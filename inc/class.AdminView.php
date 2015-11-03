@@ -162,7 +162,8 @@ class AdminView {
 		$Fieldset->addField( new FormularCheckbox('USER_CANT_LOGIN', __('Maintenance mode')) );
 		$Fieldset->addField( new FormularCheckbox('USER_CAN_REGISTER', __('Users can register')) );
 		$Fieldset->addField( new FormularInput('GARMIN_API_KEY', Ajax::tooltip(__('Garmin API-key'), __('Needed for any online-version of the Garmin Communicator<br>see http://developer.garmin.com/web-device/garmin-communicator-plugin/get-your-site-key/') )) );
-		$Fieldset->addField( new FormularInput('MAIL_SENDER', __('Sender e-mail')) );
+		$Fieldset->addField( new FormularInput('PERL_PATH', __('Perl Path')) );
+                $Fieldset->addField( new FormularInput('MAIL_SENDER', __('Sender e-mail')) );
 		$Fieldset->addField( new FormularInput('MAIL_NAME', __('Sender e-mail name')) );
 		$Fieldset->addField( new FormularInput('SMTP_HOST', __('SMTP: host')) );
 		$Fieldset->addField( new FormularInput('SMTP_PORT', __('SMTP: port')) );
@@ -455,8 +456,9 @@ class AdminView {
 	public static function getArrayOfConfigVariables() {
 		return array(
 			'RUNALYZE_DEBUG',
-			'USER_CANT_LOGIN',
+                        'USER_CANT_LOGIN',
 			'USER_CAN_REGISTER',
+                        'PERL_PATH',
 			'GARMIN_API_KEY',
 			'MAIL_SENDER',
 			'MAIL_NAME',
@@ -517,6 +519,15 @@ define(\'USER_CANT_LOGIN\', false);';
  */
 define(\'USER_CAN_REGISTER\', true);';
 
+			case 'PERL_PATH':
+				define('PERL_PATH', '/usr/bin/perl');
+				return '/**
+ * Path to perl scripts
+ * Relative to FRONTEND_PATH
+ * @var string PERL_PATH Path for perl scripts
+ */
+define(\'PERL_PATH\', \'/usr/bin/perl\');';
+                                
 			case 'GARMIN_API_KEY':
 				$APIKeyResults = DB::getInstance()->query('SELECT `value` FROM `'.PREFIX.'conf` WHERE `key`="GARMIN_API_KEY" LIMIT 1')->fetch();
 				$APIKey        = isset($APIKeyResults['value']) ? $APIKeyResults['value'] : '';
