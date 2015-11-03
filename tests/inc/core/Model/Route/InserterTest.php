@@ -43,7 +43,8 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 			Object::DISTANCE => 3.14,
 			Object::GEOHASHES => array('u1xjhpfe7yvs', 'u1xjhzdtjx62')
 		));
-
+		$R->forceToSetMinMaxFromGeohashes();
+		
 		$I = new Inserter($this->PDO, $R);
 		$I->setAccountID(0);
 		$I->insert();

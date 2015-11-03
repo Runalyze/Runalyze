@@ -51,7 +51,7 @@ class ObjectTest extends \PHPUnit_Framework_TestCase {
 	public function testSynchronization() {
 		$T = $this->simpleObject();
 		$T->synchronize();
-
+		$T->forceToSetMinMaxFromGeohashes();
 		$this->assertEquals('u1xjhpfe7y', $T->get(Object::STARTPOINT));
 		$this->assertEquals('u1xjhzdtjx', $T->get(Object::ENDPOINT));
 

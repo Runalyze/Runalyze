@@ -320,6 +320,11 @@ class Object extends Model\ObjectWithID implements Model\Loopable {
 		$this->setMinMaxFromLatitudesLongitudes($latitudes, $longitudes);
 	}
 
+	public function forceToSetMinMaxFromGeohashes() { 
+	    $this->setMinMaxFromGeohashes($this->Data[self::GEOHASHES]); 
+	    
+	}
+	
 	/**
 	 * Set geohashes from latitudes/longitudes
 	 * @param array $latitudes
