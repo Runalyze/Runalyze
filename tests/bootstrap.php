@@ -31,6 +31,8 @@ if (!defined('NBSP'))
 if (!defined('PREFIX'))
 	define('PREFIX', 'runalyze_');
 
+if (!defined('PERL_PATH'))
+	define('PERL_PATH', '/usr/bin/perl');
 
 if (!defined('DAY_IN_S'))
 	define('DAY_IN_S', 86400);
