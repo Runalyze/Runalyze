@@ -5,6 +5,7 @@
  */
 
 namespace Runalyze\Model\Route;
+use League\Geotools\Geohash\Geohash;
 
 /**
  * Loop through route object
@@ -56,11 +57,14 @@ class Loop extends \Runalyze\Model\Loop {
 	 * @return double
 	 */
 	public function calculatedStepDistance() {
-		return Object::gpsDistance(
-			$this->Object->at($this->LastIndex, Object::LATITUDES),
-			$this->Object->at($this->LastIndex, Object::LONGITUDES),
-			$this->Object->at($this->Index, Object::LATITUDES),
-			$this->Object->at($this->Index, Object::LONGITUDES)
+	    $LastGeohash = (new Geohash())->decode($this->Object->at($this->LastIndex, Object::GEOHASHES))->getCoordinate();
+	    $IndexGeohash = (new Geohash())->decode($this->Object->at($this->Index, Object::GEOHASHES))->getCoordinate();
+
+	    return Object::gpsDistance(
+			$LastGeohash->getLatitude(),
+			$LastGeohash->getLongitude(),
+			$IndexGeohash->getLatitude(),
+			$IndexGeohash->getLongitude()
 		);
 	}
 
