@@ -6,6 +6,7 @@
 
 use Runalyze\Configuration;
 use Runalyze\Activity\Distance;
+use Runalyze\Util\Time;
 
 $PLUGINKEY = 'RunalyzePluginPanel_Ziele';
 
@@ -411,9 +412,10 @@ class RunalyzePluginPanel_Ziele extends PluginPanel
 			$weeks = date('W', strtotime(date('Y') . '-12-31'));
 			$kmend->setISODate(date('Y'), $weeks == 53 ? 53 : 52, 7);
 		}
-
+echo new DateTime(date('o-\\WW'));
 		// Zeitraeume fuer die Prognosen.
-		$timeset['woche'] = array('name' => __('Week'), 'start' => new DateTime(date('o-\\WW')), 'end' => new Datetime(date('o-\\WW') . " + 6 days"));
+		$Time = new Time;
+		$timeset['woche'] = array('name' => __('Week'), 'start' => (new DateTime)->setTimestamp(Time::weekstart(time())), 'end' => (new DateTime)->setTimestamp(Time::weekend(time()) . " + 6 days"));
 		$timeset['mon'] = array('name' => __('Month'), 'start' => new DateTime(date("Y-m-01")), 'end' => new Datetime(date('Y-m-t')));
 		$timeset['hj'] = array('name' => __('Half-Year'), 'start' => new DateTime(date('m') < 7 ? date("Y-01-01") : date("Y-07-01")), 'end' => new Datetime(date('m') < 7 ? date("Y-06-30") : date('Y-12-31')));
 		$timeset['saison'] = array('name' => __('Saison'), 'start' => $kmstart, 'end' => $kmend, 'note' => __('Note: Saison means the current season in the german &quot;kmspiel&quot;'));

@@ -51,6 +51,14 @@ class WeekStart extends \Runalyze\Parameter\Select {
 	public function hasWeekStart() {
 		return !($this->value() == self::NONE);
 	}
+	
+	/**
+	 * Move weekstart
+	 * @return bool
+	 */
+	public function moveWeekStart() {
+	    return $this->value() - 2;
+	}
 
 	/**
 	 * Is monday?
