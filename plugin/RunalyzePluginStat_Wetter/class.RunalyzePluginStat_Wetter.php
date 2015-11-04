@@ -215,14 +215,13 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 	 * Display extreme trainings
 	 */
 	private function displayExtremeTrainings() {
-            $Temperature = new Temperature;
 		$hot  = DB::getInstance()->query('SELECT `temperature`, `id`, `time` FROM `'.PREFIX.'training` WHERE `temperature` IS NOT NULL '.$this->getYearDependenceForQuery().' AND accountid = '.SessionAccountHandler::getId().' ORDER BY `temperature` DESC LIMIT 5')->fetchAll();
 		$cold = DB::getInstance()->query('SELECT `temperature`, `id`, `time` FROM `'.PREFIX.'training` WHERE `temperature` IS NOT NULL '.$this->getYearDependenceForQuery().' AND accountid = '.SessionAccountHandler::getId().' ORDER BY `temperature` ASC LIMIT 5')->fetchAll();
 
 		foreach ($hot as $i => $h)
-			$hot[$i] = $Temperature->format($h['temperature'], true, false).' ' .__('on').' '.Ajax::trainingLink($h['id'], date('d.m.Y', $h['time']));
+			$hot[$i] = Temperature::format($h['temperature'], true).' ' .__('on').' '.Ajax::trainingLink($h['id'], date('d.m.Y', $h['time']));
 		foreach ($cold as $i => $c)
-			$cold[$i] = $Temperature->format($c['temperature'], true, false).' ' .__('on').' '.Ajax::trainingLink($c['id'], date('d.m.Y', $c['time']));
+			$cold[$i] = Temperature::format($c['temperature'], true).' ' .__('on').' '.Ajax::trainingLink($c['id'], date('d.m.Y', $c['time']));
 
 		echo '<p>';
 		echo '<strong>'.__('Hottest activities').':</strong> ';

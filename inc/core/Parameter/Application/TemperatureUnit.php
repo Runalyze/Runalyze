@@ -7,7 +7,7 @@
 namespace Runalyze\Parameter\Application;
 
 /**
- * Weight Unit
+ * Temperature Unit
  * @author Hannes Christiansen
  * @author Michael Pohl
  * @package Runalyze\Parameter\Application
@@ -54,7 +54,7 @@ class TemperatureUnit extends \Runalyze\Parameter\Select {
 	}
         
 	/**
-	 * Get current user weight unit
+	 * Get current user temperature unit
 	 * @return string
 	 */
 	public function unit() {
