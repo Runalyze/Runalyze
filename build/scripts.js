@@ -5705,6 +5705,7 @@ RunalyzePlot.Events = (function($, parent){
 
 					for (var i = 0; i < dataset.length; ++i) {
 						var series = dataset[i];
+						var ticker = series.yaxis.tickFormatter || series.yaxis.options.tickFormatter;
 
 						if (series.data.length == 0)
 							continue;
@@ -5725,7 +5726,7 @@ RunalyzePlot.Events = (function($, parent){
 
 						content = content + line(
 							series.label,
-							series.yaxis.tickFormatter(Math.round(y*100)/100, series.yaxis)
+							ticker(Math.round(y*100)/100, series.yaxis)
 						);
 					}
 				}
