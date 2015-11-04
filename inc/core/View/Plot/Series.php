@@ -131,7 +131,7 @@ class Series {
 				$series = count($Plot->Data) - 1;
 				$Plot->setLineWidth($series, 0);
 				$Plot->setShadowSize($series, 0);
-				//$Plot->hideYAxis($yAxis);
+				$Plot->hideYAxis($yAxis);
 				$Plot->addYUnit($yAxis, $this->UnitString, $this->UnitDecimals, $this->UnitFactor);
 			} else
 				$Plot->addYUnit($yAxis, $this->UnitString, $this->UnitDecimals);
