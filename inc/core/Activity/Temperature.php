@@ -152,13 +152,11 @@ class Temperature implements ValueInterface {
 	 * @return float [mixed unit]
 	 */
 	public function valueInPreferredUnit() {
-		if ($this->PreferredUnit->isCelsius()) {
-			return $this->celsius();
-		} elseif ($this->PreferredUnit->isFahrenheit()) {
+		if ($this->PreferredUnit->isFahrenheit()) {
 			return $this->fahrenheit();
 		}
 
-		return $this->Temperature();
+		return $this->celsius();
 	}
 
 	/**
