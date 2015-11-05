@@ -28,7 +28,7 @@ class Temperature implements ValueInterface {
 	 * Default number of decimals
 	 * @var int
 	 */
-	public static $DefaultDecimals = 1;
+	public static $DefaultDecimals = 0;
 
 	/**
 	 * Temperature [°C]

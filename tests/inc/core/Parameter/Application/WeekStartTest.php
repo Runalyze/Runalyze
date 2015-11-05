@@ -35,14 +35,6 @@ class WeekStartTest extends \PHPUnit_Framework_TestCase {
                 $this->assertFalse( $this->object->isSunday() );
         }
         
-        public function testSaturday() {
-		$this->object->set( WeekStart::SATURDAY );
-                $this->assertEquals( 6, $this->object->value() );
-		$this->assertFalse( $this->object->isMonday() );
-		$this->assertTrue( $this->object->isSaturday() );
-                $this->assertFalse( $this->object->isSunday() );
-        }
-        
         public function testSunday() {
 		$this->object->set( WeekStart::SUNDAY );
                 $this->assertEquals( 0, $this->object->value() );
@@ -50,7 +42,25 @@ class WeekStartTest extends \PHPUnit_Framework_TestCase {
 		$this->assertFalse( $this->object->isSaturday() );
                 $this->assertTrue( $this->object->isSunday() );
 	}
-        
-        
+
+	public function testWeekNumberForMonday() {
+		$this->object->set(WeekStart::MONDAY);
+
+		$this->assertEquals(44, $this->object->phpWeek(strtotime("26 October 2015")));
+		$this->assertEquals(44, $this->object->phpWeek(strtotime("1 November 2015")));
+		$this->assertEquals(45, $this->object->phpWeek(strtotime("2 November 2015")));
+		$this->assertEquals(45, $this->object->phpWeek(strtotime("8 November 2015")));
+		$this->assertEquals(53, $this->object->phpWeek(strtotime("3 January 2016")));
+	}
+
+	public function testWeekNumberForSunday() {
+		$this->object->set(WeekStart::SUNDAY);
+
+		$this->assertEquals(44, $this->object->phpWeek(strtotime("26 October 2015")));
+		$this->assertEquals(45, $this->object->phpWeek(strtotime("1 November 2015")));
+		$this->assertEquals(45, $this->object->phpWeek(strtotime("2 November 2015")));
+		$this->assertEquals(46, $this->object->phpWeek(strtotime("8 November 2015")));
+		$this->assertEquals(1, $this->object->phpWeek(strtotime("3 January 2016")));
+	}
 
 }

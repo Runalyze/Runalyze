@@ -62,7 +62,7 @@ class General extends \Runalyze\Configuration\Category {
         
 	/**
 	 * WeekStart
-	 * @return WeekStart
+	 * @return \Runalyze\Parameter\Application\WeekStart
 	 */
 	public function weekStart() {
 		return $this->object('WEEK_START');
@@ -207,9 +207,9 @@ class General extends \Runalyze\Configuration\Category {
 		$this->handle('DISTANCE_UNIT_SYSTEM')->registerOnchangeFlag(Ajax::$RELOAD_ALL);
 		$this->handle('DISTANCE_UNIT_SYSTEM')->registerOnchangeEvent('Runalyze\\Configuration\\Messages::adjustPacesInSportsConfiguration');
 		$this->handle('WEIGHT_UNIT')->registerOnchangeFlag(Ajax::$RELOAD_PLUGINS);
-                $this->handle('TEMPERATURE_UNIT')->registerOnchangeFlag(Ajax::$RELOAD_ALL);
+                $this->handle('TEMPERATURE_UNIT')->registerOnchangeFlag(Ajax::$RELOAD_DATABROWSER);
 		$this->handle('HEART_RATE_UNIT')->registerOnchangeFlag(Ajax::$RELOAD_DATABROWSER);
-                $this->handle('WEEK_START')->registerOnchangeFlag(Ajax::$RELOAD_PAGE);
+                $this->handle('WEEK_START')->registerOnchangeFlag(Ajax::$RELOAD_ALL);
 		$this->handle('MAINSPORT')->registerOnchangeFlag(Ajax::$RELOAD_PAGE);
 		$this->handle('TYPE_ID_RACE')->registerOnchangeFlag(Ajax::$RELOAD_PLUGINS);
 	}
