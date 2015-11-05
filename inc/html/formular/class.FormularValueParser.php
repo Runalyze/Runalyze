@@ -184,6 +184,9 @@ class FormularValueParser {
 			case self::$PARSER_WEIGHT:
 				self::parseWeight($value);
 				break;
+                        case self::$PARSER_TEMPERATURE:
+				self::parseTemperature($value);
+				break;
 			case self::$PARSER_ELEVATION:
 				self::parseElevation($value);
 				break;
