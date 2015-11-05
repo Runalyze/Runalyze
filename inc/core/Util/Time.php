@@ -5,6 +5,7 @@
  */
 
 namespace Runalyze\Util;
+use Runalyze\Configuration;
 
 /**
  * Class for standard operations for timestamps
@@ -52,12 +53,18 @@ class Time {
 	 */
 	public static function weekstart($time) {
 		$w = date("w", $time);
-
+		$WeekStart = Configuration::General()->weekStart()->value();
 		if ($w == 0) {
 			$w = 7;
 		}
-
-		$w -= 1;
+		
+		    $w -= 1;
+		    
+		if($WeekStart == 0) {
+		    $w += 1;
+		} elseif($WeekStart == 6) {
+		    $w += 2;
+		}
 
 		return mktime(0, 0, 0, date('m', $time), date('d', $time) - $w, date('Y', $time));
 	}

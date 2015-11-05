@@ -63,7 +63,7 @@ if ($this->day_count < 25) {
 foreach ($this->days as $i => $day) {
 	$trClass = '';
 
-	if ($i > 0 && date('w', $day['date']) == 1) {
+	if ($i > 0 && date('w', $day['date']) == \Runalyze\Configuration::General()->weekStart()->value()) {
 		$trClass = $weekSeparator;
 	}
 
