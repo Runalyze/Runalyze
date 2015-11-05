@@ -8,6 +8,7 @@ $PLUGINKEY = 'RunalyzePluginStat_Wetter';
 use Runalyze\Data\Weather;
 use Runalyze\Configuration;
 use Runalyze\Util\Time;
+use Runalyze\Activity\Temperature;
 
 /**
  * Class: RunalyzePluginStat_Wetter
@@ -128,7 +129,8 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 	* Display month-table for temperature
 	*/
 	private function displayMonthTableTemp() {
-		echo '<tr class="top-spacer"><td>&#176;C</td>';
+                $Temperature = new Temperature;
+		echo '<tr class="top-spacer"><td>'.$Temperature->unit().'</td>';
 
 		$temps = DB::getInstance()->query('
 			SELECT
@@ -149,7 +151,7 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 					echo HTML::emptyTD();
 				$i++;
 		
-				echo '<td>'.round($temp['temp']).' &deg;C</td>';
+				echo '<td>'. $Temperature->format(round($temp['temp']), true, false) .'</td>';
 			}
 
 			for (; $i <= 12; $i++)
@@ -217,9 +219,9 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 		$cold = DB::getInstance()->query('SELECT `temperature`, `id`, `time` FROM `'.PREFIX.'training` WHERE `temperature` IS NOT NULL '.$this->getYearDependenceForQuery().' AND accountid = '.SessionAccountHandler::getId().' ORDER BY `temperature` ASC LIMIT 5')->fetchAll();
 
 		foreach ($hot as $i => $h)
-			$hot[$i] = $h['temperature'].'&nbsp;&#176;C '.__('on').' '.Ajax::trainingLink($h['id'], date('d.m.Y', $h['time']));
+			$hot[$i] = Temperature::format($h['temperature'], true).' ' .__('on').' '.Ajax::trainingLink($h['id'], date('d.m.Y', $h['time']));
 		foreach ($cold as $i => $c)
-			$cold[$i] = $c['temperature'].'&nbsp;&#176;C '.__('on').' '.Ajax::trainingLink($c['id'], date('d.m.Y', $c['time']));
+			$cold[$i] = Temperature::format($c['temperature'], true).' ' .__('on').' '.Ajax::trainingLink($c['id'], date('d.m.Y', $c['time']));
 
 		echo '<p>';
 		echo '<strong>'.__('Hottest activities').':</strong> ';
