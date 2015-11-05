@@ -74,27 +74,28 @@ class ObjectTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(11, count($Object->elevationsCorrected()));
 	}
 
-	public function testSetGeohashes() {
-		// - set geohashes
-		// - check min/max
-	}
 
-	/**
-	 * @todo
-	 */
 	public function testSetLatitudesLongitudes() {
-		// - set latitudes/longitudes
-		// - check min/max
-		// - check some geohashes
+		$Object = new Object();
+		$Object->setLatitudesLongitudes(array(47.7, 47.8), array(7.8, 7.7));
+		$Object->forceToSetMinMaxFromGeohashes();
+		
+		$this->assertEquals(array('u0mx37xb9hmx', 'u0mrzjwzpjb4') , $Object->get(Object::GEOHASHES));
+		$this->assertEquals('u0mrr5wbxh', $Object->get(Object::MIN));
+		$this->assertEquals('u0mxcmxz1j', $Object->get(Object::MAX));
+
 	}
 
 	/**
-	 * @todo
+	 * @expectedException \RuntimeException
 	 */
 	public function testThatSetLatitudesLongitudesMustHaveExpectedSize() {
-		// - create object with elevations array
-		// - set latitudes/longitudes with larger array
-		// - exception should be thrown
+		$Object = new Object(array(
+			Object::ELEVATIONS_ORIGINAL => array(240, 238, 240),
+			Object::ELEVATIONS_CORRECTED => array(240, 240, 240)
+		));
+		$Object->setLatitudesLongitudes(array(47.7, 47.8, 47.7, 47.8), array(7.8, 7.7, 7.8, 7.7));
+		$Object->forceToSetMinMaxFromGeohashes();
 	}
 
 }
