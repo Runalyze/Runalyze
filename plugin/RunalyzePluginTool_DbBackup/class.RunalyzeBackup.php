@@ -46,6 +46,8 @@ abstract class RunalyzeBackup {
 	final public function run() {
 		$this->DB->stopAddingAccountID();
 
+		$this->startBackup();
+
 		$Tables = array(
 			PREFIX.'account',
 			PREFIX.'conf',
@@ -71,10 +73,22 @@ abstract class RunalyzeBackup {
 			$this->saveTableRows($TableName);
 		}
 
+		$this->finishBackup();
+
 		$this->Writer->finish();
 
 		$this->DB->startAddingAccountID();
 	}
+
+	/**
+	 * Start backup file
+	 */
+	protected function startBackup() {}
+
+	/**
+	 * Finish backup file
+	 */
+	protected function finishBackup() {}
 
 	/**
 	 * Save table structure

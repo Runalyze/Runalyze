@@ -15,6 +15,7 @@ if (!defined('FRONTEND_PATH'))
 require_once FRONTEND_PATH.'system/class.Autoloader.php';
 new Autoloader();
 
+require_once FRONTEND_PATH.'system/define.consts.php';
 require_once FRONTEND_PATH.'../lib/phpfastcache/phpfastcache.php';
 require_once FRONTEND_PATH.'system/class.Cache.php';
 new Cache();
