@@ -490,7 +490,11 @@ class FormularValueParser {
 	 * @return bool
 	 */
 	private static function validateTemperature($key) {
-		$_POST[$key] = round((new Temperature())->setInPreferredUnit($_POST[$key])->celsius(), 2);
+		if (trim($_POST[$key]) == '') {
+			$_POST[$key] = null;
+		} else {
+			$_POST[$key] = round((new Temperature())->setInPreferredUnit($_POST[$key])->celsius(), 2);
+		}
 
 		return true;
 	}
@@ -500,7 +504,7 @@ class FormularValueParser {
 	 * @param mixed $value 
 	 */
 	private static function parseTemperature(&$value) {
-		$value = round((new Temperature($value))->valueInPreferredUnit(), 2);
+		$value = (new Temperature($value))->valueInPreferredUnit();
 	}
       
 

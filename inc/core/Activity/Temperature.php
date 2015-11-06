@@ -17,13 +17,6 @@ use Runalyze\Parameter\Application\TemperatureUnit;
  * @package Runalyze\Activity
  */
 class Temperature implements ValueInterface {
-        
-	/**
-	 * Default kelvin multiplier
-	 * @var double 
-	*/
-	const KELVIN_MULTIPLIER = 274.15;
-
 	/**
 	 * Default number of decimals
 	 * @var int
@@ -32,7 +25,7 @@ class Temperature implements ValueInterface {
 
 	/**
 	 * Temperature [°C]
-	 * @var float
+	 * @var float|null
 	 */
 	protected $Temperature;
 
@@ -44,7 +37,7 @@ class Temperature implements ValueInterface {
 
 	/**
 	 * Format
-	 * @param float $temperature [°C]
+	 * @param float|null $temperature [°C]
 	 * @param bool $withUnit [optional] with or without unit
 	 * @param int $decimals [optional] number of decimals
 	 * @return string
@@ -54,10 +47,10 @@ class Temperature implements ValueInterface {
 	}
 
 	/**
-	 * @param float $temperature [°C]
+	 * @param float|null $temperature [°C]
 	 * @param \Runalyze\Parameter\Application\WeightUnit $preferredUnit
 	 */
-	public function __construct($temperature = 0, TemperatureUnit $preferredUnit = null) {
+	public function __construct($temperature = null, TemperatureUnit $preferredUnit = null) {
 		$this->PreferredUnit = (null !== $preferredUnit) ? $preferredUnit : Configuration::General()->temperatureUnit();
 
 		$this->set($temperature);
@@ -77,28 +70,36 @@ class Temperature implements ValueInterface {
 
 	/**
 	 * Set temperature
-	 * @param float $temperature [°C]
+	 * @param float|null $temperature [°C]
 	 * @return \Runalyze\Activity\Temperature $this-reference
 	 */
 	public function set($temperature) {
-		$this->Temperature = (float)str_replace(',', '.', $temperature);
+		if (null === $temperature || $temperature === '') {
+			$this->Temperature = null;
+		} else {
+			$this->Temperature = round((float)str_replace(',', '.', $temperature), 2);
+		}
 
 		return $this;
 	}
 
 	/**
 	 * Set temperature in Fahrenheit
-	 * @param float $temperature [°F]
+	 * @param float|null $temperature [°F]
 	 * @return \Runalyze\Activity\Temperature $this-reference
 	 */
 	public function setFahrenheit($temperature) {
-		$this->Temperature = ((float)str_replace(',', '.', $temperature)-32)/1.8;
+		if (null === $temperature || $temperature === '') {
+			$this->Temperature = null;
+		} else {
+			$this->Temperature = round(((float)str_replace(',', '.', $temperature)-32)/1.8, 2);
+		}
 
 		return $this;
 	}
 
 	/**
-	 * @param float $temperature [mixed unit]
+	 * @param float|null $temperature [mixed unit]
 	 * @return \Runalyze\Activity\Temperature $this-reference
 	 */
 	public function setInPreferredUnit($temperature) {
@@ -126,7 +127,7 @@ class Temperature implements ValueInterface {
 	}
 
 	/**
-	 * @return float [°C]
+	 * @return float|null [°C]
 	 */
 	public function value() {
 		return $this->Temperature;
@@ -134,7 +135,7 @@ class Temperature implements ValueInterface {
 
 	/**
 	 * Weight
-	 * @return float [°C]
+	 * @return float|null [°C]
 	 */
 	public function celsius() {
 		return $this->Temperature;
@@ -142,14 +143,26 @@ class Temperature implements ValueInterface {
 
 	/**
 	 * Weight in fahrenheit
-	 * @return float [°F]
+	 * @return float|null [°F]
 	 */
 	public function fahrenheit() {
+		if ($this->isEmpty()) {
+			return null;
+		}
+
 		return $this->Temperature * 1.8 + 32;
 	}
 
 	/**
-	 * @return float [mixed unit]
+	 * Is temperature empty?
+	 * @return bool
+	 */
+	public function isEmpty() {
+		return (null === $this->Temperature);
+	}
+
+	/**
+	 * @return float|null [mixed unit]
 	 */
 	public function valueInPreferredUnit() {
 		if ($this->PreferredUnit->isFahrenheit()) {
@@ -166,6 +179,10 @@ class Temperature implements ValueInterface {
 	 * @return string with unit
 	 */
 	public function stringCelsius($withUnit = true, $decimals = false) {
+		if ($this->isEmpty()) {
+			return '';
+		}
+
 		$decimals = ($decimals === false) ? self::$DefaultDecimals : $decimals;
 
 		return number_format($this->Temperature, $decimals, '.', '').($withUnit ? '&nbsp;'.TemperatureUnit::CELSIUS : '');
@@ -178,6 +195,10 @@ class Temperature implements ValueInterface {
 	 * @return string with unit
 	 */
 	public function stringFahrenheit($withUnit = true, $decimals = false) {
+		if ($this->isEmpty()) {
+			return '';
+		}
+
 		$decimals = ($decimals === false) ? self::$DefaultDecimals : $decimals;
 
 		return number_format($this->fahrenheit(), $decimals, '.', '').($withUnit ? '&nbsp;'.TemperatureUnit::FAHRENHEIT : '');
