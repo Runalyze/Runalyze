@@ -142,6 +142,7 @@ class RunalyzeJsonImporter {
 		}
 
 		$FetchEquipmentSportRelation = $this->DB->query('SELECT CONCAT(`sportid`, "-", `equipment_typeid`) FROM `'.PREFIX.'equipment_sport`');
+		$this->ExistingData['runalyze_equipment_sport'] = array();
 
 		while ($Relation = $FetchEquipmentSportRelation->fetchColumn()) {
 			$this->ExistingData['runalyze_equipment_sport'][] = $Relation;
