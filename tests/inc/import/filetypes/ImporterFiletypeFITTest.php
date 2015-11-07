@@ -430,4 +430,43 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertTrue($Running->hasArrayGroundContact());
 		}
 	}
+
+	/*
+	 * Test: 'stop' instead of 'stop_all' in file from osynce
+	 * Filename: "osynce-stop-bug.fit" 
+	 */
+	public function testOsynceTimeProblem() {
+		if (Shell::isPerlAvailable()) {
+			$this->object->parseFile('../tests/testfiles/fit/osynce-stop-bug.fit');
+
+			$this->assertFalse( $this->object->hasMultipleTrainings() );
+			$this->assertFalse( $this->object->failed() );
+			$this->assertEquals('osynce', $this->object->object()->getCreator());
+
+			$this->assertEquals(47*60 + 6, $this->object->object()->getTimeInSeconds());
+			$this->assertEquals(47*60 + 6, $this->object->object()->getArrayTimeLastPoint());
+			$this->assertEquals(15.5, $this->object->object()->getDistance(), '', 0.1);
+
+			$this->assertTrue($this->object->object()->hasArrayTime());
+			$this->assertTrue($this->object->object()->hasArrayDistance());
+			$this->assertTrue($this->object->object()->hasArrayAltitude());
+			$this->assertTrue($this->object->object()->hasArrayHeartrate());
+			$this->assertTrue($this->object->object()->hasArrayCadence());
+			$this->assertTrue($this->object->object()->hasArrayTemperature());
+			$this->assertTrue($this->object->object()->hasArrayPower());
+
+			$timeArray = $this->object->object()->getArrayTime();
+			$num = count($timeArray);
+
+			for ($i = 2; $i < $num; ++$i) {
+				if ($timeArray[$i] < $timeArray[$i-1]) {
+					$this->assertTrue(false, sprintf(
+						'Time array is not continuously increasing: %u < %u at index %u',
+						$timeArray[$i], $timeArray[$i-1], $i
+					));
+					break;
+				}
+			}
+		}
+	}
 }
