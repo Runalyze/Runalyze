@@ -269,6 +269,49 @@ class Factory {
 
 		return $Equipment;
 	}
+	
+	/**
+	 * Tag
+	 * @param int tagid
+	 * @return \Runalyze\Model\Equipment\Object
+	 */
+	public function tag($tagid) {
+		return new Tag\Object(
+			$this->arrayByPK('tag', $tagid)
+		);
+	}
+	
+	/**
+	 * All tag objects
+	 * @return \Runalyze\Model\Tag\Object[]
+	 */
+	public function allTags() {
+		return $this->allObjects('tag', function($data){
+			return new Tag\Object($data);
+		});
+	}
+	
+	/**
+	 * tags for activity
+	 * @param int $activityid
+	 * @param boolean $onlyIDs [optional]
+	 * @return int[]|\Runalyze\Model\Equipment\Object[]
+	 */
+	public function tagForActivity($activityid, $onlyIDs = false) {
+		$Tag = array();
+
+		$IDs = $this->DB->query('SELECT `tagid` FROM `'.PREFIX.'activity_tag` WHERE `activityid`="'.$activityid.'"')->fetchAll(\PDO::FETCH_COLUMN);
+
+		if ($onlyIDs) {
+			return $IDs;
+		}
+
+		foreach ($IDs as $id) {
+			$Tag[] = $this->tag($id);
+		}
+
+		return $Tag;
+	}
 
 	/**
 	 * Array by primary key

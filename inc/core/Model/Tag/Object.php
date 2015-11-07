@@ -11,7 +11,8 @@ use Runalyze\Model;
 /**
  * Tag object
  * 
- * @author Hannes Christiansen & Michael Pohl
+ * @author Hannes Christiansen 
+ * @author Michael Pohl
  * @package Runalyze\Model\Tag
  */
 class Object extends Model\ObjectWithID {
