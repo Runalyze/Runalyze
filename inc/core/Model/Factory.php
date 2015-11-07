@@ -51,7 +51,8 @@ class Factory {
 			'sport' => true,
 			'type' => true,
 			'equipment' => true,
-			'equipment_type' => true
+			'equipment_type' => true,
+			'tag' => true
 		);
 	}
 
@@ -273,7 +274,7 @@ class Factory {
 	/**
 	 * Tag
 	 * @param int tagid
-	 * @return \Runalyze\Model\Equipment\Object
+	 * @return \Runalyze\Model\Tag\Object
 	 */
 	public function tag($tagid) {
 		return new Tag\Object(
@@ -295,7 +296,7 @@ class Factory {
 	 * tags for activity
 	 * @param int $activityid
 	 * @param boolean $onlyIDs [optional]
-	 * @return int[]|\Runalyze\Model\Equipment\Object[]
+	 * @return int[]|\Runalyze\Model\Tag\Object[]
 	 */
 	public function tagForActivity($activityid, $onlyIDs = false) {
 		$Tag = array();

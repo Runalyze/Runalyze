@@ -212,21 +212,22 @@ class TrainingFormular extends StandardFormular {
 	    $isCreateForm = ($this->submitMode == StandardFormular::$SUBMIT_MODE_CREATE);
 	    $Factory = new Factory(SessionAccountHandler::getId());
 	    $AllTag = $Factory->allTags();
-	    print_r($AllTag);
+
 	    $RelatedTag = $isCreateForm ? array() : $Factory->tagForActivity($this->dataObject->id(), true);
 	    
 	    $selected = !empty($values) ? array_keys($values) : array(0);
             $Fieldset = new FormularFieldset( __('Tags') );
-            $Field = new FormularSelectBox('tags', __('Tags'), $selected);
-	    	    /*
-	     * foreach ($options as $key => $label) {
-		*			$Field->addOption($key, $label);
-		*		}
-	     */
-            $Field->setLayout( FormularFieldset::$LAYOUT_FIELD_W100 );
+            $Field = new FormularSelectBox('tags', 'Tags');
+
+	    foreach ($AllTag as $key => $label) {
+
+		$Field->addOption($label->id(), $label->tag());
+	    }
+	    $Field->setLayout( FormularFieldset::$LAYOUT_FIELD_W100_IN_W50 );
 	    $Field->addCSSclass('chosen-select full-size');
 	    $Field->setMultiple();
-	    $Field->addAttribute('data-placeholder', __('Tags'));
+	    $Field->addAttribute('data-placeholder', __('Choose tags'));
+	    $Field->addAttribute('style', 'width=50px;');
             $Fieldset->addField( $Field );
             $this->addFieldset($Fieldset);
         }
