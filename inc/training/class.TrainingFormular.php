@@ -217,8 +217,12 @@ class TrainingFormular extends StandardFormular {
 	    
 	    $selected = !empty($values) ? array_keys($values) : array(0);
             $Fieldset = new FormularFieldset( __('Tags') );
-            $Field = new FormularSelectBox('tags', 'Tags');
-
+            $Field = new FormularSelectBox('tags', 'Tags', $_POST['tag']);
+	    
+	    
+	    if (isset($_POST['tag'])) {
+			$RelatedTag = $_POST['tag'];
+		}
 	    foreach ($AllTag as $key => $label) {
 
 		$Field->addOption($label->id(), $label->tag());
@@ -231,7 +235,8 @@ class TrainingFormular extends StandardFormular {
             $Fieldset->addField( $Field );
             $this->addFieldset($Fieldset);
         }
-        
+	
+      
 	/**
 	 * Display fieldset: Equipment
 	 */
