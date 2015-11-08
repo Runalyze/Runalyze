@@ -129,7 +129,8 @@ class RunalyzeJsonImporter {
 			'type'		=> 'name',
 			'plugin'	=> 'key',
 			'equipment'	=> 'name',
-			'equipment_type' => 'name'
+			'equipment_type' => 'name',
+			'tag'		=> 'tag'
 		);
 
 		foreach ($Tables as $Table => $Column) {
