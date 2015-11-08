@@ -153,7 +153,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_equipment_type` (
 --
 
 CREATE TABLE IF NOT EXISTS `runalyze_tag` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `tag` varchar(50) NOT NULL,
   `accountid` int(11) NOT NULL,
   PRIMARY KEY (`id`),
@@ -433,6 +433,18 @@ ALTER TABLE `runalyze_equipment_sport`
 --
 ALTER TABLE `runalyze_equipment_type`
  ADD PRIMARY KEY (`id`), ADD KEY `accountid` (`accountid`);
+
+--
+-- Indizes für die Tabelle `runalyze_tag`
+--
+ALTER TABLE `runalyze_tag` 
+ADD PRIMARY KEY (`id`), ADD KEY `accountid` (`accountid`);
+
+--
+-- Indizes für die Tabelle `runalyze_activity_tag`
+--
+ALTER TABLE `runalyze_activity_tag`
+ADD PRIMARY KEY (`activityid`,`tagid`), ADD KEY `tagid` (`tagid`);
 
 --
 -- Indizes für die Tabelle `runalyze_hrv`
