@@ -153,11 +153,9 @@ CREATE TABLE IF NOT EXISTS `runalyze_equipment_type` (
 --
 
 CREATE TABLE IF NOT EXISTS `runalyze_tag` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL,
   `tag` varchar(50) NOT NULL,
-  `accountid` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY  `tagAccount` (`accountid`,`tag`)
+  `accountid` int(10) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -168,9 +166,8 @@ CREATE TABLE IF NOT EXISTS `runalyze_tag` (
 --
 
 CREATE TABLE IF NOT EXISTS `runalyze_activity_tag` (
-  `activityid` int(11) NOT NULL,
-  `tagid` int(11) NOT NULL,
-  PRIMARY KEY `tagActivity` (`activityid`,`tagid`)
+  `activityid` int(10) unsigned NOT NULL,
+  `tagid` int(10) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -531,6 +528,11 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `runalyze_equipment`
 MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT für Tabelle `runalyze_tag`
+--
+ALTER TABLE `runalyze_tag`
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT für Tabelle `runalyze_equipment_type`
 --
 ALTER TABLE `runalyze_equipment_type`
@@ -574,6 +576,18 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 -- Constraints der exportierten Tabellen
 --
 
+
+--
+-- Constraints der Tabelle `runalyze_activity_tagt`
+--
+ALTER TABLE `runalyze_activity_tag`
+ADD CONSTRAINT `runalyze_activity_tag_ibfk_1` FOREIGN KEY (`tagid`) REFERENCES `runalyze_tag` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `runalyze_activity_tag_ibfk_2` FOREIGN KEY (`activityid`) REFERENCES `runalyze_training` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+--
+-- Constraints der Tabelle `runalyze_tag`
+--
+ALTER TABLE `runalyze_tag`
+ADD CONSTRAINT `runalyze_tag_ibfk_1` FOREIGN KEY (`accountid`) REFERENCES `runalyze_account` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 --
 -- Constraints der Tabelle `runalyze_activity_equipment`
 --
