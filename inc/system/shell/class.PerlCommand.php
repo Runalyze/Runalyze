@@ -17,7 +17,7 @@ class PerlCommand extends ShellCommand {
 	 * Path to perl executable
 	 * @var string
 	 */
-	private static $PERL_PATH = '/usr/bin/perl';
+	private static $PERL_PATH = PERL_PATH;
 
 	/**
 	 * Path to perl scripts

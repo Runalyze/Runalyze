@@ -64,5 +64,7 @@ class HRVPointcare extends ActivityPlot {
 		$this->Plot->setXUnit('ms');
 		$this->Plot->smoothing(false);
 		$this->Plot->showPoints();
+
+		$this->Plot->PlotOptions['allowSelection'] = false;
 	}
 }

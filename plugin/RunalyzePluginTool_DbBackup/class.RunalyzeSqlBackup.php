@@ -10,6 +10,16 @@
  */
 class RunalyzeSqlBackup extends RunalyzeBackup {
 	/**
+	 * Start backup
+	 */
+	protected function startBackup() {
+		$this->Writer->addToFile('-- RUNALYZE BACKUP'.NL);
+		$this->Writer->addToFile('-- '.NL);
+		$this->Writer->addToFile('-- Date: '.date('c').NL);
+		$this->Writer->addToFile('-- Version: '.RUNALYZE_VERSION.NL.NL);
+	}
+
+	/**
 	 * Save table structure
 	 * @param string $TableName
 	 */

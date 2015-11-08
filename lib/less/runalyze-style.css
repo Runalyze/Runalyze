@@ -1479,9 +1479,6 @@ tr.space-line.zebra-corrector td {
   width: 300px;
   box-shadow: inset 0 -20px 15px -15px #ffffff;
 }
-.training-row-plot {
-  overflow: hidden;
-}
 .training-row-plot .flot {
   background: transparent;
 }

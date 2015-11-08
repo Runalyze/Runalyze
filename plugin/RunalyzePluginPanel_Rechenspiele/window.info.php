@@ -26,8 +26,8 @@ new Frontend();
 </div>
 <div class="panel-content">
 	<p class="text">
-		<?php _e('Jack Daniels\' famous Running formula serves some tables estimating the VDOT value. '.
-				'These formulas are used to estimate your VDOT and predict your race performances.'); ?>
+		<?php printf(__('<a href="%s" target="_blank">Jack Daniels\' famous Running formula</a> serves some tables estimating the VDOT value. '.
+				'These formulas are used to estimate your VDOT and predict your race performances.'), 'http://www.amazon.de/gp/product/1450431836?ie=UTF8&tag=runalyze-21'); ?>
 	</p>
 
 	<p class="text">

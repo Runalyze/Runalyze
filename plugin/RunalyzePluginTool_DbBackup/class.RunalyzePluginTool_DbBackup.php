@@ -200,6 +200,12 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 				$Fieldset->setLayoutForFields(FormularFieldset::$LAYOUT_FIELD_W100);
 
 				$Formular->addSubmitButton( __('Import') );
+			} elseif (!$Analyzer->versionIsOkay()) {
+				$Fieldset->addError(sprintf(
+					__('Versions do not match! The backup is from %s but you are using %s.'),
+					$Analyzer->fileVersion(),
+					'v'.RUNALYZE_VERSION
+				));
 			} else {
 				$Fieldset->addError( __('The file seems to be corrupted.') );
 

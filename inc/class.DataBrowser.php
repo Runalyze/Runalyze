@@ -215,7 +215,7 @@ class DataBrowser {
 
 		echo DataBrowserLinker::monthLink(Time::month(date("m", $timeForLinks)), $timeForLinks).', ';
 		echo DataBrowserLinker::yearLink(date("Y", $timeForLinks), $timeForLinks).', ';
-		echo DataBrowserLinker::weekLink(date("W", $timeForLinks).'. '.__('week') , $timeForLinks);
+		echo DataBrowserLinker::weekLink(Configuration::General()->weekStart()->phpWeek($timeForLinks).'. '.__('week') , $timeForLinks);
 	}
 
 	/**

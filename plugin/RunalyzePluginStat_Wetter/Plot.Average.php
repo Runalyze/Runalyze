@@ -6,6 +6,9 @@
  */
 
 use Runalyze\Util\Time;
+use Runalyze\Activity\Temperature;
+
+$Temperature = new Temperature;
 
 $Months       = array();
 $Temperatures = array();
@@ -30,7 +33,7 @@ $Query = '
 
 $Data = DB::getInstance()->query($Query)->fetchAll();
 foreach ($Data as $dat)
-	$Temperatures[$dat['y']][$dat['m'] - 1] = (int)$dat['temp'];
+	$Temperatures[$dat['y']][$dat['m'] - 1] = $Temperature->format((int)$dat['temp'], false);
 
 $Plot = new Plot("average", 780, 240);
 
@@ -42,7 +45,7 @@ for ($y = START_YEAR, $n = date('Y'); $y <= $n; $y++) {
 $Plot->setMarginForGrid(5);
 $Plot->setXLabels($Months);
 $Plot->addYAxis(1, 'left');
-$Plot->addYUnit(1, '°C', 1);
+$Plot->addYUnit(1, $Temperature->unit(), 1);
 $Plot->setYTicks(1, 5, 0);
 
 $Plot->addThreshold('y', 0);

@@ -358,7 +358,8 @@ $FIELDS = array(
 					),
 					'formular'	=> array(
 						'label'		=> __('Temperature'),
-						'unit'		=> FormularUnit::$CELSIUS,
+						'unit'		=> Configuration::General()->temperatureUnit()->unit(),
+                                                'parser'        => FormularValueParser::$PARSER_TEMPERATURE,
 						'css'		=> TrainingFormular::$ONLY_OUTSIDE_CLASS
 					)
 	),

@@ -5,6 +5,7 @@
  */
 
 use Runalyze\Activity\Pace;
+use Runalyze\Activity\Temperature;
 use Runalyze\Configuration;
 use Runalyze\Model\Activity;
 use Runalyze\Model\Factory;
@@ -523,7 +524,7 @@ class Dataset {
 
 			case 'temperature':
 				if (!$this->Activity->weather()->temperature()->isUnknown() && (is_null($this->Sport) || $this->Sport->isOutside())) {
-					return $this->Activity->weather()->temperature()->asString();
+					return Temperature::format($this->Activity->weather()->temperature()->value(), true, false);
 				}
 
 				return '';

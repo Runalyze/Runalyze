@@ -6176,8 +6176,11 @@ var RunalyzePlot = (function($, parent){
 		defaultPlotOptions: {
 			showLegend:			true,
 			enableCrosshair:	true,
+			allowCrosshair:		true,
 			enableSelection:	true,
-			enablePanning:		false
+			allowSelection:		true,
+			enablePanning:		false,
+			allowPanning:		true,
 		},
 		waitClass:				'wait-img'
 	};
@@ -6476,25 +6479,34 @@ var RunalyzePlot = (function($, parent){
 	};
 
 	self.toggleSelection = function(key) {
-		var hide = self.getPlot(key).getOptions().selection.mode == 'x';
-		self.getPlot(key).getOptions().selection.mode = hide ? null : 'x';
+		self.enableSelection(key, (self.getPlot(key).getOptions().selection.mode != 'x'));
+	};
 
-		if (hide) {
+	self.enableSelection = function(key, enable) {
+		self.getPlot(key).getOptions().selection.mode = !enable ? null : 'x';
+
+		if (!enable) {
 			this.getPlot(key).clearSelection();
 			$("#"+key+" .map-tooltip").hide();
 		}
 	};
 
 	self.toggleCrosshair = function(key) {
-		var isActive = (self.getPlot(key).getOptions().crosshair.mode == 'x');
+		self.enableCrosshair(key, (self.getPlot(key).getOptions().crosshair.mode == 'x'));
+	};
 
-		self.getPlot(key).getOptions().crosshair.mode = isActive ? null : 'x';
+	self.enableCrosshair = function(key, enable) {
+		self.getPlot(key).getOptions().crosshair.mode = !enable ? null : 'x';
 
-		if (isActive)
+		if (!enable)
 			$("#"+key+" .map-tooltip").hide();
 	};
 
 	self.togglePanning = function(key) {
+		// TODO
+	};
+
+	self.enablePanning = function(key, enable) {
 		// TODO
 	};
 
@@ -6658,10 +6670,15 @@ RunalyzePlot.Options = (function($, parent){
 			$(elem).toggleClass('option-toggled');
 			parent.toggleCrosshair(key);
 		}, function($elem){
-			if (parent.getPlot(key).getOptions().series.bars.show)
+			if (parent.getPlot(key).getOptions().series.bars.show) {
 				$elem.remove();
-			else if (!parent.getPlot(key).options.enableCrosshair)
+			} else if (!parent.getPlot(key).options.allowCrosshair) {
+				parent.enableCrosshair(key, false);
+				$elem.remove();
+			} else if (!parent.getPlot(key).options.enableCrosshair) {
+				parent.enableCrosshair(key, false);
 				$elem.addClass('option-toggled');
+			}
 		});
 	}
 
@@ -6670,10 +6687,15 @@ RunalyzePlot.Options = (function($, parent){
 			$(elem).toggleClass('option-toggled');
 			parent.toggleSelection(key);
 		}, function($elem){
-			if (parent.getPlot(key).getOptions().series.bars.show)
+			if (parent.getPlot(key).getOptions().series.bars.show) {
 				$elem.remove();
-			else if (!parent.getPlot(key).options.enableSelection)
+			} else if (!parent.getPlot(key).options.allowSelection) {
+				parent.enableSelection(key, false);
+				$elem.remove();
+			} else if (!parent.getPlot(key).options.enableSelection) {
+				parent.enableSelection(key, false);
 				$elem.addClass('option-toggled');
+			}
 		});
 	}
 
@@ -6683,8 +6705,13 @@ RunalyzePlot.Options = (function($, parent){
 			$(elem).toggleClass('option-toggled');
 			parent.togglePanning(key);
 		}, function($elem){
-			if (!parent.getPlot(key).options.enablePanning)
+			if (!parent.getPlot(key).options.allowPanning) {
+				parent.enablePanning(key, false);
+				$elem.remove();
+			} else if (!parent.getPlot(key).options.enablePanning) {
+				parent.enablePanning(key, false);
 				$elem.addClass('option-toggled');
+			}
 		});
 	}
 
@@ -6990,6 +7017,7 @@ RunalyzePlot.Events = (function($, parent){
 
 					for (var i = 0; i < dataset.length; ++i) {
 						var series = dataset[i];
+						var ticker = series.yaxis.tickFormatter || series.yaxis.options.tickFormatter;
 
 						if (series.data.length == 0)
 							continue;
@@ -7010,7 +7038,7 @@ RunalyzePlot.Events = (function($, parent){
 
 						content = content + line(
 							series.label,
-							series.yaxis.tickFormatter(Math.round(y*100)/100, series.yaxis)
+							ticker(Math.round(y*100)/100, series.yaxis)
 						);
 					}
 				}
@@ -7072,7 +7100,7 @@ RunalyzePlot.Events = (function($, parent){
 			}
 
 			// TODO: Think if min/max value is of interest too
-			var i, j, dataset = plot.getData();
+			var i, j, maxj, dataset = plot.getData();
 			for (i = 0; i < dataset.length; ++i) {
 				var series = dataset[i], num = 0, sum = 0;
 
@@ -7080,6 +7108,7 @@ RunalyzePlot.Events = (function($, parent){
 					if (series.data[j][0] >= from && series.data[j][0] <= to){
 						sum = sum + series.data[j][1];
 						num = num + 1;
+						maxj = j;
 					}
 
 				content = content + line(
@@ -7089,10 +7118,19 @@ RunalyzePlot.Events = (function($, parent){
 			}
 
 			// TODO: event.pageY/X do not exist?
-			var pos = {
-				y: 15 + event.pageY,
-				x: 15 + event.pageX
-			};
+			var tt = tooltip(key);
+			var pos = {y: 0, x: 0};
+
+			if (tt.is(':visible')) {
+				var off = $('#' + key).offset();
+
+				pos.y = tt.offset().top - off.top;
+				pos.x = tt.offset().left - off.left;
+			} else {
+				var pof = plot.pointOffset({x:to, y:dataset[0].data[maxj][1]});
+				pos.y = pof.top;
+				pos.x = pof.left;
+			}
 
 			show(key, pos, content, 'right', true);
 		};
@@ -7115,8 +7153,8 @@ RunalyzePlot.Events = (function($, parent){
 			if (fixed === true) {
 				var off = $('#' + key).offset();
 
-				cssProperties['top'] = tt.offset().top - off.top;
-				cssProperties['left'] = tt.offset().left - off.left;
+				cssProperties['top'] = pos.y;// - off.top;
+				cssProperties['left'] = pos.x;// - off.left;
 				cssProperties['position'] = 'absolute';
 			} else {
 				cssProperties['top'] = pos.y - $(document).scrollTop();
@@ -8204,7 +8242,7 @@ Runalyze.Feature = (function($, Parent){
 				position: 'bottom',
 				mode: 'single',
                 locale:  JSON.parse($("#calendar-locale").val()),
-                onBeforeShow: function(){ if ($t.val() != '') $t.DatePickerSetDate($t.val(), true); },
+                onBeforeShow: function(){ if ($t.val().trim() != '') $t.DatePickerSetDate($t.val(), true); },
 				onChange: function(formated, dates){ $t.val(formated); $t.DatePickerHide(); }
 			});
 		});

@@ -285,7 +285,7 @@ class Ajax {
 	 * @param string $class   The new css-class
 	 * @return string
 	 */
-	private static function insertClass($link, $class) {
+	public static function insertClass($link, $class) {
 		$text = preg_replace('#<a ([^>]*?)class="(.+?)"#i', '<a \\1class="'.$class.' \\2"', $link);
 		if ($text == $link)
 			$text = str_replace('<a ', '<a class="'.$class.'" ', $text);
@@ -299,7 +299,7 @@ class Ajax {
 	 * @param string $rel    The new rel-value
 	 * @return string
 	 */
-	private static function insertRel($link, $rel) {
+	public static function insertRel($link, $rel) {
 		$text = preg_replace('#rel="(.+?)"#i', 'rel="'.$rel.'"', $link);
 		if ($text == $link)
 			$text = str_replace('<a ', '<a rel="'.$rel.'" ', $text);
@@ -313,7 +313,7 @@ class Ajax {
 	 * @param string $rel    The new data-size-value
 	 * @return string
 	 */
-	private static function insertDataSize($link, $rel) {
+	public static function insertDataSize($link, $rel) {
 		$text = preg_replace('#data-size="(.+?)"#i', 'data-size="'.$rel.'"', $link);
 		if ($text == $link)
 			$text = str_replace('<a ', '<a data-size="'.$rel.'" ', $text);

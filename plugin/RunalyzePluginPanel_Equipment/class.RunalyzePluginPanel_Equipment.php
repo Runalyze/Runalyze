@@ -75,7 +75,7 @@ class RunalyzePluginPanel_Equipment extends PluginPanel {
 	 */
 	protected function getRightSymbol() {
 		$Links = '';
-		$Links .= '<li class="with-submenu">'.Ajax::link(__('Type'), 'panel-'.$this->id(), Plugin::$DISPLAY_URL.'?id='.$this->id()).'</a>';
+		$Links .= '<li class="with-submenu">'.Ajax::link(__('Type'), 'panel-'.$this->id(), Plugin::$DISPLAY_URL.'?id='.$this->id());
 		$Links .= '<ul class="submenu">';
 
 		foreach ($this->AllTypes as $Type) {
