@@ -159,6 +159,7 @@ class TrainingObject extends DataObject {
 		$InserterActivity->setTrackdata($Trackdata);
 		$InserterActivity->setSwimdata($Swimdata);
 		$InserterActivity->setEquipmentIDs(TrainingFormular::readEquipmentFromPost($Activity->sportid()));
+		$InserterActivity->setTagIDs(TrainingFormular::readTagFromPost($Activity->sportid()));
 		$InserterActivity->insert();
 
 		$this->id = $InserterActivity->insertedID();
@@ -274,6 +275,8 @@ class TrainingObject extends DataObject {
 			TrainingFormular::readEquipmentFromPost($NewActivity->sportid()),
 			isset($_POST['equipment_old']) ? explode(',', $_POST['equipment_old']) : array()
 		);
+		$UpdaterActivity->setTagIDs(TrainingFormular::readTagFromPost(), 
+			isset($_POST['tag_old']) ? explode(',', $_POST['tag_old']) : array());
 		$UpdaterActivity->setAccountID($AccountID);
 		$UpdaterActivity->update();
 

@@ -41,6 +41,11 @@ class Inserter extends Model\InserterWithAccountID {
 	 * @var array
 	 */
 	protected $EquipmentIDs = array();
+	
+	/**
+	 * @var array
+	 */
+	protected $TagIDs = array();
 
 	/**
 	 * Construct inserter
@@ -77,6 +82,13 @@ class Inserter extends Model\InserterWithAccountID {
 	 */
 	public function setEquipmentIDs(array $ids) {
 		$this->EquipmentIDs = $ids;
+	}
+	
+	/**
+	 * @param array $ids
+	 */
+	public function setTagIDs(array $ids) {
+		$this->TagIDs = $ids;
 	}
 
 	/**
@@ -231,11 +243,21 @@ class Inserter extends Model\InserterWithAccountID {
 	 */
 	protected function after() {
 		$this->updateEquipment();
+		$this->updateTag();
 		$this->updateStartTime();
 		$this->updateVDOTshapeAndCorrector();
 		$this->updateBasicEndurance();
 	}
 
+	/**
+	 * Update tag
+	 */
+	protected function updateTag() {
+	    if (!empty($this->TagIDs)) {
+		$TagUpdater = new TagUpdater($this->PDO, $this->Object->id());
+		    $TagUpdater->update($this->TagIDs);
+	    }
+	}
 	/**
 	 * Update equipment
 	 */

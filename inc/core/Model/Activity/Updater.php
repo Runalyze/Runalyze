@@ -310,10 +310,10 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 	 * Update tag
 	 */
 	protected function updateTag() {
+	    
 		if (!empty($this->TagIDsNew) || !empty($this->TagIDsOld)) {
-	       /* $EquipmentUpdater = new TagUpdater($this->PDO, $this->NewObject->id());
-			$EquipmentUpdater->setActivityObjects($this->NewObject, $this->OldObject);
-			$EquipmentUpdater->update($this->TagIDsNew, $this->TagIDsOld);*/
+		    $TagUpdater = new TagUpdater($this->PDO, $this->NewObject->id());
+		    $TagUpdater->update($this->TagIDsNew, $this->TagIDsOld);
 		}
 	}
 

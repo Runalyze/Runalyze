@@ -203,7 +203,24 @@ class TrainingFormular extends StandardFormular {
 		return $SelectedEquipment;
 	}
 
-        
+	/**
+	 * Read selected tags from post data
+	 * @return array
+	 */
+	public static function readTagFromPost() {
+	    $SelectedTags = array();
+	    if (!isset($_POST['tags']) || !is_array($_POST['tags']))
+		    return $SelectedTags;
+	    
+	    if (is_array($_POST['tags'])) {
+		    $SelectedTags = array_merge($SelectedTags, $_POST['tags']);
+	    } else {
+		    $SelectedTags[] = $_POST['tags'][0];
+	    }
+
+	    return $SelectedTags;
+	}
+	
         /**
          * Display fieldset: Tag
          */
@@ -212,19 +229,16 @@ class TrainingFormular extends StandardFormular {
 	    $isCreateForm = ($this->submitMode == StandardFormular::$SUBMIT_MODE_CREATE);
 	    $Factory = new Factory(SessionAccountHandler::getId());
 	    $AllTag = $Factory->allTags();
-
 	    $RelatedTag = $isCreateForm ? array() : $Factory->tagForActivity($this->dataObject->id(), true);
-	    
-	    $selected = !empty($values) ? array_keys($values) : array(0);
             $Fieldset = new FormularFieldset( __('Tags') );
-            $Field = new FormularSelectBox('tags', 'Tags', $_POST['tag']);
-	    
-	    
+	    $Fieldset->addField(new FormularInputHidden('tag_old', '', implode(',', $RelatedTag)));
 	    if (isset($_POST['tag'])) {
-			$RelatedTag = $_POST['tag'];
-		}
+			$RelatedTag = self::readTagFromPost();
+	    }	    
+	    
+            $Field = new FormularSelectBox('tags', 'Tags', $RelatedTag);
+	    
 	    foreach ($AllTag as $key => $label) {
-
 		$Field->addOption($label->id(), $label->tag());
 	    }
 	    $Field->setLayout( FormularFieldset::$LAYOUT_FIELD_W100_IN_W50 );

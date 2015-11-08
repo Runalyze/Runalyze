@@ -310,7 +310,7 @@ class Factory {
 		foreach ($IDs as $id) {
 			$Tag[] = $this->tag($id);
 		}
-
+		
 		return $Tag;
 	}
 
