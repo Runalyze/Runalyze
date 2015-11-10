@@ -232,7 +232,7 @@ class TrainingFormular extends StandardFormular {
 	    $RelatedTag = $isCreateForm ? array() : $Factory->tagForActivity($this->dataObject->id(), true);
             $Fieldset = new FormularFieldset( __('Tags') );
 	    $Fieldset->addField(new FormularInputHidden('tag_old', '', implode(',', $RelatedTag)));
-	    if (isset($_POST['tag'])) {
+	    if (isset($_POST['tags'])) {
 			$RelatedTag = self::readTagFromPost();
 	    }	    
 	    

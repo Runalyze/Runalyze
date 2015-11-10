@@ -16,5 +16,5 @@ CREATE TABLE IF NOT EXISTS `runalyze_activity_tag` (
   PRIMARY KEY `tagActivity` (`activityid`,`tagid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-ALTER TABLE `runalyze_tag` ADD PRIMARY KEY (`id`), ADD KEY `accountid` (`accountid`);
-ALTER TABLE `runalyze_activity_tag` ADD PRIMARY KEY (`activityid`,`tagid`), ADD KEY `tagid` (`tagid`);
+/* ALTER TABLE `runalyze_tag` ADD PRIMARY KEY (`id`), ADD KEY `accountid` (`accountid`);
+ALTER TABLE `runalyze_activity_tag` ADD PRIMARY KEY (`activityid`,`tagid`), ADD KEY `tagid` (`tagid`);*/
