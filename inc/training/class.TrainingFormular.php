@@ -208,6 +208,7 @@ class TrainingFormular extends StandardFormular {
 	 * @return array
 	 */
 	public static function readTagFromPost() {
+            
 	    $SelectedTags = array();
 	    if (!isset($_POST['tags']) || !is_array($_POST['tags']))
 		    return $SelectedTags;
@@ -217,7 +218,6 @@ class TrainingFormular extends StandardFormular {
 	    } else {
 		    $SelectedTags[] = $_POST['tags'][0];
 	    }
-
 	    return $SelectedTags;
 	}
 	
@@ -242,7 +242,7 @@ class TrainingFormular extends StandardFormular {
 		$Field->addOption($label->id(), $label->tag());
 	    }
 	    $Field->setLayout( FormularFieldset::$LAYOUT_FIELD_W100_IN_W50 );
-	    $Field->addCSSclass('chosen-select full-size');
+	    $Field->addCSSclass('chosen-select-create full-size');
 	    $Field->setMultiple();
 	    $Field->addAttribute('data-placeholder', __('Choose tags'));
 	    $Field->addAttribute('style', 'width=50px;');
