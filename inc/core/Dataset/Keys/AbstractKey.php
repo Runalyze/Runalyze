@@ -81,7 +81,7 @@ abstract class AbstractKey
 	 */
 	final public function isShownInSummary()
 	{
-		return ($this->summaryMode() != Summary::NO);
+		return ($this->summaryMode() != SummaryMode::NO);
 	}
 
 	/**

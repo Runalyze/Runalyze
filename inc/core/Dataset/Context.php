@@ -6,7 +6,6 @@
 
 namespace Runalyze\Dataset;
 
-use Runalyze\Configuration;
 use Runalyze\Model;
 use Runalyze\View\Activity\Dataview;
 use Runalyze\View\Activity\Linker;
@@ -96,7 +95,7 @@ class Context
 		$this->Sport = $this->Activity->sportid() > 0 ? $this->Factory->sport($this->Activity->sportid()) : null;
 		$this->Type = $this->Activity->typeid() > 0 ? $this->Factory->type($this->Activity->typeid()) : null;
 		$this->ActivityData = $this->Activity->completeData();
-		$this->IsRunning = $this->hasSport() && $this->Sport->id() == Configuration::General()->runningSport();
+		$this->IsRunning = $this->hasSport() && $this->Sport->id() == \Runalyze\Configuration::General()->runningSport();
 	}
 
 	/**

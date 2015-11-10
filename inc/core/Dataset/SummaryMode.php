@@ -118,7 +118,7 @@ final class SummaryMode extends AbstractEnum
 	 */
 	private static function queryForVdot($key)
 	{
-		$Sum = Configuration::Vdot()->useElevationCorrection() ? 'IF(`vdot_with_elevation`>0,`vdot_with_elevation`,`vdot`)*`s`' : '`vdot`*`s`';
+		$Sum = \Runalyze\Configuration::Vdot()->useElevationCorrection() ? 'IF(`vdot_with_elevation`>0,`vdot_with_elevation`,`vdot`)*`s`' : '`vdot`*`s`';
 
 		return 'SUM(IF(`use_vdot`=1 AND `vdot`>0,' . $Sum . ',0))/SUM(IF(`use_vdot`=1 AND `vdot`>0,`s`,0)) as `'.$key.'`';
 	}
