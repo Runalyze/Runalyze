@@ -14,6 +14,12 @@ namespace Runalyze\Dataset;
  */
 class Query
 {
+	/** @var int */
+	const YEAR_TIMERANGE = 31622400; // 366 * 86400
+
+	/** @var int */
+	const MONTH_TIMERANGE = 2678400; // 31 * 86400
+
 	/** @var \Runalyze\Dataset\Configuration */
 	protected $Configuration;
 
@@ -47,15 +53,39 @@ class Query
 	}
 
 	/**
+	 * @param int $timeStart
+	 * @param int $timeEnd
+	 * @param bool $allKeys
+	 * @return \PDOStatement
+	 */
+	public function statementToFetchActivities($timeStart, $timeEnd, $allKeys = false)
+	{
+		return $this->PDO->query(
+			'SELECT
+				`id`,
+				`time`,
+				`s` as `'.Keys\Pace::DURATION_SUM_WITH_DISTANCE_KEY.'`,
+				DATE(FROM_UNIXTIME(time)) as `date`,
+				'.($allKeys ? $this->queryToSelectAllKeys() : $this->queryToSelectActiveKeys()).'
+			FROM `'.PREFIX.'training`
+			WHERE
+				'.$this->whereTimeIsBetween($timeStart, $timeEnd).' AND
+				`accountid` = '.(int)$this->AccountID.' AND
+				'.$this->wherePrivacyIsOkay().'
+			ORDER BY `time` ASC'
+		);
+	}
+
+	/**
 	 * @param int $sportid
 	 * @param int $timeStart default 0
 	 * @param int $timeEnd   default time()
 	 * @return array array with summary for given sportid and timerange
 	 */
-	public function fetchSummary($sportid, $timeStart = 0, $timeEnd = 0)
+	public function fetchSummaryForSport($sportid, $timeStart = 0, $timeEnd = false)
 	{
-		return $this->PDO->query('
-			SELECT
+		return $this->PDO->query(
+			'SELECT
 				`time`,
 				`sportid`,
 				SUM(IF(`distance`>0,`s`,0)) as `'.Keys\Pace::DURATION_SUM_WITH_DISTANCE_KEY.'`,
@@ -65,11 +95,11 @@ class Query
 			WHERE
 				`sportid` = '.(int)$sportid.' AND
 				`accountid` = '.(int)$this->AccountID.' AND
-				`time` BETWEEN '.($timeStart - 10).' AND '.($timeEnd - 10).'
-				'.$this->queryToRespectPrivacy().'
+				'.$this->whereTimeIsBetween($timeStart, $timeEnd).' AND
+				'.$this->wherePrivacyIsOkay().'
 			GROUP BY `sportid`
-			LIMIT 1
-		')->fetch();
+			LIMIT 1'
+		)->fetch();
 	}
 
 	/**
@@ -80,12 +110,8 @@ class Query
 	 * @param int $timeEnd   default time()
 	 * @return array array of summaries for different timeranges
 	 */
-	public function fetchSummaryForTimerange($sportid, $timerange = 604800, $timeStart = 0, $timeEnd = 0)
+	public function fetchSummaryForTimerange($sportid, $timerange = 604800, $timeStart = 0, $timeEnd = false)
 	{
-		if ($timeEnd == 0) {
-			$timeEnd = time();
-		}
-
 		return $this->PDO->query(
 			'SELECT
 				`sportid`,
@@ -97,8 +123,8 @@ class Query
 			WHERE
 				`sportid` = '.(int)$sportid.' AND
 				`accountid` = '.(int)$this->AccountID.' AND
-				`time` BETWEEN '.($timeStart - 10).' AND '.($timeEnd - 10).'
-				'.$this->queryToRespectPrivacy().'
+				'.$this->whereTimeIsBetween($timeStart, $timeEnd).' AND
+				'.$this->wherePrivacyIsOkay().'
 			GROUP BY `timerange`, `sportid`
 			ORDER BY `timerange` ASC'
 		)->fetchAll();
@@ -189,9 +215,9 @@ class Query
 	 */
 	protected function queryToSelectTimerange($timerange, $timeEnd, $asColumn = 'timerange')
 	{
-		if ($timerange == 366*DAY_IN_S) {
+		if ($timerange == self::YEAR_TIMERANGE) {
 			return date('Y', $timeEnd).' - YEAR(FROM_UNIXTIME(`time`)) as `'.$asColumn.'`';
-		} elseif ($timerange == 31*DAY_IN_S) {
+		} elseif ($timerange == self::MONTH_TIMERANGE) {
 			return date('m', $timeEnd).' - MONTH(FROM_UNIXTIME(`time`)) + 12*('.date('Y', $timeEnd).' - YEAR(FROM_UNIXTIME(`time`))) as `'.$asColumn.'`';
 		}
 
@@ -199,14 +225,28 @@ class Query
 	}
 
 	/**
+	 * @param int $timeStart default: 0
+	 * @param int $timeEnd default: time()
+	 * @return string
+	 */
+	protected function whereTimeIsBetween($timeStart = 0, $timeEnd = false)
+	{
+		if ($timeEnd === false) {
+			$timeEnd = time();
+		}
+
+		return '`time` BETWEEN '.($timeStart - 10).' AND '.($timeEnd - 10);
+	}
+
+	/**
 	 * Query to respect activity's privacy
 	 * @return string
 	 */
-	protected function queryToRespectPrivacy() {
+	protected function wherePrivacyIsOkay() {
 		if ($this->ShowOnlyPublicActivites) {
-			return ' AND `is_public`=1 ';
+			return '`is_public`=1';
 		}
 
-		return '';
+		return '1';
 	}
 }

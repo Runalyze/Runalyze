@@ -7,6 +7,22 @@ use Runalyze\Model\Activity;
 class ContextTest extends \PHPUnit_Framework_TestCase
 {
 
+	public function testThatAllStringMethodsWork()
+	{
+		$Context = new Context(array(
+			Activity\Object::TIMESTAMP => mktime(12, 0, 0, 10, 30, 2015),
+			Activity\Object::TIME_IN_SECONDS => 3600,
+			Activity\Object::DISTANCE => 12.3,
+			Keys\Pace::DURATION_SUM_WITH_DISTANCE_KEY => 42
+		), 0);
+
+		$Configuration = new DefaultConfiguration();
+
+		foreach ($Configuration->allKeys() as $keyid) {
+			Keys::get($keyid)->stringFor($Context);
+		}
+	}
+
 	public function testContextFromArrayWithoutSportAndType()
 	{
 		$Context = new Context(array(
@@ -30,7 +46,7 @@ class ContextTest extends \PHPUnit_Framework_TestCase
 	{
 		$Context = new Context(new Activity\Object(array(
 			Activity\Object::TIMESTAMP => mktime(12, 0, 0, 10, 30, 2015)
-		)), 0);
+				)), 0);
 
 		$this->assertEquals('30.10.2015', date('d.m.Y', $Context->activity()->timestamp()));
 	}
@@ -40,7 +56,7 @@ class ContextTest extends \PHPUnit_Framework_TestCase
 	{
 		$Context = new Context(new Activity\Object(array(
 			Activity\Object::TIMESTAMP => mktime(12, 0, 0, 10, 30, 2015)
-		)), 0);
+				)), 0);
 
 		$Context->data('non-existing-key');
 	}
@@ -61,12 +77,11 @@ class ContextTest extends \PHPUnit_Framework_TestCase
 	{
 		$Context = new Context(new Activity\Object(array(
 			Activity\Object::TIMESTAMP => mktime(12, 0, 0, 10, 30, 2015)
-		)), 0);
+				)), 0);
 		$Context->setActivityData(array(
 			Activity\Object::TIMESTAMP => mktime(12, 0, 0, 11, 11, 2015)
 		));
 
 		$this->assertEquals('11.11.2015', date('d.m.Y', $Context->activity()->timestamp()));
 	}
-
 }

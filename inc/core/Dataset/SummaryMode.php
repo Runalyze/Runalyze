@@ -41,16 +41,22 @@ final class SummaryMode extends AbstractEnum
 	const MAX = 3;
 
 	/**
+	 * MIN: This value will be summarized by its maximum.
+	 * @var int
+	 */
+	const MIN = 4;
+
+	/**
 	 * AVG_WITHOUT_NULL: This value will be summarized by its average ignoring nulls.
 	 * @var int
 	 */
-	const AVG_WITHOUT_NULL = 4;
+	const AVG_WITHOUT_NULL = 5;
 
 	/**
 	 * VDOT: take only the average of activities with `use_vdot` and respect elevation correction
 	 * @var int
 	 */
-	const VDOT = 5;
+	const VDOT = 6;
 
 	/**
 	 * 
@@ -67,6 +73,8 @@ final class SummaryMode extends AbstractEnum
 				return self::queryForSum($key);
 			case self::MAX:
 				return self::queryForMax($key);
+			case self::MIN:
+				return self::queryForMin($key);
 			case self::AVG_WITHOUT_NULL:
 				return self::queryForAvgWithoutNull($key);
 			case self::VDOT:
@@ -107,19 +115,27 @@ final class SummaryMode extends AbstractEnum
 	 * @param string $key
 	 * @return string
 	 */
+	private static function queryForMin($key)
+	{
+		return 'MIN(`'.$key.'`) as `'.$key.'`';
+	}
+
+	/**
+	 * @param string $key
+	 * @return string
+	 */
 	private static function queryForAvgWithoutNull($key)
 	{
 		return 'AVG(NULLIF(`'.$key.'`,0)) as `'.$key.'`';
 	}
 
 	/**
-	 * 
-	 * @param type $key
+	 * @param string $key
 	 */
 	private static function queryForVdot($key)
 	{
 		$Sum = \Runalyze\Configuration::Vdot()->useElevationCorrection() ? 'IF(`vdot_with_elevation`>0,`vdot_with_elevation`,`vdot`)*`s`' : '`vdot`*`s`';
 
-		return 'SUM(IF(`use_vdot`=1 AND `vdot`>0,' . $Sum . ',0))/SUM(IF(`use_vdot`=1 AND `vdot`>0,`s`,0)) as `'.$key.'`';
+		return 'SUM(IF(`use_vdot`=1 AND `vdot`>0,'.$Sum.',0))/SUM(IF(`use_vdot`=1 AND `vdot`>0,`s`,0)) as `'.$key.'`';
 	}
 }

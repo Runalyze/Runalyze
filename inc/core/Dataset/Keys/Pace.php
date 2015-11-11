@@ -69,7 +69,7 @@ class Pace extends AbstractKey
 					$Pace = new Activity\Pace(
 						$context->data(self::DURATION_SUM_WITH_DISTANCE_KEY),
 						$context->activity()->distance(),
-						$context->sport()->paceUnitEnum()
+						$context->hasSport() ? $context->sport()->paceUnitEnum() : Activity\Pace::STANDARD
 					);
 
 					return $Pace->valueWithAppendix();

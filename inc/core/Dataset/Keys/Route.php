@@ -68,7 +68,7 @@ class Route extends AbstractKey
 	{
 		if ($context->activity()->get(Activity\Object::ROUTEID) > 0) {
 			return \Helper::Cut(
-				$this->Factory->route($context->activity()->get(Activity\Object::ROUTEID))->name(),
+				$context->factory()->route($context->activity()->get(Activity\Object::ROUTEID))->name(),
 				self::DEFAULT_CUT
 			);
 		}
