@@ -254,6 +254,9 @@ class Inserter extends Model\InserterWithAccountID {
 	 */
 	protected function updateTag() {
 	    if (!empty($this->TagIDs)) {
+                $AddNewTags = new Model\Tag\ChosenInserter($this->PDO, $this->TagIDs);
+                $AddNewTags->insertTags();
+                $this->TagIDs = $AddNewTags->getNewTagIDs();
 		$TagUpdater = new TagUpdater($this->PDO, $this->Object->id());
 		    $TagUpdater->update($this->TagIDs);
 	    }

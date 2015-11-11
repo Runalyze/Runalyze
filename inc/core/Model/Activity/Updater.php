@@ -10,6 +10,8 @@ use Runalyze\Model;
 use Runalyze\Calculation\BasicEndurance;
 use Runalyze\Configuration;
 
+
+
 /**
  * Update activity in database
  * 
@@ -312,6 +314,9 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 	protected function updateTag() {
 	    
 		if (!empty($this->TagIDsNew) || !empty($this->TagIDsOld)) {
+                    $AddNewTags = new Model\Tag\ChosenInserter($this->PDO, $this->TagIDsNew);
+                    $AddNewTags->insertTags();
+                    $this->TagIDsNew = $AddNewTags->getNewTagIDs();
 		    $TagUpdater = new TagUpdater($this->PDO, $this->NewObject->id());
 		    $TagUpdater->update($this->TagIDsNew, $this->TagIDsOld);
 		}
