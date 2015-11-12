@@ -144,6 +144,8 @@ class SearchFormular extends Formular {
 		$this->addConditionFieldWithChosen('typeid', 'type', 'name', __('Type'), __('Choose activity type(s)'));
 		$this->addConditionFieldWithChosen('weatherid', 'weather', 'name', __('Weather'), __('Choose weather conditions'));
 		$this->addConditionFieldWithChosen('equipmentid', 'equipment', 'name', __('Equipment'), __('Choose equipment'));
+                $this->addConditionFieldWithChosen('tagid', 'tag', 'tag', __('Tag'), __('Choose tag'));
+
 
 		$this->addFieldNotes();
 

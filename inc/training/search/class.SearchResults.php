@@ -147,12 +147,12 @@ class SearchResults {
 			$this->page--;
 
 		$this->Trainings = DB::getInstance()->query(
-			'SELECT
+			'SELECT DISTINCT
 				`id`,
 				`time`
 				'.($this->multiEditorRequested() ? '' : $this->Dataset->getQuerySelectForAllDatasets()).'
 			FROM `'.PREFIX.'training`
-			'.$this->getWhere().$this->getOrder().$this->getLimit()
+			'.$this->getWhere().$this->getOrder().$this->getLimit() 
 		)->fetchAll();
 	}
 
@@ -185,8 +185,8 @@ class SearchResults {
 		}
 	
 		$this->addConditionsForOrder($conditions);
-
-		return $this->getEquipmentCondition().' WHERE '.implode(' AND ', $conditions);
+                    
+		return $this->getEquipmentCondition().$this->getTagCondition().' WHERE '.implode(' AND ', $conditions);
 	}
 
 	/**
@@ -309,12 +309,35 @@ class SearchResults {
 				$_POST['equipmentid']
 			);
 
-			return 'INNER JOIN (SELECT `ae`.`activityid` FROM `'.PREFIX.'activity_equipment` AS `ae` WHERE `ae`.`equipmentid` IN('.implode(',', $array).')) AS `sub` ON `sub`.`activityid` = `'.PREFIX.'training`.`id`';
+			return 'INNER JOIN (SELECT `ae`.`activityid` FROM `'.PREFIX.'activity_equipment` AS `ae` WHERE `ae`.`equipmentid` IN('.implode(',', $array).')) AS `suba` ON `suba`.`activityid` = `'.PREFIX.'training`.`id`';
 		}
 
 		return 'INNER JOIN `'.PREFIX.'activity_equipment` AS `ae` ON `ae`.`activityid` = `'.PREFIX.'training`.`id` AND `ae`.`equipmentid`="'.(int)$_POST['equipmentid'].'"';
 	}
 
+	/**
+	 * Get tag condition
+	 * @return string
+	 */
+	private function getTagCondition() {
+		if (!isset($_POST['tagid'])) {
+			return '';
+		}
+
+		if (is_array($_POST['tagid'])) {
+			$array = array_map(
+				function ($value) {
+					return (int)$value;
+				},
+				$_POST['tagid']
+			);
+
+			return 'INNER JOIN (SELECT `at`.`activityid` FROM `'.PREFIX.'activity_tag` AS `at` WHERE `at`.`tagid` IN('.implode(',', $array).')) AS `subb` ON `subb`.`activityid` = `'.PREFIX.'training`.`id`';
+		}
+
+		return 'INNER JOIN `'.PREFIX.'activity_tag` AS `at` ON `at`.`activityid` = `'.PREFIX.'training`.`id` AND `at`.`tagid`="'.(int)$_POST['tagid'].'"';
+	}
+        
 	/**
 	 * Get order
 	 * @return string
