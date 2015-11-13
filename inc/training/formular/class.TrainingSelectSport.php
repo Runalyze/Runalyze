@@ -29,7 +29,7 @@ class TrainingSelectSport extends FormularSelectBox {
 				$attributes['data-running'] = 'true';
 			if ($sport['outside'] == 1)
 				$attributes['data-outside'] = 'true';
-			if ($sport['types'] == 1)
+			if (isset($sport['types']) && $sport['types'] == 1)
 				$attributes['data-types'] = 'true';
                         if ($sport['distances'] == 1)
 				$attributes['data-distances'] = 'true';
