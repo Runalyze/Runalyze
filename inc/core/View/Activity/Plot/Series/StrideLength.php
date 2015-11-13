@@ -72,9 +72,13 @@ class StrideLength extends ActivityPointSeries {
 		$UnitSystem = Configuration::General()->distanceUnitSystem();
 
 		if ($UnitSystem->isImperial()) {
-			$this->Data = array_map(function($value) {
-				return $value * DistanceUnitSystem::FEET_MULTIPLIER / 1000 / 100;
-			}, $this->Data);
+			$factor = DistanceUnitSystem::FEET_MULTIPLIER / 1000 / 100;
+		} else {
+			$factor = 1 / 100;
 		}
+
+		$this->Data = array_map(function ($value) use ($factor) {
+			return $value * $factor;
+		}, $this->Data);
 	}
 }

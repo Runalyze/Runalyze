@@ -68,7 +68,7 @@ class StrideLength implements ValueInterface
 			return DistanceUnitSystem::FEET;
 		}
 
-		return DistanceUnitSystem::CM;
+		return DistanceUnitSystem::METER;
 	}
 
 	/**
