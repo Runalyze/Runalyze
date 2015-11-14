@@ -171,7 +171,7 @@ class Split extends StringObject {
 	 * @return string
 	 */
 	private function distanceAsString() {
-		return number_format($this->Distance, 2, '.', '');
+		return number_format($this->Distance, 3, '.', '');
 	}
 
 	/**
