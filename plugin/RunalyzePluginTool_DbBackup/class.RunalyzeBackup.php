@@ -115,7 +115,7 @@ abstract class RunalyzeBackup {
 			$Query .= ' WHERE `equipment_typeid` IN('.implode(',', $this->fetchEquipmentTypeIDs()).')';
 		} elseif ($TableName == PREFIX.'activity_equipment') {
 			$Query .= ' WHERE `equipmentid` IN('.implode(',', $this->fetchEquipmentIDs()).')';
-		} elseif ($TableName == PREFIX.'activity_Tag') {
+		} elseif ($TableName == PREFIX.'activity_tag') {
 			$Query .= ' WHERE `tagid` IN('.implode(',', $this->fetchTagIDs()).')';
 		} else {
 			$Query .= ' WHERE `accountid`='.$this->AccountID;
