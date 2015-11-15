@@ -263,8 +263,18 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 				date('d.m.Y', $edited),
 				date('H:i', $edited)
 			);
+			
+			$Factory = new \Runalyze\Model\Factory(SessionAccountHandler::getId());
+			$Tags = $Factory->tagForActivity($this->Context->activity()->id());
+			if(isset($Tags)) {
+			    $TagText =  '<br>'. __('This activity has following tags: ');
+			    foreach($Tags as $Tag) { 
+				$TagText .= '<strong>'.$Tag->tag().'</strong>'; 
+				if($Tag->id() !== end($Tags)->id()) { $TagText .=', '; }
+			    }
+			}
 
-			$this->NotesContent .= HTML::fileBlock($CreationTime.$ModificationTime);
+			$this->NotesContent .= HTML::fileBlock($CreationTime.$ModificationTime.$TagText);
 		}
 	}
 }

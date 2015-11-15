@@ -13,14 +13,17 @@ use Runalyze\Configuration;
  * @package Runalyze\Plugins\Stats
  */
 class RunalyzePluginStat_Laufabc extends PluginStat {
-	private $ABCData = array();
+    
+	private $TagData = array();
+	
+	private $Tags = array();
 
 	/**
 	 * Name
 	 * @return string
 	 */
 	final public function name() {
-		return __('Running Drills');
+		return __('Tag analysis');
 	}
 
 	/**
@@ -28,14 +31,27 @@ class RunalyzePluginStat_Laufabc extends PluginStat {
 	 * @return string
 	 */
 	final public function description() {
-		return __('How often did you do your running drills?');
+		return __('How often have you tagged your activities with tag x?');
 	}
 
 	/**
 	 * Init data 
 	 */
 	protected function prepareForDisplay() {
+	    $this->setAnalysisNavigation();
 		$this->initData();
+	}
+	
+	private function setAnalysisNavigation() {
+		$Factory = new \Runalyze\Model\Factory(SessionAccountHandler::getId());
+		$this->Tags = $Factory->allTags();
+		$LinkList = '<li class="with-submenu"><span class="link">' . __('Tags') . '</span><ul class="submenu">';
+		foreach($this->Tags as $Tag) {
+		    $LinkList .= '<li>' . $this->getInnerLink($Tag->tag(), false, false, $Tag->id()) . '</li>';
+		}
+		$LinkList .= '</ul></li>';
+
+		$this->setToolbarNavigationLinks(array($LinkList));
 	}
 
 	/**
@@ -54,16 +70,16 @@ class RunalyzePluginStat_Laufabc extends PluginStat {
 		echo '<thead>'.HTML::monthTr(8, 1).'</thead>';
 		echo '<tbody>';
 
-		if (empty($this->ABCData)) {
-			echo '<tr><td colspan="13" class="c"><em>'.__('No activities with running drills found.').'</em></td></tr>';
+		if (empty($this->TagData)) {
+			echo '<tr><td colspan="13" class="c"><em>'.__('No activities with tag x found.').'</em></td></tr>';
 		}
 
-		foreach ($this->ABCData as $y => $Data) {
+		foreach ($this->TagData as $y => $Data) {
 			echo '<tr><td class="b l">'.$y.'</td>';
 
 			for ($m = 1; $m <= 12; $m++) {
 				if (isset($Data[$m]) && $Data[$m]['num'] > 0) {
-					echo '<td title="'.$Data[$m]['num'].'x">'.round(100*$Data[$m]['abc']/$Data[$m]['num']).' &#37;</td>';
+					echo '<td title="'.$Data[$m]['num'].'x">'.round(100*$Data[$m]['tag']/$Data[$m]['num']).' &#37;</td>';
 				} else {
 					echo HTML::emptyTD();
 				}
@@ -75,25 +91,31 @@ class RunalyzePluginStat_Laufabc extends PluginStat {
 		echo '</tbody></table>';
 	}
 
+	
+	
 	/**
-	 * Initialize $this->ABCData
+	 * Initialize $this->TagData
 	 */
 	private function initData() {
+	    $UsersTags = array_map(function ($tag) { return $tag->id(); }, $this->Tags);
+	    if($_GET['dat'] && is_numeric($_GET['dat']) && in_array($_GET['dat'], $UsersTags)) {
+		$UsersTags = array_map(function ($tag) { return $tag->id(); }, $this->Tags);
 		$result = DB::getInstance()->query('
-			SELECT
-				SUM(`abc`) as `abc`,
-				SUM(1) as `num`,
-				YEAR(FROM_UNIXTIME(`time`)) as `year`,
-				MONTH(FROM_UNIXTIME(`time`)) as `month`
-			FROM `'.PREFIX.'training`
-				WHERE `sportid`='.Configuration::General()->runningSport().' AND `accountid`='.SessionAccountHandler::getId().'
+			SELECT  
+			    SUM(IF(tr.id IN (SELECT activityid FROM runalyze_activity_tag WHERE tagid='.$_GET['dat'].'),1,0)) as tag,
+			    SUM(IF(tr.time,1,0)) as `num`,
+			    YEAR(FROM_UNIXTIME(`tr`.`time`)) as `year`,
+			    MONTH(FROM_UNIXTIME(`tr`.`time`)) as `month` 
+			FROM `runalyze_training` tr
+			    WHERE `accountid`='.SessionAccountHandler::getId().'
 			GROUP BY `year` DESC, `month` ASC'
 		)->fetchAll();
 		
 		foreach ($result as $dat) {
-			if ($dat['abc'] > 0) {
-				$this->ABCData[$dat['year']][$dat['month']] = array('abc' => $dat['abc'], 'num' => $dat['num']);
+			if ($dat['tag'] > 0) {
+				$this->TagData[$dat['year']][$dat['month']] = array('tag' => $dat['tag'], 'num' => $dat['num']);
 			}
 		}
+	    }
 	}
 }
