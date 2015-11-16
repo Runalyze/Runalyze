@@ -1,18 +1,19 @@
 <?php
 /**
- * This file contains the class of the RunalyzePluginStat "Laufabc".
+ * This file contains the class of the RunalyzePluginStat "Tag".
  * @package Runalyze\Plugins\Stats
  */
-$PLUGINKEY = 'RunalyzePluginStat_Laufabc';
+$PLUGINKEY = 'RunalyzePluginStat_Tag';
 
 use Runalyze\Configuration;
 
 /**
- * Class: RunalyzePluginStat_Laufabc
+ * Class: RunalyzePluginStat_Tag
  * @author Hannes Christiansen
+ * @author Michael Pohl
  * @package Runalyze\Plugins\Stats
  */
-class RunalyzePluginStat_Laufabc extends PluginStat {
+class RunalyzePluginStat_Tag extends PluginStat {
     
 	private $TagData = array();
 	

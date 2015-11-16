@@ -16,14 +16,16 @@ CREATE TABLE IF NOT EXISTS `runalyze_activity_tag` (
   PRIMARY KEY `tagActivity` (`activityid`,`tagid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `runalyze_tag` (`accountid`, `tag`) SELECT `id`, 'Runningdrills' FROM `runalyze_account` WHERE `language` = 'en';
+INSERT INTO `runalyze_tag` (`accountid`, `tag`) SELECT `id`, 'Running drills' FROM `runalyze_account` WHERE `language` = 'en';
 INSERT INTO `runalyze_tag` (`accountid`, `tag`) SELECT `id`, 'Lauf-ABC' FROM `runalyze_account` WHERE `language` = 'de';
 INSERT INTO `runalyze_tag` (`accountid`, `tag`) SELECT `id`, 'tècnica' FROM `runalyze_account` WHERE `language` = 'ca';
-INSERT INTO `runalyze_tag` (`accountid`, `tag`) SELECT `id`, 'Loop-ABC' FROM `runalyze_account` WHERE `language` = 'nl';
+INSERT INTO `runalyze_tag` (`accountid`, `tag`) SELECT `id`, 'Loop ABC' FROM `runalyze_account` WHERE `language` = 'nl';
 INSERT INTO `runalyze_tag` (`accountid`, `tag`) SELECT `id`, 'Technice' FROM `runalyze_account` WHERE `language` = 'it';
-INSERT INTO `runalyze_tag` (`accountid`, `tag`) SELECT `id`, 'Ćwiczenia-biegowe' FROM `runalyze_account` WHERE `language` = 'pl';
+INSERT INTO `runalyze_tag` (`accountid`, `tag`) SELECT `id`, 'Ćwiczenia biegowe' FROM `runalyze_account` WHERE `language` = 'pl';
 
 INSERT INTO `runalyze_activity_tag` (`activityid`, `tagid`) SELECT tr.id, tg.id FROM `runalyze_training` tr LEFT JOIN `runalyze_tag` tg ON tr.accountid=tg.accountid where `abc` = 1;
+
+UPDATE `runalyze_plugin` SET `key`="RunalyzePluginStat_Tag" WHERE `key`="RunalyzePluginStat_Laufabc";
 
 /* ALTER TABLE `runalyze_tag` ADD PRIMARY KEY (`id`), ADD KEY `accountid` (`accountid`);
 ALTER TABLE `runalyze_activity_tag` ADD PRIMARY KEY (`activityid`,`tagid`), ADD KEY `tagid` (`tagid`);*/
