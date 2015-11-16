@@ -4,11 +4,16 @@ msgstr ""
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-10-27 12:32+0100\n"
 <<<<<<< HEAD
+<<<<<<< HEAD
 "PO-Revision-Date: 2015-11-16 15:14+0200\n"
 "Last-Translator: Michael Pohl <michael@mipapo.de>\n"
 =======
 "PO-Revision-Date: 2015-11-16 11:35+0200\n"
 "Last-Translator: Manfred Mayer <mayerflash@gmx.de>\n"
+>>>>>>> Translated using Weblate (German)
+=======
+"PO-Revision-Date: 2015-11-16 15:14+0200\n"
+"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
 >>>>>>> Translated using Weblate (German)
 "Language-Team: German "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
@@ -4152,11 +4157,16 @@ msgstr ""
 "wird. (Zum Beispiel, wenn du deine Laufschuhe bereits 200 km benutzt hast, "
 "bevor du deine Aufzeichnungen beginnst.) Zusätzlich kannst du eine Beginn- "
 <<<<<<< HEAD
+<<<<<<< HEAD
 "und Enddatum für die Benutzung angeben. Die Gegenstände werden dann als \""
 "inaktiv\" angezeigt, sobald das Enddatum erreicht wurde."
 =======
 "und Endedatum für die Benutzung angeben. Die Gegenstände werden dann als \""
 "inaktiv\" angezeigt, sobald das Endedatum erreicht wurde."
+>>>>>>> Translated using Weblate (German)
+=======
+"und Enddatum für die Benutzung angeben. Die Gegenstände werden dann als \""
+"inaktiv\" angezeigt, sobald das Enddatum erreicht wurde."
 >>>>>>> Translated using Weblate (German)
 
 #: inc/system/config/class.ConfigTabEquipment.php:82
