@@ -140,7 +140,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertEquals( 1, $this->object->object()->Sport()->id() );
 
 			$this->assertFalse( $this->object->object()->Splits()->areEmpty() );
-			$this->assertEquals( "10.55|46:49", $this->object->object()->Splits()->asString() );
+			$this->assertEquals( "10.547|46:49", $this->object->object()->Splits()->asString() );
 
 			$this->assertEquals( 46*60 + 50, $this->object->object()->getArrayTimeLastPoint(), '', 5 );
 
