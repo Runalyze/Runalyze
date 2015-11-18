@@ -88,7 +88,7 @@ class ImporterFiletypeFITLOGTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertFalse( $this->object->object()->Splits()->areEmpty() );
 		$this->assertEquals(
-			"0.00|0:00-1.00|5:31-1.00|5:40-1.00|5:55-1.00|5:32-0.09|0:39",
+			"0.002|0:00-1.000|5:31-1.000|5:40-1.000|5:55-1.000|5:32-0.087|0:39",
 			$this->object->object(2)->Splits()->asString()
 		);
 	}

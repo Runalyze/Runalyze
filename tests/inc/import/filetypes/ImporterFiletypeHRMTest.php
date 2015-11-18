@@ -31,7 +31,7 @@ class ImporterFiletypeHRMTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertFalse( $this->object->object()->Splits()->areEmpty() );
 		$this->assertEquals(
-			'1.01|6:03-1.01|5:59-1.01|5:58-1.02|6:05-1.02|6:44-1.01|6:11-1.01|6:00-1.02|5:56-1.02|6:10',
+			'1.009|6:03-1.012|5:59-1.013|5:58-1.017|6:05-1.021|6:44-1.014|6:11-1.015|6:00-1.024|5:56-1.016|6:10',
 			$this->object->object()->Splits()->asString()
 		);
 	}

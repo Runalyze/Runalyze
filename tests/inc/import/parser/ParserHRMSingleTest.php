@@ -53,7 +53,7 @@ Length=00:59:36.4
 		$this->assertEquals( 110, $Parser->object()->getPulseAvg() );
 		$this->assertEquals( 120, $Parser->object()->getPulseMax() );
 		$this->assertEquals( array(100,120), $Parser->object()->getArrayHeartrate() );
-		$this->assertEquals( '0.00|6:58-0.00|7:06', $Parser->object()->Splits()->asString() );
+		$this->assertEquals( '0.000|6:58-0.000|7:06', $Parser->object()->Splits()->asString() );
 	}
 
 	public function testDefaultRecordingInterval() {
