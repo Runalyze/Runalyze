@@ -2065,8 +2065,8 @@ sub named_type_value {
      63 => +{'name' => 'max_neg_vertical_speed', 'scale' => 1000, 'unit' => 'm/s'},
      66 => +{'name' => 'time_in_speed_zone', 'scale' => 1000, 'unit' => 's'},
      67 => +{'name' => 'time_in_cadence_zone', 'scale' => 1000, 'unit' => 's'}, 
-     83 => +{'name' => 'ground_contact_time_balance', 'scale' => 100, 'unit' => '%'},   
-     84 => +{'name' => 'vertical_ratio', 'scale' => 100, 'unit' => '%'},  
+     83 => +{'name' => 'vertical_ratio', 'scale' => 100, 'unit' => '%'},  
+     84 => +{'name' => 'ground_contact_time_balance', 'scale' => 100, 'unit' => '%'},   
      112 => +{'name' => 'time_standing', 'scale' => 1000, 'unit' => 's'},
    },
 

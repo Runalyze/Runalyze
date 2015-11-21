@@ -339,7 +339,7 @@ class ParserFITSingle extends ParserAbstractSingle {
 		//Running Dynamics
 		$this->gps['groundcontact'][] = isset($this->Values['stance_time']) ? round($this->Values['stance_time'][0]/10) : 0;
 		$this->gps['oscillation'][]   = isset($this->Values['vertical_oscillation']) ? round($this->Values['vertical_oscillation'][0]/10) : 0;
-		$this->gps['gctb'][] = isset($this->Values['ground_contact_time_balance']) ? (int)$this->Values['ground_contact_time_balance'][0] : 0;
+		$this->gps['groundcontact_balance'][] = isset($this->Values['ground_contact_time_balance']) ? (int)$this->Values['ground_contact_time_balance'][0] : 0;
 		$this->gps['vertical_ratio'][] = isset($this->Values['vertical_ratio']) ? (int)$this->Values['vertical_ratio'][0] : 0;
 
 		if ($time === $last) {

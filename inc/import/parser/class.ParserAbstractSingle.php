@@ -35,7 +35,7 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 			'power'			=> array(),
 			'groundcontact'	=> array(),
 			'oscillation'	=> array(),
-			'gctb'		=> array(),
+			'groundcontact_balance'	=> array(),
 			'vertical_ratio'=> array(),
 			'stroke'        => array(),
 			'stroketype'    => array(),
@@ -155,7 +155,7 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 		$this->TrainingObject->setArrayGroundContact( $this->gps['groundcontact'] );
 		$this->TrainingObject->setArrayVerticalOscillation( $this->gps['oscillation'] );
 		$this->TrainingObject->setArrayVerticalRatio( $this->gps['vertical_ratio'] );
-		$this->TrainingObject->setArrayGctb( $this->gps['gctb'] );
+		$this->TrainingObject->setArrayGroundContactBalance( $this->gps['groundcontact_balance'] );
 		$this->TrainingObject->setArrayStroke( $this->gps['stroke'] );
 		$this->TrainingObject->setArrayStrokeType( $this->gps['stroketype'] );
 		$this->TrainingObject->setArrayHRV( $this->gps['hrv'] );
@@ -231,6 +231,8 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 	private function setRunningDynamicsFromArray() {
 		$groundContact = $this->TrainingObject->getArrayGroundContact();
 		$oscillation = $this->TrainingObject->getArrayVerticalOscillation();
+		$verticalRatio = $this->TrainingObject->getArrayVerticalRatio();
+		$groundContactTimeBalance = $this->TrainingObject->getArrayGroundContactBalance();
 
 		if (!empty($groundContact) && max($groundContact) > 30) {
 			$groundContact = array_filter($groundContact, 'ParserAbstract__ArrayFilterForLowEntries');
@@ -242,6 +244,12 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 			$oscillation = array_filter($oscillation);
 
 			$this->TrainingObject->setVerticalOscillation( round(array_sum($oscillation)/count($oscillation)) );
+		}
+		
+		if (!empty($verticalRatio) && max($verticalRatio) > 30) {
+			$verticalRatio = array_filter($verticalRatio, 'ParserAbstract__ArrayFilterForLowEntries');
+
+			$this->TrainingObject->setVerticalRatio( round(array_sum($verticalRatio)/count($verticalRatio)) );
 		}
 	}
 

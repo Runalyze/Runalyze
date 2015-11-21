@@ -28,7 +28,7 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 			`temperature` longtext NOT NULL,
 			`groundcontact` longtext NOT NULL,
 			`vertical_oscillation` longtext NOT NULL,
-			`gctb` LONGTEXT NOT NULL,
+			`groundcontact_balance` LONGTEXT NOT NULL,
 			`vertical_ratio` LONGTEXT NOT NULL,	
 			`pauses` text NOT NULL,
 			PRIMARY KEY (`activityid`)

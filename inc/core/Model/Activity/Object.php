@@ -203,7 +203,7 @@ class Object extends Model\ObjectWithID {
 	 * Key: ground contact time balance
 	 * @var string
 	 */
-	const GCTB = 'gctb';
+	const GROUNDCONTACT_BALANCE = 'groundcontact_balance';
 
 	/**
 	 * Key: vertical ratio
@@ -346,7 +346,7 @@ class Object extends Model\ObjectWithID {
 			self::TOTAL_STROKES,
 			self::GROUNDCONTACT,
 			self::VERTICAL_OSCILLATION,
-			self::GCTB,
+			self::GROUNDCONTACT_BALANCE,
 			self::VERTICAL_RATIO,
 			self::TEMPERATURE,
 			self::WEATHERID,
@@ -462,7 +462,7 @@ class Object extends Model\ObjectWithID {
 			self::SWOLF,
 			self::GROUNDCONTACT,
 			self::VERTICAL_OSCILLATION,
-			self::GCTB,
+			self::GROUNDCONTACT_BALANCE,
 			self::VERTICAL_RATIO,
 			self::ROUTEID,
 			self::RUNNING_DRILLS,
@@ -712,8 +712,8 @@ class Object extends Model\ObjectWithID {
 	 * Ground contact time balance
 	 * @return int [%]
 	 */
-	public function gctb() {
-		return $this->Data[self::GCTB];
+	public function groundContactBalance() {
+		return $this->Data[self::GROUNDCONTACT_BALANCE];
 	}
 
 	/**

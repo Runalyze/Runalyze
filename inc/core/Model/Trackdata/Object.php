@@ -80,7 +80,7 @@ class Object extends Model\Object implements Model\Loopable {
 	 * Key: ground contact time balance
 	 * @var string
 	 */
-	const GCTB = 'gctb';
+	const GROUNDCONTACT_BALANCE = 'groundcontact_balance';
 
 	/**
 	 * Key: vertical ratio
@@ -209,7 +209,7 @@ class Object extends Model\Object implements Model\Loopable {
 			self::TEMPERATURE,
 			self::GROUNDCONTACT,
 			self::VERTICAL_OSCILLATION,
-			self::GCTB,
+			self::GROUNDCONTACT_BALANCE,
 			self::VERTICAL_RATIO,
 			self::PAUSES
 		);
@@ -251,7 +251,7 @@ class Object extends Model\Object implements Model\Loopable {
 			case self::TEMPERATURE:
 			case self::GROUNDCONTACT:
 			case self::VERTICAL_OSCILLATION:
-			case self::GCTB:
+			case self::GROUNDCONTACT_BALANCE:
 			case self::VERTICAL_RATIO:
 			case self::PAUSES:
 				return true;
@@ -421,8 +421,8 @@ class Object extends Model\Object implements Model\Loopable {
 	 * Get ground contact time balance
 	 * @return array unit: [%]
 	 */
-	public function gctb() {
-		return $this->Data[self::GCTB];
+	public function groundContactBalance() {
+		return $this->Data[self::GROUNDCONTACT_BALANCE];
 	}
 	
 	/**
