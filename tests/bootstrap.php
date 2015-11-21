@@ -6,6 +6,8 @@
  */
 //ini_set('include_path', ini_get('include_path').PATH_SEPARATOR.dirname(__FILE__).'/../../../php/PEAR');
 
+error_reporting(E_ALL);
+
 if (!defined('RUNALYZE_TEST'))
 	define('RUNALYZE_TEST', true);
 

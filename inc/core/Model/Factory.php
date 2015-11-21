@@ -180,6 +180,29 @@ class Factory {
 			return new EquipmentType\Object($data);
 		});
 	}
+	
+	/**
+	 * All equipment for equipment type
+	 * @param int $equipmentTypeid
+	 * @param boolean $onlyIDs [optional]
+	 * @return \Runalyze\Model\Equipment\Object[]
+	 */
+	public function equipmentForEquipmentType($equipmentTypeid, $onlyIDs = false) {
+	    $Equipment = array();
+	    
+	    $IDs = $this->DB->Query('SELECT `id` FROM `'.PREFIX.'equipment` WHERE `typeid`="'.$equipmentTypeid.'"')->fetchAll(\PDO::FETCH_COLUMN);
+	    
+	    if($onlyIDs) {
+		return $IDs;
+	    }
+	    
+	    foreach ($IDs as $id) {
+		$Equipment[] = $this->equipment ($id);
+	    }
+	    
+	    return $Equipment;
+	    
+	}
 
 	/**
 	 * Sport for equipment type

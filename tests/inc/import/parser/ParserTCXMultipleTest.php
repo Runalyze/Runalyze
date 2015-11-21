@@ -84,7 +84,7 @@ class ParserTCXMultipleTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( $Object->getTimestamp(), mktime(11, 47, 0, 7, 10, 2011) );
 		$this->assertEquals( $Object->Sport()->id(), Configuration::General()->runningSport() );
 		$this->assertEquals( $Object->avgHF(), 145 );
-		$this->assertEquals( $Object->Splits()->asString(), '0.20|1:00' );
+		$this->assertEquals( $Object->Splits()->asString(), '0.200|1:00' );
 		$this->assertEquals( $Object->getArrayAltitude(), array(200, 200) );
 		$this->assertEquals( $Object->getArrayDistance(), array(0.1, 0.2) );
 		$this->assertEquals( $Object->getArrayHeartrate(), array(140, 150) );
@@ -187,7 +187,7 @@ class ParserTCXMultipleTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( $Object->getTimestamp(), mktime(11, 47, 0, 7, 10, 2011) );
 		$this->assertEquals( $Object->Sport()->id(), Configuration::General()->runningSport() );
 		$this->assertEquals( $Object->avgHF(), 145 );
-		$this->assertEquals( $Object->Splits()->asString(), '0.20|1:00' );
+		$this->assertEquals( $Object->Splits()->asString(), '0.200|1:00' );
 		$this->assertEquals( $Object->getArrayAltitude(), array(200, 200) );
 		$this->assertEquals( $Object->getArrayDistance(), array(0.1, 0.2) );
 		$this->assertEquals( $Object->getArrayHeartrate(), array(140, 150) );
@@ -203,7 +203,7 @@ class ParserTCXMultipleTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( $Object2->getTimestamp(), mktime(11, 47, 0, 7, 10, 2011) );
 		$this->assertEquals( $Object2->Sport()->id(), Configuration::General()->runningSport() );
 		$this->assertEquals( $Object2->avgHF(), 115 );
-		$this->assertEquals( $Object2->Splits()->asString(), '0.50|1:00' );
+		$this->assertEquals( $Object2->Splits()->asString(), '0.500|1:00' );
 		$this->assertEquals( $Object2->getArrayAltitude(), array(100, 100) );
 		$this->assertEquals( $Object2->getArrayDistance(), array(0.3, 0.5) );
 		$this->assertEquals( $Object2->getArrayHeartrate(), array(100, 130) );

@@ -170,7 +170,7 @@ class ImporterFiletypeXMLTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( \Runalyze\Data\Weather\Condition::SUNNY, $this->object->object(0)->get('weatherid') );
 
 		$this->assertEquals(
-			"1.00|4:10-R0.40|3:00-1.00|4:10-R0.40|3:00-1.00|4:10-R0.40|3:00-1.00|4:10-R1.60|8:00",
+			"1.000|4:10-R0.400|3:00-1.000|4:10-R0.400|3:00-1.000|4:10-R0.400|3:00-1.000|4:10-R1.600|8:00",
 			$this->object->object(2)->Splits()->asString()
 		);
 	}
@@ -244,7 +244,7 @@ class ImporterFiletypeXMLTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertFalse( $this->object->object()->Splits()->areEmpty() );
 		$this->assertEquals(
-			"1.00|5:33-1.00|5:16",
+			"1.002|5:33-1.000|5:16",
 			$this->object->object()->Splits()->asString()
 		);
 	}

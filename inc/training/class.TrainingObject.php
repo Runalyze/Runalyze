@@ -232,6 +232,8 @@ class TrainingObject extends DataObject {
 			Runalyze\Model\Trackdata\Object::TEMPERATURE => $this->get('arr_temperature'),
 			Runalyze\Model\Trackdata\Object::GROUNDCONTACT => $this->get('arr_groundcontact'),
 			Runalyze\Model\Trackdata\Object::VERTICAL_OSCILLATION => $this->get('arr_vertical_oscillation'),
+			Runalyze\Model\Trackdata\Object::GROUNDCONTACT_BALANCE => $this->get('arr_groundcontact_balance'),
+			Runalyze\Model\Trackdata\Object::VERTICAL_RATIO => $this->get('arr_vertical_ratio'),
 			Runalyze\Model\Trackdata\Object::PAUSES => $this->get('pauses')
 		));
 	}
@@ -750,6 +752,28 @@ class TrainingObject extends DataObject {
 
 
 	/**
+	 * Set vertical ratio
+	 * @param int $verticalRatio vertical ratio [%]
+	 */
+	public function setVerticalRatio($verticalRatio) { return $this->set('vertical_ratio', $verticalRatio); }
+	/**
+	 * Get vertical ratio
+	 * @return int vertical ratio [%]
+	 */
+	public function getVerticalRatio() { return $this->get('vertical_ratio'); }
+	
+	/**
+	 * Set ground contact time balance
+	 * @param int $groundContactBalance ground contact time balance [%]
+	 */
+	public function setGroundContactBalance($groundContactBalance) { return $this->set('groundcontact_balance', $groundContactBalance); }
+	/**
+	 * Get ground contact time balance
+	 * @return int ground contact time balance [%]
+	 */
+	public function getGroundContactBalance() { return $this->get('groundcontact_balance'); }
+
+	/**
 	 * Set weatherid
 	 * @param mixed $id weatherid
 	 */
@@ -1173,7 +1197,41 @@ class TrainingObject extends DataObject {
 	 * @return bool
 	 */
 	public function hasArrayVerticalOscillation() { return strlen($this->get('arr_vertical_oscillation')) > 0; }
-
+	
+	
+	/**
+	 * Set array for vertical ratio
+	 * @param array $data
+	 */
+	public function setArrayVerticalRatio(array $data) { $this->setArrayFor('arr_vertical_ratio', $data); }
+	/**
+	 * Get array for vertical ratio
+	 * @return array
+	 */
+	public function getArrayVerticalRatio() { return $this->getArrayFor('arr_vertical_ratio'); }
+	/**
+	 * Has array for vertical ratio?
+	 * @return bool
+	 */
+	public function hasArrayVerticalRatio() { return strlen($this->get('arr_vertical_ratio')) > 0; }
+	
+	
+	/**
+	 * Set array for ground contact time balance
+	 * @param array $data
+	 */
+	public function setArrayGroundContactBalance(array $data) { $this->setArrayFor('arr_groundcontact_balance', $data); }
+	/**
+	 * Get array for ground contact time balance
+	 * @return array
+	 */
+	public function getArrayGroundContactBalance() { return $this->getArrayFor('arr_groundcontact_balance'); }
+	/**
+	 * Has array for ground contact time balance?
+	 * @return bool
+	 */
+	public function hasArrayGroundContactBalance() { return strlen($this->get('arr_groundcontact_balance')) > 0; }
+	
 	
 	/**
 	 * Set array for heart rate variability

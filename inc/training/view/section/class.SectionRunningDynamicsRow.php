@@ -8,6 +8,7 @@ use Runalyze\Data\Cadence;
 use Runalyze\View\Activity;
 use Runalyze\Model\Trackdata;
 use Runalyze\Activity\Distance;
+use Runalyze\View\Activity\Box;
 
 /**
  * Row: Running dynamics
@@ -53,6 +54,11 @@ class SectionRunningDynamicsRow extends TrainingViewSectionRowTabbedPlot {
 			$Plot = new Activity\Plot\VerticalOscillation($this->Context);
 			$this->addRightContent('verticaloscillation', __('Oscillation plot'), $Plot);
 		}
+		
+		if ($this->Context->trackdata()->has(Trackdata\Object::VERTICAL_RATIO)) {
+			$Plot = new Activity\Plot\VerticalRatio($this->Context);
+			$this->addRightContent('verticalratio', __('Vertical ratio'), $Plot);
+		}
 
 		if ($this->Context->trackdata()->has(Trackdata\Object::GROUNDCONTACT)) {
 			$Plot = new Activity\Plot\GroundContact($this->Context);
@@ -92,9 +98,17 @@ class SectionRunningDynamicsRow extends TrainingViewSectionRowTabbedPlot {
 
 			$Oscillation = new BoxedValue(Helper::Unknown(round($this->Context->activity()->verticalOscillation()/10, 1), '-'), 'cm', __('Vertical oscillation'));
 			$Oscillation->defineAsFloatingBlock('w50');
-
+			
+			$VerticalRatio = new BoxedValue(Helper::Unknown(round($this->Context->activity()->verticalRatio()/100, 1), '-'), '%', __('Vertical Ratio'));
+			$VerticalRatio->defineAsFloatingBlock('w50');
+			
+			$GroundContactBalance = new Box\GroundContactBalance($this->Context);
+			$GroundContactBalance->defineAsFloatingBlock('w50');
+			
 			$this->BoxedValues[] = $Contact;
 			$this->BoxedValues[] = $Oscillation;
+			$this->BoxedValues[] = $VerticalRatio;
+			$this->BoxedValues[] = $GroundContactBalance;
 		}
 	}
 }

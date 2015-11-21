@@ -267,7 +267,9 @@ class Calculator
 		$KeysToAverage = array(
 			Activity\Object::CADENCE => Trackdata\Object::CADENCE,
 			Activity\Object::GROUNDCONTACT => Trackdata\Object::GROUNDCONTACT,
-			Activity\Object::VERTICAL_OSCILLATION => Trackdata\Object::VERTICAL_OSCILLATION
+			Activity\Object::VERTICAL_OSCILLATION => Trackdata\Object::VERTICAL_OSCILLATION,
+			Activity\Object::VERTICAL_RATIO => Trackdata\Object::VERTICAL_RATIO,
+			Activity\Object::GROUNDCONTACT_BALANCE => Trackdata\Object::GROUNDCONTACT_BALANCE
 		);
 
 		$NewLoop = new Trackdata\Loop($Object);

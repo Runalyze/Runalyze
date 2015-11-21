@@ -20,6 +20,8 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 	private $jahr   = '';
 	private $jstart = 0;
 	private $jende  = 0;
+	private $EquipmentTypes = array();
+	private $Equipment = array();
 
 	/**
 	 * Name
@@ -53,7 +55,11 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 	protected function getToolbarNavigationLinks() {
 		$LinkList = array();
 		$LinkList[] = '<li>'.Ajax::window('<a href="plugin/'.$this->key().'/window.php">'.Ajax::tooltip(Icon::$LINE_CHART, __('Show temperature plots')).'</a>').'</li>';
-
+		$LinkList[] = '<li class="with-submenu"><span class="link">' . __('Equipment types') . '</span><ul class="submenu">';
+		foreach($this->EquipmentTypes as $EqType) {
+		    $LinkList[] = '<li>' . $this->getInnerLink($EqType->name(), false, false, $EqType->id()) . '</li>';
+		}
+		$LinkList[] = '</ul></li>';
 		return $LinkList;
 	}
 
@@ -75,10 +81,12 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 	 */
 	protected function prepareForDisplay() {
 		$this->initData();
+		
 
 		$this->setYearsNavigation(true, true, true);
+		//$EquipmentNavigation = $this->getEquipmentTypeNavigation();
 		$this->setToolbarNavigationLinks($this->getToolbarNavigationLinks());
-
+		
 		$this->setHeader($this->getHeader());
 	}
 
@@ -103,6 +111,7 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 
 		$this->displayMonthTableTemp();
 		$this->displayMonthTableWeather();
+		$this->displayClothesTable();
 
 		echo '</tbody>';
 		echo '</table>';
@@ -236,6 +245,13 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 	 */
 	private function initData() {
 		$this->sportid = Configuration::General()->mainSport();
+		
+		$Factory = new \Runalyze\Model\Factory(SessionAccountHandler::getId());
+		$this->EquipmentTypes = $Factory->allEquipmentTypes();
+		
+		if(isset($_GET['dat'])) {
+		    $this->Equipment = $Factory->equipmentForEquipmentType($_GET['dat']);
+		}
 
 		if ($this->showsAllYears()) {
 			$this->i      = 0;
@@ -257,4 +273,131 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 	private function getHeader() {
 		return __('Weather').': '.$this->getYearString();
 	}
+	
+	/**
+	* Display month-table for clothes
+	*/
+	private function displayMonthTableClothes() {
+		$nums = DB::getInstance()->query('SELECT
+				SUM(1) as `num`,
+				'.$this->getTimerIndexForQuery().' as `m`
+			FROM `'.PREFIX.'training` WHERE
+				`clothes`!=""
+				'.$this->getSportAndYearDependenceForQuery().'
+			GROUP BY '.$this->getTimerIndexForQuery().'
+			ORDER BY '.$this->getTimerForOrderingInQuery().' ASC
+			LIMIT 12')->fetchAll();
+		
+		if (!empty($nums)) {
+			foreach ($nums as $dat)
+				$num[$dat['m']] = $dat['num'];
+		}
+		$ClothesQuery = DB::getInstance()->prepare(
+			'SELECT
+				SUM(IF(FIND_IN_SET(:id, `clothes`)!=0,1,0)) as `num`,
+				'.$this->getTimerIndexForQuery().' as `m`
+			FROM `'.PREFIX.'training` WHERE
+				1 '.$this->getSportAndYearDependenceForQuery().'
+			GROUP BY '.$this->getTimerIndexForQuery().'
+			HAVING `num`!=0
+			ORDER BY '.$this->getTimerForOrderingInQuery().' ASC
+			LIMIT 12'
+		);
+		if (!empty($this->Clothes)) {
+			foreach ($this->Clothes as $k => $kleidung) {
+				echo '<tr class="'.($k == 0 ? 'top-spacer' : '').'"><td>'.$kleidung['name'].'</td>';
+			
+				$i = 1;
+				$ClothesQuery->execute(array(':id' => $kleidung['id']));
+				$data = $ClothesQuery->fetchAll();
+				if (!empty($data)) {
+					foreach ($data as $dat) {
+						for (; $i < $dat['m']; $i++)
+							echo HTML::emptyTD();
+						$i++;
+						if ($dat['num'] != 0)
+							echo '
+								<td class="r"><span title="'.$dat['num'].'x">
+										'.round($dat['num']*100/$num[$dat['m']]).' &#37;
+								</span></td>';
+						else
+							echo HTML::emptyTD();
+					}
+					for (; $i <= 12; $i++)
+						echo HTML::emptyTD();
+				} else {
+					echo '<td colspan="12"></td>';
+				}
+				echo '</tr>';
+			}
+		}
+	}
+	
+	private function getEquipmentTypeNavigation() {
+		$LinkList = '<li class="with-submenu"><span class="link">' . __('Equipment types') . '</span><ul class="submenu">';
+		foreach($this->EquipmentTypes as $EqType) {
+		    $LinkList .= '<li>' . $this->getInnerLink($EqType->name(), false, false, $EqType->id()) . '</li>';
+		}
+		$LinkList .= '</ul></li>';
+		return $LinkList;
+	}
+	
+	/**
+	 * Display table for clothes
+	 */
+	private function displayClothesTable() {
+		/*if (!$this->Configuration()->value('for_clothes'))
+			return;*/
+		echo '<table class="fullwidth zebra-style">
+			<thead><tr>
+				<th></th>
+				<th>'.__('Temperatures').'</th>
+				<th>&Oslash;</th>
+				<th colspan="2"></th>
+				<th>'.__('Temperatures').'</th>
+				<th>&Oslash;</th>
+				<th colspan="2"></th>
+				<th>'.__('Temperatures').'</th>
+				<th>&Oslash;</th>
+			</tr></thead>';
+		echo '<tr class="r">';
+
+		$EquipmentQuery = DB::getInstance()->query(
+			'SELECT
+				AVG(`temperature`) as `avg`,
+				MAX(`temperature`) as `max`,
+				MIN(`temperature`) as `min`,
+				eq.equipmentid
+			FROM `'.PREFIX.'training`
+			LEFT JOIN runalyze_activity_equipment eq ON id=eq.activityid
+			WHERE eq.activityid IS NOT NULL GROUP BY eq.equipmentid
+				'.$this->getSportAndYearDependenceForQuery()
+		)->fetchAll();
+		$EquipmentsTemperatures = array();
+		foreach($EquipmentQuery as $Equipment)
+		{
+		   $EquipmentsTemperatures[$Equipment['equipmentid']] = $Equipment;
+		}
+		$i = 0;
+		if (!empty($this->Equipment)) {
+			foreach ($this->Equipment as $equipment) {
+				echo ($i%3 == 0) ? '</tr><tr class="r">' : '<td>&nbsp;&nbsp;</td>';
+				echo '<td class="l">'.$equipment->name().'</td>';
+				
+				if (isset($EquipmentsTemperatures[$equipment->id()])) {
+				    $Temperatures = $EquipmentsTemperatures[$equipment->id()];
+					echo '<td>'.(Temperature::format($Temperatures['min'], true)).' '.__('to').' '.(Temperature::format($Temperatures['max'], true)).'</td>';
+					echo '<td>'.(Temperature::format(round($Temperatures['avg']), true)).'</td>';
+				} else {
+					echo '<td colspan="2" class="c"><em>-</em></td>';
+				}
+				$i++;
+			}
+		}
+		for (; $i%3 != 2; $i++)
+			echo HTML::emptyTD(3);
+		echo '</tr>';
+		echo '</table>';
+	}
+	
 }

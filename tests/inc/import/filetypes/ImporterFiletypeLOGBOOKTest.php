@@ -90,7 +90,7 @@ class ImporterFiletypeLOGBOOKTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( "Horneburg Winterrunde", $this->object->object(2)->getRoute() );
 		$this->assertEquals( false, $this->object->object(2)->Splits()->areEmpty() );
 		$this->assertEquals(
-				'1.00|5:37-1.00|5:38-1.00|5:43-1.00|5:38-1.00|5:37-1.00|5:19-0.90|4:56',
+				'1.000|5:37-1.000|5:38-1.000|5:43-1.000|5:38-1.000|5:37-1.000|5:19-0.904|4:56',
 				$this->object->object(2)->Splits()->asString()
 		);
 

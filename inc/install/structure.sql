@@ -268,6 +268,8 @@ CREATE TABLE IF NOT EXISTS `runalyze_trackdata` (
   `temperature` longtext,
   `groundcontact` longtext,
   `vertical_oscillation` longtext,
+  `groundcontact_balance` LONGTEXT,
+  `vertical_ratio` LONGTEXT,
   `pauses` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -309,6 +311,8 @@ CREATE TABLE IF NOT EXISTS `runalyze_training` (
   `stride_length` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `groundcontact` smallint(5) unsigned NOT NULL DEFAULT '0',
   `vertical_oscillation` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `vertical_ratio` SMALLINT UNSIGNED NOT NULL DEFAULT  '0',
+  `groundcontact_balance` SMALLINT UNSIGNED NOT NULL DEFAULT  '0',
   `temperature` tinyint(4) DEFAULT NULL,
   `weatherid` smallint(6) NOT NULL DEFAULT '1',
   `route` text,

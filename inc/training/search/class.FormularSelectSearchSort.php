@@ -38,6 +38,7 @@ class FormularSelectSearchSort extends FormularField {
 			'stride_length'	=> __('Stride length'),
 			'groundcontact'	=> __('Ground contact'),
 			'vertical_oscillation'	=> __('Vertical oscillation'),
+			'vertical_ratio'	=> __('Vertical ratio'),
 			'vdot'		=> __('VDOT'),
 			'trimp'		=> __('TRIMP'),
 			'jd_intensity'	=> __('JDpoints')
