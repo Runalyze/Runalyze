@@ -394,7 +394,8 @@ class Dataset {
 		if ($this->isSummary && $set['summary'] == 0) {
 			echo HTML::emptyTD();
 		} else {
-			echo HTML::td($this->getDataset($set['name']), $set['class'], $set['style']);
+                        $Labels = new DatasetLabels();
+                        echo HTML::td('<span '.Ajax::tooltip('', $Labels->get($set['name']), false, true).'>'.$this->getDataset($set['name']).'</span>', $set['class'], $set['style']);
 		}
 	}
 
