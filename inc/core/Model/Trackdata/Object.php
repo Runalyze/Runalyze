@@ -75,6 +75,18 @@ class Object extends Model\Object implements Model\Loopable {
 	 * @var string
 	 */
 	const VERTICAL_OSCILLATION = 'vertical_oscillation';
+	
+	/**
+	 * Key: ground contact time balance
+	 * @var string
+	 */
+	const GROUNDCONTACT_BALANCE = 'groundcontact_balance';
+
+	/**
+	 * Key: vertical ratio
+	 * @var string
+	 */
+	const VERTICAL_RATIO = 'vertical_ratio';
 
 	/**
 	 * Key: pauses
@@ -197,6 +209,8 @@ class Object extends Model\Object implements Model\Loopable {
 			self::TEMPERATURE,
 			self::GROUNDCONTACT,
 			self::VERTICAL_OSCILLATION,
+			self::GROUNDCONTACT_BALANCE,
+			self::VERTICAL_RATIO,
 			self::PAUSES
 		);
 	}
@@ -237,6 +251,8 @@ class Object extends Model\Object implements Model\Loopable {
 			case self::TEMPERATURE:
 			case self::GROUNDCONTACT:
 			case self::VERTICAL_OSCILLATION:
+			case self::GROUNDCONTACT_BALANCE:
+			case self::VERTICAL_RATIO:
 			case self::PAUSES:
 				return true;
 		}
@@ -399,6 +415,22 @@ class Object extends Model\Object implements Model\Loopable {
 	 */
 	public function verticalOscillation() {
 		return $this->Data[self::VERTICAL_OSCILLATION];
+	}
+	
+	/**
+	 * Get ground contact time balance
+	 * @return array unit: [%]
+	 */
+	public function groundContactBalance() {
+		return $this->Data[self::GROUNDCONTACT_BALANCE];
+	}
+	
+	/**
+	 * Get vertical ratio
+	 * @return array unit: [%]
+	 */
+	public function verticalRatio() {
+		return $this->Data[self::VERTICAL_RATIO];
 	}
 
 	/**
