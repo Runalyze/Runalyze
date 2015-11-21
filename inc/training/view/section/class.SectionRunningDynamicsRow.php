@@ -8,6 +8,7 @@ use Runalyze\Data\Cadence;
 use Runalyze\View\Activity;
 use Runalyze\Model\Trackdata;
 use Runalyze\Activity\Distance;
+use Runalyze\View\Activity\Box;
 
 /**
  * Row: Running dynamics
@@ -101,12 +102,13 @@ class SectionRunningDynamicsRow extends TrainingViewSectionRowTabbedPlot {
 			$VerticalRatio = new BoxedValue(Helper::Unknown(round($this->Context->activity()->verticalRatio()/100, 1), '-'), '%', __('Vertical Ratio'));
 			$VerticalRatio->defineAsFloatingBlock('w50');
 			
-			$Gctb = new BoxedValue(Helper::Unknown(round($this->Context->activity()->groundContactBalance()/10, 1), '-'), '%', __('Ground Contact Time Balance'));
-			$Gctb->defineAsFloatingBlock('w50');
-
-			$this->BoxedValues[] = $VerticalRatio;
+			$GroundContactBalance = new Box\GroundContactBalance($this->Context);
+			$GroundContactBalance->defineAsFloatingBlock('w50');
+			
 			$this->BoxedValues[] = $Contact;
 			$this->BoxedValues[] = $Oscillation;
+			$this->BoxedValues[] = $VerticalRatio;
+			$this->BoxedValues[] = $GroundContactBalance;
 		}
 	}
 }

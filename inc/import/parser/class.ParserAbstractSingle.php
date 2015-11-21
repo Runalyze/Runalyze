@@ -232,7 +232,7 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 		$groundContact = $this->TrainingObject->getArrayGroundContact();
 		$oscillation = $this->TrainingObject->getArrayVerticalOscillation();
 		$verticalRatio = $this->TrainingObject->getArrayVerticalRatio();
-		$groundContactTimeBalance = $this->TrainingObject->getArrayGroundContactBalance();
+		$groundContactBalance = $this->TrainingObject->getArrayGroundContactBalance();
 
 		if (!empty($groundContact) && max($groundContact) > 30) {
 			$groundContact = array_filter($groundContact, 'ParserAbstract__ArrayFilterForLowEntries');
@@ -250,6 +250,12 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 			$verticalRatio = array_filter($verticalRatio, 'ParserAbstract__ArrayFilterForLowEntries');
 
 			$this->TrainingObject->setVerticalRatio( round(array_sum($verticalRatio)/count($verticalRatio)) );
+		}
+		
+		if (!empty($groundContactBalance) && max($groundContactBalance) > 30) {
+			$groundContactBalance = array_filter($groundContactBalance, 'ParserAbstract__ArrayFilterForLowEntries');
+
+			$this->TrainingObject->setGroundContactBalance( round(array_sum($groundContactBalance)/count($groundContactBalance)) );
 		}
 	}
 

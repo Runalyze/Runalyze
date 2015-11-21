@@ -715,6 +715,22 @@ class Object extends Model\ObjectWithID {
 	public function groundContactBalance() {
 		return $this->Data[self::GROUNDCONTACT_BALANCE];
 	}
+	
+	/**
+	 * Ground contact time balance
+	 * @return int [%]
+	 */
+	public function groundContactBalanceLeft() {
+		return $this->Data[self::GROUNDCONTACT_BALANCE];
+	}
+	
+	/**
+	 * Ground contact time balance
+	 * @return int [%]
+	 */
+	public function groundContactBalanceRight() {
+		return 10000 - $this->Data[self::GROUNDCONTACT_BALANCE];
+	}
 
 	/**
 	 * Vertical ratio
