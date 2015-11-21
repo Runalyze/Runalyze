@@ -198,6 +198,18 @@ class Object extends Model\ObjectWithID {
 	 * @var string
 	 */
 	const VERTICAL_OSCILLATION = 'vertical_oscillation';
+	
+	/**
+	 * Key: ground contact time balance
+	 * @var string
+	 */
+	const GCTB = 'gctb';
+
+	/**
+	 * Key: vertical ratio
+	 * @var string
+	 */
+	const VERTICAL_RATIO = 'vertical_ratio';
 
 	/**
 	 * Key: temperature
@@ -334,6 +346,8 @@ class Object extends Model\ObjectWithID {
 			self::TOTAL_STROKES,
 			self::GROUNDCONTACT,
 			self::VERTICAL_OSCILLATION,
+			self::GCTB,
+			self::VERTICAL_RATIO,
 			self::TEMPERATURE,
 			self::WEATHERID,
 			self::ROUTEID,
@@ -448,6 +462,8 @@ class Object extends Model\ObjectWithID {
 			self::SWOLF,
 			self::GROUNDCONTACT,
 			self::VERTICAL_OSCILLATION,
+			self::GCTB,
+			self::VERTICAL_RATIO,
 			self::ROUTEID,
 			self::RUNNING_DRILLS,
 		));
@@ -690,6 +706,22 @@ class Object extends Model\ObjectWithID {
 	 */
 	public function verticalOscillation() {
 		return $this->Data[self::VERTICAL_OSCILLATION];
+	}
+	
+	/**
+	 * Ground contact time balance
+	 * @return int [%]
+	 */
+	public function gctb() {
+		return $this->Data[self::GCTB];
+	}
+
+	/**
+	 * Vertical ratio
+	 * @return int [%]
+	 */
+	public function verticalRatio() {
+		return $this->Data[self::VERTICAL_RATIO];
 	}
         
 	/**

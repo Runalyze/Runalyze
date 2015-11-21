@@ -35,6 +35,8 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 			'power'			=> array(),
 			'groundcontact'	=> array(),
 			'oscillation'	=> array(),
+			'gctb'		=> array(),
+			'vertical_ratio'=> array(),
 			'stroke'        => array(),
 			'stroketype'    => array(),
 			'hrv'		=> array()
@@ -152,6 +154,8 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 		$this->TrainingObject->setArrayTemperature( $this->gps['temp'] );
 		$this->TrainingObject->setArrayGroundContact( $this->gps['groundcontact'] );
 		$this->TrainingObject->setArrayVerticalOscillation( $this->gps['oscillation'] );
+		$this->TrainingObject->setArrayVerticalRatio( $this->gps['vertical_ratio'] );
+		$this->TrainingObject->setArrayGctb( $this->gps['gctb'] );
 		$this->TrainingObject->setArrayStroke( $this->gps['stroke'] );
 		$this->TrainingObject->setArrayStrokeType( $this->gps['stroketype'] );
 		$this->TrainingObject->setArrayHRV( $this->gps['hrv'] );

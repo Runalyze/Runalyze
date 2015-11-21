@@ -59,6 +59,10 @@ if (!qq.supportedFeatures.ajaxUploading)
 	</p>
 
 	<p class="info">
+		<?php _e('Currently we don\'t detect duplicates during import'); ?> 
+	</p>
+	
+	<p class="info">
 		<?php _e('Supported file extensions:'); ?> <?php echo '*.'.implode(', *.', $this->Filetypes); ?>
 	</p>
 

@@ -232,6 +232,8 @@ class TrainingObject extends DataObject {
 			Runalyze\Model\Trackdata\Object::TEMPERATURE => $this->get('arr_temperature'),
 			Runalyze\Model\Trackdata\Object::GROUNDCONTACT => $this->get('arr_groundcontact'),
 			Runalyze\Model\Trackdata\Object::VERTICAL_OSCILLATION => $this->get('arr_vertical_oscillation'),
+			Runalyze\Model\Trackdata\Object::GCTB => $this->get('arr_gctb'),
+			Runalyze\Model\Trackdata\Object::VERTICAL_RATIO => $this->get('arr_vertical_ratio'),
 			Runalyze\Model\Trackdata\Object::PAUSES => $this->get('pauses')
 		));
 	}
@@ -1173,7 +1175,41 @@ class TrainingObject extends DataObject {
 	 * @return bool
 	 */
 	public function hasArrayVerticalOscillation() { return strlen($this->get('arr_vertical_oscillation')) > 0; }
-
+	
+	
+	/**
+	 * Set array for vertical ratio
+	 * @param array $data
+	 */
+	public function setArrayVerticalRatio(array $data) { $this->setArrayFor('arr_vertical_ratio', $data); }
+	/**
+	 * Get array for vertical ratio
+	 * @return array
+	 */
+	public function getArrayVerticalRatio() { return $this->getArrayFor('arr_vertical_ratio'); }
+	/**
+	 * Has array for vertical ratio?
+	 * @return bool
+	 */
+	public function hasArrayVerticalRatio() { return strlen($this->get('arr_vertical_ratio')) > 0; }
+	
+	
+	/**
+	 * Set array for ground contact time balance
+	 * @param array $data
+	 */
+	public function setArrayGctb(array $data) { $this->setArrayFor('arr_gctb', $data); }
+	/**
+	 * Get array for ground contact time balance
+	 * @return array
+	 */
+	public function getArrayGctb() { return $this->getArrayFor('arr_gctb'); }
+	/**
+	 * Has array for ground contact time balance?
+	 * @return bool
+	 */
+	public function hasArrayGctb() { return strlen($this->get('arr_gctb')) > 0; }
+	
 	
 	/**
 	 * Set array for heart rate variability
