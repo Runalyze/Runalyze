@@ -82,11 +82,6 @@ class Object extends Model\Object implements Model\Loopable {
 	 */
 	const GROUNDCONTACT_BALANCE = 'groundcontact_balance';
 
-	/**
-	 * Key: vertical ratio
-	 * @var string
-	 */
-	const VERTICAL_RATIO = 'vertical_ratio';
 
 	/**
 	 * Key: pauses
@@ -210,7 +205,6 @@ class Object extends Model\Object implements Model\Loopable {
 			self::GROUNDCONTACT,
 			self::VERTICAL_OSCILLATION,
 			self::GROUNDCONTACT_BALANCE,
-			self::VERTICAL_RATIO,
 			self::PAUSES
 		);
 	}
@@ -252,7 +246,6 @@ class Object extends Model\Object implements Model\Loopable {
 			case self::GROUNDCONTACT:
 			case self::VERTICAL_OSCILLATION:
 			case self::GROUNDCONTACT_BALANCE:
-			case self::VERTICAL_RATIO:
 			case self::PAUSES:
 				return true;
 		}

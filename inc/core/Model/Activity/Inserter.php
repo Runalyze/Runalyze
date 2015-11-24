@@ -201,7 +201,9 @@ class Inserter extends Model\InserterWithAccountID {
 				$this->Object->set(Object::STRIDE_LENGTH, $Calculator->average());
 			} elseif ($this->Object->cadence() > 0) {
 				$this->Object->set(Object::STRIDE_LENGTH, \Runalyze\Calculation\StrideLength\Calculator::forActivity($this->Object));
+				$this->Object->set(Object::VERTICAL_RATIO, \Runalyze\Calculation\Activity\VerticalRatioCalculator::forActivity($this->Object));
 			}
+			
 		}
 	}
 

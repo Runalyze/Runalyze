@@ -68,8 +68,7 @@ class ObjectTest extends \PHPUnit_Framework_TestCase {
 			Object::TEMPERATURE => array(25, 24),
 			Object::GROUNDCONTACT => array(200, 250),
 			Object::VERTICAL_OSCILLATION => array(8.0, 7.5),
-			Object::GROUNDCONTACT_BALANCE => array(6500, 6430),
-			Object::VERTICAL_RATIO => array(1171,1159)
+			Object::GROUNDCONTACT_BALANCE => array(6500, 6430)
 		));
 
 		$this->assertEquals(2, $T->num());
@@ -78,7 +77,6 @@ class ObjectTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(array( 25,  24), $T->temperature());
 		$this->assertEquals(array(200, 250), $T->groundcontact());
 		$this->assertEquals(array(6500, 6430), $T->groundContactBalance());
-		$this->assertEquals(array(1171,1159), $T->verticalRatio());
 	}
 
 	/**

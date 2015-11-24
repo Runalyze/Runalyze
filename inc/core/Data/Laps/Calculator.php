@@ -268,7 +268,6 @@ class Calculator
 			Activity\Object::CADENCE => Trackdata\Object::CADENCE,
 			Activity\Object::GROUNDCONTACT => Trackdata\Object::GROUNDCONTACT,
 			Activity\Object::VERTICAL_OSCILLATION => Trackdata\Object::VERTICAL_OSCILLATION,
-			Activity\Object::VERTICAL_RATIO => Trackdata\Object::VERTICAL_RATIO,
 			Activity\Object::GROUNDCONTACT_BALANCE => Trackdata\Object::GROUNDCONTACT_BALANCE
 		);
 
@@ -289,11 +288,16 @@ class Calculator
 	protected function addStrideLengthToDataFrom(Trackdata\Object $Object, array &$AdditionalData) {
 		$StrideCalculator = new Calculation\StrideLength\Calculator($Object);
 		$StrideCalculator->calculate();
+		
+		$VerticalRatio = new Calculation\Activity\VerticalRatioCalculator($Object);
+		$VerticalRatio->calculate();
 
 		if ($StrideCalculator->average() > 0) {
 			$AdditionalData[Activity\Object::STRIDE_LENGTH] = $StrideCalculator->average();
 		}
 	}
+	
+	
 
 	/**
 	 * @param \Runalyze\Data\Laps\Lap $Lap

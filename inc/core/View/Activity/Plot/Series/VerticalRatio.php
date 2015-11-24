@@ -30,7 +30,7 @@ class VerticalRatio extends ActivityPointSeries {
 	 */
 	public function __construct(Activity\Context $context) {
 		$this->initOptions();
-		$this->initData($context->trackdata(), Trackdata::VERTICAL_RATIO);
+		$this->initData($context->trackdata());
 		$this->manipulateData();
 		$this->setManualAverage($context->activity()->verticalRatio()*0.01);
 	}

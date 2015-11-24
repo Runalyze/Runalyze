@@ -269,7 +269,6 @@ CREATE TABLE IF NOT EXISTS `runalyze_trackdata` (
   `groundcontact` longtext,
   `vertical_oscillation` longtext,
   `groundcontact_balance` LONGTEXT,
-  `vertical_ratio` LONGTEXT,
   `pauses` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
