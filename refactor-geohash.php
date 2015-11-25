@@ -2,7 +2,7 @@
 use League\Geotools\Geohash\Geohash;
 use League\Geotools\Coordinate\Coordinate;
 /**
- * Script to refactor equipment
+ * Script to refactor coordinates to geohashes
  * 
  * You have to set your database connection within this file to enable the script.
  * Remember to delete your credentials afterwards to protect this script.
@@ -14,11 +14,11 @@ $database = '';
 $username = '';
 $password = '';
 
-define('PREFIX', 'runalyze_');
-define('LIMIT', 100); // Limit number of accounts to refactor per request
+define('PREFIX', 'runalyze_'); // Prefix of your RUNALYZE installation
+define('LIMIT', 50); // Limit number of trainings to refactor per request
 define('CLI', false); // Set to true if running from command line
 define('SET_GLOBAL_PROPERTIES', false); // Set to true to set max_allowed_packet and key_buffer_size for mysql
-define('CHECK_INNODB', true); // Set to false if you don't want or can't use InnoDB as your storage engine
+
 
 // Uncomment these lines to unset time/memory limits
 #@ini_set('memory_limit', '-1');
@@ -57,25 +57,26 @@ if (empty($database) && empty($host)) {
 		exit;
 	}
 }
-
-
 /**
  * Check version
  */
-// TODO: final version needs to check if `lats` etc. do still exist
-$IsNotRefactored = true;
 
-if (!$IsNotRefactored) {
-	echo 'The database is already refactored.'.NL;
-	exit;
+$columns = $PDO->query('SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS  WHERE TABLE_SCHEMA = "'.$database.'" AND TABLE_NAME ="'.PREFIX.'route"')->fetchAll(PDO::FETCH_COLUMN, 0);
+if (!in_array('geohashes', $columns)) {
+      echo 'Update your installation from v2.2 to v2.3 via update.php'.NL;
+      exit;
 }
 
+if (!in_array('lats', $columns)) {
+	echo 'The Route table has already been refactored.'.NL;
+       	exit;
+}
+ $IsNotRefactored = true;
 
 /**
  * Overview for data
  */
-// TODO: final version needs to check for empty `geohashes` columns and use LIMIT
-$Routes = $PDO->query('SELECT id, lats, lngs, startpoint_lat, startpoint_lng, endpoint_lat, endpoint_lng, min_lat, min_lng, max_lat, max_lng FROM runalyze_route WHERE lats != "" && id > 2127');
+$Routes = $PDO->query('SELECT id, lats, lngs, startpoint_lat, startpoint_lng, endpoint_lat, endpoint_lng, min_lat, min_lng, max_lat, max_lng FROM runalyze_route WHERE lats IS NOT NULL AND `geohashes` IS NULL LIMIT '.LIMIT);
 $InsertGeohash = $PDO->prepare('UPDATE '.PREFIX.'route SET `geohashes`=:geohash, `startpoint`=:startpoint, `endpoint`=:endpoint, `min`=:min, `max`=:max WHERE `id` = :id');
 while ($Route = $Routes->fetch()) {
     $lats = explode("|", $Route['lats']);
@@ -109,4 +110,22 @@ while ($Route = $Routes->fetch()) {
         echo 'Memory peak: '.memory_get_peak_usage().'B'.NL;
         echo NL;
 
-// TODO: final version needs to remove old columns (`lats`, ...) afterwards
+
+$countLats = $PDO->query('SELECT COUNT(*) as c FROM runalyze_route WHERE `lats` != \'\' ')->fetchColumn();
+$countGeohashes = $PDO->query('SELECT COUNT(*) as c FROM runalyze_route WHERE geohashes IS NOT NULL AND `lats` != \'\'')->fetchColumn();
+echo $countGeohashes;
+
+if($countGeohashes == $countLats) {
+    echo 'You are done. All routes are refactored. Dropping now all old coordinate columns'.NL;
+    $PDO->exec('ALTER TABLE `'.PREFIX.'route` DROP `lats`, DROP `lngs`, DROP `startpoint_lat`, DROP `startpoint_lng`, DROP `endpoint_lat`, DROP `endpoint_lng`, DROP `min_lat`, DROP `min_lng`, DROP `max_lat`, DROP `max_lng`');        
+    echo 'All old coordinate columns have been dropped'.NL;
+    echo NL;
+    echo 'Remember to unset your credentials within this file.'.NL;
+    echo '(Or simply delete this file if you are not working on our git repository)'.NL;
+} else {
+	if (CLI) {
+		echo '... call the script again to continue'.NL;
+	} else {
+		echo '... <a href="javascript:location.reload()">reload to continue</a>';
+	}
+}
