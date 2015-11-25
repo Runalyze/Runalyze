@@ -26,6 +26,12 @@ class ElevationAlgorithms extends ActivityPlot {
 	 */
 	protected $Context;
 
+	/** @var int|bool */
+	protected $Min = false;
+
+	/** @var int|bool */
+	protected $Max = false;
+
 	/**
 	 * Set key
 	 */
@@ -40,14 +46,10 @@ class ElevationAlgorithms extends ActivityPlot {
 	protected function initData(Activity\Context $context) {
 		$this->Context = $context;
 
-		$this->addSeries(new Series\Elevation($context), 1, false);
+		$this->addSeries($this->seriesForCorrectedData(), 1, false);
 
 		if ($context->route()->hasCorrectedElevations() && $context->route()->hasOriginalElevations()) {
-			$OriginalSeries = new Series\Elevation($context, true);
-			$OriginalSeries->setColor('#ccc');
-			$OriginalSeries->setLabel( __('Original data') );
-
-			$this->addSeries($OriginalSeries, 1, false);
+			$this->addSeries($this->seriesForOriginalData(), 1, false);
 		}
 
 		$this->addSeries($this->seriesForThreshold(), 1, false);
@@ -56,6 +58,32 @@ class ElevationAlgorithms extends ActivityPlot {
 		foreach (array_keys($this->Plot->Data) as $key) {
 			$this->Plot->Data[$key]['curvedLines'] = array('apply' => false);
 		}
+
+		$this->setAxisLimits();
+	}
+
+	/**
+	 * @return \Runalyze\View\Plot\Series
+	 */
+	protected function seriesForCorrectedData() {
+		$Series = new Series\Elevation($this->Context);
+
+		$this->updateLimits($Series->limits());
+
+		return $Series;
+	}
+
+	/**
+	 * @return \Runalyze\View\Plot\Series
+	 */
+	protected function seriesForOriginalData() {
+		$Series = new Series\Elevation($this->Context, true);
+		$Series->setColor('#ccc');
+		$Series->setLabel( __('Original data') );
+
+		$this->updateLimits($Series->limits());
+
+		return $Series;
 	}
 
 	/**
@@ -136,8 +164,43 @@ class ElevationAlgorithms extends ActivityPlot {
 
 		if ($UnitSystem->isImperial()) {
 			$data = array_map(function($value) {
-				return $value * DistanceUnitSystem::FEET_MULTIPLIER / 1000;
+				return round($value * DistanceUnitSystem::FEET_MULTIPLIER / 1000);
 			}, $data);
+		}
+
+		$this->updateLimits(array(min($data), max($data)));
+	}
+
+	/**
+	 * @param array $minmax array($min, $max)
+	 */
+	protected function updateLimits(array $minmax) {
+		$min = $minmax[0];
+		$max = $minmax[1];
+
+		if ($this->Min === false || $min < $this->Min) {
+			$this->Min = $min;
+		}
+
+		if ($this->Max === false || $max > $this->Max) {
+			$this->Max = $max;
+		}
+	}
+
+	/**
+	 * Set maximal limits for all series
+	 */
+	protected function setAxisLimits() {
+		if ($this->Min !== false && $this->Max !== false) {
+			if ($this->Max - $this->Min <= 50) {
+				$minLimit = $this->Min - 20;
+				$maxLimit = $this->Max + 20;
+			} else {
+				$minLimit = $this->Min;
+				$maxLimit = $this->Max;
+			}
+	
+			$this->Plot->setYLimits(1, $minLimit, $maxLimit, true);
 		}
 	}
 }

@@ -43,8 +43,13 @@ if ($result) {
 
 	Ajax::setReloadFlag( Ajax::$RELOAD_DATABROWSER_AND_TRAINING );
 	echo Ajax::getReloadCommand();
-	echo Ajax::wrapJS('if($("#ajax").is(":visible") && $("#training").length)Runalyze.Overlay.load(\''.Linker::EDITOR_URL.'?id='.Request::sendId().'\')');
-	echo Ajax::wrapJS('if($("#ajax").is(":visible") && $("#gps-results").length)Runalyze.Overlay.load(\''.Linker::ELEVATION_INFO_URL.'?id='.Request::sendId().'\')');
+	echo Ajax::wrapJS(
+		'if ($("#ajax").is(":visible") && $("#training").length) {'.
+			'Runalyze.Overlay.load(\''.Linker::EDITOR_URL.'?id='.Request::sendId().'\');'.
+		'} else if ($("#ajax").is(":visible") && $("#gps-results").length) {'.
+			'Runalyze.Overlay.load(\''.Linker::ELEVATION_INFO_URL.'?id='.Request::sendId().'\');'.
+		'}'
+	);
 } else {
 	echo __('Elevation data could not be retrieved.');
 }

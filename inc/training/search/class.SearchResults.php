@@ -126,6 +126,7 @@ class SearchResults {
 			'stride_length',
 			'groundcontact',
 			'vertical_oscillation',
+			'vertical_ratio'
 
 			'use_vdot',
 			'is_public',
@@ -243,6 +244,8 @@ class SearchResults {
 				$value = (new Distance())->setInPreferredUnit($_POST[$key])->kilometer();
 			} elseif ($key == 'vertical_oscillation') {
 				$value = 10*$_POST[$key];
+			} elseif ($key == 'vertical_ratio') {
+				$value = 10*$_POST[$key];
 			} elseif ($key == 'stride_length') {
 				$value = (new StrideLength())->setInPreferredUnit($_POST[$key])->cm();
 			} else {
@@ -253,7 +256,7 @@ class SearchResults {
 
 			if (
 				($sign == '<' || $sign == '<=') &&
-				in_array($key, array('distance', 'pulse_avg', 'pulse_max', 'cadence', 'groundcontact', 'vertical_oscillation', 'stride_length'))
+				in_array($key, array('distance', 'pulse_avg', 'pulse_max', 'cadence', 'groundcontact', 'vertical_oscillation', 'vertical_ratio', 'stride_length'))
 			) {
 				$conditions[] = '`'.$key.'` != 0';
 			}
@@ -362,7 +365,7 @@ class SearchResults {
 
 		if ($_POST['search-sort-by'] == 'pace') {
 			$conditions[] = '`distance` > 0';
-		} elseif (in_array($_POST['search-sort-by'], array('pulse_avg', 'pulse_max', 'cadence', 'stride_length', 'groundcontact', 'vertical_oscillation'))) {
+		} elseif (in_array($_POST['search-sort-by'], array('pulse_avg', 'pulse_max', 'cadence', 'stride_length', 'groundcontact', 'vertical_oscillation', 'vertical_ratio'))) {
 			$conditions[] = '`'.$_POST['search-sort-by'].'` > 0';
 		}
 	}

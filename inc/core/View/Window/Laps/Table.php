@@ -202,6 +202,10 @@ class Table {
 				case Activity\Object::VERTICAL_OSCILLATION:
 					$Code .= '<td>'.$View->verticalOscillation().'</td>';
 					break;
+				    
+				case Activity\Object::VERTICAL_RATIO:
+					$Code .= '<td>'.$View->verticalRatio().'</td>';
+					break;
 
 				case Activity\Object::STRIDE_LENGTH:
 					$Code .= '<td>'.$View->strideLength()->string().'</td>';

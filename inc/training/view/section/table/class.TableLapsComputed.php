@@ -35,11 +35,16 @@ class TableLapsComputed extends TableLapsAbstract {
 	 */
 	protected function constructLaps() {
 		$singleDistance = Configuration::General()->distanceUnitSystem()->distanceToKmFactor();
+		$totalDistance = $this->Context->trackdata()->totalDistance();
 
-		if ($this->Context->trackdata()->totalDistance() < $singleDistance) {
+		if ($totalDistance < 2*$singleDistance) {
 			$Distances = array($singleDistance);
 		} else {
-			$Distances = range($singleDistance, floor($this->Context->trackdata()->totalDistance()), $singleDistance);
+			$Distances = range($singleDistance, $totalDistance, $singleDistance);
+
+			if (false === $Distances) {
+				$Distances = array($singleDistance);
+			}
 		}
 
 		$this->Laps = new Laps();

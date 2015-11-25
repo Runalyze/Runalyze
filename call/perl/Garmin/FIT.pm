@@ -2057,7 +2057,17 @@ sub named_type_value {
      32 => +{'name' => 'vertical_speed', 'scale' => 1000, 'unit' => 'm/s'},
      33 => +{'name' => 'calories', 'scale' => 1, 'unit' => 'kcal'},
      39 => +{'name' => 'vertical_oscillation', 'scale' => 10, 'unit' => 'mm'},
+     40 => +{'name' => 'stance_time_percent', 'scale' => 100, 'unit' => '%'},
      41 => +{'name' => 'stance_time', 'scale' => 10, 'unit' => 'ms'},
+     53 => +{'name' => 'fractional_cadencee', 'scale' => 128, 'unit' => 'rpm'},
+     61 => +{'name' => 'avg_neg_vertical_speed', 'scale' => 1000, 'unit' => 'm/s'},
+     62 => +{'name' => 'max_pos_vertical_speed', 'scale' => 1000, 'unit' => 'm/s'},
+     63 => +{'name' => 'max_neg_vertical_speed', 'scale' => 1000, 'unit' => 'm/s'},
+     66 => +{'name' => 'time_in_speed_zone', 'scale' => 1000, 'unit' => 's'},
+     67 => +{'name' => 'time_in_cadence_zone', 'scale' => 1000, 'unit' => 's'}, 
+     83 => +{'name' => 'vertical_ratio', 'scale' => 100, 'unit' => '%'},  
+     84 => +{'name' => 'ground_contact_time_balance', 'scale' => 100, 'unit' => '%'},   
+     112 => +{'name' => 'time_standing', 'scale' => 1000, 'unit' => 's'},
    },
 
    'event' => +{

@@ -7,7 +7,7 @@ $TABLENAME = 'training';
 $HIDDEN_KEYS = array(
 	'creator', 'creator_details', 'activity_id',
 	//'vdot', 'vdot_by_time', 'trimp', 'vdot_with_elevation', 'jd_intensity'
-	'elapsed_time', 'groundcontact', 'vertical_oscillation', 'total_strokes', 'swolf', 'pool_length'
+	'elapsed_time', 'groundcontact', 'vertical_oscillation', 'vertical_ratio', 'groundcontact_balance', 'total_strokes', 'swolf', 'pool_length'
 );
 
 $FIELDSETS = array(
