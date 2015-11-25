@@ -36,7 +36,6 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 			'groundcontact'	=> array(),
 			'oscillation'	=> array(),
 			'groundcontact_balance'	=> array(),
-			'vertical_ratio'=> array(),
 			'stroke'        => array(),
 			'stroketype'    => array(),
 			'hrv'		=> array()
@@ -154,7 +153,6 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 		$this->TrainingObject->setArrayTemperature( $this->gps['temp'] );
 		$this->TrainingObject->setArrayGroundContact( $this->gps['groundcontact'] );
 		$this->TrainingObject->setArrayVerticalOscillation( $this->gps['oscillation'] );
-		$this->TrainingObject->setArrayVerticalRatio( $this->gps['vertical_ratio'] );
 		$this->TrainingObject->setArrayGroundContactBalance( $this->gps['groundcontact_balance'] );
 		$this->TrainingObject->setArrayStroke( $this->gps['stroke'] );
 		$this->TrainingObject->setArrayStrokeType( $this->gps['stroketype'] );
@@ -231,7 +229,6 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 	private function setRunningDynamicsFromArray() {
 		$groundContact = $this->TrainingObject->getArrayGroundContact();
 		$oscillation = $this->TrainingObject->getArrayVerticalOscillation();
-		$verticalRatio = $this->TrainingObject->getArrayVerticalRatio();
 		$groundContactBalance = $this->TrainingObject->getArrayGroundContactBalance();
 
 		if (!empty($groundContact) && max($groundContact) > 30) {
@@ -246,11 +243,6 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 			$this->TrainingObject->setVerticalOscillation( round(array_sum($oscillation)/count($oscillation)) );
 		}
 		
-		if (!empty($verticalRatio) && max($verticalRatio) > 30) {
-			$verticalRatio = array_filter($verticalRatio, 'ParserAbstract__ArrayFilterForLowEntries');
-
-			$this->TrainingObject->setVerticalRatio( round(array_sum($verticalRatio)/count($verticalRatio)) );
-		}
 		
 		if (!empty($groundContactBalance) && max($groundContactBalance) > 30) {
 			$groundContactBalance = array_filter($groundContactBalance, 'ParserAbstract__ArrayFilterForLowEntries');

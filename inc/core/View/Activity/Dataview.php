@@ -279,7 +279,15 @@ class Dataview {
 			return new StrideLength($Activity->strideLength());
 		});
 	}
-
+	
+	/**
+	 * Get vertical ratio
+	 * @return $int
+	 */
+	public function verticalRatio() {
+		return $this->Activity->verticalRatio();
+	}
+	
 	/**
 	 * Get string for displaying colored trimp
 	 * @return string

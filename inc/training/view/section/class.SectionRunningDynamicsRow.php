@@ -48,16 +48,13 @@ class SectionRunningDynamicsRow extends TrainingViewSectionRowTabbedPlot {
 		) {
 			$Plot = new Activity\Plot\StrideLength($this->Context);
 			$this->addRightContent('stridelength', __('Stride length plot'), $Plot);
+			//$Plot = new Activity\Plot\VerticalRatio($this->Context);
+			//$this->addRightContent('verticalratio', __('Vertical ratio'), $Plot);
 		}
 
 		if ($this->Context->trackdata()->has(Trackdata\Object::VERTICAL_OSCILLATION)) {
 			$Plot = new Activity\Plot\VerticalOscillation($this->Context);
 			$this->addRightContent('verticaloscillation', __('Oscillation plot'), $Plot);
-		}
-		
-		if ($this->Context->trackdata()->has(Trackdata\Object::VERTICAL_RATIO)) {
-			$Plot = new Activity\Plot\VerticalRatio($this->Context);
-			$this->addRightContent('verticalratio', __('Vertical ratio'), $Plot);
 		}
 
 		if ($this->Context->trackdata()->has(Trackdata\Object::GROUNDCONTACT)) {
@@ -82,9 +79,13 @@ class SectionRunningDynamicsRow extends TrainingViewSectionRowTabbedPlot {
 
 			$StrideLength = new Activity\Box\StrideLength($this->Context);
 			$StrideLength->defineAsFloatingBlock('w50');
+			
+			$VerticalRatio = new Activity\Box\VerticalRatio($this->Context);
+			$VerticalRatio->defineAsFloatingBlock('w50');
 
 			$this->BoxedValues[] = $Cadence;
 			$this->BoxedValues[] = $StrideLength;
+			$this->BoxedValues[] = $VerticalRatio;
 		}
 	}
 
@@ -99,16 +100,12 @@ class SectionRunningDynamicsRow extends TrainingViewSectionRowTabbedPlot {
 			$Oscillation = new BoxedValue(Helper::Unknown(round($this->Context->activity()->verticalOscillation()/10, 1), '-'), 'cm', __('Vertical oscillation'));
 			$Oscillation->defineAsFloatingBlock('w50');
 			
-			$VerticalRatio = new BoxedValue(Helper::Unknown(round($this->Context->activity()->verticalRatio()/100, 1), '-'), '%', __('Vertical Ratio'));
-			$VerticalRatio->defineAsFloatingBlock('w50');
-			
 			$GroundContactBalance = new Box\GroundContactBalance($this->Context);
 			$GroundContactBalance->defineAsFloatingBlock('w50');
 			
 			$this->BoxedValues[] = $Contact;
 			$this->BoxedValues[] = $Oscillation;
-			$this->BoxedValues[] = $VerticalRatio;
-			$this->BoxedValues[] = $GroundContactBalance;
+			$this->BoxedValues[] = $GroundContactBalance; 
 		}
 	}
 }

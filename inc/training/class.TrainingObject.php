@@ -233,7 +233,6 @@ class TrainingObject extends DataObject {
 			Runalyze\Model\Trackdata\Object::GROUNDCONTACT => $this->get('arr_groundcontact'),
 			Runalyze\Model\Trackdata\Object::VERTICAL_OSCILLATION => $this->get('arr_vertical_oscillation'),
 			Runalyze\Model\Trackdata\Object::GROUNDCONTACT_BALANCE => $this->get('arr_groundcontact_balance'),
-			Runalyze\Model\Trackdata\Object::VERTICAL_RATIO => $this->get('arr_vertical_ratio'),
 			Runalyze\Model\Trackdata\Object::PAUSES => $this->get('pauses')
 		));
 	}
@@ -1197,23 +1196,6 @@ class TrainingObject extends DataObject {
 	 * @return bool
 	 */
 	public function hasArrayVerticalOscillation() { return strlen($this->get('arr_vertical_oscillation')) > 0; }
-	
-	
-	/**
-	 * Set array for vertical ratio
-	 * @param array $data
-	 */
-	public function setArrayVerticalRatio(array $data) { $this->setArrayFor('arr_vertical_ratio', $data); }
-	/**
-	 * Get array for vertical ratio
-	 * @return array
-	 */
-	public function getArrayVerticalRatio() { return $this->getArrayFor('arr_vertical_ratio'); }
-	/**
-	 * Has array for vertical ratio?
-	 * @return bool
-	 */
-	public function hasArrayVerticalRatio() { return strlen($this->get('arr_vertical_ratio')) > 0; }
 	
 	
 	/**
