@@ -30,9 +30,9 @@ class VerticalRatio extends ActivityPointSeries {
 	 */
 	public function __construct(Activity\Context $context) {
 		$this->initOptions();
-		$this->initData($context->trackdata());
+		$this->initData($context->trackdata(), Trackdata::VERTICAL_RATIO);
 		$this->manipulateData();
-		$this->setManualAverage($context->activity()->verticalRatio()*0.01);
+		$this->setManualAverage($context->activity()->verticalRatio()*0.1);
 	}
 
 	/**
@@ -66,7 +66,7 @@ class VerticalRatio extends ActivityPointSeries {
 	 * @return float
 	 */
 	protected function correctUnit($value) {
-		return 0.01*$value;
+		return 0.1*$value;
 	}
 
 	/**

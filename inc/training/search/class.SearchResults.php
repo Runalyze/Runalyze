@@ -126,7 +126,7 @@ class SearchResults {
 			'stride_length',
 			'groundcontact',
 			'vertical_oscillation',
-			'vertical_ratio'
+			'vertical_ratio',
 
 			'use_vdot',
 			'is_public',

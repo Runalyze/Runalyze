@@ -56,7 +56,7 @@ class VerticalRatioCalculator {
 		$this->VerticalRatio = array();
 
 		for ($i = 0; $i < $Size; ++$i) {
-			$this->VerticalRatio[] = ($StrideLength[$i] > 0) ? round(100 * $Oscillation[$i]/10 / $StrideLength[$i], 1) : 0;
+			$this->VerticalRatio[] = ($StrideLength[$i] > 0) ? round(100 * $Oscillation[$i] / $StrideLength[$i], 1) : 0;
 		}
 
 		return $this->VerticalRatio;
@@ -97,7 +97,7 @@ class VerticalRatioCalculator {
 	 */
 	public static function forActivity(Activity\Object $activity) {
 		if ($activity->verticalOscillation() > 0 && $activity->strideLength() > 0) {
-			return round(100 * $activity->verticalOscillation()/10 / $activity->strideLength(), 1);
+			return round(100 * $activity->verticalOscillation() / $activity->strideLength(), 1);
 		}
 
 		return 0;

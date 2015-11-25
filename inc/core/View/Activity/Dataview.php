@@ -281,14 +281,6 @@ class Dataview {
 	}
 	
 	/**
-	 * Get vertical ratio
-	 * @return $int
-	 */
-	public function verticalRatio() {
-		return $this->Activity->verticalRatio();
-	}
-	
-	/**
 	 * Get string for displaying colored trimp
 	 * @return string
 	 */
@@ -385,12 +377,36 @@ class Dataview {
 	}
 
 	/**
+	 * Get ground contact balance
+	 * @return string ground contact balance with unit
+	 */
+	public function groundcontactBalance() {
+		if ($this->Activity->groundContactBalance() > 0) {
+			return \Runalyze\Activity\GroundcontactBalance::format($this->Activity->groundContactBalance());
+		}
+
+		return '';
+	}
+
+	/**
 	 * Get vertical oscillation
 	 * @return string vertical oscillation with unit
 	 */
 	public function verticalOscillation() {
 		if ($this->Activity->verticalOscillation() > 0)
 			return number_format($this->Activity->verticalOscillation()/10, 1).'&nbsp;cm';
+
+		return '';
+	}
+	
+	/**
+	 * Get vertical ratio
+	 * @return $int
+	 */
+	public function verticalRatio() {
+		if ($this->Activity->verticalRatio() > 0) {
+			return \Runalyze\Activity\VerticalRatio::format($this->Activity->verticalRatio());
+		}
 
 		return '';
 	}
