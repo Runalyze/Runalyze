@@ -481,11 +481,6 @@ MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 ALTER TABLE `runalyze_conf`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT für Tabelle `runalyze_dataset`
---
-ALTER TABLE `runalyze_dataset`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
 -- AUTO_INCREMENT für Tabelle `runalyze_equipment`
 --
 ALTER TABLE `runalyze_equipment`
