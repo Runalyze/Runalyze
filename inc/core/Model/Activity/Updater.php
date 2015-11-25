@@ -7,6 +7,7 @@
 namespace Runalyze\Model\Activity;
 
 use Runalyze\Model;
+use Runalyze\Calculation\Activity\VerticalRatioCalculator;
 use Runalyze\Calculation\BasicEndurance;
 use Runalyze\Configuration;
 
@@ -279,7 +280,7 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 	
 				$this->NewObject->set(Object::VERTICAL_RATIO, $Calculator->average());
 			} else {
-				$this->NewObject->set(Object::VERTICAL_RATIO, \Runalyze\Calculation\VerticalRatioCalculator::forActivity($this->NewObject));
+				$this->NewObject->set(Object::VERTICAL_RATIO, VerticalRatioCalculator::forActivity($this->NewObject));
 			}
 		}
 	}
