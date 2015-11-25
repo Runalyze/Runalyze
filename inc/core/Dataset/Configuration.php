@@ -25,6 +25,9 @@ class Configuration
 	 */
 	protected $Data;
 
+	/** @var bool */
+	protected $ShowAllKeys = false;
+
 	/**
 	 * Load dataset configuration from database
 	 * @param \PDO $pdo database connection
@@ -46,16 +49,44 @@ class Configuration
 	}
 
 	/**
+	 * Set internal flag to activate all keys
+	 */
+	public function activateAllKeys()
+	{
+		$this->ShowAllKeys = true;
+	}
+
+	/**
+	 * Remove internal flag to activate all keys
+	 */
+	public function deactivateAllKeys()
+	{
+		$this->ShowAllKeys = false;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isEmpty()
+	{
+		return empty($this->Data);
+	}
+
+	/**
 	 * Get all active keys
 	 * @return array active keys in dataset, sorted by position
 	 */
 	public function activeKeys()
 	{
+		if ($this->ShowAllKeys) {
+			return $this->allKeys();
+		}
+
 		$activeKeys = array();
 
-		foreach ($this->Data as $key => $keyData) {
+		foreach ($this->Data as $keyid => $keyData) {
 			if ($keyData['active'] == 1) {
-				$activeKeys[] = $key;
+				$activeKeys[] = $keyid;
 			}
 		}
 
@@ -72,32 +103,42 @@ class Configuration
 	}
 
 	/**
+	 * Does this key exist in configuration?
+	 * @param int $keyid enum, see \Runalyze\Dataset\Keys
+	 * @return bool
+	 */
+	public function exists($keyid)
+	{
+		return isset($this->Data[$keyid]);
+	}
+
+	/**
 	 * Is this dataset active?
-	 * @param string $key enum, see \Runalyze\Dataset\Keys or $this->allKeys()
+	 * @param int $keyid enum, see \Runalyze\Dataset\Keys or $this->allKeys()
 	 * @return bool
 	 * @throws \InvalidArgumentException
 	 */
-	public function isActive($key)
+	public function isActive($keyid)
 	{
-		if (!isset($this->Data[$key])) {
-			throw new \InvalidArgumentException('Unknown dataset key "'.$key.'".');
+		if (!isset($this->Data[$keyid])) {
+			throw new \InvalidArgumentException('Unknown dataset key "'.$keyid.'".');
 		}
 
-		return ($this->Data[$key]['active'] == 1);
+		return ($this->Data[$keyid]['active'] == 1) || $this->ShowAllKeys;
 	}
 
 	/**
 	 * Get CSS inline style for dataset
-	 * @param string $key enum, see \Runalyze\Dataset\Keys or $this->allKeys()
+	 * @param int $keyid enum, see \Runalyze\Dataset\Keys or $this->allKeys()
 	 * @return string
 	 * @throws \InvalidArgumentException
 	 */
-	public function getStyle($key)
+	public function getStyle($keyid)
 	{
-		if (!isset($this->Data[$key])) {
-			throw new \InvalidArgumentException('Unknown dataset key "'.$key.'".');
+		if (!isset($this->Data[$keyid])) {
+			throw new \InvalidArgumentException('Unknown dataset key "'.$keyid.'".');
 		}
 
-		return $this->Data[$key]['style'];
+		return $this->Data[$keyid]['style'];
 	}
 }

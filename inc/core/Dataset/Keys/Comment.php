@@ -16,6 +16,9 @@ use Runalyze\Dataset\Context;
  */
 class Comment extends AbstractKey
 {
+	/** @var int */
+	const DEFAULT_CUT = 20;
+
 	/**
 	 * Enum id
 	 * @return int

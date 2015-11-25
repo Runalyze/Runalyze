@@ -59,7 +59,7 @@ class Sport extends AbstractKey
 	 */
 	public function shortLabel()
 	{
-		return __('');
+		return '';
 	}
 
 	/**

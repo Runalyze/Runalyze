@@ -36,6 +36,25 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
 		$this->PDO->exec('DROP TABLE `'.PREFIX.'dataset`');
 	}
 
+	public function testEmptiness()
+	{
+		$this->assertFalse($this->Configuration->isEmpty());
+
+		Cache::delete(Configuration::CACHE_KEY);
+
+		$this->assertTrue((new Configuration($this->PDO, 2))->isEmpty());
+	}
+
+	public function testExistance()
+	{
+		$this->assertFalse($this->Configuration->exists(0));
+		$this->assertTrue($this->Configuration->exists(1));
+		$this->assertTrue($this->Configuration->exists(2));
+		$this->assertTrue($this->Configuration->exists(3));
+		$this->assertFalse($this->Configuration->exists(4));
+		$this->assertFalse($this->Configuration->exists(5));
+	}
+
 	/**
 	 * @expectedException \InvalidArgumentException
 	 */

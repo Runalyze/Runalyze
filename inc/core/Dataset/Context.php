@@ -208,4 +208,13 @@ class Context
 
 		return $this->ActivityData[$key];
 	}
+
+	/**
+	 * @param string $key
+	 * @param mixed $value
+	 */
+	public function setData($key, $value)
+	{
+		$this->ActivityData[$key] = $value;
+	}
 }

@@ -32,6 +32,9 @@ class Query
 	/** @var bool */
 	protected $ShowOnlyPublicActivites = false;
 
+	/** @var array */
+	protected $AdditionalColumns = array();
+
 	/**
 	 * @param \Runalyze\Dataset\Configuration $configuration
 	 * @param \PDO $pdo
@@ -100,6 +103,29 @@ class Query
 			GROUP BY `sportid`
 			LIMIT 1'
 		)->fetch();
+	}
+
+	/**
+	 * @param int $timeStart default 0
+	 * @param int $timeEnd   default time()
+	 * @return array array with summary for each sportid and given timerange
+	 */
+	public function fetchSummaryForAllSport($timeStart = 0, $timeEnd = false)
+	{
+		return $this->PDO->query(
+			'SELECT
+				`time`,
+				`sportid`,
+				SUM(IF(`distance`>0,`s`,0)) as `'.Keys\Pace::DURATION_SUM_WITH_DISTANCE_KEY.'`,
+				SUM(1) as `num`,
+				'.$this->queryToSummarizeActiveKeys().'
+			FROM `'.PREFIX.'training`
+			WHERE
+				`accountid` = '.(int)$this->AccountID.' AND
+				'.$this->whereTimeIsBetween($timeStart, $timeEnd).' AND
+				'.$this->wherePrivacyIsOkay().'
+			GROUP BY `sportid`'
+		)->fetchAll();
 	}
 
 	/**
@@ -204,7 +230,15 @@ class Query
 	 */
 	protected function defaultColumns()
 	{
-		return array('sportid', 'time');
+		return array_merge(array('sportid', 'time'), $this->AdditionalColumns);
+	}
+
+	/**
+	 * @param array $columns
+	 */
+	public function setAdditionalColumns(array $columns)
+	{
+		$this->AdditionalColumns = $columns;
 	}
 
 	/**

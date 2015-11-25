@@ -118,6 +118,24 @@ final class Keys extends AbstractEnum
 	private static $ClassNames = null;
 
 	/**
+	 * @var array instances of key objects
+	 */
+	private static $Instances = array();
+
+	/**
+	 * @var bool
+	 */
+	private static $KeepInstances = false;
+
+	/**
+	 * @param bool $flag
+	 */
+	public static function keepInstances($flag = true)
+	{
+		self::$KeepInstances = $flag;
+	}
+
+	/**
 	 * Get key
 	 * @param int $keyid int from internal enum
 	 * @return \Runalyze\Dataset\Keys\AbstractKey
@@ -134,6 +152,14 @@ final class Keys extends AbstractEnum
 		}
 
 		$className = 'Runalyze\\Dataset\\Keys\\'.self::$ClassNames[$keyid];
+
+		if (self::$KeepInstances) {
+			if (!isset(self::$Instances[$keyid])) {
+				self::$Instances[$keyid] = new $className;
+			}
+
+			return self::$Instances[$keyid];
+		}
 
 		return new $className;
 	}

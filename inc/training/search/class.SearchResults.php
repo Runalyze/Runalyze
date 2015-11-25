@@ -26,70 +26,83 @@ class SearchResults {
 	 * Allowed keys
 	 * @var array
 	 */
-	private $allowedKeys = array();
+	protected $AllowedKeys = array();
 
 	/**
 	 * Dataset
 	 * @var Dataset
 	 */
-	private $Dataset = null;
+	protected $Dataset = null;
 
 	/**
 	 * Colspan
 	 * @var int
 	 */
-	private $colspan = 0;
+	protected $Colspan = 0;
 
 	/**
 	 * Trainings
 	 * @var array
 	 */
-	private $Trainings = array();
+	protected $Trainings = array();
 
 	/**
 	 * Total number of trainings
 	 * @var int
 	 */
-	private $totalNumberOfTrainings = 0;
+	protected $TotalNumberOfTrainings = 0;
 
 	/**
 	 * Page
 	 * @var int
 	 */
-	private $page = 0;
+	protected $Page = 0;
 
 	/**
 	 * Search and show trainings=
 	 * @var boolean
 	 */
-	private $withResults = true;
+	protected $WithResults = true;
 
 	/**
 	 * Results per page
 	 * @var int
 	 */
-	private $resultsPerPage;
+	protected $ResultsPerPage;
+
+	/** @var int */
+	protected $AccountID;
+
+	/** @var \PDOforRunalyze */
+	protected $DB;
+
+	/** @var \Runalyze\Dataset\Configuration */
+	protected $DatasetConfig;
+
+	/** @var \Runalyze\Dataset\Query */
+	protected $DatasetQuery;
 
 	/**
 	 * Constructor
 	 * @param boolean $withResults
 	 */
 	public function __construct($withResults = true) {
-		$this->withResults = $withResults;
-		$this->resultsPerPage = Configuration::Misc()->searchResultsPerPage();
+		$this->WithResults = $withResults;
+		$this->ResultsPerPage = Configuration::Misc()->searchResultsPerPage();
 
 		$this->setAllowedKeys();
-		$this->initDataset();
 
-		if ($withResults)
+		if ($withResults) {
+			$this->initDataset();
 			$this->searchTrainings();
+		}
 	}
 
 	/**
 	 * Set allowed keys
 	 */
-	private function setAllowedKeys() {
-		$this->allowedKeys = array(
+	protected function setAllowedKeys() {
+		$this->AllowedKeys = array(
 			'typeid',
 			'weatherid',
 
@@ -120,38 +133,41 @@ class SearchResults {
 		);
 
 		// Some additional keys
-		$this->allowedKeys[] = 'power';
-		$this->allowedKeys[] = 'is_track';
-		$this->allowedKeys[] = 'vdot';
-		$this->allowedKeys[] = 'notes';
+		$this->AllowedKeys[] = 'power';
+		$this->AllowedKeys[] = 'is_track';
+		$this->AllowedKeys[] = 'vdot';
+		$this->AllowedKeys[] = 'notes';
 
 	}
 
 	/**
 	 * Init dataset
 	 */
-	private function initDataset() {
-		$this->Dataset = new Dataset();
-		$this->Dataset->loadCompleteDataset();
+	protected function initDataset() {
+		$this->AccountID = SessionAccountHandler::getId();
+		$this->DB = DB::getInstance();
+		$this->DatasetConfig = new \Runalyze\Dataset\Configuration($this->DB, $this->AccountID);
+		$this->DatasetQuery = new \Runalyze\Dataset\Query($this->DatasetConfig, $this->DB, $this->AccountID);
 
-		$this->colspan = $this->Dataset->cols() + 2;
+		$this->DatasetConfig->activateAllKeys();
+		$this->Colspan = 2 + count($this->DatasetConfig->allKeys());
 	}
 
 	/**
 	 * Search trainings
 	 */
-	private function searchTrainings() {
-		$this->totalNumberOfTrainings = DB::getInstance()->query('SELECT COUNT(*) FROM `'.PREFIX.'training` '.$this->getWhere().$this->getOrder().' LIMIT 1')->fetchColumn();
-		$this->page = (int)Request::param('page');
+	protected function searchTrainings() {
+		$this->TotalNumberOfTrainings = DB::getInstance()->query('SELECT COUNT(*) FROM `'.PREFIX.'training` '.$this->getWhere().$this->getOrder().' LIMIT 1')->fetchColumn();
+		$this->Page = (int)Request::param('page');
 
-		if (($this->page-1)*$this->resultsPerPage > $this->totalNumberOfTrainings)
-			$this->page--;
+		if (($this->Page-1)*$this->ResultsPerPage > $this->TotalNumberOfTrainings)
+			$this->Page--;
 
 		$this->Trainings = DB::getInstance()->query(
 			'SELECT
 				`id`,
 				`time`
-				'.($this->multiEditorRequested() ? '' : $this->Dataset->getQuerySelectForAllDatasets()).'
+				'.($this->multiEditorRequested() ? '' : ', '.$this->DatasetQuery->queryToSelectAllKeys()).'
 			FROM `'.PREFIX.'training`
 			'.$this->getWhere().$this->getOrder().$this->getLimit()
 		)->fetchAll();
@@ -161,8 +177,8 @@ class SearchResults {
 	 * Get where
 	 * @return string
 	 */
-	private function getWhere() {
-		$conditions = array('`accountid`="'.SessionAccountHandler::getId().'"');
+	protected function getWhere() {
+		$conditions = array('`accountid`="'.$this->AccountID.'"');
 
 		if (isset($_POST['sportid']))
 			$this->addSportCondition($conditions);
@@ -175,7 +191,7 @@ class SearchResults {
 			$_POST['s'] = $Time->seconds();
 		}
 
-		foreach ($this->allowedKeys as $key) {
+		foreach ($this->AllowedKeys as $key) {
 			if (isset($_POST[$key])) {
 				if (is_array($_POST[$key])) {
 					$this->addConditionForArray($key, $conditions);
@@ -195,7 +211,7 @@ class SearchResults {
 	 * @param string $key
 	 * @param array $conditions
 	 */
-	private function addConditionForArray($key, array &$conditions) {
+	protected function addConditionForArray($key, array &$conditions) {
 		$array = array_map(
 			function ($value) {
 				return (int)$value;
@@ -211,7 +227,7 @@ class SearchResults {
 	 * @param string $key
 	 * @param array $conditions
 	 */
-	private function addConditionFor($key, array &$conditions) {
+	protected function addConditionFor($key, array &$conditions) {
 		$sign = (isset($_POST['opt'][$key])) ? $this->signFor($_POST['opt'][$key]) : '=';
 
 		if ($sign == ' LIKE ') {
@@ -249,8 +265,8 @@ class SearchResults {
 	 * @param string $postSign from $_POST
 	 * @return string
 	 */
-	private function signFor($postSign) {
-		switch($postSign) {
+	protected function signFor($postSign) {
+		switch ($postSign) {
 			case 'is': return '=';
 			case 'gt': return '>';
 			case 'ge': return '>=';
@@ -267,18 +283,21 @@ class SearchResults {
 	 * Add time range condition
 	 * @param array $conditions
 	 */
-	private function addTimeRangeCondition(array &$conditions) {
-		if (FormularValueParser::validatePost('date-from', FormularValueParser::$PARSER_DATE)
-				&& FormularValueParser::validatePost('date-to', FormularValueParser::$PARSER_DATE)
-				&& $_POST['date-to'] > 0)
+	protected function addTimeRangeCondition(array &$conditions) {
+		if (
+			FormularValueParser::validatePost('date-from', FormularValueParser::$PARSER_DATE) &&
+			FormularValueParser::validatePost('date-to', FormularValueParser::$PARSER_DATE) &&
+			$_POST['date-to'] > 0
+		) {
 			$conditions[] = '`time` BETWEEN '.(int)$_POST['date-from'].' AND '.((int)$_POST['date-to']+DAY_IN_S);
+		}
 	}
 
 	/**
 	 * Add sport condition
 	 * @param array $conditions
 	 */
-	private function addSportCondition(array &$conditions) {
+	protected function addSportCondition(array &$conditions) {
 		if (is_array($_POST['sportid'])) {
 			$array = array_map(
 				function ($value) {
@@ -297,7 +316,7 @@ class SearchResults {
 	 * Get equipment condition
 	 * @return string
 	 */
-	private function getEquipmentCondition() {
+	protected function getEquipmentCondition() {
 		if (!isset($_POST['equipmentid'])) {
 			return '';
 		}
@@ -320,9 +339,9 @@ class SearchResults {
 	 * Get order
 	 * @return string
 	 */
-	private function getOrder() {
-		$sort  = (!isset($_POST['search-sort-by']) || array_key_exists($_POST['search-sort-by'], $this->allowedKeys)) ? '`time`' : DB::getInstance()->escape($_POST['search-sort-by'], false);
-		$order = (!isset($_POST['search-sort-order'])) ? 'DESC' : DB::getInstance()->escape($_POST['search-sort-order'], false);
+	protected function getOrder() {
+		$sort  = (!isset($_POST['search-sort-by']) || array_key_exists($_POST['search-sort-by'], $this->AllowedKeys)) ? '`time`' : $this->DB->escape($_POST['search-sort-by'], false);
+		$order = (!isset($_POST['search-sort-order'])) ? 'DESC' : $this->DB->escape($_POST['search-sort-order'], false);
 
 		if ($sort == 'vdot' && Configuration::Vdot()->useElevationCorrection())
 			return ' ORDER BY IF(`vdot_with_elevation`>0,`vdot_with_elevation`,`vdot`) '.$order;
@@ -337,7 +356,7 @@ class SearchResults {
 	 * Add additional conditions for order
 	 * @param array $conditions
 	 */
-	private function addConditionsForOrder(array &$conditions) {
+	protected function addConditionsForOrder(array &$conditions) {
 		if (!isset($_POST['search-sort-by']))
 			return;
 
@@ -352,17 +371,17 @@ class SearchResults {
 	 * Get limit
 	 * @return string
 	 */
-	private function getLimit() {
+	protected function getLimit() {
 		if ($this->multiEditorRequested()) {
 			return ' LIMIT '.self::MAX_LIMIT_FOR_MULTI_EDITOR;
 		}
 
-		if ($this->page <= 0)
-			$this->page = 1;
+		if ($this->Page <= 0)
+			$this->Page = 1;
 
-		$limit = ($this->page - 1)*$this->resultsPerPage;
+		$limit = ($this->Page - 1)*$this->ResultsPerPage;
 
-		return ' LIMIT '.$limit.','.$this->resultsPerPage;
+		return ' LIMIT '.$limit.','.$this->ResultsPerPage;
 	}
 
 	/**
@@ -388,7 +407,7 @@ class SearchResults {
 	/**
 	 * Send results to Multi Editor
 	 */
-	private function sendResultsToMultiEditor() {
+	protected function sendResultsToMultiEditor() {
 		$IDs = array();
 		foreach ($this->Trainings as $data) {
 			$IDs[] = $data['id'];
@@ -411,17 +430,21 @@ class SearchResults {
 	/**
 	 * Display results
 	 */
-	private function displayResults() {
-		if (!$this->withResults)
+	protected function displayResults() {
+		if (!$this->WithResults)
 			return;
 
+		$Table = new \Runalyze\View\Dataset\Table($this->DatasetConfig);
+		$Icon = new \Runalyze\View\Icon(Runalyze\View\Icon::INFO);
+
+		echo '<p class="c">'; $this->displayHeader(); echo '</p>';
 		echo '<table class="fullwidth zebra-style">';
-		echo '<thead><tr class="c"><th colspan="'.$this->colspan.'">';
-		$this->displayHeader();
-		echo '</th></tr></thead>';
+		echo '<thead>';
+		echo '<tr style="font-size:.5em;line-height:1;"><td></td>'.$Table->codeForColumnLabels($Icon->code()).'</tr>';
+		echo '</thead>';
 		echo '<tbody>';
 
-		$this->displayTrainingRows();
+		$this->displayTrainingRows($Table);
 
 		echo '</tbody>';
 		echo '</table>';
@@ -430,14 +453,14 @@ class SearchResults {
 	/*
 	 * Display header
 	 */
-	private function displayHeader() {
-		if ($this->page != 1) {
+	protected function displayHeader() {
+		if ($this->Page != 1) {
 			echo '<span id="search-back" class="link">'.Icon::$BACK.'</span>';
 		}
 
-		echo ' '.sprintf( __('Found %s activities'), $this->totalNumberOfTrainings).' ';
+		echo ' '.sprintf( __('Found %s activities'), $this->TotalNumberOfTrainings).' ';
 
-		if ($this->page*$this->resultsPerPage < $this->totalNumberOfTrainings) {
+		if ($this->Page*$this->ResultsPerPage < $this->TotalNumberOfTrainings) {
 			echo '<span id="search-next" class="link">'.Icon::$NEXT.'</span>';
 		}
 
@@ -447,7 +470,7 @@ class SearchResults {
 	/**
 	 * Connect pagination links
 	 */
-	private function connectPagination() {
+	protected function connectPagination() {
 		echo Ajax::wrapJSforDocumentReady(
 			'$("#search-back").click(function(){'.
 				'var $i = $("#search input[name=\'page\']");'.
@@ -463,18 +486,19 @@ class SearchResults {
 	}
 
 	/**
-	 * Display all training rows
+	 * @param \Runalyze\View\Dataset\Table $Table
 	 */
-	private function displayTrainingRows() {
+	protected function displayTrainingRows(\Runalyze\View\Dataset\Table $Table) {
+		$Context = new \Runalyze\Dataset\Context(new Runalyze\Model\Activity\Object(), $this->AccountID);
+
 		foreach ($this->Trainings as $training) {
 			$date = date("d.m.Y", $training['time']);
 			$link = Ajax::trainingLink($training['id'], $date, true);
+			$Context->setActivityData($training);
 
 			echo '<tr class="r">';
 			echo '<td class="l"><small>'.$link.'</small></td>';
-
-			$this->Dataset->setActivityData($training);
-			$this->Dataset->displayTableColumns();
+			echo $Table->codeForColumns($Context);
 
 			echo '</tr>';
 		}
