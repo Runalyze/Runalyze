@@ -35,7 +35,6 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 			`groundcontact` longtext NOT NULL,
 			`vertical_oscillation` longtext NOT NULL,
 			`groundcontact_balance` LONGTEXT NOT NULL,
-			`vertical_ratio` LONGTEXT NOT NULL,
 			`pauses` text NOT NULL,
 			PRIMARY KEY (`activityid`)
 			);

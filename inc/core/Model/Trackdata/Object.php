@@ -210,7 +210,6 @@ class Object extends Model\Object implements Model\Loopable {
 			self::GROUNDCONTACT,
 			self::VERTICAL_OSCILLATION,
 			self::GROUNDCONTACT_BALANCE,
-			self::VERTICAL_RATIO,
 			self::PAUSES
 		);
 	}
@@ -221,7 +220,8 @@ class Object extends Model\Object implements Model\Loopable {
 	 */
 	public function properties() {
 		return array_merge(array(
-				self::PACE
+				self::PACE,
+				self::VERTICAL_RATIO
 			),
 			static::allDatabaseProperties() 
 		);
@@ -268,7 +268,8 @@ class Object extends Model\Object implements Model\Loopable {
 	protected function notInDatabase($key) {
 		switch ($key) {
 			case self::PACE:
-				return false;
+			case self::VERTICAL_RATIO:
+				return true;
 		}
 
 		return false;
