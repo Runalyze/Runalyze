@@ -142,6 +142,7 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 		$this->deleteIntensityCache();
 		$this->updatePower();
 		$this->updateStrideLength();
+		$this->updateVerticalRatio();
 	}
 
 	/**
@@ -259,6 +260,26 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 				}
 			} else {
 				$this->NewObject->set(Object::STRIDE_LENGTH, 0);
+			}
+		}
+	}
+
+	/**
+	 * Update vertical ratio
+	 */
+	protected function updateVerticalRatio() {
+		if ($this->hasChanged(Object::SPORTID)) {
+			if (
+				null !== $this->Trackdata &&
+				$this->Trackdata->has(Model\Trackdata\Object::VERTICAL_OSCILLATION) &&
+				$this->Trackdata->has(Model\Trackdata\Object::STRIDE_LENGTH)
+			) {
+				$Calculator = new \Runalyze\Calculation\StrideLength\Calculator($this->Trackdata);
+				$Calculator->calculate();
+	
+				$this->NewObject->set(Object::VERTICAL_RATIO, $Calculator->average());
+			} else {
+				$this->NewObject->set(Object::VERTICAL_RATIO, \Runalyze\Calculation\VerticalRatioCalculator::forActivity($this->NewObject));
 			}
 		}
 	}
