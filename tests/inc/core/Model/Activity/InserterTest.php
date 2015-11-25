@@ -374,4 +374,33 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(array( 0,    0), $this->PDO->query('SELECT `distance`, `time` FROM `runalyze_equipment` WHERE `id`='.$this->EquipmentC)->fetch(PDO::FETCH_NUM));
 	}
 
+	/**
+	 * @group verticalRatio
+	 */
+	public function testStrideLengthAndVerticalRatioCalculation() {
+		$Activity = new Object(array(
+			Object::DISTANCE => 0.36,
+			Object::TIME_IN_SECONDS => 120,
+			Object::SPORTID => Configuration::General()->runningSport()
+		));
+
+		$Trackdata = new Model\Trackdata\Object(array(
+			Model\Trackdata\Object::TIME => array(60, 120),
+			Model\Trackdata\Object::DISTANCE => array(0.18, 0.36),
+			Model\Trackdata\Object::CADENCE => array(90, 100),
+			Model\Trackdata\Object::VERTICAL_OSCILLATION => array(90, 80)
+		));
+
+		$Inserter = new Inserter($this->PDO);
+		$Inserter->setAccountID(0);
+		$Inserter->setTrackdata($Trackdata);
+		$Inserter->insert($Activity);
+
+		$this->assertEquals(95, $this->fetch($Inserter->insertedID())->strideLength());
+		$this->assertEquals(array(100, 90), $Trackdata->strideLength());
+
+		$this->assertEquals(9, $this->fetch($Inserter->insertedID())->verticalRatio());
+		$this->assertEquals(array(9.0, 8.9), $Trackdata->verticalRatio());
+	}
+
 }

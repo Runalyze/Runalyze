@@ -7,14 +7,14 @@
 	<div class="hover-icons"><?php $this->displayHoverLinks(); ?></div>
 </div>
 <div class="panel-content">
-	<div id="<?php echo DataBrowser::$CALENDAR_ID; ?>">
+	<div id="<?php echo DataBrowser::CALENDAR_ID; ?>">
 
 		<div id="widget-calendar">
 		</div>
 
 		<span id="calendar-result" class="hide"><?php _e('Choose a date ...'); ?></span>
-		<input id="calendar-start" type="hidden" value="<?php echo $this->timestamp_start; ?>000">
-		<input id="calendar-end" type="hidden" value="<?php echo $this->timestamp_end; ?>000">
+		<input id="calendar-start" type="hidden" value="<?php echo $this->TimestampStart; ?>000">
+		<input id="calendar-end" type="hidden" value="<?php echo $this->TimestampEnd; ?>000">
 
         <input id="calendar-locale" type="hidden" value="<?php
 
@@ -40,19 +40,8 @@
 		</div>
 	</div>
 
-	<div id="data-browser-container">
-		<table class="zebra-style">
-			<?php if (\Runalyze\Configuration::DataBrowser()->showLabels()): ?>
-			<thead class="data-browser-labels">
-				<tr class="small">
-					<td colspan="<?php echo (2 + $this->showPublicLink); ?>"></td>
-					<?php $this->Dataset->displayTableLabels(); ?>
-				</tr>
-			</thead>
-			<?php endif; ?>
-			<tbody class="top-and-bottom-border">
 <?php
-if ($this->day_count < 25) {
+if ($this->DayCount < 25) {
 	$weekSeparator = ' top-separated';
 	$monthSeparator = ' top-separated-light';
 } else {
@@ -60,7 +49,23 @@ if ($this->day_count < 25) {
 	$monthSeparator = ' top-separated';
 }
 
-foreach ($this->days as $i => $day) {
+$Context = new \Runalyze\Dataset\Context(new Runalyze\Model\Activity\Object(), $this->AccountID);
+$Table = new \Runalyze\View\Dataset\Table($this->DatasetConfig);
+?>
+
+	<div id="data-browser-container">
+		<table class="zebra-style">
+			<?php if (\Runalyze\Configuration::DataBrowser()->showLabels()): ?>
+			<thead class="data-browser-labels">
+				<tr class="small">
+					<td colspan="<?php echo (2 + $this->ShowPublicLink); ?>"></td>
+					<?php echo $Table->codeForColumnLabels(); ?>
+				</tr>
+			</thead>
+			<?php endif; ?>
+			<tbody class="top-and-bottom-border">
+<?php
+foreach ($this->Days as $i => $day) {
 	$trClass = '';
 
 	if ($i > 0 && date('w', $day['date']) == \Runalyze\Configuration::General()->weekStart()->value()) {
@@ -77,30 +82,32 @@ foreach ($this->days as $i => $day) {
 			$wk_class = isset($Training['typeid']) && $Training['typeid'] == \Runalyze\Configuration::General()->competitionType() ? ' wk' : '';
 			$trClass = ($t == 0) ? $trClass : '';
 
-			if (FrontendShared::$IS_SHOWN && !$Training['is_public'])
+			if (FrontendShared::$IS_SHOWN && !$Training['is_public']) {
 				echo '<tr class="r'.$trClass.' training'.$wk_class.'">';
-			else
+			} else {
 				echo '<tr class="r'.$trClass.' training'.$wk_class.'" id="training_'.$id.'" '.Ajax::trainingLinkAsOnclick($id).'>';
+			}
 
-			if ($t != 0)
+			if ($t != 0) {
 				echo '<td colspan="2"></td>';
-			else {
+			} else {
 				echo '<td class="l" style="width:24px;">';
 
 				foreach ($day['shorts'] as $short) {
-					$this->Dataset->setActivityData($short);
-					$this->Dataset->displayShortLink();
+					$Context->setActivityData($short);
+					echo $Table->codeForShortLink($Context);
 				}
 
-				echo '</td><td class="l as-small-as-possible">'.Dataset::getDateString($day['date']).'</td>';
+				echo '</td><td class="l as-small-as-possible">'.$this->dateString($day['date']).'</td>';
 			}
 
-			$this->Dataset->setActivityData($Training);
+			$Context->setActivityData($Training);
 
-			if ($this->showPublicLink)
-				$this->Dataset->displayPublicIcon();
+			if ($this->ShowPublicLink) {
+				echo $Table->codeForPublicIcon($Context);
+			}
 
-			$this->Dataset->displayTableColumns();
+			echo $Table->codeForColumns($Context);
 
 			echo '</tr>';
 		}
@@ -110,13 +117,15 @@ foreach ($this->days as $i => $day) {
 				<td class="l" style="width:24px;">';
 
 		foreach ($day['shorts'] as $short) {
-			$this->Dataset->setActivityData($short);
-			$this->Dataset->displayShortLink();
+			$Context->setActivityData($short);
+			echo $Table->codeForShortLink($Context);
 		}
 
+		$cols = $Table->numColumns();
+
 		echo '</td>
-				<td class="l as-small-as-possible">'.Dataset::getDateString($day['date']).'</td>
-				<td colspan="'.($this->Dataset->cols() + $this->showPublicLink).'"></td>
+				<td class="l as-small-as-possible">'.$this->dateString($day['date']).'</td>
+				<td colspan="'.($Table->numColumns() + $this->ShowPublicLink).'"></td>
 			</tr>';
 	}
 }
@@ -124,22 +133,16 @@ foreach ($this->days as $i => $day) {
 echo '</tbody>';
 echo '<tbody>';
 
-// Z U S A M M E N F A S S U N G
-$WhereNotPrivate = (FrontendShared::$IS_SHOWN && !\Runalyze\Configuration::Privacy()->showPrivateActivitiesInList()) ? 'AND is_public=1' : '';
-$sports = DB::getInstance()->query('SELECT `id`, `time`, `sportid`, SUM(1) as `num` FROM `'.PREFIX.'training` WHERE `time` BETWEEN '.($this->timestamp_start-10).' AND '.($this->timestamp_end-10).' AND accountid = '.SessionAccountHandler::getId().' '.$WhereNotPrivate.' GROUP BY `sportid` ORDER BY `num` DESC')->fetchAll();
-foreach ($sports as $i => $sportdata) {
-	$Sport = new Sport($sportdata['sportid']);
-	echo '<tr class="r no-zebra">
-			<td colspan="'.$this->additionalColumns.'">
-				<small>'.$sportdata['num'].'x</small>
-				'.$Sport->name().'
-			</td>';
+$Summary = $this->DatasetQuery->fetchSummaryForAllSport($this->TimestampStart, $this->TimestampEnd);
 
-	$this->Dataset->loadGroupOfTrainings($sportdata['sportid'], $this->timestamp_start, $this->timestamp_end);
-	$this->Dataset->displayTableColumns();
+foreach ($Summary as $data) {
+	$Sport = $this->Factory->sport($data['sportid']);
+	$Context->setActivityData($data);
 
-	echo '
-		</tr>';
+	echo '<tr class="r no-zebra">';
+	echo '<td colspan="'.$this->AdditionalColumns.'"><small>'.$data['num'].'x</small> '.$Sport->name().'</td>';
+	echo $Table->codeForColumns($Context, array(Runalyze\Dataset\Keys::SPORT));
+	echo '</tr>';
 }
 ?>
 			</tbody>

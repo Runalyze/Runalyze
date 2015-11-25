@@ -47,7 +47,6 @@ class RunalyzeJsonImporterTest extends PHPUnit_Framework_TestCase {
 		$this->DB->exec('DELETE FROM `runalyze_user`');
 
 		$this->DB->exec('DELETE FROM `runalyze_conf` WHERE `key`="TEST_CONF"');
-		$this->DB->exec('DELETE FROM `runalyze_dataset` WHERE `name`="test-dataset"');
 		$this->DB->exec('DELETE FROM `runalyze_plugin` WHERE `key`="RunalyzePluginTool_TEST"');
 		$this->DB->exec('DELETE FROM `runalyze_plugin_conf` WHERE `config`="test_one"');
 		$this->DB->exec('DELETE FROM `runalyze_plugin_conf` WHERE `config`="test_two"');
@@ -117,7 +116,6 @@ class RunalyzeJsonImporterTest extends PHPUnit_Framework_TestCase {
 		$_POST['overwrite_plugin'] = true;
 
 		$this->DB->insert('conf', array('category', 'key', 'value'), array('test-data', 'TEST_CONF', 'false') );
-		$this->DB->insert('dataset', array('name', 'class', 'style', 'position', 'summary'), array('test-dataset', '', 'width:10px;', 3, 0) );
 		$id = $this->DB->insert('plugin', array('key', 'active', 'order'), array('RunalyzePluginTool_TEST', 0, 3) );
 		$this->DB->insert('plugin_conf', array('pluginid', 'config', 'value'), array($id, 'test_one', 2) );
 		$this->DB->insert('plugin_conf', array('pluginid', 'config', 'value'), array($id, 'test_two', 1) );
@@ -128,12 +126,6 @@ class RunalyzeJsonImporterTest extends PHPUnit_Framework_TestCase {
 
 		// Assert
 		$this->assertEquals('true', $this->DB->query('SELECT `value` FROM `runalyze_conf` WHERE `key`="TEST_CONF" LIMIT 1')->fetchColumn());
-
-		$Dataset = $this->DB->query('SELECT * FROM `runalyze_dataset` WHERE `name`="test-dataset" LIMIT 1')->fetch();
-		$this->assertEquals('testclass', $Dataset['class']);
-		$this->assertEquals('', $Dataset['style']);
-		$this->assertEquals('42', $Dataset['position']);
-		$this->assertEquals('1', $Dataset['summary']);
 
 		$Plugin = $this->DB->query('SELECT * FROM `runalyze_plugin` WHERE `key`="RunalyzePluginTool_TEST" LIMIT 1')->fetch();
 		$this->assertEquals('1', $Plugin['active']);

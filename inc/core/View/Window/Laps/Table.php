@@ -131,11 +131,10 @@ class Table {
 	 * @return string
 	 */
 	protected function tableHeaderForAdditionalKeys() {
-		$Labels = new \DatasetLabels();
 		$Code = '';
 
 		foreach ($this->AdditionalKeys as $key) {
-			$Code .= '<th class="small">'.$Labels->get($key).'</th>';
+			$Code .= '<th class="small">'.$this->labelForAdditionalValue($key).'</th>';
 		}
 
 		return $Code;
@@ -222,6 +221,28 @@ class Table {
 		}
 
 		return $Code;
+	}
+
+	/**
+	 * 
+	 * @param type $key
+	 * @return string
+	 */
+	protected function labelForAdditionalValue($key) {
+		switch ($key) {
+			case Activity\Object::CADENCE:
+				return __('Cadence');
+			case Activity\Object::GROUNDCONTACT:
+				return __('Ground contact time');
+			case Activity\Object::VERTICAL_OSCILLATION:
+				return __('Vertical oscillation');
+			case Activity\Object::STRIDE_LENGTH:
+				return __('Stride length');
+			case Activity\Object::VDOT:
+				return __('VDOT');
+		}
+
+		return '';
 	}
 
 	/**

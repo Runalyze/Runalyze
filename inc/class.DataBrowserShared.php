@@ -13,22 +13,22 @@ class DataBrowserShared extends DataBrowser {
 	 * Number of additional columns
 	 * @var int
 	 */
-	protected $additionalColumns = 3;
+	protected $AdditionalColumns = 3;
 
 	/**
 	 * Boolean flag: show public link for trainings
 	 * @var boolean
 	 */
-	protected $showPublicLink = true;
+	protected $ShowPublicLink = true;
 
 	/**
 	 * Init private timestamps from request
 	 */
 	protected function initTimestamps() {
-		$this->timestamp_start = isset($_GET['start']) ? $_GET['start'] : mktime(0, 0, 0, date("m"), 1, date("Y"));
-		$this->timestamp_end   = isset($_GET['end'])   ? $_GET['end']   : mktime(23, 59, 50, date("m")+1, 0, date("Y"));
+		$this->TimestampStart = isset($_GET['start']) ? $_GET['start'] : mktime(0, 0, 0, date("m"), 1, date("Y"));
+		$this->TimestampEnd   = isset($_GET['end'])   ? $_GET['end']   : mktime(23, 59, 50, date("m")+1, 0, date("Y"));
 
-		$this->day_count = round(($this->timestamp_end - $this->timestamp_start) / 86400);
+		$this->DayCount = round(($this->TimestampEnd - $this->TimestampStart) / 86400);
 	}
 
 	/**

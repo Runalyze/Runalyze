@@ -89,16 +89,11 @@ CREATE TABLE IF NOT EXISTS `runalyze_conf` (
 --
 
 CREATE TABLE IF NOT EXISTS `runalyze_dataset` (
-`id` int(11) NOT NULL,
-  `name` varchar(20) NOT NULL,
-  `active` tinyint(1) NOT NULL DEFAULT '1',
-  `modus` tinyint(1) NOT NULL DEFAULT '0',
-  `class` varchar(25) NOT NULL DEFAULT '',
+  `keyid` tinyint(3) unsigned NOT NULL,
+  `active` tinyint(1) unsigned NOT NULL DEFAULT '1',
   `style` varchar(100) NOT NULL DEFAULT '',
-  `position` smallint(6) NOT NULL DEFAULT '0',
-  `summary` tinyint(1) NOT NULL DEFAULT '0',
-  `summary_mode` varchar(3) NOT NULL DEFAULT 'SUM',
-  `accountid` int(11) NOT NULL
+  `position` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `accountid` int(10) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -268,8 +263,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_trackdata` (
   `temperature` longtext,
   `groundcontact` longtext,
   `vertical_oscillation` longtext,
-  `groundcontact_balance` LONGTEXT,
-  `vertical_ratio` LONGTEXT,
+  `groundcontact_balance` longtext,
   `pauses` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -310,9 +304,9 @@ CREATE TABLE IF NOT EXISTS `runalyze_training` (
   `swolf` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `stride_length` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `groundcontact` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `groundcontact_balance` SMALLINT UNSIGNED NOT NULL DEFAULT  '0',
   `vertical_oscillation` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `vertical_ratio` SMALLINT UNSIGNED NOT NULL DEFAULT  '0',
-  `groundcontact_balance` SMALLINT UNSIGNED NOT NULL DEFAULT  '0',
   `temperature` tinyint(4) DEFAULT NULL,
   `weatherid` smallint(6) NOT NULL DEFAULT '1',
   `route` text,
@@ -391,7 +385,7 @@ ALTER TABLE `runalyze_conf`
 -- Indizes für die Tabelle `runalyze_dataset`
 --
 ALTER TABLE `runalyze_dataset`
- ADD PRIMARY KEY (`id`), ADD KEY `accountid` (`accountid`);
+ ADD PRIMARY KEY (`accountid`,`keyid`), ADD KEY `position` (`accountid`,`position`);
 
 --
 -- Indizes für die Tabelle `runalyze_equipment`
@@ -484,11 +478,6 @@ MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT für Tabelle `runalyze_conf`
 --
 ALTER TABLE `runalyze_conf`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT für Tabelle `runalyze_dataset`
---
-ALTER TABLE `runalyze_dataset`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT für Tabelle `runalyze_equipment`

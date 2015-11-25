@@ -6,7 +6,6 @@ version=2.2
 {"1":{"category":"test-data","key":"TEST_CONF","value":"true"}}
 
 {"TABLE":"runalyze_dataset"}
-{"1":{"name":"test-dataset","active":"1","modus":"1","class":"testclass","style":"","position":"42","summary":"1"}}
 
 {"TABLE":"runalyze_hrv"}
 
