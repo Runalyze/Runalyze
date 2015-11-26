@@ -119,8 +119,8 @@ class Table {
 						($this->DemandedTime->isZero() ? '' : '<th>'.__('Diff.').'</th>').
 						'<th>'.__('Pace').'</th>'.
 						'<th>'.__('Diff.').'</th>'.
-						'<th>'.__('&oslash; bpm').'</th>'.
-						'<th>'.__('max. bpm').'</th>'.
+						'<th>&oslash; '.__('HR').'</th>'.
+						'<th>'.__('max.').' '.__('HR').'</th>'.
 						'<th class="{sorter: false}">'.__('elevation').'</th>'.
 						$this->tableHeaderForAdditionalKeys().
 					'</tr>'.
@@ -173,8 +173,8 @@ class Table {
 				($this->DemandedTime->isZero() ? '' : '<td>'.$Lap->duration()->compareTo($this->DemandedTime, true).'</td>').
 				'<td>'.$Lap->pace()->valueWithAppendix().'</td>'.
 				($this->DemandedPace->isEmpty() ? '' : '<td>'.$Lap->pace()->compareTo($this->DemandedPace).'</td>').
-				'<td>'.($Lap->hasHR() ? Helper::Unknown(round($Lap->HRavg()->inBPM()), '-') : '-').'</td>'.
-				'<td>'.($Lap->hasHR() ? Helper::Unknown(round($Lap->HRmax()->inBPM()), '-') : '-').'</td>'.
+				'<td>'.($Lap->hasHR() ? Helper::Unknown($Lap->HRavg()->string(), '-') : '-').'</td>'.
+				'<td>'.($Lap->hasHR() ? Helper::Unknown($Lap->HRmax()->string(), '-') : '-').'</td>'.
 				'<td>'.($Lap->hasElevation() ? '+'.Elevation::format($Lap->elevationUp(), false).'/-'.Elevation::format($Lap->elevationDown(), false) : '-').'</td>'.
 				$this->additionalTableCellsFor($Lap).
 			'</tr>';
