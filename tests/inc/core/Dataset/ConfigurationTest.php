@@ -5,6 +5,9 @@ namespace Runalyze\Dataset;
 use PDO;
 use Cache;
 
+/**
+ * @group dataset
+ */
 class ConfigurationTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -42,7 +45,12 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
 
 		Cache::delete(Configuration::CACHE_KEY);
 
-		$this->assertTrue((new Configuration($this->PDO, 2))->isEmpty());
+		$this->assertTrue((new Configuration($this->PDO, 2, false))->isEmpty());
+	}
+
+	public function testFallbackToDefault()
+	{
+		$this->assertFalse((new Configuration($this->PDO, 42))->isEmpty());
 	}
 
 	public function testExistance()
