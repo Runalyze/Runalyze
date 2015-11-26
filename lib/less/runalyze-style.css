@@ -570,6 +570,9 @@ form#training {
 #ajax-next.black-rounded-icon {
   box-shadow: -1px 1px 2px #000000;
 }
+#searchResult {
+	overflow: auto;
+}
 @media screen and (max-width: 960px) {
   #ajax {
     width: 90%;

@@ -32,20 +32,33 @@ class Configuration
 	 * Load dataset configuration from database
 	 * @param \PDO $pdo database connection
 	 * @param int $accountID accountid
+	 * @param bool $fallbackToDefault
 	 */
-	public function __construct(\PDO $pdo, $accountID)
+	public function __construct(\PDO $pdo, $accountID, $fallbackToDefault = true)
 	{
 		$this->Data = Cache::get(self::CACHE_KEY);
 
 		if (is_null($this->Data)) {
 			$completeData = $pdo->query('SELECT `keyid`, `active`, `style` FROM `'.PREFIX.'dataset` WHERE `accountid`="'.$accountID.'" ORDER BY `position` ASC')->fetchAll();
 
-			foreach ($completeData as $data) {
-				$this->Data[$data['keyid']] = $data;
+			if (empty($completeData) && $fallbackToDefault) {
+				$this->Data = (new DefaultConfiguration)->data();
+			} else {
+				foreach ($completeData as $data) {
+					$this->Data[$data['keyid']] = $data;
+				}
 			}
 
 			Cache::set(self::CACHE_KEY, $this->Data, '600');
 		}
+	}
+
+	/**
+	 * @return array
+	 */
+	public function data()
+	{
+		return $this->Data;
 	}
 
 	/**

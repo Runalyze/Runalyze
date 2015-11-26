@@ -127,7 +127,7 @@ class SearchResults {
 			'groundcontact',
 			'vertical_oscillation',
 			'vertical_ratio',
-                        'groundcontact_balance',
+			'groundcontact_balance',
 
 			'use_vdot',
 			'is_public',
