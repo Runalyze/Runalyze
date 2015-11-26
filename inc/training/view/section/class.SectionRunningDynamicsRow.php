@@ -62,6 +62,11 @@ class SectionRunningDynamicsRow extends TrainingViewSectionRowTabbedPlot {
 			$Plot = new Activity\Plot\GroundContact($this->Context);
 			$this->addRightContent('groundcontact', __('Ground contact'), $Plot);
 		}
+
+		if ($this->Context->trackdata()->has(Trackdata\Object::GROUNDCONTACT_BALANCE)) {
+			$Plot = new Activity\Plot\GroundContactBalance($this->Context);
+			$this->addRightContent('groundcontact_balance', __('Ground contact balance'), $Plot);
+		}
 	}
 
 	/**
