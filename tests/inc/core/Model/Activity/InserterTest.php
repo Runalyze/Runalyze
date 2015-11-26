@@ -381,7 +381,9 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		$Activity = new Object(array(
 			Object::DISTANCE => 0.36,
 			Object::TIME_IN_SECONDS => 120,
-			Object::SPORTID => Configuration::General()->runningSport()
+			Object::SPORTID => Configuration::General()->runningSport(),
+			Object::CADENCE => 95,
+			Object::VERTICAL_OSCILLATION => 85
 		));
 
 		$Trackdata = new Model\Trackdata\Object(array(
@@ -399,7 +401,7 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(95, $this->fetch($Inserter->insertedID())->strideLength());
 		$this->assertEquals(array(100, 90), $Trackdata->strideLength());
 
-		$this->assertEquals(90, $this->fetch($Inserter->insertedID())->verticalRatio());
+		$this->assertEquals(89, $this->fetch($Inserter->insertedID())->verticalRatio());
 		$this->assertEquals(array(90, 89), $Trackdata->verticalRatio());
 	}
 
