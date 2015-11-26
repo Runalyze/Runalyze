@@ -52,7 +52,9 @@ class DefaultConfiguration extends Configuration
 			Keys::FIT_RECOVERY_TIME => false,
 			Keys::FIT_HRV_ANALYSIS => false,
 			Keys::SWOLF => false,
-			Keys::TOTAL_STROKES => false
+			Keys::TOTAL_STROKES => false,
+			Keys::VERTICAL_RATIO => false,
+			Keys::GROUNDCONTACT_BALANCE => false
 		));
 	}
 
