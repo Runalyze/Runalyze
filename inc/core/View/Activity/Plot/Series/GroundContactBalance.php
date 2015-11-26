@@ -1,6 +1,6 @@
 <?php
 /**
- * This file contains class::VerticalOscillation
+ * This file contains class::GroundContactBalance
  * @package Runalyze\View\Activity\Plot\Series
  */
 
@@ -9,16 +9,15 @@ namespace Runalyze\View\Activity\Plot\Series;
 use Runalyze\Model\Trackdata\Object as Trackdata;
 use Runalyze\View\Activity;
 
-use \Plot;
+use Plot;
 
 /**
- * Plot for: Vertical ratio
+ * Plot for: ground contact balance
  * 
  * @author Hannes Christiansen
- * @author Michael Pohl
  * @package Runalyze\View\Activity\Plot\Series
  */
-class VerticalRatio extends ActivityPointSeries {
+class GroundContactBalance extends ActivityPointSeries {
 	/**
 	 * @var string
 	 */
@@ -30,27 +29,9 @@ class VerticalRatio extends ActivityPointSeries {
 	 */
 	public function __construct(Activity\Context $context) {
 		$this->initOptions();
-		$this->initData($context->trackdata(), Trackdata::VERTICAL_RATIO);
+		$this->initData($context->trackdata(), Trackdata::GROUNDCONTACT_BALANCE);
+		$this->setManualAverage($context->activity()->groundContactBalance()/100);
 		$this->manipulateData();
-		$this->setManualAverage($context->activity()->verticalRatio()*0.1);
-	}
-
-	/**
-	 * Init options
-	 */
-	protected function initOptions() {
-		$this->Label = __('Vertical ratio');
-		$this->Color = self::COLOR;
-
-		$this->UnitString = '%';
-		$this->UnitDecimals = 1;
-
-		$this->TickSize = 1;
-		$this->TickDecimals = 1;
-
-		$this->ShowAverage = true;
-		$this->ShowMaximum = false;
-		$this->ShowMinimum = false;
 	}
 
 	/**
@@ -66,7 +47,25 @@ class VerticalRatio extends ActivityPointSeries {
 	 * @return float
 	 */
 	protected function correctUnit($value) {
-		return 0.1*$value;
+		return 0.01*$value;
+	}
+
+	/**
+	 * Init options
+	 */
+	protected function initOptions() {
+		$this->Label = __('Ground contact balance');
+		$this->Color = self::COLOR;
+
+		$this->UnitString = '%';
+		$this->UnitDecimals = 1;
+
+		$this->TickSize = 0.2;
+		$this->TickDecimals = 1;
+
+		$this->ShowAverage = true;
+		$this->ShowMaximum = false;
+		$this->ShowMinimum = false;
 	}
 
 	/**
@@ -78,6 +77,10 @@ class VerticalRatio extends ActivityPointSeries {
 	public function addTo(Plot &$Plot, $yAxis, $addAnnotations = true) {
 		parent::addTo($Plot, $yAxis, $addAnnotations);
 
-		$this->setColorThresholdsBelow($Plot, 6.1, 7.4, 8.6, 10.1);
+		$Plot->Options['hooks']['draw'] = array('RunalyzePlot.flotHookColorPoints('
+			. '[52.2, 50.7, 49.2, 47.7], '
+			. '["'.self::COLOR_BAD.'", "'.self::COLOR_OKAY.'", "'.self::COLOR_GOOD.'", "'.self::COLOR_OKAY.'"], '
+			. '"'.self::COLOR_BAD.'")'
+		);
 	}
 }

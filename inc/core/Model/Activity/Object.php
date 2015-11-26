@@ -710,7 +710,7 @@ class Object extends Model\ObjectWithID {
 	
 	/**
 	 * Ground contact time balance
-	 * @return int [%]
+	 * @return int [%oo]
 	 */
 	public function groundContactBalance() {
 		return $this->Data[self::GROUNDCONTACT_BALANCE];
@@ -734,7 +734,7 @@ class Object extends Model\ObjectWithID {
 
 	/**
 	 * Vertical ratio
-	 * @return int [%]
+	 * @return int [%o]
 	 */
 	public function verticalRatio() {
 		return $this->Data[self::VERTICAL_RATIO];

@@ -249,16 +249,13 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 	 * Update stride length
 	 */
 	protected function updateStrideLength() {
-		if ($this->hasChanged(Object::SPORTID)) {
+		if (
+			$this->hasChanged(Object::SPORTID) ||
+			$this->hasChanged(Object::VERTICAL_OSCILLATION) ||
+			$this->hasChanged(Object::STRIDE_LENGTH)
+		) {
 			if ($this->NewObject->sportid() == Configuration::General()->runningSport()) {
-				if (null !== $this->Trackdata && $this->Trackdata->has(Model\Trackdata\Object::CADENCE)) {
-					$Calculator = new \Runalyze\Calculation\StrideLength\Calculator($this->Trackdata);
-					$Calculator->calculate();
-
-					$this->NewObject->set(Object::STRIDE_LENGTH, $Calculator->average());
-				} elseif ($this->NewObject->cadence() > 0) {
-					$this->NewObject->set(Object::STRIDE_LENGTH, \Runalyze\Calculation\StrideLength\Calculator::forActivity($this->NewObject));
-				}
+				$this->NewObject->set(Object::STRIDE_LENGTH, \Runalyze\Calculation\StrideLength\Calculator::forActivity($this->NewObject));
 			} else {
 				$this->NewObject->set(Object::STRIDE_LENGTH, 0);
 			}
@@ -269,19 +266,12 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 	 * Update vertical ratio
 	 */
 	protected function updateVerticalRatio() {
-		if ($this->hasChanged(Object::SPORTID)) {
-			if (
-				null !== $this->Trackdata &&
-				$this->Trackdata->has(Model\Trackdata\Object::VERTICAL_OSCILLATION) &&
-				$this->Trackdata->has(Model\Trackdata\Object::STRIDE_LENGTH)
-			) {
-				$Calculator = new \Runalyze\Calculation\StrideLength\Calculator($this->Trackdata);
-				$Calculator->calculate();
-	
-				$this->NewObject->set(Object::VERTICAL_RATIO, $Calculator->average());
-			} else {
-				$this->NewObject->set(Object::VERTICAL_RATIO, VerticalRatioCalculator::forActivity($this->NewObject));
-			}
+		if (
+			$this->hasChanged(Object::SPORTID) ||
+			$this->hasChanged(Object::VERTICAL_OSCILLATION) ||
+			$this->hasChanged(Object::STRIDE_LENGTH)
+		) {
+			$this->NewObject->set(Object::VERTICAL_RATIO, VerticalRatioCalculator::forActivity($this->NewObject));
 		}
 	}
         

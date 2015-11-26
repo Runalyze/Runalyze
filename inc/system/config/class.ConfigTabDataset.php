@@ -266,7 +266,9 @@ class ConfigTabDataset extends ConfigTab {
 			'activity_id'	=> '',
 			'elevation_corrected'	=> 1,
 			'swolf'		=> 29,
-			'total_strokes'	=> 1250
+			'total_strokes'	=> 1250,
+			'vertical_ratio' => 79,
+			'groundcontact_balance' => 4980
 		);
 	}
 }

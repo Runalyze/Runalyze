@@ -48,3 +48,6 @@ ALTER TABLE `runalyze_dataset` CHANGE `accountid` `accountid` INT(10) UNSIGNED N
 ALTER TABLE `runalyze_trackdata` ADD `groundcontact_balance` LONGTEXT NULL DEFAULT NULL AFTER `groundcontact`;
 ALTER TABLE `runalyze_training` ADD  `vertical_ratio` SMALLINT UNSIGNED NOT NULL DEFAULT  '0' AFTER `vertical_oscillation`;
 ALTER TABLE `runalyze_training` ADD  `groundcontact_balance` SMALLINT UNSIGNED NOT NULL DEFAULT  '0' AFTER  `groundcontact`;
+
+/* 26.11.2015 - calculate vertical ratio for existing activities */
+UPDATE `runalyze_training` SET `vertical_ratio` = 100 * `vertical_oscillation` / `stride_length` WHERE `stride_length` > 0;

@@ -195,15 +195,7 @@ class Inserter extends Model\InserterWithAccountID {
 	 */
 	protected function calculateStrideLength() {
 		if ($this->Object->sportid() == Configuration::General()->runningSport()) {
-			if (null !== $this->Trackdata && $this->Trackdata->has(Model\Trackdata\Object::CADENCE)) {
-				$Calculator = new \Runalyze\Calculation\StrideLength\Calculator($this->Trackdata);
-				$Calculator->calculate();
-
-				$this->Object->set(Object::STRIDE_LENGTH, $Calculator->average());
-			} elseif ($this->Object->cadence() > 0) {
-				$this->Object->set(Object::STRIDE_LENGTH, \Runalyze\Calculation\StrideLength\Calculator::forActivity($this->Object));
-			}
-			
+			$this->Object->set(Object::STRIDE_LENGTH, \Runalyze\Calculation\StrideLength\Calculator::forActivity($this->Object));
 		}
 	}
 
@@ -212,19 +204,7 @@ class Inserter extends Model\InserterWithAccountID {
 	 */
 	protected function calculateVerticalRatio() {
 		if ($this->Object->sportid() == Configuration::General()->runningSport()) {
-			if (
-				null !== $this->Trackdata &&
-				$this->Trackdata->has(Model\Trackdata\Object::STRIDE_LENGTH) &&
-				$this->Trackdata->has(Model\Trackdata\Object::VERTICAL_OSCILLATION)
-			) {
-				$Calculator = new \Runalyze\Calculation\Activity\VerticalRatioCalculator($this->Trackdata);
-				$Calculator->calculate();
-
-				$this->Object->set(Object::VERTICAL_RATIO, $Calculator->average());
-			} elseif ($this->Object->cadence() > 0) {
-				$this->Object->set(Object::VERTICAL_RATIO, \Runalyze\Calculation\Activity\VerticalRatioCalculator::forActivity($this->Object));
-			}
-			
+			$this->Object->set(Object::VERTICAL_RATIO, \Runalyze\Calculation\Activity\VerticalRatioCalculator::forActivity($this->Object));
 		}
 	}
 

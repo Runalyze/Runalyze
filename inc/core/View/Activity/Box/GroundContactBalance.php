@@ -6,8 +6,6 @@
 
 namespace Runalyze\View\Activity\Box;
 
-use Runalyze\Configuration;
-
 /**
  * Boxed value for ground contact balance 
  * 
@@ -23,11 +21,8 @@ class GroundContactBalance extends AbstractBox
 	 */
 	public function __construct(\Runalyze\View\Activity\Context $Context)
 	{
-		$leftRight = ($Context->activity()->groundContactBalanceLeft()/100).'L/'.($Context->activity()->groundContactBalanceRight()/100).'R';
-		
-
 		parent::__construct(
-			$leftRight,
+			\Runalyze\Activity\GroundcontactBalance::format($Context->activity()->groundContactBalance(), false),
 			'%',
 			__('Ground Contact Balance')
 		);

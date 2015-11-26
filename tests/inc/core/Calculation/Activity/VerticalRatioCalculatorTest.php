@@ -13,7 +13,7 @@ class VerticalRatioCalculatorTest extends \PHPUnit_Framework_TestCase
 
 	public function testForActivity()
 	{
-		$this->assertEquals(5.3, VerticalRatioCalculator::forActivity(new Activity\Object(array(
+		$this->assertEquals(53.0, VerticalRatioCalculator::forActivity(new Activity\Object(array(
 			Activity\Object::VERTICAL_OSCILLATION => 53,
 			Activity\Object::STRIDE_LENGTH => 100
 		))));
@@ -29,7 +29,7 @@ class VerticalRatioCalculatorTest extends \PHPUnit_Framework_TestCase
 		);
 		$Calculator->calculate();
 
-		$this->assertEquals(10, $Calculator->average());
+		$this->assertEquals(100, $Calculator->average());
 	}
 
 	public function testSimpleArray()
@@ -42,9 +42,9 @@ class VerticalRatioCalculatorTest extends \PHPUnit_Framework_TestCase
 		);
 		$Calculator->calculate();
 
-		$this->assertEquals( 6.9, $Calculator->average());
+		$this->assertEquals( 69.0, $Calculator->average());
 		$this->assertEquals(
-			array(7.3, 6.7, 6.0, 6.7, 8.0),
+			array(73, 67, 60, 67, 80),
 			$Calculator->verticalRatioData()
 		);
 	}

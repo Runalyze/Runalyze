@@ -20,10 +20,8 @@ class VerticalRatio extends AbstractBox
 	 */
 	public function __construct(\Runalyze\View\Activity\Context $Context)
 	{
-		$VerticalRatio = $Context->dataview()->verticalRatio();
-
 		parent::__construct(
-			\Helper::Unknown($VerticalRatio, '-'),
+			\Helper::Unknown(\Runalyze\Activity\VerticalRatio::format($Context->activity()->verticalRatio(), false), '-'),
 			'%',
 			__('Vertical Ratio')
 		);
