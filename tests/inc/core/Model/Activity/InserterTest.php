@@ -399,8 +399,8 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(95, $this->fetch($Inserter->insertedID())->strideLength());
 		$this->assertEquals(array(100, 90), $Trackdata->strideLength());
 
-		$this->assertEquals(9, $this->fetch($Inserter->insertedID())->verticalRatio());
-		$this->assertEquals(array(9.0, 8.9), $Trackdata->verticalRatio());
+		$this->assertEquals(90, $this->fetch($Inserter->insertedID())->verticalRatio());
+		$this->assertEquals(array(90, 89), $Trackdata->verticalRatio());
 	}
 
 }

@@ -39,7 +39,7 @@ class VerticalRatioCalculator {
 	
 	/**
 	 * Calculate vertical ratio array
-	 * @return array
+	 * @return array [%o]
 	 */
 	public function calculate() {
 		if (
@@ -56,7 +56,7 @@ class VerticalRatioCalculator {
 		$this->VerticalRatio = array();
 
 		for ($i = 0; $i < $Size; ++$i) {
-			$this->VerticalRatio[] = ($StrideLength[$i] > 0) ? round(100 * $Oscillation[$i] / $StrideLength[$i], 1) : 0;
+			$this->VerticalRatio[] = ($StrideLength[$i] > 0) ? round(100 * $Oscillation[$i] / $StrideLength[$i]) : 0;
 		}
 
 		return $this->VerticalRatio;
@@ -64,7 +64,7 @@ class VerticalRatioCalculator {
 
 	
 	/**
-	 * @return array
+	 * @return array [%o]
 	*/
 	public function verticalRatioData() {
 	    return $this->VerticalRatio;
@@ -72,7 +72,7 @@ class VerticalRatioCalculator {
 	
 	/**
 	 * Calculate average Vertical Ratio
-	 * @return int [%]
+	 * @return int [%o]
 	 */
 	public function average() {
 		if (empty($this->VerticalRatio)) {
@@ -80,24 +80,24 @@ class VerticalRatioCalculator {
 		}
 
 		if (!$this->Trackdata->has(Trackdata\Object::TIME)) {
-			return round(array_sum($this->VerticalRatio) / $this->Trackdata->num(), 1);
+			return round(array_sum($this->VerticalRatio) / $this->Trackdata->num());
 		}
 
 		$Series = new TimeSeries($this->VerticalRatio, $this->Trackdata->time());
 		$Series->calculateStatistic();
 
-		return round($Series->mean(), 1);
+		return round($Series->mean());
 	}
 	
 	/**
 	 * Calculate vertical ratio for activity
 	 * Use this method if trackdata is not available
 	 * @param \Runalyze\Model\Activity\Object $activity
-	 * @return int [%]
+	 * @return int [%o]
 	 */
 	public static function forActivity(Activity\Object $activity) {
 		if ($activity->verticalOscillation() > 0 && $activity->strideLength() > 0) {
-			return round(100 * $activity->verticalOscillation() / $activity->strideLength(), 1);
+			return round(100 * $activity->verticalOscillation() / $activity->strideLength());
 		}
 
 		return 0;
