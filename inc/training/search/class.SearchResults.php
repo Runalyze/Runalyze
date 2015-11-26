@@ -127,6 +127,7 @@ class SearchResults {
 			'groundcontact',
 			'vertical_oscillation',
 			'vertical_ratio',
+                        'groundcontact_balance',
 
 			'use_vdot',
 			'is_public',
@@ -246,6 +247,8 @@ class SearchResults {
 				$value = 10*$_POST[$key];
 			} elseif ($key == 'vertical_ratio') {
 				$value = 10*$_POST[$key];
+                        } elseif ($key == 'groundcontact_balance') {
+                                $value = 100*$_POST[$key];
 			} elseif ($key == 'stride_length') {
 				$value = (new StrideLength())->setInPreferredUnit($_POST[$key])->cm();
 			} else {
@@ -256,7 +259,7 @@ class SearchResults {
 
 			if (
 				($sign == '<' || $sign == '<=') &&
-				in_array($key, array('distance', 'pulse_avg', 'pulse_max', 'cadence', 'groundcontact', 'vertical_oscillation', 'vertical_ratio', 'stride_length'))
+				in_array($key, array('distance', 'pulse_avg', 'pulse_max', 'cadence', 'groundcontact', 'vertical_oscillation', 'vertical_ratio', 'groundcontact_balance', 'stride_length'))
 			) {
 				$conditions[] = '`'.$key.'` != 0';
 			}
