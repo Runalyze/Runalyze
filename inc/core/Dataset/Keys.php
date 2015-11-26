@@ -112,6 +112,12 @@ final class Keys extends AbstractEnum
 	/** @var int */
 	const TOTAL_STROKES = 32;
 
+	/** @var int */
+	const VERTICAL_RATIO = 33;
+
+	/** @var int */
+	const GROUNDCONTACT_BALANCE = 34;
+
 	/**
 	 * @var array|null
 	 */
@@ -201,7 +207,9 @@ final class Keys extends AbstractEnum
 			self::SPLITS => 'Splits',
 			self::COMMENT => 'Comment',
 			self::TRAININGPARTNER => 'TrainingPartner',
-			self::TOTAL_STROKES => 'TotalStrokes'
+			self::TOTAL_STROKES => 'TotalStrokes',
+			self::VERTICAL_RATIO => 'VerticalRatio',
+			self::GROUNDCONTACT_BALANCE => 'GroundcontactBalance'
 		);
 	}
 }
