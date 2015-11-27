@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-11-27 13:34+0100\n"
-"PO-Revision-Date: 2015-11-16 15:14+0200\n"
+"PO-Revision-Date: 2015-11-27 14:17+0200\n"
 "Last-Translator: Michael Pohl <michael@mipapo.de>\n"
-"Language-Team: German <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/de/>\n"
+"Language-Team: German "
+"<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -291,9 +291,8 @@ msgstr "Vertikale Bewegung"
 #: inc/core/Activity/VerticalRatio.php:48
 #: inc/core/View/Activity/Plot/Series/VerticalRatio.php:42
 #: inc/core/Dataset/Keys/VerticalRatio.php:44
-#, fuzzy
 msgid "Vertical ratio"
-msgstr "Vertikale Bewegung"
+msgstr "Vertikale Verhältnis"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:42
 #: inc/training/view/class.VDOTinfo.php:74
@@ -509,9 +508,8 @@ msgstr "Benutzt VDOT"
 
 #: inc/training/search/class.SearchFormular.php:168
 #: inc/core/View/Activity/Box/GroundContactBalance.php:27
-#, fuzzy
 msgid "Ground Contact Balance"
-msgstr "Bodenkontaktzeit"
+msgstr "Bodenkontaktzeit Balance"
 
 #: inc/training/search/class.SearchFormular.php:169
 #: inc/training/schemes/scheme.Training.new.php:440
@@ -842,16 +840,14 @@ msgid "Zone"
 msgstr "Zone"
 
 #: inc/training/view/section/class.SectionRunningDynamicsRow.php:58
-#, fuzzy
 msgid "Oscillation"
 msgstr "Vertikale Bewegung"
 
 #: inc/training/view/section/class.SectionRunningDynamicsRow.php:68
 #: inc/core/View/Activity/Plot/Series/GroundContactBalance.php:57
 #: inc/core/Dataset/Keys/GroundcontactBalance.php:44
-#, fuzzy
 msgid "Ground contact balance"
-msgstr "Bodenkontaktzeit"
+msgstr "Balance Bodenkontaktzeit"
 
 #: inc/training/view/section/class.SectionHRVRow.php:30
 msgid "R-R intervals"
@@ -990,9 +986,8 @@ msgid "correct again using %s"
 msgstr ""
 
 #: inc/training/view/class.ElevationInfo.php:274
-#, fuzzy
 msgid "srtm files"
-msgstr "Datei erstellen"
+msgstr "srtm Dateien"
 
 #: inc/training/view/class.ElevationInfo.php:288
 msgid "Compare algorithms"
@@ -1246,9 +1241,8 @@ msgid "Heart rate"
 msgstr "Herzfrequenz"
 
 #: inc/training/class.TrainingFormular.php:305
-#, fuzzy
 msgid "Ground contact time balance"
-msgstr "Bodenkontaktzeit"
+msgstr "Balance der Bodenkontaktzeit"
 
 #: inc/training/class.TrainingFormular.php:306
 #: inc/core/View/Window/Laps/Table.php:236
@@ -1303,7 +1297,7 @@ msgstr "Geschlecht"
 
 #: inc/core/Configuration/Category/General.php:229
 msgid "Beginning of the week"
-msgstr ""
+msgstr "Wochenbeginn"
 
 #: inc/core/Configuration/Category/General.php:233
 msgid "Unit system for distances"
@@ -1322,9 +1316,8 @@ msgid "Weight unit"
 msgstr "Einheit für Gewicht"
 
 #: inc/core/Configuration/Category/General.php:242
-#, fuzzy
 msgid "Temperature unit"
-msgstr "Temperatur"
+msgstr "Temperatureinheit"
 
 #: inc/core/Configuration/Category/General.php:246
 msgid "Heart rate unit"
@@ -1872,9 +1865,8 @@ msgstr ""
 "%s wurde neu berechnet. Neuer Wert: <strong>%s</strong> (alter Wert: %s)"
 
 #: inc/core/Activity/GroundcontactBalance.php:48
-#, fuzzy
 msgid "Groundcontact balance"
-msgstr "Bodenkontaktzeit"
+msgstr "Balance der Bodenkontaktzeit"
 
 #: inc/core/View/Window/Laps/Table.php:117
 msgid "Lap"
@@ -2019,9 +2011,8 @@ msgid "Speed"
 msgstr "Geschwindigkeit"
 
 #: inc/core/View/Activity/Box/VerticalRatio.php:26
-#, fuzzy
 msgid "Vertical Ratio"
-msgstr "Vertikale Bewegung"
+msgstr "Vertikales Verhältnis"
 
 #: inc/core/View/Activity/Box/Gradient.php:26
 msgid "&oslash; Gradient"
@@ -2351,11 +2342,11 @@ msgstr "Pace / Herzfrequenz / Höhenprofil"
 
 #: inc/core/Parameter/Application/TemperatureUnit.php:35
 msgid "Celsius (°C)"
-msgstr ""
+msgstr "Celsius (°C)"
 
 #: inc/core/Parameter/Application/TemperatureUnit.php:36
 msgid "Fahrenheit (°F)"
-msgstr ""
+msgstr "Fahrenheit (°F)"
 
 #: inc/core/Parameter/Application/DataBrowserMode.php:33
 msgid "Week view"
@@ -2467,12 +2458,11 @@ msgstr ""
 
 #: inc/core/Dataset/Keys/Temperature.php:53
 msgid "Temp."
-msgstr ""
+msgstr "Temp."
 
 #: inc/core/Dataset/Keys/HeartrateAverage.php:44
-#, fuzzy
 msgid "avg."
-msgstr "durchschn. Puls"
+msgstr "durchschn."
 
 #: inc/core/Dataset/Keys/Sport.php:53
 msgid "Sport type"
@@ -2530,7 +2520,7 @@ msgstr "JD Intensität"
 
 #: inc/core/Dataset/Keys/JdIntensity.php:53
 msgid "JD"
-msgstr ""
+msgstr "JD"
 
 #: inc/core/Dataset/Keys/JdIntensity.php:62
 #, fuzzy
@@ -2555,9 +2545,8 @@ msgid ""
 msgstr ""
 
 #: inc/core/Dataset/Keys/VdotValue.php:44
-#, fuzzy
 msgid "VDOT value"
-msgstr "VDOT Form"
+msgstr "VDOT Wert"
 
 #: inc/core/Dataset/Keys/VdotValue.php:63
 msgid ""
@@ -2566,9 +2555,8 @@ msgid ""
 msgstr ""
 
 #: inc/core/Dataset/Keys/FitVdotEstimate.php:53
-#, fuzzy
 msgid "(file)"
-msgstr "(laut Datei)"
+msgstr "(Datei)"
 
 #: inc/core/Dataset/Keys/FitVdotEstimate.php:62
 msgid "Garmin's newer devices have an integrated vdot estimation."
@@ -2576,7 +2564,7 @@ msgstr ""
 
 #: inc/core/Dataset/Keys/GroundcontactBalance.php:53
 msgid "GCB"
-msgstr ""
+msgstr "GCB"
 
 #: inc/core/Dataset/Keys/Daytime.php:43
 msgid "Daytime"
@@ -2587,7 +2575,6 @@ msgid "Exact daytime of the activity. (the date itself is always shown)"
 msgstr ""
 
 #: inc/core/Dataset/Keys/Groundcontact.php:53
-#, fuzzy
 msgid "Groundcontact"
 msgstr "Bodenkontaktzeit"
 
@@ -4021,7 +4008,7 @@ msgstr "Beispiel"
 
 #: inc/system/config/class.ConfigTabDataset.php:136
 msgid "new"
-msgstr ""
+msgstr "neu"
 
 #: inc/system/config/class.ConfigTabDataset.php:259
 msgid "Test activity"
@@ -4452,7 +4439,7 @@ msgstr "Dein Browser unterstützt diesen Uploader anscheinend nicht, siehe"
 
 #: inc/import/tpl/tpl.Importer.upload.php:62
 msgid "Currently we don't detect duplicates during import"
-msgstr ""
+msgstr "Aktuell können wir keine Duplikate während des Uploads erkennen"
 
 #: inc/import/tpl/tpl.Importer.upload.php:66
 msgid "Supported file extensions:"
@@ -4525,12 +4512,10 @@ msgstr ""
 "Das XML-Objekt enthält keine Daten. &lt;result&gt;-tag wurde nicht gefunden."
 
 #: inc/import/parser/class.ParserSLF4Single.php:28
-#, fuzzy
 msgid ""
 "Given XML object is not from Sigma. &lt;Entries&gt;-tag could not be located."
 msgstr ""
-"Das XML-Objekt ist nicht von Sigma. &lt;LogEntries&gt;-tag wurde nicht "
-"gefunden."
+"Das XML-Objekt ist nicht von Sigma. &lt;Entries&gt;-tag wurde nicht gefunden."
 
 #: inc/import/parser/class.ParserSLF4Single.php:54
 #: inc/import/parser/class.ParserSLF3Single.php:65
@@ -4973,7 +4958,7 @@ msgstr ""
 
 #: inc/class.AdminView.php:165
 msgid "Perl Path"
-msgstr ""
+msgstr "Perl Pfad"
 
 #: inc/class.AdminView.php:166
 msgid "Sender e-mail"
