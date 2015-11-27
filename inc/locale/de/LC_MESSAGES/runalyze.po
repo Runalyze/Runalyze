@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-11-27 13:34+0100\n"
-"PO-Revision-Date: 2015-11-27 14:17+0200\n"
-"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
+"PO-Revision-Date: 2015-11-27 17:14+0200\n"
+"Last-Translator: Saalbuerger <janosch.loehr@posteo.de>\n"
 "Language-Team: German "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
@@ -1757,8 +1757,8 @@ msgid ""
 "Add for each meter upwards X meter to the distance. (Only for the VDOT "
 "calculation)"
 msgstr ""
-"Um bei der VDOT-Berechnung Höhenmeter zu beachten, kann die Distanz den "
-"Höhenmetern entsprechend angepasst werden."
+"Füge für jeden positiven Höhenmeter X Meter an die Distanz an. (Nur für die "
+"VDOT Kalkulation)"
 
 #: inc/core/Configuration/Category/Vdot.php:200
 msgid "Correction per negative elevation"
@@ -1769,8 +1769,8 @@ msgid ""
 "Add for each meter downwards X meter to the distance. (Only for the VDOT "
 "calculation)"
 msgstr ""
-"Um bei der VDOT-Berechnung Höhenmeter zu beachten, kann die Distanz den "
-"Höhenmetern entsprechend angepasst werden."
+"Ziehe für jeden negativen Höhenmeter X Meter von der Distanz ab. (Nur für "
+"die VDOT Kalkulation)"
 
 #: inc/core/Configuration/Category/Vdot.php:220
 #: plugin/RunalyzePluginTool_DatenbankCleanup/JobGeneral.php:116
@@ -2502,9 +2502,8 @@ msgid "Calories are taken from your device or calculated by a simple formula."
 msgstr ""
 
 #: inc/core/Dataset/Keys/FitHrvAnalysis.php:53
-#, fuzzy
 msgid "HRV"
-msgstr "HF"
+msgstr "HRV"
 
 #: inc/core/Dataset/Keys/FitHrvAnalysis.php:63
 msgid ""
@@ -3197,11 +3196,12 @@ msgid ""
 "Single-user installations are not supported anymore. Please register a new "
 "account by following %s."
 msgstr ""
+"Single-user Installationen werden nicht mehr Unterstützt. Bitte erstelle dir "
+"einen neuen Account unter %s."
 
 #: inc/tpl/tpl.InstallerUpdate.php:36
-#, fuzzy
 msgid "these instructions"
-msgstr "Registrierungen"
+msgstr "diese Anleitungen"
 
 #: inc/tpl/tpl.InstallerUpdate.php:44
 msgid "----- please choose"
@@ -3355,7 +3355,7 @@ msgid ""
 "problems or wishes: Please contact our Runalyze team. It's near and dear to "
 "us"
 msgstr ""
-"Runalyze kommt von Läufern für Läufer. Wann immer du Anmerkungen, Probleme "
+"Runalyze ist von Läufern für Läufer. Wann immer du Anmerkungen, Probleme "
 "oder Wünsche hast: Sag uns Bescheid, es liegt uns am Herzen!"
 
 #: inc/tpl/tpl.help.php:11
@@ -5577,8 +5577,8 @@ msgid ""
 "A virtual Pace Bunny <em>reaches</em> the goal with a steady performance - "
 "you can see how far you are ahead or behind."
 msgstr ""
-"Ein virtuelles Pace Bunny läuft gleichmässig mit dem selben Ziel - der "
-"Vorsprung oder Rückstand zum Pace Bunny wird ebenfalls angezeigt."
+"Ein virtuelles Pace Bunny läuft gleichmässig und <em>erreicht</em> das selbe "
+"Ziel - der Vorsprung oder Rückstand zum Pace Bunny wird ebenfalls angezeigt."
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:59
 msgid ""
@@ -6117,6 +6117,8 @@ msgstr "Es befinden sich <strong>%s</strong> Körperdaten in der Datei."
 #, php-format
 msgid "Versions do not match! The backup is from %s but you are using %s."
 msgstr ""
+"Die Versionen passen nicht zusammen! Das Backup ist mit Version %s erstellt "
+"worden, Du aber verwendest Version %s."
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:210
 msgid "The file seems to be corrupted."
@@ -6144,6 +6146,8 @@ msgid ""
 "All shared links will be invalid if you (re-)import activities and overwrite "
 "all existing activities!"
 msgstr ""
+"Bei einem (Re-)Import von Aktivitäten und dem Überschreiben aller "
+"Aktivitäten, werden alle geteilten Links ungültig."
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:284
 msgid ""
@@ -6706,6 +6710,11 @@ msgid ""
 "serves some tables estimating the VDOT value. These formulas are used to "
 "estimate your VDOT and predict your race performances."
 msgstr ""
+"Die <a href=\"%s\" target=\"_blank\">Jack Daniels Laufformel</a> liefert …"
+"serves some tables estimating the VDOT value…\n"
+"Diese Formel wird benutzt um deine VDOT-Werte zu schätzen und berechnet "
+"deine Wettkampfzeiten.\n"
+"\n"
 "\"Die Laufformel\" von Jack Daniels beinhaltet einige Tabelle um VDOT-Werte "
 "zu schätzen. Diese Formeln werden verwendet, um deinen VDOT zu schätzen und "
 "deine Wettkampfzeiten vorherzusagen."
@@ -6897,7 +6906,7 @@ msgstr "Form anzeigen"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:101
 msgid "How are these values calculated?"
-msgstr "Erläuterungen zu den Rechenspielen"
+msgstr "Wie werden diese Werte berechnet?"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:102
 msgid "Explanations: What are VDOT and TRIMP?"
@@ -7037,7 +7046,7 @@ msgstr "Einfach"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:388
 msgid "Easy pace running refers to warm-ups, cool-downs and recovery runs."
-msgstr "Lockere Läufe (Aufwärmen, Auslaufen, Regenerationsläufe)"
+msgstr "Lockere Pace zum Aufwärmen, zum Auslaufen und für Regenerationsläufe."
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:393
 #: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:140
