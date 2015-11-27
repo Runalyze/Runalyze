@@ -48,7 +48,7 @@ class RunalyzePluginPanel_Equipment extends PluginPanel {
 	 * Init configuration
 	 */
 	protected function initConfiguration() {
-		$this->AllTypes = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'equipment_type` WHERE `accountid`="'.SessionAccountHandler::getId().'" ORDER BY `name` ASC')->fetchAll();
+		$this->AllTypes = DB::getInstance()->query('SELECT `id`, `name` FROM `'.PREFIX.'equipment_type` WHERE `accountid`="'.SessionAccountHandler::getId().'" ORDER BY `name` ASC')->fetchAll();
 		$Options = array();
 
 		foreach ($this->AllTypes as $data) {
