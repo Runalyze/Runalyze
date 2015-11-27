@@ -112,7 +112,8 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 
 		$this->displayMonthTableTemp();
 		$this->displayMonthTableWeather();
-		$this->displayClothesTable();
+                $this->displayMonthTableEquipment();
+		$this->displayEquipmentTable();
 
 		echo '</tbody>';
 		echo '</table>';
@@ -280,79 +281,81 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 	}
 	
 	/**
-	 * Display month-table for clothes
-	 */
-	private function displayMonthTableClothes() {
-		$nums = DB::getInstance()->query(
-			'SELECT
+	* Display month-table for equipment
+	*/
+	private function displayMonthTableEquipment() {
+
+		$nums = DB::getInstance()->query('SELECT
 				SUM(1) as `num`,
 				'.$this->getTimerIndexForQuery().' as `m`
-			FROM `'.PREFIX.'training` WHERE
-				`clothes`!=""
+			FROM `'.PREFIX.'training` WHERE 1 
 				'.$this->getSportAndYearDependenceForQuery().'
 			GROUP BY '.$this->getTimerIndexForQuery().'
 			ORDER BY '.$this->getTimerForOrderingInQuery().' ASC
-			LIMIT 12'
-		)->fetchAll();
-		
+			LIMIT 12')->fetchAll();
+
 		if (!empty($nums)) {
-			foreach ($nums as $dat) {
+			foreach ($nums as $dat)
 				$num[$dat['m']] = $dat['num'];
-			}
 		}
 
-		$ClothesQuery = DB::getInstance()->prepare(
-			'SELECT
-				SUM(IF(FIND_IN_SET(:id, `clothes`)!=0,1,0)) as `num`,
-				'.$this->getTimerIndexForQuery().' as `m`
-			FROM `'.PREFIX.'training` WHERE
-				1 '.$this->getSportAndYearDependenceForQuery().'
-			GROUP BY '.$this->getTimerIndexForQuery().'
-			HAVING `num`!=0
-			ORDER BY '.$this->getTimerForOrderingInQuery().' ASC
-			LIMIT 12'
-		);
+		if (!empty($this->Equipment)) {
+                    
+                    $EquipmentTable = array();
+                    
+                    $Equipmentquery = DB::getInstance()->query(
+                    'SELECT
+                            SUM(IF(eq.activityid = id, 1,0)) as `num`, eq.equipmentid,
+                            '.$this->getTimerIndexForQuery().' as `m`
+                    FROM `'.PREFIX.'activity_equipment` eq
+                    LEFT JOIN runalyze_training ON id=eq.activityid 
+                    WHERE accountid = '.SessionAccountHandler::getId().' ' .$this->getYearDependenceForQuery(). '
+                        GROUP BY eq.equipmentid, '.$this->getTimerIndexForQuery().'  
+                        HAVING `num`!=0
+                    ORDER BY '.$this->getTimerForOrderingInQuery().' ASC
+                    LIMIT 12'
+                    )->fetchAll();
+                    
+                    if(!empty($Equipmentquery)) {
+                        foreach ($Equipmentquery as $eqp)
+                                $EquipmentTable[$eqp['equipmentid']][$eqp['m']] = $eqp['num'];
+                    }
 
-		if (!empty($this->Clothes)) {
-			foreach ($this->Clothes as $k => $kleidung) {
-				echo '<tr class="'.($k == 0 ? 'top-spacer' : '').'"><td>'.$kleidung['name'].'</td>';
-			
-				$i = 1;
-				$ClothesQuery->execute(array(':id' => $kleidung['id']));
-				$data = $ClothesQuery->fetchAll();
-
-				if (!empty($data)) {
-					foreach ($data as $dat) {
-						for (; $i < $dat['m']; $i++)
-							echo HTML::emptyTD();
-
-						$i++;
-
-						if ($dat['num'] != 0) {
-							echo '
-								<td class="r"><span title="'.$dat['num'].'x">
-										'.round($dat['num']*100/$num[$dat['m']]).' &#37;
-								</span></td>';
-						} else {
-							echo HTML::emptyTD();
-						}
-					}
-
-					for (; $i <= 12; $i++)
-						echo HTML::emptyTD();
-				} else {
-					echo '<td colspan="12"></td>';
-				}
-
-				echo '</tr>';
+                    foreach ($this->Equipment as $e => $equipment) {
+                            echo '<tr class="'.($e == 0 ? 'top-spacer' : '').'"><td>'.$equipment->name().'</td>';
+                            if(!isset($EquipmentTable[$equipment->id()])) {
+                                echo '<td colspan="12"></td>';
+                            } else {
+                                $i = 1;
+                                for (; $i <= 12; $i++) {
+                                    if(!isset($EquipmentTable[$equipment->id()][$i])) {
+                                        echo HTML::emptyTD();
+                                    } else {
+                                            echo '
+                                                    <td class="r"><span title="'.$EquipmentTable[$equipment->id()][$i].'x">
+                                                                    '.round($EquipmentTable[$equipment->id()][$i]*100/$num[$i]).' &#37;
+                                                    </span></td>';
+                                    }
+                                }
+                            }
+                            echo '</tr>';
 			}
 		}
+	}
+	
+	private function getEquipmentTypeNavigation() {
+		$LinkList = '<li class="with-submenu"><span class="link">' . __('Equipment types') . '</span><ul class="submenu">';
+		foreach($this->EquipmentTypes as $EqType) {
+		    $LinkList .= '<li>' . $this->getInnerLink($EqType->name(), false, false, $EqType->id()) . '</li>';
+		}
+		$LinkList .= '</ul></li>';
+		return $LinkList;
 	}
 
 	/**
 	 * Display table for clothes
 	 */
-	private function displayClothesTable() {
+	private function displayEquipmentTable() {
 		echo '<table class="fullwidth zebra-style">
 			<thead><tr>
 				<th></th>
@@ -375,7 +378,7 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 				`eq`.`equipmentid`
 			FROM `'.PREFIX.'training`
 			LEFT JOIN `runalyze_activity_equipment` AS `eq` ON `id` = `eq`.`activityid`
-			WHERE `eq`.`activityid` IS NOT NULL AND `temperature` IS NOT NULL
+			WHERE accountid = '.SessionAccountHandler::getId().' AND `eq`.`activityid` IS NOT NULL AND `temperature` IS NOT NULL
 				'.$this->getYearDependenceForQuery().'
 			GROUP BY `eq`.`equipmentid`'
 		)->fetchAll();
