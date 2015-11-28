@@ -90,7 +90,7 @@ class Query
 	/**
 	 * Reset joins
 	 */
-	protected function resetJoins()
+	public function resetJoins()
 	{
 		$this->JoinTables = array();
 	}
@@ -98,7 +98,7 @@ class Query
 	/**
 	 * @return string
 	 */
-	protected function queryToSelectJoinedFields()
+	public function queryToSelectJoinedFields()
 	{
 		$query = '';
 
@@ -112,7 +112,7 @@ class Query
 	/**
 	 * @return string
 	 */
-	protected function queryToJoinTables()
+	public function queryToJoinTables()
 	{
 		$query = '';
 
@@ -123,7 +123,7 @@ class Query
 		return $query;
 	}
 
-	protected function queryToGroupByActivity()
+	public function queryToGroupByActivity()
 	{
 		if (!empty($this->JoinTables)) {
 			return 'GROUP BY `t`.`id`';
@@ -231,6 +231,8 @@ class Query
 	}
 
 	/**
+	 * Query to select all keys
+	 * Hint: You must use "... FROM `'.PREFIX.'training` AS `t` ..."
 	 * @return string
 	 */
 	public function queryToSelectAllKeys()
@@ -241,6 +243,8 @@ class Query
 	}
 
 	/**
+	 * Query to select active keys
+	 * Hint: You must use "... FROM `'.PREFIX.'training` AS `t` ..."
 	 * @return string
 	 */
 	public function queryToSelectActiveKeys()
