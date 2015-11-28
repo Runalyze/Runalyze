@@ -31,7 +31,10 @@ define('SET_GLOBAL_PROPERTIES', false); // Set to true to set max_allowed_packet
  ******************************************************************************/
 
 $starttime = microtime(true);
-
+$maxtime = ini_get('max_execution_time');
+if(!CLI) {
+    echo '<meta http-equiv="refresh" content="'.$maxtime.'; URL=refactor-geohash.php">';
+}
 /**
  * Protect script
  */
@@ -99,9 +102,11 @@ while ($Route = $Routes->fetch()) {
 				 ':min' => (new Geohash)->encode(new Coordinate(array($Route['min_lat'], $Route['min_lng'])), 10)->getGeohash(),
 				 ':max' => (new Geohash)->encode(new Coordinate(array($Route['max_lat'], $Route['max_lng'])), 10)->getGeohash()
 			    ));
+    if (CLI) {
     echo "\033[7D";
     $diff = count($Route['id']);
     echo str_pad($Route['id'], 7-$diff, ' ', STR_PAD_LEFT);
+    } else { echo "."; }
 }
 
         echo 'done;'.NL;
