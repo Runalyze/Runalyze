@@ -182,7 +182,9 @@ class RunalyzeJsonImporter {
 				'runalyze_swimdata',
 				'runalyze_trackdata',
 				'runalyze_hrv',
-				'runalyze_activity_equipment'
+				'runalyze_activity_equipment',
+				'runalyze_tag',
+				'runalyze_activity_tag',
 			),
 			'update'	=> array(
 				'runalyze_conf'			=> 'overwrite_config',
@@ -328,7 +330,8 @@ class RunalyzeJsonImporter {
 				'runalyze_plugin',
 				'runalyze_route',
 				'runalyze_sport',
-				'runalyze_type'
+				'runalyze_type',
+				'runalyze_tag'
 			))) {
 				if (isset($this->ExistingData[$TableName][$Values[0]])) {
 					$this->ReplaceIDs[$TableName][$ID] = $this->ExistingData[$TableName][$Values[0]];
@@ -403,6 +406,9 @@ class RunalyzeJsonImporter {
 		} elseif ($TableName == 'runalyze_activity_equipment') {
 			$Row['activityid'] = $this->correctID('runalyze_training', $Row['activityid']);
 			$Row['equipmentid'] = $this->correctID('runalyze_equipment', $Row['equipmentid']);
+		} elseif ($TableName == 'runalyze_activity_tag') {
+			$Row['activityid'] = $this->correctID('runalyze_training', $Row['activityid']);
+			$Row['tagid'] = $this->correctID('runalyze_tag', $Row['tagid']);
 		}
 	}
 
