@@ -54,7 +54,8 @@ class DefaultConfiguration extends Configuration
 			Keys::SWOLF => false,
 			Keys::TOTAL_STROKES => false,
 			Keys::VERTICAL_RATIO => false,
-			Keys::GROUNDCONTACT_BALANCE => false
+			Keys::GROUNDCONTACT_BALANCE => false,
+			Keys::TAGS => false
 		));
 	}
 

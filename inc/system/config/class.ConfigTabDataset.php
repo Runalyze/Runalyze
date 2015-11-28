@@ -267,7 +267,22 @@ class ConfigTabDataset extends ConfigTab {
 			'swolf'		=> 29,
 			'total_strokes'	=> 1250,
 			'vertical_ratio' => 79,
-			'groundcontact_balance' => 4980
+			'groundcontact_balance' => 4980,
+			Dataset\Keys\Tags::CONCAT_TAGIDS_KEY => $this->exampleTagID()
 		);
+	}
+
+	/**
+	 * @return string
+	 */
+	protected function exampleTagID() {
+		$Factory = new \Runalyze\Model\Factory(SessionAccountHandler::getId());
+		$AllTags = $Factory->allTags();
+
+		if (!empty($AllTags)) {
+			return $AllTags[0]->id();
+		}
+
+		return '';
 	}
 }

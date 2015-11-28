@@ -35,6 +35,9 @@ class Query
 	/** @var array */
 	protected $AdditionalColumns = array();
 
+	/** @var array array('table' => array('field' => ..., 'join' => ...)) */
+	protected $JoinTables = array();
+
 	/**
 	 * @param \Runalyze\Dataset\Configuration $configuration
 	 * @param \PDO $pdo
@@ -63,20 +66,70 @@ class Query
 	 */
 	public function statementToFetchActivities($timeStart, $timeEnd, $allKeys = false)
 	{
+		$this->resetJoins();
+
 		return $this->PDO->query(
 			'SELECT
-				`id`,
-				`time`,
-				`s` as `'.Keys\Pace::DURATION_SUM_WITH_DISTANCE_KEY.'`,
-				DATE(FROM_UNIXTIME(time)) as `date`,
+				`t`.`id`,
+				`t`.`time`,
+				`t`.`s` as `'.Keys\Pace::DURATION_SUM_WITH_DISTANCE_KEY.'`,
+				DATE(FROM_UNIXTIME(`t`.`time`)) as `date`,
 				'.($allKeys ? $this->queryToSelectAllKeys() : $this->queryToSelectActiveKeys()).'
-			FROM `'.PREFIX.'training`
+				'.$this->queryToSelectJoinedFields().'
+			FROM `'.PREFIX.'training` AS `t`
+			'.$this->queryToJoinTables().'
 			WHERE
 				'.$this->whereTimeIsBetween($timeStart, $timeEnd).' AND
-				`accountid` = '.(int)$this->AccountID.' AND
+				`t`.`accountid` = '.(int)$this->AccountID.' AND
 				'.$this->wherePrivacyIsOkay().'
+			'.$this->queryToGroupByActivity().'
 			ORDER BY `time` ASC'
 		);
+	}
+
+	/**
+	 * Reset joins
+	 */
+	protected function resetJoins()
+	{
+		$this->JoinTables = array();
+	}
+
+	/**
+	 * @return string
+	 */
+	protected function queryToSelectJoinedFields()
+	{
+		$query = '';
+
+		foreach ($this->JoinTables as $joinData) {
+			$query .= ', '.$joinData['field'];
+		}
+
+		return $query;
+	}
+
+	/**
+	 * @return string
+	 */
+	protected function queryToJoinTables()
+	{
+		$query = '';
+
+		foreach ($this->JoinTables as $joinData) {
+			$query .= $joinData['join'].' ';
+		}
+
+		return $query;
+	}
+
+	protected function queryToGroupByActivity()
+	{
+		if (!empty($this->JoinTables)) {
+			return 'GROUP BY `t`.`id`';
+		}
+
+		return '';
 	}
 
 	/**
@@ -94,7 +147,7 @@ class Query
 				SUM(IF(`distance`>0,`s`,0)) as `'.Keys\Pace::DURATION_SUM_WITH_DISTANCE_KEY.'`,
 				SUM(1) as `num`,
 				'.$this->queryToSummarizeActiveKeys().'
-			FROM `'.PREFIX.'training`
+			FROM `'.PREFIX.'training` AS `t`
 			WHERE
 				`sportid` = '.(int)$sportid.' AND
 				`accountid` = '.(int)$this->AccountID.' AND
@@ -119,7 +172,7 @@ class Query
 				SUM(IF(`distance`>0,`s`,0)) as `'.Keys\Pace::DURATION_SUM_WITH_DISTANCE_KEY.'`,
 				SUM(1) as `num`,
 				'.$this->queryToSummarizeActiveKeys().'
-			FROM `'.PREFIX.'training`
+			FROM `'.PREFIX.'training` AS `t`
 			WHERE
 				`accountid` = '.(int)$this->AccountID.' AND
 				'.$this->whereTimeIsBetween($timeStart, $timeEnd).' AND
@@ -145,7 +198,7 @@ class Query
 				SUM(1) as `num`,
 				'.$this->queryToSummarizeActiveKeys().',
 				'.$this->queryToSelectTimerange($timerange, $timeEnd, 'timerange').'
-			FROM `'.PREFIX.'training`
+			FROM `'.PREFIX.'training` AS `t`
 			WHERE
 				`sportid` = '.(int)$sportid.' AND
 				`accountid` = '.(int)$this->AccountID.' AND
@@ -203,7 +256,7 @@ class Query
 	 */
 	protected function queryToSelectKeys(array $arrayOfKeys)
 	{
-		return '`'.implode('`, `', $arrayOfKeys).'`';
+		return '`t`.`'.implode('`, `t`.`', $arrayOfKeys).'`';
 	}
 
 	/**
@@ -218,7 +271,11 @@ class Query
 			$KeyObject = Keys::get($key);
 
 			if ($KeyObject->isInDatabase()) {
-				$columns[] = $KeyObject->column();
+				if ($KeyObject->requiresJoin()) {
+					$this->JoinTables[] = $KeyObject->joinDefinition();
+				} else {
+					$columns[] = $KeyObject->column();
+				}
 			}
 		}
 
@@ -252,12 +309,12 @@ class Query
 		$timeEnd = $timeEnd ?: time();
 
 		if ($timerange == self::YEAR_TIMERANGE) {
-			return date('Y', $timeEnd).' - YEAR(FROM_UNIXTIME(`time`)) as `'.$asColumn.'`';
+			return date('Y', $timeEnd).' - YEAR(FROM_UNIXTIME(`t`.`time`)) as `'.$asColumn.'`';
 		} elseif ($timerange == self::MONTH_TIMERANGE) {
-			return date('m', $timeEnd).' - MONTH(FROM_UNIXTIME(`time`)) + 12*('.date('Y', $timeEnd).' - YEAR(FROM_UNIXTIME(`time`))) as `'.$asColumn.'`';
+			return date('m', $timeEnd).' - MONTH(FROM_UNIXTIME(`t`.`time`)) + 12*('.date('Y', $timeEnd).' - YEAR(FROM_UNIXTIME(`t`.`time`))) as `'.$asColumn.'`';
 		}
 
-		return 'FLOOR(('.$timeEnd.'-`time`)/('.$timerange.')) as `'.$asColumn.'`';
+		return 'FLOOR(('.$timeEnd.'-`t`.`time`)/('.$timerange.')) as `'.$asColumn.'`';
 	}
 
 	/**
@@ -269,7 +326,7 @@ class Query
 	{
 		$timeEnd = $timeEnd ?: time();
 
-		return '`time` BETWEEN '.($timeStart - 10).' AND '.($timeEnd - 10);
+		return '`t`.`time` BETWEEN '.($timeStart - 10).' AND '.($timeEnd - 10);
 	}
 
 	/**
@@ -278,7 +335,7 @@ class Query
 	 */
 	protected function wherePrivacyIsOkay() {
 		if ($this->ShowOnlyPublicActivites) {
-			return '`is_public`=1';
+			return '`t`.`is_public`=1';
 		}
 
 		return '1';
