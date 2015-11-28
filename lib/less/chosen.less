@@ -13,7 +13,7 @@
 @chosen-no-results-background:	#f4f4f4;
 
 // Complete container
-.chzn-container {
+.chosen-container {
 	font-size: @chosen-font-size;
 	position: relative;
 	display: inline-block;
@@ -22,7 +22,7 @@
 	*display: inline;
 
 	// Drop down menu
-	.chzn-drop {
+	.chosen-drop {
 		background: @chosen-background;
 		border: 1px solid @chosen-border;
 		border-top: 0;
@@ -34,19 +34,19 @@
 		box-sizing: border-box;
 	}
 
-	&.chzn-with-drop .chzn-drop {
+	&.chosen-with-drop .chosen-drop {
 		left: 0;
 	}
 
-	&.chzn-container-active,
-	&.chzn-container-active.chzn-container-multi .chzn-choices {
+	&.chosen-container-active,
+	&.chosen-container-active.chosen-container-multi .chosen-choices {
 		background: @chosen-background-active;
 	}
 }
 
 // Multi select
-.chzn-container-multi {
-	.chzn-choices {
+.chosen-container-multi {
+	.chosen-choices {
 		background: @chosen-background;
 		border: 1px solid @chosen-border;
 		border-radius: @chosen-border-radius;
@@ -120,18 +120,18 @@
 		}
 	}
 
-	.chzn-results {
+	.chosen-results {
 		margin: 0;
 		padding: 0;
 	}
 
-	.chzn-drop .result-selected {
+	.chosen-drop .result-selected {
 		display: none;
 	}
 }
 
 // Results
-.chzn-results {
+.chosen-results {
 	margin: 0 4px 4px 0;
 	max-height: 240px;
 	padding: 0 0 0 4px;
@@ -177,22 +177,22 @@
 	}
 }
 
-// Not used: .chzn-results-scroll
-// Not used: .chzn-container-active ...
+// Not used: .chosen-results-scroll
+// Not used: .chosen-container-active ...
 
 // Disabled support
-.chzn-disabled {
+.chosen-disabled {
 	cursor: default;
 	opacity: 0.5 !important;
 
-	.chzn-single {
+	.chosen-single {
 		cursor: default;
 	}
 
-	.chzn-choices .search-choice .search-choice-close {
+	.chosen-choices .search-choice .search-choice-close {
 		cursor: default;
 	}
 }
 
 // Not used elements:
-// .chzn-container-single .chzn-single/chzn-default/chzn-search
+// .chosen-container-single .chosen-single/chosen-default/chosen-search

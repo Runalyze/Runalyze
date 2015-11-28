@@ -130,8 +130,7 @@ class SearchResults {
 			'groundcontact_balance',
 
 			'use_vdot',
-			'is_public',
-			'abc'
+			'is_public'
 		);
 
 		// Some additional keys
@@ -159,19 +158,27 @@ class SearchResults {
 	 * Search trainings
 	 */
 	protected function searchTrainings() {
-		$this->TotalNumberOfTrainings = DB::getInstance()->query('SELECT COUNT(*) FROM `'.PREFIX.'training` '.$this->getWhere().$this->getOrder().' LIMIT 1')->fetchColumn();
+		$this->TotalNumberOfTrainings = DB::getInstance()->query('SELECT COUNT(*) FROM `'.PREFIX.'training` AS `t` '.$this->getWhere().$this->getOrder().' LIMIT 1')->fetchColumn();
 		$this->Page = (int)Request::param('page');
 
 		if (($this->Page-1)*$this->ResultsPerPage > $this->TotalNumberOfTrainings)
 			$this->Page--;
 
+		$this->DatasetQuery->resetJoins();
+
 		$this->Trainings = DB::getInstance()->query(
-			'SELECT
-				`id`,
-				`time`
-				'.($this->multiEditorRequested() ? '' : ', '.$this->DatasetQuery->queryToSelectAllKeys()).'
-			FROM `'.PREFIX.'training`
-			'.$this->getWhere().$this->getOrder().$this->getLimit()
+			'SELECT DISTINCT
+				`t`.`id`,
+				`t`.`time`
+				'.($this->multiEditorRequested() ? '' :
+					', '.str_replace('`t`.', '', $this->DatasetQuery->queryToSelectAllKeys()).' '.
+					$this->DatasetQuery->queryToSelectJoinedFields()
+				).'
+			FROM `'.PREFIX.'training` AS `t`
+			'.$this->DatasetQuery->queryToJoinTables().'
+			'.$this->getWhere().' '.
+			$this->DatasetQuery->queryToGroupByActivity().
+			$this->getOrder().$this->getLimit() 
 		)->fetchAll();
 	}
 
@@ -180,7 +187,7 @@ class SearchResults {
 	 * @return string
 	 */
 	protected function getWhere() {
-		$conditions = array('`accountid`="'.$this->AccountID.'"');
+		$conditions = array('`t`.`accountid`="'.$this->AccountID.'"');
 
 		if (isset($_POST['sportid']))
 			$this->addSportCondition($conditions);
@@ -204,8 +211,8 @@ class SearchResults {
 		}
 	
 		$this->addConditionsForOrder($conditions);
-
-		return $this->getEquipmentCondition().' WHERE '.implode(' AND ', $conditions);
+                    
+		return $this->getEquipmentCondition().$this->getTagCondition().' WHERE '.implode(' AND ', $conditions);
 	}
 
 	/**
@@ -221,7 +228,7 @@ class SearchResults {
 			$_POST[$key]
 		);
 
-		$conditions[] = '`'.$key.'` IN('.implode(',', $array).')';
+		$conditions[] = '`t`.`'.$key.'` IN('.implode(',', $array).')';
 	}
 
 	/**
@@ -233,7 +240,7 @@ class SearchResults {
 		$sign = (isset($_POST['opt'][$key])) ? $this->signFor($_POST['opt'][$key]) : '=';
 
 		if ($sign == ' LIKE ') {
-			$conditions[] = '`'.$key.'` '.$sign.' "%'.DB::getInstance()->escape($_POST[$key], false).'%"';
+			$conditions[] = '`t`.`'.$key.'` '.$sign.' "%'.DB::getInstance()->escape($_POST[$key], false).'%"';
 		} else {
 			if (in_array($key, array('distance', 'vertical_oscillation', 'stride_length'))) {
 				$_POST[$key] = (float)str_replace(',', '.', $_POST[$key]);
@@ -255,13 +262,13 @@ class SearchResults {
 				$value = $_POST[$key];
 			}
 
-			$conditions[] = '`'.$key.'` '.$sign.' '.DB::getInstance()->escape($value);
+			$conditions[] = '`t`.`'.$key.'` '.$sign.' '.DB::getInstance()->escape($value);
 
 			if (
 				($sign == '<' || $sign == '<=') &&
 				in_array($key, array('distance', 'pulse_avg', 'pulse_max', 'cadence', 'groundcontact', 'vertical_oscillation', 'vertical_ratio', 'groundcontact_balance', 'stride_length'))
 			) {
-				$conditions[] = '`'.$key.'` != 0';
+				$conditions[] = '`t`.`'.$key.'` != 0';
 			}
 		}
 	}
@@ -295,7 +302,7 @@ class SearchResults {
 			FormularValueParser::validatePost('date-to', FormularValueParser::$PARSER_DATE) &&
 			$_POST['date-to'] > 0
 		) {
-			$conditions[] = '`time` BETWEEN '.(int)$_POST['date-from'].' AND '.((int)$_POST['date-to']+DAY_IN_S);
+			$conditions[] = '`t`.`time` BETWEEN '.(int)$_POST['date-from'].' AND '.((int)$_POST['date-to']+DAY_IN_S);
 		}
 	}
 
@@ -312,9 +319,9 @@ class SearchResults {
 				$_POST['sportid']
 			);
 
-			$conditions[] = '`sportid` IN('.implode(',', $array).')';
+			$conditions[] = '`t`.`sportid` IN('.implode(',', $array).')';
 		} else {
-			$conditions[] = '`sportid`="'.(int)$_POST['sportid'].'"';
+			$conditions[] = '`t`.`sportid`="'.(int)$_POST['sportid'].'"';
 		}
 	}
 
@@ -335,12 +342,35 @@ class SearchResults {
 				$_POST['equipmentid']
 			);
 
-			return 'INNER JOIN (SELECT `ae`.`activityid` FROM `'.PREFIX.'activity_equipment` AS `ae` WHERE `ae`.`equipmentid` IN('.implode(',', $array).')) AS `sub` ON `sub`.`activityid` = `'.PREFIX.'training`.`id`';
+			return 'INNER JOIN (SELECT `ae`.`activityid` FROM `'.PREFIX.'activity_equipment` AS `ae` WHERE `ae`.`equipmentid` IN('.implode(',', $array).')) AS `suba` ON `suba`.`activityid` = `t`.`id`';
 		}
 
-		return 'INNER JOIN `'.PREFIX.'activity_equipment` AS `ae` ON `ae`.`activityid` = `'.PREFIX.'training`.`id` AND `ae`.`equipmentid`="'.(int)$_POST['equipmentid'].'"';
+		return 'INNER JOIN `'.PREFIX.'activity_equipment` AS `ae` ON `ae`.`activityid` = `t`.`id` AND `ae`.`equipmentid`="'.(int)$_POST['equipmentid'].'"';
 	}
 
+	/**
+	 * Get tag condition
+	 * @return string
+	 */
+	private function getTagCondition() {
+		if (!isset($_POST['tagid'])) {
+			return '';
+		}
+
+		if (is_array($_POST['tagid'])) {
+			$array = array_map(
+				function ($value) {
+					return (int)$value;
+				},
+				$_POST['tagid']
+			);
+
+			return 'INNER JOIN (SELECT `at`.`activityid` FROM `'.PREFIX.'activity_tag` AS `at` WHERE `at`.`tagid` IN('.implode(',', $array).')) AS `subb` ON `subb`.`activityid` = `t`.`id`';
+		}
+
+		return 'INNER JOIN `'.PREFIX.'activity_tag` AS `at` ON `at`.`activityid` = `t`.`id` AND `at`.`tagid`="'.(int)$_POST['tagid'].'"';
+	}
+        
 	/**
 	 * Get order
 	 * @return string
@@ -350,12 +380,12 @@ class SearchResults {
 		$order = (!isset($_POST['search-sort-order'])) ? 'DESC' : $this->DB->escape($_POST['search-sort-order'], false);
 
 		if ($sort == 'vdot' && Configuration::Vdot()->useElevationCorrection())
-			return ' ORDER BY IF(`vdot_with_elevation`>0,`vdot_with_elevation`,`vdot`) '.$order;
+			return ' ORDER BY IF(`t`.`vdot_with_elevation`>0, `t`.`vdot_with_elevation`, `t`.`vdot`) '.$order;
 
 		if ($sort == 'pace')
-			$sort = 'IF(`distance`>0,`s`/`distance`,0)';
+			$sort = 'IF(`t`.`distance`>0, `t`.`s`/`t`.`distance`, 0)';
 
-		return ' ORDER BY '.$sort.' '.$order;
+		return ' ORDER BY `t`.'.$sort.' '.$order;
 	}
 
 	/**
@@ -367,9 +397,9 @@ class SearchResults {
 			return;
 
 		if ($_POST['search-sort-by'] == 'pace') {
-			$conditions[] = '`distance` > 0';
+			$conditions[] = '`t`.`distance` > 0';
 		} elseif (in_array($_POST['search-sort-by'], array('pulse_avg', 'pulse_max', 'cadence', 'stride_length', 'groundcontact', 'vertical_oscillation', 'vertical_ratio'))) {
-			$conditions[] = '`'.$_POST['search-sort-by'].'` > 0';
+			$conditions[] = '`t`.`'.$_POST['search-sort-by'].'` > 0';
 		}
 	}
 

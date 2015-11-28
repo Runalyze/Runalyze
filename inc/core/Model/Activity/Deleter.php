@@ -26,6 +26,11 @@ class Deleter extends Model\DeleterWithIDAndAccountID {
 	 * @var array
 	 */
 	protected $EquipmentIDs = array();
+	
+	/**
+	 * @var array
+	 */
+	protected $TagIDs = array();
 
 	/**
 	 * Construct deleter
@@ -41,6 +46,13 @@ class Deleter extends Model\DeleterWithIDAndAccountID {
 	 */
 	public function setEquipmentIDs(array $ids) {
 		$this->EquipmentIDs = $ids;
+	}
+	
+	/**
+	 * @param array $ids
+	 */
+	public function setTagIDs(array $ids) {
+		$this->TagIDs = $ids;
 	}
 
 	/**
@@ -60,6 +72,7 @@ class Deleter extends Model\DeleterWithIDAndAccountID {
 		$this->deleteRoute();
 
 		$this->updateEquipment();
+		$this->updateTag();
 		$this->updateStartTime();
 		$this->updateVDOTshapeAndCorrector();
 		$this->updateBasicEndurance();
@@ -112,7 +125,17 @@ class Deleter extends Model\DeleterWithIDAndAccountID {
 			$EquipmentUpdater->update(array(), $this->EquipmentIDs);
 		}
 	}
-
+	
+	/**
+	 * Update tag
+	 */
+	protected function updateTag() {
+		if (!empty($this->TagIDs)) {
+	        $TagUpdater = new TagUpdater($this->PDO, $this->Object->id());
+			$TagUpdater->update(array(), $this->TagIDs);
+		}
+	}
+	
 	/**
 	 * Update start time
 	 */

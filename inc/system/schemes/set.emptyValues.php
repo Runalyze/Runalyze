@@ -16,6 +16,7 @@ $EmptyTables['runalyze_equipment_type'] = array(
 		array(__('Clothes'), 1, 'EQUIPMENT_CLOTHES_ID')
 	)
 );
+
 $EmptyTables['plugin'] = array(
 	'columns' => array('key', 'type', 'active', 'order'),
 	'values'  => array(
@@ -33,7 +34,7 @@ $EmptyTables['plugin'] = array(
 		array('RunalyzePluginStat_Trainingszeiten', 'stat', 2, 8),
 		array('RunalyzePluginStat_Trainingspartner', 'stat', 2, 9),
 		array('RunalyzePluginStat_Hoehenmeter', 'stat', 2, 10),
-		array('RunalyzePluginStat_Laufabc', 'stat', 1, 11),
+		array('RunalyzePluginStat_Tag', 'stat', 1, 11),
 		array('RunalyzePluginTool_Cacheclean', 'tool', 1, 99),
 		array('RunalyzePluginTool_DatenbankCleanup', 'tool', 1, 99),
 		array('RunalyzePluginTool_MultiEditor', 'tool', 1, 99),

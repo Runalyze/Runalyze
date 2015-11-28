@@ -117,7 +117,7 @@ class SearchFormular extends Formular {
 	private function addFieldSport() {
 		$Field = new FormularSelectDb('sportid', __('Sport'));
 		$Field->loadOptionsFrom('sport', 'name');
-		$Field->addCSSclass('chzn-select full-size');
+		$Field->addCSSclass('chosen-select full-size');
 		$Field->setMultiple();
 		$Field->addAttribute('data-placeholder', __('Choose sport(s)'));
 		$Field->setLayout( FormularFieldset::$LAYOUT_FIELD_W100_IN_W33 );
@@ -144,6 +144,8 @@ class SearchFormular extends Formular {
 		$this->addConditionFieldWithChosen('typeid', 'type', 'name', __('Type'), __('Choose activity type(s)'));
 		$this->addConditionFieldWithChosen('weatherid', 'weather', 'name', __('Weather'), __('Choose weather conditions'));
 		$this->addConditionFieldWithChosen('equipmentid', 'equipment', 'name', __('Equipment'), __('Choose equipment'));
+                $this->addConditionFieldWithChosen('tagid', 'tag', 'tag', __('Tag'), __('Choose tag'));
+
 
 		$this->addFieldNotes();
 
@@ -165,8 +167,7 @@ class SearchFormular extends Formular {
 		$this->addNumericConditionField('trimp', __('TRIMP'), FormularInput::$SIZE_SMALL);
 		$this->addNumericConditionField('vertical_oscillation', __('Vertical oscillation'), FormularInput::$SIZE_SMALL, FormularUnit::$CM);
 		$this->addNumericConditionField('vertical_ratio', __('Vertical ratio'), FormularInput::$SIZE_SMALL, FormularUnit::$PERCENT);
-                $this->addNumericConditionField('groundcontact_balance', __('Ground Contact Balance'), FormularInput::$SIZE_SMALL, 'L'. FormularUnit::$PERCENT);
-		$this->addBooleanField('abc', __('Running drills'));
+		$this->addNumericConditionField('groundcontact_balance', __('Ground Contact Balance'), FormularInput::$SIZE_SMALL, 'L'. FormularUnit::$PERCENT);
 		$this->addNumericConditionField('stride_length', __('Stride length'), FormularInput::$SIZE_SMALL, Configuration::General()->distanceUnitSystem()->strideLengthUnit());
 	}
 
@@ -185,7 +186,7 @@ class SearchFormular extends Formular {
 			$Field = new FormularSelectDb($name, $label);
 			$Field->loadOptionsFrom($table, $key);
 		}
-		$Field->addCSSclass('chzn-select full-size');
+		$Field->addCSSclass('chosen-select full-size');
 		$Field->setMultiple();
 		$Field->addAttribute('data-placeholder', $placeholder);
 		$Field->setLayout( FormularFieldset::$LAYOUT_FIELD_W50_IN_W33 );

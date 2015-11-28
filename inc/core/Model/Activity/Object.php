@@ -255,13 +255,6 @@ class Object extends Model\ObjectWithID {
 	const PARTNER = 'partner';
 
 	/**
-	 * Key: running drills
-	 * @var string
-	 */
-	const RUNNING_DRILLS = 'abc';
-
-
-	/**
 	 * Key: notes
 	 * @var string
 	 */
@@ -355,7 +348,6 @@ class Object extends Model\ObjectWithID {
 			self::SPLITS,
 			self::COMMENT,
 			self::PARTNER,
-			self::RUNNING_DRILLS,
 			self::NOTES,
 			self::CREATOR,
 			self::CREATOR_DETAILS,
@@ -464,8 +456,7 @@ class Object extends Model\ObjectWithID {
 			self::VERTICAL_OSCILLATION,
 			self::GROUNDCONTACT_BALANCE,
 			self::VERTICAL_RATIO,
-			self::ROUTEID,
-			self::RUNNING_DRILLS,
+			self::ROUTEID
 		));
 	}
 
@@ -786,15 +777,6 @@ class Object extends Model\ObjectWithID {
 
 		return $this->Partner;
 	}
-
-	/**
-	 * Is with running drills?
-	 * @return boolean
-	 */
-	public function isWithRunningDrills() {
-		return ($this->Data[self::RUNNING_DRILLS] == 1);
-	}
-
 
 	/**
 	 * Notes

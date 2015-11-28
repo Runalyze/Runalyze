@@ -201,6 +201,9 @@ class RunalyzeJsonImporterTest extends PHPUnit_Framework_TestCase {
 		$EquipmentAB1 = $this->DB->query('SELECT `id` FROM `runalyze_equipment` WHERE `name`="AB1"')->fetchColumn();
 		$EquipmentAB2 = $this->DB->query('SELECT `id` FROM `runalyze_equipment` WHERE `name`="AB2"')->fetchColumn();
 
+		$TagA = $this->DB->query('SELECT `id` FROM `runalyze_tag` WHERE `tag`="TagA"')->fetchColumn();
+		$TagB = $this->DB->query('SELECT `id` FROM `runalyze_tag` WHERE `tag`="TagB"')->fetchColumn();
+
 		$this->assertEquals(array(
 			array($SportA, $TypeA),
 			array($SportA, $TypeAB),
@@ -214,12 +217,16 @@ class RunalyzeJsonImporterTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals(array($EquipmentA1), $this->DB->query('SELECT `equipmentid` FROM `runalyze_activity_equipment` WHERE `activityid`='.$Activity1)->fetchAll(PDO::FETCH_COLUMN));
 		$this->assertEquals(array($EquipmentA1, $EquipmentAB1, $EquipmentAB2), $this->DB->query('SELECT `equipmentid` FROM `runalyze_activity_equipment` WHERE `activityid`='.$Activity2)->fetchAll(PDO::FETCH_COLUMN));
 		$this->assertEquals(array($EquipmentAB1), $this->DB->query('SELECT `equipmentid` FROM `runalyze_activity_equipment` WHERE `activityid`='.$Activity3)->fetchAll(PDO::FETCH_COLUMN));
+
+		$this->assertEquals(array($TagA), $this->DB->query('SELECT `tagid` FROM `runalyze_activity_tag` WHERE `activityid`='.$Activity1)->fetchAll(PDO::FETCH_COLUMN));
+		$this->assertEquals(array($TagA, $TagB), $this->DB->query('SELECT `tagid` FROM `runalyze_activity_tag` WHERE `activityid`='.$Activity2)->fetchAll(PDO::FETCH_COLUMN));
+		$this->assertEquals(array($TagB), $this->DB->query('SELECT `tagid` FROM `runalyze_activity_tag` WHERE `activityid`='.$Activity3)->fetchAll(PDO::FETCH_COLUMN));
 	}
 
 	/**
-	 * Test with existing equipment
+	 * Test with existing equipment and tags
 	 */
-	public function testWithExistingEquipment() {
+	public function testWithExistingEquipmentAndTags() {
 		$this->DB->exec('INSERT INTO `runalyze_sport` (`name`, `accountid`) VALUES("Sport A", '.$this->AccountID.')');
 		$ExistingSportA = $this->DB->lastInsertId();
 		$this->DB->exec('INSERT INTO `runalyze_equipment_type` (`name`, `accountid`) VALUES("Typ A", '.$this->AccountID.')');
@@ -227,6 +234,8 @@ class RunalyzeJsonImporterTest extends PHPUnit_Framework_TestCase {
 		$this->DB->exec('INSERT INTO `runalyze_equipment_type` (`name`, `accountid`) VALUES("Typ AB", '.$this->AccountID.')');
 		$ExistingTypeAB = $this->DB->lastInsertId();
 		$this->DB->exec('INSERT INTO `runalyze_equipment_sport` (`sportid`, `equipment_typeid`) VALUES('.$ExistingSportA.', '.$ExistingTypeA.')');
+		$this->DB->exec('INSERT INTO `runalyze_tag` (`tag`, `accountid`) VALUES("Tag A", '.$this->AccountID.')');
+		$ExistingTagA = $this->DB->lastInsertId();
 
 		$Importer = new RunalyzeJsonImporter('../tests/testfiles/backup/with-equipment.json.gz', $this->AccountID);
 		$Importer->importData();
@@ -239,6 +248,10 @@ class RunalyzeJsonImporterTest extends PHPUnit_Framework_TestCase {
 		$TypeAB = $this->DB->query('SELECT `id` FROM `runalyze_equipment_type` WHERE `name`="Typ AB"')->fetchColumn();
 		$this->assertEquals($ExistingTypeA, $TypeA);
 		$this->assertEquals($ExistingTypeAB, $TypeAB);
+
+		$TagA = $this->DB->query('SELECT `id` FROM `runalyze_tag` WHERE `tag`="Tag A"')->fetchColumn();
+		$TagB = $this->DB->query('SELECT `id` FROM `runalyze_tag` WHERE `tag`="Tag B"')->fetchColumn();
+		$this->assertEquals($ExistingTagA, $TagA);
 
 		$this->assertEquals(array(
 			array($SportA, $TypeA),
@@ -266,6 +279,10 @@ class RunalyzeJsonImporterTest extends PHPUnit_Framework_TestCase {
 		$this->DB->exec('INSERT INTO `runalyze_swimdata` (`accountid`,`activityid`) VALUES(0, '.$FirstTraining.')');
 		$this->DB->exec('INSERT INTO `runalyze_hrv` (`accountid`,`activityid`) VALUES(0, '.$FirstTraining.')');
 		$this->DB->exec('INSERT INTO `runalyze_activity_equipment` (`activityid`,`equipmentid`) VALUES('.$FirstTraining.', '.$FirstEquipment.')');
+		$this->DB->exec('INSERT INTO `runalyze_tag` (`accountid`,`tag`) VALUES(0, "")');
+		$FirstTag = $this->DB->lastInsertId();
+		$this->DB->exec('INSERT INTO `runalyze_activity_tag` (`activityid`,`tagid`) VALUES('.$FirstTraining.', '.$FirstTag.')');
+
 
 		// Data of account 1
 		$this->DB->exec('INSERT INTO `runalyze_equipment_type` (`accountid`,`name`) VALUES(1, "")');
@@ -280,6 +297,9 @@ class RunalyzeJsonImporterTest extends PHPUnit_Framework_TestCase {
 		$this->DB->exec('INSERT INTO `runalyze_swimdata` (`accountid`,`activityid`) VALUES(1, '.$SecondTraining.')');
 		$this->DB->exec('INSERT INTO `runalyze_hrv` (`accountid`,`activityid`) VALUES(1, '.$SecondTraining.')');
 		$this->DB->exec('INSERT INTO `runalyze_activity_equipment` (`activityid`,`equipmentid`) VALUES('.$SecondTraining.', '.$SecondEquipment.')');
+		$this->DB->exec('INSERT INTO `runalyze_tag` (`accountid`,`tag`) VALUES(1, "")');
+		$SecondTag = $this->DB->lastInsertId();
+		$this->DB->exec('INSERT INTO `runalyze_activity_tag` (`activityid`,`tagid`) VALUES('.$SecondTraining.', '.$SecondTag.')');
 
 		$Importer = new RunalyzeJsonImporter('../tests/testfiles/backup/default-empty.json.gz', 0);
 		$Importer->importData();
@@ -290,6 +310,7 @@ class RunalyzeJsonImporterTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals(0, $this->DB->query('SELECT COUNT(*) FROM `runalyze_swimdata` WHERE `accountid`=0')->fetchColumn());
 		$this->assertEquals(0, $this->DB->query('SELECT COUNT(*) FROM `runalyze_hrv` WHERE `accountid`=0')->fetchColumn());
 		$this->assertEquals(0, $this->DB->query('SELECT COUNT(*) FROM `runalyze_activity_equipment` WHERE `equipmentid`='.$FirstEquipment)->fetchColumn());
+		$this->assertEquals(0, $this->DB->query('SELECT COUNT(*) FROM `runalyze_activity_tag` WHERE `tagid`='.$FirstTag)->fetchColumn());
 
 		$this->assertEquals(1, $this->DB->query('SELECT COUNT(*) FROM `runalyze_route` WHERE `accountid`=1')->fetchColumn());
 		$this->assertEquals(1, $this->DB->query('SELECT COUNT(*) FROM `runalyze_training` WHERE `accountid`=1')->fetchColumn());
@@ -297,6 +318,8 @@ class RunalyzeJsonImporterTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals(1, $this->DB->query('SELECT COUNT(*) FROM `runalyze_swimdata` WHERE `accountid`=1')->fetchColumn());
 		$this->assertEquals(1, $this->DB->query('SELECT COUNT(*) FROM `runalyze_hrv` WHERE `accountid`=1')->fetchColumn());
 		$this->assertEquals(1, $this->DB->query('SELECT COUNT(*) FROM `runalyze_activity_equipment` WHERE `equipmentid`='.$SecondEquipment)->fetchColumn());
+		$this->assertEquals(1, $this->DB->query('SELECT COUNT(*) FROM `runalyze_activity_tag` WHERE `tagid`='.$SecondTag)->fetchColumn());
+
 	}
 
 }

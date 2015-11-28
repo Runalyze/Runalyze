@@ -38,6 +38,22 @@ abstract class AbstractKey
 	}
 
 	/**
+	 * @return bool
+	 */
+	public function requiresJoin()
+	{
+		return false;
+	}
+
+	/**
+	 * @return array array('join' => 'LEFT JOIN ...', 'field' => '`x`.`y`)
+	 */
+	public function joinDefinition()
+	{
+		return array('join' => '', 'field' => '');
+	}
+
+	/**
 	 * @return string
 	 * @codeCoverageIgnore
 	 */

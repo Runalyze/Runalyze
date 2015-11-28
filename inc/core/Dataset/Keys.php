@@ -118,6 +118,9 @@ final class Keys extends AbstractEnum
 	/** @var int */
 	const GROUNDCONTACT_BALANCE = 34;
 
+	/** @var int */
+	const TAGS = 35;
+
 	/**
 	 * @var array|null
 	 */
@@ -209,7 +212,8 @@ final class Keys extends AbstractEnum
 			self::TRAININGPARTNER => 'TrainingPartner',
 			self::TOTAL_STROKES => 'TotalStrokes',
 			self::VERTICAL_RATIO => 'VerticalRatio',
-			self::GROUNDCONTACT_BALANCE => 'GroundcontactBalance'
+			self::GROUNDCONTACT_BALANCE => 'GroundcontactBalance',
+			self::TAGS => 'Tags'
 		);
 	}
 }

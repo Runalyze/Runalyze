@@ -61,8 +61,8 @@ class QueryTest extends \PHPUnit_Framework_TestCase
 
 	public function testThatSelectQueriesAreValid()
 	{
-		$this->PDO->query('SELECT '.$this->Query->queryToSelectAllKeys().' FROM `runalyze_training` LIMIT 1')->fetch();
-		$this->PDO->query('SELECT '.$this->Query->queryToSelectActiveKeys().' FROM `runalyze_training` LIMIT 1')->fetch();
+		$this->PDO->query('SELECT '.$this->Query->queryToSelectAllKeys().' FROM `runalyze_training` AS `t` LIMIT 1')->fetch();
+		$this->PDO->query('SELECT '.$this->Query->queryToSelectActiveKeys().' FROM `runalyze_training` AS `t` LIMIT 1')->fetch();
 	}
 
 	public function testTimerangeAndPrivacyForSingleActivities()

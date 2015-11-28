@@ -76,6 +76,7 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 		$this->addCadenceAndPower();
 		$this->addStrokeandSwolf();
 		$this->addWeather();
+		$this->addTags();
 		$this->addEquipment();
 		$this->addTrainingPartner();
 	}
@@ -213,6 +214,24 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 	}
 
 	/**
+	 * Add tags
+	 */
+	protected function addTags() {
+		$Links = array();
+		$Factory = new \Runalyze\Model\Factory(SessionAccountHandler::getId());
+		$SelectedTags = $Factory->tagForActivity($this->Context->activity()->id());
+
+		foreach ($SelectedTags as $Object) {
+			$Links[] = SearchLink::to('tagid', $Object->id(), '#'.$Object->tag());
+		}
+
+		$Value = new BoxedValue(implode(', ', $Links), '', __('Tags'));
+		$Value->defineAsFloatingBlock('w100 flexible-height');
+
+		$this->BoxedValues[] = $Value;
+	}
+
+	/**
 	 * Add training partner
 	 */
 	protected function addTrainingPartner() {
@@ -264,7 +283,7 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 				date('H:i', $edited)
 			);
 
-			$this->NotesContent .= HTML::fileBlock($CreationTime.$ModificationTime);
+			$this->NotesContent .= HTML::fileBlock($CreationTime.$ModificationTime.$TagText);
 		}
 	}
 }

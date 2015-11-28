@@ -59,6 +59,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase {
 		$this->assertTrue($this->object->type(1)->isEmpty());
 		$this->assertTrue($this->object->sport(1)->isEmpty());
 		$this->assertTrue($this->object->equipment(1)->isEmpty());
+                $this->assertTrue($this->object->tag(1)->isEmpty());
 	}
 
 	public function testStaticCacheForSport() {
@@ -76,6 +77,40 @@ class FactoryTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals('Test C', $this->object->sport(3)->name());
 	}
 
+        public function testTags() {
+		$this->DB->exec('INSERT INTO `runalyze_sport` (`id`, `name`, `accountid`) VALUES(1, "Sport A", '.$this->accountID.')');
+		$this->DB->exec('INSERT INTO `runalyze_tag` (`id`, `tag`, `accountid`) VALUES(1, "Tag A1", '.$this->accountID.')');
+		$this->DB->exec('INSERT INTO `runalyze_tag` (`id`, `tag`, `accountid`) VALUES(2, "Tag A2", '.$this->accountID.')');
+		$this->DB->exec('INSERT INTO `runalyze_tag` (`id`, `tag`, `accountid`) VALUES(3, "Tag B", '.$this->accountID.')');
+		$this->DB->exec('INSERT INTO `runalyze_tag` (`id`, `tag`, `accountid`) VALUES(4, "Tag C", '.$this->accountID.')');
+		$this->DB->exec('INSERT INTO `runalyze_training` (`id`, `sportid`, `accountid`) VALUES(1, 1, '.$this->accountID.')');
+		$this->DB->exec('INSERT INTO `runalyze_training` (`id`, `sportid`, `accountid`) VALUES(2, 1, '.$this->accountID.')');
+		$this->DB->exec('INSERT INTO `runalyze_training` (`id`, `sportid`, `accountid`) VALUES(3, 1, '.$this->accountID.')');
+		$this->DB->exec('INSERT INTO `runalyze_activity_tag` (`activityid`, `tagid`) VALUES(1, 1)');
+		$this->DB->exec('INSERT INTO `runalyze_activity_tag` (`activityid`, `tagid`) VALUES(1, 2)');
+		$this->DB->exec('INSERT INTO `runalyze_activity_tag` (`activityid`, `tagid`) VALUES(2, 3)');
+		$this->DB->exec('INSERT INTO `runalyze_activity_tag` (`activityid`, `tagid`) VALUES(3, 4)');
+                
+		$this->assertEquals(array(1, 2), $this->object->tagForActivity(1, true));
+		$this->assertEquals(array(
+			$this->object->tag(1), $this->object->tag(2)
+		), $this->object->tagForActivity(1));
+
+		$this->assertEquals(array(3), $this->object->tagForActivity(2, true));
+		$this->assertEquals(array(
+			$this->object->tag(3)
+		), $this->object->tagForActivity(2));
+
+		$this->assertEquals(array(4), $this->object->tagForActivity(3, true));
+		$this->assertEquals(array(
+			$this->object->tag(4)
+		), $this->object->tagForActivity(3));
+
+		$this->assertEquals(array(
+			$this->object->tag(1), $this->object->tag(2), $this->object->tag(3), $this->object->tag(4)
+		), $this->object->allTags());
+        }
+        
 	public function testEquipment() {
 		$this->DB->exec('INSERT INTO `runalyze_sport` (`id`, `name`, `accountid`) VALUES(1, "Sport A", '.$this->accountID.')');
 		$this->DB->exec('INSERT INTO `runalyze_sport` (`id`, `name`, `accountid`) VALUES(2, "Sport B", '.$this->accountID.')');

@@ -26,7 +26,7 @@ $FIELDSETS = array(
 	array(
 		'id'		=> 'distance',
 		'legend'	=> __('Distance'),
-		'fields'	=> array('distance', 'is_track', 'elevation', 'abc', 'pace', 'power', 'cadence'),
+		'fields'	=> array('distance', 'is_track', 'elevation', 'pace', 'power', 'cadence'),
             'conf'		=> 'DISTANCE',
 		'css'		=> TrainingFormular::$ONLY_DISTANCES_CLASS
 	),
@@ -430,17 +430,6 @@ $FIELDS = array(
 						'size'		=> FormularInput::$SIZE_FULL_INLINE
 					)
 	),
-	'abc'				=> array(
-					'database'	=> array(
-						'type'		=> 'tinyint',
-						'precision'	=> '1',
-						'default'	=> '0'
-					),
-					'formular'	=> array(
-						'label'		=> __('Running drills'),
-						'class'		=> 'FormularCheckbox',
-						'css'		=> TrainingFormular::$ONLY_RUNNING_CLASS
-					)),
 	'shoeid'			=> array(
 					'database'	=> array(
 						'type'		=> 'int',

@@ -51,3 +51,35 @@ ALTER TABLE `runalyze_training` ADD  `groundcontact_balance` SMALLINT UNSIGNED N
 
 /* 26.11.2015 - calculate vertical ratio for existing activities */
 UPDATE `runalyze_training` SET `vertical_ratio` = 100 * `vertical_oscillation` / `stride_length` WHERE `stride_length` > 0;
+
+/* 28.11.2015 -  add tables for tags */
+CREATE TABLE IF NOT EXISTS `runalyze_tag` (
+  `id` int(10) unsigned NOT NULL,
+  `tag` varchar(50) NOT NULL,
+  `accountid` int(10) unsigned NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `runalyze_activity_tag` (
+  `activityid` int(10) unsigned NOT NULL,
+  `tagid` int(10) unsigned NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `runalyze_tag` ADD PRIMARY KEY (`id`), ADD KEY `accountid` (`accountid`);
+ALTER TABLE `runalyze_tag` MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+ALTER TABLE `runalyze_activity_tag` ADD PRIMARY KEY (`activityid`,`tagid`), ADD KEY `tagid` (`tagid`);
+
+INSERT INTO `runalyze_tag` (`accountid`, `tag`) SELECT `id`, 'Running drills' FROM `runalyze_account` WHERE `language` = 'en' OR `language` = '';
+INSERT INTO `runalyze_tag` (`accountid`, `tag`) SELECT `id`, 'Lauf-ABC' FROM `runalyze_account` WHERE `language` = 'de';
+INSERT INTO `runalyze_tag` (`accountid`, `tag`) SELECT `id`, 'tècnica' FROM `runalyze_account` WHERE `language` = 'ca';
+INSERT INTO `runalyze_tag` (`accountid`, `tag`) SELECT `id`, 'Loop ABC' FROM `runalyze_account` WHERE `language` = 'nl';
+INSERT INTO `runalyze_tag` (`accountid`, `tag`) SELECT `id`, 'Technice' FROM `runalyze_account` WHERE `language` = 'it';
+INSERT INTO `runalyze_tag` (`accountid`, `tag`) SELECT `id`, 'Ćwiczenia biegowe' FROM `runalyze_account` WHERE `language` = 'pl';
+
+INSERT INTO `runalyze_activity_tag` (`activityid`, `tagid`) SELECT tr.id, tg.id FROM `runalyze_training` tr LEFT JOIN `runalyze_tag` tg ON tr.accountid=tg.accountid where `abc` = 1 AND `tg`.`id` IS NOT NULL;
+ALTER TABLE `runalyze_training` DROP `abc`;
+
+UPDATE `runalyze_plugin` SET `key`="RunalyzePluginStat_Tag" WHERE `key`="RunalyzePluginStat_Laufabc";
+
+ALTER TABLE `runalyze_activity_tag` ADD CONSTRAINT `runalyze_activity_tag_ibfk_1` FOREIGN KEY (`tagid`) REFERENCES `runalyze_tag` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `runalyze_activity_tag` ADD CONSTRAINT `runalyze_activity_tag_ibfk_2` FOREIGN KEY (`activityid`) REFERENCES `runalyze_training` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `runalyze_tag` ADD CONSTRAINT `runalyze_tag_ibfk_1` FOREIGN KEY (`accountid`) REFERENCES `runalyze_account` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;

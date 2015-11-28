@@ -494,17 +494,6 @@ class Dataview {
 	}
 
 	/**
-	 * Get icon for 'running abc'
-	 * @return string
-	 */
-	public function abcIcon() {
-		if ($this->Activity->isWithRunningDrills())
-			return Ajax::tooltip(Icon::$ABC, __('Running drills'));
-
-		return '';
-	}
-
-	/**
 	 * VDOT
 	 * @return \Runalyze\Calculation\JD\VDOT
 	 */
