@@ -35,7 +35,7 @@ class QueryTest extends \PHPUnit_Framework_TestCase
 		}
 
 		if (!isset($data['sportid'])) {
-			$data['sportid'] = 1;
+			$data['sportid'] = $this->Running;
 		}
 
 		if (!isset($data['is_public'])) {

@@ -247,8 +247,10 @@ class Query
 	 * @param string $asColumn optional column key that is used in returned data row
 	 * @return string
 	 */
-	protected function queryToSelectTimerange($timerange, $timeEnd, $asColumn = 'timerange')
+	protected function queryToSelectTimerange($timerange, $timeEnd = false, $asColumn = 'timerange')
 	{
+		$timeEnd = $timeEnd ?: time();
+
 		if ($timerange == self::YEAR_TIMERANGE) {
 			return date('Y', $timeEnd).' - YEAR(FROM_UNIXTIME(`time`)) as `'.$asColumn.'`';
 		} elseif ($timerange == self::MONTH_TIMERANGE) {
@@ -265,9 +267,7 @@ class Query
 	 */
 	protected function whereTimeIsBetween($timeStart = 0, $timeEnd = false)
 	{
-		if ($timeEnd === false) {
-			$timeEnd = time();
-		}
+		$timeEnd = $timeEnd ?: time();
 
 		return '`time` BETWEEN '.($timeStart - 10).' AND '.($timeEnd - 10);
 	}
