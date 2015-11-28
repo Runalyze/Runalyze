@@ -4,6 +4,8 @@
  * @package Runalyze\Plugins\Stats\RunalyzePluginStat_Statistiken
  */
 
+use Runalyze\Dataset;
+
 /**
  * Summary table for dataset/data browser
  * 
@@ -11,11 +13,14 @@
  * @package Runalyze\Plugins\Stats\RunalyzePluginStat_Statistiken
  */
 abstract class SummaryTable {
-	/**
-	 * Dataset for converting and showing data
-	 * @var \Dataset
-	 */
-	protected $Dataset;
+	/** @var int */
+	protected $AccountID;
+
+	/** @var \Runalyze\Dataset\Query */
+	protected $DatasetQuery;
+
+	/** @var \Runalyze\View\Dataset\Table */
+	protected $DatasetTable;
 
 	/**
 	 * Compare kilometers
@@ -67,10 +72,15 @@ abstract class SummaryTable {
 
 	/**
 	 * Construct summary table
-	 * @param Dataset $dataset
+	 * @param \Runalyze\Dataset\Configuration $datasetConfig
+	 * @param int $sportid
+	 * @param int $year
 	 */
-	public function __construct(Dataset $dataset, $sportid, $year) {
-		$this->Dataset = $dataset;
+	public function __construct(Dataset\Configuration $datasetConfig, $sportid, $year) {
+		$this->AccountID = SessionAccountHandler::getId();
+		$this->DatasetQuery = new Dataset\Query($datasetConfig, DB::getInstance(), $this->AccountID);
+		$this->DatasetTable = new Runalyze\View\Dataset\Table($datasetConfig);
+
 		$this->Sportid = $sportid;
 		$this->Year = $year;
 	}
@@ -109,10 +119,6 @@ abstract class SummaryTable {
 		if ($this->Timerange == 0 || ($this->TimeStart == 0 && $this->TimeEnd == 0)) {
 			throw new Exception('Timerange, -start and -end have to be properly defined.');
 		}
-
-		if ($this->CompareKilometers) {
-			$this->Dataset->activateKilometerComparison();
-		}
 	}
 
 	/**
@@ -133,7 +139,7 @@ abstract class SummaryTable {
 	 */
 	protected function displayTableHeader() {
 		echo '<table class="r fullwidth zebra-style">';
-		echo '<thead><tr><th colspan="'.($this->Dataset->cols() + 2 + $this->AdditionalColumns).'">'.$this->Title.'</th></tr></thead>';
+		echo '<thead><tr><th colspan="'.($this->DatasetTable->numColumns() + 2 + $this->AdditionalColumns).'">'.$this->Title.'</th></tr></thead>';
 		echo '<tbody>';
 	}
 
@@ -143,7 +149,11 @@ abstract class SummaryTable {
 	protected function displayTableBody() {
 		$maxIndex = ceil(($this->TimeEnd - $this->TimeStart) / $this->Timerange) - 1;
 		$CompleteData = array();
-		$CompleteResult = $this->Dataset->getGroupOfTrainingsForTimerange($this->Sportid, $this->Timerange, $this->TimeStart, $this->TimeEnd);
+		$CompleteResult = $this->DatasetQuery->fetchSummaryForTimerange($this->Sportid, $this->Timerange, $this->TimeStart, $this->TimeEnd);
+		$Context = new Dataset\Context(new Runalyze\Model\Activity\Object(), $this->AccountID);
+		$hiddenKeys = array(
+			Dataset\Keys::SPORT
+		);
 
 		foreach ($CompleteResult as $Data) {
 			$CompleteData[$Data['timerange']] = $Data;
@@ -156,15 +166,16 @@ abstract class SummaryTable {
 				echo '<td class="small">'.$CompleteData[$index]['num'].'x</td>';
 
 				$this->displayAdditionalColumns($CompleteData[$index]);
-				$this->Dataset->setGroupOfTrainings($CompleteData[$index]);
 
-				if (isset($CompleteData[$index+1])) {
-					$this->Dataset->setKilometerToCompareTo($CompleteData[$index+1]['distance']);
+				if ($this->CompareKilometers) {
+					$value = isset($CompleteData[$index+1]) ? $CompleteData[$index+1]['distance'] : 0;
+					$CompleteData[$index][Dataset\Keys\Distance::KEY_DISTANCE_COMPARISON] = $value;
 				}
 
-				$this->Dataset->displayTableColumns();
+				$Context->setActivityData($CompleteData[$index]);
+				echo $this->DatasetTable->codeForColumns($Context, $hiddenKeys);
 			} else {
-				echo HTML::emptyTD($this->Dataset->cols() + 1 + $this->AdditionalColumns, '<em>'.__('No activities').'</em>', 'c small');
+				echo HTML::emptyTD($this->DatasetTable->numColumns() + 1 + $this->AdditionalColumns, '<em>'.__('No activities').'</em>', 'c small');
 			}
 
 			echo '</tr>';

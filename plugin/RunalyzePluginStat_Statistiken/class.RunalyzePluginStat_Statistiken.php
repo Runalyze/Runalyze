@@ -21,13 +21,13 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	 * Sport
 	 * @var array
 	 */
-	private $Sport  = array();
+	protected $Sport = array();
 
 	/**
 	 * Dataset for converting and showing data
-	 * @var object
+	 * @var \Runalyze\Dataset\Configuration
 	 */
-	private $Dataset;
+	protected $DatasetConfig;
 
 	/**
 	 * Name
@@ -70,7 +70,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	 */
 	private function initVariables() {
 		$this->Sport = SportFactory::DataFor($this->sportid);
-		$this->Dataset = new Dataset(SessionAccountHandler::getId());
+		$this->DatasetConfig = new \Runalyze\Dataset\Configuration(DB::getInstance(), SessionAccountHandler::getId());
 
 		require_once 'class.SummaryTable.php';
 		require_once 'class.SummaryTable10Weeks.php';
@@ -169,9 +169,9 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	 */
 	private function displayYearTable() {
 		if ($this->year == -1) {
-			$SummaryTable = new SummaryTableAllYears($this->Dataset, $this->sportid, $this->year);
+			$SummaryTable = new SummaryTableAllYears($this->DatasetConfig, $this->sportid, $this->year);
 		} else {
-			$SummaryTable = new SummaryTableMonths($this->Dataset, $this->sportid, $this->year);
+			$SummaryTable = new SummaryTableMonths($this->DatasetConfig, $this->sportid, $this->year);
 
 			if ($this->year == 6) {
 				$SummaryTable->setMode(SummaryTableMonths::MODE_LAST_6);
@@ -195,9 +195,9 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 			return;
 
 		if ($showAllWeeks) {
-			$SummaryTable = new SummaryTableAllWeeks($this->Dataset, $this->sportid, $this->year);
+			$SummaryTable = new SummaryTableAllWeeks($this->DatasetConfig, $this->sportid, $this->year);
 		} else {
-			$SummaryTable = new SummaryTable10Weeks($this->Dataset, $this->sportid, $this->year);
+			$SummaryTable = new SummaryTable10Weeks($this->DatasetConfig, $this->sportid, $this->year);
 		}
 
 		$SummaryTable->compareKilometers($this->Configuration()->value('compare_weeks'));

@@ -5,6 +5,7 @@
  */
 
 use Runalyze\Configuration;
+use Runalyze\Dataset;
 
 /**
  * ConfigTabDataset
@@ -12,6 +13,39 @@ use Runalyze\Configuration;
  * @package Runalyze\System\Config
  */
 class ConfigTabDataset extends ConfigTab {
+	/** @var \Runalyze\Dataset\Configuration */
+	protected $Configuration;
+
+	/** @var bool */
+	protected $ConfigurationIsNew = false;
+
+	/** @var \Runalyze\Dataset\Context */
+	protected $ExampleContext;
+
+	/**
+	 * Construct config tab
+	 */
+	public function __construct() {
+		parent::__construct();
+
+		$this->loadConfiguration();
+		$this->ExampleContext = new Dataset\Context($this->getExampleTraining(), SessionAccountHandler::getId());
+	}
+
+	/**
+	 * Load configuration
+	 */
+	protected function loadConfiguration() {
+		$this->Configuration = new Dataset\Configuration(DB::getInstance(), SessionAccountHandler::getId());
+
+		if ($this->Configuration->isEmpty()) {
+			$this->Configuration = new Dataset\DefaultConfiguration();
+			$this->ConfigurationIsNew = true;
+		} else {
+			$this->ConfigurationIsNew = false;
+		}
+	}
+
 	/**
 	 * Set key and title for form 
 	 */
@@ -37,76 +71,94 @@ class ConfigTabDataset extends ConfigTab {
 	 * @return string 
 	 */
 	private function getCode() {
-		$Code = '
-			<table class="c fullwidth zebra-style" id="conf-tab-dataset">
-				<thead>
-					<tr>
-						<th>&nbsp;</th>
-						<th>'.Ajax::tooltip(__('Display'), __('The information will be shown directly in the row.')).'</th>
-						<th colspan="2">'.Ajax::tooltip(__('Summary'), __('The value will be summarized for the sport.')).'</th>
-						<th>'.Ajax::tooltip(__('Order'), __('Indicates the order of appearance.')).'</th>
-						<th>'.Ajax::tooltip(__('CSS-Class'), __('\'c\': centered<br>\'l\': left-aligned<br>\'small\': small<br>\'b\': bold')).'</th>
-						<th>'.Ajax::tooltip(__('CSS-Style'), __('any CSS-Code')).'</th>
-						<th>'.__('Example').'</th>
-					</tr>
-				</thead>
-				<tbody>';
+		$Code = '';
+		$pos = 0;
 
-		$Labels = new DatasetLabels();
-		$DatasetObject = new Dataset();
-		$DatasetObject->setActivityData($this->getExampleTraining());
-                
-                
-		$Dataset = DB::getInstance()->query('SELECT *, (`position` = 0) as `hidden` FROM `'.PREFIX.'dataset` WHERE accountid = '.SessionAccountHandler::getId().' ORDER BY (`position` > 0) DESC, `position` ASC')->fetchAll();
-		foreach ($Dataset as $pos => $Data) {
-			$disabled    = ($Data['modus'] == 3) ? ' disabled' : '';
-			$checked_2   = ($Data['modus'] >= 2) ? ' checked' : '';
-			$checked     = ($Data['summary'] == 1) ? ' checked' : '';
-			$SummarySign = '';
-
-			switch ($Data['summary_mode']) {
-				case 'YES':
-				case 'NO':
-					$checked .= ' disabled';
-					break;
-				case 'AVG':
-					$SummarySign = '&Oslash;';
-					break;
-				case 'SUM':
-					$SummarySign = '&sum;';
-					break;
-				case 'MAX':
-					$SummarySign = 'max';
-					break;
-			}
-
-			$Example = $DatasetObject->getDataset($Data['name']);
-
-			$Code .= '
-				<tr class="r" id="'.$Data['id'].'_tr">
-					<td class="l b">'.$Labels->get($Data['name']).'</td>
-					<td class="c">
-						<input type="hidden" name="'.$Data['id'].'_modus_3" value="'.$Data['modus'].'">
-						<input type="checkbox" name="'.$Data['id'].'_modus"'.$checked_2.$disabled.'>
-					</td>
-					<td class="c"><input type="checkbox" name="'.$Data['id'].'_summary"'.$checked.'></td>
-					<td class="c small">'.$SummarySign.'</td>
-					<td class="c">
-						<input class="dataset-position" type="text" name="'.$Data['id'].'_position" value="'.($pos + 1).'" size="2">
-						<span class="link" onclick="datasetMove('.$Data['id'].', \'up\')">'.Icon::$UP.'</span>
-						<span class="link" onclick="datasetMove('.$Data['id'].', \'down\')">'.Icon::$DOWN.'</span>
-					</td>
-					<td class="c"><input type="text" name="'.$Data['id'].'_class" value="'.$Data['class'].'" size="7"></td>
-					<td class="c"><input type="text" name="'.$Data['id'].'_style" value="'.$Data['style'].'" size="15"></td>
-					<td class="'.$Data['class'].'" style="'.$Data['style'].'">'.$Example.'</td>
-				</tr>';
+		foreach ($this->Configuration->allKeys() as $keyid) {
+			$Code .= $this->getCodeForKey($keyid, ++$pos);
 		}
 
-		$Code .= '
-				</tbody>
-			</table>';
+		if (!$this->ConfigurationIsNew) {
+			foreach (Dataset\Keys::getEnum() as $keyid) {
+				if (!$this->Configuration->exists($keyid)) {
+					$Code .= $this->getCodeForKey($keyid, ++$pos, true);
+				}
+			}
+		}
 
-		$Code .= Ajax::wrapJS('
+		return $this->getTableHeader().$Code.$this->getTableFooter();
+	}
+
+	/**
+	 * @return string
+	 */
+	protected function getTableHeader() {
+		return '<table class="c fullwidth zebra-style" id="conf-tab-dataset">
+			<thead>
+				<tr>
+					<th>&nbsp;</th>
+					<th>&nbsp;</th>
+					<th>'.Ajax::tooltip(__('Display'), __('The information will be shown directly in the row.')).'</th>
+					<th>'.Ajax::tooltip(__('Order'), __('Indicates the order of appearance.')).'</th>
+					<th>'.Ajax::tooltip(__('CSS-Style'), __('any CSS-Code')).'</th>
+					<th>'.__('Example').'</th>
+				</tr>
+			</thead>
+			<tbody>';
+	}
+
+	/**
+	 * @return string
+	 */
+	protected function getTableFooter() {
+		return '</tbody></table>'.$this->getJS();
+	}
+
+	/**
+	 * @param string $keyid
+	 * @param int $pos
+	 * @param bool $isNew flag to indicate that a key is new
+	 * @return string
+	 */
+	protected function getCodeForKey($keyid, $pos, $isNew = false) {
+		$KeyObject = Dataset\Keys::get($keyid);
+
+		if ($KeyObject->description() != '') {
+			$DescriptionIcon = new Runalyze\View\Icon(Runalyze\View\Icon::INFO.' '.Runalyze\View\Tooltip::POSITION_RIGHT);
+			$DescriptionIcon->setTooltip($KeyObject->description());
+
+			$Icon = $DescriptionIcon->code();
+		} else {
+			$Icon = '';
+		}
+
+		if ($isNew) {
+			$newIndicator = '<sup class="colored-green">'.__('new').'</sup>';
+		} else {
+			$newIndicator = '';
+		}
+
+		return '<tr class="r" id="'.$keyid.'_tr">
+				<td class="c">'.$Icon.'</td>
+				<td class="l b">'.$KeyObject->label().$newIndicator.'</td>
+				<td class="c">
+					<input type="checkbox" name="'.$keyid.'_active"'.(!$isNew && $this->Configuration->isActive($keyid) ? ' checked' : '').'>
+				</td>
+				<td class="c">
+					<input class="dataset-position" type="text" name="'.$keyid.'_position" value="'.$pos.'" size="2">
+					<span class="link" onclick="datasetMove('.$keyid.', \'up\')">'.Icon::$UP.'</span>
+					<span class="link" onclick="datasetMove('.$keyid.', \'down\')">'.Icon::$DOWN.'</span>
+				</td>
+				<td class="c"><input type="text" name="'.$keyid.'_style" value="'.($isNew ? '' : $this->Configuration->getStyle($keyid)).'" size="15"></td>
+				<td class="'.$KeyObject->cssClass().'" style="'.($isNew ? '' : $this->Configuration->getStyle($keyid)).'">'.$KeyObject->stringFor($this->ExampleContext).'</td>
+			</tr>';
+	}
+
+	/**
+	 * @return string
+	 */
+	protected function getJS() {
+		return Ajax::wrapJS('
 			function datasetMove(id, way) {
 				var pos = parseInt($("input[name=\'"+id+"_position\']").val()),
 					tr = $("#"+id+"_tr");
@@ -126,42 +178,46 @@ class ConfigTabDataset extends ConfigTab {
 				tr.toggleClass("swapped");
 			}
 		');
-
-		return $Code;
 	}
 
 	/**
 	 * Parse all post values 
 	 */
 	public function parsePostData() {
-		$dataset = DB::getInstance()->query('SELECT `id` FROM `'.PREFIX.'dataset` WHERE accountid = '.SessionAccountHandler::getId())->fetchAll();
+		$AccountID = SessionAccountHandler::getId();
+		$UpdateStatement = DB::getInstance()->prepare(
+			'UPDATE `'.PREFIX.'dataset` '.
+			'SET `active`=:active, `style`=:style, `position`=:position '.
+			'WHERE `accountid`=:accountid AND `keyid`=:keyid'
+		);
+		$InsertStatement = DB::getInstance()->prepare(
+			'INSERT INTO `'.PREFIX.'dataset` '.
+			'(`keyid`, `active`, `style`, `position`, `accountid`) '.
+			'VALUES (:keyid, :active, :style, :position, :accountid)'
+		);
 
-		foreach ($dataset as $set) {
-			$id = $set['id'];
-			$modus = isset($_POST[$id.'_modus']) && $_POST[$id.'_modus'] == 'on' ? 2 : 1;
-			if (isset($_POST[$id.'_modus_3']) && $_POST[$id.'_modus_3'] == 3)
-				$modus = 3;
+		foreach (Dataset\Keys::getEnum() as $keyid) {
+			$active = Dataset\Keys::get($keyid)->mustBeShown() || (isset($_POST[$keyid.'_active']) && $_POST[$keyid.'_active']);
 
-			$columns = array(
-				'modus',
-				'summary',
-				'position',
-				'style',
-				'class'
+			$data = array(
+				':active' => $active ? 1 : 0,
+				':style' => isset($_POST[$keyid.'_style']) ? htmlentities($_POST[$keyid.'_style']) : '',
+				':position' => isset($_POST[$keyid.'_position']) ? (int)$_POST[$keyid.'_position'] : 99,
+				':accountid' => $AccountID,
+				':keyid' => $keyid
 			);
-			$values  = array(
-				$modus,
-				(isset($_POST[$id.'_summary']) && $_POST[$id.'_summary'] == 'on' ? 1 : 0),
-				isset($_POST[$id.'_position']) ? (int)$_POST[$id.'_position'] : '',
-				isset($_POST[$id.'_style']) ? htmlentities($_POST[$id.'_style']) : '',
-				isset($_POST[$id.'_class']) ? htmlentities($_POST[$id.'_class']) : ''
-			);
 
-			DB::getInstance()->update('dataset', $id, $columns, $values);
+			if ($this->Configuration->exists($keyid)) {
+				$UpdateStatement->execute($data);
+			} else {
+				$InsertStatement->execute($data);
+			}
 		}
 
-		Cache::delete('Dataset');
 		Ajax::setReloadFlag(Ajax::$RELOAD_DATABROWSER);
+		Cache::delete(Dataset\Configuration::CACHE_KEY);
+
+		$this->loadConfiguration();
 	}
 
 	/**
@@ -169,8 +225,7 @@ class ConfigTabDataset extends ConfigTab {
 	 * @return array 
 	 */
 	protected function getExampleTraining() {
-
-		$Data = array(
+		return array(
 			'id'		=> DataObject::$DEFAULT_ID,
 			'sportid'	=> Configuration::General()->runningSport(),
 			'typeid'	=> Configuration::General()->competitionType(),
@@ -208,23 +263,11 @@ class ConfigTabDataset extends ConfigTab {
 			'creator'	=> '',
 			'creator_details'	=> '',
 			'activity_id'	=> '',
-			'elevation_corrected'	=> 1
+			'elevation_corrected'	=> 1,
+			'swolf'		=> 29,
+			'total_strokes'	=> 1250,
+			'vertical_ratio' => 79,
+			'groundcontact_balance' => 4980
 		);
-
-		return $Data;
-	}
-
-	/**
-	 * Get random ID from database for a specific table
-	 * @param string $table
-	 * @return int 
-	 */
-	protected function getRandIdFor($table) {
-		$Result = DB::getInstance()->query('SELECT id FROM `'.PREFIX.$table.'` WHERE `accountid`='.(int)SessionAccountHandler::getId().' LIMIT 1')->fetch();
-
-		if (isset($Result['id']))
-			return $Result['id'];
-
-		return 0;
 	}
 }

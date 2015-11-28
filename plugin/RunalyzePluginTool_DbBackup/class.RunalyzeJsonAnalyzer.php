@@ -71,7 +71,7 @@ class RunalyzeJsonAnalyzer {
 	 * @return bool
 	 */
 	public function versionIsOkay() {
-		return (RUNALYZE_VERSION == self::extractMajorAndMinorVersion($this->VersionString));
+		return (self::extractMajorAndMinorVersion(RUNALYZE_VERSION) == self::extractMajorAndMinorVersion($this->VersionString));
 	}
 
 	/**

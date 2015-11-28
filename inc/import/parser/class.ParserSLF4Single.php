@@ -25,7 +25,7 @@ class ParserSLF4Single extends ParserSLF3Single {
 	 * Add error: incorrect file
 	 */
 	protected function throwNoSLFError() {
-		$this->addError( __('Given XML object is not from Sigma. &lt;LogEntries&gt;-tag could not be located.') );
+		$this->addError( __('Given XML object is not from Sigma. &lt;Entries&gt;-tag could not be located.') );
 	}
 
 	/**
@@ -43,7 +43,8 @@ class ParserSLF4Single extends ParserSLF3Single {
 	 * Parse all entries
 	 */
 	protected function parseLogEntries() {
-		if (!isset($this->XML->Entries->Entry)) {
+		if (!isset($this->XML->Entries->Entry) ) {
+
 			if ($this->XML->GeneralInformation->trainingTime) {
 				$this->TrainingObject->setTimeInSeconds((int)$this->XML->GeneralInformation->trainingTime/100);
 				$this->TrainingObject->setDistance((float)$this->XML->GeneralInformation->distance/1000);

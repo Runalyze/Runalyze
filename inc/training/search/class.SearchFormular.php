@@ -164,9 +164,11 @@ class SearchFormular extends Formular {
 		$this->addNumericConditionField('jd_intensity', __('JD points'), FormularInput::$SIZE_SMALL);
 		$this->addNumericConditionField('groundcontact', __('Ground contact'), FormularInput::$SIZE_SMALL, FormularUnit::$MS);
 		$this->addBooleanField('use_vdot', __('Uses VDOT'));
-		$this->addConditionField('trimp', __('TRIMP'), FormularInput::$SIZE_SMALL);
-		$this->addConditionField('vertical_oscillation', __('Vertical oscillation'), FormularInput::$SIZE_SMALL, FormularUnit::$CM);
-		$this->addConditionField('stride_length', __('Stride length'), FormularInput::$SIZE_SMALL, FormularUnit::$M);
+		$this->addNumericConditionField('trimp', __('TRIMP'), FormularInput::$SIZE_SMALL);
+		$this->addNumericConditionField('vertical_oscillation', __('Vertical oscillation'), FormularInput::$SIZE_SMALL, FormularUnit::$CM);
+		$this->addNumericConditionField('vertical_ratio', __('Vertical ratio'), FormularInput::$SIZE_SMALL, FormularUnit::$PERCENT);
+		$this->addNumericConditionField('groundcontact_balance', __('Ground Contact Balance'), FormularInput::$SIZE_SMALL, 'L'. FormularUnit::$PERCENT);
+		$this->addNumericConditionField('stride_length', __('Stride length'), FormularInput::$SIZE_SMALL, Configuration::General()->distanceUnitSystem()->strideLengthUnit());
 	}
 
 	/**

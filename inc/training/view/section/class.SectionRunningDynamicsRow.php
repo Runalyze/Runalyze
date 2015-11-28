@@ -8,6 +8,7 @@ use Runalyze\Data\Cadence;
 use Runalyze\View\Activity;
 use Runalyze\Model\Trackdata;
 use Runalyze\Activity\Distance;
+use Runalyze\View\Activity\Box;
 
 /**
  * Row: Running dynamics
@@ -45,18 +46,26 @@ class SectionRunningDynamicsRow extends TrainingViewSectionRowTabbedPlot {
 			$this->Context->trackdata()->has(Trackdata\Object::DISTANCE) &&
 			$this->Context->trackdata()->has(Trackdata\Object::CADENCE)
 		) {
-			$Plot = new Activity\Plot\StrideLength($this->Context);
-			$this->addRightContent('stridelength', __('Stride length plot'), $Plot);
+			$this->addRightContent('stridelength', __('Stride length'), new Activity\Plot\StrideLength($this->Context));
+
+			if ($this->Context->trackdata()->has(Trackdata\Object::VERTICAL_RATIO)) {
+				$this->addRightContent('verticalratio', __('Vertical ratio'), new Activity\Plot\VerticalRatio($this->Context));
+			}
 		}
 
 		if ($this->Context->trackdata()->has(Trackdata\Object::VERTICAL_OSCILLATION)) {
 			$Plot = new Activity\Plot\VerticalOscillation($this->Context);
-			$this->addRightContent('verticaloscillation', __('Oscillation plot'), $Plot);
+			$this->addRightContent('verticaloscillation', __('Oscillation'), $Plot);
 		}
 
 		if ($this->Context->trackdata()->has(Trackdata\Object::GROUNDCONTACT)) {
 			$Plot = new Activity\Plot\GroundContact($this->Context);
-			$this->addRightContent('groundcontact', __('Ground contact plot'), $Plot);
+			$this->addRightContent('groundcontact', __('Ground contact'), $Plot);
+		}
+
+		if ($this->Context->trackdata()->has(Trackdata\Object::GROUNDCONTACT_BALANCE)) {
+			$Plot = new Activity\Plot\GroundContactBalance($this->Context);
+			$this->addRightContent('groundcontact_balance', __('Ground contact balance'), $Plot);
 		}
 	}
 
@@ -87,14 +96,22 @@ class SectionRunningDynamicsRow extends TrainingViewSectionRowTabbedPlot {
 	 */
 	protected function addRunningDynamics() {
 		if ($this->Context->activity()->groundcontact() > 0 || $this->Context->activity()->verticalOscillation() > 0) {
-			$Contact = new BoxedValue(Helper::Unknown($this->Context->activity()->groundcontact(), '-'), 'ms', __('Ground contact'));
-			$Contact->defineAsFloatingBlock('w50');
-
 			$Oscillation = new BoxedValue(Helper::Unknown(round($this->Context->activity()->verticalOscillation()/10, 1), '-'), 'cm', __('Vertical oscillation'));
 			$Oscillation->defineAsFloatingBlock('w50');
 
-			$this->BoxedValues[] = $Contact;
+			$VerticalRatio = new Activity\Box\VerticalRatio($this->Context);
+			$VerticalRatio->defineAsFloatingBlock('w50');
+
+			$Contact = new BoxedValue(Helper::Unknown($this->Context->activity()->groundcontact(), '-'), 'ms', __('Ground contact'));
+			$Contact->defineAsFloatingBlock('w50');
+
+			$GroundContactBalance = new Box\GroundContactBalance($this->Context);
+			$GroundContactBalance->defineAsFloatingBlock('w50');
+
 			$this->BoxedValues[] = $Oscillation;
+			$this->BoxedValues[] = $VerticalRatio;
+			$this->BoxedValues[] = $Contact;
+			$this->BoxedValues[] = $GroundContactBalance; 
 		}
 	}
 }

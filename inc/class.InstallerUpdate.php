@@ -160,6 +160,13 @@ class InstallerUpdate extends Installer {
 	}
 
 	/**
+	 * @return bool
+	 */
+	protected function installationHasAccounts() {
+		return (1 == $this->PDO->query('SELECT 1 FROM `'.PREFIX.'account` LIMIT 1')->fetchColumn());
+	}
+
+	/**
 	 * Display the Updater
 	 */
 	public function display() {

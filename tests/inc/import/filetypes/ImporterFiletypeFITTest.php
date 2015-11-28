@@ -140,7 +140,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertEquals( 1, $this->object->object()->Sport()->id() );
 
 			$this->assertFalse( $this->object->object()->Splits()->areEmpty() );
-			$this->assertEquals( "10.55|46:49", $this->object->object()->Splits()->asString() );
+			$this->assertEquals( "10.547|46:49", $this->object->object()->Splits()->asString() );
 
 			$this->assertEquals( 46*60 + 50, $this->object->object()->getArrayTimeLastPoint(), '', 5 );
 
@@ -467,6 +467,31 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 					break;
 				}
 			}
+		}
+	}
+
+	/**
+	 * Test: groundcontact_balance
+	 * Filename: "with-new-dynamics.fit"
+	 * @group gcb
+	 */
+	public function testNewRunningDynamicsFromFenix3() {
+		if (Shell::isPerlAvailable()) {
+			$this->object->parseFile('../tests/testfiles/fit/with-new-dynamics.fit');
+
+			$this->assertFalse( $this->object->hasMultipleTrainings() );
+			$this->assertFalse( $this->object->failed() );
+
+			$this->assertEquals(2*3600 + 17*60 + 50, $this->object->object()->getTimeInSeconds());
+			$this->assertEquals(23.5, $this->object->object()->getDistance(), '', 0.1);
+
+			$this->assertTrue($this->object->object()->hasArrayTime());
+			$this->assertTrue($this->object->object()->hasArrayDistance());
+			$this->assertTrue($this->object->object()->hasArrayCadence());
+			$this->assertTrue($this->object->object()->hasArrayGroundContact());
+			$this->assertTrue($this->object->object()->hasArrayGroundContactBalance());
+
+			$this->assertEquals(5198, $this->object->object()->getGroundContactBalance(), '', 10);
 		}
 	}
 }

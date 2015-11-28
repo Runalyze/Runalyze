@@ -119,8 +119,8 @@ class Table {
 						($this->DemandedTime->isZero() ? '' : '<th>'.__('Diff.').'</th>').
 						'<th>'.__('Pace').'</th>'.
 						'<th>'.__('Diff.').'</th>'.
-						'<th>'.__('&oslash; bpm').'</th>'.
-						'<th>'.__('max. bpm').'</th>'.
+						'<th>&oslash; '.__('HR').'</th>'.
+						'<th>'.__('max.').' '.__('HR').'</th>'.
 						'<th class="{sorter: false}">'.__('elevation').'</th>'.
 						$this->tableHeaderForAdditionalKeys().
 					'</tr>'.
@@ -131,11 +131,10 @@ class Table {
 	 * @return string
 	 */
 	protected function tableHeaderForAdditionalKeys() {
-		$Labels = new \DatasetLabels();
 		$Code = '';
 
 		foreach ($this->AdditionalKeys as $key) {
-			$Code .= '<th class="small">'.$Labels->get($key).'</th>';
+			$Code .= '<th class="small">'.$this->labelForAdditionalValue($key).'</th>';
 		}
 
 		return $Code;
@@ -173,8 +172,8 @@ class Table {
 				($this->DemandedTime->isZero() ? '' : '<td>'.$Lap->duration()->compareTo($this->DemandedTime, true).'</td>').
 				'<td>'.$Lap->pace()->valueWithAppendix().'</td>'.
 				($this->DemandedPace->isEmpty() ? '' : '<td>'.$Lap->pace()->compareTo($this->DemandedPace).'</td>').
-				'<td>'.($Lap->hasHR() ? Helper::Unknown(round($Lap->HRavg()->inBPM()), '-') : '-').'</td>'.
-				'<td>'.($Lap->hasHR() ? Helper::Unknown(round($Lap->HRmax()->inBPM()), '-') : '-').'</td>'.
+				'<td>'.($Lap->hasHR() ? Helper::Unknown($Lap->HRavg()->string(), '-') : '-').'</td>'.
+				'<td>'.($Lap->hasHR() ? Helper::Unknown($Lap->HRmax()->string(), '-') : '-').'</td>'.
 				'<td>'.($Lap->hasElevation() ? '+'.Elevation::format($Lap->elevationUp(), false).'/-'.Elevation::format($Lap->elevationDown(), false) : '-').'</td>'.
 				$this->additionalTableCellsFor($Lap).
 			'</tr>';
@@ -203,6 +202,10 @@ class Table {
 				case Activity\Object::VERTICAL_OSCILLATION:
 					$Code .= '<td>'.$View->verticalOscillation().'</td>';
 					break;
+				    
+				case Activity\Object::VERTICAL_RATIO:
+					$Code .= '<td>'.$View->verticalRatio().'</td>';
+					break;
 
 				case Activity\Object::STRIDE_LENGTH:
 					$Code .= '<td>'.$View->strideLength()->string().'</td>';
@@ -218,6 +221,28 @@ class Table {
 		}
 
 		return $Code;
+	}
+
+	/**
+	 * 
+	 * @param type $key
+	 * @return string
+	 */
+	protected function labelForAdditionalValue($key) {
+		switch ($key) {
+			case Activity\Object::CADENCE:
+				return __('Cadence');
+			case Activity\Object::GROUNDCONTACT:
+				return __('Ground contact time');
+			case Activity\Object::VERTICAL_OSCILLATION:
+				return __('Vertical oscillation');
+			case Activity\Object::STRIDE_LENGTH:
+				return __('Stride length');
+			case Activity\Object::VDOT:
+				return __('VDOT');
+		}
+
+		return '';
 	}
 
 	/**

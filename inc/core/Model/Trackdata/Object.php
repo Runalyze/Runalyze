@@ -8,6 +8,8 @@ namespace Runalyze\Model\Trackdata;
 
 use Runalyze\Model;
 use Runalyze\Calculation\Activity\PaceCalculator;
+use Runalyze\Calculation\Activity\VerticalRatioCalculator;
+use Runalyze\Calculation\StrideLength;
 
 /**
  * Trackdata object
@@ -35,7 +37,7 @@ class Object extends Model\Object implements Model\Loopable {
 	const DISTANCE = 'distance';
 
 	/**
-	 * Key: pace
+	 * Key: pace - must be calculated (not in db!)
 	 * @var string
 	 */
 	const PACE = 'pace';
@@ -51,6 +53,12 @@ class Object extends Model\Object implements Model\Loopable {
 	 * @var string
 	 */
 	const CADENCE = 'cadence';
+
+	/**
+	 * Key: stridelength - must be calculated (not in db!)
+	 * @var string
+	 */
+	const STRIDE_LENGTH = 'stridelength';
 
 	/**
 	 * Key: power
@@ -75,6 +83,18 @@ class Object extends Model\Object implements Model\Loopable {
 	 * @var string
 	 */
 	const VERTICAL_OSCILLATION = 'vertical_oscillation';
+
+	/**
+	 * Key: vertical ratio - must be calculated (not in db!)
+	 * @var string
+	 */
+	const VERTICAL_RATIO = 'vertical_ratio';
+	
+	/**
+	 * Key: ground contact time balance
+	 * @var string
+	 */
+	const GROUNDCONTACT_BALANCE = 'groundcontact_balance';
 
 	/**
 	 * Key: pauses
@@ -114,6 +134,8 @@ class Object extends Model\Object implements Model\Loopable {
 		parent::__construct($data);
 
 		$this->calculatePaceArray();
+		$this->calculateStrideLengthArray();
+		$this->calculateVerticalRatioArray();
  		$this->readPauses();
 	}
 
@@ -197,6 +219,7 @@ class Object extends Model\Object implements Model\Loopable {
 			self::TEMPERATURE,
 			self::GROUNDCONTACT,
 			self::VERTICAL_OSCILLATION,
+			self::GROUNDCONTACT_BALANCE,
 			self::PAUSES
 		);
 	}
@@ -207,7 +230,9 @@ class Object extends Model\Object implements Model\Loopable {
 	 */
 	public function properties() {
 		return array_merge(array(
-				self::PACE
+				self::PACE,
+				self::STRIDE_LENGTH,
+				self::VERTICAL_RATIO
 			),
 			static::allDatabaseProperties() 
 		);
@@ -237,6 +262,7 @@ class Object extends Model\Object implements Model\Loopable {
 			case self::TEMPERATURE:
 			case self::GROUNDCONTACT:
 			case self::VERTICAL_OSCILLATION:
+			case self::GROUNDCONTACT_BALANCE:
 			case self::PAUSES:
 				return true;
 		}
@@ -252,7 +278,9 @@ class Object extends Model\Object implements Model\Loopable {
 	protected function notInDatabase($key) {
 		switch ($key) {
 			case self::PACE:
-				return false;
+			case self::STRIDE_LENGTH:
+			case self::VERTICAL_RATIO:
+				return true;
 		}
 
 		return false;
@@ -370,6 +398,14 @@ class Object extends Model\Object implements Model\Loopable {
 	}
 
 	/**
+	 * Get stride length
+	 * @return array unit: [cm]
+	 */
+	public function strideLength() {
+		return $this->Data[self::STRIDE_LENGTH];
+	}
+
+	/**
 	 * Get power
 	 * @return array unit: [W]
 	 */
@@ -400,6 +436,22 @@ class Object extends Model\Object implements Model\Loopable {
 	public function verticalOscillation() {
 		return $this->Data[self::VERTICAL_OSCILLATION];
 	}
+	
+	/**
+	 * Get ground contact time balance
+	 * @return array unit: [%*100]
+	 */
+	public function groundContactBalance() {
+		return $this->Data[self::GROUNDCONTACT_BALANCE];
+	}
+	
+	/**
+	 * Get vertical ratio
+	 * @return array unit: [%]
+	 */
+	public function verticalRatio() {
+		return $this->Data[self::VERTICAL_RATIO];
+	}
 
 	/**
 	 * Get pauses
@@ -416,14 +468,40 @@ class Object extends Model\Object implements Model\Loopable {
 	public function hasPauses() {
 		return !$this->Pauses->isEmpty();
 	}
-        
+
 	/*
 	 * Calculate pace array 
 	 */
 	protected function calculatePaceArray() {
-		$PaceCalculator = new PaceCalculator($this);
-		$PaceCalculator->calculate();
+		if (!$this->has(self::PACE)) {
+			$PaceCalculator = new PaceCalculator($this);
+			$PaceCalculator->calculate();
 
-		$this->set(self::PACE, $PaceCalculator->result());
+			$this->set(self::PACE, $PaceCalculator->result());
+		}
+	}
+
+	/*
+	 * Calculate stride length array 
+	 */
+	protected function calculateStrideLengthArray() {
+		if (!$this->has(self::STRIDE_LENGTH)) {
+			$StridesCalculator = new StrideLength\Calculator($this);
+			$StridesCalculator->calculate();
+
+			$this->set(self::STRIDE_LENGTH, $StridesCalculator->stridesData());
+		}
+	}
+
+	/*
+	 * Calculate vertical ratio array 
+	 */
+	protected function calculateVerticalRatioArray() {
+		if (!$this->has(self::VERTICAL_RATIO)) {
+			$RatioCalculator = new VerticalRatioCalculator($this);
+			$RatioCalculator->calculate();
+
+			$this->set(self::VERTICAL_RATIO, $RatioCalculator->verticalRatioData());
+		}
 	}
 }

@@ -223,7 +223,7 @@ class ActivityView extends \Runalyze\Configuration\Category {
 	 */
 	protected function createOtherOptions() {
 		$this->createHandle('TRAINING_DECIMALS', new Select('1', array(
-			'options' => array('0', '1', '2')
+			'options' => array('0', '1', '2', '3')
 		)));
 
 		$this->createHandle('SHOW_SECTIONS_FULLHEIGHT', new Bool(false));
