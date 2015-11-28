@@ -76,6 +76,7 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 		$this->addCadenceAndPower();
 		$this->addStrokeandSwolf();
 		$this->addWeather();
+		$this->addTags();
 		$this->addEquipment();
 		$this->addTrainingPartner();
 	}
@@ -213,6 +214,24 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 	}
 
 	/**
+	 * Add tags
+	 */
+	protected function addTags() {
+		$Links = array();
+		$Factory = new \Runalyze\Model\Factory(SessionAccountHandler::getId());
+		$SelectedTags = $Factory->tagForActivity($this->Context->activity()->id());
+
+		foreach ($SelectedTags as $Object) {
+			$Links[] = SearchLink::to('tagid', $Object->id(), '#'.$Object->tag());
+		}
+
+		$Value = new BoxedValue(implode(', ', $Links), '', __('Tags'));
+		$Value->defineAsFloatingBlock('w100 flexible-height');
+
+		$this->BoxedValues[] = $Value;
+	}
+
+	/**
 	 * Add training partner
 	 */
 	protected function addTrainingPartner() {
@@ -263,16 +282,6 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 				date('d.m.Y', $edited),
 				date('H:i', $edited)
 			);
-			
-			$Factory = new \Runalyze\Model\Factory(SessionAccountHandler::getId());
-			$Tags = $Factory->tagForActivity($this->Context->activity()->id());
-			if(isset($Tags)) {
-			    $TagText =  '<br>'. __('This activity has following tags: ');
-			    foreach($Tags as $Tag) { 
-				$TagText .= '<strong>'.$Tag->tag().'</strong>'; 
-				if($Tag->id() !== end($Tags)->id()) { $TagText .=', '; }
-			    }
-			}
 
 			$this->NotesContent .= HTML::fileBlock($CreationTime.$ModificationTime.$TagText);
 		}
