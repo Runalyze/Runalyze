@@ -8228,13 +8228,15 @@ Runalyze.Feature = (function($, Parent){
 
 	function initFormularElements() {
 		var config = {
-                    '.chosen-select-create': {create_option: true, skip_no_results: true, create_option_text:"Add a tag"},
-                    '.chosen-select': {no_results_text: "No results match"}
-                  }
-                  for (var selector in config) {
-                    $(selector).chosen(config[selector]);
-                  }
-        $(".fip-select").fontIconPicker({emptyIcon: false, hasSearch: false});
+			'.chosen-select-create': {width: "auto", create_option: true, skip_no_results: true, create_option_text:"Add a tag"},
+			'.chosen-select': {width: "auto", no_results_text: "No results match"}
+		};
+
+		for (var selector in config) {
+			$(selector).chosen(config[selector]);
+		}
+  
+		$(".fip-select").fontIconPicker({emptyIcon: false, hasSearch: false});
 		$(".pick-a-date:not(.has-a-datepicker)").each(function(){
 			var $t = $(this);
 			$t.addClass('has-a-datepicker');
