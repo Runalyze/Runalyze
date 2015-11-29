@@ -55,11 +55,12 @@ class Tags extends AbstractKey
 	}
 
 	/**
-	 * @return array array('join' => 'LEFT JOIN ...', 'field' => '`x`.`y`)
+	 * @return array array('column' => '...', 'join' => 'LEFT JOIN ...', 'field' => '`x`.`y`)
 	 */
 	public function joinDefinition()
 	{
 		return array(
+			'column' => self::CONCAT_TAGIDS_KEY,
 			'join' => 'LEFT JOIN `'.PREFIX.'activity_tag` AS `atag` ON `t`.`id` = `atag`.activityid',
 			'field' => 'GROUP_CONCAT(`atag`.`tagid` SEPARATOR \',\') AS `'.self::CONCAT_TAGIDS_KEY.'`'
 		);

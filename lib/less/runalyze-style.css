@@ -893,6 +893,9 @@ tr.ERROR td {
 .mono {
   font-family: monospace;
 }
+.nowrap {
+  white-space: nowrap;
+}
 .unimportant {
   opacity: .5;
 }

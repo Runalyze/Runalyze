@@ -121,6 +121,12 @@ final class Keys extends AbstractEnum
 	/** @var int */
 	const TAGS = 35;
 
+	/** @var int */
+	const COMPLETE_EQUIPMENT = 36;
+
+	/** @var int */
+	const MAIN_EQUIPMENT = 37;
+
 	/**
 	 * @var array|null
 	 */
@@ -213,7 +219,9 @@ final class Keys extends AbstractEnum
 			self::TOTAL_STROKES => 'TotalStrokes',
 			self::VERTICAL_RATIO => 'VerticalRatio',
 			self::GROUNDCONTACT_BALANCE => 'GroundcontactBalance',
-			self::TAGS => 'Tags'
+			self::TAGS => 'Tags',
+			self::COMPLETE_EQUIPMENT => 'CompleteEquipment',
+			self::MAIN_EQUIPMENT => 'MainEquipment'
 		);
 	}
 }

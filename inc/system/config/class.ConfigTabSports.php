@@ -58,6 +58,7 @@ class ConfigTabSports extends ConfigTab {
 						<th>'.Ajax::tooltip(__('Unit'), __('Unit for speed')).'</th>
 						<th>'.Ajax::tooltip(__('Power'), __('Power is recorded or calculated.')).'</th>
 						<th>'.Ajax::tooltip(__('Outside'), __('Sport is performed outdoor: activate route, weather, ...')).'</th>
+						<th>'.Ajax::tooltip(__('Main equipment'), __('Objects of main equipment type can be shown in the activity overview.')).'</th>
 						<th>'.Ajax::tooltip(__('Calendar view'), __('Mode for displaying activities in calendar')).'</th>
 						<th>'.Ajax::tooltip(Icon::$CROSS_SMALL, __('A sport can only be deleted if no references exist.')).'</th>
 					</tr>
@@ -76,7 +77,7 @@ class ConfigTabSports extends ConfigTab {
 			return (!isset($b['counts']) || (isset($a['counts']) && ((int)$a['counts'] > (int)$b['counts']))) ? -1 : 1;
 		});
 
-		$Sports[] = array('id' => -1, 'new' => true, 'name' => '', 'img' => 'unknown.gif', 'short' => 0, 'kcal' => '', 'HFavg' => '', 'distances' => 0, 'speed' => Pace::STANDARD, 'power' => 0, 'outside' => '');
+		$Sports[] = array('id' => -1, 'new' => true, 'name' => '', 'img' => 'unknown.gif', 'short' => 0, 'kcal' => '', 'HFavg' => '', 'distances' => 0, 'speed' => Pace::STANDARD, 'power' => 0, 'outside' => '', 'main_equipmenttypeid' => 0);
 
 		$IconOptions = SportFactory::getIconOptions();
 		$PaceOptions = Pace::options();
@@ -89,6 +90,7 @@ class ConfigTabSports extends ConfigTab {
 			$id         = $Data['id'];
 			$isRunning  = ($id == Runalyze\Configuration::General()->runningSport());
 			$iconSelect = HTML::selectBox('sport[img]['.$id.']', $IconOptions, $Data['img'], '', 'fip-select');
+			$EquipmentTypeOptions = $this->getEquipmentTypeOptions($id);
 
 			if ($id == -1)
 				$delete = '';
@@ -107,6 +109,7 @@ class ConfigTabSports extends ConfigTab {
 						<td>'.HTML::selectBox('sport[speed]['.$id.']', $PaceOptions, $Data['speed']).'</td>
 						<td><input type="checkbox" name="sport[power]['.$id.']"'.($Data['power'] == 1 ? ' checked' : '').'></td>
 						<td><input type="checkbox" name="sport[outside]['.$id.']"'.($Data['outside'] == 1 ? ' checked' : '').'></td>
+						<td>'.HTML::selectBox('sport[main_equipmenttypeid]['.$id.']', $EquipmentTypeOptions, $Data['main_equipmenttypeid']).'</td>
 						<td>'.($isRunning ? '<input type="hidden" name="sport[short]['.$id.']" value="0">-' : HTML::selectBox('sport[short]['.$id.']', $ShortOptions, $Data['short'])).'</td>
 						<td>'.($isRunning ? '-' : $delete).'</td>
 					</tr>';
@@ -117,6 +120,21 @@ class ConfigTabSports extends ConfigTab {
 			</table>';
 
 		return $Code;
+	}
+
+	/**
+	 * @param int $sportid
+	 * @return array
+	 */
+	protected function getEquipmentTypeOptions($sportid) {
+		$Options = array(0 => __('none'));
+		$Factory = new \Runalyze\Model\Factory(\SessionAccountHandler::getId());
+
+		foreach ($Factory->equipmentTypeForSport($sportid) as $Type) {
+			$Options[$Type->id()] = $Type->name();
+		}
+
+		return $Options;
 	}
 
 	/**
@@ -139,6 +157,7 @@ class ConfigTabSports extends ConfigTab {
 				'speed',
 				'power',
 				'outside',
+				'main_equipmenttypeid'
 			);
 
 			$values  = array(
@@ -151,6 +170,7 @@ class ConfigTabSports extends ConfigTab {
 				$_POST['sport']['speed'][$id],
 				isset($_POST['sport']['power'][$id]),
 				isset($_POST['sport']['outside'][$id]),
+				$_POST['sport']['main_equipmenttypeid'][$id],
 			);
 
 			if (isset($_POST['sport']['delete'][$id]) && $id != Runalyze\Configuration::General()->runningSport())

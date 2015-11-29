@@ -276,7 +276,11 @@ class Query
 
 			if ($KeyObject->isInDatabase()) {
 				if ($KeyObject->requiresJoin()) {
-					$this->JoinTables[] = $KeyObject->joinDefinition();
+					$joinDefinition = $KeyObject->joinDefinition();
+
+					if (!key_exists($joinDefinition['column'], $this->JoinTables)) {
+						$this->JoinTables[$joinDefinition['column']] = $joinDefinition;
+					}
 				} else {
 					$columns[] = $KeyObject->column();
 				}

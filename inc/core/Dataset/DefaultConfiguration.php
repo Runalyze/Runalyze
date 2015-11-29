@@ -55,7 +55,9 @@ class DefaultConfiguration extends Configuration
 			Keys::TOTAL_STROKES => false,
 			Keys::VERTICAL_RATIO => false,
 			Keys::GROUNDCONTACT_BALANCE => false,
-			Keys::TAGS => false
+			Keys::TAGS => false,
+			Keys::COMPLETE_EQUIPMENT => false,
+			Keys::MAIN_EQUIPMENT => false
 		));
 	}
 

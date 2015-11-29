@@ -71,6 +71,12 @@ class Object extends Model\ObjectWithID {
 	const IS_OUTSIDE = 'outside';
 
 	/**
+	 * Key: id of main equipment (used for dataset)
+	 * @var string
+	 */
+	const MAIN_EQUIPMENTTYPEID = 'main_equipmenttypeid';
+
+	/**
 	 * All properties
 	 * @return array
 	 */
@@ -84,7 +90,8 @@ class Object extends Model\ObjectWithID {
 			self::HAS_DISTANCES,
 			self::PACE_UNIT,
 			self::HAS_POWER,
-			self::IS_OUTSIDE
+			self::IS_OUTSIDE,
+			self::MAIN_EQUIPMENTTYPEID
 		);
 	}
 
@@ -178,5 +185,13 @@ class Object extends Model\ObjectWithID {
 	 */
 	public function isOutside() {
 		return ($this->Data[self::IS_OUTSIDE] == 1);
+	}
+
+	/**
+	 * ID of main equipment type
+	 * @return int
+	 */
+	public function mainEquipmentTypeID() {
+		return $this->Data[self::MAIN_EQUIPMENTTYPEID];
 	}
 }

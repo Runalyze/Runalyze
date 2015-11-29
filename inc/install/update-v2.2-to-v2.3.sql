@@ -80,6 +80,10 @@ ALTER TABLE `runalyze_training` DROP `abc`;
 
 UPDATE `runalyze_plugin` SET `key`="RunalyzePluginStat_Tag" WHERE `key`="RunalyzePluginStat_Laufabc";
 
+/* 29.11.2015 - add equipment to dataset */
+ALTER TABLE `runalyze_sport` ADD `main_equipmenttypeid` int(10) unsigned NOT NULL DEFAULT '0' AFTER `outside`;
+
+/* Constraints at the bottom as they may cause errors */
 ALTER TABLE `runalyze_activity_tag` ADD CONSTRAINT `runalyze_activity_tag_ibfk_1` FOREIGN KEY (`tagid`) REFERENCES `runalyze_tag` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE `runalyze_activity_tag` ADD CONSTRAINT `runalyze_activity_tag_ibfk_2` FOREIGN KEY (`activityid`) REFERENCES `runalyze_training` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE `runalyze_tag` ADD CONSTRAINT `runalyze_tag_ibfk_1` FOREIGN KEY (`accountid`) REFERENCES `runalyze_account` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;

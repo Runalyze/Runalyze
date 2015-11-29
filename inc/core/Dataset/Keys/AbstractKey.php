@@ -46,11 +46,11 @@ abstract class AbstractKey
 	}
 
 	/**
-	 * @return array array('join' => 'LEFT JOIN ...', 'field' => '`x`.`y`)
+	 * @return array array('column' => '...','join' => 'LEFT JOIN ...', 'field' => '`x`.`y`)
 	 */
 	public function joinDefinition()
 	{
-		return array('join' => '', 'field' => '');
+		return array('column' => '', 'join' => '', 'field' => '');
 	}
 
 	/**

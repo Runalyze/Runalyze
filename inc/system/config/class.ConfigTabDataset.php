@@ -6,6 +6,7 @@
 
 use Runalyze\Configuration;
 use Runalyze\Dataset;
+use Runalyze\Model\Factory;
 
 /**
  * ConfigTabDataset
@@ -22,6 +23,9 @@ class ConfigTabDataset extends ConfigTab {
 	/** @var \Runalyze\Dataset\Context */
 	protected $ExampleContext;
 
+	/** @var \Runalyze\Model\Factory */
+	protected $Factory;
+
 	/**
 	 * Construct config tab
 	 */
@@ -29,6 +33,7 @@ class ConfigTabDataset extends ConfigTab {
 		parent::__construct();
 
 		$this->loadConfiguration();
+		$this->Factory = new Factory(SessionAccountHandler::getId());
 		$this->ExampleContext = new Dataset\Context($this->getExampleTraining(), SessionAccountHandler::getId());
 	}
 
@@ -268,7 +273,8 @@ class ConfigTabDataset extends ConfigTab {
 			'total_strokes'	=> 1250,
 			'vertical_ratio' => 79,
 			'groundcontact_balance' => 4980,
-			Dataset\Keys\Tags::CONCAT_TAGIDS_KEY => $this->exampleTagID()
+			Dataset\Keys\Tags::CONCAT_TAGIDS_KEY => $this->exampleTagID(),
+			Dataset\Keys\CompleteEquipment::CONCAT_EQUIPMENT_KEY => $this->exampleEquipmentIDs(2)
 		);
 	}
 
@@ -276,11 +282,41 @@ class ConfigTabDataset extends ConfigTab {
 	 * @return string
 	 */
 	protected function exampleTagID() {
-		$Factory = new \Runalyze\Model\Factory(SessionAccountHandler::getId());
-		$AllTags = $Factory->allTags();
+		$AllTags = $this->Factory->allTags();
 
 		if (!empty($AllTags)) {
 			return $AllTags[0]->id();
+		}
+
+		return '';
+	}
+
+	/**
+	 * @param int $num
+	 * @return string
+	 */
+	protected function exampleEquipmentIDs($num = 1) {
+		$Sport = $this->Factory->sport(Configuration::General()->runningSport());
+
+		if ($Sport->mainEquipmentTypeID() > 0) {
+			$IDs = $this->Factory->equipmentForEquipmentType($Sport->mainEquipmentTypeID(), true);
+
+			if (!empty($IDs)) {
+				return $IDs[0];
+			}
+		}
+
+		$AllEquipments = $this->Factory->allEquipments();
+
+		if (!empty($AllEquipments)) {
+			$max = min($num, count($AllEquipments));
+			$ids = array();
+
+			for ($i = 0; $i < $max; ++$i) {
+				$ids[] = $AllEquipments[$i]->id();
+			}
+
+			return implode(',', $ids);
 		}
 
 		return '';
