@@ -33,7 +33,7 @@ class Loop extends \Runalyze\Model\Loop {
 	 * @return float
 	 */
 	public function latitude() {
-		return $this->current(Object::LATITUDES);
+		return (new Geohash())->decode($this->current(Object::GEOHASHES))->getCoordinate()->getLatitude();
 	}
 
 	/**
@@ -41,7 +41,7 @@ class Loop extends \Runalyze\Model\Loop {
 	 * @return float
 	 */
 	public function longitude() {
-		return $this->current(Object::LONGITUDES);
+		return (new Geohash())->decode($this->current(Object::GEOHASHES))->getCoordinate()->getLongitude();
 	}
 	
 	/**

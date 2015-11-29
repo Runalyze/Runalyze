@@ -72,18 +72,6 @@ class Object extends Model\ObjectWithID implements Model\Loopable {
 	 * @var string
 	 */
 	const ELEVATION_DOWN = 'elevation_down';
-
-	/**
-	 * Key: latitudes
-	 * @var string
-	 */
-	const LATITUDES = 'lats';
-
-	/**
-	 * Key: longitudes
-	 * @var string
-	 */
-	const LONGITUDES = 'lngs';
 	
 	/**
 	 * Key: geohash
@@ -180,8 +168,6 @@ class Object extends Model\ObjectWithID implements Model\Loopable {
 			self::ELEVATION_UP,
 			self::ELEVATION_DOWN,
 			self::GEOHASHES,
-			self::LATITUDES,
-			self::LONGITUDES,
 			self::ELEVATIONS_ORIGINAL,
 			self::ELEVATIONS_CORRECTED,
 			self::ELEVATIONS_SOURCE,
@@ -234,8 +220,6 @@ class Object extends Model\ObjectWithID implements Model\Loopable {
 		switch ($key) {
 			case self::ELEVATIONS_ORIGINAL:
 			case self::ELEVATIONS_CORRECTED:
-			case self::LATITUDES:
-			case self::LONGITUDES:
 			case self::GEOHASHES:
 				return true;
 		}
@@ -358,12 +342,12 @@ class Object extends Model\ObjectWithID implements Model\Loopable {
          * @return array Array with coordiantes: ['lat' => array, 'lng' => array]
          */
         public function latitudesAndLongitudesFromGeohash() {
-            $Geohash = new Geohash();
+			$Coordinates = array();
             $Geohashes = $this->Data[self::GEOHASHES];
             $size = count($this->Data[self::GEOHASHES]);
             
             for ($i = 0; $i < $size; $i++) {
-                $geo = $Geohash->decode($Geohashes[$i])->getCoordinate(); 
+                $geo = (new Geohash())->decode($Geohashes[$i])->getCoordinate(); 
                 $Coordinates['lat'][] = $geo->getLatitude();
                 $Coordinates['lng'][] = $geo->getLongitude();
             }  
@@ -516,26 +500,6 @@ class Object extends Model\ObjectWithID implements Model\Loopable {
 	 */
 	public function elevationDown() {
 		return $this->Data[self::ELEVATION_DOWN];
-	}
-
-	/**
-	 * Latitudes
-	 * @return array
-	 */
-	public function latitudes() {
-		throw new \RuntimeException('Route\Object::latitudes() is not supported anymore.');
-
-		return $this->Data[self::LATITUDES];
-	}
-
-	/**
-	 * Longitudes
-	 * @return array
-	 */
-	public function longitudes() {
-		throw new \RuntimeException('Route\Object::longitudes() is not supported anymore.');
-
-		return $this->Data[self::LONGITUDES];
 	}
 	
 	/**

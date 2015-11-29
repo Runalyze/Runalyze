@@ -62,8 +62,10 @@ class Calculator {
 			return false;
 		}
 
+		$coordinates = $this->Route->latitudesAndLongitudesFromGeohash();
+
 		$Corrector = new Corrector();
-		$Corrector->correctElevation($this->Route->latitudesFromGeohash(), $this->Route->longitudesFromGeohash(), $strategyName);
+		$Corrector->correctElevation($coordinates['lat'], $coordinates['lng'], $strategyName);
 		$result = $Corrector->getCorrectedElevation();
 
 		if (!empty($result)) {
