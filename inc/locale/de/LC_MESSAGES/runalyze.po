@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-11-29 11:30+0100\n"
-"PO-Revision-Date: 2015-11-27 20:56+0200\n"
+"PO-Revision-Date: 2015-11-29 11:37+0200\n"
 "Last-Translator: Michael Pohl <michael@mipapo.de>\n"
-"Language-Team: German <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/de/>\n"
+"Language-Team: German "
+"<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -452,13 +452,12 @@ msgstr "Wähle Ausrüstung"
 #: inc/training/search/class.SearchFormular.php:147
 #: plugin/RunalyzePluginStat_Tag/class.RunalyzePluginStat_Tag.php:119
 msgid "Tag"
-msgstr ""
+msgstr "Tag"
 
 #: inc/training/search/class.SearchFormular.php:147
 #: plugin/RunalyzePluginStat_Tag/class.RunalyzePluginStat_Tag.php:91
-#, fuzzy
 msgid "Choose tag"
-msgstr "Tool wählen"
+msgstr "Tag auswählen"
 
 #: inc/training/search/class.SearchFormular.php:154
 #: inc/training/schemes/scheme.Training.new.php:384
@@ -777,7 +776,7 @@ msgstr "Wetterbedingungen"
 #: inc/core/Dataset/Keys/Tags.php:46
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:146
 msgid "Tags"
-msgstr ""
+msgstr "Tags"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:239
 #: inc/core/Dataset/Keys/TrainingPartner.php:46
@@ -1227,9 +1226,8 @@ msgid "The activity has been successfully created."
 msgstr "Die Trainingseinheit wurde erfolgreich eingetragen."
 
 #: inc/training/class.TrainingFormular.php:253
-#, fuzzy
 msgid "Choose tags"
-msgstr "Statistik auswählen"
+msgstr "Tags auswählen"
 
 #: inc/training/class.TrainingFormular.php:329
 msgid "Remove data series"
@@ -5401,9 +5399,8 @@ msgstr "Temperaturen"
 
 #: plugin/RunalyzePluginStat_Wetter/MinMaxTableForEquipment.php:128
 #: plugin/RunalyzePluginStat_Wetter/MonthwiseTable.php:147
-#, fuzzy
 msgid "No data found."
-msgstr "Keine Strecken gefunden."
+msgstr "Keine Daten gefunden."
 
 #: plugin/RunalyzePluginStat_Wetter/Plot.Year.php:46
 #: plugin/RunalyzePluginStat_Trainingszeiten/Plot.Daytime.php:75
@@ -5525,23 +5522,20 @@ msgid "Empty your cache"
 msgstr "Löscht deinen Cache"
 
 #: plugin/RunalyzePluginStat_Tag/class.RunalyzePluginStat_Tag.php:29
-#, fuzzy
 msgid "Tag analysis"
-msgstr "Analyse"
+msgstr "Tag Analyse"
 
 #: plugin/RunalyzePluginStat_Tag/class.RunalyzePluginStat_Tag.php:37
 msgid "How often have you tagged your activities with tag x?"
-msgstr ""
+msgstr "Wie oft hast du deine Aktivitäten mit dem Tag x getaggt?"
 
 #: plugin/RunalyzePluginStat_Tag/class.RunalyzePluginStat_Tag.php:51
-#, fuzzy
 msgid "Tag to analyze"
-msgstr "Runalyze starten"
+msgstr "Standardtag zum Analysieren"
 
 #: plugin/RunalyzePluginStat_Tag/class.RunalyzePluginStat_Tag.php:109
-#, fuzzy
 msgid "Please choose a tag."
-msgstr "bitte wählen"
+msgstr "Bitte wähle einen Tag."
 
 #: plugin/RunalyzePluginStat_Tag/class.RunalyzePluginStat_Tag.php:125
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:101
@@ -6271,9 +6265,8 @@ msgid "Relation: equipment to activities"
 msgstr "Relationen: Ausrüstung zu Aktivitäten"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:147
-#, fuzzy
 msgid "Relation: tag to activities"
-msgstr "Relationen: Ausrüstung zu Aktivitäten"
+msgstr "Zuordnung: Tag zu Aktivitäten"
 
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:27
 msgid "Monthly Stats"
