@@ -283,7 +283,7 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 				date('H:i', $edited)
 			);
 
-			$this->NotesContent .= HTML::fileBlock($CreationTime.$ModificationTime.$TagText);
+			$this->NotesContent .= HTML::fileBlock($CreationTime.$ModificationTime);
 		}
 	}
 }
