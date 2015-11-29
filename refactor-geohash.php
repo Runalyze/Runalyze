@@ -74,13 +74,20 @@ if (!in_array('lats', $columns)) {
 	echo 'The Route table has already been refactored.'.NL;
        	exit;
 }
+
+if (!in_array('refactored', $columns)) {
+	$PDO->exec('ALTER TABLE `'.PREFIX.'route` ADD `refactored` TINYINT UNSIGNED NOT NULL DEFAULT 0 FIRST;');
+	$PDO->exec('ALTER TABLE `'.PREFIX.'route` ADD INDEX `refactored` (`refactored`);');
+	$PDO->exec('UPDATE `'.PREFIX.'route` SET `lats` = NULL, `refactored` = 1 WHERE `lats` = "" OR `lats` IS NULL');
+}
+
  $IsNotRefactored = true;
 
 /**
  * Overview for data
  */
-$Routes = $PDO->query('SELECT id, lats, lngs, startpoint_lat, startpoint_lng, endpoint_lat, endpoint_lng, min_lat, min_lng, max_lat, max_lng FROM runalyze_route WHERE lats IS NOT NULL AND `geohashes` IS NULL LIMIT '.LIMIT);
-$InsertGeohash = $PDO->prepare('UPDATE '.PREFIX.'route SET `geohashes`=:geohash, `startpoint`=:startpoint, `endpoint`=:endpoint, `min`=:min, `max`=:max WHERE `id` = :id');
+$Routes = $PDO->query('SELECT id, lats, lngs, startpoint_lat, startpoint_lng, endpoint_lat, endpoint_lng, min_lat, min_lng, max_lat, max_lng FROM '.PREFIX.'route WHERE `refactored`=0 LIMIT '.LIMIT);
+$InsertGeohash = $PDO->prepare('UPDATE '.PREFIX.'route SET `refactored`=1, `geohashes`=:geohash, `startpoint`=:startpoint, `endpoint`=:endpoint, `min`=:min, `max`=:max WHERE `id` = :id');
 while ($Route = $Routes->fetch()) {
     $lats = explode("|", $Route['lats']);
     $lngs = explode("|", $Route['lngs']);
@@ -90,17 +97,17 @@ while ($Route = $Routes->fetch()) {
 
     for($i=0; $i< $quantity; $i++) {
 		// TODO: use a persisent Geohash object as soon as that's possible, see https://github.com/thephpleague/geotools/issues/73
-		$Coordinate->setLatitude($lats[$i]);
-		$Coordinate->setLongitude($lngs[$i]);
+		$Coordinate->setLatitude((float)$lats[$i]);
+		$Coordinate->setLongitude((float)$lngs[$i]);
 	$geohashArray[] = (new Geohash)->encode($Coordinate, 12)->getGeohash();
     }
 	$InsertGeohash->execute(array(
 				':geohash' => implode("|", $geohashArray),
 				 ':id' => $Route['id'],
-				 ':startpoint' => (new Geohash)->encode(new Coordinate(array($Route['startpoint_lat'], $Route['startpoint_lng'])), 10)->getGeohash(),
-				 ':endpoint' => (new Geohash)->encode(new Coordinate(array($Route['endpoint_lat'], $Route['endpoint_lng'])), 10)->getGeohash(),
-				 ':min' => (new Geohash)->encode(new Coordinate(array($Route['min_lat'], $Route['min_lng'])), 10)->getGeohash(),
-				 ':max' => (new Geohash)->encode(new Coordinate(array($Route['max_lat'], $Route['max_lng'])), 10)->getGeohash()
+				 ':startpoint' => (new Geohash)->encode(new Coordinate(array((float)$Route['startpoint_lat'], (float)$Route['startpoint_lng'])), 10)->getGeohash(),
+				 ':endpoint' => (new Geohash)->encode(new Coordinate(array((float)$Route['endpoint_lat'], (float)$Route['endpoint_lng'])), 10)->getGeohash(),
+				 ':min' => (new Geohash)->encode(new Coordinate(array((float)$Route['min_lat'], (float)$Route['min_lng'])), 10)->getGeohash(),
+				 ':max' => (new Geohash)->encode(new Coordinate(array((float)$Route['max_lat'], (float)$Route['max_lng'])), 10)->getGeohash()
 			    ));
     if (CLI) {
     echo "\033[7D";
@@ -109,21 +116,23 @@ while ($Route = $Routes->fetch()) {
     } else { echo "."; }
 }
 
+	if (CLI) {
+		echo NL.NL;
+	}
+
         echo 'done;'.NL;
         echo NL;
         echo 'Time: '.(microtime(true) - $starttime).'s'.NL;
         echo 'Memory peak: '.memory_get_peak_usage().'B'.NL;
         echo NL;
 
+$stats = $PDO->query('SELECT COUNT(*) as `num`, SUM(`refactored`) as `refactored` FROM `'.PREFIX.'route`')->fetch();
+echo 'Done so far: '.$stats['refactored'].' / '.$stats['num'].NL.NL;
 
-$countLats = $PDO->query('SELECT COUNT(*) as c FROM runalyze_route WHERE `lats` != \'\' ')->fetchColumn();
-$countGeohashes = $PDO->query('SELECT COUNT(*) as c FROM runalyze_route WHERE geohashes IS NOT NULL AND `lats` != \'\'')->fetchColumn();
-echo $countGeohashes;
-
-if($countGeohashes == $countLats) {
-    echo 'You are done. All routes are refactored. Dropping now all old coordinate columns'.NL;
-    $PDO->exec('ALTER TABLE `'.PREFIX.'route` DROP `lats`, DROP `lngs`, DROP `startpoint_lat`, DROP `startpoint_lng`, DROP `endpoint_lat`, DROP `endpoint_lng`, DROP `min_lat`, DROP `min_lng`, DROP `max_lat`, DROP `max_lng`');        
-    echo 'All old coordinate columns have been dropped'.NL;
+if($stats['refactored'] == $stats['num']) {
+    echo 'You are done. All routes are refactored. Dropping now all old columns.'.NL;
+    $PDO->exec('ALTER TABLE `'.PREFIX.'route` DROP `refactored`, DROP `lats`, DROP `lngs`, DROP `startpoint_lat`, DROP `startpoint_lng`, DROP `endpoint_lat`, DROP `endpoint_lng`, DROP `min_lat`, DROP `min_lng`, DROP `max_lat`, DROP `max_lng`');
+    echo 'All old columns have been dropped.'.NL;
     echo NL;
     echo 'Remember to unset your credentials within this file.'.NL;
     echo '(Or simply delete this file if you are not working on our git repository)'.NL;
