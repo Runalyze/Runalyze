@@ -338,6 +338,9 @@ class Object extends Model\ObjectWithID implements Model\Loopable {
 			throw new \InvalidArgumentException('Latitude & Longitude Array cannot have different lenghts');
 		}
 
+		$latitudes = array_map(function ($value) { return ($value == '') ? 0 : $value; }, $latitudes);
+		$longitudes = array_map(function ($value) { return ($value == '') ? 0 : $value; }, $longitudes);
+
 		$geohashes = array();
 
 		for ($i = 0; $i < $size; ++$i) {

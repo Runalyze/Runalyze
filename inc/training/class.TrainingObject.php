@@ -204,7 +204,10 @@ class TrainingObject extends DataObject {
 			Runalyze\Model\Route\Object::DISTANCE => $this->get('distance'),
 			Runalyze\Model\Route\Object::ELEVATIONS_ORIGINAL => $this->get('arr_alt')
 		));
-                $Route->setLatitudesLongitudes($this->getArrayFor('arr_lat'), $this->getArrayFor('arr_lon'));
+
+		if ($this->hasArrayLatitude()) {
+			$Route->setLatitudesLongitudes($this->getArrayFor('arr_lat'), $this->getArrayFor('arr_lon'));
+		}
 
 		return $Route;
 	}

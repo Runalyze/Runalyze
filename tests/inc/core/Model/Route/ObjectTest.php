@@ -98,4 +98,11 @@ class ObjectTest extends \PHPUnit_Framework_TestCase {
 		$Object->forceToSetMinMaxFromGeohashes();
 	}
 
+	public function testEmptyArraysFromTrainingForm() {
+		$Object = new Object();
+		$Object->setLatitudesLongitudes(array(''), array(''));
+
+		$this->assertEquals(array('7zzzzzzzzzzz'), $Object->get(Object::GEOHASHES));
+	}
+
 }
