@@ -5,6 +5,7 @@
  */
 
 namespace Runalyze\Model\Route;
+use League\Geotools\Geohash\Geohash;
 
 /**
  * Loop through route object
@@ -32,7 +33,7 @@ class Loop extends \Runalyze\Model\Loop {
 	 * @return float
 	 */
 	public function latitude() {
-		return $this->current(Object::LATITUDES);
+		return (new Geohash())->decode($this->current(Object::GEOHASHES))->getCoordinate()->getLatitude();
 	}
 
 	/**
@@ -40,7 +41,15 @@ class Loop extends \Runalyze\Model\Loop {
 	 * @return float
 	 */
 	public function longitude() {
-		return $this->current(Object::LONGITUDES);
+		return (new Geohash())->decode($this->current(Object::GEOHASHES))->getCoordinate()->getLongitude();
+	}
+	
+	/**
+	 * Current geohash
+	 * @return float
+	 */
+	public function geohash() {
+		return $this->current(Object::GEOHASHES);
 	}
 
 	/**
@@ -48,11 +57,14 @@ class Loop extends \Runalyze\Model\Loop {
 	 * @return double
 	 */
 	public function calculatedStepDistance() {
-		return Object::gpsDistance(
-			$this->Object->at($this->LastIndex, Object::LATITUDES),
-			$this->Object->at($this->LastIndex, Object::LONGITUDES),
-			$this->Object->at($this->Index, Object::LATITUDES),
-			$this->Object->at($this->Index, Object::LONGITUDES)
+	    $LastGeohash = (new Geohash())->decode($this->Object->at($this->LastIndex, Object::GEOHASHES))->getCoordinate();
+	    $IndexGeohash = (new Geohash())->decode($this->Object->at($this->Index, Object::GEOHASHES))->getCoordinate();
+
+	    return Object::gpsDistance(
+			$LastGeohash->getLatitude(),
+			$LastGeohash->getLongitude(),
+			$IndexGeohash->getLatitude(),
+			$IndexGeohash->getLongitude()
 		);
 	}
 

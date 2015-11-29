@@ -15,8 +15,7 @@ class ObjectTest extends \PHPUnit_Framework_TestCase {
 			Object::ELEVATION => 20,
 			Object::ELEVATION_UP => 20,
 			Object::ELEVATION_DOWN => 15,
-			Object::LATITUDES => array(47.7, 47.8),
-			Object::LONGITUDES => array(7.8, 7.7),
+			Object::GEOHASHES => array('u1xjhpfe7yvs', 'u1xjhzdtjx62'),
 			Object::ELEVATIONS_ORIGINAL => array(195, 210),
 			Object::ELEVATIONS_CORRECTED => array(200, 220),
 			Object::ELEVATIONS_SOURCE => 'unknown',
@@ -42,8 +41,7 @@ class ObjectTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(20, $T->elevation());
 		$this->assertEquals(20, $T->elevationUp());
 		$this->assertEquals(15, $T->elevationDown());
-		$this->assertEquals(array(47.7, 47.8), $T->latitudes());
-		$this->assertEquals(array(7.8, 7.7), $T->longitudes());
+		$this->assertEquals(array('u1xjhpfe7yvs', 'u1xjhzdtjx62'), $T->geohashes());
 		$this->assertEquals(array(195, 210), $T->elevationsOriginal());
 		$this->assertEquals(array(200, 220), $T->elevationsCorrected());
 		$this->assertEquals('unknown', $T->get(Object::ELEVATIONS_SOURCE));
@@ -53,67 +51,58 @@ class ObjectTest extends \PHPUnit_Framework_TestCase {
 	public function testSynchronization() {
 		$T = $this->simpleObject();
 		$T->synchronize();
+		$T->forceToSetMinMaxFromGeohashes();
+		$this->assertEquals('u1xjhpfe7y', $T->get(Object::STARTPOINT));
+		$this->assertEquals('u1xjhzdtjx', $T->get(Object::ENDPOINT));
 
-		$this->assertEquals(47.7, $T->get(Object::STARTPOINT_LATITUDE));
-		$this->assertEquals(7.8, $T->get(Object::STARTPOINT_LONGITUDE));
-		$this->assertEquals(47.8, $T->get(Object::ENDPOINT_LATITUDE));
-		$this->assertEquals(7.7, $T->get(Object::ENDPOINT_LONGITUDE));
-
-		$this->assertEquals(47.7, $T->get(Object::MIN_LATITUDE));
-		$this->assertEquals(7.7, $T->get(Object::MIN_LONGITUDE));
-		$this->assertEquals(47.8, $T->get(Object::MAX_LATITUDE));
-		$this->assertEquals(7.8, $T->get(Object::MAX_LONGITUDE));
+		$this->assertEquals('u1xjhpdt5z', $T->get(Object::MIN));
+		$this->assertEquals('u1xjhzfemw', $T->get(Object::MAX));
 	}
 
-	public function testSynchronizationWithEmptyPoints() {
-		$T = new Object(array(
-			Object::LATITUDES => array(0.0, 47.7, 47.8, 0.0),
-			Object::LONGITUDES => array(0.0, -7.8, -7.7, 0.0)
-		));
-		$T->synchronize();
-
-		$this->assertEquals(47.7, $T->get(Object::STARTPOINT_LATITUDE));
-		$this->assertEquals(-7.8, $T->get(Object::STARTPOINT_LONGITUDE));
-		$this->assertEquals(47.8, $T->get(Object::ENDPOINT_LATITUDE));
-		$this->assertEquals(-7.7, $T->get(Object::ENDPOINT_LONGITUDE));
-
-		$this->assertEquals(47.7, $T->get(Object::MIN_LATITUDE));
-		$this->assertEquals(-7.8, $T->get(Object::MIN_LONGITUDE));
-		$this->assertEquals(47.8, $T->get(Object::MAX_LATITUDE));
-		$this->assertEquals(-7.7, $T->get(Object::MAX_LONGITUDE));
-	}
-
-	public function testSynchronizationWithFullEmptyPoints() {
-		$T = new Object(array(
-			Object::LATITUDES => array(0.0, 0.0, 0.0, 0.0),
-			Object::LONGITUDES => array(0.0, 0.0, 0.0, 0.0)
-		));
-		$T->synchronize();
-
-		$this->assertEquals(null, $T->get(Object::STARTPOINT_LATITUDE));
-		$this->assertEquals(null, $T->get(Object::STARTPOINT_LONGITUDE));
-		$this->assertEquals(null, $T->get(Object::ENDPOINT_LATITUDE));
-		$this->assertEquals(null, $T->get(Object::ENDPOINT_LONGITUDE));
-
-		$this->assertEquals(null, $T->get(Object::MIN_LATITUDE));
-		$this->assertEquals(null, $T->get(Object::MIN_LONGITUDE));
-		$this->assertEquals(null, $T->get(Object::MAX_LATITUDE));
-		$this->assertEquals(null, $T->get(Object::MAX_LONGITUDE));
-	}
 
 	/**
 	 * @see https://github.com/Runalyze/Runalyze/issues/1172
 	 */
 	public function testPossibilityOfTooLargeCorrectedElevations() {
 		$Object = new Object(array(
-			Object::LATITUDES => array(49.440, 49.441, 49.442, 49.443, 49.444, 49.445, 49.446, 49.447, 49.448, 49.449, 49.450),
-			Object::LONGITUDES => array(7.760, 7.761, 7.762, 7.763, 7.764, 7.765, 7.766, 7.767, 7.768, 7.769, 7.770),
+			Object::GEOHASHES => array('u1xjhxf507s1', 'u1xjhxf6b7s9', 'u1xjhxfd8jyw', 'u1xjhxfdx0cw', 'u1xjhxffrhw4', 'u1xjhxg4r0du', 'u1xjhxg6p6bq', 'u1xjhxgdn0fk', 'u1xjhxgcvgh0', 'u1xjhxu1tytn', 'u1xjhxu3s0j8'),
 			Object::ELEVATIONS_ORIGINAL => array(240, 238, 240, 238, 238, 237, 236, 237, 240, 248, 259),
 			Object::ELEVATIONS_CORRECTED => array(240, 240, 240, 240, 240, 237, 237, 237, 237, 237, 259, 259, 259, 259, 259)
 		));
 
 		$this->assertEquals(11, $Object->num());
 		$this->assertEquals(11, count($Object->elevationsCorrected()));
+	}
+
+
+	public function testSetLatitudesLongitudes() {
+		$Object = new Object();
+		$Object->setLatitudesLongitudes(array(47.7, 47.8), array(7.8, 7.7));
+		$Object->forceToSetMinMaxFromGeohashes();
+		
+		$this->assertEquals(array('u0mx37xb9hmx', 'u0mrzjwzpjb4') , $Object->get(Object::GEOHASHES));
+		$this->assertEquals('u0mrr5wbxh', $Object->get(Object::MIN));
+		$this->assertEquals('u0mxcmxz1j', $Object->get(Object::MAX));
+
+	}
+
+	/**
+	 * @expectedException \RuntimeException
+	 */
+	public function testThatSetLatitudesLongitudesMustHaveExpectedSize() {
+		$Object = new Object(array(
+			Object::ELEVATIONS_ORIGINAL => array(240, 238, 240),
+			Object::ELEVATIONS_CORRECTED => array(240, 240, 240)
+		));
+		$Object->setLatitudesLongitudes(array(47.7, 47.8, 47.7, 47.8), array(7.8, 7.7, 7.8, 7.7));
+		$Object->forceToSetMinMaxFromGeohashes();
+	}
+
+	public function testEmptyArraysFromTrainingForm() {
+		$Object = new Object();
+		$Object->setLatitudesLongitudes(array(''), array(''));
+
+		$this->assertEquals(array('7zzzzzzzzzzz'), $Object->get(Object::GEOHASHES));
 	}
 
 }

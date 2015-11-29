@@ -94,8 +94,7 @@ class DataSeriesRemoverTest extends \PHPUnit_Framework_TestCase {
 			Object::TIMESTAMP => time(),
 			Object::HR_AVG => 1
 		), array(
-			Route\Object::LATITUDES => array(49.6, 49.7, 49.8),
-			Route\Object::LONGITUDES => array(7.6, 7.7, 7.8),
+			Route\Object::GEOHASHES => array('u1xjhpfe7yvs', 'u1xjhzdtjx62', 'u1xjjp6nyp0b'),
 			Route\Object::ELEVATIONS_ORIGINAL => array(0, 220, 290),
 			Route\Object::ELEVATIONS_CORRECTED => array(210, 220, 230)
 		), array(
@@ -121,8 +120,7 @@ class DataSeriesRemoverTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertFalse($Activity->trimp() > 0);
 
-		$this->assertFalse($Route->has(Route\Object::LATITUDES));
-		$this->assertFalse($Route->has(Route\Object::LONGITUDES));
+		$this->assertFalse($Route->has(Route\Object::GEOHASHES));
 		$this->assertFalse($Route->hasOriginalElevations());
 		$this->assertTrue($Route->hasCorrectedElevations());
 
@@ -155,8 +153,7 @@ class DataSeriesRemoverTest extends \PHPUnit_Framework_TestCase {
 		$id = $this->insert(array(
 			Object::TIMESTAMP => time()
 		), array(
-			Route\Object::LATITUDES => array(49.6, 49.7, 49.8),
-			Route\Object::LONGITUDES => array(7.6, 7.7, 7.8),
+			Route\Object::GEOHASHES => array('u1xjhpfe7yvs', 'u1xjhzdtjx62', 'u1xjjp6nyp0b'),
 			Route\Object::ELEVATIONS_CORRECTED => array(200, 250, 200),
 			Route\Object::ELEVATION => 50,
 			Route\Object::ELEVATION_UP => 50,

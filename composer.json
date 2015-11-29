@@ -6,6 +6,7 @@
         "symfony/class-loader": "@stable",
         "symfony/yaml": "@stable",
         "swiftmailer/swiftmailer": "@stable",
-        "nojacko/email-validator": "~1.0"
+        "nojacko/email-validator": "~1.0",
+        "league/geotools": "@stable"
     }
 }

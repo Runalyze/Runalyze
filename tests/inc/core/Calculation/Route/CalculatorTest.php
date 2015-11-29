@@ -11,8 +11,6 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase {
 
 	public function testCalculatorForEmptyData() {
 		$Route = new Route\Object(array(
-			Route\Object::LATITUDES => array(),
-			Route\Object::LONGITUDES => array(),
 			Route\Object::ELEVATIONS_ORIGINAL => array(),
 			Route\Object::ELEVATIONS_CORRECTED => array(),
 			Route\Object::ELEVATION => 123,
@@ -59,10 +57,11 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testCorrection() {
-		$Route = new Route\Object(array(
-			Route\Object::LATITUDES => array(49.440, 49.441, 49.442, 49.443, 49.444, 49.445, 49.446, 49.447, 49.448, 49.449, 49.450), 
-			Route\Object::LONGITUDES => array(7.760, 7.761, 7.762, 7.763, 7.764, 7.765, 7.766, 7.767, 7.768, 7.769, 7.770)
-		));
+		$Route = new Route\Object();
+		$Route->setLatitudesLongitudes(
+			array(49.440, 49.441, 49.442, 49.443, 49.444, 49.445, 49.446, 49.447, 49.448, 49.449, 49.450),
+			array(7.760, 7.761, 7.762, 7.763, 7.764, 7.765, 7.766, 7.767, 7.768, 7.769, 7.770)
+		);
 		$Calc = new Calculator($Route);
 
 		if ($Calc->tryToCorrectElevation()) {
@@ -70,7 +69,7 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase {
 			$this->assertNotEmpty($Route->elevationsCorrected());
 			$this->assertNotEmpty($Route->get(Route\Object::ELEVATIONS_SOURCE));
 		} else {
-			$this->markTestSkipped('No elevation correction was not available.');
+			$this->markTestSkipped('No elevation correction was available.');
 		}
 	}
 

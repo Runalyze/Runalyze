@@ -13,6 +13,7 @@ use Runalyze\Configuration;
 use Runalyze\Activity\Distance;
 use Runalyze\Activity\Duration;
 use Runalyze\Activity\Pace;
+use League\Geotools\Geotools;
 
 /**
  * Leaflet route for an activity
@@ -182,11 +183,12 @@ class Activity extends LeafletRoute {
 	 * Fill current segment
 	 */
 	protected function fillCurrentSegment() {
-		if ($this->RouteLoop->latitude() == 0 && $this->RouteLoop->longitude() == 0) {
+		$geohash = (new Geotools())->geohash()->decode($this->RouteLoop->geohash());
+		if ($this->RouteLoop->geohash() == '7zzzzzzzzzzz') {
 			return;
 		}
 
-		$this->Path[] = array((float)$this->RouteLoop->latitude(), (float)$this->RouteLoop->longitude());
+		$this->Path[] = array((float)$geohash->getCoordinate()->getLatitude(), (float)$geohash->getCoordinate()->getLongitude());
 
 		if ($this->addIconsAndInfo && $this->hasTrackdataLoop()) {
 			$this->Info[] = array(
@@ -226,9 +228,8 @@ class Activity extends LeafletRoute {
 			$Tooltip = sprintf( __('<strong>%s. %s</strong> in %s'), $this->Dist, Configuration::General()->distanceUnitSystem()->distanceUnit(), $Pace->asMinPerKm() ).'<br>';
 			$Tooltip .= sprintf( __('<strong>Time:</strong> %s'), Duration::format($this->TrackdataLoop->time()) );
 
-			$this->addMarker(
-				$this->RouteLoop->latitude(),
-				$this->RouteLoop->longitude(),
+			$this->addMarkerGeohash(
+				$this->RouteLoop->geohash(),
 				$this->distIcon($this->Dist),
 				$Tooltip
 			);
@@ -260,9 +261,8 @@ class Activity extends LeafletRoute {
 			$Tooltip = '';
 		}
 
-		$this->addMarker(
-			$this->RouteLoop->latitude(),
-			$this->RouteLoop->longitude(),
+		$this->addMarkerGeohash(
+			$this->RouteLoop->geohash(),
 			$this->endIcon(),
 			$Tooltip
 		);
@@ -328,9 +328,8 @@ class Activity extends LeafletRoute {
 			$Tooltip .= '<br>'.sprintf( __('<strong>Heart rate:</strong>').' '.__('%s to %s'), $Pause->hrStart(), $Pause->hrEnd().' bpm' );
 		}
 
-		$this->addMarker(
-			$this->Route->at($Index, Route\Object::LATITUDES),
-			$this->Route->at($Index, Route\Object::LONGITUDES),
+		$this->addMarkerGeohash(
+			$this->Route->at($Index, Route\Object::GEOHASHES),
 			$this->pauseIcon(),
 			$Tooltip
 		);

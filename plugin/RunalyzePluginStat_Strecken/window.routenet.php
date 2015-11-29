@@ -36,30 +36,24 @@ if ($year > 0) {
 if (empty($Conditions)) {
 	$Routes = DB::getInstance()->query('
 		SELECT
-			id,
-			lats,
-			lngs,
-			min_lat,
-			min_lng,
-			max_lat,
-			max_lng
+			`id`,
+			`geohashes`,
+			`min`,
+			`max`
 		FROM `'.PREFIX.'route`
-		WHERE `lats`!="" '.$Conditions.'
+		WHERE `geohashes`!="" '.$Conditions.'
 		ORDER BY `id` DESC
 		LIMIT '.RunalyzePluginStat_Strecken::MAX_ROUTES_ON_NET);
 } else {
 	$Routes = DB::getInstance()->query('
 		SELECT
 			`'.PREFIX.'route`.`id`,
-			`'.PREFIX.'route`.`lats`,
-			`'.PREFIX.'route`.`lngs`,
-			`'.PREFIX.'route`.`min_lat`,
-			`'.PREFIX.'route`.`min_lng`,
-			`'.PREFIX.'route`.`max_lat`,
-			`'.PREFIX.'route`.`max_lng`
+			`'.PREFIX.'route`.`geohashes`,
+			`'.PREFIX.'route`.`min`,
+			`'.PREFIX.'route`.`max`
 		FROM `'.PREFIX.'training`
 			LEFT JOIN `'.PREFIX.'route` ON `'.PREFIX.'training`.`routeid`=`'.PREFIX.'route`.`id`
-		WHERE `'.PREFIX.'training`.`accountid`='.SessionAccountHandler::getId().' AND`'.PREFIX.'route`.`lats`!="" '.$Conditions.'
+		WHERE `'.PREFIX.'training`.`accountid`='.SessionAccountHandler::getId().' AND`'.PREFIX.'route`.`geohashes`!="" '.$Conditions.'
 		ORDER BY `id` DESC
 		LIMIT '.RunalyzePluginStat_Strecken::MAX_ROUTES_ON_NET);
 }
@@ -73,11 +67,13 @@ $maxLng = -180;
 
 while ($RouteData = $Routes->fetch()) {
 	$Route = new Model\Route\Object($RouteData);
+	$MinCoordinate = (new League\Geotools\Geohash\Geohash())->decode($RouteData['min'])->getCoordinate();
+	$MaxCoordinate = (new League\Geotools\Geohash\Geohash())->decode($RouteData['max'])->getCoordinate();
 
-	$minLat = $RouteData['min_lat'] != 0 ? min($minLat, $RouteData['min_lat']) : $minLat;
-	$maxLat = $RouteData['max_lat'] != 0 ? max($maxLat, $RouteData['max_lat']) : $maxLat;
-	$minLng = $RouteData['min_lng'] != 0 ? min($minLng, $RouteData['min_lng']) : $minLng;
-	$maxLng = $RouteData['max_lng'] != 0 ? max($maxLng, $RouteData['max_lng']) : $maxLng;
+	$minLat = $MinCoordinate->getLatitude() != 0 ? min($minLat, $MinCoordinate->getLatitude()) : $minLat;
+	$minLng = $MinCoordinate->getLongitude() != 0 ? min($minLng, $MinCoordinate->getLongitude()) : $minLng;
+	$maxLat = $MaxCoordinate->getLatitude() != 0 ? max($maxLat, $MaxCoordinate->getLatitude()) : $maxLat;
+	$maxLng = $MaxCoordinate->getLongitude() != 0 ? max($maxLng, $MaxCoordinate->getLongitude()) : $maxLng;
 
 	$Path = new Leaflet\Activity('route-'.$RouteData['id'], $Route, null, false);
 	$Path->addOption('hoverable', false);
