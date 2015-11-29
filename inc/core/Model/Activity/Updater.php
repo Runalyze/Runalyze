@@ -7,8 +7,11 @@
 namespace Runalyze\Model\Activity;
 
 use Runalyze\Model;
+use Runalyze\Calculation\Activity\VerticalRatioCalculator;
 use Runalyze\Calculation\BasicEndurance;
 use Runalyze\Configuration;
+
+
 
 /**
  * Update activity in database
@@ -48,6 +51,16 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 	 * @var array
 	 */
 	protected $EquipmentIDsOld = array();
+	
+	/**
+	 * @var array
+	 */
+	protected $TagIDsNew = array();
+
+	/**
+	 * @var array
+	 */
+	protected $TagIDsOld = array();
 
 	/**
 	 * @var boolean
@@ -85,6 +98,15 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 	public function setEquipmentIDs(array $newIDs, array $oldIDs) {
 		$this->EquipmentIDsNew = $newIDs;
 		$this->EquipmentIDsOld = $oldIDs;
+	}
+	
+	/**
+	 * @param array $newTagIDs
+	 * @param array $oldTagIDs
+	 */
+	public function setTagIDs(array $newTagIDs, array $oldTagIDs) {
+		$this->TagIDsNew = $newTagIDs;
+		$this->TagIDsOld = $oldTagIDs;
 	}
 
 	/**
@@ -142,6 +164,7 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 		$this->deleteIntensityCache();
 		$this->updatePower();
 		$this->updateStrideLength();
+		$this->updateVerticalRatio();
 	}
 
 	/**
@@ -247,19 +270,29 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 	 * Update stride length
 	 */
 	protected function updateStrideLength() {
-		if ($this->hasChanged(Object::SPORTID)) {
+		if (
+			$this->hasChanged(Object::SPORTID) ||
+			$this->hasChanged(Object::VERTICAL_OSCILLATION) ||
+			$this->hasChanged(Object::STRIDE_LENGTH)
+		) {
 			if ($this->NewObject->sportid() == Configuration::General()->runningSport()) {
-				if (null !== $this->Trackdata && $this->Trackdata->has(Model\Trackdata\Object::CADENCE)) {
-					$Calculator = new \Runalyze\Calculation\StrideLength\Calculator($this->Trackdata);
-					$Calculator->calculate();
-
-					$this->NewObject->set(Object::STRIDE_LENGTH, $Calculator->average());
-				} elseif ($this->NewObject->cadence() > 0) {
-					$this->NewObject->set(Object::STRIDE_LENGTH, \Runalyze\Calculation\StrideLength\Calculator::forActivity($this->NewObject));
-				}
+				$this->NewObject->set(Object::STRIDE_LENGTH, \Runalyze\Calculation\StrideLength\Calculator::forActivity($this->NewObject));
 			} else {
 				$this->NewObject->set(Object::STRIDE_LENGTH, 0);
 			}
+		}
+	}
+
+	/**
+	 * Update vertical ratio
+	 */
+	protected function updateVerticalRatio() {
+		if (
+			$this->hasChanged(Object::SPORTID) ||
+			$this->hasChanged(Object::VERTICAL_OSCILLATION) ||
+			$this->hasChanged(Object::STRIDE_LENGTH)
+		) {
+			$this->NewObject->set(Object::VERTICAL_RATIO, VerticalRatioCalculator::forActivity($this->NewObject));
 		}
 	}
         
@@ -270,6 +303,7 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 		parent::after();
 
 		$this->updateEquipment();
+		$this->updateTag();
 		$this->updateStartTime();
 		$this->updateVDOTshapeAndCorrector();
 		$this->updateBasicEndurance();
@@ -283,6 +317,20 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 	        $EquipmentUpdater = new EquipmentUpdater($this->PDO, $this->NewObject->id());
 			$EquipmentUpdater->setActivityObjects($this->NewObject, $this->OldObject);
 			$EquipmentUpdater->update($this->EquipmentIDsNew, $this->EquipmentIDsOld);
+		}
+	}
+	
+	/**
+	 * Update tag
+	 */
+	protected function updateTag() {
+	    
+		if (!empty($this->TagIDsNew) || !empty($this->TagIDsOld)) {
+                    $AddNewTags = new Model\Tag\ChosenInserter($this->PDO, $this->TagIDsNew);
+                    $AddNewTags->insertTags();
+                    $this->TagIDsNew = $AddNewTags->getNewTagIDs();
+		    $TagUpdater = new TagUpdater($this->PDO, $this->NewObject->id());
+		    $TagUpdater->update($this->TagIDsNew, $this->TagIDsOld);
 		}
 	}
 

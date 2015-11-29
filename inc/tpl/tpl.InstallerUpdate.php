@@ -15,6 +15,10 @@
 
 	<?php if (!$this->triesToUpdate()): ?>
 
+		<p class="text">
+			&nbsp;
+		</p>
+
 		<p class="warning">
 			<?php _e('We urgently recommend a backup of your existing database prior to any update of RUNALYZE.'); ?>
 		</p>
@@ -23,18 +27,32 @@
 			&nbsp;
 		</p>
 
-		<p class="text">
-			<select name="importFile">
-				<option value="-1"><?php _e('----- please choose'); ?></option>
-				<?php foreach ($this->PossibleUpdates as $i => $Update): ?>
-				<option value="<?php echo $i; ?>"><?php echo sprintf( __('Update to %s (from %s, %s)'), $Update['to'], $Update['from'], $Update['date']); ?></option>
-				<?php endforeach; ?>
-			</select>
-		</p>
+		<?php if (!$this->installationHasAccounts()): ?>
 
-		<p class="text">
-			<input type="submit" value="<?php _e('Update RUNALYZE'); ?>">
-		</p>
+			<p class="error">
+				<?php printf(
+					__('Single-user installations are not supported anymore. '.
+					'Please register a new account by following %s.'),
+					'<a href="http://docs.runalyze.com/en/latest/update.html#upgrade-single-user-installation" target="_blank">'.__('these instructions').'</a>'
+				); ?>
+			</p>
+
+		<?php else: ?>
+
+			<p class="text">
+				<select name="importFile">
+					<option value="-1"><?php _e('----- please choose'); ?></option>
+					<?php foreach ($this->PossibleUpdates as $i => $Update): ?>
+					<option value="<?php echo $i; ?>"><?php echo sprintf( __('Update to %s (from %s, %s)'), $Update['to'], $Update['from'], $Update['date']); ?></option>
+					<?php endforeach; ?>
+				</select>
+			</p>
+	
+			<p class="text">
+				<input type="submit" value="<?php _e('Update RUNALYZE'); ?>">
+			</p>
+
+		<?php endif; ?>
 
 	<?php else: ?>
 

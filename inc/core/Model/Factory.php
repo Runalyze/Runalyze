@@ -51,7 +51,8 @@ class Factory {
 			'sport' => true,
 			'type' => true,
 			'equipment' => true,
-			'equipment_type' => true
+			'equipment_type' => true,
+			'tag' => true
 		);
 	}
 
@@ -180,6 +181,29 @@ class Factory {
 			return new EquipmentType\Object($data);
 		});
 	}
+	
+	/**
+	 * All equipment for equipment type
+	 * @param int $equipmentTypeid
+	 * @param boolean $onlyIDs [optional]
+	 * @return \Runalyze\Model\Equipment\Object[]
+	 */
+	public function equipmentForEquipmentType($equipmentTypeid, $onlyIDs = false) {
+	    $Equipment = array();
+	    
+	    $IDs = $this->DB->Query('SELECT `id` FROM `'.PREFIX.'equipment` WHERE `typeid`="'.$equipmentTypeid.'"')->fetchAll(\PDO::FETCH_COLUMN);
+	    
+	    if($onlyIDs) {
+		return $IDs;
+	    }
+	    
+	    foreach ($IDs as $id) {
+		$Equipment[] = $this->equipment ($id);
+	    }
+	    
+	    return $Equipment;
+	    
+	}
 
 	/**
 	 * Sport for equipment type
@@ -268,6 +292,49 @@ class Factory {
 		}
 
 		return $Equipment;
+	}
+	
+	/**
+	 * Tag
+	 * @param int tagid
+	 * @return \Runalyze\Model\Tag\Object
+	 */
+	public function tag($tagid) {
+		return new Tag\Object(
+			$this->arrayByPK('tag', $tagid)
+		);
+	}
+	
+	/**
+	 * All tag objects
+	 * @return \Runalyze\Model\Tag\Object[]
+	 */
+	public function allTags() {
+		return $this->allObjects('tag', function($data){
+			return new Tag\Object($data);
+		});
+	}
+	
+	/**
+	 * tags for activity
+	 * @param int $activityid
+	 * @param boolean $onlyIDs [optional]
+	 * @return int[]|\Runalyze\Model\Tag\Object[]
+	 */
+	public function tagForActivity($activityid, $onlyIDs = false) {
+		$Tag = array();
+
+		$IDs = $this->DB->query('SELECT `tagid` FROM `'.PREFIX.'activity_tag` WHERE `activityid`="'.$activityid.'"')->fetchAll(\PDO::FETCH_COLUMN);
+
+		if ($onlyIDs) {
+			return $IDs;
+		}
+
+		foreach ($IDs as $id) {
+			$Tag[] = $this->tag($id);
+		}
+		
+		return $Tag;
 	}
 
 	/**

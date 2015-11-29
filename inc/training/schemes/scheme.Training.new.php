@@ -7,7 +7,7 @@ $TABLENAME = 'training';
 $HIDDEN_KEYS = array(
 	'creator', 'creator_details', 'activity_id',
 	//'vdot', 'vdot_by_time', 'trimp', 'vdot_with_elevation', 'jd_intensity'
-	'elapsed_time', 'groundcontact', 'vertical_oscillation', 'total_strokes', 'swolf', 'pool_length'
+	'elapsed_time', 'groundcontact', 'vertical_oscillation', 'groundcontact_balance', 'total_strokes', 'swolf', 'pool_length'
 );
 
 $FIELDSETS = array(
@@ -26,7 +26,7 @@ $FIELDSETS = array(
 	array(
 		'id'		=> 'distance',
 		'legend'	=> __('Distance'),
-		'fields'	=> array('distance', 'is_track', 'elevation', 'abc', 'pace', 'power', 'cadence'),
+		'fields'	=> array('distance', 'is_track', 'elevation', 'pace', 'power', 'cadence'),
             'conf'		=> 'DISTANCE',
 		'css'		=> TrainingFormular::$ONLY_DISTANCES_CLASS
 	),
@@ -358,7 +358,8 @@ $FIELDS = array(
 					),
 					'formular'	=> array(
 						'label'		=> __('Temperature'),
-						'unit'		=> FormularUnit::$CELSIUS,
+						'unit'		=> Configuration::General()->temperatureUnit()->unit(),
+                                                'parser'        => FormularValueParser::$PARSER_TEMPERATURE,
 						'css'		=> TrainingFormular::$ONLY_OUTSIDE_CLASS
 					)
 	),
@@ -429,17 +430,6 @@ $FIELDS = array(
 						'size'		=> FormularInput::$SIZE_FULL_INLINE
 					)
 	),
-	'abc'				=> array(
-					'database'	=> array(
-						'type'		=> 'tinyint',
-						'precision'	=> '1',
-						'default'	=> '0'
-					),
-					'formular'	=> array(
-						'label'		=> __('Running drills'),
-						'class'		=> 'FormularCheckbox',
-						'css'		=> TrainingFormular::$ONLY_RUNNING_CLASS
-					)),
 	'shoeid'			=> array(
 					'database'	=> array(
 						'type'		=> 'int',

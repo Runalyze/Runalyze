@@ -198,6 +198,18 @@ class Object extends Model\ObjectWithID {
 	 * @var string
 	 */
 	const VERTICAL_OSCILLATION = 'vertical_oscillation';
+	
+	/**
+	 * Key: ground contact time balance
+	 * @var string
+	 */
+	const GROUNDCONTACT_BALANCE = 'groundcontact_balance';
+
+	/**
+	 * Key: vertical ratio
+	 * @var string
+	 */
+	const VERTICAL_RATIO = 'vertical_ratio';
 
 	/**
 	 * Key: temperature
@@ -241,13 +253,6 @@ class Object extends Model\ObjectWithID {
 	 * @var string
 	 */
 	const PARTNER = 'partner';
-
-	/**
-	 * Key: running drills
-	 * @var string
-	 */
-	const RUNNING_DRILLS = 'abc';
-
 
 	/**
 	 * Key: notes
@@ -334,6 +339,8 @@ class Object extends Model\ObjectWithID {
 			self::TOTAL_STROKES,
 			self::GROUNDCONTACT,
 			self::VERTICAL_OSCILLATION,
+			self::GROUNDCONTACT_BALANCE,
+			self::VERTICAL_RATIO,
 			self::TEMPERATURE,
 			self::WEATHERID,
 			self::ROUTEID,
@@ -341,7 +348,6 @@ class Object extends Model\ObjectWithID {
 			self::SPLITS,
 			self::COMMENT,
 			self::PARTNER,
-			self::RUNNING_DRILLS,
 			self::NOTES,
 			self::CREATOR,
 			self::CREATOR_DETAILS,
@@ -448,8 +454,9 @@ class Object extends Model\ObjectWithID {
 			self::SWOLF,
 			self::GROUNDCONTACT,
 			self::VERTICAL_OSCILLATION,
-			self::ROUTEID,
-			self::RUNNING_DRILLS,
+			self::GROUNDCONTACT_BALANCE,
+			self::VERTICAL_RATIO,
+			self::ROUTEID
 		));
 	}
 
@@ -691,6 +698,38 @@ class Object extends Model\ObjectWithID {
 	public function verticalOscillation() {
 		return $this->Data[self::VERTICAL_OSCILLATION];
 	}
+	
+	/**
+	 * Ground contact time balance
+	 * @return int [%oo]
+	 */
+	public function groundContactBalance() {
+		return $this->Data[self::GROUNDCONTACT_BALANCE];
+	}
+	
+	/**
+	 * Ground contact time balance
+	 * @return int [%]
+	 */
+	public function groundContactBalanceLeft() {
+		return $this->Data[self::GROUNDCONTACT_BALANCE];
+	}
+	
+	/**
+	 * Ground contact time balance
+	 * @return int [%]
+	 */
+	public function groundContactBalanceRight() {
+		return 10000 - $this->Data[self::GROUNDCONTACT_BALANCE];
+	}
+
+	/**
+	 * Vertical ratio
+	 * @return int [%o]
+	 */
+	public function verticalRatio() {
+		return $this->Data[self::VERTICAL_RATIO];
+	}
         
 	/**
 	 * Weather
@@ -738,15 +777,6 @@ class Object extends Model\ObjectWithID {
 
 		return $this->Partner;
 	}
-
-	/**
-	 * Is with running drills?
-	 * @return boolean
-	 */
-	public function isWithRunningDrills() {
-		return ($this->Data[self::RUNNING_DRILLS] == 1);
-	}
-
 
 	/**
 	 * Notes

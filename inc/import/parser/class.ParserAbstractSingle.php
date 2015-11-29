@@ -35,6 +35,7 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 			'power'			=> array(),
 			'groundcontact'	=> array(),
 			'oscillation'	=> array(),
+			'groundcontact_balance'	=> array(),
 			'stroke'        => array(),
 			'stroketype'    => array(),
 			'hrv'		=> array()
@@ -152,6 +153,7 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 		$this->TrainingObject->setArrayTemperature( $this->gps['temp'] );
 		$this->TrainingObject->setArrayGroundContact( $this->gps['groundcontact'] );
 		$this->TrainingObject->setArrayVerticalOscillation( $this->gps['oscillation'] );
+		$this->TrainingObject->setArrayGroundContactBalance( $this->gps['groundcontact_balance'] );
 		$this->TrainingObject->setArrayStroke( $this->gps['stroke'] );
 		$this->TrainingObject->setArrayStrokeType( $this->gps['stroketype'] );
 		$this->TrainingObject->setArrayHRV( $this->gps['hrv'] );
@@ -227,6 +229,7 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 	private function setRunningDynamicsFromArray() {
 		$groundContact = $this->TrainingObject->getArrayGroundContact();
 		$oscillation = $this->TrainingObject->getArrayVerticalOscillation();
+		$groundContactBalance = $this->TrainingObject->getArrayGroundContactBalance();
 
 		if (!empty($groundContact) && max($groundContact) > 30) {
 			$groundContact = array_filter($groundContact, 'ParserAbstract__ArrayFilterForLowEntries');
@@ -238,6 +241,13 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 			$oscillation = array_filter($oscillation);
 
 			$this->TrainingObject->setVerticalOscillation( round(array_sum($oscillation)/count($oscillation)) );
+		}
+		
+		
+		if (!empty($groundContactBalance) && max($groundContactBalance) > 30) {
+			$groundContactBalance = array_filter($groundContactBalance, 'ParserAbstract__ArrayFilterForLowEntries');
+
+			$this->TrainingObject->setGroundContactBalance( round(array_sum($groundContactBalance)/count($groundContactBalance)) );
 		}
 	}
 

@@ -48,7 +48,7 @@ class RunalyzePluginPanel_Equipment extends PluginPanel {
 	 * Init configuration
 	 */
 	protected function initConfiguration() {
-		$this->AllTypes = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'equipment_type` WHERE `accountid`="'.SessionAccountHandler::getId().'" ORDER BY `name` ASC')->fetchAll();
+		$this->AllTypes = DB::getInstance()->query('SELECT `id`, `name` FROM `'.PREFIX.'equipment_type` WHERE `accountid`="'.SessionAccountHandler::getId().'" ORDER BY `name` ASC')->fetchAll();
 		$Options = array();
 
 		foreach ($this->AllTypes as $data) {
@@ -75,7 +75,7 @@ class RunalyzePluginPanel_Equipment extends PluginPanel {
 	 */
 	protected function getRightSymbol() {
 		$Links = '';
-		$Links .= '<li class="with-submenu">'.Ajax::link(__('Type'), 'panel-'.$this->id(), Plugin::$DISPLAY_URL.'?id='.$this->id()).'</a>';
+		$Links .= '<li class="with-submenu">'.Ajax::link(__('Type'), 'panel-'.$this->id(), Plugin::$DISPLAY_URL.'?id='.$this->id());
 		$Links .= '<ul class="submenu">';
 
 		foreach ($this->AllTypes as $Type) {

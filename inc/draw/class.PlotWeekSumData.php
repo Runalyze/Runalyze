@@ -12,10 +12,16 @@ use Runalyze\Util\Time;
  */
 class PlotWeekSumData extends PlotSumData {
 	/**
+	 * @var \Runalyze\Parameter\Application\WeekStart
+	 */
+	protected $WeekStart;
+
+	/**
 	 * Constructor
 	 */
 	public function __construct() {
 		$this->timerStart = 1;
+		$this->WeekStart = Runalyze\Configuration::General()->weekStart();
 
 		if (Request::param('y') == self::LAST_6_MONTHS) {
 			$this->timerEnd = 26;
@@ -54,10 +60,10 @@ class PlotWeekSumData extends PlotSumData {
 	 */
 	protected function getXLabels() {
 		$weeks = array();
-		$add = ($this->Year == parent::LAST_6_MONTHS || $this->Year == parent::LAST_12_MONTHS) ? 0 : date("W") - $this->timerEnd;
+		$add = ($this->Year == parent::LAST_6_MONTHS || $this->Year == parent::LAST_12_MONTHS) ? 0 : $this->WeekStart->phpWeek() - $this->timerEnd;
 
 		for ($w = $this->timerStart; $w <= $this->timerEnd; $w++) {
-			$time = strtotime("sunday -".($this->timerEnd - $w + $add)." weeks");
+			$time = strtotime($this->WeekStart->lastDayOfWeekForStrtotime()." -".($this->timerEnd - $w + $add)." weeks");
 			$string = (date("d", $time) <= 7) ? Time::month(date("m", $time), true) : '';
 
 			if ($string != '' && date("m", $time) == 1) {
@@ -76,10 +82,10 @@ class PlotWeekSumData extends PlotSumData {
 	 */
 	protected function timer() {
 		if ($this->Year == parent::LAST_6_MONTHS || $this->Year == parent::LAST_12_MONTHS) {
-			return '((WEEK(FROM_UNIXTIME(`time`),1) + '.$this->timerEnd.' - '.date('W').' - 1)%'.$this->timerEnd.' + 1)';
+			return '((WEEK(FROM_UNIXTIME(`time`),'.$this->WeekStart->mysqlParameter().') + '.$this->timerEnd.' - '.$this->WeekStart->phpWeek().' - 1)%'.$this->timerEnd.' + 1)';
 		}
 
-		return 'WEEK(FROM_UNIXTIME(`time`),1)';
+		return 'WEEK(FROM_UNIXTIME(`time`),'.$this->WeekStart->mysqlParameter().')';
 	}
 
 	/**
@@ -101,10 +107,10 @@ class PlotWeekSumData extends PlotSumData {
 	 */
 	protected function beginningOfTimerange() {
 		if (date('w') == 0) {
-			return strtotime("monday -".$this->timerEnd." weeks");
+			return strtotime($this->WeekStart->firstDayOfWeekForStrtotime()." -".$this->timerEnd." weeks");
 		}
 
-		return strtotime("monday -".($this->timerEnd - 1)." weeks");
+		return strtotime($this->WeekStart->firstDayOfWeekForStrtotime()." -".($this->timerEnd - 1)." weeks");
 	}
 
 	/**

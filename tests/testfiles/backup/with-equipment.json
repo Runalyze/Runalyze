@@ -1,3 +1,5 @@
+version=2.2
+
 {"TABLE":"runalyze_account"}
 
 {"TABLE":"runalyze_conf"}
@@ -49,3 +51,13 @@
 {"":{"activityid":"22","equipmentid":"42"}}
 {"":{"activityid":"22","equipmentid":"43"}}
 {"":{"activityid":"23","equipmentid":"42"}}
+
+{"TABLE":"runalyze_tag"}
+{"51":{"tag":"TagA"}}
+{"52":{"tag":"TagB"}}
+
+{"TABLE":"runalyze_activity_tag"}
+{"":{"activityid":"21","tagid":"51"}}
+{"":{"activityid":"22","tagid":"51"}}
+{"":{"activityid":"22","tagid":"52"}}
+{"":{"activityid":"23","tagid":"52"}}

@@ -23,6 +23,9 @@ class Elevation extends ActivitySeries {
 	 */
 	const COLOR = 'rgb(227,217,187)';
 
+	/** @var bool */
+	protected $ShowAsFilledLine = true;
+
 	/**
 	 * Create series
 	 * @var \Runalyze\View\Activity\Context $context
@@ -66,7 +69,7 @@ class Elevation extends ActivitySeries {
 
 		if ($UnitSystem->isImperial()) {
 			$this->Data = array_map(function($value) {
-				return $value * DistanceUnitSystem::FEET_MULTIPLIER / 1000;
+				return round($value * DistanceUnitSystem::FEET_MULTIPLIER / 1000);
 			}, $this->Data);
 		}
 	}
@@ -115,6 +118,25 @@ class Elevation extends ActivitySeries {
 
 		$Plot->setYLimits($yAxis, $minLimit, $maxLimit, true);
 
-		$Plot->setLinesFilled(array($yAxis - 1));
+		if ($this->ShowAsFilledLine) {
+			$Plot->setLinesFilled(array($yAxis - 1));
+		}
+	}
+
+	/**
+	 * @return array array($min, $max)
+	 */
+	public function limits() {
+		return array(
+			min($this->Data),
+			max($this->Data)
+		);
+	}
+
+	/**
+	 * @param bool $flag
+	 */
+	public function showAsFilledLine($flag = true) {
+		$this->ShowAsFilledLine = $flag;
 	}
 }

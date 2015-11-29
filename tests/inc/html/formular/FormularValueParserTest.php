@@ -1,6 +1,7 @@
 <?php
 
-require_once dirname(__FILE__) . '/../../../../inc/html/formular/class.FormularValueParser.php';
+use Runalyze\Configuration;
+use Runalyze\Parameter\Application\TemperatureUnit;
 
 /**
  * Test class for FormularValueParser.
@@ -13,25 +14,15 @@ class FormularValueParserTest extends PHPUnit_Framework_TestCase {
 	 */
 	protected $object;
 
-	/**
-	 * Sets up the fixture, for example, opens a network connection.
-	 * This method is called before a test is executed.
-	 */
 	protected function setUp() {
 		$this->object = new FormularValueParser;
+		$_POST = array();
 	}
 
-	/**
-	 * Tears down the fixture, for example, closes a network connection.
-	 * This method is called after a test is executed.
-	 */
 	protected function tearDown() {
-		
+		$_POST = array();
 	}
 
-	/**
-	 * @covers FormularValueParser::validatePost
-	 */
 	public function testValidatePost_PARSER_DATE() {
 		$Parser = FormularValueParser::$PARSER_DATE;
 		$_POST  = array(
@@ -55,9 +46,6 @@ class FormularValueParserTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( $_POST['date'], mktime(0, 0, 0, 4, 13, 2010) );
 	}
 
-	/**
-	 * @covers FormularValueParser::validatePost
-	 */
 	public function testValidatePost_PARSER_DAYTIME() {
 		$Parser = FormularValueParser::$PARSER_DAYTIME;
 		$_POST  = array(
@@ -81,9 +69,6 @@ class FormularValueParserTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( $_POST['time2'], 2*60*60 + 17*60 );
 	}
 
-	/**
-	 * @covers FormularValueParser::validatePost
-	 */
 	public function testValidatePost_PARSER_STRING() {
 		$Parser  = FormularValueParser::$PARSER_STRING;
 		$_POST   = array(
@@ -95,9 +80,6 @@ class FormularValueParserTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue( $this->object->validatePost('string', $Parser) );
 	}
 
-	/**
-	 * @covers FormularValueParser::validatePost
-	 */
 	public function testValidatePost_PARSER_INT() {
 		$Parser  = FormularValueParser::$PARSER_INT;
 		$Options = array('precision' => '2');
@@ -116,9 +98,6 @@ class FormularValueParserTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( $_POST['int'], 27);
 	}
 
-	/**
-	 * @covers FormularValueParser::validatePost
-	 */
 	public function testValidatePost_PARSER_DECIMAL() {
 		// TODO: Uses Helper::CommaToPoint, not testable because of mysql-connection
 		$Parser  = FormularValueParser::$PARSER_DECIMAL;
@@ -142,10 +121,6 @@ class FormularValueParserTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( $_POST['zero'], 0.0);
 	}
 
-	/**
-	 * @covers FormularValueParser::parse
-	 * @todo Implement testParse().
-	 */
 	public function testParse() {
 		$date = time();
 		$this->object->parse($date, FormularValueParser::$PARSER_DATE);
@@ -164,6 +139,69 @@ class FormularValueParserTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($string, 'Test');
 	}
 
-}
+	public function testParsingTemperature() {
+		Configuration::General()->temperatureUnit()->set(TemperatureUnit::CELSIUS);
+		$null = null;
+		$this->object->parse($null, FormularValueParser::$PARSER_TEMPERATURE);
+		$this->assertEquals('', $null);
 
-?>
+		$zero = 0;
+		$this->object->parse($zero, FormularValueParser::$PARSER_TEMPERATURE);
+		$this->assertEquals('0', $zero);
+
+		$celsius = 10;
+		$this->object->parse($celsius, FormularValueParser::$PARSER_TEMPERATURE);
+		$this->assertEquals('10', $celsius);
+
+		Configuration::General()->temperatureUnit()->set(TemperatureUnit::FAHRENHEIT);
+		$this->object->parse($celsius, FormularValueParser::$PARSER_TEMPERATURE);
+		$this->assertEquals('50', $celsius);
+	}
+
+	public function testValidatingTemperatureInCelsius() {
+		Configuration::General()->temperatureUnit()->set(TemperatureUnit::CELSIUS);
+		$_POST   = array(
+			'empty'	=> '',
+			'negative'	=> '-10',
+			'comma'	=> '13,5',
+			'point'	=> '13.5',
+			'zero'	=> '0',
+			'large'	=> '33'
+		);
+
+		foreach (array_keys($_POST) as $key) {
+			$this->object->validatePost($key, FormularValueParser::$PARSER_TEMPERATURE);
+		}
+
+		$this->assertEquals(null, $_POST['empty']);
+		$this->assertEquals(-10, $_POST['negative']);
+		$this->assertEquals(13.5, $_POST['comma']);
+		$this->assertEquals(13.5, $_POST['point']);
+		$this->assertEquals(0, $_POST['zero']);
+		$this->assertEquals(33, $_POST['large']);
+	}
+
+	public function testValidatingTemperatureInFahrenheit() {
+		Configuration::General()->temperatureUnit()->set(TemperatureUnit::FAHRENHEIT);
+		$_POST   = array(
+			'empty'	=> '',
+			'negative'	=> '-10',
+			'comma'	=> '13,5',
+			'point'	=> '13.5',
+			'zero'	=> '0',
+			'large'	=> '33'
+		);
+
+		foreach (array_keys($_POST) as $key) {
+			$this->object->validatePost($key, FormularValueParser::$PARSER_TEMPERATURE);
+		}
+
+		$this->assertEquals(null, $_POST['empty']);
+		$this->assertEquals(-23.3, $_POST['negative'], '', 0.1);
+		$this->assertEquals(-10.3, $_POST['comma'], '', 0.1);
+		$this->assertEquals(-10.3, $_POST['point'], '', 0.1);
+		$this->assertEquals(-17.8, $_POST['zero'], '', 0.1);
+		$this->assertEquals(0.56, $_POST['large'], '', 0.1);
+	}
+
+}

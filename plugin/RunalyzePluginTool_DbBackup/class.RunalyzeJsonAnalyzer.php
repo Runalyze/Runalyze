@@ -13,6 +13,11 @@ use Runalyze\Util\File\GZipReader;
  */
 class RunalyzeJsonAnalyzer {
 	/**
+	 * @var string
+	 */
+	protected $VersionString = '';
+
+	/**
 	 * Number of rows per table
 	 * @var array
 	 */
@@ -33,6 +38,8 @@ class RunalyzeJsonAnalyzer {
 				$this->NumberOf[$TableName] = 0;
 			} elseif ($Line != '' && $Line{0} == '{') {
 				$this->NumberOf[$TableName]++;
+			} elseif (substr($Line, 0, 8) == 'version=') {
+				$this->VersionString = substr($Line, 8);
 			}
 		}
 
@@ -57,6 +64,32 @@ class RunalyzeJsonAnalyzer {
 	 * @return bool
 	 */
 	public function fileIsOkay() {
+		return $this->versionIsOkay() && $this->expectedTablesAreThere();
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function versionIsOkay() {
+		return (self::extractMajorAndMinorVersion(RUNALYZE_VERSION) == self::extractMajorAndMinorVersion($this->VersionString));
+	}
+
+	/**
+	 * @string
+	 */
+	public function fileVersion() {
+		if ($this->VersionString == '') {
+			return 'unknown';
+		}	
+
+		return 'v'.$this->VersionString;
+	}
+
+	/**
+	 * All expected tables are there
+	 * @return bool
+	 */
+	protected function expectedTablesAreThere() {
 		$Expected = $this->expectedTables();
 		$Found = array_keys($this->NumberOf);
 
@@ -104,7 +137,22 @@ class RunalyzeJsonAnalyzer {
 			'runalyze_equipment_type',
 			'runalyze_equipment_sport',
 			'runalyze_equipment',
-			'runalyze_activity_equipment'
+			'runalyze_activity_equipment',
+			'runalyze_activity_tag',
+			'runalyze_tag'
 		);
+	}
+
+	/**
+	 * Extract major and minor version, i.e. 'X.Y' of any 'X.Y[.Z][-abc]'
+	 * @param string $versionString
+	 * @return string
+	 */
+	public static function extractMajorAndMinorVersion($versionString) {
+		if (preg_match('/^(\d+\.\d+)/', $versionString, $matches)) {
+			return $matches[1];
+		}
+
+		return '';
 	}
 }

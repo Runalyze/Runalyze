@@ -23,7 +23,7 @@ class StrideLength extends AbstractBox
 		$StrideLength = $Context->dataview()->strideLength();
 
 		parent::__construct(
-			\Helper::Unknown($StrideLength->valueInPreferredUnit(), '-'),
+			\Helper::Unknown($StrideLength->string(false), '-'),
 			$StrideLength->unit(),
 			$StrideLength->label()
 		);

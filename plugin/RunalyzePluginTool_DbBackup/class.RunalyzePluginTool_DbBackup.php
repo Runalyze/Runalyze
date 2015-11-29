@@ -200,6 +200,12 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 				$Fieldset->setLayoutForFields(FormularFieldset::$LAYOUT_FIELD_W100);
 
 				$Formular->addSubmitButton( __('Import') );
+			} elseif (!$Analyzer->versionIsOkay()) {
+				$Fieldset->addError(sprintf(
+					__('Versions do not match! The backup is from %s but you are using %s.'),
+					$Analyzer->fileVersion(),
+					'v'.RUNALYZE_VERSION
+				));
 			} else {
 				$Fieldset->addError( __('The file seems to be corrupted.') );
 
@@ -274,6 +280,7 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 		$Text = '<div id="upload-container" style="margin-bottom:5px;"><div class="c button" id="file-upload">'.__('Upload file').'</div></div>';
 		$Text .= Ajax::wrapJSasFunction($JScode);
 		$Text .= HTML::info( __('Allowed file extension: *.json.gz') );
+		$Text .= HTML::warning( __('All shared links will be invalid if you (re-)import activities and overwrite all existing activities!') );
 		$Text .= HTML::warning( __('The file has to be created with the same version of Runalyze!<br>'.
 									'You won\'t be able to import a file from an older version.') );
 		$Text .= HTML::warning( __('The importer will not change existing data for equipment, sport types or activity types.<br>'.

@@ -12,6 +12,8 @@ use Runalyze\Parameter\Application\Gender;
 use Runalyze\Parameter\Application\HeartRateUnit;
 use Runalyze\Parameter\Application\DistanceUnitSystem;
 use Runalyze\Parameter\Application\DistanceUnit;
+use Runalyze\Parameter\Application\WeekStart;
+use Runalyze\Parameter\Application\TemperatureUnit;
 use Runalyze\Parameter\Application\WeightUnit;
 use Ajax;
 
@@ -34,8 +36,10 @@ class General extends \Runalyze\Configuration\Category {
 	 */
 	protected function createHandles() {
 		$this->createGender();
+                $this->createWeekStart();
 		$this->createDistanceUnitSystem();
 		$this->createWeightUnit();
+                $this->createTemperatureUnit();
 		$this->createHeartRateUnit();
 		$this->createMainSport();
 		$this->createRunningSport();
@@ -49,6 +53,21 @@ class General extends \Runalyze\Configuration\Category {
 		$this->createHandle('GENDER', new Gender());
 	}
 	
+	/**
+	 * Create: Beginning of the week
+	 */
+	protected function createWeekStart() {
+		$this->createHandle('WEEK_START', new WeekStart());
+	}
+        
+	/**
+	 * WeekStart
+	 * @return \Runalyze\Parameter\Application\WeekStart
+	 */
+	public function weekStart() {
+		return $this->object('WEEK_START');
+	}
+        
 	/**
 	 * Create: DISTANCE_UNIT_SYSTEM
 	 */
@@ -79,6 +98,21 @@ class General extends \Runalyze\Configuration\Category {
 		return $this->object('WEIGHT_UNIT');
 	}
 
+	/**
+	 * Create: TemperatureUnit
+	 */
+	protected function createTemperatureUnit() {
+		$this->createHandle('TEMPERATURE_UNIT', new TemperatureUnit());
+	}
+	
+	/**
+	 * temperature Unit
+	 * @return \Runalyze\Parameter\Application\TemperatureUnit
+	 */
+	public function temperatureUnit() {
+		return $this->object('TEMPERATURE_UNIT');
+	}
+        
 	/**
 	 * Gender
 	 * @return Gender
@@ -173,7 +207,9 @@ class General extends \Runalyze\Configuration\Category {
 		$this->handle('DISTANCE_UNIT_SYSTEM')->registerOnchangeFlag(Ajax::$RELOAD_ALL);
 		$this->handle('DISTANCE_UNIT_SYSTEM')->registerOnchangeEvent('Runalyze\\Configuration\\Messages::adjustPacesInSportsConfiguration');
 		$this->handle('WEIGHT_UNIT')->registerOnchangeFlag(Ajax::$RELOAD_PLUGINS);
+                $this->handle('TEMPERATURE_UNIT')->registerOnchangeFlag(Ajax::$RELOAD_DATABROWSER);
 		$this->handle('HEART_RATE_UNIT')->registerOnchangeFlag(Ajax::$RELOAD_DATABROWSER);
+                $this->handle('WEEK_START')->registerOnchangeFlag(Ajax::$RELOAD_ALL);
 		$this->handle('MAINSPORT')->registerOnchangeFlag(Ajax::$RELOAD_PAGE);
 		$this->handle('TYPE_ID_RACE')->registerOnchangeFlag(Ajax::$RELOAD_PLUGINS);
 	}
@@ -188,6 +224,10 @@ class General extends \Runalyze\Configuration\Category {
 		$Fieldset->addHandle( $this->handle('GENDER'), array(
 			'label'		=> __('Gender')
 		));
+                
+		$Fieldset->addHandle( $this->handle('WEEK_START'), array(
+			'label'		=> __('Beginning of the week')
+		));
 
 		$Fieldset->addHandle( $this->handle('DISTANCE_UNIT_SYSTEM'), array(
 			'label'		=> __('Unit system for distances'),
@@ -196,6 +236,10 @@ class General extends \Runalyze\Configuration\Category {
 
 		$Fieldset->addHandle( $this->handle('WEIGHT_UNIT'), array(
 			'label'		=> __('Weight unit')
+		));
+                
+		$Fieldset->addHandle( $this->handle('TEMPERATURE_UNIT'), array(
+			'label'		=> __('Temperature unit')
 		));
 
 		$Fieldset->addHandle( $this->handle('HEART_RATE_UNIT'), array(

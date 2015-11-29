@@ -89,16 +89,11 @@ CREATE TABLE IF NOT EXISTS `runalyze_conf` (
 --
 
 CREATE TABLE IF NOT EXISTS `runalyze_dataset` (
-`id` int(11) NOT NULL,
-  `name` varchar(20) NOT NULL,
-  `active` tinyint(1) NOT NULL DEFAULT '1',
-  `modus` tinyint(1) NOT NULL DEFAULT '0',
-  `class` varchar(25) NOT NULL DEFAULT '',
+  `keyid` tinyint(3) unsigned NOT NULL,
+  `active` tinyint(1) unsigned NOT NULL DEFAULT '1',
   `style` varchar(100) NOT NULL DEFAULT '',
-  `position` smallint(6) NOT NULL DEFAULT '0',
-  `summary` tinyint(1) NOT NULL DEFAULT '0',
-  `summary_mode` varchar(3) NOT NULL DEFAULT 'SUM',
-  `accountid` int(11) NOT NULL
+  `position` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `accountid` int(10) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -145,6 +140,31 @@ CREATE TABLE IF NOT EXISTS `runalyze_equipment_type` (
   `max_time` int(11) NOT NULL DEFAULT '0',
   `accountid` int(10) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `runalyze_tag`
+--
+
+CREATE TABLE IF NOT EXISTS `runalyze_tag` (
+  `id` int(10) unsigned NOT NULL,
+  `tag` varchar(50) NOT NULL,
+  `accountid` int(10) unsigned NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `runalyze_activity_tag`
+--
+
+CREATE TABLE IF NOT EXISTS `runalyze_activity_tag` (
+  `activityid` int(10) unsigned NOT NULL,
+  `tagid` int(10) unsigned NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 -- --------------------------------------------------------
 
@@ -229,6 +249,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_sport` (
   `speed` varchar(10) NOT NULL DEFAULT 'min/km',
   `power` tinyint(1) NOT NULL DEFAULT '0',
   `outside` tinyint(1) NOT NULL DEFAULT '0',
+  `main_equipmenttypeid` int(10) unsigned NOT NULL DEFAULT '0',
   `accountid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -263,6 +284,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_trackdata` (
   `temperature` longtext,
   `groundcontact` longtext,
   `vertical_oscillation` longtext,
+  `groundcontact_balance` longtext,
   `pauses` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -303,7 +325,9 @@ CREATE TABLE IF NOT EXISTS `runalyze_training` (
   `swolf` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `stride_length` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `groundcontact` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `groundcontact_balance` SMALLINT UNSIGNED NOT NULL DEFAULT  '0',
   `vertical_oscillation` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `vertical_ratio` SMALLINT UNSIGNED NOT NULL DEFAULT  '0',
   `temperature` tinyint(4) DEFAULT NULL,
   `weatherid` smallint(6) NOT NULL DEFAULT '1',
   `route` text,
@@ -311,7 +335,6 @@ CREATE TABLE IF NOT EXISTS `runalyze_training` (
   `splits` mediumtext,
   `comment` text,
   `partner` text,
-  `abc` smallint(1) NOT NULL DEFAULT '0',
   `notes` text,
   `accountid` int(11) NOT NULL,
   `creator` varchar(100) NOT NULL DEFAULT '',
@@ -382,7 +405,7 @@ ALTER TABLE `runalyze_conf`
 -- Indizes für die Tabelle `runalyze_dataset`
 --
 ALTER TABLE `runalyze_dataset`
- ADD PRIMARY KEY (`id`), ADD KEY `accountid` (`accountid`);
+ ADD PRIMARY KEY (`accountid`,`keyid`), ADD KEY `position` (`accountid`,`position`);
 
 --
 -- Indizes für die Tabelle `runalyze_equipment`
@@ -401,6 +424,18 @@ ALTER TABLE `runalyze_equipment_sport`
 --
 ALTER TABLE `runalyze_equipment_type`
  ADD PRIMARY KEY (`id`), ADD KEY `accountid` (`accountid`);
+
+--
+-- Indizes für die Tabelle `runalyze_tag`
+--
+ALTER TABLE `runalyze_tag` 
+ADD PRIMARY KEY (`id`), ADD KEY `accountid` (`accountid`);
+
+--
+-- Indizes für die Tabelle `runalyze_activity_tag`
+--
+ALTER TABLE `runalyze_activity_tag`
+ADD PRIMARY KEY (`activityid`,`tagid`), ADD KEY `tagid` (`tagid`);
 
 --
 -- Indizes für die Tabelle `runalyze_hrv`
@@ -477,14 +512,14 @@ MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 ALTER TABLE `runalyze_conf`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT für Tabelle `runalyze_dataset`
---
-ALTER TABLE `runalyze_dataset`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
 -- AUTO_INCREMENT für Tabelle `runalyze_equipment`
 --
 ALTER TABLE `runalyze_equipment`
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT für Tabelle `runalyze_tag`
+--
+ALTER TABLE `runalyze_tag`
 MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT für Tabelle `runalyze_equipment_type`
@@ -530,6 +565,18 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 -- Constraints der exportierten Tabellen
 --
 
+
+--
+-- Constraints der Tabelle `runalyze_activity_tagt`
+--
+ALTER TABLE `runalyze_activity_tag`
+ADD CONSTRAINT `runalyze_activity_tag_ibfk_1` FOREIGN KEY (`tagid`) REFERENCES `runalyze_tag` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `runalyze_activity_tag_ibfk_2` FOREIGN KEY (`activityid`) REFERENCES `runalyze_training` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+--
+-- Constraints der Tabelle `runalyze_tag`
+--
+ALTER TABLE `runalyze_tag`
+ADD CONSTRAINT `runalyze_tag_ibfk_1` FOREIGN KEY (`accountid`) REFERENCES `runalyze_account` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 --
 -- Constraints der Tabelle `runalyze_activity_equipment`
 --

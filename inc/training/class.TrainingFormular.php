@@ -74,6 +74,7 @@ class TrainingFormular extends StandardFormular {
 	protected function prepareForDisplayInSublcass() {
 		parent::prepareForDisplayInSublcass();
 
+                $this->initTagFieldset();
 		$this->addAdditionalHiddenFields();
 		$this->initEquipmentFieldset();
 
@@ -203,6 +204,59 @@ class TrainingFormular extends StandardFormular {
 	}
 
 	/**
+	 * Read selected tags from post data
+	 * @return array
+	 */
+	public static function readTagFromPost() {
+		if (isset($_POST['tags']) && is_array($_POST['tags'])) {
+			$AllTags = (new Factory(SessionAccountHandler::getId()))->allTags();
+			foreach ($_POST['tags'] as $key => $value) {
+				if (!is_numeric($value)) {
+					foreach ($AllTags as $Tag) {
+						if ($Tag->tag() == $value) {
+							$_POST['tags'][$key] = $Tag->id();
+							continue;
+						}
+					}
+				}
+			}
+
+			return $_POST['tags'];
+		}
+
+		return array();
+	}
+
+	/**
+	 * Display fieldset: Tag
+	 */
+	protected function initTagFieldset() {
+		$isCreateForm = ($this->submitMode == StandardFormular::$SUBMIT_MODE_CREATE);
+		$Factory = new Factory(SessionAccountHandler::getId());
+		$CurrentTags = $isCreateForm ? array() : $Factory->tagForActivity($this->dataObject->id(), true);
+		$Fieldset = new FormularFieldset( __('Tags') );
+		$Fieldset->addField(new FormularInputHidden('tag_old', '', implode(',', $CurrentTags)));
+
+		if (isset($_POST['tags'])) {
+			$CurrentTags = self::readTagFromPost();
+		}	    
+
+		$Field = new FormularSelectBox('tags', 'Tags', $CurrentTags);
+
+		foreach ($Factory->allTags() as $tag) {
+			$Field->addOption($tag->id(), $tag->tag());
+		}
+
+		$Field->setLayout( FormularFieldset::$LAYOUT_FIELD_W100_IN_W50 );
+		$Field->addCSSclass('chosen-select-create full-size');
+		$Field->setMultiple();
+		$Field->addAttribute('data-placeholder', __('Choose tags'));
+		$Field->addAttribute('style', 'width=50px;');
+		$Fieldset->addField( $Field );
+		$this->addFieldset($Fieldset);
+	}
+      
+	/**
 	 * Display fieldset: Equipment
 	 */
 	protected function initEquipmentFieldset() {
@@ -302,6 +356,7 @@ class TrainingFormular extends StandardFormular {
 			Trackdata::HEARTRATE => __('Heart rate'),
 			Trackdata::CADENCE => __('Cadence'),
 			Trackdata::VERTICAL_OSCILLATION => __('Vertical oscillation'),
+			Trackdata::GROUNDCONTACT_BALANCE => __('Ground contact time balance'),
 			Trackdata::GROUNDCONTACT => __('Ground contact time'),
 			Trackdata::POWER => __('Power'),
 			Trackdata::TEMPERATURE => __('Temperature')

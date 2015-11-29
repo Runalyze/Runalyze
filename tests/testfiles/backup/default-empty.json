@@ -1,3 +1,5 @@
+version=2.2
+
 {"TABLE":"runalyze_account"}
 
 {"TABLE":"runalyze_conf"}
@@ -32,3 +34,6 @@
 
 {"TABLE":"runalyze_activity_equipment"}
 
+{"TABLE":"runalyze_tag"}
+
+{"TABLE":"runalyze_activity_tag"}

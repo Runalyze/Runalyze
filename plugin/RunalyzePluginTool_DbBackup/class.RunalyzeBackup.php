@@ -46,6 +46,8 @@ abstract class RunalyzeBackup {
 	final public function run() {
 		$this->DB->stopAddingAccountID();
 
+		$this->startBackup();
+
 		$Tables = array(
 			PREFIX.'account',
 			PREFIX.'conf',
@@ -63,7 +65,9 @@ abstract class RunalyzeBackup {
 			PREFIX.'equipment_type',
 			PREFIX.'equipment_sport',
 			PREFIX.'equipment',
-			PREFIX.'activity_equipment'
+			PREFIX.'activity_equipment',
+			PREFIX.'activity_tag',
+			PREFIX.'tag'
 		);
 
 		foreach ($Tables as $TableName) {
@@ -71,10 +75,22 @@ abstract class RunalyzeBackup {
 			$this->saveTableRows($TableName);
 		}
 
+		$this->finishBackup();
+
 		$this->Writer->finish();
 
 		$this->DB->startAddingAccountID();
 	}
+
+	/**
+	 * Start backup file
+	 */
+	protected function startBackup() {}
+
+	/**
+	 * Finish backup file
+	 */
+	protected function finishBackup() {}
 
 	/**
 	 * Save table structure
@@ -99,6 +115,8 @@ abstract class RunalyzeBackup {
 			$Query .= ' WHERE `equipment_typeid` IN('.implode(',', $this->fetchEquipmentTypeIDs()).')';
 		} elseif ($TableName == PREFIX.'activity_equipment') {
 			$Query .= ' WHERE `equipmentid` IN('.implode(',', $this->fetchEquipmentIDs()).')';
+		} elseif ($TableName == PREFIX.'activity_tag') {
+			$Query .= ' WHERE `tagid` IN('.implode(',', $this->fetchTagIDs()).')';
 		} else {
 			$Query .= ' WHERE `accountid`='.$this->AccountID;
 		}
@@ -136,6 +154,14 @@ abstract class RunalyzeBackup {
 	 */
 	private function fetchEquipmentIDs() {
 		return $this->DB->query('SELECT `id` FROM `'.PREFIX.'equipment` WHERE `accountid`='.$this->AccountID)->fetchAll(PDO::FETCH_COLUMN);
+	}
+	
+	/**
+	 * tagIDs
+	 * @return array
+	 */
+	private function fetchTagIDs() {
+		return $this->DB->query('SELECT `id` FROM `'.PREFIX.'tag` WHERE `accountid`='.$this->AccountID)->fetchAll(PDO::FETCH_COLUMN);
 	}
 
 	/**

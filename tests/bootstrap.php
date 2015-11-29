@@ -6,6 +6,8 @@
  */
 //ini_set('include_path', ini_get('include_path').PATH_SEPARATOR.dirname(__FILE__).'/../../../php/PEAR');
 
+error_reporting(E_ALL);
+
 if (!defined('RUNALYZE_TEST'))
 	define('RUNALYZE_TEST', true);
 
@@ -15,6 +17,7 @@ if (!defined('FRONTEND_PATH'))
 require_once FRONTEND_PATH.'system/class.Autoloader.php';
 new Autoloader();
 
+require_once FRONTEND_PATH.'system/define.consts.php';
 require_once FRONTEND_PATH.'../lib/phpfastcache/phpfastcache.php';
 require_once FRONTEND_PATH.'system/class.Cache.php';
 new Cache();
@@ -31,6 +34,8 @@ if (!defined('NBSP'))
 if (!defined('PREFIX'))
 	define('PREFIX', 'runalyze_');
 
+if (!defined('PERL_PATH'))
+	define('PERL_PATH', '/usr/bin/perl');
 
 if (!defined('DAY_IN_S'))
 	define('DAY_IN_S', 86400);

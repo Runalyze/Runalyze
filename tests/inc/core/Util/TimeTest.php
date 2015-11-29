@@ -2,10 +2,17 @@
 
 namespace Runalyze\Util;
 
+use Runalyze\Configuration;
+use Runalyze\Parameter\Application\WeekStart;
+
 /**
  * Test class for Time
  */
 class TimeTest extends \PHPUnit_Framework_TestCase {
+
+	protected function tearDown() {
+		Configuration::General()->weekStart()->set(WeekStart::MONDAY);
+	}
 
 	public function testDiffInDays() {
 		$this->assertEquals(0, Time::diffInDays(mktime(0,0,0,12,5,2000), mktime(0,0,0,12,5,2000)));
@@ -36,12 +43,37 @@ class TimeTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testWeekstartAndWeekend() {
+		Configuration::General()->weekStart()->set(WeekStart::MONDAY);
+
 		$today = mktime(10, 22, 20, 9, 17, 2015);
 		$start = mktime(0, 0, 0, 9, 14, 2015);
 		$end = mktime(23, 59, 50, 9, 20, 2015);
 
 		$this->assertEquals($start, Time::weekstart($today));
 		$this->assertEquals($end, Time::weekend($today));
+	}
+
+	public function testWeekstartAndWeekendForSundaySimple() {
+		Configuration::General()->weekStart()->set(WeekStart::SUNDAY);
+
+		$today = mktime(10, 22, 20, 9, 17, 2015);
+		$start = mktime(0, 0, 0, 9, 13, 2015);
+		$end = mktime(23, 59, 50, 9, 19, 2015);
+
+		$this->assertEquals($start, Time::weekstart($today));
+		$this->assertEquals($end, Time::weekend($today));
+	}
+
+	public function testWeekstartAndWeekendForSundayBug() {
+		Configuration::General()->weekStart()->set(WeekStart::SUNDAY);
+
+		$today = mktime(0, 0, 0, 10, 25, 2015);
+		$end = mktime(23, 59, 50, 10, 31, 2015);
+
+		$this->assertEquals($today, Time::weekstart($today));
+		$this->assertEquals($today, Time::weekstart($end));
+		$this->assertEquals($end, Time::weekend($today));
+		$this->assertEquals($end, Time::weekend($end));
 	}
 
 }

@@ -159,6 +159,7 @@ class TrainingObject extends DataObject {
 		$InserterActivity->setTrackdata($Trackdata);
 		$InserterActivity->setSwimdata($Swimdata);
 		$InserterActivity->setEquipmentIDs(TrainingFormular::readEquipmentFromPost($Activity->sportid()));
+		$InserterActivity->setTagIDs(TrainingFormular::readTagFromPost($Activity->sportid()));
 		$InserterActivity->insert();
 
 		$this->id = $InserterActivity->insertedID();
@@ -233,6 +234,7 @@ class TrainingObject extends DataObject {
 			Runalyze\Model\Trackdata\Object::TEMPERATURE => $this->get('arr_temperature'),
 			Runalyze\Model\Trackdata\Object::GROUNDCONTACT => $this->get('arr_groundcontact'),
 			Runalyze\Model\Trackdata\Object::VERTICAL_OSCILLATION => $this->get('arr_vertical_oscillation'),
+			Runalyze\Model\Trackdata\Object::GROUNDCONTACT_BALANCE => $this->get('arr_groundcontact_balance'),
 			Runalyze\Model\Trackdata\Object::PAUSES => $this->get('pauses')
 		));
 	}
@@ -266,8 +268,18 @@ class TrainingObject extends DataObject {
 			new \Runalyze\Model\Activity\Object($OldData)
 		);
 
-		if (isset($OldData['routeid'])) {
+		if (isset($OldData['routeid']) && $OldData['routeid'] > 0) {
 			$UpdaterActivity->setRoute(\Runalyze\Context::Factory()->route($OldData['routeid']));
+		} elseif ($this->get('route') != '') {
+			$InserterRoute = new Runalyze\Model\Route\Inserter($DB, new Runalyze\Model\Route\Object(array(
+				Runalyze\Model\Route\Object::NAME => $this->get('route'),
+				Runalyze\Model\Route\Object::CITIES => $this->get('route'),
+				Runalyze\Model\Route\Object::DISTANCE => $this->get('distance')
+			)));
+			$InserterRoute->setAccountID($AccountID);
+			$InserterRoute->insert();
+
+			$NewActivity->set(Runalyze\Model\Activity\Object::ROUTEID, $InserterRoute->insertedID());
 		}
 
 		$UpdaterActivity->setTrackdata(\Runalyze\Context::Factory()->trackdata($this->id()));
@@ -275,6 +287,8 @@ class TrainingObject extends DataObject {
 			TrainingFormular::readEquipmentFromPost($NewActivity->sportid()),
 			isset($_POST['equipment_old']) ? explode(',', $_POST['equipment_old']) : array()
 		);
+		$UpdaterActivity->setTagIDs(TrainingFormular::readTagFromPost(), 
+			isset($_POST['tag_old']) ? explode(',', $_POST['tag_old']) : array());
 		$UpdaterActivity->setAccountID($AccountID);
 		$UpdaterActivity->update();
 
@@ -741,6 +755,28 @@ class TrainingObject extends DataObject {
 
 
 	/**
+	 * Set vertical ratio
+	 * @param int $verticalRatio vertical ratio [%]
+	 */
+	public function setVerticalRatio($verticalRatio) { return $this->set('vertical_ratio', $verticalRatio); }
+	/**
+	 * Get vertical ratio
+	 * @return int vertical ratio [%]
+	 */
+	public function getVerticalRatio() { return $this->get('vertical_ratio'); }
+	
+	/**
+	 * Set ground contact time balance
+	 * @param int $groundContactBalance ground contact time balance [%]
+	 */
+	public function setGroundContactBalance($groundContactBalance) { return $this->set('groundcontact_balance', $groundContactBalance); }
+	/**
+	 * Get ground contact time balance
+	 * @return int ground contact time balance [%]
+	 */
+	public function getGroundContactBalance() { return $this->get('groundcontact_balance'); }
+
+	/**
 	 * Set weatherid
 	 * @param mixed $id weatherid
 	 */
@@ -848,12 +884,6 @@ class TrainingObject extends DataObject {
 	 * @return string partner
 	 */
 	public function getPartner() { return $this->get('partner'); }
-
-	/**
-	 * Was with running abc?
-	 * @return bool True if this training was with 'running abc'
-	 */
-	public function wasWithABC() { return $this->get('abc') == 1; }
 
 	/**
 	 * Set notes
@@ -1181,7 +1211,24 @@ class TrainingObject extends DataObject {
 	 * @return bool
 	 */
 	public function hasArrayVerticalOscillation() { return strlen($this->get('arr_vertical_oscillation')) > 0; }
-
+	
+	
+	/**
+	 * Set array for ground contact time balance
+	 * @param array $data
+	 */
+	public function setArrayGroundContactBalance(array $data) { $this->setArrayFor('arr_groundcontact_balance', $data); }
+	/**
+	 * Get array for ground contact time balance
+	 * @return array
+	 */
+	public function getArrayGroundContactBalance() { return $this->getArrayFor('arr_groundcontact_balance'); }
+	/**
+	 * Has array for ground contact time balance?
+	 * @return bool
+	 */
+	public function hasArrayGroundContactBalance() { return strlen($this->get('arr_groundcontact_balance')) > 0; }
+	
 	
 	/**
 	 * Set array for heart rate variability

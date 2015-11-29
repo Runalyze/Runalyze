@@ -16,6 +16,13 @@ class RunalyzeJsonBackup extends RunalyzeBackup {
 	protected $TablesStarted = false;
 
 	/**
+	 * Start backup
+	 */
+	protected function startBackup() {
+		$this->Writer->addToFile('version='.RUNALYZE_VERSION.NL.NL);
+	}
+
+	/**
 	 * Save table structure
 	 * @param string $TableName
 	 */

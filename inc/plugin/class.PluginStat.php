@@ -135,33 +135,37 @@ abstract class PluginStat extends Plugin {
 
 	/**
 	 * Get query for sport and year
+	 * @param bool $addTableName must be used if query contains joins
 	 * @return string
 	 */
-	protected function getSportAndYearDependenceForQuery() {
+	protected function getSportAndYearDependenceForQuery($addTableName = false) {
 		$Query = '';
 
 		if ($this->sportid > 0) {
-			$Query .= ' AND `sportid`='.(int) $this->sportid;
+			$sport = $addTableName ? '`'.PREFIX.'training`.`sportid`' : '`sportid`';
+			$Query .= ' AND '.$sport.'='.(int) $this->sportid;
 		}
 
-		$Query .= $this->getYearDependenceForQuery();
+		$Query .= $this->getYearDependenceForQuery($addTableName);
 
 		return $Query;
 	}
 
 	/**
 	 * Get query for year
+	 * @param bool $addTableName must be used if query contains joins
 	 * @return string
 	 */
-	protected function getYearDependenceForQuery() {
+	protected function getYearDependenceForQuery($addTableName = false) {
 		$Query = '';
+		$time = $addTableName ? '`'.PREFIX.'training`.`time`' : '`time`';
 
 		if ($this->showsLast6Months()) {
-			$Query .= ' AND `time` > '.strtotime("first day of -5 months");
+			$Query .= ' AND '.$time.' > '.strtotime("first day of -5 months ");
 		} elseif ($this->showsLast12Months()) {
-			$Query .= ' AND `time` > '.strtotime("first day of -11 months");
+			$Query .= ' AND '.$time.' > '.strtotime("first day of -11 months ");
 		} elseif (!$this->showsAllYears()) {
-			$Query .= ' AND `time` BETWEEN UNIX_TIMESTAMP(\''.(int)$this->year.'-01-01\') AND UNIX_TIMESTAMP(\''.((int)$this->year+1).'-01-01\')-1';
+			$Query .= ' AND '.$time.' BETWEEN UNIX_TIMESTAMP(\''.(int)$this->year.'-01-01\') AND UNIX_TIMESTAMP(\''.((int)$this->year+1).'-01-01\')-1 ';
 		}
 
 		return $Query;
@@ -169,30 +173,36 @@ abstract class PluginStat extends Plugin {
 
 	/**
 	 * Timer for year or ordered months
+	 * @param bool $addTableName must be used if query contains joins
 	 * @return string
 	 */
-	protected function getTimerForOrderingInQuery() {
+	protected function getTimerForOrderingInQuery($addTableName = false) {
+		$time = $addTableName ? '`'.PREFIX.'training`.`time`' : '`time`';
+
 		if ($this->showsAllYears()) {
-			return 'YEAR(FROM_UNIXTIME(`time`))';
+			return 'YEAR(FROM_UNIXTIME('.$time.'))';
 		} elseif (!$this->showsSpecificYear()) {
-			return 'DATE_FORMAT(FROM_UNIXTIME(`time`), "%Y-%m")';
+			return 'DATE_FORMAT(FROM_UNIXTIME('.$time.'), "%Y-%m")';
 		}
 
-		return 'MONTH(FROM_UNIXTIME(`time`))';
+		return 'MONTH(FROM_UNIXTIME('.$time.'))';
 	}
 
 	/**
 	 * Index for timer
+	 * @param bool $addTableName must be used if query contains joins
 	 * @return string
 	 */
-	protected function getTimerIndexForQuery() {
+	protected function getTimerIndexForQuery($addTableName = false) {
+		$time = $addTableName ? '`'.PREFIX.'training`.`time`' : '`time`';
+
 		if ($this->showsLast6Months()) {
-			return '((MONTH(FROM_UNIXTIME(`time`)) + 5 - '.date('m').')%12 + 1)';
+			return '((MONTH(FROM_UNIXTIME('.$time.')) + 5 - '.date('m').')%12 + 1)';
 		} elseif ($this->showsLast12Months()) {
-			return '((MONTH(FROM_UNIXTIME(`time`)) + 11 - '.date('m').')%12 + 1)';
+			return '((MONTH(FROM_UNIXTIME('.$time.')) + 11 - '.date('m').')%12 + 1)';
 		}
 
-		return $this->getTimerForOrderingInQuery();
+		return $this->getTimerForOrderingInQuery($addTableName);
 	}
 
 	/**

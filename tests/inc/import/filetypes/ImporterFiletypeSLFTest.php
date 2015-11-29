@@ -102,5 +102,25 @@ class ImporterFiletypeSLFTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertEquals( 14, count($this->object->object()->Splits()->distancesAsArray()) );
 	}
+	
+	/**
+	 * Test: new format
+	 * Filename: "DatacenterVersion4-HM.slf" 
+	 */
+	public function testVersion4WithoutEntriesFile() {
+		$this->object->parseFile('../tests/testfiles/slf/slf4-without-entries-.slf');
+
+		$this->assertFalse( $this->object->hasMultipleTrainings() );
+		$this->assertFalse( $this->object->failed() );
+
+		$this->assertEquals( '03.02.2015 10:01:11', date('d.m.Y H:i:s', $this->object->object()->getTimestamp()) );
+		$this->assertEquals( 2766, $this->object->object()->getTimeInSeconds() );
+		$this->assertEquals( 7.42, $this->object->object()->getDistance(), '', 0.1);
+		$this->assertEquals( 404, $this->object->object()->getCalories(), '', 10);
+		$this->assertEquals( 138, $this->object->object()->getPulseAvg(), '', 2);
+		$this->assertEquals( 162, $this->object->object()->getPulseMax(), '', 2);
+
+		$this->assertEquals( 0, count($this->object->object()->Splits()->distancesAsArray()) );
+	}
 
 }

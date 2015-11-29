@@ -36,5 +36,7 @@ class HRV extends ActivityPlot {
 		$this->addSeries(
 			new Series\HRV($context)
 		);
+
+		$this->Plot->PlotOptions['allowSelection'] = false;
 	}
 }

@@ -7,6 +7,7 @@
 use Runalyze\View\Activity;
 use Runalyze\Model\Trackdata;
 use Runalyze\View\Activity\Box;
+use Runalyze\Activity\Temperature;
 
 /**
  * Row: Miscellaneous
@@ -75,6 +76,7 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 		$this->addCadenceAndPower();
 		$this->addStrokeandSwolf();
 		$this->addWeather();
+		$this->addTags();
 		$this->addEquipment();
 		$this->addTrainingPartner();
 	}
@@ -169,11 +171,12 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 	 * Add weather
 	 */
 	protected function addWeather() {
-		if (!$this->Context->activity()->weather()->isEmpty()) {
+            if (!$this->Context->activity()->weather()->isEmpty()) {
+                $Temperature = new Temperature($this->Context->activity()->weather()->temperature()->value());
 			$Weather = new BoxedValue($this->Context->activity()->weather()->condition()->string(), '', __('Weather condition'), $this->Context->activity()->weather()->condition()->icon()->code());
 			$Weather->defineAsFloatingBlock('w50');
 
-			$Temp = new BoxedValue($this->Context->activity()->weather()->temperature()->asStringWithoutUnit(), $this->Context->activity()->weather()->temperature()->unit(), __('Temperature'));
+			$Temp = new BoxedValue($Temperature->string(false, false), $Temperature->unit(), __('Temperature'));
 			$Temp->defineAsFloatingBlock('w50');
 
 			$this->BoxedValues[] = $Weather;
@@ -208,6 +211,24 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 
 			$this->BoxedValues[] = $Value;
 		}
+	}
+
+	/**
+	 * Add tags
+	 */
+	protected function addTags() {
+		$Links = array();
+		$Factory = new \Runalyze\Model\Factory(SessionAccountHandler::getId());
+		$SelectedTags = $Factory->tagForActivity($this->Context->activity()->id());
+
+		foreach ($SelectedTags as $Object) {
+			$Links[] = SearchLink::to('tagid', $Object->id(), '#'.$Object->tag());
+		}
+
+		$Value = new BoxedValue(implode(', ', $Links), '', __('Tags'));
+		$Value->defineAsFloatingBlock('w100 flexible-height');
+
+		$this->BoxedValues[] = $Value;
 	}
 
 	/**

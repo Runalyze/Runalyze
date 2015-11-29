@@ -1,6 +1,6 @@
 <?php
 /**
- * This file contains the class of the RunalyzePluginStat "Laufabc".
+ * This file contains the class of the RunalyzePluginStat "MonthlyStats".
  * @package Runalyze\Plugins\Stats
  */
 $PLUGINKEY = 'RunalyzePluginStat_MonthlyStats';
@@ -10,7 +10,7 @@ use Runalyze\Activity\Duration;
 use Runalyze\Configuration;
 
 /**
- * Class: RunalyzePluginStat_Laufabc
+ * Class: RunalyzePluginStat_MonthlyStats
  * @author Hannes Christiansen
  * @package Runalyze\Plugins\Stats
  */
@@ -124,7 +124,7 @@ class RunalyzePluginStat_MonthlyStats extends PluginStat {
 	}
 
 	/**
-	 * Initialize $this->ABCData
+	 * Initialize Data
 	 */
 	private function initData() {
 		$result = DB::getInstance()->query('

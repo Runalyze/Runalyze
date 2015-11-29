@@ -16,6 +16,16 @@ use Runalyze\Model\Factory;
  */
 class RunalyzePluginPanel_Sports extends PluginPanel {
 	/**
+	 * @var int
+	 */
+	protected $DefaultTimesetIndex = 1;
+
+	/**
+	 * @var array
+	 */
+	protected $Timeset = array();
+
+	/**
 	 * Name
 	 * @return string
 	 */
@@ -52,20 +62,49 @@ class RunalyzePluginPanel_Sports extends PluginPanel {
 		if (!$this->Configuration()->value('show_as_table')) {
 			$this->removePanelContentPadding = true;
 		}
+
+		$this->Timeset = array(
+			array(
+				'name'	=> __('Week'),
+				'start'	=> Runalyze\Util\Time::weekstart(time())
+			),
+			array(
+				'name'	=> __('Month'),
+				'start'	=> mktime(0,0,0,date("m"),1,date("Y"))
+			),
+			array(
+				'name'	=> __('Year'),
+				'start'	=> mktime(0,0,0,1,1,date("Y"))
+			),
+			array(
+				'name'	=> __('Total'),
+				'start'	=> START_TIME
+			)
+		);
 	}
 
 	/**
 	 * Method for getting the right symbol(s)
-	 * @see PluginPanel::getRightSymbol()
 	 */
 	protected function getRightSymbol() {
-		$html = '<ul>';
+		$Links = '';
+		$Links .= '<li class="with-submenu"><span class="link">'.__('Choose time range').'</span>';
+		$Links .= '<ul class="submenu">';
 
-		foreach ($this->getTimeset() as $i => $timeset) {
-			$html .= '<li>'.Ajax::change($timeset['name'], 'sports', '#sports_'.$i).'</li>';
+		foreach ($this->Timeset as $i => $timeset) {
+			$Link = Ajax::change($timeset['name'], 'sports', '#sports_'.$i);
+
+			if ($i == $this->DefaultTimesetIndex) {
+				$Link = Ajax::insertClass($Link, 'triggered');
+			}
+
+			$Links .= '<li>'.$Link.'</li>';
 		}
 
-		return $html.'</ul>';
+		$Links .= '</ul>';
+		$Links .= '</li>';
+
+		return '<ul>'.$Links.'</ul>';
 	}
 
 	/**
@@ -90,8 +129,8 @@ class RunalyzePluginPanel_Sports extends PluginPanel {
 
 		echo '<div id="sports">';
 	
-		foreach ($this->getTimeset() as $i => $timeset) {
-			echo '<div id="sports_'.$i.'" class="change"'.($i==0 ? '' : ' style="display:none;"').'>';
+		foreach ($this->Timeset as $i => $timeset) {
+			echo '<div id="sports_'.$i.'" class="change"'.($i==$this->DefaultTimesetIndex ? '' : ' style="display:none;"').'>';
 
 			$Request->bindValue('start', $timeset['start'], PDO::PARAM_INT);
                         $Request->bindValue('accountid', SessionAccountHandler::getId(), PDO::PARAM_INT);
@@ -170,27 +209,5 @@ class RunalyzePluginPanel_Sports extends PluginPanel {
 
 		echo '<small class="right">'.__('since').' '.date("d.m.Y", $timeset['start']).'</small>';
 		echo HTML::clearBreak();
-	}
-
-	/**
-	 * Get the timeset as array for this panel
-	 */
-	private function getTimeset() {
-		$timeset = array(
-			array(
-				'name'	=> __('Month'),
-				'start'	=> mktime(0,0,0,date("m"),1,date("Y"))
-			),
-			array(
-				'name'	=> __('Year'),
-				'start'	=> mktime(0,0,0,1,1,date("Y"))
-			),
-			array(
-				'name'	=> __('Total'),
-				'start'	=> START_TIME
-			)
-		);
-	
-		return $timeset;
 	}
 }

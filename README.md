@@ -42,7 +42,9 @@ You have to apply recent changes from the respective update files in `inc/instal
 
 ## Changelog
 * [v2.2](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-2-en/), 28.10.2015: minor release (equipment for al sports, imperial units, ...)
+ * If you're updating from 2.1.* directly use v2.2.1 for updating   
  * warning: migration from v2.1 to v2.2 requires `refactor-equipment.php`
+ * [v2.2.1] (http://blog.runalyze.com/en/allgemein-en/runalyze-v2-1-1-en/), 18.11.2015: minor bugfixes (use three decimals for splits, Fix upgrade from single user installations) 
 * [v2.1](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-1-en/), 19.07.2015: minor release (running dynamics, new importers, recovery time ...)
  * [v2.1.1](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-1-1-en/), 22.10.2015: minor bugfixes
 * [v2.0](http://blog.runalyze.com/allgemein/runalyze-v2-0/), 28.02.2015: first mutlilingual major release

@@ -8,6 +8,7 @@ use Runalyze\Activity\Distance;
 use Runalyze\Activity\Duration;
 use Runalyze\Activity\Elevation;
 use Runalyze\Activity\Weight;
+use Runalyze\Activity\Temperature;
 
 /**
  * Library with parsers for formular values, default behavior: from user input to database value
@@ -80,6 +81,12 @@ class FormularValueParser {
 	 * @var string 
 	 */
 	public static $PARSER_WEIGHT = 'weight';
+        
+	/**
+	 * Parser: temperature in c <=> temperature in preferred unit
+	 * @var string 
+	 */
+	public static $PARSER_TEMPERATURE = 'temperature';
 
 	/**
 	 * Parser: elevation in m <=> elevation in preferred unit
@@ -134,6 +141,8 @@ class FormularValueParser {
 				return self::validateSplits($key, $parserOptions);
 			case self::$PARSER_WEIGHT:
 				return self::validateWeight($key);
+                        case self::$PARSER_TEMPERATURE:
+                                return self::validateTemperature($key);
 			case self::$PARSER_ELEVATION:
 				return self::validateElevation($key);
 			case self::$PARSER_DISTANCE:
@@ -174,6 +183,9 @@ class FormularValueParser {
 				break;
 			case self::$PARSER_WEIGHT:
 				self::parseWeight($value);
+				break;
+                        case self::$PARSER_TEMPERATURE:
+				self::parseTemperature($value);
 				break;
 			case self::$PARSER_ELEVATION:
 				self::parseElevation($value);
@@ -471,6 +483,30 @@ class FormularValueParser {
 	private static function parseWeight(&$value) {
 		$value = round((new Weight($value))->valueInPreferredUnit(), 2);
 	}
+        
+	/**
+	 * Validator: temperature in preferred unit => temperature in °C
+	 * @param string $key
+	 * @return bool
+	 */
+	private static function validateTemperature($key) {
+		if (trim($_POST[$key]) == '') {
+			$_POST[$key] = null;
+		} else {
+			$_POST[$key] = round((new Temperature())->setInPreferredUnit($_POST[$key])->celsius(), 2);
+		}
+
+		return true;
+	}
+
+	/**
+	 * Parse: temperature in °C => temperature in preferred unit
+	 * @param mixed $value 
+	 */
+	private static function parseTemperature(&$value) {
+		$value = (new Temperature($value))->valueInPreferredUnit();
+	}
+      
 
 	/**
 	 * Validator: elevation in preferred unit => elevation in m

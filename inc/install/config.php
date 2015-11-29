@@ -46,6 +46,13 @@ define('USER_CANT_LOGIN', false);
 define('USER_CAN_REGISTER', true);
 
 /**
+ * Path to perl scripts
+ * Relative to FRONTEND_PATH
+ * @var string PERL_PATH Path for perl scripts
+ */
+define('PERL_PATH', '/usr/bin/perl');
+
+/**
  * Garmin API key is needed for using Garmin Communicator
  * @var bool GARMIN_API_KEY Garmin API key
  * @see http://developer.garmin.com/web-device/garmin-communicator-plugin/get-your-site-key/

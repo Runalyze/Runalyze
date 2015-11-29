@@ -201,6 +201,9 @@ class ParserFITSingle extends ParserAbstractSingle {
 			$this->TrainingObject->setTimestamp( strtotime((string)$this->Values['time_created'][1]) );
 
 		$this->TrainingObject->setSportid( Configuration::General()->mainSport() );
+
+		if (isset($this->Values['manufacturer']))
+			$this->TrainingObject->setCreator($this->Values['manufacturer'][1]);
 	}
 
 	/**
@@ -263,7 +266,7 @@ class ParserFITSingle extends ParserAbstractSingle {
 
 		$thisTimestamp = strtotime((string)$this->Values['timestamp'][1]);
 
-		if ($this->Values['event_type'][1] == 'stop_all') {
+		if ($this->Values['event_type'][1] == 'stop_all' || $this->Values['event_type'][1] == 'stop') {
 			$this->isPaused = true;
 			$this->lastStopTimestamp = $thisTimestamp;
 		} elseif ($this->Values['event_type'][1] == 'start') {
@@ -333,8 +336,11 @@ class ParserFITSingle extends ParserAbstractSingle {
 
 		$this->gps['time_in_s'][] = $time;
 
+		//Running Dynamics
 		$this->gps['groundcontact'][] = isset($this->Values['stance_time']) ? round($this->Values['stance_time'][0]/10) : 0;
 		$this->gps['oscillation'][]   = isset($this->Values['vertical_oscillation']) ? round($this->Values['vertical_oscillation'][0]/10) : 0;
+		$this->gps['groundcontact_balance'][] = isset($this->Values['ground_contact_time_balance']) ? (int)$this->Values['ground_contact_time_balance'][0] : 0;
+		//$this->gps['vertical_ratio'][] = isset($this->Values['vertical_ratio']) ? (int)$this->Values['vertical_ratio'][0] : 0;
 
 		if ($time === $last) {
 			$this->mergeRecord();

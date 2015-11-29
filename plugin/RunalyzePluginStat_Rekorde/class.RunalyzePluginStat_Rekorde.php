@@ -228,9 +228,9 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 			SELECT
 				`sportid`,
 				SUM(`distance`) as `km`,
-				WEEK(FROM_UNIXTIME(`time`),1) as `week`,
+				WEEK(FROM_UNIXTIME(`time`),'.Configuration::General()->weekStart()->mysqlParameter().') as `week`,
 				YEAR(FROM_UNIXTIME(`time`)) as `year`,
-				YEARWEEK(FROM_UNIXTIME(`time`),1) as `weekyear`,
+				YEARWEEK(FROM_UNIXTIME(`time`),'.Configuration::General()->weekStart()->mysqlParameter().') as `weekyear`,
 				`time`
 			FROM `'.PREFIX.'training`
 			WHERE `sportid`='.Configuration::General()->runningSport().' '.$this->getYearDependenceForQuery().'

@@ -34,6 +34,7 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 			`speed` VARCHAR(10) NOT NULL,
 			`power` TINYINT NOT NULL,
 			`outside` TINYINT NOT NULL,
+			`main_equipmenttypeid` INTEGER NOT NULL,
 			`accountid` INTEGER NOT NULL
 			);
 		');

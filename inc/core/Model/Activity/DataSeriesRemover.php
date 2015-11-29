@@ -78,6 +78,8 @@ class DataSeriesRemover {
 		$this->Route = $factory->route($activity->get(Object::ROUTEID));
 		$this->OldRoute = clone $this->Route;
 
+		// TODO: What's with STRIDE_LENGTH and VERTICAL_RATIO?
+		// - so far, there are updateStrideLength() and updateVerticalRatio() in Activity\Updater
 		$this->ActivityKeysForTrackdataKeys = [
 			Model\Trackdata\Object::HEARTRATE => Model\Activity\Object::HR_AVG,
 			Model\Trackdata\Object::CADENCE => Model\Activity\Object::CADENCE,
