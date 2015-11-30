@@ -295,7 +295,7 @@ class Query
 	 */
 	protected function defaultColumns()
 	{
-		return array_merge(array('sportid', 'time'), $this->AdditionalColumns);
+		return array_merge(array('sportid', 'time', 'use_vdot'), $this->AdditionalColumns);
 	}
 
 	/**
