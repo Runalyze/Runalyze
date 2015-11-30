@@ -119,6 +119,7 @@ class RunalyzeJsonImporterTest extends PHPUnit_Framework_TestCase {
 		$id = $this->DB->insert('plugin', array('key', 'active', 'order'), array('RunalyzePluginTool_TEST', 0, 3) );
 		$this->DB->insert('plugin_conf', array('pluginid', 'config', 'value'), array($id, 'test_one', 2) );
 		$this->DB->insert('plugin_conf', array('pluginid', 'config', 'value'), array($id, 'test_two', 1) );
+		$this->DB->insert('dataset', array('keyid', 'active', 'style', 'position'), array(1, 1, '', 1) );
 
 		// Act
 		$Importer = new RunalyzeJsonImporter('../tests/testfiles/backup/default-update.json.gz');
@@ -133,6 +134,8 @@ class RunalyzeJsonImporterTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertEquals('1', $this->DB->query('SELECT `value` FROM `runalyze_plugin_conf` WHERE `config`="test_one" LIMIT 1')->fetchColumn());
 		$this->assertEquals('2', $this->DB->query('SELECT `value` FROM `runalyze_plugin_conf` WHERE `config`="test_two" LIMIT 1')->fetchColumn());
+
+		$this->assertEquals(array(0, 'width:auto;', 42), $this->DB->query('SELECT `active`, `style`, `position` FROM `runalyze_dataset` WHERE `keyid`=1')->fetch(PDO::FETCH_NUM));
 	}
 
 	/**

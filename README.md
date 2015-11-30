@@ -1,4 +1,4 @@
-# [Runalyze v2.2](http://blog.runalyze.com)
+# [Runalyze v2.3-beta](http://blog.runalyze.com)
 
 [![Build Status](https://travis-ci.org/Runalyze/Runalyze.svg?branch=master)](https://travis-ci.org/Runalyze/Runalyze)
 [![Code Coverage](https://scrutinizer-ci.com/g/Runalyze/Runalyze/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/Runalyze/Runalyze/?branch=master)
@@ -16,7 +16,7 @@ We provide two different documentations:
 
 ## Install / Development
 Runalyze v2.1+ requires [composer](https://getcomposer.org/doc/00-intro.md#system-requirements) and
-v2.3+ will probably require [npm](https://nodejs.org/download/),
+v2.4+ will probably require [npm](https://nodejs.org/download/),
 [bower](http://bower.io/) (`sudo npm install -g bower`) and
 [grunt](http://gruntjs.com/) (`sudo npm install -g grunt-cli`).
 
@@ -26,7 +26,7 @@ composer install
 php build/build.php translations
 ```
 
-To install dependencies and build for v2.3+ (applies to some branches):
+To install dependencies and build for v2.4+ (applies to some branches):
 ```
 composer install
 bower install

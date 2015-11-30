@@ -1,4 +1,4 @@
-version=2.2
+version=2.3
 
 {"TABLE":"runalyze_account"}
 
@@ -6,6 +6,7 @@ version=2.2
 {"1":{"category":"test-data","key":"TEST_CONF","value":"true"}}
 
 {"TABLE":"runalyze_dataset"}
+{"":{"keyid":"1","active":"0","style":"width:auto;","position":"42"}}
 
 {"TABLE":"runalyze_hrv"}
 

@@ -244,12 +244,9 @@ class RunalyzeJsonImporter {
 						UPDATE `'.PREFIX.'dataset`
 						SET
 							`active`=?,
-							`modus`=?,
-							`class`=?,
 							`style`=?,
-							`position`=?,
-							`summary`=?
-						WHERE `accountid`='.$this->AccountID.' AND `name`=?');
+							`position`=?
+						WHERE `accountid`='.$this->AccountID.' AND `keyid`=?');
 
 			case 'runalyze_plugin':
 				return $this->DB->prepare('UPDATE `'.PREFIX.'plugin` SET `active`=?, `order`=? WHERE `accountid`='.$this->AccountID.' AND `key`=?');
@@ -275,12 +272,9 @@ class RunalyzeJsonImporter {
 			case 'runalyze_dataset':
 				$Statement->execute(array(
 					$Row['active'],
-					$Row['modus'],
-					$Row['class'],
 					$Row['style'],
 					$Row['position'],
-					$Row['summary'],
-					$Row['name']
+					$Row['keyid']
 				));
 				break;
 
