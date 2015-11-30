@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-11-30 11:08+0100\n"
-"PO-Revision-Date: 2015-11-30 18:09+0200\n"
+"PO-Revision-Date: 2015-11-30 18:10+0200\n"
 "Last-Translator: MtP76 <marko@poikonen.de>\n"
 "Language-Team: Finnish "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/fi/>\n"
@@ -718,7 +718,7 @@ msgstr "Korjatut korkeustiedot."
 #: inc/training/view/section/class.SectionRouteRowElevation.php:95
 #: inc/training/view/section/class.SectionCompositeRow.php:240
 msgid "Elevation data are not corrected."
-msgstr ""
+msgstr "Korjaamattomat korkeustiedot."
 
 #: inc/training/view/section/class.SectionOverviewRow.php:55
 #: inc/training/view/section/class.SectionCompositeRow.php:99
