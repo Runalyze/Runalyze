@@ -146,6 +146,10 @@ class Dataview {
 	 * @return string
 	 */
 	public function date($format = 'd.m.Y') {
+		if (!is_numeric($this->Activity->timestamp())) {
+			return '';
+		}
+
 		return date($format, $this->Activity->timestamp());
 	}
 
@@ -155,12 +159,12 @@ class Dataview {
 	 * @return string
 	 */
 	public function daytime() {
-		$time = date('H:i', $this->Activity->timestamp());
+		if (is_numeric($this->Activity->timestamp())) {
+			$time = date('H:i', $this->Activity->timestamp());
 
-		if ($time != '00:00') {
-			return $time;
-			// TODO
-			//return sprintf( __('%s&nbsp;Uhr'), $time);
+			if ($time != '00:00') {
+				return $time;
+			}
 		}
 
 		return '';
@@ -179,6 +183,10 @@ class Dataview {
 	 * @return string
 	 */
 	public function weekday() {
+		if (!is_numeric($this->Activity->timestamp())) {
+			return '';
+		}
+
 		return Time::weekday( date('w', $this->Activity->timestamp()) );
 	}
 
