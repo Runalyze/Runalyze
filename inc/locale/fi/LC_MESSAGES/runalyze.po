@@ -6,20 +6,22 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-11-30 11:08+0100\n"
-"PO-Revision-Date: 2015-11-30 11:08+0100\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2015-11-30 13:39+0200\n"
+"Last-Translator: MtP76 <marko@poikonen.de>\n"
+"Language-Team: Finnish "
+"<http://translate.runalyze.de/projects/runalyze/runalyze/fi/>\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 2.3\n"
 
 #: login.php:27 inc/tpl/tpl.installerHeader.php:23
 msgid "Please login"
-msgstr ""
+msgstr "Kirjaudu sisään"
 
 #: index.php:47 inc/training/view/section/class.SectionMiscellaneous.php:34
 #: inc/training/schemes/scheme.Training.new.php:41
@@ -27,58 +29,58 @@ msgstr ""
 #: inc/core/Configuration/Category/Misc.php:46
 #: inc/class.FrontendSharedStatistics.php:151
 msgid "Miscellaneous"
-msgstr ""
+msgstr "Sekalaiset"
 
 #: index.php:74
 msgid ""
 "<em>There are no statistics available. Activate a plugin in your "
 "configuration.</em>"
-msgstr ""
+msgstr "<em>Ei tilastoja. Aktivoi laajennus asetuksista.</em>"
 
 #: inc/html/formular/class.FormularValueParser.php:207
 msgid "The field can not be left empty."
-msgstr ""
+msgstr "Kenttä ei voi olla tyhjä."
 
 #: inc/html/formular/class.FormularValueParser.php:231
 msgid "Please enter a number."
-msgstr ""
+msgstr "Anna numero."
 
 #: inc/html/formular/class.FormularValueParser.php:236
 #: inc/html/formular/class.FormularValueParser.php:256
 msgid "The value is too large."
-msgstr ""
+msgstr "Liian suuri arvo."
 
 #: inc/html/formular/class.FormularValueParser.php:294
 msgid "The date could not be parsed."
-msgstr ""
+msgstr "Päivämäärä virheellisessä muodossa."
 
 #: inc/html/formular/class.FormularValueParser.php:327
 msgid "The time could not be read."
-msgstr ""
+msgstr "Aika virheellisessä muodossa."
 
 #: inc/html/formular/class.FormularValueParser.php:356
 #: inc/html/formular/class.FormularValueParser.php:391
 msgid "You have to enter a time."
-msgstr ""
+msgstr "Anna aika."
 
 #: inc/html/formular/class.StandardFormular.php:145
 msgid "Submit"
-msgstr ""
+msgstr "Syötä"
 
 #: inc/html/formular/class.StandardFormular.php:148
 msgid "Create"
-msgstr ""
+msgstr "Luo"
 
 #: inc/html/formular/class.StandardFormular.php:151
 #: inc/system/config/class.ConfigTab.php:100
 #: inc/plugin/config/class.PluginConfigurationWindow.php:131
 #: inc/class.AdminView.php:176
 msgid "Save"
-msgstr ""
+msgstr "Tallenna"
 
 #: inc/html/formular/class.FormularField.php:212
 msgid "Your input is not allowed."
-msgstr ""
+msgstr "Ei sallittu syöte."
 
 #: inc/html/formular/class.FormularInputDayAndDaytime.php:96
 #: inc/training/view/section/class.SectionOverviewRow.php:54
@@ -97,7 +99,7 @@ msgstr ""
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:351
 #: plugin/RunalyzePluginPanel_Equipment/class.RunalyzePluginPanel_Equipment.php:197
 msgid "Time"
-msgstr ""
+msgstr "Aika"
 
 #: inc/html/formular/class.FormularInputDayAndDaytime.php:98
 #: inc/training/search/class.FormularSelectSearchSort.php:29
@@ -113,42 +115,42 @@ msgstr ""
 #: plugin/RunalyzePluginPanel_Sportler/window.sportler.table.php:34
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:590
 msgid "Date"
-msgstr ""
+msgstr "Päivämäärä"
 
 #: inc/html/formular/class.FormularInputDayAndDaytime.php:102
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:91
 msgid "Time of day"
-msgstr ""
+msgstr "Vuorokaudenaika"
 
 #: inc/html/class.HTML.php:128 inc/draw/class.PlotSumData.php:206
 #: plugin/RunalyzePluginStat_Trainingszeiten/class.RunalyzePluginStat_Trainingszeiten.php:70
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:80
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:245
 msgid "Total"
-msgstr ""
+msgstr "Yhteensä"
 
 #: inc/html/class.Ajax.php:431 inc/core/View/Leaflet/Activity.php:254
 #: inc/tpl/tpl.Installer.php:4
 msgid "Start"
-msgstr ""
+msgstr "Aloitus"
 
 #: inc/html/class.Ajax.php:432
 msgid "previous"
-msgstr ""
+msgstr "edellinen"
 
 #: inc/html/class.Ajax.php:434 inc/class.DataBrowser.php:251
 msgid "next"
-msgstr ""
+msgstr "seuraava"
 
 #: inc/html/class.Ajax.php:435
 msgid "End"
-msgstr ""
+msgstr "Lopetus"
 
 #: inc/html/class.Ajax.php:438 inc/html/class.Ajax.php:439
 #: inc/html/class.Ajax.php:440 inc/html/class.Ajax.php:441
 #: inc/html/class.Ajax.php:442
 msgid "per page"
-msgstr ""
+msgstr "aktiviteetteja sivulla"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:30
 #: inc/training/search/class.SearchFormular.php:152
@@ -173,7 +175,7 @@ msgstr ""
 #: plugin/RunalyzePluginPanel_Equipment/class.RunalyzePluginPanel_Equipment.php:198
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:591
 msgid "Distance"
-msgstr ""
+msgstr "Matka"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:31
 #: inc/training/search/class.SearchFormular.php:155
@@ -185,7 +187,7 @@ msgstr ""
 #: inc/import/class.MultiImporterFormular.php:75
 #: call/call.garminCommunicator.php:66
 msgid "Duration"
-msgstr ""
+msgstr "Kesto"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:32
 #: inc/training/view/section/class.SectionOverviewRow.php:56
@@ -205,7 +207,7 @@ msgstr ""
 #: plugin/RunalyzePluginPanel_Equipment/class.RunalyzePluginPanel_Equipment.php:196
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:646
 msgid "Pace"
-msgstr ""
+msgstr "Tahti"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:33
 #: inc/training/search/class.SearchFormular.php:153
@@ -216,11 +218,11 @@ msgstr ""
 #: inc/core/Dataset/Keys/Elevation.php:44
 #: plugin/RunalyzePluginStat_Hoehenmeter/class.RunalyzePluginStat_Hoehenmeter.php:28
 msgid "Elevation"
-msgstr ""
+msgstr "Korkeusero"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:34
 msgid "avg. Heartrate"
-msgstr ""
+msgstr "keskisyke"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:35
 #: inc/training/view/section/class.SectionHeartrateRow.php:64
@@ -229,7 +231,7 @@ msgstr ""
 #: inc/training/view/section/class.SectionCompositeRow.php:174
 #: inc/training/view/section/class.SectionCompositeRow.php:177
 msgid "max. Heartrate"
-msgstr ""
+msgstr "maksimisyke"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:36
 #: inc/training/search/class.SearchFormular.php:156
@@ -241,7 +243,7 @@ msgstr ""
 #: inc/core/View/Activity/Plot/Series/Temperature.php:38
 #: inc/core/Dataset/Keys/Temperature.php:44
 msgid "Temperature"
-msgstr ""
+msgstr "Lämpötila"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:37
 #: inc/training/search/class.SearchFormular.php:162
@@ -251,7 +253,7 @@ msgstr ""
 #: inc/core/View/Window/Laps/Table.php:234
 #: inc/core/Data/Cadence/General.php:22 inc/core/Dataset/Keys/Cadence.php:44
 msgid "Cadence"
-msgstr ""
+msgstr "Askeltahti"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:38
 #: inc/training/search/class.SearchFormular.php:171
@@ -261,7 +263,7 @@ msgstr ""
 #: inc/core/View/Activity/Plot/Series/StrideLength.php:54
 #: inc/core/Dataset/Keys/StrideLength.php:44
 msgid "Stride length"
-msgstr ""
+msgstr "Askelpituus"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:39
 #: inc/training/search/class.SearchFormular.php:165
@@ -270,7 +272,7 @@ msgstr ""
 #: inc/training/view/section/class.SectionRunningDynamicsRow.php:105
 #: inc/core/View/Activity/Plot/Series/GroundContact.php:40
 msgid "Ground contact"
-msgstr ""
+msgstr "Maakontakti"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:40
 #: inc/training/search/class.SearchFormular.php:168
@@ -281,7 +283,7 @@ msgstr ""
 #: inc/core/View/Activity/Plot/Series/VerticalOscillation.php:41
 #: inc/core/Dataset/Keys/VerticalOscillation.php:44
 msgid "Vertical oscillation"
-msgstr ""
+msgstr "Pystysuuntainen liike"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:41
 #: inc/training/search/class.SearchFormular.php:169
@@ -290,7 +292,7 @@ msgstr ""
 #: inc/core/View/Activity/Plot/Series/VerticalRatio.php:42
 #: inc/core/Dataset/Keys/VerticalRatio.php:44
 msgid "Vertical ratio"
-msgstr ""
+msgstr "Pystysuuntainen suhde"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:42
 #: inc/training/view/class.VDOTinfo.php:74
@@ -316,7 +318,7 @@ msgstr ""
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:197
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:534
 msgid "VDOT"
-msgstr ""
+msgstr "VDOT"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:43
 #: inc/training/search/class.SearchFormular.php:167
@@ -326,30 +328,32 @@ msgstr ""
 #: inc/core/Configuration/Category/Trimp.php:96
 #: inc/core/Dataset/Keys/Trimp.php:44 inc/draw/class.PlotSumData.php:220
 msgid "TRIMP"
-msgstr ""
+msgstr "TRIMP"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:44
+#, fuzzy
 msgid "JDpoints"
-msgstr ""
+msgstr "JDpoints"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:48
 msgid "descending"
-msgstr ""
+msgstr "laskua"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:48
 msgid "ascending"
-msgstr ""
+msgstr "nousua"
 
 #: inc/training/search/class.FormularInputSearchTimeRange.php:34
 #: plugin/RunalyzePluginStat_Wetter/MinMaxTableForEquipment.php:119
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:427
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:485
+#, fuzzy
 msgid "to"
-msgstr ""
+msgstr "minne"
 
 #: inc/training/search/class.SearchResults.php:460
 msgid "The multi editor could not be located."
-msgstr ""
+msgstr "Muokkain ei saatavilla."
 
 #: inc/training/search/class.SearchResults.php:497
 #, php-format
