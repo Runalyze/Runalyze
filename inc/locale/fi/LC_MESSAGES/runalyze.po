@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-11-30 11:08+0100\n"
-"PO-Revision-Date: 2015-11-30 18:10+0200\n"
+"PO-Revision-Date: 2015-11-30 18:17+0200\n"
 "Last-Translator: MtP76 <marko@poikonen.de>\n"
 "Language-Team: Finnish "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/fi/>\n"
@@ -766,8 +766,9 @@ msgstr "Vedot"
 #: inc/core/View/Activity/Plot/Series/Swolfcycles.php:62
 #: inc/core/View/Activity/Plot/Series/Swolf.php:63
 #: inc/core/Dataset/Keys/Swolf.php:44
+#, fuzzy
 msgid "Swolf"
-msgstr ""
+msgstr "Swolf"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:176
 msgid "Weather condition"
@@ -814,7 +815,7 @@ msgstr "JD pisteet"
 #: inc/training/view/section/class.SectionPaceRow.php:84
 #: inc/training/view/section/class.SectionCompositeRow.php:150
 msgid "More about VDOT calculation"
-msgstr ""
+msgstr "Tietoa VDOT laskennasta"
 
 #: inc/training/view/section/class.SectionSwimLane.php:21
 #: inc/training/view/section/class.SectionSwimLane.php:22
@@ -822,12 +823,14 @@ msgid "Lanes"
 msgstr "Radat"
 
 #: inc/training/view/section/table/class.TableLapsComputed.php:66
+#, fuzzy
 msgid "&oslash; bpm"
-msgstr ""
+msgstr "&oslash; bpm"
 
 #: inc/training/view/section/table/class.TableLapsComputed.php:67
+#, fuzzy
 msgid "elev."
-msgstr ""
+msgstr "korkeus"
 
 #: inc/training/view/section/table/class.TableZonesPace.php:35
 #: inc/core/View/Window/Laps/Table.php:122
@@ -850,18 +853,20 @@ msgid "Zone"
 msgstr "Vyöhyke"
 
 #: inc/training/view/section/class.SectionRunningDynamicsRow.php:58
+#, fuzzy
 msgid "Oscillation"
-msgstr ""
+msgstr "Pystyliike"
 
 #: inc/training/view/section/class.SectionRunningDynamicsRow.php:68
 #: inc/core/View/Activity/Plot/Series/GroundContactBalance.php:57
 #: inc/core/Dataset/Keys/GroundcontactBalance.php:44
+#, fuzzy
 msgid "Ground contact balance"
-msgstr ""
+msgstr "Maakontaktin balanssi"
 
 #: inc/training/view/section/class.SectionHRVRow.php:30
 msgid "R-R intervals"
-msgstr ""
+msgstr "R-R-intervalli"
 
 #: inc/training/view/section/class.SectionHRVRow.php:31
 msgid "Pointcaré plot"
@@ -869,7 +874,7 @@ msgstr "Pointcaré kaavio"
 
 #: inc/training/view/section/class.SectionHRVRow.php:44
 msgid "&Oslash; R-R interval"
-msgstr ""
+msgstr "&Oslash; R-R-intervalli"
 
 #: inc/training/view/section/class.SectionOverview.php:17
 msgid "Overview"
@@ -903,11 +908,12 @@ msgstr "Sykevyöhykkeet"
 #: inc/training/view/class.ElevationInfo.php:113
 #, php-format
 msgid "Elevation calculation for: %s"
-msgstr ""
+msgstr "Korkeustietojen korjaus: %s"
 
 #: inc/training/view/class.ElevationInfo.php:122
+#, fuzzy
 msgid "apply data"
-msgstr ""
+msgstr "vahvista syöte"
 
 #: inc/training/view/class.ElevationInfo.php:127
 msgid "General data"
@@ -919,7 +925,7 @@ msgstr "syötetty arvo"
 
 #: inc/training/view/class.ElevationInfo.php:130
 msgid "If you did not insert a value by hand, this value has been calculated."
-msgstr ""
+msgstr "Käytetään laskettua arvoa mikäli ei syötettyä arvoa."
 
 #: inc/training/view/class.ElevationInfo.php:134
 msgid "Lowest point"
@@ -927,13 +933,14 @@ msgstr "Matalin piste"
 
 #: inc/training/view/class.ElevationInfo.php:138
 msgid "calculated value"
-msgstr ""
+msgstr "laskettu arvo"
 
 #: inc/training/view/class.ElevationInfo.php:138
 msgid ""
 "This value is calculated with your current configuration. The saved value "
 "may be outdated."
 msgstr ""
+"Arvo laskettu nykyisillä asetuksilla. Tallennettu arvo voi olla vanhentunut."
 
 #: inc/training/view/class.ElevationInfo.php:142
 msgid "Highest point"
