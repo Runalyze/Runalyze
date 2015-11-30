@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-29 11:30+0100\n"
+"POT-Creation-Date: 2015-11-30 11:08+0100\n"
 "PO-Revision-Date: 2015-08-23 12:14+0200\n"
 "Last-Translator: pedro galan <arnoldewald@yahoo.es>\n"
 "Language-Team: Catalan <http://translate.runalyze.de/projects/runalyze/"
@@ -93,7 +93,7 @@ msgstr "La seva entrada no es permesa."
 #: inc/training/class.TrainingFormular.php:354
 #: inc/core/View/Window/Laps/Table.php:116 inc/core/View/Splits/Table.php:147
 #: inc/core/View/Activity/Plot/Series/TimeSeries.php:37
-#: inc/core/View/Leaflet/Activity.php:206 inc/core/Dataset/Keys/Daytime.php:52
+#: inc/core/View/Leaflet/Activity.php:208 inc/core/Dataset/Keys/Daytime.php:52
 #: plugin/RunalyzePluginTool_AnalyzeVDOT/tpl.Table.php:11
 #: plugin/RunalyzePluginTool_AnalyzeVDOT/tpl.Table.php:15
 #: plugin/RunalyzePluginTool_AnalyzeVDOT/tpl.Table.php:17
@@ -131,7 +131,7 @@ msgstr "Hora"
 msgid "Total"
 msgstr "Total"
 
-#: inc/html/class.Ajax.php:431 inc/core/View/Leaflet/Activity.php:253
+#: inc/html/class.Ajax.php:431 inc/core/View/Leaflet/Activity.php:254
 #: inc/tpl/tpl.Installer.php:4
 msgid "Start"
 msgstr "Inici"
@@ -169,7 +169,7 @@ msgstr "per pàgina"
 #: inc/core/Activity/Distance.php:80 inc/core/View/Window/Laps/Table.php:115
 #: inc/core/View/Splits/Table.php:146
 #: inc/core/View/Activity/Plot/Series/DistanceSeries.php:39
-#: inc/core/View/Leaflet/Activity.php:205
+#: inc/core/View/Leaflet/Activity.php:207
 #: inc/core/Dataset/Keys/Distance.php:49
 #: inc/import/class.MultiImporterFormular.php:75
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:350
@@ -442,6 +442,7 @@ msgstr "Seleccioni condicions climatològiques"
 
 #: inc/training/search/class.SearchFormular.php:146
 #: inc/training/class.TrainingFormular.php:268
+#: inc/core/Dataset/Keys/MainEquipment.php:43
 #: inc/system/config/class.ConfigTabEquipment.php:24
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:142
 #: plugin/RunalyzePluginPanel_Equipment/class.RunalyzePluginPanel_Equipment.php:36
@@ -682,7 +683,7 @@ msgid "Stroke"
 msgstr ""
 
 #: inc/training/view/section/class.SectionSwimLaneRow.php:38
-#: inc/training/schemes/scheme.Training.php:705
+#: inc/training/schemes/scheme.Training.php:714
 msgid "SWOLF"
 msgstr ""
 
@@ -1161,13 +1162,13 @@ msgstr "Roba"
 msgid "Shoe"
 msgstr "Sabatilles"
 
-#: inc/training/schemes/scheme.Training.php:695
+#: inc/training/schemes/scheme.Training.php:704
 #: inc/core/Dataset/Keys/TotalStrokes.php:44
 #, fuzzy
 msgid "Total strokes"
 msgstr "Distància total:"
 
-#: inc/training/schemes/scheme.Training.php:716
+#: inc/training/schemes/scheme.Training.php:725
 #: inc/core/Activity/PoolLength.php:58
 msgid "Pool length"
 msgstr ""
@@ -1668,7 +1669,7 @@ msgstr "Seleccioni: sabatilles"
 
 #: inc/core/Configuration/Category/DataBrowser.php:86
 #: inc/system/config/class.ConfigTabTypes.php:51
-#: inc/system/config/class.ConfigTabSports.php:61
+#: inc/system/config/class.ConfigTabSports.php:62
 msgid "Calendar view"
 msgstr "Visió de calendari"
 
@@ -2092,19 +2093,19 @@ msgstr "Dades de la ruta disponibles"
 msgid "unknown"
 msgstr "desconegut"
 
-#: inc/core/View/Leaflet/Activity.php:226
+#: inc/core/View/Leaflet/Activity.php:228
 #, fuzzy, php-format
 msgid "<strong>%s. %s</strong> in %s"
 msgstr "<strong>%s. km</strong> en %s"
 
-#: inc/core/View/Leaflet/Activity.php:227
-#: inc/core/View/Leaflet/Activity.php:258
+#: inc/core/View/Leaflet/Activity.php:229
+#: inc/core/View/Leaflet/Activity.php:259
 #: inc/core/View/Leaflet/Activity.php:325
 #, php-format
 msgid "<strong>Time:</strong> %s"
 msgstr "<strong>Temps:</strong> %s"
 
-#: inc/core/View/Leaflet/Activity.php:257
+#: inc/core/View/Leaflet/Activity.php:258
 #, php-format
 msgid "<strong>Total:</strong> %s"
 msgstr "<strong>Total:</strong> %s"
@@ -2452,6 +2453,15 @@ msgstr "Gambada (córrer)"
 msgid "spm = steps per minute"
 msgstr "spm = passes per minut"
 
+#: inc/core/Dataset/Keys/CompleteEquipment.php:34
+#, fuzzy
+msgid "Complete equipment"
+msgstr "El seu equipament"
+
+#: inc/core/Dataset/Keys/CompleteEquipment.php:52
+msgid "Your complete equipment is shown as icon with tooltip."
+msgstr ""
+
 #: inc/core/Dataset/Keys/Route.php:57
 #, php-format
 msgid "Route names are automatically cut after %u characters."
@@ -2568,6 +2578,17 @@ msgstr "Diferència d'elevació."
 msgid ""
 "Calculated value for total elevation, i.e. maximum of total ascent or "
 "descent."
+msgstr ""
+
+#: inc/core/Dataset/Keys/MainEquipment.php:34
+#, fuzzy
+msgid "Main Equipment"
+msgstr "Equipament"
+
+#: inc/core/Dataset/Keys/MainEquipment.php:52
+msgid ""
+"You can choose a main equipment type for each sport in your sport "
+"configuration. Equipment objects of this type will be shown with their names."
 msgstr ""
 
 #: inc/core/Dataset/Keys/VdotValue.php:44
@@ -3971,65 +3992,65 @@ msgstr "Guants"
 msgid "hat"
 msgstr "gorra"
 
-#: inc/system/config/class.ConfigTabDataset.php:54
+#: inc/system/config/class.ConfigTabDataset.php:59
 msgid "Dataset"
 msgstr "Conjunt de dades"
 
-#: inc/system/config/class.ConfigTabDataset.php:61
+#: inc/system/config/class.ConfigTabDataset.php:66
 msgid "Your Dataset"
 msgstr "El seu conjunt de dades"
 
-#: inc/system/config/class.ConfigTabDataset.php:63
+#: inc/system/config/class.ConfigTabDataset.php:68
 msgid ""
 "You can specify which values show up in the overview of your activities."
 msgstr ""
 "Pot definir quins valor es mostren en la visió de conjunt dels seus "
 "entrenaments."
 
-#: inc/system/config/class.ConfigTabDataset.php:64
+#: inc/system/config/class.ConfigTabDataset.php:69
 msgid ""
 "This does not influence the detailed activity view, the form or any plugin."
 msgstr ""
 "Això no canvia la vista d'entrenament detallada, el formulari o cap plugin."
 
-#: inc/system/config/class.ConfigTabDataset.php:101
+#: inc/system/config/class.ConfigTabDataset.php:106
 msgid "Display"
 msgstr "Mostri"
 
-#: inc/system/config/class.ConfigTabDataset.php:101
+#: inc/system/config/class.ConfigTabDataset.php:106
 msgid "The information will be shown directly in the row."
 msgstr "La informació es mostrarà directament a la columna."
 
-#: inc/system/config/class.ConfigTabDataset.php:102
+#: inc/system/config/class.ConfigTabDataset.php:107
 #: inc/system/config/class.ConfigTabPlugins.php:78
 msgid "Order"
 msgstr "Ordre"
 
-#: inc/system/config/class.ConfigTabDataset.php:102
+#: inc/system/config/class.ConfigTabDataset.php:107
 msgid "Indicates the order of appearance."
 msgstr "Indica l'ordre d'aparició."
 
-#: inc/system/config/class.ConfigTabDataset.php:103
+#: inc/system/config/class.ConfigTabDataset.php:108
 msgid "CSS-Style"
 msgstr "Estil-CSS"
 
-#: inc/system/config/class.ConfigTabDataset.php:103
+#: inc/system/config/class.ConfigTabDataset.php:108
 msgid "any CSS-Code"
 msgstr "qualsevol codi-CSS"
 
-#: inc/system/config/class.ConfigTabDataset.php:104
+#: inc/system/config/class.ConfigTabDataset.php:109
 msgid "Example"
 msgstr "Exemple"
 
-#: inc/system/config/class.ConfigTabDataset.php:136
+#: inc/system/config/class.ConfigTabDataset.php:141
 msgid "new"
 msgstr ""
 
-#: inc/system/config/class.ConfigTabDataset.php:259
+#: inc/system/config/class.ConfigTabDataset.php:264
 msgid "Test activity"
 msgstr "Entrenament de prova"
 
-#: inc/system/config/class.ConfigTabDataset.php:261
+#: inc/system/config/class.ConfigTabDataset.php:266
 msgid "Great run!"
 msgstr "Excel·lent cursa!"
 
@@ -4158,7 +4179,7 @@ msgid "You need to set one type for running as race type."
 msgstr ""
 
 #: inc/system/config/class.ConfigTabTypes.php:51
-#: inc/system/config/class.ConfigTabSports.php:61
+#: inc/system/config/class.ConfigTabSports.php:62
 msgid "Mode for displaying activities in calendar"
 msgstr ""
 
@@ -4167,12 +4188,12 @@ msgid "A type can only be deleted if no references exist."
 msgstr "Un tipus pot  ser esborrat únicament si no existeix cap referència."
 
 #: inc/system/config/class.ConfigTabTypes.php:86
-#: inc/system/config/class.ConfigTabSports.php:84
+#: inc/system/config/class.ConfigTabSports.php:85
 msgid "complete row"
 msgstr ""
 
 #: inc/system/config/class.ConfigTabTypes.php:87
-#: inc/system/config/class.ConfigTabSports.php:85
+#: inc/system/config/class.ConfigTabSports.php:86
 msgid "only icon"
 msgstr ""
 
@@ -4334,9 +4355,26 @@ msgstr ""
 "L'activitat esportiva s'ha desenvolupat fora: activi ruta, condicions "
 "meteorològiques, etc."
 
-#: inc/system/config/class.ConfigTabSports.php:62
+#: inc/system/config/class.ConfigTabSports.php:61
+#, fuzzy
+msgid "Main equipment"
+msgstr "El seu equipament"
+
+#: inc/system/config/class.ConfigTabSports.php:61
+msgid "Objects of main equipment type can be shown in the activity overview."
+msgstr ""
+
+#: inc/system/config/class.ConfigTabSports.php:63
 msgid "A sport can only be deleted if no references exist."
 msgstr "Un esport pot  ser esborrat únicament si no existeix cap referència."
+
+#: inc/system/config/class.ConfigTabSports.php:130
+#: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:51
+#: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:150
+#: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:151
+#: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:118
+msgid "none"
+msgstr "cap"
 
 #: inc/system/config/class.ConfigTabEquipment.php:31
 #, fuzzy
@@ -5410,13 +5448,6 @@ msgstr ""
 "fred, plovia i quina roba duies? Aquest plugin et delata si has compilat les "
 "dades seriosament."
 
-#: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:51
-#: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:150
-#: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:151
-#: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:118
-msgid "none"
-msgstr "cap"
-
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:58
 #: plugin/RunalyzePluginPanel_Equipment/class.RunalyzePluginPanel_Equipment.php:58
 msgid "Equipment type to display"
@@ -6324,18 +6355,18 @@ msgstr ""
 msgid "Route network"
 msgstr "Xarxa de rutes"
 
-#: plugin/RunalyzePluginStat_Strecken/window.routenet.php:90
+#: plugin/RunalyzePluginStat_Strecken/window.routenet.php:86
 msgid "There are no routes matching the criterias."
 msgstr "No hi ha cap ruta que s'ajusti als seus criteris de cerca."
 
-#: plugin/RunalyzePluginStat_Strecken/window.routenet.php:103
+#: plugin/RunalyzePluginStat_Strecken/window.routenet.php:99
 #, php-format
 msgid "The map contains your %s most recent routes matching the criterias."
 msgstr ""
 "El mapa inclou les seves %s més recents rutes que s'ajusten als seus "
 "criteris de cerca."
 
-#: plugin/RunalyzePluginStat_Strecken/window.routenet.php:104
+#: plugin/RunalyzePluginStat_Strecken/window.routenet.php:100
 msgid "More routes are not possible at the moment due to performance issues."
 msgstr "Més rutes no són possibles actualment degut a raons de prestacions."
 
