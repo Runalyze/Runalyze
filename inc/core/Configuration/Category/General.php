@@ -209,7 +209,7 @@ class General extends \Runalyze\Configuration\Category {
 		$this->handle('WEIGHT_UNIT')->registerOnchangeFlag(Ajax::$RELOAD_PLUGINS);
                 $this->handle('TEMPERATURE_UNIT')->registerOnchangeFlag(Ajax::$RELOAD_DATABROWSER);
 		$this->handle('HEART_RATE_UNIT')->registerOnchangeFlag(Ajax::$RELOAD_DATABROWSER);
-                $this->handle('WEEK_START')->registerOnchangeFlag(Ajax::$RELOAD_ALL);
+                $this->handle('WEEK_START')->registerOnchangeFlag(Ajax::$RELOAD_PAGE);
 		$this->handle('MAINSPORT')->registerOnchangeFlag(Ajax::$RELOAD_PAGE);
 		$this->handle('TYPE_ID_RACE')->registerOnchangeFlag(Ajax::$RELOAD_PLUGINS);
 	}
