@@ -257,10 +257,8 @@ class ElevationInfo {
 		}
 
 		$Fieldset->setHtmlCode(
-			'<p class="info block" id="gps-results">
-				'.$textInfo.'<br><br>
-				'.implode('<br>', $Links).'
-			</p>'
+			'<p class="info block" id="gps-results">'.$textInfo.'</p>
+			<p class="info block">'.implode('<br>', $Links).'</p>'
 		);
 
 		$Fieldset->display();
