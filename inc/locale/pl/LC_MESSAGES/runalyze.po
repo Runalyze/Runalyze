@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-11-30 11:08+0100\n"
-"PO-Revision-Date: 2015-10-23 14:50+0200\n"
+"PO-Revision-Date: 2015-12-01 01:13+0200\n"
 "Last-Translator: Grzegorz G <grzegorz@thulium.pl>\n"
-"Language-Team: Polish <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/pl/>\n"
+"Language-Team: Polish "
+"<http://translate.runalyze.de/projects/runalyze/runalyze/pl/>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -291,9 +291,8 @@ msgstr "Odchylenie pionowe"
 #: inc/core/Activity/VerticalRatio.php:48
 #: inc/core/View/Activity/Plot/Series/VerticalRatio.php:42
 #: inc/core/Dataset/Keys/VerticalRatio.php:44
-#, fuzzy
 msgid "Vertical ratio"
-msgstr "Odchylenie pionowe"
+msgstr "Współczynnik pionowy"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:42
 #: inc/training/view/class.VDOTinfo.php:74
@@ -454,13 +453,12 @@ msgstr "Wybierz sprzęt"
 #: inc/training/search/class.SearchFormular.php:147
 #: plugin/RunalyzePluginStat_Tag/class.RunalyzePluginStat_Tag.php:119
 msgid "Tag"
-msgstr ""
+msgstr "Etykieta"
 
 #: inc/training/search/class.SearchFormular.php:147
 #: plugin/RunalyzePluginStat_Tag/class.RunalyzePluginStat_Tag.php:91
-#, fuzzy
 msgid "Choose tag"
-msgstr "Wybierz narzędzie"
+msgstr "Wybierz etykietę"
 
 #: inc/training/search/class.SearchFormular.php:154
 #: inc/training/schemes/scheme.Training.new.php:384
@@ -520,9 +518,8 @@ msgstr "Wykorzystuje VDOT"
 
 #: inc/training/search/class.SearchFormular.php:170
 #: inc/core/View/Activity/Box/GroundContactBalance.php:27
-#, fuzzy
 msgid "Ground Contact Balance"
-msgstr "Wykres kontaktu z podłożem"
+msgstr "Balans kontaktu z podłożem"
 
 #: inc/training/search/class.SearchFormular.php:268
 #: inc/system/config/class.ConfigTabAccount.php:58
@@ -775,7 +772,7 @@ msgstr "Pogoda"
 #: inc/core/Dataset/Keys/Tags.php:46
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:146
 msgid "Tags"
-msgstr ""
+msgstr "Etykiety"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:239
 #: inc/core/Dataset/Keys/TrainingPartner.php:46
@@ -846,16 +843,14 @@ msgid "Zone"
 msgstr "Strefa"
 
 #: inc/training/view/section/class.SectionRunningDynamicsRow.php:58
-#, fuzzy
 msgid "Oscillation"
-msgstr "Wykres odchylenia"
+msgstr "Odchylenie"
 
 #: inc/training/view/section/class.SectionRunningDynamicsRow.php:68
 #: inc/core/View/Activity/Plot/Series/GroundContactBalance.php:57
 #: inc/core/Dataset/Keys/GroundcontactBalance.php:44
-#, fuzzy
 msgid "Ground contact balance"
-msgstr "Wykres kontaktu z podłożem"
+msgstr "Balans kontaktu z podłożem"
 
 #: inc/training/view/section/class.SectionHRVRow.php:30
 msgid "R-R intervals"
@@ -988,12 +983,11 @@ msgstr "koryguj"
 #: inc/training/view/class.ElevationInfo.php:277
 #, php-format
 msgid "correct again using %s"
-msgstr ""
+msgstr "skoryguj ponownie za pomocą %s"
 
 #: inc/training/view/class.ElevationInfo.php:274
-#, fuzzy
 msgid "srtm files"
-msgstr "Utwórz plik"
+msgstr "pliki srtm"
 
 #: inc/training/view/class.ElevationInfo.php:288
 msgid "Compare algorithms"
@@ -1218,9 +1212,8 @@ msgid "The activity has been successfully created."
 msgstr "Trening został utworzony."
 
 #: inc/training/class.TrainingFormular.php:253
-#, fuzzy
 msgid "Choose tags"
-msgstr "Wybierz statystykę"
+msgstr "Wybierz etykiety"
 
 #: inc/training/class.TrainingFormular.php:329
 msgid "Remove data series"
@@ -1247,9 +1240,8 @@ msgid "Heart rate"
 msgstr "Tętno"
 
 #: inc/training/class.TrainingFormular.php:359
-#, fuzzy
 msgid "Ground contact time balance"
-msgstr "Czas kontaktu z podłożem"
+msgstr "Balans czasu kontaktu z podłożem"
 
 #: inc/training/class.TrainingFormular.php:360
 #: inc/core/View/Window/Laps/Table.php:236
@@ -1304,7 +1296,7 @@ msgstr "Płeć"
 
 #: inc/core/Configuration/Category/General.php:229
 msgid "Beginning of the week"
-msgstr ""
+msgstr "Początek tygodnia"
 
 #: inc/core/Configuration/Category/General.php:233
 msgid "Unit system for distances"
@@ -1323,9 +1315,8 @@ msgid "Weight unit"
 msgstr "Jednostka wagi"
 
 #: inc/core/Configuration/Category/General.php:242
-#, fuzzy
 msgid "Temperature unit"
-msgstr "Temperatura"
+msgstr "Jednostka temperatury"
 
 #: inc/core/Configuration/Category/General.php:246
 msgid "Heart rate unit"
@@ -1858,9 +1849,8 @@ msgstr ""
 "Przeliczono %s. Nowa wartość: <strong>%s</strong> (poprzednia wartość: %s)"
 
 #: inc/core/Activity/GroundcontactBalance.php:48
-#, fuzzy
 msgid "Groundcontact balance"
-msgstr "Wykres kontaktu z podłożem"
+msgstr "Balans kontaktu z podłożem"
 
 #: inc/core/View/Window/Laps/Table.php:117
 msgid "Lap"
@@ -2005,9 +1995,8 @@ msgid "Speed"
 msgstr "Prędkość"
 
 #: inc/core/View/Activity/Box/VerticalRatio.php:26
-#, fuzzy
 msgid "Vertical Ratio"
-msgstr "Odchylenie pionowe"
+msgstr "Współczynnik pionowy"
 
 #: inc/core/View/Activity/Box/Gradient.php:26
 msgid "&oslash; Gradient"
@@ -2336,11 +2325,11 @@ msgstr "Tempo / Tętno / Wysokość"
 
 #: inc/core/Parameter/Application/TemperatureUnit.php:35
 msgid "Celsius (°C)"
-msgstr ""
+msgstr "Celsiusz (°C)"
 
 #: inc/core/Parameter/Application/TemperatureUnit.php:36
 msgid "Fahrenheit (°F)"
-msgstr ""
+msgstr "Fahrenheit (°F)"
 
 #: inc/core/Parameter/Application/DataBrowserMode.php:33
 msgid "Week view"
@@ -2423,29 +2412,30 @@ msgid "spm = steps per minute"
 msgstr "spm = steps per minute (kroków na minutę)"
 
 #: inc/core/Dataset/Keys/CompleteEquipment.php:34
-#, fuzzy
 msgid "Complete equipment"
-msgstr "Wybierz sprzęt"
+msgstr "Kompletny sprzęt"
 
 #: inc/core/Dataset/Keys/CompleteEquipment.php:52
 msgid "Your complete equipment is shown as icon with tooltip."
-msgstr ""
+msgstr "Twój kompletny sprzęt wyświetlany jest jako ikona z etykietką."
 
 #: inc/core/Dataset/Keys/Route.php:57
 #, php-format
 msgid "Route names are automatically cut after %u characters."
-msgstr ""
+msgstr "Nazwy tras są automatycznie ucinane po %u znakach."
 
 #: inc/core/Dataset/Keys/SharedLink.php:63
 msgid ""
 "You can decide for each activity whether it is visible for everybody or not. "
 "If it is public a linked icon is shown."
 msgstr ""
+"Dla każdego treningu możesz określić, czy jest widoczny dla wszystkich, czy "
+"nie. Jeśli jest publiczny, pokazywana jest ikona łącza."
 
 #: inc/core/Dataset/Keys/FitRecoveryTime.php:44
 #: inc/core/Dataset/Keys/FitRecoveryTime.php:53
 msgid "Recovery time"
-msgstr "Czas odpoczynku"
+msgstr "Czas regeneracji"
 
 #: inc/core/Dataset/Keys/FitRecoveryTime.php:44
 #: inc/core/Dataset/Keys/FitHrvAnalysis.php:44
@@ -2458,24 +2448,24 @@ msgid ""
 "Garmin calculates a suggested recovery time based on your heart rate "
 "variablitity right after the end of your activity."
 msgstr ""
+"Garmin wylicza sugerowany czas regeneracji na podstawie zmienności tętna "
+"zaraz po zakończeniu treningu."
 
 #: inc/core/Dataset/Keys/Temperature.php:53
 msgid "Temp."
-msgstr ""
+msgstr "Temp."
 
 #: inc/core/Dataset/Keys/HeartrateAverage.php:44
-#, fuzzy
 msgid "avg."
-msgstr "śr. tętno"
+msgstr "śr."
 
 #: inc/core/Dataset/Keys/Sport.php:53
 msgid "Sport type"
 msgstr "Sport"
 
 #: inc/core/Dataset/Keys/Sport.php:71
-#, fuzzy
 msgid "The sports icon is shown."
-msgstr "Nieznana nazwa użytkownika."
+msgstr "Ikona sportu jest pokazywana."
 
 #: inc/core/Dataset/Keys/VdotIcon.php:44
 msgid "VDOT icon"
@@ -2493,21 +2483,22 @@ msgstr ""
 #: inc/core/Dataset/Keys/Comment.php:56
 #, php-format
 msgid "Comments are automatically cut after %u characters."
-msgstr ""
+msgstr "Komentarze są automatycznie ucinane po %u znakach."
 
 #: inc/core/Dataset/Keys/TrainingPartner.php:65
 #, php-format
 msgid "Training partner are automatically cut after %u characters."
-msgstr ""
+msgstr "Partnerzy są automatycznie ucinani po %u znakach."
 
 #: inc/core/Dataset/Keys/Calories.php:53
 msgid "Calories are taken from your device or calculated by a simple formula."
 msgstr ""
+"Kalorie pobierane są z Twojego urządzenia lub wyliczane według prostego "
+"wzoru."
 
 #: inc/core/Dataset/Keys/FitHrvAnalysis.php:53
-#, fuzzy
 msgid "HRV"
-msgstr "Tętno"
+msgstr "Zmienność tętna"
 
 #: inc/core/Dataset/Keys/FitHrvAnalysis.php:63
 msgid ""
@@ -2516,6 +2507,10 @@ msgid ""
 "a colored marker, green for low values and red for high values. Garmin shows "
 "this value as recovery status."
 msgstr ""
+"Garmin wylicza pewien wynik HRV w ciągu pierwszych 12 minut każdego "
+"treningu. Wartość - prawdopodobnie czas regeneracji w minutach - jest "
+"wyświetlany jako kolorowy wskaźnik. Garmin pokazuje tą wartość jako czas "
+"regeneracji."
 
 #: inc/core/Dataset/Keys/JdIntensity.php:44
 msgid "JD intensity"
@@ -2523,19 +2518,17 @@ msgstr "Intensywność JD"
 
 #: inc/core/Dataset/Keys/JdIntensity.php:53
 msgid "JD"
-msgstr ""
+msgstr "JD"
 
 #: inc/core/Dataset/Keys/JdIntensity.php:62
-#, fuzzy
 msgid "Intensity points based on Jack Daniels' Running formula."
-msgstr "Podane tempa treningowe bazują na zaleceniach Jacka Danielsa."
+msgstr "Punkty intensywności bazują na opracowaniach Jacka Danielsa."
 
 #: inc/core/Dataset/Keys/Splits.php:45
 msgid "Splits"
 msgstr "Okrążenia"
 
 #: inc/core/Dataset/Keys/Elevation.php:53
-#, fuzzy
 msgid "Elev."
 msgstr "wys."
 
@@ -2544,41 +2537,44 @@ msgid ""
 "Calculated value for total elevation, i.e. maximum of total ascent or "
 "descent."
 msgstr ""
+"Wyliczana wartość całkowitej różnicy wysokości, maksimum całkowitych "
+"wzniesień i obniżeń."
 
 #: inc/core/Dataset/Keys/MainEquipment.php:34
-#, fuzzy
 msgid "Main Equipment"
-msgstr "Sprzęt"
+msgstr "Główny sprzęt"
 
 #: inc/core/Dataset/Keys/MainEquipment.php:52
 msgid ""
 "You can choose a main equipment type for each sport in your sport "
 "configuration. Equipment objects of this type will be shown with their names."
 msgstr ""
+"Możesz określić główny sprzęt dla każdego sportu w konfiguracji sportów. "
+"Elementy sprzętu tego typu zostanę pokazane wraz z nazwami."
 
 #: inc/core/Dataset/Keys/VdotValue.php:44
-#, fuzzy
 msgid "VDOT value"
-msgstr "Forma VDOT"
+msgstr "Wartość VDOT"
 
 #: inc/core/Dataset/Keys/VdotValue.php:63
 msgid ""
 "Estimated VDOT based on pace and heart rate. The value is slightly "
 "transparent if it is not used for your VDOT shape."
 msgstr ""
+"Szacowane VDOT w oparciu o tempo i tętno. Wartości, które nie wchodzą do "
+"średniej, będą częściowo przezroczyste."
 
 #: inc/core/Dataset/Keys/FitVdotEstimate.php:53
-#, fuzzy
 msgid "(file)"
-msgstr "(wg pliku)"
+msgstr "(plik)"
 
 #: inc/core/Dataset/Keys/FitVdotEstimate.php:62
 msgid "Garmin's newer devices have an integrated vdot estimation."
-msgstr ""
+msgstr "Nowe urządzenia Garmin posiadają zintegrowane oszacowanie VDOT."
 
 #: inc/core/Dataset/Keys/GroundcontactBalance.php:53
 msgid "GCB"
-msgstr ""
+msgstr "GCB"
 
 #: inc/core/Dataset/Keys/Daytime.php:43
 msgid "Daytime"
@@ -2586,7 +2582,7 @@ msgstr "Godzina"
 
 #: inc/core/Dataset/Keys/Daytime.php:61
 msgid "Exact daytime of the activity. (the date itself is always shown)"
-msgstr ""
+msgstr "Dokładna godzina dnia aktywności. (sama data zawsze jest widoczna)"
 
 #: inc/core/Dataset/Keys/Groundcontact.php:53
 #, fuzzy
@@ -2598,6 +2594,8 @@ msgid ""
 "Trimp values are colored based on their value, slightly transparent for low "
 "values and dark red for high values."
 msgstr ""
+"Wartości TRIMP pokolorowane są według wartości, nieco przezroczyste dla "
+"niskich wartości i ciemnoczerwone dla wysokich."
 
 #: inc/core/Dataset/Keys/Type.php:62
 msgid ""
