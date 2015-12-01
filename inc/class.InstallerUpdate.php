@@ -44,6 +44,13 @@ class InstallerUpdate extends Installer {
 	 */
 	protected function initPossibleUpdates() {
 		$this->PossibleUpdates[] = array(
+			'file'	=> 'update-v2.2-to-v2.3.sql',
+			'from'	=> 'v2.2',
+			'to'	=> 'v2.3',
+			'date'	=> '2015/12',
+			'instruction'	=> $this->instructionToRunScript('refactor-geohash.php')
+		);
+		$this->PossibleUpdates[] = array(
 			'file'	=> 'update-v2.1-to-v2.2.sql',
 			'from'	=> 'v2.1',
 			'to'	=> 'v2.2',
