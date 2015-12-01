@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-11-30 11:08+0100\n"
-"PO-Revision-Date: 2015-12-01 13:34+0200\n"
+"PO-Revision-Date: 2015-12-01 13:40+0200\n"
 "Last-Translator: Hannes <mail@laufhannes.de>\n"
 "Language-Team: German "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
@@ -292,7 +292,7 @@ msgstr "Vertikale Bewegung"
 #: inc/core/View/Activity/Plot/Series/VerticalRatio.php:42
 #: inc/core/Dataset/Keys/VerticalRatio.php:44
 msgid "Vertical ratio"
-msgstr "Vertikale Verhältnis"
+msgstr "Vertikales Verhältnis"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:42
 #: inc/training/view/class.VDOTinfo.php:74
@@ -519,7 +519,7 @@ msgstr "Benutzt VDOT"
 #: inc/training/search/class.SearchFormular.php:170
 #: inc/core/View/Activity/Box/GroundContactBalance.php:27
 msgid "Ground Contact Balance"
-msgstr "Bodenkontaktzeit Balance"
+msgstr "Balance Bodenkontaktzeit"
 
 #: inc/training/search/class.SearchFormular.php:268
 #: inc/system/config/class.ConfigTabAccount.php:58
@@ -2453,7 +2453,7 @@ msgstr "Dein komplettes Equipment wird als Icon mit einem Tooltip angezeigt."
 #: inc/core/Dataset/Keys/Route.php:57
 #, php-format
 msgid "Route names are automatically cut after %u characters."
-msgstr "Streckennamen werden automatisch nach %u Zeichen abgeschnitten."
+msgstr "Der Routenname wird automatisch nach %u Zeichen gekürzt."
 
 #: inc/core/Dataset/Keys/SharedLink.php:63
 msgid ""
@@ -2515,12 +2515,12 @@ msgstr ""
 #: inc/core/Dataset/Keys/Comment.php:56
 #, php-format
 msgid "Comments are automatically cut after %u characters."
-msgstr "Kommentare werden automatisch nach %u Zeichen abgeschnitten."
+msgstr "Kommentare werden automatisch nach %u Zeichen gekürzt. "
 
 #: inc/core/Dataset/Keys/TrainingPartner.php:65
 #, php-format
 msgid "Training partner are automatically cut after %u characters."
-msgstr "Trainingspartner werden automatisch nach %u Zeichen abgeschnitten."
+msgstr "Trainingspartner werden automatisch nach %u Zeichen gekürzt. "
 
 #: inc/core/Dataset/Keys/Calories.php:53
 msgid "Calories are taken from your device or calculated by a simple formula."
@@ -6800,9 +6800,9 @@ msgid ""
 "serves some tables estimating the VDOT value. These formulas are used to "
 "estimate your VDOT and predict your race performances."
 msgstr ""
-"Die <a href=\"%s\" target=\"_blank\">Jack Daniels Laufformel</a> beinhaltet "
-"einige Tabelle um VDOT-Werte zu schätzen. Diese Formeln werden verwendet, um "
-"deinen VDOT zu schätzen und deine Wettkampfzeiten vorherzusagen."
+"<a href=\"%s\" target=\"_blank\">Jack Daniels Laufformel</a> beinhaltet "
+"einige Tabellen, um VDOT-Werte zu schätzen. Diese Formeln werden verwendet, "
+"um deinen VDOT zu schätzen und deine Wettkampfzeiten vorherzusagen."
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/window.info.php:34
 msgid ""
@@ -7131,7 +7131,7 @@ msgstr "Einfach"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:388
 msgid "Easy pace running refers to warm-ups, cool-downs and recovery runs."
-msgstr "Lockere Pace zum Aufwärmen, zum Auslaufen und für Regenerationsläufe."
+msgstr "Lockere Läufe zum Aufwärmen, zum Auslaufen und für Regenerationsläufe."
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:393
 #: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:140
