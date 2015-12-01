@@ -48,11 +48,16 @@ abstract class RunalyzeBackup {
 
 		$this->startBackup();
 
+		// REMINDER: think about required order, e.g.
+		// - plugin before plugin_conf
+		// - sport/type/route before training
+		// - training before trackdata/swimdata/hrv
+		// - equipment_Type before equipment_sport before equipment before activity_equipment
+		// - tag before activity_tag
 		$Tables = array(
 			PREFIX.'account',
 			PREFIX.'conf',
 			PREFIX.'dataset',
-			PREFIX.'hrv',
 			PREFIX.'plugin',
 			PREFIX.'plugin_conf',
 			PREFIX.'sport',
@@ -62,12 +67,13 @@ abstract class RunalyzeBackup {
 			PREFIX.'training',
 			PREFIX.'trackdata',
 			PREFIX.'swimdata',
+			PREFIX.'hrv',
 			PREFIX.'equipment_type',
 			PREFIX.'equipment_sport',
 			PREFIX.'equipment',
 			PREFIX.'activity_equipment',
-			PREFIX.'activity_tag',
-			PREFIX.'tag'
+			PREFIX.'tag',
+			PREFIX.'activity_tag'
 		);
 
 		foreach ($Tables as $TableName) {
