@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-11-30 11:08+0100\n"
-"PO-Revision-Date: 2015-11-30 11:31+0200\n"
-"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
+"PO-Revision-Date: 2015-12-01 13:34+0200\n"
+"Last-Translator: Hannes <mail@laufhannes.de>\n"
 "Language-Team: German "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
@@ -2447,9 +2447,8 @@ msgid "Complete equipment"
 msgstr "Komplette Ausrüstung"
 
 #: inc/core/Dataset/Keys/CompleteEquipment.php:52
-#, fuzzy
 msgid "Your complete equipment is shown as icon with tooltip."
-msgstr "Dein komplettes Equipment wird als Icon in einem Tooltip angezeigt."
+msgstr "Dein komplettes Equipment wird als Icon mit einem Tooltip angezeigt."
 
 #: inc/core/Dataset/Keys/Route.php:57
 #, php-format
@@ -2504,14 +2503,14 @@ msgid "VDOT icon"
 msgstr "VDOT Icon"
 
 #: inc/core/Dataset/Keys/VdotIcon.php:63
-#, fuzzy
 msgid ""
 "Each VDOT value of an activity is marked with an arrow to show if the value "
 "is (much) higher than your current shape, equal to it or (much) lower:"
 msgstr ""
-"Neben den VDOT-Werten eines Trainings wird mit einem Pfeil angezeigt, ob der "
-"Wert im Vergleich zum derzeitigen Durchschnittswert (deutlich) höher, etwas "
-"höher, in etwa gleich, etwas niedriger, oder deutlich niedriger ist:"
+"Der VDOT-Wert eines Trainings wird mit einem Pfeil dargestellt, um zu "
+"verdeutlichen, ob der Wert im Vergleich zum derzeitigen Durchschnittswert "
+"(deutlich) höher, etwas höher, in etwa gleich, etwas niedriger, oder "
+"deutlich niedriger ist:"
 
 #: inc/core/Dataset/Keys/Comment.php:56
 #, php-format
@@ -2533,7 +2532,6 @@ msgid "HRV"
 msgstr "HRV"
 
 #: inc/core/Dataset/Keys/FitHrvAnalysis.php:63
-#, fuzzy
 msgid ""
 "Garmin calculates some HRV score within the first 12 minutes of every "
 "activity. The value - probably the recovery time in minutes - is display as "
@@ -2542,7 +2540,7 @@ msgid ""
 msgstr ""
 "Garmin berechnet einen HRV Wert innerhalb der ersten 12 Minuten einer "
 "Aktivität. Dieser Wert - vermutlich die Erholungszeit in Minuten - wird als "
-"farbiger Icon, grün bei niedrigen und rot bei hohen Werten, angezeigt. "
+"farbige Markierung, grün bei niedrigen und rot bei hohen Werten, angezeigt. "
 "Garmin zeigt diesen Wert als Erholungsstatus an."
 
 #: inc/core/Dataset/Keys/JdIntensity.php:44
@@ -2562,26 +2560,29 @@ msgid "Splits"
 msgstr "Zwischenzeiten"
 
 #: inc/core/Dataset/Keys/Elevation.php:53
-#, fuzzy
 msgid "Elev."
-msgstr "Anstieg"
+msgstr "Hm"
 
 #: inc/core/Dataset/Keys/Elevation.php:62
 msgid ""
 "Calculated value for total elevation, i.e. maximum of total ascent or "
 "descent."
 msgstr ""
+"Berechnete Höhenmeter, d.h. entweder die Summe der positiven oder der "
+"negativen Höhenmeter."
 
 #: inc/core/Dataset/Keys/MainEquipment.php:34
-#, fuzzy
 msgid "Main Equipment"
-msgstr "Ausrüstung"
+msgstr "Haupt-Ausrüstung"
 
 #: inc/core/Dataset/Keys/MainEquipment.php:52
 msgid ""
 "You can choose a main equipment type for each sport in your sport "
 "configuration. Equipment objects of this type will be shown with their names."
 msgstr ""
+"Du kannst in der Sportkonfiguration für jede Sportart einen Haupt-"
+"Ausrüstungstyp auswählen. Objekte dieses Typs werden mit ihrem Namen "
+"angezeigt."
 
 #: inc/core/Dataset/Keys/VdotValue.php:44
 msgid "VDOT value"
@@ -2592,6 +2593,8 @@ msgid ""
 "Estimated VDOT based on pace and heart rate. The value is slightly "
 "transparent if it is not used for your VDOT shape."
 msgstr ""
+"Geschätzter VDOT anhand von Pace und Herzfrequenz. Dieser Wert ist leicht "
+"ausgegraut, falls er nicht für deine VDOT-Form genutzt wird."
 
 #: inc/core/Dataset/Keys/FitVdotEstimate.php:53
 msgid "(file)"
@@ -2611,7 +2614,7 @@ msgstr "Uhrzeit"
 
 #: inc/core/Dataset/Keys/Daytime.php:61
 msgid "Exact daytime of the activity. (the date itself is always shown)"
-msgstr ""
+msgstr "Exakte Uhrzeit der Aktivität. (Das Datum selbst wird ohnehin angezeigt)"
 
 #: inc/core/Dataset/Keys/Groundcontact.php:53
 msgid "Groundcontact"
@@ -2622,18 +2625,25 @@ msgid ""
 "Trimp values are colored based on their value, slightly transparent for low "
 "values and dark red for high values."
 msgstr ""
+"Trimp-Werte werden entsprechend ihres Wertes eingefärbt, leicht transparent "
+"für niedrige und dunkelrot für große Werte."
 
 #: inc/core/Dataset/Keys/Type.php:62
 msgid ""
 "The activity type is shown with its abbreviation. It is bold if the type is "
 "marked as quality session."
 msgstr ""
+"Der Trainingstyp wird mit der entsprechenden Abkürzung angezeigt. "
+"Trainingstypen, die als Qualitätseinheiten markiert sind, werden fett "
+"dargestellt."
 
 #: inc/core/Dataset/Keys/ElapsedTime.php:53
 msgid ""
 "Elapsed time is the difference between end and start of your activity "
 "including pauses."
 msgstr ""
+"Verstrichene Zeit ist die Differenz zwischen Ende und Anfang der Aktivität, "
+"inklusive aller Pausen."
 
 #: inc/core/Util/Time.php:86 inc/tpl/tpl.DataBrowser.php:23
 msgid "Sun"
@@ -4361,13 +4371,14 @@ msgid "Sport is performed outdoor: activate route, weather, ..."
 msgstr "Der Sport wird an der freien Luft betrieben: Strecke, Wetter, ..."
 
 #: inc/system/config/class.ConfigTabSports.php:61
-#, fuzzy
 msgid "Main equipment"
-msgstr "Deine Ausrüstung"
+msgstr "Haupt-Ausrüstung"
 
 #: inc/system/config/class.ConfigTabSports.php:61
 msgid "Objects of main equipment type can be shown in the activity overview."
 msgstr ""
+"Objekte der Haupt-Ausrüstung können in der Aktivitätsübersicht angezeigt "
+"werden."
 
 #: inc/system/config/class.ConfigTabSports.php:63
 msgid "A sport can only be deleted if no references exist."
