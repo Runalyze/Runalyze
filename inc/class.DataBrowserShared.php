@@ -21,6 +21,9 @@ class DataBrowserShared extends DataBrowser {
 	 */
 	protected $ShowPublicLink = true;
 
+	/** @var bool */
+	protected $ShowEditLink = false;
+
 	/**
 	 * Init private timestamps from request
 	 */
