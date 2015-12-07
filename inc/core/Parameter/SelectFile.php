@@ -12,6 +12,9 @@ namespace Runalyze\Parameter;
  * @package Runalyze\Parameter
  */
 class SelectFile extends Select {
+	/** @var bool */
+	protected $UseFallback = false;
+
 	/**
 	 * Boolean flag: allow uppercase variants of file extensions
 	 * @var boolean

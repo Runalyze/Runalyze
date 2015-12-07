@@ -132,6 +132,10 @@ class PaceUnit extends \Runalyze\Parameter\Select
 				return new PaceUnitObject\MinPer500m();
 			case self::MIN_PER_500Y:
 				return new PaceUnitObject\MinPer500y();
+			default:
+				if ($this->UseFallback) {
+					return new PaceUnitObject\KmPerHour();
+				}
 		}
 
 		throw new \InvalidArgumentException('Invalid value "'.$value.'" for pace unit.');

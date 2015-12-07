@@ -32,4 +32,12 @@ class ObjectTest extends \PHPUnit_Framework_TestCase {
 		$this->assertFalse($Sport->hasPower());
 	}
 
+	/**
+	 * @see https://github.com/Runalyze/Runalyze/issues/1585
+	 */
+	public function testPaceUnitForEmptySport() {
+		$Sport = new Object(array());
+		$Sport->paceUnit();
+	}
+
 }
