@@ -192,4 +192,19 @@ class ImporterFiletypeGPXTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue( $this->object->object()->hasArrayLongitude() );
 	}
 
+	/**
+	 * Test: strava export
+	 * Filename: "strava-export.gpx"
+	 * @see https://github.com/Runalyze/Runalyze/issues/1367
+	 */
+	public function testStravaExport() {
+		$this->object->parseFile('../tests/testfiles/gpx/strava-export.gpx');
+
+		$this->assertFalse($this->object->hasMultipleTrainings());
+		$this->assertFalse($this->object->failed());
+
+		$this->assertTrue($this->object->object()->hasArrayCadence());
+		$this->assertEquals(89, $this->object->object()->getCadence());
+	}
+
 }
