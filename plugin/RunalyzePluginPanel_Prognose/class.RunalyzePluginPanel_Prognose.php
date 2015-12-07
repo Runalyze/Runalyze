@@ -127,6 +127,10 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 			$this->showPrognosis($km);
 		}
 
+		if (!$this->Prognosis->isValid()) {
+			echo HTML::warning(__('Prognoses can\'t be calculated.'));
+		}
+
 		if ($this->thereAreNotEnoughCompetitions()) {
 			echo HTML::info( __('There are not enough results for good predictions.') );
 		}
@@ -182,8 +186,14 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 		$PB->lookupWithDetails();
 		$PBTime = $PB->exists() ? Duration::format( $PB->seconds() ) : '-';
 		$PBString = $PB->exists() ? Ajax::trainingLink($PB->activityId(),$PBTime,true) : $PBTime;
-		$Prognosis = new Duration( $this->Prognosis->inSeconds($distance) );
 		$Distance = new Distance($distance);
+
+		if ($this->Prognosis->isValid()) {
+			$Prognosis = new Duration( $this->Prognosis->inSeconds($distance) );
+		} else {
+			$Prognosis = new Duration(0);
+		}
+
 		$Pace = new Pace($Prognosis->seconds(), $distance, SportFactory::getSpeedUnitFor(Configuration::General()->runningSport()));
 
 		echo '<p>

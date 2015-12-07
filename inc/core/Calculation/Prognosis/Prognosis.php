@@ -39,4 +39,11 @@ class Prognosis {
 
 		return $this->Strategy->inSeconds($distance);
 	}
+
+	/**
+	 * @return bool
+	 */
+	public function isValid() {
+		return (null !== $this->Strategy) && $this->Strategy->valuesAreValid();
+	}
 }

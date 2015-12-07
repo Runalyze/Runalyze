@@ -18,6 +18,18 @@ namespace Runalyze\Calculation\Prognosis;
  * @package Runalyze\Calculation\Prognosis
  */
 class Bock extends AbstractStrategy {
+	/** @var int */
+	const K_LOWER_BOUND = 132;
+
+	/** @var int */
+	const K_UPPER_BOUND = 1800;
+
+	/** @var float */
+	const E_LOWER_BOUND = 1.0;
+
+	/** @var float */
+	const E_UPPER_BOUND = 2.0;
+
 	/**
 	 * Const K
 	 * @var float 
@@ -35,6 +47,19 @@ class Bock extends AbstractStrategy {
 	 * @var float
 	 */
 	protected $MINIMAL_DISTANCE = 3;
+
+	/**
+	 * @see https://github.com/Runalyze/Runalyze/issues/1258
+	 * @return bool
+	 */
+	public function valuesAreValid() {
+		return (
+			($this->CONST_K > self::K_LOWER_BOUND) &&
+			($this->CONST_K < self::K_UPPER_BOUND) &&
+			($this->CONST_e > self::E_LOWER_BOUND) &&
+			($this->CONST_e < self::E_UPPER_BOUND)
+		);
+	}
 
 	/**
 	 * Running setup from database
