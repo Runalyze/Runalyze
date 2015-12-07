@@ -193,6 +193,10 @@ class Prognose_PrognosisWindow {
 	 * Init calculations
 	 */
 	protected function runCalculations() {
+		if (!$this->PrognosisObject->isValid()) {
+			return;
+		}
+
 		foreach ($this->Distances as $km) {
 			$Prognosis = $this->PrognosisObject->inSeconds( $km );
 
@@ -230,7 +234,13 @@ class Prognose_PrognosisWindow {
 	 */
 	protected function fillResultTable() {
 		$this->startResultTable();
-		$this->fillResultTableWithResults();
+
+		if ($this->PrognosisObject->isValid()) {
+			$this->fillResultTableWithResults();
+		} else {
+			$this->fillResultTableWithInvalidMessage();
+		}
+
 		$this->finishResultTable();
 	}
 
@@ -272,6 +282,13 @@ class Prognose_PrognosisWindow {
 	}
 
 	/**
+	 * Set invalid message to table
+	 */
+	protected function fillResultTableWithInvalidMessage() {
+		$this->ResultTable .= '<tr class="c"><td colspan="9"><em>'.__('Your input is invalid').'</em></td></tr>';
+	}
+
+	/**
 	 * Finish result table
 	 */
 	protected function finishResultTable() {
@@ -281,6 +298,14 @@ class Prognose_PrognosisWindow {
 			$K = $this->PrognosisStrategies['robert-bock']->getK();
 			$e = $this->PrognosisStrategies['robert-bock']->getE();
 			$this->ResultTable .= HTML::info( sprintf( __('The results give the constants K = %f and e = %f.'), $K, $e) ).'<br>';
+
+			if (!$this->PrognosisObject->isValid()) {
+				$this->ResultTable .= HTML::warning(sprintf(
+					__('K must be between %u and %u, e between %f and %f.'),
+					Prognosis\Bock::K_LOWER_BOUND, Prognosis\Bock::K_UPPER_BOUND,
+					Prognosis\Bock::E_LOWER_BOUND, Prognosis\Bock::E_UPPER_BOUND
+				));
+			}
 		}
 	}
 
