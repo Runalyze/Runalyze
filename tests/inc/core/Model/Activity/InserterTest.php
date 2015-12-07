@@ -316,7 +316,8 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 	public function testTemperature() {
 		$Zero = $this->fetch(
 			$this->insert(array(
-				Object::TEMPERATURE => 0
+				Object::TEMPERATURE => 0,
+				Object::SPORTID => $this->OutdoorID
 			))
 		);
 
@@ -403,6 +404,18 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertEquals(89, $this->fetch($Inserter->insertedID())->verticalRatio());
 		$this->assertEquals(array(90, 89), $Trackdata->verticalRatio());
+	}
+
+	public function testEmptySport() {
+		$Inserter = new Inserter($this->PDO);
+		$Inserter->setAccountID(0);
+		$Inserter->insert(new Object(array(
+			Object::DISTANCE => 10,
+			Object::TIME_IN_SECONDS => 3600
+		)));
+
+		$mainSport = Configuration::General()->mainSport();
+		$this->assertEquals($mainSport, $this->PDO->query('SELECT `sportid` FROM `runalyze_training` WHERE `id`='.$Inserter->insertedID())->fetchColumn());
 	}
 
 }
