@@ -275,7 +275,8 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 
 	public function testUpdateTemperature() {
 		$OldObject = $this->fetch( $this->insert(array(
-			Object::TEMPERATURE => 5
+			Object::TEMPERATURE => 5,
+			Object::SPORTID => $this->OutdoorID
 		)) );
 
 		$this->assertFalse($OldObject->weather()->temperature()->isUnknown());
@@ -289,7 +290,8 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 
 	public function testUpdateTemperatureFromNullToZero() {
 		$OldObject = $this->fetch( $this->insert(array(
-			Object::TEMPERATURE => null
+			Object::TEMPERATURE => null,
+			Object::SPORTID => $this->OutdoorID
 		)) );
 
 		$this->assertTrue($OldObject->weather()->temperature()->isUnknown());
@@ -303,7 +305,8 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 
 	public function testUpdateTemperatureWithoutOldObject() {
 		$OldObject = $this->fetch( $this->insert(array(
-			Object::TEMPERATURE => 5
+			Object::TEMPERATURE => 5,
+			Object::SPORTID => $this->OutdoorID
 		)) );
 
 		$this->assertFalse($OldObject->weather()->temperature()->isUnknown());

@@ -20,15 +20,30 @@ class DataSeriesRemoverTest extends \PHPUnit_Framework_TestCase {
 	 */
 	protected $Factory;
 
+	protected $OutdoorID;
+	protected $IndoorID;
+
 	protected function setUp() {
 		$this->PDO = \DB::getInstance();
 		$this->Factory = new \Runalyze\Model\Factory(0);
+
+		$this->PDO->exec('INSERT INTO `'.PREFIX.'sport` (`name`,`kcal`,`outside`,`accountid`,`power`) VALUES("",600,1,0,1)');
+		$this->OutdoorID = $this->PDO->lastInsertId();
+		$this->PDO->exec('INSERT INTO `'.PREFIX.'sport` (`name`,`kcal`,`outside`,`accountid`,`power`) VALUES("",400,0,0,0)');
+		$this->IndoorID = $this->PDO->lastInsertId();
+
+		$this->Factory->clearCache('sport');
+		\SportFactory::reInitAllSports();
 	}
 
 	protected function tearDown() {
 		$this->PDO->exec('DELETE FROM `'.PREFIX.'training`');
 		$this->PDO->exec('TRUNCATE TABLE `'.PREFIX.'trackdata`');
 		$this->PDO->exec('TRUNCATE TABLE `'.PREFIX.'route`');
+		$this->PDO->exec('DELETE FROM `'.PREFIX.'sport`');
+
+		$this->Factory->clearCache('sport');
+		\Cache::clean();
 	}
 
 	/**
@@ -180,7 +195,8 @@ class DataSeriesRemoverTest extends \PHPUnit_Framework_TestCase {
 		$id = $this->insert(array(
 			Object::TIMESTAMP => time(),
 			Object::HR_AVG => 150,
-			Object::TEMPERATURE => 18
+			Object::TEMPERATURE => 18,
+			Object::SPORTID => $this->OutdoorID
 		), array(
 			Route\Object::ELEVATIONS_CORRECTED => array(200, 250, 200)
 		), array(

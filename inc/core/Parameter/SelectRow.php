@@ -12,6 +12,9 @@ namespace Runalyze\Parameter;
  * @package Runalyze\Parameter
  */
 class SelectRow extends Select {
+	/** @var bool */
+	protected $UseFallback = false;
+
 	/**
 	 * Construct
 	 * @param string $default
