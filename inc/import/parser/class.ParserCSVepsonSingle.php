@@ -57,6 +57,7 @@ class ParserCSVepsonSingle extends ParserAbstractSingle {
 		}
 
 		$this->finishGPSData();
+		$this->adjustArraySizes();
 		$this->setGPSarrays();
 	}
 
@@ -264,6 +265,70 @@ class ParserCSVepsonSingle extends ParserAbstractSingle {
 				$values[$this->Temp[1]] / 1000,
 				$values[$this->Temp[0]]
 			);
+		}
+	}
+
+	/**
+	 * Adjust array sizes
+	 * @see https://github.com/Runalyze/Runalyze/issues/1575
+	 */
+	protected function adjustArraySizes() {
+		$sizeTimeData = count($this->gps['time_in_s']);
+
+		if ($sizeTimeData > 0) {
+			$keysToAdjust = $this->gpsKeysThatExceed($sizeTimeData);
+			$newArrays = $this->createNewArraysFor($keysToAdjust, $sizeTimeData);
+
+			foreach ($this->gps['time_in_s'] as $sec) {
+				foreach ($keysToAdjust as $key) {
+					$newArrays[$key][] = isset($this->gps[$key][$sec]) ? $this->gps[$key][$sec] : 0;
+				}
+			}
+
+			$this->useNewArrays($newArrays);
+		}
+	}
+
+	/**
+	 * @return array
+	 */
+	protected function gpsKeysThatExceed($limit) {
+		$keys = array();
+
+		foreach ($this->gps as $key => $data) {
+			$num = count($data);
+
+			if ($num > $limit) {
+				$keys[] = $key;
+			}
+		}
+
+		return $keys;
+	}
+
+	/**
+	 * Create empty associative array with given keys and size
+	 * @param array $keys
+	 * @param int $size
+	 * @return array
+	 */
+	protected function createNewArraysFor(array $keys, $size) {
+		$newArrays = array();
+
+		foreach ($keys as $key) {
+			$newArrays[$key] = array();
+		}
+
+		return $newArrays;
+	}
+
+	/**
+	 * Use new arrays
+	 * @param array $newArrays
+	 */
+	protected function useNewArrays(array $newArrays) {
+		foreach ($newArrays as $key => $data) {
+			$this->gps[$key] = $data;
 		}
 	}
 }
