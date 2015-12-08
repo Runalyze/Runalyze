@@ -26,17 +26,17 @@ abstract class PlotSumData extends Plot {
 	const LAST_12_MONTHS = 'last12months';
 
 	/**
-	 * @var enum 
+	 * @var string 
 	 */
 	const ANALYSIS_DEFAULT = 'kmorh';
 
 	/**
-	 * @var enum 
+	 * @var string 
 	 */
 	const ANALYSIS_TRIMP = 'trimp';
 
 	/**
-	 * @var enum 
+	 * @var string 
 	 */
 	const ANALYSIS_JD = 'jd';
 
@@ -90,7 +90,7 @@ abstract class PlotSumData extends Plot {
 
 	/**
 	 * Which analysis to show
-	 * @var enum
+	 * @var string
 	 */
 	protected $Analysis;
 

@@ -26,7 +26,7 @@ class DataCollectorWithSwimdata extends DataCollector {
 	/**
 	 * Construct collector
 	 * @param \Runalyze\Model\Trackdata\Object $trackdata
-	 * @param enum $key
+	 * @param int $key
 	 * @param \Runalyze\Model\Swimdata\Object $swimdata
 	 * @throws \InvalidArgumentException
 	 */

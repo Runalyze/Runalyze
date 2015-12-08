@@ -239,24 +239,4 @@ class Frontend {
 			$Panel->display();
 		}
 	}
-
-	/**
-	 * Test a plot
-	 * 
-	 * Will be displayed instead of the DataBrowser - Only for testing purposes!
-	 * @param string $includePath 
-	 * @param string $name
-	 * @param int $width
-	 * @param int $height
-	 */
-	public function testPlot($includePath, $name, $width, $height) {
-		echo '<div id="container"><div id="main"><div id="data-browser" class="panel c"><div class="panel-content">';
-
-		echo Plot::getDivFor($name, $width, $height);
-		include FRONTEND_PATH.$includePath;
-
-		echo '</div></div></div></div>';
-
-		exit();
-	}
 }

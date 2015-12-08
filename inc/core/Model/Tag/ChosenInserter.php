@@ -30,7 +30,7 @@ class ChosenInserter {
         
 	/**
 	 * Object
-	 * @var \Runalyze\Model\Tag
+	 * @var \Runalyze\Model\Tag\Object
 	 */
 	protected $TagObject;
         

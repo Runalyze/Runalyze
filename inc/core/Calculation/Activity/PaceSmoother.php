@@ -16,17 +16,17 @@ use Runalyze\Model\Trackdata;
  */
 class PaceSmoother {
 	/**
-	 * @var enum
+	 * @var int
 	 */
 	const MODE_STEP = 0;
 
 	/**
-	 * @var enum
+	 * @var int
 	 */
 	const MODE_TIME = 1;
 
 	/**
-	 * @var enum
+	 * @var int
 	 */
 	const MODE_DISTANCE = 2;
 
@@ -46,7 +46,7 @@ class PaceSmoother {
 	protected $Smoothed = array();
 
 	/**
-	 * @var enum
+	 * @var int
 	 */
 	protected $Mode = 0;
 
@@ -74,7 +74,7 @@ class PaceSmoother {
 	/**
 	 * Smooth data
 	 * @param int|float $stepSize integer as steps, float as distance [km], int as time [s]
-	 * @param enum $mode [optional]
+	 * @param int $mode [optional]
 	 * @return array
 	 */
 	public function smooth($stepSize, $mode = self::MODE_STEP) {
@@ -96,7 +96,7 @@ class PaceSmoother {
 	/**
 	 * Set internals
 	 * @param int|float $stepSize
-	 * @param enum $mode
+	 * @param int $mode
 	 */
 	protected function set($stepSize, $mode) {
 		$this->StepSize = $stepSize;

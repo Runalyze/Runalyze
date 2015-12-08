@@ -86,7 +86,7 @@ class Ajax {
 
 	/**
 	 * Set reload flag
-	 * @param enum $Flag 
+	 * @param int $Flag 
 	 */
 	public static function setReloadFlag($Flag) {
 		$BothFlags = array($Flag, self::$currentReloadFlag);

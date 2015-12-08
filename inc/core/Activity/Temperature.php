@@ -70,7 +70,7 @@ class Temperature implements ValueInterface {
 
 	/**
 	 * Set temperature
-	 * @param float|null $temperature [°C]
+	 * @param float|string|null $temperature [°C]
 	 * @return \Runalyze\Activity\Temperature $this-reference
 	 */
 	public function set($temperature) {
@@ -85,7 +85,7 @@ class Temperature implements ValueInterface {
 
 	/**
 	 * Set temperature in Fahrenheit
-	 * @param float|null $temperature [°F]
+	 * @param float|string|null $temperature [°F]
 	 * @return \Runalyze\Activity\Temperature $this-reference
 	 */
 	public function setFahrenheit($temperature) {
@@ -99,7 +99,7 @@ class Temperature implements ValueInterface {
 	}
 
 	/**
-	 * @param float|null $temperature [mixed unit]
+	 * @param float|string|null $temperature [mixed unit]
 	 * @return \Runalyze\Activity\Temperature $this-reference
 	 */
 	public function setInPreferredUnit($temperature) {

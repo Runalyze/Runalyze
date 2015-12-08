@@ -44,7 +44,7 @@ class StandardFormular extends Formular {
 	/**
 	 * Construct a new formular
 	 * @param DataObject $dataObject
-	 * @param enum $mode
+	 * @param int $mode
 	 */
 	public function __construct(DataObject &$dataObject, $mode) {
 		parent::__construct();

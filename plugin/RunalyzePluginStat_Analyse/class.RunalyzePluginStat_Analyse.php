@@ -16,23 +16,36 @@ $PLUGINKEY = 'RunalyzePluginStat_Analyse';
  * @package Runalyze\Plugins\Stats
  */
 class RunalyzePluginStat_Analyse extends PluginStat {
-	private $where_time = '';
-	private $group_time = '';
-	private $timer = '';
-	private $timer_start = 0;
-	private $timer_end = 1;
+
+	/** @var string */
+	protected $WhereTime = '';
+
+	/** @var string */
+	protected $GroupTime = '';
+
+	/** @var string */
+	protected $Timer= '';
+
+	/** @var int */
+	protected $TimerStart = 0;
+
+	/** @var int */
+	protected $TimerEnd = 1;
+
+	/** @var int */
+	protected $Colspan = 0;
 
 	/**
 	 * Data
 	 * @var array
 	 */
-	private $AnalysisData = array();
+	protected $AnalysisData = array();
 
 	/**
 	 * Empty data array
 	 * @var array
 	 */
-	private $emptyData = array(
+	protected $EmptyData = array(
 			'all_sum_km'	=> 0,
 			'all_sum_s'		=> 0,
 			'timer_sum_km'	=> array(),
@@ -44,7 +57,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 	 * Sport
 	 * @var Sport
 	 */
-	private $Sport = null;
+	protected $Sport = null;
 
 	/**
 	 * Name
@@ -134,27 +147,27 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 	 */
 	private function initTimer() {
 		if ($this->showsSpecificYear()) {
-			$this->where_time = 'AND `time` BETWEEN UNIX_TIMESTAMP(\''.(int)$this->year.'-01-01\') AND UNIX_TIMESTAMP(\''.((int)$this->year+1).'-01-01\')-1';
-			$this->group_time = 'MONTH(FROM_UNIXTIME(`time`))';
-			$this->timer = 'MONTH';
-			$this->timer_start = 1;
-			$this->timer_end = 12;
+			$this->WhereTime = 'AND `time` BETWEEN UNIX_TIMESTAMP(\''.(int)$this->year.'-01-01\') AND UNIX_TIMESTAMP(\''.((int)$this->year+1).'-01-01\')-1';
+			$this->GroupTime = 'MONTH(FROM_UNIXTIME(`time`))';
+			$this->Timer= 'MONTH';
+			$this->TimerStart = 1;
+			$this->TimerEnd = 12;
 		} elseif ($this->showsAllYears()) {
-			$this->where_time = '';
-			$this->group_time = 'YEAR(FROM_UNIXTIME(`time`))';
-			$this->timer = 'YEAR';
-			$this->timer_start = START_YEAR;
-			$this->timer_end = YEAR;
+			$this->WhereTime = '';
+			$this->GroupTime = 'YEAR(FROM_UNIXTIME(`time`))';
+			$this->Timer= 'YEAR';
+			$this->TimerStart = START_YEAR;
+			$this->TimerEnd = YEAR;
 		} else {
 			$num = $this->showsLast6Months() ? 6 : 12;
-			$this->where_time = ' AND `time` > '.strtotime("first day of -".($num - 1)." months");
-			$this->group_time = 'MONTH(FROM_UNIXTIME(`time`))';
-			$this->timer = 'MONTH';
-			$this->timer_start = 1;
-			$this->timer_end = 12;
+			$this->WhereTime = ' AND `time` > '.strtotime("first day of -".($num - 1)." months");
+			$this->GroupTime = 'MONTH(FROM_UNIXTIME(`time`))';
+			$this->Timer= 'MONTH';
+			$this->TimerStart = 1;
+			$this->TimerEnd = 12;
 		}
 
-		$this->colspan = $this->timer_end - $this->timer_start + 3;
+		$this->Colspan = $this->TimerEnd - $this->TimerStart + 3;
 	}
 
 	/**
@@ -199,12 +212,12 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 			$this->printTableStart($Data['name']);
 
 			if (empty($Data['foreach'])) {
-				echo '<tr class="c">'.HTML::emptyTD($this->colspan, '<em>'.__('No data available.').'</em>').'</tr>';
+				echo '<tr class="c">'.HTML::emptyTD($this->Colspan, '<em>'.__('No data available.').'</em>').'</tr>';
 			} else {
 				foreach ($Data['foreach'] as $i => $Each) {
 					echo '<tr><td class="c b">'.$Each['name'].'</td>';
 
-					for ($t = $this->timer_start; $t <= $this->timer_end; $t++) {
+					for ($t = $this->TimerStart; $t <= $this->TimerEnd; $t++) {
 						if (isset($Data['array'][$Each['id']][$t])) {
 							$num  = $Data['array'][$Each['id']][$t]['num'];
 							$dist = $Data['array'][$Each['id']][$t]['distance'];
@@ -244,7 +257,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 				if ($i == count($Data['foreach']) - 1) {
 					echo '<tr class="top-spacer no-zebra"><td class="c b">'.__('Total').'</td>';
 
-					for ($t = $this->timer_start; $t <= $this->timer_end; $t++) {
+					for ($t = $this->TimerStart; $t <= $this->TimerEnd; $t++) {
 						if (isset($Data['array']['timer_sum_km'][$t])) {
 							if ($this->Sport->usesDistance() && $this->dat != 's')
 								echo '<td>'.Distance::format($Data['array']['timer_sum_km'][$t], true, 0).'</td>';
@@ -319,12 +332,12 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 				'.PREFIX.'type.accountid="'.SessionAccountHandler::getId().'"
 			)
 			WHERE '.PREFIX.'training.`sportid`="'.$this->sportid.'"
-				AND '.PREFIX.'training.accountid="'.SessionAccountHandler::getId().'" '.$this->where_time.'
-			GROUP BY `typeid`, '.$this->group_time.'
+				AND '.PREFIX.'training.accountid="'.SessionAccountHandler::getId().'" '.$this->WhereTime.'
+			GROUP BY `typeid`, '.$this->GroupTime.'
 			ORDER BY `hr_avg`, '.$this->getTimerForOrderingInQuery().' ASC
 		')->fetchAll();
 
-		$type_data = $this->emptyData;
+		$type_data = $this->EmptyData;
 
 		foreach ($result as $dat) {
 			if (!isset($type_data[$dat['typeid']]))
@@ -376,7 +389,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 					MIN(`s`/`distance`) as `min`,
 					MAX(`s`/`distance`) as `max`
 				FROM `'.PREFIX.'training`
-				WHERE `sportid`='.$this->sportid.' AND '.PREFIX.'training.accountid="'.SessionAccountHandler::getId().'" '.$this->where_time.' AND `distance`>0
+				WHERE `sportid`='.$this->sportid.' AND '.PREFIX.'training.accountid="'.SessionAccountHandler::getId().'" '.$this->WhereTime.' AND `distance`>0
 			')->fetch();
 
 			if (!empty($MinMax)) {
@@ -394,12 +407,12 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 				SUM(`s`) AS `s`,
 				FLOOR( (`s`/`distance` - '.$ceil_corr.')/'.$speed_step.')*'.$speed_step.' + '.$ceil_corr.' AS `group`
 			FROM `'.PREFIX.'training`
-			WHERE `sportid`='.$this->sportid.' AND '.PREFIX.'training.accountid="'.SessionAccountHandler::getId().'" '.$this->where_time.' AND `distance`>0
-			GROUP BY `group`, '.$this->group_time.'
+			WHERE `sportid`='.$this->sportid.' AND '.PREFIX.'training.accountid="'.SessionAccountHandler::getId().'" '.$this->WhereTime.' AND `distance`>0
+			GROUP BY `group`, '.$this->GroupTime.'
 			ORDER BY `group` DESC, '.$this->getTimerForOrderingInQuery().' ASC
 		')->fetchAll();
 
-		$speed_data = $this->emptyData;
+		$speed_data = $this->EmptyData;
 
 		foreach ($result as $dat) {
 			if ($this->sportid == Configuration::General()->runningSport()) {
@@ -450,12 +463,12 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 				:
 					'CEIL( (100 * (`pulse_avg` - '.$ceil_corr.') / '.HF_MAX.') /'.$pulse_step.')*'.$pulse_step.' + '.$ceil_corr.' AS `group`').'
 			FROM `'.PREFIX.'training`
-			WHERE `sportid`='.$this->sportid.' AND '.PREFIX.'training.accountid="'.SessionAccountHandler::getId().'" '.$this->where_time.' && `pulse_avg`!=0
-			GROUP BY `group`, '.$this->group_time.'
+			WHERE `sportid`='.$this->sportid.' AND '.PREFIX.'training.accountid="'.SessionAccountHandler::getId().'" '.$this->WhereTime.' && `pulse_avg`!=0
+			GROUP BY `group`, '.$this->GroupTime.'
 			ORDER BY `group`, '.$this->getTimerForOrderingInQuery().' ASC
 		')->fetchAll();
 
-		$pulse_data = $this->emptyData;
+		$pulse_data = $this->EmptyData;
 
 		foreach ($result as $dat) {
 			if ($dat['group'] < $pulse_min)

@@ -13,34 +13,22 @@ namespace Runalyze\Calculation\Distribution;
  * @package Runalyze\Calculation\Distribution
  */
 abstract class Distribution {
-	/**
-	 * Minimum
-	 */
+	/** @var string */
 	const MIN = 'min';
 
-	/**
-	 * Maximum
-	 */
+	/** @var string */
 	const MAX = 'max';
 
-	/**
-	 * Mean
-	 */
+	/** @var string */
 	const MEAN = 'mean';
 
-	/**
-	 * Mean
-	 */
+	/** @var string */
 	const MEDIAN = 'median';
 
-	/**
-	 * Mode
-	 */
+	/** @var string */
 	const MODE = 'mode';
 
-	/**
-	 * Variance
-	 */
+	/** @var string */
 	const VARIANCE = 'var';
 
 	/**
@@ -119,7 +107,7 @@ abstract class Distribution {
 
 	/**
 	 * Set statistic
-	 * @param const $key
+	 * @param string $key
 	 * @param float $value
 	 */
 	final protected function setStatistic($key, $value) {

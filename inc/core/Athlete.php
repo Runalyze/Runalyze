@@ -49,14 +49,14 @@ class Athlete {
 	 * Current VDOT shape
 	 * @var float
 	 */
-	protected $vdot = 0;
+	protected $vdot = 0.0;
 
 	/**
 	 * Create athlete
 	 * @param \Gender $Gender [optional]
 	 * @param int $maximalHR [optional]
 	 * @param int $restingHR [optional]
-	 * @param flot $weight [optional]
+	 * @param float $weight [optional]
 	 * @param int $age [optional]
 	 * @param float $vdot [optional]
 	 */
@@ -66,7 +66,7 @@ class Athlete {
 		$restingHR = null,
 		$weight = null,
 		$age = null,
-		$vdot = 0
+		$vdot = 0.0
 	) {
 		$this->Gender = $Gender ?: new Gender();
 		$this->maximalHR = $maximalHR;

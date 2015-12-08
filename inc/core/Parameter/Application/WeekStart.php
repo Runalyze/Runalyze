@@ -20,24 +20,25 @@ namespace Runalyze\Parameter\Application;
 class WeekStart extends \Runalyze\Parameter\Select {
 	/**
 	 * Monday
-	 * @var string
+	 * @var int
 	 */
-	const MONDAY = '1';
+	const MONDAY = 1;
 
 	/**
 	 * Saturday
-	 * @var string
+	 * @var int
 	 */
-	const SATURDAY = '6';
+	const SATURDAY = 6;
 
 	/**
 	 * Sunday
-	 * @var string
+	 * @var int
 	 */
-	const SUNDAY = '0';
+	const SUNDAY = 0;
 
 	/**
 	 * Construct
+	 * @param int|string
 	 */
 	public function __construct($default = self::MONDAY) {
 		parent::__construct($default, array(
@@ -83,7 +84,7 @@ class WeekStart extends \Runalyze\Parameter\Select {
 	}
 
 	/**
-	 * @return int
+	 * @return int|bool
 	 */
 	public function phpWeek($now = false) {
 		if ($now === false) {

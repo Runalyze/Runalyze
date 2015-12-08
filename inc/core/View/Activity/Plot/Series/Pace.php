@@ -43,7 +43,7 @@ class Pace extends ActivitySeries {
 	protected $paceUnit;
 
 	/**
-	 * @var enum
+	 * @var string
 	 */
 	protected $paceUnitEnum;
 

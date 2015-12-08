@@ -25,25 +25,25 @@ class SessionAccountHandler {
 
 	/**
 	 * Error: no error
-	 * @var enum
+	 * @var int
 	 */
 	public static $ERROR_TYPE_NO = 0;
 
 	/**
 	 * Error: no/wrong username
-	 * @var enum
+	 * @var int
 	 */
 	public static $ERROR_TYPE_WRONG_USERNAME = 1;
 
 	/**
 	 * Error: no/wrong password
-	 * @var enum
+	 * @var int
 	 */
 	public static $ERROR_TYPE_WRONG_PASSWORD = 2;
 
 	/**
 	 * Error: activation needed
-	 * @var enum
+	 * @var int
 	 */
 	public static $ERROR_TYPE_ACTIVATION_NEEDED = 3;
 

@@ -43,7 +43,7 @@ class AccountHandler {
 
 	/**
 	 * Boolean flag: registration process
-	 * @var type
+	 * @var bool
 	 */
 	public static $IS_ON_REGISTER_PROCESS = false;
 

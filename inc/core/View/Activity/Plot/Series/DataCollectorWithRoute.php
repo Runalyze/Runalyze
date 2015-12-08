@@ -26,7 +26,7 @@ class DataCollectorWithRoute extends DataCollector {
 	/**
 	 * Construct collector
 	 * @param \Runalyze\Model\Trackdata\Object $trackdata
-	 * @param enum $key
+	 * @param int $key
 	 * @param \Runalyze\Model\Route\Object $route
 	 * @throws \InvalidArgumentException
 	 */
