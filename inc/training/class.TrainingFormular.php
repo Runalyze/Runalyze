@@ -289,6 +289,10 @@ class TrainingFormular extends StandardFormular {
 				}
 			}
 
+			if (empty($options)) {
+				continue;
+			}
+
 			if ($EquipmentType->allowsMultipleValues()) {
 				$Field = new FormularCheckboxes('equipment['.$EquipmentType->id().']', $EquipmentType->name(), $values);
 

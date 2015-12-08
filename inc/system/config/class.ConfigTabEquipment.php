@@ -135,7 +135,7 @@ class ConfigTabEquipment extends ConfigTab {
 				<thead>
 					<tr>
 						<th>'.__('Name').'</th>
-						<th>'.__('Type').'</th>
+						<th>'.__('Category').'</th>
 						<th>'.__('prev. distance').'</th>
 						<th>'.__('Start of use').'</th>
 						<th>'.__('End of use').'</th>
