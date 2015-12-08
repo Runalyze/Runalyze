@@ -121,6 +121,7 @@ class Inserter extends Model\InserterWithAccountID {
 
 		$this->Object->set(Object::TIMESTAMP_CREATED, time());
 
+		$this->setSportIdIfEmpty();
 		$this->removeDataIfInside();
 		$this->calculateCaloriesIfZero();
 		$this->calculateVDOTAndIntensityAndTrimp();
@@ -143,6 +144,15 @@ class Inserter extends Model\InserterWithAccountID {
 
 				$this->Object->synchronize();
 			}
+		}
+	}
+
+	/**
+	 * Set sport id if empty
+	 */
+	protected function setSportIdIfEmpty() {
+		if ($this->Object->sportid() == 0) {
+			$this->Object->set(Object::SPORTID, Configuration::General()->mainSport());
 		}
 	}
 

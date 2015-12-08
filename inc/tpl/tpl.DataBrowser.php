@@ -58,7 +58,7 @@ $Table = new \Runalyze\View\Dataset\Table($this->DatasetConfig);
 			<?php if (\Runalyze\Configuration::DataBrowser()->showLabels()): ?>
 			<thead class="data-browser-labels">
 				<tr class="small">
-					<td colspan="<?php echo (2 + $this->ShowPublicLink); ?>"></td>
+					<td colspan="<?php echo (2 + $this->ShowEditLink + $this->ShowPublicLink); ?>"></td>
 					<?php echo $Table->codeForColumnLabels(); ?>
 				</tr>
 			</thead>
@@ -103,6 +103,10 @@ foreach ($this->Days as $i => $day) {
 
 			$Context->setActivityData($Training);
 
+			if ($this->ShowEditLink) {
+				echo $Table->codeForEditIcon($Context);
+			}
+
 			if ($this->ShowPublicLink) {
 				echo $Table->codeForPublicIcon($Context);
 			}
@@ -125,7 +129,7 @@ foreach ($this->Days as $i => $day) {
 
 		echo '</td>
 				<td class="l as-small-as-possible">'.$this->dateString($day['date']).'</td>
-				<td colspan="'.($Table->numColumns() + $this->ShowPublicLink).'"></td>
+				<td colspan="'.($Table->numColumns() + $this->ShowEditLink + $this->ShowPublicLink).'"></td>
 			</tr>';
 	}
 }

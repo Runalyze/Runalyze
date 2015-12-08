@@ -225,10 +225,12 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 			$Links[] = SearchLink::to('tagid', $Object->id(), '#'.$Object->tag());
 		}
 
-		$Value = new BoxedValue(implode(', ', $Links), '', __('Tags'));
-		$Value->defineAsFloatingBlock('w100 flexible-height');
+		if (!empty($Links)) {
+			$Value = new BoxedValue(implode(', ', $Links), '', __('Tags'));
+			$Value->defineAsFloatingBlock('w100 flexible-height');
 
-		$this->BoxedValues[] = $Value;
+			$this->BoxedValues[] = $Value;
+		}
 	}
 
 	/**

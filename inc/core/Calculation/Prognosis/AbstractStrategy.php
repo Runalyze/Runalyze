@@ -27,6 +27,13 @@ abstract class AbstractStrategy {
 	abstract public function inSeconds($distance);
 
 	/**
+	 * @return bool
+	 */
+	public function valuesAreValid() {
+		return true;
+	}
+
+	/**
 	 * Get top results (according to vdot_by_time
 	 * @param int $numberOfResults number of results to return
 	 * @param float $minimalDistanceRequired in km

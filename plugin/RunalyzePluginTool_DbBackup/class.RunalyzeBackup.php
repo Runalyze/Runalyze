@@ -112,27 +112,45 @@ abstract class RunalyzeBackup {
 		$ColumnInfo = $this->DB->query('SHOW COLUMNS FROM '.$TableName)->fetchAll();
 
 		$Query = 'SELECT * FROM `'.$TableName.'`';
-
-		if ($TableName == PREFIX.'account') {
-			$Query .= ' WHERE `id`='.$this->AccountID.' LIMIT 1';
-		} elseif ($TableName == PREFIX.'plugin_conf') {
-			$Query .= ' WHERE `pluginid` IN('.implode(',', $this->fetchPluginIDs()).')';
-		} elseif ($TableName == PREFIX.'equipment_sport') {
-			$Query .= ' WHERE `equipment_typeid` IN('.implode(',', $this->fetchEquipmentTypeIDs()).')';
-		} elseif ($TableName == PREFIX.'activity_equipment') {
-			$Query .= ' WHERE `equipmentid` IN('.implode(',', $this->fetchEquipmentIDs()).')';
-		} elseif ($TableName == PREFIX.'activity_tag') {
-			$Query .= ' WHERE `tagid` IN('.implode(',', $this->fetchTagIDs()).')';
-		} else {
-			$Query .= ' WHERE `accountid`='.$this->AccountID;
-		}
+		$ids = $this->addConditionToQuery($Query, $TableName);
 
 		$this->startTableRows($TableName);
 
-		$Statement = $this->DB->query($Query);
-		$this->saveRowsFromStatement($TableName, $ColumnInfo, $Statement);
+		if (!is_array($ids) || !empty($ids)) {
+			$Statement = $this->DB->query($Query);
+			$this->saveRowsFromStatement($TableName, $ColumnInfo, $Statement);
+		}
 
 		$this->finishTableRows();
+	}
+
+	/**
+	 * @param string $query
+	 * @param string $tableName
+	 * @return boole|array
+	 */
+	private function addConditionToQuery(&$query, $tableName) {
+		$ids = false;
+
+		if ($tableName == PREFIX.'account') {
+			$query .= ' WHERE `id`='.$this->AccountID.' LIMIT 1';
+		} elseif ($tableName == PREFIX.'plugin_conf') {
+			$ids = $this->fetchPluginIDs();
+			$query .= ' WHERE `pluginid` IN('.implode(',', $ids).')';
+		} elseif ($tableName == PREFIX.'equipment_sport') {
+			$ids = $this->fetchEquipmentTypeIDs();
+			$query .= ' WHERE `equipment_typeid` IN('.implode(',', $ids).')';
+		} elseif ($tableName == PREFIX.'activity_equipment') {
+			$ids = $this->fetchEquipmentIDs();
+			$query .= ' WHERE `equipmentid` IN('.implode(',', $ids).')';
+		} elseif ($tableName == PREFIX.'activity_tag') {
+			$ids = $this->fetchTagIDs();
+			$query .= ' WHERE `tagid` IN('.implode(',', $ids).')';
+		} else {
+			$query .= ' WHERE `accountid`='.$this->AccountID;
+		}
+
+		return $ids;
 	}
 
 	/**

@@ -46,7 +46,7 @@ class Loop extends \Runalyze\Model\Loop {
 	
 	/**
 	 * Current geohash
-	 * @return float
+	 * @return string
 	 */
 	public function geohash() {
 		return $this->current(Object::GEOHASHES);

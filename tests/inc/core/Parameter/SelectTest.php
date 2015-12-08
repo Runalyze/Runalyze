@@ -40,11 +40,10 @@ class ParameterSelectTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals( array('a' => 'one', 'b' => 'two', 'c' => 'three'), $this->object->options() );
 	}
 
-	/**
-	 * @expectedException \InvalidArgumentException
-	 */
 	public function testInvalidOption() {
 		$this->object->set('foobar');
+
+		$this->assertEquals('a', $this->object->value());
 	}
 
 	public function testWithoutOptions() {

@@ -129,6 +129,14 @@ class Table {
 	 * @param \Runalyze\Dataset\Context $context
 	 * @return string
 	 */
+	public function codeForEditIcon(Context $context) {
+		return \HTML::td($context->linker()->smallEditLink());
+	}
+
+	/**
+	 * @param \Runalyze\Dataset\Context $context
+	 * @return string
+	 */
 	public function codeForShortLink(Context $context) {
 		return $context->linker()->linkWithSportIcon(Tooltip::POSITION_RIGHT);
 	}
