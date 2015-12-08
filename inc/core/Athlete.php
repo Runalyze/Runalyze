@@ -169,6 +169,6 @@ class Athlete {
 	 * @return bool
 	 */
 	public function knowsVDOT() {
-		return (0 !== $this->vdot);
+		return (0.0 !== $this->vdot);
 	}
 }
