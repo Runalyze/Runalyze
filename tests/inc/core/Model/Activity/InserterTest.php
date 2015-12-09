@@ -63,7 +63,7 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 	 * @return int
 	 */
 	protected function insert(array $data) {
-		$Inserter = new Inserter($this->PDO, new Object($data));
+		$Inserter = new Inserter($this->PDO, new Entity($data));
 		$Inserter->setAccountID(0);
 		$Inserter->insert();
 
@@ -72,10 +72,10 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * @param int $id
-	 * @return \Runalyze\Model\Activity\Object
+	 * @return \Runalyze\Model\Activity\Entity
 	 */
 	protected function fetch($id) {
-		return new Object(
+		return new Entity(
 			$this->PDO->query('SELECT * FROM `'.PREFIX.'training` WHERE `id`="'.$id.'" AND `accountid`=0')->fetch(PDO::FETCH_ASSOC)
 		);
 	}
@@ -84,18 +84,18 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 	 * @expectedException \PHPUnit_Framework_Error
 	 */
 	public function testWrongObject() {
-		new Inserter($this->PDO, new Model\Trackdata\Object);
+		new Inserter($this->PDO, new Model\Trackdata\Entity);
 	}
 
 	public function testSimpleInsert() {
 		$Object = $this->fetch(
 			$this->insert(array(
-				Object::TIME_IN_SECONDS => 3600,
-				Object::DISTANCE => 12.0
+				Entity::TIME_IN_SECONDS => 3600,
+				Entity::DISTANCE => 12.0
 			))
 		);
 
-		$this->assertEquals(time(), $Object->get(Object::TIMESTAMP_CREATED), '', 10);
+		$this->assertEquals(time(), $Object->get(Entity::TIMESTAMP_CREATED), '', 10);
 		$this->assertEquals(3600, $Object->duration());
 		$this->assertEquals(12.0, $Object->distance());
 	}
@@ -103,10 +103,10 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 	public function testOutdoorData() {
 		$Object = $this->fetch(
 			$this->insert(array(
-				Object::TIME_IN_SECONDS => 3600,
-				Object::WEATHERID => Weather\Condition::SUNNY,
-				Object::TEMPERATURE => 7,
-				Object::SPORTID => $this->OutdoorID
+				Entity::TIME_IN_SECONDS => 3600,
+				Entity::WEATHERID => Weather\Condition::SUNNY,
+				Entity::TEMPERATURE => 7,
+				Entity::SPORTID => $this->OutdoorID
 			))
 		);
 
@@ -117,10 +117,10 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 	public function testIndoorData() {
 		$Object = $this->fetch(
 			$this->insert(array(
-				Object::TIME_IN_SECONDS => 3600,
-				Object::WEATHERID => Weather\Condition::SUNNY,
-				Object::TEMPERATURE => 7,
-				Object::SPORTID => $this->IndoorID
+				Entity::TIME_IN_SECONDS => 3600,
+				Entity::WEATHERID => Weather\Condition::SUNNY,
+				Entity::TEMPERATURE => 7,
+				Entity::SPORTID => $this->IndoorID
 			))
 		);
 
@@ -130,8 +130,8 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 	public function testCalories() {
 		$ObjectWithout = $this->fetch(
 			$this->insert(array(
-				Object::TIME_IN_SECONDS => 3600,
-				Object::SPORTID => $this->OutdoorID
+				Entity::TIME_IN_SECONDS => 3600,
+				Entity::SPORTID => $this->OutdoorID
 			))
 		);
 
@@ -139,9 +139,9 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 
 		$ObjectWith = $this->fetch(
 			$this->insert(array(
-				Object::TIME_IN_SECONDS => 3600,
-				Object::SPORTID => $this->OutdoorID,
-				Object::CALORIES => 873
+				Entity::TIME_IN_SECONDS => 3600,
+				Entity::SPORTID => $this->OutdoorID,
+				Entity::CALORIES => 873
 			))
 		);
 
@@ -155,13 +155,13 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		Configuration::Data()->updateStartTime($current);
 
 		$this->insert(array(
-			Object::TIMESTAMP => $current
+			Entity::TIMESTAMP => $current
 		));
 
 		$this->assertEquals($current, Configuration::Data()->startTime());
 
 		$this->insert(array(
-			Object::TIMESTAMP => $timeago
+			Entity::TIMESTAMP => $timeago
 		));
 
 		$this->assertEquals($timeago, Configuration::Data()->startTime());
@@ -169,10 +169,10 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 
 	public function testCalculationsForRunning() {
 		$Object = $this->fetch( $this->insert(array(
-			Object::DISTANCE => 10,
-			Object::TIME_IN_SECONDS => 3000,
-			Object::HR_AVG => 150,
-			Object::SPORTID => Configuration::General()->runningSport()
+			Entity::DISTANCE => 10,
+			Entity::TIME_IN_SECONDS => 3000,
+			Entity::HR_AVG => 150,
+			Entity::SPORTID => Configuration::General()->runningSport()
 		)));
 
 		$this->assertGreaterThan(0, $Object->vdotByTime());
@@ -184,10 +184,10 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 
 	public function testCalculationsForNotRunning() {
 		$Object = $this->fetch( $this->insert(array(
-			Object::DISTANCE => 10,
-			Object::TIME_IN_SECONDS => 3000,
-			Object::HR_AVG => 150,
-			Object::SPORTID => Configuration::General()->runningSport() + 1
+			Entity::DISTANCE => 10,
+			Entity::TIME_IN_SECONDS => 3000,
+			Entity::HR_AVG => 150,
+			Entity::SPORTID => Configuration::General()->runningSport() + 1
 		)));
 
 		$this->assertEquals(0, $Object->vdotByTime());
@@ -207,54 +207,54 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		Configuration::Data()->updateVdotCorrector(1);
 
 		$this->insert(array(
-			Object::TIMESTAMP => $timeago,
-			Object::DISTANCE => 10,
-			Object::TIME_IN_SECONDS => 30*60,
-			Object::HR_AVG => 150,
-			Object::SPORTID => $running,
-			Object::TYPEID => $raceid + 1,
-			Object::USE_VDOT => true
+			Entity::TIMESTAMP => $timeago,
+			Entity::DISTANCE => 10,
+			Entity::TIME_IN_SECONDS => 30*60,
+			Entity::HR_AVG => 150,
+			Entity::SPORTID => $running,
+			Entity::TYPEID => $raceid + 1,
+			Entity::USE_VDOT => true
 		));
 		$this->insert(array(
-			Object::TIMESTAMP => $current,
-			Object::DISTANCE => 10,
-			Object::TIME_IN_SECONDS => 30*60,
-			Object::HR_AVG => 150,
-			Object::SPORTID => $running + 1,
-			Object::USE_VDOT => true
+			Entity::TIMESTAMP => $current,
+			Entity::DISTANCE => 10,
+			Entity::TIME_IN_SECONDS => 30*60,
+			Entity::HR_AVG => 150,
+			Entity::SPORTID => $running + 1,
+			Entity::USE_VDOT => true
 		));
 		$this->insert(array(
-			Object::TIMESTAMP => $current,
-			Object::DISTANCE => 10,
-			Object::TIME_IN_SECONDS => 30*60,
-			Object::SPORTID => $running,
-			Object::USE_VDOT => true
+			Entity::TIMESTAMP => $current,
+			Entity::DISTANCE => 10,
+			Entity::TIME_IN_SECONDS => 30*60,
+			Entity::SPORTID => $running,
+			Entity::USE_VDOT => true
 		));
 
 		$this->assertEquals(0, Configuration::Data()->vdotShape());
 		$this->assertEquals(1, Configuration::Data()->vdotFactor());
 
 		$this->insert(array(
-			Object::TIMESTAMP => $current,
-			Object::DISTANCE => 10,
-			Object::TIME_IN_SECONDS => 30*60,
-			Object::HR_AVG => 150,
-			Object::SPORTID => $running,
-			Object::TYPEID => $raceid + 1,
-			Object::USE_VDOT => true
+			Entity::TIMESTAMP => $current,
+			Entity::DISTANCE => 10,
+			Entity::TIME_IN_SECONDS => 30*60,
+			Entity::HR_AVG => 150,
+			Entity::SPORTID => $running,
+			Entity::TYPEID => $raceid + 1,
+			Entity::USE_VDOT => true
 		));
 
 		$this->assertNotEquals(0, Configuration::Data()->vdotShape());
 		$this->assertEquals(1, Configuration::Data()->vdotFactor());
 
 		$this->insert(array(
-			Object::TIMESTAMP => $current,
-			Object::DISTANCE => 10,
-			Object::TIME_IN_SECONDS => 30*60,
-			Object::HR_AVG => 150,
-			Object::SPORTID => $running,
-			Object::TYPEID => $raceid,
-			Object::USE_VDOT => true
+			Entity::TIMESTAMP => $current,
+			Entity::DISTANCE => 10,
+			Entity::TIME_IN_SECONDS => 30*60,
+			Entity::HR_AVG => 150,
+			Entity::SPORTID => $running,
+			Entity::TYPEID => $raceid,
+			Entity::USE_VDOT => true
 		));
 
 		$this->assertNotEquals(0, Configuration::Data()->vdotShape());
@@ -262,11 +262,11 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testWithCalculationsFromAdditionalObjects() {
-		$Activity = new Object(array(
-			Object::DISTANCE => 10,
-			Object::TIME_IN_SECONDS => 3000,
-			Object::HR_AVG => 150,
-			Object::SPORTID => Configuration::General()->runningSport()
+		$Activity = new Entity(array(
+			Entity::DISTANCE => 10,
+			Entity::TIME_IN_SECONDS => 3000,
+			Entity::HR_AVG => 150,
+			Entity::SPORTID => Configuration::General()->runningSport()
 		));
 
 		$Inserter = new Inserter($this->PDO);
@@ -274,13 +274,13 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		$Inserter->insert($Activity);
 		$ObjectWithout = $this->fetch( $Inserter->insertedID() );
 
-		$Inserter->setTrackdata(new Model\Trackdata\Object(array(
-			Model\Trackdata\Object::TIME => array(1500, 3000),
-			Model\Trackdata\Object::HEARTRATE => array(125, 175)
+		$Inserter->setTrackdata(new Model\Trackdata\Entity(array(
+			Model\Trackdata\Entity::TIME => array(1500, 3000),
+			Model\Trackdata\Entity::HEARTRATE => array(125, 175)
 		)));
-		$Inserter->setRoute(new Model\Route\Object(array(
-			Model\Route\Object::ELEVATION_UP => 500,
-			Model\Route\Object::ELEVATION_DOWN => 100
+		$Inserter->setRoute(new Model\Route\Entity(array(
+			Model\Route\Entity::ELEVATION_UP => 500,
+			Model\Route\Entity::ELEVATION_DOWN => 100
 		)));
 
 		$Inserter->insert($Activity);
@@ -292,19 +292,19 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testWithSwimdata() {
-		$Activity = new Object(array(
-			Object::DISTANCE => 0.2,
-			Object::TIME_IN_SECONDS => 120,
+		$Activity = new Entity(array(
+			Entity::DISTANCE => 0.2,
+			Entity::TIME_IN_SECONDS => 120,
 		));
 
 		$Inserter = new Inserter($this->PDO);
 		$Inserter->setAccountID(0);
-		$Inserter->setTrackdata(new Model\Trackdata\Object(array(
-			Model\Trackdata\Object::TIME => array(30, 60, 90, 120),
-			Model\Trackdata\Object::DISTANCE => array(0.05, 0.1, 0.15, 0.2)
+		$Inserter->setTrackdata(new Model\Trackdata\Entity(array(
+			Model\Trackdata\Entity::TIME => array(30, 60, 90, 120),
+			Model\Trackdata\Entity::DISTANCE => array(0.05, 0.1, 0.15, 0.2)
 		)));
-		$Inserter->setSwimdata(new Model\Swimdata\Object(array(
-			Model\Swimdata\Object::STROKE => array(25, 20, 15, 20)
+		$Inserter->setSwimdata(new Model\Swimdata\Entity(array(
+			Model\Swimdata\Entity::STROKE => array(25, 20, 15, 20)
 		)));
 		$Inserter->insert($Activity);
 		$Result = $this->fetch( $Inserter->insertedID());
@@ -316,8 +316,8 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 	public function testTemperature() {
 		$Zero = $this->fetch(
 			$this->insert(array(
-				Object::TEMPERATURE => 0,
-				Object::SPORTID => $this->OutdoorID
+				Entity::TEMPERATURE => 0,
+				Entity::SPORTID => $this->OutdoorID
 			))
 		);
 
@@ -329,15 +329,15 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 	public function testPowerCalculation() {
 		// TODO: Needs configuration setting
 		if (Configuration::ActivityForm()->computePower()) {
-			$ActivityIndoor = new Object(array(
-				Object::DISTANCE => 10,
-				Object::TIME_IN_SECONDS => 3000,
-				Object::SPORTID => $this->IndoorID
+			$ActivityIndoor = new Entity(array(
+				Entity::DISTANCE => 10,
+				Entity::TIME_IN_SECONDS => 3000,
+				Entity::SPORTID => $this->IndoorID
 			));
 
-			$Trackdata = new Model\Trackdata\Object(array(
-				Model\Trackdata\Object::TIME => array(1500, 3000),
-				Model\Trackdata\Object::DISTANCE => array(5, 10)
+			$Trackdata = new Model\Trackdata\Entity(array(
+				Model\Trackdata\Entity::TIME => array(1500, 3000),
+				Model\Trackdata\Entity::DISTANCE => array(5, 10)
 			));
 
 			$Inserter = new Inserter($this->PDO);
@@ -348,7 +348,7 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 			$this->assertEquals(0, $this->fetch($Inserter->insertedID())->power());
 
 			$ActivityOutdoor = clone $ActivityIndoor;
-			$ActivityOutdoor->set(Object::SPORTID, $this->OutdoorID);
+			$ActivityOutdoor->set(Entity::SPORTID, $this->OutdoorID);
 			$Inserter->insert($ActivityOutdoor);
 
 			$this->assertNotEquals(0, $this->fetch($Inserter->insertedID())->power());
@@ -364,10 +364,10 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		$Inserter = new Inserter($this->PDO);
 		$Inserter->setAccountID(0);
 		$Inserter->setEquipmentIDs(array($this->EquipmentA, $this->EquipmentB));
-		$Inserter->insert(new Object(array(
-			Object::DISTANCE => 10,
-			Object::TIME_IN_SECONDS => 3600,
-			Object::SPORTID => $this->OutdoorID
+		$Inserter->insert(new Entity(array(
+			Entity::DISTANCE => 10,
+			Entity::TIME_IN_SECONDS => 3600,
+			Entity::SPORTID => $this->OutdoorID
 		)));
 
 		$this->assertEquals(array(10, 3600), $this->PDO->query('SELECT `distance`, `time` FROM `runalyze_equipment` WHERE `id`='.$this->EquipmentA)->fetch(PDO::FETCH_NUM));
@@ -379,19 +379,19 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 	 * @group verticalRatio
 	 */
 	public function testStrideLengthAndVerticalRatioCalculation() {
-		$Activity = new Object(array(
-			Object::DISTANCE => 0.36,
-			Object::TIME_IN_SECONDS => 120,
-			Object::SPORTID => Configuration::General()->runningSport(),
-			Object::CADENCE => 95,
-			Object::VERTICAL_OSCILLATION => 85
+		$Activity = new Entity(array(
+			Entity::DISTANCE => 0.36,
+			Entity::TIME_IN_SECONDS => 120,
+			Entity::SPORTID => Configuration::General()->runningSport(),
+			Entity::CADENCE => 95,
+			Entity::VERTICAL_OSCILLATION => 85
 		));
 
-		$Trackdata = new Model\Trackdata\Object(array(
-			Model\Trackdata\Object::TIME => array(60, 120),
-			Model\Trackdata\Object::DISTANCE => array(0.18, 0.36),
-			Model\Trackdata\Object::CADENCE => array(90, 100),
-			Model\Trackdata\Object::VERTICAL_OSCILLATION => array(90, 80)
+		$Trackdata = new Model\Trackdata\Entity(array(
+			Model\Trackdata\Entity::TIME => array(60, 120),
+			Model\Trackdata\Entity::DISTANCE => array(0.18, 0.36),
+			Model\Trackdata\Entity::CADENCE => array(90, 100),
+			Model\Trackdata\Entity::VERTICAL_OSCILLATION => array(90, 80)
 		));
 
 		$Inserter = new Inserter($this->PDO);
@@ -409,9 +409,9 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 	public function testEmptySport() {
 		$Inserter = new Inserter($this->PDO);
 		$Inserter->setAccountID(0);
-		$Inserter->insert(new Object(array(
-			Object::DISTANCE => 10,
-			Object::TIME_IN_SECONDS => 3600
+		$Inserter->insert(new Entity(array(
+			Entity::DISTANCE => 10,
+			Entity::TIME_IN_SECONDS => 3600
 		)));
 
 		$mainSport = Configuration::General()->mainSport();

@@ -4,7 +4,7 @@ namespace Runalyze\Model\Trackdata;
 
 use PDO;
 
-class InvalidInserterObjectForTrackdata_MockTester extends \Runalyze\Model\Object {
+class InvalidInserterObjectForTrackdata_MockTester extends \Runalyze\Model\Entity {
 	public function properties() {
 		return array('foo');
 	}
@@ -53,11 +53,11 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testSimpleInsert() {
-		$T = new Object(array(
-			Object::ACTIVITYID => 1,
-			Object::TIME => array(20, 40, 60),
-			Object::DISTANCE => array(0.1, 0.2, 0.3),
-			Object::HEARTRATE => array(100, 120, 130)
+		$T = new Entity(array(
+			Entity::ACTIVITYID => 1,
+			Entity::TIME => array(20, 40, 60),
+			Entity::DISTANCE => array(0.1, 0.2, 0.3),
+			Entity::HEARTRATE => array(100, 120, 130)
 		));
 		$T->pauses()->add(new Pause(40, 10));
 
@@ -66,7 +66,7 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		$I->insert();
 
 		$data = $this->PDO->query('SELECT * FROM `'.PREFIX.'trackdata` WHERE `accountid`=1')->fetch(PDO::FETCH_ASSOC);
-		$N = new Object($data);
+		$N = new Entity($data);
 
 		$this->assertEquals(1, $N->activityID());
 		$this->assertEquals(array(20, 40, 60), $N->time());

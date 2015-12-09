@@ -73,7 +73,7 @@ class ExporterGPX extends ExporterAbstractFile {
 		$Route = new Route\Loop($this->Context->route());
 
 		$hasElevation = $this->Context->route()->hasOriginalElevations();
-		$hasHeartrate = $this->Context->trackdata()->has(Trackdata\Object::HEARTRATE);
+		$hasHeartrate = $this->Context->trackdata()->has(Trackdata\Entity::HEARTRATE);
 
 		while ($Trackdata->nextStep()) {
 			$Route->nextStep();
@@ -84,13 +84,13 @@ class ExporterGPX extends ExporterAbstractFile {
 			$Trackpoint->addChild('time', $this->timeToString($Starttime + $Trackdata->time()));
 
 			if ($hasElevation) {
-				$Trackpoint->addChild('ele', $Route->current(Route\Object::ELEVATIONS_ORIGINAL));
+				$Trackpoint->addChild('ele', $Route->current(Route\Entity::ELEVATIONS_ORIGINAL));
 			}
 
 			if ($hasHeartrate) {
                 $ext = $Trackpoint->addChild('extensions');
                 $tpe = $ext->addChild('gpxtpx:TrackPointExtension','','http://www.garmin.com/xmlschemas/TrackPointExtension/v1');
-                $tpe->addChild('gpxtpx:hr',  $Trackdata->current(Trackdata\Object::HEARTRATE));
+                $tpe->addChild('gpxtpx:hr',  $Trackdata->current(Trackdata\Entity::HEARTRATE));
             }
 		}
 	}

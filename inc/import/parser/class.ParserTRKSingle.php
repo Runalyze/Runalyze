@@ -119,7 +119,7 @@ class ParserTRKSingle extends ParserAbstractSingle {
 
 		$this->gps['time_in_s'][] = $time;
 		$this->gps['km'][] = $this->latitude === false ? 0
-				: end($this->gps['km']) + round(Runalyze\Model\Route\Object::gpsDistance($latitude, $longitude, $this->latitude, $this->longitude), ParserAbstract::DISTANCE_PRECISION);
+				: end($this->gps['km']) + round(Runalyze\Model\Route\Entity::gpsDistance($latitude, $longitude, $this->latitude, $this->longitude), ParserAbstract::DISTANCE_PRECISION);
 		$this->gps['latitude'][] = $latitude;
 		$this->gps['longitude'][] = $longitude;
 		$this->gps['altitude'][] = ($num > 7 && $values[7] != '-1') ? round($values[7]) : 0;

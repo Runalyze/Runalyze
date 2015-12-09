@@ -8,7 +8,7 @@ namespace Runalyze\View\Activity\Plot\Series;
 
 use Plot;
 use Runalyze\Configuration;
-use Runalyze\Model\Trackdata\Object as Trackdata;
+use Runalyze\Model\Trackdata\Entity as Trackdata;
 use Runalyze\Parameter\Application\PaceAxisType;
 use Runalyze\Parameter\Application\PaceUnit;
 use Runalyze\View\Activity;

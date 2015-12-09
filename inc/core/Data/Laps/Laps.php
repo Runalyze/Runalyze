@@ -36,10 +36,10 @@ class Laps {
 
 	/**
 	 * @param array $distances
-	 * @param \Runalyze\Model\Trackdata\Object $trackdata
-	 * @param \Runalyze\Model\Route\Object $route
+	 * @param \Runalyze\Model\Trackdata\Entity $trackdata
+	 * @param \Runalyze\Model\Route\Entity $route
 	 */
-	public function calculateFrom(array $distances, Trackdata\Object $trackdata, Route\Object $route = null) {
+	public function calculateFrom(array $distances, Trackdata\Entity $trackdata, Route\Entity $route = null) {
 		$Calculator = new Calculator($this);
 		$Calculator->calculateAdditionalValues($this->CalculateAdditionalValues);
 		$Calculator->setDistances($distances);
@@ -48,10 +48,10 @@ class Laps {
 
 	/**
 	 * @param array $times
-	 * @param \Runalyze\Model\Trackdata\Object $trackdata
-	 * @param \Runalyze\Model\Route\Object $route
+	 * @param \Runalyze\Model\Trackdata\Entity $trackdata
+	 * @param \Runalyze\Model\Route\Entity $route
 	 */
-	public function calculateFromTimes(array $times, Trackdata\Object $trackdata, Route\Object $route = null) {
+	public function calculateFromTimes(array $times, Trackdata\Entity $trackdata, Route\Entity $route = null) {
 		$Calculator = new Calculator($this);
 		$Calculator->calculateAdditionalValues($this->CalculateAdditionalValues);
 		$Calculator->setTimes($times);
@@ -59,9 +59,9 @@ class Laps {
 	}
 
 	/**
-	 * @param \Runalyze\Model\Activity\Splits\Object $splits
+	 * @param \Runalyze\Model\Activity\Splits\Entity $splits
 	 */
-	public function readFrom(Splits\Object $splits) {
+	public function readFrom(Splits\Entity $splits) {
 		$SplitsReader = new SplitsReader($this);
 		$SplitsReader->readFrom($splits);
 	}

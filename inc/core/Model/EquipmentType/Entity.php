@@ -1,6 +1,6 @@
 <?php
 /**
- * This file contains class::Object
+ * This file contains class::Entity
  * @package Runalyze\Model\EquipmentType
  */
 
@@ -9,12 +9,12 @@ namespace Runalyze\Model\EquipmentType;
 use Runalyze\Model;
 
 /**
- * Type object
+ * Type entity
  * 
  * @author Hannes Christiansen
  * @package Runalyze\Model\EquipmentType
  */
-class Object extends Model\EntityWithID {
+class Entity extends Model\EntityWithID {
 	/**
 	 * @var enum
 	 */

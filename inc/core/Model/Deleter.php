@@ -28,9 +28,9 @@ abstract class Deleter {
 	/**
 	 * Construct updater
 	 * @param \PDO $connection
-	 * @param \Runalyze\Model\Object $object [optional]
+	 * @param \Runalyze\Model\Entity $object [optional]
 	 */
-	public function __construct(\PDO $connection, Object $object = null) {
+	public function __construct(\PDO $connection, Entity $object = null) {
 		$this->PDO = $connection;
 		$this->Object = $object;
 	}
@@ -49,7 +49,7 @@ abstract class Deleter {
 
 	/**
 	 * Delete object
-	 * @param \Runalyze\Model\Object $oldObject [optional]
+	 * @param \Runalyze\Model\Entity $oldObject [optional]
 	 * @throws \RuntimeException
 	 */
 	final public function delete(Object $oldObject = null) {

@@ -64,7 +64,7 @@ class ElevationsRecalculator {
 		$Update = $this->prepareUpdate();
 
 		while ($Data = $Query->fetch()) {
-			$Elevation = \Runalyze\Model\Object::explode($Data['elevations']);
+			$Elevation = \Runalyze\Model\Entity::explode($Data['elevations']);
 			$Calculator = new Elevation\Calculation\Calculator($Elevation);
 			$Calculator->calculate();
 

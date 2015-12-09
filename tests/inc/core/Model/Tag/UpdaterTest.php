@@ -34,21 +34,21 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 	public function testSimpleUpdate() {
 		$Inserter = new Inserter($this->PDO);
 		$Inserter->setAccountID(1);
-		$Inserter->insert(new Object(array(
-			Object::TAG => 'Tag'
+		$Inserter->insert(new Entity(array(
+			Entity::TAG => 'Tag'
 		)));
 
-		$Tag = new Object($this->PDO->query('SELECT * FROM `'.PREFIX.'tag` WHERE `id`='.$Inserter->insertedID())->fetch(PDO::FETCH_ASSOC));
+		$Tag = new Entity($this->PDO->query('SELECT * FROM `'.PREFIX.'tag` WHERE `id`='.$Inserter->insertedID())->fetch(PDO::FETCH_ASSOC));
 		
 		
 		$Changed = clone $Tag;
-		$Changed->set(Object::TAG, 'bahn');
+		$Changed->set(Entity::TAG, 'bahn');
 		
 		$Updater = new Updater($this->PDO, $Changed, $Tag);
 		$Updater->setAccountID(1);
 		$Updater->update();
 
-		$Result = new Object($this->PDO->query('SELECT * FROM `'.PREFIX.'tag` WHERE `id`='.$Inserter->insertedID())->fetch(PDO::FETCH_ASSOC));
+		$Result = new Entity($this->PDO->query('SELECT * FROM `'.PREFIX.'tag` WHERE `id`='.$Inserter->insertedID())->fetch(PDO::FETCH_ASSOC));
 
 		$this->assertEquals('bahn', $Result->tag());
 

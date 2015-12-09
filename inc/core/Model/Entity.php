@@ -1,13 +1,13 @@
 <?php
 /**
- * This file contains class::Object
+ * This file contains class::Entity
  * @package Runalyze\Model
  */
 
 namespace Runalyze\Model;
 
 /**
- * Abstract object
+ * Abstract entity
  * 
  * An object represents a set of properties, e.g. a row from database.
  * The internal data array contains all raw values, only arrays are automatically transformed.
@@ -15,7 +15,7 @@ namespace Runalyze\Model;
  * @author Hannes Christiansen
  * @package Runalyze\Model
  */
-abstract class Object {
+abstract class Entity {
 	/**
 	 * Array separator
 	 * @var string

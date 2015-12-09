@@ -63,7 +63,7 @@ class ElevationInfo {
 	protected function handleRequest() {
 		if (Request::param('use-calculated-value') == 'true') {
 			$oldObject = clone $this->Context->activity();
-			$this->Context->activity()->set(Model\Activity\Object::ELEVATION, $this->Context->route()->elevation());
+			$this->Context->activity()->set(Model\Activity\Entity::ELEVATION, $this->Context->route()->elevation());
 
 			$Updater = new Model\Activity\Updater(
 				DB::getInstance(),

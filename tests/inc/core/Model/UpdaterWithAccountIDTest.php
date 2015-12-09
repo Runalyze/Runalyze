@@ -15,7 +15,7 @@ class UpdaterWithAccountIDForObject_MockTester extends UpdaterWithAccountID {
             return array('foo', 'accountid');
         }
 }
-class UpdaterWithAccountIDObject_MockTester extends Object {
+class UpdaterWithAccountIDObject_MockTester extends Entity {
 	public function properties() {
 		return array ('foo', 'accountid');
 	}

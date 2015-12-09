@@ -150,7 +150,7 @@ abstract class SummaryTable {
 		$maxIndex = ceil(($this->TimeEnd - $this->TimeStart) / $this->Timerange) - 1;
 		$CompleteData = array();
 		$CompleteResult = $this->DatasetQuery->fetchSummaryForTimerange($this->Sportid, $this->Timerange, $this->TimeStart, $this->TimeEnd);
-		$Context = new Dataset\Context(new Runalyze\Model\Activity\Object(), $this->AccountID);
+		$Context = new Dataset\Context(new Runalyze\Model\Activity\Entity(), $this->AccountID);
 		$hiddenKeys = array(
 			Dataset\Keys::SPORT
 		);

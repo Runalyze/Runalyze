@@ -6,7 +6,7 @@
 
 namespace Runalyze\View\Activity\Plot\Series;
 
-use Runalyze\Model\Trackdata\Object as Trackdata;
+use Runalyze\Model\Trackdata\Entity as Trackdata;
 use Runalyze\View\Activity;
 use Runalyze\Configuration;
 use Runalyze\Parameter\Application\DistanceUnitSystem;

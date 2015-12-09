@@ -43,7 +43,7 @@ class SectionLapsRowManual extends TrainingViewSectionRow {
 	 * Add info link
 	 */
 	protected function addInfoLink() {
-		if ($this->Context->trackdata()->has(Trackdata\Object::DISTANCE) && $this->Context->trackdata()->has(Trackdata\Object::TIME)) {
+		if ($this->Context->trackdata()->has(Trackdata\Entity::DISTANCE) && $this->Context->trackdata()->has(Trackdata\Entity::TIME)) {
 			if (!Request::isOnSharedPage()) {
 				$Linker = new Linker($this->Context->activity());
 				$InfoLink = Ajax::window('<a href="'.$Linker->urlToRoundsInfo().'">'.__('More details about your laps').'</a>', 'big');

@@ -362,7 +362,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	 * @param array $data
 	 */
 	private function displayWKTr(array $data) {
-		$Activity = new Activity\Object($data);
+		$Activity = new Activity\Entity($data);
 		$Linker = new Linker($Activity);
 		$Dataview = new Dataview($Activity);
 

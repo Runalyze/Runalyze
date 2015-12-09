@@ -34,7 +34,7 @@ class TableRow {
 
 	/**
 	 * Activity
-	 * @var \Runalyze\Model\Activity\Object
+	 * @var \Runalyze\Model\Activity\Entity
 	 */
 	protected $Activity;
 
@@ -50,7 +50,7 @@ class TableRow {
 	 */
 	public function __construct(array $data) {
 		$this->Data = $data;
-		$this->Activity = new Activity\Object($data);
+		$this->Activity = new Activity\Entity($data);
 		$this->Shape = $this->loadShape($data['time']);
 
 		VDOT::setPrecision(2);

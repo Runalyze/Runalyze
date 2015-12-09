@@ -66,7 +66,7 @@ $minLng = 180;
 $maxLng = -180;
 
 while ($RouteData = $Routes->fetch()) {
-	$Route = new Model\Route\Object($RouteData);
+	$Route = new Model\Route\Entity($RouteData);
 	$MinCoordinate = (new League\Geotools\Geohash\Geohash())->decode($RouteData['min'])->getCoordinate();
 	$MaxCoordinate = (new League\Geotools\Geohash\Geohash())->decode($RouteData['max'])->getCoordinate();
 

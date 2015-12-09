@@ -60,7 +60,7 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 	 * @return int
 	 */
 	protected function insert(array $data) {
-		$Inserter = new Inserter($this->PDO, new Object($data));
+		$Inserter = new Inserter($this->PDO, new Entity($data));
 		$Inserter->setAccountID(0);
 		$Inserter->insert();
 
@@ -68,13 +68,13 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @param \Runalyze\Model\Activity\Object $new
-	 * @param \Runalyze\Model\Activity\Object $old [optional]
-	 * @param \Runalyze\Model\Trackdata\Object $track [optional]
-	 * @param \Runalyze\Model\Route\Object $route [optional]
-	 * @return \Runalyze\Model\Activity\Object
+	 * @param \Runalyze\Model\Activity\Entity $new
+	 * @param \Runalyze\Model\Activity\Entity $old [optional]
+	 * @param \Runalyze\Model\Trackdata\Entity $track [optional]
+	 * @param \Runalyze\Model\Route\Entity $route [optional]
+	 * @return \Runalyze\Model\Activity\Entity
 	 */
-	protected function update(Object $new, Object $old = null, Model\Trackdata\Object $track = null, Model\Route\Object $route = null, $force = false) {
+	protected function update(Entity $new, Entity $old = null, Model\Trackdata\Entity $track = null, Model\Route\Entity $route = null, $force = false) {
 		$Updater = new Updater($this->PDO, $new, $old);
 		$Updater->setAccountID(0);
 
@@ -93,10 +93,10 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * @param int $id
-	 * @return \Runalyze\Model\Activity\Object
+	 * @return \Runalyze\Model\Activity\Entity
 	 */
 	protected function fetch($id) {
-		return new Object(
+		return new Entity(
 			$this->PDO->query('SELECT * FROM `'.PREFIX.'training` WHERE `id`="'.$id.'" AND `accountid`=0')->fetch(PDO::FETCH_ASSOC)
 		);
 	}
@@ -105,41 +105,41 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 	 * @expectedException \PHPUnit_Framework_Error
 	 */
 	public function testWrongObject() {
-		new Updater($this->PDO, new Model\Trackdata\Object);
+		new Updater($this->PDO, new Model\Trackdata\Entity);
 	}
 
 	public function testSimpleUpdate() {
 		$OldObject = $this->fetch( $this->insert(array(
-			Object::DISTANCE => 10,
-			Object::TIME_IN_SECONDS => 3000
+			Entity::DISTANCE => 10,
+			Entity::TIME_IN_SECONDS => 3000
 		)) );
 
 		$NewObject = clone $OldObject;
-		$NewObject->set(Object::TIME_IN_SECONDS, 3600);
+		$NewObject->set(Entity::TIME_IN_SECONDS, 3600);
 
 		$Result = $this->update($NewObject, $OldObject);
 
 		$this->assertEquals(10, $Result->distance());
 		$this->assertEquals(3600, $Result->duration());
-		$this->assertGreaterThan(time()-10, $Result->get(Object::TIMESTAMP_EDITED));
+		$this->assertGreaterThan(time()-10, $Result->get(Entity::TIMESTAMP_EDITED));
 	}
 
 	public function testWithCalculationsFromAdditionalObjects() {
 		$OldObject = $this->fetch( $this->insert(array(
-			Object::DISTANCE => 10,
-			Object::TIME_IN_SECONDS => 3000,
-			Object::HR_AVG => 150,
-			Object::SPORTID => Configuration::General()->runningSport()
+			Entity::DISTANCE => 10,
+			Entity::TIME_IN_SECONDS => 3000,
+			Entity::HR_AVG => 150,
+			Entity::SPORTID => Configuration::General()->runningSport()
 		)) );
 
 		$NewObject = clone $OldObject;
 
-		$Result = $this->update($NewObject, $OldObject, new Model\Trackdata\Object(array(
-			Model\Trackdata\Object::TIME => array(1500, 3000),
-			Model\Trackdata\Object::HEARTRATE => array(125, 175)
-		)), new Model\Route\Object(array(
-			Model\Route\Object::ELEVATION_UP => 500,
-			Model\Route\Object::ELEVATION_DOWN => 100
+		$Result = $this->update($NewObject, $OldObject, new Model\Trackdata\Entity(array(
+			Model\Trackdata\Entity::TIME => array(1500, 3000),
+			Model\Trackdata\Entity::HEARTRATE => array(125, 175)
+		)), new Model\Route\Entity(array(
+			Model\Route\Entity::ELEVATION_UP => 500,
+			Model\Route\Entity::ELEVATION_DOWN => 100
 		)), true);
 
 		$this->assertEquals($OldObject->vdotByTime(), $Result->vdotByTime());
@@ -151,12 +151,12 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 
 	public function testTrimpCalculations() {
 		$OldObject = $this->fetch( $this->insert(array(
-			Object::TIME_IN_SECONDS => 3000,
-			Object::SPORTID => $this->IndoorID
+			Entity::TIME_IN_SECONDS => 3000,
+			Entity::SPORTID => $this->IndoorID
 		)) );
 
 		$NewObject = clone $OldObject;
-		$NewObject->set(Object::SPORTID, $this->OutdoorID);
+		$NewObject->set(Entity::SPORTID, $this->OutdoorID);
 
 		$Result = $this->update($NewObject, $OldObject);
 
@@ -165,10 +165,10 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 
 	public function testUnsettingRunningValues() {
 		$OldObject = $this->fetch( $this->insert(array(
-			Object::DISTANCE => 10,
-			Object::TIME_IN_SECONDS => 3000,
-			Object::HR_AVG => 150,
-			Object::SPORTID => Configuration::General()->runningSport()
+			Entity::DISTANCE => 10,
+			Entity::TIME_IN_SECONDS => 3000,
+			Entity::HR_AVG => 150,
+			Entity::SPORTID => Configuration::General()->runningSport()
 		)) );
 
 		$this->assertGreaterThan(0, $OldObject->vdotByTime());
@@ -178,7 +178,7 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 		$this->assertGreaterThan(0, $OldObject->trimp());
 
 		$NewObject = clone $OldObject;
-		$NewObject->set(Object::SPORTID, $NewObject->sportid() + 1);
+		$NewObject->set(Entity::SPORTID, $NewObject->sportid() + 1);
 
 		$Result = $this->update($NewObject, $OldObject);
 
@@ -199,41 +199,41 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 		Configuration::Data()->updateVdotCorrector(1);
 
 		$Object1 = $this->fetch( $this->insert(array(
-			Object::TIMESTAMP => $timeago,
-			Object::DISTANCE => 10,
-			Object::TIME_IN_SECONDS => 30*60,
-			Object::HR_AVG => 150,
-			Object::SPORTID => $running,
-			Object::TYPEID => $raceid + 1,
-			Object::USE_VDOT => true
+			Entity::TIMESTAMP => $timeago,
+			Entity::DISTANCE => 10,
+			Entity::TIME_IN_SECONDS => 30*60,
+			Entity::HR_AVG => 150,
+			Entity::SPORTID => $running,
+			Entity::TYPEID => $raceid + 1,
+			Entity::USE_VDOT => true
 		)) );
 
 		$this->assertEquals(0, Configuration::Data()->vdotShape());
 		$this->assertEquals(1, Configuration::Data()->vdotFactor());
 
 		$Object2 = clone $Object1;
-		$Object2->set(Object::TIMESTAMP, $current);
+		$Object2->set(Entity::TIMESTAMP, $current);
 		$this->update($Object2, $Object1);
 
 		$this->assertNotEquals(0, Configuration::Data()->vdotShape());
 		$this->assertEquals(1, Configuration::Data()->vdotFactor());
 
 		$Object3 = clone $Object2;
-		$Object3->set(Object::TYPEID, $raceid);
+		$Object3->set(Entity::TYPEID, $raceid);
 		$this->update($Object3, $Object2);
 
 		$this->assertNotEquals(0, Configuration::Data()->vdotShape());
 		$this->assertNotEquals(1, Configuration::Data()->vdotFactor());
 
 		$Object4 = clone $Object3;
-		$Object4->set(Object::TYPEID, $raceid + 1);
+		$Object4->set(Entity::TYPEID, $raceid + 1);
 		$this->update($Object4, $Object3);
 
 		$this->assertNotEquals(0, Configuration::Data()->vdotShape());
 		$this->assertEquals(1, Configuration::Data()->vdotFactor());
 
 		$Object5 = clone $Object4;
-		$Object5->set(Object::TIMESTAMP, $timeago);
+		$Object5->set(Entity::TIMESTAMP, $timeago);
 		$this->update($Object5, $Object4);
 
 		$this->assertEquals(0, Configuration::Data()->vdotShape());
@@ -247,27 +247,27 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 		Configuration::Data()->updateStartTime($current);
 
 		$OldObject = $this->fetch( $this->insert(array(
-			Object::TIMESTAMP => $current
+			Entity::TIMESTAMP => $current
 		)) );
 
 		$NewObject = clone $OldObject;
-		$NewObject->set(Object::TIMESTAMP, $current);
+		$NewObject->set(Entity::TIMESTAMP, $current);
 		$this->update($NewObject, $OldObject);
 
 		$this->assertEquals($current, Configuration::Data()->startTime());
 
-		$NewObject->set(Object::TIMESTAMP, $timeago);
+		$NewObject->set(Entity::TIMESTAMP, $timeago);
 		$this->update($NewObject, $OldObject);
 
 		$this->assertEquals($timeago, Configuration::Data()->startTime());
 
 		$this->insert(array(
-			Object::TIMESTAMP => $timeago + 100
+			Entity::TIMESTAMP => $timeago + 100
 		));
 		$this->assertEquals($timeago, Configuration::Data()->startTime());
 
 		$NewestObject = clone $NewObject;
-		$NewestObject->set(Object::TIMESTAMP, $current);
+		$NewestObject->set(Entity::TIMESTAMP, $current);
 		$this->update($NewestObject, $NewObject);
 
 		$this->assertEquals($timeago + 100, Configuration::Data()->startTime());
@@ -275,8 +275,8 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 
 	public function testUpdateTemperature() {
 		$OldObject = $this->fetch( $this->insert(array(
-			Object::TEMPERATURE => 5,
-			Object::SPORTID => $this->OutdoorID
+			Entity::TEMPERATURE => 5,
+			Entity::SPORTID => $this->OutdoorID
 		)) );
 
 		$this->assertFalse($OldObject->weather()->temperature()->isUnknown());
@@ -290,8 +290,8 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 
 	public function testUpdateTemperatureFromNullToZero() {
 		$OldObject = $this->fetch( $this->insert(array(
-			Object::TEMPERATURE => null,
-			Object::SPORTID => $this->OutdoorID
+			Entity::TEMPERATURE => null,
+			Entity::SPORTID => $this->OutdoorID
 		)) );
 
 		$this->assertTrue($OldObject->weather()->temperature()->isUnknown());
@@ -305,8 +305,8 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 
 	public function testUpdateTemperatureWithoutOldObject() {
 		$OldObject = $this->fetch( $this->insert(array(
-			Object::TEMPERATURE => 5,
-			Object::SPORTID => $this->OutdoorID
+			Entity::TEMPERATURE => 5,
+			Entity::SPORTID => $this->OutdoorID
 		)) );
 
 		$this->assertFalse($OldObject->weather()->temperature()->isUnknown());
@@ -322,17 +322,17 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 		// TODO: Needs configuration setting
 		if (Configuration::ActivityForm()->computePower()) {
 			$OldObject = $this->fetch( $this->insert(array(
-				Object::DISTANCE => 10,
-				Object::TIME_IN_SECONDS => 3000,
-				Object::SPORTID => $this->IndoorID
+				Entity::DISTANCE => 10,
+				Entity::TIME_IN_SECONDS => 3000,
+				Entity::SPORTID => $this->IndoorID
 			)));
 
 			$NewObject = clone $OldObject;
-			$NewObject->set(Object::SPORTID, $this->OutdoorID);
+			$NewObject->set(Entity::SPORTID, $this->OutdoorID);
 
-			$Result = $this->update($NewObject, $OldObject, new Model\Trackdata\Object(array(
-				Model\Trackdata\Object::TIME => array(1500, 3000),
-				Model\Trackdata\Object::DISTANCE => array(5, 10)
+			$Result = $this->update($NewObject, $OldObject, new Model\Trackdata\Entity(array(
+				Model\Trackdata\Entity::TIME => array(1500, 3000),
+				Model\Trackdata\Entity::DISTANCE => array(5, 10)
 			)));
 
 			$this->assertEquals(0, $OldObject->power());
@@ -345,10 +345,10 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 		$this->PDO->exec('UPDATE `runalyze_equipment` SET `distance`=0, `time`=0 WHERE `id`='.$this->EquipmentA);
 		$this->PDO->exec('UPDATE `runalyze_equipment` SET `distance`=0, `time`=0 WHERE `id`='.$this->EquipmentB);
 
-		$OldObject = new Object(array(
-			Object::DISTANCE => 12.34,
-			Object::TIME_IN_SECONDS => 3600,
-			Object::SPORTID => $this->OutdoorID
+		$OldObject = new Entity(array(
+			Entity::DISTANCE => 12.34,
+			Entity::TIME_IN_SECONDS => 3600,
+			Entity::SPORTID => $this->OutdoorID
 		));
 		$Inserter = new Inserter($this->PDO);
 		$Inserter->setAccountID(0);

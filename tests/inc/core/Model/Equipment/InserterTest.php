@@ -5,7 +5,7 @@ namespace Runalyze\Model\Equipment;
 use PDO;
 use DB;
 
-class InvalidInserterObjectForType_MockTester extends \Runalyze\Model\Object {
+class InvalidInserterObjectForType_MockTester extends \Runalyze\Model\Entity {
 	public function properties() {
 		return array('foo');
 	}
@@ -47,12 +47,12 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testSimpleInsert() {
-		$Equipment = new Object(array(
-			Object::NAME => 'Equipment name',
-			Object::TYPEID => $this->Typeid,
-			Object::NOTES => 'Here are some notes',
-			Object::DATE_START => '2015-01-01',
-			Object::DATE_END => null
+		$Equipment = new Entity(array(
+			Entity::NAME => 'Equipment name',
+			Entity::TYPEID => $this->Typeid,
+			Entity::NOTES => 'Here are some notes',
+			Entity::DATE_START => '2015-01-01',
+			Entity::DATE_END => null
 		));
 
 		$Inserter = new Inserter($this->PDO, $Equipment);
@@ -60,7 +60,7 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		$Inserter->insert();
 
 		$data = $this->PDO->query('SELECT * FROM `'.PREFIX.'equipment` WHERE `accountid`=1')->fetch(PDO::FETCH_ASSOC);
-		$New = new Object($data);
+		$New = new Entity($data);
 
 		$this->assertEquals('Equipment name', $New->name());
 		$this->assertEquals('Here are some notes', $New->notes());

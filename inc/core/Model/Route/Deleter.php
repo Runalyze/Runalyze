@@ -18,9 +18,9 @@ class Deleter extends DeleterWithIDAndAccountID {
 	/**
 	 * Construct updater
 	 * @param \PDO $connection
-	 * @param \Runalyze\Model\Route\Object $object [optional]
+	 * @param \Runalyze\Model\Route\Entity $object [optional]
 	 */
-	public function __construct(\PDO $connection, Object $object = null) {
+	public function __construct(\PDO $connection, Entity $object = null) {
 		parent::__construct($connection, $object);
 	}
 

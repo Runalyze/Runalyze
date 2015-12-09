@@ -89,7 +89,7 @@ class ConfigTabEquipment extends ConfigTab {
 
 		$Sports = $this->Model->allSports();
 		$Types = $this->Model->allEquipmentTypes();
-		$Types[] = new EquipmentType\Object();
+		$Types[] = new EquipmentType\Entity();
 
 		foreach ($Types as $Type) {
 			$isNew = !$Type->hasID();
@@ -102,8 +102,8 @@ class ConfigTabEquipment extends ConfigTab {
 					<tr class="'.($isNew ? ' unimportant' : '').'">
 						<td><input type="text" class="middle-size" name="equipmenttype[name]['.$id.']" value="'.$Type->name().'"></td>
 						<td><select name="equipmenttype[input]['.$id.']"">
-								<option value="'.EquipmentType\Object::CHOICE_SINGLE.'" '.HTML::Selected(!$Type->allowsMultipleValues()).'>'.__('Single choice').'</option>
-								<option value="'.EquipmentType\Object::CHOICE_MULTIPLE.'" '.HTML::Selected($Type->allowsMultipleValues()).'>'.__('Multiple choice').'</option>
+								<option value="'.EquipmentType\Entity::CHOICE_SINGLE.'" '.HTML::Selected(!$Type->allowsMultipleValues()).'>'.__('Single choice').'</option>
+								<option value="'.EquipmentType\Entity::CHOICE_MULTIPLE.'" '.HTML::Selected($Type->allowsMultipleValues()).'>'.__('Multiple choice').'</option>
 							</select></td>
 						<td><span class="input-with-unit"><input type="text" class="small-size" name="equipmenttype[max_km]['.$id.']" value="'.round($MaxDistance->valueInPreferredUnit()).'"><label class="input-unit">'.$MaxDistance->unit().'</label></span></td>
 						<td><input type="text" class="small-size" name="equipmenttype[max_time]['.$id.']" value="'.($Type->maxDuration() > 0 ? Duration::format($Type->maxDuration()) : '').'" placeholder="d hh:mm:ss"></td>
@@ -147,7 +147,7 @@ class ConfigTabEquipment extends ConfigTab {
 
 		$Types = $this->Model->allEquipmentTypes();
 		$Equipments = $this->Model->allEquipments();
-		$Equipments[] = new Equipment\Object();
+		$Equipments[] = new Equipment\Entity();
 
 		foreach ($Equipments as $Equipment) {
 			$isNew = !$Equipment->hasID();
@@ -198,7 +198,7 @@ class ConfigTabEquipment extends ConfigTab {
 		$accountId = SessionAccountHandler::getId();
 
 		$Types = $this->Model->allEquipmentTypes();
-		$Types[] = new EquipmentType\Object();
+		$Types[] = new EquipmentType\Entity();
 
 		foreach ($Types as $Type) {
 			$isNew = !$Type->hasID();
@@ -209,10 +209,10 @@ class ConfigTabEquipment extends ConfigTab {
 			$MaxDistance->setInPreferredUnit($_POST['equipmenttype']['max_km'][$id]);
 
 			$NewType = clone $Type;
-			$NewType->set(EquipmentType\Object::NAME, $_POST['equipmenttype']['name'][$id]);
-			$NewType->set(EquipmentType\Object::INPUT, (int)$_POST['equipmenttype']['input'][$id]);
-			$NewType->set(EquipmentType\Object::MAX_KM, $MaxDistance->kilometer());
-			$NewType->set(EquipmentType\Object::MAX_TIME, $MaxTime->seconds());
+			$NewType->set(EquipmentType\Entity::NAME, $_POST['equipmenttype']['name'][$id]);
+			$NewType->set(EquipmentType\Entity::INPUT, (int)$_POST['equipmenttype']['input'][$id]);
+			$NewType->set(EquipmentType\Entity::MAX_KM, $MaxDistance->kilometer());
+			$NewType->set(EquipmentType\Entity::MAX_TIME, $MaxTime->seconds());
 
 			if ($isNew) {
 				if ($NewType->name() != '') {
@@ -249,7 +249,7 @@ class ConfigTabEquipment extends ConfigTab {
 		$accountId = SessionAccountHandler::getId();
 
 		$Equipments = $this->Model->allEquipments();
-		$Equipments[] = new Equipment\Object();
+		$Equipments[] = new Equipment\Entity();
 
 		foreach ($Equipments as $Equipment) {
 			$isNew = !$Equipment->hasID();
@@ -259,12 +259,12 @@ class ConfigTabEquipment extends ConfigTab {
 			$AdditionalDistance->setInPreferredUnit($_POST['equipment']['additional_km'][$id]);
 
 			$NewEquipment = clone $Equipment;
-			$NewEquipment->set(Equipment\Object::NAME, $_POST['equipment']['name'][$id]);
-			$NewEquipment->set(Equipment\Object::TYPEID, (int)$_POST['equipment']['typeid'][$id]);
-			$NewEquipment->set(Equipment\Object::ADDITIONAL_KM, $AdditionalDistance->kilometer());
-			$NewEquipment->set(Equipment\Object::DATE_START, $this->stringToDatetime($_POST['equipment']['date_start'][$id]));
-			$NewEquipment->set(Equipment\Object::DATE_END, $this->stringToDatetime($_POST['equipment']['date_end'][$id]));
-			$NewEquipment->set(Equipment\Object::NOTES, $_POST['equipment']['notes'][$id]);
+			$NewEquipment->set(Equipment\Entity::NAME, $_POST['equipment']['name'][$id]);
+			$NewEquipment->set(Equipment\Entity::TYPEID, (int)$_POST['equipment']['typeid'][$id]);
+			$NewEquipment->set(Equipment\Entity::ADDITIONAL_KM, $AdditionalDistance->kilometer());
+			$NewEquipment->set(Equipment\Entity::DATE_START, $this->stringToDatetime($_POST['equipment']['date_start'][$id]));
+			$NewEquipment->set(Equipment\Entity::DATE_END, $this->stringToDatetime($_POST['equipment']['date_end'][$id]));
+			$NewEquipment->set(Equipment\Entity::NOTES, $_POST['equipment']['notes'][$id]);
 
 			if ($isNew) {
 				if ($NewEquipment->name() != '') {

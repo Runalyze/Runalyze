@@ -20,32 +20,32 @@ use Runalyze\Model\Trackdata;
  */
 class Context {
 	/**
-	 * @var \Runalyze\Model\Activity\Object
+	 * @var \Runalyze\Model\Activity\Entity
 	 */
 	protected $Activity;
 
 	/**
-	 * @var \Runalyze\Model\Trackdata\Object
+	 * @var \Runalyze\Model\Trackdata\Entity
 	 */
 	protected $Trackdata;
         
 	/**
-	 * @var \Runalyze\Model\Swimdata\Object
+	 * @var \Runalyze\Model\Swimdata\Entity
 	 */
 	protected $Swimdata;
 
 	/**
-	 * @var \Runalyze\Model\Route\Object
+	 * @var \Runalyze\Model\Route\Entity
 	 */
 	protected $Route;
 
 	/**
-	 * @var \Runalyze\Model\HRV\Object
+	 * @var \Runalyze\Model\HRV\Entity
 	 */
 	protected $HRV;
 
 	/**
-	 * @var \Runalyze\Model\Sport\Object
+	 * @var \Runalyze\Model\Sport\Entity
 	 */
 	protected $Sport;
 
@@ -65,7 +65,7 @@ class Context {
 		$this->Activity = $Factory->activity((int)$activityID);
 		$this->Trackdata = $Factory->trackdata((int)$activityID);
 		$this->Swimdata = $Factory->swimdata((int)$activityID);
-		$this->Route = $this->Activity->get(Activity\Object::ROUTEID) ? $Factory->route($this->Activity->get(Activity\Object::ROUTEID)) : null;
+		$this->Route = $this->Activity->get(Activity\Entity::ROUTEID) ? $Factory->route($this->Activity->get(Activity\Entity::ROUTEID)) : null;
 		$this->HRV = $Factory->hrv((int)$activityID);
 		$this->Sport = $Factory->sport($this->Activity->sportid());
 		
@@ -76,42 +76,42 @@ class Context {
 	}
 
 	/**
-	 * @return \Runalyze\Model\Activity\Object
+	 * @return \Runalyze\Model\Activity\Entity
 	 */
 	public function activity() {
 		return $this->Activity;
 	}
 
 	/**
-	 * @return \Runalyze\Model\Trackdata\Object
+	 * @return \Runalyze\Model\Trackdata\Entity
 	 */
 	public function trackdata() {
 		return $this->Trackdata;
 	}
         
 	/**
-	 * @return \Runalyze\Model\Swimdata\Object
+	 * @return \Runalyze\Model\Swimdata\Entity
 	 */
 	public function swimdata() {
 		return $this->Swimdata;
 	}
 
 	/**
-	 * @return \Runalyze\Model\HRV\Object
+	 * @return \Runalyze\Model\HRV\Entity
 	 */
 	public function hrv() {
 		return $this->HRV;
 	}
 
 	/**
-	 * @return \Runalyze\Model\Sport\Object
+	 * @return \Runalyze\Model\Sport\Entity
 	 */
 	public function sport() {
 		return $this->Sport;
 	}
 
 	/**
-	 * @return \Runalyze\Model\Route\Object
+	 * @return \Runalyze\Model\Route\Entity
 	 */
 	public function route() {
 		return $this->Route;

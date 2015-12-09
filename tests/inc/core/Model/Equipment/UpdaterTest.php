@@ -36,25 +36,25 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 	public function testSimpleUpdate() {
 		$Inserter = new Inserter($this->PDO);
 		$Inserter->setAccountID(1);
-		$Inserter->insert(new Object(array(
-			Object::NAME => 'Equipment name',
-			Object::TYPEID => $this->Typeid,
-			Object::NOTES => 'Here are some notes',
-			Object::DATE_START => '2015-01-01',
-			Object::DATE_END => '2015-02-02'
+		$Inserter->insert(new Entity(array(
+			Entity::NAME => 'Equipment name',
+			Entity::TYPEID => $this->Typeid,
+			Entity::NOTES => 'Here are some notes',
+			Entity::DATE_START => '2015-01-01',
+			Entity::DATE_END => '2015-02-02'
 		)));
 
-		$Type = new Object($this->PDO->query('SELECT * FROM `'.PREFIX.'equipment` WHERE `id`='.$Inserter->insertedID())->fetch(PDO::FETCH_ASSOC));
-		$Type->set(Object::NOTES, '');
+		$Type = new Entity($this->PDO->query('SELECT * FROM `'.PREFIX.'equipment` WHERE `id`='.$Inserter->insertedID())->fetch(PDO::FETCH_ASSOC));
+		$Type->set(Entity::NOTES, '');
 
 		$Changed = clone $Type;
-		$Changed->set(Object::DATE_END, null);
+		$Changed->set(Entity::DATE_END, null);
 
 		$Updater = new Updater($this->PDO, $Changed, $Type);
 		$Updater->setAccountID(1);
 		$Updater->update();
 
-		$Result = new Object($this->PDO->query('SELECT * FROM `'.PREFIX.'equipment` WHERE `id`='.$Inserter->insertedID())->fetch(PDO::FETCH_ASSOC));
+		$Result = new Entity($this->PDO->query('SELECT * FROM `'.PREFIX.'equipment` WHERE `id`='.$Inserter->insertedID())->fetch(PDO::FETCH_ASSOC));
 
 		$this->assertEquals('Equipment name', $Result->name());
 		$this->assertEquals('Here are some notes', $Result->notes());

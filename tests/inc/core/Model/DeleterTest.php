@@ -18,7 +18,7 @@ class Deleter_MockTester extends DeleterWithAccountID {
 		$this->PDO->exec('INSERT INTO `'.PREFIX.'log` (`msg`) VALUES ("after")');
 	}
 }
-class DeleterObject_MockTester extends Object {
+class DeleterObject_MockTester extends Entity {
 	public function properties() {
 		return array ('foo');
 	}

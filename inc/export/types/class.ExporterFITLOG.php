@@ -86,7 +86,7 @@ class ExporterFITLOG extends ExporterAbstractFile {
 		$Route = ($this->Context->hasRoute() && $this->Context->route()->hasPositionData())
 				? new Route\Loop($this->Context->route()) : null;
 
-		$hasHeartrate = $this->Context->trackdata()->has(Trackdata\Object::HEARTRATE);
+		$hasHeartrate = $this->Context->trackdata()->has(Trackdata\Entity::HEARTRATE);
 
 		$Track = $this->Activity->addChild('Track');
 		$Track->addAttribute('StartTime', $this->timeToString($Starttime));
@@ -99,11 +99,11 @@ class ExporterFITLOG extends ExporterAbstractFile {
 				$Route->nextStep();
 				$Point->addAttribute('lat', $Route->latitude());
 				$Point->addAttribute('lon', $Route->longitude());
-				$Point->addAttribute('ele', $Route->current(Route\Object::ELEVATIONS_ORIGINAL));
+				$Point->addAttribute('ele', $Route->current(Route\Entity::ELEVATIONS_ORIGINAL));
 			}
 
 			if ($hasHeartrate) {
-				$Point->addAttribute('hr', $Trackdata->current(Trackdata\Object::HEARTRATE));
+				$Point->addAttribute('hr', $Trackdata->current(Trackdata\Entity::HEARTRATE));
 			}
 		}
 	}

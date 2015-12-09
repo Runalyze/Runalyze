@@ -43,12 +43,12 @@ class Calculator {
 	const AREA = 0.5;
 
 	/**
-	 * @var \Runalyze\Model\Trackdata\Object
+	 * @var \Runalyze\Model\Trackdata\Entity
 	 */
 	protected $Trackdata;
 
 	/**
-	 * @var \Runalyze\Model\Route\Object
+	 * @var \Runalyze\Model\Route\Entity
 	 */
 	protected $Route;
 
@@ -64,12 +64,12 @@ class Calculator {
 
 	/**
 	 * Calculator for activity properties
-	 * @param \Runalyze\Model\Trackdata\Object $trackdata
-	 * @param \Runalyze\Model\Route\Object $route
+	 * @param \Runalyze\Model\Trackdata\Entity $trackdata
+	 * @param \Runalyze\Model\Route\Entity $route
 	 */
 	public function __construct(
-		Trackdata\Object $trackdata,
-		Route\Object $route = null
+		Trackdata\Entity $trackdata,
+		Route\Entity $route = null
 	) {
 		$this->Trackdata = $trackdata;
 		$this->Route = $route;
@@ -108,7 +108,7 @@ class Calculator {
 	 * @return array
 	 */
 	public function calculate($weight = 75, $powerFactor = 1.0) {
-		if (!$this->Trackdata->has(Trackdata\Object::TIME) || !$this->Trackdata->has(Trackdata\Object::DISTANCE)) {
+		if (!$this->Trackdata->has(Trackdata\Entity::TIME) || !$this->Trackdata->has(Trackdata\Entity::DISTANCE)) {
 			return;
 		}
 

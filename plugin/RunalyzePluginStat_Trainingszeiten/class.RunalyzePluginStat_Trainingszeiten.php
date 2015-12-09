@@ -131,7 +131,7 @@ class RunalyzePluginStat_Trainingszeiten extends PluginStat {
 		echo '<tbody>';
 
 		foreach ($nights as $i => $data) {
-			$Activity = new Activity\Object($data);
+			$Activity = new Activity\Entity($data);
 			$Linker = new Linker($Activity);
 			$View = new Dataview($Activity);
 

@@ -92,8 +92,8 @@ class ChosenInserter {
          * @param string Tagname
          */
         private function setObjectwithTag($Tag) {
-                $newTag = new Model\Tag\Object;
-                $newTag->set(Model\Tag\Object::TAG, $Tag);
+                $newTag = new Model\Tag\Entity;
+                $newTag->set(Model\Tag\Entity::TAG, $Tag);
                 $this->TagObject = $newTag;
         }
         

@@ -17,7 +17,7 @@ class UpdaterObjectWithID_MockTester extends EntityWithID {
 		return array ('foo');
 	}
 }
-class InvalidUpdaterObjectWithID_MockTester extends Object {
+class InvalidUpdaterObjectWithID_MockTester extends Entity {
 	public function properties() {
 		return array ('foo');
 	}

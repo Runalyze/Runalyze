@@ -1,6 +1,6 @@
 <?php
 /**
- * This file contains class::Object
+ * This file contains class::Entity
  * @package Runalyze\Model\Activity\Splits
  */
 
@@ -9,12 +9,12 @@ namespace Runalyze\Model\Activity\Splits;
 use Runalyze\Model\StringArrayObject;
 
 /**
- * Splits object
+ * Splits entity
  * 
  * @author Hannes Christiansen
  * @package Runalyze\Model\Activity\Splits
  */
-class Object extends StringArrayObject {
+class Entity extends StringArrayObject {
 	/**
 	 * Separator
 	 * @var string

@@ -24,7 +24,7 @@ if (isset($_GET['delete']) && is_numeric($_GET['delete'])) {
 }
 
 $Training = new TrainingObject(Request::sendId());
-$Activity = new Activity\Object($Training->getArray());
+$Activity = new Activity\Entity($Training->getArray());
 
 $Linker = new Linker($Activity);
 $Dataview = new Dataview($Activity);

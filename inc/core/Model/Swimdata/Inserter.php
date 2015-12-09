@@ -17,16 +17,16 @@ use Runalyze\Model;
 class Inserter extends Model\InserterWithAccountID {
 	/**
 	 * Object
-	 * @var \Runalyze\Model\Swimdata\Object
+	 * @var \Runalyze\Model\Swimdata\Entity
 	 */
 	protected $Object;
 
 	/**
 	 * Construct inserter
 	 * @param \PDO $connection
-	 * @param \Runalyze\Model\Swimdata\Object $object [optional]
+	 * @param \Runalyze\Model\Swimdata\Entity $object [optional]
 	 */
-	public function __construct(\PDO $connection, Object $object = null) {
+	public function __construct(\PDO $connection, Entity $object = null) {
 		parent::__construct($connection, $object);
 	}
 
@@ -47,10 +47,10 @@ class Inserter extends Model\InserterWithAccountID {
 				self::ACCOUNTID
 			),
 			array_diff(
-				Object::allProperties(),
+				Entity::allProperties(),
 				array(
-					Object::SWOLF,
-					Object::SWOLFCYCLES
+					Entity::SWOLF,
+					Entity::SWOLFCYCLES
 				)
 			)
 		);

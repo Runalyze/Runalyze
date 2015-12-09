@@ -38,9 +38,9 @@ class HRV extends ActivityPointSeries {
 
 	/**
 	 * Init data
-	 * @param \Runalyze\Model\HRV\Object $hrv
+	 * @param \Runalyze\Model\HRV\Entity $hrv
 	 */
-	protected function initHRVData(Model\HRV\Object $hrv) {
+	protected function initHRVData(Model\HRV\Entity $hrv) {
 		if (count($this->XAxisData) == $hrv->num()) {
 			$this->XAxis = DataCollector::X_AXIS_TIME;
 			$this->Data = array_combine($this->XAxisData, $this->filterData($hrv->data()));

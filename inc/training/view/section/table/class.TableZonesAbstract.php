@@ -39,7 +39,7 @@ abstract class TableZonesAbstract {
 	public function __construct(Context $context) {
 		$this->Context = $context;
 
-		if ($this->Context->trackdata()->has(Runalyze\Model\Trackdata\Object::TIME)) {
+		if ($this->Context->trackdata()->has(Runalyze\Model\Trackdata\Entity::TIME)) {
 			$this->initData();
 			$this->convertData();
 		}

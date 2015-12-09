@@ -20,7 +20,7 @@ use Runalyze\Parameter\Application\PaceUnit;
  */
 class Table extends \Runalyze\View\Object {
 	/**
-	 * @var \Runalyze\Model\Activity\Splits\Object
+	 * @var \Runalyze\Model\Activity\Splits\Entity
 	 */
 	protected $Splits;
 
@@ -60,9 +60,9 @@ class Table extends \Runalyze\View\Object {
 	protected $Code = '';
 
 	/**
-	 * @param \Runalyze\Model\Activity\Splits\Object $splits
+	 * @param \Runalyze\Model\Activity\Splits\Entity $splits
 	 */
-	public function __construct(Splits\Object $splits, $paceUnit = PaceUnit::MIN_PER_KM) {
+	public function __construct(Splits\Entity $splits, $paceUnit = PaceUnit::MIN_PER_KM) {
 		$this->Splits = $splits;
 		$this->PaceUnit = $paceUnit;
 

@@ -20,22 +20,22 @@ use \League\Geotools\Coordinate\Coordinate;
  */
 class Inserter extends Model\InserterWithAccountID {
 	/**
-	 * @var \Runalyze\Model\Activity\Object
+	 * @var \Runalyze\Model\Activity\Entity
 	 */
 	protected $Object;
 
 	/**
-	 * @var \Runalyze\Model\Trackdata\Object
+	 * @var \Runalyze\Model\Trackdata\Entity
 	 */
 	protected $Trackdata = null;
 
 	/**
-	 * @var \Runalyze\Model\Swimdata\Object
+	 * @var \Runalyze\Model\Swimdata\Entity
 	 */
 	protected $Swimdata = null;
         
 	/**
-	 * @var \Runalyze\Model\Route\Object
+	 * @var \Runalyze\Model\Route\Entity
 	 */
 	protected $Route = null;
 
@@ -52,30 +52,30 @@ class Inserter extends Model\InserterWithAccountID {
 	/**
 	 * Construct inserter
 	 * @param \PDO $connection
-	 * @param \Runalyze\Model\Activity\Object $object [optional]
+	 * @param \Runalyze\Model\Activity\Entity $object [optional]
 	 */
-	public function __construct(\PDO $connection, Object $object = null) {
+	public function __construct(\PDO $connection, Entity $object = null) {
 		parent::__construct($connection, $object);
 	}
 
 	/**
-	 * @param \Runalyze\Model\Trackdata\Object $trackdata
+	 * @param \Runalyze\Model\Trackdata\Entity $trackdata
 	 */
-	public function setTrackdata(Model\Trackdata\Object $trackdata) {
+	public function setTrackdata(Model\Trackdata\Entity $trackdata) {
 		$this->Trackdata = $trackdata;
 	}
         
 	/**
-	 * @param \Runalyze\Model\Swimdata\Object $swimdata
+	 * @param \Runalyze\Model\Swimdata\Entity $swimdata
 	 */
-	public function setSwimdata(Model\Swimdata\Object $swimdata) {
+	public function setSwimdata(Model\Swimdata\Entity $swimdata) {
 		$this->Swimdata = $swimdata;
 	}
 
 	/**
-	 * @param \Runalyze\Model\Route\Object $route
+	 * @param \Runalyze\Model\Route\Entity $route
 	 */
-	public function setRoute(Model\Route\Object $route) {
+	public function setRoute(Model\Route\Entity $route) {
 		$this->Route = $route;
 	}
 
@@ -109,7 +109,7 @@ class Inserter extends Model\InserterWithAccountID {
 		return array_merge(array(
 				self::ACCOUNTID
 			),
-			Object::allDatabaseProperties()
+			Entity::allDatabaseProperties()
 		);
 	}
 
@@ -119,7 +119,7 @@ class Inserter extends Model\InserterWithAccountID {
 	protected function before() {
 		parent::before();
 
-		$this->Object->set(Object::TIMESTAMP_CREATED, time());
+		$this->Object->set(Entity::TIMESTAMP_CREATED, time());
 
 		$this->setSportIdIfEmpty();
 		$this->removeDataIfInside();
@@ -152,7 +152,7 @@ class Inserter extends Model\InserterWithAccountID {
 	 */
 	protected function setSportIdIfEmpty() {
 		if ($this->Object->sportid() == 0) {
-			$this->Object->set(Object::SPORTID, Configuration::General()->mainSport());
+			$this->Object->set(Entity::SPORTID, Configuration::General()->mainSport());
 		}
 	}
 
@@ -164,7 +164,7 @@ class Inserter extends Model\InserterWithAccountID {
 			$Factory = \Runalyze\Context::Factory();
 			$calories = $Factory->sport($this->Object->sportid())->caloriesPerHour() * $this->Object->duration() / 3600;
 
-			$this->Object->set(Object::CALORIES, $calories);
+			$this->Object->set(Entity::CALORIES, $calories);
 		}
 	}
 
@@ -179,10 +179,10 @@ class Inserter extends Model\InserterWithAccountID {
 		);
 
 		if ($this->Object->sportid() == Configuration::General()->runningSport()) {
-			$this->Object->set(Object::VDOT_BY_TIME, $Calculator->calculateVDOTbyTime());
-			$this->Object->set(Object::VDOT, $Calculator->calculateVDOTbyHeartRate());
-			$this->Object->set(Object::VDOT_WITH_ELEVATION, $Calculator->calculateVDOTbyHeartRateWithElevation());
-			$this->Object->set(Object::JD_INTENSITY, $Calculator->calculateJDintensity());
+			$this->Object->set(Entity::VDOT_BY_TIME, $Calculator->calculateVDOTbyTime());
+			$this->Object->set(Entity::VDOT, $Calculator->calculateVDOTbyHeartRate());
+			$this->Object->set(Entity::VDOT_WITH_ELEVATION, $Calculator->calculateVDOTbyHeartRateWithElevation());
+			$this->Object->set(Entity::JD_INTENSITY, $Calculator->calculateJDintensity());
 
 			if (class_exists('RunalyzePluginPanel_Rechenspiele') && $this->Object->timestamp() > time() - 14*DAY_IN_S) {
 				\Cache::delete(\RunalyzePluginPanel_Rechenspiele::CACHE_KEY_JD_POINTS);
@@ -191,7 +191,7 @@ class Inserter extends Model\InserterWithAccountID {
 			$this->Object->unsetRunningValues();
 		}
 
-		$this->Object->set(Object::TRIMP, $Calculator->calculateTrimp());
+		$this->Object->set(Entity::TRIMP, $Calculator->calculateTrimp());
 	}
 
 	/**
@@ -209,8 +209,8 @@ class Inserter extends Model\InserterWithAccountID {
 			);
 			$Calculator->calculate();
 
-			$this->Trackdata->set(Model\Trackdata\Object::POWER, $Calculator->powerData());
-			$this->Object->set(Object::POWER, $Calculator->average());
+			$this->Trackdata->set(Model\Trackdata\Entity::POWER, $Calculator->powerData());
+			$this->Object->set(Entity::POWER, $Calculator->average());
 		}
 	}
 
@@ -219,7 +219,7 @@ class Inserter extends Model\InserterWithAccountID {
 	 */
 	protected function calculateStrideLength() {
 		if ($this->Object->sportid() == Configuration::General()->runningSport()) {
-			$this->Object->set(Object::STRIDE_LENGTH, \Runalyze\Calculation\StrideLength\Calculator::forActivity($this->Object));
+			$this->Object->set(Entity::STRIDE_LENGTH, \Runalyze\Calculation\StrideLength\Calculator::forActivity($this->Object));
 		}
 	}
 
@@ -228,7 +228,7 @@ class Inserter extends Model\InserterWithAccountID {
 	 */
 	protected function calculateVerticalRatio() {
 		if ($this->Object->sportid() == Configuration::General()->runningSport()) {
-			$this->Object->set(Object::VERTICAL_RATIO, \Runalyze\Calculation\Activity\VerticalRatioCalculator::forActivity($this->Object));
+			$this->Object->set(Entity::VERTICAL_RATIO, \Runalyze\Calculation\Activity\VerticalRatioCalculator::forActivity($this->Object));
 		}
 	}
 
@@ -238,7 +238,7 @@ class Inserter extends Model\InserterWithAccountID {
 	protected function calculateSwimValues() {
 		if (null !== $this->Trackdata && null !== $this->Swimdata) {
 			if ($this->Swimdata->stroke()) {
-				$this->Object->set(Object::TOTAL_STROKES, array_sum($this->Swimdata->stroke()));
+				$this->Object->set(Entity::TOTAL_STROKES, array_sum($this->Swimdata->stroke()));
 			}
 
 			if ($this->Object->totalStrokes() && $this->Trackdata->totalTime()) {
@@ -247,7 +247,7 @@ class Inserter extends Model\InserterWithAccountID {
 			   $totalstrokes = $this->Object->totalStrokes();
 
 				if (!empty($totalstrokes) && !empty($totaltime) & !empty($num) && $totalstrokes != 0) {
-					$this->Object->set(Object::SWOLF, round(($totalstrokes + $totaltime) / $num));
+					$this->Object->set(Entity::SWOLF, round(($totalstrokes + $totaltime) / $num));
 				}
 			}
 		}

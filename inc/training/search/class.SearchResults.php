@@ -525,7 +525,7 @@ class SearchResults {
 	 * @param \Runalyze\View\Dataset\Table $Table
 	 */
 	protected function displayTrainingRows(\Runalyze\View\Dataset\Table $Table) {
-		$Context = new \Runalyze\Dataset\Context(new Runalyze\Model\Activity\Object(), $this->AccountID);
+		$Context = new \Runalyze\Dataset\Context(new Runalyze\Model\Activity\Entity(), $this->AccountID);
 
 		foreach ($this->Trainings as $training) {
 			$date = date("d.m.Y", $training['time']);

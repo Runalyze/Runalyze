@@ -28,9 +28,9 @@ class SplitsReader {
 	}
 
 	/**
-	 * @param \Runalyze\Model\Activity\Splits\Object $Splits
+	 * @param \Runalyze\Model\Activity\Splits\Entity $Splits
 	 */
-	public function readFrom(Splits\Object $Splits) {
+	public function readFrom(Splits\Entity $Splits) {
 		foreach ($Splits->asArray() as $Split) {
 			$this->Laps->add(new Lap(
 				$Split->time(),

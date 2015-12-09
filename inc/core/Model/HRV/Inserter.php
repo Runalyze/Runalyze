@@ -17,16 +17,16 @@ use Runalyze\Model;
 class Inserter extends Model\InserterWithAccountID {
 	/**
 	 * Object
-	 * @var \Runalyze\Model\HRV\Object
+	 * @var \Runalyze\Model\HRV\Entity
 	 */
 	protected $Object;
 
 	/**
 	 * Construct inserter
 	 * @param \PDO $connection
-	 * @param \Runalyze\Model\HRV\Object $object [optional]
+	 * @param \Runalyze\Model\HRV\Entity $object [optional]
 	 */
-	public function __construct(\PDO $connection, Object $object = null) {
+	public function __construct(\PDO $connection, Entity $object = null) {
 		parent::__construct($connection, $object);
 	}
 
@@ -46,7 +46,7 @@ class Inserter extends Model\InserterWithAccountID {
 		return array_merge(array(
 				self::ACCOUNTID
 			),
-			Object::allProperties()
+			Entity::allProperties()
 		);
 	}
 }

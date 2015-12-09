@@ -37,24 +37,24 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 	public function testSimpleUpdate() {
 		$Inserter = new Inserter($this->PDO);
 		$Inserter->setAccountID(1);
-		$Inserter->insert(new Object(array(
-			Object::NAME => 'Type name',
-			Object::ABBREVIATION => 'Tn',
-			Object::HR_AVG => 120,
-			Object::QUALITY_SESSION => 1
+		$Inserter->insert(new Entity(array(
+			Entity::NAME => 'Type name',
+			Entity::ABBREVIATION => 'Tn',
+			Entity::HR_AVG => 120,
+			Entity::QUALITY_SESSION => 1
 		)));
 
-		$Type = new Object($this->PDO->query('SELECT * FROM `'.PREFIX.'type` WHERE `id`='.$Inserter->insertedID())->fetch(PDO::FETCH_ASSOC));
-		$Type->set(Object::ABBREVIATION, '');
+		$Type = new Entity($this->PDO->query('SELECT * FROM `'.PREFIX.'type` WHERE `id`='.$Inserter->insertedID())->fetch(PDO::FETCH_ASSOC));
+		$Type->set(Entity::ABBREVIATION, '');
 
 		$Changed = clone $Type;
-		$Changed->set(Object::NAME, 'New type name');
+		$Changed->set(Entity::NAME, 'New type name');
 
 		$Updater = new Updater($this->PDO, $Changed, $Type);
 		$Updater->setAccountID(1);
 		$Updater->update();
 
-		$Result = new Object($this->PDO->query('SELECT * FROM `'.PREFIX.'type` WHERE `id`='.$Inserter->insertedID())->fetch(PDO::FETCH_ASSOC));
+		$Result = new Entity($this->PDO->query('SELECT * FROM `'.PREFIX.'type` WHERE `id`='.$Inserter->insertedID())->fetch(PDO::FETCH_ASSOC));
 		$this->assertEquals('New type name', $Result->name());
 		$this->assertEquals('Tn', $Result->abbreviation());
 		$this->assertEquals(120, $Result->hrAvg());

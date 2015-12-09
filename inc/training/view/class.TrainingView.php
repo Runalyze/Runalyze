@@ -113,11 +113,11 @@ class TrainingView {
 
 		if (
 			(
-				$this->Context->trackdata()->has(\Runalyze\Model\Trackdata\Object::CADENCE) &&
+				$this->Context->trackdata()->has(\Runalyze\Model\Trackdata\Entity::CADENCE) &&
 				$this->Context->sport()->id() == Configuration::General()->runningSport()
 			) ||
-			$this->Context->trackdata()->has(\Runalyze\Model\Trackdata\Object::GROUNDCONTACT) ||
-			$this->Context->trackdata()->has(\Runalyze\Model\Trackdata\Object::VERTICAL_OSCILLATION)
+			$this->Context->trackdata()->has(\Runalyze\Model\Trackdata\Entity::GROUNDCONTACT) ||
+			$this->Context->trackdata()->has(\Runalyze\Model\Trackdata\Entity::VERTICAL_OSCILLATION)
 		) {
 			$this->Sections[] = new SectionRunningDynamics($this->Context);
 			$this->Sections[] = new SectionMiscellaneous($this->Context, false);

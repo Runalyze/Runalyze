@@ -12,7 +12,7 @@ namespace Runalyze\Model;
  * @author Hannes Christiansen
  * @package Runalyze\Model
  */
-abstract class EntityWithID extends Object {
+abstract class EntityWithID extends Entity {
 	/**
 	 * ID
 	 * @var int

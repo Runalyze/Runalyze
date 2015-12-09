@@ -81,18 +81,18 @@ class ExporterTCX extends ExporterAbstractFile {
 
 		while (!$Loop->isAtEnd()) {
 			$Loop->nextKilometer();
-			$TimeInSeconds = $Loop->difference(Trackdata\Object::TIME);
+			$TimeInSeconds = $Loop->difference(Trackdata\Entity::TIME);
 
 			$Lap = $this->Activity->addChild('Lap');
 			$Lap->addAttribute('StartTime', $this->timeToString($Starttime + $Loop->time() - $TimeInSeconds));
 			$Lap->addChild('TotalTimeSeconds', $TimeInSeconds);
-			$Lap->addChild('DistanceMeters', 1000*$Loop->difference(Trackdata\Object::DISTANCE));
+			$Lap->addChild('DistanceMeters', 1000*$Loop->difference(Trackdata\Entity::DISTANCE));
 
-			if ($this->Context->trackdata()->has(Trackdata\Object::HEARTRATE)) {
+			if ($this->Context->trackdata()->has(Trackdata\Entity::HEARTRATE)) {
 				$AvgBpm = $Lap->addChild('AverageHeartRateBpm');
-				$AvgBpm->addChild('Value', $Loop->average(Trackdata\Object::HEARTRATE));
+				$AvgBpm->addChild('Value', $Loop->average(Trackdata\Entity::HEARTRATE));
 				$MaxBpm = $Lap->addChild('MaximumHeartRateBpm');
-				$MaxBpm->addChild('Value', $Loop->max(Trackdata\Object::HEARTRATE));
+				$MaxBpm->addChild('Value', $Loop->max(Trackdata\Entity::HEARTRATE));
 			}
 
 			$Lap->addChild('Intensity', 'Active');
@@ -115,7 +115,7 @@ class ExporterTCX extends ExporterAbstractFile {
 		$Route = new Route\Loop($this->Context->route());
 
 		$hasElevation = $this->Context->route()->hasOriginalElevations();
-		$hasHeartrate = $this->Context->trackdata()->has(Trackdata\Object::HEARTRATE);
+		$hasHeartrate = $this->Context->trackdata()->has(Trackdata\Entity::HEARTRATE);
 
 		while ($Trackdata->nextStep()) {
 			$Route->nextStep();
@@ -129,14 +129,14 @@ class ExporterTCX extends ExporterAbstractFile {
 				$Position->addChild('LongitudeDegrees', $Route->longitude());
 
 				if ($hasElevation) {
-					$Trackpoint->addChild('AltitudeMeters', $Route->current(Route\Object::ELEVATIONS_ORIGINAL));
+					$Trackpoint->addChild('AltitudeMeters', $Route->current(Route\Entity::ELEVATIONS_ORIGINAL));
 				}
 
 				$Trackpoint->addChild('DistanceMeters', 1000*$Trackdata->distance());
 
 				if ($hasHeartrate) {
 					$Heartrate = $Trackpoint->addChild('HeartRateBpm');
-					$Heartrate->addChild('Value', $Trackdata->current(Trackdata\Object::HEARTRATE));
+					$Heartrate->addChild('Value', $Trackdata->current(Trackdata\Entity::HEARTRATE));
 				}
 			}
 		}

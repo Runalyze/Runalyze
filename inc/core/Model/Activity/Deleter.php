@@ -18,7 +18,7 @@ use Runalyze\Configuration;
  */
 class Deleter extends Model\DeleterWithIDAndAccountID {
 	/**
-	 * @var \Runalyze\Model\Activity\Object
+	 * @var \Runalyze\Model\Activity\Entity
 	 */
 	protected $Object;
 
@@ -35,9 +35,9 @@ class Deleter extends Model\DeleterWithIDAndAccountID {
 	/**
 	 * Construct deleter
 	 * @param \PDO $connection
-	 * @param \Runalyze\Model\Activity\Object $object [optional]
+	 * @param \Runalyze\Model\Activity\Entity $object [optional]
 	 */
-	public function __construct(\PDO $connection, Object $object = null) {
+	public function __construct(\PDO $connection, Entity $object = null) {
 		parent::__construct($connection, $object);
 	}
 
@@ -82,7 +82,7 @@ class Deleter extends Model\DeleterWithIDAndAccountID {
 	 * Delete trackdata
 	 */
 	protected function deleteTrackdata() {
-		$Deleter = new Model\Trackdata\Deleter($this->PDO, new Model\Trackdata\Object(array(
+		$Deleter = new Model\Trackdata\Deleter($this->PDO, new Model\Trackdata\Entity(array(
 			'activityid' => $this->Object->id()
 		)));
 		$Deleter->setAccountID($this->AccountID);
@@ -93,7 +93,7 @@ class Deleter extends Model\DeleterWithIDAndAccountID {
 	 * Delete trackdata
 	 */
 	protected function deleteSwimdata() {
-		$Deleter = new Model\Swimdata\Deleter($this->PDO, new Model\Swimdata\Object(array(
+		$Deleter = new Model\Swimdata\Deleter($this->PDO, new Model\Swimdata\Entity(array(
 			'activityid' => $this->Object->id()
 		)));
 		$Deleter->setAccountID($this->AccountID);
@@ -104,11 +104,11 @@ class Deleter extends Model\DeleterWithIDAndAccountID {
 	 * Delete route
 	 */
 	protected function deleteRoute() {
-		if ($this->Object->get(Model\Activity\Object::ROUTEID) > 0) {
+		if ($this->Object->get(Model\Activity\Entity::ROUTEID) > 0) {
 			// TODO: check if route was uniquely used
 			// For the moment, routes are created uniquely, so that's right.
-			$Deleter = new Model\Route\Deleter($this->PDO, new Model\Route\Object(array(
-				'id' => $this->Object->get(Model\Activity\Object::ROUTEID)
+			$Deleter = new Model\Route\Deleter($this->PDO, new Model\Route\Entity(array(
+				'id' => $this->Object->get(Model\Activity\Entity::ROUTEID)
 			)));
 			$Deleter->setAccountID($this->AccountID);
 			$Deleter->delete();
@@ -121,7 +121,7 @@ class Deleter extends Model\DeleterWithIDAndAccountID {
 	protected function updateEquipment() {
 		if (!empty($this->EquipmentIDs)) {
 	        $EquipmentUpdater = new EquipmentUpdater($this->PDO, $this->Object->id());
-			$EquipmentUpdater->setActivityObjects(new Object(), $this->Object);
+			$EquipmentUpdater->setActivityObjects(new Entity(), $this->Object);
 			$EquipmentUpdater->update(array(), $this->EquipmentIDs);
 		}
 	}

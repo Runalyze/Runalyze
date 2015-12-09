@@ -22,23 +22,23 @@ use Runalyze\Configuration;
 class Updater extends Model\UpdaterWithIDAndAccountID {
 	/**
 	 * Old object
-	 * @var \Runalyze\Model\Activity\Object
+	 * @var \Runalyze\Model\Activity\Entity
 	 */
 	protected $OldObject;
 
 	/**
 	 * New object
-	 * @var \Runalyze\Model\Activity\Object
+	 * @var \Runalyze\Model\Activity\Entity
 	 */
 	protected $NewObject;
 
 	/**
-	 * @var \Runalyze\Model\Trackdata\Object
+	 * @var \Runalyze\Model\Trackdata\Entity
 	 */
 	protected $Trackdata = null;
 
 	/**
-	 * @var \Runalyze\Model\Route\Object
+	 * @var \Runalyze\Model\Route\Entity
 	 */
 	protected $Route = null;
 
@@ -70,24 +70,24 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 	/**
 	 * Construct updater
 	 * @param \PDO $connection
-	 * @param \Runalyze\Model\Activity\Object $newObject [optional]
-	 * @param \Runalyze\Model\Activity\Object $oldObject [optional]
+	 * @param \Runalyze\Model\Activity\Entity $newObject [optional]
+	 * @param \Runalyze\Model\Activity\Entity $oldObject [optional]
 	 */
-	public function __construct(\PDO $connection, Object $newObject = null, Object $oldObject = null) {
+	public function __construct(\PDO $connection, Entity $newObject = null, Entity $oldObject = null) {
 		parent::__construct($connection, $newObject, $oldObject);
 	}
 
 	/**
-	 * @param \Runalyze\Model\Trackdata\Object $trackdata
+	 * @param \Runalyze\Model\Trackdata\Entity $trackdata
 	 */
-	public function setTrackdata(Model\Trackdata\Object $trackdata) {
+	public function setTrackdata(Model\Trackdata\Entity $trackdata) {
 		$this->Trackdata = $trackdata;
 	}
 
 	/**
-	 * @param \Runalyze\Model\Route\Object $route
+	 * @param \Runalyze\Model\Route\Entity $route
 	 */
-	public function setRoute(Model\Route\Object $route) {
+	public function setRoute(Model\Route\Entity $route) {
 		$this->Route = $route;
 	}
 
@@ -132,7 +132,7 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 		return array_merge(array(
 				self::ACCOUNTID
 			),
-			Object::allDatabaseProperties()
+			Entity::allDatabaseProperties()
 		);
 	}
 
@@ -142,7 +142,7 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 	 * @return boolean
 	 */
 	protected function ignore($key) {
-		if ($key == Object::DISTANCE || $key == Object::TIME_IN_SECONDS) {
+		if ($key == Entity::DISTANCE || $key == Entity::TIME_IN_SECONDS) {
 			// TODO: needed if equipment is set
 			if ($this->OldObject == null && false) {
 				throw new \RuntimeException('For an update of distance or duration the old object has to be set.');
@@ -158,7 +158,7 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 	protected function before() {
 		parent::before();
 
-		$this->NewObject->set(Object::TIMESTAMP_EDITED, time());
+		$this->NewObject->set(Entity::TIMESTAMP_EDITED, time());
 
 		$this->updateVDOTAndIntensityAndTrimp();
 		$this->deleteIntensityCache();
@@ -178,24 +178,24 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 		);
 
 		if ($this->NewObject->sportid() == Configuration::General()->runningSport()) {
-			$wasNotRunning = $this->knowsOldObject() && $this->hasChanged(Object::SPORTID);
-			if ($this->ForceRecalculations || $wasNotRunning || $this->hasChanged(Object::TIME_IN_SECONDS) || $this->hasChanged(Object::DISTANCE) || $this->hasChanged(Object::HR_AVG) || $this->hasChanged(Object::ELEVATION)) {
-				$this->NewObject->set(Object::VDOT_BY_TIME, $Calculator->calculateVDOTbyTime());
-				$this->NewObject->set(Object::JD_INTENSITY, $Calculator->calculateJDintensity());
-				$this->NewObject->set(Object::VDOT, $Calculator->calculateVDOTbyHeartRate());
-				$this->NewObject->set(Object::VDOT_WITH_ELEVATION, $Calculator->calculateVDOTbyHeartRateWithElevation());
+			$wasNotRunning = $this->knowsOldObject() && $this->hasChanged(Entity::SPORTID);
+			if ($this->ForceRecalculations || $wasNotRunning || $this->hasChanged(Entity::TIME_IN_SECONDS) || $this->hasChanged(Entity::DISTANCE) || $this->hasChanged(Entity::HR_AVG) || $this->hasChanged(Entity::ELEVATION)) {
+				$this->NewObject->set(Entity::VDOT_BY_TIME, $Calculator->calculateVDOTbyTime());
+				$this->NewObject->set(Entity::JD_INTENSITY, $Calculator->calculateJDintensity());
+				$this->NewObject->set(Entity::VDOT, $Calculator->calculateVDOTbyHeartRate());
+				$this->NewObject->set(Entity::VDOT_WITH_ELEVATION, $Calculator->calculateVDOTbyHeartRateWithElevation());
 			}
 		} else {
 			$this->NewObject->unsetRunningValues();
 		}
 
 		if ($this->ForceRecalculations || (
-				(null === $this->Trackdata || !$this->Trackdata->has(Model\Trackdata\Object::TIME) || !$this->Trackdata->has(Model\Trackdata\Object::HEARTRATE)) && (
-					$this->hasChanged(Object::SPORTID) || $this->hasChanged(Object::TIME_IN_SECONDS) || $this->hasChanged(Object::HR_AVG)
+				(null === $this->Trackdata || !$this->Trackdata->has(Model\Trackdata\Entity::TIME) || !$this->Trackdata->has(Model\Trackdata\Entity::HEARTRATE)) && (
+					$this->hasChanged(Entity::SPORTID) || $this->hasChanged(Entity::TIME_IN_SECONDS) || $this->hasChanged(Entity::HR_AVG)
 				)
 			)
 		) {
-			$this->NewObject->set(Object::TRIMP, $Calculator->calculateTrimp());
+			$this->NewObject->set(Entity::TRIMP, $Calculator->calculateTrimp());
 		}
 	}
 
@@ -207,11 +207,11 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 		$timestampLimit = time() - 14 * DAY_IN_S;
 
 		if (
-			($this->hasChanged(Object::JD_INTENSITY) && (
+			($this->hasChanged(Entity::JD_INTENSITY) && (
 				$this->NewObject->timestamp() >= $timestampLimit ||
 				($this->knowsOldObject() && $this->OldObject->timestamp() >= $timestampLimit)
 			)) || (
-				$this->knowsOldObject() && $this->hasChanged(Object::TIMESTAMP) && (
+				$this->knowsOldObject() && $this->hasChanged(Entity::TIMESTAMP) && (
 					$this->NewObject->timestamp() >= $timestampLimit ||
 					$this->OldObject->timestamp() >= $timestampLimit
 				)
@@ -225,12 +225,12 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 	 * Update power
 	 */
 	protected function updatePower() {
-		if ($this->hasChanged(Object::SPORTID)) {
+		if ($this->hasChanged(Entity::SPORTID)) {
 			if (
 				\Runalyze\Context::Factory()->sport($this->NewObject->sportid())->hasPower() &&
 				null !== $this->Trackdata &&
-				$this->Trackdata->has(Model\Trackdata\Object::TIME) && 
-				$this->Trackdata->has(Model\Trackdata\Object::DISTANCE)
+				$this->Trackdata->has(Model\Trackdata\Entity::TIME) && 
+				$this->Trackdata->has(Model\Trackdata\Entity::DISTANCE)
 			) {
 				$Calculator = new \Runalyze\Calculation\Power\Calculator(
 					$this->Trackdata,
@@ -239,10 +239,10 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 				$Calculator->calculate();
 
 				$this->updatePowerForTrackdata($Calculator->powerData());
-				$this->NewObject->set(Object::POWER, $Calculator->average());
+				$this->NewObject->set(Entity::POWER, $Calculator->average());
 			} else {
 				$this->updatePowerForTrackdata(array());
-				$this->NewObject->set(Object::POWER, 0);
+				$this->NewObject->set(Entity::POWER, 0);
 			}
 		}
 	}
@@ -254,15 +254,15 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 	protected function updatePowerForTrackdata(array $powerData) {
 		if (
 			(null !== $this->Trackdata) && (
-				(empty($powerData) && $this->Trackdata->has(Model\Trackdata\Object::POWER)) ||
-				(!empty($powerData) && !$this->Trackdata->has(Model\Trackdata\Object::POWER))
+				(empty($powerData) && $this->Trackdata->has(Model\Trackdata\Entity::POWER)) ||
+				(!empty($powerData) && !$this->Trackdata->has(Model\Trackdata\Entity::POWER))
 			)
 		) {
-			$this->Trackdata->set(Model\Trackdata\Object::POWER, $powerData);
+			$this->Trackdata->set(Model\Trackdata\Entity::POWER, $powerData);
 
 			$TrackdataUpdater = new Model\Trackdata\Updater($this->PDO);
 			$TrackdataUpdater->setAccountID($this->AccountID);
-			$TrackdataUpdater->update($this->Trackdata, array(Model\Trackdata\Object::POWER));
+			$TrackdataUpdater->update($this->Trackdata, array(Model\Trackdata\Entity::POWER));
 		}
 	}
 
@@ -271,14 +271,14 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 	 */
 	protected function updateStrideLength() {
 		if (
-			$this->hasChanged(Object::SPORTID) ||
-			$this->hasChanged(Object::VERTICAL_OSCILLATION) ||
-			$this->hasChanged(Object::STRIDE_LENGTH)
+			$this->hasChanged(Entity::SPORTID) ||
+			$this->hasChanged(Entity::VERTICAL_OSCILLATION) ||
+			$this->hasChanged(Entity::STRIDE_LENGTH)
 		) {
 			if ($this->NewObject->sportid() == Configuration::General()->runningSport()) {
-				$this->NewObject->set(Object::STRIDE_LENGTH, \Runalyze\Calculation\StrideLength\Calculator::forActivity($this->NewObject));
+				$this->NewObject->set(Entity::STRIDE_LENGTH, \Runalyze\Calculation\StrideLength\Calculator::forActivity($this->NewObject));
 			} else {
-				$this->NewObject->set(Object::STRIDE_LENGTH, 0);
+				$this->NewObject->set(Entity::STRIDE_LENGTH, 0);
 			}
 		}
 	}
@@ -288,11 +288,11 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 	 */
 	protected function updateVerticalRatio() {
 		if (
-			$this->hasChanged(Object::SPORTID) ||
-			$this->hasChanged(Object::VERTICAL_OSCILLATION) ||
-			$this->hasChanged(Object::STRIDE_LENGTH)
+			$this->hasChanged(Entity::SPORTID) ||
+			$this->hasChanged(Entity::VERTICAL_OSCILLATION) ||
+			$this->hasChanged(Entity::STRIDE_LENGTH)
 		) {
-			$this->NewObject->set(Object::VERTICAL_RATIO, VerticalRatioCalculator::forActivity($this->NewObject));
+			$this->NewObject->set(Entity::VERTICAL_RATIO, VerticalRatioCalculator::forActivity($this->NewObject));
 		}
 	}
         
@@ -338,7 +338,7 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 	 * Update start time
 	 */
 	protected function updateStartTime() {
-		if ($this->hasChanged(Object::TIMESTAMP)) {
+		if ($this->hasChanged(Entity::TIMESTAMP)) {
 			if ($this->NewObject->timestamp() < Configuration::Data()->startTime()) {
 				Configuration::Data()->updateStartTime($this->NewObject->timestamp());
 			} elseif ($this->knowsOldObject() && $this->OldObject->timestamp() == Configuration::Data()->startTime()) {
@@ -355,7 +355,7 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 
 		if (
 			(
-				$this->hasChanged(Object::USE_VDOT) &&
+				$this->hasChanged(Entity::USE_VDOT) &&
 				(
 					$this->NewObject->timestamp() >= $timestampLimit ||
 					($this->knowsOldObject() && $this->OldObject->timestamp() > $timestampLimit)
@@ -364,10 +364,10 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 			(
 				$this->NewObject->usesVDOT() &&
 				(
-					$this->hasChanged(Object::VDOT) ||
-					$this->hasChanged(Object::VDOT_WITH_ELEVATION) ||
+					$this->hasChanged(Entity::VDOT) ||
+					$this->hasChanged(Entity::VDOT_WITH_ELEVATION) ||
 					(
-						$this->hasChanged(Object::TIMESTAMP) &&
+						$this->hasChanged(Entity::TIMESTAMP) &&
 						$this->knowsOldObject() &&
 						(
 							($this->NewObject->timestamp() >= $timestampLimit && $this->OldObject->timestamp() < $timestampLimit) ||
@@ -383,7 +383,7 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 		if (
 			(
 				$this->NewObject->usesVDOT() ||
-				$this->hasChanged(Object::USE_VDOT)
+				$this->hasChanged(Entity::USE_VDOT)
 			) &&
 			(
 				$this->NewObject->typeid() == Configuration::General()->competitionType() ||
@@ -402,9 +402,9 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 
 		if (
 			(
-				$this->hasChanged(Object::DISTANCE) ||
-				$this->hasChanged(Object::TIMESTAMP) ||
-				$this->hasChanged(Object::SPORTID)
+				$this->hasChanged(Entity::DISTANCE) ||
+				$this->hasChanged(Entity::TIMESTAMP) ||
+				$this->hasChanged(Entity::SPORTID)
 			) && (
 				($this->NewObject->sportid() == Configuration::General()->runningSport() && $this->NewObject->timestamp() > $timestampLimit) ||
 				($this->knowsOldObject() && $this->OldObject->sportid() == Configuration::General()->runningSport() && $this->OldObject->timestamp() > $timestampLimit)

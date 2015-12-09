@@ -1,6 +1,6 @@
 <?php
 /**
- * This file contains class::Object
+ * This file contains class::Entity
  * @package Runalyze\Model\Route
  */
 
@@ -11,16 +11,16 @@ use League\Geotools\Geohash\Geohash;
 use \League\Geotools\Coordinate\Coordinate;
 
 /**
- * Route object
+ * Route entity
  * 
- * Attention: `set(Object::GEOHASHES, $geohashes)` or `setLatitudesLongitudes($lats, $lngs)`
+ * Attention: `set(Entity::GEOHASHES, $geohashes)` or `setLatitudesLongitudes($lats, $lngs)`
  * should be used instead of serving geohashes in constructor to ensure correct
  * min/max geohashes. They are not calculated within `synchronize()`!
  * 
  * @author Hannes Christiansen
  * @package Runalyze\Model\Route
  */
-class Object extends Model\EntityWithID implements Model\Loopable {
+class Entity extends Model\EntityWithID implements Model\Loopable {
 	/**
 	 * Cities separator
 	 * @var string

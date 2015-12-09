@@ -6,7 +6,7 @@
 
 namespace Runalyze\Calculation\HRV;
 
-use Runalyze\Model\HRV\Object;
+use Runalyze\Model\HRV\Entity;
 
 /**
  * Create data for a pointcare plot
@@ -16,7 +16,7 @@ use Runalyze\Model\HRV\Object;
  */
 class PointcareCollector {
 	/**
-	 * @var \Runalyze\Model\HRV\Object
+	 * @var \Runalyze\Model\HRV\Entity
 	 */
 	protected $Object;
 
@@ -34,7 +34,7 @@ class PointcareCollector {
 
 	/**
 	 * Calculator for hrv statistics
-	 * @param \Runalyze\Model\HRV\Object $hrvObject
+	 * @param \Runalyze\Model\HRV\Entity $hrvObject
 	 * @param int $filter [optional] maximal difference to include in plot
 	 */
 	public function __construct(Object $hrvObject, $filter = 200) {

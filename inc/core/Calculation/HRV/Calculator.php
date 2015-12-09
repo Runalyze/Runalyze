@@ -6,7 +6,7 @@
 
 namespace Runalyze\Calculation\HRV;
 
-use Runalyze\Model\HRV\Object;
+use Runalyze\Model\HRV\Entity;
 
 /**
  * Calculate statistics for hrv data
@@ -16,7 +16,7 @@ use Runalyze\Model\HRV\Object;
  */
 class Calculator {
 	/**
-	 * @var \Runalyze\Model\HRV\Object
+	 * @var \Runalyze\Model\HRV\Entity
 	 */
 	protected $Object;
 
@@ -92,14 +92,14 @@ class Calculator {
 
 	/**
 	 * Calculator for hrv statistics
-	 * @param \Runalyze\Model\HRV\Object $hrvObject
+	 * @param \Runalyze\Model\HRV\Entity $hrvObject
 	 * @param array $filter [optional] array with lower and upper limit for accepted values
 	 */
-	public function __construct(Object $hrvObject, array $filter = array(200, 2000)) {
+	public function __construct(Entity $hrvObject, array $filter = array(200, 2000)) {
 		$this->Object = clone $hrvObject;
 
 		if (count($filter) == 2) {
-			$this->Object->set(Object::DATA, array_filter($this->Object->data(), function($value) use ($filter) {
+			$this->Object->set(Entity::DATA, array_filter($this->Object->data(), function($value) use ($filter) {
 				return $filter[0] < $value && $value < $filter[1];
 			}));
 		}

@@ -8,8 +8,8 @@ namespace Runalyze\Model\Trackdata;
 class LoopTest extends \PHPUnit_Framework_TestCase {
 
 	public function testSimpleLoop() {
-		$Loop = new Loop(new Object(array(
-			Object::TIME => array(0,1,2,3,4,5)
+		$Loop = new Loop(new Entity(array(
+			Entity::TIME => array(0,1,2,3,4,5)
 		)));
 
 		$i = 0;
@@ -22,62 +22,62 @@ class LoopTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testReset() {
-		$Loop = new Loop(new Object(array(
-			Object::TIME => array(0,1,2,3,4,5)
+		$Loop = new Loop(new Entity(array(
+			Entity::TIME => array(0,1,2,3,4,5)
 		)));
 
 		$Loop->setStepSize(2);
 
 		$Loop->nextStep();
-		$this->assertEquals(2, $Loop->current(Object::TIME));
+		$this->assertEquals(2, $Loop->current(Entity::TIME));
 
 		$Loop->reset();
 		$Loop->nextStep();
-		$this->assertEquals(2, $Loop->current(Object::TIME));
+		$this->assertEquals(2, $Loop->current(Entity::TIME));
 	}
 
 	public function testStepSize() {
-		$Loop = new Loop(new Object(array(
-			Object::TIME => array(0,1,2,3,4,5)
+		$Loop = new Loop(new Entity(array(
+			Entity::TIME => array(0,1,2,3,4,5)
 		)));
 
 		$Loop->setStepSize(2);
 
 		$Loop->nextStep();
-		$this->assertEquals(2, $Loop->current(Object::TIME));
+		$this->assertEquals(2, $Loop->current(Entity::TIME));
 
 		$Loop->nextStep();
-		$this->assertEquals(4, $Loop->current(Object::TIME));
+		$this->assertEquals(4, $Loop->current(Entity::TIME));
 
 		$Loop->nextStep();
-		$this->assertEquals(5, $Loop->current(Object::TIME));
+		$this->assertEquals(5, $Loop->current(Entity::TIME));
 
 		$Loop->nextStep();
-		$this->assertEquals(5, $Loop->current(Object::TIME));
+		$this->assertEquals(5, $Loop->current(Entity::TIME));
 	}
 
 	public function testStatistics() {
-		$Loop = new Loop(new Object(array(
-			Object::TIME => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10),
-			Object::HEARTRATE => array(80, 85, 90, 90, 95, 100, 90, 90, 90, 90, 90)
+		$Loop = new Loop(new Entity(array(
+			Entity::TIME => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10),
+			Entity::HEARTRATE => array(80, 85, 90, 90, 95, 100, 90, 90, 90, 90, 90)
 		)));
 		$Loop->setStepSize(5);
 		$Loop->nextStep();
-		$this->assertEquals(5, $Loop->current(Object::TIME));
-		$this->assertEquals(5, $Loop->difference(Object::TIME));
-		$this->assertEquals(15, $Loop->sum(Object::TIME));
-		$this->assertEquals(90, $Loop->average(Object::HEARTRATE));
+		$this->assertEquals(5, $Loop->current(Entity::TIME));
+		$this->assertEquals(5, $Loop->difference(Entity::TIME));
+		$this->assertEquals(15, $Loop->sum(Entity::TIME));
+		$this->assertEquals(90, $Loop->average(Entity::HEARTRATE));
 		$this->assertEquals(0, $Loop->distance());
-		$this->assertEquals(0, $Loop->difference(Object::DISTANCE));
-		$this->assertEquals(0, $Loop->sum(Object::DISTANCE));
-		$this->assertEquals(0, $Loop->average(Object::DISTANCE));
+		$this->assertEquals(0, $Loop->difference(Entity::DISTANCE));
+		$this->assertEquals(0, $Loop->sum(Entity::DISTANCE));
+		$this->assertEquals(0, $Loop->average(Entity::DISTANCE));
 
 		$Loop->nextStep();
 	}
 
 	public function testDistanceMove() {
-		$Loop = new Loop(new Object(array(
-			Object::DISTANCE => array(0, 0.5, 1.0, 2.0, 3.0, 3.2, 3.5, 3.7, 4.0)
+		$Loop = new Loop(new Entity(array(
+			Entity::DISTANCE => array(0, 0.5, 1.0, 2.0, 3.0, 3.2, 3.5, 3.7, 4.0)
 		)));
 
 		$Loop->nextKilometer();
@@ -91,33 +91,33 @@ class LoopTest extends \PHPUnit_Framework_TestCase {
 
 		$Loop->reset();
 		$Loop->moveToDistance(2.9);
-		$this->assertEquals(3.0, $Loop->current(Object::DISTANCE));
+		$this->assertEquals(3.0, $Loop->current(Entity::DISTANCE));
 		$Loop->moveToDistance(3.7);
-		$this->assertEquals(3.7, $Loop->current(Object::DISTANCE));
+		$this->assertEquals(3.7, $Loop->current(Entity::DISTANCE));
 	}
 
 	public function testTimeMove() {
-		$Loop = new Loop(new Object(array(
-			Object::TIME => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+		$Loop = new Loop(new Entity(array(
+			Entity::TIME => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
 		)));
 
 		$Loop->moveTime(2);
-		$this->assertEquals(2, $Loop->current(Object::TIME));
+		$this->assertEquals(2, $Loop->current(Entity::TIME));
 		$Loop->moveTime(5);
-		$this->assertEquals(7, $Loop->current(Object::TIME));
+		$this->assertEquals(7, $Loop->current(Entity::TIME));
 
 		$Loop->reset();
 		$Loop->moveToTime(7);
-		$this->assertEquals(7, $Loop->current(Object::TIME));
+		$this->assertEquals(7, $Loop->current(Entity::TIME));
 		$Loop->moveToTime(10);
-		$this->assertEquals(10, $Loop->current(Object::TIME));
+		$this->assertEquals(10, $Loop->current(Entity::TIME));
 	}
 
 	/**
 	 * @expectedException \InvalidArgumentException
 	 */
 	public function testInvalidMoving() {
-		$Loop = new Loop(new Object());
+		$Loop = new Loop(new Entity());
 		$Loop->moveTime(10);
 	}
 
@@ -125,7 +125,7 @@ class LoopTest extends \PHPUnit_Framework_TestCase {
 	 * @expectedException \InvalidArgumentException
 	 */
 	public function testInvalidMovingTo() {
-		$Loop = new Loop(new Object());
+		$Loop = new Loop(new Entity());
 		$Loop->moveToTime(100);
 	}
 

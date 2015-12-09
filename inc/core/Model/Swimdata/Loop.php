@@ -15,15 +15,15 @@ namespace Runalyze\Model\Swimdata;
 class Loop extends \Runalyze\Model\Loop {
 	/**
 	 * Object
-	 * @var \Runalyze\Model\Swimdata\Object
+	 * @var \Runalyze\Model\Swimdata\Entity
 	 */
 	protected $Object;
 
 	/**
 	 * Construct
-	 * @param \Runalyze\Model\Swimdata\Object $object
+	 * @param \Runalyze\Model\Swimdata\Entity $object
 	 */
-	public function __construct(Object $object) {
+	public function __construct(Entity $object) {
 		parent::__construct($object);
 	}
 
@@ -32,7 +32,7 @@ class Loop extends \Runalyze\Model\Loop {
 	 * @return int
 	 */
 	public function stroke() {
-		return $this->current(Object::STROKE);
+		return $this->current(Entity::STROKE);
 	}
         
 	/**
@@ -40,7 +40,7 @@ class Loop extends \Runalyze\Model\Loop {
 	 * @return int
 	 */
 	public function stroketype() {
-		return $this->current(Object::STROKETYPE);
+		return $this->current(Entity::STROKETYPE);
 	}
 
 	/**
@@ -48,14 +48,14 @@ class Loop extends \Runalyze\Model\Loop {
 	 * @return int
 	 */
 	public function swolf() {
-		return $this->current(Object::SWOLF);
+		return $this->current(Entity::SWOLF);
 	}
 
 	/**
 	 * @param array $data
-	 * @return \Runalyze\Model\Swimdata\Object
+	 * @return \Runalyze\Model\Swimdata\Entity
 	 */
 	protected function createNewObject(array $data) {
-		return new Object($data);
+		return new Entity($data);
 	}
 }

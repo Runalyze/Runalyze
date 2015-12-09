@@ -19,16 +19,16 @@ use Runalyze\Configuration;
 class Inserter extends Model\InserterWithAccountID {
 	/**
 	 * Object
-	 * @var \Runalyze\Model\Route\Object
+	 * @var \Runalyze\Model\Route\Entity
 	 */
 	protected $Object;
 
 	/**
 	 * Construct inserter
 	 * @param \PDO $connection
-	 * @param \Runalyze\Model\Route\Object $object [optional]
+	 * @param \Runalyze\Model\Route\Entity $object [optional]
 	 */
-	public function __construct(\PDO $connection, Object $object = null) {
+	public function __construct(\PDO $connection, Entity $object = null) {
 		parent::__construct($connection, $object);
 	}
 
@@ -48,7 +48,7 @@ class Inserter extends Model\InserterWithAccountID {
 		return array_merge(array(
 				self::ACCOUNTID
 			),
-			Object::allDatabaseProperties()
+			Entity::allDatabaseProperties()
 		);
 	}
 

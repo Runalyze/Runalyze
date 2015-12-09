@@ -93,10 +93,10 @@ class Calculator
 	}
 
 	/**
-	 * @param \Runalyze\Model\Trackdata\Object $trackdata
-	 * @param \Runalyze\Model\Route\Object $route
+	 * @param \Runalyze\Model\Trackdata\Entity $trackdata
+	 * @param \Runalyze\Model\Route\Entity $route
 	 */
-	public function calculateFrom(Trackdata\Object $trackdata, Route\Object $route = null)
+	public function calculateFrom(Trackdata\Entity $trackdata, Route\Entity $route = null)
 	{
 		$this->TrackdataLoop = new Trackdata\Loop($trackdata);
 		$this->RouteLoop = !is_null($route) ? new Route\Loop($route) : null;
@@ -212,13 +212,13 @@ class Calculator
 	protected function readLap()
 	{
 		$Lap = new Lap(
-			$this->TrackdataLoop->difference(Trackdata\Object::TIME),
-			$this->TrackdataLoop->difference(Trackdata\Object::DISTANCE)
+			$this->TrackdataLoop->difference(Trackdata\Entity::TIME),
+			$this->TrackdataLoop->difference(Trackdata\Entity::DISTANCE)
 		);
 
 		$Lap->setTrackDuration($this->TrackdataLoop->time());
 		$Lap->setTrackDistance($this->TrackdataLoop->distance());
-		$Lap->setHR($this->TrackdataLoop->average(Trackdata\Object::HEARTRATE), $this->TrackdataLoop->max(Trackdata\Object::HEARTRATE));
+		$Lap->setHR($this->TrackdataLoop->average(Trackdata\Entity::HEARTRATE), $this->TrackdataLoop->max(Trackdata\Entity::HEARTRATE));
 		$this->addElevationFor($Lap);
 		$this->calculateAdditionalValuesFor($Lap);
 
@@ -260,15 +260,15 @@ class Calculator
 	}
 
 	/**
-	 * @param \Runalyze\Model\Trackdata\Object $Object
+	 * @param \Runalyze\Model\Trackdata\Entity $Object
 	 * @param array $AdditionalData
 	 */
-	protected function addTrackdataAveragesToDataFrom(Trackdata\Object $Object, array &$AdditionalData) {
+	protected function addTrackdataAveragesToDataFrom(Trackdata\Entity $Object, array &$AdditionalData) {
 		$KeysToAverage = array(
-			Activity\Object::CADENCE => Trackdata\Object::CADENCE,
-			Activity\Object::GROUNDCONTACT => Trackdata\Object::GROUNDCONTACT,
-			Activity\Object::VERTICAL_OSCILLATION => Trackdata\Object::VERTICAL_OSCILLATION,
-			Activity\Object::GROUNDCONTACT_BALANCE => Trackdata\Object::GROUNDCONTACT_BALANCE
+			Activity\Entity::CADENCE => Trackdata\Entity::CADENCE,
+			Activity\Entity::GROUNDCONTACT => Trackdata\Entity::GROUNDCONTACT,
+			Activity\Entity::VERTICAL_OSCILLATION => Trackdata\Entity::VERTICAL_OSCILLATION,
+			Activity\Entity::GROUNDCONTACT_BALANCE => Trackdata\Entity::GROUNDCONTACT_BALANCE
 		);
 
 		$NewLoop = new Trackdata\Loop($Object);
@@ -282,10 +282,10 @@ class Calculator
 	}
 
 	/**
-	 * @param \Runalyze\Model\Trackdata\Object $Object
+	 * @param \Runalyze\Model\Trackdata\Entity $Object
 	 * @param array $AdditionalData
 	 */
-	protected function addStrideLengthToDataFrom(Trackdata\Object $Object, array &$AdditionalData) {
+	protected function addStrideLengthToDataFrom(Trackdata\Entity $Object, array &$AdditionalData) {
 		$StrideCalculator = new Calculation\StrideLength\Calculator($Object);
 		$StrideCalculator->calculate();
 		
@@ -293,7 +293,7 @@ class Calculator
 		$VerticalRatio->calculate();
 
 		if ($StrideCalculator->average() > 0) {
-			$AdditionalData[Activity\Object::STRIDE_LENGTH] = $StrideCalculator->average();
+			$AdditionalData[Activity\Entity::STRIDE_LENGTH] = $StrideCalculator->average();
 		}
 	}
 	
@@ -312,7 +312,7 @@ class Calculator
 		);
 
 		if ($VDOT->value() > 0) {
-			$AdditionalData[Activity\Object::VDOT] = $VDOT->value();
+			$AdditionalData[Activity\Entity::VDOT] = $VDOT->value();
 		}
 	}
 

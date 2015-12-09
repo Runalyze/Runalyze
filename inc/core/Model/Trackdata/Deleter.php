@@ -19,9 +19,9 @@ class Deleter extends DeleterWithAccountID {
 	/**
 	 * Construct updater
 	 * @param \PDO $connection
-	 * @param \Runalyze\Model\Trackdata\Object $object [optional]
+	 * @param \Runalyze\Model\Trackdata\Entity $object [optional]
 	 */
-	public function __construct(\PDO $connection, Object $object = null) {
+	public function __construct(\PDO $connection, Entity $object = null) {
 		parent::__construct($connection, $object);
 	}
 
@@ -38,7 +38,7 @@ class Deleter extends DeleterWithAccountID {
 	 * @return string
 	 */
 	protected function where() {
-		return '`activityid`='.$this->Object->get(Object::ACTIVITYID).' AND '.parent::where();
+		return '`activityid`='.$this->Object->get(Entity::ACTIVITYID).' AND '.parent::where();
 	}
 
 	/**
@@ -47,12 +47,12 @@ class Deleter extends DeleterWithAccountID {
 	protected function before() {
 		parent::before();
 
-		if (!$this->Object->get(Object::ACTIVITYID)) {
+		if (!$this->Object->get(Entity::ACTIVITYID)) {
 			throw new \RuntimeException('Provided object does not have any activityid.');
 		}
 
-		if (Cache::is($this->table().$this->Object->get(Object::ACTIVITYID))) {
-			Cache::delete($this->table().$this->Object->get(Object::ACTIVITYID));
+		if (Cache::is($this->table().$this->Object->get(Entity::ACTIVITYID))) {
+			Cache::delete($this->table().$this->Object->get(Entity::ACTIVITYID));
 		}
 	}
 }

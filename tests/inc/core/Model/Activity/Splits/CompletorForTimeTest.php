@@ -8,7 +8,7 @@ namespace Runalyze\Model\Activity\Splits;
 class CompletorForTimeTest extends \PHPUnit_Framework_TestCase {
 
 	public function testCompletor() {
-		$Splits = new Object(array(
+		$Splits = new Entity(array(
 			new Split(1.0, 0),
 			new Split(1.3, 0)
 		));

@@ -30,8 +30,8 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testSimpleInsert() {
-		$Tag = new Object(array(
-			Object::TAG => 'Tag test'
+		$Tag = new Entity(array(
+			Entity::TAG => 'Tag test'
 		));
 
 		$Inserter = new Inserter($this->PDO, $Tag);
@@ -39,7 +39,7 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		$Inserter->insert();
 
 		$data = $this->PDO->query('SELECT * FROM `'.PREFIX.'tag` WHERE `accountid`=1')->fetch(PDO::FETCH_ASSOC);
-		$New = new Object($data);
+		$New = new Entity($data);
 
 		$this->assertEquals('Tag test', $New->tag());
 

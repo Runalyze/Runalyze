@@ -1,6 +1,6 @@
 <?php
 /**
- * This file contains class::Object
+ * This file contains class::Entity
  * @package Runalyze\Model\Activity
  */
 
@@ -13,12 +13,12 @@ use Runalyze\Model\Activity\Splits;
 use Runalyze\Data\Weather;
 
 /**
- * Activity object
+ * Activity entity
  *
  * @author Hannes Christiansen
  * @package Runalyze\Model\Activity
  */
-class Object extends Model\EntityWithID {
+class Entity extends Model\EntityWithID {
 	/**
 	 * Key: timestamp
 	 * @var string
@@ -286,7 +286,7 @@ class Object extends Model\EntityWithID {
 
 	/**
 	 * Splits
-	 * @var \Runalyze\Model\Activity\Splits\Object
+	 * @var \Runalyze\Model\Activity\Splits\Entity
 	 */
 	protected $Splits = null;
 
@@ -748,11 +748,11 @@ class Object extends Model\EntityWithID {
 
 	/**
 	 * Splits
-	 * @return \Runalyze\Model\Activity\Splits\Object
+	 * @return \Runalyze\Model\Activity\Splits\Entity
 	 */
 	public function splits() {
 		if (is_null($this->Splits)) {
-			$this->Splits = new Splits\Object($this->Data[self::SPLITS]);
+			$this->Splits = new Splits\Entity($this->Data[self::SPLITS]);
 		}
 
 		return $this->Splits;
@@ -790,9 +790,9 @@ class Object extends Model\EntityWithID {
 	 * Unset running values
 	 */
 	public function unsetRunningValues() {
-		$this->set(Object::VDOT_BY_TIME, 0);
-		$this->set(Object::VDOT, 0);
-		$this->set(Object::VDOT_WITH_ELEVATION, 0);
-		$this->set(Object::JD_INTENSITY, 0);
+		$this->set(Entity::VDOT_BY_TIME, 0);
+		$this->set(Entity::VDOT, 0);
+		$this->set(Entity::VDOT_WITH_ELEVATION, 0);
+		$this->set(Entity::JD_INTENSITY, 0);
 	}
 }

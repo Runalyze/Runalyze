@@ -24,7 +24,7 @@ use League\Geotools\Geotools;
 class Activity extends LeafletRoute {
 	/**
 	 * Route
-	 * @var \Runalyze\Model\Route\Object
+	 * @var \Runalyze\Model\Route\Entity
 	 */
 	protected $Route;
 
@@ -36,7 +36,7 @@ class Activity extends LeafletRoute {
 
 	/**
 	 * Trackdata
-	 * @var \Runalyze\Model\Trackdata\Object
+	 * @var \Runalyze\Model\Trackdata\Entity
 	 */
 	protected $Trackdata = null;
 
@@ -95,12 +95,12 @@ class Activity extends LeafletRoute {
 	/**
 	 * Construct new route
 	 * @param string $id
-	 * @param \Runalyze\Model\Route\Object $route
-	 * @param \Runalyze\Model\Trackdata\Object $trackdata [optional]
+	 * @param \Runalyze\Model\Route\Entity $route
+	 * @param \Runalyze\Model\Trackdata\Entity $trackdata [optional]
 	 * @param bool $addIconsAndInfo [optional]
 	 * @throws \InvalidArgumentException
 	 */
-	public function __construct($id, Route\Object $route, Trackdata\Object $trackdata = null, $addIconsAndInfo = true) {
+	public function __construct($id, Route\Entity $route, Trackdata\Entity $trackdata = null, $addIconsAndInfo = true) {
 		parent::__construct($id);
 
 		if (!$route->hasPositionData()) {
@@ -152,7 +152,7 @@ class Activity extends LeafletRoute {
 		if (
 			!is_null($this->Trackdata)
 			&& ($this->Route->num() == $this->Trackdata->num())
-			&& $this->Trackdata->has(Trackdata\Object::TIME)
+			&& $this->Trackdata->has(Trackdata\Entity::TIME)
 		) {
 			$this->TrackdataLoop = new Trackdata\Loop($this->Trackdata);
 			$this->TrackdataLoop->setStepSize($stepSize);
@@ -282,7 +282,7 @@ class Activity extends LeafletRoute {
 	 * Find limit for pauses
 	 */
 	protected function findLimitForPauses() {
-		if (!is_null($this->Trackdata) && $this->Trackdata->has(Trackdata\Object::DISTANCE)) {
+		if (!is_null($this->Trackdata) && $this->Trackdata->has(Trackdata\Entity::DISTANCE)) {
 			$SecondsForDist = (int)Configuration::ActivityView()->routeBreak()->value();
 			$AveragePace = $this->Trackdata->totalDistance() > 0 ? $this->Trackdata->totalTime() / $this->Trackdata->totalDistance() : 0;
 
@@ -301,7 +301,7 @@ class Activity extends LeafletRoute {
 		if (!is_null($this->Trackdata) && $this->Trackdata->hasPauses()) {
 			if (
 				$this->PauseIndex < $this->Trackdata->pauses()->num() &&
-				$this->Trackdata->pauses()->at($this->PauseIndex)->time() <= $this->Trackdata->at($this->TrackdataLoop->index(), Trackdata\Object::TIME)
+				$this->Trackdata->pauses()->at($this->PauseIndex)->time() <= $this->Trackdata->at($this->TrackdataLoop->index(), Trackdata\Entity::TIME)
 			) {
 				$this->addCurrentPauseIcon();
 
@@ -321,15 +321,15 @@ class Activity extends LeafletRoute {
 		$Index = $this->RouteLoop->index();
 
 		$Tooltip = sprintf( __('<strong>Pause</strong> of %s'), Duration::format($Pause->duration()));
-		$Tooltip .= '<br>'.sprintf( __('<strong>Distance:</strong> %s'), Distance::format($this->Trackdata->at($Index, Trackdata\Object::DISTANCE)) );
-		$Tooltip .= '<br>'.sprintf( __('<strong>Time:</strong> %s'), Duration::format($this->Trackdata->at($Index, Trackdata\Object::TIME)) );
+		$Tooltip .= '<br>'.sprintf( __('<strong>Distance:</strong> %s'), Distance::format($this->Trackdata->at($Index, Trackdata\Entity::DISTANCE)) );
+		$Tooltip .= '<br>'.sprintf( __('<strong>Time:</strong> %s'), Duration::format($this->Trackdata->at($Index, Trackdata\Entity::TIME)) );
 
 		if ($Pause->hasHeartRateInfo()) {
 			$Tooltip .= '<br>'.sprintf( __('<strong>Heart rate:</strong>').' '.__('%s to %s'), $Pause->hrStart(), $Pause->hrEnd().' bpm' );
 		}
 
 		$this->addMarkerGeohash(
-			$this->Route->at($Index, Route\Object::GEOHASHES),
+			$this->Route->at($Index, Route\Entity::GEOHASHES),
 			$this->pauseIcon(),
 			$Tooltip
 		);

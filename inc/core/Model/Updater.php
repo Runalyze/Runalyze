@@ -7,7 +7,7 @@
 namespace Runalyze\Model;
 
 /**
- * Update object in database
+ * Update entity in database
  * 
  * @author Hannes Christiansen
  * @package Runalyze\Model
@@ -21,23 +21,23 @@ abstract class Updater {
 
 	/**
 	 * Old object
-	 * @var \Runalyze\Model\Object
+	 * @var \Runalyze\Model\Entity
 	 */
 	protected $OldObject;
 
 	/**
 	 * New object
-	 * @var \Runalyze\Model\Object
+	 * @var \Runalyze\Model\Entity
 	 */
 	protected $NewObject;
 
 	/**
 	 * Construct updater
 	 * @param \PDO $connection
-	 * @param \Runalyze\Model\Object $newObject [optional]
-	 * @param \Runalyze\Model\Object $oldObject [optional]
+	 * @param \Runalyze\Model\Entity $newObject [optional]
+	 * @param \Runalyze\Model\Entity $oldObject [optional]
 	 */
-	public function __construct(\PDO $connection, Object $newObject = null, Object $oldObject = null) {
+	public function __construct(\PDO $connection, Entity $newObject = null, Entity $oldObject = null) {
 		$this->PDO = $connection;
 		$this->NewObject = $newObject;
 		$this->OldObject = $oldObject;
@@ -75,11 +75,11 @@ abstract class Updater {
 
 	/**
 	 * Update
-	 * @param \Runalyze\Model\Object $object [optional]
+	 * @param \Runalyze\Model\Entity $object [optional]
 	 * @param array $keys [optional]
 	 * @throws \RuntimeException
 	 */
-	final public function update(Object $object = null, $keys = false) {
+	final public function update(Entity $object = null, $keys = false) {
 		if (!is_null($object)) {
 			$this->NewObject = $object;
 		}
@@ -151,7 +151,7 @@ abstract class Updater {
 		$value = $this->NewObject->get($key);
 
 		if (is_array($value)) {
-			return Object::implode($value);
+			return Entity::implode($value);
 		}
 
 		return $value;
