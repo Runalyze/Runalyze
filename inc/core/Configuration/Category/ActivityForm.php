@@ -7,8 +7,8 @@
 namespace Runalyze\Configuration\Category;
 
 use Runalyze\Configuration\Fieldset;
-use Runalyze\Parameter\Bool;
-use Runalyze\Parameter\String;
+use Runalyze\Parameter\Boolean;
+use Runalyze\Parameter\Textline;
 use Runalyze\Parameter\Set;
 use Runalyze\Parameter\Application\ActivityCreationMode;
 use Runalyze\Parameter\Application\DatabaseOrder;
@@ -40,16 +40,16 @@ class ActivityForm extends \Runalyze\Configuration\Category {
 	 * Create handles for legends
 	 */
 	private function createHandlesForLegends() {
-		$this->createHandle('FORMULAR_SHOW_SPORT', new Bool(true));
-		$this->createHandle('FORMULAR_SHOW_GENERAL', new Bool(true));
-		$this->createHandle('FORMULAR_SHOW_DISTANCE', new Bool(true));
-		$this->createHandle('FORMULAR_SHOW_SPLITS', new Bool(true));
-		$this->createHandle('FORMULAR_SHOW_WEATHER', new Bool(true));
-		$this->createHandle('FORMULAR_SHOW_OTHER', new Bool(true));
-		$this->createHandle('FORMULAR_SHOW_NOTES', new Bool(false));
-		$this->createHandle('FORMULAR_SHOW_PUBLIC', new Bool(false));
-		$this->createHandle('FORMULAR_SHOW_ELEVATION', new Bool(false));
-		$this->createHandle('FORMULAR_SHOW_GPS', new Bool(false));
+		$this->createHandle('FORMULAR_SHOW_SPORT', new Boolean(true));
+		$this->createHandle('FORMULAR_SHOW_GENERAL', new Boolean(true));
+		$this->createHandle('FORMULAR_SHOW_DISTANCE', new Boolean(true));
+		$this->createHandle('FORMULAR_SHOW_SPLITS', new Boolean(true));
+		$this->createHandle('FORMULAR_SHOW_WEATHER', new Boolean(true));
+		$this->createHandle('FORMULAR_SHOW_OTHER', new Boolean(true));
+		$this->createHandle('FORMULAR_SHOW_NOTES', new Boolean(false));
+		$this->createHandle('FORMULAR_SHOW_PUBLIC', new Boolean(false));
+		$this->createHandle('FORMULAR_SHOW_ELEVATION', new Boolean(false));
+		$this->createHandle('FORMULAR_SHOW_GPS', new Boolean(false));
 	}
 
 	/**
@@ -78,17 +78,17 @@ class ActivityForm extends \Runalyze\Configuration\Category {
 	 */
 	private function createHandlesForSettings() {
 		$this->createHandle('TRAINING_CREATE_MODE', new ActivityCreationMode());
-		$this->createHandle('TRAINING_SHOW_AFTER_CREATE', new Bool(false));
-		$this->createHandle('TRAINING_DO_ELEVATION', new Bool(true));
-		$this->createHandle('TRAINING_LOAD_WEATHER', new Bool(true));
-		$this->createHandle('PLZ', new String(''));
-		$this->createHandle('COMPUTE_KCAL', new Bool(true));
-		$this->createHandle('COMPUTE_POWER', new Bool(true));
+		$this->createHandle('TRAINING_SHOW_AFTER_CREATE', new Boolean(false));
+		$this->createHandle('TRAINING_DO_ELEVATION', new Boolean(true));
+		$this->createHandle('TRAINING_LOAD_WEATHER', new Boolean(true));
+		$this->createHandle('PLZ', new Textline(''));
+		$this->createHandle('COMPUTE_KCAL', new Boolean(true));
+		$this->createHandle('COMPUTE_POWER', new Boolean(true));
 		$this->createHandle('TRAINING_SORT_SPORTS', new DatabaseOrder());
 		$this->createHandle('TRAINING_SORT_TYPES', new DatabaseOrder());
 		$this->createHandle('TRAINING_SORT_SHOES', new DatabaseOrder());
 		$this->createHandle('GARMIN_IGNORE_IDS', new Set(array()));
-		$this->createHandle('DETECT_PAUSES', new Bool(true));
+		$this->createHandle('DETECT_PAUSES', new Boolean(true));
 	}
 
 	/**

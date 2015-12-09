@@ -192,7 +192,7 @@ abstract class Category {
 		if (isset($_POST[$key]) || isset($_POST[$key.'_sent'])) {
 			$value = $Handle->value();
 
-			if ($Handle->object() instanceof Parameter\Bool) {
+			if ($Handle->object() instanceof Parameter\Boolean) {
 				$Handle->object()->set( isset($_POST[$key]) );
 			} else {
 				$Handle->object()->setFromString($_POST[$key]);

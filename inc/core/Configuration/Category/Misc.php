@@ -7,7 +7,7 @@
 namespace Runalyze\Configuration\Category;
 
 use Runalyze\Configuration\Fieldset;
-use Runalyze\Parameter\Int;
+use Runalyze\Parameter\Integer;
 
 /**
  * Configuration category: Miscellaneous
@@ -27,7 +27,7 @@ class Misc extends \Runalyze\Configuration\Category {
 	 * Create handles
 	 */
 	protected function createHandles() {
-		$this->createHandle('SEARCH_RESULTS_PER_PAGE', new Int(15));
+		$this->createHandle('SEARCH_RESULTS_PER_PAGE', new Integer(15));
 	}
 
 	/**

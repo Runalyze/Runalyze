@@ -1,17 +1,17 @@
 <?php
 /**
- * This file contains class::Bool
+ * This file contains class::Boolean
  * @package Runalyze\Parameter
  */
 
 namespace Runalyze\Parameter;
 
 /**
- * Bool
+ * Boolean
  * @author Hannes Christiansen
  * @package Runalyze\Parameter
  */
-class Bool extends \Runalyze\Parameter {
+class Boolean extends \Runalyze\Parameter {
 	/**
 	 * Set from string
 	 * @param string $valueAsString new value
