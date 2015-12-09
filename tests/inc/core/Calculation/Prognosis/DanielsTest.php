@@ -28,7 +28,7 @@ class DanielsTest extends \PHPUnit_Framework_TestCase {
 
 		$Distances    = array(5, 10, 21.0975, 42.195);
 		$Requirements = array(
-			30 => array(array(0,30,40), array(1,03,46), array(2,21, 4), array(4,49,17)),
+			30 => array(array(0,30,40), array(1, 3,46), array(2,21, 4), array(4,49,17)),
 			35 => array(array(0,27, 0), array(0,56, 3), array(2, 4,13), array(4,16,13)),
 			40 => array(array(0,24, 8), array(0,50, 3), array(1,50,59), array(3,49,45)),
 			45 => array(array(0,21,50), array(0,45,16), array(1,40,20), array(3,28,26)),
