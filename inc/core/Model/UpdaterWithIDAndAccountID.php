@@ -17,23 +17,23 @@ use Cache;
 abstract class UpdaterWithIDAndAccountID extends UpdaterWithAccountID {
 	/**
 	 * Old object
-	 * @var \Runalyze\Model\ObjectWithID
+	 * @var \Runalyze\Model\EntityWithID
 	 */
 	protected $OldObject;
 
 	/**
 	 * New object
-	 * @var \Runalyze\Model\ObjectWithID
+	 * @var \Runalyze\Model\EntityWithID
 	 */
 	protected $NewObject;
 
 	/**
 	 * Construct updater
 	 * @param \PDO $connection
-	 * @param \Runalyze\Model\ObjectWithID $newObject [optional]
-	 * @param \Runalyze\Model\ObjectWithID $oldObject [optional]
+	 * @param \Runalyze\Model\EntityWithID $newObject [optional]
+	 * @param \Runalyze\Model\EntityWithID $oldObject [optional]
 	 */
-	public function __construct(\PDO $connection, ObjectWithID $newObject = null, ObjectWithID $oldObject = null) {
+	public function __construct(\PDO $connection, EntityWithID $newObject = null, EntityWithID $oldObject = null) {
 		parent::__construct($connection, $newObject, $oldObject);
 	}
 

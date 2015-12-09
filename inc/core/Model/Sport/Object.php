@@ -15,7 +15,7 @@ use Runalyze\View\Icon\SportIcon;
  * @author Hannes Christiansen
  * @package Runalyze\Model\Sport
  */
-class Object extends Model\ObjectWithID {
+class Object extends Model\EntityWithID {
 	/**
 	 * Key: name
 	 * @var string

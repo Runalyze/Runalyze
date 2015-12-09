@@ -14,7 +14,7 @@ use Runalyze\Model;
  * @author Hannes Christiansen
  * @package Runalyze\Model\Type
  */
-class Object extends Model\ObjectWithID {
+class Object extends Model\EntityWithID {
 	/**
 	 * Key: name
 	 * @var string

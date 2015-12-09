@@ -12,7 +12,7 @@ class UpdaterForObjectWithID_MockTester extends UpdaterWithID {
             return array('foo');
         }
 }
-class UpdaterObjectWithID_MockTester extends ObjectWithID {
+class UpdaterObjectWithID_MockTester extends EntityWithID {
 	public function properties() {
 		return array ('foo');
 	}

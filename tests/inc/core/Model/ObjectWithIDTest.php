@@ -2,7 +2,7 @@
 
 namespace Runalyze\Model;
 
-class ObjectWithID_MockTester extends ObjectWithID {
+class ObjectWithID_MockTester extends EntityWithID {
 	public function properties() {
 		return array('foo');
 	}

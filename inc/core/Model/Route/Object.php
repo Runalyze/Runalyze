@@ -20,7 +20,7 @@ use \League\Geotools\Coordinate\Coordinate;
  * @author Hannes Christiansen
  * @package Runalyze\Model\Route
  */
-class Object extends Model\ObjectWithID implements Model\Loopable {
+class Object extends Model\EntityWithID implements Model\Loopable {
 	/**
 	 * Cities separator
 	 * @var string

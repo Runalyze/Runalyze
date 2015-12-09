@@ -104,7 +104,7 @@ abstract class Inserter {
 
 		$this->InsertedID = $this->PDO->lastInsertId();
 
-		if ($this->Object instanceof ObjectWithID) {
+		if ($this->Object instanceof EntityWithID) {
 			$this->Object->setID($this->InsertedID);
 		}
 	}
@@ -174,7 +174,7 @@ abstract class Inserter {
 	 * @throws \RuntimeException
 	 */
 	final public function insertedID() {
-		if (!($this->Object instanceof ObjectWithID)) {
+		if (!($this->Object instanceof EntityWithID)) {
 			throw new \RuntimeException('Only objects with id serve an inserted id.');
 		}
 

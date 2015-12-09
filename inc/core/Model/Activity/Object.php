@@ -18,7 +18,7 @@ use Runalyze\Data\Weather;
  * @author Hannes Christiansen
  * @package Runalyze\Model\Activity
  */
-class Object extends Model\ObjectWithID {
+class Object extends Model\EntityWithID {
 	/**
 	 * Key: timestamp
 	 * @var string

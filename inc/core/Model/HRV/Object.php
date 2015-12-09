@@ -14,7 +14,7 @@ use Runalyze\Model;
  * @author Hannes Christiansen
  * @package Runalyze\Model\HRV
  */
-class Object extends Model\ObjectWithID implements Model\Loopable {
+class Object extends Model\EntityWithID implements Model\Loopable {
 	/**
 	 * Key: acitivityid
 	 * @var string

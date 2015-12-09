@@ -21,7 +21,7 @@ abstract class Deleter {
 
 	/**
 	 * Old object
-	 * @var \Runalyze\Model\ObjectWithID
+	 * @var \Runalyze\Model\EntityWithID
 	 */
 	protected $Object;
 

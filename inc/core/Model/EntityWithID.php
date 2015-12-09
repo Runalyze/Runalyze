@@ -1,6 +1,6 @@
 <?php
 /**
- * This file contains class::ObjectWithID
+ * This file contains class::EntityWithID
  * @package Runalyze\Model
  */
 
@@ -12,7 +12,7 @@ namespace Runalyze\Model;
  * @author Hannes Christiansen
  * @package Runalyze\Model
  */
-abstract class ObjectWithID extends Object {
+abstract class EntityWithID extends Object {
 	/**
 	 * ID
 	 * @var int

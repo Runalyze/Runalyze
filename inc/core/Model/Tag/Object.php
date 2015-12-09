@@ -15,7 +15,7 @@ use Runalyze\Model;
  * @author Michael Pohl
  * @package Runalyze\Model\Tag
  */
-class Object extends Model\ObjectWithID {
+class Object extends Model\EntityWithID {
 	/**
 	 * Key: tag
 	 * @var string

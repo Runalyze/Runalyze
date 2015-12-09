@@ -29,7 +29,7 @@ class InserterForObjectWithID_MockTester extends Inserter {
 		return array('foo');
 	}
 }
-class InserterObjectWithID_MockTester extends ObjectWithID {
+class InserterObjectWithID_MockTester extends EntityWithID {
 	public function properties() {
 		return array('foo', 'bar');
 	}
