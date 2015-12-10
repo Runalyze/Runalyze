@@ -5,6 +5,7 @@
  */
 
 use Runalyze\Configuration;
+use Runalyze\Error;
 
 /**
  * Maximal heart-frequence of the user

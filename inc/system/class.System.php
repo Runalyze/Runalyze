@@ -8,6 +8,8 @@
  * @author Hannes Christiansen
  * @package Runalyze\System
  */
+use Runalyze\Error;
+
 class System {
 	/**
 	 * Get code to include all local JS-files

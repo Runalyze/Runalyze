@@ -7,6 +7,7 @@
 use Runalyze\Configuration;
 use Runalyze\Activity\Duration;
 use Runalyze\Activity\Distance;
+use Runalyze\Error;
 
 /**
  * Parser for TCX files from Garmin

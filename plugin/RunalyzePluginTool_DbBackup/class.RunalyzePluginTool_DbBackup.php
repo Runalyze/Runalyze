@@ -9,6 +9,8 @@ $PLUGINKEY = 'RunalyzePluginTool_DbBackup';
  * @author Hannes Christiansen
  * @package Runalyze\Plugins\Tools
  */
+use Runalyze\Error;
+
 class RunalyzePluginTool_DbBackup extends PluginTool {
 	/**
 	 * Start of backup-files

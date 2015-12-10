@@ -37,7 +37,7 @@ class PointcareCollector {
 	 * @param \Runalyze\Model\HRV\Entity $hrvObject
 	 * @param int $filter [optional] maximal difference to include in plot
 	 */
-	public function __construct(Object $hrvObject, $filter = 200) {
+	public function __construct(Entity $hrvObject, $filter = 200) {
 		$this->Object = $hrvObject;
 		$this->Filter = $filter;
 
