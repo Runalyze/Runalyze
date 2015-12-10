@@ -1,4 +1,4 @@
-# [Runalyze v2.2](http://blog.runalyze.com)
+# [Runalyze v2.2.2](http://blog.runalyze.com)
 
 [![Build Status](https://travis-ci.org/Runalyze/Runalyze.svg?branch=master)](https://travis-ci.org/Runalyze/Runalyze)
 [![Code Coverage](https://scrutinizer-ci.com/g/Runalyze/Runalyze/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/Runalyze/Runalyze/?branch=master)
@@ -11,24 +11,30 @@ Runalyze is mainly developed by [laufhannes](https://github.com/laufhannes) and 
 
 ## Documentation
 We provide two different documentations: 
-* [User documentation](http://help.runalyze.com) - FAQ for users of RUNALYZE
-* [Administration documentation](http://docs.runalyze.com) - Installating/Updating/Developing RUNALYZE
+* [help.runalyze.com](http://help.runalyze.com) - faq for users
+* [docs.runalyze.com](http://docs.runalyze.com) - docs for admins/developers
+  * [Installation](http://docs.runalyze.com/en/latest/install.html) - tutorial in german [here](http://blog.runalyze.com/installation/)
+  * [Update](http://docs.runalyze.com/en/latest/update.html)
+  * [Checkout](http://docs.runalyze.com/en/latest/checkout.html)
+  * [Contributing](http://docs.runalyze.com/en/latest/contribute.html)
+
+Both documentations have their own repos: [docs](https://github.com/Runalyze/docs) and [admin-docs](https://github.com/Runalyze/admin-docs). In addition, there's our [runalyze-playground](https://github.com/Runalyze/runalyze-playground) to play around with some new ideas. Feel free to contribute there.
 
 ## Install / Development
 Runalyze v2.1+ requires [composer](https://getcomposer.org/doc/00-intro.md#system-requirements) and
-v2.3+ will probably require [npm](https://nodejs.org/download/),
+some future version will require [npm](https://nodejs.org/download/),
 [bower](http://bower.io/) (`sudo npm install -g bower`) and
-[grunt](http://gruntjs.com/) (`sudo npm install -g grunt-cli`).
+[grunt](http://gruntjs.com/) (`sudo npm install -g grunt-cli`). Some branches already do so.
 
-To install dependencies and build for v2.1/v2.2:
+To install dependencies and build for v2.1+:
 ```
-composer install
+composer install --prefer-dist
 php build/build.php translations
 ```
 
-To install dependencies and build for v2.3+ (applies to some branches):
+To install dependencies and build for a version with grunt:
 ```
-composer install
+composer install --prefer-dist
 bower install
 npm install
 grunt
@@ -42,8 +48,9 @@ You have to apply recent changes from the respective update files in `inc/instal
 
 ## Changelog
 * [v2.2](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-2-en/), 28.10.2015: minor release (equipment for al sports, imperial units, ...)
- * If you're updating from 2.1.* directly use v2.2.1 for updating   
+ * If you're updating from 2.1.* directly use v2.2.1/v2.2.2 for updating   
  * warning: migration from v2.1 to v2.2 requires `refactor-equipment.php`
+ * [v2.2.2] (http://blog.runalyze.com/en/allgemein-en/runalyze-v2-2-2-en/), 10.12.2015: minor bugfixes
  * [v2.2.1] (http://blog.runalyze.com/en/allgemein-en/runalyze-v2-1-1-en/), 18.11.2015: minor bugfixes (use three decimals for splits, Fix upgrade from single user installations) 
 * [v2.1](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-1-en/), 19.07.2015: minor release (running dynamics, new importers, recovery time ...)
  * [v2.1.1](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-1-1-en/), 22.10.2015: minor bugfixes
@@ -60,20 +67,6 @@ You have to apply recent changes from the respective update files in `inc/instal
  * [v1.2](http://blog.runalyze.com/allgemein/runalyze-v1-2/), 13.11.2012: save plots, share activity list
  * [v1.1](http://blog.runalyze.com/allgemein/runalyze-v1-1/), 19.07.2012: first online version
  * [v1.0](http://blog.runalyze.com/allgemein/runalyze-v1-0/), 20.01.2012: first public version
-
-## Installation
-* download [zip-file](https://github.com/Runalyze/Runalyze/releases) and extract
-* open `../runalyze/install.php` in your browser
-* follow the instructions
-
-More details: <http://blog.runalyze.com/installation/> (only in german)
-
-## Update
-* delete all contents of `/runalyze/` except for `/config.php/`
-* download new zip-file and extract it
-* open `../runalyze/update.php` in your browser and look if a database update is needed
-* follow the instructions
-* for v2.0 only: run `../runalyze/refactor-db.php`
 
 ## Credits
 * Icons
