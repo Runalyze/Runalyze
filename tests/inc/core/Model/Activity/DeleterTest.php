@@ -77,10 +77,8 @@ class DeleterTest extends \PHPUnit_Framework_TestCase {
 		);
 	}
 
-	/**
-	 * @expectedException \PHPUnit_Framework_Error
-	 */
 	public function testWrongObject() {
+	    if (PHP_MAJOR_VERSION >= 7) $this->setExpectedException('TypeError'); else $this->setExpectedException('\PHPUnit_Framework_Error');
 		new Deleter($this->PDO, new Model\Trackdata\Entity);
 	}
 

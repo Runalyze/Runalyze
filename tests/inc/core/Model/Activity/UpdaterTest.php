@@ -101,10 +101,8 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 		);
 	}
 
-	/**
-	 * @expectedException \PHPUnit_Framework_Error
-	 */
 	public function testWrongObject() {
+	    if (PHP_MAJOR_VERSION >= 7) $this->setExpectedException('TypeError'); else $this->setExpectedException('\PHPUnit_Framework_Error');
 		new Updater($this->PDO, new Model\Trackdata\Entity);
 	}
 

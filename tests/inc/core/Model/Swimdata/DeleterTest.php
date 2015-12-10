@@ -49,10 +49,8 @@ class DeleterTest extends \PHPUnit_Framework_TestCase {
 		return $this->PDO->query('SELECT * FROM `runalyze_swimdata` WHERE `activityid`="'.$id.'" AND `accountid`=0')->fetch();
 	}
 
-	/**
-	 * @expectedException \PHPUnit_Framework_Error
-	 */
 	public function testWrongObject() {
+	    if (PHP_MAJOR_VERSION >= 7) $this->setExpectedException('TypeError'); else $this->setExpectedException('\PHPUnit_Framework_Error');
 		new Deleter($this->PDO, new \Runalyze\Model\Route\Entity);
 	}
 

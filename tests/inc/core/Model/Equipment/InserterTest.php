@@ -39,10 +39,8 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		$this->PDO->exec('DELETE FROM `'.PREFIX.'equipment_type`');
 	}
 
-	/**
-	 * @expectedException \PHPUnit_Framework_Error
-	 */
 	public function testWrongObject() {
+	    if (PHP_MAJOR_VERSION >= 7) $this->setExpectedException('TypeError'); else $this->setExpectedException('\PHPUnit_Framework_Error');
 		new Inserter($this->PDO, new InvalidInserterObjectForType_MockTester);
 	}
 

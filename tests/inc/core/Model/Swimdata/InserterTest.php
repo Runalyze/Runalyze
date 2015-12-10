@@ -35,10 +35,8 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		$this->PDO->exec('DELETE FROM `runalyze_training`');
 	}
 
-	/**
-	 * @expectedException \PHPUnit_Framework_Error
-	 */
 	public function testWrongObject() {
+	    if (PHP_MAJOR_VERSION >= 7) $this->setExpectedException('TypeError'); else $this->setExpectedException('\PHPUnit_Framework_Error');
 		new Inserter($this->PDO, new InvalidInserterObjectForSwimdata_MockTester);
 	}
 

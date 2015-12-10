@@ -49,10 +49,8 @@ class DeleterTest extends \PHPUnit_Framework_TestCase {
 		return $this->PDO->query('SELECT * FROM `'.PREFIX.'route` WHERE `id`="'.$id.'" AND `accountid`=0')->fetch();
 	}
 
-	/**
-	 * @expectedException \PHPUnit_Framework_Error
-	 */
 	public function testWrongObject() {
+	    if (PHP_MAJOR_VERSION >= 7) $this->setExpectedException('TypeError'); else $this->setExpectedException('\PHPUnit_Framework_Error');
 		new Deleter($this->PDO, new \Runalyze\Model\Trackdata\Entity);
 	}
 
