@@ -11,9 +11,6 @@
  */
 abstract class ExporterAbstractFile extends ExporterAbstract {
     
-	const NEEDS_ROUTE = null;
-	const EXPORTER_TYPE = 0;
-    
 	/**
 	 * Type
 	 * @return enum

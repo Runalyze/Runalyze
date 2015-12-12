@@ -11,6 +11,8 @@
  */
 class ExporterFacebook extends ExporterAbstractSocialShare {
     
+    const EXPORTER_TYPE = 2;
+    
 	/**
 	 * Icon class
 	 * @return string

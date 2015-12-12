@@ -14,8 +14,6 @@ use Runalyze\View\Activity\Linker;
  */
 abstract class ExporterAbstractSocialShare extends ExporterAbstract {
     
-	const EXPORTER_TYPE = 2;
-	
 	/**
 	 * Type
 	 * @return enum

@@ -15,7 +15,9 @@ use Runalyze\View\Activity\Linker;
  */
 class ExporterHTML extends ExporterAbstract {
     
-	const EXPORTER_TYPE = 2;
+	const EXPORTER_TYPE = 1;
+	const TYPE = 'HTML';
+	
 	/**
 	 * Display
 	 */
