@@ -8,6 +8,8 @@
  * @author Hannes Christiansen
  * @package Runalyze\DataObjects
  */
+use Runalyze\Error;
+
 class DatabaseScheme {
 	/**
 	 * Scheme file

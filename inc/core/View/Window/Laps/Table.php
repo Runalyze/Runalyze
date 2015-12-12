@@ -185,33 +185,33 @@ class Table {
 	 */
 	protected function additionalTableCellsFor(\Runalyze\Data\Laps\Lap $Lap) {
 		$Code = '';
-		$View = new Dataview(new Activity\Object(
+		$View = new Dataview(new Activity\Entity(
 			$Lap->additionalValues()
 		));
 
 		foreach ($this->AdditionalKeys as $key) {
 			switch ($key) {
-				case Activity\Object::CADENCE:
+				case Activity\Entity::CADENCE:
 					$Code .= '<td>'.$View->cadence()->asString().'</td>';
 					break;
 
-				case Activity\Object::GROUNDCONTACT:
+				case Activity\Entity::GROUNDCONTACT:
 					$Code .= '<td>'.$View->groundcontact().'</td>';
 					break;
 
-				case Activity\Object::VERTICAL_OSCILLATION:
+				case Activity\Entity::VERTICAL_OSCILLATION:
 					$Code .= '<td>'.$View->verticalOscillation().'</td>';
 					break;
 				    
-				case Activity\Object::VERTICAL_RATIO:
+				case Activity\Entity::VERTICAL_RATIO:
 					$Code .= '<td>'.$View->verticalRatio().'</td>';
 					break;
 
-				case Activity\Object::STRIDE_LENGTH:
+				case Activity\Entity::STRIDE_LENGTH:
 					$Code .= '<td>'.$View->strideLength()->string().'</td>';
 					break;
 
-				case Activity\Object::VDOT:
+				case Activity\Entity::VDOT:
 					$Code .= '<td>'.$View->vdot()->value().'</td>';
 					break;
 
@@ -230,15 +230,15 @@ class Table {
 	 */
 	protected function labelForAdditionalValue($key) {
 		switch ($key) {
-			case Activity\Object::CADENCE:
+			case Activity\Entity::CADENCE:
 				return __('Cadence');
-			case Activity\Object::GROUNDCONTACT:
+			case Activity\Entity::GROUNDCONTACT:
 				return __('Ground contact time');
-			case Activity\Object::VERTICAL_OSCILLATION:
+			case Activity\Entity::VERTICAL_OSCILLATION:
 				return __('Vertical oscillation');
-			case Activity\Object::STRIDE_LENGTH:
+			case Activity\Entity::STRIDE_LENGTH:
 				return __('Stride length');
-			case Activity\Object::VDOT:
+			case Activity\Entity::VDOT:
 				return __('VDOT');
 		}
 

@@ -5,6 +5,7 @@
  */
 
 use Runalyze\Configuration;
+use Runalyze\Error;
 
 /**
  * Abstract class for Plugins

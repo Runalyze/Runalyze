@@ -108,9 +108,9 @@ class VDOTCorrector {
 	 * Simply calculates the ratio of vdot by time and by heart rate.
 	 * This method does not regard any other correction (e.g. elevation, ...).
 	 * 
-	 * @param \Runalyze\Model\Activity\Object $activity
+	 * @param \Runalyze\Model\Activity\Entity $activity
 	 */
-	public function fromActivity(Activity\Object $activity) {
+	public function fromActivity(Activity\Entity $activity) {
 		if ($activity->vdotByHeartRate() > 0) {
 			$this->Factor = $activity->vdotByTime() / $activity->vdotByHeartRate();
 		} else {

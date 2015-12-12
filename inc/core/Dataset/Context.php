@@ -26,7 +26,7 @@ class Context
 
 	/**
 	 * Activity
-	 * @var \Runalyze\Model\Activity\Object
+	 * @var \Runalyze\Model\Activity\Entity
 	 */
 	protected $Activity = null;
 
@@ -37,13 +37,13 @@ class Context
 
 	/**
 	 * Sport
-	 * @var \Runalyze\Model\Sport\Object
+	 * @var \Runalyze\Model\Sport\Entity
 	 */
 	protected $Sport = null;
 
 	/**
 	 * Type
-	 * @var \Runalyze\Model\Type\Object
+	 * @var \Runalyze\Model\Type\Entity
 	 */
 	protected $Type = null;
 
@@ -66,7 +66,7 @@ class Context
 
 	/**
 	 * Construct dataset context for activity
-	 * @param array|\Runalyze\Model\Activity\Object $dataOrObject
+	 * @param array|\Runalyze\Model\Activity\Entity $dataOrObject
 	 * @param int $accountID
 	 * @throws \InvalidArgumentException
 	 */
@@ -76,7 +76,7 @@ class Context
 
 		if (is_array($dataOrObject)) {
 			$this->setActivityData($dataOrObject);
-		} elseif ($dataOrObject instanceof Model\Activity\Object) {
+		} elseif ($dataOrObject instanceof Model\Activity\Entity) {
 			$this->setActivity($dataOrObject);
 		} else {
 			throw new \InvalidArgumentException('Provided data must be an array or activity object.');
@@ -85,9 +85,9 @@ class Context
 
 	/**
 	 * Set activity
-	 * @param \Runalyze\Model\Activity\Object $object activity object
+	 * @param \Runalyze\Model\Activity\Entity $object activity object
 	 */
-	public function setActivity(Model\Activity\Object $object)
+	public function setActivity(Model\Activity\Entity $object)
 	{
 		$this->Activity = $object;
 		$this->Dataview = new Dataview($object);
@@ -109,7 +109,7 @@ class Context
 			throw new \InvalidArgumentException('Provided data must not be empty.');
 		}
 
-		$this->setActivity( new Model\Activity\Object($data) );
+		$this->setActivity( new Model\Activity\Entity($data) );
 		$this->ActivityData = $data;
 	}
 
@@ -122,7 +122,7 @@ class Context
 	}
 
 	/**
-	 * @var \Runalyze\Model\Activity\Object
+	 * @var \Runalyze\Model\Activity\Entity
 	 */
 	public function activity()
 	{
@@ -154,7 +154,7 @@ class Context
 	}
 
 	/**
-	 * @return \Runalyze\Model\Sport\Object
+	 * @return \Runalyze\Model\Sport\Entity
 	 */
 	public function sport()
 	{
@@ -178,7 +178,7 @@ class Context
 	}
 
 	/**
-	 * @return \Runalyze\Model\Type\Object
+	 * @return \Runalyze\Model\Type\Entity
 	 */
 	public function type()
 	{

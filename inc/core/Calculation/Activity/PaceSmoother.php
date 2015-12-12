@@ -31,7 +31,7 @@ class PaceSmoother {
 	const MODE_DISTANCE = 2;
 
 	/**
-	 * @var \Runalyze\Model\Trackdata\Object
+	 * @var \Runalyze\Model\Trackdata\Entity
 	 */
 	protected $Trackdata;
 
@@ -62,10 +62,10 @@ class PaceSmoother {
 
 	/**
 	 * Smoother
-	 * @param \Runalyze\Model\Trackdata\Object $trackdata
+	 * @param \Runalyze\Model\Trackdata\Entity $trackdata
 	 * @param boolean $keepArraySize [optional]
 	 */
-	public function __construct(Trackdata\Object $trackdata, $keepArraySize = false) {
+	public function __construct(Trackdata\Entity $trackdata, $keepArraySize = false) {
 		$this->Trackdata = $trackdata;
 		$this->Loop = new Trackdata\Loop($trackdata);
 		$this->KeepArraySize = $keepArraySize;
@@ -121,11 +121,11 @@ class PaceSmoother {
 				break;
 
 			case self::MODE_TIME:
-				$this->runFastSmoothingForKey(Trackdata\Object::TIME);
+				$this->runFastSmoothingForKey(Trackdata\Entity::TIME);
 				break;
 
 			case self::MODE_DISTANCE:
-				$this->runFastSmoothingForKey(Trackdata\Object::DISTANCE);
+				$this->runFastSmoothingForKey(Trackdata\Entity::DISTANCE);
 				break;
 		}
 	}
@@ -177,8 +177,8 @@ class PaceSmoother {
 
 		while (!$this->Loop->isAtEnd()) {
 			$this->Loop->move($key, $this->StepSize);
-			$dist = $this->Loop->difference(Trackdata\Object::DISTANCE);
-			$pace = $dist > 0 ? round($this->Loop->difference(Trackdata\Object::TIME)/$dist) : 0;
+			$dist = $this->Loop->difference(Trackdata\Entity::DISTANCE);
+			$pace = $dist > 0 ? round($this->Loop->difference(Trackdata\Entity::TIME)/$dist) : 0;
 
 			if ($this->KeepArraySize) {
 				$steps = $this->Loop->currentStepSize();

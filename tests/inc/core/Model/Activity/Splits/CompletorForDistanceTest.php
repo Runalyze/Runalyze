@@ -8,7 +8,7 @@ namespace Runalyze\Model\Activity\Splits;
 class CompletorForDistanceTest extends \PHPUnit_Framework_TestCase {
 
 	public function testCompletor() {
-		$Splits = new Object(array(
+		$Splits = new Entity(array(
 			new Split(0, 300),
 			new Split(0, 300)
 		));

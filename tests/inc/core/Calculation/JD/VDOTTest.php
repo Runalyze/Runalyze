@@ -103,7 +103,7 @@ class VDOTTest extends \PHPUnit_Framework_TestCase {
 
 		$Results = array(
 			30 => 2*60*60 + 21*60 +  4,
-			35 => 2*60*60 + 04*60 + 13,
+			35 => 2*60*60 +  4*60 + 13,
 			40 => 1*60*60 + 50*60 + 59,
 			45 => 1*60*60 + 40*60 + 20,
 			50 => 1*60*60 + 31*60 + 35,
@@ -131,7 +131,7 @@ class VDOTTest extends \PHPUnit_Framework_TestCase {
 			40 => 3*60*60 + 49*60 + 45,
 			45 => 3*60*60 + 28*60 + 26,
 			50 => 3*60*60 + 10*60 + 49,
-			55 => 2*60*60 + 56*60 + 01,
+			55 => 2*60*60 + 56*60 +  1,
 			60 => 2*60*60 + 43*60 + 25,
 			65 => 2*60*60 + 32*60 + 35,
 			70 => 2*60*60 + 23*60 + 10,
@@ -170,10 +170,10 @@ class VDOTTest extends \PHPUnit_Framework_TestCase {
 
 	public function testDistanceIndependenceOfEstimateByHR() {
 		$Value1 = new VDOT();
-		$Value1->fromPaceAndHR(10, 40*60 + 00, 0.75);
+		$Value1->fromPaceAndHR(10, 40*60 +  0, 0.75);
 
 		$Value2 = new VDOT();
-		$Value2->fromPaceAndHR( 3, 12*60 + 00, 0.75);
+		$Value2->fromPaceAndHR( 3, 12*60 +  0, 0.75);
 
 		$this->assertEquals($Value1->value(), $Value2->value());
 	}

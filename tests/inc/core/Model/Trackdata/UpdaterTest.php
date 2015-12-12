@@ -40,26 +40,26 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testSimpleUpdate() {
-		$Inserter = new Inserter($this->PDO, new Object(array(
-			Object::ACTIVITYID => 1,
-			Object::TIME => array(20, 40, 60),
-			Object::DISTANCE => array(0.1, 0.2, 0.3),
-			Object::HEARTRATE => array(100, 120, 130)
+		$Inserter = new Inserter($this->PDO, new Entity(array(
+			Entity::ACTIVITYID => 1,
+			Entity::TIME => array(20, 40, 60),
+			Entity::DISTANCE => array(0.1, 0.2, 0.3),
+			Entity::HEARTRATE => array(100, 120, 130)
 		)));
 		$Inserter->setAccountID(1);
 		$Inserter->insert();
 
-		$Track = new Object($this->PDO->query('SELECT * FROM `'.PREFIX.'trackdata` WHERE `activityid`=1')->fetch(PDO::FETCH_ASSOC));
-		$Track->set(Object::HEARTRATE, array(120, 140, 150));
+		$Track = new Entity($this->PDO->query('SELECT * FROM `'.PREFIX.'trackdata` WHERE `activityid`=1')->fetch(PDO::FETCH_ASSOC));
+		$Track->set(Entity::HEARTRATE, array(120, 140, 150));
 
 		$Changed = clone $Track;
-		$Changed->set(Object::DISTANCE, array(0.15, 0.3, 0.45));
+		$Changed->set(Entity::DISTANCE, array(0.15, 0.3, 0.45));
 
 		$Updater = new Updater($this->PDO, $Changed, $Track);
 		$Updater->setAccountID(1);
 		$Updater->update();
 
-		$Result = new Object($this->PDO->query('SELECT * FROM `'.PREFIX.'trackdata` WHERE `activityid`=1')->fetch(PDO::FETCH_ASSOC));
+		$Result = new Entity($this->PDO->query('SELECT * FROM `'.PREFIX.'trackdata` WHERE `activityid`=1')->fetch(PDO::FETCH_ASSOC));
 
 		$this->assertEquals(1, $Result->activityID());
 		$this->assertEquals(array(20, 40, 60), $Result->time());

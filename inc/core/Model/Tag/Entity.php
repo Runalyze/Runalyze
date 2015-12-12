@@ -1,6 +1,6 @@
 <?php
 /**
- * This file contains class::Object
+ * This file contains class::Entity
  * @package Runalyze\Model\Tag
  */
 
@@ -9,13 +9,13 @@ namespace Runalyze\Model\Tag;
 use Runalyze\Model;
 
 /**
- * Tag object
+ * Tag entity
  * 
  * @author Hannes Christiansen 
  * @author Michael Pohl
  * @package Runalyze\Model\Tag
  */
-class Object extends Model\ObjectWithID {
+class Entity extends Model\EntityWithID {
 	/**
 	 * Key: tag
 	 * @var string

@@ -19,23 +19,23 @@ use Cache;
 class Updater extends Model\UpdaterWithAccountID {
 	/**
 	 * Old object
-	 * @var \Runalyze\Model\Swimdata\Object
+	 * @var \Runalyze\Model\Swimdata\Entity
 	 */
 	protected $OldObject;
 
 	/**
 	 * New object
-	 * @var \Runalyze\Model\Swimdata\Object
+	 * @var \Runalyze\Model\Swimdata\Entity
 	 */
 	protected $NewObject;
 
 	/**
 	 * Construct updater
 	 * @param \PDO $connection
-	 * @param \Runalyze\Model\Swimdata\Object $newObject [optional]
-	 * @param \Runalyze\Model\Swimdata\Object $oldObject [optional]
+	 * @param \Runalyze\Model\Swimdata\Entity $newObject [optional]
+	 * @param \Runalyze\Model\Swimdata\Entity $oldObject [optional]
 	 */
-	public function __construct(\PDO $connection, Object $newObject = null, Object $oldObject = null) {
+	public function __construct(\PDO $connection, Entity $newObject = null, Entity $oldObject = null) {
 		parent::__construct($connection, $newObject, $oldObject);
 	}
 
@@ -64,10 +64,10 @@ class Updater extends Model\UpdaterWithAccountID {
 				self::ACCOUNTID
 			),
 			array_diff(
-				Object::allProperties(),
+				Entity::allProperties(),
 				array(
-					Object::SWOLF,
-					Object::SWOLFCYCLES
+					Entity::SWOLF,
+					Entity::SWOLFCYCLES
 				)
 			)
 		);

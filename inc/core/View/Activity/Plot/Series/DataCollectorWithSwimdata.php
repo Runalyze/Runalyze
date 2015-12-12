@@ -6,8 +6,8 @@
 
 namespace Runalyze\View\Activity\Plot\Series;
 
-use Runalyze\Model\Trackdata\Object as Trackdata;
-use Runalyze\Model\Swimdata\Object as Swimdata;
+use Runalyze\Model\Trackdata\Entity as Trackdata;
+use Runalyze\Model\Swimdata\Entity as Swimdata;
 use Runalyze\Model\Swimdata\Loop;
 use Runalyze\Configuration;
 
@@ -25,9 +25,9 @@ class DataCollectorWithSwimdata extends DataCollector {
 
 	/**
 	 * Construct collector
-	 * @param \Runalyze\Model\Trackdata\Object $trackdata
+	 * @param \Runalyze\Model\Trackdata\Entity $trackdata
 	 * @param enum $key
-	 * @param \Runalyze\Model\Swimdata\Object $swimdata
+	 * @param \Runalyze\Model\Swimdata\Entity $swimdata
 	 * @throws \InvalidArgumentException
 	 */
 	public function __construct(Trackdata $trackdata, $key, Swimdata $swimdata) {

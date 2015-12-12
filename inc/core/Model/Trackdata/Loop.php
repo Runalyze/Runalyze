@@ -17,15 +17,15 @@ use Runalyze\Activity\Distance;
 class Loop extends \Runalyze\Model\Loop {
 	/**
 	 * Object
-	 * @var \Runalyze\Model\Trackdata\Object
+	 * @var \Runalyze\Model\Trackdata\Entity
 	 */
 	protected $Object;
 
 	/**
 	 * Construct
-	 * @param \Runalyze\Model\Trackdata\Object $object
+	 * @param \Runalyze\Model\Trackdata\Entity $object
 	 */
-	public function __construct(Object $object) {
+	public function __construct(Entity $object) {
 		parent::__construct($object);
 	}
 
@@ -34,7 +34,7 @@ class Loop extends \Runalyze\Model\Loop {
 	 * @return int
 	 */
 	public function time() {
-		return $this->current(Object::TIME);
+		return $this->current(Entity::TIME);
 	}
 
 	/**
@@ -42,7 +42,7 @@ class Loop extends \Runalyze\Model\Loop {
 	 * @return float
 	 */
 	public function distance() {
-		return $this->current(Object::DISTANCE);
+		return $this->current(Entity::DISTANCE);
 	}
 
 	/**
@@ -87,7 +87,7 @@ class Loop extends \Runalyze\Model\Loop {
 	 * @throws \RuntimeException for negative values or if time is empty
 	 */
 	public function moveTime($seconds) {
-		$this->move(Object::TIME, $seconds);
+		$this->move(Entity::TIME, $seconds);
 	}
 
 	/**
@@ -96,7 +96,7 @@ class Loop extends \Runalyze\Model\Loop {
 	 * @throws \RuntimeException for negative values or if time is empty
 	 */
 	public function moveToTime($seconds) {
-		$this->moveTo(Object::TIME, $seconds);
+		$this->moveTo(Entity::TIME, $seconds);
 	}
 
 	/**
@@ -105,7 +105,7 @@ class Loop extends \Runalyze\Model\Loop {
 	 * @throws \RuntimeException for negative values or if distance is empty
 	 */
 	public function moveDistance($kilometer) {
-		$this->move(Object::DISTANCE, $kilometer);
+		$this->move(Entity::DISTANCE, $kilometer);
 	}
 
 	/**
@@ -114,14 +114,14 @@ class Loop extends \Runalyze\Model\Loop {
 	 * @throws \RuntimeException for negative values or if distance is empty
 	 */
 	public function moveToDistance($kilometer) {
-		$this->moveTo(Object::DISTANCE, $kilometer);
+		$this->moveTo(Entity::DISTANCE, $kilometer);
 	}
 
 	/**
 	 * @param array $data
-	 * @return \Runalyze\Model\Trackdata\Object
+	 * @return \Runalyze\Model\Trackdata\Entity
 	 */
 	protected function createNewObject(array $data) {
-		return new Object($data);
+		return new Entity($data);
 	}
 }

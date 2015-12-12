@@ -65,10 +65,10 @@ class Intensity {
 	 * This method does not lookup trackdata of the activity!
 	 * If you want an exact intensity value, use `calculateByTrackdata(...)`
 	 * 
-	 * @param \Runalyze\Model\Activity\Object $activity
+	 * @param \Runalyze\Model\Activity\Entity $activity
 	 * @return int
 	 */
-	public function calculateByActivity(Activity\Object $activity) {
+	public function calculateByActivity(Activity\Entity $activity) {
 		if ($activity->hrAvg() > 0) {
 			return $this->calculateByHeartrateAverage($activity->hrAvg(), $activity->duration());
 		}
@@ -78,17 +78,17 @@ class Intensity {
 
 	/**
 	 * Calculate by trackdata
-	 * @param \Runalyze\Model\Trackdata\Object $trackdata
+	 * @param \Runalyze\Model\Trackdata\Entity $trackdata
 	 */
-	public function calculateByTrackdata(Trackdata\Object $trackdata) {
-		if (!$trackdata->has(Trackdata\Object::HEARTRATE)) {
+	public function calculateByTrackdata(Trackdata\Entity $trackdata) {
+		if (!$trackdata->has(Trackdata\Entity::HEARTRATE)) {
 			return;
 		}
 
 		return $this->calculateByHeartrate(
 			new TimeSeries(
-				$trackdata->get( Trackdata\Object::HEARTRATE ),
-				$trackdata->get( Trackdata\Object::TIME )
+				$trackdata->get( Trackdata\Entity::HEARTRATE ),
+				$trackdata->get( Trackdata\Entity::TIME )
 			)
 		);
 	}

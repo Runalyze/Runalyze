@@ -7,7 +7,7 @@
 namespace Runalyze\Configuration\Category;
 
 use Runalyze\Configuration\Fieldset;
-use Runalyze\Parameter\Bool;
+use Runalyze\Parameter\Boolean;
 use Runalyze\Parameter\Application\DataBrowserMode;
 use Ajax;
 
@@ -30,9 +30,9 @@ class DataBrowser extends \Runalyze\Configuration\Category {
 	 */
 	protected function createHandles() {
 		$this->createHandle('DB_DISPLAY_MODE', new DataBrowserMode());
-		$this->createHandle('DB_SHOW_DATASET_LABELS', new Bool(true));
-		$this->createHandle('DB_SHOW_DIRECT_EDIT_LINK', new Bool(false));
-		$this->createHandle('DB_SHOW_CREATELINK_FOR_DAYS', new Bool(false));
+		$this->createHandle('DB_SHOW_DATASET_LABELS', new Boolean(true));
+		$this->createHandle('DB_SHOW_DIRECT_EDIT_LINK', new Boolean(false));
+		$this->createHandle('DB_SHOW_CREATELINK_FOR_DAYS', new Boolean(false));
 	}
 
 	/**

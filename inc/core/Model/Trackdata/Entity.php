@@ -1,6 +1,6 @@
 <?php
 /**
- * This file contains class::Object
+ * This file contains class::Entity
  * @package Runalyze\Model\Trackdata
  */
 
@@ -12,12 +12,12 @@ use Runalyze\Calculation\Activity\VerticalRatioCalculator;
 use Runalyze\Calculation\StrideLength;
 
 /**
- * Trackdata object
+ * Trackdata entity
  * 
  * @author Hannes Christiansen
  * @package Runalyze\Model\Trackdata
  */
-class Object extends Model\Object implements Model\Loopable {
+class Entity extends Model\Entity implements Model\Loopable {
 	/**
 	 * Key: activity id
 	 * @var string

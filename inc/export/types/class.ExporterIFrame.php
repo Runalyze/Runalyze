@@ -78,7 +78,7 @@ class ExporterIFrame extends ExporterAbstract {
 	 * @return string 
 	 */
 	protected function getHTMLCode() {
-		$this->Context->activity()->set(Activity\Object::IS_PUBLIC, 1);
+		$this->Context->activity()->set(Activity\Entity::IS_PUBLIC, 1);
 		$Linker = new Linker($this->Context->activity());
 
 		return '<iframe style="padding:0;margin:0 auto;display:block;max-width:100%;" src="'.$Linker->publicUrl().'&amp;mode=iframe" width="'.$this->width().'" height="'.$this->height().'"></iframe>';

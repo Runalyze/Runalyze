@@ -20,8 +20,8 @@ class SectionHeartrateRow extends TrainingViewSectionRowTabbedPlot {
 		$this->addRightContent('plot', __('Heartrate plot'), new Activity\Plot\Heartrate($this->Context));
 
 		if (
-			$this->Context->trackdata()->has(\Runalyze\Model\Trackdata\Object::HEARTRATE) &&
-			$this->Context->trackdata()->has(\Runalyze\Model\Trackdata\Object::TIME)
+			$this->Context->trackdata()->has(\Runalyze\Model\Trackdata\Entity::HEARTRATE) &&
+			$this->Context->trackdata()->has(\Runalyze\Model\Trackdata\Entity::TIME)
 		) {
 			$Table = new TableZonesHeartrate($this->Context);
 			$Code = $Table->getCode();

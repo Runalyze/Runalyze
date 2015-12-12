@@ -12,7 +12,7 @@ class DeleterWithAccountIDForObject_MockTester extends DeleterWithAccountID {
 		return '`delete`=1 AND '.parent::where();
 	}
 }
-class DeleterWithAccountIDObject_MockTester extends Object {
+class DeleterWithAccountIDObject_MockTester extends Entity {
 	public function properties() {
 		return array ('delete', 'accountid');
 	}

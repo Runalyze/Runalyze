@@ -9,7 +9,7 @@ class DeleterWithAccountIDForObjectWithID_MockTester extends DeleterWithIDAndAcc
 		return 'table';
 	}
 }
-class DeleterWithAccountIDObjectWithID_MockTester extends ObjectWithID {
+class DeleterWithAccountIDObjectWithID_MockTester extends EntityWithID {
 	public function properties() {
 		return array ('foo', 'accountid');
 	}

@@ -15,7 +15,7 @@ class UpdaterForObject_MockTester extends Updater {
             return array('foo','bar');
         }
 }
-class UpdaterObject_MockTester extends Object {
+class UpdaterObject_MockTester extends Entity {
 	public function properties() {
 		return array ('foo', 'bar');
 	}

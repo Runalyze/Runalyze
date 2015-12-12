@@ -1,6 +1,6 @@
 <?php
 /**
- * This file contains class::Object
+ * This file contains class::Entity
  * @package Runalyze\Model\Swimdata
  */
 
@@ -10,12 +10,12 @@ use Runalyze\Model;
 use Runalyze\Model\Trackdata;
 
 /**
- * Swimdata object
+ * Swimdata entity
  *  
  * @author Hannes Christiansen & Michael Pohl
  * @package Runalyze\Model\Swimdata
  */
-class Object extends Model\Object implements Model\Loopable {
+class Entity extends Model\Entity implements Model\Loopable {
 	/**
 	 * Key: activity id
 	 * @var string
@@ -199,10 +199,10 @@ class Object extends Model\Object implements Model\Loopable {
 	/*
 	 * Calculate Distance based on pool length
 	 */
-	public function fillDistanceArray(Trackdata\Object &$trackdata) {
-		if ($this->poollength() && !$trackdata->has(Trackdata\Object::DISTANCE)) {
+	public function fillDistanceArray(Trackdata\Entity &$trackdata) {
+		if ($this->poollength() && !$trackdata->has(Trackdata\Entity::DISTANCE)) {
 			$distance = range($this->poollength()/100000, $this->num()*$this->poollength()/100000, $this->poollength()/100000);   
-			$trackdata->set(Trackdata\Object::DISTANCE, $distance);
+			$trackdata->set(Trackdata\Entity::DISTANCE, $distance);
 		}
 	}
 
@@ -210,8 +210,8 @@ class Object extends Model\Object implements Model\Loopable {
 	 * Create swolf array
 	 * http://marathonswimmers.org/blog/2012/05/stroke-count-games/
 	 */
-	public function fillSwolfArray(Trackdata\Object &$trackdata) {
-		if ($this->stroke() && $trackdata->has(Trackdata\Object::TIME)) {
+	public function fillSwolfArray(Trackdata\Entity &$trackdata) {
+		if ($this->stroke() && $trackdata->has(Trackdata\Entity::TIME)) {
 			$TrackLoop = new Trackdata\Loop($trackdata);
 			$Loop = new Loop($this);
 
@@ -220,7 +220,7 @@ class Object extends Model\Object implements Model\Loopable {
 			$swolfcycles = array();
 
 			for ($i = 1; $i <= $max; ++$i) {
-				$duration = $TrackLoop->difference(Trackdata\Object::TIME);
+				$duration = $TrackLoop->difference(Trackdata\Entity::TIME);
 				$swolf[] = $duration + $Loop->stroke();
 				$swolfcycles[] = $duration + $Loop->stroke()/2;
 
@@ -228,8 +228,8 @@ class Object extends Model\Object implements Model\Loopable {
 				$TrackLoop->nextStep();
 			}
 
-			$this->set(Object::SWOLF, $swolf);
-			$this->set(Object::SWOLFCYCLES, $swolfcycles);
+			$this->set(Entity::SWOLF, $swolf);
+			$this->set(Entity::SWOLFCYCLES, $swolfcycles);
 		}
 	}
 }

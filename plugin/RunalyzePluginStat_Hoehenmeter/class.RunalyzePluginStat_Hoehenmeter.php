@@ -125,7 +125,7 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 			echo '<tr><td colspan="4"><em>'.__('No routes found.').'</em></td></tr>';
 
 		foreach ($this->SumData as $Data) {
-			$Activity = new Activity\Object($Data);
+			$Activity = new Activity\Entity($Data);
 			$Linker = new Linker($Activity);
 			$grade = $Data['distance'] > 0 ? $Data['elevation'] / $Data['distance'] : 0;
 
@@ -153,7 +153,7 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 			echo '<tr><td colspan="4"><em>'.__('No routes found.').'</em></td></tr>';
 
 		foreach ($this->UpwardData as $Data) {
-			$Activity = new Activity\Object($Data);
+			$Activity = new Activity\Entity($Data);
 			$Linker = new Linker($Activity);
 
 			echo '<tr>

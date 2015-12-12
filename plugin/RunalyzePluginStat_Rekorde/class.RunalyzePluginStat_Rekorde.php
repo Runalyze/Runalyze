@@ -94,7 +94,7 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 				$data = $Request->fetchAll();
 
 				if (!empty($data)) {
-					$Sport = new Sport\Object($sportData);
+					$Sport = new Sport\Entity($sportData);
 					$output = true;
 					echo '<tr class="r">';
 					echo '<td class="b l">'.$Sport->icon()->code().' '.$Sport->name().'</td>';

@@ -32,22 +32,22 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 	public function testSimpleUpdate() {
 		$Inserter = new Inserter($this->PDO);
 		$Inserter->setAccountID(0);
-		$Inserter->insert(new Object(array(
-			Object::ACTIVITYID => $this->ActivityID,
-			Object::STROKE => array(25, 20, 15, 20)
+		$Inserter->insert(new Entity(array(
+			Entity::ACTIVITYID => $this->ActivityID,
+			Entity::STROKE => array(25, 20, 15, 20)
 		)));
 
-		$Swimdata = new Object($this->PDO->query('SELECT * FROM `'.PREFIX.'swimdata` WHERE `activityid`='.$this->ActivityID)->fetch(PDO::FETCH_ASSOC));
-		$Swimdata->set(Object::STROKE, array());
+		$Swimdata = new Entity($this->PDO->query('SELECT * FROM `'.PREFIX.'swimdata` WHERE `activityid`='.$this->ActivityID)->fetch(PDO::FETCH_ASSOC));
+		$Swimdata->set(Entity::STROKE, array());
 
 		$Changed = clone $Swimdata;
-		$Changed->set(Object::STROKETYPE, array(2, 2, 2, 2));
+		$Changed->set(Entity::STROKETYPE, array(2, 2, 2, 2));
 
 		$Updater = new Updater($this->PDO, $Changed, $Swimdata);
 		$Updater->setAccountID(0);
 		$Updater->update();
 
-		$Result = new Object($this->PDO->query('SELECT * FROM `'.PREFIX.'swimdata` WHERE `activityid`='.$this->ActivityID)->fetch(PDO::FETCH_ASSOC));
+		$Result = new Entity($this->PDO->query('SELECT * FROM `'.PREFIX.'swimdata` WHERE `activityid`='.$this->ActivityID)->fetch(PDO::FETCH_ASSOC));
 		$this->assertEquals(array(25, 20, 15, 20), $Result->stroke());
 		$this->assertEquals(array(2, 2, 2, 2), $Result->stroketype());
 	}

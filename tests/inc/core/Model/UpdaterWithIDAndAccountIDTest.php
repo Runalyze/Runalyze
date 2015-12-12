@@ -12,7 +12,7 @@ class UpdaterWithAccountIDForObjectWithID_MockTester extends UpdaterWithIDAndAcc
             return array('foo', 'accountid');
         }
 }
-class UpdaterWithAccountIDObjectWithID_MockTester extends ObjectWithID {
+class UpdaterWithAccountIDObjectWithID_MockTester extends EntityWithID {
 	public function properties() {
 		return array ('foo', 'accountid');
 	}

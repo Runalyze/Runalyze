@@ -10,12 +10,12 @@ use Runalyze\Model\Route;
 class CalculatorTest extends \PHPUnit_Framework_TestCase {
 
 	public function testCalculatorForEmptyData() {
-		$Route = new Route\Object(array(
-			Route\Object::ELEVATIONS_ORIGINAL => array(),
-			Route\Object::ELEVATIONS_CORRECTED => array(),
-			Route\Object::ELEVATION => 123,
-			Route\Object::ELEVATION_UP => 123,
-			Route\Object::ELEVATION_DOWN => 123
+		$Route = new Route\Entity(array(
+			Route\Entity::ELEVATIONS_ORIGINAL => array(),
+			Route\Entity::ELEVATIONS_CORRECTED => array(),
+			Route\Entity::ELEVATION => 123,
+			Route\Entity::ELEVATION_UP => 123,
+			Route\Entity::ELEVATION_DOWN => 123
 		));
 		$Calc = new Calculator($Route);
 		$Calc->calculateElevation();
@@ -27,13 +27,13 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase {
 		$this->assertFalse($Calc->tryToCorrectElevation());
 		$this->assertEmpty($Route->elevationsOriginal());
 		$this->assertEmpty($Route->elevationsCorrected());
-		$this->assertEmpty($Route->get(Route\Object::ELEVATIONS_SOURCE));
+		$this->assertEmpty($Route->get(Route\Entity::ELEVATIONS_SOURCE));
 	}
 
 	public function testCalculationFromOriginalData() {
-		$Route = new Route\Object(array(
-			Route\Object::ELEVATIONS_ORIGINAL => array(100, 120, 150, 140),
-			Route\Object::ELEVATIONS_CORRECTED => array()
+		$Route = new Route\Entity(array(
+			Route\Entity::ELEVATIONS_ORIGINAL => array(100, 120, 150, 140),
+			Route\Entity::ELEVATIONS_CORRECTED => array()
 		));
 		$Calc = new Calculator($Route);
 		$Calc->calculateElevation();
@@ -44,9 +44,9 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testCalculationFromCorrectedData() {
-		$Route = new Route\Object(array(
-			Route\Object::ELEVATIONS_ORIGINAL => array(100, 100, 100, 100),
-			Route\Object::ELEVATIONS_CORRECTED => array(100, 120, 150, 140)
+		$Route = new Route\Entity(array(
+			Route\Entity::ELEVATIONS_ORIGINAL => array(100, 100, 100, 100),
+			Route\Entity::ELEVATIONS_CORRECTED => array(100, 120, 150, 140)
 		));
 		$Calc = new Calculator($Route);
 		$Calc->calculateElevation();
@@ -57,7 +57,7 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testCorrection() {
-		$Route = new Route\Object();
+		$Route = new Route\Entity();
 		$Route->setLatitudesLongitudes(
 			array(49.440, 49.441, 49.442, 49.443, 49.444, 49.445, 49.446, 49.447, 49.448, 49.449, 49.450),
 			array(7.760, 7.761, 7.762, 7.763, 7.764, 7.765, 7.766, 7.767, 7.768, 7.769, 7.770)
@@ -67,7 +67,7 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase {
 		if ($Calc->tryToCorrectElevation()) {
 			$this->assertEmpty($Route->elevationsOriginal());
 			$this->assertNotEmpty($Route->elevationsCorrected());
-			$this->assertNotEmpty($Route->get(Route\Object::ELEVATIONS_SOURCE));
+			$this->assertNotEmpty($Route->get(Route\Entity::ELEVATIONS_SOURCE));
 		} else {
 			$this->markTestSkipped('No elevation correction was available.');
 		}

@@ -7,7 +7,7 @@
 namespace Runalyze\View\Activity\Plot\Series;
 
 use Runalyze\Configuration;
-use Runalyze\Model\Route\Object as Route;
+use Runalyze\Model\Route\Entity as Route;
 use Runalyze\Parameter\Application\DistanceUnitSystem;
 use Runalyze\View\Activity;
 

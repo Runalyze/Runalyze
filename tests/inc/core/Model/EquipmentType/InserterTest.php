@@ -5,7 +5,7 @@ namespace Runalyze\Model\EquipmentType;
 use PDO;
 use DB;
 
-class InvalidInserterObjectForType_MockTester extends \Runalyze\Model\Object {
+class InvalidInserterObjectForType_MockTester extends \Runalyze\Model\Entity {
 	public function properties() {
 		return array('foo');
 	}
@@ -30,19 +30,17 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		$this->PDO->exec('DELETE FROM `'.PREFIX.'equipment_type`');
 	}
 
-	/**
-	 * @expectedException \PHPUnit_Framework_Error
-	 */
 	public function testWrongObject() {
+	    if (PHP_MAJOR_VERSION >= 7) $this->setExpectedException('TypeError'); else $this->setExpectedException('\PHPUnit_Framework_Error');
 		new Inserter($this->PDO, new InvalidInserterObjectForType_MockTester);
 	}
 
 	public function testSimpleInsert() {
-		$Type = new Object(array(
-			Object::NAME => 'Equipment type name',
-			Object::INPUT => 0,
-			Object::MAX_KM => 100,
-			Object::MAX_TIME => 0
+		$Type = new Entity(array(
+			Entity::NAME => 'Equipment type name',
+			Entity::INPUT => 0,
+			Entity::MAX_KM => 100,
+			Entity::MAX_TIME => 0
 		));
 
 		$Inserter = new Inserter($this->PDO, $Type);
@@ -50,7 +48,7 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		$Inserter->insert();
 
 		$data = $this->PDO->query('SELECT * FROM `'.PREFIX.'equipment_type` WHERE `accountid`=1')->fetch(PDO::FETCH_ASSOC);
-		$New = new Object($data);
+		$New = new Entity($data);
 
 		$this->assertEquals('Equipment type name', $New->name());
 		$this->assertFalse($New->allowsMultipleValues());

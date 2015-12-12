@@ -5,6 +5,7 @@
  */
 
 use Runalyze\Configuration;
+use Runalyze\Error;
 
 /**
  * Window for importing/creating new trainings.

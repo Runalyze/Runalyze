@@ -292,12 +292,12 @@ abstract class Loop
 
 	/**
 	 * Slice object based on last/current index
-	 * @return \Runalyze\Model\Object
+	 * @return \Runalyze\Model\Entity
 	 * @throws \RuntimeException
 	 */
 	public function sliceObject()
 	{
-		if ($this->Object instanceof Runalyze\Model\Object)
+		if ($this->Object instanceof Runalyze\Model\Entity)
 		{
 			throw new \RuntimeException('This object cannot be sliced.');
 		}
@@ -317,7 +317,7 @@ abstract class Loop
 
 	/**
 	 * @param array $data
-	 * @return \Runalyze\Model\Object
+	 * @return \Runalyze\Model\Entity
 	 */
 	abstract protected function createNewObject(array $data);
 }

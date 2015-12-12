@@ -12,7 +12,7 @@ class InserterForObjectWithoutID_MockTester extends Inserter {
 		return array('foo','arr');
 	}
 }
-class InserterObjectWithoutID_MockTester extends Object {
+class InserterObjectWithoutID_MockTester extends Entity {
 	public function properties() {
 		return array ('foo', 'arr');
 	}
@@ -29,7 +29,7 @@ class InserterForObjectWithID_MockTester extends Inserter {
 		return array('foo');
 	}
 }
-class InserterObjectWithID_MockTester extends ObjectWithID {
+class InserterObjectWithID_MockTester extends EntityWithID {
 	public function properties() {
 		return array('foo', 'bar');
 	}
@@ -50,7 +50,7 @@ class InserterForSquarObject_MockTester extends Inserter {
         }
 
 }
-class InserterSquareObject_MockTester extends Object {
+class InserterSquareObject_MockTester extends Entity {
 	public function properties() {
 		return array('foo');
 	}

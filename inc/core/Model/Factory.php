@@ -67,10 +67,10 @@ class Factory {
 	/**
 	 * Activity
 	 * @param int $activityid
-	 * @return \Runalyze\Model\Activity\Object
+	 * @return \Runalyze\Model\Activity\Entity
 	 */
 	public function activity($activityid) {
-		return new Activity\Object(
+		return new Activity\Entity(
 			$this->arrayByPK('training', $activityid)
 		);
 	}
@@ -78,10 +78,10 @@ class Factory {
 	/**
 	 * Trackdata
 	 * @param int $activityid
-	 * @return \Runalyze\Model\Trackdata\Object
+	 * @return \Runalyze\Model\Trackdata\Entity
 	 */
 	public function trackdata($activityid) {
-		return new Trackdata\Object(
+		return new Trackdata\Entity(
 			$this->arrayByPK('trackdata', $activityid)
 		);
 	}
@@ -89,10 +89,10 @@ class Factory {
 	/**
 	 * Swimdata
 	 * @param int $activityid
-	 * @return \Runalyze\Model\Swimdata\Object
+	 * @return \Runalyze\Model\Swimdata\Entity
 	 */
 	public function swimdata($activityid) {
-		return new Swimdata\Object(
+		return new Swimdata\Entity(
 			$this->arrayByPK('swimdata', $activityid)
 		);
 	}
@@ -100,10 +100,10 @@ class Factory {
 	/**
 	 * Route
 	 * @param int $routeid
-	 * @return \Runalyze\Model\Route\Object
+	 * @return \Runalyze\Model\Route\Entity
 	 */
 	public function route($routeid) {
-		return new Route\Object(
+		return new Route\Entity(
 			$this->arrayByPK('route', $routeid)
 		);
 	}
@@ -111,10 +111,10 @@ class Factory {
 	/**
 	 * HRV
 	 * @param int $activityid
-	 * @return \Runalyze\Model\HRV\Object
+	 * @return \Runalyze\Model\HRV\Entity
 	 */
 	public function hrv($activityid) {
-		return new HRV\Object(
+		return new HRV\Entity(
 			$this->arrayByPK('hrv', $activityid)
 		);
 	}
@@ -122,63 +122,63 @@ class Factory {
 	/**
 	 * Type
 	 * @param int $typeid
-	 * @return \Runalyze\Model\Type\Object
+	 * @return \Runalyze\Model\Type\Entity
 	 */
 	public function type($typeid) {
-		return new Type\Object(
+		return new Type\Entity(
 			$this->arrayByPK('type', $typeid)
 		);
 	}
 
 	/**
 	 * All type objects
-	 * @return \Runalyze\Model\Type\Object[]
+	 * @return \Runalyze\Model\Type\Entity[]
 	 */
 	public function allTypes() {
 		return $this->allObjects('type', function($data){
-			return new Type\Object($data);
+			return new Type\Entity($data);
 		});
 	}
 
 	/**
 	 * Sport
 	 * @param int $sportid
-	 * @return \Runalyze\Model\Sport\Object
+	 * @return \Runalyze\Model\Sport\Entity
 	 */
 	public function sport($sportid) {
-		return new Sport\Object(
+		return new Sport\Entity(
 			$this->arrayByPK('sport', $sportid)
 		);
 	}
 
 	/**
 	 * All sport objects
-	 * @return \Runalyze\Model\Sport\Object[]
+	 * @return \Runalyze\Model\Sport\Entity[]
 	 */
 	public function allSports() {
 		return $this->allObjects('sport', function($data){
-			return new Sport\Object($data);
+			return new Sport\Entity($data);
 		});
 	}
 
 	/**
 	 * Equipment type
 	 * @param int $equipmentTypeid
-	 * @return \Runalyze\Model\EquipmentType\Object
+	 * @return \Runalyze\Model\EquipmentType\Entity
 	 */
 	public function equipmentType($equipmentTypeid) {
-		return new EquipmentType\Object(
+		return new EquipmentType\Entity(
 			$this->arrayByPK('equipment_type', $equipmentTypeid)
 		);
 	}
 
 	/**
 	 * All equipment type objects
-	 * @return \Runalyze\Model\EquipmentType\Object[]
+	 * @return \Runalyze\Model\EquipmentType\Entity[]
 	 */
 	public function allEquipmentTypes() {
 		return $this->allObjects('equipment_type', function($data){
-			return new EquipmentType\Object($data);
+			return new EquipmentType\Entity($data);
 		});
 	}
 	
@@ -186,7 +186,7 @@ class Factory {
 	 * All equipment for equipment type
 	 * @param int $equipmentTypeid
 	 * @param boolean $onlyIDs [optional]
-	 * @return \Runalyze\Model\Equipment\Object[]
+	 * @return \Runalyze\Model\Equipment\Entity[]
 	 */
 	public function equipmentForEquipmentType($equipmentTypeid, $onlyIDs = false) {
 	    $Equipment = array();
@@ -209,7 +209,7 @@ class Factory {
 	 * Sport for equipment type
 	 * @param int $equipmentTypeid
 	 * @param boolean $onlyIDs [optional]
-	 * @return int[]|\Runalyze\Model\Sport\Object[]
+	 * @return int[]|\Runalyze\Model\Sport\Entity[]
 	 */
 	public function sportForEquipmentType($equipmentTypeid, $onlyIDs = false) {
 		$Sport = array();
@@ -232,7 +232,7 @@ class Factory {
 	 * Equipment types for sport
 	 * @param int $sportid
 	 * @param boolean $onlyIDs [optional]
-	 * @return int[]|\Runalyze\Model\EquipmentType\Object[]
+	 * @return int[]|\Runalyze\Model\EquipmentType\Entity[]
 	 */
 	public function equipmentTypeForSport($sportid, $onlyIDs = false) {
 		$Types = array();
@@ -254,21 +254,21 @@ class Factory {
 	/**
 	 * Equipment
 	 * @param int $equipmentid
-	 * @return \Runalyze\Model\Equipment\Object
+	 * @return \Runalyze\Model\Equipment\Entity
 	 */
 	public function equipment($equipmentid) {
-		return new Equipment\Object(
+		return new Equipment\Entity(
 			$this->arrayByPK('equipment', $equipmentid)
 		);
 	}
 
 	/**
 	 * All equipment objects
-	 * @return \Runalyze\Model\Equipment\Object[]
+	 * @return \Runalyze\Model\Equipment\Entity[]
 	 */
 	public function allEquipments() {
 		return $this->allObjects('equipment', function($data){
-			return new Equipment\Object($data);
+			return new Equipment\Entity($data);
 		});
 	}
 
@@ -276,7 +276,7 @@ class Factory {
 	 * Equipment for activity
 	 * @param int $activityid
 	 * @param boolean $onlyIDs [optional]
-	 * @return int[]|\Runalyze\Model\Equipment\Object[]
+	 * @return int[]|\Runalyze\Model\Equipment\Entity[]
 	 */
 	public function equipmentForActivity($activityid, $onlyIDs = false) {
 		$Equipment = array();
@@ -297,21 +297,21 @@ class Factory {
 	/**
 	 * Tag
 	 * @param int tagid
-	 * @return \Runalyze\Model\Tag\Object
+	 * @return \Runalyze\Model\Tag\Entity
 	 */
 	public function tag($tagid) {
-		return new Tag\Object(
+		return new Tag\Entity(
 			$this->arrayByPK('tag', $tagid)
 		);
 	}
 	
 	/**
 	 * All tag objects
-	 * @return \Runalyze\Model\Tag\Object[]
+	 * @return \Runalyze\Model\Tag\Entity[]
 	 */
 	public function allTags() {
 		return $this->allObjects('tag', function($data){
-			return new Tag\Object($data);
+			return new Tag\Entity($data);
 		});
 	}
 	
@@ -319,7 +319,7 @@ class Factory {
 	 * tags for activity
 	 * @param int $activityid
 	 * @param boolean $onlyIDs [optional]
-	 * @return int[]|\Runalyze\Model\Tag\Object[]
+	 * @return int[]|\Runalyze\Model\Tag\Entity[]
 	 */
 	public function tagForActivity($activityid, $onlyIDs = false) {
 		$Tag = array();
@@ -429,7 +429,7 @@ class Factory {
 	 * All objects
 	 * @param string $tablename
 	 * @param \Closure $constructor
-	 * @return \Runalyze\Model\Object[]
+	 * @return \Runalyze\Model\Entity[]
 	 */
 	public function allObjects($tablename, \Closure $constructor) {
 		$allObjects = array();

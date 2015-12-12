@@ -60,7 +60,7 @@ class TableSwimLane extends TableLapsAbstract {
 			$this->Code .= '<tr class="r">';
 			$this->Code .= '<td>'.$i.'.</td>';
 			$this->Code .= '<td>'.$Distance->stringMeter().'</td>';
-			$this->Code .= '<td>'.Duration::format($TrackLoop->difference(Trackdata\Object::TIME)).'</td>';
+			$this->Code .= '<td>'.Duration::format($TrackLoop->difference(Trackdata\Entity::TIME)).'</td>';
 			$this->Code .= '<td>'.$Loop->swolf().'</td>';
 			$this->Code .= '<td>'.$Loop->stroke().'</td>';
 			$this->Code .= '<td>'.$Stroketype->shortstring().'</td>';

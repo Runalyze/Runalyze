@@ -54,11 +54,11 @@ class DataSeriesRemoverTest extends \PHPUnit_Framework_TestCase {
 	 * @return int activity id
 	 */
 	protected function insert(array $activity, array $route, array $trackdata) {
-		$activity[Object::ROUTEID] = $this->insertRoute($route);
-		$trackdata[Trackdata\Object::ACTIVITYID] = $this->insertActivity($activity, $route, $trackdata);
+		$activity[Entity::ROUTEID] = $this->insertRoute($route);
+		$trackdata[Trackdata\Entity::ACTIVITYID] = $this->insertActivity($activity, $route, $trackdata);
 		$this->insertTrackdata($trackdata);
 
-		return $trackdata[Trackdata\Object::ACTIVITYID];
+		return $trackdata[Trackdata\Entity::ACTIVITYID];
 	}
 
 	/**
@@ -68,9 +68,9 @@ class DataSeriesRemoverTest extends \PHPUnit_Framework_TestCase {
 	 * @return int
 	 */
 	protected function insertActivity(array $data, array $route, array $trackdata) {
-		$Inserter = new Inserter($this->PDO, new Object($data));
-		$Inserter->setRoute(new Route\Object($route));
-		$Inserter->setTrackdata(new Trackdata\Object($trackdata));
+		$Inserter = new Inserter($this->PDO, new Entity($data));
+		$Inserter->setRoute(new Route\Entity($route));
+		$Inserter->setTrackdata(new Trackdata\Entity($trackdata));
 
 		return $this->runInserter($Inserter);
 	}
@@ -80,7 +80,7 @@ class DataSeriesRemoverTest extends \PHPUnit_Framework_TestCase {
 	 * @return int
 	 */
 	protected function insertRoute(array $data) {
-		return $this->runInserter(new Route\Inserter($this->PDO, new Route\Object($data)));
+		return $this->runInserter(new Route\Inserter($this->PDO, new Route\Entity($data)));
 	}
 
 	/**
@@ -88,7 +88,7 @@ class DataSeriesRemoverTest extends \PHPUnit_Framework_TestCase {
 	 * @return int
 	 */
 	protected function insertTrackdata(array $data) {
-		$this->runInserter(new Trackdata\Inserter($this->PDO, new Trackdata\Object($data)), false);
+		$this->runInserter(new Trackdata\Inserter($this->PDO, new Trackdata\Entity($data)), false);
 	}
 
 	/**
@@ -106,57 +106,57 @@ class DataSeriesRemoverTest extends \PHPUnit_Framework_TestCase {
 
 	public function testSimpleExample() {
 		$id = $this->insert(array(
-			Object::TIMESTAMP => time(),
-			Object::HR_AVG => 1
+			Entity::TIMESTAMP => time(),
+			Entity::HR_AVG => 1
 		), array(
-			Route\Object::GEOHASHES => array('u1xjhpfe7yvs', 'u1xjhzdtjx62', 'u1xjjp6nyp0b'),
-			Route\Object::ELEVATIONS_ORIGINAL => array(0, 220, 290),
-			Route\Object::ELEVATIONS_CORRECTED => array(210, 220, 230)
+			Route\Entity::GEOHASHES => array('u1xjhpfe7yvs', 'u1xjhzdtjx62', 'u1xjjp6nyp0b'),
+			Route\Entity::ELEVATIONS_ORIGINAL => array(0, 220, 290),
+			Route\Entity::ELEVATIONS_CORRECTED => array(210, 220, 230)
 		), array(
-			Trackdata\Object::TIME => array(300, 600, 900),
-			Trackdata\Object::DISTANCE => array(1, 2, 3),
-			Trackdata\Object::TEMPERATURE => array(25, 30, 32),
-			Trackdata\Object::HEARTRATE => array(0, 250, 130)
+			Trackdata\Entity::TIME => array(300, 600, 900),
+			Trackdata\Entity::DISTANCE => array(1, 2, 3),
+			Trackdata\Entity::TEMPERATURE => array(25, 30, 32),
+			Trackdata\Entity::HEARTRATE => array(0, 250, 130)
 		));
 
 		$OldActivity = $this->Factory->activity($id);
 		$this->assertTrue($OldActivity->trimp() > 0);
 
 		$Remover = new DataSeriesRemover($this->PDO, 0, $OldActivity, $this->Factory);
-		$Remover->removeFromRoute(Route\Object::ELEVATIONS_ORIGINAL);
+		$Remover->removeFromRoute(Route\Entity::ELEVATIONS_ORIGINAL);
 		$Remover->removeGPSpathFromRoute();
-		$Remover->removeFromTrackdata(Trackdata\Object::TEMPERATURE);
-		$Remover->removeFromTrackdata(Trackdata\Object::HEARTRATE);
+		$Remover->removeFromTrackdata(Trackdata\Entity::TEMPERATURE);
+		$Remover->removeFromTrackdata(Trackdata\Entity::HEARTRATE);
 		$Remover->saveChanges();
 
 		$Activity = $this->Factory->activity($id);
-		$Route = $this->Factory->route($Activity->get(Object::ROUTEID));
+		$Route = $this->Factory->route($Activity->get(Entity::ROUTEID));
 		$Trackdata = $this->Factory->trackdata($id);
 
 		$this->assertFalse($Activity->trimp() > 0);
 
-		$this->assertFalse($Route->has(Route\Object::GEOHASHES));
+		$this->assertFalse($Route->has(Route\Entity::GEOHASHES));
 		$this->assertFalse($Route->hasOriginalElevations());
 		$this->assertTrue($Route->hasCorrectedElevations());
 
-		$this->assertTrue($Trackdata->has(Trackdata\Object::TIME));
-		$this->assertTrue($Trackdata->has(Trackdata\Object::DISTANCE));
-		$this->assertFalse($Trackdata->has(Trackdata\Object::TEMPERATURE));
-		$this->assertFalse($Trackdata->has(Trackdata\Object::HEARTRATE));
+		$this->assertTrue($Trackdata->has(Trackdata\Entity::TIME));
+		$this->assertTrue($Trackdata->has(Trackdata\Entity::DISTANCE));
+		$this->assertFalse($Trackdata->has(Trackdata\Entity::TEMPERATURE));
+		$this->assertFalse($Trackdata->has(Trackdata\Entity::HEARTRATE));
 	}
 
 	public function testIfTrackdataWillBeDeleted() {
 		$id = $this->insert(array(
-			Object::TIMESTAMP => time()
+			Entity::TIMESTAMP => time()
 		), array(
 		), array(
-			Trackdata\Object::TIME => array(60, 120, 180)
+			Trackdata\Entity::TIME => array(60, 120, 180)
 		));
 
 		$OldActivity = $this->Factory->activity($id);
 
 		$Remover = new DataSeriesRemover($this->PDO, 0, $OldActivity, $this->Factory);
-		$Remover->removeFromTrackdata(Trackdata\Object::TIME);
+		$Remover->removeFromTrackdata(Trackdata\Entity::TIME);
 		$Remover->saveChanges();
 
 		$Trackdata = $this->Factory->trackdata($id);
@@ -166,49 +166,49 @@ class DataSeriesRemoverTest extends \PHPUnit_Framework_TestCase {
 
 	public function testIfRouteWillBeDeleted() {
 		$id = $this->insert(array(
-			Object::TIMESTAMP => time()
+			Entity::TIMESTAMP => time()
 		), array(
-			Route\Object::GEOHASHES => array('u1xjhpfe7yvs', 'u1xjhzdtjx62', 'u1xjjp6nyp0b'),
-			Route\Object::ELEVATIONS_CORRECTED => array(200, 250, 200),
-			Route\Object::ELEVATION => 50,
-			Route\Object::ELEVATION_UP => 50,
-			Route\Object::ELEVATION_DOWN => 50
+			Route\Entity::GEOHASHES => array('u1xjhpfe7yvs', 'u1xjhzdtjx62', 'u1xjjp6nyp0b'),
+			Route\Entity::ELEVATIONS_CORRECTED => array(200, 250, 200),
+			Route\Entity::ELEVATION => 50,
+			Route\Entity::ELEVATION_UP => 50,
+			Route\Entity::ELEVATION_DOWN => 50
 		), array(
 		));
 
 		$OldActivity = $this->Factory->activity($id);
-		$RouteID = $OldActivity->get(Object::ROUTEID);
+		$RouteID = $OldActivity->get(Entity::ROUTEID);
 
 		$Remover = new DataSeriesRemover($this->PDO, 0, $OldActivity, $this->Factory);
 		$Remover->removeGPSpathFromRoute();
-		$Remover->removeFromRoute(Route\Object::ELEVATIONS_CORRECTED);
+		$Remover->removeFromRoute(Route\Entity::ELEVATIONS_CORRECTED);
 		$Remover->saveChanges();
 
 		$Activity = $this->Factory->activity($id);
 		$Route = $this->Factory->route($RouteID);
 
-		$this->assertEquals(0, $Activity->get(Object::ROUTEID));
+		$this->assertEquals(0, $Activity->get(Entity::ROUTEID));
 		$this->assertTrue($Route->isEmpty());
 	}
 
 	public function testRemovingAverageValues() {
 		$id = $this->insert(array(
-			Object::TIMESTAMP => time(),
-			Object::HR_AVG => 150,
-			Object::TEMPERATURE => 18,
-			Object::SPORTID => $this->OutdoorID
+			Entity::TIMESTAMP => time(),
+			Entity::HR_AVG => 150,
+			Entity::TEMPERATURE => 18,
+			Entity::SPORTID => $this->OutdoorID
 		), array(
-			Route\Object::ELEVATIONS_CORRECTED => array(200, 250, 200)
+			Route\Entity::ELEVATIONS_CORRECTED => array(200, 250, 200)
 		), array(
-			Trackdata\Object::TEMPERATURE => array(20, 20, 20),
-			Trackdata\Object::HEARTRATE => array(150, 170, 130)
+			Trackdata\Entity::TEMPERATURE => array(20, 20, 20),
+			Trackdata\Entity::HEARTRATE => array(150, 170, 130)
 		));
 
 		$OldActivity = $this->Factory->activity($id);
 
 		$Remover = new DataSeriesRemover($this->PDO, 0, $OldActivity, $this->Factory);
-		$Remover->removeFromTrackdata(Trackdata\Object::TEMPERATURE);
-		$Remover->removeFromTrackdata(Trackdata\Object::HEARTRATE);
+		$Remover->removeFromTrackdata(Trackdata\Entity::TEMPERATURE);
+		$Remover->removeFromTrackdata(Trackdata\Entity::HEARTRATE);
 		$Remover->saveChanges();
 
 		$Activity = $this->Factory->activity($id);

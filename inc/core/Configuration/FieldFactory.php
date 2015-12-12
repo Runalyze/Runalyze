@@ -6,7 +6,7 @@
 
 namespace Runalyze\Configuration;
 
-use Runalyze\Parameter\Bool;
+use Runalyze\Parameter\Boolean;
 use Runalyze\Parameter\Select;
 use Runalyze\Parameter\SelectRow;
 
@@ -59,7 +59,7 @@ class FieldFactory {
 			$Field->setOptions($Parameter->options());
 
 			return $Field;
-		} elseif ($Parameter instanceof Bool) {
+		} elseif ($Parameter instanceof Boolean) {
 			$Field = new \FormularCheckbox($Handle->key(), $label, $Handle->value());
 			$Field->addHiddenSentValue();
 

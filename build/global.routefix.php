@@ -98,7 +98,7 @@ while ($Route = $Routes->fetch()) {
 	GlobalCleanupAccount::$ID = $Route['accountid'];
 	$PDO->setAccountID($Route['accountid']);
 
-	$Updater->update(new Runalyze\Model\Route\Object($Route), array(
+	$Updater->update(new Runalyze\Model\Route\Entity($Route), array(
 		'startpoint_lat',
 		'startpoint_lng',
 		'endpoint_lat',

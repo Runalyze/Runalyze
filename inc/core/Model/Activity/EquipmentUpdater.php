@@ -14,12 +14,12 @@ namespace Runalyze\Model\Activity;
  */
 class EquipmentUpdater extends \Runalyze\Model\RelationUpdater {
 	/**
-	 * @var \Runalyze\Model\Activity\Object
+	 * @var \Runalyze\Model\Activity\Entity
 	 */
 	protected $NewActivity = null;
 
 	/**
-	 * @var \Runalyze\Model\Activity\Object
+	 * @var \Runalyze\Model\Activity\Entity
 	 */
 	protected $OldActivity = null;
 
@@ -28,10 +28,10 @@ class EquipmentUpdater extends \Runalyze\Model\RelationUpdater {
 	 * 
 	 * These objects are needed to keep equipment statistics up to date
 	 * 
-	 * @param \Runalyze\Model\Activity\Object $newActivity
-	 * @param \Runalyze\Model\Activity\Object $oldActivity
+	 * @param \Runalyze\Model\Activity\Entity $newActivity
+	 * @param \Runalyze\Model\Activity\Entity $oldActivity
 	 */
-	public function setActivityObjects(Object $newActivity, Object $oldActivity = null) {
+	public function setActivityObjects(Entity $newActivity, Entity $oldActivity = null) {
 		$this->NewActivity = $newActivity;
 		$this->OldActivity = $oldActivity;
 	}

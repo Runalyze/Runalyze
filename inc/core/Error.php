@@ -1,13 +1,18 @@
 <?php
 /**
+ * Class: Error - This class handles all errors 
+ * @author Hannes Christiansen
+ * @package Runalyze
+ */
+
+namespace Runalyze;
+use HTML;
+use Ajax;
+
+/**
  * This file contains the class to handle errors.
  * set_error_handler() is needed to get all normal errors from php.
  * Before handling the errors of a script a new object of class::Error has to be created.
- */
-/**
- * Class: Error - This class handles all errors 
- * @author Hannes Christiansen
- * @package Runalyze\System
  */
 class Error {
 	/**

@@ -18,7 +18,7 @@ use Runalyze\Calculation\Distribution\TimeSeries;
  */
 class Calculator {
 	/**
-	 * @var \Runalyze\Model\Trackdata\Object
+	 * @var \Runalyze\Model\Trackdata\Entity
 	 */
 	protected $Trackdata;
 
@@ -29,9 +29,9 @@ class Calculator {
 
 	/**
 	 * Calculator for stride length
-	 * @param \Runalyze\Model\Trackdata\Object $trackdata
+	 * @param \Runalyze\Model\Trackdata\Entity $trackdata
 	 */
-	public function __construct(Trackdata\Object $trackdata) {
+	public function __construct(Trackdata\Entity $trackdata) {
 		$this->Trackdata = $trackdata;
 	}
 
@@ -41,9 +41,9 @@ class Calculator {
 	 */
 	public function calculate() {
 		if (
-			!$this->Trackdata->has(Trackdata\Object::TIME) ||
-			!$this->Trackdata->has(Trackdata\Object::DISTANCE) ||
-			!$this->Trackdata->has(Trackdata\Object::CADENCE)
+			!$this->Trackdata->has(Trackdata\Entity::TIME) ||
+			!$this->Trackdata->has(Trackdata\Entity::DISTANCE) ||
+			!$this->Trackdata->has(Trackdata\Entity::CADENCE)
 		) {
 			return;
 		}
@@ -91,10 +91,10 @@ class Calculator {
 	/**
 	 * Calculate stride length for activity
 	 * Use this method if trackdata is not available
-	 * @param \Runalyze\Model\Activity\Object $activity
+	 * @param \Runalyze\Model\Activity\Entity $activity
 	 * @return int [cm]
 	 */
-	public static function forActivity(Activity\Object $activity) {
+	public static function forActivity(Activity\Entity $activity) {
 		if ($activity->cadence() > 0 && $activity->duration() > 0) {
 			return round($activity->distance() * 1000 * 100 / ($activity->cadence() * 2 / 60 * $activity->duration()));
 		}

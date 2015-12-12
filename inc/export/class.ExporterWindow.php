@@ -41,11 +41,11 @@ class ExporterWindow {
 		if (strlen(Request::param('public')) > 0) {
 			$Updater = new Activity\Updater(DB::getInstance());
 			$Updater->setAccountID(SessionAccountHandler::getId());
-			$Updater->update(new Activity\Object(array(
+			$Updater->update(new Activity\Entity(array(
 				'id' => $this->TrainingID,
-				Activity\Object::IS_PUBLIC => Request::param('public') == 'true' ? 1 : 0
+				Activity\Entity::IS_PUBLIC => Request::param('public') == 'true' ? 1 : 0
 			)), array(
-				Activity\Object::IS_PUBLIC
+				Activity\Entity::IS_PUBLIC
 			));
 		}
 	}

@@ -105,15 +105,15 @@ class MultiImporterFormular extends Formular {
 		$Inputs .= HTML::hiddenInput('training-data['.$i.']', $Data);
 
 		$Preview = new Preview(
-			new Activity\Object(array(
-				Activity\Object::TIMESTAMP => $TrainingObject->getTimestamp(),
-				Activity\Object::SPORTID => $TrainingObject->get('sportid'),
-				Activity\Object::TIME_IN_SECONDS => $TrainingObject->getTimeInSeconds(),
-				Activity\Object::DISTANCE => $TrainingObject->getDistance(),
-				Activity\Object::IS_TRACK => $TrainingObject->isTrack(),
-				Activity\Object::HR_AVG => $TrainingObject->getPulseAvg(),
-				Activity\Object::SPLITS => $TrainingObject->get('splits'),
-				Activity\Object::ROUTEID => $TrainingObject->hasPositionData()
+			new Activity\Entity(array(
+				Activity\Entity::TIMESTAMP => $TrainingObject->getTimestamp(),
+				Activity\Entity::SPORTID => $TrainingObject->get('sportid'),
+				Activity\Entity::TIME_IN_SECONDS => $TrainingObject->getTimeInSeconds(),
+				Activity\Entity::DISTANCE => $TrainingObject->getDistance(),
+				Activity\Entity::IS_TRACK => $TrainingObject->isTrack(),
+				Activity\Entity::HR_AVG => $TrainingObject->getPulseAvg(),
+				Activity\Entity::SPLITS => $TrainingObject->get('splits'),
+				Activity\Entity::ROUTEID => $TrainingObject->hasPositionData()
 			)
 		));
 

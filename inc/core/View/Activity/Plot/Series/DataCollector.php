@@ -6,7 +6,7 @@
 
 namespace Runalyze\View\Activity\Plot\Series;
 
-use Runalyze\Model\Trackdata\Object as Trackdata;
+use Runalyze\Model\Trackdata\Entity as Trackdata;
 use Runalyze\Model\Trackdata\Loop;
 use Runalyze\Configuration;
 
@@ -70,7 +70,7 @@ class DataCollector {
 
 	/**
 	 * Construct collector
-	 * @param \Runalyze\Model\Trackdata\Object $trackdata
+	 * @param \Runalyze\Model\Trackdata\Entity $trackdata
 	 * @param enum $key
 	 * @throws \InvalidArgumentException
 	 */
@@ -105,7 +105,7 @@ class DataCollector {
 
 	/**
 	 * Init loop
-	 * @param \Runalyze\Model\Trackdata\Object $trackdata
+	 * @param \Runalyze\Model\Trackdata\Entity $trackdata
 	 */
 	protected function init(Trackdata $trackdata) {
 		$this->Loop = new Loop($trackdata);
@@ -147,7 +147,7 @@ class DataCollector {
 
 	/**
 	 * Set step size
-	 * @param \Runalyze\Model\Trackdata\Object $trackdata
+	 * @param \Runalyze\Model\Trackdata\Entity $trackdata
 	 */
 	protected function defineStepSize(Trackdata $trackdata) {
 		if ($this->Precision->byPoints() && $trackdata->num() > $this->Precision->numberOfPoints()) {
@@ -159,7 +159,7 @@ class DataCollector {
 
 	/**
 	 * Define x-axis
-	 * @param \Runalyze\Model\Trackdata\Object $trackdata
+	 * @param \Runalyze\Model\Trackdata\Entity $trackdata
 	 */
 	protected function defineXAxis(Trackdata $trackdata) {
 		if (Configuration::ActivityView()->usesTimeAsXAxis() && $trackdata->has(Trackdata::TIME) && $trackdata->totalTime() > 0) {

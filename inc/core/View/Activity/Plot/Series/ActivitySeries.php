@@ -7,7 +7,7 @@
 namespace Runalyze\View\Activity\Plot\Series;
 
 use Runalyze\View\Activity\Plot\Series\DataCollector;
-use Runalyze\Model\Trackdata\Object as Trackdata;
+use Runalyze\Model\Trackdata\Entity as Trackdata;
 use Runalyze\View\Activity\Context;
 use Runalyze\Configuration;
 

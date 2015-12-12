@@ -101,12 +101,12 @@ while ($Track = $Tracks->fetch()) {
 	GlobalCleanupAccount::$ID = $Track['accountid'];
 	$PDO->setAccountID($Track['accountid']);
 
-	$Activity = new Runalyze\Model\Activity\Object(array(
+	$Activity = new Runalyze\Model\Activity\Entity(array(
 		'id' => $Track['id'],
-		Runalyze\Model\Activity\Object::SPORTID => $Track['sportid']
+		Runalyze\Model\Activity\Entity::SPORTID => $Track['sportid']
 	));
 
-	$Updater->setTrackdata(new Runalyze\Model\Trackdata\Object($Track));
+	$Updater->setTrackdata(new Runalyze\Model\Trackdata\Entity($Track));
 	$Updater->update($Activity, array(
 		'stride_length'
 	));

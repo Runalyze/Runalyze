@@ -8,7 +8,7 @@ namespace Runalyze\Parameter;
 class ParameterStringTest extends \PHPUnit_Framework_TestCase {
 
 	/**
-	 * @var \Runalyze\Parameter\String
+	 * @var \Runalyze\Parameter\Textline
 	 */
 	protected $object;
 
@@ -17,7 +17,7 @@ class ParameterStringTest extends \PHPUnit_Framework_TestCase {
 	 * This method is called before a test is executed.
 	 */
 	protected function setUp() {
-		$this->object = new String('');
+		$this->object = new Textline('');
 	}
 
 	public function testAsString() {

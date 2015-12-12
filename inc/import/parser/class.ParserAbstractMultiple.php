@@ -9,6 +9,8 @@
  * @author Hannes Christiansen
  * @package Runalyze\Import\Parser
  */
+use Runalyze\Error;
+
 abstract class ParserAbstractMultiple extends ParserAbstract {
 	/**
 	 * Training object

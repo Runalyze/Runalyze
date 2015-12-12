@@ -49,7 +49,7 @@ if ($this->DayCount < 25) {
 	$monthSeparator = ' top-separated';
 }
 
-$Context = new \Runalyze\Dataset\Context(new Runalyze\Model\Activity\Object(), $this->AccountID);
+$Context = new \Runalyze\Dataset\Context(new Runalyze\Model\Activity\Entity(), $this->AccountID);
 $Table = new \Runalyze\View\Dataset\Table($this->DatasetConfig);
 ?>
 

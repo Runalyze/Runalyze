@@ -7,8 +7,8 @@
 namespace Runalyze\Configuration\Category;
 
 use Runalyze\Configuration;
-use Runalyze\Parameter\Int;
-use Runalyze\Parameter\Float;
+use Runalyze\Parameter\Integer;
+use Runalyze\Parameter\FloatingPoint;
 use Runalyze\Calculation\Performance;
 use Runalyze\Calculation\JD;
 
@@ -33,19 +33,19 @@ class Data extends \Runalyze\Configuration\Category {
 	 * Create handles
 	 */
 	protected function createHandles() {
-		$this->createHandle('START_TIME', new Int(0));
+		$this->createHandle('START_TIME', new Integer(0));
 
-		$this->createHandle('HF_MAX', new Int(200));
-		$this->createHandle('HF_REST', new Int(60));
+		$this->createHandle('HF_MAX', new Integer(200));
+		$this->createHandle('HF_REST', new Integer(60));
 
-		$this->createHandle('VDOT_FORM', new Float(0.0));
-		$this->createHandle('VDOT_CORRECTOR', new Float(1.0));
+		$this->createHandle('VDOT_FORM', new FloatingPoint(0.0));
+		$this->createHandle('VDOT_CORRECTOR', new FloatingPoint(1.0));
 
-		$this->createHandle('BASIC_ENDURANCE', new Int(0));
+		$this->createHandle('BASIC_ENDURANCE', new Integer(0));
 
-		$this->createHandle('MAX_ATL', new Int(0));
-		$this->createHandle('MAX_CTL', new Int(0));
-		$this->createHandle('MAX_TRIMP', new Int(0));
+		$this->createHandle('MAX_ATL', new Integer(0));
+		$this->createHandle('MAX_CTL', new Integer(0));
+		$this->createHandle('MAX_TRIMP', new Integer(0));
 	}
 
 	/**

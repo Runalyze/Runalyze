@@ -12,12 +12,12 @@ class UpdaterForObjectWithID_MockTester extends UpdaterWithID {
             return array('foo');
         }
 }
-class UpdaterObjectWithID_MockTester extends ObjectWithID {
+class UpdaterObjectWithID_MockTester extends EntityWithID {
 	public function properties() {
 		return array ('foo');
 	}
 }
-class InvalidUpdaterObjectWithID_MockTester extends Object {
+class InvalidUpdaterObjectWithID_MockTester extends Entity {
 	public function properties() {
 		return array ('foo');
 	}
@@ -43,10 +43,8 @@ class UpdaterWithIDTest extends \PHPUnit_Framework_TestCase {
 		$this->PDO->exec('DROP TABLE `'.PREFIX.'table`');
 	}
 
-	/**
-	 * @expectedException \PHPUnit_Framework_Error
-	 */
 	public function testWrongObject() {
+	    if (PHP_MAJOR_VERSION >= 7) $this->setExpectedException('TypeError'); else $this->setExpectedException('\PHPUnit_Framework_Error');
 		new UpdaterForObjectWithID_MockTester($this->PDO, new InvalidUpdaterObjectWithID_MockTester);
 	}
 

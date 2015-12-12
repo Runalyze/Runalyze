@@ -163,7 +163,6 @@ $CLASSMAP = array(
 'DatabaseSchemePool' => 'system/class.DatabaseSchemePool.php',
 'DataObject' => 'system/class.DataObject.php',
 'DB' => 'system/class.DB.php',
-'Error' => 'system/class.Error.php',
 'Filesystem' => 'system/class.Filesystem.php',
 'Language' => 'system/class.Language.php',
 'PDOforRunalyze' => 'system/class.PDOforRunalyze.php',

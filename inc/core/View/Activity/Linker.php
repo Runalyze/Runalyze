@@ -28,7 +28,7 @@ use DB;
 class Linker {
 	/**
 	 * Activity
-	 * @var \Runalyze\Model\Activity\Object
+	 * @var \Runalyze\Model\Activity\Entity
 	 */
 	protected $Activity;
 
@@ -64,9 +64,9 @@ class Linker {
 
 	/**
 	 * Construct linker
-	 * @param \Runalyze\Model\Activity\Object $activity
+	 * @param \Runalyze\Model\Activity\Entity $activity
 	 */
-	public function __construct(Activity\Object $activity) {
+	public function __construct(Activity\Entity $activity) {
 		$this->Activity = $activity;
 	}
 

@@ -27,7 +27,7 @@ class DeleterTest extends \PHPUnit_Framework_TestCase {
 	 * @param array $data
 	 */
 	protected function insert(array $data) {
-		$Inserter = new Inserter($this->PDO, new Object($data));
+		$Inserter = new Inserter($this->PDO, new Entity($data));
 		$Inserter->setAccountID(0);
 		$Inserter->insert();
 	}
@@ -36,7 +36,7 @@ class DeleterTest extends \PHPUnit_Framework_TestCase {
 	 * @param int $id
 	 */
 	protected function delete($id) {
-		$Deleter = new Deleter($this->PDO, new Object($this->fetch($id)));
+		$Deleter = new Deleter($this->PDO, new Entity($this->fetch($id)));
 		$Deleter->setAccountID(0);
 		$Deleter->delete();
 	}
@@ -49,11 +49,9 @@ class DeleterTest extends \PHPUnit_Framework_TestCase {
 		return $this->PDO->query('SELECT * FROM `runalyze_swimdata` WHERE `activityid`="'.$id.'" AND `accountid`=0')->fetch();
 	}
 
-	/**
-	 * @expectedException \PHPUnit_Framework_Error
-	 */
 	public function testWrongObject() {
-		new Deleter($this->PDO, new \Runalyze\Model\Route\Object);
+	    if (PHP_MAJOR_VERSION >= 7) $this->setExpectedException('TypeError'); else $this->setExpectedException('\PHPUnit_Framework_Error');
+		new Deleter($this->PDO, new \Runalyze\Model\Route\Entity);
 	}
 
 	public function testSimpleDeletion() {
@@ -63,10 +61,10 @@ class DeleterTest extends \PHPUnit_Framework_TestCase {
 		$secondID = $this->PDO->lastInsertId();
 
 		$this->insert(array(
-			Object::ACTIVITYID => $firstID
+			Entity::ACTIVITYID => $firstID
 		));
 		$this->insert(array(
-			Object::ACTIVITYID => $secondID
+			Entity::ACTIVITYID => $secondID
 		));
 		$this->delete($firstID);
 

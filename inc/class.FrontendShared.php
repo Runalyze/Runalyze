@@ -5,6 +5,7 @@
  */
 
 use Runalyze\View\Activity;
+use Runalyze\Error;
 
 /**
  * Class for customizing frontend for displaying shared activities

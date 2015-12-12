@@ -9,6 +9,8 @@
  * @author Hannes Christiansen
  * @package Runalyze\Import\Filetype
  */
+use Runalyze\Error;
+
 abstract class ImporterFiletypeAbstract {
 	/**
 	 * Parser

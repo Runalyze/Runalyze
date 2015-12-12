@@ -17,23 +17,23 @@ use Runalyze\Model;
 class Updater extends Model\UpdaterWithIDAndAccountID {
 	/**
 	 * Old object
-	 * @var \Runalyze\Model\Tag\Object
+	 * @var \Runalyze\Model\Tag\Entity
 	 */
 	protected $OldObject;
 
 	/**
 	 * New object
-	 * @var \Runalyze\Model\Tag\Object
+	 * @var \Runalyze\Model\Tag\Entity
 	 */
 	protected $NewObject;
 
 	/**
 	 * Construct updater
 	 * @param \PDO $connection
-	 * @param \Runalyze\Model\Tag\Object $newObject [optional]
-	 * @param \Runalyze\Model\Tag\Object $oldObject [optional]
+	 * @param \Runalyze\Model\Tag\Entity $newObject [optional]
+	 * @param \Runalyze\Model\Tag\Entity $oldObject [optional]
 	 */
-	public function __construct(\PDO $connection, Object $newObject = null, Object $oldObject = null) {
+	public function __construct(\PDO $connection, Entity $newObject = null, Entity $oldObject = null) {
 		parent::__construct($connection, $newObject, $oldObject);
 	}
 
@@ -53,7 +53,7 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 		return array_merge(array(
 				self::ACCOUNTID
 			),
-			Object::allDatabaseProperties()
+			Entity::allDatabaseProperties()
 		);
 	}
 }

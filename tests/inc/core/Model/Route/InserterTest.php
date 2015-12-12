@@ -5,7 +5,7 @@ namespace Runalyze\Model\Route;
 use PDO;
 use DB;
 
-class InvalidInserterObjectForRoute_MockTester extends \Runalyze\Model\Object {
+class InvalidInserterObjectForRoute_MockTester extends \Runalyze\Model\Entity {
 	public function properties() {
 		return array('foo');
 	}
@@ -30,18 +30,16 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		$this->PDO->exec('TRUNCATE `'.PREFIX.'route`');
 	}
 
-	/**
-	 * @expectedException \PHPUnit_Framework_Error
-	 */
 	public function testWrongObject() {
+	    if (PHP_MAJOR_VERSION >= 7) $this->setExpectedException('TypeError'); else $this->setExpectedException('\PHPUnit_Framework_Error');
 		new Inserter($this->PDO, new InvalidInserterObjectForRoute_MockTester);
 	}
 
 	public function testSimpleInsert() {
-		$R = new Object(array(
-			Object::NAME => 'Test route',
-			Object::DISTANCE => 3.14,
-			Object::GEOHASHES => array('u1xjhpfe7yvs', 'u1xjhzdtjx62')
+		$R = new Entity(array(
+			Entity::NAME => 'Test route',
+			Entity::DISTANCE => 3.14,
+			Entity::GEOHASHES => array('u1xjhpfe7yvs', 'u1xjhzdtjx62')
 		));
 		$R->forceToSetMinMaxFromGeohashes();
 		
@@ -50,18 +48,18 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		$I->insert();
 
 		$data = $this->PDO->query('SELECT * FROM `'.PREFIX.'route` WHERE `accountid`=0')->fetch(PDO::FETCH_ASSOC);
-		$N = new Object($data);
+		$N = new Entity($data);
 
 		$this->assertEquals(0, $data[Inserter::ACCOUNTID]);
 		$this->assertEquals('Test route', $N->name());
 		$this->assertTrue($N->hasID());
 		$this->assertTrue($N->hasPositionData());
-		$this->assertEquals('u1xjhpdt5z', $N->get(Object::MIN));
+		$this->assertEquals('u1xjhpdt5z', $N->get(Entity::MIN));
 	}
 
 	public function testElevationCalculation() {
-		$R = new Object(array(
-			Object::ELEVATIONS_CORRECTED => array(100, 120, 110)
+		$R = new Entity(array(
+			Entity::ELEVATIONS_CORRECTED => array(100, 120, 110)
 		));
 
 		$I = new Inserter($this->PDO, $R);
@@ -69,7 +67,7 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		$I->insert();
 
 		$data = $this->PDO->query('SELECT * FROM `'.PREFIX.'route` WHERE `accountid`=0')->fetch(PDO::FETCH_ASSOC);
-		$N = new Object($data);
+		$N = new Entity($data);
 
 		$this->assertGreaterThan(0, $N->elevation());
 		$this->assertGreaterThan(0, $N->elevationUp());

@@ -8,9 +8,9 @@ namespace Runalyze\Configuration\Category;
 
 use Runalyze\Configuration\Messages;
 use Runalyze\Configuration\Fieldset;
-use Runalyze\Parameter\Bool;
-use Runalyze\Parameter\String;
-use Runalyze\Parameter\Int;
+use Runalyze\Parameter\Boolean;
+use Runalyze\Parameter\Textline;
+use Runalyze\Parameter\Integer;
 use Runalyze\Parameter\Application\VdotMethod;
 use Ajax;
 use Helper;
@@ -41,14 +41,14 @@ class Vdot extends \Runalyze\Configuration\Category {
 	 */
 	protected function createHandles() {
 		$this->createHandle('VDOT_HF_METHOD', new VdotMethod());
-		$this->createHandle('VDOT_DAYS', new Int(30));
-		$this->createHandle('VDOT_USE_CORRECTION', new Bool(true));
-		$this->createHandle('VDOT_MANUAL_CORRECTOR', new String(''));
-		$this->createHandle('VDOT_MANUAL_VALUE', new String(''));
+		$this->createHandle('VDOT_DAYS', new Integer(30));
+		$this->createHandle('VDOT_USE_CORRECTION', new Boolean(true));
+		$this->createHandle('VDOT_MANUAL_CORRECTOR', new Textline(''));
+		$this->createHandle('VDOT_MANUAL_VALUE', new Textline(''));
 
-		$this->createHandle('VDOT_USE_CORRECTION_FOR_ELEVATION', new Bool(false));
-		$this->createHandle('VDOT_CORRECTION_POSITIVE_ELEVATION', new Int(2));
-		$this->createHandle('VDOT_CORRECTION_NEGATIVE_ELEVATION', new Int(-1));
+		$this->createHandle('VDOT_USE_CORRECTION_FOR_ELEVATION', new Boolean(false));
+		$this->createHandle('VDOT_CORRECTION_POSITIVE_ELEVATION', new Integer(2));
+		$this->createHandle('VDOT_CORRECTION_NEGATIVE_ELEVATION', new Integer(-1));
 	}
 
 	/**
