@@ -142,9 +142,9 @@ class BasicEndurance extends \Runalyze\Configuration\Category {
 		if (!self::$TRIGGERED) {
 			self::$TRIGGERED = true;
 
-			$oldValue = BasicEndurance::getConst();
+			$oldValue = CalculationBasicEndurance::getConst();
 			CalculationBasicEndurance::recalculateValue();
-			$newValue = BasicEndurance::getConst();
+			$newValue = CalculationBasicEndurance::getConst();
 
 			Messages::addValueRecalculated(__('Basic endurance'), $newValue.' &#37;', $oldValue.' &#37;');
 		}
