@@ -24,7 +24,7 @@ class ExporterFactory {
 	 * @param string $Type
 	 */
 	public function __construct($Type) {
-		$ExporterClass = 'Exporter'.$Type;
+		$ExporterClass = 'Exporter'.strtoupper($Type);
 
 		if (class_exists($ExporterClass)) {
 			$this->Exporter = new $ExporterClass( new Context(Request::sendId(), SessionAccountHandler::getId()) );
