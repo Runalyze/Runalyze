@@ -16,6 +16,7 @@ use Runalyze\Model\Route;
 class ExporterFITLOG extends ExporterAbstractFile {
     
 	const NEEDS_ROUTE = false;
+	const EXPORTER_TYPE = 0;
 	const EXTENSION = 'fitlog';
 	
 	/**

@@ -11,6 +11,9 @@
  * @package Runalyze\Export\Types
  */
 class ExporterGoogle extends ExporterAbstractSocialShare {
+    
+    const EXPORTER_TYPE = 2;
+    
 	/**
 	 * Icon class
 	 * @return string

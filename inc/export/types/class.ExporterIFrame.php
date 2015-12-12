@@ -15,6 +15,10 @@ use Runalyze\Model\Activity;
  * @package Runalyze\Export\Types
  */
 class ExporterIFrame extends ExporterAbstract {
+    
+	const EXPORTER_TYPE = 1;
+	const TYPE = 'IFrame';
+    
 	/**
 	 * Default width
 	 * @var int
