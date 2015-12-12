@@ -15,7 +15,7 @@ class System {
 	 */
 	public static function getCodeForLocalJSFiles() {
 		if (self::isAtLocalhost()) {
-			return '<script src="build/scripts.js?v='.RUNALYZE_VERSION.'></script>';
+			return '<script src="build/scripts.js?v='.RUNALYZE_VERSION.'"></script>';
 		}
 
 		return '<script src="build/scripts.min.js?v='.RUNALYZE_VERSION.'"></script>';
