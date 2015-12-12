@@ -10,9 +10,12 @@ use Runalyze\View\Activity\Linker;
  * Exporter for: HTML
  * 
  * @author Hannes Christiansen
+ * @author Michael Pohl
  * @package Runalyze\Export\Types
  */
 class ExporterHTML extends ExporterAbstract {
+    
+	const EXPORTER_TYPE = 2;
 	/**
 	 * Display
 	 */

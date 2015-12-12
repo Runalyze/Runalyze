@@ -14,6 +14,11 @@ use Runalyze\Model\Route;
  * @package Runalyze\Export\Types
  */
 class ExporterGPX extends ExporterAbstractFile {
+    
+	const NEEDS_ROUTE = true;
+	const EXPORTER_TYPE = 0;
+	const EXTENSION = 'gpx';
+	
 	/**
 	 * XML construct
 	 * @var SimpleXMLElement
@@ -30,7 +35,7 @@ class ExporterGPX extends ExporterAbstractFile {
 	 * Get extension
 	 * @return string 
 	 */
-	protected function getExtension() {
+	public function getExtension() {
 		return 'gpx';
 	}
 

@@ -11,9 +11,15 @@ use Runalyze\Model\Route;
  * Exporter for: TCX
  * 
  * @author Hannes Christiansen
+ * @author Michael Pohl
  * @package Runalyze\Export\Types
  */
 class ExporterTCX extends ExporterAbstractFile {
+    
+    	const NEEDS_ROUTE = true;
+	const EXPORTER_TYPE = 0;
+	const EXTENSION = 'tcx';
+	
 	/**
 	 * XML construct
 	 * @var SimpleXMLElement
@@ -30,7 +36,7 @@ class ExporterTCX extends ExporterAbstractFile {
 	 * Get extension
 	 * @return string 
 	 */
-	protected function getExtension() {
+	public function getExtension() {
 		return 'tcx';
 	}
 
