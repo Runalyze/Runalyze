@@ -10,9 +10,15 @@ use Runalyze\Configuration;
  * Exporter for: KML
  * 
  * @author Hannes Christiansen
+ * @author Michael Pohl
  * @package Runalyze\Export\Types
  */
 class ExporterKML extends ExporterAbstractFile {
+    
+	const NEEDS_ROUTE = true;
+	const EXPORTER_TYPE = 0;
+	const EXTENSION = 'kml';
+	
 	/**
 	 * XML construct
 	 * @var SimpleXMLElement
@@ -23,7 +29,7 @@ class ExporterKML extends ExporterAbstractFile {
 	 * Get extension
 	 * @return string 
 	 */
-	protected function getExtension() {
+	public function getExtension() {
 		return 'kml';
 	}
 

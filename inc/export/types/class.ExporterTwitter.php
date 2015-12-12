@@ -7,27 +7,35 @@
  * Exporter for: Twitter
  * 
  * @author Hannes Christiansen
+ * @author Michael Pohl
  * @package Runalyze\Export\Types
  */
 class ExporterTwitter extends ExporterAbstractSocialShare {
+    
 	/**
 	 * Icon class
 	 * @return string
 	 */
-	public static function IconClass() {
+	public static function getIconClass() {
 		return 'fa-twitter color-twitter';
 	}
-
-	/**
-	 * Display
-	 */
-	public function display() {
-		$url = 'https://twitter.com/share?url='.$this->getPublicURL().'&text='.$this->getText().'&via=RunalyzeDE';
-
-		$Linklist = new BlocklinkList();
-		$Linklist->addCompleteLink($this->externalLink($url, __('Tweet!')) );
-		$Linklist->display();
-
-		echo HTML::info( __('You will be forwared to Twitter, where you can define which text shall be displayed.') );
+	
+	
+	public function getUrl() {
+	    $url = 'https://twitter.com/share?url='.$this->getPublicURL().'&text='.$this->getText().'&via=RunalyzeDE';
+	    return $url;
 	}
+	
+	public function getActionText() {
+	    return __('Tweet!');
+	}
+	
+	public function getName() {
+	    return __('Twitter');
+	}
+	
+	public function getInfoText() {
+	    return __('You will be forwared to Twitter, where you can define which text shall be displayed.');
+	}
+
 }

@@ -14,6 +14,10 @@ use Runalyze\Model\Route;
  * @package Runalyze\Export\Types
  */
 class ExporterFITLOG extends ExporterAbstractFile {
+    
+	const NEEDS_ROUTE = false;
+	const EXTENSION = 'fitlog';
+	
 	/**
 	 * XML construct
 	 * @var SimpleXMLElement
@@ -30,7 +34,7 @@ class ExporterFITLOG extends ExporterAbstractFile {
 	 * Get extension
 	 * @return string 
 	 */
-	protected function getExtension() {
+	public function getExtension() {
 		return 'fitlog';
 	}
 

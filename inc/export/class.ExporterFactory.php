@@ -24,7 +24,7 @@ class ExporterFactory {
 	 * @param string $Type
 	 */
 	public function __construct($Type) {
-		$ExporterClass = 'Exporter'.$Type;
+		$ExporterClass = 'Exporter'.strtoupper($Type);
 
 		if (class_exists($ExporterClass)) {
 			$this->Exporter = new $ExporterClass( new Context(Request::sendId(), SessionAccountHandler::getId()) );
@@ -38,7 +38,7 @@ class ExporterFactory {
 		if (is_null($this->Exporter)) {
 			echo HTML::error( __('The chosen exporter could not be located.') );
 		} else {
-			$this->Exporter->display();
+		    $this->Exporter->display();
 		}
 	}
 }
