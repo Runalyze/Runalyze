@@ -360,7 +360,6 @@ class AdminView {
 	private function getFilesFieldset() {
 		$Fieldset = new FormularFieldset( __('Unused files') );
 		$Fieldset->addFileBlock( $this->getBlockForFiles('/import/files/') );
-		$Fieldset->addFileBlock( $this->getBlockForFiles('/export/files/') );
 		$Fieldset->addFileBlock( $this->getBlockForFiles('../log/') );
 		$Fieldset->addFileBlock( $this->getBlockForFiles('../plugin/RunalyzePluginTool_DbBackup/backup/') );
 		$Fieldset->addFileBlock( $this->getBlockForFiles('../plugin/RunalyzePluginTool_DbBackup/import/') );
