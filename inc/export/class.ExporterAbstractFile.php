@@ -10,6 +10,7 @@
  * @package Runalyze\Export\Types
  */
 abstract class ExporterAbstractFile extends ExporterAbstract {
+    
 	/**
 	 * Type
 	 * @return enum
@@ -37,7 +38,7 @@ abstract class ExporterAbstractFile extends ExporterAbstract {
 	 * @return string
 	 */
 	public static function fileNameStart() {
-		return SessionAccountHandler::getId().'-Training_';
+		return SessionAccountHandler::getId().'-Activity_';
 	}
 
 	/**
@@ -56,26 +57,13 @@ abstract class ExporterAbstractFile extends ExporterAbstract {
 	 */
 	final public function display() {
 		$this->setFileContent();
-		$this->writeFile();
+		$this->getFileDownload();
 
 		if (count($this->getAllErrors()) > 0)
 			foreach ($this->getAllErrors() as $Error)
 				echo HTML::error($Error);
-		else
-			echo HTML::info('
-				'.__('Your activity has been exported.').'<br>
-				<br>
-				<a href="inc/export/files/'.$this->getFilename().'"><strong>'.__('Download').': '.$this->getFilename().'</strong></a>
-			');
 	}
 
-	/**
-	 * Write file 
-	 */
-	final protected function writeFile() {
-		if (!empty($this->FileContent))
-			Filesystem::writeFile('export/files/'.$this->getFilename(), $this->getFileContent());
-	}
 
 	/**
 	 * Add indents to file content 
@@ -95,6 +83,18 @@ abstract class ExporterAbstractFile extends ExporterAbstract {
 	 */
 	final public function getFileContent() {
 		return $this->FileContent;
+	}
+	
+	/**
+	 * Download content
+	 */
+	final public function getFileDownload() {
+	    header("Content-Type: text/plain");
+	    header("Content-Disposition: attachment; filename=".$this->getFilename()."");
+	    //header('Expires: 0');
+	    //header('Cache-Control: must-revalidate');
+	    print $this->FileContent;
+	    exit;
 	}
 
 	/**

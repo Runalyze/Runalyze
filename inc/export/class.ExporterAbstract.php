@@ -50,11 +50,6 @@ abstract class ExporterAbstract {
 	}
 
 	/**
-	 * Display
-	 */
-	abstract public function display();
-
-	/**
 	 * Add error message to display to user
 	 * @param string $message 
 	 */

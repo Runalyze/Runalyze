@@ -9,17 +9,27 @@
  * @author Hannes Christiansen
  * @package Runalyze\Export
  */
-class ExporterListView {
+
+use Runalyze\View\Activity\Context;
+
+class ExporterList {
 	/**
 	 * Exporter formats
 	 * @var array
 	 */
 	protected $Formats = array();
+	
+	/**
+	 * Activity context
+	 * @var \Runalyze\View\Activity\Context
+	 */
+	protected $Context = null;
 
 	/**
 	 * Exporter
 	 */
-	public function __construct() {
+	public function __construct(Context $context) {
+		$this->Context = $context;
 		$this->readPossibleFiletypes();
 	}
 
@@ -29,8 +39,6 @@ class ExporterListView {
 	public function display() {
 		if (empty($this->Formats)) {
 			$this->throwErrorForEmptyList();
-		} else {
-			$this->displayList();
 		}
 	}
 
@@ -41,27 +49,11 @@ class ExporterListView {
 		echo HTML::info( __('No exporter could be located.') );
 	}
 
-	/**
-	 * Display list
-	 */
-	private function displayList() {
-		ksort($this->Formats);
-
-		foreach ($this->Formats as $Type => $Formats) {
-			echo '<p><strong>'.ExporterType::heading($Type).'</strong></p>';
-
-			$List = new BlocklinkList();
-			$List->addCSSclass('blocklist-inline clearfix');
-
-			foreach ($Formats as $Format) {
-				$URL  = ExporterWindow::$URL.'?id='.Request::sendId().'&type='.$Format;
-				$List->addLinkWithIcon($URL, $Format, call_user_func( array('Exporter'.$Format, 'IconClass')));
-			}
-
-			$List->display();
-		}
+	
+	public function getList() {
+	    return $this->Formats;
 	}
-
+	
 	/**
 	 * Read possible filetypes
 	 */
@@ -70,7 +62,7 @@ class ExporterListView {
 
 		while ($file = readdir($dir)) {
 			if (substr($file, 0, 14) == 'class.Exporter') {
-				$this->Formats[ call_user_func( array(substr($file, 6, -4), 'Type')) ][] = substr($file, 14, -4);
+			    $this->Formats[ call_user_func( array(substr($file, 6, -4), 'Type')) ][] = substr($file, 6, -4);
 			}
 		}
 
