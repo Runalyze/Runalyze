@@ -53,27 +53,9 @@ class TrainingView {
 		}
 
 		if (!Request::isOnSharedPage()) {
-			$ExporterList = new ExporterList($this->Context);
-			$List = $ExporterList->getList();
-			if($this->Context->activity()->isPublic()) {
-			    $this->ToolbarLinks[] = '<ul><li class="with-submenu"><span class="link"><i class="fa fa-fw fa-share-alt"></i> Share</span><ul class="submenu">';
-			    foreach($List[ExporterType::Social] as $t) {
-				$Exporter = new $t($this->Context);
-				$this->ToolbarLinks[] = '<li><a href="'.$Exporter->getUrl().'" target="_blank" title="'.$Exporter->getInfoText().'"><i class="fa fa-fw '.$Exporter->getIconClass().'"></i>'.$Exporter->getName().'</a></li>';
-			    }
-			    foreach($List[ExporterType::Code] as $t) {
-				$Exporter = new $t($this->Context);
-				$this->ToolbarLinks[] = Ajax::window('<li><a href="'.ExporterWindow::$URL.'?id='.$this->Context->activity()->id().'&type='.$t::TYPE.'"><i class="fa fa-fw fa-code"></i>'.$t::TYPE.'</a></li>');
-			    }
-			    $this->ToolbarLinks[] = '</ul></li></ul>';
-			}
-			
-			$this->ToolbarLinks[] = '<ul><li class="with-submenu"><span class="link"><i class="fa fa-fw fa-download"></i> Export</span><ul class="submenu">';
-			foreach($List[ExporterType::File] as $ExportFile) {
-			    if($ExportFile::NEEDS_ROUTE == $this->Context->hasRoute() OR $ExportFile::NEEDS_ROUTE == false)
-			    $this->ToolbarLinks[] = '<li><a href="'.ExporterWindow::$URL.'?id='.$this->Context->activity()->id().'&type='.strtoupper($ExportFile::EXTENSION).'" title=""><i class="'.$Exporter->getIconClass.'"></i>'.$ExportFile::EXTENSION.'</a></li>';
-			}
-			$this->ToolbarLinks[] = '</ul></li></ul>';
+			$this->initShareLinks();
+			$this->initExportLinks();
+
 			$this->ToolbarLinks[] = Ajax::window('<a href="'.$Linker->editUrl().'">'.Icon::$EDIT.' '.__('Edit').'</a> ','small');
 		}
 
@@ -81,10 +63,41 @@ class TrainingView {
 	}
 
 	/**
-	 * Init social share Links
+	 * Init social share links
 	 */
-	
-	
+	protected function initShareLinks() {
+		$ExporterList = (new ExporterList($this->Context))->getList();
+
+		$this->ToolbarLinks[] = '<li class="with-submenu"><span class="link"><i class="fa fa-fw fa-share-alt"></i> '.__('Share').'</span><ul class="submenu">';
+
+		foreach ($ExporterList[ExporterType::Social] as $typeName) {
+			$Exporter = new $typeName($this->Context);
+			$this->ToolbarLinks[] = '<li><a href="'.$Exporter->getUrl().'" target="_blank" title="'.$Exporter->getInfoText().'"><i class="fa fa-fw '.$Exporter->getIconClass().'"></i> '.$Exporter->getName().'</a></li>';
+		}
+
+		foreach ($ExporterList[ExporterType::Code] as $typeName) {
+			$this->ToolbarLinks[] = Ajax::window('<li><a href="'.ExporterWindow::$URL.'?id='.$this->Context->activity()->id().'&type='.$typeName::TYPE.'"><i class="fa fa-fw fa-code"></i> '.$typeName::TYPE.'</a></li>');
+		}
+
+		$this->ToolbarLinks[] = '</ul></li>';
+	}
+
+	/**
+	 * Init download links
+	 */
+	protected function initExportLinks() {
+		$ExporterList = (new ExporterList($this->Context))->getList();
+
+		$this->ToolbarLinks[] = '<li class="with-submenu"><span class="link"><i class="fa fa-fw fa-download"></i> '.__('Export').'</span><ul class="submenu">';
+
+		foreach ($ExporterList[ExporterType::File] as $fileType) {
+			if (!$fileType::NEEDS_ROUTE || $this->Context->hasRoute()) {
+				$this->ToolbarLinks[] = '<li><a href="'.ExporterWindow::$URL.'?id='.$this->Context->activity()->id().'&type='.strtoupper($fileType::EXTENSION).'" title=""><i class="fa fa-fw fa-file-text-o"></i> '.sprintf(__('as %s'), strtoupper($fileType::EXTENSION)).'</a></li>';
+			}
+		}
+
+		$this->ToolbarLinks[] = '</ul></li>';
+	}
 
 	/**
 	 * Init sections
@@ -191,8 +204,12 @@ class TrainingView {
 	protected function displayHeaderMenu() {
 		echo '<div class="panel-menu"><ul>';
 
-		foreach ($this->ToolbarLinks as $Link) {
-			echo '<li>'.$Link.'</li>';
+		foreach ($this->ToolbarLinks as $link) {
+			if (substr($link, 0, 3) != '<li') {
+				$link = '<li>'.$link.'</li>';
+			}
+
+			echo $link;
 		}
 
 		echo '</ul></div>';
