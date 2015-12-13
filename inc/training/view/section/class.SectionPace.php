@@ -24,7 +24,7 @@ class SectionPace extends TrainingViewSectionTabbedPlot {
 	 * @return bool
 	 */
 	protected function hasRequiredData() {
-		return ($this->Context->activity()->distance() > 0 && $this->Context->activity()->duration() > 0) || $this->Context->trackdata()->has(\Runalyze\Model\Trackdata\Object::PACE);
+		return ($this->Context->activity()->distance() > 0 && $this->Context->activity()->duration() > 0) || $this->Context->trackdata()->has(\Runalyze\Model\Trackdata\Entity::PACE);
 	}
 
 	/**

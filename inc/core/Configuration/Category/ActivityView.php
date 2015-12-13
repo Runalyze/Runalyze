@@ -16,10 +16,10 @@ use Runalyze\Parameter\Application\ElevationMethod;
 use Runalyze\Parameter\Application\PaceAxisMaximum;
 use Runalyze\Parameter\Application\PaceAxisMinimum;
 use Runalyze\Parameter\Application\PaceAxisType;
-use Runalyze\Parameter\Bool;
-use Runalyze\Parameter\Int;
+use Runalyze\Parameter\Boolean;
+use Runalyze\Parameter\Integer;
 use Runalyze\Parameter\Select;
-use Runalyze\Parameter\String;
+use Runalyze\Parameter\Textline;
 
 /**
  * Configuration category: Activity view
@@ -56,11 +56,11 @@ class ActivityView extends \Runalyze\Configuration\Category {
 		$this->createHandle('GMAP_PATH_PRECISION', new ActivityRoutePrecision());
 		$this->createHandle('GMAP_PATH_BREAK', new ActivityRouteBreak());
 
-		$this->createHandle('TRAINING_MAP_COLOR', new String('#FF5500'));
+		$this->createHandle('TRAINING_MAP_COLOR', new Textline('#FF5500'));
 
-		$this->createHandle('TRAINING_LEAFLET_LAYER', new String('OpenStreetMap'));
-		$this->createHandle('TRAINING_MAP_SHOW_FIRST', new Bool(false));
-		$this->createHandle('TRAINING_MAP_ZOOM_ON_SCROLL', new Bool(false));
+		$this->createHandle('TRAINING_LEAFLET_LAYER', new Textline('OpenStreetMap'));
+		$this->createHandle('TRAINING_MAP_SHOW_FIRST', new Boolean(false));
+		$this->createHandle('TRAINING_MAP_ZOOM_ON_SCROLL', new Boolean(false));
 	}
 
 	/**
@@ -127,8 +127,8 @@ class ActivityView extends \Runalyze\Configuration\Category {
 	 * - TRAINING_PLOT_PRECISION
 	 */
 	protected function createPlotOptions() {
-		$this->createHandle('TRAINING_PLOT_SMOOTH', new Bool(false));
-		$this->createHandle('TRAINING_PLOT_XAXIS_TIME', new Bool(false));
+		$this->createHandle('TRAINING_PLOT_SMOOTH', new Boolean(false));
+		$this->createHandle('TRAINING_PLOT_XAXIS_TIME', new Boolean(false));
 
 		$this->createHandle('TRAINING_PLOT_MODE', new ActivityPlotMode());
 		$this->createHandle('TRAINING_PLOT_PRECISION', new ActivityPlotPrecision());
@@ -179,7 +179,7 @@ class ActivityView extends \Runalyze\Configuration\Category {
 
 		$this->createHandle('PACE_Y_AXIS_TYPE', new PaceAxisType());
 
-		$this->createHandle('PACE_HIDE_OUTLIERS', new Bool(false));
+		$this->createHandle('PACE_HIDE_OUTLIERS', new Boolean(false));
 	}
 
 	/**
@@ -226,11 +226,11 @@ class ActivityView extends \Runalyze\Configuration\Category {
 			'options' => array('0', '1', '2', '3')
 		)));
 
-		$this->createHandle('SHOW_SECTIONS_FULLHEIGHT', new Bool(false));
+		$this->createHandle('SHOW_SECTIONS_FULLHEIGHT', new Boolean(false));
 
 		$this->createHandle('ELEVATION_METHOD', new ElevationMethod());
 
-		$this->createHandle('ELEVATION_TRESHOLD', new Int(3));
+		$this->createHandle('ELEVATION_TRESHOLD', new Integer(3));
 	}
 
 	/**

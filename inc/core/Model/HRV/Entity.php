@@ -1,6 +1,6 @@
 <?php
 /**
- * This file contains class::Object
+ * This file contains class::Entity
  * @package Runalyze\Model\HRV
  */
 
@@ -9,12 +9,12 @@ namespace Runalyze\Model\HRV;
 use Runalyze\Model;
 
 /**
- * HRV object
+ * HRV entity
  * 
  * @author Hannes Christiansen
  * @package Runalyze\Model\HRV
  */
-class Object extends Model\ObjectWithID implements Model\Loopable {
+class Entity extends Model\EntityWithID implements Model\Loopable {
 	/**
 	 * Key: acitivityid
 	 * @var string

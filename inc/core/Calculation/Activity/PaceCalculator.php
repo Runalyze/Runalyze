@@ -31,10 +31,10 @@ class PaceCalculator {
 
 	/**
 	 * Calculate pace array
-	 * @param \Runalyze\Model\Trackdata\Object $trackdata
+	 * @param \Runalyze\Model\Trackdata\Entity $trackdata
 	 */
-	public function __construct(Trackdata\Object $trackdata) {
-		if ($trackdata->has(Trackdata\Object::TIME) && $trackdata->has(Trackdata\Object::DISTANCE)) {
+	public function __construct(Trackdata\Entity $trackdata) {
+		if ($trackdata->has(Trackdata\Entity::TIME) && $trackdata->has(Trackdata\Entity::DISTANCE)) {
 			$this->Smoother = new PaceSmoother($trackdata, true);
 		}
 	}

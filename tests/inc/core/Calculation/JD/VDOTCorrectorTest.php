@@ -42,9 +42,9 @@ class VDOTCorrectorTest extends \PHPUnit_Framework_TestCase {
 	public function testFromActivity() {
 		$Corrector = new VDOTCorrector;
 		$Corrector->fromActivity(
-			$Activity = new Activity\Object(array(
-				Activity\Object::VDOT_BY_TIME => 45,
-				Activity\Object::VDOT => 50
+			$Activity = new Activity\Entity(array(
+				Activity\Entity::VDOT_BY_TIME => 45,
+				Activity\Entity::VDOT => 50
 			))
 		);
 
@@ -54,8 +54,8 @@ class VDOTCorrectorTest extends \PHPUnit_Framework_TestCase {
 	public function testFromEmptyActivity() {
 		$Corrector = new VDOTCorrector;
 		$Corrector->fromActivity(
-			$Activity = new Activity\Object(array(
-				Activity\Object::VDOT_BY_TIME => 45
+			$Activity = new Activity\Entity(array(
+				Activity\Entity::VDOT_BY_TIME => 45
 			))
 		);
 

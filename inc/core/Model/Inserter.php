@@ -23,7 +23,7 @@ abstract class Inserter {
 
 	/**
 	 * Object
-	 * @var \Runalyze\Model\Object
+	 * @var \Runalyze\Model\Entity
 	 */
 	protected $Object;
 
@@ -41,9 +41,9 @@ abstract class Inserter {
 	/**
 	 * Construct inserter
 	 * @param \PDO $connection
-	 * @param \Runalyze\Model\Object $object [optional]
+	 * @param \Runalyze\Model\Entity $object [optional]
 	 */
-	public function __construct(\PDO $connection, Object $object = null) {
+	public function __construct(\PDO $connection, Entity $object = null) {
 		$this->PDO = $connection;
 		$this->Object = $object;
 	}
@@ -80,9 +80,9 @@ abstract class Inserter {
 
 	/**
 	 * Set object
-	 * @param \Runalyze\Model\Object $object
+	 * @param \Runalyze\Model\Entity $object
 	 */
-	final public function insert(Object $object = null) {
+	final public function insert(Entity $object = null) {
 		if (!is_null($object)) {
 			$this->Object = $object;
 		}
@@ -104,7 +104,7 @@ abstract class Inserter {
 
 		$this->InsertedID = $this->PDO->lastInsertId();
 
-		if ($this->Object instanceof ObjectWithID) {
+		if ($this->Object instanceof EntityWithID) {
 			$this->Object->setID($this->InsertedID);
 		}
 	}
@@ -150,7 +150,7 @@ abstract class Inserter {
 		$value = $this->Object->get($key);
 
 		if (is_array($value)) {
-			return Object::implode($value);
+			return Entity::implode($value);
 		}
 
 		return $value;
@@ -174,7 +174,7 @@ abstract class Inserter {
 	 * @throws \RuntimeException
 	 */
 	final public function insertedID() {
-		if (!($this->Object instanceof ObjectWithID)) {
+		if (!($this->Object instanceof EntityWithID)) {
 			throw new \RuntimeException('Only objects with id serve an inserted id.');
 		}
 

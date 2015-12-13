@@ -51,7 +51,7 @@ class DeleterTest extends \PHPUnit_Framework_TestCase {
 	 * @return int
 	 */
 	protected function insert(array $data) {
-		$Inserter = new Inserter($this->PDO, new Object($data));
+		$Inserter = new Inserter($this->PDO, new Entity($data));
 		$Inserter->setAccountID(0);
 		$Inserter->insert();
 
@@ -69,19 +69,17 @@ class DeleterTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * @param int $id
-	 * @return \Runalyze\Model\Activity\Object
+	 * @return \Runalyze\Model\Activity\Entity
 	 */
 	protected function fetch($id) {
-		return new Object(
+		return new Entity(
 			$this->PDO->query('SELECT * FROM `'.PREFIX.'training` WHERE `id`="'.$id.'" AND `accountid`=0')->fetch(PDO::FETCH_ASSOC)
 		);
 	}
 
-	/**
-	 * @expectedException \PHPUnit_Framework_Error
-	 */
 	public function testWrongObject() {
-		new Deleter($this->PDO, new Model\Trackdata\Object);
+	    if (PHP_MAJOR_VERSION >= 7) $this->setExpectedException('TypeError'); else $this->setExpectedException('\PHPUnit_Framework_Error');
+		new Deleter($this->PDO, new Model\Trackdata\Entity);
 	}
 
 	public function testStartTimeUpdate() {
@@ -92,10 +90,10 @@ class DeleterTest extends \PHPUnit_Framework_TestCase {
 
 		Configuration::Data()->updateStartTime($current);
 
-		$this->insert(array(Object::TIMESTAMP => $current));
-		$oldId = $this->insert(array(Object::TIMESTAMP => $old));
-		$olderId = $this->insert(array(Object::TIMESTAMP => $older));
-		$oldestId = $this->insert(array(Object::TIMESTAMP => $oldest));
+		$this->insert(array(Entity::TIMESTAMP => $current));
+		$oldId = $this->insert(array(Entity::TIMESTAMP => $old));
+		$olderId = $this->insert(array(Entity::TIMESTAMP => $older));
+		$oldestId = $this->insert(array(Entity::TIMESTAMP => $oldest));
 
 		$this->assertEquals($oldest, Configuration::Data()->startTime());
 
@@ -111,13 +109,13 @@ class DeleterTest extends \PHPUnit_Framework_TestCase {
 
 	public function testVDOTstatisticsForChanges() {
 		$newId = $this->insert(array(
-			Object::TIMESTAMP => time(),
-			Object::DISTANCE => 10,
-			Object::TIME_IN_SECONDS => 30*60,
-			Object::HR_AVG => 150,
-			Object::SPORTID => Configuration::General()->runningSport(),
-			Object::TYPEID => Configuration::General()->competitionType(),
-			Object::USE_VDOT => true
+			Entity::TIMESTAMP => time(),
+			Entity::DISTANCE => 10,
+			Entity::TIME_IN_SECONDS => 30*60,
+			Entity::HR_AVG => 150,
+			Entity::SPORTID => Configuration::General()->runningSport(),
+			Entity::TYPEID => Configuration::General()->competitionType(),
+			Entity::USE_VDOT => true
 		));
 
 		$this->assertNotEquals(0, Configuration::Data()->vdotShape());
@@ -132,39 +130,39 @@ class DeleterTest extends \PHPUnit_Framework_TestCase {
 	public function testVDOTstatisticsForNoChanges() {
 		$IDs = array();
 		$IDs[] = $this->insert(array(
-			Object::TIMESTAMP => time(),
-			Object::DISTANCE => 10,
-			Object::TIME_IN_SECONDS => 30*60,
-			Object::HR_AVG => 150,
-			Object::SPORTID => Configuration::General()->runningSport() + 1,
-			Object::TYPEID => Configuration::General()->competitionType(),
-			Object::USE_VDOT => true
+			Entity::TIMESTAMP => time(),
+			Entity::DISTANCE => 10,
+			Entity::TIME_IN_SECONDS => 30*60,
+			Entity::HR_AVG => 150,
+			Entity::SPORTID => Configuration::General()->runningSport() + 1,
+			Entity::TYPEID => Configuration::General()->competitionType(),
+			Entity::USE_VDOT => true
 		));
 		$IDs[] = $this->insert(array(
-			Object::TIMESTAMP => time(),
-			Object::DISTANCE => 10,
-			Object::TIME_IN_SECONDS => 30*60,
-			Object::HR_AVG => 150,
-			Object::SPORTID => Configuration::General()->runningSport(),
-			Object::TYPEID => Configuration::General()->competitionType(),
-			Object::USE_VDOT => false
+			Entity::TIMESTAMP => time(),
+			Entity::DISTANCE => 10,
+			Entity::TIME_IN_SECONDS => 30*60,
+			Entity::HR_AVG => 150,
+			Entity::SPORTID => Configuration::General()->runningSport(),
+			Entity::TYPEID => Configuration::General()->competitionType(),
+			Entity::USE_VDOT => false
 		));
 		$IDs[] = $this->insert(array(
-			Object::TIMESTAMP => time(),
-			Object::DISTANCE => 10,
-			Object::TIME_IN_SECONDS => 30*60,
-			Object::SPORTID => Configuration::General()->runningSport(),
-			Object::TYPEID => Configuration::General()->competitionType(),
-			Object::USE_VDOT => true
+			Entity::TIMESTAMP => time(),
+			Entity::DISTANCE => 10,
+			Entity::TIME_IN_SECONDS => 30*60,
+			Entity::SPORTID => Configuration::General()->runningSport(),
+			Entity::TYPEID => Configuration::General()->competitionType(),
+			Entity::USE_VDOT => true
 		));
 		$IDs[] = $this->insert(array(
-			Object::TIMESTAMP => time() - 365*DAY_IN_S,
-			Object::DISTANCE => 10,
-			Object::TIME_IN_SECONDS => 30*60,
-			Object::HR_AVG => 150,
-			Object::SPORTID => Configuration::General()->runningSport(),
-			Object::TYPEID => Configuration::General()->competitionType(),
-			Object::USE_VDOT => true
+			Entity::TIMESTAMP => time() - 365*DAY_IN_S,
+			Entity::DISTANCE => 10,
+			Entity::TIME_IN_SECONDS => 30*60,
+			Entity::HR_AVG => 150,
+			Entity::SPORTID => Configuration::General()->runningSport(),
+			Entity::TYPEID => Configuration::General()->competitionType(),
+			Entity::USE_VDOT => true
 		));
 
 		Configuration::Data()->updateVdotShape(62.15);
@@ -180,22 +178,22 @@ class DeleterTest extends \PHPUnit_Framework_TestCase {
 
 	public function testUpdatingBasicEndurance() {
 		$ignoredId1 = $this->insert(array(
-			Object::TIMESTAMP => time() - 365*DAY_IN_S,
-			Object::DISTANCE => 30,
-			Object::TIME_IN_SECONDS => 30*60*3,
-			Object::SPORTID => Configuration::General()->runningSport()
+			Entity::TIMESTAMP => time() - 365*DAY_IN_S,
+			Entity::DISTANCE => 30,
+			Entity::TIME_IN_SECONDS => 30*60*3,
+			Entity::SPORTID => Configuration::General()->runningSport()
 		));
 		$ignoredId2 = $this->insert(array(
-			Object::TIMESTAMP => time(),
-			Object::DISTANCE => 30,
-			Object::TIME_IN_SECONDS => 30*60*3,
-			Object::SPORTID => Configuration::General()->runningSport() + 1
+			Entity::TIMESTAMP => time(),
+			Entity::DISTANCE => 30,
+			Entity::TIME_IN_SECONDS => 30*60*3,
+			Entity::SPORTID => Configuration::General()->runningSport() + 1
 		));
 		$relevantId = $this->insert(array(
-			Object::TIMESTAMP => time(),
-			Object::DISTANCE => 30,
-			Object::TIME_IN_SECONDS => 30*60*3,
-			Object::SPORTID => Configuration::General()->runningSport()
+			Entity::TIMESTAMP => time(),
+			Entity::DISTANCE => 30,
+			Entity::TIME_IN_SECONDS => 30*60*3,
+			Entity::SPORTID => Configuration::General()->runningSport()
 		));
 
 		$this->assertNotEquals(0, Configuration::Data()->basicEndurance());
@@ -251,10 +249,10 @@ class DeleterTest extends \PHPUnit_Framework_TestCase {
 		$this->PDO->exec('UPDATE `runalyze_equipment` SET `distance`=0, `time`=0 WHERE `id`='.$this->EquipmentA);
 		$this->PDO->exec('UPDATE `runalyze_equipment` SET `distance`=0, `time`=0 WHERE `id`='.$this->EquipmentB);
 
-		$Object = new Object(array(
-			Object::DISTANCE => 10,
-			Object::TIME_IN_SECONDS => 3600,
-			Object::SPORTID => 1
+		$Object = new Entity(array(
+			Entity::DISTANCE => 10,
+			Entity::TIME_IN_SECONDS => 3600,
+			Entity::SPORTID => 1
 		));
 		$Inserter = new Inserter($this->PDO);
 		$Inserter->setAccountID(0);

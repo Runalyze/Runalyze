@@ -52,17 +52,17 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 		$this->fillNotesContent();
 		$this->addRightContent('notes', __('Additional notes'), $this->NotesContent);
 
-		if ($this->showCadence && $this->Context->trackdata()->has(Trackdata\Object::CADENCE)) {
+		if ($this->showCadence && $this->Context->trackdata()->has(Trackdata\Entity::CADENCE)) {
 			$Plot = new Activity\Plot\Cadence($this->Context);
 			$this->addRightContent('cadence', __('Cadence plot'), $Plot);
 		}
 
-		if ($this->Context->trackdata()->has(Trackdata\Object::POWER)) {
+		if ($this->Context->trackdata()->has(Trackdata\Entity::POWER)) {
 			$Plot = new Activity\Plot\Power($this->Context);
 			$this->addRightContent('power', __('Power plot'), $Plot);
 		}
 
-		if ($this->Context->trackdata()->has(Trackdata\Object::TEMPERATURE)) {
+		if ($this->Context->trackdata()->has(Trackdata\Entity::TEMPERATURE)) {
 			$Plot = new Activity\Plot\Temperature($this->Context);
 			$this->addRightContent('temperature', __('Temperature plot'), $Plot);
 		}
@@ -271,8 +271,8 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 	 * Add created/edited
 	 */
 	protected function addCreationAndModificationTime() {
-		$created = $this->Context->activity()->get(\Runalyze\Model\Activity\Object::TIMESTAMP_CREATED);
-		$edited = $this->Context->activity()->get(\Runalyze\Model\Activity\Object::TIMESTAMP_EDITED);
+		$created = $this->Context->activity()->get(\Runalyze\Model\Activity\Entity::TIMESTAMP_CREATED);
+		$edited = $this->Context->activity()->get(\Runalyze\Model\Activity\Entity::TIMESTAMP_EDITED);
 
 		if ($created > 0 || $edited > 0) {
 			$CreationTime = ($created == 0) ? '' : sprintf( __('You created this training on <strong>%s</strong> at <strong>%s</strong>.'),

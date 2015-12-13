@@ -55,7 +55,7 @@ class TableLapsComputed extends TableLapsAbstract {
 	 * Display data
 	 */
 	protected function setDataToCode() {
-		$showCellForHeartrate = $this->Context->trackdata()->has(Trackdata\Object::HEARTRATE);
+		$showCellForHeartrate = $this->Context->trackdata()->has(Trackdata\Entity::HEARTRATE);
 		$showCellForElevation = $this->Context->hasRoute() && $this->Context->route()->hasElevations();
 
 		$this->Code .= '<table class="fullwidth zebra-style">';

@@ -17,32 +17,32 @@ use Runalyze\Calculation\Route\Calculator;
  */
 class DataSeriesRemover {
 	/**
-	 * @var \Runalyze\Model\Activity\Object
+	 * @var \Runalyze\Model\Activity\Entity
 	 */
 	protected $OldActivity;
 
 	/**
-	 * @var \Runalyze\Model\Activity\Object
+	 * @var \Runalyze\Model\Activity\Entity
 	 */
 	protected $Activity;
 
 	/**
-	 * @var \Runalyze\Model\Trackdata\Object
+	 * @var \Runalyze\Model\Trackdata\Entity
 	 */
 	protected $Trackdata = null;
 
 	/**
-	 * @var \Runalyze\Model\Trackdata\Object
+	 * @var \Runalyze\Model\Trackdata\Entity
 	 */
 	protected $OldTrackdata = null;
 
 	/**
-	 * @var \Runalyze\Model\Route\Object
+	 * @var \Runalyze\Model\Route\Entity
 	 */
 	protected $Route = null;
 
 	/**
-	 * @var \Runalyze\Model\Route\Object
+	 * @var \Runalyze\Model\Route\Entity
 	 */
 	protected $OldRoute = null;
 
@@ -65,28 +65,28 @@ class DataSeriesRemover {
 	 * Construct updater
 	 * @param \PDO $connection
 	 * @param int $accountID
-	 * @param \Runalyze\Model\Activity\Object $activity
+	 * @param \Runalyze\Model\Activity\Entity $activity
 	 * @param \Runalyze\Model\Factory $factory
 	 */
-	public function __construct(\PDO $connection, $accountID, Object $activity, Model\Factory $factory) {
+	public function __construct(\PDO $connection, $accountID, Entity $activity, Model\Factory $factory) {
 		$this->PDO = $connection;
 		$this->AccountID = $accountID;
 		$this->Activity = $activity;
 		$this->OldActivity = clone $activity;
 		$this->Trackdata = $factory->trackdata($activity->id());
 		$this->OldTrackdata = clone $this->Trackdata;
-		$this->Route = $factory->route($activity->get(Object::ROUTEID));
+		$this->Route = $factory->route($activity->get(Entity::ROUTEID));
 		$this->OldRoute = clone $this->Route;
 
 		// TODO: What's with STRIDE_LENGTH and VERTICAL_RATIO?
 		// - so far, there are updateStrideLength() and updateVerticalRatio() in Activity\Updater
 		$this->ActivityKeysForTrackdataKeys = [
-			Model\Trackdata\Object::HEARTRATE => Model\Activity\Object::HR_AVG,
-			Model\Trackdata\Object::CADENCE => Model\Activity\Object::CADENCE,
-			Model\Trackdata\Object::VERTICAL_OSCILLATION => Model\Activity\Object::VERTICAL_OSCILLATION,
-			Model\Trackdata\Object::GROUNDCONTACT => Model\Activity\Object::GROUNDCONTACT,
-			Model\Trackdata\Object::POWER => Model\Activity\Object::POWER,
-			Model\Trackdata\Object::TEMPERATURE => Model\Activity\Object::TEMPERATURE
+			Model\Trackdata\Entity::HEARTRATE => Model\Activity\Entity::HR_AVG,
+			Model\Trackdata\Entity::CADENCE => Model\Activity\Entity::CADENCE,
+			Model\Trackdata\Entity::VERTICAL_OSCILLATION => Model\Activity\Entity::VERTICAL_OSCILLATION,
+			Model\Trackdata\Entity::GROUNDCONTACT => Model\Activity\Entity::GROUNDCONTACT,
+			Model\Trackdata\Entity::POWER => Model\Activity\Entity::POWER,
+			Model\Trackdata\Entity::TEMPERATURE => Model\Activity\Entity::TEMPERATURE
 		];
 	}
 
@@ -122,7 +122,7 @@ class DataSeriesRemover {
 	public function removeFromRoute($key) {
 		$this->Route->set($key, array());
 
-		if ($key == Model\Route\Object::ELEVATIONS_ORIGINAL || $key == Model\Route\Object::ELEVATIONS_CORRECTED) {
+		if ($key == Model\Route\Entity::ELEVATIONS_ORIGINAL || $key == Model\Route\Entity::ELEVATIONS_CORRECTED) {
 			$Calculator = new Calculator($this->Route);
 			$Calculator->calculateElevation();
 		}
@@ -132,7 +132,7 @@ class DataSeriesRemover {
 	 * Remove gps path from route
 	 */
 	public function removeGPSpathFromRoute() {
-		$this->Route->set(Model\Route\Object::GEOHASHES, array());
+		$this->Route->set(Model\Route\Entity::GEOHASHES, array());
 	}
 
 	/**
@@ -196,8 +196,8 @@ class DataSeriesRemover {
 			$Deleter->delete();
 
 			$this->Route = null;
-			$this->Activity->set(Object::ROUTEID, 0);
-			$this->Activity->set(Object::ELEVATION, 0);
+			$this->Activity->set(Entity::ROUTEID, 0);
+			$this->Activity->set(Entity::ELEVATION, 0);
 		} else {
 			$Updater = new Model\Route\Updater($this->PDO, $this->Route, $this->OldRoute);
 			$Updater->setAccountID($this->AccountID);

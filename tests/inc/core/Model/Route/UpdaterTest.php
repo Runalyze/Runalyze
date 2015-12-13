@@ -27,22 +27,22 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 	public function testSimpleUpdate() {
 		$Inserter = new Inserter($this->PDO);
 		$Inserter->setAccountID(0);
-		$Inserter->insert(new Object(array(
-			Object::NAME => 'Route name',
-			Object::DISTANCE => 3.14
+		$Inserter->insert(new Entity(array(
+			Entity::NAME => 'Route name',
+			Entity::DISTANCE => 3.14
 		)));
 
-		$Route = new Object($this->PDO->query('SELECT * FROM `'.PREFIX.'route` WHERE `id`='.$Inserter->insertedID())->fetch(PDO::FETCH_ASSOC));
-		$Route->set(Object::DISTANCE, 0);
+		$Route = new Entity($this->PDO->query('SELECT * FROM `'.PREFIX.'route` WHERE `id`='.$Inserter->insertedID())->fetch(PDO::FETCH_ASSOC));
+		$Route->set(Entity::DISTANCE, 0);
 
 		$Changed = clone $Route;
-		$Changed->set(Object::NAME, 'New route name');
+		$Changed->set(Entity::NAME, 'New route name');
 
 		$Updater = new Updater($this->PDO, $Changed, $Route);
 		$Updater->setAccountID(0);
 		$Updater->update();
 
-		$Result = new Object($this->PDO->query('SELECT * FROM `'.PREFIX.'route` WHERE `id`='.$Inserter->insertedID())->fetch(PDO::FETCH_ASSOC));
+		$Result = new Entity($this->PDO->query('SELECT * FROM `'.PREFIX.'route` WHERE `id`='.$Inserter->insertedID())->fetch(PDO::FETCH_ASSOC));
 		$this->assertEquals('New route name', $Result->name());
 		$this->assertEquals(3.14, $Result->distance());
 	}

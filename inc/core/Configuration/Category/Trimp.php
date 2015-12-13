@@ -8,8 +8,8 @@ namespace Runalyze\Configuration\Category;
 
 use Runalyze\Configuration\Messages;
 use Runalyze\Configuration\Fieldset;
-use Runalyze\Parameter\Int;
-use Runalyze\Parameter\Bool;
+use Runalyze\Parameter\Integer;
+use Runalyze\Parameter\Boolean;
 use Ajax;
 
 /**
@@ -36,10 +36,10 @@ class Trimp extends \Runalyze\Configuration\Category {
 	 * Create handles
 	 */
 	protected function createHandles() {
-		$this->createHandle('ATL_DAYS', new Int(7));
-		$this->createHandle('CTL_DAYS', new Int(42));
-		$this->createHandle('TRIMP_MODEL_IN_PERCENT', new Bool(true));
-		$this->createHandle('TSB_IN_PERCENT', new Bool(false));
+		$this->createHandle('ATL_DAYS', new Integer(7));
+		$this->createHandle('CTL_DAYS', new Integer(42));
+		$this->createHandle('TRIMP_MODEL_IN_PERCENT', new Boolean(true));
+		$this->createHandle('TSB_IN_PERCENT', new Boolean(false));
 	}
 
 	/**

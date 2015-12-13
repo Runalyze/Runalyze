@@ -11,10 +11,10 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase {
 
 	public function testSingleValue() {
 		$Calculator = new Calculator(
-			new Trackdata\Object(array(
-				Trackdata\Object::TIME => array(60),
-				Trackdata\Object::DISTANCE => array(0.180),
-				Trackdata\Object::CADENCE => array(90)
+			new Trackdata\Entity(array(
+				Trackdata\Entity::TIME => array(60),
+				Trackdata\Entity::DISTANCE => array(0.180),
+				Trackdata\Entity::CADENCE => array(90)
 			))
 		);
 		$Calculator->calculate();
@@ -24,10 +24,10 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase {
 
 	public function testSimpleArray() {
 		$Calculator = new Calculator(
-			new Trackdata\Object(array(
-				Trackdata\Object::TIME => array(30, 60, 90, 120, 150),
-				Trackdata\Object::DISTANCE => array(0.09, 0.18, 0.30, 0.48, 0.55),
-				Trackdata\Object::CADENCE => array(90, 100, 100, 90, 70)
+			new Trackdata\Entity(array(
+				Trackdata\Entity::TIME => array(30, 60, 90, 120, 150),
+				Trackdata\Entity::DISTANCE => array(0.09, 0.18, 0.30, 0.48, 0.55),
+				Trackdata\Entity::CADENCE => array(90, 100, 100, 90, 70)
 			))
 		);
 		$Calculator->calculate();

@@ -5,7 +5,7 @@
  */
 
 use Runalyze\Configuration;
-
+use Runalyze\Error;
 /**
  * Frontend class for setting up everything
  * 
@@ -135,7 +135,7 @@ class Frontend {
 	 * Include class::Error and and initialise it
 	 */
 	protected function initErrorHandling() {
-		Error::init(Request::Uri());
+		\Runalyze\Error::init(Request::Uri());
 
 		if ($this->logGetAndPost) {
 			if (!empty($_POST))

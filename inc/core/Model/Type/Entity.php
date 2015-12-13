@@ -1,6 +1,6 @@
 <?php
 /**
- * This file contains class::Object
+ * This file contains class::Entity
  * @package Runalyze\Model\Type
  */
 
@@ -9,12 +9,12 @@ namespace Runalyze\Model\Type;
 use Runalyze\Model;
 
 /**
- * Type object
+ * Type entity
  * 
  * @author Hannes Christiansen
  * @package Runalyze\Model\Type
  */
-class Object extends Model\ObjectWithID {
+class Entity extends Model\EntityWithID {
 	/**
 	 * Key: name
 	 * @var string

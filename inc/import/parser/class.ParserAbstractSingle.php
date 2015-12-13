@@ -285,7 +285,7 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 
 			for ($i = 1; $i < $num; ++$i) {
 				$step = round(
-					Runalyze\Model\Route\Object::gpsDistance(
+					Runalyze\Model\Route\Entity::gpsDistance(
 						$this->gps['latitude'][$i-1],
 						$this->gps['longitude'][$i-1],
 						$this->gps['latitude'][$i],

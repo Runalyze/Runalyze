@@ -6,8 +6,8 @@
 
 namespace Runalyze\View\Activity\Plot\Series;
 
-use Runalyze\Model\Trackdata\Object as Trackdata;
-use Runalyze\Model\Route\Object as Route;
+use Runalyze\Model\Trackdata\Entity as Trackdata;
+use Runalyze\Model\Route\Entity as Route;
 use Runalyze\Model\Route\Loop;
 use Runalyze\Configuration;
 
@@ -25,9 +25,9 @@ class DataCollectorWithRoute extends DataCollector {
 
 	/**
 	 * Construct collector
-	 * @param \Runalyze\Model\Trackdata\Object $trackdata
+	 * @param \Runalyze\Model\Trackdata\Entity $trackdata
 	 * @param int $key
-	 * @param \Runalyze\Model\Route\Object $route
+	 * @param \Runalyze\Model\Route\Entity $route
 	 * @throws \InvalidArgumentException
 	 */
 	public function __construct(Trackdata $trackdata, $key, Route $route) {

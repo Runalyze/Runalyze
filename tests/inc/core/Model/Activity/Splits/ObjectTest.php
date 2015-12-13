@@ -11,20 +11,20 @@ class ObjectTest extends \PHPUnit_Framework_TestCase {
 	 * @expectedException \InvalidArgumentException
 	 */
 	public function testInvalidConstructor() {
-		new Object(array(new \stdClass(), new \stdClass()));
+		new Entity(array(new \stdClass(), new \stdClass()));
 	}
 
 	public function testStringConstructor() {
 		$Split1 = new Split(1.00, 260, false);
 		$Split2 = new Split(1.00, 200, true);
-		$Splits = new Object($Split1->asString().Object::SEPARATOR.$Split2->asString());
+		$Splits = new Entity($Split1->asString().Entity::SEPARATOR.$Split2->asString());
 
 		$this->assertFalse($Splits->isEmpty());
 		$this->assertEquals(2, $Splits->num());
 		$this->assertEquals($Split1, $Splits->at(0));
 		$this->assertEquals($Split2, $Splits->at(1));
 		$this->assertEquals(
-			$Split1->asString().Object::SEPARATOR.$Split2->asString(),
+			$Split1->asString().Entity::SEPARATOR.$Split2->asString(),
 			$Splits->asString()
 		);
 	}
@@ -32,9 +32,9 @@ class ObjectTest extends \PHPUnit_Framework_TestCase {
 	public function testArrays() {
 		$Split1 = new Split(1.00, 260, false);
 		$Split2 = new Split(1.00, 200, true);
-		$Splits1 = new Object(array($Split1, $Split2));
+		$Splits1 = new Entity(array($Split1, $Split2));
 
-		$Splits2 = new Object();
+		$Splits2 = new Entity();
 		$Splits2->add($Split1);
 		$Splits2->add($Split2);
 
@@ -43,7 +43,7 @@ class ObjectTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testSummation() {
-		$Splits = new Object(array(
+		$Splits = new Entity(array(
 			new Split(1, 300),
 			new Split(1.5, 450),
 			new Split(1.5, 450),
@@ -57,7 +57,7 @@ class ObjectTest extends \PHPUnit_Framework_TestCase {
 	public function testActiveAndInactiveFlags() {
 		$Split1 = new Split(1.00, 300, false);
 		$Split2 = new Split(1.00, 300, false);
-		$Splits = new Object(array($Split1, $Split2));
+		$Splits = new Entity(array($Split1, $Split2));
 
 		$this->assertFalse($Splits->hasActiveAndInactiveLaps());
 		$this->assertFalse($Splits->hasActiveLaps());

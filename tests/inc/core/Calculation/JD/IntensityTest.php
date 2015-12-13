@@ -87,9 +87,9 @@ class IntensityTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testActivityHR() {
-		$activity = new Activity\Object(array(
-			Activity\Object::HR_AVG => 150,
-			Activity\Object::TIME_IN_SECONDS => 3600
+		$activity = new Activity\Entity(array(
+			Activity\Entity::HR_AVG => 150,
+			Activity\Entity::TIME_IN_SECONDS => 3600
 		));
 
 		$this->assertEquals($this->object->calculateByHeartrateAverage(150,3600), $this->object->calculateByActivity($activity));
@@ -98,9 +98,9 @@ class IntensityTest extends \PHPUnit_Framework_TestCase {
 	public function testActivityPace() {
 		Intensity::setVDOTshape(50);
 
-		$activity = new Activity\Object(array(
-			Activity\Object::DISTANCE => 12,
-			Activity\Object::TIME_IN_SECONDS => 3600
+		$activity = new Activity\Entity(array(
+			Activity\Entity::DISTANCE => 12,
+			Activity\Entity::TIME_IN_SECONDS => 3600
 		));
 
 		// VDOT 50 => vVDOT ca. 3:50
@@ -109,9 +109,9 @@ class IntensityTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testTrackdataWithTime() {
-		$trackdata = new Trackdata\Object(array(
-			Trackdata\Object::HEARTRATE => array(140, 150),
-			Trackdata\Object::TIME => array(1800, 3600)
+		$trackdata = new Trackdata\Entity(array(
+			Trackdata\Entity::HEARTRATE => array(140, 150),
+			Trackdata\Entity::TIME => array(1800, 3600)
 		));
 
 		$expected = $this->object->calculateByHeartrateAverage(140, 1800)

@@ -45,7 +45,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertFalse( $this->object->hasMultipleTrainings() );
 			$this->assertFalse( $this->object->failed() );
 
-			$this->assertEquals( 0*3600 + 53*60 + 06, $this->object->object()->getTimeInSeconds(), '', 30);
+			$this->assertEquals( 0*3600 + 53*60 +  6, $this->object->object()->getTimeInSeconds(), '', 30);
 			$this->assertEquals( 1*3600 + 00*60 + 53, $this->object->object()->getElapsedTime() );
 			$this->assertTrue( $this->object->object()->hasElapsedTime() );
 

@@ -12,7 +12,7 @@ class InserterWithAccountID_MockTester extends InserterWithAccountID {
 		return array('foo', 'accountid');
 	}
 }
-class InserterWithAccountIDObject_MockTester extends Object {
+class InserterWithAccountIDObject_MockTester extends Entity {
 	public function properties() {
 		return array ('foo');
 	}

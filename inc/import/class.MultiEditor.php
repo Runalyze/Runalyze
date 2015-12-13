@@ -62,7 +62,7 @@ class MultiEditor {
 
 		foreach (self::$IDs as $i => $ID) {
 			$Preview = new Preview(
-				new Activity\Object($this->fetchActivity($ID))
+				new Activity\Entity($this->fetchActivity($ID))
 			);
 
 			$Code .= '<tr id="multi-edit-'.$ID.'" class="link '.($i == 0 ? ' highlight' : '').' show-on-hover-parent">';

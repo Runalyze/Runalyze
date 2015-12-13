@@ -16,15 +16,15 @@ use DataObject as OldDataObject;
  */
 class DataObject extends OldDataObject {
 	/**
-	 * @var \Runalyze\Model\Activity\Object
+	 * @var \Runalyze\Model\Activity\Entity
 	 */
 	protected $Object;
 
 	/**
 	 * Constructor
-	 * @param \Runalyze\Model\Activity\Object
+	 * @param \Runalyze\Model\Activity\Entity
 	 */
-	final public function __construct(\Runalyze\Model\Activity\Object $object) {
+	final public function __construct(\Runalyze\Model\Activity\Entity $object) {
 		$this->Object = $object;
 
 		$this->setOldData();

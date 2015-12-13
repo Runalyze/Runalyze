@@ -20,7 +20,7 @@ use Runalyze\Calculation\Distribution\TimeSeries;
  */
 class VerticalRatioCalculator {
     /**
-	 * @var \Runalyze\Model\Trackdata\Object
+	 * @var \Runalyze\Model\Trackdata\Entity
 	 */
 	protected $Trackdata;
 
@@ -31,9 +31,9 @@ class VerticalRatioCalculator {
 
 	/**
 	 * Calculator for stride length
-	 * @param \Runalyze\Model\Trackdata\Object $trackdata
+	 * @param \Runalyze\Model\Trackdata\Entity $trackdata
 	 */
-	public function __construct(Trackdata\Object $trackdata) {
+	public function __construct(Trackdata\Entity $trackdata) {
 		$this->Trackdata = $trackdata;
 	}
 	
@@ -43,8 +43,8 @@ class VerticalRatioCalculator {
 	 */
 	public function calculate() {
 		if (
-			!$this->Trackdata->has(Trackdata\Object::VERTICAL_OSCILLATION) ||
-			!$this->Trackdata->has(Trackdata\Object::STRIDE_LENGTH)
+			!$this->Trackdata->has(Trackdata\Entity::VERTICAL_OSCILLATION) ||
+			!$this->Trackdata->has(Trackdata\Entity::STRIDE_LENGTH)
 		) {
 			return;
 		}
@@ -79,7 +79,7 @@ class VerticalRatioCalculator {
 			return 0;
 		}
 
-		if (!$this->Trackdata->has(Trackdata\Object::TIME)) {
+		if (!$this->Trackdata->has(Trackdata\Entity::TIME)) {
 			return round(array_sum($this->VerticalRatio) / $this->Trackdata->num());
 		}
 
@@ -92,10 +92,10 @@ class VerticalRatioCalculator {
 	/**
 	 * Calculate vertical ratio for activity
 	 * Use this method if trackdata is not available
-	 * @param \Runalyze\Model\Activity\Object $activity
+	 * @param \Runalyze\Model\Activity\Entity $activity
 	 * @return int [%o]
 	 */
-	public static function forActivity(Activity\Object $activity) {
+	public static function forActivity(Activity\Entity $activity) {
 		if ($activity->verticalOscillation() > 0 && $activity->strideLength() > 0) {
 			return round(100 * $activity->verticalOscillation() / $activity->strideLength());
 		}

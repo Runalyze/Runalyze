@@ -6,7 +6,7 @@
 
 namespace Runalyze\View\Activity\Plot\Series;
 
-use Runalyze\Model\Trackdata\Object as Trackdata;
+use Runalyze\Model\Trackdata\Entity as Trackdata;
 
 /**
  * Collect data from trackdata for stride length
@@ -17,7 +17,7 @@ use Runalyze\Model\Trackdata\Object as Trackdata;
 class DataCollectorForStrideLength extends DataCollector {
 	/**
 	 * Construct collector
-	 * @param \Runalyze\Model\Trackdata\Object $trackdata
+	 * @param \Runalyze\Model\Trackdata\Entity $trackdata
 	 * @throws \InvalidArgumentException
 	 */
 	public function __construct(Trackdata $trackdata) {

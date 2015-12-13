@@ -4,7 +4,7 @@ namespace Runalyze\Model\Sport;
 
 use PDO;
 
-class InvalidInserterObjectForSport_MockTester extends \Runalyze\Model\Object {
+class InvalidInserterObjectForSport_MockTester extends \Runalyze\Model\Entity {
 	public function properties() {
 		return array('foo');
 	}
@@ -44,23 +44,21 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		$this->PDO->exec('DROP TABLE `'.PREFIX.'sport`');
 	}
 
-	/**
-	 * @expectedException \PHPUnit_Framework_Error
-	 */
 	public function testWrongObject() {
+	    if (PHP_MAJOR_VERSION >= 7) $this->setExpectedException('TypeError'); else $this->setExpectedException('\PHPUnit_Framework_Error');
 		new Inserter($this->PDO, new InvalidInserterObjectForSport_MockTester);
 	}
 
 	public function testSimpleInsert() {
-		$Object = new Object(array(
-			Object::NAME => 'Sport name',
-			Object::SHORT => 0,
-			Object::CALORIES_PER_HOUR => 700,
-			Object::HR_AVG => 140,
-			Object::HAS_DISTANCES => 1,
-			Object::PACE_UNIT => 'foo',
-			Object::HAS_POWER => 0,
-			Object::IS_OUTSIDE => 1
+		$Object = new Entity(array(
+			Entity::NAME => 'Sport name',
+			Entity::SHORT => 0,
+			Entity::CALORIES_PER_HOUR => 700,
+			Entity::HR_AVG => 140,
+			Entity::HAS_DISTANCES => 1,
+			Entity::PACE_UNIT => 'foo',
+			Entity::HAS_POWER => 0,
+			Entity::IS_OUTSIDE => 1
 		));
 
 		$Inserter = new Inserter($this->PDO, $Object);
@@ -68,7 +66,7 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		$Inserter->insert();
 
 		$data = $this->PDO->query('SELECT * FROM `'.PREFIX.'sport` WHERE `accountid`=1')->fetch(PDO::FETCH_ASSOC);
-		$Sport = new Object($data);
+		$Sport = new Entity($data);
 
 		$this->assertEquals('Sport name', $Sport->name());
 		$this->assertEquals(700, $Sport->caloriesPerHour());

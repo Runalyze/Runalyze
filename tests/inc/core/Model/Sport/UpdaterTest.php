@@ -41,22 +41,22 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 	public function testSimpleUpdate() {
 		$Inserter = new Inserter($this->PDO);
 		$Inserter->setAccountID(1);
-		$Inserter->insert(new Object(array(
-			Object::NAME => 'Sport name',
-			Object::CALORIES_PER_HOUR => 700
+		$Inserter->insert(new Entity(array(
+			Entity::NAME => 'Sport name',
+			Entity::CALORIES_PER_HOUR => 700
 		)));
 
-		$Sport = new Object($this->PDO->query('SELECT * FROM `'.PREFIX.'sport` WHERE `id`='.$Inserter->insertedID())->fetch(PDO::FETCH_ASSOC));
-		$Sport->set(Object::CALORIES_PER_HOUR, 0);
+		$Sport = new Entity($this->PDO->query('SELECT * FROM `'.PREFIX.'sport` WHERE `id`='.$Inserter->insertedID())->fetch(PDO::FETCH_ASSOC));
+		$Sport->set(Entity::CALORIES_PER_HOUR, 0);
 
 		$Changed = clone $Sport;
-		$Changed->set(Object::NAME, 'New sport name');
+		$Changed->set(Entity::NAME, 'New sport name');
 
 		$Updater = new Updater($this->PDO, $Changed, $Sport);
 		$Updater->setAccountID(1);
 		$Updater->update();
 
-		$Result = new Object($this->PDO->query('SELECT * FROM `'.PREFIX.'sport` WHERE `id`='.$Inserter->insertedID())->fetch(PDO::FETCH_ASSOC));
+		$Result = new Entity($this->PDO->query('SELECT * FROM `'.PREFIX.'sport` WHERE `id`='.$Inserter->insertedID())->fetch(PDO::FETCH_ASSOC));
 		$this->assertEquals('New sport name', $Result->name());
 		$this->assertEquals(700, $Result->caloriesPerHour());
 	}

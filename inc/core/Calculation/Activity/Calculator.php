@@ -24,30 +24,30 @@ use Runalyze\Configuration;
  */
 class Calculator {
 	/**
-	 * @var \Runalyze\Model\Activity\Object
+	 * @var \Runalyze\Model\Activity\Entity
 	 */
 	protected $Activity;
 
 	/**
-	 * @var \Runalyze\Model\Trackdata\Object
+	 * @var \Runalyze\Model\Trackdata\Entity
 	 */
 	protected $Trackdata;
 
 	/**
-	 * @var \Runalyze\Model\Route\Object
+	 * @var \Runalyze\Model\Route\Entity
 	 */
 	protected $Route;
 
 	/**
 	 * Calculator for activity properties
-	 * @param \Runalyze\Model\Activity\Object $activity
-	 * @param \Runalyze\Model\Trackdata\Object $trackdata
-	 * @param \Runalyze\Model\Route\Object $route
+	 * @param \Runalyze\Model\Activity\Entity $activity
+	 * @param \Runalyze\Model\Trackdata\Entity $trackdata
+	 * @param \Runalyze\Model\Route\Entity $route
 	 */
 	public function __construct(
-		Model\Activity\Object $activity,
-		Model\Trackdata\Object $trackdata = null,
-		Model\Route\Object $route = null
+		Model\Activity\Entity $activity,
+		Model\Trackdata\Entity $trackdata = null,
+		Model\Route\Entity $route = null
 	) {
 		$this->Activity = $activity;
 		$this->Trackdata = $trackdata;
@@ -142,7 +142,7 @@ class Calculator {
 
 		$Intensity = new JD\Intensity();
 
-		if ($this->knowsTrackdata() && $this->Trackdata->has(Model\Trackdata\Object::HEARTRATE) && $this->Trackdata->has(Model\Trackdata\Object::TIME)) {
+		if ($this->knowsTrackdata() && $this->Trackdata->has(Model\Trackdata\Entity::HEARTRATE) && $this->Trackdata->has(Model\Trackdata\Entity::TIME)) {
 			return $Intensity->calculateByHeartrate(
 				new TimeSeries(
 					$this->Trackdata->heartRate(),
@@ -161,7 +161,7 @@ class Calculator {
 	 * @return int
 	 */
 	public function calculateTrimp() {
-		if ($this->knowsTrackdata() && $this->Trackdata->has(Model\Trackdata\Object::HEARTRATE)) {
+		if ($this->knowsTrackdata() && $this->Trackdata->has(Model\Trackdata\Entity::HEARTRATE)) {
 			$Collector = new Trimp\DataCollector($this->Trackdata->heartRate(), $this->Trackdata->time());
 			$data = $Collector->result();
 		} elseif ($this->Activity->hrAvg() > 0) {

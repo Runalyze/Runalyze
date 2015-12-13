@@ -6,7 +6,7 @@
 
 namespace Runalyze\View\Activity\Plot\Series;
 
-use Runalyze\Model\Swimdata\Object as Swimdata;
+use Runalyze\Model\Swimdata\Entity as Swimdata;
 use Runalyze\View\Activity;
 
 /**

@@ -28,16 +28,16 @@ class DanielsTest extends \PHPUnit_Framework_TestCase {
 
 		$Distances    = array(5, 10, 21.0975, 42.195);
 		$Requirements = array(
-			30 => array(array(0,30,40), array(1,03,46), array(2,21,04), array(4,49,17)),
-			35 => array(array(0,27,00), array(0,56,03), array(2,04,13), array(4,16,13)),
-			40 => array(array(0,24,08), array(0,50,03), array(1,50,59), array(3,49,45)),
+			30 => array(array(0,30,40), array(1, 3,46), array(2,21, 4), array(4,49,17)),
+			35 => array(array(0,27, 0), array(0,56, 3), array(2, 4,13), array(4,16,13)),
+			40 => array(array(0,24, 8), array(0,50, 3), array(1,50,59), array(3,49,45)),
 			45 => array(array(0,21,50), array(0,45,16), array(1,40,20), array(3,28,26)),
 			50 => array(array(0,19,57), array(0,41,21), array(1,31,35), array(3,10,49)),
-			55 => array(array(0,18,22), array(0,38,06), array(1,24,18), array(2,56,01)),
-			60 => array(array(0,17,03), array(0,35,22), array(1,18,09), array(2,43,25)),
-			65 => array(array(0,15,54), array(0,33,01), array(1,12,53), array(2,32,35)),
-			70 => array(array(0,14,55), array(0,31,00), array(1, 8,21), array(2,23,10)),
-			75 => array(array(0,14,03), array(0,29,14), array(1, 4,23), array(2,14,55))
+			55 => array(array(0,18,22), array(0,38, 6), array(1,24,18), array(2,56, 1)),
+			60 => array(array(0,17, 3), array(0,35,22), array(1,18, 9), array(2,43,25)),
+			65 => array(array(0,15,54), array(0,33, 1), array(1,12,53), array(2,32,35)),
+			70 => array(array(0,14,55), array(0,31, 0), array(1, 8,21), array(2,23,10)),
+			75 => array(array(0,14, 3), array(0,29,14), array(1, 4,23), array(2,14,55))
 		);
 
 		foreach ($Requirements as $vdot => $times) {

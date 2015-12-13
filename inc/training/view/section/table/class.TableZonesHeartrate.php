@@ -53,12 +53,12 @@ class TableZonesHeartrate extends TableZonesAbstract {
 		// - make zones configurable
 		$Zones = array();
 		$hrMax = Runalyze\Configuration::Data()->HRmax();
-		$hasDistance = $this->Context->trackdata()->has(Trackdata\Object::DISTANCE);
+		$hasDistance = $this->Context->trackdata()->has(Trackdata\Entity::DISTANCE);
 
 		$Distribution = new TimeSeriesForTrackdata(
 			$this->Context->trackdata(),
-			Trackdata\Object::HEARTRATE,
-			$hasDistance ? array(Trackdata\Object::DISTANCE) : array()
+			Trackdata\Entity::HEARTRATE,
+			$hasDistance ? array(Trackdata\Entity::DISTANCE) : array()
 		);
 		$Data = $Distribution->data();
 
@@ -68,11 +68,11 @@ class TableZonesHeartrate extends TableZonesAbstract {
 			if (!isset($Zones[$hf])) {
 				$Zones[$hf] = array(
 					'time' => $seconds,
-					'distance' => $hasDistance ? $Data[$bpm][Trackdata\Object::DISTANCE] : 0
+					'distance' => $hasDistance ? $Data[$bpm][Trackdata\Entity::DISTANCE] : 0
 				);
 			} else {
 				$Zones[$hf]['time'] += $seconds;
-				$Zones[$hf]['distance'] += $hasDistance ? $Data[$bpm][Trackdata\Object::DISTANCE] : 0;
+				$Zones[$hf]['distance'] += $hasDistance ? $Data[$bpm][Trackdata\Entity::DISTANCE] : 0;
 			}
 		}
 

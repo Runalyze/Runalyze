@@ -165,14 +165,14 @@ class TrainingObject extends DataObject {
 		$this->id = $InserterActivity->insertedID();
 
 		if ($this->hasArrayTime() || $this->hasArrayDistance() || $this->hasArrayHeartrate()) {
-			$Trackdata->set(Runalyze\Model\Trackdata\Object::ACTIVITYID, $this->id());
+			$Trackdata->set(Runalyze\Model\Trackdata\Entity::ACTIVITYID, $this->id());
 			$InserterTrack = new Runalyze\Model\Trackdata\Inserter($DB, $Trackdata);
 			$InserterTrack->setAccountID($AccountID);
 			$InserterTrack->insert();
 		}
 
 		if ($this->hasArrayStroke() || $this->hasArrayStrokeType() ) {
-			$Swimdata->set(Runalyze\Model\Swimdata\Object::ACTIVITYID, $this->id());
+			$Swimdata->set(Runalyze\Model\Swimdata\Entity::ACTIVITYID, $this->id());
 			$InserterSwim = new Runalyze\Model\Swimdata\Inserter($DB, $Swimdata);
 			$InserterSwim->setAccountID($AccountID);
 			$InserterSwim->insert();
@@ -180,7 +180,7 @@ class TrainingObject extends DataObject {
 
 		if ($this->hasArrayHRV()) {
 			$HRV = $this->newHRVObject();
-			$HRV->set(Runalyze\Model\HRV\Object::ACTIVITYID, $this->id());
+			$HRV->set(Runalyze\Model\HRV\Entity::ACTIVITYID, $this->id());
 			$InserterHRV = new Runalyze\Model\HRV\Inserter($DB, $HRV);
 			$InserterHRV->setAccountID($AccountID);
 			$InserterHRV->insert();
@@ -188,21 +188,21 @@ class TrainingObject extends DataObject {
 	}
 
 	/**
-	 * @return \Runalyze\Model\Activity\Object
+	 * @return \Runalyze\Model\Activity\Entity
 	 */
 	protected function newActivityObject() {
-		return new Runalyze\Model\Activity\Object($this->data);
+		return new Runalyze\Model\Activity\Entity($this->data);
 	}
 
 	/**
-	 * @return \Runalyze\Model\Route\Object
+	 * @return \Runalyze\Model\Route\Entity
 	 */
 	protected function newRouteObject() {
-		$Route = new Runalyze\Model\Route\Object(array(
-			Runalyze\Model\Route\Object::NAME => $this->get('route'),
-			Runalyze\Model\Route\Object::CITIES => $this->get('route'),
-			Runalyze\Model\Route\Object::DISTANCE => $this->get('distance'),
-			Runalyze\Model\Route\Object::ELEVATIONS_ORIGINAL => $this->get('arr_alt')
+		$Route = new Runalyze\Model\Route\Entity(array(
+			Runalyze\Model\Route\Entity::NAME => $this->get('route'),
+			Runalyze\Model\Route\Entity::CITIES => $this->get('route'),
+			Runalyze\Model\Route\Entity::DISTANCE => $this->get('distance'),
+			Runalyze\Model\Route\Entity::ELEVATIONS_ORIGINAL => $this->get('arr_alt')
 		));
 
 		if ($this->hasArrayLatitude()) {
@@ -213,41 +213,41 @@ class TrainingObject extends DataObject {
 	}
 
 	/**
-	 * @return \Runalyze\Model\Swimdata\Object
+	 * @return \Runalyze\Model\Swimdata\Entity
 	 */
 	protected function newSwimObject() {
-		return new Runalyze\Model\Swimdata\Object(array(
-			Runalyze\Model\Swimdata\Object::STROKE => $this->get('stroke'),
-                        Runalyze\Model\Swimdata\Object::STROKETYPE => $this->get('stroketype'),
-                        Runalyze\Model\Swimdata\Object::POOL_LENGTH => $this->get('pool_length')
+		return new Runalyze\Model\Swimdata\Entity(array(
+			Runalyze\Model\Swimdata\Entity::STROKE => $this->get('stroke'),
+                        Runalyze\Model\Swimdata\Entity::STROKETYPE => $this->get('stroketype'),
+                        Runalyze\Model\Swimdata\Entity::POOL_LENGTH => $this->get('pool_length')
 		));
                 
 	}
         
 	/**
-	 * @return \Runalyze\Model\Trackdata\Object
+	 * @return \Runalyze\Model\Trackdata\Entity
 	 */
 	protected function newTrackdataObject() {
-		return new Runalyze\Model\Trackdata\Object(array(
-			Runalyze\Model\Trackdata\Object::TIME => $this->get('arr_time'),
-			Runalyze\Model\Trackdata\Object::DISTANCE => $this->get('arr_dist'),
-			Runalyze\Model\Trackdata\Object::HEARTRATE => $this->get('arr_heart'),
-			Runalyze\Model\Trackdata\Object::CADENCE => $this->get('arr_cadence'),
-			Runalyze\Model\Trackdata\Object::POWER => $this->get('arr_power'),
-			Runalyze\Model\Trackdata\Object::TEMPERATURE => $this->get('arr_temperature'),
-			Runalyze\Model\Trackdata\Object::GROUNDCONTACT => $this->get('arr_groundcontact'),
-			Runalyze\Model\Trackdata\Object::VERTICAL_OSCILLATION => $this->get('arr_vertical_oscillation'),
-			Runalyze\Model\Trackdata\Object::GROUNDCONTACT_BALANCE => $this->get('arr_groundcontact_balance'),
-			Runalyze\Model\Trackdata\Object::PAUSES => $this->get('pauses')
+		return new Runalyze\Model\Trackdata\Entity(array(
+			Runalyze\Model\Trackdata\Entity::TIME => $this->get('arr_time'),
+			Runalyze\Model\Trackdata\Entity::DISTANCE => $this->get('arr_dist'),
+			Runalyze\Model\Trackdata\Entity::HEARTRATE => $this->get('arr_heart'),
+			Runalyze\Model\Trackdata\Entity::CADENCE => $this->get('arr_cadence'),
+			Runalyze\Model\Trackdata\Entity::POWER => $this->get('arr_power'),
+			Runalyze\Model\Trackdata\Entity::TEMPERATURE => $this->get('arr_temperature'),
+			Runalyze\Model\Trackdata\Entity::GROUNDCONTACT => $this->get('arr_groundcontact'),
+			Runalyze\Model\Trackdata\Entity::VERTICAL_OSCILLATION => $this->get('arr_vertical_oscillation'),
+			Runalyze\Model\Trackdata\Entity::GROUNDCONTACT_BALANCE => $this->get('arr_groundcontact_balance'),
+			Runalyze\Model\Trackdata\Entity::PAUSES => $this->get('pauses')
 		));
 	}
 
 	/**
-	 * @return \Runalyze\Model\HRV\Object
+	 * @return \Runalyze\Model\HRV\Entity
 	 */
 	protected function newHRVObject() {
-		return new Runalyze\Model\HRV\Object(array(
-			Runalyze\Model\HRV\Object::DATA => $this->get('hrv')
+		return new Runalyze\Model\HRV\Entity(array(
+			Runalyze\Model\HRV\Entity::DATA => $this->get('hrv')
 		));
 	}
 
@@ -268,21 +268,21 @@ class TrainingObject extends DataObject {
 		$NewActivity = $this->newActivityObject();
 		$UpdaterActivity = new \Runalyze\Model\Activity\Updater($DB,
 			$NewActivity,
-			new \Runalyze\Model\Activity\Object($OldData)
+			new \Runalyze\Model\Activity\Entity($OldData)
 		);
 
 		if (isset($OldData['routeid']) && $OldData['routeid'] > 0) {
 			$UpdaterActivity->setRoute(\Runalyze\Context::Factory()->route($OldData['routeid']));
 		} elseif ($this->get('route') != '') {
-			$InserterRoute = new Runalyze\Model\Route\Inserter($DB, new Runalyze\Model\Route\Object(array(
-				Runalyze\Model\Route\Object::NAME => $this->get('route'),
-				Runalyze\Model\Route\Object::CITIES => $this->get('route'),
-				Runalyze\Model\Route\Object::DISTANCE => $this->get('distance')
+			$InserterRoute = new Runalyze\Model\Route\Inserter($DB, new Runalyze\Model\Route\Entity(array(
+				Runalyze\Model\Route\Entity::NAME => $this->get('route'),
+				Runalyze\Model\Route\Entity::CITIES => $this->get('route'),
+				Runalyze\Model\Route\Entity::DISTANCE => $this->get('distance')
 			)));
 			$InserterRoute->setAccountID($AccountID);
 			$InserterRoute->insert();
 
-			$NewActivity->set(Runalyze\Model\Activity\Object::ROUTEID, $InserterRoute->insertedID());
+			$NewActivity->set(Runalyze\Model\Activity\Entity::ROUTEID, $InserterRoute->insertedID());
 		}
 
 		$UpdaterActivity->setTrackdata(\Runalyze\Context::Factory()->trackdata($this->id()));
@@ -297,15 +297,15 @@ class TrainingObject extends DataObject {
 
 		if (isset($OldData['routeid']) && isset($OldData['route'])) {
 			$UpdaterRoute = new \Runalyze\Model\Route\Updater($DB,
-				new Runalyze\Model\Route\Object(array(
+				new Runalyze\Model\Route\Entity(array(
 					'id' => $OldData['routeid'],
-					Runalyze\Model\Route\Object::NAME => $this->get('route'),
-					Runalyze\Model\Route\Object::CITIES => $this->get('route')
+					Runalyze\Model\Route\Entity::NAME => $this->get('route'),
+					Runalyze\Model\Route\Entity::CITIES => $this->get('route')
 				)),
-				new Runalyze\Model\Route\Object(array(
+				new Runalyze\Model\Route\Entity(array(
 					'id' => $OldData['routeid'],
-					Runalyze\Model\Route\Object::NAME => $OldData['route'],
-					Runalyze\Model\Route\Object::CITIES => $OldData['route']
+					Runalyze\Model\Route\Entity::NAME => $OldData['route'],
+					Runalyze\Model\Route\Entity::CITIES => $OldData['route']
 				))
 			);
 			$UpdaterRoute->setAccountID($AccountID);

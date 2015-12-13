@@ -20,15 +20,15 @@ use Runalyze\Data\Elevation\Calculation;
  */
 class Calculator {
 	/**
-	 * @var \Runalyze\Model\Route\Object
+	 * @var \Runalyze\Model\Route\Entity
 	 */
 	protected $Route;
 
 	/**
 	 * Calculator for route properties
-	 * @param \Runalyze\Model\Route\Object $route
+	 * @param \Runalyze\Model\Route\Entity $route
 	 */
-	public function __construct(Route\Object $route) {
+	public function __construct(Route\Entity $route) {
 		$this->Route = $route;
 
 		// TODO:
@@ -44,9 +44,9 @@ class Calculator {
 		$Calculator = new Calculation\Calculator($this->Route->elevations());
 		$Calculator->calculate();
 
-		$this->Route->set(Route\Object::ELEVATION, $Calculator->totalElevation());
-		$this->Route->set(Route\Object::ELEVATION_UP, $Calculator->elevationUp());
-		$this->Route->set(Route\Object::ELEVATION_DOWN, $Calculator->elevationDown());
+		$this->Route->set(Route\Entity::ELEVATION, $Calculator->totalElevation());
+		$this->Route->set(Route\Entity::ELEVATION_UP, $Calculator->elevationUp());
+		$this->Route->set(Route\Entity::ELEVATION_DOWN, $Calculator->elevationDown());
 	}
 
 	/**
@@ -69,8 +69,8 @@ class Calculator {
 		$result = $Corrector->getCorrectedElevation();
 
 		if (!empty($result)) {
-			$this->Route->set(Route\Object::ELEVATIONS_CORRECTED, $result);
-			$this->Route->set(Route\Object::ELEVATIONS_SOURCE, $Corrector->getNameOfUsedStrategy());
+			$this->Route->set(Route\Entity::ELEVATIONS_CORRECTED, $result);
+			$this->Route->set(Route\Entity::ELEVATIONS_SOURCE, $Corrector->getNameOfUsedStrategy());
 
 			return true;
 		}

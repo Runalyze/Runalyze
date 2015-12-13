@@ -1,17 +1,17 @@
 <?php
 /**
- * This file contains class::Float
+ * This file contains class::FloatingPoint
  * @package Runalyze\Parameter
  */
 
 namespace Runalyze\Parameter;
 
 /**
- * Float
+ * FloatingPoint (prev. Float)
  * @author Hannes Christiansen
  * @package Runalyze\Parameter
  */
-class Float extends \Runalyze\Parameter {
+class FloatingPoint extends \Runalyze\Parameter {
 	/**
 	 * Set from string
 	 * @param string $valueAsString new value

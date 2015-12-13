@@ -53,10 +53,10 @@ class LapsManual extends Laps {
 	}
 
 	/**
-	 * @param \Runalyze\Model\Activity\Splits\Object $splits
+	 * @param \Runalyze\Model\Activity\Splits\Entity $splits
 	 * @param boolean $showInactive
 	 */
-	protected function readDataFromSplits(Splits\Object $splits, $showInactive) {
+	protected function readDataFromSplits(Splits\Entity $splits, $showInactive) {
 		foreach ($splits->asArray() as $split) {
 			if (($showInactive || $split->isActive()) && $split->distance() > 0) {
 				$this->Labels[] = round((new Distance($split->distance()))->valueInPreferredUnit(), 2);

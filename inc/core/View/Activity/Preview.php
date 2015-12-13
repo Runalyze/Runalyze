@@ -19,7 +19,7 @@ use Runalyze\View\Icon;
 class Preview {
 	/**
 	 * Activity
-	 * @var \Runalyze\Model\Activity\Object
+	 * @var \Runalyze\Model\Activity\Entity
 	 */
 	protected $Activity;
 
@@ -31,15 +31,15 @@ class Preview {
 
 	/**
 	 * Sport
-	 * @var \Runalyze\Model\Sport\Object
+	 * @var \Runalyze\Model\Sport\Entity
 	 */
 	protected $Sport;
 
 	/**
 	 * Construct preview
-	 * @param \Runalyze\Model\Activity\Object $activity
+	 * @param \Runalyze\Model\Activity\Entity $activity
 	 */
-	public function __construct(Activity\Object $activity) {
+	public function __construct(Activity\Entity $activity) {
 		$this->Activity = $activity;
 		$this->Dataview = new Dataview($activity);
 		$this->Sport = Context::Factory()->sport($this->Activity->sportid());
@@ -52,14 +52,14 @@ class Preview {
 	public static function keys() {
 		return array(
 			'id',
-			Activity\Object::TIMESTAMP,
-			Activity\Object::SPORTID,
-			Activity\Object::TIME_IN_SECONDS,
-			Activity\Object::DISTANCE,
-			Activity\Object::IS_TRACK,
-			Activity\Object::HR_AVG,
-			Activity\Object::SPLITS,
-			Activity\Object::ROUTEID
+			Activity\Entity::TIMESTAMP,
+			Activity\Entity::SPORTID,
+			Activity\Entity::TIME_IN_SECONDS,
+			Activity\Entity::DISTANCE,
+			Activity\Entity::IS_TRACK,
+			Activity\Entity::HR_AVG,
+			Activity\Entity::SPLITS,
+			Activity\Entity::ROUTEID
 		);
 	}
 
@@ -140,7 +140,7 @@ class Preview {
 	 * @return string
 	 */
 	public function splitsIcon() {
-		if ($this->Activity->has(Activity\Object::SPLITS)) {
+		if ($this->Activity->has(Activity\Entity::SPLITS)) {
 			$Icon = new Icon(Icon::CLOCK);
 			$Icon->setTooltip(__('Lap data available'));
 
@@ -154,7 +154,7 @@ class Preview {
 	 * @return string
 	 */
 	public function mapIcon() {
-		if ($this->Activity->get(Activity\Object::ROUTEID) > 0) {
+		if ($this->Activity->get(Activity\Entity::ROUTEID) > 0) {
 			$Icon = new Icon(Icon::MAP_ARROW);
 			$Icon->setTooltip(__('Route data available'));
 

@@ -7,6 +7,7 @@
 use Runalyze\Configuration;
 use Runalyze\Activity\Duration;
 use Runalyze\Activity\Distance;
+use Runalyze\Error;
 
 /**
  * Parser for TCX files from Garmin
@@ -370,7 +371,7 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 			return end($this->gps['km']);
 
 		return end($this->gps['km']) +
-			Runalyze\Model\Route\Object::gpsDistance(
+			Runalyze\Model\Route\Entity::gpsDistance(
 				end($this->gps['latitude']), end($this->gps['longitude']),
 				(double)$TP->Position->LatitudeDegrees, (double)$TP->Position->LongitudeDegrees
 			);

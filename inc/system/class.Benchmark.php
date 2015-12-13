@@ -14,6 +14,8 @@
  * @author Hannes Christiansen
  * @package Runalyze\System
  */
+use Runalyze\Error;
+
 class Benchmark {
 	/**
 	 * Start time

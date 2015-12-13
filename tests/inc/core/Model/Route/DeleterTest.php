@@ -25,7 +25,7 @@ class DeleterTest extends \PHPUnit_Framework_TestCase {
 	 * @return int
 	 */
 	protected function insert(array $data) {
-		$Inserter = new Inserter($this->PDO, new Object($data));
+		$Inserter = new Inserter($this->PDO, new Entity($data));
 		$Inserter->setAccountID(0);
 		$Inserter->insert();
 
@@ -36,7 +36,7 @@ class DeleterTest extends \PHPUnit_Framework_TestCase {
 	 * @param int $id
 	 */
 	protected function delete($id) {
-		$Deleter = new Deleter($this->PDO, new Object($this->fetch($id)));
+		$Deleter = new Deleter($this->PDO, new Entity($this->fetch($id)));
 		$Deleter->setAccountID(0);
 		$Deleter->delete();
 	}
@@ -49,19 +49,17 @@ class DeleterTest extends \PHPUnit_Framework_TestCase {
 		return $this->PDO->query('SELECT * FROM `'.PREFIX.'route` WHERE `id`="'.$id.'" AND `accountid`=0')->fetch();
 	}
 
-	/**
-	 * @expectedException \PHPUnit_Framework_Error
-	 */
 	public function testWrongObject() {
-		new Deleter($this->PDO, new \Runalyze\Model\Trackdata\Object);
+	    if (PHP_MAJOR_VERSION >= 7) $this->setExpectedException('TypeError'); else $this->setExpectedException('\PHPUnit_Framework_Error');
+		new Deleter($this->PDO, new \Runalyze\Model\Trackdata\Entity);
 	}
 
 	public function testSimpleDeletion() {
 		$idToDelete = $this->insert(array(
-			Object::NAME => 'Route to go away'
+			Entity::NAME => 'Route to go away'
 		));
 		$idToKeep = $this->insert(array(
-			Object::NAME => 'Route to stay'
+			Entity::NAME => 'Route to stay'
 		));
 		$this->delete($idToDelete);
 

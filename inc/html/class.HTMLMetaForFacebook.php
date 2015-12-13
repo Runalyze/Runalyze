@@ -168,7 +168,7 @@ class HTMLMetaForFacebook {
 	protected function displayActivityDataPoint() {
 		// TODO: Elevation?
 		//$elevation = ...
-		$pace = $this->TrackdataLoop->average(Model\Trackdata\Object::PACE);
+		$pace = $this->TrackdataLoop->average(Model\Trackdata\Entity::PACE);
 
 		echo '
 <meta property="fitness:metrics:location:latitude"  content="'.$this->RouteLoop->latitude().'">

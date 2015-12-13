@@ -19,23 +19,23 @@ use Cache;
 class Updater extends Model\UpdaterWithAccountID {
 	/**
 	 * Old object
-	 * @var \Runalyze\Model\Trackdata\Object
+	 * @var \Runalyze\Model\Trackdata\Entity
 	 */
 	protected $OldObject;
 
 	/**
 	 * New object
-	 * @var \Runalyze\Model\Trackdata\Object
+	 * @var \Runalyze\Model\Trackdata\Entity
 	 */
 	protected $NewObject;
 
 	/**
 	 * Construct updater
 	 * @param \PDO $connection
-	 * @param \Runalyze\Model\Trackdata\Object $newObject [optional]
-	 * @param \Runalyze\Model\Trackdata\Object $oldObject [optional]
+	 * @param \Runalyze\Model\Trackdata\Entity $newObject [optional]
+	 * @param \Runalyze\Model\Trackdata\Entity $oldObject [optional]
 	 */
-	public function __construct(\PDO $connection, Object $newObject = null, Object $oldObject = null) {
+	public function __construct(\PDO $connection, Entity $newObject = null, Entity $oldObject = null) {
 		parent::__construct($connection, $newObject, $oldObject);
 	}
 
@@ -63,7 +63,7 @@ class Updater extends Model\UpdaterWithAccountID {
 		return array_merge(array(
 				self::ACCOUNTID
 			),
-			Object::allDatabaseProperties()
+			Entity::allDatabaseProperties()
 		);
 	}
 

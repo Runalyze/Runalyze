@@ -140,15 +140,15 @@ class JobLoop extends Job {
 		$elevations = $this->elevationsFor($data);
 
 		return new Calculator(
-			new Activity\Object($data),
-			new Trackdata\Object(array(
-				Trackdata\Object::TIME => $data['trackdata_time'],
-				Trackdata\Object::HEARTRATE => $data['trackdata_heartrate']
+			new Activity\Entity($data),
+			new Trackdata\Entity(array(
+				Trackdata\Entity::TIME => $data['trackdata_time'],
+				Trackdata\Entity::HEARTRATE => $data['trackdata_heartrate']
 			)),
-			new Route\Object(array(
-				Route\Object::ELEVATION => $elevations[0],
-				Route\Object::ELEVATION_UP => $elevations[1],
-				Route\Object::ELEVATION_DOWN => $elevations[2]
+			new Route\Entity(array(
+				Route\Entity::ELEVATION => $elevations[0],
+				Route\Entity::ELEVATION_UP => $elevations[1],
+				Route\Entity::ELEVATION_DOWN => $elevations[2]
 			))
 		);
 	}

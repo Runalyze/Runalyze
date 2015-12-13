@@ -86,6 +86,9 @@ ALTER TABLE `runalyze_sport` ADD `main_equipmenttypeid` int(10) unsigned NOT NUL
 /* 29.11.2015 - geohashes for _route table */
 ALTER TABLE `runalyze_route` ADD `geohashes` longtext AFTER `lngs`, ADD `startpoint` char(10) AFTER `startpoint_lng`, ADD `endpoint` char(10) AFTER `endpoint_lng`,  ADD `min` char(10) AFTER `min_lng`, ADD `max` char(10) AFTER `max_lng`;
 
+/* 09.12.2015 - clean activities without sportid */
+UPDATE `runalyze_training` AS `tr` INNER JOIN `runalyze_conf` AS `conf` ON `conf`.`accountid` = `tr`.`accountid` AND `conf`.`key` = 'MAINSPORT' SET `tr`.`sportid` = `conf`.`value` WHERE `sportid` = 0;
+
 /* Constraints at the bottom as they may cause errors */
 ALTER TABLE `runalyze_activity_tag` ADD CONSTRAINT `runalyze_activity_tag_ibfk_1` FOREIGN KEY (`tagid`) REFERENCES `runalyze_tag` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE `runalyze_activity_tag` ADD CONSTRAINT `runalyze_activity_tag_ibfk_2` FOREIGN KEY (`activityid`) REFERENCES `runalyze_training` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;

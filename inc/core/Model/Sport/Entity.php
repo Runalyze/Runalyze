@@ -1,6 +1,6 @@
 <?php
 /**
- * This file contains class::Object
+ * This file contains class::Entity
  * @package Runalyze\Model\Sport
  */
 
@@ -10,12 +10,12 @@ use Runalyze\Model;
 use Runalyze\View\Icon\SportIcon;
 
 /**
- * Sport object
+ * Sport entity
  * 
  * @author Hannes Christiansen
  * @package Runalyze\Model\Sport
  */
-class Object extends Model\ObjectWithID {
+class Entity extends Model\EntityWithID {
 	/**
 	 * Key: name
 	 * @var string

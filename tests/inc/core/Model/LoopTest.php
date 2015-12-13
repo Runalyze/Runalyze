@@ -2,7 +2,7 @@
 
 namespace Runalyze\Model;
 
-class Loopable_MockTester extends Object implements Loopable {
+class Loopable_MockTester extends Entity implements Loopable {
 	public function __construct($data = false) {
 		if ($data === false) {
 			$data = array(

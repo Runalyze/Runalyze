@@ -8,6 +8,8 @@
  * @author Hannes Christiansen
  * @package Runalyze\System
  */
+use Runalyze\Error;
+
 class System {
 	/**
 	 * Get code to include all local JS-files
@@ -15,10 +17,10 @@ class System {
 	 */
 	public static function getCodeForLocalJSFiles() {
 		if (self::isAtLocalhost()) {
-			return '<script src="build/scripts.js"></script>';
+			return '<script src="build/scripts.js?v='.RUNALYZE_VERSION.'"></script>';
 		}
 
-		return '<script src="build/scripts.min.js"></script>';
+		return '<script src="build/scripts.min.js?v='.RUNALYZE_VERSION.'"></script>';
 	}
 
 	/**
@@ -34,7 +36,7 @@ class System {
 	 * @return string 
 	 */
 	public static function getCodeForAllCSSFiles() {
-		return '<link rel="stylesheet" href="lib/less/runalyze-style.css">';
+		return '<link rel="stylesheet" href="lib/less/runalyze-style.css?v='.RUNALYZE_VERSION.'">';
 	}
 
 	/**

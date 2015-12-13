@@ -9,8 +9,8 @@ namespace Runalyze\Configuration\Category;
 use Runalyze\Calculation\BasicEndurance as CalculationBasicEndurance;
 use Runalyze\Configuration\Messages;
 use Runalyze\Configuration\Fieldset;
-use Runalyze\Parameter\Int;
-use Runalyze\Parameter\Float;
+use Runalyze\Parameter\Integer;
+use Runalyze\Parameter\FloatingPoint;
 
 use FormularUnit;
 
@@ -38,11 +38,11 @@ class BasicEndurance extends \Runalyze\Configuration\Category {
 	 * Create handles
 	 */
 	protected function createHandles() {
-		$this->createHandle('BE_MIN_KM_FOR_LONGJOG', new Int(13));
-		$this->createHandle('BE_DAYS_FOR_LONGJOGS', new Int(70));
-		$this->createHandle('BE_DAYS_FOR_WEEK_KM', new Int(182));
-		$this->createHandle('BE_DAYS_FOR_WEEK_KM_MIN', new Int(70));
-		$this->createHandle('BE_PERCENTAGE_WEEK_KM', new Float(0.67));
+		$this->createHandle('BE_MIN_KM_FOR_LONGJOG', new Integer(13));
+		$this->createHandle('BE_DAYS_FOR_LONGJOGS', new Integer(70));
+		$this->createHandle('BE_DAYS_FOR_WEEK_KM', new Integer(182));
+		$this->createHandle('BE_DAYS_FOR_WEEK_KM_MIN', new Integer(70));
+		$this->createHandle('BE_PERCENTAGE_WEEK_KM', new FloatingPoint(0.67));
 	}
 
 	/**

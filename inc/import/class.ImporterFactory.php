@@ -9,6 +9,8 @@
  * @author Hannes Christiansen
  * @package Runalyze\Import
  */
+use Runalyze\Error;
+
 class ImporterFactory {
 	/**
 	 * Creator: manually via form

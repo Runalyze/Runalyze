@@ -66,9 +66,9 @@ class Route extends AbstractKey
 	 */
 	public function stringFor(Context $context)
 	{
-		if ($context->activity()->get(Activity\Object::ROUTEID) > 0) {
+		if ($context->activity()->get(Activity\Entity::ROUTEID) > 0) {
 			return \Helper::Cut(
-				$context->factory()->route($context->activity()->get(Activity\Object::ROUTEID))->name(),
+				$context->factory()->route($context->activity()->get(Activity\Entity::ROUTEID))->name(),
 				self::DEFAULT_CUT
 			);
 		}

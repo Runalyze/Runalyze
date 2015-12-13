@@ -1,16 +1,16 @@
 <?php
 /**
- * This file contains class::String
+ * This file contains class::Textline
  * @package Runalyze\Parameter
  */
 
 namespace Runalyze\Parameter;
 
 /**
- * String
+ * Textline (prev. string)
  * @author Hannes Christiansen
  * @package Runalyze\Parameter
  */
-class String extends \Runalyze\Parameter {
+class Textline extends \Runalyze\Parameter {
 	// No individual methods
 }

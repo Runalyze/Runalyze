@@ -18,23 +18,23 @@ use Runalyze\Calculation\Route\Calculator;
 class Updater extends Model\UpdaterWithIDAndAccountID {
 	/**
 	 * Old object
-	 * @var \Runalyze\Model\Route\Object
+	 * @var \Runalyze\Model\Route\Entity
 	 */
 	protected $OldObject;
 
 	/**
 	 * New object
-	 * @var \Runalyze\Model\Route\Object
+	 * @var \Runalyze\Model\Route\Entity
 	 */
 	protected $NewObject;
 
 	/**
 	 * Construct updater
 	 * @param \PDO $connection
-	 * @param \Runalyze\Model\Route\Object $newObject [optional]
-	 * @param \Runalyze\Model\Route\Object $oldObject [optional]
+	 * @param \Runalyze\Model\Route\Entity $newObject [optional]
+	 * @param \Runalyze\Model\Route\Entity $oldObject [optional]
 	 */
-	public function __construct(\PDO $connection, Object $newObject = null, Object $oldObject = null) {
+	public function __construct(\PDO $connection, Entity $newObject = null, Entity $oldObject = null) {
 		parent::__construct($connection, $newObject, $oldObject);
 	}
 
@@ -54,7 +54,7 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 		return array_merge(array(
 				self::ACCOUNTID
 			),
-			Object::allDatabaseProperties()
+			Entity::allDatabaseProperties()
 		);
 	}
 
@@ -64,7 +64,7 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 	protected function before() {
 		parent::before();
 
-		if ($this->hasChanged(Object::ELEVATIONS_ORIGINAL) || $this->hasChanged(Object::ELEVATIONS_CORRECTED)) {
+		if ($this->hasChanged(Entity::ELEVATIONS_ORIGINAL) || $this->hasChanged(Entity::ELEVATIONS_CORRECTED)) {
 			$Calculator = new Calculator($this->NewObject);
 			$Calculator->calculateElevation();
 		}

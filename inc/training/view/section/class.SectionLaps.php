@@ -23,7 +23,7 @@ class SectionLaps extends TrainingViewSectionTabbed {
 			$this->appendRowTabbed( new SectionLapsRowManual($this->Context), __('Manual Laps') );
 		}
 
-		if ($this->Context->trackdata()->has(Trackdata\Object::DISTANCE) && $this->Context->trackdata()->has(Trackdata\Object::TIME)) {
+		if ($this->Context->trackdata()->has(Trackdata\Entity::DISTANCE) && $this->Context->trackdata()->has(Trackdata\Entity::TIME)) {
 			$this->appendRowTabbed( new SectionLapsRowComputed($this->Context), __('Computed Laps') );
 		}
 	}
@@ -34,7 +34,7 @@ class SectionLaps extends TrainingViewSectionTabbed {
 	 */
 	protected function hasRequiredData() {
 		return (!$this->Context->activity()->splits()->isEmpty() && $this->Context->activity()->splits()->totalDistance() > 0)
-			|| ($this->Context->trackdata()->has(Trackdata\Object::DISTANCE) && $this->Context->trackdata()->has(Trackdata\Object::TIME));
+			|| ($this->Context->trackdata()->has(Trackdata\Entity::DISTANCE) && $this->Context->trackdata()->has(Trackdata\Entity::TIME));
 	}
 
 	/**

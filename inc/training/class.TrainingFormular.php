@@ -6,8 +6,8 @@
 
 use Runalyze\Configuration;
 use Runalyze\Model\Factory;
-use Runalyze\Model\Trackdata\Object as Trackdata;
-use Runalyze\Model\Route\Object as Route;
+use Runalyze\Model\Trackdata\Entity as Trackdata;
+use Runalyze\Model\Route\Entity as Route;
 
 /**
  * Formular for trainings
@@ -287,6 +287,10 @@ class TrainingFormular extends StandardFormular {
 						$values[$Equipment->id()] = 'on';
 					}
 				}
+			}
+
+			if (empty($options)) {
+				continue;
 			}
 
 			if ($EquipmentType->allowsMultipleValues()) {

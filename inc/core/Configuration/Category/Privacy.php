@@ -7,7 +7,7 @@
 namespace Runalyze\Configuration\Category;
 
 use Runalyze\Configuration\Fieldset;
-use Runalyze\Parameter\Bool;
+use Runalyze\Parameter\Boolean;
 use Runalyze\Parameter\Application\ActivityRoutePrivacy;
 use Ajax;
 
@@ -29,10 +29,10 @@ class Privacy extends \Runalyze\Configuration\Category {
 	 * Create handles
 	 */
 	protected function createHandles() {
-		$this->createHandle('TRAINING_MAKE_PUBLIC', new Bool(false));
-		$this->createHandle('TRAINING_LIST_PUBLIC', new Bool(false));
-		$this->createHandle('TRAINING_LIST_ALL', new Bool(false));
-		$this->createHandle('TRAINING_LIST_STATISTICS', new Bool(false));
+		$this->createHandle('TRAINING_MAKE_PUBLIC', new Boolean(false));
+		$this->createHandle('TRAINING_LIST_PUBLIC', new Boolean(false));
+		$this->createHandle('TRAINING_LIST_ALL', new Boolean(false));
+		$this->createHandle('TRAINING_LIST_STATISTICS', new Boolean(false));
 		$this->createHandle('TRAINING_MAP_PUBLIC_MODE', new ActivityRoutePrivacy());
 	}
 

@@ -26,7 +26,7 @@ class TableLaps extends TableLapsAbstract {
 		$SplitsView = new Splits\Table($Splits, $this->Context->dataview()->pace()->unitEnum());
 		$SplitsView->setDemandedPace($Reader->findDemandedPace());
 
-		if ($this->Context->trackdata()->has(Trackdata\Object::DISTANCE)
+		if ($this->Context->trackdata()->has(Trackdata\Entity::DISTANCE)
 			&& $this->Context->activity()->typeid() == Configuration::General()->competitionType()
 		) {
 			$SplitsView->setHalfsOfCompetition($this->computeHalfs());
@@ -57,8 +57,8 @@ class TableLaps extends TableLapsAbstract {
 	 */
 	protected function halfFromLoop(Trackdata\Loop $Loop) {
 		return array(
-			's' => $Loop->difference(Trackdata\Object::TIME),
-			'km' => $Loop->difference(Trackdata\Object::DISTANCE)
+			's' => $Loop->difference(Trackdata\Entity::TIME),
+			'km' => $Loop->difference(Trackdata\Entity::DISTANCE)
 		);
 	}
 }

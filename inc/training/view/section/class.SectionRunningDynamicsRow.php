@@ -29,7 +29,7 @@ class SectionRunningDynamicsRow extends TrainingViewSectionRowTabbedPlot {
 	 * Set content right
 	 */
 	protected function setRightContent() {
-		if ($this->Context->trackdata()->has(Trackdata\Object::CADENCE)) {
+		if ($this->Context->trackdata()->has(Trackdata\Entity::CADENCE)) {
 			if ($this->Context->activity()->sportid() == Runalyze\Configuration::General()->runningSport()) {
 				$Cadence = new Cadence\Running();
 			} else {
@@ -42,28 +42,28 @@ class SectionRunningDynamicsRow extends TrainingViewSectionRowTabbedPlot {
 
 		if (
 			$this->Context->activity()->sportid() == Runalyze\Configuration::General()->runningSport() &&
-			$this->Context->trackdata()->has(Trackdata\Object::TIME) &&
-			$this->Context->trackdata()->has(Trackdata\Object::DISTANCE) &&
-			$this->Context->trackdata()->has(Trackdata\Object::CADENCE)
+			$this->Context->trackdata()->has(Trackdata\Entity::TIME) &&
+			$this->Context->trackdata()->has(Trackdata\Entity::DISTANCE) &&
+			$this->Context->trackdata()->has(Trackdata\Entity::CADENCE)
 		) {
 			$this->addRightContent('stridelength', __('Stride length'), new Activity\Plot\StrideLength($this->Context));
 
-			if ($this->Context->trackdata()->has(Trackdata\Object::VERTICAL_RATIO)) {
+			if ($this->Context->trackdata()->has(Trackdata\Entity::VERTICAL_RATIO)) {
 				$this->addRightContent('verticalratio', __('Vertical ratio'), new Activity\Plot\VerticalRatio($this->Context));
 			}
 		}
 
-		if ($this->Context->trackdata()->has(Trackdata\Object::VERTICAL_OSCILLATION)) {
+		if ($this->Context->trackdata()->has(Trackdata\Entity::VERTICAL_OSCILLATION)) {
 			$Plot = new Activity\Plot\VerticalOscillation($this->Context);
 			$this->addRightContent('verticaloscillation', __('Oscillation'), $Plot);
 		}
 
-		if ($this->Context->trackdata()->has(Trackdata\Object::GROUNDCONTACT)) {
+		if ($this->Context->trackdata()->has(Trackdata\Entity::GROUNDCONTACT)) {
 			$Plot = new Activity\Plot\GroundContact($this->Context);
 			$this->addRightContent('groundcontact', __('Ground contact'), $Plot);
 		}
 
-		if ($this->Context->trackdata()->has(Trackdata\Object::GROUNDCONTACT_BALANCE)) {
+		if ($this->Context->trackdata()->has(Trackdata\Entity::GROUNDCONTACT_BALANCE)) {
 			$Plot = new Activity\Plot\GroundContactBalance($this->Context);
 			$this->addRightContent('groundcontact_balance', __('Ground contact balance'), $Plot);
 		}

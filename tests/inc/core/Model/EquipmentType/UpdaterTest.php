@@ -27,24 +27,24 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 	public function testSimpleUpdate() {
 		$Inserter = new Inserter($this->PDO);
 		$Inserter->setAccountID(1);
-		$Inserter->insert(new Object(array(
-			Object::NAME => 'Equipment type name',
-			Object::INPUT => 1,
-			Object::MAX_KM => 100,
-			Object::MAX_TIME => 0
+		$Inserter->insert(new Entity(array(
+			Entity::NAME => 'Equipment type name',
+			Entity::INPUT => 1,
+			Entity::MAX_KM => 100,
+			Entity::MAX_TIME => 0
 		)));
 
-		$Type = new Object($this->PDO->query('SELECT * FROM `'.PREFIX.'equipment_type` WHERE `id`='.$Inserter->insertedID())->fetch(PDO::FETCH_ASSOC));
-		$Type->set(Object::INPUT, 0);
+		$Type = new Entity($this->PDO->query('SELECT * FROM `'.PREFIX.'equipment_type` WHERE `id`='.$Inserter->insertedID())->fetch(PDO::FETCH_ASSOC));
+		$Type->set(Entity::INPUT, 0);
 
 		$Changed = clone $Type;
-		$Changed->set(Object::MAX_TIME, 500);
+		$Changed->set(Entity::MAX_TIME, 500);
 
 		$Updater = new Updater($this->PDO, $Changed, $Type);
 		$Updater->setAccountID(1);
 		$Updater->update();
 
-		$Result = new Object($this->PDO->query('SELECT * FROM `'.PREFIX.'equipment_type` WHERE `id`='.$Inserter->insertedID())->fetch(PDO::FETCH_ASSOC));
+		$Result = new Entity($this->PDO->query('SELECT * FROM `'.PREFIX.'equipment_type` WHERE `id`='.$Inserter->insertedID())->fetch(PDO::FETCH_ASSOC));
 		$this->assertEquals('Equipment type name', $Result->name());
 		$this->assertTrue($Result->allowsMultipleValues());
 		$this->assertTrue($Result->hasMaxDistance());

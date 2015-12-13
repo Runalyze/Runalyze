@@ -33,22 +33,22 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase
 
 	protected function trackdata()
 	{
-		return new Trackdata\Object(array(
-			Trackdata\Object::TIME => array(
+		return new Trackdata\Entity(array(
+			Trackdata\Entity::TIME => array(
 				0, 60, 120, 180, 240, 300,
 				335, 370,
 				390, 410, 430,
 				464, 498,
 				520, 540, 560,
 				620, 680, 740, 800, 840
-			), Trackdata\Object::DISTANCE => array(
+			), Trackdata\Entity::DISTANCE => array(
 				0.0, 0.2, 0.4, 0.6, 0.8, 1.0,
 				1.2, 1.4,
 				1.47, 1.54, 1.60,
 				1.8, 2.0,
 				2.07, 2.14, 2.20,
 				2.4, 2.6, 2.8, 3.0, 3.2
-			), Trackdata\Object::HEARTRATE => array(
+			), Trackdata\Entity::HEARTRATE => array(
 				100, 120, 125, 130, 133, 135,
 				150, 175,
 				170, 165, 160,
@@ -61,8 +61,8 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase
 
 	protected function route()
 	{
-		return new Route\Object(array(
-			Route\Object::ELEVATIONS_ORIGINAL => array(
+		return new Route\Entity(array(
+			Route\Entity::ELEVATIONS_ORIGINAL => array(
 				100, 100, 110, 120, 115, 115,
 				115, 115,
 				115, 115, 115,
@@ -209,22 +209,22 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase
 			1, 2, 3, 4, 5, 6, 7, 8, 9, 10
 		));
 		$this->object->calculateFrom(
-			new Trackdata\Object(array(
-				Trackdata\Object::TIME => array(
+			new Trackdata\Entity(array(
+				Trackdata\Entity::TIME => array(
 					0, 150, 300,
 					450, 600,
 					800,
 					1200,
 					2200,
 					2750
-				), Trackdata\Object::DISTANCE => array(
+				), Trackdata\Entity::DISTANCE => array(
 					0.0, 0.5, 1.0,
 					1.6, 2.1,
 					2.8,
 					4.1,
 					7.3,
 					8.9
-				), Trackdata\Object::HEARTRATE => array(
+				), Trackdata\Entity::HEARTRATE => array(
 					150, 150, 150,
 					150, 150,
 					150,
