@@ -25,6 +25,18 @@ class DataBrowserShared extends DataBrowser {
 	protected $ShowEditLink = false;
 
 	/**
+	 * Init pointer to DB/Error-object
+	 */
+	protected function initInternalObjects()
+	{
+		parent::initInternalObjects();
+
+		if (!\Runalyze\Configuration::Privacy()->showPrivateActivitiesInList()) {
+			$this->DatasetQuery->showOnlyPublicActivities();
+		}
+	}
+
+	/**
 	 * Init private timestamps from request
 	 */
 	protected function initTimestamps() {
