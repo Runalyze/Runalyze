@@ -65,7 +65,7 @@ class Installer {
 
 	/**
 	 * Ready to move to next step?
-	 * @var int
+	 * @var bool
 	 */
 	protected $readyForNextStep = false;
 
@@ -313,6 +313,7 @@ class Installer {
 	 * Write config-variables to file
 	 */
 	protected function writeConfigFile() {
+		$config = array();
 		$config['host']      = $_POST['host'];
 		$config['database']  = $_POST['database'];
 		$config['username']  = $_POST['username'];
@@ -355,8 +356,6 @@ class Installer {
 		define('FRONTEND_PATH', __DIR__.'/');
 		require_once FRONTEND_PATH.'/system/class.Autoloader.php';
 		new Autoloader();
-
-		$this->adminPassAsMD5 = md5($this->mysqlConfig[2]);
 
 		DB::connect($this->mysqlConfig[0], $this->mysqlConfig[1], $this->mysqlConfig[2], $this->mysqlConfig[3]);
 	}

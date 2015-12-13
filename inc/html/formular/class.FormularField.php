@@ -35,7 +35,7 @@ abstract class FormularField extends HtmlTag {
 
 	/**
 	 * Value
-	 * @var string 
+	 * @var string|array
 	 */
 	protected $value = '';
 
@@ -111,7 +111,7 @@ abstract class FormularField extends HtmlTag {
 	 * Construct a new field
 	 * @param string $name
 	 * @param string $label
-	 * @param string $value optional, default: loading from $_POST
+	 * @param string|array $value optional, default: loading from $_POST
 	 */
 	public function __construct($name, $label, $value = '') {
 		$this->name = $name;

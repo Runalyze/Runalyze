@@ -21,13 +21,13 @@ interface ForecastStrategyInterface {
 
 	/**
 	 * Weather condition
-	 * @return \Runalze\Data\Weather\Condition
+	 * @return \Runalyze\Data\Weather\Condition
 	 */
 	public function condition();
 
 	/**
 	 * Temperature
-	 * @return \Runalze\Data\Weather\Temperature
+	 * @return \Runalyze\Data\Weather\Temperature
 	 */
 	public function temperature();
 }

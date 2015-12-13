@@ -18,17 +18,17 @@ use Runalyze\Configuration;
  */
 class DataCollector {
 	/**
-	 * @var enum
+	 * @var int
 	 */
 	const X_AXIS_INDEX = 0;
 
 	/**
-	 * @var enum
+	 * @var int
 	 */
 	const X_AXIS_TIME = 1;
 
 	/**
-	 * @var enum
+	 * @var int
 	 */
 	const X_AXIS_DISTANCE = 2;
 
@@ -49,7 +49,7 @@ class DataCollector {
 	protected $StepDistance;
 
 	/**
-	 * @var enum
+	 * @var int
 	 */
 	protected $XAxis = 0;
 
@@ -71,7 +71,7 @@ class DataCollector {
 	/**
 	 * Construct collector
 	 * @param \Runalyze\Model\Trackdata\Entity $trackdata
-	 * @param enum $key
+	 * @param int $key
 	 * @throws \InvalidArgumentException
 	 */
 	public function __construct(Trackdata $trackdata, $key) {
@@ -97,7 +97,7 @@ class DataCollector {
 
 	/**
 	 * Type of x-axis
-	 * @return enum
+	 * @return int
 	 */
 	public function xAxis() {
 		return $this->XAxis;
