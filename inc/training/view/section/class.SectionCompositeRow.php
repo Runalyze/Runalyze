@@ -194,7 +194,7 @@ class SectionCompositeRow extends TrainingViewSectionRowTabbedPlot {
 	 */
 	protected function addElevation() {
 		if ($this->Context->activity()->distance() > 0 || $this->Context->activity()->elevation() > 0) {
-			if ($this->Context->activity()->distance() > 0) {
+			if ($this->Context->activity()->distance() > 0 && !(Configuration::ActivityView()->plotMode()->showCollection() && Configuration::ActivityView()->mapFirst())) {
 				$this->BoxedValues[] = new Box\Distance($this->Context);
 			}
 
