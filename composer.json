@@ -1,5 +1,7 @@
 {
     "require": {
+        "symfony/symfony": "^2.8",
+        "sensio/framework-extra-bundle": "^3.0",
         "twig/twig": "1.*",
         "monolog/monolog": "1.*",
         "symfony/routing": "2.*",
@@ -8,5 +10,11 @@
         "swiftmailer/swiftmailer": "@stable",
         "nojacko/email-validator": "~1.0",
         "league/geotools": "@stable"
+    },
+
+    "autoload" : {
+        "psr-4" : {
+            "Runalyze\\Core\\" : "src/"
+        }
     }
 }
