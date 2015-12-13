@@ -57,7 +57,7 @@ class ExporterHTML extends ExporterAbstract {
 		$Title    = $this->Context->activity()->distance() > 0 ? $this->Context->dataview()->distance().' ' : '';
 		$Title   .= $this->Context->dataview()->titleByTypeOrSport();
 		$Pace     = $this->Context->activity()->distance() > 0 ? $this->Context->dataview()->pace()->valueWithAppendix() : '';
-		$Elev     = $this->Context->dataview()->elevation();
+		$Elev     = $this->Context->dataview()->elevation()->string();
 		$Heart    = $this->Context->activity()->hrAvg() > 0 ? $this->Context->dataview()->hrAvg()->string() : '';
 		$Spans    = '';
 
