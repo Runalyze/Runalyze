@@ -162,7 +162,7 @@ class Error {
 		elseif (!$this->log)
 			$this->sendErrorsToJSLog();
 		elseif ($this->log || self::$FORCE_LOG_FILE)
-			Filesystem::writeFile('../'.$this->log_file, $this->getErrorTable());
+			\Filesystem::writeFile('../'.$this->log_file, $this->getErrorTable());
 
 		$this->debug_displayed = true;
 	}
