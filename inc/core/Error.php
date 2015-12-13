@@ -370,7 +370,7 @@ class Error {
 }
 
 if (defined('RUNALYZE'))
-	set_error_handler("error_handler");
+	set_error_handler('Runalyze\error_handler');
 
 /**
  * Own function to handle the errors using class::Error.
