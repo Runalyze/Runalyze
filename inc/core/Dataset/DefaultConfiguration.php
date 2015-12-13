@@ -62,6 +62,14 @@ class DefaultConfiguration extends Configuration
 	}
 
 	/**
+	 * @return bool
+	 */
+	public function isDefault()
+	{
+		return true;
+	}
+
+	/**
 	 * Generate data array from base class
 	 * @param array $keysArray array(keyid => active(true|false))
 	 */

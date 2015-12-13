@@ -54,6 +54,14 @@ class Configuration
 	}
 
 	/**
+	 * @return bool
+	 */
+	public function isDefault()
+	{
+		return false;
+	}
+
+	/**
 	 * @return array
 	 */
 	public function data()

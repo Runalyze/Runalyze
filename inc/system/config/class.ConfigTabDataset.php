@@ -200,6 +200,7 @@ class ConfigTabDataset extends ConfigTab {
 			'(`keyid`, `active`, `style`, `position`, `accountid`) '.
 			'VALUES (:keyid, :active, :style, :position, :accountid)'
 		);
+		$isDefault = $this->Configuration->isDefault();
 
 		foreach (Dataset\Keys::getEnum() as $keyid) {
 			$active = Dataset\Keys::get($keyid)->mustBeShown() || (isset($_POST[$keyid.'_active']) && $_POST[$keyid.'_active']);
@@ -212,7 +213,7 @@ class ConfigTabDataset extends ConfigTab {
 				':keyid' => $keyid
 			);
 
-			if ($this->Configuration->exists($keyid)) {
+			if (!$isDefault && $this->Configuration->exists($keyid)) {
 				$UpdateStatement->execute($data);
 			} else {
 				$InsertStatement->execute($data);
