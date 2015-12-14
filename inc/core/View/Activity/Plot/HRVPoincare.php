@@ -1,21 +1,21 @@
 <?php
 /**
- * This file contains class::HRVPointcare
+ * This file contains class::HRVPoincare
  * @package Runalyze\View\Activity\Plot
  */
 
 namespace Runalyze\View\Activity\Plot;
 
-use Runalyze\Calculation\HRV\PointcareCollector;
+use Runalyze\Calculation\HRV\PoincareCollector;
 use Runalyze\View\Activity;
 
 /**
- * Pointcare plot for hrv data
+ * Poincare plot for hrv data
  * 
  * @author Hannes Christiansen
  * @package Runalyze\View\Activity\Plot
  */
-class HRVPointcare extends ActivityPlot {
+class HRVPoincare extends ActivityPlot {
 	/**
 	 * @var int
 	 */
@@ -36,7 +36,7 @@ class HRVPointcare extends ActivityPlot {
 	 * Set key
 	 */
 	protected function setKey() {
-		$this->key = 'hrvpointcare';
+		$this->key = 'hrvpoincare';
 	}
 
 	/**
@@ -44,7 +44,7 @@ class HRVPointcare extends ActivityPlot {
 	 * @param \Runalyze\View\Activity\Context $context
 	 */
 	protected function initData(Activity\Context $context) {
-		$Collector = new PointcareCollector($context->hrv());
+		$Collector = new PoincareCollector($context->hrv());
 		$this->Data = $Collector->data();
 
 		if (empty($this->Data)) {
@@ -52,7 +52,7 @@ class HRVPointcare extends ActivityPlot {
 		}
 
 		$this->Plot->Data[] = array(
-			'label' => __('Pointcare plot'),
+			'label' => __('Poincarè plot'),
 			'color' => 'rgb(0,0,0)',
 			'data' => $Collector->data()
 		);

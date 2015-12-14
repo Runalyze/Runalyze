@@ -1,6 +1,6 @@
 <?php
 /**
- * This file contains class::PointcareCollector
+ * This file contains class::PoincareCollector
  * @package Runalyze\Calculation\HRV
  */
 
@@ -9,12 +9,12 @@ namespace Runalyze\Calculation\HRV;
 use Runalyze\Model\HRV\Entity;
 
 /**
- * Create data for a pointcare plot
+ * Create data for a poincare plot
  * 
  * @author Hannes Christiansen
  * @package Runalyze\Calculation\HRV
  */
-class PointcareCollector {
+class PoincareCollector {
 	/**
 	 * @var \Runalyze\Model\HRV\Entity
 	 */
