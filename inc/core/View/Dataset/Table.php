@@ -104,7 +104,7 @@ class Table {
 			} else {
 				$Key = Keys::get($keyid);
 				$class = ($Key->cssClass() != '') ? ' class="'.$Key->cssClass().'"' : '';
-				$style = ($this->Configuration->getStyle($keyid) != '') ? ' class="'.$this->Configuration->getStyle($keyid).'"' : '';
+				$style = ($this->Configuration->getStyle($keyid) != '') ? ' style="'.$this->Configuration->getStyle($keyid).'"' : '';
 
 				$Code .= '<td'.$class.$style.'>'.$Key->stringFor($context).'</td>';
 			}
