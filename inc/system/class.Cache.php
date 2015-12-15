@@ -1,10 +1,10 @@
 <?php
-
 /**
  * Class: Cache - Wrapper for PHPFastCache
  * @author Michael Pohl
  * @package Runalyze\System
  */
+
 class Cache {
 
 	/**
@@ -26,7 +26,7 @@ class Cache {
 	 */
 	public function __construct() {
 		phpFastCache::setup("storage", "files");
-		self::$cache = new phpFastCache();
+		self::$cache = new phpFastCache;
 	}
 
 	/**

@@ -7,6 +7,7 @@
         "symfony/yaml": "@stable",
         "swiftmailer/swiftmailer": "@stable",
         "nojacko/email-validator": "~1.0",
-        "league/geotools": "@stable"
+        "league/geotools": "@stable",
+        "phpfastcache/phpfastcache": "@stable"
     }
 }
