@@ -36,6 +36,10 @@ if (!defined('PREFIX'))
 if (!defined('PERL_PATH'))
 	define('PERL_PATH', '/usr/bin/perl');
 
+if (!defined('TTBIN_PATH'))
+	define('TTBIN_PATH', FRONTEND_PATH.'../call/perl/ttbincnv');
+
+
 if (!defined('DAY_IN_S'))
 	define('DAY_IN_S', 86400);
 

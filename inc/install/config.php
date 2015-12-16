@@ -53,6 +53,12 @@ define('USER_CAN_REGISTER', true);
 define('PERL_PATH', '/usr/bin/perl');
 
 /**
+ * TTBIN Converter path
+ * @var string TTBIN_PATH for TTBIN Converter
+ */
+define('TTBIN_PATH', FRONTEND_PATH.'../call/perl/ttbincnv');
+
+/**
  * Garmin API key is needed for using Garmin Communicator
  * @var bool GARMIN_API_KEY Garmin API key
  * @see http://developer.garmin.com/web-device/garmin-communicator-plugin/get-your-site-key/
