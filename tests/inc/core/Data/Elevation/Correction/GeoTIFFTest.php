@@ -17,7 +17,7 @@ class GeoTIFFTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testPossibleData() {
-		if (file_exists(FRONTEND_PATH.'data/gps/srtm/srtm_38_03.tif')) {
+		if (file_exists(FRONTEND_PATH.'../data/srtm/srtm_38_03.tif')) {
 			$Corrector = new GeoTIFF(
 				array(49.444722), 
 				array(7.768889)
@@ -32,7 +32,7 @@ class GeoTIFFTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testPossiblePath() {
-		if (file_exists(FRONTEND_PATH.'data/gps/srtm/srtm_38_03.tif')) {
+		if (file_exists(FRONTEND_PATH.'../data/srtm/srtm_38_03.tif')) {
 			$Corrector = new GeoTIFF(
 				array(49.440, 49.441, 49.442, 49.443, 49.444, 49.445, 49.446, 49.447, 49.448, 49.449, 49.450), 
 				array(7.760, 7.761, 7.762, 7.763, 7.764, 7.765, 7.766, 7.767, 7.768, 7.769, 7.770)
@@ -48,7 +48,7 @@ class GeoTIFFTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testSmoothedPath() {
-		if (file_exists(FRONTEND_PATH.'data/gps/srtm/srtm_38_03.tif')) {
+		if (file_exists(FRONTEND_PATH.'../data/srtm/srtm_38_03.tif')) {
 			$Corrector = new GeoTIFF(
 				array(49.440, 49.441, 49.442, 49.443, 49.444, 49.445, 49.446, 49.447, 49.448, 49.449, 49.450), 
 				array(7.760, 7.761, 7.762, 7.763, 7.764, 7.765, 7.766, 7.767, 7.768, 7.769, 7.770)
@@ -65,7 +65,7 @@ class GeoTIFFTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testSydneyWithUnknown() {
-		if (file_exists(FRONTEND_PATH.'data/gps/srtm/srtm_67_19.tif')) {
+		if (file_exists(FRONTEND_PATH.'../data/srtm/srtm_67_19.tif')) {
 			$Corrector = new GeoTIFF(
 				array(-33.8705667),
 				array(151.1486337)
@@ -82,7 +82,7 @@ class GeoTIFFTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testSydneyWithGuessingUnknown() {
-		if (file_exists(FRONTEND_PATH.'data/gps/srtm/srtm_67_19.tif')) {
+		if (file_exists(FRONTEND_PATH.'../data/srtm/srtm_67_19.tif')) {
 			$Corrector = new GeoTIFF(
 				array(-33.8706555, -33.8705667, -33.8704860),
 				array(151.1486918, 151.1486337, 151.1485585)
@@ -100,7 +100,7 @@ class GeoTIFFTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testLondon() {
-		if (file_exists(FRONTEND_PATH.'data/gps/srtm/srtm_36_02.tif')) {
+		if (file_exists(FRONTEND_PATH.'../data/srtm/srtm_36_02.tif')) {
 			$Corrector = new GeoTIFF(
 				array(51.5073509, 51.5074509, 51.5075509),
 				array(-0.1277583, -0.1278583, -0.1279583)
@@ -117,7 +117,7 @@ class GeoTIFFTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testWindhoek() {
-		if (file_exists(FRONTEND_PATH.'data/gps/srtm/srtm_40_17.tif')) {
+		if (file_exists(FRONTEND_PATH.'../data/srtm/srtm_40_17.tif')) {
 			$Corrector = new GeoTIFF(
 				array(-22.5700, -22.5705, -22.5710),
 				array( 17.0836,  17.0841,  17.0846)
@@ -134,7 +134,7 @@ class GeoTIFFTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testNewYork() {
-		if (file_exists(FRONTEND_PATH.'data/gps/srtm/srtm_22_04.tif')) {
+		if (file_exists(FRONTEND_PATH.'../data/srtm/srtm_22_04.tif')) {
 			$Corrector = new GeoTIFF(
 				array( 40.7127,  40.7132,  40.7137),
 				array(-74.0059, -74.0064, -74.0069)

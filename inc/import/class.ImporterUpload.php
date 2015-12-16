@@ -144,9 +144,10 @@ class ImporterUpload {
 		$this->Response = 'Can\'t move uploaded file '.$_FILES['qqfile']['name'].'.<br>
 					The following paths need chmod 777 (write permissions):<br>
 						/log/<br>
-						/inc/import/files/<br>
-						/plugin/RunalyzePluginTool_DbBackup/backup/<br>
-						/plugin/RunalyzePluginTool_DbBackup/import/';
+						/data/import/<br>
+						/data/DbBackup/backup/<br>
+						/data/DbBackup/import/<br>
+						/data/cache/';
 	}
 
 	/**

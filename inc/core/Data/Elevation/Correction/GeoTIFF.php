@@ -75,7 +75,7 @@ class GeoTIFF extends Strategy {
 		);
 
 		try {
-			$this->Reader = new \SRTMGeoTIFFReader(FRONTEND_PATH.'data/gps/srtm');
+			$this->Reader = new \SRTMGeoTIFFReader(FRONTEND_PATH.'../data/srtm');
 			$this->Reader->getMultipleElevations($testArray);
 
 			return true;

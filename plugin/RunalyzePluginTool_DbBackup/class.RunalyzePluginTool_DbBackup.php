@@ -22,7 +22,7 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 	 * Path for all backups, relative to FRONTEND_PATH
 	 * @var string
 	 */
-	protected $BackupPath = '../plugin/RunalyzePluginTool_DbBackup/backup/';
+	protected $BackupPath = '../data/DbBackup/backup/';
 
 	/**
 	 * Export type: *.json
@@ -228,7 +228,7 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 		require_once __DIR__.'/class.RunalyzeJsonImporterResults.php';
 		require_once __DIR__.'/class.RunalyzeJsonImporter.php';
 
-		$fileName = '../plugin/'.$this->key().'/import/'.$_POST['file'];
+		$fileName = '../data/DbBackup/import/'.$_POST['file'];
 		$Importer = new RunalyzeJsonImporter($fileName);
 		$Importer->importData();
 

@@ -26,6 +26,8 @@ class Cache {
 	 */
 	public function __construct() {
 		phpFastCache::setup("storage", "files");
+		phpFastCache::setup("path", FRONTEND_PATH."../data");
+		phpFastCache::setup("securityKey","cache");
 		self::$cache = new phpFastCache;
 	}
 
