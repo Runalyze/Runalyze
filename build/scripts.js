@@ -7103,6 +7103,7 @@ RunalyzePlot.Events = (function($, parent){
 			var i, j, maxj, dataset = plot.getData();
 			for (i = 0; i < dataset.length; ++i) {
 				var series = dataset[i], num = 0, sum = 0;
+				var ticker = series.yaxis.tickFormatter || series.yaxis.options.tickFormatter;
 
 				for (j = 0; j < series.data.length; ++j)
 					if (series.data[j][0] >= from && series.data[j][0] <= to){
@@ -7113,7 +7114,7 @@ RunalyzePlot.Events = (function($, parent){
 
 				content = content + line(
 					series.label,
-					"&oslash; "+series.yaxis.tickFormatter(Math.round(sum*100.0/num)/100, series.yaxis)
+					"&oslash; "+ticker(Math.round(sum*100.0/num)/100, series.yaxis)
 				);
 			}
 
