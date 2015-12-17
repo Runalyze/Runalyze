@@ -6,6 +6,11 @@
  */
 
 class Cache {
+	/**
+	 * Path for cache, relative to runalyze root
+	 * @var string
+	 */
+	const PATH = 'data';
 
 	/**
 	 * Last cache clean date
@@ -18,7 +23,8 @@ class Cache {
 	 * @var bool
 	 */
 	public $footer_sent = true;
-        
+
+	/** @var \phpFastCache */
     public static $cache;
 
 	/**
@@ -26,8 +32,8 @@ class Cache {
 	 */
 	public function __construct() {
 		phpFastCache::setup("storage", "files");
-		phpFastCache::setup("path", FRONTEND_PATH."../data");
-		phpFastCache::setup("securityKey","cache");
+		phpFastCache::setup("path", FRONTEND_PATH."../".self::PATH);
+		phpFastCache::setup("securityKey", "cache");
 		self::$cache = new phpFastCache;
 	}
 

@@ -108,7 +108,12 @@ class Frontend {
 	 */
 	private function initCache() {
 		require_once FRONTEND_PATH.'/system/class.Cache.php';
-		new Cache();
+
+		try {
+			new Cache();
+		} catch (Exception $E) {
+			die('Cache directory "./'.Cache::PATH.'/cache/" must be writable.');
+		}
 	}
 
 	/**
