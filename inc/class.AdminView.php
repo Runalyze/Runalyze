@@ -535,7 +535,7 @@ define(\'PERL_PATH\', \'/usr/bin/perl\');';
  * Path to TTBIN Converter script
  * @var string TTBIN_PATH for perl scripts
  */
-define(\'TTBIN_PATH\', FRONTEND_PATH.\'../call/perl/ttbincnv\'));';				
+define(\'TTBIN_PATH\', FRONTEND_PATH.\'../call/perl/ttbincnv\');';				
                                 
 			case 'GARMIN_API_KEY':
 				$APIKeyResults = DB::getInstance()->query('SELECT `value` FROM `'.PREFIX.'conf` WHERE `key`="GARMIN_API_KEY" LIMIT 1')->fetch();
