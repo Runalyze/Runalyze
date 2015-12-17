@@ -49,6 +49,7 @@ You have to apply recent changes from the respective update files in `inc/instal
 ## Changelog
 * [v2.3](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-3-en/), 11.12.2015: minor release (dataset refactoring, new running dynamics, ...)
  * warning: migration from v2.2 to v2.3 requires `refactor-geohash.php`
+ * [v2.3.1](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-3-1-en/), 16.12.2015: minor bugfixes
 * [v2.2](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-2-en/), 28.10.2015: minor release (equipment for all sports, imperial units, ...)
  * If you're updating from 2.1.* directly use v2.2.1 for updating   
  * warning: migration from v2.1 to v2.2 requires `refactor-equipment.php`
