@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-12-08 14:20+0100\n"
-"PO-Revision-Date: 2015-12-14 11:25+0200\n"
-"Last-Translator: Jörg <jgutowski@gmx.de>\n"
+"PO-Revision-Date: 2015-12-17 13:00+0200\n"
+"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
 "Language-Team: German "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
@@ -6007,9 +6007,8 @@ msgid "Prognosis calculator"
 msgstr "Prognoserechner"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:131
-#, fuzzy
 msgid "Prognoses can't be calculated."
-msgstr "Prognoserechner"
+msgstr "Prognosen können nicht berechnet werden."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:135
 msgid "There are not enough results for good predictions."
@@ -6055,9 +6054,8 @@ msgid "Personal best"
 msgstr "Persönliche Bestleistungen"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:288
-#, fuzzy
 msgid "Your input is invalid"
-msgstr "Deine Eingabe ist nicht erlaubt."
+msgstr "Deine Eingabe ist ungültig"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:300
 #, php-format
@@ -6067,7 +6065,7 @@ msgstr "Aus den Ergebnissen wurden die Konstanten K = %f und e = %f berechnet."
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:304
 #, php-format
 msgid "K must be between %u and %u, e between %f and %f."
-msgstr ""
+msgstr "K muss zwischen %u und %u, e zwischen %f und %f liegen."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:324
 msgid "Input"
