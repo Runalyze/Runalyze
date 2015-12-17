@@ -278,7 +278,7 @@ class Query
 				if ($KeyObject->requiresJoin()) {
 					$joinDefinition = $KeyObject->joinDefinition();
 
-					if (!key_exists($joinDefinition['column'], $this->JoinTables)) {
+					if (!array_key_exists($joinDefinition['column'], $this->JoinTables)) {
 						$this->JoinTables[$joinDefinition['column']] = $joinDefinition;
 					}
 				} else {

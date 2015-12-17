@@ -131,6 +131,7 @@ final class SummaryMode extends AbstractEnum
 
 	/**
 	 * @param string $key
+	 * @return string
 	 */
 	private static function queryForVdot($key)
 	{
