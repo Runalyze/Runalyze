@@ -143,7 +143,7 @@ class ImporterUpload {
 		// TODO: Use folder from /system/define.chmod.php
 		$this->Response = 'Can\'t move uploaded file '.$_FILES['qqfile']['name'].'.<br>
 					The following paths need chmod 777 (write permissions):<br>
-						/log/<br>
+						/data/log/<br>
 						/data/import/<br>
 						/data/DbBackup/backup/<br>
 						/data/DbBackup/import/<br>

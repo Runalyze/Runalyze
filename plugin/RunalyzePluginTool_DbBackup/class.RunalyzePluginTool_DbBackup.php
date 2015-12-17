@@ -76,13 +76,12 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 	 */
 	protected function initPlugin() {
 		$this->fileNameStart = SessionAccountHandler::getId().'-runalyze-backup';
-
 		if (isset($_GET['json'])) {
-			if (move_uploaded_file($_FILES['qqfile']['tmp_name'], realpath(dirname(__FILE__)).'/import/'.$_FILES['qqfile']['name'])) {
+			if (move_uploaded_file($_FILES['qqfile']['tmp_name'], realpath('').'/../data/DbBackup/import/'.$_FILES['qqfile']['name'])) {
 				Error::getInstance()->footer_sent = true;
 				echo '{"success":true}';
 			} else {
-				echo '{"error":"Moving file did not work. Set chmod 777 for '.realpath(dirname(__FILE__)).'/import/"}';
+				echo '{"error":"Moving file did not work. Set chmod 777 for /data/DbBackup/import/"}';
 			}
 
 			exit;
@@ -183,11 +182,11 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 		if (substr($_GET['file'], -8) != '.json.gz') {
 			$Fieldset->addError( __('You can only import *.json.gz-files.'));
 
-			Filesystem::deleteFile('../plugin/'.$this->key().'/import/'.$_GET['file']);
+			Filesystem::deleteFile('../data/DbBackup/import/'.$_GET['file']);
 		} else {
 			require_once __DIR__.'/class.RunalyzeJsonAnalyzer.php';
 
-			$Analyzer = new RunalyzeJsonAnalyzer('../plugin/'.$this->key().'/import/'.$_GET['file']);
+			$Analyzer = new RunalyzeJsonAnalyzer('../data/DbBackup/import/'.$_GET['file']);
 
 			if ($Analyzer->fileIsOkay()) {
 				$Fieldset->addField( new FormularCheckbox('overwrite_config', __('Overwrite general configuration'), true) );

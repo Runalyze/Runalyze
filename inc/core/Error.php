@@ -131,7 +131,7 @@ class Error {
 			$this->file = $file;
 
 		if ($log_file == '') {
-			$log_file = 'log/'.self::getFilenameFromPath($this->file).'.log.'.date("Ymd.Hi").'.html';
+			$log_file = 'data/log/'.self::getFilenameFromPath($this->file).'.log.'.date("Ymd.Hi").'.html';
 			$log_file = str_replace(array('?', '&'), array('-', '-'), $log_file);
 		}
 
