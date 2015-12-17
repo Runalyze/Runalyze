@@ -36,8 +36,7 @@ class ImporterFiletypeTTBIN extends ImporterFiletypeAbstract {
 	 */
 	public function parseFile($Filename) {
 		$this->Filename = $Filename.'.temp.tcx';
-
-		$Command = new ShellCommand(FRONTEND_PATH.'../call/perl/ttbincnv -t < '.FRONTEND_PATH.$Filename.'  > '.FRONTEND_PATH.$this->Filename.'');
+		$Command = new ShellCommand(TTBIN_PATH.' -t < '.FRONTEND_PATH.$Filename.'  > '.FRONTEND_PATH.$this->Filename.'');
 		$Command->run();
 
 		$this->readFile();
