@@ -379,11 +379,13 @@ class SearchResults {
 		$sort  = (!isset($_POST['search-sort-by']) || array_key_exists($_POST['search-sort-by'], $this->AllowedKeys)) ? '`time`' : $this->DB->escape($_POST['search-sort-by'], false);
 		$order = (!isset($_POST['search-sort-order'])) ? 'DESC' : $this->DB->escape($_POST['search-sort-order'], false);
 
-		if ($sort == 'vdot' && Configuration::Vdot()->useElevationCorrection())
+		if ($sort == 'vdot' && Configuration::Vdot()->useElevationCorrection()) {
 			return ' ORDER BY IF(`t`.`vdot_with_elevation`>0, `t`.`vdot_with_elevation`, `t`.`vdot`) '.$order;
+		}
 
-		if ($sort == 'pace')
-			$sort = 'IF(`t`.`distance`>0, `t`.`s`/`t`.`distance`, 0)';
+		if ($sort == 'pace') {
+			return ' ORDER BY IF(`t`.`distance`>0, `t`.`s`/`t`.`distance`, 0) '.$order;
+		}
 
 		return ' ORDER BY `t`.'.$sort.' '.$order;
 	}
