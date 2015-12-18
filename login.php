@@ -19,7 +19,7 @@ if (isset($_GET['delete']))
 if (isset($_GET['out']))
 	SessionAccountHandler::logout();
 
-if (SessionAccountHandler::isLoggedIn()) {
+if (!USER_CANT_LOGIN && SessionAccountHandler::isLoggedIn()) {
 	header('Location: index.php');
 	exit;
 }
