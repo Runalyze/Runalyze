@@ -145,7 +145,9 @@ class RunalyzePluginPanel_Equipment extends PluginPanel {
 			echo '<p style="position:relative;">
 				<span class="right">'.($showDistance ? $Distance->string() : $Duration->string()).'</span>
 				<strong>'.SearchLink::to('equipmentid', $Object->id(), $Object->name()).'</strong>
-				'.$this->getUsageImage(
+				';
+			if($EquipmentType->maxDistance() != 0)
+				$this->getUsageImage(
 					$showDistance
 						? $Object->totalDistance() / $EquipmentType->maxDistance()
 						: $Object->duration() / ($hasMaxDuration ? $EquipmentType->maxDuration() : $max)
