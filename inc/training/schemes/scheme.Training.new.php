@@ -416,7 +416,7 @@ $FIELDS = array(
 						'null'		=> true
 					),
 					'formular'	=> array(
-						'label'		=> __('Comment'),
+						'label'		=> __('Title'),
 						'size'		=> FormularInput::$SIZE_FULL_INLINE
 					)
 	),

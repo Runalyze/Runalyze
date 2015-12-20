@@ -245,6 +245,17 @@ class ParserGPXSingle extends ParserAbstractSingleXML {
 
 		return $timeToAdd;
 	}
+	
+	/**
+  	 * Parse metadata
+  	 */
+  	public function parseMetadata($metadata) {
+  	    if(isset($metadata->name))
+  		$this->TrainingObject->setComment($metadata->name);
+  	    
+  	    if(isset($metadata->desc))
+  		$this->TrainingObject->setNotes($metadata->desc);
+  	}
 
 	/**
 	 * Parse extension values
