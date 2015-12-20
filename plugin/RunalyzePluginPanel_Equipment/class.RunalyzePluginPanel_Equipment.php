@@ -146,11 +146,11 @@ class RunalyzePluginPanel_Equipment extends PluginPanel {
 				<span class="right">'.($showDistance ? $Distance->string() : $Duration->string()).'</span>
 				<strong>'.SearchLink::to('equipmentid', $Object->id(), $Object->name()).'</strong>
 				';
-			if($EquipmentType->maxDistance() != 0)
+
 				$this->getUsageImage(
 					$showDistance
 						? $Object->totalDistance() / $EquipmentType->maxDistance()
-						: $Object->duration() / ($hasMaxDuration ? $EquipmentType->maxDuration() : $max)
+						: $Object->duration() / ($hasMaxDuration ? $EquipmentType->maxDuration() : max(1, $max))
 				).'
 			</p>';
 		}
