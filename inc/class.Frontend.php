@@ -6,6 +6,7 @@
 
 use Runalyze\Configuration;
 use Runalyze\Error;
+use Runalyze\Timezone;
 
 /**
  * Frontend class for setting up everything
@@ -75,7 +76,6 @@ class Frontend {
 	private function initSystem() {
 		define('RUNALYZE', true);
 		define('FRONTEND_PATH', dirname(__FILE__).'/');
-		date_default_timezone_set('Europe/Berlin');
 
 		$this->initLanguage();
 		$this->setAutoloader();
@@ -84,6 +84,7 @@ class Frontend {
 		$this->initDatabase();
 		$this->initDebugMode();
 		$this->initSessionAccountHandler();
+		$this->initTimezone();
 		$this->forwardAccountIDtoDatabaseWrapper();
 	}
 
@@ -101,6 +102,15 @@ class Frontend {
 	private function initLanguage() {
 		require_once FRONTEND_PATH.'/system/class.Language.php';
 		new Language();
+	}
+	
+	/**
+	 * Setup timezone
+	 */
+	private function initTimezone() {
+		Timezone::setPHPTimezone(SessionAccountHandler::getTimezone());
+		//Timezone::setMysql(SessionAccountHandler::getTimezone());
+		DB::getInstance()->exec("SET time_zone = ".SessionAccountHandler::getTimezone());
 	}
                 
         /**
