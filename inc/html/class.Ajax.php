@@ -178,6 +178,7 @@ class Ajax {
 	 * Get code for toolbar navigation for links as array (tag => ..., subs => array(..., ...))
 	 * @param array $Links
 	 * @param string $AdditionalClasses
+	 * @returns string
 	 */
 	public static function toolbarNavigation($Links, $AdditionalClasses = '') {
 		if (empty($Links))

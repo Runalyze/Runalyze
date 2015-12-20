@@ -48,15 +48,10 @@ class TrainingView {
 	private function initToolbarLinks() {
 		$Linker = new Linker($this->Context->activity());
 
-		if ($this->Context->activity()->isPublic()) {
-			$this->ToolbarLinks[] = '<a href="'.$Linker->publicUrl().'" target="_blank">'.Icon::$ATTACH.' '.__('Public link').'</a>';
-		}
-
 		if (!Request::isOnSharedPage()) {
-			$this->initShareLinks();
+			$this->initShareLinks($Linker);
 			$this->initExportLinks();
-
-			$this->ToolbarLinks[] = Ajax::window('<a href="'.$Linker->editUrl().'">'.Icon::$EDIT.' '.__('Edit').'</a> ','small');
+			$this->initEditLinks($Linker);
 		}
 
 		$this->ToolbarLinks[] = Ajax::tooltip($Linker->weekLink(), '<em>'.__('Show week').'</em><br>'.$this->Context->dataview()->weekday().', '.$this->Context->dataview()->dateAndDaytime());
@@ -64,11 +59,16 @@ class TrainingView {
 
 	/**
 	 * Init social share links
+	 * @param \Runalyze\View\Activity\Linker $linker
 	 */
-	protected function initShareLinks() {
+	protected function initShareLinks(Linker $linker) {
 		$ExporterList = (new ExporterList($this->Context))->getList();
 
 		$this->ToolbarLinks[] = '<li class="with-submenu"><span class="link"><i class="fa fa-fw fa-share-alt"></i> '.__('Share').'</span><ul class="submenu">';
+
+		if ($this->Context->activity()->isPublic()) {
+			$this->ToolbarLinks[] = '<li><a href="'.$linker->publicUrl().'" target="_blank">'.Icon::$ATTACH.' '.__('Public link').'</a></li>';
+		}
 
 		foreach ($ExporterList[ExporterType::Social] as $typeName) {
 			$Exporter = new $typeName($this->Context);
@@ -96,6 +96,26 @@ class TrainingView {
 			}
 		}
 
+		$this->ToolbarLinks[] = '</ul></li>';
+	}
+
+	/**
+	 * Init edit links
+	 * @param \Runalyze\View\Activity\Linker $linker
+	 */
+	protected function initEditLinks(Linker $linker) {
+		if ($this->Context->activity()->isPublic()) {
+			$privacyLabel = __('Make private');
+			$privacyIcon = 'fa-lock';
+		} else {
+			$privacyLabel = __('Make public');
+			$privacyIcon = 'fa-unlock';
+		}
+
+		$this->ToolbarLinks[] = '<li class="with-submenu"><span class="link"><i class="fa fa-fw fa-wrench"></i></span><ul class="submenu">';
+		$this->ToolbarLinks[] = '<li>'.Ajax::window('<a class="link" href="'.$linker->editUrl().'">'.Icon::$EDIT.' '.__('Edit').'</a> ','small').'</li>';
+		$this->ToolbarLinks[] = '<li><a class="ajax" target="statistics-inner" href="call/call.Training.display.php?id='.$this->Context->activity()->id().'&action=changePrivacy"><i class="fa fa-fw '.$privacyIcon.'"></i> '.$privacyLabel.'</a></li>';
+		$this->ToolbarLinks[] = '<li><a class="ajax" target="statistics-inner" href="call/call.Training.display.php?id='.$this->Context->activity()->id().'&action=delete"><i class="fa fa-fw fa-trash"></i> '.__('Delete activity').'</a></li>';
 		$this->ToolbarLinks[] = '</ul></li>';
 	}
 
@@ -205,7 +225,7 @@ class TrainingView {
 		echo '<div class="panel-menu"><ul>';
 
 		foreach ($this->ToolbarLinks as $link) {
-			if (substr($link, 0, 3) != '<li') {
+			if (substr($link, 0, 3) != '<li' && substr($link, 0, 2) != '</') {
 				$link = '<li>'.$link.'</li>';
 			}
 

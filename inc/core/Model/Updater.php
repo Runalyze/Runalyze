@@ -66,7 +66,7 @@ abstract class Updater {
 	 * 
 	 * This method may be overwritten in the subclass to ignore some specific keys,
 	 * e.g. don't update `A` if `B` has a specific value.
-	 * @param type $key
+	 * @param string $key
 	 * @return boolean
 	 */
 	protected function ignore($key) {
@@ -76,7 +76,7 @@ abstract class Updater {
 	/**
 	 * Update
 	 * @param \Runalyze\Model\Entity $object [optional]
-	 * @param array $keys [optional]
+	 * @param array|boolean $keys [optional]
 	 * @throws \RuntimeException
 	 */
 	final public function update(Entity $object = null, $keys = false) {
