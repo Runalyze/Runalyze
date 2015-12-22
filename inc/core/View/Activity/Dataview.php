@@ -149,8 +149,9 @@ class Dataview {
 		if (!is_numeric($this->Activity->timestamp())) {
 			return '';
 		}
-
-		return date($format, $this->Activity->timestamp());
+		$date = new \DateTime('', new \DateTimeZone('UTC'));
+		$date->setTimestamp($this->Activity->timestamp());
+		return $date->format($format);
 	}
 
 	/**
@@ -160,7 +161,9 @@ class Dataview {
 	 */
 	public function daytime() {
 		if (is_numeric($this->Activity->timestamp())) {
-			$time = date('H:i', $this->Activity->timestamp());
+			    $date = new \DateTime('', new \DateTimeZone('UTC'));
+			    $date->setTimestamp($this->Activity->timestamp());
+			    $time = $date->format('H:i');
 
 			if ($time != '00:00') {
 				return $time;

@@ -5,14 +5,14 @@
  * @package Runalyze\Plugins\Stats
  */
 
-use Runalyze\Util\Time;
+use Runalyze\Util\ActivityTime;
 
 $titleCenter = __('Activity [in h] by weekday');
 $yAxis       = array();
 $xAxis       = array();
 
 for ($w = 1; $w <= 7; $w++)
-	$xAxis[] = array($w-1, Time::weekday($w, true));
+	$xAxis[] = array($w-1, ActivityTime::weekday($w, true));
 
 if ($this->sportid > 0) {
 	$Sports = array(SportFactory::DataFor((int)$this->sportid));
