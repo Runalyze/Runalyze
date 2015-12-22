@@ -127,7 +127,7 @@ class ConfigTabAccount extends ConfigTab {
 			DB::getInstance()->update('account', SessionAccountHandler::getId(), 'allow_mails', $_POST['allow_mails'], false);
 		}
 		
-		if ($_POST['timezone'] != SessionAccountHandler::getTimezone() && Timezone::isValidTimezone('test')) {
+		if ($_POST['timezone'] != SessionAccountHandler::getTimezone() && Timezone::isValidTimezone($_POST['timezone'])) {
 			DB::getInstance()->update('account', SessionAccountHandler::getId(), 'timezone', $_POST['timezone'], false);
 			Ajax::setReloadFlag( Ajax::$RELOAD_PAGE );
 		}
