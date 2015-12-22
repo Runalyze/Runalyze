@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-12-08 14:20+0100\n"
-"PO-Revision-Date: 2015-12-10 17:47+0200\n"
-"Last-Translator: BridouZ <justin.berthault@gmail.com>\n"
+"PO-Revision-Date: 2015-12-22 04:15+0200\n"
+"Last-Translator: Jason Gombert <jason.gombert@gmail.com>\n"
 "Language-Team: French "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/fr/>\n"
 "Language: fr\n"
@@ -1373,7 +1373,7 @@ msgstr ""
 
 #: inc/core/Configuration/Category/BasicEndurance.php:117
 msgid "This value will be used if not enough data is available."
-msgstr ""
+msgstr "Cette valeur sera utilisée s'il n'y a pas assez de données disponibles."
 
 #: inc/core/Configuration/Category/BasicEndurance.php:120
 msgid "Factor for week kilometers"
@@ -1385,19 +1385,20 @@ msgstr ""
 
 #: inc/core/Configuration/Category/Misc.php:48
 msgid "Search: results per page"
-msgstr "Recherche: résultats par page"
+msgstr "Recherche : résultats par page"
 
 #: inc/core/Configuration/Category/Misc.php:49
 msgid "Number of results displayed on each page."
-msgstr "Nombre de résultats à afficher sur chaque page"
+msgstr "Nombre de résultats à afficher sur chaque page."
 
 #: inc/core/Configuration/Category/Privacy.php:94
 msgid "Publish activities"
-msgstr ""
+msgstr "Publier activités"
 
 #: inc/core/Configuration/Category/Privacy.php:95
 msgid "Automatically mark every activity after its creation as public."
 msgstr ""
+"Marquer automatiquement chaque activité comme publique après sa création."
 
 #: inc/core/Configuration/Category/Privacy.php:99
 msgid "Public list: active"
@@ -1406,6 +1407,8 @@ msgstr ""
 #: inc/core/Configuration/Category/Privacy.php:100
 msgid "If activated: Everyone can see a list of all your (public) activities."
 msgstr ""
+"Si activé : tout le monde peut voir une liste de toutes vos activités "
+"(publiques)."
 
 #: inc/core/Configuration/Category/Privacy.php:104
 msgid "Public list: private workouts"
@@ -1416,14 +1419,16 @@ msgid ""
 "If activated: Display a summary for each private activity in the public "
 "activity list."
 msgstr ""
+"Si activé : affiche un résumé pour chaque activité privée dans la liste des "
+"activités publiques."
 
 #: inc/core/Configuration/Category/Privacy.php:109
 msgid "Public list: general statistics"
-msgstr ""
+msgstr "Liste publique : statistiques générales"
 
 #: inc/core/Configuration/Category/Privacy.php:110
 msgid "Show some general statistics above the activity list"
-msgstr ""
+msgstr "Montrer des statistiques générales au-dessus de la liste d'activités"
 
 #: inc/core/Configuration/Category/Privacy.php:114
 msgid "Public view: show map"
@@ -1439,7 +1444,7 @@ msgstr ""
 
 #: inc/core/Configuration/Category/ActivityView.php:303
 msgid "Number of decimals"
-msgstr ""
+msgstr "Nombre de décimales"
 
 #: inc/core/Configuration/Category/ActivityView.php:307
 msgid "Activity view: show rows in full height"
@@ -1463,27 +1468,31 @@ msgstr ""
 
 #: inc/core/Configuration/Category/ActivityView.php:333
 msgid "Plots: smooth curves"
-msgstr ""
+msgstr "Graphiques : courbes lisses"
 
 #: inc/core/Configuration/Category/ActivityView.php:337
 msgid "Plots: use time as x-axis"
-msgstr ""
+msgstr "Graphiques : utiliser le temps comme abscisse (axe x)"
 
 #: inc/core/Configuration/Category/ActivityView.php:341
 msgid "Pace plot: y-axis minimum"
-msgstr ""
+msgstr "Graphique de cadence : ordonnée minimale"
 
 #: inc/core/Configuration/Category/ActivityView.php:342
 msgid "Data points below this limit will be ignored. (only for min/km)"
 msgstr ""
+"Les valeurs situées sous cette limite seront ignorées. (uniquement pour "
+"min/km)"
 
 #: inc/core/Configuration/Category/ActivityView.php:346
 msgid "Pace plot: y-axis maximum"
-msgstr ""
+msgstr "Graphique de cadence : ordonnée maximale"
 
 #: inc/core/Configuration/Category/ActivityView.php:347
 msgid "Data points above this limit will be ignored. (only for min/km)"
 msgstr ""
+"Les valeurs situées au dessus de cette limite seront ignorées. (uniquement "
+"pour min/km)"
 
 #: inc/core/Configuration/Category/ActivityView.php:351
 msgid "Pace plot: y-axis scale type"
@@ -1515,31 +1524,31 @@ msgstr ""
 
 #: inc/core/Configuration/Category/ActivityView.php:374
 msgid "Map: precision"
-msgstr ""
+msgstr "Carte : précision"
 
 #: inc/core/Configuration/Category/ActivityView.php:375
 msgid "How many data points shoud be displayed?"
-msgstr ""
+msgstr "Combien de points doivent-être affichés ?"
 
 #: inc/core/Configuration/Category/ActivityView.php:379
 msgid "Map: line color"
-msgstr ""
+msgstr "Carte : couleur de la ligne"
 
 #: inc/core/Configuration/Category/ActivityView.php:380
 msgid "as hexadecimal rgb (e.g. #ff5500)"
-msgstr ""
+msgstr "en rgb hexadécimal (ex : #ff5500)"
 
 #: inc/core/Configuration/Category/ActivityView.php:384
 msgid "Map: show map first"
-msgstr ""
+msgstr "Carte : montrer la carte en premier"
 
 #: inc/core/Configuration/Category/ActivityView.php:385
 msgid "show map before plots"
-msgstr ""
+msgstr "montre la carte avant les tracés"
 
 #: inc/core/Configuration/Category/ActivityView.php:389
 msgid "Map: zoom on scroll"
-msgstr ""
+msgstr "Carte : zoom avec la molette"
 
 #: inc/core/Configuration/Category/ActivityView.php:399
 msgid "Elevation: smoothing"
@@ -1559,35 +1568,35 @@ msgstr ""
 
 #: inc/core/Configuration/Category/Design.php:57
 msgid "Design"
-msgstr ""
+msgstr "Apparence"
 
 #: inc/core/Configuration/Category/Design.php:59
 msgid "Background image"
-msgstr ""
+msgstr "Image de fond"
 
 #: inc/core/Configuration/Category/ActivityForm.php:204
 msgid "Activity form"
-msgstr ""
+msgstr "Formulaire d'activité"
 
 #: inc/core/Configuration/Category/ActivityForm.php:207
 msgid "Default window"
-msgstr ""
+msgstr "Fenêtre par défaut"
 
 #: inc/core/Configuration/Category/ActivityForm.php:211
 msgid "Show activity after creation"
-msgstr ""
+msgstr "Montrer activité après la création"
 
 #: inc/core/Configuration/Category/ActivityForm.php:215
 msgid "Calculate calories"
-msgstr ""
+msgstr "Calculer calories"
 
 #: inc/core/Configuration/Category/ActivityForm.php:216
 msgid "Recalculate calories after changing duration by hand"
-msgstr ""
+msgstr "Recalcule les calories après un changement manuel de la durée"
 
 #: inc/core/Configuration/Category/ActivityForm.php:220
 msgid "Calculate power"
-msgstr ""
+msgstr "Calculer puissance"
 
 #: inc/core/Configuration/Category/ActivityForm.php:221
 msgid "Calculate power by speed and grade for cycling"
@@ -1595,64 +1604,70 @@ msgstr ""
 
 #: inc/core/Configuration/Category/ActivityForm.php:225
 msgid "Detect pauses"
-msgstr ""
+msgstr "Détecter les pauses"
 
 #: inc/core/Configuration/Category/ActivityForm.php:226
 msgid "Detect pauses (distance not increasing) when importing training"
 msgstr ""
+"Détecte les pauses (distance qui n'augmente pas) lors de l'importation d'une "
+"séance"
 
 #: inc/core/Configuration/Category/ActivityForm.php:242
 msgid "Automatically load weather conditions"
-msgstr ""
+msgstr "Charger automatiquement les conditions météo"
 
 #: inc/core/Configuration/Category/ActivityForm.php:243
 msgid "via openweathermap.org"
-msgstr ""
+msgstr "via openweathermap.org"
 
 #: inc/core/Configuration/Category/ActivityForm.php:247
 msgid "for weather: Location"
-msgstr ""
+msgstr "Météo : Lieu"
 
 #: inc/core/Configuration/Category/ActivityForm.php:248
 msgid ""
 "For loading weather data from openweathermap.org<br>e.g. <em>Berlin, de</em>"
 msgstr ""
+"Pour télécharger les données météo depuis openweathermap.org<br>ex : <em>"
+"Berlin, de</em>"
 
 #: inc/core/Configuration/Category/ActivityForm.php:259
 msgid "Automatically correct elevation data"
-msgstr ""
+msgstr "Corriger automatiquement les données d'élévation"
 
 #: inc/core/Configuration/Category/ActivityForm.php:260
 msgid ""
 "Instead of using gps-elevation a correction via external services is "
 "possible."
 msgstr ""
+"Plutôt que d'utiliser l'élévation gps, une correction via des services "
+"externes est possible."
 
 #: inc/core/Configuration/Category/ActivityForm.php:270
 msgid "Sort: sport types"
-msgstr ""
+msgstr "Tri : types de sport"
 
 #: inc/core/Configuration/Category/ActivityForm.php:274
 msgid "Sort: activity types"
-msgstr ""
+msgstr "Tri : types d'activités"
 
 #: inc/core/Configuration/Category/ActivityForm.php:278
 msgid "Sort: shoes"
-msgstr ""
+msgstr "Tri : chaussures"
 
 #: inc/core/Configuration/Category/DataBrowser.php:86
 #: inc/system/config/class.ConfigTabTypes.php:51
 #: inc/system/config/class.ConfigTabSports.php:62
 msgid "Calendar view"
-msgstr ""
+msgstr "Vue calendrier"
 
 #: inc/core/Configuration/Category/DataBrowser.php:89
 msgid "Calendar: mode"
-msgstr ""
+msgstr "Calendrier : mode"
 
 #: inc/core/Configuration/Category/DataBrowser.php:90
 msgid "Default mode for the calendar"
-msgstr ""
+msgstr "Mode par défaut pour le calendrier"
 
 #: inc/core/Configuration/Category/DataBrowser.php:94
 msgid "Calendar: show labels for dataset"
@@ -1660,29 +1675,31 @@ msgstr ""
 
 #: inc/core/Configuration/Category/DataBrowser.php:98
 msgid "Calendar: create button"
-msgstr ""
+msgstr "Calendrier : bouton créer"
 
 #: inc/core/Configuration/Category/DataBrowser.php:99
 msgid "Add a link for every day to create a new activity."
-msgstr ""
+msgstr "Ajoute un lien dans chaque jour pour créer une nouvelle activité."
 
 #: inc/core/Configuration/Category/DataBrowser.php:103
 msgid "Calendar: edit button"
-msgstr ""
+msgstr "Calendrier : bouton modifier"
 
 #: inc/core/Configuration/Category/DataBrowser.php:104
 msgid "Add an edit-link for every activity."
-msgstr ""
+msgstr "Ajoute un lien d'édition pour chaque activité."
 
 #: inc/core/Configuration/Category/Vdot.php:164
 msgid "Estimation formula"
-msgstr ""
+msgstr "Formule d'estimation"
 
 #: inc/core/Configuration/Category/Vdot.php:165
 msgid ""
 "Formula to estimate the vdot value. The old method is only listed for "
 "compatibility reasons."
 msgstr ""
+"Formule utilisée pour estimer la valeur de la VO2Max. L'ancienne méthode est "
+"uniquement listée pour des raisons de compatibilité."
 
 #: inc/core/Configuration/Category/Vdot.php:169
 msgid "Time constant length for VDOT"
@@ -1694,61 +1711,73 @@ msgstr ""
 
 #: inc/core/Configuration/Category/Vdot.php:174
 msgid "Use correction factor"
-msgstr ""
+msgstr "Utiliser un facteur de correction"
 
 #: inc/core/Configuration/Category/Vdot.php:175
 msgid "Use a correction factor based on your best competition. (recommended)"
 msgstr ""
+"Utilise un facteur de correction basé sur votre meilleure compétition. "
+"(recommandé)"
 
 #: inc/core/Configuration/Category/Vdot.php:179
 msgid "Manual correction factor"
-msgstr ""
+msgstr "Facteur de correction manuel"
 
 #: inc/core/Configuration/Category/Vdot.php:180
 msgid ""
 "Manual correction factor (e.g. 0.9), if the automatic factor does not fit. "
 "Can be left empty."
 msgstr ""
+"Facteur de correction manuel (ex : 0.9), si le facteur automatique n'est pas "
+"suffisant. Peut être laissé vide."
 
 #: inc/core/Configuration/Category/Vdot.php:184
 msgid "Use fixed VDOT value"
-msgstr ""
+msgstr "Utiliser une valeur de VO2Max fixe"
 
 #: inc/core/Configuration/Category/Vdot.php:185
 msgid ""
 "Fixed VDOT value (e.g. 55), if the estimation does not fit. Can be left "
 "empty."
 msgstr ""
+"Valeur de VO2Max fixée (ex : 55), si l'estimation n'est pas pertinente. Peut "
+"être laissé vide."
 
 #: inc/core/Configuration/Category/Vdot.php:189
 msgid "Adapt for elevation"
-msgstr ""
+msgstr "Adapter suivant l'élévation"
 
 #: inc/core/Configuration/Category/Vdot.php:190
 msgid ""
 "The distance can be corrected by a formula from Peter Greif to adapt for "
 "elevation."
 msgstr ""
+"La distance peut être corrigée par la formule de Peter Greif pour s'adapter "
+"à l'élévation."
 
 #: inc/core/Configuration/Category/Vdot.php:194
 msgid "Correction per positive elevation"
-msgstr ""
+msgstr "Correction lors d'un dénivelé positif"
 
 #: inc/core/Configuration/Category/Vdot.php:195
 msgid ""
 "Add for each meter upwards X meter to the distance. (Only for the VDOT "
 "calculation)"
 msgstr ""
+"Ajoute pour chaque mètre monté X mètres à la distance. (Uniquement pour le "
+"calcul de la VO2Max)"
 
 #: inc/core/Configuration/Category/Vdot.php:200
 msgid "Correction per negative elevation"
-msgstr ""
+msgstr "Correction en dénivelé négatif"
 
 #: inc/core/Configuration/Category/Vdot.php:201
 msgid ""
 "Add for each meter downwards X meter to the distance. (Only for the VDOT "
 "calculation)"
 msgstr ""
+"Ajoute pour chaque mètre descendu X mètres à la distance. (Uniquement pour "
+"le calcul de la VO2Max)"
 
 #: inc/core/Configuration/Category/Vdot.php:220
 #: plugin/RunalyzePluginTool_DatenbankCleanup/JobGeneral.php:116
@@ -1805,7 +1834,7 @@ msgstr ""
 #: inc/core/Configuration/Messages.php:26
 #: plugin/RunalyzePluginTool_DatenbankCleanup/class.RunalyzePluginTool_DatenbankCleanup.php:24
 msgid "Database cleanup"
-msgstr ""
+msgstr "Nettoyage de la base de données"
 
 #: inc/core/Configuration/Messages.php:27
 #, php-format
@@ -1833,7 +1862,7 @@ msgstr ""
 #: inc/core/Activity/GroundcontactBalance.php:48
 #, fuzzy
 msgid "Groundcontact balance"
-msgstr "Contact au sol"
+msgstr "Répartition des contacts au sol"
 
 #: inc/core/View/Window/Laps/Table.php:117
 msgid "Lap"
@@ -1853,11 +1882,11 @@ msgstr ""
 
 #: inc/core/View/Window/Laps/Table.php:124
 msgid "elevation"
-msgstr ""
+msgstr "dénivelé"
 
 #: inc/core/View/Window/Laps/Table.php:253
 msgid "Average"
-msgstr ""
+msgstr "Moyenne"
 
 #: inc/core/View/Window/Laps/Table.php:278
 msgid "Show inactive splits"
@@ -1865,31 +1894,30 @@ msgstr ""
 
 #: inc/core/View/Window/Laps/Form.php:40
 msgid "Calculate laps"
-msgstr ""
+msgstr "Calculer tours"
 
 #: inc/core/View/Window/Laps/Form.php:55 inc/core/View/Window/Laps/Form.php:66
 msgid "Lap every ..."
-msgstr ""
+msgstr "Tour à chaque ..."
 
 #: inc/core/View/Window/Laps/Form.php:55
 msgid "Distance, after which a new lap should start"
-msgstr ""
+msgstr "Distance après laquelle un nouveau tour doit commencee"
 
 #: inc/core/View/Window/Laps/Form.php:66 inc/core/View/Window/Laps/Form.php:78
 #: inc/core/View/Window/Laps/Form.php:81 inc/core/View/Window/Laps/Form.php:91
 #: inc/core/View/Window/Laps/Form.php:94
 #: inc/core/View/Window/Laps/Form.php:116
 msgid "or"
-msgstr ""
+msgstr "ou"
 
 #: inc/core/View/Window/Laps/Form.php:66
 msgid "Time, after which a new lap should start"
-msgstr ""
+msgstr "Temps après lequel un nouveau tour doit commencer"
 
 #: inc/core/View/Window/Laps/Form.php:78
-#, fuzzy
 msgid "Manual distances"
-msgstr "Tours Manuels"
+msgstr "Distances manuelles"
 
 #: inc/core/View/Window/Laps/Form.php:79
 msgid ""
@@ -1899,12 +1927,11 @@ msgstr ""
 
 #: inc/core/View/Window/Laps/Form.php:81 inc/core/View/Window/Laps/Form.php:94
 msgid "e.g."
-msgstr ""
+msgstr "ex :"
 
 #: inc/core/View/Window/Laps/Form.php:91
-#, fuzzy
 msgid "Manual times"
-msgstr "Tours Manuels"
+msgstr "Temps manuels"
 
 #: inc/core/View/Window/Laps/Form.php:92
 msgid ""
@@ -1914,11 +1941,11 @@ msgstr ""
 
 #: inc/core/View/Window/Laps/Form.php:104
 msgid "Lap time goal"
-msgstr ""
+msgstr "Objectif de temps au tour"
 
 #: inc/core/View/Window/Laps/Form.php:116
 msgid "Pace goal"
-msgstr ""
+msgstr "Objectif de cadence"
 
 #: inc/core/View/Window/Laps/Form.php:127
 msgid ""
@@ -1927,7 +1954,7 @@ msgstr ""
 
 #: inc/core/View/Window/Laps/Form.php:131
 msgid "The total distance of your handmade laps differs from the gps distance."
-msgstr ""
+msgstr "La distance totale de vos tours manuels diffère de la distance gps."
 
 #: inc/core/View/Window/Laps/Form.php:138
 msgid "Leave lap distances empty to use your handmade laps."
@@ -1935,12 +1962,11 @@ msgstr ""
 
 #: inc/core/View/Window/Laps/Form.php:151
 msgid "Show calculated laps"
-msgstr ""
+msgstr "Montrer les tours calculés"
 
 #: inc/core/View/Window/Laps/Form.php:152
-#, fuzzy
 msgid "Show manual laps"
-msgstr "Tours Manuels"
+msgstr "Montrer les tours manuels"
 
 #: inc/core/View/Splits/Table.php:149
 msgid "diff"
@@ -1949,15 +1975,15 @@ msgstr ""
 #: inc/core/View/Splits/Table.php:222
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:167
 msgid "Goal"
-msgstr ""
+msgstr "Objectif"
 
 #: inc/core/View/Splits/Table.php:235
 msgid "Average (active)"
-msgstr ""
+msgstr "Moyenne (actuelle)"
 
 #: inc/core/View/Splits/Table.php:243
 msgid "Average (total)"
-msgstr ""
+msgstr "Moyenne (totale)"
 
 #: inc/core/View/Splits/Table.php:258
 msgid "1st/2nd Half"
@@ -1965,12 +1991,12 @@ msgstr ""
 
 #: inc/core/View/Activity/Box/ElevationUpDown.php:35
 msgid "Elevation up/down"
-msgstr ""
+msgstr "Dénivelé positif/négatif"
 
 #: inc/core/View/Activity/Box/Pace.php:28
 #: inc/core/View/Activity/Box/Speed.php:37
 msgid "Speed"
-msgstr ""
+msgstr "Vitesse"
 
 #: inc/core/View/Activity/Box/VerticalRatio.php:26
 #, fuzzy
@@ -1988,7 +2014,7 @@ msgstr ""
 
 #: inc/core/View/Activity/Plot/ActivityPlot.php:82
 msgid "No plot available."
-msgstr ""
+msgstr "Aucun graphique disponible."
 
 #: inc/core/View/Activity/Plot/HRVPointcare.php:55
 msgid "Pointcare plot"
@@ -1996,19 +2022,19 @@ msgstr ""
 
 #: inc/core/View/Activity/Plot/LapsManual.php:39
 msgid "There are no manual laps."
-msgstr ""
+msgstr "Il n'y a pas de tours manuels."
 
 #: inc/core/View/Activity/Plot/LapsComputed.php:34
 msgid "No GPS-data available. Can\\'t compute laps."
-msgstr ""
+msgstr "Pas de données GPS disponibles. Impossible de calculer les tours."
 
 #: inc/core/View/Activity/Plot/ElevationAlgorithms.php:82
 msgid "Original data"
-msgstr ""
+msgstr "Données d'origine"
 
 #: inc/core/View/Activity/Plot/ElevationAlgorithms.php:107
 msgid "Douglas-Peucker"
-msgstr ""
+msgstr "Douglas-Peucker"
 
 #: inc/core/View/Activity/Plot/Series/HRV.php:96
 msgid "R-R interval"
@@ -2016,20 +2042,20 @@ msgstr ""
 
 #: inc/core/View/Activity/Preview.php:131
 msgid "Heartrate data available"
-msgstr ""
+msgstr "Données cardiaques disponibles"
 
 #: inc/core/View/Activity/Preview.php:145
 msgid "Lap data available"
-msgstr ""
+msgstr "Données de tours disponibles"
 
 #: inc/core/View/Activity/Preview.php:159
 msgid "Route data available"
-msgstr ""
+msgstr "Données de route disponibles"
 
 #: inc/core/View/Activity/Linker.php:111
 #: inc/core/Data/Weather/Condition.php:155 inc/data/class.SportFactory.php:205
 msgid "unknown"
-msgstr ""
+msgstr "inconnu"
 
 #: inc/core/View/Leaflet/Activity.php:228
 #, php-format
@@ -2046,7 +2072,7 @@ msgstr ""
 #: inc/core/View/Leaflet/Activity.php:258
 #, php-format
 msgid "<strong>Total:</strong> %s"
-msgstr ""
+msgstr "<strong>Total:</strong> %s"
 
 #: inc/core/View/Leaflet/Activity.php:323
 #, php-format
@@ -2056,11 +2082,11 @@ msgstr ""
 #: inc/core/View/Leaflet/Activity.php:324
 #, php-format
 msgid "<strong>Distance:</strong> %s"
-msgstr ""
+msgstr "<strong>Distance :</strong> %s"
 
 #: inc/core/View/Leaflet/Activity.php:328
 msgid "<strong>Heart rate:</strong>"
-msgstr ""
+msgstr "<strong>Pulsations :</strong>"
 
 #: inc/core/View/Leaflet/Activity.php:328
 #, php-format
@@ -2069,7 +2095,7 @@ msgstr ""
 
 #: inc/core/Parameter/Application/ActivityRoutePrecision.php:21
 msgid "every data point"
-msgstr ""
+msgstr "Tous les points"
 
 #: inc/core/Parameter/Application/ActivityRoutePrecision.php:22
 msgid "every second data point"
