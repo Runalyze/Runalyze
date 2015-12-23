@@ -265,7 +265,7 @@ class Helper {
  * @return SimpleXMLElement
  */
 function simplexml_load_string_utf8($Xml) {
-	return simplexml_load_string(simplexml_correct_ns($Xml));
+	return simplexml_load_string(simplexml_correct_ns($Xml), null, LIBXML_PARSEHUGE);
 }
 
 /**
