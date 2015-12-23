@@ -18,8 +18,8 @@ class Timezone {
 	    date_default_timezone_set($timezone);
     }
     
-    public static function setMysql($timezone) {
-	DB::getInstance()->exec("SET time_zone = ".$timezone);
+    public static function setMysql() {
+	DB::getInstance()->exec("SET time_zone = '+00:00'");
     }
     /*
      * Get list of timezones for showing up a list (with identifier as key)

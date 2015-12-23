@@ -8,7 +8,7 @@ namespace Runalyze\Util;
 use Runalyze\Configuration;
 
 /**
- * Class for standard operations for timestamps
+ * Class for activity time (always UTC)
  * 
  * @author Hannes Christiansen
  * @package Runalyze\Util
@@ -20,8 +20,7 @@ class ActivityTime extends Time {
 	 * @param int $time
 	 */
 	public static function weekstart($time) {
-                $date = new \DateTime($date, new \DateTimeZone('UTC'));
-                $date->setTimestamp($time);
+                $date = new UTCTime($time);
                 $w = $date->format("w");
                 
 		if (Configuration::General()->weekStart()->isMonday()) {
@@ -41,8 +40,7 @@ class ActivityTime extends Time {
 	 */
 	public static function weekend($time) {
 		    $start = self::weekstart($time);
-                    $date = new \DateTime($date, new \DateTimeZone('UTC'));
-                    $date->setTimestamp($start);
+                    $date = new UTCTime($start);
                     $date->add(new \DateInterval('P7D'));
                 return $date->getTimestamp();
 	}

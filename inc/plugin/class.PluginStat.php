@@ -159,12 +159,13 @@ abstract class PluginStat extends Plugin {
 	protected function getYearDependenceForQuery($addTableName = false) {
 		$Query = '';
 		$time = $addTableName ? '`'.PREFIX.'training`.`time`' : '`time`';
-
+                
 		if ($this->showsLast6Months()) {
-			$Query .= ' AND '.$time.' > '.strtotime("first day of -5 months ");
+			$Query .= ' AND '.$time.' > '.(new UTCTime('first-day of -5 months'))->getTimestamp();
 		} elseif ($this->showsLast12Months()) {
-			$Query .= ' AND '.$time.' > '.strtotime("first day of -11 months ");
+			$Query .= ' AND '.$time.' > '.(new UTCTime('first-day of -11 months'))->getTimestamp();
 		} elseif (!$this->showsAllYears()) {
+                    //Todo Timezone
 			$Query .= ' AND '.$time.' BETWEEN UNIX_TIMESTAMP(\''.(int)$this->year.'-01-01\') AND UNIX_TIMESTAMP(\''.((int)$this->year+1).'-01-01\')-1 ';
 		}
 

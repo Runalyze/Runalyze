@@ -33,8 +33,9 @@ foreach ($Sports as $sport) {
 	$data = $Query->fetchAll();
 
 	foreach ($data as $dat) {
-		$starttime = getdate($dat['time']);
-		$endtime = getdate($dat['time'] + $dat['s']);
+                $time = Runalyze\Util\AccountTime::fromUTC($dat['time']);
+		$starttime = getdate($time->getTimestamp());
+		$endtime = getdate($time->getTimestamp() + $dat['s']);
 
 		$yAxis[$id][$starttime['hours']] += (60 - $starttime['minutes']) / 60;
 		$yAxis[$id][$endtime['hours']] += $endtime['minutes'] / 60;

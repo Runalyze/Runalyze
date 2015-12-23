@@ -111,8 +111,7 @@ class Frontend {
 	 */
 	private function initTimezone() {
 		Timezone::setPHPTimezone(SessionAccountHandler::getTimezone());
-		//Timezone::setMysql(SessionAccountHandler::getTimezone());
-		//DB::getInstance()->exec("SET time_zone = ".SessionAccountHandler::getTimezone());
+		Timezone::setMysql();
 	}
                 
         /**
