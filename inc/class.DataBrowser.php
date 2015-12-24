@@ -169,7 +169,7 @@ class DataBrowser {
 
 		for ($w = 0; $w <= ($this->DayCount-1); $w++) {
 			$this->Days[] = array(
-				'date' => mktime(0, 0, 0, date("m",$this->TimestampStart), date("d",$this->TimestampStart)+$w, date("Y",$this->TimestampEnd)),
+				'date' => mktime(0, 0, 0, date("m",$this->TimestampStart), date("d",$this->TimestampStart)+$w, date("Y",$this->TimestampStart)),
 				'shorts' => array(),
 				'trainings' => array()
 			);
