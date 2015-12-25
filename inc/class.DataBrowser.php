@@ -8,6 +8,8 @@ use Runalyze\Configuration;
 use Runalyze\Dataset;
 use Runalyze\Model\Factory;
 use Runalyze\Util\Time;
+use Runalyze\Util\ActivityTime;
+use Runalyze\Util\UTCTime;
 
 /**
  * DataBrowser
@@ -127,11 +129,11 @@ class DataBrowser {
 			$Mode = Configuration::DataBrowser()->mode();
 
 			if ($Mode->showMonth()) {
-				$this->TimestampStart = mktime(0, 0, 0, date("m"), 1, date("Y"));
-				$this->TimestampEnd   = mktime(23, 59, 50, date("m")+1, 0, date("Y"));
+				$this->TimestampStart = (new UTCTime('first day of this month 00:00:00'))->getTimestamp();
+				$this->TimestampEnd   = (new UTCTime('last day of this month 23:59:59'))->getTimestamp();
 			} else {
-				$this->TimestampStart = Time::weekstart(time());
-				$this->TimestampEnd   = Time::weekend(time());
+				$this->TimestampStart = ActivityTime::weekstart(time());
+				$this->TimestampEnd   = ActivityTime::weekend(time());
 			}
 		} else {
 			$this->TimestampStart = $_GET['start'];

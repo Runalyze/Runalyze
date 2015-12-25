@@ -5,7 +5,7 @@
  */
 
 use Runalyze\Util\Time;
-
+use Runalyze\Util\ActivityTime;
 /**
  * Linker for DataBrowser
  *
@@ -38,7 +38,7 @@ class DataBrowserLinker {
 	 * @return string HTML-link
 	 */
 	public static function weekLink($name, $time) {
-		return self::link($name, Time::weekstart($time), Time::weekend($time), '', 'week-link');
+		return self::link($name, ActivityTime::weekstart($time), ActivityTime::weekend($time), '', 'week-link');
 	}
 
 	/**
