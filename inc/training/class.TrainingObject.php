@@ -5,7 +5,7 @@
  */
 
 use Runalyze\Configuration;
-use Runalyze\Util\Time;
+use Runalyze\Util\ActivityTime;
 use Runalyze\Data\Cadence;
 
 /**

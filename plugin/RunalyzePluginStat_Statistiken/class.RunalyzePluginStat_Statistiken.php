@@ -6,6 +6,7 @@
 
 use Runalyze\Configuration;
 use Runalyze\Util\Time;
+use Runalyze\Util\UTCTime;
 
 $PLUGINKEY = 'RunalyzePluginStat_Statistiken';
 /**
@@ -52,7 +53,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	protected function setOwnNavigation() {
 		$LinkList  = '<li class="with-submenu"><span class="link">'.$this->getAnalysisType().'</span><ul class="submenu">';
 		$LinkList .= '<li'.('' == $this->dat ? ' class="active"' : '').'>'.$this->getInnerLink(__('General overview'), $this->sportid, $this->year, '').'</li>';
-		$LinkList .= '<li'.('allWeeks' == $this->dat ? ' class="active"' : '').'>'.$this->getInnerLink(__('All training weeks'), $this->sportid, (!$this->showsSpecificYear()) ? date('Y') : $this->year, 'allWeeks').'</li>';
+		$LinkList .= '<li'.('allWeeks' == $this->dat ? ' class="active"' : '').'>'.$this->getInnerLink(__('All training weeks'), $this->sportid, (!$this->showsSpecificYear()) ? (new UTCTime())->format('Y') : $this->year, 'allWeeks').'</li>';
 
 		$LinkList .= '</ul></li>';
 

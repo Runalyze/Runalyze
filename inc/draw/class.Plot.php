@@ -623,7 +623,8 @@ class Plot {
 	 * @param int $day
 	 */
 	public static function dayOfYearToJStime($year, $day) {
-		return mktime(12,0,0,1,$day,$year).'000';
+	    $Date = (new \Runalyze\Util\UTCTime())->setISODate($year,0, $day);
+	    return $Date->getTimestamp().'000';
 	}
 
 	/**
