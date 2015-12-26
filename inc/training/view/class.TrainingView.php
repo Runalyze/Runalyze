@@ -5,6 +5,7 @@
  */
 
 use Runalyze\Configuration;
+use Runalyze\Export;
 use Runalyze\View\Activity\Context;
 use Runalyze\View\Activity\Linker;
 
@@ -62,21 +63,19 @@ class TrainingView {
 	 * @param \Runalyze\View\Activity\Linker $linker
 	 */
 	protected function initShareLinks(Linker $linker) {
-		$ExporterList = (new ExporterList($this->Context))->getList();
-
 		$this->ToolbarLinks[] = '<li class="with-submenu"><span class="link"><i class="fa fa-fw fa-share-alt"></i> '.__('Share').'</span><ul class="submenu">';
 
 		if ($this->Context->activity()->isPublic()) {
 			$this->ToolbarLinks[] = '<li><a href="'.$linker->publicUrl().'" target="_blank">'.Icon::$ATTACH.' '.__('Public link').'</a></li>';
 		}
 
-		foreach ($ExporterList[ExporterType::Social] as $typeName) {
-			$Exporter = new $typeName($this->Context);
-			$this->ToolbarLinks[] = '<li><a href="'.$Exporter->getUrl().'" target="_blank" title="'.$Exporter->getInfoText().'"><i class="fa fa-fw '.$Exporter->getIconClass().'"></i> '.$Exporter->getName().'</a></li>';
-		}
+		foreach (Export\Share\Types::getEnum() as $typeid) {
+			$Exporter = Export\Share\Types::get($typeid, $this->Context);
 
-		foreach ($ExporterList[ExporterType::Code] as $typeName) {
-			$this->ToolbarLinks[] = Ajax::window('<li><a href="'.ExporterWindow::$URL.'?id='.$this->Context->activity()->id().'&type='.$typeName::TYPE.'"><i class="fa fa-fw fa-code"></i> '.$typeName::TYPE.'</a></li>');
+			if ($Exporter->isPossible()) {
+				$link = '<li><a href="'.$Exporter->url().'"'.($Exporter->isExternalLink() ? ' target="_blank"' : '').'><i class="fa fa-fw '.$Exporter->iconClass().'"></i> '.$Exporter->name().'</a></li>';
+				$this->ToolbarLinks[] = !$Exporter->isExternalLink() ? Ajax::window($link) : $link;
+			}
 		}
 
 		$this->ToolbarLinks[] = '</ul></li>';
@@ -86,13 +85,13 @@ class TrainingView {
 	 * Init download links
 	 */
 	protected function initExportLinks() {
-		$ExporterList = (new ExporterList($this->Context))->getList();
-
 		$this->ToolbarLinks[] = '<li class="with-submenu"><span class="link"><i class="fa fa-fw fa-download"></i> '.__('Export').'</span><ul class="submenu">';
 
-		foreach ($ExporterList[ExporterType::File] as $fileType) {
-			if (!$fileType::NEEDS_ROUTE || $this->Context->hasRoute()) {
-				$this->ToolbarLinks[] = '<li><a href="'.ExporterWindow::$URL.'?id='.$this->Context->activity()->id().'&type='.strtoupper($fileType::EXTENSION).'" title=""><i class="fa fa-fw fa-file-text-o"></i> '.sprintf(__('as %s'), strtoupper($fileType::EXTENSION)).'</a></li>';
+		foreach (Export\File\Types::getEnum() as $typeid) {
+			$Exporter = Export\File\Types::get($typeid, $this->Context);
+
+			if ($Exporter->isPossible()) {
+				$this->ToolbarLinks[] = '<li><a href="'.$Exporter->url().'"><i class="fa fa-fw '.$Exporter->iconClass().'"></i> '.sprintf(__('as %s'), strtoupper($Exporter->extension())).'</a></li>';
 			}
 		}
 

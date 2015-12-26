@@ -57,7 +57,7 @@ class Context {
 	/**
 	 * Construct context
 	 * @var int $activityID
-	 * @var in $accountID
+	 * @var int $accountID
 	 */
 	public function __construct($activityID, $accountID) {
 		$Factory = new Factory((int)$accountID);

@@ -34,7 +34,10 @@ class FactoryTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	protected function tearDown() {
-		$this->object->clearCache();
+		if (null !== $this->object) {
+			$this->object->clearCache();
+		}
+
 		$this->truncateTables();
 		\Cache::clean();
 	}

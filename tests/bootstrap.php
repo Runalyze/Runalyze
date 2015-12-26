@@ -90,3 +90,6 @@ if (!function_exists('_ne')) {
 
 // Load helper class
 Helper::Unknown('');
+
+// Load test helper
+require_once FRONTEND_PATH.'../tests/fake/FakeContext.php';
