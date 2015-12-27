@@ -114,7 +114,7 @@ class TrainingView {
 		$this->ToolbarLinks[] = '<li class="with-submenu"><span class="link"><i class="fa fa-fw fa-wrench"></i></span><ul class="submenu">';
 		$this->ToolbarLinks[] = '<li>'.Ajax::window('<a class="link" href="'.$linker->editUrl().'">'.Icon::$EDIT.' '.__('Edit').'</a> ','small').'</li>';
 		$this->ToolbarLinks[] = '<li><a class="ajax" target="statistics-inner" href="call/call.Training.display.php?id='.$this->Context->activity()->id().'&action=changePrivacy"><i class="fa fa-fw '.$privacyIcon.'"></i> '.$privacyLabel.'</a></li>';
-		$this->ToolbarLinks[] = '<li><a class="ajax" target="statistics-inner" href="call/call.Training.display.php?id='.$this->Context->activity()->id().'&action=delete"><i class="fa fa-fw fa-trash"></i> '.__('Delete activity').'</a></li>';
+		$this->ToolbarLinks[] = '<li><a class="ajax" target="statistics-inner" href="call/call.Training.display.php?id='.$this->Context->activity()->id().'&action=delete" data-confirm="'.__('Do you really want to delete this activity?').'"><i class="fa fa-fw fa-trash"></i> '.__('Delete activity').'</a></li>';
 		$this->ToolbarLinks[] = '</ul></li>';
 	}
 
