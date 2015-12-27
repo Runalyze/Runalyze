@@ -9,13 +9,13 @@ class IFrameTest extends \PHPUnit_Framework_TestCase
 {
 	public function checkFeasibility()
 	{
-		$this->assertFalse((new Iframe(FakeContext::onlyWithActivity(
+		$this->assertFalse((new IFrame(FakeContext::onlyWithActivity(
 			new Activity\Entity(array(
 				Activity\Entity::IS_PUBLIC => false
 			))
 		)))->isPossible());
 
-		$this->assertTrue((new Iframe(FakeContext::onlyWithActivity(
+		$this->assertTrue((new IFrame(FakeContext::onlyWithActivity(
 			new Activity\Entity(array(
 				Activity\Entity::IS_PUBLIC => true
 			))
@@ -26,7 +26,7 @@ class IFrameTest extends \PHPUnit_Framework_TestCase
     {
         ob_start();
 
-		$Sharer = new Iframe(FakeContext::emptyContext());
+		$Sharer = new IFrame(FakeContext::emptyContext());
 		$Sharer->display();
 
 		ob_end_clean();
