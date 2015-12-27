@@ -113,7 +113,7 @@ abstract class ImporterFiletypeAbstract {
 	/**
 	 * Get training objects
 	 * @param int $index optional index
-	 * @return array array of TrainingObject
+	 * @return TrainingObject training object
 	 */
 	final public function object($index = 0) {
 		if (is_null($this->Parser)) {
