@@ -107,7 +107,7 @@ $FIELDS = array(
 					'formular'	=> array(
 						'required'	=> true,
 						'label'		=> __('Date'),
-						'class'		=> 'FormularInputUTCDayAndDaytime'
+						'class'		=> 'FormularInputDayAndDaytime'
 					)
 	),
 	'created'			=> array(
