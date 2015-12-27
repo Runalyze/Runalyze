@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-12-08 14:20+0100\n"
-"PO-Revision-Date: 2015-12-01 01:13+0200\n"
+"PO-Revision-Date: 2015-12-27 22:10+0200\n"
 "Last-Translator: Grzegorz G <grzegorz@thulium.pl>\n"
-"Language-Team: Polish <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/pl/>\n"
+"Language-Team: Polish "
+"<http://translate.runalyze.de/projects/runalyze/runalyze/pl/>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -2471,7 +2471,6 @@ msgid "VDOT icon"
 msgstr "Ikona VDOT"
 
 #: inc/core/Dataset/Keys/VdotIcon.php:63
-#, fuzzy
 msgid ""
 "Each VDOT value of an activity is marked with an arrow to show if the value "
 "is (much) higher than your current shape, equal to it or (much) lower:"
@@ -2584,7 +2583,6 @@ msgid "Exact daytime of the activity. (the date itself is always shown)"
 msgstr "Dokładna godzina dnia aktywności. (sama data zawsze jest widoczna)"
 
 #: inc/core/Dataset/Keys/Groundcontact.php:53
-#, fuzzy
 msgid "Groundcontact"
 msgstr "Kontakt z podłożem"
 
@@ -2601,12 +2599,16 @@ msgid ""
 "The activity type is shown with its abbreviation. It is bold if the type is "
 "marked as quality session."
 msgstr ""
+"Typ treningu pokazany jest wraz ze skrótem. Treningi klasyfikowane oznaczone "
+"są pogrubieniem."
 
 #: inc/core/Dataset/Keys/ElapsedTime.php:53
 msgid ""
 "Elapsed time is the difference between end and start of your activity "
 "including pauses."
 msgstr ""
+"Czas trwania to różnica między czasem zakończenia i rozpoczęcia treningu ("
+"włączając w to czas pauz)."
 
 #: inc/core/Util/Time.php:86 inc/tpl/tpl.DataBrowser.php:23
 msgid "Sun"
@@ -3202,11 +3204,12 @@ msgid ""
 "Single-user installations are not supported anymore. Please register a new "
 "account by following %s."
 msgstr ""
+"Instalacje dla jednego użytkownika nie są już obsługiwane. Proszę "
+"zarejestruj konto przez: %s."
 
 #: inc/tpl/tpl.InstallerUpdate.php:36
-#, fuzzy
 msgid "these instructions"
-msgstr "Rejestracje"
+msgstr "instrukcje aktualizacji"
 
 #: inc/tpl/tpl.InstallerUpdate.php:44
 msgid "----- please choose"
@@ -3989,7 +3992,7 @@ msgstr "Przykład"
 
 #: inc/system/config/class.ConfigTabDataset.php:141
 msgid "new"
-msgstr ""
+msgstr "nowe"
 
 #: inc/system/config/class.ConfigTabDataset.php:264
 msgid "Test activity"
@@ -4296,13 +4299,12 @@ msgid "Sport is performed outdoor: activate route, weather, ..."
 msgstr "Sport uprawia się na zewnątrz: włącz trasy, pogodę, ..."
 
 #: inc/system/config/class.ConfigTabSports.php:61
-#, fuzzy
 msgid "Main equipment"
-msgstr "Twój sprzęt"
+msgstr "Główny sprzęt"
 
 #: inc/system/config/class.ConfigTabSports.php:61
 msgid "Objects of main equipment type can be shown in the activity overview."
-msgstr ""
+msgstr "Obiekty sprzętu głównego mogą być wyświeltane w podsumowaniu treningu."
 
 #: inc/system/config/class.ConfigTabSports.php:63
 msgid "A sport can only be deleted if no references exist."
@@ -4345,6 +4347,10 @@ msgid ""
 "a start and end date for its usage. Objects will be displayed as 'inactive' "
 "as soon as you have entered an end date."
 msgstr ""
+"RUNALYZE zbiera dane i wylicza statystyki dla każdego obiektu sprzętu. Aby "
+"zrobić to właściwie wprowadź 'poprzedni dystans' dla sprzętu, który był "
+"wykorzystywany wcześniej. Dodatkowo możesz wprowadzić datę rozpoczęcia i "
+"zakończenia użytkowania sprzętu."
 
 #: inc/system/config/class.ConfigTabEquipment.php:83
 msgid "max. Time"
@@ -4425,7 +4431,7 @@ msgstr "Twoja przeglądarka nie obsługuje takiego przesyłania, zobacz"
 
 #: inc/import/tpl/tpl.Importer.upload.php:62
 msgid "Currently we don't detect duplicates during import"
-msgstr ""
+msgstr "Na chwilę obecną nie wykrywamy duplikatów w czasie importu"
 
 #: inc/import/tpl/tpl.Importer.upload.php:66
 msgid "Supported file extensions:"
@@ -4498,12 +4504,11 @@ msgstr ""
 "Obiekt XML nie zawiera żadnych wyników. Nie znaleziono tag-a &lt;result&gt;."
 
 #: inc/import/parser/class.ParserSLF4Single.php:28
-#, fuzzy
 msgid ""
 "Given XML object is not from Sigma. &lt;Entries&gt;-tag could not be located."
 msgstr ""
-"Obiekt XML nie został stworzony przez Sigma. Nie znaleziono tag-a &lt;"
-"LogEntries&gt;."
+"Obiekt XML nie został stworzony przez Sigma. Nie znaleziono tag-a "
+"&lt;Entries&gt;."
 
 #: inc/import/parser/class.ParserSLF4Single.php:54
 #: inc/import/parser/class.ParserSLF3Single.php:65
@@ -4935,7 +4940,7 @@ msgstr ""
 
 #: inc/class.AdminView.php:165
 msgid "Perl Path"
-msgstr ""
+msgstr "Ścieżka do Perl-a"
 
 #: inc/class.AdminView.php:166
 msgid "Sender e-mail"
@@ -5353,9 +5358,8 @@ msgstr "Temperatury"
 
 #: plugin/RunalyzePluginStat_Wetter/MinMaxTableForEquipment.php:128
 #: plugin/RunalyzePluginStat_Wetter/MonthwiseTable.php:147
-#, fuzzy
 msgid "No data found."
-msgstr "Brak tras."
+msgstr "Brak danych."
 
 #: plugin/RunalyzePluginStat_Wetter/Plot.Year.php:46
 #: plugin/RunalyzePluginStat_Trainingszeiten/Plot.Daytime.php:75
@@ -5468,23 +5472,20 @@ msgid "Empty your cache"
 msgstr "Wyczyść cache"
 
 #: plugin/RunalyzePluginStat_Tag/class.RunalyzePluginStat_Tag.php:29
-#, fuzzy
 msgid "Tag analysis"
-msgstr "Analiza"
+msgstr "Analiza tagów"
 
 #: plugin/RunalyzePluginStat_Tag/class.RunalyzePluginStat_Tag.php:37
 msgid "How often have you tagged your activities with tag x?"
-msgstr ""
+msgstr "Jak często treningi były oznaczane tagiem x?"
 
 #: plugin/RunalyzePluginStat_Tag/class.RunalyzePluginStat_Tag.php:51
-#, fuzzy
 msgid "Tag to analyze"
-msgstr "Uruchom Runalyze"
+msgstr "Tag do analizy"
 
 #: plugin/RunalyzePluginStat_Tag/class.RunalyzePluginStat_Tag.php:109
-#, fuzzy
 msgid "Please choose a tag."
-msgstr "wybierz"
+msgstr "Wybierz tag."
 
 #: plugin/RunalyzePluginStat_Tag/class.RunalyzePluginStat_Tag.php:125
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:101
@@ -5902,9 +5903,8 @@ msgid "Prognosis calculator"
 msgstr "Kalkulator prognozy"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:131
-#, fuzzy
 msgid "Prognoses can't be calculated."
-msgstr "Kalkulator prognozy"
+msgstr "Nie można wyliczyć prognozy."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:135
 msgid "There are not enough results for good predictions."
@@ -5949,9 +5949,8 @@ msgid "Personal best"
 msgstr "Rekord życiowy"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:288
-#, fuzzy
 msgid "Your input is invalid"
-msgstr "Wprowadzanie danych jest niedozwolone."
+msgstr "Dane wejściowe są niepoprawne"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:300
 #, php-format
@@ -5961,7 +5960,7 @@ msgstr "Wyniki dają stałe K = %f i e = %f."
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:304
 #, php-format
 msgid "K must be between %u and %u, e between %f and %f."
-msgstr ""
+msgstr "K musi być pomiędzy %u i %u, e pomiędzy %f i %f."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:324
 msgid "Input"
@@ -6117,6 +6116,7 @@ msgstr "W pliku znajduje się <strong>%s</strong> parametrów ciała."
 #, php-format
 msgid "Versions do not match! The backup is from %s but you are using %s."
 msgstr ""
+"Wersje się nie zgadzają! Backup jest z wersji %s, a zainstalowana jest %s."
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:210
 msgid "The file seems to be corrupted."
@@ -6144,6 +6144,8 @@ msgid ""
 "All shared links will be invalid if you (re-)import activities and overwrite "
 "all existing activities!"
 msgstr ""
+"Wszystkie linki udostępniania będą nieaktualne jeśli zaimportujesz treningi "
+"ponownie!"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:284
 msgid ""
@@ -6208,9 +6210,8 @@ msgid "Relation: equipment to activities"
 msgstr "Powiązanie: sprzęt do treningów"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:147
-#, fuzzy
 msgid "Relation: tag to activities"
-msgstr "Powiązanie: sprzęt do treningów"
+msgstr "Powiązanie: tag do treningów"
 
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:27
 msgid "Monthly Stats"
@@ -6691,15 +6692,15 @@ msgid "Your Shape: an estimation of your VDOT value"
 msgstr "Twoja forma: oszacowanie twojego VDOT"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/window.info.php:29
-#, fuzzy, php-format
+#, php-format
 msgid ""
 "<a href=\"%s\" target=\"_blank\">Jack Daniels' famous Running formula</a> "
 "serves some tables estimating the VDOT value. These formulas are used to "
 "estimate your VDOT and predict your race performances."
 msgstr ""
-"Książka \"Bieganie metodą Danielsa\" podaje tabele do oszacowania wartości "
-"VDOT. Te tabele wykorzystywane są do oszacowania Twojego VDOT i "
-"przewidywania wyników w zawodach."
+"<a href=\"%s\" target=\"_blank\">Książka \"Bieganie metodą Danielsa\"</a> "
+"podaje tabele do oszacowania wartości VDOT. Te tabele wykorzystywane są do "
+"oszacowania Twojego VDOT i przewidywania wyników w zawodach."
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/window.info.php:34
 msgid ""
