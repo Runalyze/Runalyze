@@ -73,4 +73,18 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase {
 		}
 	}
 
+	public function testRemoveCorrectedData() {
+		$Route = new Route\Entity(array(
+			Route\Entity::ELEVATIONS_ORIGINAL => array(100, 100, 100, 100),
+			Route\Entity::ELEVATIONS_CORRECTED => array(100, 120, 150, 140),
+			Route\Entity::ELEVATIONS_SOURCE => 'foobar'
+		));
+		$Calc = new Calculator($Route);
+		$Calc->removeElevationCorrection();
+
+		$this->assertNotEmpty($Route->elevationsOriginal());
+		$this->assertEmpty($Route->elevationsCorrected());
+		$this->assertEquals('', $Route->elevationsSource());
+	}
+
 }

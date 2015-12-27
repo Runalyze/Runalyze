@@ -62,6 +62,12 @@ class Calculator {
 			return false;
 		}
 
+		if ($strategyName == 'none') {
+			$this->removeElevationCorrection();
+
+			return true;
+		}
+
 		$coordinates = $this->Route->latitudesAndLongitudesFromGeohash();
 
 		$Corrector = new Corrector();
@@ -76,5 +82,13 @@ class Calculator {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Remove elevation correction
+	 */
+	public function removeElevationCorrection() {
+		$this->Route->set(Route\Entity::ELEVATIONS_CORRECTED, array());
+		$this->Route->set(Route\Entity::ELEVATIONS_SOURCE, '');
 	}
 }
