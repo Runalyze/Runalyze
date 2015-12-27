@@ -53,6 +53,13 @@ class Loop extends \Runalyze\Model\Loop {
 	}
 
 	/**
+	 * @return \League\Geotools\Coordinate\CoordinateInterface
+	 */
+	public function coordinate() {
+		return (new Geohash())->decode($this->current(Entity::GEOHASHES))->getCoordinate();
+	}
+
+	/**
 	 * Calculate distance of current step from latitude/longitude
 	 * @return double
 	 */

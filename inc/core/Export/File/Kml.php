@@ -6,8 +6,10 @@
 
 namespace Runalyze\Export\File;
 
-use League\Geotools\Geohash\Geohash;
+use League\Geotools\Coordinate\CoordinateInterface;
 use Runalyze\Configuration;
+use Runalyze\Model\Route;
+use Runalyze\Model\Trackdata;
 
 /**
  * Create exporter for kml files
@@ -18,7 +20,28 @@ use Runalyze\Configuration;
 class Kml extends AbstractFileExporter
 {
     /** @var SimpleXMLElement */
-    private $XML = null;
+    protected $XML = null;
+
+    /** @var string */
+    protected $CurrentPath = '';
+
+    /** @var int */
+    protected $CurrentPauseIndex = 0;
+
+    /** @var int */
+    protected $CurrentPauseTime = 0;
+
+    /** @var int */
+    protected $NumPauses = 0;
+
+    /** @var \Runalyze\Model\Route\Loop */
+    protected $RouteLoop = null;
+
+    /** @var \Runalyze\Model\Trackdata\Loop */
+    protected $TrackdataLoop = null;
+
+    /** @var \Runalyze\Model\Trackdata\Pauses */
+    protected $Pauses = null;
 
     /**
      * @return bool
@@ -75,19 +98,76 @@ class Kml extends AbstractFileExporter
      */
     protected function setTrack()
     {
-        $Track = '';
+        $this->prepareLoop();
 
-        $Loop = new \Runalyze\Model\Route\Loop($this->Context->route());
+        while ($this->RouteLoop->nextStep()) {
+            $this->TrackdataLoop->nextStep();
 
-        while ($Loop->nextStep()) {
-            // TODO: start a new line after a pause
-            $coordinate = (new Geohash())->decode($Loop->geohash())->getCoordinate();
-            if (abs($coordinate->getLatitude()) > 1e-5 || abs($coordinate->getLongitude()) > 1e-5) {
-                $Track .= $coordinate->getLongitude().','.$coordinate->getLatitude().NL;
+            if ($this->thereWasAPause()) {
+                $this->setPauseToXml();
             }
+
+            $this->addCoordinateToCurrentPath($this->RouteLoop->coordinate());
         }
 
-        $this->XML->Folder->Placemark->LineString->addChild('coordinates', $Track);
+        $this->addCurrentPathToXml();
+    }
+
+    /**
+     * Prepare loop
+     */
+    protected function prepareLoop()
+    {
+        $this->RouteLoop = new Route\Loop($this->Context->route());
+        $this->TrackdataLoop = new Trackdata\Loop($this->Context->trackdata());
+        $this->Pauses = $this->Context->trackdata()->pauses();
+        $this->NumPauses = $this->Pauses->num();
+
+        if ($this->NumPauses > 0) {
+            $this->CurrentPauseTime = $this->Pauses->at(0)->time();
+        }
+    }
+
+    /**
+     * @return bool
+     */
+    protected function thereWasAPause()
+    {
+        return ($this->CurrentPauseIndex < $this->NumPauses) && ($this->CurrentPauseTime < $this->TrackdataLoop->time());
+    }
+
+    /**
+     * Set pause to xml
+     */
+    protected function setPauseToXml()
+    {
+        $this->addCurrentPathToXml();
+        $this->CurrentPauseIndex++;
+
+        if ($this->NumPauses > $this->CurrentPauseIndex) {
+            $this->CurrentPauseTime = $this->Pauses->at($this->CurrentPauseIndex)->time();
+        }
+    }
+
+    /**
+     * @param \League\Geotools\Coordinate\CoordinateInterface $coordinate
+     */
+    protected function addCoordinateToCurrentPath(CoordinateInterface $coordinate)
+    {
+        if (abs($coordinate->getLatitude()) > 1e-5 || abs($coordinate->getLongitude()) > 1e-5) {
+            $this->CurrentPath .= $coordinate->getLongitude().','.$coordinate->getLatitude().NL;
+        }
+    }
+
+    /**
+     * Add current path as coordinates child
+     */
+    protected function addCurrentPathToXml()
+    {
+        $LineString = $this->XML->Folder->Placemark->MultiGeometry->addChild('LineString');
+        $LineString->addChild('coordinates', $this->CurrentPath);
+
+        $this->CurrentPath = '';
     }
 
     /**
@@ -117,8 +197,7 @@ class Kml extends AbstractFileExporter
         <geomScale>2</geomScale>
         <geomColor></geomColor>
       </Style>
-      <LineString>
-      </LineString>
+      <MultiGeometry></MultiGeometry>
     </Placemark>
   </Folder>
 </kml>';
