@@ -204,6 +204,7 @@ class TrainingView {
 
 		if (!Request::isOnSharedPage()) {
 			$this->displayHeaderMenu();
+			$this->displayNavigation();
 		} else {
 			$this->displaySharedMenu();
 		}
@@ -245,6 +246,26 @@ class TrainingView {
 		$this->ToolbarLinks[] = '<a href="shared/'.$User['username'].'/" target="_blank">'.Icon::$TABLE.'</a>';
 
 		$this->displayHeaderMenu();
+	}
+
+	/**
+	 * Display prev/next navigation
+	 */
+	protected function displayNavigation() {
+		$prevId = Linker::prevId($this->Context->activity()->id(), $this->Context->activity()->timestamp());
+		$nextId = Linker::nextId($this->Context->activity()->id(), $this->Context->activity()->timestamp());
+
+		if ($prevId !== false) {
+			echo Ajax::trainingLink($prevId, '<i class="fa fa-fw fa-chevron-left"></i>');
+		} else {
+			echo '<i class="transparent-70 fa-grey fa fa-fw fa-chevron-left"></i>';
+		}
+
+		if ($nextId !== false) {
+			echo Ajax::trainingLink($nextId, '<i class="fa fa-fw fa-chevron-right"></i>');
+		} else {
+			echo '<i class="transparent-70 fa-grey fa fa-fw fa-chevron-right"></i>';
+		}
 	}
 
 	/**
