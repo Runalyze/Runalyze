@@ -5,7 +5,7 @@
  */
 
 use Runalyze\Configuration;
-
+use Runalyze\Util\AccountTime;
 /**
  * General plotting class
  * @author Hannes Christiansen
@@ -413,14 +413,13 @@ class Plot {
 		$this->setXAxisAsTime();
 		$this->Options['xaxis']['timeformat'] = $format;
 	}
-
 	/**
 	 * Set x-axis limits to a specific year
 	 * @param int $Year
 	 */
 	public function setXAxisLimitedTo($Year) {
-		$this->Options['xaxis']['min'] = mktime(1,0,0,1,1,$Year).'000';
-		$this->Options['xaxis']['max'] = mktime(1,0,0,1,0,$Year+1).'000';
+		$this->Options['xaxis']['min'] = AccountTime::toUTC(mktime(1,0,0,1,1,$Year))->getTimestamp().'000';
+		$this->Options['xaxis']['max'] = AccountTime::toUTC(mktime(1,0,0,1,0,$Year+1))->getTimestamp().'000';
 	}
 
 	/**
