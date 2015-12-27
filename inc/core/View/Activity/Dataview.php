@@ -368,7 +368,7 @@ class Dataview {
 	 */
 	public function power() {
 		if ($this->Activity->power() > 0)
-			return $this->Activity->power().'&nbsp;W';
+			return round($this->Activity->power()).'&nbsp;W';
 
 		return '';
 	}

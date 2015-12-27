@@ -340,7 +340,8 @@ class Window {
 		$Table = new Table(
 			$this->Laps,
 			$this->DemandedTime,
-			$this->DemandedPace
+			$this->DemandedPace,
+			($this->Context->sport()->id() == Configuration::General()->runningSport())
 		);
 
 		if ($this->LapDistance > 0) {
