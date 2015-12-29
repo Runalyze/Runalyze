@@ -251,10 +251,10 @@ class ParserGPXSingle extends ParserAbstractSingleXML {
   	 */
   	public function parseMetadata($metadata) {
   	    if(isset($metadata->name))
-  		$this->TrainingObject->setComment($metadata->name);
+  		$this->TrainingObject->setComment((string)$metadata->name);
   	    
   	    if(isset($metadata->desc))
-  		$this->TrainingObject->setNotes($metadata->desc);
+  		$this->TrainingObject->setNotes((string)$metadata->desc);
   	}
 
 	/**
