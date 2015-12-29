@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-12-08 14:20+0100\n"
-"PO-Revision-Date: 2015-12-12 18:46+0200\n"
-"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
+"PO-Revision-Date: 2015-12-29 23:57+0200\n"
+"Last-Translator: Roberto Guanciale <guancio@gmail.com>\n"
 "Language-Team: Italian "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/it/>\n"
 "Language: it\n"
@@ -449,20 +449,18 @@ msgid "Equipment"
 msgstr "Attrezzatura"
 
 #: inc/training/search/class.SearchFormular.php:146
-#, fuzzy
 msgid "Choose equipment"
-msgstr "La tua attrezzatura"
+msgstr "Scegli la tua attrezzatura"
 
 #: inc/training/search/class.SearchFormular.php:147
 #: plugin/RunalyzePluginStat_Tag/class.RunalyzePluginStat_Tag.php:119
 msgid "Tag"
-msgstr ""
+msgstr "Tag"
 
 #: inc/training/search/class.SearchFormular.php:147
 #: plugin/RunalyzePluginStat_Tag/class.RunalyzePluginStat_Tag.php:91
-#, fuzzy
 msgid "Choose tag"
-msgstr "Scegli lo strumento"
+msgstr "Seleziona tag"
 
 #: inc/training/search/class.SearchFormular.php:154
 #: inc/training/schemes/scheme.Training.new.php:384
@@ -522,7 +520,6 @@ msgstr "Usa VDOT"
 
 #: inc/training/search/class.SearchFormular.php:170
 #: inc/core/View/Activity/Box/GroundContactBalance.php:27
-#, fuzzy
 msgid "Ground Contact Balance"
 msgstr "Tempo di contatto con il terreno"
 
@@ -680,12 +677,12 @@ msgstr "&oslash; Frequenza cardiaca"
 #: inc/training/view/section/class.SectionSwimLaneRow.php:36
 #: inc/core/View/Activity/Plot/Series/Stroke.php:62
 msgid "Stroke"
-msgstr ""
+msgstr "Bracciate"
 
 #: inc/training/view/section/class.SectionSwimLaneRow.php:38
 #: inc/training/schemes/scheme.Training.php:714
 msgid "SWOLF"
-msgstr ""
+msgstr "SWOLF"
 
 #: inc/training/view/section/class.SectionSwimLaneRow.php:40
 msgid "SWOLFcycles"
@@ -768,7 +765,7 @@ msgstr "Bracciate"
 #: inc/core/View/Activity/Plot/Series/Swolf.php:63
 #: inc/core/Dataset/Keys/Swolf.php:44
 msgid "Swolf"
-msgstr ""
+msgstr "Swolf"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:176
 msgid "Weather condition"
@@ -822,7 +819,7 @@ msgstr "Di più' riguardo al calcolo VDOT"
 #: inc/training/view/section/class.SectionSwimLane.php:21
 #: inc/training/view/section/class.SectionSwimLane.php:22
 msgid "Lanes"
-msgstr ""
+msgstr "Vasche"
 
 #: inc/training/view/section/table/class.TableLapsComputed.php:66
 msgid "&oslash; bpm"
@@ -1000,12 +997,11 @@ msgstr "Correggere ora"
 #: inc/training/view/class.ElevationInfo.php:275
 #, php-format
 msgid "correct again using %s"
-msgstr ""
+msgstr "Correggi di nuovo usando %s"
 
 #: inc/training/view/class.ElevationInfo.php:272
-#, fuzzy
 msgid "srtm files"
-msgstr "Crea file"
+msgstr "File srtm"
 
 #: inc/training/view/class.ElevationInfo.php:286
 msgid "Compare algorithms"
@@ -1097,6 +1093,8 @@ msgstr "in"
 #: inc/training/formular/class.TrainingInputSplits.php:94
 msgid "Defining some laps as 'resting' will hide them in the respective plot."
 msgstr ""
+"Definire alcuni giri come 'a riposo' nascondera questi nei respettivi "
+"grafici."
 
 #: inc/training/formular/class.TrainingInputSplits.php:132
 #: inc/data/class.Splits.php:171
@@ -1233,9 +1231,8 @@ msgid "The activity has been successfully created."
 msgstr "L'attività è stata inserita correttamente."
 
 #: inc/training/class.TrainingFormular.php:253
-#, fuzzy
 msgid "Choose tags"
-msgstr "Scegli la statistica"
+msgstr "Scegli tag"
 
 #: inc/training/class.TrainingFormular.php:333
 msgid "Remove data series"
@@ -1323,13 +1320,15 @@ msgstr "Inizio della settimana"
 
 #: inc/core/Configuration/Category/General.php:233
 msgid "Unit system for distances"
-msgstr ""
+msgstr "Unita di misura per la distanza"
 
 #: inc/core/Configuration/Category/General.php:234
 msgid ""
 "Changing the unit system for distances does not change pace units. You have "
 "to adjust them in sports configuration."
 msgstr ""
+"Cambiare l'unita di misura per la distanza non cambiera l'unita di misura "
+"per la frequenza. Questa deve essere cambiata in configurazione sport."
 
 #: inc/core/Configuration/Category/General.php:238
 msgid "Weight unit"
@@ -1874,15 +1873,16 @@ msgid "You can now use the %s to recalculate the concerning values."
 msgstr "Ora è possibile utilizzare %s per ricalcolare valori consistenti."
 
 #: inc/core/Configuration/Messages.php:34
-#, fuzzy
 msgid "sports configuration"
-msgstr "Scrive il file di configurazione"
+msgstr "configurazione sport"
 
 #: inc/core/Configuration/Messages.php:37
 #, php-format
 msgid ""
 "You may want to adjust pace units in %s. They are not changed automatically."
 msgstr ""
+"Potresti voler cambiare l'unita di misura della frequenza in %s. Questa non "
+"e' cambiata automaticamente."
 
 #: inc/core/Configuration/Messages.php:49
 #: plugin/RunalyzePluginTool_DatenbankCleanup/Job.php:49
@@ -1966,18 +1966,16 @@ msgid "e.g."
 msgstr "es."
 
 #: inc/core/View/Window/Laps/Form.php:91
-#, fuzzy
 msgid "Manual times"
 msgstr "Giri inseriti manualmente"
 
 #: inc/core/View/Window/Laps/Form.php:92
-#, fuzzy
 msgid ""
 "List with all times, comma seperated. Put \"+\" at the beginning to treat "
 "times as intervals."
 msgstr ""
-"Lista di tutte le distanze, separate da virgola. Inserire \"+\" all'inizio "
-"per gestire le distanze come intervalli."
+"Elenco con tutti i tempi, separati da virgola. Inserire \"+\" all'inizio per "
+"gestire le distanze come intervalli."
 
 #: inc/core/View/Window/Laps/Form.php:104
 msgid "Lap time goal"
@@ -2040,9 +2038,8 @@ msgstr "Salita/Discesa"
 
 #: inc/core/View/Activity/Box/Pace.php:28
 #: inc/core/View/Activity/Box/Speed.php:37
-#, fuzzy
 msgid "Speed"
-msgstr "come velocità"
+msgstr "Velocita"
 
 #: inc/core/View/Activity/Box/VerticalRatio.php:26
 #, fuzzy
@@ -2105,9 +2102,9 @@ msgid "unknown"
 msgstr "sconosciuto"
 
 #: inc/core/View/Leaflet/Activity.php:228
-#, fuzzy, php-format
+#, php-format
 msgid "<strong>%s. %s</strong> in %s"
-msgstr "<strong>%s. km</strong> in %s"
+msgstr "<strong>%s. %s</strong> in %s"
 
 #: inc/core/View/Leaflet/Activity.php:229
 #: inc/core/View/Leaflet/Activity.php:259
@@ -2166,7 +2163,7 @@ msgstr "Unità metriche"
 
 #: inc/core/Parameter/Application/DistanceUnitSystem.php:95
 msgid "Imperial units"
-msgstr ""
+msgstr "Sistema di misura imperiale"
 
 #: inc/core/Parameter/Application/PaceAxisType.php:16
 msgid "linear"
@@ -2206,7 +2203,7 @@ msgstr "Pounds"
 
 #: inc/core/Parameter/Application/WeightUnit.php:42
 msgid "stones"
-msgstr ""
+msgstr "stone"
 
 #: inc/core/Parameter/Application/ActivityRoutePrivacy.php:39
 #: inc/core/Parameter/Application/ActivityRouteBreak.php:27
@@ -2377,11 +2374,11 @@ msgstr "Ritmo / Frequenza cardiaca / Elevazione"
 
 #: inc/core/Parameter/Application/TemperatureUnit.php:35
 msgid "Celsius (°C)"
-msgstr ""
+msgstr "Gradi Centigradi (°C)"
 
 #: inc/core/Parameter/Application/TemperatureUnit.php:36
 msgid "Fahrenheit (°F)"
-msgstr ""
+msgstr "Fahrenheit (°F)"
 
 #: inc/core/Parameter/Application/DataBrowserMode.php:33
 msgid "Week view"
@@ -2437,11 +2434,11 @@ msgstr "Esercizi"
 
 #: inc/core/Data/Stroketype.php:108 inc/core/Data/Stroketype.php:129
 msgid "Mixed"
-msgstr ""
+msgstr "Misto"
 
 #: inc/core/Data/Stroketype.php:121
 msgid "Back"
-msgstr ""
+msgstr "Dorso"
 
 #: inc/core/Data/Stroketype.php:123
 msgid "Breast"
@@ -2470,18 +2467,20 @@ msgstr "La tua attrezzatura"
 
 #: inc/core/Dataset/Keys/CompleteEquipment.php:52
 msgid "Your complete equipment is shown as icon with tooltip."
-msgstr ""
+msgstr "La tua attrezzatura e' visualizzata come un'icona con tooltip."
 
 #: inc/core/Dataset/Keys/Route.php:57
 #, php-format
 msgid "Route names are automatically cut after %u characters."
-msgstr ""
+msgstr "I nomi dei percorsi sono automaticamente tagliati dopo %u caratteri."
 
 #: inc/core/Dataset/Keys/SharedLink.php:63
 msgid ""
 "You can decide for each activity whether it is visible for everybody or not. "
 "If it is public a linked icon is shown."
 msgstr ""
+"Puoi decidere per ogni attivita se questa possa essere visibile da chiunque "
+"o no. Le attivita' pubbliche sono identificate da un'icona collegamento."
 
 #: inc/core/Dataset/Keys/FitRecoveryTime.php:44
 #: inc/core/Dataset/Keys/FitRecoveryTime.php:53
@@ -2499,10 +2498,12 @@ msgid ""
 "Garmin calculates a suggested recovery time based on your heart rate "
 "variablitity right after the end of your activity."
 msgstr ""
+"Gramin calcola un tempo di recupero suggerito basato sulla variabilita' del "
+"tuo battito cardiaco subito dopo il completamento della tua attivita."
 
 #: inc/core/Dataset/Keys/Temperature.php:53
 msgid "Temp."
-msgstr ""
+msgstr "Temp."
 
 #: inc/core/Dataset/Keys/HeartrateAverage.php:44
 #, fuzzy
@@ -2514,9 +2515,8 @@ msgid "Sport type"
 msgstr "Sport"
 
 #: inc/core/Dataset/Keys/Sport.php:71
-#, fuzzy
 msgid "The sports icon is shown."
-msgstr "Il nome utente è sconosciuto."
+msgstr "L'icona sport e' visualizzata."
 
 #: inc/core/Dataset/Keys/VdotIcon.php:44
 msgid "VDOT icon"
@@ -2527,23 +2527,27 @@ msgid ""
 "Each VDOT value of an activity is marked with an arrow to show if the value "
 "is (much) higher than your current shape, equal to it or (much) lower:"
 msgstr ""
-"Ciacun valore di VDOT di un'attività è indicato con una freccia. La freccia "
+"Ogni valore di VDOT di un'attività è annotato con una freccia. La freccia "
 "indica se questo valore è (molto) superiore alla vostra forma attuale, pari "
 "o (molto) più basso:"
 
 #: inc/core/Dataset/Keys/Comment.php:56
 #, php-format
 msgid "Comments are automatically cut after %u characters."
-msgstr ""
+msgstr "I commenti sono automaticamente tagliati dopo %u caratteri."
 
 #: inc/core/Dataset/Keys/TrainingPartner.php:65
 #, php-format
 msgid "Training partner are automatically cut after %u characters."
 msgstr ""
+"I nomi del partner di allenamento sono automaticamente tagliati dopo %u "
+"caratteri."
 
 #: inc/core/Dataset/Keys/Calories.php:53
 msgid "Calories are taken from your device or calculated by a simple formula."
 msgstr ""
+"Le calorie sono prese dal tuo dispositivo o calcolate usando una semplice "
+"formula."
 
 #: inc/core/Dataset/Keys/FitHrvAnalysis.php:53
 msgid "HRV"
@@ -2566,16 +2570,14 @@ msgid "JD"
 msgstr ""
 
 #: inc/core/Dataset/Keys/JdIntensity.php:62
-#, fuzzy
 msgid "Intensity points based on Jack Daniels' Running formula."
-msgstr "Questi ritmi sono basati sulle indicazioni di Jack Daniels."
+msgstr "Punti intensita' basati sulle indicazioni di Jack Daniels."
 
 #: inc/core/Dataset/Keys/Splits.php:45
 msgid "Splits"
 msgstr "Frazioni"
 
 #: inc/core/Dataset/Keys/Elevation.php:53
-#, fuzzy
 msgid "Elev."
 msgstr "Alt."
 
@@ -2613,7 +2615,7 @@ msgstr ""
 
 #: inc/core/Dataset/Keys/FitVdotEstimate.php:62
 msgid "Garmin's newer devices have an integrated vdot estimation."
-msgstr ""
+msgstr "I nuovi dispositivi Garmin estimano vdot internamente."
 
 #: inc/core/Dataset/Keys/GroundcontactBalance.php:53
 msgid "GCB"
@@ -2811,9 +2813,8 @@ msgid "run diary"
 msgstr "diario di corsa"
 
 #: inc/tpl/tpl.installerFooter.php:5
-#, fuzzy
 msgid "Help and Support"
-msgstr "Supporto"
+msgstr "Aiuto e Supporto"
 
 #: inc/tpl/tpl.Installer.php:5 inc/tpl/tpl.Frontend.header.php:35
 #: inc/tpl/tpl.installerFooterText.php:12 inc/tpl/tpl.help.php:29
@@ -3239,9 +3240,8 @@ msgid ""
 msgstr ""
 
 #: inc/tpl/tpl.InstallerUpdate.php:36
-#, fuzzy
 msgid "these instructions"
-msgstr "Registrazione"
+msgstr "queste istruzioni"
 
 #: inc/tpl/tpl.InstallerUpdate.php:44
 msgid "----- please choose"
@@ -3842,9 +3842,8 @@ msgid "This email address is already being used."
 msgstr "Questo indirizzo e-mail è già stato usato."
 
 #: inc/system/class.AccountHandler.php:197
-#, fuzzy
 msgid "This email address is not allowed"
-msgstr "Questo indirizzo e-mail è già stato usato."
+msgstr "Questo indirizzo e-mail non e' permesso"
 
 #: inc/system/class.AccountHandler.php:200
 msgid "Please enter a valid email address."
@@ -4391,9 +4390,8 @@ msgid ""
 msgstr ""
 
 #: inc/system/config/class.ConfigTabEquipment.php:83
-#, fuzzy
 msgid "max. Time"
-msgstr "bpm max"
+msgstr "Tempo massimo"
 
 #: inc/system/config/class.ConfigTabEquipment.php:85
 #: inc/system/config/class.ConfigTabEquipment.php:143
@@ -4418,14 +4416,12 @@ msgid "prev. distance"
 msgstr "Distanza percorsa finora"
 
 #: inc/system/config/class.ConfigTabEquipment.php:140
-#, fuzzy
 msgid "Start of use"
-msgstr "Avvia Runalyse"
+msgstr "Usato dal"
 
 #: inc/system/config/class.ConfigTabEquipment.php:141
-#, fuzzy
 msgid "End of use"
-msgstr "In uso"
+msgstr "Usato fino al"
 
 #: inc/data/class.TypeFactory.php:124
 msgid "No types available"
@@ -4510,18 +4506,15 @@ msgstr ""
 "individuato."
 
 #: inc/import/parser/class.ParserKMLSingle.php:42
-#, fuzzy
 msgid "Given XML object does not contain any coordinates."
-msgstr ""
-"L'XML non contiene alcuna traccia. Il tag &lt;trkseg&gt; non può essere "
-"individuato."
+msgstr "L'XML non contiene alcuna coordinata."
 
 #: inc/import/parser/class.ParserTCXSingleCourse.php:49
-#, fuzzy
 msgid ""
 "Given XML object is not from Garmin. &lt;Track&gt;-tag could not be located."
 msgstr ""
-"L'XML non arriva da Garmin. Il tag &lt;Id&gt; non può essere individuato."
+"L'XML non e' stato prodotto da Garmin. Il tag &lt;Track&gt; non può essere "
+"individuato."
 
 #: inc/import/parser/class.ParserLOGBOOKSingle.php:39
 msgid ""
@@ -4548,11 +4541,10 @@ msgstr ""
 "individuato."
 
 #: inc/import/parser/class.ParserSLF4Single.php:28
-#, fuzzy
 msgid ""
 "Given XML object is not from Sigma. &lt;Entries&gt;-tag could not be located."
 msgstr ""
-"L'XML non arriva da Sigma. Il tag &lt;LogEntries&gt; non può essere "
+"L'XML non e' prodotto da Sigma. Il tag &lt;Entries&gt; non può essere "
 "individuato."
 
 #: inc/import/parser/class.ParserSLF4Single.php:54
@@ -4842,7 +4834,6 @@ msgid "Share!"
 msgstr "Condividi!"
 
 #: inc/export/types/class.ExporterFacebook.php:40
-#, fuzzy
 msgid ""
 "You will be forwarded to Facebook, where you can define which text shall be "
 "displayed."
