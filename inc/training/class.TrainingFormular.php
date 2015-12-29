@@ -275,6 +275,7 @@ class TrainingFormular extends StandardFormular {
 		foreach ($Factory->allEquipmentTypes() as $EquipmentType) {
 			$options = array();
 			$values = array();
+			$attributes = array();
 
 			foreach ($AllEquipment as $Equipment) {
 				if (
@@ -282,6 +283,10 @@ class TrainingFormular extends StandardFormular {
 					(!$isCreateForm || $Equipment->isInUse())
 				) {
 					$options[$Equipment->id()] = $Equipment->name();
+					$attributes[$Equipment->id()] = array(
+						'data-start' => $Equipment->startDate(),
+						'data-end' => $Equipment->endDate()
+					);
 
 					if (in_array($Equipment->id(), $RelatedEquipment)) {
 						$values[$Equipment->id()] = 'on';
@@ -297,7 +302,7 @@ class TrainingFormular extends StandardFormular {
 				$Field = new FormularCheckboxes('equipment['.$EquipmentType->id().']', $EquipmentType->name(), $values);
 
 				foreach ($options as $key => $label) {
-					$Field->addCheckbox($key, $label);
+					$Field->addCheckbox($key, $label, $attributes[$key]);
 				}
 			} else {
 				$selected = !empty($values) ? array_keys($values) : array(0);
@@ -305,7 +310,7 @@ class TrainingFormular extends StandardFormular {
 				$Field->addOption(0, '');
 
 				foreach ($options as $key => $label) {
-					$Field->addOption($key, $label);
+					$Field->addOption($key, $label, $attributes[$key]);
 				}
 			}
 
@@ -315,7 +320,7 @@ class TrainingFormular extends StandardFormular {
 			}
 
 			$Field->setLayout( FormularFieldset::$LAYOUT_FIELD_W100_IN_W50 );
-			$Field->addLayoutClass($SportClasses);
+			$Field->addLayoutClass($SportClasses.' depends-on-date');
 			$Field->addAttribute( 'class', FormularInput::$SIZE_FULL_INLINE );
 			$Fieldset->addField($Field);
 		}

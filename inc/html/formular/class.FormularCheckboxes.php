@@ -15,13 +15,18 @@ class FormularCheckboxes extends FormularField {
 	 */
 	private $checkboxes = array();
 
+	/** @var array */
+	protected $attributes = array();
+
 	/**
 	 * Add checkbox
 	 * @param mixed $key
-	 * @param string $label 
+	 * @param string $label
+	 * @param array $attributes
 	 */
-	public function addCheckbox($key, $label) {
+	public function addCheckbox($key, $label, $attributes = array()) {
 		$this->checkboxes[$key] = $label;
+		$this->attributes[$key] = $attributes;
 	}
 
 	/**
@@ -48,6 +53,10 @@ class FormularCheckboxes extends FormularField {
 			$Checkbox->setLayout( FormularFieldset::$LAYOUT_FIELD_SMALL_INLINE );
 			$Checkbox->addLayout( FormularFieldset::$LAYOUT_FIELD_W25 );
 			$Checkbox->setLabelToRight();
+
+			foreach ($this->attributes[$key] as $attrKey => $attrValue) {
+				$Checkbox->addAttribute($attrKey, $attrValue);
+			}
 
 			$Checkboxes .= $Checkbox->getCode();
 		}
