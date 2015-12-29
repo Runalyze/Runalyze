@@ -518,6 +518,9 @@ class AccountHandler {
 		$DB->insert('equipment_sport', array('sportid', 'equipment_typeid'), array(self::$SPECIAL_KEYS['RUNNING_SPORT_ID'], self::$SPECIAL_KEYS['EQUIPMENT_SHOES_ID']));
 		$DB->insert('equipment_sport', array('sportid', 'equipment_typeid'), array(self::$SPECIAL_KEYS['RUNNING_SPORT_ID'], self::$SPECIAL_KEYS['EQUIPMENT_CLOTHES_ID']));
 
+		// Use shoes as main equipment for running
+		$DB->exec('UPDATE `'.PREFIX.'sport` SET `main_equipmenttypeid`="'.self::$SPECIAL_KEYS['EQUIPMENT_SHOES_ID'].'" WHERE `id`="'.self::$SPECIAL_KEYS['RUNNING_SPORT_ID'].'"');
+
 		// Add standard clothes equipment
 		$eqColumns = array('name', 'notes', 'typeid', 'accountid');
 		$DB->insert('equipment', $eqColumns, array(__('long sleeve'), '', self::$SPECIAL_KEYS['EQUIPMENT_CLOTHES_ID'], $accountId));
