@@ -58,6 +58,7 @@ class TrainingObject extends DataObject {
 	protected function fillDefaultObject() {
 		$this->set('time', isset($_GET['date']) ? strtotime($_GET['date']) : mktime(0,0,0));
 		$this->set('is_public', Configuration::Privacy()->publishActivity() ? '1' : '0');
+		$this->set('sportid', Configuration::General()->mainSport());
 		$this->forceToSet('s_sum_with_distance', 0);
 	}
 

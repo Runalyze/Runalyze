@@ -245,6 +245,9 @@ class ParserFITSingle extends ParserAbstractSingle {
 
 		if (isset($this->Values['pool_length']))
 			$this->TrainingObject->setPoolLength($this->Values['pool_length'][0]);
+
+		if (isset($this->Values['sport']))
+			$this->guessSportID($this->Values['sport'][1]);
 	}
 
 	/**
