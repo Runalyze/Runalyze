@@ -30,4 +30,16 @@ interface ForecastStrategyInterface {
 	 * @return \Runalyze\Data\Weather\Temperature
 	 */
 	public function temperature();
+	
+	/**
+	 * Wind Speed
+	 * @return \Runalyze\Data\Weather\WindSpeed
+	 */
+	public function windSpeed();
+	
+	/**
+	 * Wind degree
+	 * @return \Runalyze\Data\Weather\WindDegree
+	 */
+	public function windDegree();
 }

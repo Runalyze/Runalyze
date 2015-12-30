@@ -216,6 +216,12 @@ class Entity extends Model\EntityWithID {
 	 * @var string
 	 */
 	const TEMPERATURE = 'temperature';
+	
+	/**
+	 * Key: wind speed
+	 * @var string
+	 */
+	const WINDSPEED = 'wind_speed';
 
 	/**
 	 * Key: weather id
@@ -342,6 +348,7 @@ class Entity extends Model\EntityWithID {
 			self::GROUNDCONTACT_BALANCE,
 			self::VERTICAL_RATIO,
 			self::TEMPERATURE,
+			self::WINDSPEED,
 			self::WEATHERID,
 			self::ROUTEID,
 			self::ROUTE,
@@ -371,6 +378,7 @@ class Entity extends Model\EntityWithID {
 	protected function canSet($key) {
 		switch ($key) {
 			case self::TEMPERATURE:
+			case self::WINDSPEED:
 			case self::WEATHERID:
 			case self::PARTNER:
 			case self::SPLITS:
@@ -388,6 +396,7 @@ class Entity extends Model\EntityWithID {
 	protected function canBeNull($key) {
 		switch ($key) {
 			case self::TEMPERATURE:
+			case self::WINDSPEED:
 			case self::NOTES:
 			case self::CREATOR_DETAILS:
 				return true;
@@ -401,13 +410,13 @@ class Entity extends Model\EntityWithID {
 	 * @param string $key
 	 * @return mixed
 	 */
-	public function get($key) {
+	/*public function get($key) {
 		if ($key == self::TEMPERATURE) {
 			return $this->Data[self::TEMPERATURE];
 		}
 
 		return parent::get($key);
-	}
+	}*/
 
 	/**
 	 * Synchronize
@@ -739,7 +748,8 @@ class Entity extends Model\EntityWithID {
 		if (is_null($this->Weather)) {
 			$this->Weather = new Weather(
 				new Weather\Temperature($this->Data[self::TEMPERATURE]),
-				new Weather\Condition($this->Data[self::WEATHERID])
+				new Weather\Condition($this->Data[self::WEATHERID]),
+				new Weather\WindSpeed($this->Data[self::WINDSPEED])
 			);
 		}
 

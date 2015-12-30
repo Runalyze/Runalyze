@@ -83,6 +83,7 @@ class TrainingObject extends DataObject {
 
 		$this->set('weatherid', $Weather->condition()->id());
 		$this->set('temperature', $Weather->temperature()->value());
+		$this->set('wind_speed', $Weather->windSpeed()->value());
 	}
 
 	/**
@@ -372,10 +373,12 @@ class TrainingObject extends DataObject {
 		if (is_null($this->Weather)) {
 			$id   = ($this->hasProperty('weatherid')) ? $this->get('weatherid') : \Runalyze\Data\Weather\Condition::UNKNOWN;
 			$temp = ($this->hasProperty('temperature')) ? $this->get('temperature') : null;
+			$windSpeed = ($this->hasProperty('wind_speed')) ? $this->get('wind_speed') : null;
 
 			$this->Weather = new \Runalyze\Data\Weather(
 				new \Runalyze\Data\Weather\Temperature($temp),
-				new \Runalyze\Data\Weather\Condition($id)
+				new \Runalyze\Data\Weather\Condition($id),
+				new \Runalyze\Data\Weather\WindSpeed($windSpeed)
 			);
 		}
 

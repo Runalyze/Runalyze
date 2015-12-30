@@ -8,7 +8,7 @@ namespace Runalyze\Data;
 
 use Runalyze\Data\Weather\Temperature;
 use Runalyze\Data\Weather\Condition;
-
+use Runalyze\Data\Weather\WindSpeed;
 /**
  * Weather
  * 
@@ -27,15 +27,30 @@ class Weather {
 	 * @var \Runalyze\Data\Weather\Condition
 	 */
 	protected $Condition;
+	
+	/**
+	 * WindSpeed
+	 * @var \Runalyze\Data\Weather\WindSpeed
+	 */
+	protected $WindSpeed;
+	
+	/**
+	 * WindDegree
+	 * @var \Runalyze\Data\Weather\WindDegree
+	 */
+	protected $WindDegree;
 
 	/**
 	 * Weather
 	 * @param \Runalyze\Data\Weather\Temperature $Temperature
 	 * @param \Runalyze\Data\Weather\Condition $Condition
+	 * @param \Runalyze\Data\Weather\WindSpeed $WindSpeed
 	 */
-	public function __construct(Temperature $Temperature, Condition $Condition) {
+	public function __construct(Temperature $Temperature, Condition $Condition, WindSpeed $WindSpeed) {
 		$this->Temperature = $Temperature;
 		$this->Condition = $Condition;
+		$this->WindSpeed = $WindSpeed;
+		//$this->WindDegree = $WindDegree;
 	}
 
 	/**
@@ -44,6 +59,8 @@ class Weather {
 	public function __clone() {
 		$this->Temperature = clone $this->Temperature;
 		$this->Condition = clone $this->Condition;
+		$this->WindSpeed = clone $this->WindSpeed;
+		//$this->WindDegree = clone $this->WindDegree;
 	}
 
 	/**
@@ -60,6 +77,22 @@ class Weather {
 	 */
 	public function condition() {
 		return $this->Condition;
+	}
+	
+	/**
+	 * Wind Speed
+	 * @return \Runalyze\Data\Weather\WindSpeed
+	 */
+	public function windSpeed() {
+		return $this->WindSpeed();
+	}
+	
+	/**
+	 * Wind Degree
+	 * @return \Runalyze\Data\Weather\WindDegree
+	 */
+	public function windDegree() {
+		return $this->WindDegree();
 	}
 
 	/**
@@ -79,7 +112,8 @@ class Weather {
 	public function isEmpty() {
 		return (
 			$this->Temperature->isUnknown() &&
-			$this->Condition->isUnknown()
+			$this->Condition->isUnknown() &&
+			$this->windSpeed()->isUnknown()
 		);
 	}
 }

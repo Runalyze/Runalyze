@@ -141,6 +141,34 @@ class Openweathermap implements ForecastStrategyInterface {
 
 		return new Temperature($value, Temperature::KELVIN);
 	}
+	
+	/**
+	 * Temperature
+	 * @return Runalyze\Data\Weather\Temperature
+	 */
+	public function windSpeed() {
+		if (isset($this->Result['wind']) && isset($this->Result['wind']['speed'])) {
+			$value = $this->Result['wind']['speed'];
+		} else {
+			$value = null;
+		}
+
+		return new WindSpeed($value, WindSpeed::MILES_PER_H);
+	}
+	
+	/**
+	 * Temperature
+	 * @return Runalyze\Data\Weather\Temperature
+	 */
+	public function windDegree() {
+		if (isset($this->Result['wind']) && isset($this->Result['wind']['deg'])) {
+			$value = $this->Result['wind']['deg'];
+		} else {
+			$value = null;
+		}
+
+		return new WindDegree($value);
+	}
 
 	/**
 	 * Translate api code to condition
