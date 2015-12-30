@@ -42,6 +42,6 @@ class Forecast {
 	 * @return \Runalyze\Data\Weather
 	 */
 	public function object() {
-		return new \Runalyze\Data\Weather($this->Strategy->temperature(), $this->Strategy->condition(), $this->Strategy->windSpeed());
+		return new \Runalyze\Data\Weather($this->Strategy->temperature(), $this->Strategy->condition(), $this->Strategy->windSpeed(), $this->Strategy->humidity);
 	}
 }

@@ -183,10 +183,21 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 			$this->BoxedValues[] = $Temp;
 		
 		if ($this->Context->activity()->weather()->windSpeed()->value()  > 0) {
-		    echo "test";
-			//$WindSpeed = new Box\WeatherWindSpeed($this->Context);
-			//$WindSpeed->defineAsFloatingBlock('w50');    
-			//$this->BoxedValues[] = $WindSpeed;
+			$WindSpeed = new Box\WeatherWindSpeed($this->Context);
+			$WindSpeed->defineAsFloatingBlock('w50');    
+			$this->BoxedValues[] = $WindSpeed;
+		}
+		
+		if ($this->Context->activity()->weather()->windDegree()->value()  > 0) {
+			$WindDegree = new Box\WeatherWindDegree($this->Context);
+			$WindDegree->defineAsFloatingBlock('w50');    
+			$this->BoxedValues[] = $WindDegree;
+		}
+		
+		if ($this->Context->activity()->weather()->humidity()->value()  > 0) {
+			$Humidity = new Box\WeatherHumidity($this->Context);
+			$Humidity->defineAsFloatingBlock('w50');    
+			$this->BoxedValues[] = $Humidity;
 		}
 	    }
 

@@ -6,7 +6,7 @@
 
 namespace Runalyze\Data\Weather;
 
-class Direction {
+class CardinalDirection {
 
 	/**
 	 * Direction in degree
@@ -37,7 +37,7 @@ class Direction {
 	 * @return null|int
 	 */
 	public function value() {
-		return $this->fromCelsiusTo($this->inCelsius, $this->unit);
+		return $this->getDirection($this->value);
 	}
 
 	/**
@@ -48,22 +48,9 @@ class Direction {
 		return $this->asStringWithoutUnit().'&nbsp;&deg;' ;
 	}
 	
-	/**
-	 * As string without unit
-	 * @param string $stringForUnknown [optional]
-	 * @return string
-	 */
-	public function asStringWithoutUnit($stringForUnknown = '?') {
-		if ($this->isUnknown()) {
-			return $stringForUnknown;
-		}
-
-		return round($this->value());
-	}
-	
-	
     public static function getDirection($bearing)
     {
+	echo $bearing;
 	$cardinalDirections = array( 
 	 __('N') => array(337.5, 22.5), 
 	 __('NE') => array(22.5, 67.5), 

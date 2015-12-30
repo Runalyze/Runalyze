@@ -169,6 +169,20 @@ class Openweathermap implements ForecastStrategyInterface {
 
 		return new WindDegree($value);
 	}
+	
+	/**
+	 * Humidity
+	 * @return Runalyze\Data\Weather\Temperature
+	 */
+	public function humidity() {
+		if (isset($this->Result['main']) && isset($this->Result['main']['humidity'])) {
+			$value = $this->Result['main']['humidity'];
+		} else {
+			$value = null;
+		}
+
+		return new Humidity($value);
+	}
 
 	/**
 	 * Translate api code to condition

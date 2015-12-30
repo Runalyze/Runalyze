@@ -222,6 +222,18 @@ class Entity extends Model\EntityWithID {
 	 * @var string
 	 */
 	const WINDSPEED = 'wind_speed';
+	
+	/**
+	 * Key: wind degree
+	 * @var string
+	 */
+	const WINDDEG = 'wind_deg';
+	
+	/**
+	 * Key: humidity
+	 * @var string
+	 */
+	const HUMIDITY = 'humidity';
 
 	/**
 	 * Key: weather id
@@ -349,6 +361,8 @@ class Entity extends Model\EntityWithID {
 			self::VERTICAL_RATIO,
 			self::TEMPERATURE,
 			self::WINDSPEED,
+			self::WINDDEG,
+			self::HUMIDITY,
 			self::WEATHERID,
 			self::ROUTEID,
 			self::ROUTE,
@@ -379,6 +393,8 @@ class Entity extends Model\EntityWithID {
 		switch ($key) {
 			case self::TEMPERATURE:
 			case self::WINDSPEED:
+			case self::WINDDEG:
+			case self::HUMIDITY:
 			case self::WEATHERID:
 			case self::PARTNER:
 			case self::SPLITS:
@@ -397,6 +413,8 @@ class Entity extends Model\EntityWithID {
 		switch ($key) {
 			case self::TEMPERATURE:
 			case self::WINDSPEED:
+			case self::WINDDEG:
+			case self::HUMIDITY:
 			case self::NOTES:
 			case self::CREATOR_DETAILS:
 				return true;
@@ -749,7 +767,9 @@ class Entity extends Model\EntityWithID {
 			$this->Weather = new Weather(
 				new Weather\Temperature($this->Data[self::TEMPERATURE]),
 				new Weather\Condition($this->Data[self::WEATHERID]),
-				new Weather\WindSpeed($this->Data[self::WINDSPEED])
+				new Weather\WindSpeed($this->Data[self::WINDSPEED]),
+				new Weather\WindDegree($this->Data[self::WINDDEG]),
+				new Weather\Humidity($this->Data[self::HUMIDITY])
 			);
 		}
 

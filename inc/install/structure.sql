@@ -331,6 +331,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_training` (
   `temperature` tinyint(4) DEFAULT NULL,
   `wind_speed` decimal(5,2) unsigned DEFAULT NULL,
   `wind_deg` decimal(5,2) unsigned DEFAULT NULL,
+  `humidity` tinyint unsigned DEFAULT NULL,
   `night` tinyint(1) unsigned,
   `weatherid` smallint(6) NOT NULL DEFAULT '1',
   `route` text,

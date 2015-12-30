@@ -53,7 +53,7 @@ $FIELDSETS = array(
 	array(
 		'id'		=> 'weather',
 		'legend'	=> __('Weather conditions'),
-		'fields'	=> array('weatherid', 'temperature', 'clothes'),
+		'fields'	=> array('weatherid', 'is_night', 'temperature', 'wind_speed', 'wind_deg', 'humidity'),
 		'conf'		=> 'WEATHER'
 	),
 	array(
@@ -373,6 +373,50 @@ $FIELDS = array(
 						'label'		=> __('Weather'),
 						'class'		=> 'TrainingSelectWeather',
 						'css'		=> TrainingFormular::$ONLY_OUTSIDE_CLASS
+					)
+	),
+	'humidity' => array(
+					'database'	=> array(
+						'type'		=> 'tinyint',
+						'precision'	=> '3',
+						'default'	=> '0'
+					),
+					'formular'	=> array(
+						'label'		=> __('Humidity'),
+						'unit'		=> FormularUnit::$PERCENT
+					)
+	),
+	'wind_speed' => array(
+					'database'	=> array(
+						'type'		=> 'decimal',
+						'precision'	=> '5,2',
+						'default'	=> '0'
+					),
+					'formular'	=> array(
+						'label'		=> __('Wind speed'),
+						'unit'		=> 'TODO unit'
+					)
+	),
+	'wind_deg' => array(
+					'database'	=> array(
+						'type'		=> 'decimal',
+						'precision'	=> '5,2',
+						'default'	=> '0'
+					),
+					'formular'	=> array(
+						'label'		=> __('Wind degrees'),
+						'unit'		=> FormularUnit::$DEGREE
+					)
+	),
+	'is_night' => array(
+					'database'	=> array(
+						'type'		=> 'tinyint',
+						'precision'	=> '1',
+						'default'	=> '0'
+					),
+					'formular'	=> array(
+						'label'		=> __('Night'),
+						'class'		=> 'FormularCheckbox'
 					)
 	),
 	'route'				=> array(

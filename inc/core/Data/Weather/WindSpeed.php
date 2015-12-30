@@ -6,6 +6,13 @@
 
 namespace Runalyze\Data\Weather;
 
+/**
+ * Wind Speed
+ *
+ * @author Hannes Christiansen
+ * @author Michael Pohl
+ * @package Runalyze\Data\Weather
+ */
 class WindSpeed {
     
 	/**
@@ -54,6 +61,14 @@ class WindSpeed {
 	}
 	
 	/**
+	 * Label for value
+	 * @return string
+	 */
+	public function label() {
+	    return __('Wind Speed');
+	}
+	
+	/**
 	 * Set wind Speed
 	 * @param float $value
 	 * @param int $unit
@@ -64,7 +79,6 @@ class WindSpeed {
 		}
 		
 		$this->inMetricUnit = $this->toMetricFrom($value, $this->unit);
-		print_r($this->inMetricUnit);
 	}
 	
 	/**

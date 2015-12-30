@@ -7,52 +7,53 @@
 namespace Runalyze\Data\Weather;
 
 /**
- * Wind Degree
+ * Humidity
  *
  * @author Hannes Christiansen
  * @author Michael Pohl
  * @package Runalyze\Data\Weather
  */
-class WindDegree {
+class Humidity {
     
 	/**
-	 * Wind Degree
+	 * Humidity
 	 * @var float
 	 */
 	protected $value;
 	
 	/**
-	 * Wind Degree
+	 * Construct Humidity
 	 * @param float $value
 	 */
 	public function __construct($value = null) {
-		$this->setWindDegree($value);
+		$this->setHumidity($value);
 	}
-	
+    
 	/**
-	 * Set wind Degree
+	 * Set humidity
 	 * @param float $value
 	 * @param int $unit
 	 */
-	public function setWindDegree($value) {
+	public function setHumidity($value) {
 		
 		$this->value = $value;
 	}
-	
+	#
 	/**
 	 * Label for value
 	 * @return string
 	 */
 	public function label() {
-	    return __('Wind Degree');
+	    return __('Humidity');
 	}
+	
 	
 	/**
 	 * Label for value
 	 * @return string
 	 */
 	public function unit() {
-	    return '&deg;';
+	    	    return '&#37;';
 	}
 	
 	/**
@@ -64,7 +65,7 @@ class WindDegree {
 	}
 	
 	/**
-	 * Wind degree is unknown?
+	 * Humidity is unknown?
 	 * @return bool
 	 */
 	public function isUnknown() {

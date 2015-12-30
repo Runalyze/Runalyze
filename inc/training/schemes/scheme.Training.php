@@ -61,7 +61,7 @@ $FIELDSETS = array(
 	array(
 		'id'		=> 'weather',
 		'legend'	=> __('Weather conditions'),
-		'fields'	=> array('weatherid', 'is_night', 'temperature', 'wind_speed', 'wind_deg'),
+		'fields'	=> array('weatherid', 'is_night', 'temperature', 'wind_speed', 'wind_deg', 'humidity'),
 		'conf'		=> 'WEATHER'
 	),
 	array(
@@ -435,6 +435,17 @@ $FIELDS = array(
 						'css'		=> TrainingFormular::$ONLY_OUTSIDE_CLASS
 					)
 	),
+	'humidity' => array(
+					'database'	=> array(
+						'type'		=> 'tinyint',
+						'precision'	=> '3',
+						'default'	=> '0'
+					),
+					'formular'	=> array(
+						'label'		=> __('Humidity'),
+						'unit'		=> FormularUnit::$PERCENT
+					)
+	),
 	'wind_speed' => array(
 					'database'	=> array(
 						'type'		=> 'decimal',
@@ -442,7 +453,8 @@ $FIELDS = array(
 						'default'	=> '0'
 					),
 					'formular'	=> array(
-						'label'		=> __('Wind speed')
+						'label'		=> __('Wind speed'),
+						'unit'		=> 'TODO unit'
 					)
 	),
 	'wind_deg' => array(

@@ -42,4 +42,10 @@ interface ForecastStrategyInterface {
 	 * @return \Runalyze\Data\Weather\WindDegree
 	 */
 	public function windDegree();
+	
+	/**
+	 * Humidity
+	 * @return \Runalyze\Data\Weather\Humidity
+	 */
+	public function humidity();
 }
