@@ -16,8 +16,16 @@ namespace Runalyze\Calculation\Math\MovingAverage\Kernel;
  */
 class Triweight extends AbstractKernel
 {
-    /** @var float */
-    protected $NormalizationFactor = 70/32;
+    /**
+     * @inheritdoc
+     * @param float $width
+     */
+    public function __construct($width)
+    {
+        $this->NormalizationFactor = 70/32;
+
+        parent::__construct($width);
+    }
 
     /**
      * @param float $u

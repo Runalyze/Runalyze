@@ -16,8 +16,16 @@ namespace Runalyze\Calculation\Math\MovingAverage\Kernel;
  */
 class Tricube extends AbstractKernel
 {
-    /** @var float */
-    protected $NormalizationFactor = 140/81;
+    /**
+     * @inheritdoc
+     * @param float $width
+     */
+    public function __construct($width)
+    {
+        $this->NormalizationFactor = 140/81;
+
+        parent::__construct($width);
+    }
 
     /**
      * @param float $u

@@ -16,8 +16,16 @@ namespace Runalyze\Calculation\Math\MovingAverage\Kernel;
  */
 class Quartic extends AbstractKernel
 {
-    /** @var float */
-    protected $NormalizationFactor = 30/16;
+    /**
+     * @inheritdoc
+     * @param float $width
+     */
+    public function __construct($width)
+    {
+        $this->NormalizationFactor = 30/16;
+
+        parent::__construct($width);
+    }
 
     /**
      * @param float $u
