@@ -144,7 +144,7 @@ class Openweathermap implements ForecastStrategyInterface {
 	
 	/**
 	 * Temperature
-	 * @return Runalyze\Data\Weather\Temperature
+	 * @return Runalyze\Data\Weather\WindSpeed
 	 */
 	public function windSpeed() {
 		if (isset($this->Result['wind']) && isset($this->Result['wind']['speed'])) {
@@ -158,7 +158,7 @@ class Openweathermap implements ForecastStrategyInterface {
 	
 	/**
 	 * Temperature
-	 * @return Runalyze\Data\Weather\Temperature
+	 * @return Runalyze\Data\Weather\WindDegree
 	 */
 	public function windDegree() {
 		if (isset($this->Result['wind']) && isset($this->Result['wind']['deg'])) {
@@ -172,7 +172,7 @@ class Openweathermap implements ForecastStrategyInterface {
 	
 	/**
 	 * Humidity
-	 * @return Runalyze\Data\Weather\Temperature
+	 * @return Runalyze\Data\Weather\Humidity
 	 */
 	public function humidity() {
 		if (isset($this->Result['main']) && isset($this->Result['main']['humidity'])) {
@@ -182,6 +182,20 @@ class Openweathermap implements ForecastStrategyInterface {
 		}
 
 		return new Humidity($value);
+	}
+	
+	/**
+	 * Humidity
+	 * @return Runalyze\Data\Weather\Pressure
+	 */
+	public function pressure() {
+		if (isset($this->Result['main']) && isset($this->Result['main']['pressure'])) {
+			$value = $this->Result['main']['pressure'];
+		} else {
+			$value = null;
+		}
+
+		return new Pressure($value);
 	}
 
 	/**

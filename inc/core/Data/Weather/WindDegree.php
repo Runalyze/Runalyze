@@ -10,7 +10,7 @@ namespace Runalyze\Data\Weather;
  * Wind Degree
  *
  * @author Hannes Christiansen
- * @author Michael Pohl
+ * @author Michael 
  * @package Runalyze\Data\Weather
  */
 class WindDegree {
@@ -64,7 +64,7 @@ class WindDegree {
 	}
 	
 	/**
-	 * Wind degree is unknown?
+	 * Wind Speed is unknown?
 	 * @return bool
 	 */
 	public function isUnknown() {

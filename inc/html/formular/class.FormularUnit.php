@@ -134,4 +134,10 @@ class FormularUnit {
          * @var string
          */
         public static $HOUR = 'h';
+	
+        /**
+         * Unit: hpa
+         * @var string
+         */
+        public static $HPA = 'hpa';
 }

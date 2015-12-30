@@ -61,7 +61,7 @@ $FIELDSETS = array(
 	array(
 		'id'		=> 'weather',
 		'legend'	=> __('Weather conditions'),
-		'fields'	=> array('weatherid', 'is_night', 'temperature', 'wind_speed', 'wind_deg', 'humidity'),
+		'fields'	=> array('weatherid', 'is_night', 'temperature', 'wind_speed', 'wind_deg', 'humidity', 'pressure'),
 		'conf'		=> 'WEATHER'
 	),
 	array(
@@ -444,6 +444,17 @@ $FIELDS = array(
 					'formular'	=> array(
 						'label'		=> __('Humidity'),
 						'unit'		=> FormularUnit::$PERCENT
+					)
+	),
+	'pressure' => array(
+					'database'	=> array(
+						'type'		=> 'smallint',
+						'precision'	=> '4',
+						'default'	=> '0'
+					),
+					'formular'	=> array(
+						'label'		=> __('Pressure'),
+						'unit'		=> FormularUnit::$HPA
 					)
 	),
 	'wind_speed' => array(

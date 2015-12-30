@@ -1,19 +1,19 @@
 <?php
 /**
- * This file contains class::WeatherHumidity
+ * This file contains class::WeatherPressure
 * @package Runalyze\View\Activity\Box
  */
 
 namespace Runalyze\View\Activity\Box;
 
 /**
- * Boxed value for Humidity
+ * Boxed value for Pressure
  * 
  * @author Hannes Christiansen
  * @author Michael Pohl
  * @package Runalyze\View\Activity\Box
  */
-class WeatherHumidity extends AbstractBox
+class WeatherPressure extends AbstractBox
 {
 	/**
 	 * Constructor
@@ -21,11 +21,11 @@ class WeatherHumidity extends AbstractBox
 	 */
 	public function __construct(\Runalyze\View\Activity\Context $Context)
 	{
-		$humidity = $Context->activity()->weather()->humidity();
+		$pressure = $Context->activity()->weather()->pressure();
 		parent::__construct(
-			\Helper::Unknown($humidity->value(), '-'),
-			$humidity->unit(),
-			$humidity->label()
+			\Helper::Unknown($pressure->value(), '-'),
+			$pressure->unit(),
+			$pressure->label()
 		);
 	}
 }

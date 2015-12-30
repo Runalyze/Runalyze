@@ -1,28 +1,28 @@
 <?php
 /**
- * This file contains class::Humidity
+ * This file contains class::Pressure
  * @package Runalyze\Data\Weather
  */
 
 namespace Runalyze\Data\Weather;
 
 /**
- * Humidity
+ * Pressure
  *
  * @author Hannes Christiansen
  * @author Michael Pohl
  * @package Runalyze\Data\Weather
  */
-class Humidity {
+class Pressure {
     
 	/**
-	 * Humidity
+	 * Pressure
 	 * @var float
 	 */
 	protected $value;
 	
 	/**
-	 * Construct Humidity
+	 * Construct Pressure
 	 * @param float $value
 	 */
 	public function __construct($value = null) {
@@ -30,7 +30,7 @@ class Humidity {
 	}
     
 	/**
-	 * Set humidity
+	 * Set Pressure
 	 * @param float $value
 	 * @param int $unit
 	 */
@@ -44,7 +44,7 @@ class Humidity {
 	 * @return string
 	 */
 	public function label() {
-	    return __('Humidity');
+	    return __('Pressure');
 	}
 	
 	
@@ -53,7 +53,7 @@ class Humidity {
 	 * @return string
 	 */
 	public function unit() {
-	    	    return '&#37;';
+	    	    return 'hpa';
 	}
 	
 	/**

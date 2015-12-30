@@ -58,6 +58,10 @@ class OpenweathermapTest extends \PHPUnit_Framework_TestCase {
 		$Temperature->toCelsius();
 
 		$this->assertEquals(Condition::CLOUDY, $this->object->condition()->id());
+		$this->assertEquals('1.76', $this->object->windSpeed()->value());
+		$this->assertEquals('313.5', $this->object->windDegree()->value());
+		$this->assertEquals('59', $this->object->humidity()->value());
+		$this->assertEquals('1013', $this->object->pressure()->value());
 		$this->assertEquals(16.85, $Temperature->value());
 	}
 }

@@ -11,6 +11,7 @@ use Runalyze\Data\Weather\Condition;
 use Runalyze\Data\Weather\WindSpeed;
 use Runalyze\Data\Weather\WindDegree;
 use Runalyze\Data\Weather\Humidity;
+use Runalyze\Data\Weather\Pressure;
 /**
  * Weather
  * 
@@ -48,6 +49,12 @@ class Weather {
 	 */
 	protected $Humidity;
 	
+	/**
+	 * Pressure
+	 * @var \Runalyze\Data\Weather\Pressure
+	 */
+	protected $Pressure;
+	
 	
 	/**
 	 * Weather
@@ -55,13 +62,16 @@ class Weather {
 	 * @param \Runalyze\Data\Weather\Condition $Condition
 	 * @param \Runalyze\Data\Weather\WindSpeed $WindSpeed
 	 * @param \Runalyze\Data\Weather\WindDegree $WindDegree
+	 * @param \Runalyze\Data\Weather\Humidity $Humidity
+	 * @param \Runalyze\Data\Weather\Pressure $Pressure
 	 */
-	public function __construct(Temperature $Temperature, Condition $Condition, WindSpeed $WindSpeed, WindDegree $WindDegree, Humidity $Humidity) {
+	public function __construct(Temperature $Temperature, Condition $Condition, WindSpeed $WindSpeed, WindDegree $WindDegree, Humidity $Humidity, Pressure $Pressure) {
 		$this->Temperature = $Temperature;
 		$this->Condition = $Condition;
 		$this->WindSpeed = $WindSpeed;
 		$this->WindDegree = $WindDegree;
 		$this->Humidity = $Humidity;
+		$this->Pressure = $Pressure;
 	}
 
 	/**
@@ -73,6 +83,7 @@ class Weather {
 		$this->WindSpeed = clone $this->WindSpeed;
 		$this->WindDegree = clone $this->WindDegree;
 		$this->Humditiy = clone $this->Humidity;
+		$this->Pressure = clone $this->Pressure;
 	}
 
 	/**
@@ -114,6 +125,14 @@ class Weather {
 	public function humidity() {
 		return $this->Humidity;
 	}
+	
+	/**
+	 * Pressure
+	 * @return \Runalyze\Data\Weather\Pressure
+	 */
+	public function pressure() {
+		return $this->Pressure;
+	}
 
 	/**
 	 * Full string
@@ -135,7 +154,8 @@ class Weather {
 			$this->Condition->isUnknown() &&
 			$this->windSpeed()->isUnknown() &&
 			$this->windDegree()->isUnknown() &&
-			$this->humidity()->isUnknown()
+			$this->humidity()->isUnknown() &&
+			$this->pressure()->isUnknown()
 		);
 	}
 }

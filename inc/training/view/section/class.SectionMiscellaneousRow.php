@@ -199,6 +199,12 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 			$Humidity->defineAsFloatingBlock('w50');    
 			$this->BoxedValues[] = $Humidity;
 		}
+		
+		if ($this->Context->activity()->weather()->pressure()->value()  > 0) {
+			$Pressure = new Box\WeatherPressure($this->Context);
+			$Pressure->defineAsFloatingBlock('w50');    
+			$this->BoxedValues[] = $Pressure;
+		}		
 	    }
 
 	}
