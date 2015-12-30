@@ -122,6 +122,12 @@ foreach ($Steps as $i => $Name) {
 	</p>
 	<p class="text">
 		<label>
+			<strong><?php _e('Port'); ?></strong>
+			<input type="text" name="port" value="<?php echo (isset($_POST['port']) ? $_POST['port'] : '3306'); ?>" <?php if ($this->readyForNextStep) echo 'readonly'; ?>>
+		</label>
+	</p>
+	<p class="text">
+		<label>
 			<strong><?php _e('User'); ?></strong>
 			<input type="text" name="username" value="<?php echo (isset($_POST['username']) ? $_POST['username'] : 'root'); ?>" <?php if ($this->readyForNextStep) echo 'readonly'; ?>>
 		</label>

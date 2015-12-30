@@ -154,7 +154,7 @@ class InstallerUpdate extends Installer {
 	 * Import selected file
 	 */
 	protected function importUpdateFile() {
-		$this->connectToDatabase($this->mysqlConfig[3], $this->mysqlConfig[0], $this->mysqlConfig[1], $this->mysqlConfig[2]);
+		$this->connectToDatabase($this->mysqlConfig[3], $this->mysqlConfig[4], $this->mysqlConfig[0], $this->mysqlConfig[1], $this->mysqlConfig[2]);
 
 		if ($this->triesToUpdate()) {
 			$update = $this->PossibleUpdates[$_POST['importFile']];

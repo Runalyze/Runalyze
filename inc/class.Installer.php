@@ -163,7 +163,7 @@ class Installer {
 		if (file_exists(PATH.'../config.php')) {
 			include PATH.'../config.php';
 
-			$this->mysqlConfig = array($host, $username, $password, $database);
+			$this->mysqlConfig = array($host, $username, $password, $database, $port);
 
 			if ($this->currentStep == self::START) {
 				if ($this->databaseIsCorrect())
@@ -245,7 +245,7 @@ class Installer {
 			return false;
 
 		try {
-			$this->connectToDatabase($_POST['database'], $_POST['host'], $_POST['username'], $_POST['password']);
+			$this->connectToDatabase($_POST['database'], $_POST['host'], $_POST['port'],  $_POST['username'], $_POST['password']);
 
 			return true;
 		} catch (Exception $e) {
@@ -260,8 +260,8 @@ class Installer {
 	 * @param string $user
 	 * @param string $pw
 	 */
-	protected function connectToDatabase($db, $host, $user, $pw) {
-		$this->PDO = new PDO('mysql:dbname='.$db.';host='.$host.';charset=utf8', $user, $pw);
+	protected function connectToDatabase($db, $host, $port, $user, $pw) {
+		$this->PDO = new PDO('mysql:dbname='.$db.';host='.$host.';port='.$port.';charset=utf8', $user, $pw);
 		$this->PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$this->PDO->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
@@ -303,7 +303,7 @@ class Installer {
 				return '';
 			}
 
-			$this->connectToDatabase($this->mysqlConfig[3], $this->mysqlConfig[0], $this->mysqlConfig[1], $this->mysqlConfig[2]);
+			$this->connectToDatabase($this->mysqlConfig[3], $this->mysqlConfig[0], $this->mysqlConfig[4], $this->mysqlConfig[1], $this->mysqlConfig[2]);
 		}
 
 		return $this->PDO->getAttribute(PDO::ATTR_SERVER_VERSION);
@@ -315,6 +315,7 @@ class Installer {
 	protected function writeConfigFile() {
 		$config = array();
 		$config['host']      = $_POST['host'];
+		$config['port']      = $_POST['port'];
 		$config['database']  = $_POST['database'];
 		$config['username']  = $_POST['username'];
 		$config['password']  = $_POST['password'];
@@ -349,7 +350,7 @@ class Installer {
 	 * Import all needed sql-dumps to database
 	 */
 	protected function importSqlFiles() {
-		$this->connectToDatabase($this->mysqlConfig[3], $this->mysqlConfig[0], $this->mysqlConfig[1], $this->mysqlConfig[2]);
+		$this->connectToDatabase($this->mysqlConfig[3], $this->mysqlConfig[0], $this->mysqlConfig[4], $this->mysqlConfig[1], $this->mysqlConfig[2]);
 
 		$this->importSqlFile('inc/install/structure.sql');
 
@@ -357,7 +358,7 @@ class Installer {
 		require_once FRONTEND_PATH.'/system/class.Autoloader.php';
 		new Autoloader();
 
-		DB::connect($this->mysqlConfig[0], $this->mysqlConfig[1], $this->mysqlConfig[2], $this->mysqlConfig[3]);
+		DB::connect($this->mysqlConfig[0], $this->mysqlConfig[4], $this->mysqlConfig[1], $this->mysqlConfig[2], $this->mysqlConfig[3]);
 	}
 
 	/**
@@ -365,7 +366,7 @@ class Installer {
 	 * @return bool
 	 */
 	protected function databaseIsCorrect() {
-		$this->connectToDatabase($this->mysqlConfig[3], $this->mysqlConfig[0], $this->mysqlConfig[1], $this->mysqlConfig[2]);
+		$this->connectToDatabase($this->mysqlConfig[3], $this->mysqlConfig[0], $this->mysqlConfig[4], $this->mysqlConfig[1], $this->mysqlConfig[2]);
 
 		$statement = $this->PDO->prepare('SHOW TABLES LIKE "'.PREFIX.'training"');
 		$statement->execute();
