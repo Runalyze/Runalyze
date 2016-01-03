@@ -5,6 +5,8 @@
  */
 
 namespace Runalyze\Data\Weather;
+use Runalyze\Configuration;
+use Runalyze\Parameter\Application\DistanceUnitSystem;
 
 /**
  * Wind Speed
@@ -21,11 +23,7 @@ class WindSpeed {
 	 */
 	const MILE_MULTIPLIER = 0.621371192;
 	
-	/**
-	 * Factor: miles => km
-	 * @var double 
-	 */
-	const KM_MULTIPLIER = 1.609344;
+	const KM_MULTIPLIER = 1.60934;
 	
 	/**
 	 * Speed unit km/h
@@ -40,24 +38,47 @@ class WindSpeed {
 	const MILES_PER_H = 'mph';
 	
 	/**
-	 * Unit
-	 * @var int
-	 */
-	protected $unit;
-	
-	/**
 	 * Wind Speed in Metric
 	 * @var float
 	 */
 	protected $inMetricUnit;
 	
 	/**
+	 * @var \Runalyze\Parameter\Application\DistanceUnitSystem 
+	 */
+	protected $UnitSystem;
+	
+	/**
 	 * WindSpeed
 	 * @param float $value
-	 * @param int $unit
+	 * @param \Runalyze\Parameter\Application\DistanceUnitSystem $unitSystem
 	 */
-	public function __construct($value = null, $unit = self::KM_PER_H) {
-		$this->setWindSpeed($value, $unit);
+	public function __construct($value = null, DistanceUnitSystem $unitSystem = null) {
+		$this->set($value);
+		$this->UnitSystem = (null !== $unitSystem) ? $unitSystem : Configuration::General()->distanceUnitSystem();
+	}
+	
+	/**
+	 * @return float [mixed unit]
+	 */
+	public function valueInPreferredUnit()
+	{
+		if ($this->UnitSystem->isImperial()) {
+			return $this->imperial();
+		}
+		return $this->inMetricUnit;
+	}
+	
+	/**
+	 * @return float [mixed unit]
+	 */
+	public function unitInPreferredUnit()
+	{
+		if ($this->UnitSystem->isImperial()) {
+			return self::MILES_PER_H;
+		}
+
+		return self::KM_PER_H;
 	}
 	
 	/**
@@ -73,50 +94,46 @@ class WindSpeed {
 	 * @param float $value
 	 * @param int $unit
 	 */
-	public function setWindSpeed($value, $unit = null) {
-		if (!is_null($unit)) {
-			$this->unit = $unit;
+	public function set($value) {
+		$this->inMetricUnit = $value;
+	}
+	
+	
+	/**
+	 * Set wind Speed from mph in metric
+	 * @param float $value
+	 * @param int $unit
+	 */
+	public function setImperial($value) { 
+	    echo $value;
+		$this->inMetricUnit = $value * self::KM_MULTIPLIER;
+	}	
+	/**
+	 * @param float $windspeed [mixed unit]
+	 * @return \Runalyze\Activity\Elevation $this-reference
+	 */
+	public function setInPreferredUnit($windspeed)
+	{
+	    echo $value;
+		if ($this->UnitSystem->isImperial()) {
+			$this->setImperial($windspeed);
+		} else {
+			$this->set($windspeed);
 		}
-		
-		$this->inMetricUnit = $this->toMetricFrom($value, $this->unit);
+
+		return $this;
 	}
 	
 	/**
-	 * To metric unit
-	 * @param float $value
-	 * @param int $unit
-	 * @return float
+	 * Get in imperial
+	 * @param float $value in Metric
 	 */
-	protected function toMetricFrom($value, $unit) {
-		if (!is_numeric($value)) {
-			return null;
+	public function imperial($value = NULL) {
+		if(isset($value)) {
+		    return $value * self::MILE_MULTIPLIER;
+		} else {
+		    return $this->inMetricUnit * self::MILE_MULTIPLIER;
 		}
-
-		switch ($unit) {
-			case self::MILES_PER_H:
-				return ($value * self::KM_MULTIPLIER);
-		}
-
-		return $value;
-	}
-	
-	/**
-	 * From metric unit
-	 * @param float $value
-	 * @param int $unit
-	 * @return float
-	 */
-	protected function fromMetricTo($value, $unit) {
-		if (is_null($value)) {
-			return null;
-		}
-
-		switch ($unit) {
-			case self::MILES_PER_H:
-				return $value * self::MILE_MULTIPLIER;
-		}
-
-		return $value;
 	}
 	
 	/**
@@ -132,7 +149,7 @@ class WindSpeed {
 	 * @return null|int
 	 */
 	public function value() {
-		return $this->fromMetricTo($this->inMetricUnit, $this->unit);
+		return $this->inMetricUnit;
 	}
 
 	

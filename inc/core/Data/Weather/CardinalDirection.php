@@ -40,36 +40,30 @@ class CardinalDirection {
 		return $this->getDirection($this->value);
 	}
 
-	/**
-	 * As string
-	 * @return string
+	/*
+	 * Get cardinal direction
 	 */
-	public function asString() {
-		return $this->asStringWithoutUnit().'&nbsp;&deg;' ;
-	}
-	
-    public static function getDirection($bearing)
-    {
-	echo $bearing;
-	$cardinalDirections = array( 
-	 __('N') => array(337.5, 22.5), 
-	 __('NE') => array(22.5, 67.5), 
-	 __('E') => array(67.5, 112.5), 
-	 __('SE') => array(112.5, 157.5), 
-	 __('S') => array(157.5, 202.5), 
-	 __('SW') => array(202.5, 247.5), 
-	 __('W') => array(247.5, 292.5), 
-	 __('NW') => array(292.5, 337.5) 
-	); 
+	public static function getDirection($bearing)
+	{
+	    $cardinalDirections = array( 
+	     __('N') => array(337.5, 22.5), 
+	     __('NE') => array(22.5, 67.5), 
+	     __('E') => array(67.5, 112.5), 
+	     __('SE') => array(112.5, 157.5), 
+	     __('S') => array(157.5, 202.5), 
+	     __('SW') => array(202.5, 247.5), 
+	     __('W') => array(247.5, 292.5), 
+	     __('NW') => array(292.5, 337.5) 
+	    ); 
 
-	foreach ($cardinalDirections as $dir => $angles)
-	{ 
-	 if ($bearing >= $angles[0] && $bearing < $angles[1])
-	 { 
-	  $direction = $dir; 
-	  break;
-	 } 
-	} 
-	return $direction;
-    }
+	    foreach ($cardinalDirections as $dir => $angles)
+	    { 
+	     if ($bearing >= $angles[0] && $bearing < $angles[1])
+	     { 
+	      $direction = $dir; 
+	      break;
+	     } 
+	    } 
+	    return $direction;
+	}
 }

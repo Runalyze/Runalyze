@@ -155,7 +155,7 @@ $FIELDS = array(
 					'database'	=> array(
 						'type'		=> 'decimal',
 						'precision'	=> '6,2',
-						'default'	=> '0.00'
+						'default'	=> '0'
 					),
 					'formular'	=> array(
 						'label'		=> __('Distance'),
@@ -461,11 +461,12 @@ $FIELDS = array(
 					'database'	=> array(
 						'type'		=> 'decimal',
 						'precision'	=> '5,2',
-						'default'	=> '0'
+						'default'	=> '0.00'
 					),
 					'formular'	=> array(
 						'label'		=> __('Wind speed'),
-						'unit'		=> 'TODO unit'
+						'unit'		=> (new \Runalyze\Data\Weather\WindSpeed())->unitInPreferredUnit(),
+						'parser'	=> FormularValueParser::$PARSER_WINDSPEED
 					)
 	),
 	'wind_deg' => array(

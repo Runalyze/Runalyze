@@ -120,7 +120,7 @@ class Weather {
 	
 	/**
 	 * Humidity
-	 * @return \Runalyze\Data\Weather\WindDegree
+	 * @return \Runalyze\Data\Weather\Humidity
 	 */
 	public function humidity() {
 		return $this->Humidity;

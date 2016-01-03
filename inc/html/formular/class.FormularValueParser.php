@@ -9,6 +9,7 @@ use Runalyze\Activity\Duration;
 use Runalyze\Activity\Elevation;
 use Runalyze\Activity\Weight;
 use Runalyze\Activity\Temperature;
+use Runalyze\Data\Weather\WindSpeed;
 
 /**
  * Library with parsers for formular values, default behavior: from user input to database value
@@ -99,6 +100,12 @@ class FormularValueParser {
 	 * @var string 
 	 */
 	public static $PARSER_DISTANCE = 'distance';
+	
+	/**
+	 * Parser: windspeed in km/h <=> wind speed in preferred unit
+	 * @var string 
+	 */
+	public static $PARSER_WINDSPEED = 'wind_speed';
 
 	/**
 	 * Validate post-value for a given key with a given parser
@@ -147,6 +154,9 @@ class FormularValueParser {
 				return self::validateElevation($key);
 			case self::$PARSER_DISTANCE:
 				return self::validateDistance($key, $parserOptions);
+			case self::$PARSER_WINDSPEED:
+				return self::validateWindSpeed($key, $parserOptions);
+			    
 			default:
 				return true;
 		}
@@ -192,6 +202,8 @@ class FormularValueParser {
 				break;
 			case self::$PARSER_DISTANCE:
 				self::parseDistance($value, $parserOptions);
+			case self::$PARSER_WINDSPEED:
+				self::parseWindSpeed($value, $parserOptions);
 				break;
 		}
 	}
@@ -562,6 +574,34 @@ class FormularValueParser {
 		$thousandsPoint = isset($parserOptions['thousans-point']) ? $parserOptions['thousans-point'] : '';
 
 		$value = number_format((new Distance($value))->valueInPreferredUnit(), $decimals, $decimalPoint, $thousandsPoint);
+	}
+	
+	/**
+	 * Validator: distance in preferred unit => distance in km
+	 * @param string $key
+	 * @param array $parserOptions
+	 * @return bool
+	 */
+	private static function validateWindSpeed($key, array $parserOptions) {
+		$decimals = isset($parserOptions['decimals']) ? $parserOptions['decimals'] : 2;
+		$decimalPoint = isset($parserOptions['decimal-point']) ? $parserOptions['decimal-point'] : '.';
+
+		$_POST[$key] = str_replace(',', '.', $_POST[$key]);
+
+		$_POST[$key] = round((new WindSpeed())->setInPreferredUnit($_POST[$key])->valueInPreferredUnit(), 2);
+		return true;
+	}
+
+	/**
+	 * Parse: distance in km => distance in preferred unit
+	 * @param mixed $value 
+	 * @param array $parserOptions
+	 */
+	private static function parseWindSpeed(&$value, array $parserOptions) {
+		$decimals = isset($parserOptions['decimals']) ? $parserOptions['decimals'] : 2;
+		$decimalPoint = isset($parserOptions['decimal-point']) ? $parserOptions['decimal-point'] : '.';
+
+		$value = number_format((new WindSpeed())->setInPreferredUnit($value)->valueInPreferredUnit(), 2);
 	}
 
 	/**
