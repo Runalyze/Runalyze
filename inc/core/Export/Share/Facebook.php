@@ -68,8 +68,16 @@ class Facebook extends AbstractSocialSharer
     /**
      * @return string
      */
-	public function name()
+    public function name()
     {
 	    return __('Facebook');
-	}
+    }
+        
+    /**
+     * Get meta title
+     * @return string
+     */
+    public function metaTitle() {
+            return $this->text();
+    }
 }
