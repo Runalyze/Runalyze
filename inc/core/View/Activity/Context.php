@@ -72,7 +72,17 @@ class Context {
 		$this->Swimdata->fillDistanceArray($this->Trackdata);
 		$this->Swimdata->fillSwolfArray($this->Trackdata);
 		$this->Dataview = new Dataview($this->Activity);
+	}
 
+	/**
+	 * Clone object
+	 */
+	public function __clone() {
+		foreach ($this as $property => $value) {
+			if (is_object($value)) {
+				$this->{$property} = clone $value;
+			}
+		}
 	}
 
 	/**
