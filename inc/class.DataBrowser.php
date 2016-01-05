@@ -197,6 +197,7 @@ class DataBrowser {
 	protected function displayNavigationLinks() {
 		echo $this->getCalenderLink();
 		echo $this->getPrevLink();
+		echo $this->getCurrentLink();
 		echo $this->getNextLink();
 	}
 
@@ -257,6 +258,14 @@ class DataBrowser {
 		$timestamp_array = DataBrowserLinker::nextTimestamps($this->TimestampStart, $this->TimestampEnd);
 
 		return DataBrowserLinker::link(Icon::$NEXT, $timestamp_array['start'], $timestamp_array['end'], __('next'));
+	}
+	
+	/**
+	 * Get link to jump to today
+	 * @return string
+	 */
+	protected function getCurrentLink() {
+		return DataBrowserLinker::link('<i class="fa fa-fw fa-circle"></i>', '', '', __('today'));
 	}
 
 	/**
