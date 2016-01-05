@@ -91,7 +91,7 @@ class HTML {
 	 * @param int $emptyTDs Number of empty td before the month-td
 	 * @return string
 	 */
-	public static function monthTR($fixedWidth = 0, $emptyTDs = 1, $tag = 'td') {
+	public static function monthTR($fixedWidth = 0, $emptyTDs = 1, $tag = 'td', $withTotal = false) {
 		$width = ($fixedWidth > 0) ? ' width="'.$fixedWidth.'%"' : '';
 		$html = '<tr class="b">';
 
@@ -101,6 +101,9 @@ class HTML {
 		for ($m = 1; $m <= 12; $m++)
 			$html .= '<'.$tag.$width.'>'.Time::month($m, true).'</'.$tag.'>';
 
+		if ($withTotal) {
+			$html .= '<'.$tag.$width.'>'.__('Total').'</'.$tag.'>';
+		}
 		$html .= '</tr>';
 
 		return $html;
