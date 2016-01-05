@@ -131,7 +131,7 @@ class Entity extends Model\EntityWithID {
 	 * Key: vdot estimate from fit file
 	 * @var string
 	 */
-	const FIT_VDOT_ESTIMATE = 'fit_vdot_estimate';
+	const FIT_VO2MAX_ESTIMATE = 'fit_vdot_estimate';
 
 	/**
 	 * Key: recovery time from fit file
@@ -327,7 +327,7 @@ class Entity extends Model\EntityWithID {
 			self::VDOT_BY_TIME,
 			self::VDOT_WITH_ELEVATION,
 			self::USE_VDOT,
-			self::FIT_VDOT_ESTIMATE,
+			self::FIT_VO2MAX_ESTIMATE,
 			self::FIT_RECOVERY_TIME,
 			self::FIT_HRV_ANALYSIS,
 			self::JD_INTENSITY,
@@ -442,7 +442,7 @@ class Entity extends Model\EntityWithID {
 			self::VDOT_BY_TIME,
 			self::VDOT_WITH_ELEVATION,
 			self::USE_VDOT,
-			self::FIT_VDOT_ESTIMATE,
+			self::FIT_VO2MAX_ESTIMATE,
 			self::FIT_RECOVERY_TIME,
 			self::FIT_HRV_ANALYSIS,
 			self::JD_INTENSITY,
@@ -604,11 +604,11 @@ class Entity extends Model\EntityWithID {
 	}
 
 	/**
-	 * VDOT estimate from fit file
+	 * VO2max estimate from fit file
 	 * @return int
 	 */
-	public function fitVdotEstimate() {
-		return $this->Data[self::FIT_VDOT_ESTIMATE];
+	public function fitVO2maxEstimate() {
+		return $this->Data[self::FIT_VO2MAX_ESTIMATE];
 	}
 
 	/**

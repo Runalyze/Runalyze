@@ -318,12 +318,12 @@ class Dataview {
 	}
  
  	/**
-	 * Get string for VDOT estimate
+	 * Get string for VO2max estimate
 	 * @return string
 	 */
-	public function fitVdotEstimate() {
-		if ($this->Activity->fitVdotEstimate() > 0) {
-			return round($this->Activity->fitVdotEstimate());
+	public function fitVO2maxEstimate() {
+		if ($this->Activity->fitVO2maxEstimate() > 0) {
+			return round($this->Activity->fitVO2maxEstimate());
 		}
 
 		return '';

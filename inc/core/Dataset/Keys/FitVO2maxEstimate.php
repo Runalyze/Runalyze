@@ -1,6 +1,6 @@
 <?php
 /**
- * This file contains class::FitVdotEstimate
+ * This file contains class::FitVO2maxEstimate
  * @package Runalyze
  */
 
@@ -10,12 +10,12 @@ use Runalyze\Dataset\Context;
 use Runalyze\Dataset\SummaryMode;
 
 /**
- * Dataset key: FitVdotEstimate
+ * Dataset key: FitVO2maxEstimate
  * 
  * @author Hannes Christiansen
  * @package Runalyze\Dataset\Keys
  */
-class FitVdotEstimate extends AbstractKey
+class FitVO2maxEstimate extends AbstractKey
 {
 	/**
 	 * Enum id
@@ -23,7 +23,7 @@ class FitVdotEstimate extends AbstractKey
 	 */
 	public function id()
 	{
-		return \Runalyze\Dataset\Keys::FIT_VDOT_ESTIMATE;
+		return \Runalyze\Dataset\Keys::FIT_VO2MAX_ESTIMATE;
 	}
 
 	/**
@@ -41,7 +41,7 @@ class FitVdotEstimate extends AbstractKey
 	 */
 	public function label()
 	{
-		return __('VDOT').' '.__('(by file)');
+		return __('VO2max').' '.__('(by file)');
 	}
 
 	/**
@@ -50,7 +50,7 @@ class FitVdotEstimate extends AbstractKey
 	 */
 	public function shortLabel()
 	{
-		return __('VDOT').' '.__('(file)');
+		return __('VO2max').' '.__('(file)');
 	}
 
 	/**
@@ -59,7 +59,7 @@ class FitVdotEstimate extends AbstractKey
 	 */
 	public function description()
 	{
-		return __('Garmin\'s newer devices have an integrated vdot estimation.');
+		return __('Garmin\'s newer devices have an integrated VO2max estimation.');
 	}
 
 	/**
@@ -70,7 +70,7 @@ class FitVdotEstimate extends AbstractKey
 	public function stringFor(Context $context)
 	{
 		if ($context->isRunning()) {
-			return $context->dataview()->fitVdotEstimate();
+			return $context->dataview()->fitVO2maxEstimate();
 		}
 
 		return '';

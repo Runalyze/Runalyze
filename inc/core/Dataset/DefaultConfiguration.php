@@ -48,7 +48,7 @@ class DefaultConfiguration extends Configuration
 			Keys::GROUNDCONTACT => true,
 			Keys::VERTICAL_OSCILLATION => true,
 			Keys::STRIDE_LENGTH => false,
-			Keys::FIT_VDOT_ESTIMATE => false,
+			Keys::FIT_VO2MAX_ESTIMATE => false,
 			Keys::FIT_RECOVERY_TIME => false,
 			Keys::FIT_HRV_ANALYSIS => false,
 			Keys::SWOLF => false,
