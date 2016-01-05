@@ -94,7 +94,7 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 			echo('
 				<tr>
 					<td class="b l">'.$y.'</td>'.NL);
-
+			$summarized = 0;
 			for ($m = 1; $m <= 12; $m++) {
 				if (isset($Data[$m]) && $Data[$m]['elevation'] > 0) {
 					$Link = new SearchLink();
