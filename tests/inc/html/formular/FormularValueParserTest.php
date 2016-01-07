@@ -203,5 +203,9 @@ class FormularValueParserTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals(-17.8, $_POST['zero'], '', 0.1);
 		$this->assertEquals(0.56, $_POST['large'], '', 0.1);
 	}
+	
+	public function testValidatingWindSpeedInKmh() {
+		Configuration::General()->distanceUnitSystem()->set(Runalyze\Parameter\Application\DistanceUnitSystem::METRIC);
+	}
 
 }

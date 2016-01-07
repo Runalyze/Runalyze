@@ -7,6 +7,7 @@
 namespace Runalyze\Data\Weather;
 
 use Cache;
+use Runalyze\Parameter\Application\DistanceUnitSystem;
 
 /**
  * Forecast-strategy for using openweathermap.org
@@ -152,8 +153,8 @@ class Openweathermap implements ForecastStrategyInterface {
 		} else {
 			$value = null;
 		}
-
-		return new WindSpeed($value, WindSpeed::MILES_PER_H);
+		
+		return new WindSpeed($value, DistanceUnitSystem::IMPERIAL);
 	}
 	
 	/**

@@ -49,11 +49,11 @@ class WindSpeed {
 	/**
 	 * WindSpeed
 	 * @param float $value
-	 * @param \Runalyze\Parameter\Application\DistanceUnitSystem $unitSystem
+	 * @param $unit
 	 */
-	public function __construct($value = null, DistanceUnitSystem $unitSystem = null) {
-		$this->set($value);
-		$this->UnitSystem = (null !== $unitSystem) ? $unitSystem : Configuration::General()->distanceUnitSystem();
+	public function __construct($value = null, $unit = DistanceUnitSystem::METRIC) {
+		$this->set($value, $unit);
+		$this->UnitSystem = Configuration::General()->distanceUnitSystem();
 	}
 	
 	/**
@@ -92,8 +92,12 @@ class WindSpeed {
 	 * @param float $value
 	 * @param int $unit
 	 */
-	public function set($value) {
+	public function set($value, $unit) {
+	    if($unit == DistanceUnitSystem::IMPERIAL) {
+		$this->setImperial($value);
+	    } elseif($unit == DistanceUnitSystem::METRIC) {
 		$this->inMetricUnit = $value;
+	    }
 	}
 	
 	
