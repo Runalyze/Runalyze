@@ -465,7 +465,7 @@ $FIELDS = array(
 					),
 					'formular'	=> array(
 						'label'		=> __('Wind speed'),
-						'unit'		=> (new \Runalyze\Data\Weather\WindSpeed())->unitInPreferredUnit(),
+						'unit'		=> (new \Runalyze\Data\Weather\WindSpeed())->PreferredUnit(),
 						'parser'	=> FormularValueParser::$PARSER_WINDSPEED
 					)
 	),

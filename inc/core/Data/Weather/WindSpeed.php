@@ -15,7 +15,7 @@ use Runalyze\Parameter\Application\DistanceUnitSystem;
  * @author Michael Pohl
  * @package Runalyze\Data\Weather
  */
-class WindSpeed {
+class WindSpeed implements \Runalyze\Activity\ValueInterface {
     
 	/**
 	 * Factor: mph => km/h
@@ -49,11 +49,11 @@ class WindSpeed {
 	/**
 	 * WindSpeed
 	 * @param float $value
-	 * @param $unit
+	 * @param \Runalyze\Parameter\Application\DistanceUnitSystem $unitSystem
 	 */
-	public function __construct($value = null, $unit = DistanceUnitSystem::METRIC) {
-		$this->set($value, $unit);
-		$this->UnitSystem = Configuration::General()->distanceUnitSystem();
+	public function __construct($value = null, DistanceUnitSystem $unitSystem = null) {
+		$this->set($value);
+		$this->UnitSystem = (null !== $unitSystem) ? $unitSystem : Configuration::General()->distanceUnitSystem();
 	}
 	
 	/**
@@ -70,7 +70,7 @@ class WindSpeed {
 	/**
 	 * @return float [mixed unit]
 	 */
-	public function unitInPreferredUnit()
+	public function PreferredUnit()
 	{
 		if ($this->UnitSystem->isImperial()) {
 			return self::MILES_PER_H;
@@ -92,12 +92,9 @@ class WindSpeed {
 	 * @param float $value
 	 * @param int $unit
 	 */
-	public function set($value, $unit) {
-	    if($unit == DistanceUnitSystem::IMPERIAL) {
-		$this->setImperial($value);
-	    } elseif($unit == DistanceUnitSystem::METRIC) {
+	public function set($value) {
 		$this->inMetricUnit = $value;
-	    }
+	    return $this;
 	}
 	
 	
@@ -107,6 +104,7 @@ class WindSpeed {
 	 */
 	public function setImperial($value) { 
 		$this->inMetricUnit = $value * self::KM_MULTIPLIER;
+		return $this;
 	}
         
 	/**
@@ -166,5 +164,13 @@ class WindSpeed {
 		}
 
 		return '';
+	}
+	
+	/*
+	 * String
+	 * @return string
+	 */
+	public function string($withUnit = true) {
+	    return $this->valueInPreferredUnit.($withUnit ? '&nbsp;'.$this->PreferredUnit() : '');
 	}
 }

@@ -154,7 +154,7 @@ class Openweathermap implements ForecastStrategyInterface {
 			$value = null;
 		}
 		
-		return new WindSpeed($value, DistanceUnitSystem::IMPERIAL);
+		return (new WindSpeed())->setImperial($value)->value();
 	}
 	
 	/**
