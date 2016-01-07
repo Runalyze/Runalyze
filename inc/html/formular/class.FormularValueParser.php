@@ -582,13 +582,8 @@ class FormularValueParser {
 	 * @param array $parserOptions
 	 * @return bool
 	 */
-	private static function validateWindSpeed($key, array $parserOptions) {
-		$decimals = isset($parserOptions['decimals']) ? $parserOptions['decimals'] : 2;
-		$decimalPoint = isset($parserOptions['decimal-point']) ? $parserOptions['decimal-point'] : '.';
-
-		$_POST[$key] = str_replace(',', '.', $_POST[$key]);
-
-		$_POST[$key] = round((new WindSpeed())->setInPreferredUnit($_POST[$key])->valueInPreferredUnit(), 2);
+	private static function validateWindSpeed($key) {
+		$_POST[$key] = round((new WindSpeed())->setInPreferredUnit($_POST[$key])->value(), 0);
 		return true;
 	}
 
@@ -598,10 +593,7 @@ class FormularValueParser {
 	 * @param array $parserOptions
 	 */
 	private static function parseWindSpeed(&$value, array $parserOptions) {
-		$decimals = isset($parserOptions['decimals']) ? $parserOptions['decimals'] : 2;
-		$decimalPoint = isset($parserOptions['decimal-point']) ? $parserOptions['decimal-point'] : '.';
-
-		$value = number_format((new WindSpeed())->setInPreferredUnit($value)->valueInPreferredUnit(), 2);
+                $value = number_format((new WindSpeed($value))->valueInPreferredUnit(), 0);
 	}
 
 	/**

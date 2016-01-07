@@ -18,11 +18,9 @@ use Runalyze\Parameter\Application\DistanceUnitSystem;
 class WindSpeed {
     
 	/**
-	 * Factor: km => miles
+	 * Factor: mph => km/h
 	 * @var double 
 	 */
-	const MILE_MULTIPLIER = 0.621371192;
-	
 	const KM_MULTIPLIER = 1.60934;
 	
 	/**
@@ -102,19 +100,17 @@ class WindSpeed {
 	/**
 	 * Set wind Speed from mph in metric
 	 * @param float $value
-	 * @param int $unit
 	 */
 	public function setImperial($value) { 
-	    echo $value;
 		$this->inMetricUnit = $value * self::KM_MULTIPLIER;
-	}	
+	}
+        
 	/**
 	 * @param float $windspeed [mixed unit]
-	 * @return \Runalyze\Activity\Elevation $this-reference
+	 * @return float $value
 	 */
 	public function setInPreferredUnit($windspeed)
-	{
-	    echo $value;
+	{       
 		if ($this->UnitSystem->isImperial()) {
 			$this->setImperial($windspeed);
 		} else {
@@ -129,10 +125,10 @@ class WindSpeed {
 	 * @param float $value in Metric
 	 */
 	public function imperial($value = NULL) {
-		if(isset($value)) {
-		    return $value * self::MILE_MULTIPLIER;
+		if(is_null($value)) {
+                    return $this->inMetricUnit / self::KM_MULTIPLIER;
 		} else {
-		    return $this->inMetricUnit * self::MILE_MULTIPLIER;
+		    return $value / self::KM_MULTIPLIER;
 		}
 	}
 	

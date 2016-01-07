@@ -329,7 +329,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_training` (
   `vertical_oscillation` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `vertical_ratio` SMALLINT UNSIGNED NOT NULL DEFAULT  '0',
   `temperature` tinyint(4) DEFAULT NULL,
-  `wind_speed` decimal(5,2) unsigned DEFAULT NULL,
+  `wind_speed` tinyint unsigned DEFAULT NULL,
   `wind_deg` decimal(5,2) unsigned DEFAULT NULL,
   `humidity` tinyint unsigned DEFAULT NULL,
   `pressure` smallint unsigned DEFAULT NULL,
