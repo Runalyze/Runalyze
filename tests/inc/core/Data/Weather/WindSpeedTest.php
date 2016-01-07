@@ -14,7 +14,7 @@ class WindSpeedTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testIsUnknownWithUnit() {
-		$WindSpeed = new WindSpeed(null, Temperature::KELVIN);
+		$WindSpeed = new WindSpeed(null);
 
 		$this->assertTrue($WindSpeed->isUnknown());
 		$this->assertEquals(null, $WindSpeed->value());
@@ -28,7 +28,7 @@ class WindSpeedTest extends \PHPUnit_Framework_TestCase {
 	}
 	
 	public function testImperial() {
-		$WindSpeed = new WindSpeed(30, \Runalyze\Parameter\Application\DistanceUnitSystem::IMPERIAL);
+		$WindSpeed = (new WindSpeed())->setImperial(30);
 		$this->assertEquals(30, $WindSpeed->value());
 		$this->assertEquals('mph', $WindSpeed->unit());
 		$this->assertFalse($WindSpeed->isUnknown());

@@ -156,13 +156,11 @@ class WindSpeed implements \Runalyze\Activity\ValueInterface {
 	 * @return string
 	 */
 	public function unit() {
-		switch ($this->unit) {
-			case self::KM_PER_H:
-				return 'km/h';
-			case self::MILES_PER_H:
-				return 'mph';
+		if($this->UnitSystem->isMetric()) {
+		    return self::KM_PER_H;
+		}   elseif($this->UnitSystem->isImperial()) {
+		    return self::MILES_PER_H;
 		}
-
 		return '';
 	}
 	
