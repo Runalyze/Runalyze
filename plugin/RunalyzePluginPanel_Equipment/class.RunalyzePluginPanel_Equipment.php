@@ -148,7 +148,7 @@ class RunalyzePluginPanel_Equipment extends PluginPanel {
 				'.$this->getUsageImage(
 					$showDistance
 						? $Object->totalDistance() / $EquipmentType->maxDistance()
-						: $Object->duration() / ($hasMaxDuration ? $EquipmentType->maxDuration() : $max)
+						: $Object->duration() / ($hasMaxDuration ? $EquipmentType->maxDuration() : max(1, $max))
 				).'
 			</p>';
 		}
