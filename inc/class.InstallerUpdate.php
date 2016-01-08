@@ -26,17 +26,44 @@ class InstallerUpdate extends Installer {
 	 */
 	protected $FurtherInstructions = array();
 
+	/** @var bool */
+	protected $CacheWasCleared = false;
+
 	/**
 	 * Constructor
 	 */
 	public function __construct() {
 		$this->definePath();
 		$this->loadConfig();
+		$this->initAutoloader();
 		$this->initLanguage();
 		$this->loadConsts();
+		$this->tryToClearCache();
 
 		$this->initPossibleUpdates();
 		$this->importUpdateFile();
+	}
+
+	/**
+	 * Set up Autloader 
+	 */
+	protected function initAutoloader() {
+		require_once FRONTEND_PATH.'/system/class.Autoloader.php';
+		new Autoloader();
+	}
+
+	/**
+	 * Try to clear cache
+	 */
+	protected function tryToClearCache() {
+		try {
+			new Cache();
+			Cache::clean();
+
+			$this->CacheWasCleared = true;
+		} catch (Exception $e) {
+			$this->CacheWasCleared = false;
+		}
 	}
 
 	/**

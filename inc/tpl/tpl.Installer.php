@@ -34,7 +34,7 @@ foreach ($Steps as $i => $Name) {
 	</p>
 
 	<p class="warning">
-		<?php _e('If you want to reinstall Runalyze please delete you have to delete the <em>config.php</em>-file in your main directory of this installation.'); ?>
+		<?php _e('If you want to reinstall Runalyze please delete the <em>config.php</em>-file in your main directory of this installation.'); ?>
 	</p>
 
 <?php elseif ($this->currentStep == self::START): ?>

@@ -135,6 +135,7 @@ class Installer {
 	*/
 	public function definePath() {
 		define('PATH', dirname(__FILE__).'/');
+		define('FRONTEND_PATH', dirname(__FILE__).'/');
 	}
 
 	/**
