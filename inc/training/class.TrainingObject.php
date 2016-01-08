@@ -60,6 +60,7 @@ class TrainingObject extends DataObject {
 		$this->set('is_public', Configuration::Privacy()->publishActivity() ? '1' : '0');
 		$this->set('sportid', Configuration::General()->mainSport());
 		$this->forceToSet('s_sum_with_distance', 0);
+		$this->forceToSet('equipment', []);
 	}
 
 	/**
@@ -159,7 +160,13 @@ class TrainingObject extends DataObject {
 		$InserterActivity->setRoute($Route);
 		$InserterActivity->setTrackdata($Trackdata);
 		$InserterActivity->setSwimdata($Swimdata);
-		$InserterActivity->setEquipmentIDs(TrainingFormular::readEquipmentFromPost($Activity->sportid()));
+
+		if ($this->get('equipment') != '') {
+			$InserterActivity->setEquipmentIDs($this->get('equipment'));
+		} else {
+			$InserterActivity->setEquipmentIDs(TrainingFormular::readEquipmentFromPost($Activity->sportid()));
+		}
+
 		$InserterActivity->setTagIDs(TrainingFormular::readTagFromPost($Activity->sportid()));
 		$InserterActivity->insert();
 
@@ -455,7 +462,7 @@ class TrainingObject extends DataObject {
 	 * Set shoeid
 	 * @param int $id shoeid
 	 */
-	public function setShoeid($id) { $this->set('shoeid', $id); }
+	public function setShoeid($id) { $this->set('equipment', [$id]); }
 
 
 	/**
