@@ -41,7 +41,7 @@ class ConfigTabDataset extends ConfigTab {
 	 * Load configuration
 	 */
 	protected function loadConfiguration() {
-		$this->Configuration = new Dataset\Configuration(DB::getInstance(), SessionAccountHandler::getId(), false);
+		$this->Configuration = new Dataset\Configuration(DB::getInstance(), SessionAccountHandler::getId(), false, false);
 
 		if ($this->Configuration->isEmpty()) {
 			$this->Configuration = new Dataset\DefaultConfiguration();
