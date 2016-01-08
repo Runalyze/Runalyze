@@ -40,7 +40,7 @@ class RunalyzePluginStat_MonthlyStats extends PluginStat {
 	 */
 	protected function prepareForDisplay() {
 		$this->setAnalysisNavigation();
-		$this->setSportsNavigation(true, false);
+		$this->setSportsNavigation(true, true);
 		$this->initData();
 	}
 
@@ -134,7 +134,9 @@ class RunalyzePluginStat_MonthlyStats extends PluginStat {
 				YEAR(FROM_UNIXTIME(`time`)) as `year`,
 				MONTH(FROM_UNIXTIME(`time`)) as `month`
 			FROM `' . PREFIX . 'training`
-				WHERE `sportid`=' . $this->sportid . ' AND `accountid`=' . SessionAccountHandler::getId() . '
+			WHERE
+			      '.(((int)$this->sportid > 0)?'`sportid`=' . $this->sportid . ' AND ':'').'
+			      `accountid`=' . SessionAccountHandler::getId() . '
 			GROUP BY `year` DESC, `month` ASC'
 		)->fetchAll();
 
