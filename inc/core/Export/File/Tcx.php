@@ -143,19 +143,22 @@ class Tcx extends AbstractFileExporter
             if ($this->Activity->Lap[(int)floor($Trackdata->distance())]) {
                 $Trackpoint = $this->Activity->Lap[(int)floor($Trackdata->distance())]->Track->addChild('Trackpoint');
                 $Trackpoint->addChild('Time', $this->timeToString($Starttime + $Trackdata->time()));
+                
+                if($this->Context->trackdata()->has(Trackdata\Entity::CADENCE))
+                    $Trackpoint->addChild('Cadence', $Trackdata->current (Trackdata\Entity::CADENCE));
 
-                if($hasRoute) {
+                if($hasRoute && $this->Context->route()->hasGeohashes()) {
                     $Position = $Trackpoint->addChild('Position');
                     $Position->addChild('LatitudeDegrees', $Route->latitude());
                     $Position->addChild('LongitudeDegrees', $Route->longitude());
 
-                    if ($hasElevation) {
-                        $Trackpoint->addChild('AltitudeMeters', $Route->current(Route\Entity::ELEVATIONS_ORIGINAL));
-                    }
+                
+                if ($hasElevation) 
+                    $Trackpoint->addChild('AltitudeMeters', $Route->current(Route\Entity::ELEVATIONS_ORIGINAL));
+                
                 }
-                
-                
-                $Trackpoint->addChild('DistanceMeters', 1000*$Trackdata->distance());
+                if($this->Context->trackdata()->has(Trackdata\Entity::DISTANCE))
+                    $Trackpoint->addChild('DistanceMeters', 1000*$Trackdata->distance());
 
                 if ($hasHeartrate) {
                     $Heartrate = $Trackpoint->addChild('HeartRateBpm');
