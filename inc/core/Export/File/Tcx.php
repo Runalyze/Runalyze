@@ -29,7 +29,7 @@ class Tcx extends AbstractFileExporter
      */
     public function isPossible()
     {
-        return ($this->Context->hasRoute() && $this->Context->route()->hasPositionData());
+        return $this->Context->hasTrackdata();
     }
 
     /**
@@ -126,26 +126,35 @@ class Tcx extends AbstractFileExporter
         $Starttime = $this->Context->activity()->timestamp();
 
         $Trackdata = new Trackdata\Loop($this->Context->trackdata());
-        $Route = new Route\Loop($this->Context->route());
 
-        $hasElevation = $this->Context->route()->hasOriginalElevations();
+
         $hasHeartrate = $this->Context->trackdata()->has(Trackdata\Entity::HEARTRATE);
+        $hasRoute = $this->Context->hasRoute();
+
+        if($hasRoute) {
+            $Route = new Route\Loop($this->Context->route());
+            $hasElevation = $this->Context->route()->hasOriginalElevations();
+        }
 
         while ($Trackdata->nextStep()) {
-            $Route->nextStep();
+            if($hasRoute)
+                $Route->nextStep();
 
             if ($this->Activity->Lap[(int)floor($Trackdata->distance())]) {
                 $Trackpoint = $this->Activity->Lap[(int)floor($Trackdata->distance())]->Track->addChild('Trackpoint');
                 $Trackpoint->addChild('Time', $this->timeToString($Starttime + $Trackdata->time()));
 
-                $Position = $Trackpoint->addChild('Position');
-                $Position->addChild('LatitudeDegrees', $Route->latitude());
-                $Position->addChild('LongitudeDegrees', $Route->longitude());
+                if($hasRoute) {
+                    $Position = $Trackpoint->addChild('Position');
+                    $Position->addChild('LatitudeDegrees', $Route->latitude());
+                    $Position->addChild('LongitudeDegrees', $Route->longitude());
 
-                if ($hasElevation) {
-                    $Trackpoint->addChild('AltitudeMeters', $Route->current(Route\Entity::ELEVATIONS_ORIGINAL));
+                    if ($hasElevation) {
+                        $Trackpoint->addChild('AltitudeMeters', $Route->current(Route\Entity::ELEVATIONS_ORIGINAL));
+                    }
                 }
-
+                
+                
                 $Trackpoint->addChild('DistanceMeters', 1000*$Trackdata->distance());
 
                 if ($hasHeartrate) {
