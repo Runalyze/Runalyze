@@ -3,6 +3,9 @@
  * This file contains class::DataObject
  * @package Runalyze\DataObjects
  */
+
+use Runalyze\Error;
+
 /**
  * Object for data from database
  * 
