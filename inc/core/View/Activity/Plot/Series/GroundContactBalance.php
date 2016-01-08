@@ -39,6 +39,7 @@ class GroundContactBalance extends ActivityPointSeries {
 	 */
 	protected function manipulateData() {
 		$this->Data = array_map(array($this, 'correctUnit'), $this->Data);
+		$this->Data = array_filter($this->Data);
 	}
 
 	/**
