@@ -85,10 +85,6 @@ class Corrector {
 		}
 
 		if ($this->hasNoValidStrategy()) {
-			$this->tryToUseDataScienceToolkit();
-		}
-
-		if ($this->hasNoValidStrategy()) {
 			$this->tryToUseGoogleAPI();
 		}
 	}
@@ -143,17 +139,6 @@ class Corrector {
 	 */
 	protected function tryToUseGeonames() {
 		$this->Strategy = new Geonames($this->LatitudePoints, $this->LongitudePoints);
-
-		if (!$this->Strategy->canHandleData()) {
-			$this->Strategy = null;
-		}
-	}
-
-	/**
-	 * Try to use DataScienceToolkit
-	 */
-	protected function tryToUseDataScienceToolkit() {
-		$this->Strategy = new DataScienceToolkit($this->LatitudePoints, $this->LongitudePoints);
 
 		if (!$this->Strategy->canHandleData()) {
 			$this->Strategy = null;
