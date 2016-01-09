@@ -447,7 +447,7 @@ class Entity extends Model\EntityWithID implements Model\Loopable {
 	 * 
 	 * Remark: This method may throw index offsets.
 	 * @param int $index
-	 * @param enum $key
+	 * @param string $key
 	 * @return mixed
 	 */
 	public function at($index, $key) {

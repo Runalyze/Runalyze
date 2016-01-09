@@ -6,8 +6,6 @@
 
 namespace Runalyze\View;
 
-use Runalyze\View\Tooltip;
-
 /**
  * Icon
  * 

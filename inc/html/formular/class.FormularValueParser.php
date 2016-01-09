@@ -103,7 +103,7 @@ class FormularValueParser {
 	/**
 	 * Validate post-value for a given key with a given parser
 	 * @param string $key
-	 * @param enum $parser
+	 * @param string $parser
 	 * @param array $parserOptions
 	 * @return boolean 
 	 */
@@ -155,7 +155,7 @@ class FormularValueParser {
 	/**
 	 * Transform value with a given parser
 	 * @param mixed $value
-	 * @param enum $parser
+	 * @param string $parser
 	 * @param array $parserOptions
 	 */
 	public static function parse(&$value, $parser, $parserOptions = array()) {

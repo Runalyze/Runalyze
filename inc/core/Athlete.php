@@ -53,7 +53,7 @@ class Athlete {
 
 	/**
 	 * Create athlete
-	 * @param \Gender $Gender [optional]
+	 * @param \Runalyze\Parameter\Application\Gender $Gender [optional]
 	 * @param int $maximalHR [optional]
 	 * @param int $restingHR [optional]
 	 * @param float $weight [optional]

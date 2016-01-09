@@ -13,9 +13,11 @@ use Runalyze\Model\Factory;
 use Runalyze\Activity\Distance;
 use Runalyze\Activity\Duration;
 use Runalyze\Activity\Elevation;
+use Runalyze\Activity\GroundcontactBalance;
 use Runalyze\Activity\HeartRate;
 use Runalyze\Activity\Pace;
 use Runalyze\Activity\StrideLength;
+use Runalyze\Activity\VerticalRatio;
 use Runalyze\Calculation\JD\VDOT;
 use Runalyze\Calculation\JD\VDOTCorrector;
 use Runalyze\View\Icon\VdotIcon;
@@ -26,7 +28,6 @@ use Runalyze\View\Stresscolor;
 use SessionAccountHandler;
 use SportFactory;
 use SearchLink;
-use Icon;
 use Ajax;
 use HTML;
 use Helper;
@@ -155,7 +156,6 @@ class Dataview {
 
 	/**
 	 * Daytime
-	 * @param string $format
 	 * @return string
 	 */
 	public function daytime() {
@@ -390,7 +390,7 @@ class Dataview {
 	 */
 	public function groundcontactBalance() {
 		if ($this->Activity->groundContactBalance() > 0) {
-			return \Runalyze\Activity\GroundcontactBalance::format($this->Activity->groundContactBalance());
+			return GroundcontactBalance::format($this->Activity->groundContactBalance());
 		}
 
 		return '';
@@ -409,11 +409,11 @@ class Dataview {
 	
 	/**
 	 * Get vertical ratio
-	 * @return $int
+	 * @return string
 	 */
 	public function verticalRatio() {
 		if ($this->Activity->verticalRatio() > 0) {
-			return \Runalyze\Activity\VerticalRatio::format($this->Activity->verticalRatio());
+			return VerticalRatio::format($this->Activity->verticalRatio());
 		}
 
 		return '';

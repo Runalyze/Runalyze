@@ -106,7 +106,7 @@ class Distance implements ValueInterface {
 
 	/**
 	 * @param float $distance [mixed unit]
-	 * @return \Runalyze\Activity\Elevation $this-reference
+	 * @return \Runalyze\Activity\Distance $this-reference
 	 */
 	public function setInPreferredUnit($distance)
 	{

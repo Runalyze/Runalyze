@@ -355,7 +355,7 @@ class AccountHandler {
 	 */
 	public static function tryToSetNewPassword() {
 		if (!isset($_POST['chpw_hash']) || !isset($_POST['new_pw']) || !isset($_POST['new_pw_again']) || !isset($_POST['chpw_username']))
-			return;
+			return [];
 
 		if ($_POST['chpw_username'] == self::getUsernameForChangePasswordHash()) {
 			if ($_POST['new_pw'] != $_POST['new_pw_again'])
@@ -477,7 +477,7 @@ class AccountHandler {
 		$deletionHash = self::getRandomHash();
 		$deletionLink = self::getDeletionLink($deletionHash);
 
-		DB::getInstance()->update('account', SessionAccountHandler::getId(), 'deletion_hash', $deletionHash, false);
+		DB::getInstance()->update('account', SessionAccountHandler::getId(), 'deletion_hash', $deletionHash);
 
 		$subject  = __('Deletion request of your RUNALYZE account');
 		$message  = __('Do you really want to delete your account').' '.$account['username'].", ".$account['name']."?<br><br>\r\n\r\n";

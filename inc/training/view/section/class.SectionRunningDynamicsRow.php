@@ -5,9 +5,8 @@
  */
 
 use Runalyze\Data\Cadence;
-use Runalyze\View\Activity;
 use Runalyze\Model\Trackdata;
-use Runalyze\Activity\Distance;
+use Runalyze\View\Activity;
 use Runalyze\View\Activity\Box;
 
 /**

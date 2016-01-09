@@ -59,7 +59,7 @@ class InverseCalculator {
 	protected function calculate($bpm, $trimp) {
 		$Factor = new Factor($this->Athlete->gender());
 		$max = $this->Athlete->knowsMaximalHeartRate() ? $this->Athlete->maximalHR() : Calculator::DEFAULT_HR_MAX;
-		$rest = $this->Athlete->knowsRestingHeartRate() ? $this->Athlete->restingHR() : self::DEFAULT_HR_REST;
+		$rest = $this->Athlete->knowsRestingHeartRate() ? $this->Athlete->restingHR() : Calculator::DEFAULT_HR_REST;
 
 		$hr = max(0, ($bpm - $rest) / ($max - $rest));
 

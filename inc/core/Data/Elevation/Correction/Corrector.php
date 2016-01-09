@@ -59,8 +59,7 @@ class Corrector {
 	}
 
 	/**
-	 * 
-	 * @param type $strategyName
+	 * @param string $strategyName
 	 */
 	protected function tryToUse($strategyName) {
 		$strategyName = 'Runalyze\\Data\\Elevation\\Correction\\'.$strategyName;

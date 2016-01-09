@@ -6,11 +6,9 @@
 
 namespace Runalyze\Model\Activity;
 
-use Runalyze\Model;
-use Runalyze\Model\Activity\Partner;
-use Runalyze\Model\Activity\Splits;
-
 use Runalyze\Data\Weather;
+use Runalyze\Model;
+use Runalyze\Model\Activity\Splits;
 
 /**
  * Activity entity

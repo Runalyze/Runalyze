@@ -118,7 +118,7 @@ class Language {
 
     /**
 	 * Available languages
-	 * @return string
+	 * @return array
 	 */
 	public static function availableLanguages() {
 		if (null === self::$AVAILABLE_LANGUAGES) {
@@ -258,7 +258,8 @@ class Language {
 	/**
 	 * Returns the translation for a textstring
 	 * @param string $text
-	 * @param string domain
+	 * @param string $domain
+	 * @return string
 	 */
 	public static function __($text, $domain) {
 	   return gettext($text);
@@ -267,7 +268,8 @@ class Language {
 	/**
 	 * Echo the translation for a textstring
 	 * @param string $text
-	 * @param string domain
+	 * @param string $domain
+	 * @return string
 	 */
 	public static function _e($text, $domain) {
 	   return gettext($text);
@@ -275,8 +277,11 @@ class Language {
 
 	/**
 	 * Return singular/plural translation for a textstring
-	 * @param string $text
-	 * @param string domain
+	 * @param string $msg1
+	 * @param string $msg2
+	 * @param int $n
+	 * @param string $domain
+	 * @return string
 	 */
 	public static function _n($msg1, $msg2, $n, $domain) {
 	   return ngettext($msg1, $msg2, $n);
@@ -284,8 +289,11 @@ class Language {
 
 	/**
 	 * Echo singular/plural translation for a textstring
-	 * @param string $text
-	 * @param string domain
+	 * @param string $msg1
+	 * @param string $msg2
+	 * @param int $n
+	 * @param string $domain
+	 * @return string
 	 */
 	public static function _ne($msg1, $msg2, $n, $domain) {
 	   return ngettext($msg1, $msg2, $n);
@@ -296,6 +304,7 @@ class Language {
  * Returns the translation for a textstring
  * @param string $text
  * @param string $domain [optional]
+ * @return string
  */
 function __($text, $domain = 'runalyze') {
     return Language::__($text, $domain);
@@ -312,8 +321,11 @@ function _e($text, $domain = 'runalyze') {
 
 /**
  * Return singular/plural translation for a textstring
- * @param string $text
+ * @param string $msg1
+ * @param string $msg2
+ * @param int $n
  * @param string $domain [optional]
+ * @return string
  */
 function _n($msg1, $msg2, $n, $domain = 'runalyze') {
     return Language::_n($msg1, $msg2, $n, $domain);
@@ -321,7 +333,9 @@ function _n($msg1, $msg2, $n, $domain = 'runalyze') {
 
 /**
  * Echo singular/plural translation for a textstring
- * @param string $text
+ * @param string $msg1
+ * @param string $msg2
+ * @param int $n
  * @param string $domain [optional]
  */
 function _ne($msg1, $msg2, $n, $domain = 'runalyze') {

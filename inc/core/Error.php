@@ -209,7 +209,7 @@ class Error {
 
 	/**
 	 * Adds a new message to the array of errors
-	 * @param const  $type      type of error (ERROR | WARNING | NOTICE | Unknown error type)
+	 * @param string  $type      type of error (ERROR | WARNING | NOTICE | Unknown error type)
 	 * @param string $message   error message
 	 * @param string $file      file containing the error
 	 * @param int    $line      line number containing the error
@@ -374,10 +374,10 @@ if (defined('RUNALYZE'))
 
 /**
  * Own function to handle the errors using class::Error.
- * @param $type      type of error (E_USER_ERROR | E_USER_WARNING | E_USER_NOTICE)
- * @param $message   error message
- * @param $file      filename
- * @param $line      line number
+ * @param string $type      type of error (E_USER_ERROR | E_USER_WARNING | E_USER_NOTICE)
+ * @param string $message   error message
+ * @param string $file      filename
+ * @param int $line      line number
  * @return bool      returning true to not execute PHP internal error handler
  */
 function error_handler($type, $message, $file, $line) {

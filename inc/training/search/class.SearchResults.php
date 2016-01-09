@@ -29,12 +29,6 @@ class SearchResults {
 	protected $AllowedKeys = array();
 
 	/**
-	 * Dataset
-	 * @var Dataset
-	 */
-	protected $Dataset = null;
-
-	/**
 	 * Colspan
 	 * @var int
 	 */

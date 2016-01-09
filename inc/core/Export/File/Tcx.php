@@ -18,10 +18,10 @@ use Runalyze\Model\Trackdata;
  */
 class Tcx extends AbstractFileExporter
 {
-    /** @var SimpleXMLElement */
+    /** @var \SimpleXMLElement */
     protected $XML = null;
 
-    /** @var SimpleXMLElement */
+    /** @var \SimpleXMLElement */
     protected $Activity = null;
 
     /** @var bool */

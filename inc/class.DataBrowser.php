@@ -304,7 +304,7 @@ class DataBrowser {
 
 	/**
 	 * Get list to shared list
-	 * @returns tring
+	 * @returns string
 	 */
 	protected function getSharedListLink() {
 		return SharedLinker::getListLinkForCurrentUser();

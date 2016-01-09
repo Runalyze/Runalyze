@@ -57,7 +57,7 @@ abstract class Completor {
 
 	/**
 	 * Mode
-	 * @return enum
+	 * @return string
 	 */
 	abstract public function mode();
 

@@ -32,7 +32,7 @@ class Factor {
 
 	/**
 	 * Construct
-	 * @param \Gender $Gender
+	 * @param \Runalyze\Parameter\Application\Gender $Gender
 	 */
 	public function __construct(Gender $Gender) {
 		$this->Gender = $Gender;

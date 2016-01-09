@@ -102,7 +102,7 @@ class Condition {
 
 	/**
 	 * Is unknown?
-	 * @return type
+	 * @return bool
 	 */
 	public function isUnknown() {
 		return ($this->identifier == self::UNKNOWN);
@@ -110,7 +110,7 @@ class Condition {
 
 	/**
 	 * Icon
-	 * @return Runalyze\View\Icon\WeatherIcon
+	 * @return \Runalyze\View\Icon\WeatherIcon
 	 */
 	public function icon() {
 		switch ($this->identifier) {

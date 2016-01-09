@@ -95,6 +95,7 @@ class MultiImporterFormular extends Formular {
 	 * Get table row for training
 	 * @param TrainingObject $TrainingObject
 	 * @param int $i
+	 * @return string
 	 */
 	private function getTableRowFor(TrainingObject &$TrainingObject, $i) {
 		$TrainingObject->updateAfterParsing();

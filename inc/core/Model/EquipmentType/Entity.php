@@ -16,12 +16,12 @@ use Runalyze\Model;
  */
 class Entity extends Model\EntityWithID {
 	/**
-	 * @var enum
+	 * @var int enum
 	 */
 	const CHOICE_SINGLE = 0;
 
 	/**
-	 * @var enum
+	 * @var int enum
 	 */
 	const CHOICE_MULTIPLE = 1;
 

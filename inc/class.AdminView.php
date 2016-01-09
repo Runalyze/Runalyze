@@ -3,9 +3,6 @@
  * This file contains class::AdminView
  * @package Runalyze\Frontend
  */
-
-use Runalyze\Activity\Distance;
-
 /**
  * Class for admin view
  *

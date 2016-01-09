@@ -19,7 +19,7 @@ use Runalyze\Model\Trackdata;
  */
 class Kml extends AbstractFileExporter
 {
-    /** @var SimpleXMLElement */
+    /** @var \SimpleXMLElement */
     protected $XML = null;
 
     /** @var string */

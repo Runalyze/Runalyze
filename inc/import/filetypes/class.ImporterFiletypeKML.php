@@ -44,8 +44,8 @@ class ImporterFiletypeKML extends ImporterFiletypeAbstract {
 
 	/**
 	 * Is this a standard kml file?
-	 * @param type $string
-	 * @return type
+	 * @param string $string
+	 * @return bool
 	 */
 	private function isDefaultKML($string) {
 		return (strpos($string, '<coordinates') !== false);
@@ -53,8 +53,8 @@ class ImporterFiletypeKML extends ImporterFiletypeAbstract {
 
 	/**
 	 * Is this a namespaced kml file?
-	 * @param type $string
-	 * @return type
+	 * @param string $string
+	 * @return bool
 	 */
 	private function isNamespacedKml($string) {
 		return (strpos($string, '<kml:coordinates') !== false);

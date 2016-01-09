@@ -90,7 +90,7 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 	 */
 	final public function object($index = 0) {
 		if ($index > 0)
-			Error::getInstance()->addDebug('ParserAbstractSingle has only one training, asked for index = '.$index);
+			\Runalyze\Error::getInstance()->addDebug('ParserAbstractSingle has only one training, asked for index = '.$index);
 
 		return $this->TrainingObject;
 	}

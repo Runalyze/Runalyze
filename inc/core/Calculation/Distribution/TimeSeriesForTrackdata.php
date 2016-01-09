@@ -21,17 +21,17 @@ class TimeSeriesForTrackdata extends TimeSeries {
 	protected $Trackdata;
 
 	/**
-	 * @var enum
+	 * @var int enum
 	 */
 	protected $IndexKey;
 
 	/**
-	 * @var enum[]
+	 * @var int[] enums
 	 */
 	protected $SumDifferencesKeys;
 
 	/**
-	 * @var enum[]
+	 * @var int[] enums
 	 */
 	protected $AvgValuesKeys;
 
@@ -43,9 +43,9 @@ class TimeSeriesForTrackdata extends TimeSeries {
 	/**
 	 * Construct time series for trackdata object
 	 * @param \Runalyze\Model\Trackdata\Entity $trackdata
-	 * @param enum $indexKey
-	 * @param enum[] $sumDifferencesKeys
-	 * @param enum[] $avgValuesKeys
+	 * @param int $indexKey enum
+	 * @param int[] $sumDifferencesKeys enums
+	 * @param int[] $avgValuesKeys enums
 	 * @throws \InvalidArgumentException
 	 */
 	public function __construct(
