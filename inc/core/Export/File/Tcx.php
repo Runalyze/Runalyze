@@ -19,17 +19,26 @@ use Runalyze\Model\Trackdata;
 class Tcx extends AbstractFileExporter
 {
     /** @var SimpleXMLElement */
-    private $XML = null;
+    protected $XML = null;
 
     /** @var SimpleXMLElement */
-    private $Activity = null;
+    protected $Activity = null;
+
+    /** @var bool */
+    protected $HasRoute = false;
+
+    /** @var array indicators if route has specific data, use const from Route\Entity as array key */
+    protected $RouteHas = [];
+
+    /** @var array indicators if route has specific data, use const from Trackdata\Entity as array key */
+    protected $TrackdataHas = [];
 
     /**
      * @return bool
      */
     public function isPossible()
     {
-        return $this->Context->hasTrackdata();
+        return $this->Context->hasTrackdata() && $this->Context->trackdata()->has(Trackdata\Entity::TIME);
     }
 
     /**
@@ -57,12 +66,48 @@ class Tcx extends AbstractFileExporter
         $this->XML = new \SimpleXMLElement($this->emptyXml());
         $this->Activity = $this->XML->Activities->Activity;
 
+        $this->setInternalIndicators();
         $this->setGeneralInfo();
         $this->setLaps();
 
         $this->FileContent = $this->XML->asXML();
 
         $this->formatFileContentAsXML();
+    }
+
+    /**
+     * Fill internal arrays $TrackdataHas and $RouteHas
+     */
+    protected function setInternalIndicators()
+    {
+        $this->setInternalIndicatorsForRoute();
+        $this->setInternalIndicatorsForTrackdata();
+    }
+
+    /**
+     * Fill internal array $RouteHas
+     */
+    protected function setInternalIndicatorsForRoute()
+    {
+        if ($this->Context->hasRoute()) {
+            $this->HasRoute = true;
+            $this->RouteHas[Route\Entity::GEOHASHES] = $this->Context->route()->hasGeohashes();
+            $this->RouteHas[Route\Entity::ELEVATIONS_ORIGINAL] = $this->Context->route()->hasOriginalElevations();
+        } else {
+            $this->HasRoute = false;
+        }
+    }
+
+    /**
+     * Fill internal array $TrackdataHas
+     */
+    protected function setInternalIndicatorsForTrackdata()
+    {
+        $this->TrackdataHas[Trackdata\Entity::DISTANCE] = $this->Context->trackdata()->has(Trackdata\Entity::DISTANCE);
+        $this->TrackdataHas[Trackdata\Entity::HEARTRATE] = $this->Context->trackdata()->has(Trackdata\Entity::HEARTRATE);
+        $this->TrackdataHas[Trackdata\Entity::CADENCE] = $this->Context->trackdata()->has(Trackdata\Entity::CADENCE);
+        $this->TrackdataHas[Trackdata\Entity::POWER] = $this->Context->trackdata()->has(Trackdata\Entity::POWER);
+        $this->TrackdataHas[Trackdata\Entity::PACE] = $this->Context->trackdata()->has(Trackdata\Entity::PACE);
     }
 
     /**
@@ -93,7 +138,12 @@ class Tcx extends AbstractFileExporter
         $Loop = new Trackdata\Loop($this->Context->trackdata());
 
         while (!$Loop->isAtEnd()) {
-            $Loop->nextKilometer();
+            if ($this->TrackdataHas[Trackdata\Entity::DISTANCE]) {
+                $Loop->nextKilometer();
+            } else {
+                $Loop->goToEnd();
+            }
+
             $TimeInSeconds = $Loop->difference(Trackdata\Entity::TIME);
 
             $Lap = $this->Activity->addChild('Lap');
@@ -101,11 +151,9 @@ class Tcx extends AbstractFileExporter
             $Lap->addChild('TotalTimeSeconds', $TimeInSeconds);
             $Lap->addChild('DistanceMeters', 1000*$Loop->difference(Trackdata\Entity::DISTANCE));
 
-            if ($this->Context->trackdata()->has(Trackdata\Entity::HEARTRATE)) {
-                $AvgBpm = $Lap->addChild('AverageHeartRateBpm');
-                $AvgBpm->addChild('Value', $Loop->average(Trackdata\Entity::HEARTRATE));
-                $MaxBpm = $Lap->addChild('MaximumHeartRateBpm');
-                $MaxBpm->addChild('Value', $Loop->max(Trackdata\Entity::HEARTRATE));
+            if ($this->TrackdataHas[Trackdata\Entity::HEARTRATE]) {
+                $Lap->addChild('AverageHeartRateBpm')->addChild('Value', $Loop->average(Trackdata\Entity::HEARTRATE));
+                $Lap->addChild('MaximumHeartRateBpm')->addChild('Value', $Loop->max(Trackdata\Entity::HEARTRATE));
             }
 
             $Lap->addChild('Intensity', 'Active');
@@ -124,48 +172,89 @@ class Tcx extends AbstractFileExporter
     protected function setTrack()
     {
         $Starttime = $this->Context->activity()->timestamp();
-
         $Trackdata = new Trackdata\Loop($this->Context->trackdata());
 
-
-        $hasHeartrate = $this->Context->trackdata()->has(Trackdata\Entity::HEARTRATE);
-        $hasRoute = $this->Context->hasRoute();
-
-        if($hasRoute) {
+        if ($this->HasRoute) {
             $Route = new Route\Loop($this->Context->route());
-            $hasElevation = $this->Context->route()->hasOriginalElevations();
         }
 
         while ($Trackdata->nextStep()) {
-            if($hasRoute)
+            if ($this->HasRoute) {
                 $Route->nextStep();
+            }
 
             if ($this->Activity->Lap[(int)floor($Trackdata->distance())]) {
                 $Trackpoint = $this->Activity->Lap[(int)floor($Trackdata->distance())]->Track->addChild('Trackpoint');
                 $Trackpoint->addChild('Time', $this->timeToString($Starttime + $Trackdata->time()));
-                
-                if($this->Context->trackdata()->has(Trackdata\Entity::CADENCE))
-                    $Trackpoint->addChild('Cadence', $Trackdata->current (Trackdata\Entity::CADENCE));
 
-                if($hasRoute && $this->Context->route()->hasGeohashes()) {
-                    $Position = $Trackpoint->addChild('Position');
-                    $Position->addChild('LatitudeDegrees', $Route->latitude());
-                    $Position->addChild('LongitudeDegrees', $Route->longitude());
-
-                
-                if ($hasElevation) 
-                    $Trackpoint->addChild('AltitudeMeters', $Route->current(Route\Entity::ELEVATIONS_ORIGINAL));
-                
+                if ($this->HasRoute) {
+                    $this->addRouteDetailsTo($Trackpoint, $Route);
                 }
-                if($this->Context->trackdata()->has(Trackdata\Entity::DISTANCE))
-                    $Trackpoint->addChild('DistanceMeters', 1000*$Trackdata->distance());
 
-                if ($hasHeartrate) {
-                    $Heartrate = $Trackpoint->addChild('HeartRateBpm');
-                    $Heartrate->addChild('Value', $Trackdata->current(Trackdata\Entity::HEARTRATE));
-                }
+                $this->addTrackdataDetailsTo($Trackpoint, $Trackdata);
             }
         }
+    }
+
+    /**
+     * @param \SimpleXMLElement $trackpoint
+     * @param \Runalyze\Model\Route\Loop $routeLoop
+     */
+    protected function addRouteDetailsTo(\SimpleXMLElement $trackpoint, Route\Loop $routeLoop)
+    {
+        if ($this->RouteHas[Route\Entity::GEOHASHES]) {
+            $Position = $trackpoint->addChild('Position');
+            $Position->addChild('LatitudeDegrees', $routeLoop->latitude());
+            $Position->addChild('LongitudeDegrees', $routeLoop->longitude());
+        }
+
+        if ($this->RouteHas[Route\Entity::ELEVATIONS_ORIGINAL]) {
+            $trackpoint->addChild('AltitudeMeters', $routeLoop->current(Route\Entity::ELEVATIONS_ORIGINAL));
+        }
+    }
+
+    /**
+     * @param \SimpleXMLElement $trackpoint
+     * @param \Runalyze\Model\Trackdata\Loop $trackdataLoop
+     */
+    protected function addTrackdataDetailsTo(\SimpleXMLElement $trackpoint, Trackdata\Loop $trackdataLoop)
+    {
+        if ($this->TrackdataHas[Trackdata\Entity::CADENCE]) {
+            $trackpoint->addChild('Cadence', $trackdataLoop->current (Trackdata\Entity::CADENCE));
+        }
+
+        if ($this->TrackdataHas[Trackdata\Entity::DISTANCE]) {
+            $trackpoint->addChild('DistanceMeters', 1000*$trackdataLoop->distance());
+        }
+
+        if ($this->TrackdataHas[Trackdata\Entity::HEARTRATE]) {
+            $trackpoint->addChild('HeartRateBpm')->addChild('Value', $trackdataLoop->current(Trackdata\Entity::HEARTRATE));
+        }
+
+        if ($this->TrackdataHas[Trackdata\Entity::POWER] || $this->TrackdataHas[Trackdata\Entity::PACE]) {
+            $TPX = $trackpoint->addChild('Extensions')->addChild('TPX', '', 'http://www.garmin.com/xmlschemas/ActivityExtension/v2');
+
+            if ($this->TrackdataHas[Trackdata\Entity::PACE]) {
+                $TPX->addChild('Speed', $this->convertPaceToSpeed($trackdataLoop->current(Trackdata\Entity::PACE)));
+            }
+
+            if ($this->TrackdataHas[Trackdata\Entity::POWER]) {
+                $TPX->addChild('Watts', $trackdataLoop->current(Trackdata\Entity::POWER));
+            }
+        }
+    }
+
+    /**
+     * @param int $pace
+     * @return float
+     */
+    protected function convertPaceToSpeed($pace)
+    {
+        if ($pace == 0) {
+            return 0.0;
+        }
+
+        return 1000 / $pace;
     }
 
     /**
@@ -175,7 +264,7 @@ class Tcx extends AbstractFileExporter
     protected function emptyXml()
     {
         return
-            '<TrainingCenterDatabase xmlns="http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2 http://www.garmin.com/xmlschemas/TrainingCenterDatabasev2.xsd">
+            '<TrainingCenterDatabase xmlns="http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2 http://www.garmin.com/xmlschemas/TrainingCenterDatabasev2.xsd" xmlns:ns3="http://www.garmin.com/xmlschemas/ActivityExtension/v2">
 	<Activities>
 		<Activity>
 		</Activity>
