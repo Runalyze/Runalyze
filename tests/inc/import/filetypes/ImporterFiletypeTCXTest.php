@@ -258,4 +258,24 @@ class ImporterFiletypeTCXTest extends PHPUnit_Framework_TestCase {
 		$this->assertFalse( $this->object->object()->hasArrayTime() );
 	}
 
+	/**
+	 * Filename: "Treadmill-doubled-cadence.tcx"
+	 * @see https://github.com/Runalyze/Runalyze/issues/1679#issuecomment-169980611
+	 */
+	public function testDoubledCadence() {
+		$this->object->parseFile('../tests/testfiles/tcx/Treadmill-doubled-cadence.tcx');
+
+		$this->assertFalse($this->object->hasMultipleTrainings());
+		$this->assertFalse($this->object->failed());
+
+		$this->assertTrue($this->object->object()->hasArrayTime());
+		$this->assertTrue($this->object->object()->hasArrayDistance());
+		$this->assertTrue($this->object->object()->hasArrayCadence());
+		$this->assertTrue($this->object->object()->hasArrayHeartrate());
+		$this->assertFalse($this->object->object()->hasArrayLatitude());
+		$this->assertFalse($this->object->object()->hasArrayLongitude());
+
+		$this->assertEquals(67, $this->object->object()->getCadence());
+	}
+
 }

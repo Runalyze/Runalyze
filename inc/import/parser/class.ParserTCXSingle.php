@@ -93,6 +93,7 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 		if ($this->isGarminXML()) {
 			$this->parseGeneralValues();
 			$this->parseLaps();
+			$this->correctCadenceIfNeeded();
 			$this->setGPSarrays();
 		} else {
 			$this->throwNoGarminError();
