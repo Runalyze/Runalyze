@@ -12,6 +12,7 @@ use Runalyze\Data\Weather\WindSpeed;
 use Runalyze\Data\Weather\WindDegree;
 use Runalyze\Data\Weather\Humidity;
 use Runalyze\Data\Weather\Pressure;
+use Runalyze\Data\Weather\WindChillFactor;
 /**
  * Weather
  * 
@@ -54,6 +55,12 @@ class Weather {
 	 * @var \Runalyze\Data\Weather\Pressure
 	 */
 	protected $Pressure;
+	
+	/**
+	 * WindChillFactor
+	 * @var \Runalyze\Data\Weather\WindChillFactor
+	 */
+	protected $WindChillFactor;
 	
 	
 	/**
@@ -133,7 +140,7 @@ class Weather {
 	public function pressure() {
 		return $this->Pressure;
 	}
-
+	
 	/**
 	 * Full string
 	 * 

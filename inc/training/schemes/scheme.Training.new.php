@@ -7,7 +7,7 @@ $TABLENAME = 'training';
 $HIDDEN_KEYS = array(
 	'creator', 'creator_details', 'activity_id',
 	//'vdot', 'vdot_by_time', 'trimp', 'vdot_with_elevation', 'jd_intensity'
-	'elapsed_time', 'groundcontact', 'vertical_oscillation', 'groundcontact_balance', 'total_strokes', 'swolf', 'pool_length'
+	'elapsed_time', 'groundcontact', 'vertical_oscillation', 'groundcontact_balance', 'total_strokes', 'swolf', 'pool_length', 'is_night'
 );
 
 $FIELDSETS = array(
@@ -53,7 +53,7 @@ $FIELDSETS = array(
 	array(
 		'id'		=> 'weather',
 		'legend'	=> __('Weather conditions'),
-		'fields'	=> array('weatherid', 'is_night', 'temperature', 'wind_speed', 'wind_deg', 'humidity', 'pressure'),
+		'fields'	=> array('weatherid', 'temperature', 'wind_speed', 'wind_deg', 'humidity', 'pressure'),
 		'conf'		=> 'WEATHER'
 	),
 	array(

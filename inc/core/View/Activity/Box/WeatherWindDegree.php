@@ -6,6 +6,7 @@
 
 namespace Runalyze\View\Activity\Box;
 use Runalyze\Data\Weather\CardinalDirection;
+
 /**
  * Boxed value for Wind Degree
  * 

@@ -29,8 +29,8 @@ class WindSpeedTest extends \PHPUnit_Framework_TestCase {
 	
 	public function testImperial() {
 		$WindSpeed = (new WindSpeed())->setImperial(30);
-		$this->assertEquals(30, $WindSpeed->value());
-		$this->assertEquals('mph', $WindSpeed->unit());
+		$this->assertEquals(48.28, $WindSpeed->value(), '', 0.01);
+		$this->assertEquals(30, $WindSpeed->imperial(), '', 0.01);
 		$this->assertFalse($WindSpeed->isUnknown());
 	}
 

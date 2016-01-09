@@ -15,7 +15,7 @@ $HIDDEN_KEYS = array(
 	'arr_groundcontact', 'arr_vertical_oscillation', 'arr_groundcontact_balance', 'pauses', 'hrv',
 	'fit_vdot_estimate', 'fit_recovery_time', 'fit_hrv_analysis',
 	//'vdot', 'vdot_by_time', 'trimp', 'vdot_with_elevation', 'jd_intensity'
-	'elapsed_time', 'elevation_calculated', 'groundcontact', 'vertical_oscillation', 'groundcontact_balance', 'vertical_ratio', 'stroke', 'stroketype','total_strokes', 'swolf', 'pool_length'
+	'elapsed_time', 'elevation_calculated', 'groundcontact', 'vertical_oscillation', 'groundcontact_balance', 'vertical_ratio', 'stroke', 'stroketype','total_strokes', 'swolf', 'pool_length', 'is_night'
 );
 
 $FIELDSETS = array(
@@ -61,7 +61,7 @@ $FIELDSETS = array(
 	array(
 		'id'		=> 'weather',
 		'legend'	=> __('Weather conditions'),
-		'fields'	=> array('weatherid', 'is_night', 'temperature', 'wind_speed', 'wind_deg', 'humidity', 'pressure'),
+		'fields'	=> array('weatherid', 'temperature', 'wind_speed', 'wind_deg', 'humidity', 'pressure'),
 		'conf'		=> 'WEATHER'
 	),
 	array(
@@ -438,8 +438,8 @@ $FIELDS = array(
 	'humidity' => array(
 					'database'	=> array(
 						'type'		=> 'tinyint',
-						'precision'	=> '3',
-						'default'	=> '0'
+						'null'		=> true,
+						'precision'	=> '3'
 					),
 					'formular'	=> array(
 						'label'		=> __('Humidity'),
@@ -449,8 +449,8 @@ $FIELDS = array(
 	'pressure' => array(
 					'database'	=> array(
 						'type'		=> 'smallint',
-						'precision'	=> '4',
-						'default'	=> '0'
+						'null'		=> true,
+						'precision'	=> '4'
 					),
 					'formular'	=> array(
 						'label'		=> __('Pressure'),
@@ -473,7 +473,7 @@ $FIELDS = array(
 					'database'	=> array(
 						'type'		=> 'decimal',
 						'precision'	=> '5,2',
-						'default'	=> '0'
+						 'null'		=> true
 					),
 					'formular'	=> array(
 						'label'		=> __('Wind degrees'),

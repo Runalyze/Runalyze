@@ -49,6 +49,21 @@ class Condition {
 	 * @var int
 	 */
 	const SNOWING = 7;
+	
+	/**
+	 * @var int
+	 */
+	const HEAVYRAIN = 8;
+	
+	/**
+	 * @var int
+	 */
+	const FOGGY = 9;
+	
+	/**
+	 * @var int
+	 */
+	const THUNDERSTORM = 10;
 
 	/**
 	 * Identifier
@@ -68,7 +83,10 @@ class Condition {
 			self::CLOUDY,
 			self::CHANGEABLE,
 			self::RAINY,
-			self::SNOWING
+			self::SNOWING,
+			self::HEAVYRAIN,
+			self::FOGGY,
+			self::THUNDERSTORM
 		);
 	}
 
@@ -119,10 +137,13 @@ class Condition {
 			case self::FAIR:
 				return new Weather\Fair();
 			case self::CLOUDY:
+			case self::FOGGY:
 				return new Weather\Cloudy();
 			case self::CHANGEABLE:
+			case self::THUNDERSTORM:
 				return new Weather\Changeable();
 			case self::RAINY:
+			case self::HEAVYRAIN:
 				return new Weather\Rainy();
 			case self::SNOWING:
 				return new Weather\Snowing();
@@ -150,6 +171,12 @@ class Condition {
 				return __('rainy');
 			case self::SNOWING:
 				return __('snowing');
+			case self::HEAVYRAIN:
+				return __('heavy rain');
+			case self::FOGGY:
+				return __('foggy');
+			case self::THUNDERSTORM:
+				return __('thundery');
 			case self::UNKNOWN:
 			default:
 				return __('unknown');

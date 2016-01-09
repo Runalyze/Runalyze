@@ -204,7 +204,13 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 			$Pressure = new Box\WeatherPressure($this->Context);
 			$Pressure->defineAsFloatingBlock('w50');    
 			$this->BoxedValues[] = $Pressure;
-		}		
+		}	
+		
+		if ($this->Context->activity()->weather()->windSpeed()->value()  > 0 && $this->Context->activity()->distance() > 0 && $this->Context->activity()->duration() > 0) {
+			$WindChill = new Box\WeatherWindChillFactor($this->Context);
+			$WindChill->defineAsFloatingBlock('w50');    
+			$this->BoxedValues[] = $WindChill;
+		}
 	    }
 
 	}

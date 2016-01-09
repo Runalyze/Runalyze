@@ -202,7 +202,7 @@ class Openweathermap implements ForecastStrategyInterface {
 	/**
 	 * Translate api code to condition
 	 * 
-	 * @see http://openweathermap.org/wiki/API/Weather_Condition_Codes
+	 * @see http://openweathermap.org/weather-conditions
 	 * @param int $code Code from openweathermap.org
 	 * @return Runalyze\Data\Weather\Condition
 	 */
@@ -220,6 +220,7 @@ class Openweathermap implements ForecastStrategyInterface {
 			case 230:
 			case 231: 
 			case 232:
+			    return new Condition(Condition::THUNDERSTORM);
 			case 300:
 			case 301:
 			case 802:
@@ -232,15 +233,17 @@ class Openweathermap implements ForecastStrategyInterface {
 			case 803:
 			case 804:
 				return new Condition(Condition::CLOUDY);
-			case 500:
-			case 501:
 			case 502:
 			case 503:
 			case 504:
-			case 511:
-			case 520:
 			case 521:
 			case 522:
+			case 531:
+			    return new Condition(Condition::HEAVYRAIN);
+			case 500:
+			case 501:			    
+			case 511:
+			case 520:
 			case 300:
 			case 301:
 			case 302:
