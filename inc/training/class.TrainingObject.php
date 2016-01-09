@@ -59,7 +59,7 @@ class TrainingObject extends DataObject {
 		$this->set('time', isset($_GET['date']) ? strtotime($_GET['date']) : mktime(0,0,0));
 		$this->set('is_public', Configuration::Privacy()->publishActivity() ? '1' : '0');
 		$this->forceToSet('s_sum_with_distance', 0);
-		$this->forceToSet('equipment', []);
+		$this->forceToSet('importer-equipment', []);
 	}
 
 	/**
@@ -160,13 +160,13 @@ class TrainingObject extends DataObject {
 		$InserterActivity->setTrackdata($Trackdata);
 		$InserterActivity->setSwimdata($Swimdata);
 
-		if ($this->get('equipment') != '') {
-			$InserterActivity->setEquipmentIDs($this->get('equipment'));
+		if ($this->get('importer-equipment') != []) {
+			$InserterActivity->setEquipmentIDs($this->get('importer-equipment'));
 		} else {
 			$InserterActivity->setEquipmentIDs(TrainingFormular::readEquipmentFromPost($Activity->sportid()));
 		}
 
-		$InserterActivity->setTagIDs(TrainingFormular::readTagFromPost($Activity->sportid()));
+		$InserterActivity->setTagIDs(TrainingFormular::readTagFromPost());
 		$InserterActivity->insert();
 
 		$this->id = $InserterActivity->insertedID();
@@ -461,7 +461,7 @@ class TrainingObject extends DataObject {
 	 * Set shoeid
 	 * @param int $id shoeid
 	 */
-	public function setShoeid($id) { $this->set('equipment', [$id]); }
+	public function setShoeid($id) { $this->set('importer-equipment', [$id]); }
 
 
 	/**
@@ -720,7 +720,7 @@ class TrainingObject extends DataObject {
 	 * Set cadence
 	 * @param int $cadence cadence in rpm
 	 */
-	public function setCadence($cadence) { return $this->set('cadence', $cadence); }
+	public function setCadence($cadence) { $this->set('cadence', $cadence); }
 	/**
 	 * Get cadence
 	 * @return int cadence in rpm
@@ -732,7 +732,7 @@ class TrainingObject extends DataObject {
 	 * Set power
 	 * @param int $power power
 	 */
-	public function setPower($power) { return $this->set('power', $power); }
+	public function setPower($power) { $this->set('power', $power); }
 	/**
 	 * Get power
 	 * @return int power value
@@ -744,7 +744,7 @@ class TrainingObject extends DataObject {
 	 * Set ground contact time
 	 * @param int $time ground contact time [ms]
 	 */
-	public function setGroundContactTime($time) { return $this->set('groundcontact', $time); }
+	public function setGroundContactTime($time) { $this->set('groundcontact', $time); }
 	/**
 	 * Get ground contact time
 	 * @return int ground contact time value [ms]
@@ -756,7 +756,7 @@ class TrainingObject extends DataObject {
 	 * Set vertical oscillation
 	 * @param int $oscillation vertical oscillation [cm]
 	 */
-	public function setVerticalOscillation($oscillation) { return $this->set('vertical_oscillation', $oscillation); }
+	public function setVerticalOscillation($oscillation) { $this->set('vertical_oscillation', $oscillation); }
 	/**
 	 * Get vertical oscillation
 	 * @return int vertical oscillation [cm]
@@ -768,7 +768,7 @@ class TrainingObject extends DataObject {
 	 * Set vertical ratio
 	 * @param int $verticalRatio vertical ratio [%]
 	 */
-	public function setVerticalRatio($verticalRatio) { return $this->set('vertical_ratio', $verticalRatio); }
+	public function setVerticalRatio($verticalRatio) { $this->set('vertical_ratio', $verticalRatio); }
 	/**
 	 * Get vertical ratio
 	 * @return int vertical ratio [%]
@@ -779,7 +779,7 @@ class TrainingObject extends DataObject {
 	 * Set ground contact time balance
 	 * @param int $groundContactBalance ground contact time balance [%]
 	 */
-	public function setGroundContactBalance($groundContactBalance) { return $this->set('groundcontact_balance', $groundContactBalance); }
+	public function setGroundContactBalance($groundContactBalance) { $this->set('groundcontact_balance', $groundContactBalance); }
 	/**
 	 * Get ground contact time balance
 	 * @return int ground contact time balance [%]

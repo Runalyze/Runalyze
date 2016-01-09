@@ -74,6 +74,27 @@ class ParserXMLrunningAHEADMultiple extends ParserAbstractMultipleXML {
 	}
 
 	/**
+	 * Calculate distance from unit
+	 * @param mixed $Distance
+	 * @param mixed $Unit
+	 * @return double
+	 */
+	protected function distanceFromUnit($Distance, $Unit) {
+		$Distance = (double)$Distance;
+		$Unit     = (string)$Unit;
+
+		switch ($Unit) {
+			case 'mile':
+				return 1.609344*$Distance;
+			case 'm':
+				return $Distance/1000;
+			case 'km':
+			default:
+				return $Distance;
+		}
+	}
+
+	/**
 	 * @return int|null
 	 */
 	protected function equipmentTypeIdForNewStuff() {
