@@ -107,7 +107,7 @@ class ParserXMLrunningAHEADSingle extends ParserAbstractSingleXML {
 	 * @param mixed $Unit
 	 * @return double 
 	 */
-	private function distanceFromUnit($Distance, $Unit) {
+	protected function distanceFromUnit($Distance, $Unit) {
 		$Distance = (double)$Distance;
 		$Unit     = (string)$Unit;
 
