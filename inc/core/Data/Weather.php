@@ -159,10 +159,10 @@ class Weather {
 		return (
 			$this->Temperature->isUnknown() &&
 			$this->Condition->isUnknown() &&
-			$this->windSpeed()->isUnknown() &&
-			$this->windDegree()->isUnknown() &&
-			$this->humidity()->isUnknown() &&
-			$this->pressure()->isUnknown()
+			$this->WindSpeed->isUnknown() &&
+			$this->WindDegree->isUnknown() &&
+			$this->Humidity->isUnknown() &&
+			$this->Pressure->isUnknown()
 		);
 	}
 }

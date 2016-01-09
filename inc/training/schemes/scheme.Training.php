@@ -460,8 +460,7 @@ $FIELDS = array(
 	'wind_speed' => array(
 					'database'	=> array(
 						'type'		=> 'decimal',
-						'precision'	=> '5,2',
-						'default'	=> '0.00'
+						'precision'	=> '5,2'
 					),
 					'formular'	=> array(
 						'label'		=> __('Wind speed'),
