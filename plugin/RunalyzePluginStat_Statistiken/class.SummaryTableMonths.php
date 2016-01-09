@@ -84,8 +84,9 @@ class SummaryTableMonths extends SummaryTable {
 	 * @return string
 	 */
 	protected function rowHead($index) {
-		$year = ($this->Mode == self::MODE_YEAR) ? $this->Year : date('Y');
-		$month = date('m', $this->TimeEnd - ($index + 0.5)*31*DAY_IN_S);
+		$midOfTimerange = $this->TimeEnd - ($index + 0.5)*31*DAY_IN_S;
+		$year = ($this->Mode == self::MODE_YEAR) ? $this->Year : date('Y', $midOfTimerange);
+		$month = date('m', $midOfTimerange);
 		$start = mktime(0, 0, 1, $month, 1, $year);
 		$end   = mktime(23, 59, 59, $month+1, 0, $year);
 

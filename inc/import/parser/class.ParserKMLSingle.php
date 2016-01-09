@@ -13,6 +13,16 @@ use Runalyze\Configuration;
  * @package Runalyze\Import\Parser
  */
 class ParserKMLSingle extends ParserAbstractSingleXML {
+	/** @var string */
+	protected $CoordinatesXPath = '//coordinates';
+
+	/**
+	 * @param string $ns
+	 */
+	public function setNamespace($ns = 'kml') {
+		$this->CoordinatesXPath = '//'.$ns.':coordinates';
+	}
+
 	/**
 	 * Parse
 	 */
@@ -30,7 +40,7 @@ class ParserKMLSingle extends ParserAbstractSingleXML {
 	 * @return bool
 	 */
 	protected function isCorrectXML() {
-		$coordinates = $this->XML->xpath('//coordinates');
+		$coordinates = $this->XML->xpath($this->CoordinatesXPath);
 
 		return !empty($coordinates);
 	}
@@ -46,7 +56,7 @@ class ParserKMLSingle extends ParserAbstractSingleXML {
 	 * Parse coordinates
 	 */
 	protected function parseCoordinates() {
-		foreach ($this->XML->xpath('//coordinates') as $coordinates) {
+		foreach ($this->XML->xpath($this->CoordinatesXPath) as $coordinates) {
 			$lines = preg_split('/\r\n|\r|\n/', (string)$coordinates);
 
 			foreach ($lines as $lineIndex => $line) {

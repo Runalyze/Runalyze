@@ -9,8 +9,6 @@ namespace Runalyze\Model\Activity;
 use Runalyze\Model;
 use Runalyze\Calculation\BasicEndurance;
 use Runalyze\Configuration;
-use League\Geotools\Geotools;
-use \League\Geotools\Coordinate\Coordinate;
 
 /**
  * Insert activity to database

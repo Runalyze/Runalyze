@@ -5,7 +5,6 @@
  */
 
 use Runalyze\Configuration;
-use Runalyze\Activity\Pace;
 
 /**
  * Class: Sport

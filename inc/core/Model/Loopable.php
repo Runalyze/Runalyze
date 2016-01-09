@@ -24,7 +24,7 @@ interface Loopable {
 	 * 
 	 * Remark: This method may throw index offsets.
 	 * @param int $index
-	 * @param enum $key
+	 * @param int $key enum
 	 * @return mixed
 	 */
 	public function at($index, $key);

@@ -158,8 +158,8 @@ class Frontend {
 
 		$this->adminPassAsMD5 = md5($password);
 
-		DB::connect($host, $username, $password, $database);
-		unset($host, $username, $password, $database);
+		DB::connect($host, $port, $username, $password, $database);
+		unset($host, $port, $username, $password, $database);
 	}
 
 	/**

@@ -12,11 +12,13 @@
  * These information will be read by 'class.Frontend.php'.
  * 
  * @var string $host       The servername. On local servers: 'localhost'
+ * @var string $port       The database server port. Standard '3306'
  * @var string $database   The database used for this project.
  * @var string $username   The username to connect to the database. On local servers it may be 'root'.
  * @var string $passwort   The password for the given user. Please note: Never leave a mysql-user without password.
  */
 $host = '{config::host}';
+$port = '{config::port}';
 $database = '{config::database}';
 $username = '{config::username}';
 $password = '{config::password}';

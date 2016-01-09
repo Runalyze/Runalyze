@@ -23,7 +23,7 @@ use Runalyze\View\Activity;
 class Pace extends ActivitySeries {
 	/**
 	* How many outliers should be cutted away?
-	* @var type
+	* @var int
 	*/
 	private static $CUT_OUTLIER_PERCENTAGE = 10;
 

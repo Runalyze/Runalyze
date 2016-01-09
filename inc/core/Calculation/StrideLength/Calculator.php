@@ -45,7 +45,7 @@ class Calculator {
 			!$this->Trackdata->has(Trackdata\Entity::DISTANCE) ||
 			!$this->Trackdata->has(Trackdata\Entity::CADENCE)
 		) {
-			return;
+			return [];
 		}
 
 		$Time = $this->Trackdata->time();

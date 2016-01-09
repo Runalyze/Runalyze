@@ -91,7 +91,7 @@ class HTML {
 	 * @param int $emptyTDs Number of empty td before the month-td
 	 * @return string
 	 */
-	public static function monthTR($fixedWidth = 0, $emptyTDs = 1, $tag = 'td') {
+	public static function monthTR($fixedWidth = 0, $emptyTDs = 1, $tag = 'td', $withTotal = false) {
 		$width = ($fixedWidth > 0) ? ' width="'.$fixedWidth.'%"' : '';
 		$html = '<tr class="b">';
 
@@ -101,6 +101,9 @@ class HTML {
 		for ($m = 1; $m <= 12; $m++)
 			$html .= '<'.$tag.$width.'>'.Time::month($m, true).'</'.$tag.'>';
 
+		if ($withTotal) {
+			$html .= '<'.$tag.$width.'>'.__('Total').'</'.$tag.'>';
+		}
 		$html .= '</tr>';
 
 		return $html;
@@ -136,6 +139,7 @@ class HTML {
 	/**
 	 * Get a tr-tag for a space-line
 	 * @param int $colspan
+	 * @return string
 	 */
 	public static function spaceTR($colspan) {
 		return '<tr class="space"><td colspan="'.$colspan.'"></td></tr>';
@@ -184,6 +188,7 @@ class HTML {
 	/**
 	 * Wrap a string as span
 	 * @param string $string
+	 * @return string
 	 */
 	public static function left($string) {
 		return '<span class="left">'.$string.'</span>';
@@ -192,6 +197,7 @@ class HTML {
 	/**
 	 * Wrap a string as span
 	 * @param string $string
+	 * @return string
 	 */
 	public static function right($string) {
 		return '<span class="right">'.$string.'</span>';
@@ -200,6 +206,7 @@ class HTML {
 	/**
 	 * Wrap a string into emphasize-tag
 	 * @param string $string
+	 * @return string
 	 */
 	public static function em($string) {
 		return '<em>'.$string.'</em>';
@@ -208,6 +215,7 @@ class HTML {
 	/**
 	 * Wrap a string into paragraph-tag
 	 * @param string $string
+	 * @return string
 	 */
 	public static function p($string) {
 		return '<p class="text">'.$string.'</p>';
@@ -216,6 +224,7 @@ class HTML {
 	/**
 	 * Wrap a string into centered paragraph-tag
 	 * @param string $string
+	 * @return string
 	 */
 	public static function pCentered($string) {
 		return '<p class="text c">'.$string.'</p>';
@@ -224,6 +233,7 @@ class HTML {
 	/**
 	 * Wrap a string into p-tag with class="info"
 	 * @param string $string
+	 * @return string
 	 */
 	public static function info($string) {
 		return '<p class="info">'.$string.'</p>';
@@ -232,6 +242,7 @@ class HTML {
 	/**
 	 * Wrap a string into p-tag with class="error"
 	 * @param string $string
+	 * @return string
 	 */
 	public static function error($string) {
 		return '<p class="error">'.$string.'</p>';
@@ -240,6 +251,7 @@ class HTML {
 	/**
 	 * Wrap a string into p-tag with class="warning"
 	 * @param string $string
+	 * @return string
 	 */
 	public static function warning($string) {
 		return '<p class="warning">'.$string.'</p>';
@@ -248,6 +260,7 @@ class HTML {
 	/**
 	 * Wrap a string into p-tag with class="okay"
 	 * @param string $string
+	 * @return string
 	 */
 	public static function okay($string) {
 		return '<p class="okay">'.$string.'</p>';
@@ -256,6 +269,7 @@ class HTML {
 	/**
 	 * Wrap a string into p-tag with class="file"
 	 * @param string $string
+	 * @return string
 	 */
 	public static function fileBlock($string) {
 		return '<p class="file">'.$string.'</p>';
@@ -285,6 +299,7 @@ class HTML {
 	/**
 	 * Transform given name if MultiIndex is in use
 	 * @param string $name
+	 * @return string
 	 */
 	private static function transformNameForMultiIndex($name) {
 		if (self::$MultiIndex == false)
@@ -304,6 +319,7 @@ class HTML {
 	 * @param int $cols
 	 * @param int $rows
 	 * @param string $value if not set, uses post-data as value
+	 * @return string
 	 */
 	public static function textarea($name, $cols = 70, $rows = 3, $value = '') {
 		if ($value == '' && isset($_POST[$name]))

@@ -9,25 +9,25 @@ use Runalyze\Error;
 
 /**
  * Maximal heart-frequence of the user
- * @var HF_MAX
+ * @var int
  */
 define('HF_MAX', Helper::getHFmax());
 
 /**
  * Heart-frequence in rest of the user
- * @var HF_REST
+ * @var int
  */
 define('HF_REST', Helper::getHFrest());
 
 /**
  * Timestamp of the first training
- * @var START_TIME
+ * @var int
  */
 define('START_TIME', Helper::getStartTime());
 
 /**
  * Year of the first training
- * @var START_YEAR
+ * @var int
  */
 define('START_YEAR', date("Y", START_TIME));
 
@@ -81,15 +81,17 @@ class Helper {
 	/**
 	 * Get a leading 0 if $int is lower than 10
 	 * @param int $int
+	 * @return string
 	 */
 	public static function TwoNumbers($int) {
-		return ($int < 10) ? '0'.$int : $int;
+		return ($int < 10) ? '0'.$int : (string)$int;
 	}
 
 	/**
 	 * Get a special $string if $var is not set
 	 * @param mixed $var
 	 * @param string $string string to be displayed instead, default: ?
+	 * @return string
 	 */
 	public static function Unknown($var, $string = '?') {
 		if ($var == null || !isset($var))
@@ -105,6 +107,7 @@ class Helper {
 	 * Cut a string if it is longer than $cut (default CUT_LENGTH)
 	 * @param string $text
 	 * @param int $cut [optional]
+	 * @return string
 	 */
 	public static function Cut($text, $cut = 0) {
 		if ($cut == 0)
@@ -119,6 +122,7 @@ class Helper {
 	/**
 	 * Replace every comma with a point
 	 * @param string $string
+	 * @return string
 	 */
 	public static function CommaToPoint($string) {
 		return str_replace(",", ".", $string);

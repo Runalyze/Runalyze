@@ -138,7 +138,7 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 
 	/**
 	 * Ignore specific key
-	 * @param type $key
+	 * @param string $key
 	 * @return boolean
 	 */
 	protected function ignore($key) {

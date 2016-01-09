@@ -148,7 +148,7 @@ class RunalyzePluginPanel_Equipment extends PluginPanel {
 				'.$this->getUsageImage(
 					$showDistance
 						? $Object->totalDistance() / $EquipmentType->maxDistance()
-						: $Object->duration() / ($hasMaxDuration ? $EquipmentType->maxDuration() : $max)
+						: $Object->duration() / ($hasMaxDuration ? $EquipmentType->maxDuration() : max(1, $max))
 				).'
 			</p>';
 		}
@@ -267,8 +267,8 @@ class RunalyzePluginPanel_Equipment extends PluginPanel {
 				COUNT(*) as `num`,
 				MIN(`s`/`distance`) as `pace_in_s`,
 				MAX(`distance`) as `dist`
-			FROM `runalyze_training` AS `act`
-            INNER JOIN `runalyze_activity_equipment` as `eq` ON `act`.`id` = `eq`.`activityid`
+			FROM `'.PREFIX.'training` AS `act`
+            INNER JOIN `'.PREFIX.'activity_equipment` as `eq` ON `act`.`id` = `eq`.`activityid`
 			GROUP BY `eq`.`equipmentid`'
 		)->fetchAll();
 

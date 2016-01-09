@@ -16,6 +16,7 @@ class Translator {
 	/**
 	 * Try to get weather id for string
 	 * @param string $string
+	 * @return int
 	 */
 	public static function IDfor($string) {
 		switch ($string) {

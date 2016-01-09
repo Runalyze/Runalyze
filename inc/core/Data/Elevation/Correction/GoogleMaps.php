@@ -39,7 +39,7 @@ class GoogleMaps extends FromExternalAPI {
 		}
 
 		if (isset($response['status'])) {
-			\Error::getInstance ()->addDebug('GoogleMaps response: '.$response['status']);
+			\Runalyze\Error::getInstance ()->addDebug('GoogleMaps response: '.$response['status']);
 		}
 
 		return false;

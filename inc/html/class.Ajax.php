@@ -354,6 +354,7 @@ class Ajax {
 	 * @param array $input
 	 * @param array $funcs
 	 * @param int $level
+	 * @return string
 	 */
 	public static function json_encode_jsfunc($input, $funcs = array(), $level = 0) {
 		foreach($input as $key => $value) {
@@ -397,7 +398,7 @@ class Ajax {
 	/**
 	 * Create code for binding tablesorter with pager
 	 * @param string $selector
-	 * @param boolean $reinit [optional]
+	 * @param bool $reinit [optional]
 	 */
 	public static function createTablesorterWithPagerFor($selector, $reinit = false) {
 		echo self::getTablesorterWithPagerFor($selector, $reinit);
@@ -406,7 +407,8 @@ class Ajax {
 	/**
 	 * Create code for binding tablesorter with pager
 	 * @param string $selector
-	 * @param boolean $reinit [optional]
+	 * @param bool $reinit [optional]
+	 * @return string
 	 */
 	public static function getTablesorterWithPagerFor($selector, $reinit = false) {
 		$Code = self::getPagerDiv();

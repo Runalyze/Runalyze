@@ -49,7 +49,7 @@ class Table extends \Runalyze\View\Object {
 	protected $achievedPaceActive;
 
 	/**
-	 * @var enum
+	 * @var string enum
 	 */
 	protected $PaceUnit;
 
@@ -61,6 +61,7 @@ class Table extends \Runalyze\View\Object {
 
 	/**
 	 * @param \Runalyze\Model\Activity\Splits\Entity $splits
+	 * @param string $paceUnit enum
 	 */
 	public function __construct(Splits\Entity $splits, $paceUnit = PaceUnit::MIN_PER_KM) {
 		$this->Splits = $splits;

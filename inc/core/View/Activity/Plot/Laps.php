@@ -6,7 +6,6 @@
 
 namespace Runalyze\View\Activity\Plot;
 
-use Runalyze\Activity\Duration;
 use Runalyze\Activity\Pace as PaceObject;
 use Runalyze\View\Activity;
 use Helper;

@@ -15,7 +15,7 @@ namespace Runalyze\Data\Weather;
 class Forecast {
 	/**
 	 * Strategy
-	 * @var ForecastStrategyInterface
+	 * @var \Runalyze\Data\Weather\ForecastStrategyInterface
 	 */
 	protected $Strategy = null;
 
@@ -27,8 +27,8 @@ class Forecast {
 
 	/**
 	 * Constructor
-	 * @param ForecastStrategy $Strategy
-	 * @param Location $Location
+	 * @param \Runalyze\Data\Weather\ForecastStrategyInterface $Strategy
+	 * @param \Runalyze\Data\Weather\Location $Location
 	 */
 	public function __construct(ForecastStrategyInterface $Strategy, Location $Location) {
 		$this->Strategy    = $Strategy;

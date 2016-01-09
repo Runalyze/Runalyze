@@ -3,6 +3,9 @@
  * This file contains class::DataObject
  * @package Runalyze\DataObjects
  */
+
+use Runalyze\Error;
+
 /**
  * Object for data from database
  * 
@@ -36,7 +39,7 @@ abstract class DataObject {
 
 	/**
 	 * Array seperator for gps-data in database
-	 * @var char
+	 * @var string
 	 */
 	public static $ARR_SEP = '|';
 
@@ -203,6 +206,8 @@ abstract class DataObject {
 			Error::getInstance()->addWarning('DataObject: tried to get unknown property "'.$propertyName.'"');
 		else
 			return $this->data[$propertyName];
+
+		return '';
 	}
 
 	/**
@@ -334,6 +339,7 @@ abstract class DataObject {
 	 * 
 	 * Should be overwritten by subclass
 	 * @param string $propertyName
+	 * @return bool
 	 */
 	protected function isAllowedToSet($propertyName) {
 		switch ($propertyName) {

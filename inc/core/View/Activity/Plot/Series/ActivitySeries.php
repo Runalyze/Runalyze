@@ -6,7 +6,6 @@
 
 namespace Runalyze\View\Activity\Plot\Series;
 
-use Runalyze\View\Activity\Plot\Series\DataCollector;
 use Runalyze\Model\Trackdata\Entity as Trackdata;
 use Runalyze\View\Activity\Context;
 use Runalyze\Configuration;
@@ -21,7 +20,7 @@ use \Plot;
  */
 abstract class ActivitySeries extends \Runalyze\View\Plot\Series {
 	/**
-	 * @var enum
+	 * @var int enum
 	 */
 	protected $XAxis = 0;
 
@@ -32,7 +31,7 @@ abstract class ActivitySeries extends \Runalyze\View\Plot\Series {
 
 	/**
 	 * Init data
-	 * @param \Runalyze\Model\Trackdata $trackdata
+	 * @param \Runalyze\Model\Trackdata\Entity $trackdata
 	 * @param string $key
 	 * @param boolean $fillGaps try to fill gaps (zero values)
 	 */
@@ -54,7 +53,7 @@ abstract class ActivitySeries extends \Runalyze\View\Plot\Series {
 
 	/**
 	 * Init data
-	 * @param \Runalyze\Model\Trackdata $trackdata
+	 * @param \Runalyze\Model\Trackdata\Entity $trackdata
 	 * @param string $key
 	 */
 	protected function fillGaps(Trackdata $trackdata, $key) {

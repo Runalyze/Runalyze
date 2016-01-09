@@ -11,7 +11,6 @@ use Runalyze\Parameter\SelectRow;
 use Runalyze\Parameter\Application\Gender;
 use Runalyze\Parameter\Application\HeartRateUnit;
 use Runalyze\Parameter\Application\DistanceUnitSystem;
-use Runalyze\Parameter\Application\DistanceUnit;
 use Runalyze\Parameter\Application\WeekStart;
 use Runalyze\Parameter\Application\TemperatureUnit;
 use Runalyze\Parameter\Application\WeightUnit;

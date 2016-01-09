@@ -21,7 +21,7 @@ abstract class TrainingViewSection {
 
 	/**
 	 * All rows
-	 * @var SectionRow[]
+	 * @var TrainingViewSectionRowAbstract[]
 	 */
 	protected $Rows = array();
 
@@ -38,6 +38,7 @@ abstract class TrainingViewSection {
 
 	/**
 	 * Constructor
+	 * @param \Runalyze\View\Activity\Context $Context
 	 */
 	public function __construct(Context &$Context = null) {
 		$this->Context = $Context;

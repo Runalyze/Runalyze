@@ -97,7 +97,7 @@ class PluginFactory {
 
 	/**
 	 * Complete plugin data
-	 * @param enum $type [optional]
+	 * @param string|bool $type [optional]
 	 * @return array
 	 */
 	public function completeData($type = false) {

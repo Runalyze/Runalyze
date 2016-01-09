@@ -12,13 +12,13 @@
 abstract class TrainingViewSectionTabbed extends TrainingViewSection {
 	/**
 	 * All tabbed rows
-	 * @var SectionRow[]
+	 * @var TrainingViewSectionRowAbstract[]
 	 */
 	protected $RowsTabbed = array();
 
 	/**
 	 * All tabbed rows: Title
-	 * @var SectionRow[]
+	 * @var string[]
 	 */
 	protected $RowsTabbedTitle = array();
 

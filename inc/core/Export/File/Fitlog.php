@@ -18,11 +18,11 @@ use SessionAccountHandler;
  */
 class Fitlog extends AbstractFileExporter
 {
-    /** @var SimpleXMLElement */
-    private $XML = null;
+    /** @var \SimpleXMLElement */
+    protected $XML = null;
 
-    /** @var SimpleXMLElement */
-    private $Activity = null;
+    /** @var \SimpleXMLElement */
+    protected $Activity = null;
 
     /**
      * @return bool

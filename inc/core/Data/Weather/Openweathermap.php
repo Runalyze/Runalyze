@@ -119,7 +119,7 @@ class Openweathermap implements ForecastStrategyInterface {
 
 	/**
 	 * Condition
-	 * @return Runalyze\Data\Weather\Çondition
+	 * @return \Runalyze\Data\Weather\Condition
 	 */
 	public function condition() {
 		if (!isset($this->Result['weather'])) {
@@ -131,7 +131,7 @@ class Openweathermap implements ForecastStrategyInterface {
 
 	/**
 	 * Temperature
-	 * @return Runalyze\Data\Weather\Temperature
+	 * @return \Runalyze\Data\Weather\Temperature
 	 */
 	public function temperature() {
 		if (isset($this->Result['main']) && isset($this->Result['main']['temp'])) {
@@ -204,7 +204,7 @@ class Openweathermap implements ForecastStrategyInterface {
 	 * 
 	 * @see http://openweathermap.org/weather-conditions
 	 * @param int $code Code from openweathermap.org
-	 * @return Runalyze\Data\Weather\Condition
+	 * @return \Runalyze\Data\Weather\Condition
 	 */
 	private function translateCodeToCondition($code) {
 		switch($code) {

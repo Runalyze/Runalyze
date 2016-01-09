@@ -113,15 +113,15 @@ class ConfigTabAccount extends ConfigTab {
 	 */
 	public function parsePostData() {
 		if ($_POST['name'] != SessionAccountHandler::getName()) {
-			DB::getInstance()->update('account', SessionAccountHandler::getId(), 'name', $_POST['name'], false);
+			DB::getInstance()->update('account', SessionAccountHandler::getId(), 'name', $_POST['name']);
 		}
                 
 		if ($_POST['allow_mails'] != SessionAccountHandler::getAllowMails()) {
-			DB::getInstance()->update('account', SessionAccountHandler::getId(), 'allow_mails', $_POST['allow_mails'], false);
+			DB::getInstance()->update('account', SessionAccountHandler::getId(), 'allow_mails', $_POST['allow_mails']);
 		}
                 
 		if ($_POST['language'] != SessionAccountHandler::getLanguage()) {
-			DB::getInstance()->update('account', SessionAccountHandler::getId(), 'language', $_POST['language'], false);
+			DB::getInstance()->update('account', SessionAccountHandler::getId(), 'language', $_POST['language']);
 			Language::setLanguage($_POST['language']);
 
 			echo Ajax::wrapJS('document.cookie = "lang=" + encodeURIComponent("'.addslashes($_POST['language']).'");');

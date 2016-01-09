@@ -302,7 +302,7 @@ abstract class Entity {
 
 	/**
 	 * Ignore a key while checking for emptiness
-	 * @param enum $key
+	 * @param string $key
 	 * @return boolean
 	 */
 	protected function ignoreNonEmptyValue($key) {

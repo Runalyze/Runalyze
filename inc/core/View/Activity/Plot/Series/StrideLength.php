@@ -36,9 +36,9 @@ class StrideLength extends ActivityPointSeries {
 
 	/**
 	 * Init data
-	 * @param \Runalyze\Model\Trackdata $trackdata
-	 * @param string $key
-	 * @param boolean $fillGaps try to fill gaps (zero values)
+	 * @param \Runalyze\Model\Trackdata\Entity $trackdata
+	 * @param string|bool $key
+	 * @param bool $fillGaps try to fill gaps (zero values)
 	 */
 	protected function initData(Trackdata $trackdata, $key = false, $fillGaps = false) {
 		$Collector = new DataCollectorForStrideLength($trackdata);

@@ -85,6 +85,7 @@ class Plot {
 	 * @param string $id
 	 * @param int $width
 	 * @param int $height
+	 * @return string
 	 */
 	public static function getDivFor($id, $width, $height) {
 		return '<div style="position:relative;width:'.$width.'px;height:'.$height.'px;margin:0 auto;">'.self::getInnerDivFor($id, $width, $height).'</div>';
@@ -97,6 +98,7 @@ class Plot {
 	 * @param int $height
 	 * @param bool $hidden
 	 * @param string $class
+	 * @return string
 	 */
 	public static function getInnerDivFor($id, $width, $height, $hidden = false, $class = '') {
 		return '<div class="flot '.Ajax::$IMG_WAIT.' '.$class.($hidden ? ' flot-hide' : '').'" id="'.$id.'" style="width:'.$width.'px;height:'.$height.'px;position:absolute;"></div>';
@@ -608,6 +610,7 @@ class Plot {
 	/**
 	 * Correct special characters like umlaute to unicode-HTML
 	 * @param string $string
+	 * @return string
 	 */
 	public static function correctSpecialChars($string) {
 		$string    = utf8_encode($string);
@@ -621,6 +624,7 @@ class Plot {
 	 * Get JavaScript-timestamp for a day of a year
 	 * @param int $year
 	 * @param int $day
+	 * @return int
 	 */
 	public static function dayOfYearToJStime($year, $day) {
 		return mktime(12,0,0,1,$day,$year).'000';

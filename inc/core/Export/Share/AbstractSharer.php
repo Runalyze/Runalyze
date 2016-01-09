@@ -90,5 +90,7 @@ abstract class AbstractSharer extends AbstractExporter
                 __('Linking your activity in a social network does not make sense - nobody will be able to see your activity.')
             );
         }
+
+        return '';
     }
 }

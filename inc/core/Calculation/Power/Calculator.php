@@ -109,7 +109,7 @@ class Calculator {
 	 */
 	public function calculate($weight = 75, $powerFactor = 1.0) {
 		if (!$this->Trackdata->has(Trackdata\Entity::TIME) || !$this->Trackdata->has(Trackdata\Entity::DISTANCE)) {
-			return;
+			return [];
 		}
 
 		$everyNthPoint  = ceil($this->Size/1000);

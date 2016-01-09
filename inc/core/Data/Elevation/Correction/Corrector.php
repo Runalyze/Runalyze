@@ -59,8 +59,7 @@ class Corrector {
 	}
 
 	/**
-	 * 
-	 * @param type $strategyName
+	 * @param string $strategyName
 	 */
 	protected function tryToUse($strategyName) {
 		$strategyName = 'Runalyze\\Data\\Elevation\\Correction\\'.$strategyName;
@@ -82,10 +81,6 @@ class Corrector {
 
 		if ($this->hasNoValidStrategy()) {
 			$this->tryToUseGeonames();
-		}
-
-		if ($this->hasNoValidStrategy()) {
-			$this->tryToUseDataScienceToolkit();
 		}
 
 		if ($this->hasNoValidStrategy()) {
@@ -143,17 +138,6 @@ class Corrector {
 	 */
 	protected function tryToUseGeonames() {
 		$this->Strategy = new Geonames($this->LatitudePoints, $this->LongitudePoints);
-
-		if (!$this->Strategy->canHandleData()) {
-			$this->Strategy = null;
-		}
-	}
-
-	/**
-	 * Try to use DataScienceToolkit
-	 */
-	protected function tryToUseDataScienceToolkit() {
-		$this->Strategy = new DataScienceToolkit($this->LatitudePoints, $this->LongitudePoints);
 
 		if (!$this->Strategy->canHandleData()) {
 			$this->Strategy = null;

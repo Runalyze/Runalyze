@@ -60,7 +60,7 @@ class PoincareCollector {
 
 	/**
 	 * Plot data
-	 * @var array
+	 * @return array
 	 */
 	public function data() {
 		return $this->PlotData;

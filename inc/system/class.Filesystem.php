@@ -8,8 +8,6 @@
  * @author Hannes Christiansen
  * @package Runalyze\System
  */
-
-use Runalyze\Error;
 class Filesystem {
 	/**
 	 * Get extension of filename

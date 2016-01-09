@@ -80,7 +80,7 @@ class DataBrowser extends \Runalyze\Configuration\Category {
 
 	/**
 	 * Fieldset
-	 * @return Runalyze\Configuration\Fieldset
+	 * @return \Runalyze\Configuration\Fieldset
 	 */
 	public function Fieldset() {
 		$Fieldset = new Fieldset( __('Calendar view') );

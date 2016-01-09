@@ -65,6 +65,40 @@ class FakeContext extends \Runalyze\View\Activity\Context {
 	}
 
 	/**
+	 * @param \Runalyze\Model\Activity\Entity $activity
+	 * @param \Runalyze\Model\Trackdata\Entity $trackdata
+	 * @param \Runalyze\Model\Route\Entity $route
+	 * @return \Runalyze\View\Activity\FakeContext
+	 */
+	public static function withDefaultSport(
+		Activity\Entity $activity,
+		Trackdata\Entity $trackdata = null,
+		Route\Entity $route = null
+	) {
+		if (null === $trackdata) {
+			$trackdata = new Trackdata\Entity(array());
+		}
+
+		if (null === $route) {
+			$route = new Route\Entity(array());
+		}
+
+		return new FakeContext(
+			$activity,
+			$trackdata,
+			new Swimdata\Entity(array()),
+			$route,
+			new HRV\Entity(array()),
+			new Sport\Entity(array(
+				Sport\Entity::NAME => 'Sport',
+				Sport\Entity::PACE_UNIT => \Runalyze\Parameter\Application\PaceUnit::KM_PER_H,
+				Sport\Entity::HAS_DISTANCES => true,
+				Sport\Entity::IS_OUTSIDE => true
+			))
+		);
+	}
+
+	/**
 	 * @return \Runalyze\View\Activity\FakeContext[]
 	 */
 	public static function examplaryContexts()

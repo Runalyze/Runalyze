@@ -18,11 +18,11 @@ use Runalyze\Model\Trackdata;
  */
 class Gpx extends AbstractFileExporter
 {
-    /** @var SimpleXMLElement */
-    private $XML = null;
+    /** @var \SimpleXMLElement */
+    protected $XML = null;
 
-    /** @var SimpleXMLElement */
-    private $Track = null;
+    /** @var \SimpleXMLElement */
+    protected $Track = null;
 
     /**
      * @return bool

@@ -589,10 +589,10 @@ class SRTMGeoTIFFReader {
 	}
 
 	/**
-	* Error handler
-	* 
-	* @param string $error
-	*/
+	 * Error handler
+	 * @param string $error
+	 * @throws \Exception
+	 */
 	private function handleError($method, $message) {
 		throw new Exception('SRTMGeoTIFFReader::'.$method.' fails: '.$message);
 	}

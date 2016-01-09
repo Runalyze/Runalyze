@@ -253,8 +253,7 @@ class Table {
 	}
 
 	/**
-	 * 
-	 * @param type $key
+	 * @param string $key
 	 * @return string
 	 */
 	protected function labelForAdditionalValue($key) {
@@ -304,7 +303,7 @@ class Table {
 	 */
 	protected function checkboxToToggleInactiveSplits() {
 		if ($this->IndexActive == 1 || $this->IndexResting == 1) {
-			return;
+			return '';
 		}
 
 		$Code  = '<p class="checkbox-first">';

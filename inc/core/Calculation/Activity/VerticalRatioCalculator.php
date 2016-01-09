@@ -46,7 +46,7 @@ class VerticalRatioCalculator {
 			!$this->Trackdata->has(Trackdata\Entity::VERTICAL_OSCILLATION) ||
 			!$this->Trackdata->has(Trackdata\Entity::STRIDE_LENGTH)
 		) {
-			return;
+			return [];
 		}
 
 		$Oscillation = $this->Trackdata->verticalOscillation();

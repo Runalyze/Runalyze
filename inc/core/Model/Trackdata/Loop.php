@@ -5,8 +5,8 @@
  */
 
 namespace Runalyze\Model\Trackdata;
+
 use Runalyze\Configuration;
-use Runalyze\Activity\Distance;
 
 /**
  * Loop through trackdata object

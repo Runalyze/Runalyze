@@ -50,7 +50,7 @@ class SectionOverviewRow extends TrainingViewSectionRowFullwidth {
 		$Distance = new Distance($this->Context->activity()->distance());
 
 		$this->BoxedValues = array(
-			new BoxedValue(Helper::Unknown($Distance->string(false, false, false), '-.--'), $Distance->unit(), __('Distance')),
+			new BoxedValue(Helper::Unknown($Distance->string(false, false), '-.--'), $Distance->unit(), __('Distance')),
 			new BoxedValue($this->Context->dataview()->duration()->string(), '', __('Time')),
 			new BoxedValue($this->Context->dataview()->elapsedTime(), '', __('Elapsed time')),
 			new BoxedValue($this->Context->dataview()->pace()->value(), $this->Context->dataview()->pace()->appendix(), __('Pace')),
