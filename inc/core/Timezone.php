@@ -10,12 +10,14 @@ namespace Runalyze;
 use \DateTimeZone;
 use \DateTime;
 use \DB;
+use Runalyze\Parameter\Application\Timezone as TimezoneConfiguration;
 
 class Timezone {
     
     public static function setPHPTimezone($timezone) {
-	if(self::isValidTimezone($timezone))
-	    date_default_timezone_set($timezone);
+	$timezoneName = (new TimezoneConfiguration())->getFullNameByEnum($timezone);
+	if(self::isValidTimezone($timezoneName))
+	    date_default_timezone_set($timezoneName);
     }
     
     public static function setMysql() {
@@ -27,53 +29,43 @@ class Timezone {
      */
     public static function listTimezones() 
     {
-	static $regions = array(
-	    DateTimeZone::AFRICA,
-	    DateTimeZone::AMERICA,
-	    DateTimeZone::ANTARCTICA,
-	    DateTimeZone::ASIA,
-	    DateTimeZone::ATLANTIC,
-	    DateTimeZone::AUSTRALIA,
-	    DateTimeZone::EUROPE,
-	    DateTimeZone::INDIAN,
-	    DateTimeZone::PACIFIC,
-	);
-
 	$timezones = array();
-	foreach( $regions as $region )
-	{
-	    $timezones = array_merge( $timezones, DateTimeZone::listIdentifiers( $region ) );
+	$timezoneList = (new TimezoneConfiguration())->getMapping();
+	foreach($timezoneList as $key => $timezone) {
+	    $timezones[$key] = $timezone;
 	}
-
+	$timezoneList = array_flip($timezoneList);
+	
 	$timezone_offsets = array();
 	foreach( $timezones as $timezone )
 	{
 	    $tz = new DateTimeZone($timezone);
-	    $timezone_offsets[$timezone] = $tz->getOffset(new DateTime);
+	    $timezone_offsets[$tz->getOffset(new DateTime)][] = $timezone;
 	}
-
-	asort($timezone_offsets);
+	ksort($timezone_offsets);
 
 	$timezone_list = array();
-	foreach( $timezone_offsets as $timezone => $offset )
+	foreach( $timezone_offsets as $offset => $timezones)
 	{
-	    $offset_prefix = $offset < 0 ? '-' : '+';
-	    $offset_formatted = gmdate( 'H:i', abs($offset) );
+	    foreach($timezones as $timezone) {
+		$offset_prefix = $offset < 0 ? '-' : '+';
+		$offset_formatted = gmdate( 'H:i', abs($offset) );
 
-	    $pretty_offset = "UTC${offset_prefix}${offset_formatted}";
+		$pretty_offset = "UTC${offset_prefix}${offset_formatted}";
 
-	    $t = new DateTimeZone($timezone);
-	    $c = new DateTime(null, $t);
-	    $current_time = $c->format('g:i A');
-
-	    $timezone_list[$timezone] = "(${pretty_offset}) ".str_replace('_', '', $timezone)." - $current_time";
+		$t = new DateTimeZone($timezone);
+		$c = new DateTime(null, $t);
+		$current_time = $c->format('g:i A');
+		$timezoneId  = constant('Runalyze\Parameter\Application\Timezone::'.strtoupper($timezoneList[$timezone]));
+		$timezone_list[$timezoneId] = "(${pretty_offset}) ".str_replace('_', '', $timezone)." - $current_time";
+	    }
 	}
 
 	return $timezone_list;
     }
     
     /*
-     * Check if TimezoneID is valid
+     * Check if TimezoneName is valid
      * @return bool
      */
     public static function isValidTimezone($timezone) {
