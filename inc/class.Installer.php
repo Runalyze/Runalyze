@@ -161,8 +161,8 @@ class Installer {
 			return true;
 		}
 
-		if (file_exists(PATH.'../config.php')) {
-			include PATH.'../config.php';
+		if (file_exists(PATH.'../data/config.php')) {
+			include PATH.'../data/config.php';
 
 			$this->mysqlConfig = array($host, $username, $password, $database, $port);
 
@@ -333,7 +333,7 @@ class Installer {
 			return (isset($config[$result[1]])) ? $config[$result[1]] : $result[0];
 		}, $file_string);
 
-		@file_put_contents(PATH.'../config.php', $file_string);
+		@file_put_contents(PATH.'../data/config.php', $file_string);
 
 		$this->writeConfigFileString = $file_string;
 	}

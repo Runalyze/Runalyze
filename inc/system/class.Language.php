@@ -111,7 +111,7 @@ class Language {
 	 */
 	private static function readAvailableLanguages() {
         $supportedLanguages = array();
-        include __DIR__.'/../../config_lang.php';
+        include __DIR__.'/../../data/config_lang.php';
 
 		self::$AVAILABLE_LANGUAGES = $supportedLanguages;
 	}
