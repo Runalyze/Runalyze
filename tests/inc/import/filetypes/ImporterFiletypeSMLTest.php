@@ -58,12 +58,15 @@ class ImporterFiletypeSMLTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( 39, $this->object->object()->getElapsedTime() );
 		$this->assertEquals( 91, $this->object->object()->getPulseAvg() );
 		$this->assertEquals( 113, $this->object->object()->getPulseMax() );
-		$this->assertEquals( 21, $this->object->object()->get('temperature') );
 		$this->assertEquals( 752, $this->object->object()->getCalories() );
 
 		$this->assertTrue( $this->object->object()->hasArrayLatitude() );
 		$this->assertTrue( $this->object->object()->hasArrayLongitude() );
 		$this->assertTrue( $this->object->object()->hasArrayTemperature() );
+		$this->assertEquals(
+			array(21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21),
+			$this->object->object()->getArrayTemperature()
+		);
 
 		$this->assertTrue( $this->object->object()->hasArrayHeartrate() );
 		$this->assertEquals(
@@ -107,13 +110,16 @@ class ImporterFiletypeSMLTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( 3964, $this->object->object()->getTimeInSeconds() );
 		$this->assertEquals( 79, $this->object->object()->getPulseAvg() );
 		$this->assertEquals( 81, $this->object->object()->getPulseMax() );
-		$this->assertEquals( 27, $this->object->object()->get('temperature') );
 		$this->assertEquals( 624, $this->object->object()->getCalories() );
 
 		$this->assertFalse( $this->object->object()->hasArrayLatitude() );
 		$this->assertFalse( $this->object->object()->hasArrayLongitude() );
 
 		$this->assertTrue( $this->object->object()->hasArrayTemperature() );
+		$this->assertEquals(
+			array(27, 27, 27, 27, 27, 27, 27, 27, 27, 27),
+			$this->object->object()->getArrayTemperature()
+		);
 
 		$this->assertTrue( $this->object->object()->hasArrayHeartrate() );
 		$this->assertEquals(

@@ -69,18 +69,18 @@ class CardinalDirection
         }
 
         if ($bearing >= 337.5 || $bearing < 22.5) {
-            return 'N';
+            return __('N');
         }
 
         $cardinalDirections = array(
-            'N' => array(337.5, 22.5),
-            'NE' => array(22.5, 67.5),
-            'E' => array(67.5, 112.5),
-            'SE' => array(112.5, 157.5),
-            'S' => array(157.5, 202.5),
-            'SW' => array(202.5, 247.5),
-            'W' => array(247.5, 292.5),
-            'NW' => array(292.5, 337.5)
+            __('N') => array(337.5, 22.5),
+            __('NE') => array(22.5, 67.5),
+            __('E') => array(67.5, 112.5),
+            __('SE') => array(112.5, 157.5),
+            __('S') => array(157.5, 202.5),
+            __('SW') => array(202.5, 247.5),
+            __('W') => array(247.5, 292.5),
+            __('NW') => array(292.5, 337.5)
         );
 
         foreach ($cardinalDirections as $dir => $angles) {
