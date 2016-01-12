@@ -1934,6 +1934,29 @@ tr.space-line.zebra-corrector td {
 .vdot-ignore {
   opacity: .25;
 }
+.windicon {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  line-height: 16px;
+  text-align: center;
+  font-size: 8px;
+  border: 1px solid #333;
+  border-radius: 50%;
+  position: relative;
+  margin: 0 2px;
+}
+.windicon-direction {
+  position: absolute;
+  top: -4px;
+  left: 6px;
+  display: block;
+  width: 0;
+  height: 11px;
+  border-width: 6px 2px;
+  border-style: solid;
+  border-color: #333 transparent transparent transparent;
+}
 .checkbox-icon:before {
   content: "\f096";
 }

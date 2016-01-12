@@ -284,7 +284,13 @@ class Query
 						$this->JoinTables[$joinDefinition['column']] = $joinDefinition;
 					}
 				} else {
-					$columns[] = $KeyObject->column();
+					$appendix = $KeyObject->column();
+
+					if (is_array($appendix)) {
+						$columns = array_merge($columns, $appendix);
+					} else {
+						$columns[] = $appendix;
+					}
 				}
 			}
 		}

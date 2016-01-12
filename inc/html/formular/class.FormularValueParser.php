@@ -202,6 +202,7 @@ class FormularValueParser {
 				break;
 			case self::$PARSER_DISTANCE:
 				self::parseDistance($value, $parserOptions);
+				break;
 			case self::$PARSER_WINDSPEED:
 				self::parseWindSpeed($value, $parserOptions);
 				break;

@@ -20,6 +20,20 @@ class KeysTest extends \PHPUnit_Framework_TestCase
 		);
 	}
 
+	public function testThatSummaryWorksForAllKeys()
+	{
+		foreach (Keys::getEnum() as $key) {
+			$KeyObject = Keys::get($key);
+
+			if ($KeyObject->isInDatabase() && $KeyObject->isShownInSummary()) {
+				SummaryMode::query(
+					$KeyObject->summaryMode(),
+					$KeyObject->column()
+				);
+			}
+		}
+	}
+
 	public function testThatLabelIsNeverEmpty()
 	{
 		foreach (Keys::getEnum() as $id) {
