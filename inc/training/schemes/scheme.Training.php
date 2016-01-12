@@ -650,8 +650,9 @@ $FIELDS = array(
 	),
 	'activity_id'		=> array(
 					'database'	=> array(
-						'type'		=> 'varchar',
-						'precision'	=> '50',
+						'type'		=> 'int',
+						'precision'	=> '11',
+						'null'		=> 'true'
 					),
 					'formular'	=> array(
 						'hidden'	=> true

@@ -1296,7 +1296,7 @@ class TrainingObject extends DataObject {
 	 * Has activity id?
 	 * @return bool True if training has a (positive) distance.
 	 */
-	public function hasActivityId() { return $this->getActivityId() === NULL; }
+	public function hasActivityId() { return $this->getActivityId() !== NULL; }
 
 
 	/**
