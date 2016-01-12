@@ -120,7 +120,7 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 	 */
 	protected function parseGeneralValues() {
 		$this->TrainingObject->setTimestamp( strtotime((string)$this->XML->Id) );
-		$this->TrainingObject->setActivityId( (string)$this->XML->Id );
+		//$this->TrainingObject->setActivityId( (string)$this->XML->Id );
 		$this->TrainingObject->setCreatorDetails( $this->findCreator() );
 		$this->findSportId();
 		

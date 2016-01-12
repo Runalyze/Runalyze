@@ -8,7 +8,7 @@ use Runalyze\Configuration;
 use Runalyze\Model\Factory;
 use Runalyze\Model\Trackdata\Entity as Trackdata;
 use Runalyze\Model\Route\Entity as Route;
-
+use Runalyze\Activity\DuplicateFinder;
 /**
  * Formular for trainings
  * 
@@ -74,7 +74,7 @@ class TrainingFormular extends StandardFormular {
 	protected function prepareForDisplayInSublcass() {
 		parent::prepareForDisplayInSublcass();
 
-                $this->initTagFieldset();
+        $this->initTagFieldset();
 		$this->addAdditionalHiddenFields();
 		$this->initEquipmentFieldset();
 
@@ -88,6 +88,10 @@ class TrainingFormular extends StandardFormular {
 				$this->addHiddenValue('mode', 'multi');
 				$this->submitButtons['submit'] = __('Save and continue');
 			}
+		} else {
+			$isDuplicate = (new DuplicateFinder(DB::getInstance(), SessionAccountHandler::getId()))->checkForDuplicate($this->dataObject->get('activity_id'));
+			if($isDuplicate)
+				echo HTML::warning(__('It seems that you already have imported this activity'));
 		}
 
 		$this->appendJavaScript();

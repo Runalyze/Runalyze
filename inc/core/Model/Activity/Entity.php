@@ -271,10 +271,10 @@ class Entity extends Model\EntityWithID {
 	const CREATOR_DETAILS = 'creator_details';
 
 	/**
-	 * Key: garmin activity id
+	 * Key: activity id
 	 * @var string
 	 */
-	const GARMIN_ACTIVITY_ID = 'activity_id';
+	const ACTIVITY_ID = 'activity_id';
 
 	/**
 	 * Weather
@@ -349,7 +349,7 @@ class Entity extends Model\EntityWithID {
 			self::NOTES,
 			self::CREATOR,
 			self::CREATOR_DETAILS,
-			self::GARMIN_ACTIVITY_ID
+			self::ACTIVITY_ID
 		);
 	}
 
