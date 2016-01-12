@@ -64,7 +64,7 @@ class CompleteEquipment extends AbstractEquipment
 			$Factory = new \Runalyze\Model\Factory(\SessionAccountHandler::getId());
 			$names = array();
 
-			foreach ($ids as $id) {
+			foreach (array_unique($ids) as $id) {
 				$names[] = $Factory->equipment($id)->name();
 			}
 
