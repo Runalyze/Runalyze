@@ -25,7 +25,7 @@ class WeatherWindDegree extends AbstractBox
 		$WindSpeed = $Context->activity()->weather()->windDegree();
 		$CardinalDirection = CardinalDirection::getDirection($WindSpeed->value());
 		parent::__construct(
-			\Helper::Unknown('('.$CardinalDirection.')'.$WindSpeed->value(), '-'),
+			\Helper::Unknown($CardinalDirection.' / '.$WindSpeed->value(), '-'),
 			$WindSpeed->unit(),
 			$WindSpeed->label()
 		);

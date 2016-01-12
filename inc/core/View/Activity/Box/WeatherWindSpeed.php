@@ -24,7 +24,7 @@ class WeatherWindSpeed extends AbstractBox
 		$WindSpeed = $Context->activity()->weather()->windSpeed();
 		parent::__construct(
 			\Helper::Unknown($WindSpeed->valueInPreferredUnit(), '-'),
-			$WindSpeed->PreferredUnit(),
+			$WindSpeed->unit(),
 			$WindSpeed->label()
 		);
 	}

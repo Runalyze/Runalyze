@@ -783,15 +783,6 @@ class Entity extends Model\EntityWithID {
 
 		return $this->Weather;
 	}
-	
-	/**
-	 * WindChillFactor
-	 * @return \Runalyze\Data\Weather\WindChillFactor
-	 */
-	public function windChillFactor() {
-		return new Weather\WindChillFactor(new \Runalyze\Data\Weather\WindSpeed($this->Data[self::WINDSPEED]), new \Runalyze\Activity\Temperature($this->Data[self::TEMPERATURE]), new \Runalyze\Activity\Pace($this->Data[self::TIME_IN_SECONDS], $this->Data[self::DISTANCE]));
-
-	}
 
 	/**
 	 * Splits

@@ -6,8 +6,10 @@
 
 namespace Runalyze\View\Activity;
 
+use Runalyze\Activity\Temperature;
 use Runalyze\Configuration;
 use Runalyze\Data\Cadence;
+use Runalyze\Data\Weather\WindChillFactor;
 use Runalyze\Model\Activity;
 use Runalyze\Model\Factory;
 use Runalyze\Activity\Distance;
@@ -92,6 +94,9 @@ class Dataview {
 	 * @var \Runalyze\Activity\Elevation
 	 */
 	protected $Elevation = null;
+
+	/** @var \Runalyze\Data\Weather\WindChillFactor */
+	protected $WindChillFactor = null;
 
 	/**
 	 * Construct data view
@@ -465,6 +470,20 @@ class Dataview {
 			return '-';
 
 		return round($this->Activity->elevation() / $this->Activity->distance()/10, 2).'&nbsp;&#37;';
+	}
+
+	/**
+	 * Get wind chill factor
+	 * @return WindChillFactor
+	 */
+	public function windChillFactor() {
+		return $this->object($this->WindChillFactor, function(Activity\Entity $Activity){
+			return new WindChillFactor(
+				$Activity->weather()->windSpeed(),
+				new Temperature($Activity->weather()->temperature()->value()),
+				new Pace($Activity->duration(), $Activity->distance())
+			);
+		});
 	}
 
 	/**

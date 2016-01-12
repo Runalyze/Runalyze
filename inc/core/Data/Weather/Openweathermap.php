@@ -52,7 +52,9 @@ class Openweathermap implements ForecastStrategyInterface {
 		$this->Result = array();
 
 		if ($Location->isOld() && $Location->hasLocationName()) {
-			$this->setFromURL( self::URL_HISTORY.'/city?q='.$Location->name().'&start='.$Location->time().'&cnt=1' );
+			// Historical data needs a paid account (150$/month)
+			// @see http://openweathermap.org/price
+			//$this->setFromURL( self::URL_HISTORY.'/city?q='.$Location->name().'&start='.$Location->time().'&cnt=1' );
 		}
 
 		if (empty($this->Result)) {
@@ -145,21 +147,21 @@ class Openweathermap implements ForecastStrategyInterface {
 	
 	/**
 	 * Temperature
-	 * @return Runalyze\Data\Weather\WindSpeed
+	 * @return \Runalyze\Data\Weather\WindSpeed
 	 */
 	public function windSpeed() {
+		$WindSpeed = new WindSpeed();
+
 		if (isset($this->Result['wind']) && isset($this->Result['wind']['speed'])) {
-			$value = $this->Result['wind']['speed'];
-		} else {
-			$value = null;
+			$WindSpeed->setMilesPerHour($this->Result['wind']['speed']);
 		}
 		
-		return (new WindSpeed())->setImperial($value);
+		return $WindSpeed;
 	}
 	
 	/**
 	 * Temperature
-	 * @return Runalyze\Data\Weather\WindDegree
+	 * @return \Runalyze\Data\Weather\WindDegree
 	 */
 	public function windDegree() {
 		if (isset($this->Result['wind']) && isset($this->Result['wind']['deg'])) {
@@ -173,7 +175,7 @@ class Openweathermap implements ForecastStrategyInterface {
 	
 	/**
 	 * Humidity
-	 * @return Runalyze\Data\Weather\Humidity
+	 * @return \Runalyze\Data\Weather\Humidity
 	 */
 	public function humidity() {
 		if (isset($this->Result['main']) && isset($this->Result['main']['humidity'])) {
@@ -187,7 +189,7 @@ class Openweathermap implements ForecastStrategyInterface {
 	
 	/**
 	 * Humidity
-	 * @return Runalyze\Data\Weather\Pressure
+	 * @return \Runalyze\Data\Weather\Pressure
 	 */
 	public function pressure() {
 		if (isset($this->Result['main']) && isset($this->Result['main']['pressure'])) {
@@ -244,8 +246,6 @@ class Openweathermap implements ForecastStrategyInterface {
 			case 501:			    
 			case 511:
 			case 520:
-			case 300:
-			case 301:
 			case 302:
 			case 310:
 			case 311:

@@ -459,19 +459,20 @@ $FIELDS = array(
 	),
 	'wind_speed' => array(
 					'database'	=> array(
-						'type'		=> 'decimal',
-						'precision'	=> '5,2'
+						'type'		=> 'tinyint',
+						'precision'	=> '3',
+						'null'		=> true
 					),
 					'formular'	=> array(
 						'label'		=> __('Wind speed'),
-						'unit'		=> (new \Runalyze\Data\Weather\WindSpeed())->PreferredUnit(),
+						'unit'		=> (new \Runalyze\Data\Weather\WindSpeed())->unit(),
 						'parser'	=> FormularValueParser::$PARSER_WINDSPEED
 					)
 	),
 	'wind_deg' => array(
 					'database'	=> array(
-						'type'		=> 'decimal',
-						'precision'	=> '5,2',
+						'type'		=> 'smallint',
+						'precision'	=> '3',
 						 'null'		=> true
 					),
 					'formular'	=> array(

@@ -577,23 +577,28 @@ class FormularValueParser {
 	}
 	
 	/**
-	 * Validator: distance in preferred unit => distance in km
+	 * Validator: wind speed in preferred unit => wind speed in km/h
 	 * @param string $key
-	 * @param array $parserOptions
 	 * @return bool
 	 */
 	private static function validateWindSpeed($key) {
-		$_POST[$key] = round((new WindSpeed())->setInPreferredUnit($_POST[$key])->value(), 0);
+		if (is_numeric($_POST[$key])) {
+			$_POST[$key] = round((new WindSpeed())->setInPreferredUnit($_POST[$key])->value());
+		} else {
+			$_POST[$key] = null;
+		}
+
 		return true;
 	}
 
 	/**
-	 * Parse: distance in km => distance in preferred unit
-	 * @param mixed $value 
-	 * @param array $parserOptions
+	 * Parse: wind speed in km/h => wind speed in preferred unit
+	 * @param mixed $value
 	 */
-	private static function parseWindSpeed(&$value, array $parserOptions) {
-                $value = number_format((new WindSpeed($value))->valueInPreferredUnit(), 0);
+	private static function parseWindSpeed(&$value) {
+		if (null !== $value && $value != '') {
+			$value = round((new WindSpeed($value))->valueInPreferredUnit());
+		}
 	}
 
 	/**

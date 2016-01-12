@@ -21,9 +21,10 @@ class WeatherWindChillFactor extends AbstractBox
 	 */
 	public function __construct(\Runalyze\View\Activity\Context $Context)
 	{
-		$WindChillFactor = $Context->activity()->windChillFactor();
+		$WindChillFactor = $Context->dataview()->windChillFactor();
+
 		parent::__construct(
-			\Helper::Unknown($WindChillFactor->valueInPreferredUnit(), '-'),
+			round($WindChillFactor->valueInPreferredUnit()),
 			$WindChillFactor->unit(),
 			$WindChillFactor->label()
 		);
