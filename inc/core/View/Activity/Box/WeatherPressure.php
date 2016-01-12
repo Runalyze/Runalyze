@@ -23,7 +23,7 @@ class WeatherPressure extends AbstractBox
 	{
 		$pressure = $Context->activity()->weather()->pressure();
 		parent::__construct(
-			\Helper::Unknown($pressure->value(), '-'),
+			\Helper::Unknown($pressure->string(false), '-'),
 			$pressure->unit(),
 			$pressure->label()
 		);

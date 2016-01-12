@@ -22,12 +22,12 @@ class WeatherWindDegree extends AbstractBox
 	 */
 	public function __construct(\Runalyze\View\Activity\Context $Context)
 	{
-		$WindSpeed = $Context->activity()->weather()->windDegree();
-		$CardinalDirection = CardinalDirection::getDirection($WindSpeed->value());
+		$WindDirection = $Context->activity()->weather()->windDegree();
+		$CardinalDirection = CardinalDirection::getDirection($WindDirection->value());
 		parent::__construct(
-			\Helper::Unknown($CardinalDirection.' / '.$WindSpeed->value(), '-'),
-			$WindSpeed->unit(),
-			$WindSpeed->label()
+			\Helper::Unknown($CardinalDirection.' / '.$WindDirection->string(false), '-'),
+			$WindDirection->unit(),
+			$WindDirection->label()
 		);
 	}
 }

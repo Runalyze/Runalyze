@@ -443,7 +443,8 @@ $FIELDS = array(
 					),
 					'formular'	=> array(
 						'label'		=> __('Humidity'),
-						'unit'		=> FormularUnit::$PERCENT
+						'unit'		=> FormularUnit::$PERCENT,
+						'css'		=> TrainingFormular::$ONLY_OUTSIDE_CLASS
 					)
 	),
 	'pressure' => array(
@@ -454,7 +455,8 @@ $FIELDS = array(
 					),
 					'formular'	=> array(
 						'label'		=> __('Pressure'),
-						'unit'		=> FormularUnit::$HPA
+						'unit'		=> FormularUnit::$HPA,
+						'css'		=> TrainingFormular::$ONLY_OUTSIDE_CLASS
 					)
 	),
 	'wind_speed' => array(
@@ -466,7 +468,8 @@ $FIELDS = array(
 					'formular'	=> array(
 						'label'		=> __('Wind speed'),
 						'unit'		=> (new \Runalyze\Data\Weather\WindSpeed())->unit(),
-						'parser'	=> FormularValueParser::$PARSER_WINDSPEED
+						'parser'	=> FormularValueParser::$PARSER_WINDSPEED,
+						'css'		=> TrainingFormular::$ONLY_OUTSIDE_CLASS
 					)
 	),
 	'wind_deg' => array(
@@ -477,7 +480,8 @@ $FIELDS = array(
 					),
 					'formular'	=> array(
 						'label'		=> __('Wind degrees'),
-						'unit'		=> FormularUnit::$DEGREE
+						'unit'		=> FormularUnit::$DEGREE,
+						'css'		=> TrainingFormular::$ONLY_OUTSIDE_CLASS
 					)
 	),
 	'is_night' => array(
@@ -488,7 +492,8 @@ $FIELDS = array(
 					),
 					'formular'	=> array(
 						'label'		=> __('Night'),
-						'class'		=> 'FormularCheckbox'
+						'class'		=> 'FormularCheckbox',
+						'css'		=> TrainingFormular::$ONLY_OUTSIDE_CLASS
 					)
 	),
 	'route'				=> array(

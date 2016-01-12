@@ -23,7 +23,7 @@ class WeatherHumidity extends AbstractBox
 	{
 		$humidity = $Context->activity()->weather()->humidity();
 		parent::__construct(
-			\Helper::Unknown($humidity->value(), '-'),
+			\Helper::Unknown($humidity->string(false), '-'),
 			$humidity->unit(),
 			$humidity->label()
 		);

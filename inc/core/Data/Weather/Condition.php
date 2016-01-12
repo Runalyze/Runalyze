@@ -137,14 +137,17 @@ class Condition {
 			case self::FAIR:
 				return new Weather\Fair();
 			case self::CLOUDY:
-			case self::FOGGY:
 				return new Weather\Cloudy();
+			case self::FOGGY:
+				return new Weather\Foggy();
 			case self::CHANGEABLE:
-			case self::THUNDERSTORM:
 				return new Weather\Changeable();
+			case self::THUNDERSTORM:
+				return new Weather\Thunderstorm();
 			case self::RAINY:
-			case self::HEAVYRAIN:
 				return new Weather\Rainy();
+			case self::HEAVYRAIN:
+				return new Weather\Heavyrain();
 			case self::SNOWING:
 				return new Weather\Snowing();
 			case self::UNKNOWN:
