@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-01-10 17:46+0100\n"
-"PO-Revision-Date: 2016-01-09 16:55+0200\n"
-"Last-Translator: Hannes <mail@laufhannes.de>\n"
-"Language-Team: Polish <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/pl/>\n"
+"PO-Revision-Date: 2016-01-12 13:47+0200\n"
+"Last-Translator: Grzegorz G <grzegorz@thulium.pl>\n"
+"Language-Team: Polish "
+"<http://translate.runalyze.de/projects/runalyze/runalyze/pl/>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -856,7 +856,6 @@ msgid "R-R intervals"
 msgstr "Interwały R-R"
 
 #: inc/training/view/section/class.SectionHRVRow.php:31
-#, fuzzy
 msgid "Poincaré plot"
 msgstr "Wykres Poincaré"
 
@@ -989,9 +988,8 @@ msgid "srtm files"
 msgstr "pliki srtm"
 
 #: inc/training/view/class.ElevationInfo.php:275
-#, fuzzy
 msgid "remove corrected elevation data"
-msgstr "Koryguj dane dotyczące wysokości"
+msgstr "usuń skorygowane dane wysokości"
 
 #: inc/training/view/class.ElevationInfo.php:286
 msgid "Compare algorithms"
@@ -1022,9 +1020,8 @@ msgid "Show week"
 msgstr "Pokaż tydzień"
 
 #: inc/training/view/class.TrainingView.php:66
-#, fuzzy
 msgid "Share"
-msgstr "Udostępnij!"
+msgstr "Udostępnij"
 
 #: inc/training/view/class.TrainingView.php:69
 #: inc/core/Dataset/Keys/SharedLink.php:44
@@ -1039,26 +1036,23 @@ msgstr "Eksportuj"
 #: inc/training/view/class.TrainingView.php:94
 #, php-format
 msgid "as %s"
-msgstr ""
+msgstr "jako %s"
 
 #: inc/training/view/class.TrainingView.php:107
-#, fuzzy
 msgid "Make private"
-msgstr "zmień go na prywatny"
+msgstr "Zmień na prywatny"
 
 #: inc/training/view/class.TrainingView.php:110
-#, fuzzy
 msgid "Make public"
-msgstr "zmień go na publiczny"
+msgstr "Zmień na publiczny"
 
 #: inc/training/view/class.TrainingView.php:115
 msgid "Edit"
 msgstr "Edytuj"
 
 #: inc/training/view/class.TrainingView.php:117
-#, fuzzy
 msgid "Do you really want to delete this activity?"
-msgstr "Czy na pewno chcesz usunąć konto?"
+msgstr "Czy na pewno chcesz usunąć trening?"
 
 #: inc/training/view/class.TrainingView.php:117
 #: inc/training/class.TrainingFormular.php:406
@@ -1179,7 +1173,7 @@ msgstr "Ubranie"
 #: inc/training/schemes/scheme.Training.new.php:419
 #: inc/training/schemes/scheme.Training.php:466
 msgid "Title"
-msgstr ""
+msgstr "Tytuł"
 
 #: inc/training/schemes/scheme.Training.new.php:440
 msgid "Shoe"
@@ -1671,9 +1665,8 @@ msgid "Sort: activity types"
 msgstr "Sortuj: typ treningu"
 
 #: inc/core/Configuration/Category/ActivityForm.php:278
-#, fuzzy
 msgid "Sort: equipment"
-msgstr "Twój sprzęt"
+msgstr "Sortuj: sprzęt"
 
 #: inc/core/Configuration/Category/DataBrowser.php:86
 #: inc/system/config/class.ConfigTabTypes.php:51
@@ -1885,9 +1878,8 @@ msgstr ""
 "Przeliczono %s. Nowa wartość: <strong>%s</strong> (poprzednia wartość: %s)"
 
 #: inc/core/Export/Share/Html.php:45
-#, fuzzy
 msgid "HTML"
-msgstr "Kod HTML"
+msgstr "HTML"
 
 #: inc/core/Export/Share/Html.php:55 inc/core/Export/Share/IFrame.php:82
 msgid "Code"
@@ -1911,15 +1903,15 @@ msgstr "Trening jest prywatny: Brak linku."
 
 #: inc/core/Export/Share/Facebook.php:73
 msgid "Facebook"
-msgstr ""
+msgstr "Facebook"
 
 #: inc/core/Export/Share/GooglePlus.php:49
 msgid "Google+"
-msgstr ""
+msgstr "Google+"
 
 #: inc/core/Export/Share/IFrame.php:54
 msgid "IFrame"
-msgstr ""
+msgstr "IFrame"
 
 #: inc/core/Export/Share/IFrame.php:89
 msgid ""
@@ -1963,7 +1955,7 @@ msgstr ""
 
 #: inc/core/Export/Share/Twitter.php:55
 msgid "Twitter"
-msgstr ""
+msgstr "Twitter"
 
 #: inc/core/Activity/GroundcontactBalance.php:48
 msgid "Groundcontact balance"
@@ -2137,7 +2129,6 @@ msgid "No GPS-data available. Can\\'t compute laps."
 msgstr "Dane GPS niedostępne. Nie można wyliczyć okrążeń."
 
 #: inc/core/View/Activity/Plot/HRVPoincare.php:55
-#, fuzzy
 msgid "Poincarè plot"
 msgstr "Wykres Poincaré"
 
@@ -2536,7 +2527,7 @@ msgstr "spm = steps per minute (kroków na minutę)"
 #: inc/core/Dataset/Keys/FitVO2maxEstimate.php:44
 #: inc/core/Dataset/Keys/FitVO2maxEstimate.php:53
 msgid "VO2max"
-msgstr ""
+msgstr "VO2max"
 
 #: inc/core/Dataset/Keys/FitVO2maxEstimate.php:44
 #: inc/core/Dataset/Keys/FitRecoveryTime.php:44
@@ -2549,7 +2540,6 @@ msgid "(file)"
 msgstr "(plik)"
 
 #: inc/core/Dataset/Keys/FitVO2maxEstimate.php:62
-#, fuzzy
 msgid "Garmin's newer devices have an integrated VO2max estimation."
 msgstr "Nowe urządzenia Garmin posiadają zintegrowane oszacowanie VDOT."
 
@@ -2669,6 +2659,9 @@ msgid ""
 "only if there are handmade laps, i.e. there are active and inactive laps, or "
 "if it was a race. "
 msgstr ""
+"Okrążenia oznaczane są ikoną zegarka, czasy są wyświetlane jako tooltip. "
+"Pokazywane są tylko jeśli wprowadzono ręczne okrążenia, tzn. aktywne/"
+"nieaktywne lub jeśli były to zawody. "
 
 #: inc/core/Dataset/Keys/Elevation.php:53
 msgid "Elev."
@@ -2943,13 +2936,12 @@ msgid "Start Runalyze"
 msgstr "Uruchom Runalyze"
 
 #: inc/tpl/tpl.Installer.php:37
-#, fuzzy
 msgid ""
 "If you want to reinstall Runalyze please delete the <em>config.php</em>-file "
 "in your main directory of this installation."
 msgstr ""
-"Jeśli chcesz zainstalować Runalyze ponownie musisz usunąć plik <em>config."
-"php</em> z katalogu głównego instalacji."
+"Jeśli chcesz zainstalować ponownie Runalyze, musisz usunąć plik "
+"<em>config.php</em> z katalogu głównego instalacji."
 
 #: inc/tpl/tpl.Installer.php:44
 msgid "Welcome!"
@@ -3034,7 +3026,7 @@ msgstr "Host"
 
 #: inc/tpl/tpl.Installer.php:125
 msgid "Port"
-msgstr ""
+msgstr "Port"
 
 #: inc/tpl/tpl.Installer.php:131 inc/class.AdminView.php:262
 msgid "User"
@@ -3341,7 +3333,7 @@ msgstr ""
 
 #: inc/tpl/tpl.InstallerUpdate.php:28
 msgid "Trying to clear your cache failed."
-msgstr ""
+msgstr "Próba wyczyszczenia cache nie powiodła się."
 
 #: inc/tpl/tpl.InstallerUpdate.php:40
 #, php-format
@@ -3584,21 +3576,19 @@ msgstr ""
 msgid ""
 "In general most questions, problems and ideas are more appropriate to ask in "
 "the forum."
-msgstr ""
+msgstr "Jeśli masz pytania, pomysły lub problemy - najlepiej zadaj je na forum."
 
 #: inc/tpl/tpl.help.php:51
 msgid "Forum"
-msgstr ""
+msgstr "Forum"
 
 #: inc/tpl/tpl.help.php:52
-#, fuzzy
 msgid "Documentation"
-msgstr "Czas"
+msgstr "Dokumentacja"
 
 #: inc/tpl/tpl.help.php:60
-#, fuzzy
 msgid "In a case of urgency you can contact us via email:"
-msgstr "Możesz skontaktować się z nami przez e-mail:"
+msgstr "W pilnych przypadkach możesz skontaktować się z nami przez e-mail:"
 
 #: inc/tpl/tpl.help.php:65
 msgid "Browser Support"
@@ -3657,7 +3647,7 @@ msgstr "wstecz"
 
 #: inc/class.DataBrowser.php:268
 msgid "today"
-msgstr ""
+msgstr "dzisiaj"
 
 #: inc/class.DataBrowser.php:278
 msgid "Reload current datasheet"
@@ -4612,6 +4602,10 @@ msgid ""
 "like the Garmin Communicator. A <a href=\"%s\">reinstall</a> may work, but "
 "we have documented an alternative way to import the original files at %s. "
 msgstr ""
+"Ze względów bezpieczeństwa producenci przeglądarek wyłączają wsparcie dla "
+"wtyczek takich jak Garmin Communicator.  <a href=\"%s\">Reinstalacja</a> "
+"może pomóc, ale może lepiej skorzystać z metody alternatywnej opisanej na %"
+"s. "
 
 #: inc/import/class.MultiEditor.php:45
 msgid "No activities for editing were set."
@@ -4929,7 +4923,7 @@ msgstr "Ścieżka do Perl-a"
 
 #: inc/class.AdminView.php:166
 msgid "TTBIN Converter Path"
-msgstr ""
+msgstr "Ścieżka konwertera TTBIN"
 
 #: inc/class.AdminView.php:167
 msgid "Sender e-mail"
@@ -5215,9 +5209,8 @@ msgid "You are not logged in anymore."
 msgstr "Nie jesteś już zalogowany."
 
 #: call/call.Training.elevationCorrection.php:43
-#, fuzzy
 msgid "Corrected elevation data has been removed."
-msgstr "Dane dotyczące wysokości zostały skorygowane."
+msgstr "Skorygowane dane dotyczące wysokości zostały usunięte."
 
 #: call/call.Training.elevationCorrection.php:58
 msgid "Elevation data could not be retrieved."
