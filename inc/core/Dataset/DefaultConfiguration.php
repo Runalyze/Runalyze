@@ -25,6 +25,7 @@ class DefaultConfiguration extends Configuration
 			Keys::SHARED_LINK => false,
 			Keys::WEATHER => true,
 			Keys::TEMPERATURE => true,
+			Keys::WIND_CHILL => false,
 			Keys::WIND => false,
 			Keys::HUMIDITY => false,
 			Keys::AIR_PRESSURE => false,
