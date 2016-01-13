@@ -388,6 +388,7 @@ class Entity extends Model\EntityWithID {
 			case self::TEMPERATURE:
 			case self::NOTES:
 			case self::CREATOR_DETAILS:
+			case self::ACTIVITY_ID:
 				return true;
 		}
 
