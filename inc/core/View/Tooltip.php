@@ -92,7 +92,7 @@ class Tooltip {
 	public function attributes() {
 		$Attributes = array();
 		$Attributes[] = 'rel="'.self::ATTRIBUTE_REL.'"';
-		$Attributes[] = self::ATTRIBUTE.'="'.str_replace('&amp;nbsp;', '&nbsp;', htmlspecialchars($this->text)).'"';
+		$Attributes[] = self::ATTRIBUTE.'="'.str_replace('&amp;', '&', htmlspecialchars($this->text)).'"';
 
 		if (!empty($this->position)) {
 			$Attributes[] = 'class="'.$this->position.'"';
