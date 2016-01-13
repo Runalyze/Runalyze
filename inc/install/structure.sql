@@ -333,7 +333,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_training` (
   `wind_deg` smallint(3) unsigned DEFAULT NULL,
   `humidity` tinyint(3) unsigned DEFAULT NULL,
   `pressure` smallint(4) unsigned DEFAULT NULL,
-  `is_night` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `is_night` tinyint(1) unsigned DEFAULT NULL,
   `weatherid` smallint(6) NOT NULL DEFAULT '1',
   `route` text,
   `routeid` int(10) unsigned NOT NULL DEFAULT '0',

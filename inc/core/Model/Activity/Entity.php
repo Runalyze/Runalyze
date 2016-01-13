@@ -237,13 +237,19 @@ class Entity extends Model\EntityWithID {
 	 * Key: pressure
 	 * @var string
 	 */
-	const PRESSURE = 'pressure';	
+	const PRESSURE = 'pressure';
 
 	/**
 	 * Key: weather id
 	 * @var string
 	 */
 	const WEATHERID = 'weatherid';
+
+	/**
+	 * Key: is night
+	 * @var string
+	 */
+	const IS_NIGHT = 'is_night';
 
 	/**
 	 * Key: route id
@@ -369,6 +375,7 @@ class Entity extends Model\EntityWithID {
 			self::HUMIDITY,
 			self::PRESSURE,
 			self::WEATHERID,
+			self::IS_NIGHT,
 			self::ROUTEID,
 			self::ROUTE,
 			self::SPLITS,
@@ -422,6 +429,7 @@ class Entity extends Model\EntityWithID {
 			case self::WINDDEG:
 			case self::HUMIDITY:
 			case self::PRESSURE:
+			case self::IS_NIGHT:
 			case self::NOTES:
 			case self::CREATOR_DETAILS:
 				return true;
@@ -431,24 +439,12 @@ class Entity extends Model\EntityWithID {
 	}
 
 	/**
-	 * Get value for this key
-	 * @param string $key
-	 * @return mixed
-	 */
-	/*public function get($key) {
-		if ($key == self::TEMPERATURE) {
-			return $this->Data[self::TEMPERATURE];
-		}
-
-		return parent::get($key);
-	}*/
-
-	/**
 	 * Synchronize
 	 */
 	public function synchronize() {
 		parent::synchronize();
 
+		$this->ensureNullIfEmpty(self::IS_NIGHT, true);
 		$this->ensureAllNumericValues();
 		$this->synchronizeObjects();
 	}
@@ -496,6 +492,10 @@ class Entity extends Model\EntityWithID {
 
 	protected function synchronizeObjects() {
 		$this->Data[self::TEMPERATURE] = $this->weather()->temperature()->value();
+		$this->Data[self::WINDSPEED] = $this->weather()->windSpeed()->value();
+		$this->Data[self::WINDDEG] = $this->weather()->windDegree()->value();
+		$this->Data[self::HUMIDITY] = $this->weather()->humidity()->value();
+		$this->Data[self::PRESSURE] = $this->weather()->pressure()->value();
 		$this->Data[self::WEATHERID] = $this->weather()->condition()->id();
 		$this->Data[self::SPLITS] = $this->splits()->asString();
 		$this->Data[self::PARTNER] = $this->partner()->asString();
@@ -782,6 +782,20 @@ class Entity extends Model\EntityWithID {
 		}
 
 		return $this->Weather;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isNight() {
+		return ($this->Data[self::IS_NIGHT] == 1);
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function knowsIfItIsNight() {
+		return (null !== $this->Data[self::IS_NIGHT]);
 	}
 
 	/**
