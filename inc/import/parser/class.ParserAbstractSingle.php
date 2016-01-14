@@ -206,7 +206,18 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 		$this->setTemperatureFromArray();
 		$this->setRunningDynamicsFromArray();
 		$this->setDistanceFromGPSdata();
+		$this->setActivityID();
 	}
+
+	/**
+	 * Set activityID if empty
+	 */
+	 private function setActivityID()
+	 {
+	 	if(!$this->TrainingObject->hasActivityId()) {
+	 		$this->TrainingObject->setActivityId((int)$this->TrainingObject->getTimestamp());
+	 	}
+	 }
 
 	/**
 	 * Set average and maximum heartrate from array

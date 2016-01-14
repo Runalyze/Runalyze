@@ -197,8 +197,8 @@ class DataBrowser {
 	protected function displayNavigationLinks() {
 		echo $this->getCalenderLink();
 		echo $this->getPrevLink();
-		echo $this->getCurrentLink();
 		echo $this->getNextLink();
+		echo $this->getCurrentLink();
 	}
 
 	/**

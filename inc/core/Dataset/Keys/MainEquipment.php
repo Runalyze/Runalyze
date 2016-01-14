@@ -66,7 +66,7 @@ class MainEquipment extends AbstractEquipment
 			$mainTypeID = $context->sport()->mainEquipmentTypeID();
 			$names = array();
 
-			foreach ($ids as $id) {
+			foreach (array_unique($ids) as $id) {
 				$Equipment = $Factory->equipment($id);
 
 				if ($Equipment->typeid() == $mainTypeID) {

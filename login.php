@@ -5,7 +5,7 @@
  * @author Hannes Christiansen <mail@laufhannes.de>
  * @copyright http://www.runalyze.de/
  */
-if (!file_exists('config.php')) {
+if (!file_exists('data/config.php')) {
 	include 'install.php';
 	exit();
 }

@@ -344,7 +344,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_training` (
   `accountid` int(11) NOT NULL,
   `creator` varchar(100) NOT NULL DEFAULT '',
   `creator_details` tinytext,
-  `activity_id` varchar(50) NOT NULL DEFAULT ''
+  `activity_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 PACK_KEYS=0;
 
 -- --------------------------------------------------------

@@ -145,9 +145,9 @@ class ConfigTabDataset extends ConfigTab {
 
 		return '<tr class="r" id="'.$keyid.'_tr">
 				<td class="c">'.$Icon.'</td>
-				<td class="l b">'.$KeyObject->label().$newIndicator.'</td>
+				<td class="l b"><label for="'.$keyid.'_active">'.$KeyObject->label().$newIndicator.'</label></td>
 				<td class="c">
-					<input type="checkbox" name="'.$keyid.'_active"'.(!$isNew && $this->Configuration->isActive($keyid) ? ' checked' : '').($KeyObject->mustBeShown() ? ' disabled' : '').'>
+					<input type="checkbox" id="'.$keyid.'_active" name="'.$keyid.'_active"'.(!$isNew && $this->Configuration->isActive($keyid) ? ' checked' : '').($KeyObject->mustBeShown() ? ' disabled' : '').'>
 				</td>
 				<td class="c">
 					<input class="dataset-position" type="text" name="'.$keyid.'_position" value="'.$pos.'" size="2">

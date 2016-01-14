@@ -355,8 +355,7 @@ $FIELDS = array(
 					'formular'	=> array(
 						'label'		=> '<span class="'.TrainingFormular::$ONLY_NOT_RUNNING_CLASS.'">'.__('Cadence').'</span><span class="'.TrainingFormular::$ONLY_RUNNING_CLASS.'">'.__('Cadence (Running)').'</span>',
 						'unit'		=> FormularUnit::$RPM,
-						'tooltip'	=> __('Unit is always - also for running - <em>rpm</em>, i.e. rounds (or steps with one foot) per minute,'),
-						'css'		=> TrainingFormular::$ONLY_OUTSIDE_CLASS
+						'tooltip'	=> __('Unit is always - also for running - <em>rpm</em>, i.e. rounds (or steps with one foot) per minute,')
 					)
 	),
 	'power'				=> array(
@@ -712,8 +711,9 @@ $FIELDS = array(
 	),
 	'activity_id'		=> array(
 					'database'	=> array(
-						'type'		=> 'varchar',
-						'precision'	=> '50',
+						'type'		=> 'int',
+						'precision'	=> '11',
+						'null'		=> 'true'
 					),
 					'formular'	=> array(
 						'hidden'	=> true

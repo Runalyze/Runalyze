@@ -1304,6 +1304,11 @@ class TrainingObject extends DataObject {
 	 * @return string activity id from garmin device
 	 */
 	public function getActivityId() { return $this->get('activity_id'); }
+	/**
+	 * Has activity id?
+	 * @return bool True if training has a (positive) distance.
+	 */
+	public function hasActivityId() { return $this->getActivityId() !== NULL; }
 
 
 	/**
