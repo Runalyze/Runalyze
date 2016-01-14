@@ -359,8 +359,8 @@ class AdminView {
 		$Fieldset = new FormularFieldset( __('Unused files') );
 		$Fieldset->addFileBlock( $this->getBlockForFiles('../data/import/') );
 		$Fieldset->addFileBlock( $this->getBlockForFiles('../data/log/') );
-		$Fieldset->addFileBlock( $this->getBlockForFiles('../data/DbBackup/backup/') );
-		$Fieldset->addFileBlock( $this->getBlockForFiles('../data/DbBackup/import/') );
+		$Fieldset->addFileBlock( $this->getBlockForFiles('../data/backup-tool/backup/') );
+		$Fieldset->addFileBlock( $this->getBlockForFiles('../data/backup-tool/import/') );
 		$Fieldset->addBlock( '<input type="submit" value="'.__('Clear directories').'">' );
 		$Fieldset->setCollapsed();
 
