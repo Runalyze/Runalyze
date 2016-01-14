@@ -87,7 +87,7 @@ class WindDegree implements ValueInterface
             return '';
         }
 
-        return round($this->Value).($withUnit ? '&nbsp;'.$this->unit() : '');
+        return round($this->Value).($withUnit ? $this->unit() : '');
     }
 
     /**
