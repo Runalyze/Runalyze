@@ -88,7 +88,7 @@ class TrainingFormular extends StandardFormular {
 				$this->addHiddenValue('mode', 'multi');
 				$this->submitButtons['submit'] = __('Save and continue');
 			}
-		} else {
+		} else if (is_object($this->dataOject)) {
 			$isDuplicate = (new DuplicateFinder(DB::getInstance(), SessionAccountHandler::getId()))->checkForDuplicate($this->dataObject->get('activity_id'));
 			if($isDuplicate)
 				echo HTML::warning(__('It seems that you already have imported this activity'));
