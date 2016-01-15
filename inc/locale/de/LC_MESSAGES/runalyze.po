@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-01-15 22:09+0100\n"
-"PO-Revision-Date: 2016-01-10 17:57+0200\n"
+"PO-Revision-Date: 2016-01-15 23:15+0200\n"
 "Last-Translator: Michael Pohl <michael@mipapo.de>\n"
-"Language-Team: German <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/de/>\n"
+"Language-Team: German "
+"<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -455,20 +455,19 @@ msgstr "Strecke"
 #: inc/training/schemes/scheme.Training.php:444
 #: inc/core/Data/Weather/Humidity.php:58 inc/core/Dataset/Keys/Humidity.php:43
 msgid "Humidity"
-msgstr ""
+msgstr "Luftfeuchtigkeit"
 
 #: inc/training/search/class.SearchFormular.php:160
 #: inc/training/schemes/scheme.Training.php:456
 #: inc/core/Data/Weather/Pressure.php:58
 #: inc/core/Dataset/Keys/AirPressure.php:52
 msgid "Pressure"
-msgstr ""
+msgstr "Luftdruck"
 
 #: inc/training/search/class.SearchFormular.php:161
 #: inc/core/Data/Weather/WindSpeed.php:63
-#, fuzzy
 msgid "Wind Speed"
-msgstr "Geschwindigkeit"
+msgstr "Windgeschwindigkeit"
 
 #: inc/training/search/class.SearchFormular.php:162
 #: inc/core/Dataset/Keys/Comment.php:46
@@ -1171,18 +1170,16 @@ msgstr ""
 "Schritte mit einem Fuß) pro Minute"
 
 #: inc/training/schemes/scheme.Training.php:468
-#, fuzzy
 msgid "Wind speed"
-msgstr "als Geschwindigkeit"
+msgstr "Windgeschwindigkeit"
 
 #: inc/training/schemes/scheme.Training.php:481
 msgid "Wind degrees"
-msgstr ""
+msgstr "Windrichtung"
 
 #: inc/training/schemes/scheme.Training.php:493
-#, fuzzy
 msgid "Night"
-msgstr "Gewicht"
+msgstr "Nacht"
 
 #: inc/training/schemes/scheme.Training.php:526
 msgid "Title"
@@ -1250,9 +1247,8 @@ msgid "Save and continue"
 msgstr "Speichern und weiter"
 
 #: inc/training/class.TrainingFormular.php:94
-#, fuzzy
 msgid "It seems that you already have imported this activity"
-msgstr "Möchtest du wirklich diese Aktivität löschen?"
+msgstr "Es scheint, dass du diese Aktivität bereits importiert hast"
 
 #: inc/training/class.TrainingFormular.php:148
 msgid "The activity has been successfully created."
@@ -2229,7 +2225,7 @@ msgstr "%s bis %s"
 
 #: inc/core/View/Icon/WindIcon.php:60 inc/core/Dataset/Keys/Wind.php:44
 msgid "Wind"
-msgstr ""
+msgstr "Wind"
 
 #: inc/core/Error.php:337
 msgid "Fatal error"
@@ -2488,43 +2484,40 @@ msgstr "Monatsansicht"
 
 #: inc/core/Data/Weather/CardinalDirection.php:72
 #: inc/core/Data/Weather/CardinalDirection.php:76
-#, fuzzy
 msgid "N"
-msgstr "Nein"
+msgstr "N"
 
 #: inc/core/Data/Weather/CardinalDirection.php:77
 msgid "NE"
-msgstr ""
+msgstr "NO"
 
 #: inc/core/Data/Weather/CardinalDirection.php:78
 msgid "E"
-msgstr ""
+msgstr "O"
 
 #: inc/core/Data/Weather/CardinalDirection.php:79
 msgid "SE"
-msgstr ""
+msgstr "SO"
 
 #: inc/core/Data/Weather/CardinalDirection.php:80
-#, fuzzy
 msgid "S"
-msgstr "So"
+msgstr "S"
 
 #: inc/core/Data/Weather/CardinalDirection.php:81
 msgid "SW"
-msgstr ""
+msgstr "SW"
 
 #: inc/core/Data/Weather/CardinalDirection.php:82
-#, fuzzy
 msgid "W"
-msgstr "Mi"
+msgstr "W"
 
 #: inc/core/Data/Weather/CardinalDirection.php:83
 msgid "NW"
-msgstr ""
+msgstr "NW"
 
 #: inc/core/Data/Weather/WindDegree.php:58
 msgid "Wind Degree"
-msgstr ""
+msgstr "Windrichtung"
 
 #: inc/core/Data/Weather/Condition.php:166
 msgid "sunny"
@@ -2552,19 +2545,19 @@ msgstr "Schnee"
 
 #: inc/core/Data/Weather/Condition.php:178
 msgid "heavy rain"
-msgstr ""
+msgstr "starker Regen"
 
 #: inc/core/Data/Weather/Condition.php:180
 msgid "foggy"
-msgstr ""
+msgstr "neblig"
 
 #: inc/core/Data/Weather/Condition.php:182
 msgid "thundery"
-msgstr ""
+msgstr "gewittrig"
 
 #: inc/core/Data/Weather/WindChillFactor.php:83
 msgid "Wind chill factor"
-msgstr ""
+msgstr "Gefühlte Kälte"
 
 #: inc/core/Data/Stroketype.php:98 inc/core/Data/Stroketype.php:121
 msgid "Freestyle"
@@ -2673,7 +2666,7 @@ msgstr "Temp."
 
 #: inc/core/Dataset/Keys/WindChill.php:43
 msgid "Windchill"
-msgstr ""
+msgstr "Windkälte"
 
 #: inc/core/Dataset/Keys/WindChill.php:53
 msgid ""
@@ -2834,7 +2827,7 @@ msgstr ""
 
 #: inc/core/Dataset/Keys/AirPressure.php:43
 msgid "Air pressure"
-msgstr ""
+msgstr "Luftdruck"
 
 #: inc/core/Dataset/Keys/ElapsedTime.php:53
 msgid ""
@@ -3698,6 +3691,7 @@ msgid ""
 "In general most questions, problems and ideas are more appropriate to ask in "
 "the forum."
 msgstr ""
+"Die meisten Fragen, Probleme und Ideen sind im Forum am Besten aufgehoben."
 
 #: inc/tpl/tpl.help.php:51
 msgid "Forum"
@@ -4711,11 +4705,15 @@ msgid ""
 "We have changed some paths. Please move your %s file to %s and set write "
 "permissions for all directories in %s."
 msgstr ""
+"Wir haben einige Pfade verändert. Bitte verschiebe deine %s Datei nach %s "
+"und setze die Schreibberechtigungen für alle Verzeichnisse auf %s."
 
 #: inc/class.InstallerUpdate.php:84
 #, php-format
 msgid "If you are using local srtm files, please move them from %s to %s."
 msgstr ""
+"Solltest du lokale srtm Dateien verwenden, verschiebe diese bitte von %s "
+"nach %s."
 
 #: inc/class.InstallerUpdate.php:88
 #, php-format
@@ -4723,6 +4721,8 @@ msgid ""
 "Please add %s (or whatever port your database connection requires) to your "
 "%s file."
 msgstr ""
+"Bitte füge %s (oder wie auch immer dein Port für die Datenbankverbindung ist)"
+" zu deiner %s Datei."
 
 #: inc/class.InstallerUpdate.php:182
 #, php-format
@@ -4754,6 +4754,7 @@ msgstr "Dein Browser unterstützt diesen Uploader anscheinend nicht, siehe"
 #: inc/import/tpl/tpl.Importer.upload.php:62
 msgid "Table showing included data by filetype"
 msgstr ""
+"Die Tabelle zeigt die in verschiedenen Datentypen vorhandenen Informationen"
 
 #: inc/import/tpl/tpl.Importer.upload.php:63
 msgid "Supported file extensions:"
@@ -4910,11 +4911,10 @@ msgid "Found %s activities."
 msgstr "%s Trainingseinheiten gefunden."
 
 #: inc/import/class.MultiImporterFormular.php:82
-#, fuzzy
 msgid "Found <strong>one</strong> duplicate activity."
 msgid_plural "Found duplicate activities."
-msgstr[0] "<strong>Ein</strong> Athlet ist online"
-msgstr[1] "<strong>Ein</strong> Athlet ist online"
+msgstr[0] "<strong>Eine</strong> doppelte Aktivität gefunden."
+msgstr[1] "<strong>Mehrere</strong> doppelte Aktivitäten gefunden."
 
 #: inc/import/class.MultiImporterFormular.php:85
 #: call/call.garminCommunicator.php:104 call/call.garminCommunicator.php:121
@@ -4976,7 +4976,7 @@ msgstr ""
 #: inc/import/filetypes/class.ImporterFiletypeTTBIN.php:75
 #, php-format
 msgid "Parsing your *.%s-file failed: %s"
-msgstr ""
+msgstr "Das Parsen deiner *.%s-Datei ist fehlgeschlagen: %s"
 
 #: inc/import/class.ImporterWindow.php:217
 msgid "Add workout"
@@ -5159,9 +5159,8 @@ msgid "Nokia/Here Token"
 msgstr "Nokia/Here Token"
 
 #: inc/class.AdminView.php:178
-#, fuzzy
 msgid "<strong>data/config.php</strong> is not writable"
-msgstr "<strong>config.php</strong> ist nicht beschreibbar"
+msgstr "<strong>data/config.php</strong> ist nicht beschreibbar"
 
 #: inc/class.AdminView.php:178
 msgid "Changes can't be saved."
@@ -5602,14 +5601,12 @@ msgid "Coldest activities"
 msgstr "Kälteste Trainings"
 
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:166
-#, fuzzy
 msgid "Most windy activities"
-msgstr "Wärmste Trainings"
+msgstr "Windigste Trainings"
 
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:168
-#, fuzzy
 msgid "Highest humidity activities"
-msgstr "Nächtliches Training"
+msgstr "Trainings mit der höchsten Luftfeuchtigkeit"
 
 #: plugin/RunalyzePluginStat_Trainingszeiten/Plot.Daytime.php:8
 msgid "Activity [in h] by day time"
@@ -6450,26 +6447,23 @@ msgstr "nach Zeit"
 
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:66
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:78
-#, fuzzy
 msgid "by elevation"
-msgstr "Höhenmeter"
+msgstr "nach Anstieg"
 
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:67
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:79
-#, fuzzy
 msgid "by calories"
-msgstr "Kalorien"
+msgstr "nach Kalorien"
 
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:68
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:80
-#, fuzzy
 msgid "by trimp"
-msgstr "nach Zeit"
+msgstr "nach TRIMP"
 
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:69
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:81
 msgid "by number"
-msgstr ""
+msgstr "nach Nummer"
 
 #: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:46
 msgid "Some statistics for your most frequent routes."
