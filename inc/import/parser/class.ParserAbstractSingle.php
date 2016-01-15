@@ -211,11 +211,12 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 
 	/**
 	 * Set activityID if empty
+         * Floor must be used because we don't save seconds for activities (historical)
 	 */
 	 private function setActivityID()
 	 {
-	 	if(!$this->TrainingObject->hasActivityId()) {
-	 		$this->TrainingObject->setActivityId((int)$this->TrainingObject->getTimestamp());
+	 	if (!$this->TrainingObject->hasActivityId()) {
+	 		$this->TrainingObject->setActivityId((int)floor($this->TrainingObject->getTimestamp()/60)*60);
 	 	}
 	 }
 
