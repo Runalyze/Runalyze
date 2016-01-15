@@ -79,7 +79,7 @@ class MultiImporterFormular extends Formular {
 	
 		$String .= HTML::info( sprintf( __('Found %s activities.'), count($this->TrainingObjects)) );
 		if($countDuplicates > 0)
-			$String .= HTML::warning(sprintf(_n('Found <strong>%d</strong> duplicate activity.','Found <strong>%d</strong> duplicate activities.', $countDuplicates), $countDuplicates) );
+			$String .= HTML::warning(_n('Found <strong>one</strong> duplicate activity.','Found duplicate activities.', $countDuplicates));
 		
 		$String .= '<table class="fullwidth multi-import-table zebra-style c" id="multi-import-table">';
 		$String .= '<thead><tr><th>'.__('Import').'</th><th>'.__('Date').'</th><th>'.__('Duration').'</th><th>'.__('Distance').'</th><th colspan="4"></th></tr></thead>';
