@@ -173,7 +173,7 @@ class Installer {
 					$this->currentStep = self::SETUP_DATABASE;
 			}
 		} else {
-			$this->mysqlConfig = array('localhost', '', '', 'runalyze');
+			$this->mysqlConfig = array('localhost', '', '', 'runalyze', 3306);
 			return false;
 		}
 
@@ -258,6 +258,7 @@ class Installer {
 	 * Connect to database
 	 * @param string $db
 	 * @param string $host
+	 * @param int $port
 	 * @param string $user
 	 * @param string $pw
 	 */

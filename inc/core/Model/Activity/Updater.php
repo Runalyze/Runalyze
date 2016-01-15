@@ -6,6 +6,7 @@
 
 namespace Runalyze\Model\Activity;
 
+use Runalyze\Calculation\NightDetector;
 use Runalyze\Model;
 use Runalyze\Calculation\Activity\VerticalRatioCalculator;
 use Runalyze\Calculation\BasicEndurance;
@@ -156,6 +157,8 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 	 * Tasks before insertion
 	 */
 	protected function before() {
+		$this->updateIfActivityWasAtNight();
+
 		parent::before();
 
 		$this->NewObject->set(Entity::TIMESTAMP_EDITED, time());
@@ -293,6 +296,15 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 			$this->hasChanged(Entity::STRIDE_LENGTH)
 		) {
 			$this->NewObject->set(Entity::VERTICAL_RATIO, VerticalRatioCalculator::forActivity($this->NewObject));
+		}
+	}
+
+	/**
+	 * Update if activity was at night
+	 */
+	protected function updateIfActivityWasAtNight() {
+		if (null !== $this->Route && $this->Route->hasGeohashes() && $this->hasChanged(Entity::TIMESTAMP)) {
+			$this->NewObject->set(Entity::IS_NIGHT, (new NightDetector())->setFromEntities($this->NewObject, $this->Route)->value());
 		}
 	}
         

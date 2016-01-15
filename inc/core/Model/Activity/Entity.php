@@ -214,12 +214,42 @@ class Entity extends Model\EntityWithID {
 	 * @var string
 	 */
 	const TEMPERATURE = 'temperature';
+	
+	/**
+	 * Key: wind speed
+	 * @var string
+	 */
+	const WINDSPEED = 'wind_speed';
+	
+	/**
+	 * Key: wind degree
+	 * @var string
+	 */
+	const WINDDEG = 'wind_deg';
+	
+	/**
+	 * Key: humidity
+	 * @var string
+	 */
+	const HUMIDITY = 'humidity';
+	
+	/**
+	 * Key: pressure
+	 * @var string
+	 */
+	const PRESSURE = 'pressure';
 
 	/**
 	 * Key: weather id
 	 * @var string
 	 */
 	const WEATHERID = 'weatherid';
+
+	/**
+	 * Key: is night
+	 * @var string
+	 */
+	const IS_NIGHT = 'is_night';
 
 	/**
 	 * Key: route id
@@ -340,7 +370,12 @@ class Entity extends Model\EntityWithID {
 			self::GROUNDCONTACT_BALANCE,
 			self::VERTICAL_RATIO,
 			self::TEMPERATURE,
+			self::WINDSPEED,
+			self::WINDDEG,
+			self::HUMIDITY,
+			self::PRESSURE,
 			self::WEATHERID,
+			self::IS_NIGHT,
 			self::ROUTEID,
 			self::ROUTE,
 			self::SPLITS,
@@ -369,6 +404,10 @@ class Entity extends Model\EntityWithID {
 	protected function canSet($key) {
 		switch ($key) {
 			case self::TEMPERATURE:
+			case self::WINDSPEED:
+			case self::WINDDEG:
+			case self::HUMIDITY:
+			case self::PRESSURE:
 			case self::WEATHERID:
 			case self::PARTNER:
 			case self::SPLITS:
@@ -386,6 +425,11 @@ class Entity extends Model\EntityWithID {
 	protected function canBeNull($key) {
 		switch ($key) {
 			case self::TEMPERATURE:
+			case self::WINDSPEED:
+			case self::WINDDEG:
+			case self::HUMIDITY:
+			case self::PRESSURE:
+			case self::IS_NIGHT:
 			case self::NOTES:
 			case self::CREATOR_DETAILS:
 			case self::ACTIVITY_ID:
@@ -396,24 +440,12 @@ class Entity extends Model\EntityWithID {
 	}
 
 	/**
-	 * Get value for this key
-	 * @param string $key
-	 * @return mixed
-	 */
-	public function get($key) {
-		if ($key == self::TEMPERATURE) {
-			return $this->Data[self::TEMPERATURE];
-		}
-
-		return parent::get($key);
-	}
-
-	/**
 	 * Synchronize
 	 */
 	public function synchronize() {
 		parent::synchronize();
 
+		$this->ensureNullIfEmpty(self::IS_NIGHT, true);
 		$this->ensureAllNumericValues();
 		$this->synchronizeObjects();
 	}
@@ -461,6 +493,10 @@ class Entity extends Model\EntityWithID {
 
 	protected function synchronizeObjects() {
 		$this->Data[self::TEMPERATURE] = $this->weather()->temperature()->value();
+		$this->Data[self::WINDSPEED] = $this->weather()->windSpeed()->value();
+		$this->Data[self::WINDDEG] = $this->weather()->windDegree()->value();
+		$this->Data[self::HUMIDITY] = $this->weather()->humidity()->value();
+		$this->Data[self::PRESSURE] = $this->weather()->pressure()->value();
 		$this->Data[self::WEATHERID] = $this->weather()->condition()->id();
 		$this->Data[self::SPLITS] = $this->splits()->asString();
 		$this->Data[self::PARTNER] = $this->partner()->asString();
@@ -738,11 +774,29 @@ class Entity extends Model\EntityWithID {
 		if (is_null($this->Weather)) {
 			$this->Weather = new Weather(
 				new Weather\Temperature($this->Data[self::TEMPERATURE]),
-				new Weather\Condition($this->Data[self::WEATHERID])
+				new Weather\Condition($this->Data[self::WEATHERID]),
+				new Weather\WindSpeed($this->Data[self::WINDSPEED]),
+				new Weather\WindDegree($this->Data[self::WINDDEG]),
+				new Weather\Humidity($this->Data[self::HUMIDITY]),
+				new Weather\Pressure($this->Data[self::PRESSURE])
 			);
 		}
 
 		return $this->Weather;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isNight() {
+		return ($this->Data[self::IS_NIGHT] == 1);
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function knowsIfItIsNight() {
+		return (null !== $this->Data[self::IS_NIGHT]);
 	}
 
 	/**

@@ -188,7 +188,7 @@ class MonthwiseTable
 	{
 		return $this->PDO->query(
 			'SELECT
-				AVG(`temperature`) as `temp`,
+				AVG(`temperature`) as `temp`
 				'.$this->GroupByQuery.' as `m`
 			FROM `'.PREFIX.'training`
 			WHERE

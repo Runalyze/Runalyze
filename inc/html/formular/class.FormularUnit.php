@@ -104,6 +104,12 @@ class FormularUnit {
 	 * @var string
 	 */
 	public static $KCAL = 'kcal';
+	
+	/**
+	 * Unit: degree
+	 * @var string
+	 */
+	public static $DEGREE = '&deg;';
 
 	/**
 	 * Unit: pace in km/h
@@ -128,4 +134,10 @@ class FormularUnit {
          * @var string
          */
         public static $HOUR = 'h';
+	
+        /**
+         * Unit: hpa
+         * @var string
+         */
+        public static $HPA = 'hpa';
 }

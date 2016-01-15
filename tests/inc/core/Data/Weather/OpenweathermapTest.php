@@ -37,6 +37,9 @@ class OpenweathermapTest extends \PHPUnit_Framework_TestCase {
 	 * @covers Runalyze\Data\Weather\Openweathermap::setFromJSON
 	 * @covers Runalyze\Data\Weather\Openweathermap::condition
 	 * @covers Runalyze\Data\Weather\Openweathermap::temperature
+	 * @covers Runalyze\Data\Weather\Openweathermap::humidity
+	 * @covers Runalyze\Data\Weather\Openweathermap::pressure
+	 * @covers Runalyze\Data\Weather\Openweathermap::windSpeed
 	 */
 	public function testLoadForecast() {
 		$this->object->setFromJSON('
@@ -58,6 +61,10 @@ class OpenweathermapTest extends \PHPUnit_Framework_TestCase {
 		$Temperature->toCelsius();
 
 		$this->assertEquals(Condition::CLOUDY, $this->object->condition()->id());
+		$this->assertEquals(2.83, $this->object->windSpeed()->value(), '', 0.01);
+		$this->assertEquals(313.5, $this->object->windDegree()->value());
+		$this->assertEquals(59, $this->object->humidity()->value());
+		$this->assertEquals(1013, $this->object->pressure()->value());
 		$this->assertEquals(16.85, $Temperature->value());
 	}
 }

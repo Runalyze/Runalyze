@@ -171,9 +171,17 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 	 * Add weather
 	 */
 	protected function addWeather() {
-            if (!$this->Context->activity()->weather()->isEmpty()) {
-                $Temperature = new Temperature($this->Context->activity()->weather()->temperature()->value());
-			$Weather = new BoxedValue($this->Context->activity()->weather()->condition()->string(), '', __('Weather condition'), $this->Context->activity()->weather()->condition()->icon()->code());
+		$WeatherObject = $this->Context->activity()->weather();
+
+		if (!$WeatherObject->isEmpty()) {
+			$WeatherIcon = $WeatherObject->condition()->icon();
+
+			if ($this->Context->activity()->isNight()) {
+				$WeatherIcon->setAsNight();
+			}
+
+			$Temperature = new Temperature($WeatherObject->temperature()->value());
+			$Weather = new BoxedValue($WeatherObject->condition()->string(), '', __('Weather condition'), $WeatherIcon->code());
 			$Weather->defineAsFloatingBlock('w50');
 
 			$Temp = new BoxedValue($Temperature->string(false, false), $Temperature->unit(), __('Temperature'));
@@ -181,8 +189,37 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 
 			$this->BoxedValues[] = $Weather;
 			$this->BoxedValues[] = $Temp;
-		}
 
+			if (!$WeatherObject->windSpeed()->isUnknown()) {
+				$WindSpeed = new Box\WeatherWindSpeed($this->Context);
+				$WindSpeed->defineAsFloatingBlock('w50');
+				$this->BoxedValues[] = $WindSpeed;
+			}
+
+			if (!$WeatherObject->windDegree()->isUnknown()) {
+				$WindDegree = new Box\WeatherWindDegree($this->Context);
+				$WindDegree->defineAsFloatingBlock('w50');
+				$this->BoxedValues[] = $WindDegree;
+			}
+
+			if (!$WeatherObject->humidity()->isUnknown()) {
+				$Humidity = new Box\WeatherHumidity($this->Context);
+				$Humidity->defineAsFloatingBlock('w50');
+				$this->BoxedValues[] = $Humidity;
+			}
+
+			if (!$WeatherObject->pressure()->isUnknown()) {
+				$Pressure = new Box\WeatherPressure($this->Context);
+				$Pressure->defineAsFloatingBlock('w50');
+				$this->BoxedValues[] = $Pressure;
+			}
+
+			if (!$WeatherObject->windSpeed()->isUnknown() && !$WeatherObject->temperature()->isUnknown() && $this->Context->activity()->distance() > 0 && $this->Context->activity()->duration() > 0) {
+				$WindChill = new Box\WeatherWindChillFactor($this->Context);
+				$WindChill->defineAsFloatingBlock('w50');
+				$this->BoxedValues[] = $WindChill;
+			}
+		}
 	}
 
 	/**

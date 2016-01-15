@@ -1,6 +1,7 @@
 <?php
 
 use Runalyze\Configuration;
+use Runalyze\Parameter\Application\DistanceUnitSystem;
 use Runalyze\Parameter\Application\TemperatureUnit;
 
 /**
@@ -202,6 +203,44 @@ class FormularValueParserTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals(-10.3, $_POST['point'], '', 0.1);
 		$this->assertEquals(-17.8, $_POST['zero'], '', 0.1);
 		$this->assertEquals(0.56, $_POST['large'], '', 0.1);
+	}
+
+	public function testParsingWindSpeed() {
+		Configuration::General()->distanceUnitSystem()->set(DistanceUnitSystem::METRIC);
+
+		$null = null;
+		$this->object->parse($null, FormularValueParser::$PARSER_WINDSPEED);
+		$this->assertEquals('', $null);
+
+		$zero = 0;
+		$this->object->parse($zero, FormularValueParser::$PARSER_WINDSPEED);
+		$this->assertEquals('0', $zero);
+
+		$kmh = 16;
+		$this->object->parse($kmh, FormularValueParser::$PARSER_WINDSPEED);
+		$this->assertEquals('16', $kmh);
+
+		Configuration::General()->distanceUnitSystem()->set(DistanceUnitSystem::IMPERIAL);
+		$this->object->parse($kmh, FormularValueParser::$PARSER_WINDSPEED);
+		$this->assertEquals('10', $kmh);
+	}
+
+	public function testValidatingWindSpeedInKmh() {
+		$_POST   = array(
+			'empty'	=> '',
+			'ten_kmh'	=> '10',
+			'ten_mph'	=> '10'
+		);
+
+		Configuration::General()->distanceUnitSystem()->set(DistanceUnitSystem::METRIC);
+		$this->object->validatePost('empty', FormularValueParser::$PARSER_WINDSPEED);
+		$this->object->validatePost('ten_kmh', FormularValueParser::$PARSER_WINDSPEED);
+		Configuration::General()->distanceUnitSystem()->set(DistanceUnitSystem::IMPERIAL);
+		$this->object->validatePost('ten_mph', FormularValueParser::$PARSER_WINDSPEED);
+
+		$this->assertEquals(null, $_POST['empty']);
+		$this->assertEquals(10, $_POST['ten_kmh'], '', 0.1);
+		$this->assertEquals(16, $_POST['ten_mph'], '', 0.1);
 	}
 
 }

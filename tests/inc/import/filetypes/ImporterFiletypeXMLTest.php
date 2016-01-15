@@ -226,7 +226,6 @@ class ImporterFiletypeXMLTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( 151, $this->object->object()->getElapsedTime() );
 		$this->assertEquals( 131, $this->object->object()->getPulseAvg() );
 		$this->assertEquals( 143, $this->object->object()->getPulseMax() );
-		$this->assertEquals( 26, $this->object->object()->get('temperature') );
 		$this->assertEquals( 461, $this->object->object()->getCalories() );
 
 		$this->assertTrue( $this->object->object()->hasArrayHeartrate() );
@@ -256,7 +255,6 @@ class ImporterFiletypeXMLTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( 648, $this->object->object()->getElapsedTime() );
 		$this->assertEquals( 112, $this->object->object()->getPulseAvg() );
 		$this->assertEquals( 123, $this->object->object()->getPulseMax() );
-		$this->assertEquals( 25, $this->object->object()->get('temperature') );
 		$this->assertEquals( 361, $this->object->object()->getCalories() );
 
 		$this->assertTrue( $this->object->object()->hasArrayHeartrate() );
