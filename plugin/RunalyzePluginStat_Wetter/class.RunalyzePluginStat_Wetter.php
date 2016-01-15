@@ -141,8 +141,6 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 		$cold = DB::getInstance()->query('SELECT `temperature`, `id`, `time` FROM `'.PREFIX.'training` WHERE `temperature` IS NOT NULL '.$this->getSportAndYearDependenceForQuery().' AND accountid = '.SessionAccountHandler::getId().' ORDER BY `temperature` ASC LIMIT 5')->fetchAll();
 		$windiest = DB::getInstance()->query('SELECT `wind_speed`, `id`, `time` FROM `'.PREFIX.'training` WHERE `wind_speed` IS NOT NULL '.$this->getSportAndYearDependenceForQuery().' AND accountid = '.SessionAccountHandler::getId().' ORDER BY `wind_speed` DESC LIMIT 5')->fetchAll();
 		$maxhumidity = DB::getInstance()->query('SELECT `humidity`, `id`, `time` FROM `'.PREFIX.'training` WHERE `humidity` IS NOT NULL '.$this->getSportAndYearDependenceForQuery().' AND accountid = '.SessionAccountHandler::getId().' ORDER BY `humidity` DESC LIMIT 5')->fetchAll();
-		$highestpressure = DB::getInstance()->query('SELECT `pressure`, `id`, `time` FROM `'.PREFIX.'training` WHERE `pressure` IS NOT NULL '.$this->getSportAndYearDependenceForQuery().' AND accountid = '.SessionAccountHandler::getId().' ORDER BY `pressure` DESC LIMIT 5')->fetchAll();
-
 
 		foreach ($hot as $i => $h) {
 			$hot[$i] = Temperature::format($h['temperature'], true).' ' .__('on').' '.Ajax::trainingLink($h['id'], date('d.m.Y', $h['time']));
@@ -160,10 +158,6 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 			$maxhumidity[$i] = (new Humidity($h['humidity']))->string().' '.__('on').' '.Ajax::trainingLink($w['id'], date('d.m.Y', $h['time']));
 		}
 		
-		foreach ($highestpressure as $i => $h) {
-			$highestpressure[$i] = (new Pressure($h['pressure']))->string().' '.__('on').' '.Ajax::trainingLink($w['id'], date('d.m.Y', $h['time']));
-		}
-		
 		echo '<p>';
 		echo '<strong>'.__('Hottest activities').':</strong> ';
 		echo (empty($hot) ? __('none') : implode(', ', $hot)).'<br>';
@@ -173,8 +167,6 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 		echo (empty($windiest) ? __('none') : implode(', ', $windiest)).'<br>';
 		echo '<strong>'.__('Highest humidity activities').':</strong> ';
 		echo (empty($maxhumidity) ? __('none') : implode(', ', $maxhumidity)).'<br>';
-		echo '<strong>'.__('Highest pressure activities').':</strong> ';
-		echo (empty($highestpressure) ? __('none') : implode(', ', $highestpressure)).'<br>';
 		echo '</p>';
 	}
 
