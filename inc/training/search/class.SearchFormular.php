@@ -5,7 +5,9 @@
  */
 
 use Runalyze\Configuration;
-
+use Runalyze\Data\Weather\Humidity;
+use Runalyze\Data\Weather\WindSpeed;
+use Runalyze\Data\Weather\Pressure;
 /**
  * Search formular
  *
@@ -153,7 +155,10 @@ class SearchFormular extends Formular {
 		$this->addNumericConditionField('elevation', __('Elevation'), FormularInput::$SIZE_SMALL, Configuration::General()->distanceUnitSystem()->elevationUnit());
 		$this->addStringConditionField('route', __('Route'), FormularInput::$SIZE_MIDDLE);
 		$this->addDurationField('s', __('Duration'));
-		$this->addNumericConditionField('temperature', __('Temperature'), FormularInput::$SIZE_SMALL, FormularUnit::$CELSIUS);
+		$this->addNumericConditionField('temperature', __('Temperature'), FormularInput::$SIZE_SMALL, Configuration::General()->temperatureUnit()->unit());
+		$this->addNumericConditionField('humidity', __('Humidity'), FormularInput::$SIZE_SMALL, Humidity::unit());
+		$this->addNumericConditionField('pressure', __('Pressure'), FormularInput::$SIZE_SMALL, Pressure::unit());
+		$this->addNumericConditionField('wind_speed', __('Wind Speed'), FormularInput::$SIZE_SMALL, (new WindSpeed)->unit());
 		$this->addStringConditionField('comment', __('Comment'), FormularInput::$SIZE_MIDDLE);
 		$this->addNumericConditionField('pulse_avg', __('avg. HR'), FormularInput::$SIZE_SMALL, FormularUnit::$BPM);
 		$this->addNumericConditionField('kcal', __('Calories'), FormularInput::$SIZE_SMALL, FormularUnit::$KCAL);

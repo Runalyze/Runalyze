@@ -147,8 +147,14 @@ class Weather {
 	 * Complete string for the weather conditions with icon, name and temperature.
 	 * @return string
 	 */
-	public function fullString() {
-		return $this->Condition->icon()->code().' '.$this->Condition->string().' '.__('at').' '.$this->Temperature->asString();
+	public function fullString($isNight = false) {
+		$icon = $this->Condition->icon();
+
+		if ($isNight == true) {
+			$icon->setAsNight();
+		}
+
+		return $icon->code().' '.$this->Condition->string().' '.__('at').' '.$this->Temperature->asString();
 	}
 
 	/**

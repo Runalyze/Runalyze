@@ -374,7 +374,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 				<td>'.$Dataview->duration()->string(Duration::FORMAT_COMPETITION).'</td>
 				<td class="small">'.$Dataview->pace()->value().'</td>
 				<td class="small">'.Helper::Unknown($Activity->hrAvg()).' / '.Helper::Unknown($Activity->hrMax()).' bpm</td>
-				<td class="small">'.($Activity->weather()->isEmpty() ? '' : $Activity->weather()->fullString()).'</td>
+				<td class="small">'.($Activity->weather()->isEmpty() ? '' : $Activity->weather()->fullString($Activity->isNight())).'</td>
 			</tr>';
 	}
 

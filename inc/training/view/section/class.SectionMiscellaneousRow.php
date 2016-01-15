@@ -174,8 +174,14 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 		$WeatherObject = $this->Context->activity()->weather();
 
 		if (!$WeatherObject->isEmpty()) {
+			$WeatherIcon = $WeatherObject->condition()->icon();
+
+			if ($this->Context->activity()->isNight()) {
+				$WeatherIcon->setAsNight();
+			}
+
 			$Temperature = new Temperature($WeatherObject->temperature()->value());
-			$Weather = new BoxedValue($WeatherObject->condition()->string(), '', __('Weather condition'), $WeatherObject->condition()->icon()->code());
+			$Weather = new BoxedValue($WeatherObject->condition()->string(), '', __('Weather condition'), $WeatherIcon->code());
 			$Weather->defineAsFloatingBlock('w50');
 
 			$Temp = new BoxedValue($Temperature->string(false, false), $Temperature->unit(), __('Temperature'));

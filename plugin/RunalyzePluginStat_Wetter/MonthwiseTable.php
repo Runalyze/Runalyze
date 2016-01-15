@@ -175,7 +175,7 @@ class MonthwiseTable
 		$data = array();
 
 		while ($row = $Statement->fetch()) {
-			$data[$row['m']] = $Temperature->format(round($row['temp']));
+			$data[$row['m']] = $Temperature->format(round($row));
 		}
 
 		return array($Temperature->unit() => $data);
@@ -189,6 +189,8 @@ class MonthwiseTable
 		return $this->PDO->query(
 			'SELECT
 				AVG(`temperature`) as `temp`,
+				AVG(`wind_speed`) as `wind_speed`,
+				AVG(`humidity`) as `humidity`,
 				'.$this->GroupByQuery.' as `m`
 			FROM `'.PREFIX.'training`
 			WHERE
