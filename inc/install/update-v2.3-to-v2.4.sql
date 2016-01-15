@@ -1,7 +1,7 @@
 /* 12.01.2016 - use activity_id to detect duplicates */
 UPDATE `runalyze_training` SET `activity_id` = UNIX_TIMESTAMP(`activity_id`);
 ALTER table `runalyze_training` CHANGE COLUMN `activity_id` `activity_id` int(11) DEFAULT NULL;
-UPDATE `runalyze_training` SET `activity_id` = `time` WHERE `activity_id` IS NULL;
+UPDATE `runalyze_training` SET `activity_id` = `time` WHERE `activity_id` = 0;
 
 /* 14.01.2016 - add new weather details */
 ALTER TABLE `runalyze_training` ADD `wind_speed` tinyint(3) unsigned DEFAULT NULL AFTER `weatherid`;
