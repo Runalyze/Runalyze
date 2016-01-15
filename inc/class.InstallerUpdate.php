@@ -77,8 +77,8 @@ class InstallerUpdate extends Installer {
 			'date'	=> '2015/12',
 			'instruction'	=> [
 				sprintf(
-					__('We have changed some paths. Please move your %s file to %s and set write permissions for all directories in %s.'),
-					'<em>config.php</em>', '<em>data/config.php</em>', '<em>data/</em>'
+					__('We have changed some paths. Please set write permissions for all directories in %s.'),
+					'<em>data/</em>'
 				),
 				sprintf(
 					__('If you are using local srtm files, please move them from %s to %s.'),
