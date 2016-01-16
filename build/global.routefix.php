@@ -96,8 +96,10 @@ while ($Route = $Routes->fetch()) {
 	$Updater->setAccountID($Route['accountid']);
 	GlobalCleanupAccount::$ID = $Route['accountid'];
 	$PDO->setAccountID($Route['accountid']);
+	$RouteEntity = new Runalyze\Model\Route\Entity($Route);
+	$RouteEntity->forceToSetMinMaxFromGeohashes();
 
-	$Updater->update(new Runalyze\Model\Route\Entity($Route), array(
+	$Updater->update($RouteEntity, array(
 		'startpoint',
 		'endpoint',
 		'min',
