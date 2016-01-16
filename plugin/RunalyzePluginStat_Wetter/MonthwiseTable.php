@@ -13,7 +13,7 @@ use Runalyze\Util\Time;
 
 /**
  * Table to show monthwise statistics
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Plugin\Stat\Wetter
  */
@@ -188,7 +188,7 @@ class MonthwiseTable
 	{
 		return $this->PDO->query(
 			'SELECT
-				AVG(`temperature`) as `temp`
+				AVG(`temperature`) as `temp`,
 				'.$this->GroupByQuery.' as `m`
 			FROM `'.PREFIX.'training`
 			WHERE
