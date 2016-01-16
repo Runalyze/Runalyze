@@ -297,8 +297,8 @@ class Entity extends Model\EntityWithID implements Model\Loopable {
 
 		foreach ($geohashes as $geohash) {
 			$coordinate = (new Geohash())->decode($geohash)->getCoordinate();
-			$latitudes[] = $coordinate->getLatitude();
-			$longitudes[] = $coordinate->getLongitude();
+			$latitudes[] = round($coordinate->getLatitude(), 6);
+			$longitudes[] = round($coordinate->getLongitude(), 6);
 		}
 
 		$this->setMinMaxFromLatitudesLongitudes($latitudes, $longitudes);

@@ -88,7 +88,7 @@ $Routes = $PDO->query('
 		`accountid`,
 		`geohashes`
 	FROM `'.PREFIX.'route`
-	WHERE `startpoint` = "7zzzzzzzzz"'
+	WHERE `startpoint` = "7zzzzzzzzz" OR (`startpoint` IS NOT NULL AND `min` IS NULL)'
 );
 $Updater = new Runalyze\Model\Route\Updater($PDO);
 
