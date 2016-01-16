@@ -88,6 +88,7 @@ class InstallerUpdate extends Installer {
 					__('Please add %s (or whatever port your database connection requires) to your %s file.'),
 					'<em>$port = 3306;</em>', '<em>data/config.php</em>'
 				),
+				$this->instructionToRunScript('build/global.routefix.php'),
 				$this->instructionToRunScript('refactor-night.php')
 			]
 		);
