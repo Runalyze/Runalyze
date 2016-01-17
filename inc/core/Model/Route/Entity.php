@@ -348,8 +348,8 @@ class Entity extends Model\EntityWithID implements Model\Loopable {
             
             for ($i = 0; $i < $size; $i++) {
                 $geo = (new Geohash())->decode($Geohashes[$i])->getCoordinate(); 
-                $Coordinates['lat'][] = $geo->getLatitude();
-                $Coordinates['lng'][] = $geo->getLongitude();
+                $Coordinates['lat'][] = round($geo->getLatitude(), 6);
+                $Coordinates['lng'][] = round($geo->getLongitude(), 6);
             }  
             
             return $Coordinates;
