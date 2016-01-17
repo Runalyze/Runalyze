@@ -34,7 +34,7 @@ foreach ($Steps as $i => $Name) {
 	</p>
 
 	<p class="warning">
-		<?php _e('If you want to reinstall Runalyze please delete the <em>config.php</em>-file in your main directory of this installation.'); ?>
+		<?php _e('If you want to reinstall Runalyze please delete the <em>data/config.php</em>-file in your main directory of this installation.'); ?>
 	</p>
 
 <?php elseif ($this->currentStep == self::START): ?>
@@ -211,7 +211,7 @@ foreach ($Steps as $i => $Name) {
 	</p>
 	<?php else: ?>
 	<p class="error">
-		<?php printf( __('Please save the following code as <strong>%s</strong>:'), '/runalyze/config.php'); ?>
+		<?php printf( __('Please save the following code as <strong>%s</strong>:'), '/runalyze/data/config.php'); ?>
 	</p>
 	<textarea class="code"><?php echo htmlspecialchars($this->writeConfigFileString); ?></textarea>
 	<?php endif; ?>
