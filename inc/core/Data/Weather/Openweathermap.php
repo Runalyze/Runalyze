@@ -137,7 +137,7 @@ class Openweathermap implements ForecastStrategyInterface {
 	 */
 	public function temperature() {
 		if (isset($this->Result['main']) && isset($this->Result['main']['temp'])) {
-			$value = $this->Result['main']['temp'];
+			$value = round($this->Result['main']['temp']);
 		} else {
 			$value = null;
 		}
@@ -165,7 +165,7 @@ class Openweathermap implements ForecastStrategyInterface {
 	 */
 	public function windDegree() {
 		if (isset($this->Result['wind']) && isset($this->Result['wind']['deg'])) {
-			$value = $this->Result['wind']['deg'];
+			$value = round($this->Result['wind']['deg']);
 		} else {
 			$value = null;
 		}
@@ -179,7 +179,7 @@ class Openweathermap implements ForecastStrategyInterface {
 	 */
 	public function humidity() {
 		if (isset($this->Result['main']) && isset($this->Result['main']['humidity'])) {
-			$value = $this->Result['main']['humidity'];
+			$value = round($this->Result['main']['humidity']);
 		} else {
 			$value = null;
 		}
@@ -193,7 +193,7 @@ class Openweathermap implements ForecastStrategyInterface {
 	 */
 	public function pressure() {
 		if (isset($this->Result['main']) && isset($this->Result['main']['pressure'])) {
-			$value = $this->Result['main']['pressure'];
+			$value = round($this->Result['main']['pressure']);
 		} else {
 			$value = null;
 		}
