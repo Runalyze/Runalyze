@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-01-15 22:09+0100\n"
-"PO-Revision-Date: 2016-01-16 10:18+0200\n"
+"PO-Revision-Date: 2016-01-17 20:48+0200\n"
 "Last-Translator: Michael Pohl <michael@mipapo.de>\n"
 "Language-Team: German "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
@@ -1046,14 +1046,12 @@ msgid "as %s"
 msgstr "als %s"
 
 #: inc/training/view/class.TrainingView.php:107
-#, fuzzy
 msgid "Make private"
-msgstr "jetzt privat machen"
+msgstr "Privat schalten"
 
 #: inc/training/view/class.TrainingView.php:110
-#, fuzzy
 msgid "Make public"
-msgstr "jetzt öffentlich machen"
+msgstr "Veröffentlichen"
 
 #: inc/training/view/class.TrainingView.php:115
 msgid "Edit"
@@ -2673,6 +2671,8 @@ msgid ""
 "Windchill is the perceived air temperature felt by the body on exposed skin "
 "due to the flow of air."
 msgstr ""
+"Der Windchill beschreibt den Unterschied zwischen gemessener und gefühlter "
+"Temperatur beeinflusst von der Windgeschwindigkeit auf ungeschützter Haut."
 
 #: inc/core/Dataset/Keys/HeartrateAverage.php:44
 msgid "avg."
@@ -3034,7 +3034,6 @@ msgid "Start Runalyze"
 msgstr "Runalyze starten"
 
 #: inc/tpl/tpl.Installer.php:37
-#, fuzzy
 msgid ""
 "If you want to reinstall Runalyze please delete the <em>config.php</em>-file "
 "in your main directory of this installation."
