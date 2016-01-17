@@ -8276,6 +8276,17 @@ Runalyze.Feature = (function($, Parent){
 		for (var selector in config) {
 			$(selector).chosen(config[selector]);
 		}
+
+		$(".chosen-select-all").unbind('click').bind('click', function() {
+			var target = $(this).data('target');
+			$("#"+target+" option").attr('selected', 'selected');
+			$("#"+target).trigger('chosen:updated');
+		});
+		$(".chosen-select-none").unbind('click').bind('click', function() {
+			var target = $(this).data('target');
+			$("#"+target+" option:selected").removeAttr('selected');
+			$("#"+target).trigger('chosen:updated');
+		});
   
 		$(".fip-select").fontIconPicker({emptyIcon: false, hasSearch: false});
 		$(".pick-a-date:not(.has-a-datepicker)").each(function(){

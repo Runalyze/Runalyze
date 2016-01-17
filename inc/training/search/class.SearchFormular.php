@@ -117,7 +117,7 @@ class SearchFormular extends Formular {
 	 * Add field: sport
 	 */
 	private function addFieldSport() {
-		$Field = new FormularSelectDb('sportid', __('Sport'));
+		$Field = new FormularSelectDb('sportid', __('Sport').$this->shortLinksForSportField());
 		$Field->loadOptionsFrom('sport', 'name');
 		$Field->addCSSclass('chosen-select full-size');
 		$Field->setMultiple();
@@ -125,6 +125,17 @@ class SearchFormular extends Formular {
 		$Field->setLayout( FormularFieldset::$LAYOUT_FIELD_W100_IN_W33 );
 
 		$this->Fieldset->addField( $Field );
+	}
+
+	/**
+	 * @return string
+	 */
+	protected function shortLinksForSportField() {
+		$code = '<span class="link chosen-select-all" data-target="sportid">'.__('all').'</span>';
+		$code .= ' | ';
+		$code .= '<span class="link chosen-select-none" data-target="sportid">'.__('none').'</span>';
+
+		return '<span class="right small">'.$code.'&nbsp;</span>';
 	}
 
 	/**
