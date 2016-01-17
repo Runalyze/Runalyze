@@ -16,8 +16,9 @@ class Timezone {
     
     public static function setPHPTimezone($timezone) {
 	$timezoneName = (new TimezoneConfiguration())->getFullNameByEnum($timezone);
-	if(self::isValidTimezone($timezoneName))
+	if (self::isValidTimezone($timezoneName)) {
 	    date_default_timezone_set($timezoneName);
+	}
     }
     
     public static function setMysql() {

@@ -23,7 +23,7 @@ class AccountTime extends \DateTime
   {
     $AccountTime = new \DateTime(null);
     $AccountTime->setTimestamp($utcTimestamp);
-    $AccountTime->setTimestamp($utcTimestamp - $AccountTime->getOffset());
+    $AccountTime->setTimestamp($utcTimestamp);
     return $AccountTime;
   }
   
