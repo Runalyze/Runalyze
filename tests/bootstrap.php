@@ -47,7 +47,7 @@ $_SERVER['REQUEST_URI'] = '/runalyze/index.php';
 $_SERVER['SCRIPT_NAME'] = '/runalyze/index.php';
 
 // Load and clean database
-DB::connect('127.0.0.1', 'root', '', 'runalyze_unittest');
+DB::connect('127.0.0.1', '3306', 'root', '', 'runalyze_unittest');
 DB::getInstance()->exec('SET GLOBAL sql_mode="TRADITIONAL"');
 DB::getInstance()->exec('DELETE FROM `runalyze_account`');
 DB::getInstance()->exec('INSERT INTO `runalyze_account` (`id`,`username`,`mail`) VALUES(1, "test", "test@test.com")');
@@ -90,3 +90,6 @@ if (!function_exists('_ne')) {
 
 // Load helper class
 Helper::Unknown('');
+
+// Load test helper
+require_once FRONTEND_PATH.'../tests/fake/FakeContext.php';

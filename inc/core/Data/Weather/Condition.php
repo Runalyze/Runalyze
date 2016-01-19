@@ -49,6 +49,21 @@ class Condition {
 	 * @var int
 	 */
 	const SNOWING = 7;
+	
+	/**
+	 * @var int
+	 */
+	const HEAVYRAIN = 8;
+	
+	/**
+	 * @var int
+	 */
+	const FOGGY = 9;
+	
+	/**
+	 * @var int
+	 */
+	const THUNDERSTORM = 10;
 
 	/**
 	 * Identifier
@@ -68,7 +83,10 @@ class Condition {
 			self::CLOUDY,
 			self::CHANGEABLE,
 			self::RAINY,
-			self::SNOWING
+			self::SNOWING,
+			self::HEAVYRAIN,
+			self::FOGGY,
+			self::THUNDERSTORM
 		);
 	}
 
@@ -102,7 +120,7 @@ class Condition {
 
 	/**
 	 * Is unknown?
-	 * @return type
+	 * @return bool
 	 */
 	public function isUnknown() {
 		return ($this->identifier == self::UNKNOWN);
@@ -110,7 +128,7 @@ class Condition {
 
 	/**
 	 * Icon
-	 * @return Runalyze\View\Icon\WeatherIcon
+	 * @return \Runalyze\View\Icon\WeatherIcon
 	 */
 	public function icon() {
 		switch ($this->identifier) {
@@ -120,10 +138,16 @@ class Condition {
 				return new Weather\Fair();
 			case self::CLOUDY:
 				return new Weather\Cloudy();
+			case self::FOGGY:
+				return new Weather\Foggy();
 			case self::CHANGEABLE:
 				return new Weather\Changeable();
+			case self::THUNDERSTORM:
+				return new Weather\Thunderstorm();
 			case self::RAINY:
 				return new Weather\Rainy();
+			case self::HEAVYRAIN:
+				return new Weather\Heavyrain();
 			case self::SNOWING:
 				return new Weather\Snowing();
 			case self::UNKNOWN:
@@ -150,6 +174,12 @@ class Condition {
 				return __('rainy');
 			case self::SNOWING:
 				return __('snowing');
+			case self::HEAVYRAIN:
+				return __('heavy rain');
+			case self::FOGGY:
+				return __('foggy');
+			case self::THUNDERSTORM:
+				return __('thundery');
 			case self::UNKNOWN:
 			default:
 				return __('unknown');

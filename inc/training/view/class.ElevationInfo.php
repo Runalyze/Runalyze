@@ -271,8 +271,8 @@ class ElevationInfo {
 		return array(
 			'&strategy=GeoTIFF' => sprintf(__('correct again using %s'), __('srtm files')),
 			'&strategy=Geonames' => sprintf(__('correct again using %s'), 'geonames.org'),
-			'&strategy=DataScienceToolkit' => sprintf(__('correct again using %s'), 'datasciencetoolkit.org'),
-			'&strategy=GoogleMaps' => sprintf(__('correct again using %s'), 'maps.google.com')
+			'&strategy=GoogleMaps' => sprintf(__('correct again using %s'), 'maps.google.com'),
+			'&strategy=none' => __('remove corrected elevation data')
 		);
 	}
 

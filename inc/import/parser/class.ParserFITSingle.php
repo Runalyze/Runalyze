@@ -140,8 +140,11 @@ class ParserFITSingle extends ParserAbstractSingle {
 		$line = substr($line, 4);
 		$values = explode('=', $line);
 
-		if (count($values) == 3)
+		if (count($values) == 3) {
 			$this->Values[$values[0]] = array($values[1], $values[2]);
+		} elseif (count($values) == 2) {
+			$this->Values[$values[0]] = array($values[1]);
+		}
 	}
 
 	/**
@@ -158,6 +161,10 @@ class ParserFITSingle extends ParserAbstractSingle {
 					break;
 				case 'device_info':
 					$this->readDeviceInfo();
+					break;
+
+				case 'sport':
+					$this->readSport();
 					break;
 
 				case 'event':
@@ -238,6 +245,24 @@ class ParserFITSingle extends ParserAbstractSingle {
 
 		if (isset($this->Values['pool_length']))
 			$this->TrainingObject->setPoolLength($this->Values['pool_length'][0]);
+
+		if (isset($this->Values['sport']))
+			$this->guessSportID($this->Values['sport'][1]);
+	}
+
+	/**
+	 * Read sport
+	 */
+	protected function readSport() {
+		if (isset($this->Values['name'])) {
+			$this->guessSportID(substr($this->Values['name'][0], 1, -1));
+		}
+
+		if ($this->TrainingObject->get('sportid') == Configuration::General()->mainSport()) {
+			if (isset($this->Values['sport'])) {
+				$this->guessSportID($this->Values['sport'][1]);
+			}
+		}
 	}
 
 	/**

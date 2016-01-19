@@ -5,6 +5,10 @@ $("#sportid").change(function(){
 <?php endif; ?>
 });
 
+$("#time_day").change(function(){
+	jUpdateAvailableEquipment();
+});
+
 $("input[name=distance], input[name=s]").change(function() {
 	jUpdatePace();
 	jUpdateKmh();
@@ -13,6 +17,7 @@ $("input[name=distance], input[name=s]").change(function() {
 <?php endif; ?>
 });
 
+jUpdateAvailableEquipment();
 jUpdateSportValues();
 jUpdatePace();
 

@@ -6,9 +6,10 @@
  * Remember to delete your credentials afterwards to protect this script.
  * 
  * Hint: This script is currently only a dirty hack. Don't rely on this in future versions.
- * @since 2.1
+ * @since 2.1, updated for 2.4
  */
-$hostname = '';
+$host = '';
+$port = 3306;
 $database = '';
 $username = '';
 $password = '';
@@ -33,7 +34,7 @@ $starttime = microtime(true);
 define('EOL', CLI ? PHP_EOL : '<br>'.PHP_EOL);
 define('GLOBAL_CLEANUP', true);
 
-if (empty($database) && empty($hostname)) {
+if (empty($database) && empty($host)) {
 	echo 'Database connection has to be set within the file.'.EOL;
 	exit;
 } else {
@@ -45,7 +46,7 @@ if (empty($database) && empty($hostname)) {
 	new Autoloader();
 
 	try {
-		DB::connect($hostname, $username, $password, $database);
+		DB::connect($host, $port, $username, $password, $database);
 		$PDO = DB::getInstance();
 		$PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	} catch (Exception $E) {
@@ -53,7 +54,6 @@ if (empty($database) && empty($hostname)) {
 		exit;
 	}
 
-	require_once FRONTEND_PATH.'../lib/phpfastcache/phpfastcache.php';
 	require_once FRONTEND_PATH.'/system/class.Cache.php';
 	new Cache();
 	
@@ -86,10 +86,9 @@ $Routes = $PDO->query('
 	SELECT
 		`id`,
 		`accountid`,
-		`lats`,
-		`lngs`
+		`geohashes`
 	FROM `'.PREFIX.'route`
-	WHERE (`lats` != "" AND `lngs` != "") AND (`startpoint_lat`=0 OR `startpoint_lng`=0 OR `endpoint_lng`=0 OR `endpoint_lng`=0 OR `min_lng`=0 OR `max_lng`=0 OR `min_lat`=0 OR `max_lat`=0)'
+	WHERE `startpoint` = "7zzzzzzzzz" OR (`startpoint` IS NOT NULL AND `min` IS NULL)'
 );
 $Updater = new Runalyze\Model\Route\Updater($PDO);
 
@@ -97,16 +96,14 @@ while ($Route = $Routes->fetch()) {
 	$Updater->setAccountID($Route['accountid']);
 	GlobalCleanupAccount::$ID = $Route['accountid'];
 	$PDO->setAccountID($Route['accountid']);
+	$RouteEntity = new Runalyze\Model\Route\Entity($Route);
+	$RouteEntity->forceToSetMinMaxFromGeohashes();
 
-	$Updater->update(new Runalyze\Model\Route\Entity($Route), array(
-		'startpoint_lat',
-		'startpoint_lng',
-		'endpoint_lat',
-		'endpoint_lng',
-		'min_lng',
-		'max_lng',
-		'min_lat',
-		'max_lat'
+	$Updater->update($RouteEntity, array(
+		'startpoint',
+		'endpoint',
+		'min',
+		'max'
 	));
 
 	echo '.'.(CLI ? '' : ' ');

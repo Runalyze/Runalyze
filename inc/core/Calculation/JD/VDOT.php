@@ -18,13 +18,13 @@ namespace Runalyze\Calculation\JD;
 class VDOT {
 	/**
 	 * New method: logarithmic
-	 * @var enum
+	 * @var int enum
 	 */
 	const METHOD_LOGARITHMIC = 0;
 
 	/**
 	 * Old method: linear
-	 * @var enum
+	 * @var int enum
 	 */
 	const METHOD_LINEAR = 1;
 
@@ -36,7 +36,7 @@ class VDOT {
 
 	/**
 	 * Method
-	 * @var enum 
+	 * @var int enum
 	 */
 	private static $Method = 0;
 
@@ -62,7 +62,7 @@ class VDOT {
 
 	/**
 	 * Set method
-	 * @param enum $method
+	 * @param int $method enum
 	 */
 	public static function setMethod($method) {
 		self::$Method = $method;
@@ -116,6 +116,7 @@ class VDOT {
 	 * 
 	 * @param float $distance [km]
 	 * @param int $seconds
+	 * @return float
 	 */
 	public static function formula($distance, $seconds) {
 		$min = $seconds/60;

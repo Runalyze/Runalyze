@@ -14,6 +14,12 @@ use Runalyze\Configuration;
  */
 abstract class ParserAbstractSingle extends ParserAbstract {
 	/**
+	 * Limit to correct cadence values
+	 * @var int
+	 */
+	const RPM_LIMIT_FOR_CORRECTION = 130;
+
+	/**
 	 * Training object
 	 * @var \TrainingObject
 	 */
@@ -84,7 +90,7 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 	 */
 	final public function object($index = 0) {
 		if ($index > 0)
-			Error::getInstance()->addDebug('ParserAbstractSingle has only one training, asked for index = '.$index);
+			\Runalyze\Error::getInstance()->addDebug('ParserAbstractSingle has only one training, asked for index = '.$index);
 
 		return $this->TrainingObject;
 	}
@@ -200,7 +206,19 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 		$this->setTemperatureFromArray();
 		$this->setRunningDynamicsFromArray();
 		$this->setDistanceFromGPSdata();
+		$this->setActivityID();
 	}
+
+	/**
+	 * Set activityID if empty
+         * Floor must be used because we don't save seconds for activities (historical)
+	 */
+	 private function setActivityID()
+	 {
+	 	if (!$this->TrainingObject->hasActivityId()) {
+	 		$this->TrainingObject->setActivityId((int)floor($this->TrainingObject->getTimestamp()/60)*60);
+	 	}
+	 }
 
 	/**
 	 * Set average and maximum heartrate from array
@@ -268,10 +286,12 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 	 * Set average temperature from array
 	 */
 	private function setTemperatureFromArray() {
-		$array = $this->TrainingObject->getArrayTemperature();
+		if (!Configuration::ActivityForm()->loadWeather()) {
+			$array = $this->TrainingObject->getArrayTemperature();
 
-		if (!empty($array) && (min($array) != max($array) || min($array) != 0))
-			$this->TrainingObject->setTemperature( round(array_sum($array)/count($array)) );
+			if (!empty($array) && (min($array) != max($array) || min($array) != 0))
+				$this->TrainingObject->setTemperature( round(array_sum($array)/count($array)) );
+		}
 	}
 
 	/**
@@ -321,6 +341,27 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 		}
 
 		return 0;
+	}
+
+	/**
+	 * Correct cadence if needed
+	 *
+	 * Cadence values are clearly defined by http://www8.garmin.com/xmlschemas/TrackPointExtensionv1.xsd
+	 * as "... measured in revolutions per minute." but it seems that
+	 * Strava exports them in spm (steps per minute).
+	 *
+	 * @see https://github.com/Runalyze/Runalyze/issues/1367
+	 */
+	protected function correctCadenceIfNeeded() {
+		if (!empty($this->gps['rpm'])) {
+			$avg = array_sum($this->gps['rpm']) / count($this->gps['rpm']);
+
+			if ($avg > self::RPM_LIMIT_FOR_CORRECTION) {
+				$this->gps['rpm'] = array_map(function ($v) {
+					return round($v/2);
+				}, $this->gps['rpm']);
+			}
+		}
 	}
 
 	/**

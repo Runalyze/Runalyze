@@ -165,12 +165,12 @@ class Frontend {
 	 * Connect to database
 	 */
 	private function initDatabase() {
-		require_once FRONTEND_PATH.'../config.php';
+		require_once FRONTEND_PATH.'../data/config.php';
 
 		$this->adminPassAsMD5 = md5($password);
 
-		DB::connect($host, $username, $password, $database);
-		unset($host, $username, $password, $database);
+		DB::connect($host, $port, $username, $password, $database);
+		unset($host, $port, $username, $password, $database);
 	}
 
 	/**

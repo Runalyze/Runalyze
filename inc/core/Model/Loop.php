@@ -121,7 +121,7 @@ abstract class Loop
 
 	/**
 	 * Move pointer
-	 * @param enum $key
+	 * @param string $key
 	 * @param float $value to move
 	 * @throws \InvalidArgumentException
 	 */
@@ -188,7 +188,7 @@ abstract class Loop
 
 	/**
 	 * Current value
-	 * @param enum $key
+	 * @param string $key
 	 * @return int
 	 */
 	public function current($key)
@@ -202,7 +202,7 @@ abstract class Loop
 
 	/**
 	 * Difference for current section
-	 * @param enum $key
+	 * @param string $key
 	 * @return float
 	 */
 	public function difference($key)
@@ -220,7 +220,7 @@ abstract class Loop
 
 	/**
 	 * Sum values for current section
-	 * @param enum $key
+	 * @param string $key
 	 * @return float
 	 */
 	public function sum($key)
@@ -239,7 +239,7 @@ abstract class Loop
 
 	/**
 	 * Maximal value for current section
-	 * @param enum $key
+	 * @param string $key
 	 * @return float
 	 */
 	public function max($key)
@@ -264,7 +264,7 @@ abstract class Loop
 
 	/**
 	 * Average value for current section
-	 * @param enum $key
+	 * @param string $key
 	 * @return int
 	 */
 	public function average($key)
@@ -277,7 +277,7 @@ abstract class Loop
 	}
 
 	/**
-	 * @param enum $key
+	 * @param string $key
 	 * @return array
 	 */
 	public function slice($key)

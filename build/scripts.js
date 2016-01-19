@@ -6,6 +6,15 @@ var kcalPerHour = 0;
 var splits = $("#formularSplitsContainer");
 var defaultSplit = $("#defaultInputSplit").val();
 
+function parseDate(input, format) {
+	format = format || 'yyyy-mm-dd';
+	var parts = input.match(/(\d+)/g), i = 0, fmt = {};
+
+	format.replace(/(yyyy|dd|mm)/g, function(part) { fmt[part] = i++; });
+
+	return new Date(parts[fmt['yyyy']], parts[fmt['mm']]-1, parts[fmt['dd']]);
+}
+
 function jUpdateSportValues() {
 	var $s = $("#sportid :selected"),
 		kcal = $s.attr('data-kcal'),
@@ -38,6 +47,31 @@ function jUpdateSportValues() {
 	} else {
 		$("#typeid").parent().hide();
 	}
+}
+
+function jUpdateAvailableEquipment() {
+	var date = parseDate($("#time_day").val(), 'dd.mm.yyyy').getTime();
+
+	$("form .depends-on-date option, form .depends-on-date input").each(function(){
+		var available = date == 0 || (
+			!($(this).data('start') && parseDate($(this).data('start')) > date) &&
+			!($(this).data('end') && parseDate($(this).data('end')) < date)
+		);
+
+		$(this).attr('disabled', !available).toggle(available);
+
+		if (!$(this).is('option')) {
+			$(this).parent().toggle(available);
+		}
+
+		if (!available) {
+			if ($(this).is('option')) {
+				$(this).prop('selected', false);
+			} else {
+				$(this).prop('checked', false);
+			}
+		}
+	});
 }
 
 function jUpdatePace() {
@@ -8103,6 +8137,12 @@ Runalyze.Feature = (function($, Parent){
 		$('a.ajax').unbind('click').click(function(e){
 			e.preventDefault();
 
+			if ($(this).data('confirm')) {
+				if (!window.confirm($(this).data('confirm'))) {
+					return false;
+				}
+			}
+
 			var href = $(this).attr('href');
 			var target = $(this).attr('target');
 
@@ -8236,6 +8276,17 @@ Runalyze.Feature = (function($, Parent){
 		for (var selector in config) {
 			$(selector).chosen(config[selector]);
 		}
+
+		$(".chosen-select-all").unbind('click').bind('click', function() {
+			var target = $(this).data('target');
+			$("#"+target+" option").attr('selected', 'selected');
+			$("#"+target).trigger('chosen:updated');
+		});
+		$(".chosen-select-none").unbind('click').bind('click', function() {
+			var target = $(this).data('target');
+			$("#"+target+" option:selected").removeAttr('selected');
+			$("#"+target).trigger('chosen:updated');
+		});
   
 		$(".fip-select").fontIconPicker({emptyIcon: false, hasSearch: false});
 		$(".pick-a-date:not(.has-a-datepicker)").each(function(){
@@ -8252,7 +8303,7 @@ Runalyze.Feature = (function($, Parent){
 				mode: 'single',
                 locale:  JSON.parse($("#calendar-locale").val()),
                 onBeforeShow: function(){ if ($t.val().trim() != '') $t.DatePickerSetDate($t.val(), true); },
-				onChange: function(formated, dates){ $t.val(formated); $t.DatePickerHide(); }
+				onChange: function(formated, dates){ $t.val(formated); $t.trigger('change'); $t.DatePickerHide(); }
 			});
 		});
 	}

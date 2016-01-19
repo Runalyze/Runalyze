@@ -50,6 +50,7 @@ class Time {
 	/**
 	 * Get the timestamp of the start of the week
 	 * @param int $time
+	 * @return int
 	 */
 	public static function weekstart($time) {
 		$w = date("w", $time);
@@ -68,6 +69,7 @@ class Time {
 	/**
 	 * Get the timestamp of the end of the week
 	 * @param int $time
+	 * @return int
 	 */
 	public static function weekend($time) {
 		$start = self::weekstart($time);
@@ -79,6 +81,7 @@ class Time {
 	 * Get the name of a day
 	 * @param string $w     date('w');
 	 * @param bool $short   short version, default: false
+	 * @return string
 	 * @codeCoverageIgnore
 	 */
 	public static function weekday($w, $short = false) {
@@ -98,6 +101,7 @@ class Time {
 	 * Get the name of the month
 	 * @param string $m     date('m');
 	 * @param bool $short   short version, default: false
+	 * @return string
 	 * @codeCoverageIgnore
 	 */
 	public static function month($m, $short = false) {

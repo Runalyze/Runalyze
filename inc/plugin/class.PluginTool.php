@@ -157,6 +157,7 @@ abstract class PluginTool extends Plugin {
 	 * Get link to this tool as overlay
 	 * @param string $name
 	 * @param boolean $wrapAsContainer optional
+	 * @return string
 	 */
 	public function getWindowLink($name = '', $wrapAsContainer = false) {
 		if ($name == '') {

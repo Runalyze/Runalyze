@@ -41,6 +41,9 @@ class ParserGPXMultiple extends ParserAbstractMultipleXML {
 		if (isset($this->XML->extensions))
 			$Parser->setExtensionXML($this->XML->extensions);
 
+		if (isset($this->XML->metadata))
+		    $Parser->parseMetadata($this->XML->metadata);		
+		
 		$Parser->parse();
 
 		if ($Parser->failed())

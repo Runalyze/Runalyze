@@ -22,7 +22,6 @@ class ImporterFiletypeTRKTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( 6, $this->object->object()->getTimeInSeconds() );
 		$this->assertEquals( 107, $this->object->object()->getPulseAvg() );
 		$this->assertEquals( 108, $this->object->object()->getPulseMax() );
-		$this->assertEquals( 16, $this->object->object()->get('temperature') );
 
 		$this->assertTrue( $this->object->object()->hasArrayDistance() );
 		$this->assertEquals(

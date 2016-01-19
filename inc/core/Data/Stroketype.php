@@ -107,6 +107,8 @@ class Stroketype {
                         case self::MIXED:
 				return __('Mixed');   
 		}
+
+		return '';
 	}
         
 	/**
@@ -128,6 +130,8 @@ class Stroketype {
                         case self::MIXED:
 				return __('Mixed');   
 		}
+
+		return '';
 	}
 }
 

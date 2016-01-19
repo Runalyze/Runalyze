@@ -79,10 +79,11 @@ class Intensity {
 	/**
 	 * Calculate by trackdata
 	 * @param \Runalyze\Model\Trackdata\Entity $trackdata
+	 * @return int
 	 */
 	public function calculateByTrackdata(Trackdata\Entity $trackdata) {
 		if (!$trackdata->has(Trackdata\Entity::HEARTRATE)) {
-			return;
+			return 0;
 		}
 
 		return $this->calculateByHeartrate(

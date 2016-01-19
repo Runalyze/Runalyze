@@ -25,6 +25,9 @@ class ImporterFiletypeKML extends ImporterFiletypeAbstract {
 			$this->Parser = new ParserKMLtomtomMultiple($string);
 		} elseif ($this->isDefaultKML($string)) {
 			$this->Parser = new ParserKMLSingle($string);
+		} elseif ($this->isNamespacedKml($string)) {
+			$this->Parser = new ParserKMLSingle($string);
+			$this->Parser->setNamespace('kml');
 		} else {
 			$this->throwErrorForUnknownFormat();
 		}
@@ -41,11 +44,20 @@ class ImporterFiletypeKML extends ImporterFiletypeAbstract {
 
 	/**
 	 * Is this a standard kml file?
-	 * @param type $string
-	 * @return type
+	 * @param string $string
+	 * @return bool
 	 */
 	private function isDefaultKML($string) {
-		return strpos($string, '<coordinates') !== false;
+		return (strpos($string, '<coordinates') !== false);
+	}
+
+	/**
+	 * Is this a namespaced kml file?
+	 * @param string $string
+	 * @return bool
+	 */
+	private function isNamespacedKml($string) {
+		return (strpos($string, '<kml:coordinates') !== false);
 	}
 
 	/**

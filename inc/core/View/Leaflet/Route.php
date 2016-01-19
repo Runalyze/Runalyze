@@ -5,8 +5,6 @@
  */
 
 namespace Runalyze\View\Leaflet;
-use League\Geotools\Geotools;
-use \League\Geotools\Coordinate\Coordinate;
 
 /**
  * Leaflet route

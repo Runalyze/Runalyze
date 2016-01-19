@@ -296,7 +296,7 @@ class Factory {
 	
 	/**
 	 * Tag
-	 * @param int tagid
+	 * @param int $tagid
 	 * @return \Runalyze\Model\Tag\Entity
 	 */
 	public function tag($tagid) {

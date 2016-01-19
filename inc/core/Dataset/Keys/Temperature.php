@@ -62,7 +62,7 @@ class Temperature extends AbstractKey
 	{
 		if (
 			!$context->activity()->weather()->temperature()->isUnknown() &&
-			($context->hasSport() || $context->sport()->isOutside())
+			!($context->hasSport() && !$context->sport()->isOutside())
 		) {
 			return \Runalyze\Activity\Temperature::format(
 				$context->activity()->weather()->temperature()->value(),

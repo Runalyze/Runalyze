@@ -13,6 +13,16 @@ use Runalyze\Configuration;
  * @package Runalyze\Import\Parser
  */
 class ParserKMLSingle extends ParserAbstractSingleXML {
+	/** @var string */
+	protected $CoordinatesXPath = '//coordinates';
+
+	/**
+	 * @param string $ns
+	 */
+	public function setNamespace($ns = 'kml') {
+		$this->CoordinatesXPath = '//'.$ns.':coordinates';
+	}
+
 	/**
 	 * Parse
 	 */
@@ -30,7 +40,7 @@ class ParserKMLSingle extends ParserAbstractSingleXML {
 	 * @return bool
 	 */
 	protected function isCorrectXML() {
-		$coordinates = $this->XML->xpath('//coordinates');
+		$coordinates = $this->XML->xpath($this->CoordinatesXPath);
 
 		return !empty($coordinates);
 	}
@@ -46,16 +56,17 @@ class ParserKMLSingle extends ParserAbstractSingleXML {
 	 * Parse coordinates
 	 */
 	protected function parseCoordinates() {
-		foreach ($this->XML->xpath('//coordinates') as $coordinates) {
+		foreach ($this->XML->xpath($this->CoordinatesXPath) as $coordinates) {
 			$lines = preg_split('/\r\n|\r|\n/', (string)$coordinates);
 
-			foreach ($lines as $line) {
+			foreach ($lines as $lineIndex => $line) {
 				$parts = explode(',', $line);
+				$num = count($parts);
 
-				if (count($parts) == 3) {
+				if ($num == 3 || $num == 2) {
 					if (empty($this->gps['km'])) {
 						$this->gps['km'][] = 0;
-					} else {
+					} elseif ($lineIndex > 0) {
 						$this->gps['km'][] = end($this->gps['km']) + round(
 							Runalyze\Model\Route\Entity::gpsDistance(
 								$parts[1],
@@ -65,11 +76,13 @@ class ParserKMLSingle extends ParserAbstractSingleXML {
 							),
 							ParserAbstract::DISTANCE_PRECISION
 						);
+					} else {
+						$this->gps['km'][] = end($this->gps['km']);
 					}
 
 					$this->gps['latitude'][]  = $parts[1];
 					$this->gps['longitude'][] = $parts[0];
-					$this->gps['altitude'][]  = $parts[2];
+					$this->gps['altitude'][]  = ($num > 2) ? $parts[2] : 0;
 				}
 			}
 		}

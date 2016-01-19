@@ -7,7 +7,6 @@
 namespace Runalyze\Dataset\Keys;
 
 use Runalyze\Dataset\Context;
-use Runalyze\Dataset\SummaryMode;
 
 /**
  * Dataset key: FitRecoveryTime

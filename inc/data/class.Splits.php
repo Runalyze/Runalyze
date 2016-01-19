@@ -14,7 +14,7 @@ use Runalyze\Activity\Duration;
 class Splits {
 	/**
 	 * Enum for constructor: Take data from post
-	 * @var enum
+	 * @var string
 	 */
 	public static $FROM_POST = 'TAKE_PARAMETER_FROM_POST';
 

@@ -15,7 +15,7 @@ $HIDDEN_KEYS = array(
 	'arr_groundcontact', 'arr_vertical_oscillation', 'arr_groundcontact_balance', 'pauses', 'hrv',
 	'fit_vdot_estimate', 'fit_recovery_time', 'fit_hrv_analysis',
 	//'vdot', 'vdot_by_time', 'trimp', 'vdot_with_elevation', 'jd_intensity'
-	'elapsed_time', 'elevation_calculated', 'groundcontact', 'vertical_oscillation', 'groundcontact_balance', 'vertical_ratio', 'stroke', 'stroketype','total_strokes', 'swolf', 'pool_length'
+	'elapsed_time', 'elevation_calculated', 'groundcontact', 'vertical_oscillation', 'groundcontact_balance', 'vertical_ratio', 'stroke', 'stroketype','total_strokes', 'swolf', 'pool_length', 'is_night'
 );
 
 $FIELDSETS = array(
@@ -61,7 +61,7 @@ $FIELDSETS = array(
 	array(
 		'id'		=> 'weather',
 		'legend'	=> __('Weather conditions'),
-		'fields'	=> array('weatherid', 'temperature'),
+		'fields'	=> array('weatherid', 'temperature', 'wind_speed', 'wind_deg', 'humidity', 'pressure'),
 		'conf'		=> 'WEATHER'
 	),
 	array(
@@ -155,7 +155,7 @@ $FIELDS = array(
 					'database'	=> array(
 						'type'		=> 'decimal',
 						'precision'	=> '6,2',
-						'default'	=> '0.00'
+						'default'	=> '0'
 					),
 					'formular'	=> array(
 						'label'		=> __('Distance'),
@@ -355,8 +355,7 @@ $FIELDS = array(
 					'formular'	=> array(
 						'label'		=> '<span class="'.TrainingFormular::$ONLY_NOT_RUNNING_CLASS.'">'.__('Cadence').'</span><span class="'.TrainingFormular::$ONLY_RUNNING_CLASS.'">'.__('Cadence (Running)').'</span>',
 						'unit'		=> FormularUnit::$RPM,
-						'tooltip'	=> __('Unit is always - also for running - <em>rpm</em>, i.e. rounds (or steps with one foot) per minute,'),
-						'css'		=> TrainingFormular::$ONLY_OUTSIDE_CLASS
+						'tooltip'	=> __('Unit is always - also for running - <em>rpm</em>, i.e. rounds (or steps with one foot) per minute,')
 					)
 	),
 	'power'				=> array(
@@ -435,6 +434,67 @@ $FIELDS = array(
 						'css'		=> TrainingFormular::$ONLY_OUTSIDE_CLASS
 					)
 	),
+	'humidity' => array(
+					'database'	=> array(
+						'type'		=> 'tinyint',
+						'null'		=> true,
+						'precision'	=> '3'
+					),
+					'formular'	=> array(
+						'label'		=> __('Humidity'),
+						'unit'		=> FormularUnit::$PERCENT,
+						'css'		=> TrainingFormular::$ONLY_OUTSIDE_CLASS
+					)
+	),
+	'pressure' => array(
+					'database'	=> array(
+						'type'		=> 'smallint',
+						'null'		=> true,
+						'precision'	=> '4'
+					),
+					'formular'	=> array(
+						'label'		=> __('Pressure'),
+						'unit'		=> FormularUnit::$HPA,
+						'css'		=> TrainingFormular::$ONLY_OUTSIDE_CLASS
+					)
+	),
+	'wind_speed' => array(
+					'database'	=> array(
+						'type'		=> 'tinyint',
+						'precision'	=> '3',
+						'null'		=> true
+					),
+					'formular'	=> array(
+						'label'		=> __('Wind speed'),
+						'unit'		=> (new \Runalyze\Data\Weather\WindSpeed())->unit(),
+						'parser'	=> FormularValueParser::$PARSER_WINDSPEED,
+						'css'		=> TrainingFormular::$ONLY_OUTSIDE_CLASS
+					)
+	),
+	'wind_deg' => array(
+					'database'	=> array(
+						'type'		=> 'smallint',
+						'precision'	=> '3',
+						 'null'		=> true
+					),
+					'formular'	=> array(
+						'label'		=> __('Wind degrees'),
+						'unit'		=> FormularUnit::$DEGREE,
+						'css'		=> TrainingFormular::$ONLY_OUTSIDE_CLASS
+					)
+	),
+	'is_night' => array(
+					'database'	=> array(
+						'type'		=> 'tinyint',
+						'precision'	=> '1',
+						'default'	=> '0'
+					),
+					'formular'	=> array(
+						'label'		=> __('Night'),
+						'class'		=> 'FormularCheckbox',
+						'css'		=> TrainingFormular::$ONLY_OUTSIDE_CLASS
+					)
+	),
 	'route'				=> array(
 					'database'	=> array(
 						'type'		=> 'tinytext',
@@ -463,7 +523,7 @@ $FIELDS = array(
 						'null'		=> true
 					),
 					'formular'	=> array(
-						'label'		=> __('Comment'),
+						'label'		=> __('Title'),
 						'size'		=> FormularInput::$SIZE_FULL_INLINE
 					)
 	),
@@ -651,8 +711,9 @@ $FIELDS = array(
 	),
 	'activity_id'		=> array(
 					'database'	=> array(
-						'type'		=> 'varchar',
-						'precision'	=> '50',
+						'type'		=> 'int',
+						'precision'	=> '11',
+						'null'		=> 'true'
 					),
 					'formular'	=> array(
 						'hidden'	=> true

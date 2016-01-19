@@ -2,6 +2,8 @@
 
 namespace Runalyze\Model\Activity;
 
+use League\Geotools\Coordinate\Coordinate;
+use League\Geotools\Geohash\Geohash;
 use Runalyze\Configuration;
 use Runalyze\Model;
 use Runalyze\Data\Weather;
@@ -414,6 +416,34 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 
 		$mainSport = Configuration::General()->mainSport();
 		$this->assertEquals($mainSport, $this->PDO->query('SELECT `sportid` FROM `runalyze_training` WHERE `id`='.$Inserter->insertedID())->fetchColumn());
+	}
+
+	public function testCalculatingNight() {
+		$Activity = new Entity([
+			Entity::TIMESTAMP => strtotime('2016-01-13 08:00:00')
+		]);
+
+		$Route = new Model\Route\Entity([
+			Model\Route\Entity::GEOHASHES => [(new Geohash())->encode(new Coordinate([49.44, 7.45]))->getGeohash()]
+		]);
+		$Route->synchronize();
+
+		$Inserter = new Inserter($this->PDO);
+		$Inserter->setAccountID(0);
+		$Inserter->insert($Activity);
+		$this->assertFalse($this->fetch($Inserter->insertedID())->knowsIfItIsNight());
+
+		$Inserter->setRoute($Route);
+		$Inserter->insert($Activity);
+		$ResultActivity = $this->fetch($Inserter->insertedID());
+		$this->assertTrue($ResultActivity->knowsIfItIsNight());
+		$this->assertTrue($ResultActivity->isNight());
+
+		$Activity->set(Entity::TIMESTAMP, strtotime('2016-01-13 09:00:00'));
+		$Inserter->insert($Activity);
+		$ResultActivity = $this->fetch($Inserter->insertedID());
+		$this->assertTrue($ResultActivity->knowsIfItIsNight());
+		$this->assertFalse($ResultActivity->isNight());
 	}
 
 }

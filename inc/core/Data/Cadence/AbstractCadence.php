@@ -65,7 +65,7 @@ abstract class AbstractCadence {
 	 * @codeCoverageIgnore
 	 */
 	final public function unitAsStringWithTooltip() {
-		return Ajax::tooltip($this->unitAsString(), $this->unitExplanation());
+		return \Ajax::tooltip($this->unitAsString(), $this->unitExplanation());
 	}
 
 	/**
@@ -108,7 +108,7 @@ abstract class AbstractCadence {
 
 	/**
 	 * Formular unit
-	 * @return enum
+	 * @return string
 	 * @codeCoverageIgnore
 	 */
 	abstract public function formularUnit();

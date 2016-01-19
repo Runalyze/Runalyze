@@ -43,20 +43,20 @@ class Geonames extends FromExternalAPI {
 		if (isset($response['status']) && isset($response['status']['value'])) {
 			switch ((int)$response['status']['value']) {
 				case 10:
-					\Error::getInstance()->addWarning('Geonames user account is not valid.');
+					\Runalyze\Error::getInstance()->addWarning('Geonames user account is not valid.');
 					break;
 				case 18:
-					\Error::getInstance()->addDebug('Geonames-request failed: daily limit of credits exceeded');
+					\Runalyze\Error::getInstance()->addDebug('Geonames-request failed: daily limit of credits exceeded');
 					break;
 				case 19:
-					\Error::getInstance()->addDebug('Geonames-request failed: hourly limit of credits exceeded');
+					\Runalyze\Error::getInstance()->addDebug('Geonames-request failed: hourly limit of credits exceeded');
 					break;
 				case 20:
-					\Error::getInstance()->addDebug('Geonames-request failed: weekly limit of credits exceeded');
+					\Runalyze\Error::getInstance()->addDebug('Geonames-request failed: weekly limit of credits exceeded');
 					break;
 				default:
 					if (isset($response['status']['message']))
-						\Error::getInstance ()->addDebug('Geonames response: '.$response['status']['message']);
+						\Runalyze\Error::getInstance ()->addDebug('Geonames response: '.$response['status']['message']);
 			}
 		}
 

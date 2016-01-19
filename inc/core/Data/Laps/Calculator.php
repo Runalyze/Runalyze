@@ -253,7 +253,6 @@ class Calculator
 		$SlicedTrackdata = $this->TrackdataLoop->sliceObject();
 
 		$this->addTrackdataAveragesToDataFrom($SlicedTrackdata, $AdditionalData);
-		$this->addStrideLengthToDataFrom($SlicedTrackdata, $AdditionalData);
 		$this->addVDOTToDataFrom($Lap, $AdditionalData);
 
 		$Lap->setAdditionalValues($AdditionalData);
@@ -266,9 +265,12 @@ class Calculator
 	protected function addTrackdataAveragesToDataFrom(Trackdata\Entity $Object, array &$AdditionalData) {
 		$KeysToAverage = array(
 			Activity\Entity::CADENCE => Trackdata\Entity::CADENCE,
+			Activity\Entity::STRIDE_LENGTH => Trackdata\Entity::STRIDE_LENGTH,
 			Activity\Entity::GROUNDCONTACT => Trackdata\Entity::GROUNDCONTACT,
+			Activity\Entity::GROUNDCONTACT_BALANCE => Trackdata\Entity::GROUNDCONTACT_BALANCE,
 			Activity\Entity::VERTICAL_OSCILLATION => Trackdata\Entity::VERTICAL_OSCILLATION,
-			Activity\Entity::GROUNDCONTACT_BALANCE => Trackdata\Entity::GROUNDCONTACT_BALANCE
+			Activity\Entity::VERTICAL_RATIO => Trackdata\Entity::VERTICAL_RATIO,
+			Activity\Entity::POWER => Trackdata\Entity::POWER
 		);
 
 		$NewLoop = new Trackdata\Loop($Object);
@@ -280,24 +282,6 @@ class Calculator
 			}
 		}
 	}
-
-	/**
-	 * @param \Runalyze\Model\Trackdata\Entity $Object
-	 * @param array $AdditionalData
-	 */
-	protected function addStrideLengthToDataFrom(Trackdata\Entity $Object, array &$AdditionalData) {
-		$StrideCalculator = new Calculation\StrideLength\Calculator($Object);
-		$StrideCalculator->calculate();
-		
-		$VerticalRatio = new Calculation\Activity\VerticalRatioCalculator($Object);
-		$VerticalRatio->calculate();
-
-		if ($StrideCalculator->average() > 0) {
-			$AdditionalData[Activity\Entity::STRIDE_LENGTH] = $StrideCalculator->average();
-		}
-	}
-	
-	
 
 	/**
 	 * @param \Runalyze\Data\Laps\Lap $Lap

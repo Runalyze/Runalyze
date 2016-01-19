@@ -106,4 +106,24 @@ class ImporterFiletypeKMLTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertFalse( $this->object->object()->hasArrayTime() );
 	}
+
+	/**
+	 * Test: multi line route without altitude
+	 * Filename: "multi-line-without-altitude.kml"
+	 */
+	public function testMultiLineWithoutAltitude() {
+		$this->object->parseFile('../tests/testfiles/kml/multi-line-without-altitude.kml');
+
+		$this->assertFalse( $this->object->hasMultipleTrainings() );
+		$this->assertFalse( $this->object->failed() );
+
+		$this->assertEquals(2.25, $this->object->object()->getDistance(), '', 0.05);
+
+		$this->assertTrue( $this->object->object()->hasArrayDistance() );
+		$this->assertTrue( $this->object->object()->hasArrayLatitude() );
+		$this->assertTrue( $this->object->object()->hasArrayLongitude() );
+
+		$this->assertFalse( $this->object->object()->hasArrayAltitude() );
+		$this->assertFalse( $this->object->object()->hasArrayTime() );
+	}
 }

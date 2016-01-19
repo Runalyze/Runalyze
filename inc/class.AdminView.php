@@ -3,9 +3,6 @@
  * This file contains class::AdminView
  * @package Runalyze\Frontend
  */
-
-use Runalyze\Activity\Distance;
-
 /**
  * Class for admin view
  *
@@ -177,8 +174,8 @@ class AdminView {
 		$Fieldset->addField( new FormularSubmit(__('Save'), '') );
 		$Fieldset->setLayoutForFields( FormularFieldset::$LAYOUT_FIELD_W100 );
 
-		if (!is_writable(FRONTEND_PATH.'../config.php')) {
-			$Fieldset->addError( __('<strong>config.php</strong> is not writable').', <em>(chmod = '.substr(decoct(fileperms(FRONTEND_PATH.'../config.php')),1).')</em> '.__('Changes can\'t be saved.') );
+		if (!is_writable(FRONTEND_PATH.'../data/config.php')) {
+			$Fieldset->addError( __('<strong>data/config.php</strong> is not writable').', <em>(chmod = '.substr(decoct(fileperms(FRONTEND_PATH.'../data/config.php')),1).')</em> '.__('Changes can\'t be saved.') );
 		}
 
 		return $Fieldset;
@@ -213,12 +210,12 @@ class AdminView {
 	 * Update config file from post data
 	 */
 	private function updateConfigFileFromPost() {
-		if (!is_writable(FRONTEND_PATH.'../config.php'))
+		if (!is_writable(FRONTEND_PATH.'../data/config.php'))
 			return;
 
 		$Variables     = self::getArrayOfConfigVariables();
 		$NewFile       = '';
-		$FileHandleOld = fopen( FRONTEND_PATH.'../config.php', 'r' );
+		$FileHandleOld = fopen( FRONTEND_PATH.'../data/config.php', 'r' );
 
 		while ($Line = fgets($FileHandleOld)) {
 			$Match = array();
@@ -238,7 +235,7 @@ class AdminView {
 
 		fclose($FileHandleOld);
 
-		$FileHandleNew = fopen( FRONTEND_PATH.'../config.php', 'w' );
+		$FileHandleNew = fopen( FRONTEND_PATH.'../data/config.php', 'w' );
 		fwrite($FileHandleNew, $NewFile);
 		fclose($FileHandleNew);
 	}
@@ -362,8 +359,8 @@ class AdminView {
 		$Fieldset = new FormularFieldset( __('Unused files') );
 		$Fieldset->addFileBlock( $this->getBlockForFiles('../data/import/') );
 		$Fieldset->addFileBlock( $this->getBlockForFiles('../data/log/') );
-		$Fieldset->addFileBlock( $this->getBlockForFiles('../data/DbBackup/backup/') );
-		$Fieldset->addFileBlock( $this->getBlockForFiles('../data/DbBackup/import/') );
+		$Fieldset->addFileBlock( $this->getBlockForFiles('../data/backup-tool/backup/') );
+		$Fieldset->addFileBlock( $this->getBlockForFiles('../data/backup-tool/import/') );
 		$Fieldset->addBlock( '<input type="submit" value="'.__('Clear directories').'">' );
 		$Fieldset->setCollapsed();
 
@@ -490,11 +487,11 @@ class AdminView {
 	 * @param string $Variable
 	 */
 	private static function addVariableToConfigFile($Variable) {
-		$ConfigFile  = str_replace('?>', NL, Filesystem::openFile('../config.php'));
+		$ConfigFile  = str_replace('?>', NL, Filesystem::openFile('../data/config.php'));
 		$ConfigFile .= self::defineAndGetConfigLinesFor($Variable);
 		$ConfigFile .= NL.'?>';
 
-		Filesystem::writeFile('../config.php', $ConfigFile);
+		Filesystem::writeFile('../data/config.php', $ConfigFile);
 	}
 
 	/**

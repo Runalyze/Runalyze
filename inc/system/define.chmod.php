@@ -1,7 +1,8 @@
 <?php
 $CHMOD_FOLDERS = array(
-	'data/log/',
+	'data/backup-tool/import/',
+	'data/backup-tool/backup/',
+	'data/cache',
 	'data/import/',
-	'data/DbBackup/import/',
-	'data/DbBackup/backup/'
+	'data/log/'
 );

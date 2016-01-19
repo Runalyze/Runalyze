@@ -105,4 +105,19 @@ class EntityTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(array('7zzzzzzzzzzz'), $Object->get(Entity::GEOHASHES));
 	}
 
+	public function testSynchronizationOfStartAndEndpoint() {
+		$Object = new Entity([]);
+		$Object->setLatitudesLongitudes(
+			[0.0, 0.0, 47.7, 47.8, 47.7, 47.8],
+			[0.0, 0.0, 7.8, 7.7, 7.8, 7.7]
+		);
+		$Object->forceToSetMinMaxFromGeohashes();
+		$Object->synchronize();
+
+		$this->assertEquals('u0mx37xb9h', $Object->get(Entity::STARTPOINT));
+		$this->assertEquals('u0mrzjwzpj', $Object->get(Entity::ENDPOINT));
+		$this->assertEquals('u0mrr5wbxh', $Object->get(Entity::MIN));
+		$this->assertEquals('u0mxcmxz1j', $Object->get(Entity::MAX));
+	}
+
 }

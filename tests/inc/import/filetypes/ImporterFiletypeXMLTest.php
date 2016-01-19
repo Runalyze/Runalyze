@@ -5,24 +5,19 @@
  */
 class ImporterFiletypeXMLTest extends PHPUnit_Framework_TestCase {
 
-	/**
-	 * @var ImporterFiletypeXML
-	 */
+	/** @var ImporterFiletypeXML */
 	protected $object;
 
-	/**
-	 * Sets up the fixture, for example, opens a network connection.
-	 * This method is called before a test is executed.
-	 */
 	protected function setUp() {
 		$this->object = new ImporterFiletypeXML;
+		DB::getInstance()->query('DELETE FROM `'.PREFIX.'training`');
+		DB::getInstance()->query('DELETE FROM `'.PREFIX.'equipment`');
 	}
 
-	/**
-	 * Tears down the fixture, for example, closes a network connection.
-	 * This method is called after a test is executed.
-	 */
-	protected function tearDown() { }
+	protected function tearDown() {
+		DB::getInstance()->query('DELETE FROM `'.PREFIX.'training`');
+		DB::getInstance()->query('DELETE FROM `'.PREFIX.'equipment`');
+	}
 
 	/**
 	 * Test: empty string
@@ -176,6 +171,46 @@ class ImporterFiletypeXMLTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
+	 * Test: RunningAHEAD log
+	 * Filename: "RunningAHEAD-Minimal-example-with-equipment.xml"
+	 */
+	public function test_RunningAHEADFileWithEquipment()
+	{
+		$this->object->parseFile('../tests/testfiles/xml/RunningAHEAD-Minimal-example-with-equipment.xml');
+		foreach ($this->object->objects() as $activity) {
+			$activity->insert();
+		}
+
+		$PDO = DB::getInstance();
+		$ShoeId = $PDO->query('SELECT `id` FROM `'.PREFIX.'equipment` WHERE `name`="New Balance MR 905"')->fetchColumn();
+		$this->assertGreaterThan(0, $ShoeId);
+		$this->assertEquals(2, $PDO->query('SELECT 1 FROM `'.PREFIX.'activity_equipment` WHERE `equipmentid`='.$ShoeId)->rowCount());
+	}
+
+	/**
+	 * Test: RunningAHEAD log
+	 * Filename: "RunningAHEAD-Minimal-example-with-equipment.xml"
+	 */
+	public function test_RunningAHEADFileWithExistingEquipment()
+	{
+		$AccountID = SessionAccountHandler::getId();
+		$PDO = DB::getInstance();
+		$PDO->exec('INSERT INTO `'.PREFIX.'equipment_type` (`name`, `accountid`) VALUES ("Test", '.$AccountID.')');
+		$TypeId = $PDO->lastInsertId();
+		$PDO->exec('INSERT INTO `'.PREFIX.'equipment` (`name`, `typeid`, `notes`, `accountid`) VALUES ("New Balance MR 905", '.$TypeId.', "", '.$AccountID.')');
+		$ShoeId = $PDO->lastInsertId();
+
+		$this->assertEquals(0, $PDO->query('SELECT 1 FROM `'.PREFIX.'activity_equipment` WHERE `equipmentid`='.$ShoeId)->rowCount());
+
+		$this->object->parseFile('../tests/testfiles/xml/RunningAHEAD-Minimal-example-with-equipment.xml');
+		foreach ($this->object->objects() as $activity) {
+			$activity->insert();
+		}
+
+		$this->assertEquals(2, $PDO->query('SELECT 1 FROM `'.PREFIX.'activity_equipment` WHERE `equipmentid`='.$ShoeId)->rowCount());
+	}
+
+	/**
 	 * Test: Suunto file
 	 * Filename: "Suunto-Ambit-reduced.xml" 
 	 */
@@ -191,7 +226,6 @@ class ImporterFiletypeXMLTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( 151, $this->object->object()->getElapsedTime() );
 		$this->assertEquals( 131, $this->object->object()->getPulseAvg() );
 		$this->assertEquals( 143, $this->object->object()->getPulseMax() );
-		$this->assertEquals( 26, $this->object->object()->get('temperature') );
 		$this->assertEquals( 461, $this->object->object()->getCalories() );
 
 		$this->assertTrue( $this->object->object()->hasArrayHeartrate() );
@@ -221,7 +255,6 @@ class ImporterFiletypeXMLTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( 648, $this->object->object()->getElapsedTime() );
 		$this->assertEquals( 112, $this->object->object()->getPulseAvg() );
 		$this->assertEquals( 123, $this->object->object()->getPulseMax() );
-		$this->assertEquals( 25, $this->object->object()->get('temperature') );
 		$this->assertEquals( 361, $this->object->object()->getCalories() );
 
 		$this->assertTrue( $this->object->object()->hasArrayHeartrate() );

@@ -10,23 +10,23 @@
  */
 abstract class PluginType {
 	/**
-	 * @var Enum: Stat
+	 * @var int Enum: Stat
 	 */
 	const STAT = 0;
 
 	/**
-	 * @var Enum: Panel
+	 * @var int Enum: Panel
 	 */
 	const PANEL = 1;
 
 	/**
-	 * @var Enum: Tool
+	 * @var int Enum: Tool
 	 */
 	const TOOL = 2;
 
 	/**
 	 * String
-	 * @param enum $Type
+	 * @param int $Type enum
 	 * @return string
 	 */
 	public static function string($Type) {
@@ -45,7 +45,7 @@ abstract class PluginType {
 
 	/**
 	 * Readable string
-	 * @param enum $Type
+	 * @param int $Type enum
 	 * @return string
 	 */
 	public static function readableString($Type) {

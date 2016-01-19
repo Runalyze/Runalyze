@@ -13,7 +13,7 @@ use Runalyze\Util\Time;
 
 /**
  * Table to show monthwise statistics
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Plugin\Stat\Wetter
  */

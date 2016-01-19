@@ -171,7 +171,7 @@ class DataBrowser {
 
 		for ($w = 0; $w <= ($this->DayCount-1); $w++) {
 			$this->Days[] = array(
-				'date' => mktime(0, 0, 0, date("m",$this->TimestampStart), date("d",$this->TimestampStart)+$w, date("Y",$this->TimestampEnd)),
+				'date' => mktime(0, 0, 0, date("m",$this->TimestampStart), date("d",$this->TimestampStart)+$w, date("Y",$this->TimestampStart)),
 				'shorts' => array(),
 				'trainings' => array()
 			);
@@ -200,6 +200,7 @@ class DataBrowser {
 		echo $this->getCalenderLink();
 		echo $this->getPrevLink();
 		echo $this->getNextLink();
+		echo $this->getCurrentLink();
 	}
 
 	/**
@@ -260,6 +261,14 @@ class DataBrowser {
 
 		return DataBrowserLinker::link(Icon::$NEXT, $timestamp_array['start'], $timestamp_array['end'], __('next'));
 	}
+	
+	/**
+	 * Get link to jump to today
+	 * @return string
+	 */
+	protected function getCurrentLink() {
+		return DataBrowserLinker::link('<i class="fa fa-fw fa-circle"></i>', '', '', __('today'));
+	}
 
 	/**
 	 * Get ajax-link for reload this DataBrowser
@@ -297,7 +306,7 @@ class DataBrowser {
 
 	/**
 	 * Get list to shared list
-	 * @returns tring
+	 * @returns string
 	 */
 	protected function getSharedListLink() {
 		return SharedLinker::getListLinkForCurrentUser();

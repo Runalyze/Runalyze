@@ -31,7 +31,7 @@ class Weather extends AbstractKey
 	 */
 	public function column()
 	{
-		return 'weatherid';
+		return ['weatherid', 'is_night'];
 	}
 
 	/**
@@ -60,7 +60,13 @@ class Weather extends AbstractKey
 	public function stringFor(Context $context)
 	{
 		if (!$context->activity()->weather()->condition()->isUnknown() && ($context->hasSport() || $context->sport()->isOutside())) {
-			return $context->activity()->weather()->condition()->icon()->code();
+			$icon = $context->activity()->weather()->condition()->icon();
+
+			if ($context->activity()->isNight()) {
+				$icon->setAsNight();
+			}
+
+			return $icon->code();
 		}
 
 		return '';

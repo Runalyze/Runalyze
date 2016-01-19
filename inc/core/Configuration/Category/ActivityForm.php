@@ -275,7 +275,7 @@ class ActivityForm extends \Runalyze\Configuration\Category {
 		));
 
 		$Fieldset->addHandle( $this->handle('TRAINING_SORT_SHOES'), array(
-			'label'		=> __('Sort: shoes')
+			'label'		=> __('Sort: equipment')
 		));
 	}
 }

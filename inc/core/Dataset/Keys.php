@@ -59,7 +59,7 @@ final class Keys extends AbstractEnum
 	const VDOT_VALUE = 14;
 
 	/** @var int */
-	const FIT_VDOT_ESTIMATE = 15;
+	const FIT_VO2MAX_ESTIMATE = 15;
 
 	/** @var int */
 	const FIT_RECOVERY_TIME = 16;
@@ -126,6 +126,18 @@ final class Keys extends AbstractEnum
 
 	/** @var int */
 	const MAIN_EQUIPMENT = 37;
+
+	/** @var int */
+	const WIND = 38;
+
+	/** @var int */
+	const HUMIDITY = 39;
+
+	/** @var int */
+	const AIR_PRESSURE = 40;
+
+	/** @var int */
+	const WIND_CHILL = 41;
 
 	/**
 	 * @var array|null
@@ -199,7 +211,7 @@ final class Keys extends AbstractEnum
 			self::HEARTRATE_MAX => 'HeartrateMaximum',
 			self::VDOT_ICON => 'VdotIcon',
 			self::VDOT_VALUE => 'VdotValue',
-			self::FIT_VDOT_ESTIMATE => 'FitVdotEstimate',
+			self::FIT_VO2MAX_ESTIMATE => 'FitVO2maxEstimate',
 			self::FIT_RECOVERY_TIME => 'FitRecoveryTime',
 			self::FIT_HRV_ANALYSIS => 'FitHrvAnalysis',
 			self::JD_INTENSITY => 'JdIntensity',
@@ -221,7 +233,11 @@ final class Keys extends AbstractEnum
 			self::GROUNDCONTACT_BALANCE => 'GroundcontactBalance',
 			self::TAGS => 'Tags',
 			self::COMPLETE_EQUIPMENT => 'CompleteEquipment',
-			self::MAIN_EQUIPMENT => 'MainEquipment'
+			self::MAIN_EQUIPMENT => 'MainEquipment',
+			self::WIND => 'Wind',
+			self::HUMIDITY => 'Humidity',
+			self::AIR_PRESSURE => 'AirPressure',
+			self::WIND_CHILL => 'WindChill'
 		);
 	}
 }

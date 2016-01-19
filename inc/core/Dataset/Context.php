@@ -122,7 +122,7 @@ class Context
 	}
 
 	/**
-	 * @var \Runalyze\Model\Activity\Entity
+	 * @return \Runalyze\Model\Activity\Entity
 	 */
 	public function activity()
 	{
@@ -130,7 +130,7 @@ class Context
 	}
 
 	/**
-	 * @var \Runalyze\View\Activity\Dataview
+	 * @return \Runalyze\View\Activity\Dataview
 	 */
 	public function dataview()
 	{
@@ -138,7 +138,7 @@ class Context
 	}
 
 	/**
-	 * @var \Runalyze\View\Activity\Linker
+	 * @return \Runalyze\View\Activity\Linker
 	 */
 	public function linker()
 	{

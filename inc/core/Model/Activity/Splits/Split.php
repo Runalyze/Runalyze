@@ -143,7 +143,7 @@ class Split extends StringObject {
 
 	/**
 	 * Pace
-	 * @param enum $unit [optional]
+	 * @param string $unit [optional]
 	 * @return \Runalyze\Activity\Pace
 	 */
 	public function pace($unit = PaceUnit::MIN_PER_KM) {

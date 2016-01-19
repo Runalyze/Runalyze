@@ -22,7 +22,7 @@ class ConfigTabGeneral extends ConfigTab {
 
 	/**
 	 * All categories
-	 * @return ConfigurationCategory[]
+	 * @return \Runalyze\Configuration\Category[]
 	 */
 	private function allCategories() {
 		return array(

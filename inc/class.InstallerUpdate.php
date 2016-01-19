@@ -26,17 +26,44 @@ class InstallerUpdate extends Installer {
 	 */
 	protected $FurtherInstructions = array();
 
+	/** @var bool */
+	protected $CacheWasCleared = false;
+
 	/**
 	 * Constructor
 	 */
 	public function __construct() {
 		$this->definePath();
 		$this->loadConfig();
+		$this->initAutoloader();
 		$this->initLanguage();
 		$this->loadConsts();
+		$this->tryToClearCache();
 
 		$this->initPossibleUpdates();
 		$this->importUpdateFile();
+	}
+
+	/**
+	 * Set up Autloader 
+	 */
+	protected function initAutoloader() {
+		require_once FRONTEND_PATH.'/system/class.Autoloader.php';
+		new Autoloader();
+	}
+
+	/**
+	 * Try to clear cache
+	 */
+	protected function tryToClearCache() {
+		try {
+			new Cache();
+			Cache::clean();
+
+			$this->CacheWasCleared = true;
+		} catch (Exception $e) {
+			$this->CacheWasCleared = false;
+		}
 	}
 
 	/**
@@ -44,10 +71,32 @@ class InstallerUpdate extends Installer {
 	 */
 	protected function initPossibleUpdates() {
 		$this->PossibleUpdates[] = array(
+			'file'	=> 'update-v2.3-to-v2.4.sql',
+			'from'	=> 'v2.3',
+			'to'	=> 'v2.4',
+			'date'	=> '2015/12',
+			'instruction'	=> [
+				sprintf(
+					__('We have changed some paths. Please set write permissions for all directories in %s.'),
+					'<em>data/</em>'
+				),
+				sprintf(
+					__('If you are using local srtm files, please move them from %s to %s.'),
+					'<em>inc/data/gps/srtm</em>', '<em>data/srtm</em>'
+				),
+				sprintf(
+					__('Please add %s (or whatever port your database connection requires) to your %s file.'),
+					'<em>$port = 3306;</em>', '<em>data/config.php</em>'
+				),
+				$this->instructionToRunScript('build/global.routefix.php'),
+				$this->instructionToRunScript('refactor-night.php')
+			]
+		);
+		$this->PossibleUpdates[] = array(
 			'file'	=> 'update-v2.2-to-v2.3.sql',
 			'from'	=> 'v2.2',
 			'to'	=> 'v2.3',
-			'date'	=> '2015/12',
+			'date'	=> '2015/10',
 			'instruction'	=> $this->instructionToRunScript('refactor-geohash.php')
 		);
 		$this->PossibleUpdates[] = array(
@@ -154,14 +203,18 @@ class InstallerUpdate extends Installer {
 	 * Import selected file
 	 */
 	protected function importUpdateFile() {
-		$this->connectToDatabase($this->mysqlConfig[3], $this->mysqlConfig[0], $this->mysqlConfig[1], $this->mysqlConfig[2]);
+		$this->connectToDatabase($this->mysqlConfig[3], $this->mysqlConfig[0], $this->mysqlConfig[4], $this->mysqlConfig[1], $this->mysqlConfig[2]);
 
 		if ($this->triesToUpdate()) {
 			$update = $this->PossibleUpdates[$_POST['importFile']];
 			$this->Errors = $this->importSqlFile('inc/install/'.$update['file']);
 
 			if (isset($update['instruction'])) {
-				$this->FurtherInstructions[] = $update['instruction'];
+				if (is_array($update['instruction'])) {
+					$this->FurtherInstructions = array_merge($this->FurtherInstructions, $update['instruction']);
+				} else {
+					$this->FurtherInstructions[] = $update['instruction'];
+				}
 			}
 		}
 	}

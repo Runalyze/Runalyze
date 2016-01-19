@@ -16,6 +16,9 @@ class ParserXMLrunningAHEADMultiple extends ParserAbstractMultipleXML {
 	 */
 	private static $NewEquipment = array();
 
+	/** @var null|int */
+	protected $NewEquipmentTypeId = null;
+
 	/**
 	 * Parse XML
 	 */
@@ -43,25 +46,70 @@ class ParserXMLrunningAHEADMultiple extends ParserAbstractMultipleXML {
 		if ((string)$Equipment->Name == '')
 			return;
 
-		$ExistingShoe = DB::getInstance()->query('SELECT id FROM `'.PREFIX.'shoe` WHERE name='.DB::getInstance()->escape($Equipment->Name).' AND accountid = '.SessionAccountHandler::getId().' LIMIT 1')->fetch();
+		$ExistingEquipment = DB::getInstance()->query('SELECT id FROM `'.PREFIX.'equipment` WHERE name='.DB::getInstance()->escape($Equipment->Name).' AND accountid = '.SessionAccountHandler::getId().' LIMIT 1')->fetch();
 
-		if (isset($ExistingShoe['id'])) {
-			self::$NewEquipment[(string)$Equipment->attributes()->id] = $ExistingShoe['id'];
+		if (isset($ExistingEquipment['id'])) {
+			self::$NewEquipment[(string)$Equipment->attributes()->id] = $ExistingEquipment['id'];
 		} else {
-			self::$NewEquipment[(string)$Equipment->attributes()->id] = DB::getInstance()->insert('shoe',
+			$purchaseDate = (isset($Equipment->PurchaseInfo) && isset($Equipment->PurchaseInfo['date'])) ? (string)$Equipment->PurchaseInfo['date'] : '';
+
+			self::$NewEquipment[(string)$Equipment->attributes()->id] = DB::getInstance()->insert('equipment',
 				array(
 					'name',
-					'since',
-					'additionalKm',
-					'inuse'
+					'typeid',
+					'notes',
+					'additional_km',
+					'date_start',
+					'date_end'
 				),
 				array(
 					(string)$Equipment->Name,
-					(isset($Equipment->PurchaseInfo) && isset($Equipment->PurchaseInfo['date'])) ? (string)$Equipment->PurchaseInfo['date'] : '',
+					$this->equipmentTypeIdForNewStuff(),
+					'',
 					(isset($Equipment->Distance) && isset($Equipment->Distance['initialDistance'])) ? $this->distanceFromUnit($Equipment->Distance['initialDistance'], $Equipment->Distance['unit']) : 0,
-					(isset($Equipment->Name['retired']) && (string)$Equipment->Name['retired'] == 'true') ? 0 : 1
+					strtotime($purchaseDate) ? date('Y-m-d', strtotime($purchaseDate)) : null,
+					(isset($Equipment->Name['retired']) && (string)$Equipment->Name['retired'] == 'true') ? date('Y-m-d') : null
 			));
 		}
+	}
+
+	/**
+	 * Calculate distance from unit
+	 * @param mixed $Distance
+	 * @param mixed $Unit
+	 * @return double
+	 */
+	protected function distanceFromUnit($Distance, $Unit) {
+		$Distance = (double)$Distance;
+		$Unit     = (string)$Unit;
+
+		switch ($Unit) {
+			case 'mile':
+				return 1.609344*$Distance;
+			case 'm':
+				return $Distance/1000;
+			case 'km':
+			default:
+				return $Distance;
+		}
+	}
+
+	/**
+	 * @return int|null
+	 */
+	protected function equipmentTypeIdForNewStuff() {
+		if (null === $this->NewEquipmentTypeId) {
+			$this->NewEquipmentTypeId = DB::getInstance()->insert('equipment_type',
+				['name', 'accountid'],
+				['RunningAHEAD', SessionAccountHandler::getId()]
+			);
+
+			DB::getInstance()->exec(
+				'INSERT INTO `'.PREFIX.'equipment_sport` (`sportid`, `equipment_typeid`) SELECT `id`, "'.$this->NewEquipmentTypeId.'" FROM `runalyze_sport` WHERE `accountid`='.SessionAccountHandler::getId()
+			);
+		}
+
+		return $this->NewEquipmentTypeId;
 	}
 
 	/**

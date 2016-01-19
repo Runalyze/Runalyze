@@ -39,7 +39,11 @@ if ($result) {
 	$UpdaterActivity->setAccountID(SessionAccountHandler::getId());
 	$UpdaterActivity->update();
 
-	echo __('Elevation data has been corrected.');
+	if (Request::param('strategy') == 'none') {
+		echo __('Corrected elevation data has been removed.');
+	} else {
+		echo __('Elevation data has been corrected.');
+	}
 
 	Ajax::setReloadFlag( Ajax::$RELOAD_DATABROWSER_AND_TRAINING );
 	echo Ajax::getReloadCommand();

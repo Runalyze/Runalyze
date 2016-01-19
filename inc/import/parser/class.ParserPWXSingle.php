@@ -70,9 +70,13 @@ class ParserPWXSingle extends ParserAbstractSingleXML {
 	 * Parse all laps
 	 */
 	protected function parseLaps() {
-		if (!empty($this->XML->segment))
-			foreach ($this->XML->segment->summarydata as $Lap)
-				$this->parseLap($Lap);
+		if (!empty($this->XML->segment)) {
+			foreach ($this->XML->segment as $segment) {
+				foreach ($segment->summarydata as $lap) {
+					$this->parseLap($lap);
+				}
+			}
+		}
 	}
 
 	/**

@@ -5,7 +5,7 @@
  * @author Hannes Christiansen <mail@laufhannes.de>
  * @copyright http://www.runalyze.de/
  */
-if (!file_exists('config.php')) {
+if (!file_exists('data/config.php')) {
 	include 'install.php';
 	exit();
 }
@@ -19,7 +19,7 @@ if (isset($_GET['delete']))
 if (isset($_GET['out']))
 	SessionAccountHandler::logout();
 
-if (SessionAccountHandler::isLoggedIn()) {
+if (!USER_CANT_LOGIN && SessionAccountHandler::isLoggedIn()) {
 	header('Location: index.php');
 	exit;
 }

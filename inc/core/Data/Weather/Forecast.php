@@ -15,7 +15,7 @@ namespace Runalyze\Data\Weather;
 class Forecast {
 	/**
 	 * Strategy
-	 * @var ForecastStrategyInterface
+	 * @var \Runalyze\Data\Weather\ForecastStrategyInterface
 	 */
 	protected $Strategy = null;
 
@@ -27,8 +27,8 @@ class Forecast {
 
 	/**
 	 * Constructor
-	 * @param ForecastStrategy $Strategy
-	 * @param Location $Location
+	 * @param \Runalyze\Data\Weather\ForecastStrategyInterface $Strategy
+	 * @param \Runalyze\Data\Weather\Location $Location
 	 */
 	public function __construct(ForecastStrategyInterface $Strategy, Location $Location) {
 		$this->Strategy    = $Strategy;
@@ -42,6 +42,6 @@ class Forecast {
 	 * @return \Runalyze\Data\Weather
 	 */
 	public function object() {
-		return new \Runalyze\Data\Weather($this->Strategy->temperature(), $this->Strategy->condition());
+		return new \Runalyze\Data\Weather($this->Strategy->temperature(), $this->Strategy->condition(), $this->Strategy->windSpeed(), $this->Strategy->windDegree(), $this->Strategy->humidity(), $this->Strategy->pressure());
 	}
 }
