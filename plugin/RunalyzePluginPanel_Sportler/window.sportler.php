@@ -10,6 +10,7 @@ $Frontend = new Frontend();
 if (Request::param('delete') == 'true') {
 	DB::getInstance()->deleteByID('user', (int)Request::sendId());
 	Cache::delete(UserData::CACHE_KEY);
+	Helper::recalculateHFmaxAndHFrest();
 
 	header('Location: window.sportler.table.php?reload=true');
 	exit;
