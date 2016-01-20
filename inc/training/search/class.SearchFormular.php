@@ -142,7 +142,7 @@ class SearchFormular extends Formular {
 	 * Add field: notes
 	 */
 	private function addFieldNotes() {
-		$Field = new FormularInput('notes', __('Title'));
+		$Field = new FormularInput('notes', __('Notes'));
 		$Field->setLayout( FormularFieldset::$LAYOUT_FIELD_W100_IN_W33 );
 		$Field->setSize( FormularInput::$SIZE_FULL_INLINE );
 
