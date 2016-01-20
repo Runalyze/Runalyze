@@ -170,7 +170,7 @@ class SearchFormular extends Formular {
 		$this->addNumericConditionField('humidity', __('Humidity'), FormularInput::$SIZE_SMALL, (new Humidity())->unit());
 		$this->addNumericConditionField('pressure', __('Pressure'), FormularInput::$SIZE_SMALL, (new Pressure())->unit());
 		$this->addNumericConditionField('wind_speed', __('Wind Speed'), FormularInput::$SIZE_SMALL, (new WindSpeed())->unit());
-		$this->addStringConditionField('comment', __('Comment'), FormularInput::$SIZE_MIDDLE);
+		$this->addStringConditionField('comment', __('Title'), FormularInput::$SIZE_MIDDLE);
 		$this->addNumericConditionField('pulse_avg', __('avg. HR'), FormularInput::$SIZE_SMALL, FormularUnit::$BPM);
 		$this->addNumericConditionField('kcal', __('Calories'), FormularInput::$SIZE_SMALL, FormularUnit::$KCAL);
 		$this->addStringConditionField('partner', __('Partner'), FormularInput::$SIZE_MIDDLE);
