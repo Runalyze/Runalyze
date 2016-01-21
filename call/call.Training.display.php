@@ -23,6 +23,7 @@ switch (Request::param('action')) {
         $Factory = Runalyze\Context::Factory();
         $Deleter = new Activity\Deleter(DB::getInstance(), $Context->activity());
         $Deleter->setAccountID(SessionAccountHandler::getId());
+        $Deleter->setEquipmentIDs($Factory->equipmentForActivity(Request::sendId(), true));
         $Deleter->delete();
 
         echo '<div class="panel-content"><p id="submit-info" class="error">'.__('The activity has been removed').'</p></div>';
