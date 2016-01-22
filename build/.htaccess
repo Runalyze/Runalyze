@@ -5,3 +5,7 @@ allow from 127.0.0.1 localhost ::1
 <FilesMatch "\.js$">
     Allow from all
 </FilesMatch>
+
+<FilesMatch "global\.routefix\.php$">
+    Allow from all
+</FilesMatch>
