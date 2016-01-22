@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-01-17 20:49+0100\n"
-"PO-Revision-Date: 2015-12-22 04:15+0200\n"
-"Last-Translator: Jason Gombert <jason.gombert@gmail.com>\n"
-"Language-Team: French <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/fr/>\n"
+"PO-Revision-Date: 2016-01-22 21:16+0200\n"
+"Last-Translator: Oliver Bayer <olibay@web.de>\n"
+"Language-Team: French "
+"<http://translate.runalyze.de/projects/runalyze/runalyze/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -400,7 +400,7 @@ msgstr "tous"
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:169
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:118
 msgid "none"
-msgstr ""
+msgstr "aucun"
 
 #: inc/training/search/class.SearchFormular.php:145
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:302
@@ -471,20 +471,19 @@ msgstr "Itinéraire"
 #: inc/training/schemes/scheme.Training.php:444
 #: inc/core/Data/Weather/Humidity.php:58 inc/core/Dataset/Keys/Humidity.php:43
 msgid "Humidity"
-msgstr ""
+msgstr "humidité"
 
 #: inc/training/search/class.SearchFormular.php:171
 #: inc/training/schemes/scheme.Training.php:456
 #: inc/core/Data/Weather/Pressure.php:58
 #: inc/core/Dataset/Keys/AirPressure.php:52
 msgid "Pressure"
-msgstr ""
+msgstr "pression"
 
 #: inc/training/search/class.SearchFormular.php:172
 #: inc/core/Data/Weather/WindSpeed.php:63
-#, fuzzy
 msgid "Wind Speed"
-msgstr "Vitesse"
+msgstr "Vitesse du vente"
 
 #: inc/training/search/class.SearchFormular.php:173
 #: inc/core/Dataset/Keys/Comment.php:46
@@ -872,9 +871,8 @@ msgid "R-R intervals"
 msgstr "Intervalles R-R"
 
 #: inc/training/view/section/class.SectionHRVRow.php:31
-#, fuzzy
 msgid "Poincaré plot"
-msgstr "Tracé Pointcaré"
+msgstr "Tracé Poincaré"
 
 #: inc/training/view/section/class.SectionHRVRow.php:44
 msgid "&Oslash; R-R interval"
@@ -1043,7 +1041,7 @@ msgstr "Montrer semaine"
 
 #: inc/training/view/class.TrainingView.php:66
 msgid "Share"
-msgstr ""
+msgstr "partager"
 
 #: inc/training/view/class.TrainingView.php:69
 #: inc/core/Dataset/Keys/SharedLink.php:44
@@ -1058,25 +1056,23 @@ msgstr "Exporter"
 #: inc/training/view/class.TrainingView.php:94
 #, php-format
 msgid "as %s"
-msgstr ""
+msgstr "en %s"
 
 #: inc/training/view/class.TrainingView.php:107
 msgid "Make private"
-msgstr ""
+msgstr "rendre confidentiel"
 
 #: inc/training/view/class.TrainingView.php:110
-#, fuzzy
 msgid "Make public"
-msgstr "Est publique"
+msgstr "Publier"
 
 #: inc/training/view/class.TrainingView.php:115
 msgid "Edit"
 msgstr "Modifier"
 
 #: inc/training/view/class.TrainingView.php:117
-#, fuzzy
 msgid "Do you really want to delete this activity?"
-msgstr "Effacer définitivement cette activité"
+msgstr "Voulez-vous éffacer définitivement cette activité?"
 
 #: inc/training/view/class.TrainingView.php:117
 #: inc/training/class.TrainingFormular.php:410
@@ -1186,16 +1182,15 @@ msgstr ""
 
 #: inc/training/schemes/scheme.Training.php:468
 msgid "Wind speed"
-msgstr ""
+msgstr "Vitesse de vente"
 
 #: inc/training/schemes/scheme.Training.php:481
 msgid "Wind degrees"
 msgstr ""
 
 #: inc/training/schemes/scheme.Training.php:493
-#, fuzzy
 msgid "Night"
-msgstr "Poids"
+msgstr "Nuit"
 
 #: inc/training/schemes/scheme.Training.php:526
 msgid "Title"
@@ -1263,9 +1258,8 @@ msgid "Save and continue"
 msgstr "Sauver et continuer"
 
 #: inc/training/class.TrainingFormular.php:94
-#, fuzzy
 msgid "It seems that you already have imported this activity"
-msgstr "Effacer définitivement cette activité"
+msgstr "Il semble que vous avez déjà importé cette activité"
 
 #: inc/training/class.TrainingFormular.php:148
 msgid "The activity has been successfully created."
@@ -1399,7 +1393,7 @@ msgstr "Toute course supérieur à cette distance sera classée."
 
 #: inc/core/Configuration/Category/BasicEndurance.php:108
 msgid "Days for longjogs"
-msgstr ""
+msgstr "Jours pour course d'endurance"
 
 #: inc/core/Configuration/Category/BasicEndurance.php:109
 msgid "Number of days to look at for longjog goal."
@@ -1699,9 +1693,8 @@ msgid "Sort: activity types"
 msgstr "Tri : types d'activités"
 
 #: inc/core/Configuration/Category/ActivityForm.php:278
-#, fuzzy
 msgid "Sort: equipment"
-msgstr "Choisir équipement"
+msgstr "Trier: équipement"
 
 #: inc/core/Configuration/Category/DataBrowser.php:86
 #: inc/system/config/class.ConfigTabTypes.php:51
@@ -1890,9 +1883,8 @@ msgid "You can now use the %s to recalculate the concerning values."
 msgstr ""
 
 #: inc/core/Configuration/Messages.php:34
-#, fuzzy
 msgid "sports configuration"
-msgstr "configuration"
+msgstr "configuration du sport"
 
 #: inc/core/Configuration/Messages.php:37
 #, php-format
@@ -1984,9 +1976,8 @@ msgid "Twitter"
 msgstr ""
 
 #: inc/core/Activity/GroundcontactBalance.php:48
-#, fuzzy
 msgid "Groundcontact balance"
-msgstr "Répartition des contacts au sol"
+msgstr "équilibre du contact au sol"
 
 #: inc/core/View/Window/Laps/Table.php:138
 msgid "Lap"
@@ -2287,9 +2278,8 @@ msgid "kilograms"
 msgstr ""
 
 #: inc/core/Parameter/Application/WeightUnit.php:41
-#, fuzzy
 msgid "pounds"
-msgstr "trouvé"
+msgstr "livres sterling"
 
 #: inc/core/Parameter/Application/WeightUnit.php:42
 msgid "stones"
@@ -2480,9 +2470,8 @@ msgstr ""
 
 #: inc/core/Data/Weather/CardinalDirection.php:72
 #: inc/core/Data/Weather/CardinalDirection.php:76
-#, fuzzy
 msgid "N"
-msgstr "Non"
+msgstr "N"
 
 #: inc/core/Data/Weather/CardinalDirection.php:77
 msgid "NE"
@@ -2497,9 +2486,8 @@ msgid "SE"
 msgstr ""
 
 #: inc/core/Data/Weather/CardinalDirection.php:80
-#, fuzzy
 msgid "S"
-msgstr "sauevgarder"
+msgstr "sauvegarder"
 
 #: inc/core/Data/Weather/CardinalDirection.php:81
 msgid "SW"
@@ -2669,9 +2657,8 @@ msgid ""
 msgstr ""
 
 #: inc/core/Dataset/Keys/HeartrateAverage.php:44
-#, fuzzy
 msgid "avg."
-msgstr "RC. moyen"
+msgstr "moy."
 
 #: inc/core/Dataset/Keys/Sport.php:53
 msgid "Sport type"
@@ -3601,18 +3588,16 @@ msgid "Forum"
 msgstr ""
 
 #: inc/tpl/tpl.help.php:52
-#, fuzzy
 msgid "Documentation"
-msgstr "durée"
+msgstr "documentation"
 
 #: inc/tpl/tpl.help.php:60
 msgid "In a case of urgency you can contact us via email:"
 msgstr ""
 
 #: inc/tpl/tpl.help.php:65
-#, fuzzy
 msgid "Browser Support"
-msgstr "Parcourir l'ordinateur"
+msgstr "compatible avec les navigateurs"
 
 #: inc/tpl/tpl.help.php:68
 msgid ""
@@ -3782,9 +3767,8 @@ msgid "By type"
 msgstr ""
 
 #: inc/draw/class.PlotSumData.php:219
-#, fuzzy
 msgid "Distance/Duration"
-msgstr "durée"
+msgstr "Distance/durée"
 
 #: inc/draw/class.PlotSumData.php:236
 msgid "All sports"
@@ -3995,9 +3979,8 @@ msgid "Something went wrong. Please contact the administrator."
 msgstr ""
 
 #: inc/system/class.AccountHandler.php:261
-#, fuzzy
 msgid "Reset your RUNALYZE password"
-msgstr "Définir nouveau mot de passe"
+msgstr "Réinitialiser le mot de passe"
 
 #: inc/system/class.AccountHandler.php:262
 #, php-format
@@ -4065,9 +4048,8 @@ msgid ""
 msgstr ""
 
 #: inc/system/class.AccountHandler.php:482
-#, fuzzy
 msgid "Deletion request of your RUNALYZE account"
-msgstr "Supprimer votre compte"
+msgstr "Demande de suppression de votre compte RUNALYZE"
 
 #: inc/system/class.AccountHandler.php:483
 msgid "Do you really want to delete your account"
@@ -4325,14 +4307,12 @@ msgid "Your account"
 msgstr ""
 
 #: inc/system/config/class.ConfigTabAccount.php:57
-#, fuzzy
 msgid "Email me"
-msgstr "email"
+msgstr "Contactez-moi"
 
 #: inc/system/config/class.ConfigTabAccount.php:61
-#, fuzzy
 msgid "Notifications"
-msgstr "configuration"
+msgstr "Avis"
 
 #: inc/system/config/class.ConfigTabAccount.php:62
 msgid ""
@@ -4341,19 +4321,16 @@ msgid ""
 msgstr ""
 
 #: inc/system/config/class.ConfigTabAccount.php:65
-#, fuzzy
 msgid "Change your password"
-msgstr "Définir nouveau mot de passe"
+msgstr "Changement du mot de passe"
 
 #: inc/system/config/class.ConfigTabAccount.php:76
-#, fuzzy
 msgid "Old password"
-msgstr "Définir nouveau mot de passe"
+msgstr "Ancien mot de passe"
 
 #: inc/system/config/class.ConfigTabAccount.php:78
-#, fuzzy
 msgid "Repeat new password"
-msgstr "Définir nouveau mot de passe"
+msgstr "Entrez une seconde fois le nouveau mot de passe"
 
 #: inc/system/config/class.ConfigTabAccount.php:80
 msgid "Backup your data"
@@ -4496,9 +4473,8 @@ msgid ""
 msgstr ""
 
 #: inc/system/config/class.ConfigTabEquipment.php:83
-#, fuzzy
 msgid "max. Time"
-msgstr "RC. max"
+msgstr "Durée max."
 
 #: inc/system/config/class.ConfigTabEquipment.php:85
 #: inc/system/config/class.ConfigTabEquipment.php:143
@@ -4938,9 +4914,8 @@ msgid "SMTP: username"
 msgstr ""
 
 #: inc/class.AdminView.php:170
-#, fuzzy
 msgid "SMTP: password"
-msgstr "Définir nouveau mot de passe"
+msgstr "SMTP: mot de passe"
 
 #: inc/class.AdminView.php:171
 msgid "OpenWeatherMap API-Key"
@@ -5191,9 +5166,8 @@ msgid "You are not logged in anymore."
 msgstr "Vous n'êtes plus connecté(e)."
 
 #: call/call.Training.elevationCorrection.php:43
-#, fuzzy
 msgid "Corrected elevation data has been removed."
-msgstr "Les données d'altitude ont été corrigées."
+msgstr "Les données d'altitude corrigées ont été supprimées."
 
 #: call/call.Training.elevationCorrection.php:58
 msgid "Elevation data could not be retrieved."
@@ -5320,9 +5294,8 @@ msgstr ""
 
 #: plugin/RunalyzePluginStat_Wetter/MinMaxTableForEquipment.php:128
 #: plugin/RunalyzePluginStat_Wetter/MonthwiseTable.php:147
-#, fuzzy
 msgid "No data found."
-msgstr "Pas d'appareils trouvés"
+msgstr "Aucune donnée trouvée"
 
 #: plugin/RunalyzePluginStat_Wetter/Plot.Year.php:46
 #: plugin/RunalyzePluginStat_Trainingszeiten/Plot.Daytime.php:75
@@ -5387,9 +5360,8 @@ msgid "Most windy activities"
 msgstr "%s activités trouvées"
 
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:168
-#, fuzzy
 msgid "Highest humidity activities"
-msgstr "Publier activités"
+msgstr "Activités réalisées au moment d'une humidité élevée"
 
 #: plugin/RunalyzePluginStat_Trainingszeiten/Plot.Daytime.php:8
 msgid "Activity [in h] by day time"
@@ -5458,9 +5430,8 @@ msgstr ""
 
 #: plugin/RunalyzePluginStat_Tag/class.RunalyzePluginStat_Tag.php:125
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:115
-#, fuzzy
 msgid "No activities found."
-msgstr "Pas d'appareils trouvés"
+msgstr "Pas d'activités trouvées."
 
 #: plugin/RunalyzePluginStat_Hoehenmeter/class.RunalyzePluginStat_Hoehenmeter.php:36
 msgid "Your steepest activities and an overview of your cumulated elevation."
@@ -5886,9 +5857,8 @@ msgid "Personal best"
 msgstr ""
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:288
-#, fuzzy
 msgid "Your input is invalid"
-msgstr "Votre entrée n'est pas autorisée."
+msgstr "Votre entrée n'est pas valide"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:300
 #, php-format
@@ -6132,9 +6102,8 @@ msgid "Relation: equipment to activities"
 msgstr ""
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:147
-#, fuzzy
 msgid "Relation: tag to activities"
-msgstr "%s activités trouvées"
+msgstr "Balisez vos activitez"
 
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:32
 msgid "Monthly Stats"
@@ -6161,15 +6130,13 @@ msgstr ""
 
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:66
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:78
-#, fuzzy
 msgid "by elevation"
-msgstr "dénivelé"
+msgstr "selon altitude"
 
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:67
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:79
-#, fuzzy
 msgid "by calories"
-msgstr "Calories"
+msgstr "selon Calories"
 
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:68
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:80
@@ -6230,9 +6197,8 @@ msgid "Route network"
 msgstr ""
 
 #: plugin/RunalyzePluginStat_Strecken/window.routenet.php:86
-#, fuzzy
 msgid "There are no routes matching the criterias."
-msgstr "Pas d'utilisateurs enregistrés"
+msgstr "Il n'y a pas d'itinéraires correspondant à vos critères."
 
 #: plugin/RunalyzePluginStat_Strecken/window.routenet.php:99
 #, php-format
@@ -6278,9 +6244,8 @@ msgid "Body values"
 msgstr ""
 
 #: plugin/RunalyzePluginPanel_Sportler/window.sportler.table.php:36
-#, fuzzy
 msgid "Sleep duration"
-msgstr "durée"
+msgstr "durée de sommeil"
 
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:27
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:46
@@ -6487,11 +6452,13 @@ msgid "There was a problem while recalculating your equipment statistics"
 msgstr ""
 
 #: plugin/RunalyzePluginTool_DatenbankCleanup/JobGeneral.php:105
-#, fuzzy, php-format
+#, php-format
 msgid ""
 "Statistics have been recalculated for all <strong>%s</strong> pieces of "
 "equipment."
-msgstr "Les données d'altitude ont été corrigées."
+msgstr ""
+"Les données ont été recalculées pour tous <strong>%s</strong> éléments "
+"d'équipement."
 
 #: plugin/RunalyzePluginTool_DatenbankCleanup/JobGeneral.php:126
 msgid "Vdot corrector"
@@ -6506,14 +6473,13 @@ msgid "Cleanup is running ..."
 msgstr ""
 
 #: plugin/RunalyzePluginTool_DatenbankCleanup/tpl.Job.php:47
-#, fuzzy
 msgid "back to form"
-msgstr "retour à la liste"
+msgstr "retour au formulaire"
 
 #: plugin/RunalyzePluginTool_DatenbankCleanup/JobLoop.php:88
-#, fuzzy, php-format
+#, php-format
 msgid "Elevations have been recalculated for %d routes."
-msgstr "Les données d'altitude ont été corrigées."
+msgstr "Les données d'altitude ont été re-calculées pour %d itinéraires."
 
 #: plugin/RunalyzePluginTool_DatenbankCleanup/JobLoop.php:128
 #, php-format
@@ -7120,9 +7086,8 @@ msgid "Banister"
 msgstr ""
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/window.plot.php:47
-#, fuzzy
 msgid "Performance model"
-msgstr "Travaux d'entretien"
+msgstr "modèle de performance"
 
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:41
 msgid "Summary of your activities for each sport."
@@ -7133,9 +7098,8 @@ msgid "Old table view"
 msgstr ""
 
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:91
-#, fuzzy
 msgid "Choose time range"
-msgstr "Choisir vêtements"
+msgstr "Choisir un intervalle de temps"
 
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:144
 msgid "No data available since"
