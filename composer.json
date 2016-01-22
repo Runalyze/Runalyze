@@ -8,6 +8,6 @@
         "swiftmailer/swiftmailer": "@stable",
         "nojacko/email-validator": "~1.0",
         "league/geotools": "@stable",
-        "phpfastcache/phpfastcache": "@stable"
+        "phpfastcache/phpfastcache": "3.0.23"
     }
 }
