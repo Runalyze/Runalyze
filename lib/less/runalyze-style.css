@@ -1104,7 +1104,7 @@ tr.ERROR td {
   display: block;
 }
 .panel-menu ul .submenu {
-  z-index: 100;
+  z-index: 105;
   display: none;
   position: absolute;
   min-width: 100%;
@@ -1215,7 +1215,7 @@ statistics-containerr {
   border-bottom-color: #000000;
 }
 #statistics-nav ul.submenu {
-  z-index: 100;
+  z-index: 105;
   display: none;
   position: absolute;
   margin: 0 0 0 -1px;
