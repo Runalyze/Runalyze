@@ -176,11 +176,16 @@ class InstallerUpdate extends Installer {
 	/**
 	 * Get message to run specific script
 	 * @param string $script relative to /runalyze/
+	 * @param bool $needsDatabaseConnection
 	 * @return string
 	 */
-	protected function instructionToRunScript($script) {
+	protected function instructionToRunScript($script, $needsDatabaseConnection = true) {
 		return sprintf(
-			__('You are required to run the script %s. Please set your database connection within that file first and then run it via cli or in your browser.'),
+			__('You are required to run the script %s.').(
+				$needsDatabaseConnection ?
+					' '.__('Please set your database connection within that file first and then run it via cli or in your browser.')
+					: ''
+			),
 			'<a href="'.$script.'">'.$script.'</a>'
 		);
 	}
