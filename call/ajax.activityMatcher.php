@@ -20,8 +20,12 @@ foreach ($Array as $String) {
 $IgnoreIDs = \Runalyze\Configuration::ActivityForm()->ignoredActivityIDs();
 $DuplicateFinder = new DuplicateFinder(DB::getInstance(), SessionAccountHandler::getId());
 
+$IgnoreIDs = array_map(function($v){
+	return (int)floor(strtotime($v)/60)*60;
+}, $IgnoreIDs);
+
 foreach ($IDs as $ID) {
-	$dup = $DuplicateFinder->checkForDuplicate(strtotime($ID));
+	$dup = $DuplicateFinder->checkForDuplicate((int)floor(strtotime($ID)/60)*60);
 	$found = $dup || in_array($ID, $IgnoreIDs);
 	$Matches[$ID] = array('match' => $found);
 }
