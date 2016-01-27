@@ -14,13 +14,6 @@ namespace Runalyze\Data\Elevation\Correction;
  */
 class Geonames extends FromExternalAPI {
 	/**
-	 * Username
-	 * @var string
-	 * @TODO Use this from admin configuration
-	 */
-	protected $USERNAME = 'runalyze';
-
-	/**
 	 * Can the strategy handle the data?
 	 * 
 	 * To test this, we try to fetch a gtopo30-value.
@@ -31,7 +24,7 @@ class Geonames extends FromExternalAPI {
 	 * @see http://www.geonames.org/export/webservice-exception.html
 	 */
 	public function canHandleData() {
-		$url = 'http://api.geonames.org/gtopo30JSON?lat=47.01&lng=10.2&username='.$this->USERNAME;
+		$url = 'http://api.geonames.org/gtopo30JSON?lat=47.01&lng=10.2&username='.GEONAMES_USERNAME;
 		$response = json_decode(\Filesystem::getExternUrlContent($url), true);
 
 		if (is_null($response))
@@ -74,7 +67,7 @@ class Geonames extends FromExternalAPI {
 		$latitudeString = implode(',', $latitudes);
 		$longitudeString = implode(',', $longitudes);
 
-		$url = 'http://api.geonames.org/srtm3JSON?lats='.$latitudeString.'&lngs='.$longitudeString.'&username='.$this->USERNAME;
+		$url = 'http://api.geonames.org/srtm3JSON?lats='.$latitudeString.'&lngs='.$longitudeString.'&username='.GEONAMES_USERNAME;
 		$response = json_decode(\Filesystem::getExternUrlContent($url), true);
 
 		if (is_null($response) || !isset($response['geonames']) || !is_array($response['geonames'])) {

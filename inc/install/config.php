@@ -61,6 +61,12 @@ define('PERL_PATH', '/usr/bin/perl');
 define('TTBIN_PATH', FRONTEND_PATH.'../call/perl/ttbincnv');
 
 /**
+ * Geonames.org API username
+ * @var string GEONAMES_USERNAME for geonames API username
+ */
+define('GEONAMES_USERNAME', '');
+
+/**
  * Garmin API key is needed for using Garmin Communicator
  * @var bool GARMIN_API_KEY Garmin API key
  * @see http://developer.garmin.com/web-device/garmin-communicator-plugin/get-your-site-key/
