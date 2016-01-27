@@ -314,7 +314,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_training` (
   `vdot_by_time` decimal(5,2) NOT NULL DEFAULT '0.00',
   `vdot_with_elevation` decimal(5,2) NOT NULL DEFAULT '0.00',
   `use_vdot` tinyint(1) NOT NULL DEFAULT '1',
-  `fit_vdot_estimate` tinyint(2) unsigned NOT NULL DEFAULT '0',
+  `fit_vdot_estimate` decimal(4,2) unsigned NOT NULL DEFAULT '0.0',
   `fit_recovery_time` smallint(5) unsigned NOT NULL DEFAULT '0',
   `fit_hrv_analysis` smallint(5) unsigned NOT NULL DEFAULT '0',
   `jd_intensity` smallint(4) NOT NULL DEFAULT '0',

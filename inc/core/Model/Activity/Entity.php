@@ -640,7 +640,7 @@ class Entity extends Model\EntityWithID {
 
 	/**
 	 * VO2max estimate from fit file
-	 * @return int
+	 * @return float
 	 */
 	public function fitVO2maxEstimate() {
 		return $this->Data[self::FIT_VO2MAX_ESTIMATE];

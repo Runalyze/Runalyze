@@ -194,6 +194,12 @@ class ParserFITSingle extends ParserAbstractSingle {
 				case 'activity':
 					break;
 			}
+		} elseif (isset($this->Header['NUMBER'])) {
+			switch ($this->Header['NUMBER']) {
+				case 79:
+					$this->readUserData();
+					break;
+			}
 		}
 	}
 
@@ -262,6 +268,15 @@ class ParserFITSingle extends ParserAbstractSingle {
 			if (isset($this->Values['sport'])) {
 				$this->guessSportID($this->Values['sport'][1]);
 			}
+		}
+	}
+
+	/**
+	 * Read user data
+	 */
+	protected function readUserData() {
+		if (isset($this->Values['xxx0'])) {
+			$this->TrainingObject->setFitVdotEstimate(round((int)$this->Values['xxx0'][1] * 3.5 / 1000, 2));
 		}
 	}
 

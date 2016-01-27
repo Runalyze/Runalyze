@@ -298,9 +298,9 @@ $FIELDS = array(
 	),
 	'fit_vdot_estimate'	=> array(
 					'database'	=> array(
-						'type'		=> 'tinyint',
-						'precision'	=> '2',
-						'default'	=> '0'
+						'type'		=> 'decimal',
+						'precision'	=> '4,2',
+						'default'	=> '0.00'
 					),
 					'formular'	=> array(
 						'hidden'	=> true
