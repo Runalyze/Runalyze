@@ -487,7 +487,17 @@ class TrainingObject extends DataObject {
 	 * @return int timestamp of training
 	 */
 	public function getTimestamp() { return $this->get('time'); }
-
+	
+	/**
+	 * Set timezone
+	 * @param int $timezone timezone of training
+	 */
+	public function setTimezone($timezone) { $this->set('timezone', $timezone); }
+	/**
+	 * Get timezone
+	 * @return int timezone of training
+	 */
+	public function getTimezone() { return $this->get('timezone'); }
 
 	/**
 	 * Get created-timestamp

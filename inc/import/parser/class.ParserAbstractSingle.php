@@ -5,6 +5,7 @@
  */
 
 use Runalyze\Configuration;
+use League\Geotools\Geohash\Geohash;
 
 /**
  * Abstract parser for one single training
@@ -132,6 +133,27 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 		}
 
 		$this->TrainingObject->setSportid( self::getIDforDatabaseString('sport', $String) );
+	}
+	
+	/**
+	 * Try to set timezone from time
+	 * @param string $startGeohash
+	 * @param string $timestring
+	 */
+	protected function guessTimezoneFromTimestring($timestring) {
+	    $DateTime = new DateTime($timestring);
+	    $timezone = $DateTime->getTimezone()->getName();
+	
+	}
+	
+	/**
+	 * Try to set timezone from geohash
+	 * @param string $startGeohash
+	 * @param string $timestring
+	 */
+	protected function guessTimezoneFromGeohash(League\Geotools\Geohash\GeohashInterface $geohash) {
+	    $coordinates = (new \League\Geotools\Geotools())->geohash()->decode($geohash);
+	    
 	}
 
 	/**
@@ -317,7 +339,7 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 				$this->gps['km'][] = $lastDistance + $step;
 				$lastDistance += $step;
 			}
-
+			
 			$this->TrainingObject->setArrayDistance( $this->gps['km'] );
 			$this->TrainingObject->setDistance( end($this->gps['km']) );
 		}

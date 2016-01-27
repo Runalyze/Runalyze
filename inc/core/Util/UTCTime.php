@@ -8,7 +8,7 @@ namespace Runalyze\Util;
 
 
 class UTCTime extends \DateTime
-{
+{ 
   public function __construct($time = NULL)
   {
     if (is_numeric($time)) {
