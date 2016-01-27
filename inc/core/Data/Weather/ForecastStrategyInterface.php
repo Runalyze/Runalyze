@@ -14,6 +14,12 @@ namespace Runalyze\Data\Weather;
  */
 interface ForecastStrategyInterface {
 	/**
+	 * @see \Runalyze\Data\Weather\Sources
+	 * @return int
+	 */
+	public function sourceId();
+
+	/**
 	 * Load conditions
 	 * @param \Runalyze\Data\Weather\Location $Location
 	 */

@@ -89,6 +89,7 @@ class TrainingObject extends DataObject {
 		$this->set('wind_deg', $Weather->windDegree()->value());
 		$this->set('humidity', $Weather->humidity()->value());
 		$this->set('pressure', $Weather->pressure()->value());
+		$this->set('weather_source', $Weather->source());
 	}
 
 	/**
@@ -388,6 +389,7 @@ class TrainingObject extends DataObject {
 			$windDegree = ($this->hasProperty('wind_deg')) ? $this->get('wind_deg') : null;
 			$humidity = ($this->hasProperty('humidity')) ? $this->get('humidity') : null;
 			$pressure = ($this->hasProperty('pressure')) ? $this->get('pressure') : null;
+			$sourceId = ($this->hasProperty('weather_source')) ? $this->get('weather_source') : null;
 
 			$this->Weather = new \Runalyze\Data\Weather(
 				new \Runalyze\Data\Weather\Temperature($temp),
@@ -397,6 +399,7 @@ class TrainingObject extends DataObject {
 				new \Runalyze\Data\Weather\Humidity($humidity),
 				new \Runalyze\Data\Weather\Pressure($pressure)
 			);
+			$this->Weather->setSource($sourceId);
 		}
 
 		return $this->Weather;

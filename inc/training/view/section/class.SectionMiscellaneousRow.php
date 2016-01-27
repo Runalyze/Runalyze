@@ -289,6 +289,7 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 		$this->NotesContent = '<div class="panel-content">';
 
 		$this->addNotes();
+		$this->addWeatherSourceInfo();
 		$this->addCreationAndModificationTime();
 
 		$this->NotesContent .= '</div>';
@@ -301,6 +302,17 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 		if ($this->Context->activity()->notes() != '') {
 			$Notes = '<strong>'.__('Notes').':</strong><br>'.$this->Context->dataview()->notes();
 			$this->NotesContent .= HTML::fileBlock($Notes);
+		}
+	}
+
+	/**
+	 * Add weather sources
+	 */
+	protected function addWeatherSourceInfo() {
+		if ($this->Context->activity()->weather()->sourceIsKnown()) {
+			$this->NotesContent .= HTML::info(
+				sprintf(__('Source of weather data: %s'), $this->Context->activity()->weather()->sourceAsString())
+			);
 		}
 	}
 

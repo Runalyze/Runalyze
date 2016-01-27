@@ -7,7 +7,6 @@
 namespace Runalyze\Data\Weather;
 
 use Cache;
-use Runalyze\Parameter\Application\DistanceUnitSystem;
 
 /**
  * Forecast-strategy for using openweathermap.org
@@ -43,6 +42,14 @@ class Openweathermap implements ForecastStrategyInterface {
 	 * @var array
 	 */
 	protected $Result = array();
+
+	/**
+	 * @return int
+	 */
+	public function sourceId()
+	{
+		return Sources::OPENWEATHERMAP;
+	}
 
 	/**
 	 * Load conditions for location
