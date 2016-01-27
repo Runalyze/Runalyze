@@ -6,6 +6,7 @@
 
 namespace Runalyze\Calculation\Route;
 
+use Runalyze\Data\Elevation\Correction\InvalidResponseException;
 use Runalyze\Data\Elevation\Correction\NoValidStrategyException;
 use Runalyze\Model\Route;
 use Runalyze\Data\Elevation\Correction\Corrector;
@@ -71,9 +72,13 @@ class Calculator {
 
 		$coordinates = $this->Route->latitudesAndLongitudesFromGeohash();
 
-		$Corrector = new Corrector();
-		$Corrector->correctElevation($coordinates['lat'], $coordinates['lng'], $strategyName);
-		$result = $Corrector->getCorrectedElevation();
+		try {
+			$Corrector = new Corrector();
+			$Corrector->correctElevation($coordinates['lat'], $coordinates['lng'], $strategyName);
+			$result = $Corrector->getCorrectedElevation();
+		} catch (InvalidResponseException $e) {
+			return false;
+		}
 
 		if (!empty($result)) {
 			$this->Route->set(Route\Entity::ELEVATIONS_CORRECTED, $result);

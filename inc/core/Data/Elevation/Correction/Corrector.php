@@ -36,6 +36,8 @@ class Corrector {
 	 * @param array $latitude
 	 * @param array $longitude
 	 * @param string $strategyName
+	 * @throws \NoValidStrategyException
+	 * @throws \Runalyze\Data\Elevation\Correction\InvalidResponseException
 	 */
 	public function correctElevation(array $latitude, array $longitude, $strategyName = '') {
 		$this->LatitudePoints = $latitude;
@@ -90,6 +92,7 @@ class Corrector {
 
 	/**
 	 * Apply strategy
+	 * @throws \NoValidStrategyException
 	 * @throws \RuntimeException
 	 */
 	protected function applyStrategy() {

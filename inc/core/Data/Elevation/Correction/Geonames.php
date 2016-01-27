@@ -68,7 +68,7 @@ class Geonames extends FromExternalAPI {
 	 * @param array $latitudes
 	 * @param array $longitudes
 	 * @return array
-	 * @throws \RuntimeException
+	 * @throws \InvalidResponseException
 	 */
 	protected function fetchElevationFor(array $latitudes, array $longitudes) {
 		$latitudeString = implode(',', $latitudes);
@@ -78,7 +78,7 @@ class Geonames extends FromExternalAPI {
 		$response = json_decode(\Filesystem::getExternUrlContent($url), true);
 
 		if (is_null($response) || !isset($response['geonames']) || !is_array($response['geonames'])) {
-			throw new \RuntimeException('Geonames returned malformed code.');
+			throw new InvalidResponseException('Geonames returned malformed code.');
 		}
 
 		$elevationData = array();
