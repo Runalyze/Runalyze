@@ -100,15 +100,13 @@ class Kml extends AbstractFileExporter
     {
         $this->prepareLoop();
 
-        while ($this->RouteLoop->nextStep()) {
-            $this->TrackdataLoop->nextStep();
-
+        do {
             if ($this->thereWasAPause()) {
                 $this->setPauseToXml();
             }
 
             $this->addCoordinateToCurrentPath($this->RouteLoop->coordinate());
-        }
+        } while ($this->RouteLoop->nextStep() && $this->TrackdataLoop->nextStep());
 
         $this->addCurrentPathToXml();
     }

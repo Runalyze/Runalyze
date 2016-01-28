@@ -156,11 +156,9 @@ class HTMLMetaForFacebook {
 		$this->TrackdataLoop = new Model\Trackdata\Loop($this->Context->trackdata());
 		$this->TrackdataLoop->setStepSize(self::STEP_SIZE);
 
-		while ($this->RouteLoop->nextStep()) {
-			$this->TrackdataLoop->nextStep();
-
+		do {
 			$this->displayActivityDataPoint();
-		}
+		} while ($this->RouteLoop->nextStep() && $this->TrackdataLoop->nextStep());
 	}
 
 	/**

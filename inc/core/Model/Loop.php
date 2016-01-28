@@ -102,7 +102,7 @@ abstract class Loop
 		$this->LastIndex = $this->Index;
 		$this->Index += $this->StepSize;
 
-		if ($this->Index >= $this->TotalSize - 1) {
+		if ($this->Index > $this->TotalSize - 1) {
 			$this->Index = $this->TotalSize - 1;
 			return false;
 		}

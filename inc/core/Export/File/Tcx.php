@@ -178,11 +178,7 @@ class Tcx extends AbstractFileExporter
             $Route = new Route\Loop($this->Context->route());
         }
 
-        while ($Trackdata->nextStep()) {
-            if ($this->HasRoute) {
-                $Route->nextStep();
-            }
-
+        do {
             if ($this->Activity->Lap[(int)floor($Trackdata->distance())]) {
                 $Trackpoint = $this->Activity->Lap[(int)floor($Trackdata->distance())]->Track->addChild('Trackpoint');
                 $Trackpoint->addChild('Time', $this->timeToString($Starttime + $Trackdata->time()));
@@ -193,7 +189,11 @@ class Tcx extends AbstractFileExporter
 
                 $this->addTrackdataDetailsTo($Trackpoint, $Trackdata);
             }
-        }
+
+            if ($this->HasRoute) {
+                $Route->nextStep();
+            }
+        } while ($Trackdata->nextStep());
     }
 
     /**
