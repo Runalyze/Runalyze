@@ -35,11 +35,19 @@ class Exponential extends AbstractMovingAverage
 
     /**
      * Calculate if index data is there
-     * @throws \Exception
      */
     public function calculateWithIndexData()
     {
-        throw new \Exception('Exponential moving average is not possible with index data.');
+        $tau = - 1 / log(1 - $this->Alpha);
+        $avg = $this->Data[0];
+        $this->MovingAverage[] = $avg;
+
+        for ($i = 1; $i < $this->Length; ++$i) {
+            $deltaT = $this->IndexData[$i] - $this->IndexData[$i-1];
+            $alpha = 1 - exp(-$deltaT / $tau);
+            $avg = $alpha * $this->Data[$i] + (1 - $alpha) * $avg;
+            $this->MovingAverage[] = $avg;
+        }
     }
 
     /**
