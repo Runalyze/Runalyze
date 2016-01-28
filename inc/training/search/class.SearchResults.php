@@ -171,7 +171,7 @@ class SearchResults {
 				`t`.`id`,
 				`t`.`time`
 				'.($this->multiEditorRequested() ? '' :
-					', '.str_replace('`t`.', '', $this->DatasetQuery->queryToSelectAllKeys()).' '.
+					', '.$this->DatasetQuery->queryToSelectAllKeys().' '.
 					$this->DatasetQuery->queryToSelectJoinedFields()
 				).'
 			FROM `'.PREFIX.'training` AS `t`
