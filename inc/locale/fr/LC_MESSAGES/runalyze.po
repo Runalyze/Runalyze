@@ -4,7 +4,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-01-17 20:49+0100\n"
 "PO-Revision-Date: 2016-01-29 23:03+0200\n"
-"Last-Translator: Jason Gombert <jason.gombert@gmail.com>\n"
+"Last-Translator: Oliver Bayer <olibay@web.de>\n"
 "Language-Team: French "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/fr/>\n"
 "Language: fr\n"
@@ -2144,9 +2144,8 @@ msgid "No GPS-data available. Can\\'t compute laps."
 msgstr "Pas de données GPS disponibles. Impossible de calculer les tours."
 
 #: inc/core/View/Activity/Plot/HRVPoincare.php:55
-#, fuzzy
 msgid "Poincarè plot"
-msgstr "Tracé Pointcaré"
+msgstr "Tracé Poincaré"
 
 #: inc/core/View/Activity/Plot/ElevationAlgorithms.php:82
 msgid "Original data"
@@ -3435,9 +3434,8 @@ msgid "Fr"
 msgstr ""
 
 #: inc/tpl/tpl.DataBrowser.php:22
-#, fuzzy
 msgid "Sa"
-msgstr "sauevgarder"
+msgstr "Samedi"
 
 #: inc/tpl/tpl.DataBrowser.php:35
 msgid "You can select any time range by selecting two dates."
@@ -5359,9 +5357,8 @@ msgid "Coldest activities"
 msgstr ""
 
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:166
-#, fuzzy
 msgid "Most windy activities"
-msgstr "%s activités trouvées"
+msgstr "activités les plus venteuses"
 
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:168
 msgid "Highest humidity activities"
