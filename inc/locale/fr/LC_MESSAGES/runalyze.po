@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-01-17 20:49+0100\n"
-"PO-Revision-Date: 2016-01-29 14:59+0200\n"
-"Last-Translator: Jason Gombert <jason.gombert@gmail.com>\n"
+"PO-Revision-Date: 2016-01-29 16:06+0200\n"
+"Last-Translator: Alex Thierry <alex.thierry@openmailbox.org>\n"
 "Language-Team: French "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/fr/>\n"
 "Language: fr\n"
@@ -1749,11 +1749,11 @@ msgstr ""
 
 #: inc/core/Configuration/Category/Vdot.php:169
 msgid "Time constant length for VDOT"
-msgstr ""
+msgstr "Longueur constante du temps pour VDOT"
 
 #: inc/core/Configuration/Category/Vdot.php:170
 msgid "Time constant length for VDOT rolling average"
-msgstr ""
+msgstr "Longueur constante du temps pour moyenne mobile VDOT"
 
 #: inc/core/Configuration/Category/Vdot.php:174
 msgid "Use correction factor"
@@ -1828,27 +1828,27 @@ msgstr ""
 #: inc/core/Configuration/Category/Vdot.php:220
 #: plugin/RunalyzePluginTool_DatenbankCleanup/JobGeneral.php:116
 msgid "VDOT shape"
-msgstr ""
+msgstr "Forme VDOT"
 
 #: inc/core/Configuration/Category/Trimp.php:99
 msgid "Days for ATL"
-msgstr ""
+msgstr "Jours avant ATL"
 
 #: inc/core/Configuration/Category/Trimp.php:100
 msgid "Number of days for ATL time constant"
-msgstr ""
+msgstr "Nombre de jours pour temps constant ATL"
 
 #: inc/core/Configuration/Category/Trimp.php:104
 msgid "Days for CTL"
-msgstr ""
+msgstr "Jours pour CTL"
 
 #: inc/core/Configuration/Category/Trimp.php:105
 msgid "Number of days for CTL time constant"
-msgstr ""
+msgstr "Nombre de jours pour constante de temps CTL"
 
 #: inc/core/Configuration/Category/Trimp.php:109
 msgid "Show ATL/CTL in percent of your maximum"
-msgstr ""
+msgstr "Montrer ATL/CTL en pourcentage de votre maximum"
 
 #: inc/core/Configuration/Category/Trimp.php:110
 msgid ""
