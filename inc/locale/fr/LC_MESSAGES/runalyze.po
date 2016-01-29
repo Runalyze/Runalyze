@@ -4,7 +4,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-01-17 20:49+0100\n"
 "PO-Revision-Date: 2016-01-29 23:02+0200\n"
-"Last-Translator: Jason Gombert <jason.gombert@gmail.com>\n"
+"Last-Translator: Alex Thierry <alex.thierry@openmailbox.org>\n"
 "Language-Team: French "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/fr/>\n"
 "Language: fr\n"
@@ -51,7 +51,7 @@ msgstr "La valeur est trop grande."
 
 #: inc/html/formular/class.FormularValueParser.php:307
 msgid "The date could not be parsed."
-msgstr "La date n'a pu être analysée."
+msgstr "La date n'a pas pu être analysée."
 
 #: inc/html/formular/class.FormularValueParser.php:340
 msgid "The time could not be read."
