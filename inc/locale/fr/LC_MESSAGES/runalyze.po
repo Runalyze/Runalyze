@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-01-17 20:49+0100\n"
-"PO-Revision-Date: 2016-01-22 21:16+0200\n"
-"Last-Translator: Oliver Bayer <olibay@web.de>\n"
+"PO-Revision-Date: 2016-01-29 14:59+0200\n"
+"Last-Translator: Alex Thierry <alex.thierry@openmailbox.org>\n"
 "Language-Team: French "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/fr/>\n"
 "Language: fr\n"
@@ -1006,9 +1006,8 @@ msgid "srtm files"
 msgstr "fichiers srtm"
 
 #: inc/training/view/class.ElevationInfo.php:275
-#, fuzzy
 msgid "remove corrected elevation data"
-msgstr "Données de correction d'altitude"
+msgstr "Enlever les données d'altitude corrigées"
 
 #: inc/training/view/class.ElevationInfo.php:286
 msgid "Compare algorithms"
@@ -1186,7 +1185,7 @@ msgstr "Vitesse de vente"
 
 #: inc/training/schemes/scheme.Training.php:481
 msgid "Wind degrees"
-msgstr ""
+msgstr "Température du vent"
 
 #: inc/training/schemes/scheme.Training.php:493
 msgid "Night"
@@ -1194,7 +1193,7 @@ msgstr "Nuit"
 
 #: inc/training/schemes/scheme.Training.php:526
 msgid "Title"
-msgstr ""
+msgstr "Titre"
 
 #: inc/training/schemes/scheme.Training.php:765
 #: inc/core/Dataset/Keys/TotalStrokes.php:44
@@ -1397,19 +1396,19 @@ msgstr "Jours pour course d'endurance"
 
 #: inc/core/Configuration/Category/BasicEndurance.php:109
 msgid "Number of days to look at for longjog goal."
-msgstr ""
+msgstr "Nombre de jours à observer pour une longue séance de jogging."
 
 #: inc/core/Configuration/Category/BasicEndurance.php:112
 msgid "Days for week kilometer"
-msgstr ""
+msgstr "Jours pour la distance de la semaine"
 
 #: inc/core/Configuration/Category/BasicEndurance.php:113
 msgid "Number of days to look at for weekly kilometer goal."
-msgstr ""
+msgstr "Nombre de jours à observer pour l'objectif de distance hebdomadaire."
 
 #: inc/core/Configuration/Category/BasicEndurance.php:116
 msgid "Days for week kilometer (minimum)"
-msgstr ""
+msgstr "Jours pour la distance de la semaine (minimum)"
 
 #: inc/core/Configuration/Category/BasicEndurance.php:117
 msgid "This value will be used if not enough data is available."
@@ -1418,11 +1417,11 @@ msgstr ""
 
 #: inc/core/Configuration/Category/BasicEndurance.php:120
 msgid "Factor for week kilometers"
-msgstr ""
+msgstr "Facteur pour la distance de la semaine"
 
 #: inc/core/Configuration/Category/BasicEndurance.php:121
 msgid "Percentage as value between 0.00 and 1.00."
-msgstr ""
+msgstr "Pourcentage en valeur entre 0.00 et 1.00."
 
 #: inc/core/Configuration/Category/Misc.php:48
 msgid "Search: results per page"
@@ -1443,7 +1442,7 @@ msgstr ""
 
 #: inc/core/Configuration/Category/Privacy.php:99
 msgid "Public list: active"
-msgstr ""
+msgstr "Liste publique : active"
 
 #: inc/core/Configuration/Category/Privacy.php:100
 msgid "If activated: Everyone can see a list of all your (public) activities."
@@ -1453,7 +1452,7 @@ msgstr ""
 
 #: inc/core/Configuration/Category/Privacy.php:104
 msgid "Public list: private workouts"
-msgstr ""
+msgstr "Liste publique : ateliers privés"
 
 #: inc/core/Configuration/Category/Privacy.php:105
 msgid ""
@@ -1473,15 +1472,15 @@ msgstr "Montrer des statistiques générales au-dessus de la liste d'activités"
 
 #: inc/core/Configuration/Category/Privacy.php:114
 msgid "Public view: show map"
-msgstr ""
+msgstr "Vue publique : montrer la carte"
 
 #: inc/core/Configuration/Category/Privacy.php:115
 msgid "You can hide the map for the public view"
-msgstr ""
+msgstr "Vous pouvez cacher la carte pour la vue publique"
 
 #: inc/core/Configuration/Category/ActivityView.php:300
 msgid "Activity view"
-msgstr ""
+msgstr "Vue Activité"
 
 #: inc/core/Configuration/Category/ActivityView.php:303
 msgid "Number of decimals"
@@ -1489,23 +1488,25 @@ msgstr "Nombre de décimales"
 
 #: inc/core/Configuration/Category/ActivityView.php:307
 msgid "Activity view: show rows in full height"
-msgstr ""
+msgstr "Vue Activité : montre des lignes sur toute la hauteur"
 
 #: inc/core/Configuration/Category/ActivityView.php:308
 msgid "By default e.g. lap data will be scrollable and not shown completely."
 msgstr ""
+"Par défaut par ex. les données d'un tour seront dépliables et non "
+"complètement affichées."
 
 #: inc/core/Configuration/Category/ActivityView.php:324
 msgid "Plots: combination"
-msgstr ""
+msgstr "Graphique : combinaison"
 
 #: inc/core/Configuration/Category/ActivityView.php:328
 msgid "Plots: precision"
-msgstr ""
+msgstr "Graphique : précision"
 
 #: inc/core/Configuration/Category/ActivityView.php:329
 msgid "How many data points should be plotted?"
-msgstr ""
+msgstr "Combien de points de données devraient être tracés?"
 
 #: inc/core/Configuration/Category/ActivityView.php:333
 msgid "Plots: smooth curves"
@@ -1537,23 +1538,23 @@ msgstr ""
 
 #: inc/core/Configuration/Category/ActivityView.php:351
 msgid "Pace plot: y-axis scale type"
-msgstr ""
+msgstr "Cadence du graphique : type d'échelle de l'axe y"
 
 #: inc/core/Configuration/Category/ActivityView.php:352
 msgid "Scale type that will be used to show pace on y-axis."
-msgstr ""
+msgstr "Type d'échelle à utiliser pour le rythme sur l'axe y."
 
 #: inc/core/Configuration/Category/ActivityView.php:356
 msgid "Pace plot: Ignore outliers"
-msgstr ""
+msgstr "Tracé du rythme : Ignorer les valeurs aberrantes"
 
 #: inc/core/Configuration/Category/ActivityView.php:357
 msgid "Try to ignore outliers in the pace plot."
-msgstr ""
+msgstr "Essayer d'ignorer les valeurs aberrantes dans le rythme du graphique."
 
 #: inc/core/Configuration/Category/ActivityView.php:367
 msgid "Map: interrupt route"
-msgstr ""
+msgstr "Carte : interrompre la route"
 
 #: inc/core/Configuration/Category/ActivityView.php:368
 msgid ""
@@ -1562,6 +1563,10 @@ msgid ""
 "which distance (in seconds by average pace)between two data points can be "
 "interpolated."
 msgstr ""
+"Le tracé gps peut être interrompu dans le cas de <em>interruptions</em> (par "
+"ex. une voiture/un train...). Trouver ces interruptions n'est pas facile. "
+"Vous pouvez définir jusqu'à quelle distance (en secondes par rythme moyen) "
+"peut s'interpoler entre deux points."
 
 #: inc/core/Configuration/Category/ActivityView.php:374
 msgid "Map: precision"
@@ -1593,19 +1598,19 @@ msgstr "Carte : zoom avec la molette"
 
 #: inc/core/Configuration/Category/ActivityView.php:399
 msgid "Elevation: smoothing"
-msgstr ""
+msgstr "Altitude : adoucir"
 
 #: inc/core/Configuration/Category/ActivityView.php:400
 msgid "Choose the algorithm to smooth the elevation data"
-msgstr ""
+msgstr "Choisir l'algorithme pour adoucir les données d'altitude"
 
 #: inc/core/Configuration/Category/ActivityView.php:404
 msgid "Elevation: threshold"
-msgstr ""
+msgstr "Altitude : seuil"
 
 #: inc/core/Configuration/Category/ActivityView.php:405
 msgid "Threshold for the smoothing algorithm"
-msgstr ""
+msgstr "Seuil pour l'algorithme d'adoucissement"
 
 #: inc/core/Configuration/Category/Design.php:57
 msgid "Design"
@@ -1641,7 +1646,7 @@ msgstr "Calculer puissance"
 
 #: inc/core/Configuration/Category/ActivityForm.php:221
 msgid "Calculate power by speed and grade for cycling"
-msgstr ""
+msgstr "Calculer la puissance par la vitesse et la pente pour le vélo"
 
 #: inc/core/Configuration/Category/ActivityForm.php:225
 msgid "Detect pauses"
