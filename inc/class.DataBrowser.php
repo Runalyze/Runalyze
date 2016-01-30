@@ -82,16 +82,13 @@ class DataBrowser {
 	 * Number of additional columns
 	 * @var int
 	 */
-	protected $AdditionalColumns = 3;
+	protected $AdditionalColumns = 2;
 
 	/**
 	 * Boolean flag: show public link for trainings
 	 * @var boolean
 	 */
 	protected $ShowPublicLink = false;
-
-	/** @var bool */
-	protected $ShowEditLink = true;
 
 	/**
 	 * Default constructor
@@ -112,11 +109,6 @@ class DataBrowser {
 		$this->DatasetQuery = new Dataset\Query($this->DatasetConfig, $this->DB, $this->AccountID);
 		$this->DatasetQuery->setAdditionalColumns(array('is_public'));
 		$this->Factory = new Factory($this->AccountID);
-
-		if (!Configuration::DataBrowser()->showEditLink()) {
-			$this->ShowEditLink = false;
-			$this->AdditionalColumns -= 1;
-		}
 	}
 
 	/**

@@ -138,7 +138,10 @@ final class Keys extends AbstractEnum
 
 	/** @var int */
 	const WIND_CHILL = 41;
-
+	
+	/** @var int */
+	const SETTING = 42;
+	
 	/**
 	 * @var array|null
 	 */
@@ -237,7 +240,8 @@ final class Keys extends AbstractEnum
 			self::WIND => 'Wind',
 			self::HUMIDITY => 'Humidity',
 			self::AIR_PRESSURE => 'AirPressure',
-			self::WIND_CHILL => 'WindChill'
+			self::WIND_CHILL => 'WindChill',
+			self::SETTING=> 'Setting'
 		);
 	}
 }

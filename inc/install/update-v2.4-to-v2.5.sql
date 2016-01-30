@@ -3,3 +3,7 @@ ALTER TABLE `runalyze_training` CHANGE `fit_vdot_estimate` `fit_vdot_estimate` D
 
 /* 27.01.2016 - add weather source */
 ALTER TABLE `runalyze_training` ADD `weather_source` TINYINT(2) UNSIGNED NULL DEFAULT NULL AFTER `weatherid`;
+
+/* 27.01.2016 - Move edit button to dataset */
+INSERT INTO runalyze_dataset (keyid, active, position, accountid) SELECT 42, 1, 0, accountid FROM runalyze_conf WHERE `key` = 'DB_SHOW_DIRECT_EDIT_LINK' AND value=true;
+INSERT INTO runalyze_dataset (keyid, active, position, accountid) SELECT 42, 1, 0,a.id FROM runalyze_account a LEFT JOIN runalyze_dataset d ON a.id=d.accountid AND d.keyid!=42 GROUP BY d.accountid;DELETE FROM runalyze_conf WHERE `key` = 'DB_SHOW_DIRECT_EDIT_LINK';

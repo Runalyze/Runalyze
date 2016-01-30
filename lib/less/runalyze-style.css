@@ -1,4 +1,3 @@
-/* Reset (thx to Eric A. and Kathryn S. Meyer) */
 @import "../icons8/styles.css";
 .colored-light {
   background: #eee;
@@ -1128,6 +1127,62 @@ tr.ERROR td {
   padding: 5px 7.5px;
   margin: 0;
 }
+.inline-menu {
+  float: right;
+  margin-left: 5px;
+  height: 18px;
+}
+.inline-menu ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+.inline-menu ul li {
+  position: relative;
+  display: inline-block;
+}
+.inline-menu ul li.active,
+.inline-menu ul li.triggered,
+.inline-menu ul li:hover {
+  color: #000000;
+  border-bottom-color: #000000;
+}
+.inline-menu ul .with-submenu > a,
+.inline-menu ul .with-submenu > .link {
+  line-height: 17px;
+}
+.inline-menu ul .with-submenu > a:after,
+.inline-menu ul .with-submenu > .link:after {
+  content: ' \f107';
+  font-family: FontAwesome;
+}
+.inline-menu ul .with-submenu:hover .submenu {
+  display: block;
+}
+.inline-menu ul .submenu {
+  z-index: 100000105;
+  display: none;
+  position: absolute;
+  min-width: 100%;
+  white-space: nowrap;
+  border: 1px solid #cccccc;
+  background-color: rgba(255, 255, 255, 0.95);
+}
+.inline-menu ul .submenu li {
+  margin: 0;
+  padding: 0;
+  text-shadow: none;
+  float: none;
+  display: block;
+  overflow: hidden;
+  width: 100%;
+}
+.inline-menu ul .submenu li a,
+.inline-menu ul .submenu li span.link {
+  display: block;
+  padding: 5px 7.5px;
+  margin: 0;
+}
 .small-head-navi {
   font-size: .8em;
   padding-top: 4px;
@@ -1425,7 +1480,7 @@ tr.space-line.zebra-corrector td {
   cursor: default;
   padding-right: 0;
 }
-.sortable thead th.tablesorter-header.sorter-false  > div:after {
+.sortable thead th.tablesorter-header.sorter-false > div:after {
   display: none;
 }
 .sortable thead th.tablesorter-header:hover > div:after,
@@ -1713,7 +1768,6 @@ tr.space-line.zebra-corrector td {
 }
 .progress-bar-infos {
   /* Clearfix */
-
   padding-bottom: 5px;
   font-weight: 100;
   letter-spacing: 1px;
@@ -1814,8 +1868,8 @@ tr.space-line.zebra-corrector td {
   padding: 5px 10px 5px 26px;
   min-width: 40px;
 }
-.boxed-value-container.with-icon  > i,
-.boxed-value-container.with-icon  > span > i {
+.boxed-value-container.with-icon > i,
+.boxed-value-container.with-icon > span > i {
   position: absolute;
   left: 5px;
   top: 50%;
@@ -1941,7 +1995,7 @@ tr.space-line.zebra-corrector td {
   line-height: 13px;
   text-align: center;
   font-size: 7px;
-  border: 1px solid #333;
+  border: 1px solid #333333;
   border-radius: 50%;
   position: relative;
   margin: 0 2px;
@@ -1955,7 +2009,7 @@ tr.space-line.zebra-corrector td {
   height: 7px;
   border-width: 6px 2px;
   border-style: solid;
-  border-color: #333 transparent transparent transparent;
+  border-color: #333333 transparent transparent transparent;
 }
 .checkbox-icon:before {
   content: "\f096";
@@ -2450,10 +2504,8 @@ td.datepickerDisabled a:hover {
   border: 0;
   font-size: 100%;
   /*	font: inherit;*/
-
   vertical-align: baseline;
   /*	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;*/
-
 }
 .icons-selector,
 .icons-selector:before,
@@ -2528,7 +2580,6 @@ td.datepickerDisabled a:hover {
   font-size: 12px;
   display: block;
   /* Fixes the positioning inside hidden/floated/text-aligned elements, where it would leave a margin */
-
 }
 .icons-selector .selector-category select {
   height: 30px;
@@ -2760,7 +2811,6 @@ td.datepickerDisabled a:hover {
 /* Main Container */
 .icons-selector * {
   /*   font-family: inherit;*/
-
 }
 .fip-grey.icons-selector {
   font-size: 11px;
@@ -2790,7 +2840,6 @@ td.datepickerDisabled a:hover {
 .fip-grey.icons-selector .selector-button i {
   color: #000;
   /*text-shadow: 0px 1px 0px #FFF;*/
-
   font-size: 12px;
   line-height: 16px;
   margin-left: -1px;
@@ -2839,7 +2888,6 @@ td.datepickerDisabled a:hover {
 .fip-grey.icons-selector .fip-icons-container {
   background-color: #fff;
   /*border: 1px solid #EDEDED;*/
-
   padding: 0px;
   font-size: 16px;
 }
@@ -3288,7 +3336,6 @@ td.datepickerDisabled a:hover {
   /*background-image: url(images/layers.png);
 	width: 36px;
 	height: 36px;*/
-
 }
 .leaflet-control-layers-toggle:before {
   display: inline-block;
@@ -3463,7 +3510,7 @@ td.datepickerDisabled a:hover {
   width: 24px;
   margin: 0 auto;
   -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678)";
-  filter: progid:dximagetransform.microsoft.matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678);
+  filter: progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678);
 }
 .leaflet-oldie .leaflet-popup-tip-container {
   margin-top: -1px;
@@ -3538,7 +3585,8 @@ td.datepickerDisabled a:hover {
 /*!
  *  Font Awesome 4.2.0 by @davegandy - http://fontawesome.io - @fontawesome
  *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)
- */@font-face {
+ */
+@font-face {
   font-family: 'FontAwesome';
   src: url('../fontawesome/fonts/fontawesome-webfont.eot?v=4.2.0');
   src: url('../fontawesome/fonts/fontawesome-webfont.eot?#iefix&v=4.2.0') format('embedded-opentype'), url('../fontawesome/fonts/fontawesome-webfont.woff?v=4.2.0') format('woff'), url('../fontawesome/fonts/fontawesome-webfont.ttf?v=4.2.0') format('truetype'), url('../fontawesome/fonts/fontawesome-webfont.svg?v=4.2.0#fontawesomeregular') format('svg');
@@ -3634,31 +3682,31 @@ td.datepickerDisabled a:hover {
   }
 }
 .fa-rotate-90 {
-  filter: progid:dximagetransform.microsoft.basicimage(rotation=1);
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
   -webkit-transform: rotate(90deg);
   -ms-transform: rotate(90deg);
   transform: rotate(90deg);
 }
 .fa-rotate-180 {
-  filter: progid:dximagetransform.microsoft.basicimage(rotation=2);
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
   -webkit-transform: rotate(180deg);
   -ms-transform: rotate(180deg);
   transform: rotate(180deg);
 }
 .fa-rotate-270 {
-  filter: progid:dximagetransform.microsoft.basicimage(rotation=3);
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
   -webkit-transform: rotate(270deg);
   -ms-transform: rotate(270deg);
   transform: rotate(270deg);
 }
 .fa-flip-horizontal {
-  filter: progid:dximagetransform.microsoft.basicimage(rotation=0, mirror=1);
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=0, mirror=1);
   -webkit-transform: scale(-1, 1);
   -ms-transform: scale(-1, 1);
   transform: scale(-1, 1);
 }
 .fa-flip-vertical {
-  filter: progid:dximagetransform.microsoft.basicimage(rotation=2, mirror=1);
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1);
   -webkit-transform: scale(1, -1);
   -ms-transform: scale(1, -1);
   transform: scale(1, -1);
@@ -5210,8 +5258,8 @@ td.datepickerDisabled a:hover {
 }
 @font-face {
   font-family: "iconvault";
-  src: url("../iconvault-forecast/../iconvault-forecast/iconvault_forecastfont.eot");
-  src: url("../iconvault-forecast/../iconvault-forecast/iconvault_forecastfont.eot?#iefix") format("embedded-opentype"), url("../iconvault-forecast/../iconvault-forecast/iconvault_forecastfont.woff") format("woff"), url("../iconvault-forecast/../iconvault-forecast/iconvault_forecastfont.ttf") format("truetype"), url("../iconvault-forecast/../iconvault-forecast/iconvault_forecastfont.svg#iconvault") format("svg");
+  src: url("../iconvault-forecast/iconvault_forecastfont.eot");
+  src: url("../iconvault-forecast/iconvault_forecastfont.eot?#iefix") format("embedded-opentype"), url("../iconvault-forecast/iconvault_forecastfont.woff") format("woff"), url("../iconvault-forecast/iconvault_forecastfont.ttf") format("truetype"), url("../iconvault-forecast/iconvault_forecastfont.svg#iconvault") format("svg");
   font-weight: normal;
   font-style: normal;
 }
