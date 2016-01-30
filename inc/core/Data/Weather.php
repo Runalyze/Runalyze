@@ -225,4 +225,16 @@ class Weather {
 			$this->Pressure->isUnknown()
 		);
 	}
+
+	/**
+	 * Clear weather
+	 */
+	public function clear() {
+		$this->Temperature->setTemperature(null);
+		$this->Condition->set(Condition::UNKNOWN);
+		$this->WindSpeed->set(null);
+		$this->WindDegree->set(null);
+		$this->Humidity->set(null);
+		$this->Pressure->set(null);
+	}
 }
