@@ -65,7 +65,7 @@ class WindSpeed implements ValueInterface
 
     /**
      * Set wind speed in internal unit
-     * @param float $kilometerPerHour [km/h]
+     * @param float|null $kilometerPerHour [km/h]
      * @return \Runalyze\Data\Weather\WindSpeed $this-reference
      */
     public function set($kilometerPerHour)

@@ -5,6 +5,7 @@ namespace Runalyze\Model\Activity;
 use League\Geotools\Coordinate\Coordinate;
 use League\Geotools\Geohash\Geohash;
 use Runalyze\Configuration;
+use Runalyze\Data\Weather\Condition;
 use Runalyze\Model;
 
 use PDO;
@@ -316,6 +317,27 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 		$Result = $this->update($NewObject);
 
 		$this->assertTrue($Result->weather()->temperature()->isUnknown());
+	}
+
+	public function testUnsettingWeatherForInside() {
+		$OldObject = $this->fetch( $this->insert(array(
+			Entity::TIME_IN_SECONDS => 3600,
+			Entity::WEATHERID => Condition::SUNNY,
+			Entity::TEMPERATURE => 7,
+			Entity::HUMIDITY => 67,
+			Entity::PRESSURE => 1020,
+			Entity::WINDDEG => 180,
+			Entity::WINDSPEED => 12,
+			Entity::SPORTID => $this->OutdoorID
+		)) );
+
+		$this->assertFalse($OldObject->weather()->isEmpty());
+
+		$NewObject = clone $OldObject;
+		$NewObject->set(Entity::SPORTID, $this->IndoorID);
+		$Result = $this->update($NewObject, $OldObject);
+
+		$this->assertTrue($Result->weather()->isEmpty());
 	}
 
 	public function testUpdatePowerCalculation() {
