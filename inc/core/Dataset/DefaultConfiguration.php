@@ -21,6 +21,7 @@ class DefaultConfiguration extends Configuration
 	public function __construct()
 	{
 		$this->generateDataFor(array(
+			Keys::SETTING => true,
 			Keys::DAYTIME => false,
 			Keys::SHARED_LINK => false,
 			Keys::WEATHER => true,

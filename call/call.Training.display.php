@@ -32,5 +32,7 @@ switch (Request::param('action')) {
         break;
 }
 
-$View = new TrainingView($Context);
-$View->display();
+if (!Request::param('silent')) {
+    $View = new TrainingView($Context);
+    $View->display();
+}

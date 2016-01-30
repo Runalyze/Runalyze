@@ -68,9 +68,65 @@ class Setting extends AbstractKey
 	 */
 	public function stringFor(Context $context)
 	{
-	    //TODO use new method inlineContext ($context, $fake = false)
-	    // switch
-	    if ($context->activity()->id() != 0) {
+		switch ($context->activity()->id()) {
+			case 0:
+				return '';
+			case -1:
+				$dropdown = $this->inlineDropdownWithFakeLinks($context);
+				break;
+			default:
+				$dropdown = $this->inlineDropdownWithRealLinks($context);
+				break;
+		}
+
+		return '<div class="inline-menu"><ul><li class="with-submenu">'.
+			'<span class="link"><i class="fa fa-fw fa-wrench"></i></span>'.
+			'<ul class="submenu">'.$dropdown.'</ul>'.
+			'</li></ul></div>';
+	}
+
+	/**
+	 * @param \Runalyze\Dataset\Context $context
+	 * @return string
+	 * @codeCoverageIgnore
+	 */
+	protected function inlineDropdownWithRealLinks(Context $context)
+	{
+		$id = $context->activity()->id();
+
+		$html = '<li>'.\Ajax::window('<a href="'.$context->linker()->editUrl().'">'.\Icon::$EDIT.' '.__('Edit').'</a> ','small').'</li>';
+		$html .= '<li><span class="link" data-action="privacy" data-activityid="'.$id.'">'.$this->privacyIconAndLabel($context).'</span></li>';
+		$html .= '<li><span class="link" data-action="delete" data-activityid="'.$id.'" data-confirm="'.__('Do you really want to delete this activity?').'"><i class="fa fa-fw fa-trash"></i> '.__('Delete activity').'</span></li>';
+		$html .= ($context->activity()->isPublic())
+			? '<li><a href="'.$context->linker()->publicUrl().'" target="_blank" onclick="(arguments[0] || window.event).stopPropagation();">'.\Icon::$ATTACH.' '.__('Public link').'</a></li>'
+			: '';
+
+		return $html;
+	}
+
+	/**
+	 * @param \Runalyze\Dataset\Context $context
+	 * @return string
+	 * @codeCoverageIgnore
+	 */
+	protected function inlineDropdownWithFakeLinks(Context $context)
+	{
+		$html = '<li><span class="link">'.\Icon::$EDIT.' '.__('Edit').'</span></li>';
+		$html .= '<li><span class="link">'.$this->privacyIconAndLabel($context).'</span></li>';
+		$html .= '<li><span class="link"><i class="fa fa-fw fa-trash"></i> '.__('Delete activity').'</span></li>';
+		$html .= ($context->activity()->isPublic())
+			? '<li><span class="link">'.\Icon::$ATTACH.' '.__('Public link').'</span></li>'
+			: '';
+
+		return $html;
+	}
+
+	/**
+	 * @param \Runalyze\Dataset\Context $context
+	 * @return string
+	 */
+	protected function privacyIconAndLabel(Context $context)
+	{
 		if ($context->activity()->isPublic()) {
 			$privacyLabel = __('Make private');
 			$privacyIcon = 'fa-lock';
@@ -78,35 +134,8 @@ class Setting extends AbstractKey
 			$privacyLabel = __('Make public');
 			$privacyIcon = 'fa-unlock';
 		}
-		$html = '<div class="inline-menu"><ul><li class="with-submenu">'
-			. '<span class="link"><i class="fa fa-fw fa-wrench"></i></span>'
-			. '<ul class="submenu">';
-		$html .= $this->inlineDropdown($context, !($context->activity()->id() > 0));
-		$html .= '</li></ul></div>';
 
-
-		return $html;
-	    }
-	    return '';
-	}
-	
-	/**
-	 * Inline Dropdown
-	 * @return string
-	 * @codeCoverageIgnore
-	 */
-	private function inlineDropdown(Context $context, $fake = false) {
-	    $edit = ($fake) ? '<p class="link">'.\Icon::$EDIT.' '.__('Edit').'</p>' : \Ajax::window('<a class="link" href="'.$context->linker()->editUrl().'">'.\Icon::$EDIT.' '.__('Edit').'</a> ','small');
-	    $delete = ($fake) ? '<p class="link"><i class="fa fa-fw fa-trash"></i> '.__('Delete activity').'</p>' : '<li><a class="ajax" target="statistics-inner" href="call/call.Training.display.php?id='.$context->activity()->id().'&action=delete" data-confirm="'.__('Do you really want to delete this activity?').'"><i class="fa fa-fw fa-trash"></i> '.__('Delete activity').'</a>';
-	    if ($context->activity()->isPublic() && $fake == false) {
-		    $publicUrl = '<a href="'.$context->linker()->publicUrl().'" target="_blank">'.\Icon::$ATTACH.' '.__('Public link').'</a>';
-	    } elseif ($fake == true) {
-		$publicUrl = '<p class="link">'.\Icon::$ATTACH.' '.__('Public link').'</p>';
-	    }
-	    $html = '<li>'.$edit.'</li>'
-			. '<li>'.$delete.'</li>'
-			. '<li>'.$publicUrl.'</li>';
-	    return $html;
+		return '<i class="fa fa-fw '.$privacyIcon.'"></i> '.$privacyLabel;
 	}
 
 	/**
