@@ -6834,7 +6834,9 @@ RunalyzePlot.Saver = (function($, parent){
 		init();
 
 		if (plot.getContext) {
-			redraw(obj, true);
+			if ($("#"+key+" .legend").is(':visible')) {
+				redraw(obj, true);
+			}
 
 			var img = canvas.getContext('2d'),
 				h = plot.height,
@@ -6849,7 +6851,7 @@ RunalyzePlot.Saver = (function($, parent){
 			img.fillRect(0, 0, w, h);
 			img.drawImage(plot, 0, 0);
 
-			$("#"+key+" .annotation").each(function(){
+			$("#"+key+" .annotation:visible").each(function(){
 				var pos = $(this).position(),
 					aw  = $(this).width(),
 					ah  = $(this).height(),
