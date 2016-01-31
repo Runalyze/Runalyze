@@ -307,6 +307,10 @@ class FormularValueParser {
 			return __('The date could not be parsed.');
 		}
 
+		if ($_POST[$key] > time()) {
+			return __('The date must not be in the future.');
+		}
+
 		return true;
 	}
 
