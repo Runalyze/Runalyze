@@ -5980,13 +5980,13 @@ var Runalyze = (function($, parent){
 	}
 
 	function runInitHooks() {
-		for (key in initHooks) {
+		for (var key in initHooks) {
 			initHooks[key]();
 		}
 	}
 
 	function runLoadHooks() {
-		for (key in loadHooks) {
+		for (var key in loadHooks) {
 			loadHooks[key]();
 		}
 	}
@@ -5995,13 +5995,13 @@ var Runalyze = (function($, parent){
 		self.DataBrowser.reload();
 		self.Statistics.reload();
 		self.Panels.reloadAll( options.dontReloadForConfigFlag );
-	};
+	}
 
 	function reloadContentForTraining() {
 		self.DataBrowser.reload();
 		self.Statistics.reload();
 		self.Panels.reloadAll( options.dontReloadForTrainingFlag );
-	};
+	}
 
 
 	// Public Methods
@@ -6113,7 +6113,7 @@ var Runalyze = (function($, parent){
 		$.ajax({
 			url: url
 		}).done(function(data){
-			var content = $('<div />').html(data).find('#container > *');
+			var content = $('<div></div>').html(data).find('#container > *');
 			$('#container').html(content);
 
 			self.init();
@@ -6361,7 +6361,7 @@ var RunalyzePlot = (function($, parent){
 	function finishAnnotations(key) {
 		if (plots.hasOwnProperty(key)) {
 			var ann = self.getPlot(key).annotations;
-			for (i in ann) {
+			for (var i in ann) {
 				if (ann[i].x != null && ann[i].y != null) {
 					ann[i].id = 'annotation-'+key+ann[i].x.toString().replace('.','')+ann[i].y.toString().replace('.','');
 
@@ -6384,12 +6384,12 @@ var RunalyzePlot = (function($, parent){
 	}
 
 	function repositionAllAnnotations() {
-		for (key in plots)
+		for (var key in plots)
 			repositionAnnotations(key);
 	}
 
 	function repositionAnnotations(key) {
-		for (i in plots[key].annotations)
+		for (var i in plots[key].annotations)
 			positionAnnotation(key, plots[key].annotations[i]);
 	}
 
@@ -6407,14 +6407,14 @@ var RunalyzePlot = (function($, parent){
 	};
 
 	self.resizeAll = function() {
-		for (key in plots)
+		for (var key in plots)
 			resize(key);
 
 		return self;
 	};
 
 	self.clear = function() {
-		for (key in plots)
+		for (var key in plots)
 			self.remove(key);
 
 		return self;
@@ -6485,7 +6485,7 @@ var RunalyzePlot = (function($, parent){
 
 		//$e.children('.flot-overlay').dblclick(function(){ self.Saver.save(cssId); });
 
-		for (key in initHooks)
+		for (var key in initHooks)
 			initHooks[key](cssId);
 
 		return self;
@@ -6641,7 +6641,7 @@ RunalyzePlot.Options = (function($, parent){
 	}
 
 	function addOptionsPanel(key) {
-		$("#"+key).append('<div class="'+ options.cssClass +'"/>');
+		$("#"+key).append('<div class="'+ options.cssClass +'"></div>');
 
 		addFullscreenLink(key);
 		addSaveLink(key);
@@ -6654,7 +6654,7 @@ RunalyzePlot.Options = (function($, parent){
 	}
 
 	function addLink(key, cssClass, tooltip, callback, afterCallback) { // rel="tooltip"
-		var $elem = $('<div class="'+ options.cssClassOption +'"><i class="'+ cssClass +'" title="'+ tooltip +'"/></div>')
+		var $elem = $('<div class="'+ options.cssClassOption +'"><i class="'+ cssClass +'" title="'+ tooltip +'"></i></div>')
 			.appendTo( container(key) )
 			.click(function(){
 				callback(this);
@@ -6912,8 +6912,11 @@ RunalyzePlot.Events = (function($, parent){
 	}
 
 	function bindTooltip(key) {
-		$('#'+key).bind('plothover', onHoverTooltip(key));
-		$('#'+key).bind('mouseleave', unsetMapMarker);
+		$('#'+key).bind(
+			'plothover', onHoverTooltip(key)
+		).bind(
+			'mouseleave', unsetMapMarker
+		);
 	}
 
 	function bindSelection(key) {
@@ -7113,10 +7116,8 @@ RunalyzePlot.Events = (function($, parent){
 
 	function onSelectionTooltip(key) {
 		return function(event, ranges, third){
-			var	plot = parent.getPlot(key),
-				rangeCalculation = true;
-
-            rangeCalculation = (plot.getOptions().xaxis.mode != 'time');
+			var	plot = parent.getPlot(key);
+            var rangeCalculation = (plot.getOptions().xaxis.mode != 'time');
 
 			plot.selection = true;
 
@@ -7188,10 +7189,8 @@ RunalyzePlot.Events = (function($, parent){
 			var cssProperties = {};
 
 			if (fixed === true) {
-				var off = $('#' + key).offset();
-
-				cssProperties['top'] = pos.y;// - off.top;
-				cssProperties['left'] = pos.x;// - off.left;
+				cssProperties['top'] = pos.y;
+				cssProperties['left'] = pos.x;
 				cssProperties['position'] = 'absolute';
 			} else {
 				cssProperties['top'] = pos.y - $(document).scrollTop();
@@ -7457,9 +7456,9 @@ Runalyze.Log = (function($, Parent){
 		$container = $('#' + id);
 
 		var clear = '<span onclick="Runalyze.Log.clear();" class="link"><i class="fa fa-fw fa-times"></i></span>',
-			error = '<i class="fa fa-fw fa-minus-circle link margin-5" id="log-filter-ERROR" onclick="Runalyze.Log.filter(\'ERROR\');" />',
-			warning = '<i class="fa fa-fw fa-warning link margin-5" id="log-filter-WARNING" onclick="Runalyze.Log.filter(\'WARNING\');" />',
-			info = '<i class="fa fa-fw fa-info-circle link margin-5" id="log-filter-INFO" onclick="Runalyze.Log.filter(\'INFO\');" />',
+			error = '<i class="fa fa-fw fa-minus-circle link margin-5" id="log-filter-ERROR" onclick="Runalyze.Log.filter(\'ERROR\');"></i>',
+			warning = '<i class="fa fa-fw fa-warning link margin-5" id="log-filter-WARNING" onclick="Runalyze.Log.filter(\'WARNING\');"></i>',
+			info = '<i class="fa fa-fw fa-info-circle link margin-5" id="log-filter-INFO" onclick="Runalyze.Log.filter(\'INFO\');"></i>',
 			filter = error + warning + info,
 			table = '<table class="fullwidth nomargin"><thead><tr><th style="width:100px;">'+filter+'</th><th>Errors</th><th style="width:70px;"></th><th style="width:3px;">'+clear+'</th></thead><tbody id="errorTable"></tbody></table>';
 
@@ -7795,7 +7794,7 @@ Runalyze.Panels = (function($, Parent){
 	// Private Methods
 
 	function bindConfigLinks() {
-		$("#panels .clap").unbind("click").click(function(){
+		$("#panels").find(".clap").unbind("click").click(function(){
 			$(this).closest(".panel").find(".panel-content").toggle( Parent.Options.fadeSpeed(), function(){
 				$(this).closest(".content").find(".flot").each(function(){
 					RunalyzePlot.resize($(this).attr('id'));
@@ -7835,7 +7834,7 @@ Runalyze.Panels = (function($, Parent){
 		} else {
 			dontclass = ":not(."+dontclass+")";
 
-			$("#panels div.panel"+dontclass).each(function(){
+			$("#panels").find("div.panel"+dontclass).each(function(){
 				self.load( $(this).attr('id').substring(6) );
 			});
 		}
@@ -7873,7 +7872,7 @@ Runalyze.DataBrowser = (function($, Parent){
 	}
 
 	function initInlineDropdownLinksForActivities() {
-		$('#data-browser .submenu .link').unbind('click').click(function(e){
+		$('#data-browser').find('.submenu .link').unbind('click').click(function(e){
 			e.stopPropagation();
 
 			if ($(this).data('action') == 'delete') {
@@ -8127,7 +8126,7 @@ Runalyze.Training = (function($, Parent){
 	};
 
 	self.removeHighlighting = function() {
-		$("#data-browser tr.training").removeClass( options.highlightClass );
+		$("#data-browser").find("tr.training").removeClass( options.highlightClass );
 	};
 
 	self.addHighlighting = function(id) {
@@ -8218,7 +8217,7 @@ Runalyze.Feature = (function($, Parent){
 		$(".toolbar-opener").unbind("click").click(function(){
 			$(this).parent().parent().toggleClass('open');
 		});
-	};
+	}
 
 	function initChangeDiv() {
 		$("a.change").each(function(){
@@ -8226,9 +8225,7 @@ Runalyze.Feature = (function($, Parent){
 				$("a.change[target="+$(this).attr("target")+"]:first").addClass('triggered').parent().addClass('triggered');
 			else
 				$("a.change[target="+$(this).attr("target")+"].triggered").parent().addClass('triggered');
-		});
-
-		$("a.change").unbind("click").click(function(e){
+		}).unbind("click").click(function(e){
 			e.preventDefault();
 
 			$("a.change[target="+$(this).attr("target")+"]").removeClass('triggered').parent().removeClass('triggered');
@@ -8238,12 +8235,12 @@ Runalyze.Feature = (function($, Parent){
 			var $target = $(target);
 
 			if (target == $(this).attr("href")) {
-				$newDiv = $("#"+ $(this).attr("href").split('#').pop() + " .change");
+				var $newDiv = $("#"+ $(this).attr("href").split('#').pop() + " .change");
 			} else {
-				$newDiv = $("#"+ $(this).attr("href").split('#').pop());
+				var $newDiv = $("#"+ $(this).attr("href").split('#').pop());
 			}
 
-			$oldDiv = $(target+" > .change:visible, " + target + " > .panel-content > .change:visible, " + target + " > .statistics-container > .change:visible").not($newDiv);
+			var $oldDiv = $(target+" > .change:visible, " + target + " > .panel-content > .change:visible, " + target + " > .statistics-container > .change:visible").not($newDiv);
 
 			$target.addClass('loading');
 
@@ -8263,7 +8260,7 @@ Runalyze.Feature = (function($, Parent){
 
 			return false;
 		});
-	};
+	}
 
 	function initCalendarLink() {
 		$('#calendar-link').unbind('click').bind('click', function(){
@@ -8274,7 +8271,7 @@ Runalyze.Feature = (function($, Parent){
 			if ($e.is(':visible'))
 				initCalendar();
 		});
-	};
+	}
 
 	function initCalendar() {
 		var $calendar = $('#widget-calendar');
@@ -8300,7 +8297,7 @@ Runalyze.Feature = (function($, Parent){
 		});
 
 		return this;
-	};
+	}
 
 	function initFormulars() {
 		initFormularElements();
@@ -8350,7 +8347,7 @@ Runalyze.Feature = (function($, Parent){
 
 	function initFormularSubmit() {
 		// Warning: Does only work for formulars in #ajax
-		$("#ajax form.ajax").unbind("submit").submit(function(e){
+		$("#ajax").find("form.ajax").unbind("submit").submit(function(e){
 			e.preventDefault();
 
 			if ($(this).children(":submit").hasClass('debug')) {
@@ -8376,7 +8373,7 @@ Runalyze.Feature = (function($, Parent){
 				return false;
 			}
 
-			if ($("#ajax #pluginTool").length) {
+			if ($("#pluginTool").length) {
 				elem = $("#pluginTool");
 			}
 
@@ -8391,7 +8388,7 @@ Runalyze.Feature = (function($, Parent){
 
 			return false;
 		});
-	};
+	}
 
 
 	// Public Methods
