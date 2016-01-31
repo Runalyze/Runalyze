@@ -129,6 +129,6 @@ class IFrame extends AbstractSnippetSharer
         $this->Context->activity()->set(Activity\Entity::IS_PUBLIC, 1);
         $Linker = new Linker($this->Context->activity());
 
-        return '<iframe style="padding:0;margin:0 auto;display:block;max-width:100%;" src="'.$Linker->publicUrl().'&amp;mode=iframe" width="'.$this->width().'" height="'.$this->height().'"></iframe>';
+        return '<iframe style="padding:0;margin:0 auto;display:block;max-width:100%;" src="'.$Linker->publicUrl().'&amp;mode=iframe&amp;utm_medium=referral&amp;utm_source=iframe" width="'.$this->width().'" height="'.$this->height().'"></iframe>';
     }
 }

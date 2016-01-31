@@ -52,7 +52,7 @@ class Facebook extends AbstractSocialSharer
         // @see https://developers.facebook.com/docs/reference/opengraph/action-type/fitness.runs
         // @see https://developers.facebook.com/docs/reference/opengraph/object-type/fitness.course
 
-        $url   = urlencode($this->publicURL());
+        $url   = urlencode($this->publicURL().'&utm_medium=referral&utm_source=facebook');
         $title = urlencode($this->Context->dataview()->titleWithComment());
         $text  = urlencode($this->text());
         $image = System::getFullDomain(true).'web/assets/images/runalyze.png';
