@@ -452,7 +452,7 @@ class AccountHandler {
 		$subject  = __('Activate your RUNALYZE Account');
 		$message  = __('Thanks for your registration').', '.$account['name']."!<br><br>\r\n\r\n";
 		$message .= sprintf( __('You can activate your account (username = %s) with the following link'), $account['username']).":<br>\r\n";
-		$message .= $activationLink;
+		$message .= '<a href='.$activationLink.'>'.$activationLink.'</a>';
 
 		if (!System::sendMail($account['mail'], $subject, $message)) {
 			$errors[] = __('Sending the link did not work. Please contact the administrator.');
@@ -482,7 +482,7 @@ class AccountHandler {
 		$subject  = __('Deletion request of your RUNALYZE account');
 		$message  = __('Do you really want to delete your account').' '.$account['username'].", ".$account['name']."?<br><br>\r\n\r\n";
 		$message .= __('Complete the process by accessing the following link: ')."<br>\r\n";
-		$message .= $deletionLink;
+		$message .= '<a href='.$deletionLink.'>'.$deletionLink.'</a>';
 
 		if (!System::sendMail($account['mail'], $subject, $message)) {
 			$errors[] = __('Sending the link did not work. Please contact the administrator.');
