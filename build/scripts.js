@@ -10,6 +10,10 @@ function parseDate(input, format) {
 	format = format || 'yyyy-mm-dd';
 	var parts = input.match(/(\d+)/g), i = 0, fmt = {};
 
+	if (parts == null) {
+		return new Date();
+	}
+
 	format.replace(/(yyyy|dd|mm)/g, function(part) { fmt[part] = i++; });
 
 	return new Date(parts[fmt['yyyy']], parts[fmt['mm']]-1, parts[fmt['dd']]);
