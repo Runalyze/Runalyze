@@ -203,9 +203,8 @@ class ParserKMLtomtomSingle extends ParserAbstractSingleXML {
 	protected function parseExtendedCadence(SimpleXMLElement $array) {
 		$values = $array->xpath('gx:value');
 
-                //Feels wrong to multiply this value by 2 - no kml-definition found - maybe a Suunto Movescount issue 
 		foreach ($values as $value) 
-			$this->gps['rpm'][] = (int)$value*2;
+			$this->gps['rpm'][] = (int)$value;
 
 	}
         
