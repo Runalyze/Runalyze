@@ -10968,12 +10968,12 @@ RunalyzeLeaflet.getNewLayers = function(){
 			}
 		),
 		'OpenStreetMap (de)': L.tileLayer(
-			'//{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png', {
+			'http://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png', {
 				attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 			}
 		),
 		'OpenStreetMap (hot)': L.tileLayer(
-			'//{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+			'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
 				attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 			}
 		),
@@ -10984,13 +10984,13 @@ RunalyzeLeaflet.getNewLayers = function(){
 			}
 		),
 		'HikeBikeMap': L.tileLayer(
-			'//{s}.tiles.wmflabs.org/hikebike/{z}/{x}/{y}.png', {
+			'http://{s}.tiles.wmflabs.org/hikebike/{z}/{x}/{y}.png', {
 				attribution: '&copy; <a href="http://www.opencyclemap.org">OpenCycleMap</a>, ' +
 					'&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 			}
 		),
 		'MapQuest': L.tileLayer(
-			'//otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.png', {
+			'http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.png', {
 				subdomains: '1234',
 				attribution: 'Tiles Courtesy of <a href="http://www.mapquest.com/" target="_blank">MapQuest</a>'
 			}
@@ -11003,13 +11003,13 @@ RunalyzeLeaflet.getNewLayers = function(){
 			}
 		),
 		'Hydda': L.tileLayer(
-			'//{s}.tile.openstreetmap.se/hydda/full/{z}/{x}/{y}.png', {
+			'http://{s}.tile.openstreetmap.se/hydda/full/{z}/{x}/{y}.png', {
 				attribution: '&copy; <a href="http://openstreetmap.se/">OpenStreetMap Sweden</a>, ' +
 					'&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 			}
 		),
 		'CartoDB': L.tileLayer(
-			'//{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+			'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
 				subdomains: 'abcd',
 				minZoom: 0,
 				maxZoom: 18,
@@ -11019,7 +11019,7 @@ RunalyzeLeaflet.getNewLayers = function(){
 			}
 		),
 		'HERE': L.tileLayer(
-			'//{s}.maptile.lbs.ovi.com/maptiler/v2/maptile/newest/hybrid.day/{z}/{x}/{y}/256/png8?token={token}&app_id={appId}', {
+			'http://{s}.maptile.lbs.ovi.com/maptiler/v2/maptile/newest/hybrid.day/{z}/{x}/{y}/256/png8?token={token}&app_id={appId}', {
 				subdomains: '1234',
 				appId: Runalyze.Options.nokiaAuth().app,
 				token: Runalyze.Options.nokiaAuth().token,
@@ -11037,7 +11037,7 @@ RunalyzeLeaflet.getNewLayers = function(){
 			}
 		),
 		'SigmaCycle': L.tileLayer(
-			'//tiles1.sigma-dc-control.com/layer8/{z}/{x}/{y}.png', {
+			'http://tiles1.sigma-dc-control.com/layer8/{z}/{x}/{y}.png', {
 				attribution: '&copy; <a href="http://www.sigmasport.com/" target="_blank">SIGMA Sport &reg;</a>'
 			}
 		),
@@ -11058,21 +11058,22 @@ RunalyzeLeaflet.getNewLayers = function(){
 			}
 		),
 		'Stamen': L.tileLayer(
-			'//{s}.tile.stamen.com/toner/{z}/{x}/{y}.png', {
+			'//stamen-tiles.a.ssl.fastly.net/toner/{z}/{x}/{y}.png', {
 				attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, ' +
 					'<a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>, ' +
 					'&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 			}
 		),
 		'Stamen (watercolor)': L.tileLayer(
-			'//{s}.tile.stamen.com/watercolor/{z}/{x}/{y}.png', {
+			'//stamen-tiles.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.png', {
 				attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, ' +
 					'<a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>, ' +
 					'&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 			}
 		)
 	};
-};/*
+};
+/*
  * Additional features for Leaflet
  * 
  * (c) 2014 Hannes Christiansen, http://www.runalyze.de/
