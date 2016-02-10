@@ -264,13 +264,11 @@ class SearchResults {
 				$value = (new Temperature())->setInPreferredUnit($_POST[$key])->celsius();
 			} elseif ($key == 'wind_speed') {
 				$value = (new WindSpeed())->setInPreferredUnit($_POST[$key])->value();
-			} elseif ($key == 'vdot' OR $key == 'vdot_with_elevation') {
+			} elseif ($key == 'vdot' || $key == 'vdot_with_elevation') {
 			    if(!Configuration::Vdot()->useCorrectionFactor()) {
-				$value = $_POST[$key];echo "without";
-			    } elseif(Configuration::Vdot()->manualFactor() > 0) {
-				$value = $_POST[$key] * Configuration::Vdot()->manualFactor();
+				$value = $_POST[$key];
 			    } else {
-				$value = $_POST[$key] * (new VDOTCorrector())->factor();
+				$value = $_POST[$key] * Configuration::Data()->vdotFactor();
 			    }
 			} else {
 				$value = $_POST[$key];
