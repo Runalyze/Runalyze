@@ -11,6 +11,7 @@ use Runalyze\Activity\StrideLength;
 use Runalyze\Configuration;
 use Runalyze\Activity\Temperature;
 use Runalyze\Data\Weather\WindSpeed;
+use Runalyze\Calculation\JD\VDOTCorrector;
 
 /**
  * Search results
@@ -130,13 +131,14 @@ class SearchResults {
 			'groundcontact_balance',
 
 			'use_vdot',
+			'vdot',
+			'vdot_with_elevation',
 			'is_public'
 		);
 
 		// Some additional keys
 		$this->AllowedKeys[] = 'power';
 		$this->AllowedKeys[] = 'is_track';
-		$this->AllowedKeys[] = 'vdot';
 		$this->AllowedKeys[] = 'notes';
 
 	}
@@ -262,6 +264,14 @@ class SearchResults {
 				$value = (new Temperature())->setInPreferredUnit($_POST[$key])->celsius();
 			} elseif ($key == 'wind_speed') {
 				$value = (new WindSpeed())->setInPreferredUnit($_POST[$key])->value();
+			} elseif ($key == 'vdot' OR $key == 'vdot_with_elevation') {
+			    if(!Configuration::Vdot()->useCorrectionFactor()) {
+				$value = $_POST[$key];echo "without";
+			    } elseif(Configuration::Vdot()->manualFactor() > 0) {
+				$value = $_POST[$key] * Configuration::Vdot()->manualFactor();
+			    } else {
+				$value = $_POST[$key] * (new VDOTCorrector())->factor();
+			    }
 			} else {
 				$value = $_POST[$key];
 			}
