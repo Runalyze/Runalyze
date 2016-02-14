@@ -107,6 +107,9 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 		if ($this->showCadence && ($this->Context->activity()->cadence() > 0 || $this->Context->activity()->power() > 0)) {
 			$Cadence = new BoxedValue(Helper::Unknown($this->Context->dataview()->cadence()->value(), '-'), $this->Context->dataview()->cadence()->unitAsString(), $this->Context->dataview()->cadence()->label());
 			$Cadence->defineAsFloatingBlock('w50');
+			
+			$TotalCadence = new Box\TotalCadence($this->Context);
+			$TotalCadence->defineAsFloatingBlock('w50');
 
 			if ($this->Context->activity()->strideLength() > 0) {
 				$Power = new Activity\Box\StrideLength($this->Context);
@@ -117,6 +120,7 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 			}
 
 			$this->BoxedValues[] = $Cadence;
+			$this->BoxedValues[] = $TotalCadence;
 			$this->BoxedValues[] = $Power;
 		} elseif (!$this->showCadence && $this->Context->activity()->power() > 0) {
 			$Power = new BoxedValue(Helper::Unknown($this->Context->activity()->power(), '-'), 'W', __('Power'));
