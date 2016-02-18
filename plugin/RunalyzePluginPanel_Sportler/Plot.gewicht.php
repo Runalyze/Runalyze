@@ -49,7 +49,7 @@ $Plot->setXAxisTimeFormat('%m/%y');
 $Plot->setXAxisMaxToToday();
 $Plot->Options['xaxis']['labelWidth'] = 50;
 //$Plot->Options['xaxis']['tickLength'] = 3;
-$Plot->Options['series']['curvedLines']['fit'] = true;
+$Plot->Options['series']['curvedLines']['monotonicFit'] = true;
 $Plot->PlotOptions['allowSelection'] = false;
 
 $Plot->addYAxis(1, 'left');

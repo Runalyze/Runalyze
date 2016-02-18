@@ -365,9 +365,10 @@ class Plot {
 	 */
 	public function smoothing($flag = true, $fit = null) {
 		$this->Options['series']['curvedLines']['apply'] = $flag;
+		$this->Options['series']['curvedLines']['monotonicFit'] = true;
 
 		if (!is_null($fit))
-			$this->Options['series']['curvedLines']['fit'] = $fit;
+			$this->Options['series']['curvedLines']['monotonicFit'] = $fit;
 	}
 
 	/**
