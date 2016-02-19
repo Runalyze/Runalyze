@@ -27,7 +27,7 @@ msgstr "Вход"
 #: inc/core/Configuration/Category/Misc.php:46
 #: inc/class.FrontendSharedStatistics.php:151
 msgid "Miscellaneous"
-msgstr "Разное"
+msgstr "Прочее"
 
 #: index.php:74
 msgid ""
@@ -140,7 +140,7 @@ msgstr "Предыдущий"
 
 #: inc/html/class.Ajax.php:437 inc/class.DataBrowser.php:260
 msgid "next"
-msgstr "следующий"
+msgstr "следующая"
 
 #: inc/html/class.Ajax.php:438
 msgid "End"
@@ -2196,11 +2196,11 @@ msgstr ""
 
 #: inc/core/Parameter/Application/DistanceUnitSystem.php:94
 msgid "Metric units"
-msgstr ""
+msgstr "Метрическая"
 
 #: inc/core/Parameter/Application/DistanceUnitSystem.php:95
 msgid "Imperial units"
-msgstr ""
+msgstr "Британская"
 
 #: inc/core/Parameter/Application/PaceAxisType.php:16
 msgid "linear"
@@ -2216,11 +2216,11 @@ msgstr ""
 
 #: inc/core/Parameter/Application/HeartRateUnit.php:39
 msgid "absolute value"
-msgstr ""
+msgstr "удар/мин"
 
 #: inc/core/Parameter/Application/HeartRateUnit.php:40
 msgid "&#37; HRmax"
-msgstr ""
+msgstr "&#37;ЧСС макс"
 
 #: inc/core/Parameter/Application/HeartRateUnit.php:41
 msgid "&#37; HRreserve"
@@ -2232,15 +2232,15 @@ msgstr ""
 
 #: inc/core/Parameter/Application/WeightUnit.php:40
 msgid "kilograms"
-msgstr ""
+msgstr "килограммы"
 
 #: inc/core/Parameter/Application/WeightUnit.php:41
 msgid "pounds"
-msgstr ""
+msgstr "фунты"
 
 #: inc/core/Parameter/Application/WeightUnit.php:42
 msgid "stones"
-msgstr ""
+msgstr "стоуны"
 
 #: inc/core/Parameter/Application/ActivityRoutePrivacy.php:39
 #: inc/core/Parameter/Application/ActivityRouteBreak.php:27
@@ -2286,12 +2286,12 @@ msgstr ""
 #: inc/core/Parameter/Application/WeekStart.php:46 inc/core/Util/Time.php:90
 #: inc/tpl/tpl.DataBrowser.php:21
 msgid "Monday"
-msgstr ""
+msgstr "Понедельник"
 
 #: inc/core/Parameter/Application/WeekStart.php:49 inc/core/Util/Time.php:89
 #: inc/tpl/tpl.DataBrowser.php:21
 msgid "Sunday"
-msgstr ""
+msgstr "Воскресенье"
 
 #: inc/core/Parameter/Application/ElevationMethod.php:45
 msgid "no smoothing"
@@ -2331,11 +2331,11 @@ msgstr ""
 
 #: inc/core/Parameter/Application/Gender.php:40
 msgid "male"
-msgstr ""
+msgstr "мужской"
 
 #: inc/core/Parameter/Application/Gender.php:41
 msgid "female"
-msgstr ""
+msgstr "женский"
 
 #: inc/core/Parameter/Application/ActivityPlotPrecision.php:21
 msgid "every 50m a data point"
@@ -2411,11 +2411,11 @@ msgstr ""
 
 #: inc/core/Parameter/Application/TemperatureUnit.php:35
 msgid "Celsius (°C)"
-msgstr ""
+msgstr "Цельсий (°C)"
 
 #: inc/core/Parameter/Application/TemperatureUnit.php:36
 msgid "Fahrenheit (°F)"
-msgstr ""
+msgstr "Фаренгейт (°F)"
 
 #: inc/core/Parameter/Application/DataBrowserMode.php:33
 msgid "Week view"
@@ -2754,51 +2754,51 @@ msgstr ""
 
 #: inc/core/Util/Time.php:89 inc/tpl/tpl.DataBrowser.php:23
 msgid "Sun"
-msgstr ""
+msgstr "Вос"
 
 #: inc/core/Util/Time.php:90 inc/tpl/tpl.DataBrowser.php:23
 msgid "Mon"
-msgstr ""
+msgstr "Пон"
 
 #: inc/core/Util/Time.php:91 inc/tpl/tpl.DataBrowser.php:23
 msgid "Tue"
-msgstr ""
+msgstr "Вто"
 
 #: inc/core/Util/Time.php:91 inc/tpl/tpl.DataBrowser.php:21
 msgid "Tuesday"
-msgstr ""
+msgstr "Вторник"
 
 #: inc/core/Util/Time.php:92 inc/tpl/tpl.DataBrowser.php:23
 msgid "Wed"
-msgstr ""
+msgstr "Сре"
 
 #: inc/core/Util/Time.php:92 inc/tpl/tpl.DataBrowser.php:21
 msgid "Wednesday"
-msgstr ""
+msgstr "Среда"
 
 #: inc/core/Util/Time.php:93 inc/tpl/tpl.DataBrowser.php:23
 msgid "Thu"
-msgstr ""
+msgstr "Чет"
 
 #: inc/core/Util/Time.php:93 inc/tpl/tpl.DataBrowser.php:21
 msgid "Thursday"
-msgstr ""
+msgstr "Четверг"
 
 #: inc/core/Util/Time.php:94 inc/tpl/tpl.DataBrowser.php:23
 msgid "Fri"
-msgstr ""
+msgstr "Пят"
 
 #: inc/core/Util/Time.php:94 inc/tpl/tpl.DataBrowser.php:21
 msgid "Friday"
-msgstr ""
+msgstr "Пятница"
 
 #: inc/core/Util/Time.php:96 inc/tpl/tpl.DataBrowser.php:23
 msgid "Sat"
-msgstr ""
+msgstr "Суб"
 
 #: inc/core/Util/Time.php:96 inc/tpl/tpl.DataBrowser.php:21
 msgid "Saturday"
-msgstr ""
+msgstr "Суббота"
 
 #: inc/core/Util/Time.php:109 inc/tpl/tpl.DataBrowser.php:26
 #: inc/draw/class.Plot.php:394
@@ -2812,52 +2812,52 @@ msgstr "Январь"
 #: inc/core/Util/Time.php:110 inc/tpl/tpl.DataBrowser.php:26
 #: inc/draw/class.Plot.php:395
 msgid "Feb"
-msgstr ""
+msgstr "Фев"
 
 #: inc/core/Util/Time.php:110 inc/tpl/tpl.DataBrowser.php:24
 msgid "February"
-msgstr ""
+msgstr "Февраль"
 
 #: inc/core/Util/Time.php:111 inc/tpl/tpl.DataBrowser.php:26
 #: inc/draw/class.Plot.php:396
 msgid "Mar"
-msgstr ""
+msgstr "Мар"
 
 #: inc/core/Util/Time.php:111 inc/tpl/tpl.DataBrowser.php:24
 msgid "March"
-msgstr ""
+msgstr "Март"
 
 #: inc/core/Util/Time.php:112 inc/tpl/tpl.DataBrowser.php:26
 #: inc/draw/class.Plot.php:397
 msgid "Apr"
-msgstr ""
+msgstr "Апр"
 
 #: inc/core/Util/Time.php:112 inc/tpl/tpl.DataBrowser.php:24
 msgid "April"
-msgstr ""
+msgstr "Апрель"
 
 #: inc/core/Util/Time.php:113 inc/tpl/tpl.DataBrowser.php:24
 #: inc/tpl/tpl.DataBrowser.php:26 inc/draw/class.Plot.php:398
 msgid "May"
-msgstr ""
+msgstr "Май"
 
 #: inc/core/Util/Time.php:114 inc/tpl/tpl.DataBrowser.php:26
 #: inc/draw/class.Plot.php:399
 msgid "Jun"
-msgstr ""
+msgstr "Июнь"
 
 #: inc/core/Util/Time.php:114 inc/tpl/tpl.DataBrowser.php:24
 msgid "June"
-msgstr ""
+msgstr "Июнь"
 
 #: inc/core/Util/Time.php:115 inc/tpl/tpl.DataBrowser.php:26
 #: inc/draw/class.Plot.php:400
 msgid "Jul"
-msgstr ""
+msgstr "Июль"
 
 #: inc/core/Util/Time.php:115 inc/tpl/tpl.DataBrowser.php:25
 msgid "July"
-msgstr ""
+msgstr "Июль"
 
 #: inc/core/Util/Time.php:116 inc/tpl/tpl.DataBrowser.php:26
 #: inc/draw/class.Plot.php:401
@@ -2871,38 +2871,38 @@ msgstr "Август"
 #: inc/core/Util/Time.php:117 inc/tpl/tpl.DataBrowser.php:26
 #: inc/draw/class.Plot.php:402
 msgid "Sep"
-msgstr ""
+msgstr "Сен"
 
 #: inc/core/Util/Time.php:117 inc/tpl/tpl.DataBrowser.php:25
 msgid "September"
-msgstr ""
+msgstr "Сентябрь"
 
 #: inc/core/Util/Time.php:118 inc/tpl/tpl.DataBrowser.php:26
 #: inc/draw/class.Plot.php:403
 msgid "Oct"
-msgstr ""
+msgstr "Окт"
 
 #: inc/core/Util/Time.php:118 inc/tpl/tpl.DataBrowser.php:25
 msgid "October"
-msgstr ""
+msgstr "Октябрь"
 
 #: inc/core/Util/Time.php:119 inc/tpl/tpl.DataBrowser.php:26
 #: inc/draw/class.Plot.php:404
 msgid "Nov"
-msgstr ""
+msgstr "Ноя"
 
 #: inc/core/Util/Time.php:119 inc/tpl/tpl.DataBrowser.php:25
 msgid "November"
-msgstr ""
+msgstr "Ноябрь"
 
 #: inc/core/Util/Time.php:121 inc/tpl/tpl.DataBrowser.php:26
 #: inc/draw/class.Plot.php:405
 msgid "Dec"
-msgstr ""
+msgstr "Дек"
 
 #: inc/core/Util/Time.php:121 inc/tpl/tpl.DataBrowser.php:25
 msgid "December"
-msgstr ""
+msgstr "Декабрь"
 
 #: inc/tpl/tpl.Frontend.debug.php:2
 msgid "Debug console"
@@ -2922,7 +2922,7 @@ msgstr ""
 #: call/call.Plugin.install.php:23
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:130
 msgid "Configuration"
-msgstr ""
+msgstr "Настройки"
 
 #: inc/tpl/tpl.Installer.php:6 inc/tpl/tpl.Installer.php:119
 msgid "Database"
@@ -3038,7 +3038,7 @@ msgstr ""
 #: inc/tpl/tpl.Installer.php:137 inc/tpl/tpl.loginWindow.php:32
 #: inc/tpl/tpl.loginWindow.php:89 inc/tpl/tpl.adminWindow.login.php:7
 msgid "Password"
-msgstr ""
+msgstr "Пароль"
 
 #: inc/tpl/tpl.Installer.php:143
 msgid ""
@@ -3186,18 +3186,18 @@ msgstr ""
 #: inc/tpl/tpl.adminWindow.login.php:13
 #: inc/tpl/tpl.loginWindow.activateAccount.php:18 call/login.php:4
 msgid "Login"
-msgstr ""
+msgstr "Вход"
 
 #: inc/tpl/tpl.loginWindow.php:28 inc/tpl/tpl.loginWindow.php:74
 #: inc/tpl/tpl.loginWindow.php:132
 #: inc/tpl/tpl.loginWindow.setNewPassword.php:13
 #: inc/system/config/class.ConfigTabAccount.php:28
 msgid "Username"
-msgstr ""
+msgstr "Имя пользователя"
 
 #: inc/tpl/tpl.loginWindow.php:36
 msgid "Remember me"
-msgstr ""
+msgstr "Запомнить меня"
 
 #: inc/tpl/tpl.loginWindow.php:49
 msgid "Runalyze is under maintenance at the moment. No login possible."
@@ -3205,7 +3205,7 @@ msgstr ""
 
 #: inc/tpl/tpl.loginWindow.php:57 inc/tpl/tpl.loginWindow.php:156
 msgid "Create a new account"
-msgstr ""
+msgstr "Создать эккаунт"
 
 #: inc/tpl/tpl.loginWindow.php:60
 msgid "Registrations are currently disabled."
@@ -3223,15 +3223,15 @@ msgstr ""
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:451
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:645
 msgid "Name"
-msgstr ""
+msgstr "Имя"
 
 #: inc/tpl/tpl.loginWindow.php:84 inc/class.AdminView.php:261
 msgid "Email"
-msgstr ""
+msgstr "E-mail"
 
 #: inc/tpl/tpl.loginWindow.php:94
 msgid "Password again"
-msgstr ""
+msgstr "Пароль еще раз"
 
 #: inc/tpl/tpl.loginWindow.php:112
 msgid "You can login now. Enjoy Runalyze!"
@@ -3245,19 +3245,19 @@ msgstr ""
 
 #: inc/tpl/tpl.loginWindow.php:121
 msgid "Register"
-msgstr ""
+msgstr "Регистрация"
 
 #: inc/tpl/tpl.loginWindow.php:130 inc/tpl/tpl.loginWindow.php:157
 msgid "Forgot your password?"
-msgstr ""
+msgstr "Забыли пароль?"
 
 #: inc/tpl/tpl.loginWindow.php:142
 msgid "A link for changing your password will be sent via email."
-msgstr ""
+msgstr "Ссылка для изменения пароля будет отослана Вам по электронной почте."
 
 #: inc/tpl/tpl.loginWindow.php:148
 msgid "Send link"
-msgstr ""
+msgstr "Отправить"
 
 #: inc/tpl/tpl.loginWindow.php:190
 #, php-format
@@ -3332,7 +3332,7 @@ msgstr ""
 
 #: inc/tpl/tpl.InstallerUpdate.php:50
 msgid "----- please choose"
-msgstr ""
+msgstr "---- выберите"
 
 #: inc/tpl/tpl.InstallerUpdate.php:52
 #, php-format
@@ -3349,17 +3349,17 @@ msgstr ""
 
 #: inc/tpl/tpl.Frontend.header.php:29 inc/tpl/tpl.Frontend.header.php:30
 msgid "Logout"
-msgstr ""
+msgstr "Выход"
 
 #: inc/tpl/tpl.Frontend.header.php:36
 #: inc/system/config/class.ConfigTabPlugins.php:41
 #: inc/plugin/class.PluginTool.php:82
 msgid "Tools"
-msgstr ""
+msgstr "Инструменты"
 
 #: inc/tpl/tpl.Frontend.header.php:37
 msgid "Help"
-msgstr ""
+msgstr "Помощь"
 
 #: inc/tpl/tpl.DataBrowser.php:15
 msgid "Choose a date ..."
@@ -3367,31 +3367,31 @@ msgstr ""
 
 #: inc/tpl/tpl.DataBrowser.php:22
 msgid "Su"
-msgstr ""
+msgstr "Вс"
 
 #: inc/tpl/tpl.DataBrowser.php:22
 msgid "Mo"
-msgstr ""
+msgstr "Пн"
 
 #: inc/tpl/tpl.DataBrowser.php:22
 msgid "Tu"
-msgstr ""
+msgstr "Вт"
 
 #: inc/tpl/tpl.DataBrowser.php:22
 msgid "We"
-msgstr ""
+msgstr "Ср"
 
 #: inc/tpl/tpl.DataBrowser.php:22
 msgid "Th"
-msgstr ""
+msgstr "Чт"
 
 #: inc/tpl/tpl.DataBrowser.php:22
 msgid "Fr"
-msgstr ""
+msgstr "Пт"
 
 #: inc/tpl/tpl.DataBrowser.php:22
 msgid "Sa"
-msgstr ""
+msgstr "Су"
 
 #: inc/tpl/tpl.DataBrowser.php:35
 msgid "You can select any time range by selecting two dates."
@@ -3448,7 +3448,7 @@ msgstr ""
 #: inc/plugin/class.PluginType.php:54
 #: plugin/RunalyzePluginStat_Statistiken/class.RunalyzePluginStat_Statistiken.php:38
 msgid "Statistics"
-msgstr ""
+msgstr "Статистика"
 
 #: inc/tpl/tpl.installerFooterText.php:6
 msgid ""
@@ -3608,11 +3608,11 @@ msgstr ""
 
 #: inc/class.DataBrowser.php:250
 msgid "back"
-msgstr ""
+msgstr "предыдущая"
 
 #: inc/class.DataBrowser.php:268
 msgid "today"
-msgstr ""
+msgstr "сегодня"
 
 #: inc/class.DataBrowser.php:278
 msgid "Reload current datasheet"
@@ -3620,7 +3620,7 @@ msgstr ""
 
 #: inc/class.DataBrowser.php:286
 msgid "Calendar"
-msgstr ""
+msgstr "Календарь"
 
 #: inc/class.DataBrowser.php:294 inc/class.DataBrowserShared.php:115
 msgid "Activity per month"
@@ -3674,7 +3674,7 @@ msgstr ""
 #: inc/class.FrontendSharedStatistics.php:128
 #: inc/system/schemes/set.emptyValues.php:50
 msgid "Running"
-msgstr ""
+msgstr "Бег"
 
 #: inc/class.FrontendShared.php:123 inc/class.FrontendSharedList.php:158
 msgid "Problem"
@@ -3808,19 +3808,19 @@ msgstr ""
 
 #: inc/system/schemes/set.emptyValues.php:51
 msgid "Swimming"
-msgstr ""
+msgstr "Плаванье"
 
 #: inc/system/schemes/set.emptyValues.php:52
 msgid "Biking"
-msgstr ""
+msgstr "Велосипед"
 
 #: inc/system/schemes/set.emptyValues.php:53
 msgid "Gymnastics"
-msgstr ""
+msgstr "Гимнастика"
 
 #: inc/system/schemes/set.emptyValues.php:54
 msgid "Other"
-msgstr ""
+msgstr "Другое"
 
 #: inc/system/schemes/set.emptyValues.php:61
 msgid "Jogging"
@@ -4255,7 +4255,7 @@ msgstr ""
 
 #: inc/system/config/class.ConfigTabAccount.php:36
 msgid "Language"
-msgstr ""
+msgstr "Язык"
 
 #: inc/system/config/class.ConfigTabAccount.php:43
 msgid "Registered since"
@@ -4518,7 +4518,7 @@ msgstr ""
 #: inc/import/tpl/tpl.Importer.upload.php:2
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:281
 msgid "Upload file"
-msgstr ""
+msgstr "Загрузить файл"
 
 #: inc/import/tpl/tpl.Importer.upload.php:39
 msgid "There were problems while uploading."
@@ -4730,7 +4730,7 @@ msgstr ""
 
 #: inc/import/class.ImporterWindow.php:217
 msgid "Add workout"
-msgstr ""
+msgstr "Загрузить"
 
 #: inc/import/class.MultiImporter.php:76
 msgid "The activities have been successfully imported."
@@ -4738,7 +4738,7 @@ msgstr ""
 
 #: inc/import/class.ImporterWindowTabUpload.php:38
 msgid "Upload"
-msgstr ""
+msgstr "Загрузка"
 
 #: inc/plugin/class.PluginType.php:57
 msgid "Panel"
@@ -5255,7 +5255,7 @@ msgstr ""
 #: plugin/RunalyzePluginStat_Wetter/MinMaxTableForEquipment.php:128
 #: plugin/RunalyzePluginStat_Wetter/MonthwiseTable.php:147
 msgid "No data found."
-msgstr ""
+msgstr "Нет данных."
 
 #: plugin/RunalyzePluginStat_Wetter/Plot.Year.php:46
 #: plugin/RunalyzePluginStat_Trainingszeiten/Plot.Daytime.php:75
