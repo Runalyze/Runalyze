@@ -46,7 +46,7 @@ class Heartrate extends ActivitySeries {
 		$this->initOptions();
 		$this->initData($context->trackdata(), Trackdata::HEARTRATE, true);
 		$this->manipulateData();
-		$this->setManualAverage(round(100*$context->activity()->hrAvg()/$this->HRmax));
+		$this->setManualAverage(round($this->correctUnit($context->activity()->hrAvg()/$this->HRmax)));
 	}
 
 	/**
