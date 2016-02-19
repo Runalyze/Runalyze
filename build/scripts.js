@@ -9296,6 +9296,7 @@ Licensed under the MIT license.
                 if (off) {
                     s.oldColor = s.color;
                     s.color = "#fff";
+                    options.legend.hidden.splice(options.legend.hidden.indexOf(s.label), 1);
                 }
             }
 

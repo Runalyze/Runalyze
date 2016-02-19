@@ -26,7 +26,7 @@ class Cumulative extends AbstractMovingAverage
 
         for ($i = 0; $i < $this->Length; ++$i) {
             $delta = $this->IndexData[$i] - $last;
-            $avg = ($avg * $last + $this->Data[$i] * $delta) / ($last + $delta);
+            $avg = ($last + $delta > 0) ? ($avg * $last + $this->Data[$i] * $delta) / ($last + $delta) : 0;
             $last += $delta;
 
             $this->MovingAverage[] = $avg;
