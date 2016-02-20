@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-01-17 20:49+0100\n"
-"PO-Revision-Date: 2016-02-12 20:17+0200\n"
+"PO-Revision-Date: 2016-02-19 14:27+0200\n"
 "Last-Translator: Tony Sheen <spbnalog@gmail.com>\n"
 "Language-Team: Russian "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/ru/>\n"
@@ -34,7 +34,7 @@ msgid ""
 "<em>There are no statistics available. Activate a plugin in your "
 "configuration.</em>"
 msgstr ""
-"<em>Нет доступных статистических данных. Активируйте плагин в "
+"<em>Статистические данные не доступны. Активируйте плагин в "
 "конфигурации.</em>"
 
 #: inc/html/formular/class.FormularValueParser.php:220
@@ -217,7 +217,7 @@ msgstr "Высота"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:34
 msgid "avg. Heartrate"
-msgstr "Средняя ЧСС"
+msgstr "сред.ЧСС"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:35
 #: inc/training/view/section/class.SectionHeartrateRow.php:64
@@ -494,7 +494,7 @@ msgstr "Комментарий"
 #: inc/training/search/class.SearchFormular.php:174
 #: inc/training/schemes/scheme.Training.php:242
 msgid "avg. HR"
-msgstr "средняя ЧСС"
+msgstr "сред.ЧСС"
 
 #: inc/training/search/class.SearchFormular.php:175
 #: inc/training/view/section/class.SectionHeartrateRow.php:77
@@ -653,7 +653,7 @@ msgstr ""
 
 #: inc/training/view/section/class.SectionRoute.php:17
 msgid "Course and elevation data"
-msgstr "Данные о маршруте и высоте"
+msgstr "Анализ дистанции и высоты"
 
 #: inc/training/view/section/class.SectionPace.php:17
 msgid "Pace data"
@@ -678,7 +678,7 @@ msgstr "Зоны ЧСС"
 #: inc/training/view/section/class.SectionCompositeRow.php:161
 #: inc/training/view/section/class.SectionCompositeRow.php:164
 msgid "&oslash; Heartrate"
-msgstr "Ø ЧСС"
+msgstr "сред. ЧСС"
 
 #: inc/training/view/section/class.SectionSwimLaneRow.php:35
 #: inc/core/View/Activity/Plot/Series/Stroke.php:62
@@ -703,7 +703,7 @@ msgstr "Маршрут"
 #: inc/training/view/section/class.SectionLapsRowManual.php:49
 #: inc/training/view/section/class.SectionLapsRowComputed.php:47
 msgid "More details about your laps"
-msgstr "Подробная информация о ваших кругах"
+msgstr "Подробная информация о ваших этапах"
 
 #: inc/training/view/section/class.SectionHRV.php:18
 msgid "Heart rate variability"
@@ -712,17 +712,17 @@ msgstr "Вариабельность сердечного ритма"
 #: inc/training/view/section/class.SectionRouteRowElevation.php:86
 #: inc/training/view/section/class.SectionCompositeRow.php:233
 msgid "More about elevation"
-msgstr "Подробнее о высоте"
+msgstr "Подробнее о расчете высоты"
 
 #: inc/training/view/section/class.SectionRouteRowElevation.php:93
 #: inc/training/view/section/class.SectionCompositeRow.php:238
 msgid "Elevation data were corrected."
-msgstr "Данные высоты были исправлены."
+msgstr "Данные о высоте скорректированы."
 
 #: inc/training/view/section/class.SectionRouteRowElevation.php:95
 #: inc/training/view/section/class.SectionCompositeRow.php:240
 msgid "Elevation data are not corrected."
-msgstr "Данные высоты не исправлены."
+msgstr "Данные о высоте не скорректированы."
 
 #: inc/training/view/section/class.SectionOverviewRow.php:55
 #: inc/training/view/section/class.SectionCompositeRow.php:99
@@ -826,7 +826,7 @@ msgstr ""
 
 #: inc/training/view/section/table/class.TableLapsComputed.php:66
 msgid "&oslash; bpm"
-msgstr "ø уд/мин"
+msgstr "сред. уд/мин"
 
 #: inc/training/view/section/table/class.TableLapsComputed.php:67
 msgid "elev."
@@ -872,7 +872,7 @@ msgstr "График Пуанкаре"
 
 #: inc/training/view/section/class.SectionHRVRow.php:44
 msgid "&Oslash; R-R interval"
-msgstr "Ø R-R интервал"
+msgstr "сред. R-R интервал"
 
 #: inc/training/view/section/class.SectionOverview.php:17
 msgid "Overview"
@@ -976,11 +976,11 @@ msgstr "Коррекция высоты"
 #: inc/training/view/class.ElevationInfo.php:248
 #: call/call.Training.elevationCorrection.php:45
 msgid "Elevation data has been corrected."
-msgstr "Данные высоты были исправлены."
+msgstr "Данные о высоте скорректированы."
 
 #: inc/training/view/class.ElevationInfo.php:251
 msgid "Elevation data has not been corrected."
-msgstr "Данные высоты не были исправлены."
+msgstr "Данные о высоте не скорректированы."
 
 #: inc/training/view/class.ElevationInfo.php:252
 msgid "correct now"
@@ -1069,7 +1069,7 @@ msgstr "выберите"
 
 #: inc/training/formular/class.TrainingInputSplits.php:49
 msgid "add new lap"
-msgstr "Добавить новый круг"
+msgstr "добавить новый этап"
 
 #: inc/training/formular/class.TrainingInputSplits.php:52
 msgid "round for 100m"
@@ -1215,7 +1215,7 @@ msgstr "ЧСС покоя"
 #: plugin/RunalyzePluginPanel_Sportler/window.sportler.table.php:40
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:117
 msgid "Maximal HR"
-msgstr "Максимальная ЧСС"
+msgstr "Макс. ЧСС"
 
 #: inc/training/schemes/scheme.UserData.php:86
 msgid "Body fat"
@@ -1239,7 +1239,7 @@ msgstr "Сохранить и продолжить"
 
 #: inc/training/class.TrainingFormular.php:94
 msgid "It seems that you already have imported this activity"
-msgstr "Кажется, что вы уже импортировали эту тренировку"
+msgstr "Вы уже загружали эту тренировку"
 
 #: inc/training/class.TrainingFormular.php:148
 msgid "The activity has been successfully created."
@@ -1311,7 +1311,7 @@ msgid ""
 "some satellite data."
 msgstr ""
 "Данные о  высоте, полученные с помощью GPS, являются очень неточными. "
-"Поэтому вы можете их исправить."
+"Поэтому вы можете их скорректировать."
 
 #: inc/core/Configuration/Category/General.php:221
 #: inc/system/config/class.ConfigTabGeneral.php:20
@@ -1360,7 +1360,7 @@ msgstr "Любимый вид спорта"
 #: plugin/RunalyzePluginTool_DatenbankCleanup/JobGeneral.php:137
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:623
 msgid "Basic endurance"
-msgstr "Общая выносливость"
+msgstr "Выносливость"
 
 #: inc/core/Configuration/Category/BasicEndurance.php:103
 msgid "Minimal distance for longjogs"
@@ -1556,7 +1556,7 @@ msgstr ""
 
 #: inc/core/Configuration/Category/ActivityView.php:385
 msgid "show map before plots"
-msgstr "Показывать карту перед графиками"
+msgstr "показывать карту перед графиками"
 
 #: inc/core/Configuration/Category/ActivityView.php:389
 msgid "Map: zoom on scroll"
@@ -1624,7 +1624,7 @@ msgstr ""
 
 #: inc/core/Configuration/Category/ActivityForm.php:242
 msgid "Automatically load weather conditions"
-msgstr "Автоматически загружать погодные условия"
+msgstr "Загружать погодные условия"
 
 #: inc/core/Configuration/Category/ActivityForm.php:243
 msgid "via openweathermap.org"
@@ -1643,7 +1643,7 @@ msgstr ""
 
 #: inc/core/Configuration/Category/ActivityForm.php:259
 msgid "Automatically correct elevation data"
-msgstr "Автоматически исправлять данные о высоте"
+msgstr "Исправлять данные о высоте"
 
 #: inc/core/Configuration/Category/ActivityForm.php:260
 msgid ""
@@ -1663,7 +1663,7 @@ msgstr "Сортировка: виды тренировок"
 
 #: inc/core/Configuration/Category/ActivityForm.php:278
 msgid "Sort: equipment"
-msgstr "Сортировка: снаряжение"
+msgstr "Сортировка: инвентарь"
 
 #: inc/core/Configuration/Category/DataBrowser.php:86
 #: inc/system/config/class.ConfigTabTypes.php:51
@@ -2224,7 +2224,7 @@ msgstr "&#37;ЧСС макс"
 
 #: inc/core/Parameter/Application/HeartRateUnit.php:41
 msgid "&#37; HRreserve"
-msgstr ""
+msgstr "&#37; ЧСС резерва"
 
 #: inc/core/Parameter/Application/PaceAxisLimit.php:28
 msgid "automatic"
@@ -2544,7 +2544,7 @@ msgstr ""
 
 #: inc/core/Data/Cadence/Running.php:28
 msgid "Cadence (running)"
-msgstr ""
+msgstr "Каденс (бег)"
 
 #: inc/core/Data/Cadence/Running.php:46
 msgid "spm = steps per minute"
@@ -2686,7 +2686,7 @@ msgstr ""
 
 #: inc/core/Dataset/Keys/Elevation.php:53
 msgid "Elev."
-msgstr "Высота"
+msgstr "Высота."
 
 #: inc/core/Dataset/Keys/Elevation.php:62
 msgid ""
