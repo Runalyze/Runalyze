@@ -24,6 +24,9 @@ class PaceCumulativeAverage extends Pace
 	 */
 	const COLOR = 'rgb(200,200,255)';
 
+	/** @var bool */
+	protected $adjustAxis = false;
+
 	/**
 	 * Create series
 	 * @var \Runalyze\View\Activity\Context $context
