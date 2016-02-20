@@ -6,6 +6,8 @@
 
 namespace Runalyze\View\Activity\Box;
 
+use Runalyze\View\Activity\Context;
+
 /**
  * Boxed value for Pressure
  * 
@@ -13,20 +15,16 @@ namespace Runalyze\View\Activity\Box;
  * @author Michael Pohl
  * @package Runalyze\View\Activity\Box
  */
-class WeatherWindChillFactor extends AbstractBox
+class WeatherWindChillFactor extends ValueBox
 {
 	/**
 	 * Constructor
 	 * @param \Runalyze\View\Activity\Context $Context
 	 */
-	public function __construct(\Runalyze\View\Activity\Context $Context)
+	public function __construct(Context $Context)
 	{
-		$WindChillFactor = $Context->dataview()->windChillFactor();
-
 		parent::__construct(
-			round($WindChillFactor->valueInPreferredUnit()),
-			$WindChillFactor->unit(),
-			$WindChillFactor->label()
+			$Context->dataview()->windChillFactor()
 		);
 	}
 }

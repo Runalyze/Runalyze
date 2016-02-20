@@ -6,26 +6,24 @@
 
 namespace Runalyze\View\Activity\Box;
 
+use Runalyze\View\Activity\Context;
+
 /**
  * Boxed value for elevation
  * 
  * @author Hannes Christiansen
  * @package Runalyze\View\Activity\Box
  */
-class Elevation extends AbstractBox
+class Elevation extends ValueBox
 {
 	/**
 	 * Constructor
 	 * @param \Runalyze\View\Activity\Context $Context
 	 */
-	public function __construct(\Runalyze\View\Activity\Context $Context)
+	public function __construct(Context $Context)
 	{
-		$Elevation = $Context->dataview()->elevation();
-
 		parent::__construct(
-			\Helper::Unknown($Elevation->valueInPreferredUnit(), '-'),
-			$Elevation->unit(),
-			$Elevation->label()
+			$Context->dataview()->elevation()
 		);
 	}
 }

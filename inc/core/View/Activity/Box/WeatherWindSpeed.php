@@ -6,6 +6,8 @@
 
 namespace Runalyze\View\Activity\Box;
 
+use Runalyze\View\Activity\Context;
+
 /**
  * Boxed value for Wind Speed
  * 
@@ -13,19 +15,16 @@ namespace Runalyze\View\Activity\Box;
  * @author Michael Pohl
  * @package Runalyze\View\Activity\Box
  */
-class WeatherWindSpeed extends AbstractBox
+class WeatherWindSpeed extends ValueBox
 {
 	/**
 	 * Constructor
 	 * @param \Runalyze\View\Activity\Context $Context
 	 */
-	public function __construct(\Runalyze\View\Activity\Context $Context)
+	public function __construct(Context $Context)
 	{
-		$WindSpeed = $Context->activity()->weather()->windSpeed();
 		parent::__construct(
-			\Helper::Unknown($WindSpeed->string(false), '-'),
-			$WindSpeed->unit(),
-			$WindSpeed->label()
+			$Context->activity()->weather()->windSpeed()
 		);
 	}
 }

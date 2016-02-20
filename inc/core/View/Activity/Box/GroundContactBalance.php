@@ -6,6 +6,9 @@
 
 namespace Runalyze\View\Activity\Box;
 
+use Runalyze\Activity;
+use Runalyze\View\Activity\Context;
+
 /**
  * Boxed value for ground contact balance 
  * 
@@ -13,18 +16,16 @@ namespace Runalyze\View\Activity\Box;
  * @author Michael Pohl
  * @package Runalyze\View\Activity\Box
  */
-class GroundContactBalance extends AbstractBox
+class GroundContactBalance extends ValueBox
 {
 	/**
 	 * Constructor
 	 * @param \Runalyze\View\Activity\Context $Context
 	 */
-	public function __construct(\Runalyze\View\Activity\Context $Context)
+	public function __construct(Context $Context)
 	{
 		parent::__construct(
-			\Runalyze\Activity\GroundcontactBalance::format($Context->activity()->groundContactBalance(), false),
-			'%',
-			__('Ground Contact Balance')
+			new Activity\GroundcontactBalance($Context->activity()->groundContactBalance())
 		);
 	}
 }
