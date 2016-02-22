@@ -21,6 +21,11 @@ class ParserTCXruntasticSingle extends ParserTCXSingle {
 	 * @var int
 	 */
 	protected $LastActiveIndex = 0;
+	
+	/**
+	 * @var int
+	 */
+	protected $LastValidHR = 0;
 
 	/**
 	 * Add error: no garmin file
@@ -46,12 +51,13 @@ class ParserTCXruntasticSingle extends ParserTCXSingle {
 		if ($this->distancesAreEmpty)
 			$TP->addChild('DistanceMeters', 1000*$this->distanceToTrackpoint($TP));
 
+		if (!empty($TP->HeartRateBpm)) {
+			$this->LastValidHR = round($TP->HeartRateBpm->Value);
+		}
 		$this->gps['time_in_s'][]  = strtotime((string)$TP->Time) - $this->TrainingObject->getTimestamp();
 		$this->gps['km'][]         = round((float)$TP->DistanceMeters/1000, ParserAbstract::DISTANCE_PRECISION);
 		$this->gps['altitude'][]   = (int)$TP->AltitudeMeters;
-		$this->gps['heartrate'][]  = (!empty($TP->HeartRateBpm))
-									? round($TP->HeartRateBpm->Value)
-									: 0;
+		$this->gps['heartrate'][]  = $this->LastValidHR;
 
 		if (!empty($TP->Position)) {
 			$this->gps['latitude'][]  = (double)$TP->Position->LatitudeDegrees;
