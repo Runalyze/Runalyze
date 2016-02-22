@@ -158,7 +158,7 @@ class Pace extends ActivitySeries {
 			$min = $LimitMin->automatic() ? $min : $LimitMin->value() * 1000;
 			$max = $LimitMax->automatic() ? $max : $LimitMax->value() * 1000;
 
-			$this->setYAxisForReversePace($Plot, $yAxis, $min, $max);
+			$this->setYAxisForReversePace($Plot, $yAxis, $min, $max, !$LimitMin->automatic(), !$LimitMax->automatic());
 		} else {
 			if (!$LimitMin->automatic() || !$LimitMax->automatic()) {
 				$setLimits = true;
@@ -197,8 +197,10 @@ class Pace extends ActivitySeries {
 	 * @param int $yAxis
 	 * @param int $dataMin
 	 * @param int $dataMax
+	 * @param bool $forceMin
+	 * @param bool $forceMax
 	 */
-	private function setYAxisForReversePace(Plot $plot, $yAxis, $dataMin, $dataMax)
+	private function setYAxisForReversePace(Plot $plot, $yAxis, $dataMin, $dataMax, $forceMin, $forceMax)
 	{
 		if ($this->paceUnitEnum == PaceUnit::MIN_PER_MILE) {
 			$ticks = [240, 300, 360, 450, 600, 900, 3600];
@@ -228,8 +230,8 @@ class Pace extends ActivitySeries {
 		}
 
 		$lastIndex = min($lastIndex, count($ticks) - 1);
-		$min = $ticks[$firstIndex];
-		$max = $ticks[$lastIndex];
+		$min = $forceMin ? $dataMin : $ticks[$firstIndex];
+		$max = $forceMax ? $dataMax : $ticks[$lastIndex];
 		$ticks = array_slice($ticks, max(0, $firstIndex - 1), max(1, $lastIndex - $firstIndex + 1));
 
 		$plot->setYLimits($yAxis, $min, $max, false);
