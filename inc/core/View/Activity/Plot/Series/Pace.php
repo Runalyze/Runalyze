@@ -218,7 +218,7 @@ class Pace extends ActivitySeries {
 		$lastIndex = count($ticks) - 1;
 
 		foreach ($ticks as $i => $tick) {
-			if ($tick < $dataMin) {
+			if ($tick <= $dataMin) {
 				$firstIndex = $i;
 			}
 
@@ -230,7 +230,7 @@ class Pace extends ActivitySeries {
 		$lastIndex = min($lastIndex, count($ticks) - 1);
 		$min = $ticks[$firstIndex];
 		$max = $ticks[$lastIndex];
-		$ticks = array_slice($ticks, $firstIndex, max(1, $lastIndex - $firstIndex));
+		$ticks = array_slice($ticks, max(0, $firstIndex - 1), max(1, $lastIndex - $firstIndex + 1));
 
 		$plot->setYLimits($yAxis, $min, $max, false);
 		$plot->setYAxisLabels($yAxis, $ticks);
