@@ -67,6 +67,15 @@ class ParserFITSingle extends ParserAbstractSingle {
 	 */
 	protected $pausesToApply = array();
 
+	/** @var float [s] */
+	protected $compressedTotalTime = 0;
+
+	/** @var float [16m] */
+	protected $compressedTotalDistance16 = 0;
+
+	/** @var float [16m] */
+	protected $compressedLastDistance16 = 0;
+
 	/**
 	 * Parse
 	 */
@@ -335,30 +344,38 @@ class ParserFITSingle extends ParserAbstractSingle {
 		if ($this->isPaused) // Should not happen?
 			return;
 
-		if ($this->isSwimming || !isset($this->Values['timestamp']))
+		if ($this->isSwimming)
 			return;
 
-		if (empty($this->gps['time_in_s'])) {
-			$startTime = strtotime((string)$this->Values['timestamp'][1]);
-
-			if ($startTime < $this->TrainingObject->getTimestamp()) {
-				$this->TrainingObject->setTimestamp($startTime);
+		if (isset($this->Values['compressed_speed_distance'])) {
+			$time = $this->parseCompressedSpeedDistance();
+			$last = -1;
+		} else {
+			if (!isset($this->Values['timestamp']))
+				return;
+	
+			if (empty($this->gps['time_in_s'])) {
+				$startTime = strtotime((string)$this->Values['timestamp'][1]);
+	
+				if ($startTime < $this->TrainingObject->getTimestamp()) {
+					$this->TrainingObject->setTimestamp($startTime);
+				}
 			}
-		}
-		$time = strtotime((string)$this->Values['timestamp'][1]) - $this->TrainingObject->getTimestamp() - $this->PauseInSeconds;
-		$last = end($this->gps['time_in_s']);
-
-		if ($this->wasPaused) {
-			$this->TrainingObject->Pauses()->add(
-				new \Runalyze\Model\Trackdata\Pause(
-					$last,
-					strtotime((string)$this->Values['timestamp'][1]) - $this->lastStopTimestamp,
-					end($this->gps['heartrate']),
-					isset($this->Values['heart_rate']) ? (int)$this->Values['heart_rate'][0] : 0
-				)
-			);
-			
-			$this->wasPaused = false;
+			$time = strtotime((string)$this->Values['timestamp'][1]) - $this->TrainingObject->getTimestamp() - $this->PauseInSeconds;
+			$last = end($this->gps['time_in_s']);
+	
+			if ($this->wasPaused) {
+				$this->TrainingObject->Pauses()->add(
+					new \Runalyze\Model\Trackdata\Pause(
+						$last,
+						strtotime((string)$this->Values['timestamp'][1]) - $this->lastStopTimestamp,
+						end($this->gps['heartrate']),
+						isset($this->Values['heart_rate']) ? (int)$this->Values['heart_rate'][0] : 0
+					)
+				);
+				
+				$this->wasPaused = false;
+			}
 		}
 
 		$this->gps['latitude'][]  = isset($this->Values['position_lat']) ? substr($this->Values['position_lat'][1], 0, -3) : 0;
@@ -404,6 +421,28 @@ class ParserFITSingle extends ParserAbstractSingle {
 				}
 			}
 		}
+	}
+
+	/**
+	 * @see FIT SDK, e.g. at https://github.com/dgaff/fitsdk/blob/7f38d911388b7cdc3db7bf0318239352928faa8b/c/examples/decode/decode.c#L132-L146
+	 * @return int current time
+	 */
+	protected function parseCompressedSpeedDistance() {
+		$values = explode(',', $this->Values['compressed_speed_distance'][1]);
+
+		if (count($values) == 3) {
+			$speed100 = $values[0] | (($values[1] & 0x0F) << 8);
+
+			$distance16 = ($values[1] >> 4) | ($values[2] << 4);
+			$distance16diff = ($distance16 - $this->compressedLastDistance16) & 0x0FFF;
+			$this->compressedTotalDistance16 += $distance16diff;
+			$this->compressedLastDistance16 = $distance16;
+
+			$this->compressedTotalTime += ($distance16diff/16.0) / ($speed100/100.0);
+			$this->Values['distance'][0] = 100 * $this->compressedTotalDistance16/16.0;
+		}
+
+		return round($this->compressedTotalTime);
 	}
 
 	/**
