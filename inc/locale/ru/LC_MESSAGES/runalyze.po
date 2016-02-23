@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-01-17 20:49+0100\n"
-"PO-Revision-Date: 2016-02-19 14:27+0200\n"
+"PO-Revision-Date: 2016-02-20 11:31+0200\n"
 "Last-Translator: Tony Sheen <spbnalog@gmail.com>\n"
 "Language-Team: Russian "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/ru/>\n"
@@ -631,7 +631,7 @@ msgstr ""
 
 #: inc/training/view/section/class.SectionRunningDynamics.php:21
 msgid "Running Dynamics"
-msgstr "Динамические показатели бега"
+msgstr "Показатели бега"
 
 #: inc/training/view/section/class.SectionLaps.php:20
 #: inc/training/formular/class.TrainingInputSplits.php:27
@@ -729,7 +729,7 @@ msgstr "Данные о высоте не скорректированы."
 #: inc/training/schemes/scheme.Training.php:185
 #: inc/core/Dataset/Keys/ElapsedTime.php:44
 msgid "Elapsed time"
-msgstr "Затраченное время"
+msgstr "Общее время"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:53
 msgid "Additional notes"
@@ -774,7 +774,7 @@ msgstr "SWOLF"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:184
 msgid "Weather condition"
-msgstr "Погодные условия"
+msgstr "Погода"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:266
 #: inc/training/class.TrainingFormular.php:241
@@ -1126,7 +1126,7 @@ msgstr "Общая информация"
 
 #: inc/training/schemes/scheme.Training.php:63
 msgid "Weather conditions"
-msgstr "Погодные условия"
+msgstr "Погода"
 
 #: inc/training/schemes/scheme.Training.php:69
 #: inc/core/Configuration/Category/Privacy.php:91
@@ -1193,7 +1193,7 @@ msgstr "Анализ"
 
 #: inc/training/schemes/scheme.UserData.php:23
 msgid "Sleep"
-msgstr ""
+msgstr "Продолжительность сна"
 
 #: inc/training/schemes/scheme.UserData.php:55 inc/core/Activity/Weight.php:72
 #: plugin/RunalyzePluginPanel_Sportler/window.sportler.table.php:35
@@ -1864,19 +1864,19 @@ msgstr ""
 
 #: inc/core/Export/Share/Html.php:55 inc/core/Export/Share/IFrame.php:82
 msgid "Code"
-msgstr ""
+msgstr "Код"
 
 #: inc/core/Export/Share/Html.php:59 inc/core/Export/Share/IFrame.php:86
 msgid "HTML-Code"
-msgstr ""
+msgstr "HTML код"
 
 #: inc/core/Export/Share/Html.php:61 inc/core/Export/Share/IFrame.php:93
 msgid "Add this code to your blog/website."
-msgstr ""
+msgstr "Добавьте этот код на ваш блог или сайт."
 
 #: inc/core/Export/Share/Html.php:63 inc/core/Export/Share/IFrame.php:111
 msgid "Preview"
-msgstr ""
+msgstr "Просмотр"
 
 #: inc/core/Export/Share/Html.php:67
 msgid "Your training is private: There is no link included."
@@ -2111,7 +2111,7 @@ msgstr ""
 
 #: inc/core/View/Activity/Plot/Series/HRV.php:96
 msgid "R-R interval"
-msgstr ""
+msgstr "R-R интервал"
 
 #: inc/core/View/Activity/Preview.php:131
 msgid "Heartrate data available"
@@ -2391,7 +2391,7 @@ msgstr ""
 
 #: inc/core/Parameter/Application/ActivityCreationMode.php:40
 msgid "Garmin-Communicator"
-msgstr ""
+msgstr "Устройство Garmin "
 
 #: inc/core/Parameter/Application/ActivityCreationMode.php:41
 msgid "Standard form"
@@ -2536,7 +2536,7 @@ msgstr ""
 
 #: inc/core/Data/Weather.php:157
 msgid "at"
-msgstr ""
+msgstr "на"
 
 #: inc/core/Data/Cadence/General.php:40
 msgid "rpm = rotations per minute"
@@ -2553,7 +2553,7 @@ msgstr ""
 #: inc/core/Dataset/Keys/FitVO2maxEstimate.php:44
 #: inc/core/Dataset/Keys/FitVO2maxEstimate.php:53
 msgid "VO2max"
-msgstr ""
+msgstr "VO2макс"
 
 #: inc/core/Dataset/Keys/FitVO2maxEstimate.php:44
 #: inc/core/Dataset/Keys/FitRecoveryTime.php:43
@@ -2744,14 +2744,13 @@ msgstr ""
 
 #: inc/core/Dataset/Keys/AirPressure.php:43
 msgid "Air pressure"
-msgstr "Атмосферное давление"
+msgstr "Давление"
 
 #: inc/core/Dataset/Keys/ElapsedTime.php:53
 msgid ""
 "Elapsed time is the difference between end and start of your activity "
 "including pauses."
-msgstr ""
-"Затраченное время - время между началом и концом тренировки, включая паузы"
+msgstr "Общее время - время между началом и концом тренировки, включая паузы"
 
 #: inc/core/Util/Time.php:89 inc/tpl/tpl.DataBrowser.php:23
 msgid "Sun"
@@ -3291,7 +3290,7 @@ msgstr ""
 #: inc/tpl/tpl.adminWindow.login.php:6
 #: inc/system/config/class.ConfigTabAccount.php:17
 msgid "Account"
-msgstr ""
+msgstr "Профиль"
 
 #: inc/tpl/tpl.InstallerUpdate.php:3 inc/tpl/tpl.InstallerUpdate.php:58
 msgid "Update RUNALYZE"
@@ -3430,7 +3429,7 @@ msgstr ""
 #: inc/tpl/tpl.loginWindow.setNewPassword.php:17
 #: inc/system/config/class.ConfigTabAccount.php:77
 msgid "New password"
-msgstr ""
+msgstr "Новый пароль"
 
 #: inc/tpl/tpl.loginWindow.setNewPassword.php:21
 msgid "New password again"
@@ -3476,7 +3475,7 @@ msgid ""
 "us"
 msgstr ""
 "Runalyze создан бегунами и для бегунов. Если у вас есть комментарии, "
-"проблемы или пожелания: пожалуйста свяжитесь с нашей командой. Runalyze -  "
+"проблемы или пожелания, пожалуйста, свяжитесь с нашей командой. Runalyze -  "
 "It's near and dear to us"
 
 #: inc/tpl/tpl.help.php:11
@@ -3605,7 +3604,7 @@ msgstr ""
 
 #: inc/class.DataBrowser.php:212
 msgid "week"
-msgstr ""
+msgstr "неделя"
 
 #: inc/class.DataBrowser.php:250
 msgid "back"
@@ -3650,7 +3649,7 @@ msgstr ""
 
 #: inc/class.FrontendSharedStatistics.php:89
 msgid "Registered since:"
-msgstr ""
+msgstr "Зарегистрирован:"
 
 #: inc/class.FrontendSharedStatistics.php:93
 msgid "Total duration:"
@@ -3662,7 +3661,7 @@ msgstr ""
 
 #: inc/class.FrontendSharedStatistics.php:97
 msgid "Last login:"
-msgstr ""
+msgstr "Последний вход:"
 
 #: inc/class.FrontendSharedStatistics.php:103
 msgid "General statistics"
@@ -3720,7 +3719,7 @@ msgstr ""
 #: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:282
 #: plugin/RunalyzePluginPanel_Rechenspiele/window.plot.php:48
 msgid "Choose year"
-msgstr ""
+msgstr "Выберите год"
 
 #: inc/draw/class.PlotSumData.php:204
 msgid "Activity &amp; Competition"
@@ -3742,21 +3741,21 @@ msgstr ""
 #: inc/plugin/class.PluginStat.php:302
 #: plugin/RunalyzePluginStat_Statistiken/class.SummaryTableMonths.php:56
 msgid "Last 6 months"
-msgstr ""
+msgstr "Последние 6 месяцев"
 
 #: inc/draw/class.PlotSumData.php:254 inc/plugin/class.PluginStat.php:284
 #: inc/plugin/class.PluginStat.php:304
 #: plugin/RunalyzePluginStat_Statistiken/class.SummaryTableMonths.php:62
 msgid "Last 12 months"
-msgstr ""
+msgstr "Последние 12 месяцев"
 
 #: inc/draw/class.PlotSumData.php:300
 msgid "last 6 months"
-msgstr ""
+msgstr "последние 6 месяцев"
 
 #: inc/draw/class.PlotSumData.php:302
 msgid "last 12 months"
-msgstr ""
+msgstr "последние 12 месяцев"
 
 #: inc/draw/class.PlotSumData.php:364
 msgid "There are no data for this timerange."
@@ -4057,11 +4056,11 @@ msgstr ""
 
 #: inc/system/config/class.ConfigTabDataset.php:59
 msgid "Dataset"
-msgstr "Настройка данных"
+msgstr "Данные"
 
 #: inc/system/config/class.ConfigTabDataset.php:66
 msgid "Your Dataset"
-msgstr "Ваши настройки"
+msgstr "Настройки отображения данных"
 
 #: inc/system/config/class.ConfigTabDataset.php:68
 msgid ""
@@ -4138,11 +4137,11 @@ msgstr ""
 
 #: inc/system/config/class.ConfigTabPlugins.php:46
 msgid "Install a new plugin"
-msgstr ""
+msgstr "Установка плагинов"
 
 #: inc/system/config/class.ConfigTabPlugins.php:47
 msgid "New plugins can be installed here."
-msgstr ""
+msgstr "Новые плагины, которые могут быть установлены в систему."
 
 #: inc/system/config/class.ConfigTabPlugins.php:69
 msgid "No plugins available."
@@ -4178,7 +4177,7 @@ msgstr ""
 
 #: inc/system/config/class.ConfigTabPlugins.php:189
 msgid "There are no new plugins to install."
-msgstr ""
+msgstr "Новых плагинов нет."
 
 #: inc/system/config/class.ConfigTabPlugins.php:196
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:132
@@ -4260,15 +4259,15 @@ msgstr "Язык"
 
 #: inc/system/config/class.ConfigTabAccount.php:43
 msgid "Registered since"
-msgstr ""
+msgstr "Зарегистрирован"
 
 #: inc/system/config/class.ConfigTabAccount.php:46
 msgid "Last Login"
-msgstr ""
+msgstr "Последний вход"
 
 #: inc/system/config/class.ConfigTabAccount.php:49
 msgid "Your account"
-msgstr ""
+msgstr "Ваш профиль"
 
 #: inc/system/config/class.ConfigTabAccount.php:57
 msgid "Email me"
@@ -4276,7 +4275,7 @@ msgstr ""
 
 #: inc/system/config/class.ConfigTabAccount.php:61
 msgid "Notifications"
-msgstr ""
+msgstr "Уведомления"
 
 #: inc/system/config/class.ConfigTabAccount.php:62
 msgid ""
@@ -4286,23 +4285,23 @@ msgstr ""
 
 #: inc/system/config/class.ConfigTabAccount.php:65
 msgid "Change your password"
-msgstr ""
+msgstr "Изменить пароль"
 
 #: inc/system/config/class.ConfigTabAccount.php:76
 msgid "Old password"
-msgstr ""
+msgstr "Старый пароль"
 
 #: inc/system/config/class.ConfigTabAccount.php:78
 msgid "Repeat new password"
-msgstr ""
+msgstr "Новый пароль еще раз"
 
 #: inc/system/config/class.ConfigTabAccount.php:80
 msgid "Backup your data"
-msgstr ""
+msgstr "Резервное копирование"
 
 #: inc/system/config/class.ConfigTabAccount.php:87
 msgid "Please use the plugin"
-msgstr ""
+msgstr "Используйте плагин"
 
 #: inc/system/config/class.ConfigTabAccount.php:89
 msgid ""
@@ -4314,7 +4313,7 @@ msgstr ""
 #: inc/system/config/class.ConfigTabAccount.php:93
 #: inc/system/config/class.ConfigTabAccount.php:99
 msgid "Delete your account"
-msgstr ""
+msgstr "Удалить профиль"
 
 #: inc/system/config/class.ConfigTabAccount.php:95
 msgid ""
@@ -4787,7 +4786,7 @@ msgstr ""
 
 #: inc/plugin/config/class.PluginConfigurationWindow.php:77
 msgid "back to overview"
-msgstr ""
+msgstr "назад"
 
 #: inc/plugin/config/class.PluginConfigurationWindow.php:83
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:133
@@ -4806,19 +4805,19 @@ msgstr ""
 
 #: inc/plugin/config/class.PluginConfigurationWindow.php:125
 msgid "There are no settings."
-msgstr ""
+msgstr "Нет настроек."
 
 #: inc/plugin/config/class.PluginConfigurationWindow.php:143
 msgid "Activate plugin"
-msgstr ""
+msgstr "Включить плагин"
 
 #: inc/plugin/config/class.PluginConfigurationWindow.php:144
 msgid "Deactivate plugin"
-msgstr ""
+msgstr "Отключить плагин"
 
 #: inc/plugin/config/class.PluginConfigurationWindow.php:146
 msgid "Activation"
-msgstr ""
+msgstr "Вкл/выкл"
 
 #: inc/plugin/config/class.PluginConfigurationWindow.php:157
 msgid "Open tool"
@@ -5005,7 +5004,7 @@ msgstr ""
 
 #: call/call.Training.display.php:28 call/call.Training.edit.php:21
 msgid "The activity has been removed"
-msgstr ""
+msgstr "Тренировка удалена"
 
 #: call/call.SharedList.php:44
 msgid "Click on an activity to see more details."
@@ -5041,7 +5040,7 @@ msgstr ""
 
 #: call/window.delete.php:12
 msgid "Delete your account."
-msgstr ""
+msgstr "Удалить профиль."
 
 #: call/window.delete.php:19
 msgid ""
@@ -5251,7 +5250,7 @@ msgstr ""
 #: plugin/RunalyzePluginStat_Wetter/Plot.Year.php:31
 #: plugin/RunalyzePluginStat_Wetter/window.php:27
 msgid "Temperatures"
-msgstr ""
+msgstr "Температура"
 
 #: plugin/RunalyzePluginStat_Wetter/MinMaxTableForEquipment.php:128
 #: plugin/RunalyzePluginStat_Wetter/MonthwiseTable.php:147
@@ -5270,7 +5269,7 @@ msgstr "Нет данных."
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:196
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:215
 msgid "No data available."
-msgstr ""
+msgstr "Нет данных."
 
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:38
 msgid "Statistics about weather conditions and temperatures."
@@ -5293,7 +5292,7 @@ msgstr ""
 
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:83
 msgid "Show temperature plots"
-msgstr ""
+msgstr "Показать график температуры"
 
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:84
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:143
@@ -5374,7 +5373,7 @@ msgstr ""
 
 #: plugin/RunalyzePluginStat_Tag/class.RunalyzePluginStat_Tag.php:29
 msgid "Tag analysis"
-msgstr ""
+msgstr "Анализ по тэгам"
 
 #: plugin/RunalyzePluginStat_Tag/class.RunalyzePluginStat_Tag.php:37
 msgid "How often have you tagged your activities with tag x?"
@@ -5405,7 +5404,7 @@ msgstr ""
 #: plugin/RunalyzePluginPanel_Rechenspiele/window.plot.php:23
 #: plugin/RunalyzePluginStat_Rekorde/class.RunalyzePluginStat_Rekorde.php:58
 msgid "All years"
-msgstr ""
+msgstr "За все время"
 
 #: plugin/RunalyzePluginStat_Hoehenmeter/class.RunalyzePluginStat_Hoehenmeter.php:92
 #: plugin/RunalyzePluginStat_Hoehenmeter/class.RunalyzePluginStat_Hoehenmeter.php:128
@@ -5853,7 +5852,7 @@ msgstr ""
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:363
 msgid "Basic Endurance"
-msgstr ""
+msgstr "Выносливость"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:378
 msgid "Best result"
@@ -6079,14 +6078,14 @@ msgstr ""
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:116
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:129
 msgid "by distance"
-msgstr ""
+msgstr "по расстоянию"
 
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:65
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:77
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:121
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:130
 msgid "by time"
-msgstr ""
+msgstr "по времени"
 
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:66
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:78
@@ -6201,7 +6200,7 @@ msgstr ""
 #: plugin/RunalyzePluginPanel_Sportler/window.sportler.table.php:26
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:19
 msgid "Body values"
-msgstr ""
+msgstr "Параметры тела"
 
 #: plugin/RunalyzePluginPanel_Sportler/window.sportler.table.php:36
 msgid "Sleep duration"
@@ -6248,12 +6247,12 @@ msgstr ""
 
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:71
 msgid "Add data"
-msgstr ""
+msgstr "Добавить данные"
 
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:72
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:226
 msgid "Show table"
-msgstr ""
+msgstr "Показать таблицу"
 
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:89
 msgid "You have to specify which values to record. (see configuration)"
@@ -6261,11 +6260,11 @@ msgstr ""
 
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:101
 msgid "Enter maximal HR"
-msgstr ""
+msgstr "Введите максимальную ЧСС"
 
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:101
 msgid "Otherwise calculations will be wrong"
-msgstr ""
+msgstr "Иначе расчеты будут неправильными"
 
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:163
 msgid "Other values"
@@ -6273,7 +6272,7 @@ msgstr ""
 
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:234
 msgid "Add a new entry"
-msgstr ""
+msgstr "Добавить запись"
 
 #: plugin/RunalyzePluginStat_Statistiken/class.SummaryTableAllWeeks.php:22
 #, php-format
@@ -6343,11 +6342,11 @@ msgstr ""
 
 #: plugin/RunalyzePluginStat_Statistiken/class.SummaryTable10Weeks.php:20
 msgid "Last 10 training weeks"
-msgstr ""
+msgstr "Последние 10 недель"
 
 #: plugin/RunalyzePluginStat_Statistiken/class.SummaryTable.php:178
 msgid "No activities"
-msgstr ""
+msgstr "Нет тренировок"
 
 #: plugin/RunalyzePluginStat_Statistiken/class.SummaryTableMonths.php:68
 msgid "All months"
@@ -6714,7 +6713,7 @@ msgstr ""
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:119
 msgid "There are not enough activities for good calculations."
-msgstr ""
+msgstr "Недостаточно тренировок для более точного рассчета."
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:199
 msgid "Current average VDOT"
@@ -7030,11 +7029,11 @@ msgstr ""
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/window.plot.php:26
 msgid "Last half year"
-msgstr ""
+msgstr "Последние полгода"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/window.plot.php:29
 msgid "Last year"
-msgstr ""
+msgstr "Последний год"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/window.plot.php:37
 msgid "TSB"
@@ -7121,7 +7120,7 @@ msgstr ""
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:113
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:128
 msgid "in percent"
-msgstr ""
+msgstr "в процентах"
 
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:142
 msgid "The values consider only the average data fields of your activities."
@@ -7133,7 +7132,7 @@ msgstr ""
 
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:374
 msgid "Training types"
-msgstr ""
+msgstr "Вид тренировки"
 
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:436
 msgid "faster than"
@@ -7145,7 +7144,7 @@ msgstr ""
 
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:445
 msgid "Pace Zones"
-msgstr ""
+msgstr "Зоны темпа"
 
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:504
 msgid "Heart Rate Zones"
@@ -7223,7 +7222,7 @@ msgstr ""
 
 #: plugin/RunalyzePluginStat_Rekorde/class.RunalyzePluginStat_Rekorde.php:31
 msgid "Records"
-msgstr ""
+msgstr "Рекорды"
 
 #: plugin/RunalyzePluginStat_Rekorde/class.RunalyzePluginStat_Rekorde.php:39
 msgid "Faster, longer, better: Your records from your activities."
@@ -7232,7 +7231,7 @@ msgstr ""
 #: plugin/RunalyzePluginStat_Rekorde/class.RunalyzePluginStat_Rekorde.php:125
 #: plugin/RunalyzePluginStat_Rekorde/class.RunalyzePluginStat_Rekorde.php:141
 msgid "No data available"
-msgstr ""
+msgstr "Нет данных"
 
 #: plugin/RunalyzePluginStat_Rekorde/class.RunalyzePluginStat_Rekorde.php:137
 msgid "Most kilometers"
@@ -7240,15 +7239,15 @@ msgstr ""
 
 #: plugin/RunalyzePluginStat_Rekorde/class.RunalyzePluginStat_Rekorde.php:150
 msgid "per year"
-msgstr "в год"
+msgstr "за год"
 
 #: plugin/RunalyzePluginStat_Rekorde/class.RunalyzePluginStat_Rekorde.php:161
 msgid "per month"
-msgstr "в месяц"
+msgstr "за месяц"
 
 #: plugin/RunalyzePluginStat_Rekorde/class.RunalyzePluginStat_Rekorde.php:171
 msgid "per week"
-msgstr "в неделю"
+msgstr "за неделю"
 
 #: plugin/RunalyzePluginStat_Rekorde/class.RunalyzePluginStat_Rekorde.php:191
 msgid "Fastest activities"
