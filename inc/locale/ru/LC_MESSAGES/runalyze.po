@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-01-17 20:49+0100\n"
-"PO-Revision-Date: 2016-02-20 11:31+0200\n"
+"PO-Revision-Date: 2016-02-23 17:05+0200\n"
 "Last-Translator: Tony Sheen <spbnalog@gmail.com>\n"
 "Language-Team: Russian "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/ru/>\n"
@@ -830,7 +830,7 @@ msgstr "сред. уд/мин"
 
 #: inc/training/view/section/table/class.TableLapsComputed.php:67
 msgid "elev."
-msgstr "высота."
+msgstr "выс."
 
 #: inc/training/view/section/table/class.TableZonesPace.php:35
 #: inc/core/View/Window/Laps/Table.php:143
@@ -1669,7 +1669,7 @@ msgstr "Сортировка: инвентарь"
 #: inc/system/config/class.ConfigTabTypes.php:51
 #: inc/system/config/class.ConfigTabSports.php:62
 msgid "Calendar view"
-msgstr "Настройки календаря"
+msgstr "Просмотр календаря"
 
 #: inc/core/Configuration/Category/DataBrowser.php:89
 msgid "Calendar: mode"
@@ -1952,11 +1952,11 @@ msgstr ""
 #: inc/system/config/class.ConfigTabEquipment.php:82
 #: plugin/RunalyzePluginPanel_Equipment/class.RunalyzePluginPanel_Equipment.php:195
 msgid "max."
-msgstr ""
+msgstr "макс."
 
 #: inc/core/View/Window/Laps/Table.php:145
 msgid "elevation"
-msgstr ""
+msgstr "высота"
 
 #: inc/core/View/Window/Laps/Table.php:287
 msgid "Average"
@@ -2065,7 +2065,7 @@ msgstr ""
 
 #: inc/core/View/Activity/Box/ElevationUpDown.php:35
 msgid "Elevation up/down"
-msgstr ""
+msgstr "Высота +/-"
 
 #: inc/core/View/Activity/Box/Pace.php:28
 #: inc/core/View/Activity/Box/Speed.php:37
@@ -2315,7 +2315,7 @@ msgstr ""
 
 #: inc/core/Parameter/Application/DatabaseOrder.php:41
 msgid "alphabetical"
-msgstr ""
+msgstr "по алфавиту"
 
 #: inc/core/Parameter/Application/VdotMethod.php:33
 msgid "logarithmic (new method since v1.5)"
@@ -2387,7 +2387,7 @@ msgstr ""
 
 #: inc/core/Parameter/Application/ActivityCreationMode.php:39
 msgid "Upload form"
-msgstr ""
+msgstr "Загрузка"
 
 #: inc/core/Parameter/Application/ActivityCreationMode.php:40
 msgid "Garmin-Communicator"
@@ -2395,7 +2395,7 @@ msgstr "Устройство Garmin "
 
 #: inc/core/Parameter/Application/ActivityCreationMode.php:41
 msgid "Standard form"
-msgstr ""
+msgstr "Ввод вручную"
 
 #: inc/core/Parameter/Application/ActivityPlotMode.php:39
 msgid "all separated"
@@ -2615,7 +2615,7 @@ msgstr ""
 
 #: inc/core/Dataset/Keys/HeartrateAverage.php:44
 msgid "avg."
-msgstr ""
+msgstr "сред."
 
 #: inc/core/Dataset/Keys/Sport.php:53
 msgid "Sport type"
@@ -2627,7 +2627,7 @@ msgstr ""
 
 #: inc/core/Dataset/Keys/VdotIcon.php:48
 msgid "VDOT icon"
-msgstr ""
+msgstr "Значок изменения VDOT"
 
 #: inc/core/Dataset/Keys/VdotIcon.php:67
 msgid ""
@@ -2686,7 +2686,7 @@ msgstr ""
 
 #: inc/core/Dataset/Keys/Elevation.php:53
 msgid "Elev."
-msgstr "Высота."
+msgstr "Выс."
 
 #: inc/core/Dataset/Keys/Elevation.php:62
 msgid ""
@@ -3170,7 +3170,7 @@ msgstr ""
 
 #: inc/tpl/tpl.loginWindow.php:14
 msgid "The username is not known."
-msgstr ""
+msgstr "Неправильное имя пользователя."
 
 #: inc/tpl/tpl.loginWindow.php:17
 msgid "The password was incorrect."
@@ -3223,7 +3223,7 @@ msgstr ""
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:451
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:645
 msgid "Name"
-msgstr "Имя"
+msgstr "Название"
 
 #: inc/tpl/tpl.loginWindow.php:84 inc/class.AdminView.php:261
 msgid "Email"
@@ -3263,17 +3263,17 @@ msgstr "Отправить"
 #, php-format
 msgid "Until now <strong>%d</strong> athlete is registered and"
 msgid_plural "Until now <strong>%d</strong> athletes are registered and"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Зарегистрирован <strong>%d</strong> спортсмен и"
+msgstr[1] "Зарегистрировано <strong>%d</strong> спортсмена и"
+msgstr[2] "Зарегистрировано <strong>%d</strong> спортсменов и"
 
 #: inc/tpl/tpl.loginWindow.php:191
 #, php-format
 msgid "has logged <strong>%s</strong>."
 msgid_plural "have logged <strong>%s</strong>."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "суммарная дистанция <strong>%s</strong>."
+msgstr[1] " суммарная дистанция <strong>%s</strong>."
+msgstr[2] "суммарная дистанция  <strong>%s</strong>."
 
 #: inc/tpl/tpl.loginWindow.php:193
 #, php-format
@@ -3466,7 +3466,7 @@ msgstr ""
 
 #: inc/tpl/tpl.installerFooterText.php:19
 msgid "By runners for runners"
-msgstr ""
+msgstr " Бегунам от бегунов"
 
 #: inc/tpl/tpl.installerFooterText.php:20
 msgid ""
@@ -3507,7 +3507,7 @@ msgstr ""
 
 #: inc/tpl/tpl.help.php:21
 msgid "Official developers:"
-msgstr ""
+msgstr "Официальные разработчики:"
 
 #: inc/tpl/tpl.help.php:33
 msgid ""
@@ -3528,7 +3528,7 @@ msgstr ""
 
 #: inc/tpl/tpl.help.php:41
 msgid "Support"
-msgstr ""
+msgstr "Поддержка"
 
 #: inc/tpl/tpl.help.php:45
 msgid "Please let us know if you have wishes or have encountered bugs."
@@ -3669,7 +3669,7 @@ msgstr ""
 
 #: inc/class.FrontendSharedStatistics.php:128 inc/plugin/class.Plugin.php:399
 msgid "Year on year"
-msgstr ""
+msgstr "За все время"
 
 #: inc/class.FrontendSharedStatistics.php:128
 #: inc/system/schemes/set.emptyValues.php:50
@@ -3741,21 +3741,21 @@ msgstr ""
 #: inc/plugin/class.PluginStat.php:302
 #: plugin/RunalyzePluginStat_Statistiken/class.SummaryTableMonths.php:56
 msgid "Last 6 months"
-msgstr "Последние 6 месяцев"
+msgstr "За  6 месяцев"
 
 #: inc/draw/class.PlotSumData.php:254 inc/plugin/class.PluginStat.php:284
 #: inc/plugin/class.PluginStat.php:304
 #: plugin/RunalyzePluginStat_Statistiken/class.SummaryTableMonths.php:62
 msgid "Last 12 months"
-msgstr "Последние 12 месяцев"
+msgstr "За 12 месяцев"
 
 #: inc/draw/class.PlotSumData.php:300
 msgid "last 6 months"
-msgstr "последние 6 месяцев"
+msgstr "за 6 месяцев"
 
 #: inc/draw/class.PlotSumData.php:302
 msgid "last 12 months"
-msgstr "последние 12 месяцев"
+msgstr "за 12 месяцев"
 
 #: inc/draw/class.PlotSumData.php:364
 msgid "There are no data for this timerange."
@@ -3776,7 +3776,7 @@ msgstr ""
 
 #: inc/draw/class.PlotSumData.php:610
 msgid "avg:"
-msgstr ""
+msgstr "сред:"
 
 #: inc/draw/class.PlotSumData.php:611
 msgid "goal:"
@@ -4149,7 +4149,7 @@ msgstr ""
 
 #: inc/system/config/class.ConfigTabPlugins.php:77
 msgid "Mode"
-msgstr ""
+msgstr "Состояние"
 
 #: inc/system/config/class.ConfigTabPlugins.php:92
 msgid "The plugin cannot be found."
@@ -4170,6 +4170,7 @@ msgstr "выключено"
 #: inc/system/config/class.ConfigTabPlugins.php:142
 msgid "* Hidden plugins only show their headings."
 msgstr ""
+"* скрыто - при выборе данного значения указываются только заголовки плагинов."
 
 #: inc/system/config/class.ConfigTabPlugins.php:145
 msgid "* Hidden plugins are grouped as 'Miscellaneous'."
@@ -4182,16 +4183,16 @@ msgstr "Новых плагинов нет."
 #: inc/system/config/class.ConfigTabPlugins.php:196
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:132
 msgid "Plugin"
-msgstr ""
+msgstr "Плагин"
 
 #: inc/system/config/class.ConfigTabTypes.php:20
 msgid "Activity Types"
-msgstr ""
+msgstr "Виды тренировок"
 
 #: inc/system/config/class.ConfigTabTypes.php:27
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:135
 msgid "Activity types"
-msgstr ""
+msgstr "Виды тренировок"
 
 #: inc/system/config/class.ConfigTabTypes.php:29
 msgid ""
@@ -4207,16 +4208,17 @@ msgstr ""
 
 #: inc/system/config/class.ConfigTabTypes.php:46
 msgid "Abbreviation"
-msgstr ""
+msgstr "Сокращенно"
 
 #: inc/system/config/class.ConfigTabTypes.php:47
 msgid "A type can only belong to one sport."
-msgstr ""
+msgstr "Вид тренировки может соответствовать только одному виду спорта."
 
 #: inc/system/config/class.ConfigTabTypes.php:48
 #: inc/system/config/class.ConfigTabSports.php:56
 msgid "Average heart rate (used for calculation of TRIMP)"
 msgstr ""
+"Значение средней ЧСС (необходимо для расчета TRIMP - ТРенировочного ИМПульса)"
 
 #: inc/system/config/class.ConfigTabTypes.php:49
 msgid "Quality?"
@@ -4233,21 +4235,23 @@ msgstr ""
 #: inc/system/config/class.ConfigTabTypes.php:51
 #: inc/system/config/class.ConfigTabSports.php:62
 msgid "Mode for displaying activities in calendar"
-msgstr ""
+msgstr "Как будет отражаться тренировка в календаре"
 
 #: inc/system/config/class.ConfigTabTypes.php:52
 msgid "A type can only be deleted if no references exist."
 msgstr ""
+"Вид тренировки может быть удален только в том случае, если по нему не было "
+"тренировок."
 
 #: inc/system/config/class.ConfigTabTypes.php:86
 #: inc/system/config/class.ConfigTabSports.php:85
 msgid "complete row"
-msgstr ""
+msgstr "полностью"
 
 #: inc/system/config/class.ConfigTabTypes.php:87
 #: inc/system/config/class.ConfigTabSports.php:86
 msgid "only icon"
-msgstr ""
+msgstr "только значок"
 
 #: inc/system/config/class.ConfigTabAccount.php:31
 msgid "Email address"
@@ -4271,7 +4275,7 @@ msgstr "Ваш профиль"
 
 #: inc/system/config/class.ConfigTabAccount.php:57
 msgid "Email me"
-msgstr ""
+msgstr "Подписаться на рассылку"
 
 #: inc/system/config/class.ConfigTabAccount.php:61
 msgid "Notifications"
@@ -4282,6 +4286,8 @@ msgid ""
 "At irregular intervals we are sending mails to you. We will never send you "
 "spam or advertisement."
 msgstr ""
+"Иногда мы будем присылать вам письма об изменениях на сайте. Мы никогда не "
+"рассылаем спам или рекламу."
 
 #: inc/system/config/class.ConfigTabAccount.php:65
 msgid "Change your password"
@@ -4331,41 +4337,43 @@ msgstr ""
 
 #: inc/system/config/class.ConfigTabs.php:87
 msgid "The settings have been saved."
-msgstr ""
+msgstr "Настройки сохранены."
 
 #: inc/system/config/class.ConfigTabSports.php:20
 #: inc/system/config/class.ConfigTabEquipment.php:84
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:33
 msgid "Sports"
-msgstr ""
+msgstr "Виды спорта"
 
 #: inc/system/config/class.ConfigTabSports.php:27
 msgid "Your sports"
-msgstr ""
+msgstr "Ваши виды спорта"
 
 #: inc/system/config/class.ConfigTabSports.php:29
 msgid "Hover over the headings if the abbreviations are unclear."
-msgstr ""
+msgstr "Для получения подсказки наведите курсор на заголовки таблицы."
 
 #: inc/system/config/class.ConfigTabSports.php:39
 msgid "<em>&Oslash; HF</em> is necessary for the calculation of TRIMP."
 msgstr ""
+"<em>&Oslash; ЧСС</em> - введите значение средней ЧСС, оно необходимо для "
+"расчета TRIMP (ТРенировочного ИМПульса)."
 
 #: inc/system/config/class.ConfigTabSports.php:53
 msgid "Icon"
-msgstr ""
+msgstr "Значок"
 
 #: inc/system/config/class.ConfigTabSports.php:54
 msgid "Name of the sport"
-msgstr ""
+msgstr "Введите вид спорта"
 
 #: inc/system/config/class.ConfigTabSports.php:55
 msgid "kcal/h"
-msgstr ""
+msgstr "ккал/ч"
 
 #: inc/system/config/class.ConfigTabSports.php:55
 msgid "Average energy turnover in kilocalories per hour"
-msgstr ""
+msgstr "Средний расход калорий в килокалориях в час"
 
 #: inc/system/config/class.ConfigTabSports.php:57
 #: plugin/RunalyzePluginTool_AnalyzeVDOT/tpl.Table.php:10
@@ -4375,14 +4383,16 @@ msgstr "км"
 #: inc/system/config/class.ConfigTabSports.php:57
 msgid "Has a distance"
 msgstr ""
+"Поставьте галочку если вид спорта подразумевает наличие дистанции (бег, "
+"велоспорт и т.д.)"
 
 #: inc/system/config/class.ConfigTabSports.php:58
 msgid "Unit"
-msgstr ""
+msgstr "Ед.изм."
 
 #: inc/system/config/class.ConfigTabSports.php:58
 msgid "Unit for speed"
-msgstr ""
+msgstr "Единицы измерения скорости"
 
 #: inc/system/config/class.ConfigTabSports.php:59
 msgid "Power is recorded or calculated."
@@ -4398,15 +4408,17 @@ msgstr ""
 
 #: inc/system/config/class.ConfigTabSports.php:61
 msgid "Main equipment"
-msgstr ""
+msgstr "Инвентарь"
 
 #: inc/system/config/class.ConfigTabSports.php:61
 msgid "Objects of main equipment type can be shown in the activity overview."
-msgstr ""
+msgstr "Выбранный инвентарь будет отражаться в обзоре тренировки."
 
 #: inc/system/config/class.ConfigTabSports.php:63
 msgid "A sport can only be deleted if no references exist."
 msgstr ""
+"Вид спорта может быть удален только в том случае, если по нему не было "
+"тренировок."
 
 #: inc/system/config/class.ConfigTabEquipment.php:31
 msgid "Your equipment categories"
@@ -4559,7 +4571,7 @@ msgstr ""
 #: inc/import/class.MultiEditor.php:58
 #: plugin/RunalyzePluginTool_MultiEditor/class.RunalyzePluginTool_MultiEditor.php:31
 msgid "Multi editor"
-msgstr ""
+msgstr "Редактор"
 
 #: inc/import/parser/class.ParserPWXSingle.php:54
 msgid ""
@@ -4742,15 +4754,15 @@ msgstr "Загрузка"
 
 #: inc/plugin/class.PluginType.php:57
 msgid "Panel"
-msgstr ""
+msgstr "Панель"
 
 #: inc/plugin/class.PluginType.php:61
 msgid "Tool"
-msgstr ""
+msgstr "Инструмент"
 
 #: inc/plugin/class.PluginTool.php:60
 msgid "All tools"
-msgstr ""
+msgstr "Все"
 
 #: inc/plugin/class.PluginTool.php:69
 msgid "Choose tool"
@@ -4761,10 +4773,12 @@ msgid ""
 "Complex tools can analyze or process the complete database and will open in "
 "an overlay."
 msgstr ""
+"Инструменты предназначены для анализа и обработки данных, открываются в "
+"новом окне."
 
 #: inc/plugin/class.PluginTool.php:88
 msgid "Installed tools"
-msgstr ""
+msgstr "Установленные инструменты"
 
 #: inc/plugin/class.PluginTool.php:95
 msgid "No tools installed."
@@ -4772,17 +4786,17 @@ msgstr ""
 
 #: inc/plugin/class.PluginInstaller.php:95
 msgid "Install plugin"
-msgstr ""
+msgstr "Установить плагин"
 
 #: inc/plugin/class.PluginInstaller.php:108
 msgid "Uninstall plugin"
-msgstr ""
+msgstr "Удалить плагин"
 
 #: inc/plugin/class.PluginStat.php:338
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:325
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:567
 msgid "In total"
-msgstr ""
+msgstr "Итого"
 
 #: inc/plugin/config/class.PluginConfigurationWindow.php:77
 msgid "back to overview"
@@ -5231,7 +5245,7 @@ msgstr ""
 
 #: plugin/RunalyzePluginTool_AnalyzeVDOT/class.RunalyzePluginTool_AnalyzeVDOT.php:27
 msgid "Analyze your VDOT"
-msgstr ""
+msgstr "Анализ VDOT"
 
 #: plugin/RunalyzePluginTool_AnalyzeVDOT/class.RunalyzePluginTool_AnalyzeVDOT.php:35
 msgid "Analyze the VDOT prediction based on your race results."
@@ -5288,7 +5302,7 @@ msgstr ""
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:61
 #: plugin/RunalyzePluginPanel_Equipment/class.RunalyzePluginPanel_Equipment.php:58
 msgid "Equipment type to display"
-msgstr ""
+msgstr "Какой инвентарь отображать"
 
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:83
 msgid "Show temperature plots"
@@ -5358,18 +5372,20 @@ msgstr ""
 
 #: plugin/RunalyzePluginTool_Cacheclean/class.RunalyzePluginTool_Cacheclean.php:19
 msgid "Cacheclean"
-msgstr ""
+msgstr "Очистка кэша"
 
 #: plugin/RunalyzePluginTool_Cacheclean/class.RunalyzePluginTool_Cacheclean.php:27
 msgid ""
 "Runalyze uses data caching for faster access. Whenever you feel the views "
 "are not updated you can force emptying the cache"
 msgstr ""
+"Runalyze использует кэширование данных для ускорения доступа. Если Вы "
+"заметили что данные не обновились можно принудительно очистить кэш."
 
 #: plugin/RunalyzePluginTool_Cacheclean/class.RunalyzePluginTool_Cacheclean.php:39
 #: plugin/RunalyzePluginTool_Cacheclean/class.RunalyzePluginTool_Cacheclean.php:40
 msgid "Empty your cache"
-msgstr ""
+msgstr "Очистить  кэш"
 
 #: plugin/RunalyzePluginStat_Tag/class.RunalyzePluginStat_Tag.php:29
 msgid "Tag analysis"
@@ -5525,7 +5541,7 @@ msgstr ""
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:253
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:414
 msgid "Prognosis"
-msgstr ""
+msgstr "Прогноз"
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:170
 #, php-format
@@ -5579,11 +5595,11 @@ msgstr "Месяц"
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:419
 msgid "Half-Year"
-msgstr ""
+msgstr "Полгода"
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:420
 msgid "Saison"
-msgstr ""
+msgstr "Сезон"
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:420
 msgid "Note: Saison means the current season in the german &quot;kmspiel&quot;"
@@ -5667,7 +5683,7 @@ msgstr ""
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:223
 #: plugin/RunalyzePluginPanel_Prognose/window.plot.php:33
 msgid "Choose distance"
-msgstr ""
+msgstr "Выберите дистанцию"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:230
 msgid "Results trend"
@@ -5690,6 +5706,8 @@ msgid ""
 "Edit a couple of activities. This plugin is needed to upload more than one "
 "activity at once."
 msgstr ""
+"Редактирование тренировок. Плагин необходим при однвременной загрузке "
+"нескольких тренировок."
 
 #: plugin/RunalyzePluginTool_MultiEditor/class.RunalyzePluginTool_MultiEditor.php:46
 msgid "This plugin allows you to edit multiple activities one after another."
@@ -5775,7 +5793,7 @@ msgstr ""
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:135
 msgid "There are not enough results for good predictions."
-msgstr ""
+msgstr "Для точного прогноза недостаточно данных."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:201
 #, php-format
@@ -5831,7 +5849,7 @@ msgstr ""
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:324
 msgid "Input"
-msgstr ""
+msgstr "Ввод"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:329
 msgid "Model"
@@ -5882,7 +5900,7 @@ msgstr ""
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:62
 msgid "Database import/export"
-msgstr ""
+msgstr "Импорт/экспорт базы данных"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:70
 msgid ""
@@ -5892,7 +5910,7 @@ msgstr ""
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:122
 msgid "File format"
-msgstr ""
+msgstr "Формат файла"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:123
 msgid "Portable backup"
@@ -5908,7 +5926,7 @@ msgstr ""
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:128
 msgid "Create file"
-msgstr ""
+msgstr "Создать файл"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:130
 msgid "JSON-format"
@@ -6066,12 +6084,12 @@ msgstr ""
 
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:32
 msgid "Monthly Stats"
-msgstr ""
+msgstr "Статистика за месяц"
 
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:40
 #, php-format
 msgid "How many %s/hours did you do per month"
-msgstr ""
+msgstr "Количество %s/часов тренировок за месяц"
 
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:64
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:76
@@ -6181,21 +6199,21 @@ msgstr ""
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:131
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:198
 msgid "Fat"
-msgstr ""
+msgstr "Жир"
 
 #: plugin/RunalyzePluginPanel_Sportler/Plot.analyse.php:43
 #: plugin/RunalyzePluginPanel_Sportler/window.sportler.table.php:45
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:132
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:198
 msgid "Water"
-msgstr ""
+msgstr "Вода"
 
 #: plugin/RunalyzePluginPanel_Sportler/Plot.analyse.php:44
 #: plugin/RunalyzePluginPanel_Sportler/window.sportler.table.php:46
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:133
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:198
 msgid "Muscles"
-msgstr ""
+msgstr "Мышцы"
 
 #: plugin/RunalyzePluginPanel_Sportler/window.sportler.table.php:26
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:19
@@ -6268,7 +6286,7 @@ msgstr "Иначе расчеты будут неправильными"
 
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:163
 msgid "Other values"
-msgstr ""
+msgstr "Прочие"
 
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:234
 msgid "Add a new entry"
@@ -6281,7 +6299,7 @@ msgstr ""
 
 #: plugin/RunalyzePluginStat_Statistiken/class.RunalyzePluginStat_Statistiken.php:46
 msgid "Monthly and weekly summaries for all sports"
-msgstr ""
+msgstr "Ежемесячные и еженедельные сводки для всех видов спорта"
 
 #: plugin/RunalyzePluginStat_Statistiken/class.RunalyzePluginStat_Statistiken.php:54
 #: plugin/RunalyzePluginStat_Statistiken/class.RunalyzePluginStat_Statistiken.php:63
@@ -6354,16 +6372,16 @@ msgstr ""
 
 #: plugin/RunalyzePluginPanel_Equipment/class.RunalyzePluginPanel_Equipment.php:44
 msgid "Display statistics for your equipment."
-msgstr ""
+msgstr "Статистика использования вашего инвентаря."
 
 #: plugin/RunalyzePluginPanel_Equipment/class.RunalyzePluginPanel_Equipment.php:88
 msgid "Add/Edit equipment"
-msgstr ""
+msgstr "Добавить/изменить инвентарь"
 
 #: plugin/RunalyzePluginPanel_Equipment/class.RunalyzePluginPanel_Equipment.php:89
 #: plugin/RunalyzePluginPanel_Equipment/class.RunalyzePluginPanel_Equipment.php:253
 msgid "Show all equipment"
-msgstr ""
+msgstr "Показать весь инвентарь"
 
 #: plugin/RunalyzePluginPanel_Equipment/class.RunalyzePluginPanel_Equipment.php:103
 msgid "Please choose an equipment type in the plugin configuration."
@@ -6375,7 +6393,7 @@ msgstr ""
 
 #: plugin/RunalyzePluginPanel_Equipment/class.RunalyzePluginPanel_Equipment.php:157
 msgid "You don't have any equipment"
-msgstr ""
+msgstr "Вы не добавили инвентарь"
 
 #: plugin/RunalyzePluginPanel_Equipment/class.RunalyzePluginPanel_Equipment.php:190
 msgid "x-times"
@@ -7152,7 +7170,7 @@ msgstr ""
 
 #: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:36
 msgid "Tables by Jack Daniels"
-msgstr ""
+msgstr "Таблицы Джека Дэниэлса (JD)"
 
 #: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:44
 msgid "Tables for heart rate, paces and VDOT values by Jack Daniels."
