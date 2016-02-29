@@ -42,8 +42,8 @@ class Temperature {
 
 	/**
 	 * Temperature
-	 * @param float $value
-	 * @param int $unit
+	 * @param float|null $value
+	 * @param int|null $unit
 	 */
 	public function __construct($value = null, $unit = self::CELSIUS) {
 		$this->setTemperature($value, $unit);
@@ -51,8 +51,8 @@ class Temperature {
 
 	/**
 	 * Set temperature
-	 * @param float $value
-	 * @param int $unit
+	 * @param float|null $value
+	 * @param int|null $unit
 	 */
 	public function setTemperature($value, $unit = null) {
 		if (!is_null($unit)) {
@@ -64,7 +64,7 @@ class Temperature {
 
 	/**
 	 * To celsius
-	 * @param float $value
+	 * @param float|null $value
 	 * @param int $unit
 	 * @return float
 	 */
@@ -85,7 +85,7 @@ class Temperature {
 
 	/**
 	 * From celsius
-	 * @param float $value
+	 * @param float|null $value
 	 * @param int $unit
 	 * @return float
 	 */
