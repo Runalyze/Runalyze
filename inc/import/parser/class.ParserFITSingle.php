@@ -485,7 +485,13 @@ class ParserFITSingle extends ParserAbstractSingle {
 	 */
 	protected function readHRV() {
 		if (!$this->isPaused) {
-			$this->gps['hrv'][] = $this->Values['time'][0];
+			$values = explode(',', $this->Values['time'][1]);
+
+			foreach ($values as $value) {
+				if ($value != '65535') {
+					$this->gps['hrv'][] = 1000*(double)substr($value, 0, -1);
+				}
+			}
 		}
 	}
 

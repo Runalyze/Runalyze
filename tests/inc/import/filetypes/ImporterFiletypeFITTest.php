@@ -344,7 +344,9 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertFalse( $this->object->failed() );
 
 			$this->assertTrue( $this->object->object()->hasArrayHRV() );
-
+echo count($this->object->object()->getArrayHRV()).'<br>';
+echo array_sum($this->object->object()->getArrayHRV()).'<br>';
+echo ($this->object->object()->getTimeInSeconds()).'<br>';
 		}
 	}
 
