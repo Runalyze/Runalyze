@@ -371,6 +371,9 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 		if (empty($TP->Position))
 			return end($this->gps['km']);
 
+		if (end($this->gps['latitude']) == 0 && end($this->gps['longitude']) == 0)
+			return end($this->gps['km']) + 0.001;
+
 		return end($this->gps['km']) +
 			Runalyze\Model\Route\Entity::gpsDistance(
 				end($this->gps['latitude']), end($this->gps['longitude']),
