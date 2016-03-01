@@ -278,4 +278,21 @@ class ImporterFiletypeTCXTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals(67, $this->object->object()->getCadence());
 	}
 
+	/**
+	 * Filename: "First-point-empty.tcx"
+	 * @see https://github.com/Runalyze/Runalyze/issues/1445
+	 */
+	public function testFirstPointEmpty() {
+		$this->object->parseFile('../tests/testfiles/tcx/First-point-empty.tcx');
+
+		$this->assertFalse($this->object->hasMultipleTrainings());
+		$this->assertFalse($this->object->failed());
+
+		$this->assertTrue($this->object->object()->hasArrayLatitude());
+		$this->assertTrue($this->object->object()->hasArrayLongitude());
+
+		$this->assertEquals(142, $this->object->object()->getTimeInSeconds());
+		$this->assertEquals(0.601, $this->object->object()->getDistance(), '', 0.001);
+	}
+
 }
