@@ -6,26 +6,24 @@
 
 namespace Runalyze\View\Activity\Box;
 
+use Runalyze\View\Activity\Context;
+
 /**
  * Boxed value for stride length
  * 
  * @author Hannes Christiansen
  * @package Runalyze\View\Activity\Box
  */
-class StrideLength extends AbstractBox
+class StrideLength extends ValueBox
 {
 	/**
 	 * Constructor
 	 * @param \Runalyze\View\Activity\Context $Context
 	 */
-	public function __construct(\Runalyze\View\Activity\Context $Context)
+	public function __construct(Context $Context)
 	{
-		$StrideLength = $Context->dataview()->strideLength();
-
 		parent::__construct(
-			\Helper::Unknown($StrideLength->string(false), '-'),
-			$StrideLength->unit(),
-			$StrideLength->label()
+			$Context->dataview()->strideLength()
 		);
 	}
 }

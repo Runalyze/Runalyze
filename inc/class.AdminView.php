@@ -161,6 +161,7 @@ class AdminView {
 		$Fieldset->addField( new FormularInput('GARMIN_API_KEY', Ajax::tooltip(__('Garmin API-key'), __('Needed for any online-version of the Garmin Communicator<br>see http://developer.garmin.com/web-device/garmin-communicator-plugin/get-your-site-key/') )) );
 		$Fieldset->addField( new FormularInput('PERL_PATH', __('Perl Path')) );
 		$Fieldset->addField( new FormularInput('TTBIN_PATH', __('TTBIN Converter Path')) );
+		$Fieldset->addField( new FormularInput('GEONAMES_USERNAME', __('Geonames Username')) );
                 $Fieldset->addField( new FormularInput('MAIL_SENDER', __('Sender e-mail')) );
 		$Fieldset->addField( new FormularInput('MAIL_NAME', __('Sender e-mail name')) );
 		$Fieldset->addField( new FormularInput('SMTP_HOST', __('SMTP: host')) );
@@ -457,6 +458,7 @@ class AdminView {
 			'USER_CAN_REGISTER',
                         'PERL_PATH',
 			'TTBIN_PATH',
+			'GEONAMES_USERNAME',
 			'GARMIN_API_KEY',
 			'MAIL_SENDER',
 			'MAIL_NAME',
@@ -532,7 +534,15 @@ define(\'PERL_PATH\', \'/usr/bin/perl\');';
  * Path to TTBIN Converter script
  * @var string TTBIN_PATH for perl scripts
  */
-define(\'TTBIN_PATH\', FRONTEND_PATH.\'../call/perl/ttbincnv\');';				
+define(\'TTBIN_PATH\', FRONTEND_PATH.\'../call/perl/ttbincnv\');';	
+				
+			case 'GEONAMES_USERNAME':
+				define('GEONAMES_USERNAME', '');
+				return '/**
+ * Geonames.org API username
+ * @var string GEONAMES_USERNAME for geonames API username
+ */
+define(\'GEONAMES_USERNAME\', \'/\');';
                                 
 			case 'GARMIN_API_KEY':
 				$APIKeyResults = DB::getInstance()->query('SELECT `value` FROM `'.PREFIX.'conf` WHERE `key`="GARMIN_API_KEY" LIMIT 1')->fetch();

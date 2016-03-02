@@ -246,6 +246,12 @@ class Entity extends Model\EntityWithID {
 	const WEATHERID = 'weatherid';
 
 	/**
+	 * Key: weather source
+	 * @var string
+	 */
+	const WEATHER_SOURCE = 'weather_source';
+
+	/**
 	 * Key: is night
 	 * @var string
 	 */
@@ -375,6 +381,7 @@ class Entity extends Model\EntityWithID {
 			self::HUMIDITY,
 			self::PRESSURE,
 			self::WEATHERID,
+			self::WEATHER_SOURCE,
 			self::IS_NIGHT,
 			self::ROUTEID,
 			self::ROUTE,
@@ -409,6 +416,7 @@ class Entity extends Model\EntityWithID {
 			case self::HUMIDITY:
 			case self::PRESSURE:
 			case self::WEATHERID:
+			case self::WEATHER_SOURCE:
 			case self::PARTNER:
 			case self::SPLITS:
 				return false;
@@ -429,6 +437,7 @@ class Entity extends Model\EntityWithID {
 			case self::WINDDEG:
 			case self::HUMIDITY:
 			case self::PRESSURE:
+			case self::WEATHER_SOURCE:
 			case self::IS_NIGHT:
 			case self::NOTES:
 			case self::CREATOR_DETAILS:
@@ -498,6 +507,7 @@ class Entity extends Model\EntityWithID {
 		$this->Data[self::HUMIDITY] = $this->weather()->humidity()->value();
 		$this->Data[self::PRESSURE] = $this->weather()->pressure()->value();
 		$this->Data[self::WEATHERID] = $this->weather()->condition()->id();
+		$this->Data[self::WEATHER_SOURCE] = $this->weather()->source();
 		$this->Data[self::SPLITS] = $this->splits()->asString();
 		$this->Data[self::PARTNER] = $this->partner()->asString();
 	}
@@ -640,7 +650,7 @@ class Entity extends Model\EntityWithID {
 
 	/**
 	 * VO2max estimate from fit file
-	 * @return int
+	 * @return float
 	 */
 	public function fitVO2maxEstimate() {
 		return $this->Data[self::FIT_VO2MAX_ESTIMATE];
@@ -780,6 +790,7 @@ class Entity extends Model\EntityWithID {
 				new Weather\Humidity($this->Data[self::HUMIDITY]),
 				new Weather\Pressure($this->Data[self::PRESSURE])
 			);
+			$this->Weather->setSource($this->Data[self::WEATHER_SOURCE]);
 		}
 
 		return $this->Weather;

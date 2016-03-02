@@ -43,6 +43,11 @@ class DuplicateFinderTest extends \PHPUnit_Framework_TestCase
 	    $this->Finder->checkForDuplicate('foobar');
 	}
 
+	public function testSingleNull()
+	{
+		$this->assertFalse($this->Finder->checkForDuplicate(null));
+	}
+
 	public function testDuplicates()
 	{
 	    $this->assertEquals([
@@ -59,6 +64,32 @@ class DuplicateFinderTest extends \PHPUnit_Framework_TestCase
 	    		9876543210
 	    	])
 	    );
+	}
+
+	public function testDuplicatesWithNull()
+	{
+		$this->assertEquals([
+				null => false,
+				'1234567890' => false,
+				'1448797800' => true
+			], $this->Finder->checkForDuplicates([
+				1234567890,
+				null,
+				1448797800,
+				null
+			])
+		);
+	}
+
+	public function testDuplicatesWithOnlyNull()
+	{
+		$this->assertEquals([
+				null => false
+			], $this->Finder->checkForDuplicates([
+				null,
+				null
+			])
+		);
 	}
 
 	/** @expectedException \InvalidArgumentException */

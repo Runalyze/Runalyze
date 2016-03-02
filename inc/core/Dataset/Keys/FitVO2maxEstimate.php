@@ -59,7 +59,8 @@ class FitVO2maxEstimate extends AbstractKey
 	 */
 	public function description()
 	{
-		return __('Garmin\'s newer devices have an integrated VO2max estimation.');
+		return __('Garmin\'s newer devices have an integrated VO2max estimation.').' '.
+			__('This value refers to your estimated VO2max at the start of the activity.');
 	}
 
 	/**

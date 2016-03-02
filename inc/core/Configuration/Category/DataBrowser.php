@@ -31,7 +31,6 @@ class DataBrowser extends \Runalyze\Configuration\Category {
 	protected function createHandles() {
 		$this->createHandle('DB_DISPLAY_MODE', new DataBrowserMode());
 		$this->createHandle('DB_SHOW_DATASET_LABELS', new Boolean(true));
-		$this->createHandle('DB_SHOW_DIRECT_EDIT_LINK', new Boolean(false));
 		$this->createHandle('DB_SHOW_CREATELINK_FOR_DAYS', new Boolean(false));
 	}
 
@@ -52,14 +51,6 @@ class DataBrowser extends \Runalyze\Configuration\Category {
 	}
 
 	/**
-	 * Show edit link
-	 * @return bool
-	 */
-	public function showEditLink() {
-		return $this->get('DB_SHOW_DIRECT_EDIT_LINK');
-	}
-
-	/**
 	 * Show create link
 	 * @return bool
 	 */
@@ -72,7 +63,6 @@ class DataBrowser extends \Runalyze\Configuration\Category {
 	 */
 	protected function registerOnchangeEvents() {
 		$this->handle('DB_SHOW_DATASET_LABELS')->registerOnchangeFlag(Ajax::$RELOAD_DATABROWSER);
-		$this->handle('DB_SHOW_DIRECT_EDIT_LINK')->registerOnchangeFlag(Ajax::$RELOAD_DATABROWSER);
 		$this->handle('DB_SHOW_CREATELINK_FOR_DAYS')->registerOnchangeFlag(Ajax::$RELOAD_DATABROWSER);
 
 		$this->handle('DB_DISPLAY_MODE')->registerOnchangeEvent('Runalyze\\Configuration\\Category\\DataBrowser::showNewTimerangeInDB');
@@ -97,11 +87,6 @@ class DataBrowser extends \Runalyze\Configuration\Category {
 		$Fieldset->addHandle( $this->handle('DB_SHOW_CREATELINK_FOR_DAYS'), array(
 			'label'		=> __('Calendar: create button'),
 			'tooltip'	=> __('Add a link for every day to create a new activity.')
-		));
-
-		$Fieldset->addHandle( $this->handle('DB_SHOW_DIRECT_EDIT_LINK'), array(
-			'label'		=> __('Calendar: edit button'),
-			'tooltip'	=> __('Add an edit-link for every activity.')
 		));
 
 		return $Fieldset;

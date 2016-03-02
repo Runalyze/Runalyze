@@ -87,9 +87,7 @@ class Gpx extends AbstractFileExporter
         $hasElevation = $this->Context->route()->hasOriginalElevations();
         $hasHeartrate = $this->Context->trackdata()->has(Trackdata\Entity::HEARTRATE);
 
-        while ($Trackdata->nextStep()) {
-            $Route->nextStep();
-
+        do {
             $Trackpoint = $this->Track->addChild('trkpt');
             $Trackpoint->addAttribute('lat', $Route->latitude());
             $Trackpoint->addAttribute('lon', $Route->longitude());
@@ -104,7 +102,7 @@ class Gpx extends AbstractFileExporter
                 $tpe = $ext->addChild('gpxtpx:TrackPointExtension','','http://www.garmin.com/xmlschemas/TrackPointExtension/v1');
                 $tpe->addChild('gpxtpx:hr',  $Trackdata->current(Trackdata\Entity::HEARTRATE));
             }
-        }
+        } while ($Trackdata->nextStep() && $Route->nextStep());
     }
 
     /**

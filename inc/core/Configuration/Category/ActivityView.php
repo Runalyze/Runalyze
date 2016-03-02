@@ -132,10 +132,12 @@ class ActivityView extends \Runalyze\Configuration\Category {
 
 		$this->createHandle('TRAINING_PLOT_MODE', new ActivityPlotMode());
 		$this->createHandle('TRAINING_PLOT_PRECISION', new ActivityPlotPrecision());
+
+		$this->createHandle('TRAINING_PLOT_SPLITS_ZERO', new Boolean(true));
 	}
 
 	/**
-	 * Main sport
+	 * Plot: smooth curves
 	 * @return bool
 	 */
 	public function smoothCurves() {
@@ -164,6 +166,13 @@ class ActivityView extends \Runalyze\Configuration\Category {
 	 */
 	public function plotPrecision() {
 		return $this->object('TRAINING_PLOT_PRECISION');
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function startSplitsAtZero() {
+		return $this->get('TRAINING_PLOT_SPLITS_ZERO');
 	}
 
 	/**
@@ -280,6 +289,7 @@ class ActivityView extends \Runalyze\Configuration\Category {
 		$this->handle('PACE_Y_LIMIT_MAX')->registerOnchangeFlag(Ajax::$RELOAD_TRAINING);
 		$this->handle('PACE_Y_AXIS_TYPE')->registerOnchangeFlag(Ajax::$RELOAD_TRAINING);
 		$this->handle('PACE_HIDE_OUTLIERS')->registerOnchangeFlag(Ajax::$RELOAD_TRAINING);
+		$this->handle('TRAINING_PLOT_SPLITS_ZERO')->registerOnchangeFlag(Ajax::$RELOAD_TRAINING);
 
 		$this->handle('TRAINING_PLOT_PRECISION')->registerOnchangeFlag(Ajax::$RELOAD_TRAINING);
 
@@ -355,6 +365,10 @@ class ActivityView extends \Runalyze\Configuration\Category {
 		$Fieldset->addHandle($this->handle('PACE_HIDE_OUTLIERS'), array(
 			'label' => __('Pace plot: Ignore outliers'),
 			'tooltip' => __('Try to ignore outliers in the pace plot.')
+		));
+
+		$Fieldset->addHandle($this->handle('TRAINING_PLOT_SPLITS_ZERO'), array(
+			'label' => __('Splits plot: use zero as axis minimum')
 		));
 	}
 

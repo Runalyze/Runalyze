@@ -112,7 +112,11 @@ class DataSeriesRemover {
 		$dataAverage = round(array_sum($dataArray) / count($dataArray));
 
 		if ($this->Activity->get($activityKey) == $dataAverage) {
-			$this->Activity->set($activityKey, '');
+			if ($activityKey == Model\Activity\Entity::TEMPERATURE) {
+				$this->Activity->weather()->temperature()->setTemperature(null);
+			} else {
+				$this->Activity->set($activityKey, '');
+			}
 		}
 	}
 	/**

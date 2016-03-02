@@ -39,7 +39,7 @@ class Twitter extends AbstractSocialSharer
     public function url()
     {
         if ($this->Context->activity()->isPublic() && !System::isAtLocalhost()) {
-            $urlPart = 'url='.$this->publicURL().'&';
+            $urlPart = 'url='.urlencode($this->publicURL().'&utm_medium=referral&utm_source=twitter').'&';
         } else {
             $urlPart = '';
         }

@@ -38,7 +38,7 @@ class GooglePlus extends AbstractSocialSharer
      */
     public function url()
     {
-        return 'https://plus.google.com/share?url='.urlencode($this->publicURL());
+        return 'https://plus.google.com/share?url='.urlencode($this->publicURL().'&utm_medium=referral&utm_source=googleplus');
     }
 
     /**

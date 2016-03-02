@@ -329,7 +329,7 @@ class Dataview {
 	 */
 	public function fitVO2maxEstimate() {
 		if ($this->Activity->fitVO2maxEstimate() > 0) {
-			return round($this->Activity->fitVO2maxEstimate());
+			return number_format($this->Activity->fitVO2maxEstimate(), 2);
 		}
 
 		return '';

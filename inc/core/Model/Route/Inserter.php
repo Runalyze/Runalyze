@@ -6,6 +6,7 @@
 
 namespace Runalyze\Model\Route;
 
+use Runalyze\Data\Elevation\Correction\NoValidStrategyException;
 use Runalyze\Model;
 use Runalyze\Calculation\Route\Calculator;
 use Runalyze\Configuration;
@@ -61,7 +62,11 @@ class Inserter extends Model\InserterWithAccountID {
 		$Calculator = new Calculator($this->Object);
 
 		if (Configuration::ActivityForm()->correctElevation() && !$this->Object->hasCorrectedElevations()) {
-			$Calculator->tryToCorrectElevation();
+			try {
+				$Calculator->tryToCorrectElevation();
+			} catch (NoValidStrategyException $e) {
+				// Well, obviously that did not work. Probably all API limits have been reached.
+			}
 		}
 
 		$Calculator->calculateElevation();

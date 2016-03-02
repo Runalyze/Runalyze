@@ -6,6 +6,8 @@
 
 namespace Runalyze\View\Activity\Box;
 
+use Runalyze\View\Activity\Context;
+
 /**
  * Boxed value for Pressure
  * 
@@ -13,19 +15,16 @@ namespace Runalyze\View\Activity\Box;
  * @author Michael Pohl
  * @package Runalyze\View\Activity\Box
  */
-class WeatherPressure extends AbstractBox
+class WeatherPressure extends ValueBox
 {
 	/**
 	 * Constructor
 	 * @param \Runalyze\View\Activity\Context $Context
 	 */
-	public function __construct(\Runalyze\View\Activity\Context $Context)
+	public function __construct(Context $Context)
 	{
-		$pressure = $Context->activity()->weather()->pressure();
 		parent::__construct(
-			\Helper::Unknown($pressure->string(false), '-'),
-			$pressure->unit(),
-			$pressure->label()
+			$Context->activity()->weather()->pressure()
 		);
 	}
 }

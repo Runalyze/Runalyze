@@ -15,7 +15,7 @@ $HIDDEN_KEYS = array(
 	'arr_groundcontact', 'arr_vertical_oscillation', 'arr_groundcontact_balance', 'pauses', 'hrv',
 	'fit_vdot_estimate', 'fit_recovery_time', 'fit_hrv_analysis',
 	//'vdot', 'vdot_by_time', 'trimp', 'vdot_with_elevation', 'jd_intensity'
-	'elapsed_time', 'elevation_calculated', 'groundcontact', 'vertical_oscillation', 'groundcontact_balance', 'vertical_ratio', 'stroke', 'stroketype','total_strokes', 'swolf', 'pool_length', 'is_night'
+	'elapsed_time', 'elevation_calculated', 'groundcontact', 'vertical_oscillation', 'groundcontact_balance', 'vertical_ratio', 'stroke', 'stroketype','total_strokes', 'swolf', 'pool_length', 'weather_source', 'is_night'
 );
 
 $FIELDSETS = array(
@@ -308,9 +308,9 @@ $FIELDS = array(
 	),
 	'fit_vdot_estimate'	=> array(
 					'database'	=> array(
-						'type'		=> 'tinyint',
-						'precision'	=> '2',
-						'default'	=> '0'
+						'type'		=> 'decimal',
+						'precision'	=> '4,2',
+						'default'	=> '0.00'
 					),
 					'formular'	=> array(
 						'hidden'	=> true
@@ -490,6 +490,17 @@ $FIELDS = array(
 					'formular'	=> array(
 						'label'		=> __('Wind degrees'),
 						'unit'		=> FormularUnit::$DEGREE,
+						'css'		=> TrainingFormular::$ONLY_OUTSIDE_CLASS
+					)
+	),
+	'weather_source' => array(
+					'database'	=> array(
+						'type'		=> 'tinyint',
+						'precision'	=> '2',
+						'null'		=> true
+					),
+					'formular'	=> array(
+						'hidden'	=> true,
 						'css'		=> TrainingFormular::$ONLY_OUTSIDE_CLASS
 					)
 	),

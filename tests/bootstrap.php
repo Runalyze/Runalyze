@@ -39,6 +39,9 @@ if (!defined('PERL_PATH'))
 if (!defined('TTBIN_PATH'))
 	define('TTBIN_PATH', FRONTEND_PATH.'../call/perl/ttbincnv');
 
+if (!defined('GEONAMES_USERNAME'))
+	define('GEONAMES_USERNAME', 'runalyze');
+
 
 if (!defined('DAY_IN_S'))
 	define('DAY_IN_S', 86400);

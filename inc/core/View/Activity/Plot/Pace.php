@@ -27,8 +27,11 @@ class Pace extends ActivityPlot {
 	 * @param \Runalyze\View\Activity\Context $context
 	 */
 	protected function initData(Activity\Context $context) {
-		$this->addSeries(
-			new Series\Pace($context)
-		);
+		$CumulativeSeries = new Series\PaceCumulativeAverage($context);
+
+		$this->addSeries(new Series\Pace($context));
+		$this->addSeries($CumulativeSeries, 1, false);
+
+		$this->Plot->Options['legend']['hidden'] = [$CumulativeSeries->label()];
 	}
 }

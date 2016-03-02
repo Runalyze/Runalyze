@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-01-17 20:49+0100\n"
-"PO-Revision-Date: 2015-12-29 23:57+0200\n"
+"PO-Revision-Date: 2016-01-19 22:33+0200\n"
 "Last-Translator: Roberto Guanciale <guancio@gmail.com>\n"
-"Language-Team: Italian <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/it/>\n"
+"Language-Team: Italian "
+"<http://translate.runalyze.de/projects/runalyze/runalyze/it/>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -474,20 +474,19 @@ msgstr "Percorso"
 #: inc/training/schemes/scheme.Training.php:444
 #: inc/core/Data/Weather/Humidity.php:58 inc/core/Dataset/Keys/Humidity.php:43
 msgid "Humidity"
-msgstr ""
+msgstr "Umidità"
 
 #: inc/training/search/class.SearchFormular.php:171
 #: inc/training/schemes/scheme.Training.php:456
 #: inc/core/Data/Weather/Pressure.php:58
 #: inc/core/Dataset/Keys/AirPressure.php:52
 msgid "Pressure"
-msgstr ""
+msgstr "Pressione"
 
 #: inc/training/search/class.SearchFormular.php:172
 #: inc/core/Data/Weather/WindSpeed.php:63
-#, fuzzy
 msgid "Wind Speed"
-msgstr "Velocita"
+msgstr "Velocita del vento"
 
 #: inc/training/search/class.SearchFormular.php:173
 #: inc/core/Dataset/Keys/Comment.php:46
@@ -1015,9 +1014,8 @@ msgid "srtm files"
 msgstr "File srtm"
 
 #: inc/training/view/class.ElevationInfo.php:275
-#, fuzzy
 msgid "remove corrected elevation data"
-msgstr "Correggi dati dell'altitudine"
+msgstr "Rimuovi correzione dell'altimetria"
 
 #: inc/training/view/class.ElevationInfo.php:286
 msgid "Compare algorithms"
@@ -1050,9 +1048,8 @@ msgid "Show week"
 msgstr "Mostra settimana"
 
 #: inc/training/view/class.TrainingView.php:66
-#, fuzzy
 msgid "Share"
-msgstr "Condividi!"
+msgstr "Condividi"
 
 #: inc/training/view/class.TrainingView.php:69
 #: inc/core/Dataset/Keys/SharedLink.php:44
@@ -1070,23 +1067,20 @@ msgid "as %s"
 msgstr ""
 
 #: inc/training/view/class.TrainingView.php:107
-#, fuzzy
 msgid "Make private"
-msgstr "rendi privato"
+msgstr "Rendi privato"
 
 #: inc/training/view/class.TrainingView.php:110
-#, fuzzy
 msgid "Make public"
-msgstr "rendi pubblico"
+msgstr "Rendi pubblico"
 
 #: inc/training/view/class.TrainingView.php:115
 msgid "Edit"
 msgstr "Modifica"
 
 #: inc/training/view/class.TrainingView.php:117
-#, fuzzy
 msgid "Do you really want to delete this activity?"
-msgstr "Vuoi davvero cancellare l'account?"
+msgstr "Vuoi davvero cancellare questa attività?"
 
 #: inc/training/view/class.TrainingView.php:117
 #: inc/training/class.TrainingFormular.php:410
@@ -1195,22 +1189,20 @@ msgstr ""
 "passi con un piede) per minuto"
 
 #: inc/training/schemes/scheme.Training.php:468
-#, fuzzy
 msgid "Wind speed"
-msgstr "come velocità"
+msgstr "Velocita del vento"
 
 #: inc/training/schemes/scheme.Training.php:481
 msgid "Wind degrees"
-msgstr ""
+msgstr "Direzione del vento"
 
 #: inc/training/schemes/scheme.Training.php:493
-#, fuzzy
 msgid "Night"
-msgstr "Peso"
+msgstr "Notte"
 
 #: inc/training/schemes/scheme.Training.php:526
 msgid "Title"
-msgstr ""
+msgstr "Titolo"
 
 #: inc/training/schemes/scheme.Training.php:765
 #: inc/core/Dataset/Keys/TotalStrokes.php:44
@@ -1274,9 +1266,8 @@ msgid "Save and continue"
 msgstr "Salva e continua"
 
 #: inc/training/class.TrainingFormular.php:94
-#, fuzzy
 msgid "It seems that you already have imported this activity"
-msgstr "Vuoi davvero cancellare l'account?"
+msgstr "Sembra che hai gia' importato questa attività"
 
 #: inc/training/class.TrainingFormular.php:148
 msgid "The activity has been successfully created."
@@ -1943,9 +1934,8 @@ msgstr ""
 "%s)"
 
 #: inc/core/Export/Share/Html.php:45
-#, fuzzy
 msgid "HTML"
-msgstr "Codice HTML"
+msgstr "HTML"
 
 #: inc/core/Export/Share/Html.php:55 inc/core/Export/Share/IFrame.php:82
 msgid "Code"
@@ -1969,7 +1959,7 @@ msgstr "Il tuo allenamento è privato: non ci sono link allegati."
 
 #: inc/core/Export/Share/Facebook.php:73
 msgid "Facebook"
-msgstr ""
+msgstr "Facebook"
 
 #: inc/core/Export/Share/GooglePlus.php:49
 msgid "Google+"
@@ -2269,7 +2259,7 @@ msgstr "%s a %s"
 
 #: inc/core/View/Icon/WindIcon.php:60 inc/core/Dataset/Keys/Wind.php:44
 msgid "Wind"
-msgstr ""
+msgstr "Vento"
 
 #: inc/core/Error.php:337
 msgid "Fatal error"
@@ -2528,43 +2518,40 @@ msgstr "Mese"
 
 #: inc/core/Data/Weather/CardinalDirection.php:72
 #: inc/core/Data/Weather/CardinalDirection.php:76
-#, fuzzy
 msgid "N"
-msgstr "No"
+msgstr "N"
 
 #: inc/core/Data/Weather/CardinalDirection.php:77
 msgid "NE"
-msgstr ""
+msgstr "NE"
 
 #: inc/core/Data/Weather/CardinalDirection.php:78
 msgid "E"
-msgstr ""
+msgstr "E"
 
 #: inc/core/Data/Weather/CardinalDirection.php:79
 msgid "SE"
-msgstr ""
+msgstr "SE"
 
 #: inc/core/Data/Weather/CardinalDirection.php:80
-#, fuzzy
 msgid "S"
-msgstr "Do"
+msgstr "S"
 
 #: inc/core/Data/Weather/CardinalDirection.php:81
 msgid "SW"
-msgstr ""
+msgstr "SO"
 
 #: inc/core/Data/Weather/CardinalDirection.php:82
-#, fuzzy
 msgid "W"
-msgstr "Me"
+msgstr "O"
 
 #: inc/core/Data/Weather/CardinalDirection.php:83
 msgid "NW"
-msgstr ""
+msgstr "NO"
 
 #: inc/core/Data/Weather/WindDegree.php:58
 msgid "Wind Degree"
-msgstr ""
+msgstr "Direzione del vento"
 
 #: inc/core/Data/Weather/Condition.php:166
 msgid "sunny"
@@ -2592,15 +2579,15 @@ msgstr "neve"
 
 #: inc/core/Data/Weather/Condition.php:178
 msgid "heavy rain"
-msgstr ""
+msgstr "Pioggia forte"
 
 #: inc/core/Data/Weather/Condition.php:180
 msgid "foggy"
-msgstr ""
+msgstr "nebbia"
 
 #: inc/core/Data/Weather/Condition.php:182
 msgid "thundery"
-msgstr ""
+msgstr "tuoni"
 
 #: inc/core/Data/Weather/WindChillFactor.php:83
 msgid "Wind chill factor"
@@ -2670,9 +2657,8 @@ msgid "(file)"
 msgstr ""
 
 #: inc/core/Dataset/Keys/FitVO2maxEstimate.php:62
-#, fuzzy
 msgid "Garmin's newer devices have an integrated VO2max estimation."
-msgstr "I nuovi dispositivi Garmin estimano vdot internamente."
+msgstr "I nuovi dispositivi Garmin stimano VO2max internamente."
 
 #: inc/core/Dataset/Keys/CompleteEquipment.php:34
 #, fuzzy

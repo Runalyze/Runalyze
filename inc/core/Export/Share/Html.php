@@ -81,7 +81,8 @@ class Html extends AbstractSnippetSharer
     protected function codeSnippet()
     {
         $Linker = new Linker($this->Context->activity());
-        $Url      = $Linker->publicUrl();
+        $TextUrl  = $Linker->publicUrl();
+	$Url      = $Linker->publicUrl().'&utm_medium=referral&utm_source=sharehtml';
         $Date     = $this->Context->dataview()->date();
         $Time     = $this->Context->dataview()->duration()->string();
         $Title    = $this->Context->activity()->distance() > 0 ? $this->Context->dataview()->distance().' ' : '';
@@ -100,7 +101,7 @@ class Html extends AbstractSnippetSharer
         if ($Elev != '')
             $Spans .= '<span class="runalyze-emb-elev">'.$Elev.'</span>';
 
-        $UrlLink = (System::isAtLocalhost() || !$this->Context->activity()->isPublic()) ? '' : '<a href="'.$Url.'" class="runalyze-emb-share">'.$Url.'</a>';
+        $UrlLink = (System::isAtLocalhost() || !$this->Context->activity()->isPublic()) ? '' : '<a href="'.$Url.'" class="runalyze-emb-share">'.$TextUrl.'</a>';
 
         return '<div class="runalyze-emb">
 	<a href="https://runalyze.com/" class="runalyze-emb-runalyze">runalyze.com</a>

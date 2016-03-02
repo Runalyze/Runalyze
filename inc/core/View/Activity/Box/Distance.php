@@ -6,26 +6,25 @@
 
 namespace Runalyze\View\Activity\Box;
 
+use Runalyze\Activity;
+use Runalyze\View\Activity\Context;
+
 /**
  * Boxed value for distance
  * 
  * @author Hannes Christiansen
  * @package Runalyze\View\Activity\Box
  */
-class Distance extends AbstractBox
+class Distance extends ValueBox
 {
 	/**
 	 * Constructor
 	 * @param \Runalyze\View\Activity\Context $Context
 	 */
-	public function __construct(\Runalyze\View\Activity\Context $Context)
+	public function __construct(Context $Context)
 	{
-		$Distance = new \Runalyze\Activity\Distance($Context->activity()->distance());
-
 		parent::__construct(
-			\Helper::Unknown(round($Distance->valueInPreferredUnit(), 2), '-'),
-			$Distance->unit(),
-			$Distance->label()
+			new Activity\Distance($Context->activity()->distance())
 		);
 	}
 }

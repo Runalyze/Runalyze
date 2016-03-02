@@ -106,6 +106,10 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 				Entity::TIME_IN_SECONDS => 3600,
 				Entity::WEATHERID => Weather\Condition::SUNNY,
 				Entity::TEMPERATURE => 7,
+				Entity::HUMIDITY => 67,
+				Entity::PRESSURE => 1020,
+				Entity::WINDDEG => 180,
+				Entity::WINDSPEED => 12,
 				Entity::SPORTID => $this->OutdoorID
 			))
 		);
@@ -120,6 +124,10 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 				Entity::TIME_IN_SECONDS => 3600,
 				Entity::WEATHERID => Weather\Condition::SUNNY,
 				Entity::TEMPERATURE => 7,
+				Entity::HUMIDITY => 67,
+				Entity::PRESSURE => 1020,
+				Entity::WINDDEG => 180,
+				Entity::WINDSPEED => 12,
 				Entity::SPORTID => $this->IndoorID
 			))
 		);

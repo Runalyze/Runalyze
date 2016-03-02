@@ -39,12 +39,16 @@ class DuplicateFinder
     
     /*
      * Find duplicate by original activityID (Timestamp)
-     * @param int $activityId
+     * @param int|null $activityId
      * @return bool
      * @throws \InvalidArgumentException
      */
     public function checkForDuplicate($activityId) 
     {
+        if (null === $activityId) {
+            return false;
+        }
+
         if (!is_numeric($activityId)) {
             throw new \InvalidArgumentException('Activity id must be numerical.');
         }
@@ -53,21 +57,29 @@ class DuplicateFinder
     }
 
     /**
-     * @param int[] $activityIds
+     * @param array $activityIds null or int
      * @return bool[] array(id => true|false)
      * @throws \InvalidArgumentException
      */
     public function checkForDuplicates(array $activityIds)
     {
-        if (array_filter($activityIds, 'is_numeric') !== $activityIds) {
-            throw new \InvalidArgumentException('All activity ids must be numerical.');
+        $result = [];
+
+        if (in_array(null, $activityIds)) {
+            $result[null] = false;
+            $activityIds = array_filter($activityIds, 'strlen');
         }
 
-        $result = [];
-        $existingIds = $this->PDO->query('SELECT `'.self::COLUMN_WITH_ID.'` FROM `'.PREFIX.'training` WHERE `'.self::COLUMN_WITH_ID.'` IN ('.implode(', ', $activityIds).') AND `accountid` = "'.$this->AccountId.'"')->fetchAll(PDO::FETCH_COLUMN);
+        if (!empty($activityIds)) {
+            if (array_filter($activityIds, 'is_numeric') !== $activityIds) {
+                throw new \InvalidArgumentException('All activity ids must be numerical.');
+            }
 
-        foreach ($activityIds as $id) {
-            $result[$id] = in_array($id, $existingIds);
+            $existingIds = $this->PDO->query('SELECT `'.self::COLUMN_WITH_ID.'` FROM `'.PREFIX.'training` WHERE `'.self::COLUMN_WITH_ID.'` IN ('.implode(', ', $activityIds).') AND `accountid` = "'.$this->AccountId.'"')->fetchAll(PDO::FETCH_COLUMN);
+
+            foreach ($activityIds as $id) {
+                $result[$id] = in_array($id, $existingIds);
+            }
         }
 
         return $result;

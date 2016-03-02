@@ -110,21 +110,21 @@ class Fitlog extends AbstractFileExporter
         $Track = $this->Activity->addChild('Track');
         $Track->addAttribute('StartTime', $this->timeToString($Starttime));
 
-        while ($Trackdata->nextStep()) {
+        do {
             $Point = $Track->addChild('pt');
             $Point->addAttribute('tm', $Trackdata->time());
 
             if (null !== $Route) {
-                $Route->nextStep();
                 $Point->addAttribute('lat', $Route->latitude());
                 $Point->addAttribute('lon', $Route->longitude());
                 $Point->addAttribute('ele', $Route->current(Route\Entity::ELEVATIONS_ORIGINAL));
+                $Route->nextStep();
             }
 
             if ($hasHeartrate) {
                 $Point->addAttribute('hr', $Trackdata->current(Trackdata\Entity::HEARTRATE));
             }
-        }
+        } while ($Trackdata->nextStep());
     }
 
     /**

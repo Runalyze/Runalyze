@@ -140,9 +140,7 @@ class Inserter extends Model\InserterWithAccountID {
 			$Factory = \Runalyze\Context::Factory();
 
 			if (!$Factory->sport($this->Object->sportid())->isOutside()) {
-				$this->Object->weather()->condition()->set( \Runalyze\Data\Weather\Condition::UNKNOWN );
-				$this->Object->weather()->temperature()->setTemperature(null);
-
+				$this->Object->weather()->clear();
 				$this->Object->synchronize();
 			}
 		}

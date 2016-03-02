@@ -86,6 +86,13 @@ class Series {
 	}
 
 	/**
+	 * @return string
+	 */
+	public function label() {
+		return $this->Label;
+	}
+
+	/**
 	 * Set color
 	 * @param string $color
 	 */

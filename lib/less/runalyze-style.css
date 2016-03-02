@@ -1104,7 +1104,7 @@ tr.ERROR td {
   display: block;
 }
 .panel-menu ul .submenu {
-  z-index: 100;
+  z-index: 105;
   display: none;
   position: absolute;
   min-width: 100%;
@@ -1127,6 +1127,56 @@ tr.ERROR td {
   display: block;
   padding: 5px 7.5px;
   margin: 0;
+}
+.inline-menu {
+  color: #666;
+}
+.inline-menu ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+.inline-menu ul li {
+  margin: 0;
+  padding: 0;
+  position: relative;
+  display: inline-block;
+}
+.inline-menu ul .with-submenu > .link {
+  display: block;
+  white-space: nowrap;
+}
+.inline-menu ul .with-submenu > .link:after {
+  content: ' \f107';
+  font-family: FontAwesome;
+}
+.inline-menu ul .with-submenu:hover > .link {
+  color: #000000;
+}
+.inline-menu ul .with-submenu:hover .submenu {
+  display: block;
+}
+.inline-menu ul .submenu {
+  z-index: 105;
+  display: none;
+  position: absolute;
+  white-space: nowrap;
+  border: 1px solid #cccccc;
+  background-color: rgba(255, 255, 255, 0.95);
+}
+.inline-menu ul .submenu li {
+  display: block;
+  overflow: hidden;
+  width: 100%;
+}
+.inline-menu ul .submenu a,
+.inline-menu ul .submenu span.link {
+  display: block;
+  padding: 5px 7.5px;
+}
+.inline-menu ul .submenu a:hover,
+.inline-menu ul .submenu span.link:hover {
+  background-color: #f7f7f9;
 }
 .small-head-navi {
   font-size: .8em;
@@ -1157,7 +1207,8 @@ tr.ERROR td {
 }
 .loading * {
   opacity: 0;
-  transition: opacity 0.4s linear;
+  visibility: hidden;
+  transition: visibility 0s 0.4s, opacity 0.4s linear;
 }
 .wait-img {
   background: url(../../img/wait.gif) center center no-repeat !important;
@@ -1166,7 +1217,7 @@ tr.ERROR td {
   width: 100%;
 }
 #data-browser,
-statistics-containerr {
+.statistics-container {
   overflow: auto;
 }
 #statistics-nav {
@@ -1215,7 +1266,7 @@ statistics-containerr {
   border-bottom-color: #000000;
 }
 #statistics-nav ul.submenu {
-  z-index: 100;
+  z-index: 105;
   display: none;
   position: absolute;
   margin: 0 0 0 -1px;
@@ -1556,7 +1607,7 @@ tr.space-line.zebra-corrector td {
     overflow: hidden;
   }
   #data-browser-container,
-  #statistics-container {
+  .statistics-container {
     overflow: auto;
   }
   table,
@@ -1941,7 +1992,7 @@ tr.space-line.zebra-corrector td {
   line-height: 13px;
   text-align: center;
   font-size: 7px;
-  border: 1px solid #333;
+  border: 1px solid #333333;
   border-radius: 50%;
   position: relative;
   margin: 0 2px;
@@ -1955,7 +2006,7 @@ tr.space-line.zebra-corrector td {
   height: 7px;
   border-width: 6px 2px;
   border-style: solid;
-  border-color: #333 transparent transparent transparent;
+  border-color: #333333 transparent transparent transparent;
 }
 .checkbox-icon:before {
   content: "\f096";

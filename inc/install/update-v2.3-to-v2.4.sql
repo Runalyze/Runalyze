@@ -13,3 +13,6 @@ ALTER TABLE `runalyze_training`
   ADD `humidity` tinyint(3) unsigned DEFAULT NULL AFTER `wind_deg`,
   ADD `pressure` smallint(4) unsigned DEFAULT NULL AFTER `humidity`,
   ADD `is_night` tinyint(1) unsigned DEFAULT NULL AFTER `pressure`;
+
+UPDATE `runalyze_training` SET `activity_id` = `activity_id` + 3600 WHERE `time` - `activity_id` BETWEEN 3600 AND 3659;
+UPDATE `runalyze_training` SET `activity_id` = `activity_id` + 7200 WHERE `time` - `activity_id` BETWEEN 7200 AND 7259;

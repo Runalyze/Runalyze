@@ -163,11 +163,26 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 
 		$this->NewObject->set(Entity::TIMESTAMP_EDITED, time());
 
+		$this->removeWeatherIfInside();
 		$this->updateVDOTAndIntensityAndTrimp();
 		$this->deleteIntensityCache();
 		$this->updatePower();
 		$this->updateStrideLength();
 		$this->updateVerticalRatio();
+	}
+
+	/**
+	 * Remove weather if sport is always inside
+	 */
+	protected function removeWeatherIfInside() {
+		if ($this->hasChanged(Entity::SPORTID)) {
+			$Factory = \Runalyze\Context::Factory();
+
+			if (!$Factory->sport($this->NewObject->sportid())->isOutside()) {
+				$this->NewObject->weather()->clear();
+				$this->NewObject->synchronize();
+			}
+		}
 	}
 
 	/**

@@ -13,6 +13,7 @@ use Runalyze\Util\AccountTime;
 use Runalyze\Util\UTCTime;
 use Runalyze\Activity\Temperature;
 use Runalyze\Data\Weather\WindSpeed;
+use Runalyze\Calculation\JD\VDOTCorrector;
 
 /**
  * Search results
@@ -132,13 +133,14 @@ class SearchResults {
 			'groundcontact_balance',
 
 			'use_vdot',
+			'vdot',
+			'vdot_with_elevation',
 			'is_public'
 		);
 
 		// Some additional keys
 		$this->AllowedKeys[] = 'power';
 		$this->AllowedKeys[] = 'is_track';
-		$this->AllowedKeys[] = 'vdot';
 		$this->AllowedKeys[] = 'notes';
 
 	}
@@ -173,7 +175,7 @@ class SearchResults {
 				`t`.`id`,
 				`t`.`time`
 				'.($this->multiEditorRequested() ? '' :
-					', '.str_replace('`t`.', '', $this->DatasetQuery->queryToSelectAllKeys()).' '.
+					', '.$this->DatasetQuery->queryToSelectAllKeys().' '.
 					$this->DatasetQuery->queryToSelectJoinedFields()
 				).'
 			FROM `'.PREFIX.'training` AS `t`
@@ -264,6 +266,12 @@ class SearchResults {
 				$value = (new Temperature())->setInPreferredUnit($_POST[$key])->celsius();
 			} elseif ($key == 'wind_speed') {
 				$value = (new WindSpeed())->setInPreferredUnit($_POST[$key])->value();
+			} elseif ($key == 'vdot' || $key == 'vdot_with_elevation') {
+			    if(!Configuration::Vdot()->useCorrectionFactor()) {
+				$value = $_POST[$key];
+			    } else {
+				$value = $_POST[$key] * Configuration::Data()->vdotFactor();
+			    }
 			} else {
 				$value = $_POST[$key];
 			}

@@ -1,4 +1,4 @@
-# [Runalyze v2.4.0-beta](http://blog.runalyze.com)
+# [Runalyze v2.5.0-dev](http://blog.runalyze.com)
 
 [![Build Status](https://travis-ci.org/Runalyze/Runalyze.svg?branch=master)](https://travis-ci.org/Runalyze/Runalyze)
 [![Code Coverage](https://scrutinizer-ci.com/g/Runalyze/Runalyze/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/Runalyze/Runalyze/?branch=master)
@@ -47,6 +47,8 @@ You have to apply recent changes from the respective update files in `inc/instal
 * see [#952](https://github.com/Runalyze/Runalyze/issues/952)
 
 ## Changelog
+* [v2.4](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-4-en/), 25.01.2016: minor release (more weather data, recognition of duplicate activities, ...)
+ * [Have a look at the update instructions](http://docs.runalyze.com/en/latest/update.html#upgrade-from-2-3-to-2-4)  
 * [v2.3](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-3-en/), 11.12.2015: minor release (dataset refactoring, new running dynamics, ...)
  * warning: migration from v2.2 to v2.3 requires `refactor-geohash.php`
  * [v2.3.1](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-3-1-en/), 16.12.2015: minor bugfixes

@@ -12,7 +12,8 @@ use Runalyze\Data\Weather\WindSpeed;
 use Runalyze\Data\Weather\WindDegree;
 use Runalyze\Data\Weather\Humidity;
 use Runalyze\Data\Weather\Pressure;
-use Runalyze\Data\Weather\WindChillFactor;
+use Runalyze\Data\Weather\Sources;
+
 /**
  * Weather
  * 
@@ -61,7 +62,13 @@ class Weather {
 	 * @var \Runalyze\Data\Weather\WindChillFactor
 	 */
 	protected $WindChillFactor;
-	
+
+	/**
+	 * Enum for weather source
+	 * @see \Runalyze\Data\Weather\Sources
+	 * @var null|int
+	 */
+	protected $SourceId = null;
 	
 	/**
 	 * Weather
@@ -89,8 +96,24 @@ class Weather {
 		$this->Condition = clone $this->Condition;
 		$this->WindSpeed = clone $this->WindSpeed;
 		$this->WindDegree = clone $this->WindDegree;
-		$this->Humditiy = clone $this->Humidity;
+		$this->Humidity = clone $this->Humidity;
 		$this->Pressure = clone $this->Pressure;
+	}
+
+	/**
+	 * @param null|int $sourceId
+	 * @throws \InvalidArgumentException
+	 */
+	public function setSource($sourceId) {
+		if (null !== $sourceId) {
+			$sourceId = (int)$sourceId;
+
+			if (!Sources::isValidValue((int)$sourceId)) {
+				throw new \InvalidArgumentException('Provided source must be null or defined in sources enum.');
+			}
+		}
+
+		$this->SourceId = $sourceId;
 	}
 
 	/**
@@ -140,11 +163,42 @@ class Weather {
 	public function pressure() {
 		return $this->Pressure;
 	}
-	
+
+	/**
+	 * @see \Runalyze\Data\Weather\Sources
+	 * @return int|null
+	 */
+	public function source() {
+		if ($this->isEmpty()) {
+			$this->SourceId = null;
+		}
+
+		return $this->SourceId;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function sourceAsString() {
+		if ($this->sourceIsKnown()) {
+			return Sources::stringFor($this->SourceId);
+		}
+
+		return '';
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function sourceIsKnown() {
+		return (null !== $this->SourceId);
+	}
+
 	/**
 	 * Full string
 	 * 
 	 * Complete string for the weather conditions with icon, name and temperature.
+	 * @param bool $isNight
 	 * @return string
 	 */
 	public function fullString($isNight = false) {
@@ -170,5 +224,17 @@ class Weather {
 			$this->Humidity->isUnknown() &&
 			$this->Pressure->isUnknown()
 		);
+	}
+
+	/**
+	 * Clear weather
+	 */
+	public function clear() {
+		$this->Temperature->setTemperature(null);
+		$this->Condition->set(Condition::UNKNOWN);
+		$this->WindSpeed->set(null);
+		$this->WindDegree->set(null);
+		$this->Humidity->set(null);
+		$this->Pressure->set(null);
 	}
 }

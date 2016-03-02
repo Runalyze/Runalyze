@@ -6,6 +6,8 @@
 
 namespace Runalyze\View\Activity\Box;
 
+use Runalyze\View\Activity\Context;
+
 /**
  * Boxed value for Humidity
  * 
@@ -13,19 +15,16 @@ namespace Runalyze\View\Activity\Box;
  * @author Michael Pohl
  * @package Runalyze\View\Activity\Box
  */
-class WeatherHumidity extends AbstractBox
+class WeatherHumidity extends ValueBox
 {
 	/**
 	 * Constructor
 	 * @param \Runalyze\View\Activity\Context $Context
 	 */
-	public function __construct(\Runalyze\View\Activity\Context $Context)
+	public function __construct(Context $Context)
 	{
-		$humidity = $Context->activity()->weather()->humidity();
 		parent::__construct(
-			\Helper::Unknown($humidity->string(false), '-'),
-			$humidity->unit(),
-			$humidity->label()
+			$Context->activity()->weather()->humidity()
 		);
 	}
 }

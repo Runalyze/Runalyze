@@ -11,6 +11,7 @@ class ForecastTest extends \PHPUnit_Framework_TestCase {
 		$object = $Forecast->object();
 
 		$this->assertTrue( $object->isEmpty() );
+		$this->assertNull($object->source());
 	}
 
 	public function testLocationByName() {
@@ -22,6 +23,8 @@ class ForecastTest extends \PHPUnit_Framework_TestCase {
 
 		if ($object->isEmpty()) {
 			$this->markTestSkipped('Openweathermap: "Berlin, de" was not available.');
+		} else {
+			$this->assertEquals(Sources::OPENWEATHERMAP, $object->source());
 		}
 	}
 
@@ -38,6 +41,8 @@ class ForecastTest extends \PHPUnit_Framework_TestCase {
 
 		if ($object->isEmpty()) {
 			$this->markTestSkipped('Openweathermap: History for "Berlin, de" was not available.');
+		} else {
+			$this->assertEquals(Sources::OPENWEATHERMAP, $object->source());
 		}
 	}
 
@@ -50,6 +55,8 @@ class ForecastTest extends \PHPUnit_Framework_TestCase {
 
 		if ($object->isEmpty()) {
 			$this->markTestSkipped('Openweathermap: Position "49,9, 7.77" was not available.');
+		} else {
+			$this->assertEquals(Sources::OPENWEATHERMAP, $object->source());
 		}
 	}
 
