@@ -1,7 +1,7 @@
 <?php
 /**
  * Script to refactor coordinates to geohashes
- * 
+ *
  * You have to set your database connection within this file to enable the script.
  * Remember to delete your credentials afterwards to protect this script.
  */
@@ -27,14 +27,14 @@ define('SET_GLOBAL_PROPERTIES', false); // Set to true to set max_allowed_packet
 define('FRONTEND_PATH', 'inc/');
 
 include_once 'data/config.php';
-require_once 'inc/core/Data/TimezoneLookup.php';
+require_once 'inc/core/Util/TimezoneLookup.php';
 require 'vendor/autoload.php';
 use League\Geotools\Geotools;
 
 $starttime = microtime(true);
 $maxtime = ini_get('max_execution_time');
 
-$TZL = new \Runalyze\Data\TimezoneLookup();
+$TZL = new \Runalyze\Util\TimezoneLookup();
 
 
 /**
