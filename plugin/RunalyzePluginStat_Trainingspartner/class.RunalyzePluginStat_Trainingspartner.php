@@ -121,7 +121,7 @@ class RunalyzePluginStat_Trainingspartner extends PluginStat {
 	 * Init all trainingspartner
 	 */
 	protected function initTrainingspartner() {
-		$Query = 'SELECT `partner` FROM `'.PREFIX.'training` WHERE `partner`!=""';
+		$Query = 'SELECT `partner` FROM `'.PREFIX.'training` WHERE `accountid`='.SessionAccountHandler::getId().' AND `partner`!=""';
 		$Query .= $this->getSportAndYearDependenceForQuery();
 
 		$trainings = DB::getInstance()->query($Query)->fetchAll();
