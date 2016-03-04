@@ -17,7 +17,9 @@ class SectionPaceRow extends TrainingViewSectionRowTabbedPlot {
 	 * Set plot
 	 */
 	protected function setRightContent() {
-		$this->addRightContent('plot', __('Pace plot'), new Activity\Plot\Pace($this->Context));
+		if ($this->Context->trackdata()->has(\Runalyze\Model\Trackdata\Entity::PACE)) {
+			$this->addRightContent('plot', __('Pace plot'), new Activity\Plot\Pace($this->Context));
+		}
 
 		if (
 			$this->Context->trackdata()->has(\Runalyze\Model\Trackdata\Entity::PACE) &&
