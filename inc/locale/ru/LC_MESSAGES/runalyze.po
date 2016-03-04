@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-01-17 20:49+0100\n"
-"PO-Revision-Date: 2016-02-25 14:33+0200\n"
+"PO-Revision-Date: 2016-03-04 18:12+0200\n"
 "Last-Translator: Tony Sheen <spbnalog@gmail.com>\n"
 "Language-Team: Russian "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/ru/>\n"
@@ -6919,7 +6919,7 @@ msgstr ""
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:473
 #, php-format
 msgid "%s days"
-msgstr "%s days"
+msgstr ""
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:467
 msgid "Training impulse over a short period"
@@ -7172,7 +7172,7 @@ msgstr "быстрее"
 
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:438
 msgid "up to"
-msgstr "ниже "
+msgstr "ниже"
 
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:445
 msgid "Pace Zones"
