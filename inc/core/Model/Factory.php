@@ -191,7 +191,7 @@ class Factory {
 	public function equipmentForEquipmentType($equipmentTypeid, $onlyIDs = false) {
 	    $Equipment = array();
 	    
-	    $IDs = $this->DB->Query('SELECT `id` FROM `'.PREFIX.'equipment` WHERE `typeid`="'.$equipmentTypeid.'"')->fetchAll(\PDO::FETCH_COLUMN);
+	    $IDs = $this->DB->Query('SELECT `id` FROM `'.PREFIX.'equipment` WHERE `accountid`='.\SessionAccountHandler::getId().' AND `typeid`="'.$equipmentTypeid.'"')->fetchAll(\PDO::FETCH_COLUMN);
 	    
 	    if($onlyIDs) {
 		return $IDs;

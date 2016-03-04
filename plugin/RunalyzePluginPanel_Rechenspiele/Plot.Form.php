@@ -65,7 +65,8 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 				SUM('.JD\Shape::mysqlVDOTsum($withElevation).'*(`sportid`='.Configuration::General()->runningSport().')) as `vdot`,
 				SUM('.JD\Shape::mysqlVDOTsumTime($withElevation).'*(`sportid`='.Configuration::General()->runningSport().')) as `s`
 			FROM `'.PREFIX.'training`
-			WHERE
+			WHERE 
+				`accountid`='.\SessionAccountHandler::getId().' AND
 				`time` BETWEEN UNIX_TIMESTAMP("'.$StartDay.'" + INTERVAL -'.$AddDays.' DAY) AND UNIX_TIMESTAMP("'.$StartDay.'" + INTERVAL '.$NumberOfDays.' DAY)-1
 			GROUP BY `index`')->fetchAll();
 

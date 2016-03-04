@@ -67,7 +67,7 @@ class RaceContainer {
 			'SELECT
 				`'.implode('`,`', $this->columns()).'`
 			FROM `'.PREFIX.'training`
-			WHERE `typeid`='.$this->ComeptitionType.'
+			WHERE `accountid`='.\SessionAccountHandler::getId().' AND `typeid`='.$this->ComeptitionType.'
 			ORDER BY `time` DESC'
 		)->fetchAll();
 	}
