@@ -112,6 +112,7 @@ foreach ($this->Days as $i => $day) {
 			echo '</tr>';
 		}
 	} else {
+	    if(\Runalyze\Configuration::DataBrowser()->showActiveDaysOnly() == FALSE OR !empty($day['shorts'])) {
 		echo '
 			<tr class="r'.$trClass.'">
 				<td class="l" style="width:24px;">';
@@ -127,6 +128,7 @@ foreach ($this->Days as $i => $day) {
 				<td class="l as-small-as-possible">'.$this->dateString($day['date']).'</td>
 				<td colspan="'.($Table->numColumns() + $this->ShowPublicLink).'"></td>
 			</tr>';
+	    }
 	}
 }
 
