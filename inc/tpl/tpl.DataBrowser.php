@@ -58,7 +58,7 @@ $Table = new \Runalyze\View\Dataset\Table($this->DatasetConfig);
 			<?php if (\Runalyze\Configuration::DataBrowser()->showLabels()): ?>
 			<thead class="data-browser-labels">
 				<tr class="small">
-					<td colspan="<?php echo (2 + $this->ShowPublicLink); ?>"></td>
+					<td colspan="2"></td>
 					<?php echo $Table->codeForColumnLabels(); ?>
 				</tr>
 			</thead>
@@ -103,10 +103,6 @@ foreach ($this->Days as $i => $day) {
 
 			$Context->setActivityData($Training);
 
-			if ($this->ShowPublicLink) {
-				echo $Table->codeForPublicIcon($Context);
-			}
-
 			echo $Table->codeForColumns($Context);
 
 			echo '</tr>';
@@ -126,12 +122,14 @@ foreach ($this->Days as $i => $day) {
 
 		echo '</td>
 				<td class="l as-small-as-possible">'.$this->dateString($day['date']).'</td>
-				<td colspan="'.($Table->numColumns() + $this->ShowPublicLink).'"></td>
+				<td colspan="'.($Table->numColumns()).'"></td>
 			</tr>';
 	    }
 	}
 }
-
+	if($this->AllDaysEmpty) {
+	    echo '<tr><td colspan="'.($Table->numColumns() + 2).'"><em>'.__('There are no activities for this time range.').'</em></td></tr>';
+	}
 echo '</tbody>';
 echo '<tbody>';
 
