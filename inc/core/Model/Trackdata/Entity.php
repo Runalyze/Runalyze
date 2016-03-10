@@ -13,7 +13,7 @@ use Runalyze\Calculation\StrideLength;
 
 /**
  * Trackdata entity
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Model\Trackdata
  */
@@ -89,7 +89,7 @@ class Entity extends Model\Entity implements Model\Loopable {
 	 * @var string
 	 */
 	const VERTICAL_RATIO = 'vertical_ratio';
-	
+
 	/**
 	 * Key: ground contact time balance
 	 * @var string
@@ -234,7 +234,7 @@ class Entity extends Model\Entity implements Model\Loopable {
 				self::STRIDE_LENGTH,
 				self::VERTICAL_RATIO
 			),
-			static::allDatabaseProperties() 
+			static::allDatabaseProperties()
 		);
 	}
 
@@ -269,7 +269,7 @@ class Entity extends Model\Entity implements Model\Loopable {
 
 		return false;
 	}
-        
+
 	/**
 	 * Is not in Database?
 	 * @param string $key
@@ -288,7 +288,7 @@ class Entity extends Model\Entity implements Model\Loopable {
 
 	/**
 	 * Ignore a key while checking for emptiness
-	 * @param enum $key
+	 * @param string $key
 	 * @return boolean
 	 */
 	protected function ignoreNonEmptyValue($key) {
@@ -319,10 +319,10 @@ class Entity extends Model\Entity implements Model\Loopable {
 
 	/**
 	 * Value at
-	 * 
+	 *
 	 * Remark: This method may throw index offsets.
 	 * @param int $index
-	 * @param enum $key
+	 * @param string $key
 	 * @return mixed
 	 */
 	public function at($index, $key) {
@@ -436,7 +436,7 @@ class Entity extends Model\Entity implements Model\Loopable {
 	public function verticalOscillation() {
 		return $this->Data[self::VERTICAL_OSCILLATION];
 	}
-	
+
 	/**
 	 * Get ground contact time balance
 	 * @return array unit: [%*100]
@@ -444,7 +444,7 @@ class Entity extends Model\Entity implements Model\Loopable {
 	public function groundContactBalance() {
 		return $this->Data[self::GROUNDCONTACT_BALANCE];
 	}
-	
+
 	/**
 	 * Get vertical ratio
 	 * @return array unit: [%]
@@ -470,9 +470,9 @@ class Entity extends Model\Entity implements Model\Loopable {
 	}
 
 	/*
-	 * Calculate pace array 
+	 * Calculate pace array
 	 */
-	protected function calculatePaceArray() {
+	public function calculatePaceArray() {
 		if (!$this->has(self::PACE)) {
 			$PaceCalculator = new PaceCalculator($this);
 			$PaceCalculator->calculate();
@@ -482,7 +482,7 @@ class Entity extends Model\Entity implements Model\Loopable {
 	}
 
 	/*
-	 * Calculate stride length array 
+	 * Calculate stride length array
 	 */
 	protected function calculateStrideLengthArray() {
 		if (!$this->has(self::STRIDE_LENGTH)) {
@@ -494,7 +494,7 @@ class Entity extends Model\Entity implements Model\Loopable {
 	}
 
 	/*
-	 * Calculate vertical ratio array 
+	 * Calculate vertical ratio array
 	 */
 	protected function calculateVerticalRatioArray() {
 		if (!$this->has(self::VERTICAL_RATIO)) {

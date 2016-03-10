@@ -23,6 +23,12 @@
 			<?php _e('We urgently recommend a backup of your existing database prior to any update of RUNALYZE.'); ?>
 		</p>
 
+		<?php if (!$this->CacheWasCleared): ?>
+		<p class="warning">
+			<?php _e('Trying to clear your cache failed.'); ?>
+		</p>
+		<?php endif; ?>
+
 		<p class="text">
 			&nbsp;
 		</p>

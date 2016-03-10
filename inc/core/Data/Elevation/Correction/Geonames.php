@@ -14,13 +14,6 @@ namespace Runalyze\Data\Elevation\Correction;
  */
 class Geonames extends FromExternalAPI {
 	/**
-	 * Username
-	 * @var string
-	 * @TODO Use this from admin configuration
-	 */
-	protected $USERNAME = 'runalyze';
-
-	/**
 	 * Can the strategy handle the data?
 	 * 
 	 * To test this, we try to fetch a gtopo30-value.
@@ -31,7 +24,7 @@ class Geonames extends FromExternalAPI {
 	 * @see http://www.geonames.org/export/webservice-exception.html
 	 */
 	public function canHandleData() {
-		$url = 'http://api.geonames.org/gtopo30JSON?lat=47.01&lng=10.2&username='.$this->USERNAME;
+		$url = 'http://api.geonames.org/gtopo30JSON?lat=47.01&lng=10.2&username='.GEONAMES_USERNAME;
 		$response = json_decode(\Filesystem::getExternUrlContent($url), true);
 
 		if (is_null($response))
@@ -43,20 +36,20 @@ class Geonames extends FromExternalAPI {
 		if (isset($response['status']) && isset($response['status']['value'])) {
 			switch ((int)$response['status']['value']) {
 				case 10:
-					\Error::getInstance()->addWarning('Geonames user account is not valid.');
+					\Runalyze\Error::getInstance()->addWarning('Geonames user account is not valid.');
 					break;
 				case 18:
-					\Error::getInstance()->addDebug('Geonames-request failed: daily limit of credits exceeded');
+					\Runalyze\Error::getInstance()->addDebug('Geonames-request failed: daily limit of credits exceeded');
 					break;
 				case 19:
-					\Error::getInstance()->addDebug('Geonames-request failed: hourly limit of credits exceeded');
+					\Runalyze\Error::getInstance()->addDebug('Geonames-request failed: hourly limit of credits exceeded');
 					break;
 				case 20:
-					\Error::getInstance()->addDebug('Geonames-request failed: weekly limit of credits exceeded');
+					\Runalyze\Error::getInstance()->addDebug('Geonames-request failed: weekly limit of credits exceeded');
 					break;
 				default:
 					if (isset($response['status']['message']))
-						\Error::getInstance ()->addDebug('Geonames response: '.$response['status']['message']);
+						\Runalyze\Error::getInstance ()->addDebug('Geonames response: '.$response['status']['message']);
 			}
 		}
 
@@ -68,17 +61,17 @@ class Geonames extends FromExternalAPI {
 	 * @param array $latitudes
 	 * @param array $longitudes
 	 * @return array
-	 * @throws \RuntimeException
+	 * @throws \InvalidResponseException
 	 */
 	protected function fetchElevationFor(array $latitudes, array $longitudes) {
 		$latitudeString = implode(',', $latitudes);
 		$longitudeString = implode(',', $longitudes);
 
-		$url = 'http://api.geonames.org/srtm3JSON?lats='.$latitudeString.'&lngs='.$longitudeString.'&username='.$this->USERNAME;
+		$url = 'http://api.geonames.org/srtm3JSON?lats='.$latitudeString.'&lngs='.$longitudeString.'&username='.GEONAMES_USERNAME;
 		$response = json_decode(\Filesystem::getExternUrlContent($url), true);
 
 		if (is_null($response) || !isset($response['geonames']) || !is_array($response['geonames'])) {
-			throw new \RuntimeException('Geonames returned malformed code.');
+			throw new InvalidResponseException('Geonames returned malformed code.');
 		}
 
 		$elevationData = array();

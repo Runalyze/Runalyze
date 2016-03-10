@@ -5,8 +5,8 @@
  */
 require_once '../inc/class.Frontend.php';
 
-$Frontend = new Frontend();
-
+$Frontend = new Frontend(true);
+use Runalyze\Activity\DuplicateFinder;
 header('Content-type: application/json');
 
 $IDs     = array();
@@ -18,11 +18,15 @@ foreach ($Array as $String) {
 }
 
 $IgnoreIDs = \Runalyze\Configuration::ActivityForm()->ignoredActivityIDs();
-$Request = DB::getInstance()->prepare('SELECT COUNT(*) FROM `'.PREFIX.'training` WHERE `activity_id`=:id LIMIT 1');
+$DuplicateFinder = new DuplicateFinder(DB::getInstance(), SessionAccountHandler::getId());
+
+$IgnoreIDs = array_map(function($v){
+	return (int)floor(strtotime($v)/60)*60;
+}, $IgnoreIDs);
 
 foreach ($IDs as $ID) {
-	$Request->execute(array('id' => $ID));
-	$found = in_array($ID, $IgnoreIDs) || $Request->fetchColumn() > 0;
+	$dup = $DuplicateFinder->checkForDuplicate((int)floor(strtotime($ID)/60)*60);
+	$found = $dup || in_array($ID, $IgnoreIDs);
 	$Matches[$ID] = array('match' => $found);
 }
 

@@ -13,7 +13,7 @@ use Runalyze\Util\Time;
 
 /**
  * Table to show monthwise statistics
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Plugin\Stat\Wetter
  */
@@ -192,6 +192,7 @@ class MonthwiseTable
 				'.$this->GroupByQuery.' as `m`
 			FROM `'.PREFIX.'training`
 			WHERE
+				`accountid`='.\SessionAccountHandler::getId().' AND
 				`temperature` IS NOT NULL
 				'.$this->DependencyQuery.'
 			GROUP BY '.$this->GroupByQuery.'
@@ -239,6 +240,7 @@ class MonthwiseTable
 				'.$this->GroupByQuery.' as `m`
 			FROM `'.PREFIX.'training`
 			WHERE
+				`accountid`='.\SessionAccountHandler::getId().' AND
 				`weatherid` = ?
 				'.$this->DependencyQuery.'
 			GROUP BY '.$this->GroupByQuery.'

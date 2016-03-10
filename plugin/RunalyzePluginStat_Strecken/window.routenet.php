@@ -41,7 +41,8 @@ if (empty($Conditions)) {
 			`min`,
 			`max`
 		FROM `'.PREFIX.'route`
-		WHERE `geohashes`!="" '.$Conditions.'
+		WHERE `'.PREFIX.'route`.`accountid`='.SessionAccountHandler::getId().' AND 
+				`geohashes`!="" '.$Conditions.'
 		ORDER BY `id` DESC
 		LIMIT '.RunalyzePluginStat_Strecken::MAX_ROUTES_ON_NET);
 } else {

@@ -68,7 +68,7 @@ class Tags extends AbstractKey
 
 	/**
 	 * Get string to display this dataset value
-	 * @param Runalyze\Dataset\Context $context
+	 * @param \Runalyze\Dataset\Context $context
 	 * @return string
 	 */
 	public function stringFor(Context $context)
@@ -79,7 +79,7 @@ class Tags extends AbstractKey
 			$ids = explode(',', $context->data(self::CONCAT_TAGIDS_KEY));
 			$Factory = new \Runalyze\Model\Factory(\SessionAccountHandler::getId());
 
-			foreach ($ids as $id) {
+			foreach (array_unique($ids) as $id) {
 				$string .= '#'.$Factory->tag($id)->tag().' ';
 			}
 		}

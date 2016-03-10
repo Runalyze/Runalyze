@@ -48,10 +48,10 @@ class Running extends AbstractCadence {
 
 	/**
 	 * Formular unit
-	 * @return enum
+	 * @return string
 	 * @codeCoverageIgnore
 	 */
 	public function formularUnit() {
-		return FormularUnit::$SPM;
+		return \FormularUnit::$SPM;
 	}
 }

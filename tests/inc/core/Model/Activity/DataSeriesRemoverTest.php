@@ -216,4 +216,24 @@ class DataSeriesRemoverTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(0, $Activity->hrAvg());
 	}
 
+	public function testRemovingAverageTemperature() {
+		$id = $this->insert(array(
+			Entity::TIMESTAMP => time(),
+			Entity::TEMPERATURE => 20,
+			Entity::SPORTID => $this->OutdoorID
+		), array(
+		), array(
+			Trackdata\Entity::TEMPERATURE => array(20, 20, 20)
+		));
+
+		$OldActivity = $this->Factory->activity($id);
+
+		$Remover = new DataSeriesRemover($this->PDO, 0, $OldActivity, $this->Factory);
+		$Remover->removeFromTrackdata(Trackdata\Entity::TEMPERATURE);
+		$Remover->saveChanges();
+
+		$Activity = $this->Factory->activity($id);
+		$this->assertTrue($Activity->weather()->temperature()->isUnknown());
+	}
+
 }

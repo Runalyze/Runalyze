@@ -6,9 +6,12 @@
  */
 
 use Runalyze\Calculation\JD;
+use Runalyze\Calculation\Math\MovingAverage\Kernel;
+use Runalyze\Calculation\Math\MovingAverage\WithKernel;
 use Runalyze\Calculation\Prognosis;
 use Runalyze\Configuration;
 use Runalyze\Activity\Distance;
+use Runalyze\Util\Time;
 
 if (is_dir(FRONTEND_PATH.'../plugin/RunalyzePluginStat_Wettkampf')) {
 	$Factory = new PluginFactory();
@@ -30,7 +33,7 @@ $PrognosisObj = new Prognosis\Prognosis();
 $PrognosisObj->setStrategy($Strategy);
 
 if (START_TIME != time()) {
-	$Data = Cache::get('prognosePlotData');
+	$Data = null; Cache::get('prognosePlotData');
 
 	if (is_null($Data)) {
 		$withElevation = Configuration::Vdot()->useElevationCorrection();
@@ -39,44 +42,69 @@ if (START_TIME != time()) {
 			SELECT
 				YEAR(FROM_UNIXTIME(`time`)) as `y`,
 				MONTH(FROM_UNIXTIME(`time`)) as `m`,
+				DAY(FROM_UNIXTIME(`time`)) as `d`,
 				SUM('.JD\Shape::mysqlVDOTsum($withElevation).')/SUM('.JD\Shape::mysqlVDOTsumTime($withElevation).') as `vdot`
 			FROM `'.PREFIX.'training`
 			WHERE
+				`accountid`='.\SessionAccountHandler::getId().' AND
 				`vdot`>0 AND use_vdot<>0
-			GROUP BY `y`, `m`
-			ORDER BY `y` ASC, `m` ASC')->fetchAll();
+			GROUP BY `y`, `m`, `d`
+			ORDER BY `y` ASC, `m` ASC, `d` ASC')->fetchAll();
 
 		Cache::set('prognosePlotData', $Data, '300');
 	}
 
-	foreach ($Data as $dat) {
-		// TODO: use correct GA
-		$Strategy->setVDOT( Configuration::Data()->vdotFactor() * $dat['vdot'] );
+	if (!empty($Data)) {
+		$StartTime = mktime(12, 0, 0, $Data[0]['m'], $Data[0]['d'], $Data[0]['y']);
+		$windowWidth = Configuration::Vdot()->days();
+		$VDOTs = [$Data[0]['vdot']];
+		$Indices = [0];
 
-		$index = mktime(1,0,0,$dat['m'],15,$dat['y']);
-		$Prognosis[$index.'000'] = $PrognosisObj->inSeconds($distance)*1000;
-	}
+		// A 'prefix' of 15 days is needed to use uniform kernel only as 'rear mirror'
+		foreach ($Data as $dat) {
+			$VDOTs[] = $dat['vdot'];
+			$Indices[] = 15 + Time::diffInDays($StartTime, mktime(12, 0, 0, $dat['m'], $dat['d'], $dat['y']));
+		}
 
-	$ResultsData = Cache::get('prognosePlotDistanceData'.$distance);
-	if (is_null($ResultsData)) {
-		$ResultsData = DB::getInstance()->query('
-			SELECT
-				`time`,
-				`id`,
-				`s`
-			FROM `'.PREFIX.'training`
-			WHERE
-				`typeid`="'.Configuration::General()->competitionType().'"
-				AND `distance`="'.$distance.'"
-			ORDER BY
-				`time` ASC')->fetchAll();
+		$MovingAverage = new WithKernel($VDOTs, $Indices);
+		$MovingAverage->setKernel(new Kernel\Uniform($windowWidth));
+		$MovingAverage->calculate();
 
-		Cache::set('prognosePlotDistanceData'.$distance, $ResultsData, '600');
-	}
+		foreach ($MovingAverage->movingAverage() as $i => $value) {
+			if ($i > 0) {
+				// TODO: use correct GA
+				$Strategy->setVDOT(Configuration::Data()->vdotFactor() * $value);
 
-	foreach ($ResultsData as $dat) {
-		if (!isset($WKplugin) || !$WKplugin->isFunCompetition($dat['id']))
-			$Results[$dat['time'].'000'] = $dat['s']*1000;
+				$index = $StartTime + DAY_IN_S * ($Indices[$i] - 15);
+				$Prognosis[$index.'000'] = $PrognosisObj->inSeconds($distance) * 1000;
+			}
+		}
+
+
+		$ResultsData = Cache::get('prognosePlotDistanceData'.$distance);
+		if (is_null($ResultsData)) {
+			$ResultsData = DB::getInstance()->query('
+				SELECT
+					`time`,
+					`id`,
+					`s`
+				FROM `'.PREFIX.'training`
+				WHERE 
+					`accountid`='.\SessionAccountHandler::getId().' AND
+					`typeid`="'.Configuration::General()->competitionType().'"
+					AND `distance`="'.$distance.'"
+				ORDER BY
+					`time` ASC')->fetchAll();
+
+			Cache::set('prognosePlotDistanceData'.$distance, $ResultsData, '600');
+		}
+
+		foreach ($ResultsData as $dat) {
+			if (!isset($WKplugin) || !$WKplugin->isFunCompetition($dat['id']))
+				$Results[$dat['time'].'000'] = $dat['s'] * 1000;
+		}
+	} else {
+		$DataFailed = true;
 	}
 } else {
 	$DataFailed = true;

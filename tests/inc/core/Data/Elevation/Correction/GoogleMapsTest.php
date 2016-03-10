@@ -17,7 +17,7 @@ class GoogleMapsTest extends \PHPUnit_Framework_TestCase {
 			$Corrector->correctElevation();
 			$this->assertEquals( array(237), $Corrector->getCorrectedElevation() );
 		} else {
-			$this->markTestSkipped('Datasciencetoolkit was not available.');
+			$this->markTestSkipped('Google Maps was not available.');
 		}
 	}
 
@@ -31,7 +31,7 @@ class GoogleMapsTest extends \PHPUnit_Framework_TestCase {
 			$Corrector->correctElevation();
 			$this->assertEquals( array(238, 238, 238, 238, 238, 237, 237, 237, 237, 237, 263), $Corrector->getCorrectedElevation() );
 		} else {
-			$this->markTestSkipped('Datasciencetoolkit was not available.');
+			$this->markTestSkipped('Google Maps was not available.');
 		}
 	}
 }

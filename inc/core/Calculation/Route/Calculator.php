@@ -6,6 +6,8 @@
 
 namespace Runalyze\Calculation\Route;
 
+use Runalyze\Data\Elevation\Correction\InvalidResponseException;
+use Runalyze\Data\Elevation\Correction\NoValidStrategyException;
 use Runalyze\Model\Route;
 use Runalyze\Data\Elevation\Correction\Corrector;
 use Runalyze\Data\Elevation\Calculation;
@@ -62,11 +64,21 @@ class Calculator {
 			return false;
 		}
 
+		if ($strategyName == 'none') {
+			$this->removeElevationCorrection();
+
+			return true;
+		}
+
 		$coordinates = $this->Route->latitudesAndLongitudesFromGeohash();
 
-		$Corrector = new Corrector();
-		$Corrector->correctElevation($coordinates['lat'], $coordinates['lng'], $strategyName);
-		$result = $Corrector->getCorrectedElevation();
+		try {
+			$Corrector = new Corrector();
+			$Corrector->correctElevation($coordinates['lat'], $coordinates['lng'], $strategyName);
+			$result = $Corrector->getCorrectedElevation();
+		} catch (InvalidResponseException $e) {
+			return false;
+		}
 
 		if (!empty($result)) {
 			$this->Route->set(Route\Entity::ELEVATIONS_CORRECTED, $result);
@@ -76,5 +88,13 @@ class Calculator {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Remove elevation correction
+	 */
+	public function removeElevationCorrection() {
+		$this->Route->set(Route\Entity::ELEVATIONS_CORRECTED, array());
+		$this->Route->set(Route\Entity::ELEVATIONS_SOURCE, '');
 	}
 }

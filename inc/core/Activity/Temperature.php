@@ -48,7 +48,7 @@ class Temperature implements ValueInterface {
 
 	/**
 	 * @param float|null $temperature [°C]
-	 * @param \Runalyze\Parameter\Application\WeightUnit $preferredUnit
+	 * @param \Runalyze\Parameter\Application\TemperatureUnit $preferredUnit
 	 */
 	public function __construct($temperature = null, TemperatureUnit $preferredUnit = null) {
 		$this->PreferredUnit = (null !== $preferredUnit) ? $preferredUnit : Configuration::General()->temperatureUnit();
@@ -134,7 +134,7 @@ class Temperature implements ValueInterface {
 	}
 
 	/**
-	 * Weight
+	 * Temperature
 	 * @return float|null [°C]
 	 */
 	public function celsius() {
@@ -142,7 +142,7 @@ class Temperature implements ValueInterface {
 	}
 
 	/**
-	 * Weight in fahrenheit
+	 * Temperature in fahrenheit
 	 * @return float|null [°F]
 	 */
 	public function fahrenheit() {

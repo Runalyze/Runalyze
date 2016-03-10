@@ -362,7 +362,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 				);
 			}
 
-			$types = DB::getInstance()->query('SELECT `id`, `name`, `abbr` FROM `'.PREFIX.'type` WHERE `sportid`="'.$this->sportid.'" ORDER BY `hr_avg` ASC')->fetchAll();
+			$types = DB::getInstance()->query('SELECT `id`, `name`, `abbr` FROM `'.PREFIX.'type` WHERE `accountid`='.SessionAccountHandler::getId().' AND `sportid`="'.$this->sportid.'" ORDER BY `hr_avg` ASC')->fetchAll();
 			foreach ($types as $type) {
 				$type_foreach[] = array(
 					'name' => '<span title="'.$type['name'].'">'.($type['abbr'] != '' ? $type['abbr'] : $type['name']).'</span>',

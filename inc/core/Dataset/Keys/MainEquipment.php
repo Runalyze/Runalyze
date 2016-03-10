@@ -55,7 +55,7 @@ class MainEquipment extends AbstractEquipment
 
 	/**
 	 * Get string to display this dataset value
-	 * @param Runalyze\Dataset\Context $context
+	 * @param \Runalyze\Dataset\Context $context
 	 * @return string
 	 */
 	public function stringFor(Context $context)
@@ -66,7 +66,7 @@ class MainEquipment extends AbstractEquipment
 			$mainTypeID = $context->sport()->mainEquipmentTypeID();
 			$names = array();
 
-			foreach ($ids as $id) {
+			foreach (array_unique($ids) as $id) {
 				$Equipment = $Factory->equipment($id);
 
 				if ($Equipment->typeid() == $mainTypeID) {

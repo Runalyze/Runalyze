@@ -101,7 +101,6 @@ class ImporterFiletypeGPXTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertEquals( 10, $this->object->object()->getTimeInSeconds() );
 		$this->assertEquals( 90, $this->object->object()->getCadence() );
-		$this->assertEquals( 27, $this->object->object()->Weather()->temperature()->value() );
 
 		$this->assertEquals( array(0, 10), $this->object->object()->getArrayTime() );
 		$this->assertEquals( array(275,280), $this->object->object()->getArrayAltitude() );

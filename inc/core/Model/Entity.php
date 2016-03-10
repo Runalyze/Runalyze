@@ -176,6 +176,27 @@ abstract class Entity {
 	}
 
 	/**
+	 * Transforms empty strings to null
+	 * @param array|string $keyOrKeys key or array of keys to be checked
+	 * @param bool $ensureNumericIfNotEmpty
+	 */
+	protected function ensureNullIfEmpty($keyOrKeys, $ensureNumericIfNotEmpty = false) {
+		if (!is_array($keyOrKeys)) {
+			$keyOrKeys = array($keyOrKeys);
+		}
+
+		foreach ($keyOrKeys as $key) {
+			if (array_key_exists($key, $this->Data)) {
+				if ($this->Data[$key] === '' || null === $this->Data[$key]) {
+					$this->Data[$key] = null;
+				} elseif ($ensureNumericIfNotEmpty) {
+					$this->Data[$key] = (float)$this->Data[$key];
+				}
+			}
+		}
+	}
+
+	/**
 	 * Can set key?
 	 * @param string $key
 	 * @return boolean
@@ -302,7 +323,7 @@ abstract class Entity {
 
 	/**
 	 * Ignore a key while checking for emptiness
-	 * @param enum $key
+	 * @param string $key
 	 * @return boolean
 	 */
 	protected function ignoreNonEmptyValue($key) {

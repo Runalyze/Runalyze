@@ -36,8 +36,7 @@ class ImporterFiletypeTTBIN extends ImporterFiletypeAbstract {
 	 */
 	public function parseFile($Filename) {
 		$this->Filename = $Filename.'.temp.tcx';
-
-		$Command = new ShellCommand(FRONTEND_PATH.'../call/perl/ttbincnv -t < '.FRONTEND_PATH.$Filename.'  > '.FRONTEND_PATH.$this->Filename.'');
+		$Command = new ShellCommand(TTBIN_PATH.' -t -E < "'.FRONTEND_PATH.$Filename.'"  > "'.FRONTEND_PATH.$this->Filename.'"');
 		$Command->run();
 
 		$this->readFile();
@@ -71,6 +70,9 @@ class ImporterFiletypeTTBIN extends ImporterFiletypeAbstract {
 
 			if (strpos($firstLine, 'ttbincnv') !== FALSE) {
 				$this->Errors[] = 'Importing your *.ttbin-file did not work. Please compile ttbincnv for your environment.';
+				$this->Parser = new ParserTCXMultiple('');
+			} elseif (substr($firstLine, 0, 1) != '<') {
+				$this->Errors[] = sprintf(__('Parsing your *.%s-file failed: %s'), 'ttbin', $firstLine);
 				$this->Parser = new ParserTCXMultiple('');
 			} else {
 				$Filecontent = Filesystem::openFile($this->Filename);

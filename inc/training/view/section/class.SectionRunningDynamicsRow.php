@@ -5,9 +5,8 @@
  */
 
 use Runalyze\Data\Cadence;
-use Runalyze\View\Activity;
 use Runalyze\Model\Trackdata;
-use Runalyze\Activity\Distance;
+use Runalyze\View\Activity;
 use Runalyze\View\Activity\Box;
 
 /**
@@ -85,8 +84,12 @@ class SectionRunningDynamicsRow extends TrainingViewSectionRowTabbedPlot {
 
 			$StrideLength = new Activity\Box\StrideLength($this->Context);
 			$StrideLength->defineAsFloatingBlock('w50');
+			
+			$TotalCadence = new Box\TotalCadence($this->Context);
+			$TotalCadence->defineAsFloatingBlock('w50');
 
 			$this->BoxedValues[] = $Cadence;
+			$this->BoxedValues[] = $TotalCadence;
 			$this->BoxedValues[] = $StrideLength;
 		}
 	}

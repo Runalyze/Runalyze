@@ -7,6 +7,7 @@
 use Runalyze\View\Activity\Context;
 use Runalyze\View\Activity\Linker;
 use Runalyze\Model;
+use Runalyze\Export\Share\Facebook;
 
 /**
  * Meta-tag creator for Facebook
@@ -97,11 +98,11 @@ class HTMLMetaForFacebook {
 	 * Set properties
 	 */
 	protected function setProperties() {
-		$Exporter = new ExporterFacebook($this->Context);
+		$Exporter = new Facebook($this->Context);
 
 		$Linker = new Linker($this->Context->activity());
 
-		$this->add('fb:app_id', ExporterFacebook::$APP_ID);
+		$this->add('fb:app_id', Facebook::$APP_ID);
 		$this->add('og:type', 'fitness.course');
 		$this->add('og:url', $Linker->publicUrl());
 		$this->add('og:title', addslashes($Exporter->metaTitle()));
@@ -155,11 +156,9 @@ class HTMLMetaForFacebook {
 		$this->TrackdataLoop = new Model\Trackdata\Loop($this->Context->trackdata());
 		$this->TrackdataLoop->setStepSize(self::STEP_SIZE);
 
-		while ($this->RouteLoop->nextStep()) {
-			$this->TrackdataLoop->nextStep();
-
+		do {
 			$this->displayActivityDataPoint();
-		}
+		} while ($this->RouteLoop->nextStep() && $this->TrackdataLoop->nextStep());
 	}
 
 	/**

@@ -37,7 +37,7 @@ class ImporterFactory {
 
 	/**
 	 * Import from garmin communicator
-	 * @var enum
+	 * @var string enum
 	 */
 	public static $FROM_COMMUNICATOR = 'NO_FILENAME_IMPORT_FROM_GARMIN_COMMUNICATOR';
 

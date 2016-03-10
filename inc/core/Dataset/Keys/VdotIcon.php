@@ -32,6 +32,10 @@ class VdotIcon extends AbstractKey
 	 */
 	public function column()
 	{
+		if (\Runalyze\Configuration::Vdot()->useElevationCorrection()) {
+			return 'vdot_with_elevation';
+		}
+
 		return 'vdot';
 	}
 
@@ -82,12 +86,12 @@ class VdotIcon extends AbstractKey
 
 	/**
 	 * Get string to display this dataset value
-	 * @param Runalyze\Dataset\Context $context
+	 * @param \Runalyze\Dataset\Context $context
 	 * @return string
 	 */
 	public function stringFor(Context $context)
 	{
-		if ($context->isRunning() && $context->activity()->vdotByHeartRate() > 0) {
+		if ($context->isRunning() && $context->dataview()->usedVdot() > 0) {
 			return $context->dataview()->vdotIcon();
 		}
 

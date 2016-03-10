@@ -130,7 +130,7 @@ class ParserKMLtomtomSingle extends ParserAbstractSingleXML {
 	 */
 	protected function parseExtendedData() {
 		foreach ($this->XML->xpath('//gx:SimpleArrayData') as $array) {
-			switch ($array['name']) {
+			switch (strtolower($array['name'])) {
 				case 'calories':
 					$this->parseExtendedCalories($array);
 					break;
@@ -139,6 +139,12 @@ class ParserKMLtomtomSingle extends ParserAbstractSingleXML {
 					break;
 				case 'heartrate':
 					$this->parseExtendedHeartrate($array);
+					break;
+				case 'power':
+					$this->parseExtendedPower($array);
+					break;
+				case 'cadence':
+					$this->parseExtendedCadence($array);
 					break;
 			}
 		}
@@ -173,8 +179,45 @@ class ParserKMLtomtomSingle extends ParserAbstractSingleXML {
 	protected function parseExtendedHeartrate(SimpleXMLElement $array) {
 		$values = $array->xpath('gx:value');
 
-		foreach ($values as $value)
+		foreach ($values as $value) 
 			$this->gps['heartrate'][] = (int)$value;
+
+	}
+        
+	/**
+	 * Parse power
+	 * @param SimpleXMLElement $array
+	 */
+	protected function parseExtendedPower(SimpleXMLElement $array) {
+		$values = $array->xpath('gx:value');
+
+		foreach ($values as $value) 
+			$this->gps['power'][] = (int)$value;
+
+	}
+        
+	/**
+	 * Parse cadence
+	 * @param SimpleXMLElement $array
+	 */
+	protected function parseExtendedCadence(SimpleXMLElement $array) {
+		$values = $array->xpath('gx:value');
+
+		foreach ($values as $value) 
+			$this->gps['rpm'][] = (int)$value;
+
+	}
+        
+	/**
+	 * Parse altitude
+	 * @param SimpleXMLElement $array
+	 */
+	protected function parseExtendedAltitude(SimpleXMLElement $array) {
+		$values = $array->xpath('gx:value');
+
+		foreach ($values as $value) 
+			$this->gps['altitude'][] = (int)$value;
+
 	}
 
 	/**

@@ -44,6 +44,14 @@ class Openweathermap implements ForecastStrategyInterface {
 	protected $Result = array();
 
 	/**
+	 * @return int
+	 */
+	public function sourceId()
+	{
+		return Sources::OPENWEATHERMAP;
+	}
+
+	/**
 	 * Load conditions for location
 	 * @param Location $Location
 	 */
@@ -51,7 +59,9 @@ class Openweathermap implements ForecastStrategyInterface {
 		$this->Result = array();
 
 		if ($Location->isOld() && $Location->hasLocationName()) {
-			$this->setFromURL( self::URL_HISTORY.'/city?q='.$Location->name().'&start='.$Location->time().'&cnt=1' );
+			// Historical data needs a paid account (150$/month)
+			// @see http://openweathermap.org/price
+			//$this->setFromURL( self::URL_HISTORY.'/city?q='.$Location->name().'&start='.$Location->time().'&cnt=1' );
 		}
 
 		if (empty($this->Result)) {
@@ -118,7 +128,7 @@ class Openweathermap implements ForecastStrategyInterface {
 
 	/**
 	 * Condition
-	 * @return Runalyze\Data\Weather\Çondition
+	 * @return \Runalyze\Data\Weather\Condition
 	 */
 	public function condition() {
 		if (!isset($this->Result['weather'])) {
@@ -130,24 +140,80 @@ class Openweathermap implements ForecastStrategyInterface {
 
 	/**
 	 * Temperature
-	 * @return Runalyze\Data\Weather\Temperature
+	 * @return \Runalyze\Data\Weather\Temperature
 	 */
 	public function temperature() {
 		if (isset($this->Result['main']) && isset($this->Result['main']['temp'])) {
-			$value = $this->Result['main']['temp'];
+			$value = round($this->Result['main']['temp']);
 		} else {
 			$value = null;
 		}
 
 		return new Temperature($value, Temperature::KELVIN);
 	}
+	
+	/**
+	 * Temperature
+	 * @return \Runalyze\Data\Weather\WindSpeed
+	 */
+	public function windSpeed() {
+		$WindSpeed = new WindSpeed();
+
+		if (isset($this->Result['wind']) && isset($this->Result['wind']['speed'])) {
+			$WindSpeed->setMeterPerSecond($this->Result['wind']['speed']);
+		}
+		
+		return $WindSpeed;
+	}
+	
+	/**
+	 * Temperature
+	 * @return \Runalyze\Data\Weather\WindDegree
+	 */
+	public function windDegree() {
+		if (isset($this->Result['wind']) && isset($this->Result['wind']['deg'])) {
+			$value = round($this->Result['wind']['deg']);
+		} else {
+			$value = null;
+		}
+
+		return new WindDegree($value);
+	}
+	
+	/**
+	 * Humidity
+	 * @return \Runalyze\Data\Weather\Humidity
+	 */
+	public function humidity() {
+		if (isset($this->Result['main']) && isset($this->Result['main']['humidity'])) {
+			$value = round($this->Result['main']['humidity']);
+		} else {
+			$value = null;
+		}
+
+		return new Humidity($value);
+	}
+	
+	/**
+	 * Humidity
+	 * @return \Runalyze\Data\Weather\Pressure
+	 */
+	public function pressure() {
+		if (isset($this->Result['main']) && isset($this->Result['main']['pressure'])) {
+			$value = round($this->Result['main']['pressure']);
+		} else {
+			$value = null;
+		}
+
+		return new Pressure($value);
+	}
 
 	/**
 	 * Translate api code to condition
 	 * 
-	 * @see http://openweathermap.org/wiki/API/Weather_Condition_Codes
+	 * @see http://openweathermap.org/weather-conditions
 	 * @param int $code Code from openweathermap.org
-	 * @return Runalyze\Data\Weather\Condition
+	 * @return \Runalyze\Data\Weather\Condition
 	 */
 	private function translateCodeToCondition($code) {
 		switch($code) {
@@ -163,6 +229,7 @@ class Openweathermap implements ForecastStrategyInterface {
 			case 230:
 			case 231: 
 			case 232:
+			    return new Condition(Condition::THUNDERSTORM);
 			case 300:
 			case 301:
 			case 802:
@@ -175,17 +242,17 @@ class Openweathermap implements ForecastStrategyInterface {
 			case 803:
 			case 804:
 				return new Condition(Condition::CLOUDY);
-			case 500:
-			case 501:
 			case 502:
 			case 503:
 			case 504:
-			case 511:
-			case 520:
 			case 521:
 			case 522:
-			case 300:
-			case 301:
+			case 531:
+			    return new Condition(Condition::HEAVYRAIN);
+			case 500:
+			case 501:			    
+			case 511:
+			case 520:
 			case 302:
 			case 310:
 			case 311:

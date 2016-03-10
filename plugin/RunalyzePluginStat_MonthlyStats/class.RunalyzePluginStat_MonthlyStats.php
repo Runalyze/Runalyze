@@ -7,6 +7,7 @@ $PLUGINKEY = 'RunalyzePluginStat_MonthlyStats';
 
 use Runalyze\Activity\Distance;
 use Runalyze\Activity\Duration;
+use Runalyze\Activity\Elevation;
 use Runalyze\Configuration;
 
 /**
@@ -18,6 +19,10 @@ class RunalyzePluginStat_MonthlyStats extends PluginStat {
 	private $KmData = array();
 	private $maxKm = 1;
 	private $maxs = 1;
+	private $maxEm = 1;
+	private $maxKcal = 1;
+	private $maxTrimp = 1;
+	private $maxN = 1;
 
 	/**
 	 * Name
@@ -40,7 +45,7 @@ class RunalyzePluginStat_MonthlyStats extends PluginStat {
 	 */
 	protected function prepareForDisplay() {
 		$this->setAnalysisNavigation();
-		$this->setSportsNavigation(true, false);
+		$this->setSportsNavigation(true, true);
 		$this->initData();
 	}
 
@@ -58,6 +63,10 @@ class RunalyzePluginStat_MonthlyStats extends PluginStat {
 		$LinkList = '<li class="with-submenu"><span class="link">' . $this->getAnalysisType() . '</span><ul class="submenu">';
 		$LinkList .= '<li' . ('km' == $this->dat ? ' class="active"' : '') . '>' . $this->getInnerLink(__('by distance'), $this->sportid, $this->year, 'km') . '</li>';
 		$LinkList .= '<li' . ('s' == $this->dat ? ' class="active"' : '') . '>' . $this->getInnerLink(__('by time'), $this->sportid, $this->year, 's') . '</li>';
+		$LinkList .= '<li' . ('em' == $this->dat ? ' class="active"' : '') . '>' . $this->getInnerLink(__('by elevation'), $this->sportid, $this->year, 'em') . '</li>';
+		$LinkList .= '<li' . ('kcal' == $this->dat ? ' class="active"' : '') . '>' . $this->getInnerLink(__('by calories'), $this->sportid, $this->year, 'kcal') . '</li>';
+		$LinkList .= '<li' . ('trimp' == $this->dat ? ' class="active"' : '') . '>' . $this->getInnerLink(__('by trimp'), $this->sportid, $this->year, 'trimp') . '</li>';
+		$LinkList .= '<li' . ('n' == $this->dat ? ' class="active"' : '') . '>' . $this->getInnerLink(__('by number'), $this->sportid, $this->year, 'n') . '</li>';
 		$LinkList .= '</ul></li>';
 
 		$this->setToolbarNavigationLinks(array($LinkList));
@@ -65,7 +74,12 @@ class RunalyzePluginStat_MonthlyStats extends PluginStat {
 
 	private function getAnalysisType() {
 		$types = ['km' => __('by distance'),
-			's' => __('by time')];
+			's' => __('by time'),
+			'em' => __('by elevation'),
+			'kcal' => __('by calories'),
+			'trimp' => __('by trimp'),
+			'n' => __('by number')
+			];
 		return $types[$this->dat];
 	}
 
@@ -109,8 +123,16 @@ class RunalyzePluginStat_MonthlyStats extends PluginStat {
 					if ($this->dat == 'km') {
 						echo '<td title="' . Distance::format($Data[$m]['distance']) . '">' . Distance::format($Data[$m]['distance']) . $this->getCircleFor(100 * $Data[$m]['distance'] / $this->maxKm) . '</td>';
 						//echo '<td style="vertical-align: bottom;">' . $tooltip . $circle . '</td>';
-					} else {
+					} else if ($this->dat == 's') {
 						echo '<td title="' . $Data[$m]['s'] . '">' . Duration::format($Data[$m]['s']) . $this->getCircleFor(100 * $Data[$m]['s'] / $this->maxs) . '</td>';
+					} else if ($this->dat == 'em') {
+						echo '<td title="' . Elevation::format($Data[$m]['elevation']) . '">' . Elevation::format($Data[$m]['elevation']) . $this->getCircleFor(100 * $Data[$m]['elevation'] / $this->maxEm) . '</td>';
+					} else if ($this->dat == 'kcal') {
+						echo '<td title="' . $Data[$m]['kcal'] . ' kcal">' . $Data[$m]['kcal'] . ' kcal' . $this->getCircleFor(100 * $Data[$m]['kcal'] / $this->maxKcal) . '</td>';
+					} else if ($this->dat == 'trimp') {
+						echo '<td title="' . $Data[$m]['trimp'] . '">' . $Data[$m]['trimp'] . $this->getCircleFor(100 * $Data[$m]['trimp'] / $this->maxTrimp) . '</td>';
+					} else if ($this->dat == 'n') {
+						echo '<td title="' . $Data[$m]['n'] . '">' . $Data[$m]['n'] . $this->getCircleFor(100 * $Data[$m]['n'] / $this->maxN) . '</td>';
 					}
 				} else {
 					echo HTML::emptyTD();
@@ -131,18 +153,38 @@ class RunalyzePluginStat_MonthlyStats extends PluginStat {
 			SELECT
 				SUM(`distance`) as `distance`,
 				SUM(`s`) as `s`,
+				SUM(`elevation`) as `elevation`,
+				SUM(`kcal`) as `kcal`,
+				SUM(`trimp`) as `trimp`,
+				COUNT(*) as `n`,
 				YEAR(FROM_UNIXTIME(`time`)) as `year`,
 				MONTH(FROM_UNIXTIME(`time`)) as `month`
 			FROM `' . PREFIX . 'training`
-				WHERE `sportid`=' . $this->sportid . ' AND `accountid`=' . SessionAccountHandler::getId() . '
+			WHERE
+			      '.(((int)$this->sportid > 0)?'`sportid`=' . $this->sportid . ' AND ':'').'
+			      `accountid`=' . SessionAccountHandler::getId() . '
 			GROUP BY `year` DESC, `month` ASC'
 		)->fetchAll();
 
 		foreach ($result as $dat) {
-			if ($dat['distance'] > 0 || $dat['s'] > 0) {
-				$this->KmData[$dat['year']][$dat['month']] = array('distance' => $dat['distance'], 's' => $dat['s']);
+			if ($dat['distance'] > 0 || $dat['s'] > 0 ||
+			    $dat['elevation'] > 0 || $dat['kcal'] > 0 ||
+			    $dat['trimp'] > 0 || $dat['n'] > 0
+			    ) {
+				$this->KmData[$dat['year']][$dat['month']] = array(
+				   'distance' => $dat['distance'],
+				   's' => $dat['s'],
+				   'elevation' => $dat['elevation'],
+				   'kcal' => $dat['kcal'],
+				   'trimp' => $dat['trimp'],
+				   'n' => $dat['n']
+				   );
 				if ($dat['distance'] > $this->maxKm) $this->maxKm = $dat['distance'];
 				if ($dat['s'] > $this->maxs) $this->maxs = $dat['s'];
+				if ($dat['elevation'] > $this->maxEm) $this->maxEm = $dat['elevation'];
+				if ($dat['kcal'] > $this->maxKcal) $this->maxKcal = $dat['kcal'];
+				if ($dat['trimp'] > $this->maxTrimp) $this->maxTrimp = $dat['trimp'];
+				if ($dat['n'] > $this->maxN) $this->maxN = $dat['n'];
 			}
 		}
 	}

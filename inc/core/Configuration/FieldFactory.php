@@ -20,6 +20,7 @@ class FieldFactory {
 	 * Add field
 	 * @param \Runalyze\Configuration\Handle $Handle
 	 * @param array $options
+	 * @return \FormularField
 	 */
 	public function FieldFor(Handle $Handle, array $options = array()) {
 		$options = array_merge(array(

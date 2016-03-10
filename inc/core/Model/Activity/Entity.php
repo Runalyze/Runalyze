@@ -6,11 +6,9 @@
 
 namespace Runalyze\Model\Activity;
 
-use Runalyze\Model;
-use Runalyze\Model\Activity\Partner;
-use Runalyze\Model\Activity\Splits;
-
 use Runalyze\Data\Weather;
+use Runalyze\Model;
+use Runalyze\Model\Activity\Splits;
 
 /**
  * Activity entity
@@ -131,7 +129,7 @@ class Entity extends Model\EntityWithID {
 	 * Key: vdot estimate from fit file
 	 * @var string
 	 */
-	const FIT_VDOT_ESTIMATE = 'fit_vdot_estimate';
+	const FIT_VO2MAX_ESTIMATE = 'fit_vdot_estimate';
 
 	/**
 	 * Key: recovery time from fit file
@@ -216,12 +214,48 @@ class Entity extends Model\EntityWithID {
 	 * @var string
 	 */
 	const TEMPERATURE = 'temperature';
+	
+	/**
+	 * Key: wind speed
+	 * @var string
+	 */
+	const WINDSPEED = 'wind_speed';
+	
+	/**
+	 * Key: wind degree
+	 * @var string
+	 */
+	const WINDDEG = 'wind_deg';
+	
+	/**
+	 * Key: humidity
+	 * @var string
+	 */
+	const HUMIDITY = 'humidity';
+	
+	/**
+	 * Key: pressure
+	 * @var string
+	 */
+	const PRESSURE = 'pressure';
 
 	/**
 	 * Key: weather id
 	 * @var string
 	 */
 	const WEATHERID = 'weatherid';
+
+	/**
+	 * Key: weather source
+	 * @var string
+	 */
+	const WEATHER_SOURCE = 'weather_source';
+
+	/**
+	 * Key: is night
+	 * @var string
+	 */
+	const IS_NIGHT = 'is_night';
 
 	/**
 	 * Key: route id
@@ -273,10 +307,10 @@ class Entity extends Model\EntityWithID {
 	const CREATOR_DETAILS = 'creator_details';
 
 	/**
-	 * Key: garmin activity id
+	 * Key: activity id
 	 * @var string
 	 */
-	const GARMIN_ACTIVITY_ID = 'activity_id';
+	const ACTIVITY_ID = 'activity_id';
 
 	/**
 	 * Weather
@@ -327,7 +361,7 @@ class Entity extends Model\EntityWithID {
 			self::VDOT_BY_TIME,
 			self::VDOT_WITH_ELEVATION,
 			self::USE_VDOT,
-			self::FIT_VDOT_ESTIMATE,
+			self::FIT_VO2MAX_ESTIMATE,
 			self::FIT_RECOVERY_TIME,
 			self::FIT_HRV_ANALYSIS,
 			self::JD_INTENSITY,
@@ -342,7 +376,13 @@ class Entity extends Model\EntityWithID {
 			self::GROUNDCONTACT_BALANCE,
 			self::VERTICAL_RATIO,
 			self::TEMPERATURE,
+			self::WINDSPEED,
+			self::WINDDEG,
+			self::HUMIDITY,
+			self::PRESSURE,
 			self::WEATHERID,
+			self::WEATHER_SOURCE,
+			self::IS_NIGHT,
 			self::ROUTEID,
 			self::ROUTE,
 			self::SPLITS,
@@ -351,7 +391,7 @@ class Entity extends Model\EntityWithID {
 			self::NOTES,
 			self::CREATOR,
 			self::CREATOR_DETAILS,
-			self::GARMIN_ACTIVITY_ID
+			self::ACTIVITY_ID
 		);
 	}
 
@@ -371,7 +411,12 @@ class Entity extends Model\EntityWithID {
 	protected function canSet($key) {
 		switch ($key) {
 			case self::TEMPERATURE:
+			case self::WINDSPEED:
+			case self::WINDDEG:
+			case self::HUMIDITY:
+			case self::PRESSURE:
 			case self::WEATHERID:
+			case self::WEATHER_SOURCE:
 			case self::PARTNER:
 			case self::SPLITS:
 				return false;
@@ -388,25 +433,19 @@ class Entity extends Model\EntityWithID {
 	protected function canBeNull($key) {
 		switch ($key) {
 			case self::TEMPERATURE:
+			case self::WINDSPEED:
+			case self::WINDDEG:
+			case self::HUMIDITY:
+			case self::PRESSURE:
+			case self::WEATHER_SOURCE:
+			case self::IS_NIGHT:
 			case self::NOTES:
 			case self::CREATOR_DETAILS:
+			case self::ACTIVITY_ID:
 				return true;
 		}
 
 		return false;
-	}
-
-	/**
-	 * Get value for this key
-	 * @param string $key
-	 * @return mixed
-	 */
-	public function get($key) {
-		if ($key == self::TEMPERATURE) {
-			return $this->Data[self::TEMPERATURE];
-		}
-
-		return parent::get($key);
 	}
 
 	/**
@@ -415,6 +454,7 @@ class Entity extends Model\EntityWithID {
 	public function synchronize() {
 		parent::synchronize();
 
+		$this->ensureNullIfEmpty(self::IS_NIGHT, true);
 		$this->ensureAllNumericValues();
 		$this->synchronizeObjects();
 	}
@@ -442,7 +482,7 @@ class Entity extends Model\EntityWithID {
 			self::VDOT_BY_TIME,
 			self::VDOT_WITH_ELEVATION,
 			self::USE_VDOT,
-			self::FIT_VDOT_ESTIMATE,
+			self::FIT_VO2MAX_ESTIMATE,
 			self::FIT_RECOVERY_TIME,
 			self::FIT_HRV_ANALYSIS,
 			self::JD_INTENSITY,
@@ -462,7 +502,12 @@ class Entity extends Model\EntityWithID {
 
 	protected function synchronizeObjects() {
 		$this->Data[self::TEMPERATURE] = $this->weather()->temperature()->value();
+		$this->Data[self::WINDSPEED] = $this->weather()->windSpeed()->value();
+		$this->Data[self::WINDDEG] = $this->weather()->windDegree()->value();
+		$this->Data[self::HUMIDITY] = $this->weather()->humidity()->value();
+		$this->Data[self::PRESSURE] = $this->weather()->pressure()->value();
 		$this->Data[self::WEATHERID] = $this->weather()->condition()->id();
+		$this->Data[self::WEATHER_SOURCE] = $this->weather()->source();
 		$this->Data[self::SPLITS] = $this->splits()->asString();
 		$this->Data[self::PARTNER] = $this->partner()->asString();
 	}
@@ -604,11 +649,11 @@ class Entity extends Model\EntityWithID {
 	}
 
 	/**
-	 * VDOT estimate from fit file
-	 * @return int
+	 * VO2max estimate from fit file
+	 * @return float
 	 */
-	public function fitVdotEstimate() {
-		return $this->Data[self::FIT_VDOT_ESTIMATE];
+	public function fitVO2maxEstimate() {
+		return $this->Data[self::FIT_VO2MAX_ESTIMATE];
 	}
 
 	/**
@@ -739,11 +784,30 @@ class Entity extends Model\EntityWithID {
 		if (is_null($this->Weather)) {
 			$this->Weather = new Weather(
 				new Weather\Temperature($this->Data[self::TEMPERATURE]),
-				new Weather\Condition($this->Data[self::WEATHERID])
+				new Weather\Condition($this->Data[self::WEATHERID]),
+				new Weather\WindSpeed($this->Data[self::WINDSPEED]),
+				new Weather\WindDegree($this->Data[self::WINDDEG]),
+				new Weather\Humidity($this->Data[self::HUMIDITY]),
+				new Weather\Pressure($this->Data[self::PRESSURE])
 			);
+			$this->Weather->setSource($this->Data[self::WEATHER_SOURCE]);
 		}
 
 		return $this->Weather;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isNight() {
+		return ($this->Data[self::IS_NIGHT] == 1);
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function knowsIfItIsNight() {
+		return (null !== $this->Data[self::IS_NIGHT]);
 	}
 
 	/**

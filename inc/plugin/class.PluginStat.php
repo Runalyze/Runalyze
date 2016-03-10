@@ -270,6 +270,7 @@ abstract class PluginStat extends Plugin {
 	 * Get links for all years
 	 * @param bool $CompareYears If set, adds a link with year=-1
 	 * @param bool $TimeRanges If set, adds links with year=6/12
+	 * @return string
 	 */
 	private function getYearLinksAsList($CompareYears = true, $TimeRanges = false) {
 		$Links = '';

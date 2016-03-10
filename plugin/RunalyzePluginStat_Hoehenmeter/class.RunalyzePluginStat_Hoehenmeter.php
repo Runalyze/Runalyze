@@ -85,7 +85,7 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 	 */
 	private function displayElevationData() {
 		echo '<table class="fullwidth zebra-style r">';
-		echo '<thead>'.HTML::monthTr(8, 1).'</thead>';
+		echo '<thead>'.HTML::monthTr(8, 1, 'td', true).'</thead>';
 		echo '<tbody>';
 
 		if (empty($this->ElevationData))
@@ -94,18 +94,21 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 			echo('
 				<tr>
 					<td class="b l">'.$y.'</td>'.NL);
-
+			$summarized = 0;
 			for ($m = 1; $m <= 12; $m++) {
 				if (isset($Data[$m]) && $Data[$m]['elevation'] > 0) {
 					$Link = new SearchLink();
 					$Link->fromTo(mktime(0,0,0,$m,1,$y), mktime(0,0,0,$m+1,0,$y));
 					$Link->sortBy('elevation');
+					$summarized += $Data[$m]['elevation'];
 
 					echo '<td>'.$Link->link(Elevation::format($Data[$m]['elevation'])).'</td>';
 				} else {
 					echo HTML::emptyTD();
 				}
 			}
+			echo '<td>'.Elevation::format($summarized).'</td>';
+			
 
 			echo '</tr>'.NL;
 		}
@@ -201,7 +204,7 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 				YEAR(FROM_UNIXTIME(`time`)) as `year`,
 				MONTH(FROM_UNIXTIME(`time`)) as `month`
 			FROM `'.PREFIX.'training`
-			WHERE `elevation` > 0 '.$this->getSportAndYearDependenceForQuery().'
+			WHERE `accountid`='.SessionAccountHandler::getId().' AND `elevation` > 0 '.$this->getSportAndYearDependenceForQuery().'
 			GROUP BY `year`, `month`'
 		)->fetchAll();
 

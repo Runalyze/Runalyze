@@ -7,7 +7,6 @@
 use Runalyze\Model\Trackdata;
 use Runalyze\Model\Swimdata;
 use Runalyze\View\Activity;
-use Runalyze\View\Activity\Linker;
 
 /**
  * Row: Laps (manual)

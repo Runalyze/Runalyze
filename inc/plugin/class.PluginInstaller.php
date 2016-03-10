@@ -76,7 +76,6 @@ class PluginInstaller {
 		$Plugin = $Factory->newInstance($this->Key);
 
 		DB::getInstance()->deleteByID('plugin', $Plugin->id());
-		DB::getInstance()->query('DELETE FROM `'.PREFIX.'plugin_conf` WHERE `pluginid`='.$Plugin->id().' AND accountid = '.SessionAccountHandler::getId());
 
 		PluginFactory::clearCache();
 

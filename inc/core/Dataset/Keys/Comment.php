@@ -60,7 +60,7 @@ class Comment extends AbstractKey
 
 	/**
 	 * Get string to display this dataset value
-	 * @param Runalyze\Dataset\Context $context
+	 * @param \Runalyze\Dataset\Context $context
 	 * @return string
 	 */
 	public function stringFor(Context $context)

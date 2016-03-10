@@ -11,7 +11,7 @@ use Runalyze\Model\Trackdata;
 
 /**
  * Swimdata entity
- *  
+ *
  * @author Hannes Christiansen & Michael Pohl
  * @package Runalyze\Model\Swimdata
  */
@@ -44,13 +44,13 @@ class Entity extends Model\Entity implements Model\Loopable {
 	 * Key: swolf
 	 * @var string
 	 */
-	const SWOLF = 'swolf';     
+	const SWOLF = 'swolf';
 
 	/**
 	 * Key: SWOLFCYCLES
 	 * @var string
 	 */
-	const SWOLFCYCLES = 'swolfcycles';     
+	const SWOLFCYCLES = 'swolfcycles';
 
 	/**
 	 * Construct
@@ -60,7 +60,7 @@ class Entity extends Model\Entity implements Model\Loopable {
 		parent::__construct($data);
 		$this->checkArraySizes();
 	}
-        
+
 	/**
 	 * All properties
 	 * @return array
@@ -75,7 +75,7 @@ class Entity extends Model\Entity implements Model\Loopable {
 			self::POOL_LENGTH
 		);
 	}
-        
+
 	/**
 	 * Can be null?
 	 * @param string $key
@@ -92,7 +92,7 @@ class Entity extends Model\Entity implements Model\Loopable {
 
 		return false;
 	}
- 
+
 	/**
 	 * Is the property an array?
 	 * @param string $key
@@ -138,10 +138,10 @@ class Entity extends Model\Entity implements Model\Loopable {
 
 	/**
 	 * Value at
-	 * 
+	 *
 	 * Remark: This method may throw index offsets.
 	 * @param int $index
-	 * @param enum $key
+	 * @param string $key
 	 * @return mixed
 	 */
 	public function at($index, $key) {
@@ -201,8 +201,9 @@ class Entity extends Model\Entity implements Model\Loopable {
 	 */
 	public function fillDistanceArray(Trackdata\Entity &$trackdata) {
 		if ($this->poollength() && !$trackdata->has(Trackdata\Entity::DISTANCE)) {
-			$distance = range($this->poollength()/100000, $this->num()*$this->poollength()/100000, $this->poollength()/100000);   
+			$distance = range($this->poollength()/100000, $this->num()*$this->poollength()/100000, $this->poollength()/100000);
 			$trackdata->set(Trackdata\Entity::DISTANCE, $distance);
+			$trackdata->calculatePaceArray();
 		}
 	}
 

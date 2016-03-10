@@ -344,7 +344,6 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertFalse( $this->object->failed() );
 
 			$this->assertTrue( $this->object->object()->hasArrayHRV() );
-
 		}
 	}
 
@@ -492,6 +491,32 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertTrue($this->object->object()->hasArrayGroundContactBalance());
 
 			$this->assertEquals(5198, $this->object->object()->getGroundContactBalance(), '', 10);
+		}
+	}
+
+	/**
+	 * Test: compressed_speed_distance from FR70
+	 * Filename: "FR70-intervals.fit"
+	 * @group gcb
+	 */
+	public function testDataFromFR70WithCompressedSpeedDistance() {
+		if (Shell::isPerlAvailable()) {
+			$this->object->parseFile('../tests/testfiles/fit/FR70-intervals.fit');
+
+			$this->assertFalse( $this->object->hasMultipleTrainings() );
+			$this->assertFalse( $this->object->failed() );
+
+			$this->assertEquals(3160, $this->object->object()->getTimeInSeconds(), '', 10);
+			$this->assertEquals(3160, $this->object->object()->getArrayTimeLastPoint(), '', 10);
+			$this->assertEquals(6.234, $this->object->object()->getDistance(), '', 0.01);
+
+			$this->assertEquals(129, $this->object->object()->getPulseAvg(), '', 2);
+			$this->assertEquals(172, $this->object->object()->getPulseMax());
+
+			$this->assertTrue($this->object->object()->hasArrayTime());
+			$this->assertTrue($this->object->object()->hasArrayDistance());
+			$this->assertTrue($this->object->object()->hasArrayCadence());
+			$this->assertTrue($this->object->object()->hasArrayHeartrate());
 		}
 	}
 }

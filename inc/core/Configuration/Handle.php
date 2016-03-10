@@ -36,7 +36,7 @@ class Handle {
 
 	/**
 	 * Onchange reload flag
-	 * @var enum
+	 * @var mixed enum
 	 */
 	protected $OnchangeReloadFlag = '';
 
@@ -102,7 +102,7 @@ class Handle {
 
 	/**
 	 * Register onchange flag
-	 * @param enum $flag
+	 * @param string $flag
 	 */
 	final public function registerOnchangeFlag($flag) {
 		$this->OnchangeReloadFlag = $flag;

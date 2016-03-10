@@ -9,6 +9,9 @@ use Runalyze\Activity\Duration;
 use Runalyze\Activity\Elevation;
 use Runalyze\Activity\StrideLength;
 use Runalyze\Configuration;
+use Runalyze\Activity\Temperature;
+use Runalyze\Data\Weather\WindSpeed;
+use Runalyze\Calculation\JD\VDOTCorrector;
 
 /**
  * Search results
@@ -27,12 +30,6 @@ class SearchResults {
 	 * @var array
 	 */
 	protected $AllowedKeys = array();
-
-	/**
-	 * Dataset
-	 * @var Dataset
-	 */
-	protected $Dataset = null;
 
 	/**
 	 * Colspan
@@ -112,6 +109,10 @@ class SearchResults {
 
 			'elevation',
 			'temperature',
+			'wind_speed',
+			'humdity',
+			'pressure',
+			
 			'kcal',
 
 			'partner',
@@ -130,13 +131,14 @@ class SearchResults {
 			'groundcontact_balance',
 
 			'use_vdot',
+			'vdot',
+			'vdot_with_elevation',
 			'is_public'
 		);
 
 		// Some additional keys
 		$this->AllowedKeys[] = 'power';
 		$this->AllowedKeys[] = 'is_track';
-		$this->AllowedKeys[] = 'vdot';
 		$this->AllowedKeys[] = 'notes';
 
 	}
@@ -171,7 +173,7 @@ class SearchResults {
 				`t`.`id`,
 				`t`.`time`
 				'.($this->multiEditorRequested() ? '' :
-					', '.str_replace('`t`.', '', $this->DatasetQuery->queryToSelectAllKeys()).' '.
+					', '.$this->DatasetQuery->queryToSelectAllKeys().' '.
 					$this->DatasetQuery->queryToSelectJoinedFields()
 				).'
 			FROM `'.PREFIX.'training` AS `t`
@@ -258,6 +260,16 @@ class SearchResults {
                                 $value = 100*$_POST[$key];
 			} elseif ($key == 'stride_length') {
 				$value = (new StrideLength())->setInPreferredUnit($_POST[$key])->cm();
+			} elseif ($key == 'temperature') {
+				$value = (new Temperature())->setInPreferredUnit($_POST[$key])->celsius();
+			} elseif ($key == 'wind_speed') {
+				$value = (new WindSpeed())->setInPreferredUnit($_POST[$key])->value();
+			} elseif ($key == 'vdot' || $key == 'vdot_with_elevation') {
+			    if(!Configuration::Vdot()->useCorrectionFactor()) {
+				$value = $_POST[$key];
+			    } else {
+				$value = $_POST[$key] * Configuration::Data()->vdotFactor();
+			    }
 			} else {
 				$value = $_POST[$key];
 			}
@@ -379,11 +391,13 @@ class SearchResults {
 		$sort  = (!isset($_POST['search-sort-by']) || array_key_exists($_POST['search-sort-by'], $this->AllowedKeys)) ? '`time`' : $this->DB->escape($_POST['search-sort-by'], false);
 		$order = (!isset($_POST['search-sort-order'])) ? 'DESC' : $this->DB->escape($_POST['search-sort-order'], false);
 
-		if ($sort == 'vdot' && Configuration::Vdot()->useElevationCorrection())
+		if ($sort == 'vdot' && Configuration::Vdot()->useElevationCorrection()) {
 			return ' ORDER BY IF(`t`.`vdot_with_elevation`>0, `t`.`vdot_with_elevation`, `t`.`vdot`) '.$order;
+		}
 
-		if ($sort == 'pace')
-			$sort = 'IF(`t`.`distance`>0, `t`.`s`/`t`.`distance`, 0)';
+		if ($sort == 'pace') {
+			return ' ORDER BY IF(`t`.`distance`>0, `t`.`s`/`t`.`distance`, 0) '.$order;
+		}
 
 		return ' ORDER BY `t`.'.$sort.' '.$order;
 	}

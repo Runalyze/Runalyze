@@ -3,9 +3,6 @@
  * This file contains class::AdminView
  * @package Runalyze\Frontend
  */
-
-use Runalyze\Activity\Distance;
-
 /**
  * Class for admin view
  *
@@ -163,6 +160,8 @@ class AdminView {
 		$Fieldset->addField( new FormularCheckbox('USER_CAN_REGISTER', __('Users can register')) );
 		$Fieldset->addField( new FormularInput('GARMIN_API_KEY', Ajax::tooltip(__('Garmin API-key'), __('Needed for any online-version of the Garmin Communicator<br>see http://developer.garmin.com/web-device/garmin-communicator-plugin/get-your-site-key/') )) );
 		$Fieldset->addField( new FormularInput('PERL_PATH', __('Perl Path')) );
+		$Fieldset->addField( new FormularInput('TTBIN_PATH', __('TTBIN Converter Path')) );
+		$Fieldset->addField( new FormularInput('GEONAMES_USERNAME', __('Geonames Username')) );
                 $Fieldset->addField( new FormularInput('MAIL_SENDER', __('Sender e-mail')) );
 		$Fieldset->addField( new FormularInput('MAIL_NAME', __('Sender e-mail name')) );
 		$Fieldset->addField( new FormularInput('SMTP_HOST', __('SMTP: host')) );
@@ -176,8 +175,8 @@ class AdminView {
 		$Fieldset->addField( new FormularSubmit(__('Save'), '') );
 		$Fieldset->setLayoutForFields( FormularFieldset::$LAYOUT_FIELD_W100 );
 
-		if (!is_writable(FRONTEND_PATH.'../config.php')) {
-			$Fieldset->addError( __('<strong>config.php</strong> is not writable').', <em>(chmod = '.substr(decoct(fileperms(FRONTEND_PATH.'../config.php')),1).')</em> '.__('Changes can\'t be saved.') );
+		if (!is_writable(FRONTEND_PATH.'../data/config.php')) {
+			$Fieldset->addError( __('<strong>data/config.php</strong> is not writable').', <em>(chmod = '.substr(decoct(fileperms(FRONTEND_PATH.'../data/config.php')),1).')</em> '.__('Changes can\'t be saved.') );
 		}
 
 		return $Fieldset;
@@ -212,12 +211,12 @@ class AdminView {
 	 * Update config file from post data
 	 */
 	private function updateConfigFileFromPost() {
-		if (!is_writable(FRONTEND_PATH.'../config.php'))
+		if (!is_writable(FRONTEND_PATH.'../data/config.php'))
 			return;
 
 		$Variables     = self::getArrayOfConfigVariables();
 		$NewFile       = '';
-		$FileHandleOld = fopen( FRONTEND_PATH.'../config.php', 'r' );
+		$FileHandleOld = fopen( FRONTEND_PATH.'../data/config.php', 'r' );
 
 		while ($Line = fgets($FileHandleOld)) {
 			$Match = array();
@@ -237,7 +236,7 @@ class AdminView {
 
 		fclose($FileHandleOld);
 
-		$FileHandleNew = fopen( FRONTEND_PATH.'../config.php', 'w' );
+		$FileHandleNew = fopen( FRONTEND_PATH.'../data/config.php', 'w' );
 		fwrite($FileHandleNew, $NewFile);
 		fclose($FileHandleNew);
 	}
@@ -359,10 +358,10 @@ class AdminView {
 	 */
 	private function getFilesFieldset() {
 		$Fieldset = new FormularFieldset( __('Unused files') );
-		$Fieldset->addFileBlock( $this->getBlockForFiles('/import/files/') );
-		$Fieldset->addFileBlock( $this->getBlockForFiles('../log/') );
-		$Fieldset->addFileBlock( $this->getBlockForFiles('../plugin/RunalyzePluginTool_DbBackup/backup/') );
-		$Fieldset->addFileBlock( $this->getBlockForFiles('../plugin/RunalyzePluginTool_DbBackup/import/') );
+		$Fieldset->addFileBlock( $this->getBlockForFiles('../data/import/') );
+		$Fieldset->addFileBlock( $this->getBlockForFiles('../data/log/') );
+		$Fieldset->addFileBlock( $this->getBlockForFiles('../data/backup-tool/backup/') );
+		$Fieldset->addFileBlock( $this->getBlockForFiles('../data/backup-tool/import/') );
 		$Fieldset->addBlock( '<input type="submit" value="'.__('Clear directories').'">' );
 		$Fieldset->setCollapsed();
 
@@ -458,6 +457,8 @@ class AdminView {
                         'USER_CANT_LOGIN',
 			'USER_CAN_REGISTER',
                         'PERL_PATH',
+			'TTBIN_PATH',
+			'GEONAMES_USERNAME',
 			'GARMIN_API_KEY',
 			'MAIL_SENDER',
 			'MAIL_NAME',
@@ -488,11 +489,11 @@ class AdminView {
 	 * @param string $Variable
 	 */
 	private static function addVariableToConfigFile($Variable) {
-		$ConfigFile  = str_replace('?>', NL, Filesystem::openFile('../config.php'));
+		$ConfigFile  = str_replace('?>', NL, Filesystem::openFile('../data/config.php'));
 		$ConfigFile .= self::defineAndGetConfigLinesFor($Variable);
 		$ConfigFile .= NL.'?>';
 
-		Filesystem::writeFile('../config.php', $ConfigFile);
+		Filesystem::writeFile('../data/config.php', $ConfigFile);
 	}
 
 	/**
@@ -526,6 +527,22 @@ define(\'USER_CAN_REGISTER\', true);';
  * @var string PERL_PATH Path for perl scripts
  */
 define(\'PERL_PATH\', \'/usr/bin/perl\');';
+				
+			case 'TTBIN_PATH':
+				define('TTBIN_PATH', FRONTEND_PATH.'../call/perl/ttbincnv');
+				return '/**
+ * Path to TTBIN Converter script
+ * @var string TTBIN_PATH for perl scripts
+ */
+define(\'TTBIN_PATH\', FRONTEND_PATH.\'../call/perl/ttbincnv\');';	
+				
+			case 'GEONAMES_USERNAME':
+				define('GEONAMES_USERNAME', '');
+				return '/**
+ * Geonames.org API username
+ * @var string GEONAMES_USERNAME for geonames API username
+ */
+define(\'GEONAMES_USERNAME\', \'/\');';
                                 
 			case 'GARMIN_API_KEY':
 				$APIKeyResults = DB::getInstance()->query('SELECT `value` FROM `'.PREFIX.'conf` WHERE `key`="GARMIN_API_KEY" LIMIT 1')->fetch();

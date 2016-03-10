@@ -59,20 +59,20 @@ class LinkerTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testPrevAndNext() {
-		$this->assertEquals('', Linker::editPrevLink($this->ThisIDs[0], 1));
-		$this->assertContains($this->ThisIDs[0], Linker::editPrevLink($this->ThisIDs[1], 3));
-		$this->assertContains($this->ThisIDs[1], Linker::editPrevLink($this->ThisIDs[2], 3));
-		$this->assertContains($this->ThisIDs[2], Linker::editPrevLink($this->ThisIDs[3], 3));
+		$this->assertEquals('', Linker::prevId($this->ThisIDs[0], 1));
+		$this->assertEquals($this->ThisIDs[0], Linker::prevId($this->ThisIDs[1], 3));
+		$this->assertEquals($this->ThisIDs[1], Linker::prevId($this->ThisIDs[2], 3));
+		$this->assertEquals($this->ThisIDs[2], Linker::prevId($this->ThisIDs[3], 3));
 
-		$this->assertContains($this->ThisIDs[1], Linker::editNextLink($this->ThisIDs[0], 3));
-		$this->assertContains($this->ThisIDs[2], Linker::editNextLink($this->ThisIDs[1], 3));
-		$this->assertContains($this->ThisIDs[3], Linker::editNextLink($this->ThisIDs[2], 3));
-		$this->assertEquals('', Linker::editNextLink($this->ThisIDs[3], 5));
+		$this->assertEquals($this->ThisIDs[1], Linker::nextId($this->ThisIDs[0], 3));
+		$this->assertEquals($this->ThisIDs[2], Linker::nextId($this->ThisIDs[1], 3));
+		$this->assertEquals($this->ThisIDs[3], Linker::nextId($this->ThisIDs[2], 3));
+		$this->assertEquals('', Linker::nextId($this->ThisIDs[3], 5));
 	}
 
 	public function testPrevAndNextAtEqualTimestamp() {
-		$this->assertContains($this->ThisIDs[1], Linker::editPrevLink($this->ThisIDs[2], 3));
-		$this->assertContains($this->ThisIDs[2], Linker::editNextLink($this->ThisIDs[1], 3));
+		$this->assertEquals($this->ThisIDs[1], Linker::prevId($this->ThisIDs[2], 3));
+		$this->assertEquals($this->ThisIDs[2], Linker::nextId($this->ThisIDs[1], 3));
 	}
 
 }

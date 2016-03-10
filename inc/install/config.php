@@ -12,11 +12,13 @@
  * These information will be read by 'class.Frontend.php'.
  * 
  * @var string $host       The servername. On local servers: 'localhost'
+ * @var string $port       The database server port. Standard '3306'
  * @var string $database   The database used for this project.
  * @var string $username   The username to connect to the database. On local servers it may be 'root'.
  * @var string $passwort   The password for the given user. Please note: Never leave a mysql-user without password.
  */
 $host = '{config::host}';
+$port = '{config::port}';
 $database = '{config::database}';
 $username = '{config::username}';
 $password = '{config::password}';
@@ -51,6 +53,18 @@ define('USER_CAN_REGISTER', true);
  * @var string PERL_PATH Path for perl scripts
  */
 define('PERL_PATH', '/usr/bin/perl');
+
+/**
+ * TTBIN Converter path
+ * @var string TTBIN_PATH for TTBIN Converter
+ */
+define('TTBIN_PATH', FRONTEND_PATH.'../call/perl/ttbincnv');
+
+/**
+ * Geonames.org API username
+ * @var string GEONAMES_USERNAME for geonames API username
+ */
+define('GEONAMES_USERNAME', '');
 
 /**
  * Garmin API key is needed for using Garmin Communicator

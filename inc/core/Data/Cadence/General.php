@@ -42,10 +42,10 @@ class General extends AbstractCadence {
 
 	/**
 	 * Formular unit
-	 * @return enum
+	 * @return string enum
 	 * @codeCoverageIgnore
 	 */
 	public function formularUnit() {
-		return FormularUnit::$RPM;
+		return \FormularUnit::$RPM;
 	}
 }

@@ -297,8 +297,8 @@ class Entity extends Model\EntityWithID implements Model\Loopable {
 
 		foreach ($geohashes as $geohash) {
 			$coordinate = (new Geohash())->decode($geohash)->getCoordinate();
-			$latitudes[] = $coordinate->getLatitude();
-			$longitudes[] = $coordinate->getLongitude();
+			$latitudes[] = round($coordinate->getLatitude(), 6);
+			$longitudes[] = round($coordinate->getLongitude(), 6);
 		}
 
 		$this->setMinMaxFromLatitudesLongitudes($latitudes, $longitudes);
@@ -348,8 +348,8 @@ class Entity extends Model\EntityWithID implements Model\Loopable {
             
             for ($i = 0; $i < $size; $i++) {
                 $geo = (new Geohash())->decode($Geohashes[$i])->getCoordinate(); 
-                $Coordinates['lat'][] = $geo->getLatitude();
-                $Coordinates['lng'][] = $geo->getLongitude();
+                $Coordinates['lat'][] = round($geo->getLatitude(), 6);
+                $Coordinates['lng'][] = round($geo->getLongitude(), 6);
             }  
             
             return $Coordinates;
@@ -410,24 +410,28 @@ class Entity extends Model\EntityWithID implements Model\Loopable {
 	 * @return string|null
 	 */
 	protected function findStartpoint() {
-		$nullGeohash = (new Geohash())->encode(new Coordinate(array(0, 0)), self::BOUNDARIES_GEOHASH_PRECISION);
-		foreach ($this->Data[self::GEOHASHES] as $geohash) {
-			if ($geohash != $nullGeohash) {
-				return substr($geohash, 0, self::BOUNDARIES_GEOHASH_PRECISION);
-			}
-		}
-
-		return null;
+		return $this->findFirstNonNullGeohash($this->Data[self::GEOHASHES]);
 	}
 
 	/**
 	 * @return string|null
 	 */
 	protected function findEndpoint() {
-		$nullGeohash = (new Geohash())->encode(new Coordinate(array(0, 0)), self::BOUNDARIES_GEOHASH_PRECISION);
-		foreach (array_reverse($this->Data[self::GEOHASHES]) as $geohash) {
+		return $this->findFirstNonNullGeohash(array_reverse($this->Data[self::GEOHASHES]));
+	}
+
+	/**
+	 * @param array $geohashes
+	 * @return null|string
+	 */
+	protected function findFirstNonNullGeohash(array $geohashes) {
+		$nullGeohash = (new Geohash())->encode(new Coordinate(array(0, 0)), self::BOUNDARIES_GEOHASH_PRECISION)->getGeohash();
+
+		foreach ($geohashes as $geohash) {
+			$geohash = substr($geohash, 0, self::BOUNDARIES_GEOHASH_PRECISION);
+
 			if ($geohash != $nullGeohash) {
-				return substr($geohash, 0, self::BOUNDARIES_GEOHASH_PRECISION);
+				return $geohash;
 			}
 		}
 
@@ -447,7 +451,7 @@ class Entity extends Model\EntityWithID implements Model\Loopable {
 	 * 
 	 * Remark: This method may throw index offsets.
 	 * @param int $index
-	 * @param enum $key
+	 * @param string $key
 	 * @return mixed
 	 */
 	public function at($index, $key) {

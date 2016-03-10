@@ -97,12 +97,11 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 
 		$this->initVariables();
 
-		$this->setSportsNavigation();
+		$this->setSportsNavigation(true, true);
 		$this->setYearsNavigation(true, true, true);
 		$this->setOwnNavigation();
 
-		$this->setHeader($this->Sport['name'].': '.$this->getYearString());
-
+		$this->setHeaderWithSportAndYear();
 	}
 
 	/**

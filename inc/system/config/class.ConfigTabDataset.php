@@ -41,7 +41,7 @@ class ConfigTabDataset extends ConfigTab {
 	 * Load configuration
 	 */
 	protected function loadConfiguration() {
-		$this->Configuration = new Dataset\Configuration(DB::getInstance(), SessionAccountHandler::getId());
+		$this->Configuration = new Dataset\Configuration(DB::getInstance(), SessionAccountHandler::getId(), false, false);
 
 		if ($this->Configuration->isEmpty()) {
 			$this->Configuration = new Dataset\DefaultConfiguration();
@@ -145,9 +145,9 @@ class ConfigTabDataset extends ConfigTab {
 
 		return '<tr class="r" id="'.$keyid.'_tr">
 				<td class="c">'.$Icon.'</td>
-				<td class="l b">'.$KeyObject->label().$newIndicator.'</td>
+				<td class="l b"><label for="'.$keyid.'_active">'.$KeyObject->label().$newIndicator.'</label></td>
 				<td class="c">
-					<input type="checkbox" name="'.$keyid.'_active"'.(!$isNew && $this->Configuration->isActive($keyid) ? ' checked' : '').'>
+					<input type="checkbox" id="'.$keyid.'_active" name="'.$keyid.'_active"'.(!$isNew && $this->Configuration->isActive($keyid) ? ' checked' : '').($KeyObject->mustBeShown() ? ' disabled' : '').'>
 				</td>
 				<td class="c">
 					<input class="dataset-position" type="text" name="'.$keyid.'_position" value="'.$pos.'" size="2">
@@ -212,7 +212,7 @@ class ConfigTabDataset extends ConfigTab {
 				':keyid' => $keyid
 			);
 
-			if ($this->Configuration->exists($keyid)) {
+			if (!$this->ConfigurationIsNew && $this->Configuration->exists($keyid)) {
 				$UpdateStatement->execute($data);
 			} else {
 				$InsertStatement->execute($data);
@@ -259,6 +259,10 @@ class ConfigTabDataset extends ConfigTab {
 			'vertical_oscillation'	=> 76,
 			'power'		=> 520,
 			'temperature'	=> 17,
+			'wind_speed' => 27,
+			'wind_deg' => 219,
+			'pressure' => 1025,
+			'humidity' => 63,
 			'weatherid'	=> 5,
 			'splits'	=> '5|26:51-5|24:36',
 			'comment'	=> str_replace(' ', '&nbsp;', __('Test activity')),

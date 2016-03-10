@@ -6,6 +6,19 @@ var kcalPerHour = 0;
 var splits = $("#formularSplitsContainer");
 var defaultSplit = $("#defaultInputSplit").val();
 
+function parseDate(input, format) {
+	format = format || 'yyyy-mm-dd';
+	var parts = input.match(/(\d+)/g), i = 0, fmt = {};
+
+	if (parts == null) {
+		return new Date();
+	}
+
+	format.replace(/(yyyy|dd|mm)/g, function(part) { fmt[part] = i++; });
+
+	return new Date(parts[fmt['yyyy']], parts[fmt['mm']]-1, parts[fmt['dd']]);
+}
+
 function jUpdateSportValues() {
 	var $s = $("#sportid :selected"),
 		kcal = $s.attr('data-kcal'),
@@ -38,6 +51,31 @@ function jUpdateSportValues() {
 	} else {
 		$("#typeid").parent().hide();
 	}
+}
+
+function jUpdateAvailableEquipment() {
+	var date = parseDate($("#time_day").val(), 'dd.mm.yyyy').getTime();
+
+	$("form .depends-on-date option, form .depends-on-date input").each(function(){
+		var available = date == 0 || (
+			!($(this).data('start') && parseDate($(this).data('start')) > date) &&
+			!($(this).data('end') && parseDate($(this).data('end')) < date)
+		);
+
+		$(this).attr('disabled', !available).toggle(available);
+
+		if (!$(this).is('option')) {
+			$(this).parent().toggle(available);
+		}
+
+		if (!available) {
+			if ($(this).is('option')) {
+				$(this).prop('selected', false);
+			} else {
+				$(this).prop('checked', false);
+			}
+		}
+	});
 }
 
 function jUpdatePace() {
@@ -5946,13 +5984,13 @@ var Runalyze = (function($, parent){
 	}
 
 	function runInitHooks() {
-		for (key in initHooks) {
+		for (var key in initHooks) {
 			initHooks[key]();
 		}
 	}
 
 	function runLoadHooks() {
-		for (key in loadHooks) {
+		for (var key in loadHooks) {
 			loadHooks[key]();
 		}
 	}
@@ -5961,13 +5999,13 @@ var Runalyze = (function($, parent){
 		self.DataBrowser.reload();
 		self.Statistics.reload();
 		self.Panels.reloadAll( options.dontReloadForConfigFlag );
-	};
+	}
 
 	function reloadContentForTraining() {
 		self.DataBrowser.reload();
 		self.Statistics.reload();
 		self.Panels.reloadAll( options.dontReloadForTrainingFlag );
-	};
+	}
 
 
 	// Public Methods
@@ -6079,7 +6117,7 @@ var Runalyze = (function($, parent){
 		$.ajax({
 			url: url
 		}).done(function(data){
-			var content = $('<div />').html(data).find('#container > *');
+			var content = $('<div></div>').html(data).find('#container > *');
 			$('#container').html(content);
 
 			self.init();
@@ -6211,8 +6249,8 @@ var RunalyzePlot = (function($, parent){
 			curvedLines: {
 				active:			true,
 				apply:			false,
-				fit:			false,
-				curvePointFactor:	5
+				monotonicFit:	false,
+				nrSplinePoints:	5
 			}
 		},
 		yaxis: {
@@ -6327,7 +6365,7 @@ var RunalyzePlot = (function($, parent){
 	function finishAnnotations(key) {
 		if (plots.hasOwnProperty(key)) {
 			var ann = self.getPlot(key).annotations;
-			for (i in ann) {
+			for (var i in ann) {
 				if (ann[i].x != null && ann[i].y != null) {
 					ann[i].id = 'annotation-'+key+ann[i].x.toString().replace('.','')+ann[i].y.toString().replace('.','');
 
@@ -6350,12 +6388,12 @@ var RunalyzePlot = (function($, parent){
 	}
 
 	function repositionAllAnnotations() {
-		for (key in plots)
+		for (var key in plots)
 			repositionAnnotations(key);
 	}
 
 	function repositionAnnotations(key) {
-		for (i in plots[key].annotations)
+		for (var i in plots[key].annotations)
 			positionAnnotation(key, plots[key].annotations[i]);
 	}
 
@@ -6373,14 +6411,14 @@ var RunalyzePlot = (function($, parent){
 	};
 
 	self.resizeAll = function() {
-		for (key in plots)
+		for (var key in plots)
 			resize(key);
 
 		return self;
 	};
 
 	self.clear = function() {
-		for (key in plots)
+		for (var key in plots)
 			self.remove(key);
 
 		return self;
@@ -6451,7 +6489,7 @@ var RunalyzePlot = (function($, parent){
 
 		//$e.children('.flot-overlay').dblclick(function(){ self.Saver.save(cssId); });
 
-		for (key in initHooks)
+		for (var key in initHooks)
 			initHooks[key](cssId);
 
 		return self;
@@ -6607,7 +6645,7 @@ RunalyzePlot.Options = (function($, parent){
 	}
 
 	function addOptionsPanel(key) {
-		$("#"+key).append('<div class="'+ options.cssClass +'"/>');
+		$("#"+key).append('<div class="'+ options.cssClass +'"></div>');
 
 		addFullscreenLink(key);
 		addSaveLink(key);
@@ -6620,7 +6658,7 @@ RunalyzePlot.Options = (function($, parent){
 	}
 
 	function addLink(key, cssClass, tooltip, callback, afterCallback) { // rel="tooltip"
-		var $elem = $('<div class="'+ options.cssClassOption +'"><i class="'+ cssClass +'" title="'+ tooltip +'"/></div>')
+		var $elem = $('<div class="'+ options.cssClassOption +'"><i class="'+ cssClass +'" title="'+ tooltip +'"></i></div>')
 			.appendTo( container(key) )
 			.click(function(){
 				callback(this);
@@ -6800,7 +6838,9 @@ RunalyzePlot.Saver = (function($, parent){
 		init();
 
 		if (plot.getContext) {
-			redraw(obj, true);
+			if ($("#"+key+" .legend").is(':visible')) {
+				redraw(obj, true);
+			}
 
 			var img = canvas.getContext('2d'),
 				h = plot.height,
@@ -6815,7 +6855,7 @@ RunalyzePlot.Saver = (function($, parent){
 			img.fillRect(0, 0, w, h);
 			img.drawImage(plot, 0, 0);
 
-			$("#"+key+" .annotation").each(function(){
+			$("#"+key+" .annotation:visible").each(function(){
 				var pos = $(this).position(),
 					aw  = $(this).width(),
 					ah  = $(this).height(),
@@ -6876,8 +6916,11 @@ RunalyzePlot.Events = (function($, parent){
 	}
 
 	function bindTooltip(key) {
-		$('#'+key).bind('plothover', onHoverTooltip(key));
-		$('#'+key).bind('mouseleave', unsetMapMarker);
+		$('#'+key).bind(
+			'plothover', onHoverTooltip(key)
+		).bind(
+			'mouseleave', unsetMapMarker
+		);
 	}
 
 	function bindSelection(key) {
@@ -7077,10 +7120,8 @@ RunalyzePlot.Events = (function($, parent){
 
 	function onSelectionTooltip(key) {
 		return function(event, ranges, third){
-			var	plot = parent.getPlot(key),
-				rangeCalculation = true;
-
-            rangeCalculation = (plot.getOptions().xaxis.mode != 'time');
+			var	plot = parent.getPlot(key);
+            var rangeCalculation = (plot.getOptions().xaxis.mode != 'time');
 
 			plot.selection = true;
 
@@ -7103,6 +7144,7 @@ RunalyzePlot.Events = (function($, parent){
 			var i, j, maxj, dataset = plot.getData();
 			for (i = 0; i < dataset.length; ++i) {
 				var series = dataset[i], num = 0, sum = 0;
+				var ticker = series.yaxis.tickFormatter || series.yaxis.options.tickFormatter;
 
 				for (j = 0; j < series.data.length; ++j)
 					if (series.data[j][0] >= from && series.data[j][0] <= to){
@@ -7113,7 +7155,7 @@ RunalyzePlot.Events = (function($, parent){
 
 				content = content + line(
 					series.label,
-					"&oslash; "+series.yaxis.tickFormatter(Math.round(sum*100.0/num)/100, series.yaxis)
+					"&oslash; "+ticker(Math.round(sum*100.0/num)/100, series.yaxis)
 				);
 			}
 
@@ -7151,10 +7193,8 @@ RunalyzePlot.Events = (function($, parent){
 			var cssProperties = {};
 
 			if (fixed === true) {
-				var off = $('#' + key).offset();
-
-				cssProperties['top'] = pos.y;// - off.top;
-				cssProperties['left'] = pos.x;// - off.left;
+				cssProperties['top'] = pos.y;
+				cssProperties['left'] = pos.x;
 				cssProperties['position'] = 'absolute';
 			} else {
 				cssProperties['top'] = pos.y - $(document).scrollTop();
@@ -7420,9 +7460,9 @@ Runalyze.Log = (function($, Parent){
 		$container = $('#' + id);
 
 		var clear = '<span onclick="Runalyze.Log.clear();" class="link"><i class="fa fa-fw fa-times"></i></span>',
-			error = '<i class="fa fa-fw fa-minus-circle link margin-5" id="log-filter-ERROR" onclick="Runalyze.Log.filter(\'ERROR\');" />',
-			warning = '<i class="fa fa-fw fa-warning link margin-5" id="log-filter-WARNING" onclick="Runalyze.Log.filter(\'WARNING\');" />',
-			info = '<i class="fa fa-fw fa-info-circle link margin-5" id="log-filter-INFO" onclick="Runalyze.Log.filter(\'INFO\');" />',
+			error = '<i class="fa fa-fw fa-minus-circle link margin-5" id="log-filter-ERROR" onclick="Runalyze.Log.filter(\'ERROR\');"></i>',
+			warning = '<i class="fa fa-fw fa-warning link margin-5" id="log-filter-WARNING" onclick="Runalyze.Log.filter(\'WARNING\');"></i>',
+			info = '<i class="fa fa-fw fa-info-circle link margin-5" id="log-filter-INFO" onclick="Runalyze.Log.filter(\'INFO\');"></i>',
 			filter = error + warning + info,
 			table = '<table class="fullwidth nomargin"><thead><tr><th style="width:100px;">'+filter+'</th><th>Errors</th><th style="width:70px;"></th><th style="width:3px;">'+clear+'</th></thead><tbody id="errorTable"></tbody></table>';
 
@@ -7758,7 +7798,7 @@ Runalyze.Panels = (function($, Parent){
 	// Private Methods
 
 	function bindConfigLinks() {
-		$("#panels .clap").unbind("click").click(function(){
+		$("#panels").find(".clap").unbind("click").click(function(){
 			$(this).closest(".panel").find(".panel-content").toggle( Parent.Options.fadeSpeed(), function(){
 				$(this).closest(".content").find(".flot").each(function(){
 					RunalyzePlot.resize($(this).attr('id'));
@@ -7798,7 +7838,7 @@ Runalyze.Panels = (function($, Parent){
 		} else {
 			dontclass = ":not(."+dontclass+")";
 
-			$("#panels div.panel"+dontclass).each(function(){
+			$("#panels").find("div.panel"+dontclass).each(function(){
 				self.load( $(this).attr('id').substring(6) );
 			});
 		}
@@ -7835,11 +7875,28 @@ Runalyze.DataBrowser = (function($, Parent){
 		$container = $( options.selectorContainer );
 	}
 
+	function initInlineDropdownLinksForActivities() {
+		$('#data-browser').find('.submenu .link').unbind('click').click(function(e){
+			e.stopPropagation();
+
+			if ($(this).data('action') == 'delete') {
+				self.deleteActivity($(this).data('activityid'), $(this).data('confirm'));
+			} else if ($(this).data('action') == 'privacy') {
+				self.changePrivacyOfActivity($(this).data('activityid'));
+			}
+		});
+	}
+
 
 	// Public Methods
 
 	self.init = function() {
 		initObjects();
+		initInlineDropdownLinksForActivities();
+	};
+
+	self.reinit = function() {
+		initInlineDropdownLinksForActivities();
 	};
 
 	self.reload = function() {
@@ -7871,7 +7928,28 @@ Runalyze.DataBrowser = (function($, Parent){
 		};
 	};
 
+	self.deleteActivity = function(id, confirmMsg) {
+		if (confirmMsg) {
+			if (!window.confirm(confirmMsg)) {
+				return false;
+			}
+		}
+
+		Parent.Overlay.load(
+			Parent.Training.url(id) + "&action=delete",
+			{ size: 'small' }
+		);
+	};
+
+	self.changePrivacyOfActivity = function(id) {
+		$("#data-browser-inner").addClass('loading');
+		$.ajax(Parent.Training.url(id) + "&action=changePrivacy&silent=true").done(function(){
+			self.reload();
+		});
+	};
+
 	Parent.addInitHook('init-databrowser', self.init);
+	Parent.addLoadHook('init-databrowser', self.reinit);
 
 	return self;
 })(jQuery, Runalyze);/*
@@ -8052,7 +8130,7 @@ Runalyze.Training = (function($, Parent){
 	};
 
 	self.removeHighlighting = function() {
-		$("#data-browser tr.training").removeClass( options.highlightClass );
+		$("#data-browser").find("tr.training").removeClass( options.highlightClass );
 	};
 
 	self.addHighlighting = function(id) {
@@ -8102,6 +8180,12 @@ Runalyze.Feature = (function($, Parent){
 		$('a.ajax').unbind('click').click(function(e){
 			e.preventDefault();
 
+			if ($(this).data('confirm')) {
+				if (!window.confirm($(this).data('confirm'))) {
+					return false;
+				}
+			}
+
 			var href = $(this).attr('href');
 			var target = $(this).attr('target');
 
@@ -8137,7 +8221,7 @@ Runalyze.Feature = (function($, Parent){
 		$(".toolbar-opener").unbind("click").click(function(){
 			$(this).parent().parent().toggleClass('open');
 		});
-	};
+	}
 
 	function initChangeDiv() {
 		$("a.change").each(function(){
@@ -8145,9 +8229,7 @@ Runalyze.Feature = (function($, Parent){
 				$("a.change[target="+$(this).attr("target")+"]:first").addClass('triggered').parent().addClass('triggered');
 			else
 				$("a.change[target="+$(this).attr("target")+"].triggered").parent().addClass('triggered');
-		});
-
-		$("a.change").unbind("click").click(function(e){
+		}).unbind("click").click(function(e){
 			e.preventDefault();
 
 			$("a.change[target="+$(this).attr("target")+"]").removeClass('triggered').parent().removeClass('triggered');
@@ -8157,12 +8239,12 @@ Runalyze.Feature = (function($, Parent){
 			var $target = $(target);
 
 			if (target == $(this).attr("href")) {
-				$newDiv = $("#"+ $(this).attr("href").split('#').pop() + " .change");
+				var $newDiv = $("#"+ $(this).attr("href").split('#').pop() + " .change");
 			} else {
-				$newDiv = $("#"+ $(this).attr("href").split('#').pop());
+				var $newDiv = $("#"+ $(this).attr("href").split('#').pop());
 			}
 
-			$oldDiv = $(target+" > .change:visible, " + target + " > .panel-content > .change:visible, " + target + " > .statistics-container > .change:visible").not($newDiv);
+			var $oldDiv = $(target+" > .change:visible, " + target + " > .panel-content > .change:visible, " + target + " > .statistics-container > .change:visible").not($newDiv);
 
 			$target.addClass('loading');
 
@@ -8182,7 +8264,7 @@ Runalyze.Feature = (function($, Parent){
 
 			return false;
 		});
-	};
+	}
 
 	function initCalendarLink() {
 		$('#calendar-link').unbind('click').bind('click', function(){
@@ -8193,7 +8275,7 @@ Runalyze.Feature = (function($, Parent){
 			if ($e.is(':visible'))
 				initCalendar();
 		});
-	};
+	}
 
 	function initCalendar() {
 		var $calendar = $('#widget-calendar');
@@ -8219,7 +8301,7 @@ Runalyze.Feature = (function($, Parent){
 		});
 
 		return this;
-	};
+	}
 
 	function initFormulars() {
 		initFormularElements();
@@ -8235,6 +8317,17 @@ Runalyze.Feature = (function($, Parent){
 		for (var selector in config) {
 			$(selector).chosen(config[selector]);
 		}
+
+		$(".chosen-select-all").unbind('click').bind('click', function() {
+			var target = $(this).data('target');
+			$("#"+target+" option").prop('selected', true);
+			$("#"+target).trigger('chosen:updated');
+		});
+		$(".chosen-select-none").unbind('click').bind('click', function() {
+			var target = $(this).data('target');
+			$("#"+target+" option").prop('selected', false);
+			$("#"+target).trigger('chosen:updated');
+		});
   
 		$(".fip-select").fontIconPicker({emptyIcon: false, hasSearch: false});
 		$(".pick-a-date:not(.has-a-datepicker)").each(function(){
@@ -8251,14 +8344,14 @@ Runalyze.Feature = (function($, Parent){
 				mode: 'single',
                 locale:  JSON.parse($("#calendar-locale").val()),
                 onBeforeShow: function(){ if ($t.val().trim() != '') $t.DatePickerSetDate($t.val(), true); },
-				onChange: function(formated, dates){ $t.val(formated); $t.DatePickerHide(); }
+				onChange: function(formated, dates){ $t.val(formated); $t.trigger('change'); $t.DatePickerHide(); }
 			});
 		});
 	}
 
 	function initFormularSubmit() {
 		// Warning: Does only work for formulars in #ajax
-		$("#ajax form.ajax").unbind("submit").submit(function(e){
+		$("#ajax").find("form.ajax").unbind("submit").submit(function(e){
 			e.preventDefault();
 
 			if ($(this).children(":submit").hasClass('debug')) {
@@ -8284,7 +8377,7 @@ Runalyze.Feature = (function($, Parent){
 				return false;
 			}
 
-			if ($("#ajax #pluginTool").length) {
+			if ($("#pluginTool").length) {
 				elem = $("#pluginTool");
 			}
 
@@ -8299,7 +8392,7 @@ Runalyze.Feature = (function($, Parent){
 
 			return false;
 		});
-	};
+	}
 
 
 	// Public Methods
@@ -9203,6 +9296,7 @@ Licensed under the MIT license.
                 if (off) {
                     s.oldColor = s.color;
                     s.color = "#fff";
+                    options.legend.hidden.splice(options.legend.hidden.indexOf(s.label), 1);
                 }
             }
 
@@ -10166,299 +10260,466 @@ Licensed under the MIT license.
  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
+*/
+
+/*
+____________________________________________________
+
+ what it is:
+ ____________________________________________________
+
+ curvedLines is a plugin for flot, that tries to display lines in a smoother way.
+ This is achieved through adding of more data points. The plugin is a data processor and can thus be used
+ in combination with standard line / point rendering options.
+
+ => 1) with large data sets you may get trouble
+ => 2) if you want to display the points too, you have to plot them as 2nd data series over the lines
+ => 3) consecutive x data points are not allowed to have the same value
+
+ Feel free to further improve the code
+
+ ____________________________________________________
+
+ how to use it:
+ ____________________________________________________
+
+ var d1 = [[5,5],[7,3],[9,12]];
+
+ var options = { series: { curvedLines: {  active: true }}};
+
+ $.plot($("#placeholder"), [{data: d1, lines: { show: true}, curvedLines: {apply: true}}], options);
+
+ _____________________________________________________
+
+ options:
+ _____________________________________________________
+
+ active:           bool true => plugin can be used
+ apply:            bool true => series will be drawn as curved line
+ monotonicFit:	   bool true => uses monotone cubic interpolation (preserve monotonicity)
+ tension:          int          defines the tension parameter of the hermite spline interpolation (no effect if monotonicFit is set)
+ nrSplinePoints:   int 			defines the number of sample points (of the spline) in between two consecutive points
+
+ deprecated options from flot prior to 1.0.0:
+ ------------------------------------------------
+ legacyOverride	   bool true => use old default
+    OR
+ legacyOverride    optionArray
+ {
+ 	fit: 	             bool true => forces the max,mins of the curve to be on the datapoints
+ 	curvePointFactor	 int  		  defines how many "virtual" points are used per "real" data point to
+ 									  emulate the curvedLines (points total = real points * curvePointFactor)
+ 	fitPointDist: 	     int  		  defines the x axis distance of the additional two points that are used
+ }						   		   	  to enforce the min max condition.
  */
 
-	/*
+/*
+ *  v0.1   initial commit
+ *  v0.15  negative values should work now (outcommented a negative -> 0 hook hope it does no harm)
+ *  v0.2   added fill option (thanks to monemihir) and multi axis support (thanks to soewono effendi)
+ *  v0.3   improved saddle handling and added basic handling of Dates
+ *  v0.4   rewritten fill option (thomas ritou) mostly from original flot code (now fill between points rather than to graph bottom), corrected fill Opacity bug
+ *  v0.5   rewritten instead of implementing a own draw function CurvedLines is now based on the processDatapoints flot hook (credits go to thomas ritou).
+ * 		   This change breakes existing code however CurvedLines are now just many tiny straight lines to flot and therefore all flot lines options (like gradient fill,
+ * 	       shadow) are now supported out of the box
+ *  v0.6   flot 0.8 compatibility and some bug fixes
+ *  v0.6.x changed versioning schema
+ *
+ *  v1.0.0 API Break marked existing implementation/options as deprecated
+ *  v1.1.0 added the new curved line calculations based on hermite splines
+ *  v1.1.1 added a rough parameter check to make sure the new options are used
+ */
 
-	 ____________________________________________________
+(function($) {
 
-	 what it is:
-	 ____________________________________________________
+	var options = {
+		series : {
+			curvedLines : {
+				active : false,
+				apply : false,
+				monotonicFit : false,
+				tension : 0.5,
+				nrSplinePoints : 20,
+				legacyOverride : undefined
+			}
+		}
+	};
 
-	 curvedLines is a plugin for flot, that tries to display lines in a smoother way.
-	 The plugin is based on nergal.dev's work https://code.google.com/p/flot/issues/detail?id=226
-	 and further extended with a mode that forces the min/max points of the curves to be on the
-	 points. Both modes are achieved through adding of more data points
-	 => 1) with large data sets you may get trouble
-	 => 2) if you want to display the points too, you have to plot them as 2nd data series over the lines
-	 
-	 && 3) consecutive x data points are not allowed to have the same value
+	function init(plot) {
 
-	 This is version 0.5 of curvedLines so it will probably not work in every case. However
-	 the basic form of use descirbed next works (:
+		plot.hooks.processOptions.push(processOptions);
 
-	 Feel free to further improve the code
+		//if the plugin is active register processDatapoints method
+		function processOptions(plot, options) {
+			if (options.series.curvedLines.active) {
+				plot.hooks.processDatapoints.unshift(processDatapoints);
+			}
+		}
 
-	 ____________________________________________________
+		//only if the plugin is active
+		function processDatapoints(plot, series, datapoints) {
+			var nrPoints = datapoints.points.length / datapoints.pointsize;
+			var EPSILON = 0.005;
 
-	 how to use it:
-	 ____________________________________________________
+			//detects missplaced legacy parameters (prior v1.x.x) in the options object
+			//this can happen if somebody upgrades to v1.x.x without adjusting the parameters or uses old examples
+            var invalidLegacyOptions = hasInvalidParameters(series.curvedLines);
 
-	 var d1 = [[5,5],[7,3],[9,12]];
+			if (!invalidLegacyOptions && series.curvedLines.apply == true && series.originSeries === undefined && nrPoints > (1 + EPSILON)) {
+				if (series.lines.fill) {
 
-	 var options = { series: { curvedLines: {  active: true }}};
+					var pointsTop = calculateCurvePoints(datapoints, series.curvedLines, 1);
+					var pointsBottom = calculateCurvePoints(datapoints, series.curvedLines, 2);
+					//flot makes sure for us that we've got a second y point if fill is true !
 
-	 $.plot($("#placeholder"), [{data = d1, lines: { show: true}, curvedLines: {apply: true}}], options);
+					//Merge top and bottom curve
+					datapoints.pointsize = 3;
+					datapoints.points = [];
+					var j = 0;
+					var k = 0;
+					var i = 0;
+					var ps = 2;
+					while (i < pointsTop.length || j < pointsBottom.length) {
+						if (pointsTop[i] == pointsBottom[j]) {
+							datapoints.points[k] = pointsTop[i];
+							datapoints.points[k + 1] = pointsTop[i + 1];
+							datapoints.points[k + 2] = pointsBottom[j + 1];
+							j += ps;
+							i += ps;
 
-	 _____________________________________________________
+						} else if (pointsTop[i] < pointsBottom[j]) {
+							datapoints.points[k] = pointsTop[i];
+							datapoints.points[k + 1] = pointsTop[i + 1];
+							datapoints.points[k + 2] = k > 0 ? datapoints.points[k - 1] : null;
+							i += ps;
+						} else {
+							datapoints.points[k] = pointsBottom[j];
+							datapoints.points[k + 1] = k > 1 ? datapoints.points[k - 2] : null;
+							datapoints.points[k + 2] = pointsBottom[j + 1];
+							j += ps;
+						}
+						k += 3;
+					}
+				} else if (series.lines.lineWidth > 0) {
+					datapoints.points = calculateCurvePoints(datapoints, series.curvedLines, 1);
+					datapoints.pointsize = 2;
+				}
+			}
+		}
 
-	 options:
-	 _____________________________________________________
-
-	 active:           bool true => plugin can be used
-	 apply:            bool true => series will be drawn as curved line
-	 fit:              bool true => forces the max,mins of the curve to be on the datapoints
-	 curvePointFactor  int  defines how many "virtual" points are used per "real" data point to
-	 						emulate the curvedLines (points total = real points * curvePointFactor)
-	 fitPointDist:     int  defines the x axis distance of the additional two points that are used
-	 						to enforce the min max condition. 
-	 						
-	 + line options (since v0.5 curved lines use flots line implementation for drawing
-	   => line options like fill, show ... are supported out of the box)
-
-	 */
-
-	/*
-	 *  v0.1   initial commit
-	 *  v0.15  negative values should work now (outcommented a negative -> 0 hook hope it does no harm)
-	 *  v0.2   added fill option (thanks to monemihir) and multi axis support (thanks to soewono effendi)
-	 *  v0.3   improved saddle handling and added basic handling of Dates
-	 *  v0.4   rewritten fill option (thomas ritou) mostly from original flot code (now fill between points rather than to graph bottom), corrected fill Opacity bug
-	 *  v0.5   rewritten instead of implementing a own draw function CurvedLines is now based on the processDatapoints flot hook (credits go to thomas ritou).
-	 * 		   This change breakes existing code however CurvedLines are now just many tiny straight lines to flot and therefore all flot lines options (like gradient fill,
-	 * 	       shadow) are now supported out of the box
-	 *  v0.6   flot 0.8 compatibility and some bug fixes
-	 */
-
-	(function($) {
-
-		var options = {
-			series : {
-				curvedLines : {
-					active : false,
-					apply: false,
+		function calculateCurvePoints(datapoints, curvedLinesOptions, yPos) {
+			if ( typeof curvedLinesOptions.legacyOverride != 'undefined' && curvedLinesOptions.legacyOverride != false) {
+				var defaultOptions = {
 					fit : false,
 					curvePointFactor : 20,
 					fitPointDist : undefined
-				}
-			}
-		};
-
-		function init(plot) {
-
-			plot.hooks.processOptions.push(processOptions);
-
-			//if the plugin is active register processDatapoints method
-			function processOptions(plot, options) {
-				if (options.series.curvedLines.active) {
-					plot.hooks.processDatapoints.unshift(processDatapoints);
-				}
+				};
+				var legacyOptions = jQuery.extend(defaultOptions, curvedLinesOptions.legacyOverride);
+				return calculateLegacyCurvePoints(datapoints, legacyOptions, yPos);
 			}
 
-			//only if the plugin is active
-			function processDatapoints(plot, series, datapoints) {
-				var nrPoints = datapoints.points.length / datapoints.pointsize;
-				var EPSILON = 0.5; //pretty large epsilon but save
+			return calculateSplineCurvePoints(datapoints, curvedLinesOptions, yPos);
+		}
 
-				if (series.curvedLines.apply == true && series.originSeries === undefined && nrPoints > (1 + EPSILON)) {
-					if (series.lines.fill) {
+		function calculateSplineCurvePoints(datapoints, curvedLinesOptions, yPos) {
+			var points = datapoints.points;
+			var ps = datapoints.pointsize;
+			
+			//create interpolant fuction
+			var splines = createHermiteSplines(datapoints, curvedLinesOptions, yPos);
+			var result = [];
 
-						var pointsTop = calculateCurvePoints(datapoints, series.curvedLines, 1)
-						,pointsBottom = calculateCurvePoints(datapoints, series.curvedLines, 2); //flot makes sure for us that we've got a second y point if fill is true !
+			//sample the function
+			// (the result is intependent from the input data =>
+			//	it is ok to alter the input after this method)
+			var j = 0;
+			for (var i = 0; i < points.length - ps; i += ps) {
+				var curX = i;
+				var curY = i + yPos;	
+				
+				var xStart = points[curX];
+				var xEnd = points[curX + ps];
+				var xStep = (xEnd - xStart) / Number(curvedLinesOptions.nrSplinePoints);
 
-						//Merge top and bottom curve
-						datapoints.pointsize = 3;
-						datapoints.points = [];
-						var j = 0;
-						var k = 0;
-						var i = 0;
-						var ps = 2;
-						while (i < pointsTop.length || j < pointsBottom.length) {
-							if (pointsTop[i] == pointsBottom[j]) {
-								datapoints.points[k] = pointsTop[i];
-								datapoints.points[k + 1] = pointsTop[i + 1];
-								datapoints.points[k + 2] = pointsBottom[j + 1];
-								j += ps;
-								i += ps;
+				//add point
+				result.push(points[curX]);
+				result.push(points[curY]);
 
-							} else if (pointsTop[i] < pointsBottom[j]) {
-								datapoints.points[k] = pointsTop[i];
-								datapoints.points[k + 1] = pointsTop[i + 1];
-								datapoints.points[k + 2] = k > 0 ? datapoints.points[k-1] : null;
-								i += ps;
-							} else {
-								datapoints.points[k] = pointsBottom[j];
-								datapoints.points[k + 1] = k > 1 ? datapoints.points[k-2] : null;
-								datapoints.points[k + 2] = pointsBottom[j + 1];
-								j += ps;
-							}
-							k += 3;
-						}
-					} else if (series.lines.lineWidth > 0) {
-						datapoints.points = calculateCurvePoints(datapoints, series.curvedLines, 1);
-						datapoints.pointsize = 2;
+				//add curve point
+				for (var x = (xStart += xStep); x < xEnd; x += xStep) {
+					result.push(x);
+					result.push(splines[j](x));
+				}
+				
+				j++;
+			}
+
+			//add last point
+			result.push(points[points.length - ps]);
+			result.push(points[points.length - ps + yPos]);
+
+			return result;
+		}
+
+
+
+		// Creates an array of splines, one for each segment of the original curve. Algorithm based on the wikipedia articles: 
+		//
+		// http://de.wikipedia.org/w/index.php?title=Kubisch_Hermitescher_Spline&oldid=130168003 and 
+		// http://en.wikipedia.org/w/index.php?title=Monotone_cubic_interpolation&oldid=622341725 and the description of Fritsch-Carlson from
+		// http://math.stackexchange.com/questions/45218/implementation-of-monotone-cubic-interpolation
+		// for a detailed description see https://github.com/MichaelZinsmaier/CurvedLines/docu
+		function createHermiteSplines(datapoints, curvedLinesOptions, yPos) {
+			var points = datapoints.points;
+			var ps = datapoints.pointsize;
+			
+			// preparation get length (x_{k+1} - x_k) and slope s=(p_{k+1} - p_k) / (x_{k+1} - x_k) of the segments
+			var segmentLengths = [];
+			var segmentSlopes = [];
+
+			for (var i = 0; i < points.length - ps; i += ps) {
+				var curX = i;
+				var curY = i + yPos;			
+				var dx = points[curX + ps] - points[curX];
+				var dy = points[curY + ps] - points[curY];
+							
+				segmentLengths.push(dx);
+				segmentSlopes.push(dy / dx);
+			}
+
+			//get the values for the desired gradients  m_k for all points k
+			//depending on the used method the formula is different
+			var gradients = [segmentSlopes[0]];	
+			if (curvedLinesOptions.monotonicFit) {
+				// Fritsch Carlson
+				for (var i = 1; i < segmentLengths.length; i++) {
+					var slope = segmentSlopes[i];
+					var prev_slope = segmentSlopes[i - 1];
+					if (slope * prev_slope <= 0) { // sign(prev_slope) != sign(slpe)
+						gradients.push(0);
+					} else {
+						var length = segmentLengths[i];
+						var prev_length = segmentLengths[i - 1];
+						var common = length + prev_length;
+						//m = 3 (prev_length + length) / ((2 length + prev_length) / prev_slope + (length + 2 prev_length) / slope)
+						gradients.push(3 * common / ((common + length) / prev_slope + (common + prev_length) / slope));
 					}
 				}
+			} else {
+				// Cardinal spline with t € [0,1]
+				// Catmull-Rom for t = 0
+				for (var i = ps; i < points.length - ps; i += ps) {
+					var curX = i;
+					var curY = i + yPos;	
+					gradients.push(Number(curvedLinesOptions.tension) * (points[curY + ps] - points[curY - ps]) / (points[curX + ps] - points[curX - ps]));
+				}
 			}
+			gradients.push(segmentSlopes[segmentSlopes.length - 1]);
+
+			//get the two major coefficients (c'_{oef1} and c'_{oef2}) for each segment spline
+			var coefs1 = [];
+			var coefs2 = [];
+			for (i = 0; i < segmentLengths.length; i++) {
+				var m_k = gradients[i];
+				var m_k_plus = gradients[i + 1];
+				var slope = segmentSlopes[i];
+				var invLength = 1 / segmentLengths[i];
+				var common = m_k + m_k_plus - slope - slope;
+				
+				coefs1.push(common * invLength * invLength);
+				coefs2.push((slope - common - m_k) * invLength);
+			}
+
+			//create functions with from the coefficients and capture the parameters
+			var ret = [];
+			for (var i = 0; i < segmentLengths.length; i ++) {
+				var spline = function (x_k, coef1, coef2, coef3, coef4) {
+					// spline for a segment
+					return function (x) {									
+						var diff = x - x_k;
+						var diffSq = diff * diff;
+						return coef1 * diff * diffSq + coef2 * diffSq + coef3 * diff + coef4;
+					};
+				};			
+		
+				ret.push(spline(points[i * ps], coefs1[i], coefs2[i], gradients[i], points[i * ps + yPos]));
+			}
+			
+			return ret;
+		};
 
 		//no real idea whats going on here code mainly from https://code.google.com/p/flot/issues/detail?id=226
 		//if fit option is selected additional datapoints get inserted before the curve calculations in nergal.dev s code.
-			function calculateCurvePoints(datapoints, curvedLinesOptions, yPos) {
+		function calculateLegacyCurvePoints(datapoints, curvedLinesOptions, yPos) {
 
-				var points = datapoints.points, ps = datapoints.pointsize;
-				var num = curvedLinesOptions.curvePointFactor * (points.length / ps);
+			var points = datapoints.points;
+			var ps = datapoints.pointsize;
+			var num = Number(curvedLinesOptions.curvePointFactor) * (points.length / ps);
 
-				var xdata = new Array;
-				var ydata = new Array;
-				
-				var curX = -1;
-				var curY = -1;
-				var j = 0;
+			var xdata = new Array;
+			var ydata = new Array;
 
-				if (curvedLinesOptions.fit) {
-					//insert a point before and after the "real" data point to force the line
-					//to have a max,min at the data point.
-					
-					var fpDist;
-					if(typeof curvedLinesOptions.fitPointDist == 'undefined') {
-						//estimate it
-						var minX = points[0];
-						var maxX = points[points.length-ps];			
-						fpDist = (maxX - minX) / (500 * 100); //x range / (estimated pixel length of placeholder * factor)
-					} else {
-						//use user defined value
-						fpDist = curvedLinesOptions.fitPointDist;
-					}
+			var curX = -1;
+			var curY = -1;
+			var j = 0;
 
-					for (var i = 0; i < points.length; i += ps) {
+			if (curvedLinesOptions.fit) {
+				//insert a point before and after the "real" data point to force the line
+				//to have a max,min at the data point.
 
-						var frontX;
-						var backX;
-						curX = i;
-						curY = i + yPos;
-
-						//add point X s
-						frontX = points[curX] - fpDist;
-						backX = points[curX] + fpDist;
-						
-						var factor = 2;
-						while (frontX == points[curX] || backX == points[curX]) {
-							//inside the ulp
-							frontX = points[curX] - (fpDist * factor);
-							backX = points[curX] + (fpDist * factor);
-							factor++;
-						}												
-						
-						//add curve points
-						xdata[j] = frontX;
-						ydata[j] = points[curY];
-						j++;
-
-						xdata[j] = points[curX];
-						ydata[j] = points[curY];
-						j++;
-
-						xdata[j] = backX;
-						ydata[j] = points[curY];
-						j++;
-					}
+				var fpDist;
+				if ( typeof curvedLinesOptions.fitPointDist == 'undefined') {
+					//estimate it
+					var minX = points[0];
+					var maxX = points[points.length - ps];
+					fpDist = (maxX - minX) / (500 * 100);
+					//x range / (estimated pixel length of placeholder * factor)
 				} else {
-					//just use the datapoints
-					for (var i = 0; i < points.length; i += ps) {
-						curX = i;
-						curY = i + yPos;
-
-						xdata[j] = points[curX];
-						ydata[j] = points[curY];
-						j++;
-					}
+					//use user defined value
+					fpDist = Number(curvedLinesOptions.fitPointDist);
 				}
 
-				var n = xdata.length;
+				for (var i = 0; i < points.length; i += ps) {
 
-				var y2 = new Array();
-				var delta = new Array();
-				y2[0] = 0;
-				y2[n - 1] = 0;
-				delta[0] = 0;
+					var frontX;
+					var backX;
+					curX = i;
+					curY = i + yPos;
 
-				for (var i = 1; i < n - 1; ++i) {
-					var d = (xdata[i + 1] - xdata[i - 1]);
-					if (d == 0) {
-						//point before current point and after current point need some space in between
-						return [];
+					//add point X s
+					frontX = points[curX] - fpDist;
+					backX = points[curX] + fpDist;
+
+					var factor = 2;
+					while (frontX == points[curX] || backX == points[curX]) {
+						//inside the ulp
+						frontX = points[curX] - (fpDist * factor);
+						backX = points[curX] + (fpDist * factor);
+						factor++;
 					}
 
-					var s = (xdata[i] - xdata[i - 1]) / d;
-					var p = s * y2[i - 1] + 2;
-					y2[i] = (s - 1) / p;
-					delta[i] = (ydata[i + 1] - ydata[i]) / (xdata[i + 1] - xdata[i]) - (ydata[i] - ydata[i - 1]) / (xdata[i] - xdata[i - 1]);
-					delta[i] = (6 * delta[i] / (xdata[i + 1] - xdata[i - 1]) - s * delta[i - 1]) / p;
+					//add curve points
+					xdata[j] = frontX;
+					ydata[j] = points[curY];
+					j++;
+
+					xdata[j] = points[curX];
+					ydata[j] = points[curY];
+					j++;
+
+					xdata[j] = backX;
+					ydata[j] = points[curY];
+					j++;
 				}
+			} else {
+				//just use the datapoints
+				for (var i = 0; i < points.length; i += ps) {
+					curX = i;
+					curY = i + yPos;
 
-				for (var j = n - 2; j >= 0; --j) {
-					y2[j] = y2[j] * y2[j + 1] + delta[j];
+					xdata[j] = points[curX];
+					ydata[j] = points[curY];
+					j++;
 				}
-
-				//   xmax  - xmin  / #points
-				var step = (xdata[n - 1] - xdata[0]) / (num - 1);
-
-				var xnew = new Array;
-				var ynew = new Array;
-				var result = new Array;
-
-				xnew[0] = xdata[0];
-				ynew[0] = ydata[0];
-
-				result.push(xnew[0]);
-				result.push(ynew[0]);
-
-				for ( j = 1; j < num; ++j) {
-					//new x point (sampling point for the created curve)
-					xnew[j] = xnew[0] + j * step;
-
-					var max = n - 1;
-					var min = 0;
-
-					while (max - min > 1) {
-						var k = Math.round((max + min) / 2);
-						if (xdata[k] > xnew[j]) {
-							max = k;
-						} else {
-							min = k;
-						}
-					}
-
-					//found point one to the left and one to the right of generated new point
-					var h = (xdata[max] - xdata[min]);
-
-					if (h == 0) {
-						//similar to above two points from original x data need some space between them
-						return [];
-					}
-
-					var a = (xdata[max] - xnew[j]) / h;
-					var b = (xnew[j] - xdata[min]) / h;
-
-					ynew[j] = a * ydata[min] + b * ydata[max] + ((a * a * a - a) * y2[min] + (b * b * b - b) * y2[max]) * (h * h) / 6;
-					
-					result.push(xnew[j]);
-					result.push(ynew[j]);
-				}
-
-				return result;
 			}
 
-		}//end init
+			var n = xdata.length;
 
-		$.plot.plugins.push({
-			init : init,
-			options : options,
-			name : 'curvedLines',
-			version : '0.5'
-		});
+			var y2 = new Array();
+			var delta = new Array();
+			y2[0] = 0;
+			y2[n - 1] = 0;
+			delta[0] = 0;
 
-	})(jQuery);
+			for (var i = 1; i < n - 1; ++i) {
+				var d = (xdata[i + 1] - xdata[i - 1]);
+				if (d == 0) {
+					//point before current point and after current point need some space in between
+					return [];
+				}
+
+				var s = (xdata[i] - xdata[i - 1]) / d;
+				var p = s * y2[i - 1] + 2;
+				y2[i] = (s - 1) / p;
+				delta[i] = (ydata[i + 1] - ydata[i]) / (xdata[i + 1] - xdata[i]) - (ydata[i] - ydata[i - 1]) / (xdata[i] - xdata[i - 1]);
+				delta[i] = (6 * delta[i] / (xdata[i + 1] - xdata[i - 1]) - s * delta[i - 1]) / p;
+			}
+
+			for (var j = n - 2; j >= 0; --j) {
+				y2[j] = y2[j] * y2[j + 1] + delta[j];
+			}
+
+			//   xmax  - xmin  / #points
+			var step = (xdata[n - 1] - xdata[0]) / (num - 1);
+
+			var xnew = new Array;
+			var ynew = new Array;
+			var result = new Array;
+
+			xnew[0] = xdata[0];
+			ynew[0] = ydata[0];
+
+			result.push(xnew[0]);
+			result.push(ynew[0]);
+
+			for ( j = 1; j < num; ++j) {
+				//new x point (sampling point for the created curve)
+				xnew[j] = xnew[0] + j * step;
+
+				var max = n - 1;
+				var min = 0;
+
+				while (max - min > 1) {
+					var k = Math.round((max + min) / 2);
+					if (xdata[k] > xnew[j]) {
+						max = k;
+					} else {
+						min = k;
+					}
+				}
+
+				//found point one to the left and one to the right of generated new point
+				var h = (xdata[max] - xdata[min]);
+
+				if (h == 0) {
+					//similar to above two points from original x data need some space between them
+					return [];
+				}
+
+				var a = (xdata[max] - xnew[j]) / h;
+				var b = (xnew[j] - xdata[min]) / h;
+
+				ynew[j] = a * ydata[min] + b * ydata[max] + ((a * a * a - a) * y2[min] + (b * b * b - b) * y2[max]) * (h * h) / 6;
+
+				result.push(xnew[j]);
+				result.push(ynew[j]);
+			}
+
+			return result;
+		}
+		
+		function hasInvalidParameters(curvedLinesOptions) {
+			if (typeof curvedLinesOptions.fit != 'undefined' ||
+			    typeof curvedLinesOptions.curvePointFactor != 'undefined' ||
+			    typeof curvedLinesOptions.fitPointDist != 'undefined') {
+			    	throw new Error("CurvedLines detected illegal parameters. The CurvedLines API changed with version 1.0.0 please check the options object.");
+			    	return true;
+			    }
+			return false;
+		}
+		
+
+	}//end init
+
+
+	$.plot.plugins.push({
+		init : init,
+		options : options,
+		name : 'curvedLines',
+		version : '1.1.1'
+	});
+
+})(jQuery);
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
 /* Geohash encoding/decoding and associated functions        (c) Chris Veness 2014 / MIT Licence  */
@@ -10870,7 +11131,7 @@ var RunalyzeLeaflet = (function($){
 RunalyzeLeaflet.getNewLayers = function(){
 	return {
 		'OpenStreetMap': L.tileLayer(
-			'http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+			'//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 				attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 			}
 		),
@@ -10885,7 +11146,7 @@ RunalyzeLeaflet.getNewLayers = function(){
 			}
 		),
 		'OpenMapSurfer': L.tileLayer(
-			'http://openmapsurfer.uni-hd.de/tiles/roads/x={x}&y={y}&z={z}', {
+			'http://korona.geog.uni-heidelberg.de/tiles/roads/x={x}&y={y}&z={z}', {
 				attribution: '&copy; <a href="http://giscience.uni-hd.de/">GIScience Research Group University of Heidelberg</a>, ' +
 					'&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 			}
@@ -10903,7 +11164,7 @@ RunalyzeLeaflet.getNewLayers = function(){
 			}
 		),
 		'Thunderforest': L.tileLayer(
-			'http://{s}.tile.thunderforest.com/outdoors/{z}/{x}/{y}.png', {
+			'//{s}.tile.thunderforest.com/outdoors/{z}/{x}/{y}.png', {
 				attribution: '&copy; <a href="http://www.opencyclemap.org">OpenCycleMap</a>, ' +
 					'&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
 					'<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
@@ -10934,12 +11195,12 @@ RunalyzeLeaflet.getNewLayers = function(){
 			}
 		),
 		'GoogleMaps': L.tileLayer(
-			'http://mt0.google.com/vt/lyrs=m@142&x={x}&y={y}&z={z}', {
+			'//mt0.google.com/vt/lyrs=m@142&x={x}&y={y}&z={z}', {
 				attribution: '&copy; <a href="http://maps.google.com/" target="_blank">Google Maps</a>'
 			}
 		),
 		'GoogleTerrain': L.tileLayer(
-			'http://mt0.google.com/vt/lyrs=t@126,r@142&x={x}&y={y}&z={z}', {
+			'//mt0.google.com/vt/lyrs=t@126,r@142&x={x}&y={y}&z={z}', {
 				attribution: '&copy; <a href="http://maps.google.com/" target="_blank">Google Terrain</a>'
 			}
 		),
@@ -10949,45 +11210,38 @@ RunalyzeLeaflet.getNewLayers = function(){
 			}
 		),
 		'OpenCycleMap': L.tileLayer(
-			'http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png', {
+			'//{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png', {
 				attribution: '&copy; <a href="http://www.opencyclemap.org">OpenCycleMap</a>, ' +
 					'&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 			}
 		),
 		'Esri': L.tileLayer(
-			'http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
+			'//server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
 				attribution: 'Tiles: &copy; <a href="http://www.esri.com/" target="_blank">Esri</a>'
 			}
 		),
 		'EsriSatellite': L.tileLayer(
-			'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+			'//server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
 				attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
 			}
 		),
 		'Stamen': L.tileLayer(
-			'http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png', {
+			'//stamen-tiles.a.ssl.fastly.net/toner/{z}/{x}/{y}.png', {
 				attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, ' +
 					'<a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>, ' +
 					'&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 			}
 		),
 		'Stamen (watercolor)': L.tileLayer(
-			'http://{s}.tile.stamen.com/watercolor/{z}/{x}/{y}.png', {
+			'//stamen-tiles.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.png', {
 				attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, ' +
 					'<a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>, ' +
 					'&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 			}
-		),
-		'Acetate': L.tileLayer(
-			'http://a{s}.acetate.geoiq.com/tiles/acetate-hillshading/{z}/{x}/{y}.png', {
-				subdomains: '0123',
-				minZoom: 2,
-				maxZoom: 18,
-				attribution: '&copy;2012 Esri & Stamen, Data from OSM and Natural Earth'
-			}
 		)
 	};
-};/*
+};
+/*
  * Additional features for Leaflet
  * 
  * (c) 2014 Hannes Christiansen, http://www.runalyze.de/

@@ -95,7 +95,7 @@ abstract class TableZonesAbstract {
 	 */
 	final public function getCode() {
 		if (empty($this->Data))
-			return;
+			return '';
 
 		$Code = '<table class="fullwidth bar-chart-table">';
 		$Code .= '<thead><tr>';

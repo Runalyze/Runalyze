@@ -6,8 +6,8 @@
 
 namespace Runalyze\View\Activity\Plot;
 
-use Runalyze\Activity\Duration;
 use Runalyze\Activity\Pace as PaceObject;
+use Runalyze\Configuration;
 use Runalyze\View\Activity;
 use Helper;
 
@@ -68,10 +68,12 @@ abstract class Laps extends ActivityPlot {
 		$this->loadData($context);
 
 		if (!empty($this->Data) && $this->PaceUnit->isTimeFormat()) {
+			$min = Helper::floorFor(min($this->Data), 30000);
 			$max = Helper::ceilFor(max($this->Data), 30000);
 
 			$this->Plot->setYAxisTimeFormat('%M:%S');
 		} else {
+			$min = floor(min($this->Data));
 			$max = ceil(max($this->Data));
 
 			$Pace = new PaceObject(0, 1);
@@ -79,7 +81,11 @@ abstract class Laps extends ActivityPlot {
 			$this->Plot->addYUnit(1, str_replace('&nbsp;', '', $Pace->appendix()), 1);
 		}
 
-		$this->Plot->setYLimits(1, 0, $max, false);
+		if (Configuration::ActivityView()->startSplitsAtZero()) {
+			$min = 0;
+		}
+
+		$this->Plot->setYLimits(1, $min, $max, false);
 		$this->Plot->setXLabels($this->Labels);
 		$this->Plot->showBars(true);
 

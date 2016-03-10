@@ -34,6 +34,7 @@ sub dump_it {
 
   # CONFIGURATION
   $indent = '--- ';
+  $skip_arrays = 0;
   $skip_invalid = 1;
   $skip_debug = 1;
 
@@ -83,6 +84,15 @@ sub dump_it {
 		my $pval = $self->value_cooked($tname, $attr, $invalid, $v->[$i]);
 
         $FH->print($v->[$i], '=', $pval);
+
+    if (!$skip_arrays && $c > 1) {
+		  my ($j, $k);
+
+	  	  for ($j = $i + 1, $k = $i + $c ; $j < $k ; ++$j) {
+  	    	$pval = $self->value_cooked($tname, $attr, $invalid, $v->[$j]);
+  	    	$FH->print(',', $pval);
+	  	  }
+    }
 
 		# Additional stuff I don't understand ...
 		if (!$skip_debug) {

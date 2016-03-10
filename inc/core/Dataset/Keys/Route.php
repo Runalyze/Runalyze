@@ -20,6 +20,9 @@ class Route extends AbstractKey
 	/** @var int */
 	const DEFAULT_CUT = 20;
 
+	/** @var string */
+	const ROUTE_NAME_KEY = 'route_name';
+
 	/**
 	 * Enum id
 	 * @return int
@@ -35,7 +38,27 @@ class Route extends AbstractKey
 	 */
 	public function column()
 	{
-		return 'routeid';
+		return '';
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function requiresJoin()
+	{
+		return true;
+	}
+
+	/**
+	 * @return array array('column' => '...', 'join' => 'LEFT JOIN ...', 'field' => '`x`.`y`)
+	 */
+	public function joinDefinition()
+	{
+		return array(
+			'column' => self::ROUTE_NAME_KEY,
+			'join' => 'LEFT JOIN `'.PREFIX.'route` AS `route` ON `t`.`routeid` = `route`.id',
+			'field' => '`route`.`name` AS `'.self::ROUTE_NAME_KEY.'`'
+		);
 	}
 
 	/**
@@ -61,14 +84,14 @@ class Route extends AbstractKey
 
 	/**
 	 * Get string to display this dataset value
-	 * @param Runalyze\Dataset\Context $context
+	 * @param \Runalyze\Dataset\Context $context
 	 * @return string
 	 */
 	public function stringFor(Context $context)
 	{
-		if ($context->activity()->get(Activity\Entity::ROUTEID) > 0) {
+		if ($context->hasData(self::ROUTE_NAME_KEY) && $context->data(self::ROUTE_NAME_KEY) != '') {
 			return \Helper::Cut(
-				$context->factory()->route($context->activity()->get(Activity\Entity::ROUTEID))->name(),
+				$context->data(self::ROUTE_NAME_KEY),
 				self::DEFAULT_CUT
 			);
 		}

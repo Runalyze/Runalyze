@@ -220,16 +220,39 @@ class Linker {
 	}
 
 	/**
+	 * @param int $id activity id
+	 * @param int $timestamp
+	 * @return bool|int
+	 */
+	public static function prevId($id, $timestamp) {
+		$PrevTraining = DB::getInstance()->query('SELECT `id` FROM `'.PREFIX.'training` WHERE ((`time`<"'.$timestamp.'" AND `id`!='.$id.') OR (`time`="'.$timestamp.'" AND `id`<'.$id.')) AND `accountid` = '.SessionAccountHandler::getId().' ORDER BY `time` DESC, `id` DESC LIMIT 1')->fetch();
+
+		return (isset($PrevTraining['id'])) ? $PrevTraining['id'] : false;
+	}
+
+	/**
+	 * @param int $id activity id
+	 * @param int $timestamp
+	 * @return bool|int
+	 */
+	public static function nextId($id, $timestamp) {
+		$NextTraining = DB::getInstance()->query('SELECT `id` FROM `'.PREFIX.'training` WHERE ((`time`>"'.$timestamp.'" AND `id`!='.$id.') OR (`time`="'.$timestamp.'" AND `id`>'.$id.')) AND `accountid` = '.SessionAccountHandler::getId().' ORDER BY `time` ASC, `id` ASC LIMIT 1')->fetch();
+
+		return (isset($NextTraining['id'])) ? $NextTraining['id'] : false;
+	}
+
+	/**
 	 * Get array for navigating back to previous training in editor
 	 * @param int $id
 	 * @param int $timestamp
 	 * @return string
+	 * @codeCoverageIgnore
 	 */
 	public static function editPrevLink($id, $timestamp) {
-		$PrevTraining = DB::getInstance()->query('SELECT id FROM '.PREFIX.'training WHERE ((time<"'.$timestamp.'" AND id!='.$id.') OR (time="'.$timestamp.'" AND id<'.$id.')) AND `accountid` = '.SessionAccountHandler::getId().' ORDER BY time DESC LIMIT 1')->fetch();
+		$prevId = self::prevId($id, $timestamp);
 
-		if (isset($PrevTraining['id']))
-			return self::editLink($PrevTraining['id'], Icon::$BACK, 'ajax-prev', 'black-rounded-icon');
+		if ($prevId !== false)
+			return self::editLink($prevId, Icon::$BACK, 'ajax-prev', 'black-rounded-icon');
 
 		return '';
 	}
@@ -239,12 +262,13 @@ class Linker {
 	 * @param int $id
 	 * @param int $timestamp
 	 * @return string
+	 * @codeCoverageIgnore
 	 */
 	public static function editNextLink($id, $timestamp) {
-		$NextTraining = DB::getInstance()->query('SELECT id FROM '.PREFIX.'training WHERE ((time>"'.$timestamp.'" AND id!='.$id.') OR (time="'.$timestamp.'" AND id>'.$id.')) AND `accountid` = '.SessionAccountHandler::getId().' ORDER BY time ASC LIMIT 1')->fetch();
+		$nextId = self::nextId($id, $timestamp);
 
-		if (isset($NextTraining['id']))
-			return self::editLink($NextTraining['id'], Icon::$NEXT, 'ajax-next', 'black-rounded-icon');
+		if ($nextId !== false)
+			return self::editLink($nextId, Icon::$NEXT, 'ajax-next', 'black-rounded-icon');
 
 		return '';
 	}

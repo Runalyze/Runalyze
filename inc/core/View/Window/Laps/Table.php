@@ -75,12 +75,33 @@ class Table {
 	 * @param \Runalyze\Data\Laps\Laps $laps
 	 * @param \Runalyze\Activity\Duration $demandedTime
 	 * @param \Runalyze\Activity\Pace $demandedPace
+	 * @param bool $isRunning
 	 */
-	public function __construct(Laps $laps, Duration $demandedTime, Pace $demandedPace) {
+	public function __construct(Laps $laps, Duration $demandedTime, Pace $demandedPace, $isRunning)
+	{
 		$this->Laps = $laps;
 		$this->DemandedTime = $demandedTime;
 		$this->DemandedPace = $demandedPace;
+
+		$this->defineAdditionalKeys($isRunning);
+	}
+
+	/**
+	 * @param $isRunning
+	 */
+	protected function defineAdditionalKeys($isRunning) {
 		$this->AdditionalKeys = array_keys($this->Laps->at(0)->additionalValues());
+
+		if (!$isRunning) {
+			$this->AdditionalKeys = array_diff($this->AdditionalKeys, array(
+				Activity\Entity::GROUNDCONTACT,
+				Activity\Entity::GROUNDCONTACT_BALANCE,
+				Activity\Entity::VERTICAL_OSCILLATION,
+				Activity\Entity::VERTICAL_RATIO,
+				Activity\Entity::STRIDE_LENGTH,
+				Activity\Entity::VDOT
+			));
+		}
 	}
 
 	/**
@@ -199,6 +220,10 @@ class Table {
 					$Code .= '<td>'.$View->groundcontact().'</td>';
 					break;
 
+				case Activity\Entity::GROUNDCONTACT_BALANCE:
+					$Code .= '<td>'.$View->groundcontactBalance().'</td>';
+					break;
+
 				case Activity\Entity::VERTICAL_OSCILLATION:
 					$Code .= '<td>'.$View->verticalOscillation().'</td>';
 					break;
@@ -215,6 +240,10 @@ class Table {
 					$Code .= '<td>'.$View->vdot()->value().'</td>';
 					break;
 
+				case Activity\Entity::POWER:
+					$Code .= '<td>'.$View->power().'</td>';
+					break;
+
 				default:
 					$Code .= '<td></td>';
 			}
@@ -224,8 +253,7 @@ class Table {
 	}
 
 	/**
-	 * 
-	 * @param type $key
+	 * @param string $key
 	 * @return string
 	 */
 	protected function labelForAdditionalValue($key) {
@@ -234,12 +262,18 @@ class Table {
 				return __('Cadence');
 			case Activity\Entity::GROUNDCONTACT:
 				return __('Ground contact time');
+			case Activity\Entity::GROUNDCONTACT_BALANCE:
+				return __('Ground contact balance');
 			case Activity\Entity::VERTICAL_OSCILLATION:
 				return __('Vertical oscillation');
+			case Activity\Entity::VERTICAL_RATIO:
+				return __('Vertical ratio');
 			case Activity\Entity::STRIDE_LENGTH:
 				return __('Stride length');
 			case Activity\Entity::VDOT:
 				return __('VDOT');
+			case Activity\Entity::POWER:
+				return __('Power');
 		}
 
 		return '';
@@ -269,7 +303,7 @@ class Table {
 	 */
 	protected function checkboxToToggleInactiveSplits() {
 		if ($this->IndexActive == 1 || $this->IndexResting == 1) {
-			return;
+			return '';
 		}
 
 		$Code  = '<p class="checkbox-first">';

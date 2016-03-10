@@ -92,7 +92,7 @@ class DataSeriesRemover {
 
 	/**
 	 * Remove single series from trackdata
-	 * @param enum $key
+	 * @param string $key
 	 */
 	public function removeFromTrackdata($key) {
 		if (isset($this->ActivityKeysForTrackdataKeys[$key])) {
@@ -103,8 +103,8 @@ class DataSeriesRemover {
 	}
 
 	/**
-	 * @param enum $trackdataKey
-	 * @param enum $activityKey
+	 * @param string $trackdataKey
+	 * @param string $activityKey
 	 */
 	protected function removeFromActivityIfValueIsEqualToAverage($trackdataKey, $activityKey) {
 		// TODO: this does not use a filter for low values as ParserAbstractSingle does
@@ -112,12 +112,16 @@ class DataSeriesRemover {
 		$dataAverage = round(array_sum($dataArray) / count($dataArray));
 
 		if ($this->Activity->get($activityKey) == $dataAverage) {
-			$this->Activity->set($activityKey, '');
+			if ($activityKey == Model\Activity\Entity::TEMPERATURE) {
+				$this->Activity->weather()->temperature()->setTemperature(null);
+			} else {
+				$this->Activity->set($activityKey, '');
+			}
 		}
 	}
 	/**
 	 * Remove single series from route
-	 * @param enum $key
+	 * @param string $key
 	 */
 	public function removeFromRoute($key) {
 		$this->Route->set($key, array());

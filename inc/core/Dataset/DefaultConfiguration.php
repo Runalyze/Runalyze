@@ -21,10 +21,15 @@ class DefaultConfiguration extends Configuration
 	public function __construct()
 	{
 		$this->generateDataFor(array(
+			Keys::SETTING => true,
 			Keys::DAYTIME => false,
 			Keys::SHARED_LINK => false,
 			Keys::WEATHER => true,
 			Keys::TEMPERATURE => true,
+			Keys::WIND_CHILL => false,
+			Keys::WIND => false,
+			Keys::HUMIDITY => false,
+			Keys::AIR_PRESSURE => false,
 			Keys::TYPE => true,
 			Keys::SPORT => true,
 			Keys::DISTANCE => true,
@@ -48,7 +53,7 @@ class DefaultConfiguration extends Configuration
 			Keys::GROUNDCONTACT => true,
 			Keys::VERTICAL_OSCILLATION => true,
 			Keys::STRIDE_LENGTH => false,
-			Keys::FIT_VDOT_ESTIMATE => false,
+			Keys::FIT_VO2MAX_ESTIMATE => false,
 			Keys::FIT_RECOVERY_TIME => false,
 			Keys::FIT_HRV_ANALYSIS => false,
 			Keys::SWOLF => false,
@@ -59,6 +64,14 @@ class DefaultConfiguration extends Configuration
 			Keys::COMPLETE_EQUIPMENT => false,
 			Keys::MAIN_EQUIPMENT => false
 		));
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isDefault()
+	{
+		return true;
 	}
 
 	/**

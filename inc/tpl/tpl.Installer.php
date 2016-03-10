@@ -34,7 +34,7 @@ foreach ($Steps as $i => $Name) {
 	</p>
 
 	<p class="warning">
-		<?php _e('If you want to reinstall Runalyze please delete you have to delete the <em>config.php</em>-file in your main directory of this installation.'); ?>
+		<?php _e('If you want to reinstall Runalyze please delete the <em>data/config.php</em>-file in your main directory of this installation.'); ?>
 	</p>
 
 <?php elseif ($this->currentStep == self::START): ?>
@@ -122,6 +122,12 @@ foreach ($Steps as $i => $Name) {
 	</p>
 	<p class="text">
 		<label>
+			<strong><?php _e('Port'); ?></strong>
+			<input type="text" name="port" value="<?php echo (isset($_POST['port']) ? $_POST['port'] : '3306'); ?>" <?php if ($this->readyForNextStep) echo 'readonly'; ?>>
+		</label>
+	</p>
+	<p class="text">
+		<label>
 			<strong><?php _e('User'); ?></strong>
 			<input type="text" name="username" value="<?php echo (isset($_POST['username']) ? $_POST['username'] : 'root'); ?>" <?php if ($this->readyForNextStep) echo 'readonly'; ?>>
 		</label>
@@ -205,7 +211,7 @@ foreach ($Steps as $i => $Name) {
 	</p>
 	<?php else: ?>
 	<p class="error">
-		<?php printf( __('Please save the following code as <strong>%s</strong>:'), '/runalyze/config.php'); ?>
+		<?php printf( __('Please save the following code as <strong>%s</strong>:'), '/runalyze/data/config.php'); ?>
 	</p>
 	<textarea class="code"><?php echo htmlspecialchars($this->writeConfigFileString); ?></textarea>
 	<?php endif; ?>

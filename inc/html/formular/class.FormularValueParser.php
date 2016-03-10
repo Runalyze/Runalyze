@@ -9,6 +9,7 @@ use Runalyze\Activity\Duration;
 use Runalyze\Activity\Elevation;
 use Runalyze\Activity\Weight;
 use Runalyze\Activity\Temperature;
+use Runalyze\Data\Weather\WindSpeed;
 
 /**
  * Library with parsers for formular values, default behavior: from user input to database value
@@ -99,11 +100,17 @@ class FormularValueParser {
 	 * @var string 
 	 */
 	public static $PARSER_DISTANCE = 'distance';
+	
+	/**
+	 * Parser: windspeed in km/h <=> wind speed in preferred unit
+	 * @var string 
+	 */
+	public static $PARSER_WINDSPEED = 'wind_speed';
 
 	/**
 	 * Validate post-value for a given key with a given parser
 	 * @param string $key
-	 * @param enum $parser
+	 * @param string $parser
 	 * @param array $parserOptions
 	 * @return boolean 
 	 */
@@ -147,6 +154,9 @@ class FormularValueParser {
 				return self::validateElevation($key);
 			case self::$PARSER_DISTANCE:
 				return self::validateDistance($key, $parserOptions);
+			case self::$PARSER_WINDSPEED:
+				return self::validateWindSpeed($key, $parserOptions);
+			    
 			default:
 				return true;
 		}
@@ -155,7 +165,7 @@ class FormularValueParser {
 	/**
 	 * Transform value with a given parser
 	 * @param mixed $value
-	 * @param enum $parser
+	 * @param string $parser
 	 * @param array $parserOptions
 	 */
 	public static function parse(&$value, $parser, $parserOptions = array()) {
@@ -192,6 +202,9 @@ class FormularValueParser {
 				break;
 			case self::$PARSER_DISTANCE:
 				self::parseDistance($value, $parserOptions);
+				break;
+			case self::$PARSER_WINDSPEED:
+				self::parseWindSpeed($value, $parserOptions);
 				break;
 		}
 	}
@@ -292,6 +305,10 @@ class FormularValueParser {
 		} else {
 			//$_POST[$key] = time();
 			return __('The date could not be parsed.');
+		}
+
+		if ($_POST[$key] > time()) {
+			return __('The date must not be in the future.');
 		}
 
 		return true;
@@ -562,6 +579,31 @@ class FormularValueParser {
 		$thousandsPoint = isset($parserOptions['thousans-point']) ? $parserOptions['thousans-point'] : '';
 
 		$value = number_format((new Distance($value))->valueInPreferredUnit(), $decimals, $decimalPoint, $thousandsPoint);
+	}
+	
+	/**
+	 * Validator: wind speed in preferred unit => wind speed in km/h
+	 * @param string $key
+	 * @return bool
+	 */
+	private static function validateWindSpeed($key) {
+		if (is_numeric($_POST[$key])) {
+			$_POST[$key] = round((new WindSpeed())->setInPreferredUnit($_POST[$key])->value());
+		} else {
+			$_POST[$key] = null;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Parse: wind speed in km/h => wind speed in preferred unit
+	 * @param mixed $value
+	 */
+	private static function parseWindSpeed(&$value) {
+		if (null !== $value && $value != '') {
+			$value = round((new WindSpeed($value))->valueInPreferredUnit());
+		}
 	}
 
 	/**

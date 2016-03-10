@@ -48,6 +48,7 @@ abstract class AbstractStrategy {
 					`time`, `distance`, `s`, `vdot_by_time`
 				FROM `'.PREFIX.'training`
 				WHERE
+					`accountid`='.\SessionAccountHandler::getId().' AND
 					`sportid`='.Configuration::General()->runningSport().'
 					AND `distance` >= "'.$minimalDistanceRequired.'"
 				ORDER BY `vdot_by_time` DESC

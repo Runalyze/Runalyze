@@ -60,12 +60,20 @@ class GeoTIFF extends Strategy {
 
 	/**
 	 * Can the strategy handle the data?
+	 * @return bool
 	 */
 	public function canHandleData() {
-		$minLatitude = min($this->LatitudePoints);
-		$maxLatitude = max($this->LatitudePoints);
-		$minLongitude = min($this->LongitudePoints);
-		$maxLongitude = max($this->LongitudePoints);
+		$lats = array_filter($this->LatitudePoints);
+		$lngs = array_filter($this->LongitudePoints);
+
+		if (empty($lats) || empty($lngs)) {
+			return true;
+		}
+
+		$minLatitude = min($lats);
+		$maxLatitude = max($lats);
+		$minLongitude = min($lngs);
+		$maxLongitude = max($lngs);
 
 		$testArray = array(
 			$minLatitude, $minLongitude,
@@ -75,7 +83,7 @@ class GeoTIFF extends Strategy {
 		);
 
 		try {
-			$this->Reader = new \SRTMGeoTIFFReader(FRONTEND_PATH.'data/gps/srtm');
+			$this->Reader = new \SRTMGeoTIFFReader(FRONTEND_PATH.'../data/srtm');
 			$this->Reader->getMultipleElevations($testArray);
 
 			return true;
@@ -95,21 +103,38 @@ class GeoTIFF extends Strategy {
 			$this->Reader->maxPoints = PHP_INT_MAX;
 			$arraySize = count($this->LatitudePoints);
 			$locations = array();
+			$emptyIndices = array();
 
 			for ($i = 0; $i < $arraySize; $i++) {
-				$locations[] = $this->LatitudePoints[$i];
-				$locations[] = $this->LongitudePoints[$i];
+				if ($this->LatitudePoints[$i] != 0 || $this->LongitudePoints[$i] != 0) {
+					$locations[] = $this->LatitudePoints[$i];
+					$locations[] = $this->LongitudePoints[$i];
+				} else {
+					$emptyIndices[] = $i;
+				}
 			}
 
 			$this->ElevationPoints = $this->Reader->getMultipleElevations($locations, false, $this->INTERPOLATE);
-
-			if ($this->USE_SMOOTHING) {
-				$this->smoothElevation();
-			}
+			$this->insertUnknownValuesAt($emptyIndices);
 
 			if ($this->GUESS_UNKNOWN) {
 				$this->guessUnknown(self::UNKNOWN);
 			}
+
+			if ($this->USE_SMOOTHING) {
+				$this->smoothElevation();
+			}
+		}
+	}
+
+	/**
+	 * @param array $emptyIndices
+	 */
+	protected function insertUnknownValuesAt(array $emptyIndices) {
+		foreach ($emptyIndices as $i => $index) {
+			$firstPart = array_slice($this->ElevationPoints, 0, $index);
+			$secondPart = array_slice($this->ElevationPoints, $index);
+			$this->ElevationPoints = array_merge($firstPart, [self::UNKNOWN], $secondPart);
 		}
 	}
 

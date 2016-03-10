@@ -9,7 +9,7 @@
  * @package Runalyze\System
  */
 $EmptyTables = array();
-$EmptyTables['runalyze_equipment_type'] = array(
+$EmptyTables['equipment_type'] = array(
 	'columns' => array('name', 'input'),
 	'values'  => array(
 		array(__('Shoes'), 0, 'EQUIPMENT_SHOES_ID'),

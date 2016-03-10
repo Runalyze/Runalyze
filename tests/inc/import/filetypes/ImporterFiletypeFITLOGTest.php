@@ -94,11 +94,21 @@ class ImporterFiletypeFITLOGTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test: multiple file
-	 * Filename: "..." 
+	 * Test: "spinning.fitlog"
 	 */
-	public function test_multiple() {
-		// TODO
+	public function testIndoorSpinning() {
+		$this->object->parseFile('../tests/testfiles/sporttracks/spinning.fitlog');
+
+		$this->assertFalse($this->object->hasMultipleTrainings());
+		$this->assertFalse($this->object->failed());
+
+		$this->assertEquals(1803, $this->object->object()->getTimeInSeconds());
+		$this->assertEquals(0.0, $this->object->object()->getDistance());
+		$this->assertEquals(108, $this->object->object()->getPulseAvg());
+		$this->assertEquals(144, $this->object->object()->getPulseMax());
+
+		$this->assertTrue($this->object->object()->hasArrayTime());
+		$this->assertTrue($this->object->object()->hasArrayHeartrate());
 	}
 
 }

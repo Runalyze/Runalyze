@@ -44,19 +44,21 @@ $Frontend = new Frontend();
 	<p class="text">
 		<?php _e('Please let us know if you have wishes or have encountered bugs.'); ?>
 		<?php _e('We give our best to make Runalyze as good as possible for you. - Therefore we would be interested in your suggestions for improvement.'); ?>
-	</p>
-
-	<p class="text">
-		<?php _e('You can contact us via email:'); ?> <a href="mailto:support@runalyze.de" title="Support">support@runalyze.de</a>.
+		<?php _e('In general most questions, problems and ideas are more appropriate to ask in the forum.'); ?>
 	</p>
 
 	<ul class="blocklist blocklist-inline clearfix">
+		<li><a href="http://forum.runalyze.com" title="Board: Runalyze"><i class="fa fa-comments"></i> <strong><?php _e('Forum'); ?></strong></a></li>
+		<li><a href="http://help.runalyze.com" title="Runalyze"><i class="fa fa-question"></i> <strong><?php _e('Documentation'); ?></strong></a></li>
 		<li><a href="https://github.com/Runalyze/Runalyze" title="GitHub: Runalyze"><i class="fa fa-github-alt"></i> <strong>GitHub</strong></a></li>
 		<li><a href="http://twitter.com/RunalyzeDE" title="Runalyze"><i class="fa fa-twitter color-twitter"></i> <strong>Twitter</strong></a></li>
 		<li><a href="http://facebook.com/Runalyze" title="Runalyze"><i class="fa fa-facebook color-facebook"></i> <strong>Facebook</strong></a></li>
 		<li><a href="https://plus.google.com/communities/116260192529858591171" title="Runalyze"><i class="fa fa-google-plus color-google-plus"></i> <strong>Google+</strong></a></li>
-		<li><a href="http://blog.runalyze.com/faq/" title="Runalyze"><i class="fa fa-question"></i> <strong>FAQ</strong></a></li>
 	</ul>
+	
+	<p class="text">
+		<?php _e('In a case of urgency you can contact us via email:'); ?> <a href="mailto:support@runalyze.com" title="Support">support@runalyze.com</a>.
+	</p>
 </div>
 
 <div class="panel-heading panel-sub-heading">

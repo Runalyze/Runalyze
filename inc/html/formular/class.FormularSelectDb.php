@@ -24,6 +24,7 @@ class FormularSelectDb extends FormularSelectBox {
 			self::$OptionsCache[$Table.'.'.$Label] = DB::getInstance()->query(
 				'SELECT `id`, `'.$Label.'` as `value` '.
 				'FROM `'.PREFIX.$Table.'` '.
+				'WHERE `accountid`='.\SessionAccountHandler::getId().' '.
 				'ORDER BY `id` ASC'
 			)->fetchAll();
 		}

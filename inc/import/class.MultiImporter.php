@@ -3,6 +3,11 @@
  * This file contains class::MultiImporter
  * @package Runalyze\Import
  */
+
+use Runalyze\Model\Activity;
+use Runalyze\View\Activity\Linker;
+use Runalyze\View\Activity\Dataview;
+
 /**
  * Multi importer
  *
@@ -70,11 +75,23 @@ class MultiImporter {
 	 */
 	public function displayAfterInsert() {
 		if ($this->EditorRequested) {
-			$MultiEditor = new MultiEditor($this->InsertedIDs);
-			$MultiEditor->display();
+			if (count($this->InsertedIDs) == 1) {
+				$this->displaySingleEditor($this->InsertedIDs[0]);
+			} else {
+				$MultiEditor = new MultiEditor($this->InsertedIDs);
+				$MultiEditor->display();
+			}
 		} else {
 			echo HTML::em( __('The activities have been successfully imported.') );
 			echo Ajax::closeOverlay();
 		}
+	}
+
+	/**
+	 * Display editor for single activity
+	 * @param int $id
+	 */
+	protected function displaySingleEditor($id) {
+		header('Location: call.Training.edit.php?id='.$id);
 	}
 }

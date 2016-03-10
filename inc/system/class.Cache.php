@@ -1,11 +1,16 @@
 <?php
-
 /**
  * Class: Cache - Wrapper for PHPFastCache
  * @author Michael Pohl
  * @package Runalyze\System
  */
+
 class Cache {
+	/**
+	 * Path for cache, relative to runalyze root
+	 * @var string
+	 */
+	const PATH = 'data';
 
 	/**
 	 * Last cache clean date
@@ -18,7 +23,8 @@ class Cache {
 	 * @var bool
 	 */
 	public $footer_sent = true;
-        
+
+	/** @var \phpFastCache */
     public static $cache;
 
 	/**
@@ -26,7 +32,9 @@ class Cache {
 	 */
 	public function __construct() {
 		phpFastCache::setup("storage", "files");
-		self::$cache = new phpFastCache();
+		phpFastCache::setup("path", FRONTEND_PATH."../".self::PATH);
+		phpFastCache::setup("securityKey", "cache");
+		self::$cache = new phpFastCache;
 	}
 
 	/**

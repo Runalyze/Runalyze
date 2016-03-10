@@ -7,11 +7,11 @@
         "symfony/routing": "2.*",
         "symfony/class-loader": "@stable",
         "symfony/yaml": "@stable",
-        "swiftmailer/swiftmailer": "@stable",
         "nojacko/email-validator": "~1.0",
-        "league/geotools": "@stable"
+        "league/geotools": "@stable",
+        "swiftmailer/swiftmailer": "@stable",
+        "phpfastcache/phpfastcache": "3.0.23"
     },
-
     "autoload" : {
         "psr-4" : {
             "Runalyze\\Core\\" : "src/"

@@ -28,7 +28,7 @@ class Context {
 	 * @var \Runalyze\Model\Trackdata\Entity
 	 */
 	protected $Trackdata;
-        
+
 	/**
 	 * @var \Runalyze\Model\Swimdata\Entity
 	 */
@@ -57,7 +57,7 @@ class Context {
 	/**
 	 * Construct context
 	 * @var int $activityID
-	 * @var in $accountID
+	 * @var int $accountID
 	 */
 	public function __construct($activityID, $accountID) {
 		$Factory = new Factory((int)$accountID);
@@ -72,7 +72,17 @@ class Context {
 		$this->Swimdata->fillDistanceArray($this->Trackdata);
 		$this->Swimdata->fillSwolfArray($this->Trackdata);
 		$this->Dataview = new Dataview($this->Activity);
+	}
 
+	/**
+	 * Clone object
+	 */
+	public function __clone() {
+		foreach ($this as $property => $value) {
+			if (is_object($value)) {
+				$this->{$property} = clone $value;
+			}
+		}
 	}
 
 	/**
@@ -88,7 +98,7 @@ class Context {
 	public function trackdata() {
 		return $this->Trackdata;
 	}
-        
+
 	/**
 	 * @return \Runalyze\Model\Swimdata\Entity
 	 */
@@ -137,7 +147,7 @@ class Context {
 	public function hasRoute() {
 		return !is_null($this->Route);
 	}
-        
+
 	/**
 	 * @return boolean
 	 */

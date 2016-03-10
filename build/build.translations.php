@@ -9,7 +9,7 @@ echo 'Building translations...'.PHP_EOL;
 
 $supportedLanguages=array();
 
-require(__DIR__.'/../config_lang.php');
+require(__DIR__.'/../data/config_lang.php');
 
 $LOCALE_DIR=__DIR__.'/../inc/locale';
 

@@ -2,7 +2,10 @@
 
 namespace Runalyze\Model\Activity;
 
+use League\Geotools\Coordinate\Coordinate;
+use League\Geotools\Geohash\Geohash;
 use Runalyze\Configuration;
+use Runalyze\Data\Weather\Condition;
 use Runalyze\Model;
 
 use PDO;
@@ -316,6 +319,27 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 		$this->assertTrue($Result->weather()->temperature()->isUnknown());
 	}
 
+	public function testUnsettingWeatherForInside() {
+		$OldObject = $this->fetch( $this->insert(array(
+			Entity::TIME_IN_SECONDS => 3600,
+			Entity::WEATHERID => Condition::SUNNY,
+			Entity::TEMPERATURE => 7,
+			Entity::HUMIDITY => 67,
+			Entity::PRESSURE => 1020,
+			Entity::WINDDEG => 180,
+			Entity::WINDSPEED => 12,
+			Entity::SPORTID => $this->OutdoorID
+		)) );
+
+		$this->assertFalse($OldObject->weather()->isEmpty());
+
+		$NewObject = clone $OldObject;
+		$NewObject->set(Entity::SPORTID, $this->IndoorID);
+		$Result = $this->update($NewObject, $OldObject);
+
+		$this->assertTrue($Result->weather()->isEmpty());
+	}
+
 	public function testUpdatePowerCalculation() {
 		// TODO: Needs configuration setting
 		if (Configuration::ActivityForm()->computePower()) {
@@ -364,6 +388,38 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertEquals(array( 0.00,    0), $this->PDO->query('SELECT `distance`, `time` FROM `runalyze_equipment` WHERE `id`='.$this->EquipmentA)->fetch(PDO::FETCH_NUM));
 		$this->assertEquals(array(12.34, 3600), $this->PDO->query('SELECT `distance`, `time` FROM `runalyze_equipment` WHERE `id`='.$this->EquipmentB)->fetch(PDO::FETCH_NUM));
+	}
+
+	public function testUpdatingNight() {
+		$OldObject = new Entity([
+			Entity::TIMESTAMP => strtotime('2016-01-13 08:00:00')
+		]);
+
+		$Route = new Model\Route\Entity([
+			Model\Route\Entity::GEOHASHES => [(new Geohash())->encode(new Coordinate([49.44, 7.45]))->getGeohash()]
+		]);
+		$Route->synchronize();
+
+		$Inserter = new Inserter($this->PDO);
+		$Inserter->setAccountID(0);
+		$Inserter->setRoute($Route);
+		$Inserter->insert($OldObject);
+
+		$Result = $this->fetch($Inserter->insertedID());
+		$this->assertTrue($Result->knowsIfItIsNight());
+		$this->assertTrue($Result->isNight());
+
+		$NewObject = clone $OldObject;
+		$NewObject->set(Entity::TIMESTAMP, $OldObject->timestamp() + 3600);
+
+		$Updater = new Updater($this->PDO, $NewObject, $OldObject);
+		$Updater->setAccountID(0);
+		$Updater->setRoute($Route);
+		$Updater->update();
+
+		$UpdatedResult = $this->fetch($Inserter->insertedID());
+		$this->assertTrue($UpdatedResult->knowsIfItIsNight());
+		$this->assertFalse($UpdatedResult->isNight());
 	}
 
 }

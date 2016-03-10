@@ -33,10 +33,11 @@ class Configuration
 	 * @param \PDO $pdo database connection
 	 * @param int $accountID accountid
 	 * @param bool $fallbackToDefault
+	 * @param bool $useCache
 	 */
-	public function __construct(\PDO $pdo, $accountID, $fallbackToDefault = true)
+	public function __construct(\PDO $pdo, $accountID, $fallbackToDefault = true, $useCache = true)
 	{
-		$this->Data = Cache::get(self::CACHE_KEY);
+		$this->Data = $useCache ? Cache::get(self::CACHE_KEY) : null;
 
 		if (is_null($this->Data)) {
 			$completeData = $pdo->query('SELECT `keyid`, `active`, `style` FROM `'.PREFIX.'dataset` WHERE `accountid`="'.$accountID.'" ORDER BY `position` ASC')->fetchAll();
@@ -49,8 +50,18 @@ class Configuration
 				}
 			}
 
-			Cache::set(self::CACHE_KEY, $this->Data, '600');
+			if ($useCache) {
+				Cache::set(self::CACHE_KEY, $this->Data, '600');
+			}
 		}
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isDefault()
+	{
+		return false;
 	}
 
 	/**

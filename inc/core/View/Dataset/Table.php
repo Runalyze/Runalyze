@@ -104,7 +104,7 @@ class Table {
 			} else {
 				$Key = Keys::get($keyid);
 				$class = ($Key->cssClass() != '') ? ' class="'.$Key->cssClass().'"' : '';
-				$style = ($this->Configuration->getStyle($keyid) != '') ? ' class="'.$this->Configuration->getStyle($keyid).'"' : '';
+				$style = ($this->Configuration->getStyle($keyid) != '') ? ' style="'.$this->Configuration->getStyle($keyid).'"' : '';
 
 				$Code .= '<td'.$class.$style.'>'.$Key->stringFor($context).'</td>';
 			}
@@ -123,14 +123,6 @@ class Table {
 		}
 
 		return '<td></td>';
-	}
-
-	/**
-	 * @param \Runalyze\Dataset\Context $context
-	 * @return string
-	 */
-	public function codeForEditIcon(Context $context) {
-		return \HTML::td($context->linker()->smallEditLink());
 	}
 
 	/**

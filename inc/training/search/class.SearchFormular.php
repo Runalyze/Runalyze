@@ -5,7 +5,9 @@
  */
 
 use Runalyze\Configuration;
-
+use Runalyze\Data\Weather\Humidity;
+use Runalyze\Data\Weather\WindSpeed;
+use Runalyze\Data\Weather\Pressure;
 /**
  * Search formular
  *
@@ -115,7 +117,7 @@ class SearchFormular extends Formular {
 	 * Add field: sport
 	 */
 	private function addFieldSport() {
-		$Field = new FormularSelectDb('sportid', __('Sport'));
+		$Field = new FormularSelectDb('sportid', __('Sport').$this->shortLinksForSportField());
 		$Field->loadOptionsFrom('sport', 'name');
 		$Field->addCSSclass('chosen-select full-size');
 		$Field->setMultiple();
@@ -123,6 +125,17 @@ class SearchFormular extends Formular {
 		$Field->setLayout( FormularFieldset::$LAYOUT_FIELD_W100_IN_W33 );
 
 		$this->Fieldset->addField( $Field );
+	}
+
+	/**
+	 * @return string
+	 */
+	protected function shortLinksForSportField() {
+		$code = '<span class="link chosen-select-all" data-target="sportid">'.__('all').'</span>';
+		$code .= ' | ';
+		$code .= '<span class="link chosen-select-none" data-target="sportid">'.__('none').'</span>';
+
+		return '<span class="right small">'.$code.'&nbsp;</span>';
 	}
 
 	/**
@@ -153,8 +166,11 @@ class SearchFormular extends Formular {
 		$this->addNumericConditionField('elevation', __('Elevation'), FormularInput::$SIZE_SMALL, Configuration::General()->distanceUnitSystem()->elevationUnit());
 		$this->addStringConditionField('route', __('Route'), FormularInput::$SIZE_MIDDLE);
 		$this->addDurationField('s', __('Duration'));
-		$this->addNumericConditionField('temperature', __('Temperature'), FormularInput::$SIZE_SMALL, FormularUnit::$CELSIUS);
-		$this->addStringConditionField('comment', __('Comment'), FormularInput::$SIZE_MIDDLE);
+		$this->addNumericConditionField('temperature', __('Temperature'), FormularInput::$SIZE_SMALL, Configuration::General()->temperatureUnit()->unit());
+		$this->addNumericConditionField('humidity', __('Humidity'), FormularInput::$SIZE_SMALL, (new Humidity())->unit());
+		$this->addNumericConditionField('pressure', __('Pressure'), FormularInput::$SIZE_SMALL, (new Pressure())->unit());
+		$this->addNumericConditionField('wind_speed', __('Wind Speed'), FormularInput::$SIZE_SMALL, (new WindSpeed())->unit());
+		$this->addStringConditionField('comment', __('Title'), FormularInput::$SIZE_MIDDLE);
 		$this->addNumericConditionField('pulse_avg', __('avg. HR'), FormularInput::$SIZE_SMALL, FormularUnit::$BPM);
 		$this->addNumericConditionField('kcal', __('Calories'), FormularInput::$SIZE_SMALL, FormularUnit::$KCAL);
 		$this->addStringConditionField('partner', __('Partner'), FormularInput::$SIZE_MIDDLE);
@@ -163,12 +179,17 @@ class SearchFormular extends Formular {
 		$this->addBooleanField('is_public', __('Is public'));
 		$this->addNumericConditionField('jd_intensity', __('JD points'), FormularInput::$SIZE_SMALL);
 		$this->addNumericConditionField('groundcontact', __('Ground contact'), FormularInput::$SIZE_SMALL, FormularUnit::$MS);
-		$this->addBooleanField('use_vdot', __('Uses VDOT'));
-		$this->addNumericConditionField('trimp', __('TRIMP'), FormularInput::$SIZE_SMALL);
+		$this->addNumericConditionField('groundcontact_balance', __('Ground Contact Balance'), FormularInput::$SIZE_SMALL, 'L'. FormularUnit::$PERCENT);
 		$this->addNumericConditionField('vertical_oscillation', __('Vertical oscillation'), FormularInput::$SIZE_SMALL, FormularUnit::$CM);
 		$this->addNumericConditionField('vertical_ratio', __('Vertical ratio'), FormularInput::$SIZE_SMALL, FormularUnit::$PERCENT);
-		$this->addNumericConditionField('groundcontact_balance', __('Ground Contact Balance'), FormularInput::$SIZE_SMALL, 'L'. FormularUnit::$PERCENT);
 		$this->addNumericConditionField('stride_length', __('Stride length'), FormularInput::$SIZE_SMALL, Configuration::General()->distanceUnitSystem()->strideLengthUnit());
+		if(Configuration::Vdot()->useElevationCorrection()) {
+		    $this->addNumericConditionField('vdot_with_elevation', __('VDOT'), FormularInput::$SIZE_SMALL);
+		} else {
+		$this->addNumericConditionField('vdot', __('VDOT'), FormularInput::$SIZE_SMALL);
+		}
+		$this->addBooleanField('use_vdot', __('Uses VDOT'));
+		$this->addNumericConditionField('trimp', __('TRIMP'), FormularInput::$SIZE_SMALL);
 	}
 
 	/**

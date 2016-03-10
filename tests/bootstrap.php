@@ -18,7 +18,6 @@ require_once FRONTEND_PATH.'system/class.Autoloader.php';
 new Autoloader();
 
 require_once FRONTEND_PATH.'system/define.consts.php';
-require_once FRONTEND_PATH.'../lib/phpfastcache/phpfastcache.php';
 require_once FRONTEND_PATH.'system/class.Cache.php';
 new Cache();
 Cache::clean();
@@ -37,6 +36,13 @@ if (!defined('PREFIX'))
 if (!defined('PERL_PATH'))
 	define('PERL_PATH', '/usr/bin/perl');
 
+if (!defined('TTBIN_PATH'))
+	define('TTBIN_PATH', FRONTEND_PATH.'../call/perl/ttbincnv');
+
+if (!defined('GEONAMES_USERNAME'))
+	define('GEONAMES_USERNAME', 'runalyze');
+
+
 if (!defined('DAY_IN_S'))
 	define('DAY_IN_S', 86400);
 
@@ -44,7 +50,7 @@ $_SERVER['REQUEST_URI'] = '/runalyze/index.php';
 $_SERVER['SCRIPT_NAME'] = '/runalyze/index.php';
 
 // Load and clean database
-DB::connect('127.0.0.1', 'root', '', 'runalyze_unittest');
+DB::connect('127.0.0.1', '3306', 'root', '', 'runalyze_unittest');
 DB::getInstance()->exec('SET GLOBAL sql_mode="TRADITIONAL"');
 DB::getInstance()->exec('DELETE FROM `runalyze_account`');
 DB::getInstance()->exec('INSERT INTO `runalyze_account` (`id`,`username`,`mail`) VALUES(1, "test", "test@test.com")');
@@ -87,3 +93,6 @@ if (!function_exists('_ne')) {
 
 // Load helper class
 Helper::Unknown('');
+
+// Load test helper
+require_once FRONTEND_PATH.'../tests/fake/FakeContext.php';

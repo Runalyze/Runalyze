@@ -189,13 +189,13 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 		$this->rekorde = array();
 		$this->rekorde[] = array(
 			'name'			=> __('Fastest activities'),
-			'sportquery'	=> 'SELECT * FROM `'.PREFIX.'sport` ORDER BY `id` ASC',
-			'datquery'		=> 'SELECT `id`, `time`, `s`, `distance`, `sportid` FROM `'.PREFIX.'training` WHERE `sportid`=:sportid '.$this->getYearDependenceForQuery().' AND `distance`>0 ORDER BY (`distance`/`s`) DESC, `s` DESC LIMIT 10',
+			'sportquery'	=> 'SELECT * FROM `'.PREFIX.'sport` WHERE `accountid`='.SessionAccountHandler::getId().' ORDER BY `id` ASC',
+			'datquery'		=> 'SELECT `id`, `time`, `s`, `distance`, `sportid` FROM `'.PREFIX.'training` WHERE `accountid`='.SessionAccountHandler::getId().' AND `sportid`=:sportid '.$this->getYearDependenceForQuery().' AND `distance`>0 ORDER BY (`distance`/`s`) DESC, `s` DESC LIMIT 10',
 			'speed'			=> true);
 		$this->rekorde[] = array(
 			'name'			=> __('Longest activities'),
-			'sportquery'	=> 'SELECT * FROM `'.PREFIX.'sport` ORDER BY `id` ASC',
-			'datquery'		=> 'SELECT `id`, `time`, `s`, `distance`, `sportid` FROM `'.PREFIX.'training` WHERE `sportid`=:sportid '.$this->getYearDependenceForQuery().' ORDER BY `distance` DESC, `s` DESC LIMIT 10',
+			'sportquery'	=> 'SELECT * FROM `'.PREFIX.'sport` WHERE `accountid`='.SessionAccountHandler::getId().' ORDER BY `id` ASC',
+			'datquery'		=> 'SELECT `id`, `time`, `s`, `distance`, `sportid` FROM `'.PREFIX.'training` WHERE `accountid`='.SessionAccountHandler::getId().' AND `sportid`=:sportid '.$this->getYearDependenceForQuery().' ORDER BY `distance` DESC, `s` DESC LIMIT 10',
 			'speed'			=> false);
 
 		if ($this->showsAllYears()) {
@@ -205,7 +205,8 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 					SUM(`distance`) as `km`,
 					YEAR(FROM_UNIXTIME(`time`)) as `year`
 				FROM `'.PREFIX.'training`
-				WHERE `sportid`='.Configuration::General()->runningSport().'
+				WHERE `accountid`='.SessionAccountHandler::getId().' AND
+						`sportid`='.Configuration::General()->runningSport().'
 				GROUP BY `year`
 				ORDER BY `km` DESC
 				LIMIT 10')->fetchAll();
@@ -219,7 +220,8 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 				MONTH(FROM_UNIXTIME(`time`)) as `month`,
 				(MONTH(FROM_UNIXTIME(`time`))+100*YEAR(FROM_UNIXTIME(`time`))) as `monthyear`
 			FROM `'.PREFIX.'training`
-			WHERE `sportid`='.Configuration::General()->runningSport().' '.$this->getYearDependenceForQuery().'
+			WHERE `accountid`='.\SessionAccountHandler::getId().' AND
+					`sportid`='.Configuration::General()->runningSport().' '.$this->getYearDependenceForQuery().'
 			GROUP BY `monthyear`
 			ORDER BY `km` DESC
 			LIMIT 10')->fetchAll();
@@ -233,7 +235,8 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 				YEARWEEK(FROM_UNIXTIME(`time`),'.Configuration::General()->weekStart()->mysqlParameter().') as `weekyear`,
 				`time`
 			FROM `'.PREFIX.'training`
-			WHERE `sportid`='.Configuration::General()->runningSport().' '.$this->getYearDependenceForQuery().'
+			WHERE `accountid`='.\SessionAccountHandler::getId().' AND
+					`sportid`='.Configuration::General()->runningSport().' '.$this->getYearDependenceForQuery().'
 			GROUP BY `weekyear`
 			ORDER BY `km` DESC
 			LIMIT 10')->fetchAll();

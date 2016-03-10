@@ -54,7 +54,7 @@ class CompleteEquipment extends AbstractEquipment
 
 	/**
 	 * Get string to display this dataset value
-	 * @param Runalyze\Dataset\Context $context
+	 * @param \Runalyze\Dataset\Context $context
 	 * @return string
 	 */
 	public function stringFor(Context $context)
@@ -64,7 +64,7 @@ class CompleteEquipment extends AbstractEquipment
 			$Factory = new \Runalyze\Model\Factory(\SessionAccountHandler::getId());
 			$names = array();
 
-			foreach ($ids as $id) {
+			foreach (array_unique($ids) as $id) {
 				$names[] = $Factory->equipment($id)->name();
 			}
 

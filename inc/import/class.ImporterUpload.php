@@ -14,12 +14,6 @@
  */
 class ImporterUpload {
 	/**
-	 * Path to files, after construction with absolute path
-	 * @var string 
-	 */
-	private static $pathToFiles = '/files/';
-
-	/**
 	 * JSON-response
 	 * @var string
 	 */
@@ -140,13 +134,12 @@ class ImporterUpload {
 	 * Set response for upload failed
 	 */
 	private function throwUploadFailed() {
-		// TODO: Use folder from /system/define.chmod.php
+		$CHMOD_FOLDERS = array();
+
+		include FRONTEND_PATH.'system/define.chmod.php';
+
 		$this->Response = 'Can\'t move uploaded file '.$_FILES['qqfile']['name'].'.<br>
-					The following paths need chmod 777 (write permissions):<br>
-						/log/<br>
-						/inc/import/files/<br>
-						/plugin/RunalyzePluginTool_DbBackup/backup/<br>
-						/plugin/RunalyzePluginTool_DbBackup/import/';
+					The following paths need chmod 777 (write permissions):<br>'.implode('<br>', $CHMOD_FOLDERS);
 	}
 
 	/**
@@ -172,7 +165,7 @@ class ImporterUpload {
 	 * @return string
 	 */
 	public static function absolutePath($File) {
-		return realpath(dirname(__FILE__)).self::$pathToFiles.$File;
+		return FRONTEND_PATH.self::relativePath($File);
 	}
 
 	/**
@@ -181,6 +174,6 @@ class ImporterUpload {
 	 * @return string
 	 */
 	public static function relativePath($File) {
-		return 'import'.self::$pathToFiles.$File;
+		return '../data/import/'.$File;
 	}
 }

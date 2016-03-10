@@ -58,7 +58,9 @@ class TrainingObject extends DataObject {
 	protected function fillDefaultObject() {
 		$this->set('time', isset($_GET['date']) ? strtotime($_GET['date']) : mktime(0,0,0));
 		$this->set('is_public', Configuration::Privacy()->publishActivity() ? '1' : '0');
+		$this->set('sportid', Configuration::General()->mainSport());
 		$this->forceToSet('s_sum_with_distance', 0);
+		$this->forceToSet('importer-equipment', []);
 	}
 
 	/**
@@ -83,6 +85,11 @@ class TrainingObject extends DataObject {
 
 		$this->set('weatherid', $Weather->condition()->id());
 		$this->set('temperature', $Weather->temperature()->value());
+		$this->set('wind_speed', $Weather->windSpeed()->value());
+		$this->set('wind_deg', $Weather->windDegree()->value());
+		$this->set('humidity', $Weather->humidity()->value());
+		$this->set('pressure', $Weather->pressure()->value());
+		$this->set('weather_source', $Weather->source());
 	}
 
 	/**
@@ -158,8 +165,14 @@ class TrainingObject extends DataObject {
 		$InserterActivity->setRoute($Route);
 		$InserterActivity->setTrackdata($Trackdata);
 		$InserterActivity->setSwimdata($Swimdata);
-		$InserterActivity->setEquipmentIDs(TrainingFormular::readEquipmentFromPost($Activity->sportid()));
-		$InserterActivity->setTagIDs(TrainingFormular::readTagFromPost($Activity->sportid()));
+
+		if ($this->get('importer-equipment') != []) {
+			$InserterActivity->setEquipmentIDs($this->get('importer-equipment'));
+		} else {
+			$InserterActivity->setEquipmentIDs(TrainingFormular::readEquipmentFromPost($Activity->sportid()));
+		}
+
+		$InserterActivity->setTagIDs(TrainingFormular::readTagFromPost());
 		$InserterActivity->insert();
 
 		$this->id = $InserterActivity->insertedID();
@@ -372,11 +385,21 @@ class TrainingObject extends DataObject {
 		if (is_null($this->Weather)) {
 			$id   = ($this->hasProperty('weatherid')) ? $this->get('weatherid') : \Runalyze\Data\Weather\Condition::UNKNOWN;
 			$temp = ($this->hasProperty('temperature')) ? $this->get('temperature') : null;
+			$windSpeed = ($this->hasProperty('wind_speed')) ? $this->get('wind_speed') : null;
+			$windDegree = ($this->hasProperty('wind_deg')) ? $this->get('wind_deg') : null;
+			$humidity = ($this->hasProperty('humidity')) ? $this->get('humidity') : null;
+			$pressure = ($this->hasProperty('pressure')) ? $this->get('pressure') : null;
+			$sourceId = ($this->hasProperty('weather_source')) ? $this->get('weather_source') : null;
 
 			$this->Weather = new \Runalyze\Data\Weather(
 				new \Runalyze\Data\Weather\Temperature($temp),
-				new \Runalyze\Data\Weather\Condition($id)
+				new \Runalyze\Data\Weather\Condition($id),
+				new \Runalyze\Data\Weather\WindSpeed($windSpeed),
+				new \Runalyze\Data\Weather\WindDegree($windDegree),
+				new \Runalyze\Data\Weather\Humidity($humidity),
+				new \Runalyze\Data\Weather\Pressure($pressure)
 			);
+			$this->Weather->setSource($sourceId);
 		}
 
 		return $this->Weather;
@@ -454,7 +477,7 @@ class TrainingObject extends DataObject {
 	 * Set shoeid
 	 * @param int $id shoeid
 	 */
-	public function setShoeid($id) { $this->set('shoeid', $id); }
+	public function setShoeid($id) { $this->set('importer-equipment', [$id]); }
 
 
 	/**
@@ -713,7 +736,7 @@ class TrainingObject extends DataObject {
 	 * Set cadence
 	 * @param int $cadence cadence in rpm
 	 */
-	public function setCadence($cadence) { return $this->set('cadence', $cadence); }
+	public function setCadence($cadence) { $this->set('cadence', $cadence); }
 	/**
 	 * Get cadence
 	 * @return int cadence in rpm
@@ -725,7 +748,7 @@ class TrainingObject extends DataObject {
 	 * Set power
 	 * @param int $power power
 	 */
-	public function setPower($power) { return $this->set('power', $power); }
+	public function setPower($power) { $this->set('power', $power); }
 	/**
 	 * Get power
 	 * @return int power value
@@ -737,7 +760,7 @@ class TrainingObject extends DataObject {
 	 * Set ground contact time
 	 * @param int $time ground contact time [ms]
 	 */
-	public function setGroundContactTime($time) { return $this->set('groundcontact', $time); }
+	public function setGroundContactTime($time) { $this->set('groundcontact', $time); }
 	/**
 	 * Get ground contact time
 	 * @return int ground contact time value [ms]
@@ -749,7 +772,7 @@ class TrainingObject extends DataObject {
 	 * Set vertical oscillation
 	 * @param int $oscillation vertical oscillation [cm]
 	 */
-	public function setVerticalOscillation($oscillation) { return $this->set('vertical_oscillation', $oscillation); }
+	public function setVerticalOscillation($oscillation) { $this->set('vertical_oscillation', $oscillation); }
 	/**
 	 * Get vertical oscillation
 	 * @return int vertical oscillation [cm]
@@ -761,7 +784,7 @@ class TrainingObject extends DataObject {
 	 * Set vertical ratio
 	 * @param int $verticalRatio vertical ratio [%]
 	 */
-	public function setVerticalRatio($verticalRatio) { return $this->set('vertical_ratio', $verticalRatio); }
+	public function setVerticalRatio($verticalRatio) { $this->set('vertical_ratio', $verticalRatio); }
 	/**
 	 * Get vertical ratio
 	 * @return int vertical ratio [%]
@@ -772,7 +795,7 @@ class TrainingObject extends DataObject {
 	 * Set ground contact time balance
 	 * @param int $groundContactBalance ground contact time balance [%]
 	 */
-	public function setGroundContactBalance($groundContactBalance) { return $this->set('groundcontact_balance', $groundContactBalance); }
+	public function setGroundContactBalance($groundContactBalance) { $this->set('groundcontact_balance', $groundContactBalance); }
 	/**
 	 * Get ground contact time balance
 	 * @return int ground contact time balance [%]
@@ -1284,6 +1307,11 @@ class TrainingObject extends DataObject {
 	 * @return string activity id from garmin device
 	 */
 	public function getActivityId() { return $this->get('activity_id'); }
+	/**
+	 * Has activity id?
+	 * @return bool True if training has a (positive) distance.
+	 */
+	public function hasActivityId() { return $this->getActivityId() !== NULL; }
 
 
 	/**

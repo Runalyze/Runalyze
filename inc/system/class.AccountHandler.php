@@ -355,7 +355,7 @@ class AccountHandler {
 	 */
 	public static function tryToSetNewPassword() {
 		if (!isset($_POST['chpw_hash']) || !isset($_POST['new_pw']) || !isset($_POST['new_pw_again']) || !isset($_POST['chpw_username']))
-			return;
+			return [];
 
 		if ($_POST['chpw_username'] == self::getUsernameForChangePasswordHash()) {
 			if ($_POST['new_pw'] != $_POST['new_pw_again'])
@@ -452,7 +452,7 @@ class AccountHandler {
 		$subject  = __('Activate your RUNALYZE Account');
 		$message  = __('Thanks for your registration').', '.$account['name']."!<br><br>\r\n\r\n";
 		$message .= sprintf( __('You can activate your account (username = %s) with the following link'), $account['username']).":<br>\r\n";
-		$message .= $activationLink;
+		$message .= '<a href='.$activationLink.'>'.$activationLink.'</a>';
 
 		if (!System::sendMail($account['mail'], $subject, $message)) {
 			$errors[] = __('Sending the link did not work. Please contact the administrator.');
@@ -477,12 +477,12 @@ class AccountHandler {
 		$deletionHash = self::getRandomHash();
 		$deletionLink = self::getDeletionLink($deletionHash);
 
-		DB::getInstance()->update('account', SessionAccountHandler::getId(), 'deletion_hash', $deletionHash, false);
+		DB::getInstance()->update('account', SessionAccountHandler::getId(), 'deletion_hash', $deletionHash);
 
 		$subject  = __('Deletion request of your RUNALYZE account');
 		$message  = __('Do you really want to delete your account').' '.$account['username'].", ".$account['name']."?<br><br>\r\n\r\n";
 		$message .= __('Complete the process by accessing the following link: ')."<br>\r\n";
-		$message .= $deletionLink;
+		$message .= '<a href='.$deletionLink.'>'.$deletionLink.'</a>';
 
 		if (!System::sendMail($account['mail'], $subject, $message)) {
 			$errors[] = __('Sending the link did not work. Please contact the administrator.');
@@ -517,6 +517,9 @@ class AccountHandler {
 		//Connect equipment type and sport
 		$DB->insert('equipment_sport', array('sportid', 'equipment_typeid'), array(self::$SPECIAL_KEYS['RUNNING_SPORT_ID'], self::$SPECIAL_KEYS['EQUIPMENT_SHOES_ID']));
 		$DB->insert('equipment_sport', array('sportid', 'equipment_typeid'), array(self::$SPECIAL_KEYS['RUNNING_SPORT_ID'], self::$SPECIAL_KEYS['EQUIPMENT_CLOTHES_ID']));
+
+		// Use shoes as main equipment for running
+		$DB->exec('UPDATE `'.PREFIX.'sport` SET `main_equipmenttypeid`="'.self::$SPECIAL_KEYS['EQUIPMENT_SHOES_ID'].'" WHERE `id`="'.self::$SPECIAL_KEYS['RUNNING_SPORT_ID'].'"');
 
 		// Add standard clothes equipment
 		$eqColumns = array('name', 'notes', 'typeid', 'accountid');

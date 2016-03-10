@@ -63,6 +63,8 @@ class ImporterFiletypePWXTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals('06:15', date('H:i', $this->object->object()->getTimestamp()) );
 		$this->assertEquals('Stuart', $this->object->object()->getComment());
 		$this->assertEquals("Apple, iPhone (SERIAL_NUMBER)", $this->object->object()->getCreatorDetails());
+
+		$this->assertTrue($this->object->object()->Splits()->areEmpty());
 	}
 
 	/**
@@ -82,6 +84,8 @@ class ImporterFiletypePWXTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals('11:40', date('H:i', $this->object->object()->getTimestamp()) );
 		$this->assertEquals('Blue Sky trail with Dan and Ian', $this->object->object()->getComment());
 		$this->assertEquals("Garmin, Edge 205/305 (EDGE305 Software Version 3.20)", $this->object->object()->getCreatorDetails());
+
+		$this->assertEquals(4, count($this->object->object()->Splits()->asArray()));
 	}
 
 	/**
@@ -98,6 +102,8 @@ class ImporterFiletypePWXTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( 89.535, $this->object->object()->getDistance(), '', 0.1);
 		$this->assertEquals( 146, $this->object->object()->getPulseAvg(), '', 2);
 		$this->assertEquals( 174, $this->object->object()->getPulseMax(), '', 2);
+
+		$this->assertEquals(1, count($this->object->object()->Splits()->asArray()));
 	}
 
 	/**
@@ -112,6 +118,25 @@ class ImporterFiletypePWXTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertTrue( $this->object->object()->hasArrayPower() );
 		$this->assertTrue( $this->object->object()->getPower() > 0 );
+
+		$this->assertEquals(18, count($this->object->object()->Splits()->asArray()));
+	}
+
+	/**
+	 * Test: with intervals
+	 * Filename: "intervals.pwx"
+	 */
+	public function testIntervals() {
+		$this->object->parseFile('../tests/testfiles/pwx/intervals.pwx');
+
+		$this->assertFalse($this->object->hasMultipleTrainings());
+		$this->assertFalse($this->object->failed());
+
+		$this->assertEquals(4813, $this->object->object()->getTimeInSeconds(), '', 30);
+		$this->assertEquals(15.00, $this->object->object()->getDistance(), '', 0.1);
+		$this->assertEquals('05.08.2015', date('d.m.Y', $this->object->object()->getTimestamp()));
+
+		$this->assertEquals(9, count($this->object->object()->Splits()->asArray()));
 	}
 
 }

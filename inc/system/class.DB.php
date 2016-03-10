@@ -31,12 +31,13 @@ class DB {
 	/**
 	 * Create connection
 	 * @param $host string
+	 * @param $port string
 	 * @param $user string
 	 * @param $password string
 	 * @param $database string
 	 */
-	public static function connect($host, $user, $password, $database) {
-		self::$PDO = new PDOforRunalyze('mysql:dbname='.$database.';host='.$host.';charset=utf8', $user, $password);
+	public static function connect($host, $port, $user, $password, $database) {
+		self::$PDO = new PDOforRunalyze('mysql:dbname='.$database.';host='.$host.';port='.$port.';charset=utf8', $user, $password);
 		self::$PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		self::$PDO->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 

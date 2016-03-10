@@ -125,7 +125,7 @@ class PersonalBest {
 		}
 
 		return 'SELECT `distance`, MIN(`s`) as `pb` FROM `'.PREFIX.'training` '.
-				'WHERE `typeid`="'.Configuration::General()->competitionType().'" '.
+				'WHERE `accountid`='.\SessionAccountHandler::getId().' AND `typeid`="'.Configuration::General()->competitionType().'" '.
 				'AND `distance` IN('.implode(',', $distances).') GROUP BY `distance`';
 	}
 
@@ -164,7 +164,7 @@ class PersonalBest {
 		} else {
 			$this->Time = $this->PDO->query(
 				'SELECT MIN(`s`) FROM `'.PREFIX.'training` '.
-				'WHERE `typeid`="'.Configuration::General()->competitionType().'" '.
+				'WHERE `accountid`='.\SessionAccountHandler::getId().' AND `typeid`="'.Configuration::General()->competitionType().'" '.
 				'AND `distance`="'.$this->Distance.'"'
 			)->fetchColumn();
 
@@ -187,7 +187,7 @@ class PersonalBest {
 		} else {
 			$Data = $this->PDO->query(
 				'SELECT `id`, `s`, `time` FROM `'.PREFIX.'training` '.
-				'WHERE `typeid`="'.Configuration::General()->competitionType().'" '.
+				'WHERE `accountid`='.\SessionAccountHandler::getId().' AND `typeid`="'.Configuration::General()->competitionType().'" '.
 				'AND `distance`="'.$this->Distance.'" '.
 				'ORDER BY `s` ASC LIMIT 1'
 			)->fetch();

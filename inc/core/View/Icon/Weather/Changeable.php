@@ -19,4 +19,11 @@ class Changeable extends \Runalyze\View\Icon\WeatherIcon {
 		$this->setBaseClass('weather-basecloud');
 		$this->setLayerClass('weather-drizzle weather-sunny');
 	}
+
+	/**
+	 * Set weather icon as night
+	 */
+	public function setAsNight() {
+		$this->Layer = str_replace('weather-sunny', 'weather-night', $this->Layer);
+	}
 }

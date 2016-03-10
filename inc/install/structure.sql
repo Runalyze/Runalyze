@@ -314,7 +314,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_training` (
   `vdot_by_time` decimal(5,2) NOT NULL DEFAULT '0.00',
   `vdot_with_elevation` decimal(5,2) NOT NULL DEFAULT '0.00',
   `use_vdot` tinyint(1) NOT NULL DEFAULT '1',
-  `fit_vdot_estimate` tinyint(2) unsigned NOT NULL DEFAULT '0',
+  `fit_vdot_estimate` decimal(4,2) unsigned NOT NULL DEFAULT '0.0',
   `fit_recovery_time` smallint(5) unsigned NOT NULL DEFAULT '0',
   `fit_hrv_analysis` smallint(5) unsigned NOT NULL DEFAULT '0',
   `jd_intensity` smallint(4) NOT NULL DEFAULT '0',
@@ -329,7 +329,13 @@ CREATE TABLE IF NOT EXISTS `runalyze_training` (
   `vertical_oscillation` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `vertical_ratio` SMALLINT UNSIGNED NOT NULL DEFAULT  '0',
   `temperature` tinyint(4) DEFAULT NULL,
+  `wind_speed` tinyint(3) unsigned DEFAULT NULL,
+  `wind_deg` smallint(3) unsigned DEFAULT NULL,
+  `humidity` tinyint(3) unsigned DEFAULT NULL,
+  `pressure` smallint(4) unsigned DEFAULT NULL,
+  `is_night` tinyint(1) unsigned DEFAULT NULL,
   `weatherid` smallint(6) NOT NULL DEFAULT '1',
+  `weather_source` tinyint(2) unsigned DEFAULT NULL,
   `route` text,
   `routeid` int(10) unsigned NOT NULL DEFAULT '0',
   `splits` mediumtext,
@@ -339,7 +345,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_training` (
   `accountid` int(11) NOT NULL,
   `creator` varchar(100) NOT NULL DEFAULT '',
   `creator_details` tinytext,
-  `activity_id` varchar(50) NOT NULL DEFAULT ''
+  `activity_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 PACK_KEYS=0;
 
 -- --------------------------------------------------------

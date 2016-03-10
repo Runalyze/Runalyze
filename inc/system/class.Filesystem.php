@@ -8,8 +8,6 @@
  * @author Hannes Christiansen
  * @package Runalyze\System
  */
-
-use Runalyze\Error;
 class Filesystem {
 	/**
 	 * Get extension of filename
@@ -121,7 +119,7 @@ class Filesystem {
 		if (empty($XML) || defined('RUNALYZE_TEST'))
 			return;
 
-		$FileName = 'log/corrupt.xml.'.time().'.xml';
+		$FileName = 'data/log/corrupt.xml.'.time().'.xml';
 		self::writeFile('../'.$FileName, $XML);
 
 		\Runalyze\Error::getInstance()->addError('Die XML-Datei scheint fehlerhaft zu sein und konnte nicht erfolgreich geladen werden.

@@ -112,8 +112,8 @@ class ElevationAlgorithms extends ActivityPlot {
 
 	/**
 	 * Construct plot data
-	 * @param enum $algorithm
-	 * @param int $treshold
+	 * @param mixed $algorithm
+	 * @param int|bool $treshold
 	 * @return array
 	 */
 	protected function constructPlotDataFor($algorithm, $treshold = false) {

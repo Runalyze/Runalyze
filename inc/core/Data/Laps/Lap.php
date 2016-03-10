@@ -20,12 +20,12 @@ use Runalyze\Context;
  */
 class Lap {
 	/**
-	 * @var enum
+	 * @var int enum
 	 */
 	const MODE_ACTIVE = 0;
 
 	/**
-	 * @var enum
+	 * @var int enum
 	 */
 	const MODE_RESTING = 1;
 
@@ -45,7 +45,7 @@ class Lap {
 	protected $LapPace = null;
 
 	/**
-	 * @var enum
+	 * @var int enum
 	 */
 	protected $Mode;
 
@@ -92,9 +92,9 @@ class Lap {
 	/**
 	 * @param int $duration [optional]
 	 * @param float $distance [optional]
-	 * @param enum $mode [optional]
+	 * @param int $mode [optional]
 	 */
-	public function __construct($duration = 0, $distance = 0, $mode = self::MODE_ACTIVE) {
+	public function __construct($duration = 0, $distance = 0.0, $mode = self::MODE_ACTIVE) {
 		$this->setDuration($duration);
 		$this->setDistance($distance);
 		$this->setMode($mode);
@@ -117,7 +117,7 @@ class Lap {
 	}
 
 	/**
-	 * @param enum $mode
+	 * @param int $mode
 	 */
 	public function setMode($mode) {
 		$this->Mode = $mode;

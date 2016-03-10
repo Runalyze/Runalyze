@@ -7,7 +7,6 @@
 namespace Runalyze\Dataset\Keys;
 
 use Runalyze\Dataset\Context;
-use Runalyze\Dataset\SummaryMode;
 
 /**
  * Dataset key: FitRecoveryTime
@@ -67,7 +66,7 @@ class FitRecoveryTime extends AbstractKey
 
 	/**
 	 * Get string to display this dataset value
-	 * @param Runalyze\Dataset\Context $context
+	 * @param \Runalyze\Dataset\Context $context
 	 * @return string
 	 */
 	public function stringFor(Context $context)

@@ -6,16 +6,20 @@
 
 namespace Runalyze\View\Activity;
 
+use Runalyze\Activity\Temperature;
 use Runalyze\Configuration;
 use Runalyze\Data\Cadence;
+use Runalyze\Data\Weather\WindChillFactor;
 use Runalyze\Model\Activity;
 use Runalyze\Model\Factory;
 use Runalyze\Activity\Distance;
 use Runalyze\Activity\Duration;
 use Runalyze\Activity\Elevation;
+use Runalyze\Activity\GroundcontactBalance;
 use Runalyze\Activity\HeartRate;
 use Runalyze\Activity\Pace;
 use Runalyze\Activity\StrideLength;
+use Runalyze\Activity\VerticalRatio;
 use Runalyze\Calculation\JD\VDOT;
 use Runalyze\Calculation\JD\VDOTCorrector;
 use Runalyze\View\Icon\VdotIcon;
@@ -26,7 +30,6 @@ use Runalyze\View\Stresscolor;
 use SessionAccountHandler;
 use SportFactory;
 use SearchLink;
-use Icon;
 use Ajax;
 use HTML;
 use Helper;
@@ -92,6 +95,9 @@ class Dataview {
 	 */
 	protected $Elevation = null;
 
+	/** @var \Runalyze\Data\Weather\WindChillFactor */
+	protected $WindChillFactor = null;
+
 	/**
 	 * Construct data view
 	 * @param \Runalyze\Model\Activity\Entity $activity
@@ -155,7 +161,6 @@ class Dataview {
 
 	/**
 	 * Daytime
-	 * @param string $format
 	 * @return string
 	 */
 	public function daytime() {
@@ -318,12 +323,12 @@ class Dataview {
 	}
  
  	/**
-	 * Get string for VDOT estimate
+	 * Get string for VO2max estimate
 	 * @return string
 	 */
-	public function fitVdotEstimate() {
-		if ($this->Activity->fitVdotEstimate() > 0) {
-			return round($this->Activity->fitVdotEstimate());
+	public function fitVO2maxEstimate() {
+		if ($this->Activity->fitVO2maxEstimate() > 0) {
+			return number_format($this->Activity->fitVO2maxEstimate(), 2);
 		}
 
 		return '';
@@ -368,7 +373,7 @@ class Dataview {
 	 */
 	public function power() {
 		if ($this->Activity->power() > 0)
-			return $this->Activity->power().'&nbsp;W';
+			return round($this->Activity->power()).'&nbsp;W';
 
 		return '';
 	}
@@ -390,7 +395,7 @@ class Dataview {
 	 */
 	public function groundcontactBalance() {
 		if ($this->Activity->groundContactBalance() > 0) {
-			return \Runalyze\Activity\GroundcontactBalance::format($this->Activity->groundContactBalance());
+			return GroundcontactBalance::format($this->Activity->groundContactBalance());
 		}
 
 		return '';
@@ -409,11 +414,11 @@ class Dataview {
 	
 	/**
 	 * Get vertical ratio
-	 * @return $int
+	 * @return string
 	 */
 	public function verticalRatio() {
 		if ($this->Activity->verticalRatio() > 0) {
-			return \Runalyze\Activity\VerticalRatio::format($this->Activity->verticalRatio());
+			return VerticalRatio::format($this->Activity->verticalRatio());
 		}
 
 		return '';
@@ -465,6 +470,20 @@ class Dataview {
 			return '-';
 
 		return round($this->Activity->elevation() / $this->Activity->distance()/10, 2).'&nbsp;&#37;';
+	}
+
+	/**
+	 * Get wind chill factor
+	 * @return WindChillFactor
+	 */
+	public function windChillFactor() {
+		return $this->object($this->WindChillFactor, function(Activity\Entity $Activity){
+			return new WindChillFactor(
+				$Activity->weather()->windSpeed(),
+				new Temperature($Activity->weather()->temperature()->value()),
+				new Pace($Activity->duration(), $Activity->distance())
+			);
+		});
 	}
 
 	/**

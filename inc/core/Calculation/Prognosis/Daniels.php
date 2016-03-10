@@ -93,12 +93,12 @@ class Daniels extends AbstractStrategy {
 	/**
 	 * Calculate prognosis for given VDOT
 	 * @see \Runalyze\Calculation\JD\VDOT::formula
-	 * @param $VDOTtoReach  VDOT
-	 * @param $km           Distance [km]
+	 * @param float $VDOTtoReach  VDOT
+	 * @param float $km           Distance [km]
 	 * @return int          Time [s]
 	 */
-	public static function prognosisFor($VDOTtoReach, $km = 5) {
-		if ($VDOTtoReach == 0)
+	public static function prognosisFor($VDOTtoReach, $km = 5.0) {
+		if ($VDOTtoReach == 0.0)
 			return 0;
 
 		$Bisection = new Bisection(

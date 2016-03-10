@@ -191,22 +191,24 @@ class Query
 	 */
 	public function fetchSummaryForTimerange($sportid, $timerange = 604800, $timeStart = 0, $timeEnd = false)
 	{
-		return $this->PDO->query(
-			'SELECT
-				`sportid`,
+		$Query = '
+		        SELECT
+				'.(((int)$sportid > 0)?'`sportid`':'0').',
 				SUM(IF(`distance`>0,`s`,0)) as `'.Keys\Pace::DURATION_SUM_WITH_DISTANCE_KEY.'`,
 				SUM(1) as `num`,
 				'.$this->queryToSummarizeActiveKeys().',
 				'.$this->queryToSelectTimerange($timerange, $timeEnd, 'timerange').'
 			FROM `'.PREFIX.'training` AS `t`
 			WHERE
-				`sportid` = '.(int)$sportid.' AND
+				'.(((int)$sportid > 0)?'`sportid` = '.(int)$sportid.' AND':''). '
 				`accountid` = '.(int)$this->AccountID.' AND
 				'.$this->whereTimeIsBetween($timeStart, $timeEnd).' AND
 				'.$this->wherePrivacyIsOkay().'
-			GROUP BY `timerange`, `sportid`
-			ORDER BY `timerange` ASC'
-		)->fetchAll();
+				GROUP BY `timerange`
+				'.(((int)$sportid > 0)?', `sportid`':'').'
+				ORDER BY `timerange` ASC';
+
+		return $this->PDO->query($Query)->fetchAll();
 	}
 
 	/**
@@ -278,11 +280,17 @@ class Query
 				if ($KeyObject->requiresJoin()) {
 					$joinDefinition = $KeyObject->joinDefinition();
 
-					if (!key_exists($joinDefinition['column'], $this->JoinTables)) {
+					if (!array_key_exists($joinDefinition['column'], $this->JoinTables)) {
 						$this->JoinTables[$joinDefinition['column']] = $joinDefinition;
 					}
 				} else {
-					$columns[] = $KeyObject->column();
+					$appendix = $KeyObject->column();
+
+					if (is_array($appendix)) {
+						$columns = array_merge($columns, $appendix);
+					} else {
+						$columns[] = $appendix;
+					}
 				}
 			}
 		}

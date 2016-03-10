@@ -8,7 +8,7 @@ use Runalyze\Configuration;
 use Runalyze\Model\Factory;
 use Runalyze\Model\Trackdata\Entity as Trackdata;
 use Runalyze\Model\Route\Entity as Route;
-
+use Runalyze\Activity\DuplicateFinder;
 /**
  * Formular for trainings
  * 
@@ -74,7 +74,7 @@ class TrainingFormular extends StandardFormular {
 	protected function prepareForDisplayInSublcass() {
 		parent::prepareForDisplayInSublcass();
 
-                $this->initTagFieldset();
+        $this->initTagFieldset();
 		$this->addAdditionalHiddenFields();
 		$this->initEquipmentFieldset();
 
@@ -88,6 +88,10 @@ class TrainingFormular extends StandardFormular {
 				$this->addHiddenValue('mode', 'multi');
 				$this->submitButtons['submit'] = __('Save and continue');
 			}
+		} else if (is_numeric($this->dataObject->get('activity_id'))) {
+			$isDuplicate = (new DuplicateFinder(DB::getInstance(), SessionAccountHandler::getId()))->checkForDuplicate($this->dataObject->get('activity_id'));
+			if($isDuplicate)
+				echo HTML::warning(__('It seems that you already have imported this activity'));
 		}
 
 		$this->appendJavaScript();
@@ -275,6 +279,7 @@ class TrainingFormular extends StandardFormular {
 		foreach ($Factory->allEquipmentTypes() as $EquipmentType) {
 			$options = array();
 			$values = array();
+			$attributes = array();
 
 			foreach ($AllEquipment as $Equipment) {
 				if (
@@ -282,6 +287,10 @@ class TrainingFormular extends StandardFormular {
 					(!$isCreateForm || $Equipment->isInUse())
 				) {
 					$options[$Equipment->id()] = $Equipment->name();
+					$attributes[$Equipment->id()] = array(
+						'data-start' => $Equipment->startDate(),
+						'data-end' => $Equipment->endDate()
+					);
 
 					if (in_array($Equipment->id(), $RelatedEquipment)) {
 						$values[$Equipment->id()] = 'on';
@@ -297,7 +306,7 @@ class TrainingFormular extends StandardFormular {
 				$Field = new FormularCheckboxes('equipment['.$EquipmentType->id().']', $EquipmentType->name(), $values);
 
 				foreach ($options as $key => $label) {
-					$Field->addCheckbox($key, $label);
+					$Field->addCheckbox($key, $label, $attributes[$key]);
 				}
 			} else {
 				$selected = !empty($values) ? array_keys($values) : array(0);
@@ -305,7 +314,7 @@ class TrainingFormular extends StandardFormular {
 				$Field->addOption(0, '');
 
 				foreach ($options as $key => $label) {
-					$Field->addOption($key, $label);
+					$Field->addOption($key, $label, $attributes[$key]);
 				}
 			}
 
@@ -315,7 +324,7 @@ class TrainingFormular extends StandardFormular {
 			}
 
 			$Field->setLayout( FormularFieldset::$LAYOUT_FIELD_W100_IN_W50 );
-			$Field->addLayoutClass($SportClasses);
+			$Field->addLayoutClass($SportClasses.' depends-on-date');
 			$Field->addAttribute( 'class', FormularInput::$SIZE_FULL_INLINE );
 			$Fieldset->addField($Field);
 		}

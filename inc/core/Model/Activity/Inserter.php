@@ -6,11 +6,10 @@
 
 namespace Runalyze\Model\Activity;
 
+use Runalyze\Calculation\NightDetector;
 use Runalyze\Model;
 use Runalyze\Calculation\BasicEndurance;
 use Runalyze\Configuration;
-use League\Geotools\Geotools;
-use \League\Geotools\Coordinate\Coordinate;
 
 /**
  * Insert activity to database
@@ -117,6 +116,8 @@ class Inserter extends Model\InserterWithAccountID {
 	 * Tasks before insertion
 	 */
 	protected function before() {
+		$this->calculateIfActivityWasAtNight();
+
 		parent::before();
 
 		$this->Object->set(Entity::TIMESTAMP_CREATED, time());
@@ -139,9 +140,7 @@ class Inserter extends Model\InserterWithAccountID {
 			$Factory = \Runalyze\Context::Factory();
 
 			if (!$Factory->sport($this->Object->sportid())->isOutside()) {
-				$this->Object->weather()->condition()->set( \Runalyze\Data\Weather\Condition::UNKNOWN );
-				$this->Object->weather()->temperature()->setTemperature(null);
-
+				$this->Object->weather()->clear();
 				$this->Object->synchronize();
 			}
 		}
@@ -250,6 +249,15 @@ class Inserter extends Model\InserterWithAccountID {
 					$this->Object->set(Entity::SWOLF, round(($totalstrokes + $totaltime) / $num));
 				}
 			}
+		}
+	}
+
+	/**
+	 * Calculate if activity was at night
+	 */
+	protected function calculateIfActivityWasAtNight() {
+		if (null !== $this->Route && $this->Route->hasGeohashes()) {
+			$this->Object->set(Entity::IS_NIGHT, (new NightDetector())->setFromEntities($this->Object, $this->Route)->value());
 		}
 	}
         

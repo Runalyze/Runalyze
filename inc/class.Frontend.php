@@ -6,6 +6,7 @@
 
 use Runalyze\Configuration;
 use Runalyze\Error;
+
 /**
  * Frontend class for setting up everything
  * 
@@ -77,8 +78,8 @@ class Frontend {
 		date_default_timezone_set('Europe/Berlin');
 
 		$this->initLanguage();
-		$this->initCache();
 		$this->setAutoloader();
+		$this->initCache();
 		$this->initErrorHandling();
 		$this->initDatabase();
 		$this->initDebugMode();
@@ -106,9 +107,13 @@ class Frontend {
 	 * Setup Language
 	 */
 	private function initCache() {
-		require_once FRONTEND_PATH.'../lib/phpfastcache/phpfastcache.php';
 		require_once FRONTEND_PATH.'/system/class.Cache.php';
-		new Cache();
+
+		try {
+			new Cache();
+		} catch (Exception $E) {
+			die('Cache directory "./'.Cache::PATH.'/cache/" must be writable.');
+		}
 	}
 
 	/**
@@ -149,12 +154,12 @@ class Frontend {
 	 * Connect to database
 	 */
 	private function initDatabase() {
-		require_once FRONTEND_PATH.'../config.php';
+		require_once FRONTEND_PATH.'../data/config.php';
 
 		$this->adminPassAsMD5 = md5($password);
 
-		DB::connect($host, $username, $password, $database);
-		unset($host, $username, $password, $database);
+		DB::connect($host, $port, $username, $password, $database);
+		unset($host, $port, $username, $password, $database);
 	}
 
 	/**
