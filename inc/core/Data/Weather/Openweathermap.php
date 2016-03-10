@@ -160,7 +160,7 @@ class Openweathermap implements ForecastStrategyInterface {
 		$WindSpeed = new WindSpeed();
 
 		if (isset($this->Result['wind']) && isset($this->Result['wind']['speed'])) {
-			$WindSpeed->setMilesPerHour($this->Result['wind']['speed']);
+			$WindSpeed->setMeterPerSecond($this->Result['wind']['speed']);
 		}
 		
 		return $WindSpeed;

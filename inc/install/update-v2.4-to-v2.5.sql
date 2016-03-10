@@ -8,3 +8,6 @@ ALTER TABLE `runalyze_training` ADD `weather_source` TINYINT(2) UNSIGNED NULL DE
 INSERT INTO `runalyze_dataset` (`keyid`, `active`, `position`, `accountid`) SELECT 42, IF(`value` = 'true',1,0), 0, `accountid` FROM `runalyze_conf` WHERE `key` = 'DB_SHOW_DIRECT_EDIT_LINK';
 INSERT INTO `runalyze_dataset` (`keyid`, `active`, `position`, `accountid`) SELECT 42, 1, 0, `a`.`id` FROM `runalyze_account` `a` LEFT JOIN `runalyze_dataset` `d` ON `a`.`id` = `d`.`accountid` AND `d`.`keyid` != 42 GROUP BY `d`.`accountid`;
 DELETE FROM `runalyze_conf` WHERE `key` = 'DB_SHOW_DIRECT_EDIT_LINK';
+
+/* 10.03.2016 - fix conversion of wind speed */
+UPDATE `runalyze_training` SET wind_speed=2.25*wind_speed WHERE wind_speed IS NOT NULL AND wind_deg IS NOT NULL AND humidity IS NOT NULL AND pressure IS NOT NULL AND weatherid IS NOT NULL AND temperature IS NOT NULL;
