@@ -16,7 +16,7 @@ class AppKernel extends \Symfony\Component\HttpKernel\Kernel
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Symfony\Bundle\TwigBundle\TwigBundle(),
-            new Runalyze\Core\RunalyzeBundle()
+            new Runalyze\Bundle\CoreBundle\CoreBundle()
         ];
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {
@@ -39,13 +39,7 @@ class AppKernel extends \Symfony\Component\HttpKernel\Kernel
             $routes->mount('/_profiler', $routes->import('@WebProfilerBundle/Resources/config/routing/profiler.xml'));
         }
 
-        $routes->add('/', 'kernel:randomAction');
-    }
-
-    public function randomAction()
-    {
-        return new JsonResponse([
-            'pi' => 3.14159265358979323846264338327950288419716939937510582097494459230781640628998
-        ]);
+        $routes->mount('/', $routes->import('@CoreBundle/Controller', 'annotation'));
+        //$routes->add('/', 'kernel:randomAction');
     }
 }
