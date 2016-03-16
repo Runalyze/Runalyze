@@ -42,6 +42,7 @@ class TimezoneLookup
      * @param bool $silenceExceptions
      * @param string|bool $pathToDatabase absolute path to database, can be false to use default path
      * @param string $extensionName
+     * @throws \Runalyze\Util\TimezoneLookupException
      */
     public function __construct($silenceExceptions = true, $pathToDatabase = false, $extensionName = 'libspatialite.so.5') {
         try {

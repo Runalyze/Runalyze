@@ -6,10 +6,9 @@
 $PLUGINKEY = 'RunalyzePluginStat_Wetter';
 
 use Runalyze\Activity\Temperature;
-use Runalyze\Util\AccountTime;
+use Runalyze\Util\LocalTime;
 use Runalyze\Data\Weather\WindSpeed;
 use Runalyze\Data\Weather\Humidity;
-use Runalyze\Data\Weather\Pressure;
 
 /**
  * Class: RunalyzePluginStat_Wetter
@@ -143,23 +142,20 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 		$windiest = DB::getInstance()->query('SELECT `wind_speed`, `id`, `time` FROM `'.PREFIX.'training` WHERE `wind_speed` IS NOT NULL '.$this->getSportAndYearDependenceForQuery().' AND accountid = '.SessionAccountHandler::getId().' ORDER BY `wind_speed` DESC LIMIT 5')->fetchAll();
 		$maxhumidity = DB::getInstance()->query('SELECT `humidity`, `id`, `time` FROM `'.PREFIX.'training` WHERE `humidity` IS NOT NULL '.$this->getSportAndYearDependenceForQuery().' AND accountid = '.SessionAccountHandler::getId().' ORDER BY `humidity` DESC LIMIT 5')->fetchAll();
 
-		
-		                     //       $date = \Runalyze\Util\AccountTime::fromUTC($this->Activity->timestamp());
-			 //   $time = $date->format('H:i');
 		foreach ($hot as $i => $h) {
-			$hot[$i] = Temperature::format($h['temperature'], true).' ' .__('on').' '.Ajax::trainingLink($h['id'], (new AccountTime())->fromUTC($h['time'])->format('d.m.Y'));
+			$hot[$i] = Temperature::format($h['temperature'], true).' ' .__('on').' '.Ajax::trainingLink($h['id'], (new LocalTime($h['time']))->format('d.m.Y'));
 		}
 
 		foreach ($cold as $i => $c) {
-			$cold[$i] = Temperature::format($c['temperature'], true).' ' .__('on').' '.Ajax::trainingLink($c['id'], (new AccountTime())->fromUTC($c['time'])->format('d.m.Y'));
+			$cold[$i] = Temperature::format($c['temperature'], true).' ' .__('on').' '.Ajax::trainingLink($c['id'], (new LocalTime($c['time']))->format('d.m.Y'));
 		}
 		
 		foreach ($windiest as $i => $w) {
-			$windiest[$i] = (new WindSpeed($w['wind_speed']))->string().' '.__('on').' '.Ajax::trainingLink($w['id'], date('d.m.Y', $w['time']));
+			$windiest[$i] = (new WindSpeed($w['wind_speed']))->string().' '.__('on').' '.Ajax::trainingLink($w['id'], (new LocalTime($w['time']))->format('d.m.Y'));
 		}
 		
 		foreach ($maxhumidity as $i => $h) {
-			$maxhumidity[$i] = (new Humidity($h['humidity']))->string().' '.__('on').' '.Ajax::trainingLink($w['id'], date('d.m.Y', $h['time']));
+			$maxhumidity[$i] = (new Humidity($h['humidity']))->string().' '.__('on').' '.Ajax::trainingLink($w['id'], (new LocalTime($w['time']))->format('d.m.Y'));
 		}
 		
 		echo '<p>';

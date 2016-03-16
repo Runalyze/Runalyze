@@ -10,6 +10,8 @@ class EntityTest extends \PHPUnit_Framework_TestCase {
 	public function testEmptyObject() {
 		$A = new Entity();
 
+		$this->assertFalse($A->knowsTimezoneOffset());
+
 		$this->assertTrue($A->weather()->isEmpty());
 		$this->assertTrue($A->weather()->temperature()->isUnknown());
 		$this->assertTrue($A->weather()->condition()->isUnknown());

@@ -8,6 +8,7 @@
 use Runalyze\Configuration;
 use Runalyze\Calculation\JD;
 use Runalyze\Util\Time;
+use Runalyze\Util\LocalTime;
 
 $MaxATLPoints   = 750;
 $DataFailed     = false;
@@ -38,7 +39,7 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 	$StartTime    = !$All ? mktime(0,0,0,1,1,$StartYear) : strtotime("today 00:00", START_TIME);
 	$StartTime    = $lastHalf ? strtotime("today 00:00 -180days") : $StartTime;
 	$StartTime    = $lastYear ? strtotime("today 00:00 -1 year") : $StartTime;
-	$StartDay     = date('Y-m-d', $StartTime);
+	$StartDay     = LocalTime::fromServerTime($StartTime)->format('Y-m-d');
 	$EndTime      = !$All && $Year < date('Y') ? mktime(23,59,0,12,31,$Year) : strtotime("today 23:59");
 	$EndTime      = $lastHalf || $lastYear ? strtotime("today 23:59 +30days") : $EndTime;
 	$NumberOfDays = Time::diffInDays($StartTime, $EndTime);
@@ -84,7 +85,7 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 	}
 
 	$TodayIndex = Time::diffInDays($StartTime) + $AddDays;
-	$StartDayInYear = $All || $lastHalf || $lastYear ? Time::diffInDays($StartTime, mktime(0,0,0,1,1,$StartYear)) + 1 + 1*($StartYear < $Year) : 1;
+	$StartDayInYear = $All || $lastHalf || $lastYear ? Time::diffInDays($StartTime, mktime(0,0,0,1,1,$StartYear)) + 1*($StartYear < $Year) : 1;
 	$LowestIndex = $AddDays + 1;
 	$HighestIndex = $AddDays + 1 + $NumberOfDays;
 
@@ -124,7 +125,7 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 	}
 
 	for ($d = $LowestIndex; $d <= $HighestIndex; $d++) {
-		$index = Plot::dayOfYearToJStime($StartYear, $d - $AddDays + $StartDayInYear);
+		$index = Plot::dayOfYearToJStime($StartYear, $d - $AddDays + $StartDayInYear, 0);
 
 		$ATLs[$index] = 100 * $performanceModel->fatigueAt($d) / $maxATL;
 		$CTLs[$index] = 100 * $performanceModel->fitnessAt($d) / $maxCTL;

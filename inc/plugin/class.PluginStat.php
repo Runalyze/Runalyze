@@ -5,6 +5,7 @@
  */
 
 use Runalyze\Util\Time;
+use Runalyze\Util\LocalTime;
 
 /**
  * Abstract plugin class for statistics
@@ -161,11 +162,10 @@ abstract class PluginStat extends Plugin {
 		$time = $addTableName ? '`'.PREFIX.'training`.`time`' : '`time`';
                 
 		if ($this->showsLast6Months()) {
-			$Query .= ' AND '.$time.' > '.(new UTCTime('first-day of -5 months'))->getTimestamp();
+			$Query .= ' AND '.$time.' > '.LocalTime::fromString('first-day of -5 months 00:00')->getTimestamp();
 		} elseif ($this->showsLast12Months()) {
-			$Query .= ' AND '.$time.' > '.(new UTCTime('first-day of -11 months'))->getTimestamp();
+			$Query .= ' AND '.$time.' > '.LocalTime::fromString('first-day of -11 months 00:00')->getTimestamp();
 		} elseif (!$this->showsAllYears()) {
-                    //Todo Timezone
 			$Query .= ' AND '.$time.' BETWEEN UNIX_TIMESTAMP(\''.(int)$this->year.'-01-01\') AND UNIX_TIMESTAMP(\''.((int)$this->year+1).'-01-01\')-1 ';
 		}
 

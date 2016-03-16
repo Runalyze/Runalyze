@@ -6,14 +6,14 @@
  * Remember to delete your credentials afterwards to protect this script.
  */
 
-// This time we are automatically reading your config.php.
-// This will ensure that you moved your configuration to its new place
-// and this refactor script does not include any security issues.
-// Still, we encourage you to delete this file after refactoring your database.
+// This script must only be executed once with `$updateActivityTime = true;`,
+// otherwise it will change all your activity timestamps.
+// If you did not have a timezone database available and want to set timezone offset (only for visual effects) later on,
+// You can run the script again with `$updateActivityTime = false;`.
+$updateActivityTime = true;
 
 define('CLI', false); // Set to true if running from command line
 define('SET_GLOBAL_PROPERTIES', false); // Set to true to set max_allowed_packet and key_buffer_size for mysql
-
 
 // Uncomment these lines to unset time/memory limits
 #@ini_set('memory_limit', '-1');
@@ -28,22 +28,21 @@ define('FRONTEND_PATH', 'inc/');
 
 include_once 'data/config.php';
 require_once 'inc/core/Util/TimezoneLookup.php';
+require_once 'inc/core/Util/TimezoneLookupException.php';
+require_once 'inc/core/Util/LocalTime.php';
 require 'vendor/autoload.php';
+
 use League\Geotools\Geotools;
 
 $starttime = microtime(true);
-$maxtime = ini_get('max_execution_time');
-
-$TZL = new \Runalyze\Util\TimezoneLookup();
-
 
 /**
  * Protect script
  */
 define('NL', CLI ? PHP_EOL : '<br>'.PHP_EOL);
 
-if(file_exists('.refactortimezone')) {
-    echo 'This script has already been executed';
+if ($updateActivityTime && file_exists('.refactortimezone')) {
+    echo 'This script has already been executed.';
     exit;
 }
 
@@ -73,7 +72,7 @@ if (empty($database) && empty($host)) {
  */
 $columns = $PDO->query('SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = "'.$database.'" AND TABLE_NAME ="'.PREFIX.'training"')->fetchAll(PDO::FETCH_COLUMN, 0);
 
-if (!in_array('timezone', $columns)) {
+if (!in_array('timezone_offset', $columns)) {
 	echo 'Update your installation from v2.4 to v2.5 via update.php.'.NL;
 	exit;
 }
@@ -81,33 +80,49 @@ if (!in_array('timezone', $columns)) {
 /**
  * Overview for data
  */
-$Activities = $PDO->query('SELECT tr.id, tr.time, tr.routeid, r.startpoint FROM '.PREFIX.'training tr JOIN '.PREFIX.'route r ON (tr.routeid = r.id) GROUP BY tr.id');
-$geotools       = new Geotools();
+$Geotools = new Geotools();
+$TZLookup = new \Runalyze\Util\TimezoneLookup();
+$DateTime = new DateTime('', new DateTimeZone('Europe/Berlin'));
 
-while ($Activity = $Activities->fetch()) {
-	$Time = new DateTime('', new DateTimeZone('Europe/Berlin'));
-	$Time->setTimestamp($Activity['time']);
-	$Offset = $Time->getOffset() / 60;
-	//TODO SET new UTC Time in database
-	$UTCTime = $Activity['time'] - $Time->getOffset();
-	if(!is_null($Activity['startpoint'])) {
-	    $decoded = $geotools->geohash()->decode($Activity['startpoint'])->getCoordinate();
-	    $tzid = $TZL->getTimezoneForCoordinate($decoded->getLongitude(), $decoded->getLatitude());
-	    if($tzid) {
-		$timezone = new DateTime('', new DateTimeZone($tzid));
-		$timezone->setTimestamp($UTCTime);
-		//TODO Set offset in db
-		$tzoffset = $timezone->getOffset() / 60;
-	    }
+$activities = $PDO->query('SELECT tr.id, tr.time, tr.routeid, r.startpoint FROM '.PREFIX.'training tr LEFT JOIN '.PREFIX.'route r ON (tr.routeid = r.id) GROUP BY tr.id');
+$UpdateTime = $PDO->prepare('UPDATE '.PREFIX.'training SET `time` = :time, `timezone_offset` = :offset WHERE `id` = :id');
+$UpdateOnlyOffset = $PDO->prepare('UPDATE '.PREFIX.'training SET `timezone_offset` = :offset WHERE `id` = :id');
+
+while ($activity = $activities->fetch()) {
+	$offset = $DateTime->setTimestamp($activity['time'])->getOffset();
+	$localTime = $activity['time'] + $offset;
+
+	$timezoneOffset = $offset;
+
+	if ($TZLookup->isPossible() && !is_null($activity['startpoint'])) {
+		$Coordinate = $Geotools->geohash()->decode($activity['startpoint'])->getCoordinate();
+		$timezone = $TZLookup->getTimezoneForCoordinate($Coordinate->getLongitude(), $Coordinate->getLatitude());
+
+		if ($timezone) {
+			$timezoneOffset = (new DateTime(null, new DateTimeZone($timezone)))->setTimestamp($localTime)->getOffset() / 60;
+
+			if (!$updateActivityTime) {
+				$UpdateOnlyOffset->execute([
+					'offset' => $timezoneOffset,
+					'id' => $activity['id']
+				]);
+			}
+		}
 	}
-	echo ".";
-}
-$done = true;
-if($done) {
-    $file = fopen(".refactortimezone","w");
-    fclose($file);
 
+	if ($updateActivityTime) {
+		$UpdateTime->execute([
+			'time' => $localTime,
+			'offset' => $timezoneOffset,
+			'id' => $activity['id']
+		]);
+	}
+
+	echo '.';
 }
+
+$file = @fopen(".refactortimezone","w");
+@fclose($file);
 
 if (CLI) {
 	echo NL.NL;

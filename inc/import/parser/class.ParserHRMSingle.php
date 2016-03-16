@@ -112,7 +112,7 @@ class ParserHRMSingle extends ParserAbstractSingle {
 	 */
 	private function readParam() {
 		if (substr($this->Line, 0, 4) == 'Date') {
-			$date = DateTime::createFromFormat('Ymd H:i', substr($this->Line, 5).' 00:00');
+			$date = DateTime::createFromFormat('Ymd H:i', substr($this->Line, 5).' 00:00', new DateTimeZone('UTC'));
 			$this->TrainingObject->setTimestamp( $date->getTimestamp() );
 		} elseif (substr($this->Line, 0, 9) == 'StartTime') {
 			$Time = new Duration(substr($this->Line, 10));

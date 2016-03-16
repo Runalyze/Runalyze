@@ -6,10 +6,12 @@
 
 namespace Runalyze\Model\Activity;
 
+use League\Geotools\Geotools;
 use Runalyze\Calculation\NightDetector;
 use Runalyze\Model;
 use Runalyze\Calculation\BasicEndurance;
 use Runalyze\Configuration;
+use Runalyze\Util\TimezoneLookup;
 
 /**
  * Insert activity to database
@@ -130,6 +132,7 @@ class Inserter extends Model\InserterWithAccountID {
 		$this->calculateStrideLength();
 		$this->calculateVerticalRatio();
 		$this->calculateSwimValues();
+		$this->lookForTimezoneOffset();
 	}
 
 	/**
@@ -258,6 +261,23 @@ class Inserter extends Model\InserterWithAccountID {
 	protected function calculateIfActivityWasAtNight() {
 		if (null !== $this->Route && $this->Route->hasGeohashes()) {
 			$this->Object->set(Entity::IS_NIGHT, (new NightDetector())->setFromEntities($this->Object, $this->Route)->value());
+		}
+	}
+
+	/**
+	 * Look for timezone offset
+	 */
+	protected function lookForTimezoneOffset() {
+		if (null === $this->Object->timezoneOffset() && null !== $this->Route && $this->Route->has(Model\Route\Entity::STARTPOINT)) {
+			$Lookup = new TimezoneLookup();
+
+			if ($Lookup->isPossible()) {
+				$Coordinate = (new Geotools())->geohash()->decode($this->Route->get(Model\Route\Entity::STARTPOINT))->getCoordinate();
+				$timezone = $Lookup->getTimezoneForCoordinate($Coordinate->getLongitude(), $Coordinate->getLatitude());
+				$timezoneOffset = (new \DateTime(null, new \DateTimeZone($timezone)))->setTimestamp($this->Object->timestamp())->getOffset() / 60;
+
+				$this->Object->set(Entity::TIMEZONE_OFFSET, $timezoneOffset);
+			}
 		}
 	}
         

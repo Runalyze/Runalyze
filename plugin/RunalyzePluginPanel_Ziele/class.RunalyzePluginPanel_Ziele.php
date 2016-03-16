@@ -7,6 +7,7 @@
 use Runalyze\Configuration;
 use Runalyze\Activity\Distance;
 use Runalyze\Util\Time;
+use Runalyze\Util\LocalTime;
 
 $PLUGINKEY = 'RunalyzePluginPanel_Ziele';
 
@@ -359,7 +360,7 @@ class RunalyzePluginPanel_Ziele extends PluginPanel
 			FROM `' . PREFIX . 'training`
 			WHERE
 				`sportid`=' . Configuration::General()->runningSport() . ' AND
-				`time` >= ' . $timestamp . ' AND
+				`time` >= ' . LocalTime::fromServerTime($timestamp)->getTimestamp() . ' AND
 				`accountid`=' . SessionAccountHandler::getId() . '
 			GROUP BY `sportid`
 			ORDER BY `distanz_sum` DESC, `dauer_sum` DESC
@@ -417,7 +418,7 @@ class RunalyzePluginPanel_Ziele extends PluginPanel
 		$timeset['woche'] = array('name' => __('Week'), 'start' => (new DateTime)->setTimestamp(Time::weekstart(time())), 'end' => (new DateTime)->setTimestamp(Time::weekend(time())));
 		$timeset['mon'] = array('name' => __('Month'), 'start' => new DateTime(date("Y-m-01")), 'end' => new Datetime(date('Y-m-t')));
 		$timeset['hj'] = array('name' => __('Half-Year'), 'start' => new DateTime(date('m') < 7 ? date("Y-01-01") : date("Y-07-01")), 'end' => new Datetime(date('m') < 7 ? date("Y-06-30") : date('Y-12-31')));
-		$timeset['saison'] = array('name' => __('Saison'), 'start' => $kmstart, 'end' => $kmend, 'note' => __('Note: Saison means the current season in the german &quot;kmspiel&quot;'));
+		$timeset['saison'] = array('name' => __('Season'), 'start' => $kmstart, 'end' => $kmend, 'note' => __('Note: Season means the current season in the german &quot;kmspiel&quot;'));
 		$timeset['jahr'] = array('name' => __('Year'), 'start' => new DateTime(date("Y-01-01")), 'end' => new Datetime(date('Y-12-31')));
 
 		return $timeset;

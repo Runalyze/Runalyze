@@ -109,7 +109,7 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 							$code = ($dat['distance'] != 0 ? Distance::format($dat['distance']) : Duration::format($dat['s']));
 						}
 
-						echo '<td class="small"><span title="'.date("d.m.Y",$dat['time']).'">
+						echo '<td class="small"><span title="'.\Runalyze\Util\LocalTime::date("d.m.Y",$dat['time']).'">
 								'.Ajax::trainingLink($dat['id'], $code).'
 							</span></td>';
 					}
@@ -149,7 +149,7 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 		if ($this->year == -1) {
 			echo '<tr class="r"><td class="c b">'.__('per year').'</td>';
 			foreach ($this->years as $i => $year) {
-				$link = DataBrowserLinker::link(Distance::format($year['km']), mktime(0,0,0,1,1,$year['year']), mktime(23,59,50,12,31,$year['year']));
+				$link = DataBrowserLinker::yearLink(Distance::format($year['km']), $year['time'], false);
 				echo '<td class="small"><span title="'.$year['year'].'">'.$link.'</span></td>';
 			}
 			for (; $i < 9; $i++)
@@ -160,7 +160,7 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 		// Months
 		echo '<tr class="r"><td class="c b">'.__('per month').'</td>';
 		foreach ($this->months as $i => $month) {
-			$link = DataBrowserLinker::link(Distance::format($month['km']), mktime(0,0,0,$month['month'],1,$month['year']), mktime(23,59,50,$month['month']+1,0,$month['year']));
+			$link = DataBrowserLinker::monthLink(Distance::format($month['km']), $month['time'], false);
 			echo '<td class="small"><span title="'.Time::month($month['month']).' '.$month['year'].'">'.$link.'</span></td>';
 		}
 		for (; $i < 9; $i++)
@@ -170,7 +170,7 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 		// Weeks
 		echo '<tr class="r"><td class="c b">'.__('per week').'</td>';
 		foreach ($this->weeks as $i => $week) {
-			$link = DataBrowserLinker::link(Distance::format($week['km']), Time::weekstart($week['time']), Time::weekend($week['time']));
+			$link = DataBrowserLinker::weekLink(Distance::format($week['km']), $week['time'], false);
 			echo '<td class="small"><span title="'.__('Week').' '.$week['week'].' '.$week['year'].'">'.$link.'</span></td>';
 		}
 		for (; $i < 9; $i++)
@@ -203,7 +203,8 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 				SELECT
 					`sportid`,
 					SUM(`distance`) as `km`,
-					YEAR(FROM_UNIXTIME(`time`)) as `year`
+					YEAR(FROM_UNIXTIME(`time`)) as `year`,
+					`time`
 				FROM `'.PREFIX.'training`
 				WHERE `sportid`='.Configuration::General()->runningSport().'
 				GROUP BY `year`
@@ -217,7 +218,8 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 				SUM(`distance`) as `km`,
 				YEAR(FROM_UNIXTIME(`time`)) as `year`,
 				MONTH(FROM_UNIXTIME(`time`)) as `month`,
-				(MONTH(FROM_UNIXTIME(`time`))+100*YEAR(FROM_UNIXTIME(`time`))) as `monthyear`
+				(MONTH(FROM_UNIXTIME(`time`))+100*YEAR(FROM_UNIXTIME(`time`))) as `monthyear`,
+				`time`
 			FROM `'.PREFIX.'training`
 			WHERE `sportid`='.Configuration::General()->runningSport().' '.$this->getYearDependenceForQuery().'
 			GROUP BY `monthyear`

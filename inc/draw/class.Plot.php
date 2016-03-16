@@ -5,7 +5,7 @@
  */
 
 use Runalyze\Configuration;
-use Runalyze\Util\AccountTime;
+
 /**
  * General plotting class
  * @author Hannes Christiansen
@@ -421,8 +421,8 @@ class Plot {
 	 * @param int $Year
 	 */
 	public function setXAxisLimitedTo($Year) {
-		$this->Options['xaxis']['min'] = AccountTime::toUTC(mktime(1,0,0,1,1,$Year))->getTimestamp().'000';
-		$this->Options['xaxis']['max'] = AccountTime::toUTC(mktime(1,0,0,1,0,$Year+1))->getTimestamp().'000';
+		$this->Options['xaxis']['min'] = mktime(1,0,0,1,1,$Year).'000';
+		$this->Options['xaxis']['max'] = mktime(1,0,0,1,0,$Year+1).'000';
 	}
 
 	/**
@@ -624,11 +624,11 @@ class Plot {
 	 * Get JavaScript-timestamp for a day of a year
 	 * @param int $year
 	 * @param int $day
+	 * @param int $hour
 	 * @return int
 	 */
-	public static function dayOfYearToJStime($year, $day) {
-	    $Date = (new \Runalyze\Util\UTCTime())->setISODate($year,0, $day);
-	    return $Date->getTimestamp().'000';
+	public static function dayOfYearToJStime($year, $day, $hour = 12) {
+		return mktime($hour,0,0,1,$day,$year).'000';
 	}
 
 	/**

@@ -9,7 +9,7 @@ $TABLENAME = 'training';
 $Distance = new \Runalyze\Activity\Distance();
 $HIDDEN_KEYS = array(
 	//'created', 'edited',
-	'creator', 'creator_details', 'activity_id', 'timezone',
+	'creator', 'creator_details', 'activity_id', 'timezone_offset',
 	//'elevation_corrected', 'gps_cache_object',
 	'arr_time', 'arr_lat', 'arr_lon', 'arr_geohashes', 'arr_alt', 'arr_alt_original', 'arr_heart', 'arr_dist', 'arr_cadence', 'arr_power', 'arr_temperature',
 	'arr_groundcontact', 'arr_vertical_oscillation', 'arr_groundcontact_balance', 'pauses', 'hrv',
@@ -107,10 +107,10 @@ $FIELDS = array(
 					'formular'	=> array(
 						'required'	=> true,
 						'label'		=> __('Date'),
-						'class'		=> 'FormularInputDayAndDaytime'
+						'class'		=> 'FormularInputUTCDayAndDaytime'
 					)
 	),
-	'timezone'	=> array(
+	'timezone_offset'	=> array(
 					'database'	=> array(
 						'type'		=> 'smallint',
 						'precision'	=> '3',

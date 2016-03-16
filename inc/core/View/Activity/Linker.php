@@ -8,6 +8,7 @@ namespace Runalyze\View\Activity;
 
 use Runalyze\Model\Activity;
 use Runalyze\Activity\Duration;
+use Runalyze\Util\LocalTime;
 use Runalyze\Util\Time;
 
 use SessionAccountHandler;
@@ -136,10 +137,10 @@ class Linker {
 	 */
 	public function weekLink($name = '') {
 		if ($name == '') {
-			$name = date('d.m.Y', $this->Activity->timestamp());
+			$name = (new LocalTime($this->Activity->timestamp()))->format('d.m.Y');
 		}
 
-		return DataBrowserLinker::link($name, Time::weekstart($this->Activity->timestamp()), Time::weekend($this->Activity->timestamp()));
+		return DataBrowserLinker::weekLink($name, $this->Activity->timestamp());
 	}
 
 	/**
@@ -221,22 +222,22 @@ class Linker {
 
 	/**
 	 * @param int $id activity id
-	 * @param int $timestamp
+	 * @param int $timestampInNoTimezone
 	 * @return bool|int
 	 */
-	public static function prevId($id, $timestamp) {
-		$PrevTraining = DB::getInstance()->query('SELECT `id` FROM `'.PREFIX.'training` WHERE ((`time`<"'.$timestamp.'" AND `id`!='.$id.') OR (`time`="'.$timestamp.'" AND `id`<'.$id.')) AND `accountid` = '.SessionAccountHandler::getId().' ORDER BY `time` DESC, `id` DESC LIMIT 1')->fetch();
+	public static function prevId($id, $timestampInNoTimezone) {
+		$PrevTraining = DB::getInstance()->query('SELECT `id` FROM `'.PREFIX.'training` WHERE ((`time`<"'.$timestampInNoTimezone.'" AND `id`!='.$id.') OR (`time`="'.$timestampInNoTimezone.'" AND `id`<'.$id.')) AND `accountid` = '.SessionAccountHandler::getId().' ORDER BY `time` DESC, `id` DESC LIMIT 1')->fetch();
 
 		return (isset($PrevTraining['id'])) ? $PrevTraining['id'] : false;
 	}
 
 	/**
 	 * @param int $id activity id
-	 * @param int $timestamp
+	 * @param int $timestampInNoTimezone
 	 * @return bool|int
 	 */
-	public static function nextId($id, $timestamp) {
-		$NextTraining = DB::getInstance()->query('SELECT `id` FROM `'.PREFIX.'training` WHERE ((`time`>"'.$timestamp.'" AND `id`!='.$id.') OR (`time`="'.$timestamp.'" AND `id`>'.$id.')) AND `accountid` = '.SessionAccountHandler::getId().' ORDER BY `time` ASC, `id` ASC LIMIT 1')->fetch();
+	public static function nextId($id, $timestampInNoTimezone) {
+		$NextTraining = DB::getInstance()->query('SELECT `id` FROM `'.PREFIX.'training` WHERE ((`time`>"'.$timestampInNoTimezone.'" AND `id`!='.$id.') OR (`time`="'.$timestampInNoTimezone.'" AND `id`>'.$id.')) AND `accountid` = '.SessionAccountHandler::getId().' ORDER BY `time` ASC, `id` ASC LIMIT 1')->fetch();
 
 		return (isset($NextTraining['id'])) ? $NextTraining['id'] : false;
 	}
@@ -244,12 +245,12 @@ class Linker {
 	/**
 	 * Get array for navigating back to previous training in editor
 	 * @param int $id
-	 * @param int $timestamp
+	 * @param int $timestampInNoTimezone
 	 * @return string
 	 * @codeCoverageIgnore
 	 */
-	public static function editPrevLink($id, $timestamp) {
-		$prevId = self::prevId($id, $timestamp);
+	public static function editPrevLink($id, $timestampInNoTimezone) {
+		$prevId = self::prevId($id, $timestampInNoTimezone);
 
 		if ($prevId !== false)
 			return self::editLink($prevId, Icon::$BACK, 'ajax-prev', 'black-rounded-icon');
@@ -260,12 +261,12 @@ class Linker {
 	/**
 	 * Get array for navigating for to next training in editor
 	 * @param int $id
-	 * @param int $timestamp
+	 * @param int $timestampInNoTimezone
 	 * @return string
 	 * @codeCoverageIgnore
 	 */
-	public static function editNextLink($id, $timestamp) {
-		$nextId = self::nextId($id, $timestamp);
+	public static function editNextLink($id, $timestampInNoTimezone) {
+		$nextId = self::nextId($id, $timestampInNoTimezone);
 
 		if ($nextId !== false)
 			return self::editLink($nextId, Icon::$NEXT, 'ajax-next', 'black-rounded-icon');

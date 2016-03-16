@@ -8,6 +8,7 @@ use Runalyze\View\Activity\Context;
 use Runalyze\View\Activity\Linker;
 use Runalyze\Model;
 use Runalyze\Export\Share\Facebook;
+use Runalyze\Util\LocalTime;
 
 /**
  * Meta-tag creator for Facebook
@@ -172,7 +173,7 @@ class HTMLMetaForFacebook {
 		echo '
 <meta property="fitness:metrics:location:latitude"  content="'.$this->RouteLoop->latitude().'">
 <meta property="fitness:metrics:location:longitude" content="'.$this->RouteLoop->longitude().'">
-<meta property="fitness:metrics:timestamp" content="'.date('Y-m-d\TH:i', ($this->Context->activity()->timestamp() + $this->TrackdataLoop->time())).'">
+<meta property="fitness:metrics:timestamp" content="'.LocalTime::date('Y-m-d\TH:i', ($this->Context->activity()->timestamp() + $this->TrackdataLoop->time())).'">
 <meta property="fitness:metrics:distance:value" content="'.$this->TrackdataLoop->distance().'">
 <meta property="fitness:metrics:distance:units" content="km">
 <meta property="fitness:metrics:pace:value" content="'.($pace/1000).'">

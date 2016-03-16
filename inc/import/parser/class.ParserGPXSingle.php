@@ -107,7 +107,7 @@ class ParserGPXSingle extends ParserAbstractSingleXML {
 	 * Parse general values
 	 */
 	protected function parseGeneralValues() {
-		$this->TrainingObject->setTimestamp( strtotime((string)$this->XML->trkseg->trkpt[0]->time) );
+		$this->TrainingObject->setTimestamp( $this->strtotime((string)$this->XML->trkseg->trkpt[0]->time) );
 		$this->TrainingObject->setSportid( Configuration::General()->mainSport() );
 
 		if (!empty($this->XML->desc))
@@ -125,7 +125,7 @@ class ParserGPXSingle extends ParserAbstractSingleXML {
 		for ($seg = 0; $seg < $numSegments; ++$seg) {
 			$numPoints = count($this->XML->trkseg[$seg]->trkpt);
 			$totalPoints += $numPoints;
-			$totalTime += strtotime((string)$this->XML->trkseg[$seg]->trkpt[$numPoints-1]->time) - strtotime((string)$this->XML->trkseg[$seg]->trkpt[0]->time);
+			$totalTime += $this->strtotime((string)$this->XML->trkseg[$seg]->trkpt[$numPoints-1]->time) - $this->strtotime((string)$this->XML->trkseg[$seg]->trkpt[0]->time);
 		}
 
 		$this->limitForPauses = round(self::$PAUSE_FACTOR_FROM_AVERAGE_INTERVAL * $totalTime / $totalPoints);
@@ -153,7 +153,7 @@ class ParserGPXSingle extends ParserAbstractSingleXML {
 	 */
 	protected function parseTrackpoint($Point) {
 		if ($this->lastTimestamp == 0) {
-			$this->lastTimestamp = strtotime((string)$Point->time);
+			$this->lastTimestamp = $this->strtotime((string)$Point->time);
 		}
 
 		if (!empty($Point['lat'])) {
@@ -209,7 +209,7 @@ class ParserGPXSingle extends ParserAbstractSingleXML {
 	 * @return int
 	 */
 	private function getTimeOfPoint(SimpleXMLElement &$Point) {
-		$newTimestamp        = strtotime((string)$Point->time);
+		$newTimestamp        = $this->strtotime((string)$Point->time);
 		$timeToAdd           = $newTimestamp - $this->lastTimestamp;
 		$this->lastTimestamp = $newTimestamp;
 

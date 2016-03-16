@@ -90,7 +90,7 @@ class ParserTRKSingle extends ParserAbstractSingle {
 
 		$latitude = floatval($values[2]);
 		$longitude = floatval($values[3]);
-		$time = strtotime($values[4].' '.$values[5]) - $this->starttime - $this->pauseInSeconds;
+		$time = strtotime($values[4].' '.$values[5].' UTC') - $this->starttime - $this->pauseInSeconds;
 
 		if (!$this->isStarted) {
 			$this->isStarted = true;

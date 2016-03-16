@@ -5,6 +5,8 @@
  * @package Runalyze\Plugins\Stats
  */
 
+use Runalyze\Util\LocalTime;
+
 $titleCenter = __('Activity [in h] by day time');
 $xAxis       = array(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23);
 $yAxis       = array();
@@ -33,9 +35,9 @@ foreach ($Sports as $sport) {
 	$data = $Query->fetchAll();
 
 	foreach ($data as $dat) {
-                $time = Runalyze\Util\AccountTime::fromUTC($dat['time']);
-		$starttime = getdate($time->getTimestamp());
-		$endtime = getdate($time->getTimestamp() + $dat['s']);
+		$time = (new LocalTime($dat['time']))->toServerTimestamp();
+		$starttime = getdate($time);
+		$endtime = getdate($time + $dat['s']);
 
 		$yAxis[$id][$starttime['hours']] += (60 - $starttime['minutes']) / 60;
 		$yAxis[$id][$endtime['hours']] += $endtime['minutes'] / 60;

@@ -5,7 +5,7 @@
  */
 
 use Runalyze\Configuration;
-use League\Geotools\Geohash\Geohash;
+use Runalyze\Util\LocalTime;
 
 /**
  * Abstract parser for one single training
@@ -97,6 +97,42 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 	}
 
 	/**
+	 * Set timestamp and timezone offset
+	 * @param $stringWithTimezoneInformation
+	 */
+	protected function setTimestampAndTimezoneOffsetFrom($stringWithTimezoneInformation) {
+		try {
+			$DateTime = new DateTime($stringWithTimezoneInformation);
+
+			$this->TrainingObject->setTimestamp($DateTime->getTimestamp() + $DateTime->getOffset());
+			$this->TrainingObject->setTimezoneOffset(round($DateTime->getOffset() / 60));
+		} catch (Exception $e) {
+			// Invalid date
+		}
+	}
+
+	/**
+	 * Interpret current timestamp of training object as server time
+	 */
+	protected function interpretTimestampAsServerTime() {
+		$this->TrainingObject->setTimestamp(LocalTime::fromServerTime($this->TrainingObject->getTimestamp()));
+	}
+
+	/**
+	 * Adjusted strtotime
+	 * Timestamps are given in UTC but local timezone offset has to be considered!
+	 * @param $string
+	 * @return int
+	 */
+	protected function strtotime($string) {
+		if (substr($string, -1) == 'Z') {
+			return LocalTime::fromServerTime(strtotime(substr($string, 0, -1).' UTC'))->getTimestamp();
+		}
+
+		return LocalTime::fromString($string)->getTimestamp();
+	}
+
+	/**
 	 * Try to set sportid from creator or string
 	 * @param string $String
 	 * @param string $Creator optional
@@ -133,27 +169,6 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 		}
 
 		$this->TrainingObject->setSportid( self::getIDforDatabaseString('sport', $String) );
-	}
-	
-	/**
-	 * Try to set timezone from time
-	 * @param string $startGeohash
-	 * @param string $timestring
-	 */
-	protected function guessTimezoneFromTimestring($timestring) {
-	    $DateTime = new DateTime($timestring);
-	    $timezone = $DateTime->getTimezone()->getName();
-	
-	}
-	
-	/**
-	 * Try to set timezone from geohash
-	 * @param string $startGeohash
-	 * @param string $timestring
-	 */
-	protected function guessTimezoneFromGeohash(League\Geotools\Geohash\GeohashInterface $geohash) {
-	    $coordinates = (new \League\Geotools\Geotools())->geohash()->decode($geohash);
-	    
 	}
 
 	/**

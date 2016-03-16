@@ -3,14 +3,15 @@
  * This file contains class::ConfigTabAccount
  * @package Runalyze\System\Config
  */
+
+use Runalyze\Timezone;
+use Runalyze\Parameter\Application\Timezone as TimezoneValues;
+
 /**
  * ConfigTabAccount
  * @author Hannes Christiansen
  * @package Runalyze\System\Config
  */
-
-use Runalyze\Timezone;
-use Runalyze\Parameter\Application\Timezone as TimezoneValues;
 class ConfigTabAccount extends ConfigTab {
 	/**
 	 * Set key and title for form 
@@ -43,9 +44,7 @@ class ConfigTabAccount extends ConfigTab {
 		}
 
 		$TimeZoneField = new FormularSelectBox('timezone', __('Timezone'), $Data['timezone']);
-		foreach (Timezone::listTimezones() as $key => $option) {
-			$TimeZoneField->addOption($key, __($option));
-		}
+		$TimeZoneField->setOptions(Timezone::listTimezones());
 		
 		$SinceField = new FormularInput('name', __('Registered since'), date('d.m.Y H:i', $Data['registerdate']));
 		$SinceField->setDisabled();
@@ -127,6 +126,7 @@ class ConfigTabAccount extends ConfigTab {
 		if ($_POST['allow_mails'] != SessionAccountHandler::getAllowMails()) {
 			DB::getInstance()->update('account', SessionAccountHandler::getId(), 'allow_mails', $_POST['allow_mails']);
 		}
+
 		if ($_POST['timezone'] != SessionAccountHandler::getTimezone() && TimezoneValues::isValidValue($_POST['timezone'], false)) {
 			DB::getInstance()->update('account', SessionAccountHandler::getId(), 'timezone', $_POST['timezone'], false);
 			Ajax::setReloadFlag( Ajax::$RELOAD_PAGE );

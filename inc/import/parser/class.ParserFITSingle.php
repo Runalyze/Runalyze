@@ -107,6 +107,8 @@ class ParserFITSingle extends ParserAbstractSingle {
 	public function finishParsing() {
 		$this->applyPauses();
 		$this->setGPSarrays();
+
+		// TODO: lookup timezone and correct timestamp if startpoint is not in user's timezone
 	}
 
 	/**
@@ -220,7 +222,7 @@ class ParserFITSingle extends ParserAbstractSingle {
 			$this->addError( __('FIT file is not specified as activity.') );
 
 		if (isset($this->Values['time_created']))
-			$this->TrainingObject->setTimestamp( strtotime((string)$this->Values['time_created'][1]) );
+			$this->TrainingObject->setTimestamp( $this->strtotime((string)$this->Values['time_created'][1]) );
 
 		$this->TrainingObject->setSportid( Configuration::General()->mainSport() );
 
@@ -313,7 +315,7 @@ class ParserFITSingle extends ParserAbstractSingle {
 		if (!isset($this->Values['event']) || $this->Values['event'][1] != 'timer' || !isset($this->Values['event_type']))
 			return;
 
-		$thisTimestamp = strtotime((string)$this->Values['timestamp'][1]);
+		$thisTimestamp = $this->strtotime((string)$this->Values['timestamp'][1]);
 
 		if ($this->Values['event_type'][1] == 'stop_all' || $this->Values['event_type'][1] == 'stop') {
 			$this->isPaused = true;
@@ -355,20 +357,20 @@ class ParserFITSingle extends ParserAbstractSingle {
 				return;
 	
 			if (empty($this->gps['time_in_s'])) {
-				$startTime = strtotime((string)$this->Values['timestamp'][1]);
+				$startTime = $this->strtotime((string)$this->Values['timestamp'][1]);
 	
 				if ($startTime < $this->TrainingObject->getTimestamp()) {
 					$this->TrainingObject->setTimestamp($startTime);
 				}
 			}
-			$time = strtotime((string)$this->Values['timestamp'][1]) - $this->TrainingObject->getTimestamp() - $this->PauseInSeconds;
+			$time = $this->strtotime((string)$this->Values['timestamp'][1]) - $this->TrainingObject->getTimestamp() - $this->PauseInSeconds;
 			$last = end($this->gps['time_in_s']);
 	
 			if ($this->wasPaused) {
 				$this->TrainingObject->Pauses()->add(
 					new \Runalyze\Model\Trackdata\Pause(
 						$last,
-						strtotime((string)$this->Values['timestamp'][1]) - $this->lastStopTimestamp,
+						$this->strtotime((string)$this->Values['timestamp'][1]) - $this->lastStopTimestamp,
 						end($this->gps['heartrate']),
 						isset($this->Values['heart_rate']) ? (int)$this->Values['heart_rate'][0] : 0
 					)
@@ -473,7 +475,7 @@ class ParserFITSingle extends ParserAbstractSingle {
 		$this->gps['rpm'][] = isset($this->Values['avg_swimming_cadence']) ? (int)$this->Values['avg_swimming_cadence'][0] : 0;
 
 		if (empty($this->gps['time_in_s'])) {
-			$this->TrainingObject->setTimestamp( strtotime((string)$this->Values['start_time'][1]) );
+			$this->TrainingObject->setTimestamp( $this->strtotime((string)$this->Values['start_time'][1]) );
 			$this->gps['time_in_s'][] = round(((int)$this->Values['total_timer_time'][0])/1000);
 		} else {
 			$this->gps['time_in_s'][] = end($this->gps['time_in_s']) + round(((int)$this->Values['total_timer_time'][0])/1000);

@@ -33,7 +33,7 @@ class ParserSMLsuuntoSingle extends ParserXMLsuuntoSingle {
 	 * Parse general values
 	 */
 	protected function parseGeneralValues() {
-		$this->TrainingObject->setTimestamp( strtotime((string)$this->XML->DeviceLog->Header->DateTime) );
+		$this->TrainingObject->setTimestamp( $this->strtotime((string)$this->XML->DeviceLog->Header->DateTime) );
 
 		if (!empty($this->XML->DeviceLog->Header->Activity))
 			$this->guessSportID( (string)$this->XML->DeviceLog->Header->Activity );

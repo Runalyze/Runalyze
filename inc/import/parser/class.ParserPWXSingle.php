@@ -58,7 +58,7 @@ class ParserPWXSingle extends ParserAbstractSingleXML {
 	 * Parse general values
 	 */
 	protected function parseGeneralValues() {
-		$this->TrainingObject->setTimestamp( strtotime((string)$this->XML->time) );
+		$this->TrainingObject->setTimestamp( $this->strtotime((string)$this->XML->time) );
 		$this->TrainingObject->setSportid( $this->findSportId() );
 		$this->TrainingObject->setCreatorDetails( $this->findCreator() );
 

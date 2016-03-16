@@ -47,6 +47,7 @@ class ParserKMLtomtomSingle extends ParserAbstractSingleXML {
 			$this->parseSteps();
 			$this->parseExtendedData();
 			$this->setGPSarrays();
+			$this->interpretTimestampAsServerTime();
 		} else {
 			$this->throwNoXMLError();
 		}

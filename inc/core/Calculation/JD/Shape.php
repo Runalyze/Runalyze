@@ -8,6 +8,7 @@ namespace Runalyze\Calculation\JD;
 
 use Runalyze\Configuration;
 use PDO;
+use Runalyze\Util\LocalTime;
 
 /**
  * VDOT shape
@@ -83,10 +84,10 @@ class Shape {
 
 	/**
 	 * Calculate at given day
-	 * @param int $time timestamp
+	 * @param int $timestampInServerTimezone timestamp
 	 */
-	public function calculateAt($time) {
-		$time = mktime(23, 59, 59, date('m', $time), date('d', $time), date('Y', $time));
+	public function calculateAt($timestampInServerTimezone) {
+		$time = LocalTime::fromServerTime($timestampInServerTimezone)->setTime(23, 59, 59)->getTimestamp();
 
 		$data = $this->PDO->query(
 			'SELECT

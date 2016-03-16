@@ -1,3 +1,8 @@
+<?php
+
+use Runalyze\Util\LocalTime;
+
+?>
 <div class="panel-heading">
 	<div class="panel-menu">
 		<?php $this->displayIconLinks(); ?>
@@ -68,11 +73,11 @@ $Table = new \Runalyze\View\Dataset\Table($this->DatasetConfig);
 foreach ($this->Days as $i => $day) {
 	$trClass = '';
 
-	if ($i > 0 && date('w', $day['date']) == \Runalyze\Configuration::General()->weekStart()->value()) {
+	if ($i > 0 && (new LocalTime($day['date']))->format('w') == \Runalyze\Configuration::General()->weekStart()->value()) {
 		$trClass = $weekSeparator;
 	}
 
-	if ($i > 0 && date('j', $day['date']) == 1) {
+	if ($i > 0 && (new LocalTime($day['date']))->format('j') == 1) {
 		$trClass = ($trClass == '') ? $monthSeparator : ' top-separated';
 	}
 

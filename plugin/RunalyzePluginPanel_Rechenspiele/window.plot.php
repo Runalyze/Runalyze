@@ -6,7 +6,7 @@
 require '../../inc/class.Frontend.php';
 
 $Frontend = new Frontend();
-use Runalyze\Util\UTCTime;
+
 if (isset($_GET['y'])){
 	$timerange=$_GET['y'];
 } else {
@@ -28,7 +28,7 @@ $Submenu .= '<li'.('lasthalf' == $timerange ? ' class="active"' : '').'>'.Ajax::
 $link = 'plugin/RunalyzePluginPanel_Rechenspiele/window.plot.php?y=lastyear&m='.$perfmodel;
 $Submenu .= '<li'.('lastyear' == $timerange ? ' class="active"' : '').'>'.Ajax::window('<a href="'.$link.'">'.__('Last year').'</a>').'</li>';
 
-for ($j = (new UTCTime())->format('Y'); $j >= START_YEAR; $j--)  {
+for ($j = date('Y'); $j >= START_YEAR; $j--)  {
 	$link = 'plugin/RunalyzePluginPanel_Rechenspiele/window.plot.php?y='.$j.'&m='.$perfmodel;
 	$Submenu .= '<li'.($j == $timerange ? ' class="active"' : '').'>'.Ajax::window('<a href="'.$link.'">'.$j.'</a>').'</li>';
 }

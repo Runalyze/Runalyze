@@ -9,11 +9,9 @@ use Runalyze\Activity\Duration;
 use Runalyze\Activity\Elevation;
 use Runalyze\Activity\StrideLength;
 use Runalyze\Configuration;
-use Runalyze\Util\AccountTime;
-use Runalyze\Util\UTCTime;
+use Runalyze\Util\LocalTime;
 use Runalyze\Activity\Temperature;
 use Runalyze\Data\Weather\WindSpeed;
-use Runalyze\Calculation\JD\VDOTCorrector;
 
 /**
  * Search results
@@ -316,7 +314,7 @@ class SearchResults {
 			FormularValueParser::validatePost('date-to', FormularValueParser::$PARSER_DATE) &&
 			$_POST['date-to'] > 0
 		) {
-			$conditions[] = '`t`.`time` BETWEEN '.(int)AccountTime::toUTC($_POST['date-from'])->getTimestamp().' AND '.((int)AccountTime::toUTC($_POST['date-to'])->getTimestamp()+DAY_IN_S);
+			$conditions[] = '`t`.`time` BETWEEN '.LocalTime::fromServerTime($_POST['date-from'])->getTimestamp().' AND '.(LocalTime::fromServerTime($_POST['date-to'])->getTimestamp()+DAY_IN_S);
 		}
 	}
 
@@ -544,7 +542,7 @@ class SearchResults {
 		$Context = new \Runalyze\Dataset\Context(new Runalyze\Model\Activity\Entity(), $this->AccountID);
 
 		foreach ($this->Trainings as $training) {
-			$date = (new UTCTime($training['time']))->format("d.m.Y");
+			$date = (new LocalTime($training['time']))->format("d.m.Y");
 			$link = Ajax::trainingLink($training['id'], $date, true);
 			$Context->setActivityData($training);
 

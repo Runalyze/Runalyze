@@ -5,6 +5,7 @@
  */
 
 use Runalyze\Util\Time;
+use Runalyze\Util\LocalTime;
 
 /**
  * Summary table for dataset/data browser
@@ -54,26 +55,26 @@ class SummaryTableMonths extends SummaryTable {
 		switch ($this->Mode) {
 			case self::MODE_LAST_6:
 				$this->Title = __('Last 6 months');
-				$this->TimeEnd = mktime(23, 59, 59, date('m')+1, 0, date('Y'));
-				$this->TimeStart = mktime(0, 0, 1, date('m')-6, 1, date('Y'));
+				$this->TimeEnd = LocalTime::mktime(23, 59, 59, date('m')+1, 0, date('Y'));
+				$this->TimeStart = LocalTime::mktime(0, 0, 1, date('m')-6, 1, date('Y'));
 				break;
 
 			case self::MODE_LAST_12:
 				$this->Title = __('Last 12 months');
-				$this->TimeEnd = mktime(23, 59, 59, date('m')+1, 0, date('Y'));
-				$this->TimeStart = mktime(0, 0, 1, date('m')-12, 1, date('Y'));
+				$this->TimeEnd = LocalTime::mktime(23, 59, 59, date('m')+1, 0, date('Y'));
+				$this->TimeStart = LocalTime::mktime(0, 0, 1, date('m')-12, 1, date('Y'));
 				break;
 
 			case self::MODE_ALL:
 				$this->Title = __('All months');
-				$this->TimeEnd = mktime(23, 59, 59, 12, 31, date('Y'));
-				$this->TimeStart = mktime(0, 0, 1, 1, 1, date('Y', START_TIME));
+				$this->TimeEnd = (new LocalTime)->yearEnd();
+				$this->TimeStart = (new LocalTime(START_TIME))->yearStart();
 				break;
 
 			case self::MODE_YEAR:
 				$this->Title = $this->Year;
-				$this->TimeEnd = mktime(23, 59, 59, 12, 31, $this->Year);
-				$this->TimeStart = mktime(0, 0, 1, 1, 1, $this->Year);
+				$this->TimeEnd = LocalTime::mktime(23, 59, 59, 12, 31, $this->Year);
+				$this->TimeStart = LocalTime::mktime(0, 0, 1, 1, 1, $this->Year);
 				break;
 		}
 	}
@@ -85,11 +86,8 @@ class SummaryTableMonths extends SummaryTable {
 	 */
 	protected function rowHead($index) {
 		$midOfTimerange = $this->TimeEnd - ($index + 0.5)*31*DAY_IN_S;
-		$year = ($this->Mode == self::MODE_YEAR) ? $this->Year : date('Y', $midOfTimerange);
 		$month = date('m', $midOfTimerange);
-		$start = mktime(0, 0, 1, $month, 1, $year);
-		$end   = mktime(23, 59, 59, $month+1, 0, $year);
 
-		return DataBrowserLinker::link(Time::month($month), $start, $end, '');
+		return DataBrowserLinker::monthLink(Time::month($month), $midOfTimerange);
 	}
 }

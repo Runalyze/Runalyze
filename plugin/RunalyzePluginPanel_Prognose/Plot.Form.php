@@ -12,6 +12,7 @@ use Runalyze\Calculation\Prognosis;
 use Runalyze\Configuration;
 use Runalyze\Activity\Distance;
 use Runalyze\Util\Time;
+use Runalyze\Util\LocalTime;
 
 if (is_dir(FRONTEND_PATH.'../plugin/RunalyzePluginStat_Wettkampf')) {
 	$Factory = new PluginFactory();
@@ -98,8 +99,9 @@ if (START_TIME != time()) {
 		}
 
 		foreach ($ResultsData as $dat) {
-			if (!isset($WKplugin) || !$WKplugin->isFunCompetition($dat['id']))
-				$Results[$dat['time'].'000'] = $dat['s'] * 1000;
+			if (!isset($WKplugin) || !$WKplugin->isFunCompetition($dat['id'])) {
+				$Results[(new LocalTime($dat['time']))->toServerTimestamp().'000'] = $dat['s'] * 1000;
+			}
 		}
 	} else {
 		$DataFailed = true;

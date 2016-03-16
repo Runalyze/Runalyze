@@ -7,6 +7,7 @@
 namespace Runalyze\Calculation;
 
 use Runalyze\Configuration;
+use Runalyze\Util\LocalTime;
 use Runalyze\Util\Time;
 
 use DB;
@@ -269,7 +270,7 @@ class BasicEndurance {
 	 */
 	public function getQuery($timestamp = 0, $onlyLongjogs = false) {
 		if ($timestamp == 0)
-			$timestamp = time();
+			$timestamp = LocalTime::now();
 
 		$StartTimeForLongjogs = $timestamp - $this->DAYS_FOR_LONGJOGS * DAY_IN_S;
 		$StartTimeForWeekKm   = $timestamp - $this->getDaysForWeekKm() * DAY_IN_S;

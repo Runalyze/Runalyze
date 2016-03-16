@@ -8,6 +8,7 @@ use Runalyze\View\Activity;
 use Runalyze\Model\Trackdata;
 use Runalyze\View\Activity\Box;
 use Runalyze\Activity\Temperature;
+use Runalyze\Util\LocalTime;
 
 /**
  * Row: Miscellaneous
@@ -328,14 +329,16 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 		$edited = $this->Context->activity()->get(\Runalyze\Model\Activity\Entity::TIMESTAMP_EDITED);
 
 		if ($created > 0 || $edited > 0) {
+			$createdDate = new LocalTime($created);
 			$CreationTime = ($created == 0) ? '' : sprintf( __('You created this training on <strong>%s</strong> at <strong>%s</strong>.'),
-				date('d.m.Y', $created),
-				date('H:i', $created)
+				$createdDate->format('d.m.Y'),
+				$createdDate->format('H:i')
 			);
 
+			$editedDate = new LocalTime($created);
 			$ModificationTime = ($edited == 0) ? '' : '<br>'.sprintf( __('Last modification on <strong>%s</strong> at <strong>%s</strong>.'),
-				date('d.m.Y', $edited),
-				date('H:i', $edited)
+				$editedDate->format('d.m.Y'),
+				$editedDate->format('H:i')
 			);
 
 			$this->NotesContent .= HTML::fileBlock($CreationTime.$ModificationTime);
