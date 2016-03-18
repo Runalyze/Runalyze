@@ -3,7 +3,7 @@ use Runalyze\Activity\Distance;
 ?>
 <div class="w50" id="login-window">
 	<div id="login">
-		<form action="login.php" method="post">
+		<form action="login" method="post">
 
 			<?php
 			$ErrorString = '';
@@ -52,7 +52,7 @@ use Runalyze\Activity\Distance;
 	</div>
 
 	<div id="registerFormular" style="display:none;">
-		<form action="login.php" method="post">
+		<form action="login" method="post">
 			<fieldset>
 				<legend onclick="show('log');"><?php _e('Create a new account'); ?></legend>
 			<?php
@@ -125,7 +125,7 @@ use Runalyze\Activity\Distance;
 	</div>
 
 	<div id="forgotPassword" style="display:none;">
-		<form action="login.php" method="post">
+		<form action="login" method="post">
 			<fieldset>
 				<legend onclick="show('log');"><?php _e('Forgot your password?'); ?></legend>
 				<div class="w100">
@@ -152,9 +152,9 @@ use Runalyze\Activity\Distance;
 </div>
 
 <div id="login-panel">
-	<a id="login-link" href="#" onclick="show('log')"><i class="fa fa-fw fa-lg fa-sign-in"></i> <?php _e('Login'); ?></a>
-	<a id="register-link" href="#" onclick="show('reg')"><i class="fa fa-fw fa-lg fa-user"></i> <?php _e('Create a new account'); ?></a>
-	<a id="password-link" href="#" onclick="show('pwf');"><i class="fa fa-fw fa-lg fa-lock"></i> <?php _e('Forgot your password?'); ?></a>
+	<a id="login-link" href="login#" onclick="show('log')"><i class="fa fa-fw fa-lg fa-sign-in"></i> <?php _e('Login'); ?></a>
+	<a id="register-link" href="login#" onclick="show('reg')"><i class="fa fa-fw fa-lg fa-user"></i> <?php _e('Create a new account'); ?></a>
+	<a id="password-link" href="login#" onclick="show('pwf');"><i class="fa fa-fw fa-lg fa-lock"></i> <?php _e('Forgot your password?'); ?></a>
 </div>
 
 <script type="text/javascript">

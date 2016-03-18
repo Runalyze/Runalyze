@@ -3,9 +3,6 @@
 * Delete Account
  * Call:   call/window.delete.php
  */
-require '../inc/class.Frontend.php';
-
-$Frontend = new Frontend();
 $Errors   = array();
 AccountHandler::setAndSendDeletionKeyFor($Errors);
 

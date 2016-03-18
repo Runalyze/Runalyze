@@ -72,15 +72,14 @@ class AdminView {
 	 */
 	public function display() {
 		$title = 'Runalyze v'.RUNALYZE_VERSION;
-
-		include 'inc/tpl/tpl.installerHeader.php';
+		include '../inc/tpl/tpl.installerHeader.php';
 
 		if (!$this->isLoggedIn)
-			include 'inc/tpl/tpl.adminWindow.login.php';
+			include '../inc/tpl/tpl.adminWindow.login.php';
 		else
 			$this->displayView();
 
-		include 'inc/tpl/tpl.installerFooter.php';
+		include '../inc/tpl/tpl.installerFooter.php';
 	}
 
 	/**

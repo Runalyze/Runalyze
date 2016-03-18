@@ -3,11 +3,9 @@
  * File for uninstalling plugins.
  * Call:   call.Plugin.uninstall.php?key=
  */
-require '../inc/class.Frontend.php';
 
 $Pluginkey = filter_input(INPUT_GET, 'key');
 
-$Frontend = new Frontend();
 $Installer = new PluginInstaller($Pluginkey);
 
 echo '<h1>'.__('Uninstall').' '.$Pluginkey.'</h1>';

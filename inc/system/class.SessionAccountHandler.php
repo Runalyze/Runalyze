@@ -73,7 +73,7 @@ class SessionAccountHandler {
 	 * Forward to index page
 	 */
 	protected function forwardToIndexPage() {
-		header('Location: '.System::getFullDomain().'index.php');
+		header('Location: '.System::getFullDomain().'dashboard');
 		exit;
 	}
 
@@ -82,7 +82,7 @@ class SessionAccountHandler {
 	 */
 	protected function forwardToLoginPage() {
 		if (!$this->isOnLoginPage() && !$this->isOnAdminPage()) {
-			header('Location: '.System::getFullDomain().'login.php');
+			header('Location: '.System::getFullDomain().'login');
 			exit;
 		}
 	}
@@ -92,7 +92,7 @@ class SessionAccountHandler {
 	 * @return boolean
 	 */
 	private function isOnLoginPage() {
-		return substr(Request::Basename(), 0, 9) == 'login.php';
+		return substr(Request::Basename(), 0, 9) == 'login';
 	}
 
 	/**

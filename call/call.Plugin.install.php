@@ -3,11 +3,9 @@
  * File for installing plugins.
  * Call:   call.Plugin.install.php?key=
  */
-require '../inc/class.Frontend.php';
 
 $Pluginkey = filter_input(INPUT_GET, 'key');
 
-$Frontend = new Frontend();
 $Installer = new PluginInstaller($Pluginkey);
 
 echo '<h1>'.__('Install').' '.$Pluginkey.'</h1>';

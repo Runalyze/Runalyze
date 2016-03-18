@@ -3,9 +3,6 @@
  * File for displaying plugins.
  * Call:   call.Plugin.display.php?id= [&sport= &jahr= &dat= ]
  */
-require '../inc/class.Frontend.php';
-
-$Frontend = new Frontend();
 $Factory = new PluginFactory();
 
 try {

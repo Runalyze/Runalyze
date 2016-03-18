@@ -3,7 +3,6 @@
  * File for displaying sum data for each week or month
  * Call:   call/window.plotSumData.php
  */
-require '../inc/class.Frontend.php';
 require '../inc/class.FrontendShared.php';
 require '../inc/class.FrontendSharedList.php';
 

@@ -3,9 +3,6 @@
  * File the search
  * Call:   call/window.search.php
  */
-require '../inc/class.Frontend.php';
-
-$Frontend = new Frontend();
 
 $showResults = !empty($_POST);
 

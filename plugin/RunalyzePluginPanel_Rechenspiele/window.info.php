@@ -3,9 +3,6 @@
  * Window: plot for calculations
  * @package Runalyze\Plugins\Panels
  */
-require '../../inc/class.Frontend.php';
-
-new Frontend();
 ?>
 <div class="panel-heading">
 	<h1><?php _e('VDOT'); ?></h1>

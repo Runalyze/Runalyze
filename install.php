@@ -16,7 +16,7 @@ require_once 'inc/system/class.Request.php';
 require_once 'inc/system/class.System.php';
 require_once 'inc/class.Installer.php';
 
-$Installer = new Installer();
+$Installer = new \Installer();
 
 $title = __(sprintf('Installation: Runalyze %s',RUNALYZE_VERSION));
 include 'inc/tpl/tpl.installerHeader.php';

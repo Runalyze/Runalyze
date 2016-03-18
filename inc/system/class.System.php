@@ -18,11 +18,11 @@ class System {
 	public static function getCodeForLocalJSFiles() {
 		if (self::isAtLocalhost()) {
 			return '<script>document.addEventListener("touchstart", function(){}, true);</script>'.
-				'<script src="build/scripts.js?v='.RUNALYZE_VERSION.'"></script>';
+				'<script src="assets/js/scripts.js?v='.RUNALYZE_VERSION.'"></script>';
 		}
 
 		return '<script>document.addEventListener("touchstart", function(){}, true);</script>'.
-			'<script src="build/scripts.min.js?v='.RUNALYZE_VERSION.'"></script>';
+			'<script src="assets/js/scripts.min.js?v='.RUNALYZE_VERSION.'"></script>';
 	}
 
 	/**
@@ -38,7 +38,7 @@ class System {
 	 * @return string 
 	 */
 	public static function getCodeForAllCSSFiles() {
-		return '<link rel="stylesheet" href="lib/less/runalyze-style.css?v='.RUNALYZE_VERSION.'">';
+		return '<link rel="stylesheet" href="assets/css/runalyze-style.css?v='.RUNALYZE_VERSION.'">';
 	}
 
 	/**

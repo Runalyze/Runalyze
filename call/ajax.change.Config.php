@@ -3,9 +3,6 @@
  * File for changing a config-value
  * Call:   ajax.change.Config.php?key=...&value=...[&add]
  */
-require_once '../inc/class.Frontend.php';
-
-$Frontend = new Frontend();
 
 switch ($_GET['key']) {
 	case 'garmin-ignore':

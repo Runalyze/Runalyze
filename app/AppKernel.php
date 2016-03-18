@@ -16,7 +16,7 @@ class AppKernel extends \Symfony\Component\HttpKernel\Kernel
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Symfony\Bundle\TwigBundle\TwigBundle(),
-            new Runalyze\Bundle\CoreBundle\CoreBundle()
+            new Runalyze\Bundle\CoreBundle\CoreBundle(),
         ];
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {

@@ -16,9 +16,9 @@ $WINDOWS		= false;
 // *.jar-file of YUI-compressor
 $COMPRESSOR		=  dirname(__FILE__).'/yuicompressor-2.4.8.jar';
 // Scripts-file for developing
-$SCRIPT			= dirname(__FILE__).'/scripts.js';
+$SCRIPT			= __DIR__.'/../web/assets/js/scripts.js';
 // Scripts-file for usage (minifies)
-$SCRIPT_MIN		= dirname(__FILE__).'/scripts.min.js';
+$SCRIPT_MIN		= __DIR__.'/../web/assets/js/scripts.min.js';
 
 /**
  * Don't change something below.

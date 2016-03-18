@@ -8,6 +8,6 @@ if (!defined('RUNALYZE_BUILD'))
 echo 'Building css...'.PHP_EOL;
 
 $CSS_DIR=__DIR__.'/../lib/less/';
-system ('lessc --relative-urls '.$CSS_DIR.'runalyze-style.less '.$CSS_DIR.'runalyze-style.css' );
+system ('lessc --relative-urls '.$CSS_DIR.'runalyze-style.less '.__DIR__.'/../web/assets/css/runalyze-style.css' );
 
 ?>

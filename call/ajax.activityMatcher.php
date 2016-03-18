@@ -3,7 +3,6 @@
  * File for matching activities from Garmin Communicator
  * Call:   ajax.activityMatcher.php
  */
-require_once '../inc/class.Frontend.php';
 
 $Frontend = new Frontend(true);
 use Runalyze\Activity\DuplicateFinder;

@@ -3,9 +3,7 @@
  * Window: plot for calculations
  * @package Runalyze\Plugins\Panels
  */
-require '../../inc/class.Frontend.php';
 
-$Frontend = new Frontend();
 
 if (isset($_GET['y'])){
 	$timerange=$_GET['y'];

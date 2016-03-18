@@ -3,12 +3,9 @@
  * File for displaying a training.
  * Call:   call.Training.display.php?id=
  */
-require '../inc/class.Frontend.php';
-
 use Runalyze\Model\Activity;
 use Runalyze\View\Activity\Context;
 
-$Frontend = new Frontend();
 $Context = new Context(Request::sendId(), SessionAccountHandler::getId());
 
 switch (Request::param('action')) {

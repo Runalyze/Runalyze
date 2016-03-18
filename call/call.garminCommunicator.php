@@ -1,16 +1,12 @@
-<?php
-require_once '../inc/class.Frontend.php';
-
-$Frontend = new Frontend(true);
-?><!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
 	<meta charset="UTF-8">
 	<title>Garmin Communicator</title>
 
-	<link rel="stylesheet" href="../lib/garmin/communicator2.css">
-	<script src="../lib/garmin/prototype/prototype.js"></script>
-	<script src="../lib/garmin/garmin/device/GarminDeviceDisplay.js"></script>
+	<link rel="stylesheet" href="/assets/garmin/communicator2.css">
+	<script src="/assets/garmin/prototype/prototype.js"></script>
+	<script src="/assets/garmin/garmin/device/GarminDeviceDisplay.js"></script>
 	<script>
 		function ignoreID(id,e) {
 			var p = e.parentNode;

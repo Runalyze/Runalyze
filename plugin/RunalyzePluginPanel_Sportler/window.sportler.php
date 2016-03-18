@@ -3,9 +3,6 @@
  * Window: formular for user
  * @package Runalyze\Plugins\Panels
  */
-require '../../inc/class.Frontend.php';
-
-$Frontend = new Frontend();
 
 if (Request::param('delete') == 'true') {
 	DB::getInstance()->deleteByID('user', (int)Request::sendId());

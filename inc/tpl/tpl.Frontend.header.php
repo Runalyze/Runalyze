@@ -26,7 +26,7 @@
 	<span id="menu-link" onclick="$('#headline').toggleClass('menu-expanded');"><i class="fa fa-fw fa-bars"></i></span>
 
 	<a class="tab logo" href="<?php echo System::getFullDomain(); ?>" title="Runalyze">Runalyze</a>
-	<?php if (SessionAccountHandler::isLoggedIn()): ?><a class="tab right" href="login.php?out" title="<?php _e('Logout'); ?>">
+	<?php if (SessionAccountHandler::isLoggedIn()): ?><a class="tab right" href="login?out" title="<?php _e('Logout'); ?>">
 		<i class="fa fa-fw fa-lg fa-sign-out"></i>&nbsp;<?php _e('Logout'); ?></a>
 		<?php echo Ajax::window('<a class="tab right b" href="'.ConfigTabs::$CONFIG_URL.'?key=config_tab_account"><i class="fa fa-fw fa-lg fa-user"></i>'.NBSP.SessionAccountHandler::getUsername().'</a>'); ?>
 	<?php endif; ?>

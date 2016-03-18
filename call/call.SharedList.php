@@ -15,7 +15,6 @@ if (isset($_GET['view'])) {
 	}
 }
 
-require '../inc/class.Frontend.php';
 require '../inc/class.FrontendShared.php';
 require '../inc/class.FrontendSharedList.php';
 

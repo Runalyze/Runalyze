@@ -5,13 +5,10 @@
  * @author Hannes Christiansen <mail@laufhannes.de>
  * @copyright http://www.runalyze.de/
  */
-if (!file_exists('data/config.php')) {
+if (!file_exists('../data/config.php')) {
 	include 'install.php';
 	exit();
 }
-
-require 'inc/class.Frontend.php';
-$Frontend = new Frontend(true);
 
 if (isset($_GET['delete'])) 
     SessionAccountHandler::logout();
@@ -20,7 +17,7 @@ if (isset($_GET['out']))
 	SessionAccountHandler::logout();
 
 if (!USER_CANT_LOGIN && SessionAccountHandler::isLoggedIn()) {
-	header('Location: index.php');
+	header('Location: dashboard');
 	exit;
 }
 

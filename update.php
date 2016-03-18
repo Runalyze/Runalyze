@@ -10,7 +10,7 @@
  * Don't change anything in this file!
  */
 
-if (!file_exists('data/config.php')) {
+if (!file_exists('../data/config.php')) {
     die('We have changed some paths. Please move your config.php file to data/config.php');
 }
 

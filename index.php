@@ -8,14 +8,13 @@
 
 use Runalyze\View\Activity\Context;
 
-if (!file_exists('data/config.php')) {
+if (!file_exists('../data/config.php')) {
 	include 'install.php';
 	exit();
 }
 
-require 'inc/class.Frontend.php';
 
-$Frontend = new Frontend();
+
 ?>
 
 <div id="container">

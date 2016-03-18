@@ -38,7 +38,7 @@
 			<?php
 				foreach (Language::availableLanguages() as $key => $lang_arr) {
 					$liClass = (Language::getCurrentLanguage() == $key) ? ' class="triggered"' : '';
-					echo '<li'.$liClass.'><a href="?lang='.$key.'">'.$lang_arr[0].'</a></li>';
+					echo '<li'.$liClass.'><a href="login?lang='.$key.'">'.$lang_arr[0].'</a></li>';
 				}
 			?>
 			</ul>

@@ -3,13 +3,10 @@
  * Display formular for editing a training
  * Call:   call/call.Training.edit.php?id=
  */
-require '../inc/class.Frontend.php';
-
 use Runalyze\Model\Activity;
 use Runalyze\View\Activity\Linker;
 use Runalyze\View\Activity\Dataview;
 
-$Frontend = new Frontend();
 
 if (isset($_GET['delete']) && is_numeric($_GET['delete'])) {
 	$Factory = Runalyze\Context::Factory();

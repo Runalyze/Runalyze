@@ -3,12 +3,9 @@
  * Window for routenet
  * @package Runalyze\Plugins\Stats
  */
-require '../../inc/class.Frontend.php';
-
 use Runalyze\View\Leaflet;
 use Runalyze\Model;
 
-$Frontend = new Frontend();
 
 require 'class.RunalyzePluginStat_Strecken.php';
 
