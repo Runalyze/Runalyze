@@ -68,6 +68,7 @@ class Setting extends AbstractKey
 	 */
 	public function stringFor(Context $context)
 	{
+	    if (!\Request::isOnSharedPage()) {
 		switch ($context->activity()->id()) {
 			case 0:
 				return '';
@@ -83,6 +84,9 @@ class Setting extends AbstractKey
 			'<span class="link"><i class="fa fa-fw fa-wrench"></i></span>'.
 			'<ul class="submenu">'.$dropdown.'</ul>'.
 			'</li></ul></div>';
+	    } else {
+		return '';
+	    }
 	}
 
 	/**
