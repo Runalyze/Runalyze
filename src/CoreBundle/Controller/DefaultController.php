@@ -62,14 +62,6 @@ class DefaultController extends Controller
     }
     
     /**
-     * @Route("/call/{file}")
-     */
-    public function callAction($file)
-    {
-        return $this->includeOldScript('../call/'.$file);
-    }
-    
-    /**
      * @Route("/plugin/{plugin}/{file}")
      */
     public function pluginAction($plugin, $file)
@@ -157,15 +149,4 @@ class DefaultController extends Controller
         return new Response;
     }
     
-
-    /**
-     * @Route("/json")
-     * @Method({"GET"})
-     */
-    public function jsonAction()
-    {
-        return new JsonResponse([
-            'pi' => 3.14159265358979323846264338327950288419716939937510582097494459230781640628998
-        ]);
-    }
 }
