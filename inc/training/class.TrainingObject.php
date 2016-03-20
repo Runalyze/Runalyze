@@ -5,6 +5,7 @@
  */
 
 use Runalyze\Configuration;
+use Runalyze\Util\LocalTime;
 use Runalyze\Util\Time;
 use Runalyze\Data\Cadence;
 
@@ -97,7 +98,7 @@ class TrainingObject extends DataObject {
 	 * @return boolean
 	 */
 	private function trainingIsTooOldToFetchWeatherData() {
-		return Time::diffInDays($this->getTimestamp()) > 1;
+		return Time::diffInDays($this->getTimestamp(), (new LocalTime)->toServerTimestamp()) > 1;
 	}
 
 	/**
@@ -491,6 +492,16 @@ class TrainingObject extends DataObject {
 	 */
 	public function getTimestamp() { return $this->get('time'); }
 
+	/**
+	 * Set timezone
+	 * @param int $timezone timezone of training
+	 */
+	public function setTimezoneOffset($timezone) { $this->set('timezone_offset', $timezone); }
+	/**
+	 * Get timezone
+	 * @return int timezone of training
+	 */
+	public function getTimezoneOffset() { return $this->get('timezone_offset'); }
 
 	/**
 	 * Get created-timestamp

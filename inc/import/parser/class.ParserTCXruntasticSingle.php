@@ -54,7 +54,7 @@ class ParserTCXruntasticSingle extends ParserTCXSingle {
 		if (!empty($TP->HeartRateBpm)) {
 			$this->LastValidHR = round($TP->HeartRateBpm->Value);
 		}
-		$this->gps['time_in_s'][]  = strtotime((string)$TP->Time) - $this->TrainingObject->getTimestamp();
+		$this->gps['time_in_s'][]  = $this->strtotime((string)$TP->Time) - $this->TrainingObject->getTimestamp();
 		$this->gps['km'][]         = round((float)$TP->DistanceMeters/1000, ParserAbstract::DISTANCE_PRECISION);
 		$this->gps['altitude'][]   = (int)$TP->AltitudeMeters;
 		$this->gps['heartrate'][]  = $this->LastValidHR;

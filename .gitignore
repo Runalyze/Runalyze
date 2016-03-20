@@ -9,6 +9,7 @@ Thumbs.db
 .build/
 .idea/
 nbproject/
+php.ini
 
 #Runalyze
 build/yuicompressor-*
@@ -16,6 +17,7 @@ img/backgrounds/My-*
 lib/phpfastcache/cache.storage.*
 *.xcf
 data/config.php
+data/timezone.sqlite
 *.mo
 
 #composer

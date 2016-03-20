@@ -219,15 +219,15 @@ class ImporterWindow {
 
 	/**
 	 * Get link for create window for a given date
-	 * @param int $timestamp
+	 * @param int $timestampInServerTime
 	 * @return string
 	 */
-	public static function linkForDate($timestamp) {
-		if ($timestamp > time()) {
+	public static function linkForDate($timestampInServerTime) {
+		if ($timestampInServerTime > time()) {
 			return '<span style="opacity:.25;">'.Icon::$ADD_SMALL.'</span>';
 		}
 
-		$date = date('d.m.Y', $timestamp);
+		$date = date('d.m.Y', $timestampInServerTime);
 
 		return Ajax::window('<a href="'.self::$URL.'?date='.$date.'">'.Icon::$ADD_SMALL.'</a>', 'small');
 	}

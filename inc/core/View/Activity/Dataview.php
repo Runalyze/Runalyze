@@ -25,6 +25,7 @@ use Runalyze\Calculation\JD\VDOTCorrector;
 use Runalyze\View\Icon\VdotIcon;
 use Runalyze\Context as GeneralContext;
 use Runalyze\Util\Time;
+use Runalyze\Util\LocalTime;
 use Runalyze\View\Stresscolor;
 
 use SessionAccountHandler;
@@ -156,7 +157,7 @@ class Dataview {
 			return '';
 		}
 
-		return date($format, $this->Activity->timestamp());
+		return (new LocalTime($this->Activity->timestamp()))->format($format);
 	}
 
 	/**
@@ -165,7 +166,7 @@ class Dataview {
 	 */
 	public function daytime() {
 		if (is_numeric($this->Activity->timestamp())) {
-			$time = date('H:i', $this->Activity->timestamp());
+			$time = (new LocalTime($this->Activity->timestamp()))->format('H:i');
 
 			if ($time != '00:00') {
 				return $time;
@@ -192,7 +193,7 @@ class Dataview {
 			return '';
 		}
 
-		return Time::weekday( date('w', $this->Activity->timestamp()) );
+		return Time::weekday( (new LocalTime($this->Activity->timestamp()))->format('w') );
 	}
 
 	/**

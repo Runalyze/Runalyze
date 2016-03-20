@@ -416,7 +416,6 @@ class Plot {
 		$this->setXAxisAsTime();
 		$this->Options['xaxis']['timeformat'] = $format;
 	}
-
 	/**
 	 * Set x-axis limits to a specific year
 	 * @param int $Year
@@ -625,10 +624,11 @@ class Plot {
 	 * Get JavaScript-timestamp for a day of a year
 	 * @param int $year
 	 * @param int $day
+	 * @param int $hour
 	 * @return int
 	 */
-	public static function dayOfYearToJStime($year, $day) {
-		return mktime(12,0,0,1,$day,$year).'000';
+	public static function dayOfYearToJStime($year, $day, $hour = 12) {
+		return mktime($hour,0,0,1,$day,$year).'000';
 	}
 
 	/**

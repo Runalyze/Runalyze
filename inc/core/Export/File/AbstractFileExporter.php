@@ -7,6 +7,7 @@
 namespace Runalyze\Export\File;
 
 use Runalyze\Export\AbstractExporter;
+use Runalyze\Util\LocalTime;
 
 /**
  * Create exporter for given type
@@ -110,7 +111,7 @@ abstract class AbstractFileExporter extends AbstractExporter
             return 'undefined.'.$this->extension();
         }
 
-        return self::fileNameStart().date('Y-m-d_H-i', $this->Context->activity()->timestamp()).'_'.$this->Context->activity()->id().'.'.$this->extension();
+        return self::fileNameStart().LocalTime::date('Y-m-d_H-i', $this->Context->activity()->timestamp()).'_'.$this->Context->activity()->id().'.'.$this->extension();
     }
 
     /**

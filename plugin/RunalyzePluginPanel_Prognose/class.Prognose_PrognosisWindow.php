@@ -12,6 +12,7 @@ use Runalyze\Activity\Distance;
 use Runalyze\Activity\Duration;
 use Runalyze\Activity\Pace;
 use Runalyze\Activity\PersonalBest;
+use Runalyze\Util\LocalTime;
 
 /**
  * Prognosis calculator window
@@ -116,8 +117,8 @@ class Prognose_PrognosisWindow {
 		$this->InfoLines['jack-daniels'] .= __('Your current basic endurance:').' '.BasicEndurance::getConst().'.';
 
 		$ResultLine = empty($TopResults) ? __('none') : sprintf( __('%s in %s <small>(%s)</small> and %s in %s <small>(%s)</small>'),
-				Distance::format($TopResults[0]['distance']), Duration::format($TopResults[0]['s']), date('d.m.Y', $TopResults[0]['time']),
-				Distance::format($TopResults[1]['distance']), Duration::format($TopResults[1]['s']), date('d.m.Y', $TopResults[1]['time'])
+				Distance::format($TopResults[0]['distance']), Duration::format($TopResults[0]['s']), (new LocalTime($TopResults[0]['time']))->format('d.m.Y'),
+				Distance::format($TopResults[1]['distance']), Duration::format($TopResults[1]['s']), (new LocalTime($TopResults[1]['time']))->format('d.m.Y')
 		);
 		$this->InfoLines['robert-bock'] = __('Your two best results:').' '.$ResultLine;
 
@@ -212,7 +213,7 @@ class Prognose_PrognosisWindow {
 			$PacePrognosis = new Pace($Prognosis, $km, SportFactory::getSpeedUnitFor(Configuration::General()->runningSport()));
 			$PacePB = new Pace($PB->seconds(), $km, SportFactory::getSpeedUnitFor(Configuration::General()->runningSport()));
 
-			$DateWithLink = Ajax::trainingLink($PB->activityId(), date('d.m.Y', $PB->timestamp()), true);
+			$DateWithLink = Ajax::trainingLink($PB->activityId(), (new LocalTime( $PB->timestamp() ))->format('d.m.Y'), true);
 
 			$this->Prognoses[] = array(
 				'distance'	=> (new Distance($km))->stringAuto(),

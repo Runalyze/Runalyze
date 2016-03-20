@@ -4,7 +4,7 @@
  * @package Runalyze\Plugins\Stats\RunalyzePluginStat_Statistiken
  */
 
-use Runalyze\Util\Time;
+use Runalyze\Util\LocalTime;
 
 /**
  * Summary table for dataset/data browser
@@ -20,7 +20,7 @@ class SummaryTableAllWeeks extends SummaryTable10Weeks {
 		parent::prepare();
 
 		$this->Title = sprintf(__('All training weeks %s'), $this->Year);
-		$this->TimeEnd = ($this->Year == date("Y")) ? Time::weekend(time()) : Time::weekend(mktime(1, 0, 0, 12, 31, $this->Year));
-		$this->TimeStart = Time::weekstart(mktime(1, 0, 0, 12, 31, $this->Year-1));
+		$this->TimeEnd = ($this->Year == date("Y")) ? (new LocalTime)->weekend() : LocalTime::fromString('31.12.'.$this->Year.' 01:00:00')->weekend();
+		$this->TimeStart = LocalTime::fromString('01.01.'.$this->Year.' 01:00:00')->weekstart();
 	}
 }

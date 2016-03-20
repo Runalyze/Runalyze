@@ -13,6 +13,7 @@ use Runalyze\Calculation\JD\VDOTCorrector;
 use Runalyze\Configuration;
 use Runalyze\Activity\Distance;
 use Runalyze\Activity\Duration;
+use Runalyze\Util\LocalTime;
 
 use Runalyze\Calculation\Prognosis\Daniels;
 use HTML;
@@ -79,7 +80,7 @@ class TableRow {
 	 * @return string
 	 */
 	public function date() {
-		return date('d.m.Y', $this->Activity->timestamp());
+		return LocalTime::date('d.m.Y', $this->Activity->timestamp());
 	}
 
 	/**

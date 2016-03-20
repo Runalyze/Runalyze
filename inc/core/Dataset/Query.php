@@ -6,6 +6,8 @@
 
 namespace Runalyze\Dataset;
 
+use Runalyze\Util\LocalTime;
+
 /**
  * Build query to fetch dataset values from `runalyze_training`
  * 
@@ -322,12 +324,12 @@ class Query
 	 */
 	protected function queryToSelectTimerange($timerange, $timeEnd = false, $asColumn = 'timerange')
 	{
-		$timeEnd = $timeEnd ?: time();
+		$timeEnd = $timeEnd ?: LocalTime::now();
 
 		if ($timerange == self::YEAR_TIMERANGE) {
-			return date('Y', $timeEnd).' - YEAR(FROM_UNIXTIME(`t`.`time`)) as `'.$asColumn.'`';
+			return LocalTime::date('Y', $timeEnd).' - YEAR(FROM_UNIXTIME(`t`.`time`)) as `'.$asColumn.'`';
 		} elseif ($timerange == self::MONTH_TIMERANGE) {
-			return date('m', $timeEnd).' - MONTH(FROM_UNIXTIME(`t`.`time`)) + 12*('.date('Y', $timeEnd).' - YEAR(FROM_UNIXTIME(`t`.`time`))) as `'.$asColumn.'`';
+			return LocalTime::date('m', $timeEnd).' - MONTH(FROM_UNIXTIME(`t`.`time`)) + 12*('.LocalTime::date('Y', $timeEnd).' - YEAR(FROM_UNIXTIME(`t`.`time`))) as `'.$asColumn.'`';
 		}
 
 		return 'FLOOR(('.$timeEnd.'-`t`.`time`)/('.$timerange.')) as `'.$asColumn.'`';
@@ -335,12 +337,12 @@ class Query
 
 	/**
 	 * @param int $timeStart default: 0
-	 * @param int $timeEnd default: time()
+	 * @param int|bool $timeEnd default: LocalTime::now()
 	 * @return string
 	 */
 	protected function whereTimeIsBetween($timeStart = 0, $timeEnd = false)
 	{
-		$timeEnd = $timeEnd ?: time();
+		$timeEnd = $timeEnd ?: LocalTime::now();
 
 		return '`t`.`time` BETWEEN '.($timeStart - 10).' AND '.($timeEnd - 10);
 	}

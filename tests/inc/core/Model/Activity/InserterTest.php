@@ -454,4 +454,40 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		$this->assertFalse($ResultActivity->isNight());
 	}
 
+	public function testTimezoneOffset() {
+		$Object = $this->fetch(
+			$this->insert([])
+		);
+
+		$this->assertFalse($Object->knowsTimezoneOffset());
+		$this->assertEquals(null, $Object->timezoneOffset());
+
+		$ObjectWithNull = $this->fetch(
+			$this->insert([
+				Entity::TIMEZONE_OFFSET => null
+			])
+		);
+
+		$this->assertFalse($ObjectWithNull->knowsTimezoneOffset());
+		$this->assertEquals(null, $ObjectWithNull->timezoneOffset());
+
+		$ObjectWithOffset = $this->fetch(
+			$this->insert([
+				Entity::TIMEZONE_OFFSET => 120
+			])
+		);
+
+		$this->assertTrue($ObjectWithOffset->knowsTimezoneOffset());
+		$this->assertEquals(120, $ObjectWithOffset->timezoneOffset());
+
+		$ObjectWithNegativeOffset = $this->fetch(
+			$this->insert([
+				Entity::TIMEZONE_OFFSET => -60
+			])
+		);
+
+		$this->assertTrue($ObjectWithNegativeOffset->knowsTimezoneOffset());
+		$this->assertEquals(-60, $ObjectWithNegativeOffset->timezoneOffset());
+	}
+
 }
