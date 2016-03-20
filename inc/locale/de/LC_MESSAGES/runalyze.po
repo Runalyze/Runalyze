@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-03-10 18:19+0100\n"
-"PO-Revision-Date: 2016-03-10 18:28+0200\n"
-"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
+"PO-Revision-Date: 2016-03-20 11:24+0200\n"
+"Last-Translator: Hannes <mail@laufhannes.de>\n"
 "Language-Team: German "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
@@ -845,7 +845,7 @@ msgstr "&oslash; bpm"
 
 #: inc/training/view/section/table/class.TableLapsComputed.php:67
 msgid "elev."
-msgstr "Anstieg"
+msgstr "Hm"
 
 #: inc/training/view/section/table/class.TableZonesPace.php:35
 #: inc/core/View/Window/Laps/Table.php:143
@@ -7552,7 +7552,7 @@ msgstr ""
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:620
 #, php-format
 msgid "* In general, all runs with more than %s are being considered."
-msgstr "* Generell werden alle Läufe ab %s km betrachtet."
+msgstr "* Generell werden alle Läufe ab %s betrachtet."
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:624
 msgid ""
