@@ -26,6 +26,7 @@ $Query = DB::getInstance()->prepare(
 		(DAYOFWEEK(FROM_UNIXTIME(`time`))-1) as `day`
 	FROM `'.PREFIX.'training`
 	WHERE
+		`accountid`='.SessionAccountHandler::getId().' AND
 		`sportid`=:id
 		'.$this->getYearDependenceForQuery().'
 	GROUP BY `day`

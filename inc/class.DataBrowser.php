@@ -86,10 +86,10 @@ class DataBrowser {
 	protected $AdditionalColumns = 2;
 
 	/**
-	 * Boolean flag: show public link for trainings
+	 * Boolean flag: has current view no activities
 	 * @var boolean
 	 */
-	protected $ShowPublicLink = false;
+	protected $AllDaysEmpty = true;
 
 	/**
 	 * Default constructor
@@ -142,7 +142,7 @@ class DataBrowser {
 		$this->initEmptyDays();
 
 		$Statement = $this->DatasetQuery->statementToFetchActivities($this->TimestampStart, $this->TimestampEnd);
-
+		
 		while ($Training = $Statement->fetch()) {
 			$w = Time::diffInDays($Training['time'], $this->TimestampStart);
 
@@ -151,6 +151,7 @@ class DataBrowser {
 			} else {
 				$this->Days[$w]['trainings'][] = $Training;
 			}
+			$this->AllDaysEmpty = false;
 		}
 	}
 

@@ -32,6 +32,7 @@ class DataBrowser extends \Runalyze\Configuration\Category {
 		$this->createHandle('DB_DISPLAY_MODE', new DataBrowserMode());
 		$this->createHandle('DB_SHOW_DATASET_LABELS', new Boolean(true));
 		$this->createHandle('DB_SHOW_CREATELINK_FOR_DAYS', new Boolean(false));
+		$this->createHandle('DB_SHOW_ACTIVE_DAYS_ONLY', new Boolean(false));
 	}
 
 	/**
@@ -57,6 +58,14 @@ class DataBrowser extends \Runalyze\Configuration\Category {
 	public function showCreateLink() {
 		return $this->get('DB_SHOW_CREATELINK_FOR_DAYS');
 	}
+	
+	/**
+	 * Show days with activities only
+	 * @return bool
+	 */
+	public function showActiveDaysOnly() {
+		return $this->get('DB_SHOW_ACTIVE_DAYS_ONLY');
+	}
 
 	/**
 	 * Register onchange events
@@ -64,6 +73,7 @@ class DataBrowser extends \Runalyze\Configuration\Category {
 	protected function registerOnchangeEvents() {
 		$this->handle('DB_SHOW_DATASET_LABELS')->registerOnchangeFlag(Ajax::$RELOAD_DATABROWSER);
 		$this->handle('DB_SHOW_CREATELINK_FOR_DAYS')->registerOnchangeFlag(Ajax::$RELOAD_DATABROWSER);
+		$this->handle('DB_SHOW_ACTIVE_DAYS_ONLY')->registerOnchangeFlag(Ajax::$RELOAD_DATABROWSER);
 
 		$this->handle('DB_DISPLAY_MODE')->registerOnchangeEvent('Runalyze\\Configuration\\Category\\DataBrowser::showNewTimerangeInDB');
 	}
@@ -82,6 +92,10 @@ class DataBrowser extends \Runalyze\Configuration\Category {
 
 		$Fieldset->addHandle( $this->handle('DB_SHOW_DATASET_LABELS'), array(
 			'label'		=> __('Calendar: show labels for dataset')
+		));
+		
+		$Fieldset->addHandle( $this->handle('DB_SHOW_ACTIVE_DAYS_ONLY'), array(
+			'label'		=> __('Calendar: show days with activities only')
 		));
 
 		$Fieldset->addHandle( $this->handle('DB_SHOW_CREATELINK_FOR_DAYS'), array(

@@ -28,7 +28,7 @@ class Context {
 	 * @var \Runalyze\Model\Trackdata\Entity
 	 */
 	protected $Trackdata;
-        
+
 	/**
 	 * @var \Runalyze\Model\Swimdata\Entity
 	 */
@@ -98,7 +98,7 @@ class Context {
 	public function trackdata() {
 		return $this->Trackdata;
 	}
-        
+
 	/**
 	 * @return \Runalyze\Model\Swimdata\Entity
 	 */
@@ -147,7 +147,7 @@ class Context {
 	public function hasRoute() {
 		return !is_null($this->Route);
 	}
-        
+
 	/**
 	 * @return boolean
 	 */

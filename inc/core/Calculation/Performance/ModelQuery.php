@@ -113,6 +113,7 @@ class ModelQuery {
 				SUM(`trimp`) as `trimp`
 			FROM `'.PREFIX.'training`
 			WHERE '.$Where.'
+			AND `accountid`='.\SessionAccountHandler::getId().'
 			GROUP BY `date`';
 
 		return $Query;

@@ -84,6 +84,18 @@ class WindSpeed implements ValueInterface
     {
         return $this->set($kilometerPerHour);
     }
+    
+    /**
+     * Set wind speed in m/s
+     * @param float $meterPerSecond [m/s]
+     * @return \Runalyze\Data\Weather\WindSpeed $this-reference
+     */
+    public function setMeterPerSecond($meterPerSecond)
+    {
+        $this->KilometerPerHour = $meterPerSecond * 3.6;
+	
+	return $this;
+    }
 
     /**
      * Set wind speed in mph

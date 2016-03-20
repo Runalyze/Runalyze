@@ -204,7 +204,7 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 				YEAR(FROM_UNIXTIME(`time`)) as `year`,
 				MONTH(FROM_UNIXTIME(`time`)) as `month`
 			FROM `'.PREFIX.'training`
-			WHERE `elevation` > 0 '.$this->getSportAndYearDependenceForQuery().'
+			WHERE `accountid`='.SessionAccountHandler::getId().' AND `elevation` > 0 '.$this->getSportAndYearDependenceForQuery().'
 			GROUP BY `year`, `month`'
 		)->fetchAll();
 

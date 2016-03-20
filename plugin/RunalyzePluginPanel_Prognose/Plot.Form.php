@@ -47,6 +47,7 @@ if (START_TIME != time()) {
 				SUM('.JD\Shape::mysqlVDOTsum($withElevation).')/SUM('.JD\Shape::mysqlVDOTsumTime($withElevation).') as `vdot`
 			FROM `'.PREFIX.'training`
 			WHERE
+				`accountid`='.\SessionAccountHandler::getId().' AND
 				`vdot`>0 AND use_vdot<>0
 			GROUP BY `y`, `m`, `d`
 			ORDER BY `y` ASC, `m` ASC, `d` ASC')->fetchAll();
@@ -89,7 +90,8 @@ if (START_TIME != time()) {
 					`id`,
 					`s`
 				FROM `'.PREFIX.'training`
-				WHERE
+				WHERE 
+					`accountid`='.\SessionAccountHandler::getId().' AND
 					`typeid`="'.Configuration::General()->competitionType().'"
 					AND `distance`="'.$distance.'"
 				ORDER BY

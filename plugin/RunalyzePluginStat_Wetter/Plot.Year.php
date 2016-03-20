@@ -17,6 +17,7 @@ $Query = '
 		AVG(`temperature`) as `temp`
 	FROM `'.PREFIX.'training`
 	WHERE
+		`accountid`='.SessionAccountHandler::getId().' AND
 		!ISNULL(`temperature`) AND
 		`time` BETWEEN UNIX_TIMESTAMP(\''.(int)$Year.'-01-01\') AND UNIX_TIMESTAMP(\''.((int)$Year+1).'-01-01\')-1
 	GROUP BY `d`

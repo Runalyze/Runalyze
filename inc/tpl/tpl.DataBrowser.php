@@ -63,21 +63,25 @@ $Table = new \Runalyze\View\Dataset\Table($this->DatasetConfig);
 			<?php if (\Runalyze\Configuration::DataBrowser()->showLabels()): ?>
 			<thead class="data-browser-labels">
 				<tr class="small">
-					<td colspan="<?php echo (2 + $this->ShowPublicLink); ?>"></td>
+					<td colspan="2"></td>
 					<?php echo $Table->codeForColumnLabels(); ?>
 				</tr>
 			</thead>
 			<?php endif; ?>
 			<tbody class="top-and-bottom-border">
 <?php
+$currentWeek = null;
+$currentMonth = null;
 foreach ($this->Days as $i => $day) {
 	$trClass = '';
+	$week = (int)\Runalyze\Configuration::General()->weekStart()->phpWeek($day['date']);
+	$month = (int)LocalTime::date('n', $day['date']);
 
-	if ($i > 0 && (new LocalTime($day['date']))->format('w') == \Runalyze\Configuration::General()->weekStart()->value()) {
+	if ($i > 0 && $week != $currentWeek) {
 		$trClass = $weekSeparator;
 	}
 
-	if ($i > 0 && (new LocalTime($day['date']))->format('j') == 1) {
+	if ($i > 0 && $month != $currentMonth) {
 		$trClass = ($trClass == '') ? $monthSeparator : ' top-separated';
 	}
 
@@ -108,15 +112,14 @@ foreach ($this->Days as $i => $day) {
 
 			$Context->setActivityData($Training);
 
-			if ($this->ShowPublicLink) {
-				echo $Table->codeForPublicIcon($Context);
-			}
-
 			echo $Table->codeForColumns($Context);
 
 			echo '</tr>';
 		}
-	} else {
+
+		$currentWeek = $week;
+		$currentMonth = $month;
+	} elseif (!\Runalyze\Configuration::DataBrowser()->showActiveDaysOnly() || !empty($day['shorts'])) {
 		echo '
 			<tr class="r'.$trClass.'">
 				<td class="l" style="width:24px;">';
@@ -130,9 +133,16 @@ foreach ($this->Days as $i => $day) {
 
 		echo '</td>
 				<td class="l as-small-as-possible">'.$this->dateString($day['date']).'</td>
-				<td colspan="'.($Table->numColumns() + $this->ShowPublicLink).'"></td>
+				<td colspan="'.($Table->numColumns()).'"></td>
 			</tr>';
+
+		$currentWeek = $week;
+		$currentMonth = $month;
 	}
+}
+
+if ($this->AllDaysEmpty && \Runalyze\Configuration::DataBrowser()->showActiveDaysOnly()) {
+    echo '<tr><td colspan="'.($Table->numColumns() + 2).'"><em>'.__('There are no activities for this time range.').'</em></td></tr>';
 }
 
 echo '</tbody>';

@@ -92,7 +92,7 @@ class RunalyzePluginStat_Trainingszeiten extends PluginStat {
 			$sports_not_short = $this->sportid.',';
 		} else {
 			$sports_not_short = '';
-			$sports = DB::getInstance()->query('SELECT `id` FROM `'.PREFIX.'sport` WHERE `short`=0 AND `accountid` = '.SessionAccountHandler::getId())->fetchAll();
+			$sports = DB::getInstance()->query('SELECT `id` FROM `'.PREFIX.'sport` WHERE `accountid`='.\SessionAccountHandler::getId().' AND `short`=0 AND `accountid` = '.SessionAccountHandler::getId())->fetchAll();
 			foreach ($sports as $sport)
 				$sports_not_short .= $sport['id'].',';
 		}

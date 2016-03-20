@@ -290,7 +290,7 @@ class BasicEndurance {
 						0
 					) as `points`
 				FROM '.PREFIX.'training
-				WHERE `time` BETWEEN '.$StartTimeForLongjogs.' AND '.$timestamp.' AND `sportid`='.Configuration::General()->runningSport().' AND distance>'.$this->MIN_KM_FOR_LONGJOG;
+				WHERE `accountid`='.\SessionAccountHandler::getId().' AND `time` BETWEEN '.$StartTimeForLongjogs.' AND '.$timestamp.' AND `sportid`='.Configuration::General()->runningSport().' AND distance>'.$this->MIN_KM_FOR_LONGJOG;
 		}
 
 		return '
@@ -309,7 +309,7 @@ class BasicEndurance {
 					)
 				) as `sum`
 			FROM '.PREFIX.'training
-			WHERE `time` BETWEEN '.min($StartTimeForLongjogs,$StartTimeForWeekKm).' AND '.$timestamp.' AND `sportid`='.Configuration::General()->runningSport().'
+			WHERE `accountid`='.\SessionAccountHandler::getId().' AND `time` BETWEEN '.min($StartTimeForLongjogs,$StartTimeForWeekKm).' AND '.$timestamp.' AND `sportid`='.Configuration::General()->runningSport().'
 			GROUP BY accountid
 			LIMIT 1';
 	}

@@ -27,6 +27,7 @@ $Query = '
 		AVG(`temperature`) as `temp`
 	FROM `'.PREFIX.'training`
 	WHERE
+		`accountid`='.SessionAccountHandler::getId().' AND
 		!ISNULL(`temperature`)
 	GROUP BY `y`, `m`
 	ORDER BY `y` ASC, `m` ASC';

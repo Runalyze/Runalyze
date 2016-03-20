@@ -8,6 +8,7 @@ namespace Runalyze\View\Icon;
 
 use Runalyze\Data\Weather\WindDegree;
 use Runalyze\Data\Weather\WindSpeed;
+use Runalyze\Data\Weather\BeaufortScale;
 
 /**
  * Wind icon
@@ -28,6 +29,9 @@ class WindIcon extends \Runalyze\View\Icon
     /** @var \Runalyze\Data\Weather\WindDegree */
     protected $WindDegree;
 
+    /** @var \Runalyze\Data\Weather\BeaufortScale */
+    protected $BeaufortScale;
+
     /**
      * WindIcon constructor.
      * @param \Runalyze\Data\Weather\WindSpeed $windSpeed
@@ -37,6 +41,7 @@ class WindIcon extends \Runalyze\View\Icon
     {
         $this->WindSpeed = $windSpeed;
         $this->WindDegree = $windDegree;
+	    $this->BeaufortScale = new BeaufortScale($windSpeed);
 
         $this->setDefaultTooltip();
     }
@@ -50,6 +55,7 @@ class WindIcon extends \Runalyze\View\Icon
 
         if (!$this->WindSpeed->isUnknown()) {
             $strings[] = $this->WindSpeed->string();
+	        $strings[] = $this->BeaufortScale->shortString();
         }
 
         if (!$this->WindDegree->isUnknown()) {
@@ -77,7 +83,7 @@ class WindIcon extends \Runalyze\View\Icon
             $code .= '<span class="'.self::DIRECTION_CLASS.'" style="transform:rotate('.$this->WindDegree->value().'deg);"></span> ';
         }
 
-        $code .= $this->WindSpeed->isUnknown() ? '?' : $this->WindSpeed->string(false);
+        $code .= $this->WindSpeed->isUnknown() ? '?' : $this->BeaufortScale->string(false);
         $code .= '</span>';
 
         return $code;
