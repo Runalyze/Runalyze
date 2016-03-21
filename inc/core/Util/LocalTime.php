@@ -212,15 +212,15 @@ class LocalTime extends \DateTime
 
     /**
      * LocalTime equivalent for mktime(...)
-     * @param int|null $hour
-     * @param int|null $minute
-     * @param int|null $second
-     * @param int|null $month
-     * @param int|null $day
-     * @param int|null $year
+     * @param int $hour
+     * @param int $minute
+     * @param int $second
+     * @param int $month
+     * @param int $day
+     * @param int $year
      * @return int
      */
-    public static function mktime($hour = null, $minute = null, $second = null, $month = null, $day = null, $year = null)
+    public static function mktime($hour, $minute, $second, $month, $day, $year)
     {
         return self::fromServerTime(mktime($hour, $minute, $second, $month, $day, $year))->getTimestamp();
     }
