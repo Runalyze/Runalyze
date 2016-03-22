@@ -69,7 +69,7 @@ class PluginController extends Controller
         	echo \HTML::okay( __('The plugin has been uninstalled.') );
         
         	\PluginFactory::clearCache();
-        	\Ajax::setReloadFlag(Ajax::$RELOAD_ALL);
+        	\Ajax::setReloadFlag(\Ajax::$RELOAD_ALL);
         	echo \Ajax::getReloadCommand();
         } else {
         	echo \HTML::error( __('There was a problem, the plugin could not be uninstalled.') );
@@ -156,7 +156,7 @@ class PluginController extends Controller
         if (isset($_GET['key'])) {
         	$Factory->uninstallPlugin( filter_input(INPUT_GET, 'key') );
         
-        	echo Ajax::wrapJSforDocumentReady('Runalyze.Overlay.load("call/window.config.php");');
+        	echo \Ajax::wrapJSforDocumentReady('Runalyze.Overlay.load("call/window.config.php");');
         } elseif (isset($_GET['id']) && is_numeric($_GET['id'])) {
         	$Plugin = $Factory->newInstanceFor( $_GET['id'] );
         	$Plugin->displayConfigWindow();
@@ -173,8 +173,7 @@ class PluginController extends Controller
      public function contentPanelsAction()
      {
          $Frontend = new \Frontend();
-         $Frontend->displayPanels();
-         return new Response;
+         return new Response($Frontend->displayPanels());
      }
      
     /**

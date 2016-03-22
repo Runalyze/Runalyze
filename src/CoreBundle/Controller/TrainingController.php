@@ -13,8 +13,6 @@ use Runalyze\Model\Activity;
 use Runalyze\Export\File;
 use Runalyze\View\Window\Laps\Window;
 use Runalyze\Activity\DuplicateFinder;
-use Runalyze\Context as RunalyzeContext;
-use Runalyze\Model\Route as RunalyzeRoute;
 use Runalyze\Calculation\Route\Calculator;
 use Runalyze\Data\Elevation\Correction\NoValidStrategyException;
 
@@ -73,7 +71,7 @@ class TrainingController extends Controller
                 $Updater->update();
                 break;
             case 'delete':
-                $Factory = Runalyze\Context::Factory();
+                $Factory = \Runalyze\Context::Factory();
                 $Deleter = new Activity\Deleter(\DB::getInstance(), $Context->activity());
                 $Deleter->setAccountID(\SessionAccountHandler::getId());
                 $Deleter->setEquipmentIDs($Factory->equipmentForActivity(\Request::sendId(), true));
@@ -151,7 +149,7 @@ class TrainingController extends Controller
         
         $Frontend = new \Frontend();
         
-        $Factory = RunalyzeContext::Factory();
+        $Factory = \Runalyze\Context::Factory();
         $Activity = $Factory->activity(\Request::sendId());
         $ActivityOld = clone $Activity;
         $Route = $Factory->route($Activity->get(Activity\Entity::ROUTEID));
@@ -168,7 +166,7 @@ class TrainingController extends Controller
         	$Calculator->calculateElevation();
         	$Activity->set(Activity\Entity::ELEVATION, $Route->elevation());
         
-        	$UpdaterRoute = new RunalyzeRoute\Updater(DB::getInstance(), $Route, $RouteOld);
+        	$UpdaterRoute = new \Runalyze\Route\Updater(DB::getInstance(), $Route, $RouteOld);
         	$UpdaterRoute->setAccountID(\SessionAccountHandler::getId());
         	$UpdaterRoute->update();
         
