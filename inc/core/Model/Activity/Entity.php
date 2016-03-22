@@ -24,6 +24,12 @@ class Entity extends Model\EntityWithID {
 	const TIMESTAMP = 'time';
 
 	/**
+	 * Key: timezone offset [minutes]
+	 * @var string
+	 */
+	const TIMEZONE_OFFSET = 'timezone_offset';
+
+	/**
 	 * Key: timestamp created
 	 * @var string
 	 */
@@ -344,6 +350,7 @@ class Entity extends Model\EntityWithID {
 	public static function allDatabaseProperties() {
 		return array(
 			self::TIMESTAMP,
+			self::TIMEZONE_OFFSET,
 			self::TIMESTAMP_CREATED,
 			self::TIMESTAMP_EDITED,
 			self::SPORTID,
@@ -432,6 +439,7 @@ class Entity extends Model\EntityWithID {
 	 */
 	protected function canBeNull($key) {
 		switch ($key) {
+			case self::TIMEZONE_OFFSET:
 			case self::TEMPERATURE:
 			case self::WINDSPEED:
 			case self::WINDDEG:
@@ -454,6 +462,7 @@ class Entity extends Model\EntityWithID {
 	public function synchronize() {
 		parent::synchronize();
 
+		$this->ensureNullIfEmpty(self::TIMEZONE_OFFSET, true);
 		$this->ensureNullIfEmpty(self::IS_NIGHT, true);
 		$this->ensureAllNumericValues();
 		$this->synchronizeObjects();
@@ -518,6 +527,20 @@ class Entity extends Model\EntityWithID {
 	 */
 	public function timestamp() {
 		return $this->Data[self::TIMESTAMP];
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function knowsTimezoneOffset() {
+		return (null !== $this->Data[self::TIMEZONE_OFFSET]);
+	}
+
+	/**
+	 * @return int|null offset in minutes or null if unknown
+	 */
+	public function timezoneOffset() {
+		return $this->Data[self::TIMEZONE_OFFSET];
 	}
 
 	/**

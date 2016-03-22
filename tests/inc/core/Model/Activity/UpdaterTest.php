@@ -7,6 +7,7 @@ use League\Geotools\Geohash\Geohash;
 use Runalyze\Configuration;
 use Runalyze\Data\Weather\Condition;
 use Runalyze\Model;
+use Runalyze\Util\LocalTime;
 
 use PDO;
 use Shoe;
@@ -392,7 +393,7 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 
 	public function testUpdatingNight() {
 		$OldObject = new Entity([
-			Entity::TIMESTAMP => strtotime('2016-01-13 08:00:00')
+			Entity::TIMESTAMP => LocalTime::fromString('2016-01-13 08:00:00')->getTimestamp()
 		]);
 
 		$Route = new Model\Route\Entity([

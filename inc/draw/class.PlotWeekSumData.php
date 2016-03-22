@@ -5,6 +5,7 @@
  */
 
 use Runalyze\Util\Time;
+use Runalyze\Util\LocalTime;
 
 /**
  * Plot week data
@@ -107,10 +108,10 @@ class PlotWeekSumData extends PlotSumData {
 	 */
 	protected function beginningOfTimerange() {
 		if (date('w') == 0) {
-			return strtotime($this->WeekStart->firstDayOfWeekForStrtotime()." -".$this->timerEnd." weeks");
+			return LocalTime::fromString($this->WeekStart->firstDayOfWeekForStrtotime()." -".$this->timerEnd." weeks 00:00")->getTimestamp();
 		}
 
-		return strtotime($this->WeekStart->firstDayOfWeekForStrtotime()." -".($this->timerEnd - 1)." weeks");
+		return LocalTime::fromString($this->WeekStart->firstDayOfWeekForStrtotime()." -".($this->timerEnd - 1)." weeks 00:00")->getTimestamp();
 	}
 
 	/**

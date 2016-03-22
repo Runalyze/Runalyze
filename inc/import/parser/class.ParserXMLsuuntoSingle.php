@@ -108,7 +108,7 @@ class ParserXMLsuuntoSingle extends ParserAbstractSingleXML {
 	 * Parse general values
 	 */
 	protected function parseGeneralValues() {
-		$this->TrainingObject->setTimestamp( strtotime((string)$this->XML->header->DateTime) );
+		$this->TrainingObject->setTimestamp( $this->strtotime((string)$this->XML->header->DateTime) );
 
 		if (!empty($this->XML->header->Activity))
 			$this->guessSportID( (string)$this->XML->header->Activity );
@@ -167,7 +167,7 @@ class ParserXMLsuuntoSingle extends ParserAbstractSingleXML {
 	 */
 	protected function readElapsedTimeFrom(SimpleXMLElement &$Sample) {
 		if (!empty($Sample->UTC)) {
-			$FinishTimestamp = (int)strtotime((string)$Sample->UTC);
+			$FinishTimestamp = (int)$this->strtotime((string)$Sample->UTC);
 
 			if ($FinishTimestamp > $this->TrainingObject->getTimestamp())
 				$this->TrainingObject->setElapsedTime( $FinishTimestamp - $this->TrainingObject->getTimestamp() );

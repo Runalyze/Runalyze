@@ -259,9 +259,9 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 				$LastTraining = DB::getInstance()->query('SELECT time FROM `'.PREFIX.'training` WHERE `sportid`='.Configuration::General()->runningSport().' AND accountid = '.SessionAccountHandler::getId().' ORDER BY `time` DESC LIMIT 1')->fetch();
 
 				if (isset($LastTraining['time']))
-					$Text .= ' '.sprintf( __('Your last run was on %s'), date('d.m.Y', $LastTraining['time']));
+					$Text .= ' '.sprintf( __('Your last run was on %s'), \Runalyze\Util\LocalTime::date('d.m.Y', $LastTraining['time']));
 			} else {
-				$Text .= sprintf( _n('%d day of running since %s', '%d days of running since %s', $NumDays), $NumDays, date('d.m.Y', $LastTime) );
+				$Text .= sprintf( _n('%d day of running since %s', '%d days of running since %s', $NumDays), $NumDays, \Runalyze\Util\LocalTime::date('d.m.Y', $LastTime) );
 			}
 
 			echo '<p class="text c"><em>'.$Text.'</em></p>';

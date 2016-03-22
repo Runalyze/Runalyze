@@ -8,6 +8,7 @@ $PLUGINKEY = 'RunalyzePluginPanel_Sports';
 use Runalyze\Activity\Distance;
 use Runalyze\Activity\Duration;
 use Runalyze\Model\Factory;
+use Runalyze\Util\LocalTime;
 
 /**
  * Class: RunalyzePluginPanel_Sports
@@ -63,18 +64,21 @@ class RunalyzePluginPanel_Sports extends PluginPanel {
 			$this->removePanelContentPadding = true;
 		}
 
+		$Today = new LocalTime();
+		$Today->setTime(0, 0, 0);
+
 		$this->Timeset = array(
 			array(
 				'name'	=> __('Week'),
-				'start'	=> Runalyze\Util\Time::weekstart(time())
+				'start'	=> $Today->weekstart()
 			),
 			array(
 				'name'	=> __('Month'),
-				'start'	=> mktime(0,0,0,date("m"),1,date("Y"))
+				'start'	=> $Today->setDate($Today->format('Y'), $Today->format('m'), 1)->getTimestamp()
 			),
 			array(
 				'name'	=> __('Year'),
-				'start'	=> mktime(0,0,0,1,1,date("Y"))
+				'start'	=> $Today->setDate($Today->format('Y'), 1, 1)->getTimestamp()
 			),
 			array(
 				'name'	=> __('Total'),
@@ -141,7 +145,7 @@ class RunalyzePluginPanel_Sports extends PluginPanel {
 				$this->showDataInTableView($data, $timeset);
 			} else {
 				if (empty($data)) {
-					echo '<div class="panel-content"><p><em>'.__('No data available since').' '.date("d.m.Y", $timeset['start']).'.</em></p></div>';
+					echo '<div class="panel-content"><p><em>'.__('No data available since').' '.LocalTime::date("d.m.Y", $timeset['start']).'.</em></p></div>';
 				} else {
 					echo '<div class="'.BoxedValue::$SURROUNDING_DIV.' at-bottom">';
 					$this->showDataAsBoxedValues($data);
@@ -207,7 +211,7 @@ class RunalyzePluginPanel_Sports extends PluginPanel {
 			}
 		}
 
-		echo '<small class="right">'.__('since').' '.date("d.m.Y", $timeset['start']).'</small>';
+		echo '<small class="right">'.__('since').' '.LocalTime::date("d.m.Y", $timeset['start']).'</small>';
 		echo HTML::clearBreak();
 	}
 }

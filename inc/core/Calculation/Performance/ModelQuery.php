@@ -6,6 +6,8 @@
 
 namespace Runalyze\Calculation\Performance;
 
+use Runalyze\Util\LocalTime;
+
 /**
  * Query for performance model
  *
@@ -39,8 +41,8 @@ class ModelQuery {
 
 	/**
 	 * Construct
-	 * @param int $from [optional] timestamp
-	 * @param int $to [optional] timestamp
+	 * @param int|null $from [optional] timestamp
+	 * @param int|null $to [optional] timestamp
 	 */
 	public function __construct($from = null, $to = null) {
 		$this->setRange($from, $to);
@@ -48,20 +50,12 @@ class ModelQuery {
 
 	/**
 	 * Set time range
-	 * @param int $from
-	 * @param int $to
+	 * @param int|null $from
+	 * @param int|null $to
 	 */
 	public function setRange($from, $to) {
-		$this->From = $this->setHour($from,"0:00");
-		$this->To = $this->setHour($to,"23:59");
-	}
-
-	/**
-	 * set hour of timestamp
-	 */
-	public function setHour($timestamp, $hour="0:00") {
-		if ($timestamp==null) return null;
-		return strtotime($hour, $timestamp);
+		$this->From = (null === $from) ? null : LocalTime::fromServerTime($from)->setTime(0, 0, 0)->getTimestamp();
+		$this->To = (null === $to) ? null : LocalTime::fromServerTime($to)->setTime(23, 59, 50)->getTimestamp();
 	}
 
 	/**
@@ -86,12 +80,12 @@ class ModelQuery {
 	 */
 	public function execute(\PDOforRunalyze $DB) {
 		$this->Data = array();
-		$Today = new \DateTime('today 23:59');
+		$Today = LocalTime::fromString('today 23:59');
 
 		$Statement = $DB->query($this->query());
 		while ($row = $Statement->fetch()) {
 			// Don't rely on MySQLs timezone => calculate diff based on timestamp
-			$index = (int)$Today->diff(new \DateTime('@'.$row['time']))->format('%r%a');
+			$index = (int)$Today->diff(new LocalTime($row['time']))->format('%r%a');
 			$this->Data[$index] = $row['trimp'];
 		}
 	}

@@ -119,7 +119,7 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 	 * Parse general values
 	 */
 	protected function parseGeneralValues() {
-		$this->TrainingObject->setTimestamp( strtotime((string)$this->XML->Id) );
+		$this->TrainingObject->setTimestamp( $this->strtotime((string)$this->XML->Id) );
 		//$this->TrainingObject->setActivityId( (string)$this->XML->Id );
 		$this->TrainingObject->setCreatorDetails( $this->findCreator() );
 		$this->findSportId();
@@ -141,14 +141,14 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 			foreach ($this->XML->Lap as $i => $Lap) {
 				if ($i == 0) {
 					if (isset($Lap['StartTime'])) {
-						$start = strtotime((string)$Lap['StartTime']);
+						$start = $this->strtotime((string)$Lap['StartTime']);
 						if ($start < $this->TrainingObject->getTimestamp()) {
 							$this->TrainingObject->setTimestamp($start);
 						}
 					}
 
 					if (!empty($Lap->Track) && !empty($Lap->Track[0]->Trackpoint[0])) {
-						$start = strtotime((string)$Lap->Track[0]->Trackpoint[0]->Time);
+						$start = $this->strtotime((string)$Lap->Track[0]->Trackpoint[0]->Time);
 						if ($start < $this->TrainingObject->getTimestamp()) {
 							$this->TrainingObject->setTimestamp($start);
 						}
@@ -212,7 +212,7 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 			if (count($Track->xpath('./Trackpoint')) > 0) {
 				$this->distancesAreEmpty = (count($Track->xpath('./Trackpoint/DistanceMeters')) == 0);
 
-				if (strtotime((string)$Lap['StartTime']) + 8 < strtotime((string)$Track->Trackpoint[0]->Time))
+				if ($this->strtotime((string)$Lap['StartTime']) + 8 < $this->strtotime((string)$Track->Trackpoint[0]->Time))
 					$this->lastPointWasEmpty = true;
 
 				foreach ($Track->Trackpoint as $Trackpoint)
@@ -236,7 +236,7 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 		//	$TP->DistanceMeters = 1000*$this->distanceToTrackpoint($TP);
 
 		$ThisBreakInMeter   = (float)$TP->DistanceMeters - $this->lastDistance;
-		$ThisBreakInSeconds = (strtotime((string)$TP->Time) - $this->TrainingObject->getTimestamp() - end($this->gps['time_in_s'])) - $this->PauseInSeconds;
+		$ThisBreakInSeconds = ($this->strtotime((string)$TP->Time) - $this->TrainingObject->getTimestamp() - end($this->gps['time_in_s'])) - $this->PauseInSeconds;
 
 		if (Configuration::ActivityForm()->detectPauses() && !$this->isWithoutDistance) {
 			$NoMove = ($this->lastDistance == (float)$TP->DistanceMeters);
@@ -272,11 +272,11 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 			$TP->DistanceMeters = end($this->gps['km'])*1000;
 
 		if ($this->TrainingObject->getTimestamp() == 0)
-			$this->TrainingObject->setTimestamp( strtotime((string)$TP->Time) );
+			$this->TrainingObject->setTimestamp( $this->strtotime((string)$TP->Time) );
 
 		if ($this->lastPointWasEmpty) {
 			$OldPauseInSeconds = $this->PauseInSeconds;
-			$this->PauseInSeconds = (strtotime((string)$TP->Time) - $this->TrainingObject->getTimestamp() - end($this->gps['time_in_s']));
+			$this->PauseInSeconds = ($this->strtotime((string)$TP->Time) - $this->TrainingObject->getTimestamp() - end($this->gps['time_in_s']));
 			$this->pauseDuration += $this->PauseInSeconds - $OldPauseInSeconds;
 			$this->wasPause = true;
 
@@ -302,7 +302,7 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 		$this->lastPointWasEmpty   = false;
 		$this->lastPoint           = (int)$TP->DistanceMeters;
 		$this->lastDistance        = (float)$TP->DistanceMeters;
-		$this->gps['time_in_s'][]  = strtotime((string)$TP->Time) - $this->TrainingObject->getTimestamp() - $this->PauseInSeconds;
+		$this->gps['time_in_s'][]  = $this->strtotime((string)$TP->Time) - $this->TrainingObject->getTimestamp() - $this->PauseInSeconds;
 		$this->gps['km'][]         = round((float)$TP->DistanceMeters/1000, ParserAbstract::DISTANCE_PRECISION);
 		$this->gps['altitude'][]   = (int)$TP->AltitudeMeters;
 		$this->gps['heartrate'][]  = (!empty($TP->HeartRateBpm))

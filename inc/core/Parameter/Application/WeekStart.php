@@ -6,6 +6,8 @@
 
 namespace Runalyze\Parameter\Application;
 
+use Runalyze\Util\LocalTime;
+
 /**
  * Parameter to set first day of week
  * 
@@ -84,11 +86,15 @@ class WeekStart extends \Runalyze\Parameter\Select {
 	}
 
 	/**
-	 * @return int|bool
+	 * @param int|bool $now
+	 * @param bool $transformToServerTime
+	 * @return int
 	 */
-	public function phpWeek($now = false) {
+	public function phpWeek($now = false, $transformToServerTime = false) {
 		if ($now === false) {
 			$now = time();
+		} elseif ($transformToServerTime) {
+			$now = (new LocalTime($now))->toServerTimestamp();
 		}
 
 		if ($this->isSunday() && date('w', $now) == 0) {

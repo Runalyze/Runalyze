@@ -9,6 +9,7 @@ namespace Runalyze\Export\File;
 use Runalyze\Configuration;
 use Runalyze\Model\Route;
 use Runalyze\Model\Trackdata;
+use Runalyze\Util\LocalTime;
 
 /**
  * Create exporter for gpx files
@@ -71,7 +72,7 @@ class Gpx extends AbstractFileExporter
      */
     final protected function timeToString($time)
     {
-        return date("c", $time);
+        return LocalTime::date("c", $time);
     }
 
     /**

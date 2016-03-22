@@ -16,6 +16,7 @@ use Runalyze\Activity\Distance;
 use Runalyze\Activity\Duration;
 use Runalyze\Util\Time;
 use Runalyze\View\Tooltip;
+use Runalyze\Util\LocalTime;
 
 /**
  * Class: RunalyzePluginPanel_Rechenspiele
@@ -517,7 +518,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 			if ($i%10 == 0)
 				$Table .= '<tr>';
 
-			$Tooltip->setText(date('d.m.Y', $Data['time']).': '.Distance::format($Data['distance']));
+			$Tooltip->setText((new LocalTime($Data['time']))->format('d.m.Y').': '.Distance::format($Data['distance']));
 			$VDOT->setValue($Data['vdot']);
 
 			$Table .= '<td '.$Tooltip->attributes().'>'.Ajax::trainingLink($Data['id'], $VDOT->value()).'</td>';
@@ -600,7 +601,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 		foreach ($Longjogs as $Longjog) {
 			if ($Longjog['points'] >= 0.2)
 				$LongjogTable .= '<tr>
-							<td>'.Ajax::trainingLink($Longjog['id'], date('d.m.Y', $Longjog['time'])).'</td>
+							<td>'.Ajax::trainingLink($Longjog['id'], (new LocalTime($Longjog['time']))->format('d.m.Y')).'</td>
 							<td>'.Distance::format($Longjog['distance']).'</td>
 							<td>'.round($Longjog['points'], 1).' points</td>
 						</tr>';

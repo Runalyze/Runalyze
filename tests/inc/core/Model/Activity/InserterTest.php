@@ -7,6 +7,7 @@ use League\Geotools\Geohash\Geohash;
 use Runalyze\Configuration;
 use Runalyze\Model;
 use Runalyze\Data\Weather;
+use Runalyze\Util\LocalTime;
 
 use PDO;
 
@@ -428,7 +429,7 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 
 	public function testCalculatingNight() {
 		$Activity = new Entity([
-			Entity::TIMESTAMP => strtotime('2016-01-13 08:00:00')
+			Entity::TIMESTAMP => LocalTime::fromString('2016-01-13 08:00:00')->getTimestamp()
 		]);
 
 		$Route = new Model\Route\Entity([
@@ -447,11 +448,47 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		$this->assertTrue($ResultActivity->knowsIfItIsNight());
 		$this->assertTrue($ResultActivity->isNight());
 
-		$Activity->set(Entity::TIMESTAMP, strtotime('2016-01-13 09:00:00'));
+		$Activity->set(Entity::TIMESTAMP, LocalTime::fromString('2016-01-13 09:00:00')->getTimestamp());
 		$Inserter->insert($Activity);
 		$ResultActivity = $this->fetch($Inserter->insertedID());
 		$this->assertTrue($ResultActivity->knowsIfItIsNight());
 		$this->assertFalse($ResultActivity->isNight());
+	}
+
+	public function testTimezoneOffset() {
+		$Object = $this->fetch(
+			$this->insert([])
+		);
+
+		$this->assertFalse($Object->knowsTimezoneOffset());
+		$this->assertEquals(null, $Object->timezoneOffset());
+
+		$ObjectWithNull = $this->fetch(
+			$this->insert([
+				Entity::TIMEZONE_OFFSET => null
+			])
+		);
+
+		$this->assertFalse($ObjectWithNull->knowsTimezoneOffset());
+		$this->assertEquals(null, $ObjectWithNull->timezoneOffset());
+
+		$ObjectWithOffset = $this->fetch(
+			$this->insert([
+				Entity::TIMEZONE_OFFSET => 120
+			])
+		);
+
+		$this->assertTrue($ObjectWithOffset->knowsTimezoneOffset());
+		$this->assertEquals(120, $ObjectWithOffset->timezoneOffset());
+
+		$ObjectWithNegativeOffset = $this->fetch(
+			$this->insert([
+				Entity::TIMEZONE_OFFSET => -60
+			])
+		);
+
+		$this->assertTrue($ObjectWithNegativeOffset->knowsTimezoneOffset());
+		$this->assertEquals(-60, $ObjectWithNegativeOffset->timezoneOffset());
 	}
 
 }

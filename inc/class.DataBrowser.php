@@ -8,6 +8,7 @@ use Runalyze\Configuration;
 use Runalyze\Dataset;
 use Runalyze\Model\Factory;
 use Runalyze\Util\Time;
+use Runalyze\Util\LocalTime;
 
 /**
  * DataBrowser
@@ -29,13 +30,13 @@ class DataBrowser {
 
 	/**
 	 * Timestamp for first day to be displayed
-	 * @var int
+	 * @var int [timestamp without any timezone]
 	 */
 	protected $TimestampStart;
 
 	/**
 	 * Timestamp for last day to be displayed
-	 * @var int
+	 * @var int [timestamp without any timezone]
 	 */
 	protected $TimestampEnd;
 
@@ -119,11 +120,11 @@ class DataBrowser {
 			$Mode = Configuration::DataBrowser()->mode();
 
 			if ($Mode->showMonth()) {
-				$this->TimestampStart = mktime(0, 0, 0, date("m"), 1, date("Y"));
-				$this->TimestampEnd   = mktime(23, 59, 50, date("m")+1, 0, date("Y"));
+				$this->TimestampStart = LocalTime::fromString('first day of this month 00:00:00')->getTimestamp();
+				$this->TimestampEnd   = LocalTime::fromString('last day of this month 23:59:59')->getTimestamp();
 			} else {
-				$this->TimestampStart = Time::weekstart(time());
-				$this->TimestampEnd   = Time::weekend(time());
+				$this->TimestampStart = (new LocalTime)->weekstart();
+				$this->TimestampEnd   = (new LocalTime)->weekend();
 			}
 		} else {
 			$this->TimestampStart = $_GET['start'];
@@ -134,7 +135,7 @@ class DataBrowser {
 	}
 
 	/**
-	 * Init all days for beeing displayed
+	 * Init all days for being displayed
 	 */
 	protected function initDays() {
 		$this->initShortModes();
@@ -159,13 +160,17 @@ class DataBrowser {
 	 */
 	protected function initEmptyDays() {
 		$this->Days = array();
+		$date = new LocalTime($this->TimestampStart);
+		$date->setTime(0, 0, 0);
 
 		for ($w = 0; $w <= ($this->DayCount-1); $w++) {
 			$this->Days[] = array(
-				'date' => mktime(0, 0, 0, date("m",$this->TimestampStart), date("d",$this->TimestampStart)+$w, date("Y",$this->TimestampStart)),
+				'date' => $date->getTimestamp(),
 				'shorts' => array(),
 				'trainings' => array()
 			);
+
+			$date->add(new \DateInterval('P1D'));
 		}
 	}
 
@@ -198,11 +203,13 @@ class DataBrowser {
 	 * Display title
 	 */
 	protected function displayTitle() {
-		$timeForLinks = ($this->TimestampStart < time() && time() < $this->TimestampEnd) ? time() : $this->TimestampStart;
+		$now = (new LocalTime)->getTimestamp();
+		$timestampForLinks = ($this->TimestampStart < $now && $now < $this->TimestampEnd) ? $now : $this->TimestampStart;
+		$timeForLinks = new LocalTime($timestampForLinks);
 
-		echo DataBrowserLinker::monthLink(Time::month(date("m", $timeForLinks)), $timeForLinks).', ';
-		echo DataBrowserLinker::yearLink(date("Y", $timeForLinks), $timeForLinks).', ';
-		echo DataBrowserLinker::weekLink(Configuration::General()->weekStart()->phpWeek($timeForLinks).'. '.__('week') , $timeForLinks);
+		echo DataBrowserLinker::monthLink(Time::month($timeForLinks->format('m')), $timestampForLinks).', ';
+		echo DataBrowserLinker::yearLink($timeForLinks->format('Y'), $timestampForLinks).', ';
+		echo DataBrowserLinker::weekLink(Configuration::General()->weekStart()->phpWeek($timestampForLinks, true).'. '.__('week') , $timestampForLinks);
 	}
 
 	/**
@@ -321,22 +328,22 @@ class DataBrowser {
 
 	/**
 	 * Get date string for given timestamp
-	 * @param int $timestamp
+	 * @param int $timestampInNoTimezone
 	 * @return string
 	 */
-	protected function dateString($timestamp) {
-		$date    = date('d.m.', $timestamp);
+	protected function dateString($timestampInNoTimezone) {
+		$localTime = new LocalTime($timestampInNoTimezone);
 		$addLink = '';
-		$weekDay = Time::weekday(date('w', $timestamp), true);
+		$weekDay = Time::weekday($localTime->format('w'), true);
 
 		if (Configuration::DataBrowser()->showCreateLink() && !FrontendShared::$IS_SHOWN) {
-			$addLink = ImporterWindow::linkForDate($timestamp);
+			$addLink = ImporterWindow::linkForDate($localTime->toServerTimestamp());
 		}
 
-		if (Time::isToday($timestamp)) {
+		if ($localTime->isToday()) {
 			$weekDay = '<strong>'.$weekDay.'</strong>';
 		}
 
-		return $date.' '.$addLink.' '.$weekDay;
+		return $localTime->format('d.m.').' '.$addLink.' '.$weekDay;
 	}
 }

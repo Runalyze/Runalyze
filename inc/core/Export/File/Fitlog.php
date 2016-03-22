@@ -8,6 +8,7 @@ namespace Runalyze\Export\File;
 
 use Runalyze\Model\Route;
 use Runalyze\Model\Trackdata;
+use Runalyze\Util\LocalTime;
 use SessionAccountHandler;
 
 /**
@@ -72,7 +73,7 @@ class Fitlog extends AbstractFileExporter
      */
     final protected function timeToString($time)
     {
-        return date("c", (int)$time);
+        return LocalTime::date("c", (int)$time);
     }
 
     /**

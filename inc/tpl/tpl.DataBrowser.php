@@ -1,3 +1,8 @@
+<?php
+
+use Runalyze\Util\LocalTime;
+
+?>
 <div class="panel-heading">
 	<div class="panel-menu">
 		<?php $this->displayIconLinks(); ?>
@@ -70,7 +75,7 @@ $currentMonth = null;
 foreach ($this->Days as $i => $day) {
 	$trClass = '';
 	$week = (int)\Runalyze\Configuration::General()->weekStart()->phpWeek($day['date']);
-	$month = (int)date('n', $day['date']);
+	$month = (int)LocalTime::date('n', $day['date']);
 
 	if ($i > 0 && $week != $currentWeek) {
 		$trClass = $weekSeparator;

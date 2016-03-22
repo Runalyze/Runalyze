@@ -6,6 +6,7 @@
 
 use Runalyze\Activity\Distance;
 use Runalyze\Configuration;
+use Runalyze\Util\LocalTime;
 
 /**
  * Summary table for dataset/data browser
@@ -20,8 +21,8 @@ class SummaryTableAllYears extends SummaryTable {
 	protected function prepare() {
 		$this->Title = __('All years');
 		$this->Timerange = 366*DAY_IN_S;
-		$this->TimeEnd = mktime(23, 59, 59, 12, 31, date('Y'));
-		$this->TimeStart = mktime(0, 0, 1, 1, 1, date('Y', START_TIME));
+		$this->TimeEnd = (new LocalTime)->yearEnd();
+		$this->TimeStart = (new LocalTime(START_TIME))->yearStart();
 		$this->AdditionalColumns = 1 * ($this->Sportid == Configuration::General()->runningSport());
 	}
 
@@ -31,11 +32,9 @@ class SummaryTableAllYears extends SummaryTable {
 	 * @return string
 	 */
 	protected function rowHead($index) {
-		$year = date('Y', $this->TimeEnd - ($index + 0.5)*366*DAY_IN_S);
-		$start = mktime(0, 0, 1, 1, 1, $year);
-		$end   = mktime(23, 59, 59, 12, 31, $year);
+		$timestampInMiddelOfYear = $this->TimeEnd - ($index + 0.5)*366*DAY_IN_S;
 
-		return DataBrowserLinker::link($year, $start, $end, '');
+		return DataBrowserLinker::yearLink(date('Y', $timestampInMiddelOfYear), $timestampInMiddelOfYear);
 	}
 
 	/**
@@ -46,13 +45,15 @@ class SummaryTableAllYears extends SummaryTable {
 		if ($this->AdditionalColumns) {
 			$weekFactor  = 52;
 			$monthFactor = 12;
+			$startTime = new LocalTime(START_TIME);
 
 			if ($data['timerange'] == 0) {
-				$weekFactor  = (date('z')+1) / 7;
-				$monthFactor = (date('z')+1) / 30.4;
-			} elseif ($data['timerange'] == (date('Y') - START_YEAR) && date('Y', START_TIME) == START_YEAR) {
-				$weekFactor  = 53 - date("W", START_TIME);
-				$monthFactor = 13 - date("n", START_TIME);
+				$now = new LocalTime();
+				$weekFactor  = ($now->format('z')+1) / 7;
+				$monthFactor = ($now->format('z')+1) / 30.4;
+			} elseif ($data['timerange'] == (date('Y') - START_YEAR) && $startTime->format('Y') == START_YEAR) {
+				$weekFactor  = 53 - $startTime->format("W");
+				$monthFactor = 13 - $startTime->format("n");
 			}
 
 			if ($data['distance'] > 0) {

@@ -5,6 +5,7 @@
  */
 
 use Runalyze\Configuration;
+use Runalyze\Util\LocalTime;
 
 /**
  * Abstract parser for one single training
@@ -93,6 +94,42 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 			\Runalyze\Error::getInstance()->addDebug('ParserAbstractSingle has only one training, asked for index = '.$index);
 
 		return $this->TrainingObject;
+	}
+
+	/**
+	 * Set timestamp and timezone offset
+	 * @param $stringWithTimezoneInformation
+	 */
+	protected function setTimestampAndTimezoneOffsetFrom($stringWithTimezoneInformation) {
+		try {
+			$DateTime = new DateTime($stringWithTimezoneInformation);
+
+			$this->TrainingObject->setTimestamp($DateTime->getTimestamp() + $DateTime->getOffset());
+			$this->TrainingObject->setTimezoneOffset(round($DateTime->getOffset() / 60));
+		} catch (Exception $e) {
+			// Invalid date
+		}
+	}
+
+	/**
+	 * Interpret current timestamp of training object as server time
+	 */
+	protected function interpretTimestampAsServerTime() {
+		$this->TrainingObject->setTimestamp(LocalTime::fromServerTime($this->TrainingObject->getTimestamp()));
+	}
+
+	/**
+	 * Adjusted strtotime
+	 * Timestamps are given in UTC but local timezone offset has to be considered!
+	 * @param $string
+	 * @return int
+	 */
+	protected function strtotime($string) {
+		if (substr($string, -1) == 'Z') {
+			return LocalTime::fromServerTime(strtotime(substr($string, 0, -1).' UTC'))->getTimestamp();
+		}
+
+		return LocalTime::fromString($string)->getTimestamp();
 	}
 
 	/**
@@ -317,7 +354,7 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 				$this->gps['km'][] = $lastDistance + $step;
 				$lastDistance += $step;
 			}
-
+			
 			$this->TrainingObject->setArrayDistance( $this->gps['km'] );
 			$this->TrainingObject->setDistance( end($this->gps['km']) );
 		}

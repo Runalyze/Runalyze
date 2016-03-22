@@ -3,6 +3,9 @@
  * This file contains class::DataBrowserShared
  * @package Runalyze\DataBrowser
  */
+
+use Runalyze\Util\LocalTime;
+
 /**
  * Shared version of DataBrowser
  * @author Hannes Christiansen
@@ -40,8 +43,8 @@ class DataBrowserShared extends DataBrowser {
 	 * Init private timestamps from request
 	 */
 	protected function initTimestamps() {
-		$this->TimestampStart = isset($_GET['start']) && is_numeric($_GET['start']) ? $_GET['start'] : mktime(0, 0, 0, date("m"), 1, date("Y"));
-		$this->TimestampEnd   = isset($_GET['end']) && is_numeric($_GET['end']) ? $_GET['end'] : mktime(23, 59, 50, date("m")+1, 0, date("Y"));
+		$this->TimestampStart = isset($_GET['start']) && is_numeric($_GET['start']) ? $_GET['start'] : LocalTime::fromString('first day of this month 00:00:00')->getTimestamp();
+		$this->TimestampEnd   = isset($_GET['end']) && is_numeric($_GET['end']) ? $_GET['end'] : LocalTime::fromString('last day of this month 23:59:59')->getTimestamp();
 
 		$this->DayCount = round(($this->TimestampEnd - $this->TimestampStart) / 86400);
 	}
