@@ -10,6 +10,7 @@ use League\Geotools\Coordinate\CoordinateInterface;
 use League\Geotools\Geohash\Geohash;
 use Runalyze\Model\Activity;
 use Runalyze\Model\Route;
+use Runalyze\Util\LocalTime;
 use Runalyze\View\Activity\Context;
 
 /**
@@ -34,30 +35,28 @@ class NightDetector
      * NightDetector constructor
      * @param bool|int $timestamp
      * @param \League\Geotools\Coordinate\CoordinateInterface|null $coordinate
-     * @param int $offset
      */
-    public function __construct($timestamp = false, CoordinateInterface $coordinate = null, $offset = 0)
+    public function __construct($timestamp = false, CoordinateInterface $coordinate = null)
     {
         if ($timestamp !== false && null !== $coordinate) {
-            $this->setFrom($timestamp, $coordinate, $offset);
+            $this->setFrom($timestamp, $coordinate);
         }
     }
 
     /**
      * @param int $timestamp
      * @param \League\Geotools\Coordinate\CoordinateInterface $coordinate
-     * @param int $offset
      * @return \Runalyze\Calculation\NightDetector $this-reference
      * @throws \InvalidArgumentException
      */
-    public function setFrom($timestamp, CoordinateInterface $coordinate, $offset = 0)
+    public function setFrom($timestamp, CoordinateInterface $coordinate)
     {
         if (!is_numeric($timestamp)) {
             throw new \InvalidArgumentException('Provided timestamp must be numerical.');
         }
 
-        $isAfterSunset = $timestamp > date_sunset($timestamp, SUNFUNCS_RET_TIMESTAMP, $coordinate->getLatitude(), $coordinate->getLongitude(), self::ZENITH, $offset);
-        $isBeforeSunrise = $timestamp < date_sunrise($timestamp, SUNFUNCS_RET_TIMESTAMP, $coordinate->getLatitude(), $coordinate->getLongitude(), self::ZENITH, $offset);
+        $isAfterSunset = $timestamp > date_sunset($timestamp, SUNFUNCS_RET_TIMESTAMP, $coordinate->getLatitude(), $coordinate->getLongitude(), self::ZENITH);
+        $isBeforeSunrise = $timestamp < date_sunrise($timestamp, SUNFUNCS_RET_TIMESTAMP, $coordinate->getLatitude(), $coordinate->getLongitude(), self::ZENITH);
 
         $this->Value = $isAfterSunset || $isBeforeSunrise;
 
@@ -67,16 +66,16 @@ class NightDetector
     /**
      * @param \Runalyze\Model\Activity\Entity $activity
      * @param \Runalyze\Model\Route\Entity $route
-     * @param int $offset
      * @return \Runalyze\Calculation\NightDetector $this-reference
      */
-    public function setFromEntities(Activity\Entity $activity, Route\Entity $route, $offset = 0)
+    public function setFromEntities(Activity\Entity $activity, Route\Entity $route)
     {
         if ($route->hasGeohashes() && $route->get(Route\Entity::STARTPOINT) != '') {
-            $timestamp = $activity->timestamp() + 0.5 * $activity->duration();
+            // TODO use activity's offset if known
+            $timestamp = (new LocalTime($activity->timestamp()))->toServerTimestamp() + 0.5 * $activity->duration();
             $coordinate = (new Geohash())->decode($route->get(Route\Entity::STARTPOINT))->getCoordinate();
 
-            $this->setFrom($timestamp, $coordinate, $offset);
+            $this->setFrom($timestamp, $coordinate);
         } else {
             $this->Value = null;
         }
@@ -86,10 +85,9 @@ class NightDetector
 
     /**
      * @param \Runalyze\View\Activity\Context $context
-     * @param int $offset
      * @return \Runalyze\Calculation\NightDetector $this-reference
      */
-    public function setFromContext(Context $context, $offset = 0)
+    public function setFromContext(Context $context)
     {
         if (!$context->hasRoute()) {
             $this->Value = null;
@@ -97,7 +95,7 @@ class NightDetector
             return $this;
         }
 
-        return $this->setFromEntities($context->activity(), $context->route(), $offset);
+        return $this->setFromEntities($context->activity(), $context->route());
     }
 
     /**

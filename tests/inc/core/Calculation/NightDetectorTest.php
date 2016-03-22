@@ -7,6 +7,7 @@ use League\Geotools\Geohash\Geohash;
 use Runalyze\Model\Activity;
 use Runalyze\Model\Route;
 use Runalyze\Model\Trackdata;
+use Runalyze\Util\LocalTime;
 use Runalyze\View\Activity\FakeContext;
 
 class NightDetectorTest extends \PHPUnit_Framework_TestCase
@@ -68,7 +69,7 @@ class NightDetectorTest extends \PHPUnit_Framework_TestCase
         $Detector = new NightDetector();
         $Context = FakeContext::withDefaultSport(
             new Activity\Entity([
-                Activity\Entity::TIMESTAMP => strtotime('2016-01-13 08:00:00'),
+                Activity\Entity::TIMESTAMP => LocalTime::fromString('2016-01-13 08:00:00')->getTimestamp(),
                 Activity\Entity::TIME_IN_SECONDS => 0
             ]), new Trackdata\Entity([
             ]), new Route\Entity([
