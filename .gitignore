@@ -13,7 +13,7 @@ php.ini
 
 #Runalyze
 build/yuicompressor-*
-img/backgrounds/My-*
+web/img/backgrounds/My-*
 lib/phpfastcache/cache.storage.*
 *.xcf
 data/config.php
