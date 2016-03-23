@@ -19,6 +19,9 @@ abstract class FromExternalAPI extends Strategy {
 	 */
 	protected $POINTS_PER_CALL = 20;
 
+	/** @var int */
+	protected $UnknownValue = -32768;
+
 	/**
 	 * Correct elevation
 	 *
@@ -52,7 +55,7 @@ abstract class FromExternalAPI extends Strategy {
 		if (count($this->ElevationPoints) > $numberOfPoints)
 			$this->ElevationPoints = array_slice($this->ElevationPoints, 0, $numberOfPoints);
 
-		$this->guessUnknown();
+		$this->guessUnknown($this->UnknownValue);
 	}
 
 	/**
