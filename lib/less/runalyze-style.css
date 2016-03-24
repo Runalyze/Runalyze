@@ -444,6 +444,9 @@ fieldset .checkbox-first input {
 .input-with-unit .middle-size {
   width: 94px;
 }
+.input-with-unit .full-size {
+  width: 46%;
+}
 .input-with-unit .small-size.pick-a-date {
   width: 60px;
 }

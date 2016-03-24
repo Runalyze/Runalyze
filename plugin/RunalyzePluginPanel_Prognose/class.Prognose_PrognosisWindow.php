@@ -12,6 +12,7 @@ use Runalyze\Activity\Distance;
 use Runalyze\Activity\Duration;
 use Runalyze\Activity\Pace;
 use Runalyze\Activity\PersonalBest;
+use Runalyze\Parameter\Application\DistanceUnitSystem;
 use Runalyze\Util\LocalTime;
 
 /**
@@ -22,6 +23,9 @@ use Runalyze\Util\LocalTime;
  * @package Runalyze\Plugins\Panels
  */
 class Prognose_PrognosisWindow {
+	/** @var int */
+	const DISTANCE_PRECISION = 2;
+
 	/**
 	 * Formular
 	 * @var Formular
@@ -77,6 +81,11 @@ class Prognose_PrognosisWindow {
 	protected $InfoLines = array();
 
 	/**
+	 * @var \Runalyze\Parameter\Application\DistanceUnitSystem
+	 */
+	protected $UnitSystem;
+
+	/**
 	 * Constructor
 	 */
 	public function __construct() {
@@ -92,6 +101,8 @@ class Prognose_PrognosisWindow {
 	 * Set default values
 	 */
 	protected function setDefaultValues() {
+		$this->UnitSystem = Configuration::General()->distanceUnitSystem();
+
 		$Strategy = new Prognosis\Bock();
 		$TopResults = $Strategy->getTopResults(2);
 		$CurrentShape = Configuration::Data()->vdotShape();
@@ -101,7 +112,7 @@ class Prognose_PrognosisWindow {
 			$Plugin = $Factory->newInstance('RunalyzePluginPanel_Prognose');
 
 			$_POST['model'] = 'jack-daniels';
-			$_POST['distances'] = implode(', ', $Plugin->getDistances());
+			$_POST['distances'] = implode(', ', $this->distanceValuesToMiles($Plugin->getDistances()));
 
 			$_POST['vdot'] = $CurrentShape;
 			$_POST['endurance'] = true;
@@ -111,10 +122,12 @@ class Prognose_PrognosisWindow {
 			$_POST['best-result-time'] = !empty($TopResults) ? Duration::format($TopResults[0]['s']) : '0:26:00';
 			$_POST['second-best-result-km'] = !empty($TopResults) ? $TopResults[1]['distance'] : '10.0';
 			$_POST['second-best-result-time'] = !empty($TopResults) ? Duration::format($TopResults[1]['s']) : '1:00:00';
+		} else {
+			list($_POST['best-result-km'], $_POST['second-best-result-km']) = $this->distanceValuesToKm([$_POST['best-result-km'], $_POST['second-best-result-km']]);
 		}
 
 		$this->InfoLines['jack-daniels']  = __('Your current VDOT:').' '.$CurrentShape.'. ';
-		$this->InfoLines['jack-daniels'] .= __('Your current basic endurance:').' '.BasicEndurance::getConst().'.';
+		$this->InfoLines['jack-daniels'] .= __('Your current basic endurance:').' '.BasicEndurance::getConst().' &#37;.';
 
 		$ResultLine = empty($TopResults) ? __('none') : sprintf( __('%s in %s <small>(%s)</small> and %s in %s <small>(%s)</small>'),
 				Distance::format($TopResults[0]['distance']), Duration::format($TopResults[0]['s']), (new LocalTime($TopResults[0]['time']))->format('d.m.Y'),
@@ -126,6 +139,9 @@ class Prognose_PrognosisWindow {
 		$this->setupBockStrategy();
 		$this->setupSteffnyStrategy();
 		$this->setupCameronStrategy();
+
+		$_POST['best-result-km'] = Distance::format($_POST['best-result-km'], false, self::DISTANCE_PRECISION);
+		$_POST['second-best-result-km'] = Distance::format($_POST['second-best-result-km'], false, self::DISTANCE_PRECISION);
 	}
 
 	/**
@@ -133,9 +149,37 @@ class Prognose_PrognosisWindow {
 	 */
 	protected function readPostData() {
 		$this->PrognosisObject = new Prognosis\Prognosis();
-		$this->Distances = Helper::arrayTrim(explode(',', $_POST['distances']));
-
 		$this->PrognosisObject->setStrategy( $this->PrognosisStrategies[$_POST['model']] );
+
+		$this->Distances = $this->distanceValuesToKm(Helper::arrayTrim(explode(',', $_POST['distances'])));
+	}
+
+	/**
+	 * @param array $values
+	 * @return array
+	 */
+	protected function distanceValuesToKm(array $values) {
+		if ($this->UnitSystem->isImperial()) {
+			$values = array_map(function($val){
+				return round($val / DistanceUnitSystem::MILE_MULTIPLIER, self::DISTANCE_PRECISION);
+			}, $values);
+		}
+
+		return $values;
+	}
+
+	/**
+	 * @param array $values
+	 * @return array
+	 */
+	protected function distanceValuesToMiles(array $values) {
+		if ($this->UnitSystem->isImperial()) {
+			$values = array_map(function($val){
+				return round($val * DistanceUnitSystem::MILE_MULTIPLIER, self::DISTANCE_PRECISION);
+			}, $values);
+		}
+
+		return $values;
 	}
 
 	/**
@@ -335,10 +379,10 @@ class Prognose_PrognosisWindow {
 		$FieldModel->addAttribute('onchange', '$(\'#prognosis-calculator .only-\'+$(this).val()).closest(\'div\').show();$(\'#prognosis-calculator .hide-on-model-change:not(.only-\'+$(this).val()+\')\').closest(\'div\').hide();');
 		$FieldModel->setLayout( FormularFieldset::$LAYOUT_FIELD_W50_AS_W100 );
 
-		// TODO: allow input in miles
-		$FieldDistances = new FormularInput('distances', __('Distances').' (in km)');
+		$FieldDistances = new FormularInput('distances', __('Distances'));
 		$FieldDistances->setLayout( FormularFieldset::$LAYOUT_FIELD_W50_AS_W100 );
 		$FieldDistances->setSize( FormularInput::$SIZE_FULL_INLINE );
+		$FieldDistances->setUnit($this->UnitSystem->distanceUnit());
 
 		$this->FieldsetInput->addField($FieldModel);
 		$this->FieldsetInput->addField($FieldDistances);
@@ -382,7 +426,7 @@ class Prognose_PrognosisWindow {
 		$BestResult->addCSSclass('only-robert-bock');
 		$BestResult->addCSSclass('only-herbert-steffny');
 		$BestResult->addCSSclass('only-david-cameron');
-		$BestResult->setUnit( FormularUnit::$KM );
+		$BestResult->setUnit($this->UnitSystem->distanceUnit());
 
 		$BestResultTime = new FormularInput('best-result-time', __('in'));
 		$BestResultTime->setLayout( FormularFieldset::$LAYOUT_FIELD_W50 );
@@ -395,7 +439,7 @@ class Prognose_PrognosisWindow {
 		$SecondBestResult->setLayout( FormularFieldset::$LAYOUT_FIELD_W50 );
 		$SecondBestResult->addCSSclass('hide-on-model-change');
 		$SecondBestResult->addCSSclass('only-robert-bock');
-		$SecondBestResult->setUnit( FormularUnit::$KM );
+		$SecondBestResult->setUnit($this->UnitSystem->distanceUnit());
 
 		$SecondBestResultTime = new FormularInput('second-best-result-time', __('in'));
 		$SecondBestResultTime->setLayout( FormularFieldset::$LAYOUT_FIELD_W50 );

@@ -79,9 +79,7 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 	 * Init configuration
 	 */
 	protected function initConfiguration() {
-		// TODO: allow input in miles
-		$Distances = new PluginConfigurationValueArray('distances', __('Distances to predict').' (in km)');
-		$Distances->setDefaultValue( array(1, 3, 5, 10, 21.1, 42.2) );
+		$Distances = new PluginConfigurationValueDistances('distances', __('Distances to predict'), '', array(1, 3, 5, 10, 21.1, 42.2));
 
 		$Model = new PluginConfigurationValueSelect('model', __('Prediction model'));
 		$Model->setOptions( array(
