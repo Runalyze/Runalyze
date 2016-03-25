@@ -92,7 +92,7 @@ while ($activity = $activities->fetch()) {
 	$offset = $DateTime->setTimestamp($activity['time'])->getOffset();
 	$localTime = $activity['time'] + $offset;
 
-	$timezoneOffset = $offset;
+	$timezoneOffset = $offset / 60;
 
 	if ($TZLookup->isPossible() && !is_null($activity['startpoint'])) {
 		$Coordinate = $Geotools->geohash()->decode($activity['startpoint'])->getCoordinate();
