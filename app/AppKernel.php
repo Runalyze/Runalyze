@@ -40,6 +40,5 @@ class AppKernel extends \Symfony\Component\HttpKernel\Kernel
         }
 
         $routes->mount('/', $routes->import('@CoreBundle/Controller', 'annotation'));
-        //$routes->add('/', 'kernel:randomAction');
     }
 }

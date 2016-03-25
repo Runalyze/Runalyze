@@ -13,7 +13,7 @@ class ConfigTabs {
 	 * URL for config-window
 	 * @var string
 	 */
-	public static $CONFIG_URL = 'call/window.config.php';
+	public static $CONFIG_URL = 'settings';
 
 	/**
 	 * HTML-ID for div

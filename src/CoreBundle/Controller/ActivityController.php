@@ -5,6 +5,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Runalyze\View\Activity\Context;
 use Runalyze\View\Activity\Linker;
 use Runalyze\View\Activity\Dataview;
@@ -19,11 +20,12 @@ use Runalyze\Data\Elevation\Correction\NoValidStrategyException;
 require_once '../inc/class.Frontend.php';
 require_once '../inc/class.FrontendShared.php';
 
-class TrainingController extends Controller
+class ActivityController extends Controller
 {
     
     /**
      * @Route("/call/call.Training.create.php")
+     * @Route("/activity/create", name="ActivityCreate")
      */
     public function callTrainingCreateAction()
     {
@@ -55,14 +57,18 @@ class TrainingController extends Controller
     
     /**
      * @Route("/call/call.Training.display.php")
+     * @Route("/activity/{id}", name="ActivityShow")
      */
-    public function callTrainingDisplayAction()
+    public function callTrainingDisplayAction($id = null)
     {
         $Frontend = new \Frontend(true);
+        if (is_null($id)) {
+            $id = Request::createFromGlobals()->query->get('id');
+        }
 
-        $Context = new Context(\Request::sendId(), \SessionAccountHandler::getId());
+        $Context = new Context($id, \SessionAccountHandler::getId());
         
-        switch (\Request::param('action')) {
+        switch (Request::createFromGlobals()->query->get('action')) {
             case 'changePrivacy':
                 $oldActivity = clone $Context->activity();
                 $Context->activity()->set(Activity\Entity::IS_PUBLIC, !$Context->activity()->isPublic());
@@ -74,7 +80,7 @@ class TrainingController extends Controller
                 $Factory = \Runalyze\Context::Factory();
                 $Deleter = new Activity\Deleter(\DB::getInstance(), $Context->activity());
                 $Deleter->setAccountID(\SessionAccountHandler::getId());
-                $Deleter->setEquipmentIDs($Factory->equipmentForActivity(\Request::sendId(), true));
+                $Deleter->setEquipmentIDs($Factory->equipmentForActivity($id, true));
                 $Deleter->delete();
         
                 echo '<div class="panel-content"><p id="submit-info" class="error">'.__('The activity has been removed').'</p></div>';
@@ -83,7 +89,7 @@ class TrainingController extends Controller
                 break;
         }
         
-        if (!\Request::param('silent')) {
+        if (!Request::createFromGlobals()->query->get('silent')) {
             $View = new \TrainingView($Context);
             $View->display();
         }
@@ -92,6 +98,7 @@ class TrainingController extends Controller
     
     /**
      * @Route("/call/call.Training.edit.php")
+     * @Route("/activity/edit", name="ActivityEdit")
      */
     public function callTrainingEditAction()
     {
@@ -109,7 +116,7 @@ class TrainingController extends Controller
         	exit();
         }
         
-        $Training = new \TrainingObject(\Request::sendId());
+        $Training = new \TrainingObject(Request::createFromGlobals()->query->get('id'));
         $Activity = new Activity\Entity($Training->getArray());
         
         $Linker = new Linker($Activity);
@@ -132,17 +139,19 @@ class TrainingController extends Controller
     }
     
     /**
-    * @Route("/call/call.Training.vdotInfo.php")
+     * @Route("/call/call.Training.vdotInfo.php")
+     * @Route("/activity/vdotInfo")
     */
     public function trainingVdotInfoAction()
     {
         $Frontend = new \Frontend(true);
-        $VDOTinfo = new \VDOTinfo(new Context(\Request::sendId(), \SessionAccountHandler::getId()));
+        $VDOTinfo = new \VDOTinfo(new Context(Request::createFromGlobals()->query->get('id'), \SessionAccountHandler::getId()));
         return new Response($VDOTinfo->display());
     }
     
     /**
      * @Route("/call/call.Training.elevationCorrection.php")
+     * @Route("/activity/elevationCorrection")
      */
     public function trainingElevationCorrectionAction()
     {
@@ -150,14 +159,14 @@ class TrainingController extends Controller
         $Frontend = new \Frontend();
         
         $Factory = \Runalyze\Context::Factory();
-        $Activity = $Factory->activity(\Request::sendId());
+        $Activity = $Factory->activity(Request::createFromGlobals()->query->get('id'));
         $ActivityOld = clone $Activity;
         $Route = $Factory->route($Activity->get(Activity\Entity::ROUTEID));
         $RouteOld = clone $Route;
         
         try {
         	$Calculator = new Calculator($Route);
-        	$result = $Calculator->tryToCorrectElevation(\Request::param('strategy'));
+        	$result = $Calculator->tryToCorrectElevation(Request::createFromGlobals()->query->get('strategy'));
         } catch (NoValidStrategyException $Exception) {
         	$result = false;
         }
@@ -184,9 +193,9 @@ class TrainingController extends Controller
         	echo Ajax::getReloadCommand();
         	echo Ajax::wrapJS(
         		'if ($("#ajax").is(":visible") && $("#training").length) {'.
-        			'Runalyze.Overlay.load(\''.Linker::EDITOR_URL.'?id='.Request::sendId().'\');'.
+        			'Runalyze.Overlay.load(\''.Linker::EDITOR_URL.'?id='.Request::createFromGlobals()->query->get('id').'\');'.
         		'} else if ($("#ajax").is(":visible") && $("#gps-results").length) {'.
-        			'Runalyze.Overlay.load(\''.Linker::ELEVATION_INFO_URL.'?id='.Request::sendId().'\');'.
+        			'Runalyze.Overlay.load(\''.Linker::ELEVATION_INFO_URL.'?id='.Request::createFromGlobals()->query->get('id').'\');'.
         		'}'
         	);
         } else {
@@ -196,27 +205,30 @@ class TrainingController extends Controller
     }
     
     /**
-    * @Route("/call/call.Training.roundsInfo.php")
+     * @Route("/call/call.Training.roundsInfo.php")
+     * @Route("/activity/roundsInfo")
     */
     public function trainingRoundsInfoAction()
     {
         $Frontend = new \Frontend();
-        $Window = new Window(new Context(\Request::sendId(), \SessionAccountHandler::getId()));
+        $Window = new Window(new Context(Request::createFromGlobals()->query->get('id'), \SessionAccountHandler::getId()));
         return new Response($Window->display());
     }
     
     /**
-    * @Route("/call/call.Training.elevationInfo.php")
+     * @Route("/call/call.Training.elevationInfo.php")
+     * @Route("/activity/elevationInfo")
     */
     public function trainingElevationInfoAction()
     {
         $Frontend = new \Frontend();
-        $ElevationInfo = new \ElevationInfo(new Context(\Request::sendId(), \SessionAccountHandler::getId()));
+        $ElevationInfo = new \ElevationInfo(new Context(Request::createFromGlobals()->query->get('id'), \SessionAccountHandler::getId()));
         return new Response($ElevationInfo->display());
     }
     
     /**
-    * @Route("/call/call.Exporter.export.php")
+     * @Route("/call/call.Exporter.export.php")
+     * @Route("/activity/export")
     */
     public function exporterExportAction() {
         $Frontend = new \Frontend(true);
@@ -242,6 +254,7 @@ class TrainingController extends Controller
     
     /**
      * @Route("/call/ajax.activityMatcher.php")
+     * @Route("/activity/matcher", name="activityMatcher")
      */
     public function ajaxActivityMatcher()
     {

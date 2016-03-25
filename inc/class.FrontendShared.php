@@ -153,11 +153,11 @@ class FrontendShared extends Frontend {
 	}
 
 	/**
-	 * Display link to www.runalyze.de
+	 * Display link to www.runalyze.com
 	 */
 	protected function displayLinkToRunalyze() {
 		$List = new BlocklinkList();
-		$List->addCompleteLink('<a class="nopadding" href="http://www.runalyze.de/" title="Runalyze - Online Lauftagebuch"><strong>&raquo;&nbsp;runalyze.de</strong></a>');
+		$List->addCompleteLink('<a class="nopadding" href="https://www.runalyze.com/" title="Runalyze - Online Lauftagebuch"><strong>&raquo;&nbsp;runalyze.com</strong></a>');
 		$List->display();
 	}
 

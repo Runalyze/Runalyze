@@ -3,3 +3,10 @@ framework:
     assets: ~
     templating:
         engines: ['twig']
+    translator:
+        fallbacks: ['%locale%']
+        paths:
+            - '%kernel.root_dir%/../inc/locale/'
+    
+parameters:
+    locale:     de

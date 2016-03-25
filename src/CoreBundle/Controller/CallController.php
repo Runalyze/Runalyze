@@ -5,6 +5,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Runalyze\View\Activity\Context;
 use Runalyze\View\Activity\Linker;
 use Runalyze\View\Activity\Dataview;
@@ -13,15 +14,15 @@ use Runalyze\View\Window\Laps\Window;
 
 require_once '../inc/class.Frontend.php';
 require_once '../inc/class.FrontendShared.php';
+require_once '../inc/class.FrontendSharedList.php';
 
-/**
- * @Route("/call")
- */
+
 class CallController extends Controller
 {
     /**
-    * @Route("/call.DataBrowser.display.php", name="databrowser")
-    */
+     * @Route("/call/call.DataBrowser.display.php")
+     * @Route("databrowser", name="databrowser")
+     */
     public function dataBrowserAction()
     {
         $Frontend = new \Frontend(true);
@@ -31,21 +32,24 @@ class CallController extends Controller
     }
     
     /**
-    * @Route("/call.garminCommunicator.php")
-    */
+     * @Route("/call/call.garminCommunicator.php")
+     * @Route("/upload/garminCommunicator")
+     */
     public function garminCommunicatorAction()
     {
         $Frontend = new \Frontend(true);
-        include '../call/call.garminCommunicator.php';
-        return new Response;
+
+        return $this->render('CoreBundle:Upload:garminCommunicator.html.twig', array(
+                    'garminAPIKey' => GARMIN_API_KEY,
+        ));
     }
     
     /**
-    * @Route("/savePng.php")
-    */
+     * @Route("/call/savePng.php")
+     * @Method("POST")
+     */
     public function savePngAction()
     {
-        $Frontend = new \Frontend(true);
         header("Content-type: image/png");
         header("Content-Disposition: attachment; filename=".strtolower(str_replace(' ', '_', $_POST['filename'])));
         
@@ -55,8 +59,8 @@ class CallController extends Controller
     }
     
     /**
-    * @Route("/call.MetaCourse.php")
-    */
+     * @Route("/call/call.MetaCourse.php")
+     */
     public function metaCourseAction() {
         $Frontend = new \FrontendShared(true);
         
@@ -66,8 +70,9 @@ class CallController extends Controller
     }
     
     /**
-    * @Route("/window.config.php", name="config")
-    */
+     * @Route("/call/window.config.php")
+     * @Route("/settings", name="settings")
+     */
     public function windowConfigAction() {
         $Frontend = new \Frontend(true);
         $ConfigTabs = new \ConfigTabs();
@@ -85,8 +90,8 @@ class CallController extends Controller
     }
 
     /**
-    * @Route("/ajax.saveTcx.php")
-    */
+     * @Route("/call/ajax.saveTcx.php")
+     */
     public function ajaxSaveTcxAction()
     {
         $Frontend = new \Frontend(true);
@@ -97,7 +102,7 @@ class CallController extends Controller
     }
     
     /**
-     * @Route("/ajax.change.Config.php")
+     * @Route("/call/ajax.change.Config.php")
      */
     public function ajaxChanceConfigAction()
     {
@@ -121,7 +126,7 @@ class CallController extends Controller
     }
     
     /**
-     * @Route("/window.delete.php")
+     * @Route("/call/window.delete.php")
      */
      public function windowDeleteAction()
      {
@@ -145,10 +150,11 @@ class CallController extends Controller
      }
      
     /**
-     * @Route("window.search.php")
+     * @Route("/call/window.search.php")
      */
     public function windowSearchAction()
     {
+        $Frontend = new \Frontend();
         $showResults = !empty($_POST);
         
         if (isset($_GET['get']) && $_GET['get'] == 'true') {
@@ -158,7 +164,7 @@ class CallController extends Controller
         	\SearchFormular::transformOldParamsToNewParams();
         }
         
-        if (empty($_POST) || \Request::param('get') == 'true') {
+        if (empty($_POST) || Request::createFromGlobals()->query->get('get') == 'true') {
         	echo '<div class="panel-heading">';
         	echo '<h1>'.__('Search for activities').'</h1>';
         	echo '</div>';
@@ -172,17 +178,19 @@ class CallController extends Controller
         return new Response;
     }
     
-    protected function plotSumData() {
-        if (!isset($_GET['y']))
+    protected function plotSumData($Frontend) {
+
+        $Request = Request::createFromGlobals();
+        if (is_null($Request->query->get('y'))) {
         	$_GET['y'] = \PlotSumData::LAST_12_MONTHS;
+        }
         
-        if (!isset($_GET['type']))
-        	$_GET['type'] = 'month';
-        
-        if ($_GET['type'] == 'week') {
+        $type = $Request->query->get('type', 'month');
+
+        if ($type == 'week') {
         	$Plot = new \PlotWeekSumData();
         	$Plot->display();
-        } elseif ($_GET['type'] == 'month') {
+        } elseif ($type == 'month') {
         	$Plot = new \PlotMonthSumData();
         	$Plot->display();
         } else {
@@ -191,27 +199,27 @@ class CallController extends Controller
     }
     
     /**
-     * @Route("/window.plotSumData.php")
+     * @Route("/call/window.plotSumData.php")
      */
     public function windowsPlotSumDataAction()
     {
         $Frontend = new \Frontend();
-        $this->plotSumData();
+        $this->plotSumData($Frontend);
         return new Response;
     }
     
     /**
-     * @Route("/window.plotSumDataShared.php")
+     * @Route("/call/window.plotSumDataShared.php")
      */
     public function windowsPlotSumDataSharedAction()
     {
-        $Frontend = new \FrontendSharedList();
+        $Frontend = new \FrontendSharedList($Frontend);
         $this->plotSumData();
         return new Response;
     }
     
     /**
-     * @Route("/login.php")
+     * @Route("/call/login.php")
      */
     public function loginAction()
     {

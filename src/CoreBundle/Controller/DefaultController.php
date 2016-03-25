@@ -30,7 +30,7 @@ class DefaultController extends Controller
     }
     
     /**
-     * @Route("/login")
+     * @Route("/login", name="login")
      */
     public function loginAction()
     {
@@ -38,7 +38,7 @@ class DefaultController extends Controller
     }
     
     /**
-     * @Route("/install.php")
+     * @Route("/install.php", name="install")
      */
     public function installAction()
     {
@@ -46,7 +46,7 @@ class DefaultController extends Controller
     }
     
     /**
-     * @Route("/update.php")
+     * @Route("/update.php", name="update")
      */
     public function updateAction()
     {
@@ -70,7 +70,7 @@ class DefaultController extends Controller
     }
     
     /**
-     * @Route("/dashboard/help")
+     * @Route("/dashboard/help", name="help")
      */
     public function dashboardHelpAction()
     {
@@ -108,13 +108,11 @@ class DefaultController extends Controller
         	if ($_GET['view'] == 'monthkm') {
         		$_GET['type'] = 'month';
         		$response = $this->forward('CoreBundle:Call:windowsPlotSumDataShared');
-        		//include 'window.plotSumData.shared.php';
-        		//exit;
+        		exit;
         	} elseif ($_GET['view'] == 'weekkm') {
         		$_GET['type'] = 'week';
         		$response = $this->forward('CoreBundle:Call:windowsPlotSumDataShared');
-        		//include 'window.plotSumData.shared.php';
-        		//exit;
+        		exit;
         	}
         }
         

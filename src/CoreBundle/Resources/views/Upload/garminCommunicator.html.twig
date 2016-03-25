@@ -24,7 +24,7 @@
 		var currentActivity = 0, uploadedActivities = [], display, newIndex = 0;
 		function load() {
 		    display = new Garmin.DeviceDisplay("garminDisplay", {
-				pluginNotUnlocked: "<em>The plug-in was not unlocked successfully.</em><br>The administrator has to set the correct API-key.",
+				pluginNotUnlocked: "<em>{{ 'The plug-in was not unlocked successfully.' | trans }}</em><br>{{ 'The administrator has to set the correct API-key.' | trans }}",
 				showReadDataElement: true,
 				showProgressBar: true,
 				showFindDevicesElement: true,
@@ -36,34 +36,34 @@
 				autoHideUnusedElements: true,
 				showReadDataTypesSelect: false,
 				readDataTypes: [Garmin.DeviceControl.FILE_TYPES.tcxDir, Garmin.DeviceControl.FILE_TYPES.gpxDir, Garmin.DeviceControl.FILE_TYPES.fitDir],
-				readDataButtonText: "<?php _e('Connect'); ?>",
+				readDataButtonText: "{{ 'Connect' | trans }}",
 				showCancelReadDataButton: false,
-				lookingForDevices: '<?php _e('Searching for devices'); ?><br><br><img src="../img/wait.gif">',
-				uploadsFinished: "<?php _e('Transfer complete'); ?>",
+				lookingForDevices: '{{ 'Searching for devices' | trans }}<br><br><img src="../img/wait.gif">',
+				uploadsFinished: "{{ 'Transfer complete' | trans }}
 				uploadSelectedActivities: true,
 				uploadCompressedData: true,
 				uploadMaximum: 40, 
-				browseComputerButtonText: "<?php _e('Browse computer'); ?>",
-				cancelUploadButtonText: "<?php _e('Cancel'); ?>",
-				changeDeviceButtonText: "<?php _e('Cancel'); ?>",
-				connectedDevicesLabel: "<?php _e('Connected devices'); ?>: ",
-				deviceBrowserLabel: "<?php _e('Browse devices'); ?>: ",
-				deviceSelectLabel: "<?php _e('Devices'); ?>: ",
-				findDevicesButtonText: "<?php _e('Search for decives'); ?>",
-				loadingContentText: "<?php _e('Retrieving data from #{deviceName}, please wait ...'); ?>",
-				readSelectedButtonText: "<?php _e('Please wait ...'); ?>",
-				dataFound: "<?php _e('Found #{tracks} activities'); ?>",
-				noDeviceDetectedStatusText: "<?php _e('No devices found'); ?>",
-				singleDeviceDetectedStatusText: "<?php _e('Found'); ?>: ",
-				foundDevice: "<?php _e('Found'); ?>: #{deviceName}",
-				foundDevices: "<?php _e('#{deviceCount} devices found'); ?>",
+				browseComputerButtonText: "{{ 'Browse computer' | trans }}",
+				cancelUploadButtonText: "{{ 'Cancel' | trans }}",
+				changeDeviceButtonText: "{{ 'Cancel' | trans }}",
+				connectedDevicesLabel: "{{ 'Connected devices' | trans }}: ",
+				deviceBrowserLabel: "{{ 'Browse devices' | trans }}: ",
+				deviceSelectLabel: "{{ 'Devices' | trans }}: ",
+				findDevicesButtonText: "{{ 'Search for decives' | trans }}",
+				loadingContentText: "{{ 'Retrieving data from #{deviceName}, please wait ...' | trans }}",
+				readSelectedButtonText: "{{ 'Please wait ...' | trans }}",
+				dataFound: "{{ 'Found #{tracks} activities' | trans }}",
+				noDeviceDetectedStatusText: "{{ 'No devices found' | trans }}",
+				singleDeviceDetectedStatusText: "{{ 'Found' | trans }}: ",
+				foundDevice: "{{ 'Found' | trans }}: #{deviceName}",
+				foundDevices: "{{ '#{deviceCount} devices found' | trans }}",
 				showReadDataElementOnDeviceFound: true,
-				getActivityDirectoryHeaderIdLabel: function () { return '<?php _e('Date'); ?>'; },
-				activityDirectoryHeaderDuration: '<?php _e('Duration'); ?>',
-				activityDirectoryHeaderStatus: '<?php _e('Status'); ?>',
+				getActivityDirectoryHeaderIdLabel: function () { return '{{ 'Date' | trans }}'; },
+				activityDirectoryHeaderDuration: '{{ 'Duration' | trans }}',
+				activityDirectoryHeaderStatus: '{{ 'Status' | trans }}',
 				statusCellProcessingImg: 'upload',
 				detectNewActivities: true,
-				syncDataUrl: '<?php echo System::getFullDomain(); ?>call/ajax.activityMatcher.php',
+				syncDataUrl: '{{ absolute_url('/') }}call/ajax.activityMatcher.php',
 				syncDataOptions: {method:'post'},
 				afterTableInsert: function(index, entry, statusCell, checkbox, row, activityMatcher) {
 					var activityId = entry.id, isMatch = false;
@@ -78,12 +78,12 @@
 						entry.isNew = false;
 						checkbox.checked = false;
 						statusCell.className = statusCell.className + ' upload-exists';
-						statusCell.innerHTML = '<?php _e('present'); ?>';
+						statusCell.innerHTML = '{{ 'present' | trans }}';
 					} else {
 						entry.isNew = true;
 						checkbox.checked = true;
 						statusCell.className = statusCell.className + ' upload-new';
-						statusCell.innerHTML = 'neu<br><small onclick="ignoreID(\''+activityId+'\', this)">[<?php _e('ignore'); ?>]</small>';
+						statusCell.innerHTML = 'neu<br><small onclick="ignoreID(\''+activityId+'\', this)">[{{ 'ignore' | trans }}]</small>';
 
 						// Rearrange: Put to the top
 						if (index != newIndex) {
@@ -97,7 +97,7 @@
 					}
 				},
 				postActivityHandler: function(activityXml, display) {
-					$("readSelectedButton").value = "<?php _e('Import'); ?>";
+					$("readSelectedButton").value = "{{ 'Import' | trans }}";
 					var currentName = display.activities[currentActivity].attributes.activityName.replace(/:/gi, "-");
 
 					uploadedActivities.push(currentName);
@@ -114,9 +114,9 @@
 					//	window.parent.Runalyze.Training.loadSavedTcxs(uploadedActivities);
 				},
 				afterFinishReadFromDevice: function(dataString, dataDoc, extension, activities, display) {
-					$("readSelectedButton").value = "<?php _e('Import'); ?>";
+					$("readSelectedButton").value = "{{ 'Import' | trans }}";
 
-					$("selectAllHeader").innerHTML = '<a href="#" id="selectAllButton" style="cursor:pointer;"><?php _e('all'); ?></a>';
+					$("selectAllHeader").innerHTML = '<a href="#" id="selectAllButton" style="cursor:pointer;">{{ 'all' | trans }}</a>';
 
 					var checkboxes = $$("input[type=checkbox]");
 					var cbControl = $("selectAllButton");
@@ -129,10 +129,9 @@
 						});
 					});
 				}
-<?php
-if (strlen(GARMIN_API_KEY) > 10)
-	echo ',pathKeyPairsArray: ["'.Request::getProtocol().'://'.$_SERVER['HTTP_HOST'].'","'.GARMIN_API_KEY.'"]';
-?>
+{% if garminAPIKey|length > 10 %}
+	,pathKeyPairsArray: ["'.Request::getProtocol().'://'.$_SERVER['HTTP_HOST'].'","'.GARMIN_API_KEY.'"]
+{% endif %}
 			});
 		}
 	</script>
