@@ -9,4 +9,11 @@ framework:
             - '%kernel.root_dir%/../inc/locale/'
     
 parameters:
-    locale:     de
+    locale:     en
+   
+services:
+    app.locale_listener:
+        class: Runalyze\Bundle\CoreBundle\EventListener\LocaleListener
+        arguments: ['%kernel.default_locale%']
+        tags:
+            - { name: kernel.event_subscriber }

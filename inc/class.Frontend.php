@@ -77,7 +77,7 @@ class Frontend {
 		define('RUNALYZE', true);
 		define('FRONTEND_PATH', dirname(__FILE__).'/');
 
-		$this->initLanguage();
+		//$this->initLanguage();
 		$this->setAutoloader();
                 
                 
