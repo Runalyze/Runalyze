@@ -267,7 +267,7 @@ msgstr "Длина шага"
 #: inc/training/view/section/class.SectionRunningDynamicsRow.php:108
 #: inc/core/View/Activity/Plot/Series/GroundContact.php:40
 msgid "Ground contact"
-msgstr ""
+msgstr "Контакт с землей"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:40
 #: inc/training/search/class.SearchFormular.php:183
@@ -278,7 +278,7 @@ msgstr ""
 #: inc/core/View/Activity/Plot/Series/VerticalOscillation.php:41
 #: inc/core/Dataset/Keys/VerticalOscillation.php:44
 msgid "Vertical oscillation"
-msgstr ""
+msgstr "Верт. колебания"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:41
 #: inc/training/search/class.SearchFormular.php:184
@@ -288,7 +288,7 @@ msgstr ""
 #: inc/core/View/Activity/Plot/Series/VerticalRatio.php:42
 #: inc/core/Dataset/Keys/VerticalRatio.php:44
 msgid "Vertical ratio"
-msgstr ""
+msgstr "Верт. коэффициент"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:42
 #: inc/training/search/class.SearchFormular.php:187
@@ -328,7 +328,7 @@ msgstr "TRIMP"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:44
 msgid "JDpoints"
-msgstr ""
+msgstr "Баллы (JD)"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:48
 msgid "descending"
@@ -373,7 +373,7 @@ msgstr "Сортировка"
 
 #: inc/training/search/class.SearchFormular.php:105
 msgid "Send to multi editor"
-msgstr ""
+msgstr "Загрузить в редактор"
 
 #: inc/training/search/class.SearchFormular.php:106
 #, php-format
@@ -531,7 +531,7 @@ msgstr "Баллы (JD)"
 
 #: inc/training/search/class.SearchFormular.php:182
 msgid "Ground Contact Balance"
-msgstr ""
+msgstr "Баланс контакта с землей"
 
 #: inc/training/search/class.SearchFormular.php:191
 msgid "Uses VDOT"
@@ -1089,7 +1089,7 @@ msgstr "добавить новый этап"
 
 #: inc/training/formular/class.TrainingInputSplits.php:52
 msgid "round for 100m"
-msgstr ""
+msgstr "округлить до 100м"
 
 #: inc/training/formular/class.TrainingInputSplits.php:55
 msgid "apply as total distance"
@@ -1263,7 +1263,7 @@ msgstr "Выберите теги"
 
 #: inc/training/class.TrainingFormular.php:342
 msgid "Remove data series"
-msgstr ""
+msgstr "Удалить данные"
 
 #: inc/training/class.TrainingFormular.php:343
 msgid ""
@@ -1295,15 +1295,15 @@ msgstr ""
 
 #: inc/training/class.TrainingFormular.php:385
 msgid "Original elevation"
-msgstr ""
+msgstr "Оригинальная высота"
 
 #: inc/training/class.TrainingFormular.php:386
 msgid "Corrected elevation"
-msgstr ""
+msgstr "Скорректированная высота"
 
 #: inc/training/class.TrainingFormular.php:390
 msgid "GPS path"
-msgstr ""
+msgstr "GPS маршрут"
 
 #: inc/training/class.TrainingFormular.php:406
 msgid "Permanently delete this activity"
@@ -2268,7 +2268,7 @@ msgstr "стоуны"
 #: inc/core/Parameter/Application/ActivityRoutePrivacy.php:39
 #: inc/core/Parameter/Application/ActivityRouteBreak.php:27
 msgid "never"
-msgstr ""
+msgstr "никогда"
 
 #: inc/core/Parameter/Application/ActivityRoutePrivacy.php:40
 msgid "only for competitions"
@@ -2276,7 +2276,7 @@ msgstr ""
 
 #: inc/core/Parameter/Application/ActivityRoutePrivacy.php:41
 msgid "always"
-msgstr ""
+msgstr "всегда"
 
 #: inc/core/Parameter/Application/ActivityRouteBreak.php:28
 msgid "at too big distance (15s)"
@@ -3490,7 +3490,7 @@ msgstr "Пт"
 
 #: inc/tpl/tpl.DataBrowser.php:22
 msgid "Sa"
-msgstr "Су"
+msgstr "Сб"
 
 #: inc/tpl/tpl.DataBrowser.php:35
 msgid "You can select any time range by selecting two dates."
@@ -5386,7 +5386,7 @@ msgstr "Анализ VDOT"
 
 #: plugin/RunalyzePluginTool_AnalyzeVDOT/class.RunalyzePluginTool_AnalyzeVDOT.php:35
 msgid "Analyze the VDOT prediction based on your race results."
-msgstr ""
+msgstr "Анализ VDOT на основании результатов соревнований."
 
 #: plugin/RunalyzePluginTool_AnalyzeVDOT/class.RunalyzePluginTool_AnalyzeVDOT.php:42
 msgid ""
@@ -5448,7 +5448,7 @@ msgstr "Показать график температуры"
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:84
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:143
 msgid "Equipment types"
-msgstr ""
+msgstr "Инвентарь"
 
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:146
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:150
@@ -5503,11 +5503,11 @@ msgstr "Ночные тренировки"
 
 #: plugin/RunalyzePluginStat_Trainingszeiten/class.RunalyzePluginStat_Trainingszeiten.php:154
 msgid "2 a.m. is considered as <em>most extreme</em> time for a training. "
-msgstr ""
+msgstr "2 часа ночи это <em>очень экстремальное</em> время для тренировок. "
 
 #: plugin/RunalyzePluginStat_Trainingszeiten/class.RunalyzePluginStat_Trainingszeiten.php:155
 msgid "The 20 trainings being nearest to that time are listed."
-msgstr ""
+msgstr "Показаны 20 тренировок наиболее близких к этому времени."
 
 #: plugin/RunalyzePluginTool_Cacheclean/class.RunalyzePluginTool_Cacheclean.php:19
 msgid "Cacheclean"
@@ -5597,11 +5597,13 @@ msgid ""
 "You have trained <strong>%sx</strong> in total and out of that <strong>%sx</"
 "strong> with a training partner, "
 msgstr ""
+"Вы тренировались <strong>%sx</strong> раз всего и из них <strong>%sx</strong>"
+" раз с партнером, "
 
 #: plugin/RunalyzePluginStat_Trainingspartner/class.RunalyzePluginStat_Trainingspartner.php:116
 #, php-format
 msgid "that are <strong>%s</strong> &#37;."
-msgstr ""
+msgstr "что составляет <strong>%s</strong> &#37;."
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:39
 msgid "Goals"
@@ -6547,7 +6549,7 @@ msgstr ""
 
 #: plugin/RunalyzePluginPanel_Equipment/class.RunalyzePluginPanel_Equipment.php:226
 msgid "You don't have any shoes"
-msgstr ""
+msgstr "Вы не добавили обувь"
 
 #: plugin/RunalyzePluginTool_DatenbankCleanup/class.RunalyzePluginTool_DatenbankCleanup.php:32
 msgid ""
@@ -6555,6 +6557,8 @@ msgid ""
 "activities. In addition, values for elevation, TRIMP and VDOT can be "
 "recalculated."
 msgstr ""
+"Пересчет статистических данных необходим после удаления тренировок. Также "
+"могут быть пересчитаны значения TRIMP, VDOT и высоты."
 
 #: plugin/RunalyzePluginTool_DatenbankCleanup/class.RunalyzePluginTool_DatenbankCleanup.php:40
 msgid ""
@@ -7355,7 +7359,7 @@ msgstr ""
 
 #: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:85
 msgid "General pace table"
-msgstr ""
+msgstr "Таблица темпов"
 
 #: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:86
 msgid ""
