@@ -16,3 +16,6 @@ UPDATE `runalyze_training` SET wind_speed=2.25*wind_speed WHERE wind_speed IS NO
 ALTER TABLE `runalyze_account` ADD `timezone` SMALLINT(5) unsigned NOT NULL DEFAULT '0' AFTER `language`;
 /* 20.03.2016 - originally in feature/timezone on  26.01.2016 */
 ALTER TABLE `runalyze_training` ADD `timezone_offset` SMALLINT(6) signed DEFAULT NULL AFTER `time`;
+
+/* 30.03.2016 - set default timezone to Europe/Berlin */
+UPDATE `runalyze_account` SET `timezone`=43;

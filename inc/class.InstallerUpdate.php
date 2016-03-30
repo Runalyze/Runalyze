@@ -74,7 +74,7 @@ class InstallerUpdate extends Installer {
 			'file'	=> 'update-v2.4-to-v2.5.sql',
 			'from'	=> 'v2.4',
 			'to'	=> 'v2.5',
-			'date'	=> '2016/',
+			'date'	=> '2016/01',
 			'instruction' =>  $this->instructionToRunScript('refactor-timezone.php')
 		);
 		$this->PossibleUpdates[] = array(
