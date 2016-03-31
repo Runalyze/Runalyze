@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-03-10 18:19+0100\n"
-"PO-Revision-Date: 2016-03-31 18:35+0200\n"
-"Last-Translator: NoName Never <translate.runalyze.phil@daxbau.net>\n"
+"PO-Revision-Date: 2016-03-31 18:36+0200\n"
+"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
 "Language-Team: German "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
@@ -2719,7 +2719,7 @@ msgstr "Garmins neuere Geräte besitzen eine integrierte VDOT Schätzung."
 msgid ""
 "This value refers to your estimated VO2max at the start of the activity."
 msgstr ""
-"Dieser Wert bezieht sich auf ihren geschätzten VO2max zu Beginn der "
+"Dieser Wert bezieht sich auf deinen geschätzten VO2max zu Beginn der "
 "Aktivität."
 
 #: inc/core/Dataset/Keys/CompleteEquipment.php:34
@@ -3633,7 +3633,6 @@ msgid "Show selection"
 msgstr "Auswahl anzeigen"
 
 #: inc/tpl/tpl.DataBrowser.php:140
-#, fuzzy
 msgid "There are no activities for this time range."
 msgstr "Es gibt keine Daten für diese Zeitspanne."
 
