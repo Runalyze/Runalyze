@@ -4,7 +4,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-03-10 18:19+0100\n"
 "PO-Revision-Date: 2016-03-31 18:33+0200\n"
-"Last-Translator: NoName Never <translate.runalyze.phil@daxbau.net>\n"
+"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
 "Language-Team: German "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
@@ -4825,7 +4825,7 @@ msgstr ""
 #: inc/class.InstallerUpdate.php:184
 #, php-format
 msgid "You are required to run the script %s."
-msgstr "Es ist notwendig, dass sie das Skript %s ausführen."
+msgstr "Es ist notwendig das Skript %s auszuführen."
 
 #: inc/class.InstallerUpdate.php:186
 msgid ""
