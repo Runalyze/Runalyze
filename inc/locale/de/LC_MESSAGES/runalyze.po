@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-03-10 18:19+0100\n"
-"PO-Revision-Date: 2016-03-20 11:24+0200\n"
-"Last-Translator: Hannes <mail@laufhannes.de>\n"
+"PO-Revision-Date: 2016-03-31 18:33+0200\n"
+"Last-Translator: NoName Never <translate.runalyze.phil@daxbau.net>\n"
 "Language-Team: German "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
@@ -2803,7 +2803,7 @@ msgstr "Kommentar"
 #: inc/core/Dataset/Keys/Comment.php:56
 #, php-format
 msgid "Comments are automatically cut after %u characters."
-msgstr "Kommentare werden automatisch nach %u Zeichen gekürzt. "
+msgstr "Kommentare werden automatisch nach %u Zeichen gekürzt."
 
 #: inc/core/Dataset/Keys/TrainingPartner.php:65
 #, php-format
@@ -4825,7 +4825,7 @@ msgstr ""
 #: inc/class.InstallerUpdate.php:184
 #, php-format
 msgid "You are required to run the script %s."
-msgstr ""
+msgstr "Es ist notwendig, dass sie das Skript %s ausführen."
 
 #: inc/class.InstallerUpdate.php:186
 msgid ""
