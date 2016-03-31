@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-03-10 18:19+0100\n"
-"PO-Revision-Date: 2016-03-31 18:33+0200\n"
-"Last-Translator: NoName Never <translate.runalyze.phil@daxbau.net>\n"
+"PO-Revision-Date: 2016-03-31 18:35+0200\n"
+"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
 "Language-Team: German "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
@@ -2200,7 +2200,7 @@ msgstr "R-R Intervall"
 
 #: inc/core/View/Activity/Plot/Series/PaceCumulativeAverage.php:50
 msgid "Moving average"
-msgstr ""
+msgstr "Gleitender Mittelwert"
 
 #: inc/core/View/Activity/Preview.php:131
 msgid "Heartrate data available"
@@ -4832,8 +4832,8 @@ msgid ""
 "Please set your database connection within that file first and then run it "
 "via cli or in your browser."
 msgstr ""
-"Bitte setzen Sie zunächst die Datenbank Verbindung in der Datei und starten "
-"sie es dann via cli oder in Ihrem Browser."
+"Bitte setze zunächst die Datenbank Verbindung in der Datei und starte das "
+"Skript dann via cli oder in Ihrem Browser."
 
 #: inc/import/class.ImporterWindowTabFormular.php:40
 msgid "Form"
