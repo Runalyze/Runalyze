@@ -10,7 +10,7 @@ INSERT INTO `runalyze_dataset` (`keyid`, `active`, `position`, `accountid`) SELE
 DELETE FROM `runalyze_conf` WHERE `key` = 'DB_SHOW_DIRECT_EDIT_LINK';
 
 /* 10.03.2016 - fix conversion of wind speed */
-UPDATE `runalyze_training` SET wind_speed=2.25*wind_speed WHERE wind_speed IS NOT NULL AND wind_deg IS NOT NULL AND humidity IS NOT NULL AND pressure IS NOT NULL AND weatherid IS NOT NULL AND temperature IS NOT NULL;
+UPDATE `runalyze_training` SET wind_speed=2.25*wind_speed WHERE wind_speed IS NOT NULL AND wind_speed > 0 AND wind_speed <=102 AND wind_deg IS NOT NULL AND humidity IS NOT NULL AND pressure IS NOT NULL AND weatherid IS NOT NULL AND temperature IS NOT NULL;
 
 /* 20.03.2016 - originally in feature/timezone on 20.12.2015 */
 ALTER TABLE `runalyze_account` ADD `timezone` SMALLINT(5) unsigned NOT NULL DEFAULT '0' AFTER `language`;
