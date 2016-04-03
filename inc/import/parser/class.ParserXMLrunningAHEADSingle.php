@@ -49,9 +49,14 @@ class ParserXMLrunningAHEADSingle extends ParserAbstractSingleXML {
 			if (isset($this->XML->HeartRate->MaxHR))
 				$this->TrainingObject->setPulseMax( (int)$this->XML->HeartRate->MaxHR );
 		}
-	
-		if (isset($this->XML->Equipment))
-			$this->TrainingObject->setShoeid( ParserXMLrunningAHEADMultiple::newEquipmentId((string)$this->XML->Equipment['id']) );
+
+		if (isset($this->XML->Equipment)) {
+			$equipmentId = ParserXMLrunningAHEADMultiple::newEquipmentId((string)$this->XML->Equipment['id']);
+
+			if ($equipmentId > 0) {
+				$this->TrainingObject->setShoeid($equipmentId);
+			}
+		}
 
 		if (isset($this->XML->Route))
 			$this->TrainingObject->setRoute( (string)$this->XML->Route );
@@ -105,7 +110,7 @@ class ParserXMLrunningAHEADSingle extends ParserAbstractSingleXML {
 	 * Calculate distance from unit
 	 * @param mixed $Distance
 	 * @param mixed $Unit
-	 * @return double 
+	 * @return double
 	 */
 	protected function distanceFromUnit($Distance, $Unit) {
 		$Distance = (double)$Distance;
