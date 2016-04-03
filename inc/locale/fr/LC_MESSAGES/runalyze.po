@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-03-10 18:19+0100\n"
-"PO-Revision-Date: 2016-01-30 16:50+0200\n"
+"PO-Revision-Date: 2016-04-03 12:21+0200\n"
 "Last-Translator: Alex Thierry <alex.thierry@openmailbox.org>\n"
-"Language-Team: French <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/fr/>\n"
+"Language-Team: French "
+"<http://translate.runalyze.de/projects/runalyze/runalyze/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -54,9 +54,8 @@ msgid "The date could not be parsed."
 msgstr "La date n'a pas pu être analysée."
 
 #: inc/html/formular/class.FormularValueParser.php:311
-#, fuzzy
 msgid "The date must not be in the future."
-msgstr "La date n'a pas pu être analysée."
+msgstr "La date ne doit pas être dans le futur."
 
 #: inc/html/formular/class.FormularValueParser.php:344
 msgid "The time could not be read."
