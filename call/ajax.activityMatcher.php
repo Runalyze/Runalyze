@@ -20,7 +20,7 @@ header('Content-type: application/json');
  */
 function parserStrtotime($string) {
 	if (substr($string, -1) == 'Z') {
-		return LocalTime::fromServerTime(strtotime(substr($string, 0, -1).' UTC'))->getTimestamp();
+		return LocalTime::fromServerTime((int)strtotime(substr($string, 0, -1).' UTC'))->getTimestamp();
 	}
 
 	return LocalTime::fromString($string)->getTimestamp();
