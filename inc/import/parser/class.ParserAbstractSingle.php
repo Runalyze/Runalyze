@@ -50,18 +50,18 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 
 	/**
 	 * Previous distance
-	 * 
+	 *
 	 * For pace calculation.
-	 * 
+	 *
 	 * @var int
 	 */
 	private $paceDist = 0;
 
 	/**
 	 * Previous time
-	 * 
+	 *
 	 * For pace calculation.
-	 * 
+	 *
 	 * @var int
 	 */
 	private $paceTime = 0;
@@ -115,7 +115,7 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 	 * Interpret current timestamp of training object as server time
 	 */
 	protected function interpretTimestampAsServerTime() {
-		$this->TrainingObject->setTimestamp(LocalTime::fromServerTime($this->TrainingObject->getTimestamp()));
+		$this->TrainingObject->setTimestamp(LocalTime::fromServerTime($this->TrainingObject->getTimestamp())->getTimestamp());
 	}
 
 	/**
@@ -297,8 +297,8 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 
 			$this->TrainingObject->setVerticalOscillation( round(array_sum($oscillation)/count($oscillation)) );
 		}
-		
-		
+
+
 		if (!empty($groundContactBalance) && max($groundContactBalance) > 30) {
 			$groundContactBalance = array_filter($groundContactBalance, 'ParserAbstract__ArrayFilterForLowEntries');
 
@@ -354,7 +354,7 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 				$this->gps['km'][] = $lastDistance + $step;
 				$lastDistance += $step;
 			}
-			
+
 			$this->TrainingObject->setArrayDistance( $this->gps['km'] );
 			$this->TrainingObject->setDistance( end($this->gps['km']) );
 		}
@@ -429,7 +429,7 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 /**
  * Filter-function: Remove all entries lower than 30 from array
  * @param mixed $value
- * @return boolean 
+ * @return boolean
  */
 function ParserAbstract__ArrayFilterForLowEntries($value) {
 	return ($value > 30);
