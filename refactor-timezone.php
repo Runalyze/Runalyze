@@ -84,7 +84,7 @@ $Geotools = new Geotools();
 $TZLookup = new \Runalyze\Util\TimezoneLookup();
 $DateTime = new DateTime('', new DateTimeZone('Europe/Berlin'));
 
-$activities = $PDO->query('SELECT tr.id, tr.time, tr.activity_id, tr.routeid, r.startpoint FROM '.PREFIX.'training tr LEFT JOIN '.PREFIX.'route r ON (tr.routeid = r.id) GROUP BY tr.id');
+$activities = $PDO->query('SELECT tr.id, tr.time, tr.activity_id, tr.routeid, r.startpoint FROM '.PREFIX.'training tr LEFT JOIN '.PREFIX.'route r ON (tr.routeid = r.id) WHERE tr.time > 86400 AND tr.time < 2147397247 GROUP BY tr.id');
 $UpdateTime = $PDO->prepare('UPDATE '.PREFIX.'training SET `time` = :time, `activity_id` = :activityid, `timezone_offset` = :offset WHERE `id` = :id');
 $UpdateOnlyOffset = $PDO->prepare('UPDATE '.PREFIX.'training SET `timezone_offset` = :offset WHERE `id` = :id');
 
@@ -111,9 +111,15 @@ while ($activity = $activities->fetch()) {
 	}
 
 	if ($updateActivityTime) {
+		if ($activity['activity_id'] < 2147397247) {
+		    $activityid = $activity['activity_id'] + $offset;
+		} else {
+		    $activityid = $activity['activity_id'];
+		}
+	    
 		$UpdateTime->execute([
 			'time' => $localTime,
-			'activityid' => $activity['activity_id'] + $offset,
+			'activityid' => $activityid,
 			'offset' => $timezoneOffset,
 			'id' => $activity['id']
 		]);
