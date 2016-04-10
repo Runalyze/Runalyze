@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-03-10 18:19+0100\n"
-"PO-Revision-Date: 2016-04-03 12:21+0200\n"
-"Last-Translator: Alex Thierry <alex.thierry@openmailbox.org>\n"
+"PO-Revision-Date: 2016-04-10 15:37+0200\n"
+"Last-Translator: Alan <alan.burlot@gmail.com>\n"
 "Language-Team: French "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/fr/>\n"
 "Language: fr\n"
@@ -798,7 +798,7 @@ msgstr "Partenaire d'entraînement"
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:318
 #, php-format
 msgid "Source of weather data: %s"
-msgstr ""
+msgstr "Source des données météo: %s"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:331
 #, php-format
@@ -1735,9 +1735,8 @@ msgid "Calendar: show labels for dataset"
 msgstr "Calendrier : montrer les légendes pour les données"
 
 #: inc/core/Configuration/Category/DataBrowser.php:98
-#, fuzzy
 msgid "Calendar: show days with activities only"
-msgstr "Calendrier : montrer les légendes pour les données"
+msgstr "Calendrier : ne montrer que les jours comprenant une activité"
 
 #: inc/core/Configuration/Category/DataBrowser.php:102
 msgid "Calendar: create button"
@@ -2071,6 +2070,8 @@ msgid ""
 "List with all distances, comma seperated. Put \"+\" at the beginning to "
 "treat distances as intervals."
 msgstr ""
+"Liste de l'ensemble des distances, séparées par une virgule. Mettre un \"+\" "
+"en début de ligne pour traiter les distances comme des intervalles."
 
 #: inc/core/View/Window/Laps/Form.php:81 inc/core/View/Window/Laps/Form.php:94
 msgid "e.g."
@@ -2085,10 +2086,12 @@ msgid ""
 "List with all times, comma seperated. Put \"+\" at the beginning to treat "
 "times as intervals."
 msgstr ""
+"Liste de l'ensemble des temps, séparés par une virgule. Mettre un \"+\" en "
+"début de ligne pour traiter les temps comme des intervalles."
 
 #: inc/core/View/Window/Laps/Form.php:104
 msgid "Lap time goal"
-msgstr "Objectif de temps au tour"
+msgstr "Objectif de temps par tour"
 
 #: inc/core/View/Window/Laps/Form.php:116
 msgid "Pace goal"
@@ -2101,11 +2104,13 @@ msgstr ""
 
 #: inc/core/View/Window/Laps/Form.php:131
 msgid "The total distance of your handmade laps differs from the gps distance."
-msgstr "La distance totale de vos tours manuels diffère de la distance gps."
+msgstr ""
+"La distance totale de vos tours personnalisés diffère de la distance GPS."
 
 #: inc/core/View/Window/Laps/Form.php:138
 msgid "Leave lap distances empty to use your handmade laps."
 msgstr ""
+"Laisser vide les distances par tour pour utiliser vos tours personnalisés."
 
 #: inc/core/View/Window/Laps/Form.php:151
 msgid "Show calculated laps"
@@ -2134,7 +2139,7 @@ msgstr "Moyenne (totale)"
 
 #: inc/core/View/Splits/Table.php:259
 msgid "1st/2nd Half"
-msgstr ""
+msgstr "1ère/2ème moitié"
 
 #: inc/core/View/Activity/Box/TotalCadence.php:27
 #, fuzzy
