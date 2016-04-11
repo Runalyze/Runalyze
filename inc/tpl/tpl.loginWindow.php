@@ -95,6 +95,9 @@ use Runalyze\Activity\Distance;
 				$Field->setLayout(FormularFieldset::$LAYOUT_FIELD_W100);
 				$Field->setUnit( FormularUnit::$PASS );
 				$Field->display();
+				
+				$Field = new FormularInputHidden('timezone');
+				$Field->display();
 			}
 			?>
 
@@ -160,7 +163,7 @@ use Runalyze\Activity\Distance;
 <script type="text/javascript">
 function show(what) {
 	var $log = $("#login"), $reg = $("#registerFormular"), $pwf = $("#forgotPassword");
-	if (what == 'reg') { $reg.show(); $log.hide(); $pwf.hide();	}
+	if (what == 'reg') { $reg.show(); $log.hide(); $pwf.hide(); document.getElementById("timezone").value = moment.tz.guess(); }
 	else if (what == 'pwf') { $pwf.show(); $reg.hide(); $log.hide(); }
 	else if (what == 'log') { $log.show(); $pwf.hide(); $reg.hide(); }
 }

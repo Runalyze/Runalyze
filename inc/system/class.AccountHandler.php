@@ -6,7 +6,8 @@
 
 use Runalyze\Configuration;
 use Runalyze\Error;
-
+use Runalyze\Timezone;
+use Runalyze\Parameter\Application\Timezone as ATimezone;
 /**
  * AccountHandler
  *
@@ -223,9 +224,15 @@ class AccountHandler {
 
 		$activationHash = (System::isAtLocalhost()) ? '' : self::getRandomHash();
 		$newSalt = self::getNewSalt();
+		
+		$timezone = EnumTimezone::getEnumByOriginalName('UTC');
+		if (Timezone::isValidTimezone($_POST['timezone'])) {
+		    $timezone = EnumTimezone::getEnumByOriginalName($_POST['timezone']);
+		}
+		
 		$newAccountId   = DB::getInstance()->insert('account',
-				array('username', 'name', 'mail', 'language', 'password', 'salt' , 'registerdate', 'activation_hash'),
-				array($_POST['new_username'], $_POST['name'], $_POST['email'], Language::getCurrentLanguage(), self::passwordToHash($_POST['password'], $newSalt), $newSalt, time(), $activationHash));
+				array('username', 'name', 'mail', 'language', 'timezone', 'password', 'salt', 'registerdate', 'activation_hash'),
+				array($_POST['new_username'], $_POST['name'], $_POST['email'], Language::getCurrentLanguage(), $timezone, self::passwordToHash($_POST['password'], $newSalt), $newSalt, time(), $activationHash));
 
 		self::$IS_ON_REGISTER_PROCESS = true;
 		self::$NEW_REGISTERED_ID = $newAccountId;

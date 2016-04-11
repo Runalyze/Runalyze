@@ -1715,4 +1715,16 @@ class Timezone extends \Runalyze\Util\AbstractEnum
 
 	    return self::$Mapping[strtolower($enums[$enum])];
     }
+    
+    /**
+     * Get Enum by full/original timezone name (e.g. Europe/Berlin)
+     * @param string $name
+     * @return int Timezone Enum
+     */
+    public static function getEnumByOriginalName($name) {
+	$mapping = array_flip(self::$Mapping);
+	$enums = self::getEnum();
+	
+       return $enums[strtoupper($mapping[$name])];
+    }
 }
