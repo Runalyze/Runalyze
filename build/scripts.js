@@ -11213,7 +11213,7 @@ RunalyzeLeaflet.getNewLayers = function(){
 			}
 		),
 		'OpenCycleMap': L.tileLayer(
-			'//{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png', {
+			'//{s}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png', {
 				attribution: '&copy; <a href="http://www.opencyclemap.org">OpenCycleMap</a>, ' +
 					'&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 			}
