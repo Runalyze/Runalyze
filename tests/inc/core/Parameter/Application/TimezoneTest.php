@@ -38,4 +38,21 @@ class TimezoneTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    public function testThatAllEnumsCanBeFoundByOriginalName()
+    {
+        foreach (Timezone::getEnum() as $enum) {
+            $identifier = Timezone::getFullNameByEnum($enum);
+
+            $this->assertEquals($enum, Timezone::getEnumByOriginalName($identifier));
+        }
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testInvalidOriginalName()
+    {
+        Timezone::getEnumByOriginalName('Horsehead_Nebula/Magrathea');
+    }
+
 }

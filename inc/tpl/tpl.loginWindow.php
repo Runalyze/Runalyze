@@ -85,7 +85,7 @@ use Runalyze\Activity\Distance;
 				$Field->setLayout(FormularFieldset::$LAYOUT_FIELD_W100);
 				$Field->setUnit( FormularUnit::$MAIL );
 				$Field->display();
-                                
+
 				$Field = new FormularInputPassword('password', __('Password'));
 				$Field->setLayout(FormularFieldset::$LAYOUT_FIELD_W100);
 				$Field->setUnit( FormularUnit::$PASS );
@@ -95,8 +95,8 @@ use Runalyze\Activity\Distance;
 				$Field->setLayout(FormularFieldset::$LAYOUT_FIELD_W100);
 				$Field->setUnit( FormularUnit::$PASS );
 				$Field->display();
-				
-				$Field = new FormularInputHidden('timezone');
+
+				$Field = new FormularInputHidden('timezone', '');
 				$Field->display();
 			}
 			?>
