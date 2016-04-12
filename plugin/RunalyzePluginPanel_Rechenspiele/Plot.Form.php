@@ -28,37 +28,38 @@ $lastYear = 1*($timerange == 'lastyear');
 $Year     = $All || $lastHalf || $lastYear ? date('Y') : (int)$timerange;
 
 if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
-	$StartYear    = !$All ? $Year : START_YEAR;
-	$StartYear    = $lastHalf ? date('Y', strtotime("today -180days")) : $StartYear;
-	$StartYear    = $lastYear ? date('Y', strtotime("today -1 year")) : $StartYear;
-	$EndYear      = !$All && !$lastHalf ? $Year : date('Y');
-	$MaxDays      = ($EndYear - $StartYear + 1)*366;
-	$MaxDays      = $lastHalf ? 366 : $MaxDays;
-	$MaxDays      = $lastYear ? 396 : $MaxDays;
+	if ($All) {
+		$StartTime = strtotime('today 00:00', START_TIME);
+		$EndTime = strtotime('today 23:59');
+	} elseif ($lastHalf) {
+		$StartTime = strtotime('today 00:00 -180days');
+		$EndTime = strtotime('today 23:59 +30days');
+	} elseif ($lastYear) {
+		$StartTime = strtotime('today 00:00 -1 year');
+		$EndTime = strtotime('today 23:59 +30days');
+	} else {
+		$StartTime = mktime(0, 0, 0, 1, 1, $Year);
+		$EndTime = mktime(23, 59, 0, 12, 31, $Year);
+	}
+
 	$AddDays      = 3*max(Configuration::Trimp()->daysForATL(), Configuration::Trimp()->daysForCTL(), Configuration::Vdot()->days());
-	$StartTime    = !$All ? mktime(0,0,0,1,1,$StartYear) : strtotime("today 00:00", START_TIME);
-	$StartTime    = $lastHalf ? strtotime("today 00:00 -180days") : $StartTime;
-	$StartTime    = $lastYear ? strtotime("today 00:00 -1 year") : $StartTime;
-	$StartDay     = LocalTime::fromServerTime($StartTime)->format('Y-m-d');
-	$EndTime      = !$All && $Year < date('Y') ? mktime(23,59,0,12,31,$Year) : strtotime("today 23:59");
-	$EndTime      = $lastHalf || $lastYear ? strtotime("today 23:59 +30days") : $EndTime;
 	$NumberOfDays = Time::diffInDays($StartTime, $EndTime);
+	$StartYear    = date('Y', $StartTime);
+	$EndYear      = date('Y', $EndTime);
 
 	$EmptyArray    = array_fill(0, $NumberOfDays + $AddDays + 2, 0);
 	$Trimps_raw    = $EmptyArray;
 	$VDOTs_raw     = $EmptyArray;
 	$Durations_raw = $EmptyArray;
 
-
 	// Here VDOT will be implemented again
 	// Normal functions are too slow, calling them for each day would trigger each time a query
 	// - VDOT: AVG(`vdot`) for Configuration::Vdot()->days()
 
-	//Can't cache until we can invalidate it
-	//$Data = Cache::get('calculationsPlotData'.$Year.$All.$lastHalf.$lastYear);
-	//if (is_null($Data)) {
 	$withElevation = Configuration::Vdot()->useElevationCorrection();
+	$StartDay = LocalTime::fromServerTime($StartTime)->format('Y-m-d');
 
+	// Can't cache until we can invalidate it
 	$Data = DB::getInstance()->query('
 			SELECT
 				DATEDIFF(FROM_UNIXTIME(`time`), "'.$StartDay.'") as `index`,
@@ -66,13 +67,10 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 				SUM('.JD\Shape::mysqlVDOTsum($withElevation).'*(`sportid`='.Configuration::General()->runningSport().')) as `vdot`,
 				SUM('.JD\Shape::mysqlVDOTsumTime($withElevation).'*(`sportid`='.Configuration::General()->runningSport().')) as `s`
 			FROM `'.PREFIX.'training`
-			WHERE 
+			WHERE
 				`accountid`='.\SessionAccountHandler::getId().' AND
 				`time` BETWEEN UNIX_TIMESTAMP("'.$StartDay.'" + INTERVAL -'.$AddDays.' DAY) AND UNIX_TIMESTAMP("'.$StartDay.'" + INTERVAL '.$NumberOfDays.' DAY)-1
 			GROUP BY `index`')->fetchAll();
-
-	//	Cache::set('calculationsPlotData'.$Year.$All.$lastHalf.$lastYear, $Data, '300');
-	//}
 
 	foreach ($Data as $dat) {
 		$index = $dat['index'] + $AddDays;
@@ -85,10 +83,10 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 		}
 	}
 
-	$TodayIndex = Time::diffInDays($StartTime) + $AddDays;
 	$StartDayInYear = $All || $lastHalf || $lastYear ? Time::diffInDays($StartTime, mktime(0,0,0,1,1,$StartYear)) + 1*($StartYear < $Year) : 1;
-	$LowestIndex = $AddDays + 1;
-	$HighestIndex = $AddDays + 1 + $NumberOfDays;
+	$StartDayInYear += $lastHalf || $lastYear ? 1 : 0;
+	$LowestIndex = $AddDays + 1*(!$All);
+	$HighestIndex = $LowestIndex + $NumberOfDays;
 
 	$VDOTdays = Configuration::Vdot()->days();
 	$ATLdays = Configuration::Trimp()->daysForATL();
@@ -126,7 +124,7 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 	}
 
 	for ($d = $LowestIndex; $d <= $HighestIndex; $d++) {
-		$index = Plot::dayOfYearToJStime($StartYear, $d - $AddDays + $StartDayInYear, 0);
+		$index = Plot::dayOfYearToJStime($StartYear, $d - $AddDays + $StartDayInYear, 12);
 
 		$ATLs[$index] = 100 * $performanceModel->fatigueAt($d) / $maxATL;
 		$CTLs[$index] = 100 * $performanceModel->fitnessAt($d) / $maxCTL;
