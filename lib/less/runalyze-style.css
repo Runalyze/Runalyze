@@ -1133,6 +1133,7 @@ tr.ERROR td {
 }
 .inline-menu {
   color: #666;
+  font-weight: normal;
 }
 .inline-menu ul {
   margin: 0;

@@ -16,7 +16,10 @@ use Runalyze\Util\LocalTime;
 
 if (is_dir(FRONTEND_PATH.'../plugin/RunalyzePluginStat_Wettkampf')) {
 	$Factory = new PluginFactory();
-	$WKplugin = $Factory->newInstance('RunalyzePluginStat_Wettkampf');
+
+	if (!$Factory->isInstalled('RunalyzePluginStat_Wettkampf')) {
+		$WKplugin = $Factory->newInstance('RunalyzePluginStat_Wettkampf');
+	}
 }
 
 if (!isset($distance)) {

@@ -6,7 +6,8 @@
 
 use Runalyze\Configuration;
 use Runalyze\Error;
-
+use Runalyze\Timezone;
+use Runalyze\Parameter\Application\Timezone as EnumTimezone;
 /**
  * AccountHandler
  *
@@ -128,11 +129,11 @@ class AccountHandler {
 	public static function mailExists($mail) {
 		return (1 == DB::getInstance()->query('SELECT 1 FROM `'.PREFIX.'account` WHERE `mail`='.DB::getInstance()->escape($mail).' LIMIT 1')->fetchColumn());
 	}
-        
+
         /**
          * Is the mail address valid?
          * @param string $mail
-         * @return boolean 
+         * @return boolean
          */
         public static function mailValid($mail) {
             $validator = new \EmailValidator\Validator();
@@ -193,7 +194,7 @@ class AccountHandler {
 
 		if (self::mailExists($_POST['email']))
 			$errors[] = array('email' => __('This email address is already being used.'));
-                
+
                 if(self::mailValid($_POST['email']))
                         $errors[] = array('email' => __('This email address is not allowed'));
 
@@ -223,9 +224,15 @@ class AccountHandler {
 
 		$activationHash = (System::isAtLocalhost()) ? '' : self::getRandomHash();
 		$newSalt = self::getNewSalt();
+
+		$timezone = EnumTimezone::getEnumByOriginalName(date_default_timezone_get());
+		if (Timezone::isValidTimezone($_POST['timezone'])) {
+		    $timezone = EnumTimezone::getEnumByOriginalName($_POST['timezone']);
+		}
+
 		$newAccountId   = DB::getInstance()->insert('account',
-				array('username', 'name', 'mail', 'language', 'password', 'salt' , 'registerdate', 'activation_hash'),
-				array($_POST['new_username'], $_POST['name'], $_POST['email'], Language::getCurrentLanguage(), self::passwordToHash($_POST['password'], $newSalt), $newSalt, time(), $activationHash));
+				array('username', 'name', 'mail', 'language', 'timezone', 'password', 'salt', 'registerdate', 'activation_hash'),
+				array($_POST['new_username'], $_POST['name'], $_POST['email'], Language::getCurrentLanguage(), $timezone, self::passwordToHash($_POST['password'], $newSalt), $newSalt, time(), $activationHash));
 
 		self::$IS_ON_REGISTER_PROCESS = true;
 		self::$NEW_REGISTERED_ID = $newAccountId;

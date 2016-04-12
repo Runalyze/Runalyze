@@ -55,5 +55,7 @@ $JS_FILES = array(
 	'lib/leaflet/runalyze.leaflet.layers.js',
 	'lib/leaflet/runalyze.leaflet.routes.js',
 	'lib/fontIconPicker-2.0.0/jquery.fonticonpicker.js',
+    	'lib/moment.js',
+	'lib/moment-timezone-with-data-2010-2020.js'
 
 );

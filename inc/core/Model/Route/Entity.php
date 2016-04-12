@@ -328,7 +328,7 @@ class Entity extends Model\EntityWithID implements Model\Loopable {
 		$geohashes = array();
 
 		for ($i = 0; $i < $size; ++$i) {
-			$geohashes[] = (new Geohash())->encode(new Coordinate($latitudes[$i].','.$longitudes[$i]), self::PATH_GEOHASH_PRECISION)->getGeohash();
+			$geohashes[] = (new Geohash())->encode(new Coordinate(array($latitudes[$i], $longitudes[$i])), self::PATH_GEOHASH_PRECISION)->getGeohash();
 		}
 
 		$this->Data[self::GEOHASHES] = $geohashes;
