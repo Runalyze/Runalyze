@@ -8,7 +8,7 @@ namespace Runalyze\Data\Elevation\Correction;
 
 /**
  * Elevation corrector strategy: http://maps.googleapis.com/
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Data\Elevation\Correction
  */
@@ -20,10 +20,21 @@ class GoogleMaps extends FromExternalAPI {
 	protected $POINTS_PER_CALL = 20;
 
 	/**
+	 * Value for unknown elevation
+	 *
+	 * GoogleMaps does not mask oceans but returns real elevation, e.g. -3492m for (0.0, 0.0).
+	 * We will mask only this 'null point' as 'unknown'.
+	 *
+	 * @see http://maps.googleapis.com/maps/api/elevation/json?locations=0,0&sensor=false
+	 * @var int
+	 */
+	protected $UnknownValue = -3492;
+
+	/**
 	 * Can the strategy handle the data?
-	 * 
+	 *
 	 * We assume that GoogleMaps will find elevation data for all points.
-	 * 
+	 *
 	 * @see https://developers.google.com/maps/documentation/elevation/?hl=de&csw=1
 	 */
 	public function canHandleData() {

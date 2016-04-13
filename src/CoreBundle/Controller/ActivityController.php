@@ -11,6 +11,7 @@ use Runalyze\View\Activity\Linker;
 use Runalyze\View\Activity\Dataview;
 use Runalyze\Export\Share;
 use Runalyze\Model\Activity;
+use Runalyze\Util\LocalTime;
 use Runalyze\Export\File;
 use Runalyze\View\Window\Laps\Window;
 use Runalyze\Activity\DuplicateFinder;
@@ -264,25 +265,39 @@ class ActivityController extends Controller
         $Matches = array();
         $Array   = explode('&', urldecode(file_get_contents('php://input')));
         foreach ($Array as $String) {
-        	if (substr($String,0,12) == 'externalIds=')
-        		$IDs[] = substr($String,12);
+                if (substr($String,0,12) == 'externalIds=')
+                        $IDs[] = substr($String,12);
         }
-        
+
         $IgnoreIDs = \Runalyze\Configuration::ActivityForm()->ignoredActivityIDs();
-        $DuplicateFinder = new DuplicateFinder(\DB::getInstance(), \SessionAccountHandler::getId());
-        
+        $DuplicateFinder = new DuplicateFinder(DB::getInstance(), SessionAccountHandler::getId());
+
         $IgnoreIDs = array_map(function($v){
-        	return (int)floor(strtotime($v)/60)*60;
+                return (int)floor(parserStrtotime($v)/60)*60;
         }, $IgnoreIDs);
-        
+
         foreach ($IDs as $ID) {
-        	$dup = $DuplicateFinder->checkForDuplicate((int)floor(strtotime($ID)/60)*60);
-        	$found = $dup || in_array($ID, $IgnoreIDs);
-        	$Matches[$ID] = array('match' => $found);
+                $dup = $DuplicateFinder->checkForDuplicate((int)floor($this->parserStrtotime($ID)/60)*60);
+                $found = $dup || in_array($ID, $IgnoreIDs);
+                $Matches[$ID] = array('match' => $found);
         }
-        
+
         $Response = array('matches' => $Matches);
         
         return new JsonResponse($Response);
+    }
+    
+    /**
+     * Adjusted strtotime
+     * Timestamps are given in UTC but local timezone offset has to be considered!
+     * @param $string
+     * @return int
+     */
+    private function parserStrtotime($string) {
+            if (substr($string, -1) == 'Z') {
+                    return LocalTime::fromServerTime((int)strtotime(substr($string, 0, -1).' UTC'))->getTimestamp();
+            }
+
+            return LocalTime::fromString($string)->getTimestamp();
     }
 }

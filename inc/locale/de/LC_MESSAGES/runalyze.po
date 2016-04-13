@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-03-10 18:19+0100\n"
-"PO-Revision-Date: 2016-01-22 17:44+0200\n"
+"PO-Revision-Date: 2016-04-02 14:39+0200\n"
 "Last-Translator: Michael Pohl <michael@mipapo.de>\n"
-"Language-Team: German <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/de/>\n"
+"Language-Team: German "
+"<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -54,9 +54,8 @@ msgid "The date could not be parsed."
 msgstr "Das Datum wurde im falschen Format angegeben."
 
 #: inc/html/formular/class.FormularValueParser.php:311
-#, fuzzy
 msgid "The date must not be in the future."
-msgstr "Das Datum wurde im falschen Format angegeben."
+msgstr "Das Datum darf nicht in der Zukunft liegen."
 
 #: inc/html/formular/class.FormularValueParser.php:344
 msgid "The time could not be read."
@@ -801,7 +800,7 @@ msgstr "Trainingspartner"
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:318
 #, php-format
 msgid "Source of weather data: %s"
-msgstr ""
+msgstr "Wetterdaten-Quelle: %s"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:331
 #, php-format
@@ -846,7 +845,7 @@ msgstr "&oslash; bpm"
 
 #: inc/training/view/section/table/class.TableLapsComputed.php:67
 msgid "elev."
-msgstr "Anstieg"
+msgstr "Hm"
 
 #: inc/training/view/section/table/class.TableZonesPace.php:35
 #: inc/core/View/Window/Laps/Table.php:143
@@ -1562,9 +1561,8 @@ msgstr ""
 "Wenn aktiviert, werden im Pace-Diagramm Ausreißer nicht berücksichtigt."
 
 #: inc/core/Configuration/Category/ActivityView.php:371
-#, fuzzy
 msgid "Splits plot: use zero as axis minimum"
-msgstr "Pacediagramm: Y-Achsen-Minimum"
+msgstr "Zwischenzeitendiagramm: verwende null als Achsen-Minimum"
 
 #: inc/core/Configuration/Category/ActivityView.php:381
 msgid "Map: interrupt route"
@@ -1738,9 +1736,8 @@ msgid "Calendar: show labels for dataset"
 msgstr "Kalender: Zeige Label für Dataset"
 
 #: inc/core/Configuration/Category/DataBrowser.php:98
-#, fuzzy
 msgid "Calendar: show days with activities only"
-msgstr "Kalender: Zeige Label für Dataset"
+msgstr "Kalender: Zeige nur Tage mit Aktivitäten"
 
 #: inc/core/Configuration/Category/DataBrowser.php:102
 msgid "Calendar: create button"
@@ -2147,14 +2144,12 @@ msgid "1st/2nd Half"
 msgstr "1./2. Rennhälfte"
 
 #: inc/core/View/Activity/Box/TotalCadence.php:27
-#, fuzzy
 msgid "Number of steps"
-msgstr "Anzahl der Nachkommastellen"
+msgstr "Anzahl der Schritte"
 
 #: inc/core/View/Activity/Box/TotalCadence.php:29
-#, fuzzy
 msgid "Total cadence"
-msgstr "Gesamte Trainingsdistanz:"
+msgstr ""
 
 #: inc/core/View/Activity/Box/ElevationUpDown.php:35
 msgid "Elevation up/down"
@@ -2205,7 +2200,7 @@ msgstr "R-R Intervall"
 
 #: inc/core/View/Activity/Plot/Series/PaceCumulativeAverage.php:50
 msgid "Moving average"
-msgstr ""
+msgstr "Gleitender Mittelwert"
 
 #: inc/core/View/Activity/Preview.php:131
 msgid "Heartrate data available"
@@ -2555,61 +2550,59 @@ msgstr "NW"
 
 #: inc/core/Data/Weather/BeaufortScale.php:119
 msgid "Calm"
-msgstr ""
+msgstr "Windstille"
 
 #: inc/core/Data/Weather/BeaufortScale.php:121
-#, fuzzy
 msgid "Light air"
-msgstr "Einheit für Gewicht"
+msgstr "leiser Zug"
 
 #: inc/core/Data/Weather/BeaufortScale.php:123
 msgid "Light breeze"
-msgstr ""
+msgstr "leichte Brise"
 
 #: inc/core/Data/Weather/BeaufortScale.php:125
 msgid "Gentle breeze"
-msgstr ""
+msgstr "schwache Brise"
 
 #: inc/core/Data/Weather/BeaufortScale.php:127
 msgid "Moderate breeze"
-msgstr ""
+msgstr "mäßige Brise"
 
 #: inc/core/Data/Weather/BeaufortScale.php:129
 msgid "Fresh breeze"
-msgstr ""
+msgstr "frische Brise"
 
 #: inc/core/Data/Weather/BeaufortScale.php:131
 msgid "Strong breeze"
-msgstr ""
+msgstr "starker Wind"
 
 #: inc/core/Data/Weather/BeaufortScale.php:133
-#, fuzzy
 msgid "High wind"
-msgstr "höchster Punkt"
+msgstr "steifer Wind"
 
 #: inc/core/Data/Weather/BeaufortScale.php:135
 msgid "Fresh gale"
-msgstr ""
+msgstr "stürmischer Wind"
 
 #: inc/core/Data/Weather/BeaufortScale.php:137
 msgid "Strong gale"
-msgstr ""
+msgstr "Sturm"
 
 #: inc/core/Data/Weather/BeaufortScale.php:139
 msgid "Whole gale"
-msgstr ""
+msgstr "schwerer Sturm"
 
 #: inc/core/Data/Weather/BeaufortScale.php:141
 msgid "Violent storm"
-msgstr ""
+msgstr "orkanartiker Sturm"
 
 #: inc/core/Data/Weather/BeaufortScale.php:143
 msgid "Hurricane force"
-msgstr ""
+msgstr "Orkan"
 
 #: inc/core/Data/Weather/BeaufortScale.php:169
 msgid "Beautfort scale"
-msgstr ""
+msgstr "Beautfort scale"
 
 #: inc/core/Data/Weather/WindDegree.php:58
 msgid "Wind Degree"
@@ -2653,7 +2646,7 @@ msgstr "gewittrig"
 
 #: inc/core/Data/Weather/WindChillFactor.php:83
 msgid "Wind chill factor"
-msgstr "Gefühlte Kälte"
+msgstr "Gefühlte Temperatur"
 
 #: inc/core/Data/Stroketype.php:98 inc/core/Data/Stroketype.php:121
 msgid "Freestyle"
@@ -2726,6 +2719,8 @@ msgstr "Garmins neuere Geräte besitzen eine integrierte VDOT Schätzung."
 msgid ""
 "This value refers to your estimated VO2max at the start of the activity."
 msgstr ""
+"Dieser Wert bezieht sich auf deinen geschätzten VO2max zu Beginn der "
+"Aktivität."
 
 #: inc/core/Dataset/Keys/CompleteEquipment.php:34
 msgid "Complete equipment"
@@ -2810,7 +2805,7 @@ msgstr "Kommentar"
 #: inc/core/Dataset/Keys/Comment.php:56
 #, php-format
 msgid "Comments are automatically cut after %u characters."
-msgstr "Kommentare werden automatisch nach %u Zeichen gekürzt. "
+msgstr "Kommentare werden automatisch nach %u Zeichen gekürzt."
 
 #: inc/core/Dataset/Keys/TrainingPartner.php:65
 #, php-format
@@ -2823,9 +2818,8 @@ msgstr ""
 "Kalorien werden von deinem Gerät oder über eine einfache Formel berechnet."
 
 #: inc/core/Dataset/Keys/Setting.php:52
-#, fuzzy
 msgid "Setting"
-msgstr "Einstellungen"
+msgstr "Einstellung"
 
 #: inc/core/Dataset/Keys/FitHrvAnalysis.php:53
 msgid "HRV"
@@ -3639,7 +3633,6 @@ msgid "Show selection"
 msgstr "Auswahl anzeigen"
 
 #: inc/tpl/tpl.DataBrowser.php:140
-#, fuzzy
 msgid "There are no activities for this time range."
 msgstr "Es gibt keine Daten für diese Zeitspanne."
 
@@ -4833,17 +4826,15 @@ msgstr ""
 #: inc/class.InstallerUpdate.php:184
 #, php-format
 msgid "You are required to run the script %s."
-msgstr ""
+msgstr "Es ist notwendig das Skript %s auszuführen."
 
 #: inc/class.InstallerUpdate.php:186
-#, fuzzy
 msgid ""
 "Please set your database connection within that file first and then run it "
 "via cli or in your browser."
 msgstr ""
-"Du musst das Skript %s ausführen. Bitte trage deine Datenbank-Verbindung in "
-"der Datei ein und rufe sie danach über die Konsole oder in deinem Browser "
-"auf."
+"Bitte setze zunächst die Datenbank Verbindung in der Datei und starte das "
+"Skript dann via cli oder in Ihrem Browser."
 
 #: inc/import/class.ImporterWindowTabFormular.php:40
 msgid "Form"
@@ -5224,9 +5215,8 @@ msgid "TTBIN Converter Path"
 msgstr "TTBIN Konverter Pfad"
 
 #: inc/class.AdminView.php:164
-#, fuzzy
 msgid "Geonames Username"
-msgstr "Nutzername"
+msgstr "Geonames Nutzername"
 
 #: inc/class.AdminView.php:165
 msgid "Sender e-mail"
@@ -7565,7 +7555,7 @@ msgstr ""
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:620
 #, php-format
 msgid "* In general, all runs with more than %s are being considered."
-msgstr "* Generell werden alle Läufe ab %s km betrachtet."
+msgstr "* Generell werden alle Läufe ab %s betrachtet."
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:624
 msgid ""

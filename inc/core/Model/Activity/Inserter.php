@@ -274,9 +274,12 @@ class Inserter extends Model\InserterWithAccountID {
 			if ($Lookup->isPossible()) {
 				$Coordinate = (new Geotools())->geohash()->decode($this->Route->get(Model\Route\Entity::STARTPOINT))->getCoordinate();
 				$timezone = $Lookup->getTimezoneForCoordinate($Coordinate->getLongitude(), $Coordinate->getLatitude());
-				$timezoneOffset = (new \DateTime(null, new \DateTimeZone($timezone)))->setTimestamp($this->Object->timestamp())->getOffset() / 60;
 
-				$this->Object->set(Entity::TIMEZONE_OFFSET, $timezoneOffset);
+                            if (null !== $timezone && $timezone != '') {
+                                $timezoneOffset = (new \DateTime(null, new \DateTimeZone($timezone)))->setTimestamp($this->Object->timestamp())->getOffset() / 60;
+
+                                $this->Object->set(Entity::TIMEZONE_OFFSET, $timezoneOffset);
+                            }
 			}
 		}
 	}
