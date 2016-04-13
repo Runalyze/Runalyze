@@ -21,7 +21,7 @@ class PluginConfigurationValueFloat extends PluginConfigurationValue {
 
 	/**
 	 * Display row for config form
-	 * @return FormularField
+	 * @return FormularInput
 	 */
 	public function getFormField() {
 		$Field = new FormularInput($this->Key, $this->formLabel(), $this->valueAsString());

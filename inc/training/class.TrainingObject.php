@@ -23,12 +23,6 @@ class TrainingObject extends DataObject {
 	private $Sport = null;
 
 	/**
-	 * Type
-	 * @var \Type
-	 */
-	private $Type = null;
-
-	/**
 	 * Weather
 	 * @var \Runalyze\Data\Weather
 	 */
@@ -361,21 +355,6 @@ class TrainingObject extends DataObject {
 			$this->Sport = new Sport($this->get('sportid'));
 
 		return $this->Sport;
-	}
-
-	/**
-	 * Type object
-	 * @return \Type
-	 */
-	public function Type() {
-		if (is_null($this->Type)) {
-			if (!$this->hasProperty('typeid'))
-				$this->Type = new Type(0);
-			else
-				$this->Type = new Type($this->get('typeid'));
-		}
-
-		return $this->Type;
 	}
 
 	/**
@@ -1051,29 +1030,9 @@ class TrainingObject extends DataObject {
 	 * Has position data?
 	 * @return bool True if latitude and longitude arrays are set.
 	 */
-	public function hasPositionData() { 
-		if (Request::isOnSharedPage() && $this->hidesMap())
-			return false;
-
+	public function hasPositionData() {
 		return $this->hasArrayLatitude() && $this->hasArrayLongitude();
 	}
-
-	/**
-	 * Hides map?
-	 * @return boolean
-	 */
-	public function hidesMap() {
-		$RoutePrivacy = Configuration::Privacy()->RoutePrivacy();
-
-		if ($RoutePrivacy->showRace()) {
-			return (!$this->Type()->isCompetition());
-		} elseif ($RoutePrivacy->showAlways()) {
-			return false;
-		}
-
-		return true;
-	}
-
 
 	/**
 	 * Set array for altitude

@@ -167,14 +167,18 @@ class Context {
 	 * @return boolean
 	 */
 	public function hideMap() {
-		if (!Request::isOnSharedPage()) return false;
+		if (!Request::isOnSharedPage()) {
+			return false;
+		}
 
 		$RoutePrivacy = Configuration::Privacy()->RoutePrivacy();
-		if ($RoutePrivacy->showAlways()) return false;
-		$type = $this->activity()->type();
+
+		if ($RoutePrivacy->showAlways()) {
+			return false;
+		}
 
 		if ($RoutePrivacy->showRace()) {
-			return (!$type->isCompetition());
+			return ($this->activity()->typeid() != Configuration::General()->competitionType());
 		}
 
 		return true;

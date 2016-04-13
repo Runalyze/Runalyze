@@ -50,6 +50,7 @@ class PluginConfigurationValue {
 	 * @param string $Key
 	 * @param string $Label [optional]
 	 * @param string $Tooltip [optional]
+	 * @param string $DefaultValue [optional]
 	 */
 	public function __construct($Key, $Label = '', $Tooltip = '', $DefaultValue = '') {
 		$this->Key = $Key;

@@ -560,14 +560,6 @@ class Entity extends Model\EntityWithID {
 	}
 
 	/**
-	 * Type
-	 * @return \Type
-	 */
-	public function type() {
-		return new \Type($this->Data[self::TYPEID]);
-	}
-
-	/**
 	 * Is public?
 	 * @return boolean
 	 */

@@ -8,6 +8,7 @@ namespace Runalyze\View\Window\Laps;
 
 use Runalyze\Configuration;
 use Runalyze\Data\Laps\Calculator;
+use Runalyze\Parameter\Application\DistanceUnitSystem;
 use Runalyze\View\Activity\Context;
 use Runalyze\Activity\Duration;
 use Runalyze\Activity\Pace;
@@ -102,8 +103,20 @@ class Window {
 		if (isset($_POST['distance'])) {
 			$_POST['distance'] = str_replace(',', '.', $_POST['distance']);
 		} elseif ($this->Context->activity()->splits()->isEmpty()) {
-			$_POST['distance'] = Configuration::General()->distanceUnitSystem()->distanceToKmFactor();
+			$_POST['distance'] = 1;
 		}
+	}
+
+	/**
+	 * @param float $valueInPreferredUnit
+	 * @return float [km]
+	 */
+	protected function distanceToKm($valueInPreferredUnit) {
+		if (Configuration::General()->distanceUnitSystem()->isImperial()) {
+			return $valueInPreferredUnit / DistanceUnitSystem::MILE_MULTIPLIER;
+		}
+
+		return $valueInPreferredUnit;
 	}
 
 	/**
@@ -111,7 +124,7 @@ class Window {
 	 */
 	protected function readPropertiesFromRequest() {
 		if ((float)Request::param('distance') > 0) {
-			$this->LapDistance = min($this->Context->trackdata()->totalDistance(), (float)Request::param('distance'));
+			$this->LapDistance = min($this->Context->trackdata()->totalDistance(), $this->distanceToKm((float)Request::param('distance')));
 		}
 
 		if (strlen(Request::param('time')) > 0) {
@@ -139,6 +152,10 @@ class Window {
 
 		if (strlen(Request::param('manual-distances')) > 0) {
 			$this->ManualDistances = Calculator::getDistancesFromString(Request::param('manual-distances'));
+
+			if (Configuration::General()->distanceUnitSystem()->isImperial()) {
+				$this->ManualDistances = array_map(array($this, 'distanceToKm'), $this->ManualDistances);
+			}
 		}
 
 		if (strlen(Request::param('manual-times')) > 0) {
