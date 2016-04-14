@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-03-10 18:19+0100\n"
-"PO-Revision-Date: 2016-04-11 11:07+0200\n"
-"Last-Translator: Alan <alan.burlot@gmail.com>\n"
+"PO-Revision-Date: 2016-04-14 10:26+0200\n"
+"Last-Translator: Gilgamesh <alan.burlot@gmail.com>\n"
 "Language-Team: French "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/fr/>\n"
 "Language: fr\n"
@@ -2036,7 +2036,7 @@ msgstr "Moyenne"
 
 #: inc/core/View/Window/Laps/Table.php:312
 msgid "Show inactive splits"
-msgstr ""
+msgstr "Afficher les intervalles désactivés"
 
 #: inc/core/View/Window/Laps/Form.php:40
 msgid "Calculate laps"
@@ -2101,6 +2101,8 @@ msgstr "Objectif de cadence"
 msgid ""
 "Calculate values for handmade splits although total distance does not match."
 msgstr ""
+"Calculer les valeurs pour les intervalles personnalisés même si la distance "
+"totale ne concorde pas."
 
 #: inc/core/View/Window/Laps/Form.php:131
 msgid "The total distance of your handmade laps differs from the gps distance."
@@ -2122,7 +2124,7 @@ msgstr "Montrer les tours manuels"
 
 #: inc/core/View/Splits/Table.php:150
 msgid "diff"
-msgstr ""
+msgstr "diff"
 
 #: inc/core/View/Splits/Table.php:223
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:167
@@ -2220,7 +2222,7 @@ msgstr "inconnu"
 #: inc/core/View/Leaflet/Activity.php:228
 #, php-format
 msgid "<strong>%s. %s</strong> in %s"
-msgstr ""
+msgstr "<strong>%s. %s</strong> en %s"
 
 #: inc/core/View/Leaflet/Activity.php:229
 #: inc/core/View/Leaflet/Activity.php:259
@@ -2251,7 +2253,7 @@ msgstr "<strong>Pulsations :</strong>"
 #: inc/core/View/Leaflet/Activity.php:328
 #, php-format
 msgid "%s to %s"
-msgstr ""
+msgstr "%s à %s"
 
 #: inc/core/View/Icon/WindIcon.php:66 inc/core/Dataset/Keys/Wind.php:44
 msgid "Wind"
@@ -2386,7 +2388,7 @@ msgstr "pas de lissage"
 
 #: inc/core/Parameter/Application/ElevationMethod.php:46
 msgid "Threshold method"
-msgstr ""
+msgstr "Méthode à seuil"
 
 #: inc/core/Parameter/Application/ElevationMethod.php:47
 msgid "Douglas-Peucker-Algorithm"
@@ -2398,7 +2400,7 @@ msgstr "id (le plus ancien en premier)"
 
 #: inc/core/Parameter/Application/DatabaseOrder.php:40
 msgid "id (latest first)"
-msgstr ""
+msgstr "id (le plus récent en premier)"
 
 #: inc/core/Parameter/Application/DatabaseOrder.php:41
 msgid "alphabetical"
@@ -2478,7 +2480,7 @@ msgstr "Téléverser depuis"
 
 #: inc/core/Parameter/Application/ActivityCreationMode.php:40
 msgid "Garmin-Communicator"
-msgstr ""
+msgstr "Communicateur Garmin"
 
 #: inc/core/Parameter/Application/ActivityCreationMode.php:41
 msgid "Standard form"
@@ -2603,7 +2605,7 @@ msgstr "Échelle de Beaufort"
 
 #: inc/core/Data/Weather/WindDegree.php:58
 msgid "Wind Degree"
-msgstr ""
+msgstr "Direction du vent"
 
 #: inc/core/Data/Weather/Condition.php:166
 msgid "sunny"
@@ -2671,11 +2673,11 @@ msgstr ""
 
 #: inc/core/Data/Stroketype.php:123
 msgid "Back"
-msgstr ""
+msgstr "Dos"
 
 #: inc/core/Data/Stroketype.php:125
 msgid "Breast"
-msgstr ""
+msgstr "Brasse"
 
 #: inc/core/Data/Weather.php:211
 msgid "at"
@@ -2838,19 +2840,19 @@ msgstr ""
 
 #: inc/core/Dataset/Keys/JdIntensity.php:44
 msgid "JD intensity"
-msgstr ""
+msgstr "Intensité JD"
 
 #: inc/core/Dataset/Keys/JdIntensity.php:53
 msgid "JD"
-msgstr ""
+msgstr "JD"
 
 #: inc/core/Dataset/Keys/JdIntensity.php:62
 msgid "Intensity points based on Jack Daniels' Running formula."
-msgstr ""
+msgstr "Points d'intensité basés sur la formule de course de Jack Daniels."
 
 #: inc/core/Dataset/Keys/Splits.php:47
 msgid "Splits"
-msgstr ""
+msgstr "Intervalles"
 
 #: inc/core/Dataset/Keys/Splits.php:57
 msgid ""
@@ -2858,6 +2860,10 @@ msgid ""
 "only if there are handmade laps, i.e. there are active and inactive laps, or "
 "if it was a race. "
 msgstr ""
+"Les intervalles sont présentés comme une icône d'horloge avec les temps au "
+"tour en info-bulle. Ils sont affichés uniquement pour les tours "
+"personnalisés, c-à-d s'il y a des tours actifs et inactifs ou s'il s'agit "
+"d'une course. "
 
 #: inc/core/Dataset/Keys/Elevation.php:53
 msgid "Elev."
@@ -2868,6 +2874,8 @@ msgid ""
 "Calculated value for total elevation, i.e. maximum of total ascent or "
 "descent."
 msgstr ""
+"Valeur calculée pour le dénivelé total, c-à-d le maximum entre l'ascension "
+"ou de la descente totale."
 
 #: inc/core/Dataset/Keys/MainEquipment.php:34
 msgid "Main Equipment"
@@ -2896,7 +2904,7 @@ msgstr ""
 
 #: inc/core/Dataset/Keys/GroundcontactBalance.php:53
 msgid "GCB"
-msgstr ""
+msgstr "ECS"
 
 #: inc/core/Dataset/Keys/Daytime.php:43
 msgid "Daytime"
@@ -3175,42 +3183,44 @@ msgstr ""
 
 #: inc/tpl/tpl.Installer.php:67
 msgid "Time limit"
-msgstr ""
+msgstr "Limite de temps"
 
 #: inc/tpl/tpl.Installer.php:68
 msgid "Memory limit"
-msgstr ""
+msgstr "Restriction de mémoire"
 
 #: inc/tpl/tpl.Installer.php:69
 msgid "Upload limit"
-msgstr ""
+msgstr "Restriction de téléversement"
 
 #: inc/tpl/tpl.Installer.php:76
 msgid "Start installation"
-msgstr ""
+msgstr "Démarrer l'installation"
 
 #: inc/tpl/tpl.Installer.php:84
 msgid "Settings for Runalyze"
-msgstr ""
+msgstr "Paramètres de Runalyze"
 
 #: inc/tpl/tpl.Installer.php:88
 msgid "Runalyze does need a MySQL database."
-msgstr ""
+msgstr "Runalyze nécessite une base de données MySQL."
 
 #: inc/tpl/tpl.Installer.php:93
 msgid ""
 "The connection settings are incorrect. We are not able to connect to the "
 "database."
 msgstr ""
+"Les paramètres de connexion sont incorrectes. Il est impossible de se "
+"connecter à la base de données."
 
 #: inc/tpl/tpl.Installer.php:97
 msgid "A connection could be established."
-msgstr ""
+msgstr "Une connexion peut être établie."
 
 #: inc/tpl/tpl.Installer.php:102
 #, php-format
 msgid "Currently MySQL %s is running."
-msgstr ""
+msgstr "MySQL %s est actuellement utilisé."
 
 #: inc/tpl/tpl.Installer.php:106
 #, php-format
@@ -3218,77 +3228,85 @@ msgid ""
 "MySQL %s is required, but MySQL %s is running. Please update your MySQL "
 "version."
 msgstr ""
+"MySQL %s est requis mais la version %s est utilisée. Veuillez mettre à jour "
+"MySQL."
 
 #: inc/tpl/tpl.Installer.php:113
 msgid "Host server"
-msgstr ""
+msgstr "Serveur d'hébergement"
 
 #: inc/tpl/tpl.Installer.php:125
 msgid "Port"
-msgstr ""
+msgstr "Port"
 
 #: inc/tpl/tpl.Installer.php:131 inc/class.AdminView.php:260
 msgid "User"
-msgstr "utilisateur"
+msgstr "Utilisateur"
 
 #: inc/tpl/tpl.Installer.php:137 inc/tpl/tpl.loginWindow.php:32
 #: inc/tpl/tpl.loginWindow.php:89 inc/tpl/tpl.adminWindow.login.php:7
 msgid "Password"
-msgstr ""
+msgstr "Mot de passe"
 
 #: inc/tpl/tpl.Installer.php:143
 msgid ""
 "You can use a specific database prefix if you want to run multiple "
 "installations of Runalyze."
 msgstr ""
+"Vous pouvez utiliser un préfixe particulier de base de données si vous "
+"souhaitez installer plusieurs instances de Runalyze."
 
 #: inc/tpl/tpl.Installer.php:148
 msgid "This prefix is already being used."
-msgstr ""
+msgstr "Ce préfixe est déjà utilisé."
 
 #: inc/tpl/tpl.Installer.php:152
 msgid "This prefix is free."
-msgstr ""
+msgstr "Ce préfixe est disponible."
 
 #: inc/tpl/tpl.Installer.php:158
 msgid "Prefix"
-msgstr ""
+msgstr "Préfixe"
 
 #: inc/tpl/tpl.Installer.php:164
 msgid ""
 "You can activate a debug toolbar to see specific information if problems "
 "occur."
 msgstr ""
+"Vous pouvez activer une barre d'outils de débogage pour voir des "
+"informations particulières si un problème apparaît."
 
 #: inc/tpl/tpl.Installer.php:169 inc/class.AdminView.php:158
 msgid "Debug mode"
-msgstr ""
+msgstr "Mode débogage"
 
 #: inc/tpl/tpl.Installer.php:176
 msgid "Garmin API key"
-msgstr ""
+msgstr "Clé de l'API Garmin"
 
 #: inc/tpl/tpl.Installer.php:179
 msgid "not necessary for localhost"
-msgstr ""
+msgstr "Pas nécessaire pour un serveur local"
 
 #: inc/tpl/tpl.Installer.php:182
 msgid "necessary for"
-msgstr ""
+msgstr "nécessaire pour"
 
 #: inc/tpl/tpl.Installer.php:183
 msgid "see"
-msgstr ""
+msgstr "voir"
 
 #: inc/tpl/tpl.Installer.php:191
 msgid ""
 "A Garmin API key is necessary for using Garmin Communicator (enables direct "
 "imports from any Garmin Forerunner)."
 msgstr ""
+"Une clé d'API Garmin est nécessaire afin d'utiliser le Communicateur Garmin ("
+"permet l'import direct depuis n'importe quel Garmin Forerunner)."
 
 #: inc/tpl/tpl.Installer.php:197
 msgid "The configuration file cannot be written."
-msgstr ""
+msgstr "Ce fichier de configuration ne peut pas être écrit."
 
 #: inc/tpl/tpl.Installer.php:202
 #, php-format
@@ -3296,10 +3314,12 @@ msgid ""
 "Please copy <strong>%s</strong> to the directory <strong>%s</strong> and "
 "insert your data."
 msgstr ""
+"Veuillez copier <strong>%s</strong> dans le dossier <strong>%s</strong> et "
+"insérer vos données."
 
 #: inc/tpl/tpl.Installer.php:203
 msgid "You have to change the following variables:"
-msgstr ""
+msgstr "Vous devez modifier les variables suivantes :"
 
 #: inc/tpl/tpl.Installer.php:214
 #, php-format
@@ -3308,50 +3328,53 @@ msgstr ""
 
 #: inc/tpl/tpl.Installer.php:226
 msgid "Written! Continue ..."
-msgstr ""
+msgstr "Écrit ! Continuer..."
 
 #: inc/tpl/tpl.Installer.php:226
 msgid "Write configuration file"
-msgstr ""
+msgstr "Écrire le fichier de configuration"
 
 #: inc/tpl/tpl.Installer.php:226
 msgid "Check settings"
-msgstr ""
+msgstr "Vérifier les paramètres"
 
 #: inc/tpl/tpl.Installer.php:234
 msgid "The configuration file has been written."
-msgstr ""
+msgstr "Le fichier de configuration a été écrit."
 
 #: inc/tpl/tpl.Installer.php:238
 msgid "Next step: setup database"
-msgstr ""
+msgstr "Prochaine étape : installer la base de données"
 
 #: inc/tpl/tpl.Installer.php:245
 msgid ""
 "There are some problems with filling the database. Please insert the above "
 "SQL-statements by hand (e.g. via PhpMyAdmin)."
 msgstr ""
+"Il y un certain nombre de problème avec le remplissage de la base de "
+"données. Veuillez insérer instructions SQL ci-dessus à la main (par ex. via "
+"PhpMyAdmin)."
 
 #: inc/tpl/tpl.Installer.php:251
 msgid "Setup database"
-msgstr ""
+msgstr "Installer la base de données"
 
 #: inc/tpl/tpl.Installer.php:258
 msgid "Ready! Congratulations!"
-msgstr ""
+msgstr "Terminé ! Félicitations !"
 
 #: inc/tpl/tpl.Installer.php:262
 msgid "Runalyze has been successfully installed. Have fun while using it!"
-msgstr ""
+msgstr "Runalyze a été installé avec succès. Amusez-vous bien en l'utilisant !"
 
 #: inc/tpl/tpl.Installer.php:282 inc/class.AdminView.php:342
 #, php-format
 msgid "The directory <strong>%s</strong> is not writable."
-msgstr ""
+msgstr "Le répertoire <strong>%s</strong> est protégé en écriture."
 
 #: inc/tpl/tpl.Installer.php:290
 msgid "Please activate JavaScript, Runalyze will not work without."
-msgstr ""
+msgstr "Veuillez activer JavaScript, Runalyze ne peut fonctionner sans."
 
 #: inc/tpl/tpl.FrontendShared.header.php:31
 #: inc/tpl/tpl.FrontendSharedIframe.header.php:26
@@ -3366,16 +3389,16 @@ msgstr ""
 
 #: inc/tpl/tpl.loginWindow.php:14
 msgid "The username is not known."
-msgstr ""
+msgstr "Ce nom d'utilisateur est inconnu."
 
 #: inc/tpl/tpl.loginWindow.php:17
 msgid "The password was incorrect."
-msgstr ""
+msgstr "Le mot de passe est erroné."
 
 #: inc/tpl/tpl.loginWindow.php:20
 msgid ""
 "The account has not been activated.<br>Have a look into your email inbox."
-msgstr ""
+msgstr "Le compte n'a pas été activé.<br>Jeter un œil à votre boîte mail."
 
 #: inc/tpl/tpl.loginWindow.php:26 inc/tpl/tpl.loginWindow.php:44
 #: inc/tpl/tpl.loginWindow.php:48 inc/tpl/tpl.loginWindow.php:155
@@ -3389,23 +3412,25 @@ msgstr "Connexion"
 #: inc/tpl/tpl.loginWindow.setNewPassword.php:13
 #: inc/system/config/class.ConfigTabAccount.php:28
 msgid "Username"
-msgstr ""
+msgstr "Nom d'utilisateur"
 
 #: inc/tpl/tpl.loginWindow.php:36
 msgid "Remember me"
-msgstr ""
+msgstr "Se rappeler de mes identifiants"
 
 #: inc/tpl/tpl.loginWindow.php:49
 msgid "Runalyze is under maintenance at the moment. No login possible."
 msgstr ""
+"Runalyze est actuellement en cours de maintenance. Aucune connexion n'est "
+"possible."
 
 #: inc/tpl/tpl.loginWindow.php:57 inc/tpl/tpl.loginWindow.php:156
 msgid "Create a new account"
-msgstr ""
+msgstr "Créer un nouveau compte"
 
 #: inc/tpl/tpl.loginWindow.php:60
 msgid "Registrations are currently disabled."
-msgstr ""
+msgstr "Les inscriptions sont actuellement fermées."
 
 #: inc/tpl/tpl.loginWindow.php:79
 #: inc/system/config/class.ConfigTabTypes.php:45
@@ -3419,7 +3444,7 @@ msgstr ""
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:451
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:645
 msgid "Name"
-msgstr ""
+msgstr "Nom"
 
 #: inc/tpl/tpl.loginWindow.php:84 inc/class.AdminView.php:262
 msgid "Email"
@@ -3427,33 +3452,36 @@ msgstr "email"
 
 #: inc/tpl/tpl.loginWindow.php:94
 msgid "Password again"
-msgstr ""
+msgstr "Répéter le mot de passe"
 
 #: inc/tpl/tpl.loginWindow.php:112
 msgid "You can login now. Enjoy Runalyze!"
-msgstr ""
+msgstr "Vous pouvez à présent vous connecter. Amusez-vous bien avec Runalyze !"
 
 #: inc/tpl/tpl.loginWindow.php:114
 msgid ""
 "Thanks for your registration. You should receive an email within the next "
 "minutes with further instructions for activating your account."
 msgstr ""
+"Merci pour votre inscription. Vous allez recevoir dans quelques minutes un "
+"courriel de confirmation contenant les étapes à suivre pour activer votre "
+"compte."
 
 #: inc/tpl/tpl.loginWindow.php:121
 msgid "Register"
-msgstr ""
+msgstr "Inscription"
 
 #: inc/tpl/tpl.loginWindow.php:130 inc/tpl/tpl.loginWindow.php:157
 msgid "Forgot your password?"
-msgstr ""
+msgstr "Mot de passe oublié ?"
 
 #: inc/tpl/tpl.loginWindow.php:142
 msgid "A link for changing your password will be sent via email."
-msgstr ""
+msgstr "Un courriel va vous être envoyé afin de modifier votre mot de passe."
 
 #: inc/tpl/tpl.loginWindow.php:148
 msgid "Send link"
-msgstr ""
+msgstr "Envoyer le lien"
 
 #: inc/tpl/tpl.loginWindow.php:190
 #, php-format
@@ -3473,21 +3501,21 @@ msgstr[1] "s'est connecté <strong>%s</strong> fois."
 #, php-format
 msgid "<strong>%d</strong> athlete is online."
 msgid_plural "<strong>%d</strong> athletes are online."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "<strong>%d</strong> athlète est connecté."
+msgstr[1] "<strong>%d</strong> athlètes sont connectés."
 
 #: inc/tpl/tpl.adminWindow.login.php:5
 msgid "Administration"
-msgstr ""
+msgstr "Administration"
 
 #: inc/tpl/tpl.adminWindow.login.php:6
 #: inc/system/config/class.ConfigTabAccount.php:17
 msgid "Account"
-msgstr ""
+msgstr "Compte"
 
 #: inc/tpl/tpl.InstallerUpdate.php:3 inc/tpl/tpl.InstallerUpdate.php:58
 msgid "Update RUNALYZE"
-msgstr ""
+msgstr "Mettre à jour Runalyze"
 
 #: inc/tpl/tpl.InstallerUpdate.php:7
 msgid ""
@@ -3496,6 +3524,11 @@ msgid ""
 "every update. If you have skipped a version, you need to apply the "
 "respective updates in the correct order."
 msgstr ""
+"Après avoir téléchargé la dernière version de Runalyze, vous devez mettre à "
+"jour la base de données, car nous en améliorons la structure et ajoutons des "
+"fonctionnalités à chaque nouvelle version. Si vous avez manqué une mise à "
+"jour, vous devez effectuer toutes les mises à jour successivement et dans le "
+"bon ordre."
 
 #: inc/tpl/tpl.InstallerUpdate.php:13
 #, php-format
@@ -3507,10 +3540,12 @@ msgid ""
 "We urgently recommend a backup of your existing database prior to any update "
 "of RUNALYZE."
 msgstr ""
+"Nous vous recommandons fortement de faire une sauvegarde de la base de "
+"données actuelle avant de commencer la mise à jour de Runalyze."
 
 #: inc/tpl/tpl.InstallerUpdate.php:28
 msgid "Trying to clear your cache failed."
-msgstr ""
+msgstr "La tentative de purge du cache a échoué."
 
 #: inc/tpl/tpl.InstallerUpdate.php:40
 #, php-format
@@ -3521,66 +3556,66 @@ msgstr ""
 
 #: inc/tpl/tpl.InstallerUpdate.php:42
 msgid "these instructions"
-msgstr ""
+msgstr "ces instructions"
 
 #: inc/tpl/tpl.InstallerUpdate.php:50
 msgid "----- please choose"
-msgstr ""
+msgstr "----- veuillez choisir s'il vous plaît"
 
 #: inc/tpl/tpl.InstallerUpdate.php:52
 #, php-format
 msgid "Update to %s (from %s, %s)"
-msgstr ""
+msgstr "Mise à jour vers %s (depuis %s, %s)"
 
 #: inc/tpl/tpl.InstallerUpdate.php:75
 msgid "Your database has been updated successfully."
-msgstr ""
+msgstr "Votre base de données a été mise à jour avec succès."
 
 #: inc/tpl/tpl.InstallerUpdate.php:84
 msgid "Start RUNALYZE"
-msgstr ""
+msgstr "Démarrer Runalyze"
 
 #: inc/tpl/tpl.Frontend.header.php:29 inc/tpl/tpl.Frontend.header.php:30
 msgid "Logout"
-msgstr ""
+msgstr "Déconnexion"
 
 #: inc/tpl/tpl.Frontend.header.php:36
 #: inc/system/config/class.ConfigTabPlugins.php:41
 #: inc/plugin/class.PluginTool.php:82
 msgid "Tools"
-msgstr ""
+msgstr "Outils"
 
 #: inc/tpl/tpl.Frontend.header.php:37
 msgid "Help"
-msgstr ""
+msgstr "Aide"
 
 #: inc/tpl/tpl.DataBrowser.php:15
 msgid "Choose a date ..."
-msgstr ""
+msgstr "Choisir une date..."
 
 #: inc/tpl/tpl.DataBrowser.php:22
 msgid "Su"
-msgstr ""
+msgstr "Dim"
 
 #: inc/tpl/tpl.DataBrowser.php:22
 msgid "Mo"
-msgstr ""
+msgstr "Lun"
 
 #: inc/tpl/tpl.DataBrowser.php:22
 msgid "Tu"
-msgstr ""
+msgstr "Mar"
 
 #: inc/tpl/tpl.DataBrowser.php:22
 msgid "We"
-msgstr ""
+msgstr "Mer"
 
 #: inc/tpl/tpl.DataBrowser.php:22
 msgid "Th"
-msgstr ""
+msgstr "Jeu"
 
 #: inc/tpl/tpl.DataBrowser.php:22
 msgid "Fr"
-msgstr ""
+msgstr "Ven"
 
 #: inc/tpl/tpl.DataBrowser.php:22
 msgid "Sa"
@@ -3589,10 +3624,12 @@ msgstr "Samedi"
 #: inc/tpl/tpl.DataBrowser.php:35
 msgid "You can select any time range by selecting two dates."
 msgstr ""
+"Vous pouvez définir n'importe quelle période de temps en sélectionnant deux "
+"dates."
 
 #: inc/tpl/tpl.DataBrowser.php:39
 msgid "Show selection"
-msgstr ""
+msgstr "Afficher la sélection"
 
 #: inc/tpl/tpl.DataBrowser.php:140
 msgid "There are no activities for this time range."
@@ -3600,24 +3637,24 @@ msgstr "Il n'y a pas d'activité pour cette période."
 
 #: inc/tpl/tpl.loginWindow.activateAccount.php:3
 msgid "Activate account"
-msgstr ""
+msgstr "Activer le compte"
 
 #: inc/tpl/tpl.loginWindow.activateAccount.php:6
 msgid "Your account has been activated."
-msgstr ""
+msgstr "Votre compte a été activé."
 
 #: inc/tpl/tpl.loginWindow.activateAccount.php:7
 msgid "You can now use Runalyze."
-msgstr ""
+msgstr "Vous pouvez désormais utiliser Runalyze."
 
 #: inc/tpl/tpl.loginWindow.activateAccount.php:11
 msgid "The activation did not work."
-msgstr ""
+msgstr "L'activation n'a pas fonctionné."
 
 #: inc/tpl/tpl.loginWindow.activateAccount.php:12
 #: inc/tpl/tpl.loginWindow.deleteAccount.php:18
 msgid "Probably the link was wrong."
-msgstr ""
+msgstr "Le lien était probablement erroné."
 
 #: inc/tpl/tpl.loginWindow.setNewPassword.php:8 inc/class.AdminView.php:281
 msgid "Set new password"
@@ -3626,26 +3663,26 @@ msgstr "Définir nouveau mot de passe"
 #: inc/tpl/tpl.loginWindow.setNewPassword.php:17
 #: inc/system/config/class.ConfigTabAccount.php:77
 msgid "New password"
-msgstr ""
+msgstr "Nouveau mot de passe"
 
 #: inc/tpl/tpl.loginWindow.setNewPassword.php:21
 msgid "New password again"
-msgstr ""
+msgstr "Répéter le nouveau mot de passe"
 
 #: inc/tpl/tpl.loginWindow.setNewPassword.php:25
 msgid "The link is not valid anymore."
-msgstr ""
+msgstr "Le lien n'est plus valide."
 
 #: inc/tpl/tpl.loginWindow.setNewPassword.php:31
 msgid "Change password"
-msgstr ""
+msgstr "Modifier le mot de passe"
 
 #: inc/tpl/tpl.installerFooterText.php:5
 #: inc/system/config/class.ConfigTabPlugins.php:37
 #: inc/plugin/class.PluginType.php:54
 #: plugin/RunalyzePluginStat_Statistiken/class.RunalyzePluginStat_Statistiken.php:38
 msgid "Statistics"
-msgstr ""
+msgstr "Statistiques"
 
 #: inc/tpl/tpl.installerFooterText.php:6
 msgid ""
@@ -3660,10 +3697,13 @@ msgid ""
 "information of your training you want to record and which statistics are "
 "being displayed on which place."
 msgstr ""
+"Runalyze est entièrement paramétrable. Vous choisissez vous-même quelles "
+"données d'entraînement vous souhaitez enregistrer et quelles statistiques "
+"doivent être affichées à quel endroit."
 
 #: inc/tpl/tpl.installerFooterText.php:19
 msgid "By runners for runners"
-msgstr ""
+msgstr "Par des coureurs, pour des coureurs"
 
 #: inc/tpl/tpl.installerFooterText.php:20
 msgid ""
@@ -3688,6 +3728,8 @@ msgstr ""
 msgid ""
 "Please look at our official website %s to get an overview of our features."
 msgstr ""
+"Veuillez vous reporter à notre site web officiel %s afin d'avoir un aperçu "
+"des fonctionnalités."
 
 #: inc/tpl/tpl.help.php:16
 #, php-format
@@ -3695,16 +3737,20 @@ msgid ""
 "If you want to stay up to date on changes and receive tips from time to "
 "time, visit our blog at %s."
 msgstr ""
+"Si vous souhaitez rester à jour sur les améliorations et recevoir des "
+"astuces de temps en temps, rendez-vous sur notre blog à l'adresse %s."
 
 #: inc/tpl/tpl.help.php:20
 msgid ""
 "Runalyze is an open-source project. We are working on it as much as we can "
 "in our free time."
 msgstr ""
+"Runalyze est un projet open-source. Nous travaillons autant que possible sur "
+"notre temps libre."
 
 #: inc/tpl/tpl.help.php:21
 msgid "Official developers:"
-msgstr ""
+msgstr "Développeurs officiels :"
 
 #: inc/tpl/tpl.help.php:33
 msgid ""
@@ -3716,6 +3762,7 @@ msgstr ""
 msgid ""
 "Have a look at the configuration window to see what we're talking about."
 msgstr ""
+"Jeter un œil à la fenêtre de configuration pour voir de quoi nous parlons."
 
 #: inc/tpl/tpl.help.php:35
 msgid ""
@@ -3725,27 +3772,34 @@ msgstr ""
 
 #: inc/tpl/tpl.help.php:41
 msgid "Support"
-msgstr ""
+msgstr "Support"
 
 #: inc/tpl/tpl.help.php:45
 msgid "Please let us know if you have wishes or have encountered bugs."
 msgstr ""
+"Merci de nous faire part de vos souhaits ou de nous faire un retour en cas "
+"de bug."
 
 #: inc/tpl/tpl.help.php:46
 msgid ""
 "We give our best to make Runalyze as good as possible for you. - Therefore "
 "we would be interested in your suggestions for improvement."
 msgstr ""
+"Nous faisons tout notre possible pour vous garantir la meilleure expérience "
+"avec Runalyze. Nous sommes donc toujours intéressés par vos suggestions "
+"d'amélioration."
 
 #: inc/tpl/tpl.help.php:47
 msgid ""
 "In general most questions, problems and ideas are more appropriate to ask in "
 "the forum."
 msgstr ""
+"Le forum est généralement plus adapté pour discuter de vos questions, "
+"problèmes et idées."
 
 #: inc/tpl/tpl.help.php:51
 msgid "Forum"
-msgstr ""
+msgstr "Forum"
 
 #: inc/tpl/tpl.help.php:52
 msgid "Documentation"
@@ -3753,7 +3807,7 @@ msgstr "documentation"
 
 #: inc/tpl/tpl.help.php:60
 msgid "In a case of urgency you can contact us via email:"
-msgstr ""
+msgstr "En cas d'urgence, vous pouvez nous contacter par courriel :"
 
 #: inc/tpl/tpl.help.php:65
 msgid "Browser Support"
@@ -3765,51 +3819,56 @@ msgid ""
 "modern web techniques. We will not try to support any outdated browser "
 "versions."
 msgstr ""
+"Runalyze est une application moderne et utilise par conséquence les "
+"technologies web les plus récentes. Nous ne maintiendrons pas la "
+"compatibilité avec des navigateurs web obsolètes."
 
 #: inc/tpl/tpl.help.php:70
 msgid "e.g. jQuery 2.x does not support IE8 (or less)"
 msgstr ""
+"par ex. jQuery 2.x n'est pas compatible avec IE8 (et les versions "
+"précédentes)"
 
 #: inc/tpl/tpl.help.php:75
 msgid "Credits"
-msgstr ""
+msgstr "Crédits"
 
 #: inc/tpl/tpl.loginWindow.deleteAccount.php:3
 #: inc/tpl/tpl.loginWindow.deleteAccount.php:8
 msgid "Delete account"
-msgstr ""
+msgstr "Supprimer le compte"
 
 #: inc/tpl/tpl.loginWindow.deleteAccount.php:6
 msgid "Do you really want to delete your account?"
-msgstr ""
+msgstr "Êtes-vous certain de vouloir supprimer votre compte ?"
 
 #: inc/tpl/tpl.loginWindow.deleteAccount.php:12
 msgid "Your account has been deleted."
-msgstr ""
+msgstr "Votre compte a été supprimé."
 
 #: inc/tpl/tpl.loginWindow.deleteAccount.php:13
 msgid "You cannot use Runalyze anymore."
-msgstr ""
+msgstr "Vous ne pouvez plus utiliser Runalyze."
 
 #: inc/tpl/tpl.loginWindow.deleteAccount.php:17
 msgid "The deletion did not work."
-msgstr ""
+msgstr "La suppression n'a pas fonctionné."
 
 #: inc/tpl/tpl.loginWindow.deleteAccount.php:25
 msgid "Main page"
-msgstr ""
+msgstr "Page principale"
 
 #: inc/class.DataBrowser.php:205
 msgid "week"
-msgstr ""
+msgstr "semaine"
 
 #: inc/class.DataBrowser.php:243
 msgid "back"
-msgstr ""
+msgstr "retour"
 
 #: inc/class.DataBrowser.php:261
 msgid "today"
-msgstr ""
+msgstr "aujourd'hui"
 
 #: inc/class.DataBrowser.php:271
 msgid "Reload current datasheet"
@@ -3817,19 +3876,19 @@ msgstr ""
 
 #: inc/class.DataBrowser.php:279
 msgid "Calendar"
-msgstr ""
+msgstr "Calendrier"
 
 #: inc/class.DataBrowser.php:287 inc/class.DataBrowserShared.php:115
 msgid "Activity per month"
-msgstr ""
+msgstr "Activité par mois"
 
 #: inc/class.DataBrowser.php:295 inc/class.DataBrowserShared.php:123
 msgid "Activity per week"
-msgstr ""
+msgstr "Activité par semaine"
 
 #: inc/class.DataBrowser.php:311
 msgid "Search for an activity"
-msgstr ""
+msgstr "Rechercher une activité"
 
 #: inc/class.FrontendSharedStatistics.php:50
 #, php-format
@@ -3838,11 +3897,11 @@ msgstr ""
 
 #: inc/class.FrontendSharedStatistics.php:85
 msgid "Total distance:"
-msgstr ""
+msgstr "Distance totale :"
 
 #: inc/class.FrontendSharedStatistics.php:87
 msgid "Number of activities:"
-msgstr ""
+msgstr "Nombres d'activités :"
 
 #: inc/class.FrontendSharedStatistics.php:89
 msgid "Registered since:"
@@ -3854,15 +3913,15 @@ msgstr ""
 
 #: inc/class.FrontendSharedStatistics.php:95
 msgid "First activity:"
-msgstr ""
+msgstr "Première activité :"
 
 #: inc/class.FrontendSharedStatistics.php:97
 msgid "Last login:"
-msgstr ""
+msgstr "Dernière connexion :"
 
 #: inc/class.FrontendSharedStatistics.php:103
 msgid "General statistics"
-msgstr ""
+msgstr "Statistiques générales"
 
 #: inc/class.FrontendSharedStatistics.php:128 inc/plugin/class.Plugin.php:399
 msgid "Year on year"
@@ -3875,28 +3934,29 @@ msgstr ""
 
 #: inc/class.FrontendShared.php:123 inc/class.FrontendSharedList.php:158
 msgid "Problem"
-msgstr ""
+msgstr "Problème"
 
 #: inc/class.FrontendShared.php:133 inc/class.FrontendShared.php:146
 #: inc/class.FrontendSharedList.php:167
 msgid "Error"
-msgstr ""
+msgstr "Erreur"
 
 #: inc/class.FrontendShared.php:135
 msgid "Invalid request"
-msgstr ""
+msgstr "Requête non valide"
 
 #: inc/class.FrontendShared.php:136
 msgid "We are sorry, your request is not valid."
-msgstr ""
+msgstr "Nous sommes désolés, votre requête n'est pas valide."
 
 #: inc/class.FrontendShared.php:148
 msgid "Private activity"
-msgstr ""
+msgstr "Activité privée"
 
 #: inc/class.FrontendShared.php:149
 msgid "This activity is private. The user does not allow you to see it."
 msgstr ""
+"Cette activité est privée. L'utilisateur ne vous a pas autorisé à la voir."
 
 #: inc/draw/class.PlotSumData.php:163
 msgid "Choose analysis"
