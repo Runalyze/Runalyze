@@ -1,13 +1,13 @@
 <?php
 /**
- * Script to refactor coordinates to geohashes
+ * Script to refactor timestamps
  *
- * You have to set your database connection within this file to enable the script.
- * Remember to delete your credentials afterwards to protect this script.
+ * This file will create a hidden file `.refactortimezone` after execution to protect your database.
+ * Remember to create that file by hand or delete this script if that file can't be created due to missing permissions.
  */
 
 // This script must only be executed once with `$updateActivityTime = true;`,
-// otherwise it will change all your activity timestamps.
+// otherwise it will change all your activity timestamps. (see the above hint that should guarantee this)
 // If you did not have a timezone database available and want to set timezone offset (only for visual effects) later on,
 // You can run the script again with `$updateActivityTime = false;`.
 $updateActivityTime = true;
@@ -47,7 +47,7 @@ if ($updateActivityTime && file_exists('.refactortimezone')) {
 }
 
 if (empty($database) && empty($host)) {
-	echo 'Database connection has to be set within the file.'.NL;
+	echo 'Database connection has to be set within data/config.php.'.NL;
 	exit;
 } else {
 	date_default_timezone_set('Europe/Berlin');
@@ -143,4 +143,4 @@ echo NL;
 
 echo 'You are done. All trainings are refactored.'.NL;
 echo NL;
-echo 'Remember to delete this file if you are not working on our git repository.'.NL;
+echo 'Remember to delete this file or generate a `.refactortimezone` if not done automatically.'.NL;
