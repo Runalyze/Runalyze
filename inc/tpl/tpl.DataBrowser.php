@@ -63,7 +63,7 @@ $Table = new \Runalyze\View\Dataset\Table($this->DatasetConfig);
 			<?php if (\Runalyze\Configuration::DataBrowser()->showLabels()): ?>
 			<thead class="data-browser-labels">
 				<tr class="small">
-					<td colspan="$this->AdditionalColumns"></td>
+					<td colspan="<?php echo $this->AdditionalColumns; ?>"></td>
 					<?php echo $Table->codeForColumnLabels(); ?>
 				</tr>
 			</thead>
