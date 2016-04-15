@@ -11112,12 +11112,17 @@ var RunalyzeLeaflet = (function($){
 		$('#'+id).addClass('fullscreen');
 		$(".leaflet-control-zoom-full > i").removeClass('fa-expand').addClass('fa-compress');
 
+		object.scrollWheelZoom.enable();
 		object._onResize();
 	};
 
 	self.exitFullscreen = function() {
 		$('#'+id).removeClass('fullscreen');
 		$(".leaflet-control-zoom-full > i").addClass('fa-expand').removeClass('fa-compress');
+
+		if (!mapOptions.scrollWheelZoom) {
+			object.scrollWheelZoom.disable();
+		}
 
 		object._onResize();
 	};
