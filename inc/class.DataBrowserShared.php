@@ -5,6 +5,8 @@
  */
 
 use Runalyze\Util\LocalTime;
+use Runalyze\Dataset;
+use Runalyze\View;
 
 /**
  * Shared version of DataBrowser
@@ -124,5 +126,16 @@ class DataBrowserShared extends DataBrowser {
 	 */
 	protected function getWeekKmLink() {
 		return Ajax::window('<a href="'.self::getUrlForWeekKm().'">'.Ajax::tooltip(Icon::$BARS_SMALL, __('Activity per week')).'</a>');
+	}
+
+	/**
+	 * Additional columns that are shown next to date columns
+	 * @param \Runalyze\View\Dataset\Table $table
+	 * @param \Runalyze\Dataset\Context $context
+	 * @return string html string that must contain `$this->AdditionalColumns - 2` columns
+	 */
+	protected function codeForAdditionalColumnsForActivity(View\Dataset\Table $table, Dataset\Context $context)
+	{
+		return $table->codeForPublicIcon($context);
 	}
 }

@@ -9,6 +9,7 @@ use Runalyze\Dataset;
 use Runalyze\Model\Factory;
 use Runalyze\Util\Time;
 use Runalyze\Util\LocalTime;
+use Runalyze\View;
 
 /**
  * DataBrowser
@@ -142,7 +143,7 @@ class DataBrowser {
 		$this->initEmptyDays();
 
 		$Statement = $this->DatasetQuery->statementToFetchActivities($this->TimestampStart, $this->TimestampEnd);
-		
+
 		while ($Training = $Statement->fetch()) {
 			$w = Time::diffInDays($Training['time'], $this->TimestampStart);
 
@@ -259,7 +260,7 @@ class DataBrowser {
 
 		return DataBrowserLinker::link(Icon::$NEXT, $timestamp_array['start'], $timestamp_array['end'], __('next'));
 	}
-	
+
 	/**
 	 * Get link to jump to today
 	 * @return string
@@ -345,5 +346,16 @@ class DataBrowser {
 		}
 
 		return $localTime->format('d.m.').' '.$addLink.' '.$weekDay;
+	}
+
+	/**
+	 * Additional columns that are shown next to date columns
+	 * @param \Runalyze\View\Dataset\Table $table
+	 * @param \Runalyze\Dataset\Context $context
+	 * @return string html string that must contain `$this->AdditionalColumns - 2` columns
+	 */
+	protected function codeForAdditionalColumnsForActivity(View\Dataset\Table $table, Dataset\Context $context)
+	{
+		return '';
 	}
 }
