@@ -221,8 +221,10 @@ class AccountHandler {
 	 */
 	private static function createNewUserFromPost() {
 		$errors = array();
-
-		$activationHash = (System::isAtLocalhost()) ? '' : self::getRandomHash();
+		$activationHash = '';
+		if (!USER_DISABLE_ACCOUNT_ACTIVATION) {
+		    $activationHash = (System::isAtLocalhost()) ? '' : self::getRandomHash();
+		}
 		$newSalt = self::getNewSalt();
 
 		$timezone = EnumTimezone::getEnumByOriginalName(date_default_timezone_get());
@@ -242,9 +244,8 @@ class AccountHandler {
 		else {
 			self::importEmptyValuesFor($newAccountId);
 			self::setSpecialConfigValuesFor($newAccountId);
-
-			if ($activationHash != '')
-				self::setAndSendActivationKeyFor($newAccountId, $errors);
+			
+			self::setAndSendActivationKeyFor($newAccountId, $errors);
 		}
 
 		self::$IS_ON_REGISTER_PROCESS = false;
@@ -447,22 +448,27 @@ class AccountHandler {
 	}
 
 	/**
-	 * Set activation key for new user and set via email
+	 * Send registration/activation mail for a new user
 	 * @param int $accountId
 	 * @param array $errors
 	 */
 	private static function setAndSendActivationKeyFor($accountId, &$errors) {
 		$account        = DB::getInstance()->fetchByID('account', $accountId);
-		$activationHash = $account['activation_hash'];
-		$activationLink = self::getActivationLink($activationHash);
 
-		$subject  = __('Activate your RUNALYZE Account');
+		$subject  = __('Welcome to RUNALYZE');
 		$message  = __('Thanks for your registration').', '.$account['name']."!<br><br>\r\n\r\n";
-		$message .= sprintf( __('You can activate your account (username = %s) with the following link'), $account['username']).":<br>\r\n";
-		$message .= '<a href='.$activationLink.'>'.$activationLink.'</a>';
 
+		if (!USER_DISABLE_ACCOUNT_ACTIVATION) {
+		    $subject  = __('Activate your RUNALYZE Account');
+		    $activationHash = $account['activation_hash'];
+		    $activationLink = self::getActivationLink($activationHash);
+
+		    $message .= sprintf( __('You can activate your account (username = %s) with the following link'), $account['username']).":<br>\r\n";
+		    $message .= '<a href='.$activationLink.'>'.$activationLink.'</a>';
+		}
+		
 		if (!System::sendMail($account['mail'], $subject, $message)) {
-			$errors[] = __('Sending the link did not work. Please contact the administrator.');
+			$errors[] = __('Sending the mail did not work. Please contact the administrator.');
 
 			if (System::isAtLocalhost()) {
 				if ($activationHash == '') {
@@ -473,6 +479,7 @@ class AccountHandler {
 				}
 			}
 		}
+		
 	}
 
 	/**

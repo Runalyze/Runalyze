@@ -48,6 +48,12 @@ define('USER_CANT_LOGIN', false);
 define('USER_CAN_REGISTER', true);
 
 /**
+ * Disable account activation for new users
+ * @var bool USER_DISABLE_ACCOUNT_ACTIVATION Set to true to allow registrations without account activation
+ */
+define('USER_DISABLE_ACCOUNT_ACTIVATION', false);
+
+/**
  * Path to perl scripts
  * Relative to FRONTEND_PATH
  * @var string PERL_PATH Path for perl scripts
@@ -77,7 +83,7 @@ define('GARMIN_API_KEY', '{config::garminkey}');
  * Address for sending mails to users
  * @var string
  */
-define('MAIL_SENDER', 'mail@runalyze.de');
+define('MAIL_SENDER', '{config::sendermail}');
 
 /**
  * Sender name for sending mails to users

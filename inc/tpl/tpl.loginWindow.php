@@ -111,7 +111,7 @@ use Runalyze\Activity\Distance;
 						else
 							echo HTML::error($Error);
 					}
-				elseif (System::isAtLocalhost())
+				elseif (System::isAtLocalhost() OR USER_DISABLE_ACCOUNT_ACTIVATION)
 					echo HTML::info( __('You can login now. Enjoy Runalyze!') );
 				else
 					echo HTML::info( __('Thanks for your registration. You should receive an email within the next minutes with further instructions for activating your account.') );

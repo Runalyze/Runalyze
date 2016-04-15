@@ -324,7 +324,8 @@ class Installer {
 		$config['prefix']    = $_POST['prefix'];
 		$config['debug']     = isset($_POST['debug']) ? 'true' : 'false';
 		$config['garminkey'] = $_POST['garminkey'];
-
+		$config['sendermail'] = $_POST['sendermail'];
+		
 		$file_string = @file_get_contents(PATH.'install/config.php');
 
 		if ($file_string === false)

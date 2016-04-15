@@ -158,6 +158,7 @@ class AdminView {
 		$Fieldset->addField( new FormularCheckbox('RUNALYZE_DEBUG', __('Debug mode')) );
 		$Fieldset->addField( new FormularCheckbox('USER_CANT_LOGIN', __('Maintenance mode')) );
 		$Fieldset->addField( new FormularCheckbox('USER_CAN_REGISTER', __('Users can register')) );
+		$Fieldset->addField( new FormularCheckbox('USER_DISABLE_ACCOUNT_ACTIVATION', __('Users don\'t need to activate their account')) );
 		$Fieldset->addField( new FormularInput('GARMIN_API_KEY', Ajax::tooltip(__('Garmin API-key'), __('Needed for any online-version of the Garmin Communicator<br>see http://developer.garmin.com/web-device/garmin-communicator-plugin/get-your-site-key/') )) );
 		$Fieldset->addField( new FormularInput('PERL_PATH', __('Perl Path')) );
 		$Fieldset->addField( new FormularInput('TTBIN_PATH', __('TTBIN Converter Path')) );
@@ -456,6 +457,7 @@ class AdminView {
 			'RUNALYZE_DEBUG',
                         'USER_CANT_LOGIN',
 			'USER_CAN_REGISTER',
+			'USER_DISABLE_ACCOUNT_ACTIVATION',
                         'PERL_PATH',
 			'TTBIN_PATH',
 			'GEONAMES_USERNAME',
@@ -518,6 +520,14 @@ define(\'USER_CANT_LOGIN\', false);';
  * @var bool USER_CAN_REGISTER Set to false to close registration
  */
 define(\'USER_CAN_REGISTER\', true);';
+				
+			case 'USER_DISABLE_ACCOUNT_ACTIVATION':
+				define('USER_DISABLE_ACCOUNT_ACTIVATION', false);
+				return '/**
+ * Disable account activation for new users
+ * @var bool USER_DISABLE_ACCOUNT_ACTIVATION Set to true to allow registrations without account activation
+ */
+define(\'USER_DISABLE_ACCOUNT_ACTIVATION\', false);';				
 
 			case 'PERL_PATH':
 				define('PERL_PATH', '/usr/bin/perl');
