@@ -8362,8 +8362,6 @@ Runalyze.Feature = (function($, Parent){
 				return false;
 			}
 
-			$("body > .datepicker").remove();
-
 			var formID = $(this).attr("id");
 			var noreload = $(this).hasClass('no-automatic-reload');
 			var data = $(this).serializeArray();
@@ -8379,6 +8377,8 @@ Runalyze.Feature = (function($, Parent){
 				$("#searchResult").loadDiv(url+'?pager=true', data);
 				return false;
 			}
+
+			$("body > .datepicker").remove();
 
 			if ($("#pluginTool").length) {
 				elem = $("#pluginTool");
