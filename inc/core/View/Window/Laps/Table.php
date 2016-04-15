@@ -90,7 +90,12 @@ class Table {
 	 * @param $isRunning
 	 */
 	protected function defineAdditionalKeys($isRunning) {
-		$this->AdditionalKeys = array_keys($this->Laps->at(0)->additionalValues());
+		$additionalKeys = array();
+		foreach ($this->Laps->objects() as $lap) {
+			$additionalKeys = array_merge($additionalKeys, $lap->additionalValues());
+		}
+
+		$this->AdditionalKeys = array_keys($additionalKeys);
 
 		if (!$isRunning) {
 			$this->AdditionalKeys = array_diff($this->AdditionalKeys, array(
