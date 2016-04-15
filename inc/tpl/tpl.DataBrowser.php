@@ -63,7 +63,7 @@ $Table = new \Runalyze\View\Dataset\Table($this->DatasetConfig);
 			<?php if (\Runalyze\Configuration::DataBrowser()->showLabels()): ?>
 			<thead class="data-browser-labels">
 				<tr class="small">
-					<td colspan="2"></td>
+					<td colspan="$this->AdditionalColumns"></td>
 					<?php echo $Table->codeForColumnLabels(); ?>
 				</tr>
 			</thead>
@@ -112,6 +112,7 @@ foreach ($this->Days as $i => $day) {
 
 			$Context->setActivityData($Training);
 
+			echo $this->codeForAdditionalColumnsForActivity($Table, $Context);
 			echo $Table->codeForColumns($Context);
 
 			echo '</tr>';
@@ -133,7 +134,7 @@ foreach ($this->Days as $i => $day) {
 
 		echo '</td>
 				<td class="l as-small-as-possible">'.$this->dateString($day['date']).'</td>
-				<td colspan="'.($Table->numColumns()).'"></td>
+				<td colspan="'.($Table->numColumns() + $this->AdditionalColumns - 2).'"></td>
 			</tr>';
 
 		$currentWeek = $week;
@@ -142,7 +143,7 @@ foreach ($this->Days as $i => $day) {
 }
 
 if ($this->AllDaysEmpty && \Runalyze\Configuration::DataBrowser()->showActiveDaysOnly()) {
-    echo '<tr><td colspan="'.($Table->numColumns() + 2).'"><em>'.__('There are no activities for this time range.').'</em></td></tr>';
+    echo '<tr><td colspan="'.($Table->numColumns() + $this->AdditionalColumns).'"><em>'.__('There are no activities for this time range.').'</em></td></tr>';
 }
 
 echo '</tbody>';
