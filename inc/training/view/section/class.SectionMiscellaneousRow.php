@@ -12,7 +12,7 @@ use Runalyze\Util\LocalTime;
 
 /**
  * Row: Miscellaneous
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\DataObjects\Training\View\Section
  */
@@ -108,7 +108,7 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 		if ($this->showCadence && ($this->Context->activity()->cadence() > 0 || $this->Context->activity()->power() > 0)) {
 			$Cadence = new BoxedValue(Helper::Unknown($this->Context->dataview()->cadence()->value(), '-'), $this->Context->dataview()->cadence()->unitAsString(), $this->Context->dataview()->cadence()->label());
 			$Cadence->defineAsFloatingBlock('w50');
-			
+
 			$TotalCadence = new Box\TotalCadence($this->Context);
 			$TotalCadence->defineAsFloatingBlock('w50');
 
@@ -138,19 +138,19 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 		if ($this->Context->hasSwimdata() && ($this->Context->activity()->totalStrokes() > 0 || $this->Context->activity()->swolf() > 0)) {
 			if ($this->Context->activity()->totalStrokes() > 0) {
 				$Strokes = new BoxedValue($this->Context->activity()->totalStrokes(), '', __('Strokes'));
-				$Strokes->defineAsFloatingBlock('w50');    
+				$Strokes->defineAsFloatingBlock('w50');
 				$this->BoxedValues[] = $Strokes;
 			}
 
 			if ($this->Context->activity()->swolf() > 0) {
 				$Swolf = new BoxedValue($this->Context->activity()->swolf(), '', __('Swolf'));
-				$Swolf->defineAsFloatingBlock('w50');    
+				$Swolf->defineAsFloatingBlock('w50');
 				$this->BoxedValues[] = $Swolf;
 			}
 
 			if ($this->Context->swimdata()->poollength() > 0) {
 				$PoolLength = new Box\PoolLength($this->Context);
-				$PoolLength->defineAsFloatingBlock('w50');    
+				$PoolLength->defineAsFloatingBlock('w50');
 				$this->BoxedValues[] = $PoolLength;
 			}
 		}
@@ -236,7 +236,7 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 		$Equipment = $Factory->equipmentForActivity($this->Context->activity()->id());
 
 		foreach ($Equipment as $Object) {
-			$Link = SearchLink::to('equipmentid', $Object->id(), $Object->name());
+			$Link = Request::isOnSharedPage() ? $Object->name() : SearchLink::to('equipmentid', $Object->id(), $Object->name());
 
 			if (isset($Types[$Object->typeid()])) {
 				$Types[$Object->typeid()][] = $Link;
@@ -264,7 +264,7 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 		$SelectedTags = $Factory->tagForActivity($this->Context->activity()->id());
 
 		foreach ($SelectedTags as $Object) {
-			$Links[] = SearchLink::to('tagid', $Object->id(), '#'.$Object->tag());
+			$Links[] = Request::isOnSharedPage() ? '#'.$Object->tag() : SearchLink::to('tagid', $Object->id(), '#'.$Object->tag());
 		}
 
 		if (!empty($Links)) {
