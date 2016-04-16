@@ -8372,8 +8372,6 @@ Runalyze.Feature = (function($, Parent){
 				return false;
 			}
 
-			$("body > .datepicker").remove();
-
 			var formID = $(this).attr("id");
 			var noreload = $(this).hasClass('no-automatic-reload');
 			var data = $(this).serializeArray();
@@ -8389,6 +8387,8 @@ Runalyze.Feature = (function($, Parent){
 				$("#searchResult").loadDiv(url+'?pager=true', data);
 				return false;
 			}
+
+			$("body > .datepicker").remove();
 
 			if ($("#pluginTool").length) {
 				elem = $("#pluginTool");
@@ -11122,12 +11122,17 @@ var RunalyzeLeaflet = (function($){
 		$('#'+id).addClass('fullscreen');
 		$(".leaflet-control-zoom-full > i").removeClass('fa-expand').addClass('fa-compress');
 
+		object.scrollWheelZoom.enable();
 		object._onResize();
 	};
 
 	self.exitFullscreen = function() {
 		$('#'+id).removeClass('fullscreen');
 		$(".leaflet-control-zoom-full > i").addClass('fa-expand').removeClass('fa-compress');
+
+		if (!mapOptions.scrollWheelZoom) {
+			object.scrollWheelZoom.disable();
+		}
 
 		object._onResize();
 	};
