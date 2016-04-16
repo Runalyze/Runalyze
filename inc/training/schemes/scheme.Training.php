@@ -90,7 +90,8 @@ $FIELDS = array(
 	'typeid'			=> array(
 					'database'	=> array(
 						'type'		=> 'int',
-						'precision'	=> '11'
+						'precision'	=> '11',
+						'default'	=> '0'
 					),
 					'formular'	=> array(
 						'label'		=> __('Activity type'),

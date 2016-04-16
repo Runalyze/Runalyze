@@ -150,6 +150,7 @@ class Factory {
 	public function typeForSport($sportid) {
 		$Types = $this->allTypes();
 		
+		$SportTypes = array();
 		foreach($Types as $Type) {
 		    if ($Type->sportid() == $sportid) {
 			$SportTypes[] = $Type;

@@ -16,13 +16,15 @@ class EntityTest extends \PHPUnit_Framework_TestCase {
 			Entity::HAS_DISTANCES => 1,
 			Entity::PACE_UNIT => 'foo',
 			Entity::HAS_POWER => 0,
-			Entity::IS_OUTSIDE => 1
+			Entity::IS_OUTSIDE => 1,
+			Entity::DEFAULT_TYPEID => 2
 		));
 
 		$this->assertEquals('Sport name', $Sport->name());
 		$this->assertEquals(700, $Sport->caloriesPerHour());
 		$this->assertEquals(140, $Sport->avgHR());
 		$this->assertEquals('foo', $Sport->paceUnitEnum());
+		$this->assertEquals(2, $Sport->defaultTypeID());
 		$this->assertTrue($Sport->hasDistances());
 		$this->assertTrue($Sport->isOutside());
 

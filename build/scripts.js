@@ -45,7 +45,7 @@ function jUpdateSportValues() {
 
 	if ($("#typeid option:selected").attr('disabled')) {
 		$("#typeid option:selected").attr('selected', false);
-		$("#typeid option[data-sport='all']").attr('selected', true);
+		$("#typeid option[data-sport='all']").attr('selected', false);
 	}
         
 	if ($("#typeid option[value!=0]:not(:disabled)").length) {
@@ -58,9 +58,8 @@ function jUpdateSportValues() {
 
 function jUpdateDefaultType() {
         if(isNaN($("input[name='id']").val())) {
-            console.log($("#sportid :selected").attr('data-default-typeid'));
-            $("#typeid option[value=0]").attr('selected', false);
-            $("#typeid option[value="+$("#sportid :selected").attr('data-default-typeid')+"]").attr('selected', true);
+            $("#typeid option:selected").attr('selected', false);
+            $("#typeid option[value="+$("#sportid :selected").attr('data-default-typeid')+"]").prop('selected', true);
         }   
 }
 function jUpdateAvailableEquipment() {
