@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-03-10 18:19+0100\n"
-"PO-Revision-Date: 2016-03-31 10:40+0200\n"
+"PO-Revision-Date: 2016-04-11 16:50+0200\n"
 "Last-Translator: Péter Tóth <kiszeko@freemail.hu>\n"
 "Language-Team: Hungarian "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/hu/>\n"
@@ -245,7 +245,6 @@ msgstr "Hőmérséklet"
 #: inc/training/class.TrainingFormular.php:370
 #: inc/core/View/Window/Laps/Table.php:262
 #: inc/core/Data/Cadence/General.php:22 inc/core/Dataset/Keys/Cadence.php:44
-#, fuzzy
 msgid "Cadence"
 msgstr "Lépésszám"
 
@@ -265,9 +264,8 @@ msgstr "Lépéshossz"
 #: inc/training/view/section/class.SectionRunningDynamicsRow.php:62
 #: inc/training/view/section/class.SectionRunningDynamicsRow.php:108
 #: inc/core/View/Activity/Plot/Series/GroundContact.php:40
-#, fuzzy
 msgid "Ground contact"
-msgstr "Talajkapcsolat"
+msgstr "Talajérintési idő"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:40
 #: inc/training/search/class.SearchFormular.php:183
@@ -277,9 +275,8 @@ msgstr "Talajkapcsolat"
 #: inc/core/View/Window/Laps/Table.php:268
 #: inc/core/View/Activity/Plot/Series/VerticalOscillation.php:41
 #: inc/core/Dataset/Keys/VerticalOscillation.php:44
-#, fuzzy
 msgid "Vertical oscillation"
-msgstr "Függőleges kilengés"
+msgstr "Függőleges oszcilláció"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:41
 #: inc/training/search/class.SearchFormular.php:184
@@ -290,7 +287,7 @@ msgstr "Függőleges kilengés"
 #: inc/core/Dataset/Keys/VerticalRatio.php:44
 #, fuzzy
 msgid "Vertical ratio"
-msgstr "Függőleges arány"
+msgstr "Függ. lengés / lépéshossz arány"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:42
 #: inc/training/search/class.SearchFormular.php:187
@@ -347,22 +344,19 @@ msgstr "növekvő"
 #: plugin/RunalyzePluginStat_Wetter/MinMaxTableForEquipment.php:119
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:440
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:498
-#, fuzzy
 msgid "to"
-msgstr "-hoz"
+msgstr "-"
 
 #: inc/training/search/class.SearchResults.php:474
-#, fuzzy
 msgid "The multi editor could not be located."
-msgstr "A kötegelt szerkesztő nem található."
+msgstr "A multi-szerkesztő nem található."
 
 #: inc/training/search/class.SearchResults.php:511
-#, fuzzy, php-format
+#, php-format
 msgid "Found %s activities"
 msgstr "%s aktivitást találtunk"
 
 #: inc/training/search/class.SearchFormular.php:58
-#, fuzzy
 msgid "Search activities"
 msgstr "Aktivitások keresése"
 
@@ -380,14 +374,13 @@ msgid "Sorting"
 msgstr "Rendezés"
 
 #: inc/training/search/class.SearchFormular.php:105
-#, fuzzy
 msgid "Send to multi editor"
-msgstr "Küldés a kötegelt szerkesztőbe"
+msgstr "Küldés a multi-szerkesztőbe"
 
 #: inc/training/search/class.SearchFormular.php:106
-#, fuzzy, php-format
+#, php-format
 msgid "Our multi editor is limited to a maximum of %d activities."
-msgstr "A kötegelt szerkesztőnk legfeljebb %d aktivitást tud kezelni."
+msgstr "A multi-szerkesztőnk legfeljebb %d aktivitást tud kezelni."
 
 #: inc/training/search/class.SearchFormular.php:120
 #: inc/training/schemes/scheme.Training.php:24
@@ -398,7 +391,7 @@ msgstr "Sport"
 
 #: inc/training/search/class.SearchFormular.php:124
 msgid "Choose sport(s)"
-msgstr "Válasz sporto(ka)t"
+msgstr "Válassz sporto(ka)t"
 
 #: inc/training/search/class.SearchFormular.php:134
 #: call/call.garminCommunicator.php:123
@@ -507,7 +500,7 @@ msgstr "Cím"
 #: inc/training/search/class.SearchFormular.php:174
 #: inc/training/schemes/scheme.Training.php:242
 msgid "avg. HR"
-msgstr "átl. pulzus"
+msgstr "átlag pulzus"
 
 #: inc/training/search/class.SearchFormular.php:175
 #: inc/training/view/section/class.SectionHeartrateRow.php:77
@@ -531,7 +524,7 @@ msgstr "max. pulzus"
 
 #: inc/training/search/class.SearchFormular.php:179
 msgid "Is public"
-msgstr "publikus"
+msgstr "Publikus"
 
 #: inc/training/search/class.SearchFormular.php:180
 #: inc/draw/class.PlotSumData.php:224
@@ -540,13 +533,14 @@ msgid "JD points"
 msgstr "JD pontok"
 
 #: inc/training/search/class.SearchFormular.php:182
+#, fuzzy
 msgid "Ground Contact Balance"
-msgstr ""
+msgstr "Talajérintési szimmetria"
 
 #: inc/training/search/class.SearchFormular.php:191
 #, fuzzy
 msgid "Uses VDOT"
-msgstr "VDOT-ot használ"
+msgstr "VDOT használata"
 
 #: inc/training/search/class.SearchFormular.php:289
 #: inc/system/config/class.ConfigTabAccount.php:58
@@ -567,9 +561,10 @@ msgstr "Mind"
 #: inc/training/view/class.VDOTinfo.php:54
 #, fuzzy, php-format
 msgid "VDOT calculation for: %s"
-msgstr "VDOT számítás erre: %s"
+msgstr "VDOT számítása erre: %s"
 
 #: inc/training/view/class.VDOTinfo.php:63
+#, fuzzy
 msgid "Standard calculation: As competition"
 msgstr "Normál számítás: verseny"
 
