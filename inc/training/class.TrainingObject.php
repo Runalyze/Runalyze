@@ -451,6 +451,11 @@ class TrainingObject extends DataObject {
 	 * @param int $id typeid
 	 */
 	public function setTypeid($id) { $this->set('typeid', $id); }
+	/**
+	 * Get typeid
+	 * @return int typeid
+	 */
+	public function getTypeid() { return $this->get('typeid'); }
 
 
 	/**

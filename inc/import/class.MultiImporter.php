@@ -61,10 +61,13 @@ class MultiImporter {
 		if (!isset($_POST['training-data'][$i]))
 			return;
 
+		$Factory = new Runalyze\Model\Factory;
 		$Data = unserialize(urldecode($_POST['training-data'][$i]));
 		$Training = new TrainingObject( DataObject::$DEFAULT_ID );
 		$Training->setFromArray($Data);
 		$Training->setWeatherForecast();
+		if (!$Training->getTypeid())
+		    $Training->setTypeid($Factory->sport($Training->Sport()->id())->defaultTypeID());
 		$Training->insert();
 
 		$this->InsertedIDs[] = $Training->id();

@@ -129,6 +129,7 @@ class Factory {
 			$this->arrayByPK('type', $typeid)
 		);
 	}
+	
 
 	/**
 	 * All type objects
@@ -138,6 +139,25 @@ class Factory {
 		return $this->allObjects('type', function($data){
 			return new Type\Entity($data);
 		});
+	}
+	
+	/**
+	 *  type for sport
+	 * @param int $sportid
+	 * @param boolean $onlyIDs [optional]
+	 * @return int[]|\Runalyze\Model\Type\Entity[]
+	 */
+	public function typeForSport($sportid) {
+		$Types = $this->allTypes();
+		
+		$SportTypes = array();
+		foreach($Types as $Type) {
+		    if ($Type->sportid() == $sportid) {
+			$SportTypes[] = $Type;
+		    }
+		}
+
+		return $SportTypes;
 	}
 
 	/**
