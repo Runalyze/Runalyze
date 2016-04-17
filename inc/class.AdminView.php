@@ -163,6 +163,7 @@ class AdminView {
 		$Fieldset->addField( new FormularInput('PERL_PATH', __('Perl Path')) );
 		$Fieldset->addField( new FormularInput('TTBIN_PATH', __('TTBIN Converter Path')) );
 		$Fieldset->addField( new FormularInput('GEONAMES_USERNAME', __('Geonames Username')) );
+		$Fieldset->addField( new FormularInput('SQLITE_MOD_SPATIALITE', __('SQLITE Spatialite Extension')) );
                 $Fieldset->addField( new FormularInput('MAIL_SENDER', __('Sender e-mail')) );
 		$Fieldset->addField( new FormularInput('MAIL_NAME', __('Sender e-mail name')) );
 		$Fieldset->addField( new FormularInput('SMTP_HOST', __('SMTP: host')) );
@@ -461,6 +462,7 @@ class AdminView {
                         'PERL_PATH',
 			'TTBIN_PATH',
 			'GEONAMES_USERNAME',
+			'SQLITE_MOD_SPATIALITE',
 			'GARMIN_API_KEY',
 			'MAIL_SENDER',
 			'MAIL_NAME',
@@ -552,7 +554,15 @@ define(\'TTBIN_PATH\', FRONTEND_PATH.\'../call/perl/ttbincnv\');';
  * Geonames.org API username
  * @var string GEONAMES_USERNAME for geonames API username
  */
-define(\'GEONAMES_USERNAME\', \'/\');';
+define(\'GEONAMES_USERNAME\', \'\');';
+				
+			case 'SQLITE_MOD_SPATIALITE':
+				define('SQLITE_MOD_SPATIALITE', 'libspatialite.so.5');
+				return '/**
+ * SQLITE Spatialite extension name
+ * @var string SQLITE_MOD_SPATIALITE for SQLITE database (timezone offset)
+ */
+define(\'SQLITE_MOD_SPATIALITE\', \'libspatialite.so.5\');';				
                                 
 			case 'GARMIN_API_KEY':
 				$APIKeyResults = DB::getInstance()->query('SELECT `value` FROM `'.PREFIX.'conf` WHERE `key`="GARMIN_API_KEY" LIMIT 1')->fetch();

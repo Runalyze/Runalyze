@@ -42,6 +42,8 @@ if (!defined('TTBIN_PATH'))
 if (!defined('GEONAMES_USERNAME'))
 	define('GEONAMES_USERNAME', 'runalyze');
 
+if (!defined('SQLITE_MOD_SPATIALITE'))
+	define('SQLITE_MOD_SPATIALITE', 'libspatialite.so.5');
 
 if (!defined('DAY_IN_S'))
 	define('DAY_IN_S', 86400);

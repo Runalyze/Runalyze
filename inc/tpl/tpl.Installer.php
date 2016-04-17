@@ -189,7 +189,7 @@ foreach ($Steps as $i => $Name) {
 	<p class="text">
 		<label>
 			<strong><?php _e('Sender e-mail'); ?></strong>
-			<input type="text" name="sendermail" value="<?php echo (isset($_POST['sendermail']) ? $_POST['sendermail'] : ''); ?>" <?php if ($this->readyForNextStep) echo 'readonly'; ?>>
+			<input type="text" name="sendermail" value="<?php echo (isset($_POST['sendermail']) ? $_POST['sendermail'] : ''); ?>">
 		</label>
 	</p>
 
