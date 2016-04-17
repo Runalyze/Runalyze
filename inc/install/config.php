@@ -67,6 +67,12 @@ define('TTBIN_PATH', FRONTEND_PATH.'../call/perl/ttbincnv');
 define('GEONAMES_USERNAME', '');
 
 /**
+ * SQLITE Spatialite extension name
+ * @var string SQLITE_MOD_SPATIALITE for SQLITE database (timezone offset)
+ */
+define('SQLITE_MOD_SPATIALITE', 'libspatialite.so.5');
+
+/**
  * Garmin API key is needed for using Garmin Communicator
  * @var bool GARMIN_API_KEY Garmin API key
  * @see http://developer.garmin.com/web-device/garmin-communicator-plugin/get-your-site-key/
