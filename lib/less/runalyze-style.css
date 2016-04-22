@@ -1646,7 +1646,7 @@ tr.space-line.zebra-corrector td {
     right: 0;
   }
 }
-@media (max-width: 600px) {
+@media (max-width: 800px) {
   #home #headline .tab {
     display: none;
     width: 90%;
