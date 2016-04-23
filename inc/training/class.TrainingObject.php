@@ -51,7 +51,7 @@ class TrainingObject extends DataObject {
 	 * Fill default object with standard settings
 	 */
 	protected function fillDefaultObject() {
-		$this->set('time', isset($_GET['date']) ? LocalTime::fromString($_GET['date'])->getTimestamp() : (new LocalTime)->setTime(0, 0, 0)->getTimestamp());
+		$this->set('time', isset($_GET['date']) ? LocalTime::fromString($_GET['date'])->getTimestamp() : LocalTime::fromServerTime(time())->setTime(0, 0, 0)->getTimestamp());
 		$this->set('is_public', Configuration::Privacy()->publishActivity() ? '1' : '0');
 		$this->set('sportid', Configuration::General()->mainSport());
 		$this->forceToSet('s_sum_with_distance', 0);
