@@ -319,7 +319,7 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 				$String .= $File;
 				$String .= ', '.Filesystem::getFilesize(FRONTEND_PATH.$this->BackupPath.$File);
 
-				$Fieldset->addFileBlock('<a href="inc/'.$this->BackupPath.$File.'" target="_blank">'.$String.'</a>');
+				$Fieldset->addFileBlock('<a href="plugin/RunalyzePluginTool_DbBackup/download.php?backup='.$File.'" target="_blank">'.$String.'</a>');
 			}
 		}
 
@@ -353,6 +353,7 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 
 		return $Files;
 	}
+	
 	/**
 	 * Create backup: JSON
 	 */
@@ -387,6 +388,6 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 			$FileType = '.json.gz';
 		}
 
-		return $this->BackupPath.$this->fileNameStart.'-'.date('Ymd-Hi').'-'.substr(uniqid(rand()),-4).$FileType;
+		return $this->BackupPath.$this->fileNameStart.'-'.date('Ymd-Hi').'-'.RUNALYZE_VERSION.'-'.substr(uniqid(rand()),-4).$FileType;
 	}
 }
