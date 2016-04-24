@@ -50,6 +50,7 @@ class ParserLOGBOOKSingleTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertTrue( !$Parser->failed() );
 		$this->assertEquals('2015-01-15 16:16:31', LocalTime::date('Y-m-d H:i:s', $Parser->object()->getTimestamp()));
+		$this->assertEquals(60, $Parser->object()->getTimezoneOffset());
 		$this->assertEquals( $Parser->object()->getPulseAvg(), 144 );
 	}
 

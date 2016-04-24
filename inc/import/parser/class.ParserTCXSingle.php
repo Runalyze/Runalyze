@@ -119,8 +119,8 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 	 * Parse general values
 	 */
 	protected function parseGeneralValues() {
-		$this->TrainingObject->setTimestamp( $this->strtotime((string)$this->XML->Id) );
-		//$this->TrainingObject->setActivityId( (string)$this->XML->Id );
+		$this->setTimestampAndTimezoneOffsetWithUtcFixFrom((string)$this->XML->Id);
+
 		$this->TrainingObject->setCreatorDetails( $this->findCreator() );
 		$this->findSportId();
 		
@@ -143,14 +143,14 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 					if (isset($Lap['StartTime'])) {
 						$start = $this->strtotime((string)$Lap['StartTime']);
 						if ($start < $this->TrainingObject->getTimestamp()) {
-							$this->TrainingObject->setTimestamp($start);
+							$this->setTimestampAndTimezoneOffsetWithUtcFixFrom((string)$Lap['StartTime']);
 						}
 					}
 
 					if (!empty($Lap->Track) && !empty($Lap->Track[0]->Trackpoint[0])) {
 						$start = $this->strtotime((string)$Lap->Track[0]->Trackpoint[0]->Time);
 						if ($start < $this->TrainingObject->getTimestamp()) {
-							$this->TrainingObject->setTimestamp($start);
+							$this->setTimestampAndTimezoneOffsetWithUtcFixFrom((string)$Lap->Track[0]->Trackpoint[0]->Time);
 						}
 					}
 				}
@@ -272,7 +272,7 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 			$TP->DistanceMeters = end($this->gps['km'])*1000;
 
 		if ($this->TrainingObject->getTimestamp() == 0)
-			$this->TrainingObject->setTimestamp( $this->strtotime((string)$TP->Time) );
+			$this->setTimestampAndTimezoneOffsetWithUtcFixFrom((string)$TP->Time);
 
 		if ($this->lastPointWasEmpty) {
 			$OldPauseInSeconds = $this->PauseInSeconds;

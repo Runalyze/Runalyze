@@ -25,6 +25,7 @@ class ImporterFiletypeCSVTest extends PHPUnit_Framework_TestCase {
 		$this->assertFalse($this->object->failed());
 
 		$this->assertEquals('19.12.2014 16:35', LocalTime::date('d.m.Y H:i', $this->object->object()->getTimestamp()));
+		$this->assertEquals(60, $this->object->object()->getTimezoneOffset());
 		$this->assertEquals(4648, $this->object->object()->getTimeInSeconds());
 
 		$this->assertEquals(14, $this->object->object()->getDistance(), '', 0.01);

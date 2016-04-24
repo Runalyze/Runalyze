@@ -107,7 +107,7 @@ class ParserGPXSingle extends ParserAbstractSingleXML {
 	 * Parse general values
 	 */
 	protected function parseGeneralValues() {
-		$this->TrainingObject->setTimestamp( $this->strtotime((string)$this->XML->trkseg->trkpt[0]->time) );
+		$this->setTimestampAndTimezoneOffsetWithUtcFixFrom((string)$this->XML->trkseg->trkpt[0]->time);
 		$this->TrainingObject->setSportid( Configuration::General()->mainSport() );
 
 		if (!empty($this->XML->desc))

@@ -59,6 +59,8 @@ class ImporterFiletypeSLFTest extends PHPUnit_Framework_TestCase {
 		$this->assertFalse( $this->object->failed() );
 
 		$this->assertEquals( '29.04.2012 12:58:44', LocalTime::date('d.m.Y H:i:s', $this->object->object()->getTimestamp()) );
+		$this->assertEquals(120, $this->object->object()->getTimezoneOffset());
+
 		$this->assertEquals( 1257, $this->object->object()->getTimeInSeconds() );
 		$this->assertEquals( 1357, $this->object->object()->getElapsedTime() );
 		$this->assertEquals( 5.282, $this->object->object()->getDistance(), '', 0.1);
@@ -78,6 +80,8 @@ class ImporterFiletypeSLFTest extends PHPUnit_Framework_TestCase {
 		$this->assertFalse( $this->object->failed() );
 
 		$this->assertEquals( '14.10.2012 13:19:48', LocalTime::date('d.m.Y H:i:s', $this->object->object()->getTimestamp()) );
+		$this->assertEquals(120, $this->object->object()->getTimezoneOffset());
+
 		$this->assertEquals( 1803, $this->object->object()->getTimeInSeconds(), '', 30);
 		$this->assertEquals( 4.109, $this->object->object()->getDistance(), '', 0.1);
 		$this->assertEquals( 243, $this->object->object()->getCalories(), '', 10);
@@ -96,6 +100,8 @@ class ImporterFiletypeSLFTest extends PHPUnit_Framework_TestCase {
 		$this->assertFalse( $this->object->failed() );
 
 		$this->assertEquals( '29.03.2015 11:10:46', LocalTime::date('d.m.Y H:i:s', $this->object->object()->getTimestamp()) );
+		$this->assertEquals(120, $this->object->object()->getTimezoneOffset());
+
 		$this->assertEquals( 5559, $this->object->object()->getTimeInSeconds() );
 		$this->assertEquals( 20.88, $this->object->object()->getDistance(), '', 0.1);
 		$this->assertEquals( 1068, $this->object->object()->getCalories(), '', 10);
@@ -116,6 +122,8 @@ class ImporterFiletypeSLFTest extends PHPUnit_Framework_TestCase {
 		$this->assertFalse( $this->object->failed() );
 
 		$this->assertEquals( '03.02.2015 10:01:11', LocalTime::date('d.m.Y H:i:s', $this->object->object()->getTimestamp()) );
+		$this->assertEquals(60, $this->object->object()->getTimezoneOffset());
+
 		$this->assertEquals( 2766, $this->object->object()->getTimeInSeconds() );
 		$this->assertEquals( 7.42, $this->object->object()->getDistance(), '', 0.1);
 		$this->assertEquals( 404, $this->object->object()->getCalories(), '', 10);

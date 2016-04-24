@@ -32,7 +32,8 @@ class ParserSLF4Single extends ParserSLF3Single {
 	 * Parse general values
 	 */
 	protected function parseGeneralValues() {
-		$this->TrainingObject->setTimestamp( $this->strtotime((string)$this->XML->GeneralInformation->startDate) );
+		$this->setTimestampAndTimezoneOffsetWithUtcFixFrom((string)$this->XML->GeneralInformation->startDate);
+
 		$this->TrainingObject->setCalories((int)$this->XML->GeneralInformation->calories);
 		$this->TrainingObject->setSportid( Configuration::General()->mainSport() );
 		$this->TrainingObject->setCreatorDetails( $this->findCreator() );
