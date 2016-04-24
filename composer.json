@@ -1,10 +1,10 @@
 {
     "require": {
-        "symfony/symfony": "^2.8",
+        "symfony/symfony": "^3.0",
         "sensio/framework-extra-bundle": "^3.0",
         "twig/twig": "1.*",
         "monolog/monolog": "1.*",
-        "symfony/routing": "2.*",
+        "symfony/routing": "3.*",
         "symfony/class-loader": "@stable",
         "symfony/yaml": "@stable",
         "nojacko/email-validator": "~1.0",
