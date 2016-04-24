@@ -143,7 +143,7 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 		if ($this->importIsOnProgress)
 			$Fieldset->setCollapsed();
 
-		$Formular = new Formular( $_SERVER['SCRIPT_NAME'].'?id='.$this->id() );
+		$Formular = new Formular('call/call.Plugin.display.php?id='.$this->id() );
 		$Formular->setId('database-backup');
 		$Formular->addCSSclass('ajax');
 		$Formular->addCSSclass('no-automatic-reload');
@@ -319,7 +319,7 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 				$String .= $File;
 				$String .= ', '.Filesystem::getFilesize(FRONTEND_PATH.$this->BackupPath.$File);
 
-				$Fieldset->addFileBlock('<a href="plugin/RunalyzePluginTool_DbBackup/download.php?backup='.$File.'" target="_blank">'.$String.'</a>');
+				$Fieldset->addFileBlock('<a href="plugin/RunalyzePluginTool_DbBackup/download/'.$File.'" target="_blank">'.$String.'</a>');
 			}
 		}
 

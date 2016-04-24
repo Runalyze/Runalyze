@@ -12,6 +12,7 @@ use Runalyze\View\Window\Laps\Window;
 
 require_once '../inc/class.Frontend.php';
 require_once '../inc/class.FrontendShared.php';
+require_once '../plugin/RunalyzePluginTool_DbBackup/class.RunalyzeBackupFileHandler.php';
 
 class PluginController extends Controller
 {
@@ -187,6 +188,18 @@ class PluginController extends Controller
         }
         \PluginTool::displayToolsContent();
         return new Response;
+    }
+    
+    /**
+     * @Route("/plugin/RunalyzePluginTool_DbBackup/download/{file}")
+     */
+    public function dbBackupDownloadAction($file)
+    {
+	$Frontend = new \Frontend(true);
+        
+	    \RunalyzeBackupFileHandler::download($file);
+
+	return new Response;
     }
     
 }
