@@ -1,7 +1,7 @@
 <?php
 /**
- * This file contains class::SummaryMode
- * @package Runalyze
+ * This file contains class::TrainingEffectLevel
+ * @package Runalyze\Activity
  */
 
 namespace Runalyze\Activity;
@@ -16,127 +16,90 @@ use Runalyze\Util\AbstractEnum;
  */
 class TrainingEffectLevel extends AbstractEnum
 {
-	/**
-	 * NO: This value can't be summarized.
-	 * @var int
-	 */
-	const NO = 0;
+	/** @var int */
+	const EASY = 1;
 
-	/**
-	 * AVG: This value will be summarized by its average.
-	 * @var int
-	 */
-	const AVG = 1;
+	/** @var int */
+	const MAINTAINING = 2;
 
-	/**
-	 * SUM: This value will be summarized by its sum.
-	 * @var int
-	 */
-	const SUM = 2;
+    /** @var int */
+    const IMPROVING = 3;
 
-	/**
-	 * MAX: This value will be summarized by its maximum.
-	 * @var int
-	 */
-	const MAX = 3;
+    /** @var int */
+    const HIGHLY_IMPROVING = 4;
 
-	/**
-	 * MIN: This value will be summarized by its maximum.
-	 * @var int
-	 */
-	const MIN = 4;
+    /** @var int */
+    const OVERREACHING = 5;
 
-	/**
-	 * AVG_WITHOUT_NULL: This value will be summarized by its average ignoring nulls.
-	 * @var int
-	 */
-	const AVG_WITHOUT_NULL = 5;
+    /**
+     * @param float $value value between 1.0 and 5.0
+     * @return int internal enum
+     * @throws \InvalidArgumentException
+     */
+    public static function levelFor($value)
+    {
+        if (!is_numeric($value) || $value < 1.0 || 5.0 < $value ) {
+            throw new \InvalidArgumentException(sprintf('Provided training effect %s is invalid.', $value));
+        }
 
-	/**
-	 * VDOT: take only the average of activities with `use_vdot` and respect elevation correction
-	 * @var int
-	 */
-	const VDOT = 6;
+        if ($value == 5.0) {
+            return self::OVERREACHING;
+        } elseif ($value >= 4.0) {
+            return self::HIGHLY_IMPROVING;
+        } elseif ($value >= 3.0) {
+            return self::IMPROVING;
+        } elseif ($value >= 2.0) {
+            return self::MAINTAINING;
+        }
 
-	/**
-	 * 
-	 * @param int $mode int from internal enum
-	 * @param string $key key of database column
-	 * @return string query part to select column
-	 */
-	public static function query($mode, $key)
-	{
-		switch ($mode) {
-			case self::AVG:
-				return self::queryForAvg($key);
-			case self::SUM:
-				return self::queryForSum($key);
-			case self::MAX:
-				return self::queryForMax($key);
-			case self::MIN:
-				return self::queryForMin($key);
-			case self::AVG_WITHOUT_NULL:
-				return self::queryForAvgWithoutNull($key);
-			case self::VDOT:
-				return self::queryForVdot($key);
-			default:
-				return '';
-		}
-	}
+        return self::EASY;
+    }
 
-	/**
-	 * @param string $key
-	 * @return string
-	 */
-	private static function queryForAvg($key)
-	{
-		return 'SUM(`s`*`'.$key.'`*(`'.$key.'` > 0))'.'/SUM(`s`*(`'.$key.'` > 0)) as `'.$key.'`';
-	}
+    /**
+     * @param int $enum internal enum
+     * @return string
+     * @throws \InvalidArgumentException
+     * @codeCoverageIgnore
+     */
+    public static function label($enum)
+    {
+        switch ($enum) {
+            case self::EASY:
+                return __('Easy');
+            case self::MAINTAINING:
+                return __('Maintaining workout');
+            case self::IMPROVING:
+                return __('Improving Fitness');
+            case self::HIGHLY_IMPROVING:
+                return __('Highly Improving');
+            case self::OVERREACHING:
+                return __('Overreaching');
+            default:
+                throw new \InvalidArgumentException(sprintf('Provided level %u is invalid.', $enum));
+        }
+    }
 
-	/**
-	 * @param string $key
-	 * @return string
-	 */
-	private static function queryForSum($key)
-	{
-		return 'SUM(`'.$key.'`) as `'.$key.'`';
-	}
-
-	/**
-	 * @param string $key
-	 * @return string
-	 */
-	private static function queryForMax($key)
-	{
-		return 'MAX(`'.$key.'`) as `'.$key.'`';
-	}
-
-	/**
-	 * @param string $key
-	 * @return string
-	 */
-	private static function queryForMin($key)
-	{
-		return 'MIN(`'.$key.'`) as `'.$key.'`';
-	}
-
-	/**
-	 * @param string $key
-	 * @return string
-	 */
-	private static function queryForAvgWithoutNull($key)
-	{
-		return 'AVG(NULLIF(`'.$key.'`,0)) as `'.$key.'`';
-	}
-
-	/**
-	 * @param string $key
-	 * @return string
-	 */
-	private static function queryForVdot($key)
-	{
-		$Sum = \Runalyze\Configuration::Vdot()->useElevationCorrection() ? 'IF(`vdot_with_elevation`>0,`vdot_with_elevation`,`vdot`)*`s`' : '`vdot`*`s`';
-
-		return 'SUM(IF(`use_vdot`=1 AND `vdot`>0,'.$Sum.',0))/SUM(IF(`use_vdot`=1 AND `vdot`>0,`s`,0)) as `'.$key.'`';
-	}
+    /**
+     * @param int $enum internal enum
+     * @return string
+     * @throws \InvalidArgumentException
+     * @codeCoverageIgnore
+     */
+    public static function description($enum)
+    {
+        switch ($enum) {
+            case self::EASY:
+                return __('Helps recovery (short activities). Improves endurance with longer activities (more than 40 minutes).');
+            case self::MAINTAINING:
+                return __('Maintains your aerobic fitness.');
+            case self::IMPROVING:
+                return __('Improves your aerobic fitness if repeated as part of your weekly training program.');
+            case self::HIGHLY_IMPROVING:
+                return __('Highly improves your aerobic fitness if repeated 1-2 times per week with adequate recovery time.');
+            case self::OVERREACHING:
+                return __('Causes temporary overload with high improvement. Train up to this number with extreme care. Requires additional recovery days.');
+            default:
+                throw new \InvalidArgumentException(sprintf('Provided level %u is invalid.', $enum));
+        }
+    }
 }

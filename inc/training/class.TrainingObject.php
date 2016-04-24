@@ -712,6 +712,9 @@ class TrainingObject extends DataObject {
 	public function setFitHRVscore($score) { $this->set('fit_hrv_analysis', $score); }
 	public function getFitHRVscore() { return $this->get('fit_hrv_analysis'); }
 
+	public function setFitTrainingEffect($effect) { $this->set('fit_training_effect', $effect); }
+	public function getFitTrainingEffect() { return $this->get('fit_training_effect'); }
+
 
 	/**
 	 * Get JD intensity

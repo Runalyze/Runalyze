@@ -1,6 +1,6 @@
 <?php
 /**
- * This file contains class::FitRecoveryTime
+ * This file contains class::FitTrainingEffect
  * @package Runalyze
  */
 
@@ -9,12 +9,12 @@ namespace Runalyze\Dataset\Keys;
 use Runalyze\Dataset\Context;
 
 /**
- * Dataset key: FitRecoveryTime
+ * Dataset key: FitTrainingEffect
  * 
  * @author Hannes Christiansen
  * @package Runalyze\Dataset\Keys
  */
-class FitRecoveryTime extends AbstractKey
+class FitTrainingEffect extends AbstractKey
 {
 	/**
 	 * Enum id
@@ -22,7 +22,7 @@ class FitRecoveryTime extends AbstractKey
 	 */
 	public function id()
 	{
-		return \Runalyze\Dataset\Keys::FIT_RECOVERY_TIME;
+		return \Runalyze\Dataset\Keys::FIT_TRAINING_EFFECT;
 	}
 
 	/**
@@ -31,7 +31,7 @@ class FitRecoveryTime extends AbstractKey
 	 */
 	public function column()
 	{
-		return 'fit_recovery_time';
+		return 'fit_training_effect';
 	}
 
 	/**
@@ -40,7 +40,7 @@ class FitRecoveryTime extends AbstractKey
 	 */
 	public function label()
 	{
-		return __('Recovery time').' '.__('(by file)');
+		return __('Training Effect').' '.__('(by file)');
 	}
 
 	/**
@@ -49,7 +49,7 @@ class FitRecoveryTime extends AbstractKey
 	 */
 	public function shortLabel()
 	{
-		return __('Recovery time');
+		return __('TE');
 	}
 
 	/**
@@ -59,8 +59,8 @@ class FitRecoveryTime extends AbstractKey
 	public function description()
 	{
 		return __(
-			'Garmin calculates a suggested recovery time based on your '.
-			'heart rate variablitity right after the end of your activity.'
+			'Training Effect is an indicator between 1.0 (easy) and 5.0 (overreaching) '.
+			'to rate the impact of aerobic exercise on your body.'
 		);
 	}
 
@@ -71,7 +71,7 @@ class FitRecoveryTime extends AbstractKey
 	 */
 	public function stringFor(Context $context)
 	{
-		return $context->dataview()->fitRecoveryTime();
+		return $context->dataview()->fitTrainingEffect();
 	}
 
 	/**

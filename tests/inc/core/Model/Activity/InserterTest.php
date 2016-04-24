@@ -99,6 +99,7 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(time(), $Object->get(Entity::TIMESTAMP_CREATED), '', 10);
 		$this->assertEquals(3600, $Object->duration());
 		$this->assertEquals(12.0, $Object->distance());
+		$this->assertNull($Object->fitTrainingEffect());
 	}
 
 	public function testOutdoorData() {

@@ -2,62 +2,63 @@
 
 namespace Runalyze\Activity;
 
-class TrainingEffectLevelTest extends \PHPUnit_Framework_TestCase
+class TrainingEffectTest extends \PHPUnit_Framework_TestCase
 {
     /** @expectedException \InvalidArgumentException */
-	public function testInvalidLevelTooSmall()
+	public function testInvalidValueTooSmall()
 	{
-		TrainingEffectLevel::levelFor(0.9);
+        new TrainingEffect(0.9);
 	}
 
     /** @expectedException \InvalidArgumentException */
-    public function testInvalidLevelTooBig()
+    public function testInvalidValueTooBig()
     {
-        TrainingEffectLevel::levelFor(5.1);
+        new TrainingEffect(5.1);
     }
 
     /** @expectedException \InvalidArgumentException */
-    public function testInvalidLevelNonNumeric()
+    public function testInvalidValueNonNumeric()
     {
-        TrainingEffectLevel::levelFor(false);
+        new TrainingEffect(false);
     }
 
     /** @expectedException \InvalidArgumentException */
-    public function testInvalidLevelString()
+    public function testInvalidValueString()
     {
-        TrainingEffectLevel::levelFor('foobar');
+        new TrainingEffect('foobar');
     }
 
-    public function testValidLevels()
+    public function testSimpleValue()
     {
-        $this->assertEquals(TrainingEffectLevel::EASY, TrainingEffectLevel::levelFor(1.0));
-        $this->assertEquals(TrainingEffectLevel::EASY, TrainingEffectLevel::levelFor(1.9));
-        $this->assertEquals(TrainingEffectLevel::MAINTAINING, TrainingEffectLevel::levelFor(2.0));
-        $this->assertEquals(TrainingEffectLevel::MAINTAINING, TrainingEffectLevel::levelFor(2.9));
-        $this->assertEquals(TrainingEffectLevel::IMPROVING, TrainingEffectLevel::levelFor(3.0));
-        $this->assertEquals(TrainingEffectLevel::IMPROVING, TrainingEffectLevel::levelFor(3.9));
-        $this->assertEquals(TrainingEffectLevel::HIGHLY_IMPROVING, TrainingEffectLevel::levelFor(4.0));
-        $this->assertEquals(TrainingEffectLevel::HIGHLY_IMPROVING, TrainingEffectLevel::levelFor(4.9));
-        $this->assertEquals(TrainingEffectLevel::OVERREACHING, TrainingEffectLevel::levelFor(5.0));
+        $Effect = new TrainingEffect(3.1);
+
+        $this->assertTrue($Effect->isKnown());
+        $this->assertEquals(3.1, $Effect->value());
+        $this->assertEquals(TrainingEffectLevel::IMPROVING, $Effect->level());
+
+        $this->assertEquals(2.9, $Effect->set(2.9)->value());
+        $this->assertEquals(TrainingEffectLevel::MAINTAINING, $Effect->level());
+
+        $this->assertFalse($Effect->set(null)->isKnown());
     }
 
-    /** @expectedException \InvalidArgumentException */
-    public function testLabelForInvalidLevel()
+    public function testFormattingValues()
     {
-        TrainingEffectLevel::label(0);
+        $this->assertEquals('', TrainingEffect::format(null));
+        $this->assertEquals('3.1', TrainingEffect::format(3.14));
+        $this->assertEquals('5.0', TrainingEffect::format(5.0));
     }
 
-    /** @expectedException \InvalidArgumentException */
-    public function testDescriptionForInvalidLevel()
+    public function testUnknownValue()
     {
-        TrainingEffectLevel::description(TrainingEffectLevel::OVERREACHING + 1);
-    }
+        $Effect = new TrainingEffect();
 
-    public function testThatLabelAndDescriptionAreDefinedForAllLevels()
-    {
-        foreach (TrainingEffectLevel::getEnum() as $level) {
-            $this->assertNotEmpty(TrainingEffectLevel::label($level));
-            $this->assertNotEmpty(TrainingEffectLevel::description($level));
-        }
+        $this->assertFalse($Effect->isKnown());
+        $this->assertEquals('', $Effect->string());
+        $this->assertEquals('', $Effect->shortDescription());
+        $this->assertEquals('', $Effect->description());
+        $this->assertEquals(0, $Effect->numericValue());
+        $this->assertNull($Effect->value());
+        $this->assertNull($Effect->level());
     }
 }

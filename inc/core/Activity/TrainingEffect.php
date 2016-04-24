@@ -1,227 +1,162 @@
 <?php
 /**
- * This file contains class::Weight
+ * This file contains class::TrainingEffect
  * @package Runalyze\Activity
  */
 
 namespace Runalyze\Activity;
 
-use Runalyze\Configuration;
-use Runalyze\Parameter\Application\WeightUnit;
-
 /**
- * Weight
- * 
- * @author Hannes Christiansen <hannes@runalyze.de>
- * @author Michael Pohl <michael@runalyze.de>
+ * Training Effect
+ *
+ * @see https://www.firstbeat.com/en/consumer-products/features/#training-effect
  * @package Runalyze\Activity
  */
-class Weight implements ValueInterface {
-	/**
-	 * Default poun d multiplier
-	 * @var double 
-	*/
-	const POUNDS_MULTIPLIER = 2.204622;
+class TrainingEffect implements ValueInterface
+{
+	/** @var float */
+	const LOWER_LIMIT = 1.0;
 
-	/**
-	 * Default stone multiplier
-	 * @var double 
-	*/
-	const STONES_MULTIPLIER = 0.157473;
+	/** @var float */
+	const UPPER_LIMIT = 5.0;
 
-	/**
-	 * Default number of decimals
-	 * @var int
-	 */
-	public static $DefaultDecimals = 1;
+    /** @var int */
+    const DECIMALS = 1;
 
-	/**
-	 * Weight [kg]
-	 * @var float
-	 */
-	protected $Weight;
-
-	/**
-	 * Preferred unit
-	 * @var \Runalyze\Parameter\Application\WeightUnit
-	 */
-	protected $PreferredUnit;
+	/** @var float|null */
+	protected $Value = null;
 
 	/**
 	 * Format
-	 * @param float $weight [kg]
-	 * @param bool $withUnit [optional] with or without unit
-	 * @param int $decimals [optional] number of decimals
+	 * @param float|null $value
 	 * @return string
 	 */
-	public static function format($weight, $withUnit = true, $decimals = false) {
-		return (new self($weight))->string($withUnit, $decimals);
+	public static function format($value)
+    {
+        return (new self($value))->string();
 	}
 
 	/**
-	 * @param float $weight [kg]
-	 * @param \Runalyze\Parameter\Application\WeightUnit $preferredUnit
+	 * @param float|null $value
 	 */
-	public function __construct($weight = 0, WeightUnit $preferredUnit = null) {
-		$this->PreferredUnit = (null !== $preferredUnit) ? $preferredUnit : Configuration::General()->weightUnit();
-
-		$this->set($weight);
+	public function __construct($value = null)
+    {
+		$this->set($value);
 	}
 
-	public function label() {
-		return __('Weight');
+    /**
+     * @return string
+     * @codeCoverageIgnore
+     */
+	public function label()
+    {
+		return __('Training Effect');
 	}
 
 	/**
 	 * Unit
 	 * @return string
+     * @codeCoverageIgnore
 	 */
-	public function unit() {
-		return $this->PreferredUnit->unit();
+	public function unit()
+    {
+		return '';
 	}
 
 	/**
-	 * Set weight
-	 * @param float $weight [kg]
-	 * @return \Runalyze\Activity\Weight $this-reference
+	 * Set training effect
+	 * @param float|null|string $value
+	 * @return \Runalyze\Activity\TrainingEffect $this-reference
+     * @throws \InvalidArgumentException
 	 */
-	public function set($weight) {
-		$this->Weight = (float)str_replace(',', '.', $weight);
+	public function set($value) {
+        if (null === $value) {
+            $this->Value = null;
+
+            return $this;
+        }
+
+		$this->Value = (float)str_replace(',', '.', $value);
+
+        if ($this->Value < self::LOWER_LIMIT || self::UPPER_LIMIT < $this->Value) {
+            throw new \InvalidArgumentException(sprintf('Training Effect must be between %s and %s', self::LOWER_LIMIT, self::UPPER_LIMIT));
+        }
 
 		return $this;
 	}
 
 	/**
-	 * Set weight in pounds
-	 * @param float $weight [pounds]
-	 * @return \Runalyze\Activity\Weight $this-reference
-	 */
-	public function setPounds($weight) {
-		$this->Weight = (float)str_replace(',', '.', $weight) / self::POUNDS_MULTIPLIER;
-
-		return $this;
-	}
-
-	/**
-	 * Set weight in stones
-	 * @param float $weight [stones]
-	 * @return \Runalyze\Activity\Weight $this-reference
-	 */
-	public function setStones($weight) {
-		$this->Weight = (float)str_replace(',', '.', $weight) / self::STONES_MULTIPLIER;
-
-		return $this;
-	}
-
-	/**
-	 * @param float $weight [mixed unit]
-	 * @return \Runalyze\Activity\Weight $this-reference
-	 */
-	public function setInPreferredUnit($weight) {
-		if ($this->PreferredUnit->isPounds()) {
-			$this->setPounds($weight);
-		} elseif ($this->PreferredUnit->isStones()) {
-			$this->setStones($weight);
-		} else {
-			$this->set($weight);
-		}
-
-		return $this;
-	}
-
-	/**
-	 * Format weight as string
+	 * Format training effect as string
 	 * @param bool $withUnit [optional] show unit?
-	 * @param bool|int $decimals [optional] number of decimals
 	 * @return string
 	 */
-	public function string($withUnit = true, $decimals = false) {
-		if ($this->PreferredUnit->isPounds()) {
-			return $this->stringPounds($withUnit, $decimals);
-		} elseif ($this->PreferredUnit->isStones()) {
-			return $this->stringStones($withUnit, $decimals);
-		}
+	public function string($withUnit = true) {
+        if (!$this->isKnown()) {
+            return '';
+        }
 
-		return $this->stringKG($withUnit, $decimals);
+		return number_format($this->Value, self::DECIMALS);
 	}
 
 	/**
-	 * @return float [kg]
+	 * @return float|null
 	 */
-	public function value() {
-		return $this->Weight;
+	public function value()
+    {
+		return $this->Value;
 	}
 
-	/**
-	 * Weight
-	 * @return float [kg]
-	 */
-	public function kg() {
-		return $this->Weight;
-	}
+    /**
+     * @return float
+     */
+    public function numericValue()
+    {
+        return ($this->isKnown()) ? $this->Value : 0.0;
+    }
 
-	/**
-	 * Weight in pounds
-	 * @return float [lbs]
-	 */
-	public function pounds() {
-		return $this->Weight * self::POUNDS_MULTIPLIER;
-	}
+    /**
+     * @return bool
+     */
+    public function isKnown()
+    {
+        return (null !== $this->Value);
+    }
 
-	/**
-	 * Weight in stones
-	 * @return float [st]
-	 */
-	public function stones() {
-		return $this->Weight * self::STONES_MULTIPLIER;
-	}
+    /**
+     * @return int|null
+     */
+    public function level()
+    {
+        if (!$this->isKnown()) {
+            return null;
+        }
 
-	/**
-	 * @return float [mixed unit]
-	 */
-	public function valueInPreferredUnit() {
-		if ($this->PreferredUnit->isPounds()) {
-			return $this->pounds();
-		} elseif ($this->PreferredUnit->isStones()) {
-			return $this->stones();
-		}
+        return TrainingEffectLevel::levelFor($this->Value);
+    }
 
-		return $this->kg();
-	}
+    /**
+     * @return string
+     * @codeCoverageIgnore
+     */
+    public function shortDescription()
+    {
+        if (!$this->isKnown()) {
+            return '';
+        }
 
-	/**
-	 * String: as kg
-	 * @param bool $withUnit [optional] show unit?
-	 * @param bool|int $decimals [optional] number of decimals
-	 * @return string with unit
-	 */
-	public function stringKG($withUnit = true, $decimals = false) {
-		$decimals = ($decimals === false) ? self::$DefaultDecimals : $decimals;
+        return TrainingEffectLevel::label($this->level());
+    }
 
-		return number_format($this->Weight, $decimals, '.', '').($withUnit ? '&nbsp;'.WeightUnit::KG : '');
-	}
+    /**
+     * @return string
+     * @codeCoverageIgnore
+     */
+    public function description()
+    {
+        if (!$this->isKnown()) {
+            return '';
+        }
 
-	/**
-	 * String: as pounds
-	 * @param bool $withUnit [optional] show unit?
-	 * @param bool|int $decimals [optional] number of decimals
-	 * @return string with unit
-	 */
-	public function stringPounds($withUnit = true, $decimals = false) {
-		$decimals = ($decimals === false) ? self::$DefaultDecimals : $decimals;
-
-		return number_format($this->pounds(), $decimals, '.', '').($withUnit ? '&nbsp;'.WeightUnit::POUNDS : '');
-	}
-
-	/**
-	 * String: as stone
-	 * @param bool $withUnit [optional] show unit?
-	 * @param bool|int $decimals [optional] number of decimals
-	 * @return string with unit
-	 */
-	public function stringStones($withUnit = true, $decimals = false) {
-		$decimals = ($decimals === false) ? self::$DefaultDecimals : $decimals;
-
-		return number_format($this->stones(), $decimals, '.', '').($withUnit ? '&nbsp;'.WeightUnit::STONES : '');
-	}
+        return TrainingEffectLevel::description($this->level());
+    }
 }

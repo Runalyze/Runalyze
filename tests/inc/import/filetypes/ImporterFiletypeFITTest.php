@@ -519,6 +519,8 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertTrue($this->object->object()->hasArrayGroundContactBalance());
 
 			$this->assertEquals(5198, $this->object->object()->getGroundContactBalance(), '', 10);
+
+			$this->assertEquals(3.6, $this->object->object()->getFitTrainingEffect());
 		}
 	}
 
@@ -543,6 +545,8 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 
 			$this->assertEquals(129, $this->object->object()->getPulseAvg(), '', 2);
 			$this->assertEquals(172, $this->object->object()->getPulseMax());
+
+			$this->assertEquals(null, $this->object->object()->getFitTrainingEffect());
 
 			$this->assertTrue($this->object->object()->hasArrayTime());
 			$this->assertTrue($this->object->object()->hasArrayDistance());
@@ -572,6 +576,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 
 			$this->assertEquals(40.62, $this->object->object()->getFitVdotEstimate());
 			$this->assertEquals(1307, $this->object->object()->getFitRecoveryTime());
+			$this->assertEquals(3.2, $this->object->object()->getFitTrainingEffect());
 
 			// Make sure that it's not 100, see https://github.com/Runalyze/Runalyze/issues/1798
 			$this->assertEquals(0, $this->object->object()->getFitHRVscore());

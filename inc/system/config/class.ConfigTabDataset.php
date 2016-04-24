@@ -251,6 +251,7 @@ class ConfigTabDataset extends ConfigTab {
 			'fit_vdot_estimate'	=> round(Configuration::Data()->vdot()),
 			'fit_recovery_time'	=> 800,
 			'fit_hrv_analysis'	=> 800,
+			'fit_training_effect'	=> 3.1,
 			'jd_intensity'	=> 27,
 			'trimp'		=> 121,
 			'cadence'	=> 90,

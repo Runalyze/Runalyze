@@ -320,6 +320,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_training` (
   `fit_vdot_estimate` decimal(4,2) unsigned NOT NULL DEFAULT '0.0',
   `fit_recovery_time` smallint(5) unsigned NOT NULL DEFAULT '0',
   `fit_hrv_analysis` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `fit_training_effect` decimal(2,1) unsigned DEFAULT NULL,
   `jd_intensity` smallint(4) NOT NULL DEFAULT '0',
   `trimp` int(4) NOT NULL DEFAULT '0',
   `cadence` int(3) NOT NULL DEFAULT '0',

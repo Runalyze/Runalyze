@@ -7,6 +7,7 @@
 namespace Runalyze\View\Activity;
 
 use Runalyze\Activity\Temperature;
+use Runalyze\Activity\TrainingEffect;
 use Runalyze\Configuration;
 use Runalyze\Data\Cadence;
 use Runalyze\Data\Weather\WindChillFactor;
@@ -366,6 +367,14 @@ class Dataview {
 		}
 
 		return '';
+	}
+
+	/**
+	 * Get string for Training Effect
+	 * @return string
+	 */
+	public function fitTrainingEffect() {
+		return TrainingEffect::format($this->Activity->fitTrainingEffect());
 	}
 
 	/**
