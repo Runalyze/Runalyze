@@ -59,6 +59,9 @@ class ImporterFiletypeTCXTest extends PHPUnit_Framework_TestCase {
 		$this->assertFalse( $this->object->hasMultipleTrainings() );
 		$this->assertFalse( $this->object->failed() );
 
+		$this->assertEquals('2011-07-10 11:47', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
+		$this->assertEquals(120, $this->object->object()->getTimezoneOffset());
+
 		$this->assertEquals( 6523, $this->object->object()->getTimeInSeconds(), '', 30);
 		$this->assertEquals( 7200 - 8*60 - 21, $this->object->object()->getElapsedTime() );
 		$this->assertTrue( $this->object->object()->hasElapsedTime() );
@@ -102,6 +105,9 @@ class ImporterFiletypeTCXTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertTrue( !$this->object->failed() );
 
+		$this->assertEquals('2012-04-13 13:51', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
+		$this->assertEquals(120, $this->object->object()->getTimezoneOffset());
+
 		$this->assertEquals( 2100, $this->object->object()->getTimeInSeconds(), '', 30);
 		$this->assertEquals( 2100, $this->object->object()->getElapsedTime(), '', 30);
 		//$this->assertEquals( 5, $this->object->object()->Sport()->id() ); // "Other" is in the file
@@ -118,6 +124,10 @@ class ImporterFiletypeTCXTest extends PHPUnit_Framework_TestCase {
 		$this->object->parseFile('../tests/testfiles/tcx/Indoor-Training.tcx');
 
 		$this->assertFalse( $this->object->failed() );
+
+		$this->assertEquals('2012-02-10 16:48', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
+		$this->assertEquals(60, $this->object->object()->getTimezoneOffset());
+
 		$this->assertEquals( 7204, $this->object->object()->getTimeInSeconds(), '', 70);
 		$this->assertEquals( 7204, $this->object->object()->getElapsedTime() );
 		$this->assertEquals( 122, $this->object->object()->getPulseAvg(), '', 2);
@@ -137,19 +147,22 @@ class ImporterFiletypeTCXTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( 3, $this->object->numberOfTrainings() );
 
 		// Activity 1
-		$this->assertEquals( LocalTime::mktime(18, 14, 21, 4, 18, 2013), $this->object->object(0)->getTimestamp() );
+		$this->assertEquals('2013-04-18 18:14', LocalTime::date('Y-m-d H:i', $this->object->object(0)->getTimestamp()));
+		$this->assertEquals(120, $this->object->object(0)->getTimezoneOffset());
 		//$this->assertNotEquals( Configuration::General()->runningSport(), $this->object->object(0)->get('sportid') );
 		$this->assertEquals( 494, $this->object->object(0)->getTimeInSeconds(), '', 20 );
 		$this->assertEquals( 2.355, $this->object->object(0)->getDistance(), '', 0.1 );
 
 		// Activity 2
-		$this->assertEquals( LocalTime::mktime(18, 24, 12, 4, 18, 2013), $this->object->object(1)->getTimestamp() );
+		$this->assertEquals('2013-04-18 18:24', LocalTime::date('Y-m-d H:i', $this->object->object(1)->getTimestamp()));
+		$this->assertEquals(120, $this->object->object(1)->getTimezoneOffset());
 		//$this->assertEquals( Configuration::General()->runningSport(), $this->object->object(1)->get('sportid') );
 		$this->assertEquals( 3571, $this->object->object(1)->getTimeInSeconds(), '', 30 );
 		$this->assertEquals( 11.46, $this->object->object(1)->getDistance(), '', 0.1 );
 
 		// Activity 3
-		$this->assertEquals( LocalTime::mktime(19, 35, 46, 4, 18, 2013), $this->object->object(2)->getTimestamp() );
+		$this->assertEquals('2013-04-18 19:35', LocalTime::date('Y-m-d H:i', $this->object->object(2)->getTimestamp()));
+		$this->assertEquals(120, $this->object->object(2)->getTimezoneOffset());
 		//$this->assertNotEquals( Configuration::General()->runningSport(), $this->object->object(2)->get('sportid') );
 		$this->assertEquals( 420, $this->object->object(2)->getTimeInSeconds(), '', 10 );
 		$this->assertEquals( 2.355, $this->object->object(2)->getDistance(), '', 0.1 );
@@ -164,6 +177,9 @@ class ImporterFiletypeTCXTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertFalse( $this->object->hasMultipleTrainings() );
 		$this->assertFalse( $this->object->failed() );
+
+		$this->assertEquals('2012-08-19 09:21', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
+		$this->assertEquals(120, $this->object->object()->getTimezoneOffset());
 
 		// Very slow parts (2m in 30s ...), not a good example
 		//$this->assertEquals( 1371, $this->object->object()->getTimeInSeconds(), '', 30);
@@ -189,6 +205,9 @@ class ImporterFiletypeTCXTest extends PHPUnit_Framework_TestCase {
 		$this->assertFalse( $this->object->hasMultipleTrainings() );
 		$this->assertFalse( $this->object->failed() );
 
+		$this->assertEquals('2013-11-03 14:05', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
+		$this->assertEquals(60, $this->object->object()->getTimezoneOffset());
+
 		$this->assertTrue( $this->object->object()->hasArrayPower() );
 		$this->assertEquals(
 				array(0, 10, 20, 30, 41, 41, 41, 117, 155, 192, 182, 188, 186, 182, 178, 181, 180, 179, 178, 179, 180, 182, 181, 180, 180, 178),
@@ -205,6 +224,9 @@ class ImporterFiletypeTCXTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertFalse( $this->object->hasMultipleTrainings() );
 		$this->assertFalse( $this->object->failed() );
+
+		$this->assertEquals('2010-12-27 15:46', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
+		$this->assertEquals(60, $this->object->object()->getTimezoneOffset());
 
 		$DistanceArray = $this->object->object()->getArrayDistance();
 		foreach ($DistanceArray as $i => $km) {
@@ -223,6 +245,9 @@ class ImporterFiletypeTCXTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertFalse( $this->object->hasMultipleTrainings() );
 		$this->assertFalse( $this->object->failed() );
+
+		$this->assertEquals('2015-05-10 16:13', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
+		$this->assertEquals(120, $this->object->object()->getTimezoneOffset());
 
 		$this->assertEquals( 61, $this->object->object()->getTimeInSeconds(), '', 5);
 		$this->assertEquals( 0.113, $this->object->object()->getDistance(), '', 0.01);

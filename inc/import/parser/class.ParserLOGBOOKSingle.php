@@ -43,7 +43,7 @@ class ParserLOGBOOKSingle extends ParserAbstractSingleXML {
 	 * Parse general values
 	 */
 	protected function parseValues() {
-		$this->TrainingObject->setTimestamp( $this->strtotime((string)$this->XML['startTime']) );
+		$this->setTimestampAndTimezoneOffsetWithUtcFixFrom((string)$this->XML['startTime']);
 
 		if (!empty($this->XML['categoryName']))
 			$this->guessSportID( (string)$this->XML['categoryName'] );

@@ -61,7 +61,8 @@ class ImporterFiletypeLOGBOOKTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( 5, $this->object->numberOfTrainings() );
 
 		// Activity 1
-		$this->assertEquals( LocalTime::mktime(18, 1, 44, 9, 6, 2008), $this->object->object(0)->getTimestamp() );
+		$this->assertEquals('2008-09-06 18:01', LocalTime::date('Y-m-d H:i', $this->object->object(0)->getTimestamp()));
+		$this->assertEquals(120, $this->object->object(0)->getTimezoneOffset());
 		$this->assertEquals( Configuration::General()->runningSport(), $this->object->object(0)->get('sportid') );
 		$this->assertEquals( 9382, $this->object->object(0)->getTimeInSeconds() );
 		$this->assertEquals( 26.743, $this->object->object(0)->getDistance() );
@@ -71,7 +72,8 @@ class ImporterFiletypeLOGBOOKTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( "20°C\r\n1-2 Bft", $this->object->object(0)->getNotes() );
 
 		// Activity 2
-		$this->assertEquals( LocalTime::mktime(15, 3, 28, 3, 28, 2009), $this->object->object(1)->getTimestamp() );
+		$this->assertEquals('2009-03-28 15:03', LocalTime::date('Y-m-d H:i', $this->object->object(1)->getTimestamp()));
+		$this->assertEquals(60, $this->object->object(1)->getTimezoneOffset());
 		$this->assertEquals( Configuration::General()->runningSport(), $this->object->object(1)->get('sportid') );
 		$this->assertEquals( 10837, $this->object->object(1)->getTimeInSeconds() );
 		$this->assertEquals( 25.864, $this->object->object(1)->getDistance() );
@@ -84,7 +86,8 @@ class ImporterFiletypeLOGBOOKTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( true, $this->object->object(1)->Splits()->areEmpty() );
 
 		// Activity 2
-		$this->assertEquals( LocalTime::mktime(20, 22, 49, 3, 31, 2009), $this->object->object(2)->getTimestamp() );
+		$this->assertEquals('2009-03-31 20:22', LocalTime::date('Y-m-d H:i', $this->object->object(2)->getTimestamp()));
+		$this->assertEquals(120, $this->object->object(2)->getTimezoneOffset());
 		$this->assertEquals( Configuration::General()->runningSport(), $this->object->object(2)->get('sportid') );
 		$this->assertEquals( 2310, $this->object->object(2)->getTimeInSeconds() );
 		$this->assertEquals( 6.904, $this->object->object(2)->getDistance() );

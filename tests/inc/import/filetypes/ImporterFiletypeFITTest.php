@@ -249,6 +249,9 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertFalse($this->object->hasMultipleTrainings() );
 			$this->assertFalse($this->object->failed() );
 
+			$this->assertEquals('2015-06-17 07:34', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
+			$this->assertEquals(120, $this->object->object()->getTimezoneOffset());
+
 			$this->assertEquals('fr910xt', $this->object->object()->getCreator());
 			$this->assertEquals(2500, $this->object->object()->getPoolLength());
 			$this->assertEquals(890, $this->object->object()->getTotalStrokes());
@@ -279,6 +282,9 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 
 			$this->assertFalse($this->object->hasMultipleTrainings() );
 			$this->assertFalse($this->object->failed() );
+
+			$this->assertEquals('2015-07-18 08:29', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
+			$this->assertEquals(120, $this->object->object()->getTimezoneOffset());
 
 			$this->assertEquals('fenix3', $this->object->object()->getCreator());
 			$this->assertEquals(5000, $this->object->object()->getPoolLength());
@@ -316,6 +322,9 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertFalse($this->object->hasMultipleTrainings() );
 			$this->assertFalse($this->object->failed() );
 
+			$this->assertEquals('2011-10-15 21:31', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
+			$this->assertEquals(120, $this->object->object()->getTimezoneOffset());
+
 			$this->assertEquals('fr910xt', $this->object->object()->getCreator());
 			$this->assertEquals(0, $this->object->object()->getPoolLength());
 			$this->assertEquals(424, $this->object->object()->getTotalStrokes());
@@ -342,6 +351,9 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 		if (Shell::isPerlAvailable()) {
 			$this->object->parseFile('../tests/testfiles/fit/HRV-example.fit');
 
+			$this->assertEquals('2015-06-13 11:03', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
+			$this->assertEquals(120, $this->object->object()->getTimezoneOffset());
+
 			$this->assertFalse( $this->object->hasMultipleTrainings() );
 			$this->assertFalse( $this->object->failed() );
 
@@ -359,6 +371,9 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 
 			$this->assertFalse( $this->object->hasMultipleTrainings() );
 			$this->assertFalse( $this->object->failed() );
+
+			$this->assertEquals('2015-07-29 15:23', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
+			$this->assertEquals(120, $this->object->object()->getTimezoneOffset());
 
 			$this->assertEquals('edge810', $this->object->object()->getCreator());
 			$this->assertEquals(3600 + 18*60 + 9, $this->object->object()->getTimeInSeconds());
@@ -389,6 +404,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 
 			$Swimming = $this->object->object(0);
 			$this->assertEquals('09.08.2015 09:13:03', LocalTime::date('d.m.Y H:i:s', $Swimming->getTimestamp()));
+			$this->assertEquals(120, $Swimming->getTimezoneOffset());
 			$this->assertEquals(1.526, $Swimming->getDistance());
 			$this->assertEquals(2033, $Swimming->getTimeInSeconds());
 			$this->assertTrue($Swimming->hasArrayDistance());
@@ -400,11 +416,13 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 
 			$Transition1 = $this->object->object(1);
 			$this->assertEquals('09.08.2015 09:48:47', LocalTime::date('d.m.Y H:i:s', $Transition1->getTimestamp()));
+			$this->assertEquals(120, $Transition1->getTimezoneOffset());
 			$this->assertEquals(0.367, $Transition1->getDistance());
 			$this->assertEquals(165, $Transition1->getTimeInSeconds());
 
 			$Cycling = $this->object->object(2);
 			$this->assertEquals('09.08.2015 09:51:35', LocalTime::date('d.m.Y H:i:s', $Cycling->getTimestamp()));
+			$this->assertEquals(120, $Cycling->getTimezoneOffset());
 			$this->assertEquals(40.261, $Cycling->getDistance());
 			$this->assertEquals(4455, $Cycling->getTimeInSeconds());
 			$this->assertTrue($Cycling->hasArrayDistance());
@@ -416,11 +434,13 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 
 			$Transition2 = $this->object->object(3);
 			$this->assertEquals('09.08.2015 11:05:48', LocalTime::date('d.m.Y H:i:s', $Transition2->getTimestamp()));
+			$this->assertEquals(120, $Transition2->getTimezoneOffset());
 			$this->assertEquals(0.419, $Transition2->getDistance());
 			$this->assertEquals(109, $Transition2->getTimeInSeconds());
 
 			$Running = $this->object->object(4);
 			$this->assertEquals('09.08.2015 11:07:41', LocalTime::date('d.m.Y H:i:s', $Running->getTimestamp()));
+			$this->assertEquals(120, $Running->getTimezoneOffset());
 			$this->assertEquals(9.317, $Running->getDistance());
 			$this->assertEquals(2381, $Running->getTimeInSeconds());
 			$this->assertTrue($Running->hasArrayDistance());
@@ -443,6 +463,9 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertFalse( $this->object->hasMultipleTrainings() );
 			$this->assertFalse( $this->object->failed() );
 			$this->assertEquals('osynce', $this->object->object()->getCreator());
+
+			$this->assertEquals('2015-11-04 17:06', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
+			$this->assertEquals(60, $this->object->object()->getTimezoneOffset());
 
 			$this->assertEquals(47*60 + 6, $this->object->object()->getTimeInSeconds());
 			$this->assertEquals(47*60 + 6, $this->object->object()->getArrayTimeLastPoint());
@@ -483,6 +506,9 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertFalse( $this->object->hasMultipleTrainings() );
 			$this->assertFalse( $this->object->failed() );
 
+			$this->assertEquals('2015-11-21 09:25', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
+			$this->assertEquals(60, $this->object->object()->getTimezoneOffset());
+
 			$this->assertEquals(2*3600 + 17*60 + 50, $this->object->object()->getTimeInSeconds());
 			$this->assertEquals(23.5, $this->object->object()->getDistance(), '', 0.1);
 
@@ -507,6 +533,9 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 
 			$this->assertFalse( $this->object->hasMultipleTrainings() );
 			$this->assertFalse( $this->object->failed() );
+
+			$this->assertEquals('2013-05-27 08:52', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
+			$this->assertEquals(120, $this->object->object()->getTimezoneOffset());
 
 			$this->assertEquals(3160, $this->object->object()->getTimeInSeconds(), '', 10);
 			$this->assertEquals(3160, $this->object->object()->getArrayTimeLastPoint(), '', 10);
@@ -533,6 +562,9 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 
 			$this->assertFalse( $this->object->hasMultipleTrainings() );
 			$this->assertFalse( $this->object->failed() );
+
+			$this->assertEquals('2015-11-27 21:02', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
+			$this->assertEquals(60, $this->object->object()->getTimezoneOffset());
 
 			$this->assertEquals(819, $this->object->object()->getTimeInSeconds(), '', 10);
 			$this->assertEquals(819, $this->object->object()->getArrayTimeLastPoint(), '', 10);

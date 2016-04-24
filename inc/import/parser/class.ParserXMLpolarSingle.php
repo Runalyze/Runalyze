@@ -47,7 +47,7 @@ class ParserXMLpolarSingle extends ParserAbstractSingleXML {
 	 * Parse general values
 	 */
 	protected function parseGeneralValues() {
-		$this->TrainingObject->setTimestamp( $this->strtotime((string)$this->XML->time) );
+		$this->setTimestampAndTimezoneOffsetWithUtcFixFrom((string)$this->XML->time);
 		$this->TrainingObject->setSportid( Configuration::General()->runningSport() );
 	}
 

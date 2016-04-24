@@ -112,9 +112,25 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 	}
 
 	/**
+	 * Set timestamp and timezone offset with internal strtotime
+	 * @param string $string if this string ends with 'Z', its interpreted as in server timezone
+	 */
+	protected function setTimestampAndTimezoneOffsetWithUtcFixFrom($string) {
+		if (substr($string, -1) == 'Z') {
+			$localTimestamp = $this->strtotime($string);
+
+			$this->TrainingObject->setTimestamp($localTimestamp);
+			$this->TrainingObject->setTimezoneOffset(round((new DateTime())->setTimestamp($localTimestamp)->getOffset() / 60));
+		} else {
+			$this->setTimestampAndTimezoneOffsetFrom($string);
+		}
+	}
+
+	/**
 	 * Interpret current timestamp of training object as server time
 	 */
 	protected function interpretTimestampAsServerTime() {
+		$this->TrainingObject->setTimezoneOffset(round((new DateTime())->setTimestamp($this->TrainingObject->getTimestamp())->getOffset() / 60));
 		$this->TrainingObject->setTimestamp(LocalTime::fromServerTime($this->TrainingObject->getTimestamp())->getTimestamp());
 	}
 

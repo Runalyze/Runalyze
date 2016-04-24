@@ -58,11 +58,12 @@ class ImporterFiletypePWXTest extends PHPUnit_Framework_TestCase {
 		$this->assertFalse( $this->object->hasMultipleTrainings() );
 		$this->assertFalse( $this->object->failed() );
 
+		$this->assertEquals('2009-02-10 06:15', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
+		$this->assertEquals(60, $this->object->object()->getTimezoneOffset());
+
 		$this->assertEquals( 1646, $this->object->object()->getTimeInSeconds(), '', 30);
 		$this->assertEquals( 4.891, $this->object->object()->getDistance(), '', 0.1);
 
-		$this->assertEquals('10.02.2009', LocalTime::date('d.m.Y', $this->object->object()->getTimestamp()) );
-		$this->assertEquals('06:15', LocalTime::date('H:i', $this->object->object()->getTimestamp()) );
 		$this->assertEquals('Stuart', $this->object->object()->getComment());
 		$this->assertEquals("Apple, iPhone (SERIAL_NUMBER)", $this->object->object()->getCreatorDetails());
 
@@ -79,11 +80,12 @@ class ImporterFiletypePWXTest extends PHPUnit_Framework_TestCase {
 		$this->assertFalse( $this->object->hasMultipleTrainings() );
 		$this->assertFalse( $this->object->failed() );
 
+		$this->assertEquals('2008-11-16 11:40', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
+		$this->assertEquals(60, $this->object->object()->getTimezoneOffset());
+
 		$this->assertEquals( 6978, $this->object->object()->getTimeInSeconds(), '', 30);
 		$this->assertEquals( 16.049, $this->object->object()->getDistance(), '', 0.1);
 
-		$this->assertEquals('16.11.2008', LocalTime::date('d.m.Y', $this->object->object()->getTimestamp()) );
-		$this->assertEquals('11:40', LocalTime::date('H:i', $this->object->object()->getTimestamp()) );
 		$this->assertEquals('Blue Sky trail with Dan and Ian', $this->object->object()->getComment());
 		$this->assertEquals("Garmin, Edge 205/305 (EDGE305 Software Version 3.20)", $this->object->object()->getCreatorDetails());
 
