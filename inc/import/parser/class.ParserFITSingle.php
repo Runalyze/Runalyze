@@ -204,11 +204,15 @@ class ParserFITSingle extends ParserAbstractSingle {
 
 				case 'activity':
 					break;
+
+				case 'user_profile':
+					$this->readUserProfile();
+					break;
 			}
 		} elseif (isset($this->Header['NUMBER'])) {
 			switch ($this->Header['NUMBER']) {
 				case 79:
-					$this->readUserData();
+					$this->readUndocumentedUserData();
 					break;
 			}
 		}
@@ -285,9 +289,18 @@ class ParserFITSingle extends ParserAbstractSingle {
 	/**
 	 * Read user data
 	 */
-	protected function readUserData() {
-		if (isset($this->Values['xxx0'])) {
-			$this->TrainingObject->setFitVdotEstimate(round((int)$this->Values['xxx0'][1] * 3.5 / 1000, 2));
+	protected function readUserProfile() {
+		if (isset($this->Values['xxx39'])) {
+			$this->TrainingObject->setFitVdotEstimate(round((float)$this->Values['xxx39'][1] * 3.5, 2));
+		}
+	}
+
+	/**
+	 * Read undocumented user data
+	 */
+	protected function readUndocumentedUserData() {
+		if (isset($this->Values['xxx0']) && $this->TrainingObject->getFitVdotEstimate() == 0) {
+			$this->TrainingObject->setFitVdotEstimate(round((int)$this->Values['xxx0'][1] * 3.5 / 1024, 2));
 		}
 	}
 
@@ -306,7 +319,12 @@ class ParserFITSingle extends ParserAbstractSingle {
 					return;
 
 				case 39:
-					$this->TrainingObject->setFitHRVscore((int)$this->Values['data'][1]);
+					$creator = $this->TrainingObject->getCreator();
+
+					if ($creator != 'fr630' && $creator != 'fenix3') {
+						$this->TrainingObject->setFitHRVscore((int)$this->Values['data'][1]);
+					}
+
 					return;
 
 			}

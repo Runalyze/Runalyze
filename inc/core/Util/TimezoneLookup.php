@@ -44,7 +44,7 @@ class TimezoneLookup
      * @param string $extensionName
      * @throws \Runalyze\Util\TimezoneLookupException
      */
-    public function __construct($silenceExceptions = true, $pathToDatabase = false, $extensionName = 'libspatialite.so.5') {
+    public function __construct($silenceExceptions = true, $pathToDatabase = false, $extensionName = SQLITE_MOD_SPATIALITE) {
         try {
             $this->SQLiteTzWorldDatabase = $pathToDatabase ? $pathToDatabase : FRONTEND_PATH.'../data/timezone.sqlite';
             $this->SpatialiteExtensionName = $extensionName;

@@ -521,4 +521,33 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertTrue($this->object->object()->hasArrayHeartrate());
 		}
 	}
+
+	/**
+	 * Test: compressed_speed_distance from FR70
+	 * Filename: "FR70-intervals.fit"
+	 * @group gcb
+	 */
+	public function testDataFromFR630WithFurtherRunningDataLikeLactateThreshold() {
+		if (Shell::isPerlAvailable()) {
+			$this->object->parseFile('../tests/testfiles/fit/FR630-with-lth.fit');
+
+			$this->assertFalse( $this->object->hasMultipleTrainings() );
+			$this->assertFalse( $this->object->failed() );
+
+			$this->assertEquals(819, $this->object->object()->getTimeInSeconds(), '', 10);
+			$this->assertEquals(819, $this->object->object()->getArrayTimeLastPoint(), '', 10);
+			$this->assertEquals(2.029, $this->object->object()->getDistance(), '', 0.01);
+
+			$this->assertEquals(40.62, $this->object->object()->getFitVdotEstimate());
+			$this->assertEquals(1307, $this->object->object()->getFitRecoveryTime());
+
+			// Make sure that it's not 100, see https://github.com/Runalyze/Runalyze/issues/1798
+			$this->assertEquals(0, $this->object->object()->getFitHRVscore());
+			$this->assertEquals('fr630', $this->object->object()->getCreator());
+
+			// New values for later on:
+			//  - lactate threshold: 163 bpm / 2.583 m/s
+			//  - performance condition: 100 (= baseline, i.e. +/- 0)
+		}
+	}
 }

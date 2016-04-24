@@ -3,6 +3,9 @@
  * This file contains class::TrainingSelectType
  * @package Runalyze\DataObjects\Training\Formular
  */
+
+use Runalyze\Context;
+
 /**
  * Class for input field: typeid
  * @author Hannes Christiansen
@@ -20,7 +23,12 @@ class TrainingSelectType extends FormularSelectBox {
 
 		$this->addOption(0, '---- '.__('select type'), array('data-sport' => 'all'));
 
-		foreach (TypeFactory::AllTypes() as $id => $data)
-			$this->addOption($id, $data['name'], array('data-sport' => $data['sportid']));
+		foreach (Context::Factory()->allTypes() as $Type) {
+			$this->addOption(
+				$Type->id(),
+				$Type->name(),
+				['data-sport' => $Type->sportid()]
+			);
+		}
 	}
 }

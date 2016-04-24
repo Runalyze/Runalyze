@@ -115,4 +115,12 @@ class Sport {
 	public function isRunning() {
 		return ($this->id == Configuration::General()->runningSport());
 	}
+	
+	/**
+	 * Default sport type
+	 * @return int
+	 */
+	public function defaultTypeID() {
+		return $this->data['default_typeid'];
+	}
 }

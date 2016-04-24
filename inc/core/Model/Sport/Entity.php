@@ -75,6 +75,12 @@ class Entity extends Model\EntityWithID {
 	 * @var string
 	 */
 	const MAIN_EQUIPMENTTYPEID = 'main_equipmenttypeid';
+	
+	/**
+	 * Key: id of default sport type (used for multi import/automatic upload)
+	 * @var string
+	 */
+	const DEFAULT_TYPEID = 'default_typeid';
 
 	/**
 	 * All properties
@@ -91,7 +97,8 @@ class Entity extends Model\EntityWithID {
 			self::PACE_UNIT,
 			self::HAS_POWER,
 			self::IS_OUTSIDE,
-			self::MAIN_EQUIPMENTTYPEID
+			self::MAIN_EQUIPMENTTYPEID,
+			self::DEFAULT_TYPEID
 		);
 	}
 
@@ -193,5 +200,13 @@ class Entity extends Model\EntityWithID {
 	 */
 	public function mainEquipmentTypeID() {
 		return $this->Data[self::MAIN_EQUIPMENTTYPEID];
+	}
+	
+	/**
+	 * ID of default type
+	 * @return int
+	 */
+	public function defaultTypeID() {
+		return $this->Data[self::DEFAULT_TYPEID];
 	}
 }

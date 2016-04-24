@@ -25,7 +25,7 @@ require Exporter;
 	     FIT_HEADER_LENGTH
 	     );
 
-$version = 0.12;
+$version = 0.15;
 $version_major_scale = 100;
 
 sub version_major {
@@ -122,9 +122,9 @@ sub protocol_version_from_string {
   }
 }
 
-$protocol_version = &protocol_version_from_string(undef, "1.3");
+$protocol_version = &protocol_version_from_string(undef, "1.0");
 @protocol_version = &protocol_version_major(undef, $protocol_version);
-$protocol_version_header_crc_started = &protocol_version_from_string(undef, "1.2");
+$protocol_version_header_crc_started = &protocol_version_from_string(undef, "1.0");
 
 sub protocol_version_string {
   my $self = shift;
@@ -177,7 +177,7 @@ sub profile_version_from_string {
   }
 }
 
-$profile_version = &profile_version_from_string(undef, "4.10");
+$profile_version = &profile_version_from_string(undef, "16.10");
 @profile_version = &profile_version_major(undef, $profile_version);
 
 sub profile_version_string {
@@ -577,7 +577,16 @@ sub fetch_header {
 	$crc_calculated = $self->crc_of_string(0, \$h_min, 0, $header_length);
       }
 
-      ($self->file_size($f_len + $h_len), $proto_ver, $prof_ver, $extra, $crc_expected, $crc_calculated);
+      my $f_size = $f_len + $h_len;
+
+      $self->file_size($f_size);
+
+      unless (defined $self->crc) {
+	$self->crc(0);
+	$self->crc_calc(length($$buffer));
+      }
+
+      ($f_size, $proto_ver, $prof_ver, $extra, $crc_expected, $crc_calculated);
     }
   }
 }
@@ -699,6 +708,11 @@ $template[FIT_FLOAT64] = 'd';
      'monitoring' => 15,
      'activity_summary' => 20,
      'monitoring_daily' => 28,
+     'monitoring_b' => 32,
+     'segment' => 34,
+     'segment_list' => 35,
+     'mfg_range_min' => 0xF7,
+     'mfg_range_max' => 0xFE,
    },
 
    'mesg_num' => +{
@@ -737,10 +751,35 @@ $template[FIT_FLOAT64] = 'd';
      'blood_pressure' => 51,
      'speed_zone' => 53,
      'monitoring' => 55,
+     'training_file' => 72,
      'hrv' => 78,
      'length' => 101,
      'monitoring_info' => 103,
      'pad' => 105,
+     'slave_device' => 106,
+     'cadence_zone' => 131,
+     'segment_lap' => 142,
+     'memo_glob' => 145,
+     'segment_id' => 148,
+     'segment_leaderboard_entry' => 149,
+     'segment_point' => 150,
+     'segment_file' => 151,
+     'gps_metadata' => 160,
+     'camera_event' => 161,
+     'timestamp_correlation' => 162,
+     'gyroscope_data' => 164,
+     'accelerometer_data' => 165,
+     'three_d_sensor_calibration' => 167,
+     'video_frame' => 169,
+     'obdii_data' => 174,
+     'nmea_sentence' => 177,
+     'aviation_attitude' => 178,
+     'video' => 184,
+     'video_title' => 185,
+     'video_description' => 186,
+     'video_clip' => 187,
+     'mfg_range_min' => 0xFF00,
+     'mfg_range_max' => 0xFFFE,
    },
 
    'checksum' => +{
@@ -766,6 +805,7 @@ $template[FIT_FLOAT64] = 'd';
 
    'date_time' => +{
      '_base_type' => FIT_UINT32,
+     'min' => 0x10000000,
      '_min' => 0x10000000,
      '_out_of_range' => 'seconds from device power on',
      '_offset' => -timegm(0, 0, 0, 31, 11, 1989), # 1989-12-31 00:00:00 GMT
@@ -773,6 +813,7 @@ $template[FIT_FLOAT64] = 'd';
 
    'local_date_time' => +{
      '_base_type' => FIT_UINT32,
+     'min' => 0x10000000,
    },
 
    'message_index' => +{
@@ -823,6 +864,116 @@ $template[FIT_FLOAT64] = 'd';
      'bulgarian' => 24,
      'romanian' => 25,
      'custom' => 254,
+   },
+
+   'time_zone' => +{
+     '_base_type' => FIT_ENUM,
+     'almaty' => 0,
+     'bangkok' => 1,
+     'bombay' => 2,
+     'brasilia' => 3,
+     'cairo' => 4,
+     'cape_verde_is' => 5,
+     'darwin' => 6,
+     'eniwetok' => 7,
+     'fiji' => 8,
+     'hong_kong' => 9,
+     'islamabad' => 10,
+     'kabul' => 11,
+     'magadan' => 12,
+     'mid_atlantic' => 13,
+     'moscow' => 14,
+     'muscat' => 15,
+     'newfoundland' => 16,
+     'samoa' => 17,
+     'sydney' => 18,
+     'tehran' => 19,
+     'tokyo' => 20,
+     'us_alaska' => 21,
+     'us_atlantic' => 22,
+     'us_central' => 23,
+     'us_eastern' => 24,
+     'us_hawaii' => 25,
+     'us_mountain' => 26,
+     'us_pacific' => 27,
+     'other' => 28,
+     'auckland' => 29,
+     'kathmandu' => 30,
+     'europe_western_wet' => 31,
+     'europe_central_cet' => 32,
+     'europe_eastern_eet' => 33,
+     'jakarta' => 34,
+     'perth' => 35,
+     'adelaide' => 36,
+     'brisbane' => 37,
+     'tasmania' => 38,
+     'iceland' => 39,
+     'amsterdam' => 40,
+     'athens' => 41,
+     'barcelona' => 42,
+     'berlin' => 43,
+     'brussels' => 44,
+     'budapest' => 45,
+     'copenhagen' => 46,
+     'dublin' => 47,
+     'helsinki' => 48,
+     'lisbon' => 49,
+     'london' => 50,
+     'madrid' => 51,
+     'munich' => 52,
+     'oslo' => 53,
+     'paris' => 54,
+     'prague' => 55,
+     'reykjavik' => 56,
+     'rome' => 57,
+     'stockholm' => 58,
+     'vienna' => 59,
+     'warsaw' => 60,
+     'zurich' => 61,
+     'quebec' => 62,
+     'ontario' => 63,
+     'manitoba' => 64,
+     'saskatchewan' => 65,
+     'alberta' => 66,
+     'british_columbia' => 67,
+     'boise' => 68,
+     'boston' => 69,
+     'chicago' => 70,
+     'dallas' => 71,
+     'denver' => 72,
+     'kansas_city' => 73,
+     'las_vegas' => 74,
+     'los_angeles' => 75,
+     'miami' => 76,
+     'minneapolis' => 77,
+     'new_york' => 78,
+     'new_orleans' => 79,
+     'phoenix' => 80,
+     'santa_fe' => 81,
+     'seattle' => 82,
+     'washington_dc' => 83,
+     'us_arizona' => 84,
+     'chita' => 85,
+     'ekaterinburg' => 86,
+     'irkutsk' => 87,
+     'kaliningrad' => 88,
+     'krasnoyarsk' => 89,
+     'novosibirsk' => 90,
+     'petropavlovsk_kamchatskiy' => 91,
+     'samara' => 92,
+     'vladivostok' => 93,
+     'mexico_central' => 94,
+     'mexico_mountain' => 95,
+     'mexico_pacific' => 96,
+     'cape_town' => 97,
+     'winkhoek' => 98,
+     'lagos' => 99,
+     'riyahd' => 100,
+     'venezuela' => 101,
+     'australia_lh' => 102,
+     'santiago' => 103,
+     'manual' => 253,
+     'automatic' => 254,
    },
 
    'display_measure' => +{
@@ -910,6 +1061,40 @@ $template[FIT_FLOAT64] = 'd';
      'tennis' => 8,
      'american_football' => 9,
      'training' => 10,
+     'walking' => 11,
+     'cross_country_skiing' => 12,
+     'alpine_skiing' => 13,
+     'snowboarding' => 14,
+     'rowing' => 15,
+     'mountaineering' => 16,
+     'hiking' => 17,
+     'multisport' => 18,
+     'paddling' => 19,
+     'flying' => 20,
+     'e_biking' => 21,
+     'motorcycling' => 22,
+     'boating' => 23,
+     'driving' => 24,
+     'golf' => 25,
+     'hang_gliding' => 26,
+     'horseback_riding' => 27,
+     'hunting' => 28,
+     'fishing' => 29,
+     'inline_skating' => 30,
+     'rock_climbing' => 31,
+     'sailing' => 32,
+     'ice_skating' => 33,
+     'sky_diving' => 34,
+     'snowshoeing' => 35,
+     'snowmobiling' => 36,
+     'stand_up_paddleboarding' => 37,
+     'surfing' => 38,
+     'wakeboarding' => 39,
+     'water_skiing' => 40,
+     'kayaking' => 41,
+     'rafting' => 42,
+     'windsurfing' => 43,
+     'kitesurfing' => 44,
      'all' => 254,
    },
 
@@ -930,6 +1115,56 @@ $template[FIT_FLOAT64] = 'd';
      'tennis' => 0x01,
      'american_football' => 0x02,
      'training' => 0x04,
+     'walking' => 0x08,
+     'cross_country_skiing' => 0x10,
+     'alpine_skiing' => 0x20,
+     'snowboarding' => 0x40,
+     'rowing' => 0x80,
+   },
+
+   'sport_bits_2' => +{
+     '_base_type' => FIT_UINT8Z,
+     'mountaineering' => 0x01,
+     'hiking' => 0x02,
+     'multisport' => 0x04,
+     'paddling' => 0x08,
+     'flying' => 0x10,
+     'e_biking' => 0x20,
+     'motorcycling' => 0x40,
+     'boating' => 0x80,
+   },
+
+   'sport_bits_3' => +{
+     '_base_type' => FIT_UINT8Z,
+     'driving' => 0x01,
+     'golf' => 0x02,
+     'hang_gliding' => 0x04,
+     'horseback_riding' => 0x08,
+     'hunting' => 0x10,
+     'fishing' => 0x20,
+     'inline_skating' => 0x40,
+     'rock_climbing' => 0x80,
+   },
+
+   'sport_bits_4' => +{
+     '_base_type' => FIT_UINT8Z,
+     'sailing' => 0x01,
+     'ice_skating' => 0x02,
+     'sky_diving' => 0x04,
+     'snowshoeing' => 0x08,
+     'snowmobiling' => 0x10,
+     'stand_up_paddleboarding' => 0x20,
+     'surfing' => 0x40,
+     'wakeboarding' => 0x80,
+   },
+
+   'sport_bits_5' => +{
+     '_base_type' => FIT_UINT8Z,
+     'water_skiing' => 0x01,
+     'kayaking' => 0x02,
+     'rafting' => 0x04,
+     'windsurfing' => 0x08,
+     'kitesurfing' => 0x10,
    },
 
    'sub_sport' => +{
@@ -955,7 +1190,41 @@ $template[FIT_FLOAT64] = 'd';
      'open_water' => 18,
      'flexibility_training' => 19,
      'strength_training' => 20,
+     'warm_up' => 21,
+     'match' => 22,
+     'exercise' => 23,
+     'challenge' => 24,
+     'indoor_skiing' => 25,
+     'cardio_training' => 26,
+     'indoor_walking' => 27,
+     'e_bike_fitness' => 28,
+     'bmx' => 29,
+     'casual_walking' => 30,
+     'speed_walking' => 31,
+     'bike_to_run_transition' => 32,
+     'run_to_bike_transition' => 33,
+     'swim_to_bike_transition' => 34,
+     'atv' => 35,
+     'motocross' => 36,
+     'backcountry' => 37,
+     'resort' => 38,
+     'rc_drone' => 39,
+     'wingsuit' => 40,
+     'whitewater' => 41,
      'all' => 254,
+   },
+
+   'sport_event' => +{
+     '_base_type' => FIT_ENUM,
+     'uncategorized' => 0,
+     'geocaching' => 1,
+     'fitness' => 2,
+     'recreation' => 3,
+     'race' => 4,
+     'special_event' => 5,
+     'training' => 6,
+     'transportation' => 7,
+     'touring' => 8,
    },
 
    'activity' => +{
@@ -1033,6 +1302,15 @@ $template[FIT_FLOAT64] = 'd';
      'activity' => 26,
      'fitness_equipment' => 27,
      'length' => 28,
+     'user_marker' => 32,
+     'sport_point' => 33,
+     'calibration' => 36,
+     'front_gear_change' => 42,
+     'rear_gear_change' => 43,
+     'rider_position_change' => 44,
+     'elev_high_alert' => 45,
+     'elev_low_alert' => 46,
+     'comm_timeout' => 47,
    },
 
    'event_type' => +{
@@ -1103,6 +1381,7 @@ $template[FIT_FLOAT64] = 'd';
      'repeat_until_power_greater_than' => 13,
      'power_less_than' => 14,
      'power_greater_than' => 15,
+     'repetition_time' => 28,
    },
 
    'wkt_step_target' => +{
@@ -1162,6 +1441,11 @@ $template[FIT_FLOAT64] = 'd';
      'left_fork' => 16,
      'right_fork' => 17,
      'middle_fork' => 18,
+     'slight_left' => 19,
+     'sharp_left' => 20,
+     'slight_right' => 21,
+     'sharp_right' => 22,
+     'u_turn' => 23,
    },
 
    'manufacturer' => +{
@@ -1223,10 +1507,51 @@ $template[FIT_FLOAT64] = 'd';
      'star_trac' => 56,
      'breakaway' => 57,
      'alatech_technology_ltd' => 58,
+     'mio_technology_europe' => 59,
      'rotor' => 60,
      'geonaute' => 61,
      'id_bike' => 62,
+     'specialized' => 63,
+     'wtek' => 64,
+     'physical_enterprises' => 65,
+     'north_pole_engineering' => 66,
+     'bkool' => 67,
+     'cateye' => 68,
+     'stages_cycling' => 69,
+     'sigmasport' => 70,
+     'tomtom' => 71,
+     'peripedal' => 72,
+     'wattbike' => 73,
+     'moxy' => 76,
+     'ciclosport' => 77,
+     'powerbahn' => 78,
+     'acorn_projects_aps' => 79,
+     'lifebeam' => 80,
+     'bontrager' => 81,
+     'wellgo' => 82,
+     'scosche' => 83,
+     'magura' => 84,
+     'woodway' => 85,
+     'elite' => 86,
+     'nielsen_kellerman' => 87,
+     'dk_city' => 88,
+     'tacx' => 89,
+     'direction_technology' => 90,
+     'magtonic' => 91,
+     '1partcarbon' => 92,
+     'inside_ride_technologies' => 93,
+     'sound_of_motion' => 94,
+     'stryd' => 95,
      'development' => 255,
+     'healthandlife' => 257,
+     'lezyne' => 258,
+     'scribe_labs' => 259,
+     'zwift' => 260,
+     'watteam' => 261,
+     'recon' => 262,
+     'favero_electronics' => 263,
+     'dynovelo' => 264,
+     'strava' => 265,
      'actigraphcorp' => 5759,
    },
 
@@ -1239,70 +1564,163 @@ $template[FIT_FLOAT64] = 'd';
      'axb02' => 4,
      'hrm2ss' => 5,
      'dsi_alf02' => 6,
-	 'fr301' => 473,
+     'hrm3ss' => 7,
+     'hrm_run_single_byte_product_id' => 8,
+     'bsm' => 9,
+     'bcm' => 10,
+     'axs01' => 11,
+     'hrm_tri_single_byte_product_id' => 12,
+     'fr225_single_byte_product_id' => 14,
+     'fr301_china' => 473,
+     'fr301_japan' => 474,
+     'fr301_korea' => 475,
+     'fr301_taiwan' => 494,
      'fr405' => 717,
      'fr50' => 782,
+     'fr405_japan' => 987,
      'fr60' => 988,
      'dsi_alf01' => 1011,
      'fr310xt' => 1018,
      'edge500' => 1036,
      'fr110' => 1124,
      'edge800' => 1169,
+     'edge500_taiwan' => 1199,
+     'edge500_japan' => 1213,
      'chirp' => 1253,
+     'fr110_japan' => 1274,
      'edge200' => 1325,
      'fr910xt' => 1328,
+     'edge800_taiwan' => 1333,
+     'edge800_japan' => 1334,
      'alf04' => 1341,
      'fr610' => 1345,
-	 'fr210' => 1360,
+     'fr210_japan' => 1360,
+     'vector_ss' => 1380,
+     'vector_cp' => 1381,
+     'edge800_china' => 1386,
+     'edge500_china' => 1387,
+     'fr610_japan' => 1410,
+     'edge500_korea' => 1422,
      'fr70' => 1436,
      'fr310xt_4t' => 1446,
      'amx' => 1461,
-	 'fr10' => 1482,
-	 'swim' => 1499,
-	 'fenix' => 1551,
-	 'edge510' => 1561,
-	 'edge810' => 1567,
-	 'tempe' => 1570,
-	 'fr620' => 1623,
-	 'fr220' => 1632,
-	 'virb' => 1735,
-	 'edge_touring' => 1736,
-	 'fr920xt' => 1765,
-	 'edge1000' => 1836,
-	 'fr620_japan' => 1928,
-	 'fr620_china' => 1929,
-	 'fr220_japan' => 1930,
-	 'fr220_china' => 1931,
-	 'fenix2' => 1967,
-	 'epix' => 1988,
-	 'fenix3' => 2050,
-	 'fr620_russia' => 2072,
-	 'fr220_russia' => 2073,
-	 'fr920xt_taiwan' => 2130,
-	 'fr920xt_china' => 2131,
-	 'fr920xt_japan' => 2132,
-	 'fr620_taiwan' => 2173,
-	 'fenix3_china' => 2188,
-	 'fenix3_twn' => 2189,
+     'fr10' => 1482,
+     'edge800_korea' => 1497,
+     'swim' => 1499,
+     'fr910xt_china' => 1537,
+     'fenix' => 1551,
+     'edge200_taiwan' => 1555,
+     'edge510' => 1561,
+     'edge810' => 1567,
+     'tempe' => 1570,
+     'fr910xt_japan' => 1600,
+     'fr620' => 1623,
+     'fr220' => 1632,
+     'fr910xt_korea' => 1664,
+     'fr10_japan' => 1688,
+     'edge810_japan' => 1721,
+     'virb_elite' => 1735,
+     'edge_touring' => 1736,
+     'edge510_japan' => 1742,
+     'hrm_tri' => 1743,
+     'hrm_run' => 1752,
+     'fr920xt' => 1765,
+     'edge510_asia' => 1821,
+     'edge810_china' => 1822,
+     'edge810_taiwan' => 1823,
+     'edge1000' => 1836,
+     'vivo_fit' => 1837,
+     'virb_remote' => 1853,
+     'vivo_ki' => 1885,
+     'fr15' => 1903,
+     'vivo_active' => 1907,
+     'edge510_korea' => 1918,
+     'fr620_japan' => 1928,
+     'fr620_china' => 1929,
+     'fr220_japan' => 1930,
+     'fr220_china' => 1931,
+     'approach_s6' => 1936,
+     'vivo_smart' => 1956,
+     'fenix2' => 1967,
+     'epix' => 1988,
+     'fenix3' => 2050,
+     'edge1000_taiwan' => 2052,
+     'edge1000_japan' => 2053,
+     'fr15_japan' => 2061,
+     'edge520' => 2067,
+     'edge1000_china' => 2070,
+     'fr620_russia' => 2072,
+     'fr220_russia' => 2073,
+     'vector_s' => 2079,
+     'edge1000_korea' => 2100,
+     'fr920xt_taiwan' => 2130,
+     'fr920xt_china' => 2131,
+     'fr920xt_japan' => 2132,
+     'virbx' => 2134,
+     'vivo_smart_apac' => 2135,
+     'etrex_touch' => 2140,
+     'edge25' => 2147,
+     'fr25' => 2148,
+     'vivo_fit2' => 2150,
+     'fr225' => 2153,
+     'fr630' => 2156,
+     'fr230' => 2157,
+     'vivo_active_apac' => 2160,
+     'vector_2' => 2161,
+     'vector_2s' => 2162,
+     'virbxe' => 2172,
+     'fr620_taiwan' => 2173,
+     'fr220_taiwan' => 2174,
+     'fenix3_china' => 2188,
+     'fenix3_twn' => 2189,
+     'varia_headlight' => 2192,
+     'varia_taillight_old' => 2193,
+     'fr225_asia' => 2219,
+     'varia_radar_taillight' => 2225,
+     'varia_radar_display' => 2226,
+     'edge20' => 2238,
+     'd2_bravo' => 2262,
+     'varia_remote' => 2276,
+     'fenix3_hr' => 2413,
+     'fr235' => 2431,
      'sdm4' => 10007,
+     'edge_remote' => 10014,
      'training_center' => 20119,
+     'android_antplus_plugin' => 65532,
      'connect' => 65534,
    },
 
    'device_type' => +{
+     '_moved_to' => 'antplus_device_type',
+   },
+
+   'antplus_device_type' => +{
      '_base_type' => FIT_UINT8,
      'antfs' => 1,
      'bike_power' => 11,
      'environment_sensor' => 12,
      'multi_sport_speed_distance' => 15,
+     'control' => 16,
      'fitness_equipment' => 17,
      'blood_pressure' => 18,
+     'geocache_node' => 19,
+     'light_electric_vehicle' => 20,
+     'env_sensor' => 25,
+     'racquet' => 26,
      'weight_scale' => 119,
      'hrm' => 120,
      'bike_speed_cadence' => 121,
      'bike_cadence' => 122,
      'bike_speed' => 123,
      'stride_speed_distance' => 124,
+   },
+
+   'ant_network' => +{
+     '_base_type' => FIT_ENUM,
+     'public' => 0,
+     'antplus' => 1,
+     'antfs' => 2,
+     'private' => 3,
    },
 
    'workout_capabilities' => +{
@@ -1331,6 +1749,7 @@ $template[FIT_FLOAT64] = 'd';
      'ok' => 3,
      'low' => 4,
      'critical' => 5,
+     'unknown' => 7,
    },
 
    'hr_type' => +{
@@ -1352,6 +1771,7 @@ $template[FIT_FLOAT64] = 'd';
      'cadence' => 0x00000080,
      'training' => 0x00000100,
      'navigation' => 0x00000200,
+     'bikeway' => 0x00000400,
    },
 
    'weight' => +{
@@ -1396,6 +1816,7 @@ $template[FIT_FLOAT64] = 'd';
      'butterfly' => 3,
      'drill' => 4,
      'mixed' => 5,
+     'im' => 6,
    },
 
    'activity_type' => +{
@@ -1446,6 +1867,193 @@ $template[FIT_FLOAT64] = 'd';
      'right' => 0x8000,
    },
 
+   'connectivity_capabilities' => +{
+     '_base_type' => FIT_UINT32Z,
+     'bluetooth' => 0x00000001,
+     'bluetooth_le' => 0x00000002,
+     'ant' => 0x00000004,
+     'activity_upload' => 0x00000008,
+     'course_download' => 0x00000010,
+     'workout_download' => 0x00000020,
+     'live_track' => 0x00000040,
+     'weather_conditions' => 0x00000080,
+     'weather_alerts' => 0x00000100,
+     'gps_ephemeris_download' => 0x00000200,
+     'explicit_archive' => 0x00000400,
+     'setup_incomplete' => 0x00000800,
+     'continue_sync_after_software_update' => 0x00001000,
+     'connect_iq_app_download' => 0x00002000,
+   },
+
+   'stroke_type' => +{
+     '_base_type' => FIT_ENUM,
+     'no_event' => 0,
+     'other' => 1,
+     'serve' => 2,
+     'forehand' => 3,
+     'backhand' => 4,
+     'smash' => 5,
+   },
+
+   'body_location' => +{
+     '_base_type' => FIT_ENUM,
+     'left_leg' => 0,
+     'left_calf' => 1,
+     'left_shin' => 2,
+     'left_hamstring' => 3,
+     'left_quad' => 4,
+     'left_glute' => 5,
+     'right_leg' => 6,
+     'right_calf' => 7,
+     'right_shin' => 8,
+     'right_hamstring' => 9,
+     'right_quad' => 10,
+     'right_glute' => 11,
+     'torso_back' => 12,
+     'left_lower_back' => 13,
+     'left_upper_back' => 14,
+     'right_lower_back' => 15,
+     'right_upper_back' => 16,
+     'torso_front' => 17,
+     'left_abdomen' => 18,
+     'left_chest' => 19,
+     'right_abdomen' => 20,
+     'right_chest' => 21,
+     'left_arm' => 22,
+     'left_shoulder' => 23,
+     'left_bicep' => 24,
+     'left_tricep' => 25,
+     'left_brachioradialis' => 26,
+     'left_forearm_extensors' => 27,
+     'right_arm' => 28,
+     'right_shoulder' => 29,
+     'right_bicep' => 30,
+     'right_tricep' => 31,
+     'right_brachioradialis' => 32,
+     'right_forearm_extensors' => 33,
+     'neck' => 34,
+     'throat' => 35,
+   },
+
+   'segment_lap_status' => +{
+     '_base_type' => FIT_ENUM,
+     'end' => 0,
+     'fail' => 1,
+   },
+
+   'segment_leaderboard_type' => +{
+     '_base_type' => FIT_ENUM,
+     'overall' => 0,
+     'personal_best' => 1,
+     'connections' => 2,
+     'group' => 3,
+     'challenger' => 4,
+     'kom' => 5,
+     'qom' => 6,
+     'pr' => 7,
+     'goal' => 8,
+     'rival' => 9,
+     'club_leader' => 10,
+   },
+
+   'segment_delete_status' => +{
+     '_base_type' => FIT_ENUM,
+     'do_not_delete' => 0,
+     'delete_one' => 1,
+     'delete_all' => 2,
+   },
+
+   'segment_selection_type' => +{
+     '_base_type' => FIT_ENUM,
+     'starred' => 0,
+     'suggested' => 1,
+   },
+
+   'source_type' => +{
+     '_base_type' => FIT_ENUM,
+     'ant' => 0,
+     'antplus' => 1,
+     'bluetooth' => 2,
+     'bluetooth_low_energy' => 3,
+     'wifi' => 4,
+     'local' => 5,
+   },
+
+   'rider_position_type' => +{
+     '_base_type' => FIT_ENUM,
+     'seated' => 0,
+     'standing' => 1,
+   },
+
+   'power_phase_type' => +{
+     '_base_type' => FIT_ENUM,
+     'power_phase_start_angle' => 0,
+     'power_phase_end_angle' => 1,
+     'power_phase_arc_length' => 2,
+     'power_phase_center' => 3,
+   },
+
+   'camera_event_type' => +{
+     '_base_type' => FIT_ENUM,
+     'video_start' => 0,
+     'video_split' => 1,
+     'video_end' => 2,
+     'photo_taken' => 3,
+     'video_second_stream_start' => 4,
+     'video_second_stream_split' => 5,
+     'video_second_stream_end' => 6,
+     'video_split_start' => 7,
+     'video_second_stream_split_start' => 8,
+   },
+
+   'sensor_type' => +{
+     '_base_type' => FIT_ENUM,
+     'accelerometer' => 0,
+     'gyroscope' => 1,
+     'compass' => 2,
+   },
+
+   'comm_timeout_type' => +{
+     '_base_type' => FIT_UINT16,
+     'wildcard_pairing_timeout' => 0,
+     'pairing_timeout' => 1,
+     'connection_lost' => 2,
+     'connection_timeout' => 3,
+   },
+
+   'camera_orientation_type' => +{
+     '_base_type' => FIT_ENUM,
+     'camera_orientation_0' => 0,
+     'camera_orientation_90' => 1,
+     'camera_orientation_180' => 2,
+     'camera_orientation_270' => 3,
+   },
+
+   'attitude_stage' => +{
+     '_base_type' => FIT_ENUM,
+     'failed' => 0,
+     'aligning' => 1,
+     'degraded' => 2,
+     'valid' => 3,
+   },
+
+   'attitude_validity' => +{
+     '_base_type' => FIT_UINT16,
+     'track_angle_heading_valid' => 0x0001,
+     'pitch_valid' => 0x0002,
+     'roll_valid' => 0x0004,
+     'lateral_body_accel_valid' => 0x0008,
+     'normal_body_accel_valid' => 0x0010,
+     'turn_rate_valid' => 0x0020,
+     'hw_fail' => 0x0040,
+     'mag_invalid' => 0x0080,
+     'no_gps' => 0x0100,
+     'gps_invalid' => 0x0200,
+     'solution_coasting' => 0x0400,
+     'true_track_angle' => 0x0800,
+     'magnetic_heading' => 0x1000,
+   },
+
    'length_type' => +{
      '_base_type' => FIT_ENUM,
      'idle' => 0,
@@ -1459,7 +2067,17 @@ $template[FIT_FLOAT64] = 'd';
 
    );
 
-my $typdesc;
+my ($typenam, $typdesc);
+
+foreach $typename (keys %named_type) {
+  $typedesc = $named_type{$typenam};
+
+  if ($typedesc->{_moved_to} ne '') {
+    my $to = $named_type{$typedesc->{_moved_to}};
+
+    ref $to eq 'HASH' and $named_type{$typenam} = +{%$to};
+  }
+}
 
 while ((undef, $typedesc) = each %named_type) {
   my $name;
@@ -1599,11 +2217,22 @@ sub named_type_value {
      3 => +{'name' => 'serial_number'},
      4 => +{'name' => 'time_created', 'type_name' => 'date_time'},
      5 => +{'name' => 'number'},
+     8 => +{'name' => 'product_name'},
    },
 
    'file_creator' => +{
      0 => +{'name' => 'software_version'},
      1 => +{'name' => 'hardware_version'},
+   },
+
+   'timestamp_correlation' => +{
+     253 => +{'name' => 'timestamp', 'type_name' => 'date_time'},
+     0 => +{'name' => 'fractional_timestamp', 'scale' => 32768, 'unit' => 's'},
+     1 => +{'name' => 'system_timestamp', 'type_name' => 'date_time'},
+     2 => +{'name' => 'fractional_system_timestamp', 'scale' => 32768, 'unit' => 's'},
+     3 => +{'name' => 'local_timestamp', 'type_name' => 'date_time'},
+     4 => +{'name' => 'timestamp_ms', 'unit' => 'ms'},
+     5 => +{'name' => 'system_timestamp_ms', 'unit' => 'ms'},
    },
 
    'pad' => +{
@@ -1627,10 +2256,16 @@ sub named_type_value {
      5 => +{'name' => 'part_number'},
    },
 
+   'slave_device' => +{
+     0 => +{'name' => 'manufacturer', 'type_name' => 'manufacturer'},
+     1 => +{'name' => 'product'},
+   },
+
    'capabilities' => +{
      0 => +{'name' => 'languages'},
      1 => +{'name' => 'sports', 'type_name' => 'sport_bits_0'},
      21 => +{'name' => 'workout_supported', 'type_name' => 'workout_capabilities'},
+     23 => +{'name' => 'connectivity_supported', 'type_name' => 'connectivity_capabilities'},
    },
 
    'file_capabilities' => +{
@@ -1670,7 +2305,9 @@ sub named_type_value {
    },
 
    'device_settings' => +{
+     0 => +{'name' => 'active_time_zone'},
      1 => +{'name' => 'utc_offset'},
+     5 => +{'name' => 'time_zone_offset', 'scale' => 4, 'unit' => 'hr'},
    },
 
    'user_profile' => +{
@@ -1696,6 +2333,7 @@ sub named_type_value {
      21 => +{'name' => 'temperature_setting', 'type_name' => 'display_measure'},
      22 => +{'name' => 'local_id', 'type_name' => 'user_local_id'},
      23 => +{'name' => 'global_id'},
+     30 => +{'name' => 'height_setting', 'type_name' => 'display_measure'},
    },
 
    'hrm_profile' => +{
@@ -1714,6 +2352,7 @@ sub named_type_value {
      3 => +{'name' => 'odometer', 'scale' => 100, 'unit' => 'm'},
      4 => +{'name' => 'speed_source'},
      5 => +{'name' => 'sdm_ant_id_trans_type'},
+     7 => +{'name' => 'odometer_rollover'},
    },
 
    'bike_profile' => +{
@@ -1743,6 +2382,12 @@ sub named_type_value {
      22 => +{'name' => 'bike_cad_ant_id_trans_type'},
      23 => +{'name' => 'bike_spdcad_ant_id_trans_type'},
      24 => +{'name' => 'bike_power_ant_id_trans_type'},
+     37 => +{'name' => 'odometer_rollover'},
+     38 => +{'name' => 'front_gear_num'},
+     39 => +{'name' => 'front_gear'},
+     40 => +{'name' => 'rear_gear_num'},
+     41 => +{'name' => 'rear_gear'},
+     44 => +{'name' => 'shimano_di2_enabled', 'type_name' => 'bool'},
    },
 
    'zones_target' => +{
@@ -1768,6 +2413,12 @@ sub named_type_value {
    'speed_zone' => +{
      254 => +{'name' => 'message_index', 'type_name' => 'message_index'},
      0 => +{'name' => 'high_value', 'scale' => 1000, 'unit' => 'm/s'},
+     1 => +{'name' => 'name'},
+   },
+
+   'cadence_zone' => +{
+     254 => +{'name' => 'message_index', 'type_name' => 'message_index'},
+     0 => +{'name' => 'high_value', 'unit' => 'rpm'},
      1 => +{'name' => 'name'},
    },
 
@@ -1912,6 +2563,51 @@ sub named_type_value {
      69 => +{'name' => 'avg_lap_time', 'scale' => 1000, 'unit' => 's'},
      70 => +{'name' => 'best_lap_index'},
      71 => +{'name' => 'min_altitude', 'scale' => 5, 'offset' => 500, 'unit' => 'm'},
+     82 => +{'name' => 'player_score'},
+     83 => +{'name' => 'opponent_score'},
+     84 => +{'name' => 'opponent_name'},
+     85 => +{'name' => 'stroke_count', 'unit' => 'counts'},
+     86 => +{'name' => 'zone_count', 'unit' => 'counts'},
+     87 => +{'name' => 'max_ball_speed', 'scale' => 100, 'unit' => 'm/s'},
+     88 => +{'name' => 'avg_ball_speed', 'scale' => 100, 'unit' => 'm/s'},
+     89 => +{'name' => 'avg_vertical_oscillation', 'scale' => 10, 'unit' => 'mm'},
+     90 => +{'name' => 'avg_stance_time_percent', 'scale' => 100, 'unit' => 'percent'},
+     91 => +{'name' => 'avg_stance_time', 'scale' => 10, 'unit' => 'ms'},
+     92 => +{'name' => 'avg_fractional_cadence', 'scale' => 128, 'unit' => 'rpm'},
+     93 => +{'name' => 'max_fractional_cadence', 'scale' => 128, 'unit' => 'rpm'},
+     94 => +{'name' => 'total_fractional_cycles', 'scale' => 128, 'unit' => 'cycles'},
+     95 => +{'name' => 'avg_total_hemoglobin_conc', 'scale' => 100, 'unit' => 'g/dL'},
+     96 => +{'name' => 'min_total_hemoglobin_conc', 'scale' => 100, 'unit' => 'g/dL'},
+     97 => +{'name' => 'max_total_hemoglobin_conc', 'scale' => 100, 'unit' => 'g/dL'},
+     98 => +{'name' => 'avg_saturated_hemoglobin_percent', 'scale' => 10, 'unit' => '%'},
+     99 => +{'name' => 'min_saturated_hemoglobin_percent', 'scale' => 10, 'unit' => '%'},
+     100 => +{'name' => 'max_saturated_hemoglobin_percent', 'scale' => 10, 'unit' => '%'},
+     101 => +{'name' => 'avg_left_torque_effectiveness', 'scale' => 2, 'unit' => 'percent'},
+     102 => +{'name' => 'avg_right_torque_effectiveness', 'scale' => 2, 'unit' => 'percent'},
+     103 => +{'name' => 'avg_left_pedal_smoothness', 'scale' => 2, 'unit' => 'percent'},
+     104 => +{'name' => 'avg_right_pedal_smoothness', 'scale' => 2, 'unit' => 'percent'},
+     105 => +{'name' => 'avg_combined_pedal_smoothness', 'scale' => 2, 'unit' => 'percent'},
+     111 => +{'name' => 'sport_index'},
+     112 => +{'name' => 'time_standing', 'scale' => 1000, 'unit' => 's'},
+     113 => +{'name' => 'stand_count'},
+     114 => +{'name' => 'avg_left_pco', 'unit' => 'mm'},
+     115 => +{'name' => 'avg_right_pco', 'unit' => 'mm'},
+     116 => +{'name' => 'avg_left_power_phase', 'scale' => 0.7111111, 'unit' => 'degrees'},
+     117 => +{'name' => 'avg_left_power_phase_peak', 'scale' => 0.7111111, 'unit' => 'degrees'},
+     118 => +{'name' => 'avg_right_power_phase', 'scale' => 0.7111111, 'unit' => 'degrees'},
+     119 => +{'name' => 'avg_right_power_phase_peak', 'scale' => 0.7111111, 'unit' => 'degrees'},
+     120 => +{'name' => 'avg_power_position', 'unit' => 'watts'},
+     121 => +{'name' => 'max_power_position', 'unit' => 'watts'},
+     122 => +{'name' => 'avg_cadence_position', 'unit' => 'rpm'},
+     123 => +{'name' => 'max_cadence_position', 'unit' => 'rpm'},
+     124 => +{'name' => 'enhanced_avg_speed', 'scale' => 1000, 'unit' => 'm/s'},
+     125 => +{'name' => 'enhanced_max_speed', 'scale' => 1000, 'unit' => 'm/s'},
+     126 => +{'name' => 'enhanced_avg_altitude', 'scale' => 5, 'offset' => 500, 'unit' => 'm'},
+     127 => +{'name' => 'enhanced_min_altitude', 'scale' => 5, 'offset' => 500, 'unit' => 'm'},
+     128 => +{'name' => 'enhanced_max_altitude', 'scale' => 5, 'offset' => 500, 'unit' => 'm'},
+     129 => +{'name' => 'avg_lev_motor_power', 'unit' => 'watts'},
+     130 => +{'name' => 'max_lev_motor_power', 'unit' => 'watts'},
+     131 => +{'name' => 'lev_battery_consumption', 'scale' => 2, 'unit' => 'percent'},
    },
 
    'lap' => +{
@@ -2012,6 +2708,47 @@ sub named_type_value {
      62 => +{'name' => 'min_altitude', 'scale' => 5, 'offset' => 500, 'unit' => 'm'},
      63 => +{'name' => 'min_heart_rate', 'unit' => 'bpm'},
      71 => +{'name' => 'wkt_step_index'},
+     74 => +{'name' => 'opponent_score'},
+     75 => +{'name' => 'stroke_count', 'unit' => 'counts'},
+     76 => +{'name' => 'zone_count', 'unit' => 'counts'},
+     77 => +{'name' => 'avg_vertical_oscillation', 'scale' => 10, 'unit' => 'mm'},
+     78 => +{'name' => 'avg_stance_time_percent', 'scale' => 100, 'unit' => 'percent'},
+     79 => +{'name' => 'avg_stance_time', 'scale' => 10, 'unit' => 'ms'},
+     80 => +{'name' => 'avg_fractional_cadence', 'scale' => 128, 'unit' => 'rpm'},
+     81 => +{'name' => 'max_fractional_cadence', 'scale' => 128, 'unit' => 'rpm'},
+     82 => +{'name' => 'total_fractional_cycles', 'scale' => 128, 'unit' => 'cycles'},
+     83 => +{'name' => 'player_score'},
+     84 => +{'name' => 'avg_total_hemoglobin_conc', 'scale' => 100, 'unit' => 'g/dL'},
+     85 => +{'name' => 'min_total_hemoglobin_conc', 'scale' => 100, 'unit' => 'g/dL'},
+     86 => +{'name' => 'max_total_hemoglobin_conc', 'scale' => 100, 'unit' => 'g/dL'},
+     87 => +{'name' => 'avg_saturated_hemoglobin_percent', 'scale' => 10, 'unit' => '%'},
+     88 => +{'name' => 'min_saturated_hemoglobin_percent', 'scale' => 10, 'unit' => '%'},
+     89 => +{'name' => 'max_saturated_hemoglobin_percent', 'scale' => 10, 'unit' => '%'},
+     91 => +{'name' => 'avg_left_torque_effectiveness', 'scale' => 2, 'unit' => 'percent'},
+     92 => +{'name' => 'avg_right_torque_effectiveness', 'scale' => 2, 'unit' => 'percent'},
+     93 => +{'name' => 'avg_left_pedal_smoothness', 'scale' => 2, 'unit' => 'percent'},
+     94 => +{'name' => 'avg_right_pedal_smoothness', 'scale' => 2, 'unit' => 'percent'},
+     95 => +{'name' => 'avg_combined_pedal_smoothness', 'scale' => 2, 'unit' => 'percent'},
+     98 => +{'name' => 'time_standing', 'scale' => 1000, 'unit' => 's'},
+     99 => +{'name' => 'stand_count'},
+     100 => +{'name' => 'avg_left_pco', 'unit' => 'mm'},
+     101 => +{'name' => 'avg_right_pco', 'unit' => 'mm'},
+     102 => +{'name' => 'avg_left_power_phase', 'scale' => 0.7111111, 'unit' => 'degrees'},
+     103 => +{'name' => 'avg_left_power_phase_peak', 'scale' => 0.7111111, 'unit' => 'degrees'},
+     104 => +{'name' => 'avg_right_power_phase', 'scale' => 0.7111111, 'unit' => 'degrees'},
+     105 => +{'name' => 'avg_right_power_phase_peak', 'scale' => 0.7111111, 'unit' => 'degrees'},
+     106 => +{'name' => 'avg_power_position', 'unit' => 'watts'},
+     107 => +{'name' => 'max_power_position', 'unit' => 'watts'},
+     108 => +{'name' => 'avg_cadence_position', 'unit' => 'rpm'},
+     109 => +{'name' => 'max_cadence_position', 'unit' => 'rpm'},
+     110 => +{'name' => 'enhanced_avg_speed', 'scale' => 1000, 'unit' => 'm/s'},
+     111 => +{'name' => 'enhanced_max_speed', 'scale' => 1000, 'unit' => 'm/s'},
+     112 => +{'name' => 'enhanced_avg_altitude', 'scale' => 5, 'offset' => 500, 'unit' => 'm'},
+     113 => +{'name' => 'enhanced_min_altitude', 'scale' => 5, 'offset' => 500, 'unit' => 'm'},
+     114 => +{'name' => 'enhanced_max_altitude', 'scale' => 5, 'offset' => 500, 'unit' => 'm'},
+     115 => +{'name' => 'avg_lev_motor_power', 'unit' => 'watts'},
+     116 => +{'name' => 'max_lev_motor_power', 'unit' => 'watts'},
+     117 => +{'name' => 'lev_battery_consumption', 'scale' => 2, 'unit' => 'percent'},
    },
 
    'length' => +{
@@ -2029,6 +2766,10 @@ sub named_type_value {
      10 => +{'name' => 'event_group'},
      11 => +{'name' => 'total_calories', 'unit' => 'kcal'},
      12 => +{'name' => 'length_type', 'type_name' => 'length_type'},
+     18 => +{'name' => 'player_score'},
+     19 => +{'name' => 'opponent_score'},
+     20 => +{'name' => 'stroke_count', 'unit' => 'counts'},
+     21 => +{'name' => 'zone_count', 'unit' => 'counts'},
    },
 
    'record' => +{
@@ -2057,16 +2798,42 @@ sub named_type_value {
      32 => +{'name' => 'vertical_speed', 'scale' => 1000, 'unit' => 'm/s'},
      33 => +{'name' => 'calories', 'scale' => 1, 'unit' => 'kcal'},
      39 => +{'name' => 'vertical_oscillation', 'scale' => 10, 'unit' => 'mm'},
-     40 => +{'name' => 'stance_time_percent', 'scale' => 100, 'unit' => '%'},
+     40 => +{'name' => 'stance_time_percent', 'scale' => 100, 'unit' => 'percent'},
      41 => +{'name' => 'stance_time', 'scale' => 10, 'unit' => 'ms'},
-     53 => +{'name' => 'fractional_cadencee', 'scale' => 128, 'unit' => 'rpm'},
+     42 => +{'name' => 'activity_type', 'type_name' => 'activity_type'},
+     43 => +{'name' => 'left_torque_effectiveness', 'scale' => 2, 'unit' => 'percent'},
+     44 => +{'name' => 'right_torque_effectiveness', 'scale' => 2, 'unit' => 'percent'},
+     45 => +{'name' => 'left_pedal_smoothness', 'scale' => 2, 'unit' => 'percent'},
+     46 => +{'name' => 'right_pedal_smoothness', 'scale' => 2, 'unit' => 'percent'},
+     47 => +{'name' => 'combined_pedal_smoothness', 'scale' => 2, 'unit' => 'percent'},
+     48 => +{'name' => 'time128', 'scale' => 128, 'unit' => 's'},
+     49 => +{'name' => 'stroke_type', 'type_name' => 'stroke_type'},
+     50 => +{'name' => 'zone'},
+     51 => +{'name' => 'ball_speed', 'scale' => 100, 'unit' => 'm/s'},
+     52 => +{'name' => 'cadence256', 'scale' => 256, 'unit' => 'rpm'},
+     53 => +{'name' => 'fractional_cadence', 'scale' => 128, 'unit' => 'rpm'},
+     54 => +{'name' => 'total_hemoglobin_conc', 'scale' => 100, 'unit' => 'g/dL'},
+     55 => +{'name' => 'total_hemoglobin_conc_min', 'scale' => 100, 'unit' => 'g/dL'},
+     56 => +{'name' => 'total_hemoglobin_conc_max', 'scale' => 100, 'unit' => 'g/dL'},
+     57 => +{'name' => 'saturated_hemoglobin_percent', 'scale' => 10, 'unit' => '%'},
+     58 => +{'name' => 'saturated_hemoglobin_percent_min', 'scale' => 10, 'unit' => '%'},
+     59 => +{'name' => 'saturated_hemoglobin_percent_max', 'scale' => 10, 'unit' => '%'},
      61 => +{'name' => 'avg_neg_vertical_speed', 'scale' => 1000, 'unit' => 'm/s'},
-     62 => +{'name' => 'max_pos_vertical_speed', 'scale' => 1000, 'unit' => 'm/s'},
+     62 => +{'name' => 'device_index', 'type_name' => 'device_index'},
      63 => +{'name' => 'max_neg_vertical_speed', 'scale' => 1000, 'unit' => 'm/s'},
      66 => +{'name' => 'time_in_speed_zone', 'scale' => 1000, 'unit' => 's'},
-     67 => +{'name' => 'time_in_cadence_zone', 'scale' => 1000, 'unit' => 's'}, 
-     83 => +{'name' => 'vertical_ratio', 'scale' => 100, 'unit' => '%'},  
-     84 => +{'name' => 'ground_contact_time_balance', 'scale' => 100, 'unit' => '%'},   
+     67 => +{'name' => 'left_pco', 'unit' => 'mm'},
+     68 => +{'name' => 'right_pco', 'unit' => 'mm'},
+     69 => +{'name' => 'left_power_phase', 'scale' => 0.7111111, 'unit' => 'degrees'},
+     70 => +{'name' => 'left_power_phase_peak', 'scale' => 0.7111111, 'unit' => 'degrees'},
+     71 => +{'name' => 'right_power_phase', 'scale' => 0.7111111, 'unit' => 'degrees'},
+     72 => +{'name' => 'right_power_phase_peak', 'scale' => 0.7111111, 'unit' => 'degrees'},
+     73 => +{'name' => 'enhanced_speed', 'scale' => 1000, 'unit' => 'm/s'},
+     78 => +{'name' => 'enhanced_altitude', 'scale' => 5, 'offset' => 500, 'unit' => 'm'},
+     81 => +{'name' => 'battery_soc', 'scale' => 2, 'unit' => 'percent'},
+     82 => +{'name' => 'motor_power', 'unit' => 'watts'},
+     83 => +{'name' => 'vertical_ratio', 'scale' => 100, 'unit' => '%'},
+     84 => +{'name' => 'ground_contact_time_balance', 'scale' => 100, 'unit' => '%'},
      112 => +{'name' => 'time_standing', 'scale' => 1000, 'unit' => 's'},
    },
 
@@ -2121,6 +2888,13 @@ sub named_type_value {
      },
 
      4 => +{'name' => 'event_group'},
+     7 => +{'name' => 'score'},
+     8 => +{'name' => 'opponent_score'},
+     9 => +{'name' => 'front_gear_num'},
+     10 => +{'name' => 'front_gear'},
+     11 => +{'name' => 'rear_gear_num'},
+     12 => +{'name' => 'rear_gear'},
+     13 => +{'name' => 'device_index', 'type_name' => 'device_index'},
    },
 
    'device_info' => +{
@@ -2144,10 +2918,144 @@ sub named_type_value {
      7 => +{'name' => 'cum_operating_time', 'unit' => 's'},
      10 => +{'name' => 'battery_voltage', 'scale' => 256, 'unit' => 'v'},
      11 => +{'name' => 'battery_status', 'type_name' => 'battery_status'},
+     18 => +{'name' => 'sensor_position', 'type_name' => 'body_location'},
+     19 => +{'name' => 'descriptor'},
+     20 => +{'name' => 'ant_transmission_type'},
+     21 => +{'name' => 'ant_device_number'},
+     22 => +{'name' => 'ant_network', 'type_name' => 'ant_network'},
+     25 => +{'name' => 'source_type', 'type_name' => 'source_type'},
+     27 => +{'name' => 'product_name'},
+   },
+
+   'training_file' => +{
+     253 => +{'name' => 'timestamp', 'type_name' => 'date_time'},
+     0 => +{'name' => 'type', 'type_name' => 'file'},
+     1 => +{'name' => 'manufacturer', 'type_name' => 'manufacturer'},
+
+     2 => +{
+       'name' => 'product',
+
+       'switch' => +{
+	 '_by' => 'manufacturer',
+	 'garmin' => +{'name' => 'garmin_product', 'type_name' => 'garmin_product'},
+       },
+     },
+
+     3 => +{'name' => 'serial_number'},
+     4 => +{'name' => 'time_created', 'type_name' => 'date_time'},
    },
 
    'hrv' => +{
      0 => +{'name' => 'time', 'scale' => 1000, 'unit' => 's'},
+   },
+
+   'camera_event' => +{
+     253 => +{'name' => 'timestamp', 'type_name' => 'date_time', 'unit' => 's'},
+     0 => +{'name' => 'timestamp_ms', 'unit' => 'ms'},
+     1 => +{'name' => 'camera_event_type', 'type_name' => 'camera_event_type'},
+     2 => +{'name' => 'camera_file_uuid'},
+     3 => +{'name' => 'camera_orientation', 'type_name' => 'camera_orientation_type'},
+   },
+
+   'gyroscope_data' => +{
+     253 => +{'name' => 'timestamp', 'type_name' => 'date_time', 'unit' => 's'},
+     0 => +{'name' => 'timestamp_ms', 'unit' => 'ms'},
+     1 => +{'name' => 'sample_time_offset', 'unit' => 'ms'},
+     2 => +{'name' => 'gyro_x', 'unit' => 'counts'},
+     3 => +{'name' => 'gyro_y', 'unit' => 'counts'},
+     4 => +{'name' => 'gyro_z', 'unit' => 'counts'},
+     5 => +{'name' => 'calibrated_gyro_x', 'unit' => 'deg/s'},
+     6 => +{'name' => 'calibrated_gyro_y', 'unit' => 'deg/s'},
+     7 => +{'name' => 'calibrated_gyro_z', 'unit' => 'deg/s'},
+   },
+
+   'accelerometer_data' => +{
+     253 => +{'name' => 'timestamp', 'type_name' => 'date_time', 'unit' => 's'},
+     0 => +{'name' => 'timestamp_ms', 'unit' => 'ms'},
+     1 => +{'name' => 'sample_time_offset', 'unit' => 'ms'},
+     2 => +{'name' => 'accel_x', 'unit' => 'counts'},
+     3 => +{'name' => 'accel_y', 'unit' => 'counts'},
+     4 => +{'name' => 'accel_z', 'unit' => 'counts'},
+     5 => +{'name' => 'calibrated_accel_x', 'unit' => 'g'},
+     6 => +{'name' => 'calibrated_accel_y', 'unit' => 'g'},
+     7 => +{'name' => 'calibrated_accel_z', 'unit' => 'g'},
+   },
+
+   'three_d_sensor_calibration' => +{
+     253 => +{'name' => 'timestamp', 'type_name' => 'date_time', 'unit' => 's'},
+     0 => +{'name' => 'sensor_type', 'type_name' => 'sensor_type'},
+     1 => +{'name' => 'calibration_factor'},
+     2 => +{'name' => 'calibration_divisor', 'unit' => 'counts'},
+     3 => +{'name' => 'level_shift'},
+     4 => +{'name' => 'offset_cal'},
+     5 => +{'name' => 'orientation_matrix', 'scale' => 65535},
+   },
+
+   'video_frame' => +{
+     253 => +{'name' => 'timestamp', 'type_name' => 'date_time', 'unit' => 's'},
+     0 => +{'name' => 'timestamp_ms', 'unit' => 'ms'},
+     1 => +{'name' => 'frame_number'},
+   },
+
+   'obdii_data' => +{
+     253 => +{'name' => 'timestamp', 'type_name' => 'date_time', 'unit' => 's'},
+     0 => +{'name' => 'timestamp_ms', 'unit' => 'ms'},
+     1 => +{'name' => 'time_offset', 'unit' => 'ms'},
+     2 => +{'name' => 'pid'},
+     3 => +{'name' => 'raw_data'},
+     4 => +{'name' => 'pid_data_size'},
+     5 => +{'name' => 'system_time'},
+     6 => +{'name' => 'start_timestamp', 'type_name' => 'date_time'},
+     7 => +{'name' => 'start_timestamp_ms', 'unit' => 'ms'},
+   },
+
+   'nmea_sentence' => +{
+     253 => +{'name' => 'timestamp', 'type_name' => 'date_time', 'unit' => 's'},
+     0 => +{'name' => 'timestamp_ms', 'unit' => 'ms'},
+     1 => +{'name' => 'sentence'},
+   },
+
+   'aviation_attitude' => +{
+     253 => +{'name' => 'timestamp', 'type_name' => 'date_time', 'unit' => 's'},
+     0 => +{'name' => 'timestamp_ms', 'unit' => 'ms'},
+     1 => +{'name' => 'system_time', 'unit' => 'ms'},
+     2 => +{'name' => 'pitch', 'scale' => 10430.38, 'unit' => 'radians'},
+     3 => +{'name' => 'roll', 'scale' => 10430.38, 'unit' => 'radians'},
+     4 => +{'name' => 'accel_lateral', 'scale' => 100, 'unit' => 'm/s^2'},
+     5 => +{'name' => 'accel_normal', 'scale' => 100, 'unit' => 'm/s^2'},
+     6 => +{'name' => 'turn_rate', 'scale' => 1024, 'unit' => 'radians/second'},
+     7 => +{'name' => 'stage', 'type_name' => 'attitude_stage'},
+     8 => +{'name' => 'attitude_stage_complete', 'unit' => '%'},
+     9 => +{'name' => 'track', 'scale' => 10430.38, 'unit' => 'radians'},
+     10 => +{'name' => 'validity', 'type_name' => 'attitude_validity'},
+   },
+
+   'video' => +{
+     0 => +{'name' => 'url'},
+     1 => +{'name' => 'hosting_provider'},
+     2 => +{'name' => 'duration', 'unit' => 'ms'},
+   },
+
+   'video_title' => +{
+     254 => +{'name' => 'message_index', 'type_name' => 'message_index'},
+     0 => +{'name' => 'message_count'},
+     1 => +{'name' => 'text'},
+   },
+
+   'video_description' => +{
+     254 => +{'name' => 'message_index', 'type_name' => 'message_index'},
+     0 => +{'name' => 'message_count'},
+     1 => +{'name' => 'text'},
+   },
+
+   'video_clip' => +{
+     0 => +{'name' => 'clip_number'},
+     1 => +{'name' => 'start_timestamp', 'type_name' => 'date_time'},
+     2 => +{'name' => 'start_timestamp_ms'},
+     3 => +{'name' => 'end_timestamp', 'type_name' => 'date_time'},
+     4 => +{'name' => 'end_timestamp_ms'},
+     6 => +{'name' => 'clip_start', 'unit' => 'ms'},
+     7 => +{'name' => 'clip_end', 'unit' => 'ms'},
    },
 
    'course' => +{
@@ -2164,6 +3072,137 @@ sub named_type_value {
      4 => +{'name' => 'distance', 'scale' => 100, 'unit' => 'm'},
      5 => +{'name' => 'type', 'type_name' => 'course_point'},
      6 => +{'name' => 'name'},
+     8 => +{'name' => 'favorite', 'type_name' => 'bool'},
+   },
+
+   'segment_id' => +{
+     0 => +{'name' => 'name'},
+     1 => +{'name' => 'uuid'},
+     2 => +{'name' => 'sport', 'type_name' => 'sport'},
+     3 => +{'name' => 'enabled', 'type_name' => 'bool'},
+     4 => +{'name' => 'user_profile_primary_key'},
+     5 => +{'name' => 'device_id'},
+     6 => +{'name' => 'default_race_leader'},
+     7 => +{'name' => 'delete_status', 'type_name' => 'segment_delete_status'},
+     8 => +{'name' => 'selection_type', 'type_name' => 'segment_selection_type'},
+   },
+
+   'segment_leaderboard_entry' => +{
+     254 => +{'name' => 'message_index', 'type_name' => 'message_index'},
+     0 => +{'name' => 'name'},
+     1 => +{'name' => 'type', 'type_name' => 'segment_leaderboard_type'},
+     2 => +{'name' => 'group_primary_key'},
+     3 => +{'name' => 'activity_id'},
+     4 => +{'name' => 'segment_time', 'scale' => 1000, 'unit' => 's'},
+     5 => +{'name' => 'activity_id_string'},
+   },
+
+   'segment_point' => +{
+     254 => +{'name' => 'message_index', 'type_name' => 'message_index'},
+     1 => +{'name' => 'position_lat', 'unit' => 'semicircles'},
+     2 => +{'name' => 'position_long', 'unit' => 'semicircles'},
+     3 => +{'name' => 'distance', 'scale' => 100, 'unit' => 'm'},
+     4 => +{'name' => 'altitude', 'scale' => 5, 'offset' => 500, 'unit' => 'm'},
+     5 => +{'name' => 'leader_time', 'scale' => 1000, 'unit' => 's'},
+   },
+
+   'segment_lap' => +{
+     254 => +{'name' => 'message_index', 'type_name' => 'message_index'},
+     253 => +{'name' => 'timestamp', 'type_name' => 'date_time', 'unit' => 's'},
+     0 => +{'name' => 'event', 'type_name' => 'event'},
+     1 => +{'name' => 'event_type', 'type_name' => 'event_type'},
+     2 => +{'name' => 'start_time', 'type_name' => 'date_time'},
+     3 => +{'name' => 'start_position_lat', 'unit' => 'semicircles'},
+     4 => +{'name' => 'start_position_long', 'unit' => 'semicircles'},
+     5 => +{'name' => 'end_position_lat', 'unit' => 'semicircles'},
+     6 => +{'name' => 'end_position_long', 'unit' => 'semicircles'},
+     7 => +{'name' => 'total_elapsed_time', 'scale' => 1000, 'unit' => 's'},
+     8 => +{'name' => 'total_timer_time', 'scale' => 1000, 'unit' => 's'},
+     9 => +{'name' => 'total_distance', 'scale' => 100, 'unit' => 'm'},
+     10 => +{'name' => 'total_cycles', 'unit' => 'cycles'},
+     11 => +{'name' => 'total_calories', 'unit' => 'kcal'},
+     12 => +{'name' => 'total_fat_calories', 'unit' => 'kcal'},
+     13 => +{'name' => 'avg_speed', 'scale' => 1000, 'unit' => 'm/s'},
+     14 => +{'name' => 'max_speed', 'scale' => 1000, 'unit' => 'm/s'},
+     15 => +{'name' => 'avg_heart_rate', 'unit' => 'bpm'},
+     16 => +{'name' => 'max_heart_rate', 'unit' => 'bpm'},
+     17 => +{'name' => 'avg_cadence', 'unit' => 'rpm'},
+     18 => +{'name' => 'max_cadence', 'unit' => 'rpm'},
+     19 => +{'name' => 'avg_power', 'unit' => 'watts'},
+     20 => +{'name' => 'max_power', 'unit' => 'watts'},
+     21 => +{'name' => 'total_ascent', 'unit' => 'm'},
+     22 => +{'name' => 'total_descent', 'unit' => 'm'},
+     23 => +{'name' => 'sport', 'type_name' => 'sport'},
+     24 => +{'name' => 'event_group'},
+     25 => +{'name' => 'nec_lat', 'unit' => 'semicircles'},
+     26 => +{'name' => 'nec_long', 'unit' => 'semicircles'},
+     27 => +{'name' => 'swc_lat', 'unit' => 'semicircles'},
+     28 => +{'name' => 'swc_long', 'unit' => 'semicircles'},
+     29 => +{'name' => 'name'},
+     30 => +{'name' => 'normalized_power', 'unit' => 'watts'},
+     31 => +{'name' => 'left_right_balance', 'type_name' => 'left_right_balance_100'},
+     32 => +{'name' => 'sub_sport', 'type_name' => 'sub_sport'},
+     33 => +{'name' => 'total_work', 'unit' => 'J'},
+     34 => +{'name' => 'avg_altitude', 'scale' => 5, 'offset' => 500, 'unit' => 'm'},
+     35 => +{'name' => 'max_altitude', 'scale' => 5, 'offset' => 500, 'unit' => 'm'},
+     36 => +{'name' => 'gps_accuracy', 'unit' => 'm'},
+     37 => +{'name' => 'avg_grade', 'scale' => 100, 'unit' => '%'},
+     38 => +{'name' => 'avg_pos_grade', 'scale' => 100, 'unit' => '%'},
+     39 => +{'name' => 'avg_neg_grade', 'scale' => 100, 'unit' => '%'},
+     40 => +{'name' => 'max_pos_grade', 'scale' => 100, 'unit' => '%'},
+     41 => +{'name' => 'max_neg_grade', 'scale' => 100, 'unit' => '%'},
+     42 => +{'name' => 'avg_temperature', 'unit' => 'C'},
+     43 => +{'name' => 'max_temperature', 'unit' => 'C'},
+     44 => +{'name' => 'total_moving_time', 'scale' => 1000, 'unit' => 's'},
+     45 => +{'name' => 'avg_pos_vertical_speed', 'scale' => 1000, 'unit' => 'm/s'},
+     46 => +{'name' => 'avg_neg_vertical_speed', 'scale' => 1000, 'unit' => 'm/s'},
+     47 => +{'name' => 'max_pos_vertical_speed', 'scale' => 1000, 'unit' => 'm/s'},
+     48 => +{'name' => 'max_neg_vertical_speed', 'scale' => 1000, 'unit' => 'm/s'},
+     49 => +{'name' => 'time_in_hr_zone', 'scale' => 1000, 'unit' => 's'},
+     50 => +{'name' => 'time_in_speed_zone', 'scale' => 1000, 'unit' => 's'},
+     51 => +{'name' => 'time_in_cadence_zone', 'scale' => 1000, 'unit' => 's'},
+     52 => +{'name' => 'time_in_power_zone', 'scale' => 1000, 'unit' => 's'},
+     53 => +{'name' => 'repetition_num'},
+     54 => +{'name' => 'min_altitude', 'scale' => 5, 'offset' => 500, 'unit' => 'm'},
+     55 => +{'name' => 'min_heart_rate', 'unit' => 'bpm'},
+     56 => +{'name' => 'active_time', 'scale' => 1000, 'unit' => 's'},
+     57 => +{'name' => 'wkt_step_index', 'type_name' => 'message_index'},
+     58 => +{'name' => 'sport_event', 'type_name' => 'sport_event'},
+     59 => +{'name' => 'avg_left_torque_effectiveness', 'scale' => 2, 'unit' => 'percent'},
+     60 => +{'name' => 'avg_right_torque_effectiveness', 'scale' => 2, 'unit' => 'percent'},
+     61 => +{'name' => 'avg_left_pedal_smoothness', 'scale' => 2, 'unit' => 'percent'},
+     62 => +{'name' => 'avg_right_pedal_smoothness', 'scale' => 2, 'unit' => 'percent'},
+     63 => +{'name' => 'avg_combined_pedal_smoothness', 'scale' => 2, 'unit' => 'percent'},
+     64 => +{'name' => 'status', 'type_name' => 'segment_lap_status'},
+     65 => +{'name' => 'uuid'},
+     66 => +{'name' => 'avg_fractional_cadence', 'scale' => 128, 'unit' => 'rpm'},
+     67 => +{'name' => 'max_fractional_cadence', 'scale' => 128, 'unit' => 'rpm'},
+     68 => +{'name' => 'total_fractional_cycles', 'scale' => 128, 'unit' => 'cycles'},
+     69 => +{'name' => 'front_gear_shift_count'},
+     70 => +{'name' => 'rear_gear_shift_count'},
+     71 => +{'name' => 'time_standing', 'scale' => 1000, 'unit' => 's'},
+     72 => +{'name' => 'stand_count'},
+     73 => +{'name' => 'avg_left_pco', 'unit' => 'mm'},
+     74 => +{'name' => 'avg_right_pco', 'unit' => 'mm'},
+     75 => +{'name' => 'avg_left_power_phase', 'scale' => 0.7111111, 'unit' => 'degrees'},
+     76 => +{'name' => 'avg_left_power_phase_peak', 'scale' => 0.7111111, 'unit' => 'degrees'},
+     77 => +{'name' => 'avg_right_power_phase', 'scale' => 0.7111111, 'unit' => 'degrees'},
+     78 => +{'name' => 'avg_right_power_phase_peak', 'scale' => 0.7111111, 'unit' => 'degrees'},
+     79 => +{'name' => 'avg_power_position', 'unit' => 'watts'},
+     80 => +{'name' => 'max_power_position', 'unit' => 'watts'},
+     81 => +{'name' => 'avg_cadence_position', 'unit' => 'rpm'},
+     82 => +{'name' => 'max_cadence_position', 'unit' => 'rpm'},
+   },
+
+   'segment_file' => +{
+     254 => +{'name' => 'message_index', 'type_name' => 'message_index'},
+     1 => +{'name' => 'file_uuid'},
+     3 => +{'name' => 'enabled', 'type_name' => 'bool'},
+     4 => +{'name' => 'user_profile_primary_key'},
+     7 => +{'name' => 'leader_type', 'type_name' => 'segment_leaderboard_type'},
+     8 => +{'name' => 'leader_group_primary_key'},
+     9 => +{'name' => 'leader_activity_id'},
+     10 => +{'name' => 'leader_activity_id_string'},
    },
 
    'workout' => +{
@@ -2271,6 +3310,7 @@ sub named_type_value {
      4 => +{'name' => 'elapsed_time', 'unit' => 's'},
      5 => +{'name' => 'sessions'},
      6 => +{'name' => 'active_time', 'unit' => 's'},
+     9 => +{'name' => 'sport_index'},
    },
 
    'weight_scale' => +{
@@ -2306,6 +3346,10 @@ sub named_type_value {
    'monitoring_info' => +{
      253 => +{'name' => 'timestamp', 'type_name' => 'date_time'},
      0 => +{'name' => 'local_timestamp', 'type_name' => 'local_date_time'},
+     1 => +{'name' => 'activity_type', 'type_name' => 'activity_type'},
+     3 => +{'name' => 'cycles_to_distance', 'scale' => 5000, 'unit' => 'm/cycle'},
+     4 => +{'name' => 'cycles_to_calories', 'scale' => 5000, 'unit' => 'kcal/cycle'},
+     5 => +{'name' => 'resting_metabolic_rate', 'unit' => 'kcal / day'},
    },
 
    'monitoring' => +{
@@ -2319,7 +3363,27 @@ sub named_type_value {
      6 => +{'name' => 'activity_subtype', 'type_name' => 'activity_subtype'},
      8 => +{'name' => 'compressed_distance', 'scale' => 100, 'unit' => 'm'},
      9 => +{'name' => 'compressed_cycles', 'unit' => 'cycles'},
+     10 => +{'name' => 'active_time_16', 'unit' => 's'},
      11 => +{'name' => 'local_timestamp', 'type_name' => 'local_date_time'},
+     12 => +{'name' => 'temperature', 'scale' => 100, 'unit' => 'C'},
+     14 => +{'name' => 'temperature_min', 'scale' => 100, 'unit' => 'C'},
+     15 => +{'name' => 'temperature_max', 'scale' => 100, 'unit' => 'C'},
+     16 => +{'name' => 'activity_time', 'unit' => 'minutes'},
+     19 => +{'name' => 'active_calories', 'unit' => 'kcal'},
+     24 => +{'name' => 'current_activity_type_intensity'},
+     25 => +{'name' => 'timestamp_min_8', 'unit' => 'min'},
+     26 => +{'name' => 'timestamp_16', 'unit' => 's'},
+     27 => +{'name' => 'heart_rate', 'unit' => 'bpm'},
+     28 => +{'name' => 'intensity', 'scale' => 10},
+     29 => +{'name' => 'duration_min', 'unit' => 'min'},
+     30 => +{'name' => 'duration', 'unit' => 's'},
+   },
+
+   'memo_glob' => +{
+     250 => +{'name' => 'part_index'},
+     0 => +{'name' => 'memo'},
+     1 => +{'name' => 'message_number'},
+     2 => +{'name' => 'message_index', 'type_name' => 'message_index'},
    },
 
    );
@@ -2641,8 +3705,10 @@ sub cat_definition_message {
   }
 
   my @i_name = sort {$desc->{$a} <=> $desc->{$b}} grep {/^i_/} keys %$desc;
+  my ($endian, $msgnum) = @{$desc}{qw(endian message_number)};
 
-  $$p .= pack($defmsg_min_template, $desc->{local_message_type} | $rechd_mask_definition_message, 0, @{$desc}{qw(endian message_number)}, $#i_name + 1);
+  $msgnum = unpack('n', pack('v', $msgnum)) if $endian != $my_endian;
+  $$p .= pack($defmsg_min_template, $desc->{local_message_type} | $rechd_mask_definition_message, 0, $endian, $msgnum, $#i_name + 1);
 
   my $i_name;
 
@@ -2984,35 +4050,37 @@ sub fetch {
 
   my $buffer = $self->buffer;
   my $i = $self->offset;
+  my $j = $self->file_processed + $i;
 
-  if ($self->file_processed + $i < $self->file_size) {
+  if ($j < $self->file_size) {
     my $rechd = ord(substr($$buffer, $i, 1));
+    my $desc_i = -1;
 
     if ($rechd & $rechd_mask_compressed_timestamp_header) {
-      my $desc = $self->data_message_descriptor->[($rechd & $rechd_mask_cth_local_message_type) >> $rechd_offset_cth_local_message_type];
-
-      if (ref $desc eq 'HASH') {
-	$self->fetch_data_message($desc);
-      }
-      else {
-	$self->error("$rechd: not defined");
-      }
+      $desc_i = ($rechd & $rechd_mask_cth_local_message_type) >> $rechd_offset_cth_local_message_type;
     }
     elsif ($rechd & $rechd_mask_definition_message) {
       $self->fetch_definition_message;
     }
     else {
-      my $desc = $self->data_message_descriptor->[$rechd & $rechd_mask_local_message_type];
+      $desc_i = $rechd & $rechd_mask_local_message_type;
+    }
+
+    if ($desc_i < 0) {
+      1;
+    }
+    else {
+      my $desc = $self->data_message_descriptor->[$desc_i];
 
       if (ref $desc eq 'HASH') {
 	$self->fetch_data_message($desc);
       }
       else {
-	$self->error("$rechd: not defined");
+	$self->error(sprintf("%d at %ld: not defined", $rechd, $j));
       }
     }
   }
-  elsif ($self->file_processed + $i > $self->file_size) {
+  elsif ($j > $self->file_size) {
     $self->trailing_garbages($self->trailing_garbages + length($$buffer) - $i);
     $self->offset(length($$buffer));
   }
@@ -3545,6 +4613,54 @@ The author is very grateful to Garmin for supplying us free software programers 
 which includes detailed documetation about its proprietary file format.
 
 =head1 CHANGES
+
+=head2 0.14 --E<gt> 0.15
+
+=over 4
+
+=item C<fetch_header()>
+
+should do initial setup of CRC explicitly.
+
+=item C<fetch()>
+
+code clean-up.
+
+=back
+
+=head2 0.13 --E<gt> 0.14
+
+=over 4
+
+=item C<protocol_version>
+
+=item C<protocol_version_header_crc_started>
+
+were wrong.
+
+=item C<cat_definition_message()>
+
+should take care of endianness of I<message number>.
+
+=back
+
+=head2 0.12 --E<gt> 0.13
+
+=over 4
+
+=item C<profile_version>
+
+=item C<%named_type>
+
+=item C<%msgtype_by_name>
+
+follow global profile version 16.10.
+
+=item C<fetch_data_message()>
+
+file positions of undefined local message numbers are included in error messages.
+
+=back
 
 =head2 0.11 --E<gt> 0.12
 

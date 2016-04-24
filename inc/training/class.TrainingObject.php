@@ -23,12 +23,6 @@ class TrainingObject extends DataObject {
 	private $Sport = null;
 
 	/**
-	 * Type
-	 * @var \Type
-	 */
-	private $Type = null;
-
-	/**
 	 * Weather
 	 * @var \Runalyze\Data\Weather
 	 */
@@ -57,7 +51,7 @@ class TrainingObject extends DataObject {
 	 * Fill default object with standard settings
 	 */
 	protected function fillDefaultObject() {
-		$this->set('time', isset($_GET['date']) ? LocalTime::fromString($_GET['date'])->getTimestamp() : (new LocalTime)->setTime(0, 0, 0)->getTimestamp());
+		$this->set('time', isset($_GET['date']) ? LocalTime::fromString($_GET['date'])->getTimestamp() : LocalTime::fromServerTime(time())->setTime(0, 0, 0)->getTimestamp());
 		$this->set('is_public', Configuration::Privacy()->publishActivity() ? '1' : '0');
 		$this->set('sportid', Configuration::General()->mainSport());
 		$this->forceToSet('s_sum_with_distance', 0);
@@ -364,21 +358,6 @@ class TrainingObject extends DataObject {
 	}
 
 	/**
-	 * Type object
-	 * @return \Type
-	 */
-	public function Type() {
-		if (is_null($this->Type)) {
-			if (!$this->hasProperty('typeid'))
-				$this->Type = new Type(0);
-			else
-				$this->Type = new Type($this->get('typeid'));
-		}
-
-		return $this->Type;
-	}
-
-	/**
 	 * Weather object
 	 * @return \Runalyze\Data\Weather
 	 */
@@ -472,6 +451,11 @@ class TrainingObject extends DataObject {
 	 * @param int $id typeid
 	 */
 	public function setTypeid($id) { $this->set('typeid', $id); }
+	/**
+	 * Get typeid
+	 * @return int typeid
+	 */
+	public function getTypeid() { return $this->get('typeid'); }
 
 
 	/**
@@ -1051,29 +1035,9 @@ class TrainingObject extends DataObject {
 	 * Has position data?
 	 * @return bool True if latitude and longitude arrays are set.
 	 */
-	public function hasPositionData() { 
-		if (Request::isOnSharedPage() && $this->hidesMap())
-			return false;
-
+	public function hasPositionData() {
 		return $this->hasArrayLatitude() && $this->hasArrayLongitude();
 	}
-
-	/**
-	 * Hides map?
-	 * @return boolean
-	 */
-	public function hidesMap() {
-		$RoutePrivacy = Configuration::Privacy()->RoutePrivacy();
-
-		if ($RoutePrivacy->showRace()) {
-			return (!$this->Type()->isCompetition());
-		} elseif ($RoutePrivacy->showAlways()) {
-			return false;
-		}
-
-		return true;
-	}
-
 
 	/**
 	 * Set array for altitude

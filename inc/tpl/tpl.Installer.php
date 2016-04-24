@@ -185,6 +185,13 @@ foreach ($Steps as $i => $Name) {
 			<?php endif; ?>
 		</label>
 	</p>
+	
+	<p class="text">
+		<label>
+			<strong><?php _e('Sender e-mail'); ?></strong>
+			<input type="text" name="sendermail" value="<?php echo (isset($_POST['sendermail']) ? $_POST['sendermail'] : ''); ?>">
+		</label>
+	</p>
 
 	<p class="text">
 		<small>
@@ -208,6 +215,7 @@ foreach ($Steps as $i => $Name) {
 		<em>'{config::prefix}'</em> &raquo; <em>'<?php echo $_POST['prefix']; ?>'</em><br>
 		<em>{config::debug}</em> &raquo; <em><?php echo isset($_POST['debug']) ? 'true' : 'false'; ?></em><br>
 		<em>{config::garminkey}</em> &raquo; <em><?php echo $_POST['garminkey']; ?><br>
+		<em>{config::sendermail}</em> &raquo; <em><?php echo $_POST['sendermail']; ?><br>
 	</p>
 	<?php else: ?>
 	<p class="error">

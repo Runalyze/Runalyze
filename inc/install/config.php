@@ -48,6 +48,12 @@ define('USER_CANT_LOGIN', false);
 define('USER_CAN_REGISTER', true);
 
 /**
+ * Disable account activation for new users
+ * @var bool USER_DISABLE_ACCOUNT_ACTIVATION Set to true to allow registrations without account activation
+ */
+define('USER_DISABLE_ACCOUNT_ACTIVATION', false);
+
+/**
  * Path to perl scripts
  * Relative to FRONTEND_PATH
  * @var string PERL_PATH Path for perl scripts
@@ -67,6 +73,12 @@ define('TTBIN_PATH', FRONTEND_PATH.'../call/perl/ttbincnv');
 define('GEONAMES_USERNAME', '');
 
 /**
+ * SQLITE Spatialite extension name
+ * @var string SQLITE_MOD_SPATIALITE for SQLITE database (timezone offset)
+ */
+define('SQLITE_MOD_SPATIALITE', 'libspatialite.so.5');
+
+/**
  * Garmin API key is needed for using Garmin Communicator
  * @var bool GARMIN_API_KEY Garmin API key
  * @see http://developer.garmin.com/web-device/garmin-communicator-plugin/get-your-site-key/
@@ -77,7 +89,7 @@ define('GARMIN_API_KEY', '{config::garminkey}');
  * Address for sending mails to users
  * @var string
  */
-define('MAIL_SENDER', 'mail@runalyze.de');
+define('MAIL_SENDER', '{config::sendermail}');
 
 /**
  * Sender name for sending mails to users

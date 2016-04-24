@@ -58,23 +58,23 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testFiltering() {
-		$CalculatorDefaultFilter = new Calculator(new Entity(array(
-			Entity::DATA => array(50, 100, 150, 250, 300, 350)
-		)));
-		$CalculatorDefaultFilter->calculate();
-		$this->assertEquals(300, $CalculatorDefaultFilter->mean());
-
 		$CalculatorWithoutFilter = new Calculator(new Entity(array(
-			Entity::DATA => array(50, 100, 150, 250, 300, 350)
-		)), array());
+			Entity::DATA => array(300, 350, 400, 701, 99, 400, 350, 300)
+		)), null);
 		$CalculatorWithoutFilter->calculate();
-		$this->assertEquals(200, $CalculatorWithoutFilter->mean());
+		$this->assertEquals(362.5, $CalculatorWithoutFilter->mean());
 
-		$CalculatorWithSpecialFilter = new Calculator(new Entity(array(
-			Entity::DATA => array(50, 100, 150, 250, 300, 350)
-		)), array(75, 175));
-		$CalculatorWithSpecialFilter->calculate();
-		$this->assertEquals(125, $CalculatorWithSpecialFilter->mean());
+		$CalculatorWithNormalFilter = new Calculator(new Entity(array(
+			Entity::DATA => array(300, 350, 400, 701, 99, 400, 350, 300)
+		)), 0.75);
+		$CalculatorWithNormalFilter->calculate();
+		$this->assertEquals(350, $CalculatorWithNormalFilter->mean());
+
+		$CalculatorWithJumpInData = new Calculator(new Entity(array(
+			Entity::DATA => array(300, 350, 400, 800, 750, 700)
+		)), 0.75);
+		$CalculatorWithJumpInData->calculate();
+		$this->assertEquals(550, $CalculatorWithJumpInData->mean());
 	}
 
 }

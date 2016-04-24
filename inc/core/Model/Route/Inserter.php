@@ -13,7 +13,7 @@ use Runalyze\Configuration;
 
 /**
  * Insert route to database
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Model\Route
  */
@@ -61,7 +61,12 @@ class Inserter extends Model\InserterWithAccountID {
 
 		$Calculator = new Calculator($this->Object);
 
-		if (Configuration::ActivityForm()->correctElevation() && !$this->Object->hasCorrectedElevations()) {
+		if (
+			!$this->Object->hasCorrectedElevations() && (
+				Configuration::ActivityForm()->correctElevation() ||
+				($this->Object->hasGeohashes() && !$this->Object->hasOriginalElevations())
+			)
+		) {
 			try {
 				$Calculator->tryToCorrectElevation();
 			} catch (NoValidStrategyException $e) {

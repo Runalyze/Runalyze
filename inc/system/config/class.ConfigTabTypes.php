@@ -163,8 +163,6 @@ class ConfigTabTypes extends ConfigTab {
 			Ajax::setReloadFlag(Ajax::$RELOAD_PLUGINS);
 		}
 
-		TypeFactory::reInitAllTypes();
-
 		Ajax::setReloadFlag(Ajax::$RELOAD_DATABROWSER);
 	}
 }

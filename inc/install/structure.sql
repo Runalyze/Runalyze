@@ -251,6 +251,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_sport` (
   `power` tinyint(1) NOT NULL DEFAULT '0',
   `outside` tinyint(1) NOT NULL DEFAULT '0',
   `main_equipmenttypeid` int(10) unsigned NOT NULL DEFAULT '0',
+  `default_typeid` int(10) unsigned DEFAULT NULL,
   `accountid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

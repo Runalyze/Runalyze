@@ -157,10 +157,12 @@ class AdminView {
 		$Fieldset->addField( new FormularCheckbox('RUNALYZE_DEBUG', __('Debug mode')) );
 		$Fieldset->addField( new FormularCheckbox('USER_CANT_LOGIN', __('Maintenance mode')) );
 		$Fieldset->addField( new FormularCheckbox('USER_CAN_REGISTER', __('Users can register')) );
+		$Fieldset->addField( new FormularCheckbox('USER_DISABLE_ACCOUNT_ACTIVATION', __('Users don\'t need to activate their account')) );
 		$Fieldset->addField( new FormularInput('GARMIN_API_KEY', Ajax::tooltip(__('Garmin API-key'), __('Needed for any online-version of the Garmin Communicator<br>see http://developer.garmin.com/web-device/garmin-communicator-plugin/get-your-site-key/') )) );
 		$Fieldset->addField( new FormularInput('PERL_PATH', __('Perl Path')) );
 		$Fieldset->addField( new FormularInput('TTBIN_PATH', __('TTBIN Converter Path')) );
 		$Fieldset->addField( new FormularInput('GEONAMES_USERNAME', __('Geonames Username')) );
+		$Fieldset->addField( new FormularInput('SQLITE_MOD_SPATIALITE', __('SQLITE Spatialite Extension')) );
                 $Fieldset->addField( new FormularInput('MAIL_SENDER', __('Sender e-mail')) );
 		$Fieldset->addField( new FormularInput('MAIL_NAME', __('Sender e-mail name')) );
 		$Fieldset->addField( new FormularInput('SMTP_HOST', __('SMTP: host')) );
@@ -455,9 +457,11 @@ class AdminView {
 			'RUNALYZE_DEBUG',
                         'USER_CANT_LOGIN',
 			'USER_CAN_REGISTER',
+			'USER_DISABLE_ACCOUNT_ACTIVATION',
                         'PERL_PATH',
 			'TTBIN_PATH',
 			'GEONAMES_USERNAME',
+			'SQLITE_MOD_SPATIALITE',
 			'GARMIN_API_KEY',
 			'MAIL_SENDER',
 			'MAIL_NAME',
@@ -517,6 +521,14 @@ define(\'USER_CANT_LOGIN\', false);';
  * @var bool USER_CAN_REGISTER Set to false to close registration
  */
 define(\'USER_CAN_REGISTER\', true);';
+				
+			case 'USER_DISABLE_ACCOUNT_ACTIVATION':
+				define('USER_DISABLE_ACCOUNT_ACTIVATION', false);
+				return '/**
+ * Disable account activation for new users
+ * @var bool USER_DISABLE_ACCOUNT_ACTIVATION Set to true to allow registrations without account activation
+ */
+define(\'USER_DISABLE_ACCOUNT_ACTIVATION\', false);';				
 
 			case 'PERL_PATH':
 				define('PERL_PATH', '/usr/bin/perl');
@@ -541,7 +553,15 @@ define(\'TTBIN_PATH\', FRONTEND_PATH.\'../call/perl/ttbincnv\');';
  * Geonames.org API username
  * @var string GEONAMES_USERNAME for geonames API username
  */
-define(\'GEONAMES_USERNAME\', \'/\');';
+define(\'GEONAMES_USERNAME\', \'\');';
+				
+			case 'SQLITE_MOD_SPATIALITE':
+				define('SQLITE_MOD_SPATIALITE', 'libspatialite.so.5');
+				return '/**
+ * SQLITE Spatialite extension name
+ * @var string SQLITE_MOD_SPATIALITE for SQLITE database (timezone offset)
+ */
+define(\'SQLITE_MOD_SPATIALITE\', \'libspatialite.so.5\');';				
                                 
 			case 'GARMIN_API_KEY':
 				$APIKeyResults = DB::getInstance()->query('SELECT `value` FROM `'.PREFIX.'conf` WHERE `key`="GARMIN_API_KEY" LIMIT 1')->fetch();

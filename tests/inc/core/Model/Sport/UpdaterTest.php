@@ -29,6 +29,7 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 			`power` TINYINT NOT NULL,
 			`outside` TINYINT NOT NULL,
 			`main_equipmenttypeid` INTEGER NOT NULL,
+			`default_typeid` INTEGER NOT NULL,
 			`accountid` INTEGER NOT NULL
 			);
 		');

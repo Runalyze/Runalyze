@@ -33,6 +33,8 @@ class TrainingSelectSport extends FormularSelectBox {
 				$attributes['data-distances'] = 'true';
 			if ($sport['power'] == 1)
 				$attributes['data-power'] = 'true';
+			if (!is_null($sport['default_typeid']))
+				$attributes['data-default-typeid'] = $sport['default_typeid'];
 
 			$this->addOption($id, $sport['name'], $attributes);
 		}

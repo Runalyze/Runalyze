@@ -92,17 +92,42 @@ class Calculator {
 
 	/**
 	 * Calculator for hrv statistics
+	 *
+	 * http://www.zhb.uni-luebeck.de/epubs/ediss1118.pdf, 2.4.2.1 suggests a filter threshold of 75 %
+	 *
 	 * @param \Runalyze\Model\HRV\Entity $hrvObject
-	 * @param array $filter [optional] array with lower and upper limit for accepted values
+	 * @param double|null $filterThreshold RR intervals are considered only if they differ from the preceding or following interval by less than XXX %
 	 */
-	public function __construct(Entity $hrvObject, array $filter = array(200, 2000)) {
+	public function __construct(Entity $hrvObject, $filterThreshold = 0.75) {
 		$this->Object = clone $hrvObject;
 
-		if (count($filter) == 2) {
-			$this->Object->set(Entity::DATA, array_filter($this->Object->data(), function($value) use ($filter) {
-				return $filter[0] < $value && $value < $filter[1];
-			}));
+		if (null !== $filterThreshold) {
+			$this->filterByThreshold($filterThreshold);
 		}
+	}
+
+	/**
+	 * Remove all rr intervals that are not within [1 - $filterThreshold, 1 + $filterThreshold]-times their preceding/following interval
+	 * @param double $filterThreshold
+	 */
+	protected function filterByThreshold($filterThreshold) {
+		$oldData = $this->Object->data();
+		$newData = [$oldData[0]];
+		$num = $this->Object->num();
+
+		for ($i = 1; $i < $num; ++$i) {
+			$ratioPreceding = $oldData[$i] / $oldData[$i-1];
+			$ratioFollowing = ($i < $num - 1) ? $oldData[$i] / $oldData[$i+1] : 1;
+
+			if (
+				(1 - $filterThreshold <= $ratioPreceding && $ratioPreceding <= 1 + $filterThreshold) ||
+				(1 - $filterThreshold <= $ratioFollowing && $ratioFollowing <= 1 + $filterThreshold)
+			) {
+				$newData[] = $oldData[$i];
+			}
+		}
+
+		$this->Object->set(Entity::DATA, $newData);
 	}
 
 	/**

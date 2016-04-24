@@ -13,6 +13,7 @@ use FormularInput;
 use FormularUnit;
 use FormularCheckbox;
 use Ajax;
+use Runalyze\Configuration;
 
 /**
  * Display form for laps window
@@ -53,7 +54,7 @@ class Form {
 	 */
 	protected function lapDistanceField() {
 		$Field = new FormularInput('distance', Ajax::tooltip(__('Lap every ...'), __('Distance, after which a new lap should start') ) );
-		$Field->setUnit( FormularUnit::$KM );
+		$Field->setUnit(Configuration::General()->distanceUnitSystem()->distanceUnit());
 
 		return $Field;
 	}
@@ -79,6 +80,7 @@ class Form {
 			__('List with all distances, comma seperated. Put "+" at the beginning to treat distances as intervals.') ));
 		$Field->setSize( FormularInput::$SIZE_FULL_INLINE );
 		$Field->setPlaceholder( __('e.g.').' 5, 10, 21.1 '.__('or').' +0.4, 0.8, 0.4');
+		$Field->setUnit(Configuration::General()->distanceUnitSystem()->distanceUnit());
 
 		return $Field;
 	}
