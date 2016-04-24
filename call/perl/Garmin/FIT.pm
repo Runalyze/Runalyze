@@ -3671,10 +3671,10 @@ sub fetch_definition_message {
       my ($p, $unp, $n);
 
       if ($size[$type] == 2) {
-	($p, $unp) = (qw(n v));
+	($p, $unp, $n) = (qw(n v), $c);
       }
       elsif ($size[$type] == 4) {
-	($p, $unp) = (qw(N V));
+	($p, $unp, $n) = (qw(N V), $c);
       }
       else {
 	($p, $unp, $n) = (qw(N V), 2 * $c);
