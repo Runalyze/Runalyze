@@ -42,7 +42,13 @@ class Configuration {
 		}
 
 		self::fetchAllValues();
+		self::initAllCategories();
+	}
 
+	/**
+	 * Init all categories
+	 */
+	private static function initAllCategories() {
 		self::ActivityForm();
 		self::ActivityView();
 		self::Data();
@@ -54,6 +60,29 @@ class Configuration {
 		self::Trimp();
 		self::Vdot();
 		self::BasicEndurance();
+	}
+
+	/**
+	 * Reset configuration to default settings
+	 * @param mixed $accountid
+	 * @throws \InvalidArgumentException
+	 */
+	public static function resetConfiguration($accountid = 'auto') {
+		if ($accountid !== 'auto' && !is_numeric($accountid)) {
+			throw new \InvalidArgumentException('Invalid accountid: '.$accountid);
+		}
+
+		if ($accountid === 'auto') {
+			if (null === self::$AccountID) {
+				throw new \InvalidArgumentException('Configuration does not know any accountid.');
+			}
+
+			$accountid = self::$AccountID;
+		}
+
+		\DB::getInstance()->exec('DELETE FROM `'.PREFIX.'conf` WHERE `accountid`="'.$accountid.'" AND `category` != "general" AND `category` != "data"');
+
+		self::initAllCategories();
 	}
 
 	/**

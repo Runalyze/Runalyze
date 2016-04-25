@@ -4,6 +4,7 @@
  * @package Runalyze\System\Config
  */
 
+use Runalyze\Configuration;
 use Runalyze\Timezone;
 use Runalyze\Parameter\Application\Timezone as TimezoneValues;
 
@@ -14,7 +15,7 @@ use Runalyze\Parameter\Application\Timezone as TimezoneValues;
  */
 class ConfigTabAccount extends ConfigTab {
 	/**
-	 * Set key and title for form 
+	 * Set key and title for form
 	 */
 	protected function setKeyAndTitle() {
 		$this->key = 'config_tab_account';
@@ -45,7 +46,7 @@ class ConfigTabAccount extends ConfigTab {
 
 		$TimeZoneField = new FormularSelectBox('timezone', __('Timezone'), $Data['timezone']);
 		$TimeZoneField->setOptions(Timezone::listTimezones());
-		
+
 		$SinceField = new FormularInput('name', __('Registered since'), date('d.m.Y H:i', $Data['registerdate']));
 		$SinceField->setDisabled();
 
@@ -97,6 +98,11 @@ class ConfigTabAccount extends ConfigTab {
 								'In important individual cases write us an e-mail to mail@runalyze.de and and we will take care of it right away!') );
 		}
 
+		$ResetConfiguration = new FormularFieldset(__('Reset configuration'));
+		$ResetConfiguration->setCollapsed();
+		$ResetConfiguration->addField(new FormularCheckbox('reset_conf', __('Reset complete configuration to default settings')));
+		$ResetConfiguration->addInfo(__('This will not touch any general settings like gender and main sport.'));
+
 		$DeleteLink = Ajax::window('<a href="call/window.delete.php"><strong>'.__('Delete your account').' &raquo;</strong></a>').
 						'<br><br>'.
 						__('You\'ll receive an email with a link to confirm the deletion.<br>'.
@@ -111,18 +117,19 @@ class ConfigTabAccount extends ConfigTab {
 		$this->Formular->addFieldset($Notifications);
 		$this->Formular->addFieldset($Password);
 		$this->Formular->addFieldset($Backup);
+		$this->Formular->addFieldset($ResetConfiguration);
 		$this->Formular->addFieldset($Delete);
 		$this->Formular->setLayoutForFields( FormularFieldset::$LAYOUT_FIELD_W100 );
 	}
 
 	/**
-	 * Parse all post values 
+	 * Parse all post values
 	 */
 	public function parsePostData() {
 		if ($_POST['name'] != SessionAccountHandler::getName()) {
 			DB::getInstance()->update('account', SessionAccountHandler::getId(), 'name', $_POST['name']);
 		}
-                
+
 		if ($_POST['allow_mails'] != SessionAccountHandler::getAllowMails()) {
 			DB::getInstance()->update('account', SessionAccountHandler::getId(), 'allow_mails', $_POST['allow_mails']);
 		}
@@ -131,13 +138,18 @@ class ConfigTabAccount extends ConfigTab {
 			DB::getInstance()->update('account', SessionAccountHandler::getId(), 'timezone', $_POST['timezone'], false);
 			Ajax::setReloadFlag( Ajax::$RELOAD_PAGE );
 		}
-                
+
 		if ($_POST['language'] != SessionAccountHandler::getLanguage()) {
 			DB::getInstance()->update('account', SessionAccountHandler::getId(), 'language', $_POST['language']);
 			Language::setLanguage($_POST['language']);
 
 			echo Ajax::wrapJS('document.cookie = "lang=" + encodeURIComponent("'.addslashes($_POST['language']).'");');
 			Ajax::setReloadFlag( Ajax::$RELOAD_PAGE );
+		}
+
+		if (isset($_POST['reset_conf'])) {
+			Configuration::resetConfiguration(SessionAccountHandler::getId());
+			Ajax::setReloadFlag(Ajax::$RELOAD_PAGE);
 		}
 
 		if ($_POST['new_pw'] != '') {
@@ -150,7 +162,7 @@ class ConfigTabAccount extends ConfigTab {
 	 */
 	private function tryToChangePassword() {
 		if ($_POST['new_pw'] == $_POST['new_pw_repeat']) {
-			$Account = DB::getInstance()->query('SELECT `password`, `salt` FROM `'.PREFIX.'account`'.' WHERE id = '.SessionAccountHandler::getId())->fetch();   
+			$Account = DB::getInstance()->query('SELECT `password`, `salt` FROM `'.PREFIX.'account`'.' WHERE id = '.SessionAccountHandler::getId())->fetch();
 
 			if (AccountHandler::comparePasswords($_POST['old_pw'], $Account['password'], $Account['salt'])) {
 				if (strlen($_POST['new_pw']) < AccountHandler::$PASS_MIN_LENGTH) {
