@@ -100,6 +100,7 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(3600, $Object->duration());
 		$this->assertEquals(12.0, $Object->distance());
 		$this->assertNull($Object->fitTrainingEffect());
+		$this->assertNull($Object->rpe());
 	}
 
 	public function testOutdoorData() {

@@ -253,6 +253,7 @@ class ConfigTabDataset extends ConfigTab {
 			'fit_hrv_analysis'	=> 800,
 			'fit_training_effect'	=> 3.1,
 			'jd_intensity'	=> 27,
+			'rpe'		=> 13,
 			'trimp'		=> 121,
 			'cadence'	=> 90,
 			'stride_length'	=> 108,

@@ -145,6 +145,9 @@ final class Keys extends AbstractEnum
 	/** @var int */
 	const FIT_TRAINING_EFFECT = 43;
 	
+	/** @var int */
+	const RPE = 44;
+	
 	/**
 	 * @var array|null
 	 */
@@ -245,7 +248,8 @@ final class Keys extends AbstractEnum
 			self::AIR_PRESSURE => 'AirPressure',
 			self::WIND_CHILL => 'WindChill',
 			self::SETTING => 'Setting',
-			self::FIT_TRAINING_EFFECT => 'FitTrainingEffect'
+			self::FIT_TRAINING_EFFECT => 'FitTrainingEffect',
+			self::RPE => 'RPE'
 		);
 	}
 }

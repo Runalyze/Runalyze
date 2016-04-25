@@ -63,7 +63,8 @@ class DefaultConfiguration extends Configuration
 			Keys::GROUNDCONTACT_BALANCE => false,
 			Keys::TAGS => false,
 			Keys::COMPLETE_EQUIPMENT => false,
-			Keys::MAIN_EQUIPMENT => false
+			Keys::MAIN_EQUIPMENT => false,
+			Keys::RPE => false
 		));
 	}
 

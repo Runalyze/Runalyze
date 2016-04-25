@@ -160,6 +160,12 @@ class Entity extends Model\EntityWithID {
 	 * @var string
 	 */
 	const JD_INTENSITY = 'jd_intensity';
+	
+	/**
+	 * Key: RPE
+	 * @var string
+	 */
+	const RPE = 'rpe';
 
 	/**
 	 * Key: trimp
@@ -379,6 +385,7 @@ class Entity extends Model\EntityWithID {
 			self::FIT_HRV_ANALYSIS,
 			self::FIT_TRAINING_EFFECT,
 			self::JD_INTENSITY,
+			self::RPE,
 			self::TRIMP,
 			self::CADENCE,
 			self::POWER,
@@ -454,6 +461,7 @@ class Entity extends Model\EntityWithID {
 			case self::PRESSURE:
 			case self::WEATHER_SOURCE:
 			case self::IS_NIGHT:
+			case self::RPE:
 			case self::NOTES:
 			case self::CREATOR_DETAILS:
 			case self::ACTIVITY_ID:
@@ -710,6 +718,14 @@ class Entity extends Model\EntityWithID {
 	 */
 	public function jdIntensity() {
 		return $this->Data[self::JD_INTENSITY];
+	}
+	
+	/**
+	 * JD intensity
+	 * @return int
+	 */
+	public function rpe() {
+		return $this->Data[self::RPE];
 	}
 
 	/**

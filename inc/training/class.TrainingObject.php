@@ -722,6 +722,17 @@ class TrainingObject extends DataObject {
 	 */
 	public function getJDintensity() { return $this->get('jd_intensity'); }
 
+	/**
+	 * Set rpe
+	 * @param int $rpe rpe
+	 */
+	public function setRPE($rpe) { $this->set('rpe', $rpe); }
+	/**
+	 * Get rpe
+	 * @return int rpe value
+	 */
+	public function getRPE() { return $this->get('rpe'); }
+
 
 	/**
 	 * Get trimp

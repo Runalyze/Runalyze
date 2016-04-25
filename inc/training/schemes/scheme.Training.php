@@ -47,7 +47,7 @@ $FIELDSETS = array(
 	array(
 		'id'		=> 'other',
 		'legend'	=> __('Miscellaneous'),
-		'fields'	=> array('use_vdot', 'comment', 'partner', 'route'),
+		'fields'	=> array('use_vdot', 'rpe', 'comment', 'partner', 'route'),
 		'conf'		=> 'OTHER',
 		'layout'	=> FormularFieldset::$LAYOUT_FIELD_W100_IN_W50
 	),
@@ -354,6 +354,18 @@ $FIELDS = array(
 					),
 					'formular'	=> array(
 						'hidden'	=> true
+					)
+	),
+	'rpe'		=> array(
+					'database'	=> array(
+						'type'		=> 'smallint',
+						'precision'	=> '2',
+						'default'	=> null
+					),
+					'formular'	=> array(
+						'label'		=> __('RPE'),
+						'class'		=> 'TrainingSelectRPE',
+						'css'		=> TrainingFormular::$ONLY_OUTSIDE_CLASS
 					)
 	),
 	'trimp'				=> array(

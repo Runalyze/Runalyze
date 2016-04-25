@@ -121,6 +121,8 @@ class SearchResults {
 
 			'pulse_max',
 			'jd_intensity',
+			'rpe',
+			'fit_training_effect',
 			'trimp',
 
 			'cadence',

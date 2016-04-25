@@ -106,7 +106,13 @@ class FormularValueParser {
 	 * @var string 
 	 */
 	public static $PARSER_WINDSPEED = 'wind_speed';
-
+	
+	/**
+	 * Parser: RPE
+	 * @var string 
+	 */
+	public static $PARSER_RPE = 'rpe';
+	
 	/**
 	 * Validate post-value for a given key with a given parser
 	 * @param string $key
@@ -156,6 +162,8 @@ class FormularValueParser {
 				return self::validateDistance($key, $parserOptions);
 			case self::$PARSER_WINDSPEED:
 				return self::validateWindSpeed($key, $parserOptions);
+			case self::$PARSER_RPE:
+                                return self::validateRPE($key);
 			    
 			default:
 				return true;
@@ -604,6 +612,19 @@ class FormularValueParser {
 		if (null !== $value && $value != '') {
 			$value = round((new WindSpeed($value))->valueInPreferredUnit());
 		}
+	}
+	
+	/**
+	 * Validator: RPE
+	 * @param string $key
+	 * @return bool
+	 */
+	private static function validateRPE($key) {
+		if ($_POST[$key] <6 || $_POST[$key] >20 || !is_numeric($_POST[$key])) {
+			$_POST[$key] = null;
+		}
+
+		return true;
 	}
 
 	/**

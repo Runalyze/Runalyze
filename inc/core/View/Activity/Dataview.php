@@ -28,6 +28,9 @@ use Runalyze\Context as GeneralContext;
 use Runalyze\Util\Time;
 use Runalyze\Util\LocalTime;
 use Runalyze\View\Stresscolor;
+use Runalyze\View\Tooltip;
+use Runalyze\Data\RPE as DataRPE;
+
 
 use SessionAccountHandler;
 use SportFactory;
@@ -311,6 +314,17 @@ class Dataview {
 	 */
 	public function jdIntensity() {
 		return $this->Activity->jdIntensity();
+	}
+	
+ 	/**
+	 * Get string for displaying RPE
+	 * @return string
+	 */
+	public function rpe() {
+	    $Tooltip = new Tooltip(DataRPE::getString( $this->Activity->rpe()) );
+	    $RPE = $this->Activity->rpe();
+	    $Tooltip->wrapAround($RPE);
+	    return $RPE;
 	}
  
  	/**

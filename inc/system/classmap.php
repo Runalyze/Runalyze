@@ -173,6 +173,7 @@ $CLASSMAP = array(
 'TrainingSelectSport' => 'training/formular/class.TrainingSelectSport.php',
 'TrainingSelectType' => 'training/formular/class.TrainingSelectType.php',
 'TrainingSelectWeather' => 'training/formular/class.TrainingSelectWeather.php',
+'TrainingSelectRPE' => 'training/formular/class.TrainingSelectRPE.php',
 'FormularInputSearchTimeRange' => 'training/search/class.FormularInputSearchTimeRange.php',
 'FormularSelectSearchSort' => 'training/search/class.FormularSelectSearchSort.php',
 'SearchFormular' => 'training/search/class.SearchFormular.php',

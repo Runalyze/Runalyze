@@ -190,6 +190,8 @@ class SearchFormular extends Formular {
 		}
 		$this->addBooleanField('use_vdot', __('Uses VDOT'));
 		$this->addNumericConditionField('trimp', __('TRIMP'), FormularInput::$SIZE_SMALL);
+		$this->addNumericConditionField('rpe', __('RPE'), FormularInput::$SIZE_SMALL);
+		$this->addNumericConditionField('fit_training_effect', __('Training Effect'), FormularInput::$SIZE_SMALL);
 	}
 
 	/**
