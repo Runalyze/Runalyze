@@ -540,15 +540,17 @@ abstract class PlotSumData extends Plot {
 		$Types     = array(array('name' => __('without'), 'data' => $emptyData));
 		$TypesData = DB::getInstance()->query('
 			SELECT
-				id, name
+				id, abbr, name
 			FROM
 				`'.PREFIX.'type`
 			WHERE
 				`sportid`="'.$this->Sport->id().'"
 		')->fetchAll();
 
-		foreach ($TypesData as $Type)
-			$Types[$Type['id']] = array('name' => $Type['name'], 'data' => $emptyData);
+		foreach ($TypesData as $Type) {
+		    $name = ($Type['abbr'] == '') ? $Type['name'] : $Type['abbr'];
+			$Types[$Type['id']] = array('name' => $name, 'data' => $emptyData);
+		}
 
 		foreach ($this->RawData as $dat)
 			if ($dat['timer'] >= $this->timerStart && $dat['timer'] <= $this->timerEnd)

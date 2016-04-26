@@ -10,10 +10,12 @@ use Runalyze\Configuration;
 use Runalyze\Parameter\Integer;
 use Runalyze\Parameter\FloatingPoint;
 use Runalyze\Calculation\Performance;
+use Runalyze\Calculation\BasicEndurance;
 use Runalyze\Calculation\JD;
 
 use SessionAccountHandler;
 use DB;
+use Helper;
 
 /**
  * Configuration category: Data
@@ -288,5 +290,21 @@ class Data extends \Runalyze\Configuration\Category {
 		$this->updateVdotShape( $Shape->value() );
 
 		return $Shape->value();
+	}
+
+	/**
+	 * Recalculate required values
+	 *
+	 * Variables in this category store cached values.
+	 * They can be recalculated all together.
+	 */
+	public function recalculateEverything() {
+		$this->recalculateStartTime();
+		$this->recalculateMaxValues();
+		$this->recalculateVDOTcorrector();
+		$this->recalculateVDOTshape();
+
+		Helper::recalculateHFmaxAndHFrest();
+		BasicEndurance::recalculateValue();
 	}
 }

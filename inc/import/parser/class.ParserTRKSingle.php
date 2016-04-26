@@ -62,6 +62,7 @@ class ParserTRKSingle extends ParserAbstractSingle {
 	 */
 	protected function finishData() {
 		$this->TrainingObject->setTimestamp($this->starttime);
+		$this->TrainingObject->setTimezoneOffset(round((new DateTime())->setTimestamp($this->starttime)->getOffset() / 60));
 	}
 
 	/**

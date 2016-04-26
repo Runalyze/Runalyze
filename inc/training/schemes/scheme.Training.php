@@ -13,7 +13,7 @@ $HIDDEN_KEYS = array(
 	//'elevation_corrected', 'gps_cache_object',
 	'arr_time', 'arr_lat', 'arr_lon', 'arr_geohashes', 'arr_alt', 'arr_alt_original', 'arr_heart', 'arr_dist', 'arr_cadence', 'arr_power', 'arr_temperature',
 	'arr_groundcontact', 'arr_vertical_oscillation', 'arr_groundcontact_balance', 'pauses', 'hrv',
-	'fit_vdot_estimate', 'fit_recovery_time', 'fit_hrv_analysis',
+	'fit_vdot_estimate', 'fit_recovery_time', 'fit_hrv_analysis', 'fit_training_effect',
 	//'vdot', 'vdot_by_time', 'trimp', 'vdot_with_elevation', 'jd_intensity'
 	'elapsed_time', 'elevation_calculated', 'groundcontact', 'vertical_oscillation', 'groundcontact_balance', 'vertical_ratio', 'stroke', 'stroketype','total_strokes', 'swolf', 'pool_length', 'weather_source', 'is_night'
 );
@@ -47,7 +47,7 @@ $FIELDSETS = array(
 	array(
 		'id'		=> 'other',
 		'legend'	=> __('Miscellaneous'),
-		'fields'	=> array('use_vdot', 'comment', 'partner', 'route'),
+		'fields'	=> array('use_vdot', 'rpe', 'comment', 'partner', 'route'),
 		'conf'		=> 'OTHER',
 		'layout'	=> FormularFieldset::$LAYOUT_FIELD_W100_IN_W50
 	),
@@ -336,6 +336,16 @@ $FIELDS = array(
 						'hidden'	=> true
 					)
 	),
+	'fit_training_effect'	=> array(
+		'database'	=> array(
+			'type'		=> 'decimal',
+			'precision'	=> '2,1',
+			'default'	=> null
+		),
+		'formular'	=> array(
+			'hidden'	=> true
+		)
+	),
 	'jd_intensity'		=> array(
 					'database'	=> array(
 						'type'		=> 'smallint',
@@ -344,6 +354,18 @@ $FIELDS = array(
 					),
 					'formular'	=> array(
 						'hidden'	=> true
+					)
+	),
+	'rpe'		=> array(
+					'database'	=> array(
+						'type'		=> 'smallint',
+						'precision'	=> '2',
+						'default'	=> null
+					),
+					'formular'	=> array(
+						'label'		=> __('RPE'),
+						'class'		=> 'TrainingSelectRPE',
+						'css'		=> TrainingFormular::$ONLY_OUTSIDE_CLASS
 					)
 	),
 	'trimp'				=> array(

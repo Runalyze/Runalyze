@@ -84,6 +84,10 @@ class ImporterFiletypeFITLOGTest extends PHPUnit_Framework_TestCase {
 		$this->assertFalse( $this->object->hasMultipleTrainings() );
 		$this->assertFalse( $this->object->failed() );
 
+		// assume that '...Z' time strings are NOT converted to Europe/Berlin (see bootstrap.php)
+		$this->assertEquals('2011-04-11 16:52', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
+		$this->assertEquals(0, $this->object->object()->getTimezoneOffset());
+
 		$this->assertEquals( 1399, $this->object->object()->getTimeInSeconds(), '', 30);
 		$this->assertEquals( 4.09, $this->object->object()->getDistance(), '', 0.1);
 		$this->assertEquals( 361, $this->object->object()->getCalories(), '', 10);
@@ -105,6 +109,9 @@ class ImporterFiletypeFITLOGTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertFalse($this->object->hasMultipleTrainings());
 		$this->assertFalse($this->object->failed());
+
+		$this->assertEquals('2015-12-24 12:48', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
+		$this->assertEquals(60, $this->object->object()->getTimezoneOffset());
 
 		$this->assertEquals(1803, $this->object->object()->getTimeInSeconds());
 		$this->assertEquals(0.0, $this->object->object()->getDistance());

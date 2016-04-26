@@ -108,7 +108,7 @@ class ParserXMLsuuntoSingle extends ParserAbstractSingleXML {
 	 * Parse general values
 	 */
 	protected function parseGeneralValues() {
-		$this->TrainingObject->setTimestamp( $this->strtotime((string)$this->XML->header->DateTime) );
+		$this->setTimestampAndTimezoneOffsetWithUtcFixFrom((string)$this->XML->header->DateTime);
 
 		if (!empty($this->XML->header->Activity))
 			$this->guessSportID( (string)$this->XML->header->Activity );

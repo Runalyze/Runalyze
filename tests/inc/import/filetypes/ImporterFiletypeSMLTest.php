@@ -56,6 +56,8 @@ class ImporterFiletypeSMLTest extends PHPUnit_Framework_TestCase {
 		$this->assertFalse( $this->object->hasMultipleTrainings() );
 
 		$this->assertEquals('2014-08-22 10:15:36', LocalTime::date('Y-m-d H:i:s', $this->object->object()->getTimestamp()));
+		$this->assertEquals(120, $this->object->object()->getTimezoneOffset());
+
 		$this->assertEquals( 0.100, $this->object->object()->getDistance() );
 		$this->assertEquals( 3773, $this->object->object()->getTimeInSeconds() );
 		$this->assertEquals( 39, $this->object->object()->getElapsedTime() );
@@ -109,6 +111,8 @@ class ImporterFiletypeSMLTest extends PHPUnit_Framework_TestCase {
 		$this->assertFalse( $this->object->hasMultipleTrainings() );
 
 		$this->assertEquals('2014-10-15 15:15:09', LocalTime::date('Y-m-d H:i:s', $this->object->object()->getTimestamp()));
+		$this->assertEquals(120, $this->object->object()->getTimezoneOffset());
+
 		$this->assertEquals( 6.06, $this->object->object()->getDistance() );
 		$this->assertEquals( 3964, $this->object->object()->getTimeInSeconds() );
 		$this->assertEquals( 79, $this->object->object()->getPulseAvg() );

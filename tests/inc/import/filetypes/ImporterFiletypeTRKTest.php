@@ -20,6 +20,8 @@ class ImporterFiletypeTRKTest extends PHPUnit_Framework_TestCase {
 		$this->assertFalse( $this->object->hasMultipleTrainings() );
 
 		$this->assertEquals( '06-04-2015 15:37:38', LocalTime::date('d-m-Y H:i:s', $this->object->object()->getTimestamp()) );
+		$this->assertEquals(120, $this->object->object()->getTimezoneOffset());
+
 		$this->assertNotEquals( 0, $this->object->object()->getDistance() );
 		$this->assertEquals( 6, $this->object->object()->getTimeInSeconds() );
 		$this->assertEquals( 107, $this->object->object()->getPulseAvg() );
@@ -47,6 +49,8 @@ class ImporterFiletypeTRKTest extends PHPUnit_Framework_TestCase {
 		$this->assertFalse( $this->object->hasMultipleTrainings() );
 
 		$this->assertEquals( '12-04-2015 11:23:00', LocalTime::date('d-m-Y H:i:s', $this->object->object()->getTimestamp()) );
+		$this->assertEquals(120, $this->object->object()->getTimezoneOffset());
+
 		$this->assertNotEquals( 0, $this->object->object()->getDistance() );
 		$this->assertEquals( 20, $this->object->object()->getTimeInSeconds() );
 

@@ -51,6 +51,8 @@ class ImporterFiletypeXMLTest extends PHPUnit_Framework_TestCase {
 		$this->assertFalse( $this->object->hasMultipleTrainings() );
 
 		$this->assertEquals('2013-03-24 11:33:09', LocalTime::date('Y-m-d H:i:s', $this->object->object()->getTimestamp()));
+		$this->assertEquals(60, $this->object->object()->getTimezoneOffset());
+
 		$this->assertEquals( 6.6, $this->object->object()->getDistance() );
 		$this->assertEquals( 725, $this->object->object()->getCalories() );
 		$this->assertEquals( 48*60 + 49, $this->object->object()->getTimeInSeconds() );
@@ -71,6 +73,8 @@ class ImporterFiletypeXMLTest extends PHPUnit_Framework_TestCase {
 		$this->assertFalse( $this->object->hasMultipleTrainings() );
 
 		$this->assertEquals('2014-09-07 09:58:10', LocalTime::date('Y-m-d H:i:s', $this->object->object()->getTimestamp()));
+		$this->assertEquals(120, $this->object->object()->getTimezoneOffset());
+
 		$this->assertEquals( 20.05, $this->object->object()->getDistance() );
 		$this->assertEquals( 2015, $this->object->object()->getCalories() );
 		$this->assertEquals( 2*3600 + 9*60 + 0.1, $this->object->object()->getTimeInSeconds() );

@@ -138,6 +138,7 @@ class ParserCSVepsonSingle extends ParserAbstractSingle {
 			}
 
 			$this->TrainingObject->setTimestamp(strtotime($startDay.' '.$startTime.' UTC'));
+			$this->TrainingObject->setTimezoneOffset(round((strtotime($startDay.' '.$startTime.' UTC') - strtotime($startDay.' '.$startTime))/60));
 		}
 	}
 

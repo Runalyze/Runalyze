@@ -74,6 +74,7 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 	 */
 	protected function setBoxedValues() {
 		$this->addDateAndTime();
+		$this->addRPE();
 		$this->addCadenceAndPower();
 		$this->addStrokeandSwolf();
 		$this->addWeather();
@@ -343,5 +344,14 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 
 			$this->NotesContent .= HTML::fileBlock($CreationTime.$ModificationTime);
 		}
+	}
+	
+	/**
+	 * Add: RPE
+	 */
+	protected function addRPE() {
+	    if ($this->Context->activity()->rpe()) {
+		$this->BoxedValues[] = new Box\RPE($this->Context);
+	    }
 	}
 }

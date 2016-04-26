@@ -150,10 +150,22 @@ class Entity extends Model\EntityWithID {
 	const FIT_HRV_ANALYSIS = 'fit_hrv_analysis';
 
 	/**
+	 * Key: total training effect from fit file
+	 * @var string
+	 */
+	const FIT_TRAINING_EFFECT = 'fit_training_effect';
+
+	/**
 	 * Key: jd intensity
 	 * @var string
 	 */
 	const JD_INTENSITY = 'jd_intensity';
+	
+	/**
+	 * Key: RPE
+	 * @var string
+	 */
+	const RPE = 'rpe';
 
 	/**
 	 * Key: trimp
@@ -371,7 +383,9 @@ class Entity extends Model\EntityWithID {
 			self::FIT_VO2MAX_ESTIMATE,
 			self::FIT_RECOVERY_TIME,
 			self::FIT_HRV_ANALYSIS,
+			self::FIT_TRAINING_EFFECT,
 			self::JD_INTENSITY,
+			self::RPE,
 			self::TRIMP,
 			self::CADENCE,
 			self::POWER,
@@ -447,9 +461,11 @@ class Entity extends Model\EntityWithID {
 			case self::PRESSURE:
 			case self::WEATHER_SOURCE:
 			case self::IS_NIGHT:
+			case self::RPE:
 			case self::NOTES:
 			case self::CREATOR_DETAILS:
 			case self::ACTIVITY_ID:
+			case self::FIT_TRAINING_EFFECT:
 				return true;
 		}
 
@@ -464,6 +480,7 @@ class Entity extends Model\EntityWithID {
 
 		$this->ensureNullIfEmpty(self::TIMEZONE_OFFSET, true);
 		$this->ensureNullIfEmpty(self::IS_NIGHT, true);
+		$this->ensureNullIfEmpty(self::FIT_TRAINING_EFFECT, true);
 		$this->ensureAllNumericValues();
 		$this->synchronizeObjects();
 	}
@@ -688,11 +705,27 @@ class Entity extends Model\EntityWithID {
 	}
 
 	/**
+	 * Total training effect
+	 * @return null|float
+	 */
+	public function fitTrainingEffect() {
+		return $this->Data[self::FIT_TRAINING_EFFECT];
+	}
+
+	/**
 	 * JD intensity
 	 * @return int
 	 */
 	public function jdIntensity() {
 		return $this->Data[self::JD_INTENSITY];
+	}
+	
+	/**
+	 * JD intensity
+	 * @return int
+	 */
+	public function rpe() {
+		return $this->Data[self::RPE];
 	}
 
 	/**

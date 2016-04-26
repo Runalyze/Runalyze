@@ -712,12 +712,26 @@ class TrainingObject extends DataObject {
 	public function setFitHRVscore($score) { $this->set('fit_hrv_analysis', $score); }
 	public function getFitHRVscore() { return $this->get('fit_hrv_analysis'); }
 
+	public function setFitTrainingEffect($effect) { $this->set('fit_training_effect', $effect); }
+	public function getFitTrainingEffect() { return $this->get('fit_training_effect'); }
+
 
 	/**
 	 * Get JD intensity
 	 * @return int jd intensity
 	 */
 	public function getJDintensity() { return $this->get('jd_intensity'); }
+
+	/**
+	 * Set rpe
+	 * @param int $rpe rpe
+	 */
+	public function setRPE($rpe) { $this->set('rpe', $rpe); }
+	/**
+	 * Get rpe
+	 * @return int rpe value
+	 */
+	public function getRPE() { return $this->get('rpe'); }
 
 
 	/**

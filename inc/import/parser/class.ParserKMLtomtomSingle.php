@@ -76,6 +76,7 @@ class ParserKMLtomtomSingle extends ParserAbstractSingleXML {
 	protected function parseGeneralValues() {
 		$when = $this->XML->xpath('//when');
 
+		// This timestamp will be interpreted as server time later on, see parseXML() / interpretTimestampAsServerTime()
 		$this->TrainingObject->setTimestamp( strtotime((string)$when[0]) );
 		$this->TrainingObject->setSportid( Configuration::General()->runningSport() );
 	}

@@ -88,9 +88,11 @@ class ParserFITSingle extends ParserAbstractSingle {
 	 */
 	public function startNewActivity() {
 		$creator = $this->TrainingObject->getCreator();
+		$offset = $this->TrainingObject->getTimezoneOffset();
 
 		$this->TrainingObject = new TrainingObject(DataObject::$DEFAULT_ID);
 		$this->TrainingObject->setTimestamp(PHP_INT_MAX);
+		$this->TrainingObject->setTimezoneOffset($offset);
 		$this->TrainingObject->setCreator($creator);
 
 		$this->isPaused = false;
@@ -226,7 +228,7 @@ class ParserFITSingle extends ParserAbstractSingle {
 			$this->addError( __('FIT file is not specified as activity.') );
 
 		if (isset($this->Values['time_created']))
-			$this->TrainingObject->setTimestamp( $this->strtotime((string)$this->Values['time_created'][1]) );
+			$this->setTimestampAndTimezoneOffsetWithUtcFixFrom((string)$this->Values['time_created'][1]);
 
 		$this->TrainingObject->setSportid( Configuration::General()->mainSport() );
 
@@ -269,6 +271,9 @@ class ParserFITSingle extends ParserAbstractSingle {
 
 		if (isset($this->Values['sport']))
 			$this->guessSportID($this->Values['sport'][1]);
+
+		if (isset($this->Values['total_training_effect']))
+			$this->TrainingObject->setFitTrainingEffect($this->Values['total_training_effect'][0]/10);
 	}
 
 	/**
@@ -351,7 +356,7 @@ class ParserFITSingle extends ParserAbstractSingle {
 			$this->isPaused = false;
 
 			if ($this->lastStopTimestamp === false)
-				$this->TrainingObject->setTimestamp( $thisTimestamp );
+				$this->setTimestampAndTimezoneOffsetWithUtcFixFrom((string)$this->Values['timestamp'][1]);
 			elseif ($thisTimestamp > $this->lastStopTimestamp)
 				$this->PauseInSeconds += $thisTimestamp - $this->lastStopTimestamp;
 		}
@@ -378,7 +383,7 @@ class ParserFITSingle extends ParserAbstractSingle {
 				$startTime = $this->strtotime((string)$this->Values['timestamp'][1]);
 	
 				if ($startTime < $this->TrainingObject->getTimestamp()) {
-					$this->TrainingObject->setTimestamp($startTime);
+					$this->setTimestampAndTimezoneOffsetWithUtcFixFrom((string)$this->Values['timestamp'][1]);
 				}
 			}
 			$time = $this->strtotime((string)$this->Values['timestamp'][1]) - $this->TrainingObject->getTimestamp() - $this->PauseInSeconds;
@@ -493,7 +498,7 @@ class ParserFITSingle extends ParserAbstractSingle {
 		$this->gps['rpm'][] = isset($this->Values['avg_swimming_cadence']) ? (int)$this->Values['avg_swimming_cadence'][0] : 0;
 
 		if (empty($this->gps['time_in_s'])) {
-			$this->TrainingObject->setTimestamp( $this->strtotime((string)$this->Values['start_time'][1]) );
+			$this->setTimestampAndTimezoneOffsetWithUtcFixFrom((string)$this->Values['start_time'][1]);
 			$this->gps['time_in_s'][] = round(((int)$this->Values['total_timer_time'][0])/1000);
 		} else {
 			$this->gps['time_in_s'][] = end($this->gps['time_in_s']) + round(((int)$this->Values['total_timer_time'][0])/1000);

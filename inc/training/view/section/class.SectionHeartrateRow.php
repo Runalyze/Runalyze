@@ -5,7 +5,7 @@
  */
 
 use Runalyze\View\Activity;
-
+use Runalyze\View\Activity\Box;
 /**
  * Row: Heartrate
  * 
@@ -38,6 +38,7 @@ class SectionHeartrateRow extends TrainingViewSectionRowTabbedPlot {
 		$this->addAverageHeartrate();
 		$this->addMaximalHeartrate();
 		$this->addCaloriesAndTrimp();
+		$this->addFitTrainingEffect();
 
 		foreach ($this->BoxedValues as &$Value)
 			$Value->defineAsFloatingBlock('w50');
@@ -77,5 +78,14 @@ class SectionHeartrateRow extends TrainingViewSectionRowTabbedPlot {
 			$this->BoxedValues[] = new BoxedValue($this->Context->activity()->calories(), 'kcal', __('Calories'));
 			$this->BoxedValues[] = new BoxedValue($this->Context->activity()->trimp(), '', __('TRIMP'));
 		}
+	}
+	
+	/**
+	 * Add: FitTrainingEffect
+	 */
+	protected function addFitTrainingEffect() {
+	    if ($this->Context->activity()->fitTrainingEffect()) {
+		$this->BoxedValues[] = new Box\FitTrainingEffect($this->Context);
+	    }
 	}
 }
