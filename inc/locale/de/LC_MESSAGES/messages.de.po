@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-04-26 19:29+0200\n"
-"PO-Revision-Date: 2016-04-26 19:34+0200\n"
+"PO-Revision-Date: 2016-04-26 19:37+0200\n"
 "Last-Translator: Michael Pohl <michael@mipapo.de>\n"
 "Language-Team: German "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
@@ -2604,20 +2604,19 @@ msgstr ""
 
 #: inc/core/Data/RPE.php:30
 msgid "Hard"
-msgstr ""
+msgstr "anstrengend"
 
 #: inc/core/Data/RPE.php:32
 msgid "Very Hard"
-msgstr ""
+msgstr "sehr anstrengend"
 
 #: inc/core/Data/RPE.php:34
 msgid "Extremely hard"
-msgstr ""
+msgstr "extrem anstrengend"
 
 #: inc/core/Data/RPE.php:35
-#, fuzzy
 msgid "Maximal exertion"
-msgstr "Maximalpuls"
+msgstr "Maximale Anstrengung"
 
 #: inc/core/Data/Weather/CardinalDirection.php:72
 #: inc/core/Data/Weather/CardinalDirection.php:76
