@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-04-26 19:29+0200\n"
-"PO-Revision-Date: 2016-04-11 16:50+0200\n"
+"PO-Revision-Date: 2016-04-26 23:16+0200\n"
 "Last-Translator: Péter Tóth <kiszeko@freemail.hu>\n"
-"Language-Team: Hungarian <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/hu/>\n"
+"Language-Team: Hungarian "
+"<http://translate.runalyze.de/projects/runalyze/runalyze/hu/>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -330,7 +330,7 @@ msgstr "TRIMP"
 #: inc/training/search/class.FormularSelectSearchSort.php:44
 #, fuzzy
 msgid "JDpoints"
-msgstr "JDpoints"
+msgstr "JDpointok"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:48
 msgid "descending"
@@ -552,8 +552,9 @@ msgstr ""
 #: inc/training/search/class.SearchFormular.php:194
 #: inc/core/Activity/TrainingEffect.php:53
 #: inc/core/Dataset/Keys/FitTrainingEffect.php:43
+#, fuzzy
 msgid "Training Effect"
-msgstr ""
+msgstr "Edzés hatás"
 
 #: inc/training/search/class.SearchFormular.php:291
 #: inc/system/config/class.ConfigTabAccount.php:66
@@ -587,8 +588,8 @@ msgid ""
 "All traditional formulas are being used to calculate a VDOT value for a "
 "given competition."
 msgstr ""
-"Minden hagyományos képletet egy adott verseny VDOT értékenek kiszámítására "
-"használják."
+"A hagyományos képleteket mindig egy adott verseny VDOT értékének "
+"kiszámítására használják."
 
 #: inc/training/view/class.VDOTinfo.php:92
 msgid "Correction: based on heartrate"
@@ -656,7 +657,7 @@ msgstr "Hatás"
 
 #: inc/training/view/section/class.SectionRunningDynamics.php:21
 msgid "Running Dynamics"
-msgstr ""
+msgstr "Futás dinamika"
 
 #: inc/training/view/section/class.SectionLaps.php:20
 #: inc/training/formular/class.TrainingInputSplits.php:27
@@ -678,7 +679,7 @@ msgstr "Számított körök"
 
 #: inc/training/view/section/class.SectionRoute.php:17
 msgid "Course and elevation data"
-msgstr ""
+msgstr "Útvonal és emelkedési adatok"
 
 #: inc/training/view/section/class.SectionPace.php:17
 msgid "Pace data"
@@ -691,11 +692,11 @@ msgstr ""
 #: inc/training/view/section/class.SectionHeartrateRow.php:28
 #: inc/training/view/section/class.SectionPaceRow.php:30
 msgid "You'll be soon able to configure your own zones."
-msgstr ""
+msgstr "Hamarosan a saját zónáidat is testre szabhatod."
 
 #: inc/training/view/section/class.SectionHeartrateRow.php:30
 msgid "Heartrate zones"
-msgstr ""
+msgstr "Pulzus zónák"
 
 #: inc/training/view/section/class.SectionHeartrateRow.php:52
 #: inc/training/view/section/class.SectionHeartrateRow.php:55
@@ -703,7 +704,7 @@ msgstr ""
 #: inc/training/view/section/class.SectionCompositeRow.php:161
 #: inc/training/view/section/class.SectionCompositeRow.php:164
 msgid "&oslash; Heartrate"
-msgstr ""
+msgstr "&oslash; Pulzus"
 
 #: inc/training/view/section/class.SectionSwimLaneRow.php:35
 #: inc/core/View/Activity/Plot/Series/Stroke.php:62
@@ -723,12 +724,12 @@ msgstr ""
 #: inc/training/view/section/class.SectionRouteRowElevation.php:73
 #: inc/training/view/section/class.SectionCompositeRow.php:220
 msgid "Course"
-msgstr ""
+msgstr "Útvonal"
 
 #: inc/training/view/section/class.SectionLapsRowManual.php:49
 #: inc/training/view/section/class.SectionLapsRowComputed.php:47
 msgid "More details about your laps"
-msgstr ""
+msgstr "A futamaid részletes adatai"
 
 #: inc/training/view/section/class.SectionHRV.php:18
 msgid "Heart rate variability"
@@ -737,12 +738,12 @@ msgstr ""
 #: inc/training/view/section/class.SectionRouteRowElevation.php:86
 #: inc/training/view/section/class.SectionCompositeRow.php:233
 msgid "More about elevation"
-msgstr ""
+msgstr "Bővebben az emelkedésről"
 
 #: inc/training/view/section/class.SectionRouteRowElevation.php:93
 #: inc/training/view/section/class.SectionCompositeRow.php:238
 msgid "Elevation data were corrected."
-msgstr ""
+msgstr "Az emelkedés adatai javítva."
 
 #: inc/training/view/section/class.SectionRouteRowElevation.php:95
 #: inc/training/view/section/class.SectionCompositeRow.php:240
