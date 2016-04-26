@@ -15,9 +15,8 @@ $LOCALE_DIR=__DIR__.'/../inc/locale';
 
 foreach ($supportedLanguages as $lang => $larr){
     $lang_dir=$LOCALE_DIR.'/'.$lang.'/LC_MESSAGES/';
-    if (is_file($lang_dir.'runalyze.po')){
-        echo $lang.' ';
-        system ('msgfmt -v '.$lang_dir.'runalyze.po -o '.$lang_dir.'runalyze.mo');
+    if (is_file($lang_dir.'messages.'.$lang.'.po')){
+	system ('msgfmt -v '.$lang_dir.'messages.'.$lang.'.po -o '.$lang_dir.'runalyze.mo');
     }
 }
 
