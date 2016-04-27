@@ -99,7 +99,7 @@ class SectionRunningDynamicsRow extends TrainingViewSectionRowTabbedPlot {
 	 */
 	protected function addRunningDynamics() {
 		if ($this->Context->activity()->groundcontact() > 0 || $this->Context->activity()->verticalOscillation() > 0) {
-			$Oscillation = new BoxedValue(Helper::Unknown(round($this->Context->activity()->verticalOscillation()/10, 1), '-'), 'cm', __('Vertical oscillation'));
+			$Oscillation = new BoxedValue(Helper::Unknown(number_format($this->Context->activity()->verticalOscillation()/10, 1), '-'), 'cm', __('Vertical oscillation'));
 			$Oscillation->defineAsFloatingBlock('w50');
 
 			$VerticalRatio = new Activity\Box\VerticalRatio($this->Context);

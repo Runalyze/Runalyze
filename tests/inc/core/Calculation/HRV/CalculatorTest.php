@@ -63,18 +63,21 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase {
 		)), null);
 		$CalculatorWithoutFilter->calculate();
 		$this->assertEquals(362.5, $CalculatorWithoutFilter->mean());
+		$this->assertEquals(0.0, $CalculatorWithoutFilter->percentageAnomalies());
 
 		$CalculatorWithNormalFilter = new Calculator(new Entity(array(
 			Entity::DATA => array(300, 350, 400, 701, 99, 400, 350, 300)
 		)), 0.75);
 		$CalculatorWithNormalFilter->calculate();
 		$this->assertEquals(350, $CalculatorWithNormalFilter->mean());
+		$this->assertEquals(0.25, $CalculatorWithNormalFilter->percentageAnomalies());
 
 		$CalculatorWithJumpInData = new Calculator(new Entity(array(
 			Entity::DATA => array(300, 350, 400, 800, 750, 700)
 		)), 0.75);
 		$CalculatorWithJumpInData->calculate();
 		$this->assertEquals(550, $CalculatorWithJumpInData->mean());
+		$this->assertEquals(0.0, $CalculatorWithJumpInData->percentageAnomalies());
 	}
 
 }
