@@ -84,7 +84,7 @@ class SectionHeartrateRow extends TrainingViewSectionRowTabbedPlot {
 	 * Add: FitTrainingEffect
 	 */
 	protected function addFitTrainingEffect() {
-	    if ($this->Context->activity()->fitTrainingEffect()) {
+	    if ($this->Context->activity()->fitTrainingEffect() > 0) {
 		$this->BoxedValues[] = new Box\FitTrainingEffect($this->Context);
 	    }
 	}
