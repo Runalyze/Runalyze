@@ -10,5 +10,3 @@
 </div>
 </div>
 
-</body>
-</html>

@@ -16,7 +16,9 @@ $LOCALE_DIR=__DIR__.'/../inc/locale';
 foreach ($supportedLanguages as $lang => $larr){
     $lang_dir=$LOCALE_DIR.'/'.$lang.'/LC_MESSAGES/';
     if (is_file($lang_dir.'messages.'.$lang.'.po')){
-	system ('msgfmt -v '.$lang_dir.'messages.'.$lang.'.po -o '.$lang_dir.'runalyze.mo');
+        //needed for symfony
+        copy($lang_dir.'messages.'.$lang.'.po', $LOCALE_DIR.'/messages.'.$lang.'.po');
+	    system ('msgfmt -v '.$lang_dir.'messages.'.$lang.'.po -o '.$lang_dir.'runalyze.mo');
     }
 }
 

@@ -173,7 +173,7 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 	protected function displayImportForm() {
 		$Fieldset = new FormularFieldset( __('Import file') );
 
-		$Formular = new Formular( $_SERVER['SCRIPT_NAME'].'?id='.$this->id() );
+		$Formular = new Formular('call/call.Plugin.display.php?id='.$this->id() );
 		$Formular->setId('import-json-form');
 		$Formular->addCSSclass('ajax');
 		$Formular->addCSSclass('no-automatic-reload');
@@ -255,7 +255,7 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 			new qq.FineUploaderBasic({
 				button: $("#file-upload")[0],
 				request: {
-					endpoint: \''.$_SERVER['SCRIPT_NAME'].'?hideHtmlHeader=true&id='.$this->id().'&json=true\'
+					endpoint: \'call/call.Plugin.display.php?hideHtmlHeader=true&id='.$this->id().'&json=true\'
 				},
 				callbacks: {
 					onError: function(id, name, errorReason, xhr) {
@@ -266,7 +266,7 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 					},
 					onComplete: function(id, fileName, responseJSON) {
 						$(".appended-by-uploader").remove();
-						$("#pluginTool").loadDiv(\''.$_SERVER['SCRIPT_NAME'].'?id='.$this->id().'&file=\'+encodeURIComponent(fileName));
+						$("#pluginTool").loadDiv(\'call/call.Plugin.display.php?id='.$this->id().'&file=\'+encodeURIComponent(fileName));
 
 						if (!responseJSON.success) {
 							if (responseJSON.error == "")

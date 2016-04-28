@@ -6,6 +6,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
+
 require_once '../inc/class.Frontend.php';
 require_once '../inc/class.FrontendShared.php';
 require_once '../inc/class.FrontendSharedList.php';
@@ -17,7 +18,10 @@ class DefaultController extends Controller
         if ($initFrontend)
             $Frontend = new \Frontend();
         include $file;
-        return new Response;
+
+        return $this->render(
+            'CoreBundle:Default:end.html.twig'
+        );
     }
     
     /**

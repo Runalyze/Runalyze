@@ -19,6 +19,7 @@ lib/phpfastcache/cache.storage.*
 data/config.php
 data/timezone.sqlite
 *.mo
+inc/locale/*.po
 
 #composer
 composer.phar
