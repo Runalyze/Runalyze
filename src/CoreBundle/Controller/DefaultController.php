@@ -78,7 +78,11 @@ class DefaultController extends Controller
      */
     public function dashboardHelpAction()
     {
-        return $this->includeOldScript('../inc/tpl/tpl.help.php');
+        $Frontend = new \Frontend();
+        return $this->render(
+            'CoreBundle:Default:help.html.twig', array(
+                'version' => RUNALYZE_VERSION
+        ));
     }
     
     /**
