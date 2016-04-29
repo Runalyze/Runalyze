@@ -418,9 +418,10 @@ class HTML {
 	 * @param array $options Array containing values as indices, displayed text as values (may be array: 'text' => ..., 'data-...' => ...)
 	 * @param mixed $selected Value to be selected
 	 * @param string $id [optional]
+	 * @param string $class
 	 * @return string
 	 */
-	public static function selectBox($name, $options, $selected = false, $id = '', $class=null) {
+	public static function selectBox($name, $options, $selected = false, $id = '', $class = '') {
 		if ($selected === false && isset($_POST[$name]))
 			$selected = $_POST[$name];
 

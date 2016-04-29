@@ -78,7 +78,7 @@ class ConfigTabSports extends ConfigTab {
 			return (!isset($b['counts']) || (isset($a['counts']) && ((int)$a['counts'] > (int)$b['counts']))) ? -1 : 1;
 		});
 
-		$Sports[] = array('id' => -1, 'new' => true, 'name' => '', 'img' => 'unknown.gif', 'short' => 0, 'kcal' => '', 'HFavg' => '', 'distances' => 0, 'speed' => Pace::STANDARD, 'power' => 0, 'outside' => '', 'main_equipmenttypeid' => 0);
+		$Sports[] = array('id' => -1, 'new' => true, 'name' => '', 'img' => 'unknown.gif', 'short' => 0, 'kcal' => '', 'HFavg' => '', 'distances' => 0, 'speed' => Pace::STANDARD, 'power' => 0, 'outside' => '', 'main_equipmenttypeid' => 0, 'default_typeid' => 0);
 
 		$IconOptions = SportFactory::getIconOptions();
 		$PaceOptions = Pace::options();
@@ -112,9 +112,9 @@ class ConfigTabSports extends ConfigTab {
 						<td>'.HTML::selectBox('sport[speed]['.$id.']', $PaceOptions, $Data['speed']).'</td>
 						<td><input type="checkbox" name="sport[power]['.$id.']"'.($Data['power'] == 1 ? ' checked' : '').'></td>
 						<td><input type="checkbox" name="sport[outside]['.$id.']"'.($Data['outside'] == 1 ? ' checked' : '').'></td>
-						<td>'.HTML::selectBox('sport[main_equipmenttypeid]['.$id.']', $EquipmentTypeOptions, $Data['main_equipmenttypeid']).'</td>
-						<td>'.HTML::selectBox('sport[default_typeid]['.$id.']', $SportTypeOptions, $Data['default_typeid']).'</td>
-						<td>'.($isRunning ? '<input type="hidden" name="sport[short]['.$id.']" value="0">-' : HTML::selectBox('sport[short]['.$id.']', $ShortOptions, $Data['short'])).'</td>
+						<td>'.HTML::selectBox('sport[main_equipmenttypeid]['.$id.']', $EquipmentTypeOptions, $Data['main_equipmenttypeid'], '', 'w100').'</td>
+						<td>'.HTML::selectBox('sport[default_typeid]['.$id.']', $SportTypeOptions, $Data['default_typeid'], '', 'w100').'</td>
+						<td>'.($isRunning ? '<input type="hidden" name="sport[short]['.$id.']" value="0"><small>'.__('complete row').'</small>' : HTML::selectBox('sport[short]['.$id.']', $ShortOptions, $Data['short'])).'</td>
 						<td>'.($isRunning ? '-' : $delete).'</td>
 					</tr>';
 		}
