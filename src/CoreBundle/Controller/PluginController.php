@@ -102,10 +102,9 @@ class PluginController extends Controller
         }
         
         if ($Plugin !== null) {
-        	if ($Plugin instanceof PluginPanel) {
+        	if ($Plugin instanceof \PluginPanel) {
         		$Plugin->setSurroundingDivVisible(false);
         	}
-        
         	$Plugin->display();
         }
         return new Response;
