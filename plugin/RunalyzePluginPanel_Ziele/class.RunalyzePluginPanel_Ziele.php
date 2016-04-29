@@ -94,7 +94,8 @@ class RunalyzePluginPanel_Ziele extends PluginPanel
 	 */
 	protected function getRightSymbol()
 	{
-		$Code = '<ul>';
+		$Code .= '<li class="with-submenu"><span class="link">'.__('Choose time range').'</span>';
+		$Code .= '<ul class="submenu">';
 
 		foreach ($this->getTimeset() as $i => $timeset) {
 			if (!$this->Configuration()->value('ziel_show_' . $i))
@@ -103,7 +104,10 @@ class RunalyzePluginPanel_Ziele extends PluginPanel
 			$Code .= '<li>' . Ajax::change($timeset['name'], 'bunny', '#bunny_' . $i) . '</li>';
 		}
 
-		return $Code . '</ul>';
+		$Code .= '</ul>';
+		$code .= '</li>';
+
+		return '<ul>'.$Code.'</ul>';
 	}
 
 	/**

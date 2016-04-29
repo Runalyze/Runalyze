@@ -340,7 +340,7 @@ $FIELDS = array(
 		'database'	=> array(
 			'type'		=> 'decimal',
 			'precision'	=> '2,1',
-			'default'	=> null
+			'null'	=> true
 		),
 		'formular'	=> array(
 			'hidden'	=> true

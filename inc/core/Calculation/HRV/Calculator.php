@@ -91,6 +91,12 @@ class Calculator {
 	protected $NN20 = 0;
 
 	/**
+	 * Percentage of filtered r-r intervals
+	 * @var float in [0.0, 1.0]
+	 */
+	protected $percentageAnomalies = 0.0;
+
+	/**
 	 * Calculator for hrv statistics
 	 *
 	 * http://www.zhb.uni-luebeck.de/epubs/ediss1118.pdf, 2.4.2.1 suggests a filter threshold of 75 %
@@ -101,7 +107,7 @@ class Calculator {
 	public function __construct(Entity $hrvObject, $filterThreshold = 0.75) {
 		$this->Object = clone $hrvObject;
 
-		if (null !== $filterThreshold) {
+		if (null !== $filterThreshold && $this->Object->num() > 0) {
 			$this->filterByThreshold($filterThreshold);
 		}
 	}
@@ -126,6 +132,8 @@ class Calculator {
 				$newData[] = $oldData[$i];
 			}
 		}
+
+		$this->percentageAnomalies = ($num - count($newData))/$num;
 
 		$this->Object->set(Entity::DATA, $newData);
 	}
@@ -184,6 +192,13 @@ class Calculator {
 	 */
 	public function pNN20() {
 		return $this->pNN20;
+	}
+
+	/**
+	 * @return float in [0.0, 1.0]
+	 */
+	public function percentageAnomalies() {
+		return $this->percentageAnomalies;
 	}
 
 	/**

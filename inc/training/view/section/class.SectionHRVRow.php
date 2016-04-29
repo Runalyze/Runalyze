@@ -40,14 +40,15 @@ class SectionHRVRow extends TrainingViewSectionRowTabbedPlot {
 		$Calculator->calculate();
 
 		$boxes = array(
-			new BoxedValue(round(log($Calculator->RMSSD()), 1), '', 'lnRMSSD'),
+			new BoxedValue(number_format(log($Calculator->RMSSD()), 1), '', 'lnRMSSD'),
 			new BoxedValue(round($Calculator->mean()), 'ms', __('&Oslash; R-R interval')),
 			new BoxedValue(round($Calculator->RMSSD()), 'ms', 'RMSSD'),
 			new BoxedValue(round($Calculator->SDSD()), 'ms', 'SDSD'),
 			new BoxedValue(round($Calculator->SDNN()), 'ms', 'SDNN'),
 			new BoxedValue($Calculator->SDANN() > 0 ? round($Calculator->SDANN()) : '-', 'ms', '5 min-SDANN'),
-			new BoxedValue(round($Calculator->pNN50()*100, 1), '%', 'pNN50'),
-			new BoxedValue(round($Calculator->pNN20()*100, 1), '%', 'pNN20')
+			new BoxedValue(number_format($Calculator->pNN50()*100, 1), '%', 'pNN50'),
+			new BoxedValue(number_format($Calculator->pNN20()*100, 1), '%', 'pNN20'),
+			new BoxedValue(number_format($Calculator->percentageAnomalies()*100, 1), '%', __('Anomalies'))
 		);
 
 		foreach ($boxes as $box) {
