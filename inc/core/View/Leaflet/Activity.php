@@ -298,7 +298,7 @@ class Activity extends LeafletRoute {
 	 * Check for pause
 	 */
 	protected function checkForPause() {
-		if (!is_null($this->Trackdata) && $this->Trackdata->hasPauses()) {
+		if (!is_null($this->Trackdata) && $this->Trackdata->hasPauses() && $this->hasTrackdataLoop()) {
 			if (
 				$this->PauseIndex < $this->Trackdata->pauses()->num() &&
 				$this->Trackdata->pauses()->at($this->PauseIndex)->time() <= $this->Trackdata->at($this->TrackdataLoop->index(), Trackdata\Entity::TIME)
