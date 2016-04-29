@@ -83,8 +83,6 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 		}
 	}
 
-	$StartDayInYear = $All || $lastHalf || $lastYear ? Time::diffInDays($StartTime, mktime(0,0,0,1,1,$StartYear)) + 1*($StartYear < $Year) : 1;
-	$StartDayInYear += $lastHalf || $lastYear ? 1 : 0;
 	$LowestIndex = $AddDays + 1*(!$All);
 	$HighestIndex = $LowestIndex + $NumberOfDays;
 
@@ -123,8 +121,10 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 		$maxCTL = 100;
 	}
 
+	$StartTime = strtotime($StartDay) + 1800 * 24;
+
 	for ($d = $LowestIndex; $d <= $HighestIndex; $d++) {
-		$index = Plot::dayOfYearToJStime($StartYear, $d - $AddDays + $StartDayInYear, 12);
+		$index = ($StartTime + 3600 * 24 * ($d - $AddDays)) . '000';
 
 		$ATLs[$index] = 100 * $performanceModel->fatigueAt($d) / $maxATL;
 		$CTLs[$index] = 100 * $performanceModel->fitnessAt($d) / $maxCTL;
