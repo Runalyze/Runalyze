@@ -61,12 +61,6 @@ class ParserFITSingle extends ParserAbstractSingle {
 	 */
 	protected $lastStopTimestamp = false;
 
-	/**
-	 * Pauses to apply
-	 * @var array
-	 */
-	protected $pausesToApply = array();
-
 	/** @var float [s] */
 	protected $compressedTotalTime = 0;
 
@@ -515,58 +509,6 @@ class ParserFITSingle extends ParserAbstractSingle {
 			foreach ($values as $value) {
 				if ($value != '65535') {
 					$this->gps['hrv'][] = 1000*(double)substr($value, 0, -1);
-				}
-			}
-		}
-	}
-
-	/**
-	 * Apply pauses
-	 */
-	protected function applyPauses() {
-		if (!empty($this->pausesToApply)) {
-			$num = count($this->gps['time_in_s']);
-			$keys = array_keys($this->gps);
-			$pauseInSeconds = 0;
-			$pauseIndex = 0;
-			$pauseTime = $this->pausesToApply[$pauseIndex]['time'];
-			$pauseUntil = 0;
-			$isPause = false;
-			$hrStart = 0;
-
-			for ($i = 0; $i < $num; $i++) {
-				if (!$isPause && $this->gps['time_in_s'][$i] > $pauseTime) {
-					if ($pauseIndex < count($this->pausesToApply)) {
-						$isPause = true;
-						$hrStart = $this->gps['heartrate'][$i];
-						$pauseInSeconds += $this->pausesToApply[$pauseIndex]['duration'];
-						$pauseTime = $this->pausesToApply[$pauseIndex]['time'];
-						$pauseUntil = $this->pausesToApply[$pauseIndex]['duration'] + $pauseTime;
-						$pauseIndex++;
-						$pauseTime = ($pauseIndex < count($this->pausesToApply)) ? $this->pausesToApply[$pauseIndex]['time'] : PHP_INT_MAX;
-					}
-				}
-
-				if ($isPause && $this->gps['time_in_s'][$i] >= $pauseUntil) {
-					$isPause = false;
-					$this->TrainingObject->Pauses()->add(
-						new \Runalyze\Model\Trackdata\Pause(
-							$this->pausesToApply[$pauseIndex-1]['time'],
-							$this->pausesToApply[$pauseIndex-1]['duration'],
-							$hrStart,
-							end($this->gps['heartrate'])
-						)
-					);
-				}
-
-				if ($isPause) {
-					foreach ($keys as $key) {
-						if (isset($this->gps[$key][$i])) {
-							unset($this->gps[$key][$i]);
-						}
-					}
-				} else {
-					$this->gps['time_in_s'][$i] -= $pauseInSeconds;
 				}
 			}
 		}
