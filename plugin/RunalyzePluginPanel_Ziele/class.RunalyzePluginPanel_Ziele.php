@@ -4,10 +4,10 @@
  * @package Runalyze\Plugins\Panels
  */
 
-use Runalyze\Configuration;
 use Runalyze\Activity\Distance;
-use Runalyze\Util\Time;
+use Runalyze\Configuration;
 use Runalyze\Util\LocalTime;
+use Runalyze\Util\Time;
 
 $PLUGINKEY = 'RunalyzePluginPanel_Ziele';
 
@@ -94,18 +94,21 @@ class RunalyzePluginPanel_Ziele extends PluginPanel
 	 */
 	protected function getRightSymbol()
 	{
-		$Code .= '<li class="with-submenu"><span class="link">'.__('Choose time range').'</span>';
-		$Code .= '<ul class="submenu">';
-
+		$isFirst = true;
+		$Code = '<ul class="submenu">';
 		foreach ($this->getTimeset() as $i => $timeset) {
 			if (!$this->Configuration()->value('ziel_show_' . $i))
 				continue;
-
 			$Code .= '<li>' . Ajax::change($timeset['name'], 'bunny', '#bunny_' . $i) . '</li>';
+			if ($isFirst) {
+				$Code = '<li class="with-submenu"><span class="link">' . $timeset['name'] . '</span>' . $Code;
+				$isFirst = false;
+			};
 		}
-
+//		$(this).closest("li.with-submenu").find("span").text($(this).text())
+		
 		$Code .= '</ul>';
-		$code .= '</li>';
+		$Code .= '</li>';
 
 		return '<ul>'.$Code.'</ul>';
 	}
