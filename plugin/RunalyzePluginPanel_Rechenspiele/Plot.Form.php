@@ -69,7 +69,7 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 			FROM `'.PREFIX.'training`
 			WHERE
 				`accountid`='.\SessionAccountHandler::getId().' AND
-				`time` BETWEEN UNIX_TIMESTAMP("'.$StartDay.'" + INTERVAL -'.$AddDays.' DAY) AND UNIX_TIMESTAMP("'.$StartDay.'" + INTERVAL '.$NumberOfDays.' DAY)-1
+				`time` BETWEEN UNIX_TIMESTAMP("'.$StartDay.'" + INTERVAL -'.$AddDays.' DAY) AND '.$EndTime.'
 			GROUP BY `index`')->fetchAll();
 
 	foreach ($Data as $dat) {
