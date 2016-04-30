@@ -6,39 +6,10 @@
 class HelperTest extends PHPUnit_Framework_TestCase {
 
 	/**
-	 * @var Helper
-	 */
-	protected $object;
-
-	/**
-	 * Sets up the fixture, for example, opens a network connection.
-	 * This method is called before a test is executed.
-	 */
-	protected function setUp() {}
-
-	/**
-	 * Tears down the fixture, for example, closes a network connection.
-	 * This method is called after a test is executed.
-	 */
-	protected function tearDown() {}
-
-	/**
 	 * @covers Helper::arrayTrim
 	 */
 	public function testArrayTrim() {
 		$this->assertEquals( array('a', 'b', 'c', 'd', 1), Helper::arrayTrim(array(' a', 'b ', ' c ', 'd', 1)) );
-	}
-
-	/**
-	 * @covers Helper::roundFor
-	 */
-	public function testRoundFor() {
-		$this->assertEquals( 5, Helper::roundFor(4, 5) );
-		$this->assertEquals( 0, Helper::roundFor(9, 20) );
-		$this->assertEquals( 20, Helper::roundFor(11, 20) );
-		$this->assertEquals( 20, Helper::roundFor(20, 20) );
-		$this->assertEquals( 20, Helper::roundFor(21, 20) );
-		$this->assertEquals( 20, Helper::roundFor(29, 20) );
 	}
 
 	/**
@@ -87,76 +58,12 @@ class HelperTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @covers Helper::Cut
-	 * @todo   Implement testCut().
-	 */
-	public function testCut() {
-		// Remove the following lines when you implement this test.
-	}
-
-	/**
 	 * @covers Helper::CommaToPoint
 	 */
 	public function testCommaToPoint() {
 		$this->assertEquals( '17.5', Helper::CommaToPoint('17.5') );
 		$this->assertEquals( '17.5', Helper::CommaToPoint('17,5') );
 		$this->assertEquals( '175', Helper::CommaToPoint('175') );
-	}
-
-	/**
-	 * @covers Helper::getStartTime
-	 * @todo   Implement testGetStartTime().
-	 */
-	public function testGetStartTime() {
-		// Remove the following lines when you implement this test.
-	}
-
-	/**
-	 * @covers Helper::recalculateStartTime
-	 * @todo   Implement testRecalculateStartTime().
-	 */
-	public function testRecalculateStartTime() {
-		// Remove the following lines when you implement this test.
-	}
-
-	/**
-	 * @covers Helper::recalculateHFmaxAndHFrest
-	 * @todo   Implement testRecalculateHFmaxAndHFrest().
-	 */
-	public function testRecalculateHFmaxAndHFrest() {
-		// Remove the following lines when you implement this test.
-	}
-
-	/**
-	 * @covers Helper::getHFmax
-	 * @todo   Implement testGetHFmax().
-	 */
-	public function testGetHFmax() {
-		// Remove the following lines when you implement this test.
-	}
-
-	/**
-	 * @covers Helper::recalculateHFmax
-	 * @todo   Implement testRecalculateHFmax().
-	 */
-	public function testRecalculateHFmax() {
-		// Remove the following lines when you implement this test.
-	}
-
-	/**
-	 * @covers Helper::getHFrest
-	 * @todo   Implement testGetHFrest().
-	 */
-	public function testGetHFrest() {
-		// Remove the following lines when you implement this test.
-	}
-
-	/**
-	 * @covers Helper::recalculateHFrest
-	 * @todo   Implement testRecalculateHFrest().
-	 */
-	public function testRecalculateHFrest() {
-		// Remove the following lines when you implement this test.
 	}
 
 }

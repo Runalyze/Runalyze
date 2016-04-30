@@ -450,6 +450,8 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 	 * Get array for "Pulsbereiche"
 	 */
 	private function getPulseArray() {
+		$hrMax = Configuration::Data()->HRmax();
+		$hrRest = Configuration::Data()->HRrest();
 		$pulse_min  = max((int)$this->Configuration()->value('lowest_pulsegroup'), 0);
 		$pulse_step = max((int)$this->Configuration()->value('pulsegroup_step'), 1);
 		$ceil_corr  = $pulse_min % $pulse_step;
@@ -460,9 +462,9 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 				SUM(`distance`) AS `distance`,
 				SUM(`s`) AS `s`,
 				'.(Configuration::General()->heartRateUnit()->isHRreserve() ?
-					'CEIL( (100 * (`pulse_avg` - '.$ceil_corr.' - '.HF_REST.') / ('.HF_MAX.' - '.HF_REST.')) /'.$pulse_step.')*'.$pulse_step.' + '.$ceil_corr.' AS `group`'
+					'CEIL( (100 * (`pulse_avg` - '.$ceil_corr.' - '.$hrRest.') / ('.$hrMax.' - '.$hrRest.')) /'.$pulse_step.')*'.$pulse_step.' + '.$ceil_corr.' AS `group`'
 				:
-					'CEIL( (100 * (`pulse_avg` - '.$ceil_corr.') / '.HF_MAX.') /'.$pulse_step.')*'.$pulse_step.' + '.$ceil_corr.' AS `group`').'
+					'CEIL( (100 * (`pulse_avg` - '.$ceil_corr.') / '.$hrMax.') /'.$pulse_step.')*'.$pulse_step.' + '.$ceil_corr.' AS `group`').'
 			FROM `'.PREFIX.'training`
 			WHERE `sportid`='.$this->sportid.' AND '.PREFIX.'training.accountid="'.SessionAccountHandler::getId().'" '.$this->WhereTime.' && `pulse_avg`!=0
 			GROUP BY `group`, '.$this->GroupTime.'
@@ -489,8 +491,8 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 				$to = min($pulse, 100);
 
 				if ($absoluteValues) {
-					$from = ceil(HF_MAX * $from / 100);
-					$to = floor(HF_MAX * $to / 100).' bpm';
+					$from = ceil($hrMax * $from / 100);
+					$to = floor($hrMax * $to / 100).' bpm';
 				} else {
 					$to .= ' &#37;';
 				}

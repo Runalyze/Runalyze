@@ -8,18 +8,6 @@ use Runalyze\Configuration;
 use Runalyze\Error;
 
 /**
- * Maximal heart-frequence of the user
- * @var int
- */
-define('HF_MAX', Helper::getHFmax());
-
-/**
- * Heart-frequence in rest of the user
- * @var int
- */
-define('HF_REST', Helper::getHFrest());
-
-/**
  * Timestamp of the first training
  * @var int
  */
@@ -46,16 +34,6 @@ class Helper {
 		array_walk($array, 'trimValuesForArray');
 
 		return $array;
-	}
-
-	/**
-	 * Round to factor of $roundForInt
-	 * @param double $numberToRound
-	 * @param int $roundForInt
-	 * @return int
-	 */
-	public static function roundFor($numberToRound, $roundForInt) {
-		return $roundForInt * round($numberToRound / $roundForInt);
 	}
 
 	/**
@@ -183,17 +161,6 @@ class Helper {
 	}
 
 	/**
-	 * Get const for HF_MAX
-	 * @return int
-	 */
-	public static function getHFmax() {
-		if (defined('HF_MAX'))
-			return HF_MAX;
-
-		return Configuration::Data()->HRmax();
-	}
-
-	/**
 	 * Recalculate HF_MAX
 	 */
 	public static function recalculateHFmax() {
@@ -220,17 +187,6 @@ class Helper {
 			return 200;
 
 		return $userdata['pulse_max'];
-	}
-
-	/**
-	 * Get const for HF_REST
-	 * @return int
-	 */
-	public static function getHFrest() {
-		if (defined('HF_REST'))
-			return HF_REST;
-
-		return Configuration::Data()->HRrest();
 	}
 
 	/**
@@ -296,14 +252,4 @@ function removeBOMfromString($string) {
  */
 function trimValuesForArray(&$value) {
 	$value = trim($value);
-}
-
-/**
- * Reverse use of strstr (same as strstr($haystack, $needle, true) for PHP > 5.3.0)
- * @param string $haystack
- * @param string $needle
- * @return string 
- */
-function rstrstr($haystack, $needle) {
-	return substr($haystack, 0,strpos($haystack, $needle));
 }

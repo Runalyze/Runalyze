@@ -60,7 +60,10 @@ class ParserPWXSingle extends ParserAbstractSingleXML {
 	protected function parseGeneralValues() {
 		$this->setTimestampAndTimezoneOffsetWithUtcFixFrom((string)$this->XML->time);
 
-		$this->TrainingObject->setSportid( $this->findSportId() );
+		if (!empty($this->XML->sportType)) {
+			$this->guessSportID((string)$this->XML->sportType);
+		}
+
 		$this->TrainingObject->setCreatorDetails( $this->findCreator() );
 
 		if (!empty($this->XML->cmt))
@@ -134,43 +137,6 @@ class ParserPWXSingle extends ParserAbstractSingleXML {
 		$this->gps['rpm'][]       = (!empty($Log->cad)) ? (int)$Log->cad : 0;
 		$this->gps['temp'][]      = (!empty($Log->temp)) ? round((int)$Log->temp) : 0;
 		$this->gps['power'][]     = (!empty($Log->pwr)) ? round((int)$Log->pwr) : 0;
-	}
-
-	/**
-	 * Try to get current sport id
-	 * @return int 
-	 */
-	protected function findSportId() {
-		if (!empty($this->XML->sportType)) {
-			$Name = (string)$this->XML->sportType;
-			$Id   = SportFactory::idByName($Name);
-
-			if ($Id > 0)
-				return $Id;
-			else {
-				switch ($Name) {
-					case 'Run':
-						$Name = 'Laufen';
-						break;
-					case 'Bike':
-					case 'Mountain Bike':
-						$Name = 'Radfahren';
-						break;
-					case 'Swim':
-						$Name = 'Schwimmen';
-						break;
-					default:
-						$Name = 'Sonstiges';
-				}
-
-				$Id = SportFactory::idByName($Name);
-
-				if ($Id > 0)
-					return $Id;
-			}
-		}
-
-		return Configuration::General()->runningSport();
 	}
 
 	/**

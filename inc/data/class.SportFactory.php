@@ -159,38 +159,6 @@ class SportFactory {
 	}
 
 	/**
-	 * Find sportid for name
-	 * @param string $name
-	 * @return int sportid, -1 if not found
-	 */
-	public static function idByName($name) {
-		$sports = self::cacheAllSports();
-
-		foreach ($sports as $sport) {
-			if ($sport['name'] == $name) {
-				return $sport['id'];
-			}
-		}
-
-		return -1;
-	}
-
-	/**
-	* Get normal kcal per hour
-	* @param int $SportID id
-	* @return int
-	*/
-	public static function kcalPerHourFor($SportID) {
-		$Sports = self::AllSports();
-
-		if (isset($Sports[$SportID])) {
-			return $Sports[$SportID]['kcal'];
-		}
-
-		return 0;
-	}
-
-	/**
 	 * Name of sport
 	 * @param string $sportid
 	 * @return string

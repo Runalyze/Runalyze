@@ -201,7 +201,7 @@ class Splits {
 
 			if (strlen($split) > 3)
 				$this->asArray[] = array(
-					'km' => rstrstr($split, '|'),
+					'km' => strstr($split, '|', true),
 					'time' => substr(strrchr($split, '|'), 1),
 					'active' => $active
 				);
