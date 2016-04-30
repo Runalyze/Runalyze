@@ -27,6 +27,12 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 	protected $TrainingObject = null;
 
 	/**
+	 * Pauses to apply
+	 * @var array
+	 */
+	protected $pausesToApply = array();
+
+	/**
 	 * Internal array for gps data
 	 * @var array
 	 */
@@ -413,6 +419,59 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 				$this->gps['rpm'] = array_map(function ($v) {
 					return round($v/2);
 				}, $this->gps['rpm']);
+			}
+		}
+	}
+
+	/**
+	 * Apply pauses
+	 */
+	protected function applyPauses() {
+		if (!empty($this->pausesToApply)) {
+			$num = count($this->gps['time_in_s']);
+			$keys = array_keys($this->gps);
+			$pauseInSeconds = 0;
+			$pauseIndex = 0;
+			$pauseTime = $this->pausesToApply[$pauseIndex]['time'];
+			$pauseUntil = 0;
+			$isPause = false;
+			$hrStart = 0;
+
+			for ($i = 0; $i < $num; $i++) {
+				if (!$isPause && $this->gps['time_in_s'][$i] > $pauseTime) {
+					if ($pauseIndex < count($this->pausesToApply)) {
+						$isPause = true;
+						$hrStart = isset($this->gps['heartrate'][$i-1]) ? $this->gps['heartrate'][$i-1] : $this->gps['heartrate'][$i];
+						$pauseInSeconds += $this->pausesToApply[$pauseIndex]['duration'];
+						$pauseTime = $this->pausesToApply[$pauseIndex]['time'];
+						$pauseUntil = $this->pausesToApply[$pauseIndex]['duration'] + $pauseTime;
+						$pauseIndex++;
+						$pauseTime = ($pauseIndex < count($this->pausesToApply)) ? $this->pausesToApply[$pauseIndex]['time'] : PHP_INT_MAX;
+					}
+				}
+
+				if ($isPause && $this->gps['time_in_s'][$i] >= $pauseUntil) {
+					$isPause = false;
+
+					$this->TrainingObject->Pauses()->add(
+						new \Runalyze\Model\Trackdata\Pause(
+							$this->pausesToApply[$pauseIndex-1]['time'],
+							$this->pausesToApply[$pauseIndex-1]['duration'],
+							$hrStart,
+							$this->gps['heartrate'][$i]
+						)
+					);
+				}
+
+				if ($isPause) {
+					foreach ($keys as $key) {
+						if (isset($this->gps[$key][$i])) {
+							unset($this->gps[$key][$i]);
+						}
+					}
+				} else {
+					$this->gps['time_in_s'][$i] -= $pauseInSeconds;
+				}
 			}
 		}
 	}

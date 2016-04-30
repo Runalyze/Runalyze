@@ -149,6 +149,23 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertEquals( 65, $this->object->object()->getFitVdotEstimate() );
 			$this->assertEquals( 932, $this->object->object()->getFitRecoveryTime() );
 			$this->assertEquals( 0, $this->object->object()->getFitHRVscore() );
+
+			$Pauses = $this->object->object()->Pauses();
+			$this->assertEquals(6, $Pauses->num());
+
+			foreach ([
+				 [267, 14, 144, 130],
+				 [465, 53, 151, 104],
+				 [1491, 73, 145, 106],
+				 [2575, 35, 139, 111],
+				 [2804, 51, 136, 100],
+				 [2970, 9, 150, 144]
+			 ] as $i => $pause) {
+				$this->assertEquals($pause[0], $Pauses->at($i)->time());
+				$this->assertEquals($pause[1], $Pauses->at($i)->duration());
+				$this->assertEquals($pause[2], $Pauses->at($i)->hrStart());
+				$this->assertEquals($pause[3], $Pauses->at($i)->hrEnd());
+			}
 		}
 	}
 
@@ -358,6 +375,18 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertFalse( $this->object->failed() );
 
 			$this->assertTrue( $this->object->object()->hasArrayHRV() );
+
+			$Pauses = $this->object->object()->Pauses();
+			$this->assertEquals(1, $Pauses->num());
+
+			foreach ([
+				 [41, 69, 100, 69]
+			 ] as $i => $pause) {
+				$this->assertEquals($pause[0], $Pauses->at($i)->time());
+				$this->assertEquals($pause[1], $Pauses->at($i)->duration());
+				$this->assertEquals($pause[2], $Pauses->at($i)->hrStart());
+				$this->assertEquals($pause[3], $Pauses->at($i)->hrEnd());
+			}
 		}
 	}
 
