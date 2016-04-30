@@ -136,11 +136,25 @@ class ImporterFiletypePWXTest extends PHPUnit_Framework_TestCase {
 		$this->assertFalse($this->object->hasMultipleTrainings());
 		$this->assertFalse($this->object->failed());
 
-		$this->assertEquals(4813, $this->object->object()->getTimeInSeconds(), '', 30);
+		$this->assertEquals(4813 - 289, $this->object->object()->getTimeInSeconds(), '', 30);
 		$this->assertEquals(15.00, $this->object->object()->getDistance(), '', 0.1);
 		$this->assertEquals('05.08.2015', LocalTime::date('d.m.Y', $this->object->object()->getTimestamp()));
 
 		$this->assertEquals(9, count($this->object->object()->Splits()->asArray()));
+
+		$Pauses = $this->object->object()->Pauses();
+
+		$this->assertEquals(2, $Pauses->num());
+
+		foreach ([
+			 [635, 3, 155, 154],
+			 [640, 286, 154, 0]
+		 ] as $i => $pause) {
+			$this->assertEquals($pause[0], $Pauses->at($i)->time());
+			$this->assertEquals($pause[1], $Pauses->at($i)->duration());
+			$this->assertEquals($pause[2], $Pauses->at($i)->hrStart());
+			$this->assertEquals($pause[3], $Pauses->at($i)->hrEnd());
+		}
 	}
 
 }

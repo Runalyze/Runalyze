@@ -33,6 +33,8 @@ class ParserPWXSingle extends ParserAbstractSingleXML {
 			$this->parseGeneralValues();
 			$this->parseLaps();
 			$this->parseLogEntries();
+			$this->parseEvents();
+			$this->applyPauses();
 			$this->setGPSarrays();
 		} else {
 			$this->throwNoPWXError();
@@ -137,6 +139,29 @@ class ParserPWXSingle extends ParserAbstractSingleXML {
 		$this->gps['rpm'][]       = (!empty($Log->cad)) ? (int)$Log->cad : 0;
 		$this->gps['temp'][]      = (!empty($Log->temp)) ? round((int)$Log->temp) : 0;
 		$this->gps['power'][]     = (!empty($Log->pwr)) ? round((int)$Log->pwr) : 0;
+	}
+
+	/**
+	 * Parse starting/stopping events
+	 */
+	protected function parseEvents() {
+		$isStopped = false;
+		$stopOffset = false;
+
+		foreach ($this->XML->event as $event) {
+			if ((string)$event->type == 'Starting' && $isStopped && $stopOffset !== false) {
+				$this->pausesToApply[] = array(
+					'time' => $stopOffset,
+					'duration' => ((int)$event->timeoffset - $stopOffset)
+				);
+
+				$isStopped = false;
+				$stopOffset = false;
+			} elseif ((string)$event->type == 'Stopping') {
+				$isStopped = true;
+				$stopOffset = (int)$event->timeoffset;
+			}
+		}
 	}
 
 	/**
