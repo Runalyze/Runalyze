@@ -118,10 +118,12 @@ class DataCollector {
 	 * Collect data
 	 */
 	protected function collect() {
+		$useCurrentValue = ($this->Key == Trackdata::DISTANCE || $this->Key == Trackdata::TIME);
+
 		do {
 			$this->move();
 
-			$value = $this->Loop->average($this->Key);
+			$value = $useCurrentValue ? $this->Loop->current($this->Key) : $this->Loop->average($this->Key);
 
 			if ($this->XAxis == self::X_AXIS_DISTANCE) {
 				$this->Data[(string)$this->Loop->current(Trackdata::DISTANCE)] = $value;
