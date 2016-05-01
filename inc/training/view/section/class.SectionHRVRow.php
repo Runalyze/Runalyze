@@ -28,6 +28,7 @@ class SectionHRVRow extends TrainingViewSectionRowTabbedPlot {
 	protected function setRightContent() {
 		if ($this->Context->hrv()->has(HRV\Entity::DATA)) {
 			$this->addRightContent('hrv', __('R-R intervals'), new Activity\Plot\HRV($this->Context));
+			$this->addRightContent('hrv-sd', __('Successive differences'), new Activity\Plot\HRVdifferences($this->Context));
 			$this->addRightContent('hrvpoincare', __('Poincaré plot'), new Activity\Plot\HRVPoincare($this->Context));
 		}
 	}

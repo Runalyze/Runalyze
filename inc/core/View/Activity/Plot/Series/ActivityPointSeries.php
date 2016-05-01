@@ -22,6 +22,11 @@ abstract class ActivityPointSeries extends ActivitySeries {
 	const COLOR_BAD = '#E74C3C';
 
 	/**
+	 * @var int
+	 */
+	protected $PointSize = 2;
+
+	/**
 	 * Add to plot
 	 * @param \Plot $Plot
 	 * @param int $yAxis
@@ -30,7 +35,7 @@ abstract class ActivityPointSeries extends ActivitySeries {
 	public function addTo(Plot &$Plot, $yAxis, $addAnnotations = true) {
 		parent::addTo($Plot, $yAxis, $addAnnotations);
 
-		$Plot->showPoints(2);
+		$Plot->showPoints($this->PointSize);
 		$Plot->smoothing(false);
 	}
 

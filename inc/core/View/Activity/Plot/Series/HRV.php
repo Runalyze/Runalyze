@@ -1,11 +1,12 @@
 <?php
 /**
- * This file contains class::StrideLength
- * @package Runalyze\View\Activity\HRV\Series
+ * This file contains class::HRV
+ * @package Runalyze\View\Activity\Plot\Series
  */
 
 namespace Runalyze\View\Activity\Plot\Series;
 
+use Runalyze\Calculation\HRV\Calculator;
 use Runalyze\Model;
 use Runalyze\View\Activity;
 
@@ -20,6 +21,11 @@ class HRV extends ActivityPointSeries {
 	 * @var string
 	 */
 	const COLOR = 'rgb(0,0,0)';
+
+	/**
+	 * @var int
+	 */
+	protected $PointSize = 1;
 
 	/**
 	 * @var array
@@ -43,10 +49,10 @@ class HRV extends ActivityPointSeries {
 	protected function initHRVData(Model\HRV\Entity $hrv) {
 		if (count($this->XAxisData) == $hrv->num()) {
 			$this->XAxis = DataCollector::X_AXIS_TIME;
-			$this->Data = array_combine($this->XAxisData, $this->filterData($hrv->data()));
+			$this->Data = array_combine($this->XAxisData, $hrv->data());
 		} else {
 			$this->XAxis = DataCollector::X_AXIS_INDEX;
-			$this->Data = $this->filterData($hrv->data());
+			$this->Data = $hrv->data();
 		}
 	}
 
@@ -76,17 +82,6 @@ class HRV extends ActivityPointSeries {
 				}
 			}
 		}
-	}
-
-	/**
-	 * Filter data
-	 * @param array $data
-	 * @return array
-	 */
-	protected function filterData(array $data) {
-		return array_map(function($value) {
-			return 200 < $value && $value < 2000 ? $value : null;
-		}, $data);
 	}
 
 	/**

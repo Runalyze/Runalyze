@@ -6998,7 +6998,7 @@ RunalyzePlot.Events = (function($, parent){
 					}
 
 					content = content + line(
-						options.atString,
+						axes.xaxis.options.label ? axes.xaxis.options.label : options.atString,
 						x
 					) + line(
 						item.series.label,
@@ -7080,7 +7080,7 @@ RunalyzePlot.Events = (function($, parent){
 
 					if (x) {
 						content = content + line(
-							options.atString,
+							axes.xaxis.options.label ? axes.xaxis.options.label : options.atString,
 							x
 						);
 					}
@@ -10756,6 +10756,28 @@ ____________________________________________________
 		version : '1.1.1'
 	});
 
+})(jQuery);
+
+/**
+ * Flot plugin to extend options
+ */
+(function ($) {
+	var options = {
+		xaxis: {
+			label: ''
+		}
+	};
+
+	function init(plot) {
+		// Nothing to do here
+	}
+
+	$.plot.plugins.push({
+		init: init,
+		options: options,
+		name: 'flot.extend.options',
+		version: '1.0'
+	});
 })(jQuery);
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
