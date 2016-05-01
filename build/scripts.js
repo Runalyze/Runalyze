@@ -7215,8 +7215,12 @@ RunalyzePlot.Events = (function($, parent){
 				.html(content);
 
 			if (posClass == 'top') {
-				pos.x = pos.x - tt.width()/2;
-				pos.y = pos.y - tt.height() - 10;
+				if (!tt.is('visible')) {
+					tt.addClass(posClass + ' in');
+				}
+
+				pos.x = pos.x - tt.width()/2 - 1;
+				pos.y = pos.y - tt.height() - 15;
 			}
 
 			var cssProperties = {};
@@ -7232,9 +7236,6 @@ RunalyzePlot.Events = (function($, parent){
 			}
 
 			tt.css(cssProperties)
-				.children('.'+ options.tooltipInnerClass)
-				.html(content)
-				.parent()
 				.addClass(posClass + ' in');
 		} else {
 			tooltip(key).removeClass('in ' + posClass);
