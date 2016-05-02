@@ -5,7 +5,8 @@
  */
 
 namespace Runalyze\Data\Weather;
-
+use League\Geotools\Geohash\Geohash;
+use League\Geotools\Coordinate\Coordinate;
 /**
  * Weather location
  *
@@ -77,6 +78,15 @@ class Location {
 	 */
 	public function lon() {
 		return $this->Longitude;
+	}
+	
+	/** Geohash
+	 * @return string
+	 */
+	public function geohash() {
+	    if ($this->hasPosition()) {
+		return (new Geohash)->encode(new Coordinate(array((float)$this->lat(), (float)$this->lon())), 12)->getGeohash();
+	    }
 	}
 
 	/**

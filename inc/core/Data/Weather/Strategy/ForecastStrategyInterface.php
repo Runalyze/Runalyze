@@ -1,10 +1,11 @@
 <?php
 /**
  * This file contains interface::ForecastStrategyInterface
- * @package Runalyze\Data\Weather
+ * @package Runalyze\Data\Weather\Strategy
  */
 
-namespace Runalyze\Data\Weather;
+namespace Runalyze\Data\Weather\Strategy;
+use Runalyze\Data\Weather\Location;
 
 /**
  * Interface for forecasting wather
@@ -60,4 +61,22 @@ interface ForecastStrategyInterface {
 	 * @return \Runalyze\Data\Weather\Pressure
 	 */
 	public function pressure();
+	
+	/**
+	 * Is it possible to receive weather data?
+	 * @return boolean
+	 */
+	public function isPossible();
+	
+	/**
+	 * Should this data be cached?
+	 * @return boolean
+	 */
+	public function isCachable();
+	
+	/**
+	 * Location object
+	 * @return \Runalyze\Data\Weather\Location
+	 */
+	public function location();
 }

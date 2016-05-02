@@ -18,6 +18,9 @@ final class Sources extends AbstractEnum
 {
 	/** @var int */
 	const OPENWEATHERMAP = 1;
+	
+	/** @var int */
+	const DBWEATHERCACHE = 2;
 
 	/**
 	 * @param int $sourceId id from internal enum
