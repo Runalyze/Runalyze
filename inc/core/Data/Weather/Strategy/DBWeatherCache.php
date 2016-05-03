@@ -5,6 +5,7 @@
  */
 
 namespace Runalyze\Data\Weather\Strategy;
+
 use Runalyze\Model\WeatherCache;
 use Runalyze\Data\Weather\Temperature;
 use Runalyze\Data\Weather\Humidity;
@@ -27,8 +28,14 @@ use Runalyze\Data\Weather\Location;
 class DBWeatherCache implements ForecastStrategyInterface {
 
 	/**
+	 * Geohash Query Precision
+	 * @var int
+	 */
+	const GEOHASH_QUERY_PRECISION = 4;
+	
+	/**
 	 * PDO
-	 * @var PDO 
+	 * @var \PDO 
 	 */
 	protected $Pdo = null;
 	
@@ -52,6 +59,29 @@ class DBWeatherCache implements ForecastStrategyInterface {
 	{
 		return $this->WeatherCache->weatherSource();
 	}
+	
+	/**
+	 * Is it possible to receive weather data?
+	 * @return boolean
+	 */
+	public function isPossible() {
+	    return true;
+	}
+	
+	/**
+	 * Should this data be cached?
+	 * @return boolean
+	 */
+	public function isCachable() {
+	    return false;
+	}
+
+	/**
+	 * @return boolean
+	 */
+	public function wasSuccessfull() {
+		return (null !== $this->WeatherCache) && !$this->WeatherCache->isEmpty();
+	}
 
 	/**
 	 * Load conditions
@@ -60,23 +90,20 @@ class DBWeatherCache implements ForecastStrategyInterface {
 	public function loadForecast(Location $Location) {
 	    $this->Pdo  = \DB::getInstance();
 	    $this->Location = $Location;
-	    $data = $this->Pdo->prepare('SELECT * FROM '.PREFIX.'weathercache WHERE `geohash`=:geohash AND `time` BETWEEN :starttime AND :endtime ORDER BY TIME DESC LIMIT 1');
-	    if($this->Location->hasPosition()) {
-		$bindValues = array(
-				'geohash' => substr($this->Location->geohash(), 0, WeatherCache\Entity::GEOHASH_PRECISION),
+
+	    if ($this->Location->hasPosition()) {
+	    	$qValues = array(
+				'geohash' => substr($this->Location->geohash(), 0, self::GEOHASH_QUERY_PRECISION),
 				'starttime' => $this->Location->time() - Forecast::TIME_PRECISION,
 				'endtime' => $this->Location->time() + Forecast::TIME_PRECISION
-		);
-		$data->execute($bindValues);
-		
-	    }
-	    if(is_array($data->fetch())) {
-		$WeatherCache = $data->fetch();
+			);
+
+	    	$data = $this->Pdo->query('SELECT * FROM `'.PREFIX.'weathercache` WHERE `geohash` LIKE "'.$qValues['geohash'].'%" AND `time` BETWEEN "'.$qValues['starttime'].'" AND "'.$qValues['endtime'].'" ORDER BY TIME DESC LIMIT 1')->fetch();
 	    } else {
-		$WeatherCache = null;
+	    	$data = [];
 	    }
-	    print_r($WeatherCache);
-	    $this->WeatherCache = new WeatherCache\Entity($WeatherCache);
+
+	    $this->WeatherCache = new WeatherCache\Entity($data);
 	}
 	
 	/**
@@ -94,14 +121,15 @@ class DBWeatherCache implements ForecastStrategyInterface {
 	public function temperature() {
 		return new Temperature($this->WeatherCache->temperature());
 	}
-	
+
 	/**
 	 * WindSpeed
 	 * @return \Runalyze\Data\Weather\WindSpeed
 	 */
 	public function windSpeed() {
 		$WindSpeed = new WindSpeed();
-		$WindSpeed->setMeterPerSecond($this->WeatherCache->temperature());
+		$WindSpeed->setMeterPerSecond($this->WeatherCache->windSpeed());
+
 		return $WindSpeed;
 	}
 	
@@ -127,22 +155,6 @@ class DBWeatherCache implements ForecastStrategyInterface {
 	 */
 	public function pressure() {
 		return new Pressure($this->WeatherCache->pressure());
-	}
-	
-	/**
-	 * Is it possible to receive weather data?
-	 * @return boolean
-	 */
-	public function isPossible() {
-	    return true;
-	}
-	
-	/**
-	 * Should this data be cached?
-	 * @return boolean
-	 */
-	public function isCachable() {
-	    return false;
 	}
 	
 	/**

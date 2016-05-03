@@ -5,9 +5,9 @@
  */
 
 namespace Runalyze\Model\WeatherCache;
+
 use Runalyze\Data\Weather;
 use Runalyze\Model;
-
 
 /**
  * WeatherCache entity
@@ -124,7 +124,7 @@ class Entity extends Model\Entity {
 
 	/**
 	 * Time
-	 * @return string
+	 * @return int
 	 */
 	public function time() {
 		return $this->Data[self::TIME];
@@ -140,7 +140,7 @@ class Entity extends Model\Entity {
 	
 	/**
 	 * Temperature
-	 * @return string
+	 * @return float
 	 */
 	public function temperature() {
 		return $this->Data[self::TEMPERATURE];
@@ -148,7 +148,7 @@ class Entity extends Model\Entity {
 	
 	/**
 	 * WindSpeed
-	 * @return string
+	 * @return int
 	 */
 	public function windSpeed() {
 		return $this->Data[self::WINDSPEED];
@@ -156,7 +156,7 @@ class Entity extends Model\Entity {
 	
 	/**
 	 * WindDegree
-	 * @return string
+	 * @return int
 	 */
 	public function windDegree() {
 		return $this->Data[self::WINDDEG];
@@ -164,7 +164,7 @@ class Entity extends Model\Entity {
 	
 	/**
 	 * Humidity
-	 * @return string
+	 * @return int
 	 */
 	public function humidity() {
 		return $this->Data[self::HUMIDITY];
@@ -172,23 +172,23 @@ class Entity extends Model\Entity {
 	
 	/**
 	 * Pressure
-	 * @return string
+	 * @return int
 	 */
 	public function pressure() {
 		return $this->Data[self::PRESSURE];
 	}
 	
 	/**
-	 * Pressure
-	 * @return string
+	 * Weather id
+	 * @return int
 	 */
 	public function weatherid() {
 		return $this->Data[self::WEATHERID];
 	}
 	
 	/**
-	 * Pressure
-	 * @return string
+	 * Weather source
+	 * @return null|int
 	 */
 	public function weatherSource() {
 		return $this->Data[self::WEATHER_SOURCE];

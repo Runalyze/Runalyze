@@ -54,11 +54,7 @@ class Openweathermap implements ForecastStrategyInterface {
 	 * @return boolean
 	 */
 	public function isPossible() {
-	    if (defined('OPENWEATHERMAP_API_KEY') && strlen(OPENWEATHERMAP_API_KEY)) {
-		return true;
-	    } else {
-		return false;
-	    }
+	    return (defined('OPENWEATHERMAP_API_KEY') && strlen(OPENWEATHERMAP_API_KEY))  ? true : false;
 	}
 	
 	/**
@@ -68,7 +64,14 @@ class Openweathermap implements ForecastStrategyInterface {
 	public function isCachable() {
 	    return true;
 	}
-	
+
+	/**
+	 * @return boolean
+	 */
+	public function wasSuccessfull() {
+		return !empty($this->Result);
+	}
+
 	/**
 	 * @return int
 	 */
@@ -85,19 +88,19 @@ class Openweathermap implements ForecastStrategyInterface {
 		$this->Result = array();
 		$this->Location = $Location;
 		
-		if ($Location->isOld() && $Location->hasLocationName()) {
+		if ($Location->isOlderThan(7200) && $Location->hasLocationName()) {
 			// Historical data needs a paid account (150$/month)
 			// @see http://openweathermap.org/price
 			//$this->setFromURL( self::URL_HISTORY.'/city?q='.$Location->name().'&start='.$Location->time().'&cnt=1' );
-		}
-
-		if (empty($this->Result)) {
+		} elseif (empty($this->Result)) {
 			if ($Location->hasPosition()) {
 				$this->setFromURL( self::URL.'?lat='.$Location->lat().'&lon='.$Location->lon() );
 			} elseif ($Location->hasLocationName()) {
 				$this->setFromURL( self::URL.'?q='.$Location->name() );
 			}
 		}
+
+		$this->updateLocation();
 	}
 
 	/**
@@ -216,11 +219,20 @@ class Openweathermap implements ForecastStrategyInterface {
 	 * @return \Runalyze\Data\Weather\Location
 	 */
 	public function location() {
-	    if (isset($this->Result['coord']) && isset($this->Result['coord']['lon']) && isset($this->Result['coord']['lat'])) {
-		$this->Location->setPosition($this->Result['coord']['lat'], $this->Result['coord']['lon']);
-	    }
 	    return $this->Location;
 	}
+	
+	/**
+	 * Update Location Object
+	 */
+	 protected function updateLocation() {
+		if (isset($this->Result['coord']) && isset($this->Result['coord']['lon']) && isset($this->Result['coord']['lat'])) {
+			$this->Location->setPosition($this->Result['coord']['lat'], $this->Result['coord']['lon']);
+		}
+		if (isset($this->Result['dt']) && is_numeric($this->Result['dt'])) {
+			$this->Location->setTimestamp($this->Result['dt']);
+		}
+	 }
 	/**
 	 * Translate api code to condition
 	 * 

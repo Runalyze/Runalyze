@@ -18,10 +18,10 @@ use Runalyze\Util\LocalTime;
  */
 class Forecast {
 	/**
-	 * Time range for cache lookup (in seconds) (2 hours)
+	 * Time range for cache lookup (in seconds) (1 hours)
 	 * @var int
 	 */
-	const TIME_PRECISION = 7200;
+	const TIME_PRECISION = 3600;
 	
 	/**
 	 * Strategy
@@ -31,108 +31,118 @@ class Forecast {
 
 	/**
 	 * Location
-	 * @var Location 
+	 * @var \Runalyze\Data\Weather\Location 
 	 */
 	protected $Location = null;
 	
 	/**
 	 * PDO
-	 * @var PDO 
+	 * @var \PDO 
 	 */
-	protected $Pdo = null;
+	protected $PDO = null;
 	
 	/**
 	 * Strategies
-	 * @array Strategies
+	 * @var array class names (absolute path) of available strategies
 	 */
-	protected $Strategies = array('DBWeatherCache', 'Openweathermap');
+	protected $Strategies = [
+		'\\Runalyze\\Data\\Weather\\Strategy\\DBWeatherCache',
+		'\\Runalyze\\Data\\Weather\\Strategy\\Openweathermap'
+	];
 
 	/**
 	 * Constructor
 	 * @param \Runalyze\Data\Weather\Location $Location
-	 * @param \Runalyze\Data\Weather\Strategy\ForecastStrategyInterface $UseStrategy
+	 * @param null|\Runalyze\Data\Weather\Strategy\ForecastStrategyInterface $StrategyToUse can be null to loop through all available strategies
 	 */
-	public function __construct(Location $Location, Strategy\ForecastStrategyInterface $UseStrategy = null) {
-		$this->Location    = $Location;
-		$this->Pdo	   = \DB::getInstance();
-		$this->checkLocationTime();
-		$this->tryStrategies($UseStrategy);
+	public function __construct(Location $Location, Strategy\ForecastStrategyInterface $StrategyToUse = null) {
+		$this->Location = $Location;
+		$this->PDO = \DB::getInstance();
+
+		$this->adjustLocationTimeIfDateIsTodayAndTimeIsUnknown();
+		$this->tryStrategies($StrategyToUse);
 		$this->storeForecast();
+	}
 
-	}
-	
-	protected function tryStrategies($UseStrategy = null) {
-	    if($UseStrategy !== null) {
-		$this->tryToLoadForecast($UseStrategy);
+	/**
+	 * @param null|\Runalyze\Data\Weather\Strategy\ForecastStrategyInterface $StrategyToUse can be null to loop through all available strategies
+	 */
+	protected function tryStrategies(Strategy\ForecastStrategyInterface $StrategyToUse = null) {
+	    if ($StrategyToUse !== null) {
+			$this->tryToLoadForecast($StrategyToUse);
 	    } else {
-		foreach($this->Strategies as $Strategy) {
-		    $Strategy = '\\Runalyze\Data\Weather\Strategy\\'.$Strategy;
-		    $Strategy = new $Strategy;
-		    if ($this->tryToLoadForecast($Strategy)) {
-			//TODO Not correct to stop Loop
-			break;
-		    }
-		    
-		}			    
+			foreach ($this->Strategies as $strategyClassName) {
+			    if ($this->tryToLoadForecast(new $strategyClassName)) {
+					break;
+			    }
+			}
 	    }
 	}
-	
-	protected function tryToLoadForecast($Strategy) {
-	    $this->Strategy = $Strategy;
-	    if ($this->Strategy->isPossible()) {
-		$this->Strategy->loadForecast($this->Location);
+
+	/**
+	 * @param \Runalyze\Data\Weather\Strategy\ForecastStrategyInterface $Strategy
+	 * @return bool flag if forecast could be loaded
+	 */
+	protected function tryToLoadForecast(Strategy\ForecastStrategyInterface $Strategy) {
+		$this->Strategy = $Strategy;
+
+		if ($this->Strategy->isPossible()) {
+			$this->Strategy->loadForecast($this->Location);
 	    }
-	    //TODO Check is wrong
-	    if ($this->Strategy->temperature()->value() !== NULL) {
-		return true;
-	    } else {
-		return false;
-	    }
+
+	    return $this->Strategy->wasSuccessfull();
 	}
-	
+
+	/**
+	 * Store forecast
+	 */
 	protected function storeForecast() {
-	    if ($this->Strategy->location()->hasPosition() && $this->Strategy->isCachable()) {
-		$Temperature = $this->Strategy->temperature();
-		$Temperature->toCelsius();
-		$Geohash = substr($this->Location->geohash(), 0, WeatherCache\Entity::GEOHASH_PRECISION);
-
-		if(!($this->checkCache())) {
-		    $WeatherCache = new WeatherCache\Entity([
-			WeatherCache\Entity::TIME => $this->Location->time(),
-			WeatherCache\Entity::GEOHASH => $Geohash,
-			WeatherCache\Entity::TEMPERATURE => $Temperature->value(),
-			WeatherCache\Entity::HUMIDITY => $this->Strategy->humidity()->value(),
-			WeatherCache\Entity::PRESSURE => $this->Strategy->pressure()->value(),
-			WeatherCache\Entity::WINDSPEED => $this->Strategy->windSpeed()->value(),
-			WeatherCache\Entity::WINDDEG => $this->Strategy->windDegree()->value(),
-			WeatherCache\Entity::WEATHERID => $this->Strategy->condition()->id(),
-			WeatherCache\Entity::WEATHER_SOURCE => $this->Strategy->sourceId()
-		    ]);
-		    $Weather = new WeatherCache\Inserter($this->Pdo, $WeatherCache);
-		    $Weather->insert();
-		}
+	    if (null !== $this->Strategy && $this->Strategy->isCachable() && null !== $this->Strategy->location() && $this->Strategy->location()->hasPosition()) {
+			$Temperature = $this->Strategy->temperature();
+			$Temperature->toCelsius();
+			$Geohash = substr($this->Strategy->location()->geohash(), 0, WeatherCache\Entity::GEOHASH_PRECISION);
+	
+			if (!$this->locationIsAlreadyCached()) {
+			    $WeatherCache = new WeatherCache\Entity([
+					WeatherCache\Entity::TIME => $this->Location->time(),
+					WeatherCache\Entity::GEOHASH => $Geohash,
+					WeatherCache\Entity::TEMPERATURE => $Temperature->value(),
+					WeatherCache\Entity::HUMIDITY => $this->Strategy->humidity()->value(),
+					WeatherCache\Entity::PRESSURE => $this->Strategy->pressure()->value(),
+					WeatherCache\Entity::WINDSPEED => $this->Strategy->windSpeed()->value(),
+					WeatherCache\Entity::WINDDEG => $this->Strategy->windDegree()->value(),
+					WeatherCache\Entity::WEATHERID => $this->Strategy->condition()->id(),
+					WeatherCache\Entity::WEATHER_SOURCE => $this->Strategy->sourceId()
+			    ]);
+			    $Weather = new WeatherCache\Inserter($this->PDO, $WeatherCache);
+			    $Weather->insert();
+			}
 	    }
 	}
-	
-	protected function checkCache() {
-	    $Geohash = substr($this->Location->geohash(), 0, WeatherCache\Entity::GEOHASH_PRECISION);
-		$bindValues = array(
-		    'geohash' => $Geohash,
+
+	/**
+	 * Check if location is already in cache
+	 * @return bool
+	 */
+	protected function locationIsAlreadyCached() {
+		$qValues = array(
+		    'geohash' => substr($this->Location->geohash(), 0, WeatherCache\Entity::GEOHASH_PRECISION),
 		    'starttime' => $this->Location->time() - self::TIME_PRECISION,
 		    'endtime' => $this->Location->time() + self::TIME_PRECISION
 		);
-		    
-		$data = $this->Pdo->prepare('SELECT 1 FROM '.PREFIX.'weathercache WHERE `geohash`=:geohash AND `time` BETWEEN :starttime AND :endtime ORDER BY TIME DESC LIMIT 1');
-		$data->execute($bindValues);
-		return ($data->rowCount() > 0) ? true : false;
+		$rowCount = $this->PDO->query('SELECT 1 FROM `'.PREFIX.'weathercache` WHERE `geohash`="'.$qValues['geohash'].'" AND `time` BETWEEN "'.$qValues['starttime'].'" AND "'.$qValues['endtime'].'" LIMIT 1')->rowCount();
+
+		return ($rowCount > 0);
 	}
 
-
-	protected function checkLocationTime() {
-	    if($this->Location->hasTimestamp()) {
-		if($this->Location->time() == LocalTime::fromServerTime(time())->setTime(0, 0, 0)->getTimestamp()) {
-		    $this->Location->setTimestamp(time());
-		}
+	/**
+	 * Set time to now if date is today and time is unknown
+	 */
+	protected function adjustLocationTimeIfDateIsTodayAndTimeIsUnknown() {
+	    if ($this->Location->hasTimestamp()) {
+			if ($this->Location->time() == LocalTime::fromServerTime(time())->setTime(0, 0, 0)->getTimestamp()) {
+			    $this->Location->setTimestamp(time());
+			}
 	    }
 	}
 

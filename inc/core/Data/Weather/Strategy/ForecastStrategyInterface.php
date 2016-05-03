@@ -11,7 +11,7 @@ use Runalyze\Data\Weather\Location;
  * Interface for forecasting wather
  *
  * @author Hannes Christiansen
- * @package Runalyze\Data\Weather
+ * @package Runalyze\Data\Weather\Strategy
  */
 interface ForecastStrategyInterface {
 	/**
@@ -25,6 +25,23 @@ interface ForecastStrategyInterface {
 	 * @param \Runalyze\Data\Weather\Location $Location
 	 */
 	public function loadForecast(Location $Location);
+	
+	/**
+	 * Is it possible to receive weather data?
+	 * @return boolean
+	 */
+	public function isPossible();
+	
+	/**
+	 * Should this data be cached?
+	 * @return boolean
+	 */
+	public function isCachable();
+
+	/**
+	 * @return boolean
+	 */
+	public function wasSuccessfull();
 
 	/**
 	 * Weather condition
@@ -61,18 +78,6 @@ interface ForecastStrategyInterface {
 	 * @return \Runalyze\Data\Weather\Pressure
 	 */
 	public function pressure();
-	
-	/**
-	 * Is it possible to receive weather data?
-	 * @return boolean
-	 */
-	public function isPossible();
-	
-	/**
-	 * Should this data be cached?
-	 * @return boolean
-	 */
-	public function isCachable();
 	
 	/**
 	 * Location object
