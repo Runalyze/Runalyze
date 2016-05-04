@@ -11,7 +11,8 @@ use Runalyze\Model;
 /**
  * Insert tag to database
  * 
- * @author Hannes Christiansen & Michael Pohl
+ * @author Hannes Christiansen 
+ * @author Michael Pohl
  * @package Runalyze\Model\WeatherCache
  */
 class Inserter extends Model\Inserter {

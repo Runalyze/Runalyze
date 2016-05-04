@@ -1,17 +1,18 @@
 <?php
 /**
  * This file contains class::Updater
- * @package Runalyze\Model\Weather
+ * @package Runalyze\Model\WeatherCache
  */
 
-namespace Runalyze\Model\Weather;
+namespace Runalyze\Model\WeatherCache;
 
 use Runalyze\Model;
 
 /**
  * Update weather in database
  * 
- * @author Hannes Christiansen
+ * @author Hannes Christiansen 
+ * @author Michael Pohl
  * @package Runalyze\Model\WeatherCache
  */
 class Updater extends Model\Updater {
@@ -50,10 +51,16 @@ class Updater extends Model\Updater {
 	 * @return array
 	 */
 	protected function keys() {
-		return array_merge(array(
-				self::ACCOUNTID
-			),
-			Entity::allDatabaseProperties()
-		);
+		return Entity::allDatabaseProperties();
 	}
+	
+	/**
+	 * Where clause
+	 * @return string
+	 */
+	 protected function where() {
+	 	return "`time` = ".$this->OldObject->time()." AND `geohash` = '".$this->OldObject->geohash()."'";
+	 }
+	
+	
 }
