@@ -5,7 +5,8 @@
  */
 
 namespace Runalyze\Data\Weather;
-
+use League\Geotools\Geohash\Geohash;
+use League\Geotools\Coordinate\Coordinate;
 /**
  * Weather location
  *
@@ -46,6 +47,16 @@ class Location {
 		$this->Latitude = $latitude;
 		$this->Longitude = $longitude;
 	}
+	
+	/**
+	 * Set geohash
+	 * @param string $geohash
+	 */
+	public function setGeohash($geohash) {
+		$decoded = (new Geohash)->decode($geohash)->getCoordinate();
+		$this->Latitude = $decoded->getLatitude();
+		$this->Longitude = $decoded->getLongitude();
+	}
 
 	/**
 	 * Set timestamp
@@ -77,6 +88,16 @@ class Location {
 	 */
 	public function lon() {
 		return $this->Longitude;
+	}
+	
+	/**
+	 * Geohash
+	 * @return string
+	 */
+	public function geohash() {
+	    if ($this->hasPosition()) {
+			return (new Geohash)->encode(new Coordinate(array((float)$this->lat(), (float)$this->lon())), 12)->getGeohash();
+	    }
 	}
 
 	/**
@@ -125,9 +146,10 @@ class Location {
 
 	/**
 	 * Is the location old?
+	 * @param int $seconds
 	 * @return bool true if the timestamp is older than 24 hours
 	 */
-	public function isOld() {
-		return $this->hasTimestamp() && ($this->Timestamp < time() - DAY_IN_S);
+	public function isOlderThan($seconds =  DAY_IN_S) {
+		return $this->hasTimestamp() && ($this->Timestamp < time() - $seconds);
 	}
 }

@@ -18,6 +18,9 @@ final class Sources extends AbstractEnum
 {
 	/** @var int */
 	const OPENWEATHERMAP = 1;
+	
+	/** @var int */
+	const DBWEATHERCACHE = 2;
 
 	/**
 	 * @param int $sourceId id from internal enum
@@ -28,6 +31,8 @@ final class Sources extends AbstractEnum
 		switch ($sourceId) {
 			case self::OPENWEATHERMAP:
 				return '<a href="http://openweathermap.org/" target="_blank">openweathermap.org</a>';
+			case self::DBWEATHERCACHE:
+				return __('internal database');
 			default:
 				throw new \InvalidArgumentException('Invalid source id');
 		}

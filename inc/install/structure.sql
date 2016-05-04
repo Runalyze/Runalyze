@@ -390,6 +390,24 @@ CREATE TABLE IF NOT EXISTS `runalyze_user` (
   `accountid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `runalyze_weathercache`
+--
+
+CREATE TABLE IF NOT EXISTS `runalyze_weathercache` (
+  `time` int(11) NOT NULL DEFAULT '0',
+  `geohash` char(5) DEFAULT NULL,
+  `temperature` tinyint(4) DEFAULT NULL,
+  `wind_speed` tinyint(3) unsigned DEFAULT NULL,
+  `wind_deg` smallint(3) unsigned DEFAULT NULL,
+  `humidity` tinyint(3) unsigned DEFAULT NULL,
+  `pressure` smallint(4) unsigned DEFAULT NULL,
+  `weatherid` smallint(6) NOT NULL DEFAULT '1',
+  `weather_source` tinyint(2) unsigned DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Indizes der exportierten Tabellen
 --

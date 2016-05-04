@@ -1,10 +1,18 @@
 <?php
 
-namespace Runalyze\Data\Weather;
+namespace Runalyze\Data\Weather\Strategy;
+use Runalyze\Data\Weather\Temperature;
+use Runalyze\Data\Weather\Humidity;
+use Runalyze\Data\Weather\Pressure;
+use Runalyze\Data\Weather\WindSpeed;
+use Runalyze\Data\Weather\WindDegree;
+use Runalyze\Data\Weather\Condition;
+use Runalyze\Data\Weather\Sources;
+use Runalyze\Data\Weather\Location;
 
 class OpenweathermapTest extends \PHPUnit_Framework_TestCase {
 
-	/** @var \Runalyze\Data\Weather\Openweathermap */
+	/** @var \Runalyze\Data\Weather\Strategy\Openweathermap */
 	protected $object;
 
 	protected function setUp() {

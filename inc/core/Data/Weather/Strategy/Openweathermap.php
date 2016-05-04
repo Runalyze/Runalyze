@@ -1,12 +1,18 @@
 <?php
 /**
  * This file contains class::WeatherOpenweathermap
- * @package Runalyze\Data\Weather
+ * @package Runalyze\Data\Weather\Strategy
  */
 
-namespace Runalyze\Data\Weather;
-
-use Cache;
+namespace Runalyze\Data\Weather\Strategy;
+use Runalyze\Data\Weather\Temperature;
+use Runalyze\Data\Weather\Humidity;
+use Runalyze\Data\Weather\Pressure;
+use Runalyze\Data\Weather\WindSpeed;
+use Runalyze\Data\Weather\WindDegree;
+use Runalyze\Data\Weather\Condition;
+use Runalyze\Data\Weather\Sources;
+use Runalyze\Data\Weather\Location;
 
 /**
  * Forecast-strategy for using openweathermap.org
@@ -17,7 +23,7 @@ use Cache;
  * The strategy uses <code>OPENWEATHERMAP_API_KEY</code> if defined.
  *
  * @author Hannes Christiansen
- * @package Runalyze\Data\Weather
+ * @package Runalyze\Data\Weather\Strategy
  */
 class Openweathermap implements ForecastStrategyInterface {
 	/**
@@ -33,15 +39,38 @@ class Openweathermap implements ForecastStrategyInterface {
 	const URL_HISTORY = 'http://api.openweathermap.org/data/2.5/history';
 
 	/**
-	 * @var string
+	 * Location
+	 * @var \Runalyze\Data\Weather\Location $Location
 	 */
-	const CACHE_PREFIX = 'weather.';
-
+	protected $Location = null;
+	
 	/**
 	 * Result from json
 	 * @var array
 	 */
 	protected $Result = array();
+
+	/*
+	 * @return boolean
+	 */
+	public function isPossible() {
+	    return (defined('OPENWEATHERMAP_API_KEY') && strlen(OPENWEATHERMAP_API_KEY))  ? true : false;
+	}
+	
+	/**
+	 * Should this data be cached?
+	 * @return boolean
+	 */
+	public function isCachable() {
+	    return true;
+	}
+
+	/**
+	 * @return boolean
+	 */
+	public function wasSuccessfull() {
+		return !empty($this->Result);
+	}
 
 	/**
 	 * @return int
@@ -53,59 +82,36 @@ class Openweathermap implements ForecastStrategyInterface {
 
 	/**
 	 * Load conditions for location
-	 * @param Location $Location
+	 * @param \Runalyze\Data\Weather\Location $Location
 	 */
 	public function loadForecast(Location $Location) {
 		$this->Result = array();
-
-		if ($Location->isOld() && $Location->hasLocationName()) {
+		$this->Location = $Location;
+		
+		if ($Location->isOlderThan(7200) && $Location->hasLocationName()) {
 			// Historical data needs a paid account (150$/month)
 			// @see http://openweathermap.org/price
 			//$this->setFromURL( self::URL_HISTORY.'/city?q='.$Location->name().'&start='.$Location->time().'&cnt=1' );
-		}
-
-		if (empty($this->Result)) {
+		} elseif (empty($this->Result)) {
 			if ($Location->hasPosition()) {
 				$this->setFromURL( self::URL.'?lat='.$Location->lat().'&lon='.$Location->lon() );
 			} elseif ($Location->hasLocationName()) {
-				$this->setFromURL( self::URL.'?q='.$Location->name(), $this->cacheKey($Location->name()) );
+				$this->setFromURL( self::URL.'?q='.$Location->name() );
 			}
 		}
-	}
 
-	/**
-	 * Generate cache key
-	 * @param string $locationName
-	 * @return string
-	 */
-	protected function cacheKey($locationName) {
-		return self::CACHE_PREFIX.urlencode($locationName);
+		$this->updateLocation();
 	}
 
 	/**
 	 * Set from url
 	 * @param string $url
-	 * @param string $cacheKey [optional] if true result will be cached
 	 */
-	public function setFromURL($url, $cacheKey = false) {
-		if ($cacheKey !== false) {
-			$this->Result = Cache::get($cacheKey, 1);
-
-			if ($this->Result != null) {
-				return;
-			} else {
-				$this->Result = array();
-			}
-		}
-
+	public function setFromURL($url) {
 		if (defined('OPENWEATHERMAP_API_KEY') && strlen(OPENWEATHERMAP_API_KEY))
 			$url .= '&APPID='.OPENWEATHERMAP_API_KEY;
 
 		$this->setFromJSON( \Filesystem::getExternUrlContent($url) );
-
-		if ($cacheKey !== false) {
-			Cache::set($cacheKey, $this->Result, 7200, 1);
-		}
 	}
 
 	/**
@@ -153,7 +159,7 @@ class Openweathermap implements ForecastStrategyInterface {
 	}
 	
 	/**
-	 * Temperature
+	 * WindSpeed
 	 * @return \Runalyze\Data\Weather\WindSpeed
 	 */
 	public function windSpeed() {
@@ -167,7 +173,7 @@ class Openweathermap implements ForecastStrategyInterface {
 	}
 	
 	/**
-	 * Temperature
+	 * WindDegree
 	 * @return \Runalyze\Data\Weather\WindDegree
 	 */
 	public function windDegree() {
@@ -195,7 +201,7 @@ class Openweathermap implements ForecastStrategyInterface {
 	}
 	
 	/**
-	 * Humidity
+	 * Pressure
 	 * @return \Runalyze\Data\Weather\Pressure
 	 */
 	public function pressure() {
@@ -207,7 +213,26 @@ class Openweathermap implements ForecastStrategyInterface {
 
 		return new Pressure($value);
 	}
-
+	
+	/**
+	 * Location object
+	 * @return \Runalyze\Data\Weather\Location
+	 */
+	public function location() {
+	    return $this->Location;
+	}
+	
+	/**
+	 * Update Location Object
+	 */
+	 protected function updateLocation() {
+		if (isset($this->Result['coord']) && isset($this->Result['coord']['lon']) && isset($this->Result['coord']['lat'])) {
+			$this->Location->setPosition($this->Result['coord']['lat'], $this->Result['coord']['lon']);
+		}
+		if (isset($this->Result['dt']) && is_numeric($this->Result['dt'])) {
+			$this->Location->setTimestamp($this->Result['dt']);
+		}
+	 }
 	/**
 	 * Translate api code to condition
 	 * 
