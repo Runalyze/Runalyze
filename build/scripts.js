@@ -6079,7 +6079,10 @@ var Runalyze = (function($, parent){
 
 	self.flotChange = function(div, flot) {
 		$(".flotChanger-"+div).addClass("unimportant");
-		$(".flotChanger-id-"+flot).removeClass("unimportant");
+
+		var newSelection = $(".flotChanger-id-"+flot);
+		newSelection.removeClass("unimportant");
+		newSelection.closest("li.with-submenu").find("> span.link").text(newSelection.text());
 
 		$("#"+div+" .flot").addClass("flot-hide");
 		$("#"+div+" #"+flot).removeClass("flot-hide");

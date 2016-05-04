@@ -215,12 +215,16 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	 * Display all image-links for personal bests
 	 */
 	private function displayPersonalBestsImages() {
+		$display_km = $this->PBdistances[0];
+		if (in_array($this->Configuration()->value('main_distance'), $this->PBdistances))
+			$display_km = $this->Configuration()->value('main_distance');
+
 		$SubLinks = array();
 		foreach ($this->PBdistances as $km) {
 			$name       = (new Distance($km))->stringAuto(true, 1);
 			$SubLinks[] = Ajax::flotChange($name, 'bestzeitenFlots', 'bestzeit'.($km*1000));
 		}
-		$Links = array(array('tag' => '<a href="#">'.__('Choose distance').'</a>', 'subs' => $SubLinks));
+		$Links = array(array('tag' => '<span class="link">'.(new Distance($display_km))->stringAuto(true, 1).'</span>', 'subs' => $SubLinks));
 
 		echo '<div class="databox" style="float:none;padding:0;width:490px;margin:20px auto;">';
 		echo '<div class="panel-heading">';
@@ -230,10 +234,6 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 		echo '<h1>'.__('Results trend').'</h1>';
 		echo '</div>';
 		echo '<div class="panel-content">';
-
-		$display_km = $this->PBdistances[0];
-		if (in_array($this->Configuration()->value('main_distance'), $this->PBdistances))
-			$display_km = $this->Configuration()->value('main_distance');
 
 		echo '<div id="bestzeitenFlots" class="flot-changeable" style="position:relative;width:482px;height:192px;">';
 		foreach ($this->PBdistances as $km) {
