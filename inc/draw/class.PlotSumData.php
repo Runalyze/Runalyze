@@ -159,22 +159,10 @@ abstract class PlotSumData extends Plot {
 	 */
 	private function getNavigationMenu() {
 		$Menus = array(
-			array(
-				'title' => __('Choose analysis'),
-				'links'	=> $this->getMenuLinksForGrouping()
-			),
-			array(
-				'title' => __('Choose evaluation'),
-				'links'	=> $this->getMenuLinksForAnalysis()
-			),
-			array(
-				'title' => __('Choose sport'),
-				'links'	=> $this->getMenuLinksForSports()
-			),
-			array(
-				'title' => __('Choose year'),
-				'links'	=> $this->getMenuLinksForYears()
-			)
+			$this->getMenuLinksForGrouping(),
+			$this->getMenuLinksForAnalysis(),
+			$this->getMenuLinksForSports(),
+			$this->getMenuLinksForYears()
 		);
 
 		if (Request::param('group') == 'sport')
@@ -198,16 +186,23 @@ abstract class PlotSumData extends Plot {
 	 * @return array
 	 */
 	private function getMenuLinksForGrouping() {
+		if (Request::param('group') == '') {
+			$Current = ($this->Sport->isRunning()) ? __('Activity &amp; Competition') : __('Total');
+		} else {
+			$Current = __('By type');
+		}
+
 		$Links = array();
 
-		if ($this->Sport->isRunning())
+		if ($this->Sport->isRunning()) {
 			$Links[] = $this->link( __('Activity &amp; Competition'), $this->Year, Request::param('sportid'), '', Request::param('group') == '');
-		else
+		} else {
 			$Links[] = $this->link( __('Total'), $this->Year, Request::param('sportid'), '', Request::param('group') == '');
+		}
 
 		$Links[] = $this->link( __('By type'), $this->Year, Request::param('sportid'), 'types', Request::param('group') == 'types');
 
-		return $Links;
+		return ['title' => $Current, 'links' => $Links];
 	}
 
 	/**
@@ -215,6 +210,14 @@ abstract class PlotSumData extends Plot {
 	 * @return array
 	 */
 	private function getMenuLinksForAnalysis() {
+		if ($this->Analysis == self::ANALYSIS_DEFAULT) {
+			$Current = __('Distance/Duration');
+		} elseif ($this->Analysis == self::ANALYSIS_TRIMP) {
+			$Current = __('TRIMP');
+		} else {
+			$Current = __('JD points');
+		}
+
 		$Links = array(
 			$this->link( __('Distance/Duration'), $this->Year, Request::param('sportid'), Request::param('group'), $this->Analysis == self::ANALYSIS_DEFAULT, self::ANALYSIS_DEFAULT),
 			$this->link( __('TRIMP'), $this->Year, Request::param('sportid'), Request::param('group'), $this->Analysis == self::ANALYSIS_TRIMP, self::ANALYSIS_TRIMP)
@@ -224,7 +227,7 @@ abstract class PlotSumData extends Plot {
 			$Links[] = $this->link( __('JD points'), $this->Year, $this->Sport->id(), Request::param('group'), $this->Analysis == self::ANALYSIS_JD, self::ANALYSIS_JD);
 		}
 
-		return $Links;
+		return ['title' => $Current, 'links' => $Links];
 	}
 
 	/**
@@ -232,16 +235,24 @@ abstract class PlotSumData extends Plot {
 	 * @return array
 	 */
 	private function getMenuLinksForSports() {
+		$CurrentId = $this->Sport->id();
+		$Current = __('All sports');
 		$Links = array(
 			$this->link( __('All sports'), $this->Year, 0, 'sport', Request::param('group') == 'sport')
 		);
 
 		$SportGroup = Request::param('group') == 'sport' ? 'types' : Request::param('group');
-		$Sports     = SportFactory::NamesAsArray();
-		foreach ($Sports as $id => $name)
-			$Links[] = $this->link($name, $this->Year, $id, $SportGroup, $this->Sport->id() == $id);
+		$Sports = SportFactory::NamesAsArray();
 
-		return $Links;
+		foreach ($Sports as $id => $name) {
+			if ($CurrentId == $id) {
+				$Current = $name;
+			}
+
+			$Links[] = $this->link($name, $this->Year, $id, $SportGroup, $CurrentId == $id);
+		}
+
+		return ['title' => $Current, 'links' => $Links];
 	}
 
 	/**
@@ -249,6 +260,14 @@ abstract class PlotSumData extends Plot {
 	 * @return array
 	 */
 	private function getMenuLinksForYears() {
+		if (self::LAST_6_MONTHS == $this->Year) {
+			$Current = __('Last 6 months');
+		} elseif (self::LAST_12_MONTHS == $this->Year) {
+			$Current = __('Last 12 months');
+		} else {
+			$Current = $this->Year;
+		}
+
 		$Links = array(
 			$this->link(__('Last 6 months'), self::LAST_6_MONTHS, Request::param('sportid'), Request::param('group'), self::LAST_6_MONTHS == $this->Year),
 			$this->link(__('Last 12 months'), self::LAST_12_MONTHS, Request::param('sportid'), Request::param('group'), self::LAST_12_MONTHS == $this->Year)
@@ -257,7 +276,7 @@ abstract class PlotSumData extends Plot {
 		for ($Y = date('Y'); $Y >= START_YEAR; $Y--)
 			$Links[] = $this->link($Y, $Y, Request::param('sportid'), Request::param('group'), $Y == $this->Year);
 
-		return $Links;
+		return ['title' => $Current, 'links' => $Links];
 	}
 
 	/**
