@@ -45,7 +45,7 @@ class ConfigTabTypes extends ConfigTab {
 						<th>'.__('Name').'</th>
 						<th>'.__('Abbreviation').'</th>
 						<th>'.Ajax::tooltip( __('Sport'), __('A type can only belong to one sport.')).'</th>
-						<th>'.Ajax::tooltip('&Oslash;&nbsp;'.__('HR'), __('Average heart rate (used for calculation of TRIMP)')).'</th>
+						<th>'.Ajax::tooltip(__('avg.').'&nbsp;'.__('HR'), __('Average heart rate (used for calculation of TRIMP)')).'</th>
 						<th>'.Ajax::tooltip( __('Quality?'), __('Quality sessions will be emphasized in your calendar.')).'</th>
 						<th>'.Ajax::tooltip( __('Race'), __('You need to set one type for running as race type.')).'</th>
 						<th>'.Ajax::tooltip(__('Calendar view'), __('Mode for displaying activities in calendar')).'</th>

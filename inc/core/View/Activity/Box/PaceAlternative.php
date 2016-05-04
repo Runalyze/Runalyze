@@ -34,7 +34,7 @@ class PaceAlternative extends AbstractBox
 		parent::__construct(
 			$Pace->value(),
 			$Pace->appendix(),
-			'&oslash; '.__('Pace')
+			__('avg.').' '.__('Pace')
 		);
 	}
 }

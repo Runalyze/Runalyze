@@ -36,7 +36,7 @@ class ConfigTabSports extends ConfigTab {
 	 * @return string
 	 */
 	private function getInfoFieldsAfterCode() {
-		$Code = HTML::info( __('<em>&Oslash; HF</em> is necessary for the calculation of TRIMP.') );
+		$Code = HTML::info( __('<em>Avg. HF</em> is necessary for the calculation of TRIMP.') );
 
 		return $Code;
 	}
@@ -53,7 +53,7 @@ class ConfigTabSports extends ConfigTab {
 						<th>'.__('Icon').'</th>
 						<th>'.Ajax::tooltip(__('Name'), __('Name of the sport')).'</th>
 						<th>'.Ajax::tooltip(__('kcal/h'), __('Average energy turnover in kilocalories per hour')).'</th>
-						<th>'.Ajax::tooltip('&Oslash;&nbsp;'.__('HR'), __('Average heart rate (used for calculation of TRIMP)')).'</th>
+						<th>'.Ajax::tooltip(__('avg.').'&nbsp;'.__('HR'), __('Average heart rate (used for calculation of TRIMP)')).'</th>
 						<th>'.Ajax::tooltip(__('km'), __('Has a distance')).'</th>   
 						<th>'.Ajax::tooltip(__('Unit'), __('Unit for speed')).'</th>
 						<th>'.Ajax::tooltip(__('Power'), __('Power is recorded or calculated.')).'</th>

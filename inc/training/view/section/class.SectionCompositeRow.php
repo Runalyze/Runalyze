@@ -158,10 +158,10 @@ class SectionCompositeRow extends TrainingViewSectionRowTabbedPlot {
 	 */
 	protected function addAverageHeartrate() {
 		if ($this->Context->activity()->hrAvg() > 0) {
-			$this->BoxedValues[] = new BoxedValue($this->Context->dataview()->hrAvg()->inBPM(), 'bpm', __('&oslash; Heartrate'));
+			$this->BoxedValues[] = new BoxedValue($this->Context->dataview()->hrAvg()->inBPM(), 'bpm', __('avg.').' '.__('Heart rate'));
 
 			if ($this->Context->dataview()->hrMax()->canShowInHRmax()) {
-				$this->BoxedValues[] = new BoxedValue($this->Context->dataview()->hrAvg()->inPercent(), '&#37;', __('&oslash; Heartrate'));
+				$this->BoxedValues[] = new BoxedValue($this->Context->dataview()->hrAvg()->inPercent(), '&#37;', __('avg.').' '.__('Heart rate'));
 			}
 		}
 	}
@@ -171,10 +171,10 @@ class SectionCompositeRow extends TrainingViewSectionRowTabbedPlot {
 	 */
 	protected function addMaximalHeartrate() {
 		if ($this->Context->activity()->hrMax() > 0) {
-			$this->BoxedValues[] = new BoxedValue($this->Context->dataview()->hrMax()->inBPM(), 'bpm', __('max. Heartrate'));
+			$this->BoxedValues[] = new BoxedValue($this->Context->dataview()->hrMax()->inBPM(), 'bpm', __('max.').' '.__('Heart rate'));
 
 			if ($this->Context->dataview()->hrMax()->canShowInHRmax()) {
-				$this->BoxedValues[] = new BoxedValue($this->Context->dataview()->hrMax()->inPercent(), '&#37;', __('max. Heartrate'));
+				$this->BoxedValues[] = new BoxedValue($this->Context->dataview()->hrMax()->inPercent(), '&#37;', __('max.').' '.__('Heart rate'));
 			}
 		}
 	}

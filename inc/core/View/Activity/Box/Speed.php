@@ -34,7 +34,7 @@ class Speed extends AbstractBox
 		parent::__construct(
 			$Pace->value(),
 			$Pace->appendix(),
-			'&oslash; '.__('Speed')
+			__('avg.').' '.__('Speed')
 		);
 	}
 }

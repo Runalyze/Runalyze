@@ -159,7 +159,7 @@ class Series {
 			$avg = $this->avg();
 
 			$Plot->addThreshold('y'.$yAxis, $avg, 'rgba(0,0,0,0.5)');
-			$Plot->addAnnotation(0, $avg, '&oslash; '.$avg.' '.$this->UnitString);
+			$Plot->addAnnotation(0, $avg, __('avg:').' '.$avg.' '.$this->UnitString);
 		}
 
 		if ($addAnnotations && $this->ShowMaximum) {

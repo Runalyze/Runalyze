@@ -50,7 +50,7 @@ class HeartrateAverage extends AbstractKey
 	 */
 	public function shortLabel()
 	{
-		return '&oslash; '.__('HR');
+		return __('avg.').' '.__('HR');
 	}
 
 	/**

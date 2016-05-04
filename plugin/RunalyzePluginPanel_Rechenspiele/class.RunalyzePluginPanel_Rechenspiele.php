@@ -452,7 +452,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 						<th>'.__('Name').'</th>
 						<th>'.__('in &#37;').'</th>
 						<th>'.__('Time range').'</th>
-						<th>'.__('&oslash; value/day').'</th>
+						<th>'.__('avg.').' '.__('value/day').'</th>
 						<th>'.__('max. value').'</th>
 						<th class="small">'.__('Description').'</th>
 					</tr>
@@ -568,7 +568,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 						<td>'.sprintf( __('<strong>Target kilometer per week</strong> <small>(%s weeks)</small>'), round($BasicEndurance->getDaysForWeekKm() / 7)).'</td>
 						<td class="r">'.Distance::format($BasicEndurance->getTargetWeekKm(), false, 0).'</td>
 						<td class="small">'.sprintf( __('done by %s&#37;'), round(100*$BEresults['weekkm-percentage']) ).'</td>
-						<td class="small">(&oslash; '.Distance::format(($BEresults['weekkm-result'] / $BasicEndurance->getDaysForWeekKm() * 7), false, 0).')</td>
+						<td class="small">('.__('avg.').' '.Distance::format(($BEresults['weekkm-result'] / $BasicEndurance->getDaysForWeekKm() * 7), false, 0).')</td>
 						<td class="small">x'.$BasicEndurance->getPercentageForWeekKilometer().'</td>
 						<td rowspan="2" class="bottom-spacer b" style="vertical-align:middle;">= '.round($BEresults['percentage']).'&#37;</td>
 					</tr>

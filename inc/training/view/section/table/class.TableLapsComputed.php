@@ -63,7 +63,7 @@ class TableLapsComputed extends TableLapsAbstract {
 		$this->Code .= '<th>'.__('Distance').'</th>';
 		$this->Code .= '<th>'.__('Time').'</th>';
 		$this->Code .= '<th>'.__('Pace').'</th>';
-		if ($showCellForHeartrate) $this->Code .= '<th>'.__('&oslash; bpm').'</th>';
+		if ($showCellForHeartrate) $this->Code .= '<th>'.__('avg.').' '.__('bpm').'</th>';
 		if ($showCellForElevation) $this->Code .= '<th>'.__('elev.').'</th>';
 		$this->Code .= '</tr></thead>';
 

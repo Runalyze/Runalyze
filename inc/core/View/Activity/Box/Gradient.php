@@ -23,7 +23,7 @@ class Gradient extends AbstractBox
 		parent::__construct(
 			\Helper::Unknown(substr($Context->dataview()->gradientInPercent(), 0, -11), '-'),
 			'&#37;',
-			__('&oslash; Gradient')
+			__('avg.').' '.__('Gradient')
 		);
 	}
 }

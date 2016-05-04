@@ -143,7 +143,7 @@ class ElevationInfo {
 				<span class="as-input">'.Elevation::format($this->highestPoint).'</span>
 			</div>
 			<div class="w50">
-				<label>&oslash; '.__('Gradient').'</label>
+				<label>'.__('avg.').' '.__('Gradient').'</label>
 				<span class="as-input">'.$this->Context->dataview()->gradientInPercent().'</span>
 			</div>
 			<div class="w50">
