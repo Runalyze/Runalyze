@@ -7,19 +7,12 @@
 namespace Runalyze\Data\Weather\Strategy;
 
 use Runalyze\Model\WeatherCache;
-use Runalyze\Data\Weather\Temperature;
-use Runalyze\Data\Weather\Humidity;
-use Runalyze\Data\Weather\Pressure;
-use Runalyze\Data\Weather\WindSpeed;
-use Runalyze\Data\Weather\WindDegree;
-use Runalyze\Data\Weather\Condition;
-use Runalyze\Data\Weather\Forecast;
-use Runalyze\Data\Weather\Location;
+use Runalyze\Data\Weather;
 
 /**
  * Forecast-strategy for using local database cache
- * 
- * 
+ *
+ *
  *
  * @author Hannes Christiansen
  * @author Michael Pohl
@@ -32,25 +25,33 @@ class DBWeatherCache implements ForecastStrategyInterface {
 	 * @var int
 	 */
 	const GEOHASH_QUERY_PRECISION = 4;
-	
+
 	/**
 	 * PDO
-	 * @var \PDO 
+	 * @var null|\PDO
 	 */
-	protected $Pdo = null;
-	
+	protected $PDO = null;
+
 	/**
 	 * WeatherCache
-	 * @var \Runalyze\Model\WeatherCache\Entity $WeatherCache
+	 * @var null|\Runalyze\Model\WeatherCache\Entity $WeatherCache
 	 */
 	protected $WeatherCache = null;
-	
+
 	/**
 	 * Location
-	 * @var \Runalyze\Data\Weather\Location $Location
+	 * @var null|\Runalyze\Data\Weather\Location $Location
 	 */
 	protected $Location = null;
-	
+
+	/**
+	 * Constructor
+	 */
+	public function __construct()
+	{
+		$this->WeatherCache = new WeatherCache\Entity([]);
+	}
+
 	/**
 	 * @see \Runalyze\Data\Weather\Sources
 	 * @return int
@@ -59,7 +60,7 @@ class DBWeatherCache implements ForecastStrategyInterface {
 	{
 		return $this->WeatherCache->weatherSource();
 	}
-	
+
 	/**
 	 * Is it possible to receive weather data?
 	 * @return boolean
@@ -67,7 +68,7 @@ class DBWeatherCache implements ForecastStrategyInterface {
 	public function isPossible() {
 	    return true;
 	}
-	
+
 	/**
 	 * Should this data be cached?
 	 * @return boolean
@@ -80,38 +81,41 @@ class DBWeatherCache implements ForecastStrategyInterface {
 	 * @return boolean
 	 */
 	public function wasSuccessfull() {
-		return (null !== $this->WeatherCache) && !$this->WeatherCache->isEmpty();
+		return !$this->WeatherCache->isEmpty();
 	}
 
 	/**
 	 * Load conditions
 	 * @param \Runalyze\Data\Weather\Location $Location
 	 */
-	public function loadForecast(Location $Location) {
-	    $this->Pdo  = \DB::getInstance();
+	public function loadForecast(Weather\Location $Location) {
+	    $this->PDO = \DB::getInstance();
 	    $this->Location = $Location;
+	    $cacheData = [];
 
 	    if ($this->Location->hasPosition()) {
 	    	$qValues = array(
 				'geohash' => substr($this->Location->geohash(), 0, self::GEOHASH_QUERY_PRECISION),
-				'starttime' => $this->Location->time() - Forecast::TIME_PRECISION,
-				'endtime' => $this->Location->time() + Forecast::TIME_PRECISION
+				'starttime' => $this->Location->time() - Weather\Forecast::TIME_PRECISION,
+				'endtime' => $this->Location->time() + Weather\Forecast::TIME_PRECISION
 			);
 
-	    	$data = $this->Pdo->query('SELECT * FROM `'.PREFIX.'weathercache` WHERE `geohash` LIKE "'.$qValues['geohash'].'%" AND `time` BETWEEN "'.$qValues['starttime'].'" AND "'.$qValues['endtime'].'" ORDER BY TIME DESC LIMIT 1')->fetch();
-	    } else {
-	    	$data = [];
+	    	$cacheData = $this->PDO->query('SELECT * FROM `'.PREFIX.'weathercache` WHERE `geohash` LIKE "'.$qValues['geohash'].'%" AND `time` BETWEEN "'.$qValues['starttime'].'" AND "'.$qValues['endtime'].'" ORDER BY TIME DESC LIMIT 1')->fetch();
 	    }
 
-	    $this->WeatherCache = new WeatherCache\Entity($data);
+		if (false === $cacheData) {
+	    	$cacheData = [];
+	    }
+
+	    $this->WeatherCache = new WeatherCache\Entity($cacheData);
 	}
-	
+
 	/**
 	 * Condition
 	 * @return \Runalyze\Data\Weather\Condition
 	 */
 	public function condition() {
-		return new Condition($this->WeatherCache->weatherid());
+		return new Weather\Condition($this->WeatherCache->weatherid());
 	}
 
 	/**
@@ -119,7 +123,7 @@ class DBWeatherCache implements ForecastStrategyInterface {
 	 * @return \Runalyze\Data\Weather\Temperature
 	 */
 	public function temperature() {
-		return new Temperature($this->WeatherCache->temperature());
+		return new Weather\Temperature($this->WeatherCache->temperature());
 	}
 
 	/**
@@ -127,42 +131,43 @@ class DBWeatherCache implements ForecastStrategyInterface {
 	 * @return \Runalyze\Data\Weather\WindSpeed
 	 */
 	public function windSpeed() {
-		$WindSpeed = new WindSpeed();
+		return new Weather\WindSpeed($this->WeatherCache->windSpeed());
+		$WindSpeed = new Weather\WindSpeed();
 		$WindSpeed->setMeterPerSecond($this->WeatherCache->windSpeed());
 
 		return $WindSpeed;
 	}
-	
+
 	/**
 	 * WindDegree
 	 * @return \Runalyze\Data\Weather\WindDegree
 	 */
 	public function windDegree() {
-		return new WindDegree($this->WeatherCache->windDegree());
+		return new Weather\WindDegree($this->WeatherCache->windDegree());
 	}
-	
+
 	/**
 	 * Humidity
 	 * @return \Runalyze\Data\Weather\Humidity
 	 */
 	public function humidity() {
-		return new Humidity($this->WeatherCache->humidity());
+		return new Weather\Humidity($this->WeatherCache->humidity());
 	}
-	
+
 	/**
 	 * Pressure
 	 * @return \Runalyze\Data\Weather\Pressure
 	 */
 	public function pressure() {
-		return new Pressure($this->WeatherCache->pressure());
+		return new Weather\Pressure($this->WeatherCache->pressure());
 	}
-	
+
 	/**
 	 * Location object
-	 * @return \Runalyze\Data\Weather\Location
+	 * @return null|\Runalyze\Data\Weather\Location
 	 */
 	public function location() {
 	    return $this->Location;
 	}
-	
+
 }
