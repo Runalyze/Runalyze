@@ -195,6 +195,7 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 		$current = time();
 		$timeago = mktime(0,0,0,1,1,2000);
 		$running = Configuration::General()->runningSport();
+		//TODO Raceresult
 		$raceid = Configuration::General()->competitionType();
 
 		Configuration::Data()->updateVdotShape(0);

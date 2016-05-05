@@ -59,7 +59,8 @@ class ConfigTabSports extends ConfigTab {
 						<th>'.Ajax::tooltip(__('Power'), __('Power is recorded or calculated.')).'</th>
 						<th>'.Ajax::tooltip(__('Outside'), __('Sport is performed outdoor: activate route, weather, ...')).'</th>
 						<th>'.Ajax::tooltip(__('Main equipment'), __('Objects of main equipment type can be shown in the activity overview.')).'</th>
-						<th>'.Ajax::tooltip(__('Default sport type'), __('Default sport type.')).'</th>    
+						<th>'.Ajax::tooltip(__('Default sport type'), __('Default sport type.')).'</th>
+						<th>'.Ajax::tooltip(__('Race sport type'), __('Race sport type.')).'</th>    
 						<th>'.Ajax::tooltip(__('Calendar view'), __('Mode for displaying activities in calendar')).'</th>
 						<th>'.Ajax::tooltip(Icon::$CROSS_SMALL, __('A sport can only be deleted if no references exist.')).'</th>
 					</tr>
@@ -78,7 +79,7 @@ class ConfigTabSports extends ConfigTab {
 			return (!isset($b['counts']) || (isset($a['counts']) && ((int)$a['counts'] > (int)$b['counts']))) ? -1 : 1;
 		});
 
-		$Sports[] = array('id' => -1, 'new' => true, 'name' => '', 'img' => 'unknown.gif', 'short' => 0, 'kcal' => '', 'HFavg' => '', 'distances' => 0, 'speed' => Pace::STANDARD, 'power' => 0, 'outside' => '', 'main_equipmenttypeid' => 0, 'default_typeid' => 0);
+		$Sports[] = array('id' => -1, 'new' => true, 'name' => '', 'img' => 'unknown.gif', 'short' => 0, 'kcal' => '', 'HFavg' => '', 'distances' => 0, 'speed' => Pace::STANDARD, 'power' => 0, 'outside' => '', 'main_equipmenttypeid' => 0, 'default_typeid' => 0, 'race_typeid' => 0);
 
 		$IconOptions = SportFactory::getIconOptions();
 		$PaceOptions = Pace::options();
@@ -105,7 +106,7 @@ class ConfigTabSports extends ConfigTab {
 			$Code .= '
 					<tr class="'.(isset($Data['new']) ? ' unimportant' : '').'">
 						<td>'.$iconSelect.'</td>
-						<td>'.($isRunning ? '<input type="hidden" name="sport[name]['.$id.']" value="'.$Data['name'].'">'.$Data['name'] : '<input type="text" name="sport[name]['.$id.']" value="'.$Data['name'].'">').'</td>
+						<td>'.($isRunning ? '<input type="hidden" name="sport[name]['.$id.']" value="'.$Data['name'].'">'.$Data['name'] : '<input type="text" size="7" name="sport[name]['.$id.']" value="'.$Data['name'].'">').'</td>
 						<td><input type="text" size="3" name="sport[kcal]['.$id.']" value="'.$Data['kcal'].'"></td>
 						<td><input type="text" size="3" name="sport[HFavg]['.$id.']" value="'.$Data['HFavg'].'"></td>
 						<td><input type="checkbox" name="sport[distances]['.$id.']"'.($Data['distances'] == 1 ? ' checked' : '').'></td>
@@ -114,6 +115,7 @@ class ConfigTabSports extends ConfigTab {
 						<td><input type="checkbox" name="sport[outside]['.$id.']"'.($Data['outside'] == 1 ? ' checked' : '').'></td>
 						<td>'.HTML::selectBox('sport[main_equipmenttypeid]['.$id.']', $EquipmentTypeOptions, $Data['main_equipmenttypeid'], '', 'w100').'</td>
 						<td>'.HTML::selectBox('sport[default_typeid]['.$id.']', $SportTypeOptions, $Data['default_typeid'], '', 'w100').'</td>
+						<td>'.HTML::selectBox('sport[race_typeid]['.$id.']', $SportTypeOptions, $Data['race_typeid'], '', 'w100').'</td>   
 						<td>'.($isRunning ? '<input type="hidden" name="sport[short]['.$id.']" value="0"><small>'.__('complete row').'</small>' : HTML::selectBox('sport[short]['.$id.']', $ShortOptions, $Data['short'])).'</td>
 						<td>'.($isRunning ? '-' : $delete).'</td>
 					</tr>';
@@ -177,7 +179,8 @@ class ConfigTabSports extends ConfigTab {
 				'power',
 				'outside',
 				'main_equipmenttypeid',
-				'default_typeid'
+				'default_typeid',
+				'race_typeid'
 			);
 
 			$values  = array(
@@ -191,7 +194,8 @@ class ConfigTabSports extends ConfigTab {
 				isset($_POST['sport']['power'][$id]),
 				isset($_POST['sport']['outside'][$id]),
 				$_POST['sport']['main_equipmenttypeid'][$id],
-				$_POST['sport']['default_typeid'][$id]
+				$_POST['sport']['default_typeid'][$id],
+				$_POST['sport']['race_typeid'][$id]
 			);
 
 			if (isset($_POST['sport']['delete'][$id]) && $id != Runalyze\Configuration::General()->runningSport())

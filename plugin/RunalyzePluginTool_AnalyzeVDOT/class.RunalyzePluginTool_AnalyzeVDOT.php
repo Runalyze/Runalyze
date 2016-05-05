@@ -58,6 +58,7 @@ class RunalyzePluginTool_AnalyzeVDOT extends PluginTool {
 	/**
 	 * Init internal array with all trainings
 	 */
+	//TODO Raceresult
 	private function initTrainings() {
 		$this->Query = DB::getInstance()->query('
 			SELECT

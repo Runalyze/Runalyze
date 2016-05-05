@@ -38,16 +38,16 @@ class RaceContainer {
 	/**
 	 * @var int
 	 */
-	protected $ComeptitionType;
+	protected $SportId;
 
 	/**
 	 * 
 	 * @param PDO $pdo [optional]
-	 * @param int $competitionType [optional]
+	 * @param int $sportId
 	 */
-	public function __construct(PDO $pdo = null, $competitionType = false) {
+	public function __construct($sportId, PDO $pdo = null) {
 		$this->PDO = (null == $pdo) ? DB::getInstance() : $pdo;
-		$this->ComeptitionType = (false === $competitionType) ? Configuration::General()->competitionType() : $competitionType;
+		$this->SportId = $sportId;
 	}
 
 	/**
@@ -66,9 +66,10 @@ class RaceContainer {
 		return $this->PDO->query(
 			'SELECT
 				`'.implode('`,`', $this->columns()).'`
-			FROM `'.PREFIX.'training`
-			WHERE `accountid`='.\SessionAccountHandler::getId().' AND `typeid`='.$this->ComeptitionType.'
-			ORDER BY `time` DESC'
+			FROM `'.PREFIX.'raceresult` as r
+			LEFT JOIN `'.PREFIX.'training` as tr ON r.`activity_id` = tr.`id`
+			WHERE r.`accountid`='.\SessionAccountHandler::getId().' AND tr.`sportid`='.$this->SportId.'
+			ORDER BY tr.`time` DESC'
 		)->fetchAll();
 	}
 

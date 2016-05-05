@@ -96,6 +96,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	 * Init data 
 	 */
 	protected function prepareForDisplay() {
+		$this->setSportsNavigation();
 		$this->setOwnNavigation();
 		$this->loadRaces();
 	}
@@ -106,7 +107,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	protected function loadRaces() {
 		require_once __DIR__.'/RaceContainer.php';
 
-		$this->RaceContainer = new RaceContainer();
+		$this->RaceContainer = new RaceContainer($this->sportid);
 		$this->RaceContainer->fetchData();
 	}
 
@@ -294,7 +295,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 		echo '<tbody>';
 
 		PersonalBest::activateStaticCache();
-		PersonalBest::lookupDistances($kms);
+		PersonalBest::lookupDistances($kms, $this->sportid);
 
 		foreach ($kms as $km) {
 			echo '<tr class="r"><td class="b">'.(new Distance($km))->stringAuto(true, 1).'</td>';
@@ -404,7 +405,10 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 		$Condition = new Weather\Condition(0);
 		$Strings = array();
 
-		$Weather = DB::getInstance()->query('SELECT SUM(1) as num, weatherid FROM `'.PREFIX.'training` WHERE `typeid`='.Configuration::General()->competitionType().' AND `weatherid`!='.Weather\Condition::UNKNOWN.' AND `accountid` = '.SessionAccountHandler::getId().' GROUP BY `weatherid` ORDER BY `weatherid` ASC')->fetchAll();
+		//TODO Raceresult
+		//$Weather = DB::getInstance()->query('SELECT SUM(1) as num, weatherid FROM `'.PREFIX.'training` WHERE `typeid`='.Configuration::General()->competitionType().' AND `weatherid`!='.Weather\Condition::UNKNOWN.' AND `accountid` = '.SessionAccountHandler::getId().' GROUP BY `weatherid` ORDER BY `weatherid` ASC')->fetchAll();
+		
+		
 		foreach ($Weather as $W) {
 			$Condition->set($W['weatherid']);
 			$Strings[] = $W['num'].'x '.$Condition->icon()->code();

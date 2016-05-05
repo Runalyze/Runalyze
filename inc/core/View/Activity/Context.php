@@ -178,7 +178,7 @@ class Context {
 		}
 
 		if ($RoutePrivacy->showRace()) {
-			return ($this->activity()->typeid() != Configuration::General()->competitionType());
+			return ($this->activity()->typeid() != $this->Sport->raceTypeId());
 		}
 
 		return true;

@@ -77,18 +77,19 @@ class VDOTCorrector {
 	 * 
 	 * @param PDO $database
 	 * @param int $accountid
-	 * @param int $typeid
+	 * @param int $sportid
 	 */
-	public function fromDatabase(PDO $database, $accountid, $typeid) {
+	public function fromDatabase(PDO $database, $accountid, $sportid) {
 		$factor = $database->query(
 			'SELECT MAX(`factor`) as `factor`
 			FROM (
 				SELECT `vdot_by_time`*1.0/`vdot` AS `factor` 
-				FROM `'.PREFIX.'training` 
-				WHERE
-					`typeid` = '.(int)$typeid.' AND
-					`vdot` > 0 AND
-					`accountid` = '.(int)$accountid.'
+				FROM `'.PREFIX.'raceresult` r
+				LEFT JOIN `'.PREFIX.'training` tr ON r.activity_id = tr.id
+				    WHERE
+					tr.`sportid` = '.(int)$sportid.' AND
+					tr.`vdot` > 0 AND
+					r.`accountid` = '.(int)$accountid.'
 				ORDER BY  `vdot_by_time` DESC 
 				LIMIT '.self::DB_LOOKUP_LIMIT.'
 			) AS T

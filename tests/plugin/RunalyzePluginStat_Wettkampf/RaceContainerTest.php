@@ -23,13 +23,13 @@ class RaceContainerTest extends \PHPUnit_Framework_TestCase {
 	/**
 	 * @var int
 	 */
-	const RACEID = 5;
+	const SPORTID = 5;
 
 	protected function setUp() {
 		$this->PDO = DB::getInstance();
 		$this->PDO->exec('DELETE FROM `runalyze_training`');
 
-		$this->Container = new RaceContainer($this->PDO, self::RACEID);
+		$this->Container = new RaceContainer(self::SPORTID, $this->PDO);
 	}
 
 	protected function tearDown() {
@@ -37,7 +37,7 @@ class RaceContainerTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	protected function insert($distance, $s = 0, $time = 0) {
-		$this->PDO->exec('INSERT INTO `runalyze_training` (`distance`, `s`, `time`, `typeid`, `accountid`) VALUES ("'.$distance.'", "'.$s.'", "'.$time.'", "'.self::RACEID.'", 0)');
+		$this->PDO->exec('INSERT INTO `runalyze_training` (`distance`, `s`, `time`, `sportid`, `accountid`) VALUES ("'.$distance.'", "'.$s.'", "'.$time.'", "'.self::SPORTID.'", 0)');
 	}
 
 	public function testGeneralFunctionality() {

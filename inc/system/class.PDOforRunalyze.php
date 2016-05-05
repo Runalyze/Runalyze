@@ -62,6 +62,7 @@ class PDOforRunalyze extends PDO {
 				&& strpos($statement, PREFIX.'activity_tag') === false
 				&& strpos($statement, PREFIX.'equipment_sport') === false
 				&& strpos($statement, PREFIX.'weathercache') === false
+				&& strpos($statement, PREFIX.'raceresult') === false
 				&& strpos($statement, '`accountid`') === false
 				&& strpos($statement, 'accountid=') === false
 			) {

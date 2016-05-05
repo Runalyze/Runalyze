@@ -252,6 +252,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_sport` (
   `outside` tinyint(1) NOT NULL DEFAULT '0',
   `main_equipmenttypeid` int(10) unsigned NOT NULL DEFAULT '0',
   `default_typeid` int(10) unsigned DEFAULT NULL,
+  `race_typeid` int(10) unsigned DEFAULT NULL,
   `accountid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -406,6 +407,29 @@ CREATE TABLE IF NOT EXISTS `runalyze_weathercache` (
   `pressure` smallint(4) unsigned DEFAULT NULL,
   `weatherid` smallint(6) NOT NULL DEFAULT '1',
   `weather_source` tinyint(2) unsigned DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `runalyze_raceresult`
+--
+
+CREATE TABLE IF NOT EXISTS `runalyze_raceresult` (
+  `official_distance` decimal(6,2) NOT NULL,
+  `official_time` decimal(8,2) NOT NULL,
+  `officially_measured` tinyint(1)  unsigned NOT NULL DEFAULT 0,
+  `name` varchar(50) NOT NULL DEFAULT '',
+  `place_total` mediumint(8) unsigned NOT NULL DEFAULT 0,
+  `place_gender` mediumint(8) unsigned NOT NULL DEFAULT 0,
+  `place_ageclass` mediumint(8) unsigned NOT NULL DEFAULT 0,
+  `participants_total` mediumint(8) unsigned NOT NULL DEFAULT 0,
+  `participants_gender` mediumint(8) unsigned NOT NULL DEFAULT 0,
+  `participants_ageclass` mediumint(8) unsigned NOT NULL DEFAULT 0,
+  `activity_id` int(10) unsigned NOT NULL,
+  `accountid` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`activity_id`),
+  KEY  `accountid` (`accountid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --

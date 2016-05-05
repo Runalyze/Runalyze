@@ -71,7 +71,7 @@ class Splits extends AbstractKey
 			if (
 				$context->activity()->splits()->hasActiveAndInactiveLaps() ||
 				round($context->activity()->splits()->totalDistance()) != round($context->activity()->distance()) ||
-				($context->hasType() && $context->type()->id() == Configuration::General()->competitionType())
+				($context->hasType() && $context->type()->id() == $context->sport()->raceTypeId())
 			) {
 				$Icon = new Icon( Icon::CLOCK );
 				$Icon->setTooltip($this->stringForActiveLaps($context->activity()->splits()));

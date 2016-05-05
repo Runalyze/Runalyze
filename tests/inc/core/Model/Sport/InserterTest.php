@@ -35,7 +35,7 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 			`power` TINYINT NOT NULL,
 			`outside` TINYINT NOT NULL,
 			`main_equipmenttypeid` INTEGER NOT NULL,
-			`default_typeid` INTEGER NOT NULL,
+			`default_typeid` INTEGER DEFAULT NULL,
 			`accountid` INTEGER NOT NULL
 			);
 		');
@@ -60,7 +60,8 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 			Entity::PACE_UNIT => 'foo',
 			Entity::HAS_POWER => 0,
 			Entity::IS_OUTSIDE => 1,
-			Entity::DEFAULT_TYPEID => 1
+			Entity::DEFAULT_TYPEID => 1,
+			Entity::RACE_TYPEID => 3
 		));
 
 		$Inserter = new Inserter($this->PDO, $Object);
@@ -75,6 +76,7 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(140, $Sport->avgHR());
 		$this->assertEquals('foo', $Sport->paceUnitEnum());
 		$this->assertEquals(1, $Sport->defaultTypeID());
+		$this->assertEquals(3, $Sport->raceTypeId());
 
 		$this->assertTrue($Sport->hasDistances());
 		$this->assertTrue($Sport->isOutside());
