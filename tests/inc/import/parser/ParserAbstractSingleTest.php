@@ -92,7 +92,7 @@ class ParserAbstractSingleTest extends PHPUnit_Framework_TestCase
 	}
 
 	protected function internalTestThatTimestampAndOffsetCorrectionFor(array $latitudes, array $longitudes, $originalTimeString, $expectedTimeString, $expectedOffset) {
-		try {
+		if (RUNALYZE_TEST_TZ_LOOKUP) {
 			$Parser = new ParserAbstractSingle_MockTester([
 				'latitude' => $latitudes,
 				'longitude' => $longitudes
@@ -102,8 +102,6 @@ class ParserAbstractSingleTest extends PHPUnit_Framework_TestCase
 
 			$this->assertEquals($expectedTimeString, LocalTime::date('Y-m-d H:i', $Parser->object()->getTimestamp()));
 			$this->assertEquals($expectedOffset, $Parser->object()->getTimezoneOffset());
-		} catch (TimezoneLookupException $e) {
-			$this->markTestSkipped('Timezone lookup is not possible: '.$e->getMessage());
 		}
 	}
 
