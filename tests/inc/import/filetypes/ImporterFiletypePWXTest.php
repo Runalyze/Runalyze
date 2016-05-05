@@ -38,7 +38,7 @@ class ImporterFiletypePWXTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test: incorrect xml-file 
+	 * Test: incorrect xml-file
 	 */
 	public function test_notPWX() {
 		$this->object->parseString('<any><xml><file></file></xml></any>');
@@ -50,7 +50,7 @@ class ImporterFiletypePWXTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * Test: standard file
-	 * Filename: "without-dist.pwx" 
+	 * Filename: "without-dist.pwx"
 	 */
 	public function test_withoutDist() {
 		$this->object->parseFile('../tests/testfiles/pwx/without-dist.pwx');
@@ -59,7 +59,12 @@ class ImporterFiletypePWXTest extends PHPUnit_Framework_TestCase {
 		$this->assertFalse( $this->object->failed() );
 
 		$this->assertEquals('2009-02-10 06:15', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
-		$this->assertEquals(60, $this->object->object()->getTimezoneOffset());
+
+		if (RUNALYZE_TEST_TZ_LOOKUP) {
+			$this->assertEquals(-420, $this->object->object()->getTimezoneOffset());
+		} else {
+			$this->assertEquals(null, $this->object->object()->getTimezoneOffset());
+		}
 
 		$this->assertEquals( 1646, $this->object->object()->getTimeInSeconds(), '', 30);
 		$this->assertEquals( 4.891, $this->object->object()->getDistance(), '', 0.1);
@@ -72,7 +77,7 @@ class ImporterFiletypePWXTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * Test: standard file
-	 * Filename: "with-dist.pwx" 
+	 * Filename: "with-dist.pwx"
 	 */
 	public function test_withDist() {
 		$this->object->parseFile('../tests/testfiles/pwx/with-dist.pwx');
@@ -81,7 +86,12 @@ class ImporterFiletypePWXTest extends PHPUnit_Framework_TestCase {
 		$this->assertFalse( $this->object->failed() );
 
 		$this->assertEquals('2008-11-16 11:40', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
-		$this->assertEquals(60, $this->object->object()->getTimezoneOffset());
+
+		if (RUNALYZE_TEST_TZ_LOOKUP) {
+			$this->assertEquals(-420, $this->object->object()->getTimezoneOffset());
+		} else {
+			$this->assertEquals(null, $this->object->object()->getTimezoneOffset());
+		}
 
 		$this->assertEquals( 6978, $this->object->object()->getTimeInSeconds(), '', 30);
 		$this->assertEquals( 16.049, $this->object->object()->getDistance(), '', 0.1);
@@ -94,7 +104,7 @@ class ImporterFiletypePWXTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * Test: standard file
-	 * Filename: "with-dist-and-hr.pwx" 
+	 * Filename: "with-dist-and-hr.pwx"
 	 */
 	public function test_withDistAndHr() {
 		$this->object->parseFile('../tests/testfiles/pwx/with-dist-and-hr.pwx');
@@ -112,7 +122,7 @@ class ImporterFiletypePWXTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * Test: standard file
-	 * Filename: "with-dist-and-hr.pwx" 
+	 * Filename: "with-dist-and-hr.pwx"
 	 */
 	public function test_withPower() {
 		$this->object->parseFile('../tests/testfiles/pwx/with-power.pwx');

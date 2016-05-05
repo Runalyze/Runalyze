@@ -6,6 +6,7 @@
 
 use Runalyze\Configuration;
 use Runalyze\Util\LocalTime;
+use Runalyze\Util\TimezoneLookup;
 
 /**
  * Abstract parser for one single training
@@ -224,6 +225,7 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 		$this->TrainingObject->setArrayHRV( $this->gps['hrv'] );
 
 		$this->setValuesFromArraysIfEmpty();
+		$this->guessTimezoneFromStartPosition();
 	}
 
 	/**
@@ -380,6 +382,42 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 			$this->TrainingObject->setArrayDistance( $this->gps['km'] );
 			$this->TrainingObject->setDistance( end($this->gps['km']) );
 		}
+	}
+
+	/**
+	 * Use time zone from start position to correct time zone from file
+	 */
+	private function guessTimezoneFromStartPosition() {
+		$latitudes = array_filter($this->gps['latitude']);
+		$longitudes = array_filter($this->gps['longitude']);
+
+		if (!empty($latitudes) && !empty($longitudes)) {
+			$Lookup = new TimezoneLookup();
+
+			if ($Lookup->isPossible()) {
+				$timezone = $Lookup->getTimezoneForCoordinate(reset($longitudes), reset($latitudes));
+
+				if (null !== $timezone && $timezone != '') {
+					$this->adjustTimestampAndOffsetForNewTimezone($timezone);
+				}
+			}
+		}
+	}
+
+	/**
+	 * @param string $timezone
+	 */
+	private function adjustTimestampAndOffsetForNewTimezone($timezone) {
+		$newOffset = (new \DateTime(null, new \DateTimeZone($timezone)))->setTimestamp($this->TrainingObject->getTimestamp())->getOffset() / 60;
+
+		if (null === $this->TrainingObject->getTimezoneOffset()) {
+			// Don't correct the timestamp if the currently used offset is unknown
+			// (This may happen for files with something link 'Time = 16:00' as info)
+		} else {
+			$this->TrainingObject->setTimestamp($this->TrainingObject->getTimestamp() + 60*($newOffset - $this->TrainingObject->getTimezoneOffset()));
+		}
+
+		$this->TrainingObject->setTimezoneOffset($newOffset);
 	}
 
 	/**

@@ -15,7 +15,7 @@ use Runalyze\Util\TimezoneLookup;
 
 /**
  * Insert activity to database
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Model\Activity
  */
@@ -34,7 +34,7 @@ class Inserter extends Model\InserterWithAccountID {
 	 * @var \Runalyze\Model\Swimdata\Entity
 	 */
 	protected $Swimdata = null;
-        
+
 	/**
 	 * @var \Runalyze\Model\Route\Entity
 	 */
@@ -44,7 +44,7 @@ class Inserter extends Model\InserterWithAccountID {
 	 * @var array
 	 */
 	protected $EquipmentIDs = array();
-	
+
 	/**
 	 * @var array
 	 */
@@ -65,7 +65,7 @@ class Inserter extends Model\InserterWithAccountID {
 	public function setTrackdata(Model\Trackdata\Entity $trackdata) {
 		$this->Trackdata = $trackdata;
 	}
-        
+
 	/**
 	 * @param \Runalyze\Model\Swimdata\Entity $swimdata
 	 */
@@ -86,7 +86,7 @@ class Inserter extends Model\InserterWithAccountID {
 	public function setEquipmentIDs(array $ids) {
 		$this->EquipmentIDs = $ids;
 	}
-	
+
 	/**
 	 * @param array $ids
 	 */
@@ -132,7 +132,6 @@ class Inserter extends Model\InserterWithAccountID {
 		$this->calculateStrideLength();
 		$this->calculateVerticalRatio();
 		$this->calculateSwimValues();
-		$this->lookForTimezoneOffset();
 	}
 
 	/**
@@ -264,26 +263,6 @@ class Inserter extends Model\InserterWithAccountID {
 		}
 	}
 
-	/**
-	 * Look for timezone offset
-	 */
-	protected function lookForTimezoneOffset() {
-		if (null === $this->Object->timezoneOffset() && null !== $this->Route && $this->Route->has(Model\Route\Entity::STARTPOINT)) {
-			$Lookup = new TimezoneLookup();
-
-			if ($Lookup->isPossible()) {
-				$Coordinate = (new Geotools())->geohash()->decode($this->Route->get(Model\Route\Entity::STARTPOINT))->getCoordinate();
-				$timezone = $Lookup->getTimezoneForCoordinate($Coordinate->getLongitude(), $Coordinate->getLatitude());
-
-                            if (null !== $timezone && $timezone != '') {
-                                $timezoneOffset = (new \DateTime(null, new \DateTimeZone($timezone)))->setTimestamp($this->Object->timestamp())->getOffset() / 60;
-
-                                $this->Object->set(Entity::TIMEZONE_OFFSET, $timezoneOffset);
-                            }
-			}
-		}
-	}
-        
 	/**
 	 * Tasks after insertion
 	 */

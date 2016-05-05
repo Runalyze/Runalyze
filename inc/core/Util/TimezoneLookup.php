@@ -124,7 +124,9 @@ class TimezoneLookup
         $this->Db = new \SQLite3($this->SQLiteTzWorldDatabase);
 
         try {
-            $this->Db->loadExtension($this->SpatialiteExtensionName);
+            if (!@$this->Db->loadExtension($this->SpatialiteExtensionName)) {
+                throw new TimezoneLookupException(TimezoneLookupException::SPATIALITE_MISSING);
+            }
         } catch (\Exception $e) {
             throw new TimezoneLookupException(TimezoneLookupException::SPATIALITE_MISSING);
         }

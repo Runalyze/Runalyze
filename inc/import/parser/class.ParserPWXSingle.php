@@ -15,9 +15,9 @@ use Runalyze\Configuration;
 class ParserPWXSingle extends ParserAbstractSingleXML {
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * This parser reimplements constructor to force $XML-parameter to be given.
-	 * 
+	 *
 	 * @param string $FileContent file content
 	 * @param SimpleXMLElement $XML XML element with <Activity> as root tag
 	 */
@@ -58,9 +58,19 @@ class ParserPWXSingle extends ParserAbstractSingleXML {
 
 	/**
 	 * Parse general values
+	 *
+	 * "Time zones that aren't specified are considered undetermined."
+	 * That means: If the time string has no appendix (no '+01:00' and no 'Z'),
+	 * the offset must be treated as unknown (to prevent a timestamp change due to a coordinate-based time zone).
+	 *
+	 * @see http://books.xmlschemata.org/relaxng/ch19-77049.html
 	 */
 	protected function parseGeneralValues() {
 		$this->setTimestampAndTimezoneOffsetWithUtcFixFrom((string)$this->XML->time);
+
+		if (strlen((string)$this->XML->time) == 19) {
+			$this->TrainingObject->setTimezoneOffset(null);
+		}
 
 		if (!empty($this->XML->sportType)) {
 			$this->guessSportID((string)$this->XML->sportType);
@@ -113,7 +123,7 @@ class ParserPWXSingle extends ParserAbstractSingleXML {
 
 	/**
 	 * Parse log entry
-	 * @param SimpleXMLElement $Log 
+	 * @param SimpleXMLElement $Log
 	 */
 	protected function parseLogEntry($Log) {
 		if ((int)$Log->timeoffset == 0)
