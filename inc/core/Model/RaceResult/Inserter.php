@@ -7,7 +7,7 @@
 namespace Runalyze\Model\RaceResult;
 
 use Runalyze\Model;
-
+use Runalyze\Configuration;
 /**
  * Insert RaceResult to database
  * 
@@ -48,5 +48,27 @@ class Inserter extends Model\InserterWithAccountID {
 			),
 			Entity::allDatabaseProperties()
 		);
+	}
+	
+	/**
+	 * Tasks after insertion
+	 */
+	protected function after() {
+		$this->updateVDOTcorrector();
+	}
+	
+	/**
+	 * Update vdot corrector
+	 */
+	protected function updateVDOTcorrector() {
+		$Factory = new Model\Factory();
+		$Activity = $Factory->activity($this->Object->activityId());
+		if (
+			$Activity->sportid() == Configuration::General()->runningSport() &&
+			$Activity->usesVDOT() &&
+			$Activity->vdotByHeartRate() > 0
+		) {
+				Configuration::Data()->recalculateVDOTcorrector();
+		}
 	}
 }

@@ -270,7 +270,7 @@ class Inserter extends Model\InserterWithAccountID {
 		$this->updateTag();
 		$this->updateStartTime();
 		$this->createRaceResult();
-		$this->updateVDOTshapeAndCorrector();
+		$this->updateVDOTshape();
 		$this->updateBasicEndurance();
 	}
 	
@@ -326,7 +326,7 @@ class Inserter extends Model\InserterWithAccountID {
 	/**
 	 * Update vdot shape and corrector
 	 */
-	protected function updateVDOTshapeAndCorrector() {
+	protected function updateVDOTshape() {
 		$timestampLimit = time() - Configuration::Vdot()->days() * DAY_IN_S;
 
 		if (

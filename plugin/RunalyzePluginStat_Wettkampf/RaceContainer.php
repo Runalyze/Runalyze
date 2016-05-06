@@ -129,16 +129,4 @@ class RaceContainer {
 			}
 		}
 	}
-
-	/**
-	 * @return array
-	 */
-	protected function columns() {
-		return array(
-			'r.`official_time`', 'r.official_distance', 'r.officially_measured', 'r.name',
-			'r.place_total', 'r.place_gender','r.place_ageclass',
-			'r.participants_total',	'r.participants_gender', 'r.participants_ageclass',
-			'tr.id', 'tr.time',	'tr.sportid', 'tr.typeid', 'tr.comment', 'tr.distance',	'tr.s',	'tr.is_track', 'tr.pulse_avg', 'tr.pulse_max', 'tr.weatherid', 'tr.temperature'
-		);
-	}
 }

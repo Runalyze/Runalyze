@@ -37,6 +37,8 @@ class VDOTCorrectorTest extends \PHPUnit_Framework_TestCase {
 		VDOTCorrector::setGlobalFactor(1);
 		$this->PDO->exec('DELETE FROM `runalyze_training`');
 		$this->PDO->exec('DELETE FROM `runalyze_raceresult`');
+		$this->PDO->exec('DELETE FROM `runalyze_conf`');
+		Configuration::loadAll(1);
 	}
 
 	public function testSimpleFactor() {

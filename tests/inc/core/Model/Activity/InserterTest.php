@@ -40,7 +40,7 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		$this->RunningRaceTypeId = 3;
 		$this->PDO->exec('INSERT INTO `'.PREFIX.'sport` (`name`,`kcal`,`outside`,`accountid`,`power`, `race_typeid`) VALUES("Running",400,0,0,0,'.$this->RunningRaceTypeId.')');
 		$runningSportId = $this->PDO->lastInsertId();
-		$this->PDO->exec("INSERT INTO runalyze_conf (`category`, `key`, `value`, `accountid`) VALUES ('general', 'RUNNINGSPORT', ".$runningSportId.", 0)");
+		$this->PDO->exec("INSERT INTO `".PREFIX."conf` (`category`, `key`, `value`, `accountid`) VALUES ('general', 'RUNNINGSPORT', ".$runningSportId.", 0)");
 		Configuration::loadAll(0);
 		$this->PDO->exec('INSERT INTO `'.PREFIX.'equipment_type` (`name`,`accountid`) VALUES("Type",0)');
 		$this->EquipmentType = $this->PDO->lastInsertId();
@@ -61,6 +61,8 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		$this->PDO->exec('DELETE FROM `'.PREFIX.'training`');
 		$this->PDO->exec('DELETE FROM `'.PREFIX.'sport`');
 		$this->PDO->exec('DELETE FROM `'.PREFIX.'equipment_type`');
+		$this->PDO->exec('DELETE FROM `'.PREFIX.'conf');
+		Configuration::loadAll(0);
 
 		$Factory = new Model\Factory(0);
 		$Factory->clearCache('sport');
