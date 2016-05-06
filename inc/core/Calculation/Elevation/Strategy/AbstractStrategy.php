@@ -1,18 +1,19 @@
 <?php
 /**
  * This file contains class::Strategy
- * @package Runalyze\Data\Elevation\Calculation
+ * @package Runalyze\Calculation\Elevation\Strategy
  */
 
-namespace Runalyze\Data\Elevation\Calculation;
+namespace Runalyze\Calculation\Elevation\Strategy;
 
 /**
  * Abstract strategy to smooth elevation data for calculation
  *
  * @author Hannes Christiansen
- * @package Runalyze\Data\Elevation\Calculation
+ * @package Runalyze\Calculation\Elevation\Strategy
  */
-abstract class Strategy {
+abstract class AbstractStrategy
+{
 	/**
 	 * Original elevation data
 	 * @var array
@@ -35,7 +36,8 @@ abstract class Strategy {
 	 * Construct
 	 * @param array $elevation
 	 */
-	public function __construct(array $elevation) {
+	public function __construct(array $elevation)
+	{
 		$this->ElevationData = $elevation;
 	}
 
@@ -48,7 +50,8 @@ abstract class Strategy {
 	 * Get smoothed data
 	 * @return array
 	 */
-	final public function smoothedData() {
+	final public function smoothedData()
+	{
 		return $this->SmoothedData;
 	}
 
@@ -56,7 +59,8 @@ abstract class Strategy {
 	 * Get used indices
 	 * @return array
 	 */
-	final public function smoothingIndices() {
+	final public function smoothingIndices()
+	{
 		return $this->SmoothingIndices;
 	}
 
@@ -70,7 +74,8 @@ abstract class Strategy {
 	 * @param float $line2y
 	 * @return float
 	 */
-	final protected function perpendicularDistance($pointX, $pointY, $line1x, $line1y, $line2x, $line2y) {
+	final protected function perpendicularDistance($pointX, $pointY, $line1x, $line1y, $line2x, $line2y)
+	{
 		if ($line2x == $line1x) {
 			return abs($pointX - $line2x);
 		}

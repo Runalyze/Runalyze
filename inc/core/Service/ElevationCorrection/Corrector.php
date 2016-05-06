@@ -1,21 +1,22 @@
 <?php
 /**
  * This file contains class::Corrector
- * @package Runalyze\Data\Elevation\Correction
+ * @package Runalyze\Service\ElevationCorrection
  */
 
-namespace Runalyze\Data\Elevation\Correction;
+namespace Runalyze\Service\ElevationCorrection;
 
 /**
  * Elevation corrector
  * 
  * @author Hannes Christiansen
- * @package Runalyze\Data\Elevation\Correction
+ * @package Runalyze\Service\ElevationCorrection
  */
-class Corrector {
+class Corrector
+{
 	/**
 	 * Strategy
-	 * @var \Runalyze\Data\Elevation\Correction\Strategy
+	 * @var null|\Runalyze\Service\ElevationCorrection\Strategy\AbstractStrategy
 	 */
 	protected $Strategy = null;
 
@@ -36,10 +37,11 @@ class Corrector {
 	 * @param array $latitude
 	 * @param array $longitude
 	 * @param string $strategyName
-	 * @throws \NoValidStrategyException
-	 * @throws \Runalyze\Data\Elevation\Correction\InvalidResponseException
+	 * @throws \Runalyze\Service\ElevationCorrection\NoValidStrategyException
+	 * @throws \Runalyze\Service\ElevationCorrection\Strategy\InvalidResponseException
 	 */
-	public function correctElevation(array $latitude, array $longitude, $strategyName = '') {
+	public function correctElevation(array $latitude, array $longitude, $strategyName = '')
+	{
 		$this->LatitudePoints = $latitude;
 		$this->LongitudePoints = $longitude;
 
@@ -54,17 +56,19 @@ class Corrector {
 
 	/**
 	 * Is a valid strategy set?
-	 * @return boolean
+	 * @return bool
 	 */
-	final protected function hasNoValidStrategy() {
+	final protected function hasNoValidStrategy()
+	{
 		return !($this->Strategy instanceof Strategy);
 	}
 
 	/**
 	 * @param string $strategyName
 	 */
-	protected function tryToUse($strategyName) {
-		$strategyName = 'Runalyze\\Data\\Elevation\\Correction\\'.$strategyName;
+	protected function tryToUse($strategyName)
+	{
+		$strategyName = 'Runalyze\\Strategy\\ElevationCorrection\\Strategy\\'.$strategyName;
 
 		if (class_exists($strategyName)) {
 			$this->Strategy = new $strategyName($this->LatitudePoints, $this->LongitudePoints);
@@ -78,7 +82,8 @@ class Corrector {
 	/**
 	 * Choose strategy
 	 */
-	protected function chooseStrategy() {
+	protected function chooseStrategy()
+	{
 		$this->tryToUseGeoTIFF();
 
 		if ($this->hasNoValidStrategy()) {
@@ -92,10 +97,10 @@ class Corrector {
 
 	/**
 	 * Apply strategy
-	 * @throws \NoValidStrategyException
-	 * @throws \RuntimeException
+	 * @throws \Runalyze\Service\ElevationCorrection\NoValidStrategyException
 	 */
-	protected function applyStrategy() {
+	protected function applyStrategy()
+	{
 		if ($this->hasNoValidStrategy()) {
 			throw new NoValidStrategyException('No elevation correction strategy is able to handle the data. Maybe all query limits are reached.');
 		} else {
@@ -107,7 +112,8 @@ class Corrector {
 	 * Get used strategy
 	 * @return string
 	 */
-	public function getNameOfUsedStrategy() {
+	public function getNameOfUsedStrategy()
+	{
 		$strategyName = get_class($this->Strategy);
 
 		return substr($strategyName, strrpos($strategyName, '\\')+1);
@@ -117,7 +123,8 @@ class Corrector {
 	 * Get corrected elevation
 	 * @return array
 	 */
-	public function getCorrectedElevation() {
+	public function getCorrectedElevation()
+	{
 		if ($this->hasNoValidStrategy()) {
 			return array();
 		} else {
@@ -128,8 +135,9 @@ class Corrector {
 	/**
 	 * Try to use GeoTIFF
 	 */
-	protected function tryToUseGeoTIFF() {
-		$this->Strategy = new GeoTIFF($this->LatitudePoints, $this->LongitudePoints);
+	protected function tryToUseGeoTIFF()
+	{
+		$this->Strategy = new Strategy\GeoTIFF($this->LatitudePoints, $this->LongitudePoints);
 
 		if (!$this->Strategy->canHandleData()) {
 			$this->Strategy = null;
@@ -139,8 +147,9 @@ class Corrector {
 	/**
 	 * Try to use Geonames
 	 */
-	protected function tryToUseGeonames() {
-		$this->Strategy = new Geonames($this->LatitudePoints, $this->LongitudePoints);
+	protected function tryToUseGeonames()
+	{
+		$this->Strategy = new Strategy\Geonames($this->LatitudePoints, $this->LongitudePoints);
 
 		if (!$this->Strategy->canHandleData()) {
 			$this->Strategy = null;
@@ -156,8 +165,9 @@ class Corrector {
 	 * 
 	 * @see https://developers.google.com/maps/terms?hl=de#section_10_12
 	 */
-	protected function tryToUseGoogleAPI() {
-		$this->Strategy = new GoogleMaps($this->LatitudePoints, $this->LongitudePoints);
+	protected function tryToUseGoogleAPI()
+	{
+		$this->Strategy = new Strategy\GoogleMaps($this->LatitudePoints, $this->LongitudePoints);
 
 		if (!$this->Strategy->canHandleData()) {
 			$this->Strategy = null;

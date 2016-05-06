@@ -1,10 +1,10 @@
 <?php
 /**
  * This file contains class::Calculator
- * @package Runalyze\Data\Elevation\Calculation
+ * @package Runalyze\Calculation\Elevation
  */
 
-namespace Runalyze\Data\Elevation\Calculation;
+namespace Runalyze\Calculation\Elevation;
 
 use Runalyze\Configuration;
 use Runalyze\Parameter\Application\ElevationMethod;
@@ -13,9 +13,10 @@ use Runalyze\Parameter\Application\ElevationMethod;
  * Elevation calculator
  * 
  * @author Hannes Christiansen
- * @package Runalyze\Data\Elevation\Calculation
+ * @package Runalyze\Calculation\Elevation
  */
-class Calculator {
+class Calculator
+{
 	/**
 	 * Elevation points
 	 * @var array
@@ -36,7 +37,7 @@ class Calculator {
 
 	/**
 	 * Smoothing strategy
-	 * @var \Runalyze\Data\Elevation\Calculation\Strategy
+	 * @var \Runalyze\Calculation\Elevation\Strategy\AbstractStrategy
 	 */
 	protected $Strategy;
 
@@ -64,10 +65,11 @@ class Calculator {
 	 * If no options are set, the current configuration settings are used.
 	 * 
 	 * @param array $ElevationPoints
-	 * @param \Runalyze\Parameter\Application\ElevationMethod $Method [optional]
-	 * @param int $Threshold [optional]
+	 * @param \Runalyze\Parameter\Application\ElevationMethod|null $Method [optional]
+	 * @param int|null $Threshold [optional]
 	 */
-	public function __construct($ElevationPoints, ElevationMethod $Method = null, $Threshold = null) {
+	public function __construct(array $ElevationPoints, ElevationMethod $Method = null, $Threshold = null)
+	{
 		$this->ElevationPoints = $ElevationPoints;
 		$this->Method = !is_null($Method) ? $Method : Configuration::ActivityView()->elevationMethod();
 		$this->Threshold = !is_null($Threshold) ? $Threshold : Configuration::ActivityView()->elevationMinDiff();
@@ -77,7 +79,8 @@ class Calculator {
 	 * Set threshold
 	 * @param int $threshold
 	 */
-	public function setThreshold($threshold) {
+	public function setThreshold($threshold)
+	{
 		$this->Threshold = $threshold;
 	}
 
@@ -85,7 +88,8 @@ class Calculator {
 	 * Set method
 	 * @param \Runalyze\Parameter\Application\ElevationMethod $Method
 	 */
-	public function setMethod(ElevationMethod $Method) {
+	public function setMethod(ElevationMethod $Method)
+	{
 		$this->Method = $Method;
 	}
 
@@ -93,7 +97,8 @@ class Calculator {
 	 * Get elevation
 	 * @return int
 	 */
-	public function totalElevation() {
+	public function totalElevation()
+	{
 		return max($this->Up, $this->Down);
 	}
 
@@ -101,7 +106,8 @@ class Calculator {
 	 * Get elevation up
 	 * @return int
 	 */
-	public function elevationUp() {
+	public function elevationUp()
+	{
 		return $this->Up;
 	}
 
@@ -109,14 +115,16 @@ class Calculator {
 	 * Get elevation up
 	 * @return int
 	 */
-	public function elevationDown() {
+	public function elevationDown()
+	{
 		return $this->Down;
 	}
 
 	/**
 	 * Calculate
 	 */
-	public function calculate() {
+	public function calculate()
+	{
 		$this->chooseStrategy();
 
 		if (!empty($this->ElevationPoints)) {
@@ -130,23 +138,25 @@ class Calculator {
 	/**
 	 * Choose strategy
 	 */
-	protected function chooseStrategy() {
+	protected function chooseStrategy()
+	{
 		if ($this->Method->usesThreshold()) {
-			$this->Strategy = new Threshold($this->ElevationPoints, $this->Threshold);
+			$this->Strategy = new Strategy\Threshold($this->ElevationPoints, $this->Threshold);
 		} elseif ($this->Method->usesDouglasPeucker()) {
-			$this->Strategy = new DouglasPeucker($this->ElevationPoints, $this->Threshold);
+			$this->Strategy = new Strategy\DouglasPeucker($this->ElevationPoints, $this->Threshold);
 		} elseif ($this->Method->usesReumannWitkam()) {
-			$this->Strategy = new ReumannWitkam($this->ElevationPoints);
+			$this->Strategy = new Strategy\ReumannWitkam($this->ElevationPoints);
 		} else {
-			$this->Strategy = new NoSmoothing($this->ElevationPoints);
+			$this->Strategy = new Strategy\NoSmoothing($this->ElevationPoints);
 		}
 	}
 
 	/**
 	 * Run strategy
 	 */
-	protected function runStrategy() {
-		if ($this->Strategy instanceof Strategy) {
+	protected function runStrategy()
+	{
+		if ($this->Strategy instanceof Strategy\AbstractStrategy) {
 			$this->Strategy->runSmoothing();
 			$smoothedData = $this->Strategy->smoothedData();
 		} else {
@@ -163,9 +173,10 @@ class Calculator {
 
 	/**
 	 * Smoothing strategy
-	 * @return \Runalyze\Data\Elevation\Calculation\Strategy
+	 * @return \Runalyze\Calculation\Elevation\Strategy\AbstractStrategy
 	 */
-	public function strategy() {
+	public function strategy()
+	{
 		return $this->Strategy;
 	}
 }

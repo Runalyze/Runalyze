@@ -1,18 +1,19 @@
 <?php
 /**
  * This file contains class::GoogleMaps
- * @package Runalyze\Data\Elevation\Correction
+ * @package Runalyze\Service\ElevationCorrection\Strategy
  */
 
-namespace Runalyze\Data\Elevation\Correction;
+namespace Runalyze\Service\ElevationCorrection\Strategy;
 
 /**
  * Elevation corrector strategy: http://maps.googleapis.com/
  *
  * @author Hannes Christiansen
- * @package Runalyze\Data\Elevation\Correction
+ * @package Runalyze\Service\ElevationCorrection\Strategy
  */
-class GoogleMaps extends FromExternalAPI {
+class GoogleMaps extends AbstractStrategyFromExternalAPI
+{
 	/**
 	 * Points per call
 	 * @var int
@@ -37,7 +38,8 @@ class GoogleMaps extends FromExternalAPI {
 	 *
 	 * @see https://developers.google.com/maps/documentation/elevation/?hl=de&csw=1
 	 */
-	public function canHandleData() {
+	public function canHandleData()
+	{
 		$url = 'http://maps.googleapis.com/maps/api/elevation/json?locations=49.4,7.7&sensor=false';
 		$response = json_decode(\Filesystem::getExternUrlContent($url), true);
 
@@ -61,8 +63,10 @@ class GoogleMaps extends FromExternalAPI {
 	 * @param array $latitudes
 	 * @param array $longitudes
 	 * @return array
+	 * @throws \Runalyze\Service\ElevationCorrection\Strategy\InvalidResponseException
 	 */
-	protected function fetchElevationFor(array $latitudes, array $longitudes) {
+	protected function fetchElevationFor(array $latitudes, array $longitudes)
+	{
 		$numberOfCoordinates = count($latitudes);
 		$coordinatesString = '';
 
@@ -74,7 +78,7 @@ class GoogleMaps extends FromExternalAPI {
 		$response = json_decode(\Filesystem::getExternUrlContent($url), true);
 
 		if (is_null($response) || !is_array($response) || !isset($response['results']) || !isset($response['results'][0]['elevation'])) {
-			throw new \RuntimeException('GoogleMaps returned malformed code.');
+			throw new InvalidResponseException('GoogleMaps returned malformed code.');
 		}
 
 		$elevationData = array();

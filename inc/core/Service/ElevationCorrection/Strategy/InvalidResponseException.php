@@ -1,16 +1,16 @@
 <?php
 /**
  * This file contains class::InvalidResponseException
- * @package Runalyze\Data\Elevation\Correction
+ * @package Runalyze\Service\ElevationCorrection\Strategy
  */
 
-namespace Runalyze\Data\Elevation\Correction;
+namespace Runalyze\Service\ElevationCorrection\Strategy;
 
 /**
  * Invalid api response exception
  * 
  * @author Hannes Christiansen
- * @package Runalyze\Data\Elevation\Correction
+ * @package Runalyze\Service\ElevationCorrection\Strategy
  */
 class InvalidResponseException extends \RuntimeException
 {

@@ -1,18 +1,19 @@
 <?php
 /**
  * This file contains class::FromExternalAPI
- * @package Runalyze\Data\Elevation\Correction
+ * @package Runalyze\Service\ElevationCorrection\Strategy
  */
 
-namespace Runalyze\Data\Elevation\Correction;
+namespace Runalyze\Service\ElevationCorrection\Strategy;
 
 /**
  * Abstract corrector strategy for external API
  *
  * @author Hannes Christiansen
- * @package Runalyze\Data\Elevation\Correction
+ * @package Runalyze\Service\ElevationCorrection\Strategy
  */
-abstract class FromExternalAPI extends Strategy {
+abstract class AbstractStrategyFromExternalAPI extends AbstractStrategy
+{
 	/**
 	 * Points per call
 	 * @var int
@@ -27,7 +28,8 @@ abstract class FromExternalAPI extends Strategy {
 	 *
 	 * Note: canHandleData() has to be called before!
 	 */
-	final public function correctElevation() {
+	final public function correctElevation()
+	{
 		$numberOfPoints = count($this->LatitudePoints);
 		$pointsToGroup  = $this->POINTS_TO_GROUP * ceil($numberOfPoints/1000);
 		$latitudes  = array();

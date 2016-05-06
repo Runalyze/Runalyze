@@ -1,18 +1,19 @@
 <?php
 /**
  * This file contains class::GeoTIFF
- * @package Runalyze\Data\Elevation\Correction
+ * @package Runalyze\Service\ElevationCorrection\Strategy
  */
 
-namespace Runalyze\Data\Elevation\Correction;
+namespace Runalyze\Service\ElevationCorrection\Strategy;
 
 /**
  * Elevation corrector strategy: GeoTIFF
  * 
  * @author Hannes Christiansen
- * @package Runalyze\Data\Elevation\Correction
+ * @package Runalyze\Service\ElevationCorrection\Strategy
  */
-class GeoTIFF extends Strategy {
+class GeoTIFF extends AbstractStrategy
+{
 	/**
 	 * @var int
 	 */
@@ -20,41 +21,43 @@ class GeoTIFF extends Strategy {
 
 	/**
 	 * Reader
-	 * @var \SRTMGeoTIFFReader
+	 * @var null|\SRTMGeoTIFFReader
 	 */
 	protected $Reader = null;
 
 	/**
 	 * Boolean flag: use smoothing
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $USE_SMOOTHING = true;
 
 	/**
 	 * Boolean flag: guess unknown
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $GUESS_UNKNOWN = true;
 
 	/**
 	 * Boolean flag: interpolate
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $INTERPOLATE = true;
 
 	/**
 	 * Set use smoothing flag
-	 * @param boolean $flag
+	 * @param bool $flag
 	 */
-	public function setUseSmoothing($flag) {
+	public function setUseSmoothing($flag)
+	{
 		$this->USE_SMOOTHING = $flag;
 	}
 
 	/**
 	 * Set guess unknown flag
-	 * @param boolean $flag
+	 * @param bool $flag
 	 */
-	public function setGuessUnknown($flag) {
+	public function setGuessUnknown($flag)
+	{
 		$this->GUESS_UNKNOWN = $flag;
 	}
 
@@ -62,7 +65,8 @@ class GeoTIFF extends Strategy {
 	 * Can the strategy handle the data?
 	 * @return bool
 	 */
-	public function canHandleData() {
+	public function canHandleData()
+	{
 		$lats = array_filter($this->LatitudePoints);
 		$lngs = array_filter($this->LongitudePoints);
 
@@ -98,7 +102,8 @@ class GeoTIFF extends Strategy {
 	 * 
 	 * Note: canHandleData() has to be called before!
 	 */
-	public function correctElevation() {
+	public function correctElevation()
+	{
 		if ($this->Reader instanceof \SRTMGeoTIFFReader) {
 			$this->Reader->maxPoints = PHP_INT_MAX;
 			$arraySize = count($this->LatitudePoints);
@@ -130,7 +135,8 @@ class GeoTIFF extends Strategy {
 	/**
 	 * @param array $emptyIndices
 	 */
-	protected function insertUnknownValuesAt(array $emptyIndices) {
+	protected function insertUnknownValuesAt(array $emptyIndices)
+	{
 		foreach ($emptyIndices as $i => $index) {
 			$firstPart = array_slice($this->ElevationPoints, 0, $index);
 			$secondPart = array_slice($this->ElevationPoints, $index);
@@ -144,7 +150,8 @@ class GeoTIFF extends Strategy {
 	 * Although this could be more exactly, a smoothing has to be used.
 	 * Otherwise, this corrector would result in much higher cumulative elevations.
 	 */
-	protected function smoothElevation() {
+	protected function smoothElevation()
+	{
 		if (empty($this->ElevationPoints)) {
 			return;
 		}

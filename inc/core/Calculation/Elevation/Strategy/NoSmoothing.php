@@ -1,22 +1,24 @@
 <?php
 /**
  * This file contains class::NoSmoothing
- * @package Runalyze\Data\Elevation\Calculation
+ * @package Runalyze\Calculation\Elevation\Strategy
  */
 
-namespace Runalyze\Data\Elevation\Calculation;
+namespace Runalyze\Calculation\Elevation\Strategy;
 
 /**
  * Smoothing strategy: no smoothing
  *
  * @author Hannes Christiansen
- * @package Runalyze\Data\Elevation\Calculation
+ * @package Runalyze\Calculation\Elevation\Strategy
  */
-class NoSmoothing extends Strategy {
+class NoSmoothing extends AbstractStrategy
+{
 	/**
 	 * Smooth data
 	 */
-	public function runSmoothing() {
+	public function runSmoothing()
+	{
 		$this->SmoothedData = $this->ElevationData;
 		$this->SmoothingIndices = array_keys($this->SmoothedData);
 	}

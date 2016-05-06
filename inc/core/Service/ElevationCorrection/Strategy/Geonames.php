@@ -1,10 +1,10 @@
 <?php
 /**
  * This file contains class::Geonames
- * @package Runalyze\Data\Elevation\Correction
+ * @package Runalyze\Service\ElevationCorrection\Strategy
  */
 
-namespace Runalyze\Data\Elevation\Correction;
+namespace Runalyze\Service\ElevationCorrection\Strategy;
 
 /**
  * Elevation corrector strategy: ws.geonames.org
@@ -14,9 +14,10 @@ namespace Runalyze\Data\Elevation\Correction;
  * GTOPO30 data have a resolution of only 1 km.
  *
  * @author Hannes Christiansen
- * @package Runalyze\Data\Elevation\Correction
+ * @package Runalyze\Service\ElevationCorrection\Strategy
  */
-class Geonames extends FromExternalAPI {
+class Geonames extends AbstractStrategyFromExternalAPI
+{
 	/**
 	 * Value for unknown elevation
 	 *
@@ -38,7 +39,8 @@ class Geonames extends FromExternalAPI {
 	 * @see http://www.geonames.org/export/credits.html
 	 * @see http://www.geonames.org/export/webservice-exception.html
 	 */
-	public function canHandleData() {
+	public function canHandleData()
+	{
 		$url = 'http://api.geonames.org/gtopo30JSON?lat=47.01&lng=10.2&username='.GEONAMES_USERNAME;
 		$response = json_decode(\Filesystem::getExternUrlContent($url), true);
 
@@ -76,9 +78,10 @@ class Geonames extends FromExternalAPI {
 	 * @param array $latitudes
 	 * @param array $longitudes
 	 * @return array
-	 * @throws \InvalidResponseException
+	 * @throws \Runalyze\Service\ElevationCorrection\Strategy\InvalidResponseException
 	 */
-	protected function fetchElevationFor(array $latitudes, array $longitudes) {
+	protected function fetchElevationFor(array $latitudes, array $longitudes)
+	{
 		$latitudeString = implode(',', $latitudes);
 		$longitudeString = implode(',', $longitudes);
 

@@ -1,19 +1,20 @@
 <?php
 /**
  * This file contains class::DouglasPeucker
- * @package Runalyze\Data\Elevation\Calculation
+ * @package Runalyze\Calculation\Elevation\Strategy
  */
 
-namespace Runalyze\Data\Elevation\Calculation;
+namespace Runalyze\Calculation\Elevation\Strategy;
 
 /**
  * Smoothing strategy: Douglas-Peucker
  *
  * @author Hannes Christiansen
- * @package Runalyze\Data\Elevation\Calculation
+ * @package Runalyze\Calculation\Elevation\Strategy
  * @see http://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm
  */
-class DouglasPeucker extends Strategy {
+class DouglasPeucker extends AbstractStrategy
+{
 	/**
 	 * Distance (in x direction) between two points
 	 * @var int
@@ -22,16 +23,17 @@ class DouglasPeucker extends Strategy {
 
 	/**
 	 * Epsilon
-	 * @var float
+	 * @var float|int
 	 */
 	protected $Epsilon = 0;
 
 	/**
 	 * Construct
 	 * @param array $elevation
-	 * @param float $epsilon [optional]
+	 * @param float|int $epsilon [optional]
 	 */
-	public function __construct(array $elevation, $epsilon = 0) {
+	public function __construct(array $elevation, $epsilon = 0)
+	{
 		parent::__construct($elevation);
 
 		$this->setEpsilon($epsilon);
@@ -41,14 +43,16 @@ class DouglasPeucker extends Strategy {
 	 * Set epsilon
 	 * @param float $epsilon
 	 */
-	public function setEpsilon($epsilon) {
+	public function setEpsilon($epsilon)
+	{
 		$this->Epsilon = $epsilon;
 	}
 
 	/**
 	 * Smooth data
 	 */
-	public function runSmoothing() {
+	public function runSmoothing()
+	{
 		$this->SmoothingIndices = array(0, count($this->ElevationData)-1);
 		$this->SmoothedData = $this->smoothPart($this->ElevationData);
 
@@ -61,7 +65,8 @@ class DouglasPeucker extends Strategy {
 	 * @param int $offset
 	 * @return array
 	 */
-	protected function smoothPart(array $data, $offset = 0) {
+	protected function smoothPart(array $data, $offset = 0)
+	{
 		$maxDist = 0;
 		$index = 0;
 		$num = count($data);

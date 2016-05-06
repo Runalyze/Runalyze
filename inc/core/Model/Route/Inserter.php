@@ -6,7 +6,7 @@
 
 namespace Runalyze\Model\Route;
 
-use Runalyze\Data\Elevation\Correction\NoValidStrategyException;
+use Runalyze\Service\ElevationCorrection\NoValidStrategyException;
 use Runalyze\Model;
 use Runalyze\Calculation\Route\Calculator;
 use Runalyze\Configuration;

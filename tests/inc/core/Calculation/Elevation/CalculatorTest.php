@@ -1,6 +1,6 @@
 <?php
 
-namespace Runalyze\Data\Elevation\Calculation;
+namespace Runalyze\Calculation\Elevation;
 
 use Runalyze\Parameter\Application\ElevationMethod;
 

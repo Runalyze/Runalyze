@@ -1,34 +1,26 @@
 <?php
 /**
- * This file contains class::Strategy
- * @package Runalyze\Data\Elevation\Correction
+ * This file contains class::AbstractStrategy
+ * @package Runalyze\Service\ElevationCorrection\Strategy
  */
 
-namespace Runalyze\Data\Elevation\Correction;
+namespace Runalyze\Service\ElevationCorrection\Strategy;
 
 /**
  * Abstract strategy to correct elevation data
  *
  * @author Hannes Christiansen
- * @package Runalyze\Data\Elevation\Correction
+ * @package Runalyze\Service\ElevationCorrection\Strategy
  */
-abstract class Strategy {
-	/**
-	 * Latitude points
-	 * @var array
-	 */
+abstract class AbstractStrategy
+{
+	/** @var array */
 	protected $LatitudePoints = array();
 
-	/**
-	 * Longitude points
-	 * @var array
-	 */
+	/** @var array */
 	protected $LongitudePoints = array();
 
-	/**
-	 * Elevation points
-	 * @var array
-	 */
+	/** @var array */
 	protected $ElevationPoints = array();
 
 	/**
@@ -46,7 +38,8 @@ abstract class Strategy {
 	 * @param array $LongitudePoints
 	 * @throws \InvalidArgumentException
 	 */
-	public function __construct(array $LatitudePoints, array $LongitudePoints) {
+	public function __construct(array $LatitudePoints, array $LongitudePoints)
+	{
 		if (empty($LatitudePoints) || empty($LongitudePoints)) {
 			throw new \InvalidArgumentException('Latitudes/longitudes must not be empty.');
 		}
@@ -74,18 +67,21 @@ abstract class Strategy {
 	 * Guess unknown elevations
 	 * @param int $unknownValue
 	 */
-	public function guessUnknown($unknownValue = -32768) {
+	public function guessUnknown($unknownValue = -32768)
+	{
 		$numberOfPoints = count($this->ElevationPoints);
-
 		$i = 0;
+
 		while ($i < $numberOfPoints && $this->ElevationPoints[$i] == $unknownValue) { // unknown from the start
 			$i++;
 		};
+
 		if ($i == $numberOfPoints) { // in case nothing is known assume elevation of 0
 			$lastKnown = 0;
 		} else {
 			$lastKnown = $this->ElevationPoints[$i];  // first good one will be used for beginning
 		}
+
 		for ($i = 0; $i < $numberOfPoints; $i++) {	//substitute each unknown with last known
 			if ($this->ElevationPoints[$i] == $unknownValue) {
 				$this->ElevationPoints[$i] = $lastKnown;
@@ -99,7 +95,8 @@ abstract class Strategy {
 	 * Get corrected elevation
 	 * @return array
 	 */
-	final public function getCorrectedElevation() {
+	final public function getCorrectedElevation()
+	{
 		return $this->ElevationPoints;
 	}
 }

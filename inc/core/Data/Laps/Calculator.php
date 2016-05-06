@@ -234,7 +234,7 @@ class Calculator
 			return;
 		}
 
-		$Calculator = new Elevation\Calculation\Calculator($this->RouteLoop->sliceElevation());
+		$Calculator = new Calculation\Elevation\Calculator($this->RouteLoop->sliceElevation());
 		$Calculator->calculate();
 
 		$Lap->setElevation($Calculator->elevationUp(), $Calculator->elevationDown());
