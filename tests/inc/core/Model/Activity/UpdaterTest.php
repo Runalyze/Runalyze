@@ -24,6 +24,7 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 
 	protected $OutdoorID;
 	protected $IndoorID;
+	protected $RunningRaceTypeId;
 
 	protected $EquipmentType;
 	protected $EquipmentA;
@@ -36,6 +37,11 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 		$this->OutdoorID = $this->PDO->lastInsertId();
 		$this->PDO->exec('INSERT INTO `'.PREFIX.'sport` (`name`,`kcal`,`outside`,`accountid`,`power`,`HFavg`) VALUES("",400,0,0,0,100)');
 		$this->IndoorID = $this->PDO->lastInsertId();
+		$this->RunningRaceTypeId = 3;
+		$this->PDO->exec('INSERT INTO `'.PREFIX.'sport` (`name`,`kcal`,`outside`,`accountid`,`power`, `race_typeid`) VALUES("Running",400,0,0,0,'.$this->RunningRaceTypeId.')');
+		$this->runningSportId = $this->PDO->lastInsertId();
+		$this->PDO->exec("INSERT INTO runalyze_conf (`category`, `key`, `value`, `accountid`) VALUES ('general', 'RUNNINGSPORT', ".$this->runningSportId.", 0)");
+		Configuration::loadAll(0);
 		$this->PDO->exec('INSERT INTO `'.PREFIX.'equipment_type` (`name`,`accountid`) VALUES("Type",0)');
 		$this->EquipmentType = $this->PDO->lastInsertId();
 		$this->PDO->exec('INSERT INTO `'.PREFIX.'equipment_sport` (`sportid`,`equipment_typeid`) VALUES('.$this->OutdoorID.','.$this->EquipmentType.')');
@@ -195,9 +201,7 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 		$current = time();
 		$timeago = mktime(0,0,0,1,1,2000);
 		$running = Configuration::General()->runningSport();
-		//TODO Raceresult
-		$raceid = Configuration::General()->competitionType();
-
+		$raceid = $this->RunningRaceTypeId;
 		Configuration::Data()->updateVdotShape(0);
 		Configuration::Data()->updateVdotCorrector(1);
 
@@ -226,7 +230,7 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 		$this->update($Object3, $Object2);
 
 		$this->assertNotEquals(0, Configuration::Data()->vdotShape());
-		$this->assertNotEquals(1, Configuration::Data()->vdotFactor());
+		$this->assertEquals(1, Configuration::Data()->vdotFactor());
 
 		$Object4 = clone $Object3;
 		$Object4->set(Entity::TYPEID, $raceid + 1);

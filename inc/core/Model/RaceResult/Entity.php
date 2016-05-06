@@ -123,7 +123,7 @@ class Entity extends Model\Entity {
 			self::OFFICIAL_DISTANCE,
 			self::OFFICIAL_TIME,
 			self::OFFICIALLY_MEASURED,
-		    	self::PLACE_TOTAL,
+		    self::PLACE_TOTAL,
 			self::PLACE_GENDER,
 			self::PLACE_AGECLASS,
 			self::PARTICIPANTS_TOTAL,

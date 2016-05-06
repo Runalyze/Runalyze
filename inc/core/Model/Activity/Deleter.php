@@ -158,9 +158,9 @@ class Deleter extends Model\DeleterWithIDAndAccountID {
 		) {
 			Configuration::Data()->recalculateVDOTshape();
 			//TODO Raceresult
-			if ($this->Object->typeid() == Configuration::General()->competitionType()) {
+			//if ($this->Object->typeid() == Configuration::General()->competitionType()) {
 				Configuration::Data()->recalculateVDOTcorrector();
-			}
+			//}
 		}
 	}
 

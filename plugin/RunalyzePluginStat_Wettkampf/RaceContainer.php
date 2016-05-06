@@ -65,7 +65,10 @@ class RaceContainer {
 	protected function fetchDataFromDB() {
 		return $this->PDO->query(
 			'SELECT
-				`'.implode('`,`', $this->columns()).'`
+				r.`official_time`, r.`official_distance`, r.`officially_measured`, r.`name`,
+				r.`place_total`, r.`place_gender`,r.`place_ageclass`,
+				r.`participants_total`,	r.`participants_gender`, r.`participants_ageclass`,
+				tr.`id`, tr.`time`,	tr.`sportid`, tr.`typeid`, tr.`comment`, tr.`distance`,	tr.`s`,	tr.`is_track`, tr.`pulse_avg`, tr.`pulse_max`, tr.`weatherid`, tr.`temperature`
 			FROM `'.PREFIX.'raceresult` as r
 			LEFT JOIN `'.PREFIX.'training` as tr ON r.`activity_id` = tr.`id`
 			WHERE r.`accountid`='.\SessionAccountHandler::getId().' AND tr.`sportid`='.$this->SportId.'
@@ -132,18 +135,10 @@ class RaceContainer {
 	 */
 	protected function columns() {
 		return array(
-			'id',
-			'time',
-			'sportid',
-			'typeid',
-			'comment',
-			'distance',
-			's',
-			'is_track',
-			'pulse_avg',
-			'pulse_max',
-			'weatherid',
-			'temperature'
+			'r.`official_time`', 'r.official_distance', 'r.officially_measured', 'r.name',
+			'r.place_total', 'r.place_gender','r.place_ageclass',
+			'r.participants_total',	'r.participants_gender', 'r.participants_ageclass',
+			'tr.id', 'tr.time',	'tr.sportid', 'tr.typeid', 'tr.comment', 'tr.distance',	'tr.s',	'tr.is_track', 'tr.pulse_avg', 'tr.pulse_max', 'tr.weatherid', 'tr.temperature'
 		);
 	}
 }

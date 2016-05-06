@@ -90,7 +90,7 @@ class VDOTCorrector {
 					tr.`sportid` = '.(int)$sportid.' AND
 					tr.`vdot` > 0 AND
 					r.`accountid` = '.(int)$accountid.'
-				ORDER BY  `vdot_by_time` DESC 
+				ORDER BY  tr.`vdot_by_time` DESC 
 				LIMIT '.self::DB_LOOKUP_LIMIT.'
 			) AS T
 			LIMIT 1'

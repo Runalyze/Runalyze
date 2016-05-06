@@ -114,7 +114,7 @@ class DeleterTest extends \PHPUnit_Framework_TestCase {
 			Entity::TIME_IN_SECONDS => 30*60,
 			Entity::HR_AVG => 150,
 			Entity::SPORTID => Configuration::General()->runningSport(),
-			Entity::TYPEID => Configuration::General()->competitionType(),
+			//Entity::TYPEID => Configuration::General()->competitionType(),
 			Entity::USE_VDOT => true
 		));
 
@@ -135,7 +135,7 @@ class DeleterTest extends \PHPUnit_Framework_TestCase {
 			Entity::TIME_IN_SECONDS => 30*60,
 			Entity::HR_AVG => 150,
 			Entity::SPORTID => Configuration::General()->runningSport() + 1,
-			Entity::TYPEID => Configuration::General()->competitionType(),
+			//Entity::TYPEID => Configuration::General()->competitionType(),
 			Entity::USE_VDOT => true
 		));
 		$IDs[] = $this->insert(array(
@@ -144,7 +144,7 @@ class DeleterTest extends \PHPUnit_Framework_TestCase {
 			Entity::TIME_IN_SECONDS => 30*60,
 			Entity::HR_AVG => 150,
 			Entity::SPORTID => Configuration::General()->runningSport(),
-			Entity::TYPEID => Configuration::General()->competitionType(),
+			//Entity::TYPEID => Configuration::General()->competitionType(),
 			Entity::USE_VDOT => false
 		));
 		$IDs[] = $this->insert(array(
@@ -152,7 +152,7 @@ class DeleterTest extends \PHPUnit_Framework_TestCase {
 			Entity::DISTANCE => 10,
 			Entity::TIME_IN_SECONDS => 30*60,
 			Entity::SPORTID => Configuration::General()->runningSport(),
-			Entity::TYPEID => Configuration::General()->competitionType(),
+			//Entity::TYPEID => Configuration::General()->competitionType(),
 			Entity::USE_VDOT => true
 		));
 		$IDs[] = $this->insert(array(
@@ -161,7 +161,7 @@ class DeleterTest extends \PHPUnit_Framework_TestCase {
 			Entity::TIME_IN_SECONDS => 30*60,
 			Entity::HR_AVG => 150,
 			Entity::SPORTID => Configuration::General()->runningSport(),
-			Entity::TYPEID => Configuration::General()->competitionType(),
+			//Entity::TYPEID => Configuration::General()->competitionType(),
 			Entity::USE_VDOT => true
 		));
 

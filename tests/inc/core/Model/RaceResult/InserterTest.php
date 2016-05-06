@@ -22,6 +22,7 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 
 	protected function setUp() {
 		$this->PDO = DB::getInstance();
+		$this->PDO->exec('DELETE FROM `'.PREFIX.'raceresult`');
 		$this->PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	}
 

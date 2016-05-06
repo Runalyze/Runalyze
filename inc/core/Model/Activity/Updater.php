@@ -332,8 +332,27 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 		$this->updateEquipment();
 		$this->updateTag();
 		$this->updateStartTime();
+		$this->createRaceResult();
 		$this->updateVDOTshapeAndCorrector();
 		$this->updateBasicEndurance();
+	}
+	
+	/**
+	 * Create RaceResult if race type
+	 */
+	protected function createRaceResult() {
+		$Factory = \Runalyze\Context::Factory();
+		
+		if ($Factory->raceResult($this->NewObject->id()) === NULL && $this->hasChanged(Entity::TYPEID) && $this->NewObject->typeid() == $Factory->sport($this->NewObject->sportid())->raceTypeId()) {
+			$RaceResult = new Model\RaceResult\Entity(array(
+				Model\RaceResult\Entity::OFFICIAL_TIME => $this->NewObject->duration(),
+				Model\RaceResult\Entity::OFFICIAL_DISTANCE => $this->NewObject->distance(),
+				Model\RaceResult\Entity::ACTIVITY_ID => $this->NewObject->id()
+			));
+			$AddRaceResult = new Model\RaceResult\Inserter($this->PDO, $RaceResult);
+			$AddRaceResult->setAccountID($this->value(self::ACCOUNTID));
+			$AddRaceResult->insert();
+		}
 	}
 
 	/**
@@ -411,11 +430,11 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 			(
 				$this->NewObject->usesVDOT() ||
 				$this->hasChanged(Entity::USE_VDOT)
-			) &&
+			) /*&& //TODO Raceresult
 			(
 				$this->NewObject->typeid() == Configuration::General()->competitionType() ||
 				($this->knowsOldObject() && $this->OldObject->typeid() == Configuration::General()->competitionType())
-			)
+			)*/
 		) {
 			Configuration::Data()->recalculateVDOTcorrector();
 		}

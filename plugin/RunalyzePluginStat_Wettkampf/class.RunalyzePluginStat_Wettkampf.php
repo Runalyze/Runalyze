@@ -6,6 +6,7 @@
 
 use Runalyze\Configuration;
 use Runalyze\Model\Activity;
+use Runalyze\Model\RaceResult;
 use Runalyze\View\Activity\Linker;
 use Runalyze\View\Activity\Dataview;
 use Runalyze\View\Icon;
@@ -345,11 +346,19 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 			<table class="fullwidth zebra-style" id="'.$id.'">
 				<thead>
 					<tr class="c">
+						<th class="{sorter: false}" colspan=5>'.__('Official distance & time').'</th>
+						<th class="{sorter: false}" colspan=3>'.__('Placement').'</th>
+						<th class="{sorter: false}" colspan=3>'.__('Activity details').'</th>
+					</tr>
+					<tr class="c">
 						<th class="{sorter: false}">&nbsp;</th>
 						<th class="{sorter: \'germandate\'}">'.__('Date').'</th>
 						<th>'.__('Name').'</th>
 						<th class="{sorter: \'distance\'}">'.__('Distance').'</th>
 						<th class="{sorter: \'resulttime\'}">'.__('Time').'</th>
+						<th>'.__('Total').'</th>
+						<th>'.__('Age class').'</th>
+						<th>'.__('Gender').'</th>
 						<th>'.__('Pace').'</th>
 						<th>'.__('Heart rate').'</th>
 						<th class="{sorter: \'temperature\'}">'.__('Weather').'</th>
@@ -366,13 +375,18 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 		$Activity = new Activity\Entity($data);
 		$Linker = new Linker($Activity);
 		$Dataview = new Dataview($Activity);
-
+		$RaceResult = new RaceResult\Entity($data);
+		$decimals = Configuration::ActivityView()->decimals();
+		
 		echo '<tr class="r">
 				<td>'.$this->getIconForCompetition($data['id']).'</td>
 				<td class="c small">'.$Linker->weekLink().'</a></td>
-				<td class="l"><strong>'.$Linker->linkWithComment().'</strong></td>
-				<td>'.$Dataview->distance(1).'</td>
+				<td class="l"><strong>'.$Linker->link($RaceResult->name()).'</strong></td>
+				<td>'.Distance::format($RaceResult->officialDistance(), true, $decimals).'</td>
 				<td>'.$Dataview->duration()->string(Duration::FORMAT_COMPETITION).'</td>
+				<td>'.$RaceResult->placeTotal().'<td>
+				<td>'.$RaceResult->placeAgeclass().'<td>
+				<td>'.$RaceResult->placeGender().'<td>
 				<td class="small">'.$Dataview->pace()->value().'</td>
 				<td class="small">'.Helper::Unknown($Activity->hrAvg()).' / '.Helper::Unknown($Activity->hrMax()).' bpm</td>
 				<td class="small">'.($Activity->weather()->isEmpty() ? '' : $Activity->weather()->fullString($Activity->isNight())).'</td>
@@ -384,7 +398,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	 * @param string $text [optional]
 	 */
 	private function displayEmptyTr($text = '') {
-		echo '<tr class="a"><td colspan="8">'.$text.'</td></tr>';
+		echo '<tr class="a"><td colspan="11">'.$text.'</td></tr>';
 	}
 
 	/**

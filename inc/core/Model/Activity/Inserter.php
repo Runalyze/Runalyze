@@ -123,7 +123,6 @@ class Inserter extends Model\InserterWithAccountID {
 		parent::before();
 
 		$this->Object->set(Entity::TIMESTAMP_CREATED, time());
-
 		$this->setSportIdIfEmpty();
 		$this->removeDataIfInside();
 		$this->calculateCaloriesIfZero();
@@ -270,10 +269,28 @@ class Inserter extends Model\InserterWithAccountID {
 		$this->updateEquipment();
 		$this->updateTag();
 		$this->updateStartTime();
+		$this->createRaceResult();
 		$this->updateVDOTshapeAndCorrector();
 		$this->updateBasicEndurance();
 	}
-
+	
+	/**
+	 * Create RaceResult if race type
+	 */
+	protected function createRaceResult() {
+		$Factory = \Runalyze\Context::Factory();
+		if ($this->Object->typeid() == $Factory->sport($this->Object->sportid())->raceTypeId()) {
+			$RaceResult = new Model\RaceResult\Entity(array(
+				Model\RaceResult\Entity::OFFICIAL_TIME => $this->Object->duration(),
+				Model\RaceResult\Entity::OFFICIAL_DISTANCE => $this->Object->distance(),
+				Model\RaceResult\Entity::ACTIVITY_ID => $this->Object->id()
+			));
+			$AddRaceResult = new Model\RaceResult\Inserter($this->PDO, $RaceResult);
+			$AddRaceResult->setAccountID($this->value(self::ACCOUNTID));
+			$AddRaceResult->insert();
+		}
+	}
+	
 	/**
 	 * Update tag
 	 */
@@ -319,9 +336,9 @@ class Inserter extends Model\InserterWithAccountID {
 		) {
 			Configuration::Data()->recalculateVDOTshape();
 			//TODO Raceresult
-			if ($this->Object->typeid() == Configuration::General()->competitionType()) {
+			//if ($this->Object->typeid() == Configuration::General()->competitionType()) {
 				Configuration::Data()->recalculateVDOTcorrector();
-			}
+			//}
 		}
 	}
 
