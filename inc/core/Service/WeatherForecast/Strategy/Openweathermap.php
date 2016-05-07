@@ -1,10 +1,11 @@
 <?php
 /**
- * This file contains class::WeatherOpenweathermap
- * @package Runalyze\Data\Weather\Strategy
+ * This file contains class::Openweathermap
+ * @package Runalyze\Service\WeatherForecast\Strategy
  */
 
-namespace Runalyze\Data\Weather\Strategy;
+namespace Runalyze\Service\WeatherForecast\Strategy;
+
 use Runalyze\Data\Weather\Temperature;
 use Runalyze\Data\Weather\Humidity;
 use Runalyze\Data\Weather\Pressure;
@@ -23,9 +24,9 @@ use Runalyze\Data\Weather\Location;
  * The strategy uses <code>OPENWEATHERMAP_API_KEY</code> if defined.
  *
  * @author Hannes Christiansen
- * @package Runalyze\Data\Weather\Strategy
+ * @package Runalyze\Service\WeatherForecast\Strategy
  */
-class Openweathermap implements ForecastStrategyInterface {
+class Openweathermap implements StrategyInterface {
 	/**
 	 * URL for catching forecast
 	 * @var string

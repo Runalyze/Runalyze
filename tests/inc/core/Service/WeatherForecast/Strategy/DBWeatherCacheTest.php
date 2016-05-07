@@ -1,13 +1,14 @@
 <?php
 
-namespace Runalyze\Data\Weather\Strategy;
+namespace Runalyze\Service\WeatherForecast\Strategy;
 
 use Runalyze\Data\Weather;
 use Runalyze\Model;
+use Runalyze\Service\WeatherForecast\Forecast;
 
 class DBWeatherCacheTest extends \PHPUnit_Framework_TestCase
 {
-	/** @var \Runalyze\Data\Weather\Strategy\DBWeatherCache */
+	/** @var \Runalyze\Service\WeatherForecast\Strategy\DBWeatherCache */
 	protected $object;
 
 	/** @var \PDO */
@@ -94,13 +95,13 @@ class DBWeatherCacheTest extends \PHPUnit_Framework_TestCase
 		]);
 
 		$Location = new Weather\Location();
-		$Location->setTimestamp(1462289510 - Weather\Forecast::TIME_PRECISION + 1);
+		$Location->setTimestamp(1462289510 - Forecast::TIME_PRECISION + 1);
 		$Location->setGeohash('u1xjn3n74zxv');
 
 		$this->object->loadForecast($Location);
 		$this->assertTrue($this->object->wasSuccessfull());
 
-		$Location->setTimestamp(1462289510 - Weather\Forecast::TIME_PRECISION - 1);
+		$Location->setTimestamp(1462289510 - Forecast::TIME_PRECISION - 1);
 
 		$this->object->loadForecast($Location);
 		$this->assertFalse($this->object->wasSuccessfull());

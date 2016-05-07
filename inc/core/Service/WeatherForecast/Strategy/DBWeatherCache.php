@@ -1,25 +1,23 @@
 <?php
 /**
- * This file contains class::WeatherOpenweathermap
- * @package Runalyze\Data\Weather
+ * This file contains class::DBWeatherCache
+ * @package Runalyze\Service\WeatherForecast\Strategy
  */
 
-namespace Runalyze\Data\Weather\Strategy;
+namespace Runalyze\Service\WeatherForecast\Strategy;
 
 use Runalyze\Model\WeatherCache;
 use Runalyze\Data\Weather;
+use Runalyze\Service\WeatherForecast\Forecast;
 
 /**
  * Forecast-strategy for using local database cache
  *
- *
- *
  * @author Hannes Christiansen
  * @author Michael Pohl
- * @package Runalyze\Data\Weather\Strategy
+ * @package Runalyze\Service\WeatherForecast\Strategy
  */
-class DBWeatherCache implements ForecastStrategyInterface {
-
+class DBWeatherCache implements StrategyInterface {
 	/**
 	 * Geohash Query Precision
 	 * @var int
@@ -96,8 +94,8 @@ class DBWeatherCache implements ForecastStrategyInterface {
 	    if ($this->Location->hasPosition()) {
 	    	$qValues = array(
 				'geohash' => substr($this->Location->geohash(), 0, self::GEOHASH_QUERY_PRECISION),
-				'starttime' => $this->Location->time() - Weather\Forecast::TIME_PRECISION,
-				'endtime' => $this->Location->time() + Weather\Forecast::TIME_PRECISION
+				'starttime' => $this->Location->time() - Forecast::TIME_PRECISION,
+				'endtime' => $this->Location->time() + Forecast::TIME_PRECISION
 			);
 
 	    	$cacheData = $this->PDO->query('SELECT * FROM `'.PREFIX.'weathercache` WHERE `geohash` LIKE "'.$qValues['geohash'].'%" AND `time` BETWEEN "'.$qValues['starttime'].'" AND "'.$qValues['endtime'].'" ORDER BY TIME DESC LIMIT 1')->fetch();
@@ -132,10 +130,6 @@ class DBWeatherCache implements ForecastStrategyInterface {
 	 */
 	public function windSpeed() {
 		return new Weather\WindSpeed($this->WeatherCache->windSpeed());
-		$WindSpeed = new Weather\WindSpeed();
-		$WindSpeed->setMeterPerSecond($this->WeatherCache->windSpeed());
-
-		return $WindSpeed;
 	}
 
 	/**
@@ -169,5 +163,4 @@ class DBWeatherCache implements ForecastStrategyInterface {
 	public function location() {
 	    return $this->Location;
 	}
-
 }

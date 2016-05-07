@@ -1,20 +1,20 @@
 <?php
 /**
  * This file contains class::Forecast
- * @package Runalyze\Data\Weather
+ * @package Runalyze\Service\WeatherForecast
  */
 
-namespace Runalyze\Data\Weather;
-use Runalyze\Model\WeatherCache;
-use Runalyze\Data\Weather\Strategy;
-use Runalyze\Util\LocalTime;
+namespace Runalyze\Service\WeatherForecast;
 
+use Runalyze\Data\Weather;
+use Runalyze\Model\WeatherCache;
+use Runalyze\Util\LocalTime;
 
 /**
  * Weather forecast
  *
  * @author Hannes Christiansen
- * @package Runalyze\Data\Weather
+ * @package Runalyze\Service\WeatherForecast
  */
 class Forecast {
 	/**
@@ -25,7 +25,7 @@ class Forecast {
 	
 	/**
 	 * Strategy
-	 * @var \Runalyze\Data\Weather\Strategy\ForecastStrategyInterface
+	 * @var \Runalyze\Service\WeatherForecast\Strategy\StrategyInterface
 	 */
 	protected $Strategy = null;
 
@@ -46,16 +46,16 @@ class Forecast {
 	 * @var array class names (absolute path) of available strategies
 	 */
 	protected $Strategies = [
-		'\\Runalyze\\Data\\Weather\\Strategy\\DBWeatherCache',
-		'\\Runalyze\\Data\\Weather\\Strategy\\Openweathermap'
+		'\\Runalyze\\Service\\WeatherForecast\\Strategy\\DBWeatherCache',
+		'\\Runalyze\\Service\\WeatherForecast\\Strategy\\Openweathermap'
 	];
 
 	/**
 	 * Constructor
 	 * @param \Runalyze\Data\Weather\Location $Location
-	 * @param null|\Runalyze\Data\Weather\Strategy\ForecastStrategyInterface $StrategyToUse can be null to loop through all available strategies
+	 * @param null|\Runalyze\Service\WeatherForecast\Strategy\StrategyInterface $StrategyToUse can be null to loop through all available strategies
 	 */
-	public function __construct(Location $Location, Strategy\ForecastStrategyInterface $StrategyToUse = null) {
+	public function __construct(Weather\Location $Location, Strategy\StrategyInterface $StrategyToUse = null) {
 		$this->Location = $Location;
 		$this->PDO = \DB::getInstance();
 
@@ -65,9 +65,9 @@ class Forecast {
 	}
 
 	/**
-	 * @param null|\Runalyze\Data\Weather\Strategy\ForecastStrategyInterface $StrategyToUse can be null to loop through all available strategies
+	 * @param null|\Runalyze\Service\WeatherForecast\Strategy\StrategyInterface $StrategyToUse can be null to loop through all available strategies
 	 */
-	protected function tryStrategies(Strategy\ForecastStrategyInterface $StrategyToUse = null) {
+	protected function tryStrategies(Strategy\StrategyInterface $StrategyToUse = null) {
 	    if ($StrategyToUse !== null) {
 			$this->tryToLoadForecast($StrategyToUse);
 	    } else {
@@ -80,10 +80,10 @@ class Forecast {
 	}
 
 	/**
-	 * @param \Runalyze\Data\Weather\Strategy\ForecastStrategyInterface $Strategy
+	 * @param \Runalyze\Service\WeatherForecast\Strategy\StrategyInterface $Strategy
 	 * @return bool flag if forecast could be loaded
 	 */
-	protected function tryToLoadForecast(Strategy\ForecastStrategyInterface $Strategy) {
+	protected function tryToLoadForecast(Strategy\StrategyInterface $Strategy) {
 		$this->Strategy = $Strategy;
 
 		if ($this->Strategy->isPossible()) {
@@ -151,7 +151,7 @@ class Forecast {
 	 * @return \Runalyze\Data\Weather
 	 */
 	public function object() {
-		$weather = new \Runalyze\Data\Weather(
+		$weather = new Weather(
 			$this->Strategy->temperature(),
 			$this->Strategy->condition(),
 			$this->Strategy->windSpeed(),

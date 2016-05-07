@@ -1,19 +1,21 @@
 <?php
 /**
- * This file contains interface::ForecastStrategyInterface
- * @package Runalyze\Data\Weather\Strategy
+ * This file contains interface::StrategyInterface
+ * @package Runalyze\Service\WeatherForecast\Strategy
  */
 
-namespace Runalyze\Data\Weather\Strategy;
+namespace Runalyze\Service\WeatherForecast\Strategy;
+
 use Runalyze\Data\Weather\Location;
 
 /**
  * Interface for forecasting wather
  *
  * @author Hannes Christiansen
- * @package Runalyze\Data\Weather\Strategy
+ * @package Runalyze\Service\WeatherForecast\Strategy
  */
-interface ForecastStrategyInterface {
+interface StrategyInterface
+{
 	/**
 	 * @see \Runalyze\Data\Weather\Sources
 	 * @return int

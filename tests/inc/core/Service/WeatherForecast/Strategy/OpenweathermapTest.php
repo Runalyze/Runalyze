@@ -1,30 +1,27 @@
 <?php
 
-namespace Runalyze\Data\Weather\Strategy;
-use Runalyze\Data\Weather\Temperature;
-use Runalyze\Data\Weather\Humidity;
-use Runalyze\Data\Weather\Pressure;
-use Runalyze\Data\Weather\WindSpeed;
-use Runalyze\Data\Weather\WindDegree;
-use Runalyze\Data\Weather\Condition;
-use Runalyze\Data\Weather\Sources;
-use Runalyze\Data\Weather\Location;
+namespace Runalyze\Service\WeatherForecast\Strategy;
 
-class OpenweathermapTest extends \PHPUnit_Framework_TestCase {
+use Runalyze\Data\Weather;
 
-	/** @var \Runalyze\Data\Weather\Strategy\Openweathermap */
+class OpenweathermapTest extends \PHPUnit_Framework_TestCase
+{
+	/** @var \Runalyze\Service\WeatherForecast\Strategy\Openweathermap */
 	protected $object;
 
-	protected function setUp() {
+	protected function setUp()
+	{
 		$this->object = new Openweathermap;
 	}
 
-	public function testEmptyValues() {
+	public function testEmptyValues()
+	{
 		$this->assertNull($this->object->temperature()->value());
-		$this->assertEquals(Condition::UNKNOWN, $this->object->condition()->id());
+		$this->assertEquals(Weather\Condition::UNKNOWN, $this->object->condition()->id());
 	}
 
-	public function testLoadForecast() {
+	public function testLoadForecast()
+	{
 		$this->object->setFromJSON('
 			{
 				"coord":{"lon":7.75,"lat":49.45},
@@ -43,12 +40,12 @@ class OpenweathermapTest extends \PHPUnit_Framework_TestCase {
 		$Temperature = $this->object->temperature();
 		$Temperature->toCelsius();
 
-		$this->assertEquals(Condition::CLOUDY, $this->object->condition()->id());
+		$this->assertEquals(Weather\Condition::CLOUDY, $this->object->condition()->id());
 		$this->assertEquals(6.34, $this->object->windSpeed()->value(), '', 0.01);
 		$this->assertEquals(314, $this->object->windDegree()->value());
 		$this->assertEquals(59, $this->object->humidity()->value());
 		$this->assertEquals(1013, $this->object->pressure()->value());
 		$this->assertEquals(16.85, $Temperature->value());
-		$this->assertEquals(Sources::OPENWEATHERMAP, $this->object->sourceId());
+		$this->assertEquals(Weather\Sources::OPENWEATHERMAP, $this->object->sourceId());
 	}
 }

@@ -1,10 +1,10 @@
 <?php
 /**
  * This file contains class::FakeStrategy
- * @package Runalyze\Data\Weather\Strategy
+ * @package Runalyze\Service\WeatherForecast\Strategy
  */
 
-namespace Runalyze\Data\Weather\Strategy;
+namespace Runalyze\Service\WeatherForecast\Strategy;
 
 use Runalyze\Data\Weather;
 
@@ -12,9 +12,10 @@ use Runalyze\Data\Weather;
  * Interface for forecasting wather
  *
  * @author Hannes Christiansen
- * @package Runalyze\Data\Weather\Strategy
+ * @package Runalyze\Service\WeatherForecast\Strategy
  */
-class FakeStrategy implements ForecastStrategyInterface {
+class FakeStrategy implements StrategyInterface
+{
 	/** @var bool */
 	protected $IsPossible = true;
 
