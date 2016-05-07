@@ -225,9 +225,10 @@ class AccountHandler {
 		$activationHash = (System::isAtLocalhost()) ? '' : self::getRandomHash();
 		$newSalt = self::getNewSalt();
 
-		$timezone = EnumTimezone::getEnumByOriginalName(date_default_timezone_get());
-		if (Timezone::isValidTimezone($_POST['timezone'])) {
-		    $timezone = EnumTimezone::getEnumByOriginalName($_POST['timezone']);
+		try {
+			$timezone = EnumTimezone::getEnumByOriginalName($_POST['timezone']);
+		} catch (\InvalidArgumentException $e) {
+			$timezone = EnumTimezone::getEnumByOriginalName(date_default_timezone_get());
 		}
 
 		$newAccountId   = DB::getInstance()->insert('account',
