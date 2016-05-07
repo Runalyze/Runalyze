@@ -50,6 +50,7 @@ You have to apply recent changes from the respective update files in `inc/instal
 * [v2.5](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-5-en/), 12.04.2016: minor release (timezone support, Moving average, ...)
  * [Have a look at the update instructions](http://docs.runalyze.com/en/latest/update.html#upgrade-from-2-4-to-2-5)
  * [v2.5.1](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-5-1-en/), 24.04.2016: minor bugfixes
+ * [v2.5.2](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-5-2-en/), 07.05.2016: minor bugfixes
 * [v2.4](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-4-en/), 25.01.2016: minor release (more weather data, recognition of duplicate activities, ...)
  * [Have a look at the update instructions](http://docs.runalyze.com/en/latest/update.html#upgrade-from-2-3-to-2-4)
  * [v2.4.1](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-4-1-en/), 09.02.2016: minor bugfixes
