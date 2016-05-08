@@ -41,8 +41,4 @@ foreach ($distances as $km) {
 	echo Plot::getDivFor('formverlauf_'.str_replace('.', '_', $distance), 800, 450);
 	include FRONTEND_PATH.'../plugin/RunalyzePluginPanel_Prognose/Plot.Form.php';
 	?>
-
-	<p class="info">
-		<?php _e('The basic endurance adjustment is <strong>not</strong> used for these calculations.'); ?>
-	</p>
 </div>

@@ -219,14 +219,15 @@ class BasicEndurance {
 	/**
 	 * Get values as array
 	 * @param int $timestamp [optional] timestamp
+	 * @param array $data [optional] array('km' => km sum in time range, 'sum' => sum of weighted points for long jogs)
 	 * @return array array('weekkm-result', 'longjog-result', 'weekkm-percentage', 'longjog-percentage', 'percentage')
 	 */
-	public function asArray($timestamp = 0) {
+	public function asArray($timestamp = 0, array $data = []) {
 		if ($timestamp == 0)
 			$timestamp = time();
 
 		// If you change the algorithm, remember to change *info* in 'RunalyzePluginPanel_Rechenspiele'.
-		$DataSum = DB::getInstance()->query( $this->getQuery($timestamp) )->fetch();
+		$DataSum = !empty($data) ? $data : DB::getInstance()->query( $this->getQuery($timestamp) )->fetch();
 		$Result  = array();
 		$Result['weekkm-result']      = isset($DataSum['km']) ? $DataSum['km'] : 0;
 		$Result['longjog-result']     = isset($DataSum['sum']) ? $DataSum['sum'] : 0;
@@ -312,6 +313,32 @@ class BasicEndurance {
 			WHERE `accountid`='.\SessionAccountHandler::getId().' AND `time` BETWEEN '.min($StartTimeForLongjogs,$StartTimeForWeekKm).' AND '.$timestamp.' AND `sportid`='.Configuration::General()->runningSport().'
 			GROUP BY accountid
 			LIMIT 1';
+	}
+
+	/**
+	 * @param array $activityData array(array('time' => ..., 'distance' => ...), array(...), ...)
+	 * @param $timestamp
+	 * @return array array('km' => km sum in time range, 'sum' => sum of weighted points for long jogs)
+	 */
+	public function dataFor(array $activityData, $timestamp) {
+		$km = 0;
+		$points = 0;
+
+		$startTimeForLongjogs = $timestamp - $this->DAYS_FOR_LONGJOGS * DAY_IN_S;
+		$startTimeForWeekKm = $timestamp - $this->DAYS_FOR_WEEK_KM * DAY_IN_S;
+		$targetLongJogSquared = pow($this->getTargetLongjogKmPerWeek(), 2);
+
+		foreach ($activityData as $data) {
+			if ($data['time'] > $startTimeForWeekKm) {
+				$km += $data['distance'];
+			}
+
+			if ($data['time'] > $startTimeForLongjogs && $data['distance'] > $this->MIN_KM_FOR_LONGJOG) {
+				$points += (2 - 2 / $this->DAYS_FOR_LONGJOGS * ($timestamp - $data['time']) / DAY_IN_S) * pow($data['distance'] - $this->MIN_KM_FOR_LONGJOG, 2) / $targetLongJogSquared;
+			}
+		}
+
+		return ['km' => $km, 'sum' => $points];
 	}
 
 	/**
