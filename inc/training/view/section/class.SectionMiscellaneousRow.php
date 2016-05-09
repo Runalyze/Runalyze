@@ -335,7 +335,7 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 				$createdDate->format('H:i')
 			);
 
-			$editedDate = new LocalTime($created);
+			$editedDate = new LocalTime($edited);
 			$ModificationTime = ($edited == 0) ? '' : '<br>'.sprintf( __('Last modification on <strong>%s</strong> at <strong>%s</strong>.'),
 				$editedDate->format('d.m.Y'),
 				$editedDate->format('H:i')
