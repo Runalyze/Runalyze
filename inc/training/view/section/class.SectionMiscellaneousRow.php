@@ -326,6 +326,7 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 	 * Add created/edited
 	 */
 	protected function addCreationAndModificationTime() {
+	    if (!Request::isOnSharedPage()) {
 		$created = $this->Context->activity()->get(\Runalyze\Model\Activity\Entity::TIMESTAMP_CREATED);
 		$edited = $this->Context->activity()->get(\Runalyze\Model\Activity\Entity::TIMESTAMP_EDITED);
 
@@ -344,6 +345,7 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 
 			$this->NotesContent .= HTML::fileBlock($CreationTime.$ModificationTime);
 		}
+	    }
 	}
 	
 	/**

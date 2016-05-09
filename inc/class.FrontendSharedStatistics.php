@@ -86,16 +86,12 @@ class FrontendSharedStatistics {
 						<td>'.Distance::format($Stats['dist_sum']).'</td>
 						<td class="b">'.__('Number of activities:').'</td>
 						<td>'.$Stats['num'].'x</td>
-						<td class="b">'.__('Registered since:').'</td>
-						<td>'.date('d.m.Y', $User['registerdate']).'</td>
 					</tr>
 					<tr>
 						<td class="b">'.__('Total duration:').'</td>
 						<td>'.Duration::format($Stats['time_sum']).'</td>
 						<td class="b">'.__('First activity:').'</td>
 						<td>'.date('d.m.Y', START_TIME).'</td>
-						<td class="b">'.__('Last login:').'</td>
-						<td>'.date('d.m.Y', $User['lastaction']).'</td>
 					</tr>
 				</tbody>
 			</table>';
