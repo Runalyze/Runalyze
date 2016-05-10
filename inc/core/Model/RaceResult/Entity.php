@@ -151,6 +151,12 @@ class Entity extends Model\Entity {
 	protected function canBeNull($key) {
 		switch ($key) {
 			case self::OFFICIALLY_MEASURED:
+			case self::PLACE_TOTAL:
+			case self::PLACE_GENDER:
+			case self::PLACE_AGECLASS:
+			case self::PARTICIPANTS_TOTAL:
+			case self::PARTICIPANTS_GENDER:
+			case self::PARTICIPANTS_AGECLASS:
 				return true;
 		}
 

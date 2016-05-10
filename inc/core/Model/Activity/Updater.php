@@ -342,8 +342,7 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 	 */
 	protected function createRaceResult() {
 		$Factory = \Runalyze\Context::Factory();
-		
-		if ($Factory->raceResult($this->NewObject->id()) === NULL && $this->hasChanged(Entity::TYPEID) && $this->NewObject->typeid() == $Factory->sport($this->NewObject->sportid())->raceTypeId()) {
+		if (!$Factory->raceResult($this->NewObject->id()) && $this->hasChanged(Entity::TYPEID) && $this->NewObject->typeid() == $Factory->sport($this->NewObject->sportid())->raceTypeId()) {
 			$RaceResult = new Model\RaceResult\Entity(array(
 				Model\RaceResult\Entity::OFFICIAL_TIME => $this->NewObject->duration(),
 				Model\RaceResult\Entity::OFFICIAL_DISTANCE => $this->NewObject->distance(),

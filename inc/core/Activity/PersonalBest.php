@@ -81,11 +81,12 @@ class PersonalBest {
 	 * 
 	 * Usage:
 	 * <pre>PersonalBest::activateStaticCache();
-	 * PersonalBest::lookupDistances(array(3, 5, 10), $PDO);
+	 * PersonalBest::lookupDistances(array(3, 5, 10), 1, $PDO);
 	 * new PersonalBest(3);
 	 * ...</pre>
 	 * 
 	 * @param array $distances distances in [km]
+	 * @param int $sportid sportid 
 	 * @param \PDO $pdo [optional]
 	 * @param boolean $withDetails [optional]
 	 * @return int number of fetches PBs

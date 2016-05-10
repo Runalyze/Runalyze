@@ -7,8 +7,10 @@
 use Runalyze\View\Activity;
 use Runalyze\Model\Trackdata;
 use Runalyze\View\Activity\Box;
+use Runalyze\Activity\Duration;
 use Runalyze\Activity\Temperature;
 use Runalyze\Util\LocalTime;
+use Runalyze\View\RaceResult;
 
 /**
  * Row: Miscellaneous
@@ -294,11 +296,28 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 	protected function fillNotesContent() {
 		$this->NotesContent = '<div class="panel-content">';
 
+		$this->addRaceResult();
 		$this->addNotes();
 		$this->addWeatherSourceInfo();
 		$this->addCreationAndModificationTime();
 
 		$this->NotesContent .= '</div>';
+	}
+	
+	/**
+	 * Add race result
+	 */
+	protected function addRaceResult() {
+		if ($this->Context->raceResult() === NULL) {
+			$RaceResultView = new RaceResult($this->Context->raceResult());
+			$RaceResult = '<strong>'.__('Race Result').':</strong><ul>'.
+						($this->Context->raceResult()->officialDistance() ? '<li><strong>'.__('Official distance').'</strong>: '.$RaceResultView->officialDistance().'</li>' : '') .
+						($this->Context->raceResult()->officialTime() ? '<li><strong>'.__('Official time').'</strong>: '.$RaceResultView->officialTime()->string(Duration::FORMAT_COMPETITION).'</li>' : '').
+						($this->Context->raceResult()->placeTotal() ? '<li><strong>'.__('Place overall').'</strong>: '.$RaceResultView->placementTotalWithParticipants().'</li>' : '') .
+						($this->Context->raceResult()->placeAgeclass() ? '<li><strong>'.__('Place age class').'</strong>: '.$RaceResultView->placementAgeClassWithParticipants().'</li>' : '') .
+						($this->Context->raceResult()->placeGender() ? '<li><strong>'.__('Place gender').'</strong>: '.$RaceResultView->placementGenderWithParticipants().'</li>' : '') .'</ul>';
+			$this->NotesContent .= HTML::info($RaceResult);
+		}
 	}
 
 	/**

@@ -420,17 +420,16 @@ CREATE TABLE IF NOT EXISTS `runalyze_raceresult` (
   `official_time` decimal(8,2) NOT NULL,
   `officially_measured` tinyint(1)  unsigned NOT NULL DEFAULT 0,
   `name` varchar(50) NOT NULL DEFAULT '',
-  `place_total` mediumint(8) unsigned NOT NULL DEFAULT 0,
-  `place_gender` mediumint(8) unsigned NOT NULL DEFAULT 0,
-  `place_ageclass` mediumint(8) unsigned NOT NULL DEFAULT 0,
-  `participants_total` mediumint(8) unsigned NOT NULL DEFAULT 0,
-  `participants_gender` mediumint(8) unsigned NOT NULL DEFAULT 0,
-  `participants_ageclass` mediumint(8) unsigned NOT NULL DEFAULT 0,
+  `place_total` mediumint(8) unsigned DEFAULT NULL,
+  `place_gender` mediumint(8) unsigned DEFAULT NULL,
+  `place_ageclass` mediumint(8) unsigned DEFAULT NULL,
+  `participants_total` mediumint(8) unsigned DEFAULT NULL,
+  `participants_gender` mediumint(8) unsigned DEFAULT NULL,
+  `participants_ageclass` mediumint(8) unsigned DEFAULT NULL,
   `activity_id` int(10) unsigned NOT NULL,
-  `accountid` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`activity_id`),
-  KEY  `accountid` (`accountid`)
+  `accountid` int(10) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 --
 -- Indizes der exportierten Tabellen
@@ -549,7 +548,13 @@ ALTER TABLE `runalyze_type`
 --
 ALTER TABLE `runalyze_user`
  ADD PRIMARY KEY (`id`), ADD KEY `time` (`accountid`,`time`);
-
+ 
+--
+-- Indizes für die Tabelle `runalyze_raceresult`
+--
+ALTER TABLE `runalyze_raceresult`
+  ADD PRIMARY KEY (`activity_id`), KEY  `accountid` (`accountid`);
+  
 --
 -- AUTO_INCREMENT für exportierte Tabellen
 --

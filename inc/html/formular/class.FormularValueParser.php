@@ -255,9 +255,47 @@ class FormularValueParser {
 
 		if (!self::precisionIsOkay($_POST[$key], $options))
 			return __('The value is too large.');
+			
+		if (self::intIsToHigh($_POST[$key], $options))
+			return __('This value is too high');
+			
+		if (self::intIsToLow($_POST[$key], $options))
+			return __('This value is too low');
 
 		return true;
 	}
+
+	/**
+	 * Check if given value is to high
+	 * @param mixed $value as int/float/double
+	 * @param array $options array with key 'max': as int
+	 * @return boolean
+	 */
+	 private static function intIsToHigh($value, $options) {
+	 	if (!isset($options['max']) || !$options['max'])
+			return false;
+			
+		if ($value >= $options['max']) 
+			return true;
+			
+		return false;
+	 }
+	 
+	/**
+	 * Check if given value is to low
+	 * @param mixed $value as int/float/double
+	 * @param array $options array with key 'max': as int
+	 * @return boolean
+	 */
+	 private static function intIsToLow($value, $options) {
+	 	if (!isset($options['min'])  || !$options['min'])
+			return false;
+			
+		if ($value <= $options['min']) 
+			return true;
+			
+		return false;
+	 }
 
 	/**
 	 * Validator: decimal

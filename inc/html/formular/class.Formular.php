@@ -133,7 +133,7 @@ class Formular extends HtmlTag {
 	 * Add a failure, displayed above submit-button
 	 * @param string $message 
 	 */
-	protected function addFailure($message) {
+	public function addFailure($message) {
 		$this->failures[] = $message;
 	}
 

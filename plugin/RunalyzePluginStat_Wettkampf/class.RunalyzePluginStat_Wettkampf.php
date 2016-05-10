@@ -7,9 +7,12 @@
 use Runalyze\Configuration;
 use Runalyze\Model\Activity;
 use Runalyze\Model\RaceResult;
+use Runalyze\Model\Factory;
 use Runalyze\View\Activity\Linker;
 use Runalyze\View\Activity\Dataview;
+use Runalyze\View\RaceResult as RaceResultView;
 use Runalyze\View\Icon;
+use Runalyze\View\Tooltip;
 use Runalyze\Activity\Distance;
 use Runalyze\Activity\Duration;
 use Runalyze\Data\Weather;
@@ -356,7 +359,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 						<th>'.__('Name').'</th>
 						<th class="{sorter: \'distance\'}">'.__('Distance').'</th>
 						<th class="{sorter: \'resulttime\'}">'.__('Time').'</th>
-						<th>'.__('Total').'</th>
+						<th>'.__('Overall').'</th>
 						<th>'.__('Age class').'</th>
 						<th>'.__('Gender').'</th>
 						<th>'.__('Pace').'</th>
@@ -373,21 +376,21 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	 */
 	private function displayWKTr(array $data) {
 		$Activity = new Activity\Entity($data);
+		
 		$Linker = new Linker($Activity);
 		$Dataview = new Dataview($Activity);
 		$RaceResult = new RaceResult\Entity($data);
-		$decimals = Configuration::ActivityView()->decimals();
-		
+		$RaceResultView = new RaceResultView($RaceResult);
 		echo '<tr class="r">
-				<td>'.$this->getIconForCompetition($data['id']).'</td>
+				<td>'.$this->getEditIconForActivity($data['id']).$this->getEditIconForRaceResult($data['id']).$this->getIconForCompetition($data['id']).'</td>
 				<td class="c small">'.$Linker->weekLink().'</a></td>
 				<td class="l"><strong>'.$Linker->link($RaceResult->name()).'</strong></td>
-				<td>'.Distance::format($RaceResult->officialDistance(), true, $decimals).'</td>
-				<td>'.$Dataview->duration()->string(Duration::FORMAT_COMPETITION).'</td>
-				<td>'.$RaceResult->placeTotal().'<td>
-				<td>'.$RaceResult->placeAgeclass().'<td>
-				<td>'.$RaceResult->placeGender().'<td>
-				<td class="small">'.$Dataview->pace()->value().'</td>
+				<td>'.$RaceResultView->officialDistance().'</td>
+				<td>'.$RaceResultView->officialTime()->string(Duration::FORMAT_COMPETITION).'</td>
+				<td>'.$RaceResultView->placementTotalWithTooltip().'</td>
+				<td>'.$RaceResultView->placementAgeClassWithTooltip().'</td>
+				<td>'.$RaceResultView->placementGenderWithTooltip().'</td>
+				<td class="small">'.$RaceResultView->pace($this->sportid)->valueWithAppendix().'</td>
 				<td class="small">'.Helper::Unknown($Activity->hrAvg()).' / '.Helper::Unknown($Activity->hrMax()).' bpm</td>
 				<td class="small">'.($Activity->weather()->isEmpty() ? '' : $Activity->weather()->fullString($Activity->isNight())).'</td>
 			</tr>';
@@ -433,6 +436,31 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 			echo implode(', ', $Strings);
 			echo '<br><br>';
 		}
+	}
+
+	/**
+	 * Get edit icon for this competition
+	 * @param int $id ID of the training
+	 * @return string
+	 */
+	private function getEditIconForActivity($id) {
+		$Tooltip = new Tooltip( __('Edit the activity') );
+		$SportIcon = (new Factory())->sport($this->sportid)->icon()->code();
+		$code = Ajax::window('<a href="'.Linker::EDITOR_URL.'?id='.$id.'">'.$SportIcon.'</a>', 'small');
+		$Tooltip->wrapAround( $code );
+
+		return $code;
+	}
+
+	/**
+	 * Get edit icon for this competition
+	 * @param int $id ID of the training
+	 * @return string
+	 */
+	private function getEditIconForRaceResult($id) {
+		$icon = new Icon('fa-pencil');
+		$icon->setTooltip( __('Edit the race result details') );
+		return Ajax::window('<a href="/plugin/RunalyzePluginStat_Wettkampf/RaceResultForm.php?rid='.$id.'">'.$icon->code().'</a>');
 	}
 
 	/**
@@ -484,5 +512,102 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	 */
 	public function isFunCompetition($id) {
 		return (in_array($id, $this->Configuration()->value('fun_ids')));
+	}
+	
+	/**
+	 * RaceResult Formular
+	 */
+	 public function raceResultForm($id) {
+	 	$Factory = Runalyze\Context::Factory();
+	 	$Factory->clearCache('raceresult', $id);
+	 	$RaceResult = $Factory->raceresult($id);
+	 	if ($_POST['official_distance']) {
+		 	$RaceResult = $this->validatePostDataAndUpdateEntity($RaceResult);
+	 	}
+
+	 	$Formular = new Formular('/plugin/RunalyzePluginStat_Wettkampf/RaceResultForm.php?rid='.$id, 'post');
+		$Formular->setId('raceresult');
+		$Formular->addCSSclass('ajax');
+		$Formular->addCSSclass('no-automatic-reload');
+		$FieldsetDetails = new FormularFieldset( __('Details') );
+		$FieldName = new FormularInput('name', __('Event'), $RaceResult->name()); 
+		$FieldName->setLayout( FormularFieldset::$LAYOUT_FIELD_W50 );
+		$FieldName->setSize( FormularInput::$SIZE_MIDDLE);
+
+		$FieldOfficiallyMeasured = new FormularCheckbox('officially_measured', __('Officially measured'), $RaceResult->officiallyMeasured() );
+		$FieldOfficiallyMeasured->setLayout( FormularFieldset::$LAYOUT_FIELD_W50 );
+		
+		$FieldOfficialDistance = new FormularInput('official_distance', __('Official distance'), (new Distance($RaceResult->officialDistance()))->stringAuto(false, 2) );
+		$FieldOfficialDistance->setLayout( FormularFieldset::$LAYOUT_FIELD_W50 );
+		$FieldOfficialTime = new FormularInput('official_time', __('Official time'), Duration::format($RaceResult->officialTime()) );
+		$FieldOfficialTime->setLayout( FormularFieldset::$LAYOUT_FIELD_W50 );
+
+		$FieldsetDetails->addFields(array($FieldName, $FieldOfficiallyMeasured, $FieldOfficialDistance, $FieldOfficialTime) );
+
+		$FieldsetDetails->setLayoutForFields( FormularFieldset::$LAYOUT_FIELD_W100);
+		$FieldsetPlacement = new FormularFieldset( __('Placement') );
+		$FieldsetPlacement->addInfo( __('Your official placement.') );
+		$FieldsetPlacement->addField( new FormularInput('placement_total', __('Total'),  $RaceResult->placeTotal() ?: ''));
+		$FieldsetPlacement->addField( new FormularInput('placement_ageclass', __('Age class'), $RaceResult->placeAgeclass() ?: '') );
+		$FieldsetPlacement->addField( new FormularInput('placement_gender', __('Gender'), $RaceResult->placeGender() ?: '') );
+		$FieldsetParticipants = new FormularFieldset( __('Participants') );
+		$FieldsetParticipants->addInfo( __('Number of participants in every category') );
+		$FieldsetParticipants->addField( new FormularInput('participants_total', __('Total'), $RaceResult->participantsTotal() ?: '') );
+		$FieldsetParticipants->addField( new FormularInput('participants_ageclass', __('Age class'), $RaceResult->participantsAgeclass() ?: '') );
+		$FieldsetParticipants->addField( new FormularInput('participants_gender', __('Gender'), $RaceResult->participantsGender() ?: '') );
+		$Formular->addFieldset( $FieldsetDetails );
+		$Formular->addFieldset( $FieldsetPlacement );
+		$Formular->addFieldset( $FieldsetParticipants );
+		$Formular->addSubmitButton( __('Save') );
+		$Formular->setSubmitButtonsCentered();
+		//$Formular->addField( new FormularInputHidden('activityId', '', $id) );
+		$Formular->setLayoutForFields( FormularFieldset::$LAYOUT_FIELD_W33 );
+
+		$Formular->display();
+	 }
+	 
+	/**
+	 * Validate RaceResult Formular
+	 * @param \Runalyze\Model\RaceResult\Entity $RaceResult
+	 */
+	protected function validatePostDataAndUpdateEntity(RaceResult\Entity $RaceResult) {
+		$oldRaceResult = clone $RaceResult;
+		$somethingFailed = false;
+		$canBeNullOptions = array('null' => true);
+		$fieldsToValidate = array(
+			'name' => array(RaceResult\Entity::NAME, FormularValueParser::$PARSER_STRING, array('notempty' => true)),
+			'official_distance' => array(RaceResult\Entity::OFFICIAL_DISTANCE, FormularValueParser::$PARSER_DISTANCE),
+			'official_time' => array(RaceResult\Entity::OFFICIAL_TIME, FormularValueParser::$PARSER_TIME),
+			'officially_measured' => array(RaceResult\Entity::OFFICIALLY_MEASURED, FormularValueParser::$PARSER_BOOL),
+			'placement_total' => array(RaceResult\Entity::PLACE_TOTAL,FormularValueParser::$PARSER_INT,  array('null' => true, 'max' => $_POST['participants_total'])),
+			'placement_ageclass' => array(RaceResult\Entity::PLACE_AGECLASS,FormularValueParser::$PARSER_INT, array('null' => true, 'max' => $_POST['participants_ageclass'])),
+			'placement_gender' => array(RaceResult\Entity::PLACE_GENDER,FormularValueParser::$PARSER_INT, array('null' => true, 'max' => $_POST['participants_gender'])),
+			'participants_total' => array(RaceResult\Entity::PARTICIPANTS_TOTAL, FormularValueParser::$PARSER_INT, array('null' => true, 'min' => $_POST['placement_total'])),
+			'participants_ageclass' => array(RaceResult\Entity::PARTICIPANTS_AGECLASS, FormularValueParser::$PARSER_INT, array('null' => true, 'min' => $_POST['placement_ageclass'])),
+			'participants_gender' => array(RaceResult\Entity::PARTICIPANTS_GENDER, FormularValueParser::$PARSER_INT, array('null' => true, 'min' => $_POST['placement_gender']))
+		);
+
+		foreach ($fieldsToValidate as $key => $fieldValidation) {
+			$parser = $fieldValidation[1];
+			$parserOptions = ($fieldValidation[2]) ? $fieldValidation[2] : '';
+
+			$validationResult = FormularValueParser::validatePost($key, $parser, $parserOptions);
+
+			if (true !== $validationResult) {
+				$somethingFailed = true;
+				FormularField::setKeyAsFailed($key);
+				FormularField::addValidationFailure(false !== $validationResult ? $validationResult : __('Invalid input.'));
+			}
+			$RaceResult->set($fieldValidation[0], $_POST[$key]);
+		}
+		
+		if (!$somethingFailed) {
+			$Update = new RaceResult\Updater( DB::getInstance(), $RaceResult, $oldRaceResult);
+			$Update->setAccountID(SessionAccountHandler::getId());
+			$Update->update();
+			Ajax::setReloadFlag( AJAX::$RELOAD_PLUGINS);
+			echo Ajax::getReloadCommand();
+		}
+		return $RaceResult;
 	}
 }
