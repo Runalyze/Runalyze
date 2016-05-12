@@ -1,6 +1,6 @@
 <?php
 /**
- * This file contains class::GroundcontactBalance
+ * This file contains class::Gradient
  * @package Runalyze
  */
 
@@ -10,12 +10,13 @@ use Runalyze\Dataset\Context;
 use Runalyze\Dataset\SummaryMode;
 
 /**
- * Dataset key: GroundcontactBalance
+ * Dataset key: Gradient
  * 
  * @author Hannes Christiansen
+ * @author Michael Pohl
  * @package Runalyze\Dataset\Keys
  */
-class GroundcontactBalance extends AbstractKey
+class Gradient extends AbstractKey
 {
 	/**
 	 * Enum id
@@ -23,7 +24,7 @@ class GroundcontactBalance extends AbstractKey
 	 */
 	public function id()
 	{
-		return \Runalyze\Dataset\Keys::GROUNDCONTACT_BALANCE;
+		return \Runalyze\Dataset\Keys::GRADIENT;
 	}
 
 	/**
@@ -32,7 +33,7 @@ class GroundcontactBalance extends AbstractKey
 	 */
 	public function column()
 	{
-		return 'groundcontact_balance';
+		return array('elevation', 'distance');
 	}
 
 	/**
@@ -41,7 +42,7 @@ class GroundcontactBalance extends AbstractKey
 	 */
 	public function label()
 	{
-		return __('Ground contact balance');
+		return __('Gradient');
 	}
 
 	/**
@@ -50,7 +51,7 @@ class GroundcontactBalance extends AbstractKey
 	 */
 	public function shortLabel()
 	{
-		return __('GCB');
+		return __('Grad.');
 	}
 
 	/**
@@ -59,9 +60,9 @@ class GroundcontactBalance extends AbstractKey
 	 */
 	public function description()
 	{
-		return __('Ground contact time balance measures your running symmetry.');
+		return __('The gradient describes the ratio of elevation gain (or less) and distance. Dividing total elevation by total distance gives this value.');
 	}
-	
+
 	/**
 	 * Get string to display this dataset value
 	 * @param \Runalyze\Dataset\Context $context
@@ -69,7 +70,11 @@ class GroundcontactBalance extends AbstractKey
 	 */
 	public function stringFor(Context $context)
 	{
-		return $context->dataview()->groundcontactBalance();
+		if ($context->activity()->elevation() > 0 && $context->activity()->distance() > 0) {
+			return $context->dataview()->gradientInPercent();
+		}
+
+		return '';
 	}
 
 	/**
@@ -77,7 +82,7 @@ class GroundcontactBalance extends AbstractKey
 	 */
 	public function summaryMode()
 	{
-		return SummaryMode::AVG;
+		return SummaryMode::NO;
 	}
 
 	/**
