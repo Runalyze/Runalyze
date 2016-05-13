@@ -60,7 +60,7 @@ class Corrector
 	 */
 	final protected function hasNoValidStrategy()
 	{
-		return !($this->Strategy instanceof Strategy);
+		return !($this->Strategy instanceof Strategy\AbstractStrategy);
 	}
 
 	/**
@@ -68,7 +68,7 @@ class Corrector
 	 */
 	protected function tryToUse($strategyName)
 	{
-		$strategyName = 'Runalyze\\Strategy\\ElevationCorrection\\Strategy\\'.$strategyName;
+		$strategyName = 'Runalyze\\Service\\ElevationCorrection\\Strategy\\'.$strategyName;
 
 		if (class_exists($strategyName)) {
 			$this->Strategy = new $strategyName($this->LatitudePoints, $this->LongitudePoints);
