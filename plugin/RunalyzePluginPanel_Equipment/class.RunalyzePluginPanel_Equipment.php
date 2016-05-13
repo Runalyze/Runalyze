@@ -86,7 +86,7 @@ class RunalyzePluginPanel_Equipment extends PluginPanel {
 			}
 		}
 
-		$Links = '<li class="with-submenu">'.Ajax::link($CurrentType, 'panel-'.$this->id(), Plugin::$DISPLAY_URL.'?id='.$this->id());
+		$Links = '<li class="with-submenu"><span class="link">'.$CurrentType.'</span>';
 		$Links .= '<ul class="submenu">'.implode('', $TypeLinks).'</ul>';
 		$Links .= '</li>';
 		$Links .= '<li>'.Ajax::window('<a href="'.ConfigTabs::$CONFIG_URL.'?key=config_tab_equipment" '.Ajax::tooltip('', __('Add/Edit equipment'), true, true).'>'.Icon::$ADD.'</a>').'</li>';
