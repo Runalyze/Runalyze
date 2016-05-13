@@ -74,16 +74,20 @@ class RunalyzePluginPanel_Equipment extends PluginPanel {
 	 * Method for getting the right symbol(s)
 	 */
 	protected function getRightSymbol() {
-		$Links = '';
-		$Links .= '<li class="with-submenu">'.Ajax::link(__('Type'), 'panel-'.$this->id(), Plugin::$DISPLAY_URL.'?id='.$this->id());
-		$Links .= '<ul class="submenu">';
+		$CurrentType = '';
+		$TypeLinks = [];
 
 		foreach ($this->AllTypes as $Type) {
 			$active = $Type['id'] == (int)$this->Configuration()->value('type');
-			$Links .= '<li'.($active ? ' class="active"' : '').'>'.Ajax::link($Type['name'], 'panel-'.$this->id(), Plugin::$DISPLAY_URL.'?id='.$this->id().'&type='.$Type['id']).'</li>';
+			$TypeLinks[] = '<li'.($active ? ' class="active"' : '').'>'.Ajax::link($Type['name'], 'panel-'.$this->id(), Plugin::$DISPLAY_URL.'?id='.$this->id().'&type='.$Type['id']).'</li>';
+
+			if ($active) {
+				$CurrentType = $Type['name'];
+			}
 		}
 
-		$Links .= '</ul>';
+		$Links = '<li class="with-submenu"><span class="link">'.$CurrentType.'</span>';
+		$Links .= '<ul class="submenu">'.implode('', $TypeLinks).'</ul>';
 		$Links .= '</li>';
 		$Links .= '<li>'.Ajax::window('<a href="'.ConfigTabs::$CONFIG_URL.'?key=config_tab_equipment" '.Ajax::tooltip('', __('Add/Edit equipment'), true, true).'>'.Icon::$ADD.'</a>').'</li>';
 		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key().'/window.equipment.table.php" '.Ajax::tooltip('', __('Show all equipment'), true, true).'>'.Icon::$TABLE.'</a>').'</li>';
