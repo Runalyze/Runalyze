@@ -117,7 +117,7 @@ class RunalyzePluginPanel_Equipment extends PluginPanel {
 		echo '</div>';
 
 		if (!$inuse)
-			echo Ajax::toggle('<a class="right" href="#equipment" name="equipment">'.__('Show unused equipment').'</a>', 'hiddenequipment');
+			echo Ajax::toggle('<a class="right" href="#equipment" name="equipment">'.__('Show/Hide unused equipment').'</a>', 'hiddenequipment');
 
 		echo HTML::clearBreak();
 	}
