@@ -40,15 +40,20 @@ class Dataview
 	/**
 	 * Get official distance
 	 * @param null|int $decimals can be null to load default decimals from config
+	 * @param bool $isTrack
 	 * @return string
 	 */
-	public function officialDistance($decimals = null)
+	public function officialDistance($decimals = null, $isTrack = false)
 	{
 		if (null === $decimals) {
 			$decimals = Configuration::ActivityView()->decimals();
 		}
 
 		if ($this->RaceResult->officialDistance() > 0) {
+			if ($isTrack) {
+				return (new Distance($this->RaceResult->officialDistance()))->stringMeter();
+			}
+
 			return Distance::format($this->RaceResult->officialDistance(), true, $decimals);
 		}
 

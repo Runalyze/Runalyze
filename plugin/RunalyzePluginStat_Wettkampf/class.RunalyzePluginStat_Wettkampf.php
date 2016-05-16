@@ -381,7 +381,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 				<td class="c small">'.$Linker->weekLink().'</a></td>
 				<td>'.$this->getEditIconForActivity($data['id']).'</td>
 				<td class="l"><strong>'.$Linker->link($RaceResult->name()).'</strong></td>
-				<td>'.$RaceResultView->officialDistance().'</td>
+				<td>'.$RaceResultView->officialDistance(null, $Activity->isTrack()).'</td>
 				<td>'.$RaceResultView->officialTime()->string(Duration::FORMAT_COMPETITION).'</td>
 				<td class="small">'.$RaceResultView->pace($this->sportid)->valueWithAppendix().'</td>
 				<td class="small">'.Helper::Unknown($Activity->hrAvg()).' / '.Helper::Unknown($Activity->hrMax()).' bpm</td>
