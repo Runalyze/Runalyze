@@ -9,6 +9,7 @@ namespace Runalyze\Configuration\Category;
 use Runalyze\Configuration\Messages;
 use Runalyze\Configuration\Fieldset;
 use Runalyze\Parameter\Boolean;
+use Runalyze\Parameter\FloatingPoint;
 use Runalyze\Parameter\Textline;
 use Runalyze\Parameter\Integer;
 use Runalyze\Parameter\Application\VdotMethod;
@@ -43,7 +44,7 @@ class Vdot extends \Runalyze\Configuration\Category {
 		$this->createHandle('VDOT_HF_METHOD', new VdotMethod());
 		$this->createHandle('VDOT_DAYS', new Integer(30));
 		$this->createHandle('VDOT_USE_CORRECTION', new Boolean(true));
-		$this->createHandle('VDOT_MANUAL_CORRECTOR', new Textline(''));
+		$this->createHandle('VDOT_MANUAL_CORRECTOR', new FloatingPoint(null, ['min' => 0.50, 'max' => 2.00, 'null' => true]));
 		$this->createHandle('VDOT_MANUAL_VALUE', new Textline(''));
 
 		$this->createHandle('VDOT_USE_CORRECTION_FOR_ELEVATION', new Boolean(false));
@@ -77,10 +78,10 @@ class Vdot extends \Runalyze\Configuration\Category {
 
 	/**
 	 * Manual factor
-	 * @return float
+	 * @return float|null
 	 */
 	public function manualFactor() {
-		return (float)Helper::CommaToPoint($this->get('VDOT_MANUAL_CORRECTOR'));
+		return $this->get('VDOT_MANUAL_CORRECTOR');
 	}
 
 	/**
@@ -88,7 +89,7 @@ class Vdot extends \Runalyze\Configuration\Category {
 	 * @return bool
 	 */
 	public function useManualFactor() {
-		return (1 >= $this->manualFactor() && $this->manualFactor() > 0);
+		return (null !== $this->get('VDOT_MANUAL_CORRECTOR'));
 	}
 
 	/**
@@ -178,6 +179,7 @@ class Vdot extends \Runalyze\Configuration\Category {
 		$Fieldset->addHandle( $this->handle('VDOT_MANUAL_CORRECTOR'), array(
 			'label'		=> __('Manual correction factor'),
 			'tooltip'	=> __('Manual correction factor (e.g. 0.9), if the automatic factor does not fit. Can be left empty.')
+							.'<br>'.sprintf(__('Value must be between %s and %s.'), '0.50', '2.00')
 		));
 
 		$Fieldset->addHandle( $this->handle('VDOT_MANUAL_VALUE'), array(
