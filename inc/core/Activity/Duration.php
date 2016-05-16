@@ -169,7 +169,7 @@ class Duration {
 	 * @return string
 	 */
 	protected function autoCompetitionString($decimals = 2) {
-		if ($this->Time >= 60) {
+		if ($this->Time >= 60 || $this->Time == 0) {
 			return $this->autoString($decimals);
 		}
 

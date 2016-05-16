@@ -13,7 +13,7 @@ $Factory = new PluginFactory();
 $Plugin = $Factory->newInstance('RunalyzePluginStat_Wettkampf');
 ?>
 <div class="panel-heading">
-	<h1><?php _e('Race result details'); ?></h1>
+	<h1><?php _e('Competition details'); ?></h1>
 </div>
 
 <div class="panel-content">

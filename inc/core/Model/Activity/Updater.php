@@ -332,28 +332,14 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 		$this->updateEquipment();
 		$this->updateTag();
 		$this->updateStartTime();
-		$this->createRaceResult();
-		$this->updateVDOTshapeAndCorrector();
-		$this->updateBasicEndurance();
-	}
-	
-	/**
-	 * Create RaceResult if race type
-	 */
-	protected function createRaceResult() {
-		$Factory = \Runalyze\Context::Factory();
-		if (!$Factory->raceResult($this->NewObject->id()) && $this->hasChanged(Entity::TYPEID) && $this->NewObject->typeid() == $Factory->sport($this->NewObject->sportid())->raceTypeId()) {
-			$RaceResult = new Model\RaceResult\Entity(array(
-				Model\RaceResult\Entity::OFFICIAL_TIME => $this->NewObject->duration(),
-				Model\RaceResult\Entity::OFFICIAL_DISTANCE => $this->NewObject->distance(),
-				Model\RaceResult\Entity::ACTIVITY_ID => $this->NewObject->id()
-			));
-			$AddRaceResult = new Model\RaceResult\Inserter($this->PDO, $RaceResult);
-			$AddRaceResult->setAccountID($this->value(self::ACCOUNTID));
-			$AddRaceResult->insert();
+
+		if ($this->sportIsOrWasRunning()) {
+			$this->updateVDOTshape();
+			$this->updateVDOTcorrector();
+			$this->updateBasicEndurance();
 		}
 	}
-
+	
 	/**
 	 * Update equipment
 	 */
@@ -369,13 +355,12 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 	 * Update tag
 	 */
 	protected function updateTag() {
-	    
 		if (!empty($this->TagIDsNew) || !empty($this->TagIDsOld)) {
-                    $AddNewTags = new Model\Tag\ChosenInserter($this->PDO, $this->TagIDsNew);
-                    $AddNewTags->insertTags();
-                    $this->TagIDsNew = $AddNewTags->getNewTagIDs();
-		    $TagUpdater = new TagUpdater($this->PDO, $this->NewObject->id());
-		    $TagUpdater->update($this->TagIDsNew, $this->TagIDsOld);
+			$AddNewTags = new Model\Tag\ChosenInserter($this->PDO, $this->TagIDsNew);
+			$AddNewTags->insertTags();
+			$this->TagIDsNew = $AddNewTags->getNewTagIDs();
+			$TagUpdater = new TagUpdater($this->PDO, $this->NewObject->id());
+			$TagUpdater->update($this->TagIDsNew, $this->TagIDsOld);
 		}
 	}
 
@@ -393,12 +378,24 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 	}
 
 	/**
-	 * Update vdot shape and corrector
+	 * @return bool
 	 */
-	protected function updateVDOTshapeAndCorrector() {
+	protected function sportIsOrWasRunning() {
+		$runningId = Configuration::General()->runningSport();
+
+		return ($this->NewObject->sportid() == $runningId || ($this->knowsOldObject() && $this->OldObject->sportid() == $runningId));
+	}
+
+	/**
+	 * Update vdot shape
+	 * 
+	 * This method assumes that the activity is or was marked as running.
+	 */
+	protected function updateVDOTshape() {
 		$timestampLimit = time() - Configuration::Vdot()->days() * DAY_IN_S;
 
 		if (
+			$this->hasChanged(Entity::SPORTID) ||
 			(
 				$this->hasChanged(Entity::USE_VDOT) &&
 				(
@@ -424,16 +421,26 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 		) {
 			Configuration::Data()->recalculateVDOTshape();
 		}
+	}
 
+	/**
+	 * Update vdot corrector
+	 * 
+	 * This method assumes that the activity is or was marked as running.
+	 */
+	protected function updateVDOTcorrector() {
 		if (
 			(
-				$this->NewObject->usesVDOT() ||
-				$this->hasChanged(Entity::USE_VDOT)
-			) /*&& //TODO Raceresult
+				$this->hasChanged(Entity::SPORTID) ||
+				$this->hasChanged(Entity::USE_VDOT) ||
+				(
+					$this->NewObject->usesVDOT() &&
+					$this->hasChanged(Entity::VDOT)
+				)
+			) &&
 			(
-				$this->NewObject->typeid() == Configuration::General()->competitionType() ||
-				($this->knowsOldObject() && $this->OldObject->typeid() == Configuration::General()->competitionType())
-			)*/
+				!\Runalyze\Context::Factory()->raceresult($this->NewObject->id())->isEmpty()
+			)
 		) {
 			Configuration::Data()->recalculateVDOTcorrector();
 		}

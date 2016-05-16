@@ -605,7 +605,6 @@ class TrainingObject extends DataObject {
 	 */
 	public function getElevationCalculated() { return $this->get('elevation_calculated'); }
 
-
 	/**
 	 * Set calories
 	 * @param int $kcal kcal

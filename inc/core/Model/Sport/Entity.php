@@ -81,12 +81,6 @@ class Entity extends Model\EntityWithID {
 	 * @var string
 	 */
 	const DEFAULT_TYPEID = 'default_typeid';
-	
-	/**
-	 * Key: id of race typeid 
-	 * @var string
-	 */
-	const RACE_TYPEID = 'race_typeid';
 
 	/**
 	 * All properties
@@ -104,8 +98,7 @@ class Entity extends Model\EntityWithID {
 			self::HAS_POWER,
 			self::IS_OUTSIDE,
 			self::MAIN_EQUIPMENTTYPEID,
-			self::DEFAULT_TYPEID,
-			self::RACE_TYPEID
+			self::DEFAULT_TYPEID
 		);
 	}
 
@@ -215,13 +208,5 @@ class Entity extends Model\EntityWithID {
 	 */
 	public function defaultTypeID() {
 		return $this->Data[self::DEFAULT_TYPEID];
-	}
-	
-	/**
-	 * ID of race type
-	 * @return int
-	 */
-	public function raceTypeId() {
-		return $this->Data[self::RACE_TYPEID];
 	}
 }

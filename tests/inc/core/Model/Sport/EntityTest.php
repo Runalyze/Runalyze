@@ -17,8 +17,7 @@ class EntityTest extends \PHPUnit_Framework_TestCase {
 			Entity::PACE_UNIT => 'foo',
 			Entity::HAS_POWER => 0,
 			Entity::IS_OUTSIDE => 1,
-			Entity::DEFAULT_TYPEID => 2,
-			Entity::RACE_TYPEID => 4
+			Entity::DEFAULT_TYPEID => 2
 		));
 
 		$this->assertEquals('Sport name', $Sport->name());
@@ -26,7 +25,6 @@ class EntityTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(140, $Sport->avgHR());
 		$this->assertEquals('foo', $Sport->paceUnitEnum());
 		$this->assertEquals(2, $Sport->defaultTypeID());
-		$this->assertEquals(4, $Sport->raceTypeId());
 		$this->assertTrue($Sport->hasDistances());
 		$this->assertTrue($Sport->isOutside());
 

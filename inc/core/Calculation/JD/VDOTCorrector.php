@@ -78,6 +78,7 @@ class VDOTCorrector {
 	 * @param PDO $database
 	 * @param int $accountid
 	 * @param int $sportid
+	 * @return float
 	 */
 	public function fromDatabase(PDO $database, $accountid, $sportid) {
 		$factor = $database->query(
@@ -101,6 +102,8 @@ class VDOTCorrector {
 		} else {
 			$this->Factor = 1;
 		}
+
+		return $this->Factor;
 	}
 
 	/**
@@ -110,6 +113,7 @@ class VDOTCorrector {
 	 * This method does not regard any other correction (e.g. elevation, ...).
 	 * 
 	 * @param \Runalyze\Model\Activity\Entity $activity
+	 * @return float
 	 */
 	public function fromActivity(Activity\Entity $activity) {
 		if ($activity->vdotByHeartRate() > 0) {
@@ -117,5 +121,7 @@ class VDOTCorrector {
 		} else {
 			$this->Factor = 1;
 		}
+
+		return $this->Factor;
 	}
 }

@@ -117,13 +117,12 @@ class PersonalBest {
 		$distances = array_filter($distances, 'is_numeric');
 
 		if ($withDetails) {
-		return 'SELECT r.activity_id, tr.time, r.`official_distance`, MIN(r.`official_time`) as `pb` FROM `'.PREFIX.'raceresult` as r '.
+			return 'SELECT r.activity_id, tr.time, r.`official_distance`, MIN(r.`official_time`) as `pb` FROM `'.PREFIX.'raceresult` as r '.
 				'LEFT JOIN `'.PREFIX.'training` as tr ON tr.`id`= r.`activity_id` '.
 				'WHERE r.`accountid`='.\SessionAccountHandler::getId().' '.
 				'AND r.`official_distance` IN('.implode(',', $distances).') '.
 				'AND tr.`sportid`='.$sportid.' '.
 				'GROUP BY r.`official_distance`';
-
 		}
 
 		return 'SELECT r.activity_id, r.`official_distance`, MIN(r.`official_time`) as `pb` FROM `'.PREFIX.'raceresult` as r '.
@@ -145,6 +144,7 @@ class PersonalBest {
 		$this->Distance = $distance;
 		$this->PDO = is_null($pdo) ? DB::getInstance() : $pdo;
 		$this->SportId = $sportid;
+
 		if ($autoLookup) {
 			if ($withDetails) {
 				$this->lookupWithDetails();

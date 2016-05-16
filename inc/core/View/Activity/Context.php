@@ -179,7 +179,7 @@ class Context {
 	 * @return boolean
 	 */
 	public function hasRaceResult() {
-		return !is_null($this->RaceResult);
+		return !$this->RaceResult->isEmpty();
 	}
 
 
@@ -198,7 +198,7 @@ class Context {
 		}
 
 		if ($RoutePrivacy->showRace()) {
-			return ($this->activity()->typeid() != $this->Sport->raceTypeId());
+			return (!$this->hasRaceResult());
 		}
 
 		return true;

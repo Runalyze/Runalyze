@@ -123,12 +123,6 @@ class Entity extends Model\Entity {
 			self::OFFICIAL_DISTANCE,
 			self::OFFICIAL_TIME,
 			self::OFFICIALLY_MEASURED,
-		    self::PLACE_TOTAL,
-			self::PLACE_GENDER,
-			self::PLACE_AGECLASS,
-			self::PARTICIPANTS_TOTAL,
-			self::PARTICIPANTS_GENDER,
-			self::PARTICIPANTS_AGECLASS,
 			self::ACTIVITY_ID
 		));
 	}
@@ -139,8 +133,20 @@ class Entity extends Model\Entity {
 	public function synchronize() {
 		parent::synchronize();
 
-		$this->ensureNullIfEmpty(self::OFFICIALLY_MEASURED, true);
+		$this->ensureAllNullValues();
 		$this->ensureAllNumericValues();
+	}
+
+	/**
+	 * Ensure that place/participants are null if empty
+	 */
+	protected function ensureAllNullValues() {
+		$this->ensureNullIfEmpty(self::PLACE_TOTAL, true);
+		$this->ensureNullIfEmpty(self::PLACE_GENDER, true);
+		$this->ensureNullIfEmpty(self::PLACE_AGECLASS, true);
+		$this->ensureNullIfEmpty(self::PARTICIPANTS_TOTAL, true);
+		$this->ensureNullIfEmpty(self::PARTICIPANTS_GENDER, true);
+		$this->ensureNullIfEmpty(self::PARTICIPANTS_AGECLASS, true);
 	}
 	
 	/**
@@ -150,7 +156,6 @@ class Entity extends Model\Entity {
 	 */
 	protected function canBeNull($key) {
 		switch ($key) {
-			case self::OFFICIALLY_MEASURED:
 			case self::PLACE_TOTAL:
 			case self::PLACE_GENDER:
 			case self::PLACE_AGECLASS:
@@ -181,10 +186,10 @@ class Entity extends Model\Entity {
 	
 	/**
 	 * officially measured
-	 * @return string
+	 * @return bool
 	 */
 	public function officiallyMeasured() {
-		return $this->Data[self::OFFICIALLY_MEASURED];
+		return ($this->Data[self::OFFICIALLY_MEASURED] == 1);
 	}
 	
 	/**

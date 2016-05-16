@@ -107,24 +107,21 @@ class DeleterTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals($current, Configuration::Data()->startTime());
 	}
 
-	public function testVDOTstatisticsForChanges() {
+	public function testVDOTshapeForChanges() {
 		$newId = $this->insert(array(
 			Entity::TIMESTAMP => time(),
 			Entity::DISTANCE => 10,
 			Entity::TIME_IN_SECONDS => 30*60,
 			Entity::HR_AVG => 150,
 			Entity::SPORTID => Configuration::General()->runningSport(),
-			//Entity::TYPEID => Configuration::General()->competitionType(),
 			Entity::USE_VDOT => true
 		));
 
 		$this->assertNotEquals(0, Configuration::Data()->vdotShape());
-		$this->assertNotEquals(1, Configuration::Data()->vdotFactor());
 
 		$this->delete($newId);
 
 		$this->assertEquals(0, Configuration::Data()->vdotShape());
-		$this->assertEquals(1, Configuration::Data()->vdotFactor());
 	}
 
 	public function testVDOTstatisticsForNoChanges() {
@@ -135,7 +132,6 @@ class DeleterTest extends \PHPUnit_Framework_TestCase {
 			Entity::TIME_IN_SECONDS => 30*60,
 			Entity::HR_AVG => 150,
 			Entity::SPORTID => Configuration::General()->runningSport() + 1,
-			//Entity::TYPEID => Configuration::General()->competitionType(),
 			Entity::USE_VDOT => true
 		));
 		$IDs[] = $this->insert(array(
@@ -144,7 +140,6 @@ class DeleterTest extends \PHPUnit_Framework_TestCase {
 			Entity::TIME_IN_SECONDS => 30*60,
 			Entity::HR_AVG => 150,
 			Entity::SPORTID => Configuration::General()->runningSport(),
-			//Entity::TYPEID => Configuration::General()->competitionType(),
 			Entity::USE_VDOT => false
 		));
 		$IDs[] = $this->insert(array(
@@ -152,7 +147,6 @@ class DeleterTest extends \PHPUnit_Framework_TestCase {
 			Entity::DISTANCE => 10,
 			Entity::TIME_IN_SECONDS => 30*60,
 			Entity::SPORTID => Configuration::General()->runningSport(),
-			//Entity::TYPEID => Configuration::General()->competitionType(),
 			Entity::USE_VDOT => true
 		));
 		$IDs[] = $this->insert(array(
@@ -161,19 +155,16 @@ class DeleterTest extends \PHPUnit_Framework_TestCase {
 			Entity::TIME_IN_SECONDS => 30*60,
 			Entity::HR_AVG => 150,
 			Entity::SPORTID => Configuration::General()->runningSport(),
-			//Entity::TYPEID => Configuration::General()->competitionType(),
 			Entity::USE_VDOT => true
 		));
 
 		Configuration::Data()->updateVdotShape(62.15);
-		Configuration::Data()->updateVdotCorrector(0.789);
 
 		foreach ($IDs as $id) {
 			$this->delete($id);
 		}
 
 		$this->assertEquals(62.15, Configuration::Data()->vdotShape());
-		$this->assertEquals(0.789, Configuration::Data()->vdotCorrector());
 	}
 
 	public function testUpdatingBasicEndurance() {

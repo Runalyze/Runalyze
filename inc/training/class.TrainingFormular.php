@@ -7,8 +7,11 @@
 use Runalyze\Configuration;
 use Runalyze\Model\Factory;
 use Runalyze\Model\Trackdata\Entity as Trackdata;
+use Runalyze\Model\RaceResult;
 use Runalyze\Model\Route\Entity as Route;
 use Runalyze\Activity\DuplicateFinder;
+use Runalyze\Activity\Duration;
+use Runalyze\Activity\Distance;
 /**
  * Formular for trainings
  * 
@@ -74,6 +77,8 @@ class TrainingFormular extends StandardFormular {
 	protected function prepareForDisplayInSublcass() {
 		parent::prepareForDisplayInSublcass();
 
+		$this->initRaceResultFieldset();
+
         $this->initTagFieldset();
 		$this->addAdditionalHiddenFields();
 		$this->initEquipmentFieldset();
@@ -82,7 +87,6 @@ class TrainingFormular extends StandardFormular {
 			$this->addOldObjectData();
 			$this->initElevationCorrectionFieldset();
 			$this->initFieldsetToRemoveDataSeries();
-			$this->initDeleteFieldset();
 
 			if (Request::param('mode') == 'multi') {
 				$this->addHiddenValue('mode', 'multi');
@@ -106,6 +110,8 @@ class TrainingFormular extends StandardFormular {
 		}
 
 		parent::checkForSubmit();
+
+		$this->handleRaceResultCheckbox();
 	}
 
 	/**
@@ -140,6 +146,50 @@ class TrainingFormular extends StandardFormular {
 	}
 
 	/**
+	 * Handle race result checkbox
+	 */
+	protected function handleRaceResultCheckbox() {
+		$isCreateForm = ($this->submitMode == StandardFormular::$SUBMIT_MODE_CREATE);
+
+		if ($isCreateForm && isset($_POST['is_race'])) {
+			$this->insertRaceResult();
+		} elseif (isset($_POST['is_race_old_status'])) {
+			if ($_POST['is_race_old_status'] != '1' && isset($_POST['is_race'])) {
+				$this->insertRaceResult();
+			} elseif ($_POST['is_race_old_status'] == '1' && !isset($_POST['is_race'])) {
+				$this->deleteRaceResult();
+			}
+		}
+	}
+	
+	/**
+	 * Insert race result
+	 */
+	 protected function insertRaceResult() {
+	 	$RaceResult = new RaceResult\Entity(array(
+	 		RaceResult\Entity::NAME => $this->dataObject->getComment(),
+	 		RaceResult\Entity::OFFICIAL_TIME => $this->dataObject->getTimeInSeconds(),
+	 		RaceResult\Entity::OFFICIAL_DISTANCE => $this->dataObject->getDistance(),
+			RaceResult\Entity::ACTIVITY_ID => $this->dataObject->id()
+		));
+		$AddRaceResult = new RaceResult\Inserter(\DB::getInstance(), $RaceResult);
+		$AddRaceResult->setAccountID(SessionAccountHandler::getId());
+		$AddRaceResult->insert();
+	}
+
+	/**
+	 * Delete race result
+	 */
+	protected function deleteRaceResult() {
+		$RaceResult = new RaceResult\Entity(array(
+			RaceResult\Entity::ACTIVITY_ID => $this->dataObject->id()
+		));
+		$DeleteRaceResult = new RaceResult\Deleter(\DB::getInstance(), $RaceResult);
+		$DeleteRaceResult->setAccountID(SessionAccountHandler::getId());
+		$DeleteRaceResult->delete();
+	}
+
+	/**
 	 * Display after submit
 	 */
 	protected function displayAfterSubmit() {
@@ -171,6 +221,21 @@ class TrainingFormular extends StandardFormular {
 	 */
 	protected function addOldObjectData() {
 		$this->addHiddenValue('old-data', base64_encode(serialize($this->dataObject->getArray())));
+	}
+
+	/**
+	 * Add fieldset to (un)set the activity as official race
+	 */
+	protected function initRaceResultFieldset() {
+		$isCreateForm = ($this->submitMode == StandardFormular::$SUBMIT_MODE_CREATE);
+		$Factory = new Factory(SessionAccountHandler::getId());
+		$activityIsRace = !$isCreateForm && !$Factory->raceResult($this->dataObject->id())->isEmpty();
+
+		$CompetitionCheckbox = new FormularCheckbox('is_race', __('Competition'), $activityIsRace);
+		$CompetitionCheckbox->setLayout(FormularFieldset::$LAYOUT_FIELD_W50_AS_W100);
+
+		$this->fieldsets[0]->addField(new FormularInputHidden('is_race_old_status', '', $activityIsRace ? '1' : '0'));
+		$this->fieldsets[0]->addField($CompetitionCheckbox);
 	}
 
 	/**
@@ -397,22 +462,6 @@ class TrainingFormular extends StandardFormular {
 		}
 
 		return $Fields;
-	}
-
-	/**
-	 * Display fieldset: Delete training 
-	 */
-	protected function initDeleteFieldset() {
-		$DeleteText = '<strong>'.__('Permanently delete this activity').' &raquo;</strong>';
-		$DeleteUrl  = $_SERVER['SCRIPT_NAME'].'?delete='.$this->dataObject->id();
-		$DeleteLink = Ajax::link($DeleteText, 'ajax', $DeleteUrl);
-
-		$Fieldset = new FormularFieldset( __('Delete activity') );
-                
-		$Fieldset->addWarning($DeleteLink);
-		$Fieldset->setCollapsed();
-
-		$this->addFieldset($Fieldset);
 	}
 
 	/**

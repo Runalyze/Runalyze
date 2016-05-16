@@ -269,25 +269,10 @@ class Inserter extends Model\InserterWithAccountID {
 		$this->updateEquipment();
 		$this->updateTag();
 		$this->updateStartTime();
-		$this->createRaceResult();
-		$this->updateVDOTshape();
-		$this->updateBasicEndurance();
-	}
-	
-	/**
-	 * Create RaceResult if race type
-	 */
-	protected function createRaceResult() {
-		$Factory = \Runalyze\Context::Factory();
-		if ($this->Object->typeid() == $Factory->sport($this->Object->sportid())->raceTypeId()) {
-			$RaceResult = new Model\RaceResult\Entity(array(
-				Model\RaceResult\Entity::OFFICIAL_TIME => $this->Object->duration(),
-				Model\RaceResult\Entity::OFFICIAL_DISTANCE => $this->Object->distance(),
-				Model\RaceResult\Entity::ACTIVITY_ID => $this->Object->id()
-			));
-			$AddRaceResult = new Model\RaceResult\Inserter($this->PDO, $RaceResult);
-			$AddRaceResult->setAccountID($this->value(self::ACCOUNTID));
-			$AddRaceResult->insert();
+
+		if ($this->Object->sportid() == Configuration::General()->runningSport()) {
+			$this->updateVDOTshape();
+			$this->updateBasicEndurance();
 		}
 	}
 	
@@ -324,7 +309,10 @@ class Inserter extends Model\InserterWithAccountID {
 	}
 
 	/**
-	 * Update vdot shape and corrector
+	 * Update vdot shape
+	 * 
+	 * Note: This method assumes that the activity is marked as running
+	 * Note: vdot corrector will be updated by RaceResult\Inserter if necessary
 	 */
 	protected function updateVDOTshape() {
 		$timestampLimit = time() - Configuration::Vdot()->days() * DAY_IN_S;
@@ -335,20 +323,18 @@ class Inserter extends Model\InserterWithAccountID {
 			$this->Object->timestamp() > $timestampLimit
 		) {
 			Configuration::Data()->recalculateVDOTshape();
-			//TODO Raceresult
-			//if ($this->Object->typeid() == Configuration::General()->competitionType()) {
-				Configuration::Data()->recalculateVDOTcorrector();
-			//}
 		}
 	}
 
 	/**
 	 * Update basic endurance
+	 * 
+	 * Note: This method assumes that the activity is marked as running
 	 */
 	protected function updateBasicEndurance() {
 		$timestampLimit = time() - 182 * DAY_IN_S;
 
-		if ($this->Object->sportid() == Configuration::General()->runningSport() && $this->Object->timestamp() > $timestampLimit) {
+		if ($this->Object->timestamp() > $timestampLimit) {
 			BasicEndurance::recalculateValue();
 		}
 	}

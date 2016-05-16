@@ -248,53 +248,41 @@ class FormularValueParser {
 	 * @return boolean 
 	 */
 	private static function validateInt($key, $options) {
-		if (!is_numeric($_POST[$key]) || ($_POST[$key]) != (int)$_POST[$key])
+		if (!is_numeric($_POST[$key]) || ($_POST[$key]) != (int)$_POST[$key]) {
 			return __('Please enter a number.');
+		}
 
 		$_POST[$key] = (int)$_POST[$key];
 
-		if (!self::precisionIsOkay($_POST[$key], $options))
-			return __('The value is too large.');
+		if (!self::precisionIsOkay($_POST[$key], $options) || self::intIsTooLarge($_POST[$key], $options)) {
+			return __('This value is too large.');
+		}
 			
-		if (self::intIsToHigh($_POST[$key], $options))
-			return __('This value is too high');
-			
-		if (self::intIsToLow($_POST[$key], $options))
-			return __('This value is too low');
+		if (self::intIsTooSmall($_POST[$key], $options)) {
+			return __('This value is too small.');
+		}
 
 		return true;
 	}
 
 	/**
-	 * Check if given value is to high
+	 * Check if given value is too large
 	 * @param mixed $value as int/float/double
 	 * @param array $options array with key 'max': as int
 	 * @return boolean
 	 */
-	 private static function intIsToHigh($value, $options) {
-	 	if (!isset($options['max']) || !$options['max'])
-			return false;
-			
-		if ($value >= $options['max']) 
-			return true;
-			
-		return false;
+	 private static function intIsTooLarge($value, array $options) {
+	 	return (isset($options['max']) && $value > $options['max']);
 	 }
 	 
 	/**
-	 * Check if given value is to low
+	 * Check if given value is too small
 	 * @param mixed $value as int/float/double
 	 * @param array $options array with key 'max': as int
 	 * @return boolean
 	 */
-	 private static function intIsToLow($value, $options) {
-	 	if (!isset($options['min'])  || !$options['min'])
-			return false;
-			
-		if ($value <= $options['min']) 
-			return true;
-			
-		return false;
+	 private static function intIsTooSmall($value, array $options) {
+	 	return (isset($options['min']) && $value < $options['min']);
 	 }
 
 	/**

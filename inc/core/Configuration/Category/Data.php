@@ -262,7 +262,6 @@ class Data extends \Runalyze\Configuration\Category {
 	 */
 	public function recalculateVDOTcorrector() {
 		$Corrector = new JD\VDOTCorrector;
-		//TODO Raceresult
 		$Corrector->fromDatabase(
 			DB::getInstance(),
 			SessionAccountHandler::getId(),

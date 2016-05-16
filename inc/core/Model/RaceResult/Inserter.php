@@ -8,6 +8,7 @@ namespace Runalyze\Model\RaceResult;
 
 use Runalyze\Model;
 use Runalyze\Configuration;
+
 /**
  * Insert RaceResult to database
  * 
@@ -20,6 +21,9 @@ class Inserter extends Model\InserterWithAccountID {
 	 * @var \Runalyze\Model\RaceResult\Entity
 	 */
 	protected $Object;
+	
+	/** @var \Runalyze\Model\Activity\Entity */
+	protected $ActivityObject;
 
 	/**
 	 * Construct inserter
@@ -52,6 +56,27 @@ class Inserter extends Model\InserterWithAccountID {
 	
 	/**
 	 * Tasks after insertion
+	 * @throws \RuntimeException
+	 */
+	protected function before() {
+		$this->loadActivityObject();
+
+		parent::before();
+	}
+
+	/**
+	 * @throws \RuntimeException
+	 */
+	protected function loadActivityObject() {
+		$this->ActivityObject = (new Model\Factory($this->AccountID))->activity($this->Object->activityId());
+
+		if (!$this->ActivityObject->hasID()) {
+			throw new \RuntimeException('There is no valid activity object for this race result entity.');
+		}
+	}
+	
+	/**
+	 * Tasks after insertion
 	 */
 	protected function after() {
 		$this->updateVDOTcorrector();
@@ -61,14 +86,12 @@ class Inserter extends Model\InserterWithAccountID {
 	 * Update vdot corrector
 	 */
 	protected function updateVDOTcorrector() {
-		$Factory = new Model\Factory();
-		$Activity = $Factory->activity($this->Object->activityId());
 		if (
-			$Activity->sportid() == Configuration::General()->runningSport() &&
-			$Activity->usesVDOT() &&
-			$Activity->vdotByHeartRate() > 0
+			$this->ActivityObject->sportid() == Configuration::General()->runningSport() &&
+			$this->ActivityObject->usesVDOT() &&
+			$this->ActivityObject->vdotByHeartRate() > 0
 		) {
-				Configuration::Data()->recalculateVDOTcorrector();
+			Configuration::Data()->recalculateVDOTcorrector();
 		}
 	}
 }

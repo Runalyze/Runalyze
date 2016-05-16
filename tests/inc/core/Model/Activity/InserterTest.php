@@ -23,7 +23,6 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 
 	protected $OutdoorID;
 	protected $IndoorID;
-	protected $RunningRaceTypeId;
 
 	protected $EquipmentType;
 	protected $EquipmentA;
@@ -37,8 +36,7 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		$this->OutdoorID = $this->PDO->lastInsertId();
 		$this->PDO->exec('INSERT INTO `'.PREFIX.'sport` (`name`,`kcal`,`outside`,`accountid`,`power`) VALUES("",400,0,0,0)');
 		$this->IndoorID = $this->PDO->lastInsertId();
-		$this->RunningRaceTypeId = 3;
-		$this->PDO->exec('INSERT INTO `'.PREFIX.'sport` (`name`,`kcal`,`outside`,`accountid`,`power`, `race_typeid`) VALUES("Running",400,0,0,0,'.$this->RunningRaceTypeId.')');
+		$this->PDO->exec('INSERT INTO `'.PREFIX.'sport` (`name`,`kcal`,`outside`,`accountid`,`power`) VALUES("Running",400,0,0,0)');
 		$runningSportId = $this->PDO->lastInsertId();
 		$this->PDO->exec("INSERT INTO `".PREFIX."conf` (`category`, `key`, `value`, `accountid`) VALUES ('general', 'RUNNINGSPORT', ".$runningSportId.", 0)");
 		Configuration::loadAll(0);
@@ -216,13 +214,11 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		$this->assertGreaterThan(0, $Object->trimp());
 	}
 
-	public function testVDOTstatisticsUpdate() {
+	public function testVDOTshapeUpdate() {
 		$current = time();
 		$timeago = mktime(0,0,0,1,1,2000);
 		$running = Configuration::General()->runningSport();
-		$raceid = $this->RunningRaceTypeId;
 		Configuration::Data()->updateVdotShape(0);
-		Configuration::Data()->updateVdotCorrector(1);
 
 		$this->insert(array(
 			Entity::TIMESTAMP => $timeago,
@@ -230,7 +226,6 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 			Entity::TIME_IN_SECONDS => 30*60,
 			Entity::HR_AVG => 150,
 			Entity::SPORTID => $running,
-			Entity::TYPEID => $raceid + 1,
 			Entity::USE_VDOT => true
 		));
 		$this->insert(array(
@@ -250,7 +245,6 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		));
 
 		$this->assertEquals(0, Configuration::Data()->vdotShape());
-		$this->assertEquals(1, Configuration::Data()->vdotFactor());
 
 		$this->insert(array(
 			Entity::TIMESTAMP => $current,
@@ -258,12 +252,10 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 			Entity::TIME_IN_SECONDS => 30*60,
 			Entity::HR_AVG => 150,
 			Entity::SPORTID => $running,
-			Entity::TYPEID => $raceid + 1,
 			Entity::USE_VDOT => true
 		));
 
 		$this->assertNotEquals(0, Configuration::Data()->vdotShape());
-		$this->assertEquals(1, Configuration::Data()->vdotFactor());
 
 		$this->insert(array(
 			Entity::TIMESTAMP => $current,
@@ -271,12 +263,10 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 			Entity::TIME_IN_SECONDS => 30*60,
 			Entity::HR_AVG => 150,
 			Entity::SPORTID => $running,
-			Entity::TYPEID => $raceid,
 			Entity::USE_VDOT => true
 		));
 
 		$this->assertNotEquals(0, Configuration::Data()->vdotShape());
-		$this->assertNotEquals(1, Configuration::Data()->vdotFactor());
 	}
 
 	public function testWithCalculationsFromAdditionalObjects() {

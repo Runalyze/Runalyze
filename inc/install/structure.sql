@@ -252,7 +252,6 @@ CREATE TABLE IF NOT EXISTS `runalyze_sport` (
   `outside` tinyint(1) NOT NULL DEFAULT '0',
   `main_equipmenttypeid` int(10) unsigned NOT NULL DEFAULT '0',
   `default_typeid` int(10) unsigned DEFAULT NULL,
-  `race_typeid` int(10) unsigned DEFAULT NULL,
   `accountid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -553,7 +552,7 @@ ALTER TABLE `runalyze_user`
 -- Indizes für die Tabelle `runalyze_raceresult`
 --
 ALTER TABLE `runalyze_raceresult`
-  ADD PRIMARY KEY (`activity_id`), KEY  `accountid` (`accountid`);
+  ADD PRIMARY KEY (`activity_id`), ADD KEY  `accountid` (`accountid`);
   
 --
 -- AUTO_INCREMENT für exportierte Tabellen
@@ -694,3 +693,10 @@ ADD CONSTRAINT `runalyze_swimdata_ibfk_2` FOREIGN KEY (`activityid`) REFERENCES 
 ALTER TABLE `runalyze_trackdata`
 ADD CONSTRAINT `runalyze_trackdata_ibfk_1` FOREIGN KEY (`accountid`) REFERENCES `runalyze_account` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
 ADD CONSTRAINT `runalyze_trackdata_ibfk_2` FOREIGN KEY (`activityid`) REFERENCES `runalyze_training` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints der Tabelle `runalyze_raceresult`
+--
+ALTER TABLE `runalyze_raceresult`
+ADD CONSTRAINT `runalyze_raceresult_ibfk_1` FOREIGN KEY (`accountid`) REFERENCES `runalyze_account` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `runalyze_raceresult_ibfk_2` FOREIGN KEY (`activity_id`) REFERENCES `runalyze_training` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
