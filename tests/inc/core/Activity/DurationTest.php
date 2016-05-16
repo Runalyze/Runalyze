@@ -109,4 +109,13 @@ class DurationTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals('27:13:08', $Time->fromSeconds(27*3600+13*60+8)->string(Duration::FORMAT_WITH_HOURS));
 	}
 
+	public function testEmptyTime() {
+		$Time = new Duration(0);
+
+		$this->assertEquals('0:00', $Time->string(Duration::FORMAT_AUTO));
+		$this->assertEquals('0:00', $Time->string(Duration::FORMAT_COMPETITION));
+		$this->assertEquals('0:00:00', $Time->string(Duration::FORMAT_WITH_HOURS));
+		$this->assertEquals('0d 00:00:00', $Time->string(Duration::FORMAT_WITH_DAYS));
+	}
+
 }

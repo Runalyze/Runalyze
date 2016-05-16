@@ -180,7 +180,14 @@ class RunalyzeJsonImporterTest extends PHPUnit_Framework_TestCase {
 			'sportid'	=> $NewSport,
 			'typeid'	=> $NewType,
 			's'			=> '1500.00'
-		), $this->DB->query('SELECT `time`, `sportid`, `typeid`, `s` FROM `runalyze_training` WHERE `comment`="UNITTEST-2" LIMIT 1')->fetch());
+		), $this->DB->query('SELECT `time`, `sportid`, `typeid`, `s` FROM `runalyze_training` WHERE `comment`="UNITTEST-RACE" LIMIT 1')->fetch());
+
+		$competitionId = $this->DB->query('SELECT `id` FROM `runalyze_training` WHERE `comment`="UNITTEST-RACE" LIMIT 1')->fetchColumn();
+
+		$this->assertEquals(array(
+			'official_distance'	=> '10.00',
+			'official_time'		=> '2400'
+		), $this->DB->query('SELECT `official_distance`, `official_time` FROM `runalyze_raceresult` WHERE `activity_id`='.$competitionId.' LIMIT 1')->fetch());
 	}
 
 	/**

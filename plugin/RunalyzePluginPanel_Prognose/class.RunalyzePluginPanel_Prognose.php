@@ -139,7 +139,8 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 	 */
 	protected function lookupPersonalBests() {
 		PersonalBest::activateStaticCache();
-		$this->NumberOfPBs = PersonalBest::lookupDistances($this->getDistances());
+
+		$this->NumberOfPBs = PersonalBest::lookupDistances($this->getDistances(), Configuration::General()->runningSport());
 	}
 
 	/**
@@ -180,7 +181,7 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 	 * @param double $distance
 	 */
 	protected function showPrognosis($distance) {
-		$PB = new PersonalBest($distance);
+		$PB = new PersonalBest($distance, Configuration::General()->runningSport());
 		$PB->lookupWithDetails();
 		$PBTime = $PB->exists() ? Duration::format( $PB->seconds() ) : '-';
 		$PBString = $PB->exists() ? Ajax::trainingLink($PB->activityId(),$PBTime,true) : $PBTime;

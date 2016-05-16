@@ -120,12 +120,13 @@ if (START_TIME != time()) {
 				SELECT
 					`time`,
 					`id`,
-					`s`
-				FROM `'.PREFIX.'training`
+					`official_time`
+				FROM `'.PREFIX.'raceresult` r
+				    LEFT JOIN `'.PREFIX.'training` tr ON r.activity_id=tr.id
 				WHERE 
-					`accountid`='.\SessionAccountHandler::getId().' AND
-					`typeid`="'.Configuration::General()->competitionType().'"
-					AND `distance`="'.$distance.'"
+					r.`accountid`='.\SessionAccountHandler::getId().' AND
+					tr.`sportid`="'.Configuration::General()->runningSport().'"
+					AND r.`official_distance`="'.$distance.'"
 				ORDER BY
 					`time` ASC')->fetchAll();
 
@@ -134,7 +135,7 @@ if (START_TIME != time()) {
 
 		foreach ($ResultsData as $dat) {
 			if (!isset($WKplugin) || !$WKplugin->isFunCompetition($dat['id'])) {
-				$Results[(new LocalTime($dat['time']))->toServerTimestamp().'000'] = $dat['s'] * 1000;
+				$Results[(new LocalTime($dat['time']))->toServerTimestamp().'000'] = $dat['official_time'] * 1000;
 			}
 		}
 	} else {

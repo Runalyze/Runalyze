@@ -37,3 +37,5 @@ version=2.6
 {"TABLE":"runalyze_tag"}
 
 {"TABLE":"runalyze_activity_tag"}
+
+{"TABLE":"runalyze_raceresult"}

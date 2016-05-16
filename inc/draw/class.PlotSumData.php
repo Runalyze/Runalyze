@@ -418,15 +418,16 @@ abstract class PlotSumData extends Plot {
 			if ($num > 0)
 				$this->usesDistance = false;
 		}
-
+		
 		$this->RawData = DB::getInstance()->query('
 			SELECT
 				`sportid`,
 				`typeid`,
-				(`typeid` = '.Configuration::General()->competitionType().') as `wk`,
+				(r.`official_time` IS NOT NULL )as `wk`,
 				'.$this->dataSum().' as `sum`,
 				'.$this->timer().' as `timer`
-			FROM `'.PREFIX.'training`
+			FROM `'.PREFIX.'training` tr 
+			    LEFT JOIN `'.PREFIX.'raceresult` r ON tr.id = r.activity_id
 			WHERE
 				'.$whereSport.'
 				'.$this->whereDate().'
@@ -489,7 +490,7 @@ abstract class PlotSumData extends Plot {
 
 		if (Request::param('group') == 'types')
 			return '`typeid`';
-
+		//TODO Raceresult
 		return '(`typeid` = '.Configuration::General()->competitionType().')';
 	}
 

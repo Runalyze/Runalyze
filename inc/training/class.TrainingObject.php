@@ -605,7 +605,6 @@ class TrainingObject extends DataObject {
 	 */
 	public function getElevationCalculated() { return $this->get('elevation_calculated'); }
 
-
 	/**
 	 * Set calories
 	 * @param int $kcal kcal
@@ -1306,6 +1305,6 @@ class TrainingObject extends DataObject {
 	 * @return boolean 
 	 */
 	public static function idIsCompetition($id) {
-		return (DB::getInstance()->query('SELECT COUNT(*) FROM `'.PREFIX.'training` WHERE `id`='.(int)$id.' AND `typeid`="'.Configuration::General()->competitionType().'" LIMIT 1')->fetchColumn() > 0);
+		return (DB::getInstance()->query('SELECT COUNT(*) FROM `'.PREFIX.'raceresult` WHERE `activity_id`='.(int)$id.' LIMIT 1')->fetchColumn() > 0);
 	}
 }

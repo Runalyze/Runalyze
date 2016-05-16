@@ -118,6 +118,17 @@ class Factory {
 			$this->arrayByPK('hrv', $activityid)
 		);
 	}
+	
+	/**
+	 * RaceResult
+	 * @param int $activityid
+	 * @return \Runalyze\Model\RaceResult\Entity
+	 */
+	public function raceResult($activityid) {
+		return new RaceResult\Entity(
+			$this->arrayByPK('raceresult', $activityid)
+		);
+	}
 
 	/**
 	 * Type
@@ -524,6 +535,8 @@ class Factory {
 				return 'activityid';
 			case 'swimdata':
 				return 'activityid';
+			case 'raceresult':
+				return 'activity_id';
 		}
 
 		return 'id';

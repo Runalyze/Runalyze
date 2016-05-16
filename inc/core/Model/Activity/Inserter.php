@@ -123,7 +123,6 @@ class Inserter extends Model\InserterWithAccountID {
 		parent::before();
 
 		$this->Object->set(Entity::TIMESTAMP_CREATED, time());
-
 		$this->setSportIdIfEmpty();
 		$this->removeDataIfInside();
 		$this->calculateCaloriesIfZero();
@@ -270,10 +269,13 @@ class Inserter extends Model\InserterWithAccountID {
 		$this->updateEquipment();
 		$this->updateTag();
 		$this->updateStartTime();
-		$this->updateVDOTshapeAndCorrector();
-		$this->updateBasicEndurance();
-	}
 
+		if ($this->Object->sportid() == Configuration::General()->runningSport()) {
+			$this->updateVDOTshape();
+			$this->updateBasicEndurance();
+		}
+	}
+	
 	/**
 	 * Update tag
 	 */
@@ -307,9 +309,12 @@ class Inserter extends Model\InserterWithAccountID {
 	}
 
 	/**
-	 * Update vdot shape and corrector
+	 * Update vdot shape
+	 * 
+	 * Note: This method assumes that the activity is marked as running
+	 * Note: vdot corrector will be updated by RaceResult\Inserter if necessary
 	 */
-	protected function updateVDOTshapeAndCorrector() {
+	protected function updateVDOTshape() {
 		$timestampLimit = time() - Configuration::Vdot()->days() * DAY_IN_S;
 
 		if (
@@ -318,20 +323,18 @@ class Inserter extends Model\InserterWithAccountID {
 			$this->Object->timestamp() > $timestampLimit
 		) {
 			Configuration::Data()->recalculateVDOTshape();
-
-			if ($this->Object->typeid() == Configuration::General()->competitionType()) {
-				Configuration::Data()->recalculateVDOTcorrector();
-			}
 		}
 	}
 
 	/**
 	 * Update basic endurance
+	 * 
+	 * Note: This method assumes that the activity is marked as running
 	 */
 	protected function updateBasicEndurance() {
 		$timestampLimit = time() - 182 * DAY_IN_S;
 
-		if ($this->Object->sportid() == Configuration::General()->runningSport() && $this->Object->timestamp() > $timestampLimit) {
+		if ($this->Object->timestamp() > $timestampLimit) {
 			BasicEndurance::recalculateValue();
 		}
 	}

@@ -114,6 +114,7 @@ class Entity extends Model\Entity {
 
 		return false;
 	}
+	
 	/**
 	 * Properties
 	 * @return array

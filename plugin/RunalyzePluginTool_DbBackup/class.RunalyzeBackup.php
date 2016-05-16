@@ -73,7 +73,8 @@ abstract class RunalyzeBackup {
 			PREFIX.'equipment',
 			PREFIX.'activity_equipment',
 			PREFIX.'tag',
-			PREFIX.'activity_tag'
+			PREFIX.'activity_tag',
+			PREFIX.'raceresult'
 		);
 
 		foreach ($Tables as $TableName) {

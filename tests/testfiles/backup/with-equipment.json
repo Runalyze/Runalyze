@@ -61,3 +61,5 @@ version=2.6
 {"":{"activityid":"22","tagid":"51"}}
 {"":{"activityid":"22","tagid":"52"}}
 {"":{"activityid":"23","tagid":"52"}}
+
+{"TABLE":"runalyze_raceresult"}

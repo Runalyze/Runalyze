@@ -38,16 +38,16 @@ class RaceContainer {
 	/**
 	 * @var int
 	 */
-	protected $ComeptitionType;
+	protected $SportId;
 
 	/**
 	 * 
 	 * @param PDO $pdo [optional]
-	 * @param int $competitionType [optional]
+	 * @param int $sportId
 	 */
-	public function __construct(PDO $pdo = null, $competitionType = false) {
+	public function __construct($sportId, PDO $pdo = null) {
 		$this->PDO = (null == $pdo) ? DB::getInstance() : $pdo;
-		$this->ComeptitionType = (false === $competitionType) ? Configuration::General()->competitionType() : $competitionType;
+		$this->SportId = $sportId;
 	}
 
 	/**
@@ -65,10 +65,14 @@ class RaceContainer {
 	protected function fetchDataFromDB() {
 		return $this->PDO->query(
 			'SELECT
-				`'.implode('`,`', $this->columns()).'`
-			FROM `'.PREFIX.'training`
-			WHERE `accountid`='.\SessionAccountHandler::getId().' AND `typeid`='.$this->ComeptitionType.'
-			ORDER BY `time` DESC'
+				r.`official_time`, r.`official_distance`, r.`officially_measured`, r.`name`,
+				r.`place_total`, r.`place_gender`, r.`place_ageclass`,
+				r.`participants_total`,	r.`participants_gender`, r.`participants_ageclass`,
+				tr.`id`, tr.`time`,	tr.`sportid`, tr.`typeid`, tr.`comment`, tr.`distance`,	tr.`s`,	tr.`is_track`, tr.`pulse_avg`, tr.`pulse_max`, tr.`weatherid`, tr.`temperature`
+			FROM `'.PREFIX.'raceresult` as r
+			LEFT JOIN `'.PREFIX.'training` as tr ON r.`activity_id` = tr.`id`
+			WHERE r.`accountid`='.\SessionAccountHandler::getId().' AND tr.`sportid`='.$this->SportId.'
+			ORDER BY tr.`time` DESC'
 		)->fetchAll();
 	}
 
@@ -124,25 +128,5 @@ class RaceContainer {
 				$this->DistanceIDs[(string)$dist][] = $index;
 			}
 		}
-	}
-
-	/**
-	 * @return array
-	 */
-	protected function columns() {
-		return array(
-			'id',
-			'time',
-			'sportid',
-			'typeid',
-			'comment',
-			'distance',
-			's',
-			'is_track',
-			'pulse_avg',
-			'pulse_max',
-			'weatherid',
-			'temperature'
-		);
 	}
 }

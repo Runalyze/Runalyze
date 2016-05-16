@@ -139,7 +139,8 @@ class RunalyzeJsonAnalyzer {
 			'runalyze_equipment',
 			'runalyze_activity_equipment',
 			'runalyze_activity_tag',
-			'runalyze_tag'
+			'runalyze_tag',
+			'runalyze_raceresult'
 		);
 	}
 

@@ -38,3 +38,5 @@ version=2.6
 {"TABLE":"runalyze_equipment"}
 
 {"TABLE":"runalyze_activity_equipment"}
+
+{"TABLE":"runalyze_raceresult"}
