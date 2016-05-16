@@ -2,7 +2,7 @@
 ALTER TABLE `runalyze_sport` ADD `default_typeid` int(10) unsigned DEFAULT NULL AFTER `main_equipmenttypeid`;
 
 /* 24.04.2016 - add training effect, add RPE to activity (training) table */
-ALTER TABLE `runalyze_training` ADD `fit_training_effect` decimal(2,1) unsigned DEFAULT NULL AFTER `fit_hrv_analysis`, ADD `rpe` tinyint(2) unsigned DEFAULT NULL AFTER `jd_intensity`; 
+ALTER TABLE `runalyze_training` ADD `fit_performance_condition` tinyint(3) unsigned DEFAULT NULL AFTER `fit_hrv_analysis`, ADD `fit_training_effect` decimal(2,1) unsigned DEFAULT NULL AFTER `fit_hrv_analysis`, ADD `rpe` tinyint(2) unsigned DEFAULT NULL AFTER `jd_intensity`;
 
 /* 02.05.2016 - Add Weather Cache table */
 CREATE TABLE IF NOT EXISTS `runalyze_weathercache` (
@@ -51,3 +51,7 @@ INSERT INTO runalyze_raceresult (`activity_id`, `accountid`, `official_distance`
 
 /* 16.05.2016 - DELETE TYPE_ID_RACE from runalyze_conf */
 DELETE FROM runalyze_conf WHERE `key`='TYPE_ID_RACE';
+
+/* 16.05.2016 - add performance condition */
+/* This query is added to the query from 24.04.2016 - remember to run this if you already ran the previous one */
+/*ALTER TABLE `runalyze_training` ADD `fit_performance_condition` tinyint(3) unsigned DEFAULT NULL AFTER `fit_training_effect`;*/

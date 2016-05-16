@@ -54,6 +54,7 @@ class DefaultConfiguration extends Configuration
 			Keys::VERTICAL_OSCILLATION => true,
 			Keys::STRIDE_LENGTH => false,
 			Keys::FIT_VO2MAX_ESTIMATE => false,
+			Keys::FIT_PERFORMANCE_CONDITION => false,
 			Keys::FIT_RECOVERY_TIME => false,
 			Keys::FIT_HRV_ANALYSIS => false,
 			Keys::FIT_TRAINING_EFFECT => false,

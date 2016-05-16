@@ -581,6 +581,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertEquals(172, $this->object->object()->getPulseMax());
 
 			$this->assertEquals(null, $this->object->object()->getFitTrainingEffect());
+			$this->assertEquals(null, $this->object->object()->getFitPerformanceCondition());
 
 			$this->assertTrue($this->object->object()->hasArrayTime());
 			$this->assertTrue($this->object->object()->hasArrayDistance());
@@ -615,10 +616,10 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			// Make sure that it's not 100, see https://github.com/Runalyze/Runalyze/issues/1798
 			$this->assertEquals(0, $this->object->object()->getFitHRVscore());
 			$this->assertEquals('fr630', $this->object->object()->getCreator());
+			$this->assertEquals(100, $this->object->object()->getFitPerformanceCondition());
 
 			// New values for later on:
 			//  - lactate threshold: 163 bpm / 2.583 m/s
-			//  - performance condition: 100 (= baseline, i.e. +/- 0)
 		}
 	}
 }

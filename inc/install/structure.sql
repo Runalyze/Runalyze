@@ -321,6 +321,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_training` (
   `fit_recovery_time` smallint(5) unsigned NOT NULL DEFAULT '0',
   `fit_hrv_analysis` smallint(5) unsigned NOT NULL DEFAULT '0',
   `fit_training_effect` decimal(2,1) unsigned DEFAULT NULL,
+  `fit_performance_condition` tinyint(3) unsigned DEFAULT NULL,
   `jd_intensity` smallint(4) NOT NULL DEFAULT '0',
   `rpe` tinyint(2) unsigned DEFAULT NULL,
   `trimp` int(4) NOT NULL DEFAULT '0',

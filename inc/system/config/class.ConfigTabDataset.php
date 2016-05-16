@@ -252,6 +252,7 @@ class ConfigTabDataset extends ConfigTab {
 			'fit_recovery_time'	=> 800,
 			'fit_hrv_analysis'	=> 800,
 			'fit_training_effect'	=> 3.1,
+			'fit_performance_condition'	=> 100,
 			'jd_intensity'	=> 27,
 			'rpe'		=> 13,
 			'trimp'		=> 121,

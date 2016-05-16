@@ -59,7 +59,7 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		$this->PDO->exec('DELETE FROM `'.PREFIX.'training`');
 		$this->PDO->exec('DELETE FROM `'.PREFIX.'sport`');
 		$this->PDO->exec('DELETE FROM `'.PREFIX.'equipment_type`');
-		$this->PDO->exec('DELETE FROM `'.PREFIX.'conf');
+		$this->PDO->exec('DELETE FROM `'.PREFIX.'conf`');
 		Configuration::loadAll(0);
 
 		$Factory = new Model\Factory(0);

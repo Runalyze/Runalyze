@@ -70,6 +70,9 @@ class ParserFITSingle extends ParserAbstractSingle {
 	/** @var float [16m] */
 	protected $compressedLastDistance16 = 0;
 
+	/** @var string */
+	protected $softwareVersion = '';
+
 	/**
 	 * Parse
 	 */
@@ -82,12 +85,14 @@ class ParserFITSingle extends ParserAbstractSingle {
 	 */
 	public function startNewActivity() {
 		$creator = $this->TrainingObject->getCreator();
+		$creatorDetails = $this->TrainingObject->getCreatorDetails();
 		$offset = $this->TrainingObject->getTimezoneOffset();
 
 		$this->TrainingObject = new TrainingObject(DataObject::$DEFAULT_ID);
 		$this->TrainingObject->setTimestamp(PHP_INT_MAX);
 		$this->TrainingObject->setTimezoneOffset($offset);
 		$this->TrainingObject->setCreator($creator);
+		$this->TrainingObject->setCreatorDetails($creatorDetails);
 
 		$this->isPaused = false;
 		$this->isSwimming = false;
@@ -234,8 +239,16 @@ class ParserFITSingle extends ParserAbstractSingle {
 	 * Read device info
 	 */
 	protected function readDeviceInfo() {
-		if (isset($this->Values['garmin_product']) && isset($this->Values['device_index']) && $this->Values['device_index'][0] == 0)
-			$this->TrainingObject->setCreator($this->Values['garmin_product'][1]);
+		if (isset($this->Values['device_index']) && $this->Values['device_index'][0] == 0) {
+			if (isset($this->Values['garmin_product'])) {
+				$this->TrainingObject->setCreator($this->Values['garmin_product'][1]);
+			}
+
+			if (isset($this->Values['software_version'])) {
+				$this->softwareVersion = $this->Values['software_version'][1];
+				$this->TrainingObject->setCreatorDetails('firmware '.$this->softwareVersion);
+			}
+		}
 	}
 
 	/**
@@ -320,7 +333,10 @@ class ParserFITSingle extends ParserAbstractSingle {
 				case 39:
 					$creator = $this->TrainingObject->getCreator();
 
-					if ($creator != 'fr630' && $creator != 'fenix3') {
+					// TODO: this may need more device and firmware specific conditions
+					if (substr($creator, 0, 6) == 'fr630' || substr($creator, 0, 6) == 'fenix3') {
+						$this->TrainingObject->setFitPerformanceCondition((int)$this->Values['data'][1]);
+					} else {
 						$this->TrainingObject->setFitHRVscore((int)$this->Values['data'][1]);
 					}
 

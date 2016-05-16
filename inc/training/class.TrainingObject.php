@@ -705,6 +705,9 @@ class TrainingObject extends DataObject {
 	public function setFitTrainingEffect($effect) { $this->set('fit_training_effect', $effect); }
 	public function getFitTrainingEffect() { return $this->get('fit_training_effect'); }
 
+	public function setFitPerformanceCondition($value) { $this->set('fit_performance_condition', $value); }
+	public function getFitPerformanceCondition() { return $this->get('fit_performance_condition'); }
+
 
 	/**
 	 * Get JD intensity

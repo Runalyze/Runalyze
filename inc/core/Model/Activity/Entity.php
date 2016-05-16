@@ -156,6 +156,12 @@ class Entity extends Model\EntityWithID {
 	const FIT_TRAINING_EFFECT = 'fit_training_effect';
 
 	/**
+	 * Key: performance condition from fit file
+	 * @var string
+	 */
+	const FIT_PERFORMANCE_CONDITION = 'fit_performance_condition';
+
+	/**
 	 * Key: jd intensity
 	 * @var string
 	 */
@@ -384,6 +390,7 @@ class Entity extends Model\EntityWithID {
 			self::FIT_RECOVERY_TIME,
 			self::FIT_HRV_ANALYSIS,
 			self::FIT_TRAINING_EFFECT,
+			self::FIT_PERFORMANCE_CONDITION,
 			self::JD_INTENSITY,
 			self::RPE,
 			self::TRIMP,
@@ -466,6 +473,7 @@ class Entity extends Model\EntityWithID {
 			case self::CREATOR_DETAILS:
 			case self::ACTIVITY_ID:
 			case self::FIT_TRAINING_EFFECT:
+			case self::FIT_PERFORMANCE_CONDITION:
 				return true;
 		}
 
@@ -481,6 +489,7 @@ class Entity extends Model\EntityWithID {
 		$this->ensureNullIfEmpty(self::TIMEZONE_OFFSET, true);
 		$this->ensureNullIfEmpty(self::IS_NIGHT, true);
 		$this->ensureNullIfEmpty(self::FIT_TRAINING_EFFECT, true);
+		$this->ensureNullIfEmpty(self::FIT_PERFORMANCE_CONDITION, true);
 		$this->ensureAllNumericValues();
 		$this->synchronizeObjects();
 	}
@@ -710,6 +719,14 @@ class Entity extends Model\EntityWithID {
 	 */
 	public function fitTrainingEffect() {
 		return $this->Data[self::FIT_TRAINING_EFFECT];
+	}
+
+	/**
+	 * Performance condition
+	 * @return null|int
+	 */
+	public function fitPerformanceCondition() {
+		return $this->Data[self::FIT_PERFORMANCE_CONDITION];
 	}
 
 	/**
