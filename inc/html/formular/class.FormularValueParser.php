@@ -272,7 +272,7 @@ class FormularValueParser {
 	 * @return boolean
 	 */
 	 private static function intIsTooLarge($value, array $options) {
-	 	return (isset($options['max']) && $value > $options['max']);
+	 	return (isset($options['max']) && is_numeric($options['max']) && $value > $options['max']);
 	 }
 	 
 	/**
@@ -282,7 +282,7 @@ class FormularValueParser {
 	 * @return boolean
 	 */
 	 private static function intIsTooSmall($value, array $options) {
-	 	return (isset($options['min']) && $value < $options['min']);
+	 	return (isset($options['min']) && is_numeric($options['min']) && $value < $options['min']);
 	 }
 
 	/**
