@@ -6,6 +6,7 @@
 
 namespace Runalyze\Plugin\Tool\DatabaseCleanup;
 
+use Runalyze\Calculation;
 use Runalyze\Data\Elevation;
 
 use SessionAccountHandler;
@@ -65,7 +66,7 @@ class ElevationsRecalculator {
 
 		while ($Data = $Query->fetch()) {
 			$Elevation = \Runalyze\Model\Entity::explode($Data['elevations']);
-			$Calculator = new Elevation\Calculation\Calculator($Elevation);
+			$Calculator = new Calculation\Elevation\Calculator($Elevation);
 			$Calculator->calculate();
 
 			if ($Calculator->totalElevation() != $Data['elevation'] || $Calculator->elevationUp() != $Data['elevation_up']) {

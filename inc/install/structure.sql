@@ -479,7 +479,7 @@ ALTER TABLE `runalyze_equipment_type`
 --
 -- Indizes für die Tabelle `runalyze_tag`
 --
-ALTER TABLE `runalyze_tag` 
+ALTER TABLE `runalyze_tag`
 ADD PRIMARY KEY (`id`), ADD KEY `accountid` (`accountid`);
 
 --
@@ -554,6 +554,12 @@ ALTER TABLE `runalyze_user`
 ALTER TABLE `runalyze_raceresult`
   ADD PRIMARY KEY (`activity_id`), ADD KEY  `accountid` (`accountid`);
   
+--
+-- Indizes für die Tabelle `runalyze_weathercache`
+--
+ALTER TABLE `runalyze_weathercache`
+ADD PRIMARY KEY (`geohash`,`time`);
+
 --
 -- AUTO_INCREMENT für exportierte Tabellen
 --

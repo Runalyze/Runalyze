@@ -10,7 +10,7 @@ use Runalyze\Model\Activity;
 use Runalyze\Model\Route;
 use Runalyze\Calculation\Route\Calculator;
 use Runalyze\View\Activity\Linker;
-use Runalyze\Data\Elevation\Correction\NoValidStrategyException;
+use Runalyze\Service\ElevationCorrection\NoValidStrategyException;
 
 $Frontend = new Frontend();
 

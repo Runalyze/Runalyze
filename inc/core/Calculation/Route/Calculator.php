@@ -6,11 +6,11 @@
 
 namespace Runalyze\Calculation\Route;
 
-use Runalyze\Data\Elevation\Correction\InvalidResponseException;
-use Runalyze\Data\Elevation\Correction\NoValidStrategyException;
 use Runalyze\Model\Route;
-use Runalyze\Data\Elevation\Correction\Corrector;
-use Runalyze\Data\Elevation\Calculation;
+use Runalyze\Calculation\Elevation;
+use Runalyze\Service\ElevationCorrection\Corrector;
+use Runalyze\Service\ElevationCorrection\NoValidStrategyException;
+use Runalyze\Service\ElevationCorrection\Strategy\InvalidResponseException;
 
 /**
  * Calculate properties of route object
@@ -43,7 +43,7 @@ class Calculator {
 	 * This method does directly update the route object.
 	 */
 	public function calculateElevation() {
-		$Calculator = new Calculation\Calculator($this->Route->elevations());
+		$Calculator = new Elevation\Calculator($this->Route->elevations());
 		$Calculator->calculate();
 
 		$this->Route->set(Route\Entity::ELEVATION, $Calculator->totalElevation());
@@ -77,6 +77,8 @@ class Calculator {
 			$Corrector->correctElevation($coordinates['lat'], $coordinates['lng'], $strategyName);
 			$result = $Corrector->getCorrectedElevation();
 		} catch (InvalidResponseException $e) {
+			return false;
+		} catch (NoValidStrategyException $e) {
 			return false;
 		}
 

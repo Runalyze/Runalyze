@@ -64,7 +64,8 @@ class DefaultConfiguration extends Configuration
 			Keys::TAGS => false,
 			Keys::COMPLETE_EQUIPMENT => false,
 			Keys::MAIN_EQUIPMENT => false,
-			Keys::RPE => false
+			Keys::RPE => false,
+			Keys::GRADIENT => false
 		));
 	}
 

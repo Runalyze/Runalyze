@@ -17,6 +17,9 @@ CREATE TABLE IF NOT EXISTS `runalyze_weathercache` (
   `weather_source` tinyint(2) unsigned DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+/* 09.05.2016 - Add primary key for weather cache table */
+ALTER TABLE `runalyze_weathercache` ADD PRIMARY KEY (`geohash`,`time`);
+
 /* 16.05.2016 - Add RaceResult table */
 
 CREATE TABLE IF NOT EXISTS `runalyze_raceresult` (
@@ -42,8 +45,8 @@ ADD CONSTRAINT `runalyze_raceresult_ibfk_2` FOREIGN KEY (`activity_id`) REFERENC
 
 
 /* 16.05.2016 - Insert existing races into runalyze_raceresults */
-INSERT INTO runalyze_raceresult (`activity_id`, `accountid`, `official_distance`, `official_time`, `name`)  
-    SELECT `id`, `accountid`, `distance`, `s`, `comment` FROM runalyze_training 
+INSERT INTO runalyze_raceresult (`activity_id`, `accountid`, `official_distance`, `official_time`, `name`)
+    SELECT `id`, `accountid`, `distance`, `s`, `comment` FROM runalyze_training
         WHERE `typeid` IN (SELECT `value` from runalyze_conf where `key`='TYPE_ID_RACE');
 
 /* 16.05.2016 - DELETE TYPE_ID_RACE from runalyze_conf */
