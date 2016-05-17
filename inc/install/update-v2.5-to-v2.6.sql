@@ -47,7 +47,7 @@ ADD CONSTRAINT `runalyze_raceresult_ibfk_2` FOREIGN KEY (`activity_id`) REFERENC
 /* 16.05.2016 - Insert existing races into runalyze_raceresults */
 INSERT INTO runalyze_raceresult (`activity_id`, `accountid`, `official_distance`, `official_time`, `name`)
     SELECT `id`, `accountid`, `distance`, `s`, `comment` FROM runalyze_training
-        WHERE `typeid` IN (SELECT `value` from runalyze_conf where `key`='TYPE_ID_RACE');
+        WHERE `typeid` IN (SELECT `value` from runalyze_conf where `key`='TYPE_ID_RACE' AND value != 0);
 
 /* 16.05.2016 - DELETE TYPE_ID_RACE from runalyze_conf */
 DELETE FROM runalyze_conf WHERE `key`='TYPE_ID_RACE';
