@@ -187,19 +187,13 @@ abstract class PlotSumData extends Plot {
 	 */
 	private function getMenuLinksForGrouping() {
 		if (Request::param('group') == '') {
-			$Current = ($this->Sport->isRunning()) ? __('Activity &amp; Competition') : __('Total');
+			$Current = __('Total');
 		} else {
 			$Current = __('By type');
 		}
 
 		$Links = array();
-
-		if ($this->Sport->isRunning()) {
-			$Links[] = $this->link( __('Activity &amp; Competition'), $this->Year, Request::param('sportid'), '', Request::param('group') == '');
-		} else {
-			$Links[] = $this->link( __('Total'), $this->Year, Request::param('sportid'), '', Request::param('group') == '');
-		}
-
+		$Links[] = $this->link( __('Total'), $this->Year, Request::param('sportid'), '', Request::param('group') == '');
 		$Links[] = $this->link( __('By type'), $this->Year, Request::param('sportid'), 'types', Request::param('group') == 'types');
 
 		return ['title' => $Current, 'links' => $Links];
@@ -490,8 +484,8 @@ abstract class PlotSumData extends Plot {
 
 		if (Request::param('group') == 'types')
 			return '`typeid`';
-		//TODO Raceresult
-		return '(`typeid` = '.Configuration::General()->competitionType().')';
+
+		return 'wk';
 	}
 
 	/**
@@ -586,19 +580,20 @@ abstract class PlotSumData extends Plot {
 	private function setDataForCompetitionAndTraining() {
 		$Kilometers            = array_fill(0, $this->timerEnd - $this->timerStart + 1, 0);
 		$KilometersCompetition = array_fill(0, $this->timerEnd - $this->timerStart + 1, 0);
+		$hasCompetitions = false;
 
 		foreach ($this->RawData as $dat) {
 			if ($dat['timer'] >= $this->timerStart && $dat['timer'] <= $this->timerEnd) {
-				if ($dat['wk'] == 1)
+				if ($dat['wk'] == 1) {
 					$KilometersCompetition[$dat['timer']-$this->timerStart] = $dat['sum'];
-				else
+					$hasCompetitions = true;
+				} else {
 					$Kilometers[$dat['timer']-$this->timerStart] = $dat['sum'];
+				}
 			}
 		}
 
-		// TODO: currently, only ONE competition type is allowed (and used for running)
-		// if ($this->Sport->hasTypes())
-		if ($this->Sport->isRunning()) {
+		if ($hasCompetitions) {
 			$this->Data[] = array('label' => __('Competition'), 'data' => $KilometersCompetition);
 			$this->Data[] = array('label' => __('Training'), 'data' => $Kilometers, 'color' => '#E68617');
 		} else {
