@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-05-18 12:07+0200\n"
-"PO-Revision-Date: 2016-05-18 18:15+0200\n"
-"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
+"PO-Revision-Date: 2016-05-18 21:51+0200\n"
+"Last-Translator: Hannes <mail@laufhannes.de>\n"
 "Language-Team: German "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
@@ -892,9 +892,8 @@ msgid "Place age group"
 msgstr "Altersklassenplatz"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:318
-#, fuzzy
 msgid "Place gender"
-msgstr "Pacezonen"
+msgstr "Platz m/f"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:339
 #, php-format
@@ -983,7 +982,7 @@ msgstr "R-R Intervalle"
 
 #: inc/training/view/section/class.SectionHRVRow.php:31
 msgid "Successive differences"
-msgstr ""
+msgstr "Aufeinanderfolgende Differenzen"
 
 #: inc/training/view/section/class.SectionHRVRow.php:32
 msgid "Poincaré plot"
@@ -1315,7 +1314,7 @@ msgstr ""
 
 #: inc/training/schemes/scheme.Training.php:221
 msgid "Will be calculated afterwards from the acticity's elevation profile."
-msgstr ""
+msgstr "Wird im Anschluss aus dem Höhenprofil berechnet."
 
 #: inc/training/schemes/scheme.Training.php:245
 msgid ""
@@ -1323,6 +1322,9 @@ msgid ""
 "(if activated in your configuration) only if you change the duration or the "
 "type of sport."
 msgstr ""
+"Dieser Wert wird automatisch aus Dauer und Sporteinstellungen berechnet ("
+"vorausgesetzt die Berechnung ist in der Konfiguration aktiviert), wenn Dauer "
+"oder Sportart geändert wird."
 
 #: inc/training/schemes/scheme.Training.php:308
 msgid "VDOT for form"
@@ -1334,6 +1336,9 @@ msgid ""
 "single activities from the calculation of your form and should do so if it's "
 "heart rate data are not reliable (e.g. a lot of stops, walking breaks, ...)."
 msgstr ""
+"VDOTs werden aus dem Verhältnis von Herzfrequenz und Pace geschätzt. Du "
+"kannst einzelne Aktivitäten von der Formberechnung ausschließen, falls die "
+"Herzfrequenzdaten nicht zuverlässig sind (z.B. bei Trabpausen o.ä.)."
 
 #: inc/training/schemes/scheme.Training.php:403
 msgid "Cadence (Running)"
@@ -1433,6 +1438,8 @@ msgid ""
 "Competitions are treated in a special way to show your personal bests and "
 "are independent of the chosen activity type."
 msgstr ""
+"Wettkämpfe werden - unabhängig vom ausgewählten Trainingstyp - zum Beispiel "
+"für die Berechnung deiner persönlichen Bestzeiten verwendet."
 
 #: inc/training/class.TrainingFormular.php:235
 msgid ""
@@ -2173,14 +2180,13 @@ msgid "Twitter"
 msgstr "Twitter"
 
 #: inc/core/Activity/PerformanceCondition.php:58
-#, fuzzy
 msgid "Performance condition"
-msgstr "Performance-Modell"
+msgstr "Performance condition"
 
 #: inc/core/Activity/PerformanceCondition.php:67
 #: inc/core/Dataset/Keys/FitPerformanceCondition.php:52
 msgid "PC"
-msgstr ""
+msgstr "PC"
 
 #: inc/core/Activity/TrainingEffectLevel.php:68
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:388
@@ -2981,6 +2987,8 @@ msgid ""
 "Rating of Perceived Exertion or Borg scale, a scale devised to show "
 "perceived exertion during exercise"
 msgstr ""
+"Rating of Perceived Exertion oder Borg-Skala, eine Skala für das "
+"Belastungsempfinden während einer sportlichen Aktivität"
 
 #: inc/core/Dataset/Keys/FitVO2maxEstimate.php:44
 #: inc/core/Dataset/Keys/FitVO2maxEstimate.php:53
@@ -3095,7 +3103,7 @@ msgstr "Kommentare werden automatisch nach %u Zeichen gekürzt."
 msgid ""
 "Vertical oscillation is your vertical motion of your torso measured in "
 "centimeters"
-msgstr ""
+msgstr "Vertikale Oszillation ist die vertikale Bewegung des Oberkörpers"
 
 #: inc/core/Dataset/Keys/TrainingPartner.php:65
 #, php-format
@@ -3159,6 +3167,8 @@ msgid ""
 "only if there are handmade laps, i.e. there are active and inactive laps, or "
 "if it was a race. "
 msgstr ""
+"Zwischenzeiten werden als Uhr-Icon mit allen Zeiten als Tooltip angezeigt. "
+"Das Icon wird nur angezeigt, falls aktive und \"Ruhe\"-Runden vorliegen. "
 
 #: inc/core/Dataset/Keys/FitTrainingEffect.php:52
 msgid "TE"
@@ -3193,6 +3203,8 @@ msgid ""
 "The gradient describes the ratio of elevation gain (or less) and distance. "
 "Dividing total elevation by total distance gives this value."
 msgstr ""
+"Der Gradient beschreibt das Verhältnis von Auf-/Abstieg und Distanz. Er "
+"ergibt sich als Höhenmeter-Wert geteilt durch die gesamte Distanz."
 
 #: inc/core/Dataset/Keys/MainEquipment.php:35
 msgid "Main Equipment"
@@ -3237,15 +3249,17 @@ msgstr ""
 "Exakte Uhrzeit der Aktivität. (Das Datum selbst wird ohnehin angezeigt)"
 
 #: inc/core/Dataset/Keys/FitPerformanceCondition.php:43
-#, fuzzy
 msgid "Performance Condition"
-msgstr "Performance-Modell"
+msgstr "Performance Condition"
 
 #: inc/core/Dataset/Keys/FitPerformanceCondition.php:62
 msgid ""
 "The performance condition is an assessment, detected by some Garmin devices, "
 "of your ability to perform compared to your average fitness level."
 msgstr ""
+"Die Performance Condition ist eine Bewertung (mancher Garmin-Uhren) deiner "
+"aktuellen Leistungsfähigkeit im Vergleich zu deinem durchschnittlichen "
+"Fitness-Level."
 
 #: inc/core/Dataset/Keys/Groundcontact.php:53
 msgid "Groundcontact"
@@ -5951,7 +5965,6 @@ msgid "Analyze the VDOT prediction based on your race results."
 msgstr "Analysiere deinen VDOT basierend auf deinen Wettkampfergebnissen."
 
 #: plugin/RunalyzePluginTool_AnalyzeVDOT/class.RunalyzePluginTool_AnalyzeVDOT.php:42
-#, fuzzy
 msgid ""
 "Predicting your VDOT based on your training values is imprecise. This plugin "
 "lists your races and compares your results with the predicted values. This "
@@ -5959,7 +5972,7 @@ msgid ""
 msgstr ""
 "Die Vorhersage deines VDOT anhand deiner Trainingswerte ist leider nicht "
 "immer ganz passend. Dieses Plugin zeigt deine Wettkämpfe im Vergleich zu den "
-"berechneten Werten und gibt dir die Möglichkeit zu sehen wie gut die "
+"berechneten Werten und gibt dir die Möglichkeit zu sehen, wie gut die "
 "Vorhersage für dich funktioniert."
 
 #: plugin/RunalyzePluginStat_Wetter/MinMaxTableForEquipment.php:94
@@ -6355,7 +6368,6 @@ msgid "Personal bests and everything else related to your competitions."
 msgstr "Bestzeiten und alles weitere zu den bisher absolvierten Wettkämpfen."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:62
-#, fuzzy
 msgid ""
 "This plugin lists all your competitions. It shows you a summary of all "
 "competitions and of your personal bests (over all distances with at least "
@@ -6366,15 +6378,14 @@ msgstr ""
 "Ergebnissen)."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:65
-#, fuzzy
 msgid ""
 "In addition, it plots the trend of your results over a specific distance.If "
 "you do a race just for fun, you can mark it as a 'fun race' to ignore it in "
 "the plot."
 msgstr ""
-"Falls du mal einen Wettkampf nicht ganz ernst genommen hast, kannst du ihn "
-"durch einen Klick auf die kleine Uhr daneben als Spaß-Wettkampf markieren. "
-"Dadurch taucht er im entsprechenden Diagramm nicht mehr auf."
+"Außerdem wird der Trend deiner Ergebnisse über die jeweiligen Distanzen "
+"angezeigt. Falls du einen Wettkampf nur zum Spaß gemacht hast, kannst du ihn "
+"als \"Spaß-Wettkampf\" markieren, um ihn im Diagramm zu ignorieren."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:74
 msgid "Main distance"
@@ -6476,6 +6487,8 @@ msgid ""
 "If you participate in an event multiple times you should always enter the "
 "same name, i.e. don't append the event's number or year."
 msgstr ""
+"Du solltest den Veranstaltungsnamen immer ohne die Veranstaltungsnummer und "
+"Jahresangabe eintragen."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:543
 msgid "Officially measured"
