@@ -334,7 +334,11 @@ class ParserFITSingle extends ParserAbstractSingle {
 					$creator = $this->TrainingObject->getCreator();
 
 					// TODO: this may need more device and firmware specific conditions
-					if (substr($creator, 0, 6) == 'fr630' || substr($creator, 0, 6) == 'fenix3') {
+					if (
+						substr($creator, 0, 5) == 'fr630' ||
+						substr($creator, 0, 7) == 'fr735xt' ||
+						substr($creator, 0, 6) == 'fenix3'
+					) {
 						$this->TrainingObject->setFitPerformanceCondition((int)$this->Values['data'][1]);
 					} else {
 						$this->TrainingObject->setFitHRVscore((int)$this->Values['data'][1]);
@@ -388,17 +392,17 @@ class ParserFITSingle extends ParserAbstractSingle {
 		} else {
 			if (!isset($this->Values['timestamp']))
 				return;
-	
+
 			if (empty($this->gps['time_in_s'])) {
 				$startTime = $this->strtotime((string)$this->Values['timestamp'][1]);
-	
+
 				if ($startTime < $this->TrainingObject->getTimestamp()) {
 					$this->setTimestampAndTimezoneOffsetWithUtcFixFrom((string)$this->Values['timestamp'][1]);
 				}
 			}
 			$time = $this->strtotime((string)$this->Values['timestamp'][1]) - $this->TrainingObject->getTimestamp() - $this->PauseInSeconds;
 			$last = end($this->gps['time_in_s']);
-	
+
 			if ($this->wasPaused) {
 				$this->TrainingObject->Pauses()->add(
 					new \Runalyze\Model\Trackdata\Pause(
@@ -408,7 +412,7 @@ class ParserFITSingle extends ParserAbstractSingle {
 						isset($this->Values['heart_rate']) ? (int)$this->Values['heart_rate'][0] : 0
 					)
 				);
-				
+
 				$this->wasPaused = false;
 			}
 		}
@@ -490,7 +494,7 @@ class ParserFITSingle extends ParserAbstractSingle {
 				$this->Values['total_timer_time'][0] / 1e3
 			);
 	}
-        
+
 	/**
 	 * Read length
 	 */
