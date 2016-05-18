@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-05-18 12:07+0200\n"
-"PO-Revision-Date: 2016-05-16 17:02+0200\n"
+"PO-Revision-Date: 2016-05-18 18:15+0200\n"
 "Last-Translator: Michael Pohl <michael@mipapo.de>\n"
-"Language-Team: German <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/de/>\n"
+"Language-Team: German "
+"<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1298,7 +1298,7 @@ msgstr "Öffentlich"
 
 #: inc/training/schemes/scheme.Training.php:149
 msgid "Public activities will be visible for everybody."
-msgstr ""
+msgstr "Öffentliche Aktivitäten sind für alle einsehbar."
 
 #: inc/training/schemes/scheme.Training.php:160
 msgid "Track"
@@ -1309,6 +1309,9 @@ msgid ""
 "This field is only meant for official track races such that distances can be "
 "shown correctly, e.g. as 10.000m. Use tags for all other purposes."
 msgstr ""
+"Dieses Feld dient nur für offizielle Wettkämpfe auf der Bahn, sodass die "
+"Distanz korrekt angezeigt wird, z.B. als 10.000m. Nutze die Tagfunktion für "
+"andere Vorhaben."
 
 #: inc/training/schemes/scheme.Training.php:221
 msgid "Will be calculated afterwards from the acticity's elevation profile."
@@ -1436,6 +1439,8 @@ msgid ""
 "You can add some details (your placement etc.) in the 'Competitions' plugin "
 "afterwards."
 msgstr ""
+"Du kannst im Nachhinein weitere Details (deine Platzierung etc.) im "
+"'Wettkampf' Plugin eingeben."
 
 #: inc/training/class.TrainingFormular.php:237
 #: inc/draw/class.PlotSumData.php:597
@@ -2185,48 +2190,55 @@ msgstr "Einfach"
 
 #: inc/core/Activity/TrainingEffectLevel.php:70
 msgid "Maintaining workout"
-msgstr ""
+msgstr "Aufrechterhaltendes Training"
 
 #: inc/core/Activity/TrainingEffectLevel.php:72
 msgid "Improving Fitness"
-msgstr ""
+msgstr "Verbesserung der Fitness"
 
 #: inc/core/Activity/TrainingEffectLevel.php:74
-#, fuzzy
 msgid "Highly Improving"
-msgstr "höchster Punkt"
+msgstr "Stark verbesserndes Training"
 
 #: inc/core/Activity/TrainingEffectLevel.php:76
 msgid "Overreaching"
-msgstr ""
+msgstr "Überlastendes Training"
 
 #: inc/core/Activity/TrainingEffectLevel.php:92
 msgid ""
 "Helps recovery (short activities). Improves endurance with longer activities "
 "(more than 40 minutes)."
 msgstr ""
+"Unterstützt die Regeneration (kurze Einheiten). Unterstützt die "
+"Grundlagenausdauer bei langen Aktivitäten (länger als 40 Minuten)."
 
 #: inc/core/Activity/TrainingEffectLevel.php:94
 msgid "Maintains your aerobic fitness."
-msgstr ""
+msgstr "Aufrechterhaltung der aeroben Fitness."
 
 #: inc/core/Activity/TrainingEffectLevel.php:96
 msgid ""
 "Improves your aerobic fitness if repeated as part of your weekly training "
 "program."
 msgstr ""
+"Steigert die aerobe Fitness bei regelmäßiger wöchentlicher Wiederholung."
 
 #: inc/core/Activity/TrainingEffectLevel.php:98
 msgid ""
 "Highly improves your aerobic fitness if repeated 1-2 times per week with "
 "adequate recovery time."
 msgstr ""
+"Steigert die aerobe Fitness signifikant, wenn diese Einheit 1-2x pro Woche "
+"mit angemessener Erholungszeit durchgeführt wird."
 
 #: inc/core/Activity/TrainingEffectLevel.php:100
 msgid ""
 "Causes temporary overload with high improvement. Train up to this number "
 "with extreme care. Requires additional recovery days."
 msgstr ""
+"Führt zu einer vorübergehenden Überbelastung mit hoher Verbesserung. "
+"Trainiere in diesem Bereich mit Vorsicht. Es sind zusätzliche "
+"Regenerationstage erforderlich."
 
 #: inc/core/Activity/GroundcontactBalance.php:48
 msgid "Groundcontact balance"
@@ -2379,7 +2391,7 @@ msgstr "Anzahl der Schritte"
 
 #: inc/core/View/Activity/Box/TotalCadence.php:29
 msgid "Total cadence"
-msgstr ""
+msgstr "Absolute Kadenz"
 
 #: inc/core/View/Activity/Box/ElevationUpDown.php:35
 msgid "Elevation up/down"
@@ -3122,6 +3134,8 @@ msgstr ""
 #: inc/core/Dataset/Keys/VerticalRatio.php:53
 msgid "Vertical ratio is the ratio of vertical oscillation to stride length."
 msgstr ""
+"Das vertikale Verhältnis ist das Verhältnis von vertikaler Bewegung zur "
+"Schrittlänge."
 
 #: inc/core/Dataset/Keys/JdIntensity.php:44
 msgid "JD intensity"
@@ -3155,6 +3169,8 @@ msgid ""
 "Training Effect is an indicator between 1.0 (easy) and 5.0 (overreaching) to "
 "rate the impact of aerobic exercise on your body."
 msgstr ""
+"Trainingeffekt ist ein Indikator zwischen 1.0 (locker) und 5.0 (überlastend)"
+", um die Wirkung der aeroben Trainingseinheit auf den Körper zu messen."
 
 #: inc/core/Dataset/Keys/Elevation.php:53
 msgid "Elev."
@@ -3208,9 +3224,8 @@ msgid "GCB"
 msgstr "GCB"
 
 #: inc/core/Dataset/Keys/GroundcontactBalance.php:62
-#, fuzzy
 msgid "Ground contact time balance measures your running symmetry."
-msgstr "Balance der Bodenkontaktzeit"
+msgstr "Die Balance der Bodenkontaktzeit misst deine Laufsymmetrie."
 
 #: inc/core/Dataset/Keys/Daytime.php:43
 msgid "Daytime"
@@ -4901,11 +4916,13 @@ msgstr "Konfiguration zurücksetzen"
 
 #: inc/system/config/class.ConfigTabAccount.php:103
 msgid "Reset complete configuration to default settings"
-msgstr ""
+msgstr "Setzt die komplette Konfiguration auf die Standardeinstellungen zurück"
 
 #: inc/system/config/class.ConfigTabAccount.php:104
 msgid "This will not touch any general settings like gender and main sport."
 msgstr ""
+"Dies wird keine allgemeinen Einstellungen, wie das Geschlecht oder die "
+"Hauptsportart, ändern."
 
 #: inc/system/config/class.ConfigTabAccount.php:106
 #: inc/system/config/class.ConfigTabAccount.php:112
@@ -6299,9 +6316,10 @@ msgid "Season"
 msgstr "Saison"
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:428
-#, fuzzy
 msgid "Note: Season means the current season in the german &quot;kmspiel&quot;"
-msgstr "Hinweis: Saison bezieht sich auf die aktuelle Saison im kmspiel"
+msgstr ""
+"Hinweis: Saison bezieht sich auf die aktuelle Saison im deutschen "
+"&quot;kmspiel&quot;"
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:429
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:80
@@ -6464,9 +6482,8 @@ msgid "Officially measured"
 msgstr "Offiziell vermessen"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:543
-#, fuzzy
 msgid "Was the course officially measured?"
-msgstr "Offiziell vermessen"
+msgstr "War die Strecke offiziell vermessen?"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:556
 msgid "Your official placement."
@@ -6621,9 +6638,8 @@ msgid "<small>from</small> %s <small>to</small> <strong>%s</strong>"
 msgstr "<small>von</small> %s <small>zu</small> <strong>%s</strong>"
 
 #: plugin/RunalyzePluginPanel_Prognose/Plot.Form.php:151
-#, fuzzy
 msgid "Prognosis with basic endurance"
-msgstr "Nutze Grundlagenausdauer"
+msgstr "Prognose mit Grundlagenausdauer"
 
 #: plugin/RunalyzePluginPanel_Prognose/Plot.Form.php:152
 msgid "Result"
@@ -7810,7 +7826,6 @@ msgid "in &#37;"
 msgstr "in &#37;"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:455
-#, fuzzy
 msgid "value/day"
 msgstr "Wert/Tag"
 
