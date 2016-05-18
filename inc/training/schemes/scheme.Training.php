@@ -146,6 +146,7 @@ $FIELDS = array(
 					),
 					'formular'	=> array(
 						'label'		=> __('Public'),
+						'help-tooltip'	=> __('Public activities will be visible for everybody.'),
 						'class'		=> 'FormularCheckbox'
 					)
 	),
@@ -157,6 +158,7 @@ $FIELDS = array(
 					),
 					'formular'	=> array(
 						'label'		=> __('Track'),
+						'help-tooltip'	=> __('This field is only meant for official track races such that distances can be shown correctly, e.g. as 10.000m. Use tags for all other purposes.'),
 						'class'		=> 'FormularCheckbox',
 						'css'		=> TrainingFormular::$ONLY_RUNNING_CLASS
 					)
@@ -216,6 +218,7 @@ $FIELDS = array(
 					),
 					'formular'	=> array(
 						'label'		=> __('Elevation'),
+						'help-tooltip'	=> __('Will be calculated afterwards from the acticity\'s elevation profile.'),
 						'unit'		=> Configuration::General()->distanceUnitSystem()->elevationUnit(),
 						'parser'	=> FormularValueParser::$PARSER_ELEVATION,
 						'css'		=> TrainingFormular::$ONLY_OUTSIDE_CLASS
@@ -239,6 +242,7 @@ $FIELDS = array(
 					),
 					'formular'	=> array(
 						'label'		=> __('Calories'),
+						'help-tooltip'	=> __('This value will be calculated automatically from duration and sport settings (if activated in your configuration) only if you change the duration or the type of sport.'),
 						'unit'		=> FormularUnit::$KCAL
 					)
 	),
@@ -302,6 +306,7 @@ $FIELDS = array(
 					),
 					'formular'	=> array(
 						'label'		=> __('VDOT for form'),
+						'help-tooltip'	=> __('VDOTs are estimated from your ratio of heart rate and pace. You can exclude single activities from the calculation of your form and should do so if it\'s heart rate data are not reliable (e.g. a lot of stops, walking breaks, ...).'),
 						'class'		=> 'FormularCheckbox',
 						'css'		=> TrainingFormular::$ONLY_RUNNING_CLASS
 					)

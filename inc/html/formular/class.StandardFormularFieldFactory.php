@@ -57,8 +57,13 @@ class StandardFormularFieldFactory {
 	 */
 	private function createFieldFor($Key, &$FieldArray) {
 		$ClassName = $this->fieldClass($FieldArray);
+		$label = $FieldArray['formular']['label'];
 
-		return new $ClassName($Key, $FieldArray['formular']['label']);
+		if (isset($FieldArray['formular']['help-tooltip'])) {
+			$label .= ' '.Ajax::tooltip('<i class="fa fa-fw fa-question-circle"></i>', $FieldArray['formular']['help-tooltip']);
+		}
+
+		return new $ClassName($Key, $label);
 	}
 
 	/**

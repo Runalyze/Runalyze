@@ -231,7 +231,10 @@ class TrainingFormular extends StandardFormular {
 		$Factory = new Factory(SessionAccountHandler::getId());
 		$activityIsRace = !$isCreateForm && !$Factory->raceResult($this->dataObject->id())->isEmpty();
 
-		$CompetitionCheckbox = new FormularCheckbox('is_race', __('Competition'), $activityIsRace);
+		$competitionHelp = __('Competitions are treated in a special way to show your personal bests and are independent of the chosen activity type.');
+		$competitionHelp .= ' '.__('You can add some details (your placement etc.) in the \'Competitions\' plugin afterwards.');
+
+		$CompetitionCheckbox = new FormularCheckbox('is_race', __('Competition').' '.Ajax::tooltip('<i class="fa fa-fw fa-question-circle"></i>', $competitionHelp), $activityIsRace);
 		$CompetitionCheckbox->setLayout(FormularFieldset::$LAYOUT_FIELD_W50_AS_W100);
 
 		$this->fieldsets[0]->addField(new FormularInputHidden('is_race_old_status', '', $activityIsRace ? '1' : '0'));

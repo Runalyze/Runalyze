@@ -535,11 +535,12 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 			$Formular->addCSSclass('ajax');
 			$Formular->addCSSclass('no-automatic-reload');
 			$FieldsetDetails = new FormularFieldset( __('Details') );
-			$FieldName = new FormularInput('name', __('Event'), $RaceResult->name()); 
+
+			$FieldName = new FormularInput('name', __('Event').' '.Ajax::tooltip('<i class="fa fa-fw fa-question-circle"></i>', __('If you participate in an event multiple times you should always enter the same name, i.e. don\'t append the event\'s number or year.')), $RaceResult->name()); 
 			$FieldName->setLayout( FormularFieldset::$LAYOUT_FIELD_W50 );
 			$FieldName->setSize( FormularInput::$SIZE_MIDDLE);
 	
-			$FieldOfficiallyMeasured = new FormularCheckbox('officially_measured', __('Officially measured'), $RaceResult->officiallyMeasured() );
+			$FieldOfficiallyMeasured = new FormularCheckbox('officially_measured', __('Officially measured').' '.Ajax::tooltip('<i class="fa fa-fw fa-question-circle"></i>', __('Was the course officially measured?')), $RaceResult->officiallyMeasured() );
 			$FieldOfficiallyMeasured->setLayout( FormularFieldset::$LAYOUT_FIELD_W50 );
 			
 			$FieldOfficialDistance = new FormularInput('official_distance', __('Official distance'), str_replace(',', '.', (new Distance($RaceResult->officialDistance()))->stringAuto(false, 2)));
