@@ -172,7 +172,7 @@ class Dataview
 		if (null !== $participants) {
 			// quantile: 100*$place/participants
 
-			$Tooltip = new Tooltip(sprintf($sprintfString, $participants));
+			$Tooltip = new Tooltip(sprintf($sprintfString, $participants).' '.sprintf(__('(first %u%%)'), 100*$place/$participants));
 			$Tooltip->wrapAround($placeString);
 		}
 

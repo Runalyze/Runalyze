@@ -218,7 +218,7 @@ $FIELDS = array(
 					),
 					'formular'	=> array(
 						'label'		=> __('Elevation'),
-						'help-tooltip'	=> __('Will be calculated afterwards from the acticity\'s elevation profile.'),
+						'help-tooltip'	=> __('Will be calculated afterwards from the activity\'s elevation profile.'),
 						'unit'		=> Configuration::General()->distanceUnitSystem()->elevationUnit(),
 						'parser'	=> FormularValueParser::$PARSER_ELEVATION,
 						'css'		=> TrainingFormular::$ONLY_OUTSIDE_CLASS

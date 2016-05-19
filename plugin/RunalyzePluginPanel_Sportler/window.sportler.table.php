@@ -44,6 +44,7 @@ if (Request::param('reload') == 'true') {
 				<th>&#37; <?php _e('Fat'); ?></th>
 				<th>&#37; <?php _e('Water'); ?></th>
 				<th>&#37; <?php _e('Muscles'); ?></th>
+				<th><?php _e('Notes'); ?></th>
 			<?php endif; ?>
 			</tr>
 		</thead>
@@ -69,6 +70,7 @@ if (Request::param('reload') == 'true') {
 				<?php if ($Key == 'sleep_duration' && $Value > 0) $Value = (new Duration($Value*60))->string('G:i'); ?>
 				<td><?php echo (!is_numeric($Value) || $Value > 0) ? $Value.$Unit : '-'; ?></td>
 			<?php endforeach; ?>
+			<td><?php echo htmlspecialchars($Info['notes']); ?></td>
 			</tr>
 		<?php endforeach; ?>
 		<?php endif; ?>
