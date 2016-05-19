@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: mail@runalyze.de\n"
-"POT-Creation-Date: 2016-05-18 12:07+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-05-19 19:52+0200\n"
 "PO-Revision-Date: 2016-05-19 09:23+0200\n"
 "Last-Translator: Hannes <mail@laufhannes.de>\n"
-"Language-Team: German "
-"<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
+"Language-Team: German <http://translate.runalyze.de/projects/runalyze/"
+"runalyze/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -420,6 +420,7 @@ msgstr "keine"
 #: inc/training/schemes/scheme.UserData.php:28
 #: inc/training/schemes/scheme.UserData.php:128
 #: inc/system/config/class.ConfigTabEquipment.php:142
+#: plugin/RunalyzePluginPanel_Sportler/window.sportler.table.php:47
 #: plugin/RunalyzePluginPanel_Equipment/class.RunalyzePluginPanel_Equipment.php:203
 msgid "Notes"
 msgstr "Notizen"
@@ -1313,7 +1314,8 @@ msgstr ""
 "andere Vorhaben."
 
 #: inc/training/schemes/scheme.Training.php:221
-msgid "Will be calculated afterwards from the acticity's elevation profile."
+#, fuzzy
+msgid "Will be calculated afterwards from the activity's elevation profile."
 msgstr "Wird im Anschluss aus dem Höhenprofil berechnet."
 
 #: inc/training/schemes/scheme.Training.php:245
@@ -1322,9 +1324,9 @@ msgid ""
 "(if activated in your configuration) only if you change the duration or the "
 "type of sport."
 msgstr ""
-"Dieser Wert wird automatisch aus Dauer und Sporteinstellungen berechnet ("
-"vorausgesetzt die Berechnung ist in der Konfiguration aktiviert), wenn Dauer "
-"oder Sportart geändert wird."
+"Dieser Wert wird automatisch aus Dauer und Sporteinstellungen berechnet "
+"(vorausgesetzt die Berechnung ist in der Konfiguration aktiviert), wenn "
+"Dauer oder Sportart geändert wird."
 
 #: inc/training/schemes/scheme.Training.php:308
 msgid "VDOT for form"
@@ -2391,6 +2393,11 @@ msgstr "von %u in deiner Altersklasse"
 msgid "of %u men/women"
 msgstr "von %us Männer/Frauen"
 
+#: inc/core/View/RaceResult/Dataview.php:175
+#, php-format
+msgid "(first %u%%)"
+msgstr ""
+
 #: inc/core/View/Activity/Box/TotalCadence.php:27
 msgid "Number of steps"
 msgstr "Anzahl der Schritte"
@@ -3179,8 +3186,9 @@ msgid ""
 "Training Effect is an indicator between 1.0 (easy) and 5.0 (overreaching) to "
 "rate the impact of aerobic exercise on your body."
 msgstr ""
-"Trainingeffekt ist ein Indikator zwischen 1.0 (locker) und 5.0 (überlastend)"
-", um die Wirkung der aeroben Trainingseinheit auf den Körper zu messen."
+"Trainingeffekt ist ein Indikator zwischen 1.0 (locker) und 5.0 "
+"(überlastend), um die Wirkung der aeroben Trainingseinheit auf den Körper zu "
+"messen."
 
 #: inc/core/Dataset/Keys/Elevation.php:53
 msgid "Elev."
@@ -5994,7 +6002,7 @@ msgstr "Keine Daten gefunden."
 #: plugin/RunalyzePluginStat_Trainingszeiten/class.RunalyzePluginStat_Trainingszeiten.php:81
 #: plugin/RunalyzePluginPanel_Prognose/Plot.Form.php:168
 #: plugin/RunalyzePluginPanel_Sportler/Plot.analyse.php:66
-#: plugin/RunalyzePluginPanel_Sportler/window.sportler.table.php:54
+#: plugin/RunalyzePluginPanel_Sportler/window.sportler.table.php:55
 #: plugin/RunalyzePluginPanel_Sportler/Plot.gewicht.php:68
 #: plugin/RunalyzePluginPanel_Rechenspiele/Plot.Form.php:248
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:200
@@ -6331,8 +6339,8 @@ msgstr "Saison"
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:428
 msgid "Note: Season means the current season in the german &quot;kmspiel&quot;"
 msgstr ""
-"Hinweis: Saison bezieht sich auf die aktuelle Saison im deutschen "
-"&quot;kmspiel&quot;"
+"Hinweis: Saison bezieht sich auf die aktuelle Saison im deutschen &quot;"
+"kmspiel&quot;"
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:429
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:80

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-18 12:07+0200\n"
+"POT-Creation-Date: 2016-05-19 19:52+0200\n"
 "PO-Revision-Date: 2016-03-14 16:31+0200\n"
 "Last-Translator: Grzegorz G <grzegorz@thulium.pl>\n"
 "Language-Team: Polish <http://translate.runalyze.de/projects/runalyze/"
@@ -422,6 +422,7 @@ msgstr "brak"
 #: inc/training/schemes/scheme.UserData.php:28
 #: inc/training/schemes/scheme.UserData.php:128
 #: inc/system/config/class.ConfigTabEquipment.php:142
+#: plugin/RunalyzePluginPanel_Sportler/window.sportler.table.php:47
 #: plugin/RunalyzePluginPanel_Equipment/class.RunalyzePluginPanel_Equipment.php:203
 msgid "Notes"
 msgstr "Notatki"
@@ -1307,7 +1308,7 @@ msgid ""
 msgstr ""
 
 #: inc/training/schemes/scheme.Training.php:221
-msgid "Will be calculated afterwards from the acticity's elevation profile."
+msgid "Will be calculated afterwards from the activity's elevation profile."
 msgstr ""
 
 #: inc/training/schemes/scheme.Training.php:245
@@ -2350,6 +2351,11 @@ msgstr ""
 #: inc/core/View/RaceResult/Dataview.php:117
 #, php-format
 msgid "of %u men/women"
+msgstr ""
+
+#: inc/core/View/RaceResult/Dataview.php:175
+#, php-format
+msgid "(first %u%%)"
 msgstr ""
 
 #: inc/core/View/Activity/Box/TotalCadence.php:27
@@ -5898,7 +5904,7 @@ msgstr "Brak danych."
 #: plugin/RunalyzePluginStat_Trainingszeiten/class.RunalyzePluginStat_Trainingszeiten.php:81
 #: plugin/RunalyzePluginPanel_Prognose/Plot.Form.php:168
 #: plugin/RunalyzePluginPanel_Sportler/Plot.analyse.php:66
-#: plugin/RunalyzePluginPanel_Sportler/window.sportler.table.php:54
+#: plugin/RunalyzePluginPanel_Sportler/window.sportler.table.php:55
 #: plugin/RunalyzePluginPanel_Sportler/Plot.gewicht.php:68
 #: plugin/RunalyzePluginPanel_Rechenspiele/Plot.Form.php:248
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:200
