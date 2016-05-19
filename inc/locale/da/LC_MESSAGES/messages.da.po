@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-05-18 12:07+0200\n"
-"PO-Revision-Date: 2015-10-28 11:23+0200\n"
+"PO-Revision-Date: 2016-05-19 08:56+0200\n"
 "Last-Translator: Michael Pohl <michael@mipapo.de>\n"
-"Language-Team: Danish <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/da/>\n"
+"Language-Team: Danish "
+"<http://translate.runalyze.de/projects/runalyze/runalyze/da/>\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -404,7 +404,7 @@ msgstr "Vælg sport(s)"
 #: inc/training/search/class.SearchFormular.php:134
 #: call/call.garminCommunicator.php:123
 msgid "all"
-msgstr ""
+msgstr "alle"
 
 #: inc/training/search/class.SearchFormular.php:136
 #: inc/system/config/class.ConfigTabSports.php:134
@@ -416,7 +416,7 @@ msgstr ""
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:172
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:132
 msgid "none"
-msgstr ""
+msgstr "ingen"
 
 #: inc/training/search/class.SearchFormular.php:145
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:328
@@ -486,14 +486,14 @@ msgstr "Rute"
 #: inc/training/schemes/scheme.Training.php:491
 #: inc/core/Data/Weather/Humidity.php:58 inc/core/Dataset/Keys/Humidity.php:43
 msgid "Humidity"
-msgstr ""
+msgstr "Fugtighed"
 
 #: inc/training/search/class.SearchFormular.php:171
 #: inc/training/schemes/scheme.Training.php:503
 #: inc/core/Data/Weather/Pressure.php:58
 #: inc/core/Dataset/Keys/AirPressure.php:52
 msgid "Pressure"
-msgstr ""
+msgstr "Tryk"
 
 #: inc/training/search/class.SearchFormular.php:172
 #: inc/core/Data/Weather/WindSpeed.php:63
@@ -503,7 +503,7 @@ msgstr ""
 #: inc/training/search/class.SearchFormular.php:173
 #: inc/training/schemes/scheme.Training.php:584
 msgid "Title"
-msgstr ""
+msgstr "Titel"
 
 #: inc/training/search/class.SearchFormular.php:174
 #: inc/training/schemes/scheme.Training.php:256
@@ -609,11 +609,11 @@ msgstr ""
 #: inc/training/schemes/scheme.UserData.php:18
 #: inc/core/View/Activity/Plot/Series/Heartrate.php:56
 msgid "Heartrate"
-msgstr ""
+msgstr "Hjerterytme"
 
 #: inc/training/view/class.VDOTinfo.php:108
 msgid "equals"
-msgstr ""
+msgstr "lig"
 
 #: inc/training/view/class.VDOTinfo.php:121
 msgid "Correction: based on correction factor"
@@ -776,7 +776,7 @@ msgstr ""
 #: inc/training/view/section/class.SectionRouteRowElevation.php:73
 #: inc/training/view/section/class.SectionCompositeRow.php:220
 msgid "Course"
-msgstr ""
+msgstr "Kursus"
 
 #: inc/training/view/section/class.SectionLapsRowManual.php:49
 #: inc/training/view/section/class.SectionLapsRowComputed.php:47
@@ -848,7 +848,7 @@ msgstr ""
 #: inc/core/View/Activity/Plot/Series/Swolf.php:63
 #: inc/core/Dataset/Keys/Swolf.php:44
 msgid "Swolf"
-msgstr ""
+msgstr "Swolf"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:192
 msgid "Weather condition"
@@ -865,7 +865,7 @@ msgstr ""
 #: inc/core/Dataset/Keys/TrainingPartner.php:46
 #: plugin/RunalyzePluginStat_Trainingspartner/class.RunalyzePluginStat_Trainingspartner.php:36
 msgid "Training partner"
-msgstr ""
+msgstr "træningspartner"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:313
 msgid "Race Result"
@@ -874,20 +874,20 @@ msgstr ""
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:314
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:546
 msgid "Official distance"
-msgstr ""
+msgstr "officiel afstand"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:315
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:549
 msgid "Official time"
-msgstr ""
+msgstr "officielle tid"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:316
 msgid "Place overall"
-msgstr ""
+msgstr "total placering"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:317
 msgid "Place age group"
-msgstr ""
+msgstr "aldersgruppe placering"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:318
 msgid "Place gender"
@@ -955,11 +955,11 @@ msgstr ""
 
 #: inc/training/view/section/table/class.TableZonesPace.php:54
 msgid "faster"
-msgstr ""
+msgstr "hurtigere"
 
 #: inc/training/view/section/table/class.TableZonesAbstract.php:102
 msgid "Zone"
-msgstr ""
+msgstr "Zone"
 
 #: inc/training/view/section/class.SectionRunningDynamicsRow.php:57
 #, fuzzy
@@ -995,7 +995,7 @@ msgstr ""
 
 #: inc/training/view/section/class.SectionHRVRow.php:52
 msgid "Anomalies"
-msgstr ""
+msgstr "Uregelmæssigheder"
 
 #: inc/training/view/section/class.SectionOverview.php:17
 msgid "Overview"
@@ -1089,7 +1089,7 @@ msgstr ""
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:400
 #: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:141
 msgid "Threshold"
-msgstr ""
+msgstr "Grænseværdi"
 
 #: inc/training/view/class.ElevationInfo.php:245
 msgid "Elevation correction"
@@ -1117,7 +1117,7 @@ msgstr ""
 
 #: inc/training/view/class.ElevationInfo.php:273
 msgid "srtm files"
-msgstr ""
+msgstr "srtm filer"
 
 #: inc/training/view/class.ElevationInfo.php:276
 #, fuzzy
@@ -1160,7 +1160,7 @@ msgstr ""
 
 #: inc/training/view/class.TrainingView.php:88
 msgid "Export"
-msgstr ""
+msgstr "Eksport"
 
 #: inc/training/view/class.TrainingView.php:94
 #, php-format
@@ -1174,7 +1174,6 @@ msgstr ""
 
 #: inc/training/view/class.TrainingView.php:110
 #: inc/core/Dataset/Keys/Setting.php:138
-#, fuzzy
 msgid "Make public"
 msgstr "Er offentlige"
 
@@ -1243,7 +1242,7 @@ msgstr ""
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:431
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:444
 msgid "in"
-msgstr ""
+msgstr "i"
 
 #: inc/training/formular/class.TrainingInputSplits.php:94
 msgid "Defining some laps as 'resting' will hide them in the respective plot."
@@ -1256,7 +1255,7 @@ msgstr ""
 
 #: inc/training/formular/class.TrainingInputSplits.php:132
 msgid "Active"
-msgstr ""
+msgstr "Aktiv"
 
 #: inc/training/schemes/scheme.Training.php:30
 #: inc/training/schemes/scheme.UserData.php:8
@@ -1270,7 +1269,7 @@ msgstr ""
 #: inc/training/schemes/scheme.Training.php:69
 #: inc/core/Configuration/Category/Privacy.php:91
 msgid "Privacy"
-msgstr ""
+msgstr "Privatliv"
 
 #: inc/training/schemes/scheme.Training.php:97
 #: inc/core/Dataset/Keys/Type.php:43
@@ -1279,7 +1278,7 @@ msgstr ""
 
 #: inc/training/schemes/scheme.Training.php:148
 msgid "Public"
-msgstr ""
+msgstr "Offentlig"
 
 #: inc/training/schemes/scheme.Training.php:149
 msgid "Public activities will be visible for everybody."
@@ -1353,11 +1352,11 @@ msgstr ""
 #: inc/training/schemes/scheme.UserData.php:13
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:68
 msgid "Analysis"
-msgstr ""
+msgstr "Analyse"
 
 #: inc/training/schemes/scheme.UserData.php:23
 msgid "Sleep"
-msgstr ""
+msgstr "Sove"
 
 #: inc/training/schemes/scheme.UserData.php:55 inc/core/Activity/Weight.php:72
 #: plugin/RunalyzePluginPanel_Sportler/window.sportler.table.php:35
@@ -1366,7 +1365,7 @@ msgstr ""
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:162
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:188
 msgid "Weight"
-msgstr ""
+msgstr "Vægt"
 
 #: inc/training/schemes/scheme.UserData.php:66
 #: plugin/RunalyzePluginPanel_Sportler/window.sportler.table.php:39
@@ -1425,7 +1424,7 @@ msgstr ""
 #: inc/training/class.TrainingFormular.php:237
 #: inc/draw/class.PlotSumData.php:597
 msgid "Competition"
-msgstr ""
+msgstr "Konkurrence"
 
 #: inc/training/class.TrainingFormular.php:325
 #, fuzzy
@@ -1468,7 +1467,7 @@ msgstr ""
 
 #: inc/training/class.TrainingFormular.php:458
 msgid "GPS path"
-msgstr ""
+msgstr "GPS sti"
 
 #: inc/training/class.TrainingFormular.php:478
 msgid "Use elevation correction"
@@ -2028,9 +2027,8 @@ msgid ""
 msgstr ""
 
 #: inc/core/Export/Share/Html.php:45
-#, fuzzy
 msgid "HTML"
-msgstr "HTML-kode"
+msgstr "HTML"
 
 #: inc/core/Export/Share/Html.php:55 inc/core/Export/Share/IFrame.php:82
 msgid "Code"
@@ -2046,7 +2044,7 @@ msgstr ""
 
 #: inc/core/Export/Share/Html.php:63 inc/core/Export/Share/IFrame.php:111
 msgid "Preview"
-msgstr ""
+msgstr "Fernisering"
 
 #: inc/core/Export/Share/Html.php:67
 msgid "Your training is private: There is no link included."
@@ -2054,15 +2052,15 @@ msgstr ""
 
 #: inc/core/Export/Share/Facebook.php:73
 msgid "Facebook"
-msgstr ""
+msgstr "Facebook"
 
 #: inc/core/Export/Share/GooglePlus.php:49
 msgid "Google+"
-msgstr ""
+msgstr "Google+"
 
 #: inc/core/Export/Share/IFrame.php:54
 msgid "IFrame"
-msgstr ""
+msgstr "IFrame"
 
 #: inc/core/Export/Share/IFrame.php:89
 msgid ""
@@ -2088,7 +2086,7 @@ msgstr "Jeg sport: "
 
 #: inc/core/Export/Share/AbstractSharer.php:45
 msgid " in "
-msgstr ""
+msgstr " i "
 
 #: inc/core/Export/Share/AbstractSharer.php:89
 msgid "Runalyze is running on a local server."
@@ -2102,7 +2100,7 @@ msgstr ""
 
 #: inc/core/Export/Share/Twitter.php:55
 msgid "Twitter"
-msgstr ""
+msgstr "Twitter"
 
 #: inc/core/Activity/PerformanceCondition.php:58
 msgid "Performance condition"
@@ -2117,7 +2115,7 @@ msgstr ""
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:388
 #: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:139
 msgid "Easy"
-msgstr ""
+msgstr "Let"
 
 #: inc/core/Activity/TrainingEffectLevel.php:70
 msgid "Maintaining workout"
@@ -2183,7 +2181,7 @@ msgstr ""
 
 #: inc/core/View/Window/Laps/Table.php:292
 msgid "Average"
-msgstr ""
+msgstr "Gennemsnit"
 
 #: inc/core/View/Window/Laps/Table.php:317
 msgid "Show inactive splits"
@@ -2348,7 +2346,7 @@ msgstr ""
 
 #: inc/core/View/Activity/Plot/ElevationAlgorithms.php:108
 msgid "Douglas-Peucker"
-msgstr ""
+msgstr "Douglas-Peucker"
 
 #: inc/core/View/Activity/Plot/Series/PaceCumulativeAverage.php:50
 msgid "Moving average"
@@ -2357,7 +2355,7 @@ msgstr ""
 #: inc/core/View/Activity/Plot/Series/HRVdifferencesWithoutAnomalies.php:56
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:301
 msgid "Difference"
-msgstr ""
+msgstr "Forskel"
 
 #: inc/core/View/Activity/Preview.php:131
 msgid "Heartrate data available"
@@ -2479,11 +2477,11 @@ msgstr ""
 
 #: inc/core/Parameter/Application/WeightUnit.php:40
 msgid "kilograms"
-msgstr ""
+msgstr "kg"
 
 #: inc/core/Parameter/Application/WeightUnit.php:41
 msgid "pounds"
-msgstr ""
+msgstr "pund"
 
 #: inc/core/Parameter/Application/WeightUnit.php:42
 msgid "stones"
@@ -2492,7 +2490,7 @@ msgstr ""
 #: inc/core/Parameter/Application/ActivityRoutePrivacy.php:39
 #: inc/core/Parameter/Application/ActivityRouteBreak.php:27
 msgid "never"
-msgstr ""
+msgstr "aldrig"
 
 #: inc/core/Parameter/Application/ActivityRoutePrivacy.php:40
 msgid "only for competitions"
@@ -2500,7 +2498,7 @@ msgstr ""
 
 #: inc/core/Parameter/Application/ActivityRoutePrivacy.php:41
 msgid "always"
-msgstr ""
+msgstr "altid"
 
 #: inc/core/Parameter/Application/ActivityRouteBreak.php:28
 msgid "at too big distance (15s)"
@@ -2533,12 +2531,12 @@ msgstr ""
 #: inc/core/Parameter/Application/WeekStart.php:48 inc/core/Util/Time.php:90
 #: inc/tpl/tpl.DataBrowser.php:26
 msgid "Monday"
-msgstr ""
+msgstr "mandag"
 
 #: inc/core/Parameter/Application/WeekStart.php:51 inc/core/Util/Time.php:89
 #: inc/tpl/tpl.DataBrowser.php:26
 msgid "Sunday"
-msgstr ""
+msgstr "Søndag"
 
 #: inc/core/Parameter/Application/ElevationMethod.php:45
 msgid "no smoothing"
@@ -2562,7 +2560,7 @@ msgstr ""
 
 #: inc/core/Parameter/Application/DatabaseOrder.php:41
 msgid "alphabetical"
-msgstr ""
+msgstr "alfabetisk"
 
 #: inc/core/Parameter/Application/VdotMethod.php:33
 msgid "logarithmic (new method since v1.5)"
@@ -2578,11 +2576,11 @@ msgstr ""
 
 #: inc/core/Parameter/Application/Gender.php:40
 msgid "male"
-msgstr ""
+msgstr "han"
 
 #: inc/core/Parameter/Application/Gender.php:41
 msgid "female"
-msgstr ""
+msgstr "kvinde"
 
 #: inc/core/Parameter/Application/ActivityPlotPrecision.php:21
 msgid "every 50m a data point"
@@ -2658,11 +2656,11 @@ msgstr ""
 
 #: inc/core/Parameter/Application/TemperatureUnit.php:35
 msgid "Celsius (°C)"
-msgstr ""
+msgstr "Celsius (°C)"
 
 #: inc/core/Parameter/Application/TemperatureUnit.php:36
 msgid "Fahrenheit (°F)"
-msgstr ""
+msgstr "Fahrenheit (°F)"
 
 #: inc/core/Parameter/Application/DataBrowserMode.php:33
 msgid "Week view"
@@ -2812,7 +2810,7 @@ msgstr ""
 
 #: inc/core/Data/Weather/Condition.php:166
 msgid "sunny"
-msgstr ""
+msgstr "solrig"
 
 #: inc/core/Data/Weather/Condition.php:168
 msgid "fair"
@@ -2820,19 +2818,19 @@ msgstr ""
 
 #: inc/core/Data/Weather/Condition.php:170
 msgid "cloudy"
-msgstr ""
+msgstr "overskyet"
 
 #: inc/core/Data/Weather/Condition.php:172
 msgid "changeable"
-msgstr ""
+msgstr "foranderligt"
 
 #: inc/core/Data/Weather/Condition.php:174
 msgid "rainy"
-msgstr ""
+msgstr "regnfuld"
 
 #: inc/core/Data/Weather/Condition.php:176
 msgid "snowing"
-msgstr ""
+msgstr "sner"
 
 #: inc/core/Data/Weather/Condition.php:178
 msgid "heavy rain"
@@ -2856,15 +2854,15 @@ msgstr ""
 
 #: inc/core/Data/Stroketype.php:100
 msgid "Backstroke"
-msgstr ""
+msgstr "rygsvømning"
 
 #: inc/core/Data/Stroketype.php:102
 msgid "Breaststroke"
-msgstr ""
+msgstr "brystsvømning"
 
 #: inc/core/Data/Stroketype.php:104 inc/core/Data/Stroketype.php:127
 msgid "Butterfly"
-msgstr ""
+msgstr "sommerfugl"
 
 #: inc/core/Data/Stroketype.php:106 inc/core/Data/Stroketype.php:129
 msgid "Drill"
@@ -2872,7 +2870,7 @@ msgstr ""
 
 #: inc/core/Data/Stroketype.php:108 inc/core/Data/Stroketype.php:131
 msgid "Mixed"
-msgstr ""
+msgstr "Blandet"
 
 #: inc/core/Data/Stroketype.php:123
 msgid "Back"
@@ -2915,11 +2913,11 @@ msgstr ""
 #: inc/core/Dataset/Keys/FitTrainingEffect.php:43
 #: inc/core/Dataset/Keys/FitPerformanceCondition.php:43
 msgid "(by file)"
-msgstr ""
+msgstr "(af fil)"
 
 #: inc/core/Dataset/Keys/FitVO2maxEstimate.php:53
 msgid "(file)"
-msgstr ""
+msgstr "(fil)"
 
 #: inc/core/Dataset/Keys/FitVO2maxEstimate.php:62
 msgid "Garmin's newer devices have an integrated VO2max estimation."
@@ -3018,17 +3016,16 @@ msgid "Calories are taken from your device or calculated by a simple formula."
 msgstr ""
 
 #: inc/core/Dataset/Keys/Setting.php:52
-#, fuzzy
 msgid "Setting"
-msgstr "Sortering"
+msgstr "Indstilling"
 
 #: inc/core/Dataset/Keys/Setting.php:101 inc/core/Dataset/Keys/Setting.php:118
 msgid "Edit"
-msgstr ""
+msgstr "Redigere"
 
 #: inc/core/Dataset/Keys/FitHrvAnalysis.php:53
 msgid "HRV"
-msgstr ""
+msgstr "HRV"
 
 #: inc/core/Dataset/Keys/FitHrvAnalysis.php:63
 msgid ""
@@ -3048,7 +3045,7 @@ msgstr ""
 
 #: inc/core/Dataset/Keys/JdIntensity.php:53
 msgid "JD"
-msgstr ""
+msgstr "JD"
 
 #: inc/core/Dataset/Keys/JdIntensity.php:62
 msgid "Intensity points based on Jack Daniels' Running formula."
@@ -3184,7 +3181,7 @@ msgstr ""
 
 #: inc/core/Util/Time.php:91 inc/tpl/tpl.DataBrowser.php:26
 msgid "Tuesday"
-msgstr ""
+msgstr "tirsdag"
 
 #: inc/core/Util/Time.php:92 inc/tpl/tpl.DataBrowser.php:28
 msgid "Wed"
@@ -3192,7 +3189,7 @@ msgstr ""
 
 #: inc/core/Util/Time.php:92 inc/tpl/tpl.DataBrowser.php:26
 msgid "Wednesday"
-msgstr ""
+msgstr "onsdag"
 
 #: inc/core/Util/Time.php:93 inc/tpl/tpl.DataBrowser.php:28
 msgid "Thu"
@@ -3200,7 +3197,7 @@ msgstr ""
 
 #: inc/core/Util/Time.php:93 inc/tpl/tpl.DataBrowser.php:26
 msgid "Thursday"
-msgstr ""
+msgstr "torsdag"
 
 #: inc/core/Util/Time.php:94 inc/tpl/tpl.DataBrowser.php:28
 msgid "Fri"
@@ -3208,7 +3205,7 @@ msgstr ""
 
 #: inc/core/Util/Time.php:94 inc/tpl/tpl.DataBrowser.php:26
 msgid "Friday"
-msgstr ""
+msgstr "Fredag"
 
 #: inc/core/Util/Time.php:96 inc/tpl/tpl.DataBrowser.php:28
 msgid "Sat"
@@ -3225,7 +3222,7 @@ msgstr ""
 
 #: inc/core/Util/Time.php:109 inc/tpl/tpl.DataBrowser.php:29
 msgid "January"
-msgstr ""
+msgstr "januar"
 
 #: inc/core/Util/Time.php:110 inc/tpl/tpl.DataBrowser.php:31
 #: inc/draw/class.Plot.php:396
@@ -3234,7 +3231,7 @@ msgstr ""
 
 #: inc/core/Util/Time.php:110 inc/tpl/tpl.DataBrowser.php:29
 msgid "February"
-msgstr ""
+msgstr "februar"
 
 #: inc/core/Util/Time.php:111 inc/tpl/tpl.DataBrowser.php:31
 #: inc/draw/class.Plot.php:397
@@ -3243,7 +3240,7 @@ msgstr ""
 
 #: inc/core/Util/Time.php:111 inc/tpl/tpl.DataBrowser.php:29
 msgid "March"
-msgstr ""
+msgstr "marts"
 
 #: inc/core/Util/Time.php:112 inc/tpl/tpl.DataBrowser.php:31
 #: inc/draw/class.Plot.php:398
@@ -3252,7 +3249,7 @@ msgstr ""
 
 #: inc/core/Util/Time.php:112 inc/tpl/tpl.DataBrowser.php:29
 msgid "April"
-msgstr ""
+msgstr "april"
 
 #: inc/core/Util/Time.php:113 inc/tpl/tpl.DataBrowser.php:29
 #: inc/tpl/tpl.DataBrowser.php:31 inc/draw/class.Plot.php:399
@@ -3266,7 +3263,7 @@ msgstr ""
 
 #: inc/core/Util/Time.php:114 inc/tpl/tpl.DataBrowser.php:29
 msgid "June"
-msgstr ""
+msgstr "juni"
 
 #: inc/core/Util/Time.php:115 inc/tpl/tpl.DataBrowser.php:31
 #: inc/draw/class.Plot.php:401
@@ -3275,7 +3272,7 @@ msgstr ""
 
 #: inc/core/Util/Time.php:115 inc/tpl/tpl.DataBrowser.php:30
 msgid "July"
-msgstr ""
+msgstr "juli"
 
 #: inc/core/Util/Time.php:116 inc/tpl/tpl.DataBrowser.php:31
 #: inc/draw/class.Plot.php:402
@@ -3284,7 +3281,7 @@ msgstr ""
 
 #: inc/core/Util/Time.php:116 inc/tpl/tpl.DataBrowser.php:30
 msgid "August"
-msgstr ""
+msgstr "august"
 
 #: inc/core/Util/Time.php:117 inc/tpl/tpl.DataBrowser.php:31
 #: inc/draw/class.Plot.php:403
@@ -3293,7 +3290,7 @@ msgstr ""
 
 #: inc/core/Util/Time.php:117 inc/tpl/tpl.DataBrowser.php:30
 msgid "September"
-msgstr ""
+msgstr "september"
 
 #: inc/core/Util/Time.php:118 inc/tpl/tpl.DataBrowser.php:31
 #: inc/draw/class.Plot.php:404
@@ -3302,7 +3299,7 @@ msgstr ""
 
 #: inc/core/Util/Time.php:118 inc/tpl/tpl.DataBrowser.php:30
 msgid "October"
-msgstr ""
+msgstr "oktober"
 
 #: inc/core/Util/Time.php:119 inc/tpl/tpl.DataBrowser.php:31
 #: inc/draw/class.Plot.php:405
@@ -3311,7 +3308,7 @@ msgstr ""
 
 #: inc/core/Util/Time.php:119 inc/tpl/tpl.DataBrowser.php:30
 msgid "November"
-msgstr ""
+msgstr "november"
 
 #: inc/core/Util/Time.php:121 inc/tpl/tpl.DataBrowser.php:31
 #: inc/draw/class.Plot.php:406
@@ -3320,7 +3317,7 @@ msgstr ""
 
 #: inc/core/Util/Time.php:121 inc/tpl/tpl.DataBrowser.php:30
 msgid "December"
-msgstr ""
+msgstr "december"
 
 #: inc/tpl/tpl.Frontend.debug.php:2
 msgid "Debug console"
@@ -3503,7 +3500,7 @@ msgstr "nødvendigt for"
 
 #: inc/tpl/tpl.Installer.php:183
 msgid "see"
-msgstr ""
+msgstr "se"
 
 #: inc/tpl/tpl.Installer.php:191 inc/class.AdminView.php:167
 msgid "Sender e-mail"
@@ -3618,7 +3615,7 @@ msgstr "Login"
 #: inc/tpl/tpl.loginWindow.setNewPassword.php:13
 #: inc/system/config/class.ConfigTabAccount.php:33
 msgid "Username"
-msgstr ""
+msgstr "Brugernavn"
 
 #: inc/tpl/tpl.loginWindow.php:36
 msgid "Remember me"
@@ -3779,11 +3776,11 @@ msgstr ""
 #: inc/system/config/class.ConfigTabPlugins.php:41
 #: inc/plugin/class.PluginTool.php:82
 msgid "Tools"
-msgstr ""
+msgstr "Værktøj"
 
 #: inc/tpl/tpl.Frontend.header.php:37
 msgid "Help"
-msgstr ""
+msgstr "Hjælp"
 
 #: inc/tpl/tpl.DataBrowser.php:20
 msgid "Choose a date ..."
