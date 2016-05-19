@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-05-18 12:07+0200\n"
-"PO-Revision-Date: 2016-05-18 21:51+0200\n"
-"Last-Translator: Hannes <mail@laufhannes.de>\n"
+"PO-Revision-Date: 2016-05-19 08:51+0200\n"
+"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
 "Language-Team: German "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
@@ -4694,7 +4694,7 @@ msgstr "Gibt die Reihenfolge der Anzeige vor."
 
 #: inc/system/config/class.ConfigTabDataset.php:108
 msgid "CSS-Style"
-msgstr "CSS-Style"
+msgstr "CSS-Stil"
 
 #: inc/system/config/class.ConfigTabDataset.php:108
 msgid "any CSS-Code"
