@@ -83,12 +83,12 @@ class VDOTCorrectorTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(1, $Corrector->factor());
 	}
 
-	protected function insert($vdot, $vdot_by_time, $accountid, $sportid, $s = 50) {
-		$this->PDO->exec('INSERT INTO `'.PREFIX.'training` (`vdot`, `vdot_by_time`, `sportid`, `accountid`, `s`) VALUES('.$vdot.', '.$vdot_by_time.', '.$sportid.', '.$accountid.', '.$s.')');
+	protected function insert($vdot, $vdot_by_time, $accountid, $sportid, $useVdot = true) {
+		$this->PDO->exec('INSERT INTO `'.PREFIX.'training` (`vdot`, `vdot_by_time`, `sportid`, `accountid`, `s`, `use_vdot`) VALUES('.$vdot.', '.$vdot_by_time.', '.$sportid.', '.$accountid.', 2400, '.($useVdot ? 1 : 0).')');
 		$activityId = $this->PDO->lastInsertId();
 
 		$RaceResult = new RaceResult\Entity(array(
-			RaceResult\Entity::OFFICIAL_TIME => $s,
+			RaceResult\Entity::OFFICIAL_TIME => 2400,
 			RaceResult\Entity::OFFICIAL_DISTANCE => '10',
 			RaceResult\Entity::ACTIVITY_ID => $activityId
 		));
@@ -101,8 +101,10 @@ class VDOTCorrectorTest extends \PHPUnit_Framework_TestCase {
 		$this->insert(0, 90, 0, $this->runningSportId);
 		$this->insert(50, 25, 0, $this->runningSportId);
 		$this->insert(50, 45, 0, $this->runningSportId);
+		$this->insert(50, 50, 0, $this->runningSportId, false);
 		$this->insert(100, 80, 0, $this->runningSportId);
 		$this->insert(90, 90, 1, $this->runningSportId);
+		$this->insert(90, 100, 1, $this->runningSportId, false);
 
 		$this->assertEquals(0.9, (new VDOTCorrector)->fromDatabase($this->PDO, 0, $this->runningSportId));
 		$this->assertEquals(1.0, (new VDOTCorrector)->fromDatabase($this->PDO, 1, $this->runningSportId));

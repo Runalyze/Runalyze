@@ -90,6 +90,7 @@ class VDOTCorrector {
 				    WHERE
 					tr.`sportid` = '.(int)$sportid.' AND
 					tr.`vdot` > 0 AND
+					tr.`use_vdot` = 1 AND
 					r.`accountid` = '.(int)$accountid.'
 				ORDER BY  tr.`vdot_by_time` DESC 
 				LIMIT '.self::DB_LOOKUP_LIMIT.'
