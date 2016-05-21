@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-05-21 18:34+0200\n"
-"PO-Revision-Date: 2016-05-19 20:03+0200\n"
+"PO-Revision-Date: 2016-05-21 18:42+0200\n"
 "Last-Translator: Michael Pohl <michael@mipapo.de>\n"
-"Language-Team: German <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/de/>\n"
+"Language-Team: German "
+"<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -576,12 +576,10 @@ msgid "VDOT calculation for: %s"
 msgstr "VODT Berechnung für: %s"
 
 #: inc/training/view/class.VDOTinfo.php:63
-#, fuzzy
 msgid "Standard calculation: As race result"
 msgstr "Standardberechnung: als Wettkampf"
 
 #: inc/training/view/class.VDOTinfo.php:66
-#, fuzzy
 msgid ""
 "All traditional formulas are being used to calculate a VDOT value for a "
 "given race result."
@@ -627,10 +625,9 @@ msgstr ""
 "Korrekturfaktor."
 
 #: inc/training/view/class.VDOTinfo.php:125
-#, fuzzy
 msgid "This factor is based on your <em>best</em> race result."
 msgstr ""
-"Der Korrekturfaktor wird aus dem Puls des <em>besten</em> Wettkampfs "
+"Der Korrekturfaktor wird aus dem Puls des <em>besten</em> Wettkampfes "
 "berechnet."
 
 #: inc/training/view/class.VDOTinfo.php:129
@@ -1439,7 +1436,6 @@ msgid "The activity has been successfully created."
 msgstr "Die Trainingseinheit wurde erfolgreich eingetragen."
 
 #: inc/training/class.TrainingFormular.php:234
-#, fuzzy
 msgid ""
 "Race results are treated in a special way to show your personal bests and "
 "are independent of the chosen activity type."
@@ -1448,7 +1444,6 @@ msgstr ""
 "für die Berechnung deiner persönlichen Bestzeiten verwendet."
 
 #: inc/training/class.TrainingFormular.php:235
-#, fuzzy
 msgid ""
 "You can add some details (your placement etc.) in the 'Race result' plugin "
 "afterwards."
@@ -1457,7 +1452,6 @@ msgstr ""
 "'Wettkampf' Plugin eingeben."
 
 #: inc/training/class.TrainingFormular.php:237
-#, fuzzy
 msgid "Race result"
 msgstr "Wettkampfergebnis"
 
@@ -1947,7 +1941,6 @@ msgid "Use correction factor"
 msgstr "VDOT-Korrekturfaktor verwenden"
 
 #: inc/core/Configuration/Category/Vdot.php:176
-#, fuzzy
 msgid "Use a correction factor based on your best race result. (recommended)"
 msgstr "VDOT-Werte anhand des \"besten\" Wettkampfes anpassen (empfohlen)"
 
@@ -2597,9 +2590,8 @@ msgid "never"
 msgstr "nie"
 
 #: inc/core/Parameter/Application/ActivityRoutePrivacy.php:40
-#, fuzzy
 msgid "only for race results"
-msgstr "Wettkampfergebnis hinzufügen"
+msgstr "nur bei Wettkämpfen"
 
 #: inc/core/Parameter/Application/ActivityRoutePrivacy.php:41
 msgid "always"
@@ -6368,7 +6360,6 @@ msgstr "Wettkampf Details"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:46
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:148
-#, fuzzy
 msgid "Race results"
 msgstr "Wettkampfergebnis"
 
@@ -6377,7 +6368,6 @@ msgid "Personal bests and everything else related to your competitions."
 msgstr "Bestzeiten und alles weitere zu den bisher absolvierten Wettkämpfen."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:62
-#, fuzzy
 msgid ""
 "This plugin lists all your competitions. It shows you a summary of all race "
 "results and of your personal bests (over all distances with at least two "
@@ -6410,7 +6400,6 @@ msgid "Personal bests"
 msgstr "Persönliche Bestzeiten"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:87
-#, fuzzy
 msgid "All race results"
 msgstr "Wettkampfergebnis hinzufügen"
 
@@ -6419,7 +6408,6 @@ msgid "There are no races."
 msgstr "Keine Wettkämpfe vorhanden."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:208
-#, fuzzy
 msgid "There are no race results for the given distances."
 msgstr "Es gibt keine Wettkämpfe für die gegebene Distanz."
 
@@ -6471,7 +6459,6 @@ msgid "Edit the activity"
 msgstr "Aktivität editieren"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:459
-#, fuzzy
 msgid "Edit the race result details"
 msgstr "Wettkampfergebnis editieren"
 
@@ -6484,7 +6471,6 @@ msgid "Race | Click to mark this activity as a 'fun race'."
 msgstr "Wettkampf | Klicken, um als 'Spaß-Wettkampf' zu markieren."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:526
-#, fuzzy
 msgid "Race result was deleted."
 msgstr "Wettkampfergebnis wurde gelöscht."
 
@@ -6525,7 +6511,6 @@ msgid "Number of participants in every category"
 msgstr "Anzahl der Teilnehmer in jeder Kategorie"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:570
-#, fuzzy
 msgid "Delete this race result"
 msgstr "Wettkampfergebnis editieren"
 
@@ -6537,12 +6522,10 @@ msgstr ""
 "Es wird nur das Wettkampfergebnis gelöscht. Die Aktivität bleibt bestehen."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:573
-#, fuzzy
 msgid "Delete race result"
 msgstr "Wettkampfergebnis editieren"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:580
-#, fuzzy
 msgid "Add race result to activity"
 msgstr "Wettkampfergebnis hinzufügen"
 
