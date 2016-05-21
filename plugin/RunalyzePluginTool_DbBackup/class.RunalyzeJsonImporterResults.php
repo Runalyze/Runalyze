@@ -145,7 +145,7 @@ class RunalyzeJsonImporterResults {
 			'runalyze_activity_equipment'	=> __('Relation: equipment to activities'),
 			'runalyze_tag'			=> __('Tags'),
 			'runalyze_activtiy_tag'		=> __('Relation: tag to activities'),
-			'runalyze_raceresult'	=> __('Competitions')
+			'runalyze_raceresult'	=> __('Race results')
 		);
 	}
 }

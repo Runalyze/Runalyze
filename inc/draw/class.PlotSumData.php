@@ -594,7 +594,7 @@ abstract class PlotSumData extends Plot {
 		}
 
 		if ($hasCompetitions) {
-			$this->Data[] = array('label' => __('Competition'), 'data' => $KilometersCompetition);
+			$this->Data[] = array('label' => __('Race Result'), 'data' => $KilometersCompetition);
 			$this->Data[] = array('label' => __('Training'), 'data' => $Kilometers, 'color' => '#E68617');
 		} else {
 			$this->Data[] = array('label' => $this->Sport->name(), 'data' => $Kilometers, 'color' => '#E68617');

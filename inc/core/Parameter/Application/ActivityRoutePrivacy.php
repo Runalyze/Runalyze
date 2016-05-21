@@ -37,7 +37,7 @@ class ActivityRoutePrivacy extends \Runalyze\Parameter\Select {
 		parent::__construct(self::ALWAYS, array(
 			'options'		=> array(
 				self::NEVER			=> __('never'),
-				self::RACE			=> __('only for competitions'),
+				self::RACE			=> __('only for race results'),
 				self::ALWAYS		=> __('always')
 			)
 		));

@@ -60,10 +60,10 @@ class VDOTinfo {
 	protected function displayAsCompetition() {
 		$VDOT = new JD\VDOT($this->Context->activity()->vdotByTime());
 
-		$Fieldset = new FormularFieldset( __('Standard calculation: As competition'));
+		$Fieldset = new FormularFieldset( __('Standard calculation: As race result'));
 		$Fieldset->setHtmlCode('
 			<p class="info small">
-				'.__('All traditional formulas are being used to calculate a VDOT value for a given competition.').'
+				'.__('All traditional formulas are being used to calculate a VDOT value for a given race result.').'
 			</p>
 
 			<div class="w50">
@@ -122,7 +122,7 @@ class VDOTinfo {
 		$Fieldset->setHtmlCode('
 			<p class="info small">
 				'.__('To consider some individual factors, we use a correction factor.').'
-				'.__('This factor is based on your <em>best</em> competition.').'
+				'.__('This factor is based on your <em>best</em> race result.').'
 			</p>
 
 			<div class="w50">

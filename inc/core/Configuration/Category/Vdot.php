@@ -173,7 +173,7 @@ class Vdot extends \Runalyze\Configuration\Category {
 
 		$Fieldset->addHandle( $this->handle('VDOT_USE_CORRECTION'), array(
 			'label'		=> __('Use correction factor'),
-			'tooltip'	=> __('Use a correction factor based on your best competition. (recommended)')
+			'tooltip'	=> __('Use a correction factor based on your best race result. (recommended)')
 		));
 
 		$Fieldset->addHandle( $this->handle('VDOT_MANUAL_CORRECTOR'), array(
