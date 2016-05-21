@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-05-19 19:52+0200\n"
-"PO-Revision-Date: 2016-02-13 13:11+0200\n"
-"Last-Translator: Lorenzo <lorenzo.capitani@gmail.com>\n"
-"Language-Team: Italian <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/it/>\n"
+"PO-Revision-Date: 2016-05-21 12:37+0200\n"
+"Last-Translator: Pierpaolo Maimone <gebre@tiscali.it>\n"
+"Language-Team: Italian "
+"<http://translate.runalyze.de/projects/runalyze/runalyze/it/>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -63,9 +63,8 @@ msgid "The date could not be parsed."
 msgstr "La data è stata inserita in modo errato."
 
 #: inc/html/formular/class.FormularValueParser.php:345
-#, fuzzy
 msgid "The date must not be in the future."
-msgstr "La data è stata inserita in modo errato."
+msgstr "La data non deve essere nel futuro."
 
 #: inc/html/formular/class.FormularValueParser.php:378
 msgid "The time could not be read."
@@ -556,9 +555,8 @@ msgstr ""
 #: inc/training/search/class.SearchFormular.php:194
 #: inc/core/Activity/TrainingEffect.php:53
 #: inc/core/Dataset/Keys/FitTrainingEffect.php:43
-#, fuzzy
 msgid "Training Effect"
-msgstr "Ore di allenamento"
+msgstr "Effetto dell'allenamento"
 
 #: inc/training/search/class.SearchFormular.php:291
 #: inc/system/config/class.ConfigTabAccount.php:66
@@ -776,7 +774,7 @@ msgstr "SWOLF"
 
 #: inc/training/view/section/class.SectionSwimLaneRow.php:39
 msgid "SWOLFcycles"
-msgstr ""
+msgstr "Cicli SWOLF"
 
 #: inc/training/view/section/class.SectionRouteOnlyMap.php:17
 #: inc/training/view/section/class.SectionRouteRowElevation.php:73
@@ -880,29 +878,25 @@ msgstr "Risultati"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:314
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:546
-#, fuzzy
 msgid "Official distance"
-msgstr "Distanza totale:"
+msgstr "Distanza ufficiale"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:315
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:549
-#, fuzzy
 msgid "Official time"
-msgstr "Sviluppatori ufficiali:"
+msgstr "Tempo ufficiale"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:316
-#, fuzzy
 msgid "Place overall"
-msgstr "Obiettivo di ritmo"
+msgstr "Posto generale"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:317
 msgid "Place age group"
-msgstr ""
+msgstr "Posto categoria"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:318
-#, fuzzy
 msgid "Place gender"
-msgstr "Zone del ritmo di corsa"
+msgstr "Posto M/F"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:339
 #, php-format
@@ -948,7 +942,7 @@ msgstr "Vasche"
 
 #: inc/training/view/section/table/class.TableLapsComputed.php:66
 msgid "bpm"
-msgstr ""
+msgstr "bpm"
 
 #: inc/training/view/section/table/class.TableLapsComputed.php:67
 msgid "elev."
@@ -1006,7 +1000,7 @@ msgstr "Intervallo tra battiti cardiaci"
 
 #: inc/training/view/section/class.SectionHRVRow.php:52
 msgid "Anomalies"
-msgstr ""
+msgstr "Anomalie"
 
 #: inc/training/view/section/class.SectionOverview.php:17
 msgid "Overview"
@@ -1213,9 +1207,8 @@ msgid "Add race result"
 msgstr "Miglior risultato"
 
 #: inc/training/view/class.TrainingView.php:121
-#, fuzzy
 msgid "Edit activity"
-msgstr "Prima attività:"
+msgstr "Modifica attività"
 
 #: inc/training/view/class.TrainingView.php:124
 #: inc/core/Dataset/Keys/Setting.php:103
@@ -1310,7 +1303,7 @@ msgstr "Pubblico"
 
 #: inc/training/schemes/scheme.Training.php:149
 msgid "Public activities will be visible for everybody."
-msgstr ""
+msgstr "Le attività pubbliche saranno visibili a tutti."
 
 #: inc/training/schemes/scheme.Training.php:160
 msgid "Track"
@@ -1343,6 +1336,10 @@ msgid ""
 "single activities from the calculation of your form and should do so if it's "
 "heart rate data are not reliable (e.g. a lot of stops, walking breaks, ...)."
 msgstr ""
+"I VDOT sono stimati dal rapporto di frequenza cardiaca e passo. Puoi "
+"escludere le singole attività dal calcolo della tua forma e dovresti farlo "
+"se i dati di frequenza cardiaca non sono attendibili ( e.g. troppe fermate, "
+"recupero camminando, etc ...)."
 
 #: inc/training/schemes/scheme.Training.php:403
 msgid "Cadence (Running)"
