@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
-"POT-Creation-Date: 2016-05-19 19:52+0200\n"
-"PO-Revision-Date: 2016-05-21 18:33+0200\n"
+"POT-Creation-Date: 2016-05-21 18:34+0200\n"
+"PO-Revision-Date: 2016-05-21 18:37+0200\n"
 "Last-Translator: commensal <commensal@gmail.com>\n"
 "Language-Team: Russian "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/ru/>\n"
@@ -47,7 +47,7 @@ msgstr "Пожалуйста, введите номер."
 
 #: inc/html/formular/class.FormularValueParser.php:258
 msgid "This value is too large."
-msgstr ""
+msgstr "Значение слишком большое."
 
 #: inc/html/formular/class.FormularValueParser.php:262
 msgid "This value is too small."
@@ -59,11 +59,11 @@ msgstr "Значение слишком большое."
 
 #: inc/html/formular/class.FormularValueParser.php:341
 msgid "The date could not be parsed."
-msgstr ""
+msgstr "Дата не может быть обработана."
 
 #: inc/html/formular/class.FormularValueParser.php:345
 msgid "The date must not be in the future."
-msgstr ""
+msgstr "Дата не может быть в будущем."
 
 #: inc/html/formular/class.FormularValueParser.php:378
 msgid "The time could not be read."
@@ -76,7 +76,7 @@ msgstr "Необходимо ввести длительность тренир�
 
 #: inc/html/formular/class.StandardFormular.php:145
 msgid "Submit"
-msgstr ""
+msgstr "Отправить"
 
 #: inc/html/formular/class.StandardFormular.php:148
 msgid "Create"
@@ -92,7 +92,7 @@ msgstr "Сохранить"
 
 #: inc/html/formular/class.FormularField.php:213
 msgid "Your input is not allowed."
-msgstr ""
+msgstr "Ошибка ввода."
 
 #: inc/html/formular/class.FormularInputDayAndDaytime.php:96
 #: inc/training/view/section/class.SectionOverviewRow.php:52
@@ -353,7 +353,7 @@ msgstr "до"
 
 #: inc/training/search/class.SearchResults.php:476
 msgid "The multi editor could not be located."
-msgstr ""
+msgstr "Мультиредактор не может быть найден."
 
 #: inc/training/search/class.SearchResults.php:513
 #, php-format
@@ -577,13 +577,15 @@ msgid "VDOT calculation for: %s"
 msgstr "Расчет VDOT для: %s"
 
 #: inc/training/view/class.VDOTinfo.php:63
-msgid "Standard calculation: As competition"
+#, fuzzy
+msgid "Standard calculation: As race result"
 msgstr "Стандартный расчет: по результатам соревнований"
 
 #: inc/training/view/class.VDOTinfo.php:66
+#, fuzzy
 msgid ""
 "All traditional formulas are being used to calculate a VDOT value for a "
-"given competition."
+"given race result."
 msgstr "VDOT рассчитывается по формулам на основании проведенных соревнований."
 
 #: inc/training/view/class.VDOTinfo.php:92
@@ -622,7 +624,8 @@ msgstr ""
 "коэффициент."
 
 #: inc/training/view/class.VDOTinfo.php:125
-msgid "This factor is based on your <em>best</em> competition."
+#, fuzzy
+msgid "This factor is based on your <em>best</em> race result."
 msgstr ""
 "Этот коэффициент основан на <em>лучших</em> результатах ваших выступлений."
 
@@ -867,6 +870,7 @@ msgid "Training partner"
 msgstr "Партнеры"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:313
+#: inc/draw/class.PlotSumData.php:597
 msgid "Race Result"
 msgstr ""
 
@@ -1406,20 +1410,20 @@ msgstr "Тренировка создана."
 
 #: inc/training/class.TrainingFormular.php:234
 msgid ""
-"Competitions are treated in a special way to show your personal bests and "
+"Race results are treated in a special way to show your personal bests and "
 "are independent of the chosen activity type."
 msgstr ""
 
 #: inc/training/class.TrainingFormular.php:235
 msgid ""
-"You can add some details (your placement etc.) in the 'Competitions' plugin "
+"You can add some details (your placement etc.) in the 'Race result' plugin "
 "afterwards."
 msgstr ""
 
 #: inc/training/class.TrainingFormular.php:237
-#: inc/draw/class.PlotSumData.php:597
-msgid "Competition"
-msgstr "Соревнования"
+#, fuzzy
+msgid "Race result"
+msgstr "График темпа"
 
 #: inc/training/class.TrainingFormular.php:325
 msgid "Choose tags"
@@ -1894,7 +1898,8 @@ msgid "Use correction factor"
 msgstr "Использовать поправочный коэффициент"
 
 #: inc/core/Configuration/Category/Vdot.php:176
-msgid "Use a correction factor based on your best competition. (recommended)"
+#, fuzzy
+msgid "Use a correction factor based on your best race result. (recommended)"
 msgstr ""
 "Используйте поправочный коэффициент, основанный на ваших лучших выступлениях "
 "в соревнованиях. (рекомендуется)"
@@ -2502,8 +2507,9 @@ msgid "never"
 msgstr "никогда"
 
 #: inc/core/Parameter/Application/ActivityRoutePrivacy.php:40
-msgid "only for competitions"
-msgstr ""
+#, fuzzy
+msgid "only for race results"
+msgstr "Два лучших результата:"
 
 #: inc/core/Parameter/Application/ActivityRoutePrivacy.php:41
 msgid "always"
@@ -3686,7 +3692,7 @@ msgstr "Ссылка для изменения пароля будет отос�
 msgid "Send link"
 msgstr "Отправить"
 
-#: inc/tpl/tpl.loginWindow.php:193
+#: inc/tpl/tpl.loginWindow.php:192
 #, php-format
 msgid "Until now <strong>%d</strong> athlete is registered and"
 msgid_plural "Until now <strong>%d</strong> athletes are registered and"
@@ -3694,21 +3700,13 @@ msgstr[0] "Зарегистрирован <strong>%d</strong> спортсмен
 msgstr[1] "Зарегистрировано <strong>%d</strong> спортсмена и"
 msgstr[2] "Зарегистрировано <strong>%d</strong> спортсменов и"
 
-#: inc/tpl/tpl.loginWindow.php:194
+#: inc/tpl/tpl.loginWindow.php:193
 #, php-format
 msgid "has logged <strong>%s</strong>."
 msgid_plural "have logged <strong>%s</strong>."
 msgstr[0] "суммарная дистанция <strong>%s</strong>."
 msgstr[1] "суммарная дистанция <strong>%s</strong>."
 msgstr[2] "суммарная дистанция  <strong>%s</strong>."
-
-#: inc/tpl/tpl.loginWindow.php:196
-#, php-format
-msgid "<strong>%d</strong> athlete is online."
-msgid_plural "<strong>%d</strong> athletes are online."
-msgstr[0] "<strong>%d</strong> спортсмен онлайн."
-msgstr[1] "<strong>%d</strong> спортсмена онлайн."
-msgstr[2] "<strong>%d</strong> спортсменов онлайн."
 
 #: inc/tpl/tpl.adminWindow.login.php:5
 msgid "Administration"
@@ -6077,8 +6075,8 @@ msgstr ""
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:46
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:148
-msgid "Competitions"
-msgstr "Соревнования"
+msgid "Race results"
+msgstr ""
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:54
 msgid "Personal bests and everything else related to your competitions."
@@ -6086,9 +6084,9 @@ msgstr "Личные рекорды и другие данные о ваших �
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:62
 msgid ""
-"This plugin lists all your competitions. It shows you a summary of all "
-"competitions and of your personal bests (over all distances with at least "
-"two results)."
+"This plugin lists all your competitions. It shows you a summary of all race "
+"results and of your personal bests (over all distances with at least two "
+"results)."
 msgstr ""
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:65
@@ -6111,15 +6109,16 @@ msgid "Personal bests"
 msgstr "Личные рекорды"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:87
-msgid "All competitions"
-msgstr "Соревнования"
+msgid "All race results"
+msgstr ""
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:158
 msgid "There are no races."
 msgstr "Вы не участвовали в соревнованиях."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:208
-msgid "There are no competitions for the given distances."
+#, fuzzy
+msgid "There are no race results for the given distances."
 msgstr "Вы не участвовали в соревнованиях на указанных дистанциях."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:232
@@ -6170,7 +6169,7 @@ msgid "Edit the activity"
 msgstr ""
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:459
-msgid "Edit the competition details"
+msgid "Edit the race result details"
 msgstr ""
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:475
@@ -6182,7 +6181,7 @@ msgid "Race | Click to mark this activity as a 'fun race'."
 msgstr ""
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:526
-msgid "Competition was deleted."
+msgid "Race result was deleted."
 msgstr ""
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:537
@@ -6220,7 +6219,7 @@ msgid "Number of participants in every category"
 msgstr ""
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:570
-msgid "Delete this competition"
+msgid "Delete this race result"
 msgstr ""
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:571
@@ -6230,12 +6229,14 @@ msgid ""
 msgstr ""
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:573
-msgid "Delete competition"
-msgstr ""
+#, fuzzy
+msgid "Delete race result"
+msgstr "Удалить профиль"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:580
-msgid "Add competition to activity"
-msgstr ""
+#, fuzzy
+msgid "Add race result to activity"
+msgstr "Окончательно удалить эту тренировку"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:608
 msgid "Invalid input."
@@ -7815,6 +7816,21 @@ msgstr "Самые быстрые"
 msgid "Longest activities"
 msgstr "Самые продолжительные"
 
+#~ msgid "Competition"
+#~ msgstr "Соревнования"
+
+#~ msgid "<strong>%d</strong> athlete is online."
+#~ msgid_plural "<strong>%d</strong> athletes are online."
+#~ msgstr[0] "<strong>%d</strong> спортсмен онлайн."
+#~ msgstr[1] "<strong>%d</strong> спортсмена онлайн."
+#~ msgstr[2] "<strong>%d</strong> спортсменов онлайн."
+
+#~ msgid "Competitions"
+#~ msgstr "Соревнования"
+
+#~ msgid "All competitions"
+#~ msgstr "Соревнования"
+
 #~ msgid "Activity &amp; Competition"
 #~ msgstr "Тренировки &amp; соревнования"
 
@@ -7826,9 +7842,6 @@ msgstr "Самые продолжительные"
 
 #~ msgid "&Oslash; R-R interval"
 #~ msgstr "сред. R-R интервал"
-
-#~ msgid "Permanently delete this activity"
-#~ msgstr "Окончательно удалить эту тренировку"
 
 #~ msgid "Poincarè plot"
 #~ msgstr "График Пуанкаре"

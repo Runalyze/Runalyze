@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-19 19:52+0200\n"
+"POT-Creation-Date: 2016-05-21 18:34+0200\n"
 "PO-Revision-Date: 2016-04-26 19:29+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -578,13 +578,15 @@ msgid "VDOT calculation for: %s"
 msgstr "VDOT calculation for: %s"
 
 #: inc/training/view/class.VDOTinfo.php:63
-msgid "Standard calculation: As competition"
+#, fuzzy
+msgid "Standard calculation: As race result"
 msgstr "Standard calculation: As competition"
 
 #: inc/training/view/class.VDOTinfo.php:66
+#, fuzzy
 msgid ""
 "All traditional formulas are being used to calculate a VDOT value for a "
-"given competition."
+"given race result."
 msgstr ""
 "All traditional formulas are being used to calculate a VDOT value for a "
 "given competition."
@@ -624,7 +626,8 @@ msgid "To consider some individual factors, we use a correction factor."
 msgstr "To consider some individual factors, we use a correction factor."
 
 #: inc/training/view/class.VDOTinfo.php:125
-msgid "This factor is based on your <em>best</em> competition."
+#, fuzzy
+msgid "This factor is based on your <em>best</em> race result."
 msgstr "This factor is based on your <em>best</em> competition."
 
 #: inc/training/view/class.VDOTinfo.php:129
@@ -868,6 +871,7 @@ msgid "Training partner"
 msgstr "Training partner"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:313
+#: inc/draw/class.PlotSumData.php:597
 #, fuzzy
 msgid "Race Result"
 msgstr "Result"
@@ -1423,20 +1427,20 @@ msgstr "The activity has been successfully created."
 
 #: inc/training/class.TrainingFormular.php:234
 msgid ""
-"Competitions are treated in a special way to show your personal bests and "
+"Race results are treated in a special way to show your personal bests and "
 "are independent of the chosen activity type."
 msgstr ""
 
 #: inc/training/class.TrainingFormular.php:235
 msgid ""
-"You can add some details (your placement etc.) in the 'Competitions' plugin "
+"You can add some details (your placement etc.) in the 'Race result' plugin "
 "afterwards."
 msgstr ""
 
 #: inc/training/class.TrainingFormular.php:237
-#: inc/draw/class.PlotSumData.php:597
-msgid "Competition"
-msgstr "Competition"
+#, fuzzy
+msgid "Race result"
+msgstr "Result"
 
 #: inc/training/class.TrainingFormular.php:325
 msgid "Choose tags"
@@ -1913,7 +1917,8 @@ msgid "Use correction factor"
 msgstr "Use correction factor"
 
 #: inc/core/Configuration/Category/Vdot.php:176
-msgid "Use a correction factor based on your best competition. (recommended)"
+#, fuzzy
+msgid "Use a correction factor based on your best race result. (recommended)"
 msgstr "Use a correction factor based on your best competition. (recommended)"
 
 #: inc/core/Configuration/Category/Vdot.php:180
@@ -2555,8 +2560,9 @@ msgid "never"
 msgstr "never"
 
 #: inc/core/Parameter/Application/ActivityRoutePrivacy.php:40
-msgid "only for competitions"
-msgstr "only for competitions"
+#, fuzzy
+msgid "only for race results"
+msgstr "Best result"
 
 #: inc/core/Parameter/Application/ActivityRoutePrivacy.php:41
 msgid "always"
@@ -3791,26 +3797,19 @@ msgstr "A link for changing your password will be sent via email."
 msgid "Send link"
 msgstr "Send link"
 
-#: inc/tpl/tpl.loginWindow.php:193
+#: inc/tpl/tpl.loginWindow.php:192
 #, php-format
 msgid "Until now <strong>%d</strong> athlete is registered and"
 msgid_plural "Until now <strong>%d</strong> athletes are registered and"
 msgstr[0] "Until now <strong>%d</strong> athlete is registered and"
 msgstr[1] "Until now <strong>%d</strong> athletes are registered and"
 
-#: inc/tpl/tpl.loginWindow.php:194
+#: inc/tpl/tpl.loginWindow.php:193
 #, php-format
 msgid "has logged <strong>%s</strong>."
 msgid_plural "have logged <strong>%s</strong>."
 msgstr[0] "has logged <strong>%s</strong>."
 msgstr[1] "have logged <strong>%s</strong>."
-
-#: inc/tpl/tpl.loginWindow.php:196
-#, php-format
-msgid "<strong>%d</strong> athlete is online."
-msgid_plural "<strong>%d</strong> athletes are online."
-msgstr[0] "<strong>%d</strong> athlete is online."
-msgstr[1] "<strong>%d</strong> athletes are online."
 
 #: inc/tpl/tpl.adminWindow.login.php:5
 msgid "Administration"
@@ -6267,8 +6266,8 @@ msgstr "Competition"
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:46
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:148
 #, fuzzy
-msgid "Competitions"
-msgstr "Competition"
+msgid "Race results"
+msgstr "Result"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:54
 #, fuzzy
@@ -6278,9 +6277,9 @@ msgstr "Personal bests and everything else related to your races."
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:62
 #, fuzzy
 msgid ""
-"This plugin lists all your competitions. It shows you a summary of all "
-"competitions and of your personal bests (over all distances with at least "
-"two results)."
+"This plugin lists all your competitions. It shows you a summary of all race "
+"results and of your personal bests (over all distances with at least two "
+"results)."
 msgstr ""
 "This plugin lists all your races. It shows you a summary of all your races "
 "and your personal bests (over all distances with at least two results)."
@@ -6310,8 +6309,8 @@ msgstr "Personal bests"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:87
 #, fuzzy
-msgid "All competitions"
-msgstr "only for competitions"
+msgid "All race results"
+msgstr "Best result"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:158
 msgid "There are no races."
@@ -6319,7 +6318,7 @@ msgstr "There are no races."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:208
 #, fuzzy
-msgid "There are no competitions for the given distances."
+msgid "There are no race results for the given distances."
 msgstr "There are no races for the given distances."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:232
@@ -6373,8 +6372,9 @@ msgid "Edit the activity"
 msgstr "Private activity"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:459
-msgid "Edit the competition details"
-msgstr ""
+#, fuzzy
+msgid "Edit the race result details"
+msgstr "Best result"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:475
 msgid "Fun race | Click to mark this activity as a 'normal race'."
@@ -6386,7 +6386,7 @@ msgstr "Race | Click to mark this activity as a 'fun race'."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:526
 #, fuzzy
-msgid "Competition was deleted."
+msgid "Race result was deleted."
 msgstr "Competition"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:537
@@ -6426,7 +6426,7 @@ msgstr ""
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:570
 #, fuzzy
-msgid "Delete this competition"
+msgid "Delete this race result"
 msgstr "only for competitions"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:571
@@ -6437,12 +6437,13 @@ msgstr ""
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:573
 #, fuzzy
-msgid "Delete competition"
-msgstr "Competition"
+msgid "Delete race result"
+msgstr "Best result"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:580
-msgid "Add competition to activity"
-msgstr ""
+#, fuzzy
+msgid "Add race result to activity"
+msgstr "Best result"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:608
 #, fuzzy
@@ -8153,6 +8154,29 @@ msgstr "Fastest activities"
 #: plugin/RunalyzePluginStat_Rekorde/class.RunalyzePluginStat_Rekorde.php:196
 msgid "Longest activities"
 msgstr "Longest activities"
+
+#~ msgid "Competition"
+#~ msgstr "Competition"
+
+#~ msgid "only for competitions"
+#~ msgstr "only for competitions"
+
+#~ msgid "<strong>%d</strong> athlete is online."
+#~ msgid_plural "<strong>%d</strong> athletes are online."
+#~ msgstr[0] "<strong>%d</strong> athlete is online."
+#~ msgstr[1] "<strong>%d</strong> athletes are online."
+
+#, fuzzy
+#~ msgid "Competitions"
+#~ msgstr "Competition"
+
+#, fuzzy
+#~ msgid "All competitions"
+#~ msgstr "only for competitions"
+
+#, fuzzy
+#~ msgid "Delete competition"
+#~ msgstr "Competition"
 
 #~ msgid "Activity &amp; Competition"
 #~ msgstr "Activity &amp; Competition"

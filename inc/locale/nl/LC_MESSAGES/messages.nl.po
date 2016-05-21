@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-19 19:52+0200\n"
+"POT-Creation-Date: 2016-05-21 18:34+0200\n"
 "PO-Revision-Date: 2015-10-15 09:25+0200\n"
 "Last-Translator: Ivo Nobel <ivo.nobel@gmail.com>\n"
 "Language-Team: Dutch <http://translate.runalyze.de/projects/runalyze/"
@@ -584,13 +584,15 @@ msgid "VDOT calculation for: %s"
 msgstr "VDOT berekening voor: %s"
 
 #: inc/training/view/class.VDOTinfo.php:63
-msgid "Standard calculation: As competition"
+#, fuzzy
+msgid "Standard calculation: As race result"
 msgstr "Standaard berekening: als wedstrijd"
 
 #: inc/training/view/class.VDOTinfo.php:66
+#, fuzzy
 msgid ""
 "All traditional formulas are being used to calculate a VDOT value for a "
-"given competition."
+"given race result."
 msgstr ""
 "Alle traditionele formules worden gebruikt om een VDOT waarde te bepalen "
 "voor een bepaalde wedstrijd."
@@ -633,7 +635,8 @@ msgstr ""
 "correctiefactor."
 
 #: inc/training/view/class.VDOTinfo.php:125
-msgid "This factor is based on your <em>best</em> competition."
+#, fuzzy
+msgid "This factor is based on your <em>best</em> race result."
 msgstr ""
 "De correctiefactor is gebaseerd op de hartslag van uw <em>beste</em> "
 "wedstrijd."
@@ -880,6 +883,7 @@ msgid "Training partner"
 msgstr "Trainingspartner"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:313
+#: inc/draw/class.PlotSumData.php:597
 #, fuzzy
 msgid "Race Result"
 msgstr "Resultaat"
@@ -1454,20 +1458,20 @@ msgstr "De activiteit is aangemaakt."
 
 #: inc/training/class.TrainingFormular.php:234
 msgid ""
-"Competitions are treated in a special way to show your personal bests and "
+"Race results are treated in a special way to show your personal bests and "
 "are independent of the chosen activity type."
 msgstr ""
 
 #: inc/training/class.TrainingFormular.php:235
 msgid ""
-"You can add some details (your placement etc.) in the 'Competitions' plugin "
+"You can add some details (your placement etc.) in the 'Race result' plugin "
 "afterwards."
 msgstr ""
 
 #: inc/training/class.TrainingFormular.php:237
-#: inc/draw/class.PlotSumData.php:597
-msgid "Competition"
-msgstr "Wedstrijd"
+#, fuzzy
+msgid "Race result"
+msgstr "Resultaat"
 
 #: inc/training/class.TrainingFormular.php:325
 #, fuzzy
@@ -1965,7 +1969,8 @@ msgid "Use correction factor"
 msgstr "Gebruik correctiefactor"
 
 #: inc/core/Configuration/Category/Vdot.php:176
-msgid "Use a correction factor based on your best competition. (recommended)"
+#, fuzzy
+msgid "Use a correction factor based on your best race result. (recommended)"
 msgstr ""
 "Gebruik een correctiefactor op basis van uw beste competitie wedstrijd. "
 "(aanbevolen)"
@@ -2614,8 +2619,9 @@ msgid "never"
 msgstr "nooit"
 
 #: inc/core/Parameter/Application/ActivityRoutePrivacy.php:40
-msgid "only for competitions"
-msgstr "alleen voor wedstrijden"
+#, fuzzy
+msgid "only for race results"
+msgstr "Beste resultaat"
 
 #: inc/core/Parameter/Application/ActivityRoutePrivacy.php:41
 msgid "always"
@@ -3848,26 +3854,19 @@ msgstr ""
 msgid "Send link"
 msgstr "Link sturen"
 
-#: inc/tpl/tpl.loginWindow.php:193
+#: inc/tpl/tpl.loginWindow.php:192
 #, php-format
 msgid "Until now <strong>%d</strong> athlete is registered and"
 msgid_plural "Until now <strong>%d</strong> athletes are registered and"
 msgstr[0] "Tot op heden is er <strong>%d</strong> sporter geregistreerd en"
 msgstr[1] "Tot op heden zijn er <strong>%d</strong> sporters geregistreerd en"
 
-#: inc/tpl/tpl.loginWindow.php:194
+#: inc/tpl/tpl.loginWindow.php:193
 #, php-format
 msgid "has logged <strong>%s</strong>."
 msgid_plural "have logged <strong>%s</strong>."
 msgstr[0] "heeft <strong>%s</strong> geregistreerd."
 msgstr[1] "hebben <strong>%s</strong> geregistreerd."
-
-#: inc/tpl/tpl.loginWindow.php:196
-#, php-format
-msgid "<strong>%d</strong> athlete is online."
-msgid_plural "<strong>%d</strong> athletes are online."
-msgstr[0] "<strong>%d</strong> sporter is on line."
-msgstr[1] "<strong>%d</strong> sporters zijn on line."
 
 #: inc/tpl/tpl.adminWindow.login.php:5
 msgid "Administration"
@@ -6358,8 +6357,8 @@ msgstr "Wedstrijd"
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:46
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:148
 #, fuzzy
-msgid "Competitions"
-msgstr "Wedstrijd"
+msgid "Race results"
+msgstr "Resultaat"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:54
 #, fuzzy
@@ -6369,9 +6368,9 @@ msgstr "Persoonlijke records en al het andere gerelateerd aan uw wedstrijden."
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:62
 #, fuzzy
 msgid ""
-"This plugin lists all your competitions. It shows you a summary of all "
-"competitions and of your personal bests (over all distances with at least "
-"two results)."
+"This plugin lists all your competitions. It shows you a summary of all race "
+"results and of your personal bests (over all distances with at least two "
+"results)."
 msgstr ""
 "Deze plugin geeft een overzicht van al uw wedstrijden. Het laat een "
 "samenvatting zien van al uw wedstrijden en uw persoonlijke records ( voor "
@@ -6403,8 +6402,8 @@ msgstr "Persoonlijke records"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:87
 #, fuzzy
-msgid "All competitions"
-msgstr "alleen voor wedstrijden"
+msgid "All race results"
+msgstr "Beste resultaat"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:158
 msgid "There are no races."
@@ -6412,7 +6411,7 @@ msgstr "Er zijn geen wedstrijden."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:208
 #, fuzzy
-msgid "There are no competitions for the given distances."
+msgid "There are no race results for the given distances."
 msgstr "Er zijn geen wedstrijden voor de opgegeven afstanden."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:232
@@ -6466,8 +6465,9 @@ msgid "Edit the activity"
 msgstr "Privé activiteit"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:459
-msgid "Edit the competition details"
-msgstr ""
+#, fuzzy
+msgid "Edit the race result details"
+msgstr "Beste resultaat"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:475
 msgid "Fun race | Click to mark this activity as a 'normal race'."
@@ -6483,7 +6483,7 @@ msgstr ""
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:526
 #, fuzzy
-msgid "Competition was deleted."
+msgid "Race result was deleted."
 msgstr "Wedstrijd"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:537
@@ -6523,7 +6523,7 @@ msgstr ""
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:570
 #, fuzzy
-msgid "Delete this competition"
+msgid "Delete this race result"
 msgstr "alleen voor wedstrijden"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:571
@@ -6534,13 +6534,13 @@ msgstr ""
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:573
 #, fuzzy
-msgid "Delete competition"
-msgstr "Wedstrijd"
+msgid "Delete race result"
+msgstr "Beste resultaat"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:580
 #, fuzzy
-msgid "Add competition to activity"
-msgstr "Voeg een bewerken-link toe voor elke activiteit."
+msgid "Add race result to activity"
+msgstr "Beste resultaat"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:608
 #, fuzzy
@@ -8278,6 +8278,33 @@ msgstr "Snelste activiteiten"
 #: plugin/RunalyzePluginStat_Rekorde/class.RunalyzePluginStat_Rekorde.php:196
 msgid "Longest activities"
 msgstr "Langste activiteiten"
+
+#~ msgid "Competition"
+#~ msgstr "Wedstrijd"
+
+#~ msgid "only for competitions"
+#~ msgstr "alleen voor wedstrijden"
+
+#~ msgid "<strong>%d</strong> athlete is online."
+#~ msgid_plural "<strong>%d</strong> athletes are online."
+#~ msgstr[0] "<strong>%d</strong> sporter is on line."
+#~ msgstr[1] "<strong>%d</strong> sporters zijn on line."
+
+#, fuzzy
+#~ msgid "Competitions"
+#~ msgstr "Wedstrijd"
+
+#, fuzzy
+#~ msgid "All competitions"
+#~ msgstr "alleen voor wedstrijden"
+
+#, fuzzy
+#~ msgid "Delete competition"
+#~ msgstr "Wedstrijd"
+
+#, fuzzy
+#~ msgid "Add competition to activity"
+#~ msgstr "Voeg een bewerken-link toe voor elke activiteit."
 
 #~ msgid "Activity &amp; Competition"
 #~ msgstr "Activiteiten &amp; Wedstrijd"
