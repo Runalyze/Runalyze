@@ -7319,7 +7319,7 @@ Runalyze.Tablesorter = (function($, Parent){
  */
 (function($, parent, RunalyzeSorter){
 	var textExtraction = function (node) {
-		return $.trim($(node).text()).replace(/[\/km]/,"");
+		return $.trim($(node).text()).replace(/\/km|\/mi|\/[51]00[my]|&nbsp;|km\/h|mph|m\/s/g, "");
 	};
 
 	$.fn.extend({
