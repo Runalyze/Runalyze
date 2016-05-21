@@ -34,6 +34,8 @@ class DeleterTest extends \PHPUnit_Framework_TestCase {
 		$this->EquipmentA = $this->PDO->lastInsertId();
 		$this->PDO->exec('INSERT INTO `'.PREFIX.'equipment` (`name`,`typeid`,`notes`,`accountid`) VALUES("B",'.$this->EquipmentType.',"",0)');
 		$this->EquipmentB = $this->PDO->lastInsertId();
+
+		$this->PDO->exec('DELETE FROM `'.PREFIX.'raceresult`');
 	}
 
 	protected function tearDown() {
@@ -42,6 +44,7 @@ class DeleterTest extends \PHPUnit_Framework_TestCase {
 		$this->PDO->exec('DELETE FROM `'.PREFIX.'swimdata`');
 		$this->PDO->exec('DELETE FROM `'.PREFIX.'route`');
 		$this->PDO->exec('DELETE FROM `'.PREFIX.'sport`');
+		$this->PDO->exec('DELETE FROM `'.PREFIX.'raceresult`');
 
 		\Cache::clean();
 	}
@@ -108,19 +111,39 @@ class DeleterTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testVDOTshapeForChanges() {
-		$newId = $this->insert(array(
+		$activityData = array(
 			Entity::TIMESTAMP => time(),
 			Entity::DISTANCE => 10,
 			Entity::TIME_IN_SECONDS => 30*60,
 			Entity::HR_AVG => 150,
 			Entity::SPORTID => Configuration::General()->runningSport(),
 			Entity::USE_VDOT => true
-		));
+		);
 
+		$trainingId = $this->insert($activityData);
+		$raceId = $this->insert($activityData);
+
+		$RaceInserter = new Model\RaceResult\Inserter($this->PDO, new Model\RaceResult\Entity(array(
+			Model\RaceResult\Entity::OFFICIAL_DISTANCE => '10',
+			Model\RaceResult\Entity::OFFICIAL_TIME => 30*60,
+			Model\RaceResult\Entity::ACTIVITY_ID => $raceId
+		)));
+		$RaceInserter->setAccountID(0);
+		$RaceInserter->insert();
+
+		Configuration::Data()->updateVdotCorrector(0.85);
+
+		$this->assertEquals(0.85, Configuration::Data()->vdotCorrector());
 		$this->assertNotEquals(0, Configuration::Data()->vdotShape());
 
-		$this->delete($newId);
+		$this->delete($trainingId);
 
+		$this->assertEquals(0.85, Configuration::Data()->vdotCorrector());
+		$this->assertNotEquals(0, Configuration::Data()->vdotShape());
+
+		$this->delete($raceId);
+
+		$this->assertNotEquals(0.85, Configuration::Data()->vdotCorrector());
 		$this->assertEquals(0, Configuration::Data()->vdotShape());
 	}
 
@@ -159,12 +182,14 @@ class DeleterTest extends \PHPUnit_Framework_TestCase {
 		));
 
 		Configuration::Data()->updateVdotShape(62.15);
+		Configuration::Data()->updateVdotCorrector(0.85);
 
 		foreach ($IDs as $id) {
 			$this->delete($id);
 		}
 
 		$this->assertEquals(62.15, Configuration::Data()->vdotShape());
+		$this->assertEquals(0.85, Configuration::Data()->vdotCorrector());
 	}
 
 	public function testUpdatingBasicEndurance() {

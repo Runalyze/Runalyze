@@ -64,37 +64,31 @@ class Deleter extends Model\DeleterWithIDAndAccountID {
 	}
 
 	/**
+	 * Tasks before insertion
+	 */
+	protected function before() {
+		$this->deleteRaceResult();
+	}
+
+	/**
 	 * Tasks after insertion
 	 */
 	protected function after() {
-		$this->deleteTrackdata();
-		$this->deleteSwimdata();
 		$this->deleteRoute();
 
 		$this->updateEquipment();
 		$this->updateTag();
 		$this->updateStartTime();
-		$this->updateVDOTshapeAndCorrector();
+		$this->updateVDOTshape();
 		$this->updateBasicEndurance();
 	}
 
 	/**
-	 * Delete trackdata
+	 * Delete route
 	 */
-	protected function deleteTrackdata() {
-		$Deleter = new Model\Trackdata\Deleter($this->PDO, new Model\Trackdata\Entity(array(
-			'activityid' => $this->Object->id()
-		)));
-		$Deleter->setAccountID($this->AccountID);
-		$Deleter->delete();
-	}
-
-	/**
-	 * Delete trackdata
-	 */
-	protected function deleteSwimdata() {
-		$Deleter = new Model\Swimdata\Deleter($this->PDO, new Model\Swimdata\Entity(array(
-			'activityid' => $this->Object->id()
+	protected function deleteRaceResult() {
+		$Deleter = new Model\RaceResult\Deleter($this->PDO, new Model\RaceResult\Entity(array(
+			Model\RaceResult\Entity::ACTIVITY_ID => $this->Object->id()
 		)));
 		$Deleter->setAccountID($this->AccountID);
 		$Deleter->delete();
@@ -148,7 +142,7 @@ class Deleter extends Model\DeleterWithIDAndAccountID {
 	/**
 	 * Update vdot shape and corrector
 	 */
-	protected function updateVDOTshapeAndCorrector() {
+	protected function updateVDOTshape() {
 		$timestampLimit = time() - Configuration::Vdot()->days() * DAY_IN_S;
 
 		if (
@@ -157,10 +151,6 @@ class Deleter extends Model\DeleterWithIDAndAccountID {
 			$this->Object->timestamp() > $timestampLimit
 		) {
 			Configuration::Data()->recalculateVDOTshape();
-			//TODO Raceresult
-			//if ($this->Object->typeid() == Configuration::General()->competitionType()) {
-				Configuration::Data()->recalculateVDOTcorrector();
-			//}
 		}
 	}
 
