@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-05-19 19:52+0200\n"
-"PO-Revision-Date: 2016-05-21 12:37+0200\n"
+"PO-Revision-Date: 2016-05-21 12:40+0200\n"
 "Last-Translator: Pierpaolo Maimone <gebre@tiscali.it>\n"
 "Language-Team: Italian "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/it/>\n"
@@ -550,7 +550,7 @@ msgstr "Usa VDOT"
 #: inc/training/schemes/scheme.Training.php:381
 #: inc/core/View/Activity/Box/RPE.php:30 inc/core/Dataset/Keys/RPE.php:52
 msgid "RPE"
-msgstr ""
+msgstr "SSP"
 
 #: inc/training/search/class.SearchFormular.php:194
 #: inc/core/Activity/TrainingEffect.php:53
@@ -2142,7 +2142,7 @@ msgstr "Google+"
 
 #: inc/core/Export/Share/IFrame.php:54
 msgid "IFrame"
-msgstr ""
+msgstr "IFrame"
 
 #: inc/core/Export/Share/IFrame.php:89
 msgid ""
