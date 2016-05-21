@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-05-21 18:34+0200\n"
-"PO-Revision-Date: 2016-05-21 18:37+0200\n"
+"PO-Revision-Date: 2016-05-21 19:51+0200\n"
 "Last-Translator: commensal <commensal@gmail.com>\n"
 "Language-Team: Russian "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/ru/>\n"
@@ -384,7 +384,7 @@ msgstr "Загрузить в редактор"
 #: inc/training/search/class.SearchFormular.php:106
 #, php-format
 msgid "Our multi editor is limited to a maximum of %d activities."
-msgstr ""
+msgstr "Наш редактор ограничен %d тренировками."
 
 #: inc/training/search/class.SearchFormular.php:120
 #: inc/training/schemes/scheme.Training.php:24
@@ -395,7 +395,7 @@ msgstr "Вид спорта"
 
 #: inc/training/search/class.SearchFormular.php:124
 msgid "Choose sport(s)"
-msgstr ""
+msgstr "Выберите вид(ы) спорта"
 
 #: inc/training/search/class.SearchFormular.php:134
 #: call/call.garminCommunicator.php:123
@@ -577,12 +577,10 @@ msgid "VDOT calculation for: %s"
 msgstr "Расчет VDOT для: %s"
 
 #: inc/training/view/class.VDOTinfo.php:63
-#, fuzzy
 msgid "Standard calculation: As race result"
 msgstr "Стандартный расчет: по результатам соревнований"
 
 #: inc/training/view/class.VDOTinfo.php:66
-#, fuzzy
 msgid ""
 "All traditional formulas are being used to calculate a VDOT value for a "
 "given race result."
@@ -624,10 +622,9 @@ msgstr ""
 "коэффициент."
 
 #: inc/training/view/class.VDOTinfo.php:125
-#, fuzzy
 msgid "This factor is based on your <em>best</em> race result."
 msgstr ""
-"Этот коэффициент основан на <em>лучших</em> результатах ваших выступлений."
+"Этот коэффициент основан на <em>лучших</em> результатах ваших соревнований."
 
 #: inc/training/view/class.VDOTinfo.php:129
 msgid "Correction factor"
@@ -635,7 +632,7 @@ msgstr "Поправочный коэффициент"
 
 #: inc/training/view/class.VDOTinfo.php:137
 msgid "uncorrected"
-msgstr ""
+msgstr "нескорректированый"
 
 #: inc/training/view/class.VDOTinfo.php:170
 msgid "Correction: considering elevation"
@@ -669,12 +666,12 @@ msgstr "Этапы"
 #: inc/training/view/section/class.SectionLaps.php:23
 #: inc/core/View/Activity/Plot/LapsManual.php:27
 msgid "Manual Laps"
-msgstr ""
+msgstr "Указано кругов"
 
 #: inc/training/view/section/class.SectionLaps.php:27
 #: inc/core/View/Activity/Plot/LapsComputed.php:25
 msgid "Computed Laps"
-msgstr ""
+msgstr "Рассчитано кругов"
 
 #: inc/training/view/section/class.SectionRoute.php:17
 msgid "Course and elevation data"
@@ -763,7 +760,7 @@ msgstr "макс."
 #: inc/training/view/section/class.SectionSwimLaneRow.php:35
 #: inc/core/View/Activity/Plot/Series/Stroke.php:62
 msgid "Stroke"
-msgstr ""
+msgstr "Гребок"
 
 #: inc/training/view/section/class.SectionSwimLaneRow.php:37
 #: inc/training/schemes/scheme.Training.php:833
@@ -772,7 +769,7 @@ msgstr "SWOLF"
 
 #: inc/training/view/section/class.SectionSwimLaneRow.php:39
 msgid "SWOLFcycles"
-msgstr ""
+msgstr "SWOLF циклов"
 
 #: inc/training/view/section/class.SectionRouteOnlyMap.php:17
 #: inc/training/view/section/class.SectionRouteRowElevation.php:73
@@ -842,7 +839,7 @@ msgstr "Мощность"
 #: inc/training/view/section/table/class.TableSwimLane.php:43
 #: inc/core/Dataset/Keys/TotalStrokes.php:53
 msgid "Strokes"
-msgstr ""
+msgstr "Гребков"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:149
 #: inc/training/view/section/table/class.TableSwimLane.php:42
@@ -872,34 +869,34 @@ msgstr "Партнеры"
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:313
 #: inc/draw/class.PlotSumData.php:597
 msgid "Race Result"
-msgstr ""
+msgstr "Результат соревнования"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:314
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:546
 msgid "Official distance"
-msgstr ""
+msgstr "Официальная дистанция"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:315
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:549
 msgid "Official time"
-msgstr ""
+msgstr "Официальное время"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:316
 msgid "Place overall"
-msgstr ""
+msgstr "Место в общем зачете"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:317
 msgid "Place age group"
-msgstr ""
+msgstr "Место в возрастной группе"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:318
 msgid "Place gender"
-msgstr ""
+msgstr "Место по половому признаку"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:339
 #, php-format
 msgid "Source of weather data: %s"
-msgstr ""
+msgstr "Данные погоды от: %s"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:354
 #, php-format
@@ -934,11 +931,11 @@ msgstr "Подробнее о расчете VDOT"
 #: inc/training/view/section/class.SectionSwimLane.php:21
 #: inc/training/view/section/class.SectionSwimLane.php:22
 msgid "Lanes"
-msgstr ""
+msgstr "Дорожек"
 
 #: inc/training/view/section/table/class.TableLapsComputed.php:66
 msgid "bpm"
-msgstr ""
+msgstr "уд/м"
 
 #: inc/training/view/section/table/class.TableLapsComputed.php:67
 msgid "elev."
@@ -973,7 +970,7 @@ msgstr "Колебания"
 #: inc/core/View/Activity/Plot/Series/GroundContactBalance.php:58
 #: inc/core/Dataset/Keys/GroundcontactBalance.php:44
 msgid "Ground contact balance"
-msgstr ""
+msgstr "Баланс контакта с землей"
 
 #: inc/training/view/section/class.SectionHRVRow.php:30
 msgid "R-R intervals"
@@ -981,7 +978,7 @@ msgstr "R-R интервалы"
 
 #: inc/training/view/section/class.SectionHRVRow.php:31
 msgid "Successive differences"
-msgstr ""
+msgstr "Значительные изменения"
 
 #: inc/training/view/section/class.SectionHRVRow.php:32
 msgid "Poincaré plot"
@@ -996,7 +993,7 @@ msgstr "R-R интервал"
 
 #: inc/training/view/section/class.SectionHRVRow.php:52
 msgid "Anomalies"
-msgstr ""
+msgstr "Аномалии"
 
 #: inc/training/view/section/class.SectionOverview.php:17
 msgid "Overview"
@@ -1012,11 +1009,11 @@ msgstr "Данные высоты"
 
 #: inc/training/view/section/class.SectionComposite.php:17
 msgid "Composite data"
-msgstr ""
+msgstr "Общие данные"
 
 #: inc/training/view/section/class.SectionCompositeRow.php:45
 msgid "Composite plot"
-msgstr ""
+msgstr "Общий график"
 
 #: inc/training/view/section/class.SectionCompositeRow.php:50
 #: inc/training/view/section/class.SectionCompositeRow.php:58
@@ -1034,7 +1031,7 @@ msgstr "Расчет высоты для: %s"
 
 #: inc/training/view/class.ElevationInfo.php:123
 msgid "apply data"
-msgstr ""
+msgstr "ввести данные"
 
 #: inc/training/view/class.ElevationInfo.php:128
 msgid "General data"
@@ -1042,15 +1039,15 @@ msgstr "Общие данные"
 
 #: inc/training/view/class.ElevationInfo.php:131
 msgid "manual value"
-msgstr ""
+msgstr "заданное значение"
 
 #: inc/training/view/class.ElevationInfo.php:131
 msgid "If you did not insert a value by hand, this value has been calculated."
-msgstr "Если вы не вставите значение вручную, это значение будет рассчитано."
+msgstr "Если вы не введете значение вручную, это значение будет рассчитано."
 
 #: inc/training/view/class.ElevationInfo.php:135
 msgid "Lowest point"
-msgstr ""
+msgstr "Наименьшее значение"
 
 #: inc/training/view/class.ElevationInfo.php:139
 msgid "calculated value"
@@ -1066,7 +1063,7 @@ msgstr ""
 
 #: inc/training/view/class.ElevationInfo.php:143
 msgid "Highest point"
-msgstr ""
+msgstr "Наивысшее значение"
 
 #: inc/training/view/class.ElevationInfo.php:147
 #: inc/core/View/Activity/Box/Gradient.php:26
@@ -1126,7 +1123,7 @@ msgstr "srtm файлы"
 
 #: inc/training/view/class.ElevationInfo.php:276
 msgid "remove corrected elevation data"
-msgstr ""
+msgstr "удалить скорректированные данные высоты"
 
 #: inc/training/view/class.ElevationInfo.php:287
 msgid "Compare algorithms"
@@ -1145,6 +1142,12 @@ msgid ""
 "value (for up-/downwards). We give you therefore the possibility to choose "
 "algorithm and threshold such that the values fit your experience."
 msgstr ""
+"Подсчет высот очень сложен и не существует единого решения. Плохие данные "
+"GPS могут быть скорректированы посредством SRTM данных, но они доступны "
+"только в сетке 90x90 м и не всегда точны. В дополнение к этому каждая "
+"платформа использует свой алгоритм определения высоты (для подъемов и "
+"спусков). Мы даем вам возможность выбрать используемый алгоритм и порог, для "
+"того, чтобы данные соответствовали вашему личному опыту."
 
 #: inc/training/view/class.TrainingView.php:58
 msgid "Show week"
@@ -1152,14 +1155,14 @@ msgstr "Показать неделю"
 
 #: inc/training/view/class.TrainingView.php:66
 msgid "Share"
-msgstr ""
+msgstr "Поделиться"
 
 #: inc/training/view/class.TrainingView.php:69
 #: inc/core/Dataset/Keys/SharedLink.php:44
 #: inc/core/Dataset/Keys/Setting.php:105 inc/core/Dataset/Keys/Setting.php:122
 #: inc/system/class.SharedLinker.php:53
 msgid "Public link"
-msgstr ""
+msgstr "Публичная ссылка"
 
 #: inc/training/view/class.TrainingView.php:88
 msgid "Export"
@@ -1182,15 +1185,15 @@ msgstr "Разрешить общий доступ"
 
 #: inc/training/view/class.TrainingView.php:115
 msgid "Edit race result"
-msgstr ""
+msgstr "Редактировать результат соревнования"
 
 #: inc/training/view/class.TrainingView.php:117
 msgid "Add race result"
-msgstr ""
+msgstr "Добавить результат соревнования"
 
 #: inc/training/view/class.TrainingView.php:121
 msgid "Edit activity"
-msgstr ""
+msgstr "Редактировать тренировку"
 
 #: inc/training/view/class.TrainingView.php:124
 #: inc/core/Dataset/Keys/Setting.php:103
@@ -1216,11 +1219,11 @@ msgstr "округлить до 100м"
 
 #: inc/training/formular/class.TrainingInputSplits.php:55
 msgid "apply as total distance"
-msgstr ""
+msgstr "применить в качестве всей дистанции"
 
 #: inc/training/formular/class.TrainingInputSplits.php:56
 msgid "all active"
-msgstr ""
+msgstr "все активные"
 
 #: inc/training/formular/class.TrainingInputSplits.php:56
 msgid "all resting"
@@ -1421,9 +1424,8 @@ msgid ""
 msgstr ""
 
 #: inc/training/class.TrainingFormular.php:237
-#, fuzzy
 msgid "Race result"
-msgstr "График темпа"
+msgstr "Результат соревнования"
 
 #: inc/training/class.TrainingFormular.php:325
 msgid "Choose tags"
@@ -1898,11 +1900,10 @@ msgid "Use correction factor"
 msgstr "Использовать поправочный коэффициент"
 
 #: inc/core/Configuration/Category/Vdot.php:176
-#, fuzzy
 msgid "Use a correction factor based on your best race result. (recommended)"
 msgstr ""
-"Используйте поправочный коэффициент, основанный на ваших лучших выступлениях "
-"в соревнованиях. (рекомендуется)"
+"Использовать поправочный коэффициент, основанный на лучших результатах "
+"соревнований. (рекомендуется)"
 
 #: inc/core/Configuration/Category/Vdot.php:180
 msgid "Manual correction factor"
@@ -2507,9 +2508,8 @@ msgid "never"
 msgstr "никогда"
 
 #: inc/core/Parameter/Application/ActivityRoutePrivacy.php:40
-#, fuzzy
 msgid "only for race results"
-msgstr "Два лучших результата:"
+msgstr "только для результатов соревнования"
 
 #: inc/core/Parameter/Application/ActivityRoutePrivacy.php:41
 msgid "always"
@@ -6117,7 +6117,6 @@ msgid "There are no races."
 msgstr "Вы не участвовали в соревнованиях."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:208
-#, fuzzy
 msgid "There are no race results for the given distances."
 msgstr "Вы не участвовали в соревнованиях на указанных дистанциях."
 
@@ -6197,50 +6196,51 @@ msgid ""
 "If you participate in an event multiple times you should always enter the "
 "same name, i.e. don't append the event's number or year."
 msgstr ""
+"Если вы учавствуете в мероприятии несколько раз, вам нужно вводить такое же "
+"имя, например не стоит добавлять номер года к мероприятию."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:543
 msgid "Officially measured"
-msgstr ""
+msgstr "Официальный результат"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:543
 msgid "Was the course officially measured?"
-msgstr ""
+msgstr "Был у дистации официальный результат?"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:556
 msgid "Your official placement."
-msgstr ""
+msgstr "Официальное место."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:560
 msgid "Participants"
-msgstr ""
+msgstr "Участники"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:561
 msgid "Number of participants in every category"
-msgstr ""
+msgstr "Количество участников в каждой категории"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:570
 msgid "Delete this race result"
-msgstr ""
+msgstr "Удалить результат этой дистанции"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:571
 msgid ""
 "This will only delete the entry as competition. The activity itself will "
 "stay untouched."
 msgstr ""
+"Только удалит запись как соревнование. Сама тренировка останется не тронутой."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:573
-#, fuzzy
 msgid "Delete race result"
-msgstr "Удалить профиль"
+msgstr "Удалить результат дистанции"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:580
-#, fuzzy
 msgid "Add race result to activity"
-msgstr "Окончательно удалить эту тренировку"
+msgstr "Добавить результат дистанции к тренировке"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:608
 msgid "Invalid input."
-msgstr ""
+msgstr "Неверный ввод."
 
 #: plugin/RunalyzePluginTool_MultiEditor/class.RunalyzePluginTool_MultiEditor.php:39
 msgid ""
@@ -6253,12 +6253,14 @@ msgstr ""
 #: plugin/RunalyzePluginTool_MultiEditor/class.RunalyzePluginTool_MultiEditor.php:46
 msgid "This plugin allows you to edit multiple activities one after another."
 msgstr ""
+"Этот плагин позволяет редактировать несколько тренировок одну за другой."
 
 #: plugin/RunalyzePluginTool_MultiEditor/class.RunalyzePluginTool_MultiEditor.php:47
 msgid ""
 "At the moment it's not possible to edit multiple activities with only one "
 "form."
 msgstr ""
+"В данный момент невозможно редактировать несколько тренировок в одной форме."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:52
 msgid "Predict your race performance on various distances."
@@ -6268,25 +6270,32 @@ msgstr "Прогноз темпа бега на различные дистан�
 msgid ""
 "There are different models that can be used to predict your race "
 "performances:"
-msgstr ""
+msgstr "Существуют несколько моделей для предсказания результата дистанции:"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:61
 msgid ""
 "Your current VDOT is estimated based on the ratio of heart rate and pace. "
 "This value is equivalent to specific performances."
 msgstr ""
+"Текущие показатели VDOT оцениваются на соотношении ЧСС и темпа. Полученое "
+"число эквивалентно определенному результату."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:64
 msgid ""
 "Robert Bock uses an individual coefficient for your fatigue over time/"
 "distance. This model uses your two best results."
 msgstr ""
+"Роберт Бок использует индивидуальный коэфициент усталости за время/"
+"дистанцию. Эта модель использует ваши два лучших результата."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:68
 msgid ""
 "Herbert Steffny uses fixed factors to transform performances from one "
 "distance to another. This model uses your best result."
 msgstr ""
+"Херберт Стеффни использует фиксированный коэфициент при пересчете одного "
+"результата с одной дистанции к другой. Эта модель использует ваш лучшый "
+"результат."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:71
 msgid ""
@@ -6294,12 +6303,17 @@ msgid ""
 "and slightly different formulas than Robert Bock. This model uses your best "
 "result."
 msgstr ""
+"Дэвид Кэмерон использует фиксированный коэфициент усталости за время/"
+"дистанцию и немного отличные формулы от Роберта Бока. Эта модель использует "
+"ваш лучший результат."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:74
 msgid ""
 "The VDOT model is the only one which considers your current shape. The other "
 "models are based on your previous race results."
 msgstr ""
+"Модель VDOT - единственная которая учитывает вашу текущую форму. Остальные "
+"модели основанны на предыдущих результатах соревнований."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:82
 msgid "Distances to predict"
@@ -6323,7 +6337,7 @@ msgstr ""
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:110
 msgid "Show prognosis trend"
-msgstr ""
+msgstr "Показать прогноз"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:111
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:492
@@ -6332,7 +6346,7 @@ msgstr "Калькулятор прогнозов"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:129
 msgid "Prognoses can't be calculated."
-msgstr ""
+msgstr "Прогноз не может быть расчитан."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:133
 msgid "There are not enough results for good predictions."
@@ -6341,19 +6355,19 @@ msgstr "Для точного прогноза недостаточно данн
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:200
 #, php-format
 msgid "<small>from</small> %s <small>to</small> <strong>%s</strong>"
-msgstr ""
+msgstr "<small>от</small> %s <small>до</small> <strong>%s</strong>"
 
 #: plugin/RunalyzePluginPanel_Prognose/Plot.Form.php:151
 msgid "Prognosis with basic endurance"
-msgstr ""
+msgstr "Прогноз с базовой выносливостью"
 
 #: plugin/RunalyzePluginPanel_Prognose/Plot.Form.php:152
 msgid "Result"
-msgstr ""
+msgstr "Результат"
 
 #: plugin/RunalyzePluginPanel_Prognose/Plot.Form.php:165
 msgid "Prognosis trend"
-msgstr ""
+msgstr "Прогноз"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:129
 msgid "Your current VDOT:"
@@ -6366,7 +6380,7 @@ msgstr "Ваша текущая выносливость:"
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:132
 #, php-format
 msgid "%s in %s <small>(%s)</small> and %s in %s <small>(%s)</small>"
-msgstr ""
+msgstr "%s в %s <small>(%s)</small> и %s в %s <small>(%s)</small>"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:136
 msgid "Your two best results:"
@@ -6374,21 +6388,21 @@ msgstr "Два лучших результата:"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:302
 msgid "Personal best"
-msgstr ""
+msgstr "Личный рекорд"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:333
 msgid "Your input is invalid"
-msgstr ""
+msgstr "Ввод неверен"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:345
 #, php-format
 msgid "The results give the constants K = %f and e = %f."
-msgstr ""
+msgstr "Результаты предсказывают постоянные K = %f и e = %f."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:349
 #, php-format
 msgid "K must be between %u and %u, e between %f and %f."
-msgstr ""
+msgstr "K должно быть между %u и %u, e между %f и %f."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:369
 msgid "Input"
@@ -6405,7 +6419,7 @@ msgstr "Дистанции"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:398
 msgid "New VDOT"
-msgstr ""
+msgstr "Новый VDOT"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:403
 msgid "Use Basic Endurance"
@@ -6417,11 +6431,11 @@ msgstr "Выносливость"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:423
 msgid "Best result"
-msgstr ""
+msgstr "Лучший результат"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:438
 msgid "Second best result"
-msgstr ""
+msgstr "Второй результат"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:473
 msgid "Show prognosis"
@@ -6429,7 +6443,7 @@ msgstr "Показать прогноз"
 
 #: plugin/RunalyzePluginPanel_Prognose/window.plot.php:36
 msgid "Prognosis calculator: form trend"
-msgstr ""
+msgstr "Калькулятор прогноза: от тренда"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:62
 msgid "Database import/export"
@@ -6448,11 +6462,11 @@ msgstr "Формат файла"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:123
 msgid "Portable backup"
-msgstr ""
+msgstr "Бекап (переносной)"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:124
 msgid "Database backup"
-msgstr ""
+msgstr "Бекап базы данных"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:126
 msgid "Export your data"
@@ -6472,6 +6486,10 @@ msgid ""
 "into any other installation, using this plugin.<br />This way you can "
 "transfer your data from to local to an online installation and back."
 msgstr ""
+"Бекап (переносной) вашей конфигурации и данных - Этот файл может быть "
+"импортирован на другую исталяцию используя этот плагин. <br /> Таким "
+"способом вы можете перносить данные из домашней инсталляции в облако и "
+"обратно."
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:136
 msgid "SQL-format"
@@ -6483,10 +6501,13 @@ msgid ""
 "g. PHPMyAdmin into any database.<br />This is recommended to create a backup "
 "copy or to import your data into a new installation."
 msgstr ""
+"Бекап полной базы данных - Этот файл может быть вручную импортирован ("
+"например через PHPMyAdmin) в любую базу данных. .<br /> Это рекомендованный "
+"способ для создания бекапа для импорта данных на новую инсталляцию."
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:174
 msgid "Import file"
-msgstr ""
+msgstr "Ипортировать файл"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:183
 msgid "You can only import *.json.gz-files."
@@ -6494,42 +6515,42 @@ msgstr "Возможно импортировать только *.json.gz-фа�
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:192
 msgid "Overwrite general configuration"
-msgstr ""
+msgstr "Перезаписать основную конфигурацию"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:193
 msgid "Overwrite dataset configuration"
-msgstr ""
+msgstr "Перезаписать конфигурацию параметров"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:194
 msgid "Overwrite plugins"
-msgstr ""
+msgstr "Перезаписать плагины"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:195
 msgid "Delete all old activities"
-msgstr ""
+msgstr "Удалить все старые тренировки"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:196
 msgid "Delete all old body values"
-msgstr ""
+msgstr "Удалить все старые значения"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:198
 #, php-format
 msgid "There are <strong>%s</strong> activities in this file."
-msgstr ""
+msgstr "В этом файле <strong>%s</strong> тренировок."
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:199
 #, php-format
 msgid "There are <strong>%s</strong> body values in this file."
-msgstr ""
+msgstr "В этом файле <strong>%s</strong> значений."
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:206
 #, php-format
 msgid "Versions do not match! The backup is from %s but you are using %s."
-msgstr ""
+msgstr "Версии не совпадают! Бекап из версии %s, а вы используете версию %s."
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:211
 msgid "The file seems to be corrupted."
-msgstr ""
+msgstr "Похоже файл поврежден."
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:238
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:290
@@ -6538,11 +6559,11 @@ msgstr "Импорт данных"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:239
 msgid "All data have been imported."
-msgstr ""
+msgstr "Все данные были импортированы."
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:240
 msgid "It is recommended to use the <em>Database cleanup</em> tool."
-msgstr ""
+msgstr "Рекомендуется использовать инструмент <em>Очистка базы данных</em>."
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:283
 msgid "Allowed file extension: *.json.gz"
@@ -6553,12 +6574,16 @@ msgid ""
 "All shared links will be invalid if you (re-)import activities and overwrite "
 "all existing activities!"
 msgstr ""
+"Все взаимные ссылки будут недействительны если вы (пере-)импортируете "
+"тренировки и перезапишите старые!"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:285
 msgid ""
 "The file has to be created with the same version of Runalyze!<br>You won't "
 "be able to import a file from an older version."
 msgstr ""
+"Файл должен быть сделан от такой же версии Runalyze!<br>Вы не сможете "
+"импортировать файл со старой версии."
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:287
 msgid ""
@@ -6566,6 +6591,9 @@ msgid ""
 "activity types.<br>You have to make these changes by hand or delete the "
 "existing data in advance."
 msgstr ""
+"Импорт не изменит существующие данные для экипировки, вида спорта или вида "
+"тренировки.<br>Вам необходимо сделать эти изменения вручную или удалить "
+"существующие данные заранее."
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:306
 msgid "Export data"
@@ -6573,27 +6601,27 @@ msgstr "Экспорт данных"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:131
 msgid "dataset"
-msgstr ""
+msgstr "Набор данных"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:134
 msgid "Sport types"
-msgstr ""
+msgstr "Виды спорта"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:136
 msgid "Body data"
-msgstr ""
+msgstr "Данные"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:137
 msgid "Activities"
-msgstr ""
+msgstr "Тренировки"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:138
 msgid "Trackdata"
-msgstr ""
+msgstr "Трек"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:139
 msgid "Swimdata"
-msgstr ""
+msgstr "Плавание"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:140
 #: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:38
@@ -6602,7 +6630,7 @@ msgstr "Маршруты"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:141
 msgid "HRV data"
-msgstr ""
+msgstr "ВЧСС"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:143
 msgid "Equipment types"
