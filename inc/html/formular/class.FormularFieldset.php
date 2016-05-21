@@ -128,6 +128,16 @@ class FormularFieldset extends HtmlTag {
 	}
 
 	/**
+	 * Add given fields to this fieldset
+	 * @param FormularField[] $Field 
+	 */
+	final public function addFields(array $Fields) {
+		foreach ($Fields as $Field) {
+			$this->fields[] = $Field;
+		}
+	}
+
+	/**
 	 * Validate all fields
 	 */
 	final public function validateAllFields() {

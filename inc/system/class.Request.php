@@ -34,14 +34,6 @@ class Request {
 	}
 
 	/**
-	 * Get current folder of request
-	 * @return string
-	 */
-	public static function CurrentFolder() {
-		return basename(dirname(self::Uri()));
-	}
-
-	/**
 	 * Is the user on a shared page?
 	 * @return boolean
 	 */

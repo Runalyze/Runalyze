@@ -7,7 +7,8 @@
 namespace Runalyze\Dataset\Keys;
 
 use Runalyze\Dataset\Context;
-
+use Request;
+use SearchLink;
 /**
  * Dataset key: Main Equipment
  * 
@@ -70,7 +71,7 @@ class MainEquipment extends AbstractEquipment
 				$Equipment = $Factory->equipment($id);
 
 				if ($Equipment->typeid() == $mainTypeID) {
-					$names[] = $Factory->equipment($id)->name();
+				    $names[] = Request::isOnSharedPage() ? $Factory->equipment($id)->name() : SearchLink::to('equipmentid', $id, $Factory->equipment($id)->name());
 				}
 			}
 

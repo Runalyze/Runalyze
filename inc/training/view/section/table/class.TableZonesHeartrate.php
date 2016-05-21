@@ -19,7 +19,7 @@ class TableZonesHeartrate extends TableZonesAbstract {
 	 * Get title for average
 	 * @return string
 	 */
-	public function titleForAverage() { return '&oslash;&nbsp;'.__('Pace'); }
+	public function titleForAverage() { return __('avg.').'&nbsp;'.__('Pace'); }
 
 	/**
 	 * Init data

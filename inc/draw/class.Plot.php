@@ -505,6 +505,13 @@ class Plot {
 	}
 
 	/**
+	 * @param string $string
+	 */
+	public function setXLabel($string) {
+		$this->Options['xaxis']['label'] = $string;
+	}
+
+	/**
 	 * Add unit to x axis
 	 * @param float $factor
 	 * @param string $unit

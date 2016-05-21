@@ -16,7 +16,7 @@ use Runalyze\Export\File;
 use Runalyze\View\Window\Laps\Window;
 use Runalyze\Activity\DuplicateFinder;
 use Runalyze\Calculation\Route\Calculator;
-use Runalyze\Data\Elevation\Correction\NoValidStrategyException;
+use Runalyze\Service\ElevationCorrection\NoValidStrategyException;
 
 require_once '../inc/class.Frontend.php';
 require_once '../inc/class.FrontendShared.php';
@@ -106,7 +106,7 @@ class ActivityController extends Controller
         $Frontend = new \Frontend(true);
 
         if (isset($_GET['delete']) && is_numeric($_GET['delete'])) {
-        	$Factory = Runalyze\Context::Factory();
+        	$Factory = \Runalyze\Context::Factory();
         	$Deleter = new Activity\Deleter(\DB::getInstance(), $Factory->activity($_GET['delete']));
         	$Deleter->setAccountID(\SessionAccountHandler::getId());
         	$Deleter->setEquipmentIDs($Factory->equipmentForActivity($_GET['delete'], true));
@@ -176,7 +176,7 @@ class ActivityController extends Controller
         	$Calculator->calculateElevation();
         	$Activity->set(Activity\Entity::ELEVATION, $Route->elevation());
         
-        	$UpdaterRoute = new \Runalyze\Route\Updater(DB::getInstance(), $Route, $RouteOld);
+        	$UpdaterRoute = new \Runalyze\Model\Route\Updater(DB::getInstance(), $Route, $RouteOld);
         	$UpdaterRoute->setAccountID(\SessionAccountHandler::getId());
         	$UpdaterRoute->update();
         

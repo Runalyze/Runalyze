@@ -6,6 +6,7 @@
 
 use Runalyze\Configuration;
 use Runalyze\Util\LocalTime;
+use Runalyze\Util\TimezoneLookup;
 
 /**
  * Abstract parser for one single training
@@ -25,6 +26,12 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 	 * @var \TrainingObject
 	 */
 	protected $TrainingObject = null;
+
+	/**
+	 * Pauses to apply
+	 * @var array
+	 */
+	protected $pausesToApply = array();
 
 	/**
 	 * Internal array for gps data
@@ -218,6 +225,7 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 		$this->TrainingObject->setArrayHRV( $this->gps['hrv'] );
 
 		$this->setValuesFromArraysIfEmpty();
+		$this->guessTimezoneFromStartPosition();
 	}
 
 	/**
@@ -377,6 +385,42 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 	}
 
 	/**
+	 * Use time zone from start position to correct time zone from file
+	 */
+	private function guessTimezoneFromStartPosition() {
+		$latitudes = array_filter($this->gps['latitude']);
+		$longitudes = array_filter($this->gps['longitude']);
+
+		if (!empty($latitudes) && !empty($longitudes)) {
+			$Lookup = new TimezoneLookup();
+
+			if ($Lookup->isPossible()) {
+				$timezone = $Lookup->getTimezoneForCoordinate(reset($longitudes), reset($latitudes));
+
+				if (null !== $timezone && $timezone != '') {
+					$this->adjustTimestampAndOffsetForNewTimezone($timezone);
+				}
+			}
+		}
+	}
+
+	/**
+	 * @param string $timezone
+	 */
+	private function adjustTimestampAndOffsetForNewTimezone($timezone) {
+		$newOffset = (new \DateTime(null, new \DateTimeZone($timezone)))->setTimestamp($this->TrainingObject->getTimestamp())->getOffset() / 60;
+
+		if (null === $this->TrainingObject->getTimezoneOffset()) {
+			// Don't correct the timestamp if the currently used offset is unknown
+			// (This may happen for files with something link 'Time = 16:00' as info)
+		} else {
+			$this->TrainingObject->setTimestamp($this->TrainingObject->getTimestamp() + 60*($newOffset - $this->TrainingObject->getTimezoneOffset()));
+		}
+
+		$this->TrainingObject->setTimezoneOffset($newOffset);
+	}
+
+	/**
 	 * Get current pace
 	 * @return int
 	 */
@@ -413,6 +457,59 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 				$this->gps['rpm'] = array_map(function ($v) {
 					return round($v/2);
 				}, $this->gps['rpm']);
+			}
+		}
+	}
+
+	/**
+	 * Apply pauses
+	 */
+	protected function applyPauses() {
+		if (!empty($this->pausesToApply)) {
+			$num = count($this->gps['time_in_s']);
+			$keys = array_keys($this->gps);
+			$pauseInSeconds = 0;
+			$pauseIndex = 0;
+			$pauseTime = $this->pausesToApply[$pauseIndex]['time'];
+			$pauseUntil = 0;
+			$isPause = false;
+			$hrStart = 0;
+
+			for ($i = 0; $i < $num; $i++) {
+				if (!$isPause && $this->gps['time_in_s'][$i] > $pauseTime) {
+					if ($pauseIndex < count($this->pausesToApply)) {
+						$isPause = true;
+						$hrStart = isset($this->gps['heartrate'][$i-1]) ? $this->gps['heartrate'][$i-1] : $this->gps['heartrate'][$i];
+						$pauseInSeconds += $this->pausesToApply[$pauseIndex]['duration'];
+						$pauseTime = $this->pausesToApply[$pauseIndex]['time'];
+						$pauseUntil = $this->pausesToApply[$pauseIndex]['duration'] + $pauseTime;
+						$pauseIndex++;
+						$pauseTime = ($pauseIndex < count($this->pausesToApply)) ? $this->pausesToApply[$pauseIndex]['time'] : PHP_INT_MAX;
+					}
+				}
+
+				if ($isPause && $this->gps['time_in_s'][$i] >= $pauseUntil) {
+					$isPause = false;
+
+					$this->TrainingObject->Pauses()->add(
+						new \Runalyze\Model\Trackdata\Pause(
+							$this->pausesToApply[$pauseIndex-1]['time'],
+							$this->pausesToApply[$pauseIndex-1]['duration'],
+							$hrStart,
+							$this->gps['heartrate'][$i]
+						)
+					);
+				}
+
+				if ($isPause) {
+					foreach ($keys as $key) {
+						if (isset($this->gps[$key][$i])) {
+							unset($this->gps[$key][$i]);
+						}
+					}
+				} else {
+					$this->gps['time_in_s'][$i] -= $pauseInSeconds;
+				}
 			}
 		}
 	}

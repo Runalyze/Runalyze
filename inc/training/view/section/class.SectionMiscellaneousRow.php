@@ -7,8 +7,10 @@
 use Runalyze\View\Activity;
 use Runalyze\Model\Trackdata;
 use Runalyze\View\Activity\Box;
+use Runalyze\Activity\Duration;
 use Runalyze\Activity\Temperature;
 use Runalyze\Util\LocalTime;
+use Runalyze\View;
 
 /**
  * Row: Miscellaneous
@@ -294,11 +296,28 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 	protected function fillNotesContent() {
 		$this->NotesContent = '<div class="panel-content">';
 
+		$this->addRaceResult();
 		$this->addNotes();
 		$this->addWeatherSourceInfo();
 		$this->addCreationAndModificationTime();
 
 		$this->NotesContent .= '</div>';
+	}
+	
+	/**
+	 * Add race result
+	 */
+	protected function addRaceResult() {
+		if ($this->Context->hasRaceResult()) {
+			$RaceResultView = new View\RaceResult\Dataview($this->Context->raceResult());
+			$RaceResult = '<strong>'.__('Race Result').':</strong><ul>'.
+					($this->Context->raceResult()->officialDistance() ? '<li><strong>'.__('Official distance').'</strong>: '.$RaceResultView->officialDistance().'</li>' : '') .
+					($this->Context->raceResult()->officialTime() ? '<li><strong>'.__('Official time').'</strong>: '.$RaceResultView->officialTime()->string(Duration::FORMAT_COMPETITION).'</li>' : '').
+					($this->Context->raceResult()->placeTotal() ? '<li><strong>'.__('Place overall').'</strong>: '.$RaceResultView->placementTotalWithParticipants().'</li>' : '') .
+					($this->Context->raceResult()->placeAgeclass() ? '<li><strong>'.__('Place age group').'</strong>: '.$RaceResultView->placementAgeClassWithParticipants().'</li>' : '') .
+					($this->Context->raceResult()->placeGender() ? '<li><strong>'.__('Place gender').'</strong>: '.$RaceResultView->placementGenderWithParticipants().'</li>' : '') .'</ul>';
+			$this->NotesContent .= HTML::info($RaceResult);
+		}
 	}
 
 	/**
@@ -326,6 +345,7 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 	 * Add created/edited
 	 */
 	protected function addCreationAndModificationTime() {
+	    if (!Request::isOnSharedPage()) {
 		$created = $this->Context->activity()->get(\Runalyze\Model\Activity\Entity::TIMESTAMP_CREATED);
 		$edited = $this->Context->activity()->get(\Runalyze\Model\Activity\Entity::TIMESTAMP_EDITED);
 
@@ -336,7 +356,7 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 				$createdDate->format('H:i')
 			);
 
-			$editedDate = new LocalTime($created);
+			$editedDate = new LocalTime($edited);
 			$ModificationTime = ($edited == 0) ? '' : '<br>'.sprintf( __('Last modification on <strong>%s</strong> at <strong>%s</strong>.'),
 				$editedDate->format('d.m.Y'),
 				$editedDate->format('H:i')
@@ -344,6 +364,7 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 
 			$this->NotesContent .= HTML::fileBlock($CreationTime.$ModificationTime);
 		}
+	    }
 	}
 	
 	/**

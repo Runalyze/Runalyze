@@ -14,6 +14,7 @@ namespace Runalyze;
 abstract class Parameter {
 	/**
 	 * Max length
+	 * @var int
 	 */
 	const MAX_LENGTH = 255;
 

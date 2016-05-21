@@ -15,9 +15,9 @@ use Runalyze\Configuration;
 class ParserPWXSingle extends ParserAbstractSingleXML {
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * This parser reimplements constructor to force $XML-parameter to be given.
-	 * 
+	 *
 	 * @param string $FileContent file content
 	 * @param SimpleXMLElement $XML XML element with <Activity> as root tag
 	 */
@@ -33,6 +33,8 @@ class ParserPWXSingle extends ParserAbstractSingleXML {
 			$this->parseGeneralValues();
 			$this->parseLaps();
 			$this->parseLogEntries();
+			$this->parseEvents();
+			$this->applyPauses();
 			$this->setGPSarrays();
 		} else {
 			$this->throwNoPWXError();
@@ -56,11 +58,24 @@ class ParserPWXSingle extends ParserAbstractSingleXML {
 
 	/**
 	 * Parse general values
+	 *
+	 * "Time zones that aren't specified are considered undetermined."
+	 * That means: If the time string has no appendix (no '+01:00' and no 'Z'),
+	 * the offset must be treated as unknown (to prevent a timestamp change due to a coordinate-based time zone).
+	 *
+	 * @see http://books.xmlschemata.org/relaxng/ch19-77049.html
 	 */
 	protected function parseGeneralValues() {
 		$this->setTimestampAndTimezoneOffsetWithUtcFixFrom((string)$this->XML->time);
 
-		$this->TrainingObject->setSportid( $this->findSportId() );
+		if (strlen((string)$this->XML->time) == 19) {
+			$this->TrainingObject->setTimezoneOffset(null);
+		}
+
+		if (!empty($this->XML->sportType)) {
+			$this->guessSportID((string)$this->XML->sportType);
+		}
+
 		$this->TrainingObject->setCreatorDetails( $this->findCreator() );
 
 		if (!empty($this->XML->cmt))
@@ -108,7 +123,7 @@ class ParserPWXSingle extends ParserAbstractSingleXML {
 
 	/**
 	 * Parse log entry
-	 * @param SimpleXMLElement $Log 
+	 * @param SimpleXMLElement $Log
 	 */
 	protected function parseLogEntry($Log) {
 		if ((int)$Log->timeoffset == 0)
@@ -137,40 +152,26 @@ class ParserPWXSingle extends ParserAbstractSingleXML {
 	}
 
 	/**
-	 * Try to get current sport id
-	 * @return int 
+	 * Parse starting/stopping events
 	 */
-	protected function findSportId() {
-		if (!empty($this->XML->sportType)) {
-			$Name = (string)$this->XML->sportType;
-			$Id   = SportFactory::idByName($Name);
+	protected function parseEvents() {
+		$isStopped = false;
+		$stopOffset = false;
 
-			if ($Id > 0)
-				return $Id;
-			else {
-				switch ($Name) {
-					case 'Run':
-						$Name = 'Laufen';
-						break;
-					case 'Bike':
-					case 'Mountain Bike':
-						$Name = 'Radfahren';
-						break;
-					case 'Swim':
-						$Name = 'Schwimmen';
-						break;
-					default:
-						$Name = 'Sonstiges';
-				}
+		foreach ($this->XML->event as $event) {
+			if ((string)$event->type == 'Starting' && $isStopped && $stopOffset !== false) {
+				$this->pausesToApply[] = array(
+					'time' => $stopOffset,
+					'duration' => ((int)$event->timeoffset - $stopOffset)
+				);
 
-				$Id = SportFactory::idByName($Name);
-
-				if ($Id > 0)
-					return $Id;
+				$isStopped = false;
+				$stopOffset = false;
+			} elseif ((string)$event->type == 'Stopping') {
+				$isStopped = true;
+				$stopOffset = (int)$event->timeoffset;
 			}
 		}
-
-		return Configuration::General()->runningSport();
 	}
 
 	/**

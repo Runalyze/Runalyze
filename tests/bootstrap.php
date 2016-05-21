@@ -62,6 +62,15 @@ DB::getInstance()->exec('UPDATE `runalyze_account` SET `id`=0 WHERE `username`="
 // Login
 $_SESSION['accountid'] = 0;
 
+// Define RUNALYZE_TEST_TZ_LOOKUP
+try {
+	(new \Runalyze\Util\TimezoneLookup(false))->getTimezoneForCoordinate(13.41, 52.52);
+
+	define('RUNALYZE_TEST_TZ_LOOKUP', true);
+} catch (\Runalyze\Util\TimezoneLookupException $e) {
+	define('RUNALYZE_TEST_TZ_LOOKUP', false);
+}
+
 // Language functions
 if (!function_exists('__')) {
 	function __($text, $domain = 'runalyze') {

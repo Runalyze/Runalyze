@@ -25,7 +25,7 @@ class Pace extends AbstractBox
 		parent::__construct(
 			$Pace->value(),
 			$Pace->appendix(),
-			'&oslash; '.($Pace->unit()->isTimeFormat() ? __('Pace') : __('Speed'))
+			__('avg.').' '.($Pace->unit()->isTimeFormat() ? __('Pace') : __('Speed'))
 		);
 	}
 }

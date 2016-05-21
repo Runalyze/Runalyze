@@ -18,7 +18,7 @@ for ($j = date('Y'); $j >= START_YEAR; $j--)  {
 <div class="panel-heading">
 	<div class="panel-menu">
 		<ul>
-			<li class="with-submenu"><span class="link"><?php _e('Choose year'); ?></span><ul class="submenu"><?php echo $Submenu; ?></ul></li>
+			<li class="with-submenu"><span class="link"><?php echo $_GET['y']; ?></span><ul class="submenu"><?php echo $Submenu; ?></ul></li>
 		</ul>
 	</div>
 	<h1><?php _e('Temperatures'); ?></h1>

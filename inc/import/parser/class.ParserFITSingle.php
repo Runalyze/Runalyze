@@ -61,12 +61,6 @@ class ParserFITSingle extends ParserAbstractSingle {
 	 */
 	protected $lastStopTimestamp = false;
 
-	/**
-	 * Pauses to apply
-	 * @var array
-	 */
-	protected $pausesToApply = array();
-
 	/** @var float [s] */
 	protected $compressedTotalTime = 0;
 
@@ -75,6 +69,9 @@ class ParserFITSingle extends ParserAbstractSingle {
 
 	/** @var float [16m] */
 	protected $compressedLastDistance16 = 0;
+
+	/** @var string */
+	protected $softwareVersion = '';
 
 	/**
 	 * Parse
@@ -88,12 +85,14 @@ class ParserFITSingle extends ParserAbstractSingle {
 	 */
 	public function startNewActivity() {
 		$creator = $this->TrainingObject->getCreator();
+		$creatorDetails = $this->TrainingObject->getCreatorDetails();
 		$offset = $this->TrainingObject->getTimezoneOffset();
 
 		$this->TrainingObject = new TrainingObject(DataObject::$DEFAULT_ID);
 		$this->TrainingObject->setTimestamp(PHP_INT_MAX);
 		$this->TrainingObject->setTimezoneOffset($offset);
 		$this->TrainingObject->setCreator($creator);
+		$this->TrainingObject->setCreatorDetails($creatorDetails);
 
 		$this->isPaused = false;
 		$this->isSwimming = false;
@@ -240,8 +239,16 @@ class ParserFITSingle extends ParserAbstractSingle {
 	 * Read device info
 	 */
 	protected function readDeviceInfo() {
-		if (isset($this->Values['garmin_product']) && isset($this->Values['device_index']) && $this->Values['device_index'][0] == 0)
-			$this->TrainingObject->setCreator($this->Values['garmin_product'][1]);
+		if (isset($this->Values['device_index']) && $this->Values['device_index'][0] == 0) {
+			if (isset($this->Values['garmin_product'])) {
+				$this->TrainingObject->setCreator($this->Values['garmin_product'][1]);
+			}
+
+			if (isset($this->Values['software_version'])) {
+				$this->softwareVersion = $this->Values['software_version'][1];
+				$this->TrainingObject->setCreatorDetails('firmware '.$this->softwareVersion);
+			}
+		}
 	}
 
 	/**
@@ -326,7 +333,14 @@ class ParserFITSingle extends ParserAbstractSingle {
 				case 39:
 					$creator = $this->TrainingObject->getCreator();
 
-					if ($creator != 'fr630' && $creator != 'fenix3') {
+					// TODO: this may need more device and firmware specific conditions
+					if (
+						substr($creator, 0, 5) == 'fr630' ||
+						substr($creator, 0, 7) == 'fr735xt' ||
+						substr($creator, 0, 6) == 'fenix3'
+					) {
+						$this->TrainingObject->setFitPerformanceCondition((int)$this->Values['data'][1]);
+					} else {
 						$this->TrainingObject->setFitHRVscore((int)$this->Values['data'][1]);
 					}
 
@@ -378,17 +392,17 @@ class ParserFITSingle extends ParserAbstractSingle {
 		} else {
 			if (!isset($this->Values['timestamp']))
 				return;
-	
+
 			if (empty($this->gps['time_in_s'])) {
 				$startTime = $this->strtotime((string)$this->Values['timestamp'][1]);
-	
+
 				if ($startTime < $this->TrainingObject->getTimestamp()) {
 					$this->setTimestampAndTimezoneOffsetWithUtcFixFrom((string)$this->Values['timestamp'][1]);
 				}
 			}
 			$time = $this->strtotime((string)$this->Values['timestamp'][1]) - $this->TrainingObject->getTimestamp() - $this->PauseInSeconds;
 			$last = end($this->gps['time_in_s']);
-	
+
 			if ($this->wasPaused) {
 				$this->TrainingObject->Pauses()->add(
 					new \Runalyze\Model\Trackdata\Pause(
@@ -398,7 +412,7 @@ class ParserFITSingle extends ParserAbstractSingle {
 						isset($this->Values['heart_rate']) ? (int)$this->Values['heart_rate'][0] : 0
 					)
 				);
-				
+
 				$this->wasPaused = false;
 			}
 		}
@@ -480,7 +494,7 @@ class ParserFITSingle extends ParserAbstractSingle {
 				$this->Values['total_timer_time'][0] / 1e3
 			);
 	}
-        
+
 	/**
 	 * Read length
 	 */
@@ -515,58 +529,6 @@ class ParserFITSingle extends ParserAbstractSingle {
 			foreach ($values as $value) {
 				if ($value != '65535') {
 					$this->gps['hrv'][] = 1000*(double)substr($value, 0, -1);
-				}
-			}
-		}
-	}
-
-	/**
-	 * Apply pauses
-	 */
-	protected function applyPauses() {
-		if (!empty($this->pausesToApply)) {
-			$num = count($this->gps['time_in_s']);
-			$keys = array_keys($this->gps);
-			$pauseInSeconds = 0;
-			$pauseIndex = 0;
-			$pauseTime = $this->pausesToApply[$pauseIndex]['time'];
-			$pauseUntil = 0;
-			$isPause = false;
-			$hrStart = 0;
-
-			for ($i = 0; $i < $num; $i++) {
-				if (!$isPause && $this->gps['time_in_s'][$i] > $pauseTime) {
-					if ($pauseIndex < count($this->pausesToApply)) {
-						$isPause = true;
-						$hrStart = $this->gps['heartrate'][$i];
-						$pauseInSeconds += $this->pausesToApply[$pauseIndex]['duration'];
-						$pauseTime = $this->pausesToApply[$pauseIndex]['time'];
-						$pauseUntil = $this->pausesToApply[$pauseIndex]['duration'] + $pauseTime;
-						$pauseIndex++;
-						$pauseTime = ($pauseIndex < count($this->pausesToApply)) ? $this->pausesToApply[$pauseIndex]['time'] : PHP_INT_MAX;
-					}
-				}
-
-				if ($isPause && $this->gps['time_in_s'][$i] >= $pauseUntil) {
-					$isPause = false;
-					$this->TrainingObject->Pauses()->add(
-						new \Runalyze\Model\Trackdata\Pause(
-							$this->pausesToApply[$pauseIndex-1]['time'],
-							$this->pausesToApply[$pauseIndex-1]['duration'],
-							$hrStart,
-							end($this->gps['heartrate'])
-						)
-					);
-				}
-
-				if ($isPause) {
-					foreach ($keys as $key) {
-						if (isset($this->gps[$key][$i])) {
-							unset($this->gps[$key][$i]);
-						}
-					}
-				} else {
-					$this->gps['time_in_s'][$i] -= $pauseInSeconds;
 				}
 			}
 		}

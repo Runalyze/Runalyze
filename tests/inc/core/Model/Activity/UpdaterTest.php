@@ -36,6 +36,10 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 		$this->OutdoorID = $this->PDO->lastInsertId();
 		$this->PDO->exec('INSERT INTO `'.PREFIX.'sport` (`name`,`kcal`,`outside`,`accountid`,`power`,`HFavg`) VALUES("",400,0,0,0,100)');
 		$this->IndoorID = $this->PDO->lastInsertId();
+		$this->PDO->exec('INSERT INTO `'.PREFIX.'sport` (`name`,`kcal`,`outside`,`accountid`,`power`) VALUES("Running",400,0,0,0)');
+		$this->runningSportId = $this->PDO->lastInsertId();
+		$this->PDO->exec("INSERT INTO runalyze_conf (`category`, `key`, `value`, `accountid`) VALUES ('general', 'RUNNINGSPORT', ".$this->runningSportId.", 0)");
+		Configuration::loadAll(0);
 		$this->PDO->exec('INSERT INTO `'.PREFIX.'equipment_type` (`name`,`accountid`) VALUES("Type",0)');
 		$this->EquipmentType = $this->PDO->lastInsertId();
 		$this->PDO->exec('INSERT INTO `'.PREFIX.'equipment_sport` (`sportid`,`equipment_typeid`) VALUES('.$this->OutdoorID.','.$this->EquipmentType.')');
@@ -53,7 +57,8 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 		$this->PDO->exec('DELETE FROM `'.PREFIX.'training`');
 		$this->PDO->exec('DELETE FROM `'.PREFIX.'sport`');
 		$this->PDO->exec('DELETE FROM `'.PREFIX.'equipment_type`');
-
+		$this->PDO->exec('DELETE FROM runalyze_conf');
+		Configuration::loadAll(0);
 		$Factory = new Model\Factory(0);
 		$Factory->clearCache('sport');
 		\Cache::clean();
@@ -195,8 +200,6 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 		$current = time();
 		$timeago = mktime(0,0,0,1,1,2000);
 		$running = Configuration::General()->runningSport();
-		$raceid = Configuration::General()->competitionType();
-
 		Configuration::Data()->updateVdotShape(0);
 		Configuration::Data()->updateVdotCorrector(1);
 
@@ -206,7 +209,6 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 			Entity::TIME_IN_SECONDS => 30*60,
 			Entity::HR_AVG => 150,
 			Entity::SPORTID => $running,
-			Entity::TYPEID => $raceid + 1,
 			Entity::USE_VDOT => true
 		)) );
 
@@ -221,22 +223,8 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(1, Configuration::Data()->vdotFactor());
 
 		$Object3 = clone $Object2;
-		$Object3->set(Entity::TYPEID, $raceid);
+		$Object3->set(Entity::TIMESTAMP, $timeago);
 		$this->update($Object3, $Object2);
-
-		$this->assertNotEquals(0, Configuration::Data()->vdotShape());
-		$this->assertNotEquals(1, Configuration::Data()->vdotFactor());
-
-		$Object4 = clone $Object3;
-		$Object4->set(Entity::TYPEID, $raceid + 1);
-		$this->update($Object4, $Object3);
-
-		$this->assertNotEquals(0, Configuration::Data()->vdotShape());
-		$this->assertEquals(1, Configuration::Data()->vdotFactor());
-
-		$Object5 = clone $Object4;
-		$Object5->set(Entity::TIMESTAMP, $timeago);
-		$this->update($Object5, $Object4);
 
 		$this->assertEquals(0, Configuration::Data()->vdotShape());
 		$this->assertEquals(1, Configuration::Data()->vdotFactor());

@@ -28,6 +28,7 @@ class SectionHRVRow extends TrainingViewSectionRowTabbedPlot {
 	protected function setRightContent() {
 		if ($this->Context->hrv()->has(HRV\Entity::DATA)) {
 			$this->addRightContent('hrv', __('R-R intervals'), new Activity\Plot\HRV($this->Context));
+			$this->addRightContent('hrv-sd', __('Successive differences'), new Activity\Plot\HRVdifferences($this->Context));
 			$this->addRightContent('hrvpoincare', __('Poincaré plot'), new Activity\Plot\HRVPoincare($this->Context));
 		}
 	}
@@ -41,7 +42,7 @@ class SectionHRVRow extends TrainingViewSectionRowTabbedPlot {
 
 		$boxes = array(
 			new BoxedValue(number_format(log($Calculator->RMSSD()), 1), '', 'lnRMSSD'),
-			new BoxedValue(round($Calculator->mean()), 'ms', __('&Oslash; R-R interval')),
+			new BoxedValue(round($Calculator->mean()), 'ms', __('avg.').' '.__('R-R interval')),
 			new BoxedValue(round($Calculator->RMSSD()), 'ms', 'RMSSD'),
 			new BoxedValue(round($Calculator->SDSD()), 'ms', 'SDSD'),
 			new BoxedValue(round($Calculator->SDNN()), 'ms', 'SDNN'),

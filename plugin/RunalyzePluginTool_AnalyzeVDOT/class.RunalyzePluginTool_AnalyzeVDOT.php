@@ -39,8 +39,8 @@ class RunalyzePluginTool_AnalyzeVDOT extends PluginTool {
 	 * Display long description 
 	 */
 	protected function displayLongDescription() {
-		echo HTML::p( __('Predicting your VDOT based on your training values is imprecise.'.
-						'This plugin lists your races and compares your results with the predicted values.'.
+		echo HTML::p( __('Predicting your VDOT based on your training values is imprecise. '.
+						'This plugin lists your races and compares your results with the predicted values. '.
 						'This way you can get an impression of how well the prediction works for you.') );
 	}
 
@@ -61,21 +61,23 @@ class RunalyzePluginTool_AnalyzeVDOT extends PluginTool {
 	private function initTrainings() {
 		$this->Query = DB::getInstance()->query('
 			SELECT
-				`id`,
-				`time`,
-				`sportid`,
-				`distance`,
-				`s`,
-				`is_track`,
-				`comment`,
-				`pulse_avg`,
-				`pulse_max`,
-				`vdot`,
-				`vdot_by_time`
-			FROM `'.PREFIX.'training`
-			WHERE `pulse_avg`!=0 AND `typeid`='.Configuration::General()->competitionType().'
-                        AND `accountid` = '.SessionAccountHandler::getId().'
-			ORDER BY `time` DESC'
+				tr.`id`,
+				tr.`time`,
+				tr.`sportid`,
+				tr.`distance`,
+				tr.`s`,
+				tr.`is_track`,
+				tr.`comment`,
+				tr.`pulse_avg`,
+				tr.`pulse_max`,
+				tr.`vdot`,
+				tr.`vdot_by_time`
+			FROM `'.PREFIX.'raceresult` r LEFT JOIN `'.PREFIX.'training` tr ON tr.id = r.activity_id
+			WHERE
+				tr.`pulse_avg`!=0 AND
+				tr.`sportid`='.Configuration::General()->runningSport().' AND
+				r.`accountid` = '.SessionAccountHandler::getId().'
+			ORDER BY tr.`time` DESC'
 		);
 	}
 }

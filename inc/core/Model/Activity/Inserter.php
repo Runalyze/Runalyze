@@ -15,7 +15,7 @@ use Runalyze\Util\TimezoneLookup;
 
 /**
  * Insert activity to database
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Model\Activity
  */
@@ -34,7 +34,7 @@ class Inserter extends Model\InserterWithAccountID {
 	 * @var \Runalyze\Model\Swimdata\Entity
 	 */
 	protected $Swimdata = null;
-        
+
 	/**
 	 * @var \Runalyze\Model\Route\Entity
 	 */
@@ -44,7 +44,7 @@ class Inserter extends Model\InserterWithAccountID {
 	 * @var array
 	 */
 	protected $EquipmentIDs = array();
-	
+
 	/**
 	 * @var array
 	 */
@@ -65,7 +65,7 @@ class Inserter extends Model\InserterWithAccountID {
 	public function setTrackdata(Model\Trackdata\Entity $trackdata) {
 		$this->Trackdata = $trackdata;
 	}
-        
+
 	/**
 	 * @param \Runalyze\Model\Swimdata\Entity $swimdata
 	 */
@@ -86,7 +86,7 @@ class Inserter extends Model\InserterWithAccountID {
 	public function setEquipmentIDs(array $ids) {
 		$this->EquipmentIDs = $ids;
 	}
-	
+
 	/**
 	 * @param array $ids
 	 */
@@ -123,7 +123,6 @@ class Inserter extends Model\InserterWithAccountID {
 		parent::before();
 
 		$this->Object->set(Entity::TIMESTAMP_CREATED, time());
-
 		$this->setSportIdIfEmpty();
 		$this->removeDataIfInside();
 		$this->calculateCaloriesIfZero();
@@ -132,7 +131,6 @@ class Inserter extends Model\InserterWithAccountID {
 		$this->calculateStrideLength();
 		$this->calculateVerticalRatio();
 		$this->calculateSwimValues();
-		$this->lookForTimezoneOffset();
 	}
 
 	/**
@@ -265,36 +263,19 @@ class Inserter extends Model\InserterWithAccountID {
 	}
 
 	/**
-	 * Look for timezone offset
-	 */
-	protected function lookForTimezoneOffset() {
-		if (null === $this->Object->timezoneOffset() && null !== $this->Route && $this->Route->has(Model\Route\Entity::STARTPOINT)) {
-			$Lookup = new TimezoneLookup();
-
-			if ($Lookup->isPossible()) {
-				$Coordinate = (new Geotools())->geohash()->decode($this->Route->get(Model\Route\Entity::STARTPOINT))->getCoordinate();
-				$timezone = $Lookup->getTimezoneForCoordinate($Coordinate->getLongitude(), $Coordinate->getLatitude());
-
-                            if (null !== $timezone && $timezone != '') {
-                                $timezoneOffset = (new \DateTime(null, new \DateTimeZone($timezone)))->setTimestamp($this->Object->timestamp())->getOffset() / 60;
-
-                                $this->Object->set(Entity::TIMEZONE_OFFSET, $timezoneOffset);
-                            }
-			}
-		}
-	}
-        
-	/**
 	 * Tasks after insertion
 	 */
 	protected function after() {
 		$this->updateEquipment();
 		$this->updateTag();
 		$this->updateStartTime();
-		$this->updateVDOTshapeAndCorrector();
-		$this->updateBasicEndurance();
-	}
 
+		if ($this->Object->sportid() == Configuration::General()->runningSport()) {
+			$this->updateVDOTshape();
+			$this->updateBasicEndurance();
+		}
+	}
+	
 	/**
 	 * Update tag
 	 */
@@ -328,9 +309,12 @@ class Inserter extends Model\InserterWithAccountID {
 	}
 
 	/**
-	 * Update vdot shape and corrector
+	 * Update vdot shape
+	 * 
+	 * Note: This method assumes that the activity is marked as running
+	 * Note: vdot corrector will be updated by RaceResult\Inserter if necessary
 	 */
-	protected function updateVDOTshapeAndCorrector() {
+	protected function updateVDOTshape() {
 		$timestampLimit = time() - Configuration::Vdot()->days() * DAY_IN_S;
 
 		if (
@@ -339,20 +323,18 @@ class Inserter extends Model\InserterWithAccountID {
 			$this->Object->timestamp() > $timestampLimit
 		) {
 			Configuration::Data()->recalculateVDOTshape();
-
-			if ($this->Object->typeid() == Configuration::General()->competitionType()) {
-				Configuration::Data()->recalculateVDOTcorrector();
-			}
 		}
 	}
 
 	/**
 	 * Update basic endurance
+	 * 
+	 * Note: This method assumes that the activity is marked as running
 	 */
 	protected function updateBasicEndurance() {
 		$timestampLimit = time() - 182 * DAY_IN_S;
 
-		if ($this->Object->sportid() == Configuration::General()->runningSport() && $this->Object->timestamp() > $timestampLimit) {
+		if ($this->Object->timestamp() > $timestampLimit) {
 			BasicEndurance::recalculateValue();
 		}
 	}

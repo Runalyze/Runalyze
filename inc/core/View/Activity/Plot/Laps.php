@@ -118,7 +118,7 @@ abstract class Laps extends ActivityPlot {
 			}
 
 			$this->Plot->addThreshold("y", round($achievedPace), 'rgb(0,180,0)');
-			$this->Plot->addAnnotation(0, round($achievedPace), '&oslash; '.$this->PaceUnit->format($this->achievedPace), -40, -7);
+			$this->Plot->addAnnotation(0, round($achievedPace), __('avg:').' '.$this->PaceUnit->format($this->achievedPace), -40, -7);
 		}
 	}
 

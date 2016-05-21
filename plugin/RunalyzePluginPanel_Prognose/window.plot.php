@@ -26,7 +26,7 @@ foreach ($distances as $km) {
 <div class="panel-heading">
 	<div class="panel-menu">
 		<ul>
-			<li class="with-submenu"><span class="link"><?php _e('Choose distance'); ?></span><ul class="submenu"><?php echo $Submenu; ?></ul></li>
+			<li class="with-submenu"><span class="link"><?php echo (new Distance($distance))->stringAuto(); ?></span><ul class="submenu"><?php echo $Submenu; ?></ul></li>
 		</ul>
 	</div>
 	<h1><?php _e('Prognosis calculator: form trend'); ?></h1>
@@ -37,12 +37,4 @@ foreach ($distances as $km) {
 	echo Plot::getDivFor('formverlauf_'.str_replace('.', '_', $distance), 800, 450);
 	include FRONTEND_PATH.'../plugin/RunalyzePluginPanel_Prognose/Plot.Form.php';
 	?>
-
-	<p class="info">
-		<?php _e('The average VDOT value per month is used.'); ?>
-	</p>
-
-	<p class="info">
-		<?php _e('The basic endurance adjustment is <strong>not</strong> used for these calculations.'); ?>
-	</p>
 </div>

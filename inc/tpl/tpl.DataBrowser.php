@@ -88,7 +88,8 @@ foreach ($this->Days as $i => $day) {
 	if (!empty($day['trainings'])) {
 		foreach ($day['trainings'] as $t => $Training) {
 			$id       = $Training['id'];
-			$wk_class = isset($Training['typeid']) && $Training['typeid'] == \Runalyze\Configuration::General()->competitionType() ? ' wk' : '';
+			$Sport = $this->Factory->sport($id);
+			$wk_class = ''; // TODO isset($Training['typeid']) && $Training['typeid'] == $Sport->raceTypeId() ? ' wk' : '';
 			$trClass = ($t == 0) ? $trClass : '';
 
 			if (FrontendShared::$IS_SHOWN && !$Training['is_public']) {

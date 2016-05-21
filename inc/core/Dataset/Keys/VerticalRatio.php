@@ -43,6 +43,15 @@ class VerticalRatio extends AbstractKey
 	{
 		return __('Vertical ratio');
 	}
+	
+	/**
+	 * @return string
+	 * @codeCoverageIgnore
+	 */
+	public function description()
+	{
+		return __('Vertical ratio is the ratio of vertical oscillation to stride length.');
+	}
 
 	/**
 	 * Get string to display this dataset value

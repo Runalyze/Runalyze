@@ -148,6 +148,12 @@ final class Keys extends AbstractEnum
 	/** @var int */
 	const RPE = 44;
 	
+	/** @var int */
+	const GRADIENT = 45;
+
+	/** @var int */
+	const FIT_PERFORMANCE_CONDITION = 46;
+	
 	/**
 	 * @var array|null
 	 */
@@ -249,7 +255,9 @@ final class Keys extends AbstractEnum
 			self::WIND_CHILL => 'WindChill',
 			self::SETTING => 'Setting',
 			self::FIT_TRAINING_EFFECT => 'FitTrainingEffect',
-			self::RPE => 'RPE'
+			self::RPE => 'RPE',
+			self::GRADIENT => 'Gradient',
+			self::FIT_PERFORMANCE_CONDITION => 'FitPerformanceCondition'
 		);
 	}
 }

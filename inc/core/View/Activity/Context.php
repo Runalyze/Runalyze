@@ -48,6 +48,11 @@ class Context {
 	 * @var \Runalyze\Model\Sport\Entity
 	 */
 	protected $Sport;
+	
+	/**
+	 * @var \Runalyze\Model\RaceResult\Entity
+	 */
+	protected $RaceResult;
 
 	/**
 	 * @var \Runalyze\View\Activity\Dataview
@@ -65,6 +70,7 @@ class Context {
 		$this->Activity = $Factory->activity((int)$activityID);
 		$this->Trackdata = $Factory->trackdata((int)$activityID);
 		$this->Swimdata = $Factory->swimdata((int)$activityID);
+		$this->RaceResult = $Factory->raceResult((int)$activityID);
 		$this->Route = $this->Activity->get(Activity\Entity::ROUTEID) ? $Factory->route($this->Activity->get(Activity\Entity::ROUTEID)) : null;
 		$this->HRV = $Factory->hrv((int)$activityID);
 		$this->Sport = $Factory->sport($this->Activity->sportid());
@@ -126,6 +132,13 @@ class Context {
 	public function route() {
 		return $this->Route;
 	}
+	
+	/**
+	 * @return \Runalyze\Model\RaceResult\Entity
+	 */
+	public function raceResult() {
+		return $this->RaceResult;
+	}
 
 	/**
 	 * @return \Runalyze\View\Activity\Dataview
@@ -133,7 +146,7 @@ class Context {
 	public function dataview() {
 		return $this->Dataview;
 	}
-
+	
 	/**
 	 * @return boolean
 	 */
@@ -162,6 +175,13 @@ class Context {
 		return !$this->HRV->isEmpty();
 	}
 
+	/**
+	 * @return boolean
+	 */
+	public function hasRaceResult() {
+		return !$this->RaceResult->isEmpty();
+	}
+
 
 	/**
 	 * @return boolean
@@ -178,7 +198,7 @@ class Context {
 		}
 
 		if ($RoutePrivacy->showRace()) {
-			return ($this->activity()->typeid() != Configuration::General()->competitionType());
+			return (!$this->hasRaceResult());
 		}
 
 		return true;

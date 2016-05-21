@@ -245,7 +245,7 @@ class Prognose_PrognosisWindow {
 		foreach ($this->Distances as $km) {
 			$Prognosis = $this->PrognosisObject->inSeconds( $km );
 
-			$PB = new PersonalBest($km, DB::getInstance(), false);
+			$PB = new PersonalBest($km, Configuration::General()->runningSport(), DB::getInstance(), false);
 			$PB->lookupWithDetails();
 
 			$VDOTprognosis = new VDOT;

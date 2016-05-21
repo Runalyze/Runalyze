@@ -81,11 +81,14 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 	protected function getToolbarNavigationLinks() {
 		$LinkList = array();
 		$LinkList[] = '<li>'.Ajax::window('<a href="plugin/'.$this->key().'/window.php">'.Ajax::tooltip(Icon::$LINE_CHART, __('Show temperature plots')).'</a>').'</li>';
-		$LinkList[] = '<li class="with-submenu"><span class="link">'.__('Equipment types').'</span><ul class="submenu">';
 
-		foreach ($this->AllTypes as $id => $name) {
-			$active = ($id == $this->EquipmentTypeId);
-		    $LinkList[] = '<li'.($active ? ' class="active"' : '').'>'.$this->getInnerLink($name, false, false, $id).'</li>';
+		if (count($this->AllTypes) > 1) {
+			$LinkList[] = '<li class="with-submenu"><span class="link">'.$this->AllTypes[$this->EquipmentTypeId].'</span><ul class="submenu">';
+
+			foreach ($this->AllTypes as $id => $name) {
+				$active = ($id == $this->EquipmentTypeId);
+				$LinkList[] = '<li'.($active ? ' class="active"' : '').'>'.$this->getInnerLink($name, false, false, $id).'</li>';
+			}
 		}
 
 		$LinkList[] = '</ul></li>';

@@ -7,6 +7,7 @@ $("#sportid").change(function(){
 
 $("#time_day").change(function(){
 	jUpdateAvailableEquipment();
+	jUpdateWeather();
 });
 
 $("input[name=distance], input[name=s]").change(function() {

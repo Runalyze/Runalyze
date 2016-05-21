@@ -185,6 +185,7 @@ class RunalyzeJsonImporter {
 				'runalyze_activity_equipment',
 				'runalyze_tag',
 				'runalyze_activity_tag',
+				'runalyze_raceresult'
 			),
 			'update'	=> array(
 				'runalyze_conf'			=> 'overwrite_config',
@@ -403,6 +404,8 @@ class RunalyzeJsonImporter {
 		} elseif ($TableName == 'runalyze_activity_tag') {
 			$Row['activityid'] = $this->correctID('runalyze_training', $Row['activityid']);
 			$Row['tagid'] = $this->correctID('runalyze_tag', $Row['tagid']);
+		} elseif ($TableName == 'runalyze_raceresult') {
+			$Row['activity_id'] = $this->correctID('runalyze_training', $Row['activity_id']);
 		}
 	}
 

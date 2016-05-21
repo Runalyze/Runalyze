@@ -52,7 +52,7 @@ abstract class Deleter {
 	 * @param \Runalyze\Model\Entity $oldObject [optional]
 	 * @throws \RuntimeException
 	 */
-	final public function delete(Object $oldObject = null) {
+	final public function delete(Entity $oldObject = null) {
 		if (!is_null($oldObject)) {
 			$this->Object = $oldObject;
 		}

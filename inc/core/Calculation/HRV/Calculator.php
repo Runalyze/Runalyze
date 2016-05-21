@@ -113,6 +113,13 @@ class Calculator {
 	}
 
 	/**
+	 * @return \Runalyze\Model\HRV\Entity
+	 */
+	public function filteredObject() {
+		return $this->Object;
+	}
+
+	/**
 	 * Remove all rr intervals that are not within [1 - $filterThreshold, 1 + $filterThreshold]-times their preceding/following interval
 	 * @param double $filterThreshold
 	 */
@@ -126,8 +133,8 @@ class Calculator {
 			$ratioFollowing = ($i < $num - 1) ? $oldData[$i] / $oldData[$i+1] : 1;
 
 			if (
-				(1 - $filterThreshold <= $ratioPreceding && $ratioPreceding <= 1 + $filterThreshold) ||
-				(1 - $filterThreshold <= $ratioFollowing && $ratioFollowing <= 1 + $filterThreshold)
+				(max($ratioPreceding, 1/$ratioPreceding) <= 1 + $filterThreshold) ||
+				(max($ratioFollowing, 1/$ratioFollowing) <= 1 + $filterThreshold)
 			) {
 				$newData[] = $oldData[$i];
 			}

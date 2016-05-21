@@ -38,7 +38,7 @@ class ImporterFiletypeFITLOGTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test: incorrect xml-file 
+	 * Test: incorrect xml-file
 	 */
 	public function test_notFITLOG() {
 		$this->object->parseString('<any><xml><file></file></xml></any>');
@@ -49,7 +49,7 @@ class ImporterFiletypeFITLOGTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test: incorrect xml-file 
+	 * Test: incorrect xml-file
 	 */
 	public function test_noTrack() {
 		$this->object->parseString('<?xml version="1.0"?>
@@ -75,7 +75,7 @@ class ImporterFiletypeFITLOGTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * Test: standard file
-	 * Filename: "20110411_Laufeinheit_division_by_zero.fitlog" 
+	 * Filename: "20110411_Laufeinheit_division_by_zero.fitlog"
 	 */
 	public function test_standard() {
 		$this->object->parseFile('../tests/testfiles/sporttracks/20110411_Laufeinheit_division_by_zero.fitlog');
@@ -84,9 +84,8 @@ class ImporterFiletypeFITLOGTest extends PHPUnit_Framework_TestCase {
 		$this->assertFalse( $this->object->hasMultipleTrainings() );
 		$this->assertFalse( $this->object->failed() );
 
-		// assume that '...Z' time strings are NOT converted to Europe/Berlin (see bootstrap.php)
-		$this->assertEquals('2011-04-11 16:52', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
-		$this->assertEquals(0, $this->object->object()->getTimezoneOffset());
+		$this->assertEquals('2011-04-11 18:52', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
+		$this->assertEquals(120, $this->object->object()->getTimezoneOffset());
 
 		$this->assertEquals( 1399, $this->object->object()->getTimeInSeconds(), '', 30);
 		$this->assertEquals( 4.09, $this->object->object()->getDistance(), '', 0.1);
@@ -97,7 +96,7 @@ class ImporterFiletypeFITLOGTest extends PHPUnit_Framework_TestCase {
 		$this->assertFalse( $this->object->object()->Splits()->areEmpty() );
 		$this->assertEquals(
 			"0.002|0:00-1.000|5:31-1.000|5:40-1.000|5:55-1.000|5:32-0.087|0:39",
-			$this->object->object(2)->Splits()->asString()
+			$this->object->object()->Splits()->asString()
 		);
 	}
 

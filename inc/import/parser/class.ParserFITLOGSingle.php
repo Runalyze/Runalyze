@@ -49,8 +49,8 @@ class ParserFITLOGSingle extends ParserAbstractSingleXML {
 	 * Parse general values
 	 */
 	protected function parseGeneralValues() {
-		$this->setTimestampAndTimezoneOffsetFrom((string)$this->XML['StartTime']);
-		
+		$this->setTimestampAndTimezoneOffsetWithUtcFixFrom((string)$this->XML['StartTime']);
+
 		if (!empty($this->XML['categoryName']))
 			$this->guessSportID( (string)$this->XML['categoryName'] );
 		else
@@ -89,7 +89,7 @@ class ParserFITLOGSingle extends ParserAbstractSingleXML {
 
 	/**
 	 * Parse trackpoint
-	 * @param SimpleXMLElement $Point 
+	 * @param SimpleXMLElement $Point
 	 */
 	protected function parseTrackpoint($Point) {
 		if (!empty($Point['lat'])) {

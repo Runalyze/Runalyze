@@ -92,7 +92,7 @@ class RunalyzePluginPanel_Sports extends PluginPanel {
 	 */
 	protected function getRightSymbol() {
 		$Links = '';
-		$Links .= '<li class="with-submenu"><span class="link">'.__('Choose time range').'</span>';
+		$Links .= '<li class="with-submenu"><span class="link">'.$this->Timeset[$this->DefaultTimesetIndex]['name'].'</span>';
 		$Links .= '<ul class="submenu">';
 
 		foreach ($this->Timeset as $i => $timeset) {
@@ -132,7 +132,7 @@ class RunalyzePluginPanel_Sports extends PluginPanel {
 		$Request = DB::getInstance()->prepare($Query);
 
 		echo '<div id="sports">';
-	
+
 		foreach ($this->Timeset as $i => $timeset) {
 			echo '<div id="sports_'.$i.'" class="change"'.($i==$this->DefaultTimesetIndex ? '' : ' style="display:none;"').'>';
 
@@ -155,7 +155,7 @@ class RunalyzePluginPanel_Sports extends PluginPanel {
 
 			echo '</div>';
 		}
-	
+
 		echo '</div>';
 	}
 

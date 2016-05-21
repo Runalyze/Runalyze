@@ -38,7 +38,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * Test: standard file
-	 * Filename: "Standard.fit" 
+	 * Filename: "Standard.fit"
 	 */
 	public function test_generalFile() {
 		if (Shell::isPerlAvailable()) {
@@ -72,7 +72,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * Test: fenix file
-	 * Filename: "Fenix-2.fit" 
+	 * Filename: "Fenix-2.fit"
 	 */
 	public function test_FenixFile() {
 		if (Shell::isPerlAvailable()) {
@@ -114,7 +114,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * Test: fenix file
-	 * Filename: "Fenix-2.fit" 
+	 * Filename: "Fenix-2.fit"
 	 */
 	public function test_FenixFileWithPauses() {
 		if (Shell::isPerlAvailable()) {
@@ -149,12 +149,29 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertEquals( 65, $this->object->object()->getFitVdotEstimate() );
 			$this->assertEquals( 932, $this->object->object()->getFitRecoveryTime() );
 			$this->assertEquals( 0, $this->object->object()->getFitHRVscore() );
+
+			$Pauses = $this->object->object()->Pauses();
+			$this->assertEquals(6, $Pauses->num());
+
+			foreach ([
+				 [267, 14, 144, 130],
+				 [465, 53, 151, 104],
+				 [1491, 73, 145, 106],
+				 [2575, 35, 139, 111],
+				 [2804, 51, 136, 100],
+				 [2970, 9, 150, 144]
+			 ] as $i => $pause) {
+				$this->assertEquals($pause[0], $Pauses->at($i)->time());
+				$this->assertEquals($pause[1], $Pauses->at($i)->duration());
+				$this->assertEquals($pause[2], $Pauses->at($i)->hrStart());
+				$this->assertEquals($pause[3], $Pauses->at($i)->hrEnd());
+			}
 		}
 	}
 
 	/**
 	 * Test: fenix file
-	 * Filename: "Fenix-2.fit" 
+	 * Filename: "Fenix-2.fit"
 	 */
 	public function test_FenixFileNegativeTime() {
 		if (!Shell::isPerlAvailable()) {
@@ -188,7 +205,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * Test: multisession file
-	 * Filename: "Multisession.fit" 
+	 * Filename: "Multisession.fit"
 	 */
 	public function testMultisession() {
 		if (Shell::isPerlAvailable()) {
@@ -213,7 +230,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * Test: simple pauses
-	 * Filename: "HRV-example.fit" 
+	 * Filename: "HRV-example.fit"
 	 */
 	public function testSimplePauseExample() {
 		if (Shell::isPerlAvailable()) {
@@ -240,7 +257,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * Test: simple swimming file (FR910xt)
-	 * Filename: "swim-25m-lane.fit" 
+	 * Filename: "swim-25m-lane.fit"
 	 */
 	public function testSimpleSwimmingFile() {
 		if (Shell::isPerlAvailable()) {
@@ -274,7 +291,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * Test: simple swimming file (Fenix 3)
-	 * Filename: "swim-fenix-50m.fit" 
+	 * Filename: "swim-fenix-50m.fit"
 	 */
 	public function testSwimmingFileFromFenix() {
 		if (Shell::isPerlAvailable()) {
@@ -313,7 +330,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * Test: outdoor swimming file
-	 * Filename: "swim-outdoor.fit" 
+	 * Filename: "swim-outdoor.fit"
 	 */
 	public function testOutdoorSwimmingFile() {
 		if (Shell::isPerlAvailable()) {
@@ -322,8 +339,13 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertFalse($this->object->hasMultipleTrainings() );
 			$this->assertFalse($this->object->failed() );
 
-			$this->assertEquals('2011-10-15 21:31', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
-			$this->assertEquals(120, $this->object->object()->getTimezoneOffset());
+			if (RUNALYZE_TEST_TZ_LOOKUP) {
+				$this->assertEquals('2011-10-15 14:31', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
+				$this->assertEquals(-300, $this->object->object()->getTimezoneOffset());
+			} else {
+				$this->assertEquals('2011-10-15 21:31', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
+				$this->assertEquals(120, $this->object->object()->getTimezoneOffset());
+			}
 
 			$this->assertEquals('fr910xt', $this->object->object()->getCreator());
 			$this->assertEquals(0, $this->object->object()->getPoolLength());
@@ -345,7 +367,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 
 	/*
 	 * Test: hrv
-	 * Filename: "HRV-example.fit" 
+	 * Filename: "HRV-example.fit"
 	 */
 	public function testHRV() {
 		if (Shell::isPerlAvailable()) {
@@ -358,12 +380,24 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertFalse( $this->object->failed() );
 
 			$this->assertTrue( $this->object->object()->hasArrayHRV() );
+
+			$Pauses = $this->object->object()->Pauses();
+			$this->assertEquals(1, $Pauses->num());
+
+			foreach ([
+				 [41, 69, 100, 69]
+			 ] as $i => $pause) {
+				$this->assertEquals($pause[0], $Pauses->at($i)->time());
+				$this->assertEquals($pause[1], $Pauses->at($i)->duration());
+				$this->assertEquals($pause[2], $Pauses->at($i)->hrStart());
+				$this->assertEquals($pause[3], $Pauses->at($i)->hrEnd());
+			}
 		}
 	}
 
 	/*
 	 * Test: with power data
-	 * Filename: "with-power.fit" 
+	 * Filename: "with-power.fit"
 	 */
 	public function testWithPowerData() {
 		if (Shell::isPerlAvailable()) {
@@ -392,7 +426,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 
 	/*
 	 * Test: multisport session from fenix 3
-	 * Filename: "multisport-triathlon-fenix3.fit" 
+	 * Filename: "multisport-triathlon-fenix3.fit"
 	 */
 	public function testMultisportTriathlonFromFenix3() {
 		if (Shell::isPerlAvailable()) {
@@ -454,7 +488,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 
 	/*
 	 * Test: 'stop' instead of 'stop_all' in file from osynce
-	 * Filename: "osynce-stop-bug.fit" 
+	 * Filename: "osynce-stop-bug.fit"
 	 */
 	public function testOsynceTimeProblem() {
 		if (Shell::isPerlAvailable()) {
@@ -547,6 +581,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertEquals(172, $this->object->object()->getPulseMax());
 
 			$this->assertEquals(null, $this->object->object()->getFitTrainingEffect());
+			$this->assertEquals(null, $this->object->object()->getFitPerformanceCondition());
 
 			$this->assertTrue($this->object->object()->hasArrayTime());
 			$this->assertTrue($this->object->object()->hasArrayDistance());
@@ -581,10 +616,10 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			// Make sure that it's not 100, see https://github.com/Runalyze/Runalyze/issues/1798
 			$this->assertEquals(0, $this->object->object()->getFitHRVscore());
 			$this->assertEquals('fr630', $this->object->object()->getCreator());
+			$this->assertEquals(100, $this->object->object()->getFitPerformanceCondition());
 
 			// New values for later on:
 			//  - lactate threshold: 163 bpm / 2.583 m/s
-			//  - performance condition: 100 (= baseline, i.e. +/- 0)
 		}
 	}
 }

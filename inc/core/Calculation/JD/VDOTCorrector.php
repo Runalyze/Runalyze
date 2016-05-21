@@ -77,19 +77,22 @@ class VDOTCorrector {
 	 * 
 	 * @param PDO $database
 	 * @param int $accountid
-	 * @param int $typeid
+	 * @param int $sportid
+	 * @return float
 	 */
-	public function fromDatabase(PDO $database, $accountid, $typeid) {
+	public function fromDatabase(PDO $database, $accountid, $sportid) {
 		$factor = $database->query(
 			'SELECT MAX(`factor`) as `factor`
 			FROM (
 				SELECT `vdot_by_time`*1.0/`vdot` AS `factor` 
-				FROM `'.PREFIX.'training` 
-				WHERE
-					`typeid` = '.(int)$typeid.' AND
-					`vdot` > 0 AND
-					`accountid` = '.(int)$accountid.'
-				ORDER BY  `vdot_by_time` DESC 
+				FROM `'.PREFIX.'raceresult` r
+				LEFT JOIN `'.PREFIX.'training` tr ON r.activity_id = tr.id
+				    WHERE
+					tr.`sportid` = '.(int)$sportid.' AND
+					tr.`vdot` > 0 AND
+					tr.`use_vdot` = 1 AND
+					r.`accountid` = '.(int)$accountid.'
+				ORDER BY  tr.`vdot_by_time` DESC 
 				LIMIT '.self::DB_LOOKUP_LIMIT.'
 			) AS T
 			LIMIT 1'
@@ -100,6 +103,8 @@ class VDOTCorrector {
 		} else {
 			$this->Factor = 1;
 		}
+
+		return $this->Factor;
 	}
 
 	/**
@@ -109,6 +114,7 @@ class VDOTCorrector {
 	 * This method does not regard any other correction (e.g. elevation, ...).
 	 * 
 	 * @param \Runalyze\Model\Activity\Entity $activity
+	 * @return float
 	 */
 	public function fromActivity(Activity\Entity $activity) {
 		if ($activity->vdotByHeartRate() > 0) {
@@ -116,5 +122,7 @@ class VDOTCorrector {
 		} else {
 			$this->Factor = 1;
 		}
+
+		return $this->Factor;
 	}
 }

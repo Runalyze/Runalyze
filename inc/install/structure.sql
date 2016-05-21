@@ -321,6 +321,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_training` (
   `fit_recovery_time` smallint(5) unsigned NOT NULL DEFAULT '0',
   `fit_hrv_analysis` smallint(5) unsigned NOT NULL DEFAULT '0',
   `fit_training_effect` decimal(2,1) unsigned DEFAULT NULL,
+  `fit_performance_condition` tinyint(3) unsigned DEFAULT NULL,
   `jd_intensity` smallint(4) NOT NULL DEFAULT '0',
   `rpe` tinyint(2) unsigned DEFAULT NULL,
   `trimp` int(4) NOT NULL DEFAULT '0',
@@ -390,6 +391,46 @@ CREATE TABLE IF NOT EXISTS `runalyze_user` (
   `accountid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `runalyze_weathercache`
+--
+
+CREATE TABLE IF NOT EXISTS `runalyze_weathercache` (
+  `time` int(11) NOT NULL DEFAULT '0',
+  `geohash` char(5) DEFAULT NULL,
+  `temperature` tinyint(4) DEFAULT NULL,
+  `wind_speed` tinyint(3) unsigned DEFAULT NULL,
+  `wind_deg` smallint(3) unsigned DEFAULT NULL,
+  `humidity` tinyint(3) unsigned DEFAULT NULL,
+  `pressure` smallint(4) unsigned DEFAULT NULL,
+  `weatherid` smallint(6) NOT NULL DEFAULT '1',
+  `weather_source` tinyint(2) unsigned DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `runalyze_raceresult`
+--
+
+CREATE TABLE IF NOT EXISTS `runalyze_raceresult` (
+  `official_distance` decimal(6,2) NOT NULL,
+  `official_time` decimal(8,2) NOT NULL,
+  `officially_measured` tinyint(1)  unsigned NOT NULL DEFAULT 0,
+  `name` varchar(50) NOT NULL DEFAULT '',
+  `place_total` mediumint(8) unsigned DEFAULT NULL,
+  `place_gender` mediumint(8) unsigned DEFAULT NULL,
+  `place_ageclass` mediumint(8) unsigned DEFAULT NULL,
+  `participants_total` mediumint(8) unsigned DEFAULT NULL,
+  `participants_gender` mediumint(8) unsigned DEFAULT NULL,
+  `participants_ageclass` mediumint(8) unsigned DEFAULT NULL,
+  `activity_id` int(10) unsigned NOT NULL,
+  `accountid` int(10) unsigned NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 --
 -- Indizes der exportierten Tabellen
 --
@@ -439,7 +480,7 @@ ALTER TABLE `runalyze_equipment_type`
 --
 -- Indizes für die Tabelle `runalyze_tag`
 --
-ALTER TABLE `runalyze_tag` 
+ALTER TABLE `runalyze_tag`
 ADD PRIMARY KEY (`id`), ADD KEY `accountid` (`accountid`);
 
 --
@@ -507,6 +548,18 @@ ALTER TABLE `runalyze_type`
 --
 ALTER TABLE `runalyze_user`
  ADD PRIMARY KEY (`id`), ADD KEY `time` (`accountid`,`time`);
+ 
+--
+-- Indizes für die Tabelle `runalyze_raceresult`
+--
+ALTER TABLE `runalyze_raceresult`
+  ADD PRIMARY KEY (`activity_id`), ADD KEY  `accountid` (`accountid`);
+  
+--
+-- Indizes für die Tabelle `runalyze_weathercache`
+--
+ALTER TABLE `runalyze_weathercache`
+ADD PRIMARY KEY (`geohash`,`time`);
 
 --
 -- AUTO_INCREMENT für exportierte Tabellen
@@ -647,3 +700,10 @@ ADD CONSTRAINT `runalyze_swimdata_ibfk_2` FOREIGN KEY (`activityid`) REFERENCES 
 ALTER TABLE `runalyze_trackdata`
 ADD CONSTRAINT `runalyze_trackdata_ibfk_1` FOREIGN KEY (`accountid`) REFERENCES `runalyze_account` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
 ADD CONSTRAINT `runalyze_trackdata_ibfk_2` FOREIGN KEY (`activityid`) REFERENCES `runalyze_training` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints der Tabelle `runalyze_raceresult`
+--
+ALTER TABLE `runalyze_raceresult`
+ADD CONSTRAINT `runalyze_raceresult_ibfk_1` FOREIGN KEY (`accountid`) REFERENCES `runalyze_account` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `runalyze_raceresult_ibfk_2` FOREIGN KEY (`activity_id`) REFERENCES `runalyze_training` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;

@@ -6,6 +6,7 @@
 
 namespace Runalyze\View\Activity;
 
+use Runalyze\Activity\PerformanceCondition;
 use Runalyze\Activity\Temperature;
 use Runalyze\Activity\TrainingEffect;
 use Runalyze\Configuration;
@@ -389,6 +390,14 @@ class Dataview {
 	 */
 	public function fitTrainingEffect() {
 		return TrainingEffect::format($this->Activity->fitTrainingEffect());
+	}
+
+	/**
+	 * Get string for performance condition
+	 * @return string
+	 */
+	public function fitPerformanceCondition() {
+		return PerformanceCondition::format($this->Activity->fitPerformanceCondition());
 	}
 
 	/**

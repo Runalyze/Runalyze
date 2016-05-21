@@ -4,10 +4,10 @@
  * @package Runalyze\Plugins\Panels
  */
 
-use Runalyze\Configuration;
 use Runalyze\Activity\Distance;
-use Runalyze\Util\Time;
+use Runalyze\Configuration;
 use Runalyze\Util\LocalTime;
+use Runalyze\Util\Time;
 
 $PLUGINKEY = 'RunalyzePluginPanel_Ziele';
 
@@ -94,18 +94,21 @@ class RunalyzePluginPanel_Ziele extends PluginPanel
 	 */
 	protected function getRightSymbol()
 	{
-		$Code .= '<li class="with-submenu"><span class="link">'.__('Choose time range').'</span>';
-		$Code .= '<ul class="submenu">';
-
+		$isFirst = true;
+		$Code = '<ul class="submenu">';
 		foreach ($this->getTimeset() as $i => $timeset) {
 			if (!$this->Configuration()->value('ziel_show_' . $i))
 				continue;
-
 			$Code .= '<li>' . Ajax::change($timeset['name'], 'bunny', '#bunny_' . $i) . '</li>';
+			if ($isFirst) {
+				$Code = '<li class="with-submenu"><span class="link">' . $timeset['name'] . '</span>' . $Code;
+				$isFirst = false;
+			};
 		}
-
+//		$(this).closest("li.with-submenu").find("span").text($(this).text())
+		
 		$Code .= '</ul>';
-		$code .= '</li>';
+		$Code .= '</li>';
 
 		return '<ul>'.$Code.'</ul>';
 	}
@@ -159,10 +162,10 @@ class RunalyzePluginPanel_Ziele extends PluginPanel
 		if ($dat['distanz_sum'] > 0) {
 			$this->addHeadline(__('Current'), $dat['distanz_sum'], $dat['anzahl'], true);
 			if ($showDetails) {
-				$this->addLine(__('&oslash; Day'), $days > 0 ? $dat['distanz_sum'] / $days : 0);
+				$this->addLine(__('avg.').' '.__('Day'), $days > 0 ? $dat['distanz_sum'] / $days : 0);
 
 				if ($days > 7)
-					$this->addLine(__('&oslash; Week'), $days > 0 ? 7 * $dat['distanz_sum'] / $days : 0, $dat['anzahl'] / $days * 7);
+					$this->addLine(__('avg.').' '.__('Week'), $days > 0 ? 7 * $dat['distanz_sum'] / $days : 0, $dat['anzahl'] / $days * 7);
 
 				if ($days > 0)
 					$this->addHeadline(__('Prognosis'), $dat['distanz_sum'] / $days * $dauer, $dat['anzahl'] / $days * $dauer);
@@ -175,10 +178,10 @@ class RunalyzePluginPanel_Ziele extends PluginPanel
 				$this->addLine(sprintf(__('%d days left'), $rest), $togo);
 				if ($showDetails) {
 
-					$this->addLine(__('&oslash; Day'), $rest > 0 ? $togo / $rest : 0);
+					$this->addLine(__('avg.').' '.__('Day'), $rest > 0 ? $togo / $rest : 0);
 
 					if ($rest > 7)
-						$this->addLine(__('&oslash; Week'), 7 * $togo / $rest);
+						$this->addLine(__('avg.').' '.__('Week'), 7 * $togo / $rest);
 				}
 			} else {
 				$this->addLine(__('Goal reached.'));
@@ -189,7 +192,7 @@ class RunalyzePluginPanel_Ziele extends PluginPanel
 			if ($showDetails) {
 
 				$this->addHeadline(__('Pace Bunny'), $goal / $dauer * $days);
-				$this->addLine(__('&oslash; Day'), $goal / $dauer);
+				$this->addLine(__('avg.').' '.__('Day'), $goal / $dauer);
 
 
 				if ($diff > 0)

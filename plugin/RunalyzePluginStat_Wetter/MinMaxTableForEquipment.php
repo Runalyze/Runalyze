@@ -92,13 +92,13 @@ class MinMaxTableForEquipment
 			'<thead><tr>'.
 				'<th></th>'.
 				'<th>'.__('Temperatures').'</th>'.
-				'<th>&Oslash;</th>'.
+				'<th>'.__('avg.').'</th>'.
 				'<th colspan="2"></th>'.
 				'<th>'.__('Temperatures').'</th>'.
-				'<th>&Oslash;</th>'.
+				'<th>'.__('avg.').'</th>'.
 				'<th colspan="2"></th>'.
 				'<th>'.__('Temperatures').'</th>'.
-				'<th>&Oslash;</th>'.
+				'<th>'.__('avg.').'</th>'.
 			'</tr></thead>';
 	}
 

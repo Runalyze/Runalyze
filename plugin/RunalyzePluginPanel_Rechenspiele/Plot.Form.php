@@ -6,19 +6,17 @@
  */
 
 use Runalyze\Configuration;
+use Runalyze\Calculation\BasicEndurance;
 use Runalyze\Calculation\JD;
 use Runalyze\Util\Time;
 use Runalyze\Util\LocalTime;
 
-$MaxATLPoints   = 750;
 $DataFailed     = false;
+$BasicEndurance = array();
 $ATLs           = array();
 $CTLs           = array();
 $VDOTs          = array();
 $TRIMPs         = array();
-$Trimps_raw     = array();
-$VDOTs_raw      = array();
-$Durations_raw  = array();
 $VDOTsday       = array();
 $maxTrimp=0;
 
@@ -26,6 +24,16 @@ $All      = 1*($timerange == 'all'); //0 or 1
 $lastHalf = 1*($timerange == 'lasthalf');
 $lastYear = 1*($timerange == 'lastyear');
 $Year     = $All || $lastHalf || $lastYear ? date('Y') : (int)$timerange;
+
+$BasicEnduranceObj = new BasicEndurance();
+$BasicEnduranceObj->readSettingsFromConfiguration();
+
+$VDOTdays = Configuration::Vdot()->days();
+$ATLdays = Configuration::Trimp()->daysForATL();
+$CTLdays = Configuration::Trimp()->daysForCTL();
+$BEkmDays = $BasicEnduranceObj->getDaysForWeekKm();
+$BElongjogsDays = $BasicEnduranceObj->getDaysToRecognizeForLongjogs();
+$MinKmOfLongJogs = $BasicEnduranceObj->getMinimalDistanceForLongjogs();
 
 if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 	if ($All) {
@@ -42,7 +50,7 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 		$EndTime = mktime(23, 59, 0, 12, 31, $Year);
 	}
 
-	$AddDays      = 3*max(Configuration::Trimp()->daysForATL(), Configuration::Trimp()->daysForCTL(), Configuration::Vdot()->days());
+	$AddDays      = max(3*max($ATLdays, $CTLdays, $VDOTdays), $BEkmDays, $BElongjogsDays);
 	$NumberOfDays = Time::diffInDays($StartTime, $EndTime);
 	$StartYear    = date('Y', $StartTime);
 	$EndYear      = date('Y', $EndTime);
@@ -51,6 +59,8 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 	$Trimps_raw    = $EmptyArray;
 	$VDOTs_raw     = $EmptyArray;
 	$Durations_raw = $EmptyArray;
+	$Distances_raw = $EmptyArray;
+	$Longjogs_raw  = array_fill(0, $NumberOfDays + $AddDays + 2, array());
 
 	// Here VDOT will be implemented again
 	// Normal functions are too slow, calling them for each day would trigger each time a query
@@ -60,37 +70,41 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 	$StartDay = LocalTime::fromServerTime($StartTime)->format('Y-m-d');
 
 	// Can't cache until we can invalidate it
-	$Data = DB::getInstance()->query('
-			SELECT
-				DATEDIFF(FROM_UNIXTIME(`time`), "'.$StartDay.'") as `index`,
-				SUM(`trimp`) as `trimp`,
-				SUM('.JD\Shape::mysqlVDOTsum($withElevation).'*(`sportid`='.Configuration::General()->runningSport().')) as `vdot`,
-				SUM('.JD\Shape::mysqlVDOTsumTime($withElevation).'*(`sportid`='.Configuration::General()->runningSport().')) as `s`
-			FROM `'.PREFIX.'training`
-			WHERE
-				`accountid`='.\SessionAccountHandler::getId().' AND
-				`time` BETWEEN UNIX_TIMESTAMP("'.$StartDay.'" + INTERVAL -'.$AddDays.' DAY) AND UNIX_TIMESTAMP("'.$StartDay.'" + INTERVAL '.$NumberOfDays.' DAY)-1
-			GROUP BY `index`')->fetchAll();
+	$Statement = DB::getInstance()->query(
+		'SELECT
+			DATEDIFF(FROM_UNIXTIME(`time`), "'.$StartDay.'") as `index`,
+			`trimp`,
+			`distance`,
+			'.JD\Shape::mysqlVDOTsum($withElevation).' as `vdot_weighted`,
+			'.JD\Shape::mysqlVDOTsumTime($withElevation).' as `vdot_sum_time`,
+			`sportid` = "'.Configuration::General()->runningSport().'" as `is_running`
+		FROM `'.PREFIX.'training`
+		WHERE
+			`accountid`='.\SessionAccountHandler::getId().' AND
+			`time` BETWEEN UNIX_TIMESTAMP("'.$StartDay.'" + INTERVAL -'.$AddDays.' DAY) AND '.$EndTime
+	);
 
-	foreach ($Data as $dat) {
-		$index = $dat['index'] + $AddDays;
+	while ($activity = $Statement->fetch()) {
+		$index = $activity['index'] + $AddDays;
 
-		$Trimps_raw[$index] = 1*$dat['trimp'];
+		$Trimps_raw[$index] += $activity['trimp'];
 
-		if ($dat['vdot'] != 0) {
-			$VDOTs_raw[$index]     = $dat['vdot']; // Remember: These values are already multiplied with `s`
-			$Durations_raw[$index] = (double)$dat['s'];
+		if ($activity['is_running']) {
+			$Distances_raw[$index] += $activity['distance'];
+
+			if ($activity['distance'] > $MinKmOfLongJogs) {
+				$Longjogs_raw[$index][] = $activity['distance'];
+			}
+
+			if ($activity['vdot_weighted'] != 0) {
+				$VDOTs_raw[$index]     += $activity['vdot_weighted'];
+				$Durations_raw[$index] += $activity['vdot_sum_time'];
+			}
 		}
 	}
 
-	$StartDayInYear = $All || $lastHalf || $lastYear ? Time::diffInDays($StartTime, mktime(0,0,0,1,1,$StartYear)) + 1*($StartYear < $Year) : 1;
-	$StartDayInYear += $lastHalf || $lastYear ? 1 : 0;
 	$LowestIndex = $AddDays + 1*(!$All);
 	$HighestIndex = $LowestIndex + $NumberOfDays;
-
-	$VDOTdays = Configuration::Vdot()->days();
-	$ATLdays = Configuration::Trimp()->daysForATL();
-	$CTLdays = Configuration::Trimp()->daysForCTL();
 
 	if ($perfmodel == 'banister') {
 		$performanceModel = new Runalyze\Calculation\Performance\Banister($Trimps_raw, $CTLdays, $ATLdays, 1, 3);
@@ -123,14 +137,20 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 		$maxCTL = 100;
 	}
 
+	$StartTime = strtotime($StartDay) + DAY_IN_S * 0.5;
+	$vdotFactor = Configuration::Data()->vdotFactor();
+
 	for ($d = $LowestIndex; $d <= $HighestIndex; $d++) {
-		$index = Plot::dayOfYearToJStime($StartYear, $d - $AddDays + $StartDayInYear, 12);
+		$index = ($StartTime + DAY_IN_S * ($d - $AddDays)) . '000';
 
 		$ATLs[$index] = 100 * $performanceModel->fatigueAt($d) / $maxATL;
 		$CTLs[$index] = 100 * $performanceModel->fitnessAt($d) / $maxCTL;
 		$TSBs[$index] = 100 * $performanceModel->performanceAt($d) / $maxCTL;
 		$TRIMPs[$index]    = $Trimps_raw[$d];
-		if ($maxTrimp<$Trimps_raw[$d]) $maxTrimp=$Trimps_raw[$d];
+
+		if ($maxTrimp < $Trimps_raw[$d]) {
+			$maxTrimp = $Trimps_raw[$d];
+		}
 
 		$VDOT_slice      = array_slice($VDOTs_raw, $d - $VDOTdays, $VDOTdays);
 		$Durations_slice = array_slice($Durations_raw, $d - $VDOTdays, $VDOTdays);
@@ -138,10 +158,24 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 		$Durations_sum   = array_sum($Durations_slice);
 
 		if (count($VDOT_slice) != 0 && $Durations_sum != 0) {
-			$VDOTs[$index] = Configuration::Data()->vdotFactor() * ($VDOT_sum / $Durations_sum);
+			$VDOTs[$index] = $vdotFactor * ($VDOT_sum / $Durations_sum);
+
+			$BasicEnduranceObj->setVDOT($VDOTs[$index]);
+			$currentKmSum = array_sum(array_slice($Distances_raw, $d - $BEkmDays, $BEkmDays));
+			$longJogPoints = 0;
+
+			for ($i = 0; $i <= $BElongjogsDays; ++$i) {
+				foreach ($Longjogs_raw[$d - $i] as $longjog) {
+					$longJogPoints += 2*(1 - $i/$BElongjogsDays) * pow($longjog - $MinKmOfLongJogs, 2);
+				}
+			}
+			$longJogPoints /= pow($BasicEnduranceObj->getTargetLongjogKmPerWeek(), 2);
+			$BasicEndurance[$index] = $BasicEnduranceObj->asArray(0, ['km' => $currentKmSum, 'sum' => $longJogPoints])['percentage'];
 		}
 
-		if ( $VDOTs_raw[$d]) $VDOTsday[$index]= Configuration::Data()->vdotFactor() * ($VDOTs_raw[$d]/$Durations_raw[$d]);
+		if ($VDOTs_raw[$d]) {
+			$VDOTsday[$index] = $vdotFactor * ($VDOTs_raw[$d] / $Durations_raw[$d]);
+		}
 	}
 } else {
 	$DataFailed = true;
@@ -150,7 +184,6 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 $Plot = new Plot("form".$timerange.$perfmodel, 800, 450);
 
 $Plot->Data[] = array('label' => __('Fitness (CTL)'), 'color' => '#008800', 'data' => $CTLs);
-//if (count($ATLs) < $MaxATLPoints)
 
 if ($perfmodel == 'banister') {
 	$Plot->Data[] = array('label' => 'TSB', 'color' => '#BBBB00', 'data' => $TSBs);
@@ -160,6 +193,7 @@ $Plot->Data[] = array('label' => __('Fatigue (ATL)'), 'color' => '#CC2222', 'dat
 $Plot->Data[] = array('label' => __('avg VDOT'), 'color' => '#000000', 'data' => $VDOTs, 'yaxis' => 2);
 $Plot->Data[] = array('label' => 'TRIMP', 'color' => '#5555FF', 'data' => $TRIMPs, 'yaxis' => 3);
 $Plot->Data[] = array('label' => __('day VDOT'), 'color' => '#444444', 'data' => $VDOTsday, 'yaxis' => 2);
+$Plot->Data[] = array('label' => __('Basic endurance'), 'color' => '#CC9322', 'data' => $BasicEndurance, 'yaxis' => 4);
 
 $Plot->setMarginForGrid(5);
 $Plot->setLinesFilled(array(0));
@@ -185,6 +219,10 @@ $Plot->setYTicks(2, 1, 1);
 $Plot->addYAxis(3, 'right');
 $Plot->setYLimits(3, 0, $maxTrimp*2);
 
+$Plot->addYAxis(4, 'right');
+$Plot->addYUnit(4, '%');
+$Plot->setYLimits(4, 0, ceil(max($BasicEndurance)/100)*100);
+
 if ($perfmodel == 'banister') {
 	$Plot->showAsBars(4,1,2);
 	$Plot->showAsPoints(5);
@@ -195,8 +233,8 @@ if ($perfmodel == 'banister') {
 
 $Plot->smoothing(false);
 
-if (($lastHalf || $lastYear) && !$DataFailed) {
-	$Plot->addMarkingArea('x', time().'000', $index, 'rgba(255,255,255,0.3)');//'rgba(200,200,200,0.5)');
+if (($lastHalf || $lastYear || ($Year == date('Y'))) && !$DataFailed) {
+	$Plot->addMarkingArea('x', time().'000', $index, 'rgba(255,255,255,0.3)');
 }
 
 $Plot->setGridAboveData();

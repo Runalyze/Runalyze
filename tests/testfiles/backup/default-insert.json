@@ -27,7 +27,7 @@ version=2.6
 
 {"TABLE":"runalyze_training"}
 {"1":{"time":"1234567890","sportid":"1","typeid":"1","s":"900.00","routeid":"0","comment":"UNITTEST-1"}}
-{"2":{"time":"1234567890","sportid":"2","typeid":"2","s":"1500.00","routeid":"0","comment":"UNITTEST-2"}}
+{"2":{"time":"1234567890","sportid":"2","typeid":"2","s":"1500.00","routeid":"0","comment":"UNITTEST-RACE"}}
 
 {"TABLE":"runalyze_trackdata"}
 
@@ -40,3 +40,6 @@ version=2.6
 {"TABLE":"runalyze_equipment"}
 
 {"TABLE":"runalyze_activity_equipment"}
+
+{"TABLE":"runalyze_raceresult"}
+{"":{"official_distance":"10.00","official_time":"2400","activity_id":"2"}}

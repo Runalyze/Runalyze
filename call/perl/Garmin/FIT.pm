@@ -1665,6 +1665,7 @@ $template[FIT_FLOAT64] = 'd';
      'fr225' => 2153,
      'fr630' => 2156,
      'fr230' => 2157,
+     'fr735xt' => 2158,
      'vivo_active_apac' => 2160,
      'vector_2' => 2161,
      'vector_2s' => 2162,
@@ -3456,7 +3457,7 @@ sub field_name {
   if (ref $msgtype eq 'HASH') {
     my $flddesc = $msgtype->{$fspec};
 
-    ref $flddesc eq 'HASH' 
+    ref $flddesc eq 'HASH'
       and return $flddesc->{name};
   }
 

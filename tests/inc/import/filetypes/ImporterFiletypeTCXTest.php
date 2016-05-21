@@ -39,7 +39,7 @@ class ImporterFiletypeTCXTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test: incorrect xml-file 
+	 * Test: incorrect xml-file
 	 */
 	public function test_notGarmin() {
 		$this->object->parseString('<any><xml><file></file></xml></any>');
@@ -51,7 +51,7 @@ class ImporterFiletypeTCXTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * Test: standard file
-	 * Filename: "Standard.tcx" 
+	 * Filename: "Standard.tcx"
 	 */
 	public function test_generalFile() {
 		$this->object->parseFile('../tests/testfiles/tcx/Standard.tcx');
@@ -98,7 +98,7 @@ class ImporterFiletypeTCXTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * Test: swimming
-	 * Filename: "Swim-without-time_by-Timekiller.tcx" 
+	 * Filename: "Swim-without-time_by-Timekiller.tcx"
 	 */
 	public function test_swimTraining() {
 		$this->object->parseFile('../tests/testfiles/tcx/Swim-without-time_by-Timekiller.tcx');
@@ -118,7 +118,7 @@ class ImporterFiletypeTCXTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * Test: indoor file
-	 * Filename: "Indoor-Training.tcx" 
+	 * Filename: "Indoor-Training.tcx"
 	 */
 	public function test_indoorTraining() {
 		$this->object->parseFile('../tests/testfiles/tcx/Indoor-Training.tcx');
@@ -137,7 +137,7 @@ class ImporterFiletypeTCXTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * Test: multisport file
-	 * Filename: "Multisport.tcx" 
+	 * Filename: "Multisport.tcx"
 	 */
 	public function test_multisport() {
 		$this->object->parseFile('../tests/testfiles/tcx/Multisport.tcx');
@@ -170,7 +170,7 @@ class ImporterFiletypeTCXTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * Test: dakota file
-	 * Filename: "Dakota.tcx" 
+	 * Filename: "Dakota.tcx"
 	 */
 	public function test_dakota() {
 		$this->object->parseFile('../tests/testfiles/tcx/Dakota.tcx');
@@ -217,7 +217,7 @@ class ImporterFiletypeTCXTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * Test: DistanceMeters are missing
-	 * Filename: "missing-distances.tcx" 
+	 * Filename: "missing-distances.tcx"
 	 */
 	public function testMissingDistancePoints() {
 		$this->object->parseFile('../tests/testfiles/tcx/missing-distances.tcx');
@@ -238,7 +238,7 @@ class ImporterFiletypeTCXTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * Test: Runtastic file - don't look for pauses!
-	 * Filename: "Runtastic.tcx" 
+	 * Filename: "Runtastic.tcx"
 	 */
 	public function testRuntasticFile() {
 		$this->object->parseFile('../tests/testfiles/tcx/Runtastic.tcx');
@@ -268,7 +268,7 @@ class ImporterFiletypeTCXTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * Test: only route
-	 * Filename: "Route-only.tcx" 
+	 * Filename: "Route-only.tcx"
 	 */
 	public function testRouteOnly() {
 		$this->object->parseFile('../tests/testfiles/tcx/Route-only.tcx');
@@ -319,6 +319,31 @@ class ImporterFiletypeTCXTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertEquals(142, $this->object->object()->getTimeInSeconds());
 		$this->assertEquals(0.601, $this->object->object()->getDistance(), '', 0.001);
+	}
+
+	/**
+	 * Filename: "Wrong-time-zone-by-polar.tcx"
+	 * @see https://github.com/Runalyze/Runalyze/issues/1782
+	 * @see https://github.com/Runalyze/Runalyze/issues/1779
+	 */
+	public function testWrongTimeZoneByPolarThatShouldBeFixedWithTimeZoneLookup() {
+		$this->object->parseFile('../tests/testfiles/tcx/Wrong-time-zone-by-polar.tcx');
+
+		if (RUNALYZE_TEST_TZ_LOOKUP) {
+			$this->assertEquals('2016-04-10 19:40', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
+			$this->assertEquals(120, $this->object->object()->getTimezoneOffset());
+		} else {
+			$this->assertEquals('2016-04-10 18:40', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
+			$this->assertEquals(60, $this->object->object()->getTimezoneOffset());
+		}
+
+		$this->assertEquals( 1765, $this->object->object()->getTimeInSeconds(), '', 5);
+		$this->assertEquals( 3.64, $this->object->object()->getDistance(), '', 0.01);
+		$this->assertTrue( $this->object->object()->hasArrayAltitude() );
+		$this->assertTrue( $this->object->object()->hasArrayLatitude() );
+		$this->assertTrue( $this->object->object()->hasArrayLongitude() );
+		$this->assertTrue( $this->object->object()->hasArrayHeartrate() );
+		$this->assertTrue( $this->object->object()->hasArrayCadence() );
 	}
 
 }

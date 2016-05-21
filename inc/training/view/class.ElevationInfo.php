@@ -4,6 +4,7 @@
  * @package Runalyze\DataObjects\Training\View
  */
 
+use Runalyze\Calculation;
 use Runalyze\Configuration;
 use Runalyze\Parameter\Application\ElevationMethod;
 use Runalyze\Data;
@@ -143,7 +144,7 @@ class ElevationInfo {
 				<span class="as-input">'.Elevation::format($this->highestPoint).'</span>
 			</div>
 			<div class="w50">
-				<label>&oslash; '.__('Gradient').'</label>
+				<label>'.__('avg.').' '.__('Gradient').'</label>
 				<span class="as-input">'.$this->Context->dataview()->gradientInPercent().'</span>
 			</div>
 			<div class="w50">
@@ -192,7 +193,7 @@ class ElevationInfo {
 	 */
 	protected function getDifferentAlgorithmsFor($array) {
 		$Method        = new ElevationMethod();
-		$Calculator    = new Data\Elevation\Calculation\Calculator($array);
+		$Calculator    = new Calculation\Elevation\Calculator($array);
 		$TresholdRange = range(1, 10);
 		$Algorithms    = array(
 			array(ElevationMethod::NONE, false),

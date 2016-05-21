@@ -62,10 +62,9 @@ class TrainingObject extends DataObject {
 	 * Set weather forecast
 	 */
 	public function setWeatherForecast() {
-		if ($this->trainingIsTooOldToFetchWeatherData() || !Configuration::ActivityForm()->loadWeather())
+		if (!Configuration::ActivityForm()->loadWeather())
 			return;
 
-		$Strategy = new \Runalyze\Data\Weather\Openweathermap();
 		$Location = new \Runalyze\Data\Weather\Location();
 		$Location->setTimestamp($this->getTimestamp());
 		$Location->setLocationName(Configuration::ActivityForm()->weatherLocation());
@@ -74,7 +73,7 @@ class TrainingObject extends DataObject {
 			$Location->setPosition( $this->getFirstArrayPoint('arr_lat'), $this->getFirstArrayPoint('arr_lon') );
 		}
 
-		$Forecast = new \Runalyze\Data\Weather\Forecast($Strategy, $Location);
+		$Forecast = new \Runalyze\Service\WeatherForecast\Forecast($Location);
 		$Weather = $Forecast->object();
 		$Weather->temperature()->toCelsius();
 
@@ -85,14 +84,6 @@ class TrainingObject extends DataObject {
 		$this->set('humidity', $Weather->humidity()->value());
 		$this->set('pressure', $Weather->pressure()->value());
 		$this->set('weather_source', $Weather->source());
-	}
-
-	/**
-	 * Check: Is this training too old for weather forecast?
-	 * @return boolean
-	 */
-	private function trainingIsTooOldToFetchWeatherData() {
-		return Time::diffInDays($this->getTimestamp(), (new LocalTime)->toServerTimestamp()) > 1;
 	}
 
 	/**
@@ -614,7 +605,6 @@ class TrainingObject extends DataObject {
 	 */
 	public function getElevationCalculated() { return $this->get('elevation_calculated'); }
 
-
 	/**
 	 * Set calories
 	 * @param int $kcal kcal
@@ -714,6 +704,9 @@ class TrainingObject extends DataObject {
 
 	public function setFitTrainingEffect($effect) { $this->set('fit_training_effect', $effect); }
 	public function getFitTrainingEffect() { return $this->get('fit_training_effect'); }
+
+	public function setFitPerformanceCondition($value) { $this->set('fit_performance_condition', $value); }
+	public function getFitPerformanceCondition() { return $this->get('fit_performance_condition'); }
 
 
 	/**
@@ -1315,6 +1308,6 @@ class TrainingObject extends DataObject {
 	 * @return boolean 
 	 */
 	public static function idIsCompetition($id) {
-		return (DB::getInstance()->query('SELECT COUNT(*) FROM `'.PREFIX.'training` WHERE `id`='.(int)$id.' AND `typeid`="'.Configuration::General()->competitionType().'" LIMIT 1')->fetchColumn() > 0);
+		return (DB::getInstance()->query('SELECT COUNT(*) FROM `'.PREFIX.'raceresult` WHERE `activity_id`='.(int)$id.' LIMIT 1')->fetchColumn() > 0);
 	}
 }

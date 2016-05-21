@@ -227,9 +227,10 @@ class AccountHandler {
 		}
 		$newSalt = self::getNewSalt();
 
-		$timezone = EnumTimezone::getEnumByOriginalName(date_default_timezone_get());
-		if (Timezone::isValidTimezone($_POST['timezone'])) {
-		    $timezone = EnumTimezone::getEnumByOriginalName($_POST['timezone']);
+		try {
+			$timezone = EnumTimezone::getEnumByOriginalName($_POST['timezone']);
+		} catch (\InvalidArgumentException $e) {
+			$timezone = EnumTimezone::getEnumByOriginalName(date_default_timezone_get());
 		}
 
 		$newAccountId   = DB::getInstance()->insert('account',
@@ -526,7 +527,6 @@ class AccountHandler {
 
 		$DB->insert('conf', $columns, array('general', 'MAINSPORT', self::$SPECIAL_KEYS['MAIN_SPORT_ID'], $accountId));
 		$DB->insert('conf', $columns, array('general', 'RUNNINGSPORT', self::$SPECIAL_KEYS['RUNNING_SPORT_ID'], $accountId));
-		$DB->insert('conf', $columns, array('general', 'TYPE_ID_RACE', self::$SPECIAL_KEYS['TYPE_ID_RACE'], $accountId));
 
 		//Connect equipment type and sport
 		$DB->insert('equipment_sport', array('sportid', 'equipment_typeid'), array(self::$SPECIAL_KEYS['RUNNING_SPORT_ID'], self::$SPECIAL_KEYS['EQUIPMENT_SHOES_ID']));

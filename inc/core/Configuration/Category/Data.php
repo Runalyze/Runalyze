@@ -265,7 +265,7 @@ class Data extends \Runalyze\Configuration\Category {
 		$Corrector->fromDatabase(
 			DB::getInstance(),
 			SessionAccountHandler::getId(),
-			Configuration::General()->competitionType()
+			Configuration::General()->runningSport()
 		);
 
 		$this->updateVdotCorrector( $Corrector->factor() );

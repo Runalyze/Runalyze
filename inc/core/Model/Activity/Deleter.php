@@ -157,10 +157,10 @@ class Deleter extends Model\DeleterWithIDAndAccountID {
 			$this->Object->timestamp() > $timestampLimit
 		) {
 			Configuration::Data()->recalculateVDOTshape();
-
-			if ($this->Object->typeid() == Configuration::General()->competitionType()) {
+			//TODO Raceresult
+			//if ($this->Object->typeid() == Configuration::General()->competitionType()) {
 				Configuration::Data()->recalculateVDOTcorrector();
-			}
+			//}
 		}
 	}
 

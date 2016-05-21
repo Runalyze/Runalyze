@@ -32,7 +32,7 @@ class TableZonesPace extends TableZonesAbstract {
 	 * Get title for average
 	 * @return string
 	 */
-	public function titleForAverage() { return '&oslash;&nbsp;'.__('HR'); }
+	public function titleForAverage() { return __('avg.').'&nbsp;'.__('HR'); }
 
 	/**
 	 * Init data

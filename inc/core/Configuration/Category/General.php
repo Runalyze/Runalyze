@@ -42,7 +42,6 @@ class General extends \Runalyze\Configuration\Category {
 		$this->createHeartRateUnit();
 		$this->createMainSport();
 		$this->createRunningSport();
-		$this->createCompetitionType();
 	}
 
 	/**
@@ -172,33 +171,6 @@ class General extends \Runalyze\Configuration\Category {
 	}
 
 	/**
-	 * Create: TYPE_ID_RACE
-	 */
-	protected function createCompetitionType() {
-		$this->createHandle('TYPE_ID_RACE', new SelectRow(5, array(
-			'table'			=> 'type',
-			'column'		=> 'name'
-		)));
-	}
-
-	/**
-	 * Competition type
-	 * @return int
-	 */
-	public function competitionType() {
-		return $this->get('TYPE_ID_RACE');
-	}
-
-	/**
-	 * Update competition type
-	 * @param int $typeid
-	 */
-	public function updateCompetitionType($typeid) {
-		$this->object('TYPE_ID_RACE')->set($typeid);
-		$this->updateValue($this->handle('TYPE_ID_RACE'));
-	}
-
-	/**
 	 * Register onchange events
 	 */
 	protected function registerOnchangeEvents() {
@@ -210,7 +182,6 @@ class General extends \Runalyze\Configuration\Category {
 		$this->handle('HEART_RATE_UNIT')->registerOnchangeFlag(Ajax::$RELOAD_DATABROWSER);
                 $this->handle('WEEK_START')->registerOnchangeFlag(Ajax::$RELOAD_PAGE);
 		$this->handle('MAINSPORT')->registerOnchangeFlag(Ajax::$RELOAD_PAGE);
-		$this->handle('TYPE_ID_RACE')->registerOnchangeFlag(Ajax::$RELOAD_PLUGINS);
 	}
 
 	/**

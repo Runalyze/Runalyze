@@ -74,16 +74,20 @@ class RunalyzePluginPanel_Equipment extends PluginPanel {
 	 * Method for getting the right symbol(s)
 	 */
 	protected function getRightSymbol() {
-		$Links = '';
-		$Links .= '<li class="with-submenu">'.Ajax::link(__('Type'), 'panel-'.$this->id(), Plugin::$DISPLAY_URL.'?id='.$this->id());
-		$Links .= '<ul class="submenu">';
+		$CurrentType = '';
+		$TypeLinks = [];
 
 		foreach ($this->AllTypes as $Type) {
 			$active = $Type['id'] == (int)$this->Configuration()->value('type');
-			$Links .= '<li'.($active ? ' class="active"' : '').'>'.Ajax::link($Type['name'], 'panel-'.$this->id(), Plugin::$DISPLAY_URL.'?id='.$this->id().'&type='.$Type['id']).'</li>';
+			$TypeLinks[] = '<li'.($active ? ' class="active"' : '').'>'.Ajax::link($Type['name'], 'panel-'.$this->id(), Plugin::$DISPLAY_URL.'?id='.$this->id().'&type='.$Type['id']).'</li>';
+
+			if ($active) {
+				$CurrentType = $Type['name'];
+			}
 		}
 
-		$Links .= '</ul>';
+		$Links = '<li class="with-submenu"><span class="link">'.$CurrentType.'</span>';
+		$Links .= '<ul class="submenu">'.implode('', $TypeLinks).'</ul>';
 		$Links .= '</li>';
 		$Links .= '<li>'.Ajax::window('<a href="'.ConfigTabs::$CONFIG_URL.'?key=config_tab_equipment" '.Ajax::tooltip('', __('Add/Edit equipment'), true, true).'>'.Icon::$ADD.'</a>').'</li>';
 		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key().'/window.equipment.table.php" '.Ajax::tooltip('', __('Show all equipment'), true, true).'>'.Icon::$TABLE.'</a>').'</li>';
@@ -113,7 +117,7 @@ class RunalyzePluginPanel_Equipment extends PluginPanel {
 		echo '</div>';
 
 		if (!$inuse)
-			echo Ajax::toggle('<a class="right" href="#equipment" name="equipment">'.__('Show unused equipment').'</a>', 'hiddenequipment');
+			echo Ajax::toggle('<a class="right" href="#equipment" name="equipment">'.__('Show/Hide unused equipment').'</a>', 'hiddenequipment');
 
 		echo HTML::clearBreak();
 	}
@@ -190,8 +194,8 @@ class RunalyzePluginPanel_Equipment extends PluginPanel {
 					<th class="{sorter: \'x\'} small">'.__('x-times').'</th>
 					<th>'.__('Name').'</th>
 					<th class="{sorter: \'germandate\'} small">'.__('since').'</th>
-					<th class="{sorter: \'distance\'}">&Oslash; '.Runalyze\Configuration::General()->distanceUnitSystem()->distanceUnit().'</th>
-					<th>&Oslash; '.__('Pace').'</th>
+					<th class="{sorter: \'distance\'}">'.__('avg.').' '.Runalyze\Configuration::General()->distanceUnitSystem()->distanceUnit().'</th>
+					<th>'.__('avg.').' '.__('Pace').'</th>
 					<th class="{sorter: \'distance\'} small"><small>'.__('max.').'</small> '.Runalyze\Configuration::General()->distanceUnitSystem()->distanceUnit().'</th>
 					<th class="small"><small>'.__('min.').'</small> '.__('Pace').'</th>
 					<th class="{sorter: \'resulttime\'}">'.__('Time').'</th>
