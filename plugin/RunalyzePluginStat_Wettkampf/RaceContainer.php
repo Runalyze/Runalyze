@@ -120,7 +120,7 @@ class RaceContainer {
 	 */
 	protected function indexDistances() {
 		foreach ($this->Data as $index => $data) {
-			$dist = (float)$data['distance'];
+			$dist = (float)$data['official_distance'];
 
 			if (!isset($this->DistanceIDs[(string)$dist])) {
 				$this->DistanceIDs[(string)$dist] = array($index);

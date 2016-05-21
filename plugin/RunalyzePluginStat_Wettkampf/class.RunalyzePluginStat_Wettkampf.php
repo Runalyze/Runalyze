@@ -268,7 +268,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 			}
 			$year[$wk['y']]['sum']++;
 			foreach($kms as $km)
-				if ($km == $wk['distance']) {
+				if ($km == $wk['official_distance']) {
 					$year[$wk['y']][$km]['sum']++;
 					if ($wk['s'] < $year[$wk['y']][$km]['pb'])
 						$year[$wk['y']][$km]['pb'] = $wk['s'];
