@@ -438,7 +438,7 @@ class SearchResults {
 	 * Display
 	 */
 	public function display() {
-		if ($this->multiEditorRequested()) {
+		if ($this->multiEditorRequested() && !empty($this->Trainings)) {
 			$this->sendResultsToMultiEditor();
 		} else {
 			echo '<div id="'.DATA_BROWSER_SEARCHRESULT_ID.'">';
