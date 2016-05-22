@@ -372,7 +372,6 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 		$Activity = new Activity\Entity($data);
 		
 		$Linker = new Linker($Activity);
-		$Dataview = new Dataview($Activity);
 		$RaceResult = new RaceResult\Entity($data);
 		$RaceResultView = new View\RaceResult\Dataview($RaceResult);
 
@@ -527,7 +526,9 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 		} else {
 		 	if ($_POST) {
 			 	$RaceResult = $this->validatePostDataAndUpdateEntity($RaceResult);
-		 	}
+		 	} elseif ($RaceResult->isEmpty()) {
+				$RaceResult->setDefaultValuesFromActivity($Factory->activity($id));
+			}
 		 	
 			$Factory->clearCache('raceresult', $id);
 		 	$Formular = new Formular('plugin/RunalyzePluginStat_Wettkampf/window.raceResult.php?rid='.$id, 'post');
@@ -543,7 +544,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 			$FieldOfficiallyMeasured = new FormularCheckbox('officially_measured', __('Officially measured').' '.Ajax::tooltip('<i class="fa fa-fw fa-question-circle"></i>', __('Was the course officially measured?')), $RaceResult->officiallyMeasured() );
 			$FieldOfficiallyMeasured->setLayout( FormularFieldset::$LAYOUT_FIELD_W50 );
 			
-			$FieldOfficialDistance = new FormularInput('official_distance', __('Official distance'), str_replace(',', '.', (new Distance($RaceResult->officialDistance()))->stringAuto(false, 2)));
+			$FieldOfficialDistance = new FormularInput('official_distance', __('Official distance'), str_replace(',', '.', (new Distance($RaceResult->officialDistance()))->stringKilometer(false, 2)));
 			$FieldOfficialDistance->setLayout( FormularFieldset::$LAYOUT_FIELD_W50 );
 			$FieldOfficialDistance->setUnit(FormularUnit::$KM);
 			$FieldOfficialTime = new FormularInput('official_time', __('Official time'), Duration::format($RaceResult->officialTime()) );

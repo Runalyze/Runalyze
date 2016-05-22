@@ -60,7 +60,7 @@ class Deleter extends DeleterWithAccountID
 			throw new \RuntimeException('Provided object does not have any activityid.');
 		}
 
-		(new Model\Factory(\SessionAccountHandler::getId()))->clearCache($this->table(), $this->Object->get(Entity::ACTIVITY_ID));
+		(new Model\Factory($this->AccountID))->clearCache($this->table(), $this->Object->get(Entity::ACTIVITY_ID));
 	}
 	
 	/**
@@ -76,7 +76,7 @@ class Deleter extends DeleterWithAccountID
 	 */
 	protected function updateVDOTcorrector()
 	{
-		$Activity = (new Model\Factory(\SessionAccountHandler::getId()))->activity($this->Object->activityId());
+		$Activity = (new Model\Factory($this->AccountID))->activity($this->Object->activityId());
 
 		if (
 			$Activity->sportid() == Configuration::General()->runningSport() &&

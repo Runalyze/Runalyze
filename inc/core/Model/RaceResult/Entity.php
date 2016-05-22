@@ -169,6 +169,19 @@ class Entity extends Model\Entity {
 	}
 
 	/**
+	 * @param \Runalyze\Model\Activity\Entity $activity
+	 */
+	public function setDefaultValuesFromActivity(Model\Activity\Entity $activity) {
+		$this->set(Entity::OFFICIAL_DISTANCE, $activity->distance());
+		$this->set(Entity::OFFICIAL_TIME, $activity->duration());
+		$this->set(Entity::NAME, $activity->comment());
+
+		if ($activity->isTrack()) {
+			$this->set(Entity::OFFICIALLY_MEASURED, true);
+		}
+	}
+
+	/**
 	 * official distance
 	 * @return string
 	 */
