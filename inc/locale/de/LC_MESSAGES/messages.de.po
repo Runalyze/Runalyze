@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-05-21 18:34+0200\n"
-"PO-Revision-Date: 2016-05-22 09:39+0200\n"
+"PO-Revision-Date: 2016-05-22 15:41+0200\n"
 "Last-Translator: Hannes <mail@laufhannes.de>\n"
 "Language-Team: German "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
@@ -6401,7 +6401,7 @@ msgstr "Persönliche Bestzeiten"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:87
 msgid "All race results"
-msgstr "Wettkampfergebnis hinzufügen"
+msgstr "Alle Wettkampfergebnisse"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:158
 msgid "There are no races."
@@ -6512,7 +6512,7 @@ msgstr "Anzahl der Teilnehmer in jeder Kategorie"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:570
 msgid "Delete this race result"
-msgstr "Wettkampfergebnis editieren"
+msgstr "Wettkampfergebnis löschen"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:571
 msgid ""
