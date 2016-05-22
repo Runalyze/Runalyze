@@ -38,7 +38,11 @@ $IgnoreIDs = \Runalyze\Configuration::ActivityForm()->ignoredActivityIDs();
 $DuplicateFinder = new DuplicateFinder(DB::getInstance(), SessionAccountHandler::getId());
 
 $IgnoreIDs = array_map(function($v){
-	return (int)floor(parserStrtotime($v)/60)*60;
+	try {
+		return (int)floor(parserStrtotime($v)/60)*60;
+	} catch (Exception $e) {
+		return 0;
+	}
 }, $IgnoreIDs);
 
 foreach ($IDs as $ID) {
