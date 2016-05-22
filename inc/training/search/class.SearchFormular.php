@@ -8,6 +8,8 @@ use Runalyze\Configuration;
 use Runalyze\Data\Weather\Humidity;
 use Runalyze\Data\Weather\WindSpeed;
 use Runalyze\Data\Weather\Pressure;
+use Runalyze\Dataset;
+
 /**
  * Search formular
  *
@@ -157,41 +159,58 @@ class SearchFormular extends Formular {
 		$this->addConditionFieldWithChosen('typeid', 'type', 'name', __('Type'), __('Choose activity type(s)'));
 		$this->addConditionFieldWithChosen('weatherid', 'weather', 'name', __('Weather'), __('Choose weather conditions'));
 		$this->addConditionFieldWithChosen('equipmentid', 'equipment', 'name', __('Equipment'), __('Choose equipment'));
-                $this->addConditionFieldWithChosen('tagid', 'tag', 'tag', __('Tag'), __('Choose tag'));
-
+		$this->addConditionFieldWithChosen('tagid', 'tag', 'tag', __('Tag'), __('Choose tag'));
 
 		$this->addFieldNotes();
 
+		// Currently there's a fixed 3-column layout
+		// We try to order the fields column-wise, not row-wise
 		$this->addNumericConditionField('distance', __('Distance'), FormularInput::$SIZE_SMALL, Configuration::General()->distanceUnitSystem()->distanceUnit());
 		$this->addNumericConditionField('elevation', __('Elevation'), FormularInput::$SIZE_SMALL, Configuration::General()->distanceUnitSystem()->elevationUnit());
 		$this->addStringConditionField('route', __('Route'), FormularInput::$SIZE_MIDDLE);
+
 		$this->addDurationField('s', __('Duration'));
-		$this->addNumericConditionField('temperature', __('Temperature'), FormularInput::$SIZE_SMALL, Configuration::General()->temperatureUnit()->unit());
-		$this->addNumericConditionField('humidity', __('Humidity'), FormularInput::$SIZE_SMALL, (new Humidity())->unit());
-		$this->addNumericConditionField('pressure', __('Pressure'), FormularInput::$SIZE_SMALL, (new Pressure())->unit());
-		$this->addNumericConditionField('wind_speed', __('Wind Speed'), FormularInput::$SIZE_SMALL, (new WindSpeed())->unit());
+		$this->addNumericConditionField('gradient', __('Gradient'), FormularInput::$SIZE_SMALL, FormularUnit::$PERCENT);
 		$this->addStringConditionField('comment', __('Title'), FormularInput::$SIZE_MIDDLE);
-		$this->addNumericConditionField('pulse_avg', __('avg. HR'), FormularInput::$SIZE_SMALL, FormularUnit::$BPM);
-		$this->addNumericConditionField('kcal', __('Calories'), FormularInput::$SIZE_SMALL, FormularUnit::$KCAL);
-		$this->addStringConditionField('partner', __('Partner'), FormularInput::$SIZE_MIDDLE);
-		$this->addNumericConditionField('pulse_max', __('max. HR'), FormularInput::$SIZE_SMALL, FormularUnit::$BPM);
+
+		$this->addNumericConditionField('pace', __('Pace'), FormularInput::$SIZE_SMALL, FormularUnit::$PACE);
 		$this->addNumericConditionField('cadence', __('Cadence'), FormularInput::$SIZE_SMALL, FormularUnit::$SPM);
-		$this->addBooleanField('is_public', __('Is public'));
-		$this->addNumericConditionField('jd_intensity', __('JD points'), FormularInput::$SIZE_SMALL);
-		$this->addNumericConditionField('groundcontact', __('Ground contact'), FormularInput::$SIZE_SMALL, FormularUnit::$MS);
-		$this->addNumericConditionField('groundcontact_balance', __('Ground Contact Balance'), FormularInput::$SIZE_SMALL, 'L'. FormularUnit::$PERCENT);
-		$this->addNumericConditionField('vertical_oscillation', __('Vertical oscillation'), FormularInput::$SIZE_SMALL, FormularUnit::$CM);
-		$this->addNumericConditionField('vertical_ratio', __('Vertical ratio'), FormularInput::$SIZE_SMALL, FormularUnit::$PERCENT);
+		$this->addStringConditionField('partner', __('Partner'), FormularInput::$SIZE_MIDDLE);
+
+		$this->addNumericConditionField('pulse_avg', __('avg. HR'), FormularInput::$SIZE_SMALL, FormularUnit::$BPM);
 		$this->addNumericConditionField('stride_length', __('Stride length'), FormularInput::$SIZE_SMALL, Configuration::General()->distanceUnitSystem()->strideLengthUnit());
-		if(Configuration::Vdot()->useElevationCorrection()) {
-		    $this->addNumericConditionField('vdot_with_elevation', __('VDOT'), FormularInput::$SIZE_SMALL);
-		} else {
-		$this->addNumericConditionField('vdot', __('VDOT'), FormularInput::$SIZE_SMALL);
-		}
+		$this->addBooleanField('is_public', __('Is public'));
+
+		$this->addNumericConditionField('pulse_max', __('max. HR'), FormularInput::$SIZE_SMALL, FormularUnit::$BPM);
+		$this->addNumericConditionFIeld('power', __('Power'), FormularInput::$SIZE_SMALL, FormularUnit::$POWER);
+		$this->addBooleanField('is_race', __('Is race'));
+
+		$this->addNumericConditionField(Configuration::Vdot()->useElevationCorrection() ? 'vdot_with_elevation' : 'vdot', __('VDOT'), FormularInput::$SIZE_SMALL);
+		$this->addNumericConditionField('vertical_oscillation', __('Vertical oscillation'), FormularInput::$SIZE_SMALL, FormularUnit::$CM);
 		$this->addBooleanField('use_vdot', __('Uses VDOT'));
+
 		$this->addNumericConditionField('trimp', __('TRIMP'), FormularInput::$SIZE_SMALL);
+		$this->addNumericConditionField('vertical_ratio', __('Vertical ratio'), FormularInput::$SIZE_SMALL, FormularUnit::$PERCENT);
+		$this->addBooleanField('is_track', __('Track'));
+
 		$this->addNumericConditionField('rpe', __('RPE'), FormularInput::$SIZE_SMALL);
+		$this->addNumericConditionField('groundcontact', __('Ground contact'), FormularInput::$SIZE_SMALL, FormularUnit::$MS);
+		$this->addNumericConditionField('temperature', __('Temperature'), FormularInput::$SIZE_SMALL, Configuration::General()->temperatureUnit()->unit());
+
+		$this->addNumericConditionField('jd_intensity', __('JD points'), FormularInput::$SIZE_SMALL);
+		$this->addNumericConditionField('groundcontact_balance', __('Ground Contact Balance'), FormularInput::$SIZE_SMALL, 'L'. FormularUnit::$PERCENT);
+		$this->addNumericConditionField('wind_speed', __('Wind Speed'), FormularInput::$SIZE_SMALL, (new WindSpeed())->unit());
+
+		$this->addNumericConditionField('kcal', __('Calories'), FormularInput::$SIZE_SMALL, FormularUnit::$KCAL);
 		$this->addNumericConditionField('fit_training_effect', __('Training Effect'), FormularInput::$SIZE_SMALL);
+		$this->addNumericConditionField('humidity', __('Humidity'), FormularInput::$SIZE_SMALL, (new Humidity())->unit());
+
+		$this->addNumericConditionField('fit_vdot_estimate', Dataset\Keys::get(Dataset\Keys::FIT_VO2MAX_ESTIMATE)->label(), FormularInput::$SIZE_SMALL);
+		$this->addNumericConditionField('fit_recovery_time', Dataset\Keys::get(Dataset\Keys::FIT_RECOVERY_TIME)->label(), FormularInput::$SIZE_SMALL);
+		$this->addNumericConditionField('pressure', __('Pressure'), FormularInput::$SIZE_SMALL, (new Pressure())->unit());
+
+		// Currently missing/not supported:
+		// elapsed_time, fit_hrv_analysis, fit_performance_condition, total_strokes, swolf, wind_deg, is_night
 	}
 
 	/**
