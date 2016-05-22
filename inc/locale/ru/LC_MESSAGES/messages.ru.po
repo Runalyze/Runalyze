@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-05-21 18:34+0200\n"
-"PO-Revision-Date: 2016-05-21 19:51+0200\n"
+"PO-Revision-Date: 2016-05-22 18:21+0200\n"
 "Last-Translator: commensal <commensal@gmail.com>\n"
 "Language-Team: Russian "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/ru/>\n"
@@ -1227,39 +1227,40 @@ msgstr "все активные"
 
 #: inc/training/formular/class.TrainingInputSplits.php:56
 msgid "all resting"
-msgstr ""
+msgstr "все отдыхи"
 
 #: inc/training/formular/class.TrainingInputSplits.php:57
 msgid "alternating:"
-msgstr ""
+msgstr "или:"
 
 #: inc/training/formular/class.TrainingInputSplits.php:57
 msgid "first resting"
-msgstr ""
+msgstr "первый отдых"
 
 #: inc/training/formular/class.TrainingInputSplits.php:58
 msgid "first active"
-msgstr ""
+msgstr "первый активный"
 
 #: inc/training/formular/class.TrainingInputSplits.php:71
 #: inc/data/class.Splits.php:171
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:431
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:444
 msgid "in"
-msgstr ""
+msgstr "в"
 
 #: inc/training/formular/class.TrainingInputSplits.php:94
 msgid "Defining some laps as 'resting' will hide them in the respective plot."
 msgstr ""
+"Обозначив некоторые круги как \"отдых\" скроет их с соответсвующего графика."
 
 #: inc/training/formular/class.TrainingInputSplits.php:132
 #: inc/data/class.Splits.php:171
 msgid "Resting"
-msgstr ""
+msgstr "Отдых"
 
 #: inc/training/formular/class.TrainingInputSplits.php:132
 msgid "Active"
-msgstr ""
+msgstr "Активные"
 
 #: inc/training/schemes/scheme.Training.php:30
 #: inc/training/schemes/scheme.UserData.php:8
@@ -1282,25 +1283,27 @@ msgstr "Вид тренировки"
 
 #: inc/training/schemes/scheme.Training.php:148
 msgid "Public"
-msgstr ""
+msgstr "Публичные"
 
 #: inc/training/schemes/scheme.Training.php:149
 msgid "Public activities will be visible for everybody."
-msgstr ""
+msgstr "Публичные тренировки будут видны всем."
 
 #: inc/training/schemes/scheme.Training.php:160
 msgid "Track"
-msgstr ""
+msgstr "Трек"
 
 #: inc/training/schemes/scheme.Training.php:161
 msgid ""
 "This field is only meant for official track races such that distances can be "
 "shown correctly, e.g. as 10.000m. Use tags for all other purposes."
 msgstr ""
+"Это поле предназначено только для официальных результатов дистанций которые "
+"могут отображены точно, например 10.000 м. Используйте таги для других целей."
 
 #: inc/training/schemes/scheme.Training.php:221
 msgid "Will be calculated afterwards from the activity's elevation profile."
-msgstr ""
+msgstr "Будет расчитано позже исходя из профиля высоты тренировки."
 
 #: inc/training/schemes/scheme.Training.php:245
 msgid ""
@@ -1308,10 +1311,13 @@ msgid ""
 "(if activated in your configuration) only if you change the duration or the "
 "type of sport."
 msgstr ""
+"Это значение будет рассчитано автоматически исходя из длительности и "
+"настроек для вида спорта (если включено в настройках) только если вы "
+"измените длительность или тип спорта."
 
 #: inc/training/schemes/scheme.Training.php:308
 msgid "VDOT for form"
-msgstr ""
+msgstr "VDOT для формы"
 
 #: inc/training/schemes/scheme.Training.php:309
 msgid ""
@@ -1319,6 +1325,9 @@ msgid ""
 "single activities from the calculation of your form and should do so if it's "
 "heart rate data are not reliable (e.g. a lot of stops, walking breaks, ...)."
 msgstr ""
+"VDOT рассчитаны исходя из отношения ЧСС к темпу. Вы можете исключить "
+"единичные тренировки из расчета формы и стоило бы это сделать если данные "
+"ЧСС ненадежны (например много остановок, перерывов на шаг и тд)."
 
 #: inc/training/schemes/scheme.Training.php:403
 msgid "Cadence (Running)"
@@ -1329,6 +1338,8 @@ msgid ""
 "Unit is always - also for running - <em>rpm</em>, i.e. rounds (or steps with "
 "one foot) per minute,"
 msgstr ""
+"Единица всегда - также и для бега - <em>об/м</em>, т.е. число оборотов (или "
+"шагов одной ногой) в минуту,"
 
 #: inc/training/schemes/scheme.Training.php:515
 msgid "Wind speed"
@@ -1345,7 +1356,7 @@ msgstr "Ночь"
 #: inc/training/schemes/scheme.Training.php:823
 #: inc/core/Dataset/Keys/TotalStrokes.php:44
 msgid "Total strokes"
-msgstr ""
+msgstr "Всего гребков"
 
 #: inc/training/schemes/scheme.Training.php:844
 #: inc/core/Activity/PoolLength.php:58
@@ -1416,12 +1427,16 @@ msgid ""
 "Race results are treated in a special way to show your personal bests and "
 "are independent of the chosen activity type."
 msgstr ""
+"Результаты соревнований специально обработаны так, чтобы показать лучшие "
+"результаты и независимы от выбранного типа тренировки."
 
 #: inc/training/class.TrainingFormular.php:235
 msgid ""
 "You can add some details (your placement etc.) in the 'Race result' plugin "
 "afterwards."
 msgstr ""
+"Вы можете добавить немного детальной информации (место и тд) позже в плагине "
+"\"Результат соревнования\"."
 
 #: inc/training/class.TrainingFormular.php:237
 msgid "Race result"
@@ -1440,6 +1455,8 @@ msgid ""
 "You may want to remove a data series if a sensor, e.g. your heart rate "
 "strap, produced unusable data."
 msgstr ""
+"Вы можете пожелать удалить данные с некоторых датчиков, например пульс с "
+"нестабильно работающего нагрудного ремня."
 
 #: inc/training/class.TrainingFormular.php:412
 #: inc/system/config/class.ConfigTabEquipment.php:58
@@ -1448,13 +1465,13 @@ msgstr "Внимание: Это действие не может быть от�
 
 #: inc/training/class.TrainingFormular.php:440
 msgid "Ground contact time balance"
-msgstr ""
+msgstr "Баланс времени контакта с землей"
 
 #: inc/training/class.TrainingFormular.php:441
 #: inc/core/View/Window/Laps/Table.php:269
 #: inc/core/Dataset/Keys/Groundcontact.php:44
 msgid "Ground contact time"
-msgstr ""
+msgstr "Время контакта с землей"
 
 #: inc/training/class.TrainingFormular.php:453
 msgid "Original elevation"
@@ -1474,7 +1491,7 @@ msgstr "Использовать коррекцию высоты"
 
 #: inc/training/class.TrainingFormular.php:482
 msgid "Correct elevation data"
-msgstr ""
+msgstr "Верные данные высоты"
 
 #: inc/training/class.TrainingFormular.php:485
 msgid ""
@@ -1538,31 +1555,31 @@ msgstr "Выносливость"
 
 #: inc/core/Configuration/Category/BasicEndurance.php:103
 msgid "Minimal distance for longjogs"
-msgstr ""
+msgstr "Минимальная дистанция для длинных забегов"
 
 #: inc/core/Configuration/Category/BasicEndurance.php:104
 msgid "Every run above this distance will be rated."
-msgstr ""
+msgstr "Любой забег длиннее этой дистанции будет оценен."
 
 #: inc/core/Configuration/Category/BasicEndurance.php:108
 msgid "Days for longjogs"
-msgstr ""
+msgstr "Дни для длинных забегов"
 
 #: inc/core/Configuration/Category/BasicEndurance.php:109
 msgid "Number of days to look at for longjog goal."
-msgstr ""
+msgstr "Количество дней в которых искать цель для длинных забегов."
 
 #: inc/core/Configuration/Category/BasicEndurance.php:112
 msgid "Days for week kilometer"
-msgstr ""
+msgstr "Дни для недельного километража"
 
 #: inc/core/Configuration/Category/BasicEndurance.php:113
 msgid "Number of days to look at for weekly kilometer goal."
-msgstr ""
+msgstr "Количество дней в которых искать цель для недельного километража."
 
 #: inc/core/Configuration/Category/BasicEndurance.php:116
 msgid "Days for week kilometer (minimum)"
-msgstr ""
+msgstr "Дни для недельного километража (минимум)"
 
 #: inc/core/Configuration/Category/BasicEndurance.php:117
 msgid "This value will be used if not enough data is available."
@@ -1570,7 +1587,7 @@ msgstr "Это значение будет использоваться, есл�
 
 #: inc/core/Configuration/Category/BasicEndurance.php:120
 msgid "Factor for week kilometers"
-msgstr ""
+msgstr "Коэффициент для недельного километража"
 
 #: inc/core/Configuration/Category/BasicEndurance.php:121
 msgid "Percentage as value between 0.00 and 1.00."
@@ -1586,37 +1603,41 @@ msgstr "Количество результатов, отображаемых н
 
 #: inc/core/Configuration/Category/Privacy.php:94
 msgid "Publish activities"
-msgstr ""
+msgstr "Опубликовать тренировки"
 
 #: inc/core/Configuration/Category/Privacy.php:95
 msgid "Automatically mark every activity after its creation as public."
-msgstr ""
+msgstr "Автоматически отметить каждую созданную тренировку публичной."
 
 #: inc/core/Configuration/Category/Privacy.php:99
 msgid "Public list: active"
-msgstr ""
+msgstr "Публичный список: активен"
 
 #: inc/core/Configuration/Category/Privacy.php:100
 msgid "If activated: Everyone can see a list of all your (public) activities."
 msgstr ""
+"Если активно: Каждый может просмотреть список всех ваших (публичных) "
+"тренировок."
 
 #: inc/core/Configuration/Category/Privacy.php:104
 msgid "Public list: private workouts"
-msgstr ""
+msgstr "Публичный список: частные тренировки"
 
 #: inc/core/Configuration/Category/Privacy.php:105
 msgid ""
 "If activated: Display a summary for each private activity in the public "
 "activity list."
 msgstr ""
+"Если активно: Отобразить общую информацию для каждой частной тренировки в "
+"публичном списке тренировок."
 
 #: inc/core/Configuration/Category/Privacy.php:109
 msgid "Public list: general statistics"
-msgstr ""
+msgstr "Публичный список: общая статистика"
 
 #: inc/core/Configuration/Category/Privacy.php:110
 msgid "Show some general statistics above the activity list"
-msgstr ""
+msgstr "Отображает некоторую общую статистику поверх списка тренировок"
 
 #: inc/core/Configuration/Category/Privacy.php:114
 msgid "Public view: show map"
@@ -1692,19 +1713,19 @@ msgstr "Тип шкалы, которая будет использоватьс�
 
 #: inc/core/Configuration/Category/ActivityView.php:366
 msgid "Pace plot: Ignore outliers"
-msgstr ""
+msgstr "График темпа: Игнорировать выпадающие"
 
 #: inc/core/Configuration/Category/ActivityView.php:367
 msgid "Try to ignore outliers in the pace plot."
-msgstr ""
+msgstr "Постараться игнорировать выпадающие данные из графика темпа."
 
 #: inc/core/Configuration/Category/ActivityView.php:371
 msgid "Splits plot: use zero as axis minimum"
-msgstr ""
+msgstr "График интервалов: ноль в качестве минимума оси координат"
 
 #: inc/core/Configuration/Category/ActivityView.php:381
 msgid "Map: interrupt route"
-msgstr ""
+msgstr "Карта: прервать маршрут"
 
 #: inc/core/Configuration/Category/ActivityView.php:382
 msgid ""
@@ -1713,6 +1734,9 @@ msgid ""
 "which distance (in seconds by average pace)between two data points can be "
 "interpolated."
 msgstr ""
+"Путь GPS может быть нарушен в случае <em>помех</em>  (например "
+"машина/поезд/...). Поиск этих помех непрост. Вы можете выбрать до какой "
+"дистанции (в секундах среднего темпа) можно срезать данные."
 
 #: inc/core/Configuration/Category/ActivityView.php:388
 msgid "Map: precision"
@@ -1796,11 +1820,11 @@ msgstr "Расчитывать мощность при занятиях вело
 
 #: inc/core/Configuration/Category/ActivityForm.php:225
 msgid "Detect pauses"
-msgstr ""
+msgstr "Обнаружить паузы"
 
 #: inc/core/Configuration/Category/ActivityForm.php:226
 msgid "Detect pauses (distance not increasing) when importing training"
-msgstr ""
+msgstr "Обнаружить паузы (когда дистанция не растет) при импорте тренировки"
 
 #: inc/core/Configuration/Category/ActivityForm.php:242
 msgid "Automatically load weather conditions"
@@ -1861,19 +1885,19 @@ msgstr "Отображение календаря по умолчанию"
 
 #: inc/core/Configuration/Category/DataBrowser.php:94
 msgid "Calendar: show labels for dataset"
-msgstr ""
+msgstr "Календарь: показать маркеры для данных"
 
 #: inc/core/Configuration/Category/DataBrowser.php:98
 msgid "Calendar: show days with activities only"
-msgstr ""
+msgstr "Календарь: показать только дни с тренировками"
 
 #: inc/core/Configuration/Category/DataBrowser.php:102
 msgid "Calendar: create button"
-msgstr ""
+msgstr "Календарь: создать кнопку"
 
 #: inc/core/Configuration/Category/DataBrowser.php:103
 msgid "Add a link for every day to create a new activity."
-msgstr ""
+msgstr "Добавить ссылку для каждого дня для создания новой тренировки."
 
 #: inc/core/Configuration/Category/Vdot.php:165
 msgid "Estimation formula"
@@ -1907,18 +1931,20 @@ msgstr ""
 
 #: inc/core/Configuration/Category/Vdot.php:180
 msgid "Manual correction factor"
-msgstr ""
+msgstr "Свой поправочный коэффициент"
 
 #: inc/core/Configuration/Category/Vdot.php:181
 msgid ""
 "Manual correction factor (e.g. 0.9), if the automatic factor does not fit. "
 "Can be left empty."
 msgstr ""
+"Свой поправочный коэффициент (например 0.9), если не устраивает "
+"автоматический. Можно оставить пустым."
 
 #: inc/core/Configuration/Category/Vdot.php:182
 #, php-format
 msgid "Value must be between %s and %s."
-msgstr ""
+msgstr "Значение должно быть между %s и %s."
 
 #: inc/core/Configuration/Category/Vdot.php:186
 msgid "Use fixed VDOT value"
@@ -1932,7 +1958,7 @@ msgstr ""
 
 #: inc/core/Configuration/Category/Vdot.php:191
 msgid "Adapt for elevation"
-msgstr ""
+msgstr "Принимать во внимание высоту"
 
 #: inc/core/Configuration/Category/Vdot.php:192
 msgid ""
