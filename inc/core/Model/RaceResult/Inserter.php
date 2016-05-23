@@ -80,6 +80,8 @@ class Inserter extends Model\InserterWithAccountID {
 	 */
 	protected function after() {
 		$this->updateVDOTcorrector();
+
+		(new Model\Factory($this->AccountID))->clearCache($this->table(), $this->Object->get(Entity::ACTIVITY_ID));
 	}
 	
 	/**

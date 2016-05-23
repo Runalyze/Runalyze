@@ -475,8 +475,8 @@ class Factory {
 
 	/**
 	 * Clear cache
-	 * @param string $tablename
-	 * @param int $id can be empty if the table uses a full fetch and static cache
+	 * @param string|bool $tablename
+	 * @param int|bool $id can be empty if the table uses a full fetch and static cache
 	 * @throws \InvalidArgumentException
 	 */
 	public function clearCache($tablename = false, $id = false) {

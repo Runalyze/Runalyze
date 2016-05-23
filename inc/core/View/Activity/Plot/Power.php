@@ -10,7 +10,7 @@ use Runalyze\View\Activity;
 
 /**
  * Plot for: Power
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\View\Activity\Plot
  */
@@ -27,8 +27,11 @@ class Power extends ActivityPlot {
 	 * @param \Runalyze\View\Activity\Context $context
 	 */
 	protected function initData(Activity\Context $context) {
-		$this->addSeries(
-			new Series\Power($context)
-		);
+		$this->addMultipleSeries(array(
+			new Series\Elevation($context),
+			new Series\Power($context),
+			new Series\TimeSeries($context),
+			new Series\DistanceSeries($context)
+		));
 	}
 }

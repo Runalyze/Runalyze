@@ -153,10 +153,12 @@ class TrainingFormular extends StandardFormular {
 
 		if ($isCreateForm && isset($_POST['is_race'])) {
 			$this->insertRaceResult();
-		} elseif (isset($_POST['is_race_old_status'])) {
-			if ($_POST['is_race_old_status'] != '1' && isset($_POST['is_race'])) {
+		} elseif (isset($_POST['is_race_sent'])) {
+			$raceExists = !(new Factory(SessionAccountHandler::getId()))->raceResult($this->dataObject->id())->isEmpty();
+
+			if (!$raceExists && isset($_POST['is_race'])) {
 				$this->insertRaceResult();
-			} elseif ($_POST['is_race_old_status'] == '1' && !isset($_POST['is_race'])) {
+			} elseif ($raceExists && !isset($_POST['is_race'])) {
 				$this->deleteRaceResult();
 			}
 		}
@@ -231,13 +233,13 @@ class TrainingFormular extends StandardFormular {
 		$Factory = new Factory(SessionAccountHandler::getId());
 		$activityIsRace = !$isCreateForm && !$Factory->raceResult($this->dataObject->id())->isEmpty();
 
-		$competitionHelp = __('Competitions are treated in a special way to show your personal bests and are independent of the chosen activity type.');
-		$competitionHelp .= ' '.__('You can add some details (your placement etc.) in the \'Competitions\' plugin afterwards.');
+		$competitionHelp = __('Race results are treated in a special way to show your personal bests and are independent of the chosen activity type.');
+		$competitionHelp .= ' '.__('You can add some details (your placement etc.) in the \'Race result\' plugin afterwards.');
 
-		$CompetitionCheckbox = new FormularCheckbox('is_race', __('Competition').' '.Ajax::tooltip('<i class="fa fa-fw fa-question-circle"></i>', $competitionHelp), $activityIsRace);
+		$CompetitionCheckbox = new FormularCheckbox('is_race', __('Race').' '.Ajax::tooltip('<i class="fa fa-fw fa-question-circle"></i>', $competitionHelp), $activityIsRace);
 		$CompetitionCheckbox->setLayout(FormularFieldset::$LAYOUT_FIELD_W50_AS_W100);
 
-		$this->fieldsets[0]->addField(new FormularInputHidden('is_race_old_status', '', $activityIsRace ? '1' : '0'));
+		$this->fieldsets[0]->addField(new FormularInputHidden('is_race_sent', '', 'true'));
 		$this->fieldsets[0]->addField($CompetitionCheckbox);
 	}
 

@@ -43,7 +43,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	 * @return string
 	 */
 	final public function name() {
-		return __('Competitions');
+		return __('Race results');
 	}
 
 	/**
@@ -59,7 +59,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	 */
 	protected function displayLongDescription() {
 		echo HTML::p(
-			__('This plugin lists all your competitions. It shows you a summary of all competitions and '.
+			__('This plugin lists all your competitions. It shows you a summary of all race results and '.
 				'of your personal bests (over all distances with at least two results).') );
 		echo HTML::p(
 			__('In addition, it plots the trend of your results over a specific distance.'.
@@ -84,7 +84,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	protected function setOwnNavigation() {
 		$LinkList  = '';
 		$LinkList .= '<li>'.Ajax::change(__('Personal bests'), 'statistics-inner', '#personal-bests', 'triggered').'</li>';
-		$LinkList .= '<li>'.Ajax::change(__('All competitions'), 'statistics-inner', '#all-competitions').'</li>';
+		$LinkList .= '<li>'.Ajax::change(__('All race results'), 'statistics-inner', '#all-competitions').'</li>';
 
 		$this->setToolbarNavigationLinks(array($LinkList));
 	}
@@ -205,7 +205,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 		}
 
 		if (empty($this->PBdistances)) {
-			$this->displayEmptyTr('<em>'.__('There are no competitions for the given distances.').'</em>');
+			$this->displayEmptyTr('<em>'.__('There are no race results for the given distances.').'</em>');
 		}
 	}
 
@@ -268,7 +268,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 			}
 			$year[$wk['y']]['sum']++;
 			foreach($kms as $km)
-				if ($km == $wk['distance']) {
+				if ($km == $wk['official_distance']) {
 					$year[$wk['y']][$km]['sum']++;
 					if ($wk['s'] < $year[$wk['y']][$km]['pb'])
 						$year[$wk['y']][$km]['pb'] = $wk['s'];
@@ -372,7 +372,6 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 		$Activity = new Activity\Entity($data);
 		
 		$Linker = new Linker($Activity);
-		$Dataview = new Dataview($Activity);
 		$RaceResult = new RaceResult\Entity($data);
 		$RaceResultView = new View\RaceResult\Dataview($RaceResult);
 
@@ -456,7 +455,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	private function getEditIconForRaceResult($id) {
 		$code = (new Icon('fa-pencil'))->code();
 
-		$Tooltip = new Tooltip(__('Edit the competition details'));
+		$Tooltip = new Tooltip(__('Edit the race result details'));
 		$Tooltip->setPosition(Tooltip::POSITION_RIGHT);
 		$Tooltip->wrapAround($code);
 
@@ -523,11 +522,13 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 
 		if (isset($_GET['delete'])) {
 			$this->deleteRaceResult($RaceResult);
-			echo HTML::info(__('Competition was deleted.'));
+			echo HTML::info(__('Race result was deleted.'));
 		} else {
 		 	if ($_POST) {
 			 	$RaceResult = $this->validatePostDataAndUpdateEntity($RaceResult);
-		 	}
+		 	} elseif ($RaceResult->isEmpty()) {
+				$RaceResult->setDefaultValuesFromActivity($Factory->activity($id));
+			}
 		 	
 			$Factory->clearCache('raceresult', $id);
 		 	$Formular = new Formular('plugin/RunalyzePluginStat_Wettkampf/window.raceResult.php?rid='.$id, 'post');
@@ -543,7 +544,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 			$FieldOfficiallyMeasured = new FormularCheckbox('officially_measured', __('Officially measured').' '.Ajax::tooltip('<i class="fa fa-fw fa-question-circle"></i>', __('Was the course officially measured?')), $RaceResult->officiallyMeasured() );
 			$FieldOfficiallyMeasured->setLayout( FormularFieldset::$LAYOUT_FIELD_W50 );
 			
-			$FieldOfficialDistance = new FormularInput('official_distance', __('Official distance'), str_replace(',', '.', (new Distance($RaceResult->officialDistance()))->stringAuto(false, 2)));
+			$FieldOfficialDistance = new FormularInput('official_distance', __('Official distance'), str_replace(',', '.', (new Distance($RaceResult->officialDistance()))->stringKilometer(false, 2)));
 			$FieldOfficialDistance->setLayout( FormularFieldset::$LAYOUT_FIELD_W50 );
 			$FieldOfficialDistance->setUnit(FormularUnit::$KM);
 			$FieldOfficialTime = new FormularInput('official_time', __('Official time'), Duration::format($RaceResult->officialTime()) );
@@ -567,17 +568,17 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 			$Formular->addFieldset( $FieldsetParticipants );
 			
 			if (!$RaceResult->isEmpty()) {
-				$deleteLink = Ajax::link('<strong>'.__('Delete this competition').' &raquo;</strong>', 'ajax', 'plugin/RunalyzePluginStat_Wettkampf/window.raceResult.php?rid='.$id.'&delete');
+				$deleteLink = Ajax::link('<strong>'.__('Delete this race result').' &raquo;</strong>', 'ajax', 'plugin/RunalyzePluginStat_Wettkampf/window.raceResult.php?rid='.$id.'&delete');
 				$deleteInfo = __('This will only delete the entry as competition. The activity itself will stay untouched.');
 	
-				$FieldsetDeletion = new FormularFieldset( __('Delete competition') );
+				$FieldsetDeletion = new FormularFieldset( __('Delete race result') );
 				$FieldsetDeletion->setCollapsed();
 				$FieldsetDeletion->addWarning($deleteLink.'<br><br><small>'.$deleteInfo.'</small>');
 				$Formular->addFieldset( $FieldsetDeletion );
 			}
 			
 			if ($RaceResult->isEmpty()) {
-				$Formular->addSubmitButton( __('Add competition to activity'), 'submit' );
+				$Formular->addSubmitButton( __('Add race result to activity'), 'submit' );
 			} else {
 				$Formular->addSubmitButton( __('Save'), 'submit' );
 			}

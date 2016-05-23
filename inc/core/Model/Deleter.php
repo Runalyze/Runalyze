@@ -70,12 +70,9 @@ abstract class Deleter {
 	protected function runDelete() {
 		$this->before();
 
-		$this->PDO->exec(
-			'DELETE FROM `'.PREFIX.$this->table().'` '.
-			'WHERE '.$this->where()
-		);
-
-		$this->after();
+		if ($this->PDO->exec('DELETE FROM `'.PREFIX.$this->table().'` WHERE '.$this->where())) {
+			$this->after();
+		}
 	}
 
 	/**

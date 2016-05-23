@@ -57,4 +57,13 @@ class DeleterTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(array('before', 'after'), $this->PDO->query('SELECT `msg` FROM `'.PREFIX.'log`')->fetchAll(PDO::FETCH_COLUMN));
 	}
 
+	public function testThatAfterIsNotTriggeredIfNothingIsDeleted() {
+		$this->PDO->exec('INSERT INTO `'.PREFIX.'table` (`foo`) VALUES ("bar")');
+
+		$Deleter = new Deleter_MockTester($this->PDO, new DeleterObject_MockTester());
+		$Deleter->delete();
+
+		$this->assertEquals(array('before'), $this->PDO->query('SELECT `msg` FROM `'.PREFIX.'log`')->fetchAll(PDO::FETCH_COLUMN));
+	}
+
 }

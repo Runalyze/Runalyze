@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-19 19:52+0200\n"
+"POT-Creation-Date: 2016-05-21 18:34+0200\n"
 "PO-Revision-Date: 2015-11-30 18:17+0200\n"
 "Last-Translator: MtP76 <marko@poikonen.de>\n"
 "Language-Team: Finnish <http://translate.runalyze.de/projects/runalyze/"
@@ -582,14 +582,14 @@ msgstr "VDOT laskenta: %s"
 
 #: inc/training/view/class.VDOTinfo.php:63
 #, fuzzy
-msgid "Standard calculation: As competition"
+msgid "Standard calculation: As race result"
 msgstr "Normaali laskenta: Kuin kilpailu"
 
 #: inc/training/view/class.VDOTinfo.php:66
 #, fuzzy
 msgid ""
 "All traditional formulas are being used to calculate a VDOT value for a "
-"given competition."
+"given race result."
 msgstr "Käyttää kaikkia perinteisiä laskukaavoja VDOT:n laskemiseen."
 
 #: inc/training/view/class.VDOTinfo.php:92
@@ -630,7 +630,8 @@ msgid "To consider some individual factors, we use a correction factor."
 msgstr "Käytämme korjauskerrointa yksilöllisten tekijöiden takia."
 
 #: inc/training/view/class.VDOTinfo.php:125
-msgid "This factor is based on your <em>best</em> competition."
+#, fuzzy
+msgid "This factor is based on your <em>best</em> race result."
 msgstr "Kerroin perustuu <em>parhaaseen</em> kilpailusuoritukseen."
 
 #: inc/training/view/class.VDOTinfo.php:129
@@ -877,6 +878,7 @@ msgid "Training partner"
 msgstr "Treeni kumppani"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:313
+#: inc/draw/class.PlotSumData.php:597
 #, fuzzy
 msgid "Race Result"
 msgstr "Tulos"
@@ -1430,20 +1432,20 @@ msgstr ""
 
 #: inc/training/class.TrainingFormular.php:234
 msgid ""
-"Competitions are treated in a special way to show your personal bests and "
+"Race results are treated in a special way to show your personal bests and "
 "are independent of the chosen activity type."
 msgstr ""
 
 #: inc/training/class.TrainingFormular.php:235
 msgid ""
-"You can add some details (your placement etc.) in the 'Competitions' plugin "
+"You can add some details (your placement etc.) in the 'Race result' plugin "
 "afterwards."
 msgstr ""
 
 #: inc/training/class.TrainingFormular.php:237
-#: inc/draw/class.PlotSumData.php:597
-msgid "Competition"
-msgstr ""
+#, fuzzy
+msgid "Race result"
+msgstr "Tulos"
 
 #: inc/training/class.TrainingFormular.php:325
 msgid "Choose tags"
@@ -1904,7 +1906,7 @@ msgid "Use correction factor"
 msgstr ""
 
 #: inc/core/Configuration/Category/Vdot.php:176
-msgid "Use a correction factor based on your best competition. (recommended)"
+msgid "Use a correction factor based on your best race result. (recommended)"
 msgstr ""
 
 #: inc/core/Configuration/Category/Vdot.php:180
@@ -2517,8 +2519,9 @@ msgid "never"
 msgstr ""
 
 #: inc/core/Parameter/Application/ActivityRoutePrivacy.php:40
-msgid "only for competitions"
-msgstr ""
+#, fuzzy
+msgid "only for race results"
+msgstr "Paras tulos"
 
 #: inc/core/Parameter/Application/ActivityRoutePrivacy.php:41
 msgid "always"
@@ -3706,24 +3709,17 @@ msgstr "Salasanan vaihtolinkki lähetetään sähköpostitse."
 msgid "Send link"
 msgstr "Lähetä linkki"
 
-#: inc/tpl/tpl.loginWindow.php:193
+#: inc/tpl/tpl.loginWindow.php:192
 #, php-format
 msgid "Until now <strong>%d</strong> athlete is registered and"
 msgid_plural "Until now <strong>%d</strong> athletes are registered and"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/tpl/tpl.loginWindow.php:194
+#: inc/tpl/tpl.loginWindow.php:193
 #, php-format
 msgid "has logged <strong>%s</strong>."
 msgid_plural "have logged <strong>%s</strong>."
-msgstr[0] ""
-msgstr[1] ""
-
-#: inc/tpl/tpl.loginWindow.php:196
-#, php-format
-msgid "<strong>%d</strong> athlete is online."
-msgid_plural "<strong>%d</strong> athletes are online."
 msgstr[0] ""
 msgstr[1] ""
 
@@ -6058,8 +6054,8 @@ msgstr "Yleistiedot"
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:46
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:148
 #, fuzzy
-msgid "Competitions"
-msgstr "Kesto"
+msgid "Race results"
+msgstr "Tulos"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:54
 msgid "Personal bests and everything else related to your competitions."
@@ -6067,9 +6063,9 @@ msgstr ""
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:62
 msgid ""
-"This plugin lists all your competitions. It shows you a summary of all "
-"competitions and of your personal bests (over all distances with at least "
-"two results)."
+"This plugin lists all your competitions. It shows you a summary of all race "
+"results and of your personal bests (over all distances with at least two "
+"results)."
 msgstr ""
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:65
@@ -6092,8 +6088,9 @@ msgid "Personal bests"
 msgstr "Parhaat henkilököhtaiset"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:87
-msgid "All competitions"
-msgstr ""
+#, fuzzy
+msgid "All race results"
+msgstr "Paras tulos"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:158
 msgid "There are no races."
@@ -6101,7 +6098,7 @@ msgstr "Ei kilpailuja."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:208
 #, fuzzy
-msgid "There are no competitions for the given distances."
+msgid "There are no race results for the given distances."
 msgstr "Ei tietoja valitulta aikajaksolta."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:232
@@ -6154,8 +6151,9 @@ msgid "Edit the activity"
 msgstr "Ensimmäinen aktiviteetti:"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:459
-msgid "Edit the competition details"
-msgstr ""
+#, fuzzy
+msgid "Edit the race result details"
+msgstr "Paras tulos"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:475
 msgid "Fun race | Click to mark this activity as a 'normal race'."
@@ -6166,7 +6164,7 @@ msgid "Race | Click to mark this activity as a 'fun race'."
 msgstr ""
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:526
-msgid "Competition was deleted."
+msgid "Race result was deleted."
 msgstr ""
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:537
@@ -6204,8 +6202,9 @@ msgid "Number of participants in every category"
 msgstr ""
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:570
-msgid "Delete this competition"
-msgstr ""
+#, fuzzy
+msgid "Delete this race result"
+msgstr "Paras tulos"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:571
 msgid ""
@@ -6215,12 +6214,13 @@ msgstr ""
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:573
 #, fuzzy
-msgid "Delete competition"
-msgstr "Sää olosuhteet"
+msgid "Delete race result"
+msgstr "Paras tulos"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:580
-msgid "Add competition to activity"
-msgstr ""
+#, fuzzy
+msgid "Add race result to activity"
+msgstr "Paras tulos"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:608
 #, fuzzy
@@ -7791,6 +7791,14 @@ msgstr "Nopeimmat aktiviteetit"
 #: plugin/RunalyzePluginStat_Rekorde/class.RunalyzePluginStat_Rekorde.php:196
 msgid "Longest activities"
 msgstr "Pisimmät aktiviteetit"
+
+#, fuzzy
+#~ msgid "Competitions"
+#~ msgstr "Kesto"
+
+#, fuzzy
+#~ msgid "Delete competition"
+#~ msgstr "Sää olosuhteet"
 
 #~ msgid "&oslash; Heartrate"
 #~ msgstr "&oslash; Syke"

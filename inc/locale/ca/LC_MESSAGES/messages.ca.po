@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-19 19:52+0200\n"
+"POT-Creation-Date: 2016-05-21 18:34+0200\n"
 "PO-Revision-Date: 2015-08-23 12:14+0200\n"
 "Last-Translator: pedro galan <arnoldewald@yahoo.es>\n"
 "Language-Team: Catalan <http://translate.runalyze.de/projects/runalyze/"
@@ -587,13 +587,15 @@ msgid "VDOT calculation for: %s"
 msgstr "Càlcul del VDOT per a : %s"
 
 #: inc/training/view/class.VDOTinfo.php:63
-msgid "Standard calculation: As competition"
+#, fuzzy
+msgid "Standard calculation: As race result"
 msgstr "Càlcul estàndard: com a cursa"
 
 #: inc/training/view/class.VDOTinfo.php:66
+#, fuzzy
 msgid ""
 "All traditional formulas are being used to calculate a VDOT value for a "
-"given competition."
+"given race result."
 msgstr ""
 "Les fórmules originals permeten calcular el valor del VDOT mitjançant el "
 "temps d'una cursa."
@@ -632,7 +634,8 @@ msgid "To consider some individual factors, we use a correction factor."
 msgstr "Fem servir un factor de correcció que considera determinats factors."
 
 #: inc/training/view/class.VDOTinfo.php:125
-msgid "This factor is based on your <em>best</em> competition."
+#, fuzzy
+msgid "This factor is based on your <em>best</em> race result."
 msgstr ""
 "El factor de correcció es calcula sobre el pols de la <em>millor</em> cursa."
 
@@ -880,6 +883,7 @@ msgid "Training partner"
 msgstr "Company d'entrenament"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:313
+#: inc/draw/class.PlotSumData.php:597
 #, fuzzy
 msgid "Race Result"
 msgstr "Resultat"
@@ -1451,20 +1455,20 @@ msgstr "L'entrenament s'ha creat amb èxit."
 
 #: inc/training/class.TrainingFormular.php:234
 msgid ""
-"Competitions are treated in a special way to show your personal bests and "
+"Race results are treated in a special way to show your personal bests and "
 "are independent of the chosen activity type."
 msgstr ""
 
 #: inc/training/class.TrainingFormular.php:235
 msgid ""
-"You can add some details (your placement etc.) in the 'Competitions' plugin "
+"You can add some details (your placement etc.) in the 'Race result' plugin "
 "afterwards."
 msgstr ""
 
 #: inc/training/class.TrainingFormular.php:237
-#: inc/draw/class.PlotSumData.php:597
-msgid "Competition"
-msgstr "Cursa"
+#, fuzzy
+msgid "Race result"
+msgstr "Resultat"
 
 #: inc/training/class.TrainingFormular.php:325
 #, fuzzy
@@ -1954,7 +1958,8 @@ msgid "Use correction factor"
 msgstr "Apliqui factor de correcció del VDOT"
 
 #: inc/core/Configuration/Category/Vdot.php:176
-msgid "Use a correction factor based on your best competition. (recommended)"
+#, fuzzy
+msgid "Use a correction factor based on your best race result. (recommended)"
 msgstr "Ajusti els valors de VDOT segons la seva millor cursa (recomanat)"
 
 #: inc/core/Configuration/Category/Vdot.php:180
@@ -2605,8 +2610,9 @@ msgid "never"
 msgstr "mai"
 
 #: inc/core/Parameter/Application/ActivityRoutePrivacy.php:40
-msgid "only for competitions"
-msgstr "només per competicions"
+#, fuzzy
+msgid "only for race results"
+msgstr "Millor marca"
 
 #: inc/core/Parameter/Application/ActivityRoutePrivacy.php:41
 msgid "always"
@@ -3840,26 +3846,19 @@ msgstr ""
 msgid "Send link"
 msgstr "Enviï link"
 
-#: inc/tpl/tpl.loginWindow.php:193
+#: inc/tpl/tpl.loginWindow.php:192
 #, php-format
 msgid "Until now <strong>%d</strong> athlete is registered and"
 msgid_plural "Until now <strong>%d</strong> athletes are registered and"
 msgstr[0] "Fins ara <strong>%d</strong> l'atleta és registrat i"
 msgstr[1] "Fins ara <strong>%d</strong> els atletes són registrats i"
 
-#: inc/tpl/tpl.loginWindow.php:194
+#: inc/tpl/tpl.loginWindow.php:193
 #, php-format
 msgid "has logged <strong>%s</strong>."
 msgid_plural "have logged <strong>%s</strong>."
 msgstr[0] "s'ha registat <strong>%s</strong>."
 msgstr[1] "s'han registrat <strong>%s</strong>."
-
-#: inc/tpl/tpl.loginWindow.php:196
-#, php-format
-msgid "<strong>%d</strong> athlete is online."
-msgid_plural "<strong>%d</strong> athletes are online."
-msgstr[0] "<strong>%d</strong> l'atleta es troba online."
-msgstr[1] "<strong>%d</strong> els atletes es troben online."
 
 #: inc/tpl/tpl.adminWindow.login.php:5
 msgid "Administration"
@@ -6343,8 +6342,8 @@ msgstr "Cursa"
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:46
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:148
 #, fuzzy
-msgid "Competitions"
-msgstr "Cursa"
+msgid "Race results"
+msgstr "Resultat"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:54
 #, fuzzy
@@ -6354,9 +6353,9 @@ msgstr "Millors temps i tot allò relacionat amb les seves curses fins ara."
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:62
 #, fuzzy
 msgid ""
-"This plugin lists all your competitions. It shows you a summary of all "
-"competitions and of your personal bests (over all distances with at least "
-"two results)."
+"This plugin lists all your competitions. It shows you a summary of all race "
+"results and of your personal bests (over all distances with at least two "
+"results)."
 msgstr ""
 "Aquest plugin mostra totes les seves curses. Mostra una visió de conjunt de "
 "les seves curses i millors marques (sobre totes les distàncies i com a mínim "
@@ -6387,8 +6386,8 @@ msgstr "Millors marques personals"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:87
 #, fuzzy
-msgid "All competitions"
-msgstr "només per competicions"
+msgid "All race results"
+msgstr "Millor marca"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:158
 msgid "There are no races."
@@ -6396,7 +6395,7 @@ msgstr "No hi ha cap cursa."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:208
 #, fuzzy
-msgid "There are no competitions for the given distances."
+msgid "There are no race results for the given distances."
 msgstr "No hi ha cap cursa per aquesta distància."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:232
@@ -6451,7 +6450,7 @@ msgstr "Entrenament privat"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:459
 #, fuzzy
-msgid "Edit the competition details"
+msgid "Edit the race result details"
 msgstr "Tipus d'entrenament: cursa"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:475
@@ -6465,7 +6464,7 @@ msgstr "Cursa | Faci click per marcar aquest entrenament com a 'cursa d'oci'."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:526
 #, fuzzy
-msgid "Competition was deleted."
+msgid "Race result was deleted."
 msgstr "Cursa"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:537
@@ -6505,7 +6504,7 @@ msgstr ""
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:570
 #, fuzzy
-msgid "Delete this competition"
+msgid "Delete this race result"
 msgstr "només per competicions"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:571
@@ -6516,13 +6515,13 @@ msgstr ""
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:573
 #, fuzzy
-msgid "Delete competition"
-msgstr "Cursa"
+msgid "Delete race result"
+msgstr "Millor marca"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:580
 #, fuzzy
-msgid "Add competition to activity"
-msgstr "Afegeixi un link modificable per cada entrenament."
+msgid "Add race result to activity"
+msgstr "Millor marca"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:608
 #, fuzzy
@@ -8266,6 +8265,33 @@ msgstr "Entrenaments més ràpids"
 #: plugin/RunalyzePluginStat_Rekorde/class.RunalyzePluginStat_Rekorde.php:196
 msgid "Longest activities"
 msgstr "Entrenaments més llargs"
+
+#~ msgid "Competition"
+#~ msgstr "Cursa"
+
+#~ msgid "only for competitions"
+#~ msgstr "només per competicions"
+
+#~ msgid "<strong>%d</strong> athlete is online."
+#~ msgid_plural "<strong>%d</strong> athletes are online."
+#~ msgstr[0] "<strong>%d</strong> l'atleta es troba online."
+#~ msgstr[1] "<strong>%d</strong> els atletes es troben online."
+
+#, fuzzy
+#~ msgid "Competitions"
+#~ msgstr "Cursa"
+
+#, fuzzy
+#~ msgid "All competitions"
+#~ msgstr "només per competicions"
+
+#, fuzzy
+#~ msgid "Delete competition"
+#~ msgstr "Cursa"
+
+#, fuzzy
+#~ msgid "Add competition to activity"
+#~ msgstr "Afegeixi un link modificable per cada entrenament."
 
 #~ msgid "Activity &amp; Competition"
 #~ msgstr "Entrenament &amp; Cursa"

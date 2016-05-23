@@ -6,6 +6,7 @@ use PDO;
 use DB;
 
 use Runalyze\Model\Activity;
+use Runalyze\Model\Factory;
 
 class InserterTest extends \PHPUnit_Framework_TestCase
 {
@@ -19,12 +20,16 @@ class InserterTest extends \PHPUnit_Framework_TestCase
 
 		$this->PDO->exec('DELETE FROM `'.PREFIX.'training`');
 		$this->PDO->exec('DELETE FROM `'.PREFIX.'raceresult`');
+
+		\Cache::clean();
 	}
 
 	protected function tearDown()
 	{
 		$this->PDO->exec('DELETE FROM `'.PREFIX.'training`');
 		$this->PDO->exec('DELETE FROM `'.PREFIX.'raceresult`');
+
+		\Cache::clean();
 	}
 
 	/**
@@ -74,6 +79,29 @@ class InserterTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals(1033, $RaceResult->participantsTotal());
 		$this->assertEquals(100, $RaceResult->participantsGender());
 		$this->assertEquals(15, $RaceResult->participantsAgeclass());
+	}
+
+	public function testThatInsertClearsCache() {
+		$Factory = new Factory(0);
+		$data = [Entity::OFFICIAL_DISTANCE => '10', Entity::OFFICIAL_TIME => 2400];
+		$activityId = $this->insert($data);
+
+		$this->assertFalse($Factory->raceResult($activityId)->isEmpty());
+
+		$Deleter = new Deleter($this->PDO, $Factory->raceResult($activityId));
+		$Deleter->setAccountID(0);
+		$Deleter->delete();
+
+		$this->assertTrue($Factory->raceResult($activityId)->isEmpty());
+
+		$RaceResult = new Entity($data);
+		$RaceResult->set(Entity::ACTIVITY_ID, $activityId);
+
+		$Inserter = new Inserter($this->PDO);
+		$Inserter->setAccountID(0);
+		$Inserter->insert($RaceResult);
+
+		$this->assertFalse($Factory->raceResult($activityId)->isEmpty());
 	}
 
 }

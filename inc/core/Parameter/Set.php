@@ -15,10 +15,10 @@ use Runalyze\Parameter;
  */
 class Set extends \Runalyze\Parameter {
 	/**
-	 * Seperator
+	 * Separator
 	 * @var string
 	 */
-	const SEPERATOR = ',';
+	const SEPARATOR = ',';
 
 	/**
 	 * Array to string
@@ -26,10 +26,24 @@ class Set extends \Runalyze\Parameter {
 	 * @return string
 	 */
 	public static function arrayToString(array $array) {
-		$string = implode(self::SEPERATOR, $array);
+		$string = '';
+		$stringLength = 0;
+		$separatorLength = strlen(self::SEPARATOR);
 
-		if (strlen($string) > Parameter::MAX_LENGTH)
-			$string = substr($string, -Parameter::MAX_LENGTH);
+		foreach (array_reverse($array) as $value) {
+			$valueLength = strlen($value);
+
+			if ($stringLength == 0 && $valueLength <= Parameter::MAX_LENGTH) {
+				$string = $value;
+			} elseif ($stringLength + $separatorLength + $valueLength <= Parameter::MAX_LENGTH) {
+				$string = $value.self::SEPARATOR.$string;
+				$stringLength += $separatorLength;
+			} else {
+				break;
+			}
+
+			$stringLength += $valueLength;
+		}
 
 		return $string;
 	}
@@ -59,7 +73,7 @@ class Set extends \Runalyze\Parameter {
 		$valueAsArray = array();
 
 		if (strlen($valueAsString) > 0) {
-			$valueAsArray = explode(self::SEPERATOR, $valueAsString);
+			$valueAsArray = explode(self::SEPARATOR, $valueAsString);
 
 			foreach ($valueAsArray as $key => $value) {
 				$valueAsArray[$key] = trim($value);
