@@ -1,0 +1,8 @@
+app:
+  locales:
+    'de': { 'name': 'Deutsch', 'locale': 'de_DE.utf-8' }
+    'en': { 'name': 'English', locale: 'en_US.utf-8' }
+    'pl': { 'name': 'Polski',  locale: 'pl_PL.utf-8' }
+    'ca': { 'name': 'Català',  locale: 'ca_ES.UTF-8' }
+    'nl': { 'name': 'Nederlandse', locale: 'nl_NL.UTF-8'}
+    'it': { 'name': 'Italiano', locale: 'it_IT.UTF-8' }
