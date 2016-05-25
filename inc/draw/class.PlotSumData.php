@@ -26,17 +26,17 @@ abstract class PlotSumData extends Plot {
 	const LAST_12_MONTHS = 'last12months';
 
 	/**
-	 * @var string 
+	 * @var string
 	 */
 	const ANALYSIS_DEFAULT = 'kmorh';
 
 	/**
-	 * @var string 
+	 * @var string
 	 */
 	const ANALYSIS_TRIMP = 'trimp';
 
 	/**
-	 * @var string 
+	 * @var string
 	 */
 	const ANALYSIS_JD = 'jd';
 
@@ -412,7 +412,7 @@ abstract class PlotSumData extends Plot {
 			if ($num > 0)
 				$this->usesDistance = false;
 		}
-		
+
 		$this->RawData = DB::getInstance()->query('
 			SELECT
 				`sportid`,
@@ -420,9 +420,10 @@ abstract class PlotSumData extends Plot {
 				(r.`official_time` IS NOT NULL )as `wk`,
 				'.$this->dataSum().' as `sum`,
 				'.$this->timer().' as `timer`
-			FROM `'.PREFIX.'training` tr 
+			FROM `'.PREFIX.'training` tr
 			    LEFT JOIN `'.PREFIX.'raceresult` r ON tr.id = r.activity_id
 			WHERE
+				`tr`.`accountid` = '.SessionAccountHandler::getId().' AND
 				'.$whereSport.'
 				'.$this->whereDate().'
 			GROUP BY '.$this->groupBy().', '.$this->timer()
@@ -528,15 +529,10 @@ abstract class PlotSumData extends Plot {
 	private function setDataForSports() {
 		$emptyData  = array_fill(0, $this->timerEnd - $this->timerStart + 1, 0);
 		$Sports     = array();
-		$SportsData = DB::getInstance()->query('
-			SELECT
-				id, name
-			FROM
-				`'.PREFIX.'sport`
-		')->fetchAll();
 
-		foreach ($SportsData as $Sport)
-			$Sports[$Sport['id']] = array('name' => $Sport['name'], 'data' => $emptyData);
+		foreach (\Runalyze\Context::Factory()->allSports() as $Sport) {
+			$Sports[$Sport->id()] = array('name' => $Sport->name(), 'data' => $emptyData);
+		}
 
 		foreach ($this->RawData as $dat)
 			if ($dat['timer'] >= $this->timerStart && $dat['timer'] <= $this->timerEnd)
@@ -561,9 +557,9 @@ abstract class PlotSumData extends Plot {
 				`sportid`="'.$this->Sport->id().'"
 		')->fetchAll();
 
-		foreach ($TypesData as $Type) {
-		    $name = ($Type['abbr'] == '') ? $Type['name'] : $Type['abbr'];
-			$Types[$Type['id']] = array('name' => $name, 'data' => $emptyData);
+		foreach (\Runalyze\Context::Factory()->typeForSport($this->Sport->id()) as $Type) {
+		    $name = ($Type->abbreviation() == '') ? $Type->name() : $Type->abbreviation();
+			$Types[$Type->id()] = array('name' => $name, 'data' => $emptyData);
 		}
 
 		foreach ($this->RawData as $dat)
