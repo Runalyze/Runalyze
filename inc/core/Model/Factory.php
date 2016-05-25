@@ -11,7 +11,7 @@ use Cache;
 
 /**
  * Model factory
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Model
  */
@@ -85,7 +85,7 @@ class Factory {
 			$this->arrayByPK('trackdata', $activityid)
 		);
 	}
-        
+
 	/**
 	 * Swimdata
 	 * @param int $activityid
@@ -118,7 +118,7 @@ class Factory {
 			$this->arrayByPK('hrv', $activityid)
 		);
 	}
-	
+
 	/**
 	 * RaceResult
 	 * @param int $activityid
@@ -140,7 +140,7 @@ class Factory {
 			$this->arrayByPK('type', $typeid)
 		);
 	}
-	
+
 
 	/**
 	 * All type objects
@@ -151,21 +151,20 @@ class Factory {
 			return new Type\Entity($data);
 		});
 	}
-	
+
 	/**
-	 *  type for sport
+	 * Types for sport
 	 * @param int $sportid
-	 * @param boolean $onlyIDs [optional]
-	 * @return int[]|\Runalyze\Model\Type\Entity[]
+	 * @return \Runalyze\Model\Type\Entity[]
 	 */
 	public function typeForSport($sportid) {
 		$Types = $this->allTypes();
-		
 		$SportTypes = array();
-		foreach($Types as $Type) {
-		    if ($Type->sportid() == $sportid) {
-			$SportTypes[] = $Type;
-		    }
+
+		foreach ($Types as $Type) {
+			if ($Type->sportid() == $sportid) {
+				$SportTypes[] = $Type;
+			}
 		}
 
 		return $SportTypes;
@@ -212,7 +211,7 @@ class Factory {
 			return new EquipmentType\Entity($data);
 		});
 	}
-	
+
 	/**
 	 * All equipment for equipment type
 	 * @param int $equipmentTypeid
@@ -221,19 +220,19 @@ class Factory {
 	 */
 	public function equipmentForEquipmentType($equipmentTypeid, $onlyIDs = false) {
 	    $Equipment = array();
-	    
+
 	    $IDs = $this->DB->Query('SELECT `id` FROM `'.PREFIX.'equipment` WHERE `accountid`='.\SessionAccountHandler::getId().' AND `typeid`="'.$equipmentTypeid.'"')->fetchAll(\PDO::FETCH_COLUMN);
-	    
+
 	    if($onlyIDs) {
 		return $IDs;
 	    }
-	    
+
 	    foreach ($IDs as $id) {
 		$Equipment[] = $this->equipment ($id);
 	    }
-	    
+
 	    return $Equipment;
-	    
+
 	}
 
 	/**
@@ -324,7 +323,7 @@ class Factory {
 
 		return $Equipment;
 	}
-	
+
 	/**
 	 * Tag
 	 * @param int $tagid
@@ -335,7 +334,7 @@ class Factory {
 			$this->arrayByPK('tag', $tagid)
 		);
 	}
-	
+
 	/**
 	 * All tag objects
 	 * @return \Runalyze\Model\Tag\Entity[]
@@ -345,7 +344,7 @@ class Factory {
 			return new Tag\Entity($data);
 		});
 	}
-	
+
 	/**
 	 * tags for activity
 	 * @param int $activityid
@@ -364,7 +363,7 @@ class Factory {
 		foreach ($IDs as $id) {
 			$Tag[] = $this->tag($id);
 		}
-		
+
 		return $Tag;
 	}
 
@@ -491,7 +490,7 @@ class Factory {
 		if (isset($this->UseStaticCacheAndFullFetch[$tablename])) {
 			if (isset(self::$StaticCache[$tablename])) {
 				unset(self::$StaticCache[$tablename]);
-			}	
+			}
 		} elseif ($id) {
 			Cache::delete($tablename.$id);
 		} else {
