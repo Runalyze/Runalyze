@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-05-21 18:34+0200\n"
-"PO-Revision-Date: 2016-05-22 15:41+0200\n"
-"Last-Translator: Hannes <mail@laufhannes.de>\n"
+"PO-Revision-Date: 2016-05-25 10:40+0200\n"
+"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
 "Language-Team: German "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
@@ -895,7 +895,7 @@ msgstr "Altersklassenplatz"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:318
 msgid "Place gender"
-msgstr "Platz m/f"
+msgstr "Geschlechterwertung"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:339
 #, php-format
@@ -6448,7 +6448,7 @@ msgstr "männlich/weiblich"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:360
 msgid "M/F"
-msgstr "M/F"
+msgstr "M/F-Platz."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:430
 msgid "Weather statistics"
