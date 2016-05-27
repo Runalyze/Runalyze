@@ -89,7 +89,7 @@ foreach ($this->Days as $i => $day) {
 		foreach ($day['trainings'] as $t => $Training) {
 			$id       = $Training['id'];
 			$Sport = $this->Factory->sport($id);
-			$wk_class = ''; // TODO isset($Training['typeid']) && $Training['typeid'] == $Sport->raceTypeId() ? ' wk' : '';
+			$wk_class = ($Training['is_race']) ? ' wk' : '';
 			$trClass = ($t == 0) ? $trClass : '';
 
 			if (FrontendShared::$IS_SHOWN && !$Training['is_public']) {
