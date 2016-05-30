@@ -161,16 +161,15 @@ class Dataview
 	 * @param string $sprintfString must contain "%u"
 	 * @return string
 	 */
-	public function placementWithTooltip($place, $participants, $sprintfString)
+	public function placementWithTooltip($place, $participants, $sprintfString, $unknownString = '-')
 	{
 		if (null === $place) {
-			return '?';
+			return $unknownString;
 		}
 
 		$placeString = $place.'.';
 
 		if (null !== $participants) {
-			// quantile: 100*$place/participants
 
 			$Tooltip = new Tooltip(sprintf($sprintfString, $participants).' '.sprintf(__('(first %u%%)'), 100*$place/$participants));
 			$Tooltip->wrapAround($placeString);
@@ -186,16 +185,16 @@ class Dataview
 	 * @param string $unknownString string to display if place is unknown
 	 * @return string
 	 */
-	protected function placementWithParticipants($place, $participants, $unknownString = '?')
+	protected function placementWithParticipants($place, $participants, $unknownString = '-')
 	{
 		if (null === $place) {
-			return '?';
+			return $unknownString;
 		}
 
 		if (null === $participants) {
 			return $place.'.';
 		}
 
-		return sprintf('%u of %u', $place, $participants);
+		return sprintf('%u. of %u', $place, $participants);
 	}
 }

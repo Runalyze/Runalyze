@@ -66,7 +66,8 @@ class DefaultConfiguration extends Configuration
 			Keys::COMPLETE_EQUIPMENT => false,
 			Keys::MAIN_EQUIPMENT => false,
 			Keys::RPE => false,
-			Keys::GRADIENT => false
+			Keys::GRADIENT => false,
+			Keys::RACE_RESULT => false
 		));
 	}
 
