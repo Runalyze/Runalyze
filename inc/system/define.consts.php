@@ -8,7 +8,7 @@
  * Current version of Runalyze
  * @var string
  */
-define('RUNALYZE_VERSION', '2.5.2');
+define('RUNALYZE_VERSION', '2.5.3');
 
 /**
  * Maximum value for integers
