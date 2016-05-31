@@ -253,7 +253,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 		$dists = array();
 		$kms = (is_array($this->Configuration()->value('pb_distances'))) ? $this->Configuration()->value('pb_distances') : array(3, 5, 10, 21.1, 42.2);
 		foreach ($kms as $km)
-			$dists[$km] = array('sum' => 0, 'pb' => INFINITY);
+			$dists[(string)$km] = array('sum' => 0, 'pb' => INFINITY);
 
 		if ($this->RaceContainer->num() == 0)
 			return;
@@ -269,9 +269,9 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 			$year[$wk['y']]['sum']++;
 			foreach($kms as $km)
 				if ($km == $wk['official_distance']) {
-					$year[$wk['y']][$km]['sum']++;
-					if ($wk['s'] < $year[$wk['y']][$km]['pb'])
-						$year[$wk['y']][$km]['pb'] = $wk['s'];
+					$year[$wk['y']][(string)$km]['sum']++;
+					if ($wk['s'] < $year[$wk['y']][(string)$km]['pb'])
+						$year[$wk['y']][(string)$km]['pb'] = $wk['s'];
 				}
 		}
 
@@ -301,15 +301,15 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 				$y = $year[$key];
 
 				if ($key != 'sum') {
-					if ($y[$km]['sum'] != 0) {
+					if ($y[(string)$km]['sum'] != 0) {
 						$PB = new PersonalBest($km, $this->sportid);
-						$distance = Duration::format($y[$km]['pb']);
+						$distance = Duration::format($y[(string)$km]['pb']);
 
-						if ($PB->seconds() == $y[$km]['pb']) {
+						if ($PB->seconds() == $y[(string)$km]['pb']) {
 							$distance = '<strong>'.$distance.'</strong>';
 						}
 
-						echo '<td>'.$distance.' <small>'.$y[$km]['sum'].'x</small></td>';
+						echo '<td>'.$distance.' <small>'.$y[(string)$km]['sum'].'x</small></td>';
 					} else {
 						echo '<td><em><small>---</small></em></td>';
 					}
