@@ -48,9 +48,11 @@ You have to apply recent changes from the respective update files in `inc/instal
 
 ## Changelog
 * [v2.6](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-6-en/), [[update instructions]](http://docs.runalyze.com/en/latest/update.html#upgrade-from-2-5-to-2-6), 22.05.2016: minor release (race results, improved weather cache ...)
+ * [v2.6.1](https://blog.runalyze.com/en/allgemein-en/runalyze-v2-6-1-en/), 31.05.2016: minor bugfixes
 * [v2.5](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-5-en/), [[update instructions]](http://docs.runalyze.com/en/latest/update.html#upgrade-from-2-4-to-2-5), 12.04.2016: minor release (timezone support, Moving average, ...)
  * [v2.5.1](https://blog.runalyze.com/en/allgemein-en/runalyze-v2-5-1-en/), 24.04.2016: minor bugfixes
  * [v2.5.2](https://blog.runalyze.com/en/allgemein-en/runalyze-v2-5-2-en/), 07.05.2016: minor bugfixes
+ * [v2.5.3](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-5-3-en/), 31.05.2016: minor bugfixes
 * [v2.4](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-4-en/), [[update instructions]](http://docs.runalyze.com/en/latest/update.html#upgrade-from-2-3-to-2-4), 25.01.2016: minor release (more weather data, recognition of duplicate activities, ...)
  * [v2.4.1](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-4-1-en/), 09.02.2016: minor bugfixes
  * [v2.4.2](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-4-2-en/), 29.03.2016: minor bugfixes
