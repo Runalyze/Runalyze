@@ -1,6 +1,6 @@
 <?php
 /**
- * This file contains class::BeaufortScala
+ * This file contains class::BeaufortScale
  * @package Runalyze\Data\Weather
  */
 
@@ -166,7 +166,7 @@ class BeaufortScale implements ValueInterface
 	 */
 	public function label()
 	{
-	    return __('Beautfort scale');
+	    return __('Beaufort scale');
 	}
 
 	/**
