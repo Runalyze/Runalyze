@@ -28,7 +28,9 @@ composer.lock
 
 #assets
 node_modules/
-web/assets/
+web/assets/css/*.css
+web/assets/js/*.js
+web/assets/vendor/
 view/cache/
 npm-debug.log
 

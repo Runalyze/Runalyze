@@ -4,9 +4,11 @@
 	<meta charset="UTF-8">
 	<title>Garmin Communicator</title>
 
-	<link rel="stylesheet" href="/assets/garmin/communicator2.css">
-	<script src="/assets/garmin/prototype/prototype.js"></script>
-	<script src="/assets/garmin/garmin/device/GarminDeviceDisplay.js"></script>
+	<base href="{{ htmlBase }}">
+
+	<link rel="stylesheet" href="assets/v2.x/vendor/garmin/communicator2.css">
+	<script src="assets/v2.x/vendor/garmin/prototype/prototype.js"></script>
+	<script src="assets/v2.x/vendor/garmin/garmin/device/GarminDeviceDisplay.js"></script>
 	<script>
 		function ignoreID(id,e) {
 			var p = e.parentNode;
@@ -38,8 +40,8 @@
 				readDataTypes: [Garmin.DeviceControl.FILE_TYPES.tcxDir, Garmin.DeviceControl.FILE_TYPES.gpxDir, Garmin.DeviceControl.FILE_TYPES.fitDir],
 				readDataButtonText: "{{ 'Connect' | trans }}",
 				showCancelReadDataButton: false,
-				lookingForDevices: '{{ 'Searching for devices' | trans }}<br><br><img src="../img/wait.gif">',
-				uploadsFinished: "{{ 'Transfer complete' | trans }}
+				lookingForDevices: '{{ 'Searching for devices' | trans }}<br><br><img src="assets/v2.x/img/wait.gif">',
+				uploadsFinished: "{{ 'Transfer complete' | trans }}",
 				uploadSelectedActivities: true,
 				uploadCompressedData: true,
 				uploadMaximum: 40, 
@@ -130,7 +132,7 @@
 					});
 				}
 {% if garminAPIKey|length > 10 %}
-	,pathKeyPairsArray: ["'.Request::getProtocol().'://'.$_SERVER['HTTP_HOST'].'","'.GARMIN_API_KEY.'"]
+	,pathKeyPairsArray: [{{ garminAPIBase }}, {{ garminAPIKey }}]
 {% endif %}
 			});
 		}

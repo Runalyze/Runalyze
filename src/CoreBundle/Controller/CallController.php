@@ -1,11 +1,14 @@
 <?php
+
 namespace Runalyze\Bundle\CoreBundle\Controller;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 //use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+
 //use Runalyze\View\Activity\Context;
 //use Runalyze\View\Activity\Linker;
 //use Runalyze\View\Activity\Dataview;
@@ -40,7 +43,9 @@ class CallController extends Controller
         $Frontend = new \Frontend(true);
 
         return $this->render('CoreBundle:Upload:garminCommunicator.html.twig', array(
-                    'garminAPIKey' => GARMIN_API_KEY,
+            'htmlBase' => \System::getFullDomain(),
+            'garminAPIBase' => \Request::getProtocol().'://'.$_SERVER['HTTP_HOST'],
+            'garminAPIKey' => GARMIN_API_KEY,
         ));
     }
     
@@ -178,7 +183,7 @@ class CallController extends Controller
         return new Response;
     }
     
-    protected function plotSumData($Frontend) {
+    protected function plotSumData() {
 
         $Request = Request::createFromGlobals();
         if (is_null($Request->query->get('y'))) {
@@ -204,7 +209,7 @@ class CallController extends Controller
     public function windowsPlotSumDataAction()
     {
         $Frontend = new \Frontend();
-        $this->plotSumData($Frontend);
+        $this->plotSumData();
         return new Response;
     }
     
@@ -213,7 +218,7 @@ class CallController extends Controller
      */
     public function windowsPlotSumDataSharedAction()
     {
-        $Frontend = new \FrontendSharedList($Frontend);
+        $Frontend = new \FrontendSharedList();
         $this->plotSumData();
         return new Response;
     }
