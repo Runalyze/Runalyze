@@ -8,6 +8,8 @@ var less = require('gulp-less');
 var rename = require('gulp-rename');
 var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
+var shell = require('gulp-shell');
+var phpunit = require('gulp-phpunit');
 var config = require('./resources.json');
 
 function clean(done) {
@@ -41,11 +43,36 @@ function scripts() {
 }
 scripts.description = 'Combine and minify javascript files.';
 
+function tests() {
+    return gulp.src('./tests/config.xml')
+        .pipe(phpunit('./vendor/bin/phpunit', { bootstrap: './tests/bootstrap.php', statusLine: false }));
+}
+tests.description = 'Run phpunit.';
+
+function translate() {
+  return gulp.src('./inc/locale/*/*/*.po', {read: false})
+    .pipe(shell([
+        'cp <%= file.path %> ./inc/locale', // Needed for symfony
+    ]))
+    .pipe(shell([
+        'msgfmt -v <%= file.path %> -o <%= target(file.path) %>'
+    ], {
+        templateData: {
+            target: function (f) {
+                return f.replace(/\.po$/, '.mo')
+            }
+        }
+    }))
+}
+translate.description = 'Compile translation files.';
+
 exports.clean = clean;
 exports.styles = styles;
 exports.scripts = scripts;
+exports.tests = tests;
+exports.translate = translate;
 
 var build = gulp.series(clean, gulp.parallel(styles, scripts));
 
 gulp.task('build', build);
-gulp.task('default', build);
+gulp.task('default', gulp.parallel(build, translate));

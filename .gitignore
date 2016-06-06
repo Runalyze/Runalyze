@@ -13,7 +13,7 @@ php.ini
 
 #Runalyze
 build/yuicompressor-*
-web/img/backgrounds/My-*
+web/assets/v2.x/img/backgrounds/My-*
 lib/phpfastcache/cache.storage.*
 *.xcf
 data/config.php
@@ -23,14 +23,14 @@ inc/locale/*.po
 
 #composer
 composer.phar
-vendor/
+/vendor/
 composer.lock
 
 #assets
 node_modules/
 web/assets/css/*.css
 web/assets/js/*.js
-web/assets/vendor/
+web/vendor/
 view/cache/
 npm-debug.log
 

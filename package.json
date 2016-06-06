@@ -5,17 +5,19 @@
   "homepage": "https://runalyze.com/",
   "main": "gulpfile.js",
   "scripts": {
-    "start": "gulp",
-    "build": "gulp build --production"
+    "postinstall": "bower install"
   },
   "devDependencies": {
+    "bower": "^1.7.9",
     "del": "^2.2.0",
     "gulp": "github:gulpjs/gulp#4.0",
     "gulp-clean-css": "^2.0.9",
     "gulp-cli": "gulpjs/gulp-cli#4.0",
     "gulp-concat": "^2.5.2",
     "gulp-less": "^3.1.0",
+    "gulp-phpunit": "^0.15.0",
     "gulp-rename": "^1.2.0",
+    "gulp-shell": "^0.5.2",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-uglify": "^1.2.0"
   }
