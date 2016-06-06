@@ -1,4 +1,4 @@
-# [Runalyze v2.6.0-dev](http://blog.runalyze.com)
+# [Runalyze v2.7.0-dev](http://blog.runalyze.com)
 
 [![Build Status](https://travis-ci.org/Runalyze/Runalyze.svg?branch=master)](https://travis-ci.org/Runalyze/Runalyze)
 [![Code Coverage](https://scrutinizer-ci.com/g/Runalyze/Runalyze/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/Runalyze/Runalyze/?branch=master)
@@ -21,19 +21,16 @@ We provide two different documentations:
 Both documentations have their own repos: [docs](https://github.com/Runalyze/docs) and [admin-docs](https://github.com/Runalyze/admin-docs). In addition, there's our [runalyze-playground](https://github.com/Runalyze/runalyze-playground) to play around with some new ideas. Feel free to contribute there.
 
 ## Install / Development
-Runalyze requires [composer](https://getcomposer.org/doc/00-intro.md#system-requirements),
-[npm](https://nodejs.org/download/),
-[bower](http://bower.io/) (`npm install -g bower`) and
-[gulp](https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md).
+Runalyze requires [composer](https://getcomposer.org/doc/00-intro.md#system-requirements) and 
+[npm](https://nodejs.org/download/) 
+(plus [bower](http://bower.io/) and
+[gulp](https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md), will be installed via npm).
 
 To install dependencies and build:
 ```
-composer install --prefer-dist
-bower install
+composer install
 npm install
 gulp
-
-php build/build.php translations
 ```
 
 Still, we don't have any automated migration script for the database so far.
@@ -44,9 +41,11 @@ You have to apply recent changes from the respective update files in `inc/instal
 
 ## Changelog
 * [v2.6](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-6-en/), [[update instructions]](http://docs.runalyze.com/en/latest/update.html#upgrade-from-2-5-to-2-6), 22.05.2016: minor release (race results, improved weather cache ...)
+ * [v2.6.1](https://blog.runalyze.com/en/allgemein-en/runalyze-v2-6-1-en/), 31.05.2016: minor bugfixes
 * [v2.5](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-5-en/), [[update instructions]](http://docs.runalyze.com/en/latest/update.html#upgrade-from-2-4-to-2-5), 12.04.2016: minor release (timezone support, Moving average, ...)
  * [v2.5.1](https://blog.runalyze.com/en/allgemein-en/runalyze-v2-5-1-en/), 24.04.2016: minor bugfixes
  * [v2.5.2](https://blog.runalyze.com/en/allgemein-en/runalyze-v2-5-2-en/), 07.05.2016: minor bugfixes
+ * [v2.5.3](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-5-3-en/), 31.05.2016: minor bugfixes
 * [v2.4](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-4-en/), [[update instructions]](http://docs.runalyze.com/en/latest/update.html#upgrade-from-2-3-to-2-4), 25.01.2016: minor release (more weather data, recognition of duplicate activities, ...)
  * [v2.4.1](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-4-1-en/), 09.02.2016: minor bugfixes
  * [v2.4.2](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-4-2-en/), 29.03.2016: minor bugfixes
