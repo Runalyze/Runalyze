@@ -48,8 +48,7 @@ class InstallerUpdate extends Installer {
 	 * Set up Autloader 
 	 */
 	protected function initAutoloader() {
-		require_once FRONTEND_PATH.'/system/class.Autoloader.php';
-		new Autoloader();
+		require_once FRONTEND_PATH.'../vendor/autoload.php';
 	}
 
 	/**

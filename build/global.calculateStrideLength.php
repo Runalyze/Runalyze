@@ -41,8 +41,7 @@ if (empty($database) && empty($hostname)) {
 
 	define('FRONTEND_PATH', __DIR__.'/../inc/');
 
-	require_once FRONTEND_PATH.'/system/class.Autoloader.php';
-	new Autoloader();
+	require_once FRONTEND_PATH.'../vendor/autoload.php';
 
 	try {
 		DB::connect($hostname, $username, $password, $database);

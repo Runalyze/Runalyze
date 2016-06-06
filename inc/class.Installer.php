@@ -142,8 +142,7 @@ class Installer {
 	 * Setup Language
 	 */
 	protected function initLanguage() {
-		require_once PATH.'system/class.Language.php';
-		new Language();
+		new \Runalyze\Language();
 	}
 
 	/**
@@ -358,8 +357,7 @@ class Installer {
 		$this->importSqlFile('inc/install/structure.sql');
 
 		define('FRONTEND_PATH', __DIR__.'/');
-		require_once FRONTEND_PATH.'/system/class.Autoloader.php';
-		new Autoloader();
+		require_once FRONTEND_PATH.'../vendor/autoload.php';
 
 		DB::connect($this->mysqlConfig[0], $this->mysqlConfig[4], $this->mysqlConfig[1], $this->mysqlConfig[2], $this->mysqlConfig[3]);
 	}

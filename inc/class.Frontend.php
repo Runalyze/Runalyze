@@ -77,7 +77,6 @@ class Frontend {
 		define('RUNALYZE', true);
 		define('FRONTEND_PATH', dirname(__FILE__).'/');
 
-		//$this->initLanguage();
 		$this->setAutoloader();
                 
                 
@@ -94,16 +93,7 @@ class Frontend {
 	 * Set up Autloader 
 	 */
 	private function setAutoloader() {
-		require_once FRONTEND_PATH.'/system/class.Autoloader.php';
-		new Autoloader();
-	}
-
-	/**
-	 * Setup Language
-	 */
-	private function initLanguage() {
-		require_once FRONTEND_PATH.'/system/class.Language.php';
-		new Language();
+		require_once FRONTEND_PATH.'../vendor/autoload.php';
 	}
 	
 	/**

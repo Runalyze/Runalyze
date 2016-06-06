@@ -3,6 +3,9 @@
  * This file contains class::SessionAccountHandler
  * @package Runalyze\System
  */
+
+use Runalyze\Language;
+
 /**
  * Class: SessionAccountHandler
  * 

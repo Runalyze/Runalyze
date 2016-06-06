@@ -6,8 +6,9 @@
 
 use Runalyze\Configuration;
 use Runalyze\Error;
-use Runalyze\Timezone;
-use Runalyze\Parameter\Application\Timezone as EnumTimezone;
+use Runalyze\Language;
+use Runalyze\Parameter\Application\Timezone;
+
 /**
  * AccountHandler
  *
@@ -228,9 +229,9 @@ class AccountHandler {
 		$newSalt = self::getNewSalt();
 
 		try {
-			$timezone = EnumTimezone::getEnumByOriginalName($_POST['timezone']);
+			$timezone = Timezone::getEnumByOriginalName($_POST['timezone']);
 		} catch (\InvalidArgumentException $e) {
-			$timezone = EnumTimezone::getEnumByOriginalName(date_default_timezone_get());
+			$timezone = Timezone::getEnumByOriginalName(date_default_timezone_get());
 		}
 
 		$newAccountId   = DB::getInstance()->insert('account',

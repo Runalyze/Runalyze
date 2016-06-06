@@ -9,7 +9,7 @@
 	<?php echo System::getCodeForAllCSSFiles(); ?>
 
 	<link rel="shortcut icon" type="image/x-icon" href="assets/v2.x/img/favicon.ico">
-        <?php foreach (Language::availableLanguages() as $key => $lang_arr) { ?>
+        <?php foreach (\Runalyze\Language::availableLanguages() as $key => $lang_arr) { ?>
         <link rel="alternate" href="<?php echo System::getFullDomain(true)."index.php?lang=".$key; ?>" hreflang="<?php echo $key; ?>" />
         <?php } ?>
 	<title>RUNALYZE</title>

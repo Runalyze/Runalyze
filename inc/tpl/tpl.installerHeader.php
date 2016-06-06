@@ -7,7 +7,7 @@
 	<?php echo System::getCodeForAllCSSFiles(); ?>
 
 	<link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
-        <?php foreach (Language::availableLanguages() as $key => $lang_arr) { ?>
+        <?php foreach (\Runalyze\Language::availableLanguages() as $key => $lang_arr) { ?>
         <link rel="alternate" href="<?php echo System::getFullDomain(true)."index.php?lang=".$key; ?>" hreflang="<?php echo $key; ?>" />
         <?php } ?>
 	<title><?php echo $title; ?></title>
@@ -36,8 +36,8 @@
                         <span class="link">Language</span>
 			<ul class="submenu">
 			<?php
-				foreach (Language::availableLanguages() as $key => $lang_arr) {
-					$liClass = (Language::getCurrentLanguage() == $key) ? ' class="triggered"' : '';
+				foreach (\Runalyze\Language::availableLanguages() as $key => $lang_arr) {
+					$liClass = (\Runalyze\Language::getCurrentLanguage() == $key) ? ' class="triggered"' : '';
 					echo '<li'.$liClass.'><a href="login?lang='.$key.'">'.$lang_arr[0].'</a></li>';
 				}
 			?>
