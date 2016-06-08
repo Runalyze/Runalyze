@@ -1,19 +1,28 @@
+imports:
+  - { resource: languages.yml }
+
 framework:
-    secret: ThisTokenIsNotSoSecretChangeIt
-    assets: ~
-    templating:
-        engines: ['twig']
-    translator:
-        fallbacks: ['%locale%']
-        paths:
-            - '%kernel.root_dir%/../inc/locale/'
+  secret: ThisTokenIsNotSoSecretChangeIt
+  assets: ~
+  templating:
+    engines: ['twig']
+  translator:
+    fallbacks: ['%locale%']
+    paths:
+      - '%kernel.root_dir%/../inc/locale/'
     
 parameters:
-    locale:     en
+  RUNALYZE_VERSION: 2.7.0-dev
+  locale:     en
    
 services:
-    app.locale_listener:
-        class: Runalyze\Bundle\CoreBundle\EventListener\LocaleListener
-        arguments: ['%kernel.default_locale%']
-        tags:
-            - { name: kernel.event_subscriber }
+  app.locale_listener:
+    class: Runalyze\Bundle\CoreBundle\EventListener\LocaleListener
+    arguments: ['%kernel.default_locale%']
+    tags:
+      - { name: kernel.event_subscriber }
+
+twig:
+  globals:
+    RUNALYZE_VERSION: '%RUNALYZE_VERSION%'
+    locales: '%locales%'

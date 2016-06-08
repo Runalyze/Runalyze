@@ -338,7 +338,7 @@ class AccountHandler {
 	 * @return string
 	 */
 	private static function getDeletionLink($hash) {
-		return System::getFullDomain().'login.php?delete='.$hash;
+		return System::getFullDomain().'settings/account/delete/'.$hash;
 	}
 
 	/**
@@ -406,10 +406,11 @@ class AccountHandler {
 
 	/**
 	 * Try to delete the account
+	 * @param string $deletionHash
 	 * @return boolean
 	 */
-	public static function tryToDeleteAccount() {
-		$Account = DB::getInstance()->exec('DELETE FROM `'.PREFIX.'account` WHERE `deletion_hash`='.DB::getInstance()->escape($_GET['delete']).' LIMIT 1');
+	public static function tryToDeleteAccount($deletionHash) {
+		$Account = DB::getInstance()->exec('DELETE FROM `'.PREFIX.'account` WHERE `deletion_hash`='.DB::getInstance()->escape($deletionHash).' LIMIT 1');
 
 		if ($Account) {
 			return true;

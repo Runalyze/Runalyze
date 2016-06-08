@@ -10,12 +10,6 @@ if (!file_exists('../data/config.php')) {
 	exit();
 }
 
-if (isset($_GET['delete'])) 
-    SessionAccountHandler::logout();
-
-if (isset($_GET['out']))
-	SessionAccountHandler::logout();
-
 if (!USER_CANT_LOGIN && SessionAccountHandler::isLoggedIn()) {
 	header('Location: dashboard');
 	exit;
@@ -28,8 +22,6 @@ if (isset($_GET['chpw']))
 	$tpl = 'tpl.loginWindow.setNewPassword.php';
 if (isset($_GET['activate']))
 	$tpl = 'tpl.loginWindow.activateAccount.php';
-if (isset($_GET['delete'])) 
-    $tpl = 'tpl.loginWindow.deleteAccount.php';
 
 
 include 'inc/tpl/tpl.installerHeader.php';

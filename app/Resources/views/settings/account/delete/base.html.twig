@@ -1,0 +1,16 @@
+{% extends 'base_not_logged_in.html.twig' %}
+
+{% block content %}
+    <div class="w50" id="login-window">
+        <fieldset>
+            <legend>{% trans %}Delete account{% endtrans %}</legend>
+
+            {% block messages %}
+            {% endblock %}
+
+            <p class="text">
+                <a class="button" href="{{ url('base_url') }}" title="Runalyze">&raquo; {% trans %}Main page{% endtrans %}</a>
+            </p>
+        </fieldset>
+    </div>
+{% endblock %}

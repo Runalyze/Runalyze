@@ -1,31 +1,36 @@
 <?php
+
 namespace Runalyze\Bundle\CoreBundle\Controller;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
+use SessionAccountHandler;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
-
-require_once '../inc/class.Frontend.php';
-require_once '../inc/class.FrontendShared.php';
-require_once '../inc/class.FrontendSharedList.php';
-
+/**
+ * Class DefaultController
+ * @package Runalyze\Bundle\CoreBundle\Controller
+ */
 class DefaultController extends Controller
 {
+    /**
+     * @param string $file
+     * @param bool $initFrontend
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     protected function includeOldScript($file, $initFrontend = true)
     {
-        if ($initFrontend)
+        if ($initFrontend) {
             $Frontend = new \Frontend();
+        }
+
         include $file;
 
-        return $this->render(
-            'CoreBundle:Default:end.html.twig'
-        );
+        return $this->render('CoreBundle:Default:end.html.twig');
     }
     
     /**
-     * @Route("/")
+     * @Route("/", name="base_url")
      * @Route("/dashboard")
      */
     public function indexAction()
@@ -39,6 +44,17 @@ class DefaultController extends Controller
     public function loginAction()
     {
         return $this->includeOldScript('../login.php');
+    }
+
+    /**
+     * @Route("/logout", name="logout")
+     */
+    public function logoutAction()
+    {
+        new \Frontend();
+        SessionAccountHandler::logout();
+
+        return $this->redirectToRoute('login');
     }
     
     /**
@@ -78,24 +94,24 @@ class DefaultController extends Controller
      */
     public function dashboardHelpAction()
     {
-        $Frontend = new \Frontend();
-        return $this->render(
-            'CoreBundle:Default:help.html.twig', array(
-                'version' => RUNALYZE_VERSION
-        ));
+        new \Frontend();
+
+        return $this->render('CoreBundle:Default:help.html.twig', [
+            'version' => RUNALYZE_VERSION
+        ]);
     }
-    
+
     /**
      * @Route("/shared/{training}")
      */
-    public function sharedTrainingAction($training)
+    public function sharedTrainingAction($training, Request $request)
     {
-        $_GET['url']=$training;
+        $_GET['url'] = $training;
         $Frontend = new \FrontendShared();
         
         if (\FrontendShared::$IS_IFRAME)
         	echo '<div id="statistics-inner" class="panel" style="width:97%;margin:0 auto;">';
-        elseif (!\Request::isAjax())
+        elseif (!$request->isXmlHttpRequest())
         	echo '<div id="statistics-inner" class="panel" style="width:960px;margin:5px auto;">';
         else
         	echo '<div>';
@@ -103,30 +119,26 @@ class DefaultController extends Controller
         $Frontend->displaySharedView();
         
         echo '</div>';
-        return new Response;
+
+        return $this->render('CoreBundle:Default:end.html.twig');
     }
-    
+
     /**
      * @Route("/shared/{user}/")
      */
-    public function sharedUserAction($user)
+    public function sharedUserAction($user, Request $request)
     {
-        $_GET['user']=$user;
+        $_GET['user'] = $user;
+
         if (isset($_GET['view'])) {
-        	if ($_GET['view'] == 'monthkm') {
-        		$_GET['type'] = 'month';
-        		$response = $this->forward('CoreBundle:Call:windowsPlotSumDataShared');
-        		exit;
-        	} elseif ($_GET['view'] == 'weekkm') {
-        		$_GET['type'] = 'week';
-        		$response = $this->forward('CoreBundle:Call:windowsPlotSumDataShared');
-        		exit;
-        	}
+            $_GET['type'] = ($_GET['view'] == 'monthkm') ? 'month' : 'week';
+
+            return $this->forward('CoreBundle:Call:windowsPlotSumDataShared');
         }
         
         $Frontend = new \FrontendSharedList();
-        
-        if (!\Request::isAjax()) {
+
+        if (!$request->isXmlHttpRequest()) {
         	if ($Frontend->userAllowsStatistics()) {
         		echo '<div class="panel" style="width:960px;margin:5px auto;">';
         		$Frontend->displayGeneralStatistics();
@@ -139,7 +151,7 @@ class DefaultController extends Controller
         
         $Frontend->displaySharedView();
         
-        if (!\Request::isAjax()) {
+        if (!$request->isXmlHttpRequest()) {
         	echo '</div>';
         	echo '</div>';
         
@@ -152,7 +164,8 @@ class DefaultController extends Controller
         	</div>
         </div>';
         }
-        return new Response;
+
+        return $this->render('CoreBundle:Default:end.html.twig');
     }
     
 }

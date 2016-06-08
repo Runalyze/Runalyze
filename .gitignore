@@ -14,7 +14,6 @@ php.ini
 #Runalyze
 build/yuicompressor-*
 web/assets/v2.x/img/backgrounds/My-*
-lib/phpfastcache/cache.storage.*
 *.xcf
 data/config.php
 data/timezone.sqlite
@@ -31,11 +30,11 @@ node_modules/
 web/assets/css/*.css
 web/assets/js/*.js
 web/vendor/
-view/cache/
 npm-debug.log
 
 #symfony
-app/cache/*
-app/logs/*
+/var/
+!/var/cache/.gitkeep
+!/var/logs/.gitkeep
 
 !.gitkeep

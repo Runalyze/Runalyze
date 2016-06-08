@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=yes">
+
+    <base href="{{ url('base_url') }}">
+
+    <link rel="stylesheet" href="assets/css/runalyze-style.css?v={{ RUNALYZE_VERSION }}">
+
+    <link rel="shortcut icon" type="image/x-icon" href="assets/v2.x/img/favicon.ico">
+
+    {% for key, locale in locales %}
+        <link rel="alternate" href="{{ app.request.getBaseUrl ~ app.request.pathinfo }}?lang={{ key }}" hreflang="{{ key }}">
+    {% endfor %}
+
+    <title>{{ page_title|default('RUNALYZE') }}</title>
+
+    <script>document.addEventListener("touchstart", function(){}, true);</script>
+    <script src="assets/js/scripts.min.js?v={{ RUNALYZE_VERSION }}"></script>
+
+</head>
+
+<body id="installer">
+
+    <div id="headline">
+        {% block headline %}
+            <a class="tab logo" href="https://www.runalyze.com/" target="_blank">Runalyze</a>
+            <a class="tab right" href="login.php"><i class="fa fa-fw fa-sign-in"></i> {% trans %}Please login{% endtrans %}</a>
+        {% endblock %}
+    </div>
+
+    <script>(function($){$(document).ready(function(){ Runalyze.init(); });})(jQuery);</script>
+
+    <div id="overlay" style="display:block;"></div>
+
+    <div id="ajax-outer">
+        <div id="ajax" class="panel" style="display:block;">
+            <div class="panel-heading">
+                <div class="panel-menu">
+                    <ul>
+                        <li class="with-submenu">
+                            <span class="link">Language</span>
+                            <ul class="submenu">
+                                {% for key, locale in locales %}
+                                    <li{% if key == app.request.locale %} class="triggered"{% endif %}>
+                                        <a href="{{ app.request.getBaseUrl ~ app.request.pathinfo }}?lang={{ key }}">{{ locale.name }}</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <h1>{{ page_title|default('RUNALYZE') }}</h1>
+            </div>
+
+            {% block content %}
+            {% endblock %}
+
+            {% block showcase %}
+                {% include 'home_feature_showcase.html.twig' %}
+            {% endblock %}
+
+            <div class="panel-content">
+                <div class="installer-window-container">
+                    <p class="small clearfix">
+                        <span class="right">
+                            <a href="http://help.runalyze.com/" target="_blank">{% trans %}Help and Support{% endtrans %}</a>
+                            &nbsp;&middot;&nbsp; <a href="https://forum.runalyze.com/" target="_blank">{% trans %}Forum{% endtrans %}</a>
+                            &nbsp;&middot;&nbsp; <a href="https://blog.runalyze.com/" target="_blank">{% trans %}Blog{% endtrans %}</a>
+                            &nbsp;&middot;&nbsp; <a href="https://blog.runalyze.com/impressum/" target="_blank">{% trans %}Imprint &amp; Privacy{% endtrans %}</a>
+                            &nbsp;&middot;&nbsp; <a href="https://blog.runalyze.com/nutzungsbedingungen/" target="_blank">{% trans %}Terms of use{% endtrans %}</a>
+                        </span>
+
+                        &copy; {{ "now"|date("Y") }} RUNALYZE Team
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

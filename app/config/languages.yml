@@ -1,4 +1,4 @@
-app:
+parameters:
   locales:
     'de': { 'name': 'Deutsch', 'locale': 'de_DE.utf-8' }
     'en': { 'name': 'English', locale: 'en_US.utf-8' }

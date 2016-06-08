@@ -97,6 +97,8 @@ class System {
 	 * @return string
 	 */
 	public static function getFullDomain($onlyToRunalyze = true) {
+		// TODO: correct handling of /web
+
 		$path = self::getDomain().substr($_SERVER['SCRIPT_NAME'], 0, strripos($_SERVER['SCRIPT_NAME'], "/"))."/";
 
 		if ($onlyToRunalyze) {

@@ -27,11 +27,18 @@ class AppKernel extends \Symfony\Component\HttpKernel\Kernel
         return $bundles;
     }
 
+    /**
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $c
+     * @param \Symfony\Component\Config\Loader\LoaderInterface $loader
+     */
     protected function configureContainer(ContainerBuilder $c, LoaderInterface $loader)
     {
         $loader->load(__DIR__.'/config/config_'.$this->getEnvironment().'.yml');
     }
 
+    /**
+     * @param \Symfony\Component\Routing\RouteCollectionBuilder $routes
+     */
     protected function configureRoutes(RouteCollectionBuilder $routes)
     {
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {
@@ -40,5 +47,29 @@ class AppKernel extends \Symfony\Component\HttpKernel\Kernel
         }
 
         $routes->mount('/', $routes->import('@CoreBundle/Controller', 'annotation'));
+    }
+
+    /**
+     * @return string
+     */
+    public function getRootDir()
+    {
+        return __DIR__;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCacheDir()
+    {
+        return dirname(__DIR__).'/var/cache/'.$this->environment;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLogDir()
+    {
+        return dirname(__DIR__).'/var/logs';
     }
 }
