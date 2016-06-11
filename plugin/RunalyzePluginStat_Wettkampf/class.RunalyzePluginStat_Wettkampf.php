@@ -544,7 +544,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 			$FieldOfficiallyMeasured = new FormularCheckbox('officially_measured', __('Officially measured').' '.Ajax::tooltip('<i class="fa fa-fw fa-question-circle"></i>', __('Was the course officially measured?')), $RaceResult->officiallyMeasured() );
 			$FieldOfficiallyMeasured->setLayout( FormularFieldset::$LAYOUT_FIELD_W50 );
 			
-			$FieldOfficialDistance = new FormularInput('official_distance', __('Official distance'), str_replace(',', '.', (new Distance($RaceResult->officialDistance()))->stringKilometer(false, 2)));
+			$FieldOfficialDistance = new FormularInput('official_distance', __('Official distance').' '.Ajax::tooltip('<i class="fa fa-fw fa-question-circle"></i>', __('We use two decimals for convenient reasons.').'<br>'.__('Marathon').': 42.20 km<br>'.__('Half marathon').': 21.10 km'), str_replace(',', '.', (new Distance($RaceResult->officialDistance()))->stringKilometer(false, 2)));
 			$FieldOfficialDistance->setLayout( FormularFieldset::$LAYOUT_FIELD_W50 );
 			$FieldOfficialDistance->setUnit(FormularUnit::$KM);
 			$FieldOfficialTime = new FormularInput('official_time', __('Official time'), Duration::format($RaceResult->officialTime()) );
