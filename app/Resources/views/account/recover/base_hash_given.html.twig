@@ -1,0 +1,3 @@
+{% extends 'account/recover/base.html.twig' %}
+
+{% block action %}{{ path('account_recover_hash', {'hash': recoverHash}) }}{% endblock %}

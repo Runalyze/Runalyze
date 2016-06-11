@@ -1,0 +1,12 @@
+{% extends "account/delete/base.html.twig" %}
+
+{% block messages %}
+    <p class="warning">
+        {% trans %}Do you really want to delete your account, %username%?{% endtrans %}
+        <br>
+        <br>
+        <a href="{{ path('account_delete_confirmed', {'hash': deletionHash}) }}">
+            <strong>{% trans %}Delete account{% endtrans %} &raquo;</strong>
+        </a>
+    </p>
+{% endblock %}

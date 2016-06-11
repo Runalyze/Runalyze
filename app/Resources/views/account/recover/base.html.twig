@@ -1,0 +1,14 @@
+{% extends 'base_not_logged_in.html.twig' %}
+
+{% block content %}
+    <div class="w50" id="login-window">
+        <form action="{% block action %}{{ path('account_recover') }}{% endblock %}" method="post">
+            <fieldset>
+                <legend>{% trans %}Password reset{% endtrans %}</legend>
+
+                {% block form %}
+                {% endblock %}
+            </fieldset>
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'base_not_logged_in.html.twig' %}
+
+{% block content %}
+    <div class="w50" id="login-window">
+        <fieldset>
+            <legend>{% trans %}Password reset{% endtrans %}</legend>
+
+            <p class="okay">
+                {% trans %}Your password has been changed.{% endtrans %}
+            </p>
+
+            <p class="text">
+                <a class="button" href="{{ url('login') }}">&raquo; {% trans %}Login{% endtrans %}</a>
+            </p>
+        </fieldset>
+    </div>
+{% endblock %}

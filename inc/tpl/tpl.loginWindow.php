@@ -126,46 +126,19 @@ use Runalyze\Activity\Distance;
 			<?php endif; ?>
 		</form>
 	</div>
-
-	<div id="forgotPassword" style="display:none;">
-		<form action="login" method="post">
-			<fieldset>
-				<legend onclick="show('log');"><?php _e('Forgot your password?'); ?></legend>
-				<div class="w100">
-					<label for="send_username"><?php _e('Username'); ?></label>
-					<input id="send_username" name="send_username" class="middle-size" type="text" value="<?php if (isset($_POST['username'])) echo str_replace('"','',$_POST['username']); ?>">
-				</div>
-
-			<?php if (isset($_POST['send_username'])): ?>
-				<p class="info small">
-					<?php echo AccountHandler::sendPasswordLinkTo($_POST['send_username']); ?>
-				</p>
-			<?php else: ?>
-				<p class="info small">
-					<?php _e('A link for changing your password will be sent via email.'); ?>
-				</p>
-			<?php endif; ?>
-			</fieldset>
-
-			<div class="c">
-				<input type="submit" value="<?php _e('Send link'); ?>" name="submit">
-			</div>
-		</form>
-	</div>
 </div>
 
 <div id="login-panel">
 	<a id="login-link" href="login#" onclick="show('log')"><i class="fa fa-fw fa-lg fa-sign-in"></i> <?php _e('Login'); ?></a>
 	<a id="register-link" href="login#" onclick="show('reg')"><i class="fa fa-fw fa-lg fa-user"></i> <?php _e('Create a new account'); ?></a>
-	<a id="password-link" href="login#" onclick="show('pwf');"><i class="fa fa-fw fa-lg fa-lock"></i> <?php _e('Forgot your password?'); ?></a>
+	<a id="password-link" href="account/recover"><i class="fa fa-fw fa-lg fa-lock"></i> <?php _e('Forgot your password?'); ?></a>
 </div>
 
 <script type="text/javascript">
 function show(what) {
-	var $log = $("#login"), $reg = $("#registerFormular"), $pwf = $("#forgotPassword");
-	if (what == 'reg') { $reg.show(); $log.hide(); $pwf.hide(); document.getElementById("timezone").value = moment.tz.guess(); }
-	else if (what == 'pwf') { $pwf.show(); $reg.hide(); $log.hide(); }
-	else if (what == 'log') { $log.show(); $pwf.hide(); $reg.hide(); }
+	var $log = $("#login"), $reg = $("#registerFormular");
+	if (what == 'reg') { $reg.show(); $log.hide(); document.getElementById("timezone").value = moment.tz.guess(); }
+	else if (what == 'log') { $log.show(); $reg.hide(); }
 }
 </script>
 
@@ -194,4 +167,3 @@ DB::getInstance()->startAddingAccountID();
 </p>
 
 <?php if (isset($_POST['new_username'])) echo Ajax::wrapJSforDocumentReady("show('reg');") ?>
-<?php if (isset($_POST['send_username'])) echo Ajax::wrapJSforDocumentReady("show('pwf');") ?>

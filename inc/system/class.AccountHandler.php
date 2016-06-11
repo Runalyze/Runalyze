@@ -259,35 +259,30 @@ class AccountHandler {
 	/**
 	 * Send password to given user
 	 * @param string $username
-	 * @return string
+	 * @return bool
+	 * @throws \InvalidArgumentException
 	 */
 	public static function sendPasswordLinkTo($username) {
 		$account = self::getDataFor($username);
 
-		if ($account) {
-			$pwHash = self::getChangePasswordHash();
-			self::updateAccount($username, array('changepw_hash', 'changepw_timelimit'), array($pwHash, time()+DAY_IN_S));
-
-			$subject  = __('Reset your RUNALYZE password');
-			$message  = sprintf( __('Did you forget your password %s?'), $account['name'])."<br><br>\r\n\r\n";
-			$message .= __('You can change your password within the next 24 hours with the following link').":<br>\r\n";
-			$message .= '<a href='.self::getChangePasswordLink($pwHash).'>'.self::getChangePasswordLink($pwHash).'</a>';
-
-			if (System::sendMail($account['mail'], $subject, $message))
-				return __('The link has been sent and will be valid for 24 hours.');
-			else {
-				$string = __('Unable to send link. Please contact the administrator.');
-
-				if (System::isAtLocalhost()) {
-					$string .= '<br>'.__('Your local server has no smtp-server. Please contact the administrator.');
-					Error::getInstance()->addDebug('Link for changing password:'.self::getChangePasswordLink($pwHash));
-				}
-
-				return $string;
-			}
+		if (!$account) {
+			throw new InvalidArgumentException('Unknown username');
 		}
 
-		return __('The username is unknown.');
+		$pwHash = self::getChangePasswordHash();
+		self::updateAccount($username, array('changepw_hash', 'changepw_timelimit'), array($pwHash, time()+DAY_IN_S));
+
+		$subject  = __('Reset your RUNALYZE password');
+		$message  = sprintf( __('Did you forget your password %s?'), $account['name'])."<br><br>\r\n\r\n";
+		$message .= __('You can change your password within the next 24 hours with the following link').":<br>\r\n";
+		$message .= '<a href='.self::getChangePasswordLink($pwHash).'>'.self::getChangePasswordLink($pwHash).'</a>';
+
+		if (!System::sendMail($account['mail'], $subject, $message)) {
+			// TODO: provide a log entry for the admin
+			return false;
+		}
+
+		return true;
 	}
 
 
@@ -308,7 +303,8 @@ class AccountHandler {
 
 	/**
 	 * Get hash.
-	 * @return string
+	 * @param int $bytes
+	 * @return string hash of length 2*$bytes
 	 */
 	private static function getRandomHash($bytes = 16) {
 		return bin2hex(openssl_random_pseudo_bytes($bytes));
@@ -320,7 +316,7 @@ class AccountHandler {
 	 * @return string
 	 */
 	private static function getChangePasswordLink($hash) {
-		return System::getFullDomain().'login.php?chpw='.$hash;
+		return System::getFullDomain().'account/recover/'.$hash;
 	}
 
 	/**
@@ -338,17 +334,18 @@ class AccountHandler {
 	 * @return string
 	 */
 	private static function getDeletionLink($hash) {
-		return System::getFullDomain().'settings/account/delete/'.$hash;
+		return System::getFullDomain().'account/delete/'.$hash;
 	}
 
 	/**
 	 * Get username requested for changing password
-	 * @return boolean|string
+	 * @param string $hash
+	 * @return bool|string
 	 */
-	public static function getUsernameForChangePasswordHash() {
+	public static function getUsernameForChangePasswordHash($hash) {
 		$data = DB::getInstance()->query('
 			SELECT username FROM '.PREFIX.'account
-			WHERE changepw_hash='.DB::getInstance()->escape($_GET['chpw']).'
+			WHERE changepw_hash='.DB::getInstance()->escape($hash).'
 				AND changepw_timelimit>'.time().'
 			LIMIT 1'
 		)->fetch();
@@ -361,21 +358,22 @@ class AccountHandler {
 
 	/**
 	 * Try to set new password from post-values
-	 * @return mixed
+	 * @param string $hash
+	 * @return bool|array array with errors or true on success
 	 */
-	public static function tryToSetNewPassword() {
-		if (!isset($_POST['chpw_hash']) || !isset($_POST['new_pw']) || !isset($_POST['new_pw_again']) || !isset($_POST['chpw_username']))
+	public static function tryToSetNewPassword($hash) {
+		if (!isset($_POST['new_pw']) || !isset($_POST['new_pw_again']) || !isset($_POST['chpw_username']))
 			return [];
 
-		if ($_POST['chpw_username'] == self::getUsernameForChangePasswordHash()) {
+		if ($_POST['chpw_username'] == self::getUsernameForChangePasswordHash($hash)) {
 			if ($_POST['new_pw'] != $_POST['new_pw_again'])
 				return array( __('The passwords have to be the same.') );
 			elseif (strlen($_POST['new_pw']) < self::$PASS_MIN_LENGTH)
 				return array( sprintf( __('The password has to contain at least %s signs.'), self::$PASS_MIN_LENGTH) );
 			else {
 				self::setNewPassword($_POST['chpw_username'], $_POST['new_pw']);
-				header('Location: login.php');
-				exit;
+
+				return true;
 			}
 		} else
 			return array( __('Something went wrong.') );
@@ -417,6 +415,14 @@ class AccountHandler {
 		}
 
 		return false;
+	}
+
+	/**
+	 * @param string $deletionHash
+	 * @return bool|string false if deletion hash is not found
+	 */
+	public static function getUsernameForDeletionHash($deletionHash) {
+		return DB::getInstance()->query('SELECT `username` FROM `'.PREFIX.'account` WHERE `deletion_hash`='.DB::getInstance()->escape($deletionHash).' LIMIT 1')->fetchColumn();
 	}
 
 	/**

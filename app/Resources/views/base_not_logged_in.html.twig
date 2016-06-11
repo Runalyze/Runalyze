@@ -54,15 +54,15 @@
                 <h1>{{ page_title|default('RUNALYZE') }}</h1>
             </div>
 
-            {% block content %}
-            {% endblock %}
-
-            {% block showcase %}
-                {% include 'home_feature_showcase.html.twig' %}
-            {% endblock %}
-
             <div class="panel-content">
                 <div class="installer-window-container">
+                    {% block content %}
+                    {% endblock %}
+
+                    {% block showcase %}
+                        {% include 'home_feature_showcase.html.twig' %}
+                    {% endblock %}
+
                     <p class="small clearfix">
                         <span class="right">
                             <a href="http://help.runalyze.com/" target="_blank">{% trans %}Help and Support{% endtrans %}</a>
