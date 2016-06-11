@@ -5,6 +5,7 @@
  */
 
 use Runalyze\Configuration;
+use Runalyze\Import\Exception\UnsupportedFileException;
 
 /**
  * Parser for SLF files from Sigma
@@ -43,9 +44,10 @@ class ParserSLF3Single extends ParserAbstractSingleXML {
 
 	/**
 	 * Add error: incorrect file
+	 * @throws \Runalyze\Import\Exception\UnsupportedFileException
 	 */
 	protected function throwNoSLFError() {
-		$this->addError( __('Given XML object is not from Sigma. &lt;LogEntries&gt;-tag could not be located.') );
+		throw new UnsupportedFileException('Given XML object is not from Sigma. &lt;LogEntries&gt;-tag could not be located.');
 	}
 
 	/**
@@ -60,10 +62,11 @@ class ParserSLF3Single extends ParserAbstractSingleXML {
 
 	/**
 	 * Parse all log entries
+	 * @throws \Runalyze\Import\Exception\UnsupportedFileException
 	 */
 	protected function parseLogEntries() {
 		if (empty($this->XML->LogEntries->LogEntry)) {
-			$this->addError( __('This file does not contain any data.') );
+			throw new UnsupportedFileException('This file does not contain any data.');
 		} else {
 			foreach ($this->XML->LogEntries->LogEntry as $Log)
 				$this->parseLogEntry($Log);

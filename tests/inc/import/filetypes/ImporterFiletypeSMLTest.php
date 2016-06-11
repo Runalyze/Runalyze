@@ -25,24 +25,18 @@ class ImporterFiletypeSMLTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * Test: empty string
+	 * @expectedException \Runalyze\Import\Exception\ParserException
 	 */
 	public function testEmptyString() {
 		$this->object->parseString('');
-
-		$this->assertTrue( $this->object->failed() );
-		$this->assertEmpty( $this->object->objects() );
-		$this->assertNotEmpty( $this->object->getErrors() );
 	}
 
 	/**
-	 * Test: incorrect xml-file 
+	 * Test: incorrect xml-file
+	 * @expectedException \Runalyze\Import\Exception\ParserException
 	 */
 	public function test_incorrectString() {
 		$this->object->parseString('<any><xml><file></file></xml></any>');
-
-		$this->assertTrue( $this->object->failed() );
-		$this->assertEmpty( $this->object->objects() );
-		$this->assertNotEmpty( $this->object->getErrors() );
 	}
 
 	/**

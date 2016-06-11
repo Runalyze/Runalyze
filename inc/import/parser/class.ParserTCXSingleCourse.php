@@ -3,6 +3,9 @@
  * This file contains class::ParserTCXSingleCourse
  * @package Runalyze\Import\Parser
  */
+
+use Runalyze\Import\Exception\UnsupportedFileException;
+
 /**
  * Parser for TCX course from Garmin
  *
@@ -44,9 +47,10 @@ class ParserTCXSingleCourse extends ParserAbstractSingleXML {
 
 	/**
 	 * Add error: no garmin file
+	 * @throws \Runalyze\Import\Exception\UnsupportedFileException
 	 */
 	protected function throwNoGarminError() {
-		$this->addError( __('Given XML object is not from Garmin. &lt;Track&gt;-tag could not be located.') );
+		throw new UnsupportedFileException('Given XML object is not from Garmin. &lt;Track&gt;-tag could not be located.');
 	}
 
 	/**

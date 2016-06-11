@@ -5,6 +5,7 @@
  */
 
 use Runalyze\Configuration;
+use Runalyze\Import\Exception\UnsupportedFileException;
 
 /**
  * Parser for XML files from Suunto
@@ -99,9 +100,10 @@ class ParserXMLsuuntoSingle extends ParserAbstractSingleXML {
 
 	/**
 	 * Add error: incorrect file
+	 * @throws \Runalyze\Import\Exception\UnsupportedFileException
 	 */
 	protected function throwNoXMLError() {
-		$this->addError( __('Given XML object does not contain any results. &lt;Samples&gt;-tag or &lt;header&gt;-tag could not be located.') );
+		throw new UnsupportedFileException('Given XML object does not contain any results. &lt;Samples&gt;-tag or &lt;header&gt;-tag could not be located.');
 	}
 
 	/**

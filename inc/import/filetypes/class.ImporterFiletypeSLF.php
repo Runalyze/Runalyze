@@ -12,11 +12,8 @@
  * @package Runalyze\Import\Filetype
  */
 class ImporterFiletypeSLF extends ImporterFiletypeAbstract {
-	/**
-	 * Allowed producer of SLF files
-	 * @var string
-	 */
-	private static $ALLOWED_PRODUCER = 'Sigma Data Center 3 & 4';
+	/** @var string */
+	const ALLOWED_PRODUCER = 'Sigma Data Center 3 & 4';
     
 	/**
 	 * Set parser
@@ -27,8 +24,8 @@ class ImporterFiletypeSLF extends ImporterFiletypeAbstract {
 			$this->Parser = new ParserSLF3Multiple($string);
 		elseif ($this->isFromSigmaDataCenter4($string))
 			$this->Parser = new ParserSLF4Multiple($string);
-		else 
-			$this->throwErrorForUnknownFormat();
+		else
+			$this->throwErrorForUnknownFormat('slf', self::ALLOWED_PRODUCER);
 	}
 
 	/**
@@ -47,12 +44,5 @@ class ImporterFiletypeSLF extends ImporterFiletypeAbstract {
 	 */
 	private function isFromSigmaDataCenter3($string) {
 		return strpos($string, '<LogEntries') !== false;
-	}
-
-	/**
-	 * Throw error for unknown format
-	 */
-	private function throwErrorForUnknownFormat() {
-		$this->Errors[] = __('This file is not supported. Supported producers of slf-files: '.self::$ALLOWED_PRODUCER.'.');
 	}
 }

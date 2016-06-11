@@ -3,14 +3,15 @@
  * This file contains class::ImporterFactory
  * @package Runalyze\Import
  */
+
+use Runalyze\Import;
+
 /**
  * Importer factory
  *
  * @author Hannes Christiansen
  * @package Runalyze\Import
  */
-use Runalyze\Error;
-
 class ImporterFactory {
 	/**
 	 * Creator: manually via form
@@ -37,9 +38,9 @@ class ImporterFactory {
 
 	/**
 	 * Import from garmin communicator
-	 * @var string enum
+	 * @var string
 	 */
-	public static $FROM_COMMUNICATOR = 'NO_FILENAME_IMPORT_FROM_GARMIN_COMMUNICATOR';
+	const FROM_COMMUNICATOR = 'NO_FILENAME_IMPORT_FROM_GARMIN_COMMUNICATOR';
 
 	/**
 	 * Filename
@@ -61,15 +62,27 @@ class ImporterFactory {
 
 	/**
 	 * Constructor
-	 * @param string|array $Filename filename
+	 * @param string|array $filenameOrGarminFlag filename(s) or self::FROM_COMMUNICATOR
 	 */
-	public function __construct($FilenameOrGarminFlag) {
-		if ($FilenameOrGarminFlag == self::$FROM_COMMUNICATOR)
+	public function __construct($filenameOrGarminFlag) {
+		try {
+			$this->tryToConstructImporterFor($filenameOrGarminFlag);
+		} catch (Import\Exception\ParserException $e) {
+			$this->handleParserException($e);
+		}
+	}
+
+	/**
+	 * @param string|array $filenameOrGarminFlag
+	 */
+	protected function tryToConstructImporterFor($filenameOrGarminFlag) {
+		if ($filenameOrGarminFlag == self::FROM_COMMUNICATOR) {
 			$this->constructForGarminCommunicator();
-		else if (is_array($FilenameOrGarminFlag))
-			$this->constructForFilenames($FilenameOrGarminFlag);
-		else
-			$this->constructForFilename($FilenameOrGarminFlag);
+		} else if (is_array($filenameOrGarminFlag)) {
+			$this->constructForFilenames($filenameOrGarminFlag);
+		} else {
+			$this->constructForFilename($filenameOrGarminFlag);
+		}
 	}
 
 	/**
@@ -91,9 +104,6 @@ class ImporterFactory {
 	 * Delete current file
 	 */
 	protected function deleteCurrentFile() {
-		//if (self::$logFileContents)
-		//	TODO
-
 		if (!empty($this->Filename) && file_exists(FRONTEND_PATH.$this->Filename))
 			unlink(FRONTEND_PATH.$this->Filename);
 	}
@@ -275,10 +285,11 @@ class ImporterFactory {
 		$this->Filename = ImporterUpload::relativePath($Filename);
 		$extension      = Filesystem::extensionOfFile($this->Filename);
 
-		if (self::canImportExtension($extension))
+		if (self::canImportExtension($extension)) {
 			$this->importWithClass( self::classFor($extension) );
-		else
+		} else {
 			$this->throwUnknownExtension($Filename, $extension);
+		}
 	}
 
 	/**
@@ -298,8 +309,37 @@ class ImporterFactory {
 	 * @param string $filename
 	 * @param string $extension
 	 */
-	private function throwUnknownExtension($filename, $extension) {
-		Error::getInstance()->addError('Can\'t import '.$filename.', there is no importer for *.'.$extension);
+	protected function throwUnknownExtension($filename, $extension) {
+		// This must not happen as the file uploader should catch unsupported extensions.
+		throw new RuntimeException('There is no importer for *.'.$extension);
+	}
+
+	/**
+	 * @TODO use monolog
+	 * @param \Runalyze\Import\Exception\ParserException $e
+	 */
+	protected function handleParserException(Import\Exception\ParserException $e) {
+		$message = __('There was a problem while importing the file.');
+		$message .= ' ('.$e->getMessage().')';
+		$addErrorMessage = false;
+
+		if ($e instanceof Import\Exception\UnexpectedContentException) {
+			$message = __('There are some unexpected contents in the file.');
+			$message .= ' '.sprintf(__('Please mail the file to %s.'), 'support@runalyze.com');
+			$addErrorMessage = true;
+		} elseif ($e instanceof Import\Exception\InstallationSpecificException) {
+			$message = __('There was an installation specific problem. Please contact the administrator.');
+			$addErrorMessage = true;
+		} elseif ($e instanceof Import\Exception\UnsupportedFileException) {
+			$message = __('This file format is not supported.');
+		}
+
+		if ($addErrorMessage) {
+			// TODO: users should see as little as necessary of the exact error messages
+			$message .= '<br><br>'.__('Please add the following information').':<br><code style="height:auto;color:#000;">'.nl2br($e->getMessage()).'</code>';
+		}
+
+		$this->Errors[] = $message;
 	}
 
 	/**

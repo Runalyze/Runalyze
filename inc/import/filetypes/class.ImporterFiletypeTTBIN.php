@@ -3,6 +3,9 @@
  * This file contains class::ImporterFiletypeTTBIN
  * @package Runalyze\Import\Filetype
  */
+
+use Runalyze\Import;
+
 /**
  * Importer: *.ttbin
  * 
@@ -45,6 +48,7 @@ class ImporterFiletypeTTBIN extends ImporterFiletypeAbstract {
 	/**
 	 * Set parser
 	 * @param string $String string to parse
+	 * @throws \RuntimeException
 	 */
 	protected function setParserFor($String) {
 		throw new RuntimeException('ImporterFiletypeTTBIN does not use any parser, parseFile() has to be used instead of setParserFor().');
@@ -59,6 +63,7 @@ class ImporterFiletypeTTBIN extends ImporterFiletypeAbstract {
 	 * For unittesting, this method accepts a filename of the output of ttbincnv
 	 * 
 	 * @param string $filename [optional] absolute path
+	 * @throws \Runalyze\Import\Exception\ParserException
 	 */
 	public function readFile($filename = '') {
 		if (!empty($filename))
@@ -69,11 +74,12 @@ class ImporterFiletypeTTBIN extends ImporterFiletypeAbstract {
 			$firstLine = stream_get_line($Handle, 4096, PHP_EOL);
 
 			if (strpos($firstLine, 'ttbincnv') !== FALSE) {
-				$this->Errors[] = 'Importing your *.ttbin-file did not work. Please compile ttbincnv for your environment.';
-				$this->Parser = new ParserTCXMultiple('');
+				$message = 'Executing ttbincnv did not work: '.$firstLine;
+				$message .= NL.NL.'You may need to compile ttbincnv for your environment.';
+
+				throw new Import\Exception\InstallationSpecificException($message);
 			} elseif (substr($firstLine, 0, 1) != '<') {
-				$this->Errors[] = sprintf(__('Parsing your *.%s-file failed: %s'), 'ttbin', $firstLine);
-				$this->Parser = new ParserTCXMultiple('');
+				throw new Import\Exception\UnexpectedContentException('Parsing your *.ttbin-file failed: '.$firstLine);
 			} else {
 				$Filecontent = Filesystem::openFile($this->Filename);
 
