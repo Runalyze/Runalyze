@@ -1,8 +1,10 @@
 imports:
   - { resource: languages.yml }
+  - { resource: security.yml }
 
 framework:
   secret: ThisTokenIsNotSoSecretChangeIt
+  session: ~
   assets: ~
   templating:
     engines: ['twig']
@@ -14,6 +16,11 @@ framework:
 parameters:
   RUNALYZE_VERSION: 2.7.0-dev
   locale:     en
+  database_host:     127.0.0.1
+  database_port:     ~
+  database_name:     runalyze
+  database_user:     root
+  database_password: ~
    
 services:
   app.locale_listener:
@@ -21,8 +28,49 @@ services:
     arguments: ['%kernel.default_locale%']
     tags:
       - { name: kernel.event_subscriber }
+  app.sha256salted_encoder:
+    class: Runalyze\Bundle\CoreBundle\Services\Sha256SaltedEncoder
 
 twig:
   globals:
     RUNALYZE_VERSION: '%RUNALYZE_VERSION%'
     locales: '%locales%'
+    
+# Doctrine Configuration
+doctrine:
+    dbal:
+        default_connection:   default
+
+        connections:
+            default:
+                driver:   pdo_mysql
+                host:     "%database_host%"
+                port:     "%database_port%"
+                dbname:   "%database_name%"
+                user:     "%database_user%"
+                password: "%database_password%"
+                charset:  UTF8
+                mapping_types:
+                    enum:   string
+                    
+
+    orm:
+        auto_generate_proxy_classes: "%kernel.debug%"
+        auto_mapping: true
+        
+monolog:
+    handlers:
+        applog:
+            type: stream
+            path: /var/logs/symfony.log
+            level: error
+        main:
+            type: fingers_crossed
+            action_level: warning
+            handler: file
+        file:
+            type: stream
+            level: debug
+        syslog:
+            type: syslog
+            level: error

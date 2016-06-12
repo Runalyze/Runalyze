@@ -4,8 +4,8 @@ namespace Runalyze\Bundle\CoreBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-//use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -25,10 +25,11 @@ class CallController extends Controller
     /**
      * @Route("/call/call.DataBrowser.display.php")
      * @Route("databrowser", name="databrowser")
+     * @Security("has_role('ROLE_USER')")
      */
     public function dataBrowserAction()
     {
-        $Frontend = new \Frontend(true);
+        $Frontend = new \Frontend(true, $this->get('security.token_storage'));
         $DataBrowser = new \DataBrowser();
         $DataBrowser->display();
         return new Response;
@@ -37,6 +38,7 @@ class CallController extends Controller
     /**
      * @Route("/call/call.garminCommunicator.php")
      * @Route("/upload/garminCommunicator")
+     * @Security("has_role('ROLE_USER')")
      */
     public function garminCommunicatorAction()
     {
@@ -52,6 +54,7 @@ class CallController extends Controller
     /**
      * @Route("/call/savePng.php")
      * @Method("POST")
+     * @Security("has_role('ROLE_USER')")
      */
     public function savePngAction()
     {
@@ -77,9 +80,10 @@ class CallController extends Controller
     /**
      * @Route("/call/window.config.php")
      * @Route("/settings", name="settings")
+     * @Security("has_role('ROLE_USER')")
      */
     public function windowConfigAction() {
-        $Frontend = new \Frontend(true);
+        $Frontend = new \Frontend(true, $this->get('security.token_storage'));
         $ConfigTabs = new \ConfigTabs();
         $ConfigTabs->addDefaultTab(new  \ConfigTabGeneral());
         $ConfigTabs->addTab(new \ConfigTabPlugins());
@@ -96,10 +100,11 @@ class CallController extends Controller
 
     /**
      * @Route("/call/ajax.saveTcx.php")
+     * @Security("has_role('ROLE_USER')")
      */
     public function ajaxSaveTcxAction()
     {
-        $Frontend = new \Frontend(true);
+        $Frontend = new \Frontend(true, $this->get('security.token_storage'));
         
         \Filesystem::writeFile('../data/import/'.$_POST['activityId'].'.tcx', $_POST['data']);
         
@@ -108,10 +113,11 @@ class CallController extends Controller
     
     /**
      * @Route("/call/ajax.change.Config.php")
+     * @Security("has_role('ROLE_USER')")
      */
     public function ajaxChanceConfigAction()
     {
-        $Frontend = new \Frontend(true);
+        $Frontend = new \Frontend(true, $this->get('security.token_storage'));
         switch ($_GET['key']) {
         	case 'garmin-ignore':
         		\Runalyze\Configuration::ActivityForm()->ignoreActivityID($_GET['value']);
@@ -132,10 +138,11 @@ class CallController extends Controller
     
     /**
      * @Route("/call/window.delete.php")
+     * @Security("has_role('ROLE_USER')")
      */
      public function windowDeleteAction()
      {
-        new \Frontend();
+        new \Frontend(false, $this->get('security.token_storage'));
         
         echo \HTML::h1( __('Delete your account.') );
         
@@ -153,10 +160,12 @@ class CallController extends Controller
      
     /**
      * @Route("/call/window.search.php")
+     * @Route("/search", name="search")
+     * @Security("has_role('ROLE_USER')")
      */
     public function windowSearchAction()
     {
-        $Frontend = new \Frontend();
+        $Frontend = new \Frontend(false, $this->get('security.token_storage'));
         $showResults = !empty($_POST);
         
         if (isset($_GET['get']) && $_GET['get'] == 'true') {
@@ -205,7 +214,7 @@ class CallController extends Controller
      */
     public function windowsPlotSumDataAction()
     {
-        $Frontend = new \Frontend();
+        $Frontend = new \Frontend(false, $this->get('security.token_storage'));
         $this->plotSumData();
         return new Response;
     }
@@ -225,7 +234,7 @@ class CallController extends Controller
      */
     public function loginAction()
     {
-        $Frontend = new \Frontend();
+        $Frontend = new \Frontend(false, $this->get('security.token_storage'));
         echo '<p class="error">';
     	_e('You are not logged in anymore.');
     	echo '<br><br><a href="login" title="Runalyze: Login"><strong>&raquo; '. _e('Login').'</strong></a></p>';

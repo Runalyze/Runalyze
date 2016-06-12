@@ -26,8 +26,8 @@ use Runalyze\Timezone;
  */
 class Frontend {
 	/**
-	 * URL for help-window
-	 * @var string
+	 * Symfony object
+	 * @var object
 	 */
 	public static $HELP_URL = 'dashboard/help';
 
@@ -36,6 +36,12 @@ class Frontend {
 	 * @var bool
 	 */
 	protected $logGetAndPost = false;
+	
+	/**
+	 * Symfony object
+	 * @var object
+	 */
+	protected $symfonyUser = false;
 
 	/**
 	 * Admin password as md5
@@ -51,7 +57,8 @@ class Frontend {
 	 * 
 	 * @param bool $hideHeaderAndFooter By default a html-header is directly shown
 	 */
-	public function __construct($hideHeaderAndFooter = false) {
+	public function __construct($hideHeaderAndFooter = false, $symfonyUser=null) {
+		$this->symfonyUser = $symfonyUser;
 		$this->initSystem();
 		$this->defineConsts();
 		$this->checkConfigFile();
@@ -176,6 +183,16 @@ class Frontend {
 	 */
 	protected function initSessionAccountHandler() {
 		new SessionAccountHandler();
+		if ($this->symfonyUser->getToken()->getUser() != 'anon.') {
+		    $user = $this->symfonyUser->getToken()->getUser();
+
+		    SessionAccountHandler::setAccount(array(
+			    'id' => $user->getId(),
+			    'username' => $user->getUsername(),
+			    'language' => $user->getLanguage(),
+			    'mail' => $user->getMail(),
+		    ));
+		}
 	}
 
 	/**

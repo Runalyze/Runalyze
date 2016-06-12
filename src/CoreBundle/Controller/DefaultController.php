@@ -4,6 +4,8 @@ namespace Runalyze\Bundle\CoreBundle\Controller;
 
 use Runalyze\Activity\Distance;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+
 use SessionAccountHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,7 +24,7 @@ class DefaultController extends Controller
     protected function includeOldScript($file, $initFrontend = true)
     {
         if ($initFrontend) {
-            $Frontend = new \Frontend();
+            $Frontend = new \Frontend(false, $this->get('security.token_storage'));
         }
 
         include $file;
@@ -31,8 +33,9 @@ class DefaultController extends Controller
     }
     
     /**
-     * @Route("/", name="base_url")
      * @Route("/dashboard", name="dashboard")
+     * @Route("/", name="base_url")
+     * @Security("has_role('ROLE_USER')")
      */
     public function indexAction()
     {
@@ -44,7 +47,7 @@ class DefaultController extends Controller
      */
     public function registerAction()
     {
-        new \Frontend(true);
+        new \Frontend(true, $this->get('security.token_storage'));
 
         if (!USER_CAN_REGISTER) {
             return $this->render('register/disabled.html.twig');
@@ -88,7 +91,15 @@ class DefaultController extends Controller
      */
     public function loginAction()
     {
-        new \Frontend(true);
+	$authenticationUtils = $this->get('security.authentication_utils');
+
+	// get the login error if there is one
+	$error = $authenticationUtils->getLastAuthenticationError();
+
+	// last username entered by the user
+	$lastUsername = $authenticationUtils->getLastUsername();
+	
+        new \Frontend(true, $this->get('security.token_storage'));
 
         if (USER_CANT_LOGIN) {
             return $this->render('login/maintenance.html.twig');
@@ -102,10 +113,29 @@ class DefaultController extends Controller
             'failure' => [
                 'username' => (\SessionAccountHandler::$ErrorType == \SessionAccountHandler::$ERROR_TYPE_WRONG_USERNAME),
                 'password' => (\SessionAccountHandler::$ErrorType == \SessionAccountHandler::$ERROR_TYPE_WRONG_PASSWORD),
-                'activation' => (\SessionAccountHandler::$ErrorType == \SessionAccountHandler::$ERROR_TYPE_ACTIVATION_NEEDED)
+                'activation' => (\SessionAccountHandler::$ErrorType == \SessionAccountHandler::$ERROR_TYPE_ACTIVATION_NEEDED),
+		'error'         => $error,
             ],
             'num' => $this->collectStatistics()
         ]);
+    }
+    
+    /**
+     * @Route("/login_check", name="login_check")
+     */
+    public function loginCheckAction()
+    {
+    }
+    
+    /**
+     * @Route("/logout", name="logout")
+     */
+    public function logoutAction()
+    {
+        new \Frontend();
+        SessionAccountHandler::logout();
+
+        return $this->redirectToRoute('login');
     }
 
     /**
@@ -131,17 +161,6 @@ class DefaultController extends Controller
         return ['user' => (int)$numUser, 'distance' => Distance::format($numDistance)];
     }
 
-    /**
-     * @Route("/logout", name="logout")
-     */
-    public function logoutAction()
-    {
-        new \Frontend();
-        SessionAccountHandler::logout();
-
-        return $this->redirectToRoute('login');
-    }
-    
     /**
      * @Route("/install.php", name="install")
      */
@@ -179,7 +198,7 @@ class DefaultController extends Controller
      */
     public function dashboardHelpAction()
     {
-        new \Frontend();
+        new \Frontend(false, $this->get('security.token_storage'));
 
         return $this->render('CoreBundle:Default:help.html.twig', [
             'version' => RUNALYZE_VERSION

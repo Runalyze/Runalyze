@@ -3,6 +3,7 @@ namespace Runalyze\Bundle\CoreBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,10 +28,11 @@ class ActivityController extends Controller
     /**
      * @Route("/call/call.Training.create.php")
      * @Route("/activity/create", name="ActivityCreate")
+     * @Security("has_role('ROLE_USER')")
      */
     public function callTrainingCreateAction()
     {
-        $Frontend = new \Frontend(isset($_GET['json']));
+        $Frontend = new \Frontend(isset($_GET['json']), $this->get('security.token_storage'));
         
         \System::setMaximalLimits();
         
@@ -62,7 +64,7 @@ class ActivityController extends Controller
      */
     public function callTrainingDisplayAction($id = null)
     {
-        $Frontend = new \Frontend(true);
+        $Frontend = new \Frontend(true, $this->get('security.token_storage'));
         if (is_null($id)) {
             $id = Request::createFromGlobals()->query->get('id');
         }
@@ -100,10 +102,11 @@ class ActivityController extends Controller
     /**
      * @Route("/call/call.Training.edit.php")
      * @Route("/activity/edit", name="ActivityEdit")
+     * @Security("has_role('ROLE_USER')")
      */
     public function callTrainingEditAction()
     {
-        $Frontend = new \Frontend(true);
+        $Frontend = new \Frontend(true, $this->get('security.token_storage'));
 
         if (isset($_GET['delete']) && is_numeric($_GET['delete'])) {
         	$Factory = \Runalyze\Context::Factory();
@@ -142,10 +145,11 @@ class ActivityController extends Controller
     /**
      * @Route("/call/call.Training.vdotInfo.php")
      * @Route("/activity/vdotInfo")
+     * @Security("has_role('ROLE_USER')")
     */
     public function trainingVdotInfoAction()
     {
-        $Frontend = new \Frontend(true);
+        $Frontend = new \Frontend(true, $this->get('security.token_storage'));
         $VDOTinfo = new \VDOTinfo(new Context(Request::createFromGlobals()->query->get('id'), \SessionAccountHandler::getId()));
         return new Response($VDOTinfo->display());
     }
@@ -153,11 +157,12 @@ class ActivityController extends Controller
     /**
      * @Route("/call/call.Training.elevationCorrection.php")
      * @Route("/activity/elevationCorrection")
+     * @Security("has_role('ROLE_USER')")
      */
     public function trainingElevationCorrectionAction()
     {
         
-        $Frontend = new \Frontend();
+        $Frontend = new \Frontend(false, $this->get('security.token_storage'));
         
         $Factory = \Runalyze\Context::Factory();
         $Activity = $Factory->activity(Request::createFromGlobals()->query->get('id'));
@@ -208,10 +213,11 @@ class ActivityController extends Controller
     /**
      * @Route("/call/call.Training.roundsInfo.php")
      * @Route("/activity/roundsInfo")
+     * @Security("has_role('ROLE_USER')")
     */
     public function trainingRoundsInfoAction()
     {
-        $Frontend = new \Frontend();
+        $Frontend = new \Frontend(false, $this->get('security.token_storage'));
         $Window = new Window(new Context(Request::createFromGlobals()->query->get('id'), \SessionAccountHandler::getId()));
         return new Response($Window->display());
     }
@@ -219,10 +225,11 @@ class ActivityController extends Controller
     /**
      * @Route("/call/call.Training.elevationInfo.php")
      * @Route("/activity/elevationInfo")
+     * @Security("has_role('ROLE_USER')")
     */
     public function trainingElevationInfoAction()
     {
-        $Frontend = new \Frontend();
+        $Frontend = new \Frontend(false, $this->get('security.token_storage'));
         $ElevationInfo = new \ElevationInfo(new Context(Request::createFromGlobals()->query->get('id'), \SessionAccountHandler::getId()));
         return new Response($ElevationInfo->display());
     }
@@ -230,9 +237,10 @@ class ActivityController extends Controller
     /**
      * @Route("/call/call.Exporter.export.php")
      * @Route("/activity/export")
+     * @Security("has_role('ROLE_USER')")
     */
     public function exporterExportAction() {
-        $Frontend = new \Frontend(true);
+        $Frontend = new \Frontend(true, $this->get('security.token_storage'));
         
         if (isset($_GET['social']) && Share\Types::isValidValue((int)$_GET['typeid'])) {
             $Context = new Context((int)$_GET['id'], \SessionAccountHandler::getId());
@@ -256,10 +264,11 @@ class ActivityController extends Controller
     /**
      * @Route("/call/ajax.activityMatcher.php")
      * @Route("/activity/matcher", name="activityMatcher")
+     * @Security("has_role('ROLE_USER')")
      */
     public function ajaxActivityMatcher()
     {
-        $Frontend = new \Frontend(true);
+        $Frontend = new \Frontend(true, $this->get('security.token_storage'));
         
         $IDs     = array();
         $Matches = array();

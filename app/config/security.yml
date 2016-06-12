@@ -1,0 +1,28 @@
+security:
+    encoders:
+        Runalyze\Bundle\CoreBundle\Entity\Account:
+            id: app.sha256salted_encoder
+
+    providers:
+        runalyzeuser:
+            entity:
+                class: CoreBundle:Account
+                property: username
+
+    firewalls:
+        default:
+            anonymous: ~
+            http_basic: ~
+            provider:  runalyzeuser
+            logout:
+                path:   /logout
+                target: /
+            form_login:
+                login_path: /login
+                check_path: /login_check
+
+        # disables authentication for assets and the profiler, adapt it according to your needs
+        dev:
+            pattern:  ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+

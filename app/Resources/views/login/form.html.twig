@@ -1,24 +1,25 @@
 {% extends "login/base.html.twig" %}
 
 {% block form %}
-    <form action="{{ path('login') }}" method="post">
+    <form action="{{ path('login_check') }}" method="post">
         <fieldset>
             <legend>{% trans %}Login{% endtrans %}</legend>
 
             <div class="w100">
                 <label for="username">{% trans %}Username{% endtrans %}</label>
-                <input id="username" name="username" class="middle-size{% if failure.password %} validation-failed{% endif %}" type="text" value="{{ (username|default(''))|escape('html_attr') }}">
+                <input id="username" name="_username" class="middle-size{% if failure.password %} validation-failed{% endif %}" type="text" value="{{ (username|default(''))|escape('html_attr') }}">
             </div>
 
             <div class="w100 clear">
                 <label for="password">{% trans %}Password{% endtrans %}</label>
-                <input id="password" name="password" class="middle-size{% if failure.password %} validation-failed{% endif %}" type="password">
+                <input id="password" name="_password" class="middle-size{% if failure.password %} validation-failed{% endif %}" type="password">
             </div>
 
             <div class="w100 clear">
                 <label for="autologin" class="small">{% trans %}Remember me{% endtrans %}</label>
                 <input id="autologin" name="autologin" type="checkbox">
             </div>
+            <input type="hidden" name="_target_path" value="/dashboard" />
         </fieldset>
 
         {% block login_messages %}
@@ -32,7 +33,9 @@
                 {% endif %}
             {% endblock %}
         {% endblock %}
-
+            {% if error %}
+                <p class="error">{{ error.messageKey|trans(error.messageData, 'security') }}</p>
+            {% endif %}
         <div class="c">
             <input type="submit" value="{% trans %}Login{% endtrans %}" name="submit">
         </div>

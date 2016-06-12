@@ -16,7 +16,7 @@ class AccountController extends Controller
      */
     public function deleteAccountConfirmedAction($hash)
     {
-        new \Frontend(true);
+        new \Frontend(true, $this->get('security.token_storage'));
 
         if (\AccountHandler::tryToDeleteAccount($hash)) {
             return $this->render('account/delete/success.html.twig');
@@ -30,7 +30,7 @@ class AccountController extends Controller
      */
     public function deleteAccountAction($hash)
     {
-        new \Frontend(true);
+        new \Frontend(true, $this->get('security.token_storage'));
 
         $username = \AccountHandler::getUsernameForDeletionHash($hash);
 
@@ -49,7 +49,7 @@ class AccountController extends Controller
      */
     public function recoverForHashAction($hash)
     {
-        new \Frontend(true);
+        new \Frontend(true, $this->get('security.token_storage'));
 
         $successOrErrors = \AccountHandler::tryToSetNewPassword($hash);
         $username = \AccountHandler::getUsernameForChangePasswordHash($hash);
@@ -74,7 +74,7 @@ class AccountController extends Controller
      */
     public function recoverAction(Request $request)
     {
-        new \Frontend(true);
+        new \Frontend(true, $this->get('security.token_storage'));
 
         $username = $request->request->get('send_username');
         $userIsUnknown = false;
@@ -102,7 +102,7 @@ class AccountController extends Controller
      */
     public function activateAccountAction($hash)
     {
-        new \Frontend(true);
+        new \Frontend(true, $this->get('security.token_storage'));
 
         if (!\AccountHandler::tryToActivateAccount($hash)) {
             return $this->render('account/activate/problem.html.twig');

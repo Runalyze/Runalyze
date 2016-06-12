@@ -3,6 +3,7 @@ namespace Runalyze\Bundle\CoreBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Runalyze\View\Activity\Context;
@@ -18,10 +19,11 @@ class PluginController extends Controller
 {
     /**
      * @Route("/call/call.Plugin.install.php")
+     * @Security("has_role('ROLE_USER')")
      */
     public function pluginInstallAction()
     {
-        $Frontend = new \Frontend();
+        $Frontend = new \Frontend(false, $this->get('security.token_storage'));
         $Pluginkey = filter_input(INPUT_GET, 'key');
         
         $Installer = new \PluginInstaller($Pluginkey);
@@ -59,7 +61,7 @@ class PluginController extends Controller
      */
     public function pluginUninstallAction()
     {
-        $Frontend = new \Frontend();
+        $Frontend = new \Frontend(false, $this->get('security.token_storage'));
         $Pluginkey = filter_input(INPUT_GET, 'key');
         
         $Installer = new \PluginInstaller($Pluginkey);
@@ -90,7 +92,7 @@ class PluginController extends Controller
     */
     public function pluginDisplayAction()
     {
-         $Frontend = new \Frontend();
+         $Frontend = new \Frontend(false, $this->get('security.token_storage'));
          $Factory = new \PluginFactory();
         
         try {
@@ -132,7 +134,7 @@ class PluginController extends Controller
     */
     public function pluginPanelAction()
     {
-        $Frontend = new \Frontend();
+        $Frontend = new \Frontend(false, $this->get('security.token_storage'));
     
         if (is_numeric($_GET['id'])) {
     	    $Factory = new \PluginFactory();
@@ -150,7 +152,7 @@ class PluginController extends Controller
     */
     public function pluginConfigAction()
     {
-        $Frontend = new \Frontend();
+        $Frontend = new \Frontend(false, $this->get('security.token_storage'));
         $Factory = new \PluginFactory();
         
         if (isset($_GET['key'])) {
@@ -172,7 +174,7 @@ class PluginController extends Controller
      */
      public function contentPanelsAction()
      {
-         $Frontend = new \Frontend();
+         $Frontend = new \Frontend(false, $this->get('security.token_storage'));
          return new Response($Frontend->displayPanels());
      }
      
@@ -181,7 +183,7 @@ class PluginController extends Controller
     */
     public function pluginToolDisplayAction()
     {
-        $Frontend = new \Frontend();
+        $Frontend = new \Frontend(false, $this->get('security.token_storage'));
         if (!isset($_GET['list'])) {
         \PluginTool::displayToolsHeader();
         }
@@ -194,7 +196,7 @@ class PluginController extends Controller
      */
     public function dbBackupDownloadAction($file)
     {
-	$Frontend = new \Frontend(true);
+	$Frontend = new \Frontend(true, $this->get('security.token_storage'));
         
 	    \RunalyzeBackupFileHandler::download($file);
 
