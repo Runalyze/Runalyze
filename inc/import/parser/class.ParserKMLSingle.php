@@ -5,6 +5,7 @@
  */
 
 use Runalyze\Configuration;
+use Runalyze\Import\Exception\UnsupportedFileException;
 
 /**
  * Parser for general KML files
@@ -47,9 +48,10 @@ class ParserKMLSingle extends ParserAbstractSingleXML {
 
 	/**
 	 * Add error: incorrect file
+	 * @throws \Runalyze\Import\Exception\UnsupportedFileException;
 	 */
 	protected function throwNoXMLError() {
-		$this->addError( __('Given XML object does not contain any coordinates.') );
+		throw new UnsupportedFileException('Given XML object does not contain any coordinates.');
 	}
 
 	/**

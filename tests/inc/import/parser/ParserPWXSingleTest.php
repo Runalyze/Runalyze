@@ -11,23 +11,12 @@ class ParserPWXSingleTest extends PHPUnit_Framework_TestCase {
 	protected $object;
 
 	/**
-	 * Sets up the fixture, for example, opens a network connection.
-	 * This method is called before a test is executed.
+	 * @expectedException \Runalyze\Import\Exception\ParserException
 	 */
-	protected function setUp() { }
-
-	/**
-	 * Tears down the fixture, for example, closes a network connection.
-	 * This method is called after a test is executed.
-	 */
-	protected function tearDown() { }
-
 	public function testWrongXML() {
 		$XML = simplexml_load_string('<test>abc</test>');
 		$Parser = new ParserPWXSingle('', $XML);
 		$Parser->parse();
-
-		$this->assertTrue( $Parser->failed() );
 	}
 
 }

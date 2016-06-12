@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-05-21 18:34+0200\n"
-"PO-Revision-Date: 2016-05-22 15:41+0200\n"
-"Last-Translator: Hannes <mail@laufhannes.de>\n"
+"PO-Revision-Date: 2016-06-05 16:59+0200\n"
+"Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
@@ -895,7 +895,7 @@ msgstr "Altersklassenplatz"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:318
 msgid "Place gender"
-msgstr "Platz m/f"
+msgstr "Geschlechterwertung"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:339
 #, php-format
@@ -2390,7 +2390,7 @@ msgstr "von %u in deiner Altersklasse"
 #: inc/core/View/RaceResult/Dataview.php:117
 #, php-format
 msgid "of %u men/women"
-msgstr "von %us Männer/Frauen"
+msgstr "von %u Männer/Frauen"
 
 #: inc/core/View/RaceResult/Dataview.php:175
 #, php-format
@@ -5424,7 +5424,7 @@ msgstr "Das Parsen deiner *.%s-Datei ist fehlgeschlagen: %s"
 
 #: inc/import/class.ImporterWindow.php:217
 msgid "Add workout"
-msgstr "Training hinzufügen"
+msgstr "Aktivität hinzufügen"
 
 #: inc/import/class.MultiImporter.php:88
 msgid "The activities have been successfully imported."
@@ -6448,7 +6448,7 @@ msgstr "männlich/weiblich"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:360
 msgid "M/F"
-msgstr "M/F"
+msgstr "M/F-Platz."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:430
 msgid "Weather statistics"

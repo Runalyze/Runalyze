@@ -5,6 +5,7 @@
  */
 
 use Runalyze\Configuration;
+use Runalyze\Import\Exception\UnsupportedFileException;
 
 /**
  * Parser for PWX files from Peaksware/Trainingpeaks
@@ -51,9 +52,10 @@ class ParserPWXSingle extends ParserAbstractSingleXML {
 
 	/**
 	 * Add error: incorrect file
+	 * @throws \Runalyze\Import\Exception\UnsupportedFileException
 	 */
 	protected function throwNoPWXError() {
-		$this->addError( __('Given XML object is not from Peaksware/Trainingpakes. &lt;device&gt;-tag could not be located.') );
+		throw new UnsupportedFileException('Given XML object is not from Peaksware/Trainingpakes. &lt;device&gt;-tag could not be located.');
 	}
 
 	/**
@@ -111,10 +113,11 @@ class ParserPWXSingle extends ParserAbstractSingleXML {
 
 	/**
 	 * Parse all log entries
+	 * @throws \Runalyze\Import\Exception\UnsupportedFileException
 	 */
 	protected function parseLogEntries() {
 		if (empty($this->XML->sample)) {
-			$this->addError('Die Trainingsdatei enth&auml;lt keine Daten.');
+			throw new UnsupportedFileException('The file does not contain any data.');
 		} else {
 			foreach ($this->XML->sample as $Log)
 				$this->parseLogEntry($Log);

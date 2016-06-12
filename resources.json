@@ -30,7 +30,6 @@
       "./lib/runalyze.lib.plot.saver.js",
       "./lib/runalyze.lib.plot.events.js",
       "./lib/runalyze.lib.tablesorter.js",
-      "./lib/runalyze.lib.log.js",
       "./lib/runalyze.lib.options.js",
       "./lib/runalyze.lib.config.js",
       "./lib/runalyze.lib.overlay.js",

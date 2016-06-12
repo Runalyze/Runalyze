@@ -4,6 +4,7 @@
  */
 
 use Runalyze\Configuration;
+use Runalyze\Dataset;
 
 $TABLENAME = 'training';
 $Distance = new \Runalyze\Activity\Distance();
@@ -380,7 +381,8 @@ $FIELDS = array(
 					'formular'	=> array(
 						'label'		=> __('RPE'),
 						'class'		=> 'TrainingSelectRPE',
-						'css'		=> TrainingFormular::$ONLY_OUTSIDE_CLASS
+						'css'		=> TrainingFormular::$ONLY_OUTSIDE_CLASS,
+						'help-tooltip'	=> (new Dataset\Keys\RPE())->description()
 					)
 	),
 	'trimp'				=> array(

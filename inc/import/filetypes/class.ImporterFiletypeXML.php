@@ -3,7 +3,6 @@
  * This file contains class::ImporterFiletypeXML
  * @package Runalyze\Import\Filetype
  */
-ImporterWindowTabUpload::addInfo( __('xml-files from Polar, Suunto and RunningAHEAD are supported.') );
 /**
  * Importer: *.xml
  *
@@ -11,11 +10,8 @@ ImporterWindowTabUpload::addInfo( __('xml-files from Polar, Suunto and RunningAH
  * @package Runalyze\Import\Filetype
  */
 class ImporterFiletypeXML extends ImporterFiletypeAbstract {
-	/**
-	 * Allowed producer of XML files
-	 * @var string
-	 */
-	private static $ALLOWED_PRODUCER = 'Polar, Suunto, RunningAHEAD';
+	/** @var string */
+	const ALLOWED_PRODUCER = 'Polar, Suunto, RunningAHEAD';
 
 	/**
 	 * Set parser
@@ -29,7 +25,7 @@ class ImporterFiletypeXML extends ImporterFiletypeAbstract {
 		elseif ($this->isFromSuunto($String))
 			$this->Parser = new ParserXMLsuuntoMultiple($String);
 		else
-			$this->throwErrorForUnknownFormat();
+			$this->throwErrorForUnknownFormat('xml', self::ALLOWED_PRODUCER);
 	}
 
 	/**
@@ -58,11 +54,6 @@ class ImporterFiletypeXML extends ImporterFiletypeAbstract {
 	private function isFromSuunto(&$String) {
 		return strpos($String, '<header>') !== false;
 	}
-
-	/**
-	 * Throw error for unknown format
-	 */
-	private function throwErrorForUnknownFormat() {
-		$this->Errors[] = __('This file is not supported. Supported producers of kml-files: '.self::$ALLOWED_PRODUCER.'.');
-	}
 }
+
+ImporterWindowTabUpload::addInfo( sprintf(__('%s-files are supported from: %s'), 'xml', ImporterFiletypeXML::ALLOWED_PRODUCER) );

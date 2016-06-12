@@ -116,7 +116,7 @@ class Error {
 	 * @param bool   $log        Logging errors?
 	 * @param string $log_file   File for logging errors
 	 */
-	public static function init($file = __FILE__, $log = false, $log_file = '') {
+	public static function init($file = __FILE__, $log = true, $log_file = '') {
 		self::getInstance()->setLogVars($log, $log_file, $file);
 	}
 
@@ -159,8 +159,6 @@ class Error {
 
 		if (defined('RUNALYZE_TEST'))
 			$this->displayErrorsForUnitTest();
-		elseif (!$this->log)
-			$this->sendErrorsToJSLog();
 		elseif ($this->log || self::$FORCE_LOG_FILE)
 			\Filesystem::writeFile('../'.$this->log_file, $this->getErrorTable());
 
@@ -176,21 +174,10 @@ class Error {
 	}
 
 	/**
-	 * Send all errors to JS-Log 
-	 */
-	private function sendErrorsToJSLog() {
-		echo Ajax::wrapJSforDocumentReady('Runalyze.Log.addArray('.json_encode($this->errors).')');
-	}
-
-	/**
 	 * Display error messages for unit test
 	 */
 	private function displayErrorsForUnitTest() {
-		echo NL.NL.'===== '.count($this->errors).' ERROR MESSAGES: ====='.NL;
-
-		foreach ($this->errors as $error) {
-			echo '=== '.$error['type'].': '.$error['message'].NL;
-		}
+		echo $this->getErrorTable();
 	}
 
 	/**
@@ -198,13 +185,13 @@ class Error {
 	 * @return string
 	 */
 	private function getErrorTable() {
-		$table = '<table style="width:90%;margin:0;">'.NL;
-		foreach ($this->errors as $error)
-			$table .= '<tr class="'.$error['type'].'"><td class="b errortype">'.$error['type'].'</td><td>'.$error['message'].'</td></tr>'.NL;
+		$string = NL.NL.'===== '.count($this->errors).' ERROR MESSAGES: ====='.NL;
 
-		$table .= '</table>'.NL;
+		foreach ($this->errors as $error) {
+			$string .= '=== '.$error['type'].': '.$error['message'].NL.NL;
+		}
 
-		return $table;
+		return $string;
 	}
 
 	/**
@@ -254,26 +241,6 @@ class Error {
 	}
 
 	/**
-	 * Add a warning to error list
-	 * @param string $message
-	 * @param string $file
-	 * @param int $line
-	 */
-	public function addNotice($message, $file = '', $line = -1) {
-		$this->add('NOTICE', $message, $file, $line);
-	}
-
-	/**
-	 * Add a todo to error list
-	 * @param string $message
-	 * @param string $file
-	 * @param int $line
-	 */
-	public function addTodo($message, $file = '', $line = -1) {
-		$this->add('TODO', $message, $file, $line);
-	}
-
-	/**
 	 * Add a debug-info to error list
 	 * @param string $message
 	 * @param string $file
@@ -290,7 +257,6 @@ class Error {
 	 * @return string
 	 */
 	private function formErrorMessage($message, $backtrace) {
-		$id = md5($message);
 		$trace = '';
 		foreach ($backtrace as $i => $part) {
 			if (!isset($part['args']))
@@ -304,47 +270,13 @@ class Error {
 				if (isset($part['file'])) {
 					$trace .= $part['file'];
 					if (isset($part['line']))
-						$trace .= '<small>::'.$part['line'].'</small><br>';
+						$trace .= '::'.$part['line'].NL;
 				}
-				$trace .= '<strong>'.$class.$func.'</strong>';
-				$trace .= '<small>('.$args.')</small><br><br>'.NL;
+				$trace .= $class.$func.' ('.$args.')'.NL.NL;
 			}
 		}
 
-		if (defined('RUNALYZE_TEST'))
-			return $message.NL.strip_tags( str_replace('<br>', ' ', $trace) );
-
-		if (class_exists('Ajax'))
-			$message = Ajax::toggle('<a class="error" href="#errorInfo">&raquo;</a>', $id).' '.$message;
-
-		$message .= '<div id="'.$id.'" class="hide"><br>'.$trace.'</div>';
-
-		return $message;
-	}
-
-	/**
-	 * Display an error message causing a fatal error
-	 * @param string $message
-	 */
-	public function displayFatalErrorMessage($message) {
-		// TODO: Per jQuery Overlay
-
-		if (!$this->header_sent)
-			include 'tpl/tpl.Frontend.header.php';
-
-		echo '<div class="panel">';
-		echo '<div class="panel-heading">';
-		echo '<h1>'.__('Fatal error').'</h1>';
-		echo '</div>';
-		echo '<div class="panel-content">';
-		echo HTML::error($message);
-		echo '</div>';
-		echo '</div>';
-		
-		if (!$this->footer_sent)
-			include 'tpl/tpl.Frontend.footer.php';
-
-		exit();
+		return $message.NL.$trace;
 	}
 
 	/**

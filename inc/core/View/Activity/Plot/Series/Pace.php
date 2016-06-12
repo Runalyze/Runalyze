@@ -139,6 +139,7 @@ class Pace extends ActivitySeries {
 
 		if (Configuration::ActivityView()->ignorePaceOutliers() && ($max - $min) > 2 * 60 * 1000) {
 			$setLimits = true;
+			$autoscale = false;
 			$num = count($this->Data);
 			$sorted = $this->Data;
 			sort($sorted);
@@ -178,7 +179,6 @@ class Pace extends ActivitySeries {
 			}
 			if ($setLimits) {
 				$Plot->setYLimits($yAxis, $min, $max, $autoscale);
-				$Plot->setYAxisLabels($yAxis, null);
 			}
 		}
 

@@ -31,6 +31,7 @@ class Frontend {
 	 */
 	protected $symfonyUser = false;
 
+
 	/**
 	 * Admin password as md5
 	 * @var string
@@ -78,7 +79,6 @@ class Frontend {
 		$this->initCache();
 		$this->initErrorHandling();
 		$this->initDatabase();
-		$this->initDebugMode();
 		$this->initSessionAccountHandler();
 		$this->initTimezone();
 		$this->forwardAccountIDtoDatabaseWrapper();
@@ -185,19 +185,6 @@ class Frontend {
 	}
 
 	/**
-	 * Init internal debug-mode. Can be defined in config.php - otherwise is set to false here
-	 */
-	protected function initDebugMode() {
-		if (!defined('RUNALYZE_DEBUG'))
-			define('RUNALYZE_DEBUG', false);
-
-		if (RUNALYZE_DEBUG)
-			error_reporting(E_ALL);
-		else
-			Error::getInstance()->setLogVars(true);
-	}
-
-	/**
 	 * Set correct character encoding 
 	 */
 	final public function setEncoding() {
@@ -221,7 +208,7 @@ class Frontend {
 	 * Display the HTML-Footer
 	 */
 	public function displayFooter() {
-		if (RUNALYZE_DEBUG && Error::getInstance()->hasErrors()) {
+		if (Error::getInstance()->hasErrors()) {
 			Error::getInstance()->display();
 		}
 

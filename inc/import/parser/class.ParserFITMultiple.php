@@ -3,6 +3,11 @@
  * This file contains class::ParserFITMultiple
  * @package Runalyze\Import\Parser
  */
+
+use Runalyze\Import\Exception\InstallationSpecificException;
+use Runalyze\Import\Exception\ParserException;
+use Runalyze\Import\Exception\UnexpectedContentException;
+
 /**
  * Abstract parser for multiple activities in *.fit-file
  *
@@ -10,6 +15,12 @@
  * @package Runalyze\Import\Parser
  */
 class ParserFITMultiple extends ParserAbstractMultiple {
+	/** @var string */
+	const PERL_FIT_ERROR_MESSAGE_START = 'main::Garmin::FIT';
+
+	/** @var string */
+	const PERL_GENERAL_MESSAGE_START = 'perl: warning:';
+
 	/**
 	 * Name of output file
 	 * @var string
@@ -74,7 +85,27 @@ class ParserFITMultiple extends ParserAbstractMultiple {
 			fclose($this->Handle);
 			unlink($this->Filename);
 
-			throw new RuntimeException('Reading *.fit-file failed. First line was "'.$FirstLine.'".');
+			$this->throwErrorForFirstLine($FirstLine);
 		}
+	}
+
+	/**
+	 * @param string $firstLine
+	 * @throws \Runalyze\Import\Exception\ParserException
+	 */
+	protected function throwErrorForFirstLine($firstLine) {
+		$message = 'Reading *.fit-file failed. First line was "'.$firstLine.'".';
+
+		if (substr($firstLine, 0, strlen(self::PERL_FIT_ERROR_MESSAGE_START)) == self::PERL_FIT_ERROR_MESSAGE_START) {
+			throw new UnexpectedContentException($message);
+		}
+
+		if (substr($firstLine, 0, strlen(self::PERL_GENERAL_MESSAGE_START)) == self::PERL_GENERAL_MESSAGE_START) {
+			$message .= NL.NL.'See https://github.com/Runalyze/Runalyze/issues/1701';
+
+			throw new InstallationSpecificException($message);
+		}
+
+		throw new ParserException($message);
 	}
 }

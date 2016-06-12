@@ -29,7 +29,7 @@ class ImporterFiletypeKML extends ImporterFiletypeAbstract {
 			$this->Parser = new ParserKMLSingle($string);
 			$this->Parser->setNamespace('kml');
 		} else {
-			$this->throwErrorForUnknownFormat();
+			$this->throwErrorForUnknownFormat('kml', self::ALLOWED_PRODUCER);
 		}
 	}
 
@@ -58,16 +58,6 @@ class ImporterFiletypeKML extends ImporterFiletypeAbstract {
 	 */
 	private function isNamespacedKml($string) {
 		return (strpos($string, '<kml:coordinates') !== false);
-	}
-
-	/**
-	 * Throw error for unknown format
-	 */
-	private function throwErrorForUnknownFormat() {
-		$this->Errors[] = sprintf(
-			__('This file is not supported. Supported producers of %s-files: %s.'),
-			'kml', self::ALLOWED_PRODUCER
-		);
 	}
 }
 

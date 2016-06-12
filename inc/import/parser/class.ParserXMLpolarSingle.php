@@ -4,8 +4,9 @@
  * @package Runalyze\Import\Parser
  */
 
-use Runalyze\Configuration;
 use Runalyze\Activity\Duration;
+use Runalyze\Configuration;
+use Runalyze\Import\Exception\UnsupportedFileException;
 
 /**
  * Parser for XML files from Polar
@@ -38,9 +39,10 @@ class ParserXMLpolarSingle extends ParserAbstractSingleXML {
 
 	/**
 	 * Add error: incorrect file
+	 * @throws \Runalyze\Import\Exception\UnsupportedFileException
 	 */
 	protected function throwNoXMLError() {
-		$this->addError( __('Given XML object does not contain any results. &lt;result&gt;-tag could not be located.') );
+		throw new UnsupportedFileException('Given XML object does not contain any results. &lt;result&gt;-tag could not be located.');
 	}
 
 	/**

@@ -4,10 +4,11 @@
  * @package Runalyze\Import\Parser
  */
 
-use Runalyze\Configuration;
 use Runalyze\Activity\Duration;
 use Runalyze\Activity\Distance;
+use Runalyze\Configuration;
 use Runalyze\Error;
+use Runalyze\Import\Exception\UnsupportedFileException;
 
 /**
  * Parser for TCX files from Garmin
@@ -110,9 +111,10 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 
 	/**
 	 * Add error: no garmin file
+	 * @throws \Runalyze\Import\Exception\UnsupportedFileException
 	 */
 	protected function throwNoGarminError() {
-		$this->addError( __('Given XML object is not from Garmin. &lt;Id&gt;-tag could not be located.') );
+		throw new UnsupportedFileException('Given XML object is not from Garmin. &lt;Id&gt;-tag could not be located.');
 	}
 
 	/**
@@ -133,10 +135,11 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 
 	/**
 	 * Parse all laps
+	 * @throws \Runalyze\Import\Exception\UnsupportedFileException
 	 */
 	protected function parseLaps() {
 		if (!isset($this->XML->Lap)) {
-			$this->addError( __('This file does not contain any laps.') );
+			throw new UnsupportedFileException('This file does not contain any laps.');
 		} else {
 			foreach ($this->XML->Lap as $i => $Lap) {
 				if ($i == 0) {

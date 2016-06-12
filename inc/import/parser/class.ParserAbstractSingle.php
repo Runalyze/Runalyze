@@ -95,10 +95,12 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 	 * Get training object
 	 * @param int $index optional
 	 * @return \TrainingObject
+	 * @throws \InvalidArgumentException
 	 */
 	final public function object($index = 0) {
-		if ($index > 0)
-			\Runalyze\Error::getInstance()->addDebug('ParserAbstractSingle has only one training, asked for index = '.$index);
+		if ($index > 0) {
+			throw new InvalidArgumentException('ParserAbstractSingle has only one training, asked for index = '.$index);
+		}
 
 		return $this->TrainingObject;
 	}

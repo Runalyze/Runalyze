@@ -112,21 +112,6 @@ class Filesystem {
 	}
 
 	/**
-	 * Throw an error for a bad XML
-	 * @param string $XML 
-	 */
-	public static function throwErrorForBadXml($XML) {
-		if (empty($XML) || defined('RUNALYZE_TEST'))
-			return;
-
-		$FileName = 'data/log/corrupt.xml.'.time().'.xml';
-		self::writeFile('../'.$FileName, $XML);
-
-		\Runalyze\Error::getInstance()->addError('Die XML-Datei scheint fehlerhaft zu sein und konnte nicht erfolgreich geladen werden.
-			Zur Analyse kannst du die Datei <a href="'.$FileName.'">'.$FileName.'</a> an einen Administrator schicken.');
-	}
-
-	/**
 	 * Write a file
 	 * @param string $fileName relative to FRONTEND_PATH
 	 * @param string $fileContent 

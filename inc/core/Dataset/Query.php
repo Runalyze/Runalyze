@@ -76,9 +76,11 @@ class Query
 				`t`.`time`,
 				`t`.`s` as `'.Keys\Pace::DURATION_SUM_WITH_DISTANCE_KEY.'`,
 				DATE(FROM_UNIXTIME(`t`.`time`)) as `date`,
+				IF(r.activity_id IS NULL, 0, 1) as `is_race`,
 				'.($allKeys ? $this->queryToSelectAllKeys() : $this->queryToSelectActiveKeys()).'
 				'.$this->queryToSelectJoinedFields().'
 			FROM `'.PREFIX.'training` AS `t`
+			LEFT JOIN `'.PREFIX.'raceresult` AS `r` ON `t`.`id` = `r`.`activity_id`
 			'.$this->queryToJoinTables().'
 			WHERE
 				'.$this->whereTimeIsBetween($timeStart, $timeEnd).' AND

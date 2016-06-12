@@ -3,6 +3,9 @@
  * This file contains class::ParserAbstractMultipleXML
  * @package Runalyze\Import\Parser
  */
+
+use Runalyze\Import\Exception\ParserException;
+
 /**
  * Abstract parser for multiple trainings from xml content
  *
@@ -35,10 +38,11 @@ abstract class ParserAbstractMultipleXML extends ParserAbstractMultiple {
 
 	/**
 	 * Parse
+	 * @throws \Runalyze\Import\Exception\ParserException
 	 */
 	final public function parse() {
 		if ($this->XML === false)
-			Filesystem::throwErrorForBadXml($this->FileContent);
+			throw new ParserException('The xml-file is not well formed and could not be parsed.');
 		else
 			$this->parseXML();
 	}
