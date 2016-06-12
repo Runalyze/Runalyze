@@ -41,7 +41,7 @@ for ($j = date('Y'); $j >= START_YEAR; $j--)  {
 
 $ModelLabels = [
 	'tsb' => __('TSB'),
-	'banister' => __('Banister')
+	'banister' => 'Banister'
 ];
 
 $CurrentModel = $ModelLabels[$perfmodel];

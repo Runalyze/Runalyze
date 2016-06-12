@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-05-21 18:34+0200\n"
-"PO-Revision-Date: 2016-01-26 16:34+0200\n"
+"PO-Revision-Date: 2016-05-23 19:42+0200\n"
 "Last-Translator: Jose Augusto Monteiro <augusto.monteiro@gmail.com>\n"
-"Language-Team: Portuguese <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/pt/>\n"
+"Language-Team: Portuguese "
+"<http://translate.runalyze.de/projects/runalyze/runalyze/pt/>\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -38,21 +38,19 @@ msgstr ""
 
 #: inc/html/formular/class.FormularValueParser.php:228
 msgid "The field can not be left empty."
-msgstr "O campo não ficar vazio."
+msgstr "O campo não pode ficar vazio."
 
 #: inc/html/formular/class.FormularValueParser.php:252
 msgid "Please enter a number."
 msgstr "P.f. digite um número."
 
 #: inc/html/formular/class.FormularValueParser.php:258
-#, fuzzy
 msgid "This value is too large."
-msgstr "O valor é muito grande."
+msgstr "Este valor é muito grande."
 
 #: inc/html/formular/class.FormularValueParser.php:262
-#, fuzzy
 msgid "This value is too small."
-msgstr "O valor é muito grande."
+msgstr "Este valor é muito pequeno"
 
 #: inc/html/formular/class.FormularValueParser.php:303
 msgid "The value is too large."
@@ -63,9 +61,8 @@ msgid "The date could not be parsed."
 msgstr "A data não pôde ser analisada."
 
 #: inc/html/formular/class.FormularValueParser.php:345
-#, fuzzy
 msgid "The date must not be in the future."
-msgstr "A data não pôde ser analisada."
+msgstr "A data não pode estar no futuro"
 
 #: inc/html/formular/class.FormularValueParser.php:378
 msgid "The time could not be read."
@@ -217,7 +214,7 @@ msgstr "Duração"
 #: plugin/RunalyzePluginPanel_Equipment/class.RunalyzePluginPanel_Equipment.php:200
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:647
 msgid "Pace"
-msgstr "Velocidade"
+msgstr "Ritmo"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:33
 #: inc/training/search/class.SearchFormular.php:166
@@ -231,11 +228,11 @@ msgstr "Altura"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:34
 msgid "avg. Heartrate"
-msgstr "Pulsação média"
+msgstr "FC Média"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:35
 msgid "max. Heartrate"
-msgstr "Pulsação maxima"
+msgstr "FC Máxima"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:36
 #: inc/training/search/class.SearchFormular.php:169
@@ -255,7 +252,7 @@ msgstr "Temperatura"
 #: inc/core/View/Window/Laps/Table.php:267
 #: inc/core/Data/Cadence/General.php:22 inc/core/Dataset/Keys/Cadence.php:44
 msgid "Cadence"
-msgstr "Ritmo"
+msgstr "Cadência"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:38
 #: inc/training/search/class.SearchFormular.php:185
@@ -265,7 +262,7 @@ msgstr "Ritmo"
 #: inc/core/View/Activity/Plot/Series/StrideLength.php:54
 #: inc/core/Dataset/Keys/StrideLength.php:44
 msgid "Stride length"
-msgstr "Comprimento do passo"
+msgstr "Comprimento da passada"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:39
 #: inc/training/search/class.SearchFormular.php:181
@@ -274,7 +271,7 @@ msgstr "Comprimento do passo"
 #: inc/training/view/section/class.SectionRunningDynamicsRow.php:108
 #: inc/core/View/Activity/Plot/Series/GroundContact.php:40
 msgid "Ground contact"
-msgstr "Contacto na terra"
+msgstr "Contato no chão"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:40
 #: inc/training/search/class.SearchFormular.php:183
@@ -337,7 +334,7 @@ msgstr "TRIMP"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:44
 msgid "JDpoints"
-msgstr "pontosJD"
+msgstr "pontos JD"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:48
 msgid "descending"
@@ -403,7 +400,7 @@ msgstr "Escolhe o(s) desporto(s)"
 #: inc/training/search/class.SearchFormular.php:134
 #: call/call.garminCommunicator.php:123
 msgid "all"
-msgstr ""
+msgstr "Tudo"
 
 #: inc/training/search/class.SearchFormular.php:136
 #: inc/system/config/class.ConfigTabSports.php:134
@@ -415,7 +412,7 @@ msgstr ""
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:172
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:132
 msgid "none"
-msgstr ""
+msgstr "nenhum"
 
 #: inc/training/search/class.SearchFormular.php:145
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:328

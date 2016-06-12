@@ -75,19 +75,4 @@ class ImporterFiletypeFIT extends ImporterFiletypeAbstract {
 
 		unlink($this->Filename);
 	}
-
-	/**
-	 * Make sure perl script worked
-	 * @throws RuntimeException
-	 */
-	protected function readFirstLine() {
-		$FirstLine = stream_get_line($this->Handle, 4096, PHP_EOL);
-
-		if (trim($FirstLine) != 'SUCCESS') {
-			fclose($this->Handle);
-			unlink($this->Filename);
-
-			throw new RuntimeException('Reading *.fit-file failed. First line was "'.$FirstLine.'".');
-		}
-	}
 }

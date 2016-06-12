@@ -3,14 +3,15 @@
  * This file contains class::ImporterFiletypeAbstract
  * @package Runalyze\Import\Filetype
  */
+
+use Runalyze\Import\Exception\UnsupportedFileException;
+
 /**
  * Abstract importer for a given filetype
  *
  * @author Hannes Christiansen
  * @package Runalyze\Import\Filetype
  */
-use Runalyze\Error;
-
 abstract class ImporterFiletypeAbstract {
 	/**
 	 * Parser
@@ -114,11 +115,11 @@ abstract class ImporterFiletypeAbstract {
 	 * Get training objects
 	 * @param int $index optional index
 	 * @return TrainingObject training object
+	 * @throws \RuntimeException
 	 */
 	final public function object($index = 0) {
 		if (is_null($this->Parser)) {
-			Error::getInstance()->addError('Parser of Importer is empty. Returned default TrainingObject.');
-			return new TrainingObject( DataObject::$DEFAULT_ID );
+			throw new RuntimeException('Parser of Importer is empty. Returned default TrainingObject.');
 		}
 
 		return $this->Parser->object($index);
@@ -148,5 +149,18 @@ abstract class ImporterFiletypeAbstract {
 	public static function decodeCompressedData($string) {
 		$string = mb_substr($string, mb_strpos($string, "\n") + 1);
 		return gzinflate(substr(base64_decode($string),10,-8));
+	}
+
+	/**
+	 * Throw error for unknown format
+	 * @param string $extension
+	 * @param string $allowedProducer
+	 * @throws Runalyze\Import\Exception\UnsupportedFileException
+	 */
+	protected function throwErrorForUnknownFormat($extension, $allowedProducer) {
+		throw new UnsupportedFileException(sprintf(
+			__('This file is not supported. Supported producers of %s-files: %s.'),
+			$extension, $allowedProducer
+		));
 	}
 }

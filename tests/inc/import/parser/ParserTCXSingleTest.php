@@ -14,32 +14,12 @@ class ParserTCXSingleTest extends PHPUnit_Framework_TestCase {
 	protected $object;
 
 	/**
-	 * Sets up the fixture, for example, opens a network connection.
-	 * This method is called before a test is executed.
+	 * @expectedException \Runalyze\Import\Exception\ParserException
 	 */
-	protected function setUp() { }
-
-	/**
-	 * Tears down the fixture, for example, closes a network connection.
-	 * This method is called after a test is executed.
-	 */
-	protected function tearDown() { }
-
 	public function testEmpty() {
 		$XML = simplexml_load_string('<test>abc</test>');
 		$Parser = new ParserTCXSingle('', $XML);
 		$Parser->parse();
-
-		$this->assertTrue( $Parser->failed() );
-	}
-
-	public function testStarttime() {
-		$XML = simplexml_load_string('<Activity><Id>2011-07-10T09:47:00Z</Id></Activity>');
-		$Parser = new ParserTCXSingle('', $XML);
-		$Parser->parse();
-
-		$this->assertTrue( $Parser->failed() );
-		$this->assertEquals( $Parser->object()->getTimestamp(), LocalTime::mktime(11, 47, 0, 7, 10, 2011) );
 	}
 
 	public function testVerySimple() {

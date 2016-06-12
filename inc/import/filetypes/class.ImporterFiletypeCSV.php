@@ -3,6 +3,9 @@
  * This file contains class::ImporterFiletypeCSV
  * @package Runalyze\Import\Filetype
  */
+
+use Runalyze\Import;
+
 /**
  * Importer: *.csv
  *
@@ -24,7 +27,7 @@ class ImporterFiletypeCSV extends ImporterFiletypeAbstract {
 		if ($this->isFromEpson($String)) {
 			$this->Parser = new ParserCSVepsonSingle($String);
 		} else {
-			$this->throwErrorForUnknownFormat();
+			$this->throwErrorForUnknownFormat('csv', self::ALLOWED_PRODUCER);
 		}
 	}
 
@@ -35,16 +38,6 @@ class ImporterFiletypeCSV extends ImporterFiletypeAbstract {
 	 */
 	protected function isFromEpson(&$String) {
 		return strpos($String, '[[Training]]') !== false;
-	}
-
-	/**
-	 * Throw error for unknown format
-	 */
-	protected function throwErrorForUnknownFormat() {
-		$this->Errors[] = sprintf(
-			__('This file is not supported. Supported producers of %s-files: %s.'),
-			'csv', self::ALLOWED_PRODUCER
-		);
 	}
 }
 

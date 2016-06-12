@@ -121,7 +121,7 @@ class ImporterWindow {
 	 * Import form garmin communicator
 	 */
 	private function importFromGarminCommunicator() {
-		$Factory = new ImporterFactory( ImporterFactory::$FROM_COMMUNICATOR );
+		$Factory = new ImporterFactory( ImporterFactory::FROM_COMMUNICATOR );
 
 		$this->TrainingObjects = $Factory->trainingObjects();
 

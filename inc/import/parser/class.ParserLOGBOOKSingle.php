@@ -5,6 +5,7 @@
  */
 
 use Runalyze\Configuration;
+use Runalyze\Import\Exception\UnsupportedFileException;
 
 /**
  * Parser for LOGBOOK files from SportTracks
@@ -34,9 +35,10 @@ class ParserLOGBOOKSingle extends ParserAbstractSingleXML {
 
 	/**
 	 * Add error: incorrect file
+	 * @throws \Runalyze\Import\Exception\UnsupportedFileException
 	 */
 	protected function throwNoLOGBOOKError() {
-		$this->addError( __('Given XML object is not from SportTracks. &lt;Activity&gt;-tag has no attribute \'startTime\'.') );
+		throw new UnsupportedFileException('Given XML object is not from SportTracks. &lt;Activity&gt;-tag has no attribute \'startTime\'.');
 	}
 
 	/**

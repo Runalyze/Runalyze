@@ -5,6 +5,7 @@
  */
 
 use Runalyze\Configuration;
+use Runalyze\Import\Exception\UnsupportedFileException;
 
 /**
  * Parser for FITLOG files from SportTracks
@@ -40,9 +41,10 @@ class ParserFITLOGSingle extends ParserAbstractSingleXML {
 
 	/**
 	 * Add error: incorrect file
+	 * @throws \Runalyze\Import\Exception\UnsupportedFileException
 	 */
 	protected function throwNoFITLOGError() {
-		$this->addError( __('Given XML object is not from SportTracks. &lt;Duration&gt;-tag could not be located.') );
+		throw new UnsupportedFileException('Given XML object is not from SportTracks. &lt;Duration&gt;-tag could not be located.');
 	}
 
 	/**

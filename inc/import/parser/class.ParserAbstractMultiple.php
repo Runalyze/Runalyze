@@ -9,8 +9,6 @@
  * @author Hannes Christiansen
  * @package Runalyze\Import\Parser
  */
-use Runalyze\Error;
-
 abstract class ParserAbstractMultiple extends ParserAbstract {
 	/**
 	 * Training object
@@ -30,11 +28,11 @@ abstract class ParserAbstractMultiple extends ParserAbstract {
 	 * Get training object
 	 * @param int $index optional index
 	 * @return TrainingObject
+	 * @throws \InvalidArgumentException
 	 */
 	final public function object($index = 0) {
 		if (!isset($this->TrainingObjects[$index])) {
-			Error::getInstance()->addDebug('Parser has only '.$this->numberOfTrainings().' trainings, but asked for index = '.$index);
-			return end($this->TrainingObjects);
+			throw new InvalidArgumentException('Parser has only '.$this->numberOfTrainings().' trainings, but asked for index = '.$index);
 		}
 
 		return $this->TrainingObjects[$index];

@@ -5,6 +5,8 @@
  * Pause detection is not working with data by runtastic, because of their crap data
  */
 
+use Runalyze\Import\Exception\UnsupportedFileException;
+
 /**
  * Parser for TCX files from Runtastic (Garminfiletype)
  *
@@ -29,9 +31,10 @@ class ParserTCXruntasticSingle extends ParserTCXSingle {
 
 	/**
 	 * Add error: no garmin file
+	 * @throws \Runalyze\Import\Exception\UnsupportedFileException
 	 */
 	protected function throwNoGarminError() {
-		$this->addError( __('Given XML object is not from Runtastic. &lt;Id&gt;-tag could not be located.') );
+		throw new UnsupportedFileException('Given XML object is not from Runtastic. &lt;Id&gt;-tag could not be located.');
 	}
 
 	/**

@@ -5,6 +5,7 @@
  */
 
 use Runalyze\Configuration;
+use Runalyze\Import\Exception\ParserException;
 
 /**
  * Parser for FIT files from ANT
@@ -221,10 +222,12 @@ class ParserFITSingle extends ParserAbstractSingle {
 
 	/**
 	 * Read file ID
+	 * @throws \Runalyze\Import\Exception\ParserException
 	 */
 	protected function readFileId() {
-		if (isset($this->Values['type']) && $this->Values['type'][1] != 'activity')
-			$this->addError( __('FIT file is not specified as activity.') );
+		if (isset($this->Values['type']) && $this->Values['type'][1] != 'activity') {
+			throw new ParserException('FIT file is not specified as activity.');
+		}
 
 		if (isset($this->Values['time_created']))
 			$this->setTimestampAndTimezoneOffsetWithUtcFixFrom((string)$this->Values['time_created'][1]);

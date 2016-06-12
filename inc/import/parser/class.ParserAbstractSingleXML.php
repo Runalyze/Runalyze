@@ -3,6 +3,9 @@
  * This file contains class::ParserAbstractSingleXML
  * @package Runalyze\Import\Parser
  */
+
+use Runalyze\Import\Exception\ParserException;
+
 /**
  * Abstract parser for single training from xml content
  *
@@ -36,10 +39,12 @@ abstract class ParserAbstractSingleXML extends ParserAbstractSingle {
 
 	/**
 	 * Parse
+	 * Parse
+	 * @throws \Runalyze\Import\Exception\ParserException
 	 */
 	final public function parse() {
 		if ($this->XML === false)
-			Filesystem::throwErrorForBadXml($this->FileContent);
+			throw new ParserException('The xml-file is not well formed and could not be parsed.');
 		else
 			$this->parseXML();
 	}

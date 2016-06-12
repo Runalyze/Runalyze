@@ -253,7 +253,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 		$dists = array();
 		$kms = (is_array($this->Configuration()->value('pb_distances'))) ? $this->Configuration()->value('pb_distances') : array(3, 5, 10, 21.1, 42.2);
 		foreach ($kms as $km)
-			$dists[$km] = array('sum' => 0, 'pb' => INFINITY);
+			$dists[(string)$km] = array('sum' => 0, 'pb' => INFINITY);
 
 		if ($this->RaceContainer->num() == 0)
 			return;
@@ -269,9 +269,9 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 			$year[$wk['y']]['sum']++;
 			foreach($kms as $km)
 				if ($km == $wk['official_distance']) {
-					$year[$wk['y']][$km]['sum']++;
-					if ($wk['s'] < $year[$wk['y']][$km]['pb'])
-						$year[$wk['y']][$km]['pb'] = $wk['s'];
+					$year[$wk['y']][(string)$km]['sum']++;
+					if ($wk['s'] < $year[$wk['y']][(string)$km]['pb'])
+						$year[$wk['y']][(string)$km]['pb'] = $wk['s'];
 				}
 		}
 
@@ -301,15 +301,15 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 				$y = $year[$key];
 
 				if ($key != 'sum') {
-					if ($y[$km]['sum'] != 0) {
+					if ($y[(string)$km]['sum'] != 0) {
 						$PB = new PersonalBest($km, $this->sportid);
-						$distance = Duration::format($y[$km]['pb']);
+						$distance = Duration::format($y[(string)$km]['pb']);
 
-						if ($PB->seconds() == $y[$km]['pb']) {
+						if ($PB->seconds() == $y[(string)$km]['pb']) {
 							$distance = '<strong>'.$distance.'</strong>';
 						}
 
-						echo '<td>'.$distance.' <small>'.$y[$km]['sum'].'x</small></td>';
+						echo '<td>'.$distance.' <small>'.$y[(string)$km]['sum'].'x</small></td>';
 					} else {
 						echo '<td><em><small>---</small></em></td>';
 					}
@@ -544,7 +544,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 			$FieldOfficiallyMeasured = new FormularCheckbox('officially_measured', __('Officially measured').' '.Ajax::tooltip('<i class="fa fa-fw fa-question-circle"></i>', __('Was the course officially measured?')), $RaceResult->officiallyMeasured() );
 			$FieldOfficiallyMeasured->setLayout( FormularFieldset::$LAYOUT_FIELD_W50 );
 			
-			$FieldOfficialDistance = new FormularInput('official_distance', __('Official distance'), str_replace(',', '.', (new Distance($RaceResult->officialDistance()))->stringKilometer(false, 2)));
+			$FieldOfficialDistance = new FormularInput('official_distance', __('Official distance').' '.Ajax::tooltip('<i class="fa fa-fw fa-question-circle"></i>', __('We use two decimals for convenient reasons.').'<br>'.__('Marathon').': 42.20 km<br>'.__('Half marathon').': 21.10 km'), str_replace(',', '.', (new Distance($RaceResult->officialDistance()))->stringKilometer(false, 2)));
 			$FieldOfficialDistance->setLayout( FormularFieldset::$LAYOUT_FIELD_W50 );
 			$FieldOfficialDistance->setUnit(FormularUnit::$KM);
 			$FieldOfficialTime = new FormularInput('official_time', __('Official time'), Duration::format($RaceResult->officialTime()) );

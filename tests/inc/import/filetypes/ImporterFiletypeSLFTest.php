@@ -21,31 +21,19 @@ class ImporterFiletypeSLFTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Tears down the fixture, for example, closes a network connection.
-	 * This method is called after a test is executed.
-	 */
-	protected function tearDown() { }
-
-	/**
 	 * Test: empty string
+	 * @expectedException \Runalyze\Import\Exception\ParserException
 	 */
 	public function testEmptyString() {
 		$this->object->parseString('');
-
-		$this->assertTrue( $this->object->failed() );
-		$this->assertEmpty( $this->object->objects() );
-		$this->assertNotEmpty( $this->object->getErrors() );
 	}
 
 	/**
-	 * Test: incorrect xml-file 
+	 * Test: incorrect xml-file
+	 * @expectedException \Runalyze\Import\Exception\ParserException
 	 */
 	public function test_notPWX() {
 		$this->object->parseString('<any><xml><file></file></xml></any>');
-
-		$this->assertTrue( $this->object->failed() );
-		$this->assertEmpty( $this->object->objects() );
-		$this->assertNotEmpty( $this->object->getErrors() );
 	}
 
 	/**

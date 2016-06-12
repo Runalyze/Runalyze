@@ -197,15 +197,20 @@ class Context
 	/**
 	 * Get additional data that is not in the activity object
 	 * @param string $key
+	 * @param bool $returnNullForUnknownKeys set to true to not throw an exception for unknown keys
 	 * @return mixed
 	 * @throws \InvalidArgumentException
 	 */
-	public function data($key)
+	public function data($key, $returnNullForUnknownKeys = false)
 	{
 		if (!isset($this->ActivityData[$key])) {
+			if ($returnNullForUnknownKeys) {
+				return null;
+			}
+
 			throw new \InvalidArgumentException('Provided key "'.$key.'" does not exist in activity data.');
 		}
-
+		
 		return $this->ActivityData[$key];
 	}
 

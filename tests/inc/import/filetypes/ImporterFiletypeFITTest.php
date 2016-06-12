@@ -21,14 +21,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Tears down the fixture, for example, closes a network connection.
-	 * This method is called after a test is executed.
-	 */
-	protected function tearDown() {
-	}
-
-	/**
-	 * @expectedException RuntimeException
+	 * @expectedException \Runalyze\Import\Exception\ParserException
 	 */
 	public function test_nonexistingFile() {
 		if (Shell::isPerlAvailable()) {

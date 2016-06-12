@@ -61,6 +61,16 @@ class ContextTest extends \PHPUnit_Framework_TestCase
 		$Context->data('non-existing-key');
 	}
 
+	public function testUnknownDataWithNull()
+	{
+		$Context = new Context(new Activity\Entity(array(
+			Activity\Entity::TIMESTAMP => mktime(12, 0, 0, 10, 30, 2015),
+			'null-data' => null
+		)), 0);
+
+		$this->assertNull($Context->data('null-data', true));
+	}
+
 	/** @expectedException \InvalidArgumentException */
 	public function testWrongConstructor()
 	{

@@ -5,6 +5,7 @@
  */
 
 use Runalyze\Configuration;
+use Runalyze\Import\Exception\UnsupportedFileException;
 
 /**
  * Parser for GPX files
@@ -98,9 +99,10 @@ class ParserGPXSingle extends ParserAbstractSingleXML {
 
 	/**
 	 * Add error: incorrect file
+	 * @throws \Runalyze\Import\Exception\UnsupportedFileException
 	 */
 	protected function throwNoGPXError() {
-		$this->addError( __('Given XML object does not contain any track. &lt;trkseg&gt;-tag could not be located.') );
+		throw new UnsupportedFileException('Given XML object does not contain any track. &lt;trkseg&gt;-tag could not be located.');
 	}
 
 	/**
