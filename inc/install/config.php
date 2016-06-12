@@ -30,12 +30,6 @@ $password = '{config::password}';
 define('PREFIX', '{config::prefix}');
 
 /**
- * To set off debugging, define this constant as false
- * @var bool RUNALYZE_DEBUG Set to true for debugging mode
- */
-define('RUNALYZE_DEBUG', {config::debug});
-
-/**
  * Working on your site? Disable login with this variable.
  * @var bool USER_CANT_LOGIN Set to disable login
  */

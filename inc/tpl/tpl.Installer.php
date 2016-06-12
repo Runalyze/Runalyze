@@ -161,17 +161,6 @@ foreach ($Steps as $i => $Name) {
 	</p>
 
 	<p class="text">
-		<?php _e('You can activate a debug toolbar to see specific information if problems occur.'); ?>
-	</p>
-
-	<p class="text">
-		<label>
-			<strong><?php _e('Debug mode'); ?></strong>
-			<input type="checkbox" name="debug" <?php if (isset($_POST['debug']) && $_POST['debug']) echo 'checked' ?>>
-		</label>
-	</p>
-
-	<p class="text">
 		<label>
 			<strong><?php _e('Garmin API key'); ?>*</strong>
 			<input type="text" name="garminkey" value="<?php echo (isset($_POST['garminkey']) ? $_POST['garminkey'] : ''); ?>">
@@ -213,7 +202,6 @@ foreach ($Steps as $i => $Name) {
 		<em>'{config::username}'</em> &raquo; <em>'<?php echo $_POST['username']; ?>'</em><br>
 		<em>'{config::password}'</em> &raquo; <em>'<?php echo $_POST['password']; ?>'</em><br>
 		<em>'{config::prefix}'</em> &raquo; <em>'<?php echo $_POST['prefix']; ?>'</em><br>
-		<em>{config::debug}</em> &raquo; <em><?php echo isset($_POST['debug']) ? 'true' : 'false'; ?></em><br>
 		<em>{config::garminkey}</em> &raquo; <em><?php echo $_POST['garminkey']; ?><br>
 		<em>{config::sendermail}</em> &raquo; <em><?php echo $_POST['sendermail']; ?><br>
 	</p>

@@ -154,7 +154,6 @@ class AdminView {
 		FormularInput::setStandardSize( FormularInput::$SIZE_MIDDLE );
 
 		$Fieldset = new FormularFieldset( __('Settings') );
-		$Fieldset->addField( new FormularCheckbox('RUNALYZE_DEBUG', __('Debug mode')) );
 		$Fieldset->addField( new FormularCheckbox('USER_CANT_LOGIN', __('Maintenance mode')) );
 		$Fieldset->addField( new FormularCheckbox('USER_CAN_REGISTER', __('Users can register')) );
 		$Fieldset->addField( new FormularCheckbox('USER_DISABLE_ACCOUNT_ACTIVATION', __('Users don\'t need to activate their account')) );
@@ -454,7 +453,6 @@ class AdminView {
 	 */
 	public static function getArrayOfConfigVariables() {
 		return array(
-			'RUNALYZE_DEBUG',
                         'USER_CANT_LOGIN',
 			'USER_CAN_REGISTER',
 			'USER_DISABLE_ACCOUNT_ACTIVATION',

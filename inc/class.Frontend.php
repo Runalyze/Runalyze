@@ -32,12 +32,6 @@ class Frontend {
 	public static $HELP_URL = 'dashboard/help';
 
 	/**
-	 * Boolean flag: log GET- and POST-data
-	 * @var bool
-	 */
-	protected $logGetAndPost = false;
-
-	/**
 	 * Admin password as md5
 	 * @var string
 	 */
@@ -83,7 +77,6 @@ class Frontend {
 		$this->initCache();
 		$this->initErrorHandling();
 		$this->initDatabase();
-		$this->initDebugMode();
 		$this->initSessionAccountHandler();
 		$this->initTimezone();
 		$this->forwardAccountIDtoDatabaseWrapper();
@@ -142,13 +135,6 @@ class Frontend {
 	 */
 	protected function initErrorHandling() {
 		\Runalyze\Error::init(Request::Uri());
-
-		if ($this->logGetAndPost) {
-			if (!empty($_POST))
-				Error::getInstance()->addDebug('POST-Data: '.print_r($_POST, true));
-			if (!empty($_GET))
-				Error::getInstance()->addDebug('GET-Data: '.print_r($_GET, true));
-		}
 	}
 
 	/**
@@ -186,19 +172,6 @@ class Frontend {
 	}
 
 	/**
-	 * Init internal debug-mode. Can be defined in config.php - otherwise is set to false here
-	 */
-	protected function initDebugMode() {
-		if (!defined('RUNALYZE_DEBUG'))
-			define('RUNALYZE_DEBUG', false);
-
-		if (RUNALYZE_DEBUG)
-			error_reporting(E_ALL);
-		else
-			Error::getInstance()->setLogVars(true);
-	}
-
-	/**
 	 * Set correct character encoding 
 	 */
 	final public function setEncoding() {
@@ -222,7 +195,7 @@ class Frontend {
 	 * Display the HTML-Footer
 	 */
 	public function displayFooter() {
-		if (RUNALYZE_DEBUG && Error::getInstance()->hasErrors()) {
+		if (Error::getInstance()->hasErrors()) {
 			Error::getInstance()->display();
 		}
 

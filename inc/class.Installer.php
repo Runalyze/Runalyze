@@ -321,7 +321,6 @@ class Installer {
 		$config['username']  = $_POST['username'];
 		$config['password']  = $_POST['password'];
 		$config['prefix']    = $_POST['prefix'];
-		$config['debug']     = isset($_POST['debug']) ? 'true' : 'false';
 		$config['garminkey'] = $_POST['garminkey'];
 		$config['sendermail'] = $_POST['sendermail'];
 		

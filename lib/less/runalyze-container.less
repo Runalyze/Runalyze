@@ -21,10 +21,6 @@
 @databox-margin:				5px;
 @databox-padding:				3px;
 
-@error-toolbar-width:			800px;
-@error-toolbar-background:		#efefef;
-@error-toolbar-border:			#ccc;
-
 @nav-submenu-hover:				#f7f7f9;
 
 
@@ -463,21 +459,6 @@
 		&.triggered {
 			opacity: 1;
 		}
-	}
-}
-
-#error-toolbar {
-	z-index: @z-index-error-toolbar;
-	position: fixed;
-	bottom: 0;
-	left: 50%;
-	width: @error-toolbar-width;
-	margin-left: -(@error-toolbar-width/2);
-	background-color: @error-toolbar-background;
-	max-height: (@error-toolbar-width/2);
-
-	tr {
-		border-bottom: 1px solid @error-toolbar-border;
 	}
 }
 
