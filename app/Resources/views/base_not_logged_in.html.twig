@@ -1,32 +1,11 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=yes">
+{% extends "base.html.twig" %}
 
-    <base href="{{ url('base_url') }}">
+{% set body_attributes = ' id=installer' %}
 
-    <link rel="stylesheet" href="assets/css/runalyze-style.css?v={{ RUNALYZE_VERSION }}">
-
-    <link rel="shortcut icon" type="image/x-icon" href="assets/v2.x/img/favicon.ico">
-
-    {% for key, locale in locales %}
-        <link rel="alternate" href="{{ app.request.getBaseUrl ~ app.request.pathinfo }}?lang={{ key }}" hreflang="{{ key }}">
-    {% endfor %}
-
-    <title>{{ page_title|default('RUNALYZE') }}</title>
-
-    <script>document.addEventListener("touchstart", function(){}, true);</script>
-    <script src="assets/js/scripts.min.js?v={{ RUNALYZE_VERSION }}"></script>
-
-</head>
-
-<body id="installer">
-
+{% block body %}
     <div id="headline">
         {% block headline %}
             <a class="tab logo" href="https://www.runalyze.com/" target="_blank">Runalyze</a>
-            <a class="tab right" href="login.php"><i class="fa fa-fw fa-sign-in"></i> {% trans %}Please login{% endtrans %}</a>
         {% endblock %}
     </div>
 
@@ -51,13 +30,22 @@
                         </li>
                     </ul>
                 </div>
+
                 <h1>{{ page_title|default('RUNALYZE') }}</h1>
             </div>
 
             <div class="panel-content">
                 <div class="installer-window-container">
-                    {% block content %}
-                    {% endblock %}
+                    <div class="w50" id="login-window">
+                        {% block content %}
+                        {% endblock %}
+                    </div>
+
+                    <div id="login-panel">
+                        <a href="{{ path('login') }}"><i class="fa fa-fw fa-lg fa-sign-in"></i> {% trans %}Login{% endtrans %}</a>
+                        <a href="{{ path('register') }}"><i class="fa fa-fw fa-lg fa-user"></i> {% trans %}Create a new account{% endtrans %}</a>
+                        <a href="{{ path('account_recover') }}"><i class="fa fa-fw fa-lg fa-lock"></i> {% trans %}Forgot your password?{% endtrans %}</a>
+                    </div>
 
                     {% block showcase %}
                         {% include 'home_feature_showcase.html.twig' %}
@@ -78,6 +66,4 @@
             </div>
         </div>
     </div>
-
-</body>
-</html>
+{% endblock %}

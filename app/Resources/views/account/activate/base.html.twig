@@ -2,13 +2,13 @@
 
 {% block content %}
     <fieldset>
-        <legend>{% trans %}Delete account{% endtrans %}</legend>
+        <legend>{% trans %}Activate account{% endtrans %}</legend>
 
         {% block messages %}
         {% endblock %}
 
         <p class="text">
-            <a class="button" href="{{ url('base_url') }}" title="Runalyze">&raquo; {% trans %}Main page{% endtrans %}</a>
+            <a class="button" href="{{ url('login') }}" title="Runalyze">&raquo; {% trans %}Login{% endtrans %}</a>
         </p>
     </fieldset>
 {% endblock %}

@@ -2,6 +2,7 @@
 
 namespace Runalyze\Bundle\CoreBundle\Controller;
 
+use Runalyze\Activity\Distance;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use SessionAccountHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -31,11 +32,55 @@ class DefaultController extends Controller
     
     /**
      * @Route("/", name="base_url")
-     * @Route("/dashboard")
+     * @Route("/dashboard", name="dashboard")
      */
     public function indexAction()
     {
         return $this->includeOldScript('../index.php');
+    }
+
+    /**
+     * @Route("/register", name="register")
+     */
+    public function registerAction()
+    {
+        new \Frontend(true);
+
+        if (!USER_CAN_REGISTER) {
+            return $this->render('register/disabled.html.twig');
+        }
+
+        if (isset($_POST['new_username'])) {
+            $registrationResult = \AccountHandler::tryToRegisterNewUser();
+
+            if (true === $registrationResult) {
+                if (\System::isAtLocalhost() || USER_DISABLE_ACCOUNT_ACTIVATION) {
+                    return $this->render('account/activate/success.html.twig');
+                }
+
+                return $this->render('register/mail_delivered.html.twig');
+            }
+        } else {
+            $registrationResult = [
+                'failure' => [
+                    'username' => false,
+                    'email' => false,
+                    'password' => false
+                ],
+                'errors' => []
+            ];
+        }
+
+        return $this->render('register/form.html.twig', [
+            'failure' => $registrationResult['failure'],
+            'error_messages' => $registrationResult['errors'],
+            'data' => [
+                'username' => isset($_POST['new_username']) ? $_POST['new_username'] : '',
+                'name' => isset($_POST['name']) ? $_POST['name'] : '',
+                'email' => isset($_POST['email']) ? $_POST['email'] : ''
+            ],
+            'num' => $this->collectStatistics()
+        ]);
     }
     
     /**
@@ -43,7 +88,47 @@ class DefaultController extends Controller
      */
     public function loginAction()
     {
-        return $this->includeOldScript('../login.php');
+        new \Frontend(true);
+
+        if (USER_CANT_LOGIN) {
+            return $this->render('login/maintenance.html.twig');
+        }
+
+        if (\SessionAccountHandler::isLoggedIn()) {
+            return $this->redirectToRoute('dashboard');
+        }
+
+        return $this->render('login/form.html.twig', [
+            'failure' => [
+                'username' => (\SessionAccountHandler::$ErrorType == \SessionAccountHandler::$ERROR_TYPE_WRONG_USERNAME),
+                'password' => (\SessionAccountHandler::$ErrorType == \SessionAccountHandler::$ERROR_TYPE_WRONG_PASSWORD),
+                'activation' => (\SessionAccountHandler::$ErrorType == \SessionAccountHandler::$ERROR_TYPE_ACTIVATION_NEEDED)
+            ],
+            'num' => $this->collectStatistics()
+        ]);
+    }
+
+    /**
+     * @return array ['user' => (int)..., 'distance' => (string)...]
+     */
+    protected function collectStatistics()
+    {
+        \DB::getInstance()->stopAddingAccountID();
+
+        $numUser = \Cache::get('NumUser', 1);
+        if ($numUser == null) {
+            $numUser = \DB::getInstance()->query('SELECT COUNT(*) FROM `'.PREFIX.'account` WHERE `activation_hash` = ""')->fetchColumn();
+            \Cache::set('NumUser', $numUser, '500', 1);
+        }
+
+        $numDistance = \Cache::get('NumKm', 1);
+        if ($numDistance == null) {
+            $numDistance = \DB::getInstance()->query('SELECT SUM(`distance`) FROM `'.PREFIX.'training`')->fetchColumn();
+            \Cache::set('NumKm', $numDistance, '500', 1);
+        }
+        \DB::getInstance()->startAddingAccountID();
+
+        return ['user' => (int)$numUser, 'distance' => Distance::format($numDistance)];
     }
 
     /**

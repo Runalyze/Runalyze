@@ -1,0 +1,11 @@
+{% if num.user > 0 %}
+<p class="text small c login-window-stats">
+    {% transchoice num.user %}
+        {1} Until now <strong>%count%</strong> athlete is registered and|]1,Inf[ Until now <strong>%count%</strong> athletes are registered and
+    {% endtranschoice %}
+
+    {% transchoice num.user with {'%distance%': num.distance} %}
+        {1} has logged <strong>%distance%</strong>.|]1,Inf[ have logged <strong>%distance%</strong>.
+    {% endtranschoice %}
+</p>
+{% endif %}

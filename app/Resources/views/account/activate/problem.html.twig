@@ -1,0 +1,9 @@
+{% extends "account/activate/base.html.twig" %}
+
+{% block messages %}
+    <p class="error">
+        {% trans %}The activation did not work.{% endtrans %}
+        <br>
+        {% trans %}Probably the link was wrong.{% endtrans %}
+    </p>
+{% endblock %}

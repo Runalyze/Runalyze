@@ -1,0 +1,11 @@
+{% extends "base_not_logged_in.html.twig" %}
+
+<fieldset>
+    <legend>{% trans %}Login{% endtrans %}</legend>
+
+    {% block maintenance_messages %}
+    <p class="error">
+        {% trans %}Runalyze is under maintenance at the moment. No login possible.{% endtrans %}
+    </p>
+    {% endblock %}
+</fieldset>

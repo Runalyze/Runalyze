@@ -179,9 +179,6 @@ class SessionAccountHandler {
 	 * @return boolean
 	 */
 	public function tryToLogin($username, $password) {
-		if (isset($_POST['chpw_hash']))
-			AccountHandler::tryToSetNewPassword();
-
 		DB::getInstance()->stopAddingAccountID();
 		$Account = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'account` WHERE `username`="'.$username.'" LIMIT 1')->fetch();
 		DB::getInstance()->startAddingAccountID();

@@ -135,15 +135,12 @@ class CallController extends Controller
      */
      public function windowDeleteAction()
      {
-        $Frontend = new \Frontend();
-        $Errors   = array();
-        \AccountHandler::setAndSendDeletionKeyFor($Errors);
+        new \Frontend();
         
         echo \HTML::h1( __('Delete your account.') );
         
-        if (!empty($Errors)) {
-        	foreach ($Errors as $Error)
-        		echo \HTML::error($Error);
+        if (!\AccountHandler::setAndSendDeletionKeyFor(SessionAccountHandler::getId())) {
+        	echo \HTML::error(__('Sending the link did not work. Please contact the administrator.'));
         } else {
         	echo \HTML::info(
         			__('<em>A confirmation has been sent via mail.</em><br>'.

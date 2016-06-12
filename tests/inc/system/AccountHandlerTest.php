@@ -96,17 +96,10 @@ class AccountHandlerTest extends PHPUnit_Framework_TestCase {
 		);
 		$SecondID = DB::getInstance()->lastInsertId();
 
-		$_GET['chpw'] = '';
-		$this->assertEquals( false, AccountHandler::getUsernameForChangePasswordHash() );
-
-		$_GET['chpw'] = '908a098ef7e6cb87de7a6';
-		$this->assertEquals( false, AccountHandler::getUsernameForChangePasswordHash() );
-
-		$_GET['chpw'] = '8e1e915d08a163ddd4accc6d890dd557';
-		$this->assertEquals( false, AccountHandler::getUsernameForChangePasswordHash() );
-
-		$_GET['chpw'] = '920676ca497a95fa7abfe6b353692613';
-		$this->assertEquals( 'NewChanger', AccountHandler::getUsernameForChangePasswordHash() );
+		$this->assertEquals( false, AccountHandler::getUsernameForChangePasswordHash('') );
+		$this->assertEquals( false, AccountHandler::getUsernameForChangePasswordHash('908a098ef7e6cb87de7a6') );
+		$this->assertEquals( false, AccountHandler::getUsernameForChangePasswordHash('8e1e915d08a163ddd4accc6d890dd557') );
+		$this->assertEquals( 'NewChanger', AccountHandler::getUsernameForChangePasswordHash('920676ca497a95fa7abfe6b353692613') );
 
 		DB::getInstance()->exec('DELETE FROM `runalyze_account` WHERE `id`="'.$FirstID.'" OR `id`="'.$SecondID.'"');
 	}
@@ -129,14 +122,10 @@ class AccountHandlerTest extends PHPUnit_Framework_TestCase {
 			array(1, 'test', 'test@mail.de', '8e1e915d08a163ddd4accc6d890dd557')
 		);
 
-		$_GET['activate'] = '908a098ef7e6cb87de7a6';
-		$this->assertEquals( false, AccountHandler::tryToActivateAccount() );
-
+		$this->assertEquals( false, AccountHandler::tryToActivateAccount('908a098ef7e6cb87de7a6') );
 		$this->assertEquals( '8e1e915d08a163ddd4accc6d890dd557', DB::getInstance()->query('SELECT activation_hash FROM `runalyze_account` WHERE `id`=1 LIMIT 1')->fetchColumn() );
 
-		$_GET['activate'] = '8e1e915d08a163ddd4accc6d890dd557';
-		$this->assertEquals( true, AccountHandler::tryToActivateAccount() );
-
+		$this->assertEquals( true, AccountHandler::tryToActivateAccount('8e1e915d08a163ddd4accc6d890dd557') );
 		$this->assertEquals( '', DB::getInstance()->query('SELECT activation_hash FROM `runalyze_account` WHERE `id`=1 LIMIT 1')->fetchColumn() );
 	}
 

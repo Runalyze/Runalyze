@@ -96,4 +96,18 @@ class AccountController extends Controller
             'user_is_unknown' => $userIsUnknown
         ]);
     }
+
+    /**
+     * @Route("/activate/{hash}", name="account_activate", requirements={"hash": "[[:xdigit:]]{32}"})
+     */
+    public function activateAccountAction($hash)
+    {
+        new \Frontend(true);
+
+        if (!\AccountHandler::tryToActivateAccount($hash)) {
+            return $this->render('account/activate/problem.html.twig');
+        }
+
+        return $this->render('account/activate/success.html.twig');
+    }
 }
