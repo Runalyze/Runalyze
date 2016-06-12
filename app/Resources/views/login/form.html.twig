@@ -7,35 +7,29 @@
 
             <div class="w100">
                 <label for="username">{% trans %}Username{% endtrans %}</label>
-                <input id="username" name="_username" class="middle-size{% if failure.password %} validation-failed{% endif %}" type="text" value="{{ (username|default(''))|escape('html_attr') }}">
+                <input id="username" name="_username" class="middle-size{% if error %} validation-failed{% endif %}" type="text" value="{{ (username|default(''))|escape('html_attr') }}">
             </div>
 
             <div class="w100 clear">
                 <label for="password">{% trans %}Password{% endtrans %}</label>
-                <input id="password" name="_password" class="middle-size{% if failure.password %} validation-failed{% endif %}" type="password">
+                <input id="password" name="_password" class="middle-size{% if error %} validation-failed{% endif %}" type="password">
             </div>
 
             <div class="w100 clear">
-                <label for="autologin" class="small">{% trans %}Remember me{% endtrans %}</label>
-                <input id="autologin" name="autologin" type="checkbox">
+                <label for="remember_me" class="small">{% trans %}Remember me{% endtrans %}</label>
+                <input id="remember_me" name="_remember_me" type="checkbox">
             </div>
             <input type="hidden" name="_target_path" value="/dashboard" />
         </fieldset>
 
         {% block login_messages %}
             {% block login_messages_error %}
-                {% if failure.username %}
-                    <p class="error">{% trans %}The username is not known.{% endtrans %}</p>
-                {% elseif failure.password %}
-                    <p class="error">{% trans %}The password was incorrect.{% endtrans %}</p>
-                {% elseif failure.activation %}
-                    <p class="error">{% trans %}The account has not been activated.<br>Have a look into your email inbox.{% endtrans %}</p>
+                {% if error %}
+                    <p class="error">{{ error.messageKey|trans(error.messageData, 'security') }}</p>
                 {% endif %}
             {% endblock %}
         {% endblock %}
-            {% if error %}
-                <p class="error">{{ error.messageKey|trans(error.messageData, 'security') }}</p>
-            {% endif %}
+
         <div class="c">
             <input type="submit" value="{% trans %}Login{% endtrans %}" name="submit">
         </div>

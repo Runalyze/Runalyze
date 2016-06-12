@@ -13,8 +13,7 @@ if (!file_exists('../data/config.php')) {
 	exit();
 }
 
-
-
+include 'inc/tpl/tpl.Frontend.header.php';
 ?>
 
 <div id="container">
@@ -85,3 +84,6 @@ if (!file_exists('../data/config.php')) {
 		<?php $Frontend->displayPanels(); ?>
 	</div>
 </div>
+<?php
+include 'inc/tpl/tpl.Frontend.footer.php';
+?>

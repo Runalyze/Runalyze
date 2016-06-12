@@ -17,10 +17,12 @@ parameters:
   RUNALYZE_VERSION: 2.7.0-dev
   locale:     en
   database_host:     127.0.0.1
+  database_prefix:   runalyze_
   database_port:     ~
   database_name:     runalyze
   database_user:     root
   database_password: ~
+  secret: ThisTokenIsNotSoSecretChangeIt
    
 services:
   app.locale_listener:
@@ -30,6 +32,11 @@ services:
       - { name: kernel.event_subscriber }
   app.sha256salted_encoder:
     class: Runalyze\Bundle\CoreBundle\Services\Sha256SaltedEncoder
+  app.event.doctrine.table_prefix_subscriber:
+      class: Runalyze\Bundle\CoreBundle\EventListener\TablePrefixSubscriber
+      arguments: ['%database_prefix%']
+      tags:
+          - { name: doctrine.event_subscriber }
 
 twig:
   globals:

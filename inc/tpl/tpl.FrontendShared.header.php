@@ -23,7 +23,7 @@
 <div id="flot-loader"></div>
 
 <div id="headline">
-	<a class="tab logo b" href="http://www.runalyze.de/" title="Runalyze" target="_blank">RUNALYZE</a>
+	<a class="tab logo b" href="http://www.runalyze.com/" title="Runalyze" target="_blank">RUNALYZE</a>
 
 	<span class="tab right">
 		<?php

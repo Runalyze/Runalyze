@@ -10,7 +10,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * Account
  *
- * @ORM\Table(name="runalyze_account", uniqueConstraints={@ORM\UniqueConstraint(name="username", columns={"username"}), @ORM\UniqueConstraint(name="mail", columns={"mail"}), @ORM\UniqueConstraint(name="session_id", columns={"session_id"})})
+ * @ORM\Table(name="account", uniqueConstraints={@ORM\UniqueConstraint(name="username", columns={"username"}), @ORM\UniqueConstraint(name="mail", columns={"mail"}), @ORM\UniqueConstraint(name="session_id", columns={"session_id"})})
  * @ORM\Entity
  */
 class Account implements UserInterface, \Serializable
@@ -52,6 +52,13 @@ class Account implements UserInterface, \Serializable
      * @ORM\Column(name="language", type="string", length=5, nullable=false)
      */
     private $language;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="timezone", type="integer", nullable=false)
+     */
+    private $timezone;
 
     /**
      * @var string
@@ -129,6 +136,13 @@ class Account implements UserInterface, \Serializable
      * @ORM\Column(name="deletion_hash", type="string", length=32, nullable=false)
      */
     private $deletionHash;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="allow_mails", type="integer", nullable=false)
+     */
+    private $allowMails;
 
 
     public function __construct()
@@ -237,6 +251,29 @@ class Account implements UserInterface, \Serializable
     public function getLanguage()
     {
         return $this->language;
+    }
+    
+    /**
+     * Set timezone
+     *
+     * @param string $timezone
+     * @return Account
+     */
+    public function setTimezone($timezone)
+    {
+        $this->timezone = $language;
+
+        return $this;
+    }
+
+    /**
+     * Get timezone
+     *
+     * @return string 
+     */
+    public function getTimezone()
+    {
+        return $this->timezone;
     }
 
     /**
@@ -491,7 +528,29 @@ class Account implements UserInterface, \Serializable
     {
         return $this->deletionHash;
     }
+    
+    /**
+     * Set allowMails
+     *
+     * @param string $allowMails
+     * @return Account
+     */
+    public function setAllowMails($allowMails)
+    {
+        $this->allowMails = $allowMails;
 
+        return $this;
+    }
+
+    /**
+     * Get allowMails
+     *
+     * @return string 
+     */
+    public function getAllowMails()
+    {
+        return $this->allowMails;
+    }
 
     public function eraseCredentials()
     {

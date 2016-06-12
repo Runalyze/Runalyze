@@ -29,18 +29,6 @@ class Frontend {
 	 * Symfony object
 	 * @var object
 	 */
-	public static $HELP_URL = 'dashboard/help';
-
-	/**
-	 * Boolean flag: log GET- and POST-data
-	 * @var bool
-	 */
-	protected $logGetAndPost = false;
-	
-	/**
-	 * Symfony object
-	 * @var object
-	 */
 	protected $symfonyUser = false;
 
 	/**
@@ -149,13 +137,6 @@ class Frontend {
 	 */
 	protected function initErrorHandling() {
 		\Runalyze\Error::init(Request::Uri());
-
-		if ($this->logGetAndPost) {
-			if (!empty($_POST))
-				Error::getInstance()->addDebug('POST-Data: '.print_r($_POST, true));
-			if (!empty($_GET))
-				Error::getInstance()->addDebug('GET-Data: '.print_r($_GET, true));
-		}
 	}
 
 	/**
@@ -190,6 +171,7 @@ class Frontend {
 			    'id' => $user->getId(),
 			    'username' => $user->getUsername(),
 			    'language' => $user->getLanguage(),
+			    'timezone' => $user->getTimezone(),
 			    'mail' => $user->getMail(),
 		    ));
 		}

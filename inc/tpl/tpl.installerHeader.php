@@ -19,8 +19,8 @@
 <body id="installer">
 
 <div id="headline">
-	<a class="tab logo" href="http://www.runalyze.de/" target="_blank">Runalyze</a>
-	<a class="tab right" href="login.php"><i class="fa fa-fw fa-sign-in"></i> <?php _e('Please login'); ?></a>
+	<a class="tab logo" href="http://www.runalyze.com/" target="_blank">Runalyze</a>
+	<a class="tab right" href="login"><i class="fa fa-fw fa-sign-in"></i> <?php _e('Please login'); ?></a>
 </div>
 
 <?php echo Ajax::wrapJSforDocumentReady('Runalyze.init();'); ?>

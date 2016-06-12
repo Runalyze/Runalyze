@@ -39,7 +39,10 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        return $this->includeOldScript('../index.php');
+	$Frontend = new \Frontend(true, $this->get('security.token_storage'));
+	include '../index.php';
+
+        return $this->render('CoreBundle:Default:end.html.twig');
     }
 
     /**
@@ -93,12 +96,9 @@ class DefaultController extends Controller
     {
 	$authenticationUtils = $this->get('security.authentication_utils');
 
-	// get the login error if there is one
 	$error = $authenticationUtils->getLastAuthenticationError();
 
-	// last username entered by the user
 	$lastUsername = $authenticationUtils->getLastUsername();
-	
         new \Frontend(true, $this->get('security.token_storage'));
 
         if (USER_CANT_LOGIN) {
@@ -110,12 +110,7 @@ class DefaultController extends Controller
         }
 
         return $this->render('login/form.html.twig', [
-            'failure' => [
-                'username' => (\SessionAccountHandler::$ErrorType == \SessionAccountHandler::$ERROR_TYPE_WRONG_USERNAME),
-                'password' => (\SessionAccountHandler::$ErrorType == \SessionAccountHandler::$ERROR_TYPE_WRONG_PASSWORD),
-                'activation' => (\SessionAccountHandler::$ErrorType == \SessionAccountHandler::$ERROR_TYPE_ACTIVATION_NEEDED),
-		'error'         => $error,
-            ],
+   	    'error'         => $error,
             'num' => $this->collectStatistics()
         ]);
     }

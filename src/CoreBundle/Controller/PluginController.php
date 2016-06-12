@@ -179,7 +179,7 @@ class PluginController extends Controller
      }
      
     /**
-    * @Route("/call/call.PluginTool.display.php")
+    * @Route("/call/call.PluginTool.display.php", name="pluginDisplay")
     */
     public function pluginToolDisplayAction()
     {

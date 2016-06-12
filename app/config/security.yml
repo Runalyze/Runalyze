@@ -20,6 +20,10 @@ security:
             form_login:
                 login_path: /login
                 check_path: /login_check
+            remember_me:
+                secret:   '%secret%'
+                lifetime: 604800 # 1 week in seconds
+                path:     /
 
         # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
