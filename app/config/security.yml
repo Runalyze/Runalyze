@@ -7,7 +7,6 @@ security:
         runalyzeuser:
             entity:
                 class: CoreBundle:Account
-                property: username
 
     firewalls:
         default:

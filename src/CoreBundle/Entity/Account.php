@@ -3,7 +3,7 @@
 namespace Runalyze\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -11,9 +11,9 @@ use Doctrine\Common\Collections\ArrayCollection;
  * Account
  *
  * @ORM\Table(name="account", uniqueConstraints={@ORM\UniqueConstraint(name="username", columns={"username"}), @ORM\UniqueConstraint(name="mail", columns={"mail"}), @ORM\UniqueConstraint(name="session_id", columns={"session_id"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\AccountRepository")
  */
-class Account implements UserInterface, \Serializable
+class Account implements AdvancedUserInterface, \Serializable
 {
     /**
      * @var integer
@@ -571,6 +571,7 @@ class Account implements UserInterface, \Serializable
             $this->username,
             $this->password,
             $this->salt,
+	    $this->activationHash
         ));
     }
 
@@ -581,9 +582,29 @@ class Account implements UserInterface, \Serializable
             $this->id,
             $this->username,
             $this->password,
-            $this->salt
+            $this->salt,
+	    $this->activationHash,
         ) = unserialize($serialized);
     }
     
+    public function isAccountNonExpired()
+    {
+	return true;
+    }
 
+    public function isAccountNonLocked()
+    {
+	return true;
+    }
+
+    public function isCredentialsNonExpired()
+    {
+	return true;
+    }
+
+    public function isEnabled()
+    {
+	return empty($this->getActivationHash());
+    }
+    
 }

@@ -58,6 +58,7 @@ class PluginController extends Controller
     
     /**
      * @Route("/call/call.Plugin.uninstall.php")
+     * @Security("has_role('ROLE_USER')")
      */
     public function pluginUninstallAction()
     {
@@ -88,7 +89,8 @@ class PluginController extends Controller
     
     
     /**
-    * @Route("/call/call.Plugin.display.php")
+     * @Route("/call/call.Plugin.display.php")
+     * @Security("has_role('ROLE_USER')")
     */
     public function pluginDisplayAction()
     {
@@ -113,7 +115,8 @@ class PluginController extends Controller
     }
     
     /**
-    * @Route("/call/call.PluginPanel.move.php", name="PluginPanelMove")
+     * @Route("/call/call.PluginPanel.move.php", name="PluginPanelMove")
+     * @Security("has_role('ROLE_USER')")
     */
     public function pluginPanelMoveAction()
     {
@@ -130,7 +133,8 @@ class PluginController extends Controller
     }
     
     /**
-    * @Route("/call/call.PluginPanel.clap.php", name="PluginPanelClap")
+     * @Route("/call/call.PluginPanel.clap.php", name="PluginPanelClap")
+     * @Security("has_role('ROLE_USER')")
     */
     public function pluginPanelAction()
     {
@@ -148,7 +152,8 @@ class PluginController extends Controller
     }
     
     /**
-    * @Route("/call/call.Plugin.config.php")
+     * @Route("/call/call.Plugin.config.php")
+     * @Security("has_role('ROLE_USER')")
     */
     public function pluginConfigAction()
     {
@@ -171,6 +176,7 @@ class PluginController extends Controller
     
     /**
      * @Route("/call/call.ContentPanels.php")
+     * @Security("has_role('ROLE_USER')")
      */
      public function contentPanelsAction()
      {
@@ -179,7 +185,8 @@ class PluginController extends Controller
      }
      
     /**
-    * @Route("/call/call.PluginTool.display.php", name="pluginDisplay")
+     * @Route("/call/call.PluginTool.display.php", name="pluginDisplay")
+     * @Security("has_role('ROLE_USER')")
     */
     public function pluginToolDisplayAction()
     {
@@ -193,6 +200,7 @@ class PluginController extends Controller
     
     /**
      * @Route("/plugin/RunalyzePluginTool_DbBackup/download/{file}")
+     * @Security("has_role('ROLE_USER')")
      */
     public function dbBackupDownloadAction($file)
     {
