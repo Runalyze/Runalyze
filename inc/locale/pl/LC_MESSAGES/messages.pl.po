@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-05-21 18:34+0200\n"
-"PO-Revision-Date: 2016-03-14 16:31+0200\n"
-"Last-Translator: Grzegorz G <grzegorz@thulium.pl>\n"
-"Language-Team: Polish <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/pl/>\n"
+"PO-Revision-Date: 2016-06-14 11:28+0200\n"
+"Last-Translator: Marx <mnazarko@gmail.com>\n"
+"Language-Team: Polish "
+"<http://translate.runalyze.de/projects/runalyze/runalyze/pl/>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -50,9 +50,8 @@ msgid "This value is too large."
 msgstr "Wartość zbyt duża."
 
 #: inc/html/formular/class.FormularValueParser.php:262
-#, fuzzy
 msgid "This value is too small."
-msgstr "Wartość zbyt duża."
+msgstr "Wartość zbyt mała."
 
 #: inc/html/formular/class.FormularValueParser.php:303
 msgid "The value is too large."
@@ -553,9 +552,8 @@ msgstr "RPE"
 #: inc/training/search/class.SearchFormular.php:194
 #: inc/core/Activity/TrainingEffect.php:53
 #: inc/core/Dataset/Keys/FitTrainingEffect.php:43
-#, fuzzy
 msgid "Training Effect"
-msgstr "Trening"
+msgstr "Efekt treningu"
 
 #: inc/training/search/class.SearchFormular.php:291
 #: inc/system/config/class.ConfigTabAccount.php:66
@@ -584,11 +582,12 @@ msgid "Standard calculation: As race result"
 msgstr "Wyliczenie standardowe: Jako zawody"
 
 #: inc/training/view/class.VDOTinfo.php:66
-#, fuzzy
 msgid ""
 "All traditional formulas are being used to calculate a VDOT value for a "
 "given race result."
-msgstr "Do wyliczenia VDOT zastosowane są wszystkie tradycyjne algorytmy."
+msgstr ""
+"Do wyliczenia VDOT dla zadanego wyniku biegu zastosowane są wszystkie "
+"tradycyjne algorytmy ."
 
 #: inc/training/view/class.VDOTinfo.php:92
 msgid "Correction: based on heartrate"
@@ -873,9 +872,8 @@ msgstr "Partner treningowy"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:313
 #: inc/draw/class.PlotSumData.php:597
-#, fuzzy
 msgid "Race Result"
-msgstr "Wynik"
+msgstr "Wynik zawodów"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:314
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:546
@@ -885,23 +883,20 @@ msgstr "Całkowity dystans:"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:315
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:549
-#, fuzzy
 msgid "Official time"
-msgstr "Oficjalni developerzy:"
+msgstr "Oficjalny czas"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:316
-#, fuzzy
 msgid "Place overall"
-msgstr "Cel (tempo)"
+msgstr "Miejsce ogólnie"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:317
 msgid "Place age group"
-msgstr ""
+msgstr "Miejsce w grupie wiekowej"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:318
-#, fuzzy
 msgid "Place gender"
-msgstr "Strefy tempa"
+msgstr "Miejsce (płeć)"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:339
 #, php-format
@@ -988,7 +983,7 @@ msgstr "Interwały R-R"
 
 #: inc/training/view/section/class.SectionHRVRow.php:31
 msgid "Successive differences"
-msgstr ""
+msgstr "Kolejne różnice"
 
 #: inc/training/view/section/class.SectionHRVRow.php:32
 msgid "Poincaré plot"
@@ -1003,7 +998,7 @@ msgstr "Interwał R-R"
 
 #: inc/training/view/section/class.SectionHRVRow.php:52
 msgid "Anomalies"
-msgstr ""
+msgstr "Anomalia"
 
 #: inc/training/view/section/class.SectionOverview.php:17
 msgid "Overview"
@@ -1195,17 +1190,15 @@ msgstr "Zmień na publiczny"
 
 #: inc/training/view/class.TrainingView.php:115
 msgid "Edit race result"
-msgstr ""
+msgstr "Edytuj wynik zawodów"
 
 #: inc/training/view/class.TrainingView.php:117
-#, fuzzy
 msgid "Add race result"
-msgstr "Najlepszy wynik"
+msgstr "Dodaj wynik zawódów"
 
 #: inc/training/view/class.TrainingView.php:121
-#, fuzzy
 msgid "Edit activity"
-msgstr "Pierwszy trening:"
+msgstr "Edytuj trening"
 
 #: inc/training/view/class.TrainingView.php:124
 #: inc/core/Dataset/Keys/Setting.php:103
@@ -1437,9 +1430,8 @@ msgid ""
 msgstr ""
 
 #: inc/training/class.TrainingFormular.php:237
-#, fuzzy
 msgid "Race result"
-msgstr "Wynik"
+msgstr "Wynik zawodów"
 
 #: inc/training/class.TrainingFormular.php:325
 msgid "Choose tags"
