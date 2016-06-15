@@ -516,9 +516,11 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	/**
 	 * RaceResult Formular
 	 */
-	 public function raceResultForm($id) {
-	 	$Factory = Runalyze\Context::Factory();
-	 	$RaceResult = $Factory->raceresult($id);
+	public function raceResultForm($id) {
+		$Factory = Runalyze\Context::Factory();
+		$RaceResult = $Factory->raceresult($id);
+		$Activity = $Factory->activity($id);
+		$ActivityView = new Dataview($Activity);
 
 		if (isset($_GET['delete'])) {
 			$this->deleteRaceResult($RaceResult);
@@ -538,19 +540,21 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 			$FieldsetDetails = new FormularFieldset( __('Details') );
 
 			$FieldName = new FormularInput('name', __('Event').' '.Ajax::tooltip('<i class="fa fa-fw fa-question-circle"></i>', __('If you participate in an event multiple times you should always enter the same name, i.e. don\'t append the event\'s number or year.')), $RaceResult->name()); 
-			$FieldName->setLayout( FormularFieldset::$LAYOUT_FIELD_W50 );
 			$FieldName->setSize( FormularInput::$SIZE_MIDDLE);
 	
 			$FieldOfficiallyMeasured = new FormularCheckbox('officially_measured', __('Officially measured').' '.Ajax::tooltip('<i class="fa fa-fw fa-question-circle"></i>', __('Was the course officially measured?')), $RaceResult->officiallyMeasured() );
-			$FieldOfficiallyMeasured->setLayout( FormularFieldset::$LAYOUT_FIELD_W50 );
-			
+
 			$FieldOfficialDistance = new FormularInput('official_distance', __('Official distance').' '.Ajax::tooltip('<i class="fa fa-fw fa-question-circle"></i>', __('We use two decimals for convenient reasons.').'<br>'.__('Marathon').': 42.20 km<br>'.__('Half marathon').': 21.10 km'), str_replace(',', '.', (new Distance($RaceResult->officialDistance()))->stringKilometer(false, 2)));
-			$FieldOfficialDistance->setLayout( FormularFieldset::$LAYOUT_FIELD_W50 );
 			$FieldOfficialDistance->setUnit(FormularUnit::$KM);
 			$FieldOfficialTime = new FormularInput('official_time', __('Official time'), Duration::format($RaceResult->officialTime()) );
-			$FieldOfficialTime->setLayout( FormularFieldset::$LAYOUT_FIELD_W50 );
-	
+
 			$FieldsetDetails->addFields(array($FieldName, $FieldOfficiallyMeasured, $FieldOfficialDistance, $FieldOfficialTime) );
+			$FieldsetDetails->setLayoutForFields(FormularFieldset::$LAYOUT_FIELD_W50);
+			$FieldsetDetails->addFileBlock(
+				__('This race result is linked to the following activity').': '.
+				$ActivityView->date().', '.$ActivityView->titleWithComment().
+				' ('.$ActivityView->distance(2).' / '.$ActivityView->duration()->string().')'
+			);
 	
 			$FieldsetDetails->setLayoutForFields( FormularFieldset::$LAYOUT_FIELD_W100);
 			$FieldsetPlacement = new FormularFieldset( __('Placement') );
