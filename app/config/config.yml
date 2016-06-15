@@ -5,6 +5,7 @@ imports:
 framework:
   secret: ThisTokenIsNotSoSecretChangeIt
   session: ~
+  csrf_protection: true
   assets: ~
   templating:
     engines: ['twig']
@@ -69,7 +70,7 @@ monolog:
     handlers:
         applog:
             type: stream
-            path: /var/logs/symfony.log
+            path: var/logs/symfony.log
             level: error
         main:
             type: fingers_crossed

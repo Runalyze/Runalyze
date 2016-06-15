@@ -74,8 +74,7 @@ class Frontend {
 		define('FRONTEND_PATH', dirname(__FILE__).'/');
 
 		$this->setAutoloader();
-                
-                
+		
 		$this->initCache();
 		$this->initErrorHandling();
 		$this->initDatabase();
@@ -164,7 +163,7 @@ class Frontend {
 	 */
 	protected function initSessionAccountHandler() {
 		new SessionAccountHandler();
-		if ($this->symfonyUser->getToken()->getUser() != 'anon.') {
+		if (!is_null($this->symfonyUser) && $this->symfonyUser->getToken()->getUser() != 'anon.') {
 		    $user = $this->symfonyUser->getToken()->getUser();
 
 		    SessionAccountHandler::setAccount(array(
@@ -185,19 +184,10 @@ class Frontend {
 	}
 
 	/**
-	 * Set correct character encoding 
-	 */
-	final public function setEncoding() {
-		header('Content-type: text/html; charset=utf-8');
-		mb_internal_encoding("UTF-8");
-	}
-
-	/**
 	 * Display the HTML-Header
 	 */
 	public function displayHeader() {
-		$this->setEncoding();
-
+	    
 		if (!Request::isAjax() && !isset($_GET['hideHtmlHeader']))
 			include 'tpl/tpl.Frontend.header.php';
 

@@ -9,6 +9,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use SessionAccountHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
 
 /**
  * Class DefaultController
@@ -94,6 +96,9 @@ class DefaultController extends Controller
      */
     public function loginAction()
     {
+	if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+	    return $this->redirect($this->generateUrl('dashboard'));
+	}
 	$authenticationUtils = $this->get('security.authentication_utils');
 
 	$error = $authenticationUtils->getLastAuthenticationError();
@@ -177,7 +182,8 @@ class DefaultController extends Controller
      */
     public function adminAction()
     {
-        return $this->includeOldScript('../admin.php', false);
+	$Frontend = new \Frontend(true);
+	return new Response($Frontend->displayAdminView());
     }
     
     /**
