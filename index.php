@@ -67,13 +67,24 @@ $Frontend = new Frontend();
 					$Context = new Context(Request::sendId(), SessionAccountHandler::getId());
 					$View = new TrainingView($Context);
 					$View->display();
-				} elseif (isset($_GET['pluginid'])) {
-					$Factory->newInstanceFor((int)$_GET['pluginid'])->display();
 				} else {
-					if (empty($Stats)) {
-						echo __('<em>There are no statistics available. Activate a plugin in your configuration.</em>');
-					} else {
-						$Factory->newInstance($Stats[0])->display();
+					$showFirstPlugin = true;
+
+					if (isset($_GET['pluginid'])) {
+						$Plugin = $Factory->newInstanceFor((int)$_GET['pluginid']);
+
+						if (!$Plugin->isInActive()) {
+							$showFirstPlugin = false;
+							$Plugin->display();
+						}
+					}
+
+					if ($showFirstPlugin) {
+						if (empty($Stats)) {
+							echo __('<em>There are no statistics available. Activate a plugin in your configuration.</em>');
+						} else {
+							$Factory->newInstance($Stats[0])->display();
+						}
 					}
 				}
 				?>
