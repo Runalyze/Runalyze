@@ -123,7 +123,10 @@ class Prognose_PrognosisWindow {
 			$_POST['second-best-result-km'] = !empty($TopResults) ? $TopResults[1]['distance'] : '10.0';
 			$_POST['second-best-result-time'] = !empty($TopResults) ? Duration::format($TopResults[1]['s']) : '1:00:00';
 		} else {
-			list($_POST['best-result-km'], $_POST['second-best-result-km']) = $this->distanceValuesToKm([$_POST['best-result-km'], $_POST['second-best-result-km']]);
+			list($_POST['best-result-km'], $_POST['second-best-result-km']) = $this->distanceValuesToKm([
+				str_replace(',', '.', $_POST['best-result-km']),
+				str_replace(',', '.', $_POST['second-best-result-km'])
+			]);
 		}
 
 		$this->InfoLines['jack-daniels']  = __('Your current VDOT:').' '.$CurrentShape.'. ';
@@ -261,10 +264,10 @@ class Prognose_PrognosisWindow {
 
 			$this->Prognoses[] = array(
 				'distance'	=> (new Distance($km))->stringAuto(),
-				'prognosis'		=> Duration::format($Prognosis),
+				'prognosis'		=> $Prognosis > 0 ? Duration::format($Prognosis) : '-',
 				'prognosis-pace'=> $PacePrognosis->valueWithAppendix(),
-				'prognosis-vdot'=> $VDOTprognosis->uncorrectedValue(),
-				'diff'			=> !$PB->exists()? '-' : ($PB->seconds()>$Prognosis?'+ ':'- ').Duration::format(abs(round($PB->seconds()-$Prognosis))),
+				'prognosis-vdot'=> $Prognosis > 0 ? $VDOTprognosis->uncorrectedValue() : '-',
+				'diff'			=> !$PB->exists() || $Prognosis == 0 ? '-' : ($PB->seconds()>$Prognosis?'+ ':'- ').Duration::format(abs(round($PB->seconds()-$Prognosis))),
 				'diff-class'	=> $PB->seconds() > $Prognosis ? 'plus' : 'minus',
 				'pb'			=> $PB->seconds() > 0 ? Duration::format($PB->seconds()) : '-',
 				'pb-pace'		=> $PB->seconds() > 0 ? $PacePB->valueWithAppendix() : '-',
@@ -340,17 +343,38 @@ class Prognose_PrognosisWindow {
 		$this->ResultTable .= '</tbody></table>';
 
 		if ($_POST['model'] == 'robert-bock' && $this->PrognosisStrategies['robert-bock'] instanceof Prognosis\Bock) {
-			$K = $this->PrognosisStrategies['robert-bock']->getK();
-			$e = $this->PrognosisStrategies['robert-bock']->getE();
-			$this->ResultTable .= HTML::info( sprintf( __('The results give the constants K = %f and e = %f.'), $K, $e) ).'<br>';
+			$this->addHintsForRobertBock($this->PrognosisStrategies['robert-bock']);
+		} elseif ($_POST['model'] == 'jack-daniels' && $this->PrognosisStrategies['jack-daniels'] instanceof Prognosis\Daniels) {
+			$this->addHintsForJackDaniels($this->PrognosisStrategies['jack-daniels']);
+		}
+	}
 
-			if (!$this->PrognosisObject->isValid()) {
-				$this->ResultTable .= HTML::warning(sprintf(
-					__('K must be between %u and %u, e between %f and %f.'),
-					Prognosis\Bock::K_LOWER_BOUND, Prognosis\Bock::K_UPPER_BOUND,
-					Prognosis\Bock::E_LOWER_BOUND, Prognosis\Bock::E_UPPER_BOUND
-				));
-			}
+	/**
+	 * Add hints for model: Robert Bock
+	 * @param \Runalyze\Calculation\Prognosis\Bock $strategy
+	 */
+	protected function addHintsForRobertBock(Prognosis\Bock $strategy) {
+		$this->ResultTable .= HTML::info( sprintf( __('The results give the constants K = %f and e = %f.'), $strategy->getK(), $strategy->getE()) ).'<br>';
+
+		if (!$this->PrognosisObject->isValid()) {
+			$this->ResultTable .= HTML::warning(sprintf(
+				__('K must be between %u and %u, e between %f and %f.'),
+				Prognosis\Bock::K_LOWER_BOUND, Prognosis\Bock::K_UPPER_BOUND,
+				Prognosis\Bock::E_LOWER_BOUND, Prognosis\Bock::E_UPPER_BOUND
+			));
+		}
+	}
+
+	/**
+	 * Add hints for model: Jack Daniels
+	 * @param \Runalyze\Calculation\Prognosis\Daniels $strategy
+	 */
+	protected function addHintsForJackDaniels(Prognosis\Daniels $strategy) {
+		if (!$this->PrognosisObject->isValid()) {
+			$this->ResultTable .= HTML::warning(sprintf(
+				__('VDOT must be between %u and %u.'),
+				VDOT::REASONABLE_MINIMUM, VDOT::REASONABLE_MAXIMUM
+			));
 		}
 	}
 
