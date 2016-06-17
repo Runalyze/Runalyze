@@ -29,6 +29,18 @@ class VDOT {
 	const METHOD_LINEAR = 1;
 
 	/**
+	 * Values below are considered invalid
+	 * @var int
+	 */
+	const REASONABLE_MINIMUM = 15;
+
+	/**
+	 * Values above are considered invalid
+	 * @var int
+	 */
+	const REASONABLE_MAXIMUM = 90;
+
+	/**
 	 * Precision
 	 * @var int
 	 */
