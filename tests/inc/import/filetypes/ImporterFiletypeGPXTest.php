@@ -122,7 +122,7 @@ class ImporterFiletypeGPXTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals('2013-09-29 11:36', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
 		$this->assertEquals(120, $this->object->object()->getTimezoneOffset());
 
-		$this->assertEquals( 113, $this->object->object()->getPulseAvg() );
+		$this->assertEquals( 112, $this->object->object()->getPulseAvg() );
 		$this->assertEquals( 132, $this->object->object()->getPulseMax() );
 		$this->assertTrue( $this->object->object()->hasArrayHeartrate() );
 	}
@@ -141,7 +141,7 @@ class ImporterFiletypeGPXTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals('2014-07-01 10:18', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
 		$this->assertEquals(120, $this->object->object()->getTimezoneOffset());
 
-		$this->assertEquals( 105, $this->object->object()->getPulseAvg() );
+		$this->assertEquals( 106, $this->object->object()->getPulseAvg() );
 		$this->assertEquals( 128, $this->object->object()->getPulseMax() );
 		$this->assertTrue( $this->object->object()->hasArrayHeartrate() );
 	}
@@ -218,7 +218,7 @@ class ImporterFiletypeGPXTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals(60, $this->object->object()->getTimezoneOffset());
 
 		$this->assertTrue($this->object->object()->hasArrayCadence());
-		$this->assertEquals(89, $this->object->object()->getCadence());
+		$this->assertEquals(87, $this->object->object()->getCadence());
 	}
 
 }

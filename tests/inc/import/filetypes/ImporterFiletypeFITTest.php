@@ -237,7 +237,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertEquals( 60 + 69, $this->object->object()->getElapsedTime() );
 			$this->assertTrue( $this->object->object()->hasElapsedTime() );
 
-			$this->assertEquals( 72, $this->object->object()->getPulseAvg() );
+			$this->assertEquals( 70, $this->object->object()->getPulseAvg() );
 			$this->assertEquals( 100, $this->object->object()->getPulseMax() );
 
 			$Pauses = $this->object->object()->Pauses();
@@ -344,7 +344,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertEquals('fr910xt', $this->object->object()->getCreator());
 			$this->assertEquals(0, $this->object->object()->getPoolLength());
 			$this->assertEquals(424, $this->object->object()->getTotalStrokes());
-			$this->assertEquals(27, $this->object->object()->getCadence());
+			$this->assertEquals(25, $this->object->object()->getCadence());
 
 			$this->assertEquals(1007, $this->object->object()->getTimeInSeconds());
 			$this->assertEquals(1007, $this->object->object()->getElapsedTime());
