@@ -137,8 +137,10 @@ class Calculator {
 	 * @return int
 	 */
 	public function calculateJDintensity() {
-		JD\Intensity::setVDOTshape(Configuration::Data()->vdot());
-		JD\Intensity::setHRmax(Configuration::Data()->HRmax());
+		$ConfigurationData = Configuration::Data();
+
+		JD\Intensity::setVDOTshape($ConfigurationData->vdot());
+		JD\Intensity::setHRmax($ConfigurationData->HRmax());
 
 		$Intensity = new JD\Intensity();
 
@@ -151,8 +153,16 @@ class Calculator {
 			);
 		} elseif ($this->Activity->hrAvg() > 0) {
 			return $Intensity->calculateByHeartrateAverage($this->Activity->hrAvg(), $this->Activity->duration());
-		} else {
+		} elseif ($ConfigurationData->vdot() > 0) {
 			return $Intensity->calculateByPace($this->Activity->distance(), $this->Activity->duration());
+		} else {
+			if ($this->Activity->typeid() > 0) {
+				$hr = Context::Factory()->type($this->Activity->typeid())->hrAvg();
+			} else {
+				$hr = Context::Factory()->sport($this->Activity->sportid())->avgHR();
+			}
+
+			return $Intensity->calculateByHeartrateAverage($hr, $this->Activity->duration());
 		}
 	}
 
