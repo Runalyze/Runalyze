@@ -223,6 +223,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$SecondSession = $this->object->object(1);
 			$this->assertEquals('23.05.2015 14:31:29', LocalTime::date('d.m.Y H:i:s', $SecondSession->getTimestamp()));
 			$this->assertEquals(1001, $SecondSession->getTimeInSeconds());
+			$this->assertEquals(1001, $SecondSession->getArrayTimeLastPoint(), '', 5);
 			$this->assertEquals(1118, $SecondSession->getElapsedTime());
 			$this->assertEquals(3.746, $SecondSession->getDistance());
 		}
@@ -365,7 +366,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 		}
 	}
 
-	/*
+	/**
 	 * Test: hrv
 	 * Filename: "HRV-example.fit"
 	 */
@@ -395,7 +396,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 		}
 	}
 
-	/*
+	/**
 	 * Test: with power data
 	 * Filename: "with-power.fit"
 	 */
@@ -424,7 +425,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 		}
 	}
 
-	/*
+	/**
 	 * Test: multisport session from fenix 3
 	 * Filename: "multisport-triathlon-fenix3.fit"
 	 */
@@ -453,12 +454,14 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertEquals(120, $Transition1->getTimezoneOffset());
 			$this->assertEquals(0.367, $Transition1->getDistance());
 			$this->assertEquals(165, $Transition1->getTimeInSeconds());
+			$this->assertEquals(165, $Transition1->getArrayTimeLastPoint(), '', 5);
 
 			$Cycling = $this->object->object(2);
 			$this->assertEquals('09.08.2015 09:51:35', LocalTime::date('d.m.Y H:i:s', $Cycling->getTimestamp()));
 			$this->assertEquals(120, $Cycling->getTimezoneOffset());
 			$this->assertEquals(40.261, $Cycling->getDistance());
 			$this->assertEquals(4455, $Cycling->getTimeInSeconds());
+			$this->assertEquals(4455, $Cycling->getArrayTimeLastPoint(), '', 5);
 			$this->assertTrue($Cycling->hasArrayDistance());
 			$this->assertFalse($Cycling->hasArrayCadence());
 			$this->assertTrue($Cycling->hasArrayHeartrate());
@@ -471,12 +474,14 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertEquals(120, $Transition2->getTimezoneOffset());
 			$this->assertEquals(0.419, $Transition2->getDistance());
 			$this->assertEquals(109, $Transition2->getTimeInSeconds());
+			$this->assertEquals(109, $Transition2->getArrayTimeLastPoint(), '', 5);
 
 			$Running = $this->object->object(4);
 			$this->assertEquals('09.08.2015 11:07:41', LocalTime::date('d.m.Y H:i:s', $Running->getTimestamp()));
 			$this->assertEquals(120, $Running->getTimezoneOffset());
 			$this->assertEquals(9.317, $Running->getDistance());
 			$this->assertEquals(2381, $Running->getTimeInSeconds());
+			$this->assertEquals(2381, $Running->getArrayTimeLastPoint(), '', 5);
 			$this->assertTrue($Running->hasArrayDistance());
 			$this->assertTrue($Running->hasArrayCadence());
 			$this->assertTrue($Running->hasArrayHeartrate());
@@ -486,7 +491,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 		}
 	}
 
-	/*
+	/**
 	 * Test: 'stop' instead of 'stop_all' in file from osynce
 	 * Filename: "osynce-stop-bug.fit"
 	 */

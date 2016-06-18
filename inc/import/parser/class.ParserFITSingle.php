@@ -95,7 +95,10 @@ class ParserFITSingle extends ParserAbstractSingle {
 		$this->TrainingObject->setCreatorDetails($creatorDetails);
 
 		$this->isPaused = false;
+		$this->wasPaused = false;
 		$this->isSwimming = false;
+		$this->PauseInSeconds = 0;
+		$this->lastStopTimestamp = false;
 
 		foreach (array_keys($this->gps) as $key) {
 			$this->gps[$key] = array();
