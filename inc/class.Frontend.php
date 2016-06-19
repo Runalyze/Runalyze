@@ -7,6 +7,8 @@
 use Runalyze\Configuration;
 use Runalyze\Error;
 use Runalyze\Timezone;
+use Symfony\Component\Yaml\Yaml;
+
 
 /**
  * Frontend class for setting up everything
@@ -37,6 +39,12 @@ class Frontend {
 	 * @var string
 	 */
 	protected $adminPassAsMD5 = '';
+	
+	/**
+	 * Yaml Configuration
+	 * @var array
+	 */
+	protected $yamlConfig = array();
 
 	/**
 	 * Constructor
@@ -50,7 +58,6 @@ class Frontend {
 		$this->symfonyUser = $symfonyUser;
 		$this->initSystem();
 		$this->defineConsts();
-		$this->checkConfigFile();
 
 		if (!$hideHeaderAndFooter)
 			$this->displayHeader();
@@ -77,6 +84,7 @@ class Frontend {
 		
 		$this->initCache();
 		$this->initErrorHandling();
+		$this->initConfig();
 		$this->initDatabase();
 		$this->initSessionAccountHandler();
 		$this->initTimezone();
@@ -88,6 +96,35 @@ class Frontend {
 	 */
 	private function setAutoloader() {
 		require_once FRONTEND_PATH.'../vendor/autoload.php';
+	}
+	
+	/**
+	 * Setup config
+	 */
+	private function initConfig() {
+	    $config = Yaml::parse(file_get_contents('../data/config.yml'))['parameters'];
+	    $this->yamlConfig = $config;
+	    define('RUNALYZE_DEBUG', $config['runalyze_debug']);
+	    define('USER_MUST_LOGIN', $config['user_must_login']);
+	    define('USER_CANT_LOGIN', $config['user_cant_login']);
+	    define('USER_CAN_REGISTER', $config['user_can_register']);
+	    define('GARMIN_API_KEY', $config['garmin_api_key']);
+	    define('OPENWEATHERMAP_API_KEY', $config['openweathermap_api_key']);
+	    define('NOKIA_HERE_APPID', $config['nokia_here_appid']);
+	    define('NOKIA_HERE_TOKEN', $config['nokia_here_token']);
+	    define('SMTP_HOST', $config['smtp_host']);
+	    define('SMTP_PORT', $config['smtp_port']);
+	    define('SMTP_SECURITY', $config['smtp_security']);
+	    define('SMTP_USERNAME', $config['smtp_username']);
+	    define('SMTP_PASSWORD', $config['smtp_password']);
+	    define('MAIL_NAME', $config['mail_name']);
+	    define('MAIL_SENDER', $config['mail_sender']);
+	    define('PERL_PATH', $config['perl_path']);
+	    define('TTBIN_PATH', $config['runalyze_debug']);
+	    define('GEONAMES_USERNAME', $config['runalyze_debug']);
+	    define('USER_DISABLE_ACCOUNT_ACTIVATION', $config['user_disable_account_activation']);
+	    define('SQLITE_MOD_SPATIALITE', $config['sqlite_mod_spatialite']);
+
 	}
 	
 	/**
@@ -125,13 +162,6 @@ class Frontend {
 	}
 
 	/**
-	 * Check and update if needed config file
-	 */
-	private function checkConfigFile() {
-		AdminView::checkAndUpdateConfigFile();
-	}
-
-	/**
 	 * Include class::Error and and initialise it
 	 */
 	protected function initErrorHandling() {
@@ -142,12 +172,10 @@ class Frontend {
 	 * Connect to database
 	 */
 	private function initDatabase() {
-		require_once FRONTEND_PATH.'../data/config.php';
-
-		$this->adminPassAsMD5 = md5($password);
-
-		DB::connect($host, $port, $username, $password, $database);
-		unset($host, $port, $username, $password, $database);
+		$config = $this->yamlConfig;
+		$this->adminPassAsMD5 = md5($config['database_password']);
+		define('PREFIX', $config['database_prefix']);
+		DB::connect($config['database_host'], $config['database_port'], $config['database_user'], $config['database_password'], $config['database_name']);
 	}
 
 	/**

@@ -16,6 +16,7 @@ build/yuicompressor-*
 web/assets/v2.x/img/backgrounds/My-*
 *.xcf
 data/config.php
+data/config.yml
 data/timezone.sqlite
 *.mo
 inc/locale/*.po

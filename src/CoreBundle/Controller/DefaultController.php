@@ -54,7 +54,7 @@ class DefaultController extends Controller
     {
         new \Frontend(true, $this->get('security.token_storage'));
 
-        if (!USER_CAN_REGISTER) {
+        if (!USER_CAN_REGISTER || $this->getParameter('user_cant_login')) {
             return $this->render('register/disabled.html.twig');
         }
 
@@ -105,8 +105,7 @@ class DefaultController extends Controller
 
 	$lastUsername = $authenticationUtils->getLastUsername();
         new \Frontend(true, $this->get('security.token_storage'));
-
-        if (USER_CANT_LOGIN) {
+        if ($this->getParameter('user_cant_login')) {
             return $this->render('login/maintenance.html.twig');
         }
 
@@ -132,9 +131,6 @@ class DefaultController extends Controller
      */
     public function logoutAction()
     {
-        new \Frontend();
-        SessionAccountHandler::logout();
-
         return $this->redirectToRoute('login');
     }
 

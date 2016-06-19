@@ -34,10 +34,6 @@ class SessionAccountHandler {
 	 *   because some of them need database-connection
 	 */
 	public function __construct() {
-		if (USER_CANT_LOGIN) {
-			self::logout();
-			$this->forwardToLoginPage();
-		}
 	}
 
 	/**
@@ -57,7 +53,7 @@ class SessionAccountHandler {
 	 * @return boolean 
 	 */
 	private function tryToUseSession() {
-	    //Set Language::setLanguage($Account['language'], false); anywhere else
+		Language::setLanguage($Account['language'], false);
 
 		return false;
 	}
@@ -106,8 +102,6 @@ class SessionAccountHandler {
 	private function setSessionValues() {
 		session_regenerate_id();
 
-		$_SESSION['username']  = self::$Account['username'];
-		$_SESSION['accountid'] = self::$Account['id'];
 	}
         
 
@@ -117,17 +111,6 @@ class SessionAccountHandler {
 	private function setSessionToDatabase() {
 	    //lastlogin has to be updated by symfony
 	    //remove autologin hash from database
-	}
-
-	/**
-	 * Logout 
-	 */
-	public static function logout() {
-		DB::getInstance()->update('account', self::getId(), 'session_id', null);
-		session_destroy();
-		unset($_SESSION);
-
-		setcookie('test', false);
 	}
 
 	/**
@@ -142,14 +125,6 @@ class SessionAccountHandler {
 
 		if (SharedLinker::isOnSharedPage()) {
 			return SharedLinker::getUserId();
-		}
-
-		if (!isset(self::$Account['id'])) {
-			if (isset($_SESSION['accountid'])) {
-				return $_SESSION['accountid'];
-			}
-
-			return null;
 		}
 
 		return self::$Account['id'];

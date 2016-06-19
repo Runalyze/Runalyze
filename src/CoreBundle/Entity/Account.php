@@ -571,7 +571,8 @@ class Account implements AdvancedUserInterface, \Serializable
             $this->username,
             $this->password,
             $this->salt,
-	    $this->activationHash
+	    $this->activationHash,
+	    $this->language
         ));
     }
 
@@ -584,6 +585,7 @@ class Account implements AdvancedUserInterface, \Serializable
             $this->password,
             $this->salt,
 	    $this->activationHash,
+	    $this->language
         ) = unserialize($serialized);
     }
     

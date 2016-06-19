@@ -1,6 +1,8 @@
 imports:
   - { resource: languages.yml }
   - { resource: security.yml }
+  - { resource: localconfig.yml }
+  - { resource: ../../data/config.yml }
 
 framework:
   secret: ThisTokenIsNotSoSecretChangeIt
@@ -16,14 +18,6 @@ framework:
     
 parameters:
   RUNALYZE_VERSION: 2.7.0-dev
-  locale:     en
-  database_host:     127.0.0.1
-  database_prefix:   runalyze_
-  database_port:     ~
-  database_name:     runalyze
-  database_user:     root
-  database_password: ~
-  secret: ThisTokenIsNotSoSecretChangeIt
    
 services:
   app.locale_listener:
@@ -58,6 +52,7 @@ doctrine:
                 user:     "%database_user%"
                 password: "%database_password%"
                 charset:  UTF8
+                options: {1002: "SET time_zone = '+00:00'"}
                 mapping_types:
                     enum:   string
                     

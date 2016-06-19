@@ -1,4 +1,6 @@
 <?php
+use Symfony\Component\Yaml\Yaml;
+
 /**
  * This file contains class::Installer
  * @package Runalyze\Install
@@ -13,7 +15,7 @@ class Installer {
 	 * Required PHP-version
 	 * @var string
 	 */
-	const REQUIRED_PHP_VERSION = '5.4.0';
+	const REQUIRED_PHP_VERSION = '5.5.9';
 
 	/**
 	* Required MYSQL-version
@@ -315,25 +317,19 @@ class Installer {
 	 */
 	protected function writeConfigFile() {
 		$config = array();
-		$config['host']      = $_POST['host'];
-		$config['port']      = $_POST['port'];
-		$config['database']  = $_POST['database'];
-		$config['username']  = $_POST['username'];
-		$config['password']  = $_POST['password'];
-		$config['prefix']    = $_POST['prefix'];
-		$config['garminkey'] = $_POST['garminkey'];
-		$config['sendermail'] = $_POST['sendermail'];
+		$config['database_host']      = $_POST['database_host'];
+		$config['database_port']      = $_POST['database_port'];
+		$config['database_name']  = $_POST['database_name'];
+		$config['database_user']  = $_POST['database_user'];
+		$config['database_password']  = $_POST['database_password'];
+		$config['database_prefix']    = $_POST['database_prefix'];
+		$config['garmin_api_key'] = $_POST['garmin_api_key'];
+		$config['mail_sender'] = $_POST['mail_sender'];
 		
-		$file_string = @file_get_contents(PATH.'install/config.php');
+		//TODO 
 
-		if ($file_string === false)
-			return;
 
-		$file_string = preg_replace_callback('/{config::([^}]*)}/i', function($result) use ($config) {
-			return (isset($config[$result[1]])) ? $config[$result[1]] : $result[0];
-		}, $file_string);
-
-		@file_put_contents(PATH.'../data/config.php', $file_string);
+		@file_put_contents(PATH.'../data/config.yml', $file_string);
 
 		$this->writeConfigFileString = $file_string;
 	}

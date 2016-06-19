@@ -1,0 +1,28 @@
+parameters:
+  locale:
+  database_host: 
+  database_prefix:
+  database_port:
+  database_name:
+  database_user:
+  database_password:
+  secret:
+  user_can_register: true
+  user_cant_login: false
+  user_disable_account_activation: false
+  runalyze_debug:
+  garmin_api_key:
+  openweathermap_api_key:
+  nokia_here_appid:
+  nokia_here_token:
+  geonames_username:
+  perl_path:
+  ttbin_path:
+  sqlite_mod_spatialite:
+  mail_sender:
+  mail_name:
+  smtp_host:
+  smtp_port:
+  smtp_security:
+  smtp_username:
+  smtp_password: 

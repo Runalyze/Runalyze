@@ -1,4 +1,6 @@
 <?php
+use Symfony\Component\Yaml\Yaml;
+
 /**
  * This file contains class::AdminView
  * @package Runalyze\Frontend
@@ -154,29 +156,29 @@ class AdminView {
 		FormularInput::setStandardSize( FormularInput::$SIZE_MIDDLE );
 
 		$Fieldset = new FormularFieldset( __('Settings') );
-		$Fieldset->addField( new FormularCheckbox('USER_CANT_LOGIN', __('Maintenance mode')) );
-		$Fieldset->addField( new FormularCheckbox('USER_CAN_REGISTER', __('Users can register')) );
-		$Fieldset->addField( new FormularCheckbox('USER_DISABLE_ACCOUNT_ACTIVATION', __('Users don\'t need to activate their account')) );
-		$Fieldset->addField( new FormularInput('GARMIN_API_KEY', Ajax::tooltip(__('Garmin API-key'), __('Needed for any online-version of the Garmin Communicator<br>see http://developer.garmin.com/web-device/garmin-communicator-plugin/get-your-site-key/') )) );
-		$Fieldset->addField( new FormularInput('PERL_PATH', __('Perl Path')) );
-		$Fieldset->addField( new FormularInput('TTBIN_PATH', __('TTBIN Converter Path')) );
-		$Fieldset->addField( new FormularInput('GEONAMES_USERNAME', __('Geonames Username')) );
-		$Fieldset->addField( new FormularInput('SQLITE_MOD_SPATIALITE', __('SQLITE Spatialite Extension')) );
-                $Fieldset->addField( new FormularInput('MAIL_SENDER', __('Sender e-mail')) );
-		$Fieldset->addField( new FormularInput('MAIL_NAME', __('Sender e-mail name')) );
-		$Fieldset->addField( new FormularInput('SMTP_HOST', __('SMTP: host')) );
-		$Fieldset->addField( new FormularInput('SMTP_PORT', __('SMTP: port')) );
-		$Fieldset->addField( new FormularInput('SMTP_SECURITY', __('SMTP: encryption')) );
-		$Fieldset->addField( new FormularInput('SMTP_USERNAME', __('SMTP: username')) );
-		$Fieldset->addField( new FormularInputPassword('SMTP_PASSWORD', __('SMTP: password')) );
-		$Fieldset->addField( new FormularInput('OPENWEATHERMAP_API_KEY', Ajax::tooltip(__('OpenWeatherMap API-Key'), __('Loading weather data requires an api key, see openweathermap.org/appid'))) );
-		$Fieldset->addField( new FormularInput('NOKIA_HERE_APPID', Ajax::tooltip(__('Nokia/Here App-ID'), __('Nokia maps require an app-id/-token, see developer.here.com'))) );
-		$Fieldset->addField( new FormularInput('NOKIA_HERE_TOKEN', Ajax::tooltip(__('Nokia/Here Token'), __('Nokia maps require an app-id/-token, see developer.here.com'))) );
+		$Fieldset->addField( new FormularCheckbox('user_cant_login', __('Maintenance mode')) );
+		$Fieldset->addField( new FormularCheckbox('user_can_register', __('Users can register')) );
+		$Fieldset->addField( new FormularCheckbox('user_disable_account_activation', __('Users don\'t need to activate their account')) );
+		$Fieldset->addField( new FormularInput('garmin_api_key', Ajax::tooltip(__('Garmin API-key'), __('Needed for any online-version of the Garmin Communicator<br>see http://developer.garmin.com/web-device/garmin-communicator-plugin/get-your-site-key/') )) );
+		$Fieldset->addField( new FormularInput('perl_path', __('Perl Path')) );
+		$Fieldset->addField( new FormularInput('ttbin_path', __('TTBIN Converter Path')) );
+		$Fieldset->addField( new FormularInput('geonames_username', __('Geonames Username')) );
+		$Fieldset->addField( new FormularInput('sqlite_mod_spatialite', __('SQLITE Spatialite Extension')) );
+                $Fieldset->addField( new FormularInput('mail_sender', __('Sender e-mail')) );
+		$Fieldset->addField( new FormularInput('mail_name', __('Sender e-mail name')) );
+		$Fieldset->addField( new FormularInput('smtp_host', __('SMTP: host')) );
+		$Fieldset->addField( new FormularInput('smtp_port', __('SMTP: port')) );
+		$Fieldset->addField( new FormularInput('smtp_security', __('SMTP: encryption')) );
+		$Fieldset->addField( new FormularInput('smtp_username', __('SMTP: username')) );
+		$Fieldset->addField( new FormularInputPassword('smtp_password', __('SMTP: password')) );
+		$Fieldset->addField( new FormularInput('openweathermap_api_key', Ajax::tooltip(__('OpenWeatherMap API-Key'), __('Loading weather data requires an api key, see openweathermap.org/appid'))) );
+		$Fieldset->addField( new FormularInput('nokia_here_appid', Ajax::tooltip(__('Nokia/Here App-ID'), __('Nokia maps require an app-id/-token, see developer.here.com'))) );
+		$Fieldset->addField( new FormularInput('nokia_here_token', Ajax::tooltip(__('Nokia/Here Token'), __('Nokia maps require an app-id/-token, see developer.here.com'))) );
 		$Fieldset->addField( new FormularSubmit(__('Save'), '') );
 		$Fieldset->setLayoutForFields( FormularFieldset::$LAYOUT_FIELD_W100 );
 
-		if (!is_writable(FRONTEND_PATH.'../data/config.php')) {
-			$Fieldset->addError( __('<strong>data/config.php</strong> is not writable').', <em>(chmod = '.substr(decoct(fileperms(FRONTEND_PATH.'../data/config.php')),1).')</em> '.__('Changes can\'t be saved.') );
+		if (!is_writable(FRONTEND_PATH.'../data/config.yml')) {
+			$Fieldset->addError( __('<strong>data/config.yml</strong> is not writable').', <em>(chmod = '.substr(decoct(fileperms(FRONTEND_PATH.'../data/config.yml')),1).')</em> '.__('Changes can\'t be saved.') );
 		}
 
 		return $Fieldset;
@@ -201,43 +203,34 @@ class AdminView {
 	 * Set post data from configuration
 	 */
 	private function setPostDataFromConfig() {
-		$Variables = self::getArrayOfConfigVariables();
-
-		foreach ($Variables as $Variable)
-			$_POST[$Variable] = constant($Variable);
+		$config = Yaml::parse(file_get_contents('../data/config.yml'));
+		
+		foreach ($config['parameters'] as $key => $value)
+		    $_POST[$key] = $value;
 	}
 
 	/**
 	 * Update config file from post data
 	 */
 	private function updateConfigFileFromPost() {
-		if (!is_writable(FRONTEND_PATH.'../data/config.php'))
+		if (!is_writable(FRONTEND_PATH.'../data/config.yml'))
 			return;
 
-		$Variables     = self::getArrayOfConfigVariables();
-		$NewFile       = '';
-		$FileHandleOld = fopen( FRONTEND_PATH.'../data/config.php', 'r' );
+		$config = Yaml::parse(file_get_contents('../data/config.yml'));
 
-		while ($Line = fgets($FileHandleOld)) {
-			$Match = array();
-			preg_match("/^define\(\'(.*?)\', (.*?)\);/", $Line, $Match);
-
-			if (!empty($Match) && in_array($Match[1], $Variables)) {
-				$Value = isset($_POST[$Match[1]]) ? 'true' : 'false';
-
-				if ($Value == 'true' && $_POST[$Match[1]] != 'on')
-					$Value = '\''.$_POST[$Match[1]].'\'';
-
-				$NewFile .= 'define(\''.$Match[1].'\', '.$Value.');'.NL;
-			} else {
-				$NewFile .= $Line;
-			}
+		foreach ($this->getArrayOfConfigVariables() as $key) {
+		    switch ($_POST[$key]) {
+			case 'on':
+			    $config['parameters'][$key] = true;
+			    break;
+			default:
+			    $config['parameters'][$key] = $_POST[$key];
+		    }
 		}
 
-		fclose($FileHandleOld);
-
-		$FileHandleNew = fopen( FRONTEND_PATH.'../data/config.php', 'w' );
-		fwrite($FileHandleNew, $NewFile);
+		$yaml = Yaml::dump($config);
+		$FileHandleNew = fopen( FRONTEND_PATH.'../data/config.yml', 'w' );
+		fwrite($FileHandleNew, $yaml);
 		fclose($FileHandleNew);
 	}
 
@@ -262,12 +255,9 @@ class AdminView {
 						<th>'.__('Email').'</th>
 						<th class="{sorter: \'germandate\'}">'.__('since').'</th>
 						<th class="{sorter: \'germandate\'}">'.__('last').'</th>
-						<!--<th class="{sorter: false}">'.__('Functions').'</th>-->
 					</tr>
 				</thead>
 				<tbody>';
-						//<th class="{sorter: \'x\'}">'.__('times').'</th>
-						//<th class="{sorter: \'distance\'}">'.__('km').'</th>
 
 			foreach ($this->UserList as $User) {
 				$Code .= '
@@ -278,10 +268,7 @@ class AdminView {
 						<td class="small">'.$User['mail'].'</td>
 						<td class="small c">'.date("d.m.Y", $User['registerdate']).'</td>
 						<td class="small c">'.date("d.m.Y", $User['lastaction']).'</td>
-						<!--<td>'.__('Activate user').' - '.__('Set new password').'</td>-->
 					</tr>';
-					//<td class="small r">'.$User['num'].'x</td>
-					//<td class="small r">'.Distance::format($User['km']).'</td>
 			}
 
 			$Code .= '
@@ -446,218 +433,34 @@ class AdminView {
 
 		return $List;
 	}
-
+	
 	/**
 	 * Get array of config variables for editing
 	 * @return array
 	 */
 	public static function getArrayOfConfigVariables() {
 		return array(
-                        'USER_CANT_LOGIN',
-			'USER_CAN_REGISTER',
-			'USER_DISABLE_ACCOUNT_ACTIVATION',
-                        'PERL_PATH',
-			'TTBIN_PATH',
-			'GEONAMES_USERNAME',
-			'SQLITE_MOD_SPATIALITE',
-			'GARMIN_API_KEY',
-			'MAIL_SENDER',
-			'MAIL_NAME',
-			'OPENWEATHERMAP_API_KEY',
-			'NOKIA_HERE_APPID',
-			'NOKIA_HERE_TOKEN',
-			'SMTP_HOST',
-			'SMTP_PORT',
-			'SMTP_SECURITY',
-			'SMTP_USERNAME',
-			'SMTP_PASSWORD'
+		    'user_can_register',
+		    'user_cant_login',
+		    'user_disable_account_activation',
+		    'runalyze_debug',
+		    'garmin_api_key',
+		    'openweathermap_api_key',
+		    'nokia_here_appid',
+		    'nokia_here_token',
+		    'geonames_username',
+		    'perl_path',
+		    'ttbin_path',
+		    'sqlite_mod_spatialite',
+		    'mail_sender',
+		    'mail_name',
+		    'smtp_host',
+		    'smtp_port',
+		    'smtp_security',
+		    'smtp_username',
+		    'smtp_password',
 		);
 	}
 
-	/**
-	 * Check for missing variables in config file and update if needed
-	 */
-	public static function checkAndUpdateConfigFile() {
-		$Variables = self::getArrayOfConfigVariables();
 
-		foreach ($Variables as $Variable)
-			if (!defined($Variable))
-				self::addVariableToConfigFile($Variable);
-	}
-
-	/**
-	 * Add variable to config file
-	 * @param string $Variable
-	 */
-	private static function addVariableToConfigFile($Variable) {
-		$ConfigFile  = str_replace('?>', NL, Filesystem::openFile('../data/config.php'));
-		$ConfigFile .= self::defineAndGetConfigLinesFor($Variable);
-		$ConfigFile .= NL.'?>';
-
-		Filesystem::writeFile('../data/config.php', $ConfigFile);
-	}
-
-	/**
-	 * Get config lines for a given variable for adding to config file
-	 * @param string $Variable
-	 * @return string
-	 */
-	private static function defineAndGetConfigLinesFor($Variable) {
-		switch ($Variable) {
-			case 'USER_CANT_LOGIN':
-				define('USER_CANT_LOGIN', false);
-				return '/**
- * Working on your site? Disable login with this variable.
- * @var bool USER_CANT_LOGIN Set to disable login
- */
-define(\'USER_CANT_LOGIN\', false);';
-
-			case 'USER_CAN_REGISTER':
-				define('USER_CAN_REGISTER', false);
-				return '/**
- * Allow registration for new users
- * @var bool USER_CAN_REGISTER Set to false to close registration
- */
-define(\'USER_CAN_REGISTER\', true);';
-				
-			case 'USER_DISABLE_ACCOUNT_ACTIVATION':
-				define('USER_DISABLE_ACCOUNT_ACTIVATION', false);
-				return '/**
- * Disable account activation for new users
- * @var bool USER_DISABLE_ACCOUNT_ACTIVATION Set to true to allow registrations without account activation
- */
-define(\'USER_DISABLE_ACCOUNT_ACTIVATION\', false);';				
-
-			case 'PERL_PATH':
-				define('PERL_PATH', '/usr/bin/perl');
-				return '/**
- * Path to perl scripts
- * Relative to FRONTEND_PATH
- * @var string PERL_PATH Path for perl scripts
- */
-define(\'PERL_PATH\', \'/usr/bin/perl\');';
-				
-			case 'TTBIN_PATH':
-				define('TTBIN_PATH', FRONTEND_PATH.'../call/perl/ttbincnv');
-				return '/**
- * Path to TTBIN Converter script
- * @var string TTBIN_PATH for perl scripts
- */
-define(\'TTBIN_PATH\', FRONTEND_PATH.\'../call/perl/ttbincnv\');';	
-				
-			case 'GEONAMES_USERNAME':
-				define('GEONAMES_USERNAME', '');
-				return '/**
- * Geonames.org API username
- * @var string GEONAMES_USERNAME for geonames API username
- */
-define(\'GEONAMES_USERNAME\', \'\');';
-				
-			case 'SQLITE_MOD_SPATIALITE':
-				define('SQLITE_MOD_SPATIALITE', 'libspatialite.so.5');
-				return '/**
- * SQLITE Spatialite extension name
- * @var string SQLITE_MOD_SPATIALITE for SQLITE database (timezone offset)
- */
-define(\'SQLITE_MOD_SPATIALITE\', \'libspatialite.so.5\');';				
-                                
-			case 'GARMIN_API_KEY':
-				$APIKeyResults = DB::getInstance()->query('SELECT `value` FROM `'.PREFIX.'conf` WHERE `key`="GARMIN_API_KEY" LIMIT 1')->fetch();
-				$APIKey        = isset($APIKeyResults['value']) ? $APIKeyResults['value'] : '';
-
-				define('GARMIN_API_KEY', $APIKey);
-				return '/**
- * Garmin API key is needed for using Garmin Communicator
- * @var bool GARMIN_API_KEY Garmin API key
- * @see http://developer.garmin.com/web-device/garmin-communicator-plugin/get-your-site-key/
- */
-define(\'GARMIN_API_KEY\', \''.$APIKey.'\');';
-
-			case 'MAIL_SENDER':
-				define('MAIL_SENDER', 'mail@runalyze.de');
-				return '/**
- * Adress for sending mails to users
- * @var string MAIL_SENDER Adress for sending mails to users
- */
-define(\'MAIL_SENDER\', \'mail@runalyze.de\');';
-
-			case 'MAIL_NAME':
-				define('MAIL_NAME', 'Runalyze');
-				return '/**
- * Sender name for sending mails to users
- * @var string
- */
-define(\'MAIL_NAME\', \'Runalyze\');';
-
-			case 'OPENWEATHERMAP_API_KEY':
-				define('OPENWEATHERMAP_API_KEY', '');
-				return '/**
- * OpenWeatherMap: API key
- * @var string OPENWEATHERMAP_API_KEY api key
- * @see http://openweathermap.org/appid
- */
-define(\'OPENWEATHERMAP_API_KEY\', \'\');';
-
-			case 'NOKIA_HERE_APPID':
-				define('NOKIA_HERE_APPID', '');
-				return '/**
- * App-ID for Nokia/Here maps in Leaflet
- * @var string
- * @see https://developer.here.com
- */
-define(\'NOKIA_HERE_APPID\', \'\');';
-
-			case 'NOKIA_HERE_TOKEN':
-				define('NOKIA_HERE_TOKEN', '');
-				return '/**
- * Token/App-Code for Nokia/Here maps in Leaflet
- * @var string
- * @see https://developer.here.com
- */
-define(\'NOKIA_HERE_TOKEN\', \'\');';
-
-			case 'SMTP_HOST':
-				define('SMTP_HOST', 'localhost');
-				return '/**
- * Define the mail sending server
- * @var string
- */
-define(\'SMTP_HOST\', \'localhost\');';
-
-			case 'SMTP_PORT':
-				define('SMTP_PORT', '25');
-				return '/**
- * Define the smtp port
- * @var string
- */
-define(\'SMTP_PORT\', \'25\');';
-
-			case 'SMTP_SECURITY':
-				define('SMTP_SECURITY', '');
-				return '/**
- * Define the smtp encryption
- * @var string
- */
-define(\'SMTP_SECURITY\', \'\');';
-
-			case 'SMTP_USERNAME':
-				define('SMTP_USERNAME', '');
-				return '/**
- * Define the auth username for the smtp server
- * @var string
- */
-define(\'SMTP_USERNAME\', \'\');';
-
-			case 'SMTP_PASSWORD':
-				define('SMTP_PASSWORD', '');
-				return '/**
- * Define the auth password for the smtp server
- * @var string
- */
-define(\'SMTP_PASSWORD\', \'\');';
-
-			default:
-				return '// Whoo! Runalyze tried to add an nonexisting configuration variable to this file. ($Variable = '.$Variable.')';
-		}
-	}
 }
