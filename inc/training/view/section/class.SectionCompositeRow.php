@@ -171,10 +171,10 @@ class SectionCompositeRow extends TrainingViewSectionRowTabbedPlot {
 	 */
 	protected function addMaximalHeartrate() {
 		if ($this->Context->activity()->hrMax() > 0) {
-			$this->BoxedValues[] = new BoxedValue($this->Context->dataview()->hrMax()->inBPM(), 'bpm', __('max.').' '.__('Heart rate'));
+			$this->BoxedValues[] = new Box\MaximalHeartRateInBPM($this->Context->dataview()->hrMax());
 
 			if ($this->Context->dataview()->hrMax()->canShowInHRmax()) {
-				$this->BoxedValues[] = new BoxedValue($this->Context->dataview()->hrMax()->inPercent(), '&#37;', __('max.').' '.__('Heart rate'));
+				$this->BoxedValues[] = new Box\MaximalHeartRateInPercent($this->Context->dataview()->hrMax());
 			}
 		}
 	}
