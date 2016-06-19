@@ -59,8 +59,13 @@ DB::getInstance()->exec('INSERT INTO `runalyze_account` (`username`,`mail`) VALU
 DB::getInstance()->exec('UPDATE `runalyze_account` SET `id`=0 WHERE `username`="zero"');
 
 // Login
-$_SESSION['accountid'] = 0;
-
+SessionAccountHandler::setAccount(array(
+	'id' => 0,
+	'username' => 'runalyze',
+	'language' => 'de',
+	'timezone' => '43',
+	'mail' => 'noreply@runalyze.com',
+));
 // Define RUNALYZE_TEST_TZ_LOOKUP
 try {
 	(new \Runalyze\Util\TimezoneLookup(false))->getTimezoneForCoordinate(13.41, 52.52);

@@ -443,7 +443,6 @@ class AdminView {
 		    'user_can_register',
 		    'user_cant_login',
 		    'user_disable_account_activation',
-		    'runalyze_debug',
 		    'garmin_api_key',
 		    'openweathermap_api_key',
 		    'nokia_here_appid',

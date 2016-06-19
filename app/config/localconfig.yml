@@ -10,7 +10,6 @@ parameters:
   user_can_register: true
   user_cant_login: false
   user_disable_account_activation: false
-  runalyze_debug:
   garmin_api_key:
   openweathermap_api_key:
   nokia_here_appid:

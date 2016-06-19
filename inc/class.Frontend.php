@@ -104,7 +104,6 @@ class Frontend {
 	private function initConfig() {
 	    $config = Yaml::parse(file_get_contents('../data/config.yml'))['parameters'];
 	    $this->yamlConfig = $config;
-	    define('RUNALYZE_DEBUG', $config['runalyze_debug']);
 	    define('USER_MUST_LOGIN', $config['user_must_login']);
 	    define('USER_CANT_LOGIN', $config['user_cant_login']);
 	    define('USER_CAN_REGISTER', $config['user_can_register']);
@@ -120,8 +119,8 @@ class Frontend {
 	    define('MAIL_NAME', $config['mail_name']);
 	    define('MAIL_SENDER', $config['mail_sender']);
 	    define('PERL_PATH', $config['perl_path']);
-	    define('TTBIN_PATH', $config['runalyze_debug']);
-	    define('GEONAMES_USERNAME', $config['runalyze_debug']);
+	    define('TTBIN_PATH', $config['ttbin_path']);
+	    define('GEONAMES_USERNAME', $config['geonames_username']);
 	    define('USER_DISABLE_ACCOUNT_ACTIVATION', $config['user_disable_account_activation']);
 	    define('SQLITE_MOD_SPATIALITE', $config['sqlite_mod_spatialite']);
 

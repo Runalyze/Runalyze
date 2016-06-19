@@ -67,7 +67,7 @@ class FrontendShared extends Frontend {
 			include 'tpl/tpl.Frontend.footer.php';
 		}
 
-		if (RUNALYZE_DEBUG && Error::getInstance()->hasErrors()) {
+		if (Error::getInstance()->hasErrors()) {
 			Error::getInstance()->display();
 		}
 
