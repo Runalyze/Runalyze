@@ -46,7 +46,7 @@ class SystemController extends Controller {
 	    $updateAvailable = true;
 	}
 	
-        return $this->render('CoreBundle:System:update.html.twig', [
+        return $this->render('system/update.html.twig', [
             'updateAvailable' => $updateAvailable
         ]);
 	
@@ -59,7 +59,7 @@ class SystemController extends Controller {
     {
 
 	
-        return $this->render('CoreBundle:System:update_start.html.twig', [
+        return $this->render('system/update_start.html.twig', [
             'updateAvailable' => $updateAvailable
         ]);
 	
