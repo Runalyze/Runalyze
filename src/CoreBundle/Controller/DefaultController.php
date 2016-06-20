@@ -166,14 +166,6 @@ class DefaultController extends Controller
     }
     
     /**
-     * @Route("/update.php", name="update")
-     */
-    public function updateAction()
-    {
-        return $this->includeOldScript('../update.php', false);
-    }
-    
-    /**
      * @Route("/admin.php")
      */
     public function adminAction()

@@ -61,12 +61,18 @@ doctrine:
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
         auto_mapping: true
+       
+doctrine_migrations:
+    dir_name: "%kernel.root_dir%/DoctrineMigrations"
+    namespace: Application\Migrations
+    table_name: migration_versions
+    name: RUNALYZE Migrations
         
 monolog:
     handlers:
         applog:
             type: stream
-            path: var/logs/symfony.log
+            path: '%kernel.root_dir%/../var/logs/symfony.log'
             level: error
         main:
             type: fingers_crossed
