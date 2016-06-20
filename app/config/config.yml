@@ -7,6 +7,7 @@ imports:
 framework:
   secret: ThisTokenIsNotSoSecretChangeIt
   session: ~
+  form: ~
   csrf_protection: true
   assets: ~
   templating:

@@ -104,10 +104,6 @@ class Frontend {
 	private function initConfig() {
 	    $config = Yaml::parse(file_get_contents('../data/config.yml'))['parameters'];
 	    $this->yamlConfig = $config;
-	    define('USER_MUST_LOGIN', $config['user_must_login']);
-	    define('USER_CANT_LOGIN', $config['user_cant_login']);
-	    define('USER_CAN_REGISTER', $config['user_can_register']);
-	    define('GARMIN_API_KEY', $config['garmin_api_key']);
 	    define('OPENWEATHERMAP_API_KEY', $config['openweathermap_api_key']);
 	    define('NOKIA_HERE_APPID', $config['nokia_here_appid']);
 	    define('NOKIA_HERE_TOKEN', $config['nokia_here_token']);

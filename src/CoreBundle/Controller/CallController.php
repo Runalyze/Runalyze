@@ -9,12 +9,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
-//use Runalyze\View\Activity\Context;
-//use Runalyze\View\Activity\Linker;
-//use Runalyze\View\Activity\Dataview;
-//use Runalyze\Model\Activity;
-//use Runalyze\View\Window\Laps\Window;
-
 require_once '../inc/class.Frontend.php';
 require_once '../inc/class.FrontendShared.php';
 require_once '../inc/class.FrontendSharedList.php';
@@ -31,8 +25,7 @@ class CallController extends Controller
     {
         $Frontend = new \Frontend(true, $this->get('security.token_storage'));
         $DataBrowser = new \DataBrowser();
-        $DataBrowser->display();
-        return new Response;
+        return new Response($DataBrowser->display());
     }
     
     /**
@@ -47,7 +40,7 @@ class CallController extends Controller
         return $this->render('CoreBundle:Upload:garminCommunicator.html.twig', array(
             'htmlBase' => \System::getFullDomain(),
             'garminAPIBase' => \Request::getProtocol().'://'.$_SERVER['HTTP_HOST'],
-            'garminAPIKey' => GARMIN_API_KEY,
+            'garminAPIKey' => $this->getParameter('garmin_api_key'),
         ));
     }
     
@@ -114,6 +107,7 @@ class CallController extends Controller
     /**
      * @Route("/call/ajax.change.Config.php")
      * @Security("has_role('ROLE_USER')")
+     * @Method({"GET"})
      */
     public function ajaxChanceConfigAction()
     {
