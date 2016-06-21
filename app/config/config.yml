@@ -64,7 +64,7 @@ doctrine:
        
 doctrine_migrations:
     dir_name: "%kernel.root_dir%/DoctrineMigrations"
-    namespace: Application\Migrations
+    namespace: Runalyze\Migrations
     table_name: migration_versions
     name: RUNALYZE Migrations
         
@@ -72,7 +72,7 @@ monolog:
     handlers:
         applog:
             type: stream
-            path: '%kernel.root_dir%/../../var/logs/symfony.log'
+            path: '%kernel.root_dir%/../var/logs/symfony.log'
             level: error
         main:
             type: fingers_crossed

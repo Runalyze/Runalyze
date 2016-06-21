@@ -39,10 +39,9 @@ class SystemController extends Controller {
         $output = new BufferedOutput();
         $application->run($input, $output);
 
-        // return the output, don't use if you used NullOutput()
         $content = $output->fetch();
 	$updateAvailable = false;
-	if (substr_count($content, 'Already at latest version') == 0) {
+	if (substr_count($content, 'Already at latest version') == 1) {
 	    $updateAvailable = true;
 	}
 	
@@ -57,10 +56,30 @@ class SystemController extends Controller {
      */
     public function updateStartAction($entity_manager = 'default')
     {
+	$kernel = $this->get('kernel');
+        $application = new Application($kernel);
+        $application->setAutoExit(false);
 
+        $input = new ArrayInput(array(
+           'command' => 'doctrine:migrations:migrate',
+           '--no-interaction',
+        ));
+        $output = new BufferedOutput();
+        $application->run($input, $output);
+
+        $content = $output->fetch();
+
+	if (strpos($content, 'Could not find any migrations to execute.') OR strpos($content, 'No migrations to execute.')) {
+	    $migrationStatus = 'uptodate';
+	} elseif (strpos($content, 'migrations executed')) {
+	    $migrationStatus = 'executed';
+	} else {
+	    $migrationStatus = false;
+	}
 	
         return $this->render('system/update_start.html.twig', [
-            'updateAvailable' => $updateAvailable
+            'migrationStatus' => $migrationStatus,
+	    'migrationDump' => $content
         ]);
 	
     }
