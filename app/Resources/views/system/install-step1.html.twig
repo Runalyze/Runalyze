@@ -1,0 +1,12 @@
+{% extends "system/base.html.twig" %}
+{% set page_title = 'RUNALYZE | Installation' %}
+            {% block content %}
+            <div class="logo"><img src="assets/images/runalyze.png" width="200" height="200"></div>
+            
+{{ form_start(form) }}
+{{ form_widget(form) }}
+{{ form_end(form) }}
+<p><em>*{% trans %}You can use a specific database prefix if you want to run multiple installations of Runalyze.{% endtrans %}</em></p>
+<p><em>**{% trans %}A Garmin API key is necessary for using Garmin Communicator (enables direct imports from some Garmin Forerunner).{% endtrans %}</em></p>
+
+            {% endblock content %}

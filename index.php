@@ -8,11 +8,6 @@
 
 use Runalyze\View\Activity\Context;
 
-if (!file_exists('../data/config.php')) {
-	include 'install.php';
-	exit();
-}
-
 include 'inc/tpl/tpl.Frontend.header.php';
 ?>
 

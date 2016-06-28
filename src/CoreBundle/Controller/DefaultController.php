@@ -158,7 +158,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/install.php", name="install")
+     * @Route("/install.php", name="installe")
      */
     public function installAction()
     {

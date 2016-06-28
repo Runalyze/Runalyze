@@ -1,12 +1,12 @@
 parameters:
-  locale:
-  database_host: 
-  database_prefix:
-  database_port:
-  database_name:
-  database_user:
+  locale: en
+  database_host: 127.0.0.1
+  database_prefix: runalyze_
+  database_port: 3306
+  database_name: runalyze
+  database_user: root
   database_password:
-  secret:
+  secret: please_change_this_secret
   user_can_register: true
   user_cant_login: false
   user_disable_account_activation: false
