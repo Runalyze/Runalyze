@@ -1,6 +1,11 @@
 {% extends "login/base.html.twig" %}
 
 {% block form %}
+<script type="text/javascript">
+$(function(){
+document.getElementById("timezone").value = moment.tz.guess();
+}); 
+</script>
     <form action="{{ path('register') }}" method="post">
         <fieldset>
             <legend>{% trans %}Create a new account{% endtrans %}</legend>
