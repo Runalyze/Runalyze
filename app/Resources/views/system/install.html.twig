@@ -4,9 +4,10 @@
             <div class="logo"><img src="assets/images/runalyze.png" width="200" height="200"></div>
             
             <div class="button-group">
-            {% if confAvailable %}
+            {% if alreadyInstalled %}
                 <a class="button" role="button">{% trans %}You have already installed RUNALYZE{% endtrans %}</a>
-                <p>{% trans %}If you want to reinstall Runalyze please delete the <em>data/config.yml-file</em> in your directory of this installation.{% endtrans %}
+                <p>{% trans %}If you want to reinstall Runalyze please copy <em>app/config/default_config.yml</em> to <em>data/config.yml-file</em> and adjust the database settings.{% endtrans %}</p>
+                <p>{% trans %}You can remove the installer by deleting <em>src/Controller/InstallController.php</em>{% endtrans %}
             {% else %}
                 <a class="button" role="button" href="{{ path('install_step1') }}">{% trans %}Click here to start the installation of RUNALYZE{% endtrans %}</a>
             {% endif %}

@@ -1,7 +1,7 @@
 imports:
   - { resource: languages.yml }
   - { resource: security.yml }
-  - { resource: localconfig.yml }
+  - { resource: default_config.yml }
   - { resource: ../../data/config.yml }
 
 framework:

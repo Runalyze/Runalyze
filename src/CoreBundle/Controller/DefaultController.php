@@ -54,7 +54,7 @@ class DefaultController extends Controller
     {
         new \Frontend(true, $this->get('security.token_storage'));
 
-        if ($this->getParameter('user_can_register') || $this->getParameter('user_cant_login')) {
+        if (!$this->getParameter('user_can_register') || $this->getParameter('user_cant_login')) {
             return $this->render('register/disabled.html.twig');
         }
 

@@ -18,76 +18,10 @@ class Installer {
 	const REQUIRED_PHP_VERSION = '5.5.9';
 
 	/**
-	* Required MYSQL-version
-	* @var string
-	*/
-	const REQUIRED_MYSQL_VERSION = '5.0.0';
-
-	/**
-	 * Step -1: Runalyze is already installed
-	 * @var int
-	 */
-	const ALREADY_INSTALLED = -1;
-
-	/**
-	 * Step 1: Start of installation
-	 * @var int
-	 */
-	const START = 1;
-
-	/**
-	 * Step 2: Set up configuration
-	 * @var int
-	 */
-	const SETUP_CONFIG = 2;
-
-	/**
-	 * Step 3: Set up database
-	 * @var int
-	 */
-	const SETUP_DATABASE = 3;
-
-	/**
-	 * Step 4: Ready to start
-	 * @var int
-	 */
-	const READY = 4;
-
-	/**
-	 * Number of total steps
-	 * @var int
-	 */
-	const NUMBER_OF_STEPS = 4;
-
-	/**
-	 * Current step of installation
-	 * @var int
-	 */
-	protected $currentStep = 1;
-
-	/**
-	 * Ready to move to next step?
-	 * @var bool
-	 */
-	protected $readyForNextStep = false;
-
-	/**
-	 * Boolean flag: connection is set but incorrect
-	 * @var bool
-	 */
-	protected $connectionIsIncorrect = false;
-
-	/**
 	 * Boolean flag: prefix is set but already used
 	 * @var bool
 	 */
-	protected $prefixIsAlreadyUsed = false;
-
-	/**
-	 * Boolean flag: writing config-file fails
-	 * @var bool
-	 */
-	protected $cantWriteConfig = false;
+	protected $isAlreadyInstalled = false;
 
 	/**
 	 * Boolean flag: filling database fails
@@ -100,238 +34,53 @@ class Installer {
 	 * @var array
 	 */
 	protected $mysqlConfig = array();
+	
+	/**
+	 * RUNALYZE database prefix
+	 */
+	protected $databasePrefix = 'runalyze_'; 
 
 	/**
-	 * String to write to config file
-	 * @var string
+	 * Doctrine object
+	 * @var \Doctrine
 	 */
-	protected $writeConfigFileString = '';
-
-	/**
-	 * PDO object
-	 * @var \PDO
-	 */
-	protected $PDO = null;
-
+	protected $Doctrine = null;
+	
 	/**
 	 * Constructor
 	 */
-	public function __construct() {
-		$this->definePath();
-		$this->initLanguage();
-		$this->loadConsts();
+	public function __construct(\Doctrine\Bundle\DoctrineBundle\Registry $doctrine, $prefix = 'runalyze_') {
+		$this->Doctrine = $doctrine;
+		$this->databasePrefix = $prefix;
+		$this->checkIfIsAlreadyInstalled();
 	}
 
 	/**
-	 * Display
+	 * Check if RUNALYZE is already installed?
 	 */
-	public function display() {
-		$this->findoutCurrentStep();
-		$this->loadConfig();
-		$this->executeCurrentStep();
-		$this->displayCurrentStep();
-	}
-
-	/**
-	* Define const PATH
-	*/
-	public function definePath() {
-		define('PATH', dirname(__FILE__).'/');
-		define('FRONTEND_PATH', dirname(__FILE__).'/');
-	}
-
-	/**
-	 * Setup Language
-	 */
-	protected function initLanguage() {
-		new \Runalyze\Language();
-	}
-
-	/**
-	 * Load consts
-	 */
-	protected function loadConsts() {
-		require_once PATH.'system/define.consts.php';
-	}
-
-	/**
-	 * Load configuration file
-	 */
-	protected function loadConfig() {
-		if (defined('PREFIX')) {
-			return true;
-		}
-
-		if (file_exists(PATH.'../data/config.php')) {
-			include PATH.'../data/config.php';
-
-			$this->mysqlConfig = array($host, $username, $password, $database, $port);
-
-			if ($this->currentStep == self::START) {
-				if ($this->databaseIsCorrect())
-					$this->currentStep = self::ALREADY_INSTALLED;
-				else
-					$this->currentStep = self::SETUP_DATABASE;
-			}
-		} else {
-			$this->mysqlConfig = array('localhost', '', '', 'runalyze', 3306);
-			return false;
-		}
-
-		return true;
-	}
-
-	/**
-	 * Findout which is the current step
-	 */
-	protected function findoutCurrentStep() {
-		if (isset($_POST['step']) && is_numeric($_POST['step']) && $_POST['step'] <= self::NUMBER_OF_STEPS)
-			$this->currentStep = $_POST['step'];
-		else
-			$this->currentStep = self::START;
-	}
-
-	/**
-	 * Execute current step of installation
-	 */
-	protected function executeCurrentStep() {
-		switch ($this->currentStep) {
-			case self::SETUP_CONFIG:
-				if (isset($_POST['write_config'])) {
-					$this->writeConfigFile();
-
-					if ($this->loadConfig())
-						$this->moveToNextStep();
-					else
-						$this->cantWriteConfig = true;
-				} else {
-					if (!$this->connectionIsSetAndCorrect())
-						$this->connectionIsIncorrect = true;
-					elseif (!$this->prefixIsUnused())
-						$this->prefixIsAlreadyUsed = true;
-					else
-						$this->readyForNextStep = true;
-				}
-				break;
-
-			case self::SETUP_DATABASE:
-				$this->importSqlFiles();
-
-				if ($this->databaseIsCorrect())
-					$this->moveToNextStep();
-				else
-					$this->cantSetupDatabase = true;
-				break;
+	public function checkIfIsAlreadyInstalled() {
+		$sql = "SHOW TABLES IN runalyze LIKE '".$this->databasePrefix."training'";
+		$em = $this->Doctrine->getManager()->getConnection();
+		$stmt = $em->prepare($sql);
+		$stmt->execute();
+		
+		if($stmt->fetch()) {
+			$this->isAlreadyInstalled = true;
 		}
 	}
-
+	
 	/**
-	 * Execute current step of installation
+	 * Is already installed?
 	 */
-	protected function displayCurrentStep() {
-		include PATH.'tpl/tpl.Installer.php';
-	}
-
-	/**
-	 * Move to the next step
-	 */
-	protected function moveToNextStep() {
-		$this->currentStep++;
-	}
-
-	/**
-	 * Is the connection to the MySql-server setup and correct?
-	 */
-	protected function connectionIsSetAndCorrect() {
-		if (!isset($_POST['database']))
-			return false;
-
-		try {
-			$this->connectToDatabase($_POST['database'], $_POST['host'], $_POST['port'],  $_POST['username'], $_POST['password']);
-
-			return true;
-		} catch (Exception $e) {
-			return false;
-		}
-	}
-
-	/**
-	 * Connect to database
-	 * @param string $db
-	 * @param string $host
-	 * @param int $port
-	 * @param string $user
-	 * @param string $pw
-	 */
-	protected function connectToDatabase($db, $host, $port, $user, $pw) {
-		$this->PDO = new PDO('mysql:dbname='.$db.';host='.$host.';port='.$port.';charset=utf8', $user, $pw);
-		$this->PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$this->PDO->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-
-		if (version_compare(PHP_VERSION, '5.3.6', '<')) {
-			$this->PDO->exec("SET NAMES 'utf8'");
-		}
-	}
-
-	/**
-	 * Is the prefix free for this installation?
-	 */
-	protected function prefixIsUnused() {
-		if (!isset($_POST['prefix']) || strlen($_POST['prefix']) < 2)
-			return false;
-
-		return !$this->PDO->query('SHOW TABLES LIKE "'.$_POST['prefix'].'training"')->fetch();
-	}
+	 public function isAlreadyInstalled() {
+	 	return $this->isAlreadyInstalled;
+	 }
 
 	/**
 	 * Is PHP-version high enough?
 	 */
-	protected function phpVersionIsOkay() {
+	public function phpVersionIsOkay() {
 		return (version_compare(PHP_VERSION, self::REQUIRED_PHP_VERSION) >= 0);
-	}
-
-	/**
-	 * Is MySQL-version high enough?
-	 */
-	protected function mysqlVersionIsOkay() {
-		return (version_compare($this->getMysqlVersion(), self::REQUIRED_MYSQL_VERSION) >= 0);
-	}
-
-	/**
-	 * Get current MySQL-version
-	 */
-	protected function getMysqlVersion() {
-		if ($this->PDO == null) {
-			if ($this->mysqlConfig[1] == '') {
-				return '';
-			}
-
-			$this->connectToDatabase($this->mysqlConfig[3], $this->mysqlConfig[0], $this->mysqlConfig[4], $this->mysqlConfig[1], $this->mysqlConfig[2]);
-		}
-
-		return $this->PDO->getAttribute(PDO::ATTR_SERVER_VERSION);
-	}
-
-	/**
-	 * Write config-variables to file
-	 */
-	protected function writeConfigFile() {
-		$config = array();
-		$config['database_host']      = $_POST['database_host'];
-		$config['database_port']      = $_POST['database_port'];
-		$config['database_name']  = $_POST['database_name'];
-		$config['database_user']  = $_POST['database_user'];
-		$config['database_password']  = $_POST['database_password'];
-		$config['database_prefix']    = $_POST['database_prefix'];
-		$config['garmin_api_key'] = $_POST['garmin_api_key'];
-		$config['mail_sender'] = $_POST['mail_sender'];
-		
-		//TODO 
-
-
-		@file_put_contents(PATH.'../data/config.yml', $file_string);
-
-		$this->writeConfigFileString = $file_string;
 	}
 
 	/**
@@ -346,28 +95,12 @@ class Installer {
 	/**
 	 * Import all needed sql-dumps to database
 	 */
-	protected function importSqlFiles() {
-		$this->connectToDatabase($this->mysqlConfig[3], $this->mysqlConfig[0], $this->mysqlConfig[4], $this->mysqlConfig[1], $this->mysqlConfig[2]);
+	public function installRunalyze() {
 
-		$this->importSqlFile('inc/install/structure.sql');
+		$this->importSqlFile('../inc/install/structure.sql');
 
 		define('FRONTEND_PATH', __DIR__.'/');
 		require_once FRONTEND_PATH.'../vendor/autoload.php';
-
-		DB::connect($this->mysqlConfig[0], $this->mysqlConfig[4], $this->mysqlConfig[1], $this->mysqlConfig[2], $this->mysqlConfig[3]);
-	}
-
-	/**
-	 * Check if the database is filled
-	 * @return bool
-	 */
-	protected function databaseIsCorrect() {
-		$this->connectToDatabase($this->mysqlConfig[3], $this->mysqlConfig[0], $this->mysqlConfig[4], $this->mysqlConfig[1], $this->mysqlConfig[2]);
-
-		$statement = $this->PDO->prepare('SHOW TABLES LIKE "'.PREFIX.'training"');
-		$statement->execute();
-
-		return count($statement->fetch()) > 0;
 	}
 
 	/**
@@ -379,9 +112,12 @@ class Installer {
 		$Errors  = array();
 		$Queries = self::getSqlFileAsArray($filename);
 
+		$em = $this->Doctrine->getManager()->getConnection();
+
 		foreach ($Queries as $query) {
 			try {
-				$this->PDO->query($query);
+				$stmt = $em->prepare($query);
+				$stmt->execute();
 			} catch (PDOException $e) {
 				$Errors[] = $e->getMessage();
 			}
@@ -395,7 +131,7 @@ class Installer {
 	 * @param string $filename relative to PATH!
 	 * @return array
 	 */
-	public static function getSqlFileAsArray($filename, $removeDelimiter = true) {
+	public function getSqlFileAsArray($filename, $removeDelimiter = true) {
 		$MRK = array('DELIMITER', 'USE', 'SET', 'LOCK', 'SHOW', 'DROP', 'GRANT', 'ALTER', 'UNLOCK', 'CREATE', 'INSERT', 'UPDATE', 'DELETE', 'REVOKE', 'REPLACE', 'RENAME', 'TRUNCATE');
 		$SQL = @file($filename);
 		$query  = '';
@@ -409,8 +145,7 @@ class Installer {
 		foreach ($SQL as $line) {
 			$line = trim($line);
 
-			if (defined('PREFIX'))
-				$line = str_replace('runalyze_', PREFIX, $line);
+			$line = str_replace('runalyze_', $this->databasePrefix, $line);
 
 			if (isset($mysqlConfig[3]) && !isset($_POST['database'])) {
 				$line = str_replace('DATABASE runalyze', $mysqlConfig[3], $line);
