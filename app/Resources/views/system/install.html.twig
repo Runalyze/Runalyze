@@ -9,7 +9,7 @@
                 <p>{% trans %}If you want to reinstall Runalyze please copy <em>app/config/default_config.yml</em> to <em>data/config.yml-file</em> and adjust the database settings.{% endtrans %}</p>
                 <p>{% trans %}You can remove the installer by deleting <em>src/Controller/InstallController.php</em>{% endtrans %}
             {% else %}
-                <a class="button" role="button" href="{{ path('install_step1') }}">{% trans %}Click here to start the installation of RUNALYZE{% endtrans %}</a>
+                <a class="button" role="button" href="{{ path('install_start') }}">{% trans %}Click here to start the installation of RUNALYZE{% endtrans %}</a>
             {% endif %}
             </div>
             {% endblock content %}

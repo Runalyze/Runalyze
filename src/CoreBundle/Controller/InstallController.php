@@ -46,7 +46,7 @@ class InstallController extends Controller {
     }
     
     /**
-     * @Route("/install/step/1", name="install_step1")
+     * @Route("/install/start", name="install_start")
      */
     public function installStepOneAction(Request $request)
     {

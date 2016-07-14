@@ -42,7 +42,7 @@ class DefaultController extends Controller
     public function indexAction()
     {
 	$Frontend = new \Frontend(true, $this->get('security.token_storage'));
-	include '../index.php';
+	include '../dashboard.php';
 
         return $this->render('CoreBundle:Default:end.html.twig');
     }
@@ -259,6 +259,22 @@ class DefaultController extends Controller
         }
 
         return $this->render('CoreBundle:Default:end.html.twig');
+    }
+    
+    /**
+     * @Route("/index.php")
+     */
+    public function indexPhpAction()
+    {
+        return $this->redirectToRoute('base_url');
+    }
+    
+    /**
+     * @Route("/login.php")
+     */
+    public function loginPhpAction()
+    {
+        return $this->redirectToRoute('login');
     }
     
 }
