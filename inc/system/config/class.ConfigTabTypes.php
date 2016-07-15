@@ -13,7 +13,7 @@ use Runalyze\Configuration;
  */
 class ConfigTabTypes extends ConfigTab {
 	/**
-	 * Set key and title for form 
+	 * Set key and title for form
 	 */
 	protected function setKeyAndTitle() {
 		$this->key = 'config_tab_types';
@@ -33,7 +33,7 @@ class ConfigTabTypes extends ConfigTab {
 
 	/**
 	 * Get code
-	 * @return string 
+	 * @return string
 	 */
 	private function getCode() {
 		$Code = '
@@ -53,7 +53,7 @@ class ConfigTabTypes extends ConfigTab {
 
 		$Types   = DB::getInstance()->query('
 			SELECT ty.id, ty.name, ty.abbr, ty.sportid, ty.short, ty.hr_avg, ty.quality_session, ty.accountid, (
-				SELECT COUNT(*) 
+				SELECT COUNT(*)
 				FROM `'.PREFIX.'training` tr
 				WHERE tr.typeid = ty.id AND
 					`accountid`="'.SessionAccountHandler::getId().'"
@@ -63,8 +63,8 @@ class ConfigTabTypes extends ConfigTab {
 			ORDER BY `sportid` ASC, `tcount` DESC
 		')->fetchAll();
 
-		//TODO Change all locations where Typeid is used 
-		$Types[] = array('id' => -1, 'sportid' => -1, 'name' => '', 'abbr' => '', 'short' => 0, 'hr_avg' => 120, 'quality_session' => 0);
+		//TODO Change all locations where Typeid is used
+		$Types[] = array('id' => -1, 'sportid' => -1, 'name' => '', 'abbr' => '', 'short' => 2, 'hr_avg' => 120, 'quality_session' => 0);
 		$sportid = false;
 
 		foreach ($Types as $Data) {
@@ -80,9 +80,10 @@ class ConfigTabTypes extends ConfigTab {
 			$Sports = SportFactory::AllSports();
 			$ShortOptions = array(
 				0 => __('complete row'),
-				1 => __('only icon')
+				1 => __('only icon'),
+				2 => __('inherit from sport type')
 			);
-	
+
 			$Code .= '
 				<tr class="'.($sportid !== false && $sportid != $Data['sportid'] ? 'top-separated-light' : '').($id == -1 ? ' unimportant' : '').'">
 					<td><input type="text" size="20" name="type[name]['.$id.']" value="'.$Data['name'].'"></td>
@@ -114,7 +115,7 @@ class ConfigTabTypes extends ConfigTab {
 	}
 
 	/**
-	 * Parse all post values 
+	 * Parse all post values
 	 */
 	public function parsePostData() {
 		$Types = DB::getInstance()->query('SELECT `id` FROM `'.PREFIX.'type` WHERE `accountid` = '.SessionAccountHandler::getId())->fetchAll();

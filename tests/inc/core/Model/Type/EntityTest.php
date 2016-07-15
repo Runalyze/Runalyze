@@ -23,6 +23,7 @@ class EntityTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(123, $Type->hrAvg());
 		$this->assertEquals(false, $Type->isQualitySession());
 		$this->assertEquals(true, $Type->usesShortMode());
+		$this->assertEquals(false, $Type->inheritsShortMode());
 	}
 
 }

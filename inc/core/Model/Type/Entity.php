@@ -10,7 +10,7 @@ use Runalyze\Model;
 
 /**
  * Type entity
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Model\Type
  */
@@ -104,6 +104,14 @@ class Entity extends Model\EntityWithID {
 	 */
 	public function usesShortMode() {
 		return ($this->Data[self::SHORT] == 1);
+	}
+
+	/**
+	 * Inherits short mode from sport type?
+	 * @return boolean
+	 */
+	public function inheritsShortMode() {
+		return ($this->Data[self::SHORT] == 2);
 	}
 
 	/**
