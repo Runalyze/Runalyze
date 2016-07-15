@@ -68,6 +68,7 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(120, $New->hrAvg());
 		$this->assertEquals(true, $New->isQualitySession());
 		$this->assertFalse($New->usesShortMode());
+		$this->assertFalse($New->inheritsShortMode());
 	}
 
 }
