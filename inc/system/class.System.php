@@ -13,7 +13,7 @@ use Runalyze\Error;
 class System {
 	/**
 	 * Get code to include all local JS-files
-	 * @return string 
+	 * @return string
 	 */
 	public static function getCodeForLocalJSFiles() {
 		if (self::isAtLocalhost()) {
@@ -27,7 +27,7 @@ class System {
 
 	/**
 	 * Get code to include all external JS-files
-	 * @return string 
+	 * @return string
 	 */
 	public static function getCodeForExternalJSFiles() {
 		return '';
@@ -35,7 +35,7 @@ class System {
 
 	/**
 	 * Get code to include all CSS-files
-	 * @return string 
+	 * @return string
 	 */
 	public static function getCodeForAllCSSFiles() {
 		return '<link rel="stylesheet" href="lib/less/runalyze-style.css?v='.RUNALYZE_VERSION.'">';
@@ -46,7 +46,7 @@ class System {
 	 * @param string $to
 	 * @param string $subject
 	 * @param string $message
-	 * @return boolean 
+	 * @return boolean
 	 */
 	public static function sendMail($to, $subject, $message) {
 		$sender = MAIL_SENDER == '' ? 'mail@runalyze.de' : MAIL_SENDER;
@@ -69,7 +69,7 @@ class System {
 	}
 
 	/**
-	 * Set memory- and time-limit as high as possible 
+	 * Set memory- and time-limit as high as possible
 	 */
 	public static function setMaximalLimits() {
 		@ini_set('memory_limit', '-1');
@@ -88,7 +88,7 @@ class System {
 			return '';
 		}
 
-		return Request::getProtocol().'://'.$_SERVER['HTTP_HOST'];
+		return '//'.$_SERVER['HTTP_HOST'];
 	}
 
 	/**
@@ -119,7 +119,7 @@ class System {
 	}
 
 	/**
-	 * Clear complete cache 
+	 * Clear complete cache
 	 */
 	public static function clearCache() {
 		Cache::clean();
