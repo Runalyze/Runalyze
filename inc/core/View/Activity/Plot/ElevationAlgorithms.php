@@ -17,7 +17,7 @@ use Runalyze\Parameter\Application\DistanceUnitSystem;
 
 /**
  * Plot for: Elevation algorithms
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\View\Activity\Plot
  */
@@ -114,27 +114,26 @@ class ElevationAlgorithms extends ActivityPlot {
 	/**
 	 * Construct plot data
 	 * @param mixed $algorithm
-	 * @param int|bool $treshold
+	 * @param int|bool $threshold
 	 * @return array
 	 */
-	protected function constructPlotDataFor($algorithm, $treshold = false) {
+	protected function constructPlotDataFor($algorithm, $threshold = false) {
 		$Method = new ElevationMethod();
 		$Method->set($algorithm);
 
-		if ($treshold === false) {
-			$treshold = Configuration::ActivityView()->elevationMinDiff();
+		if ($threshold === false) {
+			$threshold = Configuration::ActivityView()->elevationMinDiff();
 		}
 
 		$Calculator = new Calculation\Elevation\Calculator($this->Context->route()->elevations());
 		$Calculator->setMethod($Method);
-		$Calculator->setThreshold($treshold);
+		$Calculator->setThreshold($threshold);
 		$Calculator->calculate();
 
-		$i = 0;
 		$Data = array();
 		$Points = $Calculator->strategy()->smoothedData();
 		$Indices = $Calculator->strategy()->smoothingIndices();
-		$hasDistances = $this->Context->trackdata()->get(Trackdata\Entity::DISTANCE);
+		$hasDistances = $this->Context->trackdata()->get(Trackdata\Entity::DISTANCE) && !Configuration::ActivityView()->usesTimeAsXAxis();
 		$Distances = $this->Context->trackdata()->get(Trackdata\Entity::DISTANCE);
 		$Times = $this->Context->trackdata()->get(Trackdata\Entity::TIME);
 		$num = $this->Context->trackdata()->num();
@@ -200,7 +199,7 @@ class ElevationAlgorithms extends ActivityPlot {
 				$minLimit = $this->Min;
 				$maxLimit = $this->Max;
 			}
-	
+
 			$this->Plot->setYLimits(1, $minLimit, $maxLimit, true);
 		}
 	}
