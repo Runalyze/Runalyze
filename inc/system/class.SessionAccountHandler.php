@@ -73,7 +73,7 @@ class SessionAccountHandler {
 	 * Forward to index page
 	 */
 	protected function forwardToIndexPage() {
-		header('Location: '.System::getFullDomain().'index.php');
+		header('Location: '.System::getFullDomainWithProtocol().'index.php');
 		exit;
 	}
 
@@ -82,7 +82,7 @@ class SessionAccountHandler {
 	 */
 	protected function forwardToLoginPage() {
 		if (!$this->isOnLoginPage() && !$this->isOnAdminPage()) {
-			header('Location: '.System::getFullDomain().'login.php');
+			header('Location: '.System::getFullDomainWithProtocol().'login.php');
 			exit;
 		}
 	}

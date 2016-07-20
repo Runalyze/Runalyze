@@ -67,7 +67,7 @@ $Frontend = new Frontend(true);
 				activityDirectoryHeaderStatus: '<?php _e('Status'); ?>',
 				statusCellProcessingImg: 'upload',
 				detectNewActivities: true,
-				syncDataUrl: '<?php echo System::getFullDomain(); ?>call/ajax.activityMatcher.php',
+				syncDataUrl: '<?php echo System::getFullDomainWithProtocol(); ?>call/ajax.activityMatcher.php',
 				syncDataOptions: {method:'post'},
 				afterTableInsert: function(index, entry, statusCell, checkbox, row, activityMatcher) {
 					var activityId = entry.id, isMatch = false;
