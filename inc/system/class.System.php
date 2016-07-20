@@ -107,6 +107,14 @@ class System {
 	}
 
 	/**
+	 * Get full domain with protocol
+	 * @return string
+	 */
+	public static function getFullDomainWithProtocol() {
+		return Request::getProtocol().':'.self::getFullDomain();
+	}
+
+	/**
 	 * Is this script running on localhost?
 	 * @return boolean
 	 */
