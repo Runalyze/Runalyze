@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-05-21 18:34+0200\n"
-"PO-Revision-Date: 2016-07-22 13:28+0000\n"
-"Last-Translator: Jose Augusto Monteiro <augusto.monteiro@gmail.com>\n"
+"PO-Revision-Date: 2016-07-22 13:29+0000\n"
+"Last-Translator: Heiko Andresen <heiko.andresen@gmx.de>\n"
 "Language-Team: Portuguese "
 "<http://translate.runalyze.com/projects/runalyze/runalyze/pt/>\n"
 "Language: pt\n"
@@ -7768,11 +7768,11 @@ msgstr "Valores VDOT com resultados de corrida equivalente"
 
 #: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:74
 msgid "Predict results on different distances for a given VDOT."
-msgstr ""
+msgstr "Prever resultados em distâncias diferentes para um determinado VDOT."
 
 #: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:79
 msgid "VDOT values with equivalent paces"
-msgstr ""
+msgstr "Valores VDOT com passos equivalentes"
 
 #: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:80
 msgid "Find your training paces in min/km for given VDOT values."
@@ -7780,7 +7780,7 @@ msgstr ""
 
 #: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:85
 msgid "General pace table"
-msgstr ""
+msgstr "Tabela geral de ritmo "
 
 #: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:86
 msgid ""
