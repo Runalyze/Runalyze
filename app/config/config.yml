@@ -19,7 +19,7 @@ framework:
     
 parameters:
   RUNALYZE_VERSION: 2.7.0-dev
-   
+
 services:
   app.locale_listener:
     class: Runalyze\Bundle\CoreBundle\EventListener\LocaleListener
@@ -29,15 +29,17 @@ services:
   app.sha256salted_encoder:
     class: Runalyze\Bundle\CoreBundle\Services\Sha256SaltedEncoder
   app.event.doctrine.table_prefix_subscriber:
-      class: Runalyze\Bundle\CoreBundle\EventListener\TablePrefixSubscriber
-      arguments: ['%database_prefix%']
-      tags:
-          - { name: doctrine.event_subscriber }
+    class: Runalyze\Bundle\CoreBundle\EventListener\TablePrefixSubscriber
+    arguments: ['%database_prefix%']
+    tags:
+      - { name: doctrine.event_subscriber }
 
 twig:
   globals:
     RUNALYZE_VERSION: '%RUNALYZE_VERSION%'
     locales: '%locales%'
+  paths:
+    '%kernel.root_dir%/../data/views': __main__
 
     
 # Doctrine Configuration

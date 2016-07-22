@@ -14,10 +14,10 @@ class AppKernel extends \Symfony\Component\HttpKernel\Kernel
     {
         $bundles = [
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
-	    new Symfony\Bundle\SecurityBundle\SecurityBundle(),
-	    new Symfony\Bundle\MonologBundle\MonologBundle(),
-	    new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
-	    new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
+    	    new Symfony\Bundle\SecurityBundle\SecurityBundle(),
+    	    new Symfony\Bundle\MonologBundle\MonologBundle(),
+    	    new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
+    	    new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Symfony\Bundle\TwigBundle\TwigBundle(),
             new Runalyze\Bundle\CoreBundle\CoreBundle(),
@@ -48,8 +48,8 @@ class AppKernel extends \Symfony\Component\HttpKernel\Kernel
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {
             $routes->mount('/_wdt', $routes->import('@WebProfilerBundle/Resources/config/routing/wdt.xml'));
             $routes->mount('/_profiler', $routes->import('@WebProfilerBundle/Resources/config/routing/profiler.xml'));
-	    $routes->mount('/_error', $routes->import('@TwigBundle/Resources/config/routing/errors.xml'));
-	}
+    	    $routes->mount('/_error', $routes->import('@TwigBundle/Resources/config/routing/errors.xml'));
+    	}
 
         $routes->mount('/', $routes->import('@CoreBundle/Controller', 'annotation'));
     }
