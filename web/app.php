@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 // require Composer's autoloader
 require __DIR__.'/../app/autoload.php';
 
-$kernel = new AppKernel('dev', false);
+$kernel = new AppKernel('prod', false);
 $request = Request::createFromGlobals();
 $response = $kernel->handle($request);
 $response->send();
