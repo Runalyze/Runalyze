@@ -3,16 +3,16 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-05-21 18:34+0200\n"
-"PO-Revision-Date: 2016-05-23 19:42+0200\n"
-"Last-Translator: Jose Augusto Monteiro <augusto.monteiro@gmail.com>\n"
+"PO-Revision-Date: 2016-07-22 13:06+0000\n"
+"Last-Translator: Marcos Balreira de Souza <astronomer_7000-1@yahoo.com.br>\n"
 "Language-Team: Portuguese "
-"<http://translate.runalyze.de/projects/runalyze/runalyze/pt/>\n"
+"<http://translate.runalyze.com/projects/runalyze/runalyze/pt/>\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.3\n"
+"X-Generator: Weblate 2.8-dev\n"
 "X-Poedit-KeywordsList: __;_ne;_n;_e\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -33,7 +33,7 @@ msgid ""
 "<em>There are no statistics available. Activate a plugin in your "
 "configuration.</em>"
 msgstr ""
-"<em>Não existem estatísticas disponíveis. Ativa um plugin em sua "
+"<em>Não existem estatísticas disponíveis. Ative um plugin em sua "
 "configuração.</em>"
 
 #: inc/html/formular/class.FormularValueParser.php:228
@@ -42,7 +42,7 @@ msgstr "O campo não pode ficar vazio."
 
 #: inc/html/formular/class.FormularValueParser.php:252
 msgid "Please enter a number."
-msgstr "P.f. digite um número."
+msgstr "Por favor, digite um número."
 
 #: inc/html/formular/class.FormularValueParser.php:258
 msgid "This value is too large."
@@ -79,7 +79,7 @@ msgstr "Enviar"
 
 #: inc/html/formular/class.StandardFormular.php:148
 msgid "Create"
-msgstr "criar"
+msgstr "Criar"
 
 #: inc/html/formular/class.StandardFormular.php:151
 #: inc/system/config/class.ConfigTab.php:100
@@ -87,7 +87,7 @@ msgstr "criar"
 #: inc/class.AdminView.php:177
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:582
 msgid "Save"
-msgstr "Gravar"
+msgstr "Salvar."
 
 #: inc/html/formular/class.FormularField.php:213
 msgid "Your input is not allowed."
@@ -110,7 +110,7 @@ msgstr "A entrada não é permitida."
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:354
 #: plugin/RunalyzePluginPanel_Equipment/class.RunalyzePluginPanel_Equipment.php:201
 msgid "Time"
-msgstr "Horário"
+msgstr "Hora."
 
 #: inc/html/formular/class.FormularInputDayAndDaytime.php:98
 #: inc/training/search/class.FormularSelectSearchSort.php:29
@@ -130,7 +130,7 @@ msgstr "Data"
 #: inc/html/formular/class.FormularInputDayAndDaytime.php:102
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:95
 msgid "Time of day"
-msgstr "Horário"
+msgstr "Hora do Dia."
 
 #: inc/html/class.HTML.php:81 inc/html/class.HTML.php:107
 #: inc/draw/class.PlotSumData.php:190 inc/draw/class.PlotSumData.php:196
@@ -145,7 +145,7 @@ msgstr "Total"
 #: inc/html/class.Ajax.php:434 inc/core/View/Leaflet/Activity.php:254
 #: inc/tpl/tpl.Installer.php:4
 msgid "Start"
-msgstr "Lançamento"
+msgstr "Início."
 
 #: inc/html/class.Ajax.php:435
 msgid "previous"
@@ -291,7 +291,6 @@ msgstr "Oscilação vertical"
 #: inc/core/View/Window/Laps/Table.php:275
 #: inc/core/View/Activity/Plot/Series/VerticalRatio.php:42
 #: inc/core/Dataset/Keys/VerticalRatio.php:44
-#, fuzzy
 msgid "Vertical ratio"
 msgstr "Oscilação vertical"
 
@@ -338,11 +337,11 @@ msgstr "pontos JD"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:48
 msgid "descending"
-msgstr "descer"
+msgstr "descendente"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:48
 msgid "ascending"
-msgstr "ascender"
+msgstr "ascendente"
 
 #: inc/training/search/class.FormularInputSearchTimeRange.php:34
 #: plugin/RunalyzePluginStat_Wetter/MinMaxTableForEquipment.php:119
@@ -362,7 +361,7 @@ msgstr "%s  atividades encontradas"
 
 #: inc/training/search/class.SearchFormular.php:58
 msgid "Search activities"
-msgstr "Atividades de pesquisa"
+msgstr "Buscar atividades"
 
 #: inc/training/search/class.SearchFormular.php:71
 msgid "Search"
@@ -375,7 +374,7 @@ msgstr "Intervalo de tempo"
 
 #: inc/training/search/class.SearchFormular.php:96
 msgid "Sorting"
-msgstr "Selecionar"
+msgstr "Classificar"
 
 #: inc/training/search/class.SearchFormular.php:105
 msgid "Send to multi editor"
@@ -391,11 +390,11 @@ msgstr "Nosso multi editr  é limitado a um máximo de %d atividades."
 #: inc/training/schemes/scheme.Training.php:85
 #: inc/system/config/class.ConfigTabTypes.php:45
 msgid "Sport"
-msgstr "Desporto"
+msgstr "Esporte"
 
 #: inc/training/search/class.SearchFormular.php:124
 msgid "Choose sport(s)"
-msgstr "Escolhe o(s) desporto(s)"
+msgstr "Escolhe o(s) esporte(s)"
 
 #: inc/training/search/class.SearchFormular.php:134
 #: call/call.garminCommunicator.php:123
