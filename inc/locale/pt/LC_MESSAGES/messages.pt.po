@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-05-21 18:34+0200\n"
-"PO-Revision-Date: 2016-07-22 13:06+0000\n"
-"Last-Translator: Marcos Balreira de Souza <astronomer_7000-1@yahoo.com.br>\n"
+"PO-Revision-Date: 2016-07-22 13:28+0000\n"
+"Last-Translator: Jose Augusto Monteiro <augusto.monteiro@gmail.com>\n"
 "Language-Team: Portuguese "
 "<http://translate.runalyze.com/projects/runalyze/runalyze/pt/>\n"
 "Language: pt\n"
@@ -456,21 +456,20 @@ msgstr "Escolhe os ondições meteorológicas"
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:142
 #: plugin/RunalyzePluginPanel_Equipment/class.RunalyzePluginPanel_Equipment.php:36
 msgid "Equipment"
-msgstr ""
+msgstr "Equipamento"
 
 #: inc/training/search/class.SearchFormular.php:159
 msgid "Choose equipment"
-msgstr ""
+msgstr "Escolha o equipamento"
 
 #: inc/training/search/class.SearchFormular.php:160
 #: plugin/RunalyzePluginStat_Tag/class.RunalyzePluginStat_Tag.php:123
 msgid "Tag"
-msgstr ""
+msgstr "Marca"
 
 #: inc/training/search/class.SearchFormular.php:160
-#, fuzzy
 msgid "Choose tag"
-msgstr "Escolhe a roupa desportiva"
+msgstr "Escolha a marca"
 
 #: inc/training/search/class.SearchFormular.php:167
 #: inc/training/schemes/scheme.Training.php:562
@@ -482,25 +481,24 @@ msgstr "Rota"
 #: inc/training/schemes/scheme.Training.php:491
 #: inc/core/Data/Weather/Humidity.php:58 inc/core/Dataset/Keys/Humidity.php:43
 msgid "Humidity"
-msgstr ""
+msgstr "Humidade"
 
 #: inc/training/search/class.SearchFormular.php:171
 #: inc/training/schemes/scheme.Training.php:503
 #: inc/core/Data/Weather/Pressure.php:58
 #: inc/core/Dataset/Keys/AirPressure.php:52
 msgid "Pressure"
-msgstr ""
+msgstr "Pressão"
 
 #: inc/training/search/class.SearchFormular.php:172
 #: inc/core/Data/Weather/WindSpeed.php:63
-#, fuzzy
 msgid "Wind Speed"
-msgstr "como a velocidade"
+msgstr "Velocidade do vento"
 
 #: inc/training/search/class.SearchFormular.php:173
 #: inc/training/schemes/scheme.Training.php:584
 msgid "Title"
-msgstr ""
+msgstr "Título"
 
 #: inc/training/search/class.SearchFormular.php:174
 #: inc/training/schemes/scheme.Training.php:256
@@ -537,9 +535,8 @@ msgid "JD points"
 msgstr "JD pontos"
 
 #: inc/training/search/class.SearchFormular.php:182
-#, fuzzy
 msgid "Ground Contact Balance"
-msgstr "Trama do contato do solo"
+msgstr "Equilíbrio no contacto com o solo"
 
 #: inc/training/search/class.SearchFormular.php:191
 msgid "Uses VDOT"
@@ -659,9 +656,8 @@ msgid "Influence"
 msgstr "Influência"
 
 #: inc/training/view/section/class.SectionRunningDynamics.php:21
-#, fuzzy
 msgid "Running Dynamics"
-msgstr "Execução de brocas"
+msgstr "Dinâmica da Corrida"
 
 #: inc/training/view/section/class.SectionLaps.php:20
 #: inc/training/formular/class.TrainingInputSplits.php:27
@@ -769,7 +765,7 @@ msgstr ""
 #: inc/training/view/section/class.SectionSwimLaneRow.php:35
 #: inc/core/View/Activity/Plot/Series/Stroke.php:62
 msgid "Stroke"
-msgstr ""
+msgstr "Golpe"
 
 #: inc/training/view/section/class.SectionSwimLaneRow.php:37
 #: inc/training/schemes/scheme.Training.php:833
@@ -792,9 +788,8 @@ msgid "More details about your laps"
 msgstr "Mais detalhes sobre as voltas"
 
 #: inc/training/view/section/class.SectionHRV.php:18
-#, fuzzy
 msgid "Heart rate variability"
-msgstr "Unidade de freqüência cardíaca"
+msgstr "Variação da frequência cadíca"
 
 #: inc/training/view/section/class.SectionRouteRowElevation.php:86
 #: inc/training/view/section/class.SectionCompositeRow.php:233
@@ -824,7 +819,7 @@ msgstr "Notas adicionais"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:60
 msgid "Cadence plot"
-msgstr ""
+msgstr "Gráfico da cadência"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:65
 msgid "Power plot"
@@ -849,7 +844,7 @@ msgstr "Poder"
 #: inc/training/view/section/table/class.TableSwimLane.php:43
 #: inc/core/Dataset/Keys/TotalStrokes.php:53
 msgid "Strokes"
-msgstr ""
+msgstr "Cursos"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:149
 #: inc/training/view/section/table/class.TableSwimLane.php:42
@@ -868,7 +863,7 @@ msgstr "Condição meteorológica"
 #: inc/core/Dataset/Keys/Tags.php:46
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:146
 msgid "Tags"
-msgstr ""
+msgstr "Marcas"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:286
 #: inc/core/Dataset/Keys/TrainingPartner.php:46
@@ -947,7 +942,7 @@ msgstr "Mais sobre cálculo de VDOT"
 #: inc/training/view/section/class.SectionSwimLane.php:21
 #: inc/training/view/section/class.SectionSwimLane.php:22
 msgid "Lanes"
-msgstr ""
+msgstr "Faixas"
 
 #: inc/training/view/section/table/class.TableLapsComputed.php:66
 msgid "bpm"
@@ -967,7 +962,7 @@ msgstr "elev."
 #: plugin/RunalyzePluginTool_AnalyzeVDOT/tpl.Table.php:13
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:356
 msgid "HR"
-msgstr ""
+msgstr "RC"
 
 #: inc/training/view/section/table/class.TableZonesPace.php:54
 msgid "faster"
@@ -978,17 +973,15 @@ msgid "Zone"
 msgstr "Zona"
 
 #: inc/training/view/section/class.SectionRunningDynamicsRow.php:57
-#, fuzzy
 msgid "Oscillation"
-msgstr "Trama de oscilação"
+msgstr "Oscilação"
 
 #: inc/training/view/section/class.SectionRunningDynamicsRow.php:67
 #: inc/core/View/Window/Laps/Table.php:271
 #: inc/core/View/Activity/Plot/Series/GroundContactBalance.php:58
 #: inc/core/Dataset/Keys/GroundcontactBalance.php:44
-#, fuzzy
 msgid "Ground contact balance"
-msgstr "Trama do contato do solo"
+msgstr "Equilíbrio no contacto com o solo"
 
 #: inc/training/view/section/class.SectionHRVRow.php:30
 msgid "R-R intervals"
@@ -1028,11 +1021,11 @@ msgstr "Dados de elevação"
 
 #: inc/training/view/section/class.SectionComposite.php:17
 msgid "Composite data"
-msgstr ""
+msgstr "Dados compostos"
 
 #: inc/training/view/section/class.SectionCompositeRow.php:45
 msgid "Composite plot"
-msgstr ""
+msgstr "Gráfico composto"
 
 #: inc/training/view/section/class.SectionCompositeRow.php:50
 #: inc/training/view/section/class.SectionCompositeRow.php:58
@@ -1119,7 +1112,7 @@ msgstr "Correção de elevação"
 #: inc/training/view/class.ElevationInfo.php:249
 #: call/call.Training.elevationCorrection.php:45
 msgid "Elevation data has been corrected."
-msgstr ""
+msgstr "Os dados de elevação foram corrigidos"
 
 #: inc/training/view/class.ElevationInfo.php:252
 msgid "Elevation data has not been corrected."
@@ -1134,16 +1127,15 @@ msgstr "corrigir agora"
 #: inc/training/view/class.ElevationInfo.php:275
 #, php-format
 msgid "correct again using %s"
-msgstr ""
+msgstr "corrija novamente utilizando %s"
 
 #: inc/training/view/class.ElevationInfo.php:273
 msgid "srtm files"
 msgstr ""
 
 #: inc/training/view/class.ElevationInfo.php:276
-#, fuzzy
 msgid "remove corrected elevation data"
-msgstr "Dados de elevação correta"
+msgstr "remova a correção dos dados de elevação"
 
 #: inc/training/view/class.ElevationInfo.php:287
 msgid "Compare algorithms"
@@ -1169,7 +1161,7 @@ msgstr "Visualizar semana"
 
 #: inc/training/view/class.TrainingView.php:66
 msgid "Share"
-msgstr ""
+msgstr "Partilhar"
 
 #: inc/training/view/class.TrainingView.php:69
 #: inc/core/Dataset/Keys/SharedLink.php:44
@@ -1190,13 +1182,12 @@ msgstr ""
 #: inc/training/view/class.TrainingView.php:107
 #: inc/core/Dataset/Keys/Setting.php:135
 msgid "Make private"
-msgstr ""
+msgstr "Tornar privado"
 
 #: inc/training/view/class.TrainingView.php:110
 #: inc/core/Dataset/Keys/Setting.php:138
-#, fuzzy
 msgid "Make public"
-msgstr "É público"
+msgstr "Tornar público"
 
 #: inc/training/view/class.TrainingView.php:115
 msgid "Edit race result"
@@ -1213,9 +1204,8 @@ msgstr "Excluir atividade"
 
 #: inc/training/view/class.TrainingView.php:124
 #: inc/core/Dataset/Keys/Setting.php:103
-#, fuzzy
 msgid "Do you really want to delete this activity?"
-msgstr "Excluir permanentemente esta atividade"
+msgstr "Deseja excluir permanentemente esta atividade?"
 
 #: inc/training/view/class.TrainingView.php:124
 #: inc/core/Dataset/Keys/Setting.php:103 inc/core/Dataset/Keys/Setting.php:120
@@ -1247,19 +1237,16 @@ msgid "all resting"
 msgstr "todo a descansar"
 
 #: inc/training/formular/class.TrainingInputSplits.php:57
-#, fuzzy
 msgid "alternating:"
-msgstr "todo a descansar"
+msgstr "alternada:"
 
 #: inc/training/formular/class.TrainingInputSplits.php:57
-#, fuzzy
 msgid "first resting"
-msgstr "todo a descansar"
+msgstr "primeiro descanso"
 
 #: inc/training/formular/class.TrainingInputSplits.php:58
-#, fuzzy
 msgid "first active"
-msgstr "Lista pública: ativo"
+msgstr "primeiro ativo"
 
 #: inc/training/formular/class.TrainingInputSplits.php:71
 #: inc/data/class.Splits.php:171
@@ -1353,18 +1340,16 @@ msgstr ""
 "passos com o pé) por minuto,"
 
 #: inc/training/schemes/scheme.Training.php:515
-#, fuzzy
 msgid "Wind speed"
-msgstr "como a velocidade"
+msgstr "Velocidade do vento"
 
 #: inc/training/schemes/scheme.Training.php:528
 msgid "Wind degrees"
-msgstr ""
+msgstr "Graus do vento"
 
 #: inc/training/schemes/scheme.Training.php:551
-#, fuzzy
 msgid "Night"
-msgstr "Peso"
+msgstr "Noite"
 
 #: inc/training/schemes/scheme.Training.php:823
 #: inc/core/Dataset/Keys/TotalStrokes.php:44
@@ -1374,7 +1359,7 @@ msgstr ""
 #: inc/training/schemes/scheme.Training.php:844
 #: inc/core/Activity/PoolLength.php:58
 msgid "Pool length"
-msgstr ""
+msgstr "Obter a distância"
 
 #: inc/training/schemes/scheme.UserData.php:13
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:68
@@ -1383,7 +1368,7 @@ msgstr "Análise"
 
 #: inc/training/schemes/scheme.UserData.php:23
 msgid "Sleep"
-msgstr ""
+msgstr "Adomecer"
 
 #: inc/training/schemes/scheme.UserData.php:55 inc/core/Activity/Weight.php:72
 #: plugin/RunalyzePluginPanel_Sportler/window.sportler.table.php:35
@@ -1420,19 +1405,16 @@ msgid "Body muscle"
 msgstr "Músculo do corpo"
 
 #: inc/training/schemes/scheme.UserData.php:117
-#, fuzzy
 msgid "Sleep Duration"
-msgstr "Duração"
+msgstr "Duração do descanso"
 
 #: inc/training/class.TrainingFormular.php:93
-#, fuzzy
 msgid "Save and continue"
-msgstr "Editar e continuar"
+msgstr "Gravar e continuar"
 
 #: inc/training/class.TrainingFormular.php:98
-#, fuzzy
 msgid "It seems that you already have imported this activity"
-msgstr "Excluir permanentemente esta atividade"
+msgstr "Esta atividade já foi importada anteriormente"
 
 #: inc/training/class.TrainingFormular.php:198
 msgid "The activity has been successfully created."
