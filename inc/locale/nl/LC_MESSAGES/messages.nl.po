@@ -1,18 +1,18 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-05-21 18:34+0200\n"
-"PO-Revision-Date: 2015-10-15 09:25+0200\n"
-"Last-Translator: Ivo Nobel <ivo.nobel@gmail.com>\n"
-"Language-Team: Dutch <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/nl/>\n"
+"PO-Revision-Date: 2016-07-22 12:44+0000\n"
+"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
+"Language-Team: Dutch "
+"<http://translate.runalyze.com/projects/runalyze/runalyze/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.3\n"
+"X-Generator: Weblate 2.8-dev\n"
 "X-Poedit-KeywordsList: __;_ne;_n;_e\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -42,10 +42,9 @@ msgstr "Dit veld kan niet leeg gelaten worden."
 
 #: inc/html/formular/class.FormularValueParser.php:252
 msgid "Please enter a number."
-msgstr "Voeg een cijfer in."
+msgstr "Voer een cijfer in."
 
 #: inc/html/formular/class.FormularValueParser.php:258
-#, fuzzy
 msgid "This value is too large."
 msgstr "De waarde is te hoog."
 
@@ -63,7 +62,6 @@ msgid "The date could not be parsed."
 msgstr "Het datum kan niet worden verwerkt."
 
 #: inc/html/formular/class.FormularValueParser.php:345
-#, fuzzy
 msgid "The date must not be in the future."
 msgstr "Het datum kan niet worden verwerkt."
 
@@ -294,7 +292,6 @@ msgstr "verticale oscillatie"
 #: inc/core/View/Window/Laps/Table.php:275
 #: inc/core/View/Activity/Plot/Series/VerticalRatio.php:42
 #: inc/core/Dataset/Keys/VerticalRatio.php:44
-#, fuzzy
 msgid "Vertical ratio"
 msgstr "verticale oscillatie"
 
@@ -469,12 +466,11 @@ msgstr "Kies uw uitrusting"
 #: inc/training/search/class.SearchFormular.php:160
 #: plugin/RunalyzePluginStat_Tag/class.RunalyzePluginStat_Tag.php:123
 msgid "Tag"
-msgstr ""
+msgstr "Label"
 
 #: inc/training/search/class.SearchFormular.php:160
-#, fuzzy
 msgid "Choose tag"
-msgstr "Kies tools"
+msgstr "Kies label"
 
 #: inc/training/search/class.SearchFormular.php:167
 #: inc/training/schemes/scheme.Training.php:562
@@ -486,25 +482,24 @@ msgstr "Route"
 #: inc/training/schemes/scheme.Training.php:491
 #: inc/core/Data/Weather/Humidity.php:58 inc/core/Dataset/Keys/Humidity.php:43
 msgid "Humidity"
-msgstr ""
+msgstr "Luchtvochtigheid"
 
 #: inc/training/search/class.SearchFormular.php:171
 #: inc/training/schemes/scheme.Training.php:503
 #: inc/core/Data/Weather/Pressure.php:58
 #: inc/core/Dataset/Keys/AirPressure.php:52
 msgid "Pressure"
-msgstr ""
+msgstr "Luchtdruk"
 
 #: inc/training/search/class.SearchFormular.php:172
 #: inc/core/Data/Weather/WindSpeed.php:63
-#, fuzzy
 msgid "Wind Speed"
-msgstr "Als snelheid"
+msgstr "Windsnelheid "
 
 #: inc/training/search/class.SearchFormular.php:173
 #: inc/training/schemes/scheme.Training.php:584
 msgid "Title"
-msgstr ""
+msgstr "Titel "
 
 #: inc/training/search/class.SearchFormular.php:174
 #: inc/training/schemes/scheme.Training.php:256
@@ -541,9 +536,8 @@ msgid "JD points"
 msgstr "JD punten"
 
 #: inc/training/search/class.SearchFormular.php:182
-#, fuzzy
 msgid "Ground Contact Balance"
-msgstr "Grond contact diagram"
+msgstr "Grond contact balans"
 
 #: inc/training/search/class.SearchFormular.php:191
 msgid "Uses VDOT"
@@ -874,7 +868,7 @@ msgstr "Weersomstandigheden"
 #: inc/core/Dataset/Keys/Tags.php:46
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:146
 msgid "Tags"
-msgstr ""
+msgstr "Labels"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:286
 #: inc/core/Dataset/Keys/TrainingPartner.php:46
@@ -917,7 +911,7 @@ msgstr "Tempozones"
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:339
 #, php-format
 msgid "Source of weather data: %s"
-msgstr ""
+msgstr "Bron van weerdata: %s"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:354
 #, php-format
@@ -985,7 +979,6 @@ msgid "Zone"
 msgstr "Zone"
 
 #: inc/training/view/section/class.SectionRunningDynamicsRow.php:57
-#, fuzzy
 msgid "Oscillation"
 msgstr "Verticale beweging"
 
@@ -993,9 +986,8 @@ msgstr "Verticale beweging"
 #: inc/core/View/Window/Laps/Table.php:271
 #: inc/core/View/Activity/Plot/Series/GroundContactBalance.php:58
 #: inc/core/Dataset/Keys/GroundcontactBalance.php:44
-#, fuzzy
 msgid "Ground contact balance"
-msgstr "Grond contact diagram"
+msgstr "Grond contact balans"
 
 #: inc/training/view/section/class.SectionHRVRow.php:30
 msgid "R-R intervals"
@@ -1006,7 +998,6 @@ msgid "Successive differences"
 msgstr ""
 
 #: inc/training/view/section/class.SectionHRVRow.php:32
-#, fuzzy
 msgid "Poincaré plot"
 msgstr "Poincaré diagram"
 
@@ -1147,12 +1138,10 @@ msgid "correct again using %s"
 msgstr ""
 
 #: inc/training/view/class.ElevationInfo.php:273
-#, fuzzy
 msgid "srtm files"
-msgstr "Bestand aanmaken"
+msgstr ""
 
 #: inc/training/view/class.ElevationInfo.php:276
-#, fuzzy
 msgid "remove corrected elevation data"
 msgstr "Hoogte gegevens corrigeren"
 
@@ -1186,9 +1175,8 @@ msgid "Show week"
 msgstr "Week weergeven"
 
 #: inc/training/view/class.TrainingView.php:66
-#, fuzzy
 msgid "Share"
-msgstr "Delen!"
+msgstr "Delen"
 
 #: inc/training/view/class.TrainingView.php:69
 #: inc/core/Dataset/Keys/SharedLink.php:44
@@ -1204,7 +1192,7 @@ msgstr "Exporteren"
 #: inc/training/view/class.TrainingView.php:94
 #, php-format
 msgid "as %s"
-msgstr ""
+msgstr "als %s"
 
 #: inc/training/view/class.TrainingView.php:107
 #: inc/core/Dataset/Keys/Setting.php:135
@@ -1234,7 +1222,6 @@ msgstr "Eerste activiteit:"
 
 #: inc/training/view/class.TrainingView.php:124
 #: inc/core/Dataset/Keys/Setting.php:103
-#, fuzzy
 msgid "Do you really want to delete this activity?"
 msgstr "Weet u zeker dat u uw account wil verwijderen?"
 
@@ -1326,7 +1313,7 @@ msgstr "Publiek"
 
 #: inc/training/schemes/scheme.Training.php:149
 msgid "Public activities will be visible for everybody."
-msgstr ""
+msgstr "Openbare activiteiten zijn voor iedereen zichtbaar"
 
 #: inc/training/schemes/scheme.Training.php:160
 msgid "Track"
@@ -1373,9 +1360,8 @@ msgstr ""
 "stappen met één voet) per minuut,"
 
 #: inc/training/schemes/scheme.Training.php:515
-#, fuzzy
 msgid "Wind speed"
-msgstr "Als snelheid"
+msgstr "Wind snelheid"
 
 #: inc/training/schemes/scheme.Training.php:528
 msgid "Wind degrees"
@@ -1547,7 +1533,7 @@ msgstr "Geslacht"
 
 #: inc/core/Configuration/Category/General.php:199
 msgid "Beginning of the week"
-msgstr ""
+msgstr "Begin van de week"
 
 #: inc/core/Configuration/Category/General.php:203
 msgid "Unit system for distances"
@@ -1990,7 +1976,7 @@ msgstr ""
 #: inc/core/Configuration/Category/Vdot.php:182
 #, php-format
 msgid "Value must be between %s and %s."
-msgstr ""
+msgstr "Waarde moet liggen tussen %s en %s."
 
 #: inc/core/Configuration/Category/Vdot.php:186
 msgid "Use fixed VDOT value"
@@ -2067,7 +2053,7 @@ msgstr ""
 
 #: inc/core/Configuration/Category/Trimp.php:109
 msgid "Show ATL/CTL in percent of your maximum"
-msgstr "Toon ATL/CTL in percentage van uw maximum"
+msgstr "Toon ATL/CTL als percentage van uw maximum"
 
 #: inc/core/Configuration/Category/Trimp.php:110
 msgid ""
@@ -2158,15 +2144,15 @@ msgstr "Uw training is privé: er is geen link toegevoegd."
 
 #: inc/core/Export/Share/Facebook.php:73
 msgid "Facebook"
-msgstr ""
+msgstr "Facebook"
 
 #: inc/core/Export/Share/GooglePlus.php:49
 msgid "Google+"
-msgstr ""
+msgstr "Google+"
 
 #: inc/core/Export/Share/IFrame.php:54
 msgid "IFrame"
-msgstr ""
+msgstr "IFrame"
 
 #: inc/core/Export/Share/IFrame.php:89
 msgid ""
@@ -2210,7 +2196,7 @@ msgstr ""
 
 #: inc/core/Export/Share/Twitter.php:55
 msgid "Twitter"
-msgstr ""
+msgstr "Twitter"
 
 #: inc/core/Activity/PerformanceCondition.php:58
 #, fuzzy
@@ -2220,7 +2206,7 @@ msgstr "Prestatie model"
 #: inc/core/Activity/PerformanceCondition.php:67
 #: inc/core/Dataset/Keys/FitPerformanceCondition.php:52
 msgid "PC"
-msgstr ""
+msgstr "PC"
 
 #: inc/core/Activity/TrainingEffectLevel.php:68
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:388
@@ -2539,7 +2525,7 @@ msgstr "%s tot %s"
 
 #: inc/core/View/Icon/WindIcon.php:66 inc/core/Dataset/Keys/Wind.php:44
 msgid "Wind"
-msgstr ""
+msgstr "Wind"
 
 #: inc/core/Error.php:337
 msgid "Fatal error"
@@ -2555,15 +2541,15 @@ msgstr "elke tweede gegevenspunt"
 
 #: inc/core/Parameter/Application/ActivityRoutePrecision.php:23
 msgid "every fifth data point (recommended)"
-msgstr "elk 5e gegevenspunt (aanbevolen)"
+msgstr "elk vijfde gegevenspunt (aanbevolen)"
 
 #: inc/core/Parameter/Application/ActivityRoutePrecision.php:24
 msgid "every tenth data point"
-msgstr "elk 10e gegevenspunt"
+msgstr "elk tiende gegevenspunt"
 
 #: inc/core/Parameter/Application/ActivityRoutePrecision.php:25
 msgid "every twentieth data point"
-msgstr "elk 20e gegevenspunt"
+msgstr "elk twintigste gegevenspunt"
 
 #: inc/core/Parameter/Application/DistanceUnitSystem.php:94
 msgid "Metric units"
@@ -7474,7 +7460,7 @@ msgid ""
 "em>, which is equal for all runners at the same level."
 msgstr ""
 "Door additionele factoren is hier sprake van <em>pseudo V-dot-O2Max</em> die "
-"gelijk is voor alle renners van hetzelfde nivo."
+"gelijk is voor alle renners van hetzelfde niveau."
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/window.info.php:25
 msgid "Your Shape: an estimation of your VDOT value"
@@ -7720,7 +7706,7 @@ msgstr ""
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:231
 msgid "Fitness&nbsp;level"
-msgstr "Conditie&nbsp;nivo"
+msgstr "Conditie&nbsp;niveau"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:233
 msgid ""
@@ -7803,7 +7789,7 @@ msgid ""
 "Pro Runner"
 msgstr ""
 "Trainingsintensiteit door Jack Daniels.<br>Jack Daniels gebruikt de volgende "
-"nivo's:<br> 50 punten: beginner<br>100 punten:gevorderde loper<br>200 "
+"niveaus:<br> 50 punten: beginner<br>100 punten:gevorderde loper<br>200 "
 "punten: wedstrijdatleet"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:389
