@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-05-21 18:34+0200\n"
-"PO-Revision-Date: 2016-07-22 23:32+0000\n"
+"PO-Revision-Date: 2016-07-23 13:23+0000\n"
 "Last-Translator: Daniel Pindado <daniel.pindado@gmail.com>\n"
 "Language-Team: Spanish "
 "<http://translate.runalyze.com/projects/runalyze/runalyze/es/>\n"
@@ -2538,7 +2538,7 @@ msgstr "lineal"
 
 #: inc/core/Parameter/Application/PaceAxisType.php:17
 msgid "reversed linear"
-msgstr "lineal inverso"
+msgstr "lineal invertido"
 
 #: inc/core/Parameter/Application/PaceAxisType.php:18
 msgid "as speed"
@@ -2882,7 +2882,7 @@ msgstr "huracán"
 
 #: inc/core/Data/Weather/BeaufortScale.php:169
 msgid "Beautfort scale"
-msgstr "Escala de Beautfort"
+msgstr "Escala de Beaufort"
 
 #: inc/core/Data/Weather/WindDegree.php:58
 msgid "Wind Degree"
@@ -4048,9 +4048,9 @@ msgid ""
 "problems or wishes: Please contact our Runalyze team. It's near and dear to "
 "us"
 msgstr ""
-"Runalyze ha sido creado por corredores para corredores. Siempre que tenga "
-"comentarios, problemas o sugerencias: Póngase en contacto con el equipo de "
-"Runalyze. Es sencillo y así lo queremos"
+"Runalyze ha sido creado por corredores para corredores. Siempre que tengas "
+"comentarios, problemas o sugerencias: Ponte en contacto con nosotros, en "
+"nuestro ADN está el ayudar :-)"
 
 #: inc/tpl/tpl.help.php:11
 msgid ""
@@ -4058,7 +4058,7 @@ msgid ""
 "for analyzing your activities."
 msgstr ""
 "Runalyze es completamente configurable y más detallado que cualquier otra "
-"herramienta para analizar sus actividades."
+"herramienta para analizar tus actividades."
 
 #: inc/tpl/tpl.help.php:15
 #, php-format
@@ -7099,7 +7099,7 @@ msgstr ""
 
 #: plugin/RunalyzePluginStat_Statistiken/class.RunalyzePluginStat_Statistiken.php:122
 msgid "Show streak"
-msgstr ""
+msgstr "Mostrar racha"
 
 #: plugin/RunalyzePluginStat_Statistiken/class.RunalyzePluginStat_Statistiken.php:123
 msgid "Minimum number of days to show a streak (0 for always)"
@@ -7213,7 +7213,7 @@ msgstr ""
 
 #: plugin/RunalyzePluginTool_DatenbankCleanup/JobGeneral.php:126
 msgid "Vdot corrector"
-msgstr ""
+msgstr "Corrección VDOT"
 
 #: plugin/RunalyzePluginTool_DatenbankCleanup/JobGeneral.php:158
 msgid "Maximal TRIMP"
@@ -7252,7 +7252,7 @@ msgstr ""
 
 #: plugin/RunalyzePluginTool_DatenbankCleanup/tpl.ViewForm.php:36
 msgid "Recalculate your equipment statistics"
-msgstr "Recalcular las estadísticas del equipamiento"
+msgstr "Recalcular las estadísticas del equipación"
 
 #: plugin/RunalyzePluginTool_DatenbankCleanup/tpl.ViewForm.php:42
 msgid "Recalculate your VDOT correction factor"
@@ -7466,7 +7466,7 @@ msgstr ""
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:68
 msgid "Show: Monotony/TS"
-msgstr ""
+msgstr "Mostrar: Monotonía / TS"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:69
 msgid "Show monotony and training strain (based on TRIMP)"
@@ -7571,7 +7571,7 @@ msgstr ""
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:254
 msgid "Rest&nbsp;days"
-msgstr ""
+msgstr "Días de reposo&nbsp;"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:256
 msgid "Rest days needed to reach TSB = 0"
