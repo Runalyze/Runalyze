@@ -1,15 +1,25 @@
 {% extends "system/base.html.twig" %}
+
 {% set page_title = 'RUNALYZE | Installation' %}
-            {% block content %}
-            <div class="logo"><img src="assets/images/runalyze.png" width="200" height="200"></div>
-            
-            <div class="button-group">
-            {% if alreadyInstalled %}
-                <a class="button" role="button">{% trans %}You have already installed RUNALYZE{% endtrans %}</a>
-                <p>{% trans %}If you want to reinstall Runalyze please copy <em>app/config/default_config.yml</em> to <em>data/config.yml-file</em> and adjust the database settings.{% endtrans %}</p>
-                <p>{% trans %}You can remove the installer by deleting <em>src/Controller/InstallController.php</em>{% endtrans %}
-            {% else %}
-                <a class="button" role="button" href="{{ path('install_start') }}">{% trans %}Click here to start the installation of RUNALYZE{% endtrans %}</a>
-            {% endif %}
-            </div>
-            {% endblock content %}
+
+{% block content %}
+    {% if output %}
+    <div class="console-output">
+        <pre>{{ output|raw }}</pre>
+    </div>
+    {% endif %}
+
+    {% if installationPossible %}
+    <div class="button-group">
+        <a class="button" role="button" href="{{ path('install_start') }}">{% trans %}Start the installation of RUNALYZE{% endtrans %}</a>
+    </div>
+    {% endif %}
+
+    {% if installationSuccessful %}
+    <p>{% trans %}RUNALYZE has been successfully installed. You can now start analyzing your training.{% endtrans %}</p>
+
+    <div class="button-group">
+        <a class="button" role="button" href="{{ path('register') }}">{% trans %}Create an account{% endtrans %}</a>
+    </div>
+    {% endif %}
+{% endblock content %}

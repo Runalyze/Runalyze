@@ -1,9 +1,17 @@
 {
   "less": {
-    "root": "./lib/less",
-    "src": [
-      "./lib/less/runalyze-style.less"
-    ],
+    "main": {
+      "root": "./lib/less",
+      "src": [
+        "./lib/less/runalyze-style.less"
+      ]
+    },
+    "installer": {
+      "root": "./app/Resources/public/css",
+      "src": [
+        "./app/Resources/public/css/runalyze-installer.less"
+      ]
+    },
     "dest": "./web/assets/css"
   },
   "js": {

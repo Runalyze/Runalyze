@@ -4,7 +4,7 @@
  *
  * This file is included by composer's autoload mechanism.
  * Requiring global functions is considered bad practice
- * but this will stay until all old cold smells are removed.
+ * but this will stay until all old code smells are removed.
  */
 
 /**

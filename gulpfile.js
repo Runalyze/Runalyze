@@ -21,15 +21,26 @@ function clean(done) {
 clean.description = 'Clean output files.';
 
 function styles() {
-    return gulp.src(config.less.src)
+    return gulp.src(config.less.main.src)
         .pipe(sourcemaps.init())
-        .pipe(less({ relativeUrls: true, paths: [ config.less.root ] }))
-        .pipe(cleanCSS({ processImport: true, relativeTo: config.less.root }))
+        .pipe(less({ relativeUrls: true, paths: [ config.less.main.root ] }))
+        .pipe(cleanCSS({ processImport: true, relativeTo: config.less.main.root }))
         .pipe(cleanCSS({ relativeTo: config.less.dest, target: config.less.dest }))
         .pipe(sourcemaps.write())
         .pipe(gulp.dest(config.less.dest));
 }
 styles.description = 'Run less to generate stylesheets.';
+
+function stylesInstaller() {
+    return gulp.src(config.less.installer.src)
+        .pipe(sourcemaps.init())
+        .pipe(less({ relativeUrls: true, paths: [ config.less.installer.root ] }))
+        .pipe(cleanCSS({ processImport: true, relativeTo: config.less.installer.root }))
+        .pipe(cleanCSS({ relativeTo: config.less.dest, target: config.less.dest }))
+        .pipe(sourcemaps.write())
+        .pipe(gulp.dest(config.less.dest));
+}
+stylesInstaller.description = 'Run less to generate stylesheets for the installer.';
 
 function scripts() {
     return gulp.src(config.js.src)
@@ -68,11 +79,12 @@ translate.description = 'Compile translation files.';
 
 exports.clean = clean;
 exports.styles = styles;
+exports.stylesInstaller = stylesInstaller;
 exports.scripts = scripts;
 exports.tests = tests;
 exports.translate = translate;
 
-var build = gulp.series(clean, gulp.parallel(styles, scripts));
+var build = gulp.series(clean, gulp.parallel(styles, stylesInstaller, scripts));
 
 gulp.task('build', build);
 gulp.task('default', gulp.parallel(build, translate));

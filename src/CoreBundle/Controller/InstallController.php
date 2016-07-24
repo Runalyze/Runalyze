@@ -2,29 +2,13 @@
 
 namespace Runalyze\Bundle\CoreBundle\Controller;
 
+use Runalyze\Bundle\CoreBundle\Console\Formatter\HtmlOutputFormatter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-
-use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Console\Input\StringInput;
 use Symfony\Component\Console\Output\BufferedOutput;
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
-use Symfony\Component\Form\Forms;
-use Symfony\Component\Form\Extension\Core\Type;
-use Symfony\Component\Form\Extension\HttpFoundation\HttpFoundationExtension;
-
-use Doctrine\Bundle\DoctrineBundle\ConnectionFactory;
-use Doctrine\DBAL\Configuration;
-use Symfony\Component\Yaml\Yaml;
-use Installer;
-
-
-
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class InstallController
@@ -32,44 +16,87 @@ use Installer;
  * @author Michael Pohl <michael@runalyze.de>
  * @package Runalyze\Bundle\CoreBundle\Controller
  */
-class InstallController extends Controller {
+class InstallController extends Controller
+{
      /**
      * @Route("/install", name="install")
      */
-    public function installAction()
+    public function installAction(Request $request)
     {
-		$installer = new Installer($this->getDoctrine(), $this->getParameter('database_prefix'));
-		
-		return $this->render('system/install.html.twig', [
-				'alreadyInstalled' => $installer->isAlreadyInstalled()
-	    ]);
+        $session = $request->getSession();
+
+        if ($session->has('installer/successful')) {
+            return $this->redirectToRoute('install_finish');
+        }
+
+        $app = new Application($this->get('kernel'));
+        $app->setAutoExit(false);
+
+        $input = new StringInput('runalyze:install:check');
+        $output = new BufferedOutput(BufferedOutput::VERBOSITY_NORMAL, true, new HtmlOutputFormatter(true));
+        $exitCode = $app->run($input, $output);
+
+        $session->set('installer/possible', $exitCode == 0);
+
+        return $this->render('system/install.html.twig', [
+            'output' => '$ php bin/console runalyze:install:check'."\n\n".$output->fetch(),
+            'installationPossible' => $exitCode == 0,
+            'installationSuccessful' => false
+        ]);
     }
-    
+
     /**
      * @Route("/install/start", name="install_start")
      */
-    public function installStepOneAction(Request $request)
+    public function startAction(Request $request)
     {
-    	$installer = new Installer($this->getDoctrine(), $this->getParameter('database_prefix'));
-    	if (!$installer->isAlreadyInstalled()) {
-    		$installer->installRunalyze();
-    		$installer->checkIfIsAlreadyInstalled();
-    		if ($installer->isAlreadyInstalled()) {
-    			return $this->redirect($this->generateUrl('install_finish'));
-    		}
-    	} else {
-			return $this->render('system/install.html.twig', [
-					'alreadyInstalled' => $installer->isAlreadyInstalled()
-		    ]);
-    	}
+        $session = $request->getSession();
+
+        if (!$session->has('installer/possible') || !$session->get('installer/possible')) {
+            return $this->redirectToRoute('install');
+        }
+
+        if ($session->has('installer/successful')) {
+            return $this->redirectToRoute('install_finish');
+        }
+
+        $app = new Application($this->get('kernel'));
+        $app->setAutoExit(false);
+
+        $input = new StringInput('runalyze:install:database');
+        $output = new BufferedOutput(BufferedOutput::VERBOSITY_NORMAL, true, new HtmlOutputFormatter(true));
+        $exitCode = $app->run($input, $output);
+        $outputString = '$ php bin/console runalyze:install:database'."\n\n".$output->fetch();
+
+        if ($exitCode > 0) {
+            return $this->render('system/install.html.twig', [
+                'output' => $outputString,
+                'installationPossible' => false,
+                'installationSuccessful' => false
+            ]);
+        }
+
+        $session->set('installer/successful', true);
+        $session->set('installer/output', $outputString);
+
+        return $this->redirectToRoute('install_finish');
     }
-	
+
     /**
      * @Route("/install/finish", name="install_finish")
      */
-    public function installStepTwoAction(Request $request)
+    public function finishAction(Request $request)
     {
-        return $this->render('system/install-finish.html.twig');
+        $session = $request->getSession();
+
+        if (!$session->has('installer/successful')) {
+            return $this->redirectToRoute('install');
+        }
+
+        return $this->render('system/install.html.twig', [
+            'output' => $session->get('installer/output', ''),
+            'installationPossible' => false,
+            'installationSuccessful' => true
+        ]);
     }
-    
 }

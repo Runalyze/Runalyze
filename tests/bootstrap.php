@@ -17,9 +17,6 @@ if (!defined('FRONTEND_PATH'))
 require_once FRONTEND_PATH.'../vendor/autoload.php';
 
 require_once FRONTEND_PATH.'system/define.consts.php';
-require_once FRONTEND_PATH.'system/class.Cache.php';
-new Cache();
-Cache::clean();
 
 date_default_timezone_set('Europe/Berlin');
 
@@ -105,6 +102,11 @@ if (!function_exists('_ne')) {
 		echo $msg2;
 	}
 }
+
+// Clear cache
+require_once FRONTEND_PATH.'system/class.Cache.php';
+new Cache();
+Cache::clean();
 
 // Load helper class
 Helper::Unknown('');
