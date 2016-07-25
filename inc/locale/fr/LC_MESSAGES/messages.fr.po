@@ -1,18 +1,18 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-05-21 18:34+0200\n"
-"PO-Revision-Date: 2016-05-21 13:28+0200\n"
-"Last-Translator: Gilgamesh <alan.burlot@gmail.com>\n"
-"Language-Team: French <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/fr/>\n"
+"PO-Revision-Date: 2016-07-25 09:18+0000\n"
+"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
+"Language-Team: French "
+"<http://translate.runalyze.com/projects/runalyze/runalyze/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 2.3\n"
+"X-Generator: Weblate 2.8-dev\n"
 "X-Poedit-KeywordsList: __;_ne;_n;_e\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -50,7 +50,7 @@ msgstr "Cette valeur est trop grande."
 
 #: inc/html/formular/class.FormularValueParser.php:262
 msgid "This value is too small."
-msgstr "Cette valeur est trop petite."
+msgstr "La valeur est trop petite."
 
 #: inc/html/formular/class.FormularValueParser.php:303
 msgid "The value is too large."
@@ -62,7 +62,7 @@ msgstr "La date n'a pas pu être analysée."
 
 #: inc/html/formular/class.FormularValueParser.php:345
 msgid "The date must not be in the future."
-msgstr "La date ne doit pas être dans le futur."
+msgstr "La date ne doit pas être supérieure à la date du jour"
 
 #: inc/html/formular/class.FormularValueParser.php:378
 msgid "The time could not be read."
@@ -551,9 +551,8 @@ msgstr "MPE"
 #: inc/training/search/class.SearchFormular.php:194
 #: inc/core/Activity/TrainingEffect.php:53
 #: inc/core/Dataset/Keys/FitTrainingEffect.php:43
-#, fuzzy
 msgid "Training Effect"
-msgstr "Types d'entraînement"
+msgstr "L'effet d'entraînement"
 
 #: inc/training/search/class.SearchFormular.php:291
 #: inc/system/config/class.ConfigTabAccount.php:66
@@ -875,7 +874,7 @@ msgstr "Partenaire d'entraînement"
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:313
 #: inc/draw/class.PlotSumData.php:597
 msgid "Race Result"
-msgstr "Résultat de la course"
+msgstr "Résultat de compétition"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:314
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:546
@@ -903,7 +902,7 @@ msgstr "Zones de rythme"
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:339
 #, php-format
 msgid "Source of weather data: %s"
-msgstr "Source des données météo: %s"
+msgstr "Source des données météo : %s"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:354
 #, php-format
