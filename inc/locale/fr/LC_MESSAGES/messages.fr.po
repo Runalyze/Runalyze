@@ -4,7 +4,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-05-21 18:34+0200\n"
 "PO-Revision-Date: 2016-07-25 09:18+0000\n"
-"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
+"Last-Translator: Gilgamesh <alan.burlot@gmail.com>\n"
 "Language-Team: French "
 "<http://translate.runalyze.com/projects/runalyze/runalyze/fr/>\n"
 "Language: fr\n"
@@ -2540,7 +2540,7 @@ msgstr "linéaire inversé"
 
 #: inc/core/Parameter/Application/PaceAxisType.php:18
 msgid "as speed"
-msgstr ""
+msgstr "comme pour la vitesse"
 
 #: inc/core/Parameter/Application/HeartRateUnit.php:39
 msgid "absolute value"
@@ -2724,7 +2724,7 @@ msgstr "Communicateur Garmin"
 
 #: inc/core/Parameter/Application/ActivityCreationMode.php:41
 msgid "Standard form"
-msgstr ""
+msgstr "Format standard"
 
 #: inc/core/Parameter/Application/ActivityPlotMode.php:39
 msgid "all separated"
@@ -2954,7 +2954,7 @@ msgstr "Exercice"
 
 #: inc/core/Data/Stroketype.php:108 inc/core/Data/Stroketype.php:131
 msgid "Mixed"
-msgstr ""
+msgstr "Varié"
 
 #: inc/core/Data/Stroketype.php:123
 msgid "Back"
@@ -4029,6 +4029,9 @@ msgid ""
 "prognoses and visualizes your training in plots - more detailed than any "
 "other sports diary."
 msgstr ""
+"Runalyze analyse l'ensemble de votre entraînement, évalue votre forme, "
+"calcule des prévisions et permet de visualiser l'entraînement via des "
+"graphiques, plus complet que n'importe quel carnet de sport."
 
 #: inc/tpl/tpl.installerFooterText.php:13
 msgid ""
@@ -4096,6 +4099,8 @@ msgid ""
 "The main advantage of Runalyze is the ability to adapt everything to your "
 "personal needs and wishes."
 msgstr ""
+"Le principal avantage de Runalyze est sa capacité d'adaptation complète à "
+"vos propres besoins et envies."
 
 #: inc/tpl/tpl.help.php:34
 msgid ""
@@ -4108,6 +4113,8 @@ msgid ""
 "You can define your own sports or activity types and choose your own way of "
 "presentation and configure some parameters of our experimental calculations."
 msgstr ""
+"Vous pouvez définir vos propres sports ou types d'activité, personnaliser la "
+"présentation et configurer certains paramètres expérimentaux de calcul."
 
 #: inc/tpl/tpl.help.php:41
 msgid "Support"
@@ -4211,7 +4218,7 @@ msgstr "aujourd'hui"
 
 #: inc/class.DataBrowser.php:279
 msgid "Reload current datasheet"
-msgstr ""
+msgstr "Recharger la feuille de données actuelle"
 
 #: inc/class.DataBrowser.php:287
 msgid "Calendar"
