@@ -10,8 +10,9 @@ install:
     - composer install --prefer-dist --no-interaction
 
 before_script:
+    - cp app/config/default_config.yml data/config.yml
     - mkdir -p build/logs
-    - mysql -uroot -e 'SET @@global.sql_mode = TRADITIONAL; CREATE DATABASE runalyze_unittest;';
+    - mysql -uroot -e 'SET @@global.sql_mode = TRADITIONAL; CREATE DATABASE runalyze_unittest; CREATE DATABASE runalyze_test;';
     - mysql runalyze_unittest < inc/install/structure.sql
 
 script:

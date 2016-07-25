@@ -16,12 +16,15 @@ class InstallDatabaseCommandTest extends KernelTestCase
     /** @var \Doctrine\DBAL\Connection */
     protected $Connection;
 
+    /** @var string */
+    protected $DatabasePrefix;
+
     protected function setUp()
     {
-        $this->Kernel = $this->createKernel();
-        $this->Kernel->boot();
+        static::bootKernel();
 
-        $this->Connection = $this->Kernel->getContainer()->get('doctrine')->getConnection();
+        $this->Connection = static::$kernel->getContainer()->get('doctrine')->getConnection();
+        $this->DatabasePrefix = static::$kernel->getContainer()->getParameter('database_prefix');
 
         $this->dropAllTables();
     }
@@ -29,12 +32,13 @@ class InstallDatabaseCommandTest extends KernelTestCase
     protected function tearDown()
     {
         $this->dropAllTables();
+
+        parent::tearDown();
     }
 
     protected function dropAllTables()
     {
-        $prefix = $this->Kernel->getContainer()->getParameter('database_prefix');
-        $stmt = $this->Connection->executeQuery('SHOW TABLES LIKE "'.$prefix.'%"');
+        $stmt = $this->Connection->executeQuery('SHOW TABLES LIKE "'.$this->DatabasePrefix.'%"');
         $stmt->setFetchMode(PDOConnection::FETCH_COLUMN, 0);
         $tables = $stmt->fetchAll();
 
@@ -47,16 +51,15 @@ class InstallDatabaseCommandTest extends KernelTestCase
 
     public function testExecute()
     {
-        $application = new Application($this->Kernel);
+        $application = new Application(static::$kernel);
         $application->add(new InstallDatabaseCommand());
 
         $command = $application->find('runalyze:install:database');
         $commandTester = new CommandTester($command);
         $commandTester->execute([]);
 
-        $prefix = $this->Kernel->getContainer()->getParameter('database_prefix');
         $this->assertEquals(21, $this->Connection->query(
-            'SHOW TABLES LIKE "'.$prefix.'%"'
+            'SHOW TABLES LIKE "'.$this->DatabasePrefix.'%"'
         )->rowCount());
 
         $this->assertRegExp('/Database has been successfully initialized./', $commandTester->getDisplay());
