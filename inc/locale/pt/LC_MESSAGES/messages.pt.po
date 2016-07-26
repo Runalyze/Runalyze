@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-05-21 18:34+0200\n"
-"PO-Revision-Date: 2016-07-22 13:29+0000\n"
-"Last-Translator: Jose Augusto Monteiro <augusto.monteiro@gmail.com>\n"
+"PO-Revision-Date: 2016-07-26 05:46+0000\n"
+"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
 "Language-Team: Portuguese "
 "<http://translate.runalyze.com/projects/runalyze/runalyze/pt/>\n"
 "Language: pt\n"
@@ -50,7 +50,7 @@ msgstr "Este valor é muito grande."
 
 #: inc/html/formular/class.FormularValueParser.php:262
 msgid "This value is too small."
-msgstr "Este valor é muito pequeno"
+msgstr "Este valor é muito pequeno."
 
 #: inc/html/formular/class.FormularValueParser.php:303
 msgid "The value is too large."
@@ -62,7 +62,7 @@ msgstr "A data não pôde ser analisada."
 
 #: inc/html/formular/class.FormularValueParser.php:345
 msgid "The date must not be in the future."
-msgstr "A data não pode estar no futuro"
+msgstr "A data não pode estar no futuro."
 
 #: inc/html/formular/class.FormularValueParser.php:378
 msgid "The time could not be read."
@@ -130,7 +130,7 @@ msgstr "Data"
 #: inc/html/formular/class.FormularInputDayAndDaytime.php:102
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:95
 msgid "Time of day"
-msgstr "Hora do Dia."
+msgstr "Hora do Dia"
 
 #: inc/html/class.HTML.php:81 inc/html/class.HTML.php:107
 #: inc/draw/class.PlotSumData.php:190 inc/draw/class.PlotSumData.php:196
@@ -145,7 +145,7 @@ msgstr "Total"
 #: inc/html/class.Ajax.php:434 inc/core/View/Leaflet/Activity.php:254
 #: inc/tpl/tpl.Installer.php:4
 msgid "Start"
-msgstr "Início."
+msgstr "Início"
 
 #: inc/html/class.Ajax.php:435
 msgid "previous"
@@ -7780,7 +7780,7 @@ msgstr ""
 
 #: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:85
 msgid "General pace table"
-msgstr "Tabela geral de ritmo "
+msgstr "Tabela geral de ritmo"
 
 #: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:86
 msgid ""
