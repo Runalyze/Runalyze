@@ -21,6 +21,7 @@ data/sessions/sess*
 data/timezone.sqlite
 *.mo
 inc/locale/*.po
+web/app_dev.php
 
 #composer
 composer.phar

@@ -35,11 +35,11 @@ class Design extends \Runalyze\Configuration\Category {
 	}
 
 	/**
-	 * Fix background
-	 * @return bool
+	 * Background image
+	 * @return string path without leading 'web/'
 	 */
 	public function backgroundImage() {
-		return $this->get('DESIGN_BG_FILE');
+		return substr($this->get('DESIGN_BG_FILE'), 4);
 	}
 
 	/**

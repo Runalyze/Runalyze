@@ -33,35 +33,6 @@ class Linker {
 	 */
 	protected $Activity;
 
-	/**
-	 * URL for editing trainings
-	 * @var string
-	 */
-	const EDITOR_URL = 'call/call.Training.edit.php';
-
-	/**
-	 * URL to elevation info window
-	 * @var string
-	 */
-	const ELEVATION_CORRECTION_URL = 'call/call.Training.elevationCorrection.php';
-
-	/**
-	 * URL to elevation info window
-	 * @var string
-	 */
-	const ELEVATION_INFO_URL = 'call/call.Training.elevationInfo.php';
-
-	/**
-	 * URL to vdot info window
-	 * @var string
-	 */
-	const VDOT_INFO_URL = 'call/call.Training.vdotInfo.php';
-
-	/**
-	 * URL to rounds info window
-	 * @var string
-	 */
-	const ROUNDS_INFO_URL = 'call/call.Training.roundsInfo.php';
 
 	/**
 	 * Construct linker
@@ -88,7 +59,7 @@ class Linker {
 	 * @return string
 	 */
 	public function editUrl() {
-		return self::EDITOR_URL.'?id='.$this->Activity->id();
+		return 'activity/'.$this->Activity->id().'/edit';
 	}
 
 	/**
@@ -161,7 +132,7 @@ class Linker {
 	 * @return string
 	 */
 	public function urlToElevationCorrection() {
-		return self::ELEVATION_CORRECTION_URL.'?id='.$this->Activity->id();
+		return 'activity/'.$this->Activity->id().'/elevation-correction';
 	}
 
 	/**
@@ -170,7 +141,7 @@ class Linker {
 	 * @return string
 	 */
 	public function urlToElevationInfo($data = '') {
-		return self::ELEVATION_INFO_URL.'?id='.$this->Activity->id().'&'.$data;
+		return 'activity/'.$this->Activity->id().'/elevation-info'.($data != '' ? '?'.$data : '');
 	}
 
 	/**
@@ -179,7 +150,7 @@ class Linker {
 	 * @return string
 	 */
 	public function urlToVDOTinfo($data = '') {
-		return self::VDOT_INFO_URL.'?id='.$this->Activity->id().'&'.$data;
+		return 'activity/'.$this->Activity->id().'/vdot-info'.($data != '' ? '?'.$data : '');
 	}
 
 	/**
@@ -188,7 +159,7 @@ class Linker {
 	 * @return string
 	 */
 	public function urlToRoundsInfo($data = '') {
-		return self::ROUNDS_INFO_URL.'?id='.$this->Activity->id().'&'.$data;
+		return 'activity/'.$this->Activity->id().'/splits-info'.($data != '' ? '?'.$data : '');
 	}
 
 	/**
@@ -209,7 +180,7 @@ class Linker {
 		if ($linkClass != '')
 			$linkId .= ' class="'.$linkClass.'"';
 
-		return Ajax::window('<a'.$linkId.' href="'.self::EDITOR_URL.'?id='.$id.'">'.$text.'</a>', 'small');
+		return Ajax::window('<a'.$linkId.' href="/activity/'.$id.'/edit">'.$text.'</a>', 'small');
 	}
 
 	/**

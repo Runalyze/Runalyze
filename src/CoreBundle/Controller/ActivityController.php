@@ -1,5 +1,7 @@
 <?php
+
 namespace Runalyze\Bundle\CoreBundle\Controller;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -24,13 +26,11 @@ require_once '../inc/class.FrontendShared.php';
 
 class ActivityController extends Controller
 {
-    
     /**
-     * @Route("/call/call.Training.create.php")
-     * @Route("/activity/create", name="ActivityCreate")
+     * @Route("/activity/add", name="ActivityAdd")
      * @Security("has_role('ROLE_USER')")
      */
-    public function callTrainingCreateAction()
+    public function createAction()
     {
         $Frontend = new \Frontend(isset($_GET['json']), $this->get('security.token_storage'));
         
@@ -55,17 +55,19 @@ class ActivityController extends Controller
         }
         
         $Window = new \ImporterWindow();
+
         return new Response($Window->display());
     }
     
     /**
      * @Route("/call/call.Training.display.php")
-     * @Route("/activity/{id}", name="ActivityShow")
+     * @Route("/activity/{id}", name="ActivityShow", requirements={"id" = "\d+"})
      */
-    public function callTrainingDisplayAction($id = null)
+    public function displayAction($id = null)
     {
         $Frontend = new \Frontend(true, $this->get('security.token_storage'));
-        if (is_null($id)) {
+
+        if (null === $id) {
             $id = Request::createFromGlobals()->query->get('id');
         }
 
@@ -96,31 +98,19 @@ class ActivityController extends Controller
             $View = new \TrainingView($Context);
             $View->display();
         }
+
         return new Response;
     }
     
     /**
-     * @Route("/call/call.Training.edit.php")
-     * @Route("/activity/edit", name="ActivityEdit")
+     * @Route("/activity/{id}/edit", name="ActivityEdit")
      * @Security("has_role('ROLE_USER')")
      */
-    public function callTrainingEditAction()
+    public function editAction($id = null)
     {
         $Frontend = new \Frontend(true, $this->get('security.token_storage'));
 
-        if (isset($_GET['delete']) && is_numeric($_GET['delete'])) {
-        	$Factory = \Runalyze\Context::Factory();
-        	$Deleter = new Activity\Deleter(\DB::getInstance(), $Factory->activity($_GET['delete']));
-        	$Deleter->setAccountID(\SessionAccountHandler::getId());
-        	$Deleter->setEquipmentIDs($Factory->equipmentForActivity($_GET['delete'], true));
-        	$Deleter->delete();
-        
-        	echo '<div class="panel-content"><p id="submit-info" class="error">'.__('The activity has been removed').'</p></div>';
-        	echo '<script>$("#multi-edit-'.((int)$_GET['delete']).'").remove();Runalyze.Statistics.resetUrl();Runalyze.reloadContent();</script>';
-        	exit();
-        }
-        
-        $Training = new \TrainingObject(Request::createFromGlobals()->query->get('id'));
+        $Training = new \TrainingObject($id);
         $Activity = new Activity\Entity($Training->getArray());
         
         $Linker = new Linker($Activity);
@@ -139,37 +129,89 @@ class ActivityController extends Controller
         $Formular->display();
         
         echo '</div>';
+
         return new Response;
     }
     
     /**
-     * @Route("/call/call.Training.vdotInfo.php")
-     * @Route("/activity/vdotInfo")
+     * @Route("/activity/multi-editor/{id}", name="Multi-Editor", requirements={"id" = "\d+"}, defaults={"id" = null})
      * @Security("has_role('ROLE_USER')")
-    */
-    public function trainingVdotInfoAction()
+     */
+    public function multiEditorAction($id)
+    {
+        $_GET['mode'] = 'multi';
+        $Frontend = new \Frontend(true, $this->get('security.token_storage'));
+
+        $Training = new \TrainingObject($id);
+        $Activity = new Activity\Entity($Training->getArray());
+        
+        $Linker = new Linker($Activity);
+        $Dataview = new Dataview($Activity);
+        
+        echo $Linker->editNavigation();
+        
+        echo '<div class="panel-heading">';
+        echo '<h1>'.$Dataview->titleWithComment().', '.$Dataview->dateAndDaytime().'</h1>';
+        echo '</div>';
+        echo '<div class="panel-content">';
+        
+        $Formular = new \TrainingFormular($Training, \StandardFormular::$SUBMIT_MODE_EDIT);
+        $Formular->setId('training');
+        $Formular->setLayoutForFields( \FormularFieldset::$LAYOUT_FIELD_W50 );
+        $Formular->display();
+        
+        echo '</div>';
+
+        return new Response;
+    }
+    
+   /**
+     * @Route("/activity/{id}/delete", name="ActivityDelete")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function deleteAction($id)
     {
         $Frontend = new \Frontend(true, $this->get('security.token_storage'));
-        $VDOTinfo = new \VDOTinfo(new Context(Request::createFromGlobals()->query->get('id'), \SessionAccountHandler::getId()));
-        return new Response($VDOTinfo->display());
+        
+        $Factory = \Runalyze\Context::Factory();
+        $Deleter = new Activity\Deleter(\DB::getInstance(), $Factory->activity($_GET['delete']));
+        $Deleter->setAccountID(\SessionAccountHandler::getId());
+        $Deleter->setEquipmentIDs($Factory->equipmentForActivity($_GET['delete'], true));
+        $Deleter->delete();
+        
+        echo '<div class="panel-content"><p id="submit-info" class="error">'.__('The activity has been removed').'</p></div>';
+        echo '<script>$("#multi-edit-'.((int)$_GET['delete']).'").remove();Runalyze.Statistics.resetUrl();Runalyze.reloadContent();</script>';
+        exit();
     }
     
     /**
-     * @Route("/call/call.Training.elevationCorrection.php")
-     * @Route("/activity/elevationCorrection")
+     * @Route("/activity/{id}/vdot-info")
+     * @Security("has_role('ROLE_USER')")
+    */
+    public function vdotInfoAction($id)
+    {
+        $Frontend = new \Frontend(true, $this->get('security.token_storage'));
+        $VDOTinfo = new \VDOTinfo(new Context($id, \SessionAccountHandler::getId()));
+        $VDOTinfo->display();
+
+        return new Response();
+    }
+    
+    /**
+     * @Route("/activity/{id}/elevation-correction")
      * @Security("has_role('ROLE_USER')")
      */
-    public function trainingElevationCorrectionAction()
+    public function elevationCorrectionAction($id)
     {
-        
+
         $Frontend = new \Frontend(false, $this->get('security.token_storage'));
         
         $Factory = \Runalyze\Context::Factory();
-        $Activity = $Factory->activity(Request::createFromGlobals()->query->get('id'));
+        $Activity = $Factory->activity($id);
         $ActivityOld = clone $Activity;
         $Route = $Factory->route($Activity->get(Activity\Entity::ROUTEID));
         $RouteOld = clone $Route;
-        
+
         try {
         	$Calculator = new Calculator($Route);
         	$result = $Calculator->tryToCorrectElevation(Request::createFromGlobals()->query->get('strategy'));
@@ -181,83 +223,87 @@ class ActivityController extends Controller
         	$Calculator->calculateElevation();
         	$Activity->set(Activity\Entity::ELEVATION, $Route->elevation());
         
-        	$UpdaterRoute = new \Runalyze\Model\Route\Updater(DB::getInstance(), $Route, $RouteOld);
+        	$UpdaterRoute = new \Runalyze\Model\Route\Updater(\DB::getInstance(), $Route, $RouteOld);
         	$UpdaterRoute->setAccountID(\SessionAccountHandler::getId());
         	$UpdaterRoute->update();
         
-        	$UpdaterActivity = new Activity\Updater(DB::getInstance(), $Activity, $ActivityOld);
+        	$UpdaterActivity = new Activity\Updater(\DB::getInstance(), $Activity, $ActivityOld);
         	$UpdaterActivity->setAccountID(\SessionAccountHandler::getId());
         	$UpdaterActivity->update();
         
-        	if (Request::param('strategy') == 'none') {
+        	if (Request::createFromGlobals()->query->get('strategy') == 'none') {
         		echo __('Corrected elevation data has been removed.');
         	} else {
         		echo __('Elevation data has been corrected.');
         	}
         
-        	Ajax::setReloadFlag( Ajax::$RELOAD_DATABROWSER_AND_TRAINING );
-        	echo Ajax::getReloadCommand();
-        	echo Ajax::wrapJS(
+        	\Ajax::setReloadFlag( \Ajax::$RELOAD_DATABROWSER_AND_TRAINING );
+        	echo \Ajax::getReloadCommand();
+        	echo \Ajax::wrapJS(
         		'if ($("#ajax").is(":visible") && $("#training").length) {'.
-        			'Runalyze.Overlay.load(\''.Linker::EDITOR_URL.'?id='.Request::createFromGlobals()->query->get('id').'\');'.
+        			'Runalyze.Overlay.load(\'activity/'.$id.'/edit\');'.
         		'} else if ($("#ajax").is(":visible") && $("#gps-results").length) {'.
-        			'Runalyze.Overlay.load(\''.Linker::ELEVATION_INFO_URL.'?id='.Request::createFromGlobals()->query->get('id').'\');'.
+        			'Runalyze.Overlay.load(\'activity/'.$id.'/elevation-info\');'.
         		'}'
         	);
         } else {
         	echo __('Elevation data could not be retrieved.');
         }
+
         return new Response;
     }
     
     /**
-     * @Route("/call/call.Training.roundsInfo.php")
-     * @Route("/activity/roundsInfo")
+     * @Route("/activity/{id}/splits-info", requirements={"id" = "\d+"})
      * @Security("has_role('ROLE_USER')")
     */
-    public function trainingRoundsInfoAction()
+    public function splitsInfoAction($id)
     {
         $Frontend = new \Frontend(false, $this->get('security.token_storage'));
-        $Window = new Window(new Context(Request::createFromGlobals()->query->get('id'), \SessionAccountHandler::getId()));
-        return new Response($Window->display());
+        $Window = new Window(new Context($id, \SessionAccountHandler::getId()));
+        $Window->display();
+
+        return new Response();
     }
     
     /**
      * @Route("/call/call.Training.elevationInfo.php")
-     * @Route("/activity/elevationInfo")
+     * @Route("/activity/{id}/elevation-info", requirements={"id" = "\d+"})
      * @Security("has_role('ROLE_USER')")
-    */
-    public function trainingElevationInfoAction()
+     */
+    public function elevationInfoAction($id)
     {
         $Frontend = new \Frontend(false, $this->get('security.token_storage'));
-        $ElevationInfo = new \ElevationInfo(new Context(Request::createFromGlobals()->query->get('id'), \SessionAccountHandler::getId()));
+        $ElevationInfo = new \ElevationInfo(new Context($id, \SessionAccountHandler::getId()));
+
         return new Response($ElevationInfo->display());
     }
     
     /**
      * @Route("/call/call.Exporter.export.php")
-     * @Route("/activity/export")
+     * @Route("/activity/{id}/export/{type}/{typeid}", requirements={"id" = "\d+"})
      * @Security("has_role('ROLE_USER')")
-    */
-    public function exporterExportAction() {
+     */
+    public function exporterExportAction($id, $type, $typeid) {
         $Frontend = new \Frontend(true, $this->get('security.token_storage'));
         
-        if (isset($_GET['social']) && Share\Types::isValidValue((int)$_GET['typeid'])) {
-            $Context = new Context((int)$_GET['id'], \SessionAccountHandler::getId());
-            $Exporter = Share\Types::get((int)$_GET['typeid'], $Context);
+        if ($type == 'social' && Share\Types::isValidValue((int)$typeid)) {
+            $Context = new Context((int)$id, \SessionAccountHandler::getId());
+            $Exporter = Share\Types::get((int)$typeid, $Context);
         
             if ($Exporter instanceof Share\AbstractSnippetSharer) {
                 $Exporter->display();
             }
-        } elseif (isset($_GET['file']) && File\Types::isValidValue((int)$_GET['typeid'])) {
-            $Context = new Context((int)$_GET['id'], \SessionAccountHandler::getId());
-            $Exporter = File\Types::get((int)$_GET['typeid'], $Context);
+        } elseif ($type == 'file' && File\Types::isValidValue((int)$typeid)) {
+            $Context = new Context((int)$id, \SessionAccountHandler::getId());
+            $Exporter = File\Types::get((int)$typeid, $Context);
         
             if ($Exporter instanceof File\AbstractFileExporter) {
                 $Exporter->downloadFile();
                 exit;
             }
         }
+
         return new Response;
     }
     
@@ -307,10 +353,10 @@ class ActivityController extends Controller
      * @return int
      */
     private function parserStrtotime($string) {
-            if (substr($string, -1) == 'Z') {
-                    return LocalTime::fromServerTime((int)strtotime(substr($string, 0, -1).' UTC'))->getTimestamp();
-            }
-
-            return LocalTime::fromString($string)->getTimestamp();
+        if (substr($string, -1) == 'Z') {
+                return LocalTime::fromServerTime((int)strtotime(substr($string, 0, -1).' UTC'))->getTimestamp();
+        }
+        
+        return LocalTime::fromString($string)->getTimestamp();
     }
 }

@@ -35,7 +35,7 @@ class CallController extends Controller
      */
     public function garminCommunicatorAction()
     {
-        $Frontend = new \Frontend(true);
+        $Frontend = new \Frontend(true, $this->get('security.token_storage'));
 
         return $this->render('CoreBundle:Upload:garminCommunicator.html.twig', array(
             'htmlBase' => \System::getFullDomain(),
@@ -153,8 +153,7 @@ class CallController extends Controller
      }
      
     /**
-     * @Route("/call/window.search.php")
-     * @Route("/search", name="search")
+     * @Route("/my/search", name="my-search")
      * @Security("has_role('ROLE_USER')")
      */
     public function windowSearchAction()

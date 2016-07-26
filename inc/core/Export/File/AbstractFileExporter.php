@@ -18,7 +18,7 @@ use Runalyze\Util\LocalTime;
 abstract class AbstractFileExporter extends AbstractExporter
 {
     /** @var string */
-    const URL = 'call/call.Exporter.export.php';
+    const URL = 'activity/{id}/export/file/{enum}';
 
     /**
      * File content to write
@@ -55,7 +55,11 @@ abstract class AbstractFileExporter extends AbstractExporter
      */
     public function url()
     {
-        return self::URL.'?file=true&id='.$this->Context->activity()->id().'&typeid='.$this->enum();
+        return str_replace(
+            ['{id}', '{enum}'],
+            [$this->Context->activity()->id(), $this->enum()],
+            self::URL
+        );
     }
 
     /**

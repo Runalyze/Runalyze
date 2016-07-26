@@ -89,16 +89,16 @@ class PluginController extends Controller
     
     
     /**
-     * @Route("/call/call.Plugin.display.php")
+     * @Route("/my/plugin/{id}", requirements={"id" = "\d+"})
      * @Security("has_role('ROLE_USER')")
     */
-    public function pluginDisplayAction()
+    public function pluginDisplayAction($id)
     {
          $Frontend = new \Frontend(false, $this->get('security.token_storage'));
          $Factory = new \PluginFactory();
         
         try {
-        	$Plugin = $Factory->newInstanceFor( filter_input(INPUT_GET, 'id') );
+        	$Plugin = $Factory->newInstanceFor( $id );
         } catch (Exception $E) {
         	$Plugin = null;
         
@@ -120,7 +120,7 @@ class PluginController extends Controller
     */
     public function pluginPanelMoveAction()
     {
-        $Frontend = new \Frontend(true);
+        $Frontend = new \Frontend(true, $this->get('security.token_storage'));
         if (is_numeric($_GET['id'])) {
         $Factory = new \PluginFactory();
         $Panel = $Factory->newInstanceFor( $_GET['id'] );

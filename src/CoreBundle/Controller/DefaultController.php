@@ -41,8 +41,8 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-	$Frontend = new \Frontend(true, $this->get('security.token_storage'));
-	include '../dashboard.php';
+	    $Frontend = new \Frontend(true, $this->get('security.token_storage'));
+	    include '../dashboard.php';
 
         return $this->render('CoreBundle:Default:end.html.twig');
     }
@@ -96,15 +96,16 @@ class DefaultController extends Controller
      */
     public function loginAction()
     {
-	if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-	    return $this->redirect($this->generateUrl('dashboard'));
-	}
-	$authenticationUtils = $this->get('security.authentication_utils');
+    	if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+    	    return $this->redirect($this->generateUrl('dashboard'));
+    	}
 
-	$error = $authenticationUtils->getLastAuthenticationError();
+    	$authenticationUtils = $this->get('security.authentication_utils');
+    	$error = $authenticationUtils->getLastAuthenticationError();
+    	$lastUsername = $authenticationUtils->getLastUsername();
 
-	$lastUsername = $authenticationUtils->getLastUsername();
         new \Frontend(true, $this->get('security.token_storage'));
+
         if ($this->getParameter('user_cant_login')) {
             return $this->render('login/maintenance.html.twig');
         }
@@ -114,7 +115,7 @@ class DefaultController extends Controller
         }
 
         return $this->render('login/form.html.twig', [
-   	    'error'         => $error,
+   	        'error' => $error,
             'num' => $this->collectStatistics()
         ]);
     }
@@ -142,36 +143,33 @@ class DefaultController extends Controller
         \DB::getInstance()->stopAddingAccountID();
 
         $numUser = \Cache::get('NumUser', 1);
+
         if ($numUser == null) {
             $numUser = \DB::getInstance()->query('SELECT COUNT(*) FROM `'.PREFIX.'account` WHERE `activation_hash` = ""')->fetchColumn();
             \Cache::set('NumUser', $numUser, '500', 1);
         }
 
         $numDistance = \Cache::get('NumKm', 1);
+
         if ($numDistance == null) {
             $numDistance = \DB::getInstance()->query('SELECT SUM(`distance`) FROM `'.PREFIX.'training`')->fetchColumn();
             \Cache::set('NumKm', $numDistance, '500', 1);
         }
+
         \DB::getInstance()->startAddingAccountID();
 
         return ['user' => (int)$numUser, 'distance' => Distance::format($numDistance)];
     }
 
     /**
-     * @Route("/install.php", name="installe")
-     */
-    public function installAction()
-    {
-        return $this->includeOldScript('../install.php', false);
-    }
-    
-    /**
      * @Route("/admin.php")
      */
     public function adminAction()
     {
-	$Frontend = new \Frontend(true);
-	return new Response($Frontend->displayAdminView());
+    	$Frontend = new \Frontend(true);
+    	$Frontend->displayAdminView();
+
+    	return new Response();
     }
     
     /**

@@ -38,7 +38,6 @@ class FrontendShared extends Frontend {
 		self::$IS_SHOWN  = true;
 		self::$IS_IFRAME = Request::param('mode') == 'iframe';
 
-		$this->setEncoding();
 		$this->initTraining();
 
 		$UserId = (!is_null($this->ActivityContext)) ? SessionAccountHandler::getId() : 0;

@@ -10,7 +10,7 @@
 
 	<link rel="shortcut icon" type="image/x-icon" href="assets/v2.x/img/favicon.ico">
         <?php foreach (\Runalyze\Language::availableLanguages() as $key => $lang_arr) { ?>
-        <link rel="alternate" href="<?php echo System::getFullDomain(true)."index.php?lang=".$key; ?>" hreflang="<?php echo $key; ?>" />
+        <link rel="alternate" href="<?php echo System::getFullDomain(true)."?lang=".$key; ?>" hreflang="<?php echo $key; ?>" />
         <?php } ?>
 	<title>RUNALYZE</title>
 
@@ -18,7 +18,7 @@
 	<?php echo System::getCodeForLocalJSFiles(); ?>
 </head>
 
-<body id="home" style="background-image:url(assets/v2.x/<?php echo \Runalyze\Configuration::Design()->backgroundImage(); ?>);">
+<body id="home" style="background-image:url(<?php echo \Runalyze\Configuration::Design()->backgroundImage(); ?>);">
 
 <div id="flot-loader"></div>
 

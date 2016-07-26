@@ -21,7 +21,7 @@ class ImporterWindow {
 	 * URL for window
 	 * @var string
 	 */
-	public static $URL = 'call/call.Training.create.php';
+	public static $URL = 'activity/add';
 
 	/**
 	 * Show upload form?

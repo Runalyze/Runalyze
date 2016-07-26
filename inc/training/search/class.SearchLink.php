@@ -14,7 +14,7 @@ class SearchLink {
 	 * Window url
 	 * @var string
 	 */
-	public static $WINDOW_URL = 'call/window.search.php';
+	public static $WINDOW_URL = 'my/search';
 
 	/**
 	 * Parameter

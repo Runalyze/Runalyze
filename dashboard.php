@@ -3,7 +3,7 @@
  * RUNALYZE
  * 
  * @author Hannes Christiansen
- * @copyright http://www.runalyze.de/
+ * @copyright http://www.runalyze.com/
  */
 
 use Runalyze\View\Activity\Context;
