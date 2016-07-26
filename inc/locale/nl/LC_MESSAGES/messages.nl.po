@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-05-21 18:34+0200\n"
-"PO-Revision-Date: 2016-07-22 12:44+0000\n"
+"PO-Revision-Date: 2016-07-26 05:42+0000\n"
 "Last-Translator: Michael Pohl <michael@mipapo.de>\n"
 "Language-Team: Dutch "
 "<http://translate.runalyze.com/projects/runalyze/runalyze/nl/>\n"
@@ -494,12 +494,12 @@ msgstr "Luchtdruk"
 #: inc/training/search/class.SearchFormular.php:172
 #: inc/core/Data/Weather/WindSpeed.php:63
 msgid "Wind Speed"
-msgstr "Windsnelheid "
+msgstr "Windsnelheid"
 
 #: inc/training/search/class.SearchFormular.php:173
 #: inc/training/schemes/scheme.Training.php:584
 msgid "Title"
-msgstr "Titel "
+msgstr "Titel"
 
 #: inc/training/search/class.SearchFormular.php:174
 #: inc/training/schemes/scheme.Training.php:256
