@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-05-21 18:34+0200\n"
-"PO-Revision-Date: 2016-07-26 05:41+0000\n"
+"PO-Revision-Date: 2016-07-26 11:14+0000\n"
 "Last-Translator: Michael Pohl <michael@mipapo.de>\n"
 "Language-Team: Spanish "
 "<http://translate.runalyze.com/projects/runalyze/runalyze/es/>\n"
@@ -7036,7 +7036,7 @@ msgstr ""
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:133
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:198
 msgid "Muscles"
-msgstr ""
+msgstr "Músculos"
 
 #: plugin/RunalyzePluginPanel_Sportler/window.sportler.table.php:26
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:19
@@ -7219,7 +7219,7 @@ msgstr ""
 
 #: plugin/RunalyzePluginPanel_Equipment/class.RunalyzePluginPanel_Equipment.php:194
 msgid "x-times"
-msgstr ""
+msgstr "x-veces"
 
 #: plugin/RunalyzePluginPanel_Equipment/class.RunalyzePluginPanel_Equipment.php:200
 msgid "min."
