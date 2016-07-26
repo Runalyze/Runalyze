@@ -6,18 +6,18 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-05-21 18:34+0200\n"
-"PO-Revision-Date: 2015-08-23 12:14+0200\n"
+"PO-Revision-Date: 2016-07-26 05:48+0000\n"
 "Last-Translator: pedro galan <arnoldewald@yahoo.es>\n"
-"Language-Team: Catalan <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/ca/>\n"
+"Language-Team: Catalan "
+"<http://translate.runalyze.com/projects/runalyze/runalyze/ca/>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.3\n"
+"X-Generator: Weblate 2.8-dev\n"
 
 #: login.php:27 inc/tpl/tpl.installerHeader.php:23
 msgid "Please login"
@@ -47,14 +47,12 @@ msgid "Please enter a number."
 msgstr "Si us plau entri un valor."
 
 #: inc/html/formular/class.FormularValueParser.php:258
-#, fuzzy
 msgid "This value is too large."
-msgstr "L'entrada és massa llarga."
+msgstr "Aquest valor és massa gran."
 
 #: inc/html/formular/class.FormularValueParser.php:262
-#, fuzzy
 msgid "This value is too small."
-msgstr "L'entrada és massa llarga."
+msgstr "Aquest valor és massa petit."
 
 #: inc/html/formular/class.FormularValueParser.php:303
 msgid "The value is too large."
@@ -65,9 +63,8 @@ msgid "The date could not be parsed."
 msgstr "El format de la data és incorrecte."
 
 #: inc/html/formular/class.FormularValueParser.php:345
-#, fuzzy
 msgid "The date must not be in the future."
-msgstr "El format de la data és incorrecte."
+msgstr "La data no pot ser futura."
 
 #: inc/html/formular/class.FormularValueParser.php:378
 msgid "The time could not be read."
@@ -296,9 +293,8 @@ msgstr "Desplaçament vertical"
 #: inc/core/View/Window/Laps/Table.php:275
 #: inc/core/View/Activity/Plot/Series/VerticalRatio.php:42
 #: inc/core/Dataset/Keys/VerticalRatio.php:44
-#, fuzzy
 msgid "Vertical ratio"
-msgstr "Desplaçament vertical"
+msgstr "Ràtio vertical"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:42
 #: inc/training/search/class.SearchFormular.php:187
@@ -465,19 +461,17 @@ msgid "Equipment"
 msgstr "Equipament"
 
 #: inc/training/search/class.SearchFormular.php:159
-#, fuzzy
 msgid "Choose equipment"
-msgstr "El seu equipament"
+msgstr "Seleccioni el seu equipament"
 
 #: inc/training/search/class.SearchFormular.php:160
 #: plugin/RunalyzePluginStat_Tag/class.RunalyzePluginStat_Tag.php:123
 msgid "Tag"
-msgstr ""
+msgstr "Etiqueta"
 
 #: inc/training/search/class.SearchFormular.php:160
-#, fuzzy
 msgid "Choose tag"
-msgstr "Sel·leccioni l'eina"
+msgstr "Seleccioni l'etiqueta"
 
 #: inc/training/search/class.SearchFormular.php:167
 #: inc/training/schemes/scheme.Training.php:562
@@ -489,25 +483,24 @@ msgstr "Ruta"
 #: inc/training/schemes/scheme.Training.php:491
 #: inc/core/Data/Weather/Humidity.php:58 inc/core/Dataset/Keys/Humidity.php:43
 msgid "Humidity"
-msgstr ""
+msgstr "Humitat"
 
 #: inc/training/search/class.SearchFormular.php:171
 #: inc/training/schemes/scheme.Training.php:503
 #: inc/core/Data/Weather/Pressure.php:58
 #: inc/core/Dataset/Keys/AirPressure.php:52
 msgid "Pressure"
-msgstr ""
+msgstr "Pressió atmosfèrica"
 
 #: inc/training/search/class.SearchFormular.php:172
 #: inc/core/Data/Weather/WindSpeed.php:63
-#, fuzzy
 msgid "Wind Speed"
-msgstr "com velocitat"
+msgstr "Velocitat del vent"
 
 #: inc/training/search/class.SearchFormular.php:173
 #: inc/training/schemes/scheme.Training.php:584
 msgid "Title"
-msgstr ""
+msgstr "Títol"
 
 #: inc/training/search/class.SearchFormular.php:174
 #: inc/training/schemes/scheme.Training.php:256
