@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-05-21 18:34+0200\n"
-"PO-Revision-Date: 2016-07-26 05:46+0000\n"
-"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
+"PO-Revision-Date: 2016-07-26 21:24+0000\n"
+"Last-Translator: bruno lencastre <bruno.lencastre@sapo.pt>\n"
 "Language-Team: Portuguese "
 "<http://translate.runalyze.com/projects/runalyze/runalyze/pt/>\n"
 "Language: pt\n"
@@ -582,13 +582,12 @@ msgid "Standard calculation: As race result"
 msgstr "Cálculo padrão: como competição"
 
 #: inc/training/view/class.VDOTinfo.php:66
-#, fuzzy
 msgid ""
 "All traditional formulas are being used to calculate a VDOT value for a "
 "given race result."
 msgstr ""
-"Todas as fórmulas tradicionais estão usadas para calcular um valor VDOT para "
-"uma competição determinada."
+"Estão a ser utilizadas todas as fórmulas tradicionais para cálculo do VDOT "
+"para um determinado resultado de corrida."
 
 #: inc/training/view/class.VDOTinfo.php:92
 msgid "Correction: based on heartrate"
@@ -748,7 +747,7 @@ msgstr "HR médio"
 #: inc/core/Dataset/Keys/HeartrateMaximum.php:44
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:356
 msgid "Heart rate"
-msgstr ""
+msgstr "Frequência cardíaca"
 
 #: inc/training/view/section/class.SectionHeartrateRow.php:65
 #: inc/training/view/section/class.SectionHeartrateRow.php:68
@@ -760,7 +759,7 @@ msgstr ""
 #: inc/system/config/class.ConfigTabEquipment.php:82
 #: plugin/RunalyzePluginPanel_Equipment/class.RunalyzePluginPanel_Equipment.php:199
 msgid "max."
-msgstr ""
+msgstr "máx."
 
 #: inc/training/view/section/class.SectionSwimLaneRow.php:35
 #: inc/core/View/Activity/Plot/Series/Stroke.php:62
@@ -873,21 +872,18 @@ msgstr "Parceiro de treinamento"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:313
 #: inc/draw/class.PlotSumData.php:597
-#, fuzzy
 msgid "Race Result"
-msgstr "Trama do ritmo"
+msgstr "Resultado da corrida"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:314
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:546
-#, fuzzy
 msgid "Official distance"
-msgstr "Voltas manuais"
+msgstr "Distância oficial"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:315
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:549
-#, fuzzy
 msgid "Official time"
-msgstr "Desenvolvedores oficiais:"
+msgstr "Tempo oficial"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:316
 #, fuzzy
@@ -3827,7 +3823,7 @@ msgstr ""
 
 #: inc/tpl/tpl.Frontend.header.php:29 inc/tpl/tpl.Frontend.header.php:30
 msgid "Logout"
-msgstr "Logout"
+msgstr "Fechar sessão"
 
 #: inc/tpl/tpl.Frontend.header.php:36
 #: inc/system/config/class.ConfigTabPlugins.php:41
