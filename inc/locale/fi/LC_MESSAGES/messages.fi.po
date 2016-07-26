@@ -6,18 +6,18 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-05-21 18:34+0200\n"
-"PO-Revision-Date: 2015-11-30 18:17+0200\n"
-"Last-Translator: MtP76 <marko@poikonen.de>\n"
-"Language-Team: Finnish <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/fi/>\n"
+"PO-Revision-Date: 2016-07-26 05:44+0000\n"
+"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
+"Language-Team: Finnish "
+"<http://translate.runalyze.com/projects/runalyze/runalyze/fi/>\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.3\n"
+"X-Generator: Weblate 2.8-dev\n"
 
 #: login.php:27 inc/tpl/tpl.installerHeader.php:23
 msgid "Please login"
@@ -439,7 +439,7 @@ msgstr "Tyyppi"
 
 #: inc/training/search/class.SearchFormular.php:157
 msgid "Choose activity type(s)"
-msgstr "Valitse aktiviteetin tyypit."
+msgstr "Valitse aktiviteetin tyypit"
 
 #: inc/training/search/class.SearchFormular.php:158
 #: inc/training/schemes/scheme.Training.php:479
@@ -5978,7 +5978,7 @@ msgstr "%d päivää jäljellä"
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:187
 msgid "Goal reached."
-msgstr "Tavoite saavutettu"
+msgstr "Tavoite saavutettu."
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:194
 msgid "Pace Bunny"
