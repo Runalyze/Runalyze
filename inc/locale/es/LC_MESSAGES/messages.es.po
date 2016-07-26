@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-05-21 18:34+0200\n"
-"PO-Revision-Date: 2016-07-25 09:05+0000\n"
-"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
+"PO-Revision-Date: 2016-07-26 05:32+0000\n"
+"Last-Translator: Daniel Pindado <daniel.pindado@gmail.com>\n"
 "Language-Team: Spanish "
 "<http://translate.runalyze.com/projects/runalyze/runalyze/es/>\n"
 "Language: es\n"
@@ -1896,7 +1896,7 @@ msgstr "Vista por defecto del calendario"
 
 #: inc/core/Configuration/Category/DataBrowser.php:94
 msgid "Calendar: show labels for dataset"
-msgstr "Calendario: mostrar etiquetas para el dataset"
+msgstr "Calendario: mostrar etiquetas para el grupo de datos"
 
 #: inc/core/Configuration/Category/DataBrowser.php:98
 msgid "Calendar: show days with activities only"
@@ -4376,11 +4376,11 @@ msgstr "Otros"
 
 #: inc/system/schemes/set.emptyValues.php:61
 msgid "Jogging"
-msgstr "Entrenamiento al trote cochinero"
+msgstr "carrera continua"
 
 #: inc/system/schemes/set.emptyValues.php:61
 msgid "JOG"
-msgstr "ET"
+msgstr "CC"
 
 #: inc/system/schemes/set.emptyValues.php:62
 msgid "Fartlek"
@@ -4622,11 +4622,11 @@ msgstr "gorro"
 
 #: inc/system/config/class.ConfigTabDataset.php:59
 msgid "Dataset"
-msgstr "Dataset"
+msgstr "Grupo de datos"
 
 #: inc/system/config/class.ConfigTabDataset.php:66
 msgid "Your Dataset"
-msgstr "Tu dataset"
+msgstr "Tu grupo de datos"
 
 #: inc/system/config/class.ConfigTabDataset.php:68
 msgid ""
@@ -6164,7 +6164,6 @@ msgstr ""
 "mostrará la ventaja o desventaja que te lleva (o le llevas)."
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:60
-#, fuzzy
 msgid ""
 "Note: &quot;Saison&quot; refers to the current season in the german &quot;"
 "kmspiel&quot;."
@@ -6407,19 +6406,22 @@ msgstr "Editar actividad"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:459
 msgid "Edit the race result details"
-msgstr ""
+msgstr "Editar resultados competiciones"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:475
 msgid "Fun race | Click to mark this activity as a 'normal race'."
 msgstr ""
+"Carrera divertida | Seleccionar para marcar la actividad como  'carrera "
+"normal'."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:479
 msgid "Race | Click to mark this activity as a 'fun race'."
 msgstr ""
+"Carrera | Seleccionar para marcar esta actividad como  'carrera divertida'."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:526
 msgid "Race result was deleted."
-msgstr ""
+msgstr "Se eliminó el resultado de la competición."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:537
 msgid "Details"
@@ -6427,33 +6429,35 @@ msgstr "Detalles"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:539
 msgid "Event"
-msgstr ""
+msgstr "Evento"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:539
 msgid ""
 "If you participate in an event multiple times you should always enter the "
 "same name, i.e. don't append the event's number or year."
 msgstr ""
+"Si participas en un evento en varias ocasiones, introduce siempre el mismo "
+"nombre sin añadir el ordinal o el año del evento."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:543
 msgid "Officially measured"
-msgstr ""
+msgstr "Cronometraje oficial"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:543
 msgid "Was the course officially measured?"
-msgstr ""
+msgstr "¿Se realizó cronometraje oficial en el evento?"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:556
 msgid "Your official placement."
-msgstr ""
+msgstr "Posición oficial."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:560
 msgid "Participants"
-msgstr ""
+msgstr "Participantes"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:561
 msgid "Number of participants in every category"
-msgstr ""
+msgstr "Número de participantes en cada categoría"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:570
 msgid "Delete this race result"
@@ -6464,6 +6468,8 @@ msgid ""
 "This will only delete the entry as competition. The activity itself will "
 "stay untouched."
 msgstr ""
+"Borra el resultado de la competición. La actividad en si permanece "
+"inalterada."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:573
 msgid "Delete race result"
@@ -6482,44 +6488,53 @@ msgid ""
 "Edit a couple of activities. This plugin is needed to upload more than one "
 "activity at once."
 msgstr ""
+"Editar varias actividades simultáneamente. Este complemento permite subir "
+"varias actividades de una vez."
 
 #: plugin/RunalyzePluginTool_MultiEditor/class.RunalyzePluginTool_MultiEditor.php:46
 msgid "This plugin allows you to edit multiple activities one after another."
-msgstr ""
+msgstr "Este complemento te permite editar varias actividades consecutivamente."
 
 #: plugin/RunalyzePluginTool_MultiEditor/class.RunalyzePluginTool_MultiEditor.php:47
 msgid ""
 "At the moment it's not possible to edit multiple activities with only one "
 "form."
 msgstr ""
+"Actualmente no se pueden editar varias actividades en un único formulario."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:52
 msgid "Predict your race performance on various distances."
-msgstr ""
+msgstr "Predice tu rendimiento en competición para varias distancias."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:59
 msgid ""
 "There are different models that can be used to predict your race "
 "performances:"
-msgstr ""
+msgstr "Existen varios modelos para predecir el resultado en competición:"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:61
 msgid ""
 "Your current VDOT is estimated based on the ratio of heart rate and pace. "
 "This value is equivalent to specific performances."
 msgstr ""
+"Tu VDOT actual se estima a partir de la frecuencia cardíaca y el ritmo. Con "
+"este valor se puede determinar el rendimiento."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:64
 msgid ""
 "Robert Bock uses an individual coefficient for your fatigue over time/"
 "distance. This model uses your two best results."
 msgstr ""
+"Robert Bock usa un coeficiente individual para tu fatiga a lo largo del "
+"tiempo/ la distancia. Este modelo usa tus dos mejores resultados."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:68
 msgid ""
 "Herbert Steffny uses fixed factors to transform performances from one "
 "distance to another. This model uses your best result."
 msgstr ""
+"Herbert Steffny usa coeficientes fijos, para estimar el tiempo de una "
+"distancia a partir de otra. Este modelo se basa en tu mejor resultado."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:71
 msgid ""
@@ -6527,85 +6542,93 @@ msgid ""
 "and slightly different formulas than Robert Bock. This model uses your best "
 "result."
 msgstr ""
+"David Cameron usa un coeficiente fijo para la fatiga a lo largo del tiempo/"
+"la distancia con formas ligeramente diferentes a las de Robert Bock. Este "
+"modelo se basa en tu mejor resultado."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:74
 msgid ""
 "The VDOT model is the only one which considers your current shape. The other "
 "models are based on your previous race results."
 msgstr ""
+"El modelo VDOT es el único que tiene en cuenta tu estado de forma actual. "
+"Los otros modelos se basan únicamente en tus resultados en competición "
+"anteriores."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:82
 msgid "Distances to predict"
-msgstr ""
+msgstr "Distancias a predecir"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:84
 msgid "Prediction model"
-msgstr ""
+msgstr "Modelo predictivo"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:93
 msgid "Use basic endurance"
-msgstr ""
+msgstr "Usar resistencia básica"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:93
 msgid ""
 "Use basic endurance factor to adapt prognosis for long distances (Jack "
 "Daniels only)."
 msgstr ""
+"Usar factor de resistencia básica para adaptar la predicción a largas "
+"distancias (sólo Jack Daniels)."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:110
 msgid "Show prognosis trend"
-msgstr ""
+msgstr "Mostrar evolución de las predicciones"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:111
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:492
 msgid "Prognosis calculator"
-msgstr ""
+msgstr "Calculador de predicciones"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:129
 msgid "Prognoses can't be calculated."
-msgstr ""
+msgstr "No se puede calcular una predicción."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:133
 msgid "There are not enough results for good predictions."
-msgstr ""
+msgstr "No hay suficientes resultados para una buena predicción."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:200
 #, php-format
 msgid "<small>from</small> %s <small>to</small> <strong>%s</strong>"
-msgstr ""
+msgstr "<small>de</small> %s <small>a</small> <strong>%s</strong>"
 
 #: plugin/RunalyzePluginPanel_Prognose/Plot.Form.php:151
 msgid "Prognosis with basic endurance"
-msgstr ""
+msgstr "Pronóstico con resistencia básica"
 
 #: plugin/RunalyzePluginPanel_Prognose/Plot.Form.php:152
 msgid "Result"
-msgstr ""
+msgstr "Resultado"
 
 #: plugin/RunalyzePluginPanel_Prognose/Plot.Form.php:165
 msgid "Prognosis trend"
-msgstr ""
+msgstr "Tendencia de la predicción"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:129
 msgid "Your current VDOT:"
-msgstr ""
+msgstr "Tu VDOT actual:"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:130
 msgid "Your current basic endurance:"
-msgstr ""
+msgstr "Tu resistencia básica actual:"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:132
 #, php-format
 msgid "%s in %s <small>(%s)</small> and %s in %s <small>(%s)</small>"
-msgstr ""
+msgstr "%s en %s <small>(%s)</small> y %s en %s <small>(%s)</small>"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:136
 msgid "Your two best results:"
-msgstr ""
+msgstr "Tus dos mejores marcas:"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:302
 msgid "Personal best"
-msgstr ""
+msgstr "Mejor marca personal"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:333
 msgid "Your input is invalid"
@@ -6614,87 +6637,89 @@ msgstr "Entrada inválida"
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:345
 #, php-format
 msgid "The results give the constants K = %f and e = %f."
-msgstr ""
+msgstr "Para tus marcas se calcularon las constantes K = %f y e = %f."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:349
 #, php-format
 msgid "K must be between %u and %u, e between %f and %f."
-msgstr ""
+msgstr "K debe estar entre %u y %u, e entre %f y %f."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:369
 msgid "Input"
-msgstr ""
+msgstr "Entrada"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:374
 msgid "Model"
-msgstr ""
+msgstr "Modelo"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:382
 #: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:60
 msgid "Distances"
-msgstr ""
+msgstr "Distancias"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:398
 msgid "New VDOT"
-msgstr ""
+msgstr "Nuevo VDOT"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:403
 msgid "Use Basic Endurance"
-msgstr ""
+msgstr "Usar resistencia básica"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:408
 msgid "Basic Endurance"
-msgstr ""
+msgstr "Resistencia básica"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:423
 msgid "Best result"
-msgstr ""
+msgstr "Mejor marca"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:438
 msgid "Second best result"
-msgstr ""
+msgstr "Segunda mejor marca"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:473
 msgid "Show prognosis"
-msgstr ""
+msgstr "Mostrar predicción"
 
 #: plugin/RunalyzePluginPanel_Prognose/window.plot.php:36
 msgid "Prognosis calculator: form trend"
-msgstr ""
+msgstr "Calculador de predicciones: Evolución"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:62
 msgid "Database import/export"
-msgstr ""
+msgstr "Importar/Exportar base de datos"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:70
 msgid ""
 "This plugin allows you to import and export your complete data from the "
 "database."
 msgstr ""
+"Este complemento te permite importar y exportar todos tus datos de la base "
+"de datos."
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:122
 msgid "File format"
-msgstr ""
+msgstr "Formato de archivo"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:123
 msgid "Portable backup"
-msgstr ""
+msgstr "Copia de seguridad portátil"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:124
 msgid "Database backup"
-msgstr ""
+msgstr "Copia de seguridad de la base de datos"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:126
 msgid "Export your data"
-msgstr ""
+msgstr "Exportar tus datos"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:128
 msgid "Create file"
-msgstr ""
+msgstr "Crear archivo"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:130
 msgid "JSON-format"
-msgstr ""
+msgstr "Formato JSON"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:132
 msgid ""
@@ -6702,10 +6727,14 @@ msgid ""
 "into any other installation, using this plugin.<br />This way you can "
 "transfer your data from to local to an online installation and back."
 msgstr ""
+"Copia de seguridad portátil de tu configuración y tus datos - Este archivo "
+"se puede importar en otra instalación, usando este complemento.<br />De este "
+"modo puedes transferir tus datos p.ej. de un servidor local a uno en línea y "
+"viceversa."
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:136
 msgid "SQL-format"
-msgstr ""
+msgstr "Formato SQL"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:138
 msgid ""
@@ -6713,82 +6742,92 @@ msgid ""
 "g. PHPMyAdmin into any database.<br />This is recommended to create a backup "
 "copy or to import your data into a new installation."
 msgstr ""
+"Copia de seguridad de la base de datos completa - Este archivo se puede "
+"importar manualmente en cualquier base de datos con p.ej. PHPMyAdmin.<br />"
+"Se recomienda para crear una cpia de seguridad o para importar tus datos a "
+"una nueva instalación."
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:174
 msgid "Import file"
-msgstr ""
+msgstr "Importar archivo"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:183
 msgid "You can only import *.json.gz-files."
-msgstr ""
+msgstr "Solo puedes importar archivos *.json.gz."
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:192
 msgid "Overwrite general configuration"
-msgstr ""
+msgstr "Sobreescribir la configuración general"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:193
 msgid "Overwrite dataset configuration"
-msgstr ""
+msgstr "Sobreescribir la configuración del conjunto de datos"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:194
 msgid "Overwrite plugins"
-msgstr ""
+msgstr "Sobreescribir complementos"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:195
 msgid "Delete all old activities"
-msgstr ""
+msgstr "Borrar todas las actividades"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:196
 msgid "Delete all old body values"
-msgstr ""
+msgstr "Borrar todos los datos corporales"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:198
 #, php-format
 msgid "There are <strong>%s</strong> activities in this file."
-msgstr ""
+msgstr "hay <strong>%s</strong> activitidades en este archivo."
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:199
 #, php-format
 msgid "There are <strong>%s</strong> body values in this file."
-msgstr ""
+msgstr "Hay <strong>%s</strong> valores corporales en este archivo."
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:206
 #, php-format
 msgid "Versions do not match! The backup is from %s but you are using %s."
 msgstr ""
+"¡Versiones incompatibles! La copia de seguridad es de %s pero estás usando "
+"%s."
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:211
 msgid "The file seems to be corrupted."
-msgstr ""
+msgstr "El archivo parece estar corrompido."
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:238
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:290
 msgid "Import data"
-msgstr ""
+msgstr "Importar datos"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:239
 msgid "All data have been imported."
-msgstr ""
+msgstr "Se importaron todos los datos."
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:240
 msgid "It is recommended to use the <em>Database cleanup</em> tool."
-msgstr ""
+msgstr "Se recomienda usar la herramienta <em>Limpiar la base de datos</em>."
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:283
 msgid "Allowed file extension: *.json.gz"
-msgstr ""
+msgstr "Extensión de archivo permitida: *.json.gz"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:284
 msgid ""
 "All shared links will be invalid if you (re-)import activities and overwrite "
 "all existing activities!"
 msgstr ""
+"¡Si importas (de nuevo) todas las actividades y sobreescribes las actuales, "
+"los enlaces compartidos dejarán de ser válidos!"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:285
 msgid ""
 "The file has to be created with the same version of Runalyze!<br>You won't "
 "be able to import a file from an older version."
 msgstr ""
+"¡El archivo tiene que crearse con la misma versión de Runalyze!<br>No se "
+"pueden importar archivos de versiones anteriores."
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:287
 msgid ""
@@ -6796,47 +6835,50 @@ msgid ""
 "activity types.<br>You have to make these changes by hand or delete the "
 "existing data in advance."
 msgstr ""
+"La importación no modifica los datos existentes de equipación, tipos de "
+"depote o tipos de actividad. <br>Estos cambios los debes hacer tu a mano, o "
+"bien puedes borrar previamente los datos existentes."
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:306
 msgid "Export data"
-msgstr ""
+msgstr "Exportar datos"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:131
 msgid "dataset"
-msgstr ""
+msgstr "Grupo de datos"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:134
 msgid "Sport types"
-msgstr ""
+msgstr "Tipos de deporte"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:136
 msgid "Body data"
-msgstr ""
+msgstr "Datos corporales"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:137
 msgid "Activities"
-msgstr ""
+msgstr "Actividades"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:138
 msgid "Trackdata"
-msgstr ""
+msgstr "Datos de rutas"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:139
 msgid "Swimdata"
-msgstr ""
+msgstr "Datos de natación"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:140
 #: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:38
 msgid "Routes"
-msgstr ""
+msgstr "Rutas"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:141
 msgid "HRV data"
-msgstr ""
+msgstr "Datos de HRV"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:143
 msgid "Equipment types"
-msgstr ""
+msgstr "Tipo de equipación"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:144
 msgid "Relation: equipment types to sports"
@@ -6852,26 +6894,26 @@ msgstr "Relación:etiqueta respecto a actividades"
 
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:32
 msgid "Monthly Stats"
-msgstr ""
+msgstr "Estadísticas mensuales"
 
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:40
 #, php-format
 msgid "How many %s/hours did you do per month"
-msgstr ""
+msgstr "Cuántos %s u horas has entrenado cada mes"
 
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:64
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:76
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:117
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:130
 msgid "by distance"
-msgstr ""
+msgstr "Por distancia"
 
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:65
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:77
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:122
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:131
 msgid "by time"
-msgstr ""
+msgstr "Por tiempo"
 
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:66
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:78
@@ -6886,16 +6928,16 @@ msgstr "por calorías"
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:68
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:80
 msgid "by trimp"
-msgstr ""
+msgstr "Por TRIMP"
 
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:69
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:81
 msgid "by number"
-msgstr ""
+msgstr "Por número"
 
 #: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:46
 msgid "Some statistics for your most frequent routes."
-msgstr ""
+msgstr "Listado de las rutas y lugares más/menos comunes."
 
 #: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:54
 msgid ""
@@ -6903,68 +6945,73 @@ msgid ""
 "'City A - City B'This way the plugin will be able to count how often you "
 "visit each city or place."
 msgstr ""
+"El símbolo '-' separa distintos lugares. P.ej., Ciudad A - Ciudad B. De esta "
+"forma el complemento podrá calcular la frecuencia con que visitas cada "
+"destino."
 
 #: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:64
 msgid "Show visited cities"
 msgstr "Mostrar ciudades visitadas"
 
 #: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:73
+#, fuzzy
 msgid "Open route network"
-msgstr ""
+msgstr "Abrir red de rutas"
 
 #: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:130
 msgid "Most frequent routes"
-msgstr ""
+msgstr "Rutas más frecuentes"
 
 #: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:166
 msgid "Most frequent places"
-msgstr ""
+msgstr "Destinos más frecuentes"
 
 #: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:172
 msgid "There are no routes."
-msgstr ""
+msgstr "No hay rutas."
 
 #: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:196
 msgid "Rare places"
-msgstr ""
+msgstr "Lugares menos frecuentes"
 
 #: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:223
 #, php-format
 msgid "You have visited %s different places."
-msgstr ""
+msgstr "Has visitado %s lugares diferentes."
 
 #: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:229
 msgid "Everything seperated by a ' - ' is considered as an individual place."
-msgstr ""
+msgstr "Cada elemento separado por  '-' se considera un destino independiente."
 
 #: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:281
 msgid "Choose sport"
-msgstr ""
+msgstr "Elige deporte"
 
 #: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:282
 msgid "Choose year"
-msgstr ""
+msgstr "Elige año"
 
 #: plugin/RunalyzePluginStat_Strecken/window.routenet.php:21
+#, fuzzy
 msgid "Route network"
-msgstr ""
+msgstr "Red de rutas"
 
 #: plugin/RunalyzePluginStat_Strecken/window.routenet.php:87
 msgid "There are no routes matching the criterias."
-msgstr ""
+msgstr "No hay rutas para esos criterios."
 
 #: plugin/RunalyzePluginStat_Strecken/window.routenet.php:100
 #, php-format
 msgid "The map contains your %s most recent routes matching the criterias."
-msgstr ""
+msgstr "El mapa contiene las %s rutas más recientes que cumplen los criterios."
 
 #: plugin/RunalyzePluginStat_Strecken/window.routenet.php:101
 msgid "More routes are not possible at the moment due to performance issues."
-msgstr ""
+msgstr "Por motivos de rendimiento, no se pueden actualmente más rutas."
 
 #: plugin/RunalyzePluginPanel_Sportler/window.sportler.php:20
 msgid "Add body values"
-msgstr ""
+msgstr "Añadir valores corporales"
 
 #: plugin/RunalyzePluginPanel_Sportler/window.sportler.php:25
 msgid "Edit body values"
