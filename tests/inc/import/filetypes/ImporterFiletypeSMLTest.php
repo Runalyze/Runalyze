@@ -55,7 +55,7 @@ class ImporterFiletypeSMLTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( 0.100, $this->object->object()->getDistance() );
 		$this->assertEquals( 3773, $this->object->object()->getTimeInSeconds() );
 		$this->assertEquals( 39, $this->object->object()->getElapsedTime() );
-		$this->assertEquals( 91, $this->object->object()->getPulseAvg() );
+		$this->assertEquals( 100, $this->object->object()->getPulseAvg() );
 		$this->assertEquals( 113, $this->object->object()->getPulseMax() );
 		$this->assertEquals( 752, $this->object->object()->getCalories() );
 
@@ -154,7 +154,7 @@ class ImporterFiletypeSMLTest extends PHPUnit_Framework_TestCase {
 
 		// Only the first samples up to 0.106 km are available
 		// Header data does not match anymore
-		$this->assertEquals( 117, $this->object->object()->getPulseAvg(), '', 0 );
+		$this->assertEquals( 118, $this->object->object()->getPulseAvg(), '', 0 );
 		$this->assertEquals( 131, $this->object->object()->getPulseMax(), '', 0 );
 
 		$this->assertTrue( $this->object->object()->hasArrayHRV() );

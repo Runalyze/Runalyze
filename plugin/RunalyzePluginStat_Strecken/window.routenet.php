@@ -38,7 +38,7 @@ if (empty($Conditions)) {
 			`min`,
 			`max`
 		FROM `'.PREFIX.'route`
-		WHERE `'.PREFIX.'route`.`accountid`='.SessionAccountHandler::getId().' AND 
+		WHERE `'.PREFIX.'route`.`accountid`='.SessionAccountHandler::getId().' AND
 				`geohashes`!="" '.$Conditions.'
 		ORDER BY `id` DESC
 		LIMIT '.RunalyzePluginStat_Strecken::MAX_ROUTES_ON_NET);
@@ -65,13 +65,16 @@ $maxLng = -180;
 
 while ($RouteData = $Routes->fetch()) {
 	$Route = new Model\Route\Entity($RouteData);
-	$MinCoordinate = (new League\Geotools\Geohash\Geohash())->decode($RouteData['min'])->getCoordinate();
-	$MaxCoordinate = (new League\Geotools\Geohash\Geohash())->decode($RouteData['max'])->getCoordinate();
 
-	$minLat = $MinCoordinate->getLatitude() != 0 ? min($minLat, $MinCoordinate->getLatitude()) : $minLat;
-	$minLng = $MinCoordinate->getLongitude() != 0 ? min($minLng, $MinCoordinate->getLongitude()) : $minLng;
-	$maxLat = $MaxCoordinate->getLatitude() != 0 ? max($maxLat, $MaxCoordinate->getLatitude()) : $maxLat;
-	$maxLng = $MaxCoordinate->getLongitude() != 0 ? max($maxLng, $MaxCoordinate->getLongitude()) : $maxLng;
+	if (null !== $RouteData['min'] && null !== $RouteData['max']) {
+		$MinCoordinate = (new League\Geotools\Geohash\Geohash())->decode($RouteData['min'])->getCoordinate();
+		$MaxCoordinate = (new League\Geotools\Geohash\Geohash())->decode($RouteData['max'])->getCoordinate();
+
+		$minLat = $MinCoordinate->getLatitude() != 0 ? min($minLat, $MinCoordinate->getLatitude()) : $minLat;
+		$minLng = $MinCoordinate->getLongitude() != 0 ? min($minLng, $MinCoordinate->getLongitude()) : $minLng;
+		$maxLat = $MaxCoordinate->getLatitude() != 0 ? max($maxLat, $MaxCoordinate->getLatitude()) : $maxLat;
+		$maxLng = $MaxCoordinate->getLongitude() != 0 ? max($maxLng, $MaxCoordinate->getLongitude()) : $maxLng;
+	}
 
 	$Path = new Leaflet\Activity('route-'.$RouteData['id'], $Route, null, false);
 	$Path->addOption('hoverable', false);

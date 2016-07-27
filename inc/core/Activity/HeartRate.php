@@ -36,6 +36,7 @@ class HeartRate {
 	/**
 	 * Constructor
 	 * @param int $valueInBPM
+	 * @param \Runalyze\Athlete|null $Athlete
 	 */
 	public function __construct($valueInBPM, \Runalyze\Athlete $Athlete = null) {
 		$this->value = $valueInBPM;

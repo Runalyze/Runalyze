@@ -250,7 +250,7 @@ class ImporterFiletypeXMLTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( 5.013, $this->object->object()->getDistance() );
 		$this->assertEquals( 1551, $this->object->object()->getTimeInSeconds() );
 		$this->assertEquals( 648, $this->object->object()->getElapsedTime() );
-		$this->assertEquals( 112, $this->object->object()->getPulseAvg() );
+		$this->assertEquals( 111, $this->object->object()->getPulseAvg() );
 		$this->assertEquals( 123, $this->object->object()->getPulseMax() );
 		$this->assertEquals( 361, $this->object->object()->getCalories() );
 
@@ -266,7 +266,7 @@ class ImporterFiletypeXMLTest extends PHPUnit_Framework_TestCase {
 
 		// New: Cadence && Laps
 		$this->assertTrue( $this->object->object()->hasArrayCadence() );
-		$this->assertEquals( 87, $this->object->object()->getCadence() );
+		$this->assertEquals( 86, $this->object->object()->getCadence() );
 		$this->assertEquals(
 			array(81, 87, 88, 88, 88, 87, 88),
 			$this->object->object()->getArrayCadence()

@@ -4,7 +4,9 @@
  * @package Runalyze\Import\Parser
  */
 
+use Runalyze\Calculation\Distribution\TrackdataAverages;
 use Runalyze\Configuration;
+use Runalyze\Model\Trackdata;
 use Runalyze\Util\LocalTime;
 use Runalyze\Util\TimezoneLookup;
 
@@ -261,20 +263,17 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 				$this->TrainingObject->setTimeInSeconds( $this->TrainingObject->Splits()->totalTime() );
 		}
 
-		if ($this->TrainingObject->getPulseAvg() == 0 && $this->TrainingObject->getPulseMax() == 0)
-			$this->setAvgAndMaxHeartrateFromArray();
+		if ($this->TrainingObject->getPulseMax() == 0)
+			$this->setMaxHeartrateFromArray();
 
-		$this->setAvgCadenceFromArray();
-		$this->setAvgPowerFromArray();
-		$this->setTemperatureFromArray();
-		$this->setRunningDynamicsFromArray();
+		$this->setAveragesFromArray();
 		$this->setDistanceFromGPSdata();
 		$this->setActivityID();
 	}
 
 	/**
 	 * Set activityID if empty
-         * Floor must be used because we don't save seconds for activities (historical)
+	 * Floor must be used because we don't save seconds for activities (historical)
 	 */
 	 private function setActivityID()
 	 {
@@ -286,74 +285,74 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 	/**
 	 * Set average and maximum heartrate from array
 	 */
-	private function setAvgAndMaxHeartrateFromArray() {
+	private function setMaxHeartrateFromArray() {
 		$array = $this->TrainingObject->getArrayHeartrate();
-		if (!empty($array) && max($array) > 30) {
-			$array = array_filter($array, 'ParserAbstract__ArrayFilterForLowEntries');
 
-			$this->TrainingObject->setPulseAvg( round(array_sum($array)/count($array)) );
+		if (!empty($array)) {
 			$this->TrainingObject->setPulseMax( max($array) );
 		}
 	}
 
 	/**
-	 * Set average cadence from array
+	 * Calculate average values from trackdata arrays
+	 *
+	 * Remember: vertical ratio, stride length and estimated power are calculated in Activity\Model\Inserter
 	 */
-	private function setAvgCadenceFromArray() {
-		$array = $this->TrainingObject->getArrayCadence();
-		$this->TrainingObject->setCadence( round(array_sum($array)/count($array)) );
+	private function setAveragesFromArray() {
+		$Trackdata = new Trackdata\Entity([
+			Trackdata\Entity::TIME => $this->TrainingObject->getArrayTime(),
+			Trackdata\Entity::HEARTRATE => $this->TrainingObject->getArrayHeartrate(),
+			Trackdata\Entity::CADENCE => $this->TrainingObject->getArrayCadence(),
+			Trackdata\Entity::VERTICAL_OSCILLATION => $this->TrainingObject->getArrayVerticalOscillation(),
+			Trackdata\Entity::GROUNDCONTACT => $this->TrainingObject->getArrayGroundContact(),
+			Trackdata\Entity::GROUNDCONTACT_BALANCE => $this->TrainingObject->getArrayGroundContactBalance(),
+			Trackdata\Entity::POWER => $this->TrainingObject->getArrayPower()
+		]);
+
+		if (!$this->TrainingObject->hasArrayTime()) {
+			if ($Trackdata->isEmpty()) {
+				return;
+			}
+
+			$Trackdata->set(Trackdata\Entity::TIME, range(1, $Trackdata->num()));
+		}
+
+		$this->setAveragesFrom(new TrackdataAverages($Trackdata, [
+			Trackdata\Entity::HEARTRATE,
+			Trackdata\Entity::CADENCE,
+			Trackdata\Entity::VERTICAL_OSCILLATION,
+			Trackdata\Entity::GROUNDCONTACT,
+			Trackdata\Entity::GROUNDCONTACT_BALANCE,
+			Trackdata\Entity::POWER
+		]));
 	}
 
 	/**
-	 * Set running dynamics from array
+	 * @param \Runalyze\Calculation\Distribution\TrackdataAverages $averages
 	 */
-	private function setRunningDynamicsFromArray() {
-		$groundContact = $this->TrainingObject->getArrayGroundContact();
-		$oscillation = $this->TrainingObject->getArrayVerticalOscillation();
-		$groundContactBalance = $this->TrainingObject->getArrayGroundContactBalance();
-
-		if (!empty($groundContact) && max($groundContact) > 30) {
-			$groundContact = array_filter($groundContact, 'ParserAbstract__ArrayFilterForLowEntries');
-
-			$this->TrainingObject->setGroundContactTime( round(array_sum($groundContact)/count($groundContact)) );
+	private function setAveragesFrom(TrackdataAverages $averages) {
+		if ($this->TrainingObject->getPulseAvg() == 0 && $averages->average(Trackdata\Entity::HEARTRATE) > 0) {
+			$this->TrainingObject->setPulseAvg(round($averages->average(Trackdata\Entity::HEARTRATE)));
 		}
 
-		if (!empty($oscillation) && max($oscillation) > 30) {
-			$oscillation = array_filter($oscillation);
-
-			$this->TrainingObject->setVerticalOscillation( round(array_sum($oscillation)/count($oscillation)) );
+		if ($this->TrainingObject->getCadence() == 0 && $averages->average(Trackdata\Entity::CADENCE) > 0) {
+			$this->TrainingObject->setCadence(round($averages->average(Trackdata\Entity::CADENCE)));
 		}
 
-
-		if (!empty($groundContactBalance) && max($groundContactBalance) > 30) {
-			$groundContactBalance = array_filter($groundContactBalance, 'ParserAbstract__ArrayFilterForLowEntries');
-
-			$this->TrainingObject->setGroundContactBalance( round(array_sum($groundContactBalance)/count($groundContactBalance)) );
+		if ($averages->average(Trackdata\Entity::VERTICAL_OSCILLATION) > 0) {
+			$this->TrainingObject->setVerticalOscillation(round($averages->average(Trackdata\Entity::VERTICAL_OSCILLATION)));
 		}
-	}
 
-	/**
-	 * Set average power from array
-	 */
-	private function setAvgPowerFromArray() {
-		$array = $this->TrainingObject->getArrayPower();
-
-		if (!empty($array) && max($array) > 30) {
-			$array = array_filter($array, 'ParserAbstract__ArrayFilterForLowEntries');
-
-			$this->TrainingObject->setPower( round(array_sum($array)/count($array)) );
+		if ($averages->average(Trackdata\Entity::GROUNDCONTACT) > 0) {
+			$this->TrainingObject->setGroundContactTime(round($averages->average(Trackdata\Entity::GROUNDCONTACT)));
 		}
-	}
 
-	/**
-	 * Set average temperature from array
-	 */
-	private function setTemperatureFromArray() {
-		if (!Configuration::ActivityForm()->loadWeather()) {
-			$array = $this->TrainingObject->getArrayTemperature();
+		if ($averages->average(Trackdata\Entity::GROUNDCONTACT_BALANCE) > 0) {
+			$this->TrainingObject->setGroundContactBalance(round($averages->average(Trackdata\Entity::GROUNDCONTACT_BALANCE)));
+		}
 
-			if (!empty($array) && (min($array) != max($array) || min($array) != 0))
-				$this->TrainingObject->setTemperature( round(array_sum($array)/count($array)) );
+		if ($this->TrainingObject->getPower() == 0 && $averages->average(Trackdata\Entity::POWER) > 0) {
+			$this->TrainingObject->setPower(round($averages->average(Trackdata\Entity::POWER)));
 		}
 	}
 

@@ -34,6 +34,7 @@ class SessionAccountHandler {
 	 *   because some of them need database-connection
 	 */
 	public function __construct() {
+
 	}
 
 	/**

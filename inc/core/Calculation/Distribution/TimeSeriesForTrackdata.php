@@ -21,17 +21,17 @@ class TimeSeriesForTrackdata extends TimeSeries {
 	protected $Trackdata;
 
 	/**
-	 * @var int enum
+	 * @var string enum
 	 */
 	protected $IndexKey;
 
 	/**
-	 * @var int[] enums
+	 * @var string[] enums
 	 */
 	protected $SumDifferencesKeys;
 
 	/**
-	 * @var int[] enums
+	 * @var string[] enums
 	 */
 	protected $AvgValuesKeys;
 
@@ -43,30 +43,34 @@ class TimeSeriesForTrackdata extends TimeSeries {
 	/**
 	 * Construct time series for trackdata object
 	 * @param \Runalyze\Model\Trackdata\Entity $trackdata
-	 * @param int $indexKey enum
-	 * @param int[] $sumDifferencesKeys enums
-	 * @param int[] $avgValuesKeys enums
+	 * @param string $indexKey enum
+	 * @param string[] $sumDifferencesKeys enums
+	 * @param string[] $avgValuesKeys enums
 	 * @throws \InvalidArgumentException
 	 */
-	public function __construct(
-		Trackdata\Entity $trackdata,
-		$indexKey,
-		$sumDifferencesKeys = array(),
-		$avgValuesKeys = array()
-	) {
+	public function __construct(Trackdata\Entity $trackdata, $indexKey, array $sumDifferencesKeys = [], array $avgValuesKeys = []) {
 		$this->Trackdata = $trackdata;
 		$this->IndexKey = $indexKey;
 		$this->SumDifferencesKeys = $sumDifferencesKeys;
 		$this->AvgValuesKeys = $avgValuesKeys;
 
-		foreach (array_merge($sumDifferencesKeys, $avgValuesKeys) as $key) {
-			if (!$trackdata->has($key)) {
-				$trackdata->set($key, array_fill(0, $trackdata->num(), 0));
-			}
-		}
+		$this->fillMissingTrackdataArrays();
 
 		parent::__construct($trackdata->get($indexKey), $trackdata->get(Trackdata\Entity::TIME));
 		$this->collectData();
+	}
+
+	/**
+	 * Ensure that all requested arrays are filled
+	 */
+	protected function fillMissingTrackdataArrays() {
+		$emptyArray = array_fill(0, $this->Trackdata->num(), 0);
+
+		foreach (array_merge($this->SumDifferencesKeys, $this->AvgValuesKeys) as $key) {
+			if (!$this->Trackdata->has($key)) {
+				$this->Trackdata->set($key, $emptyArray);
+			}
+		}
 	}
 
 	/**

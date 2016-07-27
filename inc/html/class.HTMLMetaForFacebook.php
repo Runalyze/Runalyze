@@ -107,11 +107,11 @@ class HTMLMetaForFacebook {
 		$this->add('og:type', 'fitness.course');
 		$this->add('og:url', $Linker->publicUrl());
 		$this->add('og:title', addslashes($Exporter->metaTitle()));
-		$this->add('og:image', System::getFullDomain(true).'web/assets/images/runalyze.png');
+		$this->add('og:image', System::getFullDomainWithProtocol(true).'web/assets/images/runalyze.png');
 		
  		//Twitter cards
  		$this->add('twitter:card', 'summary');
- 		$this->add('twitter:image', System::getFullDomain(true).'web/assets/images/runalyze.png');
+ 		$this->add('twitter:image', System::getFullDomainWithProtocol(true).'web/assets/images/runalyze.png');
  		$this->add('twitter:description', addslashes($Exporter->metaTitle()));
 
 		$this->add('fitness:calories', $this->Context->activity()->calories());

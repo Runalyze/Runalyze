@@ -288,9 +288,20 @@ class Calculator
 	 * @param array $AdditionalData
 	 */
 	protected function addVDOTToDataFrom(Lap $Lap, array &$AdditionalData) {
+		if (false && Configuration::Vdot()->useElevationCorrection() && $Lap->hasElevation()) {
+			$distance = (new Calculation\Elevation\DistanceModifier(
+				$Lap->distance()->kilometer(),
+				$Lap->elevationUp(),
+				$Lap->elevationDown(),
+				Configuration::Vdot()
+			))->correctedDistance();
+		} else {
+			$distance = $Lap->distance()->kilometer();
+		}
+
 		$VDOT = new Calculation\JD\VDOT();
 		$VDOT->fromPaceAndHR(
-			$Lap->distance()->kilometer(),
+			$distance,
 			$Lap->duration()->seconds(),
 			$Lap->HRavg()->inPercent() / 100
 		);

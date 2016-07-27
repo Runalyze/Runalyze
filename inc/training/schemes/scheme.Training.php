@@ -381,7 +381,6 @@ $FIELDS = array(
 					'formular'	=> array(
 						'label'		=> __('RPE'),
 						'class'		=> 'TrainingSelectRPE',
-						'css'		=> TrainingFormular::$ONLY_OUTSIDE_CLASS,
 						'help-tooltip'	=> (new Dataset\Keys\RPE())->description()
 					)
 	),

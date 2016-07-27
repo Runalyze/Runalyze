@@ -428,8 +428,10 @@ abstract class Plugin {
 		if (isset($_GET['active'])) {
 			$this->setActive((int) $_GET['active']);
 
-			Ajax::setReloadFlag(Ajax::$RELOAD_ALL);
-			echo Ajax::getReloadCommand();
+			if ($this->type() != PluginType::TOOL) {
+				Ajax::setReloadFlag(Ajax::$RELOAD_ALL);
+				echo Ajax::getReloadCommand();
+			}
 		}
 	}
 

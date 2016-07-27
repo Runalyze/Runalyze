@@ -82,6 +82,16 @@ class Daniels extends AbstractStrategy {
 	}
 
 	/**
+	 * @return bool
+	 */
+	public function valuesAreValid() {
+		return (
+			VDOT::REASONABLE_MINIMUM <= $this->VDOT &&
+			$this->VDOT <= VDOT::REASONABLE_MAXIMUM
+		);
+	}
+
+	/**
 	 * Prognosis in seconds
 	 * @param float $distance in kilometer
 	 * @return float prognosis in seconds
@@ -98,7 +108,7 @@ class Daniels extends AbstractStrategy {
 	 * @return int          Time [s]
 	 */
 	public static function prognosisFor($VDOTtoReach, $km = 5.0) {
-		if ($VDOTtoReach == 0.0)
+		if ($VDOTtoReach < VDOT::REASONABLE_MINIMUM || $VDOTtoReach > VDOT::REASONABLE_MAXIMUM)
 			return 0;
 
 		$Bisection = new Bisection(

@@ -79,8 +79,19 @@ class Deleter extends Model\DeleterWithIDAndAccountID {
 		$this->updateEquipment();
 		$this->updateTag();
 		$this->updateStartTime();
+
+		if ($this->Object->sportid() == Configuration::General()->runningSport()) {
+			$this->tasksForRunningActivities();
+		}
+	}
+
+	/**
+	 * Tasks that are only relevant for running
+	 */
+	protected function tasksForRunningActivities() {
 		$this->updateVDOTshape();
 		$this->updateBasicEndurance();
+		$this->deleteIntensityCache();
 	}
 
 	/**
@@ -158,13 +169,21 @@ class Deleter extends Model\DeleterWithIDAndAccountID {
 	 * Update basic endurance
 	 */
 	protected function updateBasicEndurance() {
-		$timestampLimit = time() - 182 * DAY_IN_S;
-
-		if (
-			$this->Object->timestamp() > $timestampLimit &&
-			$this->Object->sportid() == Configuration::General()->runningSport()
-		) {
+		if ($this->Object->timestamp() > time() - 182 * DAY_IN_S) {
 			BasicEndurance::recalculateValue();
+		}
+	}
+
+	/**
+	 * Delete intensity cache for calculations panel
+	 */
+	protected function deleteIntensityCache() {
+		if (!class_exists('RunalyzePluginPanel_Rechenspiele')) {
+			return;
+		}
+
+		if ($this->Object->timestamp() >= time() - 14 * DAY_IN_S) {
+			\Cache::delete(\RunalyzePluginPanel_Rechenspiele::CACHE_KEY_JD_POINTS);
 		}
 	}
 }

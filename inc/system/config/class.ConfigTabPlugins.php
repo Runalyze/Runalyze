@@ -222,26 +222,46 @@ class ConfigTabPlugins extends ConfigTab {
 	 * Parse all post values 
 	 */
 	public function parsePostData() {
+		$PreparedUpdate = $this->prepareUpdateStatement();
 		$Factory = new PluginFactory();
+
 		foreach ($Factory->completeData() as $Plugin) {
 			$id = $Plugin['id'];
 
 			if (isset($_POST['plugin_modus_'.$id]) && isset($_POST['plugin_order_'.$id])) {
-				DB::getInstance()->update('plugin', $id,
-					array(
-						'active',
-						'order'
-					),
-					array(
-						(int)$_POST['plugin_modus_'.$id],
-						(int)$_POST['plugin_order_'.$id]
-					)
-				);
+				$this->updatePlugin($PreparedUpdate, $Plugin, (int)$_POST['plugin_modus_'.$id], (int)$_POST['plugin_order_'.$id]);
 			}
 		}
 
 		$Factory->clearCache();
+	}
 
-		Ajax::setReloadFlag(Ajax::$RELOAD_PLUGINS);
+	/**
+	 * @return \PDOStatement
+	 */
+	protected function prepareUpdateStatement() {
+		return DB::getInstance()->prepare(
+			'UPDATE `'.PREFIX.'plugin` SET `active` = :active, `order` = :order WHERE `id` = :id'
+		);
+	}
+
+	/**
+	 * @param \PDOStatement $update
+	 * @param array $Plugin
+	 * @param int $newModus
+	 * @param int $newOrder
+	 */
+	protected function updatePlugin(\PDOStatement $update, array $Plugin, $newModus, $newOrder) {
+		if ($Plugin['active'] != $newModus || $Plugin['order'] != $newOrder) {
+			$update->execute([
+				':active' => $newModus,
+				':order' => $newOrder,
+				':id' => $Plugin['id']
+			]);
+
+			if ($Plugin['type'] != PluginType::TOOL) {
+				Ajax::setReloadFlag(Ajax::$RELOAD_ALL);
+			}
+		}
 	}
 }

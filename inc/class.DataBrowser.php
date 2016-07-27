@@ -147,7 +147,10 @@ class DataBrowser {
 		while ($Training = $Statement->fetch()) {
 			$w = Time::diffInDays($Training['time'], $this->TimestampStart);
 
-			if (in_array($Training['sportid'], $this->SportsShort) || in_array($Training['typeid'], $this->TypesShort)) {
+			if (
+				in_array($Training['typeid'], $this->TypesShort) ||
+				(!in_array($Training['typeid'], $this->TypesNotShort) && in_array($Training['sportid'], $this->SportsShort))
+			) {
 				$this->Days[$w]['shorts'][]    = $Training;
 			} else {
 				$this->Days[$w]['trainings'][] = $Training;
@@ -181,6 +184,7 @@ class DataBrowser {
 	protected function initShortModes() {
 		$this->SportsShort = $this->DB->query('SELECT `id` FROM `'.PREFIX.'sport` WHERE `short`=1 AND accountid = '.$this->AccountID)->fetchAll(PDO::FETCH_COLUMN);
 		$this->TypesShort = $this->DB->query('SELECT `id` FROM `'.PREFIX.'type` WHERE `short`=1 AND accountid = '.$this->AccountID)->fetchAll(PDO::FETCH_COLUMN);
+		$this->TypesNotShort = $this->DB->query('SELECT `id` FROM `'.PREFIX.'type` WHERE `short`=0 AND accountid = '.$this->AccountID)->fetchAll(PDO::FETCH_COLUMN);
 	}
 
 	/**
