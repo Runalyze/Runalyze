@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-05-21 18:34+0200\n"
-"PO-Revision-Date: 2016-07-26 05:42+0000\n"
+"PO-Revision-Date: 2016-07-27 07:45+0000\n"
 "Last-Translator: Michael Pohl <michael@mipapo.de>\n"
 "Language-Team: Dutch "
 "<http://translate.runalyze.com/projects/runalyze/runalyze/nl/>\n"
@@ -956,7 +956,7 @@ msgstr ""
 
 #: inc/training/view/section/table/class.TableLapsComputed.php:67
 msgid "elev."
-msgstr "Hoogteverschil"
+msgstr "Hgt."
 
 #: inc/training/view/section/table/class.TableZonesPace.php:35
 #: inc/core/View/Window/Laps/Table.php:148
@@ -1313,7 +1313,7 @@ msgstr "Publiek"
 
 #: inc/training/schemes/scheme.Training.php:149
 msgid "Public activities will be visible for everybody."
-msgstr "Openbare activiteiten zijn voor iedereen zichtbaar"
+msgstr "Openbare activiteiten zijn voor iedereen zichtbaar."
 
 #: inc/training/schemes/scheme.Training.php:160
 msgid "Track"
