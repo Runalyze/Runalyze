@@ -1,14 +1,16 @@
 <?php
 /**
  * RUNALYZE
- * 
+ *
  * @author Hannes Christiansen
  * @copyright http://www.runalyze.com/
  */
 
 use Runalyze\View\Activity\Context;
 
-include 'inc/tpl/tpl.Frontend.header.php';
+if (!isset($request) || !$request->isXmlHttpRequest()) {
+	include 'inc/tpl/tpl.Frontend.header.php';
+}
 ?>
 
 <div id="container">
@@ -91,5 +93,7 @@ include 'inc/tpl/tpl.Frontend.header.php';
 	</div>
 </div>
 <?php
-include 'inc/tpl/tpl.Frontend.footer.php';
+if (!isset($request) || !$request->isXmlHttpRequest()) {
+	include 'inc/tpl/tpl.Frontend.footer.php';
+}
 ?>

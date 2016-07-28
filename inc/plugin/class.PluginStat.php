@@ -160,7 +160,7 @@ abstract class PluginStat extends Plugin {
 	protected function getYearDependenceForQuery($addTableName = false) {
 		$Query = '';
 		$time = $addTableName ? '`'.PREFIX.'training`.`time`' : '`time`';
-                
+
 		if ($this->showsLast6Months()) {
 			$Query .= ' AND '.$time.' > '.LocalTime::fromString('first day of -5 months 00:00')->getTimestamp();
 		} elseif ($this->showsLast12Months()) {
@@ -372,7 +372,7 @@ abstract class PluginStat extends Plugin {
 			$year = $this->year;
 		}
 
-		return Ajax::link($name, 'statistics-inner', self::$DISPLAY_URL.'?id='.$this->id().'&sport='.$sport.'&jahr='.$year.'&dat='.$dat);
+		return Ajax::link($name, 'statistics-inner', self::$DISPLAY_URL.'/'.$this->id().'?sport='.$sport.'&jahr='.$year.'&dat='.$dat);
 	}
 
 	/**

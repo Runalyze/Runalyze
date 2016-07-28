@@ -33,7 +33,7 @@ class DefaultController extends Controller
 
         return $this->render('CoreBundle:Default:end.html.twig');
     }
-    
+
     /**
      * @Route("/dashboard", name="dashboard")
      * @Route("/", name="base_url")
@@ -90,7 +90,7 @@ class DefaultController extends Controller
             'num' => $this->collectStatistics()
         ]);
     }
-    
+
     /**
      * @Route("/login", name="login")
      */
@@ -119,14 +119,14 @@ class DefaultController extends Controller
             'num' => $this->collectStatistics()
         ]);
     }
-    
+
     /**
      * @Route("/login_check", name="login_check")
      */
     public function loginCheckAction()
     {
     }
-    
+
     /**
      * @Route("/logout", name="logout")
      */
@@ -171,7 +171,7 @@ class DefaultController extends Controller
 
     	return new Response();
     }
-    
+
     /**
      * @Route("/plugin/{plugin}/{file}")
      */
@@ -179,7 +179,7 @@ class DefaultController extends Controller
     {
         return $this->includeOldScript('../plugin/'.$plugin.'/'.$file);
     }
-    
+
     /**
      * @Route("/dashboard/help", name="help")
      */
@@ -199,16 +199,16 @@ class DefaultController extends Controller
     {
         $_GET['url'] = $training;
         $Frontend = new \FrontendShared();
-        
+
         if (\FrontendShared::$IS_IFRAME)
         	echo '<div id="statistics-inner" class="panel" style="width:97%;margin:0 auto;">';
         elseif (!$request->isXmlHttpRequest())
         	echo '<div id="statistics-inner" class="panel" style="width:960px;margin:5px auto;">';
         else
         	echo '<div>';
-        
+
         $Frontend->displaySharedView();
-        
+
         echo '</div>';
 
         return $this->render('CoreBundle:Default:end.html.twig');
@@ -226,7 +226,7 @@ class DefaultController extends Controller
 
             return $this->forward('CoreBundle:Call:windowsPlotSumDataShared');
         }
-        
+
         $Frontend = new \FrontendSharedList();
 
         if (!$request->isXmlHttpRequest()) {
@@ -235,17 +235,17 @@ class DefaultController extends Controller
         		$Frontend->displayGeneralStatistics();
         		echo '</div>';
         	}
-        
+
         	echo '<div id="data-browser" class="panel" style="width:960px;margin:5px auto;">';
         	echo '<div id="'.DATA_BROWSER_SHARED_ID.'">';
         }
-        
+
         $Frontend->displaySharedView();
-        
+
         if (!$request->isXmlHttpRequest()) {
         	echo '</div>';
         	echo '</div>';
-        
+
         	echo '<div id="statistics-inner" class="panel" style="width:960px;margin:5px auto;">
         	<div class="panel-content">
         		<p class="info">
@@ -258,15 +258,23 @@ class DefaultController extends Controller
 
         return $this->render('CoreBundle:Default:end.html.twig');
     }
-    
+
     /**
      * @Route("/index.php")
      */
-    public function indexPhpAction()
+    public function indexPhpAction(Request $request)
     {
+        if ($request->isXmlHttpRequest()) {
+            $Frontend = new \Frontend(true, $this->get('security.token_storage'));
+
+            include $this->getParameter('kernel.root_dir').'/../dashboard.php';
+
+            return new Response();
+        }
+
         return $this->redirectToRoute('base_url');
     }
-    
+
     /**
      * @Route("/login.php")
      */
@@ -274,5 +282,5 @@ class DefaultController extends Controller
     {
         return $this->redirectToRoute('login');
     }
-    
+
 }

@@ -6,7 +6,6 @@
 
 use Runalyze\Model\Activity;
 use Runalyze\View\Activity\Preview;
-use Runalyze\View\Activity\Linker;
 
 /**
  * Multi editor
@@ -29,7 +28,7 @@ class MultiEditor {
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * Construct a new editor to display it directly
 	 * @param array $IDs
 	 */
@@ -82,7 +81,7 @@ class MultiEditor {
 		echo Ajax::wrapJSasFunction('$("#ajax-navigation tr.link").click(function(e){
 	$("#ajax-navigation tr.link.highlight").removeClass("highlight").addClass("edited");
 	$(this).removeClass("edited").addClass("highlight");
-	Runalyze.Overlay.load( "/activity/multi-editor/" + $(this).attr("id").substr(11) );
+	Runalyze.Overlay.load( "activity/multi-editor/" + $(this).attr("id").substr(11) );
 });');
 		echo Ajax::wrapJSasFunction('$("#ajax-navigation .multi-edit-remove-link").click(function(e){
 	$(this).parent().parent().remove();
@@ -112,7 +111,7 @@ class MultiEditor {
 
 	/**
 	 * Display editor
-	 * 
+	 *
 	 * This function will just load the standard editor in the overlay
 	 */
 	protected function displayEditor() {

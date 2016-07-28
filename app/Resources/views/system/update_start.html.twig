@@ -1,17 +1,21 @@
 {% extends "system/base.html.twig" %}
-            {% block content %}
-            <div class="logo"><img src="assets/images/runalyze.png" width="200" height="200"></div>
-            <div class="button-group">
-            {% if migrationStatus == 'uptodate' %}
-                <a class="button" role="button">{% trans %}No update needed{% endtrans %}</a>
-            </div>
-            {% elseif migrationStatus == 'executed' %}
-            <a class="button" role="button">{% trans %}Migrations have been executed{% endtrans %} <br> {% trans %}Nothing more to do{% endtrans %}</a><br>
-                <a class="button" role="button" href="{{ path('base_url') }}">{% trans %}Go back to RUNALYZE{% endtrans %}</a>
-            </div>
-            <p>{% trans %}For all experts - Here you can see a output dump of the executed migrations{% endtrans %}</p>
-                <textarea rows="10" cols="80" readonly>
-                {{ migrationDump }}
-                </textarea>
-            {% endif %}
-            {% endblock content %}
+
+{% block content %}
+    {% if migrationStatus == 'uptodate' %}
+        <div class="button-group">
+            <a class="button" role="button">{% trans %}No update needed{% endtrans %}</a>
+        </div>
+    {% elseif migrationStatus == 'executed' %}
+        <div class="button-group">
+            <p>{% trans %}Migrations have been executed{% endtrans %} <br> {% trans %}Nothing more to do{% endtrans %}</p>
+
+            <a class="button" role="button" href="{{ path('base_url') }}">{% trans %}Go back to RUNALYZE{% endtrans %}</a>
+        </div>
+    {% endif %}
+
+    {% if migrationDump %}
+        <div class="console-output">
+            <pre>{{ migrationDump|raw }}</pre>
+        </div>
+    {% endif %}
+{% endblock content %}

@@ -90,7 +90,7 @@ abstract class PluginTool extends Plugin {
 
 		$Factory = new PluginFactory();
 		$tools = $Factory->activePlugins( PluginType::TOOL );
-		
+
 		if (empty($tools)) {
 			echo '<tr><td colspan="3"><em>'.__('No tools installed.').'.</em></td></tr>';
 		}
@@ -105,7 +105,7 @@ abstract class PluginTool extends Plugin {
 					<td>'.$Plugin->description().'</td>
 				</tr>';
 		}
-				
+
 		echo '</tbody>';
 		echo '</table>';
 		echo '</div>';
@@ -128,7 +128,7 @@ abstract class PluginTool extends Plugin {
 	 * @return string
 	 */
 	public static function getLinkFor($id, $name, $data = '') {
-		return Ajax::link($name, self::$TOOLS_DIV_ID, parent::$DISPLAY_URL.'?id='.$id, $data);
+		return Ajax::link($name, self::$TOOLS_DIV_ID, parent::$DISPLAY_URL.'/'.$id, $data);
 	}
 
 	/**
@@ -150,7 +150,7 @@ abstract class PluginTool extends Plugin {
 	 * @return string
 	 */
 	public function getActionLink($name, $getParameter = '') {
-		return Ajax::link($name, self::$TOOLS_DIV_ID, parent::$DISPLAY_URL.'?id='.$this->id().'&'.$getParameter);
+		return Ajax::link($name, self::$TOOLS_DIV_ID, parent::$DISPLAY_URL.'/'.$this->id().'?'.$getParameter);
 	}
 
 	/**
@@ -164,7 +164,7 @@ abstract class PluginTool extends Plugin {
 			$name = $this->name();
 		}
 
-		return Ajax::window('<a href="'.parent::$DISPLAY_URL.'?id='.$this->id().($wrapAsContainer ? '&wrap=true' : '').'">'.$name.'</a>', 'big');
+		return Ajax::window('<a href="'.parent::$DISPLAY_URL.'/'.$this->id().($wrapAsContainer ? '?wrap=true' : '').'">'.$name.'</a>', 'big');
 	}
 
 	/**

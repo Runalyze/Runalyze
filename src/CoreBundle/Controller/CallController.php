@@ -9,11 +9,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
-require_once '../inc/class.Frontend.php';
-require_once '../inc/class.FrontendShared.php';
-require_once '../inc/class.FrontendSharedList.php';
-
-
 class CallController extends Controller
 {
     /**
@@ -25,9 +20,11 @@ class CallController extends Controller
     {
         $Frontend = new \Frontend(true, $this->get('security.token_storage'));
         $DataBrowser = new \DataBrowser();
-        return new Response($DataBrowser->display());
+        $DataBrowser->display();
+
+        return new Response();
     }
-    
+
     /**
      * @Route("/call/call.garminCommunicator.php")
      * @Route("/upload/garminCommunicator")
@@ -43,7 +40,7 @@ class CallController extends Controller
             'garminAPIKey' => $this->getParameter('garmin_api_key'),
         ));
     }
-    
+
     /**
      * @Route("/call/savePng.php")
      * @Method("POST")
@@ -53,25 +50,25 @@ class CallController extends Controller
     {
         header("Content-type: image/png");
         header("Content-Disposition: attachment; filename=".strtolower(str_replace(' ', '_', $_POST['filename'])));
-        
+
         $encodeData = substr($_POST['image'], strpos($_POST['image'], ',') + 1);
-        echo base64_decode($encodeData);
-        return new Response;
+
+        return new Response(base64_decode($encodeData));
     }
-    
+
     /**
      * @Route("/call/call.MetaCourse.php")
      */
     public function metaCourseAction() {
         $Frontend = new \FrontendShared(true);
-        
-        $Meta = new HTMLMetaForFacebook();
+
+        $Meta = new \HTMLMetaForFacebook();
         $Meta->displayCourse();
-        return new Response;
+
+        return new Response();
     }
-    
+
     /**
-     * @Route("/call/window.config.php")
      * @Route("/settings", name="settings")
      * @Security("has_role('ROLE_USER')")
      */
@@ -86,9 +83,10 @@ class CallController extends Controller
         $ConfigTabs->addTab(new \ConfigTabEquipment());
         $ConfigTabs->addTab(new \ConfigTabAccount());
         $ConfigTabs->display();
-        
+
         echo \Ajax::wrapJSforDocumentReady('Runalyze.Overlay.removeClasses();');
-        return new Response;
+
+        return new Response();
     }
 
     /**
@@ -98,12 +96,12 @@ class CallController extends Controller
     public function ajaxSaveTcxAction()
     {
         $Frontend = new \Frontend(true, $this->get('security.token_storage'));
-        
+
         \Filesystem::writeFile('../data/import/'.$_POST['activityId'].'.tcx', $_POST['data']);
-        
-        return new Response;
+
+        return new Response();
     }
-    
+
     /**
      * @Route("/call/ajax.change.Config.php")
      * @Security("has_role('ROLE_USER')")
@@ -112,46 +110,49 @@ class CallController extends Controller
     public function ajaxChanceConfigAction()
     {
         $Frontend = new \Frontend(true, $this->get('security.token_storage'));
+
         switch ($_GET['key']) {
         	case 'garmin-ignore':
         		\Runalyze\Configuration::ActivityForm()->ignoreActivityID($_GET['value']);
         		break;
-        
+
         	case 'leaflet-layer':
         		\Runalyze\Configuration::ActivityView()->updateLayer($_GET['value']);
         		break;
-        
+
         	default:
         		if (substr($_GET['key'], 0, 5) == 'show-') {
         			$key = substr($_GET['key'], 5);
         			\Runalyze\Configuration::ActivityForm()->update($key, $_GET['value']);
         		}
         }
-        return new Response;
+
+        return new Response();
     }
-    
+
     /**
      * @Route("/call/window.delete.php")
      * @Security("has_role('ROLE_USER')")
      */
-     public function windowDeleteAction()
-     {
+    public function windowDeleteAction()
+    {
         new \Frontend(false, $this->get('security.token_storage'));
-        
+
         echo \HTML::h1( __('Delete your account.') );
-        
-        if (!\AccountHandler::setAndSendDeletionKeyFor(SessionAccountHandler::getId())) {
-        	echo \HTML::error(__('Sending the link did not work. Please contact the administrator.'));
+
+        if (!\AccountHandler::setAndSendDeletionKeyFor(\SessionAccountHandler::getId())) {
+            echo \HTML::error(__('Sending the link did not work. Please contact the administrator.'));
         } else {
-        	echo \HTML::info(
-        			__('<em>A confirmation has been sent via mail.</em><br>'.
-        				'How sad, that you\'ve decided to delete your account.<br>'.
-        				'Your account will be deleted as soon as you click on the confirmation link in your mail.')
-        	);
+            echo \HTML::info(
+                    __('<em>A confirmation has been sent via mail.</em><br>'.
+                        'How sad, that you\'ve decided to delete your account.<br>'.
+                        'Your account will be deleted as soon as you click on the confirmation link in your mail.')
+            );
         }
-        return new Response;
-     }
-     
+
+        return new Response();
+    }
+
     /**
      * @Route("/my/search", name="my-search")
      * @Security("has_role('ROLE_USER')")
@@ -160,35 +161,36 @@ class CallController extends Controller
     {
         $Frontend = new \Frontend(false, $this->get('security.token_storage'));
         $showResults = !empty($_POST);
-        
+
         if (isset($_GET['get']) && $_GET['get'] == 'true') {
         	$_POST = array_merge($_POST, $_GET);
         	$showResults = true;
-        
+
         	\SearchFormular::transformOldParamsToNewParams();
         }
-        
+
         if (empty($_POST) || Request::createFromGlobals()->query->get('get') == 'true') {
         	echo '<div class="panel-heading">';
         	echo '<h1>'.__('Search for activities').'</h1>';
         	echo '</div>';
-        
+
         	$Formular = new \SearchFormular();
         	$Formular->display();
         }
-        
+
         $Results = new \SearchResults($showResults);
         $Results->display();
-        return new Response;
-    }
-    
-    protected function plotSumData() {
 
+        return new Response();
+    }
+
+    protected function plotSumData() {
         $Request = Request::createFromGlobals();
+
         if (is_null($Request->query->get('y'))) {
         	$_GET['y'] = \PlotSumData::LAST_12_MONTHS;
         }
-        
+
         $type = $Request->query->get('type', 'month');
 
         if ($type == 'week') {
@@ -201,7 +203,7 @@ class CallController extends Controller
         	echo \HTML::error( __('There was a problem.') );
         }
     }
-    
+
     /**
      * @Route("/call/window.plotSumData.php")
      */
@@ -209,9 +211,10 @@ class CallController extends Controller
     {
         $Frontend = new \Frontend(false, $this->get('security.token_storage'));
         $this->plotSumData();
-        return new Response;
+
+        return new Response();
     }
-    
+
     /**
      * @Route("/call/window.plotSumDataShared.php")
      */
@@ -219,18 +222,21 @@ class CallController extends Controller
     {
         $Frontend = new \FrontendSharedList();
         $this->plotSumData();
-        return new Response;
+
+        return new Response();
     }
-    
+
     /**
      * @Route("/call/login.php")
      */
     public function loginAction()
     {
         $Frontend = new \Frontend(false, $this->get('security.token_storage'));
+
         echo '<p class="error">';
     	_e('You are not logged in anymore.');
     	echo '<br><br><a href="login" title="Runalyze: Login"><strong>&raquo; '. _e('Login').'</strong></a></p>';
-    	return new Response;
+
+    	return new Response();
     }
 }

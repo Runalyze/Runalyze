@@ -14,7 +14,7 @@ use Runalyze\Error;
 class RunalyzePluginTool_DbBackup extends PluginTool {
 	/**
 	 * Start of backup-files
-	 * @var string 
+	 * @var string
 	 */
 	protected $fileNameStart = '';
 
@@ -26,24 +26,24 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 
 	/**
 	 * Export type: *.json
-	 * @var enum
+	 * @var int
 	 */
 	const TYPE_JSON = 1;
 
 	/**
 	 * Export type: *.sql.gz
-	 * @var enum
+	 * @var int
 	 */
 	const TYPE_SQL = 2;
 
 	/**
-	 * ImportData: json 
+	 * ImportData: json
 	 * @var array
 	 */
 	protected $ImportData = array();
 
 	/**
-	 * ImportData Replaces Array 
+	 * ImportData Replaces Array
 	 * @var array
 	 */
 	protected $ImportReplace = array();
@@ -100,7 +100,7 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 	}
 
 	/**
-	 * Handle request 
+	 * Handle request
 	 */
 	protected function handleRequest() {
 		if (isset($_GET['file']) || isset($_POST['file'])) {
@@ -116,7 +116,7 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 	}
 
 	/**
-	 * Display export form 
+	 * Display export form
 	 */
 	protected function displayExport() {
 		$Select = new FormularSelectBox('export-type', __('File format'));
@@ -143,7 +143,7 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 		if ($this->importIsOnProgress)
 			$Fieldset->setCollapsed();
 
-		$Formular = new Formular('call/call.Plugin.display.php?id='.$this->id() );
+		$Formular = new Formular('my/plugin/'.$this->id() );
 		$Formular->setId('database-backup');
 		$Formular->addCSSclass('ajax');
 		$Formular->addCSSclass('no-automatic-reload');
@@ -168,7 +168,7 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 	}
 
 	/**
-	 * Display import form 
+	 * Display import form
 	 */
 	protected function displayImportForm() {
 		$Fieldset = new FormularFieldset( __('Import file') );
@@ -220,7 +220,7 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 	}
 
 	/**
-	 * Display form: import finished 
+	 * Display form: import finished
 	 */
 	protected function displayImportFinish() {
 		require_once __DIR__.'/class.RunalyzeBulkInsert.php';
@@ -248,7 +248,7 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 	}
 
 	/**
-	 * Display uploader 
+	 * Display uploader
 	 */
 	protected function displayImportUploader() {
 		$JScode = '
@@ -298,7 +298,7 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 	}
 
 	/**
-	 * Display list with files 
+	 * Display list with files
 	 */
 	protected function displayList() {
 		$ListOfFiles = $this->getExistingFiles();
@@ -333,8 +333,8 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 	}
 
 	/**
-	 * Get array with all existing 
-	 * @return array 
+	 * Get array with all existing
+	 * @return array
 	 */
 	protected function getExistingFiles() {
 		$Files = array();
@@ -353,7 +353,7 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 
 		return $Files;
 	}
-	
+
 	/**
 	 * Create backup: JSON
 	 */
