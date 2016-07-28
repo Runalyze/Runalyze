@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block head %}
+        <meta name="author" content="RUNALYZE">
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0">
+
+        <title>{{ page_title|default('RUNALYZE') }}</title>
+
+        <link href="{{ asset('assets/v2.x/img/favicon.ico') }}" rel="shortcut icon" type="image/x-icon">
+        <link href="{{ asset('assets/css/runalyze-installer.css') }}" rel="stylesheet" type="text/css">
+        <link href="http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+    {% endblock head %}
+</head>
+
+<body>
+    <div class="main">
+        <div class="container">
+            <div class="logo"></div>
+
+            {% block content %}
+            {% endblock content %}
+        </div>
+    </div>
+    <div class="footer">
+        <div class="container">
+            {% block footer %}
+                <ul class="footer-links right">
+                    <li><a href="http://blog.runalyze.com/blog/">{% trans %}Blog{% endtrans %}</a></li>
+                </ul>
+
+                <ul class="footer-links">
+                    <li>&copy; {{ "now"|date("Y") }} RUNALYZE</li>
+                    <li><a href="http://help.runalyze.com/">{% trans %}Help{% endtrans %}</a></li>
+                    <li><a href="http://docs.runalyze.com/">{% trans %}Docs{% endtrans %}</a></li>
+                    <li><a href="http://forum.runalyze.com/">{% trans %}Forum{% endtrans %}</a></li>
+                </ul>
+            {% endblock footer %}
+        </div>
+    </div>
+</body>
+</html>

@@ -139,7 +139,7 @@ class Ajax {
 	 * @return string
 	 */
 	public static function trainingLink($id, $name, $closeOverlay = false, $classes = '', $htmlID = '') {
-		return '<a '.(!empty($htmlID) ? 'id="'.$htmlID.'" ' : '').'class="training '.$classes.'" href="call/call.Training.display.php?id='.$id.'" rel="'.$id.'"'.($closeOverlay ? ' onclick="Runalyze.Overlay.close()"' : '').'>'.$name.'</a>';
+		return '<a '.(!empty($htmlID) ? 'id="'.$htmlID.'" ' : '').'class="training '.$classes.'" href="activity/'.$id.'" rel="'.$id.'"'.($closeOverlay ? ' onclick="Runalyze.Overlay.close()"' : '').'>'.$name.'</a>';
 	}
 
 	/**

@@ -7,6 +7,8 @@
 use Runalyze\Configuration;
 use Runalyze\Error;
 use Runalyze\Timezone;
+use Symfony\Component\Yaml\Yaml;
+
 
 /**
  * Frontend class for setting up everything
@@ -26,22 +28,23 @@ use Runalyze\Timezone;
  */
 class Frontend {
 	/**
-	 * URL for help-window
-	 * @var string
+	 * Symfony object
+	 * @var object
 	 */
-	public static $HELP_URL = 'inc/tpl/tpl.help.php';
+	protected $symfonyUser = false;
 
-	/**
-	 * Boolean flag: log GET- and POST-data
-	 * @var bool
-	 */
-	protected $logGetAndPost = false;
 
 	/**
 	 * Admin password as md5
 	 * @var string
 	 */
 	protected $adminPassAsMD5 = '';
+	
+	/**
+	 * Yaml Configuration
+	 * @var array
+	 */
+	protected $yamlConfig = array();
 
 	/**
 	 * Constructor
@@ -51,10 +54,10 @@ class Frontend {
 	 * 
 	 * @param bool $hideHeaderAndFooter By default a html-header is directly shown
 	 */
-	public function __construct($hideHeaderAndFooter = false) {
+	public function __construct($hideHeaderAndFooter = false, $symfonyUser=null) {
+		$this->symfonyUser = $symfonyUser;
 		$this->initSystem();
 		$this->defineConsts();
-		$this->checkConfigFile();
 
 		if (!$hideHeaderAndFooter)
 			$this->displayHeader();
@@ -77,14 +80,12 @@ class Frontend {
 		define('RUNALYZE', true);
 		define('FRONTEND_PATH', dirname(__FILE__).'/');
 
-		$this->initLanguage();
 		$this->setAutoloader();
-                
-                
+		
 		$this->initCache();
 		$this->initErrorHandling();
+		$this->initConfig();
 		$this->initDatabase();
-		$this->initDebugMode();
 		$this->initSessionAccountHandler();
 		$this->initTimezone();
 		$this->forwardAccountIDtoDatabaseWrapper();
@@ -94,16 +95,31 @@ class Frontend {
 	 * Set up Autloader 
 	 */
 	private function setAutoloader() {
-		require_once FRONTEND_PATH.'/system/class.Autoloader.php';
-		new Autoloader();
+		require_once FRONTEND_PATH.'../vendor/autoload.php';
 	}
-
+	
 	/**
-	 * Setup Language
+	 * Setup config
 	 */
-	private function initLanguage() {
-		require_once FRONTEND_PATH.'/system/class.Language.php';
-		new Language();
+	private function initConfig() {
+	    $config = Yaml::parse(file_get_contents('../data/config.yml'))['parameters'];
+	    $this->yamlConfig = $config;
+	    define('OPENWEATHERMAP_API_KEY', $config['openweathermap_api_key']);
+	    define('NOKIA_HERE_APPID', $config['nokia_here_appid']);
+	    define('NOKIA_HERE_TOKEN', $config['nokia_here_token']);
+	    define('SMTP_HOST', $config['smtp_host']);
+	    define('SMTP_PORT', $config['smtp_port']);
+	    define('SMTP_SECURITY', $config['smtp_security']);
+	    define('SMTP_USERNAME', $config['smtp_username']);
+	    define('SMTP_PASSWORD', $config['smtp_password']);
+	    define('MAIL_NAME', $config['mail_name']);
+	    define('MAIL_SENDER', $config['mail_sender']);
+	    define('PERL_PATH', $config['perl_path']);
+	    define('TTBIN_PATH', $config['ttbin_path']);
+	    define('GEONAMES_USERNAME', $config['geonames_username']);
+	    define('USER_DISABLE_ACCOUNT_ACTIVATION', $config['user_disable_account_activation']);
+	    define('SQLITE_MOD_SPATIALITE', $config['sqlite_mod_spatialite']);
+
 	}
 	
 	/**
@@ -141,36 +157,20 @@ class Frontend {
 	}
 
 	/**
-	 * Check and update if needed config file
-	 */
-	private function checkConfigFile() {
-		AdminView::checkAndUpdateConfigFile();
-	}
-
-	/**
 	 * Include class::Error and and initialise it
 	 */
 	protected function initErrorHandling() {
 		\Runalyze\Error::init(Request::Uri());
-
-		if ($this->logGetAndPost) {
-			if (!empty($_POST))
-				Error::getInstance()->addDebug('POST-Data: '.print_r($_POST, true));
-			if (!empty($_GET))
-				Error::getInstance()->addDebug('GET-Data: '.print_r($_GET, true));
-		}
 	}
 
 	/**
 	 * Connect to database
 	 */
 	private function initDatabase() {
-		require_once FRONTEND_PATH.'../data/config.php';
-
-		$this->adminPassAsMD5 = md5($password);
-
-		DB::connect($host, $port, $username, $password, $database);
-		unset($host, $port, $username, $password, $database);
+		$config = $this->yamlConfig;
+		$this->adminPassAsMD5 = md5($config['database_password']);
+		define('PREFIX', $config['database_prefix']);
+		DB::connect($config['database_host'], $config['database_port'], $config['database_user'], $config['database_password'], $config['database_name']);
 	}
 
 	/**
@@ -186,6 +186,17 @@ class Frontend {
 	 */
 	protected function initSessionAccountHandler() {
 		new SessionAccountHandler();
+		if (!is_null($this->symfonyUser) && $this->symfonyUser->getToken()->getUser() != 'anon.') {
+		    $user = $this->symfonyUser->getToken()->getUser();
+
+		    SessionAccountHandler::setAccount(array(
+			    'id' => $user->getId(),
+			    'username' => $user->getUsername(),
+			    'language' => $user->getLanguage(),
+			    'timezone' => $user->getTimezone(),
+			    'mail' => $user->getMail(),
+		    ));
+		}
 	}
 
 	/**
@@ -196,32 +207,10 @@ class Frontend {
 	}
 
 	/**
-	 * Init internal debug-mode. Can be defined in config.php - otherwise is set to false here
-	 */
-	protected function initDebugMode() {
-		if (!defined('RUNALYZE_DEBUG'))
-			define('RUNALYZE_DEBUG', false);
-
-		if (RUNALYZE_DEBUG)
-			error_reporting(E_ALL);
-		else
-			Error::getInstance()->setLogVars(true);
-	}
-
-	/**
-	 * Set correct character encoding 
-	 */
-	final public function setEncoding() {
-		header('Content-type: text/html; charset=utf-8');
-		mb_internal_encoding("UTF-8");
-	}
-
-	/**
 	 * Display the HTML-Header
 	 */
 	public function displayHeader() {
-		$this->setEncoding();
-
+	    
 		if (!Request::isAjax() && !isset($_GET['hideHtmlHeader']))
 			include 'tpl/tpl.Frontend.header.php';
 
@@ -232,7 +221,7 @@ class Frontend {
 	 * Display the HTML-Footer
 	 */
 	public function displayFooter() {
-		if (RUNALYZE_DEBUG && Error::getInstance()->hasErrors()) {
+		if (Error::getInstance()->hasErrors()) {
 			Error::getInstance()->display();
 		}
 

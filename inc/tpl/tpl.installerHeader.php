@@ -7,7 +7,7 @@
 	<?php echo System::getCodeForAllCSSFiles(); ?>
 
 	<link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
-        <?php foreach (Language::availableLanguages() as $key => $lang_arr) { ?>
+        <?php foreach (\Runalyze\Language::availableLanguages() as $key => $lang_arr) { ?>
         <link rel="alternate" href="<?php echo System::getFullDomain(true)."index.php?lang=".$key; ?>" hreflang="<?php echo $key; ?>" />
         <?php } ?>
 	<title><?php echo $title; ?></title>
@@ -19,8 +19,8 @@
 <body id="installer">
 
 <div id="headline">
-	<a class="tab logo" href="http://www.runalyze.de/" target="_blank">Runalyze</a>
-	<a class="tab right" href="login.php"><i class="fa fa-fw fa-sign-in"></i> <?php _e('Please login'); ?></a>
+	<a class="tab logo" href="http://www.runalyze.com/" target="_blank">Runalyze</a>
+	<a class="tab right" href="login"><i class="fa fa-fw fa-sign-in"></i> <?php _e('Please login'); ?></a>
 </div>
 
 <?php echo Ajax::wrapJSforDocumentReady('Runalyze.init();'); ?>
@@ -36,9 +36,9 @@
                         <span class="link">Language</span>
 			<ul class="submenu">
 			<?php
-				foreach (Language::availableLanguages() as $key => $lang_arr) {
-					$liClass = (Language::getCurrentLanguage() == $key) ? ' class="triggered"' : '';
-					echo '<li'.$liClass.'><a href="?lang='.$key.'">'.$lang_arr[0].'</a></li>';
+				foreach (\Runalyze\Language::availableLanguages() as $key => $lang_arr) {
+					$liClass = (\Runalyze\Language::getCurrentLanguage() == $key) ? ' class="triggered"' : '';
+					echo '<li'.$liClass.'><a href="login?lang='.$key.'">'.$lang_arr[0].'</a></li>';
 				}
 			?>
 			</ul>

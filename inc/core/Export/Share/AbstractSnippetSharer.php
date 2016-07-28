@@ -15,7 +15,7 @@ namespace Runalyze\Export\Share;
 abstract class AbstractSnippetSharer extends AbstractSharer
 {
     /** @var string */
-    const URL = 'call/call.Exporter.export.php';
+    const URL = 'activity/{id}/export/social/{enum}';
 
     /**
      * @return string
@@ -38,7 +38,11 @@ abstract class AbstractSnippetSharer extends AbstractSharer
      */
     public function url()
     {
-        return self::URL.'?social=true&id='.$this->Context->activity()->id().'&typeid='.$this->enum();
+        return str_replace(
+            ['{id}', '{enum}'],
+            [$this->Context->activity()->id(), $this->enum()],
+            self::URL
+        );
     }
 
     /**

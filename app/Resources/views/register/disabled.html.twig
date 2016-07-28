@@ -1,0 +1,12 @@
+{% extends "base_not_logged_in.html.twig" %}
+{% block content %}
+<fieldset>
+    <legend>{% trans %}Create a new account{% endtrans %}</legend>
+
+    {% block registration_disabled_messages %}
+    <p class="error">
+        {% trans %}Registrations are currently disabled.{% endtrans %}
+    </p>
+    {% endblock %}
+</fieldset>
+{% endblock %}

@@ -14,13 +14,9 @@ if (!defined('RUNALYZE_TEST'))
 if (!defined('FRONTEND_PATH'))
 	define('FRONTEND_PATH', dirname(__FILE__).'/../inc/');
 
-require_once FRONTEND_PATH.'system/class.Autoloader.php';
-new Autoloader();
+require_once FRONTEND_PATH.'../vendor/autoload.php';
 
 require_once FRONTEND_PATH.'system/define.consts.php';
-require_once FRONTEND_PATH.'system/class.Cache.php';
-new Cache();
-Cache::clean();
 
 date_default_timezone_set('Europe/Berlin');
 
@@ -60,8 +56,13 @@ DB::getInstance()->exec('INSERT INTO `runalyze_account` (`username`,`mail`) VALU
 DB::getInstance()->exec('UPDATE `runalyze_account` SET `id`=0 WHERE `username`="zero"');
 
 // Login
-$_SESSION['accountid'] = 0;
-
+SessionAccountHandler::setAccount(array(
+	'id' => 0,
+	'username' => 'runalyze',
+	'language' => 'de',
+	'timezone' => '43',
+	'mail' => 'noreply@runalyze.com',
+));
 // Define RUNALYZE_TEST_TZ_LOOKUP
 try {
 	(new \Runalyze\Util\TimezoneLookup(false))->getTimezoneForCoordinate(13.41, 52.52);
@@ -101,6 +102,11 @@ if (!function_exists('_ne')) {
 		echo $msg2;
 	}
 }
+
+// Clear cache
+require_once FRONTEND_PATH.'system/class.Cache.php';
+new Cache();
+Cache::clean();
 
 // Load helper class
 Helper::Unknown('');

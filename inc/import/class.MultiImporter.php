@@ -95,6 +95,6 @@ class MultiImporter {
 	 * @param int $id
 	 */
 	protected function displaySingleEditor($id) {
-		header('Location: call.Training.edit.php?id='.$id);
+		header('Location: activity/'.$id.'/edit');
 	}
 }

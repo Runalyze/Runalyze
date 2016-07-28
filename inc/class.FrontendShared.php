@@ -38,7 +38,6 @@ class FrontendShared extends Frontend {
 		self::$IS_SHOWN  = true;
 		self::$IS_IFRAME = Request::param('mode') == 'iframe';
 
-		$this->setEncoding();
 		$this->initTraining();
 
 		$UserId = (!is_null($this->ActivityContext)) ? SessionAccountHandler::getId() : 0;
@@ -67,7 +66,7 @@ class FrontendShared extends Frontend {
 			include 'tpl/tpl.Frontend.footer.php';
 		}
 
-		if (RUNALYZE_DEBUG && Error::getInstance()->hasErrors()) {
+		if (Error::getInstance()->hasErrors()) {
 			Error::getInstance()->display();
 		}
 
@@ -153,11 +152,11 @@ class FrontendShared extends Frontend {
 	}
 
 	/**
-	 * Display link to www.runalyze.de
+	 * Display link to www.runalyze.com
 	 */
 	protected function displayLinkToRunalyze() {
 		$List = new BlocklinkList();
-		$List->addCompleteLink('<a class="nopadding" href="http://www.runalyze.de/" title="Runalyze - Online Lauftagebuch"><strong>&raquo;&nbsp;runalyze.de</strong></a>');
+		$List->addCompleteLink('<a class="nopadding" href="https://www.runalyze.com/" title="Runalyze - Online Lauftagebuch"><strong>&raquo;&nbsp;runalyze.com</strong></a>');
 		$List->display();
 	}
 

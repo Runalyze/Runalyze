@@ -1,0 +1,106 @@
+@leaflet-marker-size:				12px;
+@leaflet-marker-font-size:			8px;
+
+// Adjustments for vendor/leaflet/dist/leaflet.css
+.leaflet-control {
+	z-index: @z-index-map-options;
+	}
+.leaflet-top,
+.leaflet-bottom {
+	z-index: @z-index-map-options + 1;
+	}
+.leaflet-top .leaflet-control {
+	margin-top: 5px;
+	}
+.leaflet-bottom .leaflet-control {
+	margin-bottom: 5px;
+	}
+.leaflet-left .leaflet-control {
+	margin-left: 5px;
+	}
+.leaflet-right .leaflet-control {
+	margin-right: 5px;
+	}
+.leaflet-bar a,
+.leaflet-bar a:hover {
+	width: 20px;
+	height: 20px;
+	line-height: 20px;
+	}
+.leaflet-control-layers-toggle,
+.leaflet-retina .leaflet-control-layers-toggle,
+.leaflet-touch .leaflet-control-layers-toggle {
+	background-image: none;
+	width: 25px;
+	height: 25px;
+	}
+.leaflet-control-layers-toggle:before {
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+	line-height: 25px;
+	font-size: 18px;
+	text-align: center;
+	font-family: 'FontAwesome';
+	content: "\f0ac";
+	-webkit-font-smoothing: antialiased;
+	color: #666;
+	}
+
+// Own RUNALYZE-specific styles
+.leaflet-control-layers-list {
+	max-height: 250px;
+	overflow-x: auto;
+}
+.leaflet-container.fullscreen {
+	position: fixed !important;
+	top: 0;
+	left: 0;
+	width: 100% !important;
+	height: 100% !important;
+	z-index: @z-index-fullscreen;
+}
+.leaflet-control-zoom-full i {
+	width: 20px;
+	height: 20px;
+	line-height: 20px;
+	text-align: center;
+}
+.polyline-marker {
+	border-radius: @leaflet-marker-size;
+	line-height: @leaflet-marker-size;
+	text-align: center;
+	font-size: @leaflet-marker-font-size;
+	background-color: #fff;
+}
+.polyline-marker-start {
+	border: 3px solid #009500;
+	background-color: #fff;
+}
+.polyline-marker-pos {
+    border: 3px solid #000095;
+    background-color: #fff;
+}
+.polyline-marker-end {
+	border: 3px solid #950000;
+	background-color: #fff;
+}
+.polyline-marker-pause {
+	border: 2px solid #959595;
+	background-color: #fff;
+
+	&:before {
+		content: "\f04c";
+		font-family: FontAwesome;
+		color: #000095;
+		font-size: 6px;
+	}
+}
+.polyline-marker-dist {
+	border: 2px solid #959595;
+}
+.polyline-marker i.fa {
+	width: @leaflet-marker-size;
+	height: @leaflet-marker-size;
+	text-align: center;
+}

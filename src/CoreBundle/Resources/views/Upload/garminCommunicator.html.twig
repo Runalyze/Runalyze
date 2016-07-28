@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Garmin Communicator</title>
+
+	<base href="{{ htmlBase }}">
+
+	<link rel="stylesheet" href="assets/v2.x/vendor/garmin/communicator2.css">
+	<script src="assets/v2.x/vendor/garmin/prototype/prototype.js"></script>
+	<script src="assets/v2.x/vendor/garmin/garmin/device/GarminDeviceDisplay.js"></script>
+	<script>
+		function ignoreID(id,e) {
+			var p = e.parentNode;
+			p.innerHTML = 'ignoriert';
+			p.toggleClassName('upload-new');
+			p.toggleClassName('upload-exists');
+			p.parentNode.toggleClassName('ignored');
+
+			$$("input[value="+id+"]").each(function(box){
+				box.checked = false;
+			});
+			window.parent.Runalyze.Config.ignoreActivityID(id);
+		}
+
+		var currentActivity = 0, uploadedActivities = [], display, newIndex = 0;
+		function load() {
+		    display = new Garmin.DeviceDisplay("garminDisplay", {
+				pluginNotUnlocked: "<em>{{ 'The plug-in was not unlocked successfully.' | trans }}</em><br>{{ 'The administrator has to set the correct API-key.' | trans }}",
+				showReadDataElement: true,
+				showProgressBar: true,
+				showFindDevicesElement: true,
+				showFindDevicesButton: false,
+				showDeviceButtonsOnLoad: false,
+				showDeviceButtonsOnFound: false,
+				autoFindDevices: true,
+				showDeviceSelectOnLoad: true,
+				autoHideUnusedElements: true,
+				showReadDataTypesSelect: false,
+				readDataTypes: [Garmin.DeviceControl.FILE_TYPES.tcxDir, Garmin.DeviceControl.FILE_TYPES.gpxDir, Garmin.DeviceControl.FILE_TYPES.fitDir],
+				readDataButtonText: "{{ 'Connect' | trans }}",
+				showCancelReadDataButton: false,
+				lookingForDevices: '{{ 'Searching for devices' | trans }}<br><br><img src="assets/v2.x/img/wait.gif">',
+				uploadsFinished: "{{ 'Transfer complete' | trans }}",
+				uploadSelectedActivities: true,
+				uploadCompressedData: true,
+				uploadMaximum: 40, 
+				browseComputerButtonText: "{{ 'Browse computer' | trans }}",
+				cancelUploadButtonText: "{{ 'Cancel' | trans }}",
+				changeDeviceButtonText: "{{ 'Cancel' | trans }}",
+				connectedDevicesLabel: "{{ 'Connected devices' | trans }}: ",
+				deviceBrowserLabel: "{{ 'Browse devices' | trans }}: ",
+				deviceSelectLabel: "{{ 'Devices' | trans }}: ",
+				findDevicesButtonText: "{{ 'Search for decives' | trans }}",
+				loadingContentText: "{{ 'Retrieving data from #{deviceName}, please wait ...' | trans }}",
+				readSelectedButtonText: "{{ 'Please wait ...' | trans }}",
+				dataFound: "{{ 'Found #{tracks} activities' | trans }}",
+				noDeviceDetectedStatusText: "{{ 'No devices found' | trans }}",
+				singleDeviceDetectedStatusText: "{{ 'Found' | trans }}: ",
+				foundDevice: "{{ 'Found' | trans }}: #{deviceName}",
+				foundDevices: "{{ '#{deviceCount} devices found' | trans }}",
+				showReadDataElementOnDeviceFound: true,
+				getActivityDirectoryHeaderIdLabel: function () { return '{{ 'Date' | trans }}'; },
+				activityDirectoryHeaderDuration: '{{ 'Duration' | trans }}',
+				activityDirectoryHeaderStatus: '{{ 'Status' | trans }}',
+				statusCellProcessingImg: 'upload',
+				detectNewActivities: true,
+				syncDataUrl: '{{ absolute_url('/') }}call/ajax.activityMatcher.php',
+				syncDataOptions: {method:'post'},
+				afterTableInsert: function(index, entry, statusCell, checkbox, row, activityMatcher) {
+					var activityId = entry.id, isMatch = false;
+
+					try {
+						isMatch = activityMatcher.get(activityId).match;
+					} catch(e) {
+						console.log(e);
+					}
+
+					if (isMatch) {
+						entry.isNew = false;
+						checkbox.checked = false;
+						statusCell.className = statusCell.className + ' upload-exists';
+						statusCell.innerHTML = '{{ 'present' | trans }}';
+					} else {
+						entry.isNew = true;
+						checkbox.checked = true;
+						statusCell.className = statusCell.className + ' upload-new';
+						statusCell.innerHTML = 'neu<br><small onclick="ignoreID(\''+activityId+'\', this)">[{{ 'ignore' | trans }}]</small>';
+
+						// Rearrange: Put to the top
+						if (index != newIndex) {
+							var rows = $("activityTable").getElementsByTagName('tr');
+							var firstOldRow = rows[newIndex];
+							var removedRow = rows[index].parentNode.removeChild(rows[index]);
+							rows[0].parentNode.insertBefore(removedRow, firstOldRow);
+						}
+
+						newIndex = newIndex + 1;
+					}
+				},
+				postActivityHandler: function(activityXml, display) {
+					$("readSelectedButton").value = "{{ 'Import' | trans }}";
+					var currentName = display.activities[currentActivity].attributes.activityName.replace(/:/gi, "-");
+
+					uploadedActivities.push(currentName);
+					currentActivity = currentActivity + 1;
+
+					if (display.numQueuedActivities > 1)
+						window.parent.Runalyze.Training.saveTcx(activityXml, currentName, currentActivity, display.numQueuedActivities, uploadedActivities);
+					else
+						window.parent.Runalyze.Training.loadXML(activityXml);
+				},
+				afterFinishUploads: function(display) {
+					// Done from Runalyze.Training.saveTcx() with callback
+					//if (uploadedActivities.length > 1)
+					//	window.parent.Runalyze.Training.loadSavedTcxs(uploadedActivities);
+				},
+				afterFinishReadFromDevice: function(dataString, dataDoc, extension, activities, display) {
+					$("readSelectedButton").value = "{{ 'Import' | trans }}";
+
+					$("selectAllHeader").innerHTML = '<a href="#" id="selectAllButton" style="cursor:pointer;">{{ 'all' | trans }}</a>';
+
+					var checkboxes = $$("input[type=checkbox]");
+					var cbControl = $("selectAllButton");
+
+					cbControl.observe("click", function(e){
+						e.preventDefault();
+						cbControl.toggleClassName('checked');
+						checkboxes.each(function(box){
+							box.checked = cbControl.hasClassName('checked');
+						});
+					});
+				}
+{% if garminAPIKey|length > 10 %}
+	,pathKeyPairsArray: [{{ garminAPIBase }}, {{ garminAPIKey }}]
+{% endif %}
+			});
+		}
+	</script>
+</head>
+
+<body onload="load()" style="background:none;">
+
+	<div id="garminDisplay"></div>
+
+</body>
+</html>

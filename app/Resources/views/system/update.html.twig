@@ -1,0 +1,14 @@
+{% extends "system/base.html.twig" %}
+{% set page_title = 'RUNALYZE | Update' %}
+            {% block content %}
+            <div class="logo"><img src="assets/images/runalyze.png" width="200" height="200"></div>
+            
+            <div class="button-group">
+            {% if updateAvailable == true %}
+                <a class="button" role="button" href="{{ path('update_start') }}">{% trans %}Click here to update RUNALYZE{% endtrans %}</a>
+                <p>{% trans %}If you have a large database (several gigabyte) we would recommend to do update RUNALYZE via console.{% endtrans %}</p>
+            {% else %}
+                <a class="button" role="button">{% trans %}No update needed{% endtrans %}</a>
+            {% endif %}
+            </div>
+            {% endblock content %}

@@ -5,6 +5,9 @@
          bootstrap="../tests/bootstrap.php"
          colors="true"
          verbose="true">
+	<php>
+		<server name="KERNEL_DIR" value="../app/" />
+	</php>
 	<testsuite name="PHPLOC">
 		<directory suffix="Test.php">../tests</directory>
 	</testsuite>

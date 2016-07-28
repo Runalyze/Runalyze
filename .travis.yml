@@ -2,7 +2,6 @@ language: php
 sudo: false
 
 php:
-    - 5.4
     - 5.5
     - 5.6
     - 7.0
@@ -11,8 +10,9 @@ install:
     - composer install --prefer-dist --no-interaction
 
 before_script:
+    - cp app/config/default_config.yml data/config.yml
     - mkdir -p build/logs
-    - mysql -uroot -e 'SET @@global.sql_mode = TRADITIONAL; CREATE DATABASE runalyze_unittest;';
+    - mysql -uroot -e 'SET @@global.sql_mode = TRADITIONAL; CREATE DATABASE runalyze_unittest; CREATE DATABASE runalyze_test;';
     - mysql runalyze_unittest < inc/install/structure.sql
 
 script:
@@ -23,10 +23,6 @@ after_script:
 
 matrix:
   include:
-    - php: 5.4
-      env: DB=mariadb
-      addons:
-        mariadb: 5.5
     - php: 5.5
       env: DB=mariadb
       addons:
@@ -40,10 +36,6 @@ matrix:
       addons:
         mariadb: 5.5
 
-    - php: 5.4
-      env: DB=mariadb
-      addons:
-        mariadb: 10.0
     - php: 5.5
       env: DB=mariadb
       addons:

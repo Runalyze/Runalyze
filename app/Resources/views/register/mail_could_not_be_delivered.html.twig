@@ -1,0 +1,11 @@
+{% extends "login/base.html.twig" %}
+
+{% block form %}
+    <fieldset>
+        <legend>{% trans %}Create a new account{% endtrans %}</legend>
+
+        <p class="error">
+            {% trans %}Unable to send link. Please contact the administrator.{% endtrans %}
+        </p>
+    </fieldset>
+{% endblock %}

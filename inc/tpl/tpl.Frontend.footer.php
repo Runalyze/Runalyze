@@ -2,5 +2,3 @@
 
 <?php Ajax::initJSlibrary(); ?>
 
-</body>
-</html>

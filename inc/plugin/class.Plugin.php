@@ -47,7 +47,7 @@ abstract class Plugin {
 	 * Url for displaying the plugin
 	 * @var string
 	 */
-	public static $DISPLAY_URL = 'call/call.Plugin.display.php';
+	public static $DISPLAY_URL = 'my/plugin';
 
 	/**
 	 * CSS-Flag for plugins: Don't reload if config has changed

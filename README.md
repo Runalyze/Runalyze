@@ -1,4 +1,4 @@
-# [Runalyze v2.6.0-dev](http://blog.runalyze.com)
+# [Runalyze v2.7.0-dev](http://blog.runalyze.com)
 
 [![Build Status](https://travis-ci.org/Runalyze/Runalyze.svg?branch=master)](https://travis-ci.org/Runalyze/Runalyze)
 [![Code Coverage](https://scrutinizer-ci.com/g/Runalyze/Runalyze/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/Runalyze/Runalyze/?branch=master)
@@ -21,23 +21,16 @@ We provide two different documentations:
 Both documentations have their own repos: [docs](https://github.com/Runalyze/docs) and [admin-docs](https://github.com/Runalyze/admin-docs). In addition, there's our [runalyze-playground](https://github.com/Runalyze/runalyze-playground) to play around with some new ideas. Feel free to contribute there.
 
 ## Install / Development
-Runalyze v2.1+ requires [composer](https://getcomposer.org/doc/00-intro.md#system-requirements) and
-some future version will require [npm](https://nodejs.org/download/),
-[bower](http://bower.io/) (`sudo npm install -g bower`) and
-[grunt](http://gruntjs.com/) (`sudo npm install -g grunt-cli`). Some branches already do so.
+Runalyze requires [composer](https://getcomposer.org/doc/00-intro.md#system-requirements) and 
+[npm](https://nodejs.org/download/) 
+(plus [bower](http://bower.io/) and
+[gulp](https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md), will be installed via npm).
 
-To install dependencies and build for v2.1+:
+To install dependencies and build:
 ```
-composer install --prefer-dist
-php build/build.php translations
-```
-
-To install dependencies and build for a version with grunt:
-```
-composer install --prefer-dist
-bower install
+composer install
 npm install
-grunt
+gulp
 ```
 
 Still, we don't have any automated migration script for the database so far.

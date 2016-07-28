@@ -352,7 +352,7 @@ abstract class PluginStat extends Plugin {
 	 * @return string
 	 */
 	public function getLink() {
-		return '<a rel="statistics" href="'.self::$DISPLAY_URL.'?id='.$this->id().'">'.$this->name().'</a>';
+		return '<a rel="statistics" href="'.self::$DISPLAY_URL.'/'.$this->id().'">'.$this->name().'</a>';
 	}
 
 	/**

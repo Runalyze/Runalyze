@@ -5,8 +5,9 @@
  */
 
 use Runalyze\Configuration;
+use Runalyze\Language;
 use Runalyze\Timezone;
-use Runalyze\Parameter\Application\Timezone as TimezoneValues;
+use Runalyze\Parameter\Application;
 
 /**
  * ConfigTabAccount
@@ -134,7 +135,7 @@ class ConfigTabAccount extends ConfigTab {
 			DB::getInstance()->update('account', SessionAccountHandler::getId(), 'allow_mails', $_POST['allow_mails']);
 		}
 
-		if ($_POST['timezone'] != SessionAccountHandler::getTimezone() && TimezoneValues::isValidValue($_POST['timezone'], false)) {
+		if ($_POST['timezone'] != SessionAccountHandler::getTimezone() && Application\Timezone::isValidValue($_POST['timezone'], false)) {
 			DB::getInstance()->update('account', SessionAccountHandler::getId(), 'timezone', $_POST['timezone'], false);
 			Ajax::setReloadFlag( Ajax::$RELOAD_PAGE );
 		}

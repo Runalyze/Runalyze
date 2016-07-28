@@ -3,9 +3,6 @@
  * Window for weather plots
  * @package Runalyze\Plugins\Stats
  */
-require '../../inc/class.Frontend.php';
-
-$Frontend = new Frontend();
 
 if (!isset($_GET['y']))
 	$_GET['y'] = date("Y");

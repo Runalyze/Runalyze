@@ -1,0 +1,27 @@
+parameters:
+  locale: en
+  database_host: 127.0.0.1
+  database_prefix: runalyze_
+  database_port: 3306
+  database_name: runalyze
+  database_user: root
+  database_password:
+  secret: please_change_this_secret
+  user_can_register: true
+  user_cant_login: false
+  user_disable_account_activation: false
+  garmin_api_key:
+  openweathermap_api_key:
+  nokia_here_appid:
+  nokia_here_token:
+  geonames_username:
+  perl_path:
+  ttbin_path:
+  sqlite_mod_spatialite:
+  mail_sender:
+  mail_name:
+  smtp_host:
+  smtp_port:
+  smtp_security:
+  smtp_username:
+  smtp_password: 

@@ -1,0 +1,13 @@
+{
+  "name": "runalyze",
+  "private": true,
+  "dependencies": {
+    "jquery": "^2.1.0",
+    "leaflet": "^0.7.7",
+    "font-awesome": "^4.5.0",
+    "fontIconPicker": "^2.0.0",
+    "tablesorter": "jquery.tablesorter#2.18.4",
+    "moment": "^2.13.0",
+    "moment-timezone": "^0.5.4"
+  }
+}

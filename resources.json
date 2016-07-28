@@ -1,0 +1,78 @@
+{
+  "less": {
+    "main": {
+      "root": "./lib/less",
+      "src": [
+        "./lib/less/runalyze-style.less"
+      ]
+    },
+    "installer": {
+      "root": "./app/Resources/public/css",
+      "src": [
+        "./app/Resources/public/css/runalyze-installer.less"
+      ]
+    },
+    "dest": "./web/assets/css"
+  },
+  "js": {
+    "src": [
+      "./web/vendor/jquery/dist/jquery.js",
+
+      "./lib/jquery.form.js",
+      "./lib/jquery.metadata.js",
+
+      "./web/vendor/tablesorter/js/jquery.tablesorter.js",
+      "./web/vendor/tablesorter/addons/pager/jquery.tablesorter.pager.js",
+
+      "./lib/bootstrap-tooltip.js",
+
+      "./lib/fineuploader-3.5.0.min.js",
+
+      "./lib/jquery.datepicker.js",
+
+      "./lib/jquery.chosen.min.js",
+
+      "./lib/runalyze.lib.js",
+      "./lib/runalyze.lib.plot.js",
+      "./lib/runalyze.lib.plot.options.js",
+      "./lib/runalyze.lib.plot.saver.js",
+      "./lib/runalyze.lib.plot.events.js",
+      "./lib/runalyze.lib.tablesorter.js",
+      "./lib/runalyze.lib.options.js",
+      "./lib/runalyze.lib.config.js",
+      "./lib/runalyze.lib.overlay.js",
+      "./lib/runalyze.lib.panels.js",
+      "./lib/runalyze.lib.databrowser.js",
+      "./lib/runalyze.lib.statistics.js",
+      "./lib/runalyze.lib.training.js",
+      "./lib/runalyze.lib.feature.js",
+
+      "./lib/flot-0.8.3/base64.js",
+      "./lib/flot-0.8.3/jquery.flot.min.js",
+      "./lib/flot-0.8.3/jquery.flot.resize.min.js",
+      "./lib/flot-0.8.3/jquery.flot.selection.js",
+      "./lib/flot-0.8.3/jquery.flot.crosshair.js",
+      "./lib/flot-0.8.3/jquery.flot.navigate.min.js",
+      "./lib/flot-0.8.3/jquery.flot.hiddengraphs.js",
+      "./lib/flot-0.8.3/jquery.flot.stack.js",
+      "./lib/flot-0.8.3/jquery.flot.textLegend.js",
+      "./lib/flot-0.8.3/jquery.flot.orderBars.js",
+      "./lib/flot-0.8.3/jquery.flot.canvas.js",
+      "./lib/flot-0.8.3/jquery.flot.time.min.js",
+      "./lib/flot-0.8.3/jquery.flot.curvedLines.js",
+      "./lib/runalyze.lib.plot.flot.js",
+
+      "./lib/geohash.js",
+      "./web/vendor/leaflet/dist/leaflet.js",
+      "./lib/leaflet/runalyze.leaflet.js",
+      "./lib/leaflet/runalyze.leaflet.layers.js",
+      "./lib/leaflet/runalyze.leaflet.routes.js",
+
+      "./web/vendor/fontIconPicker/jquery.fonticonpicker.js",
+
+      "./web/vendor/moment/moment.js",
+      "./web/vendor/moment-timezone/builds/moment-timezone-with-data-2010-2020.js"
+    ],
+    "dest": "./web/assets/js"
+  }
+}

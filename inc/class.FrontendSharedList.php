@@ -25,8 +25,6 @@ class FrontendSharedList extends FrontendShared {
 	public function displayHeader() {
 		FrontendShared::$IS_SHOWN  = true;
 
-		$this->setEncoding();
-
 		$this->initUser();
 
 		$User = $this->User;

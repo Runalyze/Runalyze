@@ -65,7 +65,7 @@ class Formular extends HtmlTag {
 	 */
 	public function __construct($action = '', $method = 'post') {
 		if (empty($action))
-			$action = $_SERVER['SCRIPT_NAME'];
+			$action = $_SERVER['REQUEST_URI'];
 
 		$this->action = $action;
 		$this->method = $method;

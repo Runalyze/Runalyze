@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html{{ html_attributes|default('') }}>
+{% block html_head %}
+    <head>
+        {% block html_head_meta %}
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=yes">
+        {% endblock %}
+
+        <base href="{{ url('base_url') }}">
+
+        {% block html_head_links %}
+            {% block html_head_styles %}
+                <link rel="stylesheet" href="{{ asset('assets/css/runalyze-style.css') }}?v={{ RUNALYZE_VERSION }}">
+            {% endblock %}
+
+            <link rel="shortcut icon" type="image/x-icon" href="assets/v2.x/img/favicon.ico">
+
+            {% for key, locale in locales %}
+                <link rel="alternate" href="{{ app.request.getBaseUrl ~ app.request.pathinfo }}?lang={{ key }}" hreflang="{{ key }}">
+            {% endfor %}
+        {% endblock %}
+
+        <title>{{ page_title|default('RUNALYZE') }}</title>
+
+        {% block html_head_scripts %}
+            <script>document.addEventListener("touchstart", function(){}, true);</script>
+            <script src="{{ asset('assets/js/scripts.min.js') }}?v={{ RUNALYZE_VERSION }}"></script>
+        {% endblock %}
+
+    </head>
+{% endblock %}
+
+<body{{ body_attributes|default('') }}>
+{% block body %}
+{% endblock %}
+</body>
+</html>

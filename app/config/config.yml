@@ -1,0 +1,91 @@
+imports:
+  - { resource: languages.yml }
+  - { resource: security.yml }
+  - { resource: default_config.yml }
+  - { resource: ../../data/config.yml }
+
+framework:
+  secret: ThisTokenIsNotSoSecretChangeIt
+  session:
+    handler_id: session.handler.native_file
+    save_path: '%kernel.root_dir%/../data/sessions'
+  form: ~
+  csrf_protection: true
+  assets: ~
+  templating:
+    engines: ['twig']
+  translator:
+    fallbacks: ['%locale%']
+    paths:
+      - '%kernel.root_dir%/../inc/locale/'
+    
+parameters:
+  RUNALYZE_VERSION: 2.7.0-dev
+
+services:
+  app.locale_listener:
+    class: Runalyze\Bundle\CoreBundle\EventListener\LocaleListener
+    arguments: ['%kernel.default_locale%']
+    tags:
+      - { name: kernel.event_subscriber }
+  app.sha256salted_encoder:
+    class: Runalyze\Bundle\CoreBundle\Services\Sha256SaltedEncoder
+  app.event.doctrine.table_prefix_subscriber:
+    class: Runalyze\Bundle\CoreBundle\EventListener\TablePrefixSubscriber
+    arguments: ['%database_prefix%']
+    tags:
+      - { name: doctrine.event_subscriber }
+
+twig:
+  globals:
+    RUNALYZE_VERSION: '%RUNALYZE_VERSION%'
+    locales: '%locales%'
+  paths:
+    '%kernel.root_dir%/../data/views': __main__
+
+    
+# Doctrine Configuration
+doctrine:
+    dbal:
+        default_connection:   default
+
+        connections:
+            default:
+                driver:   pdo_mysql
+                host:     "%database_host%"
+                port:     "%database_port%"
+                dbname:   "%database_name%"
+                user:     "%database_user%"
+                password: "%database_password%"
+                charset:  UTF8
+                options: {1002: "SET time_zone = '+00:00'"}
+                mapping_types:
+                    enum:   string
+                    
+
+    orm:
+        auto_generate_proxy_classes: "%kernel.debug%"
+        auto_mapping: true
+       
+doctrine_migrations:
+    dir_name: "%kernel.root_dir%/DoctrineMigrations"
+    namespace: Runalyze\Migrations
+    table_name: migration_versions
+    name: RUNALYZE Migrations
+        
+monolog:
+    handlers:
+        applog:
+            type: stream
+            path: '%kernel.root_dir%/../var/logs/symfony.log'
+            level: error
+        main:
+            type: fingers_crossed
+            action_level: warning
+            handler: file
+        file:
+            type: stream
+            level: debug
+        syslog:
+            type: syslog
+            level: error

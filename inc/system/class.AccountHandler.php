@@ -6,8 +6,9 @@
 
 use Runalyze\Configuration;
 use Runalyze\Error;
-use Runalyze\Timezone;
-use Runalyze\Parameter\Application\Timezone as EnumTimezone;
+use Runalyze\Language;
+use Runalyze\Parameter\Application\Timezone;
+
 /**
  * AccountHandler
  *
@@ -178,34 +179,35 @@ class AccountHandler {
 	 * @return boolean|array true for success, array with errors otherwise
 	 */
 	public static function tryToRegisterNewUser() {
+		$failure = array('username' => true, 'email' => true, 'password' => true);
 		$errors = array();
 
 		if (strlen($_POST['new_username']) < self::USER_MIN_LENGTH)
-			$errors[] = array('new_username' => sprintf( __('The username has to contain at least %s signs.'), self::USER_MIN_LENGTH));
-
-		if (strlen($_POST['new_username']) > self::USER_MAX_LENGTH)
-			$errors[] = array('new_username' => sprintf( __('The username has to contain at most %s signs.'), self::USER_MAX_LENGTH));
-
-		if (preg_replace('#[^'.self::USER_REGEXP.']#i', '', $_POST['new_username']) != $_POST['new_username'])
-			$errors[] = array('new_username' => sprintf( __('The username has to contain only the following characters: %s'), stripslashes(self::USER_REGEXP)));
-
-		if (self::usernameExists($_POST['new_username']))
-			$errors[] = array('new_username' => __('This username is already being used.'));
+			$errors[] = sprintf( __('The username has to contain at least %s signs.'), self::USER_MIN_LENGTH);
+		elseif (strlen($_POST['new_username']) > self::USER_MAX_LENGTH)
+			$errors[] = sprintf( __('The username has to contain at most %s signs.'), self::USER_MAX_LENGTH);
+		elseif (preg_replace('#[^'.self::USER_REGEXP.']#i', '', $_POST['new_username']) != $_POST['new_username'])
+			$errors[] = sprintf( __('The username has to contain only the following characters: %s'), stripslashes(self::USER_REGEXP));
+		elseif (self::usernameExists($_POST['new_username']))
+			$errors[] = __('This username is already being used.');
+		else
+			$failure['username'] = false;
 
 		if (self::mailExists($_POST['email']))
-			$errors[] = array('email' => __('This email address is already being used.'));
-
-                if(self::mailValid($_POST['email']))
-                        $errors[] = array('email' => __('This email address is not allowed'));
-
-		if (false === filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))
-			$errors[] = array('email' => __('Please enter a valid email address.'));
+			$errors[] = __('This email address is already being used.');
+		elseif (self::mailValid($_POST['email']))
+			$errors[] = __('This email address is not allowed');
+		elseif (false === filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))
+			$errors[] = __('Please enter a valid email address.');
+		else
+			$failure['email'] = false;
 
 		if ($_POST['password'] != $_POST['password_again'])
-				$errors[] = array('password_again' => __('The passwords have to be the same.'));
-
-		if (strlen($_POST['password']) < self::$PASS_MIN_LENGTH)
-			$errors[] = array('password' => sprintf( __('The password has to contain at least %s characters.'), self::$PASS_MIN_LENGTH));
+			$errors[] = __('The passwords have to be the same.');
+		elseif (strlen($_POST['password']) < self::$PASS_MIN_LENGTH)
+			$errors[] = sprintf( __('The password has to contain at least %s characters.'), self::$PASS_MIN_LENGTH);
+		else
+			$failure['password'] = false;
 
 		if (empty($errors))
 			$errors = self::createNewUserFromPost();
@@ -213,7 +215,10 @@ class AccountHandler {
 		if (empty($errors))
 			return true;
 
-		return $errors;
+		return array(
+			'failure' => $failure,
+			'errors' => $errors
+		);
 	}
 
 	/**
@@ -228,9 +233,9 @@ class AccountHandler {
 		$newSalt = self::getNewSalt();
 
 		try {
-			$timezone = EnumTimezone::getEnumByOriginalName($_POST['timezone']);
+			$timezone = Timezone::getEnumByOriginalName($_POST['timezone']);
 		} catch (\InvalidArgumentException $e) {
-			$timezone = EnumTimezone::getEnumByOriginalName(date_default_timezone_get());
+			$timezone = Timezone::getEnumByOriginalName(date_default_timezone_get());
 		}
 
 		$newAccountId   = DB::getInstance()->insert('account',
@@ -245,8 +250,10 @@ class AccountHandler {
 		else {
 			self::importEmptyValuesFor($newAccountId);
 			self::setSpecialConfigValuesFor($newAccountId);
-			
-			self::setAndSendActivationKeyFor($newAccountId, $errors);
+
+			if (!self::setAndSendActivationKeyFor($newAccountId)) {
+				$errors[] = __('Sending the mail did not work. Please contact the administrator.');
+			}
 		}
 
 		self::$IS_ON_REGISTER_PROCESS = false;
@@ -258,35 +265,30 @@ class AccountHandler {
 	/**
 	 * Send password to given user
 	 * @param string $username
-	 * @return string
+	 * @return bool
+	 * @throws \InvalidArgumentException
 	 */
 	public static function sendPasswordLinkTo($username) {
 		$account = self::getDataFor($username);
 
-		if ($account) {
-			$pwHash = self::getChangePasswordHash();
-			self::updateAccount($username, array('changepw_hash', 'changepw_timelimit'), array($pwHash, time()+DAY_IN_S));
-
-			$subject  = __('Reset your RUNALYZE password');
-			$message  = sprintf( __('Did you forget your password %s?'), $account['name'])."<br><br>\r\n\r\n";
-			$message .= __('You can change your password within the next 24 hours with the following link').":<br>\r\n";
-			$message .= '<a href='.self::getChangePasswordLink($pwHash).'>'.self::getChangePasswordLink($pwHash).'</a>';
-
-			if (System::sendMail($account['mail'], $subject, $message))
-				return __('The link has been sent and will be valid for 24 hours.');
-			else {
-				$string = __('Unable to send link. Please contact the administrator.');
-
-				if (System::isAtLocalhost()) {
-					$string .= '<br>'.__('Your local server has no smtp-server. Please contact the administrator.');
-					Error::getInstance()->addDebug('Link for changing password:'.self::getChangePasswordLink($pwHash));
-				}
-
-				return $string;
-			}
+		if (!$account) {
+			throw new InvalidArgumentException('Unknown username');
 		}
 
-		return __('The username is unknown.');
+		$pwHash = self::getChangePasswordHash();
+		self::updateAccount($username, array('changepw_hash', 'changepw_timelimit'), array($pwHash, time()+DAY_IN_S));
+
+		$subject  = __('Reset your RUNALYZE password');
+		$message  = sprintf( __('Did you forget your password %s?'), $account['name'])."<br><br>\r\n\r\n";
+		$message .= __('You can change your password within the next 24 hours with the following link').":<br>\r\n";
+		$message .= '<a href='.self::getChangePasswordLink($pwHash).'>'.self::getChangePasswordLink($pwHash).'</a>';
+
+		if (!System::sendMail($account['mail'], $subject, $message)) {
+			// TODO: provide a log entry for the admin
+			return false;
+		}
+
+		return true;
 	}
 
 
@@ -307,7 +309,8 @@ class AccountHandler {
 
 	/**
 	 * Get hash.
-	 * @return string
+	 * @param int $bytes
+	 * @return string hash of length 2*$bytes
 	 */
 	private static function getRandomHash($bytes = 16) {
 		return bin2hex(openssl_random_pseudo_bytes($bytes));
@@ -319,7 +322,7 @@ class AccountHandler {
 	 * @return string
 	 */
 	private static function getChangePasswordLink($hash) {
-		return System::getFullDomainWithProtocol().'login.php?chpw='.$hash;
+		return System::getFullDomain().'account/recover/'.$hash;
 	}
 
 	/**
@@ -328,7 +331,7 @@ class AccountHandler {
 	 * @return string
 	 */
 	private static function getActivationLink($hash) {
-		return System::getFullDomainWithProtocol().'login.php?activate='.$hash;
+		return System::getFullDomain().'account/activate/'.$hash;
 	}
 
 	/**
@@ -337,17 +340,18 @@ class AccountHandler {
 	 * @return string
 	 */
 	private static function getDeletionLink($hash) {
-		return System::getFullDomainWithProtocol().'login.php?delete='.$hash;
+		return System::getFullDomain().'account/delete/'.$hash;
 	}
 
 	/**
 	 * Get username requested for changing password
-	 * @return boolean|string
+	 * @param string $hash
+	 * @return bool|string
 	 */
-	public static function getUsernameForChangePasswordHash() {
+	public static function getUsernameForChangePasswordHash($hash) {
 		$data = DB::getInstance()->query('
 			SELECT username FROM '.PREFIX.'account
-			WHERE changepw_hash='.DB::getInstance()->escape($_GET['chpw']).'
+			WHERE changepw_hash='.DB::getInstance()->escape($hash).'
 				AND changepw_timelimit>'.time().'
 			LIMIT 1'
 		)->fetch();
@@ -360,26 +364,31 @@ class AccountHandler {
 
 	/**
 	 * Try to set new password from post-values
-	 * @return mixed
+	 * @param string $hash
+	 * @return bool|array array with errors or true on success
 	 */
-	public static function tryToSetNewPassword() {
-		if (!isset($_POST['chpw_hash']) || !isset($_POST['new_pw']) || !isset($_POST['new_pw_again']) || !isset($_POST['chpw_username']))
+	public static function tryToSetNewPassword($hash) {
+		if (!isset($_POST['new_pw']) || !isset($_POST['new_pw_again']) || !isset($_POST['chpw_username']))
 			return [];
 
-		if ($_POST['chpw_username'] == self::getUsernameForChangePasswordHash()) {
+		if ($_POST['chpw_username'] == self::getUsernameForChangePasswordHash($hash)) {
 			if ($_POST['new_pw'] != $_POST['new_pw_again'])
 				return array( __('The passwords have to be the same.') );
 			elseif (strlen($_POST['new_pw']) < self::$PASS_MIN_LENGTH)
 				return array( sprintf( __('The password has to contain at least %s signs.'), self::$PASS_MIN_LENGTH) );
 			else {
 				self::setNewPassword($_POST['chpw_username'], $_POST['new_pw']);
-				header('Location: login.php');
-				exit;
+
+				return true;
 			}
 		} else
 			return array( __('Something went wrong.') );
 	}
 
+	/**
+	 * @param string $username
+	 * @param string $password
+	 */
 	public static function setNewPassword($username, $password) {
 		$newSalt = self::getNewSalt();
 		self::updateAccount($username,
@@ -389,10 +398,11 @@ class AccountHandler {
 
 	/**
 	 * Try to activate the account
+	 * @param string $hash
 	 * @return boolean
 	 */
-	public static function tryToActivateAccount() {
-		$Account = DB::getInstance()->query('SELECT id FROM `'.PREFIX.'account` WHERE `activation_hash`='.DB::getInstance()->escape($_GET['activate']).' LIMIT 1')->fetch();
+	public static function tryToActivateAccount($hash) {
+		$Account = DB::getInstance()->query('SELECT id FROM `'.PREFIX.'account` WHERE `activation_hash`='.DB::getInstance()->escape($hash).' LIMIT 1')->fetch();
 
 		if ($Account) {
 			DB::getInstance()->update('account', $Account['id'], 'activation_hash', '');
@@ -405,16 +415,25 @@ class AccountHandler {
 
 	/**
 	 * Try to delete the account
+	 * @param string $deletionHash
 	 * @return boolean
 	 */
-	public static function tryToDeleteAccount() {
-		$Account = DB::getInstance()->exec('DELETE FROM `'.PREFIX.'account` WHERE `deletion_hash`='.DB::getInstance()->escape($_GET['delete']).' LIMIT 1');
+	public static function tryToDeleteAccount($deletionHash) {
+		$Account = DB::getInstance()->exec('DELETE FROM `'.PREFIX.'account` WHERE `deletion_hash`='.DB::getInstance()->escape($deletionHash).' LIMIT 1');
 
 		if ($Account) {
 			return true;
 		}
 
 		return false;
+	}
+
+	/**
+	 * @param string $deletionHash
+	 * @return bool|string false if deletion hash is not found
+	 */
+	public static function getUsernameForDeletionHash($deletionHash) {
+		return DB::getInstance()->query('SELECT `username` FROM `'.PREFIX.'account` WHERE `deletion_hash`='.DB::getInstance()->escape($deletionHash).' LIMIT 1')->fetchColumn();
 	}
 
 	/**
@@ -451,9 +470,9 @@ class AccountHandler {
 	/**
 	 * Send registration/activation mail for a new user
 	 * @param int $accountId
-	 * @param array $errors
+	 * @return bool
 	 */
-	private static function setAndSendActivationKeyFor($accountId, &$errors) {
+	private static function setAndSendActivationKeyFor($accountId) {
 		$account        = DB::getInstance()->fetchByID('account', $accountId);
 
 		$subject  = __('Welcome to RUNALYZE');
@@ -469,30 +488,24 @@ class AccountHandler {
 		}
 		
 		if (!System::sendMail($account['mail'], $subject, $message)) {
-			$errors[] = __('Sending the mail did not work. Please contact the administrator.');
-
-			if (System::isAtLocalhost()) {
-				if ($activationHash == '') {
-					$errors[] = __('Your local server has no smtp-server. Your account has been directly activated.');
-				} else {
-					$errors[] = __('Your local server has no smtp-server. You have to contact the administrator.');
-					Error::getInstance()->addDebug('Link for activating account: '.$activationLink);
-				}
-			}
+			// TODO: provide a log entry for the admin
+			return false;
 		}
-		
+
+		return true;
 	}
 
 	/**
 	 * Set activation key for new user and set via email
-	 * @param array $errors
+	 * @param int $accountId
+	 * @return bool
 	 */
-	public static function setAndSendDeletionKeyFor(&$errors) {
-		$account      = DB::getInstance()->fetchByID('account', SessionAccountHandler::getId());
+	public static function setAndSendDeletionKeyFor($accountId) {
+		$account      = DB::getInstance()->fetchByID('account', $accountId);
 		$deletionHash = self::getRandomHash();
 		$deletionLink = self::getDeletionLink($deletionHash);
 
-		DB::getInstance()->update('account', SessionAccountHandler::getId(), 'deletion_hash', $deletionHash);
+		DB::getInstance()->update('account', $accountId, 'deletion_hash', $deletionHash);
 
 		$subject  = __('Deletion request of your RUNALYZE account');
 		$message  = __('Do you really want to delete your account').' '.$account['username'].", ".$account['name']."?<br><br>\r\n\r\n";
@@ -500,13 +513,11 @@ class AccountHandler {
 		$message .= '<a href='.$deletionLink.'>'.$deletionLink.'</a>';
 
 		if (!System::sendMail($account['mail'], $subject, $message)) {
-			$errors[] = __('Sending the link did not work. Please contact the administrator.');
-
-			if (System::isAtLocalhost()) {
-					$errors[] = __('Your local server has no smtp-server. You have to contact the administrator.');
-				Error::getInstance()->addDebug('Link for deleting account: '.$deletionLink);
-			}
+			// TODO: provide a log entry for the admin
+			return false;
 		}
+
+		return true;
 	}
 
 	/**

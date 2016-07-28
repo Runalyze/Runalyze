@@ -13,17 +13,13 @@
 @panel-hover-icons-color-hover:	#000;
 
 @loading-min-height:			50px;
-@loading-background-image:		url(../../img/wait.gif);
+@loading-background-image:		url(../../web/assets/v2.x/img/wait.gif);
 @loading-background-color:		@panel-background;
 
 @databox-border:				#ccc;
 @databox-background:			#f6f6f6;
 @databox-margin:				5px;
 @databox-padding:				3px;
-
-@error-toolbar-width:			800px;
-@error-toolbar-background:		#efefef;
-@error-toolbar-border:			#ccc;
 
 @nav-submenu-hover:				#f7f7f9;
 
@@ -327,7 +323,7 @@
 }
 
 .wait-img {
-	background: url(../../img/wait.gif) center center no-repeat !important;
+	background: url(../../web/assets/v2.x/img/wait.gif) center center no-repeat !important;
 }
 
 #data-browser-container table {
@@ -463,21 +459,6 @@
 		&.triggered {
 			opacity: 1;
 		}
-	}
-}
-
-#error-toolbar {
-	z-index: @z-index-error-toolbar;
-	position: fixed;
-	bottom: 0;
-	left: 50%;
-	width: @error-toolbar-width;
-	margin-left: -(@error-toolbar-width/2);
-	background-color: @error-toolbar-background;
-	max-height: (@error-toolbar-width/2);
-
-	tr {
-		border-bottom: 1px solid @error-toolbar-border;
 	}
 }
 

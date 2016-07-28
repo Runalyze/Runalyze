@@ -3,10 +3,9 @@
  * Window: user table
  * @package Runalyze\Plugins\Panels
  */
-require '../../inc/class.Frontend.php';
+
 use Runalyze\Activity\Duration;
 use Runalyze\Activity\Weight;
-$Frontend = new Frontend();
 
 $Factory = new PluginFactory();
 $Plugin = $Factory->newInstance('RunalyzePluginPanel_Sportler');
