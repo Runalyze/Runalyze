@@ -1,8 +1,12 @@
 {
   "name": "Runalyze",
-  "version": "2.7.0-dev",
+  "version": "3.0.0-dev",
   "description": "Runalyze - training analysis for athletes",
   "homepage": "https://runalyze.com/",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Runalyze/Runalyze.git"
+  },
   "main": "gulpfile.js",
   "scripts": {
     "postinstall": "bower install"
