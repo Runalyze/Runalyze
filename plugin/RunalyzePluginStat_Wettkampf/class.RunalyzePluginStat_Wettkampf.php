@@ -23,7 +23,7 @@ use Runalyze\Plugin\Statistic\Races\RaceContainer;
 $PLUGINKEY = 'RunalyzePluginStat_Wettkampf';
 /**
  * Plugin "Wettkampf"
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Plugins\Stats
  */
@@ -34,7 +34,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	private $PBdistances = array();
 
 	/**
-	 * @var \Runalyze\Plugin\Statistic\Races\RaceContainer 
+	 * @var \Runalyze\Plugin\Statistic\Races\RaceContainer
 	 */
 	protected $RaceContainer;
 
@@ -55,7 +55,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	}
 
 	/**
-	 * Display long description 
+	 * Display long description
 	 */
 	protected function displayLongDescription() {
 		echo HTML::p(
@@ -90,7 +90,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	}
 
 	/**
-	 * Init data 
+	 * Init data
 	 */
 	protected function prepareForDisplay() {
 		$this->setSportsNavigation();
@@ -129,7 +129,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	}
 
 	/**
-	 * Display all divs 
+	 * Display all divs
 	 */
 	private function displayDivs() {
 		echo HTML::clearBreak();
@@ -168,12 +168,20 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 		$this->displayTableStart('pb-table');
 		$this->displayPersonalBestsTRs();
 		$this->displayTableEnd('pb-table');
+		$this->displayHintForPersonalBests();
 
 		if (!empty($this->PBdistances)) {
 			$this->displayPersonalBestsImages();
 		}
 
 		$this->displayPersonalBestYears();
+	}
+
+	private function displayHintForPersonalBests() {
+		echo HTML::info(
+			__('This list shows all distances selected for yearly comparison or with at least two results.').'<br>'.
+			__('Distances have to match exactly, especially 21.10 km and 42.20 km for (half-)marathons.')
+		);
 	}
 
 	/**
@@ -319,8 +327,13 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 			echo '</tr>';
 		}
 
+		$icon = (new Icon(Icon::INFO))->code();
+		$tooltip = new Tooltip(__('This includes races of all distances, not only those selected for yearly comparison.'));
+		$tooltip->setPosition(Tooltip::POSITION_RIGHT);
+		$tooltip->wrapAround($icon);
+
 		echo '<tr class="top-spacer no-zebra r">';
-		echo '<td class="b">'.__('In total').'</td>';
+		echo '<td class="b">'.__('In total').' '.$icon.'</td>';
 
 		foreach ($Years as $key) {
 			if ($key != 'sum') {
@@ -370,7 +383,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	 */
 	private function displayWKTr(array $data) {
 		$Activity = new Activity\Entity($data);
-		
+
 		$Linker = new Linker($Activity);
 		$RaceResult = new RaceResult\Entity($data);
 		$RaceResultView = new View\RaceResult\Dataview($RaceResult);
@@ -408,6 +421,12 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 		echo '</tbody>';
 		echo '</table>';
 
+		if ($this->RaceContainer->num() < 5) {
+			echo HTML::info(__(
+				'You can mark any activity as race by checking the respective checkbox in the activity\'s form.'
+			));
+		}
+
 		Ajax::createTablesorterFor('#'.$id, true);
 	}
 
@@ -439,7 +458,8 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	 */
 	private function getEditIconForActivity($id) {
 		$SportIcon = (new Factory())->sport($this->sportid)->icon()->code();
-		$code = Ajax::window('<a href="'.Linker::EDITOR_URL.'?id='.$id.'">'.$SportIcon.'</a>', 'small');
+		$url = (new Linker(new Runalyze\Model\Activity\Entity(['id' => $id])))->editUrl();
+		$code = Ajax::window('<a href="'.$url.'">'.$SportIcon.'</a>', 'small');
 
 		$Tooltip = new Tooltip(__('Edit the activity'));
 		$Tooltip->wrapAround($code);
@@ -512,7 +532,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	public function isFunCompetition($id) {
 		return (in_array($id, $this->Configuration()->value('fun_ids')));
 	}
-	
+
 	/**
 	 * RaceResult Formular
 	 */
@@ -531,7 +551,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 		 	} elseif ($RaceResult->isEmpty()) {
 				$RaceResult->setDefaultValuesFromActivity($Factory->activity($id));
 			}
-		 	
+
 			$Factory->clearCache('raceresult', $id);
 		 	$Formular = new Formular('plugin/RunalyzePluginStat_Wettkampf/window.raceResult.php?rid='.$id, 'post');
 			$Formular->setId('raceresult');
@@ -539,9 +559,9 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 			$Formular->addCSSclass('no-automatic-reload');
 			$FieldsetDetails = new FormularFieldset( __('Details') );
 
-			$FieldName = new FormularInput('name', __('Event').' '.Ajax::tooltip('<i class="fa fa-fw fa-question-circle"></i>', __('If you participate in an event multiple times you should always enter the same name, i.e. don\'t append the event\'s number or year.')), $RaceResult->name()); 
+			$FieldName = new FormularInput('name', __('Event').' '.Ajax::tooltip('<i class="fa fa-fw fa-question-circle"></i>', __('If you participate in an event multiple times you should always enter the same name, i.e. don\'t append the event\'s number or year.')), $RaceResult->name());
 			$FieldName->setSize( FormularInput::$SIZE_MIDDLE);
-	
+
 			$FieldOfficiallyMeasured = new FormularCheckbox('officially_measured', __('Officially measured').' '.Ajax::tooltip('<i class="fa fa-fw fa-question-circle"></i>', __('Was the course officially measured?')), $RaceResult->officiallyMeasured() );
 
 			$FieldOfficialDistance = new FormularInput('official_distance', __('Official distance').' '.Ajax::tooltip('<i class="fa fa-fw fa-question-circle"></i>', __('We use two decimals for convenient reasons.').'<br>'.__('Marathon').': 42.20 km<br>'.__('Half marathon').': 21.10 km'), str_replace(',', '.', (new Distance($RaceResult->officialDistance()))->stringKilometer(false, 2)));
@@ -555,7 +575,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 				$ActivityView->date().', '.$ActivityView->titleWithComment().
 				' ('.$ActivityView->distance(2).' / '.$ActivityView->duration()->string().')'
 			);
-	
+
 			$FieldsetDetails->setLayoutForFields( FormularFieldset::$LAYOUT_FIELD_W100);
 			$FieldsetPlacement = new FormularFieldset( __('Placement') );
 			$FieldsetPlacement->addInfo( __('Your official placement.') );
@@ -570,30 +590,30 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 			$Formular->addFieldset( $FieldsetDetails );
 			$Formular->addFieldset( $FieldsetPlacement );
 			$Formular->addFieldset( $FieldsetParticipants );
-			
+
 			if (!$RaceResult->isEmpty()) {
 				$deleteLink = Ajax::link('<strong>'.__('Delete this race result').' &raquo;</strong>', 'ajax', 'plugin/RunalyzePluginStat_Wettkampf/window.raceResult.php?rid='.$id.'&delete');
 				$deleteInfo = __('This will only delete the entry as competition. The activity itself will stay untouched.');
-	
+
 				$FieldsetDeletion = new FormularFieldset( __('Delete race result') );
 				$FieldsetDeletion->setCollapsed();
 				$FieldsetDeletion->addWarning($deleteLink.'<br><br><small>'.$deleteInfo.'</small>');
 				$Formular->addFieldset( $FieldsetDeletion );
 			}
-			
+
 			if ($RaceResult->isEmpty()) {
 				$Formular->addSubmitButton( __('Add race result to activity'), 'submit' );
 			} else {
 				$Formular->addSubmitButton( __('Save'), 'submit' );
 			}
-			
+
 			$Formular->setSubmitButtonsCentered();
 			$Formular->setLayoutForFields( FormularFieldset::$LAYOUT_FIELD_W33 );
-	
+
 			$Formular->display();
 		}
 	}
-	 
+
 	/**
 	 * Validate RaceResult Formular
 	 * @param \Runalyze\Model\RaceResult\Entity $RaceResult
@@ -644,12 +664,12 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 			'participants_gender' => array(RaceResult\Entity::PARTICIPANTS_GENDER, FormularValueParser::$PARSER_INT, array('null' => true, 'min' => $_POST['placement_gender']))
 		);
 	}
-	 
+
 	/**
 	 * Update race result
-	 * 
+	 *
 	 * This will echo an ajax reload command.
-	 * 
+	 *
 	 * @param \Runalyze\Model\RaceResult\Entity $NewRaceResult
 	 * @param \Runalyze\Model\RaceResult\Entity $OldRaceResult
 	 */
@@ -661,12 +681,12 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 		Ajax::setReloadFlag(AJAX::$RELOAD_PLUGINS);
 		echo Ajax::getReloadCommand();
 	}
-	
+
 	/**
 	 * Insert race result
-	 * 
+	 *
 	 * This will echo an ajax reload command.
-	 * 
+	 *
 	 * @param \Runalyze\Model\RaceResult\Entity $RaceResult
 	 */
 	protected function insertRaceResult(RaceResult\Entity $RaceResult) {
@@ -677,12 +697,12 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 		Ajax::setReloadFlag(AJAX::$RELOAD_PLUGINS);
 		echo Ajax::getReloadCommand();
 	}
-	
+
 	/**
 	 * Delete race result
-	 * 
+	 *
 	 * This will echo an ajax reload command.
-	 * 
+	 *
 	 * @param \Runalyze\Model\RaceResult\Entity $RaceResult
 	 */
 	protected function deleteRaceResult(RaceResult\Entity $RaceResult) {
