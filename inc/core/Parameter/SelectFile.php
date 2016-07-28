@@ -30,7 +30,8 @@ class SelectFile extends Select {
 		$options = array_merge(
 			array(
 				'folder' => '',
-				'extensions' => array()
+				'extensions' => array(),
+				'filename_only' => true
 			),
 			$options
 		);
@@ -51,6 +52,19 @@ class SelectFile extends Select {
 	 */
 	public function allowUppercaseVariants($flag = true) {
 		$this->AllowUppercaseVariants = $flag;
+	}
+
+	/**
+	 * Set value
+	 * @param mixed $value new value
+	 * @throws \InvalidArgumentException
+	 */
+	public function set($value) {
+		if ($this->Options['filename_only']) {
+			$value = basename($value);
+		}
+
+		parent::set($value);
 	}
 
 	/**
@@ -90,6 +104,10 @@ class SelectFile extends Select {
 		foreach ($Folder as $Fold) {
 			$handle = opendir(FRONTEND_PATH.'../'.$Fold);
 			if ($handle) {
+				if ($this->Options['filename_only']) {
+					$Fold = '';
+				}
+
 				while (false !== ($file = readdir($handle))) {
 					if ($this->valueIsAllowed($file)) {
 						$Options[$Fold.$file] = $file;

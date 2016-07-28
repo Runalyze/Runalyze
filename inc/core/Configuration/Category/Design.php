@@ -39,7 +39,7 @@ class Design extends \Runalyze\Configuration\Category {
 	 * @return string path without leading 'web/'
 	 */
 	public function backgroundImage() {
-		return substr($this->get('DESIGN_BG_FILE'), 4);
+		return 'assets/v2.x/img/backgrounds/'.basename($this->get('DESIGN_BG_FILE'));
 	}
 
 	/**
