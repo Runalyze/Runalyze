@@ -81,7 +81,7 @@ class RunalyzeJsonImporter {
 	}
 
 	/**
-	 * Import data 
+	 * Import data
 	 */
 	public function importData() {
 		$this->deleteOldData();
@@ -89,11 +89,11 @@ class RunalyzeJsonImporter {
 		$this->readFile();
 		$this->correctConfigReferences();
 
-		System::clearCache();
+		Cache::clean();
 	}
 
 	/**
-	 * Delete all old data (if wanted) 
+	 * Delete all old data (if wanted)
 	 */
 	private function deleteOldData() {
 		$Requests = array(
@@ -431,7 +431,7 @@ class RunalyzeJsonImporter {
 	 * Correct ID
 	 * @param string $Table
 	 * @param int $ID
-	 * @return int 
+	 * @return int
 	 */
 	private function correctID($Table, $ID) {
 		if (isset($this->ReplaceIDs[$Table][$ID]))
