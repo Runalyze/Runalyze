@@ -12,11 +12,11 @@ use \League\Geotools\Coordinate\Coordinate;
 
 /**
  * Route entity
- * 
+ *
  * Attention: `set(Entity::GEOHASHES, $geohashes)` or `setLatitudesLongitudes($lats, $lngs)`
  * should be used instead of serving geohashes in constructor to ensure correct
  * min/max geohashes. They are not calculated within `synchronize()`!
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Model\Route
  */
@@ -72,7 +72,7 @@ class Entity extends Model\EntityWithID implements Model\Loopable {
 	 * @var string
 	 */
 	const ELEVATION_DOWN = 'elevation_down';
-	
+
 	/**
 	 * Key: geohash
 	 * @var string
@@ -102,7 +102,7 @@ class Entity extends Model\EntityWithID implements Model\Loopable {
 	 * @var string
 	 */
 	const STARTPOINT = 'startpoint';
-	
+
 	/**
 	 * Key: endpoint in geohash
 	 * @var string
@@ -119,7 +119,7 @@ class Entity extends Model\EntityWithID implements Model\Loopable {
 	 * Key: maximal longitude & latitude in geohash
 	 * @var string
 	 */
-	const MAX = 'max';	
+	const MAX = 'max';
 
 	/**
 	 * Key: in routenet
@@ -178,7 +178,7 @@ class Entity extends Model\EntityWithID implements Model\Loopable {
 			self::IN_ROUTENET
 		);
 	}
-	
+
 	/**
 	 * All properties
 	 * @return array
@@ -304,11 +304,11 @@ class Entity extends Model\EntityWithID implements Model\Loopable {
 		$this->setMinMaxFromLatitudesLongitudes($latitudes, $longitudes);
 	}
 
-	public function forceToSetMinMaxFromGeohashes() { 
-	    $this->setMinMaxFromGeohashes($this->Data[self::GEOHASHES]); 
-	    
+	public function forceToSetMinMaxFromGeohashes() {
+	    $this->setMinMaxFromGeohashes($this->Data[self::GEOHASHES]);
+
 	}
-	
+
 	/**
 	 * Set geohashes from latitudes/longitudes
 	 * @param array $latitudes
@@ -322,8 +322,8 @@ class Entity extends Model\EntityWithID implements Model\Loopable {
 			throw new \InvalidArgumentException('Latitude & Longitude Array cannot have different lenghts');
 		}
 
-		$latitudes = array_map(function ($value) { return ($value == '') ? 0 : $value; }, $latitudes);
-		$longitudes = array_map(function ($value) { return ($value == '') ? 0 : $value; }, $longitudes);
+		$latitudes = array_map(function ($value) { return ($value == '') ? 0 : (double)$value; }, $latitudes);
+		$longitudes = array_map(function ($value) { return ($value == '') ? 0 : (double)$value; }, $longitudes);
 
 		$geohashes = array();
 
@@ -336,40 +336,40 @@ class Entity extends Model\EntityWithID implements Model\Loopable {
 
 		$this->setMinMaxFromLatitudesLongitudes($latitudes, $longitudes);
 	}
-        
-        /**
-         * create latitude and longitude array
-         * @return array Array with coordiantes: ['lat' => array, 'lng' => array]
-         */
-        public function latitudesAndLongitudesFromGeohash() {
-			$Coordinates = array();
-            $Geohashes = $this->Data[self::GEOHASHES];
-            $size = count($this->Data[self::GEOHASHES]);
-            
-            for ($i = 0; $i < $size; $i++) {
-                $geo = (new Geohash())->decode($Geohashes[$i])->getCoordinate(); 
-                $Coordinates['lat'][] = round($geo->getLatitude(), 6);
-                $Coordinates['lng'][] = round($geo->getLongitude(), 6);
-            }  
-            
-            return $Coordinates;
-        }
-        
+
+	/**
+	 * create latitude and longitude array
+	 * @return array Array with coordiantes: ['lat' => array, 'lng' => array]
+	 */
+	public function latitudesAndLongitudesFromGeohash() {
+		$Coordinates = array();
+		$Geohashes = $this->Data[self::GEOHASHES];
+		$size = count($this->Data[self::GEOHASHES]);
+
+		for ($i = 0; $i < $size; $i++) {
+			$geo = (new Geohash())->decode($Geohashes[$i])->getCoordinate();
+			$Coordinates['lat'][] = round($geo->getLatitude(), 6);
+			$Coordinates['lng'][] = round($geo->getLongitude(), 6);
+		}
+
+		return $Coordinates;
+	}
+
 	/**
 	 * get latitudes array from geohashes
 	 * @return array latitudes
 	 */
-        public function latitudesFromGeohash() {
-            return $this->latitudesAndLongitudesFromGeohash()['lat'];
-        }
-        
+	public function latitudesFromGeohash() {
+		return $this->latitudesAndLongitudesFromGeohash()['lat'];
+	}
+
 	/**
 	 * get longitudes array from geohashes
-	 * @return array longitudes 
+	 * @return array longitudes
 	 */
-        public function longitudesFromGeohash() {
-            return $this->latitudesAndLongitudesFromGeohash()['lng'];
-        }
+	public function longitudesFromGeohash() {
+		return $this->latitudesAndLongitudesFromGeohash()['lng'];
+	}
 
 	/**
 	 * @param array $latitudes
@@ -397,13 +397,17 @@ class Entity extends Model\EntityWithID implements Model\Loopable {
 		$this->Data[self::MIN] = null;
 		$this->Data[self::MAX] = null;
 	}
-	
+
 	/**
 	 * Synchronize start- and endpoint
 	 */
 	protected function synchronizeStartAndEndpoint() {
 		$this->Data[self::STARTPOINT] = $this->findStartpoint();
 		$this->Data[self::ENDPOINT] = $this->findEndpoint();
+
+		if (null === $this->Data[self::STARTPOINT]) {
+			$this->Data[self::GEOHASHES] = array();
+		}
 	}
 
 	/**
@@ -448,7 +452,7 @@ class Entity extends Model\EntityWithID implements Model\Loopable {
 
 	/**
 	 * Value at
-	 * 
+	 *
 	 * Remark: This method may throw index offsets.
 	 * @param int $index
 	 * @param string $key
@@ -505,7 +509,7 @@ class Entity extends Model\EntityWithID implements Model\Loopable {
 	public function elevationDown() {
 		return $this->Data[self::ELEVATION_DOWN];
 	}
-	
+
 	/**
 	 * Geohashes
 	 * @return array
@@ -522,7 +526,7 @@ class Entity extends Model\EntityWithID implements Model\Loopable {
 	public function hasPositionData() {
 		return $this->has(self::GEOHASHES);
 	}
-	
+
 	/**
 	 * Has geohash data?
 	 * @return boolean
@@ -609,14 +613,14 @@ class Entity extends Model\EntityWithID implements Model\Loopable {
 	public static function gpsDistance($lat1, $lon1, $lat2, $lon2) {
 		$rad1 = deg2rad($lat1);
 		$rad2 = deg2rad($lat2);
-		$dist = sin($rad1) * sin($rad2) +  cos($rad1) * cos($rad2) * cos(deg2rad($lon1 - $lon2)); 
-		$dist = acos($dist); 
-		$dist = rad2deg($dist); 
+		$dist = sin($rad1) * sin($rad2) +  cos($rad1) * cos($rad2) * cos(deg2rad($lon1 - $lon2));
+		$dist = acos($dist);
+		$dist = rad2deg($dist);
 		$miles = $dist * 60 * 1.1515;
 
 		if (is_nan($miles))
 			return 0;
-	
+
 		return ($miles * 1.609344);
 	}
 }
