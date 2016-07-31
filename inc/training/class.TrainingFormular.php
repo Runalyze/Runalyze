@@ -14,14 +14,14 @@ use Runalyze\Activity\Duration;
 use Runalyze\Activity\Distance;
 /**
  * Formular for trainings
- * 
+ *
  * This training formular extends StandardFormular and can be used for creating
  * a new training as well as for editing an existing training.
- * 
+ *
  * Nearly all fields are set directly through the given DatabaseScheme for a training.
  * This class only extends the standard formular with some additional values
  * (e.g. created-timestamp) and additional fieldsets for adding gps-data etc.
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\DataObjects\Training
  */
@@ -43,7 +43,7 @@ class TrainingFormular extends StandardFormular {
 	 * @var string
 	 */
 	public static $ONLY_OUTSIDE_CLASS = "only-outside";
-        
+
  	/**
 	 * CSS class for inputs only for sports with distance
 	 * @var string
@@ -70,6 +70,18 @@ class TrainingFormular extends StandardFormular {
 	 * @var string
 	 */
 	const POST_KEY_REMOVE_ROUTE_GPS = 'gps';
+
+	/**
+	 * TrainingFormular constructor.
+	 * @param \DataObject $dataObject
+	 * @param int $mode
+	 */
+	public function __construct(\DataObject $dataObject, $mode)
+	{
+		parent::__construct($dataObject, $mode);
+
+		$this->action = strtok($this->action, '?');
+	}
 
 	/**
 	 * Prepare for display
@@ -102,7 +114,7 @@ class TrainingFormular extends StandardFormular {
 	}
 
 	/**
-	 * Check for submit, therefore all fields must be set 
+	 * Check for submit, therefore all fields must be set
 	 */
 	protected function checkForSubmit() {
 		if (isset($_POST[self::POST_KEY_REMOVE_TRACKDATA]) || isset($_POST[self::POST_KEY_REMOVE_ROUTE])) {
@@ -163,7 +175,7 @@ class TrainingFormular extends StandardFormular {
 			}
 		}
 	}
-	
+
 	/**
 	 * Insert race result
 	 */
@@ -313,7 +325,7 @@ class TrainingFormular extends StandardFormular {
 
 		if (isset($_POST['tags'])) {
 			$CurrentTags = self::readTagFromPost();
-		}	    
+		}
 
 		$Field = new FormularSelectBox('tags', 'Tags', $CurrentTags);
 
@@ -329,7 +341,7 @@ class TrainingFormular extends StandardFormular {
 		$Fieldset->addField( $Field );
 		$this->addFieldset($Fieldset);
 	}
-      
+
 	/**
 	 * Display fieldset: Equipment
 	 */
@@ -493,7 +505,7 @@ class TrainingFormular extends StandardFormular {
 	}
 
 	/**
-	 * Append JavaScript 
+	 * Append JavaScript
 	 */
 	protected function appendJavaScript() {
 		echo '<script type="text/javascript">';

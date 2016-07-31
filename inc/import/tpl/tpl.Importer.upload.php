@@ -8,7 +8,7 @@ var submittedFiles = [], completedFiles = 0, uploadedFiles = 0;
 new qq.FineUploaderBasic({
 	button: $("#file-upload")[0],
 	request: {
-		endpoint: '<?php echo $_SERVER['REQUEST_URI']; ?>?json=true'
+		endpoint: '<?php echo strtok($_SERVER['REQUEST_URI'], '?'); ?>?json=true'
 	},
 	validation: {
 		allowedExtensions: [<?php echo "'".implode("', '", $this->Filetypes)."'"; ?>]
@@ -31,20 +31,20 @@ new qq.FineUploaderBasic({
 					$(".appended-by-uploader").remove();
 
 					if (completedFiles == 1)
-						$("#ajax").loadDiv('<?php echo $_SERVER['REQUEST_URI']; ?>?file='+encodeURIComponent(fileName));
+						$("#ajax").loadDiv('<?php echo strtok($_SERVER['REQUEST_URI'], '?'); ?>?file='+encodeURIComponent(fileName));
 					else
-						$("#ajax").loadDiv('<?php echo $_SERVER['REQUEST_URI']; ?>?files='+encodeURIComponent(submittedFiles.join(';')));
+						$("#ajax").loadDiv('<?php echo strtok($_SERVER['REQUEST_URI'], '?'); ?>?files='+encodeURIComponent(submittedFiles.join(';')));
 				}
 			} else {
 				$("#ajax").append('<p class="error appended-by-uploader"><?php _e('There were problems while uploading.'); ?></p>');
 			}
 
 			if (uploadedFiles == submittedFiles.length) {
-				$("#upload-container").removeClass('loading');	
+				$("#upload-container").removeClass('loading');
 
 				submittedFiles = [];
 				completedFiles = 0;
-				uploadedFiles = 0;				
+				uploadedFiles = 0;
 			}
 		}
 	}
