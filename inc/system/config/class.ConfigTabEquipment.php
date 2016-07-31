@@ -17,7 +17,7 @@ use Runalyze\View\Icon;
  */
 class ConfigTabEquipment extends ConfigTab {
 	/**
-	 * Set key and title for form 
+	 * Set key and title for form
 	 */
 	protected function setKeyAndTitle() {
 		$this->key = 'config_tab_equipment';
@@ -95,7 +95,7 @@ class ConfigTabEquipment extends ConfigTab {
 			$isNew = !$Type->hasID();
 			$id = $isNew ? -1 : $Type->id();
 			$delete = $isNew ? '' : '<input type="checkbox" class="delete-checkbox" name="equipmenttype[delete]['.$id.']">';
-			$sportIDs = $isNew ? array() : $this->Model->sportForEquipmentType($id, true);
+			$sportIDs = $isNew ? array(\Runalyze\Configuration::General()->mainSport()) : $this->Model->sportForEquipmentType($id, true);
 			$MaxDistance = new Distance($Type->maxDistance());
 
 			$Code .= '
@@ -108,7 +108,7 @@ class ConfigTabEquipment extends ConfigTab {
 						<td><span class="input-with-unit"><input type="text" class="small-size" name="equipmenttype[max_km]['.$id.']" value="'.round($MaxDistance->valueInPreferredUnit()).'"><label class="input-unit">'.$MaxDistance->unit().'</label></span></td>
 						<td><input type="text" class="small-size" name="equipmenttype[max_time]['.$id.']" value="'.($Type->maxDuration() > 0 ? Duration::format($Type->maxDuration()) : '').'" placeholder="d hh:mm:ss"></td>
 						<td><input name="equipmenttype[sportid_old]['.$id.']" type="hidden" value="'.implode(',', $sportIDs).'">
-							<select name="equipmenttype[sportid]['.$id.'][]" class="middle-size" multiple>';
+							<select name="equipmenttype[sportid]['.$id.'][]" class="middle-size" multiple required>';
 
 			foreach ($Sports as $Sport) {
 				$Code .= '<option value="'.$Sport->id().'"'.HTML::Selected(in_array($Sport->id(), $sportIDs)).'>'.$Sport->name().'</option>';
@@ -183,7 +183,7 @@ class ConfigTabEquipment extends ConfigTab {
 
 
 	/**
-	 * Parse all post values 
+	 * Parse all post values
 	 */
 	public function parsePostData() {
 		$this->parsePostDataForEquipmentTypes();
@@ -215,7 +215,7 @@ class ConfigTabEquipment extends ConfigTab {
 			$NewType->set(EquipmentType\Entity::MAX_TIME, $MaxTime->seconds());
 
 			if ($isNew) {
-				if ($NewType->name() != '') {
+				if ($NewType->name() != '' && isset($_POST['equipmenttype']['sportid'][$id]) && !empty($_POST['equipmenttype']['sportid'][$id])) {
 					$Inserter = new EquipmentType\Inserter($DB, $NewType);
 					$Inserter->setAccountID($accountId);
 					$Inserter->insert();
