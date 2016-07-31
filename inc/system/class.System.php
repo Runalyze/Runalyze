@@ -3,13 +3,14 @@
  * This file contains class::System
  * @package Runalyze\System
  */
+
+use Runalyze\Error;
+
 /**
  * System
  * @author Hannes Christiansen
  * @package Runalyze\System
  */
-use Runalyze\Error;
-
 class System {
 	/**
 	 * Get code to include all local JS-files
@@ -126,12 +127,5 @@ class System {
 		}
 
 		return $_SERVER['SERVER_NAME'] == 'localhost';
-	}
-
-	/**
-	 * Clear complete cache
-	 */
-	public static function clearCache() {
-		Cache::clean();
 	}
 }

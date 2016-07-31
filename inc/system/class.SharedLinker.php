@@ -25,11 +25,6 @@ class SharedLinker {
 	public static $USER_ID = 0;
 
 	/**
-	 * Private constructor 
-	 */
-	private function __construct() {}
-
-	/**
 	 * Is the user on the shared page?
 	 * @return boolean
 	 */
@@ -70,7 +65,7 @@ class SharedLinker {
 	/**
 	 * Get link to shared list for current user
 	 * @param string $text [optional]
-	 * @return string 
+	 * @return string
 	 */
 	public static function getListLinkForCurrentUser($text = null) {
 		if (!Configuration::Privacy()->listIsPublic()) {
@@ -124,7 +119,7 @@ class SharedLinker {
 	/**
 	 * Get URL for a given training
 	 * @param int $trainingID
-	 * @return string 
+	 * @return string
 	 */
 	public static function getUrlFor($trainingID) {
 		return self::$URL.self::idToUrl($trainingID);
@@ -133,7 +128,7 @@ class SharedLinker {
 	/**
 	 * Transform given ID to url
 	 * @param int $id
-	 * @return string 
+	 * @return string
 	 */
 	private static function idToUrl($id) {
 		return base_convert((int)$id, 10, 35);
@@ -142,7 +137,7 @@ class SharedLinker {
 	/**
 	 * Transform given url to ID
 	 * @param string $url
-	 * @return int 
+	 * @return int
 	 */
 	private static function urlToId($url) {
 		return (int)base_convert((string)$url, 35, 10);

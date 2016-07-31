@@ -11,7 +11,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-
 /**
  * Class DefaultController
  * @package Runalyze\Bundle\CoreBundle\Controller
@@ -31,7 +30,7 @@ class DefaultController extends Controller
 
         include $file;
 
-        return $this->render('CoreBundle:Default:end.html.twig');
+        return $this->render('legacy_end.html.twig');
     }
 
     /**
@@ -44,7 +43,7 @@ class DefaultController extends Controller
 	    $Frontend = new \Frontend(true, $this->get('security.token_storage'));
 	    include '../dashboard.php';
 
-        return $this->render('CoreBundle:Default:end.html.twig');
+        return $this->render('legacy_end.html.twig');
     }
 
     /**
@@ -187,7 +186,7 @@ class DefaultController extends Controller
     {
         new \Frontend(false, $this->get('security.token_storage'));
 
-        return $this->render('CoreBundle:Default:help.html.twig', [
+        return $this->render('pages/help.html.twig', [
             'version' => RUNALYZE_VERSION
         ]);
     }
@@ -211,7 +210,7 @@ class DefaultController extends Controller
 
         echo '</div>';
 
-        return $this->render('CoreBundle:Default:end.html.twig');
+        return $this->render('legacy_end.html.twig');
     }
 
     /**
@@ -256,7 +255,7 @@ class DefaultController extends Controller
         </div>';
         }
 
-        return $this->render('CoreBundle:Default:end.html.twig');
+        return $this->render('legacy_end.html.twig');
     }
 
     /**

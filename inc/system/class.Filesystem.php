@@ -65,7 +65,7 @@ class Filesystem {
 
 	/**
 	 * Get contents with CUrl
-	 * @param string $url 
+	 * @param string $url
 	 * @return string
 	 */
 	private static function getFileContentsWithCurl($url) {
@@ -73,7 +73,7 @@ class Filesystem {
 		$curl = curl_init();
 
 		curl_setopt($curl, CURLOPT_URL, $url);
-		curl_setopt($curl, CURLOPT_REFERER, 'http://user.runalyze.de/');
+		curl_setopt($curl, CURLOPT_REFERER, 'https://runalyze.com/');
 		curl_setopt($curl, CURLOPT_HEADER, 0);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($curl, CURLOPT_TIMEOUT, 10);
@@ -94,7 +94,7 @@ class Filesystem {
 
 	/**
 	 * Is CUrl enabled?
-	 * @return boolean 
+	 * @return boolean
 	 */
 	private static function isCurlInstalled() {
 		if (in_array('curl', get_loaded_extensions()))
@@ -114,7 +114,7 @@ class Filesystem {
 	/**
 	 * Write a file
 	 * @param string $fileName relative to FRONTEND_PATH
-	 * @param string $fileContent 
+	 * @param string $fileContent
 	 */
 	public static function writeFile($fileName, $fileContent) {
 		$file = fopen(FRONTEND_PATH.$fileName, "w");
@@ -158,7 +158,7 @@ class Filesystem {
 	/**
 	 * Get filesize
 	 * @param string $file
-	 * @return string 
+	 * @return string
 	 */
 	public static function getFilesize($file) {
 		$size = ($file && @is_file($file)) ? filesize($file) : null;
@@ -231,9 +231,9 @@ class Filesystem {
 
 	/**
 	 * Check write permissions
-	 * 
+	 *
 	 * Will show an error if folder is not writable
-	 * 
+	 *
 	 * @param string $folder path relative to runalyze/
 	 */
 	public static function checkWritePermissions($folder) {

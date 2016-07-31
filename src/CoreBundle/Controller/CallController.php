@@ -34,8 +34,7 @@ class CallController extends Controller
     {
         $Frontend = new \Frontend(true, $this->get('security.token_storage'));
 
-        return $this->render('CoreBundle:Upload:garminCommunicator.html.twig', array(
-            'htmlBase' => \System::getFullDomain(),
+        return $this->render('import/garmin_communicator.html.twig', array(
             'garminAPIBase' => \Request::getProtocol().'://'.$_SERVER['HTTP_HOST'],
             'garminAPIKey' => $this->getParameter('garmin_api_key'),
         ));

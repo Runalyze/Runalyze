@@ -12,7 +12,7 @@ use Runalyze\Util\LocalTime;
 
 /**
  * Meta-tag creator for Facebook
- * 
+ *
  * Facebook accepts additional meta tags for fitness activities.
  * This class can show them, if there is a training id on a shared page.
  * @see https://developers.facebook.com/docs/reference/opengraph/object-type/fitness.course
@@ -108,7 +108,7 @@ class HTMLMetaForFacebook {
 		$this->add('og:url', $Linker->publicUrl());
 		$this->add('og:title', addslashes($Exporter->metaTitle()));
 		$this->add('og:image', System::getFullDomainWithProtocol(true).'web/assets/images/runalyze.png');
-		
+
  		//Twitter cards
  		$this->add('twitter:card', 'summary');
  		$this->add('twitter:image', System::getFullDomainWithProtocol(true).'web/assets/images/runalyze.png');
@@ -137,7 +137,7 @@ class HTMLMetaForFacebook {
 		}
 
 		if (!empty($this->Properties) && $this->Context->hasRoute() && $this->Context->route()->hasPositionData()) {
-			echo '<link rel="opengraph" href="'.System::getFullDomain().'call/call.MetaCourse.php?id='.$this->Context->activity()->id().'&account='.SessionAccountHandler::getId().'">';
+			echo '<link rel="opengraph" href="'.System::getFullDomainWithProtocol().'call/call.MetaCourse.php?id='.$this->Context->activity()->id().'&account='.SessionAccountHandler::getId().'">';
 		}
 	}
 

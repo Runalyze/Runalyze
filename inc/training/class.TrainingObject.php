@@ -11,7 +11,7 @@ use Runalyze\Data\Cadence;
 
 /**
  * DataObject for trainings
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\DataObjects\Training
  */
@@ -39,7 +39,7 @@ class TrainingObject extends DataObject {
 	 * @var \Runalyze\Data\Cadence\AbstractCadence
 	 */
 	private $Cadence = null;
-        
+
 
 	/**
 	 * Pauses
@@ -87,7 +87,7 @@ class TrainingObject extends DataObject {
 	}
 
 	/**
-	 * Init DatabaseScheme 
+	 * Init DatabaseScheme
 	 */
 	protected function initDatabaseScheme() {
 		$this->DatabaseScheme = DatabaseSchemePool::get('training/schemes/scheme.Training.php');
@@ -220,9 +220,9 @@ class TrainingObject extends DataObject {
                         Runalyze\Model\Swimdata\Entity::STROKETYPE => $this->get('stroketype'),
                         Runalyze\Model\Swimdata\Entity::POOL_LENGTH => $this->get('pool_length')
 		));
-                
+
 	}
-        
+
 	/**
 	 * @return \Runalyze\Model\Trackdata\Entity
 	 */
@@ -289,7 +289,7 @@ class TrainingObject extends DataObject {
 			TrainingFormular::readEquipmentFromPost($NewActivity->sportid()),
 			isset($_POST['equipment_old']) ? explode(',', $_POST['equipment_old']) : array()
 		);
-		$UpdaterActivity->setTagIDs(TrainingFormular::readTagFromPost(), 
+		$UpdaterActivity->setTagIDs(TrainingFormular::readTagFromPost(),
 			isset($_POST['tag_old']) ? explode(',', $_POST['tag_old']) : array());
 		$UpdaterActivity->setAccountID($AccountID);
 		$UpdaterActivity->update();
@@ -414,7 +414,7 @@ class TrainingObject extends DataObject {
 
 		return $this->Pauses;
 	}
-	
+
 	/**
 	 * Set pauses from pauses object
 	 */
@@ -506,7 +506,7 @@ class TrainingObject extends DataObject {
 	 */
 	public function isPublic() { return $this->get('is_public') == 1; }
 
-	
+
 	/**
 	 * Set track
 	 * @param bool $isTrack Was this training on track?
@@ -554,7 +554,7 @@ class TrainingObject extends DataObject {
 		if ($this->hasProperty('s_sum_with_distance'))
 			return $this->get('s_sum_with_distance');
 
-		return $this->getTimeInSeconds();	
+		return $this->getTimeInSeconds();
 	}
 
 
@@ -648,14 +648,14 @@ class TrainingObject extends DataObject {
 
 	/**
 	 * Get uncorrected VDOT
-	 * 
+	 *
 	 * This value is calculated by heartrate and pace without any correction.
 	 * @return double uncorrected vdot
 	 */
 	public function getVdotUncorrected() { return $this->get('vdot'); }
 	/**
 	 * Get corrected VDOT
-	 * 
+	 *
 	 * This value is calculated by heartrate and pace and corrected by
 	 * the user defined/calculated correction factor.
 	 * @return double corrected vdot
@@ -663,7 +663,7 @@ class TrainingObject extends DataObject {
 	public function getVdotCorrected() { return round(Configuration::Data()->vdotFactor()*$this->getVdotUncorrected(), 2); }
 	/**
 	 * Get VDOT by time
-	 * 
+	 *
 	 * This value is calculated by distance and time without any influence by heartrate.
 	 * @return double vdot by time
 	 */
@@ -687,7 +687,7 @@ class TrainingObject extends DataObject {
 
 	/**
 	 * Used for vdot?
-	 * 
+	 *
 	 * A user can decide if we wants a training to be used for vdot-shape-calculation.
 	 * @return bool True if user wants this training to influence vdot-shape.
 	 */
@@ -792,7 +792,7 @@ class TrainingObject extends DataObject {
 	 * @return int vertical ratio [%]
 	 */
 	public function getVerticalRatio() { return $this->get('vertical_ratio'); }
-	
+
 	/**
 	 * Set ground contact time balance
 	 * @param int $groundContactBalance ground contact time balance [%]
@@ -837,7 +837,7 @@ class TrainingObject extends DataObject {
 
 	/**
 	 * Set splits from splits object
-	 * 
+	 *
 	 * To add new splits, use $this->Splits()->addSplit()
 	 */
 	public function setSplitsFromObject() { $this->set('splits', $this->Splits()->asString()); }
@@ -858,7 +858,7 @@ class TrainingObject extends DataObject {
 	 * @return bool
 	 */
 	public function hasComment() { return strlen($this->get('comment')) > 0; }
-        
+
 	/**
 	 * Set total strokes
 	 * @param string $totalStrokes total strokes
@@ -874,7 +874,7 @@ class TrainingObject extends DataObject {
 	 * @return bool
 	 */
 	public function hasTotalStrokes() { return strlen($this->get('total_strokes')) > 0; }
-        
+
 	/**
 	 * Set swolf
 	 * @param string $swolf swolf
@@ -890,7 +890,7 @@ class TrainingObject extends DataObject {
 	 * @return bool
 	 */
 	public function hasSwolf() { return strlen($this->get('swolf')) > 0; }
-        
+
 	/**
 	 * Set pool length
 	 * @param string $poollength pool length
@@ -905,7 +905,7 @@ class TrainingObject extends DataObject {
 	 * Has pool length?
 	 * @return bool
 	 */
-	public function hasPoolLength() { return strlen($this->get('pool_length')) > 0; }    
+	public function hasPoolLength() { return strlen($this->get('pool_length')) > 0; }
 
 	/**
 	 * Get partner
@@ -929,19 +929,19 @@ class TrainingObject extends DataObject {
 	 * @param array $array array with timepoints
 	 */
 	public function setArrayTime($array) { $this->setArrayFor('arr_time', $array); }
-        
+
 	/**
 	 * Get array for time
 	 * @return array array with timepoints
 	 */
 	public function getArrayTime() { return $this->getArrayFor('arr_time'); }
-        
+
 	/**
 	 * Get last time point
 	 * @return int
 	 */
 	public function getArrayTimeLastPoint() { return $this->getLastArrayPoint('arr_time'); }
-        
+
 	/**
 	 * Has array time?
 	 * @return bool
@@ -953,13 +953,13 @@ class TrainingObject extends DataObject {
 	 * @param array $array
 	 */
 	public function setArrayLatitude($array) { $this->setArrayFor('arr_lat', $array); }
-        
+
 	/**
 	 * Get array for latitude
 	 * @return array
 	 */
 	public function getArrayLatitude() { return $this->getArrayFor('arr_lat'); }
-        
+
 	/**
 	 * Has array for latitude?
 	 * @return bool
@@ -971,13 +971,13 @@ class TrainingObject extends DataObject {
 	 * @param array $array
 	 */
 	public function setArrayGeohashes($array) { $this->setArrayFor('arr_geohashes', $array); }
-        
+
 	/**
 	 * Get array for geohashes
 	 * @return array
 	 */
 	public function getArrayGeohashes() { return $this->getArrayFor('arr_geohashes'); }
-        
+
 	/**
 	 * Has array for geohashes?
 	 * @return bool
@@ -999,45 +999,45 @@ class TrainingObject extends DataObject {
 	 * @return bool
 	 */
 	public function hasArrayLongitude() { return strlen($this->get('arr_lon')) > 0; }
-	
-   
+
+
 	/**
 	 * Set array for swim stroke
 	 * @param array $data
 	 */
 	public function setArrayStroke(array $data) { $this->setArrayFor('stroke', $data); }
-        
+
 	/**
 	 * Get array for swim stroke
 	 * @return array
 	 */
 	public function getArrayStroke() { return $this->getArrayFor('stroke'); }
-        
+
 	/**
 	 * Has array for swim stroke?
 	 * @return bool
 	 */
 	public function hasArrayStroke() { return strlen($this->get('stroke')) > 0; }
-        
-        
+
+
 	/**
 	 * Set array for swim stroke type
 	 * @param array $data
 	 */
 	public function setArrayStrokeType(array $data) { $this->setArrayFor('stroketype', $data); }
-        
+
         /**
 	 * Get array for swim stroke type
 	 * @return array
 	 */
 	public function getArrayStrokeType() { return $this->getArrayFor('stroketype'); }
-        
+
 	/**
 	 * Has array for swim stroke type?
 	 * @return bool
 	 */
 	public function hasArrayStrokeType() { return strlen($this->get('stroketype')) > 0; }
-        
+
 	/**
 	 * Has position data?
 	 * @return bool True if latitude and longitude arrays are set.
@@ -1203,7 +1203,7 @@ class TrainingObject extends DataObject {
 	 */
 	public function hasArrayGroundContact() { return strlen($this->get('arr_groundcontact')) > 0; }
 
-	
+
 	/**
 	 * Set array for vertical oscillation
 	 * @param array $data
@@ -1219,8 +1219,8 @@ class TrainingObject extends DataObject {
 	 * @return bool
 	 */
 	public function hasArrayVerticalOscillation() { return strlen($this->get('arr_vertical_oscillation')) > 0; }
-	
-	
+
+
 	/**
 	 * Set array for ground contact time balance
 	 * @param array $data
@@ -1236,8 +1236,8 @@ class TrainingObject extends DataObject {
 	 * @return bool
 	 */
 	public function hasArrayGroundContactBalance() { return strlen($this->get('arr_groundcontact_balance')) > 0; }
-	
-	
+
+
 	/**
 	 * Set array for heart rate variability
 	 * @param array $data
@@ -1301,13 +1301,4 @@ class TrainingObject extends DataObject {
 	 * @return bool
 	 */
 	public function elevationWasCorrected() { return $this->get('elevation_corrected') == 1; }
-
-	/**
-	 * Was this training a competition?
-	 * @param int $id id
-	 * @return boolean 
-	 */
-	public static function idIsCompetition($id) {
-		return (DB::getInstance()->query('SELECT COUNT(*) FROM `'.PREFIX.'raceresult` WHERE `activity_id`='.(int)$id.' LIMIT 1')->fetchColumn() > 0);
-	}
 }

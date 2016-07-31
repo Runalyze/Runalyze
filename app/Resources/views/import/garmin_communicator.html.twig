@@ -4,11 +4,11 @@
 	<meta charset="UTF-8">
 	<title>Garmin Communicator</title>
 
-	<base href="{{ htmlBase }}">
+	<base href="{{ url('base_url') }}">
 
-	<link rel="stylesheet" href="assets/v2.x/vendor/garmin/communicator2.css">
-	<script src="assets/v2.x/vendor/garmin/prototype/prototype.js"></script>
-	<script src="assets/v2.x/vendor/garmin/garmin/device/GarminDeviceDisplay.js"></script>
+	<link rel="stylesheet" href="{{ asset('assets/v2.x/vendor/garmin/communicator2.css') }}">
+	<script src="{{ asset('assets/v2.x/vendor/garmin/prototype/prototype.js') }}"></script>
+	<script src="{{ asset('assets/v2.x/vendor/garmin/garmin/device/GarminDeviceDisplay.js') }}"></script>
 	<script>
 		function ignoreID(id,e) {
 			var p = e.parentNode;
@@ -40,11 +40,11 @@
 				readDataTypes: [Garmin.DeviceControl.FILE_TYPES.tcxDir, Garmin.DeviceControl.FILE_TYPES.gpxDir, Garmin.DeviceControl.FILE_TYPES.fitDir],
 				readDataButtonText: "{{ 'Connect' | trans }}",
 				showCancelReadDataButton: false,
-				lookingForDevices: '{{ 'Searching for devices' | trans }}<br><br><img src="assets/v2.x/img/wait.gif">',
+				lookingForDevices: '{{ 'Searching for devices' | trans }}<br><br><img src="{{ asset('assets/v2.x/img/wait.gif') }}">',
 				uploadsFinished: "{{ 'Transfer complete' | trans }}",
 				uploadSelectedActivities: true,
 				uploadCompressedData: true,
-				uploadMaximum: 40, 
+				uploadMaximum: 40,
 				browseComputerButtonText: "{{ 'Browse computer' | trans }}",
 				cancelUploadButtonText: "{{ 'Cancel' | trans }}",
 				changeDeviceButtonText: "{{ 'Cancel' | trans }}",
@@ -65,7 +65,7 @@
 				activityDirectoryHeaderStatus: '{{ 'Status' | trans }}',
 				statusCellProcessingImg: 'upload',
 				detectNewActivities: true,
-				syncDataUrl: '{{ absolute_url('/') }}call/ajax.activityMatcher.php',
+				syncDataUrl: '{{ url('activityMatcher') }}',
 				syncDataOptions: {method:'post'},
 				afterTableInsert: function(index, entry, statusCell, checkbox, row, activityMatcher) {
 					var activityId = entry.id, isMatch = false;
@@ -85,7 +85,7 @@
 						entry.isNew = true;
 						checkbox.checked = true;
 						statusCell.className = statusCell.className + ' upload-new';
-						statusCell.innerHTML = 'neu<br><small onclick="ignoreID(\''+activityId+'\', this)">[{{ 'ignore' | trans }}]</small>';
+						statusCell.innerHTML = '{{ 'new' | trans }}<br><small onclick="ignoreID(\''+activityId+'\', this)">[{{ 'ignore' | trans }}]</small>';
 
 						// Rearrange: Put to the top
 						if (index != newIndex) {

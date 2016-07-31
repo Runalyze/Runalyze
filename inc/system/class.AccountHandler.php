@@ -131,16 +131,16 @@ class AccountHandler {
 		return (1 == DB::getInstance()->query('SELECT 1 FROM `'.PREFIX.'account` WHERE `mail`='.DB::getInstance()->escape($mail).' LIMIT 1')->fetchColumn());
 	}
 
-        /**
-         * Is the mail address valid?
-         * @param string $mail
-         * @return boolean
-         */
-        public static function mailValid($mail) {
-            $validator = new \EmailValidator\Validator();
-            //isValid() could be used too, if server is connected to the internet
-            return(1 == $validator->isDisposable($mail));
-        }
+	/**
+	 * Is the mail address valid?
+	 * @param string $mail
+	 * @return boolean
+	 */
+	public static function mailValid($mail) {
+		$validator = new \EmailValidator\Validator();
+		//isValid() could be used too, if server is connected to the internet
+		return(1 == $validator->isDisposable($mail));
+	}
 
 	/**
 	 * Compares a password (given as string) with hash from database
@@ -486,7 +486,7 @@ class AccountHandler {
 		    $message .= sprintf( __('You can activate your account (username = %s) with the following link'), $account['username']).":<br>\r\n";
 		    $message .= '<a href='.$activationLink.'>'.$activationLink.'</a>';
 		}
-		
+
 		if (!System::sendMail($account['mail'], $subject, $message)) {
 			// TODO: provide a log entry for the admin
 			return false;

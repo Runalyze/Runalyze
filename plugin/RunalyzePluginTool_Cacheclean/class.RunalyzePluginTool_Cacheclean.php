@@ -33,7 +33,7 @@ class RunalyzePluginTool_Cacheclean extends PluginTool {
 	 */
 	protected function displayContent() {
 		if (isset($_GET['delete'])) {
-			System::clearCache();
+			Cache::clean();
 		}
 
 		$Fieldset = new FormularFieldset( __('Empty your cache') );

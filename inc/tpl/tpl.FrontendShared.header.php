@@ -10,7 +10,7 @@
 
 	<?php echo System::getCodeForAllCSSFiles(); ?>
 
-	<link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
+	<link rel="shortcut icon" type="image/x-icon" href="assets/web/img/favicon.ico">
 
 	<title><?php echo $this->getPageTitle(); ?> - RUNALYZE</title>
 
