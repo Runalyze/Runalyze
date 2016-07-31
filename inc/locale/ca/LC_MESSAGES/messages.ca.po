@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-05-21 18:34+0200\n"
-"PO-Revision-Date: 2015-08-23 12:14+0200\n"
+"PO-Revision-Date: 2016-07-31 11:38+0000\n"
 "Last-Translator: pedro galan <arnoldewald@yahoo.es>\n"
 "Language-Team: Catalan <http://translate.runalyze.de/projects/runalyze/"
 "runalyze/ca/>\n"
@@ -1344,6 +1344,9 @@ msgid ""
 "(if activated in your configuration) only if you change the duration or the "
 "type of sport."
 msgstr ""
+"Aquest valor es calcula automàticament mitjançant la durada i la "
+"configuració de l'esport (si s'ha activat a la configuració), en cas que "
+"s'hagi modificat la durada o bé el tipus d'esport."
 
 #: inc/training/schemes/scheme.Training.php:308
 msgid "VDOT for form"
@@ -1355,6 +1358,10 @@ msgid ""
 "single activities from the calculation of your form and should do so if it's "
 "heart rate data are not reliable (e.g. a lot of stops, walking breaks, ...)."
 msgstr ""
+"El valor VDOT s'estima de la relació entre la freqüència cardíaca i el ritme "
+"d'entrenament. Es poden descartar determinades activitats dels càlculs, en "
+"cas que les dades de la freqüència cardíaca no siguin confiables (p.ex. "
+"moltes aturades o similar)."
 
 #: inc/training/schemes/scheme.Training.php:403
 msgid "Cadence (Running)"
@@ -1458,6 +1465,8 @@ msgid ""
 "Race results are treated in a special way to show your personal bests and "
 "are independent of the chosen activity type."
 msgstr ""
+"Els resultats de les curses, independentment del tipus d'entrenament "
+"seleccionat, es fan servir pel càlcul de les millors marques personals."
 
 #: inc/training/class.TrainingFormular.php:235
 msgid ""
@@ -1555,6 +1564,9 @@ msgid ""
 "Changing the unit system for distances does not change pace units. You have "
 "to adjust them in sports configuration."
 msgstr ""
+"La modificació de les unitats per distàncies no suposa el canvi de les "
+"unitats de ritme d'entrenament. S'han de canviar aquestes explícitament a la "
+"configuració de tipus d'esport."
 
 #: inc/core/Configuration/Category/General.php:208
 #, fuzzy
@@ -2106,6 +2118,8 @@ msgstr "Desi l'arxiu de configuració"
 msgid ""
 "You may want to adjust pace units in %s. They are not changed automatically."
 msgstr ""
+"Pot ajustar les unitats de ritme d'entrenament a %s. No es canvia "
+"automàticament."
 
 #: inc/core/Configuration/Messages.php:49
 #: plugin/RunalyzePluginTool_DatenbankCleanup/Job.php:49
@@ -2233,6 +2247,9 @@ msgid ""
 "Helps recovery (short activities). Improves endurance with longer activities "
 "(more than 40 minutes)."
 msgstr ""
+"Ajuda per la regeneració (activitats de curta durada). Millora la "
+"resistència en activitats de llarga durada, és a dir, de més de quaranta "
+"minuts."
 
 #: inc/core/Activity/TrainingEffectLevel.php:94
 msgid "Maintains your aerobic fitness."
@@ -2249,12 +2266,16 @@ msgid ""
 "Highly improves your aerobic fitness if repeated 1-2 times per week with "
 "adequate recovery time."
 msgstr ""
+"Augmenta significativament la condició física aeròbica si es practica un "
+"parell de cops per setmana amb un temps de recuperació adequat."
 
 #: inc/core/Activity/TrainingEffectLevel.php:100
 msgid ""
 "Causes temporary overload with high improvement. Train up to this number "
 "with extreme care. Requires additional recovery days."
 msgstr ""
+"Provoca un sobrecàrrega amb gran millora. Entreni en aquesta zona amb molta "
+"precaució. Són necessaris dies addicionals de recuperació."
 
 #: inc/core/Activity/GroundcontactBalance.php:48
 #, fuzzy
@@ -3024,6 +3045,8 @@ msgid ""
 "Rating of Perceived Exertion or Borg scale, a scale devised to show "
 "perceived exertion during exercise"
 msgstr ""
+"Ràtio d'esforç percebut o escala de Borg, una manera de mesurar la sensació "
+"d'esforç durant l'activitat"
 
 #: inc/core/Dataset/Keys/FitVO2maxEstimate.php:44
 #: inc/core/Dataset/Keys/FitVO2maxEstimate.php:53
@@ -3058,7 +3081,7 @@ msgstr "El seu equipament"
 
 #: inc/core/Dataset/Keys/CompleteEquipment.php:52
 msgid "Your complete equipment is shown as icon with tooltip."
-msgstr ""
+msgstr "Tot el teu equipament es mostra com a icona amb tooltip."
 
 #: inc/core/Dataset/Keys/Route.php:80
 #, php-format
@@ -3070,6 +3093,8 @@ msgid ""
 "You can decide for each activity whether it is visible for everybody or not. "
 "If it is public a linked icon is shown."
 msgstr ""
+"Vostè decideix si una activitat es fa pública o no. Si es fa pública, es "
+"mostra com a icona."
 
 #: inc/core/Dataset/Keys/FitRecoveryTime.php:43
 #: inc/core/Dataset/Keys/FitRecoveryTime.php:52
@@ -3082,6 +3107,8 @@ msgid ""
 "Garmin calculates a suggested recovery time based on your heart rate "
 "variablitity right after the end of your activity."
 msgstr ""
+"Garmin calcula un temps de recuperació en funció de la seva variabilitat de "
+"la freqüència cardíaca al final de l'activitat."
 
 #: inc/core/Dataset/Keys/Temperature.php:53
 msgid "Temp."
@@ -3096,6 +3123,8 @@ msgid ""
 "Windchill is the perceived air temperature felt by the body on exposed skin "
 "due to the flow of air."
 msgstr ""
+"La sensació tèrmica és la diferència entre la temperatura mesurada i la que "
+"es percep, influenciat per velocitat del vent sobre la pell exposada."
 
 #: inc/core/Dataset/Keys/Sport.php:53
 msgid "Sport type"
@@ -3165,6 +3194,11 @@ msgid ""
 "a colored marker, green for low values and red for high values. Garmin shows "
 "this value as recovery status."
 msgstr ""
+"Garmin calcula un valor HRV durant els primers dotze minuts d'activitat. "
+"Aquest valor, probablement el temps de recuperació en minuts, es mostra de "
+"diferents colors. En cas que el valor sigui petit serà de color vermell i "
+"per a valors grans verd. Garmin presenta aquest valor com a status de "
+"recuperació."
 
 #: inc/core/Dataset/Keys/VerticalRatio.php:53
 msgid "Vertical ratio is the ratio of vertical oscillation to stride length."
@@ -3195,6 +3229,9 @@ msgid ""
 "only if there are handmade laps, i.e. there are active and inactive laps, or "
 "if it was a race. "
 msgstr ""
+"Els temps parcials es presenten com a icona de rellotge amb tots els temps "
+"parcials com a tooltip. Només es mostren si són parcials manuals, és a dir "
+"hi ha parcials amb o sense activitat. "
 
 #: inc/core/Dataset/Keys/FitTrainingEffect.php:52
 msgid "TE"
@@ -3205,6 +3242,8 @@ msgid ""
 "Training Effect is an indicator between 1.0 (easy) and 5.0 (overreaching) to "
 "rate the impact of aerobic exercise on your body."
 msgstr ""
+"L'efecte de l'entrenament és un indicador entre 1.0 per fàcil i 5.0 per a "
+"extenuant per a  avaluar l'efecte de l'exercici aeròbic sobre el seu cos."
 
 #: inc/core/Dataset/Keys/Elevation.php:53
 #, fuzzy
@@ -3216,6 +3255,8 @@ msgid ""
 "Calculated value for total elevation, i.e. maximum of total ascent or "
 "descent."
 msgstr ""
+"Elevació total calculada, és a dir la suma total de tots els desnivells "
+"acumulats, tan positius com negatius."
 
 #: inc/core/Dataset/Keys/Gradient.php:54
 #, fuzzy
@@ -3227,6 +3268,8 @@ msgid ""
 "The gradient describes the ratio of elevation gain (or less) and distance. "
 "Dividing total elevation by total distance gives this value."
 msgstr ""
+"El gradient és la relació entre l'elevació i la distància. Resulta del "
+"quocient entre l'elevació total i la distància total."
 
 #: inc/core/Dataset/Keys/MainEquipment.php:35
 #, fuzzy
@@ -3238,6 +3281,9 @@ msgid ""
 "You can choose a main equipment type for each sport in your sport "
 "configuration. Equipment objects of this type will be shown with their names."
 msgstr ""
+"Pot escollir a la configuració d'esport per a cada tipus d'esport, el seu "
+"equipament principal. Aquest tipus d'objectes es mostren amb el seu propi "
+"nom."
 
 #: inc/core/Dataset/Keys/VdotValue.php:48
 #, fuzzy
@@ -3249,6 +3295,9 @@ msgid ""
 "Estimated VDOT based on pace and heart rate. The value is slightly "
 "transparent if it is not used for your VDOT shape."
 msgstr ""
+"El VDOT estimat segons el ritme d'entrenament i la freqüència cardíaca. "
+"Aquest valor es mostra una mica transparent en cas que no s'hagi considerat "
+"pel càlcul del VDOT."
 
 #: inc/core/Dataset/Keys/GroundcontactBalance.php:53
 msgid "GCB"
@@ -3277,6 +3326,9 @@ msgid ""
 "The performance condition is an assessment, detected by some Garmin devices, "
 "of your ability to perform compared to your average fitness level."
 msgstr ""
+"La condició física és una avaluació que calculen alguns aparells Garmin, de "
+"les teves capacitats de rendiment vers el teu nivell de condició física "
+"mitjà."
 
 #: inc/core/Dataset/Keys/Groundcontact.php:53
 #, fuzzy
@@ -3288,12 +3340,16 @@ msgid ""
 "Trimp values are colored based on their value, slightly transparent for low "
 "values and dark red for high values."
 msgstr ""
+"Els valor del Trim es mostren amb diferents colors, lleugerament "
+"transparents per a valors baixos i de vermell fosc per a valors grans."
 
 #: inc/core/Dataset/Keys/Type.php:62
 msgid ""
 "The activity type is shown with its abbreviation. It is bold if the type is "
 "marked as quality session."
 msgstr ""
+"El tipus d'activitat es mostra amb la seva abreviatura. Es mostra en "
+"negretes si l'activitat ha sigut de qualitat."
 
 #: inc/core/Dataset/Keys/AirPressure.php:43
 msgid "Air pressure"
@@ -3304,6 +3360,8 @@ msgid ""
 "Elapsed time is the difference between end and start of your activity "
 "including pauses."
 msgstr ""
+"Temps transcorregut entre l'inici i final d'una activitat incloent-hi les "
+"diferents pauses."
 
 #: inc/core/Util/Time.php:89 inc/tpl/tpl.DataBrowser.php:28
 msgid "Sun"
@@ -3880,6 +3938,9 @@ msgid ""
 "every update. If you have skipped a version, you need to apply the "
 "respective updates in the correct order."
 msgstr ""
+"Un cop descarregada la darrera versió de RUNALYZE, cal actualitzar la seva "
+"base de dades. Si ha omès una versió, li caldrà aplicar les corresponents "
+"actualitzacions en l'ordre establert."
 
 #: inc/tpl/tpl.InstallerUpdate.php:13
 #, php-format
@@ -4353,7 +4414,7 @@ msgstr "Objectiu:"
 
 #: inc/draw/class.PlotSumData.php:645
 msgid "Goal and average are based on current basic endurance calculations."
-msgstr ""
+msgstr "Objectiu i mitjana es basen en la teva resistència calculada."
 
 #: inc/draw/class.PlotMonthSumData.php:38
 msgid "Monthly chart:"
@@ -4884,6 +4945,8 @@ msgid ""
 "At irregular intervals we are sending mails to you. We will never send you "
 "spam or advertisement."
 msgstr ""
+"Li enviarem correus electrònics de manera no regular. En cap cas li enviarem "
+"anuncis o spam."
 
 #: inc/system/config/class.ConfigTabAccount.php:73
 msgid "Change your password"
@@ -4927,6 +4990,8 @@ msgstr ""
 #: inc/system/config/class.ConfigTabAccount.php:104
 msgid "This will not touch any general settings like gender and main sport."
 msgstr ""
+"Això no modifica cap configuració general com per exemple el sexe o el tipus "
+"d'esport principal."
 
 #: inc/system/config/class.ConfigTabAccount.php:106
 #: inc/system/config/class.ConfigTabAccount.php:112
@@ -5031,6 +5096,8 @@ msgstr "El seu equipament"
 #: inc/system/config/class.ConfigTabSports.php:61
 msgid "Objects of main equipment type can be shown in the activity overview."
 msgstr ""
+"Els objectes de l'equipament principal es poden mostrar al resum de "
+"l'activitat."
 
 #: inc/system/config/class.ConfigTabSports.php:62
 #, fuzzy
@@ -5058,6 +5125,9 @@ msgid ""
 "one activity. In addition, you can specify to which sports a category "
 "belongs."
 msgstr ""
+"El seu equipament es troba agrupat en diferents categories. Per cada "
+"categoria pot definir si diversos objectes poden pertànyer a una activitat. "
+"També es poden assignar tipus d'esport."
 
 #: inc/system/config/class.ConfigTabEquipment.php:39
 #: plugin/RunalyzePluginPanel_Equipment/window.equipment.table.php:14
@@ -5073,6 +5143,11 @@ msgid ""
 "a start and end date for its usage. Objects will be displayed as 'inactive' "
 "as soon as you have entered an end date."
 msgstr ""
+"RUNALYZE recull dades i calcula estadístiques per tots els objectes "
+"d'equipament. Per tal de tenir perfectament actualitzat el seu ús, ha de "
+"definir quin n'ha sigut l'ús previ. També por definir quin és l'inici i el "
+"final del seu ús. Els objectes es mostraran com a inactius, tan aviat com "
+"s'hagi superat la data final."
 
 #: inc/system/config/class.ConfigTabEquipment.php:83
 #, fuzzy
@@ -5129,11 +5204,13 @@ msgid ""
 "We have changed some paths. Please set write permissions for all directories "
 "in %s."
 msgstr ""
+"Hem modificat algunes rutes. Si us pla activi els permisos d'escriptura per "
+"a tots els directoris %s."
 
 #: inc/class.InstallerUpdate.php:97
 #, php-format
 msgid "If you are using local srtm files, please move them from %s to %s."
-msgstr ""
+msgstr "Si fa servir arxius srtm locals, mogui'ls de %s a %s."
 
 #: inc/class.InstallerUpdate.php:101
 #, php-format
@@ -5141,6 +5218,7 @@ msgid ""
 "Please add %s (or whatever port your database connection requires) to your "
 "%s file."
 msgstr ""
+"Afegeixi %s (o el port que la seva base de dades necessiti) al seu arxiu %s."
 
 #: inc/class.InstallerUpdate.php:197
 #, php-format
@@ -5152,6 +5230,8 @@ msgid ""
 "Please set your database connection within that file first and then run it "
 "via cli or in your browser."
 msgstr ""
+"Seleccioni la connexió del banc de dades al seu arxiu i després arrenqui "
+"l'escript al seu navegador."
 
 #: inc/import/class.ImporterWindowTabFormular.php:40
 msgid "Form"
@@ -5172,7 +5252,7 @@ msgstr "El seu navegador aparentment no dóna suport a aquest Uploader, miri"
 
 #: inc/import/tpl/tpl.Importer.upload.php:62
 msgid "Table showing included data by filetype"
-msgstr ""
+msgstr "La taula mostra les dades per tipus d'arxiu"
 
 #: inc/import/tpl/tpl.Importer.upload.php:63
 msgid "Supported file extensions:"
@@ -5193,6 +5273,10 @@ msgid ""
 "like the Garmin Communicator. A <a href=\"%s\">reinstall</a> may work, but "
 "we have documented an alternative way to import the original files at %s. "
 msgstr ""
+"Degut a qüestions de seguretat, els fabricants dels navegadors deixen de "
+"donar suport a plugins com per exemple Garmin Communicator. Una <a href=\"%"
+"s\">nova instal·lació</a> podria funcionar però, de tota manera, t'oferim "
+"una manera alternativa per a importar els arxius originals a %s. "
 
 #: inc/import/class.MultiEditor.php:45
 msgid "No activities for editing were set."
@@ -6481,6 +6565,8 @@ msgid ""
 "If you participate in an event multiple times you should always enter the "
 "same name, i.e. don't append the event's number or year."
 msgstr ""
+"Si participa a un esdeveniment diverses vegades, hauria de posar-li sempre "
+"el mateix nom."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:543
 msgid "Officially measured"
@@ -6842,6 +6928,7 @@ msgstr "Hi han <strong>%s</strong> valors del cos en aquest arxiu."
 #, php-format
 msgid "Versions do not match! The backup is from %s but you are using %s."
 msgstr ""
+"Les versions no es corresponen. La còpia de seguretat és %s i fa servir %s."
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:211
 msgid "The file seems to be corrupted."
@@ -6869,6 +6956,8 @@ msgid ""
 "All shared links will be invalid if you (re-)import activities and overwrite "
 "all existing activities!"
 msgstr ""
+"Si reimporta les activitats i les sobreescriu, les dreceres deixaran de ser "
+"vàlides!"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:285
 msgid ""
