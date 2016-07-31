@@ -22,7 +22,7 @@ use DB;
 
 /**
  * Linker for activities
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\View\Activity
  */
@@ -180,7 +180,7 @@ class Linker {
 		if ($linkClass != '')
 			$linkId .= ' class="'.$linkClass.'"';
 
-		return Ajax::window('<a'.$linkId.' href="/activity/'.$id.'/edit">'.$text.'</a>', 'small');
+		return Ajax::window('<a'.$linkId.' href="activity/'.$id.'/edit">'.$text.'</a>', 'small');
 	}
 
 	/**
