@@ -1,0 +1,37 @@
+{% extends "base.html.twig" %}
+
+{% set body_attributes = ' id="home"' %}
+{# TODO: background image from \Runalyze\Configuration::Design()->backgroundImage() #}
+
+{% block body %}
+    {% if not app.request.xmlHttpRequest %}
+    <div id="flot-loader"></div>
+
+    <div id="headline">
+        {% block headline %}
+            <span id="menu-link" onclick="$('#headline').toggleClass('menu-expanded');"><i class="fa fa-fw fa-bars"></i></span>
+            <a class="tab logo" href="{{ url('base_url') }}" title="Runalyze">Runalyze</a>
+
+            {% if is_granted('ROLE_USER') %}
+                <a class="tab right" href="{{ url('logout') }}" title="{% trans %}Logout{% endtrans %}"><i class="fa fa-fw fa-lg fa-sign-out"></i>&nbsp;{% trans %}Logout{% endtrans %}</a>
+                <a class="window tab right b" href="{{ url('settings') }}?key=config_tab_account"><i class="fa fa-fw fa-lg fa-user"></i>&nbsp;{{ app.user.username }}</a>
+            {% endif %}
+
+            <span class="left b">
+                <a class="window tab" href="{{ url('settings') }}"><i class="fa fa-fw fa-lg fa-cog"></i>&nbsp;{% trans %}Configuration{% endtrans %}</a>
+                <a class="window tab" href="{{ url('pluginDisplay') }}"><i class="fa fa-fw fa-lg fa-dashboard"></i>&nbsp;{% trans %}Tools{% endtrans %}</a>
+                <a class="window tab" href="{{ url('help') }}"><i class="fa fa-fw fa-lg fa-question-circle"></i>&nbsp;{% trans %}Help{% endtrans %}</a>
+            </span>
+        {% endblock %}
+    </div>
+    {% endif %}
+
+    {% block content %}
+    {% endblock %}
+
+    {% if not app.request.xmlHttpRequest %}
+    <br class="clear">
+
+    <script>(function($){$(document).ready(function(){ Runalyze.init(); });})(jQuery);</script>
+    {% endif %}
+{% endblock %}

@@ -1,3 +1,6 @@
+{% extends "base_logged_in.twig" %}
+
+{% block content %}
 <div class="panel-heading">
 	<h1>Runalyze v{{ version }}</h1>
 </div>
@@ -50,7 +53,7 @@
 		<li><a href="http://facebook.com/Runalyze" title="Runalyze"><i class="fa fa-facebook color-facebook"></i> <strong>Facebook</strong></a></li>
 		<li><a href="https://plus.google.com/communities/116260192529858591171" title="Runalyze"><i class="fa fa-google-plus color-google-plus"></i> <strong>Google+</strong></a></li>
 	</ul>
-	
+
 	<p class="text">
 		{% trans %}In a case of urgency you can contact us via email:{% endtrans %} <a href="mailto:support@runalyze.com" title="Support">support@runalyze.com</a>.
 	</p>
@@ -111,3 +114,4 @@
 		</li>
 	</ul>
 </div>
+{% endblock %}

@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html{{ html_attributes|default('') }}>
+{% if not app.request.xmlHttpRequest %}<!DOCTYPE html>
+<html{{ html_attributes|default('')|raw }}>
 {% block html_head %}
     <head>
         {% block html_head_meta %}
@@ -14,7 +14,7 @@
                 <link rel="stylesheet" href="{{ asset('assets/css/runalyze-style.css') }}?v={{ RUNALYZE_VERSION }}">
             {% endblock %}
 
-            <link rel="shortcut icon" type="image/x-icon" href="assets/v2.x/img/favicon.ico">
+            <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/v2.x/img/favicon.ico') }}">
 
             {% for key, locale in locales %}
                 <link rel="alternate" href="{{ app.request.getBaseUrl ~ app.request.pathinfo }}?lang={{ key }}" hreflang="{{ key }}">
@@ -31,8 +31,13 @@
     </head>
 {% endblock %}
 
-<body{{ body_attributes|default('') }}>
+<body{{ body_attributes|default('')|raw }}>
+{% endif %}
+
 {% block body %}
 {% endblock %}
+
+{% if not app.request.xmlHttpRequest %}
 </body>
 </html>
+{% endif %}

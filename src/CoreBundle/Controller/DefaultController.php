@@ -184,7 +184,7 @@ class DefaultController extends Controller
      */
     public function dashboardHelpAction()
     {
-        new \Frontend(false, $this->get('security.token_storage'));
+        new \Frontend(true, $this->get('security.token_storage'));
 
         return $this->render('pages/help.html.twig', [
             'version' => RUNALYZE_VERSION
