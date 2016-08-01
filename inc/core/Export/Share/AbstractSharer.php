@@ -64,7 +64,7 @@ abstract class AbstractSharer extends AbstractExporter
     final protected function publicURL() {
         $Linker = new Linker($this->Context->activity());
 
-        return $Linker->publicUrl();
+	return \Request::getProtocol().':'.$Linker->publicUrl();
     }
 
     /**
