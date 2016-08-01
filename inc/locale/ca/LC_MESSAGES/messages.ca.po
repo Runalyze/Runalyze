@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-05-21 18:34+0200\n"
-"PO-Revision-Date: 2016-07-31 11:38+0000\n"
+"PO-Revision-Date: 2016-08-01 04:04+0000\n"
 "Last-Translator: pedro galan <arnoldewald@yahoo.es>\n"
 "Language-Team: Catalan "
 "<http://translate.runalyze.com/projects/runalyze/runalyze/ca/>\n"
@@ -2971,7 +2971,7 @@ msgstr "rpm = rotacions per minut"
 
 #: inc/core/Data/Cadence/Running.php:28
 msgid "Cadence (running)"
-msgstr "Gambada (córrer)"
+msgstr "Cadència (córrer)"
 
 #: inc/core/Data/Cadence/Running.php:46
 msgid "spm = steps per minute"
@@ -3137,7 +3137,7 @@ msgstr ""
 #: inc/core/Dataset/Keys/VerticalRatio.php:53
 msgid "Vertical ratio is the ratio of vertical oscillation to stride length."
 msgstr ""
-"el ràtio vertical és la relació entre el desplaçament vertical i la longitud "
+"El ràtio vertical és la relació entre el desplaçament vertical i la longitud "
 "de la gambada."
 
 #: inc/core/Dataset/Keys/JdIntensity.php:44
