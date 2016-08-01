@@ -15,13 +15,13 @@ parameters:
   nokia_here_appid:
   nokia_here_token:
   geonames_username:
-  perl_path:
-  ttbin_path:
-  sqlite_mod_spatialite:
+  perl_path: /usr/bin/perl
+  ttbin_path: ../call/perl/ttbincnv
+  sqlite_mod_spatialite: libspatialite.so.5
   mail_sender:
   mail_name:
-  smtp_host:
-  smtp_port:
+  smtp_host: localhost
+  smtp_port: 25
   smtp_security:
   smtp_username:
-  smtp_password: 
+  smtp_password:
