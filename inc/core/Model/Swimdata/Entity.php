@@ -201,8 +201,9 @@ class Entity extends Model\Entity implements Model\Loopable {
 	 */
 	public function fillDistanceArray(Trackdata\Entity &$trackdata) {
 		if ($this->poollength() && !$trackdata->has(Trackdata\Entity::DISTANCE) && $this->num() == $trackdata->num()) {
-			$length = $this->poollength()/100000;
+			$length = $this->poollength();
 			$distance = range($length, $this->num()*$length, $length);
+			$distance = array_map(function($v) { return $v / 100000; }, $distance);
 			$trackdata->set(Trackdata\Entity::DISTANCE, $distance);
 			$trackdata->calculatePaceArray();
 		}
