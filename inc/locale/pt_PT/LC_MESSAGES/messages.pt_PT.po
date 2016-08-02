@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-05-21 18:34+0200\n"
-"PO-Revision-Date: 2016-07-31 17:25+0000\n"
+"PO-Revision-Date: 2016-08-02 14:27+0000\n"
 "Last-Translator: bruno lencastre <bruno.lencastre@sapo.pt>\n"
 "Language-Team: Portuguese (Portugal) "
 "<http://translate.runalyze.com/projects/runalyze/runalyze/pt_PT/>\n"
@@ -1227,32 +1227,33 @@ msgid "add new lap"
 msgstr "Adicionar nova volta"
 
 #: inc/training/formular/class.TrainingInputSplits.php:52
+#, fuzzy
 msgid "round for 100m"
-msgstr "volta por 100m"
+msgstr "arredondar aos 100m"
 
 #: inc/training/formular/class.TrainingInputSplits.php:55
 msgid "apply as total distance"
-msgstr "aplicam-se como distância total"
+msgstr "aplicar como distância total"
 
 #: inc/training/formular/class.TrainingInputSplits.php:56
 msgid "all active"
-msgstr "todo ativo"
+msgstr "todos activos"
 
 #: inc/training/formular/class.TrainingInputSplits.php:56
 msgid "all resting"
-msgstr "todo a descansar"
+msgstr "todos em repouso"
 
 #: inc/training/formular/class.TrainingInputSplits.php:57
 msgid "alternating:"
-msgstr "alternada:"
+msgstr "alternando:"
 
 #: inc/training/formular/class.TrainingInputSplits.php:57
 msgid "first resting"
-msgstr "primeiro descanso"
+msgstr "primeiro em repouso"
 
 #: inc/training/formular/class.TrainingInputSplits.php:58
 msgid "first active"
-msgstr "primeiro ativo"
+msgstr "primeiro por activos"
 
 #: inc/training/formular/class.TrainingInputSplits.php:71
 #: inc/data/class.Splits.php:171
@@ -1263,7 +1264,7 @@ msgstr "em"
 
 #: inc/training/formular/class.TrainingInputSplits.php:94
 msgid "Defining some laps as 'resting' will hide them in the respective plot."
-msgstr ""
+msgstr "Voltas definidas como 'descanso' são escondidas do respectivo gráfico."
 
 #: inc/training/formular/class.TrainingInputSplits.php:132
 #: inc/data/class.Splits.php:171
@@ -1272,7 +1273,7 @@ msgstr "A descansar"
 
 #: inc/training/formular/class.TrainingInputSplits.php:132
 msgid "Active"
-msgstr "Ativo"
+msgstr "Activo"
 
 #: inc/training/schemes/scheme.Training.php:30
 #: inc/training/schemes/scheme.UserData.php:8
@@ -1281,7 +1282,7 @@ msgstr "Informações gerais"
 
 #: inc/training/schemes/scheme.Training.php:63
 msgid "Weather conditions"
-msgstr "Condições meteorológicas"
+msgstr "Condições climatéricas"
 
 #: inc/training/schemes/scheme.Training.php:69
 #: inc/core/Configuration/Category/Privacy.php:91
@@ -1291,7 +1292,7 @@ msgstr "Privacidade"
 #: inc/training/schemes/scheme.Training.php:97
 #: inc/core/Dataset/Keys/Type.php:43
 msgid "Activity type"
-msgstr "Tipo de atividade"
+msgstr "Tipo de actividade"
 
 #: inc/training/schemes/scheme.Training.php:148
 msgid "Public"
@@ -1299,17 +1300,20 @@ msgstr "Público"
 
 #: inc/training/schemes/scheme.Training.php:149
 msgid "Public activities will be visible for everybody."
-msgstr ""
+msgstr "Actividades marcadas como públicas serão visíveis para toda a gente."
 
 #: inc/training/schemes/scheme.Training.php:160
 msgid "Track"
-msgstr "Faixa"
+msgstr "Pista"
 
 #: inc/training/schemes/scheme.Training.php:161
 msgid ""
 "This field is only meant for official track races such that distances can be "
 "shown correctly, e.g. as 10.000m. Use tags for all other purposes."
 msgstr ""
+"Este campo serve apenas para competições oficiais de forma a que as "
+"distâncias sejam mostradas correctamente, p. ex.: 10.000m. Utilize etiquetas "
+"para qualquer outro fim."
 
 #: inc/training/schemes/scheme.Training.php:221
 msgid "Will be calculated afterwards from the activity's elevation profile."
