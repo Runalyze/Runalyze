@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @Route("/account")
+ * @Route("/{_locale}/account")
  */
 class AccountController extends Controller
 {

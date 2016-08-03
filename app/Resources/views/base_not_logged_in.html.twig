@@ -23,7 +23,7 @@
                             <ul class="submenu">
                                 {% for key, locale in locales %}
                                     <li{% if key == app.request.locale %} class="triggered"{% endif %}>
-                                        <a href="{{ app.request.getBaseUrl ~ app.request.pathinfo }}?lang={{ key }}">{{ locale.name }}</a>
+                                        <a href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale': key})) }}">{{ locale.name }}</a>
                                     </li>
                                 {% endfor %}
                             </ul>

@@ -47,7 +47,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/register", name="register")
+     * @Route("/{_locale}/register", name="register")
      */
     public function registerAction()
     {
@@ -91,7 +91,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/login", name="login")
+     * @Route("/{_locale}/login", name="login")
      */
     public function loginAction()
     {
