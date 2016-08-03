@@ -1,4 +1,4 @@
-# [Runalyze v2.6.1](http://blog.runalyze.com)
+# [Runalyze v2.6.3](http://blog.runalyze.com)
 
 [![Build Status](https://travis-ci.org/Runalyze/Runalyze.svg?branch=master)](https://travis-ci.org/Runalyze/Runalyze)
 [![Code Coverage](https://scrutinizer-ci.com/g/Runalyze/Runalyze/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/Runalyze/Runalyze/?branch=master)
@@ -50,6 +50,7 @@ You have to apply recent changes from the respective update files in `inc/instal
 * [v2.6](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-6-en/), [[update instructions]](http://docs.runalyze.com/en/latest/update.html#upgrade-from-2-5-to-2-6), 22.05.2016: minor release (race results, improved weather cache ...)
  * [v2.6.1](https://blog.runalyze.com/en/allgemein-en/runalyze-v2-6-1-en/), 31.05.2016: minor bugfixes
  * [v2.6.2](https://blog.runalyze.com/en/allgemein-en/runalyze-v2-6-2-en/), 18.07.2016: minor bugfixes
+ * [v2.6.3](https://blog.runalyze.com/en/allgemein-en/runalyze-v2-6-3-en/), 03.08.2016: minor bugfixes
 * [v2.5](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-5-en/), [[update instructions]](http://docs.runalyze.com/en/latest/update.html#upgrade-from-2-4-to-2-5), 12.04.2016: minor release (timezone support, Moving average, ...)
  * [v2.5.1](https://blog.runalyze.com/en/allgemein-en/runalyze-v2-5-1-en/), 24.04.2016: minor bugfixes
  * [v2.5.2](https://blog.runalyze.com/en/allgemein-en/runalyze-v2-5-2-en/), 07.05.2016: minor bugfixes
