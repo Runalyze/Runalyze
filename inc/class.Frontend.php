@@ -9,37 +9,35 @@ use Runalyze\Error;
 use Runalyze\Timezone;
 use Symfony\Component\Yaml\Yaml;
 
-
 /**
  * Frontend class for setting up everything
- * 
+ *
  * The frontend initializes everything for Runalyze.
  * It sets the autoloader, constants and mysql-connection.
  * By default, constructing a new frontend will print a html-header.
- * 
+ *
  * Standard initialization of Runalyze:
  * <code>
  *  require 'inc/class.Frontend.php';
  *  $Frontend = new Frontend();
  * </code>
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Frontend
  */
 class Frontend {
 	/**
-	 * Symfony object
-	 * @var object
+	 * Symfony token storage for user
+	 * @var null|\Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage
 	 */
-	protected $symfonyUser = false;
-
+	protected $symfonyToken = null;
 
 	/**
 	 * Admin password as md5
 	 * @var string
 	 */
 	protected $adminPassAsMD5 = '';
-	
+
 	/**
 	 * Yaml Configuration
 	 * @var array
@@ -48,14 +46,16 @@ class Frontend {
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * Constructing a new Frontend includes all files and sets the correct header.
 	 * Runalyze is not usable without setting up the environment with this class.
-	 * 
+	 *
 	 * @param bool $hideHeaderAndFooter By default a html-header is directly shown
+	 * @param null|\Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage $symfonyToken
 	 */
-	public function __construct($hideHeaderAndFooter = false, $symfonyUser=null) {
-		$this->symfonyUser = $symfonyUser;
+	public function __construct($hideHeaderAndFooter = false, $symfonyToken = null) {
+		$this->symfonyToken = $symfonyToken;
+
 		$this->initSystem();
 		$this->defineConsts();
 
@@ -74,14 +74,14 @@ class Frontend {
 	}
 
 	/**
-	 * Init system 
+	 * Init system
 	 */
 	private function initSystem() {
 		define('RUNALYZE', true);
 		define('FRONTEND_PATH', dirname(__FILE__).'/');
 
 		$this->setAutoloader();
-		
+
 		$this->initCache();
 		$this->initErrorHandling();
 		$this->initConfig();
@@ -92,36 +92,38 @@ class Frontend {
 	}
 
 	/**
-	 * Set up Autloader 
+	 * Set up Autloader
 	 */
 	private function setAutoloader() {
 		require_once FRONTEND_PATH.'../vendor/autoload.php';
 	}
-	
+
 	/**
 	 * Setup config
 	 */
 	private function initConfig() {
-	    $config = Yaml::parse(file_get_contents('../data/config.yml'))['parameters'];
-	    $this->yamlConfig = $config;
-	    define('OPENWEATHERMAP_API_KEY', $config['openweathermap_api_key']);
-	    define('NOKIA_HERE_APPID', $config['nokia_here_appid']);
-	    define('NOKIA_HERE_TOKEN', $config['nokia_here_token']);
-	    define('SMTP_HOST', $config['smtp_host']);
-	    define('SMTP_PORT', $config['smtp_port']);
-	    define('SMTP_SECURITY', $config['smtp_security']);
-	    define('SMTP_USERNAME', $config['smtp_username']);
-	    define('SMTP_PASSWORD', $config['smtp_password']);
-	    define('MAIL_NAME', $config['mail_name']);
-	    define('MAIL_SENDER', $config['mail_sender']);
-	    define('PERL_PATH', $config['perl_path']);
-	    define('TTBIN_PATH', $config['ttbin_path']);
-	    define('GEONAMES_USERNAME', $config['geonames_username']);
-	    define('USER_DISABLE_ACCOUNT_ACTIVATION', $config['user_disable_account_activation']);
-	    define('SQLITE_MOD_SPATIALITE', $config['sqlite_mod_spatialite']);
+		$this->yamlConfig = array_merge(
+			Yaml::parse(file_get_contents('../app/config/default_config.yml'))['parameters'],
+			Yaml::parse(file_get_contents('../data/config.yml'))['parameters']
+		);
 
+	    define('OPENWEATHERMAP_API_KEY', $this->yamlConfig['openweathermap_api_key']);
+	    define('NOKIA_HERE_APPID', $this->yamlConfig['nokia_here_appid']);
+	    define('NOKIA_HERE_TOKEN', $this->yamlConfig['nokia_here_token']);
+	    define('SMTP_HOST', $this->yamlConfig['smtp_host']);
+	    define('SMTP_PORT', $this->yamlConfig['smtp_port']);
+	    define('SMTP_SECURITY', $this->yamlConfig['smtp_security']);
+	    define('SMTP_USERNAME', $this->yamlConfig['smtp_username']);
+	    define('SMTP_PASSWORD', $this->yamlConfig['smtp_password']);
+	    define('MAIL_NAME', $this->yamlConfig['mail_name']);
+	    define('MAIL_SENDER', $this->yamlConfig['mail_sender']);
+	    define('PERL_PATH', $this->yamlConfig['perl_path']);
+	    define('TTBIN_PATH', $this->yamlConfig['ttbin_path']);
+	    define('GEONAMES_USERNAME', $this->yamlConfig['geonames_username']);
+	    define('USER_DISABLE_ACCOUNT_ACTIVATION', $this->yamlConfig['user_disable_account_activation']);
+	    define('SQLITE_MOD_SPATIALITE', $this->yamlConfig['sqlite_mod_spatialite']);
 	}
-	
+
 	/**
 	 * Setup timezone
 	 */
@@ -129,7 +131,7 @@ class Frontend {
 		Timezone::setPHPTimezone(SessionAccountHandler::getTimezone());
 		Timezone::setMysql();
 	}
-                
+
         /**
 	 * Setup Language
 	 */
@@ -167,10 +169,11 @@ class Frontend {
 	 * Connect to database
 	 */
 	private function initDatabase() {
-		$config = $this->yamlConfig;
-		$this->adminPassAsMD5 = md5($config['database_password']);
-		define('PREFIX', $config['database_prefix']);
-		DB::connect($config['database_host'], $config['database_port'], $config['database_user'], $config['database_password'], $config['database_name']);
+		$this->adminPassAsMD5 = md5($this->yamlConfig['database_password']);
+
+		define('PREFIX', $this->yamlConfig['database_prefix']);
+
+		DB::connect($this->yamlConfig['database_host'], $this->yamlConfig['database_port'], $this->yamlConfig['database_user'], $this->yamlConfig['database_password'], $this->yamlConfig['database_name']);
 	}
 
 	/**
@@ -186,8 +189,9 @@ class Frontend {
 	 */
 	protected function initSessionAccountHandler() {
 		new SessionAccountHandler();
-		if (!is_null($this->symfonyUser) && $this->symfonyUser->getToken()->getUser() != 'anon.') {
-		    $user = $this->symfonyUser->getToken()->getUser();
+
+		if (!is_null($this->symfonyToken) && $this->symfonyToken->getToken()->getUser() != 'anon.') {
+		    $user = $this->symfonyToken->getToken()->getUser();
 
 		    SessionAccountHandler::setAccount(array(
 			    'id' => $user->getId(),
@@ -210,7 +214,7 @@ class Frontend {
 	 * Display the HTML-Header
 	 */
 	public function displayHeader() {
-	    
+
 		if (!Request::isAjax() && !isset($_GET['hideHtmlHeader']))
 			include 'tpl/tpl.Frontend.header.php';
 

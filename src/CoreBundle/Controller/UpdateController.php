@@ -19,7 +19,7 @@ use Symfony\Component\Yaml\Yaml;
 class UpdateController extends Controller
 {
     /**
-     * @Route("/update", name="update")
+     * @Route("/update", name="update", condition="'%update_disabled%' == 'no'")
      */
     public function updateAction($entity_manager = 'default')
     {
@@ -46,9 +46,9 @@ class UpdateController extends Controller
     }
 
     /**
-     * @Route("/update/start", name="update_start")
+     * @Route("/update/start", name="update_start", condition="'%update_disabled%' == 'no'")
      */
-    public function updateStartAction($entity_manager = 'default')
+    public function updateStartAction()
     {
         $application = new Application($this->get('kernel'));
         $application->setAutoExit(false);

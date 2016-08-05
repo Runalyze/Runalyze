@@ -42,7 +42,10 @@ class InstallCheckCommand extends ContainerAwareCommand
         ],
         [
             'method' => 'directoriesAreWritable',
-            'message' => 'Check that directories for cache, log and import are writable'
+            'message' => 'Check that directories for cache, log and import are writable',
+            'hint' => [
+                'Respective directories in data/ and var/ must be writable.'
+            ]
         ]
     ];
 
@@ -94,7 +97,7 @@ class InstallCheckCommand extends ContainerAwareCommand
 
         $output->writeln('  '.$this->getFinalMessage());
 
-        if ($this->ReturnCode == self::ERROR) {
+        if ($this->ReturnCode & self::ERROR) {
             return self::CHECK_FAILED;
         }
     }
@@ -104,15 +107,13 @@ class InstallCheckCommand extends ContainerAwareCommand
      */
     protected function getFinalMessage()
     {
-        switch ($this->ReturnCode) {
-            case self::ERROR:
-                return '<error>Not all requirements are fulfilled, installation not possible.</error>';
-            case self::WARNING:
-                return '<warning>There were some warnings, installation may still be possible.</warning>';
-            case self::OKAY:
-            default:
-                return '<info>All requirements are fulfilled.</info>';
+        if ($this->ReturnCode & self::ERROR) {
+            return '<error>Not all requirements are fulfilled, installation not possible.</error>';
+        } elseif ($this->ReturnCode & self::WARNING) {
+            return '<comment>There were some warnings, installation may still be possible.</comment>';
         }
+
+        return '<info>All requirements are fulfilled.</info>';
     }
 
     /**
@@ -124,7 +125,8 @@ class InstallCheckCommand extends ContainerAwareCommand
     {
         switch ($returnCode) {
             case self::WARNING:
-                $tag = 'warning';
+                $tag = 'comment';
+                $message = $message ? $message : 'warning';
                 break;
             case self::ERROR:
                 $tag = 'error';

@@ -7,6 +7,7 @@ parameters:
   database_user: root
   database_password:
   secret: please_change_this_secret
+  update_disabled: no
   user_can_register: true
   user_cant_login: false
   user_disable_account_activation: false
