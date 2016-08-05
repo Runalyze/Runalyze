@@ -111,6 +111,7 @@ class ParserFITSingle extends ParserAbstractSingle {
 	public function finishParsing() {
 		$this->applyPauses();
 		$this->setGPSarrays();
+		$this->fixForSuunto();
 
 		// TODO: lookup timezone and correct timestamp if startpoint is not in user's timezone
 	}
@@ -535,5 +536,24 @@ class ParserFITSingle extends ParserAbstractSingle {
 				}
 			}
 		}
+	}
+
+	/**
+	 * @see https://github.com/Runalyze/Runalyze/issues/1886
+	 */
+	protected function fixForSuunto() {
+		if ('suunto' == $this->TrainingObject->getCreator()) {
+			$this->TrainingObject->setTimeInSeconds($this->TrainingObject->getArrayTimeLastPoint());
+			$this->finishLaps();
+		}
+	}
+
+	/**
+	 * Finish laps
+	 */
+	protected function finishLaps() {
+		$totalTime = $this->TrainingObject->getTimeInSeconds() > 0 ? $this->TrainingObject->getTimeInSeconds() : end($this->gps['time_in_s']);
+
+		$this->TrainingObject->Splits()->addLastSplitToComplete(end($this->gps['km']), $totalTime);
 	}
 }

@@ -598,7 +598,6 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * Test: compressed_speed_distance from FR70
 	 * Filename: "FR70-intervals.fit"
-	 * @group gcb
 	 */
 	public function testDataFromFR630WithFurtherRunningDataLikeLactateThreshold() {
 		if (Shell::isPerlAvailable()) {
@@ -625,6 +624,33 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 
 			// New values for later on:
 			//  - lactate threshold: 163 bpm / 2.583 m/s
+		}
+	}
+
+	/**
+	 * Filename: "Suunto-Ambit-3-Peak-without-final-lap.fit"
+	 * @see https://github.com/Runalyze/Runalyze/issues/1886
+	 */
+	public function testDataFromSuuntoAmbitPeakWithoutFinalLap() {
+		if (Shell::isPerlAvailable()) {
+			$this->object->parseFile('../tests/testfiles/fit/Suunto-Ambit-3-Peak-without-final-lap.fit');
+
+			$this->assertFalse( $this->object->hasMultipleTrainings() );
+			$this->assertFalse( $this->object->failed() );
+
+			$this->assertEquals('2016-06-29 17:43', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
+			$this->assertEquals(120, $this->object->object()->getTimezoneOffset());
+
+			$this->assertEquals('suunto', $this->object->object()->getCreator());
+
+			$this->assertEquals(4961, $this->object->object()->getTimeInSeconds(), '', 10);
+			$this->assertEquals(4961, $this->object->object()->getArrayTimeLastPoint(), '', 10);
+			$this->assertEquals(15.220, $this->object->object()->getDistance(), '', 0.01);
+
+			$splits = $this->object->object()->Splits();
+			$this->assertEquals(22, count($splits->asArray()));
+			$this->assertEquals(15.220, $splits->totalDistance());
+			$this->assertEquals(4961, $splits->totalTime());
 		}
 	}
 }
