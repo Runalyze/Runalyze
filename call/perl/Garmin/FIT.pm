@@ -3620,7 +3620,7 @@ sub fetch_definition_message {
 
   $self->fill_buffer($len) || return undef;
   $i = $self->offset;
-  $msgnum = unpack('n', pack('v', $msgnum)) if $endian != $my_endian;
+  $msgnum = unpack('n', pack('v', $msgnum)) if $endian;
 
   my $msgtype = $msgtype_by_num{$msgnum};
   my $cbmap = $self->data_message_callback;
@@ -3668,7 +3668,7 @@ sub fetch_definition_message {
     $desc{'N_' . $name} = $index;
     $desc{'I_' . $name} = $invalid[$type];
 
-    if ($endian != $my_endian && $size[$type] > 1) {
+    if ($endian && $size[$type] > 1) {
       my ($p, $unp, $n);
 
       if ($size[$type] == 2) {
@@ -3708,7 +3708,7 @@ sub cat_definition_message {
   my @i_name = sort {$desc->{$a} <=> $desc->{$b}} grep {/^i_/} keys %$desc;
   my ($endian, $msgnum) = @{$desc}{qw(endian message_number)};
 
-  $msgnum = unpack('n', pack('v', $msgnum)) if $endian != $my_endian;
+  $msgnum = unpack('n', pack('v', $msgnum)) if $endian;
   $$p .= pack($defmsg_min_template, $desc->{local_message_type} | $rechd_mask_definition_message, 0, $endian, $msgnum, $#i_name + 1);
 
   my $i_name;
@@ -3766,6 +3766,8 @@ sub fetch_data_message {
   my $buffer = $self->buffer;
   my $i = $self->offset;
   my @v = unpack($desc->{template}, substr($$buffer, $i, $desc->{message_length}));
+
+  $v = reverse $v if ref $desc->{endian_converter} eq 'ARRAY';
 
   $self->offset($i + $desc->{message_length});
 
