@@ -487,7 +487,7 @@ class AccountHandler {
 		    $message .= '<a href='.$activationLink.'>'.$activationLink.'</a>';
 		}
 
-		if (!System::sendMail($account['mail'], $subject, $message)) {
+		if (!System::sendMail($account['mail'], $subject, $message) && !USER_DISABLE_ACCOUNT_ACTIVATION) {
 			// TODO: provide a log entry for the admin
 			return false;
 		}
