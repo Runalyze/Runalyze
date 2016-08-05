@@ -1,6 +1,6 @@
 <IfModule mod_rewrite.c>
 RewriteEngine on
 
-RewriteCond %{REQUEST_URI} !^/web
-RewriteRule ^(.*)$ /web/$1 [NC,L]
+RewriteCond %{REQUEST_URI} !^web/
+RewriteRule ^(.*)$ web/$1 [NC,L]
 </IfModule>
