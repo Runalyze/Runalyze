@@ -350,13 +350,15 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 		$edited = $this->Context->activity()->get(\Runalyze\Model\Activity\Entity::TIMESTAMP_EDITED);
 
 		if ($created > 0 || $edited > 0) {
-			$createdDate = new LocalTime($created);
+			$createdDate = new \DateTime();
+			$createdDate->setTimestamp($created);
 			$CreationTime = ($created == 0) ? '' : sprintf( __('You created this training on <strong>%s</strong> at <strong>%s</strong>.'),
 				$createdDate->format('d.m.Y'),
 				$createdDate->format('H:i')
 			);
 
-			$editedDate = new LocalTime($edited);
+			$editedDate = new \DateTime();
+			$editedDate->setTimestamp($edited);
 			$ModificationTime = ($edited == 0) ? '' : '<br>'.sprintf( __('Last modification on <strong>%s</strong> at <strong>%s</strong>.'),
 				$editedDate->format('d.m.Y'),
 				$editedDate->format('H:i')
