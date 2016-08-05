@@ -158,7 +158,7 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 		}
 		
 		foreach ($maxhumidity as $i => $h) {
-			$maxhumidity[$i] = (new Humidity($h['humidity']))->string().' '.__('on').' '.Ajax::trainingLink($w['id'], (new LocalTime($w['time']))->format('d.m.Y'));
+			$maxhumidity[$i] = (new Humidity($h['humidity']))->string().' '.__('on').' '.Ajax::trainingLink($h['id'], (new LocalTime($h['time']))->format('d.m.Y'));
 		}
 		
 		echo '<p>';
