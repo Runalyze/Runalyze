@@ -76,7 +76,7 @@ doctrine:
 doctrine_migrations:
     dir_name: "%kernel.root_dir%/DoctrineMigrations"
     namespace: Runalyze\Migrations
-    table_name: migration_versions
+    table_name: '%database_prefix%migration_versions'
     name: RUNALYZE Migrations
         
 monolog:
