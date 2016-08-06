@@ -35,6 +35,12 @@ services:
     arguments: ['%database_prefix%']
     tags:
       - { name: doctrine.event_subscriber }
+  app.listener.maintenance:
+    class: Runalyze\Bundle\CoreBundle\EventListener\MaintenanceListener
+    arguments:
+        container: "@service_container"
+    tags:
+      - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
 
 twig:
   globals:
