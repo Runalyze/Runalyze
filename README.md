@@ -6,11 +6,11 @@
 [![Translation status](http://translate.runalyze.de/widgets/runalyze/-/svg-badge.svg)](http://translate.runalyze.de/engage/runalyze/?utm_source=widget)
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Runalyze/Runalyze?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-Runalyze is a web application for analyzing your training - more detailed than any other sports diary.  
+Runalyze is a web application for analyzing your training - more detailed than any other sports diary.
 Runalyze is mainly developed by [laufhannes](https://github.com/laufhannes) and [mipapo](https://github.com/mipapo).
 
 ## Documentation
-We provide two different documentations: 
+We provide two different documentations:
 * [help.runalyze.com](http://help.runalyze.com) - faq for users
 * [docs.runalyze.com](http://docs.runalyze.com) - docs for admins/developers
   * [Installation](http://docs.runalyze.com/en/latest/install.html) - tutorial in german [here](http://blog.runalyze.com/installation/)
@@ -21,8 +21,8 @@ We provide two different documentations:
 Both documentations have their own repos: [docs](https://github.com/Runalyze/docs) and [admin-docs](https://github.com/Runalyze/admin-docs). In addition, there's our [runalyze-playground](https://github.com/Runalyze/runalyze-playground) to play around with some new ideas. Feel free to contribute there.
 
 ## Install / Development
-Runalyze requires [composer](https://getcomposer.org/doc/00-intro.md#system-requirements) and 
-[npm](https://nodejs.org/download/) 
+Runalyze requires [composer](https://getcomposer.org/doc/00-intro.md#system-requirements) and
+[npm](https://nodejs.org/download/)
 (plus [bower](http://bower.io/) and
 [gulp](https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md), will be installed via npm).
 
@@ -40,23 +40,23 @@ You have to apply recent changes from the respective update files in `inc/instal
 * see [#952](https://github.com/Runalyze/Runalyze/issues/952)
 
 ## Changelog
-* [v2.6](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-6-en/), [[update instructions]](http://docs.runalyze.com/en/latest/update.html#upgrade-from-2-5-to-2-6), 22.05.2016: minor release (race results, improved weather cache ...)
+* [v2.6](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-6-en/), [[update instructions]](http://docs.runalyze.com/en/latest/upgrade/2.x.html#upgrade-from-2-5-to-2-6), 22.05.2016: minor release (race results, improved weather cache ...)
  * [v2.6.1](https://blog.runalyze.com/en/allgemein-en/runalyze-v2-6-1-en/), 31.05.2016: minor bugfixes
-* [v2.5](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-5-en/), [[update instructions]](http://docs.runalyze.com/en/latest/update.html#upgrade-from-2-4-to-2-5), 12.04.2016: minor release (timezone support, Moving average, ...)
+* [v2.5](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-5-en/), [[update instructions]](http://docs.runalyze.com/en/latest/upgrade/2.x.html#upgrade-from-2-4-to-2-5), 12.04.2016: minor release (timezone support, Moving average, ...)
  * [v2.5.1](https://blog.runalyze.com/en/allgemein-en/runalyze-v2-5-1-en/), 24.04.2016: minor bugfixes
  * [v2.5.2](https://blog.runalyze.com/en/allgemein-en/runalyze-v2-5-2-en/), 07.05.2016: minor bugfixes
  * [v2.5.3](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-5-3-en/), 31.05.2016: minor bugfixes
-* [v2.4](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-4-en/), [[update instructions]](http://docs.runalyze.com/en/latest/update.html#upgrade-from-2-3-to-2-4), 25.01.2016: minor release (more weather data, recognition of duplicate activities, ...)
+* [v2.4](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-4-en/), [[update instructions]](http://docs.runalyze.com/en/latest/upgrade/2.x.html#upgrade-from-2-3-to-2-4), 25.01.2016: minor release (more weather data, recognition of duplicate activities, ...)
  * [v2.4.1](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-4-1-en/), 09.02.2016: minor bugfixes
  * [v2.4.2](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-4-2-en/), 29.03.2016: minor bugfixes
-* [v2.3](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-3-en/), [[update instructions]](http://docs.runalyze.com/en/latest/update.html#upgrade-from-2-2-to-2-3), 11.12.2015: minor release (dataset refactoring, new running dynamics, ...)
+* [v2.3](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-3-en/), [[update instructions]](http://docs.runalyze.com/en/latest/upgrade/2.x.html#upgrade-from-2-2-to-2-3), 11.12.2015: minor release (dataset refactoring, new running dynamics, ...)
  * warning: migration from v2.2 to v2.3 requires `refactor-geohash.php`
  * [v2.3.1](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-3-1-en/), 16.12.2015: minor bugfixes
  * [v2.3.2](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-3-2-en/), 25.12.2015: minor bugfixes
  * [v2.3.3](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-3-3-en/), 09.01.2016: minor bugfixes
  * [v2.3.4](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-3-4-en/), 29.03.2016: minor bugfixes
-* [v2.2](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-2-en/), [[update instructions]](http://docs.runalyze.com/en/latest/update.html#upgrade-from-2-1-to-2-2), 28.10.2015: minor release (equipment for all sports, imperial units, ...)
- * If you're updating from 2.1.* directly use v2.2.1 for updating   
+* [v2.2](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-2-en/), [[update instructions]](http://docs.runalyze.com/en/latest/upgrade/2.x.html#upgrade-from-2-1-to-2-2), 28.10.2015: minor release (equipment for all sports, imperial units, ...)
+ * If you're updating from 2.1.* directly use v2.2.1 for updating
  * warning: migration from v2.1 to v2.2 requires `refactor-equipment.php`
  * [v2.2.1] (http://blog.runalyze.com/en/allgemein-en/runalyze-v2-1-1-en/), 18.11.2015: minor bugfixes
  * [v2.2.2] (http://blog.runalyze.com/en/allgemein-en/runalyze-v2-2-2-en/), 10.12.2015: minor bugfixes
