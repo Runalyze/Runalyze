@@ -12,16 +12,14 @@ nbproject/
 php.ini
 
 #Runalyze
-build/yuicompressor-*
 web/assets/v2.x/img/backgrounds/My-*
-*.xcf
-data/config.php
 data/config.yml
 data/sessions/sess*
 data/timezone.sqlite
 *.mo
 inc/locale/*.po
 web/app_dev.php
+/.htaccess
 
 #composer
 composer.phar

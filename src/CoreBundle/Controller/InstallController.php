@@ -63,10 +63,10 @@ class InstallController extends Controller
         $app = new Application($this->get('kernel'));
         $app->setAutoExit(false);
 
-        $input = new StringInput('runalyze:install:database');
+        $input = new StringInput('runalyze:install:database --skip=check');
         $output = new BufferedOutput(BufferedOutput::VERBOSITY_NORMAL, true, new HtmlOutputFormatter(true));
         $exitCode = $app->run($input, $output);
-        $outputString = '$ php bin/console runalyze:install:database'."\n\n".$output->fetch();
+        $outputString = '$ php bin/console runalyze:install:database --skip=check'."\n\n".$output->fetch();
 
         if ($exitCode > 0) {
             return $this->render('system/install.html.twig', [

@@ -29,12 +29,12 @@ class InstallDatabaseCommand extends ContainerAwareCommand
     {
         $output->writeln('<info>Setup RUNALYZE database...</info>');
         $output->writeln('');
-        $output->writeln(sprintf('   <info>Importing %s ...</info>', self::DATABASE_STRUCTURE_FILE));
+        $output->writeln(sprintf('  <info>Importing %s ...</info>', self::DATABASE_STRUCTURE_FILE));
         $output->writeln('');
 
         $this->importDatabaseStructure();
 
-        $output->writeln('   <info>Database has been successfully initialized.</info>');
+        $output->writeln('  <info>Database has been successfully initialized.</info>');
     }
 
     /**
