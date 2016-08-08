@@ -34,19 +34,20 @@ class LocaleListener implements EventSubscriberInterface
      */
     public function onKernelRequest(GetResponseEvent $event)
     {
-        $language = new Language();
         $request = $event->getRequest();
-        $request->setLocale($language->getCurrentLanguage());
-
-        if (!$request->hasPreviousSession()) {
-            return;
-        }
 
         if ($locale = $request->attributes->get('_locale')) {
-            $request->getSession()->set('_locale', $language->getCurrentLanguage());
+            new Language($locale);
+        } elseif ($request->hasPreviousSession() && $locale = $request->getSession()->get('_locale')) {
+            new Language($locale);
         } else {
-            $request->setLocale($request->getSession()->get('_locale', $this->defaultLocale));
+            new Language();
         }
+
+        $locale = Language::getCurrentLanguage();
+
+        $request->getSession()->set('_locale', $locale);
+        $request->setLocale($locale);
     }
 
     /**
