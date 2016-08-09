@@ -70,7 +70,7 @@ function translate() {
     ], {
         templateData: {
             target: function (f) {
-                return f.replace(/\.po$/, '.mo')
+		return f.replace(/messages\.(.*)\.po$/, 'runalyze.mo')
             }
         }
     }))

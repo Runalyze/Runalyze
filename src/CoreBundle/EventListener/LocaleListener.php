@@ -43,11 +43,11 @@ class LocaleListener implements EventSubscriberInterface
         } else {
             new Language();
         }
-
         $locale = Language::getCurrentLanguage();
 
         $request->getSession()->set('_locale', $locale);
         $request->setLocale($locale);
+        $request->attributes->set('_locale', $locale);
     }
 
     /**
