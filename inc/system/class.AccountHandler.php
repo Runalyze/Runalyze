@@ -322,7 +322,7 @@ class AccountHandler {
 	 * @return string
 	 */
 	private static function getChangePasswordLink($hash) {
-		return System::getFullDomain().'account/recover/'.$hash;
+		return System::getFullDomain().Language::getCurrentLanguage().'account/recover/'.$hash;
 	}
 
 	/**
@@ -331,7 +331,7 @@ class AccountHandler {
 	 * @return string
 	 */
 	private static function getActivationLink($hash) {
-		return System::getFullDomain().'account/activate/'.$hash;
+		return System::getFullDomain().Language::getCurrentLanguage().'account/activate/'.$hash;
 	}
 
 	/**
@@ -340,7 +340,7 @@ class AccountHandler {
 	 * @return string
 	 */
 	private static function getDeletionLink($hash) {
-		return System::getFullDomain().'account/delete/'.$hash;
+		return System::getFullDomain().Language::getCurrentLanguage().'account/delete/'.$hash;
 	}
 
 	/**

@@ -124,7 +124,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/login_check", name="login_check")
+     * @Route("/{_locale}/login_check", name="login_check")
      */
     public function loginCheckAction()
     {
