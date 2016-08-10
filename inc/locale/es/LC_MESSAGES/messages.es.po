@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-05-21 18:34+0200\n"
-"PO-Revision-Date: 2016-07-31 15:08+0000\n"
+"PO-Revision-Date: 2016-08-10 15:13+0000\n"
 "Last-Translator: Daniel Pindado <daniel.pindado@gmail.com>\n"
 "Language-Team: Spanish "
 "<http://translate.runalyze.com/projects/runalyze/runalyze/es/>\n"
@@ -2546,7 +2546,7 @@ msgstr "como velocidad"
 
 #: inc/core/Parameter/Application/HeartRateUnit.php:39
 msgid "absolute value"
-msgstr "valor absoluto"
+msgstr "pulsaciones por minuto"
 
 #: inc/core/Parameter/Application/HeartRateUnit.php:40
 msgid "&#37; HRmax"
@@ -4686,7 +4686,7 @@ msgstr "¡gran carrera!"
 
 #: inc/system/config/class.ConfigTabPlugins.php:17
 msgid "Plugins"
-msgstr "complementos"
+msgstr "Complementos"
 
 #: inc/system/config/class.ConfigTabPlugins.php:32
 msgid "Panels"
@@ -4759,7 +4759,7 @@ msgstr "complemento"
 
 #: inc/system/config/class.ConfigTabTypes.php:20
 msgid "Activity Types"
-msgstr "TIpos de actividad"
+msgstr "Tipos de actividad"
 
 #: inc/system/config/class.ConfigTabTypes.php:27
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:135
@@ -4998,11 +4998,11 @@ msgstr ""
 
 #: inc/system/config/class.ConfigTabSports.php:62
 msgid "Default sport type"
-msgstr "Deporte por defecto"
+msgstr "Entrenamiento por defecto"
 
 #: inc/system/config/class.ConfigTabSports.php:62
 msgid "Default sport type."
-msgstr "Deporte por defecto."
+msgstr "Entrenamiento por defecto."
 
 #: inc/system/config/class.ConfigTabSports.php:64
 msgid "A sport can only be deleted if no references exist."
@@ -5906,7 +5906,7 @@ msgstr "Analiza tu VDOT"
 
 #: plugin/RunalyzePluginTool_AnalyzeVDOT/class.RunalyzePluginTool_AnalyzeVDOT.php:35
 msgid "Analyze the VDOT prediction based on your race results."
-msgstr "Analiza tu VDOT en función de tus marcas en competición."
+msgstr "Analiza tu VDOT en función de tus mejores marcas personales."
 
 #: plugin/RunalyzePluginTool_AnalyzeVDOT/class.RunalyzePluginTool_AnalyzeVDOT.php:42
 msgid ""
@@ -6304,7 +6304,7 @@ msgstr "Detalles de la competición"
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:46
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:148
 msgid "Race results"
-msgstr "Marcas en competición"
+msgstr "Mejores marcas personales"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:54
 msgid "Personal bests and everything else related to your competitions."
@@ -6346,7 +6346,7 @@ msgstr "Marcas personales"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:87
 msgid "All race results"
-msgstr "Todas tus marcas en competición"
+msgstr "Mejores marcas personales"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:158
 msgid "There are no races."
@@ -6358,7 +6358,7 @@ msgstr "No hay marcas para esa distancia."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:232
 msgid "Results trend"
-msgstr "Marcas en competición"
+msgstr "Mejores marcas personales"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:344
 msgid "Official distance & time"
@@ -6487,7 +6487,7 @@ msgid ""
 "Edit a couple of activities. This plugin is needed to upload more than one "
 "activity at once."
 msgstr ""
-"Editar varias actividades simultáneamente. Este complemento permite subir "
+"Editar varias actividades simultáneamente. Este complemento permite editar "
 "varias actividades de una vez."
 
 #: plugin/RunalyzePluginTool_MultiEditor/class.RunalyzePluginTool_MultiEditor.php:46
@@ -6835,7 +6835,7 @@ msgid ""
 "existing data in advance."
 msgstr ""
 "La importación no modifica los datos existentes de equipación, tipos de "
-"depote o tipos de actividad. <br>Estos cambios los debes hacer tu a mano, o "
+"deporte o tipos de actividad. <br>Estos cambios los debes hacer tu a mano, o "
 "bien puedes borrar previamente los datos existentes."
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:306
@@ -8002,11 +8002,11 @@ msgid ""
 "different types."
 msgstr ""
 "Analiza tus entrenamientos (de carrera) por medio del ritmo, la frecuencia "
-"cardíaca y los distintos tipos de entrenamiento."
+"cardíaca y los distintos tipos de actividad."
 
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:84
 msgid "Analyze types"
-msgstr "Analiza los tipos de entrenamiento"
+msgstr "Analiza los tipos de actividad"
 
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:85
 msgid "Analyze pace zones"
@@ -8063,7 +8063,7 @@ msgstr "No hay datos para este deporte."
 
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:375
 msgid "Training types"
-msgstr "Tipos de entrenamiento"
+msgstr "Tipos de actividad"
 
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:437
 msgid "faster than"
