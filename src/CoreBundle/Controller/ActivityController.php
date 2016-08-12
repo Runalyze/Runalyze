@@ -175,13 +175,13 @@ class ActivityController extends Controller
         $Frontend = new \Frontend(true, $this->get('security.token_storage'));
 
         $Factory = \Runalyze\Context::Factory();
-        $Deleter = new Activity\Deleter(\DB::getInstance(), $Factory->activity($_GET['delete']));
+        $Deleter = new Activity\Deleter(\DB::getInstance(), $Factory->activity($id));
         $Deleter->setAccountID(\SessionAccountHandler::getId());
-        $Deleter->setEquipmentIDs($Factory->equipmentForActivity($_GET['delete'], true));
+        $Deleter->setEquipmentIDs($Factory->equipmentForActivity($id, true));
         $Deleter->delete();
 
         echo '<div class="panel-content"><p id="submit-info" class="error">'.__('The activity has been removed').'</p></div>';
-        echo '<script>$("#multi-edit-'.((int)$_GET['delete']).'").remove();Runalyze.Statistics.resetUrl();Runalyze.reloadContent();</script>';
+        echo '<script>$("#multi-edit-'.((int)$id).'").remove();Runalyze.Statistics.resetUrl();Runalyze.reloadContent();</script>';
         exit();
    }
 
