@@ -1,7 +1,31 @@
-{# app/Resources/TwigBundle/views/Exception/error404.html.twig #}
-{% extends 'base.html.twig' %}
+<html{{ html_attributes|default('')|raw }}>
+    <head>
+        {% block html_head_meta %}
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=yes">
+        {% endblock %}
 
-{% block body %}
+        <base href="{{ url('base_url') }}">
+
+        {% block html_head_links %}
+            {% block html_head_styles %}
+                <link rel="stylesheet" href="{{ asset('assets/css/runalyze-style.css') }}?v={{ RUNALYZE_VERSION }}">
+            {% endblock %}
+
+            <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/v2.x/img/favicon.ico') }}">
+
+        {% endblock %}
+
+        <title>{{ page_title|default('RUNALYZE') }}</title>
+
+        {% block html_head_scripts %}
+            <script>document.addEventListener("touchstart", function(){}, true);</script>
+            <script src="{{ asset('assets/js/scripts.min.js') }}?v={{ RUNALYZE_VERSION }}"></script>
+        {% endblock %}
+
+    </head>
+    <body{{ body_attributes|default('')|raw }}>
+
     <div id="headline">
         {% block headline %}
             <a class="tab logo" href="https://www.runalyze.com/" target="_blank">Runalyze</a>
@@ -14,24 +38,8 @@
 
     <div id="ajax-outer">
         <div id="ajax" class="panel" style="display:block;">
-            <div class="panel-heading">
-                <div class="panel-menu">
-                    <ul>
-                        <li class="with-submenu">
-                            <span class="link">Language</span>
-                            <ul class="submenu">
-                                {% for key, locale in locales %}
-                                    <li{% if key == app.request.locale %} class="triggered"{% endif %}>
-                                        <a href="{{ app.request.getBaseUrl ~ app.request.pathinfo }}?lang={{ key }}">{{ locale.name }}</a>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
 
                 <h1>{{ page_title|default('RUNALYZE') }}</h1>
-            </div>
 
             <div class="panel-content">
                 <div class="installer-window-container">
@@ -40,8 +48,8 @@
                         <h1>{% trans %}Sorry!{% endtrans %}</h1>
                         <p>
                             {% trans %}Looks like something went wrong here.{% endtrans %}<br> 
-                            {% trans %}Let's go back to RUNALYZE{% endtrans %} 
-                            <a href="{{ path('base_url') }}">{% trans %}here{% endtrans %}</a>.
+                            {% trans %}Let's go back to RUNALYZE!{% endtrans %} 
+                            <a href="{{ path('base_url') }}">{% trans %}Click here{% endtrans %}</a>.
                         </p>
                         {% endblock %}
                     </div>
@@ -64,5 +72,5 @@
             </div>
         </div>
     </div>
-
-{% endblock %}
+</body>
+</html>
