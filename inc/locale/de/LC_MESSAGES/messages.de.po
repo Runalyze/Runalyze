@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-08-11 10:47+0200\n"
-"PO-Revision-Date: 2016-08-11 15:07+0000\n"
+"PO-Revision-Date: 2016-08-12 05:51+0000\n"
 "Last-Translator: Michael Pohl <michael@mipapo.de>\n"
 "Language-Team: German "
 "<http://translate.runalyze.com/projects/runalyze/runalyze/de/>\n"
@@ -303,7 +303,6 @@ msgid "Wind speed"
 msgstr "Wind"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:65
-#, fuzzy
 msgid "Wind direction"
 msgstr "Windrichtung"
 
@@ -542,7 +541,6 @@ msgid "Power"
 msgstr "Leistung"
 
 #: inc/training/search/class.SearchFormular.php:186
-#, fuzzy
 msgid "Is race"
 msgstr "Wettkampf"
 
@@ -5576,6 +5574,8 @@ msgid ""
 "Distances have to match exactly, especially 21.10 km and 42.20 km for "
 "(half-)marathons."
 msgstr ""
+"Distanzen müssen genau angegeben sein, besonders für 21,10km und 42,20km "
+"(Halb-)Marathon."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:216
 msgid "There are no race results for the given distances."
