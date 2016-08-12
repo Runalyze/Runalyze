@@ -7036,6 +7036,342 @@ msgstr ""
 msgid "Longest activities"
 msgstr "Længste aktiviteter"
 
+#, fuzzy
+msgid "The activation did not work."
+msgstr "Konfigurationsfilen kan ikke skrives."
+
+msgid "Probably the link was wrong."
+msgstr ""
+
+#, fuzzy
+msgid "Your account has been activated."
+msgstr "Din aktivitet er blevet eksporteret."
+
+#, fuzzy
+msgid "You can now use Runalyze."
+msgstr "Du kan logge ind nu. Nyd Runalyze!"
+
+#, fuzzy
+msgid "Activate account"
+msgstr "Oprette en ny konto"
+
+#, fuzzy
+msgid "Do you really want to delete your account, %username%?"
+msgstr "Vil du virkeligt slette denne aktivitet permanent?"
+
+#, fuzzy
+msgid "Delete account"
+msgstr "Slet aktivitet"
+
+msgid "The deletion did not work."
+msgstr ""
+
+#, fuzzy
+msgid "Your account has been deleted."
+msgstr "Din aktivitet er blevet eksporteret."
+
+msgid "You cannot use Runalyze anymore."
+msgstr ""
+
+#, fuzzy
+msgid "Main page"
+msgstr "Vigtigste sport"
+
+#, fuzzy
+msgid "The link is not valid anymore."
+msgstr "værdien er for stor."
+
+msgid "The username is not known."
+msgstr "Brugernavnet er ikke kendt."
+
+msgid "A link for changing your password will be sent via email."
+msgstr ""
+
+msgid "Send link"
+msgstr ""
+
+#, fuzzy
+msgid "Password reset"
+msgstr "Adgangskode"
+
+msgid "Unable to send link. Please contact the administrator."
+msgstr ""
+
+#, fuzzy
+msgid "New password again"
+msgstr "Adgangskode igen"
+
+#, fuzzy
+msgid "Change password"
+msgstr "Adgangskode"
+
+msgid "The link has been sent and will be valid for 24 hours."
+msgstr ""
+
+msgid "Remember me"
+msgstr "Husk mig"
+
+msgid ""
+"{1} Until now <strong>%count%</strong> athlete is registered and|]1,"
+"Inf[ Until now <strong>%count%</strong> athletes are registered and"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"{1} has logged <strong>%distance%</strong>.|]1,Inf[ have logged <strong>"
+"%distance%</strong>."
+msgstr "Sidste ændring den <strong>%s</strong> kl. <strong>%s</strong>."
+
+msgid "Runalyze is under maintenance at the moment. No login possible."
+msgstr "Runalyze er under vedligeholdelse i øjeblikket. Ingen login muligt."
+
+msgid "Create a new account"
+msgstr "Oprette en ny konto"
+
+msgid "Password again"
+msgstr "Adgangskode igen"
+
+msgid ""
+"By clicking the register button you accept our %link_start%terms of use"
+"%link_end%."
+msgstr ""
+
+msgid "Register"
+msgstr "Registrer"
+
+msgid "Registrations are currently disabled."
+msgstr "Registreringer er deaktiveret i øjeblikket."
+
+msgid ""
+"Thanks for your registration. You should receive an email within the next "
+"minutes with further instructions for activating your account."
+msgstr ""
+"Tak for din registrering. Du vil modtage en e-mail inden for de næste "
+"minutter med yderligere instruktioner for at aktivere din konto."
+
+msgid ""
+"Runalyze analyzes your complete training, calculates your shape, computes "
+"prognoses and visualizes your training in plots - more detailed than any "
+"other sports diary."
+msgstr ""
+
+msgid ""
+"Runalyze is completely configurable. You can decide by yourself which "
+"information of your training you want to record and which statistics are "
+"being displayed on which place."
+msgstr ""
+
+msgid "By athletes for athletes"
+msgstr ""
+
+msgid ""
+"Runalyze is created by athletes for athletes. Whenever you have comments, "
+"problems or wishes: Please contact our Runalyze team. It's near and dear to "
+"us."
+msgstr ""
+
+#, fuzzy
+msgid "Click here to update RUNALYZE"
+msgstr "Opdater RUNALYZE"
+
+msgid ""
+"For large databases (several gigabytes) we recommend updating RUNALYZE via "
+"console."
+msgstr ""
+
+msgid "No update needed"
+msgstr ""
+
+msgid "Blog"
+msgstr ""
+
+msgid "Docs"
+msgstr ""
+
+msgid "Forum"
+msgstr ""
+
+#, fuzzy
+msgid "Start the installation of RUNALYZE"
+msgstr "Starte installationen"
+
+#, fuzzy
+msgid ""
+"RUNALYZE has been successfully installed. You can now start analyzing your "
+"training."
+msgstr "Runalyze er blevet installeret. Have det sjovt mens du bruger det!"
+
+#, fuzzy
+msgid "Create an account"
+msgstr "Oprette en ny konto"
+
+#, fuzzy
+msgid "Migrations have been executed"
+msgstr "Højde data er blevet korrigeret."
+
+msgid "Nothing more to do"
+msgstr ""
+
+#, fuzzy
+msgid "Go back to RUNALYZE"
+msgstr "Opdater RUNALYZE"
+
+msgid "The plug-in was not unlocked successfully."
+msgstr ""
+
+msgid "The administrator has to set the correct API-key."
+msgstr ""
+
+msgid "Connect"
+msgstr ""
+
+msgid "Searching for devices"
+msgstr ""
+
+msgid "Transfer complete"
+msgstr ""
+
+msgid "Browse computer"
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
+#, fuzzy
+msgid "Connected devices"
+msgstr "Korrigeret højde"
+
+msgid "Browse devices"
+msgstr ""
+
+msgid "Devices"
+msgstr ""
+
+#, fuzzy
+msgid "Search for decives"
+msgstr "Søg aktiviteter"
+
+msgid "Retrieving data from #{deviceName}, please wait ..."
+msgstr ""
+
+msgid "Please wait ..."
+msgstr ""
+
+#, fuzzy
+msgid "Found #{tracks} activities"
+msgstr "Fandt %s aktiviteter"
+
+msgid "No devices found"
+msgstr ""
+
+#, fuzzy
+msgid "Found"
+msgstr "pund"
+
+msgid "#{deviceCount} devices found"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "present"
+msgstr ""
+
+msgid "ignore"
+msgstr ""
+
+msgid ""
+"Runalyze is completely configurable and more detailed than any other tool "
+"for analyzing your activities."
+msgstr ""
+
+msgid ""
+"Please look at our official website %s to get an overview of our features."
+msgstr ""
+
+msgid ""
+"If you want to stay up to date on changes and receive tips from time to "
+"time, visit our blog at %s."
+msgstr ""
+
+msgid ""
+"Runalyze is an open-source project. We are working on it as much as we can "
+"in our free time."
+msgstr ""
+
+#, fuzzy
+msgid "Official developers:"
+msgstr "Officiel tid"
+
+msgid ""
+"The main advantage of Runalyze is the ability to adapt everything to your "
+"personal needs and wishes."
+msgstr ""
+
+msgid ""
+"Have a look at the configuration window to see what we're talking about."
+msgstr ""
+
+msgid ""
+"You can define your own sports or activity types and choose your own way of "
+"presentation and configure some parameters of our experimental calculations."
+msgstr ""
+
+#, fuzzy
+msgid "Support"
+msgstr "Sport"
+
+msgid "Please let us know if you have wishes or have encountered bugs."
+msgstr ""
+
+msgid ""
+"We give our best to make Runalyze as good as possible for you. - Therefore "
+"we would be interested in your suggestions for improvement."
+msgstr ""
+
+msgid ""
+"In general most questions, problems and ideas are more appropriate to ask in "
+"the forum."
+msgstr ""
+
+msgid "Documentation"
+msgstr "Dokumentation"
+
+#, fuzzy
+msgid "Translation"
+msgstr "Vertikal svingning"
+
+msgid "In a case of urgency you can contact us via email:"
+msgstr ""
+
+msgid "Browser Support"
+msgstr ""
+
+msgid ""
+"Runalyze is a modern application and therefore we want to use the most "
+"modern web techniques. We will not try to support any outdated browser "
+"versions."
+msgstr ""
+
+msgid "e.g. jQuery 2.x does not support IE8 (or less)"
+msgstr ""
+
+msgid "Credits"
+msgstr ""
+
+#, fuzzy
+msgid "Maintenance"
+msgstr "Afstand"
+
+msgid "RUNALYZE is temporarily down for maintenance"
+msgstr ""
+
+msgid "We will resume normal operations as soon as possible."
+msgstr ""
+
+msgid "Forgot your password?"
+msgstr ""
+
 #~ msgid "avg. Heartrate"
 #~ msgstr "gns. puls"
 
@@ -7071,9 +7407,6 @@ msgstr "Længste aktiviteter"
 #~ msgid "Upload limit"
 #~ msgstr "Upload grænse"
 
-#~ msgid "Start installation"
-#~ msgstr "Starte installationen"
-
 #~ msgid "Settings for Runalyze"
 #~ msgstr "Indstillinger for Runalyze"
 
@@ -7105,9 +7438,6 @@ msgstr "Længste aktiviteter"
 #~ msgid "see"
 #~ msgstr "se"
 
-#~ msgid "The configuration file cannot be written."
-#~ msgstr "Konfigurationsfilen kan ikke skrives."
-
 #~ msgid "Written! Continue ..."
 #~ msgstr "Skrevet! Fortsætte..."
 
@@ -7120,14 +7450,8 @@ msgstr "Længste aktiviteter"
 #~ msgid "Ready! Congratulations!"
 #~ msgstr "Klar! Tillykke!"
 
-#~ msgid "Runalyze has been successfully installed. Have fun while using it!"
-#~ msgstr "Runalyze er blevet installeret. Have det sjovt mens du bruger det!"
-
 #~ msgid "Please activate JavaScript, Runalyze will not work without."
 #~ msgstr "Aktiver venligst JavaScript, Runalyze vil ikke fungere uden."
-
-#~ msgid "The username is not known."
-#~ msgstr "Brugernavnet er ikke kendt."
 
 #~ msgid "The password was incorrect."
 #~ msgstr "Password var forkert."
@@ -7136,40 +7460,6 @@ msgstr "Længste aktiviteter"
 #~ "The account has not been activated.<br>Have a look into your email inbox."
 #~ msgstr ""
 #~ "Kontoen er ikke blevet aktiveret. <br>Har et kig ind i din indbakke."
-
-#~ msgid "Remember me"
-#~ msgstr "Husk mig"
-
-#~ msgid "Runalyze is under maintenance at the moment. No login possible."
-#~ msgstr "Runalyze er under vedligeholdelse i øjeblikket. Ingen login muligt."
-
-#~ msgid "Create a new account"
-#~ msgstr "Oprette en ny konto"
-
-#~ msgid "Registrations are currently disabled."
-#~ msgstr "Registreringer er deaktiveret i øjeblikket."
-
-#~ msgid "Password again"
-#~ msgstr "Adgangskode igen"
-
-#~ msgid "You can login now. Enjoy Runalyze!"
-#~ msgstr "Du kan logge ind nu. Nyd Runalyze!"
-
-#~ msgid ""
-#~ "Thanks for your registration. You should receive an email within the next "
-#~ "minutes with further instructions for activating your account."
-#~ msgstr ""
-#~ "Tak for din registrering. Du vil modtage en e-mail inden for de næste "
-#~ "minutter med yderligere instruktioner for at aktivere din konto."
-
-#~ msgid "Register"
-#~ msgstr "Registrer"
-
-#~ msgid "Update RUNALYZE"
-#~ msgstr "Opdater RUNALYZE"
-
-#~ msgid "Documentation"
-#~ msgstr "Dokumentation"
 
 #~ msgid "Competition"
 #~ msgstr "Konkurrence"
@@ -7189,9 +7479,6 @@ msgstr "Længste aktiviteter"
 #, fuzzy
 #~ msgid "Vertical Ratio"
 #~ msgstr "Vertikal svingning"
-
-#~ msgid "Your activity has been exported."
-#~ msgstr "Din aktivitet er blevet eksporteret."
 
 #~ msgid "Download"
 #~ msgstr "Download"

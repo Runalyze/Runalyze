@@ -7193,6 +7193,370 @@ msgstr "Activités les plus rapides"
 msgid "Longest activities"
 msgstr "Activités les plus longues"
 
+msgid "The activation did not work."
+msgstr "L'activation n'a pas fonctionné."
+
+msgid "Probably the link was wrong."
+msgstr "Le lien était probablement erroné."
+
+msgid "Your account has been activated."
+msgstr "Votre compte a été activé."
+
+msgid "You can now use Runalyze."
+msgstr "Vous pouvez désormais utiliser Runalyze."
+
+msgid "Activate account"
+msgstr "Activer le compte"
+
+#, fuzzy
+msgid "Do you really want to delete your account, %username%?"
+msgstr "Êtes-vous certain de vouloir supprimer votre compte ?"
+
+msgid "Delete account"
+msgstr "Supprimer le compte"
+
+msgid "The deletion did not work."
+msgstr "La suppression n'a pas fonctionné."
+
+msgid "Your account has been deleted."
+msgstr "Votre compte a été supprimé."
+
+msgid "You cannot use Runalyze anymore."
+msgstr "Vous ne pouvez plus utiliser Runalyze."
+
+msgid "Main page"
+msgstr "Page principale"
+
+msgid "The link is not valid anymore."
+msgstr "Le lien n'est plus valide."
+
+msgid "The username is not known."
+msgstr "Ce nom d'utilisateur est inconnu."
+
+msgid "A link for changing your password will be sent via email."
+msgstr "Un courriel va vous être envoyé afin de modifier votre mot de passe."
+
+msgid "Send link"
+msgstr "Envoyer le lien"
+
+#, fuzzy
+msgid "Password reset"
+msgstr "Mot de passe"
+
+msgid "Unable to send link. Please contact the administrator."
+msgstr ""
+
+msgid "New password again"
+msgstr "Répéter le nouveau mot de passe"
+
+msgid "Change password"
+msgstr "Modifier le mot de passe"
+
+msgid "The link has been sent and will be valid for 24 hours."
+msgstr ""
+
+msgid "Remember me"
+msgstr "Se rappeler de mes identifiants"
+
+msgid ""
+"{1} Until now <strong>%count%</strong> athlete is registered and|]1,"
+"Inf[ Until now <strong>%count%</strong> athletes are registered and"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"{1} has logged <strong>%distance%</strong>.|]1,Inf[ have logged <strong>"
+"%distance%</strong>."
+msgstr "Dernière modification le <strong>%s</strong> à <strong>%s</strong>."
+
+msgid "Runalyze is under maintenance at the moment. No login possible."
+msgstr ""
+"Runalyze est actuellement en cours de maintenance. Aucune connexion n'est "
+"possible."
+
+msgid "Create a new account"
+msgstr "Créer un nouveau compte"
+
+msgid "Password again"
+msgstr "Répéter le mot de passe"
+
+msgid ""
+"By clicking the register button you accept our %link_start%terms of use"
+"%link_end%."
+msgstr ""
+
+msgid "Register"
+msgstr "Inscription"
+
+msgid "Registrations are currently disabled."
+msgstr "Les inscriptions sont actuellement fermées."
+
+msgid ""
+"Thanks for your registration. You should receive an email within the next "
+"minutes with further instructions for activating your account."
+msgstr ""
+"Merci pour votre inscription. Vous allez recevoir dans quelques minutes un "
+"courriel de confirmation contenant les étapes à suivre pour activer votre "
+"compte."
+
+msgid ""
+"Runalyze analyzes your complete training, calculates your shape, computes "
+"prognoses and visualizes your training in plots - more detailed than any "
+"other sports diary."
+msgstr ""
+"Runalyze analyse l'ensemble de votre entraînement, évalue votre forme, "
+"calcule des prévisions et permet de visualiser l'entraînement via des "
+"graphiques, plus complet que n'importe quel carnet de sport."
+
+msgid ""
+"Runalyze is completely configurable. You can decide by yourself which "
+"information of your training you want to record and which statistics are "
+"being displayed on which place."
+msgstr ""
+"Runalyze est entièrement paramétrable. Vous choisissez vous-même quelles "
+"données d'entraînement vous souhaitez enregistrer et quelles statistiques "
+"doivent être affichées à quel endroit."
+
+msgid "By athletes for athletes"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"Runalyze is created by athletes for athletes. Whenever you have comments, "
+"problems or wishes: Please contact our Runalyze team. It's near and dear to "
+"us."
+msgstr ""
+"Runalyze a été créé par des coureurs pour des coureurs. Que vous ayez des "
+"commentaires, problèmes ou des souhaits : n'hésitez pas à contacter l'équipe "
+"Runalyze. Cela compte beaucoup pour nous"
+
+#, fuzzy
+msgid "Click here to update RUNALYZE"
+msgstr "Mettre à jour Runalyze"
+
+msgid ""
+"For large databases (several gigabytes) we recommend updating RUNALYZE via "
+"console."
+msgstr ""
+
+msgid "No update needed"
+msgstr ""
+
+msgid "Blog"
+msgstr ""
+
+msgid "Docs"
+msgstr ""
+
+msgid "Forum"
+msgstr "Forum"
+
+#, fuzzy
+msgid "Start the installation of RUNALYZE"
+msgstr "Démarrer l'installation"
+
+#, fuzzy
+msgid ""
+"RUNALYZE has been successfully installed. You can now start analyzing your "
+"training."
+msgstr "Runalyze a été installé avec succès. Amusez-vous bien en l'utilisant !"
+
+#, fuzzy
+msgid "Create an account"
+msgstr "Créer un nouveau compte"
+
+#, fuzzy
+msgid "Migrations have been executed"
+msgstr "Votre compte a été supprimé."
+
+msgid "Nothing more to do"
+msgstr ""
+
+#, fuzzy
+msgid "Go back to RUNALYZE"
+msgstr "Démarrer Runalyze"
+
+#, fuzzy
+msgid "The plug-in was not unlocked successfully."
+msgstr "Le plugin a été installé avec succès."
+
+msgid "The administrator has to set the correct API-key."
+msgstr ""
+
+msgid "Connect"
+msgstr "connecter"
+
+#, fuzzy
+msgid "Searching for devices"
+msgstr "Rechercher une activité"
+
+msgid "Transfer complete"
+msgstr "transfert terminé"
+
+msgid "Browse computer"
+msgstr "Parcourir l'ordinateur"
+
+msgid "Cancel"
+msgstr "Annuler"
+
+#, fuzzy
+msgid "Connected devices"
+msgstr "Altitude corrigée"
+
+#, fuzzy
+msgid "Browse devices"
+msgstr "Parcourir l'ordinateur"
+
+msgid "Devices"
+msgstr ""
+
+#, fuzzy
+msgid "Search for decives"
+msgstr "Rechercher une activité"
+
+msgid "Retrieving data from #{deviceName}, please wait ..."
+msgstr "Récupération des données depuis #{deviceName}, veuillez patienter..."
+
+msgid "Please wait ..."
+msgstr "Veuillez patienter ..."
+
+msgid "Found #{tracks} activities"
+msgstr "#{tracks} activités trouvées"
+
+msgid "No devices found"
+msgstr "Pas d'appareils trouvés"
+
+msgid "Found"
+msgstr "trouvé"
+
+msgid "#{deviceCount} devices found"
+msgstr "#{deviceCount}appareils trouvés"
+
+#, fuzzy
+msgid "Status"
+msgstr "Statistiques"
+
+msgid "present"
+msgstr "présent"
+
+msgid "ignore"
+msgstr "ignorer"
+
+msgid ""
+"Runalyze is completely configurable and more detailed than any other tool "
+"for analyzing your activities."
+msgstr ""
+"Runalyze est totalement paramétrable et plus détaillé que n'importe quel "
+"autre outil pour analyser vos activités."
+
+msgid ""
+"Please look at our official website %s to get an overview of our features."
+msgstr ""
+"Veuillez vous reporter à notre site web officiel %s afin d'avoir un aperçu "
+"des fonctionnalités."
+
+msgid ""
+"If you want to stay up to date on changes and receive tips from time to "
+"time, visit our blog at %s."
+msgstr ""
+"Si vous souhaitez rester à jour sur les améliorations et recevoir des "
+"astuces de temps en temps, rendez-vous sur notre blog à l'adresse %s."
+
+msgid ""
+"Runalyze is an open-source project. We are working on it as much as we can "
+"in our free time."
+msgstr ""
+"Runalyze est un projet open-source. Nous travaillons autant que possible sur "
+"notre temps libre."
+
+msgid "Official developers:"
+msgstr "Développeurs officiels :"
+
+msgid ""
+"The main advantage of Runalyze is the ability to adapt everything to your "
+"personal needs and wishes."
+msgstr ""
+"Le principal avantage de Runalyze est sa capacité d'adaptation complète à "
+"vos propres besoins et envies."
+
+msgid ""
+"Have a look at the configuration window to see what we're talking about."
+msgstr ""
+"Jeter un œil à la fenêtre de configuration pour voir de quoi nous parlons."
+
+msgid ""
+"You can define your own sports or activity types and choose your own way of "
+"presentation and configure some parameters of our experimental calculations."
+msgstr ""
+"Vous pouvez définir vos propres sports ou types d'activité, personnaliser la "
+"présentation et configurer certains paramètres expérimentaux de calcul."
+
+msgid "Support"
+msgstr "Support"
+
+msgid "Please let us know if you have wishes or have encountered bugs."
+msgstr ""
+"Merci de nous faire part de vos souhaits ou de nous faire un retour en cas "
+"de bug."
+
+msgid ""
+"We give our best to make Runalyze as good as possible for you. - Therefore "
+"we would be interested in your suggestions for improvement."
+msgstr ""
+"Nous faisons tout notre possible pour vous garantir la meilleure expérience "
+"avec Runalyze. Nous sommes donc toujours intéressés par vos suggestions "
+"d'amélioration."
+
+msgid ""
+"In general most questions, problems and ideas are more appropriate to ask in "
+"the forum."
+msgstr ""
+"Le forum est généralement plus adapté pour discuter de vos questions, "
+"problèmes et idées."
+
+msgid "Documentation"
+msgstr "documentation"
+
+#, fuzzy
+msgid "Translation"
+msgstr "Oscillation"
+
+msgid "In a case of urgency you can contact us via email:"
+msgstr "En cas d'urgence, vous pouvez nous contacter par courriel :"
+
+msgid "Browser Support"
+msgstr "compatible avec les navigateurs"
+
+msgid ""
+"Runalyze is a modern application and therefore we want to use the most "
+"modern web techniques. We will not try to support any outdated browser "
+"versions."
+msgstr ""
+"Runalyze est une application moderne et utilise par conséquence les "
+"technologies web les plus récentes. Nous ne maintiendrons pas la "
+"compatibilité avec des navigateurs web obsolètes."
+
+msgid "e.g. jQuery 2.x does not support IE8 (or less)"
+msgstr ""
+"par ex. jQuery 2.x n'est pas compatible avec IE8 (et les versions "
+"précédentes)"
+
+msgid "Credits"
+msgstr "Crédits"
+
+#, fuzzy
+msgid "Maintenance"
+msgstr "Travaux d'entretien"
+
+msgid "RUNALYZE is temporarily down for maintenance"
+msgstr ""
+
+msgid "We will resume normal operations as soon as possible."
+msgstr ""
+
+msgid "Forgot your password?"
+msgstr "Mot de passe oublié ?"
+
 #~ msgid "avg. Heartrate"
 #~ msgstr "Rythme cardiaque moyen"
 
@@ -7265,9 +7629,6 @@ msgstr "Activités les plus longues"
 
 #~ msgid "Upload limit"
 #~ msgstr "Restriction de téléversement"
-
-#~ msgid "Start installation"
-#~ msgstr "Démarrer l'installation"
 
 #~ msgid "Settings for Runalyze"
 #~ msgstr "Paramètres de Runalyze"
@@ -7388,15 +7749,8 @@ msgstr "Activités les plus longues"
 #~ msgid "Ready! Congratulations!"
 #~ msgstr "Terminé ! Félicitations !"
 
-#~ msgid "Runalyze has been successfully installed. Have fun while using it!"
-#~ msgstr ""
-#~ "Runalyze a été installé avec succès. Amusez-vous bien en l'utilisant !"
-
 #~ msgid "Please activate JavaScript, Runalyze will not work without."
 #~ msgstr "Veuillez activer JavaScript, Runalyze ne peut fonctionner sans."
-
-#~ msgid "The username is not known."
-#~ msgstr "Ce nom d'utilisateur est inconnu."
 
 #~ msgid "The password was incorrect."
 #~ msgstr "Le mot de passe est erroné."
@@ -7405,47 +7759,9 @@ msgstr "Activités les plus longues"
 #~ "The account has not been activated.<br>Have a look into your email inbox."
 #~ msgstr "Le compte n'a pas été activé.<br>Jeter un œil à votre boîte mail."
 
-#~ msgid "Remember me"
-#~ msgstr "Se rappeler de mes identifiants"
-
-#~ msgid "Runalyze is under maintenance at the moment. No login possible."
-#~ msgstr ""
-#~ "Runalyze est actuellement en cours de maintenance. Aucune connexion n'est "
-#~ "possible."
-
-#~ msgid "Create a new account"
-#~ msgstr "Créer un nouveau compte"
-
-#~ msgid "Registrations are currently disabled."
-#~ msgstr "Les inscriptions sont actuellement fermées."
-
-#~ msgid "Password again"
-#~ msgstr "Répéter le mot de passe"
-
 #~ msgid "You can login now. Enjoy Runalyze!"
 #~ msgstr ""
 #~ "Vous pouvez à présent vous connecter. Amusez-vous bien avec Runalyze !"
-
-#~ msgid ""
-#~ "Thanks for your registration. You should receive an email within the next "
-#~ "minutes with further instructions for activating your account."
-#~ msgstr ""
-#~ "Merci pour votre inscription. Vous allez recevoir dans quelques minutes "
-#~ "un courriel de confirmation contenant les étapes à suivre pour activer "
-#~ "votre compte."
-
-#~ msgid "Register"
-#~ msgstr "Inscription"
-
-#~ msgid "Forgot your password?"
-#~ msgstr "Mot de passe oublié ?"
-
-#~ msgid "A link for changing your password will be sent via email."
-#~ msgstr ""
-#~ "Un courriel va vous être envoyé afin de modifier votre mot de passe."
-
-#~ msgid "Send link"
-#~ msgstr "Envoyer le lien"
 
 #~ msgid "Until now <strong>%d</strong> athlete is registered and"
 #~ msgid_plural "Until now <strong>%d</strong> athletes are registered and"
@@ -7456,9 +7772,6 @@ msgstr "Activités les plus longues"
 #~ msgid_plural "have logged <strong>%s</strong>."
 #~ msgstr[0] "s'est connecté <strong>%s</strong> fois."
 #~ msgstr[1] "s'est connecté <strong>%s</strong> fois."
-
-#~ msgid "Update RUNALYZE"
-#~ msgstr "Mettre à jour Runalyze"
 
 #~ msgid ""
 #~ "After downloading the latest version of RUNALYZE you need to update your "
@@ -7497,225 +7810,17 @@ msgstr "Activités les plus longues"
 #~ msgid "Start RUNALYZE"
 #~ msgstr "Démarrer Runalyze"
 
-#~ msgid "Activate account"
-#~ msgstr "Activer le compte"
-
-#~ msgid "Your account has been activated."
-#~ msgstr "Votre compte a été activé."
-
-#~ msgid "You can now use Runalyze."
-#~ msgstr "Vous pouvez désormais utiliser Runalyze."
-
-#~ msgid "The activation did not work."
-#~ msgstr "L'activation n'a pas fonctionné."
-
-#~ msgid "Probably the link was wrong."
-#~ msgstr "Le lien était probablement erroné."
-
 #~ msgid "Set new password"
 #~ msgstr "Définir nouveau mot de passe"
 
-#~ msgid "New password again"
-#~ msgstr "Répéter le nouveau mot de passe"
-
-#~ msgid "The link is not valid anymore."
-#~ msgstr "Le lien n'est plus valide."
-
-#~ msgid "Change password"
-#~ msgstr "Modifier le mot de passe"
-
-#~ msgid ""
-#~ "Runalyze analyzes your complete training, calculates your shape, computes "
-#~ "prognoses and visualizes your training in plots - more detailed than any "
-#~ "other sports diary."
-#~ msgstr ""
-#~ "Runalyze analyse l'ensemble de votre entraînement, évalue votre forme, "
-#~ "calcule des prévisions et permet de visualiser l'entraînement via des "
-#~ "graphiques, plus complet que n'importe quel carnet de sport."
-
-#~ msgid ""
-#~ "Runalyze is completely configurable. You can decide by yourself which "
-#~ "information of your training you want to record and which statistics are "
-#~ "being displayed on which place."
-#~ msgstr ""
-#~ "Runalyze est entièrement paramétrable. Vous choisissez vous-même quelles "
-#~ "données d'entraînement vous souhaitez enregistrer et quelles statistiques "
-#~ "doivent être affichées à quel endroit."
-
 #~ msgid "By runners for runners"
 #~ msgstr "Par des coureurs, pour des coureurs"
-
-#~ msgid ""
-#~ "Runalyze is created by runners for runners. Whenever you have comments, "
-#~ "problems or wishes: Please contact our Runalyze team. It's near and dear "
-#~ "to us"
-#~ msgstr ""
-#~ "Runalyze a été créé par des coureurs pour des coureurs. Que vous ayez des "
-#~ "commentaires, problèmes ou des souhaits : n'hésitez pas à contacter "
-#~ "l'équipe Runalyze. Cela compte beaucoup pour nous"
-
-#~ msgid ""
-#~ "Runalyze is completely configurable and more detailed than any other tool "
-#~ "for analyzing your activities."
-#~ msgstr ""
-#~ "Runalyze est totalement paramétrable et plus détaillé que n'importe quel "
-#~ "autre outil pour analyser vos activités."
-
-#~ msgid ""
-#~ "Please look at our official website %s to get an overview of our features."
-#~ msgstr ""
-#~ "Veuillez vous reporter à notre site web officiel %s afin d'avoir un "
-#~ "aperçu des fonctionnalités."
-
-#~ msgid ""
-#~ "If you want to stay up to date on changes and receive tips from time to "
-#~ "time, visit our blog at %s."
-#~ msgstr ""
-#~ "Si vous souhaitez rester à jour sur les améliorations et recevoir des "
-#~ "astuces de temps en temps, rendez-vous sur notre blog à l'adresse %s."
-
-#~ msgid ""
-#~ "Runalyze is an open-source project. We are working on it as much as we "
-#~ "can in our free time."
-#~ msgstr ""
-#~ "Runalyze est un projet open-source. Nous travaillons autant que possible "
-#~ "sur notre temps libre."
-
-#~ msgid "Official developers:"
-#~ msgstr "Développeurs officiels :"
-
-#~ msgid ""
-#~ "The main advantage of Runalyze is the ability to adapt everything to your "
-#~ "personal needs and wishes."
-#~ msgstr ""
-#~ "Le principal avantage de Runalyze est sa capacité d'adaptation complète à "
-#~ "vos propres besoins et envies."
-
-#~ msgid ""
-#~ "Have a look at the configuration window to see what we're talking about."
-#~ msgstr ""
-#~ "Jeter un œil à la fenêtre de configuration pour voir de quoi nous parlons."
-
-#~ msgid ""
-#~ "You can define your own sports or activity types and choose your own way "
-#~ "of presentation and configure some parameters of our experimental "
-#~ "calculations."
-#~ msgstr ""
-#~ "Vous pouvez définir vos propres sports ou types d'activité, personnaliser "
-#~ "la présentation et configurer certains paramètres expérimentaux de calcul."
-
-#~ msgid "Support"
-#~ msgstr "Support"
-
-#~ msgid "Please let us know if you have wishes or have encountered bugs."
-#~ msgstr ""
-#~ "Merci de nous faire part de vos souhaits ou de nous faire un retour en "
-#~ "cas de bug."
-
-#~ msgid ""
-#~ "We give our best to make Runalyze as good as possible for you. - "
-#~ "Therefore we would be interested in your suggestions for improvement."
-#~ msgstr ""
-#~ "Nous faisons tout notre possible pour vous garantir la meilleure "
-#~ "expérience avec Runalyze. Nous sommes donc toujours intéressés par vos "
-#~ "suggestions d'amélioration."
-
-#~ msgid ""
-#~ "In general most questions, problems and ideas are more appropriate to ask "
-#~ "in the forum."
-#~ msgstr ""
-#~ "Le forum est généralement plus adapté pour discuter de vos questions, "
-#~ "problèmes et idées."
-
-#~ msgid "Forum"
-#~ msgstr "Forum"
-
-#~ msgid "Documentation"
-#~ msgstr "documentation"
-
-#~ msgid "In a case of urgency you can contact us via email:"
-#~ msgstr "En cas d'urgence, vous pouvez nous contacter par courriel :"
-
-#~ msgid "Browser Support"
-#~ msgstr "compatible avec les navigateurs"
-
-#~ msgid ""
-#~ "Runalyze is a modern application and therefore we want to use the most "
-#~ "modern web techniques. We will not try to support any outdated browser "
-#~ "versions."
-#~ msgstr ""
-#~ "Runalyze est une application moderne et utilise par conséquence les "
-#~ "technologies web les plus récentes. Nous ne maintiendrons pas la "
-#~ "compatibilité avec des navigateurs web obsolètes."
-
-#~ msgid "e.g. jQuery 2.x does not support IE8 (or less)"
-#~ msgstr ""
-#~ "par ex. jQuery 2.x n'est pas compatible avec IE8 (et les versions "
-#~ "précédentes)"
-
-#~ msgid "Credits"
-#~ msgstr "Crédits"
-
-#~ msgid "Delete account"
-#~ msgstr "Supprimer le compte"
-
-#~ msgid "Do you really want to delete your account?"
-#~ msgstr "Êtes-vous certain de vouloir supprimer votre compte ?"
-
-#~ msgid "Your account has been deleted."
-#~ msgstr "Votre compte a été supprimé."
-
-#~ msgid "You cannot use Runalyze anymore."
-#~ msgstr "Vous ne pouvez plus utiliser Runalyze."
-
-#~ msgid "The deletion did not work."
-#~ msgstr "La suppression n'a pas fonctionné."
-
-#~ msgid "Main page"
-#~ msgstr "Page principale"
 
 #~ msgid "Functions"
 #~ msgstr "fonctions"
 
 #~ msgid "Activate user"
 #~ msgstr "Activer utilisateur"
-
-#~ msgid "Connect"
-#~ msgstr "connecter"
-
-#~ msgid "Transfer complete"
-#~ msgstr "transfert terminé"
-
-#~ msgid "Browse computer"
-#~ msgstr "Parcourir l'ordinateur"
-
-#~ msgid "Cancel"
-#~ msgstr "Annuler"
-
-#~ msgid "Retrieving data from #{deviceName}, please wait ..."
-#~ msgstr ""
-#~ "Récupération des données depuis #{deviceName}, veuillez patienter..."
-
-#~ msgid "Please wait ..."
-#~ msgstr "Veuillez patienter ..."
-
-#~ msgid "Found #{tracks} activities"
-#~ msgstr "#{tracks} activités trouvées"
-
-#~ msgid "No devices found"
-#~ msgstr "Pas d'appareils trouvés"
-
-#~ msgid "Found"
-#~ msgstr "trouvé"
-
-#~ msgid "#{deviceCount} devices found"
-#~ msgstr "#{deviceCount}appareils trouvés"
-
-#~ msgid "present"
-#~ msgstr "présent"
-
-#~ msgid "ignore"
-#~ msgstr "ignorer"
 
 #~ msgid "<strong>%d</strong> athlete is online."
 #~ msgid_plural "<strong>%d</strong> athletes are online."
