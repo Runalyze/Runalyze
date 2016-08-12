@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-08-11 10:47+0200\n"
-"PO-Revision-Date: 2016-08-12 05:51+0000\n"
+"PO-Revision-Date: 2016-08-12 11:03+0000\n"
 "Last-Translator: Michael Pohl <michael@mipapo.de>\n"
 "Language-Team: German "
 "<http://translate.runalyze.com/projects/runalyze/runalyze/de/>\n"
@@ -2990,9 +2990,8 @@ msgid "Hurricane force"
 msgstr "Orkan"
 
 #: inc/core/Data/Weather/BeaufortScale.php:169
-#, fuzzy
 msgid "Beaufort scale"
-msgstr "Beautfort scale"
+msgstr "Beaufortskala"
 
 #: inc/core/Data/Weather/WindDegree.php:58
 msgid "Wind Degree"
@@ -3404,9 +3403,8 @@ msgid "Race result"
 msgstr "Wettkampfergebnis"
 
 #: inc/core/Dataset/Keys/RaceResult.php:88
-#, fuzzy
 msgid "Your placements at races"
-msgstr "Deine Ausrüstungskategorien"
+msgstr "Deine Platzierung bei Wettkämpfen"
 
 #: inc/core/Dataset/Keys/RaceResult.php:135
 #: inc/core/Dataset/Keys/RaceResult.php:178
@@ -3417,9 +3415,8 @@ msgid "Age group"
 msgstr "Altersklasse"
 
 #: inc/core/Dataset/Keys/RaceResult.php:160
-#, fuzzy
 msgid "Race name"
-msgstr "Pacezonen"
+msgstr "Veranstaltungsname"
 
 #: inc/core/Util/Time.php:89 inc/tpl/tpl.DataBrowser.php:28
 msgid "Sun"
@@ -4281,9 +4278,8 @@ msgid "only icon"
 msgstr "nur Icon"
 
 #: inc/system/config/class.ConfigTabTypes.php:84
-#, fuzzy
 msgid "inherit from sport type"
-msgstr "Sortierung: Sportarten"
+msgstr "vererbt von den Sportarten"
 
 #: inc/system/config/class.ConfigTabAccount.php:34
 msgid "Username"
@@ -4704,14 +4700,12 @@ msgid "Upload"
 msgstr "Hochladen"
 
 #: inc/import/class.ImporterFactory.php:322
-#, fuzzy
 msgid "There was a problem while importing the file."
-msgstr "Es gab Probleme während des Hochladens."
+msgstr "Es gab Probleme während des Importierens der Datei."
 
 #: inc/import/class.ImporterFactory.php:327
-#, fuzzy
 msgid "There are some unexpected contents in the file."
-msgstr "Es befinden sich <strong>%s</strong> Schuhe in der Datei."
+msgstr "Es befinden sich unerwarteter Inhalt in der Datei."
 
 #: inc/import/class.ImporterFactory.php:328
 #, php-format
@@ -4726,9 +4720,8 @@ msgstr ""
 "Es konnte kein Link gesendet werden. Bitte kontaktiere den Administrator."
 
 #: inc/import/class.ImporterFactory.php:334
-#, fuzzy
 msgid "This file format is not supported."
-msgstr "Die Datei beinhaltet keine Trainingsdaten."
+msgstr "Dieses Dateiformat wird nicht unterstützt."
 
 #: inc/import/class.ImporterFactory.php:339
 #, fuzzy
@@ -4916,9 +4909,8 @@ msgid "Nokia/Here Token"
 msgstr "Nokia/Here Token"
 
 #: inc/class.AdminView.php:181
-#, fuzzy
 msgid "<strong>data/config.yml</strong> is not writable"
-msgstr "<strong>data/config.php</strong> ist nicht beschreibbar"
+msgstr "<strong>data/config.yml</strong> ist nicht beschreibbar"
 
 #: inc/class.AdminView.php:181
 msgid "Changes can't be saved."
@@ -5685,9 +5677,8 @@ msgid "Marathon"
 msgstr "Marathon"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:567
-#, fuzzy
 msgid "Half marathon"
-msgstr "Marathon"
+msgstr "Halbmarathon"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:574
 #, fuzzy
@@ -5894,9 +5885,9 @@ msgid "K must be between %u and %u, e between %f and %f."
 msgstr "K muss zwischen %u und %u, e zwischen %f und %f liegen."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:375
-#, fuzzy, php-format
+#, php-format
 msgid "VDOT must be between %u and %u."
-msgstr "Der Wert muss zwischen %s und %s liegen."
+msgstr "VDOT muss zwischen %u und %u liegen."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:393
 msgid "Input"
