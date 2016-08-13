@@ -10,7 +10,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * Account
  *
- * @ORM\Table(name="account", uniqueConstraints={@ORM\UniqueConstraint(name="username", columns={"username"}), @ORM\UniqueConstraint(name="mail", columns={"mail"}), @ORM\UniqueConstraint(name="session_id", columns={"session_id"})})
+ * @ORM\Table(name="account", uniqueConstraints={@ORM\UniqueConstraint(name="username", columns={"username"}), @ORM\UniqueConstraint(name="mail", columns={"mail"})})
  * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\AccountRepository")
  */
 class Account implements AdvancedUserInterface, \Serializable
@@ -73,13 +73,6 @@ class Account implements AdvancedUserInterface, \Serializable
      * @ORM\Column(name="salt", type="string", length=64, nullable=false)
      */
     private $salt;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="session_id", type="string", length=32, nullable=true)
-     */
-    private $sessionId;
 
     /**
      * @var integer
@@ -320,29 +313,6 @@ class Account implements AdvancedUserInterface, \Serializable
     public function getSalt()
     {
         return $this->salt;
-    }
-
-    /**
-     * Set sessionId
-     *
-     * @param string $sessionId
-     * @return Account
-     */
-    public function setSessionId($sessionId)
-    {
-        $this->sessionId = $sessionId;
-
-        return $this;
-    }
-
-    /**
-     * Get sessionId
-     *
-     * @return string 
-     */
-    public function getSessionId()
-    {
-        return $this->sessionId;
     }
 
     /**

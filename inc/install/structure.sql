@@ -28,7 +28,6 @@ CREATE TABLE IF NOT EXISTS `runalyze_account` (
   `timezone` smallint(5) unsigned NOT NULL DEFAULT '0',
   `password` varchar(64) NOT NULL DEFAULT '',
   `salt` char(64) NOT NULL DEFAULT '',
-  `session_id` varchar(32) DEFAULT NULL,
   `registerdate` int(11) NOT NULL DEFAULT '0',
   `lastaction` int(11) NOT NULL DEFAULT '0',
   `lastlogin` int(11) NOT NULL DEFAULT '0',
@@ -430,6 +429,19 @@ CREATE TABLE IF NOT EXISTS `runalyze_raceresult` (
   `accountid` int(10) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `runalyze_raceresult`
+--
+
+CREATE TABLE IF NOT EXISTS `runalyze_sessions` (
+    `sess_id` VARBINARY(128) NOT NULL PRIMARY KEY, 
+    `sess_data` BLOB NOT NULL, 
+    `sess_time` INTEGER UNSIGNED NOT NULL, 
+    `sess_lifetime` MEDIUMINT NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 --
 -- Indizes der exportierten Tabellen
@@ -439,7 +451,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_raceresult` (
 -- Indizes für die Tabelle `runalyze_account`
 --
 ALTER TABLE `runalyze_account`
- ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `username` (`username`), ADD UNIQUE KEY `mail` (`mail`), ADD UNIQUE KEY `session_id` (`session_id`);
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `username` (`username`), ADD UNIQUE KEY `mail` (`mail`);
 
 --
 -- Indizes für die Tabelle `runalyze_activity_equipment`
