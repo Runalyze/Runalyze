@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-08-11 10:47+0200\n"
-"PO-Revision-Date: 2016-08-13 07:48+0000\n"
+"PO-Revision-Date: 2016-08-13 07:57+0000\n"
 "Last-Translator: Michael Pohl <michael@mipapo.de>\n"
 "Language-Team: German "
 "<http://translate.runalyze.com/projects/runalyze/runalyze/de/>\n"
@@ -2505,11 +2505,8 @@ msgid "Speed"
 msgstr "Geschwindigkeit"
 
 #: inc/core/View/Activity/Box/MaximalHeartRateInPercent.php:61
-#, fuzzy
 msgid "This value exceeds your entered maximal heart rate."
-msgstr ""
-"Dieser Wert bezieht sich auf deinen geschätzten VO2max zu Beginn der "
-"Aktivität."
+msgstr "Dieser Wert ist höher als deine angegebene maximal Herzfrequenz."
 
 #: inc/core/View/Activity/Box/MaximalHeartRateInPercent.php:62
 msgid "Please adjust your maximal heart rate."
@@ -7511,19 +7508,19 @@ msgstr "Der Link wurde dir zugesendet und ist für 24 Stunden gültig."
 msgid "Remember me"
 msgstr "Eingeloggt bleiben"
 
-#, fuzzy
 msgid ""
 "{1} Until now <strong>%count%</strong> athlete is registered and|]1,"
 "Inf[ Until now <strong>%count%</strong> athletes are registered and"
 msgstr ""
-"Bisher ist <strong>%numUser%</strong> Athlet bei uns registriert und hat "
-"%numKm% erfasst"
+"{1} Bisher ist <strong>%count%</strong> Athlet registriert und|]1,Inf[ "
+"Bisher sind <strong>%count%</strong> Athleten registriert und"
 
-#, fuzzy
 msgid ""
 "{1} has logged <strong>%distance%</strong>.|]1,Inf[ have logged <strong>"
 "%distance%</strong>."
-msgstr "Letzte Änderung am <strong>%s</strong> um <strong>%s</strong>."
+msgstr ""
+"{1} hat <strong>%distance%</strong>km zurückgelegt..|]1,Inf[ haben "
+"<strong>%distance%</strong>km zurückgelegt."
 
 msgid "Runalyze is under maintenance at the moment. No login possible."
 msgstr ""
@@ -7617,20 +7614,17 @@ msgstr ""
 "RUNALYZE wurde erfolgreich installiert. Du kannst nun beginnen dein Training "
 "zu analysieren."
 
-#, fuzzy
 msgid "Create an account"
-msgstr "Erstelle ein Konto"
+msgstr "Erstelle ein Account"
 
-#, fuzzy
 msgid "Migrations have been executed"
 msgstr "Migrationen wurden durchgeführt"
 
 msgid "Nothing more to do"
 msgstr "Nichts mehr zu tun"
 
-#, fuzzy
 msgid "Go back to RUNALYZE"
-msgstr "Zurück zur RUNALYZE"
+msgstr "Zurück zu RUNALYZE"
 
 #, fuzzy
 msgid "The plug-in was not unlocked successfully."
@@ -7790,7 +7784,6 @@ msgstr "z.B. jQuery 2.x unterstützt kein Internet Explorer 8 (oder älter)"
 msgid "Credits"
 msgstr "Danksagungen"
 
-#, fuzzy
 msgid "Maintenance"
 msgstr "Wartung"
 
