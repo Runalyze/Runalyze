@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-08-11 10:47+0200\n"
-"PO-Revision-Date: 2016-08-12 11:03+0000\n"
+"PO-Revision-Date: 2016-08-13 07:48+0000\n"
 "Last-Translator: Michael Pohl <michael@mipapo.de>\n"
-"Language-Team: German <http://translate.runalyze.com/projects/runalyze/"
-"runalyze/de/>\n"
+"Language-Team: German "
+"<http://translate.runalyze.com/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -4724,9 +4724,8 @@ msgid "This file format is not supported."
 msgstr "Dieses Dateiformat wird nicht unterstützt."
 
 #: inc/import/class.ImporterFactory.php:339
-#, fuzzy
 msgid "Please add the following information"
-msgstr "Bitte speichere den folgenden Code unter <strong>%s</strong>:"
+msgstr "Bitte füge folgende Informationen hinzu"
 
 #: inc/plugin/class.PluginType.php:57
 msgid "Panel"
@@ -5617,6 +5616,8 @@ msgid ""
 "You can mark any activity as race by checking the respective checkbox in the "
 "activity's form."
 msgstr ""
+"Du kannst jede Aktivität als Wettkampf markieren, indem du die Checkbox im "
+"Trainingsformular anhakst."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:448
 msgid "Weather statistics"
@@ -5668,7 +5669,7 @@ msgstr "War die Strecke offiziell vermessen?"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:567
 msgid "We use two decimals for convenient reasons."
-msgstr ""
+msgstr "Wir nutzen zwei Dezimalstellen aus praktischen Gründen."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:567
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:394
@@ -7459,9 +7460,8 @@ msgstr "Du kannst Runalyze jetzt benutzen."
 msgid "Activate account"
 msgstr "Account aktivieren"
 
-#, fuzzy
 msgid "Do you really want to delete your account, %username%?"
-msgstr "Möchtest Du wirklich deinen Account löschen?"
+msgstr "Möchtest Du wirklich deinen Account löschen, %username%?"
 
 msgid "Delete account"
 msgstr "Account löschen"
@@ -7492,13 +7492,12 @@ msgstr ""
 msgid "Send link"
 msgstr "Link senden"
 
-#, fuzzy
 msgid "Password reset"
-msgstr "Passwort"
+msgstr "Passwort zurücksetzen"
 
-#, fuzzy
 msgid "Unable to send link. Please contact the administrator."
-msgstr "Es lief etwas schief. Bitte kontaktiere den Administrator."
+msgstr ""
+"Der Link konnte nicht gesendet werden. Bitte kontaktiere den Administrator."
 
 msgid "New password again"
 msgstr "Neues Passwort wiederholen"
@@ -7541,6 +7540,8 @@ msgid ""
 "By clicking the register button you accept our %link_start%terms of use"
 "%link_end%."
 msgstr ""
+"Durch das Klicken auf \"Registrieren\" akzeptierst du unsere "
+"%link_start%Nutzungsbedingungen%link_end%."
 
 msgid "Register"
 msgstr "Registrieren"
@@ -7576,29 +7577,29 @@ msgstr ""
 msgid "By athletes for athletes"
 msgstr "Von Athleten für Athleten"
 
-#, fuzzy
 msgid ""
 "Runalyze is created by athletes for athletes. Whenever you have comments, "
 "problems or wishes: Please contact our Runalyze team. It's near and dear to "
 "us."
 msgstr ""
-"Runalyze ist von Läufern für Läufer. Wann immer du Anmerkungen, Probleme "
+"Runalyze ist von Athleten für Athleten. Wann immer du Anmerkungen, Probleme "
 "oder Wünsche hast: Sag uns Bescheid, es liegt uns am Herzen!"
 
-#, fuzzy
 msgid "Click here to update RUNALYZE"
-msgstr "Update RUNALYZE"
+msgstr "Klicke hier, um RUNALYZE zu aktualisieren"
 
 msgid ""
 "For large databases (several gigabytes) we recommend updating RUNALYZE via "
 "console."
 msgstr ""
+"Bei großen Datenbanken (mehrere Gigabyte) empfehlen wir das Update RUNALYZE "
+"via Konsole durchzuführen."
 
 msgid "No update needed"
-msgstr ""
+msgstr "Kein Update erforderlich"
 
 msgid "Blog"
-msgstr ""
+msgstr "Blog"
 
 msgid "Docs"
 msgstr ""
@@ -7606,31 +7607,30 @@ msgstr ""
 msgid "Forum"
 msgstr "Forum"
 
-#, fuzzy
 msgid "Start the installation of RUNALYZE"
-msgstr "Installation starten"
+msgstr "Starte die Installation von RUNALYZE"
 
-#, fuzzy
 msgid ""
 "RUNALYZE has been successfully installed. You can now start analyzing your "
 "training."
 msgstr ""
-"Runalyze wurde erfolgreich installiert. Jetzt viel Spaß bei der Nutzung!"
+"RUNALYZE wurde erfolgreich installiert. Du kannst nun beginnen dein Training "
+"zu analysieren."
 
 #, fuzzy
 msgid "Create an account"
-msgstr "Neuen Account erstellen"
+msgstr "Erstelle ein Konto"
 
 #, fuzzy
 msgid "Migrations have been executed"
-msgstr "Die Höhendaten wurden bereits korrigiert."
+msgstr "Migrationen wurden durchgeführt"
 
 msgid "Nothing more to do"
-msgstr ""
+msgstr "Nichts mehr zu tun"
 
 #, fuzzy
 msgid "Go back to RUNALYZE"
-msgstr "Willkommen bei RUNALYZE"
+msgstr "Zurück zur RUNALYZE"
 
 #, fuzzy
 msgid "The plug-in was not unlocked successfully."
@@ -7766,9 +7766,8 @@ msgstr ""
 msgid "Documentation"
 msgstr "Dokumentation"
 
-#, fuzzy
 msgid "Translation"
-msgstr "Vertikale Bewegung"
+msgstr "Übersetzungen"
 
 msgid "In a case of urgency you can contact us via email:"
 msgstr "Du kannst uns im Notfall unter folgender E-Mail-Adresse kontaktieren:"
@@ -7793,13 +7792,13 @@ msgstr "Danksagungen"
 
 #, fuzzy
 msgid "Maintenance"
-msgstr "Wartungsmodus"
+msgstr "Wartung"
 
 msgid "RUNALYZE is temporarily down for maintenance"
-msgstr ""
+msgstr "RUNALYZE ist vorübergehend für Wartungsarbeiten offline"
 
 msgid "We will resume normal operations as soon as possible."
-msgstr ""
+msgstr "Wir werden im Normalbetrieb so bald wie möglich fortsetzen."
 
 msgid "Forgot your password?"
 msgstr "Passwort vergessen?"
