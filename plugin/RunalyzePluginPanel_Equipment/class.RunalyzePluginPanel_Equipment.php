@@ -79,7 +79,7 @@ class RunalyzePluginPanel_Equipment extends PluginPanel {
 
 		foreach ($this->AllTypes as $Type) {
 			$active = $Type['id'] == (int)$this->Configuration()->value('type');
-			$TypeLinks[] = '<li'.($active ? ' class="active"' : '').'>'.Ajax::link($Type['name'], 'panel-'.$this->id(), Plugin::$DISPLAY_URL.'?id='.$this->id().'&type='.$Type['id']).'</li>';
+			$TypeLinks[] = '<li'.($active ? ' class="active"' : '').'>'.Ajax::link($Type['name'], 'panel-'.$this->id(), Plugin::$DISPLAY_URL.'/'.$this->id().'?type='.$Type['id']).'</li>';
 
 			if ($active) {
 				$CurrentType = $Type['name'];
