@@ -9,7 +9,7 @@ use Runalyze\Error;
 
 /**
  * Window for importing/creating new trainings.
- * 
+ *
  * This class displays a window to upload files, connect to Garmin Communicator
  * or to create new trainings via form.
  *
@@ -79,14 +79,14 @@ class ImporterWindow {
 	private function checkForImport() {
 		if (isset($_POST['forceAsFileName']))
 			$this->importFile($_POST['forceAsFileName']);
+		elseif (isset($_POST['multi-importer']))
+			$this->importFromMultiImporter();
 		elseif (isset($_GET['file']))
 			$this->importFile($_GET['file']);
 		elseif (isset($_GET['files']))
 			$this->importFiles($_GET['files']);
 		elseif (isset($_POST['data']))
 			$this->importFromGarminCommunicator();
-		elseif (isset($_POST['multi-importer']))
-			$this->importFromMultiImporter();
 		elseif (!empty($_POST))
 			$this->setObjectFromStandardFormular();
 	}
@@ -109,7 +109,7 @@ class ImporterWindow {
 	 */
 	private function importFiles($fileNames) {
 		$fileNames = explode(';', $fileNames);
-	
+
 		$Factory = new ImporterFactory($fileNames);
 
 		$this->TrainingObjects = $Factory->trainingObjects();

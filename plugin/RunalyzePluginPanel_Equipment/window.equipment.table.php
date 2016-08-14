@@ -3,7 +3,6 @@
  * Window: equipment table
  * @package Runalyze\Plugins\Panels
  */
-require '../../inc/class.Frontend.php';
 
 $Frontend = new Frontend();
 
