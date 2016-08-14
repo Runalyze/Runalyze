@@ -15,4 +15,16 @@ class AccountRepository extends EntityRepository implements UserLoaderInterface
             ->getQuery()
             ->getOneOrNullResult();
     }
+    
+    public function getAmountOfActivatedUsers($cache = true)
+    {
+	return $this->createQueryBuilder('u')
+		->select('COUNT(u.id)')
+		->where('u.activationHash = :activationhash')
+		->setParameter('activationhash', '')
+		->getQuery()
+		->useResultCache($cache)
+		->setResultCacheLifetime(320)
+		->getSingleScalarResult();
+    }
 }
