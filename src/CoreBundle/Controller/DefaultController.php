@@ -53,7 +53,7 @@ class DefaultController extends Controller
     {
         new \Frontend(true, $this->get('security.token_storage'));
 
-        if (!$this->getParameter('user_can_register') || $this->getParameter('user_cant_login')) {
+        if (!$this->getParameter('user_can_register')) {
             return $this->render('register/disabled.html.twig');
         }
 
@@ -109,10 +109,6 @@ class DefaultController extends Controller
 
         new \Frontend(true, $this->get('security.token_storage'));
 
-        if ($this->getParameter('user_cant_login')) {
-            return $this->render('login/maintenance.html.twig');
-        }
-
         if (\SessionAccountHandler::isLoggedIn()) {
             return $this->redirectToRoute('dashboard');
         }
@@ -165,7 +161,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/admin.php")
+     * @Route("/admin.php", name="logout")
      */
     public function adminAction()
     {
