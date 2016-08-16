@@ -82,7 +82,7 @@ class Html extends AbstractSnippetSharer
     {
         $Linker = new Linker($this->Context->activity());
         $TextUrl  = $Linker->publicUrl();
-	$Url      = $Linker->publicUrl().'&utm_medium=referral&utm_source=sharehtml';
+	$Url      = $Linker->publicUrl().'?utm_medium=referral&utm_source=sharehtml';
         $Date     = $this->Context->dataview()->date();
         $Time     = $this->Context->dataview()->duration()->string();
         $Title    = $this->Context->activity()->distance() > 0 ? $this->Context->dataview()->distance().' ' : '';
