@@ -161,7 +161,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/admin.php", name="logout")
+     * @Route("/admin.php", name="admin")
      */
     public function adminAction()
     {
