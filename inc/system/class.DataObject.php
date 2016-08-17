@@ -224,8 +224,13 @@ abstract class DataObject {
 	 * @return array
 	 */
 	final protected function getArrayFor($key) {
-		if (!isset($this->dataArrayCache[$key]))
+		if (!isset($this->dataArrayCache[$key])) {
 			$this->dataArrayCache[$key] = explode(self::$ARR_SEP, $this->get($key));
+
+			if (count($this->dataArrayCache[$key]) == 1 && $this->dataArrayCache[$key][0] == '') {
+				$this->dataArrayCache[$key] = array();
+			}
+		}
 
 		return $this->dataArrayCache[$key];
 	}
