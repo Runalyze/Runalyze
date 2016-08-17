@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-08-11 10:47+0200\n"
-"PO-Revision-Date: 2016-07-27 07:45+0000\n"
-"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
-"Language-Team: Dutch <http://translate.runalyze.com/projects/runalyze/"
-"runalyze/nl/>\n"
+"PO-Revision-Date: 2016-08-17 02:03+0000\n"
+"Last-Translator: Ivo Nobel <ivo.nobel@gmail.com>\n"
+"Language-Team: Dutch "
+"<http://translate.runalyze.com/projects/runalyze/runalyze/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -152,9 +152,8 @@ msgid "This value is too large."
 msgstr "De waarde is te hoog."
 
 #: inc/html/formular/class.FormularValueParser.php:262
-#, fuzzy
 msgid "This value is too small."
-msgstr "De waarde is te hoog."
+msgstr "De waarde is te klein."
 
 #: inc/html/formular/class.FormularValueParser.php:303
 msgid "The value is too large."
@@ -695,18 +694,16 @@ msgid "VDOT calculation for: %s"
 msgstr "VDOT berekening voor: %s"
 
 #: inc/training/view/class.VDOTinfo.php:63
-#, fuzzy
 msgid "Standard calculation: As race result"
-msgstr "Standaard berekening: als wedstrijd"
+msgstr "Standaard berekening: als wedstrijdresultaat"
 
 #: inc/training/view/class.VDOTinfo.php:66
-#, fuzzy
 msgid ""
 "All traditional formulas are being used to calculate a VDOT value for a "
 "given race result."
 msgstr ""
 "Alle traditionele formules worden gebruikt om een VDOT waarde te bepalen "
-"voor een bepaalde wedstrijd."
+"voor een bepaalde wedstrijdresultaat."
 
 #: inc/training/view/class.VDOTinfo.php:92
 msgid "Correction: based on heartrate"
@@ -746,11 +743,10 @@ msgstr ""
 "correctiefactor."
 
 #: inc/training/view/class.VDOTinfo.php:125
-#, fuzzy
 msgid "This factor is based on your <em>best</em> race result."
 msgstr ""
 "De correctiefactor is gebaseerd op de hartslag van uw <em>beste</em> "
-"wedstrijd."
+"wedstrijdresultaat."
 
 #: inc/training/view/class.VDOTinfo.php:129
 msgid "Correction factor"
@@ -851,9 +847,8 @@ msgstr "Hartslagzones"
 #: plugin/RunalyzePluginPanel_Equipment/class.RunalyzePluginPanel_Equipment.php:198
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:455
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:571
-#, fuzzy
 msgid "avg."
-msgstr "gem. hartslag"
+msgstr "gem."
 
 #: inc/training/view/section/class.SectionHeartrateRow.php:52
 #: inc/training/view/section/class.SectionHeartrateRow.php:55
@@ -978,39 +973,34 @@ msgstr "Trainingspartner"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:313
 #: inc/draw/class.PlotSumData.php:593
-#, fuzzy
 msgid "Race Result"
-msgstr "Resultaat"
+msgstr "Wedstrijdresultaat"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:314
 #: inc/core/Dataset/Keys/RaceResult.php:127
 #: inc/core/Dataset/Keys/RaceResult.php:175
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:567
-#, fuzzy
 msgid "Official distance"
-msgstr "Totale afstand:"
+msgstr "Officiële afstand"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:315
 #: inc/core/Dataset/Keys/RaceResult.php:128
 #: inc/core/Dataset/Keys/RaceResult.php:176
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:569
-#, fuzzy
 msgid "Official time"
-msgstr "Officiële ontwikkelaars:"
+msgstr "Officiële tijd"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:316
-#, fuzzy
 msgid "Place overall"
-msgstr "Tempo doel"
+msgstr "Totaal plaats"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:317
 msgid "Place age group"
-msgstr ""
+msgstr "Leeftijdsgroep plaats"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:318
-#, fuzzy
 msgid "Place gender"
-msgstr "Tempozones"
+msgstr "Geslacht plaats"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:339
 #, php-format
@@ -1099,7 +1089,7 @@ msgstr "R-R intervallen"
 
 #: inc/training/view/section/class.SectionHRVRow.php:31
 msgid "Successive differences"
-msgstr ""
+msgstr "Opeenvolgende verschillen"
 
 #: inc/training/view/section/class.SectionHRVRow.php:32
 msgid "Poincaré plot"
@@ -1114,7 +1104,7 @@ msgstr "R-R interval"
 
 #: inc/training/view/section/class.SectionHRVRow.php:52
 msgid "Anomalies"
-msgstr ""
+msgstr "Afwijkingen"
 
 #: inc/training/view/section/class.SectionOverview.php:17
 msgid "Overview"
@@ -1226,9 +1216,9 @@ msgstr "Nu corrigeren"
 #: inc/training/view/class.ElevationInfo.php:273
 #: inc/training/view/class.ElevationInfo.php:274
 #: inc/training/view/class.ElevationInfo.php:275
-#, php-format
+#, fuzzy, php-format
 msgid "correct again using %s"
-msgstr ""
+msgstr "opnieuw gecorrigeerd met %s"
 
 #: inc/training/view/class.ElevationInfo.php:273
 msgid "srtm files"
@@ -1236,7 +1226,7 @@ msgstr ""
 
 #: inc/training/view/class.ElevationInfo.php:276
 msgid "remove corrected elevation data"
-msgstr "Hoogte gegevens corrigeren"
+msgstr "verwijder gecorrigeerde hoogte gegevens"
 
 #: inc/training/view/class.ElevationInfo.php:287
 msgid "Compare algorithms"
@@ -1289,24 +1279,21 @@ msgstr "als %s"
 
 #: inc/training/view/class.TrainingView.php:107
 #: inc/core/Dataset/Keys/Setting.php:135
-#, fuzzy
 msgid "Make private"
-msgstr "privé maken"
+msgstr "Privé maken"
 
 #: inc/training/view/class.TrainingView.php:110
 #: inc/core/Dataset/Keys/Setting.php:138
-#, fuzzy
 msgid "Make public"
-msgstr "openbaar maken"
+msgstr "Openbaar maken"
 
 #: inc/training/view/class.TrainingView.php:115
 msgid "Edit race result"
-msgstr ""
+msgstr "Bewerk wedstrijdresultaat"
 
 #: inc/training/view/class.TrainingView.php:117
-#, fuzzy
 msgid "Add race result"
-msgstr "Beste resultaat"
+msgstr "Voeg wedstrijdresultaat toe"
 
 #: inc/training/view/class.TrainingView.php:121
 #, fuzzy
@@ -2043,10 +2030,9 @@ msgid "Use correction factor"
 msgstr "Gebruik correctiefactor"
 
 #: inc/core/Configuration/Category/Vdot.php:176
-#, fuzzy
 msgid "Use a correction factor based on your best race result. (recommended)"
 msgstr ""
-"Gebruik een correctiefactor op basis van uw beste competitie wedstrijd. "
+"Gebruik een correctiefactor op basis van uw beste wedstrijdresultaat. "
 "(aanbevolen)"
 
 #: inc/core/Configuration/Category/Vdot.php:180
@@ -2697,9 +2683,8 @@ msgid "never"
 msgstr "nooit"
 
 #: inc/core/Parameter/Application/ActivityRoutePrivacy.php:40
-#, fuzzy
 msgid "only for race results"
-msgstr "Beste resultaat"
+msgstr "Alleen voor wedstrijdresultaten"
 
 #: inc/core/Parameter/Application/ActivityRoutePrivacy.php:41
 msgid "always"
@@ -3391,9 +3376,8 @@ msgid ""
 msgstr ""
 
 #: inc/core/Dataset/Keys/RaceResult.php:40
-#, fuzzy
 msgid "Race result"
-msgstr "Resultaat"
+msgstr "Wedstrijdresultaat"
 
 #: inc/core/Dataset/Keys/RaceResult.php:88
 #, fuzzy
@@ -5497,9 +5481,8 @@ msgstr "Wedstrijd"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:46
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:148
-#, fuzzy
 msgid "Race results"
-msgstr "Resultaat"
+msgstr "Wedstrijdresultaten"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:54
 #, fuzzy
@@ -5542,9 +5525,8 @@ msgid "Personal bests"
 msgstr "Persoonlijke records"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:87
-#, fuzzy
 msgid "All race results"
-msgstr "Beste resultaat"
+msgstr "Alle wedstrijdresultaten"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:158
 msgid "There are no races."
@@ -5563,9 +5545,8 @@ msgid ""
 msgstr ""
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:216
-#, fuzzy
 msgid "There are no race results for the given distances."
-msgstr "Er zijn geen wedstrijden voor de opgegeven afstanden."
+msgstr "Er zijn geen wedstrijdresultaten voor de opgegeven afstanden."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:240
 msgid "Results trend"
@@ -5626,7 +5607,7 @@ msgstr "Privé activiteit"
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:478
 #, fuzzy
 msgid "Edit the race result details"
-msgstr "Beste resultaat"
+msgstr "Bewerk de details van de wedstrijd"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:494
 msgid "Fun race | Click to mark this activity as a 'normal race'."
@@ -5641,9 +5622,8 @@ msgstr ""
 "markeren."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:547
-#, fuzzy
 msgid "Race result was deleted."
-msgstr "Wedstrijd"
+msgstr "Wedstrijdresultaat is verwijderd."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:560
 #, fuzzy
@@ -5684,9 +5664,8 @@ msgid "Half marathon"
 msgstr "Marathon"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:574
-#, fuzzy
 msgid "This race result is linked to the following activity"
-msgstr "Beste resultaat"
+msgstr "Dit wedstrijdresultaat is gelinkt aan de volgende activiteit"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:581
 msgid "Your official placement."
@@ -5701,9 +5680,8 @@ msgid "Number of participants in every category"
 msgstr ""
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:595
-#, fuzzy
 msgid "Delete this race result"
-msgstr "alleen voor wedstrijden"
+msgstr "Verwijder dit wedstrijdresultaat"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:596
 msgid ""
@@ -5712,14 +5690,12 @@ msgid ""
 msgstr ""
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:598
-#, fuzzy
 msgid "Delete race result"
-msgstr "Beste resultaat"
+msgstr "Verwijder wedstrijdresultaat"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:605
-#, fuzzy
 msgid "Add race result to activity"
-msgstr "Beste resultaat"
+msgstr "Voeg wedstrijdresultaat toe aan activiteit"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:633
 #, fuzzy
