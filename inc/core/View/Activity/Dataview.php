@@ -17,6 +17,7 @@ use Runalyze\Model\Factory;
 use Runalyze\Activity\Distance;
 use Runalyze\Activity\Duration;
 use Runalyze\Activity\Elevation;
+use Runalyze\Activity\Energy;
 use Runalyze\Activity\GroundcontactBalance;
 use Runalyze\Activity\HeartRate;
 use Runalyze\Activity\Pace;
@@ -59,6 +60,12 @@ class Dataview {
 	 */
 	protected $Duration = null;
 
+	/**
+	 * Energy
+	 * @var \Runalyze\Activity\Energy
+	 */
+	protected $Energy = null;
+	
 	/**
 	 * HR max
 	 * @var \Runalyze\Activity\HeartRate
@@ -458,11 +465,13 @@ class Dataview {
 	}
 
 	/**
-	 * Get calories with unit
-	 * @return string
+	 * Get energy with unit
+	 * @return \Runalyze\Activity\Energy
 	 */
-	public function calories() {
-		return Helper::Unknown($this->Activity->calories()).'&nbsp;kcal';
+	public function energy() {
+		return $this->object($this->Energy, function($Activity) {
+			return new Energy($Activity->energy());
+		});
 	}
 
 	/**

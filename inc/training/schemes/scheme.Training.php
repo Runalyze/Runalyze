@@ -242,9 +242,10 @@ $FIELDS = array(
 						'default'	=> '0'
 					),
 					'formular'	=> array(
-						'label'		=> __('Calories'),
+						'label'		=> __('Energy'),
 						'help-tooltip'	=> __('This value will be calculated automatically from duration and sport settings (if activated in your configuration) only if you change the duration or the type of sport.'),
-						'unit'		=> FormularUnit::$KCAL
+						'unit'		=> Configuration::General()->energyUnit()->unit(),
+						'parser'	=> FormularValueParser::$PARSER_ENERGY,
 					)
 	),
 	'pulse_avg'			=> array(

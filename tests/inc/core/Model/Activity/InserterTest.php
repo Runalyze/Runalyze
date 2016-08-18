@@ -152,17 +152,17 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 			))
 		);
 
-		$this->assertEquals(600, $ObjectWithout->calories());
+		$this->assertEquals(600, $ObjectWithout->energy());
 
 		$ObjectWith = $this->fetch(
 			$this->insert(array(
 				Entity::TIME_IN_SECONDS => 3600,
 				Entity::SPORTID => $this->OutdoorID,
-				Entity::CALORIES => 873
+				Entity::ENERGY => 873
 			))
 		);
 
-		$this->assertEquals(873, $ObjectWith->calories());
+		$this->assertEquals(873, $ObjectWith->energy());
 	}
 
 	public function testStartTimeUpdate() {

@@ -7,6 +7,7 @@
 use Runalyze\Activity\Distance;
 use Runalyze\Activity\Duration;
 use Runalyze\Activity\Elevation;
+use Runalyze\Activity\Energy;
 use Runalyze\Activity\Pace;
 use Runalyze\Activity\StrideLength;
 use Runalyze\Configuration;
@@ -400,7 +401,7 @@ class SearchResults {
 	 * @return float|int
 	 */
 	protected function transformValueForDatabase($key, $value) {
-		if (in_array($key, array('distance', 'vertical_oscillation', 'vertical_ratio', 'stride_length', 'groundcontact_balance', 'fit_training_effect'))) {
+		if (in_array($key, array('distance', 'vertical_oscillation', 'vertical_ratio', 'stride_length', 'groundcontact_balance', 'fit_training_effect', 'kcal'))) {
 			$value = (float)str_replace(',', '.', $value);
 		}
 
@@ -420,6 +421,8 @@ class SearchResults {
 			$value = (new WindSpeed())->setInPreferredUnit($value)->value();
 		} elseif (($key == 'vdot' || $key == 'vdot_with_elevation') && Configuration::Vdot()->useCorrectionFactor()) {
 			$value *= Configuration::Data()->vdotFactor();
+		} elseif ($key == 'kcal') {
+			$value = (new Energy())->setInPreferredUnit($value)->kcal();
 		}
 
 		return $value;

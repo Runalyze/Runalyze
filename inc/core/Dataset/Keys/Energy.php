@@ -1,6 +1,6 @@
 <?php
 /**
- * This file contains class::Calories
+ * This file contains class::Energy
  * @package Runalyze
  */
 
@@ -10,12 +10,13 @@ use Runalyze\Dataset\Context;
 use Runalyze\Dataset\SummaryMode;
 
 /**
- * Dataset key: Calories
+ * Dataset key: Energy
  * 
  * @author Hannes Christiansen
+ * @author Michael Pohl
  * @package Runalyze\Dataset\Keys
  */
-class Calories extends AbstractKey
+class Energy extends AbstractKey
 {
 	/**
 	 * Enum id
@@ -23,7 +24,7 @@ class Calories extends AbstractKey
 	 */
 	public function id()
 	{
-		return \Runalyze\Dataset\Keys::CALORIES;
+		return \Runalyze\Dataset\Keys::ENERGY;
 	}
 
 	/**
@@ -41,7 +42,7 @@ class Calories extends AbstractKey
 	 */
 	public function label()
 	{
-		return __('Calories');
+		return __('Energy');
 	}
 
 	/**
@@ -50,7 +51,7 @@ class Calories extends AbstractKey
 	 */
 	public function description()
 	{
-		return __('Calories are taken from your device or calculated by a simple formula.');
+		return __('Energy values are taken from your device or calculated by a simple formula.');
 	}
 
 	/**
@@ -60,7 +61,11 @@ class Calories extends AbstractKey
 	 */
 	public function stringFor(Context $context)
 	{
-		return $context->dataview()->calories();
+		if ($context->activity()->energy() > 0) {
+			return $context->dataview()->energy()->string();
+		}
+
+		return '';
 	}
 
 	/**

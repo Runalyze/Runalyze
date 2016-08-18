@@ -39,7 +39,7 @@ class DefaultConfiguration extends Configuration
 			Keys::HEARTRATE_AVG => true,
 			Keys::HEARTRATE_MAX => false,
 			Keys::ELEVATION => true,
-			Keys::CALORIES => true,
+			Keys::ENERGY => true,
 			Keys::SPLITS => true,
 			Keys::COMMENT => true,
 			Keys::TRIMP => true,

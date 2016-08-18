@@ -114,7 +114,7 @@ class HTMLMetaForFacebook {
  		$this->add('twitter:image', System::getFullDomainWithProtocol(true).'web/assets/images/runalyze.png');
  		$this->add('twitter:description', addslashes($Exporter->metaTitle()));
 
-		$this->add('fitness:calories', $this->Context->activity()->calories());
+		$this->add('fitness:calories', $this->Context->activity()->energy());
 		$this->add('fitness:distance:value', $this->Context->activity()->distance());
 		$this->add('fitness:distance:units', 'km');
 		$this->add('fitness:duration:value', $this->Context->activity()->duration());

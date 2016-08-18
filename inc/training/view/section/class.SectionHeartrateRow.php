@@ -74,8 +74,8 @@ class SectionHeartrateRow extends TrainingViewSectionRowTabbedPlot {
 	 * Add: calories/trimp
 	 */
 	protected function addCaloriesAndTrimp() {
-		if ($this->Context->activity()->calories() > 0 || $this->Context->activity()->trimp() > 0) {
-			$this->BoxedValues[] = new BoxedValue($this->Context->activity()->calories(), 'kcal', __('Calories'));
+		if ($this->Context->activity()->energy() > 0 || $this->Context->activity()->trimp() > 0) {
+			$this->BoxedValues[] = new Box\Energy($this->Context);
 			$this->BoxedValues[] = new BoxedValue($this->Context->activity()->trimp(), '', __('TRIMP'));
 		}
 	}

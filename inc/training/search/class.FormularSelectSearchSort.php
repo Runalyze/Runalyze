@@ -44,7 +44,7 @@ class FormularSelectSearchSort extends FormularField {
 			Keys::TRIMP,
 			Keys::RPE,
 			Keys::JD_INTENSITY,
-			Keys::CALORIES,
+			Keys::ENERGY,
 			Keys::VDOT_VALUE,
 			Keys::POWER,
 			Keys::CADENCE,

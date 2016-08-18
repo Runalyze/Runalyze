@@ -7,6 +7,7 @@
 use Runalyze\Activity\Distance;
 use Runalyze\Activity\Duration;
 use Runalyze\Activity\Elevation;
+use Runalyze\Activity\Energy;
 use Runalyze\Activity\Weight;
 use Runalyze\Activity\Temperature;
 use Runalyze\Data\Weather\WindSpeed;
@@ -94,6 +95,12 @@ class FormularValueParser {
 	 * @var string 
 	 */
 	public static $PARSER_ELEVATION = 'elevation';
+	
+	/**
+	 * Parser: energy in kcal <=> energy in preferred unit
+	 * @var string 
+	 */
+	public static $PARSER_ENERGY = 'energy';
 
 	/**
 	 * Parser: distance in km <=> distance in preferred unit
@@ -158,6 +165,8 @@ class FormularValueParser {
                                 return self::validateTemperature($key);
 			case self::$PARSER_ELEVATION:
 				return self::validateElevation($key);
+                        case self::$PARSER_ENERGY:
+                                return self::validateEnergy($key);  
 			case self::$PARSER_DISTANCE:
 				return self::validateDistance($key, $parserOptions);
 			case self::$PARSER_WINDSPEED:
@@ -577,7 +586,25 @@ class FormularValueParser {
 	private static function parseElevation(&$value) {
 		$value = round((new Elevation($value))->valueInPreferredUnit(), 2);
 	}
+	
+	/**
+	 * Validator: energy in preferred unit => energy in kcal
+	 * @param string $key
+	 * @return bool
+	 */
+	private static function validateEnergy($key) {
+		$_POST[$key] = round((new Energy())->setInPreferredUnit($_POST[$key])->kcal(), 0);
 
+		return true;
+	}
+
+	/**
+	 * Parse: energy in m => energy in preferred unit
+	 * @param mixed $value 
+	 */
+	private static function parseEnergy(&$value) {
+		$value = round((new Energy($value))->valueInPreferredUnit(), 0);
+	}
 	/**
 	 * Validator: distance in preferred unit => distance in km
 	 * @param string $key

@@ -212,8 +212,8 @@ class ActivityForm extends \Runalyze\Configuration\Category {
 		));
 
 		$Fieldset->addHandle( $this->handle('COMPUTE_KCAL'), array(
-			'label'		=> __('Calculate calories'),
-			'tooltip'	=> __('Recalculate calories after changing duration by hand')
+			'label'		=> __('Calculate energy'),
+			'tooltip'	=> __('Recalculate energy after changing duration by hand')
 		));
 
 		$Fieldset->addHandle( $this->handle('COMPUTE_POWER'), array(
