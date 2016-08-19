@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: mail@runalyze.de\n"
+"Report-Msgid-Bugs-To: mail@runalyze.com\n"
 "POT-Creation-Date: 2016-05-21 18:34+0200\n"
-"PO-Revision-Date: 2016-08-02 14:27+0000\n"
-"Last-Translator: bruno lencastre <bruno.lencastre@sapo.pt>\n"
+"PO-Revision-Date: 2016-08-19 21:09+0000\n"
+"Last-Translator: Miguel Robin <dee.hood@gmail.com>\n"
 "Language-Team: Portuguese (Portugal) "
-"<http://translate.runalyze.com/projects/runalyze/runalyze/pt_PT/>\n"
+"<http://translate.runalyze.com/projects/runalyze/runalyze-26/pt_PT/>\n"
 "Language: pt_PT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1111,6 +1111,7 @@ msgstr "Correção de altitude"
 
 #: inc/training/view/class.ElevationInfo.php:249
 #: call/call.Training.elevationCorrection.php:45
+#, fuzzy
 msgid "Elevation data has been corrected."
 msgstr "Os dados de altitude foram corrigidos."
 
@@ -1316,8 +1317,9 @@ msgstr ""
 "para qualquer outro fim."
 
 #: inc/training/schemes/scheme.Training.php:221
+#, fuzzy
 msgid "Will be calculated afterwards from the activity's elevation profile."
-msgstr ""
+msgstr "Será calculada depois a partir do perfil de elevação da actividade."
 
 #: inc/training/schemes/scheme.Training.php:245
 msgid ""
@@ -1331,11 +1333,15 @@ msgid "VDOT for form"
 msgstr "VDOT para formulário"
 
 #: inc/training/schemes/scheme.Training.php:309
+#, fuzzy
 msgid ""
 "VDOTs are estimated from your ratio of heart rate and pace. You can exclude "
 "single activities from the calculation of your form and should do so if it's "
 "heart rate data are not reliable (e.g. a lot of stops, walking breaks, ...)."
 msgstr ""
+"VDOTs são estimados a partir do rácio batimentos cardiacos e passo. Pode "
+"excluir actividades individuais do cálculo no formulário e deverá fazê-lo se "
+"os dados não forem fiáveis (por exemplo muitas paragens, pausas a andar,...)."
 
 #: inc/training/schemes/scheme.Training.php:403
 msgid "Cadence (Running)"
@@ -1428,7 +1434,7 @@ msgstr "Esta atividade já foi importada anteriormente"
 
 #: inc/training/class.TrainingFormular.php:198
 msgid "The activity has been successfully created."
-msgstr "A atividade foi criada sucedida."
+msgstr "A atividade foi criada com sucesso."
 
 #: inc/training/class.TrainingFormular.php:234
 msgid ""
@@ -1437,10 +1443,13 @@ msgid ""
 msgstr ""
 
 #: inc/training/class.TrainingFormular.php:235
+#, fuzzy
 msgid ""
 "You can add some details (your placement etc.) in the 'Race result' plugin "
 "afterwards."
 msgstr ""
+"Poderá adicionar depois alguns detalhes (classificação etc.) no plugin 'Race "
+"result'"
 
 #: inc/training/class.TrainingFormular.php:237
 #, fuzzy
@@ -1476,7 +1485,7 @@ msgstr "Trama do contato do solo"
 #: inc/core/View/Window/Laps/Table.php:269
 #: inc/core/Dataset/Keys/Groundcontact.php:44
 msgid "Ground contact time"
-msgstr ""
+msgstr "Tempo de contacto com o solo"
 
 #: inc/training/class.TrainingFormular.php:453
 #, fuzzy
@@ -1521,11 +1530,12 @@ msgstr "Sexo"
 
 #: inc/core/Configuration/Category/General.php:199
 msgid "Beginning of the week"
-msgstr ""
+msgstr "Começo da semana"
 
 #: inc/core/Configuration/Category/General.php:203
+#, fuzzy
 msgid "Unit system for distances"
-msgstr ""
+msgstr "Sistema de unidades para distancias"
 
 #: inc/core/Configuration/Category/General.php:204
 msgid ""
@@ -1545,7 +1555,7 @@ msgstr "Temperatura"
 
 #: inc/core/Configuration/Category/General.php:216
 msgid "Heart rate unit"
-msgstr "Unidade de freqüência cardíaca"
+msgstr "Unidade de frequência cardíaca"
 
 #: inc/core/Configuration/Category/General.php:220
 msgid "Main sport"
@@ -3745,7 +3755,7 @@ msgstr "Registre-se"
 
 #: inc/tpl/tpl.loginWindow.php:133 inc/tpl/tpl.loginWindow.php:160
 msgid "Forgot your password?"
-msgstr "Esqueceu sua senha?"
+msgstr "Esqueceu a sua password?"
 
 #: inc/tpl/tpl.loginWindow.php:145
 msgid "A link for changing your password will be sent via email."
@@ -4312,7 +4322,7 @@ msgstr ""
 #: inc/system/schemes/set.emptyValues.php:65
 #: plugin/RunalyzePluginTool_AnalyzeVDOT/tpl.Table.php:9
 msgid "Race"
-msgstr ""
+msgstr "Corrida"
 
 #: inc/system/schemes/set.emptyValues.php:65
 msgid "RC"
@@ -4483,7 +4493,7 @@ msgstr ""
 
 #: inc/system/class.AccountHandler.php:503
 msgid "Sending the link did not work. Please contact the administrator."
-msgstr ""
+msgstr "Enviar o link não funcionou. Por favor contacte o admnistrador."
 
 #: inc/system/class.AccountHandler.php:540
 msgid "long sleeve"
@@ -5503,43 +5513,45 @@ msgstr ""
 
 #: call/call.Training.display.php:29 call/call.Training.edit.php:21
 msgid "The activity has been removed"
-msgstr ""
+msgstr "A actividade foi removida"
 
 #: call/call.SharedList.php:44
 msgid "Click on an activity to see more details."
-msgstr ""
+msgstr "Clique numa actividade para ver mais detalhes"
 
 #: call/call.SharedList.php:45
 msgid "Public activities are marked: "
-msgstr ""
+msgstr "Actividades publicas estão marcadas: "
 
 #: call/window.plotSumData.php:23 call/window.plotSumData.shared.php:25
 msgid "There was a problem."
-msgstr ""
+msgstr "Houve um problema."
 
 #: call/call.Plugin.display.php:16
 msgid "The plugin could not be found."
-msgstr ""
+msgstr "O plugin não foi encontrado."
 
 #: call/call.Plugin.uninstall.php:13
 msgid "Uninstall"
-msgstr ""
+msgstr "Desinstalar"
 
 #: call/call.Plugin.uninstall.php:16
 msgid "The plugin has been uninstalled."
-msgstr ""
+msgstr "O plugin foi desinstalado."
 
 #: call/call.Plugin.uninstall.php:22
 msgid "There was a problem, the plugin could not be uninstalled."
-msgstr ""
+msgstr "Houve um problema, o plugin não pode ser desinstalado."
 
 #: call/call.Plugin.uninstall.php:27 call/call.Plugin.install.php:35
+#, fuzzy
 msgid "back to list"
-msgstr ""
+msgstr "Voltar à lista"
 
 #: call/window.delete.php:12
+#, fuzzy
 msgid "Delete your account."
-msgstr ""
+msgstr "Apagar a sua conta"
 
 #: call/window.delete.php:19
 msgid ""
@@ -5547,6 +5559,9 @@ msgid ""
 "decided to delete your account.<br>Your account will be deleted as soon as "
 "you click on the confirmation link in your mail."
 msgstr ""
+"<eM>A confirmação foi enviada por mail.</em><br>Temos pena que tenha "
+"decidido apagar a sua conta.<br>A sua conta será apagada logo que clique no "
+"link de confirmação no seu mail."
 
 #: call/call.garminCommunicator.php:43
 msgid "Connect"
@@ -5621,37 +5636,37 @@ msgid "ignore"
 msgstr ""
 
 #: call/login.php:2
+#, fuzzy
 msgid "You are not logged in anymore."
-msgstr ""
+msgstr "Já não está ligado."
 
 #: call/call.Training.elevationCorrection.php:43
-#, fuzzy
 msgid "Corrected elevation data has been removed."
-msgstr "Dados de elevação foram corrigidos."
+msgstr "Dados de elevação corrigida foram removidos."
 
 #: call/call.Training.elevationCorrection.php:58
 msgid "Elevation data could not be retrieved."
-msgstr ""
+msgstr "Dados de elevação não puderam ser obtidos."
 
 #: call/window.search.php:21
 msgid "Search for activities"
-msgstr ""
+msgstr "Procurar actividades"
 
 #: call/call.Plugin.install.php:13
 msgid "Install"
-msgstr ""
+msgstr "Instalar"
 
 #: call/call.Plugin.install.php:19
 msgid "The plugin has been successfully installed."
-msgstr ""
+msgstr "O plugin foi instalado com sucesso."
 
 #: call/call.Plugin.install.php:30
 msgid "There was a problem, the plugin could not be installed."
-msgstr ""
+msgstr "Houve um problema, o plugin não pode ser intalado."
 
 #: call/call.Plugin.config.php:19
 msgid "Something went wrong ..."
-msgstr ""
+msgstr "Alguma coisa correu mal ..."
 
 #: plugin/RunalyzePluginTool_AnalyzeVDOT/tpl.Table.php:14
 #: plugin/RunalyzePluginTool_AnalyzeVDOT/tpl.Table.php:15
