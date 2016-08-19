@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: mail@runalyze.de\n"
+"Report-Msgid-Bugs-To: mail@runalyze.com\n"
 "POT-Creation-Date: 2016-05-21 18:34+0200\n"
-"PO-Revision-Date: 2016-07-25 09:18+0000\n"
-"Last-Translator: Gilgamesh <alan.burlot@gmail.com>\n"
+"PO-Revision-Date: 2016-08-19 16:18+0000\n"
+"Last-Translator: blutch <blh.blutch@gmail.com>\n"
 "Language-Team: French "
-"<http://translate.runalyze.com/projects/runalyze/runalyze/fr/>\n"
+"<http://translate.runalyze.com/projects/runalyze/runalyze-26/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -629,7 +629,7 @@ msgstr ""
 #: inc/training/view/class.VDOTinfo.php:125
 #, fuzzy
 msgid "This factor is based on your <em>best</em> race result."
-msgstr "Le facteur est basé sur votre <em>meilleure</em> course."
+msgstr "Ce facteur est basé sur votre <em>meilleur</em> résultat en course."
 
 #: inc/training/view/class.VDOTinfo.php:129
 msgid "Correction factor"
@@ -891,13 +891,14 @@ msgid "Place overall"
 msgstr "Classement général"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:317
+#, fuzzy
 msgid "Place age group"
-msgstr ""
+msgstr "Classement pour votre catégorie d'age."
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:318
 #, fuzzy
 msgid "Place gender"
-msgstr "Zones de rythme"
+msgstr "Classement par sexe"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:339
 #, php-format
@@ -941,8 +942,9 @@ msgid "Lanes"
 msgstr "Couloirs"
 
 #: inc/training/view/section/table/class.TableLapsComputed.php:66
+#, fuzzy
 msgid "bpm"
-msgstr ""
+msgstr "bpm"
 
 #: inc/training/view/section/table/class.TableLapsComputed.php:67
 msgid "elev."
@@ -984,8 +986,9 @@ msgid "R-R intervals"
 msgstr "Intervalles R-R"
 
 #: inc/training/view/section/class.SectionHRVRow.php:31
+#, fuzzy
 msgid "Successive differences"
-msgstr ""
+msgstr "Différences successives"
 
 #: inc/training/view/section/class.SectionHRVRow.php:32
 msgid "Poincaré plot"
@@ -999,8 +1002,9 @@ msgid "R-R interval"
 msgstr "Intervalle R-R"
 
 #: inc/training/view/section/class.SectionHRVRow.php:52
+#, fuzzy
 msgid "Anomalies"
-msgstr ""
+msgstr "Anomalies"
 
 #: inc/training/view/section/class.SectionOverview.php:17
 msgid "Overview"
@@ -1195,17 +1199,18 @@ msgid "Make public"
 msgstr "Publier"
 
 #: inc/training/view/class.TrainingView.php:115
+#, fuzzy
 msgid "Edit race result"
-msgstr ""
+msgstr "Modifier résultat de la course"
 
 #: inc/training/view/class.TrainingView.php:117
+#, fuzzy
 msgid "Add race result"
-msgstr ""
+msgstr "Ajouter le résultat de la compétition"
 
 #: inc/training/view/class.TrainingView.php:121
-#, fuzzy
 msgid "Edit activity"
-msgstr "Première activité :"
+msgstr "Modifier l'activité"
 
 #: inc/training/view/class.TrainingView.php:124
 #: inc/core/Dataset/Keys/Setting.php:103
@@ -1299,22 +1304,28 @@ msgid "Public"
 msgstr "Public"
 
 #: inc/training/schemes/scheme.Training.php:149
+#, fuzzy
 msgid "Public activities will be visible for everybody."
-msgstr ""
+msgstr "Les activités publiques seront visibles par tout le monde."
 
 #: inc/training/schemes/scheme.Training.php:160
 msgid "Track"
 msgstr "Piste"
 
 #: inc/training/schemes/scheme.Training.php:161
+#, fuzzy
 msgid ""
 "This field is only meant for official track races such that distances can be "
 "shown correctly, e.g. as 10.000m. Use tags for all other purposes."
 msgstr ""
+"Ce champ est uniquement utilisé pour les courses officielles sur piste dont "
+"les distances sont fixées, par ex. 10 000m. Vous pouvez utiliser les tags "
+"pour les autres cas."
 
 #: inc/training/schemes/scheme.Training.php:221
+#, fuzzy
 msgid "Will be calculated afterwards from the activity's elevation profile."
-msgstr ""
+msgstr "Sera calculé  à partir du profil d'altitude de l'activité."
 
 #: inc/training/schemes/scheme.Training.php:245
 msgid ""
@@ -1352,7 +1363,7 @@ msgstr "Vitesse de vente"
 
 #: inc/training/schemes/scheme.Training.php:528
 msgid "Wind degrees"
-msgstr "Température du vent"
+msgstr "Direction du vent (en °)"
 
 #: inc/training/schemes/scheme.Training.php:551
 msgid "Night"
@@ -4590,7 +4601,7 @@ msgstr ""
 
 #: inc/system/class.AccountHandler.php:503
 msgid "Sending the link did not work. Please contact the administrator."
-msgstr ""
+msgstr "Le lien ne peut pas être envoyé. Veuillez contacter l'administrateur."
 
 #: inc/system/class.AccountHandler.php:540
 msgid "long sleeve"
@@ -5608,7 +5619,7 @@ msgstr "L'activité a été supprimé"
 
 #: call/call.SharedList.php:44
 msgid "Click on an activity to see more details."
-msgstr ""
+msgstr "Cliquez sur une activité pour afficher plus de détails."
 
 #: call/call.SharedList.php:45
 msgid "Public activities are marked: "
@@ -5620,7 +5631,7 @@ msgstr "Un problème est survenue."
 
 #: call/call.Plugin.display.php:16
 msgid "The plugin could not be found."
-msgstr ""
+msgstr "Le plugin n'a pas été trouvé."
 
 #: call/call.Plugin.uninstall.php:13
 msgid "Uninstall"
@@ -5632,7 +5643,7 @@ msgstr "Le plugin a été désinstallé."
 
 #: call/call.Plugin.uninstall.php:22
 msgid "There was a problem, the plugin could not be uninstalled."
-msgstr ""
+msgstr "Problème détecté, le plugin ne peut pas être désinstallé."
 
 #: call/call.Plugin.uninstall.php:27 call/call.Plugin.install.php:35
 msgid "back to list"
@@ -5739,7 +5750,7 @@ msgstr "Les données d'altitude n'ont pas pu être récupérés."
 
 #: call/window.search.php:21
 msgid "Search for activities"
-msgstr ""
+msgstr "Recherche d'activités"
 
 #: call/call.Plugin.install.php:13
 msgid "Install"
@@ -5751,11 +5762,11 @@ msgstr "Le plugin a été installé avec succès."
 
 #: call/call.Plugin.install.php:30
 msgid "There was a problem, the plugin could not be installed."
-msgstr ""
+msgstr "Problème détecté, le plugin ne peut pas être installé."
 
 #: call/call.Plugin.config.php:19
 msgid "Something went wrong ..."
-msgstr ""
+msgstr "Quelque-chose s'est mal passé ..."
 
 #: plugin/RunalyzePluginTool_AnalyzeVDOT/tpl.Table.php:14
 #: plugin/RunalyzePluginTool_AnalyzeVDOT/tpl.Table.php:15
