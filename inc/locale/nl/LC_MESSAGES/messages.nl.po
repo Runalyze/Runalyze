@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-08-11 10:47+0200\n"
-"PO-Revision-Date: 2016-08-17 02:03+0000\n"
+"PO-Revision-Date: 2016-08-19 22:25+0000\n"
 "Last-Translator: Ivo Nobel <ivo.nobel@gmail.com>\n"
 "Language-Team: Dutch "
 "<http://translate.runalyze.com/projects/runalyze/runalyze/nl/>\n"
@@ -31,9 +31,8 @@ msgid "The activity has been removed"
 msgstr "De activiteit is verwijderd"
 
 #: src/CoreBundle/Controller/ActivityController.php:236
-#, fuzzy
 msgid "Corrected elevation data has been removed."
-msgstr "Hoogte gegevens zijn gecorrigeerd."
+msgstr "Gecorrigeerde hoogte gegevens zijn verwijderd."
 
 #: src/CoreBundle/Controller/ActivityController.php:238
 #: inc/training/view/class.ElevationInfo.php:249
@@ -302,7 +301,7 @@ msgstr "Wind snelheid"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:65
 msgid "Wind direction"
-msgstr ""
+msgstr "Windrichting"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:71
 msgid "descending"
@@ -539,9 +538,8 @@ msgid "Power"
 msgstr "Kracht"
 
 #: inc/training/search/class.SearchFormular.php:186
-#, fuzzy
 msgid "Is race"
-msgstr "Alle wedstrijden"
+msgstr "Is een wedstrijd"
 
 #: inc/training/search/class.SearchFormular.php:188
 #: inc/training/view/class.VDOTinfo.php:74
@@ -609,7 +607,7 @@ msgstr "Baan"
 #: inc/training/schemes/scheme.Training.php:382
 #: inc/core/View/Activity/Box/RPE.php:30 inc/core/Dataset/Keys/RPE.php:52
 msgid "RPE"
-msgstr ""
+msgstr "RPE"
 
 #: inc/training/search/class.SearchFormular.php:197
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:167
@@ -655,9 +653,8 @@ msgstr "calorieën"
 #: inc/training/search/class.SearchFormular.php:205
 #: inc/core/Activity/TrainingEffect.php:53
 #: inc/core/Dataset/Keys/FitTrainingEffect.php:43
-#, fuzzy
 msgid "Training Effect"
-msgstr "Training"
+msgstr "Trainingseffect"
 
 #: inc/training/search/class.SearchFormular.php:206
 #: inc/training/schemes/scheme.Training.php:492
@@ -1046,7 +1043,7 @@ msgstr "Banen"
 
 #: inc/training/view/section/table/class.TableLapsComputed.php:66
 msgid "bpm"
-msgstr ""
+msgstr "bpm"
 
 #: inc/training/view/section/table/class.TableLapsComputed.php:67
 msgid "elev."
@@ -1216,13 +1213,13 @@ msgstr "Nu corrigeren"
 #: inc/training/view/class.ElevationInfo.php:273
 #: inc/training/view/class.ElevationInfo.php:274
 #: inc/training/view/class.ElevationInfo.php:275
-#, fuzzy, php-format
+#, php-format
 msgid "correct again using %s"
-msgstr "opnieuw gecorrigeerd met %s"
+msgstr "corrigeer opnieuw met %s"
 
 #: inc/training/view/class.ElevationInfo.php:273
 msgid "srtm files"
-msgstr ""
+msgstr "srtm bestanden"
 
 #: inc/training/view/class.ElevationInfo.php:276
 msgid "remove corrected elevation data"
@@ -1296,9 +1293,8 @@ msgid "Add race result"
 msgstr "Voeg wedstrijdresultaat toe"
 
 #: inc/training/view/class.TrainingView.php:121
-#, fuzzy
 msgid "Edit activity"
-msgstr "Eerste activiteit:"
+msgstr "Bewerk activiteit"
 
 #: inc/training/view/class.TrainingView.php:124
 #: inc/core/Dataset/Keys/Setting.php:103
@@ -1400,10 +1396,14 @@ msgid ""
 "This field is only meant for official track races such that distances can be "
 "shown correctly, e.g. as 10.000m. Use tags for all other purposes."
 msgstr ""
+"Dit veld is alleen bedoeld voor officiële baanwedstrijden zodanig dat de "
+"afstanden correct kan worden weergegeven, bijv. als 10.000m . Gebruik tags "
+"voor alle andere doeleinden."
 
 #: inc/training/schemes/scheme.Training.php:222
 msgid "Will be calculated afterwards from the activity's elevation profile."
 msgstr ""
+"Wordt achteraf berekend op basis van het hoogte profiel van de activiteit."
 
 #: inc/training/schemes/scheme.Training.php:246
 msgid ""
@@ -1411,6 +1411,9 @@ msgid ""
 "(if activated in your configuration) only if you change the duration or the "
 "type of sport."
 msgstr ""
+"Deze waarde wordt automatisch berekend op basis van de duur en de sport "
+"instellingen (indien geactiveerd in uw configuratie) alleen als u de duur of "
+"de aard van de sport verandert."
 
 #: inc/training/schemes/scheme.Training.php:309
 msgid "VDOT for form"
@@ -1422,6 +1425,10 @@ msgid ""
 "single activities from the calculation of your form and should do so if it's "
 "heart rate data are not reliable (e.g. a lot of stops, walking breaks, ...)."
 msgstr ""
+"VDOTs worden geschat op basis van de verhouding van uw hartslag en tempo. U "
+"kunt afzonderlijke activiteiten uitsluiten van de berekening van uw vorm, en "
+"zou dit ook moeten doen als de hartslaggegevens niet betrouwbaar zijn ("
+"bijvoorbeeld veel stops, wandelen pauzes, ...)."
 
 #: inc/training/schemes/scheme.Training.php:404
 msgid "Cadence (Running)"
@@ -1437,12 +1444,11 @@ msgstr ""
 
 #: inc/training/schemes/scheme.Training.php:529
 msgid "Wind degrees"
-msgstr ""
+msgstr "Windrichting"
 
 #: inc/training/schemes/scheme.Training.php:552
-#, fuzzy
 msgid "Night"
-msgstr "Gewicht"
+msgstr "Nacht"
 
 #: inc/training/schemes/scheme.Training.php:824
 #: inc/core/Dataset/Keys/TotalStrokes.php:44
@@ -1506,9 +1512,8 @@ msgid "Save and continue"
 msgstr "Opslaan en doorgaan"
 
 #: inc/training/class.TrainingFormular.php:110
-#, fuzzy
 msgid "It seems that you already have imported this activity"
-msgstr "Weet u zeker dat u uw account wil verwijderen?"
+msgstr "Het lijkt erop dat u deze activiteit al heeft geïmporteerd"
 
 #: inc/training/class.TrainingFormular.php:212
 msgid "The activity has been successfully created."
@@ -1519,12 +1524,17 @@ msgid ""
 "Race results are treated in a special way to show your personal bests and "
 "are independent of the chosen activity type."
 msgstr ""
+"Wedstrijdresultaten worden op een speciale manier behandeld om uw "
+"persoonlijke records te tonen en zijn onafhankelijk van de gekozen type "
+"activiteit."
 
 #: inc/training/class.TrainingFormular.php:249
 msgid ""
 "You can add some details (your placement etc.) in the 'Race result' plugin "
 "afterwards."
 msgstr ""
+"U kunt een aantal gegevens (uw plaatsing etc.) achteraf toevoegen in de "
+"'Wedstrijdresultaat' plugin."
 
 #: inc/training/class.TrainingFormular.php:251
 #: inc/system/schemes/set.emptyValues.php:65
@@ -1533,9 +1543,8 @@ msgid "Race"
 msgstr "Wedstrijd"
 
 #: inc/training/class.TrainingFormular.php:339
-#, fuzzy
 msgid "Choose tags"
-msgstr "Kies een statistiek"
+msgstr "Kies labels"
 
 #: inc/training/class.TrainingFormular.php:424
 msgid "Remove data series"
@@ -1555,9 +1564,8 @@ msgid "Attention: This operation cannot be undone."
 msgstr "Let op: Deze bewerking kan niet ongedaan gemaakt worden."
 
 #: inc/training/class.TrainingFormular.php:454
-#, fuzzy
 msgid "Ground contact time balance"
-msgstr "Grond contact tijd"
+msgstr "Grondcontacttijd-balans"
 
 #: inc/training/class.TrainingFormular.php:455
 #: inc/core/View/Window/Laps/Table.php:269
@@ -1619,15 +1627,16 @@ msgid ""
 "Changing the unit system for distances does not change pace units. You have "
 "to adjust them in sports configuration."
 msgstr ""
+"Het wijzigen van de eenheid voor afstanden veranderd niet de tempo eenheden. "
+"Je moet ze passen in de sport configuratie."
 
 #: inc/core/Configuration/Category/General.php:208
 msgid "Weight unit"
 msgstr "Eenheid voor gewicht"
 
 #: inc/core/Configuration/Category/General.php:212
-#, fuzzy
 msgid "Temperature unit"
-msgstr "Temperatuur"
+msgstr "Temperatuur eenheid"
 
 #: inc/core/Configuration/Category/General.php:216
 msgid "Heart rate unit"
@@ -1817,9 +1826,8 @@ msgid "Try to ignore outliers in the pace plot."
 msgstr "Indien mogelijk negeren van uitschieters in het tempo diagram."
 
 #: inc/core/Configuration/Category/ActivityView.php:371
-#, fuzzy
 msgid "Splits plot: use zero as axis minimum"
-msgstr "Tempo diagram: y-as als minimum"
+msgstr "Split diagram: gebruik nul als minimum as waarde"
 
 #: inc/core/Configuration/Category/ActivityView.php:381
 msgid "Map: interrupt route"
@@ -1968,9 +1976,8 @@ msgid "Sort: activity types"
 msgstr "Sorteer: type activiteiten"
 
 #: inc/core/Configuration/Category/ActivityForm.php:278
-#, fuzzy
 msgid "Sort: equipment"
-msgstr "Uw uitrusting"
+msgstr "Sorteer: uitrusting"
 
 #: inc/core/Configuration/Category/DataBrowser.php:86
 #: inc/system/config/class.ConfigTabTypes.php:48
@@ -1991,9 +1998,8 @@ msgid "Calendar: show labels for dataset"
 msgstr "Kalender: Toon label voor dataset"
 
 #: inc/core/Configuration/Category/DataBrowser.php:98
-#, fuzzy
 msgid "Calendar: show days with activities only"
-msgstr "Kalender: Toon label voor dataset"
+msgstr "Kalender: Toon alleen dagen met activiteiten"
 
 #: inc/core/Configuration/Category/DataBrowser.php:102
 msgid "Calendar: create button"
@@ -2173,15 +2179,16 @@ msgstr ""
 "U kunt nu de tool %s gebruiken voor het berekenen van de betreffende waarden."
 
 #: inc/core/Configuration/Messages.php:34
-#, fuzzy
 msgid "sports configuration"
-msgstr "Configuratiebestand schrijven"
+msgstr "sport instellingen"
 
 #: inc/core/Configuration/Messages.php:37
 #, php-format
 msgid ""
 "You may want to adjust pace units in %s. They are not changed automatically."
 msgstr ""
+"Misschien wilt u de tempo eenheden aanpassen in %s. Ze worden niet "
+"automatisch gewijzigd."
 
 #: inc/core/Configuration/Messages.php:49
 #: plugin/RunalyzePluginTool_DatenbankCleanup/Job.php:49
@@ -2192,9 +2199,8 @@ msgstr ""
 "%s is herberekend. Nieuwe waarde: <strong>%s</strong> (oude waarde: %s)"
 
 #: inc/core/Export/Share/Html.php:45
-#, fuzzy
 msgid "HTML"
-msgstr "HTML-Code"
+msgstr "HTML"
 
 #: inc/core/Export/Share/Html.php:55 inc/core/Export/Share/IFrame.php:82
 msgid "Code"
@@ -2273,9 +2279,8 @@ msgid "Twitter"
 msgstr "Twitter"
 
 #: inc/core/Activity/PerformanceCondition.php:58
-#, fuzzy
 msgid "Performance condition"
-msgstr "Prestatie model"
+msgstr "Prestatieconditie"
 
 #: inc/core/Activity/PerformanceCondition.php:67
 #: inc/core/Dataset/Keys/FitPerformanceCondition.php:52
@@ -2290,53 +2295,59 @@ msgstr "Rustig"
 
 #: inc/core/Activity/TrainingEffectLevel.php:70
 msgid "Maintaining workout"
-msgstr ""
+msgstr "Handhaving"
 
 #: inc/core/Activity/TrainingEffectLevel.php:72
 msgid "Improving Fitness"
-msgstr ""
+msgstr "Verbetering"
 
 #: inc/core/Activity/TrainingEffectLevel.php:74
-#, fuzzy
 msgid "Highly Improving"
-msgstr "Hoogste punt"
+msgstr "Sterke verbetering"
 
 #: inc/core/Activity/TrainingEffectLevel.php:76
 msgid "Overreaching"
-msgstr ""
+msgstr "Overbelasting"
 
 #: inc/core/Activity/TrainingEffectLevel.php:92
 msgid ""
 "Helps recovery (short activities). Improves endurance with longer activities "
 "(more than 40 minutes)."
 msgstr ""
+"Ondersteunt het herstel (korte activiteiten). Verbetert uw "
+"uithoudingsvermogen bij langdurige activiteiten (meer dan 40 minuten)."
 
 #: inc/core/Activity/TrainingEffectLevel.php:94
 msgid "Maintains your aerobic fitness."
-msgstr ""
+msgstr "Handhaaft uw aerobische conditie."
 
 #: inc/core/Activity/TrainingEffectLevel.php:96
 msgid ""
 "Improves your aerobic fitness if repeated as part of your weekly training "
 "program."
 msgstr ""
+"Verbetert uw aerobische conditie indien herhaald als onderdeel van uw "
+"wekelijks trainingsprogramma."
 
 #: inc/core/Activity/TrainingEffectLevel.php:98
 msgid ""
 "Highly improves your aerobic fitness if repeated 1-2 times per week with "
 "adequate recovery time."
 msgstr ""
+"Verbetert uw aerobische conditie sterk bij herhaling 1–2 keer per week en "
+"een toereikende hersteltijd."
 
 #: inc/core/Activity/TrainingEffectLevel.php:100
 msgid ""
 "Causes temporary overload with high improvement. Train up to this number "
 "with extreme care. Requires additional recovery days."
 msgstr ""
+"Veroorzaakt tijdelijke overbelasting en sterke verbetering. Train uiterst "
+"voorzichtig tot dit getal. Vereist extra dagen voor herstel."
 
 #: inc/core/Activity/GroundcontactBalance.php:48
-#, fuzzy
 msgid "Groundcontact balance"
-msgstr "Grond contact diagram"
+msgstr "Grondcontacttijd-balans"
 
 #: inc/core/View/Window/Laps/Table.php:143
 msgid "Lap"
@@ -2444,7 +2455,7 @@ msgstr "Toon handmatige ronden"
 
 #: inc/core/View/Splits/Table.php:150
 msgid "diff"
-msgstr "diff"
+msgstr "verschil"
 
 #: inc/core/View/Splits/Table.php:223
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:175
@@ -2466,32 +2477,30 @@ msgstr "1e/2e helft"
 #: inc/core/View/RaceResult/Dataview.php:91
 #, php-format
 msgid "of %u overall"
-msgstr ""
+msgstr "van %u in totaal"
 
 #: inc/core/View/RaceResult/Dataview.php:104
 #, php-format
 msgid "of %u in your age group"
-msgstr ""
+msgstr "van %u in uw leeftijdsgroep"
 
 #: inc/core/View/RaceResult/Dataview.php:117
 #, php-format
 msgid "of %u men/women"
-msgstr ""
+msgstr "of %u mannen/vrouwen"
 
 #: inc/core/View/RaceResult/Dataview.php:174
 #, php-format
 msgid "(first %u%%)"
-msgstr ""
+msgstr "(eerste %u%%)"
 
 #: inc/core/View/Activity/Box/TotalCadence.php:27
-#, fuzzy
 msgid "Number of steps"
-msgstr "Aantal decimalen"
+msgstr "Aantal stappen"
 
 #: inc/core/View/Activity/Box/TotalCadence.php:29
-#, fuzzy
 msgid "Total cadence"
-msgstr "Totale afstand:"
+msgstr "Cadans"
 
 #: inc/core/View/Activity/Box/ElevationUpDown.php:35
 msgid "Elevation up/down"
@@ -2499,17 +2508,16 @@ msgstr "Hoogte omhoog-/laag"
 
 #: inc/core/View/Activity/Box/Pace.php:28
 #: inc/core/View/Activity/Box/Speed.php:37
-#, fuzzy
 msgid "Speed"
-msgstr "Als snelheid"
+msgstr "Snelheid"
 
 #: inc/core/View/Activity/Box/MaximalHeartRateInPercent.php:61
 msgid "This value exceeds your entered maximal heart rate."
-msgstr ""
+msgstr "Dit is hoger dan uw ingevoerde maximale hartslag."
 
 #: inc/core/View/Activity/Box/MaximalHeartRateInPercent.php:62
 msgid "Please adjust your maximal heart rate."
-msgstr ""
+msgstr "Pas uw maximale hartslag aan."
 
 #: inc/core/View/Activity/Dataview.php:379
 #: inc/core/Dataset/Keys/FitHrvAnalysis.php:44
@@ -2544,7 +2552,7 @@ msgstr "Douglas-Peucker"
 
 #: inc/core/View/Activity/Plot/Series/PaceCumulativeAverage.php:50
 msgid "Moving average"
-msgstr ""
+msgstr "voortschrijdend gemiddelde"
 
 #: inc/core/View/Activity/Plot/Series/HRVdifferencesWithoutAnomalies.php:56
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:304
@@ -2846,11 +2854,11 @@ msgstr "Tempo / hartslag / hoogte"
 
 #: inc/core/Parameter/Application/TemperatureUnit.php:35
 msgid "Celsius (°C)"
-msgstr ""
+msgstr "Celsius (°C)"
 
 #: inc/core/Parameter/Application/TemperatureUnit.php:36
 msgid "Fahrenheit (°F)"
-msgstr ""
+msgstr "Fahrenheit (°F)"
 
 #: inc/core/Parameter/Application/DataBrowserMode.php:33
 msgid "Week view"
@@ -2861,147 +2869,137 @@ msgid "Month view"
 msgstr "Maandweergave"
 
 #: inc/core/Data/RPE.php:21
-#, fuzzy
 msgid "No exertion at all"
-msgstr "Notitie voor hoogte gegevens"
+msgstr "geen gevoel van inspanning"
 
 #: inc/core/Data/RPE.php:22
 msgid "Extremely light"
-msgstr ""
+msgstr "zeer zeer licht"
 
 #: inc/core/Data/RPE.php:24
-#, fuzzy
 msgid "Very light"
-msgstr "Geheugen limiet"
+msgstr "Zeer licht"
 
 #: inc/core/Data/RPE.php:26
-#, fuzzy
 msgid "Light"
-msgstr "Gewicht"
+msgstr "Tamelijk licht"
 
 #: inc/core/Data/RPE.php:28
 msgid "Somewhat hard"
-msgstr ""
+msgstr "Iets zwaar"
 
 #: inc/core/Data/RPE.php:30
 msgid "Hard"
-msgstr ""
+msgstr "Zwaar"
 
 #: inc/core/Data/RPE.php:32
 msgid "Very Hard"
-msgstr ""
+msgstr "Erg zwaar"
 
 #: inc/core/Data/RPE.php:34
 msgid "Extremely hard"
-msgstr ""
+msgstr "Extreem hard"
 
 #: inc/core/Data/RPE.php:35
-#, fuzzy
 msgid "Maximal exertion"
-msgstr "Maximale hartslag"
+msgstr "Maximale inspanning"
 
 #: inc/core/Data/Weather/CardinalDirection.php:72
 #: inc/core/Data/Weather/CardinalDirection.php:76
-#, fuzzy
 msgid "N"
-msgstr "Nee"
+msgstr "N"
 
 #: inc/core/Data/Weather/CardinalDirection.php:77
 msgid "NE"
-msgstr ""
+msgstr "NO"
 
 #: inc/core/Data/Weather/CardinalDirection.php:78
 msgid "E"
-msgstr ""
+msgstr "O"
 
 #: inc/core/Data/Weather/CardinalDirection.php:79
 msgid "SE"
-msgstr ""
+msgstr "ZO"
 
 #: inc/core/Data/Weather/CardinalDirection.php:80
-#, fuzzy
 msgid "S"
-msgstr "Zo"
+msgstr "Z"
 
 #: inc/core/Data/Weather/CardinalDirection.php:81
 msgid "SW"
-msgstr ""
+msgstr "ZW"
 
 #: inc/core/Data/Weather/CardinalDirection.php:82
-#, fuzzy
 msgid "W"
-msgstr "Wo"
+msgstr "W"
 
 #: inc/core/Data/Weather/CardinalDirection.php:83
 msgid "NW"
-msgstr ""
+msgstr "NW"
 
 #: inc/core/Data/Weather/Sources.php:35
-#, fuzzy
 msgid "internal database"
-msgstr "Algemene gegevens"
+msgstr "Interne database"
 
 #: inc/core/Data/Weather/BeaufortScale.php:119
 msgid "Calm"
-msgstr ""
+msgstr "Stil"
 
 #: inc/core/Data/Weather/BeaufortScale.php:121
-#, fuzzy
 msgid "Light air"
-msgstr "Eenheid voor gewicht"
+msgstr "zeer zwak"
 
 #: inc/core/Data/Weather/BeaufortScale.php:123
 msgid "Light breeze"
-msgstr ""
+msgstr "zwak"
 
 #: inc/core/Data/Weather/BeaufortScale.php:125
 msgid "Gentle breeze"
-msgstr ""
+msgstr "vrij matig"
 
 #: inc/core/Data/Weather/BeaufortScale.php:127
 msgid "Moderate breeze"
-msgstr ""
+msgstr "matig"
 
 #: inc/core/Data/Weather/BeaufortScale.php:129
 msgid "Fresh breeze"
-msgstr ""
+msgstr "vrij krachtig"
 
 #: inc/core/Data/Weather/BeaufortScale.php:131
 msgid "Strong breeze"
-msgstr ""
+msgstr "krachtig"
 
 #: inc/core/Data/Weather/BeaufortScale.php:133
-#, fuzzy
 msgid "High wind"
-msgstr "Hoogste punt"
+msgstr "hard"
 
 #: inc/core/Data/Weather/BeaufortScale.php:135
 msgid "Fresh gale"
-msgstr ""
+msgstr "stormachtig"
 
 #: inc/core/Data/Weather/BeaufortScale.php:137
 msgid "Strong gale"
-msgstr ""
+msgstr "storm"
 
 #: inc/core/Data/Weather/BeaufortScale.php:139
 msgid "Whole gale"
-msgstr ""
+msgstr "zware storm"
 
 #: inc/core/Data/Weather/BeaufortScale.php:141
 msgid "Violent storm"
-msgstr ""
+msgstr "zeer zware storm"
 
 #: inc/core/Data/Weather/BeaufortScale.php:143
 msgid "Hurricane force"
-msgstr ""
+msgstr "orkaan"
 
 #: inc/core/Data/Weather/BeaufortScale.php:169
 msgid "Beaufort scale"
-msgstr ""
+msgstr "schaal van Beaufort"
 
 #: inc/core/Data/Weather/WindDegree.php:58
 msgid "Wind Degree"
-msgstr ""
+msgstr "windsnelheid"
 
 #: inc/core/Data/Weather/Condition.php:166
 msgid "sunny"
@@ -3029,19 +3027,19 @@ msgstr "sneeuw"
 
 #: inc/core/Data/Weather/Condition.php:178
 msgid "heavy rain"
-msgstr ""
+msgstr "zware regen"
 
 #: inc/core/Data/Weather/Condition.php:180
 msgid "foggy"
-msgstr ""
+msgstr "mistig"
 
 #: inc/core/Data/Weather/Condition.php:182
 msgid "thundery"
-msgstr ""
+msgstr "onweer"
 
 #: inc/core/Data/Weather/WindChillFactor.php:83
 msgid "Wind chill factor"
-msgstr ""
+msgstr "Wind chill factor"
 
 #: inc/core/Data/Stroketype.php:98 inc/core/Data/Stroketype.php:121
 msgid "Freestyle"
@@ -3096,11 +3094,13 @@ msgid ""
 "Rating of Perceived Exertion or Borg scale, a scale devised to show "
 "perceived exertion during exercise"
 msgstr ""
+"De Borg RPE-schaal is een 15-puntsschaal (6 tot 20) die gebruikt wordt om "
+"subjectieve ervaringen tijdens fysieke belasting te beoordelen"
 
 #: inc/core/Dataset/Keys/FitVO2maxEstimate.php:44
 #: inc/core/Dataset/Keys/FitVO2maxEstimate.php:53
 msgid "VO2max"
-msgstr ""
+msgstr "VO2max"
 
 #: inc/core/Dataset/Keys/FitVO2maxEstimate.php:44
 #: inc/core/Dataset/Keys/FitRecoveryTime.php:43
@@ -3117,32 +3117,35 @@ msgstr "(uit bestand)"
 
 #: inc/core/Dataset/Keys/FitVO2maxEstimate.php:62
 msgid "Garmin's newer devices have an integrated VO2max estimation."
-msgstr ""
+msgstr "Garmin's nieuwe apparaten hebben een geïntegreerde VO2max schatting."
 
 #: inc/core/Dataset/Keys/FitVO2maxEstimate.php:63
 msgid ""
 "This value refers to your estimated VO2max at the start of the activity."
 msgstr ""
+"Deze waarde heeft betrekking op uw geschatte VO2max bij de aanvang van de "
+"activiteit."
 
 #: inc/core/Dataset/Keys/CompleteEquipment.php:34
-#, fuzzy
 msgid "Complete equipment"
-msgstr "Kies uw uitrusting"
+msgstr "Volledige uitrusting"
 
 #: inc/core/Dataset/Keys/CompleteEquipment.php:52
 msgid "Your complete equipment is shown as icon with tooltip."
-msgstr ""
+msgstr "Uw complete uitrusting wordt getoond als icoon met tooltip."
 
 #: inc/core/Dataset/Keys/Route.php:80
 #, php-format
 msgid "Route names are automatically cut after %u characters."
-msgstr ""
+msgstr "Namen van routes worden automatisch afgebroken na %u karakters."
 
 #: inc/core/Dataset/Keys/SharedLink.php:63
 msgid ""
 "You can decide for each activity whether it is visible for everybody or not. "
 "If it is public a linked icon is shown."
 msgstr ""
+"U kunt voor elke activiteit beslissen of het zichtbaar is voor iedereen of "
+"niet. Als het openbaar is wordt dit met een link-icoon weergegeven."
 
 #: inc/core/Dataset/Keys/FitRecoveryTime.php:43
 #: inc/core/Dataset/Keys/FitRecoveryTime.php:52
@@ -3154,36 +3157,40 @@ msgid ""
 "Garmin calculates a suggested recovery time based on your heart rate "
 "variablitity right after the end of your activity."
 msgstr ""
+"Garmin berekent een gesuggereerde herstel tijd op basis van uw hartslag "
+"variabiliteit direct na het einde van uw activiteit."
 
 #: inc/core/Dataset/Keys/Temperature.php:53
 msgid "Temp."
-msgstr ""
+msgstr "Temp."
 
 #: inc/core/Dataset/Keys/WindChill.php:43
 msgid "Windchill"
-msgstr ""
+msgstr "Gevoelstemperatuur"
 
 #: inc/core/Dataset/Keys/WindChill.php:53
 msgid ""
 "Windchill is the perceived air temperature felt by the body on exposed skin "
 "due to the flow of air."
 msgstr ""
+"De gevoelstemperatuur geeft een maat voor het gevoel van kou "
+"(windkou/waterkou) of warmte (benauwende warmte of hitte) dat de mens "
+"ondervindt in koude lucht met veel wind of in warme lucht met zon, windstil "
+"weer en hoge luchtvochtigheid."
 
 #: inc/core/Dataset/Keys/Sport.php:53
 msgid "Sport type"
 msgstr "Sport type"
 
 #: inc/core/Dataset/Keys/Sport.php:71
-#, fuzzy
 msgid "The sports icon is shown."
-msgstr "De gebruikersnaam is onbekend."
+msgstr "Het sport icoon wordt getoond."
 
 #: inc/core/Dataset/Keys/VdotIcon.php:48
 msgid "VDOT icon"
 msgstr "VDOT pictogram"
 
 #: inc/core/Dataset/Keys/VdotIcon.php:67
-#, fuzzy
 msgid ""
 "Each VDOT value of an activity is marked with an arrow to show if the value "
 "is (much) higher than your current shape, equal to it or (much) lower:"
@@ -3199,13 +3206,15 @@ msgstr "Commentaar"
 #: inc/core/Dataset/Keys/Comment.php:56
 #, php-format
 msgid "Comments are automatically cut after %u characters."
-msgstr ""
+msgstr "Reacties worden automatisch afgebroken na %u tekens."
 
 #: inc/core/Dataset/Keys/VerticalOscillation.php:53
 msgid ""
 "Vertical oscillation is your vertical motion of your torso measured in "
 "centimeters"
 msgstr ""
+"Verticale oscillatie is de op-en-neerbeweging van uw bovenlichaam, gemeten "
+"in centimeters voor iedere stap"
 
 #: inc/core/Dataset/Keys/TrainingPartner.php:65
 #, php-format
@@ -3215,9 +3224,10 @@ msgstr ""
 #: inc/core/Dataset/Keys/Calories.php:53
 msgid "Calories are taken from your device or calculated by a simple formula."
 msgstr ""
+"Calorieën zijn afkomstig uit uw apparaat of berekend met een eenvoudige "
+"formule."
 
 #: inc/core/Dataset/Keys/Setting.php:52
-#, fuzzy
 msgid "Setting"
 msgstr "Instellingen"
 
@@ -3226,9 +3236,8 @@ msgid "Edit"
 msgstr "Bewerken"
 
 #: inc/core/Dataset/Keys/FitHrvAnalysis.php:53
-#, fuzzy
 msgid "HRV"
-msgstr "HF"
+msgstr "HV"
 
 #: inc/core/Dataset/Keys/FitHrvAnalysis.php:63
 msgid ""
@@ -3241,6 +3250,7 @@ msgstr ""
 #: inc/core/Dataset/Keys/VerticalRatio.php:53
 msgid "Vertical ratio is the ratio of vertical oscillation to stride length."
 msgstr ""
+"Verticale ratio is de verhouding tussen verticale oscillatie en staplengte."
 
 #: inc/core/Dataset/Keys/JdIntensity.php:44
 msgid "JD intensity"
@@ -5659,9 +5669,8 @@ msgid "Marathon"
 msgstr "Marathon"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:567
-#, fuzzy
 msgid "Half marathon"
-msgstr "Marathon"
+msgstr "Halve marathon"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:574
 msgid "This race result is linked to the following activity"
@@ -5669,15 +5678,15 @@ msgstr "Dit wedstrijdresultaat is gelinkt aan de volgende activiteit"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:581
 msgid "Your official placement."
-msgstr ""
+msgstr "Uw officiële klassering."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:585
 msgid "Participants"
-msgstr ""
+msgstr "Deelnemers"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:586
 msgid "Number of participants in every category"
-msgstr ""
+msgstr "Aantal deelnemers in elke categorie"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:595
 msgid "Delete this race result"
@@ -5688,6 +5697,8 @@ msgid ""
 "This will only delete the entry as competition. The activity itself will "
 "stay untouched."
 msgstr ""
+"Dit zal alleen de vermelding als wedstrijd verwijderen. De activiteit zelf "
+"zal onaangeroerd blijven."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:598
 msgid "Delete race result"
@@ -5698,9 +5709,8 @@ msgid "Add race result to activity"
 msgstr "Voeg wedstrijdresultaat toe aan activiteit"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:633
-#, fuzzy
 msgid "Invalid input."
-msgstr "Ongeldige aanvraag"
+msgstr "Ongeldige invoer."
 
 #: plugin/RunalyzePluginTool_MultiEditor/class.RunalyzePluginTool_MultiEditor.php:39
 msgid ""
@@ -7557,17 +7567,16 @@ msgstr ""
 "op welke plaats."
 
 msgid "By athletes for athletes"
-msgstr ""
+msgstr "Voor atleten door atleten"
 
-#, fuzzy
 msgid ""
 "Runalyze is created by athletes for athletes. Whenever you have comments, "
 "problems or wishes: Please contact our Runalyze team. It's near and dear to "
 "us."
 msgstr ""
-"Runalyze is gemaakt door hardlopers voor hardlopers. Wanneer u commentaar, "
-"tips, problemen of wensen heeft: neem contact op met ons Runalyze team. Het "
-"gaat ons aan het hart"
+"Runalyze is gemaakt door atleten voor atleten. Wanneer u commentaar, tips, "
+"problemen of wensen heeft: neem contact op met ons Runalyze team. Het gaat "
+"ons aan het hart."
 
 #, fuzzy
 msgid "Click here to update RUNALYZE"
@@ -7582,7 +7591,7 @@ msgid "No update needed"
 msgstr ""
 
 msgid "Blog"
-msgstr ""
+msgstr "Blog"
 
 msgid "Docs"
 msgstr ""
