@@ -89,4 +89,17 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase {
 		)));
 		$Calculator->calculate();
 	}
+
+	/**
+	 * @see https://github.com/Runalyze/Runalyze/issues/1899
+	 */
+	public function testThatLargeValuesAreIgnored() {
+		$Calculator = new Calculator(new Entity(array(
+			Entity::DATA => array(333, 337, 330, 338, 337, 336, 361, 321, 385, 5123)
+		)));
+		$Calculator->calculate();
+
+		$this->assertEquals(342, $Calculator->mean());
+		$this->assertEquals(0.1, $Calculator->percentageAnomalies());
+	}
 }

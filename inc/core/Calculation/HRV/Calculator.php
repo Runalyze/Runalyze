@@ -94,7 +94,7 @@ class Calculator {
 	 * Percentage of filtered r-r intervals
 	 * @var float in [0.0, 1.0]
 	 */
-	protected $percentageAnomalies = 0.0;
+	protected $PercentageAnomalies = 0.0;
 
 	/**
 	 * Calculator for hrv statistics
@@ -103,12 +103,13 @@ class Calculator {
 	 *
 	 * @param \Runalyze\Model\HRV\Entity $hrvObject
 	 * @param double|null $filterThreshold RR intervals are considered only if they differ from the preceding or following interval by less than XXX %
+	 * @param int $absoluteThreshold RR intervals above this threshold will be ignored (unless $filterThreshold is null)
 	 */
-	public function __construct(Entity $hrvObject, $filterThreshold = 0.75) {
+	public function __construct(Entity $hrvObject, $filterThreshold = 0.75, $absoluteThreshold = 2000) {
 		$this->Object = clone $hrvObject;
 
 		if (null !== $filterThreshold && $this->Object->num() > 0) {
-			$this->filterByThreshold($filterThreshold);
+			$this->filterByThreshold($filterThreshold, $absoluteThreshold);
 		}
 	}
 
@@ -122,8 +123,9 @@ class Calculator {
 	/**
 	 * Remove all rr intervals that are not within [1 - $filterThreshold, 1 + $filterThreshold]-times their preceding/following interval
 	 * @param double $filterThreshold
+	 * @param int $absoluteThreshold
 	 */
-	protected function filterByThreshold($filterThreshold) {
+	protected function filterByThreshold($filterThreshold, $absoluteThreshold) {
 		$oldData = array_values(array_filter($this->Object->data()));
 		$newData = [$oldData[0]];
 		$num = count($oldData);
@@ -133,14 +135,16 @@ class Calculator {
 			$ratioFollowing = ($i < $num - 1) ? $oldData[$i] / $oldData[$i+1] : 1;
 
 			if (
-				(max($ratioPreceding, 1/$ratioPreceding) <= 1 + $filterThreshold) ||
-				(max($ratioFollowing, 1/$ratioFollowing) <= 1 + $filterThreshold)
+				$oldData[$i] < $absoluteThreshold && (
+					(max($ratioPreceding, 1/$ratioPreceding) <= 1 + $filterThreshold) ||
+					(max($ratioFollowing, 1/$ratioFollowing) <= 1 + $filterThreshold)
+				)
 			) {
 				$newData[] = $oldData[$i];
 			}
 		}
 
-		$this->percentageAnomalies = ($num - count($newData))/$num;
+		$this->PercentageAnomalies = ($num - count($newData))/$num;
 
 		$this->Object->set(Entity::DATA, $newData);
 	}
@@ -205,7 +209,7 @@ class Calculator {
 	 * @return float in [0.0, 1.0]
 	 */
 	public function percentageAnomalies() {
-		return $this->percentageAnomalies;
+		return $this->PercentageAnomalies;
 	}
 
 	/**
