@@ -11,7 +11,7 @@ use Runalyze\Parameter\Application\EnergyUnit;
 
 /**
  * Energy
- * 
+ *
  * @author Hannes Christiansen <hannes@runalyze.de>
  * @author Michael Pohl <michael@runalyze.de>
  * @package Runalyze\Activity
@@ -19,15 +19,9 @@ use Runalyze\Parameter\Application\EnergyUnit;
 class Energy implements ValueInterface {
 	/**
 	 * Default kj multiplier
-	 * @var double 
+	 * @var double
 	*/
 	const KJ_MULTIPLIER = 4.1868;
-
-	/**
-	 * Default number of decimals
-	 * @var int
-	 */
-	public static $DefaultDecimals = 0;
 
 	/**
 	 * Energy [kcal]
@@ -45,11 +39,10 @@ class Energy implements ValueInterface {
 	 * Format
 	 * @param float $energy [kcal]
 	 * @param bool $withUnit [optional] with or without unit
-	 * @param int $decimals [optional] number of decimals
 	 * @return string
 	 */
-	public static function format($energy, $withUnit = true, $decimals = false) {
-		return (new self($energy))->string($withUnit, $decimals);
+	public static function format($energy, $withUnit = true) {
+		return (new self($energy))->string($withUnit);
 	}
 
 	/**
@@ -112,19 +105,18 @@ class Energy implements ValueInterface {
 	/**
 	 * Format energy as string
 	 * @param bool $withUnit [optional] show unit?
-	 * @param bool|int $decimals [optional] number of decimals
 	 * @return string
 	 */
-	public function string($withUnit = true, $decimals = false) {
+	public function string($withUnit = true) {
 		if ($this->PreferredUnit->isKJ()) {
-			return $this->stringKJ($withUnit, $decimals);
+			return $this->stringKJ($withUnit);
 		}
 
-		return $this->stringKcal($withUnit, $decimals);
+		return $this->stringKcal($withUnit);
 	}
 
 	/**
-	 * @return float [kcal]
+	 * @return int [kcal]
 	 */
 	public function value() {
 		return $this->Energy;
@@ -132,7 +124,7 @@ class Energy implements ValueInterface {
 
 	/**
 	 * Energy
-	 * @return float [kcal]
+	 * @return int [kcal]
 	 */
 	public function kcal() {
 		return $this->Energy;
@@ -140,15 +132,14 @@ class Energy implements ValueInterface {
 
 	/**
 	 * Energy in Kilojule
-	 * @return float [kj]
+	 * @return int [kj]
 	 */
 	public function kj() {
-		return round($this->Energy * self::KJ_MULTIPLIER, self::$DefaultDecimals);
+		return round($this->Energy * self::KJ_MULTIPLIER);
 	}
 
-
 	/**
-	 * @return float [mixed unit]
+	 * @return int [mixed unit]
 	 */
 	public function valueInPreferredUnit() {
 		if ($this->PreferredUnit->isKJ()) {
@@ -161,25 +152,18 @@ class Energy implements ValueInterface {
 	/**
 	 * String: as kcal
 	 * @param bool $withUnit [optional] show unit?
-	 * @param bool|int $decimals [optional] number of decimals
 	 * @return string with unit
 	 */
-	public function stringKcal($withUnit = true, $decimals = false) {
-		$decimals = ($decimals === false) ? self::$DefaultDecimals : $decimals;
-
-		return number_format($this->Energy, $decimals, '.', '').($withUnit ? '&nbsp;'.EnergyUnit::KCAL : '');
+	public function stringKcal($withUnit = true) {
+		return number_format($this->Energy, 0, '.', '').($withUnit ? '&nbsp;'.EnergyUnit::KCAL : '');
 	}
 
 	/**
 	 * String: as kj
 	 * @param bool $withUnit [optional] show unit?
-	 * @param bool|int $decimals [optional] number of decimals
 	 * @return string with unit
 	 */
-	public function stringKJ($withUnit = true, $decimals = false) {
-		$decimals = ($decimals === false) ? self::$DefaultDecimals : $decimals;
-
-		return number_format($this->kj(), $decimals, '.', '').($withUnit ? '&nbsp;'.EnergyUnit::KJ : '');
+	public function stringKJ($withUnit = true) {
+		return number_format($this->kj(), 0, '.', '').($withUnit ? '&nbsp;'.EnergyUnit::KJ : '');
 	}
-
 }

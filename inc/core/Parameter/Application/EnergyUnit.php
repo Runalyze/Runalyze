@@ -5,26 +5,27 @@
  */
 
 namespace Runalyze\Parameter\Application;
+use Runalyze\Activity\Energy;
 
 /**
  * Energy Unit
- * @author Hannes Christiansen 
+ * @author Hannes Christiansen
  * @author Michael Pohl
  * @package Runalyze\Parameter\Application
  */
 class EnergyUnit extends \Runalyze\Parameter\Select {
 	/**
-	 * KCAL	
+	 * Kilocalories
 	 * @var string
 	 */
 	const KCAL = 'kcal';
 
 	/**
-	 * Pound
+	 * Kilojoule
 	 * @var string
 	 */
-	const KJ = 'kj';
-        
+	const KJ = 'kJ';
+
 	/**
 	 * Construct
 	 * @param string $default
@@ -32,13 +33,14 @@ class EnergyUnit extends \Runalyze\Parameter\Select {
 	public function __construct($default = self::KCAL) {
 		parent::__construct($default, array(
 			'options'		=> array(
-				self::KCAL		=> __('Kilocalorie'),
-				self::KJ	=> __('Kilojule')
+				self::KCAL	=> __('Kilocalories'),
+				self::KJ	=> __('Kilojoules')
 			)
 		));
 	}
+
 	/**
-	 * Is kg?
+	 * Is kilocalories?
 	 * @return bool
 	 */
 	public function isKCAL() {
@@ -46,7 +48,7 @@ class EnergyUnit extends \Runalyze\Parameter\Select {
 	}
 
 	/**
-	 * Is pounds?
+	 * Is kilojoules?
 	 * @return bool
 	 */
 	public function isKJ() {
@@ -59,5 +61,16 @@ class EnergyUnit extends \Runalyze\Parameter\Select {
 	 */
 	public function unit() {
 		return $this->value();
+	}
+
+	/**
+	 * @return float
+	 */
+	public function factorFromKcalToUnit() {
+		if ($this->isKJ()) {
+			return Energy::KJ_MULTIPLIER;
+		}
+
+		return 1.0;
 	}
 }
