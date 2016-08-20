@@ -80,4 +80,13 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(0.0, $CalculatorWithJumpInData->percentageAnomalies());
 	}
 
+	/**
+	 * @see https://github.com/Runalyze/Runalyze/issues/1902
+	 */
+	public function testThatInvalidDataWithZerosDoesNotThrowErrors() {
+		$Calculator = new Calculator(new Entity(array(
+			Entity::DATA => explode('|', '56909|17|18340|8193|16|18897|14|49021|0|4|18897|14|49021|0|4|18897|14|49021|0|4|0|0|0|0|54921|18897|14|49021|0|4|18897|14|49021|0|4|18897|14|49021|0|4|18897|14|49021|0|4|18897|14|49021|0|4|18897|14|49021|0|4|18897|14|49021|0')
+		)));
+		$Calculator->calculate();
+	}
 }

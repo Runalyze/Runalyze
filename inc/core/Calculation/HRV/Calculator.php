@@ -10,7 +10,7 @@ use Runalyze\Model\HRV\Entity;
 
 /**
  * Calculate statistics for hrv data
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Calculation\HRV
  */
@@ -80,7 +80,7 @@ class Calculator {
 
 	/**
 	 * Proportion of successive differences larger than 20ms
-	 * @var float 
+	 * @var float
 	 */
 	protected $pNN20 = 0;
 
@@ -124,9 +124,9 @@ class Calculator {
 	 * @param double $filterThreshold
 	 */
 	protected function filterByThreshold($filterThreshold) {
-		$oldData = $this->Object->data();
+		$oldData = array_values(array_filter($this->Object->data()));
 		$newData = [$oldData[0]];
-		$num = $this->Object->num();
+		$num = count($oldData);
 
 		for ($i = 1; $i < $num; ++$i) {
 			$ratioPreceding = $oldData[$i] / $oldData[$i-1];
@@ -321,7 +321,7 @@ class Calculator {
 			if ($last) {
 				$x = abs($ms - $last);
 				$sum += ($x - $mean) * ($x - $mean);
-			} 
+			}
 
 			$last = $ms;
 		}
