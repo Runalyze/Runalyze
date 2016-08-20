@@ -65,7 +65,7 @@ class ParserKMLSingle extends ParserAbstractSingleXML {
 				$parts = explode(',', $line);
 				$num = count($parts);
 
-				if ($num == 3 || $num == 2) {
+				if (($num == 3 || $num == 2) && ($parts[0] != 0.0 || $parts[1] != 0.0)) {
 					if (empty($this->gps['km'])) {
 						$this->gps['km'][] = 0;
 					} elseif ($lineIndex > 0) {
