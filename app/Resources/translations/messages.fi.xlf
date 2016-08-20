@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="fi" datatype="plaintext" original="file.ext">
     <header>
@@ -21,9 +21,9 @@
         <source>Runalyze is an open-source project. We are working on it as much as we can in our free time.</source>
         <target>Runalyze is an open-source project. We are working on it as much as we can in our free time.</target>
       </trans-unit>
-      <trans-unit id="f67c1b23d5c1a452c90449e350cb4c76" resname="Official developers:">
+      <trans-unit id="f67c1b23d5c1a452c90449e350cb4c76" resname="Official developers:" approved="no">
         <source>Official developers:</source>
-        <target>Official developers:</target>
+        <target state="needs-translation">Viralliset kehittäjät:</target>
       </trans-unit>
       <trans-unit id="254f642527b45bc260048e30704edb39" resname="Configuration">
         <source>Configuration</source>
@@ -41,9 +41,9 @@
         <source>You can define your own sports or activity types and choose your own way of presentation and configure some parameters of our experimental calculations.</source>
         <target>You can define your own sports or activity types and choose your own way of presentation and configure some parameters of our experimental calculations.</target>
       </trans-unit>
-      <trans-unit id="db5eb84117d06047c97c9a0191b5fffe" resname="Support">
+      <trans-unit id="db5eb84117d06047c97c9a0191b5fffe" resname="Support" approved="no">
         <source>Support</source>
-        <target>Support</target>
+        <target state="needs-translation">Tuki</target>
       </trans-unit>
       <trans-unit id="f729a8a49c330339b2efa4b8e69618fd" resname="Please let us know if you have wishes or have encountered bugs.">
         <source>Please let us know if you have wishes or have encountered bugs.</source>
@@ -61,21 +61,21 @@
         <source>Forum</source>
         <target>Forum</target>
       </trans-unit>
-      <trans-unit id="5b6cf869265c13af8566f192b4ab3d2a" resname="Documentation">
+      <trans-unit id="5b6cf869265c13af8566f192b4ab3d2a" resname="Documentation" approved="no">
         <source>Documentation</source>
-        <target>Documentation</target>
+        <target state="needs-translation">Asiakirjat</target>
       </trans-unit>
-      <trans-unit id="6dd08874f83507e9c7b23f1a46b7fa7c" resname="Translation">
+      <trans-unit id="6dd08874f83507e9c7b23f1a46b7fa7c" resname="Translation" approved="no">
         <source>Translation</source>
-        <target>Translation</target>
+        <target state="needs-translation">Käännös</target>
       </trans-unit>
       <trans-unit id="0ab98b9aea9ad94538cd49800cf73c4e" resname="In a case of urgency you can contact us via email:">
         <source>In a case of urgency you can contact us via email:</source>
         <target>In a case of urgency you can contact us via email:</target>
       </trans-unit>
-      <trans-unit id="95bded74b875da4e05966bf6e0a59fba" resname="Browser Support">
+      <trans-unit id="95bded74b875da4e05966bf6e0a59fba" resname="Browser Support" approved="no">
         <source>Browser Support</source>
-        <target>Browser Support</target>
+        <target state="needs-translation">Selaimen tuki</target>
       </trans-unit>
       <trans-unit id="802d2a1dea70aa257f0b2849b7d961cd" resname="Runalyze is a modern application and therefore we want to use the most modern web techniques. We will not try to support any outdated browser versions.">
         <source>Runalyze is a modern application and therefore we want to use the most modern web techniques. We will not try to support any outdated browser versions.</source>
@@ -85,9 +85,9 @@
         <source>e.g. jQuery 2.x does not support IE8 (or less)</source>
         <target>e.g. jQuery 2.x does not support IE8 (or less)</target>
       </trans-unit>
-      <trans-unit id="948a2e3548aaf7f9941a3192fa607d51" resname="Credits">
+      <trans-unit id="948a2e3548aaf7f9941a3192fa607d51" resname="Credits" approved="no">
         <source>Credits</source>
-        <target>Credits</target>
+        <target state="needs-translation">Luottojen</target>
       </trans-unit>
       <trans-unit id="6013259776820a748d1b5bc3cc542e5d" resname="The plug-in was not unlocked successfully.">
         <source>The plug-in was not unlocked successfully.</source>
@@ -113,9 +113,9 @@
         <source>Browse computer</source>
         <target>Browse computer</target>
       </trans-unit>
-      <trans-unit id="ea4788705e6873b424c65e91c2846b19" resname="Cancel">
+      <trans-unit id="ea4788705e6873b424c65e91c2846b19" resname="Cancel" approved="yes">
         <source>Cancel</source>
-        <target>Cancel</target>
+        <target state="translated">Peruuta</target>
       </trans-unit>
       <trans-unit id="1aee350e4a181900ee9b082142f08c81" resname="Connected devices">
         <source>Connected devices</source>
@@ -125,9 +125,9 @@
         <source>Browse devices</source>
         <target>Browse devices</target>
       </trans-unit>
-      <trans-unit id="c03ca67dda321195d74c951097f240c6" resname="Devices">
+      <trans-unit id="c03ca67dda321195d74c951097f240c6" resname="Devices" approved="yes">
         <source>Devices</source>
-        <target>Devices</target>
+        <target state="translated">Laitteet</target>
       </trans-unit>
       <trans-unit id="6a9af29189122a543830fe6811601ab3" resname="Search for decives">
         <source>Search for decives</source>
@@ -149,25 +149,25 @@
         <source>No devices found</source>
         <target>No devices found</target>
       </trans-unit>
-      <trans-unit id="5d695cc28c6a7ea955162fbdd0ae42b9" resname="Found">
+      <trans-unit id="5d695cc28c6a7ea955162fbdd0ae42b9" resname="Found" approved="yes">
         <source>Found</source>
-        <target>Found</target>
+        <target state="translated">Löytyi</target>
       </trans-unit>
       <trans-unit id="eba1d5c32faf58c2f521f0fd2d380c07" resname="#{deviceCount} devices found">
         <source>#{deviceCount} devices found</source>
         <target>#{deviceCount} devices found</target>
       </trans-unit>
-      <trans-unit id="44749712dbec183e983dcd78a7736c41" resname="Date">
+      <trans-unit id="44749712dbec183e983dcd78a7736c41" resname="Date" approved="yes">
         <source>Date</source>
-        <target>Date</target>
+        <target state="translated">Päivämäärä</target>
       </trans-unit>
-      <trans-unit id="e02d2ae03de9d493df2b6b2d2813d302" resname="Duration">
+      <trans-unit id="e02d2ae03de9d493df2b6b2d2813d302" resname="Duration" approved="yes">
         <source>Duration</source>
-        <target>Duration</target>
+        <target state="translated">Kesto</target>
       </trans-unit>
-      <trans-unit id="ec53a8c4f07baed5d8825072c89799be" resname="Status">
+      <trans-unit id="ec53a8c4f07baed5d8825072c89799be" resname="Status" approved="yes">
         <source>Status</source>
-        <target>Status</target>
+        <target state="translated">Status</target>
       </trans-unit>
       <trans-unit id="47ed49958e2500d72e305f85ed316c91" resname="present">
         <source>present</source>
@@ -181,21 +181,21 @@
         <source>ignore</source>
         <target>ignore</target>
       </trans-unit>
-      <trans-unit id="72d6d7a1885885bb55a565fd1070581a" resname="Import">
+      <trans-unit id="72d6d7a1885885bb55a565fd1070581a" resname="Import" approved="yes">
         <source>Import</source>
-        <target>Import</target>
+        <target state="translated">Tuonti</target>
       </trans-unit>
       <trans-unit id="a181a603769c1f98ad927e7367c7aa51" resname="all">
         <source>all</source>
         <target>all</target>
       </trans-unit>
-      <trans-unit id="0323de4f66a1700e2173e9bcdce02715" resname="Logout">
+      <trans-unit id="0323de4f66a1700e2173e9bcdce02715" resname="Logout" approved="yes">
         <source>Logout</source>
-        <target>Logout</target>
+        <target state="translated">Kirjaudu ulos</target>
       </trans-unit>
-      <trans-unit id="8625e1de7be14c39b1d14dc03d822497" resname="Tools">
+      <trans-unit id="8625e1de7be14c39b1d14dc03d822497" resname="Tools" approved="yes">
         <source>Tools</source>
-        <target>Tools</target>
+        <target state="translated">Työkalut</target>
       </trans-unit>
       <trans-unit id="6a26f548831e6a8c26bfbbd9f6ec61e0" resname="Help">
         <source>Help</source>
@@ -205,9 +205,9 @@
         <source>Activate account</source>
         <target>Activate account</target>
       </trans-unit>
-      <trans-unit id="99dea78007133396a7b8ed70578ac6ae" resname="Login">
+      <trans-unit id="99dea78007133396a7b8ed70578ac6ae" resname="Login" approved="yes">
         <source>Login</source>
-        <target>Login</target>
+        <target state="translated">Kirjaudu sisään</target>
       </trans-unit>
       <trans-unit id="9119aa869e0c28cb8865f8108e6dccf1" resname="The activation did not work.">
         <source>The activation did not work.</source>
@@ -229,9 +229,9 @@
         <source>Do you really want to delete your account, %username%?</source>
         <target>Do you really want to delete your account, %username%?</target>
       </trans-unit>
-      <trans-unit id="e6e049c44a797fda2a175d07df838e49" resname="Delete account">
+      <trans-unit id="e6e049c44a797fda2a175d07df838e49" resname="Delete account" approved="yes">
         <source>Delete account</source>
-        <target>Delete account</target>
+        <target state="translated">Poista tili</target>
       </trans-unit>
       <trans-unit id="8f8d2783d036ec8dbe4b6b9c1d0fed0d" resname="Main page">
         <source>Main page</source>
