@@ -247,6 +247,23 @@ abstract class DataObject {
 	}
 
 	/**
+	 * Get first point of array
+	 * @param string $key
+	 * @return mixed
+	 */
+	final protected function getFirstNonEmptyArrayPoint($key) {
+		$array = $this->getArrayFor($key);
+		$num = count($array);
+		for ($i = 0; $i < $num; ++$i) {
+			if ($array[$i] != 0) {
+				return $array[$i];
+			}
+		}
+
+		return false;
+	}
+
+	/**
 	 * Get last point of array
 	 * @param string $key
 	 * @return mixed
