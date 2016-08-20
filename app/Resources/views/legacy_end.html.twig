@@ -1,2 +1,5 @@
+            {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+                <b></b><a href="{{ path('dashboard', {'_switch_user': '_exit'}) }}">Exit impersonation</a></b>
+            {% endif %}
 </body>
 </html>

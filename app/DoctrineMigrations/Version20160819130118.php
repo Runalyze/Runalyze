@@ -7,11 +7,10 @@ use Doctrine\DBAL\Schema\Schema;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-
 /**
- * Add session table to RUNALYZE & delete session column in account
+ * Add `allow_support` & `role` field to account table
  */
-class Version20160813113407 extends AbstractMigration implements ContainerAwareInterface
+class Version20160819130118 extends AbstractMigration implements ContainerAwareInterface
 {
     private $container;
 
@@ -26,21 +25,15 @@ class Version20160813113407 extends AbstractMigration implements ContainerAwareI
     public function up(Schema $schema)
     {
         $prefix = $this->container->getParameter('database_prefix');
-
-	    $this->addSql('CREATE TABLE `'.$prefix.'sessions` (`sess_id` VARBINARY(128) NOT NULL PRIMARY KEY, `sess_data` BLOB NOT NULL, `sess_time` INTEGER UNSIGNED NOT NULL, `sess_lifetime` MEDIUMINT NOT NULL) COLLATE utf8_bin, ENGINE = InnoDB');
-	    $this->addSql('ALTER TABLE `'.$prefix.'account` DROP session_id');
-
+        $this->addSql('ALTER TABLE `'.$prefix.'account` ADD `role` tinyint(3) unsigned NOT NULL DEFAULT 1, ADD `allow_support` tinyint(1) unsigned NOT NULL DEFAULT 0 AFTER `allow_mails`');
     }
-    
+
     /**
      * @param Schema $schema
      */
     public function down(Schema $schema)
     {
         $prefix = $this->container->getParameter('database_prefix');
-        
-	    $this->addSql('ALTER TABLE `'.$prefix.'account` ADD `session_id` varchar(64) NULL AFTER `salt`');
-        $this->addSql('ALTER TABLE `'.$prefix.'account` ADD UNIQUE(`session_id`)');
+        $this->addSql('ALTER TABLE `'.$prefix.'account` DROP `allow_support`, DROP `role`');
     }
-
 }

@@ -5,6 +5,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
+use Runalyze\Model\Account\UserRole;
 
 /**
  * Account
@@ -135,6 +136,20 @@ class Account implements AdvancedUserInterface, \Serializable
      * @ORM\Column(name="allow_mails", type="integer", nullable=false)
      */
     private $allowMails;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="allow_support", type="integer", nullable=false)
+     */
+    private $allowSupport;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="role", type="integer", nullable=false)
+     */
+    private $role;
 
 
     public function __construct()
@@ -520,6 +535,52 @@ class Account implements AdvancedUserInterface, \Serializable
     {
         return $this->allowMails;
     }
+    
+    /**
+     * Set allowSupport
+     *
+     * @param string allowSupport
+     * @return Account
+     */
+    public function setAllowSupport($allowSupport)
+    {
+        $this->allowSupport = $allowSupport;
+
+        return $this;
+    }
+
+    /**
+     * Get allowSupport
+     *
+     * @return string 
+     */
+    public function getAllowSupport()
+    {
+        return $this->allowSupport;
+    }
+    
+    /**
+     * Set role
+     *
+     * @param string allowSupport
+     * @return Account
+     */
+    public function setRole($role)
+    {
+        $this->role = $role;
+
+        return $this;
+    }
+
+    /**
+     * Get role
+     *
+     * @return string 
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
 
     public function eraseCredentials()
     {
@@ -528,7 +589,7 @@ class Account implements AdvancedUserInterface, \Serializable
 
     public function getRoles()
     {
-        return array('ROLE_USER');
+        return array(UserRole::getRoleName($this->role));
     }
 
 
