@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: mail@runalyze.de\n"
-"POT-Creation-Date: 2016-08-11 10:47+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-08-20 08:22+0200\n"
 "PO-Revision-Date: 2016-08-19 22:25+0000\n"
 "Last-Translator: Ivo Nobel <ivo.nobel@gmail.com>\n"
-"Language-Team: Dutch "
-"<http://translate.runalyze.com/projects/runalyze/runalyze/nl/>\n"
+"Language-Team: Dutch <http://translate.runalyze.com/projects/runalyze/"
+"runalyze/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -17,11 +17,11 @@ msgstr ""
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: src/CoreBundle/Controller/DefaultController.php:255
+#: src/CoreBundle/Controller/DefaultController.php:251
 msgid "Click on an activity to see more details."
 msgstr "Klik op een activiteit om meer details te bekijken."
 
-#: src/CoreBundle/Controller/DefaultController.php:256
+#: src/CoreBundle/Controller/DefaultController.php:252
 msgid "Public activities are marked: "
 msgstr "Openbare activiteiten zijn gemarkeerd: "
 
@@ -1427,8 +1427,8 @@ msgid ""
 msgstr ""
 "VDOTs worden geschat op basis van de verhouding van uw hartslag en tempo. U "
 "kunt afzonderlijke activiteiten uitsluiten van de berekening van uw vorm, en "
-"zou dit ook moeten doen als de hartslaggegevens niet betrouwbaar zijn ("
-"bijvoorbeeld veel stops, wandelen pauzes, ...)."
+"zou dit ook moeten doen als de hartslaggegevens niet betrouwbaar zijn "
+"(bijvoorbeeld veel stops, wandelen pauzes, ...)."
 
 #: inc/training/schemes/scheme.Training.php:404
 msgid "Cadence (Running)"
@@ -3173,10 +3173,10 @@ msgid ""
 "Windchill is the perceived air temperature felt by the body on exposed skin "
 "due to the flow of air."
 msgstr ""
-"De gevoelstemperatuur geeft een maat voor het gevoel van kou "
-"(windkou/waterkou) of warmte (benauwende warmte of hitte) dat de mens "
-"ondervindt in koude lucht met veel wind of in warme lucht met zon, windstil "
-"weer en hoge luchtvochtigheid."
+"De gevoelstemperatuur geeft een maat voor het gevoel van kou (windkou/"
+"waterkou) of warmte (benauwende warmte of hitte) dat de mens ondervindt in "
+"koude lucht met veel wind of in warme lucht met zon, windstil weer en hoge "
+"luchtvochtigheid."
 
 #: inc/core/Dataset/Keys/Sport.php:53
 msgid "Sport type"
@@ -4490,7 +4490,7 @@ msgstr ""
 "categorie hoort."
 
 #: inc/system/config/class.ConfigTabEquipment.php:39
-#: plugin/RunalyzePluginPanel_Equipment/window.equipment.table.php:14
+#: plugin/RunalyzePluginPanel_Equipment/window.equipment.table.php:13
 msgid "Your equipment"
 msgstr "Uw uitrusting"
 
@@ -5484,7 +5484,7 @@ msgstr "Trend over %s"
 msgid "Result overs %s"
 msgstr "Resultaat over %s"
 
-#: plugin/RunalyzePluginStat_Wettkampf/window.raceResult.php:16
+#: plugin/RunalyzePluginStat_Wettkampf/window.raceResult.php:15
 #, fuzzy
 msgid "Competition details"
 msgstr "Wedstrijd"
@@ -7440,361 +7440,323 @@ msgstr "Snelste activiteiten"
 msgid "Longest activities"
 msgstr "Langste activiteiten"
 
-msgid "The activation did not work."
-msgstr "Het activeren is mislukt."
+#~ msgid "The activation did not work."
+#~ msgstr "Het activeren is mislukt."
 
-msgid "Probably the link was wrong."
-msgstr "De link was waarschijnlijk verkeerd."
+#~ msgid "Probably the link was wrong."
+#~ msgstr "De link was waarschijnlijk verkeerd."
 
-msgid "Your account has been activated."
-msgstr "Uw account is geactiveerd."
+#~ msgid "Your account has been activated."
+#~ msgstr "Uw account is geactiveerd."
 
-msgid "You can now use Runalyze."
-msgstr "U kunt Runalyze nu gebruiken."
+#~ msgid "You can now use Runalyze."
+#~ msgstr "U kunt Runalyze nu gebruiken."
 
-msgid "Activate account"
-msgstr "Account activeren"
-
-#, fuzzy
-msgid "Do you really want to delete your account, %username%?"
-msgstr "Weet u zeker dat u uw account wil verwijderen?"
-
-msgid "Delete account"
-msgstr "Account verwijderen"
-
-msgid "The deletion did not work."
-msgstr "Er is een probleem opgetreden bij het verwijderen."
-
-msgid "Your account has been deleted."
-msgstr "Uw account is verwijderd."
-
-msgid "You cannot use Runalyze anymore."
-msgstr "U kunt Runalyze nu niet meer gebruiken."
-
-msgid "Main page"
-msgstr "Startpagina"
-
-msgid "The link is not valid anymore."
-msgstr "De link is niet meer geldig."
-
-msgid "The username is not known."
-msgstr "De gebruikersnaam is niet bekend."
-
-msgid "A link for changing your password will be sent via email."
-msgstr ""
-"De link om uw wachtwoord opnieuw in te stellen wordt naar het door uw "
-"ingevoerde e-mailadres gestuurd."
-
-msgid "Send link"
-msgstr "Link sturen"
+#~ msgid "Activate account"
+#~ msgstr "Account activeren"
 
 #, fuzzy
-msgid "Password reset"
-msgstr "Wachtwoord"
+#~ msgid "Do you really want to delete your account, %username%?"
+#~ msgstr "Weet u zeker dat u uw account wil verwijderen?"
+
+#~ msgid "Delete account"
+#~ msgstr "Account verwijderen"
+
+#~ msgid "The deletion did not work."
+#~ msgstr "Er is een probleem opgetreden bij het verwijderen."
+
+#~ msgid "Your account has been deleted."
+#~ msgstr "Uw account is verwijderd."
+
+#~ msgid "You cannot use Runalyze anymore."
+#~ msgstr "U kunt Runalyze nu niet meer gebruiken."
+
+#~ msgid "Main page"
+#~ msgstr "Startpagina"
+
+#~ msgid "The link is not valid anymore."
+#~ msgstr "De link is niet meer geldig."
+
+#~ msgid "The username is not known."
+#~ msgstr "De gebruikersnaam is niet bekend."
+
+#~ msgid "A link for changing your password will be sent via email."
+#~ msgstr ""
+#~ "De link om uw wachtwoord opnieuw in te stellen wordt naar het door uw "
+#~ "ingevoerde e-mailadres gestuurd."
+
+#~ msgid "Send link"
+#~ msgstr "Link sturen"
 
 #, fuzzy
-msgid "Unable to send link. Please contact the administrator."
-msgstr "Er ging iets mis. Neem contact op met de beheerder."
-
-msgid "New password again"
-msgstr "Nieuw wachtwoord opnieuw invoeren"
-
-msgid "Change password"
-msgstr "Wachtwoord wijzigen"
-
-msgid "The link has been sent and will be valid for 24 hours."
-msgstr "De link is verstuurd en is 24 uur geldig."
-
-msgid "Remember me"
-msgstr "Onthoud mijn gegevens"
-
-msgid ""
-"{1} Until now <strong>%count%</strong> athlete is registered and|]1,"
-"Inf[ Until now <strong>%count%</strong> athletes are registered and"
-msgstr ""
+#~ msgid "Password reset"
+#~ msgstr "Wachtwoord"
 
 #, fuzzy
-msgid ""
-"{1} has logged <strong>%distance%</strong>.|]1,Inf[ have logged <strong>"
-"%distance%</strong>."
-msgstr "Laatste wijziging op <strong>%s</strong> om <strong>%s</strong>."
+#~ msgid "Unable to send link. Please contact the administrator."
+#~ msgstr "Er ging iets mis. Neem contact op met de beheerder."
 
-msgid "Runalyze is under maintenance at the moment. No login possible."
-msgstr ""
-"Op dit moment wordt er onderhoud gepleegd aan Runalyze. Inloggen is niet "
-"mogelijk."
+#~ msgid "New password again"
+#~ msgstr "Nieuw wachtwoord opnieuw invoeren"
 
-msgid "Create a new account"
-msgstr "Maak een nieuwe account"
+#~ msgid "Change password"
+#~ msgstr "Wachtwoord wijzigen"
 
-msgid "Password again"
-msgstr "Voer wachtwoord nogmaals in"
+#~ msgid "The link has been sent and will be valid for 24 hours."
+#~ msgstr "De link is verstuurd en is 24 uur geldig."
 
-msgid ""
-"By clicking the register button you accept our %link_start%terms of use"
-"%link_end%."
-msgstr ""
-
-msgid "Register"
-msgstr "Registreren"
-
-msgid "Registrations are currently disabled."
-msgstr "Nieuwe registraties zijn momenteel uitgeschakeld."
-
-msgid ""
-"Thanks for your registration. You should receive an email within the next "
-"minutes with further instructions for activating your account."
-msgstr ""
-"Bedankt voor uw registratie. U zult binnen enkele minuten een email "
-"ontvangen met instructies om uw account te activeren."
-
-msgid ""
-"Runalyze analyzes your complete training, calculates your shape, computes "
-"prognoses and visualizes your training in plots - more detailed than any "
-"other sports diary."
-msgstr ""
-"Runalyze analyseert al uw trainingen, berekent uw vorm, berekent prognoses "
-"en visualiseert uw training in diagrammen - gedetailleerder dan andere "
-"loopdagboeken."
-
-msgid ""
-"Runalyze is completely configurable. You can decide by yourself which "
-"information of your training you want to record and which statistics are "
-"being displayed on which place."
-msgstr ""
-"Runalyze is volledig configureerbaar. Kunt u zelf aangeven welke "
-"trainingsinformatie u wilt opslaan en welke statistieken worden weergegeven "
-"op welke plaats."
-
-msgid "By athletes for athletes"
-msgstr "Voor atleten door atleten"
-
-msgid ""
-"Runalyze is created by athletes for athletes. Whenever you have comments, "
-"problems or wishes: Please contact our Runalyze team. It's near and dear to "
-"us."
-msgstr ""
-"Runalyze is gemaakt door atleten voor atleten. Wanneer u commentaar, tips, "
-"problemen of wensen heeft: neem contact op met ons Runalyze team. Het gaat "
-"ons aan het hart."
+#~ msgid "Remember me"
+#~ msgstr "Onthoud mijn gegevens"
 
 #, fuzzy
-msgid "Click here to update RUNALYZE"
-msgstr "RUNALYZE bijwerken"
+#~ msgid ""
+#~ "{1} has logged <strong>%distance%</strong>.|]1,Inf[ have logged <strong>"
+#~ "%distance%</strong>."
+#~ msgstr "Laatste wijziging op <strong>%s</strong> om <strong>%s</strong>."
 
-msgid ""
-"For large databases (several gigabytes) we recommend updating RUNALYZE via "
-"console."
-msgstr ""
+#~ msgid "Runalyze is under maintenance at the moment. No login possible."
+#~ msgstr ""
+#~ "Op dit moment wordt er onderhoud gepleegd aan Runalyze. Inloggen is niet "
+#~ "mogelijk."
 
-msgid "No update needed"
-msgstr ""
+#~ msgid "Create a new account"
+#~ msgstr "Maak een nieuwe account"
 
-msgid "Blog"
-msgstr "Blog"
+#~ msgid "Password again"
+#~ msgstr "Voer wachtwoord nogmaals in"
 
-msgid "Docs"
-msgstr ""
+#~ msgid "Register"
+#~ msgstr "Registreren"
 
-msgid "Forum"
-msgstr ""
+#~ msgid "Registrations are currently disabled."
+#~ msgstr "Nieuwe registraties zijn momenteel uitgeschakeld."
 
-#, fuzzy
-msgid "Start the installation of RUNALYZE"
-msgstr "Installatie starten"
+#~ msgid ""
+#~ "Thanks for your registration. You should receive an email within the next "
+#~ "minutes with further instructions for activating your account."
+#~ msgstr ""
+#~ "Bedankt voor uw registratie. U zult binnen enkele minuten een email "
+#~ "ontvangen met instructies om uw account te activeren."
 
-#, fuzzy
-msgid ""
-"RUNALYZE has been successfully installed. You can now start analyzing your "
-"training."
-msgstr "Runalyze is geïnstalleerd. Veel plezier ervan!"
+#~ msgid ""
+#~ "Runalyze analyzes your complete training, calculates your shape, computes "
+#~ "prognoses and visualizes your training in plots - more detailed than any "
+#~ "other sports diary."
+#~ msgstr ""
+#~ "Runalyze analyseert al uw trainingen, berekent uw vorm, berekent "
+#~ "prognoses en visualiseert uw training in diagrammen - gedetailleerder dan "
+#~ "andere loopdagboeken."
 
-#, fuzzy
-msgid "Create an account"
-msgstr "Maak een nieuwe account"
+#~ msgid ""
+#~ "Runalyze is completely configurable. You can decide by yourself which "
+#~ "information of your training you want to record and which statistics are "
+#~ "being displayed on which place."
+#~ msgstr ""
+#~ "Runalyze is volledig configureerbaar. Kunt u zelf aangeven welke "
+#~ "trainingsinformatie u wilt opslaan en welke statistieken worden "
+#~ "weergegeven op welke plaats."
 
-#, fuzzy
-msgid "Migrations have been executed"
-msgstr "Hoogte gegevens zijn gecorrigeerd."
+#~ msgid "By athletes for athletes"
+#~ msgstr "Voor atleten door atleten"
 
-msgid "Nothing more to do"
-msgstr ""
-
-#, fuzzy
-msgid "Go back to RUNALYZE"
-msgstr "RUNALYZE starten"
-
-#, fuzzy
-msgid "The plug-in was not unlocked successfully."
-msgstr "De plugin is geïnstalleerd."
-
-msgid "The administrator has to set the correct API-key."
-msgstr ""
-
-msgid "Connect"
-msgstr "Verbinden"
-
-msgid "Searching for devices"
-msgstr "Zoek naar apparaten"
-
-msgid "Transfer complete"
-msgstr "Overdracht compleet"
-
-msgid "Browse computer"
-msgstr "Bladeren op de computer"
-
-msgid "Cancel"
-msgstr "Annuleren"
-
-msgid "Connected devices"
-msgstr "Aangesloten apparaten"
-
-msgid "Browse devices"
-msgstr "Blader door apparaten"
-
-msgid "Devices"
-msgstr "Apparaten"
-
-msgid "Search for decives"
-msgstr "Zoek naar apparaten"
-
-msgid "Retrieving data from #{deviceName}, please wait ..."
-msgstr "Gegevens worden van #{deviceName} opgehaald, even geduld..."
-
-msgid "Please wait ..."
-msgstr "Een ogenblik geduld..."
-
-msgid "Found #{tracks} activities"
-msgstr "#{tracks} activiteiten gevonden"
-
-msgid "No devices found"
-msgstr "Geen apparaten gevonden"
-
-msgid "Found"
-msgstr "Gevonden"
-
-msgid "#{deviceCount} devices found"
-msgstr "#{deviceCount} apparaten gevonden"
-
-msgid "Status"
-msgstr "Status"
-
-msgid "present"
-msgstr "aanwezig"
-
-msgid "ignore"
-msgstr "negeren"
-
-msgid ""
-"Runalyze is completely configurable and more detailed than any other tool "
-"for analyzing your activities."
-msgstr ""
-"Runalyze is volledig configureerbaar en gedetailleerder dan enig andere "
-"applicatie voor het analyseren van uw activiteiten."
-
-msgid ""
-"Please look at our official website %s to get an overview of our features."
-msgstr ""
-"Kijk op onze officiële website %s om een overzicht van de functies te "
-"krijgen."
-
-msgid ""
-"If you want to stay up to date on changes and receive tips from time to "
-"time, visit our blog at %s."
-msgstr ""
-"Als u op de hoogte wilt blijven van wijzigingen en van tijd tot tijd tips "
-"wilt ontvangen, bezoek onze blog op %s."
-
-msgid ""
-"Runalyze is an open-source project. We are working on it as much as we can "
-"in our free time."
-msgstr ""
-"Runalyze is een open-source project. In onze vrije tijd werken we er zo veel "
-"mogelijk aan."
-
-msgid "Official developers:"
-msgstr "Officiële ontwikkelaars:"
-
-msgid ""
-"The main advantage of Runalyze is the ability to adapt everything to your "
-"personal needs and wishes."
-msgstr ""
-"Het belangrijkste voordeel van Runalyze is de mogelijkheid om alles aan te "
-"passen aan uw persoonlijke behoeften en wensen."
-
-msgid ""
-"Have a look at the configuration window to see what we're talking about."
-msgstr "Neem een kijkje in het configuratievenster om te zien wat we bedoelen."
-
-msgid ""
-"You can define your own sports or activity types and choose your own way of "
-"presentation and configure some parameters of our experimental calculations."
-msgstr ""
-"U kunt ook uw eigen sporten of typen activiteiten definiëren en de "
-"presentatie ervan. Tevens kunt u enkele parameters configureren van onze "
-"experimentele berekeningen."
-
-msgid "Support"
-msgstr "Ondersteuning"
-
-msgid "Please let us know if you have wishes or have encountered bugs."
-msgstr ""
-"Laat het ons weten als u wensen heeft of als u een bugs gevonden heeft."
-
-msgid ""
-"We give our best to make Runalyze as good as possible for you. - Therefore "
-"we would be interested in your suggestions for improvement."
-msgstr ""
-"Wij doen ons best om Runalyze voor u zo goed mogelijk te maken. Daarom zijn "
-"we geïnteresseerd in uw suggesties voor verbetering."
-
-msgid ""
-"In general most questions, problems and ideas are more appropriate to ask in "
-"the forum."
-msgstr ""
+#~ msgid ""
+#~ "Runalyze is created by athletes for athletes. Whenever you have comments, "
+#~ "problems or wishes: Please contact our Runalyze team. It's near and dear "
+#~ "to us."
+#~ msgstr ""
+#~ "Runalyze is gemaakt door atleten voor atleten. Wanneer u commentaar, "
+#~ "tips, problemen of wensen heeft: neem contact op met ons Runalyze team. "
+#~ "Het gaat ons aan het hart."
 
 #, fuzzy
-msgid "Documentation"
-msgstr "Duur"
+#~ msgid "Click here to update RUNALYZE"
+#~ msgstr "RUNALYZE bijwerken"
+
+#~ msgid "Blog"
+#~ msgstr "Blog"
 
 #, fuzzy
-msgid "Translation"
-msgstr "Verticale beweging"
+#~ msgid "Start the installation of RUNALYZE"
+#~ msgstr "Installatie starten"
 
 #, fuzzy
-msgid "In a case of urgency you can contact us via email:"
-msgstr "U kunt met ons contact opnemen via e-mail:"
-
-msgid "Browser Support"
-msgstr "Browserondersteuning"
-
-msgid ""
-"Runalyze is a modern application and therefore we want to use the most "
-"modern web techniques. We will not try to support any outdated browser "
-"versions."
-msgstr ""
-"Runalyze is een moderne applicatie, daarom willen we ook de moderne web "
-"technieken gebruiken. We zullen daarom niet altijd verouderde browserversies "
-"ondersteunen."
-
-msgid "e.g. jQuery 2.x does not support IE8 (or less)"
-msgstr "bijvoorbeeld jQuery 2.x biedt geen ondersteuning voor IE8 (of ouder)"
-
-msgid "Credits"
-msgstr "Credits"
+#~ msgid ""
+#~ "RUNALYZE has been successfully installed. You can now start analyzing "
+#~ "your training."
+#~ msgstr "Runalyze is geïnstalleerd. Veel plezier ervan!"
 
 #, fuzzy
-msgid "Maintenance"
-msgstr "Onderhoudsmodus"
+#~ msgid "Create an account"
+#~ msgstr "Maak een nieuwe account"
 
-msgid "RUNALYZE is temporarily down for maintenance"
-msgstr ""
+#, fuzzy
+#~ msgid "Migrations have been executed"
+#~ msgstr "Hoogte gegevens zijn gecorrigeerd."
 
-msgid "We will resume normal operations as soon as possible."
-msgstr ""
+#, fuzzy
+#~ msgid "Go back to RUNALYZE"
+#~ msgstr "RUNALYZE starten"
 
-msgid "Forgot your password?"
-msgstr "Wachtwoord vergeten?"
+#, fuzzy
+#~ msgid "The plug-in was not unlocked successfully."
+#~ msgstr "De plugin is geïnstalleerd."
+
+#~ msgid "Connect"
+#~ msgstr "Verbinden"
+
+#~ msgid "Searching for devices"
+#~ msgstr "Zoek naar apparaten"
+
+#~ msgid "Transfer complete"
+#~ msgstr "Overdracht compleet"
+
+#~ msgid "Browse computer"
+#~ msgstr "Bladeren op de computer"
+
+#~ msgid "Cancel"
+#~ msgstr "Annuleren"
+
+#~ msgid "Connected devices"
+#~ msgstr "Aangesloten apparaten"
+
+#~ msgid "Browse devices"
+#~ msgstr "Blader door apparaten"
+
+#~ msgid "Devices"
+#~ msgstr "Apparaten"
+
+#~ msgid "Search for decives"
+#~ msgstr "Zoek naar apparaten"
+
+#~ msgid "Retrieving data from #{deviceName}, please wait ..."
+#~ msgstr "Gegevens worden van #{deviceName} opgehaald, even geduld..."
+
+#~ msgid "Please wait ..."
+#~ msgstr "Een ogenblik geduld..."
+
+#~ msgid "Found #{tracks} activities"
+#~ msgstr "#{tracks} activiteiten gevonden"
+
+#~ msgid "No devices found"
+#~ msgstr "Geen apparaten gevonden"
+
+#~ msgid "Found"
+#~ msgstr "Gevonden"
+
+#~ msgid "#{deviceCount} devices found"
+#~ msgstr "#{deviceCount} apparaten gevonden"
+
+#~ msgid "Status"
+#~ msgstr "Status"
+
+#~ msgid "present"
+#~ msgstr "aanwezig"
+
+#~ msgid "ignore"
+#~ msgstr "negeren"
+
+#~ msgid ""
+#~ "Runalyze is completely configurable and more detailed than any other tool "
+#~ "for analyzing your activities."
+#~ msgstr ""
+#~ "Runalyze is volledig configureerbaar en gedetailleerder dan enig andere "
+#~ "applicatie voor het analyseren van uw activiteiten."
+
+#~ msgid ""
+#~ "Please look at our official website %s to get an overview of our features."
+#~ msgstr ""
+#~ "Kijk op onze officiële website %s om een overzicht van de functies te "
+#~ "krijgen."
+
+#~ msgid ""
+#~ "If you want to stay up to date on changes and receive tips from time to "
+#~ "time, visit our blog at %s."
+#~ msgstr ""
+#~ "Als u op de hoogte wilt blijven van wijzigingen en van tijd tot tijd tips "
+#~ "wilt ontvangen, bezoek onze blog op %s."
+
+#~ msgid ""
+#~ "Runalyze is an open-source project. We are working on it as much as we "
+#~ "can in our free time."
+#~ msgstr ""
+#~ "Runalyze is een open-source project. In onze vrije tijd werken we er zo "
+#~ "veel mogelijk aan."
+
+#~ msgid "Official developers:"
+#~ msgstr "Officiële ontwikkelaars:"
+
+#~ msgid ""
+#~ "The main advantage of Runalyze is the ability to adapt everything to your "
+#~ "personal needs and wishes."
+#~ msgstr ""
+#~ "Het belangrijkste voordeel van Runalyze is de mogelijkheid om alles aan "
+#~ "te passen aan uw persoonlijke behoeften en wensen."
+
+#~ msgid ""
+#~ "Have a look at the configuration window to see what we're talking about."
+#~ msgstr ""
+#~ "Neem een kijkje in het configuratievenster om te zien wat we bedoelen."
+
+#~ msgid ""
+#~ "You can define your own sports or activity types and choose your own way "
+#~ "of presentation and configure some parameters of our experimental "
+#~ "calculations."
+#~ msgstr ""
+#~ "U kunt ook uw eigen sporten of typen activiteiten definiëren en de "
+#~ "presentatie ervan. Tevens kunt u enkele parameters configureren van onze "
+#~ "experimentele berekeningen."
+
+#~ msgid "Support"
+#~ msgstr "Ondersteuning"
+
+#~ msgid "Please let us know if you have wishes or have encountered bugs."
+#~ msgstr ""
+#~ "Laat het ons weten als u wensen heeft of als u een bugs gevonden heeft."
+
+#~ msgid ""
+#~ "We give our best to make Runalyze as good as possible for you. - "
+#~ "Therefore we would be interested in your suggestions for improvement."
+#~ msgstr ""
+#~ "Wij doen ons best om Runalyze voor u zo goed mogelijk te maken. Daarom "
+#~ "zijn we geïnteresseerd in uw suggesties voor verbetering."
+
+#, fuzzy
+#~ msgid "Documentation"
+#~ msgstr "Duur"
+
+#, fuzzy
+#~ msgid "Translation"
+#~ msgstr "Verticale beweging"
+
+#, fuzzy
+#~ msgid "In a case of urgency you can contact us via email:"
+#~ msgstr "U kunt met ons contact opnemen via e-mail:"
+
+#~ msgid "Browser Support"
+#~ msgstr "Browserondersteuning"
+
+#~ msgid ""
+#~ "Runalyze is a modern application and therefore we want to use the most "
+#~ "modern web techniques. We will not try to support any outdated browser "
+#~ "versions."
+#~ msgstr ""
+#~ "Runalyze is een moderne applicatie, daarom willen we ook de moderne web "
+#~ "technieken gebruiken. We zullen daarom niet altijd verouderde "
+#~ "browserversies ondersteunen."
+
+#~ msgid "e.g. jQuery 2.x does not support IE8 (or less)"
+#~ msgstr ""
+#~ "bijvoorbeeld jQuery 2.x biedt geen ondersteuning voor IE8 (of ouder)"
+
+#~ msgid "Credits"
+#~ msgstr "Credits"
+
+#, fuzzy
+#~ msgid "Maintenance"
+#~ msgstr "Onderhoudsmodus"
+
+#~ msgid "Forgot your password?"
+#~ msgstr "Wachtwoord vergeten?"
 
 #~ msgid "avg. Heartrate"
 #~ msgstr "gem. hartslag"
