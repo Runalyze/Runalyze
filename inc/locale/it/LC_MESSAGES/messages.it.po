@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-08-20 08:22+0200\n"
-"PO-Revision-Date: 2016-08-16 20:37+0000\n"
-"Last-Translator: giuaig <gibiz@gmx.com>\n"
-"Language-Team: Italian <http://translate.runalyze.com/projects/runalyze/"
-"runalyze/it/>\n"
+"PO-Revision-Date: 2016-08-20 11:31+0000\n"
+"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
+"Language-Team: Italian "
+"<http://translate.runalyze.com/projects/runalyze/runalyze/it/>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -3362,6 +3362,7 @@ msgid "Exact daytime of the activity. (the date itself is always shown)"
 msgstr "Fascia oraria esatta dell'attività. (la data viene sempre mostrata)"
 
 #: inc/core/Dataset/Keys/FitPerformanceCondition.php:43
+#, fuzzy
 msgid "Performance Condition"
 msgstr "Performance Condition"
 
@@ -3735,6 +3736,7 @@ msgstr "Anno dopo anno"
 
 #: inc/class.FrontendSharedStatistics.php:124
 #: inc/system/schemes/set.emptyValues.php:50
+#, fuzzy
 msgid "Running"
 msgstr "Running"
 
@@ -3854,6 +3856,7 @@ msgid "Other"
 msgstr "Altro"
 
 #: inc/system/schemes/set.emptyValues.php:61
+#, fuzzy
 msgid "Jogging"
 msgstr "Jogging"
 
@@ -3862,6 +3865,7 @@ msgid "JOG"
 msgstr "JOG"
 
 #: inc/system/schemes/set.emptyValues.php:62
+#, fuzzy
 msgid "Fartlek"
 msgstr "Fartlek"
 
@@ -4078,6 +4082,7 @@ msgstr ""
 "plugin."
 
 #: inc/system/config/class.ConfigTabDataset.php:106
+#, fuzzy
 msgid "Display"
 msgstr "Display"
 
@@ -4096,7 +4101,7 @@ msgstr "Indica l'ordine in cui saranno mostrati i dati."
 
 #: inc/system/config/class.ConfigTabDataset.php:108
 msgid "CSS-Style"
-msgstr "CSS-Style"
+msgstr "CSS-stile"
 
 #: inc/system/config/class.ConfigTabDataset.php:108
 msgid "any CSS-Code"
@@ -4615,7 +4620,7 @@ msgstr "Nessuna attività è stata impostata per la modifica."
 #: inc/import/class.MultiEditor.php:57
 #: plugin/RunalyzePluginTool_MultiEditor/class.RunalyzePluginTool_MultiEditor.php:31
 msgid "Multi editor"
-msgstr "Multi editor"
+msgstr "Editor multi"
 
 #: inc/import/class.MultiImporterFormular.php:58
 msgid "Choose activities"
@@ -4832,19 +4837,20 @@ msgstr ""
 
 #: inc/class.AdminView.php:163
 msgid "Perl Path"
-msgstr "Perl Path"
+msgstr "Percorso di Perl"
 
 #: inc/class.AdminView.php:164
 msgid "TTBIN Converter Path"
-msgstr "TTBIN Converter Path"
+msgstr "TTBIN convertitore percorso"
 
 #: inc/class.AdminView.php:165
+#, fuzzy
 msgid "Geonames Username"
 msgstr "Geonames Username"
 
 #: inc/class.AdminView.php:166
 msgid "SQLITE Spatialite Extension"
-msgstr "SQLITE Spatialite Extension"
+msgstr "SQLITE estensione Spatialite"
 
 #: inc/class.AdminView.php:167
 msgid "Sender e-mail"
@@ -6104,7 +6110,7 @@ msgstr "Percorsi"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:141
 msgid "HRV data"
-msgstr "HRV data"
+msgstr "Dati HRV"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:143
 msgid "Equipment types"
