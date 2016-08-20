@@ -70,7 +70,7 @@ class TrainingObject extends DataObject {
 		$Location->setLocationName(Configuration::ActivityForm()->weatherLocation());
 
 		if ($this->hasPositionData()) {
-			$Location->setPosition( $this->getFirstArrayPoint('arr_lat'), $this->getFirstArrayPoint('arr_lon') );
+			$Location->setPosition($this->getFirstNonEmptyArrayPoint('arr_lat'), $this->getFirstNonEmptyArrayPoint('arr_lon'));
 		}
 
 		$Forecast = new \Runalyze\Service\WeatherForecast\Forecast($Location);
