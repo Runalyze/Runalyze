@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="da" datatype="plaintext" original="file.ext">
     <header>
@@ -25,9 +25,9 @@
         <source>Official developers:</source>
         <target>Official developers:</target>
       </trans-unit>
-      <trans-unit id="254f642527b45bc260048e30704edb39" resname="Configuration">
+      <trans-unit id="254f642527b45bc260048e30704edb39" resname="Configuration" approved="no">
         <source>Configuration</source>
-        <target>Configuration</target>
+        <target state="needs-translation">Konfiguration</target>
       </trans-unit>
       <trans-unit id="52b21a8e72b6862a2759f54cb415ddae" resname="The main advantage of Runalyze is the ability to adapt everything to your personal needs and wishes.">
         <source>The main advantage of Runalyze is the ability to adapt everything to your personal needs and wishes.</source>
@@ -157,13 +157,13 @@
         <source>#{deviceCount} devices found</source>
         <target>#{deviceCount} devices found</target>
       </trans-unit>
-      <trans-unit id="44749712dbec183e983dcd78a7736c41" resname="Date">
+      <trans-unit id="44749712dbec183e983dcd78a7736c41" resname="Date" approved="yes">
         <source>Date</source>
-        <target>Date</target>
+        <target state="translated">Dato</target>
       </trans-unit>
-      <trans-unit id="e02d2ae03de9d493df2b6b2d2813d302" resname="Duration">
+      <trans-unit id="e02d2ae03de9d493df2b6b2d2813d302" resname="Duration" approved="yes">
         <source>Duration</source>
-        <target>Duration</target>
+        <target state="translated">Varighed</target>
       </trans-unit>
       <trans-unit id="ec53a8c4f07baed5d8825072c89799be" resname="Status">
         <source>Status</source>
@@ -185,29 +185,29 @@
         <source>Import</source>
         <target>Import</target>
       </trans-unit>
-      <trans-unit id="a181a603769c1f98ad927e7367c7aa51" resname="all">
+      <trans-unit id="a181a603769c1f98ad927e7367c7aa51" resname="all" approved="yes">
         <source>all</source>
-        <target>all</target>
+        <target state="translated">alle</target>
       </trans-unit>
       <trans-unit id="0323de4f66a1700e2173e9bcdce02715" resname="Logout">
         <source>Logout</source>
         <target>Logout</target>
       </trans-unit>
-      <trans-unit id="8625e1de7be14c39b1d14dc03d822497" resname="Tools">
+      <trans-unit id="8625e1de7be14c39b1d14dc03d822497" resname="Tools" approved="yes">
         <source>Tools</source>
-        <target>Tools</target>
+        <target state="translated">Værktøj</target>
       </trans-unit>
-      <trans-unit id="6a26f548831e6a8c26bfbbd9f6ec61e0" resname="Help">
+      <trans-unit id="6a26f548831e6a8c26bfbbd9f6ec61e0" resname="Help" approved="yes">
         <source>Help</source>
-        <target>Help</target>
+        <target state="translated">Hjælp</target>
       </trans-unit>
       <trans-unit id="c0e1a495d527370f5ab1ea42061d9786" resname="Activate account">
         <source>Activate account</source>
         <target>Activate account</target>
       </trans-unit>
-      <trans-unit id="99dea78007133396a7b8ed70578ac6ae" resname="Login">
+      <trans-unit id="99dea78007133396a7b8ed70578ac6ae" resname="Login" approved="yes">
         <source>Login</source>
-        <target>Login</target>
+        <target state="translated">Login</target>
       </trans-unit>
       <trans-unit id="9119aa869e0c28cb8865f8108e6dccf1" resname="The activation did not work.">
         <source>The activation did not work.</source>
@@ -253,13 +253,13 @@
         <source>The link is not valid anymore.</source>
         <target>The link is not valid anymore.</target>
       </trans-unit>
-      <trans-unit id="f6039d44b29456b20f8f373155ae4973" resname="Username">
+      <trans-unit id="f6039d44b29456b20f8f373155ae4973" resname="Username" approved="yes">
         <source>Username</source>
-        <target>Username</target>
+        <target state="translated">Brugernavn</target>
       </trans-unit>
-      <trans-unit id="2c7971924957f02cf6730a876190ac48" resname="The username is not known.">
+      <trans-unit id="2c7971924957f02cf6730a876190ac48" resname="The username is not known." approved="yes">
         <source>The username is not known.</source>
-        <target>The username is not known.</target>
+        <target state="translated">Brugernavnet er ikke kendt.</target>
       </trans-unit>
       <trans-unit id="cc12a0eccefe68577fea1ce5caab9d32" resname="A link for changing your password will be sent via email.">
         <source>A link for changing your password will be sent via email.</source>
@@ -329,49 +329,49 @@
         <source>We will resume normal operations as soon as possible.</source>
         <target>We will resume normal operations as soon as possible.</target>
       </trans-unit>
-      <trans-unit id="fe1f636b83baeffd7a2ec09518a81ab8" resname="Create a new account">
+      <trans-unit id="fe1f636b83baeffd7a2ec09518a81ab8" resname="Create a new account" approved="yes">
         <source>Create a new account</source>
-        <target>Create a new account</target>
+        <target state="translated">Oprette en ny konto</target>
       </trans-unit>
-      <trans-unit id="49ee3087348e8d44e1feda1917443987" resname="Name">
+      <trans-unit id="49ee3087348e8d44e1feda1917443987" resname="Name" approved="yes">
         <source>Name</source>
-        <target>Name</target>
+        <target state="translated">Navn</target>
       </trans-unit>
-      <trans-unit id="ce8ae9da5b7cd6c3df2929543a9af92d" resname="Email">
+      <trans-unit id="ce8ae9da5b7cd6c3df2929543a9af92d" resname="Email" approved="yes">
         <source>Email</source>
-        <target>Email</target>
+        <target state="translated">E-mail</target>
       </trans-unit>
-      <trans-unit id="dc647eb65e6711e155375218212b3964" resname="Password">
+      <trans-unit id="dc647eb65e6711e155375218212b3964" resname="Password" approved="yes">
         <source>Password</source>
-        <target>Password</target>
+        <target state="translated">Adgangskode</target>
       </trans-unit>
-      <trans-unit id="7a00bc6e035926becbc69a92e10e033f" resname="Password again">
+      <trans-unit id="7a00bc6e035926becbc69a92e10e033f" resname="Password again" approved="yes">
         <source>Password again</source>
-        <target>Password again</target>
+        <target state="translated">Adgangskode igen</target>
       </trans-unit>
       <trans-unit id="98fb6a2a59cabcc0dbce38d3be5336d4" resname="By clicking the register button you accept our %link_start%terms of use%link_end%.">
         <source>By clicking the register button you accept our %link_start%terms of use%link_end%.</source>
         <target>By clicking the register button you accept our %link_start%terms of use%link_end%.</target>
       </trans-unit>
-      <trans-unit id="0ba7583639a274c434bbe6ef797115a4" resname="Register">
+      <trans-unit id="0ba7583639a274c434bbe6ef797115a4" resname="Register" approved="yes">
         <source>Register</source>
-        <target>Register</target>
+        <target state="translated">Registrer</target>
       </trans-unit>
-      <trans-unit id="fd7ff2f6e056eca4064453bad4052e47" resname="Thanks for your registration. You should receive an email within the next minutes with further instructions for activating your account.">
+      <trans-unit id="fd7ff2f6e056eca4064453bad4052e47" resname="Thanks for your registration. You should receive an email within the next minutes with further instructions for activating your account." approved="yes">
         <source>Thanks for your registration. You should receive an email within the next minutes with further instructions for activating your account.</source>
-        <target>Thanks for your registration. You should receive an email within the next minutes with further instructions for activating your account.</target>
+        <target state="translated">Tak for din registrering. Du vil modtage en e-mail inden for de næste minutter med yderligere instruktioner for at aktivere din konto.</target>
       </trans-unit>
-      <trans-unit id="366acd0072277d37a8bc6fa67209fc1d" resname="Registrations are currently disabled.">
+      <trans-unit id="366acd0072277d37a8bc6fa67209fc1d" resname="Registrations are currently disabled." approved="yes">
         <source>Registrations are currently disabled.</source>
-        <target>Registrations are currently disabled.</target>
+        <target state="translated">Registreringer er deaktiveret i øjeblikket.</target>
       </trans-unit>
       <trans-unit id="01a569ddc6cf67ddec2a683f0a5f5956" resname="Forgot your password?">
         <source>Forgot your password?</source>
         <target>Forgot your password?</target>
       </trans-unit>
-      <trans-unit id="34ad20ad8855db67abe969867908b754" resname="Help and Support">
+      <trans-unit id="34ad20ad8855db67abe969867908b754" resname="Help and Support" approved="yes">
         <source>Help and Support</source>
-        <target>Help and Support</target>
+        <target state="translated">Hjælp og Support</target>
       </trans-unit>
       <trans-unit id="be8df1f28c0abc85a0ed0c6860e5d832" resname="Blog">
         <source>Blog</source>
@@ -389,13 +389,13 @@
         <source>You are not logged in anymore.</source>
         <target>You are not logged in anymore.</target>
       </trans-unit>
-      <trans-unit id="878530871f0db73f004f5bd6591eeb76" resname="Remember me">
+      <trans-unit id="878530871f0db73f004f5bd6591eeb76" resname="Remember me" approved="yes">
         <source>Remember me</source>
-        <target>Remember me</target>
+        <target state="translated">Husk mig</target>
       </trans-unit>
-      <trans-unit id="009383a048f4570622a5d13a7d7a215a" resname="Runalyze is under maintenance at the moment. No login possible.">
+      <trans-unit id="009383a048f4570622a5d13a7d7a215a" resname="Runalyze is under maintenance at the moment. No login possible." approved="yes">
         <source>Runalyze is under maintenance at the moment. No login possible.</source>
-        <target>Runalyze is under maintenance at the moment. No login possible.</target>
+        <target state="translated">Runalyze er under vedligeholdelse i øjeblikket. Ingen login muligt.</target>
       </trans-unit>
       <trans-unit id="ab5a48c9a0cf54a09ce069569065bd47" resname="Click here to update RUNALYZE">
         <source>Click here to update RUNALYZE</source>
@@ -421,9 +421,9 @@
         <source>RUNALYZE has been successfully installed. You can now start analyzing your training.</source>
         <target>RUNALYZE has been successfully installed. You can now start analyzing your training.</target>
       </trans-unit>
-      <trans-unit id="2fdfd506efea08144c0794c32ca8250a" resname="Create an account">
+      <trans-unit id="2fdfd506efea08144c0794c32ca8250a" resname="Create an account" approved="yes">
         <source>Create an account</source>
-        <target>Create an account</target>
+        <target state="translated">Oprette en ny konto</target>
       </trans-unit>
       <trans-unit id="446a2f17e10ef064822f6719d6b45b36" resname="Migrations have been executed">
         <source>Migrations have been executed</source>
