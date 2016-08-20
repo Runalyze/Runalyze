@@ -118,6 +118,19 @@ class ImporterFiletypeKMLTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
+	 * Filename: "Route-only-with-zeros.kml"
+	 */
+	public function testStandardKMLrouteWithZeros() {
+		$this->object->parseFile('../tests/testfiles/kml/Route-only-with-zeros.kml');
+
+		$this->assertFalse($this->object->hasMultipleTrainings());
+		$this->assertFalse($this->object->failed());
+
+		$this->assertEquals(0.4, $this->object->object()->getDistance(), '', 0.05);
+		$this->assertEquals(11, count($this->object->object()->getArrayDistance()));
+	}
+
+	/**
 	 * Test: multi line route without altitude
 	 * Filename: "multi-line-without-altitude.kml"
 	 */
