@@ -1,33 +1,33 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="pt-PT" datatype="plaintext" original="file.ext">
     <header>
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
     <body>
-      <trans-unit id="db87c7c1df3b14400cf1ee12cfa94dfd" resname="Runalyze is completely configurable and more detailed than any other tool for analyzing your activities.">
+      <trans-unit id="db87c7c1df3b14400cf1ee12cfa94dfd" resname="Runalyze is completely configurable and more detailed than any other tool for analyzing your activities." approved="yes">
         <source>Runalyze is completely configurable and more detailed than any other tool for analyzing your activities.</source>
-        <target>Runalyze is completely configurable and more detailed than any other tool for analyzing your activities.</target>
+        <target state="translated">Runalyze é completamente configurável e mais detalhada do que qualquer outra ferramenta de análise de suas atividades.</target>
       </trans-unit>
-      <trans-unit id="6a07c40d5a06f10f9148318561f91fd1" resname="Please look at our official website %s to get an overview of our features.">
+      <trans-unit id="6a07c40d5a06f10f9148318561f91fd1" resname="Please look at our official website %s to get an overview of our features." approved="yes">
         <source>Please look at our official website %s to get an overview of our features.</source>
-        <target>Please look at our official website %s to get an overview of our features.</target>
+        <target state="translated">Por favor veja nosso site oficial %s para obter uma visão geral dos nossos recursos.</target>
       </trans-unit>
       <trans-unit id="9790f7d3ec77648f1719b71bab36a05f" resname="If you want to stay up to date on changes and receive tips from time to time, visit our blog at %s.">
         <source>If you want to stay up to date on changes and receive tips from time to time, visit our blog at %s.</source>
         <target>If you want to stay up to date on changes and receive tips from time to time, visit our blog at %s.</target>
       </trans-unit>
-      <trans-unit id="440d35dd3bc2ae838fb420a34e1263d2" resname="Runalyze is an open-source project. We are working on it as much as we can in our free time.">
+      <trans-unit id="440d35dd3bc2ae838fb420a34e1263d2" resname="Runalyze is an open-source project. We are working on it as much as we can in our free time." approved="no">
         <source>Runalyze is an open-source project. We are working on it as much as we can in our free time.</source>
-        <target>Runalyze is an open-source project. We are working on it as much as we can in our free time.</target>
+        <target state="needs-translation">Runalyze é um projeto open-source. Estamos trabalhando nele tanto quanto possível em nosso tempo livre.</target>
       </trans-unit>
-      <trans-unit id="f67c1b23d5c1a452c90449e350cb4c76" resname="Official developers:">
+      <trans-unit id="f67c1b23d5c1a452c90449e350cb4c76" resname="Official developers:" approved="yes">
         <source>Official developers:</source>
-        <target>Official developers:</target>
+        <target state="translated">Desenvolvedores oficiais:</target>
       </trans-unit>
-      <trans-unit id="254f642527b45bc260048e30704edb39" resname="Configuration">
+      <trans-unit id="254f642527b45bc260048e30704edb39" resname="Configuration" approved="yes">
         <source>Configuration</source>
-        <target>Configuration</target>
+        <target state="translated">Configuração</target>
       </trans-unit>
       <trans-unit id="52b21a8e72b6862a2759f54cb415ddae" resname="The main advantage of Runalyze is the ability to adapt everything to your personal needs and wishes.">
         <source>The main advantage of Runalyze is the ability to adapt everything to your personal needs and wishes.</source>
