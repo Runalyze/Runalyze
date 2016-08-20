@@ -1,57 +1,57 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="es" datatype="plaintext" original="file.ext">
     <header>
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
     <body>
-      <trans-unit id="db87c7c1df3b14400cf1ee12cfa94dfd" resname="Runalyze is completely configurable and more detailed than any other tool for analyzing your activities.">
+      <trans-unit id="db87c7c1df3b14400cf1ee12cfa94dfd" resname="Runalyze is completely configurable and more detailed than any other tool for analyzing your activities." approved="yes">
         <source>Runalyze is completely configurable and more detailed than any other tool for analyzing your activities.</source>
-        <target>Runalyze is completely configurable and more detailed than any other tool for analyzing your activities.</target>
+        <target state="translated">Runalyze es completamente configurable y más detallado que cualquier otra herramienta para analizar tus actividades.</target>
       </trans-unit>
-      <trans-unit id="6a07c40d5a06f10f9148318561f91fd1" resname="Please look at our official website %s to get an overview of our features.">
+      <trans-unit id="6a07c40d5a06f10f9148318561f91fd1" resname="Please look at our official website %s to get an overview of our features." approved="yes">
         <source>Please look at our official website %s to get an overview of our features.</source>
-        <target>Please look at our official website %s to get an overview of our features.</target>
+        <target state="translated">Por favor busque en nuestra web %s para ver un resumen de nuestras características.</target>
       </trans-unit>
-      <trans-unit id="9790f7d3ec77648f1719b71bab36a05f" resname="If you want to stay up to date on changes and receive tips from time to time, visit our blog at %s.">
+      <trans-unit id="9790f7d3ec77648f1719b71bab36a05f" resname="If you want to stay up to date on changes and receive tips from time to time, visit our blog at %s." approved="yes">
         <source>If you want to stay up to date on changes and receive tips from time to time, visit our blog at %s.</source>
-        <target>If you want to stay up to date on changes and receive tips from time to time, visit our blog at %s.</target>
+        <target state="translated">Si quiere permanecer al día de los cambios y recibir consejos de vez en cuando, visite nuestro blog en %s.</target>
       </trans-unit>
-      <trans-unit id="440d35dd3bc2ae838fb420a34e1263d2" resname="Runalyze is an open-source project. We are working on it as much as we can in our free time.">
+      <trans-unit id="440d35dd3bc2ae838fb420a34e1263d2" resname="Runalyze is an open-source project. We are working on it as much as we can in our free time." approved="yes">
         <source>Runalyze is an open-source project. We are working on it as much as we can in our free time.</source>
-        <target>Runalyze is an open-source project. We are working on it as much as we can in our free time.</target>
+        <target state="translated">Runalyze es un proyecto de código abierto. Trabajamos en ello tanto como podemos en nuestro tiempo libre.</target>
       </trans-unit>
-      <trans-unit id="f67c1b23d5c1a452c90449e350cb4c76" resname="Official developers:">
+      <trans-unit id="f67c1b23d5c1a452c90449e350cb4c76" resname="Official developers:" approved="yes">
         <source>Official developers:</source>
-        <target>Official developers:</target>
+        <target state="translated">Desarroladores oficiales:</target>
       </trans-unit>
-      <trans-unit id="254f642527b45bc260048e30704edb39" resname="Configuration">
+      <trans-unit id="254f642527b45bc260048e30704edb39" resname="Configuration" approved="no">
         <source>Configuration</source>
-        <target>Configuration</target>
+        <target state="needs-translation">Configuración</target>
       </trans-unit>
-      <trans-unit id="52b21a8e72b6862a2759f54cb415ddae" resname="The main advantage of Runalyze is the ability to adapt everything to your personal needs and wishes.">
+      <trans-unit id="52b21a8e72b6862a2759f54cb415ddae" resname="The main advantage of Runalyze is the ability to adapt everything to your personal needs and wishes." approved="yes">
         <source>The main advantage of Runalyze is the ability to adapt everything to your personal needs and wishes.</source>
-        <target>The main advantage of Runalyze is the ability to adapt everything to your personal needs and wishes.</target>
+        <target state="translated">La principal ventaja de Runalyze es la capacidad de adaptar todo a sus necesidades personales e ideas.</target>
       </trans-unit>
-      <trans-unit id="867b9932057f82b355bf51ebffeb6a34" resname="Have a look at the configuration window to see what we're talking about.">
+      <trans-unit id="867b9932057f82b355bf51ebffeb6a34" resname="Have a look at the configuration window to see what we're talking about." approved="yes">
         <source>Have a look at the configuration window to see what we're talking about.</source>
-        <target>Have a look at the configuration window to see what we're talking about.</target>
+        <target state="translated">Eche un vistazo a la ventana de configuración para ver a qué nos referimos.</target>
       </trans-unit>
-      <trans-unit id="a8598a8104d6367c88663ef032e0a234" resname="You can define your own sports or activity types and choose your own way of presentation and configure some parameters of our experimental calculations.">
+      <trans-unit id="a8598a8104d6367c88663ef032e0a234" resname="You can define your own sports or activity types and choose your own way of presentation and configure some parameters of our experimental calculations." approved="yes">
         <source>You can define your own sports or activity types and choose your own way of presentation and configure some parameters of our experimental calculations.</source>
-        <target>You can define your own sports or activity types and choose your own way of presentation and configure some parameters of our experimental calculations.</target>
+        <target state="translated">Puede definir su propio deporte o actividad, elegir su propia forma de representación y configurar algunos parámetros de nuestros cálculos experimentales.</target>
       </trans-unit>
-      <trans-unit id="db5eb84117d06047c97c9a0191b5fffe" resname="Support">
+      <trans-unit id="db5eb84117d06047c97c9a0191b5fffe" resname="Support" approved="yes">
         <source>Support</source>
-        <target>Support</target>
+        <target state="translated">Soporte</target>
       </trans-unit>
-      <trans-unit id="f729a8a49c330339b2efa4b8e69618fd" resname="Please let us know if you have wishes or have encountered bugs.">
+      <trans-unit id="f729a8a49c330339b2efa4b8e69618fd" resname="Please let us know if you have wishes or have encountered bugs." approved="yes">
         <source>Please let us know if you have wishes or have encountered bugs.</source>
-        <target>Please let us know if you have wishes or have encountered bugs.</target>
+        <target state="translated">Por favor háganos saber si tiene ideas o ha encontrado errores.</target>
       </trans-unit>
-      <trans-unit id="b920f092b826fd7644faccb7eb418285" resname="We give our best to make Runalyze as good as possible for you. - Therefore we would be interested in your suggestions for improvement.">
+      <trans-unit id="b920f092b826fd7644faccb7eb418285" resname="We give our best to make Runalyze as good as possible for you. - Therefore we would be interested in your suggestions for improvement." approved="yes">
         <source>We give our best to make Runalyze as good as possible for you. - Therefore we would be interested in your suggestions for improvement.</source>
-        <target>We give our best to make Runalyze as good as possible for you. - Therefore we would be interested in your suggestions for improvement.</target>
+        <target state="translated">Queremos hacer Runalyze tan bueno como sea posible. Haznos llegar tus deseos y sugerencias.</target>
       </trans-unit>
       <trans-unit id="8972a25e78349104f1c0b9de1e0c2996" resname="In general most questions, problems and ideas are more appropriate to ask in the forum.">
         <source>In general most questions, problems and ideas are more appropriate to ask in the forum.</source>
@@ -369,9 +369,9 @@
         <source>Forgot your password?</source>
         <target>Forgot your password?</target>
       </trans-unit>
-      <trans-unit id="34ad20ad8855db67abe969867908b754" resname="Help and Support">
+      <trans-unit id="34ad20ad8855db67abe969867908b754" resname="Help and Support" approved="no">
         <source>Help and Support</source>
-        <target>Help and Support</target>
+        <target state="needs-translation">Ayuda y soporte</target>
       </trans-unit>
       <trans-unit id="be8df1f28c0abc85a0ed0c6860e5d832" resname="Blog">
         <source>Blog</source>
@@ -385,17 +385,17 @@
         <source>{1} has logged &lt;strong&gt;%distance%&lt;/strong&gt;.|]1,Inf[ have logged &lt;strong&gt;%distance%&lt;/strong&gt;.</source>
         <target><![CDATA[{1} has logged <strong>%distance%</strong>.|]1,Inf[ have logged <strong>%distance%</strong>.]]></target>
       </trans-unit>
-      <trans-unit id="e3e2d5e0295c2f5cd85145baf3c2aeef" resname="You are not logged in anymore.">
+      <trans-unit id="e3e2d5e0295c2f5cd85145baf3c2aeef" resname="You are not logged in anymore." approved="no">
         <source>You are not logged in anymore.</source>
-        <target>You are not logged in anymore.</target>
+        <target state="needs-translation">Has cerrado la sesión.</target>
       </trans-unit>
-      <trans-unit id="878530871f0db73f004f5bd6591eeb76" resname="Remember me">
+      <trans-unit id="878530871f0db73f004f5bd6591eeb76" resname="Remember me" approved="no">
         <source>Remember me</source>
-        <target>Remember me</target>
+        <target state="needs-translation">Recordarme</target>
       </trans-unit>
-      <trans-unit id="009383a048f4570622a5d13a7d7a215a" resname="Runalyze is under maintenance at the moment. No login possible.">
+      <trans-unit id="009383a048f4570622a5d13a7d7a215a" resname="Runalyze is under maintenance at the moment. No login possible." approved="no">
         <source>Runalyze is under maintenance at the moment. No login possible.</source>
-        <target>Runalyze is under maintenance at the moment. No login possible.</target>
+        <target state="needs-translation">Runalyze se encuentra en labores de mantenimiento. No es posible acceder.</target>
       </trans-unit>
       <trans-unit id="ab5a48c9a0cf54a09ce069569065bd47" resname="Click here to update RUNALYZE">
         <source>Click here to update RUNALYZE</source>
@@ -421,9 +421,9 @@
         <source>RUNALYZE has been successfully installed. You can now start analyzing your training.</source>
         <target>RUNALYZE has been successfully installed. You can now start analyzing your training.</target>
       </trans-unit>
-      <trans-unit id="2fdfd506efea08144c0794c32ca8250a" resname="Create an account">
+      <trans-unit id="2fdfd506efea08144c0794c32ca8250a" resname="Create an account" approved="no">
         <source>Create an account</source>
-        <target>Create an account</target>
+        <target state="needs-translation">Crear nueva cuenta</target>
       </trans-unit>
       <trans-unit id="446a2f17e10ef064822f6719d6b45b36" resname="Migrations have been executed">
         <source>Migrations have been executed</source>
