@@ -48,7 +48,7 @@ class Linker {
 	 */
 	public function publicUrl() {
 		if ($this->Activity->isPublic()) {
-			return System::getFullDomain().SharedLinker::getUrlFor($this->Activity->id());
+			return System::getFullDomainWithProtocol().SharedLinker::getUrlFor($this->Activity->id());
 		}
 
 		return '';
