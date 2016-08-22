@@ -9,7 +9,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 /**
  * Drop column lastlogin
  */
-class Version20160822120408 extends AbstractMigration
+class Version20160822120408 extends AbstractMigration implements ContainerAwareInterface
 {
     private $container;
 

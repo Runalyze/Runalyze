@@ -19,14 +19,6 @@ document.getElementById("timezone").value = moment.tz.guess();
             </div>
 
             <div class="w100 block">
-                <label for="name">{% trans %}Name{% endtrans %}</label>
-                <span class="input-with-unit">
-                    <input type="text" name="name" value="{{ (data.name|default(''))|escape('html_attr') }}" id="name" class="middle-size">
-                    <label for="name" class="input-unit">&nbsp;<i class="fa fa-fw fa-user"></i></label>
-                </span>
-            </div>
-
-            <div class="w100 block">
                 <label for="email">{% trans %}Email{% endtrans %}</label>
                 <span class="input-with-unit">
                     <input type="text" name="email" value="{{ (data.email|default(''))|escape('html_attr') }}" id="email" class="middle-size{% if failure.email %} validation-failed{% endif %}">
