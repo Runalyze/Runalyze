@@ -51,9 +51,6 @@ class ConfigTabAccount extends ConfigTab {
 		$SinceField = new FormularInput('name', __('Registered since'), date('d.m.Y H:i', $Data['registerdate']));
 		$SinceField->setDisabled();
 
-		$LastLoginField = new FormularInput('name', __('Last Login'), date('d.m.Y H:i', $Data['lastlogin']));
-		$LastLoginField->setDisabled();
-		
 		$AllowSupportField = new FormularSelectBox('allow_support', __('Allow access for support'), $Data['allow_support']);
 		$AllowSupportField->addOption('1', __('Yes'));
 		$AllowSupportField->addOption('0', __('No'));
@@ -65,7 +62,6 @@ class ConfigTabAccount extends ConfigTab {
 		$Account->addField($LanguageField);
 		$Account->addField($TimeZoneField);
 		$Account->addField($SinceField);
-		$Account->addField($LastLoginField);
 		$Account->addField($AllowSupportField);
 		$Account->addInfo(__('Allow admins in case of support requests to have a look at your data.'));
 

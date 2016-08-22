@@ -110,7 +110,6 @@ class SessionAccountHandler {
 	 * Set session to database 
 	 */
 	private function setSessionToDatabase() {
-	    //lastlogin has to be updated by symfony
 	    //remove autologin hash from database
 	}
 

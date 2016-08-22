@@ -89,13 +89,6 @@ class Account implements AdvancedUserInterface, \Serializable
     private $lastaction;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="lastlogin", type="integer", nullable=false)
-     */
-    private $lastlogin;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="autologin_hash", type="string", length=32, nullable=false)
@@ -358,8 +351,12 @@ class Account implements AdvancedUserInterface, \Serializable
      * @param integer $lastaction
      * @return Account
      */
-    public function setLastaction($lastaction)
+    public function setLastAction($lastaction = null)
     {
+        if (is_null($lastaction)) {
+            $lastaction = (int)(new \DateTime())->getTimestamp();
+        }
+        
         $this->lastaction = $lastaction;
 
         return $this;
@@ -370,32 +367,9 @@ class Account implements AdvancedUserInterface, \Serializable
      *
      * @return integer 
      */
-    public function getLastaction()
+    public function getLastAction()
     {
         return $this->lastaction;
-    }
-
-    /**
-     * Set lastlogin
-     *
-     * @param integer $lastlogin
-     * @return Account
-     */
-    public function setLastlogin($lastlogin)
-    {
-        $this->lastlogin = $lastlogin;
-
-        return $this;
-    }
-
-    /**
-     * Get lastlogin
-     *
-     * @return integer 
-     */
-    public function getLastlogin()
-    {
-        return $this->lastlogin;
     }
 
     /**
