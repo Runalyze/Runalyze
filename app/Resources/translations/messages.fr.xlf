@@ -41,9 +41,9 @@
         <source>You can define your own sports or activity types and choose your own way of presentation and configure some parameters of our experimental calculations.</source>
         <target state="translated">Vous pouvez définir vos propres sports ou types d'activité, personnaliser la présentation et configurer certains paramètres expérimentaux de calcul.</target>
       </trans-unit>
-      <trans-unit id="db5eb84117d06047c97c9a0191b5fffe" resname="Support">
+      <trans-unit id="db5eb84117d06047c97c9a0191b5fffe" resname="Support" approved="yes">
         <source>Support</source>
-        <target>Support</target>
+        <target state="translated">Support</target>
       </trans-unit>
       <trans-unit id="f729a8a49c330339b2efa4b8e69618fd" resname="Please let us know if you have wishes or have encountered bugs." approved="yes">
         <source>Please let us know if you have wishes or have encountered bugs.</source>
@@ -57,17 +57,17 @@
         <source>In general most questions, problems and ideas are more appropriate to ask in the forum.</source>
         <target state="translated">Le forum est généralement plus adapté pour discuter de vos questions, problèmes et idées.</target>
       </trans-unit>
-      <trans-unit id="e6a7f8a2f42cc35979973da8dfb10720" resname="Forum">
+      <trans-unit id="e6a7f8a2f42cc35979973da8dfb10720" resname="Forum" approved="yes">
         <source>Forum</source>
-        <target>Forum</target>
+        <target state="translated">Forum</target>
       </trans-unit>
-      <trans-unit id="5b6cf869265c13af8566f192b4ab3d2a" resname="Documentation" approved="no">
+      <trans-unit id="5b6cf869265c13af8566f192b4ab3d2a" resname="Documentation" approved="yes">
         <source>Documentation</source>
-        <target state="needs-translation">documentation</target>
+        <target state="translated">Documentation</target>
       </trans-unit>
-      <trans-unit id="6dd08874f83507e9c7b23f1a46b7fa7c" resname="Translation">
+      <trans-unit id="6dd08874f83507e9c7b23f1a46b7fa7c" resname="Translation" approved="yes">
         <source>Translation</source>
-        <target>Translation</target>
+        <target state="translated">Traduction</target>
       </trans-unit>
       <trans-unit id="0ab98b9aea9ad94538cd49800cf73c4e" resname="In a case of urgency you can contact us via email:" approved="yes">
         <source>In a case of urgency you can contact us via email:</source>
@@ -89,21 +89,21 @@
         <source>Credits</source>
         <target state="translated">Crédits</target>
       </trans-unit>
-      <trans-unit id="6013259776820a748d1b5bc3cc542e5d" resname="The plug-in was not unlocked successfully." approved="no">
+      <trans-unit id="6013259776820a748d1b5bc3cc542e5d" resname="The plug-in was not unlocked successfully." approved="yes">
         <source>The plug-in was not unlocked successfully.</source>
-        <target state="needs-translation">The plug-in was not unlocked successfully.</target>
+        <target state="translated">Le plugin n'a pas été activé.</target>
       </trans-unit>
-      <trans-unit id="6d558cb627c6cbbef5d611d4a4c66c10" resname="The administrator has to set the correct API-key.">
+      <trans-unit id="6d558cb627c6cbbef5d611d4a4c66c10" resname="The administrator has to set the correct API-key." approved="yes">
         <source>The administrator has to set the correct API-key.</source>
-        <target>The administrator has to set the correct API-key.</target>
+        <target state="translated">L'administrateur n'a pas saisi une clé API correcte.</target>
       </trans-unit>
       <trans-unit id="49ab28040dfa07f53544970c6d147e1e" resname="Connect" approved="yes">
         <source>Connect</source>
         <target state="translated">connecter</target>
       </trans-unit>
-      <trans-unit id="aae025ecc68c1c8f446c631c1ce70dc3" resname="Searching for devices">
+      <trans-unit id="aae025ecc68c1c8f446c631c1ce70dc3" resname="Searching for devices" approved="yes">
         <source>Searching for devices</source>
-        <target>Searching for devices</target>
+        <target state="translated">Recherche des périphériques</target>
       </trans-unit>
       <trans-unit id="31b055f6b0dd1e000252dfe19caa5db5" resname="Transfer complete" approved="yes">
         <source>Transfer complete</source>
@@ -117,9 +117,9 @@
         <source>Cancel</source>
         <target state="translated">Annuler</target>
       </trans-unit>
-      <trans-unit id="1aee350e4a181900ee9b082142f08c81" resname="Connected devices" approved="no">
+      <trans-unit id="1aee350e4a181900ee9b082142f08c81" resname="Connected devices" approved="yes">
         <source>Connected devices</source>
-        <target state="needs-translation">Périphériques connectés</target>
+        <target state="translated">Appareils connectés</target>
       </trans-unit>
       <trans-unit id="50fcec50bde8d56ca9e2e9e0a4746d13" resname="Browse devices" approved="yes">
         <source>Browse devices</source>
@@ -129,9 +129,9 @@
         <source>Devices</source>
         <target state="translated">Dispositifs de</target>
       </trans-unit>
-      <trans-unit id="6a9af29189122a543830fe6811601ab3" resname="Search for decives">
+      <trans-unit id="6a9af29189122a543830fe6811601ab3" resname="Search for decives" approved="yes">
         <source>Search for decives</source>
-        <target>Search for decives</target>
+        <target state="translated">Recherche des appareils</target>
       </trans-unit>
       <trans-unit id="5b32b5d57b3fde808a2b618e55ef61fa" resname="Retrieving data from #{deviceName}, please wait ..." approved="yes">
         <source>Retrieving data from #{deviceName}, please wait ...</source>
@@ -157,9 +157,9 @@
         <source>#{deviceCount} devices found</source>
         <target state="translated">#{deviceCount}appareils trouvés</target>
       </trans-unit>
-      <trans-unit id="44749712dbec183e983dcd78a7736c41" resname="Date" approved="no">
+      <trans-unit id="44749712dbec183e983dcd78a7736c41" resname="Date" approved="yes">
         <source>Date</source>
-        <target state="needs-translation">date</target>
+        <target state="translated">Date</target>
       </trans-unit>
       <trans-unit id="e02d2ae03de9d493df2b6b2d2813d302" resname="Duration" approved="yes">
         <source>Duration</source>
@@ -237,9 +237,9 @@
         <source>Main page</source>
         <target state="translated">Page principale</target>
       </trans-unit>
-      <trans-unit id="8576f10ef8d39a741722d1f45942e634" resname="The deletion did not work." approved="no">
+      <trans-unit id="8576f10ef8d39a741722d1f45942e634" resname="The deletion did not work." approved="yes">
         <source>The deletion did not work.</source>
-        <target state="needs-translation">La suppression n'a pas fonctionné.</target>
+        <target state="translated">La suppression a échoué.</target>
       </trans-unit>
       <trans-unit id="cdac6e038678e7fde876bb5b4b06c116" resname="Your account has been deleted." approved="yes">
         <source>Your account has been deleted.</source>
@@ -269,13 +269,13 @@
         <source>Send link</source>
         <target state="translated">Envoyer le lien</target>
       </trans-unit>
-      <trans-unit id="28103f38886a385f79ff2fbfe9ffff5b" resname="Unable to send link. Please contact the administrator.">
+      <trans-unit id="28103f38886a385f79ff2fbfe9ffff5b" resname="Unable to send link. Please contact the administrator." approved="yes">
         <source>Unable to send link. Please contact the administrator.</source>
-        <target>Unable to send link. Please contact the administrator.</target>
+        <target state="translated">Impossible d'envoyer le lien. Veuillez contacter l'administrateur.</target>
       </trans-unit>
-      <trans-unit id="776d630537e30e4960bedd8b6f39ec72" resname="The link has been sent and will be valid for 24 hours.">
+      <trans-unit id="776d630537e30e4960bedd8b6f39ec72" resname="The link has been sent and will be valid for 24 hours." approved="yes">
         <source>The link has been sent and will be valid for 24 hours.</source>
-        <target>The link has been sent and will be valid for 24 hours.</target>
+        <target state="translated">Le lien a été envoyé et sera disponible dans 24 heures.</target>
       </trans-unit>
       <trans-unit id="3544848f820b9d94a3f3871a382cf138" resname="New password" approved="yes">
         <source>New password</source>
@@ -289,13 +289,13 @@
         <source>Change password</source>
         <target state="translated">Modifier le mot de passe</target>
       </trans-unit>
-      <trans-unit id="11f581ede2d21a7f2c9c8f6fdc9eb754" resname="Password reset">
+      <trans-unit id="11f581ede2d21a7f2c9c8f6fdc9eb754" resname="Password reset" approved="yes">
         <source>Password reset</source>
-        <target>Password reset</target>
+        <target state="translated">Mot de passe réinitialisé</target>
       </trans-unit>
-      <trans-unit id="9bc75a1c6d94e70e8b96d8d59115c0bf" resname="Your password has been changed.">
+      <trans-unit id="9bc75a1c6d94e70e8b96d8d59115c0bf" resname="Your password has been changed." approved="yes">
         <source>Your password has been changed.</source>
-        <target>Your password has been changed.</target>
+        <target state="translated">Votre mot de passe a été changé.</target>
       </trans-unit>
       <trans-unit id="c33e404a441c6ba9648f88af3c68a1ca" resname="Statistics" approved="yes">
         <source>Statistics</source>
@@ -309,9 +309,9 @@
         <source>Runalyze is completely configurable. You can decide by yourself which information of your training you want to record and which statistics are being displayed on which place.</source>
         <target state="translated">Runalyze est entièrement paramétrable. Vous choisissez vous-même quelles données d'entraînement vous souhaitez enregistrer et quelles statistiques doivent être affichées à quel endroit.</target>
       </trans-unit>
-      <trans-unit id="9cf52ba6a030f477b895be03900c5344" resname="By athletes for athletes">
+      <trans-unit id="9cf52ba6a030f477b895be03900c5344" resname="By athletes for athletes" approved="no">
         <source>By athletes for athletes</source>
-        <target>By athletes for athletes</target>
+        <target state="needs-translation">Par les sportifs, pour les sportifs</target>
       </trans-unit>
       <trans-unit id="2077caf87751f7f202e5e692cae9e623" resname="Runalyze is created by athletes for athletes. Whenever you have comments, problems or wishes: Please contact our Runalyze team. It's near and dear to us.">
         <source>Runalyze is created by athletes for athletes. Whenever you have comments, problems or wishes: Please contact our Runalyze team. It's near and dear to us.</source>
