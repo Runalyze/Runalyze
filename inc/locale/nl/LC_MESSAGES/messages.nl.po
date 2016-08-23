@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.com\n"
 "POT-Creation-Date: 2016-05-21 18:34+0200\n"
-"PO-Revision-Date: 2016-08-19 22:25+0000\n"
-"Last-Translator: Ivo Nobel <ivo.nobel@gmail.com>\n"
+"PO-Revision-Date: 2016-08-20 11:38+0000\n"
+"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
 "Language-Team: Dutch "
 "<http://translate.runalyze.com/projects/runalyze/runalyze-26/nl/>\n"
 "Language: nl\n"
@@ -2592,7 +2592,7 @@ msgstr "ponden"
 
 #: inc/core/Parameter/Application/WeightUnit.php:42
 msgid "stones"
-msgstr "stones"
+msgstr "stenen"
 
 #: inc/core/Parameter/Application/ActivityRoutePrivacy.php:39
 #: inc/core/Parameter/Application/ActivityRouteBreak.php:27
