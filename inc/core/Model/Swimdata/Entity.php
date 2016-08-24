@@ -199,7 +199,7 @@ class Entity extends Model\Entity implements Model\Loopable {
 	/*
 	 * Calculate Distance based on pool length
 	 */
-	public function fillDistanceArray(Trackdata\Entity &$trackdata) {
+	public function fillDistanceArray(Trackdata\Entity $trackdata) {
 		if ($this->poollength() && !$trackdata->has(Trackdata\Entity::DISTANCE) && $this->num() == $trackdata->num()) {
 			$length = $this->poollength();
 			$distance = range($length, $this->num()*$length, $length);
@@ -213,7 +213,7 @@ class Entity extends Model\Entity implements Model\Loopable {
 	 * Create swolf array
 	 * http://marathonswimmers.org/blog/2012/05/stroke-count-games/
 	 */
-	public function fillSwolfArray(Trackdata\Entity &$trackdata) {
+	public function fillSwolfArray(Trackdata\Entity $trackdata) {
 		if ($this->stroke() && $trackdata->has(Trackdata\Entity::TIME) && $this->num() == $trackdata->num()) {
 			$TrackLoop = new Trackdata\Loop($trackdata);
 			$Loop = new Loop($this);

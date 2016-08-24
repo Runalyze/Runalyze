@@ -15,18 +15,14 @@ use Runalyze\View\Activity;
  * @package Runalyze\DataObjects\Training\View\Section
  */
 class SectionSwimLaneRow extends TrainingViewSectionRowTabbedPlot {
-    
-    
 	/**
 	 * Constructor
 	 */
-	public function __construct(Activity\Context &$Context = null) {
+	public function __construct(Activity\Context $Context = null) {
 		parent::__construct($Context);
 
 	}
-        
 
-        
 	/**
 	 * Set content right
 	 */
@@ -37,18 +33,18 @@ class SectionSwimLaneRow extends TrainingViewSectionRowTabbedPlot {
             $this->addRightContent('swolf', __('SWOLF'), $Plot);
             $Plot = new Activity\Plot\Swolfcycles($this->Context);
             $this->addRightContent('swolfcycles', __('SWOLFcycles'), $Plot);
-		
+
         }
-        
+
 	/**
 	 * Set content
 	 */
 	protected function setContent() {
 		$this->withShadow = true;
 		$this->addTable();
- 
+
 	}
- 
+
 	/**
 	 * Add: table
 	 */
@@ -56,5 +52,4 @@ class SectionSwimLaneRow extends TrainingViewSectionRowTabbedPlot {
 		$Table = new TableSwimLane($this->Context);
 		$this->Code = $Table->getCode();
 	}
-
 }

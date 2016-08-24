@@ -30,7 +30,7 @@ class ParserXMLpolarMultiple extends ParserAbstractMultipleXML {
 	 * Parse single exercise
 	 * @param SimpleXMLElement $Exercise
 	 */
-	protected function parseSingleExercise(SimpleXMLElement &$Exercise) {
+	protected function parseSingleExercise(SimpleXMLElement $Exercise) {
 		$Parser = new ParserXMLpolarSingle('', $Exercise);
 		$Parser->parse();
 

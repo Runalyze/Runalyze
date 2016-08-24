@@ -42,7 +42,7 @@ class ParserXMLrunningAHEADMultiple extends ParserAbstractMultipleXML {
 	 * Insert Show
 	 * @param SimpleXMLElement $Equipment
 	 */
-	private function insertShoe(SimpleXMLElement &$Equipment) {
+	private function insertShoe(SimpleXMLElement $Equipment) {
 		if ((string)$Equipment->Name == '')
 			return;
 
@@ -131,7 +131,7 @@ class ParserXMLrunningAHEADMultiple extends ParserAbstractMultipleXML {
 	 * Parse single training
 	 * @param SimpleXMLElement $Event
 	 */
-	protected function parseSingleEvent(SimpleXMLElement &$Event) {
+	protected function parseSingleEvent(SimpleXMLElement $Event) {
 		$Parser = new ParserXMLrunningAHEADSingle('', $Event);
 		$Parser->parse();
 

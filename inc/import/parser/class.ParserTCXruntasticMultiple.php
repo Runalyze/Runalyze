@@ -14,7 +14,7 @@ class ParserTCXruntasticMultiple extends ParserTCXMultiple {
 	 * Parse single training
 	 * @param SimpleXMLElement $Training
 	 */
-	protected function parseSingleTraining(SimpleXMLElement &$Training) {
+	protected function parseSingleTraining(SimpleXMLElement $Training) {
 		$Parser = new ParserTCXruntasticSingle('', $Training);
 		$Parser->parse();
 

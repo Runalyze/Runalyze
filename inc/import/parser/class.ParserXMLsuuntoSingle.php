@@ -165,7 +165,7 @@ class ParserXMLsuuntoSingle extends ParserAbstractSingleXML {
 	 * Read elapsed time from last sample
 	 * @param SimpleXMLElement $Sample
 	 */
-	protected function readElapsedTimeFrom(SimpleXMLElement &$Sample) {
+	protected function readElapsedTimeFrom(SimpleXMLElement $Sample) {
 		if (!empty($Sample->UTC)) {
 			$FinishTimestamp = (int)$this->strtotime((string)$Sample->UTC);
 
@@ -178,7 +178,7 @@ class ParserXMLsuuntoSingle extends ParserAbstractSingleXML {
 	 * Parse sample
 	 * @param SimpleXMLElement $Sample
 	 */
-	protected function parseSample(SimpleXMLElement &$Sample) {
+	protected function parseSample(SimpleXMLElement $Sample) {
 		if (!empty($Sample->Events)) {
 			if (!empty($Sample->Events->Lap) && !empty($Sample->Events->Lap->Distance) && !empty($Sample->Events->Lap->Duration)) {
 				$this->TrainingObject->Splits()->addSplit(
@@ -218,7 +218,7 @@ class ParserXMLsuuntoSingle extends ParserAbstractSingleXML {
 	 * Set gps data from sample
 	 * @param SimpleXMLElement $Sample
 	 */
-	protected function setGPSfromSample(SimpleXMLElement &$Sample) {
+	protected function setGPSfromSample(SimpleXMLElement $Sample) {
 		if (!empty($Sample->HR)) {
 			$hr = round(60*(float)$Sample->HR);
 			$this->UseRR = false;

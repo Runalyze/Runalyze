@@ -5,7 +5,7 @@
  */
 /**
  * Section of the training view
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\DataObjects\Training\View\Section
  */
@@ -20,7 +20,7 @@ abstract class TrainingViewSectionTabbedPlot extends TrainingViewSection {
 	 * Append row
 	 * @param TrainingViewSectionRowTabbedPlot $Row
 	 */
-	final protected function appendRowTabbedPlot(TrainingViewSectionRowTabbedPlot &$Row) {
+	final protected function appendRowTabbedPlot(TrainingViewSectionRowTabbedPlot $Row) {
 		$this->Rows[] = $Row;
 		$this->Links += $Row->getLinks();
 

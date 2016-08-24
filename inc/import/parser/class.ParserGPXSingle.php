@@ -8,7 +8,7 @@ use Runalyze\Configuration;
 
 /**
  * Parser for GPX files
- * 
+ *
  * @see http://www.topografix.com/GPX/1/1/gpx.xsd
  *
  * @author Hannes Christiansen
@@ -149,7 +149,7 @@ class ParserGPXSingle extends ParserAbstractSingleXML {
 
 	/**
 	 * Parse trackpoint
-	 * @param SimpleXMLElement $Point 
+	 * @param SimpleXMLElement $Point
 	 */
 	protected function parseTrackpoint($Point) {
 		if ($this->lastTimestamp == 0) {
@@ -197,7 +197,7 @@ class ParserGPXSingle extends ParserAbstractSingleXML {
 					$this->gps['heartrate'][$num-1]
 				)
 			);
-			
+
 			$this->wasPaused = false;
 			$this->pauseDuration = 0;
 		}
@@ -208,7 +208,7 @@ class ParserGPXSingle extends ParserAbstractSingleXML {
 	 * @param SimpleXMLElement $Point
 	 * @return int
 	 */
-	private function getTimeOfPoint(SimpleXMLElement &$Point) {
+	private function getTimeOfPoint(SimpleXMLElement $Point) {
 		$newTimestamp        = $this->strtotime((string)$Point->time);
 		$timeToAdd           = $newTimestamp - $this->lastTimestamp;
 		$this->lastTimestamp = $newTimestamp;
@@ -218,14 +218,14 @@ class ParserGPXSingle extends ParserAbstractSingleXML {
 
 		return $timeToAdd;
 	}
-	
+
 	/**
   	 * Parse metadata
   	 */
   	public function parseMetadata($metadata) {
   	    if(isset($metadata->name))
   		$this->TrainingObject->setComment((string)$metadata->name);
-  	    
+
   	    if(isset($metadata->desc))
   		$this->TrainingObject->setNotes((string)$metadata->desc);
   	}
@@ -235,7 +235,7 @@ class ParserGPXSingle extends ParserAbstractSingleXML {
 	 * @param SimpleXMLElement $Point
 	 * @return int
 	 */
-	private function parseExtensionValues(SimpleXMLElement &$Point) {
+	private function parseExtensionValues(SimpleXMLElement $Point) {
 		$bpm  = 0;
 		$rpm  = 0;
 		$temp = 0;

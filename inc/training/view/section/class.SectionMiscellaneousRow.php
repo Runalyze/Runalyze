@@ -33,7 +33,7 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 	/**
 	 * Constructor
 	 */
-	public function __construct(Activity\Context &$Context = null, $showCadence = true) {
+	public function __construct(Activity\Context $Context = null, $showCadence = true) {
 		$this->showCadence = $showCadence;
 
 		parent::__construct($Context);
@@ -303,7 +303,7 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 
 		$this->NotesContent .= '</div>';
 	}
-	
+
 	/**
 	 * Add race result
 	 */
@@ -368,7 +368,7 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 		}
 	    }
 	}
-	
+
 	/**
 	 * Add: RPE
 	 */

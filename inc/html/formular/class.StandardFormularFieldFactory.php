@@ -20,7 +20,7 @@ class StandardFormularFieldFactory {
 	 * Constructor
 	 * @param DatabaseScheme $DatabaseScheme
 	 */
-	public function __construct(DatabaseScheme &$DatabaseScheme) {
+	public function __construct(DatabaseScheme $DatabaseScheme) {
 		$this->DatabaseScheme = $DatabaseScheme;
 	}
 
@@ -29,7 +29,7 @@ class StandardFormularFieldFactory {
 	 * @param FormularFieldset $Fieldset
 	 * @param array $fieldKeys
 	 */
-	public function addFields(FormularFieldset &$Fieldset, $fieldKeys) {
+	public function addFields(FormularFieldset $Fieldset, array $fieldKeys) {
 		foreach ($fieldKeys as $key)
 			if (!$this->DatabaseScheme->fieldIsHidden($key))
 				$Fieldset->addField( $this->getFieldFor($key) );
@@ -55,7 +55,7 @@ class StandardFormularFieldFactory {
 	 * @param array $FieldArray
 	 * @return object
 	 */
-	private function createFieldFor($Key, &$FieldArray) {
+	private function createFieldFor($Key, array &$FieldArray) {
 		$ClassName = $this->fieldClass($FieldArray);
 		$label = $FieldArray['formular']['label'];
 
@@ -71,7 +71,7 @@ class StandardFormularFieldFactory {
 	 * @param array $FieldArray
 	 * @return string
 	 */
-	private function fieldClass(&$FieldArray) {
+	private function fieldClass(array &$FieldArray) {
 		if (isset($FieldArray['formular']['class']))
 			if (class_exists($FieldArray['formular']['class']))
 				return $FieldArray['formular']['class'];
@@ -84,7 +84,7 @@ class StandardFormularFieldFactory {
 	 * @param FormularField $Field
 	 * @param array $FieldArray
 	 */
-	private function setAttributesToField(FormularField &$Field, &$FieldArray) {
+	private function setAttributesToField(FormularField $Field, array &$FieldArray) {
 		if (isset($FieldArray['formular']['parser'])) {
 			$Options = array();
 

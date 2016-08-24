@@ -98,7 +98,7 @@ class PluginConfiguration {
 	 * Insert value to database
 	 * @param PluginConfigurationValue $Value
 	 */
-	private function insertValueToDatabase(PluginConfigurationValue &$Value) {
+	private function insertValueToDatabase(PluginConfigurationValue $Value) {
 		DB::getInstance()->insert('plugin_conf',
 			array(
 				'pluginid',
@@ -147,7 +147,7 @@ class PluginConfiguration {
 	 * Add value
 	 * @param PluginConfigurationValue $Value
 	 */
-	final public function addValue(PluginConfigurationValue &$Value) {
+	final public function addValue(PluginConfigurationValue $Value) {
 		$this->Values[$Value->key()] = $Value;
 	}
 
