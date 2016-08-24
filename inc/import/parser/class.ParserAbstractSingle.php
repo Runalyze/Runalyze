@@ -309,11 +309,11 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 			Trackdata\Entity::POWER => $this->TrainingObject->getArrayPower()
 		]);
 
-		if (!$this->TrainingObject->hasArrayTime()) {
-			if ($Trackdata->isEmpty()) {
-				return;
-			}
+		if ($Trackdata->isEmpty()) {
+			return;
+		}
 
+		if (!$Trackdata->has(Trackdata\Entity::TIME)) {
 			$Trackdata->set(Trackdata\Entity::TIME, range(1, $Trackdata->num()));
 		}
 

@@ -646,4 +646,29 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertEquals(4961, $splits->totalTime());
 		}
 	}
+
+	/**
+	 * Filename: "One-second-jump-to-past.fit"
+	 * @see https://github.com/Runalyze/Runalyze/issues/1917
+	 */
+	public function testThatIrregularTimestampsAreIgnored() {
+		if (Shell::isPerlAvailable()) {
+			$this->object->parseFile('../tests/testfiles/fit/One-second-jump-to-past.fit');
+
+			$this->assertEquals('fenix2', $this->object->object()->getCreator());
+
+			$this->assertEquals(7115, $this->object->object()->getTimeInSeconds(), '', 10);
+			$this->assertEquals(7115, $this->object->object()->getArrayTimeLastPoint(), '', 10);
+			$this->assertEquals(42.801, $this->object->object()->getDistance(), '', 0.01);
+
+			$timedata = $this->object->object()->getArrayTime();
+			$num = count($timedata);
+
+			for ($i = 1; $i < $num; ++$i) {
+				if ($timedata[$i-1] >= $timedata[$i]) {
+					$this->fail(sprintf('Time data is not strictly increasing at [%u]: ..., %d, %d, ...', $i, $timedata[$i-1], $timedata[$i]));
+				}
+			}
+		}
+	}
 }
