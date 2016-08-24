@@ -58,7 +58,7 @@ abstract class TrainingViewSectionRow extends TrainingViewSectionRowAbstract {
 	/**
 	 * Constructor
 	 */
-	public function __construct(Context &$Context = null) {
+	public function __construct(Context $Context = null) {
 		parent::__construct($Context);
 
 		$this->setPlot();

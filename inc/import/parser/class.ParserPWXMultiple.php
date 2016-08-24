@@ -30,7 +30,7 @@ class ParserPWXMultiple extends ParserAbstractMultipleXML {
 	 * Parse single workout
 	 * @param SimpleXMLElement $Workout
 	 */
-	protected function parseSingleWorkout(SimpleXMLElement &$Workout) {
+	protected function parseSingleWorkout(SimpleXMLElement $Workout) {
 		$Parser = new ParserPWXSingle('', $Workout);
 		$Parser->parse();
 

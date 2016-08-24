@@ -47,7 +47,7 @@ class ImporterHRMandGPX {
 	 * @param ImporterFiletypeHRM $HRMImporter
 	 * @param ImporterFiletypeGPX $GPXImporter
 	 */
-	public function __construct(ImporterFiletypeHRM &$HRMImporter, ImporterFiletypeGPX &$GPXImporter) {
+	public function __construct(ImporterFiletypeHRM $HRMImporter, ImporterFiletypeGPX $GPXImporter) {
 		$this->TrainingObject = $HRMImporter->object();
 		$this->GPXImporter    = $GPXImporter;
 

@@ -13,7 +13,7 @@ use Plot;
 
 /**
  * Plot for: ground contact balance
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\View\Activity\Plot\Series
  */
@@ -75,7 +75,7 @@ class GroundContactBalance extends ActivityPointSeries {
 	 * @param int $yAxis
 	 * @param boolean $addAnnotations [optional]
 	 */
-	public function addTo(Plot &$Plot, $yAxis, $addAnnotations = true) {
+	public function addTo(Plot $Plot, $yAxis, $addAnnotations = true) {
 		parent::addTo($Plot, $yAxis, $addAnnotations);
 
 		$Plot->Options['hooks']['draw'] = array('RunalyzePlot.flotHookColorPoints('

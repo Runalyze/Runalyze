@@ -24,7 +24,7 @@ class MultiImporterFormular extends Formular {
 	/**
 	 * Construct a new formular
 	 * @param string $action
-	 * @param string $method 
+	 * @param string $method
 	 */
 	public function __construct($action = '', $method = 'post') {
 		parent::__construct($action, $method);
@@ -73,14 +73,14 @@ class MultiImporterFormular extends Formular {
 
 		foreach ($this->TrainingObjects as $i => $TrainingObject)
 			$activityIDs[] = $TrainingObject->getActivityId();
-		
+
 		$duplicates = (new DuplicateFinder(DB::getInstance(), SessionAccountHandler::getId()))->checkForDuplicates($activityIDs);
 		$countDuplicates = count(array_filter($duplicates));
-	
+
 		$String .= HTML::info( sprintf( __('Found %s activities.'), count($this->TrainingObjects)) );
 		if($countDuplicates > 0)
 			$String .= HTML::warning(_n('Found <strong>one</strong> duplicate activity.','Found duplicate activities.', $countDuplicates));
-		
+
 		$String .= '<table class="fullwidth multi-import-table zebra-style c" id="multi-import-table">';
 		$String .= '<thead><tr><th>'.__('Import').'</th><th>'.__('Date').'</th><th>'.__('Duration').'</th><th>'.__('Distance').'</th><th colspan="4"></th></tr></thead>';
 		$String .= '<tbody>';
@@ -107,7 +107,7 @@ class MultiImporterFormular extends Formular {
 	 * @param int $i
 	 * @return string
 	 */
-	private function getTableRowFor(TrainingObject &$TrainingObject, $i, $isDuplicate) {
+	private function getTableRowFor(TrainingObject $TrainingObject, $i, $isDuplicate) {
 		$TrainingObject->updateAfterParsing();
 
 		$Data  = urlencode(serialize($TrainingObject->getArray()));

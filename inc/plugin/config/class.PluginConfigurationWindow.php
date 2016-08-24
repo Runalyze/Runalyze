@@ -19,7 +19,7 @@ class PluginConfigurationWindow {
 	 * Constructor
 	 * @param Plugin $Plugin
 	 */
-	public function __construct(Plugin &$Plugin) {
+	public function __construct(Plugin $Plugin) {
 		$this->Plugin = $Plugin;
 
 		$this->handlePostData();

@@ -109,7 +109,7 @@ class Pace extends ActivitySeries {
 	 * @param int $yAxis
 	 * @param boolean $addAnnotations [optional]
 	 */
-	public function addTo(\Plot &$Plot, $yAxis, $addAnnotations = true)
+	public function addTo(\Plot $Plot, $yAxis, $addAnnotations = true)
 	{
 		if (empty($this->Data)) {
 			return;
@@ -126,7 +126,7 @@ class Pace extends ActivitySeries {
 	 * @param \Plot $Plot
 	 * @param int $yAxis
 	 */
-	protected function adjustAxis(\Plot &$Plot, $yAxis)
+	protected function adjustAxis(\Plot $Plot, $yAxis)
 	{
 		$Plot->setYAxisTimeFormat('%M:%S', $yAxis);
 

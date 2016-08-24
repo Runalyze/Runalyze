@@ -30,7 +30,7 @@ class ParserLOGBOOKMultiple extends ParserAbstractMultipleXML {
 	 * Parse single activity
 	 * @param SimpleXMLElement $Activity
 	 */
-	protected function parseActivity(SimpleXMLElement &$Activity) {
+	protected function parseActivity(SimpleXMLElement $Activity) {
 		$Parser = new ParserLOGBOOKSingle('', $Activity);
 		$Parser->parse();
 
