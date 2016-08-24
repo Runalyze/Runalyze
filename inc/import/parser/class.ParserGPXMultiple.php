@@ -5,7 +5,7 @@
  */
 /**
  * Parser for GPX with multiple trainings
- * 
+ *
  * @see http://www.topografix.com/GPX/1/1/gpx.xsd
  *
  * @author Hannes Christiansen
@@ -32,7 +32,7 @@ class ParserGPXMultiple extends ParserAbstractMultipleXML {
 	 * Parse single track
 	 * @param SimpleXMLElement $Track
 	 */
-	protected function parseSingleTrack(SimpleXMLElement &$Track) {
+	protected function parseSingleTrack(SimpleXMLElement $Track) {
 		$Parser = new ParserGPXSingle('', $Track);
 
 		if (isset($this->XML['creator']) && $this->XML['creator'] == 'GPS Master')
@@ -42,8 +42,8 @@ class ParserGPXMultiple extends ParserAbstractMultipleXML {
 			$Parser->setExtensionXML($this->XML->extensions);
 
 		if (isset($this->XML->metadata))
-		    $Parser->parseMetadata($this->XML->metadata);		
-		
+		    $Parser->parseMetadata($this->XML->metadata);
+
 		$Parser->parse();
 
 		if ($Parser->failed())

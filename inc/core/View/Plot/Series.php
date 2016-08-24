@@ -73,7 +73,7 @@ class Series {
 	/**
 	 * Manual average
 	 * A manual average can be used instead of calculating the average of the series
-	 * @var mixed 
+	 * @var mixed
 	 */
 	protected $ManualAverage = false;
 
@@ -121,7 +121,7 @@ class Series {
 	 * @param int $yAxis
 	 * @param boolean $addAnnotations [optional]
 	 */
-	public function addTo(Plot &$Plot, $yAxis, $addAnnotations = true) {
+	public function addTo(Plot $Plot, $yAxis, $addAnnotations = true) {
 		if (empty($this->Data)) {
 			return;
 		}

@@ -5,7 +5,7 @@
  */
 /**
  * Section of the training view
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\DataObjects\Training\View\Section
  */
@@ -27,7 +27,7 @@ abstract class TrainingViewSectionTabbed extends TrainingViewSection {
 	 * @param TrainingViewSectionRowAbstract $Row
 	 * @param string $Title
 	 */
-	final protected function appendRowTabbed(TrainingViewSectionRowAbstract &$Row, $Title) {
+	final protected function appendRowTabbed(TrainingViewSectionRowAbstract $Row, $Title) {
 		$this->RowsTabbed[] = $Row;
 		$this->RowsTabbedTitle[] = $Title;
 	}
@@ -63,7 +63,7 @@ abstract class TrainingViewSectionTabbed extends TrainingViewSection {
 
 		foreach ($this->RowsTabbedTitle as $i => $Title)
 			echo Ajax::change($Title, 'training-view-tabbed-'.$this->cssId(), 'training-view-tabbed-'.$this->cssId().'-'.$i);
- 
+
 		echo '</div>';
 	}
 

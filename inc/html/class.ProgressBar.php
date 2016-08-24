@@ -5,7 +5,7 @@
  */
 /**
  * Progressbar (with HTML/CSS)
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\HTML
  */
@@ -59,23 +59,23 @@ class ProgressBar {
 	protected $Tooltip = '';
 
 	/**
-	 * Additional classes 
+	 * Additional classes
 	 * @var string
 	 */
 	protected $AdditionalClasses = '';
 
 	/**
 	 * Goal line
-	 * @var int 
+	 * @var int
 	 */
 	protected $Goal = 0;
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * Arguments can be passed to construct a single progress bar.
 	 * Otherwise, addBar($Width, $Color) has to be used.
-	 * 
+	 *
 	 * @param int $Width [optional] in percent between 0 and 100
 	 * @param string $Color [optional]
 	 */
@@ -88,7 +88,7 @@ class ProgressBar {
 	 * Add existing bar
 	 * @param ProgressBarSingle $SingleBar
 	 */
-	public function addBar(ProgressBarSingle &$SingleBar) {
+	public function addBar(ProgressBarSingle $SingleBar) {
 		$this->Bars[] = $SingleBar;
 	}
 
@@ -198,7 +198,7 @@ class ProgressBar {
 	 * @param ProgressBarSingle $SingleBar
 	 * @return string
 	 */
-	protected function getDivForSingleBar(ProgressBarSingle &$SingleBar) {
+	protected function getDivForSingleBar(ProgressBarSingle $SingleBar) {
 		$Code  = '<div class="'.self::$DIV_BAR.' '.$SingleBar->getClasses().'" style="width:'.$SingleBar->getWidth().'%;">';
 		$Code .= '</div>';
 

@@ -13,7 +13,7 @@ use \Plot;
 
 /**
  * Plot for: Vertical oscillation
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\View\Activity\Plot\Series
  */
@@ -74,7 +74,7 @@ class VerticalOscillation extends ActivityPointSeries {
 	 * @param int $yAxis
 	 * @param boolean $addAnnotations [optional]
 	 */
-	public function addTo(Plot &$Plot, $yAxis, $addAnnotations = true) {
+	public function addTo(Plot $Plot, $yAxis, $addAnnotations = true) {
 		parent::addTo($Plot, $yAxis, $addAnnotations);
 
 		$this->setColorThresholdsBelow($Plot, 6.7, 8.3, 10.0, 11.8);

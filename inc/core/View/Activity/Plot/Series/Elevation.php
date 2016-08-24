@@ -13,7 +13,7 @@ use Runalyze\View\Activity;
 
 /**
  * Plot for: Elevation
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\View\Activity\Plot\Series
  */
@@ -53,7 +53,7 @@ class Elevation extends ActivitySeries {
 			$this->Data = array();
 			return;
 		}
-		
+
 		$Collector = new DataCollectorWithRoute($context->trackdata(), $key, $context->route());
 		$this->Data = $Collector->data();
 		$this->XAxis = $Collector->xAxis();
@@ -98,7 +98,7 @@ class Elevation extends ActivitySeries {
 	 * @param int $yAxis
 	 * @param boolean $addAnnotations [optional]
 	 */
-	public function addTo(\Plot &$Plot, $yAxis, $addAnnotations = true) {
+	public function addTo(\Plot $Plot, $yAxis, $addAnnotations = true) {
 		if (empty($this->Data)) {
 			return;
 		}

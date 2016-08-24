@@ -59,7 +59,7 @@ class ParserTCXMultiple extends ParserAbstractMultipleXML {
 	 * Parse single training
 	 * @param SimpleXMLElement $Training
 	 */
-	protected function parseSingleTraining(SimpleXMLElement &$Training) {
+	protected function parseSingleTraining(SimpleXMLElement $Training) {
 		$Parser = new ParserTCXSingle('', $Training);
 		$Parser->parse();
 
@@ -73,7 +73,7 @@ class ParserTCXMultiple extends ParserAbstractMultipleXML {
 	 * Parse single course
 	 * @param SimpleXMLElement $Course
 	 */
-	protected function parseSingleCourse(SimpleXMLElement &$Course) {
+	protected function parseSingleCourse(SimpleXMLElement $Course) {
 		$Parser = new ParserTCXSingleCourse('', $Course);
 		$Parser->parse();
 

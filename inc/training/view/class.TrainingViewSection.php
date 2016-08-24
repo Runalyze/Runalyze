@@ -8,7 +8,7 @@ use Runalyze\View\Activity\Context;
 
 /**
  * Section of the training view
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\DataObjects\Training\View\Section
  */
@@ -40,7 +40,7 @@ abstract class TrainingViewSection {
 	 * Constructor
 	 * @param \Runalyze\View\Activity\Context $Context
 	 */
-	public function __construct(Context &$Context = null) {
+	public function __construct(Context $Context = null) {
 		$this->Context = $Context;
 
 		if ($this->hasRequiredData())
@@ -70,7 +70,7 @@ abstract class TrainingViewSection {
 	 * Append row
 	 * @param TrainingViewSectionRowAbstract $Row
 	 */
-	final protected function appendRow(TrainingViewSectionRowAbstract &$Row) {
+	final protected function appendRow(TrainingViewSectionRowAbstract $Row) {
 		$this->Rows[] = $Row;
 	}
 

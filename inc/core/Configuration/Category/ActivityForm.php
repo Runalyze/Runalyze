@@ -220,7 +220,7 @@ class ActivityForm extends \Runalyze\Configuration\Category {
 			'label'		=> __('Calculate power'),
 			'tooltip'	=> __('Calculate power by speed and grade for cycling')
 		));
- 
+
 		$Fieldset->addHandle( $this->handle('DETECT_PAUSES'), array(
 			'label'		=> __('Detect pauses'),
 			'tooltip'	=> __('Detect pauses (distance not increasing) when importing training')
@@ -237,7 +237,7 @@ class ActivityForm extends \Runalyze\Configuration\Category {
 	 * Add handles for weather to fieldset
 	 * @param \Runalyze\Configuration\Fieldset $Fieldset
 	 */
-	private function addHandlesForWeatherTo(Fieldset &$Fieldset) {
+	private function addHandlesForWeatherTo(Fieldset $Fieldset) {
 		$Fieldset->addHandle( $this->handle('TRAINING_LOAD_WEATHER'), array(
 			'label'		=> __('Automatically load weather conditions'),
 			'tooltip'	=> __('via openweathermap.org')
@@ -254,7 +254,7 @@ class ActivityForm extends \Runalyze\Configuration\Category {
 	 * Add handles for elevation to fieldset
 	 * @param \Runalyze\Configuration\Fieldset $Fieldset
 	 */
-	private function addHandlesForElevationTo(Fieldset &$Fieldset) {
+	private function addHandlesForElevationTo(Fieldset $Fieldset) {
 		$Fieldset->addHandle( $this->handle('TRAINING_DO_ELEVATION'), array(
 			'label'		=> __('Automatically correct elevation data'),
 			'tooltip'	=> __('Instead of using gps-elevation a correction via external services is possible.')
@@ -265,7 +265,7 @@ class ActivityForm extends \Runalyze\Configuration\Category {
 	 * Add handles for sorting to fieldset
 	 * @param \Runalyze\Configuration\Fieldset $Fieldset
 	 */
-	private function addHandlesForSortingTo(Fieldset &$Fieldset) {
+	private function addHandlesForSortingTo(Fieldset $Fieldset) {
 		$Fieldset->addHandle( $this->handle('TRAINING_SORT_SPORTS'), array(
 			'label'		=> __('Sort: sport types')
 		));

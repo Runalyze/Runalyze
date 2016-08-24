@@ -16,7 +16,7 @@ use Runalyze\Activity\Distance;
 class FrontendSharedStatistics {
 	/**
 	 * Parent FrontendSharedList
-	 * @var FrontendSharedList 
+	 * @var FrontendSharedList
 	 */
 	protected $FrontendSharedList = null;
 
@@ -30,7 +30,7 @@ class FrontendSharedStatistics {
 	 * Construct statistics
 	 * @param FrontendSharedList $Parent
 	 */
-	public function __construct(FrontendSharedList &$Parent) {
+	public function __construct(FrontendSharedList $Parent) {
 		$this->FrontendSharedList = $Parent;
 	}
 

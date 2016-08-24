@@ -13,7 +13,7 @@ use \Plot;
 
 /**
  * Plot for: Vertical ratio
- * 
+ *
  * @author Hannes Christiansen
  * @author Michael Pohl
  * @package Runalyze\View\Activity\Plot\Series
@@ -75,7 +75,7 @@ class VerticalRatio extends ActivityPointSeries {
 	 * @param int $yAxis
 	 * @param boolean $addAnnotations [optional]
 	 */
-	public function addTo(Plot &$Plot, $yAxis, $addAnnotations = true) {
+	public function addTo(Plot $Plot, $yAxis, $addAnnotations = true) {
 		parent::addTo($Plot, $yAxis, $addAnnotations);
 
 		$this->setColorThresholdsBelow($Plot, 6.1, 7.4, 8.6, 10.1);

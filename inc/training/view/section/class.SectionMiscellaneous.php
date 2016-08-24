@@ -8,7 +8,7 @@ use Runalyze\View\Activity\Context;
 
 /**
  * Section: Miscellaneous
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\DataObjects\Training\View\Section
  */
@@ -21,7 +21,7 @@ class SectionMiscellaneous extends TrainingViewSectionTabbedPlot {
 	/**
 	 * Constructor
 	 */
-	public function __construct(Context &$Context = null, $showCadence = true) {
+	public function __construct(Context $Context = null, $showCadence = true) {
 		$this->showCadence = $showCadence;
 
 		parent::__construct($Context);

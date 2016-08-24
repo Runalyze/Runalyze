@@ -132,7 +132,7 @@ abstract class Plugin {
 
 	/**
 	 * Init configuration
-	 * 
+	 *
 	 * May be used in subclass to set own configuration.
 	 * Make sure to add all values to the configuration object
 	 * before using <code>$this->setConfiguration($Configuration);</code>.
@@ -147,13 +147,13 @@ abstract class Plugin {
 	 * Set configuration
 	 * @param PluginConfiguration $Configuration
 	 */
-	protected function setConfiguration(PluginConfiguration &$Configuration) {
+	protected function setConfiguration(PluginConfiguration $Configuration) {
 		$this->Configuration = $Configuration;
 	}
 
 	/**
 	 * Configuration
-	 * 
+	 *
 	 * This method call will force the configuration object to catch its values
 	 * from the database if not already done.
 	 * @return PluginConfiguration
@@ -275,7 +275,7 @@ abstract class Plugin {
 	abstract protected function getInnerLink($name, $sport = 0, $year = 0, $dat = '');
 
 	/**
-	 * Display description, can be overwritten for displaying a longer description 
+	 * Display description, can be overwritten for displaying a longer description
 	 */
 	protected function displayLongDescription() {
 		echo HTML::p($this->description());
@@ -305,7 +305,7 @@ abstract class Plugin {
 
 		return true;
 	}
-        
+
 	/**
 	 * Initialize all variables
 	 */
@@ -369,10 +369,10 @@ abstract class Plugin {
 
 	/**
 	 * Default sport
-	 * 
+	 *
 	 * May be overwritten in subclass.
 	 * Default setting: Configuration::General()->mainSport()
-	 * 
+	 *
 	 * @return int sportid, can be -1 for all sports
 	 */
 	protected function defaultSport() {
@@ -381,10 +381,10 @@ abstract class Plugin {
 
 	/**
 	 * Default year
-	 * 
+	 *
 	 * May be overwritten in subclass.
 	 * Default setting: current year
-	 * 
+	 *
 	 * @return int year, can be -1 for no year/comparison of all years
 	 */
 	protected function defaultYear() {

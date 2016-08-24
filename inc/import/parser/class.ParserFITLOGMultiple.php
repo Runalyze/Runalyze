@@ -30,7 +30,7 @@ class ParserFITLOGMultiple extends ParserAbstractMultipleXML {
 	 * Parse single training
 	 * @param SimpleXMLElement $Activity
 	 */
-	protected function parseSingleActivity(SimpleXMLElement &$Activity) {
+	protected function parseSingleActivity(SimpleXMLElement $Activity) {
 		$Parser = new ParserFITLOGSingle('', $Activity);
 		$Parser->parse();
 

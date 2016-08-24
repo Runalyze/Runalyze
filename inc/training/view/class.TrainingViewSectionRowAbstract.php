@@ -8,7 +8,7 @@ use Runalyze\View\Activity\Context;
 
 /**
  * Row of the training view
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\DataObjects\Training\View\Section
  */
@@ -21,7 +21,7 @@ abstract class TrainingViewSectionRowAbstract {
 	/**
 	 * Constructor
 	 */
-	public function __construct(Context &$Context = null) {
+	public function __construct(Context $Context = null) {
 		$this->Context = $Context;
 
 		$this->setContent();

@@ -14,7 +14,7 @@ use \Plot;
 
 /**
  * Activity series
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\View\Activity\Plot\Series
  */
@@ -77,7 +77,7 @@ abstract class ActivitySeries extends \Runalyze\View\Plot\Series {
 	 * @param int $yAxis
 	 * @param boolean $addAnnotations [optional]
 	 */
-	public function addTo(Plot &$Plot, $yAxis, $addAnnotations = true) {
+	public function addTo(Plot $Plot, $yAxis, $addAnnotations = true) {
 		if (empty($this->Data)) {
 			return;
 		}

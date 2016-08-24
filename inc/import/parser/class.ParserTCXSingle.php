@@ -125,7 +125,7 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 
 		$this->TrainingObject->setCreatorDetails( $this->findCreator() );
 		$this->findSportId();
-		
+
 		if (!empty($this->XML->Notes))
             $this->TrainingObject->setNotes( (string)$this->XML->Notes );
 
@@ -331,7 +331,7 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 	 * @param SimpleXMLElement $Point
 	 * @return int
 	 */
-	protected function parseExtensionValues(SimpleXMLElement &$Point) {
+	protected function parseExtensionValues(SimpleXMLElement $Point) {
 		$power = 0;
 		$rpm   = 0;
 
@@ -346,13 +346,13 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 				$power = (int)$Point->Extensions->TPX->Watts;
 
 			if (count($Point->Extensions->children('ns3',true)) > 0) {
-                            
+
 				if (isset($Point->Extensions->children('ns3',true)->TPX)) {
 					$TPX = $Point->Extensions->children('ns3',true)->TPX;
 
 					if (count($TPX->children('ns3',true)) > 0 && isset($TPX->children('ns3',true)->Watts))
 						$power = (int)$TPX->children('ns3',true)->Watts;
-                                        if (count($TPX->children('ns3',true)) > 0 && isset($TPX->children('ns3',true)->RunCadence)) 
+                                        if (count($TPX->children('ns3',true)) > 0 && isset($TPX->children('ns3',true)->RunCadence))
 						$rpm = (int)$TPX->children('ns3',true)->RunCadence;
 				}
 			}
@@ -367,7 +367,7 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 	 * @param SimpleXMLElement $TP
 	 * @return int
 	 */
-	protected function distanceToTrackpoint(SimpleXMLElement &$TP) {
+	protected function distanceToTrackpoint(SimpleXMLElement $TP) {
 		if (empty($this->gps['km']))
 			return empty($TP->Position) ? 0 : 0.001;
 

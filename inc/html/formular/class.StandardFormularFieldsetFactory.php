@@ -5,7 +5,7 @@
  */
 /**
  * Factory for fieldsets, using array from DatabaseScheme
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\HTML\Formular
  */
@@ -20,7 +20,7 @@ class StandardFormularFieldsetFactory {
 	 * Constructor
 	 * @param DatabaseScheme $DatabaseScheme
 	 */
-	public function __construct(DatabaseScheme &$DatabaseScheme) {
+	public function __construct(DatabaseScheme $DatabaseScheme) {
 		$this->DatabaseScheme = $DatabaseScheme;
 	}
 
@@ -28,7 +28,7 @@ class StandardFormularFieldsetFactory {
 	 * Add all fieldsets to given Formular
 	 * @param Formular $Formular
 	 */
-	public function addFieldsets(Formular &$Formular) {
+	public function addFieldsets(Formular $Formular) {
 		foreach ($this->DatabaseScheme->fieldsets() as $FieldsetArray)
 			$Formular->addFieldset( $this->createFieldset($FieldsetArray) );
 	}
@@ -38,7 +38,7 @@ class StandardFormularFieldsetFactory {
 	 * @param array $FieldsetArray
 	 * @return \FormularFieldset
 	 */
-	private function createFieldset(&$FieldsetArray) {
+	private function createFieldset(array &$FieldsetArray) {
 		$Fieldset = new FormularFieldset();
 
 		$FieldFactory = new StandardFormularFieldFactory($this->DatabaseScheme);
@@ -54,7 +54,7 @@ class StandardFormularFieldsetFactory {
 	 * @param FormularFieldset $Fieldset
 	 * @param array $FieldsetArray
 	 */
-	private function setAttributesToFieldset(FormularFieldset &$Fieldset, $FieldsetArray) {
+	private function setAttributesToFieldset(FormularFieldset $Fieldset, array $FieldsetArray) {
 		$Fieldset->setTitle($FieldsetArray['legend']);
 
 		if (isset($FieldsetArray['layout']))
