@@ -1,13 +1,13 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-08-20 08:22+0200\n"
-"PO-Revision-Date: 2016-07-26 21:24+0000\n"
-"Last-Translator: bruno lencastre <bruno.lencastre@sapo.pt>\n"
-"Language-Team: Portuguese (Brazil) <http://translate.runalyze.com/projects/"
-"runalyze/runalyze/pt_BR/>\n"
-"Language: pt\n"
+"PO-Revision-Date: 2016-08-24 18:35+0000\n"
+"Last-Translator: Raul Kiaer <rkiaer@uol.com.br>\n"
+"Language-Team: Portuguese (Brazil) "
+"<http://translate.runalyze.com/projects/runalyze/runalyze/pt_BR/>\n"
+"Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -576,7 +576,7 @@ msgstr "Oscilação vertical"
 
 #: inc/training/search/class.SearchFormular.php:190
 msgid "Uses VDOT"
-msgstr "Usa VDOT"
+msgstr "Usar VDOT"
 
 #: inc/training/search/class.SearchFormular.php:192
 #: inc/training/view/section/class.SectionHeartrateRow.php:79
@@ -606,7 +606,7 @@ msgstr "Faixa"
 #: inc/training/schemes/scheme.Training.php:382
 #: inc/core/View/Activity/Box/RPE.php:30 inc/core/Dataset/Keys/RPE.php:52
 msgid "RPE"
-msgstr ""
+msgstr "RPE"
 
 #: inc/training/search/class.SearchFormular.php:197
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:167
@@ -629,11 +629,11 @@ msgstr "Temperatura"
 #: inc/training/search/class.SearchFormular.php:200
 #: inc/draw/class.PlotSumData.php:212 inc/draw/class.PlotSumData.php:221
 msgid "JD points"
-msgstr "JD pontos"
+msgstr "Pontos JD"
 
 #: inc/training/search/class.SearchFormular.php:201
 msgid "Ground Contact Balance"
-msgstr "Equilíbrio no contacto com o solo"
+msgstr "Balanço das passadas"
 
 #: inc/training/search/class.SearchFormular.php:202
 #: inc/core/Data/Weather/WindSpeed.php:63
@@ -652,9 +652,8 @@ msgstr "Calorias"
 #: inc/training/search/class.SearchFormular.php:205
 #: inc/core/Activity/TrainingEffect.php:53
 #: inc/core/Dataset/Keys/FitTrainingEffect.php:43
-#, fuzzy
 msgid "Training Effect"
-msgstr "Pontos de treinamento"
+msgstr "Efeito do Treino"
 
 #: inc/training/search/class.SearchFormular.php:206
 #: inc/training/schemes/scheme.Training.php:492
@@ -683,7 +682,7 @@ msgstr "Não"
 #: inc/plugin/class.PluginStat.php:259 inc/plugin/class.PluginStat.php:316
 #: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:295
 msgid "All"
-msgstr "Tudo"
+msgstr "Todos"
 
 #: inc/training/view/class.VDOTinfo.php:54
 #, php-format
@@ -691,25 +690,24 @@ msgid "VDOT calculation for: %s"
 msgstr "Cálculo do VDOT: %s"
 
 #: inc/training/view/class.VDOTinfo.php:63
-#, fuzzy
 msgid "Standard calculation: As race result"
-msgstr "Cálculo padrão: como competição"
+msgstr "Cálculo padrão: como resultado da corrida"
 
 #: inc/training/view/class.VDOTinfo.php:66
 msgid ""
 "All traditional formulas are being used to calculate a VDOT value for a "
 "given race result."
 msgstr ""
-"Estão a ser utilizadas todas as fórmulas tradicionais para cálculo do VDOT "
-"para um determinado resultado de corrida."
+"Todas as fórmulas tradicionais serão utilizadas para o cálculo do VDOT "
+"considerando o resultado da corrida."
 
 #: inc/training/view/class.VDOTinfo.php:92
 msgid "Correction: based on heartrate"
-msgstr "Correção: com base na freqüência cardíaca"
+msgstr "Correção: baseado na freqüência cardíaca"
 
 #: inc/training/view/class.VDOTinfo.php:95
 msgid "Jack Daniels has tables to compare &#37;HRmax and &#37;vVDOT."
-msgstr "Jack Daniels tem tabelas para comparar &#37; HRmax e &#37; vVDOT."
+msgstr "Jack Daniels possui tabelas para comparar &#37; HRmax e &#37; vVDOT."
 
 #: inc/training/view/class.VDOTinfo.php:96
 msgid ""
