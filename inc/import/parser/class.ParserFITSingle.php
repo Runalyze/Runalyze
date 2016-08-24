@@ -424,6 +424,10 @@ class ParserFITSingle extends ParserAbstractSingle {
 			}
 		}
 
+		if ($time < $last) {
+			return;
+		}
+
 		$this->gps['latitude'][]  = isset($this->Values['position_lat']) ? substr($this->Values['position_lat'][1], 0, -3) : 0;
 		$this->gps['longitude'][] = isset($this->Values['position_long']) ? substr($this->Values['position_long'][1], 0, -3) : 0;
 
