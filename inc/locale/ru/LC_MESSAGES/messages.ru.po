@@ -1,19 +1,19 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-08-20 08:22+0200\n"
-"PO-Revision-Date: 2016-05-22 18:21+0200\n"
-"Last-Translator: commensal <commensal@gmail.com>\n"
-"Language-Team: Russian <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/ru/>\n"
+"PO-Revision-Date: 2016-08-25 08:21+0000\n"
+"Last-Translator: Sergey <sergey@kashporov.ru>\n"
+"Language-Team: Russian "
+"<http://translate.runalyze.com/projects/runalyze/runalyze/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 2.3\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
+"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 2.8-dev\n"
 "X-Poedit-KeywordsList: __;_ne;_n;_e\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -2041,6 +2041,8 @@ msgid ""
 "Fixed VDOT value (e.g. 55), if the estimation does not fit. Can be left "
 "empty."
 msgstr ""
+"Фиксированное значение VDOT (например 55), если оценка не подходит. Можно "
+"оставить пустым."
 
 #: inc/core/Configuration/Category/Vdot.php:191
 msgid "Adapt for elevation"
@@ -2051,6 +2053,8 @@ msgid ""
 "The distance can be corrected by a formula from Peter Greif to adapt for "
 "elevation."
 msgstr ""
+"Расстояние может быть скорректировано по формуле Питера Грейфа (Peter Greif) "
+"для учёта высоты."
 
 #: inc/core/Configuration/Category/Vdot.php:196
 msgid "Correction per positive elevation"
@@ -2061,6 +2065,8 @@ msgid ""
 "Add for each meter upwards X meter to the distance. (Only for the VDOT "
 "calculation)"
 msgstr ""
+"Добавьте для каждого метра подъёма X метров расстояния. (Только для расчёта "
+"VDOT)"
 
 #: inc/core/Configuration/Category/Vdot.php:202
 msgid "Correction per negative elevation"
@@ -2071,11 +2077,13 @@ msgid ""
 "Add for each meter downwards X meter to the distance. (Only for the VDOT "
 "calculation)"
 msgstr ""
+"Добавьте для каждого метра спуска X метров расстояния. (Только для расчёта "
+"VDOT)"
 
 #: inc/core/Configuration/Category/Vdot.php:222
 #: plugin/RunalyzePluginTool_DatenbankCleanup/JobGeneral.php:116
 msgid "VDOT shape"
-msgstr ""
+msgstr "Форма VDOT"
 
 #: inc/core/Configuration/Category/Trimp.php:99
 msgid "Days for ATL"
@@ -2087,7 +2095,7 @@ msgstr ""
 
 #: inc/core/Configuration/Category/Trimp.php:104
 msgid "Days for CTL"
-msgstr ""
+msgstr "Дни для CTL"
 
 #: inc/core/Configuration/Category/Trimp.php:105
 msgid "Number of days for CTL time constant"
@@ -2095,7 +2103,7 @@ msgstr ""
 
 #: inc/core/Configuration/Category/Trimp.php:109
 msgid "Show ATL/CTL in percent of your maximum"
-msgstr ""
+msgstr "Показать ATL/CTL в процентах от вашего максимума"
 
 #: inc/core/Configuration/Category/Trimp.php:110
 msgid ""
@@ -2103,16 +2111,21 @@ msgid ""
 "lead to wrong assumptions if you were overtrained. Deactivate this option in "
 "that case."
 msgstr ""
+"По-умолчанию ATL/CTL масштабируются на основе вашего исторического "
+"максимума. Это может приводить к ошибочным предположениям, если вы "
+"перетренированы. Отключите эту опцию в данном случае."
 
 #: inc/core/Configuration/Category/Trimp.php:116
 msgid "Show TSB in percent of ATL/CTL"
-msgstr ""
+msgstr "Показать TSB в процентах от ATL/CTL"
 
 #: inc/core/Configuration/Category/Trimp.php:117
 msgid ""
 "The scale of TSB values depends on your ATL/CTL. You can display TSB as "
 "percentage of your current ATL/CTL to keep consistency."
 msgstr ""
+"Шкала значений TSB зависит от вашего ATL/CTL. Вы можете отобразить TSB в "
+"процентах от вашего текущего ATL/CTL для получения согласованного результата."
 
 #: inc/core/Configuration/Category/Trimp.php:141
 #: plugin/RunalyzePluginTool_DatenbankCleanup/JobGeneral.php:156
@@ -2143,6 +2156,8 @@ msgstr ""
 msgid ""
 "You may want to adjust pace units in %s. They are not changed automatically."
 msgstr ""
+"Вы можете настроить единицы измерения темпа в %s. Они автоматически не "
+"изменяются."
 
 #: inc/core/Configuration/Messages.php:49
 #: plugin/RunalyzePluginTool_DatenbankCleanup/Job.php:49
@@ -2150,10 +2165,11 @@ msgstr ""
 msgid ""
 "%s has been recalculated. New value: <strong>%s</strong> (old value: %s)"
 msgstr ""
+"%s был пересчитан. Новое значение: <strong>%s</strong> (старое значение: %s)"
 
 #: inc/core/Export/Share/Html.php:45
 msgid "HTML"
-msgstr ""
+msgstr "HTML"
 
 #: inc/core/Export/Share/Html.php:55 inc/core/Export/Share/IFrame.php:82
 msgid "Code"
@@ -2185,25 +2201,27 @@ msgstr "Google+"
 
 #: inc/core/Export/Share/IFrame.php:54
 msgid "IFrame"
-msgstr ""
+msgstr "IFrame"
 
 #: inc/core/Export/Share/IFrame.php:89
 msgid ""
 "Runalyze runs on a local server. Only people in your local network will be "
 "able to see the training."
 msgstr ""
+"Runalyze работает на локальном сервере. Только люди из вашей локальной сети "
+"смогут увидеть эту тренировку."
 
 #: inc/core/Export/Share/IFrame.php:95
 msgid "Width"
-msgstr ""
+msgstr "Ширина"
 
 #: inc/core/Export/Share/IFrame.php:100
 msgid "Height"
-msgstr ""
+msgstr "Высота"
 
 #: inc/core/Export/Share/IFrame.php:105
 msgid "Change size"
-msgstr ""
+msgstr "Изменить размер"
 
 #: inc/core/Export/Share/AbstractSharer.php:41
 msgid "I did sport: "
@@ -2211,17 +2229,19 @@ msgstr ""
 
 #: inc/core/Export/Share/AbstractSharer.php:45
 msgid " in "
-msgstr ""
+msgstr " в "
 
 #: inc/core/Export/Share/AbstractSharer.php:89
 msgid "Runalyze is running on a local server."
-msgstr ""
+msgstr "Runalyze работает на локальном сервере."
 
 #: inc/core/Export/Share/AbstractSharer.php:90
 msgid ""
 "Linking your activity in a social network does not make sense - nobody will "
 "be able to see your activity."
 msgstr ""
+"Привязывание вашей активности в социальной сети не имеет смысла - никто не "
+"сможет эту активность увидеть."
 
 #: inc/core/Export/Share/Twitter.php:55
 msgid "Twitter"
@@ -2234,7 +2254,7 @@ msgstr "Состояние формы"
 #: inc/core/Activity/PerformanceCondition.php:67
 #: inc/core/Dataset/Keys/FitPerformanceCondition.php:52
 msgid "PC"
-msgstr ""
+msgstr "ПК"
 
 #: inc/core/Activity/TrainingEffectLevel.php:68
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:388
@@ -2248,7 +2268,7 @@ msgstr ""
 
 #: inc/core/Activity/TrainingEffectLevel.php:72
 msgid "Improving Fitness"
-msgstr ""
+msgstr "Улучшение физической подготовки"
 
 #: inc/core/Activity/TrainingEffectLevel.php:74
 msgid "Highly Improving"
