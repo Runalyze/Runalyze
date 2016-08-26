@@ -338,9 +338,14 @@ class ActivityController extends Controller
         }, $IgnoreIDs);
 
         foreach ($IDs as $ID) {
-        	$dup = $DuplicateFinder->checkForDuplicate((int)floor($this->parserStrtotime($ID)/60)*60);
-        	$found = $dup || in_array($ID, $IgnoreIDs);
-        	$Matches[$ID] = array('match' => $found);
+            try {
+                $dup = $DuplicateFinder->checkForDuplicate((int)floor($this->parserStrtotime($ID)/60)*60);
+            } catch (\Exception $e) {
+                $dup = false;
+            }
+
+            $found = $dup || in_array($ID, $IgnoreIDs);
+            $Matches[$ID] = array('match' => $found);
         }
 
         $Response = array('matches' => $Matches);
