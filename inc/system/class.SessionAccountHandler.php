@@ -128,7 +128,7 @@ class SessionAccountHandler {
 			return SharedLinker::getUserId();
 		}
 
-		return self::$Account['id'];
+		return isset(self::$Account['id']) ? self::$Account['id'] : -1;
 	}
 
 	/**
