@@ -8,7 +8,7 @@ use Runalyze\Util\LocalTime;
 class ImporterFiletypeKMLTest extends PHPUnit_Framework_TestCase {
 
 	/**
-	 * @var ImporterFiletypeSLF
+	 * @var ImporterFiletypeKML
 	 */
 	protected $object;
 
@@ -38,7 +38,7 @@ class ImporterFiletypeKMLTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * Test: standard file
-	 * Filename: "TomTom.kml" 
+	 * Filename: "TomTom.kml"
 	 */
 	public function test_standardFileFromTomTom() {
 		$this->object->parseFile('../tests/testfiles/kml/TomTom.kml');
@@ -64,7 +64,7 @@ class ImporterFiletypeKMLTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * Test: standard file without explicit distance
-	 * Filename: "TomTom-without-distance-extension.kml" 
+	 * Filename: "TomTom-without-distance-extension.kml"
 	 */
 	public function testFileFromTomTomWithoutDistance() {
 		$this->object->parseFile('../tests/testfiles/kml/TomTom-without-distance-extension.kml');
@@ -87,7 +87,7 @@ class ImporterFiletypeKMLTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * Test: standard route
-	 * Filename: "Route-only.kml" 
+	 * Filename: "Route-only.kml"
 	 */
 	public function testStandardKMLroute() {
 		$this->object->parseFile('../tests/testfiles/kml/Route-only.kml');
@@ -103,6 +103,19 @@ class ImporterFiletypeKMLTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue( $this->object->object()->hasArrayLongitude() );
 
 		$this->assertFalse( $this->object->object()->hasArrayTime() );
+	}
+
+	/**
+	 * Filename: "Route-only-with-zeros.kml"
+	 */
+	public function testStandardKMLrouteWithZeros() {
+		$this->object->parseFile('../tests/testfiles/kml/Route-only-with-zeros.kml');
+
+		$this->assertFalse($this->object->hasMultipleTrainings());
+		$this->assertFalse($this->object->failed());
+
+		$this->assertEquals(0.4, $this->object->object()->getDistance(), '', 0.05);
+		$this->assertEquals(11, count($this->object->object()->getArrayDistance()));
 	}
 
 	/**
@@ -123,5 +136,25 @@ class ImporterFiletypeKMLTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertFalse( $this->object->object()->hasArrayAltitude() );
 		$this->assertFalse( $this->object->object()->hasArrayTime() );
+	}
+
+	/**
+	 * Filename: "Suunto-Spartan-Ultra.kml"
+	 */
+	public function testSpartanUltraWithTemperature() {
+		$this->object->parseFile('../tests/testfiles/kml/Suunto-Spartan-Ultra.kml');
+
+		$this->assertFalse($this->object->hasMultipleTrainings());
+		$this->assertFalse($this->object->failed());
+
+		$this->assertEquals(0.098, $this->object->object()->getDistance(), '', 0.001);
+
+		$this->assertTrue($this->object->object()->hasArrayDistance());
+		$this->assertTrue($this->object->object()->hasArrayLatitude());
+		$this->assertTrue($this->object->object()->hasArrayLongitude());
+		$this->assertTrue($this->object->object()->hasArrayAltitude());
+		$this->assertTrue($this->object->object()->hasArrayTime());
+		$this->assertTrue($this->object->object()->hasArrayCadence());
+		$this->assertTrue($this->object->object()->hasArrayTemperature());
 	}
 }

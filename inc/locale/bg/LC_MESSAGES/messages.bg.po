@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-11 10:47+0200\n"
+"POT-Creation-Date: 2016-08-20 08:22+0200\n"
 "PO-Revision-Date: 2014-11-05 20:52+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -16,11 +16,11 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/CoreBundle/Controller/DefaultController.php:255
+#: src/CoreBundle/Controller/DefaultController.php:251
 msgid "Click on an activity to see more details."
 msgstr ""
 
-#: src/CoreBundle/Controller/DefaultController.php:256
+#: src/CoreBundle/Controller/DefaultController.php:252
 msgid "Public activities are marked: "
 msgstr ""
 
@@ -4290,7 +4290,7 @@ msgid ""
 msgstr ""
 
 #: inc/system/config/class.ConfigTabEquipment.php:39
-#: plugin/RunalyzePluginPanel_Equipment/window.equipment.table.php:14
+#: plugin/RunalyzePluginPanel_Equipment/window.equipment.table.php:13
 msgid "Your equipment"
 msgstr ""
 
@@ -5222,7 +5222,7 @@ msgstr ""
 msgid "Result overs %s"
 msgstr ""
 
-#: plugin/RunalyzePluginStat_Wettkampf/window.raceResult.php:16
+#: plugin/RunalyzePluginStat_Wettkampf/window.raceResult.php:15
 msgid "Competition details"
 msgstr ""
 
@@ -6982,311 +6982,4 @@ msgstr ""
 
 #: plugin/RunalyzePluginStat_Rekorde/class.RunalyzePluginStat_Rekorde.php:196
 msgid "Longest activities"
-msgstr ""
-
-msgid "The activation did not work."
-msgstr ""
-
-msgid "Probably the link was wrong."
-msgstr ""
-
-msgid "Your account has been activated."
-msgstr ""
-
-msgid "You can now use Runalyze."
-msgstr ""
-
-msgid "Activate account"
-msgstr ""
-
-msgid "Do you really want to delete your account, %username%?"
-msgstr ""
-
-msgid "Delete account"
-msgstr ""
-
-msgid "The deletion did not work."
-msgstr ""
-
-msgid "Your account has been deleted."
-msgstr ""
-
-msgid "You cannot use Runalyze anymore."
-msgstr ""
-
-msgid "Main page"
-msgstr ""
-
-msgid "The link is not valid anymore."
-msgstr ""
-
-msgid "The username is not known."
-msgstr ""
-
-msgid "A link for changing your password will be sent via email."
-msgstr ""
-
-msgid "Send link"
-msgstr ""
-
-msgid "Password reset"
-msgstr ""
-
-msgid "Unable to send link. Please contact the administrator."
-msgstr ""
-
-msgid "New password again"
-msgstr ""
-
-msgid "Change password"
-msgstr ""
-
-msgid "The link has been sent and will be valid for 24 hours."
-msgstr ""
-
-msgid "Remember me"
-msgstr ""
-
-msgid ""
-"{1} Until now <strong>%count%</strong> athlete is registered and|]1,"
-"Inf[ Until now <strong>%count%</strong> athletes are registered and"
-msgstr ""
-
-msgid ""
-"{1} has logged <strong>%distance%</strong>.|]1,Inf[ have logged <strong>"
-"%distance%</strong>."
-msgstr ""
-
-msgid "Runalyze is under maintenance at the moment. No login possible."
-msgstr ""
-
-msgid "Create a new account"
-msgstr ""
-
-msgid "Password again"
-msgstr ""
-
-msgid ""
-"By clicking the register button you accept our %link_start%terms of use"
-"%link_end%."
-msgstr ""
-
-msgid "Register"
-msgstr ""
-
-msgid "Registrations are currently disabled."
-msgstr ""
-
-msgid ""
-"Thanks for your registration. You should receive an email within the next "
-"minutes with further instructions for activating your account."
-msgstr ""
-
-msgid ""
-"Runalyze analyzes your complete training, calculates your shape, computes "
-"prognoses and visualizes your training in plots - more detailed than any "
-"other sports diary."
-msgstr ""
-
-msgid ""
-"Runalyze is completely configurable. You can decide by yourself which "
-"information of your training you want to record and which statistics are "
-"being displayed on which place."
-msgstr ""
-
-msgid "By athletes for athletes"
-msgstr ""
-
-msgid ""
-"Runalyze is created by athletes for athletes. Whenever you have comments, "
-"problems or wishes: Please contact our Runalyze team. It's near and dear to "
-"us."
-msgstr ""
-
-msgid "Click here to update RUNALYZE"
-msgstr ""
-
-msgid ""
-"For large databases (several gigabytes) we recommend updating RUNALYZE via "
-"console."
-msgstr ""
-
-msgid "No update needed"
-msgstr ""
-
-msgid "Blog"
-msgstr ""
-
-msgid "Docs"
-msgstr ""
-
-msgid "Forum"
-msgstr ""
-
-msgid "Start the installation of RUNALYZE"
-msgstr ""
-
-msgid ""
-"RUNALYZE has been successfully installed. You can now start analyzing your "
-"training."
-msgstr ""
-
-msgid "Create an account"
-msgstr ""
-
-msgid "Migrations have been executed"
-msgstr ""
-
-msgid "Nothing more to do"
-msgstr ""
-
-msgid "Go back to RUNALYZE"
-msgstr ""
-
-msgid "The plug-in was not unlocked successfully."
-msgstr ""
-
-msgid "The administrator has to set the correct API-key."
-msgstr ""
-
-msgid "Connect"
-msgstr ""
-
-msgid "Searching for devices"
-msgstr ""
-
-msgid "Transfer complete"
-msgstr ""
-
-msgid "Browse computer"
-msgstr ""
-
-msgid "Cancel"
-msgstr ""
-
-msgid "Connected devices"
-msgstr ""
-
-msgid "Browse devices"
-msgstr ""
-
-msgid "Devices"
-msgstr ""
-
-msgid "Search for decives"
-msgstr ""
-
-msgid "Retrieving data from #{deviceName}, please wait ..."
-msgstr ""
-
-msgid "Please wait ..."
-msgstr ""
-
-msgid "Found #{tracks} activities"
-msgstr ""
-
-msgid "No devices found"
-msgstr ""
-
-msgid "Found"
-msgstr ""
-
-msgid "#{deviceCount} devices found"
-msgstr ""
-
-msgid "Status"
-msgstr ""
-
-msgid "present"
-msgstr ""
-
-msgid "ignore"
-msgstr ""
-
-msgid ""
-"Runalyze is completely configurable and more detailed than any other tool "
-"for analyzing your activities."
-msgstr ""
-
-msgid ""
-"Please look at our official website %s to get an overview of our features."
-msgstr ""
-
-msgid ""
-"If you want to stay up to date on changes and receive tips from time to "
-"time, visit our blog at %s."
-msgstr ""
-
-msgid ""
-"Runalyze is an open-source project. We are working on it as much as we can "
-"in our free time."
-msgstr ""
-
-msgid "Official developers:"
-msgstr ""
-
-msgid ""
-"The main advantage of Runalyze is the ability to adapt everything to your "
-"personal needs and wishes."
-msgstr ""
-
-msgid ""
-"Have a look at the configuration window to see what we're talking about."
-msgstr ""
-
-msgid ""
-"You can define your own sports or activity types and choose your own way of "
-"presentation and configure some parameters of our experimental calculations."
-msgstr ""
-
-msgid "Support"
-msgstr ""
-
-msgid "Please let us know if you have wishes or have encountered bugs."
-msgstr ""
-
-msgid ""
-"We give our best to make Runalyze as good as possible for you. - Therefore "
-"we would be interested in your suggestions for improvement."
-msgstr ""
-
-msgid ""
-"In general most questions, problems and ideas are more appropriate to ask in "
-"the forum."
-msgstr ""
-
-msgid "Documentation"
-msgstr ""
-
-msgid "Translation"
-msgstr ""
-
-msgid "In a case of urgency you can contact us via email:"
-msgstr ""
-
-msgid "Browser Support"
-msgstr ""
-
-msgid ""
-"Runalyze is a modern application and therefore we want to use the most "
-"modern web techniques. We will not try to support any outdated browser "
-"versions."
-msgstr ""
-
-msgid "e.g. jQuery 2.x does not support IE8 (or less)"
-msgstr ""
-
-msgid "Credits"
-msgstr ""
-
-msgid "Maintenance"
-msgstr ""
-
-msgid "RUNALYZE is temporarily down for maintenance"
-msgstr ""
-
-msgid "We will resume normal operations as soon as possible."
-msgstr ""
-
-msgid "Forgot your password?"
 msgstr ""

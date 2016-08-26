@@ -71,6 +71,9 @@ class TrainingFormular extends StandardFormular {
 	 */
 	const POST_KEY_REMOVE_ROUTE_GPS = 'gps';
 
+	/** @var string */
+	const POST_KEY_REMOVE_HRV = 'remove-hrv';
+
 	/**
 	 * TrainingFormular constructor.
 	 * @param \DataObject $dataObject
@@ -121,6 +124,10 @@ class TrainingFormular extends StandardFormular {
 			$this->removeChosenDataSeries();
 		}
 
+		if (isset($_POST[self::POST_KEY_REMOVE_HRV])) {
+			$this->removeHrvData();
+		}
+
 		parent::checkForSubmit();
 
 		$this->handleRaceResultCheckbox();
@@ -155,6 +162,13 @@ class TrainingFormular extends StandardFormular {
 		}
 
 		$Remover->saveChanges();
+	}
+
+	protected function removeHrvData() {
+		$Factory = new Factory(SessionAccountHandler::getId());
+		$Deleter = new Runalyze\Model\HRV\Deleter(DB::getInstance(), $Factory->hrv($this->dataObject->id()));
+		$Deleter->setAccountID(SessionAccountHandler::getId());
+		$Deleter->delete();
 	}
 
 	/**
@@ -476,6 +490,10 @@ class TrainingFormular extends StandardFormular {
 			if ($Route->has($key)) {
 				$Fields[] = new FormularCheckbox(self::POST_KEY_REMOVE_ROUTE.'['.$key.']', $text);
 			}
+		}
+
+		if (!$Factory->hrv($this->dataObject->id())->isEmpty()) {
+			$Fields[] = new FormularCheckbox(self::POST_KEY_REMOVE_HRV, __('HRV'));
 		}
 
 		return $Fields;

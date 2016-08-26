@@ -12,6 +12,7 @@ use Runalyze\Import\Exception\UnsupportedFileException;
  *
  * @author Hannes Christiansen
  * @package Runalyze\Import\Parser
+ * @todo rename this parser to ParserKMLextendedSingle as this stuff is not TomTom-specific
  */
 class ParserKMLtomtomSingle extends ParserAbstractSingleXML {
 	/**
@@ -150,6 +151,9 @@ class ParserKMLtomtomSingle extends ParserAbstractSingleXML {
 				case 'cadence':
 					$this->parseExtendedCadence($array);
 					break;
+				case 'temperature':
+					$this->parseExtendedTemperature($array);
+					break;
 			}
 		}
 	}
@@ -183,11 +187,10 @@ class ParserKMLtomtomSingle extends ParserAbstractSingleXML {
 	protected function parseExtendedHeartrate(SimpleXMLElement $array) {
 		$values = $array->xpath('gx:value');
 
-		foreach ($values as $value) 
+		foreach ($values as $value)
 			$this->gps['heartrate'][] = (int)$value;
-
 	}
-        
+
 	/**
 	 * Parse power
 	 * @param SimpleXMLElement $array
@@ -195,11 +198,10 @@ class ParserKMLtomtomSingle extends ParserAbstractSingleXML {
 	protected function parseExtendedPower(SimpleXMLElement $array) {
 		$values = $array->xpath('gx:value');
 
-		foreach ($values as $value) 
+		foreach ($values as $value)
 			$this->gps['power'][] = (int)$value;
-
 	}
-        
+
 	/**
 	 * Parse cadence
 	 * @param SimpleXMLElement $array
@@ -207,11 +209,10 @@ class ParserKMLtomtomSingle extends ParserAbstractSingleXML {
 	protected function parseExtendedCadence(SimpleXMLElement $array) {
 		$values = $array->xpath('gx:value');
 
-		foreach ($values as $value) 
+		foreach ($values as $value)
 			$this->gps['rpm'][] = (int)$value;
-
 	}
-        
+
 	/**
 	 * Parse altitude
 	 * @param SimpleXMLElement $array
@@ -219,9 +220,19 @@ class ParserKMLtomtomSingle extends ParserAbstractSingleXML {
 	protected function parseExtendedAltitude(SimpleXMLElement $array) {
 		$values = $array->xpath('gx:value');
 
-		foreach ($values as $value) 
+		foreach ($values as $value)
 			$this->gps['altitude'][] = (int)$value;
+	}
 
+	/**
+	 * Parse temperature
+	 * @param SimpleXMLElement $array
+	 */
+	protected function parseExtendedTemperature(SimpleXMLElement $array) {
+		$values = $array->xpath('gx:value');
+
+		foreach ($values as $value)
+			$this->gps['temp'][] = (int)$value;
 	}
 
 	/**

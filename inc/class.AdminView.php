@@ -156,7 +156,7 @@ class AdminView {
 		FormularInput::setStandardSize( FormularInput::$SIZE_MIDDLE );
 
 		$Fieldset = new FormularFieldset( __('Settings') );
-		$Fieldset->addField( new FormularCheckbox('user_cant_login', __('Maintenance mode')) );
+		$Fieldset->addField( new FormularCheckbox('maintenance', __('Maintenance mode')) );
 		$Fieldset->addField( new FormularCheckbox('user_can_register', __('Users can register')) );
 		$Fieldset->addField( new FormularCheckbox('user_disable_account_activation', __('Users don\'t need to activate their account')) );
 		$Fieldset->addField( new FormularInput('garmin_api_key', Ajax::tooltip(__('Garmin API-key'), __('Needed for any online-version of the Garmin Communicator<br>see http://developer.garmin.com/web-device/garmin-communicator-plugin/get-your-site-key/') )) );
@@ -441,7 +441,7 @@ class AdminView {
 	public static function getArrayOfConfigVariables() {
 		return array(
 		    'user_can_register',
-		    'user_cant_login',
+		    'maintenance',
 		    'user_disable_account_activation',
 		    'garmin_api_key',
 		    'openweathermap_api_key',

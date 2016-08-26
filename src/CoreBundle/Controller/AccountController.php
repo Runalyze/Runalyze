@@ -74,9 +74,6 @@ class AccountController extends Controller
      */
     public function recoverAction(Request $request)
     {
-	if ($this->getParameter('user_cant_login')) {
-            return $this->render('login/maintenance.html.twig');
-        }
         new \Frontend(true, $this->get('security.token_storage'));
 
         $username = $request->request->get('send_username');

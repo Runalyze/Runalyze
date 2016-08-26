@@ -1,0 +1,442 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="fr" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="db87c7c1df3b14400cf1ee12cfa94dfd" resname="Runalyze is completely configurable and more detailed than any other tool for analyzing your activities." approved="yes">
+        <source>Runalyze is completely configurable and more detailed than any other tool for analyzing your activities.</source>
+        <target state="translated">Runalyze est totalement paramétrable et plus détaillé que n'importe quel autre outil pour analyser vos activités.</target>
+      </trans-unit>
+      <trans-unit id="6a07c40d5a06f10f9148318561f91fd1" resname="Please look at our official website %s to get an overview of our features." approved="yes">
+        <source>Please look at our official website %s to get an overview of our features.</source>
+        <target state="translated">Veuillez vous reporter à notre site web officiel %s afin d'avoir un aperçu des fonctionnalités.</target>
+      </trans-unit>
+      <trans-unit id="9790f7d3ec77648f1719b71bab36a05f" resname="If you want to stay up to date on changes and receive tips from time to time, visit our blog at %s." approved="yes">
+        <source>If you want to stay up to date on changes and receive tips from time to time, visit our blog at %s.</source>
+        <target state="translated">Si vous souhaitez rester à jour sur les améliorations et recevoir des astuces de temps en temps, rendez-vous sur notre blog à l'adresse %s.</target>
+      </trans-unit>
+      <trans-unit id="440d35dd3bc2ae838fb420a34e1263d2" resname="Runalyze is an open-source project. We are working on it as much as we can in our free time." approved="yes">
+        <source>Runalyze is an open-source project. We are working on it as much as we can in our free time.</source>
+        <target state="translated">Runalyze est un projet open-source. Nous travaillons autant que possible sur notre temps libre.</target>
+      </trans-unit>
+      <trans-unit id="f67c1b23d5c1a452c90449e350cb4c76" resname="Official developers:" approved="yes">
+        <source>Official developers:</source>
+        <target state="translated">Développeurs officiels :</target>
+      </trans-unit>
+      <trans-unit id="254f642527b45bc260048e30704edb39" resname="Configuration" approved="yes">
+        <source>Configuration</source>
+        <target state="translated">Configuration</target>
+      </trans-unit>
+      <trans-unit id="52b21a8e72b6862a2759f54cb415ddae" resname="The main advantage of Runalyze is the ability to adapt everything to your personal needs and wishes." approved="yes">
+        <source>The main advantage of Runalyze is the ability to adapt everything to your personal needs and wishes.</source>
+        <target state="translated">Le principal avantage de Runalyze est sa capacité d'adaptation complète à vos propres besoins et envies.</target>
+      </trans-unit>
+      <trans-unit id="867b9932057f82b355bf51ebffeb6a34" resname="Have a look at the configuration window to see what we're talking about." approved="yes">
+        <source>Have a look at the configuration window to see what we're talking about.</source>
+        <target state="translated">Jeter un œil à la fenêtre de configuration pour voir de quoi nous parlons.</target>
+      </trans-unit>
+      <trans-unit id="a8598a8104d6367c88663ef032e0a234" resname="You can define your own sports or activity types and choose your own way of presentation and configure some parameters of our experimental calculations." approved="yes">
+        <source>You can define your own sports or activity types and choose your own way of presentation and configure some parameters of our experimental calculations.</source>
+        <target state="translated">Vous pouvez définir vos propres sports ou types d'activité, personnaliser la présentation et configurer certains paramètres expérimentaux de calcul.</target>
+      </trans-unit>
+      <trans-unit id="db5eb84117d06047c97c9a0191b5fffe" resname="Support" approved="yes">
+        <source>Support</source>
+        <target state="translated">Support</target>
+      </trans-unit>
+      <trans-unit id="f729a8a49c330339b2efa4b8e69618fd" resname="Please let us know if you have wishes or have encountered bugs." approved="yes">
+        <source>Please let us know if you have wishes or have encountered bugs.</source>
+        <target state="translated">Merci de nous faire part de vos souhaits ou de nous faire un retour en cas de bug.</target>
+      </trans-unit>
+      <trans-unit id="b920f092b826fd7644faccb7eb418285" resname="We give our best to make Runalyze as good as possible for you. - Therefore we would be interested in your suggestions for improvement." approved="yes">
+        <source>We give our best to make Runalyze as good as possible for you. - Therefore we would be interested in your suggestions for improvement.</source>
+        <target state="translated">Nous faisons tout notre possible pour vous garantir la meilleure expérience avec Runalyze. Nous sommes donc toujours intéressés par vos suggestions d'amélioration.</target>
+      </trans-unit>
+      <trans-unit id="8972a25e78349104f1c0b9de1e0c2996" resname="In general most questions, problems and ideas are more appropriate to ask in the forum." approved="yes">
+        <source>In general most questions, problems and ideas are more appropriate to ask in the forum.</source>
+        <target state="translated">Le forum est généralement plus adapté pour discuter de vos questions, problèmes et idées.</target>
+      </trans-unit>
+      <trans-unit id="e6a7f8a2f42cc35979973da8dfb10720" resname="Forum" approved="yes">
+        <source>Forum</source>
+        <target state="translated">Forum</target>
+      </trans-unit>
+      <trans-unit id="5b6cf869265c13af8566f192b4ab3d2a" resname="Documentation" approved="yes">
+        <source>Documentation</source>
+        <target state="translated">Documentation</target>
+      </trans-unit>
+      <trans-unit id="6dd08874f83507e9c7b23f1a46b7fa7c" resname="Translation" approved="yes">
+        <source>Translation</source>
+        <target state="translated">Traduction</target>
+      </trans-unit>
+      <trans-unit id="0ab98b9aea9ad94538cd49800cf73c4e" resname="In a case of urgency you can contact us via email:" approved="yes">
+        <source>In a case of urgency you can contact us via email:</source>
+        <target state="translated">En cas d'urgence, vous pouvez nous contacter par courriel :</target>
+      </trans-unit>
+      <trans-unit id="95bded74b875da4e05966bf6e0a59fba" resname="Browser Support" approved="yes">
+        <source>Browser Support</source>
+        <target state="translated">compatible avec les navigateurs</target>
+      </trans-unit>
+      <trans-unit id="802d2a1dea70aa257f0b2849b7d961cd" resname="Runalyze is a modern application and therefore we want to use the most modern web techniques. We will not try to support any outdated browser versions." approved="yes">
+        <source>Runalyze is a modern application and therefore we want to use the most modern web techniques. We will not try to support any outdated browser versions.</source>
+        <target state="translated">Runalyze est une application moderne et utilise par conséquence les technologies web les plus récentes. Nous ne maintiendrons pas la compatibilité avec des navigateurs web obsolètes.</target>
+      </trans-unit>
+      <trans-unit id="74496c51193b483820560f6725045b2a" resname="e.g. jQuery 2.x does not support IE8 (or less)" approved="yes">
+        <source>e.g. jQuery 2.x does not support IE8 (or less)</source>
+        <target state="translated">par ex. jQuery 2.x n'est pas compatible avec IE8 (et les versions précédentes)</target>
+      </trans-unit>
+      <trans-unit id="948a2e3548aaf7f9941a3192fa607d51" resname="Credits" approved="yes">
+        <source>Credits</source>
+        <target state="translated">Crédits</target>
+      </trans-unit>
+      <trans-unit id="6013259776820a748d1b5bc3cc542e5d" resname="The plug-in was not unlocked successfully." approved="yes">
+        <source>The plug-in was not unlocked successfully.</source>
+        <target state="translated">Le plugin n'a pas été activé.</target>
+      </trans-unit>
+      <trans-unit id="6d558cb627c6cbbef5d611d4a4c66c10" resname="The administrator has to set the correct API-key." approved="yes">
+        <source>The administrator has to set the correct API-key.</source>
+        <target state="translated">L'administrateur n'a pas saisi une clé API correcte.</target>
+      </trans-unit>
+      <trans-unit id="49ab28040dfa07f53544970c6d147e1e" resname="Connect" approved="yes">
+        <source>Connect</source>
+        <target state="translated">connecter</target>
+      </trans-unit>
+      <trans-unit id="aae025ecc68c1c8f446c631c1ce70dc3" resname="Searching for devices" approved="yes">
+        <source>Searching for devices</source>
+        <target state="translated">Recherche des périphériques</target>
+      </trans-unit>
+      <trans-unit id="31b055f6b0dd1e000252dfe19caa5db5" resname="Transfer complete" approved="yes">
+        <source>Transfer complete</source>
+        <target state="translated">transfert terminé</target>
+      </trans-unit>
+      <trans-unit id="9fac221f0e0cc359e9b5860d40b44670" resname="Browse computer" approved="yes">
+        <source>Browse computer</source>
+        <target state="translated">Parcourir l'ordinateur</target>
+      </trans-unit>
+      <trans-unit id="ea4788705e6873b424c65e91c2846b19" resname="Cancel" approved="yes">
+        <source>Cancel</source>
+        <target state="translated">Annuler</target>
+      </trans-unit>
+      <trans-unit id="1aee350e4a181900ee9b082142f08c81" resname="Connected devices" approved="yes">
+        <source>Connected devices</source>
+        <target state="translated">Appareils connectés</target>
+      </trans-unit>
+      <trans-unit id="50fcec50bde8d56ca9e2e9e0a4746d13" resname="Browse devices" approved="yes">
+        <source>Browse devices</source>
+        <target state="translated">Parcourir les dispositifs</target>
+      </trans-unit>
+      <trans-unit id="c03ca67dda321195d74c951097f240c6" resname="Devices" approved="yes">
+        <source>Devices</source>
+        <target state="translated">Dispositifs de</target>
+      </trans-unit>
+      <trans-unit id="6a9af29189122a543830fe6811601ab3" resname="Search for decives" approved="yes">
+        <source>Search for decives</source>
+        <target state="translated">Recherche des appareils</target>
+      </trans-unit>
+      <trans-unit id="5b32b5d57b3fde808a2b618e55ef61fa" resname="Retrieving data from #{deviceName}, please wait ..." approved="yes">
+        <source>Retrieving data from #{deviceName}, please wait ...</source>
+        <target state="translated">Récupération des données depuis #{deviceName}, veuillez patienter...</target>
+      </trans-unit>
+      <trans-unit id="8fd89eaea3816dc99d21701581e0800a" resname="Please wait ..." approved="yes">
+        <source>Please wait ...</source>
+        <target state="translated">Veuillez patienter ...</target>
+      </trans-unit>
+      <trans-unit id="eb1fa39212b282d18e03a19ac335780e" resname="Found #{tracks} activities" approved="yes">
+        <source>Found #{tracks} activities</source>
+        <target state="translated">#{tracks} activités trouvées</target>
+      </trans-unit>
+      <trans-unit id="c84b390eef23008887527b2217ecd79b" resname="No devices found" approved="yes">
+        <source>No devices found</source>
+        <target state="translated">Pas d'appareils trouvés</target>
+      </trans-unit>
+      <trans-unit id="5d695cc28c6a7ea955162fbdd0ae42b9" resname="Found" approved="yes">
+        <source>Found</source>
+        <target state="translated">trouvé</target>
+      </trans-unit>
+      <trans-unit id="eba1d5c32faf58c2f521f0fd2d380c07" resname="#{deviceCount} devices found" approved="yes">
+        <source>#{deviceCount} devices found</source>
+        <target state="translated">#{deviceCount}appareils trouvés</target>
+      </trans-unit>
+      <trans-unit id="44749712dbec183e983dcd78a7736c41" resname="Date" approved="yes">
+        <source>Date</source>
+        <target state="translated">Date</target>
+      </trans-unit>
+      <trans-unit id="e02d2ae03de9d493df2b6b2d2813d302" resname="Duration" approved="yes">
+        <source>Duration</source>
+        <target state="translated">durée</target>
+      </trans-unit>
+      <trans-unit id="ec53a8c4f07baed5d8825072c89799be" resname="Status" approved="yes">
+        <source>Status</source>
+        <target state="translated">Statut</target>
+      </trans-unit>
+      <trans-unit id="47ed49958e2500d72e305f85ed316c91" resname="present" approved="yes">
+        <source>present</source>
+        <target state="translated">présent</target>
+      </trans-unit>
+      <trans-unit id="22af645d1859cb5ca6da0c484f1f37ea" resname="new" approved="yes">
+        <source>new</source>
+        <target state="translated">Nouveau</target>
+      </trans-unit>
+      <trans-unit id="567bc1d268f135496de3d5b946b691f3" resname="ignore" approved="yes">
+        <source>ignore</source>
+        <target state="translated">ignorer</target>
+      </trans-unit>
+      <trans-unit id="72d6d7a1885885bb55a565fd1070581a" resname="Import" approved="yes">
+        <source>Import</source>
+        <target state="translated">importer</target>
+      </trans-unit>
+      <trans-unit id="a181a603769c1f98ad927e7367c7aa51" resname="all" approved="yes">
+        <source>all</source>
+        <target state="translated">tous</target>
+      </trans-unit>
+      <trans-unit id="0323de4f66a1700e2173e9bcdce02715" resname="Logout" approved="yes">
+        <source>Logout</source>
+        <target state="translated">Déconnexion</target>
+      </trans-unit>
+      <trans-unit id="8625e1de7be14c39b1d14dc03d822497" resname="Tools" approved="yes">
+        <source>Tools</source>
+        <target state="translated">Outils</target>
+      </trans-unit>
+      <trans-unit id="6a26f548831e6a8c26bfbbd9f6ec61e0" resname="Help" approved="yes">
+        <source>Help</source>
+        <target state="translated">Aide</target>
+      </trans-unit>
+      <trans-unit id="c0e1a495d527370f5ab1ea42061d9786" resname="Activate account" approved="yes">
+        <source>Activate account</source>
+        <target state="translated">Activer le compte</target>
+      </trans-unit>
+      <trans-unit id="99dea78007133396a7b8ed70578ac6ae" resname="Login" approved="yes">
+        <source>Login</source>
+        <target state="translated">Connexion</target>
+      </trans-unit>
+      <trans-unit id="9119aa869e0c28cb8865f8108e6dccf1" resname="The activation did not work." approved="yes">
+        <source>The activation did not work.</source>
+        <target state="translated">L'activation n'a pas fonctionné.</target>
+      </trans-unit>
+      <trans-unit id="9df43abcef736372d8fa94db6b344e8b" resname="Probably the link was wrong." approved="yes">
+        <source>Probably the link was wrong.</source>
+        <target state="translated">Le lien était probablement erroné.</target>
+      </trans-unit>
+      <trans-unit id="91e7ca86887a45c091cdfbfb7533a816" resname="Your account has been activated." approved="yes">
+        <source>Your account has been activated.</source>
+        <target state="translated">Votre compte a été activé.</target>
+      </trans-unit>
+      <trans-unit id="6decb627d2f1ef92af93a558cbe3718a" resname="You can now use Runalyze." approved="yes">
+        <source>You can now use Runalyze.</source>
+        <target state="translated">Vous pouvez désormais utiliser Runalyze.</target>
+      </trans-unit>
+      <trans-unit id="889a33c84af48a585f437344b2b7759b" resname="Do you really want to delete your account, %username%?" approved="yes">
+        <source>Do you really want to delete your account, %username%?</source>
+        <target state="translated">Voulez-vous vraiment supprimer votre compte, %nom utilisateur% ?</target>
+      </trans-unit>
+      <trans-unit id="e6e049c44a797fda2a175d07df838e49" resname="Delete account" approved="yes">
+        <source>Delete account</source>
+        <target state="translated">Supprimer le compte</target>
+      </trans-unit>
+      <trans-unit id="8f8d2783d036ec8dbe4b6b9c1d0fed0d" resname="Main page" approved="yes">
+        <source>Main page</source>
+        <target state="translated">Page principale</target>
+      </trans-unit>
+      <trans-unit id="8576f10ef8d39a741722d1f45942e634" resname="The deletion did not work." approved="yes">
+        <source>The deletion did not work.</source>
+        <target state="translated">La suppression a échoué.</target>
+      </trans-unit>
+      <trans-unit id="cdac6e038678e7fde876bb5b4b06c116" resname="Your account has been deleted." approved="yes">
+        <source>Your account has been deleted.</source>
+        <target state="translated">Votre compte a été supprimé.</target>
+      </trans-unit>
+      <trans-unit id="f0dc35a80dc5486b3afa628192b8882d" resname="You cannot use Runalyze anymore." approved="yes">
+        <source>You cannot use Runalyze anymore.</source>
+        <target state="translated">Vous ne pouvez plus utiliser Runalyze.</target>
+      </trans-unit>
+      <trans-unit id="cc876f0005f144d4481d4daf029b6b2e" resname="The link is not valid anymore." approved="yes">
+        <source>The link is not valid anymore.</source>
+        <target state="translated">Le lien n'est plus valide.</target>
+      </trans-unit>
+      <trans-unit id="f6039d44b29456b20f8f373155ae4973" resname="Username" approved="yes">
+        <source>Username</source>
+        <target state="translated">Nom d'utilisateur</target>
+      </trans-unit>
+      <trans-unit id="2c7971924957f02cf6730a876190ac48" resname="The username is not known." approved="yes">
+        <source>The username is not known.</source>
+        <target state="translated">Ce nom d'utilisateur est inconnu.</target>
+      </trans-unit>
+      <trans-unit id="cc12a0eccefe68577fea1ce5caab9d32" resname="A link for changing your password will be sent via email." approved="yes">
+        <source>A link for changing your password will be sent via email.</source>
+        <target state="translated">Un courriel va vous être envoyé afin de modifier votre mot de passe.</target>
+      </trans-unit>
+      <trans-unit id="4c0d06bb8b2968f055bf36bf61bb66ab" resname="Send link" approved="yes">
+        <source>Send link</source>
+        <target state="translated">Envoyer le lien</target>
+      </trans-unit>
+      <trans-unit id="28103f38886a385f79ff2fbfe9ffff5b" resname="Unable to send link. Please contact the administrator." approved="yes">
+        <source>Unable to send link. Please contact the administrator.</source>
+        <target state="translated">Impossible d'envoyer le lien. Veuillez contacter l'administrateur.</target>
+      </trans-unit>
+      <trans-unit id="776d630537e30e4960bedd8b6f39ec72" resname="The link has been sent and will be valid for 24 hours." approved="yes">
+        <source>The link has been sent and will be valid for 24 hours.</source>
+        <target state="translated">Le lien a été envoyé et sera disponible dans 24 heures.</target>
+      </trans-unit>
+      <trans-unit id="3544848f820b9d94a3f3871a382cf138" resname="New password" approved="yes">
+        <source>New password</source>
+        <target state="translated">Nouveau mot de passe</target>
+      </trans-unit>
+      <trans-unit id="c342f723668363be245073388de96fe2" resname="New password again" approved="yes">
+        <source>New password again</source>
+        <target state="translated">Répéter le nouveau mot de passe</target>
+      </trans-unit>
+      <trans-unit id="0b39c5aca15b84b1ad53a94d6b3feb78" resname="Change password" approved="yes">
+        <source>Change password</source>
+        <target state="translated">Modifier le mot de passe</target>
+      </trans-unit>
+      <trans-unit id="11f581ede2d21a7f2c9c8f6fdc9eb754" resname="Password reset" approved="yes">
+        <source>Password reset</source>
+        <target state="translated">Mot de passe réinitialisé</target>
+      </trans-unit>
+      <trans-unit id="9bc75a1c6d94e70e8b96d8d59115c0bf" resname="Your password has been changed." approved="yes">
+        <source>Your password has been changed.</source>
+        <target state="translated">Votre mot de passe a été changé.</target>
+      </trans-unit>
+      <trans-unit id="c33e404a441c6ba9648f88af3c68a1ca" resname="Statistics" approved="yes">
+        <source>Statistics</source>
+        <target state="translated">Statistiques</target>
+      </trans-unit>
+      <trans-unit id="c8575f4aae20c4dbae08f2d9d80d69dc" resname="Runalyze analyzes your complete training, calculates your shape, computes prognoses and visualizes your training in plots - more detailed than any other sports diary." approved="yes">
+        <source>Runalyze analyzes your complete training, calculates your shape, computes prognoses and visualizes your training in plots - more detailed than any other sports diary.</source>
+        <target state="translated">Runalyze analyse l'ensemble de votre entraînement, évalue votre forme, calcule des prévisions et permet de visualiser l'entraînement via des graphiques, plus complet que n'importe quel carnet de sport.</target>
+      </trans-unit>
+      <trans-unit id="b7b9dc4be30b15599157ac66f6e4ee10" resname="Runalyze is completely configurable. You can decide by yourself which information of your training you want to record and which statistics are being displayed on which place." approved="yes">
+        <source>Runalyze is completely configurable. You can decide by yourself which information of your training you want to record and which statistics are being displayed on which place.</source>
+        <target state="translated">Runalyze est entièrement paramétrable. Vous choisissez vous-même quelles données d'entraînement vous souhaitez enregistrer et quelles statistiques doivent être affichées à quel endroit.</target>
+      </trans-unit>
+      <trans-unit id="9cf52ba6a030f477b895be03900c5344" resname="By athletes for athletes" approved="no">
+        <source>By athletes for athletes</source>
+        <target state="needs-translation">Par les sportifs, pour les sportifs</target>
+      </trans-unit>
+      <trans-unit id="2077caf87751f7f202e5e692cae9e623" resname="Runalyze is created by athletes for athletes. Whenever you have comments, problems or wishes: Please contact our Runalyze team. It's near and dear to us.">
+        <source>Runalyze is created by athletes for athletes. Whenever you have comments, problems or wishes: Please contact our Runalyze team. It's near and dear to us.</source>
+        <target>Runalyze is created by athletes for athletes. Whenever you have comments, problems or wishes: Please contact our Runalyze team. It's near and dear to us.</target>
+      </trans-unit>
+      <trans-unit id="10d0de28911c5f66463b9c8783f8148a" resname="Maintenance">
+        <source>Maintenance</source>
+        <target>Maintenance</target>
+      </trans-unit>
+      <trans-unit id="19a6166a9bb1ce14f5238a622ea73775" resname="RUNALYZE is temporarily down for maintenance">
+        <source>RUNALYZE is temporarily down for maintenance</source>
+        <target>RUNALYZE is temporarily down for maintenance</target>
+      </trans-unit>
+      <trans-unit id="ad8bfa729c523b6dade80aa9c824bafb" resname="We will resume normal operations as soon as possible.">
+        <source>We will resume normal operations as soon as possible.</source>
+        <target>We will resume normal operations as soon as possible.</target>
+      </trans-unit>
+      <trans-unit id="fe1f636b83baeffd7a2ec09518a81ab8" resname="Create a new account" approved="yes">
+        <source>Create a new account</source>
+        <target state="translated">Créer un nouveau compte</target>
+      </trans-unit>
+      <trans-unit id="49ee3087348e8d44e1feda1917443987" resname="Name" approved="yes">
+        <source>Name</source>
+        <target state="translated">Nom</target>
+      </trans-unit>
+      <trans-unit id="ce8ae9da5b7cd6c3df2929543a9af92d" resname="Email" approved="yes">
+        <source>Email</source>
+        <target state="translated">email</target>
+      </trans-unit>
+      <trans-unit id="dc647eb65e6711e155375218212b3964" resname="Password" approved="yes">
+        <source>Password</source>
+        <target state="translated">Mot de passe</target>
+      </trans-unit>
+      <trans-unit id="7a00bc6e035926becbc69a92e10e033f" resname="Password again" approved="yes">
+        <source>Password again</source>
+        <target state="translated">Répéter le mot de passe</target>
+      </trans-unit>
+      <trans-unit id="98fb6a2a59cabcc0dbce38d3be5336d4" resname="By clicking the register button you accept our %link_start%terms of use%link_end%.">
+        <source>By clicking the register button you accept our %link_start%terms of use%link_end%.</source>
+        <target>By clicking the register button you accept our %link_start%terms of use%link_end%.</target>
+      </trans-unit>
+      <trans-unit id="0ba7583639a274c434bbe6ef797115a4" resname="Register" approved="yes">
+        <source>Register</source>
+        <target state="translated">Inscription</target>
+      </trans-unit>
+      <trans-unit id="fd7ff2f6e056eca4064453bad4052e47" resname="Thanks for your registration. You should receive an email within the next minutes with further instructions for activating your account." approved="yes">
+        <source>Thanks for your registration. You should receive an email within the next minutes with further instructions for activating your account.</source>
+        <target state="translated">Merci pour votre inscription. Vous allez recevoir dans quelques minutes un courriel de confirmation contenant les étapes à suivre pour activer votre compte.</target>
+      </trans-unit>
+      <trans-unit id="366acd0072277d37a8bc6fa67209fc1d" resname="Registrations are currently disabled." approved="yes">
+        <source>Registrations are currently disabled.</source>
+        <target state="translated">Les inscriptions sont actuellement fermées.</target>
+      </trans-unit>
+      <trans-unit id="01a569ddc6cf67ddec2a683f0a5f5956" resname="Forgot your password?" approved="yes">
+        <source>Forgot your password?</source>
+        <target state="translated">Mot de passe oublié ?</target>
+      </trans-unit>
+      <trans-unit id="34ad20ad8855db67abe969867908b754" resname="Help and Support" approved="yes">
+        <source>Help and Support</source>
+        <target state="translated">Aide et support</target>
+      </trans-unit>
+      <trans-unit id="be8df1f28c0abc85a0ed0c6860e5d832" resname="Blog">
+        <source>Blog</source>
+        <target>Blog</target>
+      </trans-unit>
+      <trans-unit id="e29756ffbb4e8264a55c6b0f4a2f7ce2" resname="{1} Until now &lt;strong&gt;%count%&lt;/strong&gt; athlete is registered and|]1,Inf[ Until now &lt;strong&gt;%count%&lt;/strong&gt; athletes are registered and">
+        <source>{1} Until now &lt;strong&gt;%count%&lt;/strong&gt; athlete is registered and|]1,Inf[ Until now &lt;strong&gt;%count%&lt;/strong&gt; athletes are registered and</source>
+        <target><![CDATA[{1} Until now <strong>%count%</strong> athlete is registered and|]1,Inf[ Until now <strong>%count%</strong> athletes are registered and]]></target>
+      </trans-unit>
+      <trans-unit id="00b8ae36d5e10d62ba8bc1568d562d3e" resname="{1} has logged &lt;strong&gt;%distance%&lt;/strong&gt;.|]1,Inf[ have logged &lt;strong&gt;%distance%&lt;/strong&gt;.">
+        <source>{1} has logged &lt;strong&gt;%distance%&lt;/strong&gt;.|]1,Inf[ have logged &lt;strong&gt;%distance%&lt;/strong&gt;.</source>
+        <target><![CDATA[{1} has logged <strong>%distance%</strong>.|]1,Inf[ have logged <strong>%distance%</strong>.]]></target>
+      </trans-unit>
+      <trans-unit id="e3e2d5e0295c2f5cd85145baf3c2aeef" resname="You are not logged in anymore." approved="no">
+        <source>You are not logged in anymore.</source>
+        <target state="needs-translation">Vous n'êtes plus connecté(e).</target>
+      </trans-unit>
+      <trans-unit id="878530871f0db73f004f5bd6591eeb76" resname="Remember me" approved="yes">
+        <source>Remember me</source>
+        <target state="translated">Se rappeler de mes identifiants</target>
+      </trans-unit>
+      <trans-unit id="009383a048f4570622a5d13a7d7a215a" resname="Runalyze is under maintenance at the moment. No login possible." approved="yes">
+        <source>Runalyze is under maintenance at the moment. No login possible.</source>
+        <target state="translated">Runalyze est actuellement en cours de maintenance. Aucune connexion n'est possible.</target>
+      </trans-unit>
+      <trans-unit id="ab5a48c9a0cf54a09ce069569065bd47" resname="Click here to update RUNALYZE">
+        <source>Click here to update RUNALYZE</source>
+        <target>Click here to update RUNALYZE</target>
+      </trans-unit>
+      <trans-unit id="ce0f2b5572750ab2ea4b61b6a849caf3" resname="For large databases (several gigabytes) we recommend updating RUNALYZE via console.">
+        <source>For large databases (several gigabytes) we recommend updating RUNALYZE via console.</source>
+        <target>For large databases (several gigabytes) we recommend updating RUNALYZE via console.</target>
+      </trans-unit>
+      <trans-unit id="35ad75c771ec1cffc7f7ba03cf9457fe" resname="No update needed">
+        <source>No update needed</source>
+        <target>No update needed</target>
+      </trans-unit>
+      <trans-unit id="a3907cd461d8739aa3266047bc4b8c0c" resname="Docs">
+        <source>Docs</source>
+        <target>Docs</target>
+      </trans-unit>
+      <trans-unit id="b7f224c438e971e018cd6eab38b77fa1" resname="Start the installation of RUNALYZE">
+        <source>Start the installation of RUNALYZE</source>
+        <target>Start the installation of RUNALYZE</target>
+      </trans-unit>
+      <trans-unit id="d5ac77c95ab94ea30f3d280651ae848f" resname="RUNALYZE has been successfully installed. You can now start analyzing your training.">
+        <source>RUNALYZE has been successfully installed. You can now start analyzing your training.</source>
+        <target>RUNALYZE has been successfully installed. You can now start analyzing your training.</target>
+      </trans-unit>
+      <trans-unit id="2fdfd506efea08144c0794c32ca8250a" resname="Create an account" approved="yes">
+        <source>Create an account</source>
+        <target state="translated">Créer un nouveau compte</target>
+      </trans-unit>
+      <trans-unit id="446a2f17e10ef064822f6719d6b45b36" resname="Migrations have been executed">
+        <source>Migrations have been executed</source>
+        <target>Migrations have been executed</target>
+      </trans-unit>
+      <trans-unit id="00fca4e93b68706640ba7a4e61e35092" resname="Nothing more to do">
+        <source>Nothing more to do</source>
+        <target>Nothing more to do</target>
+      </trans-unit>
+      <trans-unit id="7cfc2601b5944323bb448901eba3a1f3" resname="Go back to RUNALYZE">
+        <source>Go back to RUNALYZE</source>
+        <target>Go back to RUNALYZE</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
