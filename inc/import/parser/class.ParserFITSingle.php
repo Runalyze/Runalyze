@@ -74,6 +74,15 @@ class ParserFITSingle extends ParserAbstractSingle {
 	/** @var string */
 	protected $softwareVersion = '';
 
+	/** @var array */
+	protected $DeveloperFieldMappingForRecord = array(
+		'0_Power' => ['power', 1],
+		'0_Cadence' => ['cadence', 0.5],
+		'0_Heart_Rate' => ['heart_rate', 1],
+		'0_Vertical_Oscillation' => ['vertical_oscillation', 100],
+		'0_Ground_Time' => ['stance_time', 10]
+	);
+
 	/**
 	 * Parse
 	 */
@@ -393,6 +402,8 @@ class ParserFITSingle extends ParserAbstractSingle {
 		if ($this->isSwimming)
 			return;
 
+		$this->mapDeveloperFieldsToNativeFieldsForCurrentRecord();
+
 		if (isset($this->Values['compressed_speed_distance'])) {
 			$time = $this->parseCompressedSpeedDistance();
 			$last = -1;
@@ -428,10 +439,10 @@ class ParserFITSingle extends ParserAbstractSingle {
 			return;
 		}
 
-		$this->gps['latitude'][]  = isset($this->Values['position_lat']) ? substr($this->Values['position_lat'][1], 0, -3) : 0;
-		$this->gps['longitude'][] = isset($this->Values['position_long']) ? substr($this->Values['position_long'][1], 0, -3) : 0;
+		$this->gps['latitude'][]  = isset($this->Values['position_lat']) ? substr($this->Values['position_lat'][1], 0, -4) : 0;
+		$this->gps['longitude'][] = isset($this->Values['position_long']) ? substr($this->Values['position_long'][1], 0, -4) : 0;
 
-		$this->gps['altitude'][]  = isset($this->Values['altitude']) ? substr($this->Values['altitude'][1], 0, -3) : 0;
+		$this->gps['altitude'][]  = isset($this->Values['altitude']) ? substr($this->Values['altitude'][1], 0, -4) : 0;
 
 		$this->gps['km'][]        = isset($this->Values['distance']) ? round($this->Values['distance'][0] / 1e5, ParserAbstract::DISTANCE_PRECISION) : end($this->gps['km']);
 		$this->gps['heartrate'][] = isset($this->Values['heart_rate']) ? (int)$this->Values['heart_rate'][0] : 0;
@@ -446,11 +457,23 @@ class ParserFITSingle extends ParserAbstractSingle {
 		//Running Dynamics
 		$this->gps['groundcontact'][] = isset($this->Values['stance_time']) ? round($this->Values['stance_time'][0]/10) : 0;
 		$this->gps['oscillation'][]   = isset($this->Values['vertical_oscillation']) ? round($this->Values['vertical_oscillation'][0]/10) : 0;
-		$this->gps['groundcontact_balance'][] = isset($this->Values['ground_contact_time_balance']) ? (int)$this->Values['ground_contact_time_balance'][0] : 0;
+		$this->gps['groundcontact_balance'][] = isset($this->Values['stance_time_balance']) ? (int)$this->Values['stance_time_balance'][0] : 0;
 		//$this->gps['vertical_ratio'][] = isset($this->Values['vertical_ratio']) ? (int)$this->Values['vertical_ratio'][0] : 0;
 
 		if ($time === $last) {
 			$this->mergeRecord();
+		}
+	}
+
+	protected function mapDeveloperFieldsToNativeFieldsForCurrentRecord() {
+		foreach ($this->DeveloperFieldMappingForRecord as $devFieldName => $nativeData) {
+			$nativeFieldName = $nativeData[0];
+			$nativeFactor = $nativeData[1];
+
+			if (isset($this->Values[$devFieldName]) && ($this->Values[$devFieldName][0] != 0 || !isset($this->Values[$nativeFieldName]))) {
+				$this->Values[$devFieldName][0] *= $nativeFactor;
+				$this->Values[$nativeFieldName] = $this->Values[$devFieldName];
+			}
 		}
 	}
 
@@ -539,7 +562,7 @@ class ParserFITSingle extends ParserAbstractSingle {
 
 			foreach ($values as $value) {
 				if ($value != '65535') {
-					$this->gps['hrv'][] = 1000*(double)substr($value, 0, -1);
+					$this->gps['hrv'][] = 1000*(double)substr($value, 0, -2);
 				}
 			}
 		}

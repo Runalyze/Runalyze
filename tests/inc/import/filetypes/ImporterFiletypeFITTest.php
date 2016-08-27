@@ -671,4 +671,63 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			}
 		}
 	}
+
+	/**
+	 * @see https://github.com/Runalyze/Runalyze/issues/1919
+	 */
+	public function testDeveloperFieldsFromDisabledMoxy() {
+		if (Shell::isPerlAvailable()) {
+			$this->object->parseFile('../tests/testfiles/fit/Fenix-3-with-inactive-Moxy.fit');
+
+			$this->assertFalse($this->object->failed());
+
+			$this->assertEquals('fenix3', $this->object->object()->getCreator());
+
+			$this->assertEquals(1401, $this->object->object()->getTimeInSeconds(), '', 10);
+			$this->assertEquals(1401, $this->object->object()->getArrayTimeLastPoint(), '', 10);
+			$this->assertEquals(3.60, $this->object->object()->getDistance(), '', 0.01);
+
+			$this->assertTrue($this->object->object()->hasArrayTime());
+			$this->assertTrue($this->object->object()->hasArrayLatitude());
+			$this->assertTrue($this->object->object()->hasArrayLongitude());
+			$this->assertTrue($this->object->object()->hasArrayAltitude());
+			$this->assertTrue($this->object->object()->hasArrayHeartrate());
+			$this->assertTrue($this->object->object()->hasArrayDistance());
+			$this->assertTrue($this->object->object()->hasArrayCadence());
+			$this->assertTrue($this->object->object()->hasArrayTemperature());
+			$this->assertTrue($this->object->object()->hasArrayGroundContact());
+			$this->assertTrue($this->object->object()->hasArrayVerticalOscillation());
+			$this->assertTrue($this->object->object()->hasArrayGroundContactBalance());
+		}
+	}
+
+	/**
+	 * @see https://github.com/Runalyze/Runalyze/issues/1919
+	 */
+	public function testDeveloperFieldsFromStryd() {
+		if (Shell::isPerlAvailable()) {
+			$this->object->parseFile('../tests/testfiles/fit/FR920xt-with-Stryd.fit');
+
+			$this->assertFalse($this->object->failed());
+
+			$this->assertEquals('fr920xt', $this->object->object()->getCreator());
+
+			$this->assertEquals(1931, $this->object->object()->getTimeInSeconds(), '', 10);
+			$this->assertEquals(1931, $this->object->object()->getArrayTimeLastPoint(), '', 10);
+			$this->assertEquals(7.255, $this->object->object()->getDistance(), '', 0.01);
+
+			$this->assertTrue($this->object->object()->hasArrayTime());
+			$this->assertTrue($this->object->object()->hasArrayLatitude());
+			$this->assertTrue($this->object->object()->hasArrayLongitude());
+			$this->assertTrue($this->object->object()->hasArrayAltitude());
+			$this->assertTrue($this->object->object()->hasArrayHeartrate());
+			$this->assertTrue($this->object->object()->hasArrayDistance());
+			$this->assertTrue($this->object->object()->hasArrayCadence());
+			$this->assertTrue($this->object->object()->hasArrayGroundContact());
+			$this->assertTrue($this->object->object()->hasArrayVerticalOscillation());
+
+			$this->assertEquals(214, $this->object->object()->getGroundContactTime(), '', 5);
+			$this->assertEquals(97, $this->object->object()->getVerticalOscillation(), '', 5);
+		}
+	}
 }
