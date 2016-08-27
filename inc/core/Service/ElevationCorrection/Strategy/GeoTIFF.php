@@ -6,59 +6,41 @@
 
 namespace Runalyze\Service\ElevationCorrection\Strategy;
 
+use Runalyze\DEM;
+
 /**
  * Elevation corrector strategy: GeoTIFF
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Service\ElevationCorrection\Strategy
  */
 class GeoTIFF extends AbstractStrategy
 {
-	/**
-	 * @var int
-	 */
-	const UNKNOWN = -32768;
+    /** @var \Runalyze\DEM\Reader */
+    protected $Reader;
 
-	/**
-	 * Reader
-	 * @var null|\SRTMGeoTIFFReader
-	 */
-	protected $Reader = null;
+    /** @var bool */
+    protected $USE_SMOOTHING = true;
 
-	/**
-	 * Boolean flag: use smoothing
-	 * @var bool
-	 */
-	protected $USE_SMOOTHING = true;
+    /** @var bool */
+    protected $GUESS_UNKNOWN = true;
 
-	/**
-	 * Boolean flag: guess unknown
-	 * @var bool
-	 */
-	protected $GUESS_UNKNOWN = true;
-
-	/**
-	 * Boolean flag: interpolate
-	 * @var bool
-	 */
-	protected $INTERPOLATE = true;
-
-	/**
-	 * Set use smoothing flag
-	 * @param bool $flag
-	 */
-	public function setUseSmoothing($flag)
+    /**
+     * GeoTIFF constructor
+     * @param array $LatitudePoints
+     * @param array $LongitudePoints
+     */
+	public function __construct(array $LatitudePoints, array $LongitudePoints)
 	{
-		$this->USE_SMOOTHING = $flag;
-	}
+		parent::__construct($LatitudePoints, $LongitudePoints);
 
-	/**
-	 * Set guess unknown flag
-	 * @param bool $flag
-	 */
-	public function setGuessUnknown($flag)
-	{
-		$this->GUESS_UNKNOWN = $flag;
+        $this->Reader = new DEM\Reader();
+        $this->Reader->addProvider(
+            new DEM\Provider\GeoTIFF\SRTM4Provider(
+                FRONTEND_PATH.'../data/srtm',
+                new DEM\Interpolation\BilinearInterpolation()
+            )
+        );
 	}
 
 	/**
@@ -67,86 +49,71 @@ class GeoTIFF extends AbstractStrategy
 	 */
 	public function canHandleData()
 	{
-		$lats = array_filter($this->LatitudePoints);
-		$lngs = array_filter($this->LongitudePoints);
-
-		if (empty($lats) || empty($lngs)) {
-			return true;
-		}
-
-		$minLatitude = min($lats);
-		$maxLatitude = max($lats);
-		$minLongitude = min($lngs);
-		$maxLongitude = max($lngs);
-
-		$testArray = array(
-			$minLatitude, $minLongitude,
-			$minLatitude, $maxLongitude,
-			$maxLatitude, $minLongitude,
-			$maxLatitude, $maxLongitude
-		);
-
-		try {
-			$this->Reader = new \SRTMGeoTIFFReader(FRONTEND_PATH.'../data/srtm');
-			$this->Reader->getMultipleElevations($testArray);
-
-			return true;
-		} catch (\Exception $Exception) {
-			//\Error::getInstance()->addDebug($Exception->getMessage());
-			return false;
-		}
+        return $this->Reader->hasDataFor($this->getBoundsFor($this->LatitudePoints, $this->LongitudePoints));
 	}
 
-	/**
-	 * Correct elevation
-	 * 
-	 * Note: canHandleData() has to be called before!
-	 */
-	public function correctElevation()
-	{
-		if ($this->Reader instanceof \SRTMGeoTIFFReader) {
-			$this->Reader->maxPoints = PHP_INT_MAX;
-			$arraySize = count($this->LatitudePoints);
-			$locations = array();
-			$emptyIndices = array();
+    /**
+     * @param bool $flag
+     */
+    public function setUseSmoothing($flag)
+    {
+        $this->USE_SMOOTHING = $flag;
+    }
 
-			for ($i = 0; $i < $arraySize; $i++) {
-				if ($this->LatitudePoints[$i] != 0 || $this->LongitudePoints[$i] != 0) {
-					$locations[] = $this->LatitudePoints[$i];
-					$locations[] = $this->LongitudePoints[$i];
-				} else {
-					$emptyIndices[] = $i;
-				}
-			}
+    /**
+     * @param bool $flag
+     */
+    public function setGuessUnknown($flag)
+    {
+        $this->GUESS_UNKNOWN = $flag;
+    }
 
-			$this->ElevationPoints = $this->Reader->getMultipleElevations($locations, false, $this->INTERPOLATE);
-			$this->insertUnknownValuesAt($emptyIndices);
+    /**
+     * Correct elevation
+     */
+    public function correctElevation()
+    {
+        $this->ElevationPoints = $this->Reader->getElevations($this->LatitudePoints, $this->LongitudePoints);
 
-			if ($this->GUESS_UNKNOWN) {
-				$this->guessUnknown(self::UNKNOWN);
-			}
+        if ($this->GUESS_UNKNOWN) {
+            $this->guessUnknown(false);
+        }
 
-			if ($this->USE_SMOOTHING) {
-				$this->smoothElevation();
-			}
-		}
-	}
+        if ($this->USE_SMOOTHING) {
+            $this->smoothElevation();
+        }
+    }
 
-	/**
-	 * @param array $emptyIndices
-	 */
-	protected function insertUnknownValuesAt(array $emptyIndices)
-	{
-		foreach ($emptyIndices as $i => $index) {
-			$firstPart = array_slice($this->ElevationPoints, 0, $index);
-			$secondPart = array_slice($this->ElevationPoints, $index);
-			$this->ElevationPoints = array_merge($firstPart, [self::UNKNOWN], $secondPart);
-		}
-	}
+    /**
+     * @param  float[] $latitudes
+     * @param  float[] $longitudes
+     * @return array   array(array($lat, $lng), ...)
+     */
+    protected function getBoundsFor(array $latitudes, array $longitudes)
+    {
+        $filteredLatitudes = array_filter($latitudes);
+        $filteredLongitudes = array_filter($longitudes);
+
+        if (empty($filteredLatitudes) || empty($filteredLongitudes)) {
+            return [];
+        }
+
+        $minLatitude = min($filteredLatitudes);
+        $maxLatitude = max($filteredLatitudes);
+        $minLongitude = min($filteredLongitudes);
+        $maxLongitude = max($filteredLongitudes);
+
+        return [
+            [$minLatitude, $minLongitude],
+            [$minLatitude, $maxLongitude],
+            [$maxLatitude, $minLongitude],
+            [$maxLatitude, $maxLongitude],
+        ];
+    }
 
 	/**
 	 * Smooth elevation
-	 * 
+	 *
 	 * Although this could be more exactly, a smoothing has to be used.
 	 * Otherwise, this corrector would result in much higher cumulative elevations.
 	 */
