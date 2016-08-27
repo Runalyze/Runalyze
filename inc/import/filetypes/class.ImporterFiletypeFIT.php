@@ -5,7 +5,7 @@
  */
 /**
  * Importer: *.fit
- * 
+ *
  * Files of *.fit are from Garmin
  *
  * @author Hannes Christiansen
@@ -57,12 +57,12 @@ class ImporterFiletypeFIT extends ImporterFiletypeAbstract {
 
 	/**
 	 * Read file
-	 * 
+	 *
 	 * WARNING: Don't use this method with a FIT-file.
 	 * FIT-files have to be parsed first with parseFile($Filename).
-	 * 
+	 *
 	 * For unittesting, this method accepts a filename of the output of fittorunalyze.pl
-	 * 
+	 *
 	 * @param string $filename [optional] absolute path
 	 */
 	public function readFile($filename = '') {
