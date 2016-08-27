@@ -15,17 +15,22 @@ require Exporter;
 	     FIT_UINT16
 	     FIT_SINT32
 	     FIT_UINT32
+	     FIT_SINT64
+	     FIT_UINT64
 	     FIT_STRING
 	     FIT_FLOAT32
 	     FIT_FLOAT64
 	     FIT_UINT8Z
 	     FIT_UINT16Z
 	     FIT_UINT32Z
+	     FIT_UINT64Z
 	     FIT_BYTE
+	     FIT_BASE_TYPE_MAX
+	     FIT_BASE_TYPE_MASK
 	     FIT_HEADER_LENGTH
 	     );
 
-$version = 0.15;
+$version = 0.21;
 $version_major_scale = 100;
 
 sub version_major {
@@ -122,7 +127,7 @@ sub protocol_version_from_string {
   }
 }
 
-$protocol_version = &protocol_version_from_string(undef, "1.0");
+$protocol_version = &protocol_version_from_string(undef, "2.2");
 @protocol_version = &protocol_version_major(undef, $protocol_version);
 $protocol_version_header_crc_started = &protocol_version_from_string(undef, "1.0");
 
@@ -177,7 +182,7 @@ sub profile_version_from_string {
   }
 }
 
-$profile_version = &profile_version_from_string(undef, "16.10");
+$profile_version = &profile_version_from_string(undef, "20.08");
 @profile_version = &profile_version_major(undef, $profile_version);
 
 sub profile_version_string {
@@ -630,6 +635,10 @@ sub FIT_UINT8Z() {10;}
 sub FIT_UINT16Z() {11;}
 sub FIT_UINT32Z() {12;}
 sub FIT_BYTE() {13;}
+sub FIT_SINT64() {14;}
+sub FIT_UINT64() {15;}
+sub FIT_UINT64Z() {16;}
+sub FIT_BASE_TYPE_MAX() {FIT_UINT64Z;}
 
 $rechd_offset_compressed_timestamp_header = 7;
 $rechd_mask_compressed_timestamp_header = 1 << $rechd_offset_compressed_timestamp_header;
@@ -640,6 +649,8 @@ $rechd_length_cth_timestamp = $rechd_offset_cth_local_message_type;
 $rechd_mask_cth_timestamp = (1 << $rechd_length_cth_timestamp) - 1;
 $rechd_offset_definition_message = 6;
 $rechd_mask_definition_message = 1 << $rechd_offset_definition_message;
+$rechd_offset_devdata_message = 5;
+$rechd_mask_devdata_message = 1 << $rechd_offset_devdata_message;
 $rechd_length_local_message_type = 4;
 $rechd_mask_local_message_type = (1 << $rechd_length_local_message_type) - 1;
 $cthd_offset_local_message_type = 5;
@@ -656,6 +667,13 @@ $deffld_length = length(pack($deffld_template));
 $deffld_mask_endian_p = 1 << 7;
 $deffld_mask_type = (1 << 5) - 1;
 
+sub FIT_BASE_TYPE_MASK() {$deffld_mask_type + 0;}
+
+$devdata_min_template = 'C';
+$devdata_min_length = length(pack($devdata_min_template));
+$devdata_deffld_template = 'C C C';
+$devdata_deffld_length = length(pack($deffld_template));
+
 @invalid = (0xFF) x ($deffld_mask_type + 1);
 
 $invalid[FIT_SINT8] = 0x7F;
@@ -663,9 +681,12 @@ $invalid[FIT_SINT16] = 0x7FFF;
 $invalid[FIT_UINT16] = 0xFFFF;
 $invalid[FIT_SINT32] = 0x7FFFFFFF;
 $invalid[FIT_UINT32] = 0xFFFFFFFF;
-$invalid[FIT_STRING] = $invalid[FIT_UINT8Z] = $invalid[FIT_UINT16Z] = $invalid[FIT_UINT32Z] = 0;
-$invalid[FIT_FLOAT32] = unpack('f', pack('V', 0xFFFFFFFF));
-$invalid[FIT_FLOAT64] = unpack('d', pack('V V', 0xFFFFFFFF, 0xFFFFFFFF));
+$invalid[FIT_STRING] = $invalid[FIT_UINT8Z] = $invalid[FIT_UINT16Z] = $invalid[FIT_UINT32Z] = $invalid[FIT_UINT64Z] = 0;
+$invalid[FIT_FLOAT32] = NaN;
+$invalid[FIT_FLOAT64] = NaN;
+$invalid[FIT_SINT64] = ($invalid[FIT_SINT32] << 32) | $invalid[FIT_UINT32];
+$invalid[FIT_UINT64] = ($invalid[FIT_UINT32] << 32) | $invalid[FIT_UINT32];
+$invalid[FIT_UINT64Z] = 0;
 
 sub invalid {
   my ($self, $type) = @_;
@@ -677,7 +698,7 @@ sub invalid {
 
 $size[FIT_SINT16] = $size[FIT_UINT16] = $size[FIT_UINT16Z] = 2;
 $size[FIT_SINT32] = $size[FIT_UINT32] = $size[FIT_UINT32Z] = $size[FIT_FLOAT32] = 4;
-$size[FIT_FLOAT64] = 8;
+$size[FIT_FLOAT64] = $size[FIT_SINT64] = $size[FIT_UINT64] = $size[FIT_UINT64Z] = 8;
 
 @template = ('C') x ($deffld_mask_type + 1);
 
@@ -688,6 +709,8 @@ $template[FIT_SINT32] = 'l';
 $template[FIT_UINT32] = $template[FIT_UINT32Z] = 'L';
 $template[FIT_FLOAT32] = 'f';
 $template[FIT_FLOAT64] = 'd';
+$template[FIT_SINT64] = 'q';
+$template[FIT_UINT64] = $template[FIT_UINT64Z] = 'Q';
 
 %named_type =
   (
@@ -695,22 +718,23 @@ $template[FIT_FLOAT64] = 'd';
    'file' => +{
      '_base_type' => FIT_ENUM,
      'device' => 1,
-     'setting' => 2,
+     'settings' => 2,
      'sport' => 3,
      'activity' => 4,
      'workout' => 5,
      'course' => 6,
-     'schedule' => 7,
-     'monitoring' => 9,
+     'schedules' => 7,
+     'weight' => 9,
      'totals' => 10,
      'goals' => 11,
      'blood_pressure' => 14,
-     'monitoring' => 15,
+     'monitoring_a' => 15,
      'activity_summary' => 20,
      'monitoring_daily' => 28,
      'monitoring_b' => 32,
      'segment' => 34,
      'segment_list' => 35,
+     'exd_configuration' => 40,
      'mfg_range_min' => 0xF7,
      'mfg_range_max' => 0xFE,
    },
@@ -729,15 +753,18 @@ $template[FIT_FLOAT64] = 'd';
      'power_zone' => 9,
      'met_zone' => 10,
      'sport' => 12,
+#    'unknown13' => 13, # unknown
      'goal' => 15,
      'session' => 18,
      'lap' => 19,
      'record' => 20,
      'event' => 21,
+     'source' => 22, # undocumented
      'device_info' => 23,
      'workout' => 26,
      'workout_step' => 27,
      'schedule' => 28,
+     'location' => 29, # undocumented
      'weight_scale' => 30,
      'course' => 31,
      'course_point' => 32,
@@ -753,13 +780,25 @@ $template[FIT_FLOAT64] = 'd';
      'monitoring' => 55,
      'training_file' => 72,
      'hrv' => 78,
+#    'unknown79' => 79, # unknown
+     'ant_rx' => 80,
+     'ant_tx' => 81,
+     'ant_channel_id' => 82,
      'length' => 101,
      'monitoring_info' => 103,
+     'battery' => 104, # undocumented
      'pad' => 105,
      'slave_device' => 106,
+#    'unknown113' => 113, # unknown
+     'connectivity' => 127,
+     'weather_conditions' => 128,
+     'weather_alert' => 129,
      'cadence_zone' => 131,
+     'hr' => 132,
+#    'unknown140' => 140, # unknown
      'segment_lap' => 142,
      'memo_glob' => 145,
+     'sensor' => 147, # undocumented
      'segment_id' => 148,
      'segment_leaderboard_entry' => 149,
      'segment_point' => 150,
@@ -778,6 +817,12 @@ $template[FIT_FLOAT64] = 'd';
      'video_title' => 185,
      'video_description' => 186,
      'video_clip' => 187,
+     'exd_screen_configuration' => 200,
+     'exd_data_field_configuration' => 201,
+     'exd_data_concept_configuration' => 202,
+     'field_description' => 206,
+     'developer_data_id' => 207,
+     'magnetometer_data' => 208,
      'mfg_range_min' => 0xFF00,
      'mfg_range_max' => 0xFFFE,
    },
@@ -824,9 +869,15 @@ $template[FIT_FLOAT64] = 'd';
      'mask' => 0x0FFF,
    },
 
-   'device_index' => +{
+   'device_index' => +{ # dynamically created, as devices are added
      '_base_type' => FIT_UINT8,
-     'creator' => 0,
+     'device0' => 0, # local, v6.00, garmin prod. edge520 (2067)
+     'device1' => 1, # local, v6.00, garmin prod. edge520 (2067)
+     'device2' => 2, # local, v3.00, garmin prod. 1619
+     'heart_rate' => 3, # antplus
+     'speed' => 4, # antplus
+     'cadence' => 5, # antplus
+     'device6' => 6, # antplus power?
    },
 
    'gender' => +{
@@ -863,7 +914,69 @@ $template[FIT_FLOAT64] = 'd';
      'farsi' => 23,
      'bulgarian' => 24,
      'romanian' => 25,
+     'chinese' => 26,
+     'japanese' => 27,
+     'korean' => 28,
+     'taiwanese' => 29,
+     'thai' => 30,
+     'hebrew' => 31,
+     'brazilian_portuguese' => 32,
+     'indonesian' => 33,
      'custom' => 254,
+   },
+
+   'language_bits_0' => +{
+     '_base_type' => FIT_UINT8Z,
+     'english' => 0x01,
+     'french' => 0x02,
+     'italian' => 0x04,
+     'german' => 0x08,
+     'spanish' => 0x10,
+     'croatian' => 0x20,
+     'czech' => 0x40,
+     'danish' => 0x80,
+   },
+
+   'language_bits_1' => +{
+     '_base_type' => FIT_UINT8Z,
+     'dutch' => 0x01,
+     'finnish' => 0x02,
+     'greek' => 0x04,
+     'hungarian' => 0x08,
+     'norwegian' => 0x10,
+     'polish' => 0x20,
+     'portuguese' => 0x40,
+     'slovakian' => 0x80,
+   },
+
+   'language_bits_2' => +{
+     '_base_type' => FIT_UINT8Z,
+     'slovenian' => 0x01,
+     'swedish' => 0x02,
+     'russian' => 0x04,
+     'turkish' => 0x08,
+     'latvian' => 0x10,
+     'ukrainian' => 0x20,
+     'arabic' => 0x40,
+     'farsi' => 0x80,
+   },
+
+   'language_bits_3' => +{
+     '_base_type' => FIT_UINT8Z,
+     'bulgarian' => 0x01,
+     'romanian' => 0x02,
+     'chinese' => 0x04,
+     'japanese' => 0x08,
+     'korean' => 0x10,
+     'taiwanese' => 0x20,
+     'thai' => 0x40,
+     'hebrew' => 0x80,
+   },
+
+   'language_bits_4' => +{
+     '_base_type' => FIT_UINT8Z,
+     'brazilian_portuguese' => 0x01,
+     'indonesian' => 0x02,
    },
 
    'time_zone' => +{
@@ -1041,13 +1154,6 @@ $template[FIT_FLOAT64] = 'd';
      'swedish_ref_99_grid' => 41,
    },
 
-   'switch' => +{
-     '_base_type' => FIT_ENUM,
-     'off' => 0,
-     'on' => 1,
-     'auto' => 2,
-   },
-
    'sport' => +{
      '_base_type' => FIT_ENUM,
      'generic' => 0,
@@ -1095,6 +1201,9 @@ $template[FIT_FLOAT64] = 'd';
      'rafting' => 42,
      'windsurfing' => 43,
      'kitesurfing' => 44,
+     'tactical' => 45,
+     'jumpmaster' => 46,
+     'boxing' => 47,
      'all' => 254,
    },
 
@@ -1165,6 +1274,9 @@ $template[FIT_FLOAT64] = 'd';
      'rafting' => 0x04,
      'windsurfing' => 0x08,
      'kitesurfing' => 0x10,
+     'tactical' => 0x20,
+     'jumpmaster' => 0x40,
+     'boxing' => 0x80,
    },
 
    'sub_sport' => +{
@@ -1211,6 +1323,14 @@ $template[FIT_FLOAT64] = 'd';
      'rc_drone' => 39,
      'wingsuit' => 40,
      'whitewater' => 41,
+     'skate_skiing' => 42,
+     'yoga' => 43,
+     'pilates' => 44,
+     'indoor_running' => 45,
+     'gravel_cycling' => 46,
+     'e_bike_mountain' => 47,
+     'commuting' => 48,
+     'mixed_surface' => 49,
      'all' => 254,
    },
 
@@ -1271,6 +1391,21 @@ $template[FIT_FLOAT64] = 'd';
      'position_marked' => 6,
      'session_end' => 7,
      'fitness_equipment' => 8,
+   },
+
+   'time_mode' => +{
+     '_base_type' => FIT_ENUM,
+     'hour12' => 0,
+     'hour24' => 1,
+     'military' => 2,
+     'hour_12_with_seconds' => 3,
+     'hour_24_with_seconds' => 4,
+   },
+
+   'date_mode' => +{
+     '_base_type' => FIT_ENUM,
+     'day_month' => 0,
+     'month_day' => 1,
    },
 
    'event' => +{
@@ -1340,6 +1475,14 @@ $template[FIT_FLOAT64] = 'd';
      'in_use' => 1,
      'paused' => 2,
      'unknown' => 3,
+   },
+
+   'autoscroll' => +{
+     '_base_type' => FIT_ENUM,
+     'none' => 0,
+     'slow' => 1,
+     'medium' => 2,
+     'fast' => 3,
    },
 
    'activity_class' => +{
@@ -1446,6 +1589,8 @@ $template[FIT_FLOAT64] = 'd';
      'slight_right' => 21,
      'sharp_right' => 22,
      'u_turn' => 23,
+     'segment_start' => 24,
+     'segment_end' => 25,
    },
 
    'manufacturer' => +{
@@ -1542,6 +1687,16 @@ $template[FIT_FLOAT64] = 'd';
      'inside_ride_technologies' => 93,
      'sound_of_motion' => 94,
      'stryd' => 95,
+     'icg' => 96,
+     'mipulse' => 97,
+     'bsx_athletics' => 98,
+     'look' => 99,
+     'campagnolo_srl' => 100,
+     'body_bike_smart' => 101,
+     'praxisworks' => 102,
+     'limits_technology' => 103,
+     'topaction_technology' => 104,
+     'cosinuss' => 105,
      'development' => 255,
      'healthandlife' => 257,
      'lezyne' => 258,
@@ -1552,12 +1707,20 @@ $template[FIT_FLOAT64] = 'd';
      'favero_electronics' => 263,
      'dynovelo' => 264,
      'strava' => 265,
+     'precor' => 266,
+     'bryton' => 267,
+     'sram' => 268,
+     'navman' => 269,
+     'cobi' => 270,
+     'spivi' => 271,
+     'mio_magellan' => 272,
+     'evesports' => 273,
      'actigraphcorp' => 5759,
    },
 
    'garmin_product' => +{
      '_base_type' => FIT_UINT16,
-     'hrm_bike' => 0,
+     'hrm_bike' => 0, # not present?
      'hrm1' => 1,
      'axh01' => 2,
      'axb01' => 3,
@@ -1672,21 +1835,36 @@ $template[FIT_FLOAT64] = 'd';
      'virbxe' => 2172,
      'fr620_taiwan' => 2173,
      'fr220_taiwan' => 2174,
+     'truswing' => 2175,
      'fenix3_china' => 2188,
      'fenix3_twn' => 2189,
      'varia_headlight' => 2192,
      'varia_taillight_old' => 2193,
+     'edge_explore_1000' => 2204,
      'fr225_asia' => 2219,
      'varia_radar_taillight' => 2225,
      'varia_radar_display' => 2226,
      'edge20' => 2238,
      'd2_bravo' => 2262,
+     'approach_s20' => 2266,
      'varia_remote' => 2276,
+     'hrm4_run' => 2327,
+     'vivo_active_hr' => 2337,
+     'vivo_smart_hr' => 2348,
+     'varia_vision' => 2398,
+     'vivo_fit3' => 2406,
+     'fenix3_hr' => 2413,
+     'index_smart_scale' => 2429,
+     'fr235' => 2431,
+     'nautix' => 2496,
+     'edge_820' => 2530,
+     'edge_explore_820' => 2531,
      'fenix3_hr' => 2413,
      'fr235' => 2431,
      'sdm4' => 10007,
      'edge_remote' => 10014,
      'training_center' => 20119,
+     'connectiq_simulator' => 65531,
      'android_antplus_plugin' => 65532,
      'connect' => 65534,
    },
@@ -1699,7 +1877,7 @@ $template[FIT_FLOAT64] = 'd';
      '_base_type' => FIT_UINT8,
      'antfs' => 1,
      'bike_power' => 11,
-     'environment_sensor' => 12,
+     'environment_sensor_legacy' => 12,
      'multi_sport_speed_distance' => 15,
      'control' => 16,
      'fitness_equipment' => 17,
@@ -1708,8 +1886,14 @@ $template[FIT_FLOAT64] = 'd';
      'light_electric_vehicle' => 20,
      'env_sensor' => 25,
      'racquet' => 26,
+     'control_hub' => 27,
+     'muscle_oxygen' => 31,
+     'bike_light_main' => 35,
+     'bike_light_shared' => 36,
+     'exd' => 38,
+     'bike_radar' => 40,
      'weight_scale' => 119,
-     'hrm' => 120,
+     'heart_rate' => 120,
      'bike_speed_cadence' => 121,
      'bike_cadence' => 122,
      'bike_speed' => 123,
@@ -1750,6 +1934,7 @@ $template[FIT_FLOAT64] = 'd';
      'ok' => 3,
      'low' => 4,
      'critical' => 5,
+     'charging' => 6,
      'unknown' => 7,
    },
 
@@ -1856,6 +2041,19 @@ $template[FIT_FLOAT64] = 'd';
      'all' => 254,
    },
 
+   'activity_level' => +{
+     '_base_type' => FIT_ENUM,
+     'low' => 0,
+     'medium' => 1,
+     'high' => 2,
+   },
+
+   'side' => +{
+     '_base_type' => FIT_ENUM,
+     'right' => 0,
+     'left' => 1,
+   },
+
    'left_right_balance' => +{
      '_base_type' => FIT_UINT8,
      'mask' => 0x7F,
@@ -1866,6 +2064,23 @@ $template[FIT_FLOAT64] = 'd';
      '_base_type' => FIT_UINT16,
      'mask' => 0x3FFF,
      'right' => 0x8000,
+   },
+
+   'length_type' => +{
+     '_base_type' => FIT_ENUM,
+     'idle' => 0,
+     'active' => 1,
+   },
+
+   'day_of_week' => +{
+     '_base_type' => FIT_ENUM,
+     'sunday' => 0,
+     'monday' => 1,
+     'tuesday' => 2,
+     'wednesday' => 3,
+     'thursday' => 4,
+     'friday' => 5,
+     'saturday' => 6,
    },
 
    'connectivity_capabilities' => +{
@@ -1884,6 +2099,153 @@ $template[FIT_FLOAT64] = 'd';
      'setup_incomplete' => 0x00000800,
      'continue_sync_after_software_update' => 0x00001000,
      'connect_iq_app_download' => 0x00002000,
+     'golf_course_download' => 0x00004000,
+     'device_initiates_sync' => 0x00008000,
+     'connect_iq_watch_app_download' => 0x00010000,
+     'connect_iq_widget_download' => 0x00020000,
+     'connect_iq_watch_face_download' => 0x00040000,
+     'connect_iq_data_field_download' => 0x00080000,
+     'connect_iq_app_managment' => 0x00100000,
+     'swing_sensor' => 0x00200000,
+     'swing_sensor_remote' => 0x00400000,
+     'incident_detection' => 0x00800000,
+     'audio_prompts' => 0x01000000,
+     'wifi_verification' => 0x02000000,
+     'true_up' => 0x04000000,
+     'find_my_watch' => 0x08000000,
+     'remote_manual_sync' => 0x10000000,
+     'live_track_auto_start' => 0x20000000,
+   },
+
+   'weather_report' => +{
+     '_base_type' => FIT_ENUM,
+     'current' => 0,
+#    'forecast' => 1, # deprecated, use hourly_forecast instead
+     'hourly_forecast' => 1,
+     'daily_forecast' => 2,
+   },
+
+   'weather_status' => +{
+     '_base_type' => FIT_ENUM,
+     'clear' => 0,
+     'partly_cloudy' => 1,
+     'mostly_cloudy' => 2,
+     'rain' => 3,
+     'snow' => 4,
+     'windy' => 5,
+     'thunderstorms' => 6,
+     'wintry_mix' => 7,
+     'fog' => 8,
+     'hazy' => 11,
+     'hail' => 12,
+     'scattered_showers' => 13,
+     'scattered_thunderstorms' => 14,
+     'unknown_precipitation' => 15,
+     'light_rain' => 16,
+     'heavy_rain' => 17,
+     'light_snow' => 18,
+     'heavy_snow' => 19,
+     'light_rain_snow' => 20,
+     'heavy_rain_snow' => 21,
+     'cloudy' => 22,
+   },
+
+   'weather_severity' => +{
+     '_base_type' => FIT_ENUM,
+     'unknown' => 0,
+     'warning' => 1,
+     'watch' => 2,
+     'advisory' => 3,
+     'statement' => 4,
+   },
+
+   'weather_severe_type' => +{
+     '_base_type' => FIT_ENUM,
+     'unspecified' => 0,
+     'tornado' => 1,
+     'tsunami' => 2,
+     'hurricane' => 3,
+     'extreme_wind' => 4,
+     'typhoon' => 5,
+     'inland_hurricane' => 6,
+     'hurricane_force_wind' => 7,
+     'waterspout' => 8,
+     'severe_thunderstorm' => 9,
+     'wreckhouse_winds' => 10,
+     'les_suetes_wind' => 11,
+     'avalanche' => 12,
+     'flash_flood' => 13,
+     'tropical_storm' => 14,
+     'inland_tropical_storm' => 15,
+     'blizzard' => 16,
+     'ice_storm' => 17,
+     'freezing_rain' => 18,
+     'debris_flow' => 19,
+     'flash_freeze' => 20,
+     'dust_storm' => 21,
+     'high_wind' => 22,
+     'winter_storm' => 23,
+     'heavy_freezing_spray' => 24,
+     'extreme_cold' => 25,
+     'wind_chill' => 26,
+     'cold_wave' => 27,
+     'heavy_snow_alert' => 28,
+     'lake_effect_blowing_snow' => 29,
+     'snow_squall' => 30,
+     'lake_effect_snow' => 31,
+     'winter_weather' => 32,
+     'sleet' => 33,
+     'snowfall' => 34,
+     'snow_and_blowing_snow' => 35,
+     'blowing_snow' => 36,
+     'snow_alert' => 37,
+     'arctic_outflow' => 38,
+     'freezing_drizzle' => 39,
+     'storm' => 40,
+     'storm_surge' => 41,
+     'rainfall' => 42,
+     'areal_flood' => 43,
+     'coastal_flood' => 44,
+     'lakeshore_flood' => 45,
+     'excessive_heat' => 46,
+     'heat' => 47,
+     'weather' => 48,
+     'high_heat_and_humidity' => 49,
+     'humidex_and_health' => 50,
+     'humidex' => 51,
+     'gale' => 52,
+     'freezing_spray' => 53,
+     'special_marine' => 54,
+     'squall' => 55,
+     'strong_wind' => 56,
+     'lake_wind' => 57,
+     'marine_weather' => 58,
+     'wind' => 59,
+     'small_craft_hazardous_seas' => 60,
+     'hazardous_seas' => 61,
+     'small_craft' => 62,
+     'small_craft_winds' => 63,
+     'small_craft_rough_bar' => 64,
+     'high_water_level' => 65,
+     'ashfall' => 66,
+     'freezing_fog' => 67,
+     'dense_fog' => 68,
+     'dense_smoke' => 69,
+     'blowing_dust' => 70,
+     'hard_freeze' => 71,
+     'freeze' => 72,
+     'frost' => 73,
+     'fire_weather' => 74,
+     'flood' => 75,
+     'rip_tide' => 76,
+     'high_surf' => 77,
+     'smog' => 78,
+     'air_quality' => 79,
+     'brisk_wind' => 80,
+     'air_stagnation' => 81,
+     'low_water' => 82,
+     'hydrological' => 83,
+     'special_weather' => 84,
    },
 
    'stroke_type' => +{
@@ -1934,6 +2296,10 @@ $template[FIT_FLOAT64] = 'd';
      'right_forearm_extensors' => 33,
      'neck' => 34,
      'throat' => 35,
+     'waist_mid_back' => 36,
+     'waist_front' => 37,
+     'waist_left' => 38,
+     'waist_right' => 39,
    },
 
    'segment_lap_status' => +{
@@ -1980,6 +2346,15 @@ $template[FIT_FLOAT64] = 'd';
      'local' => 5,
    },
 
+   'display_orientation' => +{
+     '_base_type' => FIT_ENUM,
+     'auto' => 0,
+     'portrait' => 1,
+     'landscape' => 2,
+     'portrait_flipped' => 3,
+     'landscape_flipped' => 4,
+   },
+
    'rider_position_type' => +{
      '_base_type' => FIT_ENUM,
      'seated' => 0,
@@ -2005,6 +2380,10 @@ $template[FIT_FLOAT64] = 'd';
      'video_second_stream_end' => 6,
      'video_split_start' => 7,
      'video_second_stream_split_start' => 8,
+     'video_pause' => 11,
+     'video_second_stream_pause' => 12,
+     'video_resume' => 13,
+     'video_second_stream_resume' => 14,
    },
 
    'sensor_type' => +{
@@ -2012,6 +2391,14 @@ $template[FIT_FLOAT64] = 'd';
      'accelerometer' => 0,
      'gyroscope' => 1,
      'compass' => 2,
+   },
+
+   'bike_light_network_config_type' => +{
+     '_base_type' => FIT_ENUM,
+     'auto' => 0,
+     'individual' => 4,
+     'high_visibility' => 5,
+     'trail' => 6,
    },
 
    'comm_timeout_type' => +{
@@ -2055,15 +2442,323 @@ $template[FIT_FLOAT64] = 'd';
      'magnetic_heading' => 0x1000,
    },
 
-   'length_type' => +{
+   'auto_sync_frequency' => +{
      '_base_type' => FIT_ENUM,
-     'idle' => 0,
-     'active' => 1,
+     'never' => 0,
+     'occasionally' => 1,
+     'frequent' => 2,
+     'once_a_day' => 3,
    },
 
-   'crank_length' => +{
+   'exd_layout' => +{
+     '_base_type' => FIT_ENUM,
+     'full_screen' => 0,
+     'half_vertical' => 1,
+     'half_horizontal' => 2,
+     'half_vertical_right_split' => 3,
+     'half_horizontal_bottom_split' => 4,
+     'full_quarter_split' => 5,
+     'half_vertical_left_split' => 6,
+     'half_horizontal_top_split' => 7,
+   },
+
+   'exd_display_type' => +{
+     '_base_type' => FIT_ENUM,
+     'numerical' => 0,
+     'simple' => 1,
+     'graph' => 2,
+     'bar' => 3,
+     'circle_graph' => 4,
+     'virtual_partner' => 5,
+     'balance' => 6,
+     'string_list' => 7,
+     'string' => 8,
+     'simple_dynamic_icon' => 9,
+     'gauge' => 10,
+   },
+
+   'exd_data_units' => +{
+     '_base_type' => FIT_ENUM,
+     'no_units' => 0,
+     'laps' => 1,
+     'miles_per_hour' => 2,
+     'kilometers_per_hour' => 3,
+     'feet_per_hour' => 4,
+     'meters_per_hour' => 5,
+     'degrees_celsius' => 6,
+     'degrees_farenheit' => 7,
+     'zone' => 8,
+     'gear' => 9,
+     'rpm' => 10,
+     'bpm' => 11,
+     'degrees' => 12,
+     'millimeters' => 13,
+     'meters' => 14,
+     'kilometers' => 15,
+     'feet' => 16,
+     'yards' => 17,
+     'kilofeet' => 18,
+     'miles' => 19,
+     'time' => 20,
+     'enum_turn_type' => 21,
+     'percent' => 22,
+     'watts' => 23,
+     'watts_per_kilogram' => 24,
+     'enum_battery_status' => 25,
+     'enum_bike_light_beam_angle_mode' => 26,
+     'enum_bike_light_battery_status' => 27,
+     'enum_bike_light_network_config_type' => 28,
+     'lights' => 29,
+     'seconds' => 30,
+     'minutes' => 31,
+     'hours' => 32,
+     'calories' => 33,
+     'kilojoules' => 34,
+     'milliseconds' => 35,
+     'second_per_mile' => 36,
+     'second_per_kilometer' => 37,
+     'centimeter' => 38,
+     'enum_course_point' => 39,
+     'bradians' => 40,
+     'enum_sport' => 41,
+   },
+
+   'exd_qualifiers' => +{
+     '_base_type' => FIT_ENUM,
+     'no_qualifier' => 0,
+     'instantaneous' => 1,
+     'average' => 2,
+     'lap' => 3,
+     'maximum' => 4,
+     'maximum_average' => 5,
+     'maximum_lap' => 6,
+     'last_lap' => 7,
+     'average_lap' => 8,
+     'to_destination' => 9,
+     'to_go' => 10,
+     'to_next' => 11,
+     'next_course_point' => 12,
+     'total' => 13,
+     'three_second_average' => 14,
+     'ten_second_average' => 15,
+     'thirty_second_average' => 16,
+     'percent_maximum' => 17,
+     'percent_maximum_average' => 18,
+     'lap_percent_maximum' => 19,
+     'elapsed' => 20,
+     'sunrise' => 21,
+     'sunset' => 22,
+     'compared_to_virtual_partner' => 23,
+     'maximum_24h' => 24,
+     'minimum_24h' => 25,
+     'minimum' => 26,
+     'first' => 27,
+     'second' => 28,
+     'third' => 29,
+     'shifter' => 30,
+     'last_sport' => 31,
+     'zone_9' => 242,
+     'zone_8' => 243,
+     'zone_7' => 244,
+     'zone_6' => 245,
+     'zone_5' => 246,
+     'zone_4' => 247,
+     'zone_3' => 248,
+     'zone_2' => 249,
+     'zone_1' => 250,
+   },
+
+   'exd_descriptors' => +{
+     '_base_type' => FIT_ENUM,
+     'bike_light_battery_status' => 0,
+     'beam_angle_status' => 1,
+     'batery_level' => 2,
+     'light_network_mode' => 3,
+     'number_lights_connected' => 4,
+     'cadence' => 5,
+     'distance' => 6,
+     'estimated_time_of_arrival' => 7,
+     'heading' => 8,
+     'time' => 9,
+     'battery_level' => 10,
+     'trainer_resistance' => 11,
+     'trainer_target_power' => 12,
+     'time_seated' => 13,
+     'time_standing' => 14,
+     'elevation' => 15,
+     'grade' => 16,
+     'ascent' => 17,
+     'descent' => 18,
+     'vertical_speed' => 19,
+     'di2_battery_level' => 20,
+     'front_gear' => 21,
+     'rear_gear' => 22,
+     'gear_ratio' => 23,
+     'heart_rate' => 24,
+     'heart_rate_zone' => 25,
+     'time_in_heart_rate_zone' => 26,
+     'heart_rate_reserve' => 27,
+     'calories' => 28,
+     'gps_accuracy' => 29,
+     'gps_signal_strength' => 30,
+     'temperature' => 31,
+     'time_of_day' => 32,
+     'balance' => 33,
+     'pedal_smoothness' => 34,
+     'power' => 35,
+     'functional_threshold_power' => 36,
+     'intensity_factor' => 37,
+     'work' => 38,
+     'power_ratio' => 39,
+     'normalized_power' => 40,
+     'training_stress_score' => 41,
+     'time_on_zone' => 42,
+     'speed' => 43,
+     'laps' => 44,
+     'reps' => 45,
+     'workout_step' => 46,
+     'course_distance' => 47,
+     'navigation_distance' => 48,
+     'course_estimated_time_of_arrival' => 49,
+     'navigation_estimated_time_of_arrival' => 50,
+     'course_time' => 51,
+     'navigation_time' => 52,
+     'course_heading' => 53,
+     'navigation_heading' => 54,
+     'power_zone' => 55,
+     'torque_effectiveness' => 56,
+     'timer_time' => 57,
+     'power_weight_ratio' => 58,
+     'left_platform_center_offset' => 59,
+     'right_platform_center_offset' => 60,
+     'left_power_phase_start_angle' => 61,
+     'right_power_phase_start_angle' => 62,
+     'left_power_phase_finish_angle' => 63,
+     'right_power_phase_finish_angle' => 64,
+     'gears' => 65,
+     'pace' => 66,
+     'training_effect' => 67,
+     'vertical_oscillation' => 68,
+     'vertical_ratio' => 69,
+     'ground_contact_time' => 70,
+     'left_ground_contact_time_balance' => 71,
+     'right_ground_contact_time_balance' => 72,
+     'stride_length' => 73,
+     'running_cadence' => 74,
+     'performance_condition' => 75,
+     'course_type' => 76,
+     'time_in_power_zone' => 77,
+     'navigation_turn' => 78,
+     'course_location' => 79,
+     'navigation_location' => 80,
+     'compass' => 81,
+     'gear_combo' => 82,
+     'muscle_oxygen' => 83,
+     'icon' => 84,
+   },
+
+   'auto_activity_detect' => +{
+     '_base_type' => FIT_UINT32,
+     'none' => 0x00000000,
+     'running' => 0x00000001,
+     'cycling' => 0x00000002,
+     'swimming' => 0x00000004,
+     'walking' => 0x00000008,
+     'elliptical' => 0x00000020,
+     'sedentary' => 0x00000400,
+   },
+
+   'supported_exd_screen_layouts' => +{
+     '_base_type' => FIT_UINT32Z,
+     'full_screen' => 0x00000001,
+     'half_vertical' => 0x00000002,
+     'half_horizontal' => 0x00000004,
+     'half_vertical_right_split' => 0x00000008,
+     'half_horizontal_bottom_split' => 0x00000010,
+     'full_quarter_split' => 0x00000020,
+     'half_vertical_left_split' => 0x00000040,
+     'half_horizontal_top_split' => 0x00000080,
+   },
+
+   'fit_base_type' => +{
      '_base_type' => FIT_UINT8,
-     'auto' => 0xFE,
+     'enum' => 0,
+     'sint8' => 1,
+     'uint8' => 2,
+     'sint16' => 131,
+     'uint16' => 132,
+     'sint32' => 133,
+     'uint32' => 134,
+     'string' => 7,
+     'float32' => 136,
+     'float64' => 137,
+     'uint8z' => 10,
+     'uint16z' => 139,
+     'uint32z' => 140,
+     'byte' => 13,
+     'sint64' => 142,
+     'uint64' => 143,
+     'uint64z' => 144,
+   },
+
+   'turn_type' => +{
+     '_base_type' => FIT_ENUM,
+     'arriving_idx' => 0,
+     'arriving_left_idx' => 1,
+     'arriving_right_idx' => 2,
+     'arriving_via_idx' => 3,
+     'arriving_via_left_idx' => 4,
+     'arriving_via_right_idx' => 5,
+     'bear_keep_left_idx' => 6,
+     'bear_keep_right_idx' => 7,
+     'continue_idx' => 8,
+     'exit_left_idx' => 9,
+     'exit_right_idx' => 10,
+     'ferry_idx' => 11,
+     'roundabout_45_idx' => 12,
+     'roundabout_90_idx' => 13,
+     'roundabout_135_idx' => 14,
+     'roundabout_180_idx' => 15,
+     'roundabout_225_idx' => 16,
+     'roundabout_270_idx' => 17,
+     'roundabout_315_idx' => 18,
+     'roundabout_360_idx' => 19,
+     'roundabout_neg_45_idx' => 20,
+     'roundabout_neg_90_idx' => 21,
+     'roundabout_neg_135_idx' => 22,
+     'roundabout_neg_180_idx' => 23,
+     'roundabout_neg_225_idx' => 24,
+     'roundabout_neg_270_idx' => 25,
+     'roundabout_neg_315_idx' => 26,
+     'roundabout_neg_360_idx' => 27,
+     'roundabout_generic_idx' => 28,
+     'roundabout_neg_generic_idx' => 29,
+     'sharp_turn_left_idx' => 30,
+     'sharp_turn_right_idx' => 31,
+     'turn_left_idx' => 32,
+     'turn_right_idx' => 33,
+     'uturn_left_idx' => 34,
+     'uturn_right_idx' => 35,
+     'icon_inv_idx' => 36,
+     'icon_idx_cnt' => 37,
+   },
+
+   'bike_light_beam_angle_mode' => +{
+     '_base_type' => FIT_ENUM,
+     'manual' => 0,
+     'auto' => 1,
+   },
+
+   'fit_base_unit' => +{
+     '_base_type' => FIT_UINT16,
+     'other' => 0,
+   },
+
+   'switch' => +{ # not present?
+     '_base_type' => FIT_ENUM,
+     'off' => 0,
+     'on' => 1,
+     'auto' => 2,
    },
 
    );
@@ -2140,7 +2835,7 @@ sub named_type_value {
       my $expr;
 
       foreach $expr (split /,/, $val) {
-	$expr =~s/^.*=//;
+	$expr =~ s/^.*=//;
 
 	if ($expr =~ s/^0[xX]//) {
 	  $num |= hex($expr);
@@ -2202,6 +2897,7 @@ sub named_type_value {
 %msgtype_by_name =
   (
 
+   # =================== Common messages ===================
    'file_id' => +{
      0 => +{'name' => 'type', 'type_name' => 'file'},
      1 => +{'name' => 'manufacturer', 'type_name' => 'manufacturer'},
@@ -2212,12 +2908,15 @@ sub named_type_value {
        'switch' => +{
 	 '_by' => 'manufacturer',
 	 'garmin' => +{'name' => 'garmin_product', 'type_name' => 'garmin_product'},
+	 'dynastream' => +{'name' => 'garmin_product', 'type_name' => 'garmin_product'},
+	 'dynastream_oem' => +{'name' => 'garmin_product', 'type_name' => 'garmin_product'},
        },
      },
 
      3 => +{'name' => 'serial_number'},
      4 => +{'name' => 'time_created', 'type_name' => 'date_time'},
      5 => +{'name' => 'number'},
+     7 => +{'name' => 'unknown7'}, # unknown UINT32
      8 => +{'name' => 'product_name'},
    },
 
@@ -2227,21 +2926,28 @@ sub named_type_value {
    },
 
    'timestamp_correlation' => +{
-     253 => +{'name' => 'timestamp', 'type_name' => 'date_time'},
+     253 => +{'name' => 'timestamp', 'type_name' => 'date_time', 'unit' => 's'},
      0 => +{'name' => 'fractional_timestamp', 'scale' => 32768, 'unit' => 's'},
      1 => +{'name' => 'system_timestamp', 'type_name' => 'date_time'},
      2 => +{'name' => 'fractional_system_timestamp', 'scale' => 32768, 'unit' => 's'},
-     3 => +{'name' => 'local_timestamp', 'type_name' => 'date_time'},
+     3 => +{'name' => 'local_timestamp', 'type_name' => 'local_date_time'},
      4 => +{'name' => 'timestamp_ms', 'unit' => 'ms'},
      5 => +{'name' => 'system_timestamp_ms', 'unit' => 'ms'},
    },
 
+   # =================== ??? ===================
    'pad' => +{
      0 => +{'name' => 'pad'},
    },
 
+   # =================== Device file messages ===================
    'software' => +{
      254 => +{'name' => 'message_index', 'type_name' => 'message_index'},
+     3 => +{'name' => 'version', 'scale' => 100},
+     5 => +{'name' => 'part_number'},
+   },
+
+   'slave_device' => +{
      0 => +{'name' => 'manufacturer', 'type_name' => 'manufacturer'},
 
      1 => +{
@@ -2250,23 +2956,20 @@ sub named_type_value {
        'switch' => +{
 	 '_by' => 'manufacturer',
 	 'garmin' => +{'name' => 'garmin_product', 'type_name' => 'garmin_product'},
+	 'dynastream' => +{'name' => 'garmin_product', 'type_name' => 'garmin_product'},
+	 'dynastream_oem' => +{'name' => 'garmin_product', 'type_name' => 'garmin_product'},
        },
      },
-
-     3 => +{'name' => 'version', 'scale' => 100},
-     5 => +{'name' => 'part_number'},
-   },
-
-   'slave_device' => +{
-     0 => +{'name' => 'manufacturer', 'type_name' => 'manufacturer'},
-     1 => +{'name' => 'product'},
    },
 
    'capabilities' => +{
      0 => +{'name' => 'languages'},
      1 => +{'name' => 'sports', 'type_name' => 'sport_bits_0'},
-     21 => +{'name' => 'workout_supported', 'type_name' => 'workout_capabilities'},
+     21 => +{'name' => 'workouts_supported', 'type_name' => 'workout_capabilities'},
+     22 => +{'name' => 'unknown22'}, # unknown ENUM
      23 => +{'name' => 'connectivity_supported', 'type_name' => 'connectivity_capabilities'},
+     24 => +{'name' => 'unknown24'}, # unknown ENUM
+     25 => +{'name' => 'unknown25'}, # unknown UINT32Z
    },
 
    'file_capabilities' => +{
@@ -2275,7 +2978,7 @@ sub named_type_value {
      1 => +{'name' => 'flags', 'type_name' => 'file_flags'},
      2 => +{'name' => 'directory'},
      3 => +{'name' => 'max_count'},
-     4 => +{'name' => 'max_size'},
+     4 => +{'name' => 'max_size', 'unit' => 'bytes'},
    },
 
    'mesg_capabilities' => +{
@@ -2302,28 +3005,66 @@ sub named_type_value {
      1 => +{'name' => 'mesg_num', 'type_name' => 'mesg_num'},
      2 => +{'name' => 'field_num'},
      3 => +{'name' => 'count'},
-     4 => +{'name' => 'bits'},
+     4 => +{'name' => 'bits'}, # not present?
    },
 
+   # =================== Settings file messages ===================
    'device_settings' => +{
      0 => +{'name' => 'active_time_zone'},
      1 => +{'name' => 'utc_offset'},
+     2 => +{'name' => 'time_offset', 'unit' => 's'},
+     3 => +{'name' => 'unknown3'}, # unknown ENUM
+     4 => +{'name' => 'unknown4'}, # unknown ENUM
      5 => +{'name' => 'time_zone_offset', 'scale' => 4, 'unit' => 'hr'},
+     10 => +{'name' => 'unknown10'}, # unknown ENUM
+     11 => +{'name' => 'unknown11'}, # unknown ENUM
+     12 => +{'name' => 'unknown12'}, # unknown ENUM
+     13 => +{'name' => 'unknown13'}, # unknown UINT8
+     14 => +{'name' => 'unknown14'}, # unknown UINT8
+     15 => +{'name' => 'unknown15'}, # unknown UINT8
+     16 => +{'name' => 'unknown16'}, # unknown ENUM
+     17 => +{'name' => 'unknown17'}, # unknown ENUM
+     18 => +{'name' => 'unknown18'}, # unknown ENUM
+     21 => +{'name' => 'unknown21'}, # unknown ENUM
+     22 => +{'name' => 'unknown22'}, # unknown ENUM
+     26 => +{'name' => 'unknown26'}, # unknown ENUM
+     27 => +{'name' => 'unknown27'}, # unknown ENUM
+     29 => +{'name' => 'unknown29'}, # unknown ENUM
+     36 => +{'name' => 'activity_tracker_enabled', 'type_name' => 'bool'},
+     38 => +{'name' => 'unknown38'}, # unknown ENUM
+     40 => +{'name' => 'pages_enabled'},
+     41 => +{'name' => 'unknown41'}, # unknown ENUM
+     46 => +{'name' => 'move_alert_enabled', 'type_name' => 'bool'},
+     47 => +{'name' => 'date_mode', 'type_name' => 'date_mode'},
+     48 => +{'name' => 'unknown48'}, # unknown ENUM
+     49 => +{'name' => 'unknown49'}, # unknown UINT16
+     52 => +{'name' => 'unknown52'}, # unknown ENUM
+     53 => +{'name' => 'unknown53'}, # unknown ENUM
+     54 => +{'name' => 'unknown54'}, # unknown ENUM
+     55 => +{'name' => 'display_orientation', 'type_name' => 'display_orientation'},
+     56 => +{'name' => 'mounting_side', 'type_name' => 'side'},
+     57 => +{'name' => 'default_page'},
+     58 => +{'name' => 'autosync_min_steps', 'unit' => 'steps'},
+     59 => +{'name' => 'autosync_min_time', 'unit' => 'minutes'},
+     85 => +{'name' => 'unknown85'}, # unknown ENUM
+     89 => +{'name' => 'auto_sync_frequency', 'type_name' => 'auto_sync_frequency'},
+     94 => +{'name' => 'number_of_screens'},
+     95 => +{'name' => 'smart_notification_display_orientation', 'type_name' => 'display_orientation'},
    },
 
    'user_profile' => +{
      254 => +{'name' => 'message_index', 'type_name' => 'message_index'},
      0 => +{'name' => 'friendly_name'},
      1 => +{'name' => 'gender', 'type_name' => 'gender'},
-     2 => +{'name' => 'age'},
+     2 => +{'name' => 'age', 'unit' => 'years'},
      3 => +{'name' => 'height', scale => 100, 'unit' => 'm'},
      4 => +{'name' => 'weight', scale => 10, 'unit' => 'kg'},
      5 => +{'name' => 'language', 'type_name' => 'language'},
      6 => +{'name' => 'elev_setting', 'type_name' => 'display_measure'},
      7 => +{'name' => 'weight_setting', 'type_name' => 'display_measure'},
      8 => +{'name' => 'resting_heart_rate', 'unit' => 'bpm'},
-     9 => +{'name' => 'default_running_max_heart_rate', 'unit' => 'bpm'},
-     10 => +{'name' => 'default_biking_max_heart_rate', 'unit' => 'bpm'},
+     9 => +{'name' => 'default_max_running_heart_rate', 'unit' => 'bpm'},
+     10 => +{'name' => 'default_max_biking_heart_rate', 'unit' => 'bpm'},
      11 => +{'name' => 'default_max_heart_rate', 'unit' => 'bpm'},
      12 => +{'name' => 'hr_setting', 'type_name' => 'display_heart'},
      13 => +{'name' => 'speed_setting', 'type_name' => 'display_measure'},
@@ -2334,7 +3075,19 @@ sub named_type_value {
      21 => +{'name' => 'temperature_setting', 'type_name' => 'display_measure'},
      22 => +{'name' => 'local_id', 'type_name' => 'user_local_id'},
      23 => +{'name' => 'global_id'},
+     24 => +{'name' => 'unknown24'}, # unknown UINT8
+     28 => +{'name' => 'unknown28'}, # unknown UINT32
+     29 => +{'name' => 'unknown29'}, # unknown UINT32
      30 => +{'name' => 'height_setting', 'type_name' => 'display_measure'},
+     31 => +{'name' => 'unknown31'}, # unknown UINT16
+     32 => +{'name' => 'unknown32'}, # unknown UINT16
+     33 => +{'name' => 'unknown33'}, # unknown UINT16
+     34 => +{'name' => 'unknown34'}, # unknown UINT16
+     35 => +{'name' => 'unknown35'}, # unknown UINT32
+     36 => +{'name' => 'unknown36'}, # unknown UINT8
+     38 => +{'name' => 'unknown38'}, # unknown UINT16
+     40 => +{'name' => 'unknown40'}, # unknown FLOAT32
+     42 => +{'name' => 'unknown42'}, # unknown UINT32
    },
 
    'hrm_profile' => +{
@@ -2377,32 +3130,63 @@ sub named_type_value {
      16 => +{'name' => 'cad_enabled'},
      17 => +{'name' => 'spdcad_enabled'},
      18 => +{'name' => 'power_enabled'},
-     19 => +{'name' => 'crank_length', 'type_name' => 'crank_length', 'scale' => 2, 'offset' => -110, 'unit' => 'mm'},
+     19 => +{'name' => 'crank_length', 'scale' => 2, 'offset' => -110, 'unit' => 'mm'},
      20 => +{'name' => 'enabled'},
      21 => +{'name' => 'bike_spd_ant_id_trans_type'},
      22 => +{'name' => 'bike_cad_ant_id_trans_type'},
      23 => +{'name' => 'bike_spdcad_ant_id_trans_type'},
      24 => +{'name' => 'bike_power_ant_id_trans_type'},
+     35 => +{'name' => 'unknown35'}, # unknown UINT8 (array[3])
+     36 => +{'name' => 'unknown36'}, # unknown ENUM
      37 => +{'name' => 'odometer_rollover'},
      38 => +{'name' => 'front_gear_num'},
      39 => +{'name' => 'front_gear'},
      40 => +{'name' => 'rear_gear_num'},
      41 => +{'name' => 'rear_gear'},
-     44 => +{'name' => 'shimano_di2_enabled', 'type_name' => 'bool'},
+     44 => +{'name' => 'shimano_di2_enabled'},
    },
 
+   'connectivity' => +{
+     0 => +{'name' => 'bluetooth_enabled', 'type_name' => 'bool'},
+     1 => +{'name' => 'bluetooth_le_enabled', 'type_name' => 'bool'},
+     2 => +{'name' => 'ant_enabled', 'type_name' => 'bool'},
+     3 => +{'name' => 'name'},
+     4 => +{'name' => 'live_tracking_enabled', 'type_name' => 'bool'},
+     5 => +{'name' => 'weather_conditions_enabled', 'type_name' => 'bool'},
+     6 => +{'name' => 'weather_alerts_enabled', 'type_name' => 'bool'},
+     7 => +{'name' => 'auto_activity_upload_enabled', 'type_name' => 'bool'},
+     8 => +{'name' => 'course_download_enabled', 'type_name' => 'bool'},
+     9 => +{'name' => 'workout_download_enabled', 'type_name' => 'bool'},
+     10 => +{'name' => 'gps_ephemeris_download_enabled', 'type_name' => 'bool'},
+     11 => +{'name' => 'incident_detection_enabled', 'type_name' => 'bool'},
+     12 => +{'name' => 'grouptrack_enabled', 'type_name' => 'bool'},
+   },
+
+   # =================== Sport settings file messages ===================
    'zones_target' => +{
      1 => +{'name' => 'max_heart_rate', 'unit' => 'bpm'},
      2 => +{'name' => 'threshold_heart_rate', 'unit' => 'bpm'},
-     3 => +{'name' => 'functional_threshold_power', 'unit' => 'w'},
+     3 => +{'name' => 'functional_threshold_power', 'unit' => 'watts'},
      5 => +{'name' => 'hr_calc_type', 'type_name' => 'hr_zone_calc'},
      7 => +{'name' => 'pwr_calc_type', 'type_name' => 'power_zone_calc'},
+     8 => +{'name' => 'unknown8'}, # unknown UINT16
+     9 => +{'name' => 'unknown9'}, # unknown ENUM
+     10 => +{'name' => 'unknown10'}, # unknown ENUM
+     13 => +{'name' => 'unknown13'}, # unknown ENUM
    },
 
    'sport' => +{
      0 => +{'name' => 'sport', 'type_name' => 'sport'},
      1 => +{'name' => 'sub_sport', 'type_name' => 'sub_sport'},
      3 => +{'name' => 'name'},
+     4 => +{'name' => 'unknown4'}, # unknown UINT16
+     5 => +{'name' => 'unknown5'}, # unknown ENUM
+     6 => +{'name' => 'unknown6'}, # unknown ENUM
+     7 => +{'name' => 'unknown7'}, # unknown UINT8
+     8 => +{'name' => 'unknown8'}, # unknown UINT8
+     9 => +{'name' => 'unknown9'}, # unknown UINT8
+     10 => +{'name' => 'unknown10'}, # unknown UINT8 (array[3])
+     12 => +{'name' => 'unknown12'}, # unknown UINT8
    },
 
    'hr_zone' => +{
@@ -2431,11 +3215,12 @@ sub named_type_value {
 
    'met_zone' => +{
      254 => +{'name' => 'message_index', 'type_name' => 'message_index'},
-     1 => +{'name' => 'high_bpm'},
+     1 => +{'name' => 'high_bpm', 'unit' => 'bpm'},
      2 => +{'name' => 'calories', 'scale' => 10, 'unit' => 'kcal/min'},
      3 => +{'name' => 'fat_calories', 'scale' => 10, 'unit' => 'kcal/min'},
    },
 
+   # =================== Goals file messages ===================
    'goal' => +{
      254 => +{'name' => 'message_index', 'type_name' => 'message_index'},
      0 => +{'name' => 'sport', 'type_name' => 'sport'},
@@ -2444,13 +3229,14 @@ sub named_type_value {
      3 => +{'name' => 'end_date', 'type_name' => 'date_time'},
      4 => +{'name' => 'type', 'type_name' => 'goal'},
      5 => +{'name' => 'value'},
-     6 => +{'name' => 'repeat'},
+     6 => +{'name' => 'repeat', 'type_name' => 'bool'},
      7 => +{'name' => 'target_value'},
      8 => +{'name' => 'recurrence', 'type_name' => 'goal_recurrence'},
      9 => +{'name' => 'recurrence_value'},
-     10 => +{'name' => 'enabled'},
+     10 => +{'name' => 'enabled', 'type_name' => 'bool'},
    },
 
+   # =================== Activity file messages ===================
    'activity' => +{
      253 => +{'name' => 'timestamp', 'type_name' => 'date_time'},
      0 => +{'name' => 'total_timer_time', 'scale' => 1000, 'unit' => 's'},
@@ -2464,7 +3250,7 @@ sub named_type_value {
 
    'session' => +{
      254 => +{'name' => 'message_index', 'type_name' => 'message_index'},
-     253 => +{'name' => 'timestamp', 'type_name' => 'date_time'},
+     253 => +{'name' => 'timestamp', 'type_name' => 'date_time', 'unit' => 's'},
      0 => +{'name' => 'event', 'type_name' => 'event'},
      1 => +{'name' => 'event_type', 'type_name' => 'event_type'},
      2 => +{'name' => 'start_time', 'type_name' => 'date_time'},
@@ -2477,11 +3263,11 @@ sub named_type_value {
      9 => +{'name' => 'total_distance', 'scale' => 100, 'unit' => 'm'},
 
      10 => +{
-       'name' => 'total_cycles',
-       'unit' => 'cycles',
+       'name' => 'total_cycles', 'unit' => 'cycles',
 
        'switch' => +{
 	 '_by' => 'sport',
+	 'walking' => +{'name' => 'total_steps', 'unit' => 'steps'},
 	 'running' => +{'name' => 'total_strides', 'unit' => 'strides'},
 	 'swimming' => +{'name' => 'total_strokes', 'unit' => 'strokes'},
        },
@@ -2495,22 +3281,22 @@ sub named_type_value {
      17 => +{'name' => 'max_heart_rate', 'unit' => 'bpm'},
 
      18 => +{
-       'name' => 'avg_cadence',
-       'unit' => 'rpm',
+       'name' => 'avg_cadence', 'unit' => 'rpm',
 
        'switch' => +{
 	 '_by' => 'sport',
+	 'walking' => +{'name' => 'avg_walking_cadence', 'unit' => 'steps/min'},
 	 'running' => +{'name' => 'avg_running_cadence', 'unit' => 'strides/min'},
 	 'swimming' => +{'name' => 'avg_swimming_cadence', 'unit' => 'strokes/min'},
        },
      },
 
      19 => +{
-       'name' => 'max_cadence',
-       'unit' => 'rpm',
+       'name' => 'max_cadence', 'unit' => 'rpm',
 
        'switch' => +{
 	 '_by' => 'sport',
+	 'walking' => +{'name' => 'max_walking_cadence', 'unit' => 'steps/min'},
 	 'running' => +{'name' => 'max_running_cadence', 'unit' => 'strides/min'},
 	 'swimming' => +{'name' => 'max_swimming_cadence', 'unit' => 'strokes/min'},
        },
@@ -2532,12 +3318,12 @@ sub named_type_value {
      34 => +{'name' => 'normalized_power', 'unit' => 'watts'},
      35 => +{'name' => 'training_stress_score', 'scale' => 10, 'unit' => 'tss'},
      36 => +{'name' => 'intensity_factor', 'scale' => 1000, 'unit' => 'if'},
-     37 => +{'name' => 'left_right_balance', 'type_name' => left_right_balance_100},
-     41 => +{'name' => 'avg_stroke_count', 'scale' => 10},
+     37 => +{'name' => 'left_right_balance', 'type_name' => 'left_right_balance_100'},
+     41 => +{'name' => 'avg_stroke_count', 'scale' => 10, 'unit' => 'strokes/lap'},
      42 => +{'name' => 'avg_stroke_distance', 'scale' => 100, 'unit' => 'm'},
      43 => +{'name' => 'swim_stroke', 'type_name' => 'swim_stroke'},
      44 => +{'name' => 'pool_length', 'scale' => 100, 'unit' => 'm'},
-     45 => +{'name' => 'xxx45_ftp', 'unit' => 'watts'}, # just a guess
+     45 => +{'name' => 'threshold_power', 'unit' => 'watts'},
      46 => +{'name' => 'pool_length_unit', 'type_name' => 'display_measure'},
      47 => +{'name' => 'num_active_lengths', 'unit' => 'lengths'},
      48 => +{'name' => 'total_work', 'unit' => 'J'},
@@ -2564,6 +3350,8 @@ sub named_type_value {
      69 => +{'name' => 'avg_lap_time', 'scale' => 1000, 'unit' => 's'},
      70 => +{'name' => 'best_lap_index'},
      71 => +{'name' => 'min_altitude', 'scale' => 5, 'offset' => 500, 'unit' => 'm'},
+     78 => +{'name' => 'unknown78'}, # unknown UINT32
+     81 => +{'name' => 'unknown81'}, # unknown ENUM
      82 => +{'name' => 'player_score'},
      83 => +{'name' => 'opponent_score'},
      84 => +{'name' => 'opponent_name'},
@@ -2572,7 +3360,7 @@ sub named_type_value {
      87 => +{'name' => 'max_ball_speed', 'scale' => 100, 'unit' => 'm/s'},
      88 => +{'name' => 'avg_ball_speed', 'scale' => 100, 'unit' => 'm/s'},
      89 => +{'name' => 'avg_vertical_oscillation', 'scale' => 10, 'unit' => 'mm'},
-     90 => +{'name' => 'avg_stance_time_percent', 'scale' => 100, 'unit' => 'percent'},
+     90 => +{'name' => 'avg_stance_time_percent', 'scale' => 100, 'unit' => '%'},
      91 => +{'name' => 'avg_stance_time', 'scale' => 10, 'unit' => 'ms'},
      92 => +{'name' => 'avg_fractional_cadence', 'scale' => 128, 'unit' => 'rpm'},
      93 => +{'name' => 'max_fractional_cadence', 'scale' => 128, 'unit' => 'rpm'},
@@ -2583,11 +3371,16 @@ sub named_type_value {
      98 => +{'name' => 'avg_saturated_hemoglobin_percent', 'scale' => 10, 'unit' => '%'},
      99 => +{'name' => 'min_saturated_hemoglobin_percent', 'scale' => 10, 'unit' => '%'},
      100 => +{'name' => 'max_saturated_hemoglobin_percent', 'scale' => 10, 'unit' => '%'},
-     101 => +{'name' => 'avg_left_torque_effectiveness', 'scale' => 2, 'unit' => 'percent'},
-     102 => +{'name' => 'avg_right_torque_effectiveness', 'scale' => 2, 'unit' => 'percent'},
-     103 => +{'name' => 'avg_left_pedal_smoothness', 'scale' => 2, 'unit' => 'percent'},
-     104 => +{'name' => 'avg_right_pedal_smoothness', 'scale' => 2, 'unit' => 'percent'},
-     105 => +{'name' => 'avg_combined_pedal_smoothness', 'scale' => 2, 'unit' => 'percent'},
+     101 => +{'name' => 'avg_left_torque_effectiveness', 'scale' => 2, 'unit' => '%'},
+     102 => +{'name' => 'avg_right_torque_effectiveness', 'scale' => 2, 'unit' => '%'},
+     103 => +{'name' => 'avg_left_pedal_smoothness', 'scale' => 2, 'unit' => '%'},
+     104 => +{'name' => 'avg_right_pedal_smoothness', 'scale' => 2, 'unit' => '%'},
+     105 => +{'name' => 'avg_combined_pedal_smoothness', 'scale' => 2, 'unit' => '%'},
+     106 => +{'name' => 'unknown106'}, # unknown UINT16
+     107 => +{'name' => 'unknown107'}, # unknown UINT16
+     108 => +{'name' => 'unknown108'}, # unknown UINT16
+     109 => +{'name' => 'unknown109'}, # unknown UINT8
+     110 => +{'name' => 'unknown110'}, # unknown STRING
      111 => +{'name' => 'sport_index'},
      112 => +{'name' => 'time_standing', 'scale' => 1000, 'unit' => 's'},
      113 => +{'name' => 'stand_count'},
@@ -2608,12 +3401,15 @@ sub named_type_value {
      128 => +{'name' => 'enhanced_max_altitude', 'scale' => 5, 'offset' => 500, 'unit' => 'm'},
      129 => +{'name' => 'avg_lev_motor_power', 'unit' => 'watts'},
      130 => +{'name' => 'max_lev_motor_power', 'unit' => 'watts'},
-     131 => +{'name' => 'lev_battery_consumption', 'scale' => 2, 'unit' => 'percent'},
+     131 => +{'name' => 'lev_battery_consumption', 'scale' => 2, 'unit' => '%'},
+     132 => +{'name' => 'avg_vertical_ratio', 'scale' => 100, 'unit' => '%'},
+     133 => +{'name' => 'avg_stance_time_balance', 'scale' => 100, 'unit' => '%'},
+     134 => +{'name' => 'avg_step_length', 'scale' => 10, 'unit' => 'mm'},
    },
 
    'lap' => +{
      254 => +{'name' => 'message_index', 'type_name' => 'message_index'},
-     253 => +{'name' => 'timestamp', 'type_name' => 'date_time'},
+     253 => +{'name' => 'timestamp', 'type_name' => 'date_time', 'unit' => 's'},
      0 => +{'name' => 'event', 'type_name' => 'event'},
      1 => +{'name' => 'event_type', 'type_name' => 'event_type'},
      2 => +{'name' => 'start_time', 'type_name' => 'date_time'},
@@ -2626,11 +3422,11 @@ sub named_type_value {
      9 => +{'name' => 'total_distance', 'scale' => 100, 'unit' => 'm'},
 
      10 => +{
-       'name' => 'total_cycles',
-       'unit' => 'cycles',
+       'name' => 'total_cycles', 'unit' => 'cycles',
 
        'switch' => +{
 	 '_by' => 'sport',
+	 'walking' => +{'name' => 'total_steps', 'unit' => 'steps'},
 	 'running' => +{'name' => 'total_strides', 'unit' => 'strides'},
 	 'swimming' => +{'name' => 'total_strokes', 'unit' => 'strokes'},
        },
@@ -2644,22 +3440,22 @@ sub named_type_value {
      16 => +{'name' => 'max_heart_rate', 'unit' => 'bpm'},
 
      17 => +{
-       'name' => 'avg_cadence',
-       'unit' => 'rpm',
+       'name' => 'avg_cadence', 'unit' => 'rpm',
 
        'switch' => +{
 	 '_by' => 'sport',
+	 'walking' => +{'name' => 'avg_walking_cadence', 'unit' => 'steps/min'},
 	 'running' => +{'name' => 'avg_running_cadence', 'unit' => 'strides/min'},
 	 'swimming' => +{'name' => 'avg_swimming_cadence', 'unit' => 'strokes/min'},
        },
      },
 
      18 => +{
-       'name' => 'max_cadence',
-       'unit' => 'rpm',
+       'name' => 'max_cadence', 'unit' => 'rpm',
 
        'switch' => +{
 	 '_by' => 'sport',
+	 'walking' => +{'name' => 'max_walking_cadence', 'unit' => 'steps/min'},
 	 'running' => +{'name' => 'max_running_cadence', 'unit' => 'strides/min'},
 	 'swimming' => +{'name' => 'max_swimming_cadence', 'unit' => 'strokes/min'},
        },
@@ -2673,15 +3469,15 @@ sub named_type_value {
      24 => +{'name' => 'lap_trigger', 'type_name' => 'lap_trigger'},
      25 => +{'name' => 'sport', 'type_name' => 'sport'},
      26 => +{'name' => 'event_group'},
-     27 => +{'name' => 'nec_lat', 'unit' => 'semicircles'},
-     28 => +{'name' => 'nec_long', 'unit' => 'semicircles'},
-     29 => +{'name' => 'swc_lat', 'unit' => 'semicircles'},
-     30 => +{'name' => 'swc_long', 'unit' => 'semicircles'},
+     27 => +{'name' => 'nec_lat', 'unit' => 'semicircles'}, # not present?
+     28 => +{'name' => 'nec_long', 'unit' => 'semicircles'}, # not present?
+     29 => +{'name' => 'swc_lat', 'unit' => 'semicircles'}, # not present?
+     30 => +{'name' => 'swc_long', 'unit' => 'semicircles'}, # not present?
      32 => +{'name' => 'num_lengths', 'unit' => 'lengths'},
      33 => +{'name' => 'normalized_power', 'unit' => 'watts'},
      34 => +{'name' => 'left_right_balance', 'type_name' => 'left_right_balance_100'},
      35 => +{'name' => 'first_length_index'},
-     37 => +{'name' => 'avg_stroke_distance', 'unit' => 'm'},
+     37 => +{'name' => 'avg_stroke_distance', 'scale' => 100, 'unit' => 'm'},
      38 => +{'name' => 'swim_stroke', 'type_name' => 'swim_stroke'},
      39 => +{'name' => 'sub_sport', 'type_name' => 'sub_sport'},
      40 => +{'name' => 'num_active_lengths', 'unit' => 'lengths'},
@@ -2708,12 +3504,14 @@ sub named_type_value {
      61 => +{'name' => 'repetition_num'},
      62 => +{'name' => 'min_altitude', 'scale' => 5, 'offset' => 500, 'unit' => 'm'},
      63 => +{'name' => 'min_heart_rate', 'unit' => 'bpm'},
-     71 => +{'name' => 'wkt_step_index'},
+     70 => +{'name' => 'unknown70'}, # unknown UINT32
+     71 => +{'name' => 'wkt_step_index', 'type_name' => 'message_index'},
+     72 => +{'name' => 'unknown72'}, # unknown ENUM
      74 => +{'name' => 'opponent_score'},
      75 => +{'name' => 'stroke_count', 'unit' => 'counts'},
      76 => +{'name' => 'zone_count', 'unit' => 'counts'},
      77 => +{'name' => 'avg_vertical_oscillation', 'scale' => 10, 'unit' => 'mm'},
-     78 => +{'name' => 'avg_stance_time_percent', 'scale' => 100, 'unit' => 'percent'},
+     78 => +{'name' => 'avg_stance_time_percent', 'scale' => 100, 'unit' => '%'},
      79 => +{'name' => 'avg_stance_time', 'scale' => 10, 'unit' => 'ms'},
      80 => +{'name' => 'avg_fractional_cadence', 'scale' => 128, 'unit' => 'rpm'},
      81 => +{'name' => 'max_fractional_cadence', 'scale' => 128, 'unit' => 'rpm'},
@@ -2725,11 +3523,13 @@ sub named_type_value {
      87 => +{'name' => 'avg_saturated_hemoglobin_percent', 'scale' => 10, 'unit' => '%'},
      88 => +{'name' => 'min_saturated_hemoglobin_percent', 'scale' => 10, 'unit' => '%'},
      89 => +{'name' => 'max_saturated_hemoglobin_percent', 'scale' => 10, 'unit' => '%'},
-     91 => +{'name' => 'avg_left_torque_effectiveness', 'scale' => 2, 'unit' => 'percent'},
-     92 => +{'name' => 'avg_right_torque_effectiveness', 'scale' => 2, 'unit' => 'percent'},
-     93 => +{'name' => 'avg_left_pedal_smoothness', 'scale' => 2, 'unit' => 'percent'},
-     94 => +{'name' => 'avg_right_pedal_smoothness', 'scale' => 2, 'unit' => 'percent'},
-     95 => +{'name' => 'avg_combined_pedal_smoothness', 'scale' => 2, 'unit' => 'percent'},
+     91 => +{'name' => 'avg_left_torque_effectiveness', 'scale' => 2, 'unit' => '%'},
+     92 => +{'name' => 'avg_right_torque_effectiveness', 'scale' => 2, 'unit' => '%'},
+     93 => +{'name' => 'avg_left_pedal_smoothness', 'scale' => 2, 'unit' => '%'},
+     94 => +{'name' => 'avg_right_pedal_smoothness', 'scale' => 2, 'unit' => '%'},
+     95 => +{'name' => 'avg_combined_pedal_smoothness', 'scale' => 2, 'unit' => '%'},
+     96 => +{'name' => 'unknown96'}, # unknown UINT16
+     97 => +{'name' => 'unknown97'}, # unknown UINT16
      98 => +{'name' => 'time_standing', 'scale' => 1000, 'unit' => 's'},
      99 => +{'name' => 'stand_count'},
      100 => +{'name' => 'avg_left_pco', 'unit' => 'mm'},
@@ -2749,7 +3549,10 @@ sub named_type_value {
      114 => +{'name' => 'enhanced_max_altitude', 'scale' => 5, 'offset' => 500, 'unit' => 'm'},
      115 => +{'name' => 'avg_lev_motor_power', 'unit' => 'watts'},
      116 => +{'name' => 'max_lev_motor_power', 'unit' => 'watts'},
-     117 => +{'name' => 'lev_battery_consumption', 'scale' => 2, 'unit' => 'percent'},
+     117 => +{'name' => 'lev_battery_consumption', 'scale' => 2, 'unit' => '%'},
+     118 => +{'name' => 'avg_vertical_ratio', 'scale' => 100, 'unit' => '%'},
+     119 => +{'name' => 'avg_stance_time_balance', 'scale' => 100, 'unit' => '%'},
+     120 => +{'name' => 'avg_step_length', 'scale' => 10, 'unit' => 'mm'},
    },
 
    'length' => +{
@@ -2774,7 +3577,7 @@ sub named_type_value {
    },
 
    'record' => +{
-     253 => +{'name' => 'timestamp', 'type_name' => 'date_time'},
+     253 => +{'name' => 'timestamp', 'type_name' => 'date_time', 'unit' => 's'},
      0 => +{'name' => 'position_lat', 'unit' => 'semicircles'},
      1 => +{'name' => 'position_long', 'unit' => 'semicircles'},
      2 => +{'name' => 'altitude', 'scale' => 5, 'offset' => 500, 'unit' => 'm'},
@@ -2782,10 +3585,10 @@ sub named_type_value {
      4 => +{'name' => 'cadence', 'unit' => 'rpm'},
      5 => +{'name' => 'distance', 'scale' => 100, 'unit' => 'm'},
      6 => +{'name' => 'speed', 'scale' => 1000, 'unit' => 'm/s'},
-     7 => +{'name' => 'power', 'unit' => 'w'},
-     8 => +{'name' => 'compressed_speed_distance'},
+     7 => +{'name' => 'power', 'unit' => 'watts'},
+     8 => +{'name' => 'compressed_speed_distance'}, # complex decoding!
      9 => +{'name' => 'grade', 'scale' => 100, 'unit' => '%'},
-     10 => +{'name' => 'registance'},
+     10 => +{'name' => 'resistance'},
      11 => +{'name' => 'time_from_course', 'scale' => 1000, 'unit' => 's'},
      12 => +{'name' => 'cycle_length', 'scale' => 100, 'unit' => 'm'},
      13 => +{'name' => 'temperature', 'unit' => 'deg.C'},
@@ -2799,14 +3602,14 @@ sub named_type_value {
      32 => +{'name' => 'vertical_speed', 'scale' => 1000, 'unit' => 'm/s'},
      33 => +{'name' => 'calories', 'scale' => 1, 'unit' => 'kcal'},
      39 => +{'name' => 'vertical_oscillation', 'scale' => 10, 'unit' => 'mm'},
-     40 => +{'name' => 'stance_time_percent', 'scale' => 100, 'unit' => 'percent'},
+     40 => +{'name' => 'stance_time_percent', 'scale' => 100, 'unit' => '%'},
      41 => +{'name' => 'stance_time', 'scale' => 10, 'unit' => 'ms'},
      42 => +{'name' => 'activity_type', 'type_name' => 'activity_type'},
-     43 => +{'name' => 'left_torque_effectiveness', 'scale' => 2, 'unit' => 'percent'},
-     44 => +{'name' => 'right_torque_effectiveness', 'scale' => 2, 'unit' => 'percent'},
-     45 => +{'name' => 'left_pedal_smoothness', 'scale' => 2, 'unit' => 'percent'},
-     46 => +{'name' => 'right_pedal_smoothness', 'scale' => 2, 'unit' => 'percent'},
-     47 => +{'name' => 'combined_pedal_smoothness', 'scale' => 2, 'unit' => 'percent'},
+     43 => +{'name' => 'left_torque_effectiveness', 'scale' => 2, 'unit' => '%'},
+     44 => +{'name' => 'right_torque_effectiveness', 'scale' => 2, 'unit' => '%'},
+     45 => +{'name' => 'left_pedal_smoothness', 'scale' => 2, 'unit' => '%'},
+     46 => +{'name' => 'right_pedal_smoothness', 'scale' => 2, 'unit' => '%'},
+     47 => +{'name' => 'combined_pedal_smoothness', 'scale' => 2, 'unit' => '%'},
      48 => +{'name' => 'time128', 'scale' => 128, 'unit' => 's'},
      49 => +{'name' => 'stroke_type', 'type_name' => 'stroke_type'},
      50 => +{'name' => 'zone'},
@@ -2831,38 +3634,19 @@ sub named_type_value {
      72 => +{'name' => 'right_power_phase_peak', 'scale' => 0.7111111, 'unit' => 'degrees'},
      73 => +{'name' => 'enhanced_speed', 'scale' => 1000, 'unit' => 'm/s'},
      78 => +{'name' => 'enhanced_altitude', 'scale' => 5, 'offset' => 500, 'unit' => 'm'},
-     81 => +{'name' => 'battery_soc', 'scale' => 2, 'unit' => 'percent'},
+     81 => +{'name' => 'battery_soc', 'scale' => 2, 'unit' => '%'},
      82 => +{'name' => 'motor_power', 'unit' => 'watts'},
      83 => +{'name' => 'vertical_ratio', 'scale' => 100, 'unit' => '%'},
-     84 => +{'name' => 'ground_contact_time_balance', 'scale' => 100, 'unit' => '%'},
+     84 => +{'name' => 'stance_time_balance', 'scale' => 100, 'unit' => '%'},
+     85 => +{'name' => 'step_length', 'scale' => 10, 'unit' => 'mm'},
      112 => +{'name' => 'time_standing', 'scale' => 1000, 'unit' => 's'},
    },
 
    'event' => +{
-     253 => +{'name' => 'timestamp', 'type_name' => 'date_time'},
+     253 => +{'name' => 'timestamp', 'type_name' => 'date_time', 'unit' => 's'},
      0 => +{'name' => 'event', 'type_name' => 'event'},
      1 => +{'name' => 'event_type', 'type_name' => 'event_type'},
-
-     2 => +{
-       'name' => 'data16',
-
-       'switch' => +{
-	 '_by' => 'event',
-	 'timer' => +{'name' => 'timer_trigger', 'type_name' => 'timer_trigger'},
-	 'course_point' => +{'name' => 'course_point'},
-	 'battery' => +{'name' => 'battery_level', 'scale' => 1000, 'unit' => 'V'},
-	 'virtual_partner_pace' => +{'name' => 'virtual_partner_speed', 'scale' => 1000, 'unit' => 'm/s'},
-	 'hr_high_alert' => +{'name' => 'hr_high_alert', 'unit' => 'bpm'},
-	 'hr_low_alert' => +{'name' => 'hr_low_alert', 'unit' => 'bpm'},
-	 'speed_high_alert' => +{'name' => 'speed_high_alert', 'scale' => 1000, 'unit' => 'm/s'},
-	 'speed_low_alert' => +{'name' => 'speed_low_alert', 'scale' => 1000, 'unit' => 'm/s'},
-	 'cad_high_alert' => +{'name' => 'cad_high_alert', 'unit' => 'rpm'},
-	 'cad_low_alert' => +{'name' => 'cad_low_alert', 'unit' => 'rpm'},
-	 'power_high_alert' => +{'name' => 'power_high_alert', 'unit' => 'w'},
-	 'power_low_alert' => +{'name' => 'power_low_alert', 'unit' => 'w'},
-	 'fitness_equipment' => +{'name' => 'fitness_equipment_state', 'type_name' => 'fitness_equipment_state'},
-       },
-     },
+     2 => +{'name' => 'data16'}, # no switch?
 
      3 => +{
        'name' => 'data',
@@ -2879,12 +3663,17 @@ sub named_type_value {
 	 'speed_low_alert' => +{'name' => 'speed_low_alert', 'scale' => 1000, 'unit' => 'm/s'},
 	 'cad_high_alert' => +{'name' => 'cad_high_alert', 'unit' => 'rpm'},
 	 'cad_low_alert' => +{'name' => 'cad_low_alert', 'unit' => 'rpm'},
-	 'power_high_alert' => +{'name' => 'power_high_alert', 'unit' => 'w'},
-	 'power_low_alert' => +{'name' => 'power_low_alert', 'unit' => 'w'},
+	 'power_high_alert' => +{'name' => 'power_high_alert', 'unit' => 'watts'},
+	 'power_low_alert' => +{'name' => 'power_low_alert', 'unit' => 'watts'},
 	 'time_duration_alert' => +{'name' => 'time_duration_alert', 'scale' => 1000, 'unit' => 's'},
 	 'distance_duration_alert' => +{'name' => 'distance_duration_alert', 'scale' => 100, 'unit' => 'm'},
 	 'calorie_duration_alert' => +{'name' => 'calorie_duration_alert', 'unit' => 'calories'},
 	 'fitness_equipment' => +{'name' => 'fitness_equipment_state', 'type_name' => 'fitness_equipment_state'},
+	 'sport_point' => +{'name' => 'sport_point'},
+	 'front_gear_change' => +{'name' => 'gear_change_data'},
+	 'rear_gear_change' => +{'name' => 'gear_change_data'},
+	 'rider_position_change' => +{'name' => 'rider_position', 'type_name' => 'rider_position_type'},
+	 'comm_timeout' => +{'name' => 'comm_timeout', 'type_name' => 'comm_timeout_type'},
        },
      },
 
@@ -2899,9 +3688,19 @@ sub named_type_value {
    },
 
    'device_info' => +{
-     253 => +{'name' => 'timestamp', 'type_name' => 'date_time'},
+     253 => +{'name' => 'timestamp', 'type_name' => 'date_time', 'unit' => 's'},
      0 => +{'name' => 'device_index', 'type_name' => 'device_index'},
-     1 => +{'name' => 'device_type', 'type_name' => 'device_type'},
+
+     1 => +{
+       'name' => 'device_type',
+
+       'switch' => +{
+	 '_by' => 'source_type',
+	 'antplus' => +{'name' => 'antplus_device_type', 'type_name' => 'antplus_device_type'},
+	 'ant' => +{'name' => 'ant_device_type'},
+       },
+     },
+
      2 => +{'name' => 'manufacturer', 'type_name' => 'manufacturer'},
      3 => +{'name' => 'serial_number'},
 
@@ -2911,19 +3710,26 @@ sub named_type_value {
        'switch' => +{
 	 '_by' => 'manufacturer',
 	 'garmin' => +{'name' => 'garmin_product', 'type_name' => 'garmin_product'},
+	 'dynastream' => +{'name' => 'garmin_product', 'type_name' => 'garmin_product'},
+	 'dynastream_oem' => +{'name' => 'garmin_product', 'type_name' => 'garmin_product'},
        },
      },
 
      5 => +{'name' => 'software_version', 'scale' => 100},
      6 => +{'name' => 'hardware_version'},
      7 => +{'name' => 'cum_operating_time', 'unit' => 's'},
+     8 => +{'name' => 'unknown8'}, # unknown UINT32
+     9 => +{'name' => 'unknown9'}, # unknown UINT8
      10 => +{'name' => 'battery_voltage', 'scale' => 256, 'unit' => 'v'},
      11 => +{'name' => 'battery_status', 'type_name' => 'battery_status'},
+     15 => +{'name' => 'unknown15'}, # unknown UINT32
+     16 => +{'name' => 'unknown16'}, # unknown UINT32
      18 => +{'name' => 'sensor_position', 'type_name' => 'body_location'},
      19 => +{'name' => 'descriptor'},
      20 => +{'name' => 'ant_transmission_type'},
      21 => +{'name' => 'ant_device_number'},
      22 => +{'name' => 'ant_network', 'type_name' => 'ant_network'},
+     24 => +{'name' => 'unknown24'}, # unknown UINT32Z
      25 => +{'name' => 'source_type', 'type_name' => 'source_type'},
      27 => +{'name' => 'product_name'},
    },
@@ -2939,6 +3745,8 @@ sub named_type_value {
        'switch' => +{
 	 '_by' => 'manufacturer',
 	 'garmin' => +{'name' => 'garmin_product', 'type_name' => 'garmin_product'},
+	 'dynastream' => +{'name' => 'garmin_product', 'type_name' => 'garmin_product'},
+	 'dynastream_oem' => +{'name' => 'garmin_product', 'type_name' => 'garmin_product'},
        },
      },
 
@@ -2946,8 +3754,48 @@ sub named_type_value {
      4 => +{'name' => 'time_created', 'type_name' => 'date_time'},
    },
 
-   'hrv' => +{
+   'hrv' => +{ # heart rate variability
      0 => +{'name' => 'time', 'scale' => 1000, 'unit' => 's'},
+   },
+
+   'weather_conditions' => +{
+     253 => +{'name' => 'timestamp', 'type_name' => 'date_time'},
+     0 => +{'name' => 'weather_report', 'type_name' => 'weather_report'},
+     1 => +{'name' => 'temperature', 'unit' => 'deg.C'},
+     2 => +{'name' => 'condition', 'type_name' => 'weather_status'},
+     3 => +{'name' => 'wind_direction', 'unit' => 'degrees'},
+     4 => +{'name' => 'wind_speed', 'scale' => 1000, 'unit' => 'm/s'},
+     5 => +{'name' => 'precipitation_probability'},
+     6 => +{'name' => 'temperature_feels_like', 'unit' => 'deg.C'},
+     7 => +{'name' => 'relative_humidity', 'unit' => '%'},
+     8 => +{'name' => 'location'},
+     9 => +{'name' => 'observed_at_time', 'type_name' => 'date_time'},
+     10 => +{'name' => 'observed_location_lat', 'unit' => 'semicircles'},
+     11 => +{'name' => 'observed_location_long', 'unit' => 'semicircles'},
+     12 => +{'name' => 'day_of_week', 'type_name' => 'day_of_week'},
+     13 => +{'name' => 'high_temperature', 'unit' => 'deg.C'},
+     14 => +{'name' => 'low_temperature', 'unit' => 'deg.C'},
+   },
+
+   'weather_alert' => +{
+     253 => +{'name' => 'timestamp', 'type_name' => 'date_time'},
+     0 => +{'name' => 'report_id'},
+     1 => +{'name' => 'issue_time', 'type_name' => 'date_time'},
+     2 => +{'name' => 'expire_time', 'type_name' => 'date_time'},
+     3 => +{'name' => 'severity', 'type_name' => 'weather_severity'},
+     4 => +{'name' => 'type', 'type_name' => 'weather_severe_type'},
+   },
+
+   'gps_metadata' => +{
+     253 => +{'name' => 'timestamp', 'type_name' => 'date_time', 'unit' => 's'},
+     0 => +{'name' => 'timestamp_ms', 'unit' => 'ms'},
+     1 => +{'name' => 'position_lat', 'unit' => 'semicircles'},
+     2 => +{'name' => 'position_long', 'unit' => 'semicircles'},
+     3 => +{'name' => 'enhanced_altitude', 'scale' => 5, 'offset' => 500, 'unit' => 'm'},
+     4 => +{'name' => 'enhanced_speed', 'scale' => 1000, 'unit' => 'm/s'},
+     5 => +{'name' => 'heading', 'scale' => 100, 'unit' => 'degrees'},
+     6 => +{'name' => 'utc_timestamp', 'type_name' => 'date_time', 'unit' => 's'},
+     7 => +{'name' => 'velocity', 'scale' => 100, 'unit' => 'm/s'},
    },
 
    'camera_event' => +{
@@ -2982,10 +3830,32 @@ sub named_type_value {
      7 => +{'name' => 'calibrated_accel_z', 'unit' => 'g'},
    },
 
+   'magnetometer_data' => +{
+     253 => +{'name' => 'timestamp', 'type_name' => 'date_time', 'unit' => 's'},
+     0 => +{'name' => 'timestamp_ms', 'unit' => 'ms'},
+     1 => +{'name' => 'sample_time_offset', 'unit' => 'ms'},
+     2 => +{'name' => 'mag_x', 'unit' => 'counts'},
+     3 => +{'name' => 'mag_y', 'unit' => 'counts'},
+     4 => +{'name' => 'mag_z', 'unit' => 'counts'},
+     5 => +{'name' => 'calibrated_mag_x', 'unit' => 'G'},
+     6 => +{'name' => 'calibrated_mag_y', 'unit' => 'G'},
+     7 => +{'name' => 'calibrated_mag_z', 'unit' => 'G'},
+   },
+
    'three_d_sensor_calibration' => +{
      253 => +{'name' => 'timestamp', 'type_name' => 'date_time', 'unit' => 's'},
      0 => +{'name' => 'sensor_type', 'type_name' => 'sensor_type'},
-     1 => +{'name' => 'calibration_factor'},
+
+     1 => +{
+       'name' => 'calibration_factor',
+
+       'switch' => +{
+	 '_by' => 'sensor_type',
+	 'accelerometer' => +{'name' => 'accel_cal_factor'},
+	 'gyroscope' => +{'name' => 'gyro_cal_factor'},
+       },
+     },
+
      2 => +{'name' => 'calibration_divisor', 'unit' => 'counts'},
      3 => +{'name' => 'level_shift'},
      4 => +{'name' => 'offset_cal'},
@@ -3052,13 +3922,14 @@ sub named_type_value {
    'video_clip' => +{
      0 => +{'name' => 'clip_number'},
      1 => +{'name' => 'start_timestamp', 'type_name' => 'date_time'},
-     2 => +{'name' => 'start_timestamp_ms'},
+     2 => +{'name' => 'start_timestamp_ms', 'unit' => 'ms'},
      3 => +{'name' => 'end_timestamp', 'type_name' => 'date_time'},
-     4 => +{'name' => 'end_timestamp_ms'},
+     4 => +{'name' => 'end_timestamp_ms', 'unit' => 'ms'},
      6 => +{'name' => 'clip_start', 'unit' => 'ms'},
      7 => +{'name' => 'clip_end', 'unit' => 'ms'},
    },
 
+   # =================== Course file messages ===================
    'course' => +{
      4 => +{'name' => 'sport', 'type_name' => 'sport'},
      5 => +{'name' => 'name'},
@@ -3067,20 +3938,21 @@ sub named_type_value {
 
    'course_point' => +{
      254 => +{'name' => 'message_index', 'type_name' => 'message_index'},
-     1 => +{'name' => 'time'},
+     1 => +{'name' => 'timestamp', 'type_name' => 'date_time'},
      2 => +{'name' => 'position_lat', 'unit' => 'semicircles'},
      3 => +{'name' => 'position_long', 'unit' => 'semicircles'},
      4 => +{'name' => 'distance', 'scale' => 100, 'unit' => 'm'},
      5 => +{'name' => 'type', 'type_name' => 'course_point'},
      6 => +{'name' => 'name'},
-     8 => +{'name' => 'favorite', 'type_name' => 'bool'},
+     8 => +{'name' => 'favorite'},
    },
 
+   # =================== Segment file messages ===================
    'segment_id' => +{
      0 => +{'name' => 'name'},
      1 => +{'name' => 'uuid'},
      2 => +{'name' => 'sport', 'type_name' => 'sport'},
-     3 => +{'name' => 'enabled', 'type_name' => 'bool'},
+     3 => +{'name' => 'enabled'},
      4 => +{'name' => 'user_profile_primary_key'},
      5 => +{'name' => 'device_id'},
      6 => +{'name' => 'default_race_leader'},
@@ -3120,7 +3992,18 @@ sub named_type_value {
      7 => +{'name' => 'total_elapsed_time', 'scale' => 1000, 'unit' => 's'},
      8 => +{'name' => 'total_timer_time', 'scale' => 1000, 'unit' => 's'},
      9 => +{'name' => 'total_distance', 'scale' => 100, 'unit' => 'm'},
-     10 => +{'name' => 'total_cycles', 'unit' => 'cycles'},
+
+     10 => +{
+       'name' => 'total_cycles', 'unit' => 'cycles',
+
+       'switch' => +{
+	 '_by' => 'sport',
+	 'walking' => +{'name' => 'total_steps', 'unit' => 'steps'},
+	 'running' => +{'name' => 'total_strides', 'unit' => 'strides'},
+	 'swimming' => +{'name' => 'total_strokes', 'unit' => 'strokes'},
+       },
+     },
+
      11 => +{'name' => 'total_calories', 'unit' => 'kcal'},
      12 => +{'name' => 'total_fat_calories', 'unit' => 'kcal'},
      13 => +{'name' => 'avg_speed', 'scale' => 1000, 'unit' => 'm/s'},
@@ -3152,8 +4035,8 @@ sub named_type_value {
      39 => +{'name' => 'avg_neg_grade', 'scale' => 100, 'unit' => '%'},
      40 => +{'name' => 'max_pos_grade', 'scale' => 100, 'unit' => '%'},
      41 => +{'name' => 'max_neg_grade', 'scale' => 100, 'unit' => '%'},
-     42 => +{'name' => 'avg_temperature', 'unit' => 'C'},
-     43 => +{'name' => 'max_temperature', 'unit' => 'C'},
+     42 => +{'name' => 'avg_temperature', 'unit' => 'deg.C'},
+     43 => +{'name' => 'max_temperature', 'unit' => 'deg.C'},
      44 => +{'name' => 'total_moving_time', 'scale' => 1000, 'unit' => 's'},
      45 => +{'name' => 'avg_pos_vertical_speed', 'scale' => 1000, 'unit' => 'm/s'},
      46 => +{'name' => 'avg_neg_vertical_speed', 'scale' => 1000, 'unit' => 'm/s'},
@@ -3169,11 +4052,11 @@ sub named_type_value {
      56 => +{'name' => 'active_time', 'scale' => 1000, 'unit' => 's'},
      57 => +{'name' => 'wkt_step_index', 'type_name' => 'message_index'},
      58 => +{'name' => 'sport_event', 'type_name' => 'sport_event'},
-     59 => +{'name' => 'avg_left_torque_effectiveness', 'scale' => 2, 'unit' => 'percent'},
-     60 => +{'name' => 'avg_right_torque_effectiveness', 'scale' => 2, 'unit' => 'percent'},
-     61 => +{'name' => 'avg_left_pedal_smoothness', 'scale' => 2, 'unit' => 'percent'},
-     62 => +{'name' => 'avg_right_pedal_smoothness', 'scale' => 2, 'unit' => 'percent'},
-     63 => +{'name' => 'avg_combined_pedal_smoothness', 'scale' => 2, 'unit' => 'percent'},
+     59 => +{'name' => 'avg_left_torque_effectiveness', 'scale' => 2, 'unit' => '%'},
+     60 => +{'name' => 'avg_right_torque_effectiveness', 'scale' => 2, 'unit' => '%'},
+     61 => +{'name' => 'avg_left_pedal_smoothness', 'scale' => 2, 'unit' => '%'},
+     62 => +{'name' => 'avg_right_pedal_smoothness', 'scale' => 2, 'unit' => '%'},
+     63 => +{'name' => 'avg_combined_pedal_smoothness', 'scale' => 2, 'unit' => '%'},
      64 => +{'name' => 'status', 'type_name' => 'segment_lap_status'},
      65 => +{'name' => 'uuid'},
      66 => +{'name' => 'avg_fractional_cadence', 'scale' => 128, 'unit' => 'rpm'},
@@ -3195,17 +4078,20 @@ sub named_type_value {
      82 => +{'name' => 'max_cadence_position', 'unit' => 'rpm'},
    },
 
+   # =================== Segment list file messages ===================
    'segment_file' => +{
      254 => +{'name' => 'message_index', 'type_name' => 'message_index'},
      1 => +{'name' => 'file_uuid'},
-     3 => +{'name' => 'enabled', 'type_name' => 'bool'},
+     3 => +{'name' => 'enabled'},
      4 => +{'name' => 'user_profile_primary_key'},
      7 => +{'name' => 'leader_type', 'type_name' => 'segment_leaderboard_type'},
      8 => +{'name' => 'leader_group_primary_key'},
      9 => +{'name' => 'leader_activity_id'},
      10 => +{'name' => 'leader_activity_id_string'},
+     11 => +{'name' => 'default_race_leader'},
    },
 
+   # =================== Workout file messages ===================
    'workout' => +{
      4 => +{'name' => 'sport', 'type_name' => 'sport'},
      5 => +{'name' => 'capabilities', 'type_name' => 'workout_capabilities'},
@@ -3225,9 +4111,10 @@ sub named_type_value {
        'switch' => +{
 	 '_by' => 'duration_type',
 	 'time' => +{'name' => 'duration_time', 'scale' => 1000, 'unit' => 's'},
+	 'repetition_time' => +{'name' => 'duration_time', 'scale' => 1000, 'unit' => 's'},
 	 'distance' => +{'name' => 'duration_distance', 'scale' => 100, 'unit' => 'm'},
-	 'hr_less_than' => +{'name' => 'duration_hr'},
-	 'hr_greater_than' => +{'name' => 'duration_hr'},
+	 'hr_less_than' => +{'name' => 'duration_hr', 'type_name' => 'workout_hr', 'unit' => 'bpm'},
+	 'hr_greater_than' => +{'name' => 'duration_hr', 'type_name' => 'workout_hr', 'unit' => 'bpm'},
 	 'calories' => +{'name' => 'duration_calories', 'unit' => 'kcal'},
 	 'repeat_until_steps_cmplt' => +{'name' => 'duration_step'},
 	 'repeat_until_time' => +{'name' => 'duration_step'},
@@ -3237,8 +4124,8 @@ sub named_type_value {
 	 'repeat_until_hr_greater_than' => +{'name' => 'duration_step'},
 	 'repeat_until_power_less_than' => +{'name' => 'duration_step'},
 	 'repeat_until_power_greater_than' => +{'name' => 'duration_step'},
-	 'power_less_than' => +{'name' => 'duration_power', 'unit' => 'w'},
-	 'power_greater_than' => +{'name' => 'duration_power', 'unit' => 'w'},
+	 'power_less_than' => +{'name' => 'duration_power', 'unit' => 'watts'},
+	 'power_greater_than' => +{'name' => 'duration_power', 'unit' => 'watts'},
        },
      },
 
@@ -3249,18 +4136,18 @@ sub named_type_value {
 
        'switch' => +{
 	 '_by' => [qw(target_type duration_type)],
-	 'speed' => +{'name' => 'target_speed_zone'},
+ 	 'speed' => +{'name' => 'target_speed_zone'}, # not present?
 	 'heart_rate' => +{'name' => 'target_hr_zone'},
-	 'cadence' => +{'name' => 'target_cadence_zone'},
+ 	 'cadence' => +{'name' => 'target_cadence_zone'}, # not present?
 	 'power' => +{'name' => 'target_power_zone'},
 	 'repeat_until_steps_cmplt' => +{'name' => 'repeat_steps'},
 	 'repeat_until_time' => +{'name' => 'repeat_time', 'scale' => 1000, 'unit' => 's'},
 	 'repeat_until_distance' => +{'name' => 'repeat_distance', 'scale' => 100, 'unit' => 'm'},
 	 'repeat_until_calories' => +{'name' => 'repeat_calories', 'unit' => 'kcal'},
-	 'repeat_until_hr_less_than' => +{'name' => 'repeat_hr'},
-	 'repeat_until_hr_greater_than' => +{'name' => 'repeat_hr'},
-	 'repeat_until_power_less_than' => +{'name' => 'repeat_power'},
-	 'repeat_until_power_greater_than' => +{'name' => 'repeat_power'},
+	 'repeat_until_hr_less_than' => +{'name' => 'repeat_hr', 'unit' => 'bpm'},
+	 'repeat_until_hr_greater_than' => +{'name' => 'repeat_hr', 'unit' => 'bpm'},
+	 'repeat_until_power_less_than' => +{'name' => 'repeat_power', 'unit' => 'watts'},
+	 'repeat_until_power_greater_than' => +{'name' => 'repeat_power', 'unit' => 'watts'},
        },
      },
 
@@ -3270,9 +4157,9 @@ sub named_type_value {
        'switch' => +{
 	 '_by' => 'target_type',
 	 'speed' => +{'name' => 'custom_target_speed_low', 'scale' => 1000, 'unit' => 'm/s'},
-	 'heart_rate' => +{'name' => 'custom_target_heart_rate_low'},
+	 'heart_rate' => +{'name' => 'custom_target_heart_rate_low', 'type_name' => 'workout_hr', 'unit' => 'bpm'},
 	 'cadence' => +{'name' => 'custom_target_cadence_low', 'unit' => 'rpm'},
-	 'power' => +{'name' => 'custom_target_power_low'},
+	 'power' => +{'name' => 'custom_target_power_low', 'type_name' => 'workout_power', 'unit' => 'watts'},
        },
      },
 
@@ -3282,40 +4169,55 @@ sub named_type_value {
        'switch' => +{
 	 '_by' => 'target_type',
 	 'speed' => +{'name' => 'custom_target_speed_high', 'scale' => 1000, 'unit' => 'm/s'},
-	 'heart_rate' => +{'name' => 'custom_target_heart_rate_high'},
+	 'heart_rate' => +{'name' => 'custom_target_heart_rate_high', 'type_name' => 'workout_hr', 'unit' => 'bpm'},
 	 'cadence' => +{'name' => 'custom_target_cadence_high', 'unit' => 'rpm'},
-	 'power' => +{'name' => 'custom_target_power_high'},
+	 'power' => +{'name' => 'custom_target_power_high', 'type_name' => 'workout_power', 'unit' => 'watts'},
        },
      },
 
      7 => +{'name' => 'intensity', 'type_name' => 'intensity'},
    },
 
+   # =================== Schedule file messages ===================
    'schedule' => +{
      0 => +{'name' => 'manufacturer', 'type_name' => 'manufacturer'},
-     1 => +{'name' => 'product', 'type_name' => 'garmin_product'},
+
+     1 => +{
+       'name' => 'product',
+
+       'switch' => +{
+	 '_by' => 'manufacturer',
+	 'garmin' => +{'name' => 'garmin_product', 'type_name' => 'garmin_product'},
+	 'dynastream' => +{'name' => 'garmin_product', 'type_name' => 'garmin_product'},
+	 'dynastream_oem' => +{'name' => 'garmin_product', 'type_name' => 'garmin_product'},
+       },
+     },
+
      2 => +{'name' => 'serial_number'},
      3 => +{'name' => 'time_created', 'type_name' => 'date_time'},
      4 => +{'name' => 'completed'},
      5 => +{'name' => 'type', 'type_name' => 'schedule'},
-     6 => +{'name' => 'schedule_time', 'type_name' => 'date_time'},
+     6 => +{'name' => 'schedule_time', 'type_name' => 'local_date_time'},
    },
 
+   # =================== Totals file messages ===================
    'totals' => +{
      254 => +{'name' => 'message_index', 'type_name' => 'message_index'},
-     253 => +{'name' => 'timestamp', 'type_name' => 'date_time'},
-     0 => +{'name' => 'timer_time'},
-     1 => +{'name' => 'distance'},
-     2 => +{'name' => 'calories'},
+     253 => +{'name' => 'timestamp', 'type_name' => 'date_time', 'unit' => 's'},
+     0 => +{'name' => 'timer_time', 'unit' => 's'},
+     1 => +{'name' => 'distance', 'unit' => 'm'},
+     2 => +{'name' => 'calories', 'unit' => 'kcal'},
      3 => +{'name' => 'sport', 'type_name' => 'sport'},
      4 => +{'name' => 'elapsed_time', 'unit' => 's'},
      5 => +{'name' => 'sessions'},
      6 => +{'name' => 'active_time', 'unit' => 's'},
      9 => +{'name' => 'sport_index'},
+     10 => +{'name' => 'profile_name'}, # unknown STRING
    },
 
+   # =================== Weight scale file messages ===================
    'weight_scale' => +{
-     253 => +{'name' => 'timestamp', 'type_name' => 'date_time'},
+     253 => +{'name' => 'timestamp', 'type_name' => 'date_time', 'unit' => 's'},
      0 => +{'name' => 'weight', 'type_name' => 'weight', 'scale' => 100, 'unit' => 'kg'},
      1 => +{'name' => 'percent_fat', 'scale' => 100, 'unit' => '%'},
      2 => +{'name' => 'percent_hydration', 'scale' => 100, 'unit' => '%'},
@@ -3330,6 +4232,7 @@ sub named_type_value {
      12 => +{'name' => 'user_profile_index', 'type_name' => 'message_index'},
    },
 
+   # =================== Blood pressure file messages ===================
    'blood_pressure' => +{
      253 => +{'name' => 'timestamp', 'type_name' => 'date_time', 'unit' => 's'},
      0 => +{'name' => 'systolic_pressure', 'unit' => 'mmHg'},
@@ -3344,8 +4247,9 @@ sub named_type_value {
      9 => +{'name' => 'user_profile_index', 'type_name' => 'message_index'},
    },
 
+   # =================== Monitoring file messages ===================
    'monitoring_info' => +{
-     253 => +{'name' => 'timestamp', 'type_name' => 'date_time'},
+     253 => +{'name' => 'timestamp', 'type_name' => 'date_time', 'unit' => 's'},
      0 => +{'name' => 'local_timestamp', 'type_name' => 'local_date_time'},
      1 => +{'name' => 'activity_type', 'type_name' => 'activity_type'},
      3 => +{'name' => 'cycles_to_distance', 'scale' => 5000, 'unit' => 'm/cycle'},
@@ -3358,18 +4262,31 @@ sub named_type_value {
      0 => +{'name' => 'device_index', 'type_name' => 'device_index'},
      1 => +{'name' => 'calories', 'unit' => 'kcal'},
      2 => +{'name' => 'distance', 'scale' => 100, 'unit' => 'm'},
-     3 => +{'name' => 'cycles', 'unit' => 'cycles'},
+
+     3 => +{
+       'name' => 'cycles', 'scale' => 2, 'unit' => 'cycles',
+
+       'switch' => +{
+	 '_by' => 'activity_type',
+	 'walking' => +{'name' => 'total_steps', 'scale' => 1, 'unit' => 'steps'},
+	 'running' => +{'name' => 'total_strides', 'scale' => 1, 'unit' => 'strides'},
+	 'cycling' => +{'name' => 'total_strokes', 'scale' => 2, 'unit' => 'strokes'},
+	 'swimming' => +{'name' => 'total_strokes', 'scale' => 2, 'unit' => 'strokes'},
+       },
+     },
+
      4 => +{'name' => 'active_time', 'scale' => 1000, 'unit' => 's'},
      5 => +{'name' => 'activity_type', 'type_name' => 'activity_type'},
      6 => +{'name' => 'activity_subtype', 'type_name' => 'activity_subtype'},
-     8 => +{'name' => 'compressed_distance', 'scale' => 100, 'unit' => 'm'},
-     9 => +{'name' => 'compressed_cycles', 'unit' => 'cycles'},
+     7 => +{'name' => 'activity_level', 'type_name' => 'activity_level'},
+     8 => +{'name' => 'distance_16', 'scale' => 100, 'unit' => 'm'},
+     9 => +{'name' => 'cycles_16', 'scale' => 2, 'unit' => 'cycles'},
      10 => +{'name' => 'active_time_16', 'unit' => 's'},
      11 => +{'name' => 'local_timestamp', 'type_name' => 'local_date_time'},
-     12 => +{'name' => 'temperature', 'scale' => 100, 'unit' => 'C'},
-     14 => +{'name' => 'temperature_min', 'scale' => 100, 'unit' => 'C'},
-     15 => +{'name' => 'temperature_max', 'scale' => 100, 'unit' => 'C'},
-     16 => +{'name' => 'activity_time', 'unit' => 'minutes'},
+     12 => +{'name' => 'temperature', 'scale' => 100, 'unit' => 'deg.C'},
+     14 => +{'name' => 'temperature_min', 'scale' => 100, 'unit' => 'deg.C'},
+     15 => +{'name' => 'temperature_max', 'scale' => 100, 'unit' => 'deg.C'},
+     16 => +{'name' => 'activity_time', 'unit' => 'min'},
      19 => +{'name' => 'active_calories', 'unit' => 'kcal'},
      24 => +{'name' => 'current_activity_type_intensity'},
      25 => +{'name' => 'timestamp_min_8', 'unit' => 'min'},
@@ -3378,13 +4295,193 @@ sub named_type_value {
      28 => +{'name' => 'intensity', 'scale' => 10},
      29 => +{'name' => 'duration_min', 'unit' => 'min'},
      30 => +{'name' => 'duration', 'unit' => 's'},
+     31 => +{'name' => 'ascent', 'scale' => 1000, 'unit' => 'm'},
+     32 => +{'name' => 'descent', 'scale' => 1000, 'unit' => 'm'},
+     33 => +{'name' => 'moderate_activity_minutes', 'unit' => 'min'},
+     34 => +{'name' => 'vigorous_activity_minutes', 'unit' => 'min'},
    },
 
+   'hr' => +{
+     253 => +{'name' => 'timestamp', 'type_name' => 'date_time'},
+     0 => +{'name' => 'fractional_timestamp', 'scale' => 32768, 'unit' => 's'},
+     1 => +{'name' => 'time256', 'scale' => 256, 'unit' => 's'},
+     6 => +{'name' => 'filtered_bpm', 'unit' => 'bpm'},
+     9 => +{'name' => 'event_timestamp', 'scale' => 1024, 'unit' => 's'},
+     10 => +{'name' => 'event_timestamp_12', 'scale' => 1024, 'unit' => 's'},
+   },
+
+   # =================== Other messages ===================
    'memo_glob' => +{
      250 => +{'name' => 'part_index'},
      0 => +{'name' => 'memo'},
      1 => +{'name' => 'message_number'},
      2 => +{'name' => 'message_index', 'type_name' => 'message_index'},
+   },
+
+   'ant_channel_id' => +{
+     0 => +{'name' => 'channel_number'},
+     1 => +{'name' => 'device_type'},
+     2 => +{'name' => 'device_number'},
+     3 => +{'name' => 'transmission_type'},
+     4 => +{'name' => 'device_index', 'type_name' => 'device_index'},
+   },
+
+   'ant_rx' => +{
+     253 => +{'name' => 'timestamp', 'type_name' => 'date_time', 'unit' => 's'},
+     0 => +{'name' => 'fractional_timestamp', 'scale' => 32768, 'unit' => 's'},
+     1 => +{'name' => 'mesg_id'},
+     2 => +{'name' => 'mesg_data'},
+     3 => +{'name' => 'channel_number'},
+     4 => +{'name' => 'data'},
+   },
+
+   'ant_tx' => +{
+     253 => +{'name' => 'timestamp', 'type_name' => 'date_time', 'unit' => 's'},
+     0 => +{'name' => 'fractional_timestamp', 'scale' => 32768, 'unit' => 's'},
+     1 => +{'name' => 'mesg_id'},
+     2 => +{'name' => 'mesg_data'},
+     3 => +{'name' => 'channel_number'},
+     4 => +{'name' => 'data'},
+   },
+
+   'exd_screen_configuration' => +{
+     0 => +{'name' => 'screen_index'},
+     1 => +{'name' => 'field_count'},
+     2 => +{'name' => 'layout', 'type_name' => 'exd_layout'},
+     3 => +{'name' => 'screen_enabled'},
+   },
+
+   'exd_data_field_configuration' => +{
+     0 => +{'name' => 'screen_index'},
+     1 => +{'name' => 'concept_field'},
+     2 => +{'name' => 'field_id'},
+     3 => +{'name' => 'concept_count'},
+     4 => +{'name' => 'display_type', 'type_name' => 'exd_display_type'},
+     5 => +{'name' => 'title'},
+   },
+
+   'exd_data_concept_configuration' => +{
+     0 => +{'name' => 'screen_index'},
+     1 => +{'name' => 'concept_field'},
+     2 => +{'name' => 'field_id'},
+     3 => +{'name' => 'concept_index'},
+     4 => +{'name' => 'data_page'},
+     5 => +{'name' => 'concept_key'},
+     6 => +{'name' => 'scaling'},
+     7 => +{'name' => 'unknown7'}, # unknown UINT8
+     8 => +{'name' => 'data_units', 'type_name' => 'exd_data_units'},
+     9 => +{'name' => 'qualifier', 'type_name' => 'exd_qualifiers'},
+     10 => +{'name' => 'descriptor', 'type_name' => 'exd_descriptors'},
+     11 => +{'name' => 'is_signed'},
+   },
+
+   'field_description' => +{
+     0 => +{'name' => 'developer_data_index'},
+     1 => +{'name' => 'field_definition_number'},
+     2 => +{'name' => 'fit_base_type_id', 'type_name' => 'fit_base_type'},
+     3 => +{'name' => 'field_name'},
+     4 => +{'name' => 'array'},
+     5 => +{'name' => 'components'},
+     6 => +{'name' => 'scale'},
+     7 => +{'name' => 'offset'},
+     8 => +{'name' => 'units'},
+     9 => +{'name' => 'bits'},
+     10 => +{'name' => 'accumulate'},
+     13 => +{'name' => 'fit_base_unit_id', 'type_name' => 'fit_base_unit'},
+     14 => +{'name' => 'native_mesg_num', 'type_name' => 'mesg_num'},
+     15 => +{'name' => 'native_field_num'},
+   },
+
+   'developer_data_id' => +{
+     0 => +{'name' => 'developer_id'},
+     1 => +{'name' => 'application_id'},
+     2 => +{'name' => 'manufacturer_id', 'type_name' => 'manufacturer'},
+     3 => +{'name' => 'developer_data_index'},
+     4 => +{'name' => 'application_version'},
+   },
+
+   # =================== Undocumented messages ===================
+   'source' => +{
+     253 => +{'name' => 'timestamp', 'type_name' => 'date_time'},
+     # device_index in device_info
+     0 => +{'name' => 'unknown0', 'type_name' => 'device_index'}, # unknown UINT8
+     1 => +{'name' => 'unknown1', 'type_name' => 'device_index'}, # unknown UINT8
+     2 => +{'name' => 'unknown2', 'type_name' => 'device_index'}, # unknown UINT8
+     3 => +{'name' => 'unknown3', 'type_name' => 'device_index'}, # unknown UINT8
+     4 => +{'name' => 'unknown4', 'type_name' => 'device_index'}, # unknown UINT8
+     5 => +{'name' => 'unknown5'}, # unknown ENUM
+     6 => +{'name' => 'unknown6'}, # unknown UINT8
+     7 => +{'name' => 'unknown7'}, # unknown UINT8
+     8 => +{'name' => 'unknown8'}, # unknown UINT8
+     9 => +{'name' => 'unknown9'}, # unknown UINT8
+   },
+
+   'location' => +{
+     254 => +{'name' => 'message_index', 'type_name' => 'message_index'},
+     253 => +{'name' => 'timestamp', 'type_name' => 'date_time'},
+     0 => +{'name' => 'name'}, # unknown STRING
+     1 => +{'name' => 'position_lat', 'unit' => 'semicircles'}, # unknown SINT32
+     2 => +{'name' => 'position_long', 'unit' => 'semicircles'}, # unknown SINT32
+     3 => +{'name' => 'unknown3'}, # unknown UINT16 (elevation?)
+     4 => +{'name' => 'unknown4'}, # unknown UINT16
+     5 => +{'name' => 'unknown5'}, # unknown UINT16
+     6 => +{'name' => 'unknown6'}, # unknown STRING
+   },
+
+   'battery' => +{
+     253 => +{'name' => 'timestamp', 'type_name' => 'date_time'},
+     0 => +{'name' => 'unknown0'}, # unknown UINT16 (voltage with scale?)
+     1 => +{'name' => 'unknown1'}, # unknown SINT16
+     2 => +{'name' => 'charge_level', 'unit' => '%'}, # unknown UINT8
+     3 => +{'name' => 'temperature', 'unit' => 'deg.C'}, # unknown SINT8
+   },
+
+   'sensor' => +{
+     254 => +{'name' => 'message_index', 'type_name' => 'message_index'},
+     0 => +{'name' => 'unknown0'}, # unknown UINT32Z
+     1 => +{'name' => 'unknown1'}, # unknown UINT8
+     2 => +{'name' => 'sensor_id'}, # unknown STRING
+     3 => +{'name' => 'unknown3'}, # unknown ENUM
+     4 => +{'name' => 'unknown4'}, # unknown ENUM
+     5 => +{'name' => 'unknown5'}, # unknown ENUM
+     6 => +{'name' => 'unknown6'}, # unknown ENUM
+     7 => +{'name' => 'unknown7'}, # unknown ENUM
+     8 => +{'name' => 'unknown8'}, # unknown ENUM
+     9 => +{'name' => 'unknown9'}, # unknown UINT8
+     10 => +{'name' => 'wheel_size', 'unit' => 'mm'}, # unknown UINT16
+     11 => +{'name' => 'unknown11'}, # unknown UINT16
+     12 => +{'name' => 'unknown12'}, # unknown UINT8
+     13 => +{'name' => 'unknown13'}, # unknown UINT32
+     14 => +{'name' => 'unknown14'}, # unknown UINT8
+     15 => +{'name' => 'unknown15'}, # unknown UINT8
+     16 => +{'name' => 'unknown16'}, # unknown UINT8
+     17 => +{'name' => 'unknown17'}, # unknown UINT8Z
+     18 => +{'name' => 'unknown18'}, # unknown UINT8Z (array[4])
+     19 => +{'name' => 'unknown19'}, # unknown UINT8Z
+     20 => +{'name' => 'unknown20'}, # unknown UINT8Z (array[12])
+     21 => +{'name' => 'unknown21'}, # unknown UINT16
+     25 => +{'name' => 'unknown25'}, # unknown UINT16
+     26 => +{'name' => 'unknown26'}, # unknown UINT16
+     27 => +{'name' => 'unknown27'}, # unknown UINT8
+     28 => +{'name' => 'unknown28'}, # unknown UINT8 (array[4])
+     29 => +{'name' => 'unknown29'}, # unknown UINT8 (array[4])
+     30 => +{'name' => 'unknown30'}, # unknown UINT8 (array[4])
+     31 => +{'name' => 'unknown31'}, # unknown UINT8
+     32 => +{'name' => 'unknown32'}, # unknown UINT16
+     33 => +{'name' => 'unknown33'}, # unknown UINT16
+     34 => +{'name' => 'unknown34'}, # unknown UINT16
+     35 => +{'name' => 'unknown35'}, # unknown UINT16
+     36 => +{'name' => 'unknown36'}, # unknown ENUM
+     37 => +{'name' => 'unknown37'}, # unknown ENUM (array[7])
+     38 => +{'name' => 'unknown38'}, # unknown ENUM (array[7])
+     39 => +{'name' => 'unknown39'}, # unknown ENUM (array[7])
+     40 => +{'name' => 'unknown40'}, # unknown UINT16Z
+     41 => +{'name' => 'unknown41'}, # unknown UINT8 (array[7])
+     42 => +{'name' => 'unknown42'}, # unknown ENUM
+     43 => +{'name' => 'unknown43'}, # unknown ENUM
+     44 => +{'name' => 'unknown44'}, # unknown UINT8Z
+     47 => +{'name' => 'unknown47'}, # unknown ENUM
+     48 => +{'name' => 'unknown48'}, # unknown ENUM
    },
 
    );
@@ -3394,15 +4491,183 @@ $mesg_name_vs_num = $named_type{mesg_num};
 %msgtype_by_num =
   (
 
-   22 => +{
-     '_number' => 22,
+   # =================== Unknown messages ===================
+   13 => +{
+     '_number' => 13,
+     254 => +{'name' => 'message_index', 'type_name' => 'message_index'},
+     1 => +{'name' => 'unknown1'}, # unknown ENUM
+     2 => +{'name' => 'unknown2'}, # unknown UINT16
+     3 => +{'name' => 'unknown3'}, # unknown ENUM
+     4 => +{'name' => 'unknown4'}, # unknown UINT32
+     5 => +{'name' => 'unknown5'}, # unknown SINT32
+     6 => +{'name' => 'unknown6'}, # unknown SINT32
+     7 => +{'name' => 'unknown7'}, # unknown ENUM
+     8 => +{'name' => 'unknown8'}, # unknown UINT16
+     9 => +{'name' => 'unknown9'}, # unknown ENUM
+     10 => +{'name' => 'unknown10'}, # unknown UINT16
+     11 => +{'name' => 'unknown11'}, # unknown UINT8
+     12 => +{'name' => 'unknown12'}, # unknown ENUM
+     13 => +{'name' => 'unknown13'}, # unknown ENUM
+     14 => +{'name' => 'unknown14'}, # unknown ENUM
+     15 => +{'name' => 'unknown15'}, # unknown ENUM
+     16 => +{'name' => 'unknown16'}, # unknown ENUM
+     17 => +{'name' => 'unknown17'}, # unknown ENUM
+     18 => +{'name' => 'unknown18'}, # unknown ENUM
+     19 => +{'name' => 'unknown19'}, # unknown UINT16
+     27 => +{'name' => 'unknown27'}, # unknown ENUM
+     30 => +{'name' => 'unknown30'}, # unknown ENUM
+     31 => +{'name' => 'unknown31'}, # unknown UINT32
+     32 => +{'name' => 'unknown32'}, # unknown UINT16
+     33 => +{'name' => 'unknown33'}, # unknown UINT32
+     34 => +{'name' => 'unknown34'}, # unknown ENUM
+     50 => +{'name' => 'unknown50'}, # unknown ENUM
+   },
+
+   14 => +{
+     '_number' => 14,
+     254 => +{'name' => 'message_index', 'type_name' => 'message_index'},
+     1 => +{'name' => 'unknown1'}, # unknown ENUM
+     3 => +{'name' => 'unknown3'}, # unknown UINT8
+     4 => +{'name' => 'unknown4'}, # unknown UINT8 (array[10])
+     5 => +{'name' => 'unknown5'}, # unknown ENUM (array[10])
+     6 => +{'name' => 'unknown6'}, # unknown STRING
+     7 => +{'name' => 'unknown7'}, # unknown UINT16 (array[10])
+   },
+
+   16 => +{
+     '_number' => 16,
+     254 => +{'name' => 'message_index', 'type_name' => 'message_index'},
+     1 => +{'name' => 'unknown1'}, # unknown ENUM
+     2 => +{'name' => 'unknown2'}, # unknown UINT32
+     3 => +{'name' => 'unknown3'}, # unknown ENUM
+   },
+
+   17 => +{
+     '_number' => 17,
+     254 => +{'name' => 'message_index', 'type_name' => 'message_index'},
+     1 => +{'name' => 'unknown1'}, # unknown ENUM
+     2 => +{'name' => 'unknown2'}, # unknown ENUM
+     3 => +{'name' => 'unknown3'}, # unknown UINT16
+     4 => +{'name' => 'unknown4'}, # unknown ENUM
+     5 => +{'name' => 'unknown5'}, # unknown UINT16
+   },
+
+   70 => +{
+     '_number' => 70,
+     254 => +{'name' => 'message_index', 'type_name' => 'message_index'},
+     0 => +{'name' => 'unknown0'}, # unknown ENUM
+     1 => +{'name' => 'unknown1'}, # unknown ENUM
+     2 => +{'name' => 'unknown2'}, # unknown ENUM
+     3 => +{'name' => 'unknown3'}, # unknown ENUM
+     4 => +{'name' => 'unknown4'}, # unknown ENUM
+     5 => +{'name' => 'unknown5'}, # unknown ENUM
+     6 => +{'name' => 'unknown6'}, # unknown ENUM
+     7 => +{'name' => 'unknown7'}, # unknown ENUM
+     8 => +{'name' => 'unknown8'}, # unknown ENUM
+     9 => +{'name' => 'unknown9'}, # unknown ENUM
+     10 => +{'name' => 'unknown10'}, # unknown ENUM
+     11 => +{'name' => 'unknown11'}, # unknown ENUM
+     12 => +{'name' => 'unknown12'}, # unknown ENUM
+     13 => +{'name' => 'unknown13'}, # unknown ENUM
+     14 => +{'name' => 'unknown14'}, # unknown ENUM
+     15 => +{'name' => 'unknown15'}, # unknown ENUM
+   },
+
+   71 => +{
+     '_number' => 71,
+     254 => +{'name' => 'message_index', 'type_name' => 'message_index'},
+     0 => +{'name' => 'unknown0'}, # unknown ENUM
+     1 => +{'name' => 'unknown1'}, # unknown ENUM
+     2 => +{'name' => 'unknown2'}, # unknown ENUM
+     3 => +{'name' => 'unknown3'}, # unknown UINT16
+     4 => +{'name' => 'unknown4'}, # unknown ENUM
+   },
+
+   79 => +{
+     '_number' => 79,
      253 => +{'name' => 'timestamp', 'type_name' => 'date_time'},
-     0 => +{'name' => 'xxx0_distance_source'}, # device_index in device_info
-     1 => +{'name' => 'xxx1_speed_source'}, # device_index in device_info
-     2 => +{'name' => 'xxx2_cadence_source'}, # device_index in device_info
-     3 => +{'name' => 'xxx3_altitude_source'}, # device_index in device_info
-     4 => +{'name' => 'xxx4_heart_rate_source'}, # device_index in device_info
-     6 => +{'name' => 'xxx6_power_source'}, # device_index in device_info
+     0 => +{'name' => 'unknown0'}, # unknown UINT16
+     1 => +{'name' => 'unknown1'}, # unknown UINT8
+     2 => +{'name' => 'unknown2'}, # unknown UINT8
+     3 => +{'name' => 'unknown3'}, # unknown UINT16
+     4 => +{'name' => 'unknown4'}, # unknown ENUM
+     5 => +{'name' => 'unknown5'}, # unknown ENUM
+     6 => +{'name' => 'unknown6'}, # unknown UINT8
+     7 => +{'name' => 'unknown7'}, # unknown SINT8
+     8 => +{'name' => 'unknown8'}, # unknown UINT16
+     9 => +{'name' => 'unknown9'}, # unknown UINT16
+     10 => +{'name' => 'unknown10'}, # unknown UINT8
+     11 => +{'name' => 'unknown11'}, # unknown UINT16
+     12 => +{'name' => 'unknown12'}, # unknown UINT16
+     13 => +{'name' => 'unknown13'}, # unknown UINT16
+     14 => +{'name' => 'unknown14'}, # unknown UINT8
+   },
+
+   113 => +{
+     '_number' => 113,
+     253 => +{'name' => 'timestamp', 'type_name' => 'date_time'},
+     0 => +{'name' => 'unknown0'}, # unknown UINT16
+     1 => +{'name' => 'unknown1'}, # unknown ENUM
+     2 => +{'name' => 'unknown2'}, # unknown UINT32
+     3 => +{'name' => 'unknown3'}, # unknown UINT32
+     4 => +{'name' => 'unknown4'}, # unknown UINT32
+     5 => +{'name' => 'unknown5'}, # unknown ENUM
+   },
+
+   114 => +{
+     '_number' => 114,
+     254 => +{'name' => 'message_index', 'type_name' => 'message_index'},
+     253 => +{'name' => 'timestamp', 'type_name' => 'date_time'},
+     0 => +{'name' => 'unknown0'}, # unknown UINT16
+     1 => +{'name' => 'unknown1'}, # unknown ENUM
+     2 => +{'name' => 'unknown2'}, # unknown UINT32
+     3 => +{'name' => 'unknown3'}, # unknown UINT32
+     4 => +{'name' => 'unknown4'}, # unknown UINT32
+     5 => +{'name' => 'unknown5'}, # unknown UINT32
+     6 => +{'name' => 'unknown6'}, # unknown UINT32Z
+     7 => +{'name' => 'unknown7'}, # unknown UINT32
+   },
+
+   139 => +{
+     '_number' => 139,
+     254 => +{'name' => 'message_index', 'type_name' => 'message_index'},
+     0 => +{'name' => 'unknown0'}, # unknown ENUM
+     1 => +{'name' => 'unknown1'}, # unknown UINT16Z
+     3 => +{'name' => 'unknown3'}, # unknown UINT8Z
+     4 => +{'name' => 'unknown4'}, # unknown ENUM
+     5 => +{'name' => 'unknown5'}, # unknown UINT16
+   },
+
+   140 => +{
+     '_number' => 140,
+     253 => +{'name' => 'timestamp', 'type_name' => 'date_time'},
+     0 => +{'name' => 'unknown0'}, # unknown UINT8
+     1 => +{'name' => 'unknown1'}, # unknown UINT8
+     2 => +{'name' => 'unknown2'}, # unknown SINT32
+     3 => +{'name' => 'unknown3'}, # unknown SINT32
+     4 => +{'name' => 'unknown4'}, # unknown UINT8
+     5 => +{'name' => 'unknown5'}, # unknown SINT32
+     6 => +{'name' => 'unknown6'}, # unknown SINT32
+     7 => +{'name' => 'unknown7'}, # unknown SINT32
+     8 => +{'name' => 'unknown8'}, # unknown UINT8
+     9 => +{'name' => 'unknown9'}, # unknown UINT16
+     10 => +{'name' => 'unknown10'}, # unknown UINT16
+     11 => +{'name' => 'unknown11'}, # unknown ENUM
+     12 => +{'name' => 'unknown12'}, # unknown ENUM
+     13 => +{'name' => 'unknown13'}, # unknown UINT8
+     14 => +{'name' => 'unknown14'}, # unknown UINT16
+     15 => +{'name' => 'unknown15'}, # unknown UINT16
+     16 => +{'name' => 'unknown16'}, # unknown UINT16
+     17 => +{'name' => 'unknown17'}, # unknown SINT8
+     18 => +{'name' => 'unknown18'}, # unknown UINT8
+     19 => +{'name' => 'unknown19'}, # unknown UINT8
+   },
+
+   203 => +{
+     '_number' => 203,
+     0 => +{'name' => 'unknown0'}, # unknown ENUM
+     1 => +{'name' => 'unknown1'}, # unknown ENUM
+     2 => +{'name' => 'unknown2'}, # unknown ENUM
    },
 
    );
@@ -3518,7 +4783,7 @@ sub data_message_callback_by_num {
       foreach $num (keys %msgtype_by_num) {
 	my $cb = $cbmap->{$num};
 
-	$res{$num} = ref $cb eq 'ARRAY' ? [@$cb] : [];
+	ref $cb eq 'ARRAY' and $res{$num} = [@$cb];
       }
 
       \%res;
@@ -3529,7 +4794,9 @@ sub data_message_callback_by_num {
   }
   elsif (@_) {
     if (ref $_[0] eq 'CODE') {
-      $cbmap->{$msgtype->{_name}} = $cbmap->{$num} = [@_];
+      $cbmap->{$num} = [@_];
+      $msgtype->{_name} ne '' and $cbmap->{$msgtype->{_name}} = $cbmap->{$num};
+      $cbmap->{$num};
     }
     else {
       $self->error('not a CODE');
@@ -3538,12 +4805,7 @@ sub data_message_callback_by_num {
   else {
     my $cb = $cbmap->{$num};
 
-    if (ref $cb eq 'ARRAY') {
-      [@$cb];
-    }
-    else {
-      [];
-    }
+    ref $cb eq 'ARRAY' ? [@$cb] : [];
   }
 }
 
@@ -3568,7 +4830,7 @@ sub data_message_callback_by_name {
       foreach $name (keys %msgtype_by_name) {
 	my $cb = $cbmap->{$name};
 
-	$res{$name} = ref $cb eq 'ARRAY' ? [@$cb] : [];
+	ref $cb eq 'ARRAY' and $res{$name} = [@$cb];
       }
 
       \%res;
@@ -3580,6 +4842,7 @@ sub data_message_callback_by_name {
   elsif (@_) {
     if (ref $_[0] eq 'CODE') {
       $cbmap->{$msgtype->{_number}} = $cbmap->{$name} = [@_];
+      $res;
     }
     else {
       $self->error('not a CODE');
@@ -3588,20 +4851,219 @@ sub data_message_callback_by_name {
   else {
     my $cb = $cbmap->{$name};
 
-    if (ref $cb eq 'ARRAY') {
-      [@$cb];
-    }
-    else {
-      [];
-    }
+    ref $cb eq 'ARRAY' ? [@$cb] : [];
   }
 }
 
 sub undocumented_field_name {
   my ($self, $index, $size, $type, $i_string) = @_;
 
-#  'xxx' . $i_string . '_' . $index . '_' . $size . '_' . $type;
+# 'xxx' . $i_string . '_' . $index . '_' . $size . '_' . $type;
   'xxx' . $index;
+}
+
+sub syscallback_devdata_id {
+  my ($self, $desc, $v) = @_;
+  my ($i_id, $T_id, $c_id, $i_index) = @$desc{qw(i_application_id T_application_id c_application_id i_developer_data_index)};
+  my $emsg;
+
+  if (!defined $i_id) {
+    $emsg = "no application_id";
+  }
+  elsif ($T_id != FIT_UINT8 && $T_id != FIT_BYTE) {
+    $emsg = "base type of application_id is $type_name[$T_id] ($T_id)";
+  }
+  elsif (!defined $i_index) {
+    $emsg = "no developer_data_index";
+  }
+
+  if ($emsg ne '') {
+    $self->error("Broken developer data id message ($emsg)");
+    return undef;
+  }
+
+  my $devdata_by_index = $self->{devdata_by_index};
+
+  ref $devdata_by_index eq 'HASH' or $devdata_by_index = $self->{devdata_by_index} = +{};
+
+  my $devdata_by_id = $self->{devdata_by_id};
+
+  ref $devdata_by_id eq 'HASH' or $devdata_by_id = $self->{devdata_by_id} = +{};
+
+  my $id;
+
+  if ($T_id == FIT_UINT8) {
+    $id = pack('C*', @$v[$i_id .. ($i_id + $c_id - 1)]);
+  }
+  else {
+    $id = $v->[$i_id];
+  }
+
+  my %devdata = (id => $id, index => $v->[$i_index]);
+
+  $devdata_by_id->{$devdata{id}} = $devdata_by_index->{$devdata{index}} = \%devdata;
+}
+
+sub syscallback_devdata_field_desc {
+  my ($self, $desc, $v) = @_;
+
+  my ($i_index, $I_index, $i_field_num, $I_field_num,
+      $i_base_type_id, $T_base_type_id, $I_base_type_id,
+      $i_field_name, $T_field_name, $c_field_name)
+    = @$desc{qw(i_developer_data_index I_developer_data_index i_field_definition_number I_field_definition_number
+		i_fit_base_type_id T_fit_base_type_id I_fit_base_type_id
+		i_field_name T_field_name c_field_name)};
+
+  my $emsg;
+
+  if (!defined $i_index) {
+    $emsg = 'no developer_data_index';
+  }
+  elsif (!defined $i_field_num) {
+    $emsg = 'no field_num';
+  }
+  elsif (!defined $i_base_type_id) {
+    $emsg = 'no base_type_id';
+  }
+  elsif ($T_base_type_id != FIT_UINT8) {
+    $emsg = "base type of base_type_id is $type_name[$T_base_type_id] ($T_base_type_id)";
+  }
+  elsif (!defined $i_field_name) {
+    $emsg = 'no field_name';
+  }
+  elsif ($T_field_name != FIT_STRING || $c_field_name <= 0) {
+    $emsg = "field_name is not a non-empty string";
+  }
+
+  if ($emsg ne '') {
+    $self->error("broken field description message ($emsg)");
+    return undef;
+  }
+
+  my $base_type = $v->[$i_base_type_id];
+
+  if ($base_type == $I_base_type) {
+    $self->error("invalid base type ($base_type)");
+    return undef;
+  }
+
+  if ($base_type < 0) {
+    $self->error("unknown base type ($base_type)");
+    return undef;
+  }
+
+  $base_type &= FIT_BASE_TYPE_MASK;
+
+  unless ($base_type <= FIT_BASE_TYPE_MAX) {
+    $self->error("unknown base type ($base_type)");
+    return undef;
+  }
+
+  my $devdata_by_index = $self->{devdata_by_index};
+
+  unless (ref $devdata_by_index eq 'HASH') {
+    $self->error('no developer data id message before a field description message');
+    return undef;
+  }
+
+  my $index = $v->[$i_index];
+
+  if ($index == $I_index) {
+    $self->error("invalid developer data index ($index)");
+    return undef;
+  }
+
+  my $num = $v->[$i_field_num];
+
+  if ($num == $I_field_num) {
+    $self->error("invalid field definition number ($num)");
+    return undef;
+  }
+
+  my $devdata = $devdata_by_index->{$index};
+
+  unless (ref $devdata eq 'HASH') {
+    $self->error("No developer data id message with the index $index before a field description message");
+    return undef;
+  }
+
+  my $field_desc_by_num = $devdata->{field_desc_by_num};
+
+  ref $field_desc_by_num eq 'HASH' or $field_desc_by_num = $devdata->{field_desc_by_num} = +{};
+
+  my $field_desc_by_name = $devdata->{field_desc_by_name};
+
+  ref $field_desc_by_name eq 'HASH' or $field_desc_by_name = $devdata->{field_desc_by_name} = +{};
+
+  my $o_name = $self->string_value($v, $i_field_name, $c_field_name);
+
+  if ($o_name eq '') {
+    $self->error("name of field $index/$num is null");
+    return undef;
+  }
+
+  my $name = $o_name;
+
+  $name =~ s/\s+/_/g;
+  $name =~ s/\W/sprintf('_%02x', ord($&))/ge;
+
+  my %fdesc =
+    (
+     '_index' => $index,
+     '_num' => $num,
+     '_name' => $name,
+     'field_name' => $o_name,
+     '_type' => $base_type,
+     );
+
+  my $i_aname;
+
+  foreach $i_aname (grep {/^i_/} keys %$desc) {
+    if ($i_aname !~ /^i_(developer_data_index|field_definition_number|fit_base_type_id|field_name)$/) {
+      my $i = $desc->{$i_aname};
+      my $aname = $i_aname;
+
+      $aname =~ s/^i_//;
+
+      my $I_aname = 'I_' . $aname;
+      my $T_aname = 'T_' . $aname;
+      my $c_aname = 'c_' . $aname;
+
+      if ($desc->{$T_aname} == FIT_STRING) {
+	$fdesc{$aname} = $self->string_value($v, $i, $desc->{$c_aname});
+      }
+      elsif ($v->[$i] != $desc->{$I_aname}) {
+	$fdesc{$aname} = $v->[$i];
+      }
+    }
+  }
+
+  $field_desc_by_num->{$num} = \%fdesc;
+  $field_desc_by_name->{$name} = \%fdesc;
+}
+
+sub add_endian_converter {
+  my ($self, $endian, $type, $c, $i_string, $cvt) = @_;
+
+  if ($endian != $my_endian && $size[$type] > 1) {
+    my ($p, $unp, $n);
+
+    if ($size[$type] == 2) {
+      ($p, $unp, $n) = (qw(n v), $c);
+    }
+    elsif ($size[$type] == 4) {
+      ($p, $unp, $n) = (qw(N V), $c);
+    }
+    else {
+      ($p, $unp, $n) = (qw(N V), 2 * $c);
+    }
+
+    push @$cvt, $p . $n, $unp . $n, $i_string, $size[$type] * $c;
+    1;
+  }
+  else {
+    0;
+  }
 }
 
 sub fetch_definition_message {
@@ -3668,26 +5130,85 @@ sub fetch_definition_message {
     $desc{'N_' . $name} = $index;
     $desc{'I_' . $name} = $invalid[$type];
 
-    if ($endian && $size[$type] > 1) {
-      my ($p, $unp, $n);
-
-      if ($size[$type] == 2) {
-	($p, $unp, $n) = (qw(n v), $c);
-      }
-      elsif ($size[$type] == 4) {
-	($p, $unp, $n) = (qw(N V), $c);
-      }
-      else {
-	($p, $unp, $n) = (qw(N V), 2 * $c);
-      }
-
-      push @cvt, $p . $n, $unp . $n, $i_string, $size[$type] * $c;
-    }
+    $self->add_endian_converter($endian, $type, $c, $i_string, \@cvt);
 
     $i_array += $c;
     $i_string += $size;
     $desc{template} .= ' ' . $template[$type];
     $desc{template} .= $c if $c > 1;
+  }
+
+  $desc{devdata_nfields} = 0;
+
+  if ($rechd & $rechd_mask_devdata_message) {
+    $self->offset($e);
+    $self->fill_buffer($devdata_min_length) || return undef;
+    $i = $self->offset;
+    ($nfields) = unpack($devdata_min_template, substr($$buffer, $i, $devdata_min_length));
+    $self->offset($i + $devdata_min_length);
+    $len = $nfields * $devdata_deffld_length;
+    $self->fill_buffer($len) || return undef;
+
+    my $devdata_by_index = $self->{devdata_by_index};
+    my @emsg;
+
+    if (ref $devdata_by_index ne 'HASH') {
+      push @emsg, 'No developer data id';
+      $devdata_by_index = +{};
+    }
+
+    for ($i = $self->offset, $e = $i + $len ; $i + $devdata_deffld_length <= $e ; $i += $devdata_deffld_length) {
+      my ($fnum, $size, $index) = unpack($devdata_deffld_template, substr($$buffer, $i, $devdata_deffld_length));
+      my $devdata = $devdata_by_index->{$index};
+      my ($fdesc, $name, $type, %attr);
+
+      if (ref $devdata eq 'HASH') {
+	my $fdesc_by_num = $devdata->{field_desc_by_num};
+
+	if (ref $fdesc_by_num eq 'HASH') {
+	  $fdesc = $fdesc_by_num->{$fnum};
+	}
+	else {
+	  push @emsg, "No field description message for developer data with index $index";
+	}
+      }
+      else {
+	push @emsg, "No developer data id with index $index";
+      }
+
+      if (ref $fdesc eq 'HASH') {
+	%attr = %$fdesc;
+	($type, $name) = @attr{qw(_type _name)};
+      }
+      else {
+	push @emsg, "No field with number $fnum for developer data with index $index";
+	$type = FIT_UINT8;
+      }
+
+      $name = $self->undocumented_field_name($fnum, $size, $type, $i_string) if !defined $name;
+      $name = "${index}_$name";
+
+      my $c = int($size / $size[$type] + 0.5);
+
+      $desc{'i_' . $name} = $i_array;
+      $desc{'o_' . $name} = $i_string;
+      $desc{'c_' . $name} = $c;
+      $desc{'s_' . $name} = $size[$type];
+      $desc{'a_' . $name} = \%attr if %attr;
+      $desc{'T_' . $name} = $type;
+      $desc{'N_' . $name} = $fnum;
+      $desc{'I_' . $name} = $invalid[$type];
+
+      $self->add_endian_converter($endian, $type, $c, $i_string, \@cvt);
+
+      $i_array += $c;
+      $i_string += $size;
+      $desc{template} .= ' ' . $template[$type];
+      $desc{template} .= $c if $c > 1;
+    }
+
+    $desc{devdata_nfields} = $nfields;
+    $self->error(join(' / ', @emsg)) if (@emsg);
   }
 
   $desc{endian_converter} = \@cvt if @cvt;
@@ -3705,13 +5226,13 @@ sub cat_definition_message {
     $p = \$bin;
   }
 
-  my @i_name = sort {$desc->{$a} <=> $desc->{$b}} grep {/^i_/} keys %$desc;
+  my @i_name = sort {$desc->{$a} <=> $desc->{$b}} grep {/^i_[A-Za-z]/} keys %$desc;
+  my @devdata_i_name = sort {$desc->{$a} <=> $desc->{$b}} grep {/^i_\d+_/} keys %$desc;
+  my $mask = @devdata_i_name ? $rechd_mask_devdata_message : 0;
   my ($endian, $msgnum) = @{$desc}{qw(endian message_number)};
 
   $msgnum = unpack('n', pack('v', $msgnum)) if $endian;
-  $$p .= pack($defmsg_min_template, $desc->{local_message_type} | $rechd_mask_definition_message, 0, $endian, $msgnum, $#i_name + 1);
-
-  my $i_name;
+  $$p .= pack($defmsg_min_template, $desc->{local_message_type} | $rechd_mask_definition_message | $mask, 0, $endian, $msgnum, $#i_name + 1);
 
   while (@i_name) {
     my $name = shift @i_name;
@@ -3721,6 +5242,20 @@ sub cat_definition_message {
     my $size = $desc->{'s_' . $name};
 
     $$p .= pack($deffld_template, $desc->{'N_' . $name}, $desc->{'c_' . $name} * $size, $desc->{'T_' . $name} | ($size > 1 ? $deffld_mask_endian_p : 0));
+  }
+
+  if (@devdata_i_name) {
+    $$p .= pack($devdata_min_template, $#devdata_i_name + 1);
+
+    while (@devdata_i_name) {
+      my $name = shift @devdata_i_name;
+
+      $name =~ s/^i_//;
+
+      my $size = $desc->{'s_' . $name};
+
+      $$p .= pack($devdata_deffld_template, $desc->{'N_' . $name}, $desc->{'c_' . $name} * $size, $name =~ /^(\d+)_/);
+    }
   }
 
   $p;
@@ -3765,6 +5300,7 @@ sub fetch_data_message {
 
   my $buffer = $self->buffer;
   my $i = $self->offset;
+  # unpack('f'/'d', ...) unpacks to NaN
   my @v = unpack($desc->{template}, substr($$buffer, $i, $desc->{message_length}));
 
   $v = reverse $v if ref $desc->{endian_converter} eq 'ARRAY';
@@ -3877,13 +5413,18 @@ sub value_processed {
       if ($scale > 0) {
 	my $below_pt = int(log($scale + 9) / log(10));
 
-	sprintf("%.${below_pt}f%s", $num, $self->without_unit ? '' : $unit);
+	if ($self->without_unit) {
+	  sprintf("%.${below_pt}f", $num);
+        }
+	else {
+	  sprintf("%.${below_pt}f %s", $num, $unit);
+        }
       }
       elsif ($self->without_unit) {
 	$num;
       }
       else {
-	$num . $unit;
+	$num . " " . $unit;
       }
     }
     elsif ($scale > 0) {
@@ -4011,6 +5552,8 @@ sub initialize {
      'unit_table' => +{},
      );
 
+  $self->data_message_callback_by_name(developer_data_id => \&syscallback_devdata_id);
+  $self->data_message_callback_by_name(field_description => \&syscallback_devdata_field_desc);
   $self;
 }
 
@@ -4118,6 +5661,8 @@ $type_name[FIT_UINT16Z] = 'UINT16Z';
 $type_name[FIT_UINT32Z] = 'UINT32Z';
 $type_name[FIT_BYTE] = 'BYTE';
 
+sub isnan { !defined($_[0] <=> 9**9**9) }
+
 sub print_all_fields {
   my ($self, $desc, $v, %opt) = @_;
   my ($indent, $FH, $skip_invalid) = @opt{qw(indent FH skip_invalid)};
@@ -4153,13 +5698,14 @@ sub print_all_fields {
     my $j;
 
     for ($j = 0 ; $j < $c ; ++$j) {
+      isnan($v->[$i + $j]) && next;
       $v->[$i + $j] != $invalid && last;
     }
 
     if ($j < $c || !$skip_invalid) {
       $self->last_timestamp($v->[$i]) if $type == FIT_UINT32 && $tname eq 'date_time' && $pname eq 'timestamp';
       $FH->print($indent, $pname, ' (', $desc->{'N_' . $name}, '-', $c, '-', $type_name[$type] ne '' ? $type_name[$type] : $type);
-      $FH->print(', orignal name: ', $name) if $name ne $pname;
+      $FH->print(', original name: ', $name) if $name ne $pname;
       $FH->print(', INVALID') if $j >= $c;
       $FH->print('): ');
 
@@ -4588,7 +6134,7 @@ of Perl representations.
 =over 4
 
 =item When C<fetch> method meets a data message,
-it calls a II<<callback function>> registered with C<data_message_callback_by_name> or C<data_message_callback_by_num>,
+it calls a I<<callback function>> registered with C<data_message_callback_by_name> or C<data_message_callback_by_num>,
 in the form
 
 I<<callback function>>-E<gt>(I<<object>>, I<<data message descriptor>>, I<<array of field values>>, I<<callback data>>, ...).
@@ -4597,6 +6143,12 @@ I<<callback function>>-E<gt>(I<<object>>, I<<data message descriptor>>, I<<array
 
 The return value of the function becomes the return value of C<fetch>.
 It is expected to be C<1> on success, or C<undef> on failure status.
+
+=head2 Developer data
+
+
+=head2 64bit data
+
 
 =head1 AUTHOR
 
@@ -4616,6 +6168,14 @@ The author is very grateful to Garmin for supplying us free software programers 
 which includes detailed documetation about its proprietary file format.
 
 =head1 CHANGES
+
+=head2 0.20 --E<gt> 0.21
+
+=over 4
+
+Support for developer data introduced in FIT 2.0.
+
+=back
 
 =head2 0.14 --E<gt> 0.15
 
