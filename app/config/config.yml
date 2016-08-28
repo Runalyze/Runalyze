@@ -1,6 +1,7 @@
 imports:
   - { resource: languages.yml }
   - { resource: security.yml }
+  - { resource: services.yml }
   - { resource: default_config.yml }
   - { resource: ../../data/config.yml }
 
@@ -18,7 +19,7 @@ framework:
     fallbacks: ['%locale%']
     paths:
       - '%kernel.root_dir%/../inc/locale/'
-    
+
 parameters:
   RUNALYZE_VERSION: 3.0.0-dev
 
@@ -59,7 +60,7 @@ twig:
   paths:
     '%kernel.root_dir%/../data/views': __main__
 
-    
+
 # Doctrine Configuration
 doctrine_cache:
     providers:
@@ -92,7 +93,7 @@ doctrine:
                 options: {1002: "SET time_zone = '+00:00'"}
                 mapping_types:
                     enum:   string
-                    
+
 
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
@@ -112,7 +113,7 @@ doctrine_migrations:
     namespace: Runalyze\Migrations
     table_name: '%database_prefix%migration_versions'
     name: RUNALYZE Migrations
-        
+
 monolog:
     handlers:
         applog:
