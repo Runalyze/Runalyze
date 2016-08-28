@@ -93,9 +93,9 @@
         <source>The plug-in was not unlocked successfully.</source>
         <target>The plug-in was not unlocked successfully.</target>
       </trans-unit>
-      <trans-unit id="6d558cb627c6cbbef5d611d4a4c66c10" resname="The administrator has to set the correct API-key.">
+      <trans-unit id="6d558cb627c6cbbef5d611d4a4c66c10" resname="The administrator has to set the correct API-key." approved="yes">
         <source>The administrator has to set the correct API-key.</source>
-        <target>The administrator has to set the correct API-key.</target>
+        <target state="translated">El administrador debe establecer el API-key correctamente.</target>
       </trans-unit>
       <trans-unit id="49ab28040dfa07f53544970c6d147e1e" resname="Connect" approved="yes">
         <source>Connect</source>
@@ -309,17 +309,17 @@
         <source>Runalyze is completely configurable. You can decide by yourself which information of your training you want to record and which statistics are being displayed on which place.</source>
         <target state="translated">Runalyze es completamente configurable. Puedes decidir qué información de tus actividades grabar, qué estadísticas mostrar y dónde mostrarlas.</target>
       </trans-unit>
-      <trans-unit id="9cf52ba6a030f477b895be03900c5344" resname="By athletes for athletes">
+      <trans-unit id="9cf52ba6a030f477b895be03900c5344" resname="By athletes for athletes" approved="yes">
         <source>By athletes for athletes</source>
-        <target>By athletes for athletes</target>
+        <target state="translated">Por atletas para atletas</target>
       </trans-unit>
       <trans-unit id="2077caf87751f7f202e5e692cae9e623" resname="Runalyze is created by athletes for athletes. Whenever you have comments, problems or wishes: Please contact our Runalyze team. It's near and dear to us.">
         <source>Runalyze is created by athletes for athletes. Whenever you have comments, problems or wishes: Please contact our Runalyze team. It's near and dear to us.</source>
         <target>Runalyze is created by athletes for athletes. Whenever you have comments, problems or wishes: Please contact our Runalyze team. It's near and dear to us.</target>
       </trans-unit>
-      <trans-unit id="10d0de28911c5f66463b9c8783f8148a" resname="Maintenance">
+      <trans-unit id="10d0de28911c5f66463b9c8783f8148a" resname="Maintenance" approved="yes">
         <source>Maintenance</source>
-        <target>Maintenance</target>
+        <target state="translated">Mantenimiento</target>
       </trans-unit>
       <trans-unit id="19a6166a9bb1ce14f5238a622ea73775" resname="RUNALYZE is temporarily down for maintenance">
         <source>RUNALYZE is temporarily down for maintenance</source>
