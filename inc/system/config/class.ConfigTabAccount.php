@@ -51,8 +51,9 @@ class ConfigTabAccount extends ConfigTab {
 		$SinceField = new FormularInput('name', __('Registered since'), date('d.m.Y H:i', $Data['registerdate']));
 		$SinceField->setDisabled();
 
-		$LastLoginField = new FormularInput('name', __('Last Login'), date('d.m.Y H:i', $Data['lastlogin']));
-		$LastLoginField->setDisabled();
+		$AllowSupportField = new FormularSelectBox('allow_support', __('Allow access for support'), $Data['allow_support']);
+		$AllowSupportField->addOption('1', __('Yes'));
+		$AllowSupportField->addOption('0', __('No'));
 
 		$Account = new FormularFieldset( __('Your account') );
 		$Account->addField($UsernameField);
@@ -61,11 +62,15 @@ class ConfigTabAccount extends ConfigTab {
 		$Account->addField($LanguageField);
 		$Account->addField($TimeZoneField);
 		$Account->addField($SinceField);
-		$Account->addField($LastLoginField);
+		$Account->addField($AllowSupportField);
+		$Account->addInfo(__('Allow admins in case of support requests to have a look at your data.'));
 
 		$AllowMailsField = new FormularSelectBox('allow_mails', __('Email me'), $Data['allow_mails']);
 		$AllowMailsField->addOption('1', __('Yes'));
 		$AllowMailsField->addOption('0', __('No'));
+		
+
+
 
 		$Notifications = new FormularFieldset( __('Notifications') );
 		$Notifications->addInfo(__('At irregular intervals we are sending mails to you. We will never send you spam or advertisement.'));
@@ -133,6 +138,10 @@ class ConfigTabAccount extends ConfigTab {
 
 		if ($_POST['allow_mails'] != SessionAccountHandler::getAllowMails()) {
 			DB::getInstance()->update('account', SessionAccountHandler::getId(), 'allow_mails', $_POST['allow_mails']);
+		}
+		
+		if ($_POST['allow_support'] != SessionAccountHandler::getAllowSupport()) {
+			DB::getInstance()->update('account', SessionAccountHandler::getId(), 'allow_support', $_POST['allow_support']);
 		}
 
 		if ($_POST['timezone'] != SessionAccountHandler::getTimezone() && Application\Timezone::isValidValue($_POST['timezone'], false)) {

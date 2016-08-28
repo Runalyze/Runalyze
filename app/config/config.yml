@@ -1,6 +1,7 @@
 imports:
   - { resource: languages.yml }
   - { resource: security.yml }
+  - { resource: services.yml }
   - { resource: default_config.yml }
   - { resource: ../../data/config.yml }
 
@@ -18,7 +19,7 @@ framework:
     fallbacks: ['%locale%']
     paths:
       - '%kernel.root_dir%/../inc/locale/'
-    
+
 parameters:
   RUNALYZE_VERSION: 3.0.0
 
@@ -33,6 +34,11 @@ services:
     arguments: ['@session']
     tags:
       - { name: kernel.event_listener, event: security.interactive_login, method: onInteractiveLogin }
+  app.account_last_action_listener:
+    class: Runalyze\Bundle\CoreBundle\EventListener\AccountLastActionListener
+    arguments: ['@security.token_storage', '@doctrine.orm.entity_manager']
+    tags:
+      - { name: kernel.event_listener, event: kernel.controller, method: onCoreController }
   app.sha256salted_encoder:
     class: Runalyze\Bundle\CoreBundle\Services\Sha256SaltedEncoder
   app.event.doctrine.table_prefix_subscriber:
@@ -54,8 +60,23 @@ twig:
   paths:
     '%kernel.root_dir%/../data/views': __main__
 
-    
+
 # Doctrine Configuration
+doctrine_cache:
+    providers:
+        vendor_filesystem_metadata_cache:
+            file_system:
+                extension: cache
+                directory: %kernel.root_dir%/../var/cache/doctrine
+        vendor_filesystem_result_cache:
+            file_system:
+                extension: cache
+                directory: %kernel.root_dir%/../var/cache/doctrine
+        vendor_filesystem_query_cache:
+            file_system:
+                extension: cache
+                directory: %kernel.root_dir%/../var/cache/doctrine
+
 doctrine:
     dbal:
         default_connection:   default
@@ -72,18 +93,27 @@ doctrine:
                 options: {1002: "SET time_zone = '+00:00'"}
                 mapping_types:
                     enum:   string
-                    
+
 
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
         auto_mapping: true
-       
+        metadata_cache_driver:
+            type: service
+            id: doctrine_cache.providers.vendor_filesystem_metadata_cache
+        result_cache_driver:
+            type: service
+            id: doctrine_cache.providers.vendor_filesystem_result_cache
+        query_cache_driver:
+            type: service
+            id: doctrine_cache.providers.vendor_filesystem_query_cache
+
 doctrine_migrations:
     dir_name: "%kernel.root_dir%/DoctrineMigrations"
     namespace: Runalyze\Migrations
     table_name: '%database_prefix%migration_versions'
     name: RUNALYZE Migrations
-        
+
 monolog:
     handlers:
         applog:

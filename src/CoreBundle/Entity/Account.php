@@ -1,16 +1,16 @@
 <?php
-
 namespace Runalyze\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
+use Runalyze\Model\Account\UserRole;
 
 /**
  * Account
  *
- * @ORM\Table(name="account", uniqueConstraints={@ORM\UniqueConstraint(name="username", columns={"username"}), @ORM\UniqueConstraint(name="mail", columns={"mail"}), @ORM\UniqueConstraint(name="session_id", columns={"session_id"})})
+ * @ORM\Table(name="account", uniqueConstraints={@ORM\UniqueConstraint(name="username", columns={"username"}), @ORM\UniqueConstraint(name="mail", columns={"mail"})})
  * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\AccountRepository")
  */
 class Account implements AdvancedUserInterface, \Serializable
@@ -75,13 +75,6 @@ class Account implements AdvancedUserInterface, \Serializable
     private $salt;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="session_id", type="string", length=32, nullable=true)
-     */
-    private $sessionId;
-
-    /**
      * @var integer
      *
      * @ORM\Column(name="registerdate", type="integer", nullable=false)
@@ -94,13 +87,6 @@ class Account implements AdvancedUserInterface, \Serializable
      * @ORM\Column(name="lastaction", type="integer", nullable=false)
      */
     private $lastaction;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="lastlogin", type="integer", nullable=false)
-     */
-    private $lastlogin;
 
     /**
      * @var string
@@ -143,6 +129,20 @@ class Account implements AdvancedUserInterface, \Serializable
      * @ORM\Column(name="allow_mails", type="integer", nullable=false)
      */
     private $allowMails;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="allow_support", type="integer", nullable=false)
+     */
+    private $allowSupport;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="role", type="integer", nullable=false)
+     */
+    private $role;
 
 
     public function __construct()
@@ -323,29 +323,6 @@ class Account implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * Set sessionId
-     *
-     * @param string $sessionId
-     * @return Account
-     */
-    public function setSessionId($sessionId)
-    {
-        $this->sessionId = $sessionId;
-
-        return $this;
-    }
-
-    /**
-     * Get sessionId
-     *
-     * @return string 
-     */
-    public function getSessionId()
-    {
-        return $this->sessionId;
-    }
-
-    /**
      * Set registerdate
      *
      * @param integer $registerdate
@@ -374,8 +351,12 @@ class Account implements AdvancedUserInterface, \Serializable
      * @param integer $lastaction
      * @return Account
      */
-    public function setLastaction($lastaction)
+    public function setLastAction($lastaction = null)
     {
+        if (is_null($lastaction)) {
+            $lastaction = (int)(new \DateTime())->getTimestamp();
+        }
+        
         $this->lastaction = $lastaction;
 
         return $this;
@@ -386,32 +367,9 @@ class Account implements AdvancedUserInterface, \Serializable
      *
      * @return integer 
      */
-    public function getLastaction()
+    public function getLastAction()
     {
         return $this->lastaction;
-    }
-
-    /**
-     * Set lastlogin
-     *
-     * @param integer $lastlogin
-     * @return Account
-     */
-    public function setLastlogin($lastlogin)
-    {
-        $this->lastlogin = $lastlogin;
-
-        return $this;
-    }
-
-    /**
-     * Get lastlogin
-     *
-     * @return integer 
-     */
-    public function getLastlogin()
-    {
-        return $this->lastlogin;
     }
 
     /**
@@ -551,6 +509,52 @@ class Account implements AdvancedUserInterface, \Serializable
     {
         return $this->allowMails;
     }
+    
+    /**
+     * Set allowSupport
+     *
+     * @param string allowSupport
+     * @return Account
+     */
+    public function setAllowSupport($allowSupport)
+    {
+        $this->allowSupport = $allowSupport;
+
+        return $this;
+    }
+
+    /**
+     * Get allowSupport
+     *
+     * @return string 
+     */
+    public function getAllowSupport()
+    {
+        return $this->allowSupport;
+    }
+    
+    /**
+     * Set role
+     *
+     * @param string allowSupport
+     * @return Account
+     */
+    public function setRole($role)
+    {
+        $this->role = $role;
+
+        return $this;
+    }
+
+    /**
+     * Get role
+     *
+     * @return string 
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
 
     public function eraseCredentials()
     {
@@ -559,7 +563,7 @@ class Account implements AdvancedUserInterface, \Serializable
 
     public function getRoles()
     {
-        return array('ROLE_USER');
+        return array(UserRole::getRoleName($this->role));
     }
 
 

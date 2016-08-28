@@ -7,6 +7,7 @@
 use Runalyze\Activity\Distance;
 use Runalyze\Activity\Duration;
 use Runalyze\Activity\Elevation;
+use Runalyze\Activity\Energy;
 use Runalyze\Activity\Weight;
 use Runalyze\Activity\Temperature;
 use Runalyze\Data\Weather\WindSpeed;
@@ -19,13 +20,13 @@ use Runalyze\Data\Weather\WindSpeed;
 class FormularValueParser {
 	/**
 	 * Parser: timestamp <=> date-string
-	 * @var string 
+	 * @var string
 	 */
 	public static $PARSER_DATE = 'date';
 
 	/**
 	 * Parser: timestamp <=> daytime-string
-	 * @var string 
+	 * @var string
 	 */
 	public static $PARSER_DAYTIME = 'daytime';
 
@@ -43,31 +44,31 @@ class FormularValueParser {
 
 	/**
 	 * Parser: encoded string <=> string
-	 * @var string 
+	 * @var string
 	 */
 	public static $PARSER_STRING = 'string';
 
 	/**
 	 * Parser: check for integer
-	 * @var string 
+	 * @var string
 	 */
 	public static $PARSER_INT = 'int';
 
 	/**
 	 * Parser: check for decimal
-	 * @var string 
+	 * @var string
 	 */
 	public static $PARSER_DECIMAL = 'decimal';
 
 	/**
 	 * Parser: check for boolean
-	 * @var string 
+	 * @var string
 	 */
 	public static $PARSER_BOOL = 'bool';
 
 	/**
 	 * Parser: comma separated string <=> checkboxes
-	 * @var string 
+	 * @var string
 	 */
 	public static $PARSER_ARRAY_CHECKBOXES = 'array-checkboxes';
 
@@ -79,46 +80,52 @@ class FormularValueParser {
 
 	/**
 	 * Parser: weight in kg <=> weight in preferred unit
-	 * @var string 
+	 * @var string
 	 */
 	public static $PARSER_WEIGHT = 'weight';
-        
+
 	/**
 	 * Parser: temperature in c <=> temperature in preferred unit
-	 * @var string 
+	 * @var string
 	 */
 	public static $PARSER_TEMPERATURE = 'temperature';
 
 	/**
 	 * Parser: elevation in m <=> elevation in preferred unit
-	 * @var string 
+	 * @var string
 	 */
 	public static $PARSER_ELEVATION = 'elevation';
 
 	/**
+	 * Parser: energy in kcal <=> energy in preferred unit
+	 * @var string
+	 */
+	public static $PARSER_ENERGY = 'energy';
+
+	/**
 	 * Parser: distance in km <=> distance in preferred unit
-	 * @var string 
+	 * @var string
 	 */
 	public static $PARSER_DISTANCE = 'distance';
-	
+
 	/**
 	 * Parser: windspeed in km/h <=> wind speed in preferred unit
-	 * @var string 
+	 * @var string
 	 */
 	public static $PARSER_WINDSPEED = 'wind_speed';
-	
+
 	/**
 	 * Parser: RPE
-	 * @var string 
+	 * @var string
 	 */
 	public static $PARSER_RPE = 'rpe';
-	
+
 	/**
 	 * Validate post-value for a given key with a given parser
 	 * @param string $key
 	 * @param string $parser
 	 * @param array $parserOptions
-	 * @return boolean 
+	 * @return boolean
 	 */
 	public static function validatePost($key, $parser, $parserOptions = array()) {
 		if (is_null($parser))
@@ -154,17 +161,19 @@ class FormularValueParser {
 				return self::validateSplits($key, $parserOptions);
 			case self::$PARSER_WEIGHT:
 				return self::validateWeight($key);
-                        case self::$PARSER_TEMPERATURE:
-                                return self::validateTemperature($key);
+			case self::$PARSER_TEMPERATURE:
+				return self::validateTemperature($key);
 			case self::$PARSER_ELEVATION:
 				return self::validateElevation($key);
+			case self::$PARSER_ENERGY:
+				return self::validateEnergy($key);
 			case self::$PARSER_DISTANCE:
 				return self::validateDistance($key, $parserOptions);
 			case self::$PARSER_WINDSPEED:
 				return self::validateWindSpeed($key, $parserOptions);
 			case self::$PARSER_RPE:
-                                return self::validateRPE($key);
-			    
+                return self::validateRPE($key);
+
 			default:
 				return true;
 		}
@@ -202,17 +211,20 @@ class FormularValueParser {
 			case self::$PARSER_WEIGHT:
 				self::parseWeight($value);
 				break;
-                        case self::$PARSER_TEMPERATURE:
+            case self::$PARSER_TEMPERATURE:
 				self::parseTemperature($value);
 				break;
 			case self::$PARSER_ELEVATION:
 				self::parseElevation($value);
 				break;
+			case self::$PARSER_ENERGY:
+				self::parseEnergy($value);
+				break;
 			case self::$PARSER_DISTANCE:
 				self::parseDistance($value, $parserOptions);
 				break;
 			case self::$PARSER_WINDSPEED:
-				self::parseWindSpeed($value, $parserOptions);
+				self::parseWindSpeed($value);
 				break;
 		}
 	}
@@ -221,7 +233,7 @@ class FormularValueParser {
 	 * Validator: string => encoded string
 	 * @param string $key
 	 * @param array $options
-	 * @return boolean 
+	 * @return boolean
 	 */
 	private static function validateString($key, $options = array()) {
 		if (isset($options['notempty']) && $options['notempty'] && strlen($_POST[$key]) == 0)
@@ -233,7 +245,7 @@ class FormularValueParser {
 	/**
 	 * Validator: boolean
 	 * @param string $key
-	 * @return boolean 
+	 * @return boolean
 	 */
 	private static function validateBool($key) {
 		$_POST[$key] = isset($_POST[$key]) ? '1' : '0';
@@ -245,7 +257,7 @@ class FormularValueParser {
 	 * Validator: integer
 	 * @param string $key
 	 * @param array $options
-	 * @return boolean 
+	 * @return boolean
 	 */
 	private static function validateInt($key, $options) {
 		if (!is_numeric($_POST[$key]) || ($_POST[$key]) != (int)$_POST[$key]) {
@@ -257,7 +269,7 @@ class FormularValueParser {
 		if (!self::precisionIsOkay($_POST[$key], $options) || self::intIsTooLarge($_POST[$key], $options)) {
 			return __('This value is too large.');
 		}
-			
+
 		if (self::intIsTooSmall($_POST[$key], $options)) {
 			return __('This value is too small.');
 		}
@@ -274,7 +286,7 @@ class FormularValueParser {
 	 private static function intIsTooLarge($value, array $options) {
 	 	return (isset($options['max']) && is_numeric($options['max']) && $value > $options['max']);
 	 }
-	 
+
 	/**
 	 * Check if given value is too small
 	 * @param mixed $value as int/float/double
@@ -289,7 +301,7 @@ class FormularValueParser {
 	 * Validator: decimal
 	 * @param string $key
 	 * @param array $options
-	 * @return boolean 
+	 * @return boolean
 	 */
 	private static function validateDecimal($key, $options) {
 		$_POST[$key] = Helper::CommaToPoint($_POST[$key]);
@@ -326,7 +338,7 @@ class FormularValueParser {
 	/**
 	 * Validator: date-string => timestamp
 	 * @param string $key
-	 * @return boolean 
+	 * @return boolean
 	 */
 	private static function validateDate($key) {
 		$dateParts = self::removeEmptyValues(explode('.', $_POST[$key]));
@@ -350,7 +362,7 @@ class FormularValueParser {
 
 	/**
 	 * Parse: timestamp => date-string
-	 * @param type $value 
+	 * @param string $value
 	 */
 	private static function parseDate(&$value) {
 		if (is_numeric($value))
@@ -360,7 +372,7 @@ class FormularValueParser {
 	/**
 	 * Validator: daytime-string => timestamp
 	 * @param string $key
-	 * @return boolean 
+	 * @return boolean
 	 */
 	private static function validateDaytime($key) {
 		$timeParts = self::removeEmptyValues(explode(':', $_POST[$key]));
@@ -382,7 +394,7 @@ class FormularValueParser {
 
 	/**
 	 * Parse: timestamp => date-string
-	 * @param type $value 
+	 * @param string $value
 	 */
 	private static function parseDaytime(&$value) {
 		if (is_numeric($value))
@@ -396,7 +408,7 @@ class FormularValueParser {
 	 * Validator: time-string => time in seconds
 	 * @param string $key
 	 * @param array $options
-	 * @return boolean 
+	 * @return boolean
 	 */
 	private static function validateTime($key, $options) {
 		$Time = new Duration($_POST[$key]);
@@ -411,7 +423,7 @@ class FormularValueParser {
 
 	/**
 	 * Parse: time in seconds => time-string
-	 * @param mixed $value 
+	 * @param mixed $value
 	 * @param array $options
 	 */
 	private static function parseTime(&$value, $options) {
@@ -431,7 +443,7 @@ class FormularValueParser {
 	 * This will transform 6:23 to 6*60 + 23
 	 * @param string $key
 	 * @param array $options
-	 * @return boolean 
+	 * @return boolean
 	 */
 	private static function validateTimeMinutes($key, $options) {
 		$Time = new Duration($_POST[$key]);
@@ -446,7 +458,7 @@ class FormularValueParser {
 
 	/**
 	 * Parse: time in seconds => time-string
-	 * @param mixed $value 
+	 * @param mixed $value
 	 */
 	private static function parseTimeMinutes(&$value) {
 		if ($value == 0) {
@@ -529,12 +541,12 @@ class FormularValueParser {
 
 	/**
 	 * Parse: weight in kg => weight in preferred unit
-	 * @param mixed $value 
+	 * @param mixed $value
 	 */
 	private static function parseWeight(&$value) {
 		$value = round((new Weight($value))->valueInPreferredUnit(), 2);
 	}
-        
+
 	/**
 	 * Validator: temperature in preferred unit => temperature in °C
 	 * @param string $key
@@ -552,12 +564,12 @@ class FormularValueParser {
 
 	/**
 	 * Parse: temperature in °C => temperature in preferred unit
-	 * @param mixed $value 
+	 * @param mixed $value
 	 */
 	private static function parseTemperature(&$value) {
 		$value = (new Temperature($value))->valueInPreferredUnit();
 	}
-      
+
 
 	/**
 	 * Validator: elevation in preferred unit => elevation in m
@@ -572,12 +584,30 @@ class FormularValueParser {
 
 	/**
 	 * Parse: elevation in m => elevation in preferred unit
-	 * @param mixed $value 
+	 * @param mixed $value
 	 */
 	private static function parseElevation(&$value) {
 		$value = round((new Elevation($value))->valueInPreferredUnit(), 2);
 	}
 
+	/**
+	 * Validator: energy in preferred unit => energy in kcal
+	 * @param string $key
+	 * @return bool
+	 */
+	private static function validateEnergy($key) {
+		$_POST[$key] = (new Energy())->setInPreferredUnit($_POST[$key])->kcal();
+
+		return true;
+	}
+
+	/**
+	 * Parse: energy in m => energy in preferred unit
+	 * @param mixed $value
+	 */
+	private static function parseEnergy(&$value) {
+		$value = (new Energy($value))->valueInPreferredUnit();
+	}
 	/**
 	 * Validator: distance in preferred unit => distance in km
 	 * @param string $key
@@ -604,7 +634,7 @@ class FormularValueParser {
 
 	/**
 	 * Parse: distance in km => distance in preferred unit
-	 * @param mixed $value 
+	 * @param mixed $value
 	 * @param array $parserOptions
 	 */
 	private static function parseDistance(&$value, array $parserOptions) {
@@ -614,7 +644,7 @@ class FormularValueParser {
 
 		$value = number_format((new Distance($value))->valueInPreferredUnit(), $decimals, $decimalPoint, $thousandsPoint);
 	}
-	
+
 	/**
 	 * Validator: wind speed in preferred unit => wind speed in km/h
 	 * @param string $key
@@ -639,7 +669,7 @@ class FormularValueParser {
 			$value = round((new WindSpeed($value))->valueInPreferredUnit());
 		}
 	}
-	
+
 	/**
 	 * Validator: RPE
 	 * @param string $key

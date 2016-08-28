@@ -110,7 +110,6 @@ class SessionAccountHandler {
 	 * Set session to database 
 	 */
 	private function setSessionToDatabase() {
-	    //lastlogin has to be updated by symfony
 	    //remove autologin hash from database
 	}
 
@@ -165,6 +164,18 @@ class SessionAccountHandler {
 		}
 
 		return self::$Account['allow_mails'];
+	}
+	
+	/**
+	 * Get if user allows access to account
+	 * @return string 
+	 */
+	public static function getAllowSupport() {
+		if (!isset(self::$Account['allow_support'])) {
+			return '';
+		}
+
+		return self::$Account['allow_support'];
 	}
 
 	/**

@@ -27,7 +27,7 @@ class GeoTIFFTest extends \PHPUnit_Framework_TestCase
 	{
 		if (file_exists(FRONTEND_PATH.'../data/srtm/srtm_38_03.tif')) {
 			$Corrector = new GeoTIFF(
-				array(49.444722), 
+				array(49.444722),
 				array(7.768889)
 			);
 
@@ -62,7 +62,7 @@ class GeoTIFFTest extends \PHPUnit_Framework_TestCase
 	{
 		if (file_exists(FRONTEND_PATH.'../data/srtm/srtm_38_03.tif')) {
 			$Corrector = new GeoTIFF(
-				array(49.440, 49.441, 49.442, 49.443, 49.444, 49.445, 49.446, 49.447, 49.448, 49.449, 49.450), 
+				array(49.440, 49.441, 49.442, 49.443, 49.444, 49.445, 49.446, 49.447, 49.448, 49.449, 49.450),
 				array(7.760, 7.761, 7.762, 7.763, 7.764, 7.765, 7.766, 7.767, 7.768, 7.769, 7.770)
 			);
 
@@ -79,7 +79,7 @@ class GeoTIFFTest extends \PHPUnit_Framework_TestCase
 	{
 		if (file_exists(FRONTEND_PATH.'../data/srtm/srtm_38_03.tif')) {
 			$Corrector = new GeoTIFF(
-				array(49.440, 49.441, 49.442, 49.443, 49.444, 49.445, 49.446, 49.447, 49.448, 49.449, 49.450), 
+				array(49.440, 49.441, 49.442, 49.443, 49.444, 49.445, 49.446, 49.447, 49.448, 49.449, 49.450),
 				array(7.760, 7.761, 7.762, 7.763, 7.764, 7.765, 7.766, 7.767, 7.768, 7.769, 7.770)
 			);
 
@@ -90,24 +90,6 @@ class GeoTIFFTest extends \PHPUnit_Framework_TestCase
 			$this->assertEquals( array(240.0, 239.0, 240.0, 238.0, 238.0, 239.0, 236.0, 236.0, 240.0, 247.0, 258.0), $Corrector->getCorrectedElevation() );
 		} else {
 			$this->markTestSkipped('srtm_38_03.tif is not available.');
-		}
-	}
-
-	public function testSydneyWithUnknown()
-	{
-		if (file_exists(FRONTEND_PATH.'../data/srtm/srtm_67_19.tif')) {
-			$Corrector = new GeoTIFF(
-				array(-33.8705667),
-				array(151.1486337)
-			);
-
-			$this->assertTrue( $Corrector->canHandleData() );
-			$Corrector->setGuessUnknown(false);
-			$Corrector->correctElevation();
-
-			$this->assertEquals( array(GeoTIFF::UNKNOWN), $Corrector->getCorrectedElevation() );
-		} else {
-			$this->markTestSkipped('srtm_67_19.tif is not available.');
 		}
 	}
 

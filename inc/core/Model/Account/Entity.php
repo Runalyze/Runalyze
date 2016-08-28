@@ -13,7 +13,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * Account entity
  * 
  * @author Hannes Christiansen
- * @package Runalyze\Model\HRV
+ * @package Runalyze\Model\Account
  */
 class Entity extends Model\EntityWithID implements Model\Loopable, UserInterface, \Serializable {
 	/**

@@ -2,6 +2,8 @@
 
 namespace Runalyze\Bundle\CoreBundle\Controller;
 
+use Runalyze\Bundle\CoreBundle\Services\Activity\VdotInfo;
+use Runalyze\Configuration;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -192,10 +194,19 @@ class ActivityController extends Controller
     public function vdotInfoAction($id)
     {
         $Frontend = new \Frontend(true, $this->get('security.token_storage'));
-        $VDOTinfo = new \VDOTinfo(new Context($id, \SessionAccountHandler::getId()));
-        $VDOTinfo->display();
 
-        return new Response();
+        $VdotInfo = new VdotInfo();
+        $VdotInfo->setContext(new Context($id, \SessionAccountHandler::getId()));
+        $VdotInfo->setConfiguration(Configuration::Data(), Configuration::Vdot());
+
+        return $this->render(':activity:vdot_info.html.twig', [
+            'title' => $VdotInfo->getTitle(),
+            'raceDetails' => $VdotInfo->getRaceCalculationDetails(),
+            'hrDetails' => $VdotInfo->getHeartRateCalculationDetails(),
+            'factorDetails' => $VdotInfo->getCorrectionFactorDetails(),
+            'elevationDetails' => $VdotInfo->getElevationDetails(),
+            'useElevationAdjustment' => $VdotInfo->usesElevationAdjustment()
+        ]);
     }
 
     /**

@@ -6,6 +6,10 @@ use Runalyze\Activity\Distance;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
+use AppBundle\Entity\Account;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use SessionAccountHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -139,23 +143,11 @@ class DefaultController extends Controller
      */
     protected function collectStatistics()
     {
-        \DB::getInstance()->stopAddingAccountID();
+	$repository = $this->getDoctrine()->getRepository('CoreBundle:Account');
+	$numUser =  $repository->getAmountOfActivatedUsers();
 
-        $numUser = \Cache::get('NumUser', 1);
-
-        if ($numUser == null) {
-            $numUser = \DB::getInstance()->query('SELECT COUNT(*) FROM `'.PREFIX.'account` WHERE `activation_hash` = ""')->fetchColumn();
-            \Cache::set('NumUser', $numUser, '500', 1);
-        }
-
-        $numDistance = \Cache::get('NumKm', 1);
-
-        if ($numDistance == null) {
-            $numDistance = \DB::getInstance()->query('SELECT SUM(`distance`) FROM `'.PREFIX.'training`')->fetchColumn();
-            \Cache::set('NumKm', $numDistance, '500', 1);
-        }
-
-        \DB::getInstance()->startAddingAccountID();
+	$repository = $this->getDoctrine()->getRepository('CoreBundle:Training');
+	$numDistance =  $repository->getAmountOfLoggedKilometers();
 
         return ['user' => (int)$numUser, 'distance' => Distance::format($numDistance)];
     }

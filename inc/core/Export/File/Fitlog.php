@@ -89,7 +89,7 @@ class Fitlog extends AbstractFileExporter
 
         $this->Activity->Duration->addAttribute('TotalSeconds', (int)$this->Context->activity()->duration());
         $this->Activity->Distance->addAttribute('TotalMeters', 1000*$this->Context->activity()->distance());
-        $this->Activity->Calories->addAttribute('TotalCal', $this->Context->activity()->calories());
+        $this->Activity->Calories->addAttribute('TotalCal', $this->Context->activity()->energy());
     }
 
     /**

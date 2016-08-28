@@ -90,10 +90,10 @@ class Entity extends Model\EntityWithID {
 	const ELEVATION = 'elevation';
 
 	/**
-	 * Key: calories
+	 * Key: energy
 	 * @var string
 	 */
-	const CALORIES = 'kcal';
+	const ENERGY = 'kcal';
 
 	/**
 	 * Key: average heart rate
@@ -379,7 +379,7 @@ class Entity extends Model\EntityWithID {
 			self::TIME_IN_SECONDS,
 			self::ELAPSED_TIME,
 			self::ELEVATION,
-			self::CALORIES,
+			self::ENERGY,
 			self::HR_AVG,
 			self::HR_MAX,
 			self::VDOT,
@@ -510,7 +510,7 @@ class Entity extends Model\EntityWithID {
 			self::TIME_IN_SECONDS,
 			self::ELAPSED_TIME,
 			self::ELEVATION,
-			self::CALORIES,
+			self::ENERGY,
 			self::HR_AVG,
 			self::HR_MAX,
 			self::VDOT,
@@ -634,11 +634,11 @@ class Entity extends Model\EntityWithID {
 	}
 
 	/**
-	 * Calories
+	 * Energy
 	 * @return int [kcal]
 	 */
-	public function calories() {
-		return $this->Data[self::CALORIES];
+	public function energy() {
+		return $this->Data[self::ENERGY];
 	}
 
 	/**

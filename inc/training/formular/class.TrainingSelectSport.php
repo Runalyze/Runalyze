@@ -21,9 +21,12 @@ class TrainingSelectSport extends FormularSelectBox {
 	public function __construct($name, $label, $value = '') {
 		parent::__construct($name, $label, $value);
 
+		// Instead of renaming all functions we directly apply the factor
+		$kcalFactor = Configuration::General()->energyUnit()->factorFromKcalToUnit();
+
 		foreach (SportFactory::AllSports() as $id => $sport) {
 			$attributes = array();
-			$attributes['data-kcal'] = $sport['kcal'];
+			$attributes['data-kcal'] = round($sport['kcal'] * $kcalFactor);
 
 			if ($sport['id'] == Configuration::General()->runningSport())
 				$attributes['data-running'] = 'true';

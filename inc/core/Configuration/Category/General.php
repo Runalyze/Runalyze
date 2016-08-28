@@ -14,6 +14,8 @@ use Runalyze\Parameter\Application\DistanceUnitSystem;
 use Runalyze\Parameter\Application\WeekStart;
 use Runalyze\Parameter\Application\TemperatureUnit;
 use Runalyze\Parameter\Application\WeightUnit;
+use Runalyze\Parameter\Application\EnergyUnit;
+
 use Ajax;
 
 /**
@@ -38,6 +40,7 @@ class General extends \Runalyze\Configuration\Category {
                 $this->createWeekStart();
 		$this->createDistanceUnitSystem();
 		$this->createWeightUnit();
+		$this->createEnergyUnit();
                 $this->createTemperatureUnit();
 		$this->createHeartRateUnit();
 		$this->createMainSport();
@@ -94,6 +97,22 @@ class General extends \Runalyze\Configuration\Category {
 	 */
 	public function weightUnit() {
 		return $this->object('WEIGHT_UNIT');
+	}
+	
+	/**
+	 * Create: EnergyUnit
+	 */
+	protected function createEnergyUnit() {
+		$this->createHandle('ENERGY_UNIT', new EnergyUnit());
+	}
+	
+	
+	/**
+	 * energy Unit
+	 * @return \Runalyze\Parameter\Application\EnergyUnit
+	 */
+	public function energyUnit() {
+		return $this->object('ENERGY_UNIT');
 	}
 
 	/**
@@ -176,6 +195,7 @@ class General extends \Runalyze\Configuration\Category {
 	protected function registerOnchangeEvents() {
 		$this->handle('GENDER')->registerOnchangeFlag(Ajax::$RELOAD_ALL);
 		$this->handle('DISTANCE_UNIT_SYSTEM')->registerOnchangeFlag(Ajax::$RELOAD_ALL);
+		$this->handle('ENERGY_UNIT')->registerOnchangeFlag(Ajax::$RELOAD_ALL);
 		$this->handle('DISTANCE_UNIT_SYSTEM')->registerOnchangeEvent('Runalyze\\Configuration\\Messages::adjustPacesInSportsConfiguration');
 		$this->handle('WEIGHT_UNIT')->registerOnchangeFlag(Ajax::$RELOAD_PLUGINS);
                 $this->handle('TEMPERATURE_UNIT')->registerOnchangeFlag(Ajax::$RELOAD_DATABROWSER);
@@ -207,6 +227,10 @@ class General extends \Runalyze\Configuration\Category {
 		$Fieldset->addHandle( $this->handle('WEIGHT_UNIT'), array(
 			'label'		=> __('Weight unit')
 		));
+		
+		$Fieldset->addHandle( $this->handle('ENERGY_UNIT'), array(
+			'label'		=> __('Energy unit')
+		));	
                 
 		$Fieldset->addHandle( $this->handle('TEMPERATURE_UNIT'), array(
 			'label'		=> __('Temperature unit')

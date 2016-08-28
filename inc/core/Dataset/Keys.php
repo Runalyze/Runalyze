@@ -44,7 +44,7 @@ final class Keys extends AbstractEnum
 	const ELEVATION = 9;
 
 	/** @var int */
-	const CALORIES = 10;
+	const ENERGY = 10;
 
 	/** @var int */
 	const HEARTRATE_AVG = 11;
@@ -224,7 +224,7 @@ final class Keys extends AbstractEnum
 			self::PACE => 'Pace',
 			self::ELAPSED_TIME => 'ElapsedTime',
 			self::ELEVATION => 'Elevation',
-			self::CALORIES => 'Calories',
+			self::ENERGY => 'Energy',
 			self::HEARTRATE_AVG => 'HeartrateAverage',
 			self::HEARTRATE_MAX => 'HeartrateMaximum',
 			self::VDOT_ICON => 'VdotIcon',

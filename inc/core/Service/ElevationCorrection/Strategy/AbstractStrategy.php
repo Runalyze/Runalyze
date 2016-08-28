@@ -72,7 +72,7 @@ abstract class AbstractStrategy
 		$numberOfPoints = count($this->ElevationPoints);
 		$i = 0;
 
-		while ($i < $numberOfPoints && $this->ElevationPoints[$i] == $unknownValue) { // unknown from the start
+		while ($i < $numberOfPoints && $this->ElevationPoints[$i] === $unknownValue) { // unknown from the start
 			$i++;
 		};
 
@@ -83,7 +83,7 @@ abstract class AbstractStrategy
 		}
 
 		for ($i = 0; $i < $numberOfPoints; $i++) {	//substitute each unknown with last known
-			if ($this->ElevationPoints[$i] == $unknownValue) {
+			if ($this->ElevationPoints[$i] === $unknownValue) {
 				$this->ElevationPoints[$i] = $lastKnown;
 			} else {
 				$lastKnown = $this->ElevationPoints[$i];
