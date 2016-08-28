@@ -40,8 +40,14 @@ You have to apply recent changes from the respective update files in `inc/instal
 * see [#952](https://github.com/Runalyze/Runalyze/issues/952)
 
 ## Changelog
+* [v3.0](http://blog.runalyze.com/en/allgemein-en/runalyze-v3-0-en/), [[update instructions]](https://docs.runalyze.com/en/latest/upgrade/3.x.html#upgrade-from-2-6-to-3-0), 28.08.2016: major release (improved core, no amazing new features)
 * [v2.6](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-6-en/), [[update instructions]](http://docs.runalyze.com/en/latest/upgrade/2.x.html#upgrade-from-2-5-to-2-6), 22.05.2016: minor release (race results, improved weather cache ...)
  * [v2.6.1](https://blog.runalyze.com/en/allgemein-en/runalyze-v2-6-1-en/), 31.05.2016: minor bugfixes
+ * [v2.6.2](https://blog.runalyze.com/en/allgemein-en/runalyze-v2-6-2-en/), 18.07.2016: minor bugfixes
+ * [v2.6.3](https://blog.runalyze.com/en/allgemein-en/runalyze-v2-6-3-en/), 03.08.2016: minor bugfixes
+ * [v2.6.4](https://blog.runalyze.com/en/allgemein-en/runalyze-v2-6-4-en/), 17.08.2016: minor bugfixes
+ * [v2.6.5](https://blog.runalyze.com/en/allgemein-en/runalyze-v2-6-5-en/), 22.08.2016: minor bugfixes
+ * v2.6.6, 28.08.2016: fix fit file import with developer fields
 * [v2.5](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-5-en/), [[update instructions]](http://docs.runalyze.com/en/latest/upgrade/2.x.html#upgrade-from-2-4-to-2-5), 12.04.2016: minor release (timezone support, Moving average, ...)
  * [v2.5.1](https://blog.runalyze.com/en/allgemein-en/runalyze-v2-5-1-en/), 24.04.2016: minor bugfixes
  * [v2.5.2](https://blog.runalyze.com/en/allgemein-en/runalyze-v2-5-2-en/), 07.05.2016: minor bugfixes
