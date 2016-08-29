@@ -54,13 +54,13 @@ class InstallCommand extends ContainerAwareCommand
         $this->Application->setCatchExceptions(false);
         $this->Application->setAutoExit(false);
 
-        $this->removeCommandsThatShouldBeSkipeed($input);
+        $this->removeCommandsThatShouldBeSkipped($input);
     }
 
     /**
      * @param \Symfony\Component\Console\Input\InputInterface $input
      */
-    protected function removeCommandsThatShouldBeSkipeed(InputInterface $input)
+    protected function removeCommandsThatShouldBeSkipped(InputInterface $input)
     {
         if ($input->hasOption('skip') && is_array($input->getOption('skip'))) {
             $skippedCommands = $input->getOption('skip');
