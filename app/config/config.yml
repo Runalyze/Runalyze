@@ -52,6 +52,11 @@ services:
         container: "@service_container"
     tags:
       - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+  app.twig_extension:
+    class: Runalyze\Bundle\CoreBundle\Twig\HtmlExtension
+    public: false
+    tags:
+      - { name: twig.extension }
 
 twig:
   globals:
