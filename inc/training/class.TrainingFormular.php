@@ -511,7 +511,9 @@ class TrainingFormular extends StandardFormular {
 				$Fieldset->setCollapsed();
 
 				$Fieldset->addInfo('
-					<a class="ajax" target="gps-results" href="call/call.Training.elevationCorrection.php?id='.$this->dataObject->id().'"><strong>'.__('Correct elevation data').'</strong></a><br>
+                                        <a class="ajax" target="gps-results" href="activity/'.$this->dataObject->id().'/elevation-correction"><strong>'.__('Correct elevation data').'</strong></a><br>
+
+
 					<br>
 					<small id="gps-results" class="block">
 						'.__('Elevation data via GPS is very inaccurate. Therefore you can correct it via some satellite data.').'
