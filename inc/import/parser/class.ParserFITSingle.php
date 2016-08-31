@@ -327,8 +327,8 @@ class ParserFITSingle extends ParserAbstractSingle {
 	 * Read undocumented user data
 	 */
 	protected function readUndocumentedUserData() {
-		if (isset($this->Values['xxx0']) && $this->TrainingObject->getFitVdotEstimate() == 0) {
-			$this->TrainingObject->setFitVdotEstimate(round((int)$this->Values['xxx0'][1] * 3.5 / 1024, 2));
+		if (isset($this->Values['unknown0']) && $this->TrainingObject->getFitVdotEstimate() == 0) {
+			$this->TrainingObject->setFitVdotEstimate(round((int)$this->Values['unknown0'][1] * 3.5 / 1024, 2));
 		}
 	}
 
