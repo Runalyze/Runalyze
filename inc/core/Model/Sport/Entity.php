@@ -7,15 +7,16 @@
 namespace Runalyze\Model\Sport;
 
 use Runalyze\Model;
+use Runalyze\Profile\Sport\ProfileInterface;
 use Runalyze\View\Icon\SportIcon;
 
 /**
  * Sport entity
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Model\Sport
  */
-class Entity extends Model\EntityWithID {
+class Entity extends Model\EntityWithID implements ProfileInterface {
 	/**
 	 * Key: name
 	 * @var string
@@ -75,7 +76,7 @@ class Entity extends Model\EntityWithID {
 	 * @var string
 	 */
 	const MAIN_EQUIPMENTTYPEID = 'main_equipmenttypeid';
-	
+
 	/**
 	 * Key: id of default sport type (used for multi import/automatic upload)
 	 * @var string
@@ -201,7 +202,7 @@ class Entity extends Model\EntityWithID {
 	public function mainEquipmentTypeID() {
 		return $this->Data[self::MAIN_EQUIPMENTTYPEID];
 	}
-	
+
 	/**
 	 * ID of default type
 	 * @return int
