@@ -422,6 +422,8 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertTrue($this->object->object()->hasArrayTemperature());
 			$this->assertTrue($this->object->object()->hasArrayPower());
 
+			// Read from undocumented block NUMBER=79
+			$this->assertEquals(47.64, $this->object->object()->getFitVdotEstimate());
 		}
 	}
 
