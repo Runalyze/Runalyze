@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="uk" datatype="plaintext" original="file.ext">
     <header>
@@ -13,9 +13,9 @@
         <source>The administrator has to set the correct API-key.</source>
         <target>The administrator has to set the correct API-key.</target>
       </trans-unit>
-      <trans-unit id="49ab28040dfa07f53544970c6d147e1e" resname="Connect">
+      <trans-unit id="49ab28040dfa07f53544970c6d147e1e" resname="Connect" approved="yes">
         <source>Connect</source>
-        <target>Connect</target>
+        <target state="translated">Підключення</target>
       </trans-unit>
       <trans-unit id="aae025ecc68c1c8f446c631c1ce70dc3" resname="Searching for devices">
         <source>Searching for devices</source>
@@ -29,9 +29,9 @@
         <source>Browse computer</source>
         <target>Browse computer</target>
       </trans-unit>
-      <trans-unit id="ea4788705e6873b424c65e91c2846b19" resname="Cancel">
+      <trans-unit id="ea4788705e6873b424c65e91c2846b19" resname="Cancel" approved="yes">
         <source>Cancel</source>
-        <target>Cancel</target>
+        <target state="translated">Скасувати</target>
       </trans-unit>
       <trans-unit id="1aee350e4a181900ee9b082142f08c81" resname="Connected devices">
         <source>Connected devices</source>
