@@ -5,13 +5,15 @@
  */
 
 namespace Runalyze;
+use Runalyze\Util\InterfaceChoosable;
+use Symfony\Component\Yaml\Yaml;
 
 /**
  * Language class
  * @author Michael Pohl
  * @package Runalyze
  */
-class Language
+class Language implements InterfaceChoosable
 {
     /** @var string */
     const GET_KEY = 'lang';
@@ -55,6 +57,14 @@ class Language
         self::setLanguage($language);
 
         $this->setDomain($domain);
+    }
+
+    public static function getChoices() {
+        self::readAvailableLanguages();
+        foreach (self::availableLanguages() as $name => $lang) {
+            $languages[$lang[0]] = $name;
+        }
+        return $languages;
     }
 
     /**
@@ -115,10 +125,12 @@ class Language
      */
     private static function readAvailableLanguages()
     {
-        $supportedLanguages = array();
-        include __DIR__.'/../../data/config_lang.php';
+        $config = Yaml::parse(file_get_contents('../app/config/languages.yml'));
 
-        self::$AVAILABLE_LANGUAGES = $supportedLanguages;
+        foreach($config['parameters']['locales'] as $short => $lang) {
+            $languages[$short] = array($lang['name'], $lang['locale']);
+        }
+        self::$AVAILABLE_LANGUAGES = $languages;
     }
 
     /**
