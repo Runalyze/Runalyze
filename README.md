@@ -1,4 +1,4 @@
-# [Runalyze v3.0.0-dev](http://blog.runalyze.com)
+# [Runalyze v3.1.0-dev](http://blog.runalyze.com)
 
 [![Build Status](https://travis-ci.org/Runalyze/Runalyze.svg?branch=master)](https://travis-ci.org/Runalyze/Runalyze)
 [![Code Coverage](https://scrutinizer-ci.com/g/Runalyze/Runalyze/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/Runalyze/Runalyze/?branch=master)
@@ -11,12 +11,12 @@ Runalyze is mainly developed by [laufhannes](https://github.com/laufhannes) and 
 
 ## Documentation
 We provide two different documentations:
-* [help.runalyze.com](http://help.runalyze.com) - faq for users
-* [docs.runalyze.com](http://docs.runalyze.com) - docs for admins/developers
-  * [Installation](http://docs.runalyze.com/en/latest/install.html) - tutorial in german [here](http://blog.runalyze.com/installation/)
-  * [Update](http://docs.runalyze.com/en/latest/update.html)
-  * [Checkout](http://docs.runalyze.com/en/latest/checkout.html)
-  * [Contributing](http://docs.runalyze.com/en/latest/contribute.html)
+* [help.runalyze.com](https://help.runalyze.com) - faq for users
+* [docs.runalyze.com](https://docs.runalyze.com) - docs for admins/developers
+  * [Installation](https://docs.runalyze.com/en/latest/install.html) - tutorial in german [here](https://blog.runalyze.com/installation/)
+  * [Update](https://docs.runalyze.com/en/latest/update.html)
+  * [Checkout](https://docs.runalyze.com/en/latest/checkout.html)
+  * [Contributing](https://docs.runalyze.com/en/latest/contribute.html)
 
 Both documentations have their own repos: [docs](https://github.com/Runalyze/docs) and [admin-docs](https://github.com/Runalyze/admin-docs). In addition, there's our [runalyze-playground](https://github.com/Runalyze/runalyze-playground) to play around with some new ideas. Feel free to contribute there.
 
@@ -33,15 +33,13 @@ npm install
 gulp
 ```
 
-Still, we don't have any automated migration script for the database so far.
-You have to apply recent changes from the respective update files in `inc/install/` by hand.
 
 ## License
 * see [#952](https://github.com/Runalyze/Runalyze/issues/952)
 
 ## Changelog
-* [v3.0](http://blog.runalyze.com/en/allgemein-en/runalyze-v3-0-en/), [[update instructions]](https://docs.runalyze.com/en/latest/upgrade/3.x.html#upgrade-from-2-6-to-3-0), 28.08.2016: major release (improved core, no amazing new features)
-* [v2.6](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-6-en/), [[update instructions]](http://docs.runalyze.com/en/latest/upgrade/2.x.html#upgrade-from-2-5-to-2-6), 22.05.2016: minor release (race results, improved weather cache ...)
+* [v3.0](https://blog.runalyze.com/en/allgemein-en/runalyze-v3-0-en/), [[update instructions]](https://docs.runalyze.com/en/latest/upgrade/3.x.html#upgrade-from-2-6-to-3-0), 28.08.2016: major release (improved core, no amazing new features)
+* [v2.6](https://blog.runalyze.com/en/allgemein-en/runalyze-v2-6-en/), [[update instructions]](http://docs.runalyze.com/en/latest/upgrade/2.x.html#upgrade-from-2-5-to-2-6), 22.05.2016: minor release (race results, improved weather cache ...)
  * [v2.6.1](https://blog.runalyze.com/en/allgemein-en/runalyze-v2-6-1-en/), 31.05.2016: minor bugfixes
  * [v2.6.2](https://blog.runalyze.com/en/allgemein-en/runalyze-v2-6-2-en/), 18.07.2016: minor bugfixes
  * [v2.6.3](https://blog.runalyze.com/en/allgemein-en/runalyze-v2-6-3-en/), 03.08.2016: minor bugfixes
