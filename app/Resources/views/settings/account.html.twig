@@ -1,0 +1,51 @@
+{% extends "base_logged_in.twig" %}
+{% block content %}
+<div class="panel-heading">
+<h1>{% trans %}Account{% endtrans %}</h1>
+</div>
+<div class="panel-content">
+    {% include 'flashmessages.html.twig' %}
+    {{ form_start(form, {'attr': {'class': 'ajax no-automatic-reloads'} }) }}
+    <fieldset id="legend0">
+        <legend onclick="Runalyze.toggleFieldset(this, 'legend0', false, '')">{% trans %}Your acccount{% endtrans %}</legend>
+    {% form_theme form 'form/fields.html.twig' %}
+        {{ form_row(form.username) }}
+        {{ form_row(form.name) }}
+        {{ form_row(form.mail) }}
+        {{ form_row(form.language) }}
+        {{ form_row(form.timezone) }}
+        {{ form_row(form.gender, {'info': 'Used for the calculation of energy spent for an activity'|trans }) }}
+        {{ form_row(form.birthyear, {'info': 'Will be used for some upcoming features'|trans }) }}
+        {{ form_row(form.registerdate) }}
+        {{ form_row(form.allow_support, {'info': 'Allow admins in case of support requests to have a look at your data.'|trans }) }}
+    </fieldset>
+    <fieldset id="legend1">
+        <legend onclick="Runalyze.toggleFieldset(this, 'legend1', false, '')">{% trans %}Notifications{% endtrans %}</legend>
+        {{ form_row(form.allow_mails, {'info': 'At irregular intervals we are sending mails to you. We will never send you spam or advertisement.'|trans }) }}
+    </fieldset>
+    <fieldset id="legend2">
+        <legend onclick="Runalyze.toggleFieldset(this, 'legend2', true, '')">{% trans %}Change your password{% endtrans %}</legend>
+        {{ form_row(form.password) }}
+        {{ form_row(form.new_password.first) }}
+        {{ form_row(form.new_password.second) }}
+    </fieldset>
+    <fieldset id="legend3">
+        <legend onclick="Runalyze.toggleFieldset(this, 'legend3', true, '')">{% trans %}Backup your data{% endtrans %}</legend>
+        <div class="fieldset-messages">
+            <p class="info">{% trans %}Please use the plugin{% endtrans %} '<strong><a data-size="big" class="window" href="my/tools/backup">{% trans %}Database import/export{% endtrans %}</a></strong>'.</p>
+        </div>
+    </fieldset>
+    <fieldset id="legend4">
+        <legend onclick="Runalyze.toggleFieldset(this, 'legend4', true, '')">{% trans %}Reset configuration{% endtrans %}</legend>
+        {{ form_row(form.reset_configuration, {'info': 'This will not touch any general settings like gender and main sport'|trans }) }}
+    </fieldset>
+    <fieldset id="legend5">
+        <legend onclick="Runalyze.toggleFieldset(this, 'legend5', true, '')">{% trans %}Delete your account{% endtrans %}</legend>
+        <p class="warning"><strong><a class="window" href="{{ path('settings-account-delete') }}">Delete your account »</a></strong>
+            <br>{% trans %}You'll receive an email with a link to confirm the deletion.{% endtrans %}
+            {% trans %}The deletion is permanent and cannot be reversed. Therefore, you should backup your data.{% endtrans %}</p>
+    </fieldset>
+    <input type="submit" value="{% trans %}Save{% endtrans %}" />
+    {{ form_end(form) }}
+</div>
+{% endblock %}

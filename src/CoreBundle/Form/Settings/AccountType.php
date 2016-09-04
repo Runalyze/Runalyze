@@ -13,12 +13,33 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Security\Core\Validator\Constraints as SecurityAssert;
+use Symfony\Component\Validator\Constraints as Assert;
 use Runalyze\Timezone;
 use Runalyze\Language;
 use Runalyze\Profile\Athlete\Gender;
 
 class AccountType extends AbstractType
 {
+
+    /**
+     * @SecurityAssert\UserPassword(
+     *     message = "Wrong value for your current password"
+     * )
+     */
+    protected $oldPassword;
+
+    /**
+     * @Assert\Length(
+     *     min = 6,
+     *     minMessage = "Password should by at least 6 chars long"
+     * )
+     */
+    protected $newPassword;
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -45,6 +66,7 @@ class AccountType extends AbstractType
                 'required' => false
             ))
             ->add('registerdate', DateTimeType::class, array(
+                    'label' => 'Registered since',
                     'input' => 'timestamp',
                     'disabled' => true,
                     'date_widget' =>  'single_text',
@@ -54,7 +76,36 @@ class AccountType extends AbstractType
                 'choices' => array(
                     'Yes' => true,
                     'No' => false
-                )))
+                ),
+                'label' => 'Allow access for support'
+            ))
+            ->add('allow_mails', ChoiceType::class, array(
+                'choices' => array(
+                    'Yes' => true,
+                    'No' => false
+                ),
+                'label' => 'Email me'
+            ))
+            ->add('password', PasswordType::class, array(
+                'required' => false,
+                'label' => 'Old password',
+                'mapped' => false,
+            ))
+            ->add('new_password', RepeatedType::class, array(
+                'type' => PasswordType::class,
+                'invalid_message' => 'The password fields must match.',
+                'options' => array('attr' => array('class' => 'password-field')),
+                'required' => false,
+                'first_options'  => array('label' => 'New password'),
+                'second_options' => array('label' => 'Repeat password'),
+                'mapped' => false,
+                'empty_data'  => null
+            ))
+            ->add('reset_configuration', CheckboxType::class, array(
+                'required' => false,
+                'mapped' => false,
+                'empty_data'  => null
+            ))
         ;
     }
 

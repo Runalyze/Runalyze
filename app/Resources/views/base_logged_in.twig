@@ -14,7 +14,7 @@
 
             {% if is_granted('ROLE_USER') %}
                 <a class="tab right" href="{{ url('logout') }}" title="{% trans %}Logout{% endtrans %}"><i class="fa fa-fw fa-lg fa-sign-out"></i>&nbsp;{% trans %}Logout{% endtrans %}</a>
-                <a class="window tab right b" href="{{ url('settings') }}?key=config_tab_account"><i class="fa fa-fw fa-lg fa-user"></i>&nbsp;{{ app.user.username }}</a>
+                <a class="window tab right b" href="{{ url('settings-account') }}"><i class="fa fa-fw fa-lg fa-user"></i>&nbsp;{{ app.user.username }}</a>
             {% endif %}
 
             <span class="left b">

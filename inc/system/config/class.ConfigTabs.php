@@ -73,8 +73,10 @@ class ConfigTabs {
 		foreach ($this->Tabs as $Tab) {
 			$Links[] = array('tag' => Ajax::link($Tab->getTitle(), self::$TABS_ID, $Tab->getUrl()));
 		}
+            $Links[] = array('tag' => Ajax::link(__('Account'), self::$TABS_ID, 'settings/account'));
 
-		echo Ajax::toolbarNavigation($Links);
+
+        echo Ajax::toolbarNavigation($Links);
 	}
 
 	/**

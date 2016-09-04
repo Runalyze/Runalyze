@@ -55,10 +55,24 @@ class Account implements AdvancedUserInterface, \Serializable
     
     /**
      * @var integer
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="timezone", type="integer", nullable=false)
      */
     private $timezone;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="gender", type="integer", nullable=false)
+     */
+    private $gender;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="birthyear", type="integer")
+     */
+    private $birthyear;
 
     /**
      * @var string
@@ -261,7 +275,7 @@ class Account implements AdvancedUserInterface, \Serializable
      */
     public function setTimezone($timezone)
     {
-        $this->timezone = $language;
+        $this->timezone = $timezone;
 
         return $this;
     }
@@ -274,6 +288,52 @@ class Account implements AdvancedUserInterface, \Serializable
     public function getTimezone()
     {
         return $this->timezone;
+    }
+    
+    /**
+     * Set gender
+     *
+     * @param string $gender
+     * @return Account
+     */
+    public function setGender($gender)
+    {
+        $this->gender = $gender;
+
+        return $this;
+    }
+
+    /**
+     * Get gender
+     *
+     * @return string 
+     */
+    public function getGender()
+    {
+        return $this->gender;
+    }
+    
+    /**
+     * Set birthyear
+     *
+     * @param string $birthyear
+     * @return Account
+     */
+    public function setBirthyear($birthyear)
+    {
+        $this->birthyear = $birthyear;
+
+        return $this;
+    }
+
+    /**
+     * Get birthyear
+     *
+     * @return string 
+     */
+    public function getBirthyear()
+    {
+        return $this->birthyear;
     }
 
     /**

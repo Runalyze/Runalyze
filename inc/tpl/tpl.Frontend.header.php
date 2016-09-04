@@ -29,7 +29,7 @@
 	<?php if ($this instanceof \Symfony\Component\DependencyInjection\ContainerAwareInterface): ?>
 	<?php if ($this->get('security.authorization_checker')->isGranted('ROLE_USER')): ?><a class="tab right" href="logout" title="<?php _e('Logout'); ?>">
 		<i class="fa fa-fw fa-lg fa-sign-out"></i>&nbsp;<?php _e('Logout'); ?></a>
-		<?php echo Ajax::window('<a class="tab right b" href="'.ConfigTabs::$CONFIG_URL.'?key=config_tab_account"><i class="fa fa-fw fa-lg fa-user"></i>'.NBSP.$this->get('security.token_storage')->getToken()->getUser()->getUsername().'</a>'); ?>
+		<?php echo Ajax::window('<a class="tab right b" href="'.$this->get('router')->generate('settings-account').'"><i class="fa fa-fw fa-lg fa-user"></i>'.NBSP.$this->get('security.token_storage')->getToken()->getUser()->getUsername().'</a>'); ?>
 	<?php endif; ?>
 
 	<span class="left b">
