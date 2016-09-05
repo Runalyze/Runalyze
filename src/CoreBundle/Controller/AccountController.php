@@ -2,9 +2,12 @@
 
 namespace Runalyze\Bundle\CoreBundle\Controller;
 
+use Runalyze\Bundle\CoreBundle\Form\RecoverPasswordType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use  Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 /**
  * @Route("/{_locale}/account")
@@ -74,14 +77,19 @@ class AccountController extends Controller
      */
     public function recoverAction(Request $request)
     {
-        new \Frontend(true, $this->get('security.token_storage'));
+        $form = $this->createFormBuilder()
+            ->add('username', TextType::class, array('required' => false))
+            ->getForm();
+        $form->handleRequest($request);
 
-        $username = $request->request->get('send_username');
         $userIsUnknown = false;
+        if ($form->isSubmitted()) {
+            new \Frontend(true, $this->get('security.token_storage'));
+            $data = $form->getData();
 
-        if ($username) {
             try {
-                if (\AccountHandler::sendPasswordLinkTo($username)) {
+                //TODO Refactor AccountHandler remove Frontend dependency
+                if (\AccountHandler::sendPasswordLinkTo($data['username'])) {
                     return $this->render('account/recover/mail_delivered.html.twig');
                 } else {
                     return $this->render('account/recover/mail_could_not_be_delivered.html.twig');
@@ -92,8 +100,8 @@ class AccountController extends Controller
         }
 
         return $this->render('account/recover/form_send_mail.html.twig', [
-            'username' => $username,
-            'user_is_unknown' => $userIsUnknown
+            'user_is_unknown' => $userIsUnknown,
+            'form' => $form->createView()
         ]);
     }
 

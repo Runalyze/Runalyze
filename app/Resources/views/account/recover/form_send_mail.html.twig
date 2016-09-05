@@ -1,10 +1,10 @@
 {% extends 'account/recover/base.html.twig' %}
 
 {% block form %}
-    <div class="w100">
-        <label for="send_username">{% trans %}Username{% endtrans %}</label>
-        <input id="send_username" name="send_username" class="middle-size{% if user_is_unknown %} validation-failed{% endif %}" type="text" value="{{ (username|default(''))|escape('html_attr') }}">
-    </div>
+
+    {{ form(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    {{ form_widget(form) }}
+
 
     {% if user_is_unknown %}
         <p class="error">
@@ -19,4 +19,5 @@
     <div class="c">
         <input type="submit" value="{% trans %}Send link{% endtrans %}" name="submit">
     </div>
+    {{ form_end(form) }}
 {% endblock %}
