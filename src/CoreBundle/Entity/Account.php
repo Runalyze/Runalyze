@@ -33,7 +33,7 @@ class Account implements AdvancedUserInterface, \Serializable
 
     /**
      * @var string
-     * @Assert\NotBlank()
+     *
      * @ORM\Column(name="name", type="string", length=50, nullable=false)
      */
     private $name;

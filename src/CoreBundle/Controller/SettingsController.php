@@ -9,6 +9,9 @@ use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Runalyze\Bundle\CoreBundle\Form\Settings\AccountType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\FormError;
+use Runalyze\Configuration;
+use Runalyze\Language;
 
 class SettingsController extends Controller
 {
@@ -18,6 +21,7 @@ class SettingsController extends Controller
      */
     public function settingsAccountAction(Request $request)
     {
+        $Frontend = new \Frontend(true, $this->get('security.token_storage'));
         $user = $this->get('security.token_storage')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();
         $account = $em->getRepository('CoreBundle:Account')->find($user->getId());
@@ -29,9 +33,6 @@ class SettingsController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $formdata = $request->request->get($form->getName());
             $em = $this->getDoctrine()->getManager();
-            $em->persist($account);
-            $em->flush();
-            $this->addFlash('notice', $this->get('translator')->trans('Your changes have been saved!'));
 
             if (isset($formdata['reset_configuration'])) {
                 Configuration::resetConfiguration($user->getId());
@@ -39,36 +40,42 @@ class SettingsController extends Controller
             }
 
             if (isset($formdata['language'])) {
-               // Language::setLanguage($_POST['language']);
+                $this->get('session')->set('_locale', $formdata['language']);
+                Language::setLanguage($formdata['language']);
                // echo Ajax::wrapJS('document.cookie = "lang=" + encodeURIComponent("'.addslashes($_POST['language']).'");');
             }
-
-            if (isset($formdata['new_password_first'])) {
-                $this->addFlash('notice', $this->get('translator')->trans('Your password has been changed.'));
-                //TODO Change password
-                /*if (AccountHandler::comparePasswords($_POST['old_pw'], $Account['password'], $Account['salt'])) {
-                    if (strlen($_POST['new_pw']) < AccountHandler::$PASS_MIN_LENGTH) {
-                        ConfigTabs::addMessage( HTML::error(sprintf( __('The password has to contain at least %s characters.'), AccountHandler::$PASS_MIN_LENGTH)) );
+            if (!empty($formdata['newPassword']['first'])) {
+                if (empty($formdata['oldPassword'])) {
+                    $form->get('oldPassword')->addError(new FormError($this->get('translator')->trans('To change your password you need to enter your current password.')));
+                } else {
+                    $oldPw = $this->encodePassword($account, $account->getSalt(), $formdata['oldPassword']);
+                    if ($oldPw != $account->getPassword()) {
+                        $form->get('oldPassword')->addError(new FormError($this->get('translator')->trans('Your password was not correct.')));
                     } else {
-                        AccountHandler::setNewPassword(SessionAccountHandler::getUsername(), $_POST['new_pw']);
-                        ConfigTabs::addMessage( HTML::okay (__('Your password has been changed.')) );
-                    }*/
-                //look at https://knpuniversity.com/screencast/symfony2-ep2/form-submit
+                        $newSalt = \AccountHandler::getNewSalt();
+                    $hash = $this->encodePassword($account, $newSalt, $formdata['newPassword']['first']);
+                    $account->setPassword($hash);
+                    $account->setSalt($newSalt);
+                    $this->addFlash('notice', $this->get('translator')->trans('Your password has been changed.'));
+                    }
+                }
             }
+            $em->persist($account);
+            $em->flush();
+            $this->addFlash('notice', $this->get('translator')->trans('Your changes have been saved!'));
         }
 
         return $this->render('settings/account.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'language' => $account->getLanguage()
         ]);
     }
 
-    private function encodePassword(User $user, $plainPassword)
+    private function encodePassword(Account $Account, $salt, $plainPassword)
     {
-        $encoder = $this->container->get('security.encoder_factory')
-            ->getEncoder($user)
-        ;
+        $encoder = $this->container->get('security.encoder_factory')->getEncoder($Account);
 
-        return $encoder->encodePassword($plainPassword, $user->getSalt());
+        return $encoder->encodePassword($plainPassword, $salt);
     }
     /**
      * @Route("/settings/account/delete", name="settings-account-delete")

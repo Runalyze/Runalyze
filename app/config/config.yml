@@ -7,6 +7,7 @@ imports:
 
 framework:
   secret: ThisTokenIsNotSoSecretChangeIt
+  validation: { enable_annotations: true }
   session:
     handler_id: session.handler.native_file
     save_path: '%kernel.root_dir%/../data/sessions'

@@ -5,14 +5,11 @@ namespace Runalyze\Bundle\CoreBundle\Form\Settings;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -46,9 +43,12 @@ class AccountType extends AbstractType
             ->add('username', TextType::class, array(
                     'disabled' => true
             ))
-            ->add('name', TextType::class)
+            ->add('name', TextType::class, array(
+                'required' => false,
+                'empty_data' => ''
+            ))
             ->add('mail', EmailType::class, array(
-                    'disabled' => true
+                'disabled' => true
             ))
             ->add('language', ChoiceType::class, array(
                 'choices' => Language::getChoices()
@@ -65,13 +65,13 @@ class AccountType extends AbstractType
                 'attr' => array('min' => 1900, 'max' => date("Y")),
                 'required' => false
             ))
-            ->add('registerdate', DateTimeType::class, array(
+            ->add('registerdate', DateType::class, array(
                     'label' => 'Registered since',
                     'input' => 'timestamp',
                     'disabled' => true,
-                    'date_widget' =>  'single_text',
-                    'date_format' => 'yyyy-MM-dd h:s'
-                ))
+                    'widget' =>  'single_text',
+                    'format' => 'yyyy-MM-dd'
+            ))
             ->add('allow_support', ChoiceType::class, array(
                 'choices' => array(
                     'Yes' => true,
@@ -86,12 +86,13 @@ class AccountType extends AbstractType
                 ),
                 'label' => 'Email me'
             ))
-            ->add('password', PasswordType::class, array(
+            ->add('oldPassword', PasswordType::class, array(
                 'required' => false,
                 'label' => 'Old password',
                 'mapped' => false,
+                'empty_data' => null
             ))
-            ->add('new_password', RepeatedType::class, array(
+            ->add('newPassword', RepeatedType::class, array(
                 'type' => PasswordType::class,
                 'invalid_message' => 'The password fields must match.',
                 'options' => array('attr' => array('class' => 'password-field')),

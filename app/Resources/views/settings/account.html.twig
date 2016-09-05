@@ -25,9 +25,9 @@
     </fieldset>
     <fieldset id="legend2">
         <legend onclick="Runalyze.toggleFieldset(this, 'legend2', true, '')">{% trans %}Change your password{% endtrans %}</legend>
-        {{ form_row(form.password) }}
-        {{ form_row(form.new_password.first) }}
-        {{ form_row(form.new_password.second) }}
+        {{ form_row(form.oldPassword) }}
+        {{ form_row(form.newPassword.first) }}
+        {{ form_row(form.newPassword.second) }}
     </fieldset>
     <fieldset id="legend3">
         <legend onclick="Runalyze.toggleFieldset(this, 'legend3', true, '')">{% trans %}Backup your data{% endtrans %}</legend>
