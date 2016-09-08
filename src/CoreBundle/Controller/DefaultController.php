@@ -36,6 +36,7 @@ class DefaultController extends Controller
     /**
      * @Route("/dashboard", name="dashboard")
      * @Route("/", name="base_url")
+     * @Route("/{_locale}")
      * @Security("has_role('ROLE_USER')")
      */
     public function indexAction()
