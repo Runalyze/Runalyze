@@ -65,7 +65,8 @@ twig:
     locales: '%locales%'
   paths:
     '%kernel.root_dir%/../data/views': __main__
-
+  form_themes:
+     - 'form/fields.html.twig'
 
 # Doctrine Configuration
 doctrine_cache:

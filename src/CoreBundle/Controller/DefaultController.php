@@ -3,10 +3,12 @@
 namespace Runalyze\Bundle\CoreBundle\Controller;
 
 use Runalyze\Activity\Distance;
+use Runalyze\Parameter\Application\Timezone;
+use Runalyze\Bundle\CoreBundle\Form\RegistrationType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
-use AppBundle\Entity\Account;
+use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -40,6 +42,7 @@ class DefaultController extends Controller
     /**
      * @Route("/dashboard", name="dashboard")
      * @Route("/", name="base_url")
+     * @Route("/{_locale}")
      * @Security("has_role('ROLE_USER')")
      */
     public function indexAction()
@@ -53,7 +56,7 @@ class DefaultController extends Controller
     /**
      * @Route("/{_locale}/register", name="register")
      */
-    public function registerAction()
+    public function registerAction(Request $request)
     {
         new \Frontend(true, $this->get('security.token_storage'));
 
@@ -61,35 +64,42 @@ class DefaultController extends Controller
             return $this->render('register/disabled.html.twig');
         }
 
-        if (isset($_POST['new_username'])) {
-            $registrationResult = \AccountHandler::tryToRegisterNewUser();
+        $account = new Account();
+        $form = $this->createForm(RegistrationType::class, $account);
+        $form->handleRequest($request);
 
-            if (true === $registrationResult) {
-                if (\System::isAtLocalhost() || USER_DISABLE_ACCOUNT_ACTIVATION) {
-                    return $this->render('account/activate/success.html.twig');
-                }
-
-                return $this->render('register/mail_delivered.html.twig');
+        //<a href="https://blog.runalyze.com/nutzungsbedingungen/
+        if ($form->isSubmitted() && $form->isValid()) {
+            $formdata = $request->request->get($form->getName());
+            $em = $this->getDoctrine()->getManager();
+            $account->setLanguage($request->getLocale());
+            try {
+                $account->setTimezone(Timezone::getEnumByOriginalName($formdata['textTimezone']));
+            } catch (\InvalidArgumentException $e) {
+                $account->setTimezone(Timezone::getEnumByOriginalName(date_default_timezone_get()));
             }
-        } else {
-            $registrationResult = [
-                'failure' => [
-                    'username' => false,
-                    'email' => false,
-                    'password' => false
-                ],
-                'errors' => []
-            ];
+            if (!\System::isAtLocalhost() || $this->getParameter('user_disable_account_activation')) {
+                $account->setActivationHash(\AccountHandler::getRandomHash());
+            }
+
+            $encoder = $this->container->get('security.encoder_factory')->getEncoder($account);
+            $account->setPassword($encoder->encodePassword($account->getPlainPassword(), $account->getSalt()));
+
+            $em->persist($account);
+            $em->flush();
+
+            $mailSent = \AccountHandler::createNewUserFrom($account->getId());
+
+            if (\System::isAtLocalhost() || $this->getParameter('user_disable_account_activation') || !$mailSent) {
+                return $this->render('account/activate/success.html.twig');
+            }
+
+            return $this->render('register/mail_delivered.html.twig');
+
         }
 
         return $this->render('register/form.html.twig', [
-            'failure' => $registrationResult['failure'],
-            'error_messages' => $registrationResult['errors'],
-            'data' => [
-                'username' => isset($_POST['new_username']) ? $_POST['new_username'] : '',
-                'name' => isset($_POST['name']) ? $_POST['name'] : '',
-                'email' => isset($_POST['email']) ? $_POST['email'] : ''
-            ],
+            'form' => $form->createView(),
             'num' => $this->collectStatistics()
         ]);
     }

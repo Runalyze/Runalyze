@@ -2,6 +2,8 @@
 
 namespace Runalyze\Bundle\CoreBundle\Controller;
 
+use Runalyze\Bundle\CoreBundle\Form\Settings\ChangeMailType;
+use Runalyze\Bundle\CoreBundle\Form\Settings\ChangePasswordType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,6 +27,7 @@ class SettingsController extends Controller
         $user = $this->get('security.token_storage')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();
         $account = $em->getRepository('CoreBundle:Account')->find($user->getId());
+
         $form = $this->createForm(AccountType::class, $account, array(
             'action' => $this->generateUrl('settings-account')
         ));
@@ -44,22 +47,6 @@ class SettingsController extends Controller
                 Language::setLanguage($formdata['language']);
                // echo Ajax::wrapJS('document.cookie = "lang=" + encodeURIComponent("'.addslashes($_POST['language']).'");');
             }
-            if (!empty($formdata['newPassword']['first'])) {
-                if (empty($formdata['oldPassword'])) {
-                    $form->get('oldPassword')->addError(new FormError($this->get('translator')->trans('To change your password you need to enter your current password.')));
-                } else {
-                    $oldPw = $this->encodePassword($account, $account->getSalt(), $formdata['oldPassword']);
-                    if ($oldPw != $account->getPassword()) {
-                        $form->get('oldPassword')->addError(new FormError($this->get('translator')->trans('Your password was not correct.')));
-                    } else {
-                        $newSalt = \AccountHandler::getNewSalt();
-                    $hash = $this->encodePassword($account, $newSalt, $formdata['newPassword']['first']);
-                    $account->setPassword($hash);
-                    $account->setSalt($newSalt);
-                    $this->addFlash('notice', $this->get('translator')->trans('Your password has been changed.'));
-                    }
-                }
-            }
             $em->persist($account);
             $em->flush();
             $this->addFlash('notice', $this->get('translator')->trans('Your changes have been saved!'));
@@ -71,11 +58,74 @@ class SettingsController extends Controller
         ]);
     }
 
-    private function encodePassword(Account $Account, $salt, $plainPassword)
+    /**
+     * @Route("/settings/password", name="settings-password")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function settingsPasswordAction(Request $request)
+    {
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $em = $this->getDoctrine()->getManager();
+        $account = $em->getRepository('CoreBundle:Account')->find($user->getId());
+        $form = $this->createForm(ChangePasswordType::class, $account, array(
+            'action' => $this->generateUrl('settings-password')
+        ));
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $formdata = $request->request->get($form->getName());
+            $newSalt = \AccountHandler::getNewSalt();
+            $hash = $this->encodePassword($account, $newSalt, $formdata['plainPassword']['first']);
+            $account->setPassword($hash);
+            $account->setSalt($newSalt);
+            $em->persist($account);
+            $em->flush();
+            $this->addFlash('notice', $this->get('translator')->trans('Your new password has been saved!'));
+        }
+
+            return $this->render('settings/account-password.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/settings/mail", name="settings-mail")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function settingsMailAction(Request $request)
+    {
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $em = $this->getDoctrine()->getManager();
+        $account = $em->getRepository('CoreBundle:Account')->find($user->getId());
+        $form = $this->createForm(ChangeMailType::class, $account, array(
+            'action' => $this->generateUrl('settings-mail')
+        ));
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($account);
+            $em->flush();
+            $this->addFlash('notice', $this->get('translator')->trans('Your mail address has been changed!'));
+        }
+            return $this->render('settings/account-mail.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/settings/account/delete", name="settings-account-delete")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function settingsAccountDeleteAction(Request $request)
+    {
+
+    }
+
+    private function encodePassword(Account $Account, $salt)
     {
         $encoder = $this->container->get('security.encoder_factory')->getEncoder($Account);
 
-        return $encoder->encodePassword($plainPassword, $salt);
+        return $encoder->encodePassword($Account->getPlainPassword(), $salt);
     }
     /**
      * @Route("/settings/account/delete", name="settings-account-delete")

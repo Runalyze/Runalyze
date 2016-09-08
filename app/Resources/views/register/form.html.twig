@@ -3,58 +3,21 @@
 {% block form %}
 <script type="text/javascript">
 $(function(){
-document.getElementById("timezone").value = moment.tz.guess();
-}); 
+document.getElementById("registration_textTimezone").value = moment.tz.guess();
+});
 </script>
-    <form action="{{ path('register') }}" method="post">
-        <fieldset>
-            <legend>{% trans %}Create a new account{% endtrans %}</legend>
 
-            <div class="w100 block">
-                <label for="new_username">{% trans %}Username{% endtrans %}</label>
-                <span class="input-with-unit">
-                    <input type="text" name="new_username" value="{{ (data.username|default(''))|escape('html_attr') }}" id="new_username" class="middle-size{% if failure.username %} validation-failed{% endif %}">
-                    <label for="new_username" class="input-unit">&nbsp;<i class="fa fa-fw fa-user"></i></label>
-                </span>
-            </div>
-
-            <div class="w100 block">
-                <label for="email">{% trans %}Email{% endtrans %}</label>
-                <span class="input-with-unit">
-                    <input type="text" name="email" value="{{ (data.email|default(''))|escape('html_attr') }}" id="email" class="middle-size{% if failure.email %} validation-failed{% endif %}">
-                    <label for="email" class="input-unit">&nbsp;<i class="fa fa-fw fa-envelope"></i></label>
-                </span>
-            </div>
-
-            <div class="w100 block">
-                <label for="password">{% trans %}Password{% endtrans %}</label>
-                <span class="input-with-unit">
-                    <input type="password" name="password" value="" id="password" class="middle-size{% if failure.password %} validation-failed{% endif %}">
-                    <label for="password" class="input-unit">&nbsp;<i class="fa fa-fw fa-lock"></i></label>
-                </span>
-            </div>
-
-            <div class="w100 block">
-                <label for="password_again">{% trans %}Password again{% endtrans %}</label>
-                <span class="input-with-unit">
-                    <input type="password" name="password_again" value="" id="password_again" class="middle-size{% if failure.password %} validation-failed{% endif %}">
-                    <label for="password_again" class="input-unit">&nbsp;<i class="fa fa-fw fa-lock"></i></label>
-                </span>
-            </div>
-
-            <input type="hidden" name="timezone" value="" id="timezone">
-
-            <div class="w100 clear">
-                <p><em>{% trans with {'%link_start%': '<a href="https://blog.runalyze.com/nutzungsbedingungen/">', '%link_end%': '</a>'} %}By clicking the register button you accept our %link_start%terms of use%link_end%.{% endtrans %}</em></p>
-            </div>
-
-            {% for error in error_messages %}
-                <p class="error">{{ error }}</p>
-            {% endfor %}
-
-            <div class="c">
-                <input type="submit" value="{% trans %}Register{% endtrans %}" name="submit">
-            </div>
-        </fieldset>
-    </form>
+    {{ form_start(form) }}
+<fieldset>
+    <legend>{% trans %}Create a new account{% endtrans %}</legend>
+    {{ form_row(form.username) }}
+    {{ form_row(form.mail) }}
+    {{ form_row(form.plainPassword) }}
+    {{ form_row(form.termsAccepted) }}
+    {{ form_rest(form) }}
+    <div class="c">
+        <input type="submit" value="{% trans %}Register{% endtrans %}" name="submit">
+    </div>
+</fieldset>
+    {{ form_end(form) }}
 {% endblock %}

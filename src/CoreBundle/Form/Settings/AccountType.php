@@ -13,7 +13,10 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 use Symfony\Component\Security\Core\Validator\Constraints as SecurityAssert;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints as Assert;
 use Runalyze\Timezone;
 use Runalyze\Language;
@@ -21,22 +24,6 @@ use Runalyze\Profile\Athlete\Gender;
 
 class AccountType extends AbstractType
 {
-
-    /**
-     * @SecurityAssert\UserPassword(
-     *     message = "Wrong value for your current password"
-     * )
-     */
-    protected $oldPassword;
-
-    /**
-     * @Assert\Length(
-     *     min = 6,
-     *     minMessage = "Password should by at least 6 chars long"
-     * )
-     */
-    protected $newPassword;
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -85,22 +72,6 @@ class AccountType extends AbstractType
                     'No' => false
                 ),
                 'label' => 'Email me'
-            ))
-            ->add('oldPassword', PasswordType::class, array(
-                'required' => false,
-                'label' => 'Old password',
-                'mapped' => false,
-                'empty_data' => null
-            ))
-            ->add('newPassword', RepeatedType::class, array(
-                'type' => PasswordType::class,
-                'invalid_message' => 'The password fields must match.',
-                'options' => array('attr' => array('class' => 'password-field')),
-                'required' => false,
-                'first_options'  => array('label' => 'New password'),
-                'second_options' => array('label' => 'Repeat password'),
-                'mapped' => false,
-                'empty_data'  => null
             ))
             ->add('reset_configuration', CheckboxType::class, array(
                 'required' => false,

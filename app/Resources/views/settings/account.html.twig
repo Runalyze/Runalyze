@@ -8,7 +8,6 @@
     {{ form_start(form, {'attr': {'class': 'ajax no-automatic-reloads'} }) }}
     <fieldset id="legend0">
         <legend onclick="Runalyze.toggleFieldset(this, 'legend0', false, '')">{% trans %}Your acccount{% endtrans %}</legend>
-    {% form_theme form 'form/fields.html.twig' %}
         {{ form_row(form.username) }}
         {{ form_row(form.name) }}
         {{ form_row(form.mail) }}
@@ -20,14 +19,17 @@
         {{ form_row(form.allow_support, {'info': 'Allow admins in case of support requests to have a look at your data.'|trans }) }}
     </fieldset>
     <fieldset id="legend1">
-        <legend onclick="Runalyze.toggleFieldset(this, 'legend1', false, '')">{% trans %}Notifications{% endtrans %}</legend>
+        <legend onclick="Runalyze.toggleFieldset(this, 'legend1', false, '')">{% trans %}E-Mail{% endtrans %}</legend>
         {{ form_row(form.allow_mails, {'info': 'At irregular intervals we are sending mails to you. We will never send you spam or advertisement.'|trans }) }}
+        <div class="fieldset-messages">
+            <p class="info"><a class="window" href="{{ path('settings-mail') }}">{% trans %}Change your mail address{% endtrans %}</a></p>
+        </div>
     </fieldset>
     <fieldset id="legend2">
         <legend onclick="Runalyze.toggleFieldset(this, 'legend2', true, '')">{% trans %}Change your password{% endtrans %}</legend>
-        {{ form_row(form.oldPassword) }}
-        {{ form_row(form.newPassword.first) }}
-        {{ form_row(form.newPassword.second) }}
+        <div class="fieldset-messages">
+            <p class="info"><a class="window" href="{{ path('settings-password') }}">{% trans %}Change your password{% endtrans %}</a></p>
+        </div>
     </fieldset>
     <fieldset id="legend3">
         <legend onclick="Runalyze.toggleFieldset(this, 'legend3', true, '')">{% trans %}Backup your data{% endtrans %}</legend>

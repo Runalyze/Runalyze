@@ -27,8 +27,6 @@ class AccountHandlerTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @covers AccountHandler::usernameExists
-	 * @covers AccountHandler::mailExists
 	 * @covers AccountHandler::getMailFor
 	 * @covers AccountHandler::getDataForId
 	 * @covers AccountHandler::getDataFor
@@ -41,15 +39,6 @@ class AccountHandlerTest extends PHPUnit_Framework_TestCase {
 			array(1, 'Testuser', 'Max Mustermann', 'mail@test.de')
 		);
 
-		$this->assertEquals( true, AccountHandler::usernameExists('Testuser') );
-		$this->assertEquals( false, AccountHandler::usernameExists('Tester') );
-
-		$this->assertEquals( true, AccountHandler::mailExists('mail@test.de') );
-		$this->assertEquals( false, AccountHandler::mailExists('mail@test.com') );
-
-		$this->assertEquals( 'mail@test.de', AccountHandler::getMailFor('Testuser') );
-		$this->assertEquals( false, AccountHandler::getMailFor('Tester') );
-
 		$this->assertTrue( is_array(AccountHandler::getDataForId(1)) );
 		$this->assertEquals( false, AccountHandler::getDataForId(13) );
 
@@ -58,7 +47,6 @@ class AccountHandlerTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @covers AccountHandler::comparePasswords
 	 * @covers AccountHandler::getAutologinHash
 	 */
 	public function testPasswordAndHash() {
@@ -78,86 +66,6 @@ class AccountHandlerTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testSendPasswordLinkTo() {
 		// Can't be tested
-	}
-
-	/**
-	 * @covers AccountHandler::getUsernameForChangePasswordHash
-	 */
-	public function testGetUsernameForChangePasswordHash() {
-		DB::getInstance()->insert('account',
-			array('username', 'changepw_hash', 'changepw_timelimit', 'mail'),
-			array('OldChanger', '8e1e915d08a163ddd4accc6d890dd557', time()-100, 'test1@mail.de')
-		);
-		$FirstID = DB::getInstance()->lastInsertId();
-
-		DB::getInstance()->insert('account',
-			array('username', 'changepw_hash', 'changepw_timelimit', 'mail'),
-			array('NewChanger', '920676ca497a95fa7abfe6b353692613', time()+7*DAY_IN_S, 'test2@mail.de')
-		);
-		$SecondID = DB::getInstance()->lastInsertId();
-
-		$this->assertEquals( false, AccountHandler::getUsernameForChangePasswordHash('') );
-		$this->assertEquals( false, AccountHandler::getUsernameForChangePasswordHash('908a098ef7e6cb87de7a6') );
-		$this->assertEquals( false, AccountHandler::getUsernameForChangePasswordHash('8e1e915d08a163ddd4accc6d890dd557') );
-		$this->assertEquals( 'NewChanger', AccountHandler::getUsernameForChangePasswordHash('920676ca497a95fa7abfe6b353692613') );
-
-		DB::getInstance()->exec('DELETE FROM `runalyze_account` WHERE `id`="'.$FirstID.'" OR `id`="'.$SecondID.'"');
-	}
-
-	/**
-	 * @covers AccountHandler::tryToSetNewPassword
-	 */
-	public function testTryToSetNewPassword() {
-		// Not possible (tries to forward to login.php)
-	}
-
-	/**
-	 * @covers AccountHandler::tryToActivateAccount
-	 */
-	public function testTryToActivateAccount() {
-		DB::getInstance()->exec('DELETE FROM `runalyze_account` WHERE `id` = 1');
-
-		DB::getInstance()->insert('account',
-			array('id', 'username', 'mail', 'activation_hash'),
-			array(1, 'test', 'test@mail.de', '8e1e915d08a163ddd4accc6d890dd557')
-		);
-
-		$this->assertEquals( false, AccountHandler::tryToActivateAccount('908a098ef7e6cb87de7a6') );
-		$this->assertEquals( '8e1e915d08a163ddd4accc6d890dd557', DB::getInstance()->query('SELECT activation_hash FROM `runalyze_account` WHERE `id`=1 LIMIT 1')->fetchColumn() );
-
-		$this->assertEquals( true, AccountHandler::tryToActivateAccount('8e1e915d08a163ddd4accc6d890dd557') );
-		$this->assertEquals( '', DB::getInstance()->query('SELECT activation_hash FROM `runalyze_account` WHERE `id`=1 LIMIT 1')->fetchColumn() );
-	}
-
-	/**
-	 * @covers AccountHandler::tryToDeleteAccount
-	 */
-	public function testTryToDeleteAccount() {
-		// FAILS because of trigger
-		// PDOException: SQLSTATE[HY000]: General error: 1436 Thread stack overrun:  6024 bytes used of a 131072 byte stack, and 128000 bytes needed.  Use 'mysqld -O thread_stack=#' to specify a bigger stack.
-
-		/*DB::getInstance()->exec('TRUNCATE TABLE `runalyze_account`');
-
-		DB::getInstance()->insert('account',
-			array('id', 'username', 'deletion_hash'),
-			array(1, 'test', '8e1e915d08a163ddd4accc6d890dd557')
-		);
-
-		$_GET['delete'] = '';
-		$this->assertEquals( false, AccountHandler::tryToDeleteAccount() );
-
-		$_GET['delete'] = '908a098ef7e6cb87de7a6';
-		$this->assertEquals( false, AccountHandler::tryToDeleteAccount() );
-
-		$this->assertEquals( '8e1e915d08a163ddd4accc6d890dd557', DB::getInstance()->query('SELECT deletion_hash FROM `runalyze_account` WHERE `id`=1 LIMIT 1')->fetchColumn() );
-		$this->assertEquals( true, AccountHandler::usernameExists('test') );
-
-		$_GET['delete'] = '8e1e915d08a163ddd4accc6d890dd557';
-		$this->assertEquals( true, AccountHandler::tryToDeleteAccount() );
-
-		$this->assertEquals( false, AccountHandler::usernameExists('test') );
-
-		DB::getInstance()->exec('TRUNCATE TABLE `runalyze_account`');*/
 	}
 
 	/**

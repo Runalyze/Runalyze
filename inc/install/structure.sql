@@ -30,7 +30,6 @@ CREATE TABLE IF NOT EXISTS `runalyze_account` (
   `salt` char(64) NOT NULL DEFAULT '',
   `registerdate` int(11) NOT NULL DEFAULT '0',
   `lastaction` int(11) NOT NULL DEFAULT '0',
-  `autologin_hash` varchar(32) NOT NULL DEFAULT '',
   `changepw_hash` varchar(32) NOT NULL DEFAULT '',
   `changepw_timelimit` int(11) NOT NULL DEFAULT '0',
   `activation_hash` varchar(32) NOT NULL DEFAULT '',

@@ -3,14 +3,7 @@
 {% block form %}
 
     {{ form(form, {'attr': {'novalidate': 'novalidate'}}) }}
-    {{ form_widget(form) }}
-
-
-    {% if user_is_unknown %}
-        <p class="error">
-            {% trans %}The username is not known.{% endtrans %}
-        </p>
-    {% endif %}
+    {{ form_row(form.username) }}
 
     <p class="info">
         {% trans %}A link for changing your password will be sent via email.{% endtrans %}
