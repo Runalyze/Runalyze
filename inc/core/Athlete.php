@@ -121,7 +121,7 @@ class Athlete {
 	 * @return int
 	 */
 	public function birthyear() {
-		return $this->birthyear();
+		return $this->birthyear;
 	}
 
 	/**

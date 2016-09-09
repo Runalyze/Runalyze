@@ -49,8 +49,8 @@ class AthleteTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals( 210, $Athlete->maximalHR() );
 		$this->assertEquals( 45, $Athlete->restingHR() );
 		$this->assertEquals( 70, $Athlete->weight() );
-        $this->assertEquals( 1993, $Athlete->age() );
-		$this->assertEquals( 23, $Athlete->age() );
+        $this->assertEquals( 1993, $Athlete->birthyear() );
+		$this->assertEquals( date("Y")-1993, $Athlete->age() );
 		$this->assertEquals( 60, $Athlete->vdot() );
 	}
 
