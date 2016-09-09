@@ -36,11 +36,11 @@ class Context {
 	public static function Athlete() {
 		if (!isset(self::$Objects['athlete'])) {
 			self::$Objects['athlete'] = new Athlete(
-				Configuration::General()->gender(),
+                SessionAccountHandler::getGender(),
 				Configuration::Data()->HRmax(),
 				Configuration::Data()->HRrest(),
 				null,
-				null,
+                SessionAccountHandler::getBirthYear(),
 				Configuration::Data()->vdot()
 			);
 		}

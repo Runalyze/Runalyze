@@ -30,6 +30,9 @@ class ChangePasswordType extends AbstractType
                 'mapped' => false,
                 'empty_data' => null,
                 'constraints' => new UserPassword(array('message' => 'Please enter your current password')),
+                'attr' => array(
+                    'autofocus' => true
+                )
             ))
             ->add('plainPassword', RepeatedType::class, array(
                 'type' => PasswordType::class,

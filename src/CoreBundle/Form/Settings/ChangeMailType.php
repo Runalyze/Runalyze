@@ -30,6 +30,9 @@ class ChangeMailType extends AbstractType
                 'mapped' => false,
                 'empty_data' => null,
                 'constraints' => new UserPassword(array('message' => 'Please enter your current password')),
+                'attr' => array(
+                    'autofocus' => true
+                )
             ))
             ->add('mail', EmailType::class, array(
                 'required' => false,

@@ -91,7 +91,12 @@ class AccountController extends Controller
     public function recoverAction(Request $request)
     {
         $form = $this->createFormBuilder()
-            ->add('username', TextType::class, array('required' => false))
+            ->add('username', TextType::class, array(
+                'required' => false,
+                'attr' => array(
+                    'autofocus' => true
+                )
+            ))
             ->getForm();
         $form->handleRequest($request);
 

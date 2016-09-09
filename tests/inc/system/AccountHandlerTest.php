@@ -27,7 +27,6 @@ class AccountHandlerTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @covers AccountHandler::getMailFor
 	 * @covers AccountHandler::getDataForId
 	 * @covers AccountHandler::getDataFor
 	 */

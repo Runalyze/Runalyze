@@ -7,7 +7,7 @@
 
             <div class="w100">
                 <label for="username">{% trans %}Username{% endtrans %}</label>
-                <input id="username" name="_username" class="middle-size{% if error %} validation-failed{% endif %}" type="text" value="{{ (username|default(''))|escape('html_attr') }}">
+                <input id="username" name="_username" class="middle-size{% if error %} validation-failed{% endif %}" type="text" value="{{ (username|default(''))|escape('html_attr') }}" autofocus>
             </div>
 
             <div class="w100 clear">

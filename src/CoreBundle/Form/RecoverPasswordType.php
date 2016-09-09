@@ -26,7 +26,10 @@ class RecoverPasswordType extends AbstractType
         $builder
             ->add('username', TextType::class, array(
                 'required' => false,
-                'disabled' => true
+                'disabled' => true,
+                'attr' => array(
+                    'autofocus' => true
+                )
             ))
             ->add('plainPassword', RepeatedType::class, array(
                 'type' => PasswordType::class,

@@ -21,7 +21,10 @@ class RegistrationType extends AbstractType
     {
         $builder
             ->add('username', TextType::class, array(
-                'required' => false
+                'required' => false,
+                'attr' => array(
+                    'autofocus' => true
+                )
             ))
             ->add('mail', EmailType::class, array(
                 'required' => false
