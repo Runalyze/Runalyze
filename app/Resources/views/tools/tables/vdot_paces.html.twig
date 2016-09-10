@@ -1,0 +1,35 @@
+{% extends 'tools/tables/base.html.twig' %}
+
+{% set activeTable = 2 %}
+
+{% block table %}
+    <table class="zebra-style c" style="width: 700px;">
+        <thead>
+            <tr>
+                <th>VDOT</th>
+                <th>{% trans %}Easy{% endtrans %}</th>
+                <th>{% trans %}Marathon{% endtrans %}</th>
+                <th>{% trans %}Threshold{% endtrans %}</th>
+                <th>{% trans %}Interval{% endtrans %}</th>
+                <th>{% trans %}Repetition{% endtrans %}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for vdot in vdots %}
+                <tr{% if vdot.value == currentVdot|round %} class="highlight"{% endif %}>
+                    <td class="b">{{ vdot.value }}</td>
+                    {% for time in vdot.paces %}
+                        <td>{{ time|raw }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <p class="info">
+        {% trans %}
+            This table is computed by some formulas, derived from the tables in Jack Daniels' Running formula.
+            These values do not fit the original table one hundred percent.
+        {% endtrans %}
+    </p>
+{% endblock %}

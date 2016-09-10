@@ -1,0 +1,12 @@
+{% extends 'base_logged_in.twig' %}
+
+{% block content %}
+    <div class="panel-heading">
+        <h1><a class="ajax" target="ajax" href="{{ url('tools-backup-json') }}">{% trans %}Database import{% endtrans %}</a></h1>
+    </div>
+
+    <div class="panel-content">
+        {% block toolContent %}
+        {% endblock %}
+    </div>
+{% endblock %}

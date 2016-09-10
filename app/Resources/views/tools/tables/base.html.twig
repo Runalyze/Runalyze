@@ -1,0 +1,37 @@
+{% extends 'base_logged_in.twig' %}
+
+{% block content %}
+    <div class="panel-heading">
+        <h1><a class="ajax" target="ajax" href="{{ url('tools-tables') }}">{% trans %}Running tables{% endtrans %}</a></h1>
+    </div>
+
+    <div class="panel-content">
+        {% block tableList %}
+            <p class="{% if activeTable == 1 %}okay{% else %}file{% endif %}">
+                <a class="ajax" href="{{ url('tools-tables-vdot') }}" target="ajax">
+                    <strong class="block">{% trans %}VDOT values with equivalent race results{% endtrans %}</strong>
+                    <small class="block">{% trans %}Predict results on different distances for a given VDOT.{% endtrans %}</small>
+                </a>
+            </p>
+
+            <p class="{% if activeTable == 2 %}okay{% else %}file{% endif %}">
+                <a class="ajax" href="{{ url('tools-tables-vdot-pace') }}" target="ajax">
+                    <strong class="block">{% trans %}VDOT values with equivalent paces{% endtrans %}</strong>
+                    <small class="block">{% trans %}Find your training paces in min/km for given VDOT values.{% endtrans %}</small>
+                </a>
+            </p>
+
+            <p class="{% if activeTable == 3 %}okay{% else %}file{% endif %}">
+                <a class="ajax" href="{{ url('tools-tables-general-pace') }}" target="ajax">
+                    <strong class="block">{% trans %}General pace table{% endtrans %}</strong>
+                    <small class="block">{% trans %}This table shows times for different distances if you run them with the same pace.{% endtrans %}</small>
+                </a>
+            </p>
+        {% endblock %}
+
+        <p>&nbsp;</p>
+
+        {% block table %}
+        {% endblock %}
+    </div>
+{% endblock %}

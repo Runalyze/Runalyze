@@ -1,0 +1,132 @@
+{% extends 'tools/database_cleanup/base.html.twig' %}
+
+{% block toolContent %}
+    <form action="{{ url('tools-cleanup') }}" method="post" id="cleanup" class="ajax no-automatic-reload">
+
+        <div class="padding-5">
+            <label>
+                <input type="radio" name="mode" value="general" checked>
+                <strong>{% trans %}General cleanup{% endtrans %}</strong>
+            </label>
+
+            <div class="radio-content" data-radio="general">
+                <div class="margin-10 padding-5">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="internals">
+                            {% trans %}Refresh internal constants{% endtrans %}
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="equipment">
+                            {% trans %}Recalculate your equipment statistics{% endtrans %}
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="vdot-corrector">
+                            {% trans %}Recalculate your VDOT correction factor{% endtrans %}
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="vdot">
+                            {% trans %}Recalculate your VDOT shape{% endtrans %}
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="endurance">
+                            {% trans %}Recalculate your basic endurance{% endtrans %}
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="trimp">
+                            {% trans %}Recalculate maximal TRIMP values{% endtrans %}
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="cacheclean">
+                            {% trans %}Clear your personal cache{% endtrans %}
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="padding-5">
+            <label>
+                <input type="radio" name="mode" value="loop">
+                <strong>{% trans %}Loop through activities{% endtrans %}</strong>
+            </label>
+
+            <div class="radio-content transparent-70" data-radio="loop">
+                <div class="margin-10">
+                    <p class="info">
+                        {% trans %}These recalculations are only needed if you changed the corresponding settings.{% endtrans %}<br>
+                        {% trans %}This task may take some time, since we have to loop through all your activities.{% endtrans %}
+                    </p>
+                </div>
+
+                <div class="margin-10 padding-5">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="activity-elevation">
+                            {% trans %}Recalculate elevation{% endtrans %}
+                        </label>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="activity-elevation-overwrite">
+                                {% trans %}Overwrite manual values{% endtrans %}
+                            </label>
+                        </div>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="activity-vdot">
+                            {% trans %}Recalculate VDOT values{% endtrans %}
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="activity-jdpoints">
+                            {% trans %}Recalculate JD training points{% endtrans %}
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="activity-trimp">
+                            {% trans %}Recalculate TRIMP values{% endtrans %}
+                        </label>
+                    </div>
+                </div>
+
+                <div class="margin-10 padding-5" style="display:none;">
+                    <label class="transparent-70">
+                        <input type="checkbox" id="toggle-disabled" name="toggle-disabled" checked disabled>
+                        {% trans %}Allow to force recalculations if settings did not change{% endtrans %}
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <input type="submit" name="submit" value="{% trans %}Start cleanup{% endtrans %}">
+
+    </form>
+
+    <script>
+        $(function(){
+            $("#cleanup").find("input[type=radio]").change(function(){
+                if ($(this).is(':checked')) {
+                    var val = $(this).attr('value');
+                    $("#cleanup").find(".radio-content").each(function(){
+                        $(this).toggleClass('transparent-70', $(this).attr('data-radio') != val);
+                    });
+                }
+            });
+        });
+    </script>
+{% endblock %}

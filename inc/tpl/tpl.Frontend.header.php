@@ -34,7 +34,7 @@
 
 	<span class="left b">
 		<?php echo Ajax::window('<a class="tab" href="'.$this->get('router')->generate('settings').'"><i class="fa fa-fw fa-lg fa-cog"></i>'.NBSP.__('Configuration').'</a>'); ?>
-		<?php echo Ajax::window('<a class="tab" href="'.$this->get('router')->generate('pluginDisplay').'"><i class="fa fa-fw fa-lg fa-dashboard"></i>'.NBSP.__('Tools').'</a>'); ?>
+		<?php echo Ajax::window('<a class="tab" href="'.$this->get('router')->generate('tools').'"><i class="fa fa-fw fa-lg fa-dashboard"></i>'.NBSP.__('Tools').'</a>'); ?>
 		<?php echo Ajax::window('<a class="tab" href="'.$this->get('router')->generate('help').'"><i class="fa fa-fw fa-lg fa-question-circle"></i>'.NBSP.__('Help').'</a>'); ?>
 	</span>
 	<?php endif; ?>

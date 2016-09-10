@@ -1,0 +1,9 @@
+{% extends 'base_logged_in.twig' %}
+
+{% block content %}
+    {% for message in messages %}
+        <p class="error">
+            {{ message }}
+        </p>
+    {% endfor %}
+{% endblock %}

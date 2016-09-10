@@ -288,9 +288,9 @@ class SearchResults {
 				}
 			}
 		}
-	
+
 		$this->addConditionsForOrder($conditions);
-                    
+
 		return $this->getEquipmentCondition().$this->getTagCondition().' WHERE '.implode(' AND ', array_unique($conditions));
 	}
 
@@ -537,7 +537,7 @@ class SearchResults {
 
 		return 'INNER JOIN `'.PREFIX.'activity_tag` AS `at` ON `at`.`activityid` = `t`.`id` AND `at`.`tagid`="'.(int)$_POST['tagid'].'"';
 	}
-        
+
 	/**
 	 * Get order
 	 * @return string
@@ -630,18 +630,12 @@ class SearchResults {
 			$IDs[] = $data['id'];
 		}
 
-		$_POST['ids'] = implode(',', $IDs);
+		$_POST = array();
 
-		$Factory = new PluginFactory();
-		$MultiEditor = $Factory->newInstance('RunalyzePluginTool_MultiEditor');
+		$MultiEditor = new MultiEditor($IDs);
+		$MultiEditor->display();
 
-		if ($MultiEditor) {
-			$MultiEditor->display();
-		} else {
-			echo HTML::error( __('The multi editor could not be located.') );
-		}
-
-		echo Ajax::wrapJS('$("#search").remove();$("#ajax").removeClass("big-window");');
+		echo Ajax::wrapJS('$("#ajax > .panel-heading, #ajax > .panel-content").remove();$("#ajax").removeClass("big-window").addClass("small-window");');
 	}
 
 	/**

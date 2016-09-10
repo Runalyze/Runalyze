@@ -1,0 +1,24 @@
+{% extends 'tools/tables/base.html.twig' %}
+
+{% set activeTable = 3 %}
+
+{% block table %}
+    <table class="zebra-style c" style="width: 700px;">
+        <thead>
+            <tr>
+                {% for km in distances %}
+                    <th>{{ km|raw }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for times in paces %}
+                <tr>
+                    {% for time in times %}
+                        <td>{{ time|raw }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
