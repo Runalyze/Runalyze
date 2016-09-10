@@ -20,26 +20,18 @@ abstract class PluginType {
 	const PANEL = 1;
 
 	/**
-	 * @var int Enum: Tool
-	 */
-	const TOOL = 2;
-
-	/**
 	 * String
 	 * @param int $Type enum
 	 * @return string
 	 */
 	public static function string($Type) {
 		switch ($Type) {
-			case self::STAT:
-				return 'stat';
-
 			case self::PANEL:
 				return 'panel';
 
-			case self::TOOL:
+			case self::STAT:
 			default:
-				return 'tool';
+			return 'stat';
 		}
 	}
 
@@ -50,15 +42,12 @@ abstract class PluginType {
 	 */
 	public static function readableString($Type) {
 		switch ($Type) {
-			case self::STAT:
-				return __('Statistics');
-
 			case self::PANEL:
 				return __('Panel');
 
-			case self::TOOL:
+			case self::STAT:
 			default:
-				return __('Tool');
+			return __('Statistics');
 		}
 	}
 }

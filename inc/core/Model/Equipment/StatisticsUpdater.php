@@ -1,57 +1,46 @@
 <?php
-/**
- * This file contains class::StatisticsUpdater
- * @package Runalyze\Model\Equipment
- */
 
 namespace Runalyze\Model\Equipment;
 
-/**
- * Update collected statistics (distance, time) for equipment
- * 
- * @author Hannes Christiansen
- * @package Runalyze\Model\Equipment
- */
-class StatisticsUpdater {
-	/**
-	 * Database connection
-	 * @var \PDO
-	 */
+class StatisticsUpdater
+{
+	/** @var \PDO */
 	protected $PDO;
 
-	/**
-	 * Account id
-	 * @var int|null
-	 */
-	protected $accountID;
+	/** @var int */
+	protected $AccountId;
+
+    /** @var string */
+    protected $DatabasePrefix;
 
 	/**
-	 * Construct updater
 	 * @param \PDO $connection
-	 * @param int $accountID [optional]
+	 * @param int $accountId
+     * @param string $databasePrefix
 	 */
-	public function __construct(\PDO $connection, $accountID = null) {
+	public function __construct(\PDO $connection, $accountId, $databasePrefix) {
 		$this->PDO = $connection;
-		$this->accountID = $accountID;
+		$this->AccountId = $accountId;
+        $this->DatabasePrefix = $databasePrefix;
 	}
 
 	/**
 	 * Update statistics
 	 * @return mixed false on failure, number of affected rows otherwise
 	 */
-	public function run() {
-		$whereAccount = null !== $this->accountID ? 'WHERE `eqp`.`accountid` = '.$this->accountID : '';
+	public function run()
+    {
 		$result = $this->PDO->exec(
-			'UPDATE `'.PREFIX.'equipment`
+			'UPDATE `'.$this->DatabasePrefix.'equipment`
 			CROSS JOIN(
 				SELECT
 					`eqp`.`id` AS `eqpid`,
 					SUM(`tr`.`distance`) AS `km`,
-					SUM(`tr`.`s`) AS `s` 
-				FROM `'.PREFIX.'equipment` AS `eqp` 
-				LEFT JOIN `'.PREFIX.'activity_equipment` AS `aeqp` ON `eqp`.`id` = `aeqp`.`equipmentid` 
-				LEFT JOIN `'.PREFIX.'training` AS `tr` ON `aeqp`.`activityid` = `tr`.`id`
-				'.$whereAccount.'
+					SUM(`tr`.`s`) AS `s`
+				FROM `'.$this->DatabasePrefix.'equipment` AS `eqp`
+				LEFT JOIN `'.$this->DatabasePrefix.'activity_equipment` AS `aeqp` ON `eqp`.`id` = `aeqp`.`equipmentid`
+				LEFT JOIN `'.$this->DatabasePrefix.'training` AS `tr` ON `aeqp`.`activityid` = `tr`.`id`
+				WHERE `eqp`.`accountid` = '.$this->AccountId.'
 				GROUP BY `eqp`.`id`
 			) AS `new`
 			SET
@@ -60,7 +49,7 @@ class StatisticsUpdater {
 			WHERE `id` = `new`.`eqpid`');
 
 		if ($result !== false) {
-			$Factory = new \Runalyze\Model\Factory($this->accountID);
+			$Factory = new \Runalyze\Model\Factory($this->AccountId);
 			$Factory->clearCache('equipment');
 		}
 

@@ -6,6 +6,8 @@
 
 use Runalyze\Model\Activity;
 use Runalyze\View\Activity\Preview;
+use Runalyze\View\Activity\Linker;
+use Runalyze\View\Activity\Dataview;
 
 /**
  * Multi editor
@@ -32,7 +34,7 @@ class MultiEditor {
 	 * Construct a new editor to display it directly
 	 * @param array $IDs
 	 */
-	public function __construct(array $IDs) {
+	public function __construct(array $IDs = array()) {
 		self::setIDs($IDs);
 	}
 
@@ -43,7 +45,7 @@ class MultiEditor {
 		if (empty(self::$IDs)) {
 			echo HTML::error( __('No activities for editing were set.') );
 		} else {
-			$this->displayEditor();
+			$this->displayEditor(self::$IDs[0]);
 			$this->displayNavigation();
 		}
 	}
@@ -112,10 +114,30 @@ class MultiEditor {
 	/**
 	 * Display editor
 	 *
-	 * This function will just load the standard editor in the overlay
+	 * @param int $id
 	 */
-	protected function displayEditor() {
-		echo Ajax::wrapJS('Runalyze.Overlay.load(\'activity/multi-editor/'.self::$IDs[0].'\');');
+	public function displayEditor($id) {
+		$_GET['mode'] = 'multi';
+
+		$Training = new \TrainingObject($id);
+		$Activity = new Activity\Entity($Training->getArray());
+
+		$Linker = new Linker($Activity);
+		$Dataview = new Dataview($Activity);
+
+		echo $Linker->editNavigation();
+
+		echo '<div class="panel-heading">';
+		echo '<h1>'.$Dataview->titleWithComment().', '.$Dataview->dateAndDaytime().'</h1>';
+		echo '</div>';
+		echo '<div class="panel-content">';
+
+		$Formular = new \TrainingFormular($Training, \StandardFormular::$SUBMIT_MODE_EDIT);
+		$Formular->setId('training');
+		$Formular->setLayoutForFields( \FormularFieldset::$LAYOUT_FIELD_W50 );
+		$Formular->display();
+
+		echo '</div>';
 	}
 
 	/**

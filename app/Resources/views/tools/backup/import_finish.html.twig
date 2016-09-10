@@ -1,0 +1,25 @@
+{% extends 'tools/backup/base_import.html.twig' %}
+
+{% block toolContent %}
+    <div class="panel-content">
+        <form action="{{ url('tools-cleanup') }}" method="post" class="ajax no-automatic-reload">
+            <fieldset>
+                <legend>
+                    {% trans %}Import backup{% endtrans %}
+                </legend>
+
+                <p class="okay">
+                    {% trans %}Your data has been imported.{% endtrans %}
+                </p>
+
+                <p class="info">
+                    {{ results|raw }}
+                </p>
+
+                <input type="submit" name="submit" value="{% trans %}Go to database cleanup{% endtrans %}">
+            </fieldset>
+        </form>
+
+        <script>Runalyze.reloadContent();</script>
+    </div>
+{% endblock %}

@@ -1,0 +1,9 @@
+{% macro plusMinus(value, string, epsilon) %}
+    {% if value > epsilon|default(0) %}
+        <span class="plus">{{ string|default(value)|raw }}</span>
+    {% elseif value < -epsilon|default(0) %}
+        <span class="minus">{{ string|default(value)|raw }}</span>
+    {% else %}
+        {{ string|default(value)|raw }}
+    {% endif %}
+{% endmacro %}
