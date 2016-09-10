@@ -46,13 +46,6 @@ class AccountHandlerTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @covers AccountHandler::getAutologinHash
-	 */
-	public function testPasswordAndHash() {
-		// Not possible without knowing the 'SALT'
-	}
-
-	/**
 	 * @covers AccountHandler::tryToRegisterNewUser
 	 */
 	public function testTryToRegisterNewUser() {

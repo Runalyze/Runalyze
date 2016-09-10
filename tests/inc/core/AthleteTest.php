@@ -15,7 +15,8 @@ class AthleteTest extends \PHPUnit_Framework_TestCase {
 		$this->assertFalse( $Athlete->knowsMaximalHeartRate() );
 		$this->assertFalse( $Athlete->knowsRestingHeartRate() );
 		$this->assertFalse( $Athlete->knowsAge() );
-		$this->assertFalse( $Athlete->knowsWeight() );
+        $this->assertFalse( $Athlete->knowsBirthyear() );
+        $this->assertFalse( $Athlete->knowsWeight() );
 		$this->assertFalse( $Athlete->knowsVDOT() );
 	}
 
@@ -42,7 +43,8 @@ class AthleteTest extends \PHPUnit_Framework_TestCase {
 		$this->assertTrue( $Athlete->knowsMaximalHeartRate() );
 		$this->assertTrue( $Athlete->knowsRestingHeartRate() );
 		$this->assertTrue( $Athlete->knowsAge() );
-		$this->assertTrue( $Athlete->knowsWeight() );
+        $this->assertTrue( $Athlete->knowsBirthyear() );
+        $this->assertTrue( $Athlete->knowsWeight() );
 		$this->assertTrue( $Athlete->knowsVDOT() );
 
 		$this->assertEquals( GENDER::MALE, $Athlete->gender() );
