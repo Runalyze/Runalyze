@@ -8,7 +8,7 @@ namespace Runalyze\Util\File;
 
 /**
  * Class for writing big gzipped files
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Util\File
  */
@@ -25,9 +25,7 @@ class GZipWriter {
 	 * @throws \RuntimeException
 	 */
 	public function __construct($fileName) {
-		if (!is_writable($fileName)) {
-			$this->Resource = gzopen($fileName, "wb");
-		}
+		$this->Resource = gzopen($fileName, "wb");
 
 		if (!$this->Resource) {
 			throw new \RuntimeException('The file "'.$fileName.'" couldn\'t be opened for writing.');

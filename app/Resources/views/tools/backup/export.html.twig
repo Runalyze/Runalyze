@@ -1,0 +1,74 @@
+{% extends 'tools/backup/base.html.twig' %}
+
+{% block toolContent %}
+    <div class="panel-content">
+        <form action="{{ url('tools-backup-create') }}" method="post" id="database-backup" class="ajax no-automatic-reload">
+            <input type="hidden" name="backup" value="true">
+
+            <fieldset>
+                <legend>{% trans %}Export data{% endtrans %}</legend>
+                <div class="w50">
+                    <label for="export-type">{% trans %}File format{% endtrans %}</label>
+                    <select name="export-type" id="export-type">
+                        <option value="json">{% trans %}Portable backup{% endtrans %} (*.json.gz)</option>
+                        <option value="sql">{% trans %}Database backup{% endtrans %} (*.sql.gz)</option>
+                    </select>
+                </div>
+
+                <div class="w50">
+                    <input type="submit" value="{% trans %}Create backup{% endtrans %}">
+                </div>
+
+                <div class="fieldset-messages">
+                    <p class="info">
+                        <strong>{% trans %}JSON-format{% endtrans %} (*.json.gz)</strong><br>
+                        <small>
+                            {% trans %}
+                                Portable backup of your configuration and data -
+                                This file can be imported into any other installation, using this tool.<br />
+                                This way you can transfer your data from a local to an online installation and back.
+                            {% endtrans %}
+                        </small>
+                    </p>
+                    <p class="info">
+                        <strong>{% trans %}SQL-format{% endtrans %} (*.sql.gz)</strong><br>
+                        <small>
+                            {% trans %}
+                                Backup of the complete database -
+                                This file can be imported manually with e.g. phpMyAdmin into any database.<br />
+                                This is recommended to create a backup copy or to import your data into a new installation.
+                            {% endtrans %}
+                        </small>
+                    </p>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+
+    {% if backupWasCreated %}
+    <div class="panel-container">
+        <p class="okay">{% trans %}Your backup has been created.{% endtrans %}</p>
+    </div>
+    {% endif %}
+
+    {% if hasFiles %}
+    <div class="panel-content">
+        <form action="{{ url('tools-backup') }}" method="post" id="backup-list">
+            <fieldset>
+                <legend>{% trans %}Available exports{% endtrans %}</legend>
+
+                {% set prefix = app.user.id ~ "-runalyze-backup-" %}
+
+                <div class="fieldset-messages">
+                    {% for file in files %}
+                        <p class="file">
+                            <strong>{{ file.mTime|date('d.m.Y, H:i') }}:</strong>
+                            <a href="{{ url('tools-backup-download', {'filename': file.filename|replace({(prefix): ''})}) }}">{{ file.filename|replace({(prefix): ''}) }}, {{ file.size|filesize }}</a>
+                        </p>
+                    {% endfor %}
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    {% endif %}
+{% endblock %}

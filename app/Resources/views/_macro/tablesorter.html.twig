@@ -1,0 +1,24 @@
+{% macro pager(selector, reinit) %}
+    <div id="pager" class="pager c">
+        <form>
+            <span class="link first">|&laquo; {% trans %}Start{% endtrans %}</span>
+            <span class="link prev">&laquo; {% trans %}previous{% endtrans %}</span>
+            <input type="text" class="pagedisplay">
+            <span class="link next">{% trans %}next{% endtrans %} &raquo;</span>
+            <span class="link last">{% trans %}End{% endtrans %} &raquo;|</span>
+
+            <select class="pagesize">
+                <option value="10">10 {% trans %}per page{% endtrans %}&nbsp;</option>
+                <option value="20" selected>20 {% trans %}per page{% endtrans %}&nbsp;</option>
+                <option value="30">30 {% trans %}per page{% endtrans %}&nbsp;</option>
+                <option value="40">40 {% trans %}per page{% endtrans %}&nbsp;</option>
+                <option value="50">50 {% trans %}per page{% endtrans %}&nbsp;</option>
+            </select>
+        </form>
+    </div>
+    <script>
+        (function($){$(document).ready(function(){
+            $("{{ selector }}").tablesorterWithPager({% if reinit %}'true'{% endif %});
+        });})(jQuery);
+    </script>
+{% endmacro %}

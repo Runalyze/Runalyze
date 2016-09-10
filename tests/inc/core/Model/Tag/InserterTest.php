@@ -23,6 +23,7 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 	protected function setUp() {
 		$this->PDO = DB::getInstance();
 		$this->PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$this->PDO->exec('DELETE FROM `'.PREFIX.'tag`');
 	}
 
 	protected function tearDown() {

@@ -1,0 +1,30 @@
+{% extends 'tools/backup/base_import.html.twig' %}
+
+{% block toolContent %}
+    <div class="panel-content">
+        <form action="{{ url('tools-backup-json-import') }}" method="post">
+            <fieldset>
+                <legend>
+                    {% trans %}Import backup{% endtrans %}
+                </legend>
+
+
+                <p class="file">
+                    {% trans %}Uploaded file{% endtrans %}:
+                    <strong>{{ file.filename }}</strong> {% if file.file %}({{ file.size|filesize }}){% endif %}
+                </p>
+            </fieldset>
+
+            <div class="fieldset-messages">
+                <p class="error">
+                    {% trans %}There is a problem with your file.{% endtrans %}
+
+                    {% if not versionIsOkay %}
+                        <br>
+                        {% trans %}RUNALYZE version v%runalyzeVersionFile% of your backup file does not match current version v%runalyzeVersion%.{% endtrans %}
+                    {% endif %}
+                </p>
+            </div>
+        </form>
+    </div>
+{% endblock %}

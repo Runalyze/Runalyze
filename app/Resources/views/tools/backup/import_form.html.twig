@@ -1,0 +1,55 @@
+{% extends 'tools/backup/base_import.html.twig' %}
+
+{% block toolContent %}
+    <div class="panel-content">
+        <form action="{{ url('tools-backup-json-import-do') }}" method="post" class="ajax no-automatic-reload">
+            <fieldset>
+                <legend>
+                    {% trans %}Import backup{% endtrans %}
+                </legend>
+
+                <p class="file">
+                    {% trans %}Uploaded file{% endtrans %}:
+                    <strong>{{ file.filename }}</strong> ({{ file.size|filesize }})
+                </p>
+
+                <div class="w100 block">
+                    <label class="checkable" for="overwrite_config">{% trans %}Overwrite general configuration{% endtrans %}</label>
+                    <input type="checkbox" name="overwrite_config" checked="checked" id="overwrite_config">
+                </div>
+
+                <div class="w100 block">
+                    <label class="checkable" for="overwrite_dataset">{% trans %}Overwrite dataset configuration{% endtrans %}</label>
+                    <input type="checkbox" name="overwrite_dataset" checked="checked" id="overwrite_dataset">
+                </div>
+
+                <div class="w100 block">
+                    <label class="checkable" for="overwrite_plugin">{% trans %}Overwrite plugins{% endtrans %}</label>
+                    <input type="checkbox" name="overwrite_plugin" checked="checked" id="overwrite_plugin">
+                </div>
+
+                <div class="w100 block">
+                    <label class="checkable" for="delete_trainings">{% trans %}Delete all old activities{% endtrans %}</label>
+                    <input type="checkbox" name="delete_trainings" id="delete_trainings">
+                </div>
+
+                <div class="w100 block">
+                    <label class="checkable" for="delete_user_data">{% trans %}Delete all old body values{% endtrans %}</label>
+                    <input type="checkbox" name="delete_user_data" id="delete_user_data">
+                </div>
+
+                <div class="fieldset-messages">
+                    <p class="file">
+                        {% trans %}There are <strong>%numActivities%</strong> activities in this file.{% endtrans %}
+                    </p>
+
+                    <p class="file">
+                        {% trans %}There are <strong>%numBodyValues%</strong> body values in this file.{% endtrans %}
+                    </p>
+                </div>
+
+                <input type="submit" name="submit" value="{% trans %}Import{% endtrans %}">
+            </fieldset>
+        </form>
+    </div>
+{% endblock %}
