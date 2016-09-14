@@ -11,7 +11,7 @@ use Runalyze\View\Icon;
 
 /**
  * Boxed value for maximal heart rate
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\View\Activity\Box
  */
@@ -20,12 +20,15 @@ class MaximalHeartRateInPercent extends MaximalHeartRate
     /**
      * MaximalHeartRateInPercent constructor.
      * @param \Runalyze\Activity\HeartRate $heartRate
+     * @param bool $addWarningIfMaximalHeartRateIsExceeded
      */
-    public function __construct(HeartRate $heartRate)
+    public function __construct(HeartRate $heartRate, $addWarningIfMaximalHeartRateIsExceeded = false)
     {
         parent::__construct($heartRate);
 
-        $this->addWarningIfMaximalHeartRateIsExceeded($heartRate);
+        if ($addWarningIfMaximalHeartRateIsExceeded) {
+            $this->addWarningIfMaximalHeartRateIsExceeded($heartRate);
+        }
     }
 
     /**
@@ -52,7 +55,7 @@ class MaximalHeartRateInPercent extends MaximalHeartRate
     /**
      * @param \Runalyze\Activity\HeartRate $heartRate
      */
-    protected function addWarningIfMaximalHeartRateIsExceeded(HeartRate $heartRate)
+    public function addWarningIfMaximalHeartRateIsExceeded(HeartRate $heartRate)
     {
         if ($heartRate->canShowInHRmax() && $heartRate->inPercent() > 100) {
             // TODO: Using 'minus' is currently a dirty hack to color this icon

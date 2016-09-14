@@ -8,7 +8,7 @@ use Runalyze\View\Activity;
 use Runalyze\View\Activity\Box;
 /**
  * Row: Heartrate
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\DataObjects\Training\View\Section
  */
@@ -65,7 +65,7 @@ class SectionHeartrateRow extends TrainingViewSectionRowTabbedPlot {
 			$this->BoxedValues[] = new Box\MaximalHeartRateInBPM($this->Context->dataview()->hrMax());
 
 			if ($this->Context->dataview()->hrMax()->canShowInHRmax()) {
-				$this->BoxedValues[] = new Box\MaximalHeartRateInPercent($this->Context->dataview()->hrMax());
+				$this->BoxedValues[] = new Box\MaximalHeartRateInPercent($this->Context->dataview()->hrMax(), !Request::isOnSharedPage());
 			}
 		}
 	}
@@ -79,7 +79,7 @@ class SectionHeartrateRow extends TrainingViewSectionRowTabbedPlot {
 			$this->BoxedValues[] = new BoxedValue($this->Context->activity()->trimp(), '', __('TRIMP'));
 		}
 	}
-	
+
 	/**
 	 * Add: FitTrainingEffect
 	 */
