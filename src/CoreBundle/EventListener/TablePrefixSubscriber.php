@@ -21,6 +21,7 @@ class TablePrefixSubscriber implements \Doctrine\Common\EventSubscriber {
         foreach ($classMetadata->getAssociationMappings() as $fieldName => $mapping) {
             if ($mapping['type'] == \Doctrine\ORM\Mapping\ClassMetadataInfo::MANY_TO_MANY) {
                 if(!isset($classMetadata->associationMappings[$fieldName]['joinTable'])) { continue; }
+                if(!isset($classMetadata->associationMappings[$fieldName]['joinTable']['name'])) { continue; }
                 $mappedTableName = $classMetadata->associationMappings[$fieldName]['joinTable']['name'];
                 if(0 !== strpos($mappedTableName, $this->prefix)) {
                     $classMetadata->associationMappings[$fieldName]['joinTable']['name'] = $this->prefix . $mappedTableName;

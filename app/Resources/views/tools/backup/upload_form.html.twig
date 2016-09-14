@@ -1,0 +1,77 @@
+{% extends 'tools/backup/base_import.html.twig' %}
+
+{% block toolContent %}
+    <div class="panel-content">
+        <form action="{{ url('tools-backup-json-import') }}" method="post">
+            <fieldset>
+                <legend>{% trans %}Import data{% endtrans %}</legend>
+
+                <div id="backup-import" class="fieldset-messages">
+                    <div id="upload-container" style="margin-bottom:1em;">
+                        <div class="c button" id="file-upload">{% trans %}Upload file{% endtrans %}</div>
+                    </div>
+
+                    <script>
+                        $(function(){
+                            new qq.FineUploaderBasic({
+                                button: $("#file-upload")[0],
+                                request: {
+                                    endpoint: '{{ url('tools-backup-json-upload') }}'
+                                },
+                                validation: {
+                                    allowedExtensions: ['json.gz'],
+                                },
+                                callbacks: {
+                                    onError: function(id, name, errorReason, xhr) {
+                                        $("#upload-container").append('<p class="error appended-by-uploader">'+errorReason+'</p>').removeClass('loading');
+                                    },
+                                    onSubmit: function(id, fileName) {
+                                        $("#upload-container").addClass('loading');
+                                    },
+                                    onComplete: function(id, fileName, responseJSON) {
+                                        $(".appended-by-uploader").remove();
+
+                                        if (!responseJSON.success) {
+                                            if (responseJSON.error == "")
+                                                responseJSON.error = 'An unknown error occured.';
+
+                                            $("#upload-container").append('<p class="error appended-by-uploader">'+fileName+': '+responseJSON.error+'</p>')
+                                                    .removeClass('loading');
+                                        } else {
+                                            $("#ajax").loadDiv('{{ url('tools-backup-json-import') }}');
+                                        }
+                                    }
+                                }
+                            }); });
+                    </script>
+
+                    <p class="info">
+                        {% trans %}Allowed file extension:{% endtrans %} *.json.gz
+                    </p>
+
+                    <p class="info">
+                        {% trans %}Current RUNALYZE version: {% endtrans %} v{{ runalyzeVersion }}
+                    </p>
+
+                    <p class="warning">
+                        {% trans %}All shared links will be invalid if you (re-)import activities and overwrite all existing activities!{% endtrans %}
+                    </p>
+
+                    <p class="warning">
+                        {% trans %}
+                            The file has to be created with the same (minor) version of RUNALYZE.<br>
+                            You won't be able to import a file from older versions.
+                        {% endtrans %}
+                    </p>
+
+                    <p class="warning">
+                        {% trans %}
+                            The importer will not change existing data for equipment, sport types or activity types.<br>
+                            You have to make these changes by hand or delete the existing data in advance.
+                        {% endtrans %}
+                    </p>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+{% endblock %}

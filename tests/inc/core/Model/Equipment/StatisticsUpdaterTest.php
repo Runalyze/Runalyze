@@ -53,7 +53,7 @@ class StatisticsUpdaterTest extends \PHPUnit_Framework_TestCase {
 		$this->PDO->exec('INSERT INTO `'.PREFIX.'training` (`distance`, `s`, `accountid`) VALUES (20, 7200, 1)');
 		$this->PDO->exec('INSERT INTO `'.PREFIX.'activity_equipment` (`activityid`, `equipmentid`) VALUES ('.$this->PDO->lastInsertId().', '.$this->EquipmentIDs[1].')');
 
-		$Updater = new StatisticsUpdater($this->PDO, 1);
+		$Updater = new StatisticsUpdater($this->PDO, 1, PREFIX);
 		$this->assertEquals(3, $Updater->run());
 
 		$this->assertEquals(array(10, 3600), $this->PDO->query('SELECT `distance`, `time` FROM `'.PREFIX.'equipment` WHERE `id`='.$this->EquipmentIDs[0])->fetch(PDO::FETCH_NUM));

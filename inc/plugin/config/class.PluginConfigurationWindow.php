@@ -59,20 +59,12 @@ class PluginConfigurationWindow {
 	public function display() {
 		$this->displayHeader();
 		$this->displayForm();
-
-		if ($this->Plugin->type() == PluginType::TOOL && $this->Plugin->isActive()) {
-			$this->displayLinkToTool();
-		}
 	}
 
 	/**
 	 * Display header
 	 */
 	protected function displayHeader() {
-		$name = ($this->Plugin instanceof PluginTool)
-			? $this->Plugin->getWindowLink()
-			: $this->Plugin->name();
-
 		$Links = array();
 		$Links[] = array('tag' => Ajax::window('<a href="'.ConfigTabPlugins::getExternalUrl().'">'.__('back to overview').'</a>'));
 
@@ -80,7 +72,7 @@ class PluginConfigurationWindow {
 		echo '<div class="panel-menu">';
 		echo Ajax::toolbarNavigation($Links);
 		echo '</div>';
-		echo '<h1>'.__('Plugin configuration').': '.$name.'</h1>';
+		echo '<h1>'.__('Plugin configuration').': '.$this->Plugin->name().'</h1>';
 		echo '</div>';
 	}
 
@@ -147,14 +139,5 @@ class PluginConfigurationWindow {
 		$Fieldset->addInfo( $activationLink );
 
 		return $Fieldset;
-	}
-
-	/**
-	 * Display link to tool
-	 */
-	protected function displayLinkToTool() {
-		$Linklist = new BlocklinkList();
-		$Linklist->addCompleteLink( $this->Plugin->getWindowLink(Icon::$CALCULATOR.' '.__('Open tool'), true) );
-		$Linklist->display();
 	}
 }

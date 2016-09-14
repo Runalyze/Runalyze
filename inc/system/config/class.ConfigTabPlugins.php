@@ -10,7 +10,7 @@
  */
 class ConfigTabPlugins extends ConfigTab {
 	/**
-	 * Set key and title for form 
+	 * Set key and title for form
 	 */
 	protected function setKeyAndTitle() {
 		$this->key = 'config_tab_plugins';
@@ -19,7 +19,7 @@ class ConfigTabPlugins extends ConfigTab {
 
 	/**
 	 * Get URL
-	 * @return string 
+	 * @return string
 	 */
 	public static function getExternalUrl() {
 		return ConfigTabs::$CONFIG_URL.'?key=config_tab_plugins&external=true';
@@ -38,11 +38,6 @@ class ConfigTabPlugins extends ConfigTab {
 		$Stats->addInfo( __('Normal statistics are shown below the activitiy log.') );
 		$Stats->setHtmlCode($this->getCodeFor( PluginType::STAT ));
 
-		$Tools = new FormularFieldset(__('Tools') );
-		$Tools->addInfo( __('Complex tools for analyzing or processing the complete database will open in an overlay.') );
-		$Tools->setHtmlCode($this->getCodeFor( PluginType::TOOL ));
-		$Tools->setCollapsed();
-
 		$Install = new FormularFieldset( __('Install a new plugin') );
 		$Install->addInfo( __('New plugins can be installed here.') );
 		$Install->setHtmlCode($this->getCodeForInstall());
@@ -50,7 +45,6 @@ class ConfigTabPlugins extends ConfigTab {
 
 		$this->Formular->addFieldset($Panels);
 		$this->Formular->addFieldset($Stats);
-		$this->Formular->addFieldset($Tools);
 		$this->Formular->addFieldset($Install);
 		$this->Formular->allowOnlyOneOpenedFieldset();
 	}
@@ -58,7 +52,7 @@ class ConfigTabPlugins extends ConfigTab {
 	/**
 	 * Get code for
 	 * @param string $PluginType
-	 * @return string 
+	 * @return string
 	 */
 	private function getCodeFor($PluginType) {
 		$Factory = new PluginFactory();
@@ -144,7 +138,6 @@ class ConfigTabPlugins extends ConfigTab {
 			case 'stat':
 				$Code .= HTML::info(__('* Hidden plugins are grouped as \'Miscellaneous\'.'));
 				break;
-			case 'tool':
 			default:
 				$Code .= '';
 		}
@@ -179,7 +172,7 @@ class ConfigTabPlugins extends ConfigTab {
 
 	/**
 	 * Get code for install
-	 * @return string 
+	 * @return string
 	 */
 	private function getCodeForInstall() {
 		$Factory = new PluginFactory();
@@ -219,7 +212,7 @@ class ConfigTabPlugins extends ConfigTab {
 	}
 
 	/**
-	 * Parse all post values 
+	 * Parse all post values
 	 */
 	public function parsePostData() {
 		$PreparedUpdate = $this->prepareUpdateStatement();
@@ -259,9 +252,7 @@ class ConfigTabPlugins extends ConfigTab {
 				':id' => $Plugin['id']
 			]);
 
-			if ($Plugin['type'] != PluginType::TOOL) {
-				Ajax::setReloadFlag(Ajax::$RELOAD_ALL);
-			}
+			Ajax::setReloadFlag(Ajax::$RELOAD_ALL);
 		}
 	}
 }

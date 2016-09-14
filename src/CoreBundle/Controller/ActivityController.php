@@ -6,7 +6,6 @@ use Runalyze\Bundle\CoreBundle\Services\Activity\VdotInfo;
 use Runalyze\Configuration;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -137,33 +136,41 @@ class ActivityController extends Controller
     }
 
     /**
-     * @Route("/activity/multi-editor/{id}", name="Multi-Editor", requirements={"id" = "\d+"}, defaults={"id" = null})
+     * @Route("/activity/multi-editor/{id}", name="multi-editor", requirements={"id" = "\d+"}, defaults={"id" = null})
      * @Security("has_role('ROLE_USER')")
      */
     public function multiEditorAction($id)
     {
-        $_GET['mode'] = 'multi';
         $Frontend = new \Frontend(true, $this->get('security.token_storage'));
 
-        $Training = new \TrainingObject($id);
-        $Activity = new Activity\Entity($Training->getArray());
+        if (null === $id) {
+            return $this->generateResponseForMultiEditorOverview();
+        } else {
+            return $this->generateResponseForMultiEditor($id);
+        }
+    }
 
-        $Linker = new Linker($Activity);
-        $Dataview = new Dataview($Activity);
+    /**
+     * @return Response
+     */
+    protected function generateResponseForMultiEditorOverview()
+    {
+        $IDs = \DB::getInstance()->query('SELECT `id` FROM `'.PREFIX.'training` ORDER BY `id` DESC LIMIT 20')->fetchAll(\PDO::FETCH_COLUMN, 0);
 
-        echo $Linker->editNavigation();
+        $MultiEditor = new \MultiEditor($IDs);
+        $MultiEditor->display();
 
-        echo '<div class="panel-heading">';
-        echo '<h1>'.$Dataview->titleWithComment().', '.$Dataview->dateAndDaytime().'</h1>';
-        echo '</div>';
-        echo '<div class="panel-content">';
+        return new Response(\Ajax::wrapJS('$("#ajax").addClass("small-window");'));
+    }
 
-        $Formular = new \TrainingFormular($Training, \StandardFormular::$SUBMIT_MODE_EDIT);
-        $Formular->setId('training');
-        $Formular->setLayoutForFields( \FormularFieldset::$LAYOUT_FIELD_W50 );
-        $Formular->display();
-
-        echo '</div>';
+    /**
+     * @param int $id
+     * @return Response
+     */
+    protected function generateResponseForMultiEditor($id)
+    {
+        $MultiEditor = new \MultiEditor();
+        $MultiEditor->displayEditor($id);
 
         return new Response();
     }
