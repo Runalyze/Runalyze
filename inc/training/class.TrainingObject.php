@@ -237,6 +237,10 @@ class TrainingObject extends DataObject {
 			Runalyze\Model\Trackdata\Entity::GROUNDCONTACT => $this->get('arr_groundcontact'),
 			Runalyze\Model\Trackdata\Entity::VERTICAL_OSCILLATION => $this->get('arr_vertical_oscillation'),
 			Runalyze\Model\Trackdata\Entity::GROUNDCONTACT_BALANCE => $this->get('arr_groundcontact_balance'),
+            Runalyze\Model\Trackdata\Entity::SMO2_0 => $this->get('arr_smo2_0'),
+            Runalyze\Model\Trackdata\Entity::SMO2_1  => $this->get('arr_smo2_1'),
+            Runalyze\Model\Trackdata\Entity::THB_0 => $this->get('arr_thb_0'),
+            Runalyze\Model\Trackdata\Entity::THB_1 => $this->get('arr_thb_1'),
 			Runalyze\Model\Trackdata\Entity::PAUSES => $this->get('pauses')
 		));
 	}
@@ -1254,6 +1258,49 @@ class TrainingObject extends DataObject {
 	 */
 	public function hasArrayHRV() { return ($this->get('hrv') != ''); }
 
+    /**
+     * Set
+     * @param int $smo2_0  absolute measure of oxygen concentration in hemoglobin [%]
+     */
+    public function setArraySmo2_0(array $smo2_0) { $this->setArrayFor('arr_smo2_0', $smo2_0); }
+    /**
+     * Get  absolute measure of oxygen concentration
+     * @return int  []
+     */
+    public function getArraySmo2_0() { return $this->getArrayFor('arr_smo2_0'); }
+
+    /**
+     * Set
+     * @param int $smo2_1  absolute measure of oxygen concentration in hemoglobin [%]
+     */
+    public function setArraySmo2_1(array $smo2_1) { $this->setArrayFor('arr_smo2_1', $smo2_1); }
+    /**
+     * Get  absolute measure of oxygen concentration
+     * @return int  []
+     */
+    public function getArraySmo2_1() { return $this->getArrayFor('arr_smo2_1'); }
+
+    /**
+     * Set
+     * @param int $thb_0
+     */
+    public function setArrayThb_0(array $thb_0) { $this->setArrayFor('arr_thb_0', $thb_0); }
+    /**
+     * Get Thb
+     * @return int  []
+     */
+    public function getArrayThb_0() { return $this->getArrayFor('arr_thb_0'); }
+
+    /**
+     * Set
+     * @param int $thb_1
+     */
+    public function setArrayThb_1(array $thb_1) { $this->setArrayFor('arr_thb_1', $thb_1); }
+    /**
+     * Get Thb
+     * @return int  []
+     */
+    public function getArrayThb_1() { return $this->getArrayFor('arr_thb_1'); }
 
 	/**
 	 * Set creator

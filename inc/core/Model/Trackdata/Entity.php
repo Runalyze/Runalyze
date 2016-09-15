@@ -96,6 +96,30 @@ class Entity extends Model\Entity implements Model\Loopable {
 	 */
 	const GROUNDCONTACT_BALANCE = 'groundcontact_balance';
 
+    /**
+     * Key: smo2 (0)
+     * @var string
+     */
+    const SMO2_0 = 'smo2_0';
+
+    /**
+     * Key: smo2 (1)
+     * @var string
+     */
+    const SMO2_1 = 'smo2_1';
+
+    /**
+     * Key: thb (0)
+     * @var string
+     */
+    const THB_0 = 'thb_0';
+
+    /**
+     * Key: thb (1)
+     * @var string
+     */
+    const THB_1 = 'thb_1';
+
 	/**
 	 * Key: pauses
 	 * @var string
@@ -220,6 +244,10 @@ class Entity extends Model\Entity implements Model\Loopable {
 			self::GROUNDCONTACT,
 			self::VERTICAL_OSCILLATION,
 			self::GROUNDCONTACT_BALANCE,
+            self::SMO2_0,
+            self::SMO2_1,
+            self::THB_0,
+            self::THB_1,
 			self::PAUSES
 		);
 	}
@@ -263,6 +291,10 @@ class Entity extends Model\Entity implements Model\Loopable {
 			case self::GROUNDCONTACT:
 			case self::VERTICAL_OSCILLATION:
 			case self::GROUNDCONTACT_BALANCE:
+            case self::SMO2_0:
+            case self::SMO2_1:
+            case self::THB_0:
+            case self::THB_1:
 			case self::PAUSES:
 				return true;
 		}
@@ -452,6 +484,38 @@ class Entity extends Model\Entity implements Model\Loopable {
 	public function verticalRatio() {
 		return $this->Data[self::VERTICAL_RATIO];
 	}
+
+    /**
+     * Get smo2 (0)
+     * @return array unit: [%]
+     */
+    public function smo2_0() {
+        return $this->Data[self::SMO2_0];
+    }
+
+    /**
+     * Get smo2 (11)
+     * @return array unit: [%]
+     */
+    public function smo2_1() {
+        return $this->Data[self::SMO2_1];
+    }
+
+    /**
+     * Get thb (0)
+     * @return array unit: [%]
+     */
+    public function thb_0() {
+        return $this->Data[self::THB_0];
+    }
+
+    /**
+     * Get thb (11)
+     * @return array unit: [%]
+     */
+    public function thb_1() {
+        return $this->Data[self::THB_1];
+    }
 
 	/**
 	 * Get pauses
