@@ -1,10 +1,10 @@
 <?php
+
 namespace Runalyze\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
-use Doctrine\Common\Collections\ArrayCollection;
 use Runalyze\Model\Account\UserRole;
 
 /**
@@ -52,7 +52,7 @@ class Account implements AdvancedUserInterface, \Serializable
      * @ORM\Column(name="language", type="string", length=5, nullable=false)
      */
     private $language;
-    
+
     /**
      * @var integer
      *
@@ -122,21 +122,21 @@ class Account implements AdvancedUserInterface, \Serializable
      * @ORM\Column(name="deletion_hash", type="string", length=32, nullable=false)
      */
     private $deletionHash;
-    
+
     /**
      * @var integer
      *
      * @ORM\Column(name="allow_mails", type="integer", nullable=false)
      */
     private $allowMails;
-    
+
     /**
      * @var integer
      *
      * @ORM\Column(name="allow_support", type="integer", nullable=false)
      */
     private $allowSupport;
-    
+
     /**
      * @var integer
      *
@@ -154,7 +154,7 @@ class Account implements AdvancedUserInterface, \Serializable
     /**
      * Get id
      *
-     * @return integer 
+     * @return int
      */
     public function getId()
     {
@@ -177,7 +177,7 @@ class Account implements AdvancedUserInterface, \Serializable
     /**
      * Get username
      *
-     * @return string 
+     * @return string
      */
     public function getUsername()
     {
@@ -200,7 +200,7 @@ class Account implements AdvancedUserInterface, \Serializable
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -223,7 +223,7 @@ class Account implements AdvancedUserInterface, \Serializable
     /**
      * Get mail
      *
-     * @return string 
+     * @return string
      */
     public function getMail()
     {
@@ -246,13 +246,13 @@ class Account implements AdvancedUserInterface, \Serializable
     /**
      * Get language
      *
-     * @return string 
+     * @return string
      */
     public function getLanguage()
     {
         return $this->language;
     }
-    
+
     /**
      * Set timezone
      *
@@ -261,7 +261,7 @@ class Account implements AdvancedUserInterface, \Serializable
      */
     public function setTimezone($timezone)
     {
-        $this->timezone = $language;
+        $this->timezone = $timezone;
 
         return $this;
     }
@@ -269,7 +269,7 @@ class Account implements AdvancedUserInterface, \Serializable
     /**
      * Get timezone
      *
-     * @return string 
+     * @return string
      */
     public function getTimezone()
     {
@@ -292,7 +292,7 @@ class Account implements AdvancedUserInterface, \Serializable
     /**
      * Get password
      *
-     * @return string 
+     * @return string
      */
     public function getPassword()
     {
@@ -315,7 +315,7 @@ class Account implements AdvancedUserInterface, \Serializable
     /**
      * Get salt
      *
-     * @return string 
+     * @return string
      */
     public function getSalt()
     {
@@ -338,7 +338,7 @@ class Account implements AdvancedUserInterface, \Serializable
     /**
      * Get registerdate
      *
-     * @return integer 
+     * @return integer
      */
     public function getRegisterdate()
     {
@@ -356,7 +356,7 @@ class Account implements AdvancedUserInterface, \Serializable
         if (is_null($lastaction)) {
             $lastaction = (int)(new \DateTime())->getTimestamp();
         }
-        
+
         $this->lastaction = $lastaction;
 
         return $this;
@@ -365,7 +365,7 @@ class Account implements AdvancedUserInterface, \Serializable
     /**
      * Get lastaction
      *
-     * @return integer 
+     * @return integer
      */
     public function getLastAction()
     {
@@ -388,7 +388,7 @@ class Account implements AdvancedUserInterface, \Serializable
     /**
      * Get autologinHash
      *
-     * @return string 
+     * @return string
      */
     public function getAutologinHash()
     {
@@ -411,7 +411,7 @@ class Account implements AdvancedUserInterface, \Serializable
     /**
      * Get changepwHash
      *
-     * @return string 
+     * @return string
      */
     public function getChangepwHash()
     {
@@ -434,7 +434,7 @@ class Account implements AdvancedUserInterface, \Serializable
     /**
      * Get changepwTimelimit
      *
-     * @return integer 
+     * @return integer
      */
     public function getChangepwTimelimit()
     {
@@ -457,7 +457,7 @@ class Account implements AdvancedUserInterface, \Serializable
     /**
      * Get activationHash
      *
-     * @return string 
+     * @return string
      */
     public function getActivationHash()
     {
@@ -480,13 +480,13 @@ class Account implements AdvancedUserInterface, \Serializable
     /**
      * Get deletionHash
      *
-     * @return string 
+     * @return string
      */
     public function getDeletionHash()
     {
         return $this->deletionHash;
     }
-    
+
     /**
      * Set allowMails
      *
@@ -503,17 +503,17 @@ class Account implements AdvancedUserInterface, \Serializable
     /**
      * Get allowMails
      *
-     * @return string 
+     * @return string
      */
     public function getAllowMails()
     {
         return $this->allowMails;
     }
-    
+
     /**
      * Set allowSupport
      *
-     * @param string allowSupport
+     * @param string $allowSupport
      * @return Account
      */
     public function setAllowSupport($allowSupport)
@@ -526,17 +526,17 @@ class Account implements AdvancedUserInterface, \Serializable
     /**
      * Get allowSupport
      *
-     * @return string 
+     * @return string
      */
     public function getAllowSupport()
     {
         return $this->allowSupport;
     }
-    
+
     /**
      * Set role
      *
-     * @param string allowSupport
+     * @param string $role
      * @return Account
      */
     public function setRole($role)
@@ -549,7 +549,7 @@ class Account implements AdvancedUserInterface, \Serializable
     /**
      * Get role
      *
-     * @return string 
+     * @return string
      */
     public function getRole()
     {
@@ -575,8 +575,8 @@ class Account implements AdvancedUserInterface, \Serializable
             $this->username,
             $this->password,
             $this->salt,
-	    $this->activationHash,
-	    $this->language
+	        $this->activationHash,
+	        $this->language
         ));
     }
 
@@ -588,29 +588,29 @@ class Account implements AdvancedUserInterface, \Serializable
             $this->username,
             $this->password,
             $this->salt,
-	    $this->activationHash,
-	    $this->language
+	        $this->activationHash,
+	        $this->language
         ) = unserialize($serialized);
     }
-    
+
     public function isAccountNonExpired()
     {
-	return true;
+	    return true;
     }
 
     public function isAccountNonLocked()
     {
-	return true;
+	    return true;
     }
 
     public function isCredentialsNonExpired()
     {
-	return true;
+	    return true;
     }
 
     public function isEnabled()
     {
-	return empty($this->getActivationHash());
+	    return empty($this->getActivationHash());
     }
-    
+
 }
