@@ -22,7 +22,7 @@ class Smo2_1 extends ActivitySeries {
 	/**
 	 * @var string
 	 */
-	const COLOR = 'rgb(200,136,0)';
+	const COLOR = 'rgb(102,255,51)';
 
 	/**
 	 * Create series
@@ -40,8 +40,8 @@ class Smo2_1 extends ActivitySeries {
 		$this->Label = __('Smo2 (2)');
 		$this->Color = self::COLOR;
 
-		$this->UnitString = '%';
-		$this->UnitDecimals = 0;
+		//$this->UnitString = '%';
+		//s$this->UnitDecimals = 0;
 
 		$this->TickSize = 10;
 		$this->TickDecimals = 0;

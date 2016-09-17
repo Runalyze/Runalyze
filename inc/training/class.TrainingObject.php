@@ -1268,6 +1268,11 @@ class TrainingObject extends DataObject {
      * @return int  []
      */
     public function getArraySmo2_0() { return $this->getArrayFor('arr_smo2_0'); }
+    /**
+     * Has array for absolute measure of oxygen concentration?
+     * @return bool
+     */
+    public function hasArraySmo2_0() { return ($this->get('arr_smo2_0') != ''); }
 
     /**
      * Set
@@ -1279,6 +1284,11 @@ class TrainingObject extends DataObject {
      * @return int  []
      */
     public function getArraySmo2_1() { return $this->getArrayFor('arr_smo2_1'); }
+    /**
+     * Has array for absolute measure of oxygen concentration?
+     * @return bool
+     */
+    public function hasArraySmo2_1() { return ($this->get('arr_smo2_1') != ''); }
 
     /**
      * Set
@@ -1290,6 +1300,11 @@ class TrainingObject extends DataObject {
      * @return int  []
      */
     public function getArrayThb_0() { return $this->getArrayFor('arr_thb_0'); }
+    /**
+     * Has array for thb_0
+     * @return bool
+     */
+    public function hasArrayThb_0() { return ($this->get('arr_thb_0') != ''); }
 
     /**
      * Set
@@ -1301,6 +1316,11 @@ class TrainingObject extends DataObject {
      * @return int  []
      */
     public function getArrayThb_1() { return $this->getArrayFor('arr_thb_1'); }
+    /**
+     * Has array for thb_1
+     * @return bool
+     */
+    public function hasArrayThb_1() { return ($this->get('arr_thb_1') != ''); }
 
 	/**
 	 * Set creator

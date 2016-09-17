@@ -22,7 +22,7 @@ class Thb_0 extends ActivitySeries {
 	/**
 	 * @var string
 	 */
-	const COLOR = 'rgb(200,100,0)';
+	const COLOR = 'rgb(0,0,255)';
 
 	/**
 	 * Create series

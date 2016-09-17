@@ -732,4 +732,73 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertEquals(97, $this->object->object()->getVerticalOscillation(), '', 5);
 		}
 	}
+
+    /**
+     * Filename: "moxy-2sensors.fit"
+     */
+    public function testDeveloperFieldsFromMoxy() {
+        if (Shell::isPerlAvailable()) {
+            $this->object->parseFile('../tests/testfiles/fit/moxy-2sensors.fit');
+
+            $this->assertEquals(83, $this->object->object()->getTimeInSeconds(), '', 10);
+            $this->assertEquals(83, $this->object->object()->getArrayTimeLastPoint(), '', 10);
+            $this->assertEquals(0.117, $this->object->object()->getDistance(), '', 0.01);
+
+            $this->assertTrue($this->object->object()->hasArrayTime());
+            $this->assertTrue($this->object->object()->hasArrayLatitude());
+            $this->assertTrue($this->object->object()->hasArrayLongitude());
+            $this->assertTrue($this->object->object()->hasArrayAltitude());
+            $this->assertTrue($this->object->object()->hasArrayDistance());
+            $this->assertTrue($this->object->object()->hasArraySmo2_0());
+            $this->assertTrue($this->object->object()->hasArraySmo2_1());
+            $this->assertTrue($this->object->object()->hasArrayThb_0());
+            $this->assertTrue($this->object->object()->hasArrayThb_1());
+
+            $smo2_0_array = array(57,57,57,56,57,57,58,58,59,59,61,61,63,63,64,64,65,65,66,66,67,67,67,67,68,68,68,68,69,69,69,69,69,69,69,69,69,69,69,69,68,68,67,67,66,66,65,65,64,64,63,63,63,62,61,61,61,61,61,60,61,61,61,61,61,61,61,61,62,62,62,62,62,62,63,63,64,64,64,64,64,64,64,64);
+            $smo2_1_array = array(51,51,51,52,52,52,53,53,53,53,53,53,54,54,55,55,56,56,58,58,59,59,59,60,60,60,60,61,61,61,62,62,62,62,62,62,61,61,61,61,60,60,60,60,60,60,60,60,59,59,59,59,59,60,60,60,60,60,60,60,59,59,59,59,59,59,57,57,57,57,57,56,56,56,56,56,56,56,56,56,56,56,56,56);
+
+            $this->assertEquals($smo2_0_array, $this->object->object()->getArraySmo2_0());
+            $this->assertEquals($smo2_1_array, $this->object->object()->getArraySmo2_1());
+
+            $thb_0_array = array(12.31,12.31,12.31,12.31,12.29,12.29,12.27,12.27,12.25,12.25,12.23,12.23,12.2,12.2,12.2,12.2,12.21,12.21,12.22,12.22,12.23,12.23,12.24,12.24,12.25,12.25,12.26,12.26,12.27,12.27,12.27,12.27,12.27,12.27,12.27,12.27,12.27,12.27,12.26,12.26,12.27,12.27,12.28,12.28,12.29,12.29,12.29,12.29,12.3,12.3,12.31,12.31,12.31,12.31,12.31,12.31,12.3,12.3,12.3,12.31,12.3,12.3,12.3,12.3,12.29,12.29,12.29,12.29,12.29,12.29,12.29,12.28,12.28,12.28,12.28,12.28,12.28,12.28,12.29,12.29,12.29,12.29,12.29,12.29);
+            $thb_1_array = array(12.77,12.77,12.77,12.77,12.77,12.77,12.76,12.76,12.75,12.75,12.73,12.73,12.72,12.72,12.71,12.71,12.7,12.7,12.7,12.7,12.7,12.7,12.7,12.69,12.68,12.68,12.68,12.67,12.66,12.66,12.65,12.65,12.65,12.65,12.65,12.64,12.65,12.65,12.65,12.65,12.66,12.66,12.66,12.66,12.66,12.66,12.66,12.66,12.66,12.66,12.66,12.66,12.66,12.67,12.68,12.68,12.67,12.67,12.67,12.68,12.68,12.68,12.69,12.69,12.69,12.69,12.69,12.69,12.69,12.69,12.69,12.69,12.69,12.69,12.69,12.7,12.7,12.7,12.7,12.7,12.71,12.71,12.71,12.71);
+
+            $this->assertEquals($thb_0_array, $this->object->object()->getArrayThb_0());
+            $this->assertEquals($thb_1_array, $this->object->object()->getArrayThb_1());
+        }
+    }
+
+    /**
+     * Filename: "moxy-fr735.fit"
+     */
+    public function testDeveloperFieldsFromMoxyByFR735() {
+        if (Shell::isPerlAvailable()) {
+            $this->object->parseFile('../tests/testfiles/fit/moxy-fr735.fit');
+
+            $this->assertEquals(61, $this->object->object()->getTimeInSeconds(), '', 10);
+            $this->assertEquals(61, $this->object->object()->getArrayTimeLastPoint(), '', 10);
+            $this->assertEquals(0.100, $this->object->object()->getDistance(), '', 0.01);
+
+            $this->assertTrue($this->object->object()->hasArrayTime());
+            $this->assertTrue($this->object->object()->hasArrayLatitude());
+            $this->assertTrue($this->object->object()->hasArrayLongitude());
+            $this->assertTrue($this->object->object()->hasArrayAltitude());
+            $this->assertTrue($this->object->object()->hasArrayDistance());
+            $this->assertTrue($this->object->object()->hasArraySmo2_0());
+            $this->assertFalse($this->object->object()->hasArraySmo2_1());
+            $this->assertTrue($this->object->object()->hasArrayThb_0());
+            $this->assertFalse($this->object->object()->hasArrayThb_1());
+
+            $smo2_0_array = array(57,0,62,64,63,65,65,65,65,64,61,61,60,59,59);
+            $this->assertEquals($smo2_0_array, $this->object->object()->getArraySmo2_0());
+
+            $thb_0_array = array(12.49,0,12.45,12.34,12.33,12.36,12.41,12.4,12.4,12.41,12.4,12.41,12.42,12.48,12.51);
+            $this->assertEquals($thb_0_array, $this->object->object()->getArrayThb_0());
+
+            foreach($this->object->object()->getArraySmo2_0() as $bla) {
+                echo $bla.',';
+            }
+
+        }
+    }
 }
