@@ -34,7 +34,7 @@
     <fieldset id="legend3">
         <legend onclick="Runalyze.toggleFieldset(this, 'legend3', true, '')">{% trans %}Backup your data{% endtrans %}</legend>
         <div class="fieldset-messages">
-            <p class="info">{% trans %}Please use the plugin{% endtrans %} '<strong><a data-size="big" class="window" href="my/tools/backup">{% trans %}Database import/export{% endtrans %}</a></strong>'.</p>
+            <p class="info">{% trans %}Please use the plugin{% endtrans %} '<strong><a data-size="big" class="window" href="{{ url('tools-backup') }}">{% trans %}Database import/export{% endtrans %}</a></strong>'.</p>
         </div>
     </fieldset>
     <fieldset id="legend4">

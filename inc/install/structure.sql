@@ -36,7 +36,9 @@ CREATE TABLE IF NOT EXISTS `runalyze_account` (
   `deletion_hash` varchar(32) NOT NULL DEFAULT '',
   `allow_mails` tinyint(1) NOT NULL DEFAULT '1',
   `allow_support` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `role` tinyint(3) unsigned NOT NULL DEFAULT '1'
+  `role` tinyint(3) unsigned NOT NULL DEFAULT '1',
+  `gender` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `birthyear` int(4) unsigned DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
