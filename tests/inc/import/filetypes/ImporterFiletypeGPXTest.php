@@ -50,7 +50,7 @@ class ImporterFiletypeGPXTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * Test: standard file
-	 * Filename: "wrongTime.gpx" 
+	 * Filename: "wrongTime.gpx"
 	 */
 	public function test_standard() {
 		$this->object->parseFile('../tests/testfiles/gpx/standard.gpx');
@@ -121,7 +121,7 @@ class ImporterFiletypeGPXTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * Test: SpoQ file
-	 * Filename: "SpoQ.gpx" 
+	 * Filename: "SpoQ.gpx"
 	 */
 	public function test_SpoQ() {
 		$this->object->parseFile('../tests/testfiles/gpx/SpoQ.gpx');
@@ -140,7 +140,7 @@ class ImporterFiletypeGPXTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * Test: SpoQ file
-	 * Filename: "SpoQ-2.gpx" 
+	 * Filename: "SpoQ-2.gpx"
 	 */
 	public function test_SpoQ2() {
 		$this->object->parseFile('../tests/testfiles/gpx/SpoQ-2.gpx');
@@ -159,7 +159,7 @@ class ImporterFiletypeGPXTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * Test: NavRun500
-	 * Filename: "NavRun500.gpx" 
+	 * Filename: "NavRun500.gpx"
 	 */
 	public function testNavRun500() {
 		$this->object->parseFile('../tests/testfiles/gpx/NavRun500.gpx');
@@ -197,7 +197,7 @@ class ImporterFiletypeGPXTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * Test: standard route
-	 * Filename: "Route-only.gpx" 
+	 * Filename: "Route-only.gpx"
 	 */
 	public function testStandardGPXroute() {
 		$this->object->parseFile('../tests/testfiles/gpx/Route-only.gpx');
@@ -230,6 +230,19 @@ class ImporterFiletypeGPXTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertTrue($this->object->object()->hasArrayCadence());
 		$this->assertEquals(89, $this->object->object()->getCadence());
+	}
+
+	/**
+	 * Filename: "hr-not-always-there.gpx"
+	 * @see https://github.com/Runalyze/Runalyze/issues/1936
+	 */
+	public function testThatMissingHeartRatePointsAreFilled() {
+		$this->object->parseFile('../tests/testfiles/gpx/hr-not-always-there.gpx');
+
+		$this->assertTrue($this->object->object()->hasArrayHeartrate());
+		$this->assertEquals(137, $this->object->object()->getPulseAvg());
+
+		$this->assertNotContains(0, $this->object->object()->getArrayHeartrate());
 	}
 
 }
