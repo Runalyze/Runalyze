@@ -1,6 +1,6 @@
 <?php
 /**
- * This file contains class::Thb_1
+ * This file contains class::Thb
  * @package Runalyze\View\Activity\Plot\Series
  */
 
@@ -12,32 +12,39 @@ use Runalyze\View\Activity;
 use \Plot;
 
 /**
- * Plot for: thb_1
+ * Plot for: thb
  *
  * @author Hannes Christiansen
  * @author Michael Pohl
  * @package Runalyze\View\Activity\Plot\Series
  */
-class Thb_1 extends ActivitySeries  {
+class Thb extends ActivitySeries {
 	/**
 	 * @var string
 	 */
-	const COLOR = 'rgb(135, 135, 255)';
+	const COLOR = 'rgb(0,0,255)';
 
 	/**
 	 * Create series
 	 * @var \Runalyze\View\Activity\Context $context
-	 */
-	public function __construct(Activity\Context $context) {
+     * @param int $sensorIndex
+     */
+	public function __construct(Activity\Context $context, $sensorIndex = 0) {
 		$this->initOptions();
-		$this->initData($context->trackdata(), Trackdata::THB_1);
+        if ($sensorIndex == 1) {
+            $trackdataKey = Trackdata::THB_1;
+            $this->Label = _('Thb (2)');
+        } else {
+            $trackdataKey = Trackdata::THB_0;
+            $this->Label = _('Thb');
+        }
+		$this->initData($context->trackdata(), $trackdataKey);
 	}
 
 	/**
 	 * Init options
 	 */
 	protected function initOptions() {
-		$this->Label = __('THb (2)');
 		$this->Color = self::COLOR;
 
 		$this->UnitString = 'g/dL';
@@ -50,5 +57,4 @@ class Thb_1 extends ActivitySeries  {
 		$this->ShowMaximum = false;
 		$this->ShowMinimum = false;
 	}
-
 }

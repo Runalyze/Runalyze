@@ -7,6 +7,7 @@
 namespace Runalyze\View\Activity\Plot;
 
 use Runalyze\View\Activity;
+use Runalyze\View\Activity\Plot\Series;
 
 /**
  * Plot for: Power
@@ -27,11 +28,9 @@ class Smo2AndThb extends ActivityPlot {
 	 * @param \Runalyze\View\Activity\Context $context
 	 */
 	protected function initData(Activity\Context $context) {
-		$this->addMultipleSeries(array(
-			new Series\Smo2_0($context),
-            new Series\Thb_0($context),
-            new Series\TimeSeries($context),
-			new Series\DistanceSeries($context),
-		));
-	}
+        $this->addSeries(new Series\Smo2($context), 1);
+        $this->addSeries(new Series\Smo2($context, 1), 1, false);
+        $this->addSeries(new Series\Thb($context), 2);
+        $this->addSeries(new Series\Thb($context, 1), 2, false);
+    }
 }
