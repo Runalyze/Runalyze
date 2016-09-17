@@ -35,12 +35,6 @@ $EmptyTables['plugin'] = array(
 		array('RunalyzePluginStat_Trainingspartner', 'stat', 2, 9),
 		array('RunalyzePluginStat_Hoehenmeter', 'stat', 2, 10),
 		array('RunalyzePluginStat_Tag', 'stat', 1, 11),
-		array('RunalyzePluginTool_Cacheclean', 'tool', 1, 99),
-		array('RunalyzePluginTool_DatenbankCleanup', 'tool', 1, 99),
-		array('RunalyzePluginTool_MultiEditor', 'tool', 1, 99),
-		array('RunalyzePluginTool_AnalyzeVDOT', 'tool', 1, 99),
-		array('RunalyzePluginTool_DbBackup', 'tool', 1, 99),
-		array('RunalyzePluginTool_JDTables', 'tool', 1, 99),
 		array('RunalyzePluginPanel_Ziele', 'panel', 0, 6)
 	)
 );

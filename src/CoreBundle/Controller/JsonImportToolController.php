@@ -5,6 +5,7 @@ namespace Runalyze\Bundle\CoreBundle\Controller;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Backup\FilenameHandler;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Backup\JsonBackupAnalyzer;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Backup\JsonImporter;
+use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Calculation\Prognosis;
 use Runalyze\Configuration;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -92,9 +93,10 @@ class JsonImportToolController extends Controller
      * @Security("has_role('ROLE_USER')")
      *
      * @param Request $request
+     * @param Account $account
      * @return Response
      */
-    public function backupImportDoAction(Request $request)
+    public function backupImportDoAction(Request $request, Account $account)
     {
         $Frontend = new \Frontend(true, $this->get('security.token_storage'));
 
@@ -110,7 +112,7 @@ class JsonImportToolController extends Controller
         $importer = new JsonImporter(
             $filePath.$filename,
             \DB::getInstance(),
-            $this->get('security.token_storage')->getToken()->getUser()->getId(),
+            $account->getId(),
             $this->getParameter('database_prefix')
         );
 

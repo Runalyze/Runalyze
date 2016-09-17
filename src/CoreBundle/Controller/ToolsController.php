@@ -9,6 +9,7 @@ use Runalyze\Bundle\CoreBundle\Component\Tool\Table\GeneralPaceTable;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Table\VdotRaceResultsTable;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Table\VdotPaceTable;
 use Runalyze\Bundle\CoreBundle\Component\Tool\VdotAnalysis\VdotAnalysis;
+use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Calculation\Prognosis;
 use Runalyze\Configuration;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -25,7 +26,7 @@ class ToolsController extends Controller
      *
      * @TODO use symfony form
      */
-    public function cleanupAction(Request $request)
+    public function cleanupAction(Request $request, Account $account)
     {
         $Frontend = new \Frontend(true, $this->get('security.token_storage'));
 
@@ -34,9 +35,9 @@ class ToolsController extends Controller
 
         if (null !== $mode) {
             if ('general' === $mode) {
-                $job = new JobGeneral($request->request->all(), \DB::getInstance(), \SessionAccountHandler::getId(), $prefix);
+                $job = new JobGeneral($request->request->all(), \DB::getInstance(), $account->getId(), $prefix);
             } else {
-                $job = new JobLoop($request->request->all(), \DB::getInstance(), \SessionAccountHandler::getId(), $prefix);
+                $job = new JobLoop($request->request->all(), \DB::getInstance(), $account->getId(), $prefix);
             }
 
             $job->run();
@@ -101,7 +102,7 @@ class ToolsController extends Controller
      * @Route("/my/tools/vdot-analysis", name="tools-vdot-analysis")
      * @Security("has_role('ROLE_USER')")
      */
-    public function vdotAnalysisAction()
+    public function vdotAnalysisAction(Account $account)
     {
         $Frontend = new \Frontend(true, $this->get('security.token_storage'));
 
@@ -109,7 +110,7 @@ class ToolsController extends Controller
         $races = $analysisTable->getAnalysisForAllRaces(
             Configuration::Data()->vdotFactor(),
             Configuration::General()->runningSport(),
-            \SessionAccountHandler::getId()
+            $account->getId()
         );
 
         return $this->render('tools/vdot_analysis.html.twig', [
