@@ -795,10 +795,6 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
             $thb_0_array = array(12.49,0,12.45,12.34,12.33,12.36,12.41,12.4,12.4,12.41,12.4,12.41,12.42,12.48,12.51);
             $this->assertEquals($thb_0_array, $this->object->object()->getArrayThb_0());
 
-            foreach($this->object->object()->getArraySmo2_0() as $bla) {
-                echo $bla.',';
-            }
-
         }
     }
 }
