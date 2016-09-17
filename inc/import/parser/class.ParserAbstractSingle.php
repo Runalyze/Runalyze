@@ -54,8 +54,12 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 			'groundcontact_balance'	=> array(),
 			'stroke'        => array(),
 			'stroketype'    => array(),
-			'hrv'		=> array()
-		);
+			'hrv'		=> array(),
+            'smo2_0'         => array(),
+            'smo2_1'         => array(),
+            'thb_0'          => array(),
+            'thb_1'          => array(),
+    );
 
 	/**
 	 * Previous distance
@@ -228,7 +232,14 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 		$this->TrainingObject->setArrayStrokeType( $this->gps['stroketype'] );
 		$this->TrainingObject->setArrayHRV( $this->gps['hrv'] );
 
-		$this->setValuesFromArraysIfEmpty();
+        $this->TrainingObject->setArraySmo2_0( $this->gps['smo2_0'] );
+        $this->TrainingObject->setArraySmo2_1( $this->gps['smo2_1'] );
+        $this->TrainingObject->setArrayThb_0( $this->gps['thb_0'] );
+        $this->TrainingObject->setArrayThb_1( $this->gps['thb_1'] );
+
+
+
+        $this->setValuesFromArraysIfEmpty();
 		$this->guessTimezoneFromStartPosition();
 	}
 

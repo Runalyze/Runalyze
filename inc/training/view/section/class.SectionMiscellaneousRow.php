@@ -69,6 +69,12 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 			$Plot = new Activity\Plot\Temperature($this->Context);
 			$this->addRightContent('temperature', __('Temperature plot'), $Plot);
 		}
+
+        if ($this->Context->trackdata()->has(Trackdata\Entity::SMO2_0)) {
+            $Plot = new Activity\Plot\Smo2AndThb($this->Context);
+            $this->addRightContent('smo2AndThb', __('Smo2 & Thb'), $Plot);
+        }
+
 	}
 
 	/**

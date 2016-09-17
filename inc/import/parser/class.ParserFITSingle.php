@@ -80,7 +80,13 @@ class ParserFITSingle extends ParserAbstractSingle {
 		'0_Cadence' => ['cadence', 0.5],
 		'0_Heart_Rate' => ['heart_rate', 1],
 		'0_Vertical_Oscillation' => ['vertical_oscillation', 100],
-		'0_Ground_Time' => ['stance_time', 10]
+		'0_Ground_Time' => ['stance_time', 10],
+        '0_SmO2_Sensor_0_on_Location_Not_Set' => ['smo2_0', 1],
+        '1_2nd_SmO2_Sensor_0_on_Location_Not_Set' => ['smo2_1', 1],
+        'saturated_hemoglobin_percent' => ['smo2_0', 0.1],
+        'total_hemoglobin_conc' => ['thb_0', 0.01],
+        '0_THb_Sensor_0_on_Location_Not_Set' => ['thb_0', 1],
+        '1_2nd_THb_Sensor_0_on_Location_Not_Set' => ['thb_1', 1],
 	);
 
 	/**
@@ -460,7 +466,13 @@ class ParserFITSingle extends ParserAbstractSingle {
 		$this->gps['groundcontact_balance'][] = isset($this->Values['stance_time_balance']) ? (int)$this->Values['stance_time_balance'][0] : 0;
 		//$this->gps['vertical_ratio'][] = isset($this->Values['vertical_ratio']) ? (int)$this->Values['vertical_ratio'][0] : 0;
 
-		if ($time === $last) {
+        // Fit developer fields
+        $this->gps['smo2_0'][] = isset($this->Values['smo2_0']) ? (int)$this->Values['smo2_0'][0] : 0;
+        $this->gps['smo2_1'][] = isset($this->Values['smo2_1']) ? (int)$this->Values['smo2_1'][0] : 0;
+        $this->gps['thb_0'][] = isset($this->Values['thb_0']) ? round($this->Values['thb_0'][0],2) : 0;
+        $this->gps['thb_1'][] = isset($this->Values['thb_1']) ? round($this->Values['thb_1'][0],2) : 0;
+
+        if ($time === $last) {
 			$this->mergeRecord();
 		}
 	}
