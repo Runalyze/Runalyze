@@ -25,15 +25,19 @@ class FormularInputUTCDayAndDaytime extends FormularInputDayAndDaytime {
 			$this->value = (new LocalTime($this->value))->toServerTime()->getTimestamp();
 		}
 	}
-	
+
 	/**
 	 * Validate value
-	 * @return boolean
+	 * @return bool
 	 */
 	public function validate() {
-		parent::validate();
+		$parentValidation = parent::validate();
 
-		$_POST[$this->name] = LocalTime::fromServerTime($_POST[$this->name])->getTimestamp();
+		if (true === $parentValidation) {
+			$_POST[$this->name] = LocalTime::fromServerTime($_POST[$this->name])->getTimestamp();
+		}
+
+		return $parentValidation;
 	}
 
 }

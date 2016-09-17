@@ -11,7 +11,7 @@
 abstract class FormularField extends HtmlTag {
 	/**
 	 * CSS-class if validation failed
-	 * @var string 
+	 * @var string
 	 */
 	public static $CSS_VALIDATION_FAILED = 'validation-failed';
 
@@ -29,7 +29,7 @@ abstract class FormularField extends HtmlTag {
 
 	/**
 	 * Name
-	 * @var string 
+	 * @var string
 	 */
 	protected $name = '';
 
@@ -41,13 +41,13 @@ abstract class FormularField extends HtmlTag {
 
 	/**
 	 * Label
-	 * @var string 
+	 * @var string
 	 */
 	protected $label = '';
 
 	/**
 	 * Layout
-	 * @var string 
+	 * @var string
 	 */
 	protected $layout = '';
 
@@ -65,7 +65,7 @@ abstract class FormularField extends HtmlTag {
 
 	/**
 	 * Array with options for parser
-	 * @var array 
+	 * @var array
 	 */
 	protected $parserOptions = array();
 
@@ -77,7 +77,7 @@ abstract class FormularField extends HtmlTag {
 
 	/**
 	 * Set key as failed
-	 * @param string $key 
+	 * @param string $key
 	 */
 	public static function setKeyAsFailed($key) {
 		self::$FAILED_KEYS[] = $key;
@@ -136,7 +136,7 @@ abstract class FormularField extends HtmlTag {
 
 	/**
 	 * Set default value if empty
-	 * @param string $value 
+	 * @param string $value
 	 */
 	public function defaultValue($value) {
 		if (empty($this->value))
@@ -145,7 +145,7 @@ abstract class FormularField extends HtmlTag {
 
 	/**
 	 * Set layout, used as css-class for a surrounding div
-	 * @param string $layout 
+	 * @param string $layout
 	 */
 	public function setLayout($layout) {
 		$this->layout = $layout;
@@ -153,7 +153,7 @@ abstract class FormularField extends HtmlTag {
 
 	/**
 	 * Set layout if no layout is set
-	 * @param string $layout 
+	 * @param string $layout
 	 */
 	public function setLayoutIfEmpty($layout) {
 		if (empty($this->layout)) {
@@ -163,7 +163,7 @@ abstract class FormularField extends HtmlTag {
 
 	/**
 	 * Add layout, used as additional css-class for a surrounding div
-	 * @param string $layout 
+	 * @param string $layout
 	 */
 	public function addLayout($layout) {
 		$this->layout .= ' '.$layout;
@@ -171,7 +171,7 @@ abstract class FormularField extends HtmlTag {
 
 	/**
 	 * Add CSS class for layout
-	 * @param string $layout 
+	 * @param string $layout
 	 */
 	public function addLayoutClass($layout) {
 		$this->layoutClasses[] = $layout;
@@ -180,7 +180,7 @@ abstract class FormularField extends HtmlTag {
 	/**
 	 * Set parser
 	 * @param string $parser
-	 * @param array $options 
+	 * @param array $options
 	 */
 	public function setParser($parser, $options = array()) {
 		$this->parser = $parser;
@@ -204,6 +204,7 @@ abstract class FormularField extends HtmlTag {
 
 	/**
 	 * Validate value
+	 * @return bool
 	 */
 	public function validate() {
 		$validation = FormularValueParser::validatePost($this->name, $this->parser, $this->parserOptions);
@@ -212,10 +213,12 @@ abstract class FormularField extends HtmlTag {
 			self::setKeyAsFailed($this->name);
 			self::addValidationFailure(is_string($validation) ? $validation : __('Your input is not allowed.').' ('.$this->name.')');
 		}
+
+		return $validation;
 	}
 
 	/**
-	 * Display this field 
+	 * Display this field
 	 */
 	public function display() {
 		echo $this->getCode();
@@ -223,7 +226,7 @@ abstract class FormularField extends HtmlTag {
 
 	/**
 	 * Get code for displaying this field with layout
-	 * @return string 
+	 * @return string
 	 */
 	final public function getCode() {
 		$this->prepare();
@@ -244,7 +247,7 @@ abstract class FormularField extends HtmlTag {
 	}
 
 	/**
-	 * Prepare field for being displayed 
+	 * Prepare field for being displayed
 	 */
 	private function prepare() {
 		if (!$this->prepared) {
