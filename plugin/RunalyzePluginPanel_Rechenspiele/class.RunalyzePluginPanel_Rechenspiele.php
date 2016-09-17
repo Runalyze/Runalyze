@@ -177,7 +177,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 		$JDQuery = Cache::get(self::CACHE_KEY_JD_POINTS);
 		if (is_null($JDQuery)) {
 			$JDQueryLastWeek = DB::getInstance()->query('SELECT SUM(`jd_intensity`) FROM `'.PREFIX.'training` WHERE `time`>='.Time::weekstart(time() - 7*DAY_IN_S).' AND `time`<'.Time::weekend(time() - 7*DAY_IN_S).' AND accountid = '.SessionAccountHandler::getId());
-			
+
                         $JDQueryThisWeek = DB::getInstance()->query('SELECT SUM(`jd_intensity`) FROM `'.PREFIX.'training` WHERE `time`>='.Time::weekstart(time()).' AND `time`<'.Time::weekend(time()).' AND accountid = '.SessionAccountHandler::getId());
                         $JDQuery['LastWeek'] = Helper::Unknown($JDQueryLastWeek->fetchColumn(), 0);
 			$JDQuery['ThisWeek'] = Helper::Unknown($JDQueryThisWeek->fetchColumn(), 0);
@@ -512,7 +512,8 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 
 		$Tooltip = new Tooltip('');
 		$VDOT = new VDOT(0, new VDOTCorrector(Configuration::Data()->vdotFactor()));
-		$VDOTs = DB::getInstance()->query('SELECT `id`,`time`,`distance`,IF(`vdot_with_elevation`>0,`vdot_with_elevation`,`vdot`) as `vdot` FROM `'.PREFIX.'training` WHERE time>='.(time() - Configuration::Vdot()->days()*DAY_IN_S).' AND vdot>0 AND use_vdot=1 AND accountid = '.SessionAccountHandler::getId().' ORDER BY time ASC')->fetchAll();
+		$vdotColumn = Configuration::Vdot()->useElevationCorrection() ? 'IF(`vdot_with_elevation`>0,`vdot_with_elevation`,`vdot`) as `vdot`' : '`vdot`';
+		$VDOTs = DB::getInstance()->query('SELECT `id`,`time`,`distance`,'.$vdotColumn.' FROM `'.PREFIX.'training` WHERE time>='.(time() - Configuration::Vdot()->days()*DAY_IN_S).' AND vdot>0 AND use_vdot=1 AND accountid = '.SessionAccountHandler::getId().' ORDER BY time ASC')->fetchAll();
 
 		foreach ($VDOTs as $i => $Data) {
 			if ($i%10 == 0)
