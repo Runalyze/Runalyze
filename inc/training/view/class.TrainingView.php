@@ -8,10 +8,11 @@ use Runalyze\Configuration;
 use Runalyze\Export;
 use Runalyze\View\Activity\Context;
 use Runalyze\View\Activity\Linker;
+use Runalyze\Model;
 
 /**
  * Display a training
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\DataObjects\Training\View
  */
@@ -52,6 +53,7 @@ class TrainingView {
 		if (!Request::isOnSharedPage()) {
 			$this->initShareLinks($Linker);
 			$this->initExportLinks();
+			$this->initToolsLinks();
 			$this->initEditLinks($Linker);
 		}
 
@@ -96,6 +98,35 @@ class TrainingView {
 		}
 
 		$this->ToolbarLinks[] = '</ul></li>';
+	}
+
+	protected function initToolsLinks() {
+		$toolsLinks = [];
+
+		if (
+			$this->Context->hasTrackdata() &&
+			$this->Context->trackdata()->has(Model\Trackdata\Entity::DISTANCE) &&
+			$this->Context->trackdata()->has(Model\Trackdata\Entity::TIME)
+		) {
+			$toolsLinks[] = '<li><a class="window link" data-size="big" href="activity/'.$this->Context->activity()->id().'/splits-info"><i class="fa fa-fw fa-bar-chart"></i> '.__('Analyze splits').'</a></li>';
+		}
+
+		if ($this->Context->activity()->vdotByHeartRate() > 0) {
+			$toolsLinks[] = '<li><a class="window link" data-size="small" href="activity/'.$this->Context->activity()->id().'/vdot-info"><i class="fa fa-fw fa-calculator"></i> '.__('Show VDOT calculation').'</a></li>';
+		}
+
+		if ($this->Context->hasRoute() && $this->Context->route()->hasElevations()) {
+			$toolsLinks[] = '<li><a class="window link" data-size="normal" href="activity/'.$this->Context->activity()->id().'/elevation-info"><i class="fa fa-fw fa-line-chart"></i> '.__('More about elevation').'</a></li>';
+		}
+
+		if (!empty($toolsLinks)) {
+			$this->ToolbarLinks = array_merge(
+				$this->ToolbarLinks,
+				['<li class="with-submenu"><span class="link"><i class="fa fa-fw fa-magic"></i> '.__('Tools').'</span><ul class="submenu">'],
+				$toolsLinks,
+				['</ul></li>']
+			);
+		}
 	}
 
 	/**
