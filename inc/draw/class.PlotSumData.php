@@ -107,6 +107,7 @@ abstract class PlotSumData extends Plot {
 
 		$this->init();
 		$this->addAverage();
+		$this->addTarget();
 	}
 
 	/**
@@ -548,14 +549,6 @@ abstract class PlotSumData extends Plot {
 	private function setDataForTypes() {
 		$emptyData = array_fill(0, $this->timerEnd - $this->timerStart + 1, 0);
 		$Types     = array(array('name' => __('without'), 'data' => $emptyData));
-		$TypesData = DB::getInstance()->query('
-			SELECT
-				id, abbr, name
-			FROM
-				`'.PREFIX.'type`
-			WHERE
-				`sportid`="'.$this->Sport->id().'"
-		')->fetchAll();
 
 		foreach (\Runalyze\Context::Factory()->typeForSport($this->Sport->id()) as $Type) {
 		    $name = ($Type->abbreviation() == '') ? $Type->name() : $Type->abbreviation();
@@ -590,7 +583,7 @@ abstract class PlotSumData extends Plot {
 		}
 
 		if ($hasCompetitions) {
-			$this->Data[] = array('label' => __('Race Result'), 'data' => $KilometersCompetition);
+			$this->Data[] = array('label' => __('Races'), 'data' => $KilometersCompetition);
 			$this->Data[] = array('label' => __('Training'), 'data' => $Kilometers, 'color' => '#E68617');
 		} else {
 			$this->Data[] = array('label' => $this->Sport->name(), 'data' => $Kilometers, 'color' => '#E68617');
@@ -600,29 +593,59 @@ abstract class PlotSumData extends Plot {
 	/**
 	 * @return bool
 	 */
-	protected function showsAverage() {
-		return ($this->Sport->isRunning() && $this->Analysis == self::ANALYSIS_DEFAULT);
+	protected function showsTarget() {
+		return ($this->Sport->isRunning() && $this->Analysis == self::ANALYSIS_DEFAULT && $this->usesDistance);
 	}
 
 	/**
-	 * Add line for average and goal
+	 * Add line for target
 	 */
-	protected function addAverage() {
-		if ($this->showsAverage()) {
+	protected function addTarget() {
+		if ($this->showsTarget()) {
 			$BasicEndurance = new BasicEndurance();
 			$BasicEndurance->readSettingsFromConfiguration();
-			$Result = $BasicEndurance->asArray();
 
-			$Avg = new Distance($this->factorForWeekKm() * $Result['weekkm-percentage'] * $BasicEndurance->getTargetWeekKm());
-			$Goal = new Distance($this->factorForWeekKm() * $BasicEndurance->getTargetWeekKm());
-			$LabelKeys = array_keys($this->getXLabels());
+			$target = new Distance($this->factorForWeekKm() * $BasicEndurance->getTargetWeekKm());
+			$labelKeys = array_keys($this->getXLabels());
 
-			$this->addThreshold('y', round($Avg->valueInPreferredUnit()), '#999');
-			$this->addThreshold('y', round($Goal->valueInPreferredUnit()), '#999');
-
-			$this->addAnnotation(-1, round($Avg->valueInPreferredUnit()), __('avg:').'&nbsp;'.$Avg->string(true, 0), 0, -10);
-			$this->addAnnotation(end($LabelKeys), round($Goal->valueInPreferredUnit()), __('goal:').'&nbsp;'.$Goal->string(true, 0), 0, -10);
+			$this->addThreshold('y', round($target->valueInPreferredUnit()), '#999');
+			$this->addAnnotation(end($labelKeys), round($target->valueInPreferredUnit()), __('target:').'&nbsp;'.$target->string(true, 0), 0, -10);
 		}
+	}
+
+	/**
+	 * Add line for average
+	 */
+	protected function addAverage() {
+		$avg = $this->getAverage();
+
+		if ($this->usesDistance && self::ANALYSIS_DEFAULT == $this->Analysis) {
+			$avgDistance = new Distance($avg);
+			$avg = $avgDistance->valueInPreferredUnit();
+			$string = $avgDistance->string(true, 0);
+		} elseif (self::ANALYSIS_DEFAULT == $this->Analysis) {
+			$string = $avg.' h';
+		} else {
+			$string = $avg;
+		}
+
+		$this->addThreshold('y', $avg, '#999');
+		$this->addAnnotation(-1, $avg, __('avg:').'&nbsp;'.$string, 0, -10);
+	}
+
+	/**
+	 * @return int
+	 */
+	protected function getAverage() {
+		$sum = 0;
+
+		foreach ($this->Data as $series) {
+			foreach ($series['data'] as $value) {
+				$sum += $value;
+			}
+		}
+
+		return (int)round($sum / ($this->timerEnd - $this->timerStart + 1));
 	}
 
 	/**
@@ -634,11 +657,11 @@ abstract class PlotSumData extends Plot {
 	 * Display additional info
 	 */
 	protected function displayInfos() {
-		if ($this->showsAverage()) {
+		if ($this->showsTarget()) {
 			$BasicEndurance = new BasicEndurance();
 			$BasicEndurance->readSettingsFromConfiguration();
 
-			echo HTML::info( __('Goal and average are based on current basic endurance calculations.') );
+			echo HTML::info( __('Target is based on current basic endurance calculations.') );
 		}
 	}
 }
