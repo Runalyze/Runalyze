@@ -240,7 +240,7 @@ class ImporterFiletypeGPXTest extends PHPUnit_Framework_TestCase {
 		$this->object->parseFile('../tests/testfiles/gpx/hr-not-always-there.gpx');
 
 		$this->assertTrue($this->object->object()->hasArrayHeartrate());
-		$this->assertEquals(137, $this->object->object()->getPulseAvg());
+		$this->assertEquals(136, $this->object->object()->getPulseAvg());
 
 		$this->assertNotContains(0, $this->object->object()->getArrayHeartrate());
 	}
