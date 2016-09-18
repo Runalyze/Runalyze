@@ -21,6 +21,7 @@ class AppKernel extends \Symfony\Component\HttpKernel\Kernel
     	    new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Symfony\Bundle\TwigBundle\TwigBundle(),
+            new \Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
             new Runalyze\Bundle\CoreBundle\CoreBundle(),
         ];
 
