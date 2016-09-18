@@ -3,7 +3,7 @@
 namespace Runalyze\Bundle\CoreBundle\Controller;
 
 use Runalyze\Activity\Distance;
-use Runalyze\Parameter\Application\Timezone;
+use Runalyze\Bundle\CoreBundle\Component\Account\Registration;
 use Runalyze\Bundle\CoreBundle\Form\RegistrationType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -16,6 +16,7 @@ use SessionAccountHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Swift_Message;
 
 /**
  * Class DefaultController
@@ -69,27 +70,29 @@ class DefaultController extends Controller
 
         //<a href="https://blog.runalyze.com/nutzungsbedingungen/
         if ($form->isSubmitted() && $form->isValid()) {
+            $registration = new Registration($account);
             $formdata = $request->request->get($form->getName());
-            $em = $this->getDoctrine()->getManager();
-            $account->setLanguage($request->getLocale());
-            try {
-                $account->setTimezone(Timezone::getEnumByOriginalName($formdata['textTimezone']));
-            } catch (\InvalidArgumentException $e) {
-                $account->setTimezone(Timezone::getEnumByOriginalName(date_default_timezone_get()));
+
+            $registration->setLocale($request->getLocale());
+            $registration->setTimezoneByName($formdata['textTimezone']);
+
+            if (!$this->getParameter('user_disable_account_activation')) {
+                $registration->requireAccountActivation();
             }
-            if (!\System::isAtLocalhost() || $this->getParameter('user_disable_account_activation')) {
-                $account->setActivationHash(\AccountHandler::getRandomHash());
-            }
+            $registration->setPassword($account->getPlainPassword(), $this->get('security.encoder_factory'));
+            $account = $registration->registerAccount($this->getDoctrine()->getManager());
 
-            $encoder = $this->container->get('security.encoder_factory')->getEncoder($account);
-            $account->setPassword($encoder->encodePassword($account->getPlainPassword(), $account->getSalt()));
 
-            $em->persist($account);
-            $em->flush();
+            $message = Swift_Message::newInstance($this->get('translator')->trans('Please activate your RUNALYZE account'))
+                ->setFrom(array($this->getParameter('mail_sender') => $this->getParameter('mail_name')))
+                ->setTo(array($account->getMail() => $account->getUsername()))
+                ->setBody($this->renderView('mail/account/registration.html.twig',
+                    array('username' => $account->getUsername(),
+                        'activationHash' => $account->getActivationHash())
+                    ),'text/html');
+            $this->get('mailer')->send($message);
 
-            $mailSent = \AccountHandler::createNewUserFrom($account->getId());
-
-            if (\System::isAtLocalhost() || $this->getParameter('user_disable_account_activation') || !$mailSent) {
+            if ($this->getParameter('user_disable_account_activation')) {
                 return $this->render('account/activate/success.html.twig');
             }
 

@@ -152,7 +152,7 @@ class Account implements AdvancedUserInterface, \Serializable
      *
      * @ORM\Column(name="activation_hash", type="string", length=32, nullable=false)
      */
-    private $activationHash;
+    private $activationHash = '';
 
     /**
      * @var string

@@ -46,14 +46,6 @@ class AccountHandlerTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @covers AccountHandler::tryToRegisterNewUser
-	 */
-	public function testTryToRegisterNewUser() {
-		// TODO: Attention, process sets config-vars and imports default settings
-		// Database has to be cleaned afterwards
-	}
-
-	/**
 	 * @covers AccountHandler::sendPasswordLinkTo
 	 */
 	public function testSendPasswordLinkTo() {

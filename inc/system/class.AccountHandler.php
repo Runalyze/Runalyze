@@ -72,22 +72,6 @@ class AccountHandler {
 	}
 
 	/**
-	 * Create a new user from post-data
-	 */
-	public static function createNewUserFrom($newAccountId) {
-		$errors = array();
-        self::importEmptyValuesFor($newAccountId);
-		self::setSpecialConfigValuesFor($newAccountId);
-
-        $mailSent = true;
-        if (!self::setAndSendActivationKeyFor($newAccountId)) {
-		    $mailSent = false;
-		}
-
-		return $mailSent;
-	}
-
-	/**
 	 * Send password to given user
 	 * @param string $username
 	 * @return bool
@@ -155,80 +139,12 @@ class AccountHandler {
 	 * @param string $hash
 	 * @return string
 	 */
-	private static function getActivationLink($hash) {
-		return System::getFullDomainWithProtocol().Language::getCurrentLanguage().'/account/activate/'.$hash;
-	}
-
-	/**
-	 * Get link for activate account
-	 * @param string $hash
-	 * @return string
-	 */
 	private static function getDeletionLink($hash) {
 		return System::getFullDomainWithProtocol().Language::getCurrentLanguage().'/account/delete/'.$hash;
 	}
 
 	/**
-	 * Import empty values for new account
-	 * Attention: $accountID has to be set here - new registered users are not in session yet!
-	 * @param int $accountID
-	 */
-	private static function importEmptyValuesFor($accountID) {
-		$DB          = DB::getInstance();
-		$EmptyTables = array();
-
-		include FRONTEND_PATH . 'system/schemes/set.emptyValues.php';
-
-		foreach ($EmptyTables as $table => $data) {
-			$columns = $data['columns'];
-			$columns[] = 'accountid';
-			foreach ($data['values'] as $values) {
-				$special_keys = array();
-
-				for ($i = count($values); $i > count($columns)-1; $i--) {
-					$special_keys[] = array_pop($values);
-				}
-
-				$values[] = $accountID;
-				$dbId = $DB->insert($table, $columns, $values);
-
-				foreach ($special_keys as $sk) {
-					self::$SPECIAL_KEYS[$sk] = $dbId;
-				}
-			}
-		}
-	}
-
-	/**
-	 * Send registration/activation mail for a new user
-	 * @param int $accountId
-	 * @return bool
-	 */
-	private static function setAndSendActivationKeyFor($accountId) {
-		$account        = DB::getInstance()->fetchByID('account', $accountId);
-
-		$subject  = __('Welcome to RUNALYZE');
-		$message  = __('Thanks for your registration').', '.$account['username']."!<br><br>\r\n\r\n";
-
-		if (!USER_DISABLE_ACCOUNT_ACTIVATION) {
-		    $subject  = __('Activate your RUNALYZE Account');
-		    $activationHash = $account['activation_hash'];
-		    $activationLink = self::getActivationLink($activationHash);
-
-		    $message .= sprintf( __('You can activate your account (username = %s) with the following link'), $account['username']).":<br>\r\n";
-		    $message .= '<a href='.$activationLink.'>'.$activationLink.'</a>';
-		}
-
-		if (!System::sendMail($account['mail'], $subject, $message) && !USER_DISABLE_ACCOUNT_ACTIVATION) {
-            DB::getInstance()->update('account', $accountId, 'activation_hash', '');
-			return false;
-		}
-
-		return true;
-	}
-
-	/**
-	 * Set activation key for new user and set via email
+	 * Set deletion key for new user and set via email
 	 * @param int $accountId
 	 * @return bool
 	 */
