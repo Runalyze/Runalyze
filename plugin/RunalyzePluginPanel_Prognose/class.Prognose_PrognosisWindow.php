@@ -17,7 +17,7 @@ use Runalyze\Util\LocalTime;
 
 /**
  * Prognosis calculator window
- * 
+ *
  * Additional window for calculating special prognoses.
  * @author Hannes Christiansen
  * @package Runalyze\Plugins\Panels
@@ -345,7 +345,7 @@ class Prognose_PrognosisWindow {
 		if ($_POST['model'] == 'robert-bock' && $this->PrognosisStrategies['robert-bock'] instanceof Prognosis\Bock) {
 			$this->addHintsForRobertBock($this->PrognosisStrategies['robert-bock']);
 		} elseif ($_POST['model'] == 'jack-daniels' && $this->PrognosisStrategies['jack-daniels'] instanceof Prognosis\Daniels) {
-			$this->addHintsForJackDaniels($this->PrognosisStrategies['jack-daniels']);
+			$this->addHintsForJackDaniels();
 		}
 	}
 
@@ -367,9 +367,8 @@ class Prognose_PrognosisWindow {
 
 	/**
 	 * Add hints for model: Jack Daniels
-	 * @param \Runalyze\Calculation\Prognosis\Daniels $strategy
 	 */
-	protected function addHintsForJackDaniels(Prognosis\Daniels $strategy) {
+	protected function addHintsForJackDaniels() {
 		if (!$this->PrognosisObject->isValid()) {
 			$this->ResultTable .= HTML::warning(sprintf(
 				__('VDOT must be between %u and %u.'),

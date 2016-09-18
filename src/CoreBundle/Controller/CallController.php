@@ -237,12 +237,6 @@ class CallController extends Controller
      */
     public function loginAction()
     {
-        $Frontend = new \Frontend(false, $this->get('security.token_storage'));
-
-        echo '<p class="error">';
-    	_e('You are not logged in anymore.');
-    	echo '<br><br><a href="login" title="Runalyze: Login"><strong>&raquo; '. _e('Login').'</strong></a></p>';
-
-    	return new Response();
+        return $this->render('login/ajax_not_logged_in.html.twig');
     }
 }

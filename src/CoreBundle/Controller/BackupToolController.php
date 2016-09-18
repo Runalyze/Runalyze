@@ -42,8 +42,6 @@ class BackupToolController extends Controller
      */
     public function downloadBackupAction($filename, Account $account)
     {
-        $Frontend = new \Frontend(true, $this->get('security.token_storage'));
-
         $fileSystem = new Filesystem();
         $fileHandler = new FilenameHandler($account->getId());
         $filePath = $this->getPathToBackupFiles();
@@ -89,7 +87,7 @@ class BackupToolController extends Controller
         if ($request->request->get('export-type') == 'json') {
             $Backup = new JsonBackup(
                 $this->getPathToBackupFiles().$fileHandler->generateInternalFilename(FilenameHandler::JSON_FORMAT),
-                \SessionAccountHandler::getId(),
+                $account->getId(),
                 \DB::getInstance(),
                 $this->getParameter('database_prefix'),
                 $this->getParameter('runalyze_version')
@@ -98,7 +96,7 @@ class BackupToolController extends Controller
         } else {
             $Backup = new SqlBackup(
                 $this->getPathToBackupFiles().$fileHandler->generateInternalFilename(FilenameHandler::SQL_FORMAT),
-                \SessionAccountHandler::getId(),
+                $account->getId(),
                 \DB::getInstance(),
                 $this->getParameter('database_prefix'),
                 $this->getParameter('runalyze_version')
@@ -120,8 +118,6 @@ class BackupToolController extends Controller
      */
     public function backupAction(Account $account)
     {
-        $Frontend = new \Frontend(true, $this->get('security.token_storage'));
-
         $fileHandler = new FilenameHandler($account->getId());
         $finder = new Finder();
         $finder

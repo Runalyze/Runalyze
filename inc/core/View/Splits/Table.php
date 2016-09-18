@@ -14,11 +14,11 @@ use Runalyze\Parameter\Application\PaceUnit;
 
 /**
  * Abstract view object
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\View
  */
-class Table extends \Runalyze\View\Object {
+class Table {
 	/**
 	 * @var \Runalyze\Model\Activity\Splits\Entity
 	 */
@@ -68,6 +68,13 @@ class Table extends \Runalyze\View\Object {
 		$this->PaceUnit = $paceUnit;
 
 		$this->init();
+	}
+
+	/**
+	 * Display
+	 */
+	public function display() {
+		echo $this->code();
 	}
 
 	/**

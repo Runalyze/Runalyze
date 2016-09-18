@@ -8,7 +8,7 @@
 
 	<?php echo System::getCodeForAllCSSFiles(); ?>
 
-	<link rel="shortcut icon" type="image/x-icon" href="assets/v2.x/img/favicon.ico">
+	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
         <?php foreach (\Runalyze\Language::availableLanguages() as $key => $lang_arr) { ?>
         <link rel="alternate" href="<?php echo System::getFullDomain(true)."?lang=".$key; ?>" hreflang="<?php echo $key; ?>" />
         <?php } ?>
@@ -27,8 +27,8 @@
 	<a class="tab logo" href="<?php echo System::getFullDomain(); ?>" title="Runalyze">Runalyze</a>
 
 	<?php if ($this instanceof \Symfony\Component\DependencyInjection\ContainerAwareInterface): ?>
-	<?php if ($this->get('security.authorization_checker')->isGranted('ROLE_USER')): ?><a class="tab right" href="logout" title="<?php _e('Logout'); ?>">
-		<i class="fa fa-fw fa-lg fa-sign-out"></i>&nbsp;<?php _e('Logout'); ?></a>
+	<?php if ($this->get('security.authorization_checker')->isGranted('ROLE_USER')): ?>
+		<a class="tab right" href="<?php echo $this->get('router')->generate('logout'); ?>" title="<?php _e('Logout'); ?>"><i class="fa fa-fw fa-lg fa-sign-out"></i>&nbsp;<?php _e('Logout'); ?></a>
 		<?php echo Ajax::window('<a class="tab right b" href="'.ConfigTabs::$CONFIG_URL.'?key=config_tab_account"><i class="fa fa-fw fa-lg fa-user"></i>'.NBSP.$this->get('security.token_storage')->getToken()->getUser()->getUsername().'</a>'); ?>
 	<?php endif; ?>
 

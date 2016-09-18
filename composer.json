@@ -1,4 +1,7 @@
 {
+    "name": "runalyze/runalyze",
+    "description": "RUNALYZE - training analysis for athletes",
+    "homepage": "https://runalyze.com",
     "require": {
         "symfony/symfony": "^3.0",
         "sensio/framework-extra-bundle": "^3.0",

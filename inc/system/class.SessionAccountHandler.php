@@ -3,12 +3,9 @@
  * This file contains class::SessionAccountHandler
  * @package Runalyze\System
  */
-
-use Runalyze\Language;
-
 /**
  * Class: SessionAccountHandler
- * 
+ *
  * @author Michael Pohl
  * @author Hannes Christiansen
  * @package Runalyze\System
@@ -39,7 +36,7 @@ class SessionAccountHandler {
 
 	/**
 	 * Is anyone logged in?
-	 * @return boolean 
+	 * @return boolean
 	 */
 	public static function isLoggedIn() {
 	    //TODO use a symfony security method
@@ -50,39 +47,15 @@ class SessionAccountHandler {
 	}
 
 	/**
-	 * Try to use current session
-	 * @return boolean 
-	 */
-	private function tryToUseSession() {
-		Language::setLanguage($Account['language'], false);
-
-		return false;
-	}
-
-	/**
-	 * Update last action to current account 
-	 */
-	private function updateLastAction() {
-		DB::getInstance()->update('account', self::getId(), 'lastaction', time());
-	}
-
-	/**
-	 * Update language of current account
-	 */
-	private function updateLanguage() {
-		DB::getInstance()->update('account', self::getId(), 'language', Language::getCurrentLanguage());
-	}  
-
-	/**
 	 * Set internal account-data
-	 * @param array $Account 
+	 * @param array $Account
 	 */
 	public static function setAccount($Account = array()) {
 		self::$Account = $Account;
 	}
 
 	/**
-	 * Try to set account from request 
+	 * Try to set account from request
 	 */
 	public static function setAccountFromRequest() {
 		if (empty(self::$Account)) {
@@ -91,31 +64,8 @@ class SessionAccountHandler {
 	}
 
 	/**
-	 * Set up session 
-	 */
-	private function setSession() {
-		$this->setSessionValues();
-	}
-
-	/**
-	 * Set account-values to session 
-	 */
-	private function setSessionValues() {
-		session_regenerate_id();
-
-	}
-        
-
-	/**
-	 * Set session to database 
-	 */
-	private function setSessionToDatabase() {
-	    //remove autologin hash from database
-	}
-
-	/**
 	 * Get ID of current user
-	 * @return int 
+	 * @return int
 	 */
 	public static function getId() {
 		// Dirty hack for 'global.cleanup.php'
@@ -132,7 +82,7 @@ class SessionAccountHandler {
 
 	/**
 	 * Get mail of current user
-	 * @return string 
+	 * @return string
 	 */
 	public static function getMail() {
 		if (!isset(self::$Account['mail'])) {
@@ -144,7 +94,7 @@ class SessionAccountHandler {
 
 	/**
 	 * Get name of current user
-	 * @return string 
+	 * @return string
 	 */
 	public static function getName() {
 		if (!isset(self::$Account['name'])) {
@@ -156,7 +106,7 @@ class SessionAccountHandler {
 
 	/**
 	 * Get if mails are allowed
-	 * @return string 
+	 * @return string
 	 */
 	public static function getAllowMails() {
 		if (!isset(self::$Account['allow_mails'])) {
@@ -165,10 +115,10 @@ class SessionAccountHandler {
 
 		return self::$Account['allow_mails'];
 	}
-	
+
 	/**
 	 * Get if user allows access to account
-	 * @return string 
+	 * @return string
 	 */
 	public static function getAllowSupport() {
 		if (!isset(self::$Account['allow_support'])) {
@@ -180,7 +130,7 @@ class SessionAccountHandler {
 
 	/**
 	 * Get language of current user
-	 * @return string 
+	 * @return string
 	 */
 	public static function getLanguage() {
 		if (!isset(self::$Account['language'])) {
@@ -192,7 +142,7 @@ class SessionAccountHandler {
 
 	/**
 	 * Get timezone of current user
-	 * @return string 
+	 * @return string
 	 */
 	public static function getTimezone() {
 		if (!isset(self::$Account['timezone'])) {
@@ -201,10 +151,10 @@ class SessionAccountHandler {
 
 		return self::$Account['timezone'];
 	}
-	
+
 	/**
 	 * Get username of current user
-	 * @return string 
+	 * @return string
 	 */
 	public static function getUsername() {
 		if (!isset(self::$Account['username'])) {
@@ -213,5 +163,4 @@ class SessionAccountHandler {
 
 		return self::$Account['username'];
 	}
-
 }

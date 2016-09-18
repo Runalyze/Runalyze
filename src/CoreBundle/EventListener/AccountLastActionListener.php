@@ -7,18 +7,21 @@ use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\HttpKernel;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
- 
+
 class AccountLastActionListener
 {
+    /** @var TokenStorage */
     protected $token;
+
+    /** @var EntityManager */
     protected $em;
- 
+
     public function __construct(TokenStorage $token, EntityManager $manager)
     {
         $this->token = $token;
         $this->em = $manager;
     }
- 
+
     /**
     * Update the user "lastaction" on each request
     * @param FilterControllerEvent $event

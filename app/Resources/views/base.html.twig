@@ -14,7 +14,7 @@
                 <link rel="stylesheet" href="{{ asset('assets/css/runalyze-style.css') }}?v={{ RUNALYZE_VERSION }}">
             {% endblock %}
 
-            <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/v2.x/img/favicon.ico') }}">
+            <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
 
             {% for key, locale in locales %}
                 <link rel="alternate" href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale': key})) }}" hreflang="{{ key }}">
