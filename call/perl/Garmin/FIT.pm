@@ -4,6 +4,19 @@ use FileHandle;
 use POSIX qw(BUFSIZ);
 use Time::Local;
 
+BEGIN {
+  $uint64_invalid = undef;
+
+  eval {
+    $uint64_invalid = unpack('Q', pack('a', -1));
+  };
+
+  unless (defined $uint64_invalid) {
+    require Math::BigInt;
+    import Math::BigInt;
+  }
+}
+
 require Exporter;
 @ISA = qw(Exporter);
 
@@ -26,11 +39,10 @@ require Exporter;
 	     FIT_UINT64Z
 	     FIT_BYTE
 	     FIT_BASE_TYPE_MAX
-	     FIT_BASE_TYPE_MASK
 	     FIT_HEADER_LENGTH
 	     );
 
-$version = 0.21;
+$version = 0.23;
 $version_major_scale = 100;
 
 sub version_major {
@@ -406,6 +418,17 @@ sub trailing_garbages {
   }
 }
 
+sub maybe_chained {
+  my $self = shift;
+
+  if (@_) {
+    $self->{maybe_chained} = $_[0];
+  }
+  else {
+    $self->{maybe_chained};
+  }
+}
+
 sub really_clear_buffer {
   my $self = shift;
   my $buffer = $self->{buffer};
@@ -489,6 +512,17 @@ sub EOF {
   }
   else {
     $self->{EOF};
+  }
+}
+
+sub end_of_chunk {
+  my $self = shift;
+
+  if (@_) {
+    $self->{end_of_chunk} = $_[0];
+  }
+  else {
+    $self->{end_of_chunk};
   }
 }
 
@@ -659,15 +693,13 @@ $cthd_mask_local_message_type = (1 << $cthd_length_local_message_type) - 1;
 $cthd_length_time_offset = 5;
 $cthd_mask_time_offset = (1 << $cthd_length_time_offset) - 1;
 
-$defmsg_min_template = 'C C C v C';
+$defmsg_min_template = 'C C C S C';
 $defmsg_min_length = length(pack($defmsg_min_template));
 
 $deffld_template = 'C C C';
 $deffld_length = length(pack($deffld_template));
 $deffld_mask_endian_p = 1 << 7;
 $deffld_mask_type = (1 << 5) - 1;
-
-sub FIT_BASE_TYPE_MASK() {$deffld_mask_type + 0;}
 
 $devdata_min_template = 'C';
 $devdata_min_length = length(pack($devdata_min_template));
@@ -682,11 +714,89 @@ $invalid[FIT_UINT16] = 0xFFFF;
 $invalid[FIT_SINT32] = 0x7FFFFFFF;
 $invalid[FIT_UINT32] = 0xFFFFFFFF;
 $invalid[FIT_STRING] = $invalid[FIT_UINT8Z] = $invalid[FIT_UINT16Z] = $invalid[FIT_UINT32Z] = $invalid[FIT_UINT64Z] = 0;
-$invalid[FIT_FLOAT32] = NaN;
-$invalid[FIT_FLOAT64] = NaN;
-$invalid[FIT_SINT64] = ($invalid[FIT_SINT32] << 32) | $invalid[FIT_UINT32];
-$invalid[FIT_UINT64] = ($invalid[FIT_UINT32] << 32) | $invalid[FIT_UINT32];
-$invalid[FIT_UINT64Z] = 0;
+#$invalid[FIT_FLOAT32] = NaN;
+#$invalid[FIT_FLOAT64] = NaN;
+$invalid[FIT_FLOAT32] = unpack('f', pack('V', 0xFFFFFFFF));
+$invalid[FIT_FLOAT64] = unpack('d', pack('V V', 0xFFFFFFFF, 0xFFFFFFFF));
+
+my ($big_int_base32, $sint64_2c_mask, $sint64_2c_base, $sint64_2c_sign);
+
+if (defined $uint64_invalid) {
+  $invalid[FIT_UINT64] = $uint64_invalid;
+  $invalid[FIT_SINT64] = eval '0x7FFFFFFFFFFFFFFF';
+}
+else {
+  $invalid[FIT_UINT64] = Math::BigInt->new('0xFFFFFFFFFFFFFFFF');
+  $invalid[FIT_SINT64] = Math::BigInt->new('0x7FFFFFFFFFFFFFFF');
+  $big_int_base32 = Math::BigInt->new('0x100000000');
+  $sint64_2c_mask = Math::BigInt->new('0xFFFFFFFFFFFFFFFF');
+  $sint64_2c_base = Math::BigInt->new('0x10000000000000000');
+  $sint64_2c_sign = Math::BigInt->new('0x1000000000000000');
+}
+
+sub packfilter_uint64_big_endian {
+  my @res = $_[0]->bdiv($big_int_base32);
+
+  @res;
+}
+
+sub packfilter_uint64_little_endian {
+  my @res = $_[0]->bdiv($big_int_base32);
+
+  @res[1, 0];
+}
+
+*packfilter_uint64 = $my_endian ? \&packfilter_uint64_big_endian : \&packfilter_uint64_little_endian;
+
+sub unpackfilter_uint64_big_endian {
+  my ($hi, $lo) = @_;
+
+  Math::BigInt->new($hi)->blsft(32)->badd($lo);
+}
+
+sub unpackfilter_uint64_little_endian {
+  &unpackfilter_uint64_big_endian(@_[1, 0]);
+}
+
+*unpackfilter_uint64 = $my_endian ? \&unpackfilter_uint64_big_endian : \&unpackfilter_uint64_little_endian;
+
+sub packfilter_sint64_big_endian {
+  if ($_[0]->bcmp(0) < 0) {
+    &packfilter_uint64_big_endian($sint64_2c_mask->band($sint64_2c_base->badd($_[0])));
+  }
+  else {
+    &packfilter_uint64_big_endian($_[0]);
+  }
+}
+
+sub packfilter_sint64_little_endian {
+  if ($_[0]->bcmp(0) < 0) {
+    &packfilter_uint64_little_endian($sint64_2c_mask->band($sint64_2c_base->badd($_[0])));
+  }
+  else {
+    &packfilter_uint64_little_endian($_[0]);
+  }
+}
+
+*packfilter_sint64 = $my_endian ? \&packfilter_sint64_big_endian : \&packfilter_sint64_little_endian;
+
+sub unpackfilter_sint64_big_endian {
+  my ($hi, $lo) = @_;
+  my $n = Math::BigInt->new($hi)->blsft(32)->badd($lo)->band($sint64_2c_mask);
+
+  if ($n->band($sint64_2c_sign)->bcmp(0) == 0) {
+    $n;
+  }
+  else {
+    $n->bsub($sint64_2c_base);
+  }
+}
+
+sub unpackfilter_sint64_little_endian {
+  &unpackfilter_sint64_big_endian(@_[1, 0]);
+}
+
+*unpackfilter_sint64 = $my_endian ? \&unpackfilter_sint64_big_endian : \&unpackfilter_sint64_little_endian;
 
 sub invalid {
   my ($self, $type) = @_;
@@ -701,6 +811,9 @@ $size[FIT_SINT32] = $size[FIT_UINT32] = $size[FIT_UINT32Z] = $size[FIT_FLOAT32] 
 $size[FIT_FLOAT64] = $size[FIT_SINT64] = $size[FIT_UINT64] = $size[FIT_UINT64Z] = 8;
 
 @template = ('C') x ($deffld_mask_type + 1);
+@packfactor = (1) x ($deffld_mask_type + 1);
+@packfilter = (undef) x ($deffld_mask_type + 1);
+@unpackfilter = (undef) x ($deffld_mask_type + 1);
 
 $template[FIT_SINT8] = 'c';
 $template[FIT_SINT16] = 's';
@@ -709,8 +822,19 @@ $template[FIT_SINT32] = 'l';
 $template[FIT_UINT32] = $template[FIT_UINT32Z] = 'L';
 $template[FIT_FLOAT32] = 'f';
 $template[FIT_FLOAT64] = 'd';
-$template[FIT_SINT64] = 'q';
-$template[FIT_UINT64] = $template[FIT_UINT64Z] = 'Q';
+
+if (defined $uint64_invalid) {
+  $template[FIT_SINT64] = 'q';
+  $template[FIT_UINT64] = $template[FIT_UINT64Z] = 'Q';
+}
+else {
+  $template[FIT_SINT64] = $template[FIT_UINT64] = $template[FIT_UINT64Z] = 'L';
+  $packfactor[FIT_SINT64] = $packfactor[FIT_UINT64] = $packfactor[FIT_UINT64Z] = 2;
+  $packfilter[FIT_SINT64] = \&packfiltr_sint64;
+  $unpackfilter[FIT_SINT64] = \&unpackfiltr_sint64;
+  $packfilter[FIT_UINT64] = $packfilter[FIT_UINT64Z] = \&packfiltr_uint64;
+  $unpackfilter[FIT_UINT64] = $unpackfilter[FIT_UINT64Z] = \&unpackfiltr_uint64;
+}
 
 %named_type =
   (
@@ -4842,7 +4966,6 @@ sub data_message_callback_by_name {
   elsif (@_) {
     if (ref $_[0] eq 'CODE') {
       $cbmap->{$msgtype->{_number}} = $cbmap->{$name} = [@_];
-      $res;
     }
     else {
       $self->error('not a CODE');
@@ -4952,7 +5075,7 @@ sub syscallback_devdata_field_desc {
     return undef;
   }
 
-  $base_type &= FIT_BASE_TYPE_MASK;
+  $base_type &= $deffld_mask_type;
 
   unless ($base_type <= FIT_BASE_TYPE_MAX) {
     $self->error("unknown base type ($base_type)");
@@ -5005,7 +5128,7 @@ sub syscallback_devdata_field_desc {
   my $name = $o_name;
 
   $name =~ s/\s+/_/g;
-  $name =~ s/\W/sprintf('_%02x', ord($&))/ge;
+  $name =~ s/\W/sprintf('_%02x_', ord($&))/ge;
 
   my %fdesc =
     (
@@ -5049,16 +5172,16 @@ sub add_endian_converter {
     my ($p, $unp, $n);
 
     if ($size[$type] == 2) {
-      ($p, $unp, $n) = (qw(n v), $c);
+      ($p, $unp) = (qw(n v));
     }
     elsif ($size[$type] == 4) {
-      ($p, $unp, $n) = (qw(N V), $c);
+      ($p, $unp) = (qw(N V));
     }
     else {
-      ($p, $unp, $n) = (qw(N V), 2 * $c);
+      ($p, $unp, $n) = (qw(N V), 2);
     }
 
-    push @$cvt, $p . $n, $unp . $n, $i_string, $size[$type] * $c;
+    push @$cvt, $p . $n, $unp . $n, $i_string, $size[$type], $c;
     1;
   }
   else {
@@ -5075,19 +5198,19 @@ sub fetch_definition_message {
   my $i = $self->offset;
   my ($rechd, $reserved, $endian, $msgnum, $nfields) = unpack($defmsg_min_template, substr($$buffer, $i, $defmsg_min_length));
 
-  $endian = 1 if $endian;
+  $endian = $endian ? 1 : 0;
   $self->offset($i + $defmsg_min_length);
 
   my $len = $nfields * $deffld_length;
 
   $self->fill_buffer($len) || return undef;
   $i = $self->offset;
-  $msgnum = unpack('n', pack('v', $msgnum)) if $endian;
+  $msgnum = unpack('n', pack('v', $msgnum)) if $endian != $my_endian;
 
   my $msgtype = $msgtype_by_num{$msgnum};
   my $cbmap = $self->data_message_callback;
   my $e = $i + $len;
-  my ($cb, %desc, $i_array, $i_string, @cvt);
+  my ($cb, %desc, $i_array, $i_array_t, $i_string, @cvt, @pi);
 
   $desc{local_message_type} = $rechd & $rechd_mask_local_message_type;
   $desc{message_number} = $msgnum;
@@ -5099,9 +5222,9 @@ sub fetch_definition_message {
   $desc{template} = 'C';
   $self->data_message_descriptor->[$desc{local_message_type}] = \%desc;
 
-  for ($i_array = $i_string = 1 ; $i + $deffld_length <= $e ; $i += $deffld_length) {
+  for ($i_array = $i_array_t = $i_string = 1 ; $i + $deffld_length <= $e ; $i += $deffld_length) {
     my ($index, $size, $type) = unpack($deffld_template, substr($$buffer, $i, $deffld_length));
-    my ($name, $tname, %attr);
+    my ($name, $tname, %attr, );
 
     if (ref $msgtype eq 'HASH') {
       my $fldtype = $msgtype->{$index};
@@ -5135,7 +5258,14 @@ sub fetch_definition_message {
     $i_array += $c;
     $i_string += $size;
     $desc{template} .= ' ' . $template[$type];
+
+    if ($packfactor[$type] > 1) {
+      push @pi, $i_array_t, $c, $i_array;
+      $c *= $packfactor[$type];
+    }
+
     $desc{template} .= $c if $c > 1;
+    $i_array_t += $c;
   }
 
   $desc{devdata_nfields} = 0;
@@ -5204,7 +5334,14 @@ sub fetch_definition_message {
       $i_array += $c;
       $i_string += $size;
       $desc{template} .= ' ' . $template[$type];
+
+      if ($packfactor[$type] > 1) {
+	push @pi, $type, $i_array_t, $c, $i_array;
+	$c *= $packfactor[$type];
+      }
+
       $desc{template} .= $c if $c > 1;
+      $i_array_t += $c;
     }
 
     $desc{devdata_nfields} = $nfields;
@@ -5212,9 +5349,11 @@ sub fetch_definition_message {
   }
 
   $desc{endian_converter} = \@cvt if @cvt;
+  $desc{packfilter_index} = \@pi if @pi;
   $desc{message_length} = $i_string;
   $desc{array_length} = $i_array;
   $self->offset($e);
+  1;
 }
 
 sub cat_definition_message {
@@ -5231,7 +5370,7 @@ sub cat_definition_message {
   my $mask = @devdata_i_name ? $rechd_mask_devdata_message : 0;
   my ($endian, $msgnum) = @{$desc}{qw(endian message_number)};
 
-  $msgnum = unpack('n', pack('v', $msgnum)) if $endian;
+  $msgnum = unpack('n', pack('v', $msgnum)) if $endian != $my_endian;
   $$p .= pack($defmsg_min_template, $desc->{local_message_type} | $rechd_mask_definition_message | $mask, 0, $endian, $msgnum, $#i_name + 1);
 
   while (@i_name) {
@@ -5265,19 +5404,19 @@ sub endian_convert {
   my ($self, $cvt, $buffer, $i) = @_;
   my $j;
 
-  for ($j = 3 ; $j < @$cvt ; $j += 4) {
-    my ($b, $n) = @$cvt[$j - 1, $j];
+  for ($j = 4 ; $j < @$cvt ; $j += 5) {
+    my ($b, $size, $c) = @$cvt[$j - 2, $j - 1, $j];
 
-    $b += $i;
+    for ($b += $i ; $c > 0 ; $b += $size, --$c) {
+      my @v = unpack($cvt->[$j - 3], substr($$buffer, $b, $size));
+      my ($k, $l);
 
-    my @v = unpack($cvt->[$j - 2], substr($$buffer, $b, $n));
-    my ($k, $l);
+      for ($k = 0, $l = $#v ; $k < $l ; ++$k, --$l) {
+	@v[$k, $l] = @v[$l, $k];
+      }
 
-    for ($k = 0, $l = $#v ; $k < $l ; ++$k, --$l) {
-      @v[$k, $l] = @v[$l, $k];
+      substr($$buffer, $b, $size) = pack($cvt->[$j - 4], @v);
     }
-
-    substr($$buffer, $b, $n) = pack($cvt->[$j - 3], @v);
   }
 }
 
@@ -5303,7 +5442,25 @@ sub fetch_data_message {
   # unpack('f'/'d', ...) unpacks to NaN
   my @v = unpack($desc->{template}, substr($$buffer, $i, $desc->{message_length}));
 
-  $v = reverse $v if ref $desc->{endian_converter} eq 'ARRAY';
+  if (ref $desc->{packfilter_index} eq 'ARRAY') {
+    my $piv = $desc->{packfilter_index};
+    my ($i, $j);
+    my @v_t = @v;
+
+    @v = ($v_t[0]);
+
+    for ($i = 1, $j = 3 ; $j < @$piv ; $j += 4) {
+      my ($type, $i_array_t, $c, $i_array) = @$piv[($j - 3) .. $j];
+      my $delta = $packfactor[$type];
+
+      $i < $i_array_t and push @v, @v_t[$i .. ($i_array_t - 1)];
+      $i = $i_array_t + $c * $delta;
+
+      for (; $i_array_t < $i ; $i_array_t += $delta) {
+	push @v, $unpackfilter[$type]->(@v_t[$i_array_t .. ($i_array_t + $delta - 1)]);
+      }
+    }
+  }
 
   $self->offset($i + $desc->{message_length});
 
@@ -5315,6 +5472,32 @@ sub fetch_data_message {
   }
   else {
     1;
+  }
+}
+
+sub pack_data_message {
+  my ($self, $desc, $v) = @_;
+
+  if (ref $desc->{packfilter_index} eq 'ARRAY') {
+    my @v = ($v->[0]);
+    my $piv = $desc->{packfilter_index};
+    my ($i, $j);
+
+    for ($i = 1, $j = 3 ; $j < @$piv ; $j += 4) {
+      my ($type, $i_array_t, $c, $i_array) = @$piv[($j - 3) .. $j];
+
+      $i < $i_array and push @v, @$v[$i .. ($i_array - 1)];
+      $i = $i_array + $c;
+
+      for (; $i_array < $i ; ++$i_array) {
+	push @v, $packfilter[$type]->($v->[$i_array]);
+      }
+    }
+
+    pack($desc->{template}, @v);
+  }
+  else {
+    pack($desc->{template}, @$v);
   }
 }
 
@@ -5557,6 +5740,21 @@ sub initialize {
   $self;
 }
 
+sub reset {
+  my $self = shift;
+
+  $self->clear_buffer;
+
+  %$self = map {($_ => $self->{$_})} qw(error buffer FH data_message_callback unit_table
+					verbose cp_fit cp_fit_FH EOF use_gmtime numeric_date_time without_unit maybe_chained);
+
+  my $buffer = $self->buffer;
+
+  $self->file_read(length($$buffer));
+  $self->file_processed(0);
+  $self;
+}
+
 sub new {
   my $class = shift;
   my $self = +{};
@@ -5626,21 +5824,24 @@ sub fetch {
       }
     }
   }
-  elsif ($j > $self->file_size) {
+  elsif (!$self->maybe_chained && $j > $self->file_size) {
     $self->trailing_garbages($self->trailing_garbages + length($$buffer) - $i);
     $self->offset(length($$buffer));
+    1;
   }
   else {
     $self->crc_calc(length($$buffer)) if !defined $self->crc;
 
-    my ($crc_expected, $j);
+    my ($crc_expected, $k);
 
-    for ($crc_expected = 0, $j = $crc_octets ; $j > 0 ;) {
-      $crc_expected = ($crc_expected << 8) + ord(substr($$buffer, $i + --$j, 1));
+    for ($crc_expected = 0, $k = $crc_octets ; $k > 0 ;) {
+      $crc_expected = ($crc_expected << 8) + ord(substr($$buffer, $i + --$k, 1));
     }
 
     $self->crc_expected($crc_expected);
     $self->offset($i + $crc_octets);
+    $self->end_of_chunk(1);
+    !$self->maybe_chained;
   }
 }
 
@@ -5853,6 +6054,10 @@ Following constants are automatically exported.
 
 =item FIT_UINT32
 
+=item FIT_SINT64
+
+=item FIT_UINT64
+
 =item FIT_STRING
 
 =item FIT_FLOAT16
@@ -5865,9 +6070,15 @@ Following constants are automatically exported.
 
 =item FIT_UINT32Z
 
+=item FIT_UINT64Z
+
 =item FIT_BYTE
 
-numbers representing types of field values in data messages.
+numbers representing base types of field values in data messages.
+
+=item FIT_BASE_TYPE_MAX
+
+the maximal number representing base types of field values in data messages.
 
 =item FIT_HEADER_LENGTH
 
@@ -6146,9 +6357,24 @@ It is expected to be C<1> on success, or C<undef> on failure status.
 
 =head2 Developer data
 
+Fields in devloper data are given names of the form I<<developer data index>>C<_>I<<converted field name>>,
+and related informations are included I<<data message descriptors>> in the same way as the fields defined in the global .FIT profile.
+
+Each I<<converted field name>> is made from the value of C<field_name> field in the corresponding I<field description message>,
+after the following conversion rules:
+
+=over 4
+
+=item (1) Each sequence of space characters is converted to single C<_>.
+
+=item (2) Each of remaining non-word-constituend characters is converted to C<_> + 2 column hex representation of C<ord()> of the character + C<_>.
+
+=back
 
 =head2 64bit data
 
+If your perl lacks 64bit integer support,
+you need the module C<Math::BigInt>.
 
 =head1 AUTHOR
 
@@ -6169,11 +6395,69 @@ which includes detailed documetation about its proprietary file format.
 
 =head1 CHANGES
 
+=head2 0.22 --E<gt> 0.23
+
+=over 4
+
+=item C<reset()>
+
+=item C<maybe_chained()>
+
+=item C<end_of_chunk()>
+
+new methods to support chained FIT files.
+
+=item C<fetch()>
+
+use new methods C<maybe_chained()> and C<end_of_chunk()> to support chained FIT files.
+
+=back
+
+=head2 0.21 --E<gt> 0.22
+
+fixes of the issues:
+
+=for html <blockquote><a href="https://github.com/mrihtar/Garmin-FIT/issues/1">
+
+Problems with big endian.
+
+=for html </a></blockquote>
+
+=over 4
+
+=item C<$defmsg_min_template>
+
+the conversion specifier for I<<message number>> must be 'S', not 'v'.
+
+=item C<endian_converter>
+
+=item C<endian_convert()>
+
+broken for arrays of multi-octets data.
+
+=back
+
 =head2 0.20 --E<gt> 0.21
 
 =over 4
 
-Support for developer data introduced in FIT 2.0.
+support for developer data and 64bit integers introduced in FIT 2.0.
+
+64bit integers support is not tested at all.
+
+This version is based on
+
+=for html <blockquote><a href="https://github.com/mrihtar/Garmin-FIT">
+
+Matjaz Rihtar's git repository
+
+=for html </a></blockquote>
+
+version.
+So,
+regardless of the above disclaimer,
+uses, modifications, and re-distributions of this version
+are restricted by the contents of the file LICENSE_LGPL_v2.1.txt in the git repository.
 
 =back
 
