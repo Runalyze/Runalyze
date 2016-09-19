@@ -13,7 +13,7 @@
                 <link rel="stylesheet" href="{{ asset('assets/css/runalyze-style.css') }}?v={{ RUNALYZE_VERSION }}">
             {% endblock %}
 
-            <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/v2.x/img/favicon.ico') }}">
+            <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
 
         {% endblock %}
 
@@ -49,8 +49,8 @@
                         {% block content %}
                         <h1>{% trans %}Sorry!{% endtrans %}</h1>
                         <p>
-                            {% trans %}Looks like something went wrong here.{% endtrans %}<br> 
-                            {% trans %}Let's go back to RUNALYZE!{% endtrans %} 
+                            {% trans %}Looks like something went wrong here.{% endtrans %}<br>
+                            {% trans %}Let's go back to RUNALYZE!{% endtrans %}
                             <a href="{{ path('base_url') }}">{% trans %}Click here{% endtrans %}</a>.
                         </p>
                         {% endblock %}

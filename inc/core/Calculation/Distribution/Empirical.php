@@ -8,7 +8,7 @@ namespace Runalyze\Calculation\Distribution;
 
 /**
  * Empirical distribution
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Calculation\Distribution
  */
@@ -22,9 +22,14 @@ class Empirical extends Distribution {
 	/**
 	 * Construct empirical distribution
 	 * @param array $data array of data points
+	 * @param bool $dataIsAlreadyTheHistogram if enabled $data is used as histogram ['value' => 'num', ...]
 	 */
-	public function __construct(array $data) {
-		$this->Histogram = array_count_values($data);
+	public function __construct(array $data, $dataIsAlreadyTheHistogram = false) {
+		if ($dataIsAlreadyTheHistogram) {
+			$this->Histogram = $data;
+		} else {
+			$this->Histogram = array_count_values($data);
+		}
 	}
 
 	/**

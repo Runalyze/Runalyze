@@ -288,6 +288,10 @@ CREATE TABLE IF NOT EXISTS `runalyze_trackdata` (
   `groundcontact` longtext,
   `vertical_oscillation` longtext,
   `groundcontact_balance` longtext,
+  `smo2_0` longtext,
+  `smo2_1` longtext,
+  `thb_0` longtext,
+  `thb_1` longtext,
   `pauses` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

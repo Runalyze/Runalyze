@@ -468,8 +468,13 @@ class TrainingFormular extends StandardFormular {
 			Trackdata::GROUNDCONTACT_BALANCE => __('Ground contact time balance'),
 			Trackdata::GROUNDCONTACT => __('Ground contact time'),
 			Trackdata::POWER => __('Power'),
-			Trackdata::TEMPERATURE => __('Temperature')
-		);
+			Trackdata::TEMPERATURE => __('Temperature'),
+            Trackdata::SMO2_0 => __('Smo2'),
+            Trackdata::SMO2_1 => __('Smo2').' (2)',
+            Trackdata::THB_0 => __('Thb'),
+            Trackdata::THB_1 => __('Thb').' (2)'
+
+        );
 
 		foreach ($TrackdataKeys as $key => $text) {
 			if ($Trackdata->has($key)) {

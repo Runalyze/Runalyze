@@ -107,7 +107,8 @@ class Frontend {
 			Yaml::parse(file_get_contents('../data/config.yml'))['parameters']
 		);
 
-	    define('OPENWEATHERMAP_API_KEY', $this->yamlConfig['openweathermap_api_key']);
+        define('FORECASTIO_API_KEY', $this->yamlConfig['forecastio_api_key']);
+        define('OPENWEATHERMAP_API_KEY', $this->yamlConfig['openweathermap_api_key']);
 	    define('NOKIA_HERE_APPID', $this->yamlConfig['nokia_here_appid']);
 	    define('NOKIA_HERE_TOKEN', $this->yamlConfig['nokia_here_token']);
 	    define('SMTP_HOST', $this->yamlConfig['smtp_host']);

@@ -47,7 +47,8 @@ class Forecast {
 	 */
 	protected $Strategies = [
 		'\\Runalyze\\Service\\WeatherForecast\\Strategy\\DBWeatherCache',
-		'\\Runalyze\\Service\\WeatherForecast\\Strategy\\Openweathermap'
+		'\\Runalyze\\Service\\WeatherForecast\\Strategy\\Openweathermap',
+        '\\Runalyze\\Service\\WeatherForecast\\Strategy\\Forecastio',
 	];
 
 	/**

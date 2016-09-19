@@ -182,34 +182,4 @@ class PluginController extends Controller
          return new Response();
      }
 
-    /**
-     * @Route("/call/call.PluginTool.display.php", name="pluginDisplay")
-     * @Security("has_role('ROLE_USER')")
-    */
-    public function pluginToolDisplayAction()
-    {
-        $Frontend = new \Frontend(false, $this->get('security.token_storage'));
-
-        if (!isset($_GET['list'])) {
-            \PluginTool::displayToolsHeader();
-        }
-
-        \PluginTool::displayToolsContent();
-
-        return new Response();
-    }
-
-    /**
-     * @Route("/plugin/RunalyzePluginTool_DbBackup/download/{file}")
-     * @Security("has_role('ROLE_USER')")
-     */
-    public function dbBackupDownloadAction($file)
-    {
-	    new \Frontend(true, $this->get('security.token_storage'));
-
-	    \RunalyzeBackupFileHandler::download($file);
-
-    	return new Response();
-    }
-
 }

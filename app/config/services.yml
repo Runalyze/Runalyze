@@ -1,0 +1,11 @@
+sensio_framework_extra:
+  request:
+    converters: true
+    auto_convert: false
+
+services:
+  app.value_resolver.account:
+    class: Runalyze\Bundle\CoreBundle\ArgumentResolver\AccountValueResolver
+    arguments: ['@security.token_storage']
+    tags:
+      - { name: controller.argument_value_resolver, priority: 50 }

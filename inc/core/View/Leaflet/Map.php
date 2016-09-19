@@ -11,11 +11,11 @@ use Runalyze\Configuration;
 
 /**
  * Leaflet map
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\View\Leaflet
  */
-class Map extends View\Object {
+class Map {
 	/**
 	 * HTML id
 	 * @var string
@@ -72,6 +72,13 @@ class Map extends View\Object {
 	 */
 	public function setBounds(array $bounds) {
 		$this->Bounds = $bounds;
+	}
+
+	/**
+	 * Display
+	 */
+	public function display() {
+		echo $this->code();
 	}
 
 	/**

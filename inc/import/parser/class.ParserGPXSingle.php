@@ -58,6 +58,9 @@ class ParserGPXSingle extends ParserAbstractSingleXML {
 	 */
 	protected $pauseDuration = 0;
 
+	/** @var int */
+	protected $LastValidHR = 0;
+
 	/**
 	 * Set extension XML
 	 * @param SimpleXMLElement $XML
@@ -269,7 +272,11 @@ class ParserGPXSingle extends ParserAbstractSingleXML {
 			}
 		}
 
-		$this->gps['heartrate'][] = $bpm;
+		if ($bpm > 0) {
+			$this->LastValidHR = $bpm;
+		}
+
+		$this->gps['heartrate'][] = $this->LastValidHR;
 		$this->gps['rpm'][]       = $rpm;
 		$this->gps['temp'][]      = $temp;
 	}

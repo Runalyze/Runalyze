@@ -7,11 +7,7 @@ use Runalyze\Bundle\CoreBundle\Component\Account\Registration;
 use Runalyze\Bundle\CoreBundle\Form\RegistrationType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-
 use Runalyze\Bundle\CoreBundle\Entity\Account;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use SessionAccountHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -121,7 +117,6 @@ class DefaultController extends Controller
 
     	$authenticationUtils = $this->get('security.authentication_utils');
     	$error = $authenticationUtils->getLastAuthenticationError();
-    	$lastUsername = $authenticationUtils->getLastUsername();
 
         new \Frontend(true, $this->get('security.token_storage'));
 

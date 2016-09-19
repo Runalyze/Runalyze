@@ -57,21 +57,30 @@ class FormularInputDayAndDaytime extends FormularField {
 
 	/**
 	 * Validate value
-	 * @return boolean
+	 * @return bool
 	 */
 	public function validate() {
 		$this->setFields();
 
 		if (!isset($_POST[$this->getFieldDayName()]) || !isset($_POST[$this->getFieldDaytimeName()]))
-			return;
+			return false;
+
+		$dateString = $_POST[$this->getFieldDayName()];
+		$timeString = $_POST[$this->getFieldDaytimeName()];
+
+		$validateDay = $this->FieldDay->validate();
+		$validateDaytime = $this->FieldDaytime->validate();
 
 		$date = $_POST[$this->getFieldDayName()];
 		$time = $_POST[$this->getFieldDaytimeName()];
 
-		$this->FieldDay->validate();
-		$this->FieldDaytime->validate();
+		if (is_numeric($date) && is_numeric($time)) {
+			$_POST[$this->name] = $date + $time;
+		} else {
+			$_POST[$this->name] = strtotime($dateString.' '.$timeString);
+		}
 
-		$_POST[$this->name] = strtotime($date.' '.$time);
+		return $validateDay && $validateDaytime && false !== $_POST[$this->name];
 	}
 
 	/**

@@ -9,7 +9,7 @@ namespace Runalyze\View\Icon\Weather;
 /**
  * Weather icon: Thunderstorm
  * @author Hannes Christiansen
- * @package Runalyze\View\Icon\„eather
+ * @package Runalyze\View\Icon\Weather
  */
 class Thunderstorm extends \Runalyze\View\Icon\WeatherIcon {
 	/**

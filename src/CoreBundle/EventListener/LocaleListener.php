@@ -7,14 +7,6 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-/**
- * Class LocaleListener
- *
- * This class is used instead of symfony's original LocaleListener
- * such that our old Language class can be used.
- *
- * @package Runalyze\Bundle\CoreBundle\EventListener
- */
 class LocaleListener implements EventSubscriberInterface
 {
     /** @var string */
@@ -43,6 +35,7 @@ class LocaleListener implements EventSubscriberInterface
         } else {
             new Language();
         }
+
         $locale = Language::getCurrentLanguage();
 
         $request->getSession()->set('_locale', $locale);

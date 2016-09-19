@@ -16,7 +16,7 @@ class UserLocaleListener
     private $session;
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Session\Session $sessuib
+     * @param \Symfony\Component\HttpFoundation\Session\Session $session
      */
     public function __construct(Session $session)
     {
