@@ -8,7 +8,7 @@ namespace Runalyze\Calculation\Distribution;
 
 /**
  * Distribution
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Calculation\Distribution
  */
@@ -62,6 +62,10 @@ abstract class Distribution {
 	 */
 	final protected function calculateStatisticByHistogram() {
 		$data = $this->histogram();
+
+		if (empty($data)) {
+			return;
+		}
 
 		ksort($data);
 
@@ -168,5 +172,17 @@ abstract class Distribution {
 	 */
 	final public function stdDev() {
 		return sqrt($this->Statistic[self::VARIANCE]);
+	}
+
+	/**
+	 * Coefficient of variation
+	 * @return bool|float boolean false is returned if mean is zero
+	 */
+	final public function coefficientOfVariation() {
+		if ($this->Statistic[self::MEAN] == 0) {
+			return false;
+		}
+
+		return sqrt($this->Statistic[self::VARIANCE]) / $this->Statistic[self::MEAN];
 	}
 }

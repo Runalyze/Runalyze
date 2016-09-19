@@ -1,0 +1,121 @@
+{% extends "base_logged_in.twig" %}
+
+{% import _self as this %}
+
+{% macro statisticsCell(value, unit) %}
+    {{ value|raw }} <small>{{ unit|raw }}</small>
+{% endmacro statisticsCell %}
+
+{% macro statisticsRow(label, unit, mean, min, max, median, cov, std) %}
+    {% import _self as this %}
+
+    <tr class="c">
+        <td class="l"><strong>{{ label }}</strong></td>
+        <td>{{ this.statisticsCell(mean, unit) }}</td>
+        <td>{{ this.statisticsCell(min, unit) }}</td>
+        <td>{{ this.statisticsCell(max, unit) }}</td>
+        <td>{{ this.statisticsCell(median, unit) }}</td>
+        <td>{{ this.statisticsCell((100 * cov)|round, "&#37;") }}</td>
+        <td>{{ this.statisticsCell("&plusmn;" ~ std, unit) }}</td>
+    </tr>
+{% endmacro statisticsRow %}
+
+{% macro statisticsRowDefault(label, unit, distribution, factor, decimals) %}
+    {# @var distribution \Runalyze\Calculation\Distribution\Empirical #}
+    {% import _self as this %}
+    {% set factor = factor|default(1) %}
+
+    {{ this.statisticsRow(
+        label,
+        unit,
+        (factor * distribution.mean)|number_format(decimals|default(0)),
+        (factor * distribution.min)|number_format(decimals|default(0)),
+        (factor * distribution.max)|number_format(decimals|default(0)),
+        (factor * distribution.median)|number_format(decimals|default(0)),
+        distribution.coefficientOfVariation,
+        (factor * distribution.stdDev)|number_format(decimals|default(0))
+    ) }}
+{% endmacro statisticsRowDefault %}
+
+{% block content %}
+    <div class="panel-heading">
+        <h1>{% trans %}Analyze time series{% endtrans %}</h1>
+    </div>
+
+    <div class="panel-content">
+        <table class="fullwidth zebra-style">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>{% trans %}mean{% endtrans %}</th>
+                    <th>{% trans %}min.{% endtrans %}</th>
+                    <th>{% trans %}max.{% endtrans %}</th>
+                    <th>{% trans %}median{% endtrans %}</th>
+                    <th>{% trans %}coeff. of variance{% endtrans %}</th>
+                    <th>{% trans %}std. dev.{% endtrans %}</th>
+                </tr>
+            </thead>
+            <tbody class="top-and-bottom-border">
+                {% if statistics.hasStatisticsForPace %}
+                    {% set current = statistics.statisticsForPace %}
+                    {# @var current \Runalyze\Calculation\Distribution\Empirical #}
+                    {{ this.statisticsRow(
+                        "Pace"|trans,
+                        "/km",
+                        (60 * current.mean)|round|date('G:i'),
+                        (60 * current.min)|round|date('G:i'),
+                        (60 * current.max)|round|date('G:i'),
+                        (60 * current.median)|round|date('G:i'),
+                        statistics.statisticsForPace.coefficientOfVariation,
+                        (60 * current.stdDev)|round|date('G:i')
+                    ) }}
+                {% endif %}
+                {% if statistics.hasStatisticsForHeartRate %}
+                    {{ this.statisticsRowDefault("Heart rate"|trans, "bpm", statistics.statisticsForHeartRate) }}
+                {% endif %}
+                {% if statistics.hasStatisticsForCadence %}
+                    {{ this.statisticsRowDefault("Cadence"|trans, "rpm", statistics.statisticsForCadence) }}
+                {% endif %}
+                {% if statistics.hasStatisticsForStrideLength %}
+                    {{ this.statisticsRowDefault("Stride length"|trans, "m", statistics.statisticsForStrideLength, 0.01, 2) }}
+                {% endif %}
+                {% if statistics.hasStatisticsForPower %}
+                    {{ this.statisticsRowDefault("Power"|trans, "W", statistics.statisticsForPower) }}
+                {% endif %}
+                {% if statistics.hasStatisticsForGroundcontact %}
+                    {{ this.statisticsRowDefault("Groundcontact"|trans, "ms", statistics.statisticsForGroundcontact) }}
+                {% endif %}
+                {% if statistics.hasStatisticsForGroundcontactBalance %}
+                    {{ this.statisticsRowDefault("Groundcontact balance"|trans, "&#37;L", statistics.statisticsForGroundcontactBalance, 0.01, 2) }}
+                {% endif %}
+                {% if statistics.hasStatisticsForVerticalOscillation %}
+                    {{ this.statisticsRowDefault("Vertical oscillation"|trans, "cm", statistics.statisticsForVerticalOscillation, 0.1, 1) }}
+                {% endif %}
+                {% if statistics.hasStatisticsForVerticalRatio %}
+                    {{ this.statisticsRowDefault("Vertical ratio"|trans, "&#37;", statistics.statisticsForVerticalRatio, 0.1, 1) }}
+                {% endif %}
+                {% if statistics.hasStatisticsForSaturatedHemoglobin %}
+                    {{ this.statisticsRowDefault("Saturated hemoglobin"|trans, "&#37;", statistics.statisticsForSaturatedHemoglobin, 0.01, 2) }}
+                {% endif %}
+                {% if statistics.hasStatisticsForSaturatedHemoglobin2 %}
+                    {{ this.statisticsRowDefault("Saturated hemoglobin"|trans ~ " (2)", "&#37;", statistics.statisticsForSaturatedHemoglobin2, 0.01, 2) }}
+                {% endif %}
+                {% if statistics.hasStatisticsForTotalHemoglobin %}
+                    {{ this.statisticsRowDefault("Total hemoglobin"|trans, "g/dL", statistics.statisticsForTotalHemoglobin, 0.01, 2) }}
+                {% endif %}
+                {% if statistics.hasStatisticsForTotalHemoglobin2 %}
+                    {{ this.statisticsRowDefault("Total hemoglobin"|trans ~ " (2)", "g/dL", statistics.statisticsForTotalHemoglobin2, 0.01, 2) }}
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+
+    <p class="info">
+        {% trans %}
+            This analysis is currently under development and does not consider your unit settings.
+        {% endtrans %}
+        {% trans with {'%githubLink%': '<a href="https://github.com/Runalyze/Runalyze" target="_blank">GitHub</a>'} %}
+            Help us improving it at %githubLink%.
+        {% endtrans %}
+    </p>
+{% endblock %}

@@ -3,6 +3,7 @@
 namespace Runalyze\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Runalyze\Model;
 
 /**
  * Trackdata
@@ -514,5 +515,31 @@ class Trackdata
     public function getAccountid()
     {
         return $this->accountid;
+    }
+
+    /**
+     * @return Model\Trackdata\Entity
+     */
+    public function getLegacyModel()
+    {
+        // TODO: activityid, accountid (entities have no getId() so far)
+        return new Model\Trackdata\Entity([
+            //Model\Trackdata\Entity::ACTIVITYID => $this->activityid->getId(),
+            //Model\Trackdata\Entity::ACCOUNTID => $this->accountid->getId(),
+            Model\Trackdata\Entity::TIME => $this->time,
+            Model\Trackdata\Entity::DISTANCE => $this->distance,
+            Model\Trackdata\Entity::HEARTRATE => $this->heartrate,
+            Model\Trackdata\Entity::CADENCE => $this->cadence,
+            Model\Trackdata\Entity::POWER => $this->power,
+            Model\Trackdata\Entity::TEMPERATURE => $this->temperature,
+            Model\Trackdata\Entity::GROUNDCONTACT => $this->groundcontact,
+            Model\Trackdata\Entity::GROUNDCONTACT_BALANCE => $this->groundcontactBalance,
+            Model\Trackdata\Entity::VERTICAL_OSCILLATION => $this->verticalOscillation,
+            Model\Trackdata\Entity::SMO2_0 => $this->smo20,
+            Model\Trackdata\Entity::SMO2_1 => $this->smo21,
+            Model\Trackdata\Entity::THB_0 => $this->thb0,
+            Model\Trackdata\Entity::THB_1 => $this->thb1,
+            Model\Trackdata\Entity::PAUSES => $this->pauses
+        ]);
     }
 }

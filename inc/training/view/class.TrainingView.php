@@ -116,7 +116,11 @@ class TrainingView {
 		}
 
 		if ($this->Context->hasRoute() && $this->Context->route()->hasElevations()) {
-			$toolsLinks[] = '<li><a class="window link" data-size="normal" href="activity/'.$this->Context->activity()->id().'/elevation-info"><i class="fa fa-fw fa-line-chart"></i> '.__('More about elevation').'</a></li>';
+			$toolsLinks[] = '<li><a class="window link" data-size="normal" href="activity/'.$this->Context->activity()->id().'/elevation-info"><i class="fa fa-fw fa-area-chart"></i> '.__('More about elevation').'</a></li>';
+		}
+
+		if ($this->Context->hasTrackdata() && $this->Context->trackdata()->has(Model\Trackdata\Entity::TIME)) {
+			$toolsLinks[] = '<li><a class="window link" data-size="big" href="activity/'.$this->Context->activity()->id().'/time-series-info"><i class="fa fa-fw fa-line-chart"></i> '.__('Analyze time series').'</a></li>';
 		}
 
 		if (!empty($toolsLinks)) {

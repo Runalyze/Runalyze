@@ -2,6 +2,9 @@
 
 namespace Runalyze\Bundle\CoreBundle\Controller;
 
+use Runalyze\Bundle\CoreBundle\Component\Activity\Tool\TimeSeriesStatistics;
+use Runalyze\Bundle\CoreBundle\Entity\Account;
+use Runalyze\Bundle\CoreBundle\Entity\Trackdata;
 use Runalyze\Bundle\CoreBundle\Services\Activity\VdotInfo;
 use Runalyze\Configuration;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -297,6 +300,22 @@ class ActivityController extends Controller
         $ElevationInfo->display();
 
         return new Response();
+    }
+
+    /**
+     * @Route("/activity/{id}/time-series-info", requirements={"id" = "\d+"}, name="activity-tool-time-series-info")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function timeSeriesInfoAction($id, Account $account)
+    {
+        $trackdata = $this->getDoctrine()->getManager()->getRepository('CoreBundle:Trackdata')->findOneBy([
+            'activityid' => $id,
+            'accountid' => $account->getId()
+        ]);
+
+        return $this->render('activity/tool/time_series_statistics.html.twig', [
+            'statistics' => new TimeSeriesStatistics($trackdata->getLegacyModel())
+        ]);
     }
 
     /**
