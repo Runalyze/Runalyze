@@ -114,6 +114,7 @@ class Trackdata
     /**
      * @var \Runalyze\Bundle\CoreBundle\Entity\Training
      *
+     * @ORM\Id
      * @ORM\OneToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Training")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="activityid", referencedColumnName="id", unique=true)
