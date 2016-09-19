@@ -39,7 +39,25 @@ class Thb extends ActivitySeries {
             $this->Label = _('Thb');
         }
 		$this->initData($context->trackdata(), $trackdataKey);
+        $this->manipulateData();
 	}
+
+    /**
+     * Manipulate data
+     */
+    protected function manipulateData() {
+        $this->Data = array_map(array($this, 'correctUnit'), $this->Data);
+        $this->Data = array_filter($this->Data);
+    }
+
+    /**
+     * Change value by internal factor
+     * @param int $value
+     * @return float
+     */
+    protected function correctUnit($value) {
+        return 0.01*$value;
+    }
 
 	/**
 	 * Init options

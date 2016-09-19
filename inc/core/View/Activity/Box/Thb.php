@@ -27,7 +27,7 @@ class Thb extends AbstractBox
 	{
         if ($sensorIndex == 1) {
             $trackdataKey = Trackdata\Entity::THB_1;
-            $label = _('Thb (2)');
+            $label = _('Thb').' (2)';
         } else {
             $trackdataKey = Trackdata\Entity::THB_0;
             $label = _('Thb');
@@ -35,7 +35,7 @@ class Thb extends AbstractBox
 
         $value = new TrackdataAverages($Context->trackdata(), [$trackdataKey]);
 		parent::__construct(
-            round($value->average($trackdataKey), 2),
+            round($value->average($trackdataKey)/100, 2),
 			'g/dL',
 			$label
 		);

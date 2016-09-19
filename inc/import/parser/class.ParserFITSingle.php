@@ -84,9 +84,9 @@ class ParserFITSingle extends ParserAbstractSingle {
         '0_SmO2_Sensor_0_on_Location_Not_Set' => ['smo2_0', 1],
         '1_2nd_SmO2_Sensor_0_on_Location_Not_Set' => ['smo2_1', 1],
         'saturated_hemoglobin_percent' => ['smo2_0', 0.1],
-        'total_hemoglobin_conc' => ['thb_0', 0.01],
-        '0_THb_Sensor_0_on_Location_Not_Set' => ['thb_0', 1],
-        '1_2nd_THb_Sensor_0_on_Location_Not_Set' => ['thb_1', 1],
+        'total_hemoglobin_conc' => ['thb_0', 1],
+        '0_THb_Sensor_0_on_Location_Not_Set' => ['thb_0', 100],
+        '1_2nd_THb_Sensor_0_on_Location_Not_Set' => ['thb_1', 100],
 	);
 
 	/**
@@ -469,8 +469,8 @@ class ParserFITSingle extends ParserAbstractSingle {
         // Fit developer fields
         $this->gps['smo2_0'][] = isset($this->Values['smo2_0']) ? (int)$this->Values['smo2_0'][0] : 0;
         $this->gps['smo2_1'][] = isset($this->Values['smo2_1']) ? (int)$this->Values['smo2_1'][0] : 0;
-        $this->gps['thb_0'][] = isset($this->Values['thb_0']) ? round($this->Values['thb_0'][0],2) : 0;
-        $this->gps['thb_1'][] = isset($this->Values['thb_1']) ? round($this->Values['thb_1'][0],2) : 0;
+        $this->gps['thb_0'][] = isset($this->Values['thb_0']) ? (int)$this->Values['thb_0'][0] : 0;
+        $this->gps['thb_1'][] = isset($this->Values['thb_1']) ? (int)$this->Values['thb_1'][0] : 0;
 
         if ($time === $last) {
 			$this->mergeRecord();
