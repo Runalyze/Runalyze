@@ -22,6 +22,9 @@ final class Sources extends AbstractEnum
 	/** @var int */
 	const DBWEATHERCACHE = 2;
 
+    /** @var int */
+    const FORECASTIO = 3;
+
 	/**
 	 * @param int $sourceId id from internal enum
 	 * @return string
@@ -29,6 +32,8 @@ final class Sources extends AbstractEnum
 	static public function stringFor($sourceId)
 	{
 		switch ($sourceId) {
+            case self::FORECASTIO:
+                return '<a href="http://forecast.io/" target="_blank">Powered by Forecast</a>';
 			case self::OPENWEATHERMAP:
 				return '<a href="http://openweathermap.org/" target="_blank">openweathermap.org</a>';
 			case self::DBWEATHERCACHE:

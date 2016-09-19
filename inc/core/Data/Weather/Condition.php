@@ -65,6 +65,11 @@ class Condition {
 	 */
 	const THUNDERSTORM = 10;
 
+    /**
+     * @var int
+     */
+    const WINDY = 11;
+
 	/**
 	 * Identifier
 	 * @var int
@@ -86,7 +91,8 @@ class Condition {
 			self::SNOWING,
 			self::HEAVYRAIN,
 			self::FOGGY,
-			self::THUNDERSTORM
+			self::THUNDERSTORM,
+            self::WINDY,
 		);
 	}
 
@@ -150,6 +156,8 @@ class Condition {
 				return new Weather\Heavyrain();
 			case self::SNOWING:
 				return new Weather\Snowing();
+            case self::WINDY:
+                return new Weather\Windy();
 			case self::UNKNOWN:
 			default:
 				return new Weather\Unknown();
@@ -180,6 +188,8 @@ class Condition {
 				return __('foggy');
 			case self::THUNDERSTORM:
 				return __('thundery');
+            case self::WINDY:
+                return __('windy');
 			case self::UNKNOWN:
 			default:
 				return __('unknown');

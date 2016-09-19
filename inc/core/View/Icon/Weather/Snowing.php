@@ -9,7 +9,7 @@ namespace Runalyze\View\Icon\Weather;
 /**
  * Weather icon: Snowing
  * @author Hannes Christiansen
- * @package Runalyze\View\Icon\„eather
+ * @package Runalyze\View\Icon\Weather
  */
 class Snowing extends \Runalyze\View\Icon\WeatherIcon {
 	/**

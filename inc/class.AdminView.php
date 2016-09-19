@@ -172,7 +172,8 @@ class AdminView {
 		$Fieldset->addField( new FormularInput('smtp_username', __('SMTP: username')) );
 		$Fieldset->addField( new FormularInputPassword('smtp_password', __('SMTP: password')) );
 		$Fieldset->addField( new FormularInput('openweathermap_api_key', Ajax::tooltip(__('OpenWeatherMap API-Key'), __('Loading weather data requires an api key, see openweathermap.org/appid'))) );
-		$Fieldset->addField( new FormularInput('nokia_here_appid', Ajax::tooltip(__('Nokia/Here App-ID'), __('Nokia maps require an app-id/-token, see developer.here.com'))) );
+        $Fieldset->addField( new FormularInput('forecastio_api_key', Ajax::tooltip(__('ForecastIO API-Key'), __('Loading weather from forecast.io requires an api key, see https://developer.forecast.io/'))) );
+        $Fieldset->addField( new FormularInput('nokia_here_appid', Ajax::tooltip(__('Nokia/Here App-ID'), __('Nokia maps require an app-id/-token, see developer.here.com'))) );
 		$Fieldset->addField( new FormularInput('nokia_here_token', Ajax::tooltip(__('Nokia/Here Token'), __('Nokia maps require an app-id/-token, see developer.here.com'))) );
 		$Fieldset->addField( new FormularSubmit(__('Save'), '') );
 		$Fieldset->setLayoutForFields( FormularFieldset::$LAYOUT_FIELD_W100 );
@@ -445,6 +446,7 @@ class AdminView {
 		    'user_disable_account_activation',
 		    'garmin_api_key',
 		    'openweathermap_api_key',
+            'forecastio_api_key',
 		    'nokia_here_appid',
 		    'nokia_here_token',
 		    'geonames_username',
