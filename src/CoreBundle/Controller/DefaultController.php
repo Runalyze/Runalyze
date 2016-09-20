@@ -3,12 +3,16 @@
 namespace Runalyze\Bundle\CoreBundle\Controller;
 
 use Runalyze\Activity\Distance;
+use Runalyze\Bundle\CoreBundle\Component\Account\Registration;
+use Runalyze\Bundle\CoreBundle\Form\RegistrationType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Runalyze\Bundle\CoreBundle\Entity\Account;
 use SessionAccountHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Swift_Message;
 
 /**
  * Class DefaultController
@@ -48,7 +52,7 @@ class DefaultController extends Controller
     /**
      * @Route("/{_locale}/register", name="register")
      */
-    public function registerAction()
+    public function registerAction(Request $request)
     {
         new \Frontend(true, $this->get('security.token_storage'));
 
@@ -56,35 +60,44 @@ class DefaultController extends Controller
             return $this->render('register/disabled.html.twig');
         }
 
-        if (isset($_POST['new_username'])) {
-            $registrationResult = \AccountHandler::tryToRegisterNewUser();
+        $account = new Account();
+        $form = $this->createForm(RegistrationType::class, $account);
+        $form->handleRequest($request);
 
-            if (true === $registrationResult) {
-                if (\System::isAtLocalhost() || USER_DISABLE_ACCOUNT_ACTIVATION) {
-                    return $this->render('account/activate/success.html.twig');
-                }
+        //<a href="https://blog.runalyze.com/nutzungsbedingungen/
+        if ($form->isSubmitted() && $form->isValid()) {
+            $registration = new Registration($account);
+            $formdata = $request->request->get($form->getName());
 
-                return $this->render('register/mail_delivered.html.twig');
+            $registration->setLocale($request->getLocale());
+            $registration->setTimezoneByName($formdata['textTimezone']);
+
+            if (!$this->getParameter('user_disable_account_activation')) {
+                $registration->requireAccountActivation();
             }
-        } else {
-            $registrationResult = [
-                'failure' => [
-                    'username' => false,
-                    'email' => false,
-                    'password' => false
-                ],
-                'errors' => []
-            ];
+            $registration->setPassword($account->getPlainPassword(), $this->get('security.encoder_factory'));
+            $account = $registration->registerAccount($this->getDoctrine()->getManager());
+
+
+            $message = Swift_Message::newInstance($this->get('translator')->trans('Please activate your RUNALYZE account'))
+                ->setFrom(array($this->getParameter('mail_sender') => $this->getParameter('mail_name')))
+                ->setTo(array($account->getMail() => $account->getUsername()))
+                ->setBody($this->renderView('mail/account/registration.html.twig',
+                    array('username' => $account->getUsername(),
+                        'activationHash' => $account->getActivationHash())
+                    ),'text/html');
+            $this->get('mailer')->send($message);
+
+            if ($this->getParameter('user_disable_account_activation')) {
+                return $this->render('account/activate/success.html.twig');
+            }
+
+            return $this->render('register/mail_delivered.html.twig');
+
         }
 
         return $this->render('register/form.html.twig', [
-            'failure' => $registrationResult['failure'],
-            'error_messages' => $registrationResult['errors'],
-            'data' => [
-                'username' => isset($_POST['new_username']) ? $_POST['new_username'] : '',
-                'name' => isset($_POST['name']) ? $_POST['name'] : '',
-                'email' => isset($_POST['email']) ? $_POST['email'] : ''
-            ],
+            'form' => $form->createView(),
             'num' => $this->collectStatistics()
         ]);
     }

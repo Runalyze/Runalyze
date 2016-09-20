@@ -132,7 +132,7 @@
 					});
 				}
 {% if garminAPIKey|length > 10 %}
-	,pathKeyPairsArray: ["{{ garminAPIBase }}", "{{ garminAPIKey }}"]
+	,pathKeyPairsArray: ["{{ url('base_url') }}", "{{ garminAPIKey }}"]
 {% endif %}
 			});
 		}

@@ -10,6 +10,7 @@ use \DateTimeZone;
 use \DateTime;
 use \DB;
 use Runalyze\Parameter\Application\Timezone as TimezoneEnum;
+use Runalyze\Util\InterfaceChoosable;
 
 /**
  * Class: Timezone
@@ -17,8 +18,14 @@ use Runalyze\Parameter\Application\Timezone as TimezoneEnum;
  * @author Michael Pohl <michael@runalyze.de>
  * @package Runalyze
  */
-class Timezone
+class Timezone implements InterfaceChoosable
 {
+
+    public static function getChoices()
+    {
+        return array_flip(self::listTimezones());
+    }
+
     /**
      * Set server timezone to given enum
      *

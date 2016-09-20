@@ -1,0 +1,26 @@
+{% extends 'form_div_layout.html.twig' %}
+
+{% block form_row %}
+    <div class="w100 block">
+        {{ form_label(form) }}
+        {{ form_widget(form) }}
+        {{ form_errors(form) }}
+        {% if info is defined %}
+            <p class="info">{{ info }}</p>
+        {% endif %}
+        {% if warning is defined %}
+            <p class="warning">{{ warning }}</p>
+        {% endif %}
+    </div>
+{% endblock form_row %}
+
+
+{%- block form_errors -%}
+    {%- if errors|length > 0 -%}
+        <p class="error">
+            {%- for error in errors -%}
+                {{ error.message }}<br>
+            {%- endfor -%}
+        </p>
+    {%- endif -%}
+{%- endblock form_errors -%}

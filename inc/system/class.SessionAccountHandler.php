@@ -127,6 +127,30 @@ class SessionAccountHandler {
 
 		return self::$Account['allow_support'];
 	}
+        
+	/**
+	 * Get users gender
+	 * @return string 
+	 */
+	public static function getGender() {
+		if (!isset(self::$Account['gender'])) {
+			return '';
+		}
+
+		return self::$Account['gender'];
+	}
+        
+	/**
+	 * Get users year of birth
+	 * @return string 
+	 */
+	public static function getBirthYear() {
+		if (!isset(self::$Account['birthyear'])) {
+			return '';
+		}
+
+		return self::$Account['birthyear'];
+	}
 
 	/**
 	 * Get language of current user

@@ -7,6 +7,7 @@ imports:
 
 framework:
   secret: ThisTokenIsNotSoSecretChangeIt
+  validation: { enable_annotations: true }
   session:
     handler_id: session.handler.native_file
     save_path: '%kernel.root_dir%/../data/sessions'
@@ -69,7 +70,8 @@ twig:
     locales: '%locales%'
   paths:
     '%kernel.root_dir%/../data/views': __main__
-
+  form_themes:
+     - 'form/fields.html.twig'
 
 # Doctrine Configuration
 doctrine_cache:
@@ -140,3 +142,12 @@ monolog:
         syslog:
             type: syslog
             level: error
+
+swiftmailer:
+    transport:            smtp
+    username:             '%smtp_username%'
+    password:             '%smtp_password%'
+    host:                 '%smtp_host%'
+    port:                 '%smtp_port%'
+    encryption:           '%smtp_security%'
+    sender_address:       '%mail_sender%'

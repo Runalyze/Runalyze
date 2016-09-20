@@ -107,10 +107,6 @@ class Configuration {
 		if (defined('RUNALYZE_TEST'))
 			return null;
 
-		if (\AccountHandler::$IS_ON_REGISTER_PROCESS) {
-			return \AccountHandler::$NEW_REGISTERED_ID;
-		}
-
 		return \SessionAccountHandler::getId();
 	}
 

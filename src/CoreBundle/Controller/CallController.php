@@ -33,10 +33,7 @@ class CallController extends Controller
      */
     public function garminCommunicatorAction()
     {
-        $Frontend = new \Frontend(true, $this->get('security.token_storage'));
-
         return $this->render('import/garmin_communicator.html.twig', array(
-            'garminAPIBase' => \Request::getProtocol().'://'.$_SERVER['HTTP_HOST'],
             'garminAPIKey' => $this->getParameter('garmin_api_key'),
         ));
     }
@@ -81,14 +78,13 @@ class CallController extends Controller
         $ConfigTabs->addTab(new \ConfigTabSports());
         $ConfigTabs->addTab(new \ConfigTabTypes());
         $ConfigTabs->addTab(new \ConfigTabEquipment());
-        $ConfigTabs->addTab(new \ConfigTabAccount());
         $ConfigTabs->display();
 
-        if ('config_tab_account' == $request->get('key') && 'true' == $request->get('form')) {
+        /*if ('config_tab_account' == $request->get('key') && 'true' == $request->get('form')) {
             $locale = Language::getCurrentLanguage();
             $request->getSession()->set('_locale', $locale);
             $request->setLocale($locale);
-        }
+        }*/
 
         echo \Ajax::wrapJSforDocumentReady('Runalyze.Overlay.removeClasses();');
 
@@ -131,29 +127,6 @@ class CallController extends Controller
         			$key = substr($_GET['key'], 5);
         			\Runalyze\Configuration::ActivityForm()->update($key, $_GET['value']);
         		}
-        }
-
-        return new Response();
-    }
-
-    /**
-     * @Route("/call/window.delete.php")
-     * @Security("has_role('ROLE_USER')")
-     */
-    public function windowDeleteAction()
-    {
-        new \Frontend(false, $this->get('security.token_storage'));
-
-        echo \HTML::h1( __('Delete your account.') );
-
-        if (!\AccountHandler::setAndSendDeletionKeyFor(\SessionAccountHandler::getId())) {
-            echo \HTML::error(__('Sending the link did not work. Please contact the administrator.'));
-        } else {
-            echo \HTML::info(
-                    __('<em>A confirmation has been sent via mail.</em><br>'.
-                        'How sad, that you\'ve decided to delete your account.<br>'.
-                        'Your account will be deleted as soon as you click on the confirmation link in your mail.')
-            );
         }
 
         return new Response();

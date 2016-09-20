@@ -6,7 +6,7 @@
 
 namespace Runalyze\Calculation\Trimp;
 
-use Runalyze\Parameter\Application\Gender;
+use Runalyze\Profile\Athlete\Gender;
 
 /**
  * Factor
@@ -26,15 +26,15 @@ use Runalyze\Parameter\Application\Gender;
 class Factor {
 	/**
 	 * Gender
-	 * @var \Runalyze\Parameter\Application\Gender
+	 * @int
 	 */
 	protected $Gender;
 
 	/**
 	 * Construct
-	 * @param \Runalyze\Parameter\Application\Gender $Gender
+	 * @param int $Gender
 	 */
-	public function __construct(Gender $Gender) {
+	public function __construct($Gender) {
 		$this->Gender = $Gender;
 	}
 
@@ -43,9 +43,9 @@ class Factor {
 	 * @return float
 	 */
 	public function A() {
-		if ($this->Gender->isMale()) {
+		if (Gender::MALE == $this->Gender) {
 			return 0.64;
-		} elseif ($this->Gender->isFemale()) {
+		} elseif (GENDER::FEMALE == $this->Gender) {
 			return 0.821776;
 		} else {
 			return 0.725215;
@@ -57,9 +57,9 @@ class Factor {
 	 * @return float
 	 */
 	public function B() {
-		if ($this->Gender->isMale()) {
+		if (Gender::MALE == $this->Gender) {
 			return 1.92;
-		} elseif ($this->Gender->isFemale()) {
+		} elseif (Gender::FEMALE == $this->Gender) {
 			return 1.67;
 		} else {
 			return 1.795;

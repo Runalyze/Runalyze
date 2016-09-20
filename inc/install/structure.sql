@@ -30,14 +30,15 @@ CREATE TABLE IF NOT EXISTS `runalyze_account` (
   `salt` char(64) NOT NULL DEFAULT '',
   `registerdate` int(11) NOT NULL DEFAULT '0',
   `lastaction` int(11) NOT NULL DEFAULT '0',
-  `autologin_hash` varchar(32) NOT NULL DEFAULT '',
   `changepw_hash` varchar(32) NOT NULL DEFAULT '',
   `changepw_timelimit` int(11) NOT NULL DEFAULT '0',
   `activation_hash` varchar(32) NOT NULL DEFAULT '',
   `deletion_hash` varchar(32) NOT NULL DEFAULT '',
   `allow_mails` tinyint(1) NOT NULL DEFAULT '1',
   `allow_support` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `role` tinyint(3) unsigned NOT NULL DEFAULT '1'
+  `role` tinyint(3) unsigned NOT NULL DEFAULT '1',
+  `gender` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `birthyear` int(4) unsigned DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -250,9 +251,9 @@ CREATE TABLE IF NOT EXISTS `runalyze_sport` (
   `speed` varchar(10) NOT NULL DEFAULT 'min/km',
   `power` tinyint(1) NOT NULL DEFAULT '0',
   `outside` tinyint(1) NOT NULL DEFAULT '0',
-  `main_equipmenttypeid` int(10) unsigned NOT NULL DEFAULT '0',
+  `main_equipmenttypeid` int(10) unsigned DEFAULT NULL,
   `default_typeid` int(10) unsigned DEFAULT NULL,
-  `accountid` int(11) NOT NULL
+  `accountid` int(10) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------

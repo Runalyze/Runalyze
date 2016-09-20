@@ -3,18 +3,35 @@
 namespace Runalyze\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Runalyze\Parameter\Application\Timezone;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Runalyze\Model\Account\UserRole;
+use Runalyze\Profile\Athlete\Gender;
+use Doctrine\ORM\Mapping\UniqueConstraint;
+use Runalyze\Bundle\CoreBundle\Validator\Constraints as RunalyzeAssert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Account
  *
  * @ORM\Table(name="account", uniqueConstraints={@ORM\UniqueConstraint(name="username", columns={"username"}), @ORM\UniqueConstraint(name="mail", columns={"mail"})})
  * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\AccountRepository")
+ * @UniqueEntity("mail", message="This mail address is already in use")
+ * @UniqueEntity("username", message="This username is already in use")
  */
 class Account implements AdvancedUserInterface, \Serializable
 {
+
+    /**
+     * @var string
+     * @Assert\Length(
+     *     min = 6,
+     *     minMessage = "Your password must be at least {{ limit }} characters long"
+     * )
+     */
+    private $plainPassword;
+
     /**
      * @var integer
      *
@@ -26,22 +43,35 @@ class Account implements AdvancedUserInterface, \Serializable
 
     /**
      * @var string
-     * @Assert\NotBlank()
-     * @ORM\Column(name="username", type="string", length=60, nullable=false)
+     * @Assert\NotBlank(message = "You need to enter a username.")
+     * @Assert\Length(
+     *     min = 3,
+     *     max = 32,
+     *     minMessage = "Your username must be at least {{ limit }} characters long",
+     *     maxMessage = "Your username cannot be longer than {{ limit }} characters")
+     * @Assert\Regex(
+     *     pattern  = "#[^a-zA-Z0-9\.\_\-]#i",
+     *     match    = false,
+     *     message  = "Besides digits and letters, only the following characters are allowed: . _ -"
+     * )
+     * @ORM\Column(name="username", type="string", length=60, nullable=false, unique=true)
      */
     private $username;
 
     /**
      * @var string
-     * @Assert\NotBlank()
-     * @ORM\Column(name="name", type="string", length=50, nullable=false)
+     *
+     * @ORM\Column(name="name", type="string", length=50)
      */
-    private $name;
+    private $name = '';
 
     /**
      * @var string
      * @Assert\NotBlank()
-     * @Assert\Email()
+     * @Assert\Email(
+     *     message = "The email '{{ value }}' is not a valid email.",
+     * )
+     * @RunalyzeAssert\ContainsDisposableMailAddress()
      * @ORM\Column(name="mail", type="string", length=100, nullable=false)
      */
     private $mail;
@@ -51,18 +81,33 @@ class Account implements AdvancedUserInterface, \Serializable
      * @Assert\NotBlank()
      * @ORM\Column(name="language", type="string", length=5, nullable=false)
      */
-    private $language;
+    private $language = 'en';
 
     /**
      * @var integer
-     *
+     * @Assert\NotBlank()
+     * @Assert\Type("int")
+     * @RunalyzeAssert\IsValidTimezone()
      * @ORM\Column(name="timezone", type="integer", nullable=false)
      */
-    private $timezone;
+    private $timezone = Timezone::UTC;
+
+    /**
+     * @var integer
+     * @Assert\Type("int")
+     * @ORM\Column(name="gender", type="integer", nullable=false)
+     */
+    private $gender = Gender::NONE;
+
+    /**
+     * @var integer
+     * @Assert\Type("int")
+     * @ORM\Column(name="birthyear", type="integer")
+     */
+    private $birthyear;
 
     /**
      * @var string
-     * @Assert\NotBlank()
      * @ORM\Column(name="password", type="string", length=64, nullable=false)
      */
     private $password;
@@ -76,7 +121,7 @@ class Account implements AdvancedUserInterface, \Serializable
 
     /**
      * @var integer
-     *
+     * @Assert\Type("int")
      * @ORM\Column(name="registerdate", type="integer", nullable=false)
      */
     private $registerdate;
@@ -86,56 +131,49 @@ class Account implements AdvancedUserInterface, \Serializable
      *
      * @ORM\Column(name="lastaction", type="integer", nullable=false)
      */
-    private $lastaction;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="autologin_hash", type="string", length=32, nullable=false)
-     */
-    private $autologinHash;
+    private $lastaction = 0;
 
     /**
      * @var string
      *
      * @ORM\Column(name="changepw_hash", type="string", length=32, nullable=false)
      */
-    private $changepwHash;
+    private $changepwHash = '';
 
     /**
      * @var integer
      *
      * @ORM\Column(name="changepw_timelimit", type="integer", nullable=false)
      */
-    private $changepwTimelimit;
+    private $changepwTimelimit = 0;
 
     /**
      * @var string
      *
      * @ORM\Column(name="activation_hash", type="string", length=32, nullable=false)
      */
-    private $activationHash;
+    private $activationHash = '';
 
     /**
      * @var string
      *
      * @ORM\Column(name="deletion_hash", type="string", length=32, nullable=false)
      */
-    private $deletionHash;
+    private $deletionHash = '';
 
     /**
      * @var integer
-     *
+     * @Assert\Type("int")
      * @ORM\Column(name="allow_mails", type="integer", nullable=false)
      */
-    private $allowMails;
+    private $allowMails = 1;
 
     /**
      * @var integer
-     *
+     * @Assert\Type("int")
      * @ORM\Column(name="allow_support", type="integer", nullable=false)
      */
-    private $allowSupport;
+    private $allowSupport = 0;
 
     /**
      * @var integer
@@ -149,6 +187,8 @@ class Account implements AdvancedUserInterface, \Serializable
     {
         $this->isActive = true;
         $this->setRegisterdate(date_timestamp_get(new \DateTime()));
+        $this->setSalt(self::getRandomHash(32));
+        $this->setRole(UserRole::ROLE_USER);
     }
 
     /**
@@ -245,7 +285,7 @@ class Account implements AdvancedUserInterface, \Serializable
 
     /**
      * Get language
-     *
+     * @Assert\Type("string")
      * @return string
      */
     public function getLanguage()
@@ -277,6 +317,52 @@ class Account implements AdvancedUserInterface, \Serializable
     }
 
     /**
+     * Set gender
+     *
+     * @param string $gender
+     * @return Account
+     */
+    public function setGender($gender)
+    {
+        $this->gender = $gender;
+
+        return $this;
+    }
+
+    /**
+     * Get gender
+     *
+     * @return string
+     */
+    public function getGender()
+    {
+        return $this->gender;
+    }
+
+    /**
+     * Set birthyear
+     *
+     * @param string $birthyear
+     * @return Account
+     */
+    public function setBirthyear($birthyear)
+    {
+        $this->birthyear = $birthyear;
+
+        return $this;
+    }
+
+    /**
+     * Get birthyear
+     *
+     * @return string
+     */
+    public function getBirthyear()
+    {
+        return $this->birthyear;
+    }
+
+    /**
      * Set password
      *
      * @param string $password
@@ -300,6 +386,30 @@ class Account implements AdvancedUserInterface, \Serializable
     }
 
     /**
+     * Set plain password
+     *
+     * @param string $plainPassword
+     * @return Account
+     */
+    public function setPlainPassword($plainPassword)
+    {
+        $this->plainPassword = $plainPassword;
+
+        return $this;
+    }
+
+    /**
+     * Get plain password
+     *
+     * @return string
+     */
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+
+    /**
      * Set salt
      *
      * @param string $salt
@@ -320,6 +430,15 @@ class Account implements AdvancedUserInterface, \Serializable
     public function getSalt()
     {
         return $this->salt;
+    }
+
+    /**
+     * Get hash.
+     * @param int $bytes
+     * @return string hash of length 2*$bytes
+     */
+    public static function getRandomHash($bytes = 16) {
+        return bin2hex(openssl_random_pseudo_bytes($bytes));
     }
 
     /**
@@ -370,29 +489,6 @@ class Account implements AdvancedUserInterface, \Serializable
     public function getLastAction()
     {
         return $this->lastaction;
-    }
-
-    /**
-     * Set autologinHash
-     *
-     * @param string $autologinHash
-     * @return Account
-     */
-    public function setAutologinHash($autologinHash)
-    {
-        $this->autologinHash = $autologinHash;
-
-        return $this;
-    }
-
-    /**
-     * Get autologinHash
-     *
-     * @return string
-     */
-    public function getAutologinHash()
-    {
-        return $this->autologinHash;
     }
 
     /**
@@ -558,6 +654,7 @@ class Account implements AdvancedUserInterface, \Serializable
 
     public function eraseCredentials()
     {
+        $this->setPlainPassword(null);
     }
 
 

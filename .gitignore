@@ -31,5 +31,6 @@ npm-debug.log
 /var/
 !/var/cache/.gitkeep
 !/var/logs/.gitkeep
+/app/config/config_test.yml
 
 !.gitkeep

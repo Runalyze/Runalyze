@@ -5,14 +5,19 @@ namespace Runalyze\Bundle\CoreBundle\Form\Settings;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
+use Symfony\Component\Security\Core\Validator\Constraints as SecurityAssert;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints as Assert;
 use Runalyze\Timezone;
 use Runalyze\Language;
 use Runalyze\Profile\Athlete\Gender;
@@ -25,9 +30,12 @@ class AccountType extends AbstractType
             ->add('username', TextType::class, array(
                     'disabled' => true
             ))
-            ->add('name', TextType::class)
+            ->add('name', TextType::class, array(
+                'required' => false,
+                'empty_data' => ''
+            ))
             ->add('mail', EmailType::class, array(
-                    'disabled' => true
+                'disabled' => true
             ))
             ->add('language', ChoiceType::class, array(
                 'choices' => Language::getChoices()
@@ -44,17 +52,32 @@ class AccountType extends AbstractType
                 'attr' => array('min' => 1900, 'max' => date("Y")),
                 'required' => false
             ))
-            ->add('registerdate', DateTimeType::class, array(
+            ->add('registerdate', DateType::class, array(
+                    'label' => 'Registered since',
                     'input' => 'timestamp',
                     'disabled' => true,
-                    'date_widget' =>  'single_text',
-                    'date_format' => 'yyyy-MM-dd h:s'
-                ))
+                    'widget' =>  'single_text',
+                    'format' => 'yyyy-MM-dd'
+            ))
             ->add('allow_support', ChoiceType::class, array(
                 'choices' => array(
                     'Yes' => true,
                     'No' => false
-                )))
+                ),
+                'label' => 'Allow access for support'
+            ))
+            ->add('allow_mails', ChoiceType::class, array(
+                'choices' => array(
+                    'Yes' => true,
+                    'No' => false
+                ),
+                'label' => 'Email me'
+            ))
+            ->add('reset_configuration', CheckboxType::class, array(
+                'required' => false,
+                'mapped' => false,
+                'empty_data'  => null
+            ))
         ;
     }
 

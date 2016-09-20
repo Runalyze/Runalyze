@@ -2,9 +2,12 @@
 
 namespace Runalyze\Bundle\CoreBundle\Controller;
 
+use Runalyze\Bundle\CoreBundle\Form\RecoverPasswordType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use  Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormError;
 
 /**
  * @Route("/{_locale}/account")
@@ -16,13 +19,16 @@ class AccountController extends Controller
      */
     public function deleteAccountConfirmedAction($hash)
     {
-        new \Frontend(true, $this->get('security.token_storage'));
+        $em = $this->getDoctrine()->getManager();
+        $account = $em->getRepository('CoreBundle:Account')->findOneBy(array('deletionHash' => $hash));
 
-        if (\AccountHandler::tryToDeleteAccount($hash)) {
-            return $this->render('account/delete/success.html.twig');
+        if (null === $account) {
+            return $this->render('account/delete/problem.html.twig');
         }
+        $em->remove($account);
+        $em->flush();
 
-        return $this->render('account/delete/problem.html.twig');
+        return $this->render('account/delete/success.html.twig');
     }
 
     /**
@@ -30,13 +36,14 @@ class AccountController extends Controller
      */
     public function deleteAccountAction($hash)
     {
-        new \Frontend(true, $this->get('security.token_storage'));
+        $em = $this->getDoctrine()->getManager();
+        $account = $em->getRepository('CoreBundle:Account')->findOneBy(array('deletionHash' => $hash));
 
-        $username = \AccountHandler::getUsernameForDeletionHash($hash);
-
-        if (false === $username) {
+        if (null === $account) {
             return $this->render('account/delete/problem.html.twig');
         }
+
+        $username = $account->getUsername();
 
         return $this->render('account/delete/please_confirm.html.twig', [
             'deletionHash' => $hash,
@@ -47,25 +54,34 @@ class AccountController extends Controller
     /**
      * @Route("/recover/{hash}", name="account_recover_hash", requirements={"hash": "[[:xdigit:]]{32}"})
      */
-    public function recoverForHashAction($hash)
+    public function recoverForHashAction($hash, Request $request)
     {
-        new \Frontend(true, $this->get('security.token_storage'));
+        $em = $this->getDoctrine()->getManager();
+        $account = $em->getRepository('CoreBundle:Account')->findOneBy(array('changepwHash' => $hash));
 
-        $successOrErrors = \AccountHandler::tryToSetNewPassword($hash);
-        $username = \AccountHandler::getUsernameForChangePasswordHash($hash);
-
-        if (true === $successOrErrors) {
-            return $this->render('account/recover/success.html.twig');
-        }
-
-        if (false === $username) {
+        if (null === $account) {
             return $this->render('account/recover/hash_invalid.html.twig', ['recoverHash' => $hash]);
         }
 
+        $form = $this->createForm(RecoverPasswordType::class, $account);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $newSalt = \AccountHandler::getNewSalt();
+            $account->setSalt($newSalt);
+            $encoder = $this->container->get('security.encoder_factory')->getEncoder($account);
+            $account->setPassword($encoder->encodePassword($account->getPlainPassword(), $account->getSalt()));
+            $account->setChangepwHash('');
+            $account->setChangepwTimeLimit(0);
+
+            $em->persist($account);
+            $em->flush();
+            return $this->render('account/recover/success.html.twig');
+
+        }
         return $this->render('account/recover/form_new_password.html.twig', [
             'recoverHash' => $hash,
-            'username' => $username,
-            'errors' => $successOrErrors
+            'form' => $form->createView()
         ]);
     }
 
@@ -74,26 +90,34 @@ class AccountController extends Controller
      */
     public function recoverAction(Request $request)
     {
-        new \Frontend(true, $this->get('security.token_storage'));
+        $form = $this->createFormBuilder()
+            ->add('username', TextType::class, array(
+                'required' => false,
+                'attr' => array(
+                    'autofocus' => true
+                )
+            ))
+            ->getForm();
+        $form->handleRequest($request);
 
-        $username = $request->request->get('send_username');
-        $userIsUnknown = false;
+        if ($form->isSubmitted()) {
+            new \Frontend(true, $this->get('security.token_storage'));
+            $data = $form->getData();
 
-        if ($username) {
             try {
-                if (\AccountHandler::sendPasswordLinkTo($username)) {
+                //TODO Refactor AccountHandler remove Frontend dependency
+                if (\AccountHandler::sendPasswordLinkTo($data['username'])) {
                     return $this->render('account/recover/mail_delivered.html.twig');
                 } else {
                     return $this->render('account/recover/mail_could_not_be_delivered.html.twig');
                 }
             } catch (\InvalidArgumentException $e) {
-                $userIsUnknown = true;
+                $form->get('username')->addError(new FormError($this->get('translator')->trans('The username is not known.')));
             }
         }
 
         return $this->render('account/recover/form_send_mail.html.twig', [
-            'username' => $username,
-            'user_is_unknown' => $userIsUnknown
+            'form' => $form->createView()
         ]);
     }
 
@@ -102,10 +126,15 @@ class AccountController extends Controller
      */
     public function activateAccountAction($hash)
     {
-        new \Frontend(true, $this->get('security.token_storage'));
+        $em = $this->getDoctrine()->getManager();
+        $account = $em->getRepository('CoreBundle:Account')->findOneBy(array('activationHash' => $hash));
 
-        if (!\AccountHandler::tryToActivateAccount($hash)) {
+        if (null === $account) {
             return $this->render('account/activate/problem.html.twig');
+        } else {
+            $account->setActivationHash('');
+            $em->persist($account);
+            $em->flush();
         }
 
         return $this->render('account/activate/success.html.twig');

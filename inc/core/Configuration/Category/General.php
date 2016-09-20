@@ -8,7 +8,6 @@ namespace Runalyze\Configuration\Category;
 
 use Runalyze\Configuration\Fieldset;
 use Runalyze\Parameter\SelectRow;
-use Runalyze\Parameter\Application\Gender;
 use Runalyze\Parameter\Application\HeartRateUnit;
 use Runalyze\Parameter\Application\DistanceUnitSystem;
 use Runalyze\Parameter\Application\WeekStart;
@@ -36,24 +35,16 @@ class General extends \Runalyze\Configuration\Category {
 	 * Create handles
 	 */
 	protected function createHandles() {
-		$this->createGender();
-                $this->createWeekStart();
+        $this->createWeekStart();
 		$this->createDistanceUnitSystem();
 		$this->createWeightUnit();
 		$this->createEnergyUnit();
-                $this->createTemperatureUnit();
+        $this->createTemperatureUnit();
 		$this->createHeartRateUnit();
 		$this->createMainSport();
 		$this->createRunningSport();
 	}
 
-	/**
-	 * Create: GENDER
-	 */
-	protected function createGender() {
-		$this->createHandle('GENDER', new Gender());
-	}
-	
 	/**
 	 * Create: Beginning of the week
 	 */
@@ -131,14 +122,6 @@ class General extends \Runalyze\Configuration\Category {
 	}
         
 	/**
-	 * Gender
-	 * @return Gender
-	 */
-	public function gender() {
-		return $this->object('GENDER');
-	}
-
-	/**
 	 * Create: HEART_RATE_UNIT
 	 */
 	protected function createHeartRateUnit() {
@@ -193,7 +176,6 @@ class General extends \Runalyze\Configuration\Category {
 	 * Register onchange events
 	 */
 	protected function registerOnchangeEvents() {
-		$this->handle('GENDER')->registerOnchangeFlag(Ajax::$RELOAD_ALL);
 		$this->handle('DISTANCE_UNIT_SYSTEM')->registerOnchangeFlag(Ajax::$RELOAD_ALL);
 		$this->handle('ENERGY_UNIT')->registerOnchangeFlag(Ajax::$RELOAD_ALL);
 		$this->handle('DISTANCE_UNIT_SYSTEM')->registerOnchangeEvent('Runalyze\\Configuration\\Messages::adjustPacesInSportsConfiguration');
@@ -210,10 +192,6 @@ class General extends \Runalyze\Configuration\Category {
 	 */
 	public function Fieldset() {
 		$Fieldset = new Fieldset( __('General settings') );
-
-		$Fieldset->addHandle( $this->handle('GENDER'), array(
-			'label'		=> __('Gender')
-		));
                 
 		$Fieldset->addHandle( $this->handle('WEEK_START'), array(
 			'label'		=> __('Beginning of the week')

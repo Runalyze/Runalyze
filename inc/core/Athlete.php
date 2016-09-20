@@ -6,7 +6,7 @@
 
 namespace Runalyze;
 
-use \Runalyze\Parameter\Application\Gender;
+use Runalyze\Profile\Athlete\Gender;
 
 /**
  * Athlete
@@ -17,7 +17,7 @@ use \Runalyze\Parameter\Application\Gender;
 class Athlete {
 	/**
 	 * Gender
-	 * @var \Runalyze\Parameter\Application\Gender
+	 * @var int
 	 */
 	protected $Gender;
 
@@ -43,7 +43,7 @@ class Athlete {
 	 * Age [years]
 	 * @var int
 	 */
-	protected $age = null;
+	protected $birthyear = null;
 
 	/**
 	 * Current VDOT shape
@@ -53,32 +53,32 @@ class Athlete {
 
 	/**
 	 * Create athlete
-	 * @param \Runalyze\Parameter\Application\Gender $Gender [optional]
+	 * @param int $Gender [optional]
 	 * @param int $maximalHR [optional]
 	 * @param int $restingHR [optional]
 	 * @param float $weight [optional]
-	 * @param int $age [optional]
+	 * @param int $birthyear [optional]
 	 * @param float $vdot [optional]
 	 */
 	public function __construct(
-		Gender $Gender = null,
+		$Gender = null,
 		$maximalHR = null,
 		$restingHR = null,
 		$weight = null,
-		$age = null,
+		$birthyear = null,
 		$vdot = 0.0
 	) {
-		$this->Gender = $Gender ?: new Gender();
+		$this->Gender = $Gender ?: Gender::NONE;
 		$this->maximalHR = $maximalHR;
 		$this->restingHR = $restingHR;
 		$this->weight = $weight;
-		$this->age = $age;
+		$this->birthyear = $birthyear;
 		$this->vdot = $vdot;
 	}
 
 	/**
 	 * Gender
-	 * @return \Runalyze\Parameter\Application\Gender
+	 * @return \Runalyze\Profile\Athlete\Gender;
 	 */
 	public function gender() {
 		return $this->Gender;
@@ -108,12 +108,20 @@ class Athlete {
 		return $this->weight;
 	}
 
+    /**
+     * Age
+     * @return int
+     */
+    public function age() {
+        return (null !== $this->birthyear()) ? date("Y")-$this->birthyear() : null;
+    }
+
 	/**
-	 * Age
+	 * Birthyear
 	 * @return int
 	 */
-	public function age() {
-		return $this->age;
+	public function birthyear() {
+		return $this->birthyear;
 	}
 
 	/**
@@ -129,7 +137,7 @@ class Athlete {
 	 * @return bool
 	 */
 	public function knowsGender() {
-		return $this->Gender->hasGender();
+		return ($this->Gender !== Gender::NONE && null !== $this->Gender);
 	}
 
 	/**
@@ -156,12 +164,20 @@ class Athlete {
 		return (null !== $this->weight);
 	}
 
+    /**
+     * Knows birthyear
+     * @return bool
+     */
+    public function knowsBirthyear() {
+        return (null !== $this->birthyear());
+    }
+
 	/**
 	 * Knows age
 	 * @return bool
 	 */
 	public function knowsAge() {
-		return (null !== $this->age);
+		return (null !== $this->birthyear());
 	}
 
 	/**

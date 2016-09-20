@@ -29,34 +29,6 @@ class AccountHandler {
 	public static $PASS_MIN_LENGTH = 6;
 
 	/**
-	 * Minimum length for usernames
-	 * @var int
-	 */
-	const USER_MIN_LENGTH = 3;
-
-	/**
-	 * @var int
-	 */
-	const USER_MAX_LENGTH = 32;
-
-	/**
-	 * @var string
-	 */
-	const USER_REGEXP = 'a-zA-Z0-9\.\_\-';
-
-	/**
-	 * Boolean flag: registration process
-	 * @var bool
-	 */
-	public static $IS_ON_REGISTER_PROCESS = false;
-
-	/**
-	 * ID for new registered user
-	 * @var int
-	 */
-	public static $NEW_REGISTERED_ID = -1;
-
-	/**
 	 * Salt length in bytes
 	 * @var int
 	 */
@@ -100,169 +72,6 @@ class AccountHandler {
 	}
 
 	/**
-	 * Get mail-address for a given username
-	 * @param string $username
-	 * @return boolean|string
-	 */
-	public static function getMailFor($username) {
-		$result = DB::getInstance()->query('SELECT `mail` FROM `'.PREFIX.'account` WHERE `username`='.DB::getInstance()->escape($username).' LIMIT 1')->fetch();
-
-		if (is_array($result) && isset($result['mail']))
-			return $result['mail'];
-
-		return false;
-	}
-
-	/**
-	 * Does a user with this name exist?
-	 * @param string $username
-	 * @return boolean
-	 */
-	public static function usernameExists($username) {
-		return (1 == DB::getInstance()->query('SELECT COUNT(*) FROM `'.PREFIX.'account` WHERE `username`='.DB::getInstance()->escape($username).' LIMIT 1')->fetchColumn());
-	}
-
-	/**
-	 * Does a user with this mail exist?
-	 * @param string $mail
-	 * @return boolean
-	 */
-	public static function mailExists($mail) {
-		return (1 == DB::getInstance()->query('SELECT 1 FROM `'.PREFIX.'account` WHERE `mail`='.DB::getInstance()->escape($mail).' LIMIT 1')->fetchColumn());
-	}
-
-	/**
-	 * Is the mail address valid?
-	 * @param string $mail
-	 * @return boolean
-	 */
-	public static function mailValid($mail) {
-		$validator = new \EmailValidator\Validator();
-		//isValid() could be used too, if server is connected to the internet
-		return(1 == $validator->isDisposable($mail));
-	}
-
-	/**
-	 * Compares a password (given as string) with hash from database
-	 * @param string $realString
-	 * @param string $hashFromDb
-	 * @param string $saltFromDb
-	 * @return boolean
-	 */
-	public static function comparePasswords($realString, $hashFromDb, $saltFromDb) {
-		return (self::passwordToHash($realString, $saltFromDb) == $hashFromDb);
-	}
-
-	/**
-	 * Transforms a password (given as string) to internal hash
-	 * @param string $realString
-	 * @return string
-	 */
-	private static function passwordToHash($realString, $salt) {
-		if (is_null($salt) || strlen($salt) == 0) {
-			return md5(trim($realString).self::$SALT);
-		} else {
-			return hash("sha256", trim($realString).$salt);
-		}
-	}
-
-	/**
-	 * Get hash for autologin
-	 * @return string
-	 */
-	public static function getAutologinHash() {
-		return md5(trim(SessionAccountHandler::getMail()).self::getRandomHash(32));
-	}
-
-	/**
-	 * Try to register new user with data from $_POST
-	 * @return boolean|array true for success, array with errors otherwise
-	 */
-	public static function tryToRegisterNewUser() {
-		$failure = array('username' => true, 'email' => true, 'password' => true);
-		$errors = array();
-
-		if (strlen($_POST['new_username']) < self::USER_MIN_LENGTH)
-			$errors[] = sprintf( __('The username has to contain at least %s signs.'), self::USER_MIN_LENGTH);
-		elseif (strlen($_POST['new_username']) > self::USER_MAX_LENGTH)
-			$errors[] = sprintf( __('The username has to contain at most %s signs.'), self::USER_MAX_LENGTH);
-		elseif (preg_replace('#[^'.self::USER_REGEXP.']#i', '', $_POST['new_username']) != $_POST['new_username'])
-			$errors[] = sprintf( __('The username has to contain only the following characters: %s'), stripslashes(self::USER_REGEXP));
-		elseif (self::usernameExists($_POST['new_username']))
-			$errors[] = __('This username is already being used.');
-		else
-			$failure['username'] = false;
-
-		if (self::mailExists($_POST['email']))
-			$errors[] = __('This email address is already being used.');
-		elseif (self::mailValid($_POST['email']))
-			$errors[] = __('This email address is not allowed');
-		elseif (false === filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))
-			$errors[] = __('Please enter a valid email address.');
-		else
-			$failure['email'] = false;
-
-		if ($_POST['password'] != $_POST['password_again'])
-			$errors[] = __('The passwords have to be the same.');
-		elseif (strlen($_POST['password']) < self::$PASS_MIN_LENGTH)
-			$errors[] = sprintf( __('The password has to contain at least %s characters.'), self::$PASS_MIN_LENGTH);
-		else
-			$failure['password'] = false;
-
-		if (empty($errors))
-			$errors = self::createNewUserFromPost();
-
-		if (empty($errors))
-			return true;
-
-		return array(
-			'failure' => $failure,
-			'errors' => $errors
-		);
-	}
-
-	/**
-	 * Create a new user from post-data
-	 */
-	private static function createNewUserFromPost() {
-		$errors = array();
-		$activationHash = '';
-		if (!USER_DISABLE_ACCOUNT_ACTIVATION) {
-		    $activationHash = (System::isAtLocalhost()) ? '' : self::getRandomHash();
-		}
-		$newSalt = self::getNewSalt();
-
-		try {
-			$timezone = Timezone::getEnumByOriginalName($_POST['timezone']);
-		} catch (\InvalidArgumentException $e) {
-			$timezone = Timezone::getEnumByOriginalName(date_default_timezone_get());
-		}
-
-		$newAccountId   = DB::getInstance()->insert('account',
-				array('username', 'mail', 'language', 'timezone', 'password', 'salt', 'registerdate', 'activation_hash'),
-				array($_POST['new_username'], $_POST['email'], Language::getCurrentLanguage(), $timezone, self::passwordToHash($_POST['password'], $newSalt), $newSalt, time(), $activationHash));
-
-		self::$IS_ON_REGISTER_PROCESS = true;
-		self::$NEW_REGISTERED_ID = $newAccountId;
-
-		if ($newAccountId === false)
-			$errors[] = __('Something went wrong. Please contact the administrator.');
-		else {
-			self::importEmptyValuesFor($newAccountId);
-			self::setSpecialConfigValuesFor($newAccountId);
-
-			if (!self::setAndSendActivationKeyFor($newAccountId)) {
-				$errors[] = __('Sending the mail did not work. Please contact the administrator.');
-			}
-		}
-
-		self::$IS_ON_REGISTER_PROCESS = false;
-		self::$NEW_REGISTERED_ID = -1;
-
-		return $errors;
-	}
-
-	/**
 	 * Send password to given user
 	 * @param string $username
 	 * @return bool
@@ -279,7 +88,7 @@ class AccountHandler {
 		self::updateAccount($username, array('changepw_hash', 'changepw_timelimit'), array($pwHash, time()+DAY_IN_S));
 
 		$subject  = __('Reset your RUNALYZE password');
-		$message  = sprintf( __('Did you forget your password %s?'), $account['name'])."<br><br>\r\n\r\n";
+		$message  = sprintf( __('Did you forget your password %s?'), $account['username'])."<br><br>\r\n\r\n";
 		$message .= __('You can change your password within the next 24 hours with the following link').":<br>\r\n";
 		$message .= '<a href='.self::getChangePasswordLink($pwHash).'>'.self::getChangePasswordLink($pwHash).'</a>';
 
@@ -295,7 +104,7 @@ class AccountHandler {
 	/**
 	 * Get random salt
 	 */
-	private static function getNewSalt() {
+	public static function getNewSalt() {
 		return self::getRandomHash(32);
 	}
 
@@ -312,7 +121,7 @@ class AccountHandler {
 	 * @param int $bytes
 	 * @return string hash of length 2*$bytes
 	 */
-	private static function getRandomHash($bytes = 16) {
+	public static function getRandomHash($bytes = 16) {
 		return bin2hex(openssl_random_pseudo_bytes($bytes));
 	}
 
@@ -330,173 +139,12 @@ class AccountHandler {
 	 * @param string $hash
 	 * @return string
 	 */
-	private static function getActivationLink($hash) {
-		return System::getFullDomainWithProtocol().Language::getCurrentLanguage().'/account/activate/'.$hash;
-	}
-
-	/**
-	 * Get link for activate account
-	 * @param string $hash
-	 * @return string
-	 */
 	private static function getDeletionLink($hash) {
 		return System::getFullDomainWithProtocol().Language::getCurrentLanguage().'/account/delete/'.$hash;
 	}
 
 	/**
-	 * Get username requested for changing password
-	 * @param string $hash
-	 * @return bool|string
-	 */
-	public static function getUsernameForChangePasswordHash($hash) {
-		$data = DB::getInstance()->query('
-			SELECT username FROM '.PREFIX.'account
-			WHERE changepw_hash='.DB::getInstance()->escape($hash).'
-				AND changepw_timelimit>'.time().'
-			LIMIT 1'
-		)->fetch();
-
-		if ($data)
-			return $data['username'];
-
-		return false;
-	}
-
-	/**
-	 * Try to set new password from post-values
-	 * @param string $hash
-	 * @return bool|array array with errors or true on success
-	 */
-	public static function tryToSetNewPassword($hash) {
-		if (!isset($_POST['new_pw']) || !isset($_POST['new_pw_again']) || !isset($_POST['chpw_username']))
-			return [];
-
-		if ($_POST['chpw_username'] == self::getUsernameForChangePasswordHash($hash)) {
-			if ($_POST['new_pw'] != $_POST['new_pw_again'])
-				return array( __('The passwords have to be the same.') );
-			elseif (strlen($_POST['new_pw']) < self::$PASS_MIN_LENGTH)
-				return array( sprintf( __('The password has to contain at least %s signs.'), self::$PASS_MIN_LENGTH) );
-			else {
-				self::setNewPassword($_POST['chpw_username'], $_POST['new_pw']);
-
-				return true;
-			}
-		} else
-			return array( __('Something went wrong.') );
-	}
-
-	/**
-	 * @param string $username
-	 * @param string $password
-	 */
-	public static function setNewPassword($username, $password) {
-		$newSalt = self::getNewSalt();
-		self::updateAccount($username,
-			array('password', 'salt', 'changepw_hash', 'changepw_timelimit'),
-			array(self::passwordToHash($password, $newSalt), $newSalt, '', 0));
-	}
-
-	/**
-	 * Try to activate the account
-	 * @param string $hash
-	 * @return boolean
-	 */
-	public static function tryToActivateAccount($hash) {
-		$Account = DB::getInstance()->query('SELECT id FROM `'.PREFIX.'account` WHERE `activation_hash`='.DB::getInstance()->escape($hash).' LIMIT 1')->fetch();
-
-		if ($Account) {
-			DB::getInstance()->update('account', $Account['id'], 'activation_hash', '');
-
-			return true;
-		}
-
-		return false;
-	}
-
-	/**
-	 * Try to delete the account
-	 * @param string $deletionHash
-	 * @return boolean
-	 */
-	public static function tryToDeleteAccount($deletionHash) {
-		$Account = DB::getInstance()->exec('DELETE FROM `'.PREFIX.'account` WHERE `deletion_hash`='.DB::getInstance()->escape($deletionHash).' LIMIT 1');
-
-		if ($Account) {
-			return true;
-		}
-
-		return false;
-	}
-
-	/**
-	 * @param string $deletionHash
-	 * @return bool|string false if deletion hash is not found
-	 */
-	public static function getUsernameForDeletionHash($deletionHash) {
-		return DB::getInstance()->query('SELECT `username` FROM `'.PREFIX.'account` WHERE `deletion_hash`='.DB::getInstance()->escape($deletionHash).' LIMIT 1')->fetchColumn();
-	}
-
-	/**
-	 * Import empty values for new account
-	 * Attention: $accountID has to be set here - new registered users are not in session yet!
-	 * @param int $accountID
-	 */
-	private static function importEmptyValuesFor($accountID) {
-		$DB          = DB::getInstance();
-		$EmptyTables = array();
-
-		include FRONTEND_PATH . 'system/schemes/set.emptyValues.php';
-
-		foreach ($EmptyTables as $table => $data) {
-			$columns = $data['columns'];
-			$columns[] = 'accountid';
-			foreach ($data['values'] as $values) {
-				$special_keys = array();
-
-				for ($i = count($values); $i > count($columns)-1; $i--) {
-					$special_keys[] = array_pop($values);
-				}
-
-				$values[] = $accountID;
-				$dbId = $DB->insert($table, $columns, $values);
-
-				foreach ($special_keys as $sk) {
-					self::$SPECIAL_KEYS[$sk] = $dbId;
-				}
-			}
-		}
-	}
-
-	/**
-	 * Send registration/activation mail for a new user
-	 * @param int $accountId
-	 * @return bool
-	 */
-	private static function setAndSendActivationKeyFor($accountId) {
-		$account        = DB::getInstance()->fetchByID('account', $accountId);
-
-		$subject  = __('Welcome to RUNALYZE');
-		$message  = __('Thanks for your registration').', '.$account['name']."!<br><br>\r\n\r\n";
-
-		if (!USER_DISABLE_ACCOUNT_ACTIVATION) {
-		    $subject  = __('Activate your RUNALYZE Account');
-		    $activationHash = $account['activation_hash'];
-		    $activationLink = self::getActivationLink($activationHash);
-
-		    $message .= sprintf( __('You can activate your account (username = %s) with the following link'), $account['username']).":<br>\r\n";
-		    $message .= '<a href='.$activationLink.'>'.$activationLink.'</a>';
-		}
-
-		if (!System::sendMail($account['mail'], $subject, $message) && !USER_DISABLE_ACCOUNT_ACTIVATION) {
-			// TODO: provide a log entry for the admin
-			return false;
-		}
-
-		return true;
-	}
-
-	/**
-	 * Set activation key for new user and set via email
+	 * Set deletion key for new user and set via email
 	 * @param int $accountId
 	 * @return bool
 	 */
