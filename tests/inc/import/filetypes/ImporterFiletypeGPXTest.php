@@ -234,4 +234,16 @@ class ImporterFiletypeGPXTest extends PHPUnit_Framework_TestCase {
 		$this->assertNotContains(0, $this->object->object()->getArrayHeartrate());
 	}
 
+	/**
+	 * Filename: "garmin-ns3-extension.gpx"
+	 * @see https://github.com/Runalyze/Runalyze/issues/1946
+	 */
+	public function testThatExtensionsInNs3FromGarminAreParsed() {
+		$this->object->parseFile('../tests/testfiles/gpx/garmin-ns3-extension.gpx');
+
+		$this->assertTrue($this->object->object()->hasArrayHeartrate());
+		$this->assertTrue($this->object->object()->hasArrayCadence());
+		$this->assertTrue($this->object->object()->hasArrayTemperature());
+	}
+
 }

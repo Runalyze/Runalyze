@@ -246,29 +246,24 @@ class ParserGPXSingle extends ParserAbstractSingleXML {
 		$temp = 0;
 
 		if (isset($Point->extensions)) {
-			if (count($Point->extensions->children('gpxtpx',true)) > 0) {
-				if (isset($Point->extensions->children('gpxtpx',true)->TrackPointExtension)) {
-					$TPE = $Point->extensions->children('gpxtpx',true)->TrackPointExtension;
-					if (count($TPE->children('gpxtpx',true)) > 0 && isset($TPE->children('gpxtpx',true)->hr))
-						$bpm = (int)$TPE->children('gpxtpx',true)->hr;
+			$extensionNode = $this->getExtensionNodeOf($Point->extensions);
 
-                    if (count($TPE->children('gpxtpx',true)) > 0 && isset($TPE->children('gpxtpx',true)->cad))
-						$rpm = (int)$TPE->children('gpxtpx',true)->cad;
-
-                    if (count($TPE->children('gpxtpx',true)) > 0 && isset($TPE->children('gpxtpx',true)->atemp))
-						$temp = (float)$TPE->children('gpxtpx',true)->atemp;
+			if ($extensionNode instanceof SimpleXMLElement) {
+				if (isset($extensionNode->hr)) {
+					$bpm = (int)$extensionNode->hr;
 				}
-			}
 
-			if (count($Point->extensions->children('gpxdata',true)) > 0) {
-				if (isset($Point->extensions->children('gpxdata',true)->hr))
-					$bpm = (int)$Point->extensions->children('gpxdata',true)->hr;
+				if (isset($extensionNode->cad)) {
+					$rpm = (int)$extensionNode->cad;
+				} elseif (isset($extensionNode->cadence)) {
+					$rpm = (int)$extensionNode->cadence;
+				}
 
-				if (isset($Point->extensions->children('gpxdata',true)->cadence))
-					$rpm = (int)$Point->extensions->children('gpxdata',true)->cadence;
-
-				if (isset($Point->extensions->children('gpxdata',true)->temp))
-					$temp = (int)$Point->extensions->children('gpxdata',true)->temp;
+				if (isset($extensionNode->temp)) {
+					$temp = (int)$extensionNode->temp;
+				} elseif (isset($extensionNode->atemp)) {
+					$temp = (int)$extensionNode->atemp;
+				}
 			}
 		}
 
@@ -279,6 +274,30 @@ class ParserGPXSingle extends ParserAbstractSingleXML {
 		$this->gps['heartrate'][] = $this->LastValidHR;
 		$this->gps['rpm'][]       = $rpm;
 		$this->gps['temp'][]      = $temp;
+	}
+
+	/**
+	 * @param SimpleXMLElement $parentNode
+	 * @return null|SimpleXMLElement
+	 */
+	protected function getExtensionNodeOf(SimpleXMLElement $parentNode) {
+		if (
+			count($parentNode->children('gpxtpx',true)) > 0 &&
+			isset($parentNode->children('gpxtpx',true)->TrackPointExtension) &&
+			count($parentNode->children('gpxtpx',true)->TrackPointExtension) > 0
+		) {
+			return $parentNode->children('gpxtpx',true)->TrackPointExtension->children('gpxtpx', true);
+		} elseif (
+			count($parentNode->children('ns3',true)) > 0 &&
+			isset($parentNode->children('ns3',true)->TrackPointExtension) &&
+			count($parentNode->children('ns3',true)->TrackPointExtension) > 0
+		) {
+			return $parentNode->children('ns3',true)->TrackPointExtension->children('ns3', true);
+		} elseif (count($parentNode->children('gpxdata',true)) > 0) {
+			return $parentNode->children('gpxdata', true);
+		}
+
+		return null;
 	}
 
 	/**
