@@ -20,6 +20,7 @@
                 <input id="remember_me" name="_remember_me" type="checkbox">
             </div>
             <input type="hidden" name="_target_path" value="/dashboard" />
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
         </fieldset>
 
         {% block login_messages %}

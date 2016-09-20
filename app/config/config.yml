@@ -24,46 +24,6 @@ framework:
 parameters:
   RUNALYZE_VERSION: 3.0.0
 
-services:
-  app.locale_listener:
-    class: Runalyze\Bundle\CoreBundle\EventListener\LocaleListener
-    arguments: ['%kernel.default_locale%']
-    tags:
-      - { name: kernel.event_subscriber }
-  app.user_locale_listener:
-    class: Runalyze\Bundle\CoreBundle\EventListener\UserLocaleListener
-    arguments: ['@session']
-    tags:
-      - { name: kernel.event_listener, event: security.interactive_login, method: onInteractiveLogin }
-  app.account_last_action_listener:
-    class: Runalyze\Bundle\CoreBundle\EventListener\AccountLastActionListener
-    arguments: ['@security.token_storage', '@doctrine.orm.entity_manager']
-    tags:
-      - { name: kernel.event_listener, event: kernel.controller, method: onCoreController }
-  app.sha256salted_encoder:
-    class: Runalyze\Bundle\CoreBundle\Services\Sha256SaltedEncoder
-  app.event.doctrine.table_prefix_subscriber:
-    class: Runalyze\Bundle\CoreBundle\EventListener\TablePrefixSubscriber
-    arguments: ['%database_prefix%']
-    tags:
-      - { name: doctrine.event_subscriber }
-  app.listener.maintenance:
-    class: Runalyze\Bundle\CoreBundle\EventListener\MaintenanceListener
-    arguments:
-        container: "@service_container"
-    tags:
-      - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
-  app.twig_html_extension:
-    class: Runalyze\Bundle\CoreBundle\Twig\HtmlExtension
-    public: false
-    tags:
-      - { name: twig.extension }
-  app.twig_utility_extension:
-    class: Runalyze\Bundle\CoreBundle\Twig\UtilityExtension
-    public: false
-    tags:
-      - { name: twig.extension }
-
 twig:
   globals:
     RUNALYZE_VERSION: '%RUNALYZE_VERSION%'

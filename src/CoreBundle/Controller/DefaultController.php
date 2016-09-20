@@ -64,7 +64,6 @@ class DefaultController extends Controller
         $form = $this->createForm(RegistrationType::class, $account);
         $form->handleRequest($request);
 
-        //<a href="https://blog.runalyze.com/nutzungsbedingungen/
         if ($form->isSubmitted() && $form->isValid()) {
             $registration = new Registration($account);
             $formdata = $request->request->get($form->getName());

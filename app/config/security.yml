@@ -20,6 +20,7 @@ security:
             form_login:
                 login_path: login
                 check_path: login_check
+                csrf_token_generator: security.csrf.token_manager
             remember_me:
                 secret:   '%secret%'
                 lifetime: 604800 # 1 week in seconds
