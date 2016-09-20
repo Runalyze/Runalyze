@@ -1,6 +1,6 @@
 <?php
 /**
- * This file contains class::Openweathermap
+ * This file contains class::Darksky
  * @package Runalyze\Service\WeatherForecast\Strategy
  */
 
@@ -16,24 +16,24 @@ use Runalyze\Data\Weather\Sources;
 use Runalyze\Data\Weather\Location;
 
 /**
- * Forecast-strategy for using forecast.io
+ * Forecast-strategy for using darksky
  * 
  * This weather forecast strategy uses the api of forecast.io
- * API documentation: https://developer.forecast.io/
+ * API documentation: https://darksky.net/dev/
  * To use this api, a location has to be set.
  * 
- * The strategy uses <code>FORECASTIO_API_KEY</code> if defined.
+ * The strategy uses <code>DARKSKY_API_KEY</code> if defined.
  *
  * @author Hannes Christiansen
  * @author Michael Pohl
  * @package Runalyze\Service\WeatherForecast\Strategy
  */
-class Forecastio implements StrategyInterface {
+class Darksky implements StrategyInterface {
 	/**
 	 * URL for catching forecast
 	 * @var string
 	 */
-	const URL = 'https://api.forecast.io/forecast/';
+	const URL = 'https://api.darksky.net/forecast/';
 
 	/**
 	 * Location
@@ -51,7 +51,7 @@ class Forecastio implements StrategyInterface {
 	 * @return boolean
 	 */
 	public function isPossible() {
-	    return (defined('FORECASTIO_API_KEY') && strlen(FORECASTIO_API_KEY))  ? true : false;
+	    return (defined('DARKSKY_API_KEY') && strlen(DARKSKY_API_KEY))  ? true : false;
 	}
 	
 	/**
@@ -74,7 +74,7 @@ class Forecastio implements StrategyInterface {
 	 */
 	public function sourceId()
 	{
-		return Sources::FORECASTIO;
+		return Sources::DARKSKY;
 	}
 
 	/**
@@ -96,8 +96,8 @@ class Forecastio implements StrategyInterface {
 	 * @param string $url
 	 */
 	public function setFromURL($url) {
-		if (defined('FORECASTIO_API_KEY') && strlen(FORECASTIO_API_KEY))
-			$url = self::URL.FORECASTIO_API_KEY.'/'.$url;
+		if (defined('DARKSKY_API_KEY') && strlen(DARKSKY_API_KEY))
+			$url = self::URL.DARKSKY_API_KEY.'/'.$url;
 
 		$this->setFromJSON( \Filesystem::getExternUrlContent($url) );
 	}

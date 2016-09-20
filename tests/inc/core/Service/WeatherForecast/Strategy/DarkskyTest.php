@@ -4,14 +4,14 @@ namespace Runalyze\Service\WeatherForecast\Strategy;
 
 use Runalyze\Data\Weather;
 
-class ForecastioTest extends \PHPUnit_Framework_TestCase
+class DarkskyTest extends \PHPUnit_Framework_TestCase
 {
-	/** @var \Runalyze\Service\WeatherForecast\Strategy\Forecastio */
+	/** @var \Runalyze\Service\WeatherForecast\Strategy\Darksky */
 	protected $object;
 
 	protected function setUp()
 	{
-		$this->object = new Forecastio();
+		$this->object = new Darksky();
 	}
 
 	public function testEmptyValues()
@@ -54,6 +54,6 @@ class ForecastioTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals(59, $this->object->humidity()->value());
 		$this->assertEquals(1013, $this->object->pressure()->value());
 		$this->assertEquals(22.77, $Temperature->value(), '', 0.01);
-		$this->assertEquals(Weather\Sources::FORECASTIO, $this->object->sourceId());
+		$this->assertEquals(Weather\Sources::DARKSKY, $this->object->sourceId());
 	}
 }
