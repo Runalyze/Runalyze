@@ -5,89 +5,89 @@
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
     <body>
-      <trans-unit id="db87c7c1df3b14400cf1ee12cfa94dfd" resname="Runalyze is completely configurable and more detailed than any other tool for analyzing your activities.">
+      <trans-unit id="db87c7c1df3b14400cf1ee12cfa94dfd" resname="Runalyze is completely configurable and more detailed than any other tool for analyzing your activities." approved="yes">
         <source>Runalyze is completely configurable and more detailed than any other tool for analyzing your activities.</source>
-        <target>Runalyze is completely configurable and more detailed than any other tool for analyzing your activities.</target>
+        <target state="translated">Runalyze on täysin muokattavissa ja yksityiskohtaisempi, kuin mikään muu työkalu urheiluaktiviteettiesi seurantaan.</target>
       </trans-unit>
-      <trans-unit id="6a07c40d5a06f10f9148318561f91fd1" resname="Please look at our official website %s to get an overview of our features.">
+      <trans-unit id="6a07c40d5a06f10f9148318561f91fd1" resname="Please look at our official website %s to get an overview of our features." approved="yes">
         <source>Please look at our official website %s to get an overview of our features.</source>
-        <target>Please look at our official website %s to get an overview of our features.</target>
+        <target state="translated">Ole hyvä ja käy katsomassa verkkosivultamme %s kooste ominaisuuksista.</target>
       </trans-unit>
-      <trans-unit id="9790f7d3ec77648f1719b71bab36a05f" resname="If you want to stay up to date on changes and receive tips from time to time, visit our blog at %s.">
+      <trans-unit id="9790f7d3ec77648f1719b71bab36a05f" resname="If you want to stay up to date on changes and receive tips from time to time, visit our blog at %s." approved="yes">
         <source>If you want to stay up to date on changes and receive tips from time to time, visit our blog at %s.</source>
-        <target>If you want to stay up to date on changes and receive tips from time to time, visit our blog at %s.</target>
+        <target state="translated">Jos haluat saada tietoa viimeisimmistä päivityksistä sekä saada vinkkejä, käy tutustumassa blogiimme %s.</target>
       </trans-unit>
-      <trans-unit id="440d35dd3bc2ae838fb420a34e1263d2" resname="Runalyze is an open-source project. We are working on it as much as we can in our free time.">
+      <trans-unit id="440d35dd3bc2ae838fb420a34e1263d2" resname="Runalyze is an open-source project. We are working on it as much as we can in our free time." approved="yes">
         <source>Runalyze is an open-source project. We are working on it as much as we can in our free time.</source>
-        <target>Runalyze is an open-source project. We are working on it as much as we can in our free time.</target>
+        <target state="translated">Runalyze avoimen lähdekoodin projekti. Työskentelemme sen parissa omalla vapaa-ajallamme niin paljon kuin voimme.</target>
       </trans-unit>
       <trans-unit id="f67c1b23d5c1a452c90449e350cb4c76" resname="Official developers:" approved="no">
         <source>Official developers:</source>
         <target state="needs-translation">Viralliset kehittäjät:</target>
       </trans-unit>
-      <trans-unit id="254f642527b45bc260048e30704edb39" resname="Configuration">
+      <trans-unit id="254f642527b45bc260048e30704edb39" resname="Configuration" approved="yes">
         <source>Configuration</source>
-        <target>Configuration</target>
+        <target state="translated">Asetukset</target>
       </trans-unit>
       <trans-unit id="52b21a8e72b6862a2759f54cb415ddae" resname="The main advantage of Runalyze is the ability to adapt everything to your personal needs and wishes.">
         <source>The main advantage of Runalyze is the ability to adapt everything to your personal needs and wishes.</source>
         <target>The main advantage of Runalyze is the ability to adapt everything to your personal needs and wishes.</target>
       </trans-unit>
-      <trans-unit id="867b9932057f82b355bf51ebffeb6a34" resname="Have a look at the configuration window to see what we're talking about.">
+      <trans-unit id="867b9932057f82b355bf51ebffeb6a34" resname="Have a look at the configuration window to see what we're talking about." approved="yes">
         <source>Have a look at the configuration window to see what we're talking about.</source>
-        <target>Have a look at the configuration window to see what we're talking about.</target>
+        <target state="translated">Käy tutustumassa Asetukset-ikkunaan, niin ymmärrät mitä tarkoitamme.</target>
       </trans-unit>
-      <trans-unit id="a8598a8104d6367c88663ef032e0a234" resname="You can define your own sports or activity types and choose your own way of presentation and configure some parameters of our experimental calculations.">
+      <trans-unit id="a8598a8104d6367c88663ef032e0a234" resname="You can define your own sports or activity types and choose your own way of presentation and configure some parameters of our experimental calculations." approved="yes">
         <source>You can define your own sports or activity types and choose your own way of presentation and configure some parameters of our experimental calculations.</source>
-        <target>You can define your own sports or activity types and choose your own way of presentation and configure some parameters of our experimental calculations.</target>
+        <target state="translated">Voit määritellä omat urheilulajisi tai aktiviteettisi, valita oman esitystapasi sekä muokata joitakin arvoja kokeellisten laskutoimituksien pohjaksi.</target>
       </trans-unit>
-      <trans-unit id="db5eb84117d06047c97c9a0191b5fffe" resname="Support" approved="no">
+      <trans-unit id="db5eb84117d06047c97c9a0191b5fffe" resname="Support" approved="yes">
         <source>Support</source>
-        <target state="needs-translation">Tuki</target>
+        <target state="translated">Tuki</target>
       </trans-unit>
-      <trans-unit id="f729a8a49c330339b2efa4b8e69618fd" resname="Please let us know if you have wishes or have encountered bugs.">
+      <trans-unit id="f729a8a49c330339b2efa4b8e69618fd" resname="Please let us know if you have wishes or have encountered bugs." approved="yes">
         <source>Please let us know if you have wishes or have encountered bugs.</source>
-        <target>Please let us know if you have wishes or have encountered bugs.</target>
+        <target state="translated">Kerro meille toiveistasi tai löytämästäsi virheestä.</target>
       </trans-unit>
-      <trans-unit id="b920f092b826fd7644faccb7eb418285" resname="We give our best to make Runalyze as good as possible for you. - Therefore we would be interested in your suggestions for improvement.">
+      <trans-unit id="b920f092b826fd7644faccb7eb418285" resname="We give our best to make Runalyze as good as possible for you. - Therefore we would be interested in your suggestions for improvement." approved="yes">
         <source>We give our best to make Runalyze as good as possible for you. - Therefore we would be interested in your suggestions for improvement.</source>
-        <target>We give our best to make Runalyze as good as possible for you. - Therefore we would be interested in your suggestions for improvement.</target>
+        <target state="translated">Teemme parhaamme tehdäksemme Runalyze:sta parhaan mahdollisen, sinulle. - Siksi olemme kiinnostuneita sinun parannusehdotuksistasi.</target>
       </trans-unit>
-      <trans-unit id="8972a25e78349104f1c0b9de1e0c2996" resname="In general most questions, problems and ideas are more appropriate to ask in the forum.">
+      <trans-unit id="8972a25e78349104f1c0b9de1e0c2996" resname="In general most questions, problems and ideas are more appropriate to ask in the forum." approved="yes">
         <source>In general most questions, problems and ideas are more appropriate to ask in the forum.</source>
-        <target>In general most questions, problems and ideas are more appropriate to ask in the forum.</target>
+        <target state="translated">Yleisesti ottaen useimmat kysymykset, ongelmat ja ideat ovat soveliaampia keskustelupalstalle.</target>
       </trans-unit>
-      <trans-unit id="e6a7f8a2f42cc35979973da8dfb10720" resname="Forum">
+      <trans-unit id="e6a7f8a2f42cc35979973da8dfb10720" resname="Forum" approved="yes">
         <source>Forum</source>
-        <target>Forum</target>
+        <target state="translated">Keskustelupalsta</target>
       </trans-unit>
-      <trans-unit id="5b6cf869265c13af8566f192b4ab3d2a" resname="Documentation" approved="no">
+      <trans-unit id="5b6cf869265c13af8566f192b4ab3d2a" resname="Documentation" approved="yes">
         <source>Documentation</source>
-        <target state="needs-translation">Asiakirjat</target>
+        <target state="translated">Ohjeet</target>
       </trans-unit>
       <trans-unit id="6dd08874f83507e9c7b23f1a46b7fa7c" resname="Translation" approved="no">
         <source>Translation</source>
         <target state="needs-translation">Käännös</target>
       </trans-unit>
-      <trans-unit id="0ab98b9aea9ad94538cd49800cf73c4e" resname="In a case of urgency you can contact us via email:">
+      <trans-unit id="0ab98b9aea9ad94538cd49800cf73c4e" resname="In a case of urgency you can contact us via email:" approved="yes">
         <source>In a case of urgency you can contact us via email:</source>
-        <target>In a case of urgency you can contact us via email:</target>
+        <target state="translated">Kiireellisissä tilanteissa voit otta yhteyttä sähköpostilla:</target>
       </trans-unit>
-      <trans-unit id="95bded74b875da4e05966bf6e0a59fba" resname="Browser Support" approved="no">
+      <trans-unit id="95bded74b875da4e05966bf6e0a59fba" resname="Browser Support" approved="yes">
         <source>Browser Support</source>
-        <target state="needs-translation">Selaimen tuki</target>
+        <target state="translated">Tuetut selaimet</target>
       </trans-unit>
-      <trans-unit id="802d2a1dea70aa257f0b2849b7d961cd" resname="Runalyze is a modern application and therefore we want to use the most modern web techniques. We will not try to support any outdated browser versions.">
+      <trans-unit id="802d2a1dea70aa257f0b2849b7d961cd" resname="Runalyze is a modern application and therefore we want to use the most modern web techniques. We will not try to support any outdated browser versions." approved="yes">
         <source>Runalyze is a modern application and therefore we want to use the most modern web techniques. We will not try to support any outdated browser versions.</source>
-        <target>Runalyze is a modern application and therefore we want to use the most modern web techniques. We will not try to support any outdated browser versions.</target>
+        <target state="translated">Runalyze on nykyaikainen sovellus ja siksi haluamme käyttää uusimpia verkkosovellustekniikoita. Emme pyri tukemaan mitään vanhentuneita selainversioita.</target>
       </trans-unit>
-      <trans-unit id="74496c51193b483820560f6725045b2a" resname="e.g. jQuery 2.x does not support IE8 (or less)">
+      <trans-unit id="74496c51193b483820560f6725045b2a" resname="e.g. jQuery 2.x does not support IE8 (or less)" approved="yes">
         <source>e.g. jQuery 2.x does not support IE8 (or less)</source>
-        <target>e.g. jQuery 2.x does not support IE8 (or less)</target>
+        <target state="translated">esim. jQuery 2.x ei tue IE8:aa (tai vanhempaa)</target>
       </trans-unit>
       <trans-unit id="948a2e3548aaf7f9941a3192fa607d51" resname="Credits" approved="no">
         <source>Credits</source>
-        <target state="needs-translation">Luottojen</target>
+        <target state="needs-translation">Kiitämme</target>
       </trans-unit>
       <trans-unit id="6013259776820a748d1b5bc3cc542e5d" resname="The plug-in was not unlocked successfully.">
         <source>The plug-in was not unlocked successfully.</source>
@@ -433,9 +433,9 @@
         <source>Nothing more to do</source>
         <target>Nothing more to do</target>
       </trans-unit>
-      <trans-unit id="7cfc2601b5944323bb448901eba3a1f3" resname="Go back to RUNALYZE">
+      <trans-unit id="7cfc2601b5944323bb448901eba3a1f3" resname="Go back to RUNALYZE" approved="yes">
         <source>Go back to RUNALYZE</source>
-        <target>Go back to RUNALYZE</target>
+        <target state="translated">Palaa RUNALYZE:en</target>
       </trans-unit>
     </body>
   </file>
