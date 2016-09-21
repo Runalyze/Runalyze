@@ -6,12 +6,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.com\n"
 "POT-Creation-Date: 2016-08-20 08:22+0200\n"
-"PO-Revision-Date: 2016-07-27 12:57+0000\n"
-"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
-"Language-Team: Finnish <http://translate.runalyze.com/projects/runalyze/"
-"runalyze/fi/>\n"
+"PO-Revision-Date: 2016-09-21 09:00+0000\n"
+"Last-Translator: koylio <riku@sdf-eu.org>\n"
+"Language-Team: Finnish <http://translate.runalyze.com/projects/runalyze"
+"/runalyze-master-po/fi/>\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,7 +21,7 @@ msgstr ""
 
 #: src/CoreBundle/Controller/DefaultController.php:251
 msgid "Click on an activity to see more details."
-msgstr "Klikkaa aktiviteettia nähdäksesi yksityiskohdat,"
+msgstr "Klikkaa aktiviteettia nähdäksesi yksityiskohdat."
 
 #: src/CoreBundle/Controller/DefaultController.php:252
 msgid "Public activities are marked: "
@@ -30,29 +30,28 @@ msgstr "Julkiset aktiviteetit merkitty: "
 #: src/CoreBundle/Controller/ActivityController.php:92
 #: src/CoreBundle/Controller/ActivityController.php:183
 msgid "The activity has been removed"
-msgstr ""
+msgstr "Aktivitetti on poistettu"
 
 #: src/CoreBundle/Controller/ActivityController.php:236
-#, fuzzy
 msgid "Corrected elevation data has been removed."
-msgstr "Korjaamattomat korkeustiedot."
+msgstr "Korjatut korkeustiedot on poistettu."
 
 #: src/CoreBundle/Controller/ActivityController.php:238
 #: inc/training/view/class.ElevationInfo.php:249
 msgid "Elevation data has been corrected."
-msgstr ""
+msgstr "Korkeustiedot on korjattu."
 
 #: src/CoreBundle/Controller/ActivityController.php:251
 msgid "Elevation data could not be retrieved."
-msgstr ""
+msgstr "Korkeustietoja ei voitu hakea."
 
 #: src/CoreBundle/Controller/PluginController.php:24
 msgid "Install"
-msgstr ""
+msgstr "Asennus"
 
 #: src/CoreBundle/Controller/PluginController.php:30
 msgid "The plugin has been successfully installed."
-msgstr ""
+msgstr "Lisäosan asentaminen onnistui."
 
 #: src/CoreBundle/Controller/PluginController.php:33
 #: inc/tpl/tpl.Frontend.header.php:36
@@ -63,24 +62,25 @@ msgstr "Asetukset"
 
 #: src/CoreBundle/Controller/PluginController.php:39
 msgid "There was a problem, the plugin could not be installed."
-msgstr ""
+msgstr "Lisäosan asentamisessa tuli ongelma, eikä sitä asennettu."
 
 #: src/CoreBundle/Controller/PluginController.php:43
 #: src/CoreBundle/Controller/PluginController.php:73
 msgid "back to list"
-msgstr ""
+msgstr "palaa luetteloon"
 
 #: src/CoreBundle/Controller/PluginController.php:60
 msgid "Uninstall"
-msgstr ""
+msgstr "Poista asennus"
 
 #: src/CoreBundle/Controller/PluginController.php:63
+#, fuzzy
 msgid "The plugin has been uninstalled."
-msgstr ""
+msgstr "Lisäosan asennus on poistettu."
 
 #: src/CoreBundle/Controller/PluginController.php:69
 msgid "There was a problem, the plugin could not be uninstalled."
-msgstr ""
+msgstr "Lisäosan poistamisessa tuli ongelma, asennusta ei poistettu."
 
 #: src/CoreBundle/Controller/PluginController.php:94
 msgid "The plugin could not be found."
@@ -88,15 +88,15 @@ msgstr "Liitännäistä ei löytynyt."
 
 #: src/CoreBundle/Controller/PluginController.php:166
 msgid "Something went wrong ..."
-msgstr ""
+msgstr "Jokin meni vikaan ..."
 
 #: src/CoreBundle/Controller/CallController.php:147
 msgid "Delete your account."
-msgstr ""
+msgstr "Poista tilisi."
 
 #: src/CoreBundle/Controller/CallController.php:150
 msgid "Sending the link did not work. Please contact the administrator."
-msgstr ""
+msgstr "Linkin lähettäminen ei onnistunut. Ota yhteyttä ylläpitoon."
 
 #: src/CoreBundle/Controller/CallController.php:153
 msgid ""
@@ -104,10 +104,13 @@ msgid ""
 "decided to delete your account.<br>Your account will be deleted as soon as "
 "you click on the confirmation link in your mail."
 msgstr ""
+"<em>Vahvitusviesti on lähetetty sähköpostiisi</em><br>Harmi, että päätit "
+"poistaa tilisi.<br>Tilisi poistetaan heti, kun olet vahvistanut poistamisen "
+"klikkamalla sähköpostissa lähetettyä linkkiä."
 
 #: src/CoreBundle/Controller/CallController.php:180
 msgid "Search for activities"
-msgstr ""
+msgstr "Hae aktiviteettia"
 
 #: src/CoreBundle/Controller/CallController.php:209
 msgid "There was a problem."
@@ -115,7 +118,7 @@ msgstr "Ongelma havaittu."
 
 #: src/CoreBundle/Controller/CallController.php:243
 msgid "You are not logged in anymore."
-msgstr ""
+msgstr "Et ole enää kirjautuneena."
 
 #: src/CoreBundle/Controller/CallController.php:244
 #: inc/tpl/tpl.adminWindow.login.php:13
@@ -145,14 +148,12 @@ msgid "Please enter a number."
 msgstr "Anna numero."
 
 #: inc/html/formular/class.FormularValueParser.php:258
-#, fuzzy
 msgid "This value is too large."
 msgstr "Liian suuri arvo."
 
 #: inc/html/formular/class.FormularValueParser.php:262
-#, fuzzy
 msgid "This value is too small."
-msgstr "Liian suuri arvo."
+msgstr "Liian pieni arvo."
 
 #: inc/html/formular/class.FormularValueParser.php:303
 msgid "The value is too large."
@@ -163,9 +164,8 @@ msgid "The date could not be parsed."
 msgstr "Päivämäärä virheellisessä muodossa."
 
 #: inc/html/formular/class.FormularValueParser.php:345
-#, fuzzy
 msgid "The date must not be in the future."
-msgstr "Päivämäärä virheellisessä muodossa."
+msgstr "Päivämäärä ei voi olla tulevaisuudessa."
 
 #: inc/html/formular/class.FormularValueParser.php:378
 msgid "The time could not be read."
@@ -298,11 +298,11 @@ msgstr "Kaltevuus"
 #: inc/training/search/class.FormularSelectSearchSort.php:64
 #: inc/training/schemes/scheme.Training.php:516
 msgid "Wind speed"
-msgstr ""
+msgstr "Tuulen nopeus"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:65
 msgid "Wind direction"
-msgstr ""
+msgstr "Tuulen suunta"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:71
 msgid "descending"
@@ -368,7 +368,7 @@ msgstr "Valitse urheilulaji(t)"
 
 #: inc/training/search/class.SearchFormular.php:136
 msgid "all"
-msgstr ""
+msgstr "kaikki"
 
 #: inc/training/search/class.SearchFormular.php:138
 #: inc/system/config/class.ConfigTabSports.php:134
@@ -379,8 +379,9 @@ msgstr ""
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:170
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:172
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:135
+#, fuzzy
 msgid "none"
-msgstr ""
+msgstr "ei mitään"
 
 #: inc/training/search/class.SearchFormular.php:147
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:328
@@ -488,7 +489,7 @@ msgstr "Kesto"
 #: inc/training/search/class.SearchFormular.php:174
 #: inc/training/schemes/scheme.Training.php:585
 msgid "Title"
-msgstr ""
+msgstr "Otsikko"
 
 #: inc/training/search/class.SearchFormular.php:177
 #: inc/training/schemes/scheme.Training.php:404
@@ -542,7 +543,7 @@ msgstr "Voima"
 #: inc/training/search/class.SearchFormular.php:186
 #, fuzzy
 msgid "Is race"
-msgstr "Kaikki kilpailut"
+msgstr "Kilpailu"
 
 #: inc/training/search/class.SearchFormular.php:188
 #: inc/training/view/class.VDOTinfo.php:74
@@ -610,7 +611,7 @@ msgstr "Rata"
 #: inc/training/schemes/scheme.Training.php:382
 #: inc/core/View/Activity/Box/RPE.php:30 inc/core/Dataset/Keys/RPE.php:52
 msgid "RPE"
-msgstr ""
+msgstr "RPE"
 
 #: inc/training/search/class.SearchFormular.php:197
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:167
@@ -642,7 +643,7 @@ msgstr "Maakontakti suhde"
 #: inc/training/search/class.SearchFormular.php:202
 #: inc/core/Data/Weather/WindSpeed.php:63
 msgid "Wind Speed"
-msgstr ""
+msgstr "Tuulen nopeus"
 
 #: inc/training/search/class.SearchFormular.php:204
 #: inc/training/view/section/class.SectionHeartrateRow.php:78
@@ -656,7 +657,6 @@ msgstr "Kalorit"
 #: inc/training/search/class.SearchFormular.php:205
 #: inc/core/Activity/TrainingEffect.php:53
 #: inc/core/Dataset/Keys/FitTrainingEffect.php:43
-#, fuzzy
 msgid "Training Effect"
 msgstr "JD pisteet"
 
@@ -664,14 +664,14 @@ msgstr "JD pisteet"
 #: inc/training/schemes/scheme.Training.php:492
 #: inc/core/Data/Weather/Humidity.php:58 inc/core/Dataset/Keys/Humidity.php:43
 msgid "Humidity"
-msgstr ""
+msgstr "Kosteus"
 
 #: inc/training/search/class.SearchFormular.php:210
 #: inc/training/schemes/scheme.Training.php:504
 #: inc/core/Data/Weather/Pressure.php:58
 #: inc/core/Dataset/Keys/AirPressure.php:52
 msgid "Pressure"
-msgstr ""
+msgstr "Paine"
 
 #: inc/training/search/class.SearchFormular.php:310
 #: inc/system/config/class.ConfigTabAccount.php:67
@@ -690,7 +690,7 @@ msgid "All"
 msgstr "Kaikki"
 
 #: inc/training/view/class.VDOTinfo.php:54
-#, fuzzy, php-format
+#, php-format
 msgid "VDOT calculation for: %s"
 msgstr "VDOT laskenta: %s"
 
@@ -711,10 +711,8 @@ msgid "Correction: based on heartrate"
 msgstr "Korjaus: perustuen sykkeeseen"
 
 #: inc/training/view/class.VDOTinfo.php:95
-#, fuzzy
 msgid "Jack Daniels has tables to compare &#37;HRmax and &#37;vVDOT."
-msgstr ""
-"Jack Danielsn talukot vertailevat &#37;maksimi syke and &#37;vVDOT arvoja."
+msgstr "Jack Danielsin taulukot vertailevat &#37;HRmax ja &#37;vVDOT arvoja."
 
 #: inc/training/view/class.VDOTinfo.php:96
 msgid ""
@@ -731,7 +729,6 @@ msgid "Heartrate"
 msgstr "Syke"
 
 #: inc/training/view/class.VDOTinfo.php:108
-#, fuzzy
 msgid "equals"
 msgstr "yhtäkuin"
 
@@ -744,7 +741,6 @@ msgid "To consider some individual factors, we use a correction factor."
 msgstr "Käytämme korjauskerrointa yksilöllisten tekijöiden takia."
 
 #: inc/training/view/class.VDOTinfo.php:125
-#, fuzzy
 msgid "This factor is based on your <em>best</em> race result."
 msgstr "Kerroin perustuu <em>parhaaseen</em> kilpailusuoritukseen."
 
@@ -770,7 +766,6 @@ msgid "Up/Down"
 msgstr "Ylös/Alas"
 
 #: inc/training/view/class.VDOTinfo.php:185
-#, fuzzy
 msgid "Influence"
 msgstr "Vaikutus"
 
@@ -863,7 +858,7 @@ msgstr "keskiarvo"
 #: inc/core/Dataset/Keys/HeartrateMaximum.php:44
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:369
 msgid "Heart rate"
-msgstr ""
+msgstr "Syke"
 
 #: inc/training/view/section/class.SectionSwimLaneRow.php:35
 #: inc/core/View/Activity/Plot/Series/Stroke.php:62
@@ -872,7 +867,6 @@ msgstr "Vedot"
 
 #: inc/training/view/section/class.SectionSwimLaneRow.php:37
 #: inc/training/schemes/scheme.Training.php:834
-#, fuzzy
 msgid "SWOLF"
 msgstr "SWOLF"
 
@@ -924,7 +918,7 @@ msgstr "Kulunut aika"
 #: inc/system/config/class.ConfigTabEquipment.php:82
 #: plugin/RunalyzePluginPanel_Equipment/class.RunalyzePluginPanel_Equipment.php:199
 msgid "max."
-msgstr ""
+msgstr "suurin"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:56
 msgid "Additional notes"
@@ -953,7 +947,6 @@ msgstr "Vedot"
 #: inc/core/View/Activity/Plot/Series/Swolfcycles.php:62
 #: inc/core/View/Activity/Plot/Series/Swolf.php:63
 #: inc/core/Dataset/Keys/Swolf.php:44
-#, fuzzy
 msgid "Swolf"
 msgstr "Swolf"
 
@@ -978,7 +971,7 @@ msgstr "Treeni kumppani"
 #: inc/draw/class.PlotSumData.php:593
 #, fuzzy
 msgid "Race Result"
-msgstr "Tulos"
+msgstr "Kilpatulos"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:314
 #: inc/core/Dataset/Keys/RaceResult.php:127
@@ -992,27 +985,26 @@ msgstr "Kokonaismatka:"
 #: inc/core/Dataset/Keys/RaceResult.php:128
 #: inc/core/Dataset/Keys/RaceResult.php:176
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:569
+#, fuzzy
 msgid "Official time"
-msgstr ""
+msgstr "Virallinen aika"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:316
-#, fuzzy
 msgid "Place overall"
-msgstr "Tahtivyöhykeeet"
+msgstr "Kokonaissijoitus"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:317
 msgid "Place age group"
-msgstr ""
+msgstr "Sijoitus ikäryhmässä"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:318
-#, fuzzy
 msgid "Place gender"
-msgstr "Tahtivyöhykeeet"
+msgstr "Sijoitus sukupuolittain"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:339
 #, php-format
 msgid "Source of weather data: %s"
-msgstr ""
+msgstr "Säätietojen lähde: %s"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:355
 #, php-format
@@ -1051,12 +1043,11 @@ msgstr "Radat"
 
 #: inc/training/view/section/table/class.TableLapsComputed.php:66
 msgid "bpm"
-msgstr ""
+msgstr "bpm"
 
 #: inc/training/view/section/table/class.TableLapsComputed.php:67
-#, fuzzy
 msgid "elev."
-msgstr "korkeus"
+msgstr "kork."
 
 #: inc/training/view/section/table/class.TableZonesPace.php:35
 #: inc/core/View/Window/Laps/Table.php:148
@@ -1071,7 +1062,6 @@ msgid "HR"
 msgstr "syke"
 
 #: inc/training/view/section/table/class.TableZonesPace.php:54
-#, fuzzy
 msgid "faster"
 msgstr "nopeampi"
 
@@ -1110,11 +1100,12 @@ msgstr "Pointcaré kaavio"
 #: inc/core/View/Activity/Plot/HRVPoincare.php:59
 #: inc/core/View/Activity/Plot/Series/HRV.php:91
 msgid "R-R interval"
-msgstr ""
+msgstr "RR-intervalli"
 
 #: inc/training/view/section/class.SectionHRVRow.php:52
+#, fuzzy
 msgid "Anomalies"
-msgstr ""
+msgstr "Poikkeamat"
 
 #: inc/training/view/section/class.SectionOverview.php:17
 msgid "Overview"
@@ -1139,7 +1130,7 @@ msgstr "Yleiskaavio"
 #: inc/training/view/section/class.SectionCompositeRow.php:50
 #: inc/training/view/section/class.SectionCompositeRow.php:58
 msgid "You will be soon able to configure your own zones."
-msgstr ""
+msgstr "Voit pian määritellä omat raja-arvosi kaavioihin."
 
 #: inc/training/view/section/class.SectionCompositeRow.php:60
 msgid "Heart rate zones"
@@ -1189,58 +1180,61 @@ msgstr "Korkein piste"
 #: inc/training/view/class.ElevationInfo.php:167
 msgid "You can choose the algorithm and threshold in the configuration window."
 msgstr ""
+"Voit valita käytetyn laskentakaavan sekä raja-arvot Asetukset -ikkunasta."
 
 #: inc/training/view/class.ElevationInfo.php:169
 msgid "Elevation data for different algorithms/thresholds"
-msgstr ""
+msgstr "Korkeustiedot eri laskentakaavoille/raja-arvoille"
 
 #: inc/training/view/class.ElevationInfo.php:182
 msgid ""
 "Elevation data for different algorithms/thresholds (based on original data)"
 msgstr ""
+"Korkeustiedot eri laskentakaavoille/raja-arvoille (perustuu alkuperäisiin "
+"tietoihin)"
 
 #: inc/training/view/class.ElevationInfo.php:207
 #: inc/core/View/Activity/Plot/ElevationAlgorithms.php:96
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:400
 #: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:141
 msgid "Threshold"
-msgstr ""
+msgstr "Raja-arvo"
 
 #: inc/training/view/class.ElevationInfo.php:245
 msgid "Elevation correction"
-msgstr ""
+msgstr "Korkeustietojen korjaus"
 
 #: inc/training/view/class.ElevationInfo.php:252
 msgid "Elevation data has not been corrected."
-msgstr ""
+msgstr "Korkeustietoja ei ole korjattu."
 
 #: inc/training/view/class.ElevationInfo.php:253
 msgid "correct now"
-msgstr ""
+msgstr "korjaa nyt"
 
 #: inc/training/view/class.ElevationInfo.php:273
 #: inc/training/view/class.ElevationInfo.php:274
 #: inc/training/view/class.ElevationInfo.php:275
 #, php-format
 msgid "correct again using %s"
-msgstr ""
+msgstr "korjaa uudelleen käyttämällä %s"
 
 #: inc/training/view/class.ElevationInfo.php:273
 msgid "srtm files"
-msgstr ""
+msgstr "strm -tiedostot"
 
 #: inc/training/view/class.ElevationInfo.php:276
-#, fuzzy
 msgid "remove corrected elevation data"
-msgstr "Reitti- ja korkeustiedot"
+msgstr "poista korjatut korkeustiedot"
 
 #: inc/training/view/class.ElevationInfo.php:287
 msgid "Compare algorithms"
 msgstr "Vertaa algoritmeja"
 
 #: inc/training/view/class.ElevationInfo.php:298
+#, fuzzy
 msgid "Note for elevation data"
-msgstr ""
+msgstr "Huomioi korkeustiedoista"
 
 #: inc/training/view/class.ElevationInfo.php:302
 msgid ""
@@ -1251,6 +1245,12 @@ msgid ""
 "value (for up-/downwards). We give you therefore the possibility to choose "
 "algorithm and threshold such that the values fit your experience."
 msgstr ""
+"Korkeustietojen laskenta on hyvin vaikeaa, eikä siihen ole yhtä ainoaa "
+"ratkaisua. Virheet GPS-tiedoissa voidaan korjata srtm-tiedoilla, mutta niitä "
+"on saatavilla vain 90x90m tarkkuudella eivätkä ne ole täysin tarkkoja. Tämän "
+"lisäksi eri alustat käyttävät eri laskentakaavoja nousujen ja laskujen "
+"laskentaan. Siksi annamme mahdollisuuden valita laskentakaavan ja "
+"käytettävät raja-arvot."
 
 #: inc/training/view/class.TrainingView.php:58
 msgid "Show week"
@@ -1258,7 +1258,7 @@ msgstr "Näytä viikko"
 
 #: inc/training/view/class.TrainingView.php:66
 msgid "Share"
-msgstr ""
+msgstr "Jaa"
 
 #: inc/training/view/class.TrainingView.php:69
 #: inc/core/Dataset/Keys/SharedLink.php:44
@@ -1272,44 +1272,41 @@ msgid "Export"
 msgstr "Vie"
 
 #: inc/training/view/class.TrainingView.php:94
-#, php-format
+#, fuzzy, php-format
 msgid "as %s"
-msgstr ""
+msgstr "%s:na"
 
 #: inc/training/view/class.TrainingView.php:107
 #: inc/core/Dataset/Keys/Setting.php:135
 msgid "Make private"
-msgstr ""
+msgstr "Yksityinen"
 
 #: inc/training/view/class.TrainingView.php:110
 #: inc/core/Dataset/Keys/Setting.php:138
-#, fuzzy
 msgid "Make public"
 msgstr "Julkinen"
 
 #: inc/training/view/class.TrainingView.php:115
 msgid "Edit race result"
-msgstr ""
+msgstr "Muokkaa kilpailutulosta"
 
 #: inc/training/view/class.TrainingView.php:117
-#, fuzzy
 msgid "Add race result"
-msgstr "Paras tulos"
+msgstr "Lisää kilpailutulos"
 
 #: inc/training/view/class.TrainingView.php:121
-#, fuzzy
 msgid "Edit activity"
-msgstr "Ensimmäinen aktiviteetti:"
+msgstr "Muokkaa aktiviteettia"
 
 #: inc/training/view/class.TrainingView.php:124
 #: inc/core/Dataset/Keys/Setting.php:103
 msgid "Do you really want to delete this activity?"
-msgstr ""
+msgstr "Haluatko varmasti poistaa tämän aktiviteetin?"
 
 #: inc/training/view/class.TrainingView.php:124
 #: inc/core/Dataset/Keys/Setting.php:103 inc/core/Dataset/Keys/Setting.php:120
 msgid "Delete activity"
-msgstr ""
+msgstr "Poista aktiviteetti"
 
 #: inc/training/formular/class.TrainingSelectType.php:24
 msgid "select type"
@@ -1317,35 +1314,36 @@ msgstr "valitse tyyppi"
 
 #: inc/training/formular/class.TrainingInputSplits.php:49
 msgid "add new lap"
-msgstr ""
+msgstr "lisää kierros"
 
 #: inc/training/formular/class.TrainingInputSplits.php:52
 msgid "round for 100m"
-msgstr ""
+msgstr "pyöristä 100m:iin"
 
 #: inc/training/formular/class.TrainingInputSplits.php:55
+#, fuzzy
 msgid "apply as total distance"
-msgstr ""
+msgstr "laske kokonaismatkaan"
 
 #: inc/training/formular/class.TrainingInputSplits.php:56
 msgid "all active"
-msgstr ""
+msgstr "kaikki aktiivisia"
 
 #: inc/training/formular/class.TrainingInputSplits.php:56
 msgid "all resting"
-msgstr ""
+msgstr "kaikki lepoa"
 
 #: inc/training/formular/class.TrainingInputSplits.php:57
 msgid "alternating:"
-msgstr ""
+msgstr "vuorotteleva:"
 
 #: inc/training/formular/class.TrainingInputSplits.php:57
 msgid "first resting"
-msgstr ""
+msgstr "ensimmäinen lepoa"
 
 #: inc/training/formular/class.TrainingInputSplits.php:58
 msgid "first active"
-msgstr ""
+msgstr "ensimmäinen aktiivinen"
 
 #: inc/training/formular/class.TrainingInputSplits.php:71
 #: inc/data/class.Splits.php:171
@@ -1356,16 +1354,14 @@ msgstr ""
 
 #: inc/training/formular/class.TrainingInputSplits.php:94
 msgid "Defining some laps as 'resting' will hide them in the respective plot."
-msgstr ""
+msgstr "Kierroksien määritteleminen 'levoksi' piilottaa ne kierrostaulukoista."
 
 #: inc/training/formular/class.TrainingInputSplits.php:132
 #: inc/data/class.Splits.php:171
-#, fuzzy
 msgid "Resting"
 msgstr "Lepo"
 
 #: inc/training/formular/class.TrainingInputSplits.php:132
-#, fuzzy
 msgid "Active"
 msgstr "Aktiivinen"
 
@@ -1394,17 +1390,20 @@ msgstr "Julikinen"
 
 #: inc/training/schemes/scheme.Training.php:150
 msgid "Public activities will be visible for everybody."
-msgstr ""
+msgstr "Julkiset aktiviteetit näkyvät kaikille."
 
 #: inc/training/schemes/scheme.Training.php:162
 msgid ""
 "This field is only meant for official track races such that distances can be "
 "shown correctly, e.g. as 10.000m. Use tags for all other purposes."
 msgstr ""
+"Tämä syöttökenttä on tarkoitettu ainoastaan ratamatkoille jotta matka "
+"näytetään oikein, esim. 10.000m. Käytä tunnisteita muita tarkoituksia varten."
 
 #: inc/training/schemes/scheme.Training.php:222
+#, fuzzy
 msgid "Will be calculated afterwards from the activity's elevation profile."
-msgstr ""
+msgstr "Lasketaan jälkikäteen  käyttäen aktiviteetin korkeustietoja."
 
 #: inc/training/schemes/scheme.Training.php:246
 msgid ""
@@ -1412,10 +1411,13 @@ msgid ""
 "(if activated in your configuration) only if you change the duration or the "
 "type of sport."
 msgstr ""
+"Tämä arvo lasketaan automaattisesti suorituksen kestosta ja valitusta "
+"uhreilulajista (jos niin on valittu asetuksissa) vain, jos muutat "
+"suorituksen kestoa tai vaihdat valittua urheilulajia."
 
 #: inc/training/schemes/scheme.Training.php:309
 msgid "VDOT for form"
-msgstr ""
+msgstr "VDOT taulukkoon"
 
 #: inc/training/schemes/scheme.Training.php:310
 msgid ""
@@ -1423,6 +1425,10 @@ msgid ""
 "single activities from the calculation of your form and should do so if it's "
 "heart rate data are not reliable (e.g. a lot of stops, walking breaks, ...)."
 msgstr ""
+"VDOT arvioidaan sykkeen ja vauhdin välisestä suhteesta. Voit rajata pois "
+"yksittäisiä aktiviteetteja arvon laskemisesta, ja niin kannattaakin tehdä "
+"jos syketiedot eivät ole luotettavia (esim. paljon pysähdyksiä, "
+"kävelytaukoja, ...)."
 
 #: inc/training/schemes/scheme.Training.php:404
 msgid "Cadence (Running)"
@@ -1433,15 +1439,17 @@ msgid ""
 "Unit is always - also for running - <em>rpm</em>, i.e. rounds (or steps with "
 "one foot) per minute,"
 msgstr ""
+"Yksikkö on aina - myös juostessa - <em>rpm</em>, eli kierrosta (tai jalan "
+"askelta) minuutissa,"
 
 #: inc/training/schemes/scheme.Training.php:529
+#, fuzzy
 msgid "Wind degrees"
-msgstr ""
+msgstr "Tuulen suunta"
 
 #: inc/training/schemes/scheme.Training.php:552
-#, fuzzy
 msgid "Night"
-msgstr "Paino"
+msgstr "Yö"
 
 #: inc/training/schemes/scheme.Training.php:824
 #: inc/core/Dataset/Keys/TotalStrokes.php:44
@@ -1476,53 +1484,59 @@ msgstr "Paino"
 #: plugin/RunalyzePluginPanel_Sportler/Plot.gewicht.php:43
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:116
 msgid "Resting HR"
-msgstr ""
+msgstr "Leposyke"
 
 #: inc/training/schemes/scheme.UserData.php:76
 #: plugin/RunalyzePluginPanel_Sportler/window.sportler.table.php:39
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:117
 msgid "Maximal HR"
-msgstr ""
+msgstr "Maksimisyke"
 
 #: inc/training/schemes/scheme.UserData.php:86
 msgid "Body fat"
-msgstr ""
+msgstr "Rasvan osuus"
 
 #: inc/training/schemes/scheme.UserData.php:96
 msgid "Body water"
-msgstr ""
+msgstr "Veden osuus"
 
 #: inc/training/schemes/scheme.UserData.php:106
 msgid "Body muscle"
-msgstr ""
+msgstr "Lihasten osuus"
 
 #: inc/training/schemes/scheme.UserData.php:117
 msgid "Sleep Duration"
-msgstr ""
+msgstr "Unen määrä"
 
 #: inc/training/class.TrainingFormular.php:105
 msgid "Save and continue"
-msgstr ""
+msgstr "Tallenna ja jatka"
 
 #: inc/training/class.TrainingFormular.php:110
 msgid "It seems that you already have imported this activity"
-msgstr ""
+msgstr "Vaikuttaisi siltä, että olet jo tuonut tämän aktiviteetin"
 
 #: inc/training/class.TrainingFormular.php:212
 msgid "The activity has been successfully created."
-msgstr ""
+msgstr "Aktiviteetin luonti onnistui."
 
 #: inc/training/class.TrainingFormular.php:248
+#, fuzzy
 msgid ""
 "Race results are treated in a special way to show your personal bests and "
 "are independent of the chosen activity type."
 msgstr ""
+"Kilpailutuloksia käsitellään erikseen, ja käytetään omien huippuarvojesi "
+"laskentaan. Ne ovat riippumattomia valitusta aktiviteetista."
 
 #: inc/training/class.TrainingFormular.php:249
+#, fuzzy
 msgid ""
 "You can add some details (your placement etc.) in the 'Race result' plugin "
 "afterwards."
 msgstr ""
+"Voit lisätä yksityiskohtia (sijoituksesi jne.) 'Kilpailutulokset' lisäosasta "
+"myöhemmin."
 
 #: inc/training/class.TrainingFormular.php:251
 #: inc/system/schemes/set.emptyValues.php:65
@@ -1532,63 +1546,69 @@ msgstr "Kilpailu"
 
 #: inc/training/class.TrainingFormular.php:339
 msgid "Choose tags"
-msgstr ""
+msgstr "Valitse tagit"
 
 #: inc/training/class.TrainingFormular.php:424
 msgid "Remove data series"
-msgstr ""
+msgstr "Poista tietue"
 
 #: inc/training/class.TrainingFormular.php:425
 msgid ""
 "You may want to remove a data series if a sensor, e.g. your heart rate "
 "strap, produced unusable data."
 msgstr ""
+"Voit haluta poistaa tietueen jos mittalaite, esim. sykemittari, tuotti "
+"epäluotettavia tuloksia."
 
 #: inc/training/class.TrainingFormular.php:426
 #: inc/system/config/class.ConfigTabEquipment.php:58
 msgid "Attention: This operation cannot be undone."
-msgstr ""
+msgstr "Varoitus: Tätä toimintoa ei voi peruuttaa."
 
 #: inc/training/class.TrainingFormular.php:454
+#, fuzzy
 msgid "Ground contact time balance"
-msgstr ""
+msgstr "Askelluksen tasapaino (ground contact time balance)"
 
 #: inc/training/class.TrainingFormular.php:455
 #: inc/core/View/Window/Laps/Table.php:269
 #: inc/core/Dataset/Keys/Groundcontact.php:44
+#, fuzzy
 msgid "Ground contact time"
-msgstr ""
+msgstr "Maakontaktin aika"
 
 #: inc/training/class.TrainingFormular.php:467
 msgid "Original elevation"
-msgstr ""
+msgstr "Alkuperäinen korkeusero"
 
 #: inc/training/class.TrainingFormular.php:468
 msgid "Corrected elevation"
-msgstr ""
+msgstr "Korjattu korkeusero"
 
 #: inc/training/class.TrainingFormular.php:472
 msgid "GPS path"
-msgstr ""
+msgstr "GPS -polku"
 
 #: inc/training/class.TrainingFormular.php:492
 msgid "Use elevation correction"
-msgstr ""
+msgstr "Käytä korkeustietojen korjausta"
 
 #: inc/training/class.TrainingFormular.php:496
 msgid "Correct elevation data"
-msgstr ""
+msgstr "Korjaa korkeustiedot"
 
 #: inc/training/class.TrainingFormular.php:499
 msgid ""
 "Elevation data via GPS is very inaccurate. Therefore you can correct it via "
 "some satellite data."
 msgstr ""
+"GPS:n tuottama korkeustieto on erittäin epätarkkaa. Voit korjata sen "
+"käyttämällä satelliittitietoja."
 
 #: inc/core/Configuration/Category/General.php:192
 #: inc/system/config/class.ConfigTabGeneral.php:20
 msgid "General settings"
-msgstr ""
+msgstr "Yleiset asetukset"
 
 #: inc/core/Configuration/Category/General.php:195
 #: inc/core/Dataset/Keys/RaceResult.php:139
@@ -1596,7 +1616,7 @@ msgstr ""
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:584
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:589
 msgid "Gender"
-msgstr ""
+msgstr "Sukupuoli"
 
 #: inc/core/Configuration/Category/General.php:199
 msgid "Beginning of the week"
@@ -1604,29 +1624,32 @@ msgstr "Viikon alku"
 
 #: inc/core/Configuration/Category/General.php:203
 msgid "Unit system for distances"
-msgstr ""
+msgstr "Mittayksikkö etäisyyksille"
 
 #: inc/core/Configuration/Category/General.php:204
+#, fuzzy
 msgid ""
 "Changing the unit system for distances does not change pace units. You have "
 "to adjust them in sports configuration."
 msgstr ""
+"Mittayksikön vaihtaminen etäisyyksille ei muuta vauhtitietojen "
+"mittayksiköitä. Muokkaa niitä urheiluasetuksissa."
 
 #: inc/core/Configuration/Category/General.php:208
 msgid "Weight unit"
-msgstr ""
+msgstr "Painoyksikkö"
 
 #: inc/core/Configuration/Category/General.php:212
 msgid "Temperature unit"
-msgstr ""
+msgstr "Lämpötilan mittayksikkö"
 
 #: inc/core/Configuration/Category/General.php:216
 msgid "Heart rate unit"
-msgstr ""
+msgstr "Sykkeen mittayksikkö"
 
 #: inc/core/Configuration/Category/General.php:220
 msgid "Main sport"
-msgstr ""
+msgstr "Pääurheilulaji"
 
 #: inc/core/Configuration/Category/BasicEndurance.php:101
 #: inc/core/Configuration/Category/BasicEndurance.php:149
@@ -1634,157 +1657,175 @@ msgstr ""
 #: plugin/RunalyzePluginPanel_Rechenspiele/Plot.Form.php:196
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:624
 msgid "Basic endurance"
-msgstr ""
+msgstr "Peruskestävyys"
 
 #: inc/core/Configuration/Category/BasicEndurance.php:103
 msgid "Minimal distance for longjogs"
-msgstr ""
+msgstr "Lyhyin matka pitkille lenkeille"
 
 #: inc/core/Configuration/Category/BasicEndurance.php:104
+#, fuzzy
 msgid "Every run above this distance will be rated."
-msgstr ""
+msgstr "Kaikki juoksut, jotka ylittävät tämän matkan arvioidaan."
 
 #: inc/core/Configuration/Category/BasicEndurance.php:108
+#, fuzzy
 msgid "Days for longjogs"
-msgstr ""
+msgstr "Päiviä pitkiin lenkkeihin"
 
 #: inc/core/Configuration/Category/BasicEndurance.php:109
+#, fuzzy
 msgid "Number of days to look at for longjog goal."
-msgstr ""
+msgstr "Kuinka monta päivää huomioidaan pitkien lenkkien tavoitteeseen."
 
 #: inc/core/Configuration/Category/BasicEndurance.php:112
+#, fuzzy
 msgid "Days for week kilometer"
-msgstr ""
+msgstr "Päivät viikkokilometreihin"
 
 #: inc/core/Configuration/Category/BasicEndurance.php:113
+#, fuzzy
 msgid "Number of days to look at for weekly kilometer goal."
-msgstr ""
+msgstr "Kuinka monta päivää huomioidaan viikokilometrien tavoitteeseen."
 
 #: inc/core/Configuration/Category/BasicEndurance.php:116
+#, fuzzy
 msgid "Days for week kilometer (minimum)"
-msgstr ""
+msgstr "Päivät viikkokilometreihin (minimi)"
 
 #: inc/core/Configuration/Category/BasicEndurance.php:117
 msgid "This value will be used if not enough data is available."
-msgstr ""
+msgstr "Tätä arvoa ei käytetä jos tarpeeksi tietoja ei ole saatavilla."
 
 #: inc/core/Configuration/Category/BasicEndurance.php:120
 msgid "Factor for week kilometers"
-msgstr ""
+msgstr "Kerroin viikkokilometrejä varten"
 
 #: inc/core/Configuration/Category/BasicEndurance.php:121
 msgid "Percentage as value between 0.00 and 1.00."
-msgstr ""
+msgstr "Prosenttiluku arvona 0.00 ja 1.00 väliltä."
 
 #: inc/core/Configuration/Category/Misc.php:48
 msgid "Search: results per page"
-msgstr ""
+msgstr "Etsi: tuloksia sivua kohden"
 
 #: inc/core/Configuration/Category/Misc.php:49
 msgid "Number of results displayed on each page."
-msgstr ""
+msgstr "Yhdellä sivulla näytettävien tulosten lukumäärä."
 
 #: inc/core/Configuration/Category/Privacy.php:94
 msgid "Publish activities"
-msgstr ""
+msgstr "Julkiset aktiviteetit"
 
 #: inc/core/Configuration/Category/Privacy.php:95
 msgid "Automatically mark every activity after its creation as public."
-msgstr ""
+msgstr "Merkitse automaattisesti jokainen luotu aktiviteetti julkiseksi."
 
 #: inc/core/Configuration/Category/Privacy.php:99
 msgid "Public list: active"
-msgstr ""
+msgstr "Julkinen lista: käytössä"
 
 #: inc/core/Configuration/Category/Privacy.php:100
 msgid "If activated: Everyone can see a list of all your (public) activities."
 msgstr ""
+"Jos valittuna, jokainen voi nähdä listan kaikista julkisista "
+"aktiviteeteistasi."
 
 #: inc/core/Configuration/Category/Privacy.php:104
 msgid "Public list: private workouts"
-msgstr ""
+msgstr "Julkinen lista: yksityiset harjoitukset"
 
 #: inc/core/Configuration/Category/Privacy.php:105
 msgid ""
 "If activated: Display a summary for each private activity in the public "
 "activity list."
 msgstr ""
+"Jos valittuna, näyttää koosteen jokaisesta yksityisestä aktiviteetista "
+"julkisessa listassa."
 
 #: inc/core/Configuration/Category/Privacy.php:109
 msgid "Public list: general statistics"
-msgstr ""
+msgstr "Julkinen lista: yleistiedot"
 
 #: inc/core/Configuration/Category/Privacy.php:110
 msgid "Show some general statistics above the activity list"
-msgstr ""
+msgstr "Näyttää yleistietoja aktiviteettilistauksen yläpuolella"
 
 #: inc/core/Configuration/Category/Privacy.php:114
 msgid "Public view: show map"
-msgstr ""
+msgstr "Julkinen näkymä: näytä kartta"
 
 #: inc/core/Configuration/Category/Privacy.php:115
 msgid "You can hide the map for the public view"
-msgstr ""
+msgstr "Voit piilottaa kartan julkisesta näkymästä"
 
 #: inc/core/Configuration/Category/ActivityView.php:310
 msgid "Activity view"
-msgstr ""
+msgstr "Aktiviteetti -näkymä"
 
 #: inc/core/Configuration/Category/ActivityView.php:313
 msgid "Number of decimals"
-msgstr ""
+msgstr "Desimaalien lukumäärä"
 
 #: inc/core/Configuration/Category/ActivityView.php:317
 msgid "Activity view: show rows in full height"
-msgstr ""
+msgstr "Aktiviteetti -näkymä: näytä rivit täydessä korkeudessaan"
 
 #: inc/core/Configuration/Category/ActivityView.php:318
 msgid "By default e.g. lap data will be scrollable and not shown completely."
 msgstr ""
+"Oletusarvoisesti esim. kierrokset näytetään vierityspalkilla varustetussa "
+"kentässä, eivätkä ne näy kokonaan."
 
 #: inc/core/Configuration/Category/ActivityView.php:334
 msgid "Plots: combination"
-msgstr ""
+msgstr "Kaaviot: yhdistelmä"
 
 #: inc/core/Configuration/Category/ActivityView.php:338
 msgid "Plots: precision"
-msgstr ""
+msgstr "Kaaviot: tarkkuus"
 
 #: inc/core/Configuration/Category/ActivityView.php:339
+#, fuzzy
 msgid "How many data points should be plotted?"
-msgstr ""
+msgstr "Kuinka monta pistettä näytetään kaaviossa?"
 
 #: inc/core/Configuration/Category/ActivityView.php:343
+#, fuzzy
 msgid "Plots: smooth curves"
-msgstr ""
+msgstr "Kaaviot: pehmeät kaaret"
 
 #: inc/core/Configuration/Category/ActivityView.php:347
 msgid "Plots: use time as x-axis"
-msgstr ""
+msgstr "Kaaviot: aika x-akselilla"
 
 #: inc/core/Configuration/Category/ActivityView.php:351
+#, fuzzy
 msgid "Pace plot: y-axis minimum"
-msgstr ""
+msgstr "Vauhti-kaavio: y-akselin minimi"
 
 #: inc/core/Configuration/Category/ActivityView.php:352
 msgid "Data points below this limit will be ignored. (only for min/km)"
-msgstr ""
+msgstr "Tämän rajan alle jäävät tiedot jätetään huomioimatta. (vain min/km)"
 
 #: inc/core/Configuration/Category/ActivityView.php:356
+#, fuzzy
 msgid "Pace plot: y-axis maximum"
-msgstr ""
+msgstr "Vauhti-kaavio: y-akselin maksimi"
 
 #: inc/core/Configuration/Category/ActivityView.php:357
 msgid "Data points above this limit will be ignored. (only for min/km)"
-msgstr ""
+msgstr "Tämän rajan ylittävät tiedot jätetään huomioimatta. (vain min/km)"
 
 #: inc/core/Configuration/Category/ActivityView.php:361
+#, fuzzy
 msgid "Pace plot: y-axis scale type"
-msgstr ""
+msgstr "Vauhti-kaavio: y-akselin skaalaus"
 
 #: inc/core/Configuration/Category/ActivityView.php:362
+#, fuzzy
 msgid "Scale type that will be used to show pace on y-axis."
-msgstr ""
+msgstr "Mitä skaalausta käytetään Vauhti-kaavion y-akselilla."
 
 #: inc/core/Configuration/Category/ActivityView.php:366
 msgid "Pace plot: Ignore outliers"
@@ -1812,47 +1853,47 @@ msgstr ""
 
 #: inc/core/Configuration/Category/ActivityView.php:388
 msgid "Map: precision"
-msgstr ""
+msgstr "Kartta: tarkkuus"
 
 #: inc/core/Configuration/Category/ActivityView.php:389
 msgid "How many data points shoud be displayed?"
-msgstr ""
+msgstr "Kuinka monta pistettä näytetään?"
 
 #: inc/core/Configuration/Category/ActivityView.php:393
 msgid "Map: line color"
-msgstr ""
+msgstr "Kartta: viivan väri"
 
 #: inc/core/Configuration/Category/ActivityView.php:394
 msgid "as hexadecimal rgb (e.g. #ff5500)"
-msgstr ""
+msgstr "heksadesimaalina RGB-arvona (esim. #ff5500)"
 
 #: inc/core/Configuration/Category/ActivityView.php:398
 msgid "Map: show map first"
-msgstr ""
+msgstr "Kartta: näytä kartta ensimmäisenä"
 
 #: inc/core/Configuration/Category/ActivityView.php:399
 msgid "show map before plots"
-msgstr ""
+msgstr "näytä kartta ennen kaavioita"
 
 #: inc/core/Configuration/Category/ActivityView.php:403
 msgid "Map: zoom on scroll"
-msgstr ""
+msgstr "Kartta: lähennä/loitonna hiiren rullalla"
 
 #: inc/core/Configuration/Category/ActivityView.php:413
 msgid "Elevation: smoothing"
-msgstr ""
+msgstr "Korkeustiedot: tasoita"
 
 #: inc/core/Configuration/Category/ActivityView.php:414
 msgid "Choose the algorithm to smooth the elevation data"
-msgstr ""
+msgstr "Valitse korkeustietojen tasoitukseen käytettävä laskentakaava"
 
 #: inc/core/Configuration/Category/ActivityView.php:418
 msgid "Elevation: threshold"
-msgstr ""
+msgstr "Korkeustiedot: raja-arvo"
 
 #: inc/core/Configuration/Category/ActivityView.php:419
 msgid "Threshold for the smoothing algorithm"
-msgstr ""
+msgstr "Raja-arvo tasoituksen laskentakaavalle"
 
 #: inc/core/Configuration/Category/Design.php:57
 msgid "Design"
@@ -1860,194 +1901,210 @@ msgstr ""
 
 #: inc/core/Configuration/Category/Design.php:59
 msgid "Background image"
-msgstr ""
+msgstr "Taustakuva"
 
 #: inc/core/Configuration/Category/ActivityForm.php:204
 msgid "Activity form"
-msgstr ""
+msgstr "Aktiviteetti -lomake"
 
 #: inc/core/Configuration/Category/ActivityForm.php:207
 msgid "Default window"
-msgstr ""
+msgstr "Oletusikkuna"
 
 #: inc/core/Configuration/Category/ActivityForm.php:211
 msgid "Show activity after creation"
-msgstr ""
+msgstr "Näytä aktiviteetti sen luomisen jälkeen"
 
 #: inc/core/Configuration/Category/ActivityForm.php:215
 msgid "Calculate calories"
-msgstr ""
+msgstr "Laske kalorikulutus"
 
 #: inc/core/Configuration/Category/ActivityForm.php:216
 msgid "Recalculate calories after changing duration by hand"
-msgstr ""
+msgstr "Laske kalorikulutus uudelleen jos suorituksen kestoa muutetaan"
 
 #: inc/core/Configuration/Category/ActivityForm.php:220
 msgid "Calculate power"
-msgstr ""
+msgstr "Laske teho"
 
 #: inc/core/Configuration/Category/ActivityForm.php:221
+#, fuzzy
 msgid "Calculate power by speed and grade for cycling"
-msgstr ""
+msgstr "Laske teho nopeudesta ja korkeusvaihteluista pyöräilyssä"
 
 #: inc/core/Configuration/Category/ActivityForm.php:225
+#, fuzzy
 msgid "Detect pauses"
-msgstr ""
+msgstr "Etsi pysähdykset"
 
 #: inc/core/Configuration/Category/ActivityForm.php:226
 msgid "Detect pauses (distance not increasing) when importing training"
-msgstr ""
+msgstr "Etsi pysähdykset (liike on pysähtynyt) harjoitusta tuodessa"
 
 #: inc/core/Configuration/Category/ActivityForm.php:242
 msgid "Automatically load weather conditions"
-msgstr ""
+msgstr "Lataa säätiedot automaattisesti"
 
 #: inc/core/Configuration/Category/ActivityForm.php:243
 msgid "via openweathermap.org"
-msgstr ""
+msgstr "käytä openweathermap.org -palvelua"
 
 #: inc/core/Configuration/Category/ActivityForm.php:247
 msgid "for weather: Location"
-msgstr ""
+msgstr "säätiedot: Sijainti"
 
 #: inc/core/Configuration/Category/ActivityForm.php:248
 msgid ""
 "For loading weather data from openweathermap.org<br>e.g. <em>Berlin, de</em>"
 msgstr ""
+"Säätietojen lataamiseksi openweathermap.org -palvelusta <br>esim. <em>"
+"Helsinki, fi</em>"
 
 #: inc/core/Configuration/Category/ActivityForm.php:259
 msgid "Automatically correct elevation data"
-msgstr ""
+msgstr "Korjaa korkeustiedot automaattisesti"
 
 #: inc/core/Configuration/Category/ActivityForm.php:260
 msgid ""
 "Instead of using gps-elevation a correction via external services is "
 "possible."
-msgstr ""
+msgstr "GPS:n korkeustietojen sijaan voidaan käyttää ulkoisia palveluita."
 
 #: inc/core/Configuration/Category/ActivityForm.php:270
 msgid "Sort: sport types"
-msgstr ""
+msgstr "Lajittelu: urheilulajit"
 
 #: inc/core/Configuration/Category/ActivityForm.php:274
 msgid "Sort: activity types"
-msgstr ""
+msgstr "Lajittelu: aktiviteettien luokka"
 
 #: inc/core/Configuration/Category/ActivityForm.php:278
-#, fuzzy
 msgid "Sort: equipment"
-msgstr "Valitse varusteet"
+msgstr "Lajittelu: varusteet"
 
 #: inc/core/Configuration/Category/DataBrowser.php:86
 #: inc/system/config/class.ConfigTabTypes.php:48
 #: inc/system/config/class.ConfigTabSports.php:63
 msgid "Calendar view"
-msgstr ""
+msgstr "Kalenterinäkymä"
 
 #: inc/core/Configuration/Category/DataBrowser.php:89
 msgid "Calendar: mode"
-msgstr ""
+msgstr "Kalenteri: näkymä"
 
 #: inc/core/Configuration/Category/DataBrowser.php:90
 msgid "Default mode for the calendar"
-msgstr ""
+msgstr "Oletusnäkymä kalenterille"
 
 #: inc/core/Configuration/Category/DataBrowser.php:94
 msgid "Calendar: show labels for dataset"
-msgstr ""
+msgstr "Kalenteri: näytä otsikot tietueille"
 
 #: inc/core/Configuration/Category/DataBrowser.php:98
 msgid "Calendar: show days with activities only"
-msgstr ""
+msgstr "Kalenteri: näytä vain harjoituspäivät"
 
 #: inc/core/Configuration/Category/DataBrowser.php:102
 msgid "Calendar: create button"
-msgstr ""
+msgstr "Kalenteri: Luo -painike"
 
 #: inc/core/Configuration/Category/DataBrowser.php:103
 msgid "Add a link for every day to create a new activity."
-msgstr ""
+msgstr "Lisää painike uuden aktiviteetin luomiseksi joka päivälle."
 
 #: inc/core/Configuration/Category/Vdot.php:165
 msgid "Estimation formula"
-msgstr ""
+msgstr "Laskentakaava arvioihin"
 
 #: inc/core/Configuration/Category/Vdot.php:166
 msgid ""
 "Formula to estimate the vdot value. The old method is only listed for "
 "compatibility reasons."
 msgstr ""
+"Lasketakaava Vdot -arvon arviointiin. Vanha kaava on valittavissa vain "
+"yhteensopivuuden vuoksi."
 
 #: inc/core/Configuration/Category/Vdot.php:170
+#, fuzzy
 msgid "Time constant length for VDOT"
-msgstr ""
+msgstr "Aikavakion kesto VDOT:iin"
 
 #: inc/core/Configuration/Category/Vdot.php:171
+#, fuzzy
 msgid "Time constant length for VDOT rolling average"
-msgstr ""
+msgstr "Aikavakion kesto VDOT:in keskiarvoa varten"
 
 #: inc/core/Configuration/Category/Vdot.php:175
 msgid "Use correction factor"
-msgstr ""
+msgstr "Käytä korjausarvoa"
 
 #: inc/core/Configuration/Category/Vdot.php:176
 msgid "Use a correction factor based on your best race result. (recommended)"
 msgstr ""
+"Kaytä korjausarvoa joka perustuu parhaaseen kilpailutulokseesi (suositus)"
 
 #: inc/core/Configuration/Category/Vdot.php:180
 msgid "Manual correction factor"
-msgstr ""
+msgstr "Syötä korjausarvo"
 
 #: inc/core/Configuration/Category/Vdot.php:181
 msgid ""
 "Manual correction factor (e.g. 0.9), if the automatic factor does not fit. "
 "Can be left empty."
 msgstr ""
+"Syötetty korjausarvo (esim. 0.9), jos automaattisesti laskettu arvo on "
+"väärä. Voidaan jättää tyhjäksi."
 
 #: inc/core/Configuration/Category/Vdot.php:182
 #, php-format
 msgid "Value must be between %s and %s."
-msgstr ""
+msgstr "Arvon täytyy olla %s ja %s väliltä."
 
 #: inc/core/Configuration/Category/Vdot.php:186
 msgid "Use fixed VDOT value"
-msgstr ""
+msgstr "Käytä pysyvää VDOT -arvoa"
 
 #: inc/core/Configuration/Category/Vdot.php:187
 msgid ""
 "Fixed VDOT value (e.g. 55), if the estimation does not fit. Can be left "
 "empty."
 msgstr ""
+"Pysyvä VDOT -arvo (esim. 55), mikäli arvioitu arvo on väärä. Voidaan jättää "
+"tyhjäksi."
 
 #: inc/core/Configuration/Category/Vdot.php:191
 msgid "Adapt for elevation"
-msgstr ""
+msgstr "Huomioi korkeuserot"
 
 #: inc/core/Configuration/Category/Vdot.php:192
 msgid ""
 "The distance can be corrected by a formula from Peter Greif to adapt for "
 "elevation."
-msgstr ""
+msgstr "Matkassa voidaan huomioida korkeuserot Peter Greifin laskukaavalla."
 
 #: inc/core/Configuration/Category/Vdot.php:196
 msgid "Correction per positive elevation"
-msgstr ""
+msgstr "Korjaus nousuja käyttämällä"
 
 #: inc/core/Configuration/Category/Vdot.php:197
 msgid ""
 "Add for each meter upwards X meter to the distance. (Only for the VDOT "
 "calculation)"
 msgstr ""
+"Lisää X metria matkaan jokaista kohtisuoraa nousumetriä kohden. (Vain VDOT -"
+"arvon laskentaan)"
 
 #: inc/core/Configuration/Category/Vdot.php:202
 msgid "Correction per negative elevation"
-msgstr ""
+msgstr "Korjaus laskuja käyttämällä"
 
 #: inc/core/Configuration/Category/Vdot.php:203
 msgid ""
 "Add for each meter downwards X meter to the distance. (Only for the VDOT "
 "calculation)"
 msgstr ""
+"Lisää X metria matkaan jokaista kohtisuoraa laskumetriä kohden. (Vain VDOT -"
+"arvon laskentaan)"
 
 #: inc/core/Configuration/Category/Vdot.php:222
 #: plugin/RunalyzePluginTool_DatenbankCleanup/JobGeneral.php:116
@@ -7004,7 +7061,7 @@ msgstr ""
 
 #: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:80
 msgid "Find your training paces in min/km for given VDOT values."
-msgstr ""
+msgstr "Katso harjoitusvauhtisi (min/km) suhteessa VDOT -arvoihin."
 
 #: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:85
 msgid "General pace table"
