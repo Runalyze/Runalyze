@@ -117,12 +117,6 @@ class DefaultController extends Controller
     	$authenticationUtils = $this->get('security.authentication_utils');
     	$error = $authenticationUtils->getLastAuthenticationError();
 
-        new \Frontend(true, $this->get('security.token_storage'));
-
-        if (\SessionAccountHandler::isLoggedIn()) {
-            return $this->redirectToRoute('dashboard');
-        }
-
         return $this->render('login/form.html.twig', [
    	        'error' => $error,
             'num' => $this->collectStatistics()
@@ -179,13 +173,12 @@ class DefaultController extends Controller
 
     /**
      * @Route("/dashboard/help", name="help")
+     * @Security("has_role('ROLE_USER')")
      */
     public function dashboardHelpAction()
     {
-        new \Frontend(true, $this->get('security.token_storage'));
-
         return $this->render('pages/help.html.twig', [
-            'version' => RUNALYZE_VERSION
+            'version' => $this->getParameter('RUNALYZE_VERSION')
         ]);
     }
 
@@ -197,7 +190,7 @@ class DefaultController extends Controller
         $_GET['url'] = $training;
         $Frontend = new \FrontendShared();
 
-        if (\FrontendShared::$IS_IFRAME)
+        if ($request->query->get('mode') == 'iframe')
         	echo '<div id="statistics-inner" class="panel" style="width:97%;margin:0 auto;">';
         elseif (!$request->isXmlHttpRequest())
         	echo '<div id="statistics-inner" class="panel" style="width:960px;margin:5px auto;">';

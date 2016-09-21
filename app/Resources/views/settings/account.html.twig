@@ -26,23 +26,23 @@
         </div>
     </fieldset>
     <fieldset id="legend2">
-        <legend onclick="Runalyze.toggleFieldset(this, 'legend2', true, '')">{% trans %}Change your password{% endtrans %}</legend>
+        <legend onclick="Runalyze.toggleFieldset(this, 'legend2', false, '')">{% trans %}Change your password{% endtrans %}</legend>
         <div class="fieldset-messages">
             <p class="info"><a class="window" href="{{ path('settings-password') }}">{% trans %}Change your password{% endtrans %}</a></p>
         </div>
     </fieldset>
     <fieldset id="legend3">
-        <legend onclick="Runalyze.toggleFieldset(this, 'legend3', true, '')">{% trans %}Backup your data{% endtrans %}</legend>
+        <legend onclick="Runalyze.toggleFieldset(this, 'legend3', false, '')">{% trans %}Backup your data{% endtrans %}</legend>
         <div class="fieldset-messages">
             <p class="info">{% trans %}Please use the plugin{% endtrans %} '<strong><a data-size="big" class="window" href="{{ url('tools-backup') }}">{% trans %}Database import/export{% endtrans %}</a></strong>'.</p>
         </div>
     </fieldset>
     <fieldset id="legend4">
-        <legend onclick="Runalyze.toggleFieldset(this, 'legend4', true, '')">{% trans %}Reset configuration{% endtrans %}</legend>
+        <legend onclick="Runalyze.toggleFieldset(this, 'legend4', false, '')">{% trans %}Reset configuration{% endtrans %}</legend>
         {{ form_row(form.reset_configuration, {'info': 'This will not touch any general settings like gender and main sport'|trans }) }}
     </fieldset>
     <fieldset id="legend5">
-        <legend onclick="Runalyze.toggleFieldset(this, 'legend5', true, '')">{% trans %}Delete your account{% endtrans %}</legend>
+        <legend onclick="Runalyze.toggleFieldset(this, 'legend5', false, '')">{% trans %}Delete your account{% endtrans %}</legend>
         <p class="warning"><strong><a class="window" href="{{ path('settings-account-delete') }}">Delete your account »</a></strong>
             <br>{% trans %}You'll receive an email with a link to confirm the deletion.{% endtrans %}
             {% trans %}The deletion is permanent and cannot be reversed. Therefore, you should backup your data.{% endtrans %}</p>
