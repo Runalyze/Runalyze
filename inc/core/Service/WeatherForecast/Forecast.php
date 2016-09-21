@@ -22,7 +22,7 @@ class Forecast {
 	 * @var int
 	 */
 	const TIME_PRECISION = 3600;
-	
+
 	/**
 	 * Strategy
 	 * @var \Runalyze\Service\WeatherForecast\Strategy\StrategyInterface
@@ -31,16 +31,16 @@ class Forecast {
 
 	/**
 	 * Location
-	 * @var \Runalyze\Data\Weather\Location 
+	 * @var \Runalyze\Data\Weather\Location
 	 */
 	protected $Location = null;
-	
+
 	/**
 	 * PDO
-	 * @var \PDO 
+	 * @var \PDO
 	 */
 	protected $PDO = null;
-	
+
 	/**
 	 * Strategies
 	 * @var array class names (absolute path) of available strategies
@@ -101,18 +101,19 @@ class Forecast {
 			$Temperature = $this->Strategy->temperature();
 			$Temperature->toCelsius();
 			$Geohash = substr($this->Strategy->location()->geohash(), 0, WeatherCache\Entity::GEOHASH_PRECISION);
-	
-			if (!$this->locationIsAlreadyCached()) {
+			$WeatherObject = $this->object();
+
+			if (!$this->locationIsAlreadyCached() && !$WeatherObject->isEmpty()) {
 			    $WeatherCache = new WeatherCache\Entity([
 					WeatherCache\Entity::TIME => $this->Location->time(),
 					WeatherCache\Entity::GEOHASH => $Geohash,
 					WeatherCache\Entity::TEMPERATURE => $Temperature->value(),
-					WeatherCache\Entity::HUMIDITY => $this->Strategy->humidity()->value(),
-					WeatherCache\Entity::PRESSURE => $this->Strategy->pressure()->value(),
-					WeatherCache\Entity::WINDSPEED => $this->Strategy->windSpeed()->value(),
-					WeatherCache\Entity::WINDDEG => $this->Strategy->windDegree()->value(),
-					WeatherCache\Entity::WEATHERID => $this->Strategy->condition()->id(),
-					WeatherCache\Entity::WEATHER_SOURCE => $this->Strategy->sourceId()
+					WeatherCache\Entity::HUMIDITY => $WeatherObject->humidity()->value(),
+					WeatherCache\Entity::PRESSURE => $WeatherObject->pressure()->value(),
+					WeatherCache\Entity::WINDSPEED => $WeatherObject->windSpeed()->value(),
+					WeatherCache\Entity::WINDDEG => $WeatherObject->windDegree()->value(),
+					WeatherCache\Entity::WEATHERID => $WeatherObject->condition()->id(),
+					WeatherCache\Entity::WEATHER_SOURCE => $WeatherObject->source()
 			    ]);
 			    $Weather = new WeatherCache\Inserter($this->PDO, $WeatherCache);
 			    $Weather->insert();
