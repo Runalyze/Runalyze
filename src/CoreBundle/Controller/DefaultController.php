@@ -77,7 +77,6 @@ class DefaultController extends Controller
             $registration->setPassword($account->getPlainPassword(), $this->get('security.encoder_factory'));
             $account = $registration->registerAccount($this->getDoctrine()->getManager());
 
-
             $message = Swift_Message::newInstance($this->get('translator')->trans('Please activate your RUNALYZE account'))
                 ->setFrom(array($this->getParameter('mail_sender') => $this->getParameter('mail_name')))
                 ->setTo(array($account->getMail() => $account->getUsername()))

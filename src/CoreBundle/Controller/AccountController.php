@@ -1,6 +1,6 @@
 <?php
 
-namespace Runalyze\Bundle\CoreBundle\Controller;
+    namespace Runalyze\Bundle\CoreBundle\Controller;
 
 use Runalyze\Bundle\CoreBundle\Form\RecoverPasswordType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use  Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormError;
+use Swift_Message;
 
 /**
  * @Route("/{_locale}/account")
@@ -95,25 +96,34 @@ class AccountController extends Controller
                 'required' => false,
                 'attr' => array(
                     'autofocus' => true
-                )
-            ))
-            ->getForm();
+                )))->getForm();
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
-            new \Frontend(true, $this->get('security.token_storage'));
-            $data = $form->getData();
-
-            try {
-                //TODO Refactor AccountHandler remove Frontend dependency
-                if (\AccountHandler::sendPasswordLinkTo($data['username'])) {
-                    return $this->render('account/recover/mail_delivered.html.twig');
-                } else {
-                    return $this->render('account/recover/mail_could_not_be_delivered.html.twig');
-                }
-            } catch (\InvalidArgumentException $e) {
+            $data = $request->request->get($form->getName());
+            $em = $this->getDoctrine()->getManager();
+            $account = $em->getRepository('CoreBundle:Account')->findOneBy(array('username' => $data['username']));
+            if (null == $account) {
                 $form->get('username')->addError(new FormError($this->get('translator')->trans('The username is not known.')));
+            } else {
+                $ChangePwHash = \AccountHandler::getRandomHash();
+                $account->setChangepwHash($ChangePwHash);
+                $account->setChangepwTimelimit(time()+86400);
+                $em->persist($account);
+                $em->flush();
+
+                $message = Swift_Message::newInstance($this->get('translator')->trans('Reset your RUNALYZE password'))
+                    ->setFrom(array($this->getParameter('mail_sender') => $this->getParameter('mail_name')))
+                    ->setTo(array($account->getMail() => $account->getUsername()))
+                    ->setBody($this->renderView('mail/account/recoverPassword.html.twig',
+                        array('username' => $account->getUsername(),
+                            'changepw_hash' => $ChangePwHash)
+                    ),'text/html');
+                $this->get('mailer')->send($message);
+
+                return $this->render('account/recover/mail_delivered.html.twig');
             }
+
         }
 
         return $this->render('account/recover/form_send_mail.html.twig', [
