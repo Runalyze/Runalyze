@@ -6,7 +6,8 @@ class MultipleTimeSeriesTest extends \PHPUnit_Framework_TestCase
 {
 	public function testSimpleExample()
     {
-		$object = new MultipleTimeSeries([
+		$object = new MultipleTimeSeries();
+        $object->generateDistributionsFor([
             'foo' => [10, 15, 10, 15, 10],
             'bar' => [1, 2, 3, 2, 1]
         ], [1, 2, 8, 9, 10]);
@@ -20,15 +21,17 @@ class MultipleTimeSeriesTest extends \PHPUnit_Framework_TestCase
     /** @expectedException \InvalidArgumentException */
     public function testAskingForUnknownDistribution()
     {
-        $object = new MultipleTimeSeries([
+        $object = new MultipleTimeSeries();
+        $object->generateDistributionsFor([
             'foo' => [10, 20, 15]
         ], [1, 2, 3]);
 
         $object->getDistribution('bar');
     }
 
-    public function testNoTimeSeriesGiven()
+    public function testOnlyTimeSeriesGiven()
     {
-        new MultipleTimeSeries([], [1, 2, 3]);
+        $object = new MultipleTimeSeries();
+        $object->generateDistributionsFor([], [1, 2, 3]);
     }
 }

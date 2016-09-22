@@ -406,6 +406,17 @@ class Entity extends Model\Entity implements Model\Loopable {
 	}
 
 	/**
+	 * @return float
+	 */
+	public function totalPace() {
+		if (!empty($this->Data[self::DISTANCE])) {
+			return $this->totalTime() / $this->totalDistance();
+		}
+
+		return 0.0;
+	}
+
+	/**
 	 * Get pace
 	 * @return array unit: [s/km]
 	 */

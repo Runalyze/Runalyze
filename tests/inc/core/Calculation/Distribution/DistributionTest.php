@@ -81,4 +81,29 @@ class DistributionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(0, $dist->stdDev());
         $this->assertFalse($dist->coefficientOfVariation());
     }
+
+    /** @expectedException \InvalidArgumentException */
+    public function testRequestingNotGeneratedQuantile()
+    {
+        $dist = new Distribution_MockTester([]);
+        $dist->quantile(0.1);
+    }
+
+    public function testQuantiles()
+    {
+        $dist = new Distribution_MockTester([
+            10 => 1,
+            20 => 5,
+            30 => 2,
+            40 => 2
+        ]);
+        $dist->calculateStatistic([0.1, 0.2, 0.5, 0.75, 0.8, 0.9]);
+
+        $this->assertEquals(10, $dist->quantile(0.1));
+        $this->assertEquals(20, $dist->quantile(0.2));
+        $this->assertEquals(20, $dist->quantile(0.5));
+        $this->assertEquals(30, $dist->quantile(0.75));
+        $this->assertEquals(30, $dist->quantile(0.8));
+        $this->assertEquals(40, $dist->quantile(0.9));
+    }
 }

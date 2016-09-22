@@ -29,7 +29,6 @@ class TimeSeriesStatistics
         $this->Trackdata = $trackdata;
 
         $this->determineAvailableKeys();
-        $this->calculateStatistics();
     }
 
     protected function determineAvailableKeys()
@@ -57,7 +56,10 @@ class TimeSeriesStatistics
         }
     }
 
-    protected function calculateStatistics()
+    /**
+     * @param float[] $quantiles
+     */
+    public function calculateStatistics(array $quantiles = [])
     {
         $dataOfAvailableSeries = [];
 
@@ -65,7 +67,9 @@ class TimeSeriesStatistics
             $dataOfAvailableSeries[$key] = $this->Trackdata->get($key);
         }
 
-        $this->MultipleTimeSeries = new MultipleTimeSeries($dataOfAvailableSeries, $this->Trackdata->get(Trackdata\Entity::TIME));
+        $this->MultipleTimeSeries = new MultipleTimeSeries();
+        $this->MultipleTimeSeries->setQuantiles($quantiles);
+        $this->MultipleTimeSeries->generateDistributionsFor($dataOfAvailableSeries, $this->Trackdata->get(Trackdata\Entity::TIME));
     }
 
     /**

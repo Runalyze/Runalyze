@@ -14,6 +14,9 @@ namespace Runalyze\Calculation\Distribution;
  */
 abstract class Distribution {
 	/** @var string */
+	const NUM = 'num';
+
+	/** @var string */
 	const MIN = 'min';
 
 	/** @var string */
@@ -26,6 +29,9 @@ abstract class Distribution {
 	const MEDIAN = 'median';
 
 	/** @var string */
+	const QUANTILES = 'quantiles';
+
+	/** @var string */
 	const MODE = 'mode';
 
 	/** @var string */
@@ -36,10 +42,12 @@ abstract class Distribution {
 	 * @var array
 	 */
 	private $Statistic = array(
+		'num' => 0,
 		'min' => 0,
 		'max' => 0,
 		'mean' => 0,
 		'median' => 0,
+		'quantiles' => [],
 		'mode' => 0,
 		'var' => 0
 	);
@@ -52,33 +60,52 @@ abstract class Distribution {
 
 	/**
 	 * Calculate statistic
+	 * @param float[] $quantiles
 	 */
-	public function calculateStatistic() {
-		$this->calculateStatisticByHistogram();
+	public function calculateStatistic(array $quantiles = []) {
+		$this->calculateStatisticByHistogram($quantiles);
 	}
 
 	/**
 	 * Calculate statistic based on histogram
+	 * @param float[] $quantiles
 	 */
-	final protected function calculateStatisticByHistogram() {
-		$data = $this->histogram();
+	final protected function calculateStatisticByHistogram(array $quantiles) {
+		$sortedData = $this->histogram();
 
-		if (empty($data)) {
+		if (empty($sortedData)) {
 			return;
 		}
 
-		ksort($data);
+		ksort($sortedData);
 
-		$keys = array_keys($data);
+		$this->calculateMinAndMax($sortedData);
+		$this->calculateMeanAndMode($sortedData);
+		$this->calculateQuantilesAndVariance($sortedData, $quantiles);
+	}
+
+	/**
+	 * @param array $sortedData
+	 */
+	private function calculateMinAndMax(array $sortedData)
+	{
+		$keys = array_keys($sortedData);
 
 		$this->setStatistic(self::MIN, $keys[0]);
 		$this->setStatistic(self::MAX, end($keys));
+	}
 
+	/**
+	 * @param array $sortedData
+	 */
+	private function calculateMeanAndMode(array $sortedData)
+	{
 		$sum = 0;
 		$num = 0;
 		$maxCount = 0;
 		$mode = 0;
-		foreach ($data as $value => $count) {
+
+		foreach ($sortedData as $value => $count) {
 			$sum += $value * $count;
 			$num += $count;
 
@@ -89,24 +116,47 @@ abstract class Distribution {
 		}
 
 		$mean = $sum / $num;
+		$this->setStatistic(self::NUM, $num);
 		$this->setStatistic(self::MEAN, $mean);
 		$this->setStatistic(self::MODE, $mode);
+	}
 
+	/**
+	 * @param array $sortedData
+	 * @param float[] $quantiles
+	 */
+	private function calculateQuantilesAndVariance(array $sortedData, array $quantiles)
+	{
+		ksort($quantiles);
+
+		$num = $this->Statistic[self::NUM];
+		$currentQuantilesIndex = 0;
+		$currentQuantile = array_shift($quantiles);
+		$desiredQuantileIndex = null !== $currentQuantile ? $currentQuantile * $num : $num + 1;
 		$desiredMedianIndex = $num / 2;
-		$currentMedianIndex = 0;
+
+		$mean = $this->Statistic[self::MEAN];
 		$median = false;
 		$var = 0;
-		foreach ($data as $value => $count) {
-			$var += $count * ($value - $mean) * ($value - $mean);
-			$currentMedianIndex += $count;
 
-			if ($median === false && $currentMedianIndex >= $desiredMedianIndex) {
+		foreach ($sortedData as $value => $count) {
+			$var += $count * ($value - $mean) * ($value - $mean);
+			$currentQuantilesIndex += $count;
+
+			if ($median === false && $currentQuantilesIndex >= $desiredMedianIndex) {
 				$median = $value;
+			}
+
+			while (null !== $currentQuantile && $currentQuantilesIndex >= $desiredQuantileIndex) {
+				$this->Statistic[self::QUANTILES]['p'.$currentQuantile] = $value;
+
+				$currentQuantile = array_shift($quantiles);
+				$desiredQuantileIndex = null !== $currentQuantile ? $currentQuantile * $num : $num + 1;
 			}
 		}
 
 		$this->setStatistic(self::MEDIAN, $median);
-		$this->setStatistic(self::VARIANCE, $var / $num);
+		$this->setStatistic(self::VARIANCE, $var / $this->Statistic[self::NUM]);
 	}
 
 	/**
@@ -148,6 +198,20 @@ abstract class Distribution {
 	 */
 	final public function median() {
 		return $this->Statistic[self::MEDIAN];
+	}
+
+	/**
+	 * @param float $alpha
+	 * @return float
+	 *
+	 * @throws \InvalidArgumentException
+	 */
+	final public function quantile($alpha) {
+		if (!isset($this->Statistic[self::QUANTILES]['p'.$alpha])) {
+			throw new \InvalidArgumentException('No quantile calculated for alpha = '.$alpha);
+		}
+
+		return $this->Statistic[self::QUANTILES]['p'.$alpha];
 	}
 
 	/**

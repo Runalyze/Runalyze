@@ -308,13 +308,19 @@ class ActivityController extends Controller
      */
     public function timeSeriesInfoAction($id, Account $account)
     {
+        /** @var Trackdata $trackdata */
         $trackdata = $this->getDoctrine()->getManager()->getRepository('CoreBundle:Trackdata')->findOneBy([
             'activityid' => $id,
             'accountid' => $account->getId()
         ]);
+        $trackdataModel = $trackdata->getLegacyModel();
+
+        $statistics = new TimeSeriesStatistics($trackdataModel);
+        $statistics->calculateStatistics([0.1, 0.9]);
 
         return $this->render('activity/tool/time_series_statistics.html.twig', [
-            'statistics' => new TimeSeriesStatistics($trackdata->getLegacyModel())
+            'statistics' => $statistics,
+            'paceAverage' => $trackdataModel->totalPace()
         ]);
     }
 

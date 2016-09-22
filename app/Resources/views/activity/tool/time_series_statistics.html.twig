@@ -6,7 +6,7 @@
     {{ value|raw }} <small>{{ unit|raw }}</small>
 {% endmacro statisticsCell %}
 
-{% macro statisticsRow(label, unit, mean, min, max, median, cov, std) %}
+{% macro statisticsRow(label, unit, mean, min, max, median, mode, cov, std, q10, q90) %}
     {% import _self as this %}
 
     <tr class="c">
@@ -15,8 +15,11 @@
         <td>{{ this.statisticsCell(min, unit) }}</td>
         <td>{{ this.statisticsCell(max, unit) }}</td>
         <td>{{ this.statisticsCell(median, unit) }}</td>
+        <td>{{ this.statisticsCell(mode, unit) }}</td>
         <td>{{ this.statisticsCell((100 * cov)|round, "&#37;") }}</td>
         <td>{{ this.statisticsCell("&plusmn;" ~ std, unit) }}</td>
+        <td>{{ this.statisticsCell(q10, unit) }}</td>
+        <td>{{ this.statisticsCell(q90, unit) }}</td>
     </tr>
 {% endmacro statisticsRow %}
 
@@ -32,8 +35,11 @@
         (factor * distribution.min)|number_format(decimals|default(0)),
         (factor * distribution.max)|number_format(decimals|default(0)),
         (factor * distribution.median)|number_format(decimals|default(0)),
+        (factor * distribution.mode)|number_format(decimals|default(0)),
         distribution.coefficientOfVariation,
-        (factor * distribution.stdDev)|number_format(decimals|default(0))
+        (factor * distribution.stdDev)|number_format(decimals|default(0)),
+        (factor * distribution.quantile(0.1))|number_format(decimals|default(0)),
+        (factor * distribution.quantile(0.9))|number_format(decimals|default(0))
     ) }}
 {% endmacro statisticsRowDefault %}
 
@@ -47,12 +53,15 @@
             <thead>
                 <tr>
                     <th></th>
-                    <th>{% trans %}mean{% endtrans %}</th>
-                    <th>{% trans %}min.{% endtrans %}</th>
-                    <th>{% trans %}max.{% endtrans %}</th>
-                    <th>{% trans %}median{% endtrans %}</th>
-                    <th>{% trans %}coeff. of variance{% endtrans %}</th>
-                    <th>{% trans %}std. dev.{% endtrans %}</th>
+                    <th rel="tooltip" title="{% trans %}arithmetic mean{% endtrans %}">{% trans %}mean{% endtrans %}</th>
+                    <th rel="tooltip" title="{% trans %}minimum{% endtrans %}">{% trans %}min.{% endtrans %}</th>
+                    <th rel="tooltip" title="{% trans %}maximum{% endtrans %}">{% trans %}max.{% endtrans %}</th>
+                    <th rel="tooltip" title="{% trans %}i.e. 50% quantile{% endtrans %}">{% trans %}median{% endtrans %}</th>
+                    <th rel="tooltip" title="{% trans %}most common value{% endtrans %}">{% trans %}mode{% endtrans %}</th>
+                    <th rel="tooltip" title="{% trans %}coefficiant of variance = standard deviation / mean{% endtrans %}">{% trans %}cov{% endtrans %}</th>
+                    <th rel="tooltip" title="{% trans %}standard deviation{% endtrans %}">{% trans %}std. dev.{% endtrans %}</th>
+                    <th rel="tooltip" title="10&#37; {% trans %}quantile{% endtrans %}">q10</th>
+                    <th rel="tooltip" title="90&#37; {% trans %}quantile{% endtrans %}">q90</th>
                 </tr>
             </thead>
             <tbody class="top-and-bottom-border">
@@ -62,12 +71,15 @@
                     {{ this.statisticsRow(
                         "Pace"|trans,
                         "/km",
-                        (60 * current.mean)|round|date('G:i'),
+                        (60 * paceAverage)|round|date('G:i'),
                         (60 * current.min)|round|date('G:i'),
                         (60 * current.max)|round|date('G:i'),
                         (60 * current.median)|round|date('G:i'),
+                        (60 * current.mode)|round|date('G:i'),
                         statistics.statisticsForPace.coefficientOfVariation,
-                        (60 * current.stdDev)|round|date('G:i')
+                        (60 * current.stdDev)|round|date('G:i'),
+                        (60 * current.quantile(0.1))|round|date('G:i'),
+                        (60 * current.quantile(0.9))|round|date('G:i')
                     ) }}
                 {% endif %}
                 {% if statistics.hasStatisticsForHeartRate %}

@@ -7,19 +7,33 @@ class MultipleTimeSeries
 	/** @var Empirical[] */
 	protected $Distributions = [];
 
+    /** @var float[] */
+    protected $Quantiles = [];
+
 	/**
-	 * @param array[] $dataOfMultipleSeries array of multiple data series, array keys are used to get single distributions
-	 * @param array $time continuous time points
-	 * @throws \InvalidArgumentException
+	 * @param float[] $quantiles
 	 */
-	public function __construct(array $dataOfMultipleSeries, array $time) {
-		if (empty($time)) {
-			throw new \InvalidArgumentException('Time array must not be empty.');
-		}
+	public function setQuantiles(array $quantiles)
+    {
+        $this->Quantiles = $quantiles;
+	}
+
+    /**
+     * @param array[] $dataOfMultipleSeries array of multiple data series, array keys are used to get single distributions
+     * @param array $time continuous time points
+     * @param array $keysThatAllowZero by default '0' is removed from all histograms
+     * @throws \InvalidArgumentException
+     */
+    public function generateDistributionsFor(array $dataOfMultipleSeries, array $time, array $keysThatAllowZero = [])
+    {
+        if (empty($time)) {
+            throw new \InvalidArgumentException('Time array must not be empty.');
+        }
 
         $histograms = $this->generateHistogramsFor($dataOfMultipleSeries, $time);
+        $this->removeZerosFrom($histograms, array_diff(array_keys($dataOfMultipleSeries), $keysThatAllowZero));
         $this->generateDistributions($histograms);
-	}
+    }
 
     /**
      * @param array[] $dataOfMultipleSeries array of multiple data series, array keys are used to get single distributions
@@ -52,13 +66,26 @@ class MultipleTimeSeries
     }
 
     /**
+     * @param array[] $histograms
+     * @param string[] $keys
+     */
+    protected function removeZerosFrom(array &$histograms, array $keys)
+    {
+        foreach ($keys as $key) {
+            if (isset($histograms[$key][0])) {
+                unset($histograms[$key][0]);
+            }
+        }
+    }
+
+    /**
      * @param array $histograms ['key a' => histogram, ...]
      */
     protected function generateDistributions(array $histograms)
     {
         foreach ($histograms as $key => $histogram) {
             $this->Distributions[$key] = new Empirical($histogram, true);
-            $this->Distributions[$key]->calculateStatistic();
+            $this->Distributions[$key]->calculateStatistic($this->Quantiles);
         }
     }
 
