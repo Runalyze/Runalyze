@@ -163,15 +163,15 @@ class Account implements AdvancedUserInterface, \Serializable
 
     /**
      * @var integer
-     * @Assert\Type("int")
-     * @ORM\Column(name="allow_mails", type="integer", nullable=false)
+     * @Assert\Type("bool")
+     * @ORM\Column(name="allow_mails", type="boolean", nullable=false)
      */
     private $allowMails = 1;
 
     /**
      * @var integer
-     * @Assert\Type("int")
-     * @ORM\Column(name="allow_support", type="integer", nullable=false)
+     * @Assert\Type("bool")
+     * @ORM\Column(name="allow_support", type="boolean", nullable=false)
      */
     private $allowSupport = 0;
 
