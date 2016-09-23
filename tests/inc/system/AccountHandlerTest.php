@@ -44,19 +44,4 @@ class AccountHandlerTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue( is_array(AccountHandler::getDataFor('Testuser')) );
 		$this->assertEquals( false, AccountHandler::getDataFor('Tester') );
 	}
-
-	/**
-	 * @covers AccountHandler::sendPasswordLinkTo
-	 */
-	public function testSendPasswordLinkTo() {
-		// Can't be tested
-	}
-
-	/**
-	 * @covers AccountHandler::setAndSendDeletionKeyFor
-	 */
-	public function testSetAndSendDeletionKeyFor() {
-		// Can't be tested
-	}
-
 }

@@ -111,13 +111,6 @@ class Frontend {
         define('OPENWEATHERMAP_API_KEY', $this->yamlConfig['openweathermap_api_key']);
 	    define('NOKIA_HERE_APPID', $this->yamlConfig['nokia_here_appid']);
 	    define('NOKIA_HERE_TOKEN', $this->yamlConfig['nokia_here_token']);
-	    define('SMTP_HOST', $this->yamlConfig['smtp_host']);
-	    define('SMTP_PORT', $this->yamlConfig['smtp_port']);
-	    define('SMTP_SECURITY', $this->yamlConfig['smtp_security']);
-	    define('SMTP_USERNAME', $this->yamlConfig['smtp_username']);
-	    define('SMTP_PASSWORD', $this->yamlConfig['smtp_password']);
-	    define('MAIL_NAME', $this->yamlConfig['mail_name']);
-	    define('MAIL_SENDER', $this->yamlConfig['mail_sender']);
 	    define('PERL_PATH', $this->yamlConfig['perl_path']);
 	    define('TTBIN_PATH', $this->yamlConfig['ttbin_path']);
 	    define('GEONAMES_USERNAME', $this->yamlConfig['geonames_username']);

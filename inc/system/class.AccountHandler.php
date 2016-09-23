@@ -70,44 +70,4 @@ class AccountHandler {
 	public static function getDataForId($id) {
 		return DB::getInstance()->query('SELECT * FROM `'.PREFIX.'account` WHERE `id`="'.(int)$id.'" LIMIT 1')->fetch();
 	}
-
-	/**
-	 * Get random salt
-	 */
-	public static function getNewSalt() {
-		return self::getRandomHash(32);
-	}
-
-	/**
-	 * Get hash.
-	 * @param int $bytes
-	 * @return string hash of length 2*$bytes
-	 */
-	public static function getRandomHash($bytes = 16) {
-		return bin2hex(openssl_random_pseudo_bytes($bytes));
-	}
-
-	/**
-	 * Set deletion key for new user and set via email
-	 * @param int $accountId
-	 * @return bool
-	 */
-	public static function setAndSendDeletionKeyFor($accountId) {
-		$account      = DB::getInstance()->fetchByID('account', $accountId);
-		$deletionHash = self::getRandomHash();
-		$deletionLink = self::getDeletionLink($deletionHash);
-
-		DB::getInstance()->update('account', $accountId, 'deletion_hash', $deletionHash);
-
-		$subject  = __('Deletion request of your RUNALYZE account');
-		$message  = __('Do you really want to delete your account').' '.$account['username'].", ".$account['name']."?<br><br>\r\n\r\n";
-		$message .= __('Complete the process by accessing the following link: ')."<br>\r\n";
-		$message .= '<a href='.$deletionLink.'>'.$deletionLink.'</a>';
-
-		if (!System::sendMail($account['mail'], $subject, $message)) {
-			return false;
-		}
-
-		return true;
-	}
 }

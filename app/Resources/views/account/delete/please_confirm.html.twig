@@ -4,6 +4,7 @@
     <p class="warning">
         {% trans %}Do you really want to delete your account, %username%?{% endtrans %}
         <br>
+        {% trans %}The deletion cannot be undone!{% endtrans %}
         <br>
         <a href="{{ path('account_delete_confirmed', {'hash': deletionHash}) }}">
             <strong>{% trans %}Delete account{% endtrans %} &raquo;</strong>

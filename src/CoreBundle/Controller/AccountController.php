@@ -106,7 +106,7 @@ class AccountController extends Controller
             if (null == $account) {
                 $form->get('username')->addError(new FormError($this->get('translator')->trans('The username is not known.')));
             } else {
-                $ChangePwHash = \AccountHandler::getRandomHash();
+                $ChangePwHash = bin2hex(random_bytes(16));
                 $account->setChangepwHash($ChangePwHash);
                 $account->setChangepwTimelimit(time()+86400);
                 $em->persist($account);

@@ -269,16 +269,6 @@ class Registration
      * Get random salt
      */
     public static function getNewSalt() {
-        return self::getRandomHash(16);
+        return bin2hex(random_bytes(16));
     }
-
-    /**
-     * Get hash.
-     * @param int $bytes
-     * @return string hash of length 2*$bytes
-     */
-    public static function getRandomHash($bytes = 16) {
-        return bin2hex(openssl_random_pseudo_bytes($bytes));
-    }
-
 }

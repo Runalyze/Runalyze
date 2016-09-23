@@ -2,7 +2,7 @@
 
 namespace Runalyze\Bundle\CoreBundle\Controller;
 
-use Runalyze\Bundle\CoreBundle\Form\Settings\ChangeMailType;
+    use Runalyze\Bundle\CoreBundle\Form\Settings\ChangeMailType;
 use Runalyze\Bundle\CoreBundle\Form\Settings\ChangePasswordType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormError;
 use Runalyze\Configuration;
 use Runalyze\Language;
+use \Swift_Message;
 
 class SettingsController extends Controller
 {
@@ -112,15 +113,6 @@ class SettingsController extends Controller
         ]);
     }
 
-    /**
-     * @Route("/settings/account/delete", name="settings-account-delete")
-     * @Security("has_role('ROLE_USER')")
-     */
-    public function settingsAccountDeleteAction(Request $request)
-    {
-
-    }
-
     private function encodePassword(Account $Account, $salt)
     {
         $encoder = $this->container->get('security.encoder_factory')->getEncoder($Account);
@@ -131,14 +123,26 @@ class SettingsController extends Controller
      * @Route("/settings/account/delete", name="settings-account-delete")
      * @Security("has_role('ROLE_USER')")
      */
-    public function windowDeleteAction()
+    public function windowDeleteAction(Account $account)
     {
         $user = $this->get('security.token_storage')->getToken()->getUser();
-        new \Frontend(false, $this->get('security.token_storage'));
+        $em = $this->getDoctrine()->getManager();
+        //$account = $em->getRepository('CoreBundle:Account')->find($user->getId());
+        $hash = bin2hex(random_bytes(16));
+        $account->setDeletionHash($hash);
+        $em->persist($account);
+        $em->flush();
 
-        return $this->render('settings/account-delete.html.twig', [
-            'mailSent' => \AccountHandler::setAndSendDeletionKeyFor($user->getId())
-        ]);
+        $message = Swift_Message::newInstance($this->get('translator')->trans('Deletion request of your RUNALYZE account'))
+            ->setFrom(array($this->getParameter('mail_sender') => $this->getParameter('mail_name')))
+            ->setTo(array($account->getMail() => $account->getUsername()))
+            ->setBody($this->renderView('mail/account/deleteAccountRequest.html.twig',
+                array('username' => $account->getUsername(),
+                    'deletion_hash' => $hash)
+            ),'text/html');
+        $this->get('mailer')->send($message);
+
+        return $this->render('settings/account-delete.html.twig');
     }
 
 }
