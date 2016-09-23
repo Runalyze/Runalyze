@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="de" datatype="plaintext" original="file.ext">
     <header>
@@ -453,29 +453,29 @@
         <source>End</source>
         <target>End</target>
       </trans-unit>
-      <trans-unit id="4f5d5f295ddc8fd8673e74dd5fbe114a" resname="per page">
+      <trans-unit id="4f5d5f295ddc8fd8673e74dd5fbe114a" resname="per page" approved="yes">
         <source>per page</source>
-        <target>per page</target>
+        <target state="translated">pro Seite</target>
       </trans-unit>
-      <trans-unit id="5e70dd4e82f51ee3e892224e28232d31" resname="The deletion cannot be undone!">
+      <trans-unit id="5e70dd4e82f51ee3e892224e28232d31" resname="The deletion cannot be undone!" approved="yes">
         <source>The deletion cannot be undone!</source>
-        <target>The deletion cannot be undone!</target>
+        <target state="translated">Die Löschung kann nicht rückgängig gemacht werden!</target>
       </trans-unit>
-      <trans-unit id="5c80dc3f6925dc488ff29b211cb0f73a" resname="Probably the link was wrong or your account has been already activated.">
+      <trans-unit id="5c80dc3f6925dc488ff29b211cb0f73a" resname="Probably the link was wrong or your account has been already activated." approved="yes">
         <source>Probably the link was wrong or your account has been already activated.</source>
-        <target>Probably the link was wrong or your account has been already activated.</target>
+        <target state="translated">Entweder war der Link falsch oder dein Account wurde bereits aktiviert.</target>
       </trans-unit>
       <trans-unit id="58103a47ccac2ac99d92fde92233b91c" resname="Your password recovery link is not valid. Maybe the link has already expired.">
         <source>Your password recovery link is not valid. Maybe the link has already expired.</source>
         <target>Your password recovery link is not valid. Maybe the link has already expired.</target>
       </trans-unit>
-      <trans-unit id="800e4dd8dfc264160c0b52347f7f9d4c" resname="Delete your account">
+      <trans-unit id="800e4dd8dfc264160c0b52347f7f9d4c" resname="Delete your account" approved="yes">
         <source>Delete your account</source>
-        <target>Delete your account</target>
+        <target state="translated">Deinen Account löschen</target>
       </trans-unit>
-      <trans-unit id="604a6bf2bb345c1f15bd21b79aa6a478" resname="A confirmation has been sent via mail.">
+      <trans-unit id="604a6bf2bb345c1f15bd21b79aa6a478" resname="A confirmation has been sent via mail." approved="yes">
         <source>A confirmation has been sent via mail.</source>
-        <target>A confirmation has been sent via mail.</target>
+        <target state="translated">Eine Bestätigungsmail wurde versandt.</target>
       </trans-unit>
       <trans-unit id="bda88c4680dff27e7a18dcf787e2afb8" resname="How sad, that you've decided to delete your account.&lt;br&gt;&#10;            Your account will be deleted as soon as you click on the confirmation link in your mail.">
         <source>How sad, that you've decided to delete your account.&lt;br&gt;
@@ -487,9 +487,9 @@
         <source>Account</source>
         <target>Account</target>
       </trans-unit>
-      <trans-unit id="3bc8bc452287eabbf03c335b6a1ab7c5" resname="Your acccount">
+      <trans-unit id="3bc8bc452287eabbf03c335b6a1ab7c5" resname="Your acccount" approved="yes">
         <source>Your acccount</source>
-        <target>Your acccount</target>
+        <target state="translated">Dein Account</target>
       </trans-unit>
       <trans-unit id="7a875db599300694d4bf5e487b39a220" resname="Used for the calculation of energy spent for an activity">
         <source>Used for the calculation of energy spent for an activity</source>
