@@ -6,6 +6,7 @@
 
 use Runalyze\Calculation\Distribution\TrackdataAverages;
 use Runalyze\Configuration;
+use Runalyze\Import\Exception\UnexpectedContentException;
 use Runalyze\Model\Trackdata;
 use Runalyze\Util\LocalTime;
 use Runalyze\Util\TimezoneLookup;
@@ -211,6 +212,7 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 	 */
 	protected function setGPSarrays() {
 		$this->removeInvalidEntriesFromGPSarrays();
+		$this->checkForBadPauses();
 
 		$this->TrainingObject->setArrayTime( $this->gps['time_in_s'] );
 		$this->TrainingObject->setArrayDistance( $this->gps['km'] );
@@ -241,6 +243,27 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 				$this->gps[$key] = array();
 			} elseif (min($values) == 0 && max($values) == 0) {
 				$this->gps[$key] = array();
+			}
+		}
+
+		$prevTime = 0;
+
+		foreach ($this->gps['time_in_s'] as $i => $time) {
+			if ($time < $prevTime) {
+				throw new UnexpectedContentException('Negative time step at index '.$i.'.');
+			}
+
+			$prevTime = $time;
+		}
+	}
+
+	private function checkForBadPauses() {
+		$pauses = $this->TrainingObject->Pauses();
+		$num = $pauses->num();
+
+		for ($i = 0; $i < $num; ++$i) {
+			if ($pauses->at($i)->duration() < 0) {
+				throw new UnexpectedContentException('Negative pause detected at '.$i.'.');
 			}
 		}
 	}
