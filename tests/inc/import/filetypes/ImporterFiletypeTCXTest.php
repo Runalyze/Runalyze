@@ -346,4 +346,18 @@ class ImporterFiletypeTCXTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue( $this->object->object()->hasArrayCadence() );
 	}
 
+	/**
+	 * @see https://github.com/Runalyze/Runalyze/issues/1948
+	 */
+	public function testNegativePauseFromSigma() {
+		$this->object->parseFile('../tests/testfiles/tcx/negative-pause.tcx');
+
+		$pauses = $this->object->object()->Pauses();
+		$num = $pauses->num();
+
+		for ($i = 0; $i < $num; ++$i) {
+			$this->assertGreaterThan(0, $pauses->at($i)->duration());
+		}
+	}
+
 }

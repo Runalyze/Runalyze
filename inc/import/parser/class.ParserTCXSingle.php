@@ -238,6 +238,10 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 		$ThisBreakInMeter   = (float)$TP->DistanceMeters - $this->lastDistance;
 		$ThisBreakInSeconds = ($this->strtotime((string)$TP->Time) - $this->TrainingObject->getTimestamp() - end($this->gps['time_in_s'])) - $this->PauseInSeconds;
 
+		if ($ThisBreakInSeconds <= 0) {
+			return;
+		}
+
 		if (Configuration::ActivityForm()->detectPauses() && !$this->isWithoutDistance) {
 			$NoMove = ($this->lastDistance == (float)$TP->DistanceMeters);
 			$TooSlow = !$this->lastPointWasEmpty && $ThisBreakInMeter > 0 && ($ThisBreakInSeconds / $ThisBreakInMeter > 6);
