@@ -201,4 +201,16 @@ class SubSegmentMaximization
     {
         return [$this->DataMaxFromIndex[$t], $this->DataMaxToIndex[$t]];
     }
+
+    /**
+     * @return array
+     */
+    public function getAvailableSegmentLengths()
+    {
+        $self = $this;
+
+        return array_filter($this->SegmentLengths, function ($index) use ($self) {
+            return $self->hasMaximumForLengthIndex($index);
+        }, ARRAY_FILTER_USE_KEY);
+    }
 }

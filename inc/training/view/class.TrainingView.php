@@ -123,6 +123,10 @@ class TrainingView {
 			$toolsLinks[] = '<li><a class="window link" data-size="big" href="activity/'.$this->Context->activity()->id().'/time-series-info"><i class="fa fa-fw fa-line-chart"></i> '.__('Analyze time series').'</a></li>';
 		}
 
+		if ($this->Context->hasTrackdata() && $this->Context->trackdata()->has(Model\Trackdata\Entity::TIME) && $this->Context->trackdata()->has(Model\Trackdata\Entity::DISTANCE)) {
+			$toolsLinks[] = '<li><a class="window link" data-size="big" href="activity/'.$this->Context->activity()->id().'/sub-segments-info"><i class="fa fa-fw fa-bar-chart"></i> '.__('Find best sub segments').'</a></li>';
+		}
+
 		if (!empty($toolsLinks)) {
 			$this->ToolbarLinks = array_merge(
 				$this->ToolbarLinks,

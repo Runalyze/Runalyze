@@ -85,6 +85,8 @@ class SubSegmentMaximizationTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals([0, 4], $Maximization->getIndizesOfMaximumForLengthIndex(1));
         $this->assertEquals(32, $Maximization->getMaximumForLengthIndex(2));
         $this->assertEquals([0, 9], $Maximization->getIndizesOfMaximumForLengthIndex(2));
+
+        $this->assertEquals([2, 5, 10], $Maximization->getAvailableSegmentLengths());
     }
 
     public function testTooShortInputData()
@@ -103,5 +105,7 @@ class SubSegmentMaximizationTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($Maximization->hasMaximumForLengthIndex(1));
         $this->assertFalse($Maximization->hasMaximumForLengthIndex(2));
         $this->assertFalse($Maximization->hasMaximumForLengthIndex(3));
+
+        $this->assertEquals([5], $Maximization->getAvailableSegmentLengths());
     }
 }

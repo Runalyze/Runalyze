@@ -2,10 +2,12 @@
 
 namespace Runalyze\Bundle\CoreBundle\Controller;
 
+use Runalyze\Bundle\CoreBundle\Component\Activity\Tool\BestSubSegmentsStatistics;
 use Runalyze\Bundle\CoreBundle\Component\Activity\Tool\TimeSeriesStatistics;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\Trackdata;
 use Runalyze\Bundle\CoreBundle\Services\Activity\VdotInfo;
+use Runalyze\Calculation\Math\SubSegmentMaximization;
 use Runalyze\Configuration;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -321,6 +323,30 @@ class ActivityController extends Controller
         return $this->render('activity/tool/time_series_statistics.html.twig', [
             'statistics' => $statistics,
             'paceAverage' => $trackdataModel->totalPace()
+        ]);
+    }
+
+    /**
+     * @Route("/activity/{id}/sub-segments-info", requirements={"id" = "\d+"}, name="activity-tool-sub-segments-info")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function subSegmentInfoAction($id, Account $account)
+    {
+        /** @var Trackdata $trackdata */
+        $trackdata = $this->getDoctrine()->getManager()->getRepository('CoreBundle:Trackdata')->findOneBy([
+            'activityid' => $id,
+            'accountid' => $account->getId()
+        ]);
+        $trackdataModel = $trackdata->getLegacyModel();
+
+        $statistics = new BestSubSegmentsStatistics($trackdataModel);
+        $statistics->setDistancesToAnalyze([0.2, 1.0, 3.0, 5.0, 10.0, 21.1, 42.2, 50, 100]);
+        $statistics->setTimesToAnalyze([30, 60, 120, 300, 600, 1800, 3600, 7200]);
+        $statistics->findSegments();
+
+        return $this->render('activity/tool/best_sub_segments.html.twig', [
+            'statistics' => $statistics,
+            'distanceArray' => $trackdataModel->distance()
         ]);
     }
 

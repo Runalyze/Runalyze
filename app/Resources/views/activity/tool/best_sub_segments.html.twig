@@ -1,0 +1,84 @@
+{% extends "base_logged_in.twig" %}
+
+{% import _self as this %}
+
+{% macro tableCell(value, unit) %}
+    {{ value|raw }} <small>{{ unit|raw }}</small>
+{% endmacro %}
+
+{% macro tableRow(rowLabel, baseValue, pace, from, to) %}
+    {% import _self as this %}
+
+    <tr class="c">
+        <td class="l"><strong>{{ rowLabel }}</strong></td>
+        <td>{{ baseValue }}</td>
+        <td>{{ this.tableCell((60 * pace)|round|date('G:i'), "/km") }}</td>
+        <td>
+            {{ this.tableCell(from|number_format(2), "km") }} - {{ this.tableCell(to|number_format(2), "km") }}
+        </td>
+    </tr>
+{% endmacro %}
+
+{% block content %}
+    <div class="panel-heading">
+        <h1>{% trans %}Best sub segments{% endtrans %}</h1>
+    </div>
+
+    {# @var distanceSegments \Runalyze\Calculation\Math\SubSegmentMaximization #}
+    {% set distanceSegments = statistics.distanceSegments %}
+    {# @var timeSegments \Runalyze\Calculation\Math\SubSegmentMaximization #}
+    {% set timeSegments = statistics.timeSegments %}
+
+    <div class="panel-content">
+        <table class="zebra-style more-padding" style="width: 400px;">
+            <thead>
+            <tr>
+                <th colspan="2">{% trans %}Best segment{% endtrans %}</th>
+                <th>{% trans %}Pace{% endtrans %}</th>
+                <th>{% trans %}Position{% endtrans %}</th>
+            </tr>
+            </thead>
+            <tbody class="top-and-bottom-border">
+            {% for i, distance in statistics.distances %}
+                {% if distanceSegments.hasMaximumForLengthIndex(i) %}
+                    {% set fromTo = distanceSegments.indizesOfMaximumForLengthIndex(i) %}
+                    {% set achievedTime = distanceSegments.maximumForLengthIndex(i) %}
+
+                    {{ this.tableRow(
+                        this.tableCell(distance|number_format(2), "km"),
+                        achievedTime|duration,
+                        achievedTime / distance,
+                        distanceArray[fromTo[0]],
+                        distanceArray[fromTo[1]]
+                    ) }}
+                {% endif %}
+            {% endfor %}
+            </tbody>
+            <tbody class="top-and-bottom-border">
+            {% for i, time in statistics.times %}
+                {% if timeSegments.hasMaximumForLengthIndex(i) %}
+                    {% set fromTo = timeSegments.indizesOfMaximumForLengthIndex(i) %}
+                    {% set achievedDistance = timeSegments.maximumForLengthIndex(i) %}
+
+                    {{ this.tableRow(
+                        time|date('H:i:s'),
+                        this.tableCell(achievedDistance|number_format(2), "km"),
+                        time / achievedDistance,
+                        distanceArray[fromTo[0]],
+                        distanceArray[fromTo[1]]
+                    ) }}
+                {% endif %}
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <p class="info">
+        {% trans %}
+            This analysis is currently under development and does not consider your unit settings.
+        {% endtrans %}
+        {% trans with {'%githubLink%': '<a href="https://github.com/Runalyze/Runalyze" target="_blank">GitHub</a>'} %}
+            Help us improving it at %githubLink%.
+        {% endtrans %}
+    </p>
+{% endblock %}
