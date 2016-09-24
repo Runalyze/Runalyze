@@ -207,10 +207,14 @@ class SubSegmentMaximization
      */
     public function getAvailableSegmentLengths()
     {
-        $self = $this;
+        $lengths = [];
 
-        return array_filter($this->SegmentLengths, function ($index) use ($self) {
-            return $self->hasMaximumForLengthIndex($index);
-        }, ARRAY_FILTER_USE_KEY);
+        foreach ($this->SegmentLengths as $index => $length) {
+            if ($this->hasMaximumForLengthIndex($index)) {
+                $lengths[] = $length;
+            }
+        }
+
+        return $lengths;
     }
 }

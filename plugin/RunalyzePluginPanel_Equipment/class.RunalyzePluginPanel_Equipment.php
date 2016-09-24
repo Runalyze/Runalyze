@@ -12,14 +12,14 @@ use Runalyze\Model;
 
 /**
  * Class: RunalyzePluginPanel_Equipment
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Plugins\Panels
  */
 class RunalyzePluginPanel_Equipment extends PluginPanel {
 	/**
 	 * Internal array with all equipment from database and statistic values
-	 * @var array 
+	 * @var array
 	 */
 	private $Equipment = null;
 
@@ -90,7 +90,7 @@ class RunalyzePluginPanel_Equipment extends PluginPanel {
 		$Links .= '<ul class="submenu">'.implode('', $TypeLinks).'</ul>';
 		$Links .= '</li>';
 		$Links .= '<li>'.Ajax::window('<a href="'.ConfigTabs::$CONFIG_URL.'?key=config_tab_equipment" '.Ajax::tooltip('', __('Add/Edit equipment'), true, true).'>'.Icon::$ADD.'</a>').'</li>';
-		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key().'/window.equipment.table.php" '.Ajax::tooltip('', __('Show all equipment'), true, true).'>'.Icon::$TABLE.'</a>').'</li>';
+		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key().'/window.equipment.table.php" '.Ajax::tooltip('', __('Show all equipment'), true, true).'>'.Icon::$TABLE.'</a>', 'big').'</li>';
 
 		return '<ul>'.$Links.'</ul>';
 	}

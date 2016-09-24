@@ -110,7 +110,7 @@ class PerformanceCondition implements ValueInterface
         if ($baselineValue > 0) {
             $baselineValue = '+'.$baselineValue;
         } elseif ($baselineValue == 0) {
-            $baselineValue = '+/- 0';
+            $baselineValue = '&plusmn;0';
         }
 
 		return $baselineValue;

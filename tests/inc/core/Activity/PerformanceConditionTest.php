@@ -9,7 +9,7 @@ class PerformanceConditionTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEquals('', PerformanceCondition::format(null));
         $this->assertEquals('+2', PerformanceCondition::format(102));
-        $this->assertEquals('+/- 0', PerformanceCondition::format(100));
+        $this->assertEquals('&plusmn;0', PerformanceCondition::format(100));
         $this->assertEquals('-3', PerformanceCondition::format(97));
     }
 
