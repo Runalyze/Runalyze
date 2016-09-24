@@ -199,8 +199,8 @@ class ImporterFiletypeTCXTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertTrue( $this->object->object()->hasArrayPower() );
 		$this->assertEquals(
-				array(0, 10, 20, 30, 41, 41, 41, 117, 155, 192, 182, 188, 186, 182, 178, 181, 180, 179, 178, 179, 180, 182, 181, 180, 180, 178),
-				$this->object->object()->getArrayPower()
+			array(0, 10, 20, 30, 41, 41, 41, 117, 155, 182, 188, 186, 182, 178, 181, 180, 179, 178, 179, 180, 181, 180, 180, 178),
+			$this->object->object()->getArrayPower()
 		);
 	}
 
@@ -326,7 +326,7 @@ class ImporterFiletypeTCXTest extends PHPUnit_Framework_TestCase {
 			$this->assertEquals(60, $this->object->object()->getTimezoneOffset());
 		}
 
-		$this->assertEquals( 1765, $this->object->object()->getTimeInSeconds(), '', 5);
+		$this->assertEquals( 1765, $this->object->object()->getTimeInSeconds(), '', 10);
 		$this->assertEquals( 3.64, $this->object->object()->getDistance(), '', 0.01);
 		$this->assertTrue( $this->object->object()->hasArrayAltitude() );
 		$this->assertTrue( $this->object->object()->hasArrayLatitude() );
