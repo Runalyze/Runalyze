@@ -145,6 +145,14 @@ class ParserTCXSingleTest extends PHPUnit_Framework_TestCase {
             <DistanceMeters>0.0</DistanceMeters>
           </Trackpoint>
           <Trackpoint>
+            <Time>2011-03-06T11:21:54.000Z</Time>
+            <Position>
+              <LatitudeDegrees>51.485025342553854</LatitudeDegrees>
+              <LongitudeDegrees>9.156750775873661</LongitudeDegrees>
+            </Position>
+            <DistanceMeters>9.035</DistanceMeters>
+          </Trackpoint>
+          <Trackpoint>
             <Time>2011-03-06T11:21:59.000Z</Time>
             <Position>
               <LatitudeDegrees>51.485025342553854</LatitudeDegrees>
@@ -160,8 +168,8 @@ class ParserTCXSingleTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertFalse( $Parser->failed() );
 		$this->assertEquals( "2011-03-06 12:21:49", LocalTime::date("Y-m-d H:i:s", $Parser->object()->getTimestamp()) );
-		$this->assertEquals( array(0, 10), $Parser->object()->getArrayTime() );
-		$this->assertEquals( array(0.000, 0.01807), $Parser->object()->getArrayDistance() );
+		$this->assertEquals( array(5, 10), $Parser->object()->getArrayTime() );
+		$this->assertEquals( array(0.00904, 0.01807), $Parser->object()->getArrayDistance() );
 	}
 
 }
