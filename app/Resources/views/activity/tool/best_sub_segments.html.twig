@@ -61,7 +61,7 @@
                     {% set achievedDistance = timeSegments.maximumForLengthIndex(i) %}
 
                     {{ this.tableRow(
-                        time|date('H:i:s'),
+                        time|date('H:i:s', false),
                         this.tableCell(achievedDistance|number_format(2), "km"),
                         time / achievedDistance,
                         distanceArray[fromTo[0]],
