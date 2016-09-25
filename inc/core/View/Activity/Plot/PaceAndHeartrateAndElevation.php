@@ -29,10 +29,15 @@ class PaceAndHeartrateAndElevation extends ActivityPlot {
 	protected function initData(Activity\Context $context) {
 		$this->addMultipleSeries(array(
 			new Series\Elevation($context),
+			new Series\Gradient($context),
 			new Series\Pace($context),
 			new Series\Heartrate($context),
 			new Series\TimeSeries($context),
 			new Series\DistanceSeries($context)
 		));
+
+		$this->hideYAxisAndSeries(2);
+		$this->hideYAxisAndSeries(5);
+		$this->hideYAxisAndSeries(6);
 	}
 }

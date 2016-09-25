@@ -29,9 +29,14 @@ class Power extends ActivityPlot {
 	protected function initData(Activity\Context $context) {
 		$this->addMultipleSeries(array(
 			new Series\Elevation($context),
+			new Series\Gradient($context),
 			new Series\Power($context),
 			new Series\TimeSeries($context),
 			new Series\DistanceSeries($context)
 		));
+
+		$this->hideYAxisAndSeries(2);
+		$this->hideYAxisAndSeries(4);
+		$this->hideYAxisAndSeries(5);
 	}
 }

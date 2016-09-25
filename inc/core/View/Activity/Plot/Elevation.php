@@ -10,7 +10,7 @@ use Runalyze\View\Activity;
 
 /**
  * Plot for: Elevation
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\View\Activity\Plot
  */
@@ -27,8 +27,11 @@ class Elevation extends ActivityPlot {
 	 * @param \Runalyze\View\Activity\Context $context
 	 */
 	protected function initData(Activity\Context $context) {
-		$this->addSeries(
-			new Series\Elevation($context)
-		);
+		$this->addMultipleSeries([
+			new Series\Elevation($context),
+			new Series\Gradient($context)
+		]);
+
+		$this->hideYAxisAndSeries(2);
 	}
 }

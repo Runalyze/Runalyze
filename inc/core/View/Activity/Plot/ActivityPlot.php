@@ -12,7 +12,7 @@ use Plot;
 
 /**
  * Plot for activity data
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\View\Activity\Plot
  */
@@ -108,6 +108,32 @@ abstract class ActivityPlot {
 	}
 
 	/**
+	 * @param int $index natural index starting by 1 (for y-axis) and using the 0-indexed version for series
+	 */
+	protected function hideYAxisAndSeries($index)
+	{
+		$this->hideYAxis($index);
+		$this->hideSeries($index - 1);
+	}
+
+	/**
+	 * @param int $yAxis
+	 */
+	protected function hideYAxis($yAxis)
+	{
+		$this->Plot->hideYAxis($yAxis);
+	}
+
+	/**
+	 * @param int $series
+	 */
+	protected function hideSeries($series)
+	{
+		$this->Plot->setLineWidth($series, 0);
+		$this->Plot->setShadowSize($series, 0);
+	}
+
+	/**
 	 * Data is available
 	 * @return bool
 	 */
@@ -122,7 +148,7 @@ abstract class ActivityPlot {
 	}
 
 	/**
-	 * Init Plot 
+	 * Init Plot
 	 */
 	private function initPlot() {
 		$this->Plot = new Plot($this->getCSSid(), $this->WIDTH, $this->HEIGHT);
@@ -153,7 +179,7 @@ abstract class ActivityPlot {
 	}
 
 	/**
-	 * Output JS 
+	 * Output JS
 	 */
 	final public function display() {
 		echo Plot::getInnerDivFor($this->getCSSid(), $this->WIDTH, $this->HEIGHT);

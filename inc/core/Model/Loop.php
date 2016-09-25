@@ -141,6 +141,14 @@ abstract class Loop
 	/**
 	 * @return int
 	 */
+	public function lastIndex()
+	{
+		return $this->LastIndex;
+	}
+
+	/**
+	 * @return int
+	 */
 	public function currentStepSize()
 	{
 		return $this->Index - $this->LastIndex;

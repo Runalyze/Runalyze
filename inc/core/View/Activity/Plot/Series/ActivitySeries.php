@@ -75,14 +75,15 @@ abstract class ActivitySeries extends \Runalyze\View\Plot\Series {
 	 * Add to plot
 	 * @param \Plot $Plot
 	 * @param int $yAxis
-	 * @param boolean $addAnnotations [optional]
+	 * @param bool $addAnnotations [optional]
+	 * @param bool $hideYAxis [optional]
 	 */
-	public function addTo(Plot $Plot, $yAxis, $addAnnotations = true) {
+	public function addTo(Plot $Plot, $yAxis, $addAnnotations = true, $hideYAxis = false) {
 		if (empty($this->Data)) {
 			return;
 		}
 
-		parent::addTo($Plot, $yAxis, $addAnnotations);
+		parent::addTo($Plot, $yAxis, $addAnnotations, $hideYAxis);
 
 		switch ($this->XAxis) {
 			case DataCollector::X_AXIS_DISTANCE:

@@ -119,9 +119,10 @@ class Series {
 	 * Set properties
 	 * @param \Plot $Plot
 	 * @param int $yAxis
-	 * @param boolean $addAnnotations [optional]
+	 * @param bool $addAnnotations [optional]
+	 * @param bool $hideYAxis [optional]
 	 */
-	public function addTo(Plot $Plot, $yAxis, $addAnnotations = true) {
+	public function addTo(Plot $Plot, $yAxis, $addAnnotations = true, $hideYAxis = false) {
 		if (empty($this->Data)) {
 			return;
 		}
@@ -135,18 +136,8 @@ class Series {
 
 		if ($this->UnitString != '') {
 			if ($this->UnitString == 'time') {
-				$series = count($Plot->Data) - 1;
 				$Plot->setYAxisAsTime($yAxis);
 				$Plot->setYAxisTimeFormat('%H:%M:%S', $yAxis);
-				$Plot->setLineWidth($series, 0);
-				$Plot->setShadowSize($series, 0);
-				$Plot->hideYAxis($yAxis);
-			} elseif ($this->UnitString == 'km' || $this->UnitString == 'mi') {
-				$series = count($Plot->Data) - 1;
-				$Plot->setLineWidth($series, 0);
-				$Plot->setShadowSize($series, 0);
-				$Plot->hideYAxis($yAxis);
-				$Plot->addYUnit($yAxis, $this->UnitString, $this->UnitDecimals, $this->UnitFactor);
 			} else
 				$Plot->addYUnit($yAxis, $this->UnitString, $this->UnitDecimals);
 		}
