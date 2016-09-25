@@ -2,6 +2,7 @@
 
 namespace Runalyze\Calculation\StrideLength;
 
+use Runalyze\Model\Activity;
 use Runalyze\Model\Trackdata;
 
 /**
@@ -37,6 +38,25 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase {
 			array(100, 90, 120, 200, 100),
 			$Calculator->stridesData()
 		);
+	}
+
+	/**
+	 * @see https://github.com/Runalyze/Runalyze/issues/1951
+	 */
+	public function testTooBigValue() {
+		$Calculator = new Calculator(
+			new Trackdata\Entity(array(
+				Trackdata\Entity::TIME => array(60),
+				Trackdata\Entity::DISTANCE => array(0.180),
+				Trackdata\Entity::CADENCE => array(90)
+			))
+		);
+		$Calculator->calculate();
+
+		$this->assertEquals(0, Calculator::forActivity(new Activity\Entity([
+			Activity\Entity::DISTANCE => 75,
+			Activity\Entity::TIME_IN_SECONDS => 7200
+		])));
 	}
 
 }
