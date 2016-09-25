@@ -12,7 +12,7 @@ use Runalyze\Calculation\Distribution\TimeSeries;
 
 /**
  * Calculate stride length
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Calculation\StrideLength
  */
@@ -91,12 +91,19 @@ class Calculator {
 	/**
 	 * Calculate stride length for activity
 	 * Use this method if trackdata is not available
+	 *
+	 * @see https://github.com/Runalyze/Runalyze/issues/1951
+	 *
 	 * @param \Runalyze\Model\Activity\Entity $activity
 	 * @return int [cm]
 	 */
 	public static function forActivity(Activity\Entity $activity) {
 		if ($activity->cadence() > 0 && $activity->duration() > 0) {
-			return round($activity->distance() * 1000 * 100 / ($activity->cadence() * 2 / 60 * $activity->duration()));
+			$value = round($activity->distance() * 1000 * 100 / ($activity->cadence() * 2 / 60 * $activity->duration()));
+
+			if ($value <= 255) {
+				return $value;
+			}
 		}
 
 		return 0;
