@@ -138,8 +138,20 @@ class Plot {
 	 * @return string
 	 */
 	private function getMainJS() {
+		$encodedData = json_encode($this->Data);
+
+		if (false === $encodedData) {
+			$this->ErrorString = sprintf('%s (%s: %u)',
+				__('There is an unknown problem with this plot.'),
+				__('Error code'),
+				json_last_error()
+			);
+
+			return $this->getJSForError();
+		}
+
 		return 'RunalyzePlot.addPlot("'.$this->cssID.'", '.
-				json_encode($this->Data).', '.
+				$encodedData.', '.
 				Ajax::json_encode_jsfunc($this->Options).', '.
 				json_encode($this->PlotOptions).', '.
 				json_encode($this->Annotations).');';
