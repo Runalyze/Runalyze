@@ -11,6 +11,7 @@
 	<?php echo System::getCodeForAllCSSFiles(); ?>
 
 	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+	<link rel="manifest" href="assets/appmanifest.json">
 
 	<title><?php echo $this->getPageTitle(); ?> - RUNALYZE</title>
 
