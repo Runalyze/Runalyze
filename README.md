@@ -13,8 +13,8 @@ Runalyze is mainly developed by [laufhannes](https://github.com/laufhannes) and 
 We provide two different documentations:
 * [help.runalyze.com](https://help.runalyze.com) - faq for users
 * [docs.runalyze.com](https://docs.runalyze.com) - docs for admins/developers
-  * [Installation](https://docs.runalyze.com/en/latest/install.html) - tutorial in german [here](https://blog.runalyze.com/installation/)
-  * [Update](https://docs.runalyze.com/en/latest/update.html)
+  * [Installation](https://docs.runalyze.com/en/latest/installation/3.x.html) - tutorial in german [here](https://blog.runalyze.com/installation/)
+  * [Update](https://docs.runalyze.com/en/latest/upgrade/3.x.html)
   * [Checkout](https://docs.runalyze.com/en/latest/checkout.html)
   * [Contributing](https://docs.runalyze.com/en/latest/contribute.html)
 
