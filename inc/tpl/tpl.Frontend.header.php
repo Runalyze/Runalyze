@@ -9,6 +9,7 @@
 	<?php echo System::getCodeForAllCSSFiles(); ?>
 
 	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+	<link rel="manifest" href="assets/appmanifest.json">
         <?php foreach (\Runalyze\Language::availableLanguages() as $key => $lang_arr) { ?>
         <link rel="alternate" href="<?php echo System::getFullDomain(true)."?lang=".$key; ?>" hreflang="<?php echo $key; ?>" />
         <?php } ?>
