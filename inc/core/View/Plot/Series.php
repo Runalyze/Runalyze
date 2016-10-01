@@ -120,9 +120,8 @@ class Series {
 	 * @param \Plot $Plot
 	 * @param int $yAxis
 	 * @param bool $addAnnotations [optional]
-	 * @param bool $hideYAxis [optional]
 	 */
-	public function addTo(Plot $Plot, $yAxis, $addAnnotations = true, $hideYAxis = false) {
+	public function addTo(Plot $Plot, $yAxis, $addAnnotations = true) {
 		if (empty($this->Data)) {
 			return;
 		}
