@@ -40,7 +40,7 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 	}
 
 	/**
-	 * Init data 
+	 * Init data
 	 */
 	protected function prepareForDisplay() {
 		$this->setYearsNavigation(true, true, true);
@@ -113,10 +113,10 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 								'.Ajax::trainingLink($dat['id'], $code).'
 							</span></td>';
 					}
-	
+
 					for (; $j < 9; $j++)
 						echo HTML::emptyTD();
-	
+
 					echo '</tr>';
 				}
 			}
@@ -212,7 +212,7 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 				ORDER BY `km` DESC
 				LIMIT 10')->fetchAll();
 		}
-		
+
 		$this->months = DB::getInstance()->query('
 			SELECT
 				`sportid`,
@@ -232,9 +232,9 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 			SELECT
 				`sportid`,
 				SUM(`distance`) as `km`,
-				WEEK(FROM_UNIXTIME(`time`),'.Configuration::General()->weekStart()->mysqlParameter().') as `week`,
+				'.Configuration::General()->weekStart()->mysqlWeek('FROM_UNIXTIME(`time`)').' as `week`,
 				YEAR(FROM_UNIXTIME(`time`)) as `year`,
-				YEARWEEK(FROM_UNIXTIME(`time`),'.Configuration::General()->weekStart()->mysqlParameter().') as `weekyear`,
+				'.Configuration::General()->weekStart()->mysqlYearWeek('FROM_UNIXTIME(`time`)').' as `weekyear`,
 				`time`
 			FROM `'.PREFIX.'training`
 			WHERE `accountid`='.\SessionAccountHandler::getId().' AND

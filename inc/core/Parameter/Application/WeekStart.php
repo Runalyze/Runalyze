@@ -10,11 +10,11 @@ use Runalyze\Util\LocalTime;
 
 /**
  * Parameter to set first day of week
- * 
+ *
  * The internal value of this class is the value returned by date('w') which
  * equals numeric representation of the day of the week based on ISO-8601
  * modulo 7, i.e. 1 for Monday and 0 for Sunday.
- * 
+ *
  * @author Hannes Christiansen
  * @author Michael Pohl <michael@runalyze.de>
  * @package Runalyze\Parameter\Application
@@ -59,8 +59,8 @@ class WeekStart extends \Runalyze\Parameter\Select {
 	 */
 	public function isMonday() {
 		return ($this->value() == self::MONDAY);
-	} 
-        
+	}
+
 	/**
 	 * Is saturday?
 	 * @return bool
@@ -76,7 +76,7 @@ class WeekStart extends \Runalyze\Parameter\Select {
 	public function isSunday() {
 		return ($this->value() == self::SUNDAY);
 	}
-        
+
 	/**
 	 * Get current week start
 	 * @return string
@@ -110,6 +110,8 @@ class WeekStart extends \Runalyze\Parameter\Select {
 	/**
 	 * Parameter for `WEEK(date, mode)` in MySQL
 	 * @see http://dev.mysql.com/doc/refman/5.5/en/date-and-time-functions.html#function_week
+	 * @deprecated 3.1.0 Use `mysqlWeek()` instead as it fixes #1941
+	 *
 	 * @return int
 	 */
 	public function mysqlParameter() {
@@ -120,6 +122,29 @@ class WeekStart extends \Runalyze\Parameter\Select {
 			default:
 				return 3;
 		}
+	}
+
+	/**
+	 * Fixed version to get correct mysql week
+	 * @see https://github.com/Runalyze/Runalyze/issues/1941
+	 *
+	 * @param string $dateString
+	 * @return string Query part to select correct week number
+	 */
+	public function mysqlWeek($dateString) {
+		if ($this->isSunday()) {
+			return 'WEEK(DATE_ADD('.$dateString.', INTERVAL 1 DAY), 3)';
+		}
+
+		return 'WEEK('.$dateString.', 3)';
+	}
+
+	/**
+	 * @param string $dateString
+	 * @return string
+	 */
+	public function mysqlYearWeek($dateString) {
+		return 'YEAR'.$this->mysqlWeek($dateString);
 	}
 
 	/**
