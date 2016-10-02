@@ -130,6 +130,14 @@ class LocalTime extends \DateTime
     }
 
     /**
+     * @return int
+     */
+    public function week()
+    {
+        return Configuration::General()->weekStart()->phpWeek($this->toServerTimestamp());
+    }
+
+    /**
      * Get the timestamp of the start of the month
      * @param bool $asObject set to true to get a new object as result
      * @return int|\Runalyze\Util\LocalTime

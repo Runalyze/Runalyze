@@ -83,10 +83,10 @@ class PlotWeekSumData extends PlotSumData {
 	 */
 	protected function timer() {
 		if ($this->Year == parent::LAST_6_MONTHS || $this->Year == parent::LAST_12_MONTHS) {
-			return '((WEEK(FROM_UNIXTIME(`time`),'.$this->WeekStart->mysqlParameter().') + '.$this->timerEnd.' - '.$this->WeekStart->phpWeek().' - 1)%'.$this->timerEnd.' + 1)';
+			return '(('.$this->WeekStart->mysqlWeek('FROM_UNIXTIME(`time`)').' + '.$this->timerEnd.' - '.$this->WeekStart->phpWeek().' - 1)%'.$this->timerEnd.' + 1)';
 		}
 
-		return 'WEEK(FROM_UNIXTIME(`time`),'.$this->WeekStart->mysqlParameter().')';
+		return $this->WeekStart->mysqlWeek('FROM_UNIXTIME(`time`)');
 	}
 
 	/**
@@ -107,7 +107,7 @@ class PlotWeekSumData extends PlotSumData {
 	 * @return int
 	 */
 	protected function beginningOfTimerange() {
-		if (date('w') == 0) {
+		if ($this->WeekStart->isSunday() && date('w') != 0) {
 			return LocalTime::fromString($this->WeekStart->firstDayOfWeekForStrtotime()." -".$this->timerEnd." weeks 00:00")->getTimestamp();
 		}
 
