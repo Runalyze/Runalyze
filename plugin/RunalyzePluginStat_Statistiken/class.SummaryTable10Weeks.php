@@ -8,7 +8,7 @@ use Runalyze\Util\LocalTime;
 
 /**
  * Summary table for dataset/data browser
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Plugins\Stats\RunalyzePluginStat_Statistiken
  */
@@ -32,7 +32,7 @@ class SummaryTable10Weeks extends SummaryTable {
 		$time  = $this->TimeEnd - ($index + 0.5)*7*DAY_IN_S;
 		$start = (new LocalTime($time))->weekstart(true);
 		$end   = (new LocalTime($time))->weekend(true);
-		$week  = Icon::$CALENDAR.' '.__('Week').' '.$start->format('W');
+		$week  = Icon::$CALENDAR.' '.__('Week').' '.$start->week();
 
 		return DataBrowserLinker::link($week, $start->getTimestamp(), $end->getTimestamp(), '').'</span>&nbsp;&nbsp;&nbsp;<span class="small">'.$start->format('d.m').' - '.$end->format('d.m');
 	}
