@@ -110,7 +110,7 @@ abstract class ActivityPlot {
 	/**
 	 * @param int $index natural index starting by 1 (for y-axis) and using the 0-indexed version for series
 	 */
-	protected function hideYAxisAndSeries($index)
+	public function hideYAxisAndSeries($index)
 	{
 		$this->hideYAxis($index);
 		$this->hideSeries($index - 1);

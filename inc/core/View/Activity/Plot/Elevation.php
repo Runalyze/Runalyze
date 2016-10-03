@@ -27,11 +27,14 @@ class Elevation extends ActivityPlot {
 	 * @param \Runalyze\View\Activity\Context $context
 	 */
 	protected function initData(Activity\Context $context) {
-		$this->addMultipleSeries([
+		/** @var \Runalyze\View\Plot\Series[] $allSeries */
+		$allSeries = [
 			new Series\Elevation($context),
 			new Series\Gradient($context)
-		]);
+		];
 
-		$this->hideYAxisAndSeries(2);
+		$this->addMultipleSeries($allSeries);
+
+		$allSeries[1]->hideIn($this);
 	}
 }

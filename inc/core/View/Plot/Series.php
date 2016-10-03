@@ -7,6 +7,7 @@
 namespace Runalyze\View\Plot;
 
 use \Plot;
+use Runalyze\View\Activity\Plot\ActivityPlot;
 
 /**
  * Plot series
@@ -78,6 +79,11 @@ class Series {
 	protected $ManualAverage = false;
 
 	/**
+	 * @var null|int
+	 */
+	protected $YAxis = null;
+
+	/**
 	 * Set label
 	 * @param string $label
 	 */
@@ -126,6 +132,8 @@ class Series {
 			return;
 		}
 
+		$this->YAxis = $yAxis;
+
 		if ($this->UnitString == 'time') {
 			foreach ($this->Data as $k => $v)
 				$this->Data[$k] = $v * "1000";
@@ -164,6 +172,15 @@ class Series {
 			$minX = array_keys($this->Data, $min);
 
 			$Plot->addAnnotation($minX[0], round($min), round($min).$this->UnitString);
+		}
+	}
+
+	/**
+	 * @param ActivityPlot $plot
+	 */
+	public function hideIn(ActivityPlot $plot) {
+		if (null !== $this->YAxis) {
+			$plot->hideYAxisAndSeries($this->YAxis);
 		}
 	}
 

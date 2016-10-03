@@ -3,6 +3,7 @@
 namespace Runalyze\View\Activity\Plot\Series;
 
 use Runalyze\Calculation;
+use Runalyze\Model\Trackdata;
 use Runalyze\View\Activity;
 
 class Gradient extends ActivitySeries
@@ -30,7 +31,7 @@ class Gradient extends ActivitySeries
 	 */
 	protected function initDataWithRoute(Activity\Context $context)
     {
-		if (!$context->hasRoute() || !$context->route()->hasElevations()) {
+		if (!$context->hasRoute() || !$context->route()->hasElevations() || !$context->hasTrackdata() || !$context->trackdata()->has(Trackdata\Entity::DISTANCE)) {
 			$this->Data = array();
 			return;
 		}
