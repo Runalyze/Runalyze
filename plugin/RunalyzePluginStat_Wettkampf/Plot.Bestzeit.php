@@ -25,7 +25,7 @@ if (!empty($competitions)) {
 	foreach ($competitions as $competition) {
 		if (!$this->isFunCompetition($competition['id'])) {
 			$Dates[]   = $competition['time'];
-			$Results[$competition['time'].'000'] = ($competition['s']*1000); // Attention: timestamp(0) => 1:00:00
+			$Results[$competition['time'].'000'] = ($competition['official_time']*1000); // Attention: timestamp(0) => 1:00:00
 		}
 	}
 
