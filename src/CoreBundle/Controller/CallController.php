@@ -180,7 +180,7 @@ class CallController extends Controller
         	echo '<h1>'.__('Search for activities').'</h1>';
         	echo '</div>';
 
-        	$Formular = new \SearchFormular();
+        	$Formular = new \SearchFormular($this->generateUrl('my-search'));
         	$Formular->display();
         }
 
