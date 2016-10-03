@@ -15,6 +15,7 @@
             {% endblock %}
 
             <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+            <link rel="manifest" href="{{ asset('assets/appmanifest.json') }}">
 
             {% block html_head_locales %}
                 {% for key, locale in locales %}

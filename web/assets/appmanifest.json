@@ -1,0 +1,14 @@
+{
+  "name": "RUNALYZE",
+  "description": "Runalyze analyzes your complete training, calculates your shape, computes prognoses and visualizes your training in plots - more detailed than any other sports diary.",
+  "short_name": "RUNALYZE",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#222222",
+  "background_color": "#222222",
+  "icons": [
+    {
+      "src": "/favicon.ico"
+    }
+  ]
+}
