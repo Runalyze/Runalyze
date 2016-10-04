@@ -185,6 +185,7 @@ class Frontend {
 		new SessionAccountHandler();
 
 		if (!is_null($this->symfonyToken) && $this->symfonyToken->getToken()->getUser() != 'anon.') {
+			/** @var \Runalyze\Bundle\CoreBundle\Entity\Account $user */
 		    $user = $this->symfonyToken->getToken()->getUser();
 
 		    SessionAccountHandler::setAccount(array(
@@ -193,6 +194,8 @@ class Frontend {
 			    'language' => $user->getLanguage(),
 			    'timezone' => $user->getTimezone(),
 			    'mail' => $user->getMail(),
+				'gender' => $user->getGender(),
+				'birthyear' => $user->getBirthyear()
 		    ));
 		}
 	}

@@ -1,64 +1,37 @@
 <?php
-/**
- * This file contains class::Athlete
- * @package Runalyze
- */
 
 namespace Runalyze;
 
 use Runalyze\Profile\Athlete\Gender;
 
-/**
- * Athlete
- * 
- * @author Hannes Christiansen
- * @package Runalyze
- */
-class Athlete {
-	/**
-	 * Gender
-	 * @var int
-	 */
+class Athlete
+{
+	/** @var int */
 	protected $Gender;
 
-	/**
-	 * Maximal heart rate [bpm]
-	 * @var int
-	 */
+	/** @var null|int [bpm] */
 	protected $maximalHR = null;
 
-	/**
-	 * Resting heart rate [bpm]
-	 * @var int
-	 */
+	/** @var null|int [bpm] */
 	protected $restingHR = null;
 
-	/**
-	 * Weight [kg]
-	 * @var float
-	 */
+	/** @var null|float [kg] */
 	protected $weight = null;
 
-	/**
-	 * Age [years]
-	 * @var int
-	 */
+	/** @var null|int */
 	protected $birthyear = null;
 
-	/**
-	 * Current VDOT shape
-	 * @var float
-	 */
+	/** @var float */
 	protected $vdot = 0.0;
 
 	/**
 	 * Create athlete
-	 * @param int $Gender [optional]
-	 * @param int $maximalHR [optional]
-	 * @param int $restingHR [optional]
-	 * @param float $weight [optional]
-	 * @param int $birthyear [optional]
-	 * @param float $vdot [optional]
+	 * @param null|int $Gender see \Runalyze\Profile\Athlete\Gender
+	 * @param null|int $maximalHR [bpm]
+	 * @param null|int $restingHR [bpm]
+	 * @param null|float $weight [kg]
+	 * @param null|int $birthyear
+	 * @param float $vdot
 	 */
 	public function __construct(
 		$Gender = null,
@@ -78,54 +51,49 @@ class Athlete {
 
 	/**
 	 * Gender
-	 * @return \Runalyze\Profile\Athlete\Gender;
+	 * @see \Runalyze\Profile\Athlete\Gender
+	 * @return null|int
 	 */
 	public function gender() {
 		return $this->Gender;
 	}
 
 	/**
-	 * Maximal heart rate
-	 * @return int
+	 * @return null|int [bpm]
 	 */
 	public function maximalHR() {
 		return $this->maximalHR;
 	}
 
 	/**
-	 * Resting heart rate
-	 * @return int
+	 * @return null|int [bpm]
 	 */
 	public function restingHR() {
 		return $this->restingHR;
 	}
 
 	/**
-	 * Weight
-	 * @return int
+	 * @return null|int [kg]
 	 */
 	public function weight() {
 		return $this->weight;
 	}
 
     /**
-     * Age
-     * @return int
+     * @return null|int [years]
      */
     public function age() {
-        return (null !== $this->birthyear()) ? date("Y")-$this->birthyear() : null;
+        return (null !== $this->birthyear) ? date("Y") - $this->birthyear : null;
     }
 
 	/**
-	 * Birthyear
-	 * @return int
+	 * @return null|int
 	 */
 	public function birthyear() {
 		return $this->birthyear;
 	}
 
 	/**
-	 * VDOT shape
 	 * @return float
 	 */
 	public function vdot() {
@@ -133,7 +101,6 @@ class Athlete {
 	}
 
 	/**
-	 * Knows gender
 	 * @return bool
 	 */
 	public function knowsGender() {
@@ -141,7 +108,6 @@ class Athlete {
 	}
 
 	/**
-	 * Knows maximal HR
 	 * @return bool
 	 */
 	public function knowsMaximalHeartRate() {
@@ -149,7 +115,6 @@ class Athlete {
 	}
 
 	/**
-	 * Knows resting HR
 	 * @return bool
 	 */
 	public function knowsRestingHeartRate() {
@@ -157,7 +122,6 @@ class Athlete {
 	}
 
 	/**
-	 * Knows weight
 	 * @return bool
 	 */
 	public function knowsWeight() {
@@ -165,23 +129,20 @@ class Athlete {
 	}
 
     /**
-     * Knows birthyear
      * @return bool
      */
     public function knowsBirthyear() {
-        return (null !== $this->birthyear());
+        return (null !== $this->birthyear);
     }
 
 	/**
-	 * Knows age
 	 * @return bool
 	 */
 	public function knowsAge() {
-		return (null !== $this->birthyear());
+		return (null !== $this->birthyear);
 	}
 
 	/**
-	 * Knows VDOT shape
 	 * @return bool
 	 */
 	public function knowsVDOT() {

@@ -22,6 +22,7 @@
         "doctrine/doctrine-migrations-bundle": "^1.0",
         "doctrine/doctrine-cache-bundle": "^1.3",
         "runalyze/dem-reader": "^1.0",
+        "runalyze/age-grade": "^1.0",
         "symfony/swiftmailer-bundle": "^2.3"
     },
     "autoload": {

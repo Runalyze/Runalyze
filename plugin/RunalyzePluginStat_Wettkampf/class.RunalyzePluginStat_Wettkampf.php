@@ -4,6 +4,9 @@
  * @package Runalyze\Plugins\Stats
  */
 
+use Runalyze\AgeGrade\Lookup;
+use Runalyze\AgeGrade\Table\FemaleTable;
+use Runalyze\AgeGrade\Table\MaleTable;
 use Runalyze\Configuration;
 use Runalyze\Model\Activity;
 use Runalyze\Model\RaceResult;
@@ -17,6 +20,7 @@ use Runalyze\Activity\Distance;
 use Runalyze\Activity\Duration;
 use Runalyze\Data\Weather;
 use Runalyze\Activity\PersonalBest;
+use Runalyze\Profile\Athlete\Gender;
 
 use Runalyze\Plugin\Statistic\Races\RaceContainer;
 
@@ -37,6 +41,9 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	 * @var \Runalyze\Plugin\Statistic\Races\RaceContainer
 	 */
 	protected $RaceContainer;
+
+	/** @var null|\Runalyze\AgeGrade\Lookup */
+	protected $AgeGradeLookup = null;
 
 	/**
 	 * Name
@@ -95,7 +102,24 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	protected function prepareForDisplay() {
 		$this->setSportsNavigation();
 		$this->setOwnNavigation();
+		$this->initAgeGradeLookup();
 		$this->loadRaces();
+	}
+
+	protected function initAgeGradeLookup() {
+		$athlete = \Runalyze\Context::Athlete();
+
+		if (Configuration::General()->runningSport() == $this->sportid && $athlete->knowsGender() && $athlete->knowsAge()) {
+			$table = Gender::FEMALE === $athlete->gender() ? new FemaleTable() : new MaleTable();
+			$this->AgeGradeLookup = new Lookup($table, $athlete->age());
+		}
+	}
+
+	/**
+	 * @return bool
+	 */
+	protected function knowsAgeGrade() {
+		return null !== $this->AgeGradeLookup;
 	}
 
 	/**
@@ -354,7 +378,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 		echo '<table class="fullwidth zebra-style" id="'.$id.'">
 				<thead>
 					<tr class="c">
-						<th class="{sorter: false}" colspan="6">'.__('Official distance & time').'</th>
+						<th class="{sorter: false}" colspan="'.($this->knowsAgeGrade() ? 7 : 6).'">'.__('Official distance & time').'</th>
 						<th class="{sorter: false}" colspan="3">'.__('Activity details').'</th>
 						<th class="{sorter: false}" colspan="3">'.__('Placement').'</th>
 						<th class="{sorter: false}">&nbsp;</th>
@@ -365,6 +389,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 						<th colspan="2">'.__('Name').'</th>
 						<th class="{sorter: \'distance\'}">'.__('Distance').'</th>
 						<th class="{sorter: \'resulttime\'}">'.__('Time').'</th>
+						'.($this->knowsAgeGrade() ? '<th>'.__('Age grade').'</th>' : '').'
 						<th>'.__('Pace').'</th>
 						<th '.(new Tooltip(__('Heart rate')))->attributes().'>'.__('HR').'</th>
 						<th class="{sorter: \'temperature\'}">'.__('Weather').'</th>
@@ -388,6 +413,17 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 		$RaceResult = new RaceResult\Entity($data);
 		$RaceResultView = new View\RaceResult\Dataview($RaceResult);
 
+		if ($this->knowsAgeGrade() && $this->AgeGradeLookup->getMinimalDistance() <= $RaceResult->officialDistance()) {
+			$agePerformance = $this->AgeGradeLookup->getAgePerformance(
+				$RaceResult->officialDistance(),
+				$RaceResult->officialTime(),
+				date('Y') - date('Y', $Activity->timestamp())
+			);
+			$ageGrade = number_format(100 * $agePerformance, 2).' &#37;';
+		} else {
+			$ageGrade = '-';
+		}
+
 		echo '<tr class="r">
 				<td>'.$this->getEditIconForRaceResult($data['id']).'</td>
 				<td class="c small">'.$Linker->weekLink().'</a></td>
@@ -395,6 +431,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 				<td class="l"><strong>'.$Linker->link($RaceResult->name()).'</strong></td>
 				<td>'.$RaceResultView->officialDistance(null, $Activity->isTrack()).'</td>
 				<td>'.$RaceResultView->officialTime()->string(Duration::FORMAT_COMPETITION).'</td>
+				'.($this->knowsAgeGrade() ? '<td class="small">'.$ageGrade.'</td>' : '').'
 				<td class="small">'.$RaceResultView->pace($this->sportid)->valueWithAppendix().'</td>
 				<td class="small">'.Helper::Unknown($Activity->hrAvg()).' / '.Helper::Unknown($Activity->hrMax()).' bpm</td>
 				<td class="small">'.($Activity->weather()->isEmpty() ? '' : $Activity->weather()->fullString($Activity->isNight())).'</td>

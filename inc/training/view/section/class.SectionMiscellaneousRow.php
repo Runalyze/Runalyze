@@ -4,13 +4,17 @@
  * @package Runalyze\DataObjects\Training\View\Section
  */
 
-use Runalyze\View\Activity;
-use Runalyze\Model\Trackdata;
-use Runalyze\View\Activity\Box;
 use Runalyze\Activity\Duration;
 use Runalyze\Activity\Temperature;
-use Runalyze\Util\LocalTime;
+use Runalyze\AgeGrade\Lookup;
+use Runalyze\AgeGrade\Table\FemaleTable;
+use Runalyze\AgeGrade\Table\MaleTable;
+use Runalyze\Configuration;
+use Runalyze\Model\Trackdata;
+use Runalyze\Profile\Athlete\Gender;
 use Runalyze\View;
+use Runalyze\View\Activity;
+use Runalyze\View\Activity\Box;
 
 /**
  * Row: Miscellaneous
@@ -346,14 +350,36 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 	 */
 	protected function addRaceResult() {
 		if ($this->Context->hasRaceResult()) {
-			$RaceResultView = new View\RaceResult\Dataview($this->Context->raceResult());
-			$RaceResult = '<strong>'.__('Race Result').':</strong><ul>'.
-					($this->Context->raceResult()->officialDistance() ? '<li><strong>'.__('Official distance').'</strong>: '.$RaceResultView->officialDistance().'</li>' : '') .
-					($this->Context->raceResult()->officialTime() ? '<li><strong>'.__('Official time').'</strong>: '.$RaceResultView->officialTime()->string(Duration::FORMAT_COMPETITION).'</li>' : '').
-					($this->Context->raceResult()->placeTotal() ? '<li><strong>'.__('Place overall').'</strong>: '.$RaceResultView->placementTotalWithParticipants().'</li>' : '') .
-					($this->Context->raceResult()->placeAgeclass() ? '<li><strong>'.__('Place age group').'</strong>: '.$RaceResultView->placementAgeClassWithParticipants().'</li>' : '') .
-					($this->Context->raceResult()->placeGender() ? '<li><strong>'.__('Place gender').'</strong>: '.$RaceResultView->placementGenderWithParticipants().'</li>' : '') .'</ul>';
-			$this->NotesContent .= HTML::info($RaceResult);
+			$raceResult = $this->Context->raceResult();
+			$athlete = \Runalyze\Context::Athlete();
+			$ageGrade = null;
+			$ageGradeIcon = '';
+
+			if (Configuration::General()->runningSport() == $this->Context->sport()->id() && $athlete->knowsGender() && $athlete->knowsAge()) {
+				$table = Gender::FEMALE === $athlete->gender() ? new FemaleTable() : new MaleTable();
+				$lookup = new Lookup($table, $athlete->age());
+
+				if ($this->Context->raceResult()->officialDistance() >= $lookup->getMinimalDistance()) {
+					$ageGrade = $lookup->getAgeGrade($raceResult->officialDistance(), $raceResult->officialTime(), date('Y') - date('Y', $this->Context->activity()->timestamp()));
+					$ageGradeIcon = new View\Icon('fa-info-circle');
+					$ageGradeIcon->setTooltip(
+						__('Age standard').': '.Duration::format($ageGrade->getAgeStandard()).', '.
+						__('Open standard').': '.Duration::format($ageGrade->getOpenStandard()).'<br>'.
+						'<small><em>'.sprintf(__('via tables by %s'), 'Alan Jones / WMA / USATF').'</em></small>'
+					);
+				}
+			}
+
+			$RaceResultView = new View\RaceResult\Dataview($raceResult);
+
+			$this->NotesContent .= HTML::info('<strong>'.__('Race Result').':</strong>');
+			$this->NotesContent .= '<ul>'.
+				($raceResult->officialDistance() ? '<li><strong>'.__('Official distance').'</strong>: '.$RaceResultView->officialDistance().'</li>' : '') .
+				($raceResult->officialTime() ? '<li><strong>'.__('Official time').'</strong>: '.$RaceResultView->officialTime()->string(Duration::FORMAT_COMPETITION).'</li>' : '').
+				(null !== $ageGrade ? '<li><strong>'.__('Age grade').'</strong>: '.number_format(100 * $ageGrade->getPerformance(), 2).' &#37; '.$ageGradeIcon->code().'</li>' : '').
+				($raceResult->placeTotal() ? '<li><strong>'.__('Place overall').'</strong>: '.$RaceResultView->placementTotalWithParticipants().'</li>' : '') .
+				($raceResult->placeAgeclass() ? '<li><strong>'.__('Place age group').'</strong>: '.$RaceResultView->placementAgeClassWithParticipants().'</li>' : '') .
+				($raceResult->placeGender() ? '<li><strong>'.__('Place gender').'</strong>: '.$RaceResultView->placementGenderWithParticipants().'</li>' : '') .'</ul>';
 		}
 	}
 
