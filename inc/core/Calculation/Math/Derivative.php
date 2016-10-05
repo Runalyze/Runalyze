@@ -3,9 +3,9 @@
 namespace Runalyze\Calculation\Math;
 
 /**
- * Calculate array-wise dervivative of f(x) = y
+ * Calculate array-wise derivative of f(x) = y
  *
- * The derivate of f(x) given at discrete points x_i is calculated by
+ * The derivative of f(x) given at discrete points x_i is calculated by
  *      d/dx f(x_i) = (f(x_i) - f(x_i-1)) / (x_i - x_i-1)
  * for i > 0 and
  *      d/dx f(x_0) = d/dx f(x_1)
@@ -30,7 +30,16 @@ class Derivative
         $ddx = [];
 
         for ($i = 1; $i < $num; ++$i) {
-            $ddx[] = ($y[$i] - $y[$i - 1]) / ($x[$i] - $x[$i - 1]);
+            $deltaX = $x[$i] - $x[$i - 1];
+            $deltaY = $y[$i] - $y[$i - 1];
+
+            if ($deltaX > 0) {
+                $ddx[] = $deltaY / $deltaX;
+            } elseif ($i > 1) {
+                $ddx[] = $ddx[$i - 2];
+            } else {
+                $ddx[] = 0;
+            }
         }
 
         array_unshift($ddx, $ddx[0]);

@@ -49,4 +49,32 @@ class DerivativeTest extends \PHPUnit_Framework_TestCase
             )
         );
     }
+
+    /**
+     * @see https://github.com/Runalyze/Runalyze/issues/1952
+     */
+    public function testConstantPartsForX()
+    {
+        $this->assertEquals(
+            [1.0, 1.0, 1.0, 0.0, 0.0],
+            (new Derivative())->calculate(
+                [1.0, 2.0, 3.0, 3.0, 3.0],
+                [1.0, 2.0, 2.0, 3.0, 3.0]
+            )
+        );
+    }
+
+    /**
+     * @see https://github.com/Runalyze/Runalyze/issues/1952
+     */
+    public function testConstantPartsAtBeginningForX()
+    {
+        $this->assertEquals(
+            [0.0, 0.0, 0.0, 4.0, 2.0],
+            (new Derivative())->calculate(
+                [1.0, 2.0, 4.0, 8.0, 10.0],
+                [1.0, 1.0, 1.0, 2.0, 3.0]
+            )
+        );
+    }
 }
