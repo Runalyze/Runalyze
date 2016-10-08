@@ -71,3 +71,6 @@ if [ ! -f ${ROOTDIR}/vendor/autoload.php ]; then
     fi
     php ${ROOTDIR}/composer.phar --no-progress -o -d=${ROOTDIR} install
 fi
+
+# install Runalyze, nothing should happen, if already installed
+php ${ROOTDIR}/bin/console runalyze:install --skip=check
