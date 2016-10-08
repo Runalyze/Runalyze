@@ -35,3 +35,11 @@ cp /vagrant/data/vagrant/mysql-runalyze.cnf /etc/mysql/mysql.conf.d/
 service mysql restart
 
 
+##########################
+# Bootstrap Runalyze
+##########################
+
+if [ ! -f /vagrant/data/config.yml ]; then
+    echo "copying default config file to data folder"
+    cp /vagrant/app/config/default_config.yml /vagrant/data/config.yml
+fi
