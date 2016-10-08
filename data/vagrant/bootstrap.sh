@@ -15,7 +15,7 @@ apt-get install -y gettext perl libxml2
 apt-get install -y php php-intl php-gettext php-zip php-curl php-xml php-mysql
 apt-get install -y libapache2-mod-php
 
-cp /vagrant/data/vagrant/runalyze.conf /etc/apache2/sites-available/
+cp ${ROOTDIR}/data/vagrant/runalyze.conf /etc/apache2/sites-available/
 
 a2enmod rewrite
 a2dissite 000-default
@@ -31,7 +31,7 @@ debconf-set-selections <<< 'mysql-server mysql-server/root_password password def
 debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password default'
 apt-get install -y mysql-server
 mysql -uroot -pdefault -e "SET PASSWORD FOR root@localhost=PASSWORD('');"
-cp /vagrant/data/vagrant/mysql-runalyze.cnf /etc/mysql/mysql.conf.d/
+cp ${ROOTDIR}/data/vagrant/mysql-runalyze.cnf /etc/mysql/mysql.conf.d/
 service mysql restart
 
 
@@ -39,9 +39,9 @@ service mysql restart
 # Bootstrap Runalyze
 ##########################
 
-if [ ! -f /vagrant/data/config.yml ]; then
+if [ ! -f ${ROOTDIR}/data/config.yml ]; then
     echo "copying default config file to data folder"
-    cp /vagrant/app/config/default_config.yml /vagrant/data/config.yml
+    cp ${ROOTDIR}/app/config/default_config.yml ${ROOTDIR}/data/config.yml
 fi
 
 # check if we can access the database
@@ -64,10 +64,10 @@ else
 fi
 
 # perform composer install if no vendor/autoload.php file exists
-if [ ! -f /vagrant/vendor/autoload.php ]; then
+if [ ! -f ${ROOTDIR}/vendor/autoload.php ]; then
     # download latest composer.phar if necessary
-    if [ ! -f /vagrant/composer.phar ]; then
-        wget -q -O /vagrant/composer.phar https://getcomposer.org/composer.phar
+    if [ ! -f ${ROOTDIR}/composer.phar ]; then
+        wget -q -O ${ROOTDIR}/composer.phar https://getcomposer.org/composer.phar
     fi
-    php /vagrant/composer.phar --no-progress -o -d=/vagrant install
+    php ${ROOTDIR}/composer.phar --no-progress -o -d=${ROOTDIR} install
 fi
