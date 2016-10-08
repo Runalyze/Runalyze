@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+ROOTDIR="/vagrant"
 
 apt-get update
 
@@ -60,4 +61,13 @@ if [ $? -eq 0 ]; then
     fi
 else
     echo "Could not access the database server, no database will be created"
+fi
+
+# perform composer install if no vendor/autoload.php file exists
+if [ ! -f /vagrant/vendor/autoload.php ]; then
+    # download latest composer.phar if necessary
+    if [ ! -f /vagrant/composer.phar ]; then
+        wget -q -O /vagrant/composer.phar https://getcomposer.org/composer.phar
+    fi
+    php /vagrant/composer.phar --no-progress -o -d=/vagrant install
 fi
