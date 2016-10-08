@@ -34,6 +34,4 @@ mysql -uroot -e "CREATE DATABASE IF NOT EXISTS runalyze;"
 cp /vagrant/data/vagrant/mysql-runalyze.cnf /etc/mysql/mysql.conf.d/
 service mysql restart
 
-echo "======================================================================="
-echo "======================================================================="
-echo "= now go to http://localhost:8080/install and install Runalyze"
+

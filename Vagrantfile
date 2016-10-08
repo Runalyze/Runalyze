@@ -16,4 +16,7 @@ Vagrant.configure("2") do |config|
     group: "www-data",
     mount_options: ["dmode=775,fmode=664"]
 
+  config.vm.post_up_message = "Congratulations! Your Runalyze Development Box has been setup.
+   Now login or create an account here http://localhost:8080/"
+
 end
