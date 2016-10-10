@@ -25,9 +25,13 @@ security:
                 secret:   '%secret%'
                 lifetime: 604800 # 1 week in seconds
                 path:     /
-                
+
         dev:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        setup:
+            pattern:  ^/(update|install)
             security: false
     role_hierarchy:
         ROLE_ADMIN:       ROLE_USER
