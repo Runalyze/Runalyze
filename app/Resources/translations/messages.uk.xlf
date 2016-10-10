@@ -1273,6 +1273,18 @@
         <source>This table does &lt;strong&gt;not&lt;/strong&gt; use a correction based on your current basic endurance.</source>
         <target><![CDATA[This table does <strong>not</strong> use a correction based on your current basic endurance.]]></target>
       </trans-unit>
+      <trans-unit id="0c280780d2b7d3f039b2969498e250f2" resname="Best sub segments">
+        <source>Best sub segments</source>
+        <target>Best sub segments</target>
+      </trans-unit>
+      <trans-unit id="e6c555aa1de3365aaa319f635d647898" resname="Best segment">
+        <source>Best segment</source>
+        <target>Best segment</target>
+      </trans-unit>
+      <trans-unit id="52f5e0bc3859bc5f5e25130b6c7e8881" resname="Position">
+        <source>Position</source>
+        <target>Position</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

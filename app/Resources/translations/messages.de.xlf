@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="de" datatype="plaintext" original="file.ext">
     <header>
@@ -453,15 +453,15 @@
         <source>End</source>
         <target>End</target>
       </trans-unit>
-      <trans-unit id="4f5d5f295ddc8fd8673e74dd5fbe114a" resname="per page" approved="yes">
+      <trans-unit id="4f5d5f295ddc8fd8673e74dd5fbe114a" resname="per page">
         <source>per page</source>
         <target state="translated">pro Seite</target>
       </trans-unit>
-      <trans-unit id="5e70dd4e82f51ee3e892224e28232d31" resname="The deletion cannot be undone!" approved="yes">
+      <trans-unit id="5e70dd4e82f51ee3e892224e28232d31" resname="The deletion cannot be undone!">
         <source>The deletion cannot be undone!</source>
         <target state="translated">Die Löschung kann nicht rückgängig gemacht werden!</target>
       </trans-unit>
-      <trans-unit id="5c80dc3f6925dc488ff29b211cb0f73a" resname="Probably the link was wrong or your account has been already activated." approved="yes">
+      <trans-unit id="5c80dc3f6925dc488ff29b211cb0f73a" resname="Probably the link was wrong or your account has been already activated.">
         <source>Probably the link was wrong or your account has been already activated.</source>
         <target state="translated">Entweder war der Link falsch oder dein Account wurde bereits aktiviert.</target>
       </trans-unit>
@@ -469,11 +469,11 @@
         <source>Your password recovery link is not valid. Maybe the link has already expired.</source>
         <target>Your password recovery link is not valid. Maybe the link has already expired.</target>
       </trans-unit>
-      <trans-unit id="800e4dd8dfc264160c0b52347f7f9d4c" resname="Delete your account" approved="yes">
+      <trans-unit id="800e4dd8dfc264160c0b52347f7f9d4c" resname="Delete your account">
         <source>Delete your account</source>
         <target state="translated">Deinen Account löschen</target>
       </trans-unit>
-      <trans-unit id="604a6bf2bb345c1f15bd21b79aa6a478" resname="A confirmation has been sent via mail." approved="yes">
+      <trans-unit id="604a6bf2bb345c1f15bd21b79aa6a478" resname="A confirmation has been sent via mail.">
         <source>A confirmation has been sent via mail.</source>
         <target state="translated">Eine Bestätigungsmail wurde versandt.</target>
       </trans-unit>
@@ -487,7 +487,7 @@
         <source>Account</source>
         <target>Account</target>
       </trans-unit>
-      <trans-unit id="3bc8bc452287eabbf03c335b6a1ab7c5" resname="Your acccount" approved="yes">
+      <trans-unit id="3bc8bc452287eabbf03c335b6a1ab7c5" resname="Your acccount">
         <source>Your acccount</source>
         <target state="translated">Dein Account</target>
       </trans-unit>
@@ -1276,6 +1276,18 @@
       <trans-unit id="90f04396748091981e63a5bc196b995b" resname="This table does &lt;strong&gt;not&lt;/strong&gt; use a correction based on your current basic endurance.">
         <source>This table does &lt;strong&gt;not&lt;/strong&gt; use a correction based on your current basic endurance.</source>
         <target><![CDATA[This table does <strong>not</strong> use a correction based on your current basic endurance.]]></target>
+      </trans-unit>
+      <trans-unit id="0c280780d2b7d3f039b2969498e250f2" resname="Best sub segments">
+        <source>Best sub segments</source>
+        <target>Best sub segments</target>
+      </trans-unit>
+      <trans-unit id="e6c555aa1de3365aaa319f635d647898" resname="Best segment">
+        <source>Best segment</source>
+        <target>Best segment</target>
+      </trans-unit>
+      <trans-unit id="52f5e0bc3859bc5f5e25130b6c7e8881" resname="Position">
+        <source>Position</source>
+        <target>Position</target>
       </trans-unit>
     </body>
   </file>
