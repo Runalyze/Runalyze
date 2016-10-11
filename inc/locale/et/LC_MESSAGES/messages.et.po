@@ -6,21 +6,23 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.com\n"
 "POT-Creation-Date: 2016-10-10 19:09+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2016-10-11 13:14+0000\n"
+"Last-Translator: Antti <antti.asi@gmail.com>\n"
+"Language-Team: Estonian <http://translate.runalyze.com/projects/runalyze"
+"/runalyze-master-po/et/>\n"
 "Language: et\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 2.7\n"
 
 #: src/CoreBundle/Controller/ActivityController.php:98
 #: src/CoreBundle/Controller/ActivityController.php:197
 msgid "The activity has been removed"
-msgstr ""
+msgstr "Tegevus eemaldati"
 
 #: src/CoreBundle/Controller/ActivityController.php:259
 msgid "Corrected elevation data has been removed."
@@ -64,7 +66,7 @@ msgstr ""
 #: inc/tpl/tpl.Frontend.header.php:37
 #: inc/plugin/config/class.PluginConfigurationWindow.php:114
 msgid "Configuration"
-msgstr ""
+msgstr "Seaded"
 
 #: src/CoreBundle/Controller/PluginController.php:39
 msgid "There was a problem, the plugin could not be installed."
@@ -73,7 +75,7 @@ msgstr ""
 #: src/CoreBundle/Controller/PluginController.php:43
 #: src/CoreBundle/Controller/PluginController.php:73
 msgid "back to list"
-msgstr ""
+msgstr "tagasi nimekirja"
 
 #: src/CoreBundle/Controller/PluginController.php:60
 msgid "Uninstall"
@@ -285,44 +287,44 @@ msgstr ""
 #: src/CoreBundle/Component/Account/Registration.php:94
 #: src/CoreBundle/Component/Account/Registration.php:211
 msgid "Shoes"
-msgstr ""
+msgstr "Jalatsid"
 
 #: src/CoreBundle/Component/Account/Registration.php:95
 #: src/CoreBundle/Component/Account/Registration.php:210
 msgid "Clothes"
-msgstr ""
+msgstr "Rõivad"
 
 #: src/CoreBundle/Component/Account/Registration.php:96
 #: src/CoreBundle/Component/Account/Registration.php:212
 msgid "Bikes"
-msgstr ""
+msgstr "Jalgrattad"
 
 #: src/CoreBundle/Component/Account/Registration.php:146
 #: inc/class.FrontendSharedStatistics.php:124
 #: inc/core/Profile/Sport/Running.php:30
 msgid "Running"
-msgstr ""
+msgstr "Jooks"
 
 #: src/CoreBundle/Component/Account/Registration.php:147
 #: inc/core/Profile/Sport/Swimming.php:30
 msgid "Swimming"
-msgstr ""
+msgstr "Ujumine"
 
 #: src/CoreBundle/Component/Account/Registration.php:148
 msgid "Biking"
-msgstr ""
+msgstr "Rattasõit"
 
 #: src/CoreBundle/Component/Account/Registration.php:149
 msgid "Gymnastics"
-msgstr ""
+msgstr "Võimlemine"
 
 #: src/CoreBundle/Component/Account/Registration.php:150
 msgid "Other"
-msgstr ""
+msgstr "Muu"
 
 #: src/CoreBundle/Component/Account/Registration.php:174
 msgid "Jogging"
-msgstr ""
+msgstr "Sörk"
 
 #: src/CoreBundle/Component/Account/Registration.php:174
 msgid "JOG"
@@ -338,7 +340,7 @@ msgstr ""
 
 #: src/CoreBundle/Component/Account/Registration.php:176
 msgid "Interval training"
-msgstr ""
+msgstr "Intervalltreening"
 
 #: src/CoreBundle/Component/Account/Registration.php:176
 msgid "IT"
@@ -346,7 +348,7 @@ msgstr ""
 
 #: src/CoreBundle/Component/Account/Registration.php:177
 msgid "Tempo Run"
-msgstr ""
+msgstr "Tempojooks"
 
 #: src/CoreBundle/Component/Account/Registration.php:177
 msgid "TR"
@@ -355,7 +357,7 @@ msgstr ""
 #: src/CoreBundle/Component/Account/Registration.php:178
 #: inc/training/class.TrainingFormular.php:265
 msgid "Race"
-msgstr ""
+msgstr "Võistlus"
 
 #: src/CoreBundle/Component/Account/Registration.php:178
 msgid "RC"
@@ -363,7 +365,7 @@ msgstr ""
 
 #: src/CoreBundle/Component/Account/Registration.php:179
 msgid "Regeneration Run"
-msgstr ""
+msgstr "Taastav jooks"
 
 #: src/CoreBundle/Component/Account/Registration.php:179
 msgid "RG"
@@ -379,7 +381,7 @@ msgstr ""
 
 #: src/CoreBundle/Component/Account/Registration.php:181
 msgid "Warm-up"
-msgstr ""
+msgstr "Soojendus"
 
 #: src/CoreBundle/Component/Account/Registration.php:181
 msgid "WU"
@@ -422,7 +424,7 @@ msgstr ""
 #: inc/import/filetypes/class.ImporterFiletypeCSV.php:44
 #, php-format
 msgid "%s-files are supported from: %s"
-msgstr ""
+msgstr "%s vormingus failide võimalikud allikad: %s"
 
 #: inc/import/filetypes/class.ImporterFiletypeAbstract.php:75
 msgid "No activities could be found."
@@ -440,7 +442,7 @@ msgstr ""
 
 #: inc/import/filetypes/class.ImporterFiletypeHRM.php:6
 msgid "hrm- and gpx-files with the same name will be automatically combined."
-msgstr ""
+msgstr "Sama nimega hrm ja gpx failid kombineeritakse automaatselt."
 
 #: inc/import/class.ImporterWindow.php:217
 msgid "Add workout"
@@ -546,7 +548,7 @@ msgstr ""
 #: plugin/RunalyzePluginPanel_Sportler/window.sportler.table.php:33
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:592
 msgid "Date"
-msgstr ""
+msgstr "Kuupäev"
 
 #: inc/import/class.MultiImporterFormular.php:85
 #: inc/training/search/class.SearchFormular.php:172
@@ -554,7 +556,7 @@ msgstr ""
 #: inc/core/Dataset/Keys/Duration.php:54
 #: inc/core/View/Window/Laps/Table.php:144
 msgid "Duration"
-msgstr ""
+msgstr "Kestus"
 
 #: inc/import/class.MultiImporterFormular.php:85
 #: inc/training/view/section/table/class.TableSwimLane.php:40
@@ -573,7 +575,7 @@ msgstr ""
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:366
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:593
 msgid "Distance"
-msgstr ""
+msgstr "Vahemaa"
 
 #: inc/import/class.MultiImporterFormular.php:150
 msgid "Show multi editor afterwards"
