@@ -1,18 +1,18 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.com\n"
 "POT-Creation-Date: 2016-10-10 19:09+0200\n"
-"PO-Revision-Date: 2016-09-11 07:09+0000\n"
-"Last-Translator: Hannes <mail@laufhannes.de>\n"
-"Language-Team: German <http://translate.runalyze.com/projects/runalyze/"
-"runalyze-master-po/de/>\n"
+"PO-Revision-Date: 2016-10-12 19:27+0000\n"
+"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
+"Language-Team: German <http://translate.runalyze.com/projects/runalyze"
+"/runalyze-master-po/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.8-dev\n"
+"X-Generator: Weblate 2.7\n"
 "X-Poedit-KeywordsList: __;_ne;_n;_e\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -299,7 +299,7 @@ msgstr "Kleidung"
 #: src/CoreBundle/Component/Account/Registration.php:96
 #: src/CoreBundle/Component/Account/Registration.php:212
 msgid "Bikes"
-msgstr ""
+msgstr "Räder"
 
 #: src/CoreBundle/Component/Account/Registration.php:146
 #: inc/class.FrontendSharedStatistics.php:124
@@ -1571,7 +1571,7 @@ msgstr "Temperaturdiagramm"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:76
 msgid "Smo2 & Thb"
-msgstr ""
+msgstr "Smo2 & Thb"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:103
 #: inc/html/formular/class.FormularInputDayAndDaytime.php:111
@@ -2180,7 +2180,7 @@ msgstr "Windgeschwindigkeit"
 #: inc/training/schemes/scheme.Training.php:245
 #: inc/core/Dataset/Keys/Energy.php:45 inc/core/Activity/Energy.php:59
 msgid "Energy"
-msgstr ""
+msgstr "Energie"
 
 #: inc/training/search/class.SearchFormular.php:205
 #: inc/core/Dataset/Keys/FitTrainingEffect.php:43
@@ -2267,7 +2267,7 @@ msgstr "Bodenkontaktzeit"
 #: inc/training/class.TrainingFormular.php:473
 #: inc/core/View/Activity/Plot/Series/Smo2.php:39
 msgid "Smo2"
-msgstr ""
+msgstr "Smo2"
 
 #: inc/training/class.TrainingFormular.php:474
 #: inc/training/class.TrainingFormular.php:475
@@ -2737,7 +2737,7 @@ msgstr "Training"
 
 #: inc/draw/class.PlotSumData.php:612
 msgid "target:"
-msgstr ""
+msgstr "Ziel:"
 
 #: inc/draw/class.PlotSumData.php:633 inc/core/View/Activity/Plot/Laps.php:121
 #: inc/core/View/Plot/Series.php:160
@@ -3391,7 +3391,7 @@ msgstr "Balance der Bodenkontaktzeit"
 
 #: inc/core/Profile/Athlete/Gender.php:44
 msgid "not set"
-msgstr ""
+msgstr "nicht gesetzt"
 
 #: inc/core/Profile/Athlete/Gender.php:46
 msgid "male"
@@ -3407,7 +3407,7 @@ msgstr ""
 
 #: inc/core/Profile/Sport/Cycling.php:30
 msgid "Cycling"
-msgstr ""
+msgstr "Radfahren"
 
 #: inc/core/Profile/Sport/Hiking.php:30
 #, fuzzy
@@ -3583,7 +3583,7 @@ msgstr "Kalorien"
 
 #: inc/core/Parameter/Application/EnergyUnit.php:37
 msgid "Kilojoules"
-msgstr ""
+msgstr "Kilojoules"
 
 #: inc/core/Parameter/Application/ActivityCreationMode.php:39
 msgid "Upload form"
@@ -3966,7 +3966,7 @@ msgstr "gewittrig"
 
 #: inc/core/Data/Weather/Condition.php:192
 msgid "windy"
-msgstr ""
+msgstr "windig"
 
 #: inc/core/View/Activity/Preview.php:131
 msgid "Heartrate data available"
