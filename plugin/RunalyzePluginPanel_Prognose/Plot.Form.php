@@ -97,7 +97,7 @@ if (START_TIME != time()) {
 				$longJogPoints = 0;
 
 				for ($i = $currentFirstIndexForLongJogs; $i <= $currentIndex; ++$i) {
-					$longJogPoints += 2*(1 - ($currentData['date_age'] - $Data[$i]['date_age'])/$maxAgeOfLongJogs) * pow($Data[$i]['distance'] - $minKmOfLongJogs, 2);
+					$longJogPoints += 2*(1 - ($currentData['date_age'] - $Data[$i]['date_age'])/$maxAgeOfLongJogs) * pow(max(0, $Data[$i]['distance'] - $minKmOfLongJogs), 2);
 				}
 
 				$BasicEnduranceObj->setVDOT($Data[$currentIndex]['vdot']);
@@ -123,7 +123,7 @@ if (START_TIME != time()) {
 					`official_time`
 				FROM `'.PREFIX.'raceresult` r
 				    LEFT JOIN `'.PREFIX.'training` tr ON r.activity_id=tr.id
-				WHERE 
+				WHERE
 					r.`accountid`='.\SessionAccountHandler::getId().' AND
 					tr.`sportid`="'.Configuration::General()->runningSport().'"
 					AND r.`official_distance`="'.$distance.'"
