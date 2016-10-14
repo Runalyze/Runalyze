@@ -1,18 +1,18 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.com\n"
 "POT-Creation-Date: 2016-10-10 19:09+0200\n"
-"PO-Revision-Date: 2016-08-19 16:18+0000\n"
-"Last-Translator: blutch <blh.blutch@gmail.com>\n"
-"Language-Team: French <http://translate.runalyze.com/projects/runalyze/"
-"runalyze/fr/>\n"
+"PO-Revision-Date: 2016-10-14 15:44+0000\n"
+"Last-Translator: sebhelsinki <sebgarcia@wanadoo.fr>\n"
+"Language-Team: French <http://translate.runalyze.com/projects/runalyze"
+"/runalyze-master-po/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 2.8-dev\n"
+"X-Generator: Weblate 2.7\n"
 "X-Poedit-KeywordsList: __;_ne;_n;_e\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -170,7 +170,7 @@ msgstr ""
 #: src/CoreBundle/Component/Tool/DatabaseCleanup/JobLoop.php:125
 #, php-format
 msgid "%d activities have been updated."
-msgstr ""
+msgstr "%d activités ont été mises à jour."
 
 #: src/CoreBundle/Component/Tool/Table/VdotPaceTable.php:43
 #: inc/core/Activity/TrainingEffectLevel.php:68
@@ -182,7 +182,7 @@ msgstr "Facile"
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:567
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:394
 msgid "Marathon"
-msgstr ""
+msgstr "Marathon"
 
 #: src/CoreBundle/Component/Tool/Table/VdotPaceTable.php:45
 #: inc/training/view/class.ElevationInfo.php:207
@@ -194,44 +194,48 @@ msgstr "Seuil"
 #: src/CoreBundle/Component/Tool/Table/VdotPaceTable.php:46
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:406
 msgid "Interval"
-msgstr ""
+msgstr "Intervalle"
 
 #: src/CoreBundle/Component/Tool/Table/VdotPaceTable.php:47
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:412
 msgid "Repetition"
-msgstr ""
+msgstr "Répétition"
 
 #: src/CoreBundle/Component/Tool/Backup/JsonImporterResults.php:134
 #: inc/system/config/class.ConfigTabDataset.php:59
+#, fuzzy
 msgid "Dataset"
-msgstr ""
+msgstr "Données"
 
 #: src/CoreBundle/Component/Tool/Backup/JsonImporterResults.php:135
 #: inc/system/config/class.ConfigTabPlugins.php:189
 msgid "Plugin"
-msgstr ""
+msgstr "Plugin"
 
 #: src/CoreBundle/Component/Tool/Backup/JsonImporterResults.php:136
 #: inc/plugin/config/class.PluginConfigurationWindow.php:75
 msgid "Plugin configuration"
-msgstr ""
+msgstr "Configuration du plugin"
 
 #: src/CoreBundle/Component/Tool/Backup/JsonImporterResults.php:137
+#, fuzzy
 msgid "Sport types"
-msgstr ""
+msgstr "Sports"
 
 #: src/CoreBundle/Component/Tool/Backup/JsonImporterResults.php:138
 #: inc/system/config/class.ConfigTabTypes.php:27
+#, fuzzy
 msgid "Activity types"
-msgstr ""
+msgstr "Activités"
 
 #: src/CoreBundle/Component/Tool/Backup/JsonImporterResults.php:139
+#, fuzzy
 msgid "Body data"
-msgstr ""
+msgstr "Données biométriques"
 
 #: src/CoreBundle/Component/Tool/Backup/JsonImporterResults.php:140
 msgid "Activities"
-msgstr ""
+msgstr "Activités"
 
 #: src/CoreBundle/Component/Tool/Backup/JsonImporterResults.php:141
 msgid "Trackdata"
@@ -291,32 +295,33 @@ msgstr "Résultat de la course"
 #: src/CoreBundle/Component/Account/Registration.php:94
 #: src/CoreBundle/Component/Account/Registration.php:211
 msgid "Shoes"
-msgstr ""
+msgstr "Chaussures"
 
 #: src/CoreBundle/Component/Account/Registration.php:95
 #: src/CoreBundle/Component/Account/Registration.php:210
 msgid "Clothes"
-msgstr ""
+msgstr "Vêtements"
 
 #: src/CoreBundle/Component/Account/Registration.php:96
 #: src/CoreBundle/Component/Account/Registration.php:212
 msgid "Bikes"
-msgstr ""
+msgstr "Vélos"
 
 #: src/CoreBundle/Component/Account/Registration.php:146
 #: inc/class.FrontendSharedStatistics.php:124
 #: inc/core/Profile/Sport/Running.php:30
+#, fuzzy
 msgid "Running"
-msgstr ""
+msgstr "Course à pied"
 
 #: src/CoreBundle/Component/Account/Registration.php:147
 #: inc/core/Profile/Sport/Swimming.php:30
 msgid "Swimming"
-msgstr ""
+msgstr "Natation"
 
 #: src/CoreBundle/Component/Account/Registration.php:148
 msgid "Biking"
-msgstr ""
+msgstr "Cyclisme"
 
 #: src/CoreBundle/Component/Account/Registration.php:149
 msgid "Gymnastics"
@@ -324,7 +329,7 @@ msgstr ""
 
 #: src/CoreBundle/Component/Account/Registration.php:150
 msgid "Other"
-msgstr ""
+msgstr "Autre"
 
 #: src/CoreBundle/Component/Account/Registration.php:174
 msgid "Jogging"
@@ -335,20 +340,22 @@ msgid "JOG"
 msgstr ""
 
 #: src/CoreBundle/Component/Account/Registration.php:175
+#, fuzzy
 msgid "Fartlek"
-msgstr ""
+msgstr "Fartlek"
 
 #: src/CoreBundle/Component/Account/Registration.php:175
 msgid "FL"
-msgstr ""
+msgstr "FL"
 
 #: src/CoreBundle/Component/Account/Registration.php:176
+#, fuzzy
 msgid "Interval training"
-msgstr ""
+msgstr "Séance d'intervalles"
 
 #: src/CoreBundle/Component/Account/Registration.php:176
 msgid "IT"
-msgstr ""
+msgstr "INT"
 
 #: src/CoreBundle/Component/Account/Registration.php:177
 msgid "Tempo Run"
@@ -385,15 +392,15 @@ msgstr ""
 
 #: src/CoreBundle/Component/Account/Registration.php:181
 msgid "Warm-up"
-msgstr ""
+msgstr "Echauffement"
 
 #: src/CoreBundle/Component/Account/Registration.php:181
 msgid "WU"
-msgstr ""
+msgstr "ECH"
 
 #: src/CoreBundle/Component/Account/Registration.php:225
 msgid "long sleeve"
-msgstr ""
+msgstr "manches longues"
 
 #: src/CoreBundle/Component/Account/Registration.php:225
 msgid "T-shirt"
@@ -2199,10 +2206,14 @@ msgid "The activity has been successfully created."
 msgstr "L'activité a été créée avec succès."
 
 #: inc/training/class.TrainingFormular.php:262
+#, fuzzy
 msgid ""
 "Race results are treated in a special way to show your personal bests and "
 "are independent of the chosen activity type."
 msgstr ""
+"Les résultats en compétition sont traités de façon particulière afin de "
+"souligner vos records personnels et sont indépendants du type d'activité "
+"choisie."
 
 #: inc/training/class.TrainingFormular.php:263
 msgid ""
@@ -2305,7 +2316,6 @@ msgid "Public"
 msgstr "Public"
 
 #: inc/training/schemes/scheme.Training.php:150
-#, fuzzy
 msgid "Public activities will be visible for everybody."
 msgstr "Les activités publiques seront visibles par tout le monde."
 
@@ -2712,8 +2722,9 @@ msgstr ""
 
 #: inc/draw/class.PlotSumData.php:633 inc/core/View/Activity/Plot/Laps.php:121
 #: inc/core/View/Plot/Series.php:160
+#, fuzzy
 msgid "avg:"
-msgstr ""
+msgstr "moyenne:"
 
 #: inc/draw/class.PlotSumData.php:664
 msgid "Target is based on current basic endurance calculations."
@@ -3296,8 +3307,9 @@ msgid "Maintaining workout"
 msgstr ""
 
 #: inc/core/Activity/TrainingEffectLevel.php:72
+#, fuzzy
 msgid "Improving Fitness"
-msgstr ""
+msgstr "Amélioration de la condition"
 
 #: inc/core/Activity/TrainingEffectLevel.php:74
 #, fuzzy
@@ -3315,8 +3327,9 @@ msgid ""
 msgstr ""
 
 #: inc/core/Activity/TrainingEffectLevel.php:94
+#, fuzzy
 msgid "Maintains your aerobic fitness."
-msgstr ""
+msgstr "maintient la condition aérobique"
 
 #: inc/core/Activity/TrainingEffectLevel.php:96
 msgid ""
@@ -3981,8 +3994,9 @@ msgstr ""
 "Cette valeur se rapporte à votre VO2max estimée au début de l'activité."
 
 #: inc/core/View/Activity/Box/MaximalHeartRateInPercent.php:65
+#, fuzzy
 msgid "Please adjust your maximal heart rate."
-msgstr ""
+msgstr "Ajustez votre HR max svp."
 
 #: inc/core/View/Activity/Box/Pace.php:28
 #: inc/core/View/Activity/Box/Speed.php:37
@@ -4616,9 +4630,9 @@ msgstr ""
 "suffisant. Peut être laissé vide."
 
 #: inc/core/Configuration/Category/Vdot.php:182
-#, php-format
+#, fuzzy, php-format
 msgid "Value must be between %s and %s."
-msgstr ""
+msgstr "La valeur doit être entre %s et %s."
 
 #: inc/core/Configuration/Category/Vdot.php:186
 msgid "Use fixed VDOT value"
@@ -4826,8 +4840,9 @@ msgid "Year"
 msgstr ""
 
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:148
+#, fuzzy
 msgid "No data available since"
-msgstr ""
+msgstr "Pas de données disponibles depuis"
 
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:200
 #: plugin/RunalyzePluginStat_Wetter/Plot.Year.php:47
