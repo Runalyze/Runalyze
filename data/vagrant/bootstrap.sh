@@ -72,5 +72,17 @@ if [ ! -f ${ROOTDIR}/vendor/autoload.php ]; then
     php ${ROOTDIR}/composer.phar --no-progress -o -d=${ROOTDIR} install
 fi
 
+#install nodejs and dependencies
+npm --version > /dev/null 2>&1
+if [ $? -ne 0 ]; then
+    curl -sL https://deb.nodesource.com/setup_4.x | bash -
+    apt-get install -y nodejs
+fi
+npm install -g bower
+npm install -g gulp-cli
+usermod -a -G www-data ubuntu
+sudo -H -u ubuntu npm --prefix=${ROOTDIR} --no-bin-links install
+sudo -H -u ubuntu gulp --cwd=${ROOTDIR}
+
 # install Runalyze, nothing should happen, if already installed
-php ${ROOTDIR}/bin/console runalyze:install --skip=check
+php ${ROOTDIR}/bin/console runalyze:install
