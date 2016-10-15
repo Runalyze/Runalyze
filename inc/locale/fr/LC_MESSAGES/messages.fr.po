@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.com\n"
 "POT-Creation-Date: 2016-10-10 19:09+0200\n"
-"PO-Revision-Date: 2016-10-14 15:44+0000\n"
-"Last-Translator: sebhelsinki <sebgarcia@wanadoo.fr>\n"
+"PO-Revision-Date: 2016-10-15 13:28+0000\n"
+"Last-Translator: Guillaume van Baalen <postdoc38@yahoo.fr>\n"
 "Language-Team: French <http://translate.runalyze.com/projects/runalyze"
 "/runalyze-master-po/fr/>\n"
 "Language: fr\n"
@@ -325,7 +325,7 @@ msgstr "Cyclisme"
 
 #: src/CoreBundle/Component/Account/Registration.php:149
 msgid "Gymnastics"
-msgstr ""
+msgstr "Gymnastique"
 
 #: src/CoreBundle/Component/Account/Registration.php:150
 msgid "Other"
@@ -333,11 +333,11 @@ msgstr "Autre"
 
 #: src/CoreBundle/Component/Account/Registration.php:174
 msgid "Jogging"
-msgstr ""
+msgstr "Jogging"
 
 #: src/CoreBundle/Component/Account/Registration.php:174
 msgid "JOG"
-msgstr ""
+msgstr "JOG"
 
 #: src/CoreBundle/Component/Account/Registration.php:175
 #, fuzzy
@@ -359,11 +359,11 @@ msgstr "INT"
 
 #: src/CoreBundle/Component/Account/Registration.php:177
 msgid "Tempo Run"
-msgstr ""
+msgstr "Course tempo"
 
 #: src/CoreBundle/Component/Account/Registration.php:177
 msgid "TR"
-msgstr ""
+msgstr "TR"
 
 #: src/CoreBundle/Component/Account/Registration.php:178
 #: inc/training/class.TrainingFormular.php:265
@@ -372,23 +372,23 @@ msgstr "Course"
 
 #: src/CoreBundle/Component/Account/Registration.php:178
 msgid "RC"
-msgstr ""
+msgstr "RC"
 
 #: src/CoreBundle/Component/Account/Registration.php:179
 msgid "Regeneration Run"
-msgstr ""
+msgstr "Course de récupération"
 
 #: src/CoreBundle/Component/Account/Registration.php:179
 msgid "RG"
-msgstr ""
+msgstr "RG"
 
 #: src/CoreBundle/Component/Account/Registration.php:180
 msgid "Long Slow Distance"
-msgstr ""
+msgstr "Distance longue et lente"
 
 #: src/CoreBundle/Component/Account/Registration.php:180
 msgid "LSD"
-msgstr ""
+msgstr "LSD"
 
 #: src/CoreBundle/Component/Account/Registration.php:181
 msgid "Warm-up"
@@ -404,7 +404,7 @@ msgstr "manches longues"
 
 #: src/CoreBundle/Component/Account/Registration.php:225
 msgid "T-shirt"
-msgstr ""
+msgstr "T-shirt"
 
 #: src/CoreBundle/Component/Account/Registration.php:225
 msgid "singlet"
@@ -416,19 +416,19 @@ msgstr ""
 
 #: src/CoreBundle/Component/Account/Registration.php:225
 msgid "long pants"
-msgstr ""
+msgstr "pantalons longs"
 
 #: src/CoreBundle/Component/Account/Registration.php:225
 msgid "shorts"
-msgstr ""
+msgstr "shorts"
 
 #: src/CoreBundle/Component/Account/Registration.php:225
 msgid "gloves"
-msgstr ""
+msgstr "gants"
 
 #: src/CoreBundle/Component/Account/Registration.php:225
 msgid "hat"
-msgstr ""
+msgstr "chapeau"
 
 #: inc/import/filetypes/class.ImporterFiletypeXML.php:59
 #: inc/import/filetypes/class.ImporterFiletypeKML.php:64
@@ -623,7 +623,7 @@ msgstr "Lien public"
 
 #: inc/system/class.SharedLinker.php:79
 msgid "Public list"
-msgstr ""
+msgstr "Liste publique"
 
 #: inc/system/config/class.ConfigTabs.php:76
 #: inc/tpl/tpl.adminWindow.login.php:6
@@ -877,21 +877,26 @@ msgstr "sauevgarder"
 
 #: inc/system/config/class.ConfigTabDataset.php:66
 msgid "Your Dataset"
-msgstr ""
+msgstr "Vos données"
 
 #: inc/system/config/class.ConfigTabDataset.php:68
 msgid ""
 "You can specify which values show up in the overview of your activities."
 msgstr ""
+"Vous pouvez préciser quelles valeurs sont affichées dans le sommaire de vos "
+"activités."
 
 #: inc/system/config/class.ConfigTabDataset.php:69
+#, fuzzy
 msgid ""
 "This does not influence the detailed activity view, the form or any plugin."
 msgstr ""
+"Ceci n'a aucune influence sur la vue détaillée des activités, la forme, ou "
+"tout autre plugin."
 
 #: inc/system/config/class.ConfigTabDataset.php:106
 msgid "Display"
-msgstr ""
+msgstr "Affichage"
 
 #: inc/system/config/class.ConfigTabDataset.php:106
 msgid "The information will be shown directly in the row."
@@ -1104,6 +1109,8 @@ msgstr ""
 msgid ""
 "The directory <strong>%s</strong> is not writable. <em>(chmod = %s)</em>"
 msgstr ""
+"Le dossier <strong>%s</strong> est inaccessible en écriture <em>(chmod "
+"=%s)</em>"
 
 #: inc/tpl/tpl.DataBrowser.php:20
 msgid "Choose a date ..."
@@ -1336,14 +1343,15 @@ msgstr "Aide et support"
 
 #: inc/tpl/tpl.FrontendSharedIframe.header.php:27
 #: inc/tpl/tpl.FrontendShared.header.php:32
-#, php-format
+#, fuzzy, php-format
 msgid "Public training view of <strong>%s</strong>"
-msgstr ""
+msgstr "Entrainement public, vue <strong>%s</strong>"
 
 #: inc/tpl/tpl.FrontendSharedIframe.header.php:29
 #: inc/tpl/tpl.FrontendShared.header.php:34
+#, fuzzy
 msgid "Public training view"
-msgstr ""
+msgstr "Vue de l'entrainement public"
 
 #: inc/tpl/tpl.adminWindow.login.php:5
 msgid "Administration"
@@ -1893,7 +1901,6 @@ msgid "R-R intervals"
 msgstr "Intervalles R-R"
 
 #: inc/training/view/section/class.SectionHRVRow.php:31
-#, fuzzy
 msgid "Successive differences"
 msgstr "Différences successives"
 
@@ -1909,7 +1916,6 @@ msgid "R-R interval"
 msgstr "Intervalle R-R"
 
 #: inc/training/view/section/class.SectionHRVRow.php:52
-#, fuzzy
 msgid "Anomalies"
 msgstr "Anomalies"
 
@@ -1966,12 +1972,11 @@ msgstr "Publier"
 #: inc/training/view/class.TrainingView.php:154
 #, fuzzy
 msgid "Edit race result"
-msgstr "Modifier résultat de la course"
+msgstr "Modifier le résultat de course"
 
 #: inc/training/view/class.TrainingView.php:156
-#, fuzzy
 msgid "Add race result"
-msgstr "Ajouter le résultat de la compétition"
+msgstr "Ajouter un résultat de compétition"
 
 #: inc/training/view/class.TrainingView.php:160
 msgid "Edit activity"
@@ -2127,9 +2132,8 @@ msgid "max. HR"
 msgstr "RC. max"
 
 #: inc/training/search/class.SearchFormular.php:186
-#, fuzzy
 msgid "Is race"
-msgstr "Course"
+msgstr "Est une course"
 
 #: inc/training/search/class.SearchFormular.php:190
 msgid "Uses VDOT"
@@ -2206,7 +2210,6 @@ msgid "The activity has been successfully created."
 msgstr "L'activité a été créée avec succès."
 
 #: inc/training/class.TrainingFormular.php:262
-#, fuzzy
 msgid ""
 "Race results are treated in a special way to show your personal bests and "
 "are independent of the chosen activity type."
@@ -2216,10 +2219,13 @@ msgstr ""
 "choisie."
 
 #: inc/training/class.TrainingFormular.php:263
+#, fuzzy
 msgid ""
 "You can add some details (your placement etc.) in the 'Race result' plugin "
 "afterwards."
 msgstr ""
+"Vous pouvez ajouter des détails (votre classement, etc.) dans le plugin "
+"'Résultat de compétition\" plus tard."
 
 #: inc/training/class.TrainingFormular.php:353
 msgid "Choose tags"
@@ -2320,7 +2326,6 @@ msgid "Public activities will be visible for everybody."
 msgstr "Les activités publiques seront visibles par tout le monde."
 
 #: inc/training/schemes/scheme.Training.php:162
-#, fuzzy
 msgid ""
 "This field is only meant for official track races such that distances can be "
 "shown correctly, e.g. as 10.000m. Use tags for all other purposes."
@@ -2330,9 +2335,8 @@ msgstr ""
 "pour les autres cas."
 
 #: inc/training/schemes/scheme.Training.php:222
-#, fuzzy
 msgid "Will be calculated afterwards from the activity's elevation profile."
-msgstr "Sera calculé  à partir du profil d'altitude de l'activité."
+msgstr "Sera calculé après coup à partir du profil d'altitude de l'activité."
 
 #: inc/training/schemes/scheme.Training.php:246
 msgid ""
@@ -2340,6 +2344,9 @@ msgid ""
 "(if activated in your configuration) only if you change the duration or the "
 "type of sport."
 msgstr ""
+"Cette valeur sera calculée automatiquement à partir de la durée et du type "
+"de sport (si activé dans votre configuration) uniquement si vous changez la "
+"longueur ou le type de sport."
 
 #: inc/training/schemes/scheme.Training.php:310
 msgid "VDOT for form"
@@ -2351,6 +2358,10 @@ msgid ""
 "single activities from the calculation of your form and should do so if it's "
 "heart rate data are not reliable (e.g. a lot of stops, walking breaks, ...)."
 msgstr ""
+"Les VDOTs sont estimées à partir du rapport entre rythme cardiaque et rythme "
+"de course. Vous pouvez exclure des activités dans le calcul de votre forme "
+"et devriez le faire si les données de rythme cardiaque ne sont pas fiables ("
+"par ex. de nombreux arrêts, pauses en marchant, ...)."
 
 #: inc/training/schemes/scheme.Training.php:405
 msgid "Cadence (Running)"
@@ -2517,7 +2528,7 @@ msgstr ""
 #: inc/class.FrontendSharedStatistics.php:50
 #, php-format
 msgid "Activity data of %s"
-msgstr ""
+msgstr "Données de l'activité du %s"
 
 #: inc/class.FrontendSharedStatistics.php:85
 msgid "Total distance:"
@@ -2529,7 +2540,7 @@ msgstr "Nombres d'activités :"
 
 #: inc/class.FrontendSharedStatistics.php:91
 msgid "Total duration:"
-msgstr ""
+msgstr "Durée totale:"
 
 #: inc/class.FrontendSharedStatistics.php:93
 msgid "First activity:"
@@ -2541,7 +2552,7 @@ msgstr "Statistiques générales"
 
 #: inc/class.FrontendSharedStatistics.php:124 inc/plugin/class.Plugin.php:399
 msgid "Year on year"
-msgstr ""
+msgstr "D'une année à l'autre"
 
 #: inc/class.DataBrowser.php:217
 msgid "week"
@@ -2660,15 +2671,15 @@ msgstr "Vous devez entrer un temps."
 
 #: inc/draw/class.PlotWeekSumData.php:55
 msgid "Weekly chart:"
-msgstr ""
+msgstr "Graphique hebdomadaire:"
 
 #: inc/draw/class.PlotMonthSumData.php:38
 msgid "Monthly chart:"
-msgstr ""
+msgstr "Graphique mensuel:"
 
 #: inc/draw/class.PlotSumData.php:193 inc/draw/class.PlotSumData.php:198
 msgid "By type"
-msgstr ""
+msgstr "Par type"
 
 #: inc/draw/class.PlotSumData.php:209 inc/draw/class.PlotSumData.php:217
 msgid "Distance/Duration"
@@ -2676,36 +2687,36 @@ msgstr "Distance/durée"
 
 #: inc/draw/class.PlotSumData.php:234 inc/draw/class.PlotSumData.php:236
 msgid "All sports"
-msgstr ""
+msgstr "Tous les sports"
 
 #: inc/draw/class.PlotSumData.php:259 inc/draw/class.PlotSumData.php:267
 #: inc/plugin/class.PluginStat.php:284 inc/plugin/class.PluginStat.php:303
 #: plugin/RunalyzePluginStat_Statistiken/class.SummaryTableMonths.php:57
 msgid "Last 6 months"
-msgstr ""
+msgstr "Dernier 6 mois"
 
 #: inc/draw/class.PlotSumData.php:261 inc/draw/class.PlotSumData.php:268
 #: inc/plugin/class.PluginStat.php:285 inc/plugin/class.PluginStat.php:305
 #: plugin/RunalyzePluginStat_Statistiken/class.SummaryTableMonths.php:63
 msgid "Last 12 months"
-msgstr ""
+msgstr "Dernier 12 mois"
 
 #: inc/draw/class.PlotSumData.php:314
 msgid "last 6 months"
-msgstr ""
+msgstr "dernier 6 mois"
 
 #: inc/draw/class.PlotSumData.php:316
 msgid "last 12 months"
-msgstr ""
+msgstr "dernier 12 mois"
 
 #: inc/draw/class.PlotSumData.php:378
 msgid "There are no data for this timerange."
-msgstr ""
+msgstr "Il n'y a pas de données dans cette période."
 
 #: inc/draw/class.PlotSumData.php:551
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:361
 msgid "without"
-msgstr ""
+msgstr "sans"
 
 #: inc/draw/class.PlotSumData.php:586
 #, fuzzy
@@ -2714,7 +2725,7 @@ msgstr "Course"
 
 #: inc/draw/class.PlotSumData.php:587
 msgid "Training"
-msgstr ""
+msgstr "Entrainement"
 
 #: inc/draw/class.PlotSumData.php:612
 msgid "target:"
@@ -2980,6 +2991,8 @@ msgid ""
 "Vertical oscillation is your vertical motion of your torso measured in "
 "centimeters"
 msgstr ""
+"L'oscillation verticale est le mouvement vertical de votre torse, mesuré en "
+"centimètres"
 
 #: inc/core/Dataset/Keys/Comment.php:46
 msgid "Comment"
@@ -3006,7 +3019,7 @@ msgstr "Résultat de la course"
 
 #: inc/core/Dataset/Keys/RaceResult.php:88
 msgid "Your placements at races"
-msgstr ""
+msgstr "Votre classement en compétition"
 
 #: inc/core/Dataset/Keys/RaceResult.php:135
 #: inc/core/Dataset/Keys/RaceResult.php:178
@@ -3014,7 +3027,7 @@ msgstr ""
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:583
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:588
 msgid "Age group"
-msgstr ""
+msgstr "Catégorie d'age"
 
 #: inc/core/Dataset/Keys/RaceResult.php:139
 #: inc/core/Dataset/Keys/RaceResult.php:179
@@ -3024,9 +3037,8 @@ msgid "Gender"
 msgstr "Genre"
 
 #: inc/core/Dataset/Keys/RaceResult.php:160
-#, fuzzy
 msgid "Race name"
-msgstr "Zones de rythme"
+msgstr "Nom de la course"
 
 #: inc/core/Dataset/Keys/Splits.php:47
 msgid "Splits"
@@ -3109,17 +3121,20 @@ msgid ""
 "Rating of Perceived Exertion or Borg scale, a scale devised to show "
 "perceived exertion during exercise"
 msgstr ""
+"Niveau d'effort perçu ou échelle de Borg, une échelle inventée pour montrer "
+"l'effort perçu en faisant de l'exercice"
 
 #: inc/core/Dataset/Keys/Gradient.php:54
-#, fuzzy
 msgid "Grad."
-msgstr "Dégradé"
+msgstr "Grad."
 
 #: inc/core/Dataset/Keys/Gradient.php:63
 msgid ""
 "The gradient describes the ratio of elevation gain (or less) and distance. "
 "Dividing total elevation by total distance gives this value."
 msgstr ""
+"Le gradient décrit le rapport entre le gain (ou la perte) d'altitude et la "
+"distance. Il s'obtient en divisant le dénivelé total par la distance totale."
 
 #: inc/core/Dataset/Keys/FitRecoveryTime.php:43
 #: inc/core/Dataset/Keys/FitRecoveryTime.php:52
@@ -3135,15 +3150,16 @@ msgstr ""
 "de la fréquence cardiaque juste après la fin de l'activité."
 
 #: inc/core/Dataset/Keys/FitTrainingEffect.php:52
-#, fuzzy
 msgid "TE"
-msgstr "E"
+msgstr "TE"
 
 #: inc/core/Dataset/Keys/FitTrainingEffect.php:62
 msgid ""
 "Training Effect is an indicator between 1.0 (easy) and 5.0 (overreaching) to "
 "rate the impact of aerobic exercise on your body."
 msgstr ""
+"Le TE est un indicateur entre 1.0 (facile) et 5.0 (sur-entraînement) pour "
+"évaluer l'impact de l'exercice aérobic sur votre corps."
 
 #: inc/core/Dataset/Keys/Temperature.php:53
 msgid "Temp."
@@ -3163,9 +3179,9 @@ msgid "GCB"
 msgstr "ECS"
 
 #: inc/core/Dataset/Keys/GroundcontactBalance.php:62
-#, fuzzy
 msgid "Ground contact time balance measures your running symmetry."
-msgstr "Bilan des temps de contact au sol"
+msgstr ""
+"Le bilan des temps de contact au sol mesure la symmétrie de votre foulée."
 
 #: inc/core/Dataset/Keys/JdIntensity.php:44
 msgid "JD intensity"
@@ -3224,6 +3240,8 @@ msgstr ""
 #: inc/core/Dataset/Keys/VerticalRatio.php:53
 msgid "Vertical ratio is the ratio of vertical oscillation to stride length."
 msgstr ""
+"Le rapport vertical est le rapport entre l'oscillation verticale et la "
+"longueur de la foulée."
 
 #: inc/core/Dataset/Keys/WindChill.php:43
 msgid "Windchill"
@@ -3276,13 +3294,16 @@ msgstr "modèle de performance"
 #: inc/core/Dataset/Keys/FitPerformanceCondition.php:52
 #: inc/core/Activity/PerformanceCondition.php:67
 msgid "PC"
-msgstr ""
+msgstr "PC"
 
 #: inc/core/Dataset/Keys/FitPerformanceCondition.php:62
 msgid ""
 "The performance condition is an assessment, detected by some Garmin devices, "
 "of your ability to perform compared to your average fitness level."
 msgstr ""
+"Le modèle de performance est une indication donnée par certains appareils "
+"Garmin. Elle indique votre capacité à la performance, comparée à votre "
+"condition physique moyenne."
 
 #: inc/core/Dataset/Keys/AirPressure.php:43
 msgid "Air pressure"
@@ -3298,56 +3319,62 @@ msgid "Wind"
 msgstr "Vent"
 
 #: inc/core/Activity/PerformanceCondition.php:58
-#, fuzzy
 msgid "Performance condition"
-msgstr "modèle de performance"
+msgstr "Modèle de performance"
 
 #: inc/core/Activity/TrainingEffectLevel.php:70
+#, fuzzy
 msgid "Maintaining workout"
-msgstr ""
+msgstr "Activité de maintien"
 
 #: inc/core/Activity/TrainingEffectLevel.php:72
-#, fuzzy
 msgid "Improving Fitness"
-msgstr "Amélioration de la condition"
+msgstr "Amélioration de la condition physique"
 
 #: inc/core/Activity/TrainingEffectLevel.php:74
-#, fuzzy
 msgid "Highly Improving"
-msgstr "Point le plus haut"
+msgstr "En grand progrès"
 
 #: inc/core/Activity/TrainingEffectLevel.php:76
 msgid "Overreaching"
-msgstr ""
+msgstr "Sur-entraînement"
 
 #: inc/core/Activity/TrainingEffectLevel.php:92
 msgid ""
 "Helps recovery (short activities). Improves endurance with longer activities "
 "(more than 40 minutes)."
 msgstr ""
+"Aide à la récupération (activités courts). Améliore l'endurance avec des "
+"activités plus longues (plus de 40 minutes)."
 
 #: inc/core/Activity/TrainingEffectLevel.php:94
-#, fuzzy
 msgid "Maintains your aerobic fitness."
-msgstr "maintient la condition aérobique"
+msgstr "Maintient la condition aérobique."
 
 #: inc/core/Activity/TrainingEffectLevel.php:96
 msgid ""
 "Improves your aerobic fitness if repeated as part of your weekly training "
 "program."
 msgstr ""
+"Améliore votre condition aérobique s'il fait partie de votre programme "
+"hebdomadaire d'entraînement de manière répétée."
 
 #: inc/core/Activity/TrainingEffectLevel.php:98
 msgid ""
 "Highly improves your aerobic fitness if repeated 1-2 times per week with "
 "adequate recovery time."
 msgstr ""
+"Améliore sensiblement votre conditíon aérobie si on le répète 1-2 fois par "
+"semaine avec suffisamment de périodes de repos."
 
 #: inc/core/Activity/TrainingEffectLevel.php:100
 msgid ""
 "Causes temporary overload with high improvement. Train up to this number "
 "with extreme care. Requires additional recovery days."
 msgstr ""
+"Cause une surcharge temporaire avec une grande amélioration. Entrainez-vous "
+"à ce niveau avec une extrème prudence. Demande des jours de récupération "
+"supplémentaires."
 
 #: inc/core/Activity/GroundcontactBalance.php:48
 msgid "Groundcontact balance"
@@ -3472,9 +3499,8 @@ msgid "at too big distance (600s)"
 msgstr "à trop grande distance (600 s)"
 
 #: inc/core/Parameter/Application/ActivityRoutePrivacy.php:40
-#, fuzzy
 msgid "only for race results"
-msgstr "seulement en compétition"
+msgstr "seulement pour résultats en compétition"
 
 #: inc/core/Parameter/Application/ActivityRoutePrivacy.php:41
 msgid "always"
@@ -3734,44 +3760,40 @@ msgid "Breast"
 msgstr "Brasse"
 
 #: inc/core/Data/RPE.php:21
-#, fuzzy
 msgid "No exertion at all"
-msgstr "Note pour les données d'altitude"
+msgstr "Sans aucun effort"
 
 #: inc/core/Data/RPE.php:22
 msgid "Extremely light"
-msgstr ""
+msgstr "Très léger"
 
 #: inc/core/Data/RPE.php:24
-#, fuzzy
 msgid "Very light"
-msgstr "Restriction de mémoire"
+msgstr "Assez léger"
 
 #: inc/core/Data/RPE.php:26
-#, fuzzy
 msgid "Light"
-msgstr "Nuit"
+msgstr "Léger"
 
 #: inc/core/Data/RPE.php:28
 msgid "Somewhat hard"
-msgstr ""
+msgstr "Plutôt difficile"
 
 #: inc/core/Data/RPE.php:30
 msgid "Hard"
-msgstr ""
+msgstr "Difficile"
 
 #: inc/core/Data/RPE.php:32
 msgid "Very Hard"
-msgstr ""
+msgstr "Très difficile"
 
 #: inc/core/Data/RPE.php:34
 msgid "Extremely hard"
-msgstr ""
+msgstr "Extrêmement difficile"
 
 #: inc/core/Data/RPE.php:35
-#, fuzzy
 msgid "Maximal exertion"
-msgstr "Rythme cardiaque maximum"
+msgstr "Effort maximum"
 
 #: inc/core/Data/Cadence/Running.php:28
 msgid "Cadence (running)"
@@ -3861,9 +3883,8 @@ msgid "Wind Degree"
 msgstr "Direction du vent"
 
 #: inc/core/Data/Weather/Sources.php:40
-#, fuzzy
 msgid "internal database"
-msgstr "Données générales"
+msgstr "base de donnée interne"
 
 #: inc/core/Data/Weather/CardinalDirection.php:72
 #: inc/core/Data/Weather/CardinalDirection.php:76
@@ -3961,7 +3982,7 @@ msgstr "Douglas-Peucker"
 #: inc/core/View/Activity/Plot/Series/HRVdifferencesWithoutAnomalies.php:56
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:304
 msgid "Difference"
-msgstr ""
+msgstr "Différence"
 
 #: inc/core/View/Activity/Plot/Series/Smo2.php:36
 msgid "Smo2 (2)"
@@ -3988,15 +4009,13 @@ msgid "Elevation up/down"
 msgstr "Dénivelé positif/négatif"
 
 #: inc/core/View/Activity/Box/MaximalHeartRateInPercent.php:64
-#, fuzzy
 msgid "This value exceeds your entered maximal heart rate."
 msgstr ""
-"Cette valeur se rapporte à votre VO2max estimée au début de l'activité."
+"Cette valeur dépasse que le rythme cardiaque maximal que vous avez indiqué."
 
 #: inc/core/View/Activity/Box/MaximalHeartRateInPercent.php:65
-#, fuzzy
 msgid "Please adjust your maximal heart rate."
-msgstr "Ajustez votre HR max svp."
+msgstr "Ajustez votre fréquence cardiaque maximale, svp."
 
 #: inc/core/View/Activity/Box/Pace.php:28
 #: inc/core/View/Activity/Box/Speed.php:37
@@ -4173,24 +4192,24 @@ msgid "1st/2nd Half"
 msgstr "1ère/2ème moitié"
 
 #: inc/core/View/RaceResult/Dataview.php:91
-#, php-format
+#, fuzzy, php-format
 msgid "of %u overall"
-msgstr ""
+msgstr "du %u général"
 
 #: inc/core/View/RaceResult/Dataview.php:104
 #, php-format
 msgid "of %u in your age group"
-msgstr ""
+msgstr "du %u dans votre catégorie d'age"
 
 #: inc/core/View/RaceResult/Dataview.php:117
 #, php-format
 msgid "of %u men/women"
-msgstr ""
+msgstr "du %u hommes/femmes"
 
 #: inc/core/View/RaceResult/Dataview.php:174
-#, php-format
+#, fuzzy, php-format
 msgid "(first %u%%)"
-msgstr ""
+msgstr "(d'abord %u%%)"
 
 #: inc/core/Configuration/Messages.php:26
 msgid "Database cleanup"
@@ -4611,7 +4630,6 @@ msgid "Use correction factor"
 msgstr "Utiliser un facteur de correction"
 
 #: inc/core/Configuration/Category/Vdot.php:176
-#, fuzzy
 msgid "Use a correction factor based on your best race result. (recommended)"
 msgstr ""
 "Utilise un facteur de correction basé sur votre meilleure compétition. "
@@ -4630,7 +4648,7 @@ msgstr ""
 "suffisant. Peut être laissé vide."
 
 #: inc/core/Configuration/Category/Vdot.php:182
-#, fuzzy, php-format
+#, php-format
 msgid "Value must be between %s and %s."
 msgstr "La valeur doit être entre %s et %s."
 
