@@ -3,16 +3,16 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-08-20 08:22+0200\n"
-"PO-Revision-Date: 2016-10-15 13:28+0000\n"
+"PO-Revision-Date: 2016-10-16 08:57+0000\n"
 "Last-Translator: Guillaume van Baalen <postdoc38@yahoo.fr>\n"
 "Language-Team: French "
-"<http://translate.runalyze.com/projects/runalyze/runalyze/fr/>\n"
+"<https://translate.runalyze.com/projects/runalyze/runalyze/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 2.7\n"
+"X-Generator: Weblate 2.8\n"
 "X-Poedit-KeywordsList: __;_ne;_n;_e\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -991,9 +991,8 @@ msgid "Place overall"
 msgstr "Classement général"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:317
-#, fuzzy
 msgid "Place age group"
-msgstr "Classement pour votre catégorie d'age."
+msgstr "Classement pour votre catégorie d'age"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:318
 #, fuzzy
@@ -1042,7 +1041,6 @@ msgid "Lanes"
 msgstr "Couloirs"
 
 #: inc/training/view/section/table/class.TableLapsComputed.php:66
-#, fuzzy
 msgid "bpm"
 msgstr "bpm"
 
@@ -1286,7 +1284,6 @@ msgid "Make public"
 msgstr "Publier"
 
 #: inc/training/view/class.TrainingView.php:115
-#, fuzzy
 msgid "Edit race result"
 msgstr "Modifier le résultat de course"
 
@@ -2290,7 +2287,6 @@ msgid "Easy"
 msgstr "Facile"
 
 #: inc/core/Activity/TrainingEffectLevel.php:70
-#, fuzzy
 msgid "Maintaining workout"
 msgstr "Activité de maintien"
 
@@ -2474,7 +2470,7 @@ msgid "1st/2nd Half"
 msgstr "1ère/2ème moitié"
 
 #: inc/core/View/RaceResult/Dataview.php:91
-#, fuzzy, php-format
+#, php-format
 msgid "of %u overall"
 msgstr "du %u général"
 
@@ -2526,7 +2522,6 @@ msgstr "VFC"
 
 #: inc/core/View/Activity/Plot/Laps.php:121 inc/core/View/Plot/Series.php:162
 #: inc/draw/class.PlotSumData.php:623
-#, fuzzy
 msgid "avg:"
 msgstr "moyenne:"
 
@@ -2994,7 +2989,6 @@ msgid "Hurricane force"
 msgstr "Ouragan"
 
 #: inc/core/Data/Weather/BeaufortScale.php:169
-#, fuzzy
 msgid "Beaufort scale"
 msgstr "Échelle de Beaufort"
 
@@ -3366,7 +3360,7 @@ msgstr "Journée exacte de l'activité. (La date est toujours affichée)"
 #: inc/core/Dataset/Keys/FitPerformanceCondition.php:43
 #, fuzzy
 msgid "Performance Condition"
-msgstr "modèle de performance"
+msgstr "Modèle de performance"
 
 #: inc/core/Dataset/Keys/FitPerformanceCondition.php:62
 msgid ""
@@ -3411,9 +3405,8 @@ msgstr ""
 "l'activité en incluant les pauses."
 
 #: inc/core/Dataset/Keys/RaceResult.php:40
-#, fuzzy
 msgid "Race result"
-msgstr "Résultat de la course"
+msgstr "Résultat de course"
 
 #: inc/core/Dataset/Keys/RaceResult.php:88
 msgid "Your placements at races"
@@ -3597,9 +3590,9 @@ msgstr "Veuillez vous connecter"
 
 #: inc/tpl/tpl.FrontendShared.header.php:31
 #: inc/tpl/tpl.FrontendSharedIframe.header.php:26
-#, fuzzy, php-format
+#, php-format
 msgid "Public training view of <strong>%s</strong>"
-msgstr "Entrainement public, vue <strong>%s</strong>"
+msgstr "Vue de l'ntrainement public <strong>%s</strong>"
 
 #: inc/tpl/tpl.FrontendShared.header.php:33
 #: inc/tpl/tpl.FrontendSharedIframe.header.php:28
@@ -3743,7 +3736,6 @@ msgstr "D'une année à l'autre"
 
 #: inc/class.FrontendSharedStatistics.php:124
 #: inc/system/schemes/set.emptyValues.php:50
-#, fuzzy
 msgid "Running"
 msgstr "Course à pied"
 
@@ -3871,7 +3863,6 @@ msgid "JOG"
 msgstr "JOG"
 
 #: inc/system/schemes/set.emptyValues.php:62
-#, fuzzy
 msgid "Fartlek"
 msgstr "Fartlek"
 
@@ -3880,7 +3871,6 @@ msgid "FL"
 msgstr "FL"
 
 #: inc/system/schemes/set.emptyValues.php:63
-#, fuzzy
 msgid "Interval training"
 msgstr "Séance d'intervalles"
 
@@ -4075,7 +4065,6 @@ msgid "hat"
 msgstr "chapeau"
 
 #: inc/system/config/class.ConfigTabDataset.php:59
-#, fuzzy
 msgid "Dataset"
 msgstr "Données"
 
@@ -4104,56 +4093,58 @@ msgstr "Affichage"
 
 #: inc/system/config/class.ConfigTabDataset.php:106
 msgid "The information will be shown directly in the row."
-msgstr ""
+msgstr "L'information sera montrée directement sur la ligne."
 
 #: inc/system/config/class.ConfigTabDataset.php:107
 #: inc/system/config/class.ConfigTabPlugins.php:78
 msgid "Order"
-msgstr ""
+msgstr "Ordre"
 
 #: inc/system/config/class.ConfigTabDataset.php:107
 msgid "Indicates the order of appearance."
-msgstr ""
+msgstr "Indique l'ordre d'apparition."
 
 #: inc/system/config/class.ConfigTabDataset.php:108
 msgid "CSS-Style"
-msgstr ""
+msgstr "Style CSS"
 
 #: inc/system/config/class.ConfigTabDataset.php:108
 msgid "any CSS-Code"
-msgstr ""
+msgstr "n'importe quel code CSS"
 
 #: inc/system/config/class.ConfigTabDataset.php:109
 msgid "Example"
-msgstr ""
+msgstr "Exemple"
 
 #: inc/system/config/class.ConfigTabDataset.php:141
 msgid "new"
-msgstr ""
+msgstr "nouveau"
 
 #: inc/system/config/class.ConfigTabDataset.php:236
 msgid "race"
-msgstr ""
+msgstr "course"
 
 #: inc/system/config/class.ConfigTabDataset.php:271
 msgid "Test activity"
-msgstr ""
+msgstr "Activité test"
 
 #: inc/system/config/class.ConfigTabDataset.php:273
 msgid "Great run!"
-msgstr ""
+msgstr "Bonne course!"
 
 #: inc/system/config/class.ConfigTabPlugins.php:17
 msgid "Plugins"
-msgstr ""
+msgstr "Plugins"
 
 #: inc/system/config/class.ConfigTabPlugins.php:32
 msgid "Panels"
-msgstr ""
+msgstr "Panneaux"
 
 #: inc/system/config/class.ConfigTabPlugins.php:33
 msgid "Panels are small statistics always shown on the right side."
 msgstr ""
+"Les panneaux sont de petites statistiques qui sont touours montrées sur le "
+"côté droit."
 
 #: inc/system/config/class.ConfigTabPlugins.php:37
 #: inc/plugin/class.PluginType.php:54
@@ -4163,57 +4154,59 @@ msgstr "Statistiques"
 
 #: inc/system/config/class.ConfigTabPlugins.php:38
 msgid "Normal statistics are shown below the activitiy log."
-msgstr ""
+msgstr "Les statistiques normales sont montrées sous le journal d'activités."
 
 #: inc/system/config/class.ConfigTabPlugins.php:42
 msgid ""
 "Complex tools for analyzing or processing the complete database will open in "
 "an overlay."
 msgstr ""
+"Les outils complexes qui permettent d'analyser ou d'agir sur la base de "
+"donnée entière s'ouvrent sur un panneau qui recouvre l'interface principale."
 
 #: inc/system/config/class.ConfigTabPlugins.php:46
 msgid "Install a new plugin"
-msgstr ""
+msgstr "Installer un nouveau plugin"
 
 #: inc/system/config/class.ConfigTabPlugins.php:47
 msgid "New plugins can be installed here."
-msgstr ""
+msgstr "Les nouveaux plugins peuvent être installés ici."
 
 #: inc/system/config/class.ConfigTabPlugins.php:69
 msgid "No plugins available."
-msgstr ""
+msgstr "Il n'y a pas de plugins disponibles."
 
 #: inc/system/config/class.ConfigTabPlugins.php:77
 msgid "Mode"
-msgstr ""
+msgstr "Mode"
 
 #: inc/system/config/class.ConfigTabPlugins.php:92
 msgid "The plugin cannot be found."
-msgstr ""
+msgstr "Impossible de trouver le plugin."
 
 #: inc/system/config/class.ConfigTabPlugins.php:101
 msgid "enabled"
-msgstr ""
+msgstr "activé"
 
 #: inc/system/config/class.ConfigTabPlugins.php:102
 msgid "hidden*"
-msgstr ""
+msgstr "caché*"
 
 #: inc/system/config/class.ConfigTabPlugins.php:103
 msgid "not enabled"
-msgstr ""
+msgstr "desactivé"
 
 #: inc/system/config/class.ConfigTabPlugins.php:142
 msgid "* Hidden plugins only show their headings."
-msgstr ""
+msgstr "* Les plugins cachés ne montrent que leur en-tête."
 
 #: inc/system/config/class.ConfigTabPlugins.php:145
 msgid "* Hidden plugins are grouped as 'Miscellaneous'."
-msgstr ""
+msgstr "* Les plugins cachés sont groupés comme 'Divers'."
 
 #: inc/system/config/class.ConfigTabPlugins.php:189
 msgid "There are no new plugins to install."
-msgstr ""
+msgstr "Il n'y a pas de nouveaux plugins à installer."
 
 #: inc/system/config/class.ConfigTabPlugins.php:196
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:132
@@ -4222,19 +4215,21 @@ msgstr "Plugin"
 
 #: inc/system/config/class.ConfigTabTypes.php:20
 msgid "Activity Types"
-msgstr ""
+msgstr "Type d'activités"
 
 #: inc/system/config/class.ConfigTabTypes.php:27
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:135
-#, fuzzy
 msgid "Activity types"
-msgstr "Activités"
+msgstr "Types d'activités"
 
 #: inc/system/config/class.ConfigTabTypes.php:29
 msgid ""
 "Activity types are useful to seperate your training into different "
 "categories. An activity type can only belong to one sport."
 msgstr ""
+"Les types d'activité sont utiles pour séparer vos entrainements en "
+"différentes catégories. Un type d'activité ne peut appartenir qu'à un seul "
+"sport."
 
 #: inc/system/config/class.ConfigTabTypes.php:43
 #: inc/system/config/class.ConfigTabAccount.php:40
@@ -4251,49 +4246,49 @@ msgstr "Nom"
 
 #: inc/system/config/class.ConfigTabTypes.php:44
 msgid "Abbreviation"
-msgstr ""
+msgstr "Abbréviation"
 
 #: inc/system/config/class.ConfigTabTypes.php:45
 msgid "A type can only belong to one sport."
-msgstr ""
+msgstr "Un type ne peut être associé qu'à un seul sport."
 
 #: inc/system/config/class.ConfigTabTypes.php:46
 #: inc/system/config/class.ConfigTabSports.php:56
 msgid "Average heart rate (used for calculation of TRIMP)"
-msgstr ""
+msgstr "Fréquence cardiaque moyenne (utilisé pour le calcul du TRIMP)"
 
 #: inc/system/config/class.ConfigTabTypes.php:47
 msgid "Quality?"
-msgstr ""
+msgstr "Qualité?"
 
 #: inc/system/config/class.ConfigTabTypes.php:47
 msgid "Quality sessions will be emphasized in your calendar."
 msgstr ""
+"Les entrainements de qualités seront mis en exergue dans votre calendrier."
 
 #: inc/system/config/class.ConfigTabTypes.php:48
 #: inc/system/config/class.ConfigTabSports.php:63
 msgid "Mode for displaying activities in calendar"
-msgstr ""
+msgstr "Mode d'affichage des activités dans votre calendrier"
 
 #: inc/system/config/class.ConfigTabTypes.php:49
 msgid "A type can only be deleted if no references exist."
-msgstr ""
+msgstr "Vous ne pouvez effacer un type que s'il n'est pas référencé."
 
 #: inc/system/config/class.ConfigTabTypes.php:82
 #: inc/system/config/class.ConfigTabSports.php:86
 #: inc/system/config/class.ConfigTabSports.php:117
 msgid "complete row"
-msgstr ""
+msgstr "ligne complète"
 
 #: inc/system/config/class.ConfigTabTypes.php:83
 #: inc/system/config/class.ConfigTabSports.php:87
 msgid "only icon"
-msgstr ""
+msgstr "seulement une icone"
 
 #: inc/system/config/class.ConfigTabTypes.php:84
-#, fuzzy
 msgid "inherit from sport type"
-msgstr "Tri : types de sport"
+msgstr "hérité depuis le type de sport"
 
 #: inc/system/config/class.ConfigTabAccount.php:34
 msgid "Username"
@@ -4301,28 +4296,27 @@ msgstr "Nom d'utilisateur"
 
 #: inc/system/config/class.ConfigTabAccount.php:37
 msgid "Email address"
-msgstr ""
+msgstr "Adresse email"
 
 #: inc/system/config/class.ConfigTabAccount.php:42
 msgid "Language"
-msgstr ""
+msgstr "Langue"
 
 #: inc/system/config/class.ConfigTabAccount.php:48
-#, fuzzy
 msgid "Timezone"
-msgstr "Temps"
+msgstr "Fuseau horaire"
 
 #: inc/system/config/class.ConfigTabAccount.php:51
 msgid "Registered since"
-msgstr ""
+msgstr "Inscrit depuis"
 
 #: inc/system/config/class.ConfigTabAccount.php:54
 msgid "Last Login"
-msgstr ""
+msgstr "Dernière connection"
 
 #: inc/system/config/class.ConfigTabAccount.php:57
 msgid "Your account"
-msgstr ""
+msgstr "Votre compte"
 
 #: inc/system/config/class.ConfigTabAccount.php:66
 msgid "Email me"
@@ -4337,6 +4331,8 @@ msgid ""
 "At irregular intervals we are sending mails to you. We will never send you "
 "spam or advertisement."
 msgstr ""
+"Nous vous envoyons des emails à intervalles irréguliers. Nous ne vous "
+"enverrons jamais d'email indésirable ou de la publicité."
 
 #: inc/system/config/class.ConfigTabAccount.php:74
 msgid "Change your password"
@@ -4356,11 +4352,11 @@ msgstr "Entrez une seconde fois le nouveau mot de passe"
 
 #: inc/system/config/class.ConfigTabAccount.php:89
 msgid "Backup your data"
-msgstr ""
+msgstr "Sauvegardez vos données"
 
 #: inc/system/config/class.ConfigTabAccount.php:96
 msgid "Please use the plugin"
-msgstr ""
+msgstr "S'il vous plait, utilisez le plugin"
 
 #: inc/system/config/class.ConfigTabAccount.php:98
 msgid ""
@@ -4368,131 +4364,140 @@ msgid ""
 "individual cases write us an e-mail to mail@runalyze.de and and we will take "
 "care of it right away!"
 msgstr ""
+"La sauvegarde de vos données manuellement n'est pas encore possible. <br>"
+"Dans les cas importants, écrivez-nous un email à mail@runalyze.de et nous "
+"nous en chargerons immédiatement!"
 
 #: inc/system/config/class.ConfigTabAccount.php:102
-#, fuzzy
 msgid "Reset configuration"
-msgstr "configuration du sport"
+msgstr "Réinitialiser la configuration"
 
 #: inc/system/config/class.ConfigTabAccount.php:104
 msgid "Reset complete configuration to default settings"
-msgstr ""
+msgstr "Réinitialiser complètement la configuration par défaut"
 
 #: inc/system/config/class.ConfigTabAccount.php:105
 msgid "This will not touch any general settings like gender and main sport."
 msgstr ""
+"Ceci n'aura pas d'effet sur les préférences générales comme le genre et le "
+"sport principal."
 
 #: inc/system/config/class.ConfigTabAccount.php:107
 #: inc/system/config/class.ConfigTabAccount.php:113
 msgid "Delete your account"
-msgstr ""
+msgstr "Effacer votre compte"
 
 #: inc/system/config/class.ConfigTabAccount.php:109
 msgid ""
 "You'll receive an email with a link to confirm the deletion.<br>The deletion "
 "is permanent and cannot be reversed. Therefore, you should backup your data."
 msgstr ""
+"Vous allez recevoir un email avec un lien pour confirmer l'effacement.<br>"
+"L'effacement est permanent et ne peut pas être annulé. Ainsi, vous devriez "
+"sauvegarder vos données."
 
 #: inc/system/config/class.ConfigTabAccount.php:173
 msgid "Your password has been changed."
-msgstr ""
+msgstr "Votre mot de passe a été modifié."
 
 #: inc/system/config/class.ConfigTabAccount.php:176
 msgid "You current password is wrong."
-msgstr ""
+msgstr "Votre mot de passe actuel est faux."
 
 #: inc/system/config/class.ConfigTabs.php:87
 msgid "The settings have been saved."
-msgstr ""
+msgstr "Les préférences ont été sauvegardées."
 
 #: inc/system/config/class.ConfigTabSports.php:20
 #: inc/system/config/class.ConfigTabEquipment.php:84
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:34
 msgid "Sports"
-msgstr ""
+msgstr "Sports"
 
 #: inc/system/config/class.ConfigTabSports.php:27
 msgid "Your sports"
-msgstr ""
+msgstr "Vos sports"
 
 #: inc/system/config/class.ConfigTabSports.php:29
 msgid "Hover over the headings if the abbreviations are unclear."
 msgstr ""
+"Déplacez la souris au-dessus des en-têtes si les abbréviations ne sont pas "
+"claires."
 
 #: inc/system/config/class.ConfigTabSports.php:39
 msgid "<em>Avg. HF</em> is necessary for the calculation of TRIMP."
-msgstr ""
+msgstr "La <em>Freq. Card. Moy.</em> est nécessaire au calcul du TRIMP."
 
 #: inc/system/config/class.ConfigTabSports.php:53
 msgid "Icon"
-msgstr ""
+msgstr "Icone"
 
 #: inc/system/config/class.ConfigTabSports.php:54
 msgid "Name of the sport"
-msgstr ""
+msgstr "Nom du sport"
 
 #: inc/system/config/class.ConfigTabSports.php:55
 msgid "kcal/h"
-msgstr ""
+msgstr "kcal/h"
 
 #: inc/system/config/class.ConfigTabSports.php:55
 msgid "Average energy turnover in kilocalories per hour"
-msgstr ""
+msgstr "Dépense énergétique moyenne en kilocalories par heure"
 
 #: inc/system/config/class.ConfigTabSports.php:57
 #: plugin/RunalyzePluginTool_AnalyzeVDOT/tpl.Table.php:10
 msgid "km"
-msgstr ""
+msgstr "km"
 
 #: inc/system/config/class.ConfigTabSports.php:57
 msgid "Has a distance"
-msgstr ""
+msgstr "A une distance"
 
 #: inc/system/config/class.ConfigTabSports.php:58
 msgid "Unit"
-msgstr ""
+msgstr "Unité"
 
 #: inc/system/config/class.ConfigTabSports.php:58
 msgid "Unit for speed"
-msgstr ""
+msgstr "Unité de vitesse"
 
 #: inc/system/config/class.ConfigTabSports.php:59
 msgid "Power is recorded or calculated."
-msgstr ""
+msgstr "La puissance est enregistrée ou calculée."
 
 #: inc/system/config/class.ConfigTabSports.php:60
 msgid "Outside"
-msgstr ""
+msgstr "Dehors"
 
 #: inc/system/config/class.ConfigTabSports.php:60
 msgid "Sport is performed outdoor: activate route, weather, ..."
-msgstr ""
+msgstr "Le sport se déroule en extérieur: activez la route, la météo, ..."
 
 #: inc/system/config/class.ConfigTabSports.php:61
 msgid "Main equipment"
-msgstr ""
+msgstr "Équipement principal"
 
 #: inc/system/config/class.ConfigTabSports.php:61
 msgid "Objects of main equipment type can be shown in the activity overview."
 msgstr ""
+"Les objets de type équipement principal peuvent être affichés dans le résumé "
+"d'activité."
 
 #: inc/system/config/class.ConfigTabSports.php:62
-#, fuzzy
 msgid "Default sport type"
-msgstr "Tri : types de sport"
+msgstr "Type de sport par défaut"
 
 #: inc/system/config/class.ConfigTabSports.php:62
-#, fuzzy
 msgid "Default sport type."
-msgstr "Tri : types de sport"
+msgstr "Type de sport par défaut."
 
 #: inc/system/config/class.ConfigTabSports.php:64
 msgid "A sport can only be deleted if no references exist."
-msgstr ""
+msgstr "Un sport ne peut être effacé que s'il n'est pas référencé."
 
 #: inc/system/config/class.ConfigTabEquipment.php:31
 msgid "Your equipment categories"
-msgstr ""
+msgstr "Vos catégories d'équipement"
 
 #: inc/system/config/class.ConfigTabEquipment.php:34
 msgid ""
@@ -4501,11 +4506,15 @@ msgid ""
 "one activity. In addition, you can specify to which sports a category "
 "belongs."
 msgstr ""
+"Tout votre équipement est groupé en certaines catégories. Pour chaque "
+"catégorie, vous pouvez définit si un ou plusieurs objets de cette catégorie "
+"peuvent appartenir à une activité. De plus, vous pouvez spécifier à quels "
+"sports une catégorie est associée."
 
 #: inc/system/config/class.ConfigTabEquipment.php:39
 #: plugin/RunalyzePluginPanel_Equipment/window.equipment.table.php:13
 msgid "Your equipment"
-msgstr ""
+msgstr "Votre équipement"
 
 #: inc/system/config/class.ConfigTabEquipment.php:42
 msgid ""
@@ -4516,6 +4525,14 @@ msgid ""
 "a start and end date for its usage. Objects will be displayed as 'inactive' "
 "as soon as you have entered an end date."
 msgstr ""
+"RUNALYZE récolte des données et calcule des statistiques pour chaque objet "
+"dans votre équipement. Pour estimer correctement la durée d'utilisation "
+"restante, vous pouvez préciser une \"distance préalable\" qui sera ajoutée à "
+"la distance calculée, par exemple si vous avez utilisé vos chaussures de "
+"course pendant 200km avant de les ajouter dans l'interface. De plus, vous "
+"pouvez ajouter une date de début et de fin d'utilisation. Les objets seront "
+"marqués comme \"inactifs\" dès que vous aurez indiqué une date de fin "
+"d'utilisation."
 
 #: inc/system/config/class.ConfigTabEquipment.php:83
 msgid "max. Time"
@@ -4524,77 +4541,77 @@ msgstr "Durée maximum"
 #: inc/system/config/class.ConfigTabEquipment.php:85
 #: inc/system/config/class.ConfigTabEquipment.php:143
 msgid "delete"
-msgstr ""
+msgstr "effacer"
 
 #: inc/system/config/class.ConfigTabEquipment.php:105
 msgid "Single choice"
-msgstr ""
+msgstr "Choix unique"
 
 #: inc/system/config/class.ConfigTabEquipment.php:106
 msgid "Multiple choice"
-msgstr ""
+msgstr "Choix multiple"
 
 #: inc/system/config/class.ConfigTabEquipment.php:138
 msgid "Category"
-msgstr ""
+msgstr "Catégorie"
 
 #: inc/system/config/class.ConfigTabEquipment.php:139
 msgid "prev. distance"
-msgstr ""
+msgstr "distance précédente"
 
 #: inc/system/config/class.ConfigTabEquipment.php:140
 msgid "Start of use"
-msgstr ""
+msgstr "Début d'utilisation"
 
 #: inc/system/config/class.ConfigTabEquipment.php:141
 msgid "End of use"
-msgstr ""
+msgstr "Fin d'utilisation"
 
 #: inc/class.FrontendSharedList.php:158
-#, php-format
+#, fuzzy, php-format
 msgid "Activity view of %s"
-msgstr ""
+msgstr "Voir l'activité du %s"
 
 #: inc/class.FrontendSharedList.php:167
 msgid "This list is private"
-msgstr ""
+msgstr "Cette liste est privée"
 
 #: inc/class.FrontendSharedList.php:168
 msgid "The user does not share his activity list."
-msgstr ""
+msgstr "L'utilisateur ne partage pas sa liste d'activités."
 
 #: inc/import/class.ImporterWindowTabFormular.php:40
 msgid "Form"
-msgstr ""
+msgstr "Forme"
 
 #: inc/import/tpl/tpl.Importer.upload.php:2
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:281
 msgid "Upload file"
-msgstr ""
+msgstr "Téléverser un fichier"
 
 #: inc/import/tpl/tpl.Importer.upload.php:39
 msgid "There were problems while uploading."
-msgstr ""
+msgstr "Il y a eu des problèmes lors du téléversement."
 
 #: inc/import/tpl/tpl.Importer.upload.php:54
 msgid "Your browser does not seem to support this uploader, see"
-msgstr ""
+msgstr "Votre navigateur ne semble pas supporter ce téléverseur, voir"
 
 #: inc/import/tpl/tpl.Importer.upload.php:62
 msgid "Table showing included data by filetype"
-msgstr ""
+msgstr "Tableau montrant les données inclues par type de fichiers"
 
 #: inc/import/tpl/tpl.Importer.upload.php:63
 msgid "Supported file extensions:"
-msgstr ""
+msgstr "Extensions de fichiers qui sont supportées:"
 
 #: inc/import/tpl/tpl.Importer.upload.php:68
 msgid "Supported file size:"
-msgstr ""
+msgstr "Taille de fichier supportée:"
 
 #: inc/import/tpl/tpl.Importer.garminCommunicator.php:10
 msgid "Move your mouse here to start loading the communicator."
-msgstr ""
+msgstr "Déplacer votre souris ici pour commencer à charger le communicateur."
 
 #: inc/import/tpl/tpl.Importer.garminCommunicator.php:25
 #, php-format
@@ -4603,34 +4620,39 @@ msgid ""
 "like the Garmin Communicator. A <a href=\"%s\">reinstall</a> may work, but "
 "we have documented an alternative way to import the original files at %s. "
 msgstr ""
+"Pour des raisons de sécurité, les développeurs de navigateurs vont arrêter "
+"le support pour des plugins comme le Communicateur Garmin. Une <a href=\"%s\""
+">réinstallation</a> pourrait fonctionner, mais nous avons indiqué une "
+"procédure pour importer les fichiers originaux ici %s. "
 
 #: inc/import/class.MultiEditor.php:44
 msgid "No activities for editing were set."
-msgstr ""
+msgstr "Aucune activité n'a été choisie pour modification."
 
 #: inc/import/class.MultiEditor.php:57
 #: plugin/RunalyzePluginTool_MultiEditor/class.RunalyzePluginTool_MultiEditor.php:31
 msgid "Multi editor"
-msgstr ""
+msgstr "Éditeur multiple"
 
 #: inc/import/class.MultiImporterFormular.php:58
 msgid "Choose activities"
-msgstr ""
+msgstr "Choisissez des activités"
 
 #: inc/import/class.MultiImporterFormular.php:63
 msgid "Import selected activities"
-msgstr ""
+msgstr "Importer les activités choisies"
 
 #: inc/import/class.MultiImporterFormular.php:80
 #, php-format
 msgid "Found %s activities."
-msgstr ""
+msgstr "%s activités ont été trouvées."
 
 #: inc/import/class.MultiImporterFormular.php:82
 msgid "Found <strong>one</strong> duplicate activity."
 msgid_plural "Found duplicate activities."
 msgstr[0] ""
-msgstr[1] ""
+"<strong>Une</strong> activité identique a été trouvée dans la base de donnée."
+msgstr[1] "Des activités identiques ont été trouvées."
 
 #: inc/import/class.MultiImporterFormular.php:85
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:203
@@ -4639,40 +4661,45 @@ msgstr "importer"
 
 #: inc/import/class.MultiImporterFormular.php:150
 msgid "Show multi editor afterwards"
-msgstr ""
+msgstr "Montrez l'éditeur multiple ensuite"
 
 #: inc/import/class.ImporterWindowTabCommunicator.php:26
 msgid "Garmin Communicator"
-msgstr ""
+msgstr "Communicateur Garmin"
 
 #: inc/import/filetypes/class.ImporterFiletypeKML.php:64
 #: inc/import/filetypes/class.ImporterFiletypeXML.php:59
 #: inc/import/filetypes/class.ImporterFiletypeCSV.php:44
 #, php-format
 msgid "%s-files are supported from: %s"
-msgstr ""
+msgstr "Les fichiers fichiers %s sont supprtés depuis: %s"
 
 #: inc/import/filetypes/class.ImporterFiletypeHRM.php:6
 msgid "hrm- and gpx-files with the same name will be automatically combined."
 msgstr ""
+"Les fichiers hrm et gpx avec le même noms seront combinés automatiquement."
 
 #: inc/import/filetypes/class.ImporterFiletypeAbstract.php:75
 msgid "No activities could be found."
-msgstr ""
+msgstr "Aucune activité n'a été trouvée."
 
 #: inc/import/filetypes/class.ImporterFiletypeAbstract.php:98
 msgid ""
 "There is no parser in ImporterFiletype. Maybe this filetype is not supported."
 msgstr ""
+"Il n'y a pas moyen de décoder le ImporterFiletype. Peut-être que ce type de "
+"fichier n'est pas supporté."
 
 #: inc/import/filetypes/class.ImporterFiletypeAbstract.php:162
 #, php-format
 msgid "This file is not supported. Supported producers of %s-files: %s."
 msgstr ""
+"Ce fichier n'est pas supporté. Les producteurs de fichiers %s qui sont "
+"supportés sont: %s."
 
 #: inc/import/class.ImporterWindow.php:217
 msgid "Add workout"
-msgstr ""
+msgstr "Ajouter une activité"
 
 #: inc/import/class.MultiImporter.php:88
 msgid "The activities have been successfully imported."
@@ -5452,9 +5479,8 @@ msgstr "Données composites"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:46
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:148
-#, fuzzy
 msgid "Race results"
-msgstr "Résultat de la course"
+msgstr "Résultat de course"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:54
 msgid "Personal bests and everything else related to your competitions."
@@ -5998,9 +6024,8 @@ msgid "dataset"
 msgstr ""
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:134
-#, fuzzy
 msgid "Sport types"
-msgstr "Sports"
+msgstr "Types de Sport"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:136
 #, fuzzy
@@ -6013,32 +6038,32 @@ msgstr "Activités"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:138
 msgid "Trackdata"
-msgstr ""
+msgstr "Données de piste"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:139
 msgid "Swimdata"
-msgstr ""
+msgstr "Données de natation"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:140
 #: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:38
 msgid "Routes"
-msgstr ""
+msgstr "Routes"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:141
 msgid "HRV data"
-msgstr ""
+msgstr "Données HRV"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:143
 msgid "Equipment types"
-msgstr ""
+msgstr "Types d'équipement"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:144
 msgid "Relation: equipment types to sports"
-msgstr ""
+msgstr "Relation: types d'équipement vers sports"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:145
 msgid "Relation: equipment to activities"
-msgstr ""
+msgstr "Relation: équipement vers activités"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:147
 msgid "Relation: tag to activities"
@@ -6392,12 +6417,13 @@ msgid ""
 msgstr ""
 
 #: plugin/RunalyzePluginTool_DatenbankCleanup/JobGeneral.php:92
+#, fuzzy
 msgid "Internal constants have been refreshed."
-msgstr ""
+msgstr "Les constantes internes ont été rafraichies."
 
 #: plugin/RunalyzePluginTool_DatenbankCleanup/JobGeneral.php:103
 msgid "There was a problem while recalculating your equipment statistics"
-msgstr ""
+msgstr "Il y a eu un problème en recalculant vos statistiques d'équipement"
 
 #: plugin/RunalyzePluginTool_DatenbankCleanup/JobGeneral.php:105
 #, php-format
@@ -6414,7 +6440,7 @@ msgstr "Correcteur de Vdot"
 
 #: plugin/RunalyzePluginTool_DatenbankCleanup/JobGeneral.php:158
 msgid "Maximal TRIMP"
-msgstr ""
+msgstr "TRIMP maximal"
 
 #: plugin/RunalyzePluginTool_DatenbankCleanup/tpl.Job.php:19
 msgid "Cleanup is running ..."
@@ -6432,7 +6458,7 @@ msgstr "Les données d'altitude ont été re-calculées pour %d itinéraires."
 #: plugin/RunalyzePluginTool_DatenbankCleanup/JobLoop.php:128
 #, php-format
 msgid "There was a problem with activity %d.<br>Error message: %s"
-msgstr ""
+msgstr "Il y a eu un problème avec l'activité%d.<br>Message d'erreur:%s"
 
 #: plugin/RunalyzePluginTool_DatenbankCleanup/JobLoop.php:132
 #, php-format
