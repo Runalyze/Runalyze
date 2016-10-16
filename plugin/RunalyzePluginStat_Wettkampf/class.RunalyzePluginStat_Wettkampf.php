@@ -414,14 +414,18 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 		$RaceResultView = new View\RaceResult\Dataview($RaceResult);
 
 		if ($this->knowsAgeGrade() && $this->AgeGradeLookup->getMinimalDistance() <= $RaceResult->officialDistance()) {
-			$agePerformance = $this->AgeGradeLookup->getAgePerformance(
+			$ageGrade = $this->AgeGradeLookup->getAgeGrade(
 				$RaceResult->officialDistance(),
 				$RaceResult->officialTime(),
 				date('Y') - date('Y', $Activity->timestamp())
 			);
-			$ageGrade = number_format(100 * $agePerformance, 2).' &#37;';
+			$ageGradeString = number_format(100 * $ageGrade->getPerformance(), 2).' &#37;';
+			$ageGradeTooltip = __('Age standard').': '.Duration::format($ageGrade->getAgeStandard()).', '.
+				__('Open standard').': '.Duration::format($ageGrade->getOpenStandard()).'<br>'.
+				'<small><em>'.sprintf(__('via tables by %s'), 'Alan Jones / WMA / USATF').'</em></small>';
 		} else {
-			$ageGrade = '-';
+			$ageGradeString = '-';
+			$ageGradeTooltip = '';
 		}
 
 		echo '<tr class="r">
@@ -431,7 +435,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 				<td class="l"><strong>'.$Linker->link($RaceResult->name()).'</strong></td>
 				<td>'.$RaceResultView->officialDistance(null, $Activity->isTrack()).'</td>
 				<td>'.$RaceResultView->officialTime()->string(Duration::FORMAT_COMPETITION).'</td>
-				'.($this->knowsAgeGrade() ? '<td class="small">'.$ageGrade.'</td>' : '').'
+				'.($this->knowsAgeGrade() ? '<td class="small"'.('' != $ageGradeTooltip ? ' rel="tooltip" title="'.$ageGradeTooltip.'"' : '').'>'.$ageGradeString.'</td>' : '').'
 				<td class="small">'.$RaceResultView->pace($this->sportid)->valueWithAppendix().'</td>
 				<td class="small">'.Helper::Unknown($Activity->hrAvg()).' / '.Helper::Unknown($Activity->hrMax()).' bpm</td>
 				<td class="small">'.($Activity->weather()->isEmpty() ? '' : $Activity->weather()->fullString($Activity->isNight())).'</td>
