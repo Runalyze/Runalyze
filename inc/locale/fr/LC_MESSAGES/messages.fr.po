@@ -3,16 +3,16 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.com\n"
 "POT-Creation-Date: 2016-10-10 19:09+0200\n"
-"PO-Revision-Date: 2016-10-15 13:28+0000\n"
+"PO-Revision-Date: 2016-10-16 08:57+0000\n"
 "Last-Translator: Guillaume van Baalen <postdoc38@yahoo.fr>\n"
-"Language-Team: French <http://translate.runalyze.com/projects/runalyze"
+"Language-Team: French <https://translate.runalyze.com/projects/runalyze"
 "/runalyze-master-po/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 2.7\n"
+"X-Generator: Weblate 2.8\n"
 "X-Poedit-KeywordsList: __;_ne;_n;_e\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -105,12 +105,13 @@ msgstr ""
 "%s)"
 
 #: src/CoreBundle/Component/Tool/DatabaseCleanup/JobGeneral.php:95
+#, fuzzy
 msgid "Internal constants have been refreshed."
-msgstr ""
+msgstr "Les constantes internes ont été rafraichies."
 
 #: src/CoreBundle/Component/Tool/DatabaseCleanup/JobGeneral.php:107
 msgid "There was a problem while recalculating your equipment statistics"
-msgstr ""
+msgstr "Il y a eu un problème en recalculant vos statistiques d'équipement"
 
 #: src/CoreBundle/Component/Tool/DatabaseCleanup/JobGeneral.php:109
 #, php-format
@@ -150,7 +151,7 @@ msgstr "ATL maximum"
 
 #: src/CoreBundle/Component/Tool/DatabaseCleanup/JobGeneral.php:166
 msgid "Maximal TRIMP"
-msgstr ""
+msgstr "TRIMP maximal"
 
 #: src/CoreBundle/Component/Tool/DatabaseCleanup/JobGeneral.php:176
 #, fuzzy
@@ -165,7 +166,7 @@ msgstr "Les données d'altitude ont été re-calculées pour %d itinéraires."
 #: src/CoreBundle/Component/Tool/DatabaseCleanup/JobLoop.php:121
 #, php-format
 msgid "There was a problem with activity %d.<br>Error message: %s"
-msgstr ""
+msgstr "Il y a eu un problème avec l'activité%d.<br>Message d'erreur:%s"
 
 #: src/CoreBundle/Component/Tool/DatabaseCleanup/JobLoop.php:125
 #, php-format
@@ -203,7 +204,6 @@ msgstr "Répétition"
 
 #: src/CoreBundle/Component/Tool/Backup/JsonImporterResults.php:134
 #: inc/system/config/class.ConfigTabDataset.php:59
-#, fuzzy
 msgid "Dataset"
 msgstr "Données"
 
@@ -218,15 +218,13 @@ msgid "Plugin configuration"
 msgstr "Configuration du plugin"
 
 #: src/CoreBundle/Component/Tool/Backup/JsonImporterResults.php:137
-#, fuzzy
 msgid "Sport types"
-msgstr "Sports"
+msgstr "Types de Sport"
 
 #: src/CoreBundle/Component/Tool/Backup/JsonImporterResults.php:138
 #: inc/system/config/class.ConfigTabTypes.php:27
-#, fuzzy
 msgid "Activity types"
-msgstr "Activités"
+msgstr "Types d'activités"
 
 #: src/CoreBundle/Component/Tool/Backup/JsonImporterResults.php:139
 #, fuzzy
@@ -239,20 +237,20 @@ msgstr "Activités"
 
 #: src/CoreBundle/Component/Tool/Backup/JsonImporterResults.php:141
 msgid "Trackdata"
-msgstr ""
+msgstr "Données de piste"
 
 #: src/CoreBundle/Component/Tool/Backup/JsonImporterResults.php:142
 msgid "Swimdata"
-msgstr ""
+msgstr "Données de natation"
 
 #: src/CoreBundle/Component/Tool/Backup/JsonImporterResults.php:143
 #: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:38
 msgid "Routes"
-msgstr ""
+msgstr "Routes"
 
 #: src/CoreBundle/Component/Tool/Backup/JsonImporterResults.php:144
 msgid "HRV data"
-msgstr ""
+msgstr "Données HRV"
 
 #: src/CoreBundle/Component/Tool/Backup/JsonImporterResults.php:145
 #: inc/system/config/class.ConfigTabEquipment.php:24
@@ -265,15 +263,15 @@ msgstr "Equipement"
 
 #: src/CoreBundle/Component/Tool/Backup/JsonImporterResults.php:146
 msgid "Equipment types"
-msgstr ""
+msgstr "Types d'équipement"
 
 #: src/CoreBundle/Component/Tool/Backup/JsonImporterResults.php:147
 msgid "Relation: equipment types to sports"
-msgstr ""
+msgstr "Relation: types d'équipement vers sports"
 
 #: src/CoreBundle/Component/Tool/Backup/JsonImporterResults.php:148
 msgid "Relation: equipment to activities"
-msgstr ""
+msgstr "Relation: équipement vers activités"
 
 #: src/CoreBundle/Component/Tool/Backup/JsonImporterResults.php:149
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:282
@@ -288,9 +286,8 @@ msgstr "Balisez vos activitez"
 
 #: src/CoreBundle/Component/Tool/Backup/JsonImporterResults.php:151
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:46
-#, fuzzy
 msgid "Race results"
-msgstr "Résultat de la course"
+msgstr "Résultat de course"
 
 #: src/CoreBundle/Component/Account/Registration.php:94
 #: src/CoreBundle/Component/Account/Registration.php:211
@@ -310,7 +307,6 @@ msgstr "Vélos"
 #: src/CoreBundle/Component/Account/Registration.php:146
 #: inc/class.FrontendSharedStatistics.php:124
 #: inc/core/Profile/Sport/Running.php:30
-#, fuzzy
 msgid "Running"
 msgstr "Course à pied"
 
@@ -340,7 +336,6 @@ msgid "JOG"
 msgstr "JOG"
 
 #: src/CoreBundle/Component/Account/Registration.php:175
-#, fuzzy
 msgid "Fartlek"
 msgstr "Fartlek"
 
@@ -349,7 +344,6 @@ msgid "FL"
 msgstr "FL"
 
 #: src/CoreBundle/Component/Account/Registration.php:176
-#, fuzzy
 msgid "Interval training"
 msgstr "Séance d'intervalles"
 
@@ -435,29 +429,34 @@ msgstr "chapeau"
 #: inc/import/filetypes/class.ImporterFiletypeCSV.php:44
 #, php-format
 msgid "%s-files are supported from: %s"
-msgstr ""
+msgstr "Les fichiers fichiers %s sont supprtés depuis: %s"
 
 #: inc/import/filetypes/class.ImporterFiletypeAbstract.php:75
 msgid "No activities could be found."
-msgstr ""
+msgstr "Aucune activité n'a été trouvée."
 
 #: inc/import/filetypes/class.ImporterFiletypeAbstract.php:98
 msgid ""
 "There is no parser in ImporterFiletype. Maybe this filetype is not supported."
 msgstr ""
+"Il n'y a pas moyen de décoder le ImporterFiletype. Peut-être que ce type de "
+"fichier n'est pas supporté."
 
 #: inc/import/filetypes/class.ImporterFiletypeAbstract.php:162
 #, php-format
 msgid "This file is not supported. Supported producers of %s-files: %s."
 msgstr ""
+"Ce fichier n'est pas supporté. Les producteurs de fichiers %s qui sont "
+"supportés sont: %s."
 
 #: inc/import/filetypes/class.ImporterFiletypeHRM.php:6
 msgid "hrm- and gpx-files with the same name will be automatically combined."
 msgstr ""
+"Les fichiers hrm et gpx avec le même noms seront combinés automatiquement."
 
 #: inc/import/class.ImporterWindow.php:217
 msgid "Add workout"
-msgstr ""
+msgstr "Ajouter une activité"
 
 #: inc/import/class.ImporterFactory.php:322
 #, fuzzy
@@ -489,31 +488,31 @@ msgstr ""
 
 #: inc/import/tpl/tpl.Importer.upload.php:2
 msgid "Upload file"
-msgstr ""
+msgstr "Téléverser un fichier"
 
 #: inc/import/tpl/tpl.Importer.upload.php:39
 msgid "There were problems while uploading."
-msgstr ""
+msgstr "Il y a eu des problèmes lors du téléversement."
 
 #: inc/import/tpl/tpl.Importer.upload.php:54
 msgid "Your browser does not seem to support this uploader, see"
-msgstr ""
+msgstr "Votre navigateur ne semble pas supporter ce téléverseur, voir"
 
 #: inc/import/tpl/tpl.Importer.upload.php:62
 msgid "Table showing included data by filetype"
-msgstr ""
+msgstr "Tableau montrant les données inclues par type de fichiers"
 
 #: inc/import/tpl/tpl.Importer.upload.php:63
 msgid "Supported file extensions:"
-msgstr ""
+msgstr "Extensions de fichiers qui sont supportées:"
 
 #: inc/import/tpl/tpl.Importer.upload.php:68
 msgid "Supported file size:"
-msgstr ""
+msgstr "Taille de fichier supportée:"
 
 #: inc/import/tpl/tpl.Importer.garminCommunicator.php:10
 msgid "Move your mouse here to start loading the communicator."
-msgstr ""
+msgstr "Déplacer votre souris ici pour commencer à charger le communicateur."
 
 #: inc/import/tpl/tpl.Importer.garminCommunicator.php:25
 #, php-format
@@ -522,29 +521,34 @@ msgid ""
 "like the Garmin Communicator. A <a href=\"%s\">reinstall</a> may work, but "
 "we have documented an alternative way to import the original files at %s. "
 msgstr ""
+"Pour des raisons de sécurité, les développeurs de navigateurs vont arrêter "
+"le support pour des plugins comme le Communicateur Garmin. Une <a href=\"%s\""
+">réinstallation</a> pourrait fonctionner, mais nous avons indiqué une "
+"procédure pour importer les fichiers originaux ici %s. "
 
 #: inc/import/class.ImporterWindowTabCommunicator.php:26
 msgid "Garmin Communicator"
-msgstr ""
+msgstr "Communicateur Garmin"
 
 #: inc/import/class.MultiImporterFormular.php:58
 msgid "Choose activities"
-msgstr ""
+msgstr "Choisissez des activités"
 
 #: inc/import/class.MultiImporterFormular.php:63
 msgid "Import selected activities"
-msgstr ""
+msgstr "Importer les activités choisies"
 
 #: inc/import/class.MultiImporterFormular.php:80
 #, php-format
 msgid "Found %s activities."
-msgstr ""
+msgstr "%s activités ont été trouvées."
 
 #: inc/import/class.MultiImporterFormular.php:82
 msgid "Found <strong>one</strong> duplicate activity."
 msgid_plural "Found duplicate activities."
 msgstr[0] ""
-msgstr[1] ""
+"<strong>Une</strong> activité identique a été trouvée dans la base de donnée."
+msgstr[1] "Des activités identiques ont été trouvées."
 
 #: inc/import/class.MultiImporterFormular.php:85
 msgid "Import"
@@ -592,11 +596,11 @@ msgstr "Distance"
 
 #: inc/import/class.MultiImporterFormular.php:150
 msgid "Show multi editor afterwards"
-msgstr ""
+msgstr "Montrez l'éditeur multiple ensuite"
 
 #: inc/import/class.ImporterWindowTabFormular.php:40
 msgid "Form"
-msgstr ""
+msgstr "Forme"
 
 #: inc/import/class.MultiImporter.php:88
 msgid "The activities have been successfully imported."
@@ -604,11 +608,11 @@ msgstr ""
 
 #: inc/import/class.MultiEditor.php:46
 msgid "No activities for editing were set."
-msgstr ""
+msgstr "Aucune activité n'a été choisie pour modification."
 
 #: inc/import/class.MultiEditor.php:59
 msgid "Multi editor"
-msgstr ""
+msgstr "Éditeur multiple"
 
 #: inc/import/class.ImporterWindowTabUpload.php:38
 msgid "Upload"
@@ -632,29 +636,31 @@ msgstr "Compte"
 
 #: inc/system/config/class.ConfigTabs.php:89
 msgid "The settings have been saved."
-msgstr ""
+msgstr "Les préférences ont été sauvegardées."
 
 #: inc/system/config/class.ConfigTabSports.php:20
 #: inc/system/config/class.ConfigTabEquipment.php:84
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:34
 msgid "Sports"
-msgstr ""
+msgstr "Sports"
 
 #: inc/system/config/class.ConfigTabSports.php:27
 msgid "Your sports"
-msgstr ""
+msgstr "Vos sports"
 
 #: inc/system/config/class.ConfigTabSports.php:29
 msgid "Hover over the headings if the abbreviations are unclear."
 msgstr ""
+"Déplacez la souris au-dessus des en-têtes si les abbréviations ne sont pas "
+"claires."
 
 #: inc/system/config/class.ConfigTabSports.php:39
 msgid "<em>Avg. HF</em> is necessary for the calculation of TRIMP."
-msgstr ""
+msgstr "La <em>Freq. Card. Moy.</em> est nécessaire au calcul du TRIMP."
 
 #: inc/system/config/class.ConfigTabSports.php:53
 msgid "Icon"
-msgstr ""
+msgstr "Icone"
 
 #: inc/system/config/class.ConfigTabSports.php:54
 #: inc/system/config/class.ConfigTabTypes.php:43
@@ -670,15 +676,15 @@ msgstr "Nom"
 
 #: inc/system/config/class.ConfigTabSports.php:54
 msgid "Name of the sport"
-msgstr ""
+msgstr "Nom du sport"
 
 #: inc/system/config/class.ConfigTabSports.php:55
 msgid "kcal/h"
-msgstr ""
+msgstr "kcal/h"
 
 #: inc/system/config/class.ConfigTabSports.php:55
 msgid "Average energy turnover in kilocalories per hour"
-msgstr ""
+msgstr "Dépense énergétique moyenne en kilocalories par heure"
 
 #: inc/system/config/class.ConfigTabSports.php:56
 #: inc/system/config/class.ConfigTabTypes.php:46
@@ -728,23 +734,23 @@ msgstr "RC"
 #: inc/system/config/class.ConfigTabSports.php:56
 #: inc/system/config/class.ConfigTabTypes.php:46
 msgid "Average heart rate (used for calculation of TRIMP)"
-msgstr ""
+msgstr "Fréquence cardiaque moyenne (utilisé pour le calcul du TRIMP)"
 
 #: inc/system/config/class.ConfigTabSports.php:57
 msgid "km"
-msgstr ""
+msgstr "km"
 
 #: inc/system/config/class.ConfigTabSports.php:57
 msgid "Has a distance"
-msgstr ""
+msgstr "A une distance"
 
 #: inc/system/config/class.ConfigTabSports.php:58
 msgid "Unit"
-msgstr ""
+msgstr "Unité"
 
 #: inc/system/config/class.ConfigTabSports.php:58
 msgid "Unit for speed"
-msgstr ""
+msgstr "Unité de vitesse"
 
 #: inc/system/config/class.ConfigTabSports.php:59
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:130
@@ -760,33 +766,33 @@ msgstr "Puissance"
 
 #: inc/system/config/class.ConfigTabSports.php:59
 msgid "Power is recorded or calculated."
-msgstr ""
+msgstr "La puissance est enregistrée ou calculée."
 
 #: inc/system/config/class.ConfigTabSports.php:60
 msgid "Outside"
-msgstr ""
+msgstr "Dehors"
 
 #: inc/system/config/class.ConfigTabSports.php:60
 msgid "Sport is performed outdoor: activate route, weather, ..."
-msgstr ""
+msgstr "Le sport se déroule en extérieur: activez la route, la météo, ..."
 
 #: inc/system/config/class.ConfigTabSports.php:61
 msgid "Main equipment"
-msgstr ""
+msgstr "Équipement principal"
 
 #: inc/system/config/class.ConfigTabSports.php:61
 msgid "Objects of main equipment type can be shown in the activity overview."
 msgstr ""
+"Les objets de type équipement principal peuvent être affichés dans le résumé "
+"d'activité."
 
 #: inc/system/config/class.ConfigTabSports.php:62
-#, fuzzy
 msgid "Default sport type"
-msgstr "Tri : types de sport"
+msgstr "Type de sport par défaut"
 
 #: inc/system/config/class.ConfigTabSports.php:62
-#, fuzzy
 msgid "Default sport type."
-msgstr "Tri : types de sport"
+msgstr "Type de sport par défaut."
 
 #: inc/system/config/class.ConfigTabSports.php:63
 #: inc/system/config/class.ConfigTabTypes.php:48
@@ -797,22 +803,22 @@ msgstr "Vue calendrier"
 #: inc/system/config/class.ConfigTabSports.php:63
 #: inc/system/config/class.ConfigTabTypes.php:48
 msgid "Mode for displaying activities in calendar"
-msgstr ""
+msgstr "Mode d'affichage des activités dans votre calendrier"
 
 #: inc/system/config/class.ConfigTabSports.php:64
 msgid "A sport can only be deleted if no references exist."
-msgstr ""
+msgstr "Un sport ne peut être effacé que s'il n'est pas référencé."
 
 #: inc/system/config/class.ConfigTabSports.php:86
 #: inc/system/config/class.ConfigTabSports.php:117
 #: inc/system/config/class.ConfigTabTypes.php:82
 msgid "complete row"
-msgstr ""
+msgstr "ligne complète"
 
 #: inc/system/config/class.ConfigTabSports.php:87
 #: inc/system/config/class.ConfigTabTypes.php:83
 msgid "only icon"
-msgstr ""
+msgstr "seulement une icone"
 
 #: inc/system/config/class.ConfigTabSports.php:134
 #: inc/system/config/class.ConfigTabSports.php:149
@@ -828,17 +834,20 @@ msgstr "aucun"
 
 #: inc/system/config/class.ConfigTabTypes.php:20
 msgid "Activity Types"
-msgstr ""
+msgstr "Type d'activités"
 
 #: inc/system/config/class.ConfigTabTypes.php:29
 msgid ""
 "Activity types are useful to seperate your training into different "
 "categories. An activity type can only belong to one sport."
 msgstr ""
+"Les types d'activité sont utiles pour séparer vos entrainements en "
+"différentes catégories. Un type d'activité ne peut appartenir qu'à un seul "
+"sport."
 
 #: inc/system/config/class.ConfigTabTypes.php:44
 msgid "Abbreviation"
-msgstr ""
+msgstr "Abbréviation"
 
 #: inc/system/config/class.ConfigTabTypes.php:45
 #: inc/training/search/class.SearchFormular.php:122
@@ -849,24 +858,24 @@ msgstr "Sport"
 
 #: inc/system/config/class.ConfigTabTypes.php:45
 msgid "A type can only belong to one sport."
-msgstr ""
+msgstr "Un type ne peut être associé qu'à un seul sport."
 
 #: inc/system/config/class.ConfigTabTypes.php:47
 msgid "Quality?"
-msgstr ""
+msgstr "Qualité?"
 
 #: inc/system/config/class.ConfigTabTypes.php:47
 msgid "Quality sessions will be emphasized in your calendar."
 msgstr ""
+"Les entrainements de qualités seront mis en exergue dans votre calendrier."
 
 #: inc/system/config/class.ConfigTabTypes.php:49
 msgid "A type can only be deleted if no references exist."
-msgstr ""
+msgstr "Vous ne pouvez effacer un type que s'il n'est pas référencé."
 
 #: inc/system/config/class.ConfigTabTypes.php:84
-#, fuzzy
 msgid "inherit from sport type"
-msgstr "Tri : types de sport"
+msgstr "hérité depuis le type de sport"
 
 #: inc/system/config/class.ConfigTab.php:100
 #: inc/html/formular/class.StandardFormular.php:151 inc/class.AdminView.php:178
@@ -900,48 +909,48 @@ msgstr "Affichage"
 
 #: inc/system/config/class.ConfigTabDataset.php:106
 msgid "The information will be shown directly in the row."
-msgstr ""
+msgstr "L'information sera montrée directement sur la ligne."
 
 #: inc/system/config/class.ConfigTabDataset.php:107
 #: inc/system/config/class.ConfigTabPlugins.php:72
 msgid "Order"
-msgstr ""
+msgstr "Ordre"
 
 #: inc/system/config/class.ConfigTabDataset.php:107
 msgid "Indicates the order of appearance."
-msgstr ""
+msgstr "Indique l'ordre d'apparition."
 
 #: inc/system/config/class.ConfigTabDataset.php:108
 msgid "CSS-Style"
-msgstr ""
+msgstr "Style CSS"
 
 #: inc/system/config/class.ConfigTabDataset.php:108
 msgid "any CSS-Code"
-msgstr ""
+msgstr "n'importe quel code CSS"
 
 #: inc/system/config/class.ConfigTabDataset.php:109
 msgid "Example"
-msgstr ""
+msgstr "Exemple"
 
 #: inc/system/config/class.ConfigTabDataset.php:141
 msgid "new"
-msgstr ""
+msgstr "nouveau"
 
 #: inc/system/config/class.ConfigTabDataset.php:236
 msgid "race"
-msgstr ""
+msgstr "course"
 
 #: inc/system/config/class.ConfigTabDataset.php:271
 msgid "Test activity"
-msgstr ""
+msgstr "Activité test"
 
 #: inc/system/config/class.ConfigTabDataset.php:273
 msgid "Great run!"
-msgstr ""
+msgstr "Bonne course!"
 
 #: inc/system/config/class.ConfigTabEquipment.php:31
 msgid "Your equipment categories"
-msgstr ""
+msgstr "Vos catégories d'équipement"
 
 #: inc/system/config/class.ConfigTabEquipment.php:34
 msgid ""
@@ -950,11 +959,15 @@ msgid ""
 "one activity. In addition, you can specify to which sports a category "
 "belongs."
 msgstr ""
+"Tout votre équipement est groupé en certaines catégories. Pour chaque "
+"catégorie, vous pouvez définit si un ou plusieurs objets de cette catégorie "
+"peuvent appartenir à une activité. De plus, vous pouvez spécifier à quels "
+"sports une catégorie est associée."
 
 #: inc/system/config/class.ConfigTabEquipment.php:39
 #: plugin/RunalyzePluginPanel_Equipment/window.equipment.table.php:13
 msgid "Your equipment"
-msgstr ""
+msgstr "Votre équipement"
 
 #: inc/system/config/class.ConfigTabEquipment.php:42
 msgid ""
@@ -965,6 +978,14 @@ msgid ""
 "a start and end date for its usage. Objects will be displayed as 'inactive' "
 "as soon as you have entered an end date."
 msgstr ""
+"RUNALYZE récolte des données et calcule des statistiques pour chaque objet "
+"dans votre équipement. Pour estimer correctement la durée d'utilisation "
+"restante, vous pouvez préciser une \"distance préalable\" qui sera ajoutée à "
+"la distance calculée, par exemple si vous avez utilisé vos chaussures de "
+"course pendant 200km avant de les ajouter dans l'interface. De plus, vous "
+"pouvez ajouter une date de début et de fin d'utilisation. Les objets seront "
+"marqués comme \"inactifs\" dès que vous aurez indiqué une date de fin "
+"d'utilisation."
 
 #: inc/system/config/class.ConfigTabEquipment.php:58
 #: inc/training/class.TrainingFormular.php:440
@@ -995,31 +1016,31 @@ msgstr "Durée maximum"
 #: inc/system/config/class.ConfigTabEquipment.php:85
 #: inc/system/config/class.ConfigTabEquipment.php:143
 msgid "delete"
-msgstr ""
+msgstr "effacer"
 
 #: inc/system/config/class.ConfigTabEquipment.php:105
 msgid "Single choice"
-msgstr ""
+msgstr "Choix unique"
 
 #: inc/system/config/class.ConfigTabEquipment.php:106
 msgid "Multiple choice"
-msgstr ""
+msgstr "Choix multiple"
 
 #: inc/system/config/class.ConfigTabEquipment.php:138
 msgid "Category"
-msgstr ""
+msgstr "Catégorie"
 
 #: inc/system/config/class.ConfigTabEquipment.php:139
 msgid "prev. distance"
-msgstr ""
+msgstr "distance précédente"
 
 #: inc/system/config/class.ConfigTabEquipment.php:140
 msgid "Start of use"
-msgstr ""
+msgstr "Début d'utilisation"
 
 #: inc/system/config/class.ConfigTabEquipment.php:141
 msgid "End of use"
-msgstr ""
+msgstr "Fin d'utilisation"
 
 #: inc/system/config/class.ConfigTabEquipment.php:142
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:365
@@ -1040,15 +1061,17 @@ msgstr "Paramètres généraux"
 
 #: inc/system/config/class.ConfigTabPlugins.php:17
 msgid "Plugins"
-msgstr ""
+msgstr "Plugins"
 
 #: inc/system/config/class.ConfigTabPlugins.php:32
 msgid "Panels"
-msgstr ""
+msgstr "Panneaux"
 
 #: inc/system/config/class.ConfigTabPlugins.php:33
 msgid "Panels are small statistics always shown on the right side."
 msgstr ""
+"Les panneaux sont de petites statistiques qui sont touours montrées sur le "
+"côté droit."
 
 #: inc/system/config/class.ConfigTabPlugins.php:37
 #: inc/plugin/class.PluginType.php:50
@@ -1058,51 +1081,51 @@ msgstr "Statistiques"
 
 #: inc/system/config/class.ConfigTabPlugins.php:38
 msgid "Normal statistics are shown below the activitiy log."
-msgstr ""
+msgstr "Les statistiques normales sont montrées sous le journal d'activités."
 
 #: inc/system/config/class.ConfigTabPlugins.php:41
 msgid "Install a new plugin"
-msgstr ""
+msgstr "Installer un nouveau plugin"
 
 #: inc/system/config/class.ConfigTabPlugins.php:42
 msgid "New plugins can be installed here."
-msgstr ""
+msgstr "Les nouveaux plugins peuvent être installés ici."
 
 #: inc/system/config/class.ConfigTabPlugins.php:63
 msgid "No plugins available."
-msgstr ""
+msgstr "Il n'y a pas de plugins disponibles."
 
 #: inc/system/config/class.ConfigTabPlugins.php:71
 msgid "Mode"
-msgstr ""
+msgstr "Mode"
 
 #: inc/system/config/class.ConfigTabPlugins.php:86
 msgid "The plugin cannot be found."
-msgstr ""
+msgstr "Impossible de trouver le plugin."
 
 #: inc/system/config/class.ConfigTabPlugins.php:95
 msgid "enabled"
-msgstr ""
+msgstr "activé"
 
 #: inc/system/config/class.ConfigTabPlugins.php:96
 msgid "hidden*"
-msgstr ""
+msgstr "caché*"
 
 #: inc/system/config/class.ConfigTabPlugins.php:97
 msgid "not enabled"
-msgstr ""
+msgstr "desactivé"
 
 #: inc/system/config/class.ConfigTabPlugins.php:136
 msgid "* Hidden plugins only show their headings."
-msgstr ""
+msgstr "* Les plugins cachés ne montrent que leur en-tête."
 
 #: inc/system/config/class.ConfigTabPlugins.php:139
 msgid "* Hidden plugins are grouped as 'Miscellaneous'."
-msgstr ""
+msgstr "* Les plugins cachés sont groupés comme 'Divers'."
 
 #: inc/system/config/class.ConfigTabPlugins.php:182
 msgid "There are no new plugins to install."
-msgstr ""
+msgstr "Il n'y a pas de nouveaux plugins à installer."
 
 #: inc/system/class.Filesystem.php:243
 #, php-format
@@ -1343,9 +1366,9 @@ msgstr "Aide et support"
 
 #: inc/tpl/tpl.FrontendSharedIframe.header.php:27
 #: inc/tpl/tpl.FrontendShared.header.php:32
-#, fuzzy, php-format
+#, php-format
 msgid "Public training view of <strong>%s</strong>"
-msgstr "Entrainement public, vue <strong>%s</strong>"
+msgstr "Vue de l'ntrainement public <strong>%s</strong>"
 
 #: inc/tpl/tpl.FrontendSharedIframe.header.php:29
 #: inc/tpl/tpl.FrontendShared.header.php:34
@@ -1638,9 +1661,8 @@ msgid "Place overall"
 msgstr "Classement général"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:354
-#, fuzzy
 msgid "Place age group"
-msgstr "Classement pour votre catégorie d'age."
+msgstr "Classement pour votre catégorie d'age"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:355
 #, fuzzy
@@ -1840,7 +1862,6 @@ msgid "Pace"
 msgstr "Rythme"
 
 #: inc/training/view/section/table/class.TableLapsComputed.php:66
-#, fuzzy
 msgid "bpm"
 msgstr "bpm"
 
@@ -1970,7 +1991,6 @@ msgid "Make public"
 msgstr "Publier"
 
 #: inc/training/view/class.TrainingView.php:154
-#, fuzzy
 msgid "Edit race result"
 msgstr "Modifier le résultat de course"
 
@@ -2508,9 +2528,9 @@ msgid "Problem"
 msgstr "Problème"
 
 #: inc/class.FrontendSharedList.php:158
-#, php-format
+#, fuzzy, php-format
 msgid "Activity view of %s"
-msgstr ""
+msgstr "Voir l'activité du %s"
 
 #: inc/class.FrontendSharedList.php:165 inc/class.FrontendShared.php:132
 #: inc/class.FrontendShared.php:145
@@ -2519,11 +2539,11 @@ msgstr "Erreur"
 
 #: inc/class.FrontendSharedList.php:167
 msgid "This list is private"
-msgstr ""
+msgstr "Cette liste est privée"
 
 #: inc/class.FrontendSharedList.php:168
 msgid "The user does not share his activity list."
-msgstr ""
+msgstr "L'utilisateur ne partage pas sa liste d'activités."
 
 #: inc/class.FrontendSharedStatistics.php:50
 #, php-format
@@ -2733,7 +2753,6 @@ msgstr ""
 
 #: inc/draw/class.PlotSumData.php:633 inc/core/View/Activity/Plot/Laps.php:121
 #: inc/core/View/Plot/Series.php:160
-#, fuzzy
 msgid "avg:"
 msgstr "moyenne:"
 
@@ -3013,9 +3032,8 @@ msgstr ""
 "Votre équipement complet est affiché comme une icône avec une info-bulle."
 
 #: inc/core/Dataset/Keys/RaceResult.php:40
-#, fuzzy
 msgid "Race result"
-msgstr "Résultat de la course"
+msgstr "Résultat de course"
 
 #: inc/core/Dataset/Keys/RaceResult.php:88
 msgid "Your placements at races"
@@ -3289,7 +3307,7 @@ msgstr ""
 #: inc/core/Dataset/Keys/FitPerformanceCondition.php:43
 #, fuzzy
 msgid "Performance Condition"
-msgstr "modèle de performance"
+msgstr "Modèle de performance"
 
 #: inc/core/Dataset/Keys/FitPerformanceCondition.php:52
 #: inc/core/Activity/PerformanceCondition.php:67
@@ -3323,7 +3341,6 @@ msgid "Performance condition"
 msgstr "Modèle de performance"
 
 #: inc/core/Activity/TrainingEffectLevel.php:70
-#, fuzzy
 msgid "Maintaining workout"
 msgstr "Activité de maintien"
 
@@ -3870,7 +3887,6 @@ msgid "unknown"
 msgstr "inconnu"
 
 #: inc/core/Data/Weather/BeaufortScale.php:169
-#, fuzzy
 msgid "Beaufort scale"
 msgstr "Échelle de Beaufort"
 
@@ -4192,7 +4208,7 @@ msgid "1st/2nd Half"
 msgstr "1ère/2ème moitié"
 
 #: inc/core/View/RaceResult/Dataview.php:91
-#, fuzzy, php-format
+#, php-format
 msgid "of %u overall"
 msgstr "du %u général"
 
