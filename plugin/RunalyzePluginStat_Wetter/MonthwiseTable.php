@@ -9,6 +9,7 @@ namespace Runalyze\Plugin\Stat\Wetter;
 use Runalyze\Activity\Temperature;
 use Runalyze\Data\Weather;
 use Runalyze\Model\Factory;
+use Runalyze\Profile\Weather\WeatherConditionProfile;
 use Runalyze\Util\Time;
 
 /**
@@ -211,7 +212,7 @@ class MonthwiseTable
 		$Statement = $this->createStatementToFetchWeatherConditions();
 
 		foreach (Weather\Condition::completeList() as $id) {
-			if ($id == Weather\Condition::UNKNOWN) {
+			if ($id == WeatherConditionProfile::UNKNOWN) {
 				continue;
 			}
 

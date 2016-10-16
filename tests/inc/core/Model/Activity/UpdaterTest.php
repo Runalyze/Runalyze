@@ -7,6 +7,7 @@ use League\Geotools\Geohash\Geohash;
 use Runalyze\Configuration;
 use Runalyze\Data\Weather\Condition;
 use Runalyze\Model;
+use Runalyze\Profile\Weather\WeatherConditionProfile;
 use Runalyze\Util\LocalTime;
 
 use PDO;
@@ -311,7 +312,7 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 	public function testUnsettingWeatherForInside() {
 		$OldObject = $this->fetch( $this->insert(array(
 			Entity::TIME_IN_SECONDS => 3600,
-			Entity::WEATHERID => Condition::SUNNY,
+			Entity::WEATHERID => WeatherConditionProfile::SUNNY,
 			Entity::TEMPERATURE => 7,
 			Entity::HUMIDITY => 67,
 			Entity::PRESSURE => 1020,

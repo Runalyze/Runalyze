@@ -13,10 +13,11 @@ use Runalyze\Data\Weather\WindDegree;
 use Runalyze\Data\Weather\Humidity;
 use Runalyze\Data\Weather\Pressure;
 use Runalyze\Data\Weather\Sources;
+use Runalyze\Profile\Weather\WeatherConditionProfile;
 
 /**
  * Weather
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Data
  */
@@ -32,13 +33,13 @@ class Weather {
 	 * @var \Runalyze\Data\Weather\Condition
 	 */
 	protected $Condition;
-	
+
 	/**
 	 * WindSpeed
 	 * @var \Runalyze\Data\Weather\WindSpeed
 	 */
 	protected $WindSpeed;
-	
+
 	/**
 	 * WindDegree
 	 * @var \Runalyze\Data\Weather\WindDegree
@@ -50,13 +51,13 @@ class Weather {
 	 * @var \Runalyze\Data\Weather\Humidity
 	 */
 	protected $Humidity;
-	
+
 	/**
 	 * Pressure
 	 * @var \Runalyze\Data\Weather\Pressure
 	 */
 	protected $Pressure;
-	
+
 	/**
 	 * WindChillFactor
 	 * @var \Runalyze\Data\Weather\WindChillFactor
@@ -69,7 +70,7 @@ class Weather {
 	 * @var null|int
 	 */
 	protected $SourceId = null;
-	
+
 	/**
 	 * Weather
 	 * @param \Runalyze\Data\Weather\Temperature $Temperature
@@ -131,7 +132,7 @@ class Weather {
 	public function condition() {
 		return $this->Condition;
 	}
-	
+
 	/**
 	 * Wind Speed
 	 * @return \Runalyze\Data\Weather\WindSpeed
@@ -139,7 +140,7 @@ class Weather {
 	public function windSpeed() {
 		return $this->WindSpeed;
 	}
-	
+
 	/**
 	 * Wind Degree
 	 * @return \Runalyze\Data\Weather\WindDegree
@@ -147,7 +148,7 @@ class Weather {
 	public function windDegree() {
 		return $this->WindDegree;
 	}
-	
+
 	/**
 	 * Humidity
 	 * @return \Runalyze\Data\Weather\Humidity
@@ -155,7 +156,7 @@ class Weather {
 	public function humidity() {
 		return $this->Humidity;
 	}
-	
+
 	/**
 	 * Pressure
 	 * @return \Runalyze\Data\Weather\Pressure
@@ -196,7 +197,7 @@ class Weather {
 
 	/**
 	 * Full string
-	 * 
+	 *
 	 * Complete string for the weather conditions with icon, name and temperature.
 	 * @param bool $isNight
 	 * @return string
@@ -231,7 +232,7 @@ class Weather {
 	 */
 	public function clear() {
 		$this->Temperature->setTemperature(null);
-		$this->Condition->set(Condition::UNKNOWN);
+		$this->Condition->set(WeatherConditionProfile::UNKNOWN);
 		$this->WindSpeed->set(null);
 		$this->WindDegree->set(null);
 		$this->Humidity->set(null);

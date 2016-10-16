@@ -35,4 +35,7 @@ class WeatherConditionProfile extends AbstractEnum
 
 	/** @var int */
 	const THUNDERSTORM = 10;
+
+	/** @var int */
+	const WINDY = 11;
 }

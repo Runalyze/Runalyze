@@ -2,7 +2,7 @@
 
 namespace Runalyze\Profile\Mapping;
 
-abstract class AbstractMapping
+abstract class AbstractMapping implements ToInternalMappingInterface, ToExternalMappingInterface
 {
     /** @var int[]|string[] */
     protected $Mapping = [];

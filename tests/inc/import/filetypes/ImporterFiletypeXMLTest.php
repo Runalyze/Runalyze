@@ -36,7 +36,7 @@ class ImporterFiletypeXMLTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * Test: Polar file
-	 * Filename: "Polar.xml" 
+	 * Filename: "Polar.xml"
 	 */
 	public function test_PolarFile() {
 		$this->object->parseFile('../tests/testfiles/xml/Polar.xml');
@@ -55,10 +55,10 @@ class ImporterFiletypeXMLTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertTrue( $this->object->object()->hasArrayHeartrate() );
 	}
- 
+
  	/**
 	 * Test: Polar file
-	 * Filename: "Polar-with-arrays.xml" 
+	 * Filename: "Polar-with-arrays.xml"
 	 */
 	public function test_PolarFileWithArrays() {
 		$this->object->parseFile('../tests/testfiles/xml/Polar-with-arrays.xml');
@@ -82,10 +82,10 @@ class ImporterFiletypeXMLTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( array_fill(0, 20, '1.00'), $this->object->object()->Splits()->distancesAsArray() );
 		$this->assertEquals( 20.049, $this->object->object()->getArrayDistanceLastPoint(), '', 0.0005 );
 	}
- 
+
  	/**
 	 * Test: Polar file
-	 * Filename: "Polar-with-arrays.xml" 
+	 * Filename: "Polar-with-arrays.xml"
 	 */
 	public function test_PolarArraySizesWithAdditionalComma() {
 		$this->object->parseFile('../tests/testfiles/xml/Polar-additional-comma.xml');
@@ -128,7 +128,7 @@ class ImporterFiletypeXMLTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * Test: RunningAHEAD log
-	 * Filename: "RunningAHEAD-Minimal-example.xml" 
+	 * Filename: "RunningAHEAD-Minimal-example.xml"
 	 */
 	public function test_RunningAHEADFile() {
 		$this->object->parseFile('../tests/testfiles/xml/RunningAHEAD-Minimal-example.xml');
@@ -144,7 +144,7 @@ class ImporterFiletypeXMLTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( 1157, $this->object->object(0)->getTimeInSeconds() );
 		$this->assertEquals( "Citylauf Telgte", $this->object->object(0)->getRoute() );
 		$this->assertEquals( 17, $this->object->object(0)->get('temperature') );
-		$this->assertEquals( \Runalyze\Data\Weather\Condition::SUNNY, $this->object->object(0)->get('weatherid') );
+		$this->assertEquals( \Runalyze\Profile\Weather\WeatherConditionProfile::SUNNY, $this->object->object(0)->get('weatherid') );
 		$this->assertEquals( "Super organisiert, gute Strecke ...", $this->object->object(0)->getNotes() );
 
 		// Event 2
@@ -159,7 +159,7 @@ class ImporterFiletypeXMLTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( "Bahn Sentruper Hoehe", $this->object->object(2)->getRoute() );
 		$this->assertEquals( "4 x 1 km, 400 m Trab", $this->object->object(2)->getComment() );
 		$this->assertEquals( 15, $this->object->object(2)->get('temperature') );
-		$this->assertEquals( \Runalyze\Data\Weather\Condition::SUNNY, $this->object->object(0)->get('weatherid') );
+		$this->assertEquals( \Runalyze\Profile\Weather\WeatherConditionProfile::SUNNY, $this->object->object(0)->get('weatherid') );
 
 		$this->assertEquals(
 			"1.000|4:10-R0.400|3:00-1.000|4:10-R0.400|3:00-1.000|4:10-R0.400|3:00-1.000|4:10-R1.600|8:00",
@@ -209,7 +209,7 @@ class ImporterFiletypeXMLTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * Test: Suunto file
-	 * Filename: "Suunto-Ambit-reduced.xml" 
+	 * Filename: "Suunto-Ambit-reduced.xml"
 	 */
 	public function test_SuuntoFile() {
 		$this->object->parseFile('../tests/testfiles/xml/Suunto-Ambit-reduced.xml');
@@ -238,7 +238,7 @@ class ImporterFiletypeXMLTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * Test: Suunto file
-	 * Filename: "Suunto-Ambit-with-laps-reduced.xml" 
+	 * Filename: "Suunto-Ambit-with-laps-reduced.xml"
 	 */
 	public function test_SuuntoFile_withLaps() {
 		$this->object->parseFile('../tests/testfiles/xml/Suunto-Ambit-with-laps-reduced.xml');

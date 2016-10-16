@@ -4,6 +4,7 @@ namespace Runalyze\Service\WeatherForecast\Strategy;
 
 use Runalyze\Data\Weather;
 use Runalyze\Model;
+use Runalyze\Profile\Weather\WeatherConditionProfile;
 use Runalyze\Service\WeatherForecast\Forecast;
 
 class DBWeatherCacheTest extends \PHPUnit_Framework_TestCase
@@ -37,7 +38,7 @@ class DBWeatherCacheTest extends \PHPUnit_Framework_TestCase
 	public function testEmptyValues()
 	{
 		$this->assertNull($this->object->temperature()->value());
-		$this->assertEquals(Weather\Condition::UNKNOWN, $this->object->condition()->id());
+		$this->assertEquals(WeatherConditionProfile::UNKNOWN, $this->object->condition()->id());
 	}
 
 	public function testLoadForecastWithEmptyCache()
@@ -61,7 +62,7 @@ class DBWeatherCacheTest extends \PHPUnit_Framework_TestCase
 			Model\WeatherCache\Entity::WINDDEG => '302',
 			Model\WeatherCache\Entity::HUMIDITY => '86',
 			Model\WeatherCache\Entity::PRESSURE => '1033',
-			Model\WeatherCache\Entity::WEATHERID => Weather\Condition::CLOUDY,
+			Model\WeatherCache\Entity::WEATHERID => WeatherConditionProfile::CLOUDY,
 			Model\WeatherCache\Entity::WEATHER_SOURCE => Weather\Sources::OPENWEATHERMAP
 		]);
 
@@ -76,7 +77,7 @@ class DBWeatherCacheTest extends \PHPUnit_Framework_TestCase
 		$Temperature = $this->object->temperature();
 		$Temperature->toCelsius();
 
-		$this->assertEquals(Weather\Condition::CLOUDY, $this->object->condition()->id());
+		$this->assertEquals(WeatherConditionProfile::CLOUDY, $this->object->condition()->id());
 		$this->assertEquals(25, $this->object->windSpeed()->value(), '', 0.01);
 		$this->assertEquals(302, $this->object->windDegree()->value());
 		$this->assertEquals(86, $this->object->humidity()->value());
@@ -91,7 +92,7 @@ class DBWeatherCacheTest extends \PHPUnit_Framework_TestCase
 			Model\WeatherCache\Entity::TIME => '1462289510',
 			Model\WeatherCache\Entity::GEOHASH => 'u1xjn',
 			Model\WeatherCache\Entity::TEMPERATURE => '10',
-			Model\WeatherCache\Entity::WEATHERID => Weather\Condition::UNKNOWN
+			Model\WeatherCache\Entity::WEATHERID => WeatherConditionProfile::UNKNOWN
 		]);
 
 		$Location = new Weather\Location();

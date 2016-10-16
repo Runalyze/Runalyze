@@ -437,7 +437,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 		$Condition = new Weather\Condition(0);
 		$Strings = array();
 
-		$Weather = DB::getInstance()->query('SELECT SUM(1) as num, tr.weatherid FROM `'.PREFIX.'raceresult` r LEFT JOIN `'.PREFIX.'training` tr ON tr.id=r.activity_id WHERE tr.`weatherid`!='.Weather\Condition::UNKNOWN.' AND r.`accountid` = '.SessionAccountHandler::getId().' GROUP BY tr.`weatherid` ORDER BY tr.`weatherid` ASC')->fetchAll();
+		$Weather = DB::getInstance()->query('SELECT SUM(1) as num, tr.weatherid FROM `'.PREFIX.'raceresult` r LEFT JOIN `'.PREFIX.'training` tr ON tr.id=r.activity_id WHERE tr.`weatherid`!='.\Runalyze\Profile\Weather\WeatherConditionProfile::UNKNOWN.' AND r.`accountid` = '.SessionAccountHandler::getId().' GROUP BY tr.`weatherid` ORDER BY tr.`weatherid` ASC')->fetchAll();
 
 		foreach ($Weather as $W) {
 			$Condition->set($W['weatherid']);

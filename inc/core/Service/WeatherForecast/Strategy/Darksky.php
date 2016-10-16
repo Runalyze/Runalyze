@@ -14,14 +14,16 @@ use Runalyze\Data\Weather\WindDegree;
 use Runalyze\Data\Weather\Condition;
 use Runalyze\Data\Weather\Sources;
 use Runalyze\Data\Weather\Location;
+use Runalyze\Profile\Weather\Mapping\DarkskyMapping;
+use Runalyze\Profile\Weather\WeatherConditionProfile;
 
 /**
  * Forecast-strategy for using darksky
- * 
+ *
  * This weather forecast strategy uses the api of forecast.io
  * API documentation: https://darksky.net/dev/
  * To use this api, a location has to be set.
- * 
+ *
  * The strategy uses <code>DARKSKY_API_KEY</code> if defined.
  *
  * @author Hannes Christiansen
@@ -40,7 +42,7 @@ class Darksky implements StrategyInterface {
 	 * @var \Runalyze\Data\Weather\Location $Location
 	 */
 	protected $Location = null;
-	
+
 	/**
 	 * Result from json
 	 * @var array
@@ -53,7 +55,7 @@ class Darksky implements StrategyInterface {
 	public function isPossible() {
 	    return (defined('DARKSKY_API_KEY') && strlen(DARKSKY_API_KEY))  ? true : false;
 	}
-	
+
 	/**
 	 * Should this data be cached?
 	 * @return boolean
@@ -125,7 +127,7 @@ class Darksky implements StrategyInterface {
 	 */
 	public function condition() {
 		if (!isset($this->Result['currently']['icon'])) {
-			return new Condition(Condition::UNKNOWN);
+			return new Condition(WeatherConditionProfile::UNKNOWN);
 		}
 
 		return $this->translateCodeToCondition($this->Result['currently']['icon']);
@@ -144,7 +146,7 @@ class Darksky implements StrategyInterface {
 
 		return new Temperature($value, Temperature::FAHRENHEIT);
 	}
-	
+
 	/**
 	 * WindSpeed
 	 * @return \Runalyze\Data\Weather\WindSpeed
@@ -155,10 +157,10 @@ class Darksky implements StrategyInterface {
 		if (isset($this->Result['currently']) && isset($this->Result['currently']['windSpeed'])) {
 			$WindSpeed->setMeterPerSecond($this->Result['currently']['windSpeed']);
 		}
-		
+
 		return $WindSpeed;
 	}
-	
+
 	/**
 	 * WindDegree
 	 * @return \Runalyze\Data\Weather\WindDegree
@@ -172,7 +174,7 @@ class Darksky implements StrategyInterface {
 
 		return new WindDegree($value);
 	}
-	
+
 	/**
 	 * Humidity
 	 * @return \Runalyze\Data\Weather\Humidity
@@ -186,7 +188,7 @@ class Darksky implements StrategyInterface {
 
 		return new Humidity($value);
 	}
-	
+
 	/**
 	 * Pressure
 	 * @return \Runalyze\Data\Weather\Pressure
@@ -200,7 +202,7 @@ class Darksky implements StrategyInterface {
 
 		return new Pressure($value);
 	}
-	
+
 	/**
 	 * Location object
 	 * @return \Runalyze\Data\Weather\Location
@@ -208,7 +210,7 @@ class Darksky implements StrategyInterface {
 	public function location() {
 	    return $this->Location;
 	}
-	
+
 	/**
 	 * Update Location Object
 	 */
@@ -222,32 +224,12 @@ class Darksky implements StrategyInterface {
 	 }
 	/**
 	 * Translate api icon string to condition
-	 * 
+	 *
 	 * @see https://developer.forecast.io/docs/v2
 	 * @param string $icon from forecast.io
 	 * @return \Runalyze\Data\Weather\Condition
 	 */
 	private function translateCodeToCondition($icon) {
-		switch($icon) {
-            case 'clear-day':
-            case 'clear-night':
-                return new Condition(Condition::FAIR);
-            case 'wind':
-			    return new Condition(Condition::WINDY);
-			case 'fog':
-			    return new Condition(Condition::FOGGY);
-            case 'partly-cloudy-night':
-            case 'partly-cloudy-day':
-                return new Condition(Condition::CHANGEABLE);
-            case 'cloudy':
-				return new Condition(Condition::CLOUDY);
-            case 'rain':
-				return new Condition(Condition::RAINY);
-            case 'snow':
-            case 'sleet':
-				return new Condition(Condition::SNOWING);
-			default:
-				return new Condition(Condition::UNKNOWN);
-		}
+		return new Condition((new DarkskyMapping())->toInternal($icon));
 	}
 }

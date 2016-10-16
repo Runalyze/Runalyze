@@ -8,9 +8,9 @@ namespace Runalyze\View\Icon;
 
 /**
  * Weather icon
- * 
+ *
  * @see http://forecastfont.iconvau.lt/
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\View\Icon
  */
@@ -39,10 +39,10 @@ abstract class WeatherIcon extends \Runalyze\View\Icon {
 	 */
 	public function __construct($isNight = false) {
 		parent::__construct('');
-		
+
 		$this->setLayer();
-		
-		if ($isNight == true) {
+
+		if ($isNight) {
 			$this->setAsNight();
 		}
 	}

@@ -7,6 +7,7 @@ use League\Geotools\Geohash\Geohash;
 use Runalyze\Configuration;
 use Runalyze\Model;
 use Runalyze\Data\Weather;
+use Runalyze\Profile\Weather\WeatherConditionProfile;
 use Runalyze\Util\LocalTime;
 
 use PDO;
@@ -113,7 +114,7 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		$Object = $this->fetch(
 			$this->insert(array(
 				Entity::TIME_IN_SECONDS => 3600,
-				Entity::WEATHERID => Weather\Condition::SUNNY,
+				Entity::WEATHERID => WeatherConditionProfile::SUNNY,
 				Entity::TEMPERATURE => 7,
 				Entity::HUMIDITY => 67,
 				Entity::PRESSURE => 1020,
@@ -123,7 +124,7 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 			))
 		);
 
-		$this->assertEquals(Weather\Condition::SUNNY, $Object->weather()->condition()->id());
+		$this->assertEquals(WeatherConditionProfile::SUNNY, $Object->weather()->condition()->id());
 		$this->assertEquals(7, $Object->weather()->temperature()->value());
 	}
 
@@ -131,7 +132,7 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		$Object = $this->fetch(
 			$this->insert(array(
 				Entity::TIME_IN_SECONDS => 3600,
-				Entity::WEATHERID => Weather\Condition::SUNNY,
+				Entity::WEATHERID => WeatherConditionProfile::SUNNY,
 				Entity::TEMPERATURE => 7,
 				Entity::HUMIDITY => 67,
 				Entity::PRESSURE => 1020,

@@ -3,6 +3,7 @@
 namespace Runalyze\Service\WeatherForecast\Strategy;
 
 use Runalyze\Data\Weather;
+use Runalyze\Profile\Weather\WeatherConditionProfile;
 
 class DarkskyTest extends \PHPUnit_Framework_TestCase
 {
@@ -17,7 +18,7 @@ class DarkskyTest extends \PHPUnit_Framework_TestCase
 	public function testEmptyValues()
 	{
 		$this->assertNull($this->object->temperature()->value());
-		$this->assertEquals(Weather\Condition::UNKNOWN, $this->object->condition()->id());
+		$this->assertEquals(WeatherConditionProfile::UNKNOWN, $this->object->condition()->id());
 	}
 
 	public function testLoadForecast()
@@ -48,7 +49,7 @@ class DarkskyTest extends \PHPUnit_Framework_TestCase
 		$Temperature = $this->object->temperature();
 		$Temperature->toCelsius();
 
-		$this->assertEquals(Weather\Condition::CHANGEABLE, $this->object->condition()->id());
+		$this->assertEquals(WeatherConditionProfile::CHANGEABLE, $this->object->condition()->id());
 		$this->assertEquals(40.32, $this->object->windSpeed()->value(), '', 0.01);
 		$this->assertEquals(109, $this->object->windDegree()->value(),'', 0.1);
 		$this->assertEquals(59, $this->object->humidity()->value());

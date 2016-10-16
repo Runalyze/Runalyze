@@ -3,6 +3,7 @@
 namespace Runalyze\Service\WeatherForecast\Strategy;
 
 use Runalyze\Data\Weather;
+use Runalyze\Profile\Weather\WeatherConditionProfile;
 
 class OpenweathermapTest extends \PHPUnit_Framework_TestCase
 {
@@ -17,7 +18,7 @@ class OpenweathermapTest extends \PHPUnit_Framework_TestCase
 	public function testEmptyValues()
 	{
 		$this->assertNull($this->object->temperature()->value());
-		$this->assertEquals(Weather\Condition::UNKNOWN, $this->object->condition()->id());
+		$this->assertEquals(WeatherConditionProfile::UNKNOWN, $this->object->condition()->id());
 	}
 
 	public function testLoadForecast()
@@ -40,7 +41,7 @@ class OpenweathermapTest extends \PHPUnit_Framework_TestCase
 		$Temperature = $this->object->temperature();
 		$Temperature->toCelsius();
 
-		$this->assertEquals(Weather\Condition::CLOUDY, $this->object->condition()->id());
+		$this->assertEquals(WeatherConditionProfile::CLOUDY, $this->object->condition()->id());
 		$this->assertEquals(6.34, $this->object->windSpeed()->value(), '', 0.01);
 		$this->assertEquals(314, $this->object->windDegree()->value());
 		$this->assertEquals(59, $this->object->humidity()->value());

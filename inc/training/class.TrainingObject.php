@@ -358,7 +358,7 @@ class TrainingObject extends DataObject {
 	 */
 	public function Weather() {
 		if (is_null($this->Weather)) {
-			$id   = ($this->hasProperty('weatherid')) ? $this->get('weatherid') : \Runalyze\Data\Weather\Condition::UNKNOWN;
+			$id   = ($this->hasProperty('weatherid')) ? $this->get('weatherid') : \Runalyze\Profile\Weather\WeatherConditionProfile::UNKNOWN;
 			$temp = ($this->hasProperty('temperature')) ? $this->get('temperature') : null;
 			$windSpeed = ($this->hasProperty('wind_speed')) ? $this->get('wind_speed') : null;
 			$windDegree = ($this->hasProperty('wind_deg')) ? $this->get('wind_deg') : null;
