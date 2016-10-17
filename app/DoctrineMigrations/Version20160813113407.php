@@ -9,7 +9,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 
 /**
- * Add session table to RUNALYZE & delete session column in account
+ * delete session column in account
  */
 class Version20160813113407 extends AbstractMigration implements ContainerAwareInterface
 {
@@ -27,7 +27,6 @@ class Version20160813113407 extends AbstractMigration implements ContainerAwareI
     {
         $prefix = $this->container->getParameter('database_prefix');
 
-	    $this->addSql('CREATE TABLE `'.$prefix.'sessions` (`sess_id` VARBINARY(128) NOT NULL PRIMARY KEY, `sess_data` BLOB NOT NULL, `sess_time` INTEGER UNSIGNED NOT NULL, `sess_lifetime` MEDIUMINT NOT NULL) COLLATE utf8_bin, ENGINE = InnoDB');
 	    $this->addSql('ALTER TABLE `'.$prefix.'account` DROP session_id');
 
     }
@@ -40,7 +39,7 @@ class Version20160813113407 extends AbstractMigration implements ContainerAwareI
         $prefix = $this->container->getParameter('database_prefix');
         
 	    $this->addSql('ALTER TABLE `'.$prefix.'account` ADD `session_id` varchar(64) NULL AFTER `salt`');
-        $this->addSql('ALTER TABLE `'.$prefix.'account` ADD UNIQUE(`session_id`)');
+            $this->addSql('ALTER TABLE `'.$prefix.'account` ADD UNIQUE(`session_id`)');
     }
 
 }
