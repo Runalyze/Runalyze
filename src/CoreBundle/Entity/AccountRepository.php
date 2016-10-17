@@ -28,4 +28,15 @@ class AccountRepository extends EntityRepository implements UserLoaderInterface
             ->getSingleScalarResult();
     }
 
+    public function deleteNotActivatedAccounts($days = 7) {
+        $minimumAge = (new \DateTime())->getTimestamp()-$days*86400;
+
+        return $this->createQueryBuilder('u')
+            ->delete()
+            ->where('u.activationHash != \'\' AND u.registerdate < :minimumAge')
+            ->setParameter('minimumAge', $minimumAge)
+            ->getQuery()
+            ->getArrayResult();
+    }
+
 }
