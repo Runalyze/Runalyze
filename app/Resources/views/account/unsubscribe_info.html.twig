@@ -5,7 +5,7 @@
     <div>
         <h1>{% trans %}Unsubscribe from notification mails of RUNALYZE{% endtrans %}</h1>
 
-        <p>{% trans %}If you turn of our mail notification you will not be informed about new features and changes at RUNALYZE{% endtrans %}</><br />
+        <p>{% trans %}If you turn off our mail notification you will not be informed about new features and changes at RUNALYZE{% endtrans %}</p><br />
         <form action="{{ path('unsubscribe-mail-confirm', {'mail': mail , 'hash' :  hash } ) }}" method="post">
 
         <p><input type="submit" value="{% trans %}Unsubscribe now{% endtrans %}" name="submit"></p>
