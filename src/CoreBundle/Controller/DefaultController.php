@@ -272,4 +272,37 @@ class DefaultController extends Controller
         return $this->redirectToRoute('login');
     }
 
+    /**
+     * @Route("/unsubscribe/{mail}/{hash}", name="unsubscribe-mail")
+     */
+    public function unsubscribeMailAction($mail, $hash)
+    {
+        $repo = $this->getDoctrine()->getRepository('CoreBundle:Account');
+        $account = $repo->findOneBy(array('mail' => $mail));
+
+        if ($account && $hash == md5($account->getUsername())) {
+            return $this->render('account/unsubscribe_info.html.twig', array('mail' => $mail, 'hash' => $hash));
+        }
+
+        return $this->render('account/unsubscribe_failure.html.twig');
+    }
+
+    /**
+     * @Route("/unsubscribe/{mail}/{hash}/confirm", name="unsubscribe-mail-confirm")
+     */
+    public function unsubscribeMailConfirmAction($mail, $hash)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $repo = $this->getDoctrine()->getRepository('CoreBundle:Account');
+        $account = $repo->findOneBy(array('mail' => $mail));
+        if ($account && $hash == md5($account->getUsername())) {
+            $account->setAllowMails(false);
+            $em->persist($account);
+            $em->flush();
+            return $this->render('account/unsubscribe_success.html.twig');
+        }
+
+        return $this->render('account/unsubscribe_failure.html.twig');
+    }
+
 }
