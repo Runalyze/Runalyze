@@ -149,18 +149,14 @@ class Data extends \Runalyze\Configuration\Category {
 
 	/**
 	 * Currently used VDOT corrector
-	 * @return int 1 if correction is not used
+	 * @return int
 	 */
 	public function vdotFactor() {
 		if (Configuration::Vdot()->useManualFactor()) {
 			return Configuration::Vdot()->manualFactor();
 		}
 
-		if (Configuration::Vdot()->useCorrectionFactor()) {
-			return $this->vdotCorrector();
-		}
-
-		return 1;
+		return $this->vdotCorrector();
 	}
 
 	/**

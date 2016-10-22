@@ -419,7 +419,7 @@ class SearchResults {
 			$value = (new Temperature())->setInPreferredUnit($value)->celsius();
 		} elseif ($key == 'wind_speed') {
 			$value = (new WindSpeed())->setInPreferredUnit($value)->value();
-		} elseif (($key == 'vdot' || $key == 'vdot_with_elevation') && Configuration::Vdot()->useCorrectionFactor()) {
+		} elseif (($key == 'vdot' || $key == 'vdot_with_elevation')) {
 			$value *= Configuration::Data()->vdotFactor();
 		} elseif ($key == 'kcal') {
 			$value = (new Energy())->setInPreferredUnit($value)->kcal();

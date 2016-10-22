@@ -9,11 +9,9 @@ class VDOTTest extends \PHPUnit_Framework_TestCase {
 
 	protected function setUp() {
 		VDOT::setPrecision(2);
-		VDOT::setMethod(VDOT::METHOD_LOGARITHMIC);
 	}
 	protected function tearDown() {
 		VDOT::setPrecision(2);
-		VDOT::setMethod(VDOT::METHOD_LOGARITHMIC);
 	}
 
 	public function testConstructor() {
@@ -237,18 +235,9 @@ class VDOTTest extends \PHPUnit_Framework_TestCase {
 
 		// since v1.5
 		$epsilon1 = 1.25;
-		VDOT::setMethod(VDOT::METHOD_LOGARITHMIC);
 		foreach ($Table as $vVDOT => $HR) {
 			$this->assertEquals($HR/100, Vdot::HRat($vVDOT/100), 'VDOT::HRat('.$vVDOT.')[log] failed', $epsilon1/100);
 			$this->assertEquals($vVDOT/100, Vdot::percentageAt($HR/100), 'VDOT::percentageAt('.$HR.')[log] failed', $epsilon1/100);
-		}
-
-		// up to v1.4
-		$epsilon2 = 4;
-		VDOT::setMethod(VDOT::METHOD_LINEAR);
-		foreach ($Table as $vVDOT => $HR) {
-			$this->assertEquals($HR/100, Vdot::HRat($vVDOT/100), 'VDOT::HRat('.$vVDOT.')[lin] failed', $epsilon2/100);
-			$this->assertEquals($vVDOT/100, Vdot::percentageAt($HR/100), 'VDOT::percentageAt('.$HR.')[lin] failed', $epsilon2/100);
 		}
 	}
 

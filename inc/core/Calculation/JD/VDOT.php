@@ -6,28 +6,13 @@
 
 namespace Runalyze\Calculation\JD;
 
-// TODO:
-// if (Configuration::Vdot()->method()->usesLogarithmic())
-
 /**
  * VDOT
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Calculation\JD
  */
 class VDOT {
-	/**
-	 * New method: logarithmic
-	 * @var int enum
-	 */
-	const METHOD_LOGARITHMIC = 0;
-
-	/**
-	 * Old method: linear
-	 * @var int enum
-	 */
-	const METHOD_LINEAR = 1;
-
 	/**
 	 * Values below are considered invalid
 	 * @var int
@@ -47,12 +32,6 @@ class VDOT {
 	private static $Precision = 2;
 
 	/**
-	 * Method
-	 * @var int enum
-	 */
-	private static $Method = 0;
-
-	/**
 	 * Value
 	 * @var float
 	 */
@@ -70,14 +49,6 @@ class VDOT {
 	 */
 	public static function setPrecision($decimals) {
 		self::$Precision = $decimals;
-	}
-
-	/**
-	 * Set method
-	 * @param int $method enum
-	 */
-	public static function setMethod($method) {
-		self::$Method = $method;
 	}
 
 	/**
@@ -110,9 +81,9 @@ class VDOT {
 
 	/**
 	 * Calculate from pace
-	 * 
+	 *
 	 * @see self::formula
-	 * 
+	 *
 	 * @param float $distance [km]
 	 * @param int $seconds
 	 */
@@ -122,10 +93,10 @@ class VDOT {
 
 	/**
 	 * VDOT formula by Daniels/Gilbert
-	 * 
+	 *
 	 * It can be read as 'oxygen cost' divided by 'drop dead'.
 	 * @see http://www.simpsonassociatesinc.com/runningmath2.htm
-	 * 
+	 *
 	 * @param float $distance [km]
 	 * @param int $seconds
 	 * @return float
@@ -199,11 +170,11 @@ class VDOT {
 
 	/**
 	 * Calculate VDOT by speed
-	 * 
+	 *
 	 * This formula is simply the oxygen formula of Daniels/Gilbert.
 	 * The drop dead formula equals nearly 1 (exact: 1.00027...) for 11 minutes,
 	 * the maximal time one can run at 100 %vVDOT.
-	 * 
+	 *
 	 * @param float $speed [m/min] speed at 100% VDOT (i.e. for 11 minutes)
 	 */
 	public function fromSpeed($speed) {
@@ -212,10 +183,10 @@ class VDOT {
 
 	/**
 	 * Speed at 100%
-	 * 
+	 *
 	 * This formula is derived by solving the quadratic formula of the original
 	 * VDOT formula for 11 minutes, i.e. the maximal time that one can run at 100 %vVDOT.
-	 * 
+	 *
 	 * @return float [m/min]
 	 */
 	public function speed() {
@@ -253,33 +224,27 @@ class VDOT {
 
 	/**
 	 * Expected heart rate at X.X % of VDOT
-	 * 
+	 *
 	 * This formula is derived via regression for the table 2.2
 	 * on page 42 of JDs running formula (german version).
-	 * 
+	 *
 	 * @param float $percentage in [0.0, 1.0]
 	 * @return float in [0.0, 1.0]
 	 */
 	public static function HRat($percentage) {
-		if (self::$Method == self::METHOD_LOGARITHMIC)
-			return 0.68725*log($percentage)+1.00466;
-
-		return ($percentage+0.2812)/1.2812;
+		return 0.68725 * log($percentage) + 1.00466;
 	}
 
 	/**
 	 * Expected % of VDOT at given heart rate
-	 * 
+	 *
 	 * This formula is derived via regression for the table 2.2
 	 * on page 42 of JDs running formula (german version).
-	 * 
+	 *
 	 * @param float $hrInPercent in [0.0, 1.0]
 	 * @return float in [0.0, 1.0]
 	 */
 	public static function percentageAt($hrInPercent) {
-		if (self::$Method == self::METHOD_LOGARITHMIC)
-			return exp( ($hrInPercent - 1.00466) / 0.68725 );
-
-		return 1.2812*$hrInPercent-0.2812;
+		return exp(($hrInPercent - 1.00466) / 0.68725);
 	}
 }

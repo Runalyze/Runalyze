@@ -41,9 +41,7 @@ class Vdot extends \Runalyze\Configuration\Category {
 	 * Create handles
 	 */
 	protected function createHandles() {
-		$this->createHandle('VDOT_HF_METHOD', new VdotMethod());
 		$this->createHandle('VDOT_DAYS', new Integer(30));
-		$this->createHandle('VDOT_USE_CORRECTION', new Boolean(true));
 		$this->createHandle('VDOT_MANUAL_CORRECTOR', new FloatingPoint(null, ['min' => 0.50, 'max' => 2.00, 'null' => true]));
 		$this->createHandle('VDOT_MANUAL_VALUE', new Textline(''));
 
@@ -53,27 +51,11 @@ class Vdot extends \Runalyze\Configuration\Category {
 	}
 
 	/**
-	 * Used method
-	 * @return VdotMethod
-	 */
-	public function method() {
-		return $this->object('VDOT_HF_METHOD');
-	}
-
-	/**
 	 * Days for shape
 	 * @return int
 	 */
 	public function days() {
 		return $this->get('VDOT_DAYS');
-	}
-
-	/**
-	 * Uses a correction factor
-	 * @return bool
-	 */
-	public function useCorrectionFactor() {
-		return $this->get('VDOT_USE_CORRECTION');
 	}
 
 	/**
@@ -136,11 +118,6 @@ class Vdot extends \Runalyze\Configuration\Category {
 	 * Register onchange events
 	 */
 	protected function registerOnchangeEvents() {
-		$this->handle('VDOT_HF_METHOD')->registerOnchangeEvent('Runalyze\\Configuration\\Messages::useCleanup');
-
-		$this->handle('VDOT_USE_CORRECTION')->registerOnchangeEvent('Runalyze\\Configuration\\Category\\Vdot::triggerRecalculation');
-		$this->handle('VDOT_USE_CORRECTION')->registerOnchangeFlag(Ajax::$RELOAD_ALL);
-
 		$this->handle('VDOT_DAYS')->registerOnchangeEvent('Runalyze\\Configuration\\Category\\Vdot::triggerRecalculation');
 		$this->handle('VDOT_DAYS')->registerOnchangeFlag(Ajax::$RELOAD_ALL);
 
@@ -161,19 +138,9 @@ class Vdot extends \Runalyze\Configuration\Category {
 	public function Fieldset() {
 		$Fieldset = new Fieldset( __('VDOT') );
 
-		$Fieldset->addHandle( $this->handle('VDOT_HF_METHOD'), array(
-			'label'		=> __('Estimation formula'),
-			'tooltip'	=> __('Formula to estimate the vdot value. The old method is only listed for compatibility reasons.')
-		));
-
 		$Fieldset->addHandle( $this->handle('VDOT_DAYS'), array(
 			'label'		=> __('Time constant length for VDOT'),
 			'tooltip'	=> __('Time constant length for VDOT rolling average')
-		));
-
-		$Fieldset->addHandle( $this->handle('VDOT_USE_CORRECTION'), array(
-			'label'		=> __('Use correction factor'),
-			'tooltip'	=> __('Use a correction factor based on your best race result. (recommended)')
 		));
 
 		$Fieldset->addHandle( $this->handle('VDOT_MANUAL_CORRECTOR'), array(
