@@ -75,4 +75,41 @@ class ImporterFiletypeCSVTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($sizeTimeData, count($this->object->object()->getArrayLongitude()), 'Latitude array has wrong size.');
 		$this->assertEquals($sizeTimeData, count($this->object->object()->getArrayLongitude()), 'Longitude array has wrong size.');
 	}
+
+	/**
+	 * Original file was cutted after 500 data points
+	 *
+	 * @group wahoo
+	 * @see https://github.com/Runalyze/Runalyze/issues/1965
+	 */
+	public function testWahooIPhoneApp() {
+		$this->object->parseFile('../tests/testfiles/csv/Wahoo.csv');
+
+		$this->assertFalse($this->object->failed());
+		$this->assertFalse($this->object->hasMultipleTrainings());
+
+		$activity = $this->object->object();
+		$splits = $activity->Splits();
+
+		$this->assertEquals('07.10.2016 17:24', LocalTime::date('d.m.Y H:i', $activity->getTimestamp()));
+		$this->assertEquals(11, count($splits->asArray()));
+		$this->assertEquals(4618, $splits->totalTime(), '', 5);
+		$this->assertEquals(10.016, $splits->totalDistance(), '', 0.01);
+
+		$this->assertTrue($activity->hasArrayDistance());
+		$this->assertTrue($activity->hasPositionData());
+		$this->assertTrue($activity->hasArrayAltitude());
+		$this->assertTrue($activity->hasArrayHeartrate());
+		$this->assertTrue($activity->hasArrayCadence());
+		$this->assertTrue($activity->hasArrayVerticalOscillation());
+		$this->assertTrue($activity->hasArrayGroundContact());
+		$this->assertFalse($activity->Pauses()->isEmpty());
+
+		$this->assertEquals(490, $activity->getTimeInSeconds());
+		$this->assertEquals(1.086, $activity->getDistance(), '', 0.001);
+		$this->assertEquals(147, $activity->getPulseAvg());
+		$this->assertEquals(82, $activity->getCadence());
+		$this->assertEquals(75, $activity->getVerticalOscillation());
+		$this->assertEquals(300, $activity->getGroundContactTime());
+	}
 }

@@ -17,28 +17,36 @@ class ImporterFiletypeCSV extends ImporterFiletypeAbstract {
 	 * Allowed producer of XML files
 	 * @var string
 	 */
-	const ALLOWED_PRODUCER = 'Epson';
+	const ALLOWED_PRODUCER = 'Epson, Wahoo';
 
 	/**
-	 * Set parser
-	 * @param string $String string to parse
+	 * @param string $string
 	 */
-	protected function setParserFor($String) {
-		if ($this->isFromEpson($String)) {
-			$this->Parser = new ParserCSVepsonSingle($String);
+	protected function setParserFor($string) {
+		if ($this->isFromEpson($string)) {
+			$this->Parser = new ParserCSVepsonSingle($string);
+		} elseif ($this->isFromWahoo($string)) {
+			$this->Parser = new ParserCSVwahooSingle($string);
 		} else {
 			$this->throwErrorForUnknownFormat('csv', self::ALLOWED_PRODUCER);
 		}
 	}
 
 	/**
-	 * Is this string from Polar?
-	 * @param string $String
+	 * @param string $string
 	 * @return bool
 	 */
-	protected function isFromEpson(&$String) {
-		return strpos($String, '[[Training]]') !== false;
+	protected function isFromEpson(&$string) {
+		return strpos($string, '[[Training]]') !== false;
+	}
+
+	/**
+	 * @param string $string
+	 * @return bool
+	 */
+	protected function isFromWahoo(&$string) {
+		return strpos($string, 'File created by Wahoo Fitness iPhone App') !== false;
 	}
 }
 
-ImporterWindowTabUpload::addInfo( sprintf(__('%s-files are supported from: %s'), 'csv', ImporterFiletypeCSV::ALLOWED_PRODUCER) );
+ImporterWindowTabUpload::addInfo(sprintf(__('%s-files are supported from: %s'), 'csv', ImporterFiletypeCSV::ALLOWED_PRODUCER));
