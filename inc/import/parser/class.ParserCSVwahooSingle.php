@@ -49,9 +49,7 @@ class ParserCSVwahooSingle extends ParserAbstractSingle
     {
         $this->Row = explode(',', $line);
 
-        if ('' == $line) {
-            $this->clearHeader();
-        } elseif (empty($this->CurrentBlock)) {
+        if (in_array($this->Row[0], ['Device', 'interval', 'time'])) {
             $this->setHeader($this->Row);
 		} else {
             switch ($this->CurrentBlock) {
