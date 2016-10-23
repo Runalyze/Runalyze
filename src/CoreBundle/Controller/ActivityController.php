@@ -217,7 +217,8 @@ class ActivityController extends Controller
             'hrDetails' => $VdotInfo->getHeartRateCalculationDetails(),
             'factorDetails' => $VdotInfo->getCorrectionFactorDetails(),
             'elevationDetails' => $VdotInfo->getElevationDetails(),
-            'useElevationAdjustment' => $VdotInfo->usesElevationAdjustment()
+            'useElevationAdjustment' => $VdotInfo->usesElevationAdjustment(),
+            'activityVdot' => $VdotInfo->getActivityVdot()
         ]);
     }
 

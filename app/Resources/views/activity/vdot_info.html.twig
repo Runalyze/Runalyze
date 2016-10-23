@@ -102,5 +102,21 @@
                 </div>
             </div>
         </fieldset>
+
+        {% if
+            (useElevationAdjustment and (not (activityVdot|round(1) == elevationDetails.vdot|round(1)))) or
+            ((not useElevationAdjustment) and (not (activityVdot|round(1) == factorDetails.vdot|round(1))))
+        %}
+        <p class="warning">
+            {% trans with {'%activityVdot%': activityVdot|round(2)} %}
+            The calculated value is not equal to what is saved for the activity (%activityVdot%).
+            The activity's value has probably been calculated based on other settings.
+            {% endtrans %}
+
+            {% trans with {'%linkStart%': '<a href="' ~ url('tools-cleanup') ~ '">', '%linkEnd%': '</a>'} %}
+            You can use the %linkStart%database cleanup%linkEnd% to recalculate the value.
+            {% endtrans %}
+        </p>
+        {% endif %}
     </div>
 {% endblock %}

@@ -148,4 +148,18 @@ class VdotInfo
     {
         return $this->VdotConfig->useElevationCorrection();
     }
+
+    /**
+     * @return float
+     */
+    public function getActivityVdot()
+    {
+        if ($this->VdotConfig->useElevationCorrection()) {
+            $vdot = $this->Context->activity()->vdotWithElevation();
+        } else  {
+            $vdot = $this->Context->activity()->vdotByHeartRate();
+        }
+
+        return $vdot * $this->DataConfig->vdotFactor();
+    }
 }
