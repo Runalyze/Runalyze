@@ -453,9 +453,9 @@
         <source>End</source>
         <target>End</target>
       </trans-unit>
-      <trans-unit id="4f5d5f295ddc8fd8673e74dd5fbe114a" resname="per page">
+      <trans-unit id="4f5d5f295ddc8fd8673e74dd5fbe114a" resname="per page" approved="yes">
         <source>per page</source>
-        <target>per page</target>
+        <target state="translated">par page</target>
       </trans-unit>
       <trans-unit id="5e70dd4e82f51ee3e892224e28232d31" resname="The deletion cannot be undone!">
         <source>The deletion cannot be undone!</source>
