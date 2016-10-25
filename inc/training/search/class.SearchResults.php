@@ -287,9 +287,9 @@ class SearchResults {
 				}
 			}
 		}
-	
+
 		$this->addConditionsForOrder($conditions);
-                    
+
 		return $this->getEquipmentCondition().$this->getTagCondition().' WHERE '.implode(' AND ', array_unique($conditions));
 	}
 
@@ -420,7 +420,9 @@ class SearchResults {
 			$value = (new WindSpeed())->setInPreferredUnit($value)->value();
 		} elseif (($key == 'vdot' || $key == 'vdot_with_elevation') && Configuration::Vdot()->useCorrectionFactor()) {
 			$value *= Configuration::Data()->vdotFactor();
-		}
+		} elseif ($key == 'fit_recovery_time') {
+            $value *= 60;
+        }
 
 		return $value;
 	}
@@ -534,7 +536,7 @@ class SearchResults {
 
 		return 'INNER JOIN `'.PREFIX.'activity_tag` AS `at` ON `at`.`activityid` = `t`.`id` AND `at`.`tagid`="'.(int)$_POST['tagid'].'"';
 	}
-        
+
 	/**
 	 * Get order
 	 * @return string
