@@ -25,7 +25,7 @@ class AppKernel extends \Symfony\Component\HttpKernel\Kernel
             new Runalyze\Bundle\CoreBundle\CoreBundle(),
         ];
 
-        if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {
+        if ('dev' == $this->getEnvironment()) {
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Symfony\Bundle\DebugBundle\DebugBundle();
         }
