@@ -423,7 +423,9 @@ class SearchResults {
 			$value *= Configuration::Data()->vdotFactor();
 		} elseif ($key == 'kcal') {
 			$value = (new Energy())->setInPreferredUnit($value)->kcal();
-		}
+		} elseif ($key == 'fit_recovery_time') {
+            $value *= 60;
+        }
 
 		return $value;
 	}
