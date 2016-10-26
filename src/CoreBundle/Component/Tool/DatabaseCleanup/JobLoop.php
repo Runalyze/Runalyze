@@ -96,8 +96,7 @@ class JobLoop extends Job
                 $calculateVdot = ($Data['sportid'] == Configuration::General()->runningSport());
 
 				if ($this->isRequested(self::ELEVATION) && $this->isRequested(self::ELEVATION_OVERWRITE)) {
-					$elevations = $this->elevationsFor($Data);
-					$Update->bindValue(':elevation', $elevations[0]);
+					$Update->bindValue(':elevation', $this->elevationsFor($Data)[0]);
 				}
 
 				if ($this->isRequested(self::VDOT)) {
@@ -150,7 +149,7 @@ class JobLoop extends Job
 	/**
 	 * Elevations for activity
 	 * @param array $data activity data
-	 * @return array ('total', 'up', 'down', 'calculated')
+	 * @return array ('total', 'up', 'down')
 	 */
 	protected function elevationsFor(array $data)
     {
@@ -158,7 +157,11 @@ class JobLoop extends Job
 			return $this->ElevationResults[$data['routeid']];
 		}
 
-		return array($data['elevation'], $data['elevation'], $data['elevation']);
+		if (isset($data['elevation']) && isset($data['elevation_up']) && isset($data['elevation_down'])) {
+			return array($data['elevation'], $data['elevation_up'], $data['elevation_down']);
+		}
+
+		return array($data['training_elevation'], $data['training_elevation'], $data['training_elevation']);
 	}
 
 	/**
@@ -222,11 +225,15 @@ class JobLoop extends Job
 				`'.$this->DatabasePrefix.'training`.`distance`,
 				`'.$this->DatabasePrefix.'training`.`s`,
 				`'.$this->DatabasePrefix.'training`.`pulse_avg`,
-				`'.$this->DatabasePrefix.'training`.`elevation`,
+				`'.$this->DatabasePrefix.'training`.`elevation` as `training_elevation`,
+				`'.$this->DatabasePrefix.'route`.`elevation`,
+				`'.$this->DatabasePrefix.'route`.`elevation_up`,
+				`'.$this->DatabasePrefix.'route`.`elevation_down`,
 				`'.$this->DatabasePrefix.'trackdata`.`time` as `trackdata_time`,
 				`'.$this->DatabasePrefix.'trackdata`.`heartrate` as `trackdata_heartrate`
 			FROM `'.$this->DatabasePrefix.'training`
 			LEFT JOIN `'.$this->DatabasePrefix.'trackdata` ON `'.$this->DatabasePrefix.'trackdata`.`activityid` = `'.$this->DatabasePrefix.'training`.`id`
+			LEFT JOIN `'.$this->DatabasePrefix.'route` ON `'.$this->DatabasePrefix.'route`.`id` = `'.$this->DatabasePrefix.'training`.`routeid`
 			WHERE `'.$this->DatabasePrefix.'training`.`accountid` = '.$this->AccountId
 		);
 	}
