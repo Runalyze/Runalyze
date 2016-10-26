@@ -156,14 +156,18 @@ class JobLoop extends Job {
 	/**
 	 * Elevations for activity
 	 * @param array $data activity data
-	 * @return array ('total', 'up', 'down', 'calculated')
+	 * @return array ('total', 'up', 'down')
 	 */
 	protected function elevationsFor(array $data) {
 		if (isset($this->ElevationResults[$data['routeid']])) {
 			return $this->ElevationResults[$data['routeid']];
 		}
 
-		return array($data['elevation'], $data['elevation'], $data['elevation']);
+		if (isset($data['elevation']) && isset($data['elevation_up']) && isset($data['elevation_down'])) {
+			return array($data['elevation'], $data['elevation_up'], $data['elevation_down']);
+		}
+
+		return array($data['training_elevation'], $data['training_elevation'], $data['training_elevation']);
 	}
 
 	/**
@@ -227,11 +231,15 @@ class JobLoop extends Job {
 				`'.PREFIX.'training`.`distance`,
 				`'.PREFIX.'training`.`s`,
 				`'.PREFIX.'training`.`pulse_avg`,
-				`'.PREFIX.'training`.`elevation`,
+				`'.PREFIX.'training`.`elevation` as `training_elevation`,
+				`'.PREFIX.'route`.`elevation`,
+				`'.PREFIX.'route`.`elevation_up`,
+				`'.PREFIX.'route`.`elevation_down`,
 				`'.PREFIX.'trackdata`.`time` as `trackdata_time`,
 				`'.PREFIX.'trackdata`.`heartrate` as `trackdata_heartrate`
 			FROM `'.PREFIX.'training`
 			LEFT JOIN `'.PREFIX.'trackdata` ON `'.PREFIX.'trackdata`.`activityid` = `'.PREFIX.'training`.`id`
+			LEFT JOIN `'.PREFIX.'route` ON `'.PREFIX.'route`.`id` = `'.PREFIX.'training`.`routeid`
 			WHERE `'.PREFIX.'training`.`accountid` = '.$accountid
 		);
 	}
