@@ -77,11 +77,11 @@ CREATE TABLE IF NOT EXISTS `runalyze_activity_equipment` (
 --
 
 CREATE TABLE IF NOT EXISTS `runalyze_conf` (
-`id` int(11) NOT NULL,
+`id` int(10) unsigned NOT NULL,
   `category` varchar(32) NOT NULL,
   `key` varchar(100) NOT NULL,
   `value` varchar(255) NOT NULL,
-  `accountid` int(11) NOT NULL
+  `accountid` int(10) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -138,8 +138,8 @@ CREATE TABLE IF NOT EXISTS `runalyze_equipment_type` (
 `id` int(10) unsigned NOT NULL,
   `name` varchar(50) NOT NULL,
   `input` tinyint(1) NOT NULL DEFAULT '0',
-  `max_km` int(11) NOT NULL DEFAULT '0',
-  `max_time` int(11) NOT NULL DEFAULT '0',
+  `max_km` mediumint unsigned DEFAULT NULL,
+  `max_time` mediumint unsigned DEFAULT NULL,
   `accountid` int(10) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -190,9 +190,9 @@ CREATE TABLE IF NOT EXISTS `runalyze_plugin` (
 `id` int(10) unsigned NOT NULL,
   `key` varchar(100) NOT NULL,
   `type` enum('panel','stat','tool') NOT NULL DEFAULT 'stat',
-  `active` tinyint(1) NOT NULL DEFAULT '1',
-  `order` smallint(6) NOT NULL DEFAULT '0',
-  `accountid` int(11) NOT NULL
+  `active` tinyint(1) unsigned NOT NULL DEFAULT '1',
+  `order` tinyint unsigned NOT NULL DEFAULT '0',
+  `accountid` int(10) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -366,14 +366,14 @@ CREATE TABLE IF NOT EXISTS `runalyze_training` (
 --
 
 CREATE TABLE IF NOT EXISTS `runalyze_type` (
-`id` int(11) NOT NULL,
+`id` int(11) unsigned NOT NULL,
   `name` varchar(50) NOT NULL,
   `abbr` varchar(5) NOT NULL DEFAULT '',
-  `sportid` int(11) NOT NULL DEFAULT '0',
+  `sportid` int(11) unsigned NOT NULL,
   `short` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `hr_avg` tinyint(3) unsigned NOT NULL DEFAULT '100',
   `quality_session` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `accountid` int(11) NOT NULL
+  `accountid` int(10) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -383,17 +383,17 @@ CREATE TABLE IF NOT EXISTS `runalyze_type` (
 --
 
 CREATE TABLE IF NOT EXISTS `runalyze_user` (
-`id` int(11) NOT NULL,
-  `time` int(11) NOT NULL,
-  `weight` decimal(5,2) NOT NULL DEFAULT '0.0',
-  `pulse_rest` smallint(3) NOT NULL DEFAULT '0',
-  `pulse_max` smallint(3) NOT NULL DEFAULT '0',
-  `fat` decimal(3,1) NOT NULL DEFAULT '0.0',
-  `water` decimal(3,1) NOT NULL DEFAULT '0.0',
-  `muscles` decimal(3,1) NOT NULL DEFAULT '0.0',
-  `sleep_duration` smallint(3) unsigned NOT NULL DEFAULT '0',
+`id` int(10) unsigned NOT NULL,
+  `time` int(10) unsigned NOT NULL,
+  `weight` decimal(5,2) DEFAULT NULl,
+  `pulse_rest` tinyint unsigned DEFAULT NULl,
+  `pulse_max` tinyint unsigned DEFAULT NULl,
+  `fat` decimal(3,1) DEFAULT NULl,
+  `water` decimal(3,1) DEFAULT NULl,
+  `muscles` decimal(3,1) DEFAULT NULl,
+  `sleep_duration` smallint(3) unsigned DEFAULT NULl,
   `notes` text,
-  `accountid` int(11) NOT NULL
+  `accountid` int(10) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
