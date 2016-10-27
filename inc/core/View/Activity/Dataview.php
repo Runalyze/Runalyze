@@ -12,6 +12,7 @@ use Runalyze\Activity\TrainingEffect;
 use Runalyze\Configuration;
 use Runalyze\Data\Cadence;
 use Runalyze\Data\Weather\WindChillFactor;
+use Runalyze\Data\Weather\HeatIndex;
 use Runalyze\Model\Activity;
 use Runalyze\Model\Factory;
 use Runalyze\Activity\Distance;
@@ -524,6 +525,19 @@ class Dataview {
 				$Activity->weather()->windSpeed(),
 				new Temperature($Activity->weather()->temperature()->value()),
 				new Pace($Activity->duration(), $Activity->distance())
+			);
+		});
+	}
+	
+	/**
+	 * Get heat index
+	 * @return HeatIndex
+	 */
+	public function heatIndex() {
+		return $this->object($this->HeatIndex, function(Activity\Entity $Activity){
+			return new HeatIndex(
+				new \Runalyze\Activity\Temperature($Activity->weather()->temperature()->value()),
+				$Activity->weather()->humidity()
 			);
 		});
 	}
