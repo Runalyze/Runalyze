@@ -242,7 +242,6 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 			
 			if (!$WeatherObject->temperature()->isUnknown() && !$WeatherObject->humidity()->isUnknown()) {
 				$heatIndexObject = $this->Context->dataview()->heatIndex();
-				echo $heatIndexObject->value();
 				$HeatIndex = new BoxedValue(Helper::Unknown($heatIndexObject->value(), '-'), $heatIndexObject->unit(), $heatIndexObject->label(), $heatIndexObject->getIcon());
 				$HeatIndex->defineAsFloatingBlock('w50');
 				$this->BoxedValues[] = $HeatIndex;
