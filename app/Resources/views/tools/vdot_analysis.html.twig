@@ -5,7 +5,7 @@
 
 {% block content %}
     {# @var conf \Runalyze\Bundle\CoreBundle\Component\Configuration\RunalyzeConfigurationList #}
-    {% set conf = config(app.user) %}
+    {% set conf = config() %}
 
     <div class="panel-heading">
         <h1><a class="ajax" target="ajax" href="{{ url('tools-vdot-analysis') }}">{% trans %}Analyze your VDOT{% endtrans %}</a></h1>

@@ -43,11 +43,11 @@ services:
     arguments: [Runalyze\Bundle\CoreBundle\Entity\Conf]
   app.configuration_manager:
     class: Runalyze\Bundle\CoreBundle\Services\Configuration\ConfigurationManager
-    arguments: ["@app.repository.conf"]
+    arguments: ["@app.repository.conf", "@security.token_storage"]
   app.twig_configuration_extension:
     class: Runalyze\Bundle\CoreBundle\Twig\ConfigurationExtension
     public: false
-    arguments: ["@app.configuration_manager", "@security.token_storage"]
+    arguments: ["@app.configuration_manager"]
     tags:
       - { name: twig.extension }
   app.twig_html_extension:

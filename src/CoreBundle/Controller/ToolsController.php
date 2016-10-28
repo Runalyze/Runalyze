@@ -106,7 +106,7 @@ class ToolsController extends Controller
     {
         $Frontend = new \Frontend(true, $this->get('security.token_storage'));
 
-        $configuration = $this->get('app.configuration_manager')->getList($account);
+        $configuration = $this->get('app.configuration_manager')->getList();
         $vdotFactor = $configuration->getVdotFactor();
 
         $analysisTable = new VdotAnalysis($configuration->getVdot()->getLegacyCategory());
