@@ -23,7 +23,7 @@ class InstallDatabaseCommandTest extends KernelTestCase
     {
         static::bootKernel();
 
-        $this->Connection = null; //static::$kernel->getContainer()->get('doctrine')->getConnection();
+        $this->Connection = static::$kernel->getContainer()->get('doctrine')->getConnection();
         $this->DatabasePrefix = static::$kernel->getContainer()->getParameter('database_prefix');
 
         if (null === $this->Connection) {

@@ -4,13 +4,14 @@ use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\Conf;
 use Runalyze\Bundle\CoreBundle\Entity\ConfRepository;
 use Runalyze\Bundle\CoreBundle\Services\Configuration\ConfigurationManager;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 class ConfigurationManagerTest extends \PHPUnit_Framework_TestCase
 {
     public function testEmptyList()
     {
         $repository = $this->getConfRepositoryMock([]);
-        $manager = new ConfigurationManager($repository);
+        $manager = new ConfigurationManager($repository, new TokenStorage());
         $list = $manager->getList(new Account());
 
         $this->assertEquals('metric', $list->get('general.DISTANCE_UNIT_SYSTEM'));
@@ -24,7 +25,7 @@ class ConfigurationManagerTest extends \PHPUnit_Framework_TestCase
         $existingConf->setValue('imperial');
 
         $repository = $this->getConfRepositoryMock([$existingConf]);
-        $manager = new ConfigurationManager($repository);
+        $manager = new ConfigurationManager($repository, new TokenStorage());
         $list = $manager->getList(new Account());
 
         $this->assertEquals('imperial', $list->get('general.DISTANCE_UNIT_SYSTEM'));
