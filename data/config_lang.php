@@ -12,7 +12,8 @@ $supportedLanguages=array (
     'ca'=>array('Català', 'ca_ES.UTF-8'),
     'nl'=>array('Nederlandse', 'nl_NL.UTF-8'),
     'es'=>array('Español', 'es_ES.UTF-8'),
-    'it' => array('Italiano', 'it_IT.UTF-8')
+    'it' => array('Italiano', 'it_IT.UTF-8'),
+    'fr' => array('Français', 'fr_FR.UTF-8')
 
 
 
