@@ -28,12 +28,12 @@ CREATE TABLE IF NOT EXISTS `runalyze_account` (
   `timezone` smallint(5) unsigned NOT NULL DEFAULT '0',
   `password` varchar(64) NOT NULL DEFAULT '',
   `salt` char(64) NOT NULL DEFAULT '',
-  `registerdate` int(11) NOT NULL DEFAULT '0',
-  `lastaction` int(11) NOT NULL DEFAULT '0',
-  `changepw_hash` varchar(32) NOT NULL DEFAULT '',
-  `changepw_timelimit` int(11) NOT NULL DEFAULT '0',
-  `activation_hash` varchar(32) NOT NULL DEFAULT '',
-  `deletion_hash` varchar(32) NOT NULL DEFAULT '',
+  `registerdate` int(11) DEFAULT NULL,
+  `lastaction` int(11) DEFAULT NULL,
+  `changepw_hash` varchar(32) DEFAULT NULL,
+  `changepw_timelimit` int(11) DEFAULT NULL,
+  `activation_hash` varchar(32) DEFAULT NULL,
+  `deletion_hash` varchar(32) DEFAULT NULL,
   `allow_mails` tinyint(1) NOT NULL DEFAULT '1',
   `allow_support` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `role` tinyint(3) unsigned NOT NULL DEFAULT '1',
@@ -436,18 +436,6 @@ CREATE TABLE IF NOT EXISTS `runalyze_raceresult` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `runalyze_raceresult`
---
-
-CREATE TABLE IF NOT EXISTS `runalyze_sessions` (
-    `sess_id` VARBINARY(128) NOT NULL PRIMARY KEY, 
-    `sess_data` BLOB NOT NULL, 
-    `sess_time` INTEGER UNSIGNED NOT NULL, 
-    `sess_lifetime` MEDIUMINT NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 --
 -- Indizes der exportierten Tabellen

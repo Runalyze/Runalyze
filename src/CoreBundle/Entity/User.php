@@ -31,51 +31,51 @@ class User
     /**
      * @var string
      *
-     * @ORM\Column(name="weight", type="decimal", precision=5, scale=2, nullable=false)
+     * @ORM\Column(name="weight", type="decimal", precision=5, scale=2, nullable=true)
      */
-    private $weight = '0.00';
+    private $weight;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="pulse_rest", type="smallint", nullable=false)
+     * @ORM\Column(name="pulse_rest", type="smallint", nullable=true)
      */
-    private $pulseRest = '0';
+    private $pulseRest;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="pulse_max", type="smallint", nullable=false)
+     * @ORM\Column(name="pulse_max", type="smallint", nullable=true)
      */
-    private $pulseMax = '0';
+    private $pulseMax;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="fat", type="decimal", precision=3, scale=1, nullable=false)
+     * @ORM\Column(name="fat", type="decimal", precision=3, scale=1, nullable=true)
      */
-    private $fat = '0.0';
+    private $fat;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="water", type="decimal", precision=3, scale=1, nullable=false)
+     * @ORM\Column(name="water", type="decimal", precision=3, scale=1, nullable=true)
      */
-    private $water = '0.0';
+    private $water;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="muscles", type="decimal", precision=3, scale=1, nullable=false)
+     * @ORM\Column(name="muscles", type="decimal", precision=3, scale=1, nullable=true)
      */
-    private $muscles = '0.0';
+    private $muscles;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="sleep_duration", type="smallint", nullable=false)
+     * @ORM\Column(name="sleep_duration", type="smallint", nullable=true)
      */
-    private $sleepDuration = '0';
+    private $sleepDuration;
 
     /**
      * @var string

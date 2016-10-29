@@ -102,7 +102,7 @@ class Account implements AdvancedUserInterface, \Serializable
     /**
      * @var integer
      * @Assert\Type("int")
-     * @ORM\Column(name="birthyear", type="integer")
+     * @ORM\Column(name="birthyear", type="integer", nullable=true)
      */
     private $birthyear;
 
@@ -122,44 +122,44 @@ class Account implements AdvancedUserInterface, \Serializable
     /**
      * @var integer
      * @Assert\Type("int")
-     * @ORM\Column(name="registerdate", type="integer", nullable=false)
+     * @ORM\Column(name="registerdate", type="integer", nullable=true)
      */
     private $registerdate;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="lastaction", type="integer", nullable=false)
+     * @ORM\Column(name="lastaction", type="integer", nullable=true)
      */
-    private $lastaction = 0;
+    private $lastaction;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="changepw_hash", type="string", length=32, nullable=false)
+     * @ORM\Column(name="changepw_hash", type="string", length=32, nullable=true)
      */
-    private $changepwHash = '';
+    private $changepwHash;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="changepw_timelimit", type="integer", nullable=false)
+     * @ORM\Column(name="changepw_timelimit", type="integer", nullable=true)
      */
-    private $changepwTimelimit = 0;
+    private $changepwTimelimit;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="activation_hash", type="string", length=32, nullable=false)
+     * @ORM\Column(name="activation_hash", type="string", length=32, nullable=true)
      */
-    private $activationHash = '';
+    private $activationHash;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="deletion_hash", type="string", length=32, nullable=false)
+     * @ORM\Column(name="deletion_hash", type="string", length=32, nullable=true)
      */
-    private $deletionHash = '';
+    private $deletionHash;
 
     /**
      * @var integer

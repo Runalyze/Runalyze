@@ -38,16 +38,16 @@ class EquipmentType
     /**
      * @var integer
      *
-     * @ORM\Column(name="max_km", type="integer", nullable=false)
+     * @ORM\Column(name="max_km", type="integer", nullable=true)
      */
-    private $maxKm = '0';
+    private $maxKm;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="max_time", type="integer", nullable=false)
+     * @ORM\Column(name="max_time", type="integer", nullable=true)
      */
-    private $maxTime = '0';
+    private $maxTime;
 
     /**
      * @var \Runalyze\Bundle\CoreBundle\Entity\Account

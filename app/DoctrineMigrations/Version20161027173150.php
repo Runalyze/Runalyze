@@ -85,12 +85,18 @@ class Version20161027173150 extends AbstractMigration implements ContainerAwareI
                   MODIFY `registerdate` int(10) unsigned DEFAULT NULL,
                   MODIFY `lastaction` int(10) unsigned DEFAULT NULL,
                   MODIFY `lastlogin` int(10) unsigned DEFAULT NULL,
+                  MODIFY `activation_hash` varchar(32) DEFAULT NULL,
+                  MODIFY `deletion_hash` varchar(32) DEFAULT NULL,
                   MODIFY `changepw_timelimit` int(10) unsigned DEFAULT NULL,
+                  MODIFY `changepw_hash` varchar(32) DEFAULT NULL,
                   MODIFY `allow_mails` tinyint(1) unsigned NOT NULL DEFAULT \'1\'');
         $this->addSql('UPDATE `'.$prefix.'account` SET `registerdate` = NULL WHERE `registerdate`= \'0\'');
         $this->addSql('UPDATE `'.$prefix.'account` SET `lastaction` = NULL WHERE `lastaction`= \'0\'');
         $this->addSql('UPDATE `'.$prefix.'account` SET `lastlogin` = NULL WHERE `lastlogin`= \'0\'');
+        $this->addSql('UPDATE `'.$prefix.'account` SET `activation_hash` = NULL WHERE `activation_hash`= \'\'');
+        $this->addSql('UPDATE `'.$prefix.'account` SET `deletion_hash` = NULL WHERE `deletion_hash`= \'\'');
         $this->addSql('UPDATE `'.$prefix.'account` SET `changepw_timelimit` = NULL WHERE `changepw_timelimit`= \'0\'');
+        $this->addSql('UPDATE `'.$prefix.'account` SET `changepw_hash` = NULL WHERE `changepw_hash`= \'\'');
 
     }
 
