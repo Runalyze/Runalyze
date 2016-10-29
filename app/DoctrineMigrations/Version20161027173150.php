@@ -99,7 +99,7 @@ class Version20161027173150 extends AbstractMigration implements ContainerAwareI
         //Table sport
         $this->addSql('ALTER TABLE `'.$prefix.'sport`
                   MODIFY `accountid` int(10) unsigned NOT NULL,
-                  MODIFY `short` tinyint(1)unsigned  NOT NULL DEFAULT \'0\',
+                  MODIFY `short` tinyint(1) unsigned  NOT NULL DEFAULT \'0\',
                   MODIFY `kcal` smallint(4) unsigned NOT NULL DEFAULT \'0\',
                   MODIFY `HFavg` tinyint unsigned NOT NULL DEFAULT \'120\',
                   MODIFY `distances` tinyint(1) unsigned NOT NULL DEFAULT \'1\',

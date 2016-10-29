@@ -136,7 +136,7 @@ class Account implements AdvancedUserInterface, \Serializable
     /**
      * @var string
      *
-     * @ORM\Column(name="changepw_hash", type="string", length=32, nullable=true)
+     * @ORM\Column(name="changepw_hash", type="string", length=32, nullable=true, options={"fixed" = true})
      */
     private $changepwHash;
 
@@ -150,14 +150,14 @@ class Account implements AdvancedUserInterface, \Serializable
     /**
      * @var string
      *
-     * @ORM\Column(name="activation_hash", type="string", length=32, nullable=true)
+     * @ORM\Column(name="activation_hash", type="string", length=32, nullable=true, options={"fixed" = true})
      */
     private $activationHash;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="deletion_hash", type="string", length=32, nullable=true)
+     * @ORM\Column(name="deletion_hash", type="string", length=32, nullable=true, options={"fixed" = true})
      */
     private $deletionHash;
 
