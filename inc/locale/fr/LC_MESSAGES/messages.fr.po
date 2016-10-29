@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.com\n"
 "POT-Creation-Date: 2016-10-10 19:09+0200\n"
-"PO-Revision-Date: 2016-10-16 08:57+0000\n"
+"PO-Revision-Date: 2016-10-29 09:46+0000\n"
 "Last-Translator: Guillaume van Baalen <postdoc38@yahoo.fr>\n"
 "Language-Team: French <https://translate.runalyze.com/projects/runalyze"
 "/runalyze-master-po/fr/>\n"
@@ -459,32 +459,32 @@ msgid "Add workout"
 msgstr "Ajouter une activité"
 
 #: inc/import/class.ImporterFactory.php:322
-#, fuzzy
 msgid "There was a problem while importing the file."
-msgstr "Un problème est survenue."
+msgstr "Il y a eu un problème au moment d'importer le fichier."
 
 #: inc/import/class.ImporterFactory.php:327
-#, fuzzy
 msgid "There are some unexpected contents in the file."
-msgstr "La date ne doit pas être supérieure à la date du jour"
+msgstr "Le fichier contient des données inattendues."
 
 #: inc/import/class.ImporterFactory.php:328
 #, php-format
 msgid "Please mail the file to %s."
-msgstr ""
+msgstr "Veuillez s'il vous plait envoyer le fichier à %s."
 
 #: inc/import/class.ImporterFactory.php:331
 msgid ""
 "There was an installation specific problem. Please contact the administrator."
 msgstr ""
+"Il y a eu un problème spécifique d'installation. Veuillez contacter "
+"l'administrateur."
 
 #: inc/import/class.ImporterFactory.php:334
 msgid "This file format is not supported."
-msgstr ""
+msgstr "Ce format de fichier n'est pas supporté."
 
 #: inc/import/class.ImporterFactory.php:339
 msgid "Please add the following information"
-msgstr ""
+msgstr "Veuillez ajouter l'information suivante"
 
 #: inc/import/tpl/tpl.Importer.upload.php:2
 msgid "Upload file"
@@ -604,7 +604,7 @@ msgstr "Forme"
 
 #: inc/import/class.MultiImporter.php:88
 msgid "The activities have been successfully imported."
-msgstr ""
+msgstr "Les activités ont été importées avec succès."
 
 #: inc/import/class.MultiEditor.php:46
 msgid "No activities for editing were set."
@@ -616,7 +616,7 @@ msgstr "Éditeur multiple"
 
 #: inc/import/class.ImporterWindowTabUpload.php:38
 msgid "Upload"
-msgstr ""
+msgstr "Téléverser"
 
 #: inc/system/class.SharedLinker.php:48
 #: inc/training/view/class.TrainingView.php:71
@@ -1665,7 +1665,6 @@ msgid "Place age group"
 msgstr "Classement pour votre catégorie d'age"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:355
-#, fuzzy
 msgid "Place gender"
 msgstr "Classement par sexe"
 
@@ -2239,7 +2238,6 @@ msgstr ""
 "choisie."
 
 #: inc/training/class.TrainingFormular.php:263
-#, fuzzy
 msgid ""
 "You can add some details (your placement etc.) in the 'Race result' plugin "
 "afterwards."
@@ -2784,57 +2782,61 @@ msgstr "Les utilisateurs peuvent s'inscrire"
 
 #: inc/class.AdminView.php:161
 msgid "Users don't need to activate their account"
-msgstr ""
+msgstr "Les utilisateurs n'ont pas besoin d'activer leur compte"
 
 #: inc/class.AdminView.php:162
 msgid "Garmin API-key"
-msgstr ""
+msgstr "Clé-API de Garmin"
 
 #: inc/class.AdminView.php:162
 msgid ""
 "Needed for any online-version of the Garmin Communicator<br>see http://"
 "developer.garmin.com/web-device/garmin-communicator-plugin/get-your-site-key/"
 msgstr ""
+"Nécessaire pour toute version online du Communicateur Garmin<br> voir "
+"http://developer.garmin.com/web-device/garmin-communicator-plugin/get-your-"
+"site-key/"
 
 #: inc/class.AdminView.php:163
 msgid "Perl Path"
-msgstr ""
+msgstr "Chemin de Perl"
 
 #: inc/class.AdminView.php:164
 msgid "TTBIN Converter Path"
-msgstr ""
+msgstr "Chemin du Convertisseur TTBIN"
 
 #: inc/class.AdminView.php:165
 msgid "Geonames Username"
-msgstr ""
+msgstr "Nom d'utilisateur Geonames"
 
 #: inc/class.AdminView.php:166
 msgid "SQLITE Spatialite Extension"
-msgstr ""
+msgstr "SQLITE Spatialite Extension"
 
 #: inc/class.AdminView.php:167
+#, fuzzy
 msgid "Sender e-mail"
-msgstr ""
+msgstr "E-mail de l'envoyeur"
 
 #: inc/class.AdminView.php:168
 msgid "Sender e-mail name"
-msgstr ""
+msgstr "Nom de l'envoyeur d'email"
 
 #: inc/class.AdminView.php:169
 msgid "SMTP: host"
-msgstr ""
+msgstr "Hôte SMTP:"
 
 #: inc/class.AdminView.php:170
 msgid "SMTP: port"
-msgstr ""
+msgstr "Port SMTP:"
 
 #: inc/class.AdminView.php:171
 msgid "SMTP: encryption"
-msgstr ""
+msgstr "Cryptage SMTP:"
 
 #: inc/class.AdminView.php:172
 msgid "SMTP: username"
-msgstr ""
+msgstr "Nom d'utilisateur SMTP:"
 
 #: inc/class.AdminView.php:173
 msgid "SMTP: password"
@@ -2842,11 +2844,13 @@ msgstr "SMTP: mot de passe"
 
 #: inc/class.AdminView.php:174
 msgid "OpenWeatherMap API-Key"
-msgstr ""
+msgstr "Clé pour l'API OpenWeatherMap"
 
 #: inc/class.AdminView.php:174
 msgid "Loading weather data requires an api key, see openweathermap.org/appid"
 msgstr ""
+"Le chargement des données météorologiques nécessite une clé api, voir "
+"openweathermap.org/appid"
 
 #: inc/class.AdminView.php:175
 msgid "ForecastIO API-Key"
@@ -2860,24 +2864,23 @@ msgstr ""
 
 #: inc/class.AdminView.php:176
 msgid "Nokia/Here App-ID"
-msgstr ""
+msgstr "ID de l'app Nokia/Here"
 
 #: inc/class.AdminView.php:176 inc/class.AdminView.php:177
 msgid "Nokia maps require an app-id/-token, see developer.here.com"
-msgstr ""
+msgstr "Les cartes Nokia nécessitent une app-id/-jeton, voir developer.here.com"
 
 #: inc/class.AdminView.php:177
 msgid "Nokia/Here Token"
-msgstr ""
+msgstr "Jeton Nokia/Here"
 
 #: inc/class.AdminView.php:182
-#, fuzzy
 msgid "<strong>data/config.yml</strong> is not writable"
-msgstr "Le répertoire <strong>%s</strong> est protégé en écriture."
+msgstr "Le répertoire <strong>data/config.yml</strong> est protégé en écriture"
 
 #: inc/class.AdminView.php:182
 msgid "Changes can't be saved."
-msgstr ""
+msgstr "Les changement ne peuvent pas être sauvegardés."
 
 #: inc/class.AdminView.php:243
 msgid "User list"
@@ -2911,45 +2914,47 @@ msgstr "informations serveur"
 
 #: inc/class.AdminView.php:295
 msgid "PHP version:"
-msgstr ""
+msgstr "Version PHP:"
 
 #: inc/class.AdminView.php:296
 msgid "MySQL version:"
-msgstr ""
+msgstr "Version MySQL:"
 
 #: inc/class.AdminView.php:297
 msgid "Time limit:"
-msgstr ""
+msgstr "Limite de temps:"
 
 #: inc/class.AdminView.php:298
 msgid "Memory limit:"
-msgstr ""
+msgstr "Limite de mémoire:"
 
 #: inc/class.AdminView.php:299
 msgid "Upload limit:"
-msgstr ""
+msgstr "Limite de téléversement:"
 
 #: inc/class.AdminView.php:300
 msgid "Post limit:"
-msgstr ""
+msgstr "Limite de post:"
 
 #: inc/class.AdminView.php:303
 msgid "Perl scripts can be used."
-msgstr ""
+msgstr "Des scripts perl peuvent être utilisés."
 
 #: inc/class.AdminView.php:305
 msgid "Perl scripts cannot be used."
-msgstr ""
+msgstr "Des scripts perl ne peuvent pas être utilisés."
 
 #: inc/class.AdminView.php:322
 msgid "Permissions"
-msgstr ""
+msgstr "Permissions"
 
 #: inc/class.AdminView.php:323
 msgid ""
 "The following directories do need write permissions. (And the right owner "
 "has to be set!)"
 msgstr ""
+"Les répertoires suivant doivent pouvoir être accessibles en écriture. (Et le "
+"propriétaire correct doit être asssigné!)"
 
 #: inc/class.AdminView.php:330
 #, php-format
@@ -2959,23 +2964,23 @@ msgstr "Le répertoire <strong>%s</strong> est protégé en écriture."
 #: inc/class.AdminView.php:333
 #, php-format
 msgid "The directory <strong>%s</strong> is writable."
-msgstr ""
+msgstr "Le répertoire<strong>%s</strong> est accessible en écriture."
 
 #: inc/class.AdminView.php:348
 msgid "Unused files"
-msgstr ""
+msgstr "Fichiers inutilisés"
 
 #: inc/class.AdminView.php:353
 msgid "Clear directories"
-msgstr ""
+msgstr "Vider les répertoires"
 
 #: inc/class.AdminView.php:365
 msgid "clean up"
-msgstr ""
+msgstr "nettoyer"
 
 #: inc/class.AdminView.php:371
 msgid "No files found"
-msgstr ""
+msgstr "Aucun fichier trouvé"
 
 #: inc/core/Dataset/Keys/Setting.php:52
 msgid "Setting"
@@ -4792,51 +4797,51 @@ msgstr ""
 
 #: inc/plugin/class.PluginInstaller.php:95
 msgid "Install plugin"
-msgstr ""
+msgstr "Installer un plugin"
 
 #: inc/plugin/class.PluginInstaller.php:108
 msgid "Uninstall plugin"
-msgstr ""
+msgstr "Désinstaller un plugin"
 
 #: inc/plugin/config/class.PluginConfigurationWindow.php:69
 msgid "back to overview"
-msgstr ""
+msgstr "retourner à l'aperçu"
 
 #: inc/plugin/config/class.PluginConfigurationWindow.php:99
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:457
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:649
 msgid "Description"
-msgstr ""
+msgstr "Description"
 
 #: inc/plugin/config/class.PluginConfigurationWindow.php:103
 msgid "The plugin is deactivated."
-msgstr ""
+msgstr "Le plugin est désactivé."
 
 #: inc/plugin/config/class.PluginConfigurationWindow.php:117
 msgid "There are no settings."
-msgstr ""
+msgstr "Il n'y a pas de paramètres."
 
 #: inc/plugin/config/class.PluginConfigurationWindow.php:135
 msgid "Activate plugin"
-msgstr ""
+msgstr "Activer le plugin"
 
 #: inc/plugin/config/class.PluginConfigurationWindow.php:136
 msgid "Deactivate plugin"
-msgstr ""
+msgstr "Désactiver le plugin"
 
 #: inc/plugin/config/class.PluginConfigurationWindow.php:138
 msgid "Activation"
-msgstr ""
+msgstr "Activation"
 
 #: inc/plugin/class.PluginType.php:46
 msgid "Panel"
-msgstr ""
+msgstr "Panneau"
 
 #: inc/plugin/class.PluginStat.php:339
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:570
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:336
 msgid "In total"
-msgstr ""
+msgstr "Au total"
 
 #: dashboard.php:79
 msgid ""
@@ -4861,17 +4866,17 @@ msgstr ""
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:184
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:425
 msgid "Week"
-msgstr ""
+msgstr "Semaine"
 
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:76
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:426
 msgid "Month"
-msgstr ""
+msgstr "Mois"
 
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:80
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:429
 msgid "Year"
-msgstr ""
+msgstr "Année"
 
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:148
 #, fuzzy
@@ -4890,7 +4895,7 @@ msgstr "Pas de données disponibles depuis"
 #: plugin/RunalyzePluginPanel_Sportler/Plot.analyse.php:66
 #: plugin/RunalyzePluginPanel_Rechenspiele/Plot.Form.php:248
 msgid "No data available."
-msgstr ""
+msgstr "Aucune donnée disponible."
 
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:209
 #, php-format
@@ -4961,7 +4966,7 @@ msgstr ""
 #: plugin/RunalyzePluginStat_Trainingspartner/class.RunalyzePluginStat_Trainingspartner.php:72
 #: plugin/RunalyzePluginPanel_Rechenspiele/window.plot.php:21
 msgid "All years"
-msgstr ""
+msgstr "Toutes les années"
 
 #: plugin/RunalyzePluginStat_Statistiken/class.SummaryTableAllYears.php:60
 msgid "/week"
@@ -4990,45 +4995,47 @@ msgstr ""
 #: plugin/RunalyzePluginStat_Wetter/MinMaxTableForEquipment.php:97
 #: plugin/RunalyzePluginStat_Wetter/MinMaxTableForEquipment.php:100
 msgid "Temperatures"
-msgstr ""
+msgstr "Températures"
 
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:38
 msgid "Statistics about weather conditions and temperatures."
-msgstr ""
+msgstr "Statistiques des conditions météorologies et des températures."
 
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:45
 msgid "There is no bad weather, there is only bad clothing."
-msgstr ""
+msgstr "Il n'y a pas de mauvaus temps, il n'y a que des mauvais habits."
 
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:46
 msgid ""
 "Are you a wimp or a tough runner? Have a look at these statistics about the "
 "weather conditions."
 msgstr ""
+"Êtes-vous une mauviette ou un coureur endurci? Jetez un coup d'oeil à ces "
+"statistiques à propos des conditions météorologiques."
 
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:61
 #: plugin/RunalyzePluginPanel_Equipment/class.RunalyzePluginPanel_Equipment.php:58
 msgid "Equipment type to display"
-msgstr ""
+msgstr "Type d'équipement à afficher"
 
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:83
 msgid "Show temperature plots"
-msgstr ""
+msgstr "Montrez des graphes de température"
 
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:149
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:153
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:157
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:161
 msgid "on"
-msgstr ""
+msgstr "sur"
 
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:165
 msgid "Hottest activities"
-msgstr ""
+msgstr "Activités les plus chaudes"
 
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:167
 msgid "Coldest activities"
-msgstr ""
+msgstr "Activités les plus froides"
 
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:169
 msgid "Most windy activities"
@@ -5102,14 +5109,14 @@ msgstr "en pourcentage"
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:64
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:76
 msgid "by distance"
-msgstr ""
+msgstr "par distance"
 
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:122
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:131
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:65
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:77
 msgid "by time"
-msgstr ""
+msgstr "par temps"
 
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:143
 msgid "The values consider only the average data fields of your activities."
@@ -5218,7 +5225,7 @@ msgstr ""
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:40
 msgid "Goals"
-msgstr ""
+msgstr "Buts"
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:49
 msgid ""
@@ -5230,30 +5237,37 @@ msgstr ""
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:57
 msgid "This plugin tracks your distances for chosen time ranges."
-msgstr ""
+msgstr "Ce plugin enregistre vos distances pour les plages horaires choisies."
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:58
 msgid ""
 "You can set a goal (value &gt; 0) for every time range. If it is set, you "
 "will see how much you have to run to reach it."
 msgstr ""
+"Vous pouvez assigner un but (valeur &gt;0) pour chaque plage horaire. S'il "
+"est assigné, vous pourrez voir combien vous devez courir pour l'atteindre."
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:59
 msgid ""
 "A virtual Pace Bunny <em>reaches</em> the goal with a steady performance - "
 "you can see how far you are ahead or behind."
 msgstr ""
+"Un lièvre virtuel <em>atteint</em> l'objectif avec une performance régulière "
+"- vous pouvez voir à quel point vous êtes en avance ou en retard."
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:60
+#, fuzzy
 msgid ""
 "Note: &quot;Saison&quot; refers to the current season in the german &quot;"
 "kmspiel&quot;."
 msgstr ""
+"Note: La &quot;Saison&quot; fait référence à la saison actuelle dans le "
+"&quot;kmspiel&quot; allemand."
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:71
 #, php-format
 msgid "Show a prognosis for the current %s"
-msgstr ""
+msgstr "Montrer un pronostic pour le %s actuel"
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:72
 #, php-format
@@ -5263,27 +5277,26 @@ msgstr "Intervalle de temps actuel : de %s à %s"
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:79
 #, php-format
 msgid "%s: show"
-msgstr ""
+msgstr "%s: montrer"
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:80
 #, php-format
 msgid "%s: goal"
-msgstr ""
+msgstr "%s: but"
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:86
 msgid "Show details"
-msgstr ""
+msgstr "Montrer les détails"
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:163
 msgid "Current"
-msgstr ""
+msgstr "Actuel"
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:165
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:181
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:195
-#, fuzzy
 msgid "Day"
-msgstr "Mai"
+msgstr "Jour"
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:171
 #: plugin/RunalyzePluginPanel_Prognose/Plot.Form.php:150
@@ -5291,53 +5304,53 @@ msgstr "Mai"
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:301
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:482
 msgid "Prognosis"
-msgstr ""
+msgstr "Pronostic"
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:178
 #, php-format
 msgid "%d days left"
-msgstr ""
+msgstr "%d jours restant"
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:187
 msgid "Goal reached."
-msgstr ""
+msgstr "But atteint."
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:194
 msgid "Pace Bunny"
-msgstr ""
+msgstr "Lièvre"
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:199
 msgid "Behind"
-msgstr ""
+msgstr "Derrière"
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:201
 msgid "Ahead"
-msgstr ""
+msgstr "Devant"
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:202
 msgid "Head 2 Head"
-msgstr ""
+msgstr "Opposition directe"
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:204
 msgid "Me"
-msgstr ""
+msgstr "Moi"
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:205
 msgid "Pace&nbsp;Bunny"
-msgstr ""
+msgstr "Lièvre"
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:211
 #, php-format
 msgid "%s to %s (%d days)"
-msgstr ""
+msgstr "%s à %s (%d jours)"
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:427
 msgid "Half-Year"
-msgstr ""
+msgstr "Demi-année"
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:428
 msgid "Season"
-msgstr ""
+msgstr "Saison"
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:428
 #, fuzzy
@@ -5346,45 +5359,53 @@ msgstr ""
 "Note: Saison signifie la saison actuelle dans le &quot;kmspiel&quot; allemand"
 
 #: plugin/RunalyzePluginPanel_Prognose/Plot.Form.php:151
-#, fuzzy
 msgid "Prognosis with basic endurance"
-msgstr "Endurance basique"
+msgstr "Pronostic avec endurance de base"
 
 #: plugin/RunalyzePluginPanel_Prognose/Plot.Form.php:152
 msgid "Result"
-msgstr ""
+msgstr "Résultat"
 
 #: plugin/RunalyzePluginPanel_Prognose/Plot.Form.php:165
 msgid "Prognosis trend"
-msgstr ""
+msgstr "Tendance du pronostic"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:52
 msgid "Predict your race performance on various distances."
-msgstr ""
+msgstr "Prédire vos résultats en compétition sur diverses distances."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:59
 msgid ""
 "There are different models that can be used to predict your race "
 "performances:"
 msgstr ""
+"Il y a différents modèles qui peuvent être utilités pour prédire vos "
+"résultats en compétition:"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:61
 msgid ""
 "Your current VDOT is estimated based on the ratio of heart rate and pace. "
 "This value is equivalent to specific performances."
 msgstr ""
+"Votre VDOT actuelle est estimée en se basant sur le rapport entre votre "
+"rythme cardiaque et votre rythme de course. Cette valeur est équivalente "
+"pour des performances spécifiques."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:64
 msgid ""
 "Robert Bock uses an individual coefficient for your fatigue over time/"
 "distance. This model uses your two best results."
 msgstr ""
+"Robert Bock utilise un coéfficient individuel pour votre fatigue en fonction "
+"du temps ou de la distance. Ce modèle utilise vos deux meilleurs résultats."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:68
 msgid ""
 "Herbert Steffny uses fixed factors to transform performances from one "
 "distance to another. This model uses your best result."
 msgstr ""
+"Herbert Steffny utilise des facteurs fixes pour traduire les performances "
+"d'une distance à une autre. Ce modèle utilise votre meilleur résultat."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:71
 msgid ""
@@ -5392,77 +5413,84 @@ msgid ""
 "and slightly different formulas than Robert Bock. This model uses your best "
 "result."
 msgstr ""
+"David Cameron utilise un coéfficient fixe pour la fatigue en fonction du "
+"temps/de la distance et une formule légèrement différente de celle de Robert "
+"Bock. Ce modèle utilise votre meilleur résultat."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:74
 msgid ""
 "The VDOT model is the only one which considers your current shape. The other "
 "models are based on your previous race results."
 msgstr ""
+"Le modèle de VDOT est le seul qui prenne en compte votre forme actuelle. Les "
+"autres modèles sont basés sur vos résultats précédents en compétition."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:82
 msgid "Distances to predict"
-msgstr ""
+msgstr "Distances à prédire"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:84
 msgid "Prediction model"
-msgstr ""
+msgstr "Modèle de prédiction"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:93
 msgid "Use basic endurance"
-msgstr ""
+msgstr "Utiliser l'endurance de base"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:93
 msgid ""
 "Use basic endurance factor to adapt prognosis for long distances (Jack "
 "Daniels only)."
 msgstr ""
+"Utiliser l'endurance de base pour ajuster les pronostics pour les longues "
+"distances (seulement pour Jack Daniels)."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:110
 msgid "Show prognosis trend"
-msgstr ""
+msgstr "Montrer la tendance des pronostics"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:111
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:515
 msgid "Prognosis calculator"
-msgstr ""
+msgstr "Calculateur de pronostics"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:129
 msgid "Prognoses can't be calculated."
-msgstr ""
+msgstr "Il n'est pas possible de calculer les pronostics."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:133
 msgid "There are not enough results for good predictions."
-msgstr ""
+msgstr "Il n'y a pas assez de résultats pour obtenir de bonnes prédictions."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:200
 #, php-format
 msgid "<small>from</small> %s <small>to</small> <strong>%s</strong>"
-msgstr ""
+msgstr "<small>de</small>%s<small>à</small><strong>%s</strong>"
 
 #: plugin/RunalyzePluginPanel_Prognose/window.plot.php:32
 msgid "Prognosis calculator: form trend"
-msgstr ""
+msgstr "Calculateur de pronostic: tendance de forme physique"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:132
 msgid "Your current VDOT:"
-msgstr ""
+msgstr "Votre VDOT actuelle:"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:133
 msgid "Your current basic endurance:"
-msgstr ""
+msgstr "Votre endurance de base actuelle:"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:135
 #, php-format
 msgid "%s in %s <small>(%s)</small> and %s in %s <small>(%s)</small>"
-msgstr ""
+msgstr "%s en %s<small>(%s)</small> et %s en%s<small>(%s)</small>"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:139
 msgid "Your two best results:"
-msgstr ""
+msgstr "Vos deux meilleurs résultats en compétition:"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:305
 msgid "Personal best"
-msgstr ""
+msgstr "Record personnel"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:336
 msgid "Your input is invalid"
@@ -5471,69 +5499,69 @@ msgstr "Votre entrée n'est pas valide"
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:357
 #, php-format
 msgid "The results give the constants K = %f and e = %f."
-msgstr ""
+msgstr "Les résultats donne les constantes K = %f et e = %f."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:361
 #, php-format
 msgid "K must be between %u and %u, e between %f and %f."
-msgstr ""
+msgstr "K doit être entre %u et %u, e entre %f et %f."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:374
 #, php-format
 msgid "VDOT must be between %u and %u."
-msgstr ""
+msgstr "VDOT doit être entre %u et %u."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:392
 msgid "Input"
-msgstr ""
+msgstr "Donnée"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:397
 msgid "Model"
-msgstr ""
+msgstr "Modèle"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:405
 msgid "Distances"
-msgstr ""
+msgstr "Distances"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:421
 msgid "New VDOT"
-msgstr ""
+msgstr "Nouvelle VDOT"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:426
 msgid "Use Basic Endurance"
-msgstr ""
+msgstr "Utiliser l'endurance de base"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:431
 msgid "Basic Endurance"
-msgstr ""
+msgstr "Endurance de Base"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:446
 msgid "Best result"
-msgstr ""
+msgstr "Meilleur résultat"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:461
 msgid "Second best result"
-msgstr ""
+msgstr "Deuxième meilleur résultat"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:496
 msgid "Show prognosis"
-msgstr ""
+msgstr "Montrer le pronostic"
 
 #: plugin/RunalyzePluginStat_Tag/class.RunalyzePluginStat_Tag.php:29
 msgid "Tag analysis"
-msgstr ""
+msgstr "Analyse par mot-clé"
 
 #: plugin/RunalyzePluginStat_Tag/class.RunalyzePluginStat_Tag.php:37
 msgid "How often have you tagged your activities with tag x?"
-msgstr ""
+msgstr "Combien de fois avez-vous assigné le mot-clé x à une activité?"
 
 #: plugin/RunalyzePluginStat_Tag/class.RunalyzePluginStat_Tag.php:51
 msgid "Tag to analyze"
-msgstr ""
+msgstr "Mot-clé à analyser"
 
 #: plugin/RunalyzePluginStat_Tag/class.RunalyzePluginStat_Tag.php:113
 msgid "Please choose a tag."
-msgstr ""
+msgstr "Veuillez choisir un mot-clé."
 
 #: plugin/RunalyzePluginStat_Tag/class.RunalyzePluginStat_Tag.php:129
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:115
@@ -5542,29 +5570,30 @@ msgstr "Pas d'activités trouvées."
 
 #: plugin/RunalyzePluginStat_Hoehenmeter/class.RunalyzePluginStat_Hoehenmeter.php:36
 msgid "Your steepest activities and an overview of your cumulated elevation."
-msgstr ""
+msgstr "Vos activités les plus raides et un aperçu de votre dénivelé accumulé."
 
 #: plugin/RunalyzePluginStat_Hoehenmeter/class.RunalyzePluginStat_Hoehenmeter.php:92
 #: plugin/RunalyzePluginStat_Hoehenmeter/class.RunalyzePluginStat_Hoehenmeter.php:128
 #: plugin/RunalyzePluginStat_Hoehenmeter/class.RunalyzePluginStat_Hoehenmeter.php:156
 msgid "No routes found."
-msgstr ""
+msgstr "Aucune route n'a été trouvée."
 
 #: plugin/RunalyzePluginStat_Hoehenmeter/class.RunalyzePluginStat_Hoehenmeter.php:124
+#, fuzzy
 msgid "Most elevation"
-msgstr ""
+msgstr "La plupart des altitudes"
 
 #: plugin/RunalyzePluginStat_Hoehenmeter/class.RunalyzePluginStat_Hoehenmeter.php:152
 msgid "Steepest routes"
-msgstr ""
+msgstr "Routes les plus raides"
 
 #: plugin/RunalyzePluginStat_Hoehenmeter/class.RunalyzePluginStat_Hoehenmeter.php:193
 msgid "unlabeled"
-msgstr ""
+msgstr "sans étiquette"
 
 #: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:46
 msgid "Some statistics for your most frequent routes."
-msgstr ""
+msgstr "Quelques statistiques de vos parcours les plus fréquents."
 
 #: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:54
 msgid ""
@@ -5633,56 +5662,60 @@ msgstr ""
 
 #: plugin/RunalyzePluginStat_Trainingszeiten/class.RunalyzePluginStat_Trainingszeiten.php:26
 msgid "Training times"
-msgstr ""
+msgstr "Temps d'entraînement"
 
 #: plugin/RunalyzePluginStat_Trainingszeiten/class.RunalyzePluginStat_Trainingszeiten.php:34
 msgid ""
 "Plot all your activity times by daytime/weekday and list your nightly "
 "activities."
 msgstr ""
+"Graphe tous vos temps d'activités par moment de la journée/jour de la semain "
+"et liste de vos activités nocturnes."
 
 #: plugin/RunalyzePluginStat_Trainingszeiten/class.RunalyzePluginStat_Trainingszeiten.php:42
 msgid "Show nightly activities"
-msgstr ""
+msgstr "Montrer les activités nocturnes"
 
 #: plugin/RunalyzePluginStat_Trainingszeiten/class.RunalyzePluginStat_Trainingszeiten.php:130
 msgid "Nightly activities"
-msgstr ""
+msgstr "Activités nocturnes"
 
 #: plugin/RunalyzePluginStat_Trainingszeiten/class.RunalyzePluginStat_Trainingszeiten.php:154
 msgid "2 a.m. is considered as <em>most extreme</em> time for a training. "
 msgstr ""
+"On considère que 2 heures du matin est un moment <em>vraiment extrême</em> "
+"pour s'entraîner. "
 
 #: plugin/RunalyzePluginStat_Trainingszeiten/class.RunalyzePluginStat_Trainingszeiten.php:155
 msgid "The 20 trainings being nearest to that time are listed."
-msgstr ""
+msgstr "Les 20 entraînements les plus proches de ce moment sont listés."
 
 #: plugin/RunalyzePluginStat_Trainingszeiten/Plot.Weekday.php:10
 msgid "Activity [in h] by weekday"
-msgstr ""
+msgstr "Activité [en h] selon le jour de la semaine"
 
 #: plugin/RunalyzePluginStat_Trainingszeiten/Plot.Daytime.php:10
 msgid "Activity [in h] by day time"
-msgstr ""
+msgstr "Activité [en h] selon le moment de la journée"
 
 #: plugin/RunalyzePluginStat_Wettkampf/Plot.Bestzeit.php:17
 #, php-format
 msgid "Result over %s"
-msgstr ""
+msgstr "Résultat au dessus de %s"
 
 #: plugin/RunalyzePluginStat_Wettkampf/Plot.Bestzeit.php:18
 #, php-format
 msgid "Trend over %s"
-msgstr ""
+msgstr "Tendance au dessus de %s"
 
 #: plugin/RunalyzePluginStat_Wettkampf/Plot.Bestzeit.php:19
 #, php-format
 msgid "Result overs %s"
-msgstr ""
+msgstr "Résultat au dessus de %s"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:54
 msgid "Personal bests and everything else related to your competitions."
-msgstr ""
+msgstr "Records personnels et tout le reste de vos compétitions."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:62
 msgid ""
@@ -5690,6 +5723,9 @@ msgid ""
 "results and of your personal bests (over all distances with at least two "
 "results)."
 msgstr ""
+"Ce plugin donne la liste de vos compétitions. Il montre un résumé de vos "
+"résulats de course et vos records personnels (sur toutes les distances où "
+"vous avez au moins deux résutlats)."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:65
 msgid ""
@@ -5697,206 +5733,214 @@ msgid ""
 "you do a race just for fun, you can mark it as a 'fun race' to ignore it in "
 "the plot."
 msgstr ""
+"De plus, il montre la tendance de vos résultats sur un distance donnée. Si "
+"vous faites une course pour le plaisir, vous pouvez la marquer comme \""
+"course pour le plaisir\" pour ne pas l'inclure dans le graphique."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:74
 msgid "Main distance"
-msgstr ""
+msgstr "Distance principale"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:75
 msgid "Distances for yearly comparison"
-msgstr ""
+msgstr "Distances pour comparaison d'une année à l'autre"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:86
 msgid "Personal bests"
-msgstr ""
+msgstr "Records personnels"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:87
-#, fuzzy
 msgid "All race results"
-msgstr "Résultat de la course"
+msgstr "Tous les résultats de course"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:158
 msgid "There are no races."
-msgstr ""
+msgstr "Il n'y a pas de courses."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:182
 msgid ""
 "This list shows all distances selected for yearly comparison or with at "
 "least two results."
 msgstr ""
+"Cette liste montre toutes les distances choisies pour comparaison annuelle "
+"ou avec au moins deux résultats."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:183
 msgid ""
 "Distances have to match exactly, especially 21.10 km and 42.20 km for "
 "(half-)marathons."
 msgstr ""
+"Les distance doivent être exactement égales, particulièrement 21.10km et "
+"42.20km pour les (semi-)marathons."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:216
-#, fuzzy
 msgid "There are no race results for the given distances."
-msgstr "Il n'y a pas d'activité pour cette période."
+msgstr "Il n'y a pas de résultats de course pour les distances choisies."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:240
 msgid "Results trend"
-msgstr ""
+msgstr "Tendance des résultats"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:331
 msgid ""
 "This includes races of all distances, not only those selected for yearly "
 "comparison."
 msgstr ""
+"Ceci inclut les courses à toutes les distances, et non seulement celles "
+"choisies pour comparaison annuelle."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:357
 msgid "Official distance & time"
-msgstr ""
+msgstr "Distance et temps officiels"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:358
-#, fuzzy
 msgid "Activity details"
-msgstr "Type d'activité"
+msgstr "Détails de l'activité"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:359
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:580
 msgid "Placement"
-msgstr ""
+msgstr "Classement"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:371
 msgid "Overall"
-msgstr ""
+msgstr "En tout"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:372
 msgid "AG"
-msgstr ""
+msgstr "AG"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:373
-#, fuzzy
 msgid "male/female"
-msgstr "féminin"
+msgstr "masculin/féminin"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:373
 msgid "M/F"
-msgstr ""
+msgstr "M/F"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:426
 msgid ""
 "You can mark any activity as race by checking the respective checkbox in the "
 "activity's form."
 msgstr ""
+"Vous pouvez marquer n'importe quelle activité en tant que compétition en "
+"cochant la case correspondante dans les détails de l'activité."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:448
 msgid "Weather statistics"
-msgstr ""
+msgstr "Statistiques météorologiques"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:464
-#, fuzzy
 msgid "Edit the activity"
-msgstr "Activité privée"
+msgstr "Éditer l'activité"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:478
 msgid "Edit the race result details"
-msgstr ""
+msgstr "Éditer les détails du résultat en compétition"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:494
 msgid "Fun race | Click to mark this activity as a 'normal race'."
 msgstr ""
+"Course pour le plaisir | Cocher pour indiquer qu'il s'agit d'une \"course "
+"normale\"."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:498
 msgid "Race | Click to mark this activity as a 'fun race'."
 msgstr ""
+"Course | Cocher pour marquer cette activité comme \"course pour le plaisir\"."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:547
 msgid "Race result was deleted."
-msgstr ""
+msgstr "Le résultat en compétition a été effacé."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:560
 msgid "Details"
-msgstr ""
+msgstr "Détails"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:562
 msgid "Event"
-msgstr ""
+msgstr "Évènement"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:562
 msgid ""
 "If you participate in an event multiple times you should always enter the "
 "same name, i.e. don't append the event's number or year."
 msgstr ""
+"Si vous participez à un évènement plusieurs fois, vous devriez à chaque fois "
+"entrer le même nom. En particulier, n'ajoutez pas l'année au nom de "
+"l'évènement."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:565
 msgid "Officially measured"
-msgstr ""
+msgstr "Mesuré officiellement"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:565
 msgid "Was the course officially measured?"
-msgstr ""
+msgstr "La course a-t-elle été mesurée officiellement?"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:567
 msgid "We use two decimals for convenient reasons."
-msgstr ""
+msgstr "Nous utilisons deux décimales pour des raisons pratiques."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:567
 msgid "Half marathon"
-msgstr ""
+msgstr "Semi marathon"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:574
-#, fuzzy
 msgid "This race result is linked to the following activity"
-msgstr "Ajoute un lien d'édition pour chaque activité."
+msgstr "Ce résultat en compétition est liée à l'activité suivante"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:581
 msgid "Your official placement."
-msgstr ""
+msgstr "Votre classement officiel."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:585
 msgid "Participants"
-msgstr ""
+msgstr "Participants"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:586
 msgid "Number of participants in every category"
-msgstr ""
+msgstr "Nombre de participants dans chaque catégorie"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:595
-#, fuzzy
 msgid "Delete this race result"
-msgstr "seulement en compétition"
+msgstr "Effacer ce résultat de compétition"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:596
 msgid ""
 "This will only delete the entry as competition. The activity itself will "
 "stay untouched."
 msgstr ""
+"Ceci va seulement effacer cette donnée comme compétition. L'activité elle-"
+"même sera conservée."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:598
-#, fuzzy
 msgid "Delete race result"
-msgstr "Supprimer le compte"
+msgstr "Supprimer le résultat de compétition"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:605
-#, fuzzy
 msgid "Add race result to activity"
-msgstr "Ajoute un lien d'édition pour chaque activité."
+msgstr "Ajouter un résultat de compétition à l'activité"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:633
-#, fuzzy
 msgid "Invalid input."
-msgstr "Requête non valide"
+msgstr "Donnée non valide."
 
 #: plugin/RunalyzePluginStat_Wettkampf/window.raceResult.php:15
-#, fuzzy
 msgid "Competition details"
-msgstr "Données composites"
+msgstr "Détails de compétition"
 
 #: plugin/RunalyzePluginStat_Trainingspartner/class.RunalyzePluginStat_Trainingspartner.php:44
 msgid "How often did you train with whom?"
-msgstr ""
+msgstr "Combien de fois vous êtes-vous entraîné avec qui?"
 
 #: plugin/RunalyzePluginStat_Trainingspartner/class.RunalyzePluginStat_Trainingspartner.php:81
 msgid "All training partners"
-msgstr ""
+msgstr "Tous vos partenaires d'entraînement"
 
 #: plugin/RunalyzePluginStat_Trainingspartner/class.RunalyzePluginStat_Trainingspartner.php:88
 msgid "You have only trained on your own."
-msgstr ""
+msgstr "Vous vous êtes toujours entraîné tout seul."
 
 #: plugin/RunalyzePluginStat_Trainingspartner/class.RunalyzePluginStat_Trainingspartner.php:115
 #, php-format
@@ -5910,7 +5954,7 @@ msgstr ""
 #: plugin/RunalyzePluginStat_Trainingspartner/class.RunalyzePluginStat_Trainingspartner.php:116
 #, php-format
 msgid "that are <strong>%s</strong> &#37;."
-msgstr ""
+msgstr "qui sont <strong>%s</strong>&#37;."
 
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:19
 #: plugin/RunalyzePluginPanel_Sportler/window.sportler.table.php:25
@@ -6045,7 +6089,7 @@ msgstr ""
 #: plugin/RunalyzePluginPanel_Rechenspiele/Plot.Form.php:245
 #: plugin/RunalyzePluginPanel_Rechenspiele/window.plot.php:64
 msgid "Shape"
-msgstr ""
+msgstr "Forme"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:37
 msgid "Calculations"
@@ -6523,12 +6567,12 @@ msgstr ""
 
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:32
 msgid "Monthly Stats"
-msgstr ""
+msgstr "Statistiques Mensuelles"
 
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:40
 #, php-format
 msgid "How many %s/hours did you do per month"
-msgstr ""
+msgstr "Combien de %s/heure vous avez effectué par mois"
 
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:66
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:78
@@ -6543,12 +6587,12 @@ msgstr "selon Calories"
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:68
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:80
 msgid "by trimp"
-msgstr ""
+msgstr "par trimp"
 
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:69
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:81
 msgid "by number"
-msgstr ""
+msgstr "par nombre"
 
 #~ msgid "Delete your account."
 #~ msgstr "Supprimer votre compte."
