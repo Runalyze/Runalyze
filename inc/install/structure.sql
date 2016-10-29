@@ -28,13 +28,13 @@ CREATE TABLE IF NOT EXISTS `runalyze_account` (
   `timezone` smallint(5) unsigned NOT NULL DEFAULT '0',
   `password` varchar(64) NOT NULL DEFAULT '',
   `salt` char(64) NOT NULL DEFAULT '',
-  `registerdate` int(11) DEFAULT NULL,
-  `lastaction` int(11) DEFAULT NULL,
-  `changepw_hash` varchar(32) DEFAULT NULL,
-  `changepw_timelimit` int(11) DEFAULT NULL,
-  `activation_hash` varchar(32) DEFAULT NULL,
-  `deletion_hash` varchar(32) DEFAULT NULL,
-  `allow_mails` tinyint(1) NOT NULL DEFAULT '1',
+  `registerdate` int(10) unsigned DEFAULT NULL,
+  `lastaction` int(10) unsigned DEFAULT NULL,
+  `changepw_hash` char(32) DEFAULT NULL,
+  `changepw_timelimit` int(10) unsigned DEFAULT NULL,
+  `activation_hash` char(32) DEFAULT NULL,
+  `deletion_hash` char(32) DEFAULT NULL,
+  `allow_mails` tinyint(1) unsigned NOT NULL DEFAULT '1',
   `allow_support` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `role` tinyint(3) unsigned NOT NULL DEFAULT '1',
   `gender` tinyint(1) unsigned NOT NULL DEFAULT '0',
@@ -137,7 +137,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_equipment_sport` (
 CREATE TABLE IF NOT EXISTS `runalyze_equipment_type` (
 `id` int(10) unsigned NOT NULL,
   `name` varchar(50) NOT NULL,
-  `input` tinyint(1) NOT NULL DEFAULT '0',
+  `input` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `max_km` mediumint unsigned DEFAULT NULL,
   `max_time` mediumint unsigned DEFAULT NULL,
   `accountid` int(10) unsigned NOT NULL
@@ -244,13 +244,13 @@ CREATE TABLE IF NOT EXISTS `runalyze_sport` (
 `id` int(10) unsigned NOT NULL,
   `name` varchar(50) NOT NULL,
   `img` varchar(100) NOT NULL DEFAULT 'unknown.gif',
-  `short` tinyint(1) NOT NULL DEFAULT '0',
-  `kcal` smallint(4) NOT NULL DEFAULT '0',
-  `HFavg` smallint(3) NOT NULL DEFAULT '120',
-  `distances` tinyint(1) NOT NULL DEFAULT '1',
+  `short` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `kcal` smallint(4) unsigned NOT NULL DEFAULT '0',
+  `HFavg` tinyint unsigned NOT NULL DEFAULT '120',
+  `distances` tinyint(1) unsigned NOT NULL DEFAULT '1',
   `speed` varchar(10) NOT NULL DEFAULT 'min/km',
-  `power` tinyint(1) NOT NULL DEFAULT '0',
-  `outside` tinyint(1) NOT NULL DEFAULT '0',
+  `power` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `outside` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `main_equipmenttypeid` int(10) unsigned DEFAULT NULL,
   `default_typeid` int(10) unsigned DEFAULT NULL,
   `accountid` int(10) unsigned NOT NULL
@@ -366,10 +366,10 @@ CREATE TABLE IF NOT EXISTS `runalyze_training` (
 --
 
 CREATE TABLE IF NOT EXISTS `runalyze_type` (
-`id` int(11) unsigned NOT NULL,
+`id` int(10) unsigned NOT NULL,
   `name` varchar(50) NOT NULL,
   `abbr` varchar(5) NOT NULL DEFAULT '',
-  `sportid` int(11) unsigned NOT NULL,
+  `sportid` int(10) unsigned NOT NULL,
   `short` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `hr_avg` tinyint(3) unsigned NOT NULL DEFAULT '100',
   `quality_session` tinyint(1) unsigned NOT NULL DEFAULT '0',
@@ -580,7 +580,7 @@ MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT für Tabelle `runalyze_conf`
 --
 ALTER TABLE `runalyze_conf`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT für Tabelle `runalyze_equipment`
 --
@@ -625,12 +625,12 @@ MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT für Tabelle `runalyze_type`
 --
 ALTER TABLE `runalyze_type`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT für Tabelle `runalyze_user`
 --
 ALTER TABLE `runalyze_user`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- Constraints der exportierten Tabellen
 --

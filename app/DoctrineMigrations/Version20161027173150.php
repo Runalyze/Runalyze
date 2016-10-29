@@ -33,7 +33,7 @@ class Version20161027173150 extends AbstractMigration implements ContainerAwareI
         $prefix = $this->container->getParameter('database_prefix');
         $this->addSql('DELETE FROM `'.$prefix.'conf` WHERE `accountid` = \'-1\'');
         $this->addSql('ALTER TABLE `'.$prefix.'conf`
-                  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+                  MODIFY `id` int(10) unsigned auto_increment NOT NULL,
                   MODIFY `accountid` int(10) unsigned NOT NULL');
 
         //Table: plugin
@@ -55,14 +55,14 @@ class Version20161027173150 extends AbstractMigration implements ContainerAwareI
         $this->addSql('DELETE FROM `'.$prefix.'type` WHERE `accountid` = \'-1\'');
         $this->addSql('DELETE FROM `'.$prefix.'type` WHERE `sportid` = \'0\'');
         $this->addSql('ALTER TABLE `'.$prefix.'type`
-                  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+                  MODIFY `id` int(10) unsigned auto_increment NOT NULL,
                   MODIFY `sportid` int(10) unsigned NOT NULL,
                   MODIFY `accountid` int(10) unsigned NOT NULL');
 
         //Table: user
         $this->addSql('DELETE FROM `'.$prefix.'user` WHERE `accountid` = \'-1\'');
-        $this->addSql('ALTER TABLE '.$prefix.'user`
-                  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+        $this->addSql('ALTER TABLE `'.$prefix.'user`
+                  MODIFY `id` int(10) unsigned auto_increment NOT NULL,
                   MODIFY `accountid` int(10) unsigned NOT NULL,
                   MODIFY `time` int(10) unsigned NOT NULL,
                   MODIFY `pulse_rest` tinyint unsigned DEFAULT NULL,
@@ -81,23 +81,31 @@ class Version20161027173150 extends AbstractMigration implements ContainerAwareI
         $this->addSql('UPDATE `'.$prefix.'user` SET `sleep_duration` = NULL WHERE `sleep_duration`= \'0\'');
 
         //Table account
-        $this->addSql('ALTER TABLE '.$prefix.'account`
+        $this->addSql('ALTER TABLE `'.$prefix.'account`
                   MODIFY `registerdate` int(10) unsigned DEFAULT NULL,
                   MODIFY `lastaction` int(10) unsigned DEFAULT NULL,
-                  MODIFY `lastlogin` int(10) unsigned DEFAULT NULL,
-                  MODIFY `activation_hash` varchar(32) DEFAULT NULL,
-                  MODIFY `deletion_hash` varchar(32) DEFAULT NULL,
+                  MODIFY `activation_hash` char(32) DEFAULT NULL,
+                  MODIFY `deletion_hash` char(32) DEFAULT NULL,
                   MODIFY `changepw_timelimit` int(10) unsigned DEFAULT NULL,
-                  MODIFY `changepw_hash` varchar(32) DEFAULT NULL,
+                  MODIFY `changepw_hash` char(32) DEFAULT NULL,
                   MODIFY `allow_mails` tinyint(1) unsigned NOT NULL DEFAULT \'1\'');
         $this->addSql('UPDATE `'.$prefix.'account` SET `registerdate` = NULL WHERE `registerdate`= \'0\'');
         $this->addSql('UPDATE `'.$prefix.'account` SET `lastaction` = NULL WHERE `lastaction`= \'0\'');
-        $this->addSql('UPDATE `'.$prefix.'account` SET `lastlogin` = NULL WHERE `lastlogin`= \'0\'');
         $this->addSql('UPDATE `'.$prefix.'account` SET `activation_hash` = NULL WHERE `activation_hash`= \'\'');
         $this->addSql('UPDATE `'.$prefix.'account` SET `deletion_hash` = NULL WHERE `deletion_hash`= \'\'');
         $this->addSql('UPDATE `'.$prefix.'account` SET `changepw_timelimit` = NULL WHERE `changepw_timelimit`= \'0\'');
         $this->addSql('UPDATE `'.$prefix.'account` SET `changepw_hash` = NULL WHERE `changepw_hash`= \'\'');
 
+        //Table sport
+        $this->addSql('ALTER TABLE `'.$prefix.'sport`
+                  MODIFY `accountid` int(10) unsigned NOT NULL,
+                  MODIFY `short` tinyint(1)unsigned  NOT NULL DEFAULT \'0\',
+                  MODIFY `kcal` smallint(4) unsigned NOT NULL DEFAULT \'0\',
+                  MODIFY `HFavg` tinyint unsigned NOT NULL DEFAULT \'120\',
+                  MODIFY `distances` tinyint(1) unsigned NOT NULL DEFAULT \'1\',
+                  MODIFY `power` tinyint(1) unsigned NOT NULL DEFAULT \'0\',
+                  MODIFY `outside` tinyint(1) unsigned NOT NULL DEFAULT \'0\'
+                  ');
     }
 
     /**
