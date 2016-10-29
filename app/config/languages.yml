@@ -7,3 +7,4 @@ parameters:
     'nl': { 'name': 'Nederlandse', locale: 'nl_NL.UTF-8'}
     'it': { 'name': 'Italiano', locale: 'it_IT.UTF-8' }
     'es': { 'name': 'Español', locale: 'es_ES.UTF-8' }
+    'fr': { 'name': 'Français', locale: 'fr_FR.UTF-8' }
