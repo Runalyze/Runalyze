@@ -135,6 +135,7 @@ class Registration
             $Plugin->setActive($pData[2]);
             $Plugin->setOrder($pData[3]);
             $this->em->persist($Plugin);
+            $this->em->flush();
         }
     }
 
@@ -165,7 +166,6 @@ class Registration
             $this->em->persist($Sport);
         }
         $this->em->flush();
-        $this->em->clear($Sport);
 
     }
 
@@ -207,9 +207,9 @@ class Registration
             }
         }
         $equipmentType = $this->em->getRepository('CoreBundle:EquipmentType');
-        $equipmentClothes = $equipmentType->findOneBy(array('name' => __('Clothes'), accountid => $this->Account->getId()));
-        $equipmentShoes = $equipmentType->findOneBy(array('name' => __('Shoes'), accountid => $this->Account->getId()));
-        $equipmentBikes = $equipmentType->findOneBy(array('name' => __('Bikes'), accountid => $this->Account->getId()));
+        $equipmentClothes = $equipmentType->findOneBy(array('name' => __('Clothes'), 'accountid' => $this->Account->getId()));
+        $equipmentShoes = $equipmentType->findOneBy(array('name' => __('Shoes'), 'accountid' => $this->Account->getId()));
+        $equipmentBikes = $equipmentType->findOneBy(array('name' => __('Bikes'), 'accountid' => $this->Account->getId()));
 
         $this->specialVars['EQUIPMENT_CLOTHES'] = $equipmentClothes;
         $this->specialVars['EQUIPMENT_SHOES'] = $equipmentShoes;
