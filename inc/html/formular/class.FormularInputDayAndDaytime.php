@@ -74,13 +74,17 @@ class FormularInputDayAndDaytime extends FormularField {
 		$date = $_POST[$this->getFieldDayName()];
 		$time = $_POST[$this->getFieldDaytimeName()];
 
-		if (is_numeric($date) && is_numeric($time)) {
-			$_POST[$this->name] = $date + $time;
-		} else {
+		if ($validateDay && $validateDaytime) {
 			$_POST[$this->name] = strtotime($dateString.' '.$timeString);
+
+			if (false === $_POST[$this->name]) { // i.e. FormularValueParser "ignored/fixed" some bad input
+				$_POST[$this->name] = $date + $time;
+			}
+
+			return true;
 		}
 
-		return $validateDay && $validateDaytime && false !== $_POST[$this->name];
+		return false;
 	}
 
 	/**
