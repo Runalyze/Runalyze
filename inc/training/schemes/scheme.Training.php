@@ -80,7 +80,7 @@ $FIELDS = array(
 					'database'	=> array(
 						'type'		=> 'int',
 						'precision'	=> '11',
-						'default'	=> '0'
+                        'null'		=> false
 					),
 					'formular'	=> array(
 						'label'		=> __('Sport'),
@@ -92,7 +92,7 @@ $FIELDS = array(
 					'database'	=> array(
 						'type'		=> 'int',
 						'precision'	=> '11',
-						'default'	=> '0'
+                        'null'		=> true
 					),
 					'formular'	=> array(
 						'label'		=> __('Activity type'),
@@ -103,7 +103,7 @@ $FIELDS = array(
 					'database'	=> array(
 						'type'		=> 'int',
 						'precision'	=> '11',
-						'default'	=> '0'
+                        'null'		=> false
 					),
 					'formular'	=> array(
 						'required'	=> true,
@@ -125,6 +125,7 @@ $FIELDS = array(
 					'database'	=> array(
 						'type'		=> 'int',
 						'precision'	=> '11',
+                        'null'		=> true
 					),
 					'formular'	=> array(
 						'hidden'	=> true
@@ -134,6 +135,7 @@ $FIELDS = array(
 					'database'	=> array(
 						'type'		=> 'int',
 						'precision'	=> '11',
+                        'null'		=> true
 					),
 					'formular'	=> array(
 						'hidden'	=> true
@@ -168,7 +170,7 @@ $FIELDS = array(
 					'database'	=> array(
 						'type'		=> 'decimal',
 						'precision'	=> '6,2',
-						'default'	=> '0'
+                        'null'		=> true
 					),
 					'formular'	=> array(
 						'label'		=> __('Distance'),
@@ -192,7 +194,7 @@ $FIELDS = array(
 					'database'	=> array(
 						'type'		=> 'int',
 						'precision'	=> '6',
-						'default'	=> '0'
+                        'null'		=> true
 					),
 					'formular'	=> array(
 						'label'		=> __('Elapsed time'),
@@ -215,7 +217,7 @@ $FIELDS = array(
 					'database'	=> array(
 						'type'		=> 'int',
 						'precision'	=> '5',
-						'default'	=> '0'
+                        'null'		=> true
 					),
 					'formular'	=> array(
 						'label'		=> __('Elevation'),
@@ -229,7 +231,7 @@ $FIELDS = array(
 					'database'	=> array(
 						'type'		=> 'int',
 						'precision'	=> '5',
-						'default'	=> '0'
+                        'null'		=> true
 					),
 					'formular'	=> array(
 						'hidden'	=> true
@@ -239,7 +241,7 @@ $FIELDS = array(
 					'database'	=> array(
 						'type'		=> 'int',
 						'precision'	=> '5',
-						'default'	=> '0'
+                        'null'		=> true
 					),
 					'formular'	=> array(
 						'label'		=> __('Energy'),
@@ -252,7 +254,7 @@ $FIELDS = array(
 					'database'	=> array(
 						'type'		=> 'int',
 						'precision'	=> '3',
-						'default'	=> '0'
+                        'null'		=> true
 					),
 					'formular'	=> array(
 						'label'		=> __('avg. HR'),
@@ -263,7 +265,7 @@ $FIELDS = array(
 					'database'	=> array(
 						'type'		=> 'int',
 						'precision'	=> '3',
-						'default'	=> '0'
+                        'null'		=> true
 					),
 					'formular'	=> array(
 						'label'		=> __('max. HR'),
@@ -274,7 +276,7 @@ $FIELDS = array(
 					'database'	=> array(
 						'type'		=> 'decimal',
 						'precision'	=> '5,2',
-						'default'	=> '0.00'
+                        'null'		=> true
 					),
 					'formular'	=> array(
 						'hidden'	=> true
@@ -284,7 +286,7 @@ $FIELDS = array(
 					'database'	=> array(
 						'type'		=> 'decimal',
 						'precision'	=> '5,2',
-						'default'	=> '0.00'
+                        'null'		=> true
 					),
 					'formular'	=> array(
 						'hidden'	=> true
@@ -294,7 +296,7 @@ $FIELDS = array(
 					'database'	=> array(
 						'type'		=> 'decimal',
 						'precision'	=> '5,2',
-						'default'	=> '0.00'
+                        'null'		=> true
 					),
 					'formular'	=> array(
 						'hidden'	=> true
@@ -317,7 +319,7 @@ $FIELDS = array(
 					'database'	=> array(
 						'type'		=> 'decimal',
 						'precision'	=> '4,2',
-						'default'	=> '0.00'
+                        'null'		=> true
 					),
 					'formular'	=> array(
 						'hidden'	=> true
@@ -327,7 +329,7 @@ $FIELDS = array(
 					'database'	=> array(
 						'type'		=> 'smallint',
 						'precision'	=> '5',
-						'default'	=> '0'
+                        'null'		=> true
 					),
 					'formular'	=> array(
 						'hidden'	=> true
@@ -337,7 +339,7 @@ $FIELDS = array(
 					'database'	=> array(
 						'type'		=> 'smallint',
 						'precision'	=> '5',
-						'default'	=> '0'
+                        'null'		=> true
 					),
 					'formular'	=> array(
 						'hidden'	=> true
@@ -367,7 +369,7 @@ $FIELDS = array(
 					'database'	=> array(
 						'type'		=> 'smallint',
 						'precision'	=> '4',
-						'default'	=> '0'
+                        'null'		=> true
 					),
 					'formular'	=> array(
 						'hidden'	=> true
@@ -377,7 +379,7 @@ $FIELDS = array(
 					'database'	=> array(
 						'type'		=> 'smallint',
 						'precision'	=> '2',
-						'default'	=> null
+                        'null'		=> true
 					),
 					'formular'	=> array(
 						'label'		=> __('RPE'),
@@ -389,7 +391,7 @@ $FIELDS = array(
 					'database'	=> array(
 						'type'		=> 'int',
 						'precision'	=> '4',
-						'default'	=> '0'
+                        'null'		=> true
 					),
 					'formular'	=> array(
 						'hidden'	=> true
@@ -399,7 +401,7 @@ $FIELDS = array(
 					'database'	=> array(
 						'type'		=> 'int',
 						'precision'	=> '3',
-						'default'	=> '0'
+                        'null'		=> true
 					),
 					'formular'	=> array(
 						'label'		=> '<span class="'.TrainingFormular::$ONLY_NOT_RUNNING_CLASS.'">'.__('Cadence').'</span><span class="'.TrainingFormular::$ONLY_RUNNING_CLASS.'">'.__('Cadence (Running)').'</span>',
@@ -411,7 +413,7 @@ $FIELDS = array(
 					'database'	=> array(
 						'type'		=> 'int',
 						'precision'	=> '4',
-						'default'	=> '0'
+                        'null'		=> true
 					),
 					'formular'	=> array(
 						'label'		=> __('Power'), // Leistung?
@@ -423,7 +425,7 @@ $FIELDS = array(
 					'database'	=> array(
 						'type'		=> 'smallint',
 						'precision'	=> '5',
-						'default'	=> '0'
+                        'null'		=> true
 					),
 					'formular'	=> array(
 						'hidden'	=> true
@@ -433,7 +435,7 @@ $FIELDS = array(
 					'database'	=> array(
 						'type'		=> 'tinyint',
 						'precision'	=> '3',
-						'default'	=> '0'
+                        'null'		=> true
 					),
 					'formular'	=> array(
 						'hidden'	=> true
@@ -443,7 +445,7 @@ $FIELDS = array(
 					'database'	=> array(
 						'type'		=> 'smallint',
 						'precision'	=> '4',
-						'default'	=> '0'
+                        'null'		=> true
 					),
 					'formular'	=> array(
 						'hidden'	=> true
@@ -453,7 +455,7 @@ $FIELDS = array(
 					'database'	=> array(
 						'type'		=> 'smallint',
 						'precision'	=> '4',
-						'default'	=> '0'
+                        'null'		=> true
 					),
 					'formular'	=> array(
 						'hidden'	=> true

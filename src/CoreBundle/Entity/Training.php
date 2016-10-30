@@ -400,6 +400,13 @@ class Training
     private $activityId;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="lock", type="boolean", nullable=false)
+     */
+    private $lock = '0';
+
+    /**
      * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\ManyToMany(targetEntity="Equipment", inversedBy="activityid")
