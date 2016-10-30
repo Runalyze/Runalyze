@@ -29,56 +29,56 @@ class Raceresult
     /**
      * @var boolean
      *
-     * @ORM\Column(name="officially_measured", type="boolean", nullable=false)
+     * @ORM\Column(name="officially_measured", type="boolean", nullable=false, options={"unsigned":true, "default":0})
      */
     private $officiallyMeasured = '0';
 
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=50, nullable=false)
+     * @ORM\Column(name="name", type="string", length=50, nullable=false, options={"default":""})
      */
     private $name = '';
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="place_total", type="integer", nullable=true)
+     * @ORM\Column(name="place_total", type="integer", precision=8, nullable=true, options={"unsigned":true})
      */
     private $placeTotal;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="place_gender", type="integer", nullable=true)
+     * @ORM\Column(name="place_gender", type="integer", precision=8, nullable=true, options={"unsigned":true})
      */
     private $placeGender;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="place_ageclass", type="integer", nullable=true)
+     * @ORM\Column(name="place_ageclass", type="integer", precision=8, nullable=true, options={"unsigned":true})
      */
     private $placeAgeclass;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="participants_total", type="integer", nullable=true)
+     * @ORM\Column(name="participants_total", type="integer", precision=8, nullable=true, options={"unsigned":true})
      */
     private $participantsTotal;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="participants_gender", type="integer", nullable=true)
+     * @ORM\Column(name="participants_gender", type="integer", precision=8, nullable=true, options={"unsigned":true})
      */
     private $participantsGender;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="participants_ageclass", type="integer", nullable=true)
+     * @ORM\Column(name="participants_ageclass", type="integer", precision=8, nullable=true, options={"unsigned":true})
      */
     private $participantsAgeclass;
 

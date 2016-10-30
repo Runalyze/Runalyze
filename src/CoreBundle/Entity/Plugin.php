@@ -15,7 +15,7 @@ class Plugin
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(name="id", type="integer", options={"unsigned":true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -30,22 +30,21 @@ class Plugin
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="type", type="string", nullable=false)
+     * @ORM\Column(name="type", type="string", nullable=false, options={"default":"stat"})
      */
     private $type = 'stat';
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="active", type="smallint", nullable=false)
+     * @ORM\Column(name="active", type="smallint", precision=1, nullable=false, options={"default":1})
      */
     private $active = '1';
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="`order`", type="smallint", nullable=false)
+     * @ORM\Column(name="`order`", type="smallint", nullable=false, options={"default":1})
      */
     private $order = '0';
 

@@ -15,7 +15,7 @@ class Sport
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(name="id", type="integer", options={"unsigned":true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -31,56 +31,56 @@ class Sport
     /**
      * @var string
      *
-     * @ORM\Column(name="img", type="string", length=100, nullable=false)
+     * @ORM\Column(name="img", type="string", length=100, nullable=false, options={"default":"unknown.gif"})
      */
     private $img = 'unknown.gif';
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="short", type="boolean", nullable=false)
+     * @ORM\Column(name="short", type="boolean", nullable=false, options={"unsigned":true, "default":0})
      */
     private $short = '0';
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="kcal", type="smallint", nullable=false)
+     * @ORM\Column(name="kcal", type="smallint", precision=5, nullable=false, options={"unsigned":true, "default":0})
      */
     private $kcal = '0';
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="HFavg", type="smallint", nullable=false)
+     * @ORM\Column(name="HFavg", type="smallint", nullable=false, options={"unsigned":true, "default":120})
      */
     private $hfavg = '120';
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="distances", type="boolean", nullable=false)
+     * @ORM\Column(name="distances", type="boolean", nullable=false, options={"unsigned":true, "default":1})
      */
     private $distances = '1';
 
     /**
      * @var string
      *
-     * @ORM\Column(name="speed", type="string", length=10, nullable=false)
+     * @ORM\Column(name="speed", type="string", length=10, nullable=false, options={"default":"min/km"})
      */
     private $speed = 'min/km';
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="power", type="boolean", nullable=false)
+     * @ORM\Column(name="power", type="boolean", nullable=false, options={"unsigned":true, "default":0})
      */
     private $power = '0';
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="outside", type="boolean", nullable=false)
+     * @ORM\Column(name="outside", type="boolean", nullable=false, options={"unsigned":true, "default":0})
      */
     private $outside = '0';
 
@@ -97,7 +97,7 @@ class Sport
     /**
      * @var integer
      *
-     * @ORM\Column(name="default_typeid", type="integer", nullable=true)
+     * @ORM\Column(name="default_typeid", type="integer", nullable=true, options={"unsigned":true})
      */
     private $defaultTypeid;
 

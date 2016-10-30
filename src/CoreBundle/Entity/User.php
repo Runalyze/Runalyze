@@ -15,7 +15,7 @@ class User
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer", nullable=false, options={"unsigned":true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -24,28 +24,28 @@ class User
     /**
      * @var integer
      *
-     * @ORM\Column(name="time", type="integer", nullable=false)
+     * @ORM\Column(name="time", type="integer", precision=10, nullable=false)
      */
     private $time;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="weight", type="decimal", precision=5, scale=2, nullable=true)
+     * @ORM\Column(name="weight", type="decimal", precision=5, scale=2, nullable=true, options={"unsigned":true})
      */
     private $weight;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="pulse_rest", type="smallint", nullable=true)
+     * @ORM\Column(name="pulse_rest", type="smallint", precision=3, nullable=true, options={"unsigned":true})
      */
     private $pulseRest;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="pulse_max", type="smallint", nullable=true)
+     * @ORM\Column(name="pulse_max", type="smallint", precision=3, nullable=true, options={"unsigned":true})
      */
     private $pulseMax;
 

@@ -15,7 +15,7 @@ class Dataset
     /**
      * @var integer
      *
-     * @ORM\Column(name="accountid", type="integer", nullable=false)
+     * @ORM\Column(name="accountid", type="integer", nullable=false, options={"unsigned":true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
      */
@@ -24,7 +24,7 @@ class Dataset
     /**
      * @var boolean
      *
-     * @ORM\Column(name="keyid", type="boolean", nullable=false)
+     * @ORM\Column(name="keyid", type="boolean", nullable=false, options={"unsigned":true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
      */
@@ -33,21 +33,21 @@ class Dataset
     /**
      * @var boolean
      *
-     * @ORM\Column(name="active", type="boolean", nullable=false)
+     * @ORM\Column(name="active", type="boolean", nullable=false, options={"unsigned":true, "default":1})
      */
     private $active = '1';
 
     /**
      * @var string
      *
-     * @ORM\Column(name="style", type="string", length=100, nullable=false)
+     * @ORM\Column(name="style", type="string", length=100, nullable=false, options={"default":""})
      */
     private $style = '';
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="position", type="boolean", nullable=false)
+     * @ORM\Column(name="position", type="boolean", nullable=false, options={"unsigned":true, "default":0})
      */
     private $position = '0';
 

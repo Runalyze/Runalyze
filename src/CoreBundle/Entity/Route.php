@@ -38,28 +38,28 @@ class Route
     /**
      * @var string
      *
-     * @ORM\Column(name="distance", type="decimal", precision=6, scale=2, nullable=false)
+     * @ORM\Column(name="distance", type="decimal", precision=6, scale=2, nullable=false, options={"unsigned":true})
      */
     private $distance = '0.00';
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="elevation", type="smallint", nullable=false)
+     * @ORM\Column(name="elevation", type="smallint", nullable=false, options={"unsigned":true, "default":0})
      */
     private $elevation = '0';
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="elevation_up", type="smallint", nullable=false)
+     * @ORM\Column(name="elevation_up", type="smallint", nullable=false, options={"unsigned":true, "default":0})
      */
     private $elevationUp = '0';
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="elevation_down", type="smallint", nullable=false)
+     * @ORM\Column(name="elevation_down", type="smallint", nullable=false, options={"unsigned":true, "default":0})
      */
     private $elevationDown = '0';
 
@@ -94,35 +94,35 @@ class Route
     /**
      * @var string
      *
-     * @ORM\Column(name="startpoint", type="string", length=10, nullable=true)
+     * @ORM\Column(name="startpoint", type="string", length=10, nullable=true, options={"fixed" = true})
      */
     private $startpoint;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="endpoint", type="string", length=10, nullable=true)
+     * @ORM\Column(name="endpoint", type="string", length=10, nullable=true, options={"fixed" = true})
      */
     private $endpoint;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="min", type="string", length=10, nullable=true)
+     * @ORM\Column(name="min", type="string", length=10, nullable=true, options={"fixed" = true})
      */
     private $min;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="max", type="string", length=10, nullable=true)
+     * @ORM\Column(name="max", type="string", length=10, nullable=true, options={"fixed" = true})
      */
     private $max;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="in_routenet", type="boolean", nullable=false)
+     * @ORM\Column(name="in_routenet", type="boolean", nullable=false, options={"default":0})
      */
     private $inRoutenet = '0';
 

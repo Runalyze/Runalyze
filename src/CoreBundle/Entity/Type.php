@@ -15,7 +15,7 @@ class Type
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(name="id", type="integer", options={"unsigned":true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -31,7 +31,7 @@ class Type
     /**
      * @var string
      *
-     * @ORM\Column(name="abbr", type="string", length=5, nullable=false)
+     * @ORM\Column(name="abbr", type="string", length=5, nullable=false, options={"default":""})
      */
     private $abbr = '';
 
@@ -48,21 +48,21 @@ class Type
     /**
      * @var boolean
      *
-     * @ORM\Column(name="short", type="boolean", nullable=false)
+     * @ORM\Column(name="short", type="boolean", nullable=false, options={"unsigned":true, "default":0})
      */
     private $short = '0';
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="hr_avg", type="boolean", nullable=false)
+     * @ORM\Column(name="hr_avg", type="boolean", precision=3, nullable=false, options={"unsigned":true, "default":100})
      */
     private $hrAvg = '100';
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="quality_session", type="boolean", nullable=false)
+     * @ORM\Column(name="quality_session", type="boolean", nullable=false, options={"unsigned":true, "default":0})
      */
     private $qualitySession = '0';
 

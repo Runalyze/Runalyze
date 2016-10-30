@@ -29,7 +29,7 @@ class Swimdata
     /**
      * @var integer
      *
-     * @ORM\Column(name="pool_length", type="smallint", nullable=false)
+     * @ORM\Column(name="pool_length", type="smallint", precision=5, nullable=false, options={"default":0})
      */
     private $poolLength = '0';
 

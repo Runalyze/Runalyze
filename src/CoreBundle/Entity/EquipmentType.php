@@ -15,7 +15,7 @@ class EquipmentType
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(name="id", type="integer", options={"unsigned":true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -31,21 +31,21 @@ class EquipmentType
     /**
      * @var boolean
      *
-     * @ORM\Column(name="input", type="boolean", nullable=false)
+     * @ORM\Column(name="input", type="boolean", nullable=false, options={"unsigned":true, "default":0})
      */
     private $input = '0';
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="max_km", type="integer", nullable=true)
+     * @ORM\Column(name="max_km", type="integer", nullable=true, options={"unsigned":true})
      */
     private $maxKm;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="max_time", type="integer", nullable=true)
+     * @ORM\Column(name="max_time", type="integer", nullable=true, options={"unsigned":true})
      */
     private $maxTime;
 

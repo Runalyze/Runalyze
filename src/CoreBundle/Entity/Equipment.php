@@ -15,7 +15,7 @@ class Equipment
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(name="id", type="integer", options={"unsigned":true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -38,21 +38,21 @@ class Equipment
     /**
      * @var string
      *
-     * @ORM\Column(name="distance", type="decimal", precision=8, scale=2, nullable=false)
+     * @ORM\Column(name="distance", type="decimal", precision=8, scale=2, nullable=false, options={"unsigned":true})
      */
     private $distance = '0.00';
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="time", type="integer", nullable=false)
+     * @ORM\Column(name="time", type="integer", nullable=false, options={"unsigned":true, "default":0})
      */
     private $time = '0';
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="additional_km", type="integer", nullable=false)
+     * @ORM\Column(name="additional_km", type="integer", nullable=false, options={"unsigned":true, "default":0})
      */
     private $additionalKm = '0';
 
