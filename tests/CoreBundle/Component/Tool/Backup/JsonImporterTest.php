@@ -3,6 +3,7 @@
 namespace Runalyze\Bundle\CoreBundle\Tests\Component\Tool\Backup;
 
 use Runalyze\Bundle\CoreBundle\Component\Tool\Backup\JsonImporter;
+use Runalyze\Configuration;
 
 class JsonImporterTest extends \PHPUnit_Framework_TestCase
 {
@@ -266,7 +267,7 @@ class JsonImporterTest extends \PHPUnit_Framework_TestCase
 		$FirstEquipment = $this->DB->lastInsertId();
 		$this->DB->exec('INSERT INTO `runalyze_route` (`accountid`) VALUES(0)');
 		$FirstRoute = $this->DB->lastInsertId();
-		$this->DB->exec('INSERT INTO `runalyze_training` (`accountid`,`routeid`) VALUES(0, '.$FirstRoute.')');
+		$this->DB->exec('INSERT INTO `runalyze_training` (`accountid`,`routeid`, `time`, `sportid`) VALUES(0, '.$FirstRoute.', 1477839906, '.Configuration::General()->runningSport().')');
 		$FirstTraining = $this->DB->lastInsertId();
 		$this->DB->exec('INSERT INTO `runalyze_trackdata` (`accountid`,`activityid`) VALUES(0, '.$FirstTraining.')');
 		$this->DB->exec('INSERT INTO `runalyze_swimdata` (`accountid`,`activityid`) VALUES(0, '.$FirstTraining.')');
@@ -284,7 +285,7 @@ class JsonImporterTest extends \PHPUnit_Framework_TestCase
 		$SecondEquipment = $this->DB->lastInsertId();
 		$this->DB->exec('INSERT INTO `runalyze_route` (`accountid`) VALUES(1)');
 		$SecondRoute = $this->DB->lastInsertId();
-		$this->DB->exec('INSERT INTO `runalyze_training` (`accountid`,`routeid`) VALUES(1, '.$SecondRoute.')');
+		$this->DB->exec('INSERT INTO `runalyze_training` (`accountid`,`routeid`, `time`, `sportid`) VALUES(1, '.$SecondRoute.', 1477839906, '.Configuration::General()->runningSport().')');
 		$SecondTraining = $this->DB->lastInsertId();
 		$this->DB->exec('INSERT INTO `runalyze_trackdata` (`accountid`,`activityid`) VALUES(1, '.$SecondTraining.')');
 		$this->DB->exec('INSERT INTO `runalyze_swimdata` (`accountid`,`activityid`) VALUES(1, '.$SecondTraining.')');

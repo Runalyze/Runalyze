@@ -86,9 +86,9 @@ class FactoryTest extends \PHPUnit_Framework_TestCase {
 		$this->DB->exec('INSERT INTO `runalyze_tag` (`id`, `tag`, `accountid`) VALUES(2, "Tag A2", '.$this->accountID.')');
 		$this->DB->exec('INSERT INTO `runalyze_tag` (`id`, `tag`, `accountid`) VALUES(3, "Tag B", '.$this->accountID.')');
 		$this->DB->exec('INSERT INTO `runalyze_tag` (`id`, `tag`, `accountid`) VALUES(4, "Tag C", '.$this->accountID.')');
-		$this->DB->exec('INSERT INTO `runalyze_training` (`id`, `sportid`, `accountid`) VALUES(1, 1, '.$this->accountID.')');
-		$this->DB->exec('INSERT INTO `runalyze_training` (`id`, `sportid`, `accountid`) VALUES(2, 1, '.$this->accountID.')');
-		$this->DB->exec('INSERT INTO `runalyze_training` (`id`, `sportid`, `accountid`) VALUES(3, 1, '.$this->accountID.')');
+		$this->DB->exec('INSERT INTO `runalyze_training` (`id`, `sportid`, `accountid`, `time`) VALUES(1, 1, '.$this->accountID.', 1477843525)');
+		$this->DB->exec('INSERT INTO `runalyze_training` (`id`, `sportid`, `accountid`, `time`) VALUES(2, 1, '.$this->accountID.', 1477843525)');
+		$this->DB->exec('INSERT INTO `runalyze_training` (`id`, `sportid`, `accountid`, `time`) VALUES(3, 1, '.$this->accountID.', 1477843525)');
 		$this->DB->exec('INSERT INTO `runalyze_activity_tag` (`activityid`, `tagid`) VALUES(1, 1)');
 		$this->DB->exec('INSERT INTO `runalyze_activity_tag` (`activityid`, `tagid`) VALUES(1, 2)');
 		$this->DB->exec('INSERT INTO `runalyze_activity_tag` (`activityid`, `tagid`) VALUES(2, 3)');
@@ -127,9 +127,9 @@ class FactoryTest extends \PHPUnit_Framework_TestCase {
 		$this->DB->exec('INSERT INTO `runalyze_equipment` (`id`, `name`, `typeid`, `notes`, `accountid`) VALUES(2, "Equipment A2", 1, "", '.$this->accountID.')');
 		$this->DB->exec('INSERT INTO `runalyze_equipment` (`id`, `name`, `typeid`, `notes`, `accountid`) VALUES(3, "Equipment B", 1, "", '.$this->accountID.')');
 		$this->DB->exec('INSERT INTO `runalyze_equipment` (`id`, `name`, `typeid`, `notes`, `accountid`) VALUES(4, "Equipment C", 2, "", '.$this->accountID.')');
-		$this->DB->exec('INSERT INTO `runalyze_training` (`id`, `sportid`, `accountid`) VALUES(1, 1, '.$this->accountID.')');
-		$this->DB->exec('INSERT INTO `runalyze_training` (`id`, `sportid`, `accountid`) VALUES(2, 2, '.$this->accountID.')');
-		$this->DB->exec('INSERT INTO `runalyze_training` (`id`, `sportid`, `accountid`) VALUES(3, 3, '.$this->accountID.')');
+		$this->DB->exec('INSERT INTO `runalyze_training` (`id`, `sportid`, `accountid`, `time`) VALUES(1, 1, '.$this->accountID.', 1477843525)');
+		$this->DB->exec('INSERT INTO `runalyze_training` (`id`, `sportid`, `accountid`, `time`) VALUES(2, 2, '.$this->accountID.', 1477843525)');
+		$this->DB->exec('INSERT INTO `runalyze_training` (`id`, `sportid`, `accountid`, `time`) VALUES(3, 3, '.$this->accountID.', 1477843525)');
 		$this->DB->exec('INSERT INTO `runalyze_activity_equipment` (`activityid`, `equipmentid`) VALUES(1, 1)');
 		$this->DB->exec('INSERT INTO `runalyze_activity_equipment` (`activityid`, `equipmentid`) VALUES(1, 2)');
 		$this->DB->exec('INSERT INTO `runalyze_activity_equipment` (`activityid`, `equipmentid`) VALUES(2, 3)');

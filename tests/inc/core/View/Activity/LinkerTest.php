@@ -46,7 +46,7 @@ class LinkerTest extends \PHPUnit_Framework_TestCase {
 			[6, $this->OtherAccountID]
 		];
 		foreach ($activities as $data) {
-			$this->PDO->exec('INSERT INTO `runalyze_training` (`time`, `accountid`) VALUES ('.$data[0].', '.$data[1].')');
+			$this->PDO->exec('INSERT INTO `runalyze_training` (`time`, `accountid`, `sportid`) VALUES ('.$data[0].', '.$data[1].', 0)');
 
 			if ($data[1] == $this->ThisAccountID) {
 				$this->ThisIDs[] = $this->PDO->lastInsertId();

@@ -45,12 +45,12 @@ class StatisticsUpdaterTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testStatistics() {
-		$this->PDO->exec('INSERT INTO `'.PREFIX.'training` (`distance`, `s`, `accountid`) VALUES (10, 3600, 1)');
+		$this->PDO->exec('INSERT INTO `'.PREFIX.'training` (`distance`, `s`, `accountid`, `sportid`, `time`) VALUES (10, 3600, 1, 0, 1477843525)');
 		$firstActivity = $this->PDO->lastInsertId();
 		$this->PDO->exec('INSERT INTO `'.PREFIX.'activity_equipment` (`activityid`, `equipmentid`) VALUES ('.$firstActivity.', '.$this->EquipmentIDs[0].')');
 		$this->PDO->exec('INSERT INTO `'.PREFIX.'activity_equipment` (`activityid`, `equipmentid`) VALUES ('.$firstActivity.', '.$this->EquipmentIDs[1].')');
 
-		$this->PDO->exec('INSERT INTO `'.PREFIX.'training` (`distance`, `s`, `accountid`) VALUES (20, 7200, 1)');
+		$this->PDO->exec('INSERT INTO `'.PREFIX.'training` (`distance`, `s`, `accountid`,  `sportid`, `time`) VALUES (20, 7200, 1, 0, 1477843525)');
 		$this->PDO->exec('INSERT INTO `'.PREFIX.'activity_equipment` (`activityid`, `equipmentid`) VALUES ('.$this->PDO->lastInsertId().', '.$this->EquipmentIDs[1].')');
 
 		$Updater = new StatisticsUpdater($this->PDO, 1, PREFIX);

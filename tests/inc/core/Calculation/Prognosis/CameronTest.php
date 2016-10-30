@@ -20,8 +20,8 @@ class CameronTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testSetupFromDatabase() {
-		DB::getInstance()->insert('training', array('sportid', 'vdot_by_time', 's', 'distance'), array(Configuration::General()->runningSport(), 60, 16*60 + 32, 5) );
-		DB::getInstance()->insert('training', array('sportid', 'vdot_by_time', 's', 'distance'), array(Configuration::General()->runningSport(), 45, 90*60 +  0, 21.1) );
+		DB::getInstance()->insert('training', array('sportid', 'vdot_by_time', 's', 'distance', 'time'), array(Configuration::General()->runningSport(), 60, 16*60 + 32, 5, 1477839906) );
+		DB::getInstance()->insert('training', array('sportid', 'vdot_by_time', 's', 'distance', 'time'), array(Configuration::General()->runningSport(), 45, 90*60 +  0, 21.1, 1477839906) );
 
 		$this->object->setupFromDatabase();
 

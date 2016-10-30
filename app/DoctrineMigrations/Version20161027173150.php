@@ -105,7 +105,8 @@ class Version20161027173150 extends AbstractMigration implements ContainerAwareI
         $this->addSql('UPDATE `'.$prefix.'account` SET `changepw_hash` = NULL WHERE `changepw_hash`= \'\'');
 
         //Table sport
-        $this->addSql('ALTER TABLE `'.$prefix.'sport`
+        $this->addSql('ALTER TABLE `'.$prefix.'sport`,
+                  MODIFY `id` int(10) unsigned NOT NULL,
                   MODIFY `accountid` int(10) unsigned NOT NULL,
                   MODIFY `short` tinyint(1) unsigned  NOT NULL DEFAULT \'0\',
                   MODIFY `kcal` smallint(4) unsigned NOT NULL DEFAULT \'0\',
@@ -126,8 +127,8 @@ class Version20161027173150 extends AbstractMigration implements ContainerAwareI
         $this->addSql('UPDATE `'.$prefix.'training` SET `power` = NULL WHERE `power` > \'65535\'');
 
         $this->addSql('ALTER TABLE `'.$prefix.'training`
-                  MODIFY `sportid` int(11) unsigned NOT NULL,
-                  MODIFY `typeid` int(11) unsigned DEFAULT NULL,
+                  MODIFY `sportid` int(10) unsigned NOT NULL,
+                  MODIFY `typeid` int(10) unsigned DEFAULT NULL,
                   MODIFY `time` int(11) unsigned NOT NULL,
                   MODIFY `created` int(11) unsigned DEFAULT NULL,
                   MODIFY `edited` int(11) unsigned DEFAULT NULL,

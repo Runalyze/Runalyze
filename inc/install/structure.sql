@@ -303,8 +303,8 @@ CREATE TABLE IF NOT EXISTS `runalyze_trackdata` (
 
 CREATE TABLE IF NOT EXISTS `runalyze_training` (
 `id` int(10) unsigned NOT NULL,
-  `sportid` int(11) unsigned NOT NULL,
-  `typeid` int(11) unsigned DEFAULT NULl,
+  `sportid` int(10) unsigned NOT NULL,
+  `typeid` int(10) unsigned DEFAULT NULL,
   `time` int(11) unsigned NOT NULL,
   `timezone_offset` smallint(6) DEFAULT NULL,
   `created` int(11) unsigned DEFAULT NULL,
