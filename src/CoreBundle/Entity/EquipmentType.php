@@ -57,21 +57,21 @@ class EquipmentType
      *   @ORM\JoinColumn(name="accountid", referencedColumnName="id")
      * })
      */
-    private $accountid;
+    private $account;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\ManyToMany(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Sport", mappedBy="equipmentTypeid")
      */
-    private $sportid;
+    private $sport;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->sportid = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->sport = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -181,61 +181,61 @@ class EquipmentType
     }
 
     /**
-     * Set accountid
+     * Set account
      *
-     * @param \Runalyze\Bundle\CoreBundle\Entity\Account $accountid
+     * @param \Runalyze\Bundle\CoreBundle\Entity\Account $account
      *
      * @return EquipmentType
      */
-    public function setAccountid(\Runalyze\Bundle\CoreBundle\Entity\Account $accountid = null)
+    public function setAccount(\Runalyze\Bundle\CoreBundle\Entity\Account $account = null)
     {
-        $this->accountid = $accountid;
+        $this->account = $account;
 
         return $this;
     }
 
     /**
-     * Get accountid
+     * Get account
      *
      * @return \Runalyze\Bundle\CoreBundle\Entity\Account
      */
-    public function getAccountid()
+    public function getAccount()
     {
-        return $this->accountid;
+        return $this->account;
     }
 
     /**
-     * Add sportid
+     * Add sport
      *
-     * @param \Runalyze\Bundle\CoreBundle\Entity\Sport $sportid
+     * @param \Runalyze\Bundle\CoreBundle\Entity\Sport $sport
      *
      * @return EquipmentType
      */
-    public function addSportid(\Runalyze\Bundle\CoreBundle\Entity\Sport $sportid)
+    public function addSport(\Runalyze\Bundle\CoreBundle\Entity\Sport $sport)
     {
-        $this->sportid[] = $sportid;
+        $this->sport[] = $sport;
 
         return $this;
     }
 
     /**
-     * Remove sportid
+     * Remove sport
      *
-     * @param \Runalyze\Bundle\CoreBundle\Entity\Sport $sportid
+     * @param \Runalyze\Bundle\CoreBundle\Entity\Sport $sport
      */
-    public function removeSportid(\Runalyze\Bundle\CoreBundle\Entity\Sport $sportid)
+    public function removeSport(\Runalyze\Bundle\CoreBundle\Entity\Sport $sport)
     {
-        $this->sportid->removeElement($sportid);
+        $this->sport->removeElement($sport);
     }
 
     /**
-     * Get sportid
+     * Get sport
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getSportid()
+    public function getSport()
     {
-        return $this->sportid;
+        return $this->sport;
     }
 }
 

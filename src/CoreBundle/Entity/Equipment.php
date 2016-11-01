@@ -78,7 +78,7 @@ class Equipment
      *   @ORM\JoinColumn(name="typeid", referencedColumnName="id")
      * })
      */
-    private $typeid;
+    private $type;
 
     /**
      * @var \Runalyze\Bundle\CoreBundle\Entity\Account
@@ -89,21 +89,21 @@ class Equipment
      *   @ORM\JoinColumn(name="accountid", referencedColumnName="id")
      * })
      */
-    private $accountid;
+    private $account;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\ManyToMany(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Training", mappedBy="equipmentid")
      */
-    private $activityid;
+    private $activity;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->activityid = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->activity = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
 
@@ -286,84 +286,84 @@ class Equipment
     }
 
     /**
-     * Set typeid
+     * Set type
      *
-     * @param \Runalyze\Bundle\CoreBundle\Entity\EquipmentType $typeid
+     * @param \Runalyze\Bundle\CoreBundle\Entity\EquipmentType $type
      *
      * @return Equipment
      */
-    public function setTypeid(\Runalyze\Bundle\CoreBundle\Entity\EquipmentType $typeid = null)
+    public function setType(\Runalyze\Bundle\CoreBundle\Entity\EquipmentType $type = null)
     {
-        $this->typeid = $typeid;
+        $this->type = $type;
 
         return $this;
     }
 
     /**
-     * Get typeid
+     * Get type
      *
      * @return \Runalyze\Bundle\CoreBundle\Entity\EquipmentType
      */
-    public function getTypeid()
+    public function getType()
     {
-        return $this->typeid;
+        return $this->type;
     }
 
     /**
-     * Set accountid
+     * Set account
      *
-     * @param \Runalyze\Bundle\CoreBundle\Entity\Account $accountid
+     * @param \Runalyze\Bundle\CoreBundle\Entity\Account $account
      *
      * @return Equipment
      */
-    public function setAccountid(\Runalyze\Bundle\CoreBundle\Entity\Account $accountid = null)
+    public function setAccount(\Runalyze\Bundle\CoreBundle\Entity\Account $account = null)
     {
-        $this->accountid = $accountid;
+        $this->account = $account;
 
         return $this;
     }
 
     /**
-     * Get accountid
+     * Get account
      *
      * @return \Runalyze\Bundle\CoreBundle\Entity\Account
      */
-    public function getAccountid()
+    public function getAccount()
     {
-        return $this->accountid;
+        return $this->account;
     }
 
     /**
-     * Add activityid
+     * Add activity
      *
-     * @param \Runalyze\Bundle\CoreBundle\Entity\Training $activityid
+     * @param \Runalyze\Bundle\CoreBundle\Entity\Training $activity
      *
      * @return Equipment
      */
-    public function addActivityid(\Runalyze\Bundle\CoreBundle\Entity\Training $activityid)
+    public function addActivity(\Runalyze\Bundle\CoreBundle\Entity\Training $activity)
     {
-        $this->activityid[] = $activityid;
+        $this->activity[] = $activity;
 
         return $this;
     }
 
     /**
-     * Remove activityid
+     * Remove activity
      *
-     * @param \Runalyze\Bundle\CoreBundle\Entity\Training $activityid
+     * @param \Runalyze\Bundle\CoreBundle\Entity\Training $activity
      */
-    public function removeActivityid(\Runalyze\Bundle\CoreBundle\Entity\Training $activityid)
+    public function removeActivity(\Runalyze\Bundle\CoreBundle\Entity\Training $activity)
     {
-        $this->activityid->removeElement($activityid);
+        $this->activity->removeElement($activity);
     }
 
     /**
-     * Get activityid
+     * Get activity
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getActivityid()
+    public function getActivity()
     {
-        return $this->activityid;
+        return $this->activity;
     }
 }
