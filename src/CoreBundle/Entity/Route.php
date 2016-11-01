@@ -15,7 +15,7 @@ class Route
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer", precsion=10, nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -87,7 +87,7 @@ class Route
     /**
      * @var string
      *
-     * @ORM\Column(name="elevations_source", type="string", length=255, nullable=false)
+     * @ORM\Column(name="elevations_source", type="string", length=255, nullable=false, options={"default" = ""})
      */
     private $elevationsSource = '';
 

@@ -33,7 +33,7 @@ class EquipmentType
      *
      * @ORM\Column(name="input", type="boolean", nullable=false, options={"unsigned":true, "default":0})
      */
-    private $input = '0';
+    private $input;
 
     /**
      * @var integer

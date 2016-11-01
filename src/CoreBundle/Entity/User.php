@@ -24,7 +24,7 @@ class User
     /**
      * @var integer
      *
-     * @ORM\Column(name="time", type="integer", precision=10, nullable=false)
+     * @ORM\Column(name="time", type="integer", precision=11, nullable=false, options={"unsigned":true})
      */
     private $time;
 
@@ -38,14 +38,14 @@ class User
     /**
      * @var integer
      *
-     * @ORM\Column(name="pulse_rest", type="smallint", precision=3, nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="pulse_rest", columnDefinition="tinyint(3) unsigned DEFAULT NULL")
      */
     private $pulseRest;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="pulse_max", type="smallint", precision=3, nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="pulse_max", columnDefinition="tinyint(3) unsigned DEFAULT NULL")
      */
     private $pulseMax;
 
@@ -73,7 +73,7 @@ class User
     /**
      * @var integer
      *
-     * @ORM\Column(name="sleep_duration", type="smallint", nullable=true)
+     * @ORM\Column(name="sleep_duration", type="smallint", precision=3, nullable=true)
      */
     private $sleepDuration;
 
@@ -87,6 +87,7 @@ class User
     /**
      * @var integer
      *
+     * @ORM\Column(name="accountid", type="integer", precision=10, nullable=false, options={"unsigned":true})
      * @ORM\Column(name="accountid", type="integer", nullable=false)
      */
     private $accountid;

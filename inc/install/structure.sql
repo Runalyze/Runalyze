@@ -404,7 +404,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_user` (
 --
 
 CREATE TABLE IF NOT EXISTS `runalyze_weathercache` (
-  `time` int(11) NOT NULL DEFAULT '0',
+  `time` int(11) NOT NULL,
   `geohash` char(5) DEFAULT NULL,
   `temperature` tinyint(4) DEFAULT NULL,
   `wind_speed` tinyint(3) unsigned DEFAULT NULL,

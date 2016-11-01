@@ -115,14 +115,14 @@ class Training
     /**
      * @var integer
      *
-     * @ORM\Column(name="pulse_avg", type="integer", precision=3, nullable=false, options={"unsigned":true})
+     * @ORM\Column(name="pulse_avg", columnDefinition="tinyint(3) unsigned DEFAULT NULL")
      */
     private $pulseAvg = '0';
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="pulse_max", type="integer", precision=3, nullable=false, options={"unsigned":true})
+     * @ORM\Column(name="pulse_max", columnDefinition="tinyint(3) unsigned DEFAULT NULL")
      */
     private $pulseMax = '0';
 
@@ -383,7 +383,7 @@ class Training
      *
      * @ORM\Column(name="creator", type="string", length=100, nullable=false)
      */
-    private $creator = '';
+    private $creator;
 
     /**
      * @var string

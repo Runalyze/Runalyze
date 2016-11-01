@@ -189,6 +189,12 @@ class Version20161027173150 extends AbstractMigration implements ContainerAwareI
         $this->addSql('UPDATE `'.$prefix.'training` SET `vertical_oscillation` = NULL WHERE `vertical_oscillation`= \'0\'');
         $this->addSql('UPDATE `'.$prefix.'training` SET `vertical_ratio` = NULL WHERE `vertical_ratio`= \'0\'');
 
+        // Cleanup up weathercache
+        $this->addSql('DELETE FROM `'.$prefix.'weathercache WHERE coalesce(temperature, wind_speed, wind_deg, humidity, pressure) IS NULL OR time=0');
+        $this->addSql('ALTER TABLE `'.$prefix.'weathercache`,
+                  MODIFY `time` int(11) NOT NULL,
+                  ');
+
     }
 
     /**

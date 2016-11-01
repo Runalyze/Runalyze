@@ -52,7 +52,7 @@ class Sport
     /**
      * @var integer
      *
-     * @ORM\Column(name="HFavg", type="smallint", nullable=false, options={"unsigned":true, "default":120})
+     * @ORM\Column(name="HFavg", columnDefinition="tinyint(3) unsigned NOT NULL DEFAULT 120")
      */
     private $hfavg = '120';
 
@@ -61,7 +61,7 @@ class Sport
      *
      * @ORM\Column(name="distances", type="boolean", nullable=false, options={"unsigned":true, "default":1})
      */
-    private $distances = '1';
+    private $distances;
 
     /**
      * @var string
@@ -104,6 +104,7 @@ class Sport
     /**
      * @var \Runalyze\Bundle\CoreBundle\Entity\Account
      *
+     * @ORM\Column(name="accountid", type="integer", precision=10, nullable=false, options={"unsigned":true})
      * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Account")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="accountid", referencedColumnName="id")

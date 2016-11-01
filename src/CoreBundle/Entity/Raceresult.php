@@ -43,42 +43,42 @@ class Raceresult
     /**
      * @var integer
      *
-     * @ORM\Column(name="place_total", type="integer", precision=8, nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="place_total", columnDefinition="mediumint(8) unsigned DEFAULT NULL")
      */
     private $placeTotal;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="place_gender", type="integer", precision=8, nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="place_gender", columnDefinition="mediumint(8) unsigned DEFAULT NULL")
      */
     private $placeGender;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="place_ageclass", type="integer", precision=8, nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="place_ageclass", columnDefinition="mediumint(8) unsigned DEFAULT NULL")
      */
     private $placeAgeclass;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="participants_total", type="integer", precision=8, nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="participants_total", columnDefinition="mediumint(8) unsigned DEFAULT NULL")
      */
     private $participantsTotal;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="participants_gender", type="integer", precision=8, nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="participants_gender", columnDefinition="mediumint(8) unsigned DEFAULT NULL")
      */
     private $participantsGender;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="participants_ageclass", type="integer", precision=8, nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="participants_ageclass", columnDefinition="mediumint(8) unsigned DEFAULT NULL")
      */
     private $participantsAgeclass;
 
@@ -86,6 +86,7 @@ class Raceresult
      * @var \Account
      *
      * @ORM\ManyToOne(targetEntity="Account")
+     * @ORM\Column(name="accountid", type="integer", precision=10, nullable=false, options={"unsigned":true})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="accountid", referencedColumnName="id")
      * })

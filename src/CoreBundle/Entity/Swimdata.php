@@ -36,6 +36,7 @@ class Swimdata
     /**
      * @var \Account
      *
+     * @ORM\Column(name="accountid", type="integer", precision=10, nullable=false, options={"unsigned":true})
      * @ORM\ManyToOne(targetEntity="Account")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="accountid", referencedColumnName="id")
@@ -47,6 +48,7 @@ class Swimdata
      * @var \Training
      *
      * @ORM\Id
+     * @ORM\Column(name="activityid", precision=10, type="integer", nullable=false)
      * @ORM\GeneratedValue(strategy="NONE")
      * @ORM\OneToOne(targetEntity="Training")
      * @ORM\JoinColumns({

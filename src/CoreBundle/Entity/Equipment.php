@@ -38,7 +38,7 @@ class Equipment
     /**
      * @var string
      *
-     * @ORM\Column(name="distance", type="decimal", precision=8, scale=2, nullable=false, options={"unsigned":true})
+     * @ORM\Column(name="distance", type="decimal", precision=8, scale=2, nullable=false, options={"unsigned":true, "default":"0.00"})
      */
     private $distance = '0.00';
 
@@ -83,6 +83,7 @@ class Equipment
     /**
      * @var \Runalyze\Bundle\CoreBundle\Entity\Account
      *
+     * @ORM\Column(name="accountid", type="integer", precision=10, nullable=false, options={"unsigned":true})
      * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Account")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="accountid", referencedColumnName="id")

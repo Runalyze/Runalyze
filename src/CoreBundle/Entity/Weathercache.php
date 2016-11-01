@@ -15,7 +15,7 @@ class Weathercache
     /**
      * @var string
      *
-     * @ORM\Column(name="geohash", type="string", length=5, nullable=false)
+     * @ORM\Column(name="geohash", type="string", length=5, nullable=false, options={"fixed" = true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
      */
@@ -24,11 +24,11 @@ class Weathercache
     /**
      * @var integer
      *
-     * @ORM\Column(name="time", type="integer", nullable=false)
+     * @ORM\Column(name="time", type="integer", precision=11, nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
      */
-    private $time = '0';
+    private $time;
 
     /**
      * @var boolean
@@ -54,14 +54,14 @@ class Weathercache
     /**
      * @var boolean
      *
-     * @ORM\Column(name="humidity", type="integer", precision=3, nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="humidity", columnDefinition="tinyint(3) unsigned DEFAULT NULL")
      */
     private $humidity;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="pressure", type="smallint", precision=4, nullable=true,  options={"unsigned":true})
+     * @ORM\Column(name="pressure", type="smallint", precision=3, nullable=true,  options={"unsigned":true})
      */
     private $pressure;
 
@@ -75,7 +75,7 @@ class Weathercache
     /**
      * @var boolean
      *
-     * @ORM\Column(name="weather_source", type="integer", precision=2, nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="weather_source", columnDefinition="TINYINT(2) unsigned DEFAULT NULL")
      */
     private $weatherSource;
 

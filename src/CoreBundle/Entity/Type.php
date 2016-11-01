@@ -55,7 +55,7 @@ class Type
     /**
      * @var boolean
      *
-     * @ORM\Column(name="hr_avg", type="boolean", precision=3, nullable=false, options={"unsigned":true, "default":100})
+     * @ORM\Column(name="hr_avg", columnDefinition="tinyint(3) unsigned NOT NULL DEFAULT '100'")
      */
     private $hrAvg = '100';
 
@@ -69,6 +69,7 @@ class Type
     /**
      * @var \Runalyze\Bundle\CoreBundle\Entity\Account
      *
+     * @ORM\Column(name="accountid", type="integer", precision=10, nullable=false, options={"unsigned":true})
      * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Account")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="accountid", referencedColumnName="id")
