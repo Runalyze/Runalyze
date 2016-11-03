@@ -279,7 +279,7 @@ class DefaultController extends Controller
      */
     public function loginPhpAction()
     {
-        return $this->redirectToRoute('login');
+        return $this->redirectToRoute('dashboard');
     }
 
 }
