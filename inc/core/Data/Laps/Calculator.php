@@ -303,7 +303,7 @@ class Calculator
 		$VDOT->fromPaceAndHR(
 			$distance,
 			$Lap->duration()->seconds(),
-			$Lap->HRavg()->inPercent() / 100
+			$Lap->HRavg()->inHRmax() / 100
 		);
 
 		if ($VDOT->value() > 0) {
