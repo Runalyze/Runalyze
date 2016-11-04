@@ -55,9 +55,9 @@ class DeleterTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testSimpleDeletion() {
-		$this->PDO->exec('INSERT INTO `runalyze_training` (`accountid`, `sportid`, `time`) VALUES (0, 0, 1477843525)');
+		$this->PDO->exec('INSERT INTO `runalyze_training` (`accountid`, `sportid`, `time`, `s`) VALUES (0, 0, 1477843525, 2)');
 		$firstID = $this->PDO->lastInsertId();
-		$this->PDO->exec('INSERT INTO `runalyze_training` (`accountid`, `sportid`, `time`) VALUES (0, 0, 1477843525)');
+		$this->PDO->exec('INSERT INTO `runalyze_training` (`accountid`, `sportid`, `time`, `s`) VALUES (0, 0, 1477843525, 2)');
 		$secondID = $this->PDO->lastInsertId();
 
 		$this->insert(array(

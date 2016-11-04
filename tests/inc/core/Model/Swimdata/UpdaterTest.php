@@ -20,7 +20,7 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 	protected function setUp() {
 		$this->PDO = DB::getInstance();
 		$this->PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$this->PDO->exec('INSERT INTO `runalyze_training` (`accountid`, `sportid`, `time`) VALUES (0, 0, 1477843525)');
+		$this->PDO->exec('INSERT INTO `runalyze_training` (`accountid`, `sportid`, `time`, `s`) VALUES (0, 0, 1477843525, 2)');
 
 		$this->ActivityID = $this->PDO->lastInsertId();
 	}

@@ -228,7 +228,7 @@ class DeleterTest extends \PHPUnit_Framework_TestCase {
 		$this->PDO->exec('INSERT INTO `'.PREFIX.'route` (`accountid`) VALUES(0)');
 		$routeID = $this->PDO->lastInsertId();
 
-		$this->PDO->exec('INSERT INTO `'.PREFIX.'training` (`routeid`,`accountid`, `sportid`, `time`) VALUES('.$routeID.',0, 0, 1477843525)');
+		$this->PDO->exec('INSERT INTO `'.PREFIX.'training` (`routeid`,`accountid`, `sportid`, `time`, `s`) VALUES('.$routeID.',0, 0, 1477843525, 2)');
 		$activityID = $this->PDO->lastInsertId();
 
 		$this->delete($activityID);
@@ -238,7 +238,7 @@ class DeleterTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testDeletionOfTrackdata() {
-		$this->PDO->exec('INSERT INTO `'.PREFIX.'training` (`accountid`, `sportid`, `time`) VALUES(0, 0, 1477843525)');
+		$this->PDO->exec('INSERT INTO `'.PREFIX.'training` (`accountid`, `sportid`, `time`, `s`) VALUES(0, 0, 1477843525, 2)');
 		$activityID = $this->PDO->lastInsertId();
 
 		$this->PDO->exec('INSERT INTO `'.PREFIX.'trackdata` (`activityid`, `accountid`) VALUES('.$activityID.', 0)');
@@ -250,7 +250,7 @@ class DeleterTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testDeletionOfSwimdata() {
-		$this->PDO->exec('INSERT INTO `'.PREFIX.'training` (`accountid`, `sportid`, `time`) VALUES(0, 0, 1477843525)');
+		$this->PDO->exec('INSERT INTO `'.PREFIX.'training` (`accountid`, `sportid`, `time`, `s`) VALUES(0, 0, 1477843525, 2)');
 		$activityID = $this->PDO->lastInsertId();
 
 		$this->PDO->exec('INSERT INTO `'.PREFIX.'swimdata` (`activityid`, `accountid`) VALUES('.$activityID.', 0)');

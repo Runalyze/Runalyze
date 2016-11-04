@@ -50,9 +50,9 @@ class JsonImporterTest extends \PHPUnit_Framework_TestCase
 
 	private function fillDummyTrainings()
     {
-        $statement = $this->DB->prepare('INSERT INTO `runalyze_training` (`sportid`, `time`, `distance`, `accountid`) VALUES (?, ?, ?, ?)');
-        $statement->execute([1, time() - DAY_IN_S, 15, $this->AccountID]);
-        $statement->execute([1, time(), 10, $this->AccountID]);
+        $statement = $this->DB->prepare('INSERT INTO `runalyze_training` (`sportid`, `time`, `distance`, `accountid`, `s`) VALUES (?, ?, ?, ?, ?)');
+        $statement->execute([1, time() - DAY_IN_S, 15, $this->AccountID, 2]);
+        $statement->execute([1, time(), 10, $this->AccountID, 2]);
 
 		return 2;
 	}
@@ -267,7 +267,7 @@ class JsonImporterTest extends \PHPUnit_Framework_TestCase
 		$FirstEquipment = $this->DB->lastInsertId();
 		$this->DB->exec('INSERT INTO `runalyze_route` (`accountid`) VALUES(0)');
 		$FirstRoute = $this->DB->lastInsertId();
-		$this->DB->exec('INSERT INTO `runalyze_training` (`accountid`,`routeid`, `time`, `sportid`) VALUES(0, '.$FirstRoute.', 1477839906, '.Configuration::General()->runningSport().')');
+		$this->DB->exec('INSERT INTO `runalyze_training` (`accountid`,`routeid`, `time`, `sportid`, `s`) VALUES(0, '.$FirstRoute.', 1477839906, '.Configuration::General()->runningSport().', 2)');
 		$FirstTraining = $this->DB->lastInsertId();
 		$this->DB->exec('INSERT INTO `runalyze_trackdata` (`accountid`,`activityid`) VALUES(0, '.$FirstTraining.')');
 		$this->DB->exec('INSERT INTO `runalyze_swimdata` (`accountid`,`activityid`) VALUES(0, '.$FirstTraining.')');
@@ -285,7 +285,7 @@ class JsonImporterTest extends \PHPUnit_Framework_TestCase
 		$SecondEquipment = $this->DB->lastInsertId();
 		$this->DB->exec('INSERT INTO `runalyze_route` (`accountid`) VALUES(1)');
 		$SecondRoute = $this->DB->lastInsertId();
-		$this->DB->exec('INSERT INTO `runalyze_training` (`accountid`,`routeid`, `time`, `sportid`) VALUES(1, '.$SecondRoute.', 1477839906, '.Configuration::General()->runningSport().')');
+		$this->DB->exec('INSERT INTO `runalyze_training` (`accountid`,`routeid`, `time`, `sportid`, `s`) VALUES(1, '.$SecondRoute.', 1477839906, '.Configuration::General()->runningSport().', 2)');
 		$SecondTraining = $this->DB->lastInsertId();
 		$this->DB->exec('INSERT INTO `runalyze_trackdata` (`accountid`,`activityid`) VALUES(1, '.$SecondTraining.')');
 		$this->DB->exec('INSERT INTO `runalyze_swimdata` (`accountid`,`activityid`) VALUES(1, '.$SecondTraining.')');
