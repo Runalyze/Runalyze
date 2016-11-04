@@ -145,7 +145,7 @@ class Version20161027173150 extends AbstractMigration implements ContainerAwareI
         $this->addSql('UPDATE `'.$prefix.'training` SET `jd_intensity` = 0 WHERE `jd_intensity` < 0');
         $this->addSql('UPDATE `'.$prefix.'training` SET `distance` = 0 WHERE `distance` < 0');
         $this->addSql('UPDATE `'.$prefix.'training` SET `activity_id` = NULL WHERE `activity_id` < 0');
-
+        $this->addSql('UPDATE `'.$prefix.'training` SET `fit_training_effect` = NULL WHERE `fit_training_effect` = 0');
 
         $this->addSql('DELETE FROM `'.$prefix.'training` WHERE `s` < 0');
 
