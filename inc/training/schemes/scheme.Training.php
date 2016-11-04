@@ -838,7 +838,7 @@ $FIELDS = array(
 	'stroke'			=> array(
 					'database'	=> array(
 						'type'		=> 'longtext',
-						'null'		=> 'true',
+                         'null'		=> true,
 					),
 					'formular'	=> array(
 						'hidden'	=> true
@@ -857,7 +857,7 @@ $FIELDS = array(
 					'database'	=> array(
 						'type'		=> 'int',
 						'precision'	=> '4',
-						'default'	=> '0'
+                        'null'		=> true
 					),
 					'formular'	=> array(
 						'label'		=> __('Total strokes')
@@ -867,7 +867,7 @@ $FIELDS = array(
 					'database'	=> array(
 						'type'		=> 'int',
 						'precision'	=> '4',
-						'default'	=> '0'
+                        'null'		=> true
 					),
 					'formular'	=> array(
 						'label'		=> __('SWOLF')
