@@ -83,6 +83,7 @@ class Equipment
     /**
      * @var \Runalyze\Bundle\CoreBundle\Entity\Account
      *
+     * @ORM\Column(name="accountid", type="integer", precision=10, nullable=false, options={"unsigned":true})
      * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Account")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="accountid", referencedColumnName="id")
@@ -93,7 +94,7 @@ class Equipment
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Training", mappedBy="equipmentid")
+     * @ORM\ManyToMany(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Training", mappedBy="equipment")
      */
     private $activity;
 

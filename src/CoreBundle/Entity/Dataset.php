@@ -24,7 +24,7 @@ class Dataset
     /**
      * @var boolean
      *
-     * @ORM\Column(name="keyid", type="boolean", nullable=false, options={"unsigned":true})
+     * @ORM\Column(name="keyid", columnDefinition="tinyint(3) unsigned NOT NULL")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
      */
@@ -47,7 +47,7 @@ class Dataset
     /**
      * @var boolean
      *
-     * @ORM\Column(name="position", type="boolean", nullable=false, options={"unsigned":true, "default":0})
+     * @ORM\Column(name="position", columnDefinition="tinyint(3) unsigned NOT NULL DEFAULT 0")
      */
     private $position = '0';
 

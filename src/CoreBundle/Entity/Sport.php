@@ -45,7 +45,7 @@ class Sport
     /**
      * @var integer
      *
-     * @ORM\Column(name="kcal", type="smallint", precision=5, nullable=false, options={"unsigned":true, "default":0})
+     * @ORM\Column(name="kcal", type="smallint", precision=4, nullable=false, options={"unsigned":true, "default":0})
      */
     private $kcal = '0';
 
@@ -73,7 +73,7 @@ class Sport
     /**
      * @var boolean
      *
-     * @ORM\Column(name="power", type="boolean", nullable=false, options={"unsigned":true, "default":0})
+     * @ORM\Column(name="power", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 0")
      */
     private $power = '0';
 

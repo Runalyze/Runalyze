@@ -31,6 +31,7 @@ class Tag
     /**
      * @var \Account
      *
+     * @ORM\Column(name="accountid", type="integer", precision=10, nullable=false, options={"unsigned":true})
      * @ORM\ManyToOne(targetEntity="Account")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="accountid", referencedColumnName="id")
@@ -41,7 +42,7 @@ class Tag
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Training", mappedBy="tagid")
+     * @ORM\ManyToMany(targetEntity="Training", mappedBy="tag")
      */
     private $activity;
 

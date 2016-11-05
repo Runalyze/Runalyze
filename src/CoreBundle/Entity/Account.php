@@ -95,27 +95,27 @@ class Account implements AdvancedUserInterface, \Serializable
     /**
      * @var integer
      * @Assert\Type("int")
-     * @ORM\Column(name="gender", type="integer", nullable=false, options={"unsigned":true})
+     * @ORM\Column(name="gender", type="integer", nullable=false, options={"unsigned":true, "default": 0})
      */
     private $gender = Gender::NONE;
 
     /**
      * @var integer
      * @Assert\Type("int")
-     * @ORM\Column(name="birthyear", type="integer", nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="birthyear", type="integer", length=4, nullable=true, options={"unsigned":true})
      */
     private $birthyear;
 
     /**
      * @var string
-     * @ORM\Column(name="password", type="string", length=64, nullable=false)
+     * @ORM\Column(name="password", type="string", length=64, nullable=false, options={"default": ""})
      */
     private $password;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="salt", type="string", length=64, nullable=false)
+     * @ORM\Column(name="salt", type="string", length=64, nullable=false, options={"fixed" = true})
      */
     private $salt;
 
@@ -164,21 +164,21 @@ class Account implements AdvancedUserInterface, \Serializable
     /**
      * @var integer
      * @Assert\Type("bool")
-     * @ORM\Column(name="allow_mails", type="boolean", nullable=false, options={"unsigned":true})
+     * @ORM\Column(name="allow_mails", type="boolean", options={"unsigned":true, "default": true})
      */
     private $allowMails = true;
 
     /**
      * @var integer
      * @Assert\Type("bool")
-     * @ORM\Column(name="allow_support", type="boolean", nullable=false, options={"unsigned":true})
+     * @ORM\Column(name="allow_support", type="boolean", options={"unsigned":true, "default": false})
      */
     private $allowSupport = false;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="role", type="integer", nullable=false, options={"unsigned":true})
+     * @ORM\Column(name="role", columnDefinition="tinyint(3) unsigned NOT NULL DEFAULT 1")
      */
     private $role;
 

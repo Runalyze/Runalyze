@@ -38,14 +38,14 @@ class EquipmentType
     /**
      * @var integer
      *
-     * @ORM\Column(name="max_km", type="integer", nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="max_km", columnDefinition="mediumint unsigned DEFAULT NULL")
      */
     private $maxKm;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="max_time", type="integer", nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="max_time", columnDefinition="mediumint unsigned DEFAULT NULL")
      */
     private $maxTime;
 

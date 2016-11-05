@@ -15,7 +15,7 @@ class Training
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", precision=10, type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer", precision=10, nullable=false, options={"unsigned":true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -39,7 +39,7 @@ class Training
     /**
      * @var integer
      *
-     * @ORM\Column(name="time", type="integer", precision=11, nullable=false, options={"unsigned":true})
+     * @ORM\Column(name="time", type="integer", precision=11, nullable=false)
      */
     private $time = '0';
 
@@ -102,49 +102,49 @@ class Training
     /**
      * @var integer
      *
-     * @ORM\Column(name="elevation", type="integer", precision=5, nullable=false, options={"unsigned":true})
+     * @ORM\Column(name="elevation", type="integer", precision=5, nullable=true, options={"unsigned":true})
      */
-    private $elevation = '0';
+    private $elevation = 0;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="kcal", type="integer", precision=5, nullable=false, options={"unsigned":true})
+     * @ORM\Column(name="kcal", type="integer", precision=5, nullable=true, options={"unsigned":true})
      */
-    private $kcal = '0';
+    private $kcal = null;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="pulse_avg", columnDefinition="tinyint(3) unsigned DEFAULT NULL")
      */
-    private $pulseAvg = '0';
+    private $pulseAvg = null;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="pulse_max", columnDefinition="tinyint(3) unsigned DEFAULT NULL")
      */
-    private $pulseMax = '0';
+    private $pulseMax = null;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="vdot", type="decimal", precision=5, scale=2, nullable=false, options={"unsigned":true})
+     * @ORM\Column(name="vdot", type="decimal", nullable=true, precision=5, scale=2, options={"unsigned":true})
      */
     private $vdot = '0.00';
 
     /**
      * @var string
      *
-     * @ORM\Column(name="vdot_by_time", type="decimal", precision=5, scale=2, nullable=false, options={"unsigned":true})
+     * @ORM\Column(name="vdot_by_time", type="decimal", nullable=true, precision=5, scale=2, options={"unsigned":true})
      */
     private $vdotByTime = '0.00';
 
     /**
      * @var string
      *
-     * @ORM\Column(name="vdot_with_elevation", type="decimal", precision=5, scale=2, nullable=false, options={"unsigned":true})
+     * @ORM\Column(name="vdot_with_elevation", type="decimal", nullable=true, precision=5, scale=2, options={"unsigned":true})
      */
     private $vdotWithElevation = '0.00';
 
@@ -158,79 +158,79 @@ class Training
     /**
      * @var string
      *
-     * @ORM\Column(name="fit_vdot_estimate", type="decimal", precision=4, scale=2, nullable=false, options={"unsigned":true})
+     * @ORM\Column(name="fit_vdot_estimate", type="decimal", nullable=true, precision=4, scale=2, options={"unsigned":true})
      */
-    private $fitVdotEstimate = '0.00';
+    private $fitVdotEstimate = null;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="fit_recovery_time", type="smallint", nullable=false, options={"unsigned":true})
+     * @ORM\Column(name="fit_recovery_time", type="smallint", nullable=true, options={"unsigned":true})
      */
-    private $fitRecoveryTime = '0';
+    private $fitRecoveryTime = null;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="fit_hrv_analysis", type="smallint", nullable=false, options={"unsigned":true})
+     * @ORM\Column(name="fit_hrv_analysis", type="smallint", nullable=true, options={"unsigned":true})
      */
-    private $fitHrvAnalysis = '0';
+    private $fitHrvAnalysis = null;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="fit_training_effect", type="decimal", precision=2, scale=1, nullable=true)
+     * @ORM\Column(name="fit_training_effect", type="decimal", precision=2, scale=1, nullable=true, options={"unsigned":true})
      */
-    private $fitTrainingEffect;
+    private $fitTrainingEffect = null;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="fit_performance_condition", type="boolean", nullable=true)
+     * @ORM\Column(name="fit_performance_condition", type="boolean", nullable=true, options={"unsigned":true})
      */
-    private $fitPerformanceCondition;
+    private $fitPerformanceCondition = null;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="jd_intensity", type="smallint", nullable=false)
+     * @ORM\Column(name="jd_intensity", type="smallint", options={"unsigned":true})
      */
-    private $jdIntensity = '0';
+    private $jdIntensity = null;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="rpe", type="boolean", nullable=true)
+     * @ORM\Column(name="rpe", type="boolean", nullable=true, options={"unsigned":true})
      */
-    private $rpe;
+    private $rpe = null;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="trimp", type="integer", nullable=false)
+     * @ORM\Column(name="trimp", type="integer", options={"unsigned":true})
      */
-    private $trimp = '0';
+    private $trimp = null;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="cadence", type="integer", nullable=false)
+     * @ORM\Column(name="cadence", type="integer", options={"unsigned":true})
      */
-    private $cadence = '0';
+    private $cadence = null;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="power", type="integer", nullable=false)
+     * @ORM\Column(name="power", type="integer", options={"unsigned":true})
      */
-    private $power = '0';
+    private $power = null;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="total_strokes", type="smallint", nullable=false, options={"unsigned":true})
+     * @ORM\Column(name="total_strokes", type="smallint", options={"unsigned":true})
      */
-    private $totalStrokes = '0';
+    private $totalStrokes = null;
 
     /**
      * @var boolean
@@ -242,51 +242,51 @@ class Training
     /**
      * @var boolean
      *
-     * @ORM\Column(name="stride_length", type="boolean", nullable=false, options={"unsigned":true})
+     * @ORM\Column(name="stride_length", type="boolean", options={"unsigned":true})
      */
-    private $strideLength = '0';
+    private $strideLength = null;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="groundcontact", type="smallint", nullable=false, options={"unsigned":true})
+     * @ORM\Column(name="groundcontact", type="smallint", options={"unsigned":true})
      */
-    private $groundcontact = '0';
+    private $groundcontact = null;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="groundcontact_balance", type="smallint", nullable=false, options={"unsigned":true})
+     * @ORM\Column(name="groundcontact_balance", type="smallint",  options={"unsigned":true})
      */
-    private $groundcontactBalance = '0';
+    private $groundcontactBalance = null;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="vertical_oscillation", type="boolean", nullable=false, options={"unsigned":true})
+     * @ORM\Column(name="vertical_oscillation", type="boolean", options={"unsigned":true})
      */
-    private $verticalOscillation = '0';
+    private $verticalOscillation = null;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="vertical_ratio", type="smallint", nullable=false, options={"unsigned":true})
+     * @ORM\Column(name="vertical_ratio", type="smallint", options={"unsigned":true})
      */
-    private $verticalRatio = '0';
+    private $verticalRatio = null;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="temperature", type="boolean", nullable=true)
      */
-    private $temperature;
+    private $temperature = null;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="wind_speed", type="boolean", nullable=true, options={"unsigned":true})
      */
-    private $windSpeed;
+    private $windSpeed = null;
 
     /**
      * @var integer
@@ -410,13 +410,13 @@ class Training
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Equipment", inversedBy="activityid")
+     * @ORM\ManyToMany(targetEntity="Equipment", inversedBy="activity")
      * @ORM\JoinTable(name="activity_equipment",
      *   joinColumns={
-     *     @ORM\JoinColumn(name="activityid", referencedColumnName="id")
+     *     @ORM\JoinColumn(name="activity", referencedColumnName="id")
      *   },
      *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="equipmentid", referencedColumnName="id")
+     *     @ORM\JoinColumn(name="equipment", referencedColumnName="id")
      *   }
      * )
      */
@@ -425,13 +425,13 @@ class Training
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="activityid")
+     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="activity")
      * @ORM\JoinTable(name="activity_tag",
      *   joinColumns={
-     *     @ORM\JoinColumn(name="activityid", referencedColumnName="id")
+     *     @ORM\JoinColumn(name="activity", referencedColumnName="id")
      *   },
      *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="tagid", referencedColumnName="id")
+     *     @ORM\JoinColumn(name="tag", referencedColumnName="id")
      *   }
      * )
      */
