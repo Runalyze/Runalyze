@@ -4,7 +4,17 @@
 
 {% macro statisticsCell(value, unit) %}
     {{ value|raw }} <small>{{ unit|raw }}</small>
-{% endmacro statisticsCell %}
+{% endmacro %}
+
+{% macro statisticsCellUnit(value) %}
+    {# @var value \Runalyze\Bundle\CoreBundle\Twig\DisplayableValue #}
+    {{ value.value }} <small>{{ value.unit }}</small>
+{% endmacro %}
+
+{% macro statisticsCellUnitStd(value) %}
+    {# @var value \Runalyze\Bundle\CoreBundle\Twig\DisplayableValue #}
+    &plusmn;{{ value.value|abs }} <small>{{ value.unit }}</small>
+{% endmacro %}
 
 {% macro statisticsRow(label, unit, mean, min, max, median, mode, cov, std, q10, q90) %}
     {% import _self as this %}
@@ -21,7 +31,24 @@
         <td>{{ this.statisticsCell(q10, unit) }}</td>
         <td>{{ this.statisticsCell(q90, unit) }}</td>
     </tr>
-{% endmacro statisticsRow %}
+{% endmacro %}
+
+{% macro statisticsRowUnit(label, mean, min, max, median, mode, cov, std, q10, q90) %}
+    {% import _self as this %}
+
+    <tr class="c">
+        <td class="l"><strong>{{ label }}</strong></td>
+        <td>{{ this.statisticsCellUnit(mean) }}</td>
+        <td>{{ this.statisticsCellUnit(min) }}</td>
+        <td>{{ this.statisticsCellUnit(max) }}</td>
+        <td>{{ this.statisticsCellUnit(median) }}</td>
+        <td>{{ this.statisticsCellUnit(mode) }}</td>
+        <td>{{ this.statisticsCell((100 * cov)|round, "&#37;") }}</td>
+        <td>{{ this.statisticsCellUnitStd(std) }}</td>
+        <td>{{ this.statisticsCellUnit(q10) }}</td>
+        <td>{{ this.statisticsCellUnit(q90) }}</td>
+    </tr>
+{% endmacro %}
 
 {% macro statisticsRowDefault(label, unit, distribution, factor, decimals) %}
     {# @var distribution \Runalyze\Calculation\Distribution\Empirical #}
@@ -41,7 +68,7 @@
         (factor * distribution.quantile(0.1))|number_format(decimals|default(0)),
         (factor * distribution.quantile(0.9))|number_format(decimals|default(0))
     ) }}
-{% endmacro statisticsRowDefault %}
+{% endmacro %}
 
 {% block content %}
     <div class="panel-heading">
@@ -68,28 +95,53 @@
                 {% if statistics.hasStatisticsForPace %}
                     {% set current = statistics.statisticsForPace %}
                     {# @var current \Runalyze\Calculation\Distribution\Empirical #}
-                    {{ this.statisticsRow(
+                    {{ this.statisticsRowUnit(
                         "Pace"|trans,
-                        "/km",
-                        (60 * paceAverage)|round|date('G:i'),
-                        (60 * current.min)|round|date('G:i'),
-                        (60 * current.max)|round|date('G:i'),
-                        (60 * current.median)|round|date('G:i'),
-                        (60 * current.mode)|round|date('G:i'),
-                        statistics.statisticsForPace.coefficientOfVariation,
-                        (60 * current.stdDev)|round|date('G:i'),
-                        (60 * current.quantile(0.1))|round|date('G:i'),
-                        (60 * current.quantile(0.9))|round|date('G:i')
+                        pace(current.mean, paceUnit),
+                        pace(current.max, paceUnit),
+                        pace(current.min, paceUnit),
+                        pace(current.median, paceUnit),
+                        pace(current.mode, paceUnit),
+                        current.coefficientOfVariation,
+                        paceComparison(current.mean, (current.mean + current.stdDev), paceUnit),
+                        pace(current.quantile(0.1), paceUnit),
+                        pace(current.quantile(0.9), paceUnit)
                     ) }}
                 {% endif %}
                 {% if statistics.hasStatisticsForHeartRate %}
-                    {{ this.statisticsRowDefault("Heart rate"|trans, "bpm", statistics.statisticsForHeartRate) }}
+                    {% set current = statistics.statisticsForHeartRate %}
+                    {# @var current \Runalyze\Calculation\Distribution\Empirical #}
+                    {{ this.statisticsRowUnit(
+                        "Heart rate"|trans,
+                        heartRate(current.mean),
+                        heartRate(current.min),
+                        heartRate(current.max),
+                        heartRate(current.median),
+                        heartRate(current.mode),
+                        current.coefficientOfVariation,
+                        heartRateComparison(current.mean, (current.mean + current.stdDev)),
+                        heartRate(current.quantile(0.1)),
+                        heartRate(current.quantile(0.9))
+                    ) }}
                 {% endif %}
                 {% if statistics.hasStatisticsForCadence %}
                     {{ this.statisticsRowDefault("Cadence"|trans, "rpm", statistics.statisticsForCadence) }}
                 {% endif %}
                 {% if statistics.hasStatisticsForStrideLength %}
-                    {{ this.statisticsRowDefault("Stride length"|trans, "m", statistics.statisticsForStrideLength, 0.01, 2) }}
+                    {% set current = statistics.statisticsForStrideLength %}
+                    {# @var current \Runalyze\Calculation\Distribution\Empirical #}
+                    {{ this.statisticsRowUnit(
+                        "Stride length"|trans,
+                        strideLength(current.mean),
+                        strideLength(current.min),
+                        strideLength(current.max),
+                        strideLength(current.median),
+                        strideLength(current.mode),
+                        current.coefficientOfVariation,
+                        strideLength(current.stdDev),
+                        strideLength(current.quantile(0.1)),
+                        strideLength(current.quantile(0.9))
+                    ) }}
                 {% endif %}
                 {% if statistics.hasStatisticsForPower %}
                     {{ this.statisticsRowDefault("Power"|trans, "W", statistics.statisticsForPower) }}
@@ -121,13 +173,4 @@
             </tbody>
         </table>
     </div>
-
-    <p class="info">
-        {% trans %}
-            This analysis is currently under development and does not consider your unit settings.
-        {% endtrans %}
-        {% trans with {'%githubLink%': '<a href="https://github.com/Runalyze/Runalyze" target="_blank">GitHub</a>'} %}
-            Help us improving it at %githubLink%.
-        {% endtrans %}
-    </p>
 {% endblock %}

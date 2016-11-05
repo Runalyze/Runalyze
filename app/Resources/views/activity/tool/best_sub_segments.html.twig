@@ -6,16 +6,19 @@
     {{ value|raw }} <small>{{ unit|raw }}</small>
 {% endmacro %}
 
+{% macro tableCellFor(value) %}
+    {# @var value \Runalyze\Bundle\CoreBundle\Twig\DisplayableValue #}
+    {{ value.value }} <small>{{ value.unit }}</small>
+{% endmacro %}
+
 {% macro tableRow(rowLabel, baseValue, pace, from, to) %}
     {% import _self as this %}
 
     <tr class="c">
         <td class="l"><strong>{{ rowLabel }}</strong></td>
         <td>{{ baseValue }}</td>
-        <td>{{ this.tableCell((60 * pace)|round|date('G:i'), "/km") }}</td>
-        <td>
-            {{ this.tableCell(from|number_format(2), "km") }} - {{ this.tableCell(to|number_format(2), "km") }}
-        </td>
+        <td>{{ this.tableCellFor(pace) }}</td>
+        <td>{{ this.tableCellFor(distance(from)) }} - {{ this.tableCellFor(distance(to)) }}</td>
     </tr>
 {% endmacro %}
 
@@ -45,9 +48,9 @@
                     {% set achievedTime = distanceSegments.maximumForLengthIndex(i) %}
 
                     {{ this.tableRow(
-                        this.tableCell(distance|number_format(2), "km"),
+                        this.tableCellFor(distance(distance)),
                         achievedTime|duration,
-                        achievedTime / distance,
+                        pace(achievedTime / distance, paceUnit),
                         distanceArray[fromTo[0]],
                         distanceArray[fromTo[1]]
                     ) }}
@@ -62,8 +65,8 @@
 
                     {{ this.tableRow(
                         time|date('H:i:s', false),
-                        this.tableCell(achievedDistance|number_format(2), "km"),
-                        time / achievedDistance,
+                        this.tableCellFor(distance(achievedDistance)),
+                        pace(time / achievedDistance, paceUnit),
                         distanceArray[fromTo[0]],
                         distanceArray[fromTo[1]]
                     ) }}
@@ -72,13 +75,4 @@
             </tbody>
         </table>
     </div>
-
-    <p class="info">
-        {% trans %}
-            This analysis is currently under development and does not consider your unit settings.
-        {% endtrans %}
-        {% trans with {'%githubLink%': '<a href="https://github.com/Runalyze/Runalyze" target="_blank">GitHub</a>'} %}
-            Help us improving it at %githubLink%.
-        {% endtrans %}
-    </p>
 {% endblock %}

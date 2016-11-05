@@ -9,6 +9,7 @@ use Runalyze\Bundle\CoreBundle\Entity\Trackdata;
 use Runalyze\Bundle\CoreBundle\Services\Activity\VdotInfo;
 use Runalyze\Calculation\Math\SubSegmentMaximization;
 use Runalyze\Configuration;
+use Runalyze\Metrics\LegacyUnitConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -313,17 +314,22 @@ class ActivityController extends Controller
     {
         /** @var Trackdata $trackdata */
         $trackdata = $this->getDoctrine()->getManager()->getRepository('CoreBundle:Trackdata')->findOneBy([
-            'activityid' => $id,
-            'accountid' => $account->getId()
+            'activity' => $id,
+            'account' => $account->getId()
         ]);
         $trackdataModel = $trackdata->getLegacyModel();
+
+        $paceUnit = (new LegacyUnitConverter())->getPaceUnit(
+            $this->getDoctrine()->getManager()->getRepository('CoreBundle:Training')->getSpeedUnitFor($id, $account->getId())
+        );
 
         $statistics = new TimeSeriesStatistics($trackdataModel);
         $statistics->calculateStatistics([0.1, 0.9]);
 
         return $this->render('activity/tool/time_series_statistics.html.twig', [
             'statistics' => $statistics,
-            'paceAverage' => $trackdataModel->totalPace()
+            'paceAverage' => $trackdataModel->totalPace(),
+            'paceUnit' => $paceUnit
         ]);
     }
 
@@ -335,19 +341,24 @@ class ActivityController extends Controller
     {
         /** @var Trackdata $trackdata */
         $trackdata = $this->getDoctrine()->getManager()->getRepository('CoreBundle:Trackdata')->findOneBy([
-            'activityid' => $id,
-            'accountid' => $account->getId()
+            'activity' => $id,
+            'account' => $account->getId()
         ]);
         $trackdataModel = $trackdata->getLegacyModel();
 
+        $paceUnit = (new LegacyUnitConverter())->getPaceUnit(
+            $this->getDoctrine()->getManager()->getRepository('CoreBundle:Training')->getSpeedUnitFor($id, $account->getId())
+        );
+
         $statistics = new BestSubSegmentsStatistics($trackdataModel);
-        $statistics->setDistancesToAnalyze([0.2, 1.0, 3.0, 5.0, 10.0, 21.1, 42.2, 50, 100]);
+        $statistics->setDistancesToAnalyze([0.2, 1.0, 1.609, 3.0, 5.0, 10.0, 16.09, 21.1, 42.2, 50, 100]);
         $statistics->setTimesToAnalyze([30, 60, 120, 300, 600, 1800, 3600, 7200]);
         $statistics->findSegments();
 
         return $this->render('activity/tool/best_sub_segments.html.twig', [
             'statistics' => $statistics,
-            'distanceArray' => $trackdataModel->distance()
+            'distanceArray' => $trackdataModel->distance(),
+            'paceUnit' => $paceUnit
         ]);
     }
 

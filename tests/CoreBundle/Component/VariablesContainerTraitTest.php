@@ -1,5 +1,7 @@
 <?php
 
+namespace Runalyze\Bundle\CoreBundle\Tests\Component;
+
 use Runalyze\Bundle\CoreBundle\Component\VariablesContainerTrait;
 
 class VariablesContainerTraitTest extends \PHPUnit_Framework_TestCase
@@ -21,7 +23,7 @@ class VariablesContainerTraitTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      */
     public function testGettingUnknownKey()
     {

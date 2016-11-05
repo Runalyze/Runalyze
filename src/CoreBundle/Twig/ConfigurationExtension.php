@@ -31,7 +31,8 @@ class ConfigurationExtension extends \Twig_Extension
     {
         return array(
             new \Twig_SimpleFunction('configVar', array($this, 'configVar')),
-            new \Twig_SimpleFunction('config', array($this, 'config'))
+            new \Twig_SimpleFunction('config', array($this, 'config')),
+            new \Twig_SimpleFunction('unitSystem', array($this, 'unitSystem'))
         );
     }
 
@@ -53,5 +54,14 @@ class ConfigurationExtension extends \Twig_Extension
     public function config(Account $account = null)
     {
         return $this->ConfigurationManager->getList($account);
+    }
+
+    /**
+     * @param Account|null $account
+     * @return \Runalyze\Bundle\CoreBundle\Component\Configuration\UnitSystem
+     */
+    public function unitSystem(Account $account = null)
+    {
+        return $this->ConfigurationManager->getList($account)->getUnitSystem();
     }
 }

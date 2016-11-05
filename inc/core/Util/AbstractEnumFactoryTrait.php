@@ -23,7 +23,8 @@ trait AbstractEnumFactoryTrait
     /**
      * Get object
      * @param int|string $enum from internal enum
-     * @return \Runalyze\Util\AbstractEnum
+     * @return object
+     *
      * @throws \InvalidArgumentException
      */
     public static function get($enum)

@@ -64,7 +64,7 @@ class ConfigurationManager
 
     protected function setListForCurrentUser()
     {
-        $user = $this->TokenStorage->getToken()->getUser();
+        $user = $this->TokenStorage->getToken() ? $this->TokenStorage->getToken()->getUser() : null;
 
         if ($user instanceof Account) {
             $this->CurrentConfigurationList = $this->getListFor($user);

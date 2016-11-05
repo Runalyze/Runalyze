@@ -24,9 +24,10 @@ class Training
     /**
      * @var integer
      *
-     * @ORM\Column(name="sportid", type="integer", precision=10, nullable=false, options={"unsigned":true})
+     * @ORM\ManyToOne(targetEntity="Sport")
+     * @ORM\JoinColumn(name="sportid", referencedColumnName="id")
      */
-    private $sportid = '0';
+    private $sport = '0';
 
     /**
      * @var integer

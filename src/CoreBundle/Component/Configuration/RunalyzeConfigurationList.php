@@ -12,6 +12,9 @@ class RunalyzeConfigurationList extends ConfigurationList
     /** @var AbstractCategory[] */
     protected $CategoryPool = [];
 
+    /** @var UnitSystem|null */
+    protected $UnitSystem = null;
+
     public function __construct(array $variables = [])
     {
         parent::__construct([]);
@@ -197,6 +200,18 @@ class RunalyzeConfigurationList extends ConfigurationList
     public function getVdot()
     {
         return $this->getCategory('vdot');
+    }
+
+    /**
+     * @return UnitSystem
+     */
+    public function getUnitSystem()
+    {
+        if (null === $this->UnitSystem) {
+            $this->UnitSystem = new UnitSystem($this);
+        }
+
+        return $this->UnitSystem;
     }
 
     /**

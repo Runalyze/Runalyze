@@ -60,3 +60,9 @@ services:
     public: false
     tags:
       - { name: twig.extension }
+  app.twig_value_extension:
+    class: Runalyze\Bundle\CoreBundle\Twig\ValueExtension
+    public: false
+    arguments: ["@app.configuration_manager"]
+    tags:
+      - { name: twig.extension }

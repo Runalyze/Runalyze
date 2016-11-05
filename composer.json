@@ -31,7 +31,8 @@
         "exclude-from-classmap": ["inc/core/"],
         "psr-4": {
             "Runalyze\\": "inc/core/",
-            "Runalyze\\Bundle\\": "src/"
+            "Runalyze\\Bundle\\": "src/",
+            "Runalyze\\Tests\\": "tests/inc/core/"
         }
     },
     "require-dev": {
