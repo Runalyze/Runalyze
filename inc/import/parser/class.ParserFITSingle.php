@@ -292,7 +292,7 @@ class ParserFITSingle extends ParserAbstractSingle {
 		if (isset($this->Values['sport']))
 			$this->guessSportID($this->Values['sport'][1]);
 
-		if (isset($this->Values['total_training_effect']) && $this->Values['total_training_effect'][0] >= 1.0 && $this->Values['total_training_effect'][0] <= 5.0)
+		if (isset($this->Values['total_training_effect']) && $this->Values['total_training_effect'][0] >= 10.0 && $this->Values['total_training_effect'][0] <= 50.0)
 			$this->TrainingObject->setFitTrainingEffect($this->Values['total_training_effect'][0]/10);
 	}
 
