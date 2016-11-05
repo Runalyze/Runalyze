@@ -3,8 +3,13 @@
 namespace Runalyze\Bundle\CoreBundle\Command;
 
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\NullOutput;
+use Symfony\Component\Console\Output\Output;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Input\StringInput;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Application;
 
 class InstallDatabaseCommand extends ContainerAwareCommand
 {
@@ -35,6 +40,9 @@ class InstallDatabaseCommand extends ContainerAwareCommand
         $this->importDatabaseStructure();
 
         $output->writeln('  <info>Database has been successfully initialized.</info>');
+
+        $this->addAllMigrationsToDatabase();
+
     }
 
     /**
@@ -60,6 +68,16 @@ class InstallDatabaseCommand extends ContainerAwareCommand
 
             throw $e;
         }
+    }
+
+    private function addAllMigrationsToDatabase() {
+
+        $app = $this->getApplication();
+        $app->setAutoExit(false);
+
+        $input = new StringInput('doctrine:migrations:version --add --all -n -q');
+        $output = new NullOutput();
+        $app->run($input, $output);
     }
 
     /**

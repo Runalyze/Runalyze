@@ -54,8 +54,6 @@ class DefaultController extends Controller
      */
     public function registerAction(Request $request)
     {
-        new \Frontend(true, $this->get('security.token_storage'));
-
         if (!$this->getParameter('user_can_register')) {
             return $this->render('register/disabled.html.twig');
         }
@@ -142,11 +140,11 @@ class DefaultController extends Controller
      */
     protected function collectStatistics()
     {
-	$repository = $this->getDoctrine()->getRepository('CoreBundle:Account');
-	$numUser =  $repository->getAmountOfActivatedUsers();
+        $repository = $this->getDoctrine()->getRepository('CoreBundle:Account');
+        $numUser =  $repository->getAmountOfActivatedUsers();
 
-	$repository = $this->getDoctrine()->getRepository('CoreBundle:Training');
-	$numDistance =  $repository->getAmountOfLoggedKilometers();
+        $repository = $this->getDoctrine()->getRepository('CoreBundle:Training');
+        $numDistance =  $repository->getAmountOfLoggedKilometers();
 
         return ['user' => (int)$numUser, 'distance' => Distance::format($numDistance)];
     }
@@ -269,7 +267,7 @@ class DefaultController extends Controller
      */
     public function loginPhpAction()
     {
-        return $this->redirectToRoute('login');
+        return $this->redirectToRoute('dashboard');
     }
 
     /**

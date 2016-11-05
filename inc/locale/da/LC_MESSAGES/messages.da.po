@@ -1,18 +1,18 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.com\n"
 "POT-Creation-Date: 2016-10-10 19:09+0200\n"
-"PO-Revision-Date: 2016-07-27 21:06+0000\n"
+"PO-Revision-Date: 2016-10-19 21:24+0000\n"
 "Last-Translator: Jörn Petersen <joern@familiepetersen.dk>\n"
-"Language-Team: Danish <http://translate.runalyze.com/projects/runalyze/"
-"runalyze/da/>\n"
+"Language-Team: Danish <https://translate.runalyze.com/projects/runalyze"
+"/runalyze-master-po/da/>\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.8-dev\n"
+"X-Generator: Weblate 2.8\n"
 "X-Poedit-KeywordsList: __;_ne;_n;_e\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -20,7 +20,7 @@ msgstr ""
 #: src/CoreBundle/Controller/ActivityController.php:98
 #: src/CoreBundle/Controller/ActivityController.php:197
 msgid "The activity has been removed"
-msgstr ""
+msgstr "Aktiviteten er blevet fjernet"
 
 #: src/CoreBundle/Controller/ActivityController.php:259
 msgid "Corrected elevation data has been removed."
@@ -33,31 +33,31 @@ msgstr "Højde data er blevet korrigeret."
 
 #: src/CoreBundle/Controller/ActivityController.php:274
 msgid "Elevation data could not be retrieved."
-msgstr ""
+msgstr "Højdedata kunne ikke modtages."
 
 #: src/CoreBundle/Controller/CallController.php:153
 msgid "Search for activities"
-msgstr ""
+msgstr "Søg efter aktiviteter"
 
 #: src/CoreBundle/Controller/CallController.php:182
 msgid "There was a problem."
-msgstr ""
+msgstr "Et problem opstod."
 
 #: src/CoreBundle/Controller/DefaultController.php:241
 msgid "Click on an activity to see more details."
-msgstr ""
+msgstr "Klik på en aktivitet for at se flere detaljer."
 
 #: src/CoreBundle/Controller/DefaultController.php:242
 msgid "Public activities are marked: "
-msgstr ""
+msgstr "Offentlige aktiviteter er markerede. "
 
 #: src/CoreBundle/Controller/PluginController.php:24
 msgid "Install"
-msgstr ""
+msgstr "Installere"
 
 #: src/CoreBundle/Controller/PluginController.php:30
 msgid "The plugin has been successfully installed."
-msgstr ""
+msgstr "Plugin er blevet installeret."
 
 #: src/CoreBundle/Controller/PluginController.php:33
 #: src/CoreBundle/Component/Tool/Backup/JsonImporterResults.php:133
@@ -68,32 +68,32 @@ msgstr "Konfiguration"
 
 #: src/CoreBundle/Controller/PluginController.php:39
 msgid "There was a problem, the plugin could not be installed."
-msgstr ""
+msgstr "Et problem opstod, plugin kunne ikke installeres."
 
 #: src/CoreBundle/Controller/PluginController.php:43
 #: src/CoreBundle/Controller/PluginController.php:73
 msgid "back to list"
-msgstr ""
+msgstr "tilbage til listen"
 
 #: src/CoreBundle/Controller/PluginController.php:60
 msgid "Uninstall"
-msgstr ""
+msgstr "Afinstallere"
 
 #: src/CoreBundle/Controller/PluginController.php:63
 msgid "The plugin has been uninstalled."
-msgstr ""
+msgstr "Plugin blev afinstalleret."
 
 #: src/CoreBundle/Controller/PluginController.php:69
 msgid "There was a problem, the plugin could not be uninstalled."
-msgstr ""
+msgstr "Et problem opstod, plugin kunne ikke afinstalleres."
 
 #: src/CoreBundle/Controller/PluginController.php:94
 msgid "The plugin could not be found."
-msgstr ""
+msgstr "Plugin kunne ikke findes."
 
 #: src/CoreBundle/Controller/PluginController.php:166
 msgid "Something went wrong ..."
-msgstr ""
+msgstr "Noget gik galt..."
 
 #: src/CoreBundle/Component/Tool/DatabaseCleanup/Job.php:69
 #: inc/core/Configuration/Messages.php:49
@@ -120,7 +120,7 @@ msgstr ""
 #: src/CoreBundle/Component/Tool/DatabaseCleanup/JobGeneral.php:121
 #: inc/core/Configuration/Category/Vdot.php:222
 msgid "VDOT shape"
-msgstr ""
+msgstr "VDOT form"
 
 #: src/CoreBundle/Component/Tool/DatabaseCleanup/JobGeneral.php:132
 msgid "Vdot corrector"
@@ -356,7 +356,7 @@ msgstr ""
 #: src/CoreBundle/Component/Account/Registration.php:178
 #: inc/training/class.TrainingFormular.php:265
 msgid "Race"
-msgstr ""
+msgstr "Konkurrence"
 
 #: src/CoreBundle/Component/Account/Registration.php:178
 msgid "RC"
@@ -452,9 +452,8 @@ msgid "There was a problem while importing the file."
 msgstr ""
 
 #: inc/import/class.ImporterFactory.php:327
-#, fuzzy
 msgid "There are some unexpected contents in the file."
-msgstr "Datoen må ikke være i fremtiden."
+msgstr "Der er uventet indhold i filen."
 
 #: inc/import/class.ImporterFactory.php:328
 #, php-format
@@ -777,7 +776,7 @@ msgstr ""
 #: inc/system/config/class.ConfigTabTypes.php:48
 #: inc/core/Configuration/Category/DataBrowser.php:86
 msgid "Calendar view"
-msgstr ""
+msgstr "Kalendervisning"
 
 #: inc/system/config/class.ConfigTabSports.php:63
 #: inc/system/config/class.ConfigTabTypes.php:48
@@ -1782,7 +1781,7 @@ msgstr "SWOLF"
 
 #: inc/training/view/section/class.SectionSwimLaneRow.php:35
 msgid "SWOLFcycles"
-msgstr "SWOLFcycles"
+msgstr "SWOLF-cycles"
 
 #: inc/training/view/section/table/class.TableZonesAbstract.php:102
 msgid "Zone"
@@ -1963,7 +1962,6 @@ msgid "Wind speed"
 msgstr "Vindhastighed"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:65
-#, fuzzy
 msgid "Wind direction"
 msgstr "Vindretning"
 
@@ -2081,7 +2079,7 @@ msgstr "Kadence"
 #: inc/training/schemes/scheme.Training.php:596
 #: inc/core/Dataset/Keys/TrainingPartner.php:55
 msgid "Partner"
-msgstr "Partner"
+msgstr "Træningspartner"
 
 #: inc/training/search/class.SearchFormular.php:180
 #: inc/training/schemes/scheme.Training.php:258
@@ -2099,7 +2097,7 @@ msgstr "Maks. puls"
 
 #: inc/training/search/class.SearchFormular.php:186
 msgid "Is race"
-msgstr ""
+msgstr "Konkurrence"
 
 #: inc/training/search/class.SearchFormular.php:190
 msgid "Uses VDOT"
@@ -2988,9 +2986,8 @@ msgid "Gender"
 msgstr "Køn"
 
 #: inc/core/Dataset/Keys/RaceResult.php:160
-#, fuzzy
 msgid "Race name"
-msgstr "Tempo zoner"
+msgstr "Løbsnavn"
 
 #: inc/core/Dataset/Keys/Splits.php:47
 msgid "Splits"
@@ -4169,23 +4166,23 @@ msgstr "Tempodiagram: y-akse opløsning"
 
 #: inc/core/Configuration/Category/ActivityView.php:362
 msgid "Scale type that will be used to show pace on y-axis."
-msgstr ""
+msgstr "Skalering for pace på y-aksen."
 
 #: inc/core/Configuration/Category/ActivityView.php:366
 msgid "Pace plot: Ignore outliers"
-msgstr ""
+msgstr "Pacediagram: Ignorer større afvigelser"
 
 #: inc/core/Configuration/Category/ActivityView.php:367
 msgid "Try to ignore outliers in the pace plot."
-msgstr ""
+msgstr "Ved aktivering ignoreres større afvigelser i pace diagrammet."
 
 #: inc/core/Configuration/Category/ActivityView.php:371
 msgid "Splits plot: use zero as axis minimum"
-msgstr ""
+msgstr "Split diagram: anvend nul som minimum for aksen"
 
 #: inc/core/Configuration/Category/ActivityView.php:381
 msgid "Map: interrupt route"
-msgstr ""
+msgstr "Kort: Afbryd rute"
 
 #: inc/core/Configuration/Category/ActivityView.php:382
 msgid ""
@@ -4194,10 +4191,14 @@ msgid ""
 "which distance (in seconds by average pace)between two data points can be "
 "interpolated."
 msgstr ""
+"Gps ruten kan afbrydes i tilfælde af <em>afbrydelser</em> (f.eks. "
+"bil/tog/...). Det er dog ikke nemt at finde disse afbrydelser. Du kan angive "
+"op til hvilken distance (i sekunder ved gennemsnitstempo) mellem to data "
+"punkter der skal interpoleres."
 
 #: inc/core/Configuration/Category/ActivityView.php:388
 msgid "Map: precision"
-msgstr ""
+msgstr "Kort: nøjagtighed"
 
 #: inc/core/Configuration/Category/ActivityView.php:389
 msgid "How many data points shoud be displayed?"
@@ -4205,23 +4206,23 @@ msgstr "Hvor mange data punkter shoud blive vist?"
 
 #: inc/core/Configuration/Category/ActivityView.php:393
 msgid "Map: line color"
-msgstr ""
+msgstr "Kort: farve af linje"
 
 #: inc/core/Configuration/Category/ActivityView.php:394
 msgid "as hexadecimal rgb (e.g. #ff5500)"
-msgstr ""
+msgstr "som hexadecimal rgb (f.eks. #ff5500)"
 
 #: inc/core/Configuration/Category/ActivityView.php:398
 msgid "Map: show map first"
-msgstr ""
+msgstr "Kort: vis før diagrammer"
 
 #: inc/core/Configuration/Category/ActivityView.php:399
 msgid "show map before plots"
-msgstr ""
+msgstr "vis kort inden diagrammer"
 
 #: inc/core/Configuration/Category/ActivityView.php:403
 msgid "Map: zoom on scroll"
-msgstr ""
+msgstr "Kort: zoom ved at scrolle"
 
 #: inc/core/Configuration/Category/ActivityView.php:413
 msgid "Elevation: smoothing"
@@ -4229,7 +4230,7 @@ msgstr "Højde: gulvafslibning"
 
 #: inc/core/Configuration/Category/ActivityView.php:414
 msgid "Choose the algorithm to smooth the elevation data"
-msgstr ""
+msgstr "Vælg algoritme til at udjævne højdedata"
 
 #: inc/core/Configuration/Category/ActivityView.php:418
 msgid "Elevation: threshold"
@@ -4237,19 +4238,19 @@ msgstr "Højde: tærskel"
 
 #: inc/core/Configuration/Category/ActivityView.php:419
 msgid "Threshold for the smoothing algorithm"
-msgstr ""
+msgstr "Tærskel for udjævnelses algoritmen"
 
 #: inc/core/Configuration/Category/ActivityForm.php:204
 msgid "Activity form"
-msgstr ""
+msgstr "Aktivitets formular"
 
 #: inc/core/Configuration/Category/ActivityForm.php:207
 msgid "Default window"
-msgstr ""
+msgstr "Standard vindue"
 
 #: inc/core/Configuration/Category/ActivityForm.php:211
 msgid "Show activity after creation"
-msgstr ""
+msgstr "Vis træning efter oprettelse"
 
 #: inc/core/Configuration/Category/ActivityForm.php:215
 #, fuzzy
@@ -4262,54 +4263,60 @@ msgstr ""
 
 #: inc/core/Configuration/Category/ActivityForm.php:220
 msgid "Calculate power"
-msgstr ""
+msgstr "Beregn effekt"
 
 #: inc/core/Configuration/Category/ActivityForm.php:221
 msgid "Calculate power by speed and grade for cycling"
 msgstr ""
+"Ved cykling kan effekten beregnes automatisk med hjælp af nogle fysikalske "
+"størrelser"
 
 #: inc/core/Configuration/Category/ActivityForm.php:225
 msgid "Detect pauses"
-msgstr ""
+msgstr "Find pauser automatisk"
 
 #: inc/core/Configuration/Category/ActivityForm.php:226
 msgid "Detect pauses (distance not increasing) when importing training"
-msgstr ""
+msgstr "Find pauser ved import af aktiviteter (distancen forbliver uændret)"
 
 #: inc/core/Configuration/Category/ActivityForm.php:242
 msgid "Automatically load weather conditions"
-msgstr ""
+msgstr "Indlæs vejrdata automatisk"
 
 #: inc/core/Configuration/Category/ActivityForm.php:243
 msgid "via openweathermap.org"
-msgstr ""
+msgstr "via openweathermap.org"
 
 #: inc/core/Configuration/Category/ActivityForm.php:247
 msgid "for weather: Location"
-msgstr ""
+msgstr "Sted for vejrdata"
 
 #: inc/core/Configuration/Category/ActivityForm.php:248
 msgid ""
 "For loading weather data from openweathermap.org<br>e.g. <em>Berlin, de</em>"
 msgstr ""
+"For at indlæse vejrdata fra openweathermap.org<br>f.eks. <em>København, "
+"dk</em>"
 
 #: inc/core/Configuration/Category/ActivityForm.php:259
 msgid "Automatically correct elevation data"
-msgstr ""
+msgstr "Automatisk korrektion af højdedata"
 
 #: inc/core/Configuration/Category/ActivityForm.php:260
 msgid ""
 "Instead of using gps-elevation a correction via external services is "
 "possible."
 msgstr ""
+"I stedet for at anvende gps-højdedata, kan højdedata korrigeres via en "
+"ekstern service."
 
 #: inc/core/Configuration/Category/ActivityForm.php:270
 msgid "Sort: sport types"
-msgstr ""
+msgstr "Sortering: Sportsgrene"
 
 #: inc/core/Configuration/Category/ActivityForm.php:274
 msgid "Sort: activity types"
-msgstr ""
+msgstr "Sortering: Aktivitetstyper"
 
 #: inc/core/Configuration/Category/ActivityForm.php:278
 msgid "Sort: equipment"
@@ -4317,31 +4324,31 @@ msgstr "Sortering: Udstyr"
 
 #: inc/core/Configuration/Category/DataBrowser.php:89
 msgid "Calendar: mode"
-msgstr ""
+msgstr "Kalender: modus"
 
 #: inc/core/Configuration/Category/DataBrowser.php:90
 msgid "Default mode for the calendar"
-msgstr ""
+msgstr "Standardvisning for kalenderen"
 
 #: inc/core/Configuration/Category/DataBrowser.php:94
 msgid "Calendar: show labels for dataset"
-msgstr ""
+msgstr "Kalender: vis label for datasæt"
 
 #: inc/core/Configuration/Category/DataBrowser.php:98
 msgid "Calendar: show days with activities only"
-msgstr ""
+msgstr "Kalender: vis kun dage med aktiviteter"
 
 #: inc/core/Configuration/Category/DataBrowser.php:102
 msgid "Calendar: create button"
-msgstr ""
+msgstr "Vis tilføj-aktivitet-link for hver dag"
 
 #: inc/core/Configuration/Category/DataBrowser.php:103
 msgid "Add a link for every day to create a new activity."
-msgstr ""
+msgstr "Tilføj et link for hver dag for at oprette en ny aktivitet."
 
 #: inc/core/Configuration/Category/Trimp.php:99
 msgid "Days for ATL"
-msgstr ""
+msgstr "Dage for ATL"
 
 #: inc/core/Configuration/Category/Trimp.php:100
 msgid "Number of days for ATL time constant"
@@ -4460,84 +4467,97 @@ msgstr "Du kan skjule kortet for den offentlige visning"
 
 #: inc/core/Configuration/Category/Vdot.php:165
 msgid "Estimation formula"
-msgstr ""
+msgstr "VDOT formel"
 
 #: inc/core/Configuration/Category/Vdot.php:166
 msgid ""
 "Formula to estimate the vdot value. The old method is only listed for "
 "compatibility reasons."
 msgstr ""
+"Formel til beregning af VDOT værdien. Den gamle metode vises kun på grund af "
+"kompatibilitet."
 
 #: inc/core/Configuration/Category/Vdot.php:170
 msgid "Time constant length for VDOT"
-msgstr ""
+msgstr "Dage for VDOT"
 
 #: inc/core/Configuration/Category/Vdot.php:171
 msgid "Time constant length for VDOT rolling average"
-msgstr ""
+msgstr "Antal dage der anvendes til beregning af VDOT-formen"
 
 #: inc/core/Configuration/Category/Vdot.php:175
 msgid "Use correction factor"
-msgstr ""
+msgstr "Anvend VDOT korrektionsfaktor"
 
 #: inc/core/Configuration/Category/Vdot.php:176
 msgid "Use a correction factor based on your best race result. (recommended)"
 msgstr ""
+"Tilpas VDOT-værdien ved hjælp af det bedste konkurrence-resultat (anbefales)"
 
 #: inc/core/Configuration/Category/Vdot.php:180
 msgid "Manual correction factor"
-msgstr ""
+msgstr "Manuel VDOT-korrektionsfaktor"
 
 #: inc/core/Configuration/Category/Vdot.php:181
 msgid ""
 "Manual correction factor (e.g. 0.9), if the automatic factor does not fit. "
 "Can be left empty."
 msgstr ""
+"Manuel korrektionsfaktor (f.eks. 0.9), hvis den automatiske faktor ikke "
+"passer. Kan stå tomt."
 
 #: inc/core/Configuration/Category/Vdot.php:182
 #, php-format
 msgid "Value must be between %s and %s."
-msgstr ""
+msgstr "Værdien skal være imellem %s og %s."
 
 #: inc/core/Configuration/Category/Vdot.php:186
 msgid "Use fixed VDOT value"
-msgstr ""
+msgstr "Manuel VDOT-værdi"
 
 #: inc/core/Configuration/Category/Vdot.php:187
 msgid ""
 "Fixed VDOT value (e.g. 55), if the estimation does not fit. Can be left "
 "empty."
 msgstr ""
+"Fast VDOT-værdi (f.eks. 55), hvis den skønnede værdi ikke stemmer. Kan blive "
+"tomt."
 
 #: inc/core/Configuration/Category/Vdot.php:191
 msgid "Adapt for elevation"
-msgstr ""
+msgstr "VDOT: tilpas for højdemeter"
 
 #: inc/core/Configuration/Category/Vdot.php:192
 msgid ""
 "The distance can be corrected by a formula from Peter Greif to adapt for "
 "elevation."
 msgstr ""
+"Distancen kan tilpasses for højdemeter ved hjælp af en formel fra Peter "
+"Greif."
 
 #: inc/core/Configuration/Category/Vdot.php:196
 msgid "Correction per positive elevation"
-msgstr ""
+msgstr "VDOT: distance korrektion per positiv højdemeter"
 
 #: inc/core/Configuration/Category/Vdot.php:197
 msgid ""
 "Add for each meter upwards X meter to the distance. (Only for the VDOT "
 "calculation)"
 msgstr ""
+"Tilføj X meter til distancen for hver positiv højdemeter. (kun til VDOT "
+"beregningen)"
 
 #: inc/core/Configuration/Category/Vdot.php:202
 msgid "Correction per negative elevation"
-msgstr ""
+msgstr "VDOT: distance korrektion per negativ højdemeter"
 
 #: inc/core/Configuration/Category/Vdot.php:203
 msgid ""
 "Add for each meter downwards X meter to the distance. (Only for the VDOT "
 "calculation)"
 msgstr ""
+"Fjern X meter fra distancen for hver negativ højdemeter. (kun til VDOT "
+"beregningen)"
 
 #: inc/core/Configuration/Category/Misc.php:48
 msgid "Search: results per page"
@@ -4593,7 +4613,7 @@ msgstr "Design"
 
 #: inc/core/Configuration/Category/Design.php:59
 msgid "Background image"
-msgstr ""
+msgstr "Baggrundsbillede"
 
 #: inc/class.FrontendShared.php:134
 msgid "Invalid request"
@@ -5645,9 +5665,8 @@ msgid "Half marathon"
 msgstr ""
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:574
-#, fuzzy
 msgid "This race result is linked to the following activity"
-msgstr "Tilføj løbsresultat"
+msgstr "Dette løbsresultat er knyttet til den følgende aktivitet"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:581
 msgid "Your official placement."

@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: mail@runalyze.com\n"
 "POT-Creation-Date: 2016-10-10 19:09+0200\n"
-"PO-Revision-Date: 2016-10-11 13:14+0000\n"
+"PO-Revision-Date: 2016-10-19 16:26+0000\n"
 "Last-Translator: Antti <antti.asi@gmail.com>\n"
-"Language-Team: Estonian <http://translate.runalyze.com/projects/runalyze"
+"Language-Team: Estonian <https://translate.runalyze.com/projects/runalyze"
 "/runalyze-master-po/et/>\n"
 "Language: et\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.7\n"
+"X-Generator: Weblate 2.8\n"
 
 #: src/CoreBundle/Controller/ActivityController.php:98
 #: src/CoreBundle/Controller/ActivityController.php:197
@@ -79,23 +79,23 @@ msgstr "tagasi nimekirja"
 
 #: src/CoreBundle/Controller/PluginController.php:60
 msgid "Uninstall"
-msgstr ""
+msgstr "Eemalda"
 
 #: src/CoreBundle/Controller/PluginController.php:63
 msgid "The plugin has been uninstalled."
-msgstr ""
+msgstr "Moodul on eemaldatud."
 
 #: src/CoreBundle/Controller/PluginController.php:69
 msgid "There was a problem, the plugin could not be uninstalled."
-msgstr ""
+msgstr "Moodulit polnud võimalik eemaldada."
 
 #: src/CoreBundle/Controller/PluginController.php:94
 msgid "The plugin could not be found."
-msgstr ""
+msgstr "Moodulit ei leitud."
 
 #: src/CoreBundle/Controller/PluginController.php:166
 msgid "Something went wrong ..."
-msgstr ""
+msgstr "Miskit läks nihu ..."
 
 #: src/CoreBundle/Component/Tool/DatabaseCleanup/Job.php:69
 #: inc/core/Configuration/Messages.php:49
@@ -152,7 +152,7 @@ msgstr ""
 
 #: src/CoreBundle/Component/Tool/DatabaseCleanup/JobGeneral.php:176
 msgid "Your personal cache has been cleared."
-msgstr ""
+msgstr "Sinu isiklik vahemälu puhastati."
 
 #: src/CoreBundle/Component/Tool/DatabaseCleanup/JobLoop.php:81
 #, php-format
@@ -201,7 +201,7 @@ msgstr ""
 #: src/CoreBundle/Component/Tool/Backup/JsonImporterResults.php:134
 #: inc/system/config/class.ConfigTabDataset.php:59
 msgid "Dataset"
-msgstr ""
+msgstr "Andmeväljad"
 
 #: src/CoreBundle/Component/Tool/Backup/JsonImporterResults.php:135
 #: inc/system/config/class.ConfigTabPlugins.php:189
@@ -332,7 +332,7 @@ msgstr ""
 
 #: src/CoreBundle/Component/Account/Registration.php:175
 msgid "Fartlek"
-msgstr ""
+msgstr "Fartlek"
 
 #: src/CoreBundle/Component/Account/Registration.php:175
 msgid "FL"
@@ -450,41 +450,42 @@ msgstr ""
 
 #: inc/import/class.ImporterFactory.php:322
 msgid "There was a problem while importing the file."
-msgstr ""
+msgstr "Probleem faili impordil."
 
 #: inc/import/class.ImporterFactory.php:327
 msgid "There are some unexpected contents in the file."
-msgstr ""
+msgstr "Faili sisu erineb oodatust."
 
 #: inc/import/class.ImporterFactory.php:328
 #, php-format
 msgid "Please mail the file to %s."
-msgstr ""
+msgstr "Palun saada fail aadressile %s."
 
 #: inc/import/class.ImporterFactory.php:331
 msgid ""
 "There was an installation specific problem. Please contact the administrator."
 msgstr ""
+"Avaldus paigaldusega seotud viga. Palun võta ühendust administraatoriga."
 
 #: inc/import/class.ImporterFactory.php:334
 msgid "This file format is not supported."
-msgstr ""
+msgstr "See vorming pole toetatud."
 
 #: inc/import/class.ImporterFactory.php:339
 msgid "Please add the following information"
-msgstr ""
+msgstr "Palun anna edasi ka järgnev info"
 
 #: inc/import/tpl/tpl.Importer.upload.php:2
 msgid "Upload file"
-msgstr ""
+msgstr "Lae fail"
 
 #: inc/import/tpl/tpl.Importer.upload.php:39
 msgid "There were problems while uploading."
-msgstr ""
+msgstr "Probleem üleslaadimisel."
 
 #: inc/import/tpl/tpl.Importer.upload.php:54
 msgid "Your browser does not seem to support this uploader, see"
-msgstr ""
+msgstr "Tundub, et su brauser ei toeta seda üleslaadijat, vaata ka"
 
 #: inc/import/tpl/tpl.Importer.upload.php:62
 msgid "Table showing included data by filetype"
@@ -606,7 +607,7 @@ msgstr ""
 #: inc/core/Dataset/Keys/Setting.php:105 inc/core/Dataset/Keys/Setting.php:122
 #: inc/core/Dataset/Keys/SharedLink.php:44
 msgid "Public link"
-msgstr ""
+msgstr "Avalik viide"
 
 #: inc/system/class.SharedLinker.php:79
 msgid "Public list"
@@ -633,7 +634,7 @@ msgstr ""
 
 #: inc/system/config/class.ConfigTabSports.php:29
 msgid "Hover over the headings if the abbreviations are unclear."
-msgstr ""
+msgstr "Vii kursor pealkirja kohale kui lühendid segaseks jäävad."
 
 #: inc/system/config/class.ConfigTabSports.php:39
 msgid "<em>Avg. HF</em> is necessary for the calculation of TRIMP."
@@ -641,7 +642,7 @@ msgstr ""
 
 #: inc/system/config/class.ConfigTabSports.php:53
 msgid "Icon"
-msgstr ""
+msgstr "Ikoon"
 
 #: inc/system/config/class.ConfigTabSports.php:54
 #: inc/system/config/class.ConfigTabTypes.php:43
@@ -653,19 +654,19 @@ msgstr ""
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:452
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:647
 msgid "Name"
-msgstr ""
+msgstr "Nimetus"
 
 #: inc/system/config/class.ConfigTabSports.php:54
 msgid "Name of the sport"
-msgstr ""
+msgstr "Spordiala nimetus"
 
 #: inc/system/config/class.ConfigTabSports.php:55
 msgid "kcal/h"
-msgstr ""
+msgstr "kcal/h"
 
 #: inc/system/config/class.ConfigTabSports.php:55
 msgid "Average energy turnover in kilocalories per hour"
-msgstr ""
+msgstr "Keskmine energiakulu kilokalorites tunni kohta"
 
 #: inc/system/config/class.ConfigTabSports.php:56
 #: inc/system/config/class.ConfigTabTypes.php:46
@@ -710,28 +711,28 @@ msgstr ""
 #: inc/core/View/Window/Laps/Table.php:149
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:369
 msgid "HR"
-msgstr ""
+msgstr "SLS"
 
 #: inc/system/config/class.ConfigTabSports.php:56
 #: inc/system/config/class.ConfigTabTypes.php:46
 msgid "Average heart rate (used for calculation of TRIMP)"
-msgstr ""
+msgstr "Keskmine pulss (kasutatakse TRIMPi arvutamiseks)"
 
 #: inc/system/config/class.ConfigTabSports.php:57
 msgid "km"
-msgstr ""
+msgstr "km"
 
 #: inc/system/config/class.ConfigTabSports.php:57
 msgid "Has a distance"
-msgstr ""
+msgstr "Üks parameetritest on läbitud vahemaa"
 
 #: inc/system/config/class.ConfigTabSports.php:58
 msgid "Unit"
-msgstr ""
+msgstr "Ühik"
 
 #: inc/system/config/class.ConfigTabSports.php:58
 msgid "Unit for speed"
-msgstr ""
+msgstr "Kiiruse mõõtühik"
 
 #: inc/system/config/class.ConfigTabSports.php:59
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:130
@@ -743,19 +744,19 @@ msgstr ""
 #: inc/core/View/Activity/Plot/Series/Power.php:38
 #: inc/core/View/Window/Laps/Table.php:281
 msgid "Power"
-msgstr ""
+msgstr "Võimsus"
 
 #: inc/system/config/class.ConfigTabSports.php:59
 msgid "Power is recorded or calculated."
-msgstr ""
+msgstr "Võimsust mõõdetakse või arvutatakse."
 
 #: inc/system/config/class.ConfigTabSports.php:60
 msgid "Outside"
-msgstr ""
+msgstr "Õues"
 
 #: inc/system/config/class.ConfigTabSports.php:60
 msgid "Sport is performed outdoor: activate route, weather, ..."
-msgstr ""
+msgstr "Õues toimuv spordiala. Lisanduvad teekond, ilm jne."
 
 #: inc/system/config/class.ConfigTabSports.php:61
 msgid "Main equipment"
@@ -777,27 +778,27 @@ msgstr ""
 #: inc/system/config/class.ConfigTabTypes.php:48
 #: inc/core/Configuration/Category/DataBrowser.php:86
 msgid "Calendar view"
-msgstr ""
+msgstr "Kalendrivaade"
 
 #: inc/system/config/class.ConfigTabSports.php:63
 #: inc/system/config/class.ConfigTabTypes.php:48
 msgid "Mode for displaying activities in calendar"
-msgstr ""
+msgstr "Millisel moel näidatakse tegevusi kalendris"
 
 #: inc/system/config/class.ConfigTabSports.php:64
 msgid "A sport can only be deleted if no references exist."
-msgstr ""
+msgstr "Spordiala saab eemaldada vaid viidete puudumisel."
 
 #: inc/system/config/class.ConfigTabSports.php:86
 #: inc/system/config/class.ConfigTabSports.php:117
 #: inc/system/config/class.ConfigTabTypes.php:82
 msgid "complete row"
-msgstr ""
+msgstr "täisinfo"
 
 #: inc/system/config/class.ConfigTabSports.php:87
 #: inc/system/config/class.ConfigTabTypes.php:83
 msgid "only icon"
-msgstr ""
+msgstr "ainult ikoon"
 
 #: inc/system/config/class.ConfigTabSports.php:134
 #: inc/system/config/class.ConfigTabSports.php:149
@@ -875,32 +876,32 @@ msgstr ""
 
 #: inc/system/config/class.ConfigTabDataset.php:106
 msgid "Display"
-msgstr ""
+msgstr "Kuva"
 
 #: inc/system/config/class.ConfigTabDataset.php:106
 msgid "The information will be shown directly in the row."
-msgstr ""
+msgstr "Väli kuvatakse inforeale."
 
 #: inc/system/config/class.ConfigTabDataset.php:107
 #: inc/system/config/class.ConfigTabPlugins.php:72
 msgid "Order"
-msgstr ""
+msgstr "Järjestus"
 
 #: inc/system/config/class.ConfigTabDataset.php:107
 msgid "Indicates the order of appearance."
-msgstr ""
+msgstr "Kuvamise järjekord."
 
 #: inc/system/config/class.ConfigTabDataset.php:108
 msgid "CSS-Style"
-msgstr ""
+msgstr "CSSi stiil"
 
 #: inc/system/config/class.ConfigTabDataset.php:108
 msgid "any CSS-Code"
-msgstr ""
+msgstr "suvaline CSSi kood"
 
 #: inc/system/config/class.ConfigTabDataset.php:109
 msgid "Example"
-msgstr ""
+msgstr "Näide"
 
 #: inc/system/config/class.ConfigTabDataset.php:141
 msgid "new"
