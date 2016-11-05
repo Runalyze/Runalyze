@@ -1,0 +1,5 @@
+imports:
+    - { resource: config_test.yml }
+
+parameters:
+  database_prefix: runalyze_test_empty_

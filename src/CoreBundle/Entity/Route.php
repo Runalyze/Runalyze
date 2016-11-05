@@ -1,8 +1,9 @@
 <?php
+
 namespace Runalyze\Bundle\CoreBundle\Entity;
 
-
 use Doctrine\ORM\Mapping as ORM;
+use Runalyze\Bundle\CoreBundle\Entity\Account;
 
 /**
  * Route
@@ -15,7 +16,7 @@ class Route
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer", precsion=10, nullable=false)
+     * @ORM\Column(name="id", type="integer", precision=10, nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -127,7 +128,7 @@ class Route
     private $inRoutenet = '0';
 
     /**
-     * @var \Account
+     * @var Account
      *
      * @ORM\ManyToOne(targetEntity="Account")
      * @ORM\JoinColumns({
@@ -509,11 +510,11 @@ class Route
     /**
      * Set account
      *
-     * @param \Runalyze\Bundle\CoreBundle\Entity\Account $account
+     * @param Account|null $account
      *
      * @return Route
      */
-    public function setAccount(\Runalyze\Bundle\CoreBundle\Entity\Account $account = null)
+    public function setAccount(Account $account = null)
     {
         $this->account = $account;
 
@@ -523,7 +524,7 @@ class Route
     /**
      * Get account
      *
-     * @return \Runalyze\Bundle\CoreBundle\Entity\Account
+     * @return Account|null
      */
     public function getAccount()
     {

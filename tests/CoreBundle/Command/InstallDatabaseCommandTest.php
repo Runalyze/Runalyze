@@ -21,7 +21,7 @@ class InstallDatabaseCommandTest extends KernelTestCase
 
     protected function setUp()
     {
-        static::bootKernel();
+        static::bootKernel(['environment' => 'test_empty']);
 
         $this->Connection = static::$kernel->getContainer()->get('doctrine')->getConnection();
         $this->DatabasePrefix = static::$kernel->getContainer()->getParameter('database_prefix');
