@@ -13,13 +13,13 @@ use Runalyze\Configuration;
 
 /**
  * Prognosis by Jack Daniels
- * 
+ *
  * Competition prediction based on "Die Laufformel" by Jack Daniels.
  * See page 52/53 for a table.
- * 
+ *
  * An adjustment based on a value for the basic endurance can be used.
  * This adjustment is NOT based on Jack Daniels' formulas.
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Calculation\Prognosis
  */
@@ -38,12 +38,12 @@ class Daniels extends AbstractStrategy {
 
 	/**
 	 * Basic endurance
-	 * 
+	 *
 	 * Basic endurance is interpreted as a percentage of achieved (optimal)
 	 * marathon training. A value of '100' represents a perfect training.
 	 * The value can be greater than 100 for representing a good training for
 	 * an ultramarathon.
-	 * 
+	 *
 	 * @var int
 	 */
 	private $BASIC_ENDURANCE = 0;
@@ -137,9 +137,9 @@ class Daniels extends AbstractStrategy {
 
 	/**
 	 * Get adjusted VDOT
-	 * 
+	 *
 	 * This method doesn't care if the strategy uses an adjusted VDOT or not.
-	 * 
+	 *
 	 * @see self::getAdjustmentFactor()
 	 * @param float $distance distance in km
 	 * @return float factor
@@ -150,12 +150,12 @@ class Daniels extends AbstractStrategy {
 
 	/**
 	 * Get adjustment factor
-	 * 
+	 *
 	 * Get a factor between 0 and 1 (in fact between 0.6 and 1) for adjusting
 	 * the VDOT to the given distance based on used basic endurance value.
-	 * 
+	 *
 	 * Uses <code>pow($distance, 1.23)</code> to predict the required basic endurance.
-	 * 
+	 *
 	 * @param float $distance distance in km
 	 * @return float factor
 	 */

@@ -112,7 +112,11 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	protected function displayContent() {
 		$this->showValues();
 
-		if ($this->Configuration()->value('show_trainingpaces')) {
+		if (0 == Configuration::Data()->vdot()) {
+			if ($this->Configuration()->value('show_vdot')) {
+				echo '<p class="error small">'.$this->getNoVdotDataError().'</p>';
+			}
+		} elseif ($this->Configuration()->value('show_trainingpaces')) {
 			$this->showPaces();
 		}
 
@@ -194,7 +198,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 					new ProgressBarSingle(2*round($VDOT - 30), ProgressBarSingle::$COLOR_BLUE)
 				),
 				'bar-tooltip'	=> '',
-				'value'	=> number_format($VDOT, 2),
+				'value'	=> number_format($VDOT, 2).(0 == $VDOT ? '&nbsp;<i class="fa fa-fw fa-exclamation-circle"></i>' : ''),
 				'title'	=> __('VDOT'),
 				'small'	=> '',
 				'tooltip'	=> __('Current average VDOT')
@@ -205,7 +209,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 					new ProgressBarSingle(BasicEndurance::getConst(), ProgressBarSingle::$COLOR_BLUE)
 				),
 				'bar-tooltip'	=> '',
-				'value'	=> BasicEndurance::getConst().'&nbsp;&#37;',
+				'value'	=> BasicEndurance::getConst().'&nbsp;&#37;'.(0 == $VDOT ? '&nbsp;<i class="fa fa-fw fa-exclamation-circle"></i>' : ''),
 				'title'	=> __('Basic&nbsp;endurance'),
 				'small'	=> '',
 				'tooltip'	=> __('<em>Experimental value!</em><br>100 &#37; means: you had enough long runs and kilometers per week to run a good marathon, based on your current VDOT.')
@@ -347,7 +351,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 
 				$Progress = $ProgressBar->getCode();
 
-				echo '<tr><td>'.$Text.'</td><td style="width:99%;vertical-align:middle;">'.$Progress.'</td><td class="r">'.$Value['value'].'</td></tr>';
+				echo '<tr><td>'.$Text.'</td><td style="width:99%;vertical-align:middle;">'.$Progress.'</td><td class="r nowrap">'.$Value['value'].'</td></tr>';
 			}
 		}
 		echo '</table>';
@@ -502,7 +506,15 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	 * @return \FormularFieldset
 	 */
 	public function getFieldsetVDOT() {
-		$Table = '<table class="fullwidth zebra-style">
+		$Tooltip = new Tooltip('');
+		$VDOT = new VDOT(0, new VDOTCorrector(Configuration::Data()->vdotFactor()));
+		$vdotColumn = Configuration::Vdot()->useElevationCorrection() ? 'IF(`vdot_with_elevation`>0,`vdot_with_elevation`,`vdot`) as `vdot`' : '`vdot`';
+		$VDOTs = DB::getInstance()->query('SELECT `id`,`time`,`distance`,'.$vdotColumn.' FROM `'.PREFIX.'training` WHERE time>='.(time() - Configuration::Vdot()->days()*DAY_IN_S).' AND vdot>0 AND use_vdot=1 AND accountid = '.SessionAccountHandler::getId().' ORDER BY time ASC')->fetchAll();
+
+		if (empty($VDOTs)) {
+			$Table = '<p class="error">'.$this->getNoVdotDataError().'</p>';
+		} else {
+			$Table = '<table class="fullwidth zebra-style">
 				<thead>
 					<tr>
 						<th colspan="10">'.sprintf( __('VDOT values of the last %s days'), Configuration::Vdot()->days() ).'</th>
@@ -510,28 +522,24 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 				</thead>
 				<tbody class="top-and-bottom-border">';
 
-		$Tooltip = new Tooltip('');
-		$VDOT = new VDOT(0, new VDOTCorrector(Configuration::Data()->vdotFactor()));
-		$vdotColumn = Configuration::Vdot()->useElevationCorrection() ? 'IF(`vdot_with_elevation`>0,`vdot_with_elevation`,`vdot`) as `vdot`' : '`vdot`';
-		$VDOTs = DB::getInstance()->query('SELECT `id`,`time`,`distance`,'.$vdotColumn.' FROM `'.PREFIX.'training` WHERE time>='.(time() - Configuration::Vdot()->days()*DAY_IN_S).' AND vdot>0 AND use_vdot=1 AND accountid = '.SessionAccountHandler::getId().' ORDER BY time ASC')->fetchAll();
+			foreach ($VDOTs as $i => $Data) {
+				if ($i % 10 == 0)
+					$Table .= '<tr>';
 
-		foreach ($VDOTs as $i => $Data) {
-			if ($i%10 == 0)
-				$Table .= '<tr>';
+				$Tooltip->setText((new LocalTime($Data['time']))->format('d.m.Y').': '.Distance::format($Data['distance']));
+				$VDOT->setValue($Data['vdot']);
 
-			$Tooltip->setText((new LocalTime($Data['time']))->format('d.m.Y').': '.Distance::format($Data['distance']));
-			$VDOT->setValue($Data['vdot']);
+				$Table .= '<td '.$Tooltip->attributes().'>'.Ajax::trainingLink($Data['id'], $VDOT->value()).'</td>';
 
-			$Table .= '<td '.$Tooltip->attributes().'>'.Ajax::trainingLink($Data['id'], $VDOT->value()).'</td>';
+				if ($i % 10 == 9)
+					$Table .= '</tr>';
+			}
 
-			if ($i%10 == 9)
-				$Table .= '</tr>';
+			if (count($VDOTs) % 10 != 0)
+				$Table .= HTML::emptyTD(10 - count($VDOTs) % 10);
+
+			$Table .= '</tbody></table>';
 		}
-
-		if (count($VDOTs)%10 != 0)
-			$Table .= HTML::emptyTD(10 - count($VDOTs)%10);
-
-		$Table .= '</tbody></table>';
 
 		$Fieldset = new FormularFieldset( __('VDOT') );
 		$Fieldset->addBlock( sprintf( __('The VDOT value is the average, weighted by the time, of the VDOT of your activities in the last %s days.'), Configuration::Vdot()->days() ) );
@@ -551,10 +559,12 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	public function getFieldsetBasicEndurance() {
 		$BasicEndurance = new BasicEndurance();
 		$BasicEndurance->readSettingsFromConfiguration();
+		$usedVdot = $BasicEndurance->getUsedVDOT();
 		$BEresults = $BasicEndurance->asArray();
 
 		$Strategy  = new Prognosis\Daniels();
 		$Strategy->setupFromDatabase();
+		$Strategy->setVDOT($usedVdot);
 		$Strategy->adjustVDOT(false);
 		$Prognosis = new Prognosis\Prognosis();
 		$Prognosis->setStrategy($Strategy);
@@ -625,6 +635,11 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 		$Fieldset = new FormularFieldset( __('Basic endurance') );
 		$Fieldset->addBlock( __('Your basic endurance is based on your weekly kilometers and your long jogs.<br>'.
 								'The target is derived from the possible marathon time based on your current shape.').'<br>&nbsp;' );
+
+		if (0 == Configuration::Data()->vdot()) {
+			$Fieldset->addBlock('<p class="error">'.$this->getNoVdotDataError().'</p><br>&nbsp;');
+		}
+
 		$Fieldset->addBlock($GeneralTable);
 		$Fieldset->addBlock( __('The points for your long runs are weighted by time and quadratic in distance. '.
 								'That means, a long jog yesterday gives more points than a long jog two weeks ago '.
@@ -671,5 +686,13 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 		$Fieldset->addInfo( __('These paces are based on Jack Daniels\' recommendation.') );
 
 		return $Fieldset;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getNoVdotDataError() {
+		return __('There are no current activities with a vdot value.').'<br>'.
+			__('Vdot values can only be calculated for runs with heart rate data.');
 	}
 }

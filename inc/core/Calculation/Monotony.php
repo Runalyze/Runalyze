@@ -11,9 +11,9 @@ use Runalyze\Configuration;
 
 /**
  * Monotony
- * 
+ *
  * @see http://fellrnr.com/wiki/Training_Monotony
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Calculation
  */
@@ -57,7 +57,7 @@ class Monotony {
 
 	/**
 	 * Value
-	 * @var float
+	 * @var float|null
 	 */
 	protected $Value = null;
 
@@ -95,11 +95,11 @@ class Monotony {
 
 	/**
 	 * Get complete arrays
-	 * @return array array(enum => data)
+	 * @return float
 	 * @throws \RuntimeException
 	 */
 	public function value() {
-		if (is_null($this->Value)) {
+		if (null === $this->Value) {
 			throw new \RuntimeException('Monotony has to be calculated first.');
 		}
 

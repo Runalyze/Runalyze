@@ -14,24 +14,27 @@ use DB;
 
 /**
  * BasicEndurance
- * 
+ *
  * This class can calculated a value for the basic endurance.
  * A value of 100 represents a fully sufficient training for an optimal marathon.
  * The requirements for a sufficient basic endurance are calculated from the given VDOT.
- * 
+ *
  * This class can use the settings from configuration or with own settings.
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Calculation
  */
 class BasicEndurance {
 	/**
 	 * Value for basic endurance
-	 * 
+	 *
 	 * This value refers to the constant configuration value.
 	 * @var int
 	 */
 	private static $CONST_VALUE = false;
+
+	/** @var float */
+	const MINIMAL_VDOT = 25.0;
 
 	/**
 	 * VDOT to use
@@ -47,13 +50,13 @@ class BasicEndurance {
 
 	/**
 	 * Number of days for counting weekkilometer
-	 * @var int 
+	 * @var int
 	 */
 	protected $DAYS_FOR_WEEK_KM = 182;
 
 	/**
 	 * Minimum number of days for counting weekkilometer
-	 * @var int 
+	 * @var int
 	 */
 	protected $DAYS_FOR_WEEK_KM_MIN = 70;
 
@@ -92,7 +95,7 @@ class BasicEndurance {
 
 	/**
 	 * Set vdot
-	 * 
+	 *
 	 * Setting VDOT is required to calculated requirements for a sufficient basic endurance
 	 * @param float $VDOT vdot
 	 */
@@ -105,12 +108,12 @@ class BasicEndurance {
 	 * @return float
 	 */
 	public function getUsedVDOT() {
-		return $this->VDOT;
+		return max($this->VDOT, self::MINIMAL_VDOT);
 	}
 
 	/**
 	 * Set minimal distance for longjogs
-	 * 
+	 *
 	 * Only trainings above a given distance are treated as "longjogs".
 	 * @param float $km minimal distance for longjog
 	 */
@@ -145,7 +148,7 @@ class BasicEndurance {
 
 	/**
 	 * Set minimal number of days to recognize for week kilometer
-	 * 
+	 *
 	 * For new users it's senseless to look one year back, but it's senseless to look only one week back.
 	 * Therefore a minimal number of days can be specified.
 	 * @param int $days number of days
@@ -180,7 +183,7 @@ class BasicEndurance {
 
 	/**
 	 * Set percentage for week kilometer
-	 * 
+	 *
 	 * Percentage has to be between 0 and 1. A value higher than 1 will be treated as 1.
 	 * @param int $percentage percentage between 0 and 1
 	 */
@@ -199,7 +202,7 @@ class BasicEndurance {
 
 	/**
 	 * Set percentage for longjogs
-	 * 
+	 *
 	 * Percentage has to be between 0 and 1. A value higher than 1 will be treated as 1.
 	 * @param int $percentage percentage between 0 and 1
 	 */
@@ -241,10 +244,10 @@ class BasicEndurance {
 
 	/**
 	 * Get value
-	 * 
+	 *
 	 * The calculated value can be higher than 100.
 	 * To get a limited percentage, @see valueInPercent()
-	 * 
+	 *
 	 * @param int $timestamp [optional] timestamp
 	 * @return int calculated value
 	 */
@@ -343,7 +346,7 @@ class BasicEndurance {
 
 	/**
 	 * Get days used for week km for basic endurance
-	 * @return double 
+	 * @return double
 	 */
 	public function getDaysForWeekKm() {
 		$diff = Time::diffInDays(START_TIME);
@@ -361,7 +364,7 @@ class BasicEndurance {
 	 * @return double
 	 */
 	public function getTargetWeekKm() {
-		return pow(max($this->VDOT, 10), 1.135);
+		return pow(max($this->VDOT, self::MINIMAL_VDOT), 1.135);
 	}
 
 	/**
@@ -370,10 +373,7 @@ class BasicEndurance {
 	 * @return double
 	 */
 	public function getTargetLongjogKmPerWeek() {
-		if ($this->VDOT == 0)
-			return 1;
-
-		return log($this->VDOT/4) * 12 - $this->MIN_KM_FOR_LONGJOG;
+		return log(max($this->VDOT, self::MINIMAL_VDOT)/4) * 12 - $this->MIN_KM_FOR_LONGJOG;
 	}
 
 	/**

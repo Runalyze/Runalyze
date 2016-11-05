@@ -53,7 +53,7 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 	}
 
 	/**
-	 * Display long description 
+	 * Display long description
 	 */
 	protected function displayLongDescription() {
 		echo HTML::p( __('There are different models that can be used to predict your race performances:') );
@@ -130,7 +130,7 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 		}
 
 		if ($this->thereAreNotEnoughCompetitions()) {
-			echo HTML::info( __('There are not enough results for good predictions.') );
+			echo HTML::info(__('There are not enough results for good predictions.'));
 		}
 	}
 
@@ -144,7 +144,7 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 	}
 
 	/**
-	 * Prepare calculations 
+	 * Prepare calculations
 	 */
 	protected function prepareForPrognosis() {
 		switch ($this->Configuration()->value('model')) {
@@ -188,17 +188,18 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 		$Distance = new Distance($distance);
 
 		if ($this->Prognosis->isValid()) {
-			$Prognosis = new Duration( $this->Prognosis->inSeconds($distance) );
+			$prognosis = new Duration($this->Prognosis->inSeconds($distance));
+			$pace = new Pace($prognosis->seconds(), $distance, SportFactory::getSpeedUnitFor(Configuration::General()->runningSport()));
+			$prognosisString = $prognosis->string(Duration::FORMAT_AUTO, 0);
 		} else {
-			$Prognosis = new Duration(0);
+			$prognosisString = '-';
+			$pace = new Pace(0, $distance, SportFactory::getSpeedUnitFor(Configuration::General()->runningSport()));
 		}
-
-		$Pace = new Pace($Prognosis->seconds(), $distance, SportFactory::getSpeedUnitFor(Configuration::General()->runningSport()));
 
 		echo '<p>
 				<span class="right">
-					'.sprintf( __('<small>from</small> %s <small>to</small> <strong>%s</strong>'), $PBString, $Prognosis->string(Duration::FORMAT_AUTO, 0) ).'
-					<small>('.$Pace->valueWithAppendix().')</small>
+					'.sprintf(__('<small>from</small> %s <small>to</small> <strong>%s</strong>'), $PBString, $prognosisString).'
+					<small>('.$pace->valueWithAppendix().')</small>
 				</span>
 				<strong>'.$Distance->stringAuto(true, 1).'</strong>
 			</p>';
@@ -213,8 +214,7 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 	}
 
 	/**
-	 * Get string with distances for prognosis
-	 * @return string
+	 * @return array
 	 */
 	public function getDistances() {
 		return array_filter($this->Configuration()->value('distances'), 'is_numeric');
