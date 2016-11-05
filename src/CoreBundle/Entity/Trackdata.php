@@ -120,17 +120,18 @@ class Trackdata
      *   @ORM\JoinColumn(name="activityid", referencedColumnName="id", unique=true)
      * })
      */
-    private $activityid;
+    private $activity;
 
     /**
      * @var \Runalyze\Bundle\CoreBundle\Entity\Account
      *
+     * @ORM\Column(name="accountid", type="integer", precision=10, nullable=false, options={"unsigned":true})
      * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Account")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="accountid", referencedColumnName="id")
      * })
      */
-    private $accountid;
+    private $account;
 
 
 
@@ -471,51 +472,51 @@ class Trackdata
     }
 
     /**
-     * Set activityid
+     * Set activity
      *
-     * @param \Runalyze\Bundle\CoreBundle\Entity\Training $activityid
+     * @param \Runalyze\Bundle\CoreBundle\Entity\Training $activity
      *
      * @return Trackdata
      */
-    public function setActivityid(\Runalyze\Bundle\CoreBundle\Entity\Training $activityid = null)
+    public function setActivity(\Runalyze\Bundle\CoreBundle\Entity\Training $activity = null)
     {
-        $this->activityid = $activityid;
+        $this->activity = $activity;
 
         return $this;
     }
 
     /**
-     * Get activityid
+     * Get activity
      *
      * @return \Runalyze\Bundle\CoreBundle\Entity\Training
      */
-    public function getActivityid()
+    public function getActivity()
     {
-        return $this->activityid;
+        return $this->activity;
     }
 
     /**
-     * Set accountid
+     * Set account
      *
-     * @param \Runalyze\Bundle\CoreBundle\Entity\Account $accountid
+     * @param \Runalyze\Bundle\CoreBundle\Entity\Account $account
      *
      * @return Trackdata
      */
-    public function setAccountid(\Runalyze\Bundle\CoreBundle\Entity\Account $accountid = null)
+    public function setAccount(\Runalyze\Bundle\CoreBundle\Entity\Account $account = null)
     {
-        $this->accountid = $accountid;
+        $this->account = $account;
 
         return $this;
     }
 
     /**
-     * Get accountid
+     * Get account
      *
      * @return \Runalyze\Bundle\CoreBundle\Entity\Account
      */
-    public function getAccountid()
+    public function getAccount()
     {
-        return $this->accountid;
+        return $this->account;
     }
 
     /**
@@ -523,10 +524,10 @@ class Trackdata
      */
     public function getLegacyModel()
     {
-        // TODO: activityid, accountid (entities have no getId() so far)
+        // TODO: activity, account (entities have no getId() so far)
         return new Model\Trackdata\Entity([
-            //Model\Trackdata\Entity::ACTIVITYID => $this->activityid->getId(),
-            //Model\Trackdata\Entity::ACCOUNTID => $this->accountid->getId(),
+            //Model\Trackdata\Entity::ACTIVITY => $this->activity->getId(),
+            //Model\Trackdata\Entity::ACCOUNT => $this->account->getId(),
             Model\Trackdata\Entity::TIME => $this->time,
             Model\Trackdata\Entity::DISTANCE => $this->distance,
             Model\Trackdata\Entity::HEARTRATE => $this->heartrate,

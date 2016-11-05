@@ -33,9 +33,9 @@ class PDOforRunalyzeTest extends PHPUnit_Framework_TestCase {
 	 * @covers PDOforRunalyze::setAccountID
 	 */
 	public function testStartAddingAccountID() {
-		$this->object->exec('INSERT INTO `runalyze_training` (`s`, `accountid`) VALUES(100, 1)');
-		$this->object->exec('INSERT INTO `runalyze_training` (`s`, `accountid`) VALUES(200, 1)');
-		$this->object->exec('INSERT INTO `runalyze_training` (`s`, `accountid`) VALUES(66, 3)');
+		$this->object->exec('INSERT INTO `runalyze_training` (`s`, `accountid`, `sportid`, `time`) VALUES(100, 1, 0, 1477843525)');
+		$this->object->exec('INSERT INTO `runalyze_training` (`s`, `accountid`, `sportid`, `time`) VALUES(200, 1, 0, 1477843525)');
+		$this->object->exec('INSERT INTO `runalyze_training` (`s`, `accountid`, `sportid`, `time`) VALUES(66, 3, 0, 1477843525)');
 
 		$this->object->setAccountID(1);
 		$this->object->startAddingAccountID();
@@ -65,9 +65,9 @@ class PDOforRunalyzeTest extends PHPUnit_Framework_TestCase {
 	public function testFetchByID() {
 		$this->assertEquals( 0, $this->object->query('SELECT COUNT(*) FROM `runalyze_training`')->fetchColumn() );
 
-		$this->object->exec('INSERT INTO `runalyze_training` (`id`, `s`, `accountid`) VALUES(1, 100, 0)');
-		$this->object->exec('INSERT INTO `runalyze_training` (`id`, `s`, `accountid`) VALUES(2, 200, 0)');
-		$this->object->exec('INSERT INTO `runalyze_training` (`id`, `s`, `accountid`) VALUES(3, 300, 0)');
+		$this->object->exec('INSERT INTO `runalyze_training` (`id`, `s`, `accountid`, `sportid`, `time`) VALUES(1, 100, 0, 0, 1477843525)');
+		$this->object->exec('INSERT INTO `runalyze_training` (`id`, `s`, `accountid`, `sportid`, `time`) VALUES(2, 200, 0, 0, 1477843525)');
+		$this->object->exec('INSERT INTO `runalyze_training` (`id`, `s`, `accountid`, `sportid`, `time`) VALUES(3, 300, 0, 0, 1477843525)');
 
 		$Training1 = $this->object->fetchByID('training', 1);
 		$this->assertEquals( 100, $Training1['s'] );
@@ -100,9 +100,9 @@ class PDOforRunalyzeTest extends PHPUnit_Framework_TestCase {
 	 * @covers PDOforRunalyze::exec
 	 */
 	public function testUpdate() {
-		$this->object->insert('training', array('id', 's', 'distance'), array(1, 600, 1));
-		$this->object->insert('training', array('id', 's', 'distance'), array(2, 900, 1));
-		$this->object->insert('training', array('id', 's', 'distance'), array(3, 300, 1));
+		$this->object->insert('training', array('id', 's', 'distance', 'sportid', 'time'), array(1, 600, 1, 0, 1477843525));
+		$this->object->insert('training', array('id', 's', 'distance', 'sportid', 'time'), array(2, 900, 1, 0, 1477843525));
+		$this->object->insert('training', array('id', 's', 'distance', 'sportid', 'time'), array(3, 300, 1, 0, 1477843525));
 
 		$this->object->update('training', 1, 'distance', 2);
 		$this->assertEquals( array(600, 2), $this->object->query('SELECT `s`, `distance` FROM `runalyze_training` WHERE `id`=1 LIMIT 1')->fetch(PDO::FETCH_NUM) );
@@ -126,20 +126,29 @@ class PDOforRunalyzeTest extends PHPUnit_Framework_TestCase {
 	 * @covers PDOforRunalyze::prepare
 	 */
 	public function testPrepare() {
-		$Insert = $this->object->prepare('INSERT INTO `runalyze_training` (`id`, `s`, `distance`, `accountid`) VALUES (:id, :s, :distance, 0)');
+		$Insert = $this->object->prepare('INSERT INTO `runalyze_training` (`id`, `s`, `distance`, `accountid`, `sportid`, `time`) VALUES (:id, :s, :distance, :accountid, :sportid, :ttime)');
 		$Insert->bindValue('id', 1);
 		$Insert->bindValue('s', 300);
 		$Insert->bindValue('distance', 1);
+        $Insert->bindValue('sportid', 0);
+        $Insert->bindValue('accountid', 0);
+        $Insert->bindValue('ttime', 1477843525);
 		$Insert->execute();
 
 		$Insert->bindValue('id', 2);
 		$Insert->bindValue('s', 610);
 		$Insert->bindValue('distance', 2.1);
+        $Insert->bindValue('sportid', 0);
+        $Insert->bindValue('accountid', 0);
+        $Insert->bindValue('ttime', 1477843525);
 		$Insert->execute();
 
 		$Insert->bindValue('id', 3);
 		$Insert->bindValue('s', 3111);
 		$Insert->bindValue('distance', 11.23);
+        $Insert->bindValue('sportid', 0);
+        $Insert->bindValue('accountid', 0);
+        $Insert->bindValue('ttime', 1477843525);
 		$Insert->execute();
 
 		$id = 0;

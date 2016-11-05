@@ -15,7 +15,7 @@ class Plugin
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(name="id", type="integer", options={"unsigned":true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -30,34 +30,34 @@ class Plugin
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="type", type="string", nullable=false)
+     * @ORM\Column(name="type", type="string", nullable=false, options={"default":"stat"})
      */
     private $type = 'stat';
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="active", type="smallint", nullable=false)
+     * @ORM\Column(name="active", type="smallint", precision=1, nullable=false, options={"default":1})
      */
     private $active = '1';
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="`order`", type="smallint", nullable=false)
+     * @ORM\Column(name="`order`", type="smallint", nullable=false, options={"default":1})
      */
     private $order = '0';
 
     /**
      * @var \Runalyze\Bundle\CoreBundle\Entity\Account
      *
+     * @ORM\Column(name="accountid", type="integer", precision=10, nullable=false, options={"unsigned":true})
      * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Account")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="accountid", referencedColumnName="id")
      * })
      */
-    private $accountid;
+    private $account;
 
     /**
      * Get id
@@ -166,26 +166,26 @@ class Plugin
     }
 
     /**
-     * Set accountid
+     * Set account
      *
-     * @param \Runalyze\Bundle\CoreBundle\Entity\Account $accountid
+     * @param \Runalyze\Bundle\CoreBundle\Entity\Account $account
      *
      * @return Plugin
      */
-    public function setAccountid(\Runalyze\Bundle\CoreBundle\Entity\Account $accountid = null)
+    public function setAccountid(\Runalyze\Bundle\CoreBundle\Entity\Account $account = null)
     {
-        $this->accountid = $accountid;
+        $this->account = $account;
 
         return $this;
     }
 
     /**
-     * Get accountid
+     * Get account
      *
      * @return \Runalyze\Bundle\CoreBundle\Entity\Account
      */
-    public function getAccountid()
+    public function getAccount()
     {
-        return $this->accountid;
+        return $this->account;
     }
 }

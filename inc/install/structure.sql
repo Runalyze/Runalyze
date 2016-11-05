@@ -28,13 +28,13 @@ CREATE TABLE IF NOT EXISTS `runalyze_account` (
   `timezone` smallint(5) unsigned NOT NULL DEFAULT '0',
   `password` varchar(64) NOT NULL DEFAULT '',
   `salt` char(64) NOT NULL DEFAULT '',
-  `registerdate` int(11) NOT NULL DEFAULT '0',
-  `lastaction` int(11) NOT NULL DEFAULT '0',
-  `changepw_hash` varchar(32) NOT NULL DEFAULT '',
-  `changepw_timelimit` int(11) NOT NULL DEFAULT '0',
-  `activation_hash` varchar(32) NOT NULL DEFAULT '',
-  `deletion_hash` varchar(32) NOT NULL DEFAULT '',
-  `allow_mails` tinyint(1) NOT NULL DEFAULT '1',
+  `registerdate` int(10) unsigned DEFAULT NULL,
+  `lastaction` int(10) unsigned DEFAULT NULL,
+  `changepw_hash` char(32) DEFAULT NULL,
+  `changepw_timelimit` int(10) unsigned DEFAULT NULL,
+  `activation_hash` char(32) DEFAULT NULL,
+  `deletion_hash` char(32) DEFAULT NULL,
+  `allow_mails` tinyint(1) unsigned NOT NULL DEFAULT '1',
   `allow_support` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `role` tinyint(3) unsigned NOT NULL DEFAULT '1',
   `gender` tinyint(1) unsigned NOT NULL DEFAULT '0',
@@ -77,11 +77,11 @@ CREATE TABLE IF NOT EXISTS `runalyze_activity_equipment` (
 --
 
 CREATE TABLE IF NOT EXISTS `runalyze_conf` (
-`id` int(11) NOT NULL,
+`id` int(10) unsigned NOT NULL,
   `category` varchar(32) NOT NULL,
   `key` varchar(100) NOT NULL,
   `value` varchar(255) NOT NULL,
-  `accountid` int(11) NOT NULL
+  `accountid` int(10) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -137,9 +137,9 @@ CREATE TABLE IF NOT EXISTS `runalyze_equipment_sport` (
 CREATE TABLE IF NOT EXISTS `runalyze_equipment_type` (
 `id` int(10) unsigned NOT NULL,
   `name` varchar(50) NOT NULL,
-  `input` tinyint(1) NOT NULL DEFAULT '0',
-  `max_km` int(11) NOT NULL DEFAULT '0',
-  `max_time` int(11) NOT NULL DEFAULT '0',
+  `input` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `max_km` mediumint unsigned DEFAULT NULL,
+  `max_time` mediumint unsigned DEFAULT NULL,
   `accountid` int(10) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -190,9 +190,9 @@ CREATE TABLE IF NOT EXISTS `runalyze_plugin` (
 `id` int(10) unsigned NOT NULL,
   `key` varchar(100) NOT NULL,
   `type` enum('panel','stat','tool') NOT NULL DEFAULT 'stat',
-  `active` tinyint(1) NOT NULL DEFAULT '1',
-  `order` smallint(6) NOT NULL DEFAULT '0',
-  `accountid` int(11) NOT NULL
+  `active` tinyint(1) unsigned NOT NULL DEFAULT '1',
+  `order` tinyint unsigned NOT NULL DEFAULT '0',
+  `accountid` int(10) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -244,13 +244,13 @@ CREATE TABLE IF NOT EXISTS `runalyze_sport` (
 `id` int(10) unsigned NOT NULL,
   `name` varchar(50) NOT NULL,
   `img` varchar(100) NOT NULL DEFAULT 'unknown.gif',
-  `short` tinyint(1) NOT NULL DEFAULT '0',
-  `kcal` smallint(4) NOT NULL DEFAULT '0',
-  `HFavg` smallint(3) NOT NULL DEFAULT '120',
-  `distances` tinyint(1) NOT NULL DEFAULT '1',
+  `short` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `kcal` smallint(4) unsigned NOT NULL DEFAULT '0',
+  `HFavg` tinyint unsigned NOT NULL DEFAULT '120',
+  `distances` tinyint(1) unsigned NOT NULL DEFAULT '1',
   `speed` varchar(10) NOT NULL DEFAULT 'min/km',
-  `power` tinyint(1) NOT NULL DEFAULT '0',
-  `outside` tinyint(1) NOT NULL DEFAULT '0',
+  `power` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `outside` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `main_equipmenttypeid` int(10) unsigned DEFAULT NULL,
   `default_typeid` int(10) unsigned DEFAULT NULL,
   `accountid` int(10) unsigned NOT NULL
@@ -303,49 +303,49 @@ CREATE TABLE IF NOT EXISTS `runalyze_trackdata` (
 
 CREATE TABLE IF NOT EXISTS `runalyze_training` (
 `id` int(10) unsigned NOT NULL,
-  `sportid` int(11) NOT NULL DEFAULT '0',
-  `typeid` int(11) NOT NULL DEFAULT '0',
-  `time` int(11) NOT NULL DEFAULT '0',
+  `sportid` int(10) unsigned NOT NULL,
+  `typeid` int(10) unsigned DEFAULT NULL,
+  `time` int(11) NOT NULL,
   `timezone_offset` smallint(6) DEFAULT NULL,
-  `created` int(11) NOT NULL DEFAULT '0',
-  `edited` int(11) NOT NULL DEFAULT '0',
-  `is_public` tinyint(1) NOT NULL DEFAULT '0',
-  `is_track` tinyint(1) NOT NULL DEFAULT '0',
-  `distance` decimal(6,2) NOT NULL DEFAULT '0.00',
-  `s` decimal(8,2) NOT NULL DEFAULT '0.00',
-  `elapsed_time` int(6) NOT NULL DEFAULT '0',
-  `elevation` int(5) NOT NULL DEFAULT '0',
-  `kcal` int(5) NOT NULL DEFAULT '0',
-  `pulse_avg` int(3) NOT NULL DEFAULT '0',
-  `pulse_max` int(3) NOT NULL DEFAULT '0',
-  `vdot` decimal(5,2) NOT NULL DEFAULT '0.00',
-  `vdot_by_time` decimal(5,2) NOT NULL DEFAULT '0.00',
-  `vdot_with_elevation` decimal(5,2) NOT NULL DEFAULT '0.00',
-  `use_vdot` tinyint(1) NOT NULL DEFAULT '1',
-  `fit_vdot_estimate` decimal(4,2) unsigned NOT NULL DEFAULT '0.0',
-  `fit_recovery_time` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `fit_hrv_analysis` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `created` int(11) unsigned DEFAULT NULL,
+  `edited` int(11) unsigned DEFAULT NULL,
+  `is_public` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `is_track` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `distance` decimal(6,2) unsigned DEFAULT NULL,
+  `s` decimal(8,2) unsigned NOT NULL,
+  `elapsed_time` mediumint unsigned DEFAULT NULL,
+  `elevation` smallint unsigned DEFAULT NULL,
+  `kcal` smallint unsigned DEFAULT NULL,
+  `pulse_avg` tinyint unsigned DEFAULT NULL,
+  `pulse_max` tinyint unsigned DEFAULT NULL,
+  `vdot` decimal(5,2) unsigned DEFAULT NULL,
+  `vdot_by_time` decimal(5,2) unsigned DEFAULT NULL,
+  `vdot_with_elevation` decimal(5,2) unsigned DEFAULT NULL,
+  `use_vdot` tinyint(1) unsigned NOT NULL DEFAULT '1',
+  `fit_vdot_estimate` decimal(4,2) unsigned DEFAULT NULL,
+  `fit_recovery_time` smallint(5) unsigned DEFAULT NULL,
+  `fit_hrv_analysis` smallint(5) unsigned DEFAULT NULL,
   `fit_training_effect` decimal(2,1) unsigned DEFAULT NULL,
   `fit_performance_condition` tinyint(3) unsigned DEFAULT NULL,
-  `jd_intensity` smallint(4) NOT NULL DEFAULT '0',
+  `jd_intensity` smallint(4) unsigned DEFAULT NULL,
   `rpe` tinyint(2) unsigned DEFAULT NULL,
-  `trimp` int(4) NOT NULL DEFAULT '0',
-  `cadence` int(3) NOT NULL DEFAULT '0',
-  `power` int(4) NOT NULL DEFAULT '0',
-  `total_strokes` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `swolf` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `stride_length` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `groundcontact` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `groundcontact_balance` SMALLINT UNSIGNED NOT NULL DEFAULT  '0',
-  `vertical_oscillation` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `vertical_ratio` SMALLINT UNSIGNED NOT NULL DEFAULT  '0',
+  `trimp` smallint unsigned DEFAULT NULL,
+  `cadence` int(3) unsigned DEFAULT NULL,
+  `power` int(4) unsigned DEFAULT NULL,
+  `total_strokes` smallint(5) unsigned DEFAULT NULL,
+  `swolf` tinyint(3) unsigned DEFAULT NULL,
+  `stride_length` tinyint(3) unsigned DEFAULT NULL,
+  `groundcontact` smallint(5) unsigned DEFAULT NULL,
+  `groundcontact_balance` SMALLINT unsigned DEFAULT NULL,
+  `vertical_oscillation` tinyint(3) unsigned DEFAULT NULL,
+  `vertical_ratio` SMALLINT UNSIGNED DEFAULT NULL,
   `temperature` tinyint(4) DEFAULT NULL,
   `wind_speed` tinyint(3) unsigned DEFAULT NULL,
   `wind_deg` smallint(3) unsigned DEFAULT NULL,
   `humidity` tinyint(3) unsigned DEFAULT NULL,
   `pressure` smallint(4) unsigned DEFAULT NULL,
   `is_night` tinyint(1) unsigned DEFAULT NULL,
-  `weatherid` smallint(6) NOT NULL DEFAULT '1',
+  `weatherid` smallint(6) unsigned NOT NULL DEFAULT '1',
   `weather_source` tinyint(2) unsigned DEFAULT NULL,
   `route` text,
   `routeid` int(10) unsigned NOT NULL DEFAULT '0',
@@ -353,10 +353,11 @@ CREATE TABLE IF NOT EXISTS `runalyze_training` (
   `comment` text,
   `partner` text,
   `notes` text,
-  `accountid` int(11) NOT NULL,
+  `accountid` int(10) unsigned NOT NULL,
   `creator` varchar(100) NOT NULL DEFAULT '',
   `creator_details` tinytext,
-  `activity_id` int(11) DEFAULT NULL
+  `activity_id` int(10) unsigned DEFAULT NULL,
+  `lock` tinyint(1) unsigned NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 PACK_KEYS=0;
 
 -- --------------------------------------------------------
@@ -366,14 +367,14 @@ CREATE TABLE IF NOT EXISTS `runalyze_training` (
 --
 
 CREATE TABLE IF NOT EXISTS `runalyze_type` (
-`id` int(11) NOT NULL,
+`id` int(10) unsigned NOT NULL,
   `name` varchar(50) NOT NULL,
   `abbr` varchar(5) NOT NULL DEFAULT '',
-  `sportid` int(11) NOT NULL DEFAULT '0',
+  `sportid` int(10) unsigned NOT NULL,
   `short` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `hr_avg` tinyint(3) unsigned NOT NULL DEFAULT '100',
   `quality_session` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `accountid` int(11) NOT NULL
+  `accountid` int(10) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -383,17 +384,17 @@ CREATE TABLE IF NOT EXISTS `runalyze_type` (
 --
 
 CREATE TABLE IF NOT EXISTS `runalyze_user` (
-`id` int(11) NOT NULL,
-  `time` int(11) NOT NULL,
-  `weight` decimal(5,2) NOT NULL DEFAULT '0.0',
-  `pulse_rest` smallint(3) NOT NULL DEFAULT '0',
-  `pulse_max` smallint(3) NOT NULL DEFAULT '0',
-  `fat` decimal(3,1) NOT NULL DEFAULT '0.0',
-  `water` decimal(3,1) NOT NULL DEFAULT '0.0',
-  `muscles` decimal(3,1) NOT NULL DEFAULT '0.0',
-  `sleep_duration` smallint(3) unsigned NOT NULL DEFAULT '0',
+`id` int(10) unsigned NOT NULL,
+  `time` int(10) unsigned NOT NULL,
+  `weight` decimal(5,2) DEFAULT NULl,
+  `pulse_rest` tinyint unsigned DEFAULT NULl,
+  `pulse_max` tinyint unsigned DEFAULT NULl,
+  `fat` decimal(3,1) DEFAULT NULl,
+  `water` decimal(3,1) DEFAULT NULl,
+  `muscles` decimal(3,1) DEFAULT NULl,
+  `sleep_duration` smallint(3) unsigned DEFAULT NULl,
   `notes` text,
-  `accountid` int(11) NOT NULL
+  `accountid` int(10) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -403,7 +404,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_user` (
 --
 
 CREATE TABLE IF NOT EXISTS `runalyze_weathercache` (
-  `time` int(11) NOT NULL DEFAULT '0',
+  `time` int(11) NOT NULL,
   `geohash` char(5) DEFAULT NULL,
   `temperature` tinyint(4) DEFAULT NULL,
   `wind_speed` tinyint(3) unsigned DEFAULT NULL,
@@ -436,18 +437,6 @@ CREATE TABLE IF NOT EXISTS `runalyze_raceresult` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `runalyze_raceresult`
---
-
-CREATE TABLE IF NOT EXISTS `runalyze_sessions` (
-    `sess_id` VARBINARY(128) NOT NULL PRIMARY KEY, 
-    `sess_data` BLOB NOT NULL, 
-    `sess_time` INTEGER UNSIGNED NOT NULL, 
-    `sess_lifetime` MEDIUMINT NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 --
 -- Indizes der exportierten Tabellen
@@ -592,7 +581,7 @@ MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT für Tabelle `runalyze_conf`
 --
 ALTER TABLE `runalyze_conf`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT für Tabelle `runalyze_equipment`
 --
@@ -637,12 +626,12 @@ MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT für Tabelle `runalyze_type`
 --
 ALTER TABLE `runalyze_type`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT für Tabelle `runalyze_user`
 --
 ALTER TABLE `runalyze_user`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- Constraints der exportierten Tabellen
 --

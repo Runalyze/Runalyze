@@ -15,7 +15,7 @@ class Sport
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(name="id", type="integer", options={"unsigned":true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -31,56 +31,56 @@ class Sport
     /**
      * @var string
      *
-     * @ORM\Column(name="img", type="string", length=100, nullable=false)
+     * @ORM\Column(name="img", type="string", length=100, nullable=false, options={"default":"unknown.gif"})
      */
     private $img = 'unknown.gif';
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="short", type="boolean", nullable=false)
+     * @ORM\Column(name="short", type="boolean", nullable=false, options={"unsigned":true, "default":0})
      */
     private $short = '0';
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="kcal", type="smallint", nullable=false)
+     * @ORM\Column(name="kcal", type="smallint", precision=5, nullable=false, options={"unsigned":true, "default":0})
      */
     private $kcal = '0';
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="HFavg", type="smallint", nullable=false)
+     * @ORM\Column(name="HFavg", columnDefinition="tinyint(3) unsigned NOT NULL DEFAULT 120")
      */
     private $hfavg = '120';
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="distances", type="boolean", nullable=false)
+     * @ORM\Column(name="distances", type="boolean", nullable=false, options={"unsigned":true, "default":1})
      */
-    private $distances = '1';
+    private $distances;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="speed", type="string", length=10, nullable=false)
+     * @ORM\Column(name="speed", type="string", length=10, nullable=false, options={"default":"min/km"})
      */
     private $speed = 'min/km';
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="power", type="boolean", nullable=false)
+     * @ORM\Column(name="power", type="boolean", nullable=false, options={"unsigned":true, "default":0})
      */
     private $power = '0';
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="outside", type="boolean", nullable=false)
+     * @ORM\Column(name="outside", type="boolean", nullable=false, options={"unsigned":true, "default":0})
      */
     private $outside = '0';
 
@@ -97,19 +97,20 @@ class Sport
     /**
      * @var integer
      *
-     * @ORM\Column(name="default_typeid", type="integer", nullable=true)
+     * @ORM\Column(name="default_typeid", type="integer", nullable=true, options={"unsigned":true})
      */
     private $defaultTypeid;
 
     /**
      * @var \Runalyze\Bundle\CoreBundle\Entity\Account
      *
+     * @ORM\Column(name="accountid", type="integer", precision=10, nullable=false, options={"unsigned":true})
      * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Account")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="accountid", referencedColumnName="id")
      * })
      */
-    private $accountid;
+    private $account;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -410,27 +411,27 @@ class Sport
     }
 
     /**
-     * Set accountid
+     * Set account
      *
-     * @param \Runalyze\Bundle\CoreBundle\Entity\Account $accountid
+     * @param \Runalyze\Bundle\CoreBundle\Entity\Account $account
      *
      * @return Sport
      */
-    public function setAccountid(\Runalyze\Bundle\CoreBundle\Entity\Account $accountid = null)
+    public function setAccount(\Runalyze\Bundle\CoreBundle\Entity\Account $account = null)
     {
-        $this->accountid = $accountid;
+        $this->account = $account;
 
         return $this;
     }
 
     /**
-     * Get accountid
+     * Get account
      *
      * @return \Runalyze\Bundle\CoreBundle\Entity\Account
      */
-    public function getAccountid()
+    public function getAccount()
     {
-        return $this->accountid;
+        return $this->account;
     }
 
     /**

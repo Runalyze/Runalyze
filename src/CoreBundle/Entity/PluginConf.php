@@ -15,7 +15,7 @@ class PluginConf
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer", nullable=false, options={"unsigned":true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -43,8 +43,64 @@ class PluginConf
      *   @ORM\JoinColumn(name="pluginid", referencedColumnName="id")
      * })
      */
-    private $pluginid;
+    private $plugin;
 
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
+    /**
+     * Set value
+     *
+     * @param string $value
+     *
+     * @return PluginConf
+     */
+    public function setValue($value)
+    {
+        $this->value = $value;
+
+        return $this;
+    }
+
+    /**
+     * Get value
+     *
+     * @return string
+     */
+    public function getValue()
+    {
+        return $this->value;
+    }
+
+    /**
+     * Set plugin
+     *
+     * @param \Runalyze\Bundle\CoreBundle\Entity\Plugin $account
+     *
+     * @return PluginConf
+     */
+    public function setPlugin(\Runalyze\Bundle\CoreBundle\Entity\Plugin $plugin = null)
+    {
+        $this->plugin = $plugin;
+
+        return $this;
+    }
+
+    /**
+     * Get plugin
+     *
+     * @return \Runalyze\Bundle\CoreBundle\Entity\Plugin
+     */
+    public function getPlugin()
+    {
+        return $this->plugin;
+    }
 }
 

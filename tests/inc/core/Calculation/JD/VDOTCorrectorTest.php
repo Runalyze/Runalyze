@@ -84,7 +84,7 @@ class VDOTCorrectorTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	protected function insert($vdot, $vdot_by_time, $accountid, $sportid, $useVdot = true) {
-		$this->PDO->exec('INSERT INTO `'.PREFIX.'training` (`vdot`, `vdot_by_time`, `sportid`, `accountid`, `s`, `use_vdot`) VALUES('.$vdot.', '.$vdot_by_time.', '.$sportid.', '.$accountid.', 2400, '.($useVdot ? 1 : 0).')');
+		$this->PDO->exec('INSERT INTO `'.PREFIX.'training` (`vdot`, `vdot_by_time`, `sportid`, `accountid`, `s`, `use_vdot`, `time`) VALUES('.$vdot.', '.$vdot_by_time.', '.$sportid.', '.$accountid.', 2400, '.($useVdot ? 1 : 0).', 1477843525)');
 		$activityId = $this->PDO->lastInsertId();
 
 		$RaceResult = new RaceResult\Entity(array(
