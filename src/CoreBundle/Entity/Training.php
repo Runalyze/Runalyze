@@ -420,7 +420,7 @@ class Training
      *   }
      * )
      */
-    private $equipmentid;
+    private $equipment;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -435,15 +435,15 @@ class Training
      *   }
      * )
      */
-    private $tagid;
+    private $tag;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->equipmentid = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->tagid = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->equipment = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->tag = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**

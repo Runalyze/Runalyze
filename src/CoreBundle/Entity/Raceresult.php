@@ -86,7 +86,6 @@ class Raceresult
      * @var \Account
      *
      * @ORM\ManyToOne(targetEntity="Account")
-     * @ORM\Column(name="accountid", type="integer", precision=10, nullable=false, options={"unsigned":true})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="accountid", referencedColumnName="id")
      * })

@@ -39,19 +39,18 @@ class Plugin
      *
      * @ORM\Column(name="active", type="smallint", precision=1, nullable=false, options={"default":1})
      */
-    private $active = '1';
+    private $active = 1;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="`order`", type="smallint", nullable=false, options={"default":1})
      */
-    private $order = '0';
+    private $order = 0;
 
     /**
      * @var \Runalyze\Bundle\CoreBundle\Entity\Account
      *
-     * @ORM\Column(name="accountid", type="integer", precision=10, nullable=false, options={"unsigned":true})
      * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Account")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="accountid", referencedColumnName="id")
@@ -172,7 +171,7 @@ class Plugin
      *
      * @return Plugin
      */
-    public function setAccountid(\Runalyze\Bundle\CoreBundle\Entity\Account $account = null)
+    public function setAccount(\Runalyze\Bundle\CoreBundle\Entity\Account $account = null)
     {
         $this->account = $account;
 

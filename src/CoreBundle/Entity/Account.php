@@ -128,7 +128,7 @@ class Account implements AdvancedUserInterface, \Serializable
 
     /**
      * @var integer
-     *
+     * @Assert\Type("int")
      * @ORM\Column(name="lastaction", type="integer", nullable=true, options={"unsigned":true})
      */
     private $lastaction;
@@ -138,7 +138,7 @@ class Account implements AdvancedUserInterface, \Serializable
      *
      * @ORM\Column(name="changepw_hash", type="string", length=32, nullable=true, options={"fixed" = true})
      */
-    private $changepwHash;
+    private $changepwHash = null;
 
     /**
      * @var integer
@@ -187,6 +187,7 @@ class Account implements AdvancedUserInterface, \Serializable
     {
         $this->isActive = true;
         $this->setRegisterdate(date_timestamp_get(new \DateTime()));
+        $this->setLastAction(date_timestamp_get(new \DateTime()));
         $this->setSalt(self::getRandomHash(32));
         $this->setRole(UserRole::ROLE_USER);
     }

@@ -43,7 +43,7 @@ class Type
      *   @ORM\JoinColumn(name="sportid", referencedColumnName="id")
      * })
      */
-    private $sportid;
+    private $sport;
 
     /**
      * @var boolean
@@ -69,7 +69,6 @@ class Type
     /**
      * @var \Runalyze\Bundle\CoreBundle\Entity\Account
      *
-     * @ORM\Column(name="accountid", type="integer", precision=10, nullable=false, options={"unsigned":true})
      * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Account")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="accountid", referencedColumnName="id")
@@ -136,27 +135,27 @@ class Type
     }
 
     /**
-     * Set sportid
+     * Set sport
      *
-     * @param \Runalyze\Bundle\CoreBundle\Entity\Sport $sportid
+     * @param \Runalyze\Bundle\CoreBundle\Entity\Sport $sport
      *
      * @return Type
      */
-    public function setSportid(\Runalyze\Bundle\CoreBundle\Entity\Sport $sportid = null)
+    public function setSport(\Runalyze\Bundle\CoreBundle\Entity\Sport $sport = null)
     {
-        $this->sportid = $sportid;
+        $this->sport = $sport;
 
         return $this;
     }
 
     /**
-     * Get sportid
+     * Get sport
      *
      * @return \Runalyze\Bundle\CoreBundle\Entity\Sport
      */
-    public function getSportid()
+    public function getSport()
     {
-        return $this->sportid;
+        return $this->sport;
     }
 
     /**

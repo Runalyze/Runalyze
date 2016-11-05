@@ -98,7 +98,7 @@ class Registration
 
         foreach($equipmentType as $eqType) {
             $Type = new EquipmentType();
-            $Type->setAccountid($this->Account);
+            $Type->setAccount($this->Account);
             $Type->setName($eqType[0]);
             $Type->setInput($eqType[1]);
             $this->em->persist($Type);
@@ -129,14 +129,14 @@ class Registration
 
         foreach($pluginData as $pData) {
             $Plugin = new Plugin();
-            $Plugin->setAccountid($this->Account);
             $Plugin->setKey($pData[0]);
             $Plugin->setType($pData[1]);
             $Plugin->setActive($pData[2]);
             $Plugin->setOrder($pData[3]);
+            $Plugin->setAccount($this->Account);
             $this->em->persist($Plugin);
-            $this->em->flush();
         }
+        $this->em->flush();
     }
 
     /*
@@ -152,7 +152,7 @@ class Registration
         );
         foreach($sportData as $sData) {
             $Sport = new Sport();
-            $Sport->setAccountid($this->Account);
+            $Sport->setAccount($this->Account);
             $Sport->setName($sData[0]);
             $Sport->setImg($sData[1]);
             $Sport->setShort($sData[2]);
@@ -182,12 +182,12 @@ class Registration
         );
         foreach($TypeData as $tData) {
             $Type = new Type();
-            $Type->setAccountid($this->Account);
+            $Type->setAccount($this->Account);
             $Type->setName($tData[0]);
             $Type->setAbbr($tData[1]);
             $Type->getHrAvg($tData[2]);
             $Type->setQualitySession($tData[3]);
-            $Type->setSportid($this->specialVars['RUNNINGSPORT']);
+            $Type->setSport($this->specialVars['RUNNINGSPORT']);
             $this->em->persist($Type);
         }
     }
@@ -195,7 +195,7 @@ class Registration
     private function collectSpecialVars() {
         $this->specialVars['RUNNINGSPORT'] = 1;
         $sport = $this->em->getRepository('CoreBundle:Sport');
-        $sport = $sport->findByAccountid($this->Account);
+        $sport = $sport->findByAccount($this->Account);
         foreach ($sport as $item) {
             switch ($item->getImg()) {
                 case 'icons8-Running':
@@ -207,9 +207,9 @@ class Registration
             }
         }
         $equipmentType = $this->em->getRepository('CoreBundle:EquipmentType');
-        $equipmentClothes = $equipmentType->findOneBy(array('name' => __('Clothes'), 'accountid' => $this->Account->getId()));
-        $equipmentShoes = $equipmentType->findOneBy(array('name' => __('Shoes'), 'accountid' => $this->Account->getId()));
-        $equipmentBikes = $equipmentType->findOneBy(array('name' => __('Bikes'), 'accountid' => $this->Account->getId()));
+        $equipmentClothes = $equipmentType->findOneBy(array('name' => __('Clothes'), 'account' => $this->Account->getId()));
+        $equipmentShoes = $equipmentType->findOneBy(array('name' => __('Shoes'), 'account' => $this->Account->getId()));
+        $equipmentBikes = $equipmentType->findOneBy(array('name' => __('Bikes'), 'account' => $this->Account->getId()));
 
         $this->specialVars['EQUIPMENT_CLOTHES'] = $equipmentClothes;
         $this->specialVars['EQUIPMENT_SHOES'] = $equipmentShoes;
@@ -225,15 +225,15 @@ class Registration
         $Clothes = array(__('long sleeve'), __('T-shirt'), __('singlet'), __('jacket'), __('long pants'), __('shorts'), __('gloves'), __('hat'));
         foreach ($Clothes as $cloth) {
             $Equipment = new Equipment();
-            $Equipment->setAccountid($this->Account);
+            $Equipment->setAccount($this->Account);
             $Equipment->setName($cloth);
-            $Equipment->setTypeid($this->specialVars['EQUIPMENT_CLOTHES']);
+            $Equipment->setType($this->specialVars['EQUIPMENT_CLOTHES']);
             $this->em->persist($Equipment);
         }
 
         foreach (array('MAINSPORT', 'RUNNINGSPORT') as $cKey) {
             $Conf = new Conf();
-            $Conf->setAccountid($this->Account);
+            $Conf->setAccount($this->Account);
             $Conf->setCategory('general');
             $Conf->setKey($cKey);
             $Conf->setValue($this->specialVars['RUNNINGSPORT']->getId());
@@ -241,13 +241,13 @@ class Registration
         }
 
         $Running = $this->specialVars['RUNNINGSPORT'];
-        $Running->setMainEquipmenttypeid($this->specialVars['EQUIPMENT_SHOES']);
-        $Running->addEquipmentTypeid($this->specialVars['EQUIPMENT_CLOTHES']);
-        $Running->addEquipmentTypeid($this->specialVars['EQUIPMENT_SHOES']);
+        $Running->setMainEquipmenttype($this->specialVars['EQUIPMENT_SHOES']);
+        $Running->addEquipmentType($this->specialVars['EQUIPMENT_CLOTHES']);
+        $Running->addEquipmentType($this->specialVars['EQUIPMENT_SHOES']);
         $this->em->persist($Running);
 
         $Biking = $this->specialVars['BIKESPORT'];
-        $Biking->addEquipmentTypeid($this->specialVars['EQUIPMENT_BIKES']);
+        $Biking->addEquipmentType($this->specialVars['EQUIPMENT_BIKES']);
         $this->em->persist($Biking);
         $this->em->flush();
         $this->em->clear();

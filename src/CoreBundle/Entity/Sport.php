@@ -92,19 +92,18 @@ class Sport
      *   @ORM\JoinColumn(name="main_equipmenttypeid", referencedColumnName="id")
      * })
      */
-    private $mainEquipmenttypeid;
+    private $mainEquipmenttype;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="default_typeid", type="integer", nullable=true, options={"unsigned":true})
      */
-    private $defaultTypeid;
+    private $defaultType;
 
     /**
      * @var \Runalyze\Bundle\CoreBundle\Entity\Account
      *
-     * @ORM\Column(name="accountid", type="integer", precision=10, nullable=false, options={"unsigned":true})
      * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Account")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="accountid", referencedColumnName="id")
@@ -125,14 +124,14 @@ class Sport
      *   }
      * )
      */
-    private $equipmentTypeid;
+    private $equipmentType;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->equipmentTypeid = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->equipmentType = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
 
@@ -363,51 +362,51 @@ class Sport
     }
 
     /**
-     * Set mainEquipmenttypeid
+     * Set mainEquipmenttype
      *
-     * @param \Runalyze\Bundle\CoreBundle\Entity\EquipmentType $mainEquipmenttypeid
+     * @param \Runalyze\Bundle\CoreBundle\Entity\EquipmentType $mainEquipmenttype
      *
      * @return Sport
      */
-    public function setMainEquipmenttypeid(\Runalyze\Bundle\CoreBundle\Entity\EquipmentType $mainEquipmenttypeid = null)
+    public function setMainEquipmenttype(\Runalyze\Bundle\CoreBundle\Entity\EquipmentType $mainEquipmenttype = null)
     {
-        $this->mainEquipmenttypeid = $mainEquipmenttypeid;
+        $this->mainEquipmenttype = $mainEquipmenttype;
 
         return $this;
     }
 
     /**
-     * Get mainEquipmenttypeid
+     * Get mainEquipmenttype
      *
      * @return \Runalyze\Bundle\CoreBundle\Entity\EquipmentType
      */
-    public function getMainEquipmenttypeid()
+    public function getMainEquipmenttype()
     {
-        return $this->mainEquipmenttypeid;
+        return $this->mainEquipmenttype;
     }
 
     /**
-     * Set defaultTypeid
+     * Set defaultType
      *
-     * @param integer $defaultTypeid
+     * @param integer $defaultType
      *
      * @return Sport
      */
-    public function setDefaultTypeid($defaultTypeid)
+    public function setDefaultType($defaultType)
     {
-        $this->defaultTypeid = $defaultTypeid;
+        $this->defaultType = $defaultType;
 
         return $this;
     }
 
     /**
-     * Get defaultTypeid
+     * Get defaultType
      *
      * @return integer
      */
-    public function getDefaultTypeid()
+    public function getDefaultType()
     {
-        return $this->defaultTypeid;
+        return $this->defaultType;
     }
 
     /**
@@ -435,36 +434,36 @@ class Sport
     }
 
     /**
-     * Add equipmentTypeid
+     * Add equipmentType
      *
-     * @param \Runalyze\Bundle\CoreBundle\Entity\EquipmentType $equipmentTypeid
+     * @param \Runalyze\Bundle\CoreBundle\Entity\EquipmentType $equipmentType
      *
      * @return Sport
      */
-    public function addEquipmentTypeid(\Runalyze\Bundle\CoreBundle\Entity\EquipmentType $equipmentTypeid)
+    public function addEquipmentType(\Runalyze\Bundle\CoreBundle\Entity\EquipmentType $equipmentType)
     {
-        $this->equipmentTypeid[] = $equipmentTypeid;
+        $this->equipmentType[] = $equipmentType;
 
         return $this;
     }
 
     /**
-     * Remove equipmentTypeid
+     * Remove equipmentType
      *
-     * @param \Runalyze\Bundle\CoreBundle\Entity\EquipmentType $equipmentTypeid
+     * @param \Runalyze\Bundle\CoreBundle\Entity\EquipmentType $equipmentType
      */
-    public function removeEquipmentTypeid(\Runalyze\Bundle\CoreBundle\Entity\EquipmentType $equipmentTypeid)
+    public function removeEquipmentType(\Runalyze\Bundle\CoreBundle\Entity\EquipmentType $equipmentType)
     {
-        $this->equipmentTypeid->removeElement($equipmentTypeid);
+        $this->equipmentType->removeElement($equipmentType);
     }
 
     /**
-     * Get equipmentTypeid
+     * Get equipmentType
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getEquipmentTypeid()
+    public function getEquipmentType()
     {
-        return $this->equipmentTypeid;
+        return $this->equipmentType;
     }
 }
