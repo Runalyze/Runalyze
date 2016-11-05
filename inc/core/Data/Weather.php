@@ -59,12 +59,6 @@ class Weather {
 	protected $Pressure;
 
 	/**
-	 * WindChillFactor
-	 * @var \Runalyze\Data\Weather\WindChillFactor
-	 */
-	protected $WindChillFactor;
-
-	/**
 	 * Enum for weather source
 	 * @see \Runalyze\Data\Weather\Sources
 	 * @var null|int

@@ -9,6 +9,7 @@ namespace Runalyze\Data\Weather;
 /**
  * Temperature
  * 
+ * @deprecated since 3.1.0
  * @author Hannes Christiansen
  * @package Runalyze\Data\Weather
  */
@@ -123,6 +124,13 @@ class Temperature {
 	 */
 	public function toKelvin() {
 		$this->unit = self::KELVIN;
+	}
+
+	/**
+	 * @return null|float [°F]
+	 */
+	public function inFahrenheit() {
+		return $this->fromCelsiusTo($this->inCelsius, self::FAHRENHEIT);
 	}
 
 	/**

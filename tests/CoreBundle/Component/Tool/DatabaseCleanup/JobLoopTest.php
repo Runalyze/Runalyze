@@ -68,6 +68,22 @@ class JobLoopTest extends \PHPUnit_Framework_TestCase
 		$this->assertNotEquals(0, $data['trimp']);
 	}
 
+	public function testOverwriteElevation()
+	{
+		$this->PDO->exec('INSERT INTO `runalyze_training` (`id`, `distance`, `s`, `elevation`, `routeid`, `accountid`) VALUES (1, 10, 3600, 42, 1, 0)');
+		$this->PDO->exec('INSERT INTO `runalyze_route` (`id`, `elevation`, `elevation_up`, `elevation_down`, `accountid`) VALUES (1, 123, 123, 123, 0)');
+
+		$Loop = new JobLoop([
+			JobLoop::ELEVATION => true,
+			JobLoop::ELEVATION_OVERWRITE => true
+		], $this->PDO, 0, 'runalyze_');
+		$Loop->run();
+
+		$this->assertEquals(123, $this->PDO->query(
+			'SELECT `elevation` FROM `runalyze_training` WHERE `id`=1 LIMIT 1'
+		)->fetchColumn());
+	}
+
 	public function testDontOverwriteElevation()
     {
 		$this->PDO->exec('INSERT INTO `runalyze_training` (`id`, `distance`, `s`, `elevation`, `routeid`, `accountid`) VALUES (1, 10, 3600, 42, 1, 0)');
@@ -75,7 +91,6 @@ class JobLoopTest extends \PHPUnit_Framework_TestCase
 
 		$Loop = new JobLoop([
             JobLoop::ELEVATION => true,
-            JobLoop::ELEVATION_OVERWRITE => true
         ], $this->PDO, 0, 'runalyze_');
 		$Loop->run();
 
@@ -111,6 +126,33 @@ class JobLoopTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals(100, $DataUp['elevation']);
 		$this->assertEquals(200, $DataDown['elevation']);
 		$this->assertGreaterThan($DataDown['vdot_with_elevation'], $DataUp['vdot_with_elevation']);
+	}
+
+	/**
+	 * @see https://github.com/Runalyze/Runalyze/issues/1970
+	 */
+	public function testUsageOfCorrectElevationForVdot()
+	{
+		$this->PDO->exec(
+			'INSERT INTO `runalyze_training` (`id`, `routeid`, `distance`, `s`, `pulse_avg`, `sportid`, `accountid`) '.
+			'VALUES (1, 2, 10, 3600, 150, '.Configuration::General()->runningSport().', 0)'
+		);
+		$this->PDO->exec(
+			'INSERT INTO `runalyze_training` (`id`, `routeid`, `distance`, `s`, `pulse_avg`, `sportid`, `accountid`) '.
+			'VALUES (2, 1, 10, 3600, 150, '.Configuration::General()->runningSport().', 0)'
+		);
+		$this->PDO->exec('INSERT INTO `runalyze_route` (`id`, `elevation`, `elevation_up`, `elevation_down`, `accountid`) VALUES (1, 200, 200, 0, 0)');
+		$this->PDO->exec('INSERT INTO `runalyze_route` (`id`, `elevation`, `elevation_up`, `elevation_down`, `accountid`) VALUES (2, 200, 0, 200, 0)');
+
+		$Loop = new JobLoop([
+			JobLoop::VDOT => true
+		], $this->PDO, 0, 'runalyze_');
+		$Loop->run();
+
+		$vdotElevationDown = $this->PDO->query('SELECT `vdot_with_elevation` FROM `runalyze_training` WHERE `id`=1 LIMIT 1')->fetchColumn();
+		$vdotElevationUp = $this->PDO->query('SELECT `vdot_with_elevation` FROM `runalyze_training` WHERE `id`=2 LIMIT 1')->fetchColumn();
+
+		$this->assertGreaterThan($vdotElevationDown, $vdotElevationUp);
 	}
 
 	public function testIgnoreVDOTforNotRunning()

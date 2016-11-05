@@ -157,6 +157,9 @@ final class Keys extends AbstractEnum
 	/** @var int */
 	const RACE_RESULT = 47;
 	
+	/** @var int */
+	const HEAT_INDEX = 48;
+	
 	/**
 	 * @var array|null
 	 */
@@ -261,7 +264,8 @@ final class Keys extends AbstractEnum
 			self::RPE => 'RPE',
 			self::GRADIENT => 'Gradient',
 			self::FIT_PERFORMANCE_CONDITION => 'FitPerformanceCondition',
-			self::RACE_RESULT => 'RaceResult'
+			self::RACE_RESULT => 'RaceResult',
+			self::HEAT_INDEX => 'HeatIndex'
 		);
 	}
 }

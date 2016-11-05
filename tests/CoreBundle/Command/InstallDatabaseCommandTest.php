@@ -64,7 +64,7 @@ class InstallDatabaseCommandTest extends KernelTestCase
         $commandTester = new CommandTester($command);
         $commandTester->execute([]);
 
-        $this->assertEquals(22, $this->Connection->query(
+        $this->assertEquals(23, $this->Connection->query(
             'SHOW TABLES LIKE "'.$this->DatabasePrefix.'%"'
         )->rowCount());
 
