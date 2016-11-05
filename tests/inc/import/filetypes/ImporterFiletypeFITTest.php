@@ -739,4 +739,15 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertEquals(97, $this->object->object()->getVerticalOscillation(), '', 5);
 		}
 	}
+
+	public function testThatBadTrainingEffectValuesAreIgnored() {
+		if (Shell::isPerlAvailable()) {
+			$this->object->parseFile('../tests/testfiles/fit/Zwift-bad-training-effect.fit');
+
+			$this->assertEquals(2764, $this->object->object()->getTimeInSeconds(), '', 10);
+			$this->assertEquals(16.72, $this->object->object()->getDistance(), '', 0.01);
+
+			$this->assertNull($this->object->object()->getFitTrainingEffect());
+		}
+	}
 }
