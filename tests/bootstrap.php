@@ -14,7 +14,7 @@ if (!defined('RUNALYZE_TEST'))
 if (!defined('FRONTEND_PATH'))
 	define('FRONTEND_PATH', dirname(__FILE__).'/../inc/');
 
-require_once FRONTEND_PATH.'../vendor/autoload.php';
+require_once FRONTEND_PATH.'../app/autoload.php';
 
 require_once FRONTEND_PATH.'system/define.consts.php';
 

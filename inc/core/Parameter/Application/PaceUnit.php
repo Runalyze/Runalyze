@@ -20,7 +20,7 @@ class PaceUnit extends \Runalyze\Parameter\Select
 	 * @var string
 	 */
 	const KM_PER_H = 'km/h';
-	
+
 	/**
 	 * Speed unit mph
 	 * @var string
@@ -32,7 +32,7 @@ class PaceUnit extends \Runalyze\Parameter\Select
 	 * @var string
 	 */
 	const MIN_PER_KM = 'min/km';
-	
+
 	/**
 	 * Speed unit min/mile
 	 * @var string
@@ -50,7 +50,7 @@ class PaceUnit extends \Runalyze\Parameter\Select
 	 * @var string
 	 */
 	const MIN_PER_100M = 'min/100m';
-        
+
 	/**
 	 * Speed unit min/100y
 	 * @var string
@@ -92,6 +92,8 @@ class PaceUnit extends \Runalyze\Parameter\Select
 				self::MIN_PER_500Y => self::MIN_PER_500Y
 			)
 		));
+
+		$this->UnitObject = $this->getNewPaceUnitObject($this->Default);
 	}
 
 	/**

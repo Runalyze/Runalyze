@@ -1,7 +1,6 @@
 {% extends "base.html.twig" %}
 
-{% set body_attributes = ' id="home"' %}
-{# TODO: background image from \Runalyze\Configuration::Design()->backgroundImage() #}
+{% set body_attributes = ' id="home" style="background-image:url(' ~ asset('assets/v2.x/img/backgrounds/' ~ configVar('design.DESIGN_BG_FILE')) ~ '"' %}
 
 {% block body %}
     {% if not app.request.xmlHttpRequest %}

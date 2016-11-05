@@ -106,17 +106,19 @@ class ToolsController extends Controller
     {
         $Frontend = new \Frontend(true, $this->get('security.token_storage'));
 
-        $analysisTable = new VdotAnalysis(Configuration::Vdot());
+        $configuration = $this->get('app.configuration_manager')->getList();
+        $vdotFactor = $configuration->getVdotFactor();
+
+        $analysisTable = new VdotAnalysis($configuration->getVdot()->getLegacyCategory());
         $races = $analysisTable->getAnalysisForAllRaces(
-            Configuration::Data()->vdotFactor(),
-            Configuration::General()->runningSport(),
+            $vdotFactor,
+            $configuration->getGeneral()->getRunningSport(),
             $account->getId()
         );
 
         return $this->render('tools/vdot_analysis.html.twig', [
             'races' => $races,
-            'useVdotElevationCorrection' => Configuration::Vdot()->useElevationCorrection(),
-            'vdotFactor' => Configuration::Data()->vdotFactor()
+            'vdotFactor' => $vdotFactor
         ]);
     }
 

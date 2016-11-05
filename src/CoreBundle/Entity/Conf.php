@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Conf
  *
  * @ORM\Table(name="conf", indexes={@ORM\Index(name="accountid", columns={"accountid"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\ConfRepository")
  */
 class Conf
 {

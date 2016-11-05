@@ -14,7 +14,7 @@ namespace Runalyze\Parameter\Application;
  */
 class TemperatureUnit extends \Runalyze\Parameter\Select {
 	/**
-	 * Celsius	
+	 * Celsius
 	 * @var string
 	 */
 	const CELSIUS = '°C';
@@ -24,7 +24,7 @@ class TemperatureUnit extends \Runalyze\Parameter\Select {
 	 * @var string
 	 */
 	const FAHRENHEIT = '°F';
-        
+
 	/**
 	 * Construct
 	 * @param string $default
@@ -52,12 +52,24 @@ class TemperatureUnit extends \Runalyze\Parameter\Select {
 	public function isFahrenheit() {
 		return ($this->value() == self::FAHRENHEIT);
 	}
-        
+
 	/**
 	 * Get current user temperature unit
 	 * @return string
 	 */
 	public function unit() {
 		return $this->value();
+	}
+
+	/**
+	 * @param float $celsius [°C]
+	 * @return float [°C|°F]
+	 */
+	public function celsiusToUnit($celsius) {
+		if ($this->isFahrenheit()) {
+			return $celsius * 1.8 + 32;
+		}
+
+		return $celsius;
 	}
 }

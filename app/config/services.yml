@@ -37,6 +37,19 @@ services:
         container: "@service_container"
     tags:
       - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+  app.repository.conf:
+    class: Runalyze\Bundle\CoreBundle\Entity\ConfRepository
+    factory: ["@doctrine.orm.entity_manager", getRepository]
+    arguments: [Runalyze\Bundle\CoreBundle\Entity\Conf]
+  app.configuration_manager:
+    class: Runalyze\Bundle\CoreBundle\Services\Configuration\ConfigurationManager
+    arguments: ["@app.repository.conf", "@security.token_storage"]
+  app.twig_configuration_extension:
+    class: Runalyze\Bundle\CoreBundle\Twig\ConfigurationExtension
+    public: false
+    arguments: ["@app.configuration_manager"]
+    tags:
+      - { name: twig.extension }
   app.twig_html_extension:
     class: Runalyze\Bundle\CoreBundle\Twig\HtmlExtension
     public: false
@@ -45,5 +58,11 @@ services:
   app.twig_utility_extension:
     class: Runalyze\Bundle\CoreBundle\Twig\UtilityExtension
     public: false
+    tags:
+      - { name: twig.extension }
+  app.twig_value_extension:
+    class: Runalyze\Bundle\CoreBundle\Twig\ValueExtension
+    public: false
+    arguments: ["@app.configuration_manager"]
     tags:
       - { name: twig.extension }

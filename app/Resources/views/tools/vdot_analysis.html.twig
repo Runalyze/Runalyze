@@ -4,6 +4,9 @@
 {% from '_macro/utilities.html.twig' import plusMinus %}
 
 {% block content %}
+    {# @var conf \Runalyze\Bundle\CoreBundle\Component\Configuration\RunalyzeConfigurationList #}
+    {% set conf = config() %}
+
     <div class="panel-heading">
         <h1><a class="ajax" target="ajax" href="{{ url('tools-vdot-analysis') }}">{% trans %}Analyze your VDOT{% endtrans %}</a></h1>
     </div>
@@ -75,7 +78,7 @@
             {% endtrans %}
         </p>
 
-        {% if useVdotElevationCorrection %}
+        {% if conf.vdot.useCorrectionForElevation %}
         <p class="info">
             {% trans %}
                 <strong>VDOT/Time (corrected):</strong> after individual VDOT correction (factor: %vdotFactor%)<br>
@@ -101,7 +104,7 @@
             {% trans %}<strong>Corrector:</strong> Ratio between VDOT and VDOT (by HR){% endtrans %}
         </p>
 
-        {% if useVdotElevationCorrection %}
+        {% if conf.vdot.useCorrectionForElevation %}
         <p class="warning">
             {% trans %}The distance correction for elevation is not used in this table.{% endtrans %}
         </p>

@@ -32,12 +32,12 @@ abstract class Category {
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * To load values from database, make sure to call
 	 * <code>$Category->setUserID($id);</code>
-	 * 
+	 *
 	 * Otherwise this object will only contain default values
-	 * 
+	 *
 	 * @todo require database as parameter
 	 */
 	public function __construct() {
@@ -54,6 +54,17 @@ abstract class Category {
 		if ($id !== $this->UserID) {
 			$this->UserID = (int)$id;
 			$this->loadValues($data);
+		}
+	}
+
+	/**
+	 * @param array $data
+	 */
+	public function setValues(array $data) {
+		foreach ($data as $key => $value) {
+			if (isset($this->Handles[$key])) {
+				$this->Handles[$key]->object()->setFromString($value);
+			}
 		}
 	}
 
