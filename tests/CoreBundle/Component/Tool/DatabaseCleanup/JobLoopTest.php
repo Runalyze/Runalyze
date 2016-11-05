@@ -1,5 +1,4 @@
 <?php
-
 namespace Runalyze\Bundle\CoreBundle\Tests\Component\Tool\DatabaseCleanup;
 
 use Runalyze\Bundle\CoreBundle\Component\Tool\DatabaseCleanup\JobLoop;
@@ -28,8 +27,8 @@ class JobLoopTest extends \PHPUnit_Framework_TestCase
 	public function testNoLoopForSingleActivity()
     {
 		$this->PDO->exec(
-			'INSERT INTO `runalyze_training` (`id`, `distance`, `s`, `pulse_avg`, `sportid`, `accountid`) '.
-			'VALUES (1, 10, 3600, 150, '.Configuration::General()->runningSport().', 0)'
+			'INSERT INTO `runalyze_training` (`id`, `distance`, `s`, `pulse_avg`, `sportid`, `accountid`, `time`) '.
+			'VALUES (1, 10, 3600, 150, '.Configuration::General()->runningSport().', 0, 1477839475)'
 		);
 
 		$Loop = new JobLoop([], $this->PDO, 0, 'runalyze_');
@@ -47,8 +46,8 @@ class JobLoopTest extends \PHPUnit_Framework_TestCase
 	public function testCompleteLoopForSingleActivity()
     {
 		$this->PDO->exec(
-			'INSERT INTO `runalyze_training` (`id`, `distance`, `s`, `pulse_avg`, `sportid`, `accountid`) '.
-			'VALUES (1, 10, 3600, 150, '.Configuration::General()->runningSport().', 0)'
+			'INSERT INTO `runalyze_training` (`id`, `distance`, `s`, `pulse_avg`, `sportid`, `accountid`, `time`) '.
+			'VALUES (1, 10, 3600, 150, '.Configuration::General()->runningSport().', 0, 1477839906)'
 		);
 
 		$Loop = new JobLoop([
@@ -70,7 +69,7 @@ class JobLoopTest extends \PHPUnit_Framework_TestCase
 
 	public function testOverwriteElevation()
 	{
-		$this->PDO->exec('INSERT INTO `runalyze_training` (`id`, `distance`, `s`, `elevation`, `routeid`, `accountid`) VALUES (1, 10, 3600, 42, 1, 0)');
+		$this->PDO->exec('INSERT INTO `runalyze_training` (`id`, `distance`, `s`, `elevation`, `routeid`, `accountid`, `sportid`, `time`) VALUES (1, 10, 3600, 42, 1, 0, '.Configuration::General()->runningSport().', 1477839906)');
 		$this->PDO->exec('INSERT INTO `runalyze_route` (`id`, `elevation`, `elevation_up`, `elevation_down`, `accountid`) VALUES (1, 123, 123, 123, 0)');
 
 		$Loop = new JobLoop([
@@ -86,7 +85,7 @@ class JobLoopTest extends \PHPUnit_Framework_TestCase
 
 	public function testDontOverwriteElevation()
     {
-		$this->PDO->exec('INSERT INTO `runalyze_training` (`id`, `distance`, `s`, `elevation`, `routeid`, `accountid`) VALUES (1, 10, 3600, 42, 1, 0)');
+		$this->PDO->exec('INSERT INTO `runalyze_training` (`id`, `distance`, `s`, `elevation`, `routeid`, `accountid`, `sportid`, `time`) VALUES (1, 10, 3600, 42, 1, 0, '.Configuration::General()->runningSport().', 1477839906)');
 		$this->PDO->exec('INSERT INTO `runalyze_route` (`id`, `elevation`, `elevation_up`, `elevation_down`, `accountid`) VALUES (1, 123, 123, 123, 0)');
 
 		$Loop = new JobLoop([
@@ -102,12 +101,12 @@ class JobLoopTest extends \PHPUnit_Framework_TestCase
 	public function testUsageOfCorrectElevation()
     {
 		$this->PDO->exec(
-			'INSERT INTO `runalyze_training` (`id`, `routeid`, `distance`, `s`, `pulse_avg`, `sportid`, `accountid`) '.
-			'VALUES (1, 2, 10, 3600, 150, '.Configuration::General()->runningSport().', 0)'
+			'INSERT INTO `runalyze_training` (`id`, `routeid`, `distance`, `s`, `pulse_avg`, `sportid`, `accountid`, `time`) '.
+			'VALUES (1, 2, 10, 3600, 150, '.Configuration::General()->runningSport().', 0, 1477839906)'
 		);
 		$this->PDO->exec(
-			'INSERT INTO `runalyze_training` (`id`, `routeid`, `distance`, `s`, `pulse_avg`, `sportid`, `accountid`) '.
-			'VALUES (2, 1, 10, 3600, 150, '.Configuration::General()->runningSport().', 0)'
+			'INSERT INTO `runalyze_training` (`id`, `routeid`, `distance`, `s`, `pulse_avg`, `sportid`, `accountid`, `time`) '.
+			'VALUES (2, 1, 10, 3600, 150, '.Configuration::General()->runningSport().', 0, 1477839906)'
 		);
 		$this->PDO->exec('INSERT INTO `runalyze_route` (`id`, `elevations_corrected`, `accountid`) VALUES (1, "0|100", 0)');
 		$this->PDO->exec('INSERT INTO `runalyze_route` (`id`, `elevations_corrected`, `accountid`) VALUES (2, "200|0", 0)');
@@ -134,12 +133,12 @@ class JobLoopTest extends \PHPUnit_Framework_TestCase
 	public function testUsageOfCorrectElevationForVdot()
 	{
 		$this->PDO->exec(
-			'INSERT INTO `runalyze_training` (`id`, `routeid`, `distance`, `s`, `pulse_avg`, `sportid`, `accountid`) '.
-			'VALUES (1, 2, 10, 3600, 150, '.Configuration::General()->runningSport().', 0)'
+			'INSERT INTO `runalyze_training` (`id`, `routeid`, `distance`, `s`, `pulse_avg`, `sportid`, `accountid`, `time`) '.
+			'VALUES (1, 2, 10, 3600, 150, '.Configuration::General()->runningSport().', 0, 1477839906)'
 		);
 		$this->PDO->exec(
-			'INSERT INTO `runalyze_training` (`id`, `routeid`, `distance`, `s`, `pulse_avg`, `sportid`, `accountid`) '.
-			'VALUES (2, 1, 10, 3600, 150, '.Configuration::General()->runningSport().', 0)'
+			'INSERT INTO `runalyze_training` (`id`, `routeid`, `distance`, `s`, `pulse_avg`, `sportid`, `accountid`, `time`) '.
+			'VALUES (2, 1, 10, 3600, 150, '.Configuration::General()->runningSport().', 0, 1477839906)'
 		);
 		$this->PDO->exec('INSERT INTO `runalyze_route` (`id`, `elevation`, `elevation_up`, `elevation_down`, `accountid`) VALUES (1, 200, 200, 0, 0)');
 		$this->PDO->exec('INSERT INTO `runalyze_route` (`id`, `elevation`, `elevation_up`, `elevation_down`, `accountid`) VALUES (2, 200, 0, 200, 0)');
@@ -158,8 +157,8 @@ class JobLoopTest extends \PHPUnit_Framework_TestCase
 	public function testIgnoreVDOTforNotRunning()
     {
 		$this->PDO->exec(
-			'INSERT INTO `runalyze_training` (`id`, `distance`, `s`, `pulse_avg`, `sportid`, `accountid`) '.
-			'VALUES (1, 10, 3600, 150, '.(Configuration::General()->runningSport() + 1).', 0)'
+			'INSERT INTO `runalyze_training` (`id`, `distance`, `s`, `pulse_avg`, `sportid`, `accountid`, `time`) '.
+			'VALUES (1, 10, 3600, 150, '.(Configuration::General()->runningSport() + 1).', 0, 1477839906)'
 		);
 
 		$Loop = new JobLoop([

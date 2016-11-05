@@ -6,8 +6,6 @@
 
 use Runalyze\Activity\Distance;
 
-
-$Frontend = new Frontend();
 $Factory = new PluginFactory();
 $Plugin = $Factory->newInstance('RunalyzePluginStat_Wettkampf');
 ?>

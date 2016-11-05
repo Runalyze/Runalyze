@@ -873,11 +873,6 @@ class TrainingObject extends DataObject {
 	 * @return string total strokes
 	 */
 	public function getTotalStrokes() { return $this->get('total_strokes'); }
-	/**
-	 * Has total strokes?
-	 * @return bool
-	 */
-	public function hasTotalStrokes() { return strlen($this->get('total_strokes')) > 0; }
 
 	/**
 	 * Set swolf
@@ -889,11 +884,6 @@ class TrainingObject extends DataObject {
 	 * @return string swolf
 	 */
 	public function getSwolf() { return $this->get('swolf'); }
-	/**
-	 * Has swolf?
-	 * @return bool
-	 */
-	public function hasSwolf() { return strlen($this->get('swolf')) > 0; }
 
 	/**
 	 * Set pool length
@@ -905,11 +895,6 @@ class TrainingObject extends DataObject {
 	 * @return string pool length
 	 */
 	public function getPoolLength() { return $this->get('pool_length'); }
-	/**
-	 * Has pool length?
-	 * @return bool
-	 */
-	public function hasPoolLength() { return strlen($this->get('pool_length')) > 0; }
 
 	/**
 	 * Get partner

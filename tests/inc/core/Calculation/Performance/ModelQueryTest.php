@@ -16,18 +16,18 @@ class ModelQueryTest extends \PHPUnit_Framework_TestCase {
 		$this->DB->exec('DELETE FROM `runalyze_training`');
 
 		$Date = new \DateTime('today 15:30');
-		$this->DB->insert('training', array('time', 'trimp', 'sportid'), array($Date->getTimestamp(), 100, 1));
+		$this->DB->insert('training', array('time', 'trimp', 'sportid', 's'), array($Date->getTimestamp(), 100, 1, 2));
 
 		$Date->modify('-1 day 10:00');
-		$this->DB->insert('training', array('time', 'trimp', 'sportid'), array($Date->getTimestamp(), 30, 1));
+		$this->DB->insert('training', array('time', 'trimp', 'sportid', 's'), array($Date->getTimestamp(), 30, 1, 2));
 		$Date->modify('-0 day 16:30');
-		$this->DB->insert('training', array('time', 'trimp', 'sportid'), array($Date->getTimestamp(), 20, 2));
+		$this->DB->insert('training', array('time', 'trimp', 'sportid', 's'), array($Date->getTimestamp(), 20, 2, 2));
 
 		$Date->modify('-2 days 07:00');
-		$this->DB->insert('training', array('time', 'trimp', 'sportid'), array($Date->getTimestamp(), 70, 2));
+		$this->DB->insert('training', array('time', 'trimp', 'sportid', 's'), array($Date->getTimestamp(), 70, 2, 2));
 
 		$Date->modify('-7 days 19:00');
-		$this->DB->insert('training', array('time', 'trimp', 'sportid'), array($Date->getTimestamp(), 150, 1));
+		$this->DB->insert('training', array('time', 'trimp', 'sportid', 's'), array($Date->getTimestamp(), 150, 1, 2));
 	}
 
 	protected function tearDown() {

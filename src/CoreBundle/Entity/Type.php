@@ -15,7 +15,7 @@ class Type
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(name="id", type="integer", options={"unsigned":true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -31,7 +31,7 @@ class Type
     /**
      * @var string
      *
-     * @ORM\Column(name="abbr", type="string", length=5, nullable=false)
+     * @ORM\Column(name="abbr", type="string", length=5, nullable=false, options={"default":""})
      */
     private $abbr = '';
 
@@ -48,33 +48,34 @@ class Type
     /**
      * @var boolean
      *
-     * @ORM\Column(name="short", type="boolean", nullable=false)
+     * @ORM\Column(name="short", type="boolean", nullable=false, options={"unsigned":true, "default":0})
      */
     private $short = '0';
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="hr_avg", type="boolean", nullable=false)
+     * @ORM\Column(name="hr_avg", columnDefinition="tinyint(3) unsigned NOT NULL DEFAULT '100'")
      */
     private $hrAvg = '100';
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="quality_session", type="boolean", nullable=false)
+     * @ORM\Column(name="quality_session", type="boolean", nullable=false, options={"unsigned":true, "default":0})
      */
     private $qualitySession = '0';
 
     /**
      * @var \Runalyze\Bundle\CoreBundle\Entity\Account
      *
+     * @ORM\Column(name="accountid", type="integer", precision=10, nullable=false, options={"unsigned":true})
      * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Account")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="accountid", referencedColumnName="id")
      * })
      */
-    private $accountid;
+    private $account;
 
     /**
      * Get id
@@ -231,26 +232,26 @@ class Type
     }
 
     /**
-     * Set accountid
+     * Set account
      *
-     * @param \Runalyze\Bundle\CoreBundle\Entity\Account $accountid
+     * @param \Runalyze\Bundle\CoreBundle\Entity\Account $account
      *
      * @return Type
      */
-    public function setAccountid(\Runalyze\Bundle\CoreBundle\Entity\Account $accountid = null)
+    public function setAccount(\Runalyze\Bundle\CoreBundle\Entity\Account $account = null)
     {
-        $this->accountid = $accountid;
+        $this->account= $account;
 
         return $this;
     }
 
     /**
-     * Get accountid
+     * Get account
      *
      * @return \Runalyze\Bundle\CoreBundle\Entity\Account
      */
-    public function getAccountid()
+    public function getAccount()
     {
-        return $this->accountid;
+        return $this->account;
     }
 }

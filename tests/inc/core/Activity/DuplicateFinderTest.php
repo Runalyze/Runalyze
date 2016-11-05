@@ -16,8 +16,8 @@ class DuplicateFinderTest extends \PHPUnit_Framework_TestCase
 	{
 		$this->PDO = \DB::getInstance();
 		$this->PDO->exec('DELETE FROM `'.PREFIX.'training`');
-		$this->PDO->exec('INSERT INTO `'.PREFIX.'training` (`activity_id`, `accountid`) VALUES (1448797800, 0)');
-		$this->PDO->exec('INSERT INTO `'.PREFIX.'training` (`activity_id`, `accountid`) VALUES (1450823800, 0)');
+		$this->PDO->exec('INSERT INTO `'.PREFIX.'training` (`activity_id`, `accountid`, `sportid`, `time`, `s`) VALUES (1448797800, 0, 0, 1477839906, 2)');
+		$this->PDO->exec('INSERT INTO `'.PREFIX.'training` (`activity_id`, `accountid`, `sportid`, `time`, `s`) VALUES (1450823800, 0, 0, 1477839906, 2)');
 
 		$this->Finder = new DuplicateFinder($this->PDO, 0);
 	}

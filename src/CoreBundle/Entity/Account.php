@@ -35,7 +35,7 @@ class Account implements AdvancedUserInterface, \Serializable
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer", precision=10, nullable=false, options={"unsigned":true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -61,7 +61,7 @@ class Account implements AdvancedUserInterface, \Serializable
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=50)
+     * @ORM\Column(name="name", type="string", length=50, options={"default":""})
      */
     private $name = '';
 
@@ -79,7 +79,7 @@ class Account implements AdvancedUserInterface, \Serializable
     /**
      * @var string
      * @Assert\NotBlank()
-     * @ORM\Column(name="language", type="string", length=5, nullable=false)
+     * @ORM\Column(name="language", type="string", length=5, nullable=false, options={"default":"en"})
      */
     private $language = 'en';
 
@@ -88,21 +88,21 @@ class Account implements AdvancedUserInterface, \Serializable
      * @Assert\NotBlank()
      * @Assert\Type("int")
      * @RunalyzeAssert\IsValidTimezone()
-     * @ORM\Column(name="timezone", type="integer", nullable=false)
+     * @ORM\Column(name="timezone", type="integer", nullable=false, options={"unsigned":true, "default":0})
      */
     private $timezone = Timezone::UTC;
 
     /**
      * @var integer
      * @Assert\Type("int")
-     * @ORM\Column(name="gender", type="integer", nullable=false)
+     * @ORM\Column(name="gender", type="integer", nullable=false, options={"unsigned":true})
      */
     private $gender = Gender::NONE;
 
     /**
      * @var integer
      * @Assert\Type("int")
-     * @ORM\Column(name="birthyear", type="integer")
+     * @ORM\Column(name="birthyear", type="integer", nullable=true, options={"unsigned":true})
      */
     private $birthyear;
 
@@ -122,63 +122,63 @@ class Account implements AdvancedUserInterface, \Serializable
     /**
      * @var integer
      * @Assert\Type("int")
-     * @ORM\Column(name="registerdate", type="integer", nullable=false)
+     * @ORM\Column(name="registerdate", type="integer", nullable=true, options={"unsigned":true})
      */
     private $registerdate;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="lastaction", type="integer", nullable=false)
+     * @ORM\Column(name="lastaction", type="integer", nullable=true, options={"unsigned":true})
      */
-    private $lastaction = 0;
+    private $lastaction;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="changepw_hash", type="string", length=32, nullable=false)
+     * @ORM\Column(name="changepw_hash", type="string", length=32, nullable=true, options={"fixed" = true})
      */
-    private $changepwHash = '';
+    private $changepwHash;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="changepw_timelimit", type="integer", nullable=false)
+     * @ORM\Column(name="changepw_timelimit", type="integer", nullable=true, options={"unsigned":true})
      */
-    private $changepwTimelimit = 0;
+    private $changepwTimelimit;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="activation_hash", type="string", length=32, nullable=false)
+     * @ORM\Column(name="activation_hash", type="string", length=32, nullable=true, options={"fixed" = true})
      */
-    private $activationHash = '';
+    private $activationHash;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="deletion_hash", type="string", length=32, nullable=false)
+     * @ORM\Column(name="deletion_hash", type="string", length=32, nullable=true, options={"fixed" = true})
      */
-    private $deletionHash = '';
+    private $deletionHash;
 
     /**
      * @var integer
      * @Assert\Type("bool")
-     * @ORM\Column(name="allow_mails", type="boolean", nullable=false)
+     * @ORM\Column(name="allow_mails", type="boolean", nullable=false, options={"unsigned":true})
      */
     private $allowMails = true;
 
     /**
      * @var integer
      * @Assert\Type("bool")
-     * @ORM\Column(name="allow_support", type="boolean", nullable=false)
+     * @ORM\Column(name="allow_support", type="boolean", nullable=false, options={"unsigned":true})
      */
     private $allowSupport = false;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="role", type="integer", nullable=false)
+     * @ORM\Column(name="role", type="integer", nullable=false, options={"unsigned":true})
      */
     private $role;
 

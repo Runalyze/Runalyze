@@ -8,6 +8,7 @@ namespace Runalyze\Data\Laps;
 
 use Runalyze\Activity\Duration;
 use Runalyze\Calculation;
+use Runalyze\Configuration;
 use Runalyze\Data\Elevation;
 use Runalyze\Model\Route;
 use Runalyze\Model\Trackdata;
@@ -288,7 +289,7 @@ class Calculator
 	 * @param array $AdditionalData
 	 */
 	protected function addVDOTToDataFrom(Lap $Lap, array &$AdditionalData) {
-		if (false && Configuration::Vdot()->useElevationCorrection() && $Lap->hasElevation()) {
+		if (Configuration::Vdot()->useElevationCorrection() && $Lap->hasElevation()) {
 			$distance = (new Calculation\Elevation\DistanceModifier(
 				$Lap->distance()->kilometer(),
 				$Lap->elevationUp(),
@@ -303,7 +304,7 @@ class Calculator
 		$VDOT->fromPaceAndHR(
 			$distance,
 			$Lap->duration()->seconds(),
-			$Lap->HRavg()->inPercent() / 100
+			$Lap->HRavg()->inHRmax() / 100
 		);
 
 		if ($VDOT->value() > 0) {

@@ -4,8 +4,6 @@
  * @package Runalyze\Plugins\Panels
  */
 
-$Frontend = new Frontend();
-
 $Factory = new PluginFactory();
 $Plugin = $Factory->newInstance('RunalyzePluginPanel_Equipment');
 
