@@ -98,10 +98,11 @@ class ConfigTabEquipment extends ConfigTab {
 			$sportIDs = $isNew ? array(\Runalyze\Configuration::General()->mainSport()) : $this->Model->sportForEquipmentType($id, true);
 			$MaxDistance = new Distance($Type->maxDistance());
 
+            $readOnly = !$isNew ? 'disabled="true"' : '';
 			$Code .= '
 					<tr class="'.($isNew ? ' unimportant' : '').'">
 						<td><input type="text" class="middle-size" name="equipmenttype[name]['.$id.']" value="'.$Type->name().'"></td>
-						<td><select name="equipmenttype[input]['.$id.']"">
+						<td><select name="equipmenttype[input]['.$id.']" '.$readOnly.' ">
 								<option value="'.EquipmentType\Entity::CHOICE_SINGLE.'" '.HTML::Selected(!$Type->allowsMultipleValues()).'>'.__('Single choice').'</option>
 								<option value="'.EquipmentType\Entity::CHOICE_MULTIPLE.'" '.HTML::Selected($Type->allowsMultipleValues()).'>'.__('Multiple choice').'</option>
 							</select></td>

@@ -84,11 +84,13 @@ class ConfigTabTypes extends ConfigTab {
 				2 => __('inherit from sport type')
 			);
 
+            $readOnly = $id !== -1 ? 'disabled="true"' : '';
 			$Code .= '
 				<tr class="'.($sportid !== false && $sportid != $Data['sportid'] ? 'top-separated-light' : '').($id == -1 ? ' unimportant' : '').'">
 					<td><input type="text" size="20" name="type[name]['.$id.']" value="'.$Data['name'].'"></td>
 					<td><input type="text" size="3" name="type[abbr]['.$id.']" value="'.$Data['abbr'].'"></td>
-					<td><select name="type[sportid]['.$id.']">';
+                    <td><select name="type[sportid]['.$id.']" '.$readOnly.'>';
+
 			foreach ($Sports as $SData)
 				$Code .= '<option value="'.$SData['id'].'"'.HTML::Selected($SData['id'] == $Data['sportid']).'>'.$SData['name'].'</option>';
 
