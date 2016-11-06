@@ -40,7 +40,7 @@ class Swimdata
      * @ORM\GeneratedValue(strategy="NONE")
      * @ORM\ManyToOne(targetEntity="Account")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="accountid", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="accountid", referencedColumnName="id", onDelete="cascade")
      * })
      */
     private $account;
@@ -52,7 +52,7 @@ class Swimdata
      * @ORM\GeneratedValue(strategy="NONE")
      * @ORM\OneToOne(targetEntity="Training")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="activityid", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="activityid", referencedColumnName="id", onDelete="cascade")
      * })
      */
     private $activity;
