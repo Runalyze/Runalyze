@@ -21,15 +21,6 @@ class BasicEnduranceTest extends \PHPUnit_Framework_TestCase {
 		DB::getInstance()->exec('DELETE FROM `runalyze_training`');
 	}
 
-	public function testGetConst() {
-		// TODO: needs VDOT_FORM
-		// $this->assertEquals(0, BasicEndurance::getConst(true));
-	}
-
-	public function testRecalculateValue() {
-		// TODO
-	}
-
 	public function testSetterAndGetter() {
 		$this->object->setVDOT(50);
 		$this->object->setDaysToRecognizeForLongjogs(30);
@@ -62,11 +53,13 @@ class BasicEnduranceTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(0, $this->object->getPercentageForWeekKilometer());
 	}
 
+	public function testThatMinimalVdotIsUsed() {
+		$this->object->setVDOT(20);
+		$this->assertEquals(25, $this->object->getUsedVDOT());
+	}
+
 	public function testTargets() {
 		$this->object->setMinimalDistanceForLongjogs(10);
-		$this->object->setVDOT(20);
-		$this->assertEquals(30, $this->object->getTargetWeekKm(), '', 1);
-		$this->assertEquals(19, $this->object->getRealTargetLongjogKmPerWeek(), '', 1);
 
 		$this->object->setVDOT(30);
 		$this->assertEquals(47.5, $this->object->getTargetWeekKm(), '', 1);
@@ -93,8 +86,8 @@ class BasicEnduranceTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(36, $this->object->getRealTargetLongjogKmPerWeek(), '', 1);
 	}
 
-	public function testForVDOT20() {
-		$this->object->setVDOT(20);
+	public function testForVDOT30() {
+		$this->object->setVDOT(30);
 		$this->object->setDaysToRecognizeForLongjogs(7);
 		$this->object->setDaysToRecognizeForWeekKilometer(7);
 		$this->object->setMinimalDaysToRecognizeForWeekKilometer(7);
@@ -108,24 +101,24 @@ class BasicEnduranceTest extends \PHPUnit_Framework_TestCase {
 
 		$Results = $this->object->asArray();
 		$this->assertEquals(30, $Results['weekkm-result']);
-		$this->assertEquals(0.82, $Results['longjog-result'], '', 0.01);
-		$this->assertEquals(1.00, $Results['weekkm-percentage'], '', 0.01);
-		$this->assertEquals(0.82, $Results['longjog-percentage'], '', 0.01);
-		$this->assertEquals(94, $Results['percentage'], '', 0.01);
-		$this->assertEquals(94, $this->object->value());
-		$this->assertEquals('94 &#37;', $this->object->valueInPercent());
+		$this->assertEquals(0.36, $Results['longjog-result'], '', 0.01);
+		$this->assertEquals(0.63, $Results['weekkm-percentage'], '', 0.01);
+		$this->assertEquals(0.36, $Results['longjog-percentage'], '', 0.01);
+		$this->assertEquals(54, $Results['percentage'], '', 0.01);
+		$this->assertEquals(54, $this->object->value());
+		$this->assertEquals('54 &#37;', $this->object->valueInPercent());
 
 		$this->object->setPercentageForLongjogs(1);
-		$this->assertEquals(82, $this->object->value());
+		$this->assertEquals(36, $this->object->value());
 
 		$this->object->setDaysToRecognizeForLongjogs(14);
-		$this->assertEquals(555, $this->object->value());
+		$this->assertEquals(240, $this->object->value());
 
 		// Attention: depens on START_TIME
 		$this->object->setMinimalDaysToRecognizeForWeekKilometer(70);
 		$this->object->setDaysToRecognizeForWeekKilometer(70);
 		$this->object->setPercentageForLongjogs(0.01);
-		$this->assertEquals(29, $this->object->value());
+		$this->assertEquals(17, $this->object->value());
 	}
 
 }

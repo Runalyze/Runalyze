@@ -502,6 +502,7 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 	protected function applyPauses() {
 		if (!empty($this->pausesToApply)) {
 			$num = count($this->gps['time_in_s']);
+			$hasHR = !empty($this->gps['heartrate']);
 			$keys = array_keys($this->gps);
 			$pauseInSeconds = 0;
 			$pauseIndex = 0;
@@ -514,7 +515,7 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 				if (!$isPause && $this->gps['time_in_s'][$i] > $pauseTime) {
 					if ($pauseIndex < count($this->pausesToApply)) {
 						$isPause = true;
-						$hrStart = isset($this->gps['heartrate'][$i-1]) ? $this->gps['heartrate'][$i-1] : $this->gps['heartrate'][$i];
+						$hrStart = !$hasHR ? 0 : (isset($this->gps['heartrate'][$i-1]) ? $this->gps['heartrate'][$i-1] : $this->gps['heartrate'][$i]);
 						$pauseInSeconds += $this->pausesToApply[$pauseIndex]['duration'];
 						$pauseTime = $this->pausesToApply[$pauseIndex]['time'];
 						$pauseUntil = $this->pausesToApply[$pauseIndex]['duration'] + $pauseTime;
@@ -531,7 +532,7 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 							$this->pausesToApply[$pauseIndex-1]['time'],
 							$this->pausesToApply[$pauseIndex-1]['duration'],
 							$hrStart,
-							$this->gps['heartrate'][$i]
+							$hasHR ? $this->gps['heartrate'][$i] : 0
 						)
 					);
 				}

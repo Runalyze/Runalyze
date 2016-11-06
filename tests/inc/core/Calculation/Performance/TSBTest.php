@@ -115,4 +115,12 @@ class TSBTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(   0, $Model->fatigueAt(22) );
 	}
 
+	public function testBadTimeConstants() {
+		$Model = new TSB([1000, 500], 14, 14);
+		$Model->setRange(0, 10);
+		$Model->calculate();
+
+		$this->assertEquals(0, $Model->restDays(50, 100));
+		$this->assertEquals(0, $Model->maxTrimpToBalanced(50, 100));
+	}
 }
