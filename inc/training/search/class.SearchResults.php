@@ -547,20 +547,22 @@ class SearchResults {
 	protected function getOrder() {
 		$order = (!isset($_POST['search-sort-order'])) ? 'DESC' : $this->DB->escape($_POST['search-sort-order'], false);
 
-		if ($_POST['search-sort-by'] == 'vdot' && Configuration::Vdot()->useElevationCorrection()) {
-			return ' ORDER BY IF(`t`.`vdot_with_elevation`>0, `t`.`vdot_with_elevation`, `t`.`vdot`) '.$order;
-		}
+		if (isset($_POST['search-sort-by'])) {
+			if ($_POST['search-sort-by'] == 'vdot' && Configuration::Vdot()->useElevationCorrection()) {
+				return ' ORDER BY IF(`t`.`vdot_with_elevation`>0, `t`.`vdot_with_elevation`, `t`.`vdot`) '.$order;
+			}
 
-		if ($_POST['search-sort-by'] == 'pace') { // addConditionsForOrder() guarantees that `distance` > 0
-			return ' ORDER BY `t`.`s`/`t`.`distance` '.$order;
-		}
+			if ($_POST['search-sort-by'] == 'pace') { // addConditionsForOrder() guarantees that `distance` > 0
+				return ' ORDER BY `t`.`s`/`t`.`distance` '.$order;
+			}
 
-		if ($_POST['search-sort-by'] == 'gradient') { // addConditionsForOrder() guarantees that `distance` > 0
-			return ' ORDER BY `t`.`elevation`/`t`.`distance` '.$order;
-		}
+			if ($_POST['search-sort-by'] == 'gradient') { // addConditionsForOrder() guarantees that `distance` > 0
+				return ' ORDER BY `t`.`elevation`/`t`.`distance` '.$order;
+			}
 
-		if (isset($_POST['search-sort-by']) && in_array($_POST['search-sort-by'], $this->AllowedKeys)) {
-			return ' ORDER BY `t`.'.$this->DB->escape($_POST['search-sort-by'], false).' '.$order;
+			if (in_array($_POST['search-sort-by'], $this->AllowedKeys)) {
+				return ' ORDER BY `t`.'.$this->DB->escape($_POST['search-sort-by'], false).' '.$order;
+			}
 		}
 
 		return ' ORDER BY `t`.`time` '.$order;

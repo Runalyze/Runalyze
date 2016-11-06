@@ -13,8 +13,8 @@
         {{ form_row(form.mail) }}
         {{ form_row(form.language) }}
         {{ form_row(form.timezone) }}
-        {{ form_row(form.gender, {'info': 'Used for the calculation of energy spent for an activity'|trans }) }}
-        {{ form_row(form.birthyear, {'info': 'Will be used for some upcoming features'|trans }) }}
+        {{ form_row(form.gender, {'info': 'Used for calculating energy consumption and age grading.'|trans }) }}
+        {{ form_row(form.birthyear, {'info': 'Used for age grading.'|trans }) }}
         {{ form_row(form.registerdate) }}
         {{ form_row(form.allow_support, {'info': 'Allow admins in case of support requests to have a look at your data.'|trans }) }}
     </fieldset>
@@ -39,7 +39,7 @@
     </fieldset>
     <fieldset id="legend4">
         <legend onclick="Runalyze.toggleFieldset(this, 'legend4', false, '')">{% trans %}Reset configuration{% endtrans %}</legend>
-        {{ form_row(form.reset_configuration, {'info': 'This will not touch any general settings like gender and main sport'|trans }) }}
+        {{ form_row(form.reset_configuration, {'info': 'This will not touch any general settings like gender or main sport.'|trans }) }}
     </fieldset>
     <fieldset id="legend5">
         <legend onclick="Runalyze.toggleFieldset(this, 'legend5', false, '')">{% trans %}Delete your account{% endtrans %}</legend>

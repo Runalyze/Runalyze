@@ -7,30 +7,29 @@ use Ajax;
 
 /**
  * Heat index effect as defined by the U.S. National Oceanic and Atmospheric Administration
- * 
+ *
  * @see http://www.nws.noaa.gov/os/heat/heat_index.shtml
  */
 class HeatIndexEffect extends AbstractEnum
 {
     /** @var int */
     const NO_EFFECT = 0;
-    
+
     /** @var int */
     const CAUTION = 1;
-    
+
     /** @var int */
     const EXTREME_CAUTION = 2;
-    
+
     /** @var int */
     const DANGER = 3;
-    
+
     /** @var int */
     const EXTREME_DANGER = 4;
 
     /**
      * @param float $value value (in Fahrenheit)
      * @return int internal enum
-     * @throws \InvalidArgumentException
      */
     public static function levelFor($value)
     {
@@ -43,10 +42,10 @@ class HeatIndexEffect extends AbstractEnum
         } elseif ($value >= 80) {
             return self::CAUTION;
         }
-        
+
         return self::NO_EFFECT;
     }
-    
+
     /**
      * @param int $enum internal enum
      * @return string
@@ -74,23 +73,21 @@ class HeatIndexEffect extends AbstractEnum
     /**
      * @param int $enum internal enum
      * @return string
-     * @throws \InvalidArgumentException
+     * @codeCoverageIgnore
      */
     public static function colorFor($enum)
     {
         switch ($enum) {
-            case self::NO_EFFECT:
-                return '#32ad32';
             case self::CAUTION:
-                return '#ffff00';
+                return '#ffc930';
             case self::EXTREME_CAUTION:
-                return '#ffd700';
+                return '#ff6530';
             case self::DANGER:
-                return '#ffa500';
+                return '#e04b27';
             case self::EXTREME_DANGER:
-                return '#ff0000';
+                return '#c1321d';
             default:
-                return '#32ad32';
+                return '#ccc';
         }
     }
 
@@ -104,20 +101,20 @@ class HeatIndexEffect extends AbstractEnum
     {
         switch ($enum) {
             case self::NO_EFFECT:
-                return __('temperature and humidity should not have any effect');
+                return __('Temperature and humidity should not have any effect.');
             case self::CAUTION:
-                return __('fatigue is possible with prolonged exposure and activity. Continuing activity could result in heat cramps');
+                return __('Fatigue is possible with prolonged exposure and activity. Continuing activity could result in heat cramps.');
             case self::EXTREME_CAUTION:
-                return __('heat cramps and heat exhaustion are possible. Continuing activity could result in heat stroke');
+                return __('Heat cramps and heat exhaustion are possible. Continuing activity could result in heat stroke.');
             case self::DANGER:
-                return __('heat cramps and heat exhaustion are likely; heat stroke is probable with continued activity');
+                return __('Heat cramps and heat exhaustion are likely; heat stroke is probable with continued activity.');
             case self::EXTREME_DANGER:
-                return __('heat stroke is imminent');
+                return __('Heat stroke is imminent.');
             default:
                 throw new \InvalidArgumentException(sprintf('Provided level %u is invalid.', $enum));
         }
     }
-    
+
     /**
      * @param int $enum internal enum
      * @return string
@@ -125,13 +122,11 @@ class HeatIndexEffect extends AbstractEnum
      */
     public static function icon($enum)
     {
-                $code = '<i class="fa fa-fw '.self::fontIconName($enum).'" style="color:'.self::colorFor($enum).'"></i>';
-                $Tooltip = new \Runalyze\View\Tooltip(self::label($enum).'<br>'.self::description($enum));
-        		$Tooltip->setPosition('atRight');
-        		$Tooltip->wrapAround($code);
-        		return $code;
+        $Tooltip = new \Runalyze\View\Tooltip(self::label($enum).'<br>'.self::description($enum));
+
+        return '<i '.$Tooltip->attributes().' class="fa fa-fw '.self::fontIconName($enum).' atRight" style="color:'.self::colorFor($enum).'"></i>';
     }
-    
+
     /**
      * @param int $enum internal enum
      * @return string
@@ -145,9 +140,9 @@ class HeatIndexEffect extends AbstractEnum
             case self::DANGER:
             case self::EXTREME_DANGER:
                 return 'fa-exclamation-triangle';
-            default:    
+            default:
                 return 'fa-check';
         }
     }
-    
+
 }
