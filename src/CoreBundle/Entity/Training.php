@@ -15,7 +15,7 @@ class Training
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer", precision=10, nullable=false, options={"unsigned":true})
+     * @ORM\Column(name="id", type="integer", precision=10, unique=true, nullable=false, options={"unsigned":true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -53,37 +53,37 @@ class Training
     /**
      * @var integer
      *
-     * @ORM\Column(name="created", type="integer", precision=11, nullable=false, options={"unsigned":true})
+     * @ORM\Column(name="created", type="integer", precision=11, nullable=true, options={"unsigned":true})
      */
-    private $created = '0';
+    private $created = null;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="edited", type="integer", precision=11, nullable=false, options={"unsigned":true})
+     * @ORM\Column(name="edited", type="integer", precision=11, nullable=true, options={"unsigned":true})
      */
-    private $edited = '0';
+    private $edited = null;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="is_public", type="boolean", nullable=false, options={"unsigned":true, "default":0})
+     * @ORM\Column(name="is_public", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 0")
      */
     private $isPublic = '0';
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="is_track", type="boolean", nullable=false, options={"unsigned":true,"default":0})
+     * @ORM\Column(name="is_track", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 0")
      */
     private $isTrack = '0';
 
     /**
      * @var string
      *
-     * @ORM\Column(name="distance", type="decimal", precision=6, scale=2, nullable=false, options={"unsigned":true, "default":0.00})
+     * @ORM\Column(name="distance", type="decimal", precision=6, scale=2, nullable=true, options={"unsigned":true})
      */
-    private $distance = '0.00';
+    private $distance = null;
 
     /**
      * @var string
@@ -95,21 +95,21 @@ class Training
     /**
      * @var integer
      *
-     * @ORM\Column(name="elapsed_time", type="integer", precision=8, nullable=false, options={"unsigned":true})
+     * @ORM\Column(name="elapsed_time", columnDefinition="mediumint unsigned DEFAULT NULL")
      */
-    private $elapsedTime = '0';
+    private $elapsedTime = 0;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="elevation", type="integer", precision=5, nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="elevation", columnDefinition="smallint unsigned DEFAULT NULL")
      */
-    private $elevation = 0;
+    private $elevation = null;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="kcal", type="integer", precision=5, nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="kcal", columnDefinition="smallint unsigned DEFAULT NULL")
      */
     private $kcal = null;
 
@@ -200,28 +200,28 @@ class Training
     /**
      * @var boolean
      *
-     * @ORM\Column(name="rpe", type="boolean", nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="rpe", columnDefinition="tinyint(2) unsigned DEFAULT NULL")
      */
     private $rpe = null;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="trimp", type="integer", options={"unsigned":true})
+     * @ORM\Column(name="trimp", columnDefinition="smallint unsigned DEFAULT NULL")
      */
     private $trimp = null;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="cadence", type="integer", options={"unsigned":true})
+     * @ORM\Column(name="cadence", type="integer", length=3 ,options={"unsigned":true})
      */
     private $cadence = null;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="power", type="integer", options={"unsigned":true})
+     * @ORM\Column(name="power", type="integer", length=4, options={"unsigned":true})
      */
     private $power = null;
 
@@ -249,28 +249,28 @@ class Training
     /**
      * @var integer
      *
-     * @ORM\Column(name="groundcontact", type="smallint", options={"unsigned":true})
+     * @ORM\Column(name="groundcontact", type="smallint", nullable=true, options={"unsigned":true})
      */
     private $groundcontact = null;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="groundcontact_balance", type="smallint",  options={"unsigned":true})
+     * @ORM\Column(name="groundcontact_balance", type="smallint", nullable=true, options={"unsigned":true})
      */
     private $groundcontactBalance = null;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="vertical_oscillation", type="boolean", options={"unsigned":true})
+     * @ORM\Column(name="vertical_oscillation", type="boolean", nullable=true, options={"unsigned":true})
      */
     private $verticalOscillation = null;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="vertical_ratio", type="smallint", options={"unsigned":true})
+     * @ORM\Column(name="vertical_ratio", type="smallint", nullable=true, options={"unsigned":true})
      */
     private $verticalRatio = null;
 
@@ -377,12 +377,12 @@ class Training
      *
      * @ORM\Column(name="accountid", type="integer", nullable=false, options={"unsigned":true})
      */
-    private $accountid;
+    private $account;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="creator", type="string", length=100, nullable=false)
+     * @ORM\Column(name="creator", type="string", length=100, nullable=false, options={"default":""})
      */
     private $creator;
 

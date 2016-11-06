@@ -73,7 +73,7 @@ class User
     /**
      * @var integer
      *
-     * @ORM\Column(name="sleep_duration", type="smallint", precision=3, nullable=true)
+     * @ORM\Column(name="sleep_duration", type="smallint", precision=3, nullable=true, options={"unsigned":true})
      */
     private $sleepDuration;
 

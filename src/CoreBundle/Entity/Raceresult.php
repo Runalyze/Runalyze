@@ -29,7 +29,7 @@ class Raceresult
     /**
      * @var boolean
      *
-     * @ORM\Column(name="officially_measured", type="boolean", nullable=false, options={"unsigned":true, "default":0})
+     * @ORM\Column(name="officially_measured", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 0")
      */
     private $officiallyMeasured = '0';
 

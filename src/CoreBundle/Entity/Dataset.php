@@ -13,11 +13,12 @@ use Doctrine\ORM\Mapping as ORM;
 class Dataset
 {
     /**
-     * @var integer
+     * @var \Runalyze\Bundle\CoreBundle\Entity\Account
      *
-     * @ORM\Column(name="accountid", type="integer", nullable=false, options={"unsigned":true})
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Account")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="accountid", referencedColumnName="id")
+     * })
      */
     private $account;
 
@@ -33,9 +34,9 @@ class Dataset
     /**
      * @var boolean
      *
-     * @ORM\Column(name="active", type="boolean", nullable=false, options={"unsigned":true, "default":1})
+     * @ORM\Column(name="active", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 1")
      */
-    private $active = '1';
+    private $active = 1;
 
     /**
      * @var string
@@ -73,6 +74,30 @@ class Dataset
     public function getAccount()
     {
         return $this->account;
+    }
+
+    /**
+     * Set KeyId
+     *
+     * @param string $keyId
+     *
+     * @return Dataset
+     */
+    public function setKeyId($keyId)
+    {
+        $this->keyid = $keyId;
+
+        return $this;
+    }
+
+    /**
+     * Get KeyId
+     *
+     * @return string
+     */
+    public function getKeyId()
+    {
+        return $this->keyid;
     }
 
     /**

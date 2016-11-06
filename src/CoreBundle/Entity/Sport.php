@@ -38,16 +38,16 @@ class Sport
     /**
      * @var boolean
      *
-     * @ORM\Column(name="short", type="boolean", nullable=false, options={"unsigned":true, "default":0})
+     * @ORM\Column(name="short", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 0")
      */
-    private $short = '0';
+    private $short = 0;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="kcal", type="smallint", precision=4, nullable=false, options={"unsigned":true, "default":0})
      */
-    private $kcal = '0';
+    private $kcal = 0;
 
     /**
      * @var integer
@@ -80,7 +80,7 @@ class Sport
     /**
      * @var boolean
      *
-     * @ORM\Column(name="outside", type="boolean", nullable=false, options={"unsigned":true, "default":0})
+     * @ORM\Column(name="outside", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 0")
      */
     private $outside = '0';
 

@@ -33,14 +33,14 @@ class Weathercache
     /**
      * @var boolean
      *
-     * @ORM\Column(name="temperature", type="integer",  precision=4, nullable=true)
+     * @ORM\Column(name="temperature", columnDefinition="tinyint(4) DEFAULT NULL")
      */
     private $temperature;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="wind_speed", type="integer", precision=3, nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="wind_speed", columnDefinition="tinyint(3) unsigned DEFAULT NULL")
      */
     private $windSpeed;
 
@@ -61,7 +61,7 @@ class Weathercache
     /**
      * @var integer
      *
-     * @ORM\Column(name="pressure", type="smallint", precision=3, nullable=true,  options={"unsigned":true})
+     * @ORM\Column(name="pressure", type="smallint", precision=4, nullable=true,  options={"unsigned":true})
      */
     private $pressure;
 

@@ -15,7 +15,7 @@ class EquipmentType
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer", options={"unsigned":true})
+     * @ORM\Column(name="id", type="integer", precision=10, nullable=false, options={"unsigned":true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -31,7 +31,7 @@ class EquipmentType
     /**
      * @var boolean
      *
-     * @ORM\Column(name="input", type="boolean", nullable=false, options={"unsigned":true, "default":0})
+     * @ORM\Column(name="input", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 0")
      */
     private $input;
 
