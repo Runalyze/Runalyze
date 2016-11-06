@@ -352,7 +352,7 @@ class ActivityController extends Controller
 
         $statistics = new BestSubSegmentsStatistics($trackdataModel);
         $statistics->setDistancesToAnalyze([0.2, 1.0, 1.609, 3.0, 5.0, 10.0, 16.09, 21.1, 42.2, 50, 100]);
-        $statistics->setTimesToAnalyze([30, 60, 120, 300, 600, 1800, 3600, 7200]);
+        $statistics->setTimesToAnalyze([30, 60, 120, 300, 600, 720, 1800, 3600, 7200]);
         $statistics->findSegments();
 
         return $this->render('activity/tool/best_sub_segments.html.twig', [
