@@ -59,7 +59,7 @@ class Sport
     /**
      * @var boolean
      *
-     * @ORM\Column(name="distances", type="boolean", nullable=false, options={"unsigned":true, "default":1})
+     * @ORM\Column(name="distances", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 1")
      */
     private $distances;
 
