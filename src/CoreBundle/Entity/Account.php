@@ -35,7 +35,7 @@ class Account implements AdvancedUserInterface, \Serializable
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer", precision=10, nullable=false, options={"unsigned":true})
+     * @ORM\Column(name="id", type="integer", precision=10, unique=true, nullable=false, options={"unsigned":true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -102,7 +102,7 @@ class Account implements AdvancedUserInterface, \Serializable
     /**
      * @var integer
      * @Assert\Type("int")
-     * @ORM\Column(name="birthyear", type="integer", length=4, nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="birthyear", type="integer", precision=4, nullable=true, options={"unsigned":true})
      */
     private $birthyear;
 

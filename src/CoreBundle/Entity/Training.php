@@ -22,19 +22,24 @@ class Training
     private $id;
 
     /**
-     * @var integer
+     * @var \Runalyze\Bundle\CoreBundle\Entity\Sport
      *
-     * @ORM\ManyToOne(targetEntity="Sport")
-     * @ORM\JoinColumn(name="sportid", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Sport")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="sportid", referencedColumnName="id", nullable=false)
+     * })
      */
-    private $sport = '0';
+    private $sport;
 
     /**
-     * @var integer
+     * @var \Runalyze\Bundle\CoreBundle\Entity\Type
      *
-     * @ORM\Column(name="typeid", type="integer", precision=10, nullable=false, options={"unsigned":true})
+     * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Type")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="typeid", referencedColumnName="id")
+     * })
      */
-    private $typeid = '0';
+    private $type;
 
     /**
      * @var integer
@@ -81,14 +86,14 @@ class Training
     /**
      * @var string
      *
-     * @ORM\Column(name="distance", type="decimal", precision=6, scale=2, nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="distance", columnDefinition="decimal(6,2) unsigned DEFAULT NULL")
      */
     private $distance = null;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="s", type="decimal", precision=8, scale=2, nullable=false)
+     * @ORM\Column(name="s", columnDefinition="decimal(8,2) unsigned NOT NULL")
      */
     private $s = '0.00';
 
@@ -130,35 +135,35 @@ class Training
     /**
      * @var string
      *
-     * @ORM\Column(name="vdot", type="decimal", nullable=true, precision=5, scale=2, options={"unsigned":true})
+     * @ORM\Column(name="vdot", columnDefinition="decimal(5,2) unsigned DEFAULT NULL")
      */
     private $vdot = '0.00';
 
     /**
      * @var string
      *
-     * @ORM\Column(name="vdot_by_time", type="decimal", nullable=true, precision=5, scale=2, options={"unsigned":true})
+     * @ORM\Column(name="vdot_by_time", columnDefinition="decimal(5,2) unsigned DEFAULT NULL")
      */
     private $vdotByTime = '0.00';
 
     /**
      * @var string
      *
-     * @ORM\Column(name="vdot_with_elevation", type="decimal", nullable=true, precision=5, scale=2, options={"unsigned":true})
+     * @ORM\Column(name="vdot_with_elevation", columnDefinition="decimal(5,2) unsigned DEFAULT NULL" )
      */
     private $vdotWithElevation = '0.00';
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="use_vdot", type="boolean", nullable=false, options={"unsigned":true})
+     * @ORM\Column(name="use_vdot", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 1")
      */
     private $useVdot = '1';
 
     /**
      * @var string
      *
-     * @ORM\Column(name="fit_vdot_estimate", type="decimal", nullable=true, precision=4, scale=2, options={"unsigned":true})
+     * @ORM\Column(name="fit_vdot_estimate", columnDefinition="decimal(4,2) unsigned DEFAULT NULL")
      */
     private $fitVdotEstimate = null;
 
@@ -179,21 +184,21 @@ class Training
     /**
      * @var string
      *
-     * @ORM\Column(name="fit_training_effect", type="decimal", precision=2, scale=1, nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="fit_training_effect", columnDefinition="decimal(2,1) unsigned DEFAULT NULL")
      */
     private $fitTrainingEffect = null;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="fit_performance_condition", type="boolean", nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="fit_performance_condition", columnDefinition="tinyint(3) unsigned DEFAULT NULL")
      */
     private $fitPerformanceCondition = null;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="jd_intensity", type="smallint", options={"unsigned":true})
+     * @ORM\Column(name="jd_intensity", type="smallint", nullable=true, options={"unsigned":true})
      */
     private $jdIntensity = null;
 
@@ -214,35 +219,35 @@ class Training
     /**
      * @var integer
      *
-     * @ORM\Column(name="cadence", type="integer", length=3 ,options={"unsigned":true})
+     * @ORM\Column(name="cadence", type="integer", length=3, nullable=true, options={"unsigned":true})
      */
     private $cadence = null;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="power", type="integer", length=4, options={"unsigned":true})
+     * @ORM\Column(name="power", type="integer", length=4, nullable=true, options={"unsigned":true})
      */
     private $power = null;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="total_strokes", type="smallint", options={"unsigned":true})
+     * @ORM\Column(name="total_strokes", type="smallint", nullable=true, options={"unsigned":true})
      */
     private $totalStrokes = null;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="swolf", type="boolean", nullable=false, options={"unsigned":true})
+     * @ORM\Column(name="swolf", columnDefinition="tinyint(3) unsigned DEFAULT NULL")
      */
     private $swolf = '0';
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="stride_length", type="boolean", options={"unsigned":true})
+     * @ORM\Column(name="stride_length", columnDefinition="tinyint(3) unsigned DEFAULT NULL")
      */
     private $strideLength = null;
 
@@ -263,7 +268,7 @@ class Training
     /**
      * @var boolean
      *
-     * @ORM\Column(name="vertical_oscillation", type="boolean", nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="vertical_oscillation", columnDefinition="tinyint(3) unsigned DEFAULT NULL")
      */
     private $verticalOscillation = null;
 
@@ -277,56 +282,56 @@ class Training
     /**
      * @var boolean
      *
-     * @ORM\Column(name="temperature", type="boolean", nullable=true)
+     * @ORM\Column(name="temperature", columnDefinition="tinyint(4) DEFAULT NULL")
      */
     private $temperature = null;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="wind_speed", type="boolean", nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="wind_speed", columnDefinition="tinyint(3) unsigned DEFAULT NULL")
      */
     private $windSpeed = null;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="wind_deg", type="smallint", nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="wind_deg", columnDefinition="smallint(3) unsigned DEFAULT NULL")
      */
     private $windDeg;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="humidity", type="boolean", precision=3, nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="humidity", columnDefinition="tinyint(3) unsigned DEFAULT NULL")
      */
     private $humidity;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="pressure", type="smallint", precision=4, nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="pressure", columnDefinition="smallint(4) unsigned DEFAULT NULL")
      */
     private $pressure;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="is_night", type="boolean", nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="is_night", columnDefinition="tinyint(1) unsigned DEFAULT NULL")
      */
     private $isNight;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="weatherid", type="smallint", nullable=false, options={"unsigned":true})
+     * @ORM\Column(name="weatherid", type="smallint", nullable=false, options={"unsigned":true, "default":1})
      */
     private $weatherid = '1';
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="weather_source", type="boolean", nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="weather_source", columnDefinition="tinyint(2) unsigned DEFAULT NULL")
      */
     private $weatherSource;
 
@@ -340,7 +345,7 @@ class Training
     /**
      * @var integer
      *
-     * @ORM\Column(name="routeid", type="integer", nullable=false, options={"unsigned":true})
+     * @ORM\Column(name="routeid", type="integer", nullable=false, options={"unsigned":true, "default":0})
      */
     private $routeid = '0';
 
@@ -403,7 +408,7 @@ class Training
     /**
      * @var boolean
      *
-     * @ORM\Column(name="lock", type="boolean", nullable=false, options={"unsigned":true, "default":0})
+     * @ORM\Column(name="lock", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 0")
      */
     private $lock = '0';
 
@@ -413,10 +418,10 @@ class Training
      * @ORM\ManyToMany(targetEntity="Equipment", inversedBy="activity")
      * @ORM\JoinTable(name="activity_equipment",
      *   joinColumns={
-     *     @ORM\JoinColumn(name="activity", referencedColumnName="id")
+     *     @ORM\JoinColumn(name="activityid", referencedColumnName="id")
      *   },
      *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="equipment", referencedColumnName="id")
+     *     @ORM\JoinColumn(name="equipmentid", referencedColumnName="id")
      *   }
      * )
      */
@@ -428,10 +433,10 @@ class Training
      * @ORM\ManyToMany(targetEntity="Tag", inversedBy="activity")
      * @ORM\JoinTable(name="activity_tag",
      *   joinColumns={
-     *     @ORM\JoinColumn(name="activity", referencedColumnName="id")
+     *     @ORM\JoinColumn(name="activityid", referencedColumnName="id")
      *   },
      *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="tag", referencedColumnName="id")
+     *     @ORM\JoinColumn(name="tagid", referencedColumnName="id")
      *   }
      * )
      */

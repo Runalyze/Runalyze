@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * User
  *
- * @ORM\Table(name="user", indexes={@ORM\Index(name="time", columns={"accountid", "time"})})
+ * @ORM\Table(name="user", indexes={@ORM\Index(name="time", columns={"accountid", "time"}), @ORM\Index(name="accountid", columns={"accountid"})})
  * @ORM\Entity
  */
 class User
@@ -85,10 +85,12 @@ class User
     private $notes;
 
     /**
-     * @var integer
+     * @var \Runalyze\Bundle\CoreBundle\Entity\Account
      *
-     * @ORM\Column(name="accountid", type="integer", precision=10, nullable=false, options={"unsigned":true})
-     * @ORM\Column(name="accountid", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Account")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="accountid", referencedColumnName="id", nullable=false)
+     * })
      */
     private $account;
 

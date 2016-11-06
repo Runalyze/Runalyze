@@ -30,7 +30,7 @@ class Plugin
 
     /**
      * @var string
-     * @ORM\Column(name="type", type="string", nullable=false, options={"default":"stat"})
+     * @ORM\Column(name="type", columnDefinition="enum('panel','stat','tool') NOT NULL DEFAULT 'stat'")
      */
     private $type = 'stat';
 
@@ -53,7 +53,7 @@ class Plugin
      *
      * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Account")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="accountid", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="accountid", referencedColumnName="id", nullable=false)
      * })
      */
     private $account;

@@ -39,7 +39,7 @@ class Route
     /**
      * @var string
      *
-     * @ORM\Column(name="distance", type="decimal", precision=6, scale=2, nullable=false, options={"unsigned":true, "default":"0.00"})
+     * @ORM\Column(name="distance", columnDefinition="decimal(6,2) unsigned NOT NULL DEFAULT '0.00'")
      */
     private $distance = '0.00';
 
@@ -132,7 +132,7 @@ class Route
      *
      * @ORM\ManyToOne(targetEntity="Account")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="accountid", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="accountid", referencedColumnName="id", nullable=false)
      * })
      */
     private $account;

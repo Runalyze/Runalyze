@@ -107,7 +107,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_dataset` (
 CREATE TABLE IF NOT EXISTS `runalyze_equipment` (
 `id` int(10) unsigned NOT NULL,
   `name` varchar(50) NOT NULL,
-  `typeid` int(10) unsigned NOT NULL DEFAULT '0',
+  `typeid` int(10) unsigned NOT NULL,
   `notes` tinytext NOT NULL,
   `distance` decimal(8,2) unsigned NOT NULL DEFAULT '0.00',
   `time` int(10) unsigned NOT NULL DEFAULT '0',

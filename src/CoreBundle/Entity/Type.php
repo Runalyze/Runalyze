@@ -40,7 +40,7 @@ class Type
      *
      * @ORM\ManyToOne(targetEntity="Sport")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="sportid", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="sportid", referencedColumnName="id", nullable=false)
      * })
      */
     private $sport;
@@ -71,7 +71,7 @@ class Type
      *
      * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Account")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="accountid", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="accountid", referencedColumnName="id", nullable=false)
      * })
      */
     private $account;
