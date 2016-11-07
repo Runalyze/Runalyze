@@ -29,7 +29,7 @@ class Raceresult
     /**
      * @var boolean
      *
-     * @ORM\Column(name="officially_measured", type="boolean", nullable=false, options={"unsigned":true, "default":0})
+     * @ORM\Column(name="officially_measured", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 0")
      */
     private $officiallyMeasured = '0';
 
@@ -87,7 +87,7 @@ class Raceresult
      *
      * @ORM\ManyToOne(targetEntity="Account")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="accountid", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="accountid", referencedColumnName="id", nullable=false)
      * })
      */
     private $account;
@@ -99,7 +99,7 @@ class Raceresult
      * @ORM\GeneratedValue(strategy="NONE")
      * @ORM\OneToOne(targetEntity="Training")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="activity_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="activity_id", referencedColumnName="id", nullable=false)
      * })
      */
     private $activity;

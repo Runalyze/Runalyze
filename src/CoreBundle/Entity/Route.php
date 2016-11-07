@@ -16,7 +16,7 @@ class Route
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer", precision=10, nullable=false)
+     * @ORM\Column(name="id", type="integer", precision=10, nullable=false, options={"unsigned":true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -25,21 +25,21 @@ class Route
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255, nullable=false)
+     * @ORM\Column(name="name", type="string", length=255, nullable=false, options={"default":"})
      */
     private $name = '';
 
     /**
      * @var string
      *
-     * @ORM\Column(name="cities", type="string", length=255, nullable=false)
+     * @ORM\Column(name="cities", type="string", length=255, nullable=false, options={"default":"})
      */
     private $cities = '';
 
     /**
      * @var string
      *
-     * @ORM\Column(name="distance", type="decimal", precision=6, scale=2, nullable=false, options={"unsigned":true})
+     * @ORM\Column(name="distance", columnDefinition="decimal(6,2) unsigned NOT NULL DEFAULT '0.00'")
      */
     private $distance = '0.00';
 
@@ -123,7 +123,7 @@ class Route
     /**
      * @var boolean
      *
-     * @ORM\Column(name="in_routenet", type="boolean", nullable=false, options={"default":0})
+     * @ORM\Column(name="in_routenet", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 0")
      */
     private $inRoutenet = '0';
 
@@ -132,7 +132,7 @@ class Route
      *
      * @ORM\ManyToOne(targetEntity="Account")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="accountid", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="accountid", referencedColumnName="id", nullable=false)
      * })
      */
     private $account;

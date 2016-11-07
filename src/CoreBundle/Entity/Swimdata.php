@@ -29,14 +29,15 @@ class Swimdata
     /**
      * @var integer
      *
-     * @ORM\Column(name="pool_length", type="smallint", precision=5, nullable=false, options={"default":0})
+     * @ORM\Column(name="pool_length", type="smallint", precision=5, nullable=false, options={"unsigned":true, "default":0})
      */
     private $poolLength = '0';
 
     /**
      * @var \Account
      *
-     * @ORM\Column(name="accountid", type="integer", precision=10, nullable=false, options={"unsigned":true})
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
      * @ORM\ManyToOne(targetEntity="Account")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="accountid", referencedColumnName="id")
@@ -48,7 +49,6 @@ class Swimdata
      * @var \Training
      *
      * @ORM\Id
-     * @ORM\Column(name="activityid", precision=10, type="integer", nullable=false)
      * @ORM\GeneratedValue(strategy="NONE")
      * @ORM\OneToOne(targetEntity="Training")
      * @ORM\JoinColumns({

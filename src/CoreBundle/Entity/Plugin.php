@@ -30,21 +30,21 @@ class Plugin
 
     /**
      * @var string
-     * @ORM\Column(name="type", type="string", nullable=false, options={"default":"stat"})
+     * @ORM\Column(name="type", columnDefinition="enum('panel','stat','tool') NOT NULL DEFAULT 'stat'")
      */
     private $type = 'stat';
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="active", type="smallint", precision=1, nullable=false, options={"default":1})
+     * @ORM\Column(name="active", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 1")
      */
     private $active = 1;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="`order`", type="smallint", nullable=false, options={"default":1})
+     * @ORM\Column(name="`order`", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
      */
     private $order = 0;
 
@@ -53,7 +53,7 @@ class Plugin
      *
      * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Account")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="accountid", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="accountid", referencedColumnName="id", nullable=false)
      * })
      */
     private $account;

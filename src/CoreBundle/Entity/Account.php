@@ -35,7 +35,7 @@ class Account implements AdvancedUserInterface, \Serializable
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer", precision=10, nullable=false, options={"unsigned":true})
+     * @ORM\Column(name="id", type="integer", precision=10, unique=true, nullable=false, options={"unsigned":true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -88,21 +88,21 @@ class Account implements AdvancedUserInterface, \Serializable
      * @Assert\NotBlank()
      * @Assert\Type("int")
      * @RunalyzeAssert\IsValidTimezone()
-     * @ORM\Column(name="timezone", type="integer", nullable=false, options={"unsigned":true, "default":0})
+     * @ORM\Column(name="timezone", type="smallint", length=5, nullable=false, options={"unsigned":true, "default":0})
      */
     private $timezone = Timezone::UTC;
 
     /**
      * @var integer
      * @Assert\Type("int")
-     * @ORM\Column(name="gender", type="integer", nullable=false, options={"unsigned":true, "default": 0})
+     * @ORM\Column(name="gender", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 0")
      */
     private $gender = Gender::NONE;
 
     /**
      * @var integer
      * @Assert\Type("int")
-     * @ORM\Column(name="birthyear", type="integer", length=4, nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="birthyear", type="integer", precision=4, nullable=true, options={"unsigned":true})
      */
     private $birthyear;
 
@@ -115,7 +115,7 @@ class Account implements AdvancedUserInterface, \Serializable
     /**
      * @var string
      *
-     * @ORM\Column(name="salt", type="string", length=64, nullable=false, options={"fixed" = true})
+     * @ORM\Column(name="salt", type="string", length=64, nullable=false, options={"fixed" = true, "default":""})
      */
     private $salt;
 
@@ -163,17 +163,17 @@ class Account implements AdvancedUserInterface, \Serializable
 
     /**
      * @var integer
-     * @Assert\Type("bool")
-     * @ORM\Column(name="allow_mails", type="boolean", options={"unsigned":true, "default": true})
+     * @Assert\Type("int")
+     * @ORM\Column(name="allow_mails", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 1")
      */
-    private $allowMails = true;
+    private $allowMails = 1;
 
     /**
      * @var integer
-     * @Assert\Type("bool")
-     * @ORM\Column(name="allow_support", type="boolean", options={"unsigned":true, "default": false})
+     * @Assert\Type("int")
+     * @ORM\Column(name="allow_support", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 0")
      */
-    private $allowSupport = false;
+    private $allowSupport = 0;
 
     /**
      * @var integer

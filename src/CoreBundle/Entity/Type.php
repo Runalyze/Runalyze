@@ -40,7 +40,7 @@ class Type
      *
      * @ORM\ManyToOne(targetEntity="Sport")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="sportid", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="sportid", referencedColumnName="id", nullable=false)
      * })
      */
     private $sport;
@@ -48,7 +48,7 @@ class Type
     /**
      * @var boolean
      *
-     * @ORM\Column(name="short", type="boolean", nullable=false, options={"unsigned":true, "default":0})
+     * @ORM\Column(name="short", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 0")
      */
     private $short = '0';
 
@@ -62,7 +62,7 @@ class Type
     /**
      * @var boolean
      *
-     * @ORM\Column(name="quality_session", type="boolean", nullable=false, options={"unsigned":true, "default":0})
+     * @ORM\Column(name="quality_session", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 0")
      */
     private $qualitySession = '0';
 
@@ -71,7 +71,7 @@ class Type
      *
      * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Account")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="accountid", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="accountid", referencedColumnName="id", nullable=false)
      * })
      */
     private $account;

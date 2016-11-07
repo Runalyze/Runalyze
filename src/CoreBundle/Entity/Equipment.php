@@ -38,7 +38,7 @@ class Equipment
     /**
      * @var string
      *
-     * @ORM\Column(name="distance", type="decimal", precision=8, scale=2, nullable=false, options={"unsigned":true, "default":"0.00"})
+     * @ORM\Column(name="distance", columnDefinition="decimal(8,2) unsigned NOT NULL DEFAULT '0.00'")
      */
     private $distance = '0.00';
 
@@ -75,7 +75,7 @@ class Equipment
      *
      * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\EquipmentType")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="typeid", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="typeid", referencedColumnName="id", nullable=false)
      * })
      */
     private $type;
@@ -83,10 +83,9 @@ class Equipment
     /**
      * @var \Runalyze\Bundle\CoreBundle\Entity\Account
      *
-     * @ORM\Column(name="accountid", type="integer", precision=10, nullable=false, options={"unsigned":true})
      * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Account")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="accountid", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="accountid", referencedColumnName="id", nullable=false)
      * })
      */
     private $account;
