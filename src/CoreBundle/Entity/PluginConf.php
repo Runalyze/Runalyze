@@ -40,7 +40,7 @@ class PluginConf
      *
      * @ORM\ManyToOne(targetEntity="Plugin")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="pluginid", referencedColumnName="id", nullable=false, onDelete="cascade")
+     *   @ORM\JoinColumn(name="pluginid", referencedColumnName="id", nullable=false)
      * })
      */
     private $plugin;

@@ -53,7 +53,7 @@ class Plugin
      *
      * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Account")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="accountid", referencedColumnName="id", nullable=false, onDelete="cascade")
+     *   @ORM\JoinColumn(name="accountid", referencedColumnName="id", nullable=false)
      * })
      */
     private $account;

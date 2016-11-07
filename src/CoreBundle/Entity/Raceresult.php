@@ -87,7 +87,7 @@ class Raceresult
      *
      * @ORM\ManyToOne(targetEntity="Account")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="accountid", referencedColumnName="id", nullable=false, onDelete="cascade")
+     *   @ORM\JoinColumn(name="accountid", referencedColumnName="id", nullable=false)
      * })
      */
     private $account;
@@ -99,7 +99,7 @@ class Raceresult
      * @ORM\GeneratedValue(strategy="NONE")
      * @ORM\OneToOne(targetEntity="Training")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="activity_id", referencedColumnName="id", nullable=false, onDelete="cascade")
+     *   @ORM\JoinColumn(name="activity_id", referencedColumnName="id", nullable=false)
      * })
      */
     private $activity;

@@ -378,12 +378,9 @@ class Training
     private $notes;
 
     /**
-     * @var \Account
+     * @var integer
      *
-     * @ORM\ManyToOne(targetEntity="Account")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="accountid", referencedColumnName="id", nullable=false, onDelete="cascade")
-     * })
+     * @ORM\Column(name="accountid", type="integer", nullable=false, options={"unsigned":true})
      */
     private $account;
 

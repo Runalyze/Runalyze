@@ -117,7 +117,7 @@ class Trackdata
      * @ORM\Id
      * @ORM\OneToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Training")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="activityid", referencedColumnName="id", unique=true, onDelete="cascade")
+     *   @ORM\JoinColumn(name="activityid", referencedColumnName="id", unique=true)
      * })
      */
     private $activity;
@@ -127,7 +127,7 @@ class Trackdata
      *
      * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Account")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="accountid", referencedColumnName="id", nullable=false, onDelete="cascade")
+     *   @ORM\JoinColumn(name="accountid", referencedColumnName="id", nullable=false)
      * })
      */
     private $account;

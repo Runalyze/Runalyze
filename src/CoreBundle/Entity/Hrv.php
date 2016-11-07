@@ -24,7 +24,7 @@ class Hrv
      *
      * @ORM\ManyToOne(targetEntity="Account")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="accountid", referencedColumnName="id", nullable=false, onDelete="cascade")
+     *   @ORM\JoinColumn(name="accountid", referencedColumnName="id", nullable=false)
      * })
      */
     private $account;
@@ -36,7 +36,7 @@ class Hrv
      * @ORM\GeneratedValue(strategy="NONE")
      * @ORM\OneToOne(targetEntity="Training")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="activityid", referencedColumnName="id", onDelete="cascade")
+     *   @ORM\JoinColumn(name="activityid", referencedColumnName="id")
      * })
      */
     private $activity;
