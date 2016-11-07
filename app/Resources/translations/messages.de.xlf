@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="de" datatype="plaintext" original="file.ext">
     <header>
@@ -547,17 +547,17 @@
         <source>The deletion is permanent and cannot be reversed. Therefore, you should backup your data.</source>
         <target>The deletion is permanent and cannot be reversed. Therefore, you should backup your data.</target>
       </trans-unit>
-      <trans-unit id="c9cc8cce247e49bae79f15173ce97354" resname="Save">
+      <trans-unit id="c9cc8cce247e49bae79f15173ce97354" resname="Save" approved="yes">
         <source>Save</source>
-        <target>Save</target>
+        <target state="translated">Speichern</target>
       </trans-unit>
-      <trans-unit id="5c67ffd65944e4d61ef7a9400ce0392c" resname="Change mail address">
+      <trans-unit id="5c67ffd65944e4d61ef7a9400ce0392c" resname="Change mail address" approved="yes">
         <source>Change mail address</source>
-        <target>Change mail address</target>
+        <target state="translated">E-Mail-Adresse ändern</target>
       </trans-unit>
-      <trans-unit id="f4ec5f57bd4d31b803312d873be40da9" resname="Change">
+      <trans-unit id="f4ec5f57bd4d31b803312d873be40da9" resname="Change" approved="yes">
         <source>Change</source>
-        <target>Change</target>
+        <target state="translated">Ändern</target>
       </trans-unit>
       <trans-unit id="22b653bd8d2edcebb9e0036b4ac79262" resname="Go back">
         <source>Go back</source>
@@ -583,9 +583,9 @@
         <source>If the link does not work, please copy the following URL into the address field of your web browser</source>
         <target>If the link does not work, please copy the following URL into the address field of your web browser</target>
       </trans-unit>
-      <trans-unit id="3f1643974cc828011fe031dd192ca5d6" resname="Your RUNALYZE-Team">
+      <trans-unit id="3f1643974cc828011fe031dd192ca5d6" resname="Your RUNALYZE-Team" approved="yes">
         <source>Your RUNALYZE-Team</source>
-        <target>Your RUNALYZE-Team</target>
+        <target state="translated">Dein RUNALYZE-Team</target>
       </trans-unit>
       <trans-unit id="e022748b5abb414946dc22e7c6f07aea" resname="Hi %s, we heard that you forgot your password!">
         <source>Hi %s, we heard that you forgot your password!</source>
@@ -595,25 +595,25 @@
         <source>You can change your password within the next 24 hours by clicking the link below.</source>
         <target>You can change your password within the next 24 hours by clicking the link below.</target>
       </trans-unit>
-      <trans-unit id="d6bbda66baa2b4c69c3c78f4a8013d46" resname="Activate your RUNALYZE account">
+      <trans-unit id="d6bbda66baa2b4c69c3c78f4a8013d46" resname="Activate your RUNALYZE account" approved="yes">
         <source>Activate your RUNALYZE account</source>
-        <target>Activate your RUNALYZE account</target>
+        <target state="translated">Aktiviere deinen RUNALYZE-Account</target>
       </trans-unit>
-      <trans-unit id="e5fe77195f75d3cddc96fb9ce4ff3d1c" resname="Welcome to RUNALYZE!">
+      <trans-unit id="e5fe77195f75d3cddc96fb9ce4ff3d1c" resname="Welcome to RUNALYZE!" approved="yes">
         <source>Welcome to RUNALYZE!</source>
-        <target>Welcome to RUNALYZE!</target>
+        <target state="translated">Willkommen bei RUNALYZE!</target>
       </trans-unit>
-      <trans-unit id="ffc30dab210834f2baab6e3355a4af04" resname="Hi %s, welcome to RUNALYZE">
+      <trans-unit id="ffc30dab210834f2baab6e3355a4af04" resname="Hi %s, welcome to RUNALYZE" approved="yes">
         <source>Hi %s, welcome to RUNALYZE</source>
-        <target>Hi %s, welcome to RUNALYZE</target>
+        <target state="translated">Hi %s, willkommen bei RUNALYZE</target>
       </trans-unit>
       <trans-unit id="8ef695cee05cbee0c9b177f14aabcf9a" resname="Please activate your account by clicking the link below.">
         <source>Please activate your account by clicking the link below.</source>
         <target>Please activate your account by clicking the link below.</target>
       </trans-unit>
-      <trans-unit id="537ece2f0dc02ee1d7dea6cdeb351593" resname="Confirm email address">
+      <trans-unit id="537ece2f0dc02ee1d7dea6cdeb351593" resname="Confirm email address" approved="yes">
         <source>Confirm email address</source>
-        <target>Confirm email address</target>
+        <target state="translated">Bestätige deine Mailadresse</target>
       </trans-unit>
       <trans-unit id="c5093f03229416cc06a625654429d7f2" resname="Your account has been activated">
         <source>Your account has been activated</source>
@@ -623,9 +623,9 @@
         <source>To get started right away just take a look at our "getting started" guide at %s.</source>
         <target>To get started right away just take a look at our "getting started" guide at %s.</target>
       </trans-unit>
-      <trans-unit id="3903aab323863bd2e9b68218a7a65ebd" resname="Follow">
+      <trans-unit id="3903aab323863bd2e9b68218a7a65ebd" resname="Follow" approved="yes">
         <source>Follow</source>
-        <target>Follow</target>
+        <target state="translated">Folgen</target>
       </trans-unit>
       <trans-unit id="0866d0513309fee7479977346ffdbdee" resname="Accept our %a% terms of use %b%">
         <source>Accept our %a% terms of use %b%</source>
@@ -639,9 +639,9 @@
         <source>Elevation data from Shuttle Radar Topography Mission</source>
         <target>Elevation data from Shuttle Radar Topography Mission</target>
       </trans-unit>
-      <trans-unit id="81db66a50f0cb05c93a8f1c70e6e9450" resname="Miscellaneaous">
+      <trans-unit id="81db66a50f0cb05c93a8f1c70e6e9450" resname="Miscellaneaous" approved="yes">
         <source>Miscellaneaous</source>
-        <target>Miscellaneaous</target>
+        <target state="translated">Sonstiges</target>
       </trans-unit>
       <trans-unit id="61bee55add2db4b395b8c9a58e75b036" resname="Analyze time series">
         <source>Analyze time series</source>
@@ -711,13 +711,13 @@
         <source>Pace</source>
         <target>Pace</target>
       </trans-unit>
-      <trans-unit id="4d287b6a65e1d4d3f2505b9256a203ec" resname="Heart rate">
+      <trans-unit id="4d287b6a65e1d4d3f2505b9256a203ec" resname="Heart rate" approved="yes">
         <source>Heart rate</source>
-        <target>Heart rate</target>
+        <target state="translated">Herzfrequenz</target>
       </trans-unit>
-      <trans-unit id="bce431d01a4df1bf31ba7787331ad1dc" resname="Cadence">
+      <trans-unit id="bce431d01a4df1bf31ba7787331ad1dc" resname="Cadence" approved="yes">
         <source>Cadence</source>
-        <target>Cadence</target>
+        <target state="translated">Kadenz</target>
       </trans-unit>
       <trans-unit id="c0cc584633afb317352f169baed4ff80" resname="Stride length">
         <source>Stride length</source>
@@ -779,17 +779,17 @@
         <source>VDOT</source>
         <target>VDOT</target>
       </trans-unit>
-      <trans-unit id="63d5049791d9d79d86e9a108b0a999ca" resname="Reference">
+      <trans-unit id="63d5049791d9d79d86e9a108b0a999ca" resname="Reference" approved="yes">
         <source>Reference</source>
-        <target>Reference</target>
+        <target state="translated">Referenz</target>
       </trans-unit>
       <trans-unit id="7219ff172727ac5ab4cadd0e4f22f3ec" resname="The Daniels/Gilbert Formula by Larry Simpson">
         <source>The Daniels/Gilbert Formula by Larry Simpson</source>
         <target>The Daniels/Gilbert Formula by Larry Simpson</target>
       </trans-unit>
-      <trans-unit id="dfe66ed2b784a84ffd0f36565e0e15a5" resname="Correction: based on heartrate">
+      <trans-unit id="dfe66ed2b784a84ffd0f36565e0e15a5" resname="Correction: based on heartrate" approved="yes">
         <source>Correction: based on heartrate</source>
-        <target>Correction: based on heartrate</target>
+        <target state="translated">Korrektur: anhand der Herzfrequenz</target>
       </trans-unit>
       <trans-unit id="73437d19f12e2410bf550135e9b38aee" resname="Jack Daniels has tables to compare &amp;#37;HRmax and &amp;#37;vVDOT.">
         <source>Jack Daniels has tables to compare &amp;#37;HRmax and &amp;#37;vVDOT.</source>
@@ -799,25 +799,25 @@
         <source>Because of a lot of influencing factors these computations are not always accurate.</source>
         <target>Because of a lot of influencing factors these computations are not always accurate.</target>
       </trans-unit>
-      <trans-unit id="51c3f59625962b899c03595d6cdfb284" resname="equals">
+      <trans-unit id="51c3f59625962b899c03595d6cdfb284" resname="equals" approved="yes">
         <source>equals</source>
-        <target>equals</target>
+        <target state="translated">gleich</target>
       </trans-unit>
-      <trans-unit id="138b4e9078580ee8d824b456627c869d" resname="Correction: based on correction factor">
+      <trans-unit id="138b4e9078580ee8d824b456627c869d" resname="Correction: based on correction factor" approved="yes">
         <source>Correction: based on correction factor</source>
-        <target>Correction: based on correction factor</target>
+        <target state="translated">Korrektur: anhand des Korrekturfaktors</target>
       </trans-unit>
       <trans-unit id="792ebe4d45ccc3602cca9dd7243d72bc" resname="To consider some individual factors, we use a correction factor.">
         <source>To consider some individual factors, we use a correction factor.</source>
         <target>To consider some individual factors, we use a correction factor.</target>
       </trans-unit>
-      <trans-unit id="c77a4a1e49dad746d2b3b13e24250e1d" resname="Correction factor">
+      <trans-unit id="c77a4a1e49dad746d2b3b13e24250e1d" resname="Correction factor" approved="yes">
         <source>Correction factor</source>
-        <target>Correction factor</target>
+        <target state="translated">Korrekturfaktor</target>
       </trans-unit>
-      <trans-unit id="b2111806faf0190ffb9ff266eac8e2eb" resname="uncorrected">
+      <trans-unit id="b2111806faf0190ffb9ff266eac8e2eb" resname="uncorrected" approved="yes">
         <source>uncorrected</source>
-        <target>uncorrected</target>
+        <target state="translated">unkorrigiert</target>
       </trans-unit>
       <trans-unit id="770906778fc399fa87756659a09cc86d" resname="Correction: considering elevation">
         <source>Correction: considering elevation</source>
@@ -831,21 +831,21 @@
         <source>Up/Down</source>
         <target>Up/Down</target>
       </trans-unit>
-      <trans-unit id="d35a98028cca23c2a745a0bba43a90ff" resname="Influence">
+      <trans-unit id="d35a98028cca23c2a745a0bba43a90ff" resname="Influence" approved="yes">
         <source>Influence</source>
-        <target>Influence</target>
+        <target state="translated">Einfluss</target>
       </trans-unit>
-      <trans-unit id="3a7af6fe0df41f239c0d43d34d19d278" resname="Cleanup is running ...">
+      <trans-unit id="3a7af6fe0df41f239c0d43d34d19d278" resname="Cleanup is running ..." approved="yes">
         <source>Cleanup is running ...</source>
-        <target>Cleanup is running ...</target>
+        <target state="translated">Bereinigung wird durchgeführt...</target>
       </trans-unit>
-      <trans-unit id="f435327217fb9eef365101b4bbc39463" resname="back to form">
+      <trans-unit id="f435327217fb9eef365101b4bbc39463" resname="back to form" approved="yes">
         <source>back to form</source>
-        <target>back to form</target>
+        <target state="translated">zurück zum Formular</target>
       </trans-unit>
-      <trans-unit id="91e8745deed4bed52c6bb855042df916" resname="Database cleanup">
+      <trans-unit id="91e8745deed4bed52c6bb855042df916" resname="Database cleanup" approved="yes">
         <source>Database cleanup</source>
-        <target>Database cleanup</target>
+        <target state="translated">Datenbank-Cleanup</target>
       </trans-unit>
       <trans-unit id="23eb3aa5c1281236839c3f1b900c7d5f" resname="General cleanup">
         <source>General cleanup</source>
