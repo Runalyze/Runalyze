@@ -142,7 +142,7 @@ class AccountController extends Controller
         if (null === $account) {
             return $this->render('account/activate/problem.html.twig');
         } else {
-            $account->setActivationHash('');
+            $account->setActivationHash(null);
             $em->persist($account);
             $em->flush();
         }

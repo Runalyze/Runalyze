@@ -20,8 +20,7 @@ class AccountRepository extends EntityRepository implements UserLoaderInterface
     {
         return $this->createQueryBuilder('u')
             ->select('COUNT(u.id)')
-            ->where('u.activationHash = :activationhash')
-            ->setParameter('activationhash', '')
+            ->where('u.activationHash is NULL')
             ->getQuery()
             ->useResultCache($cache)
             ->setResultCacheLifetime(320)
@@ -33,7 +32,7 @@ class AccountRepository extends EntityRepository implements UserLoaderInterface
 
         return $this->createQueryBuilder('u')
             ->delete()
-            ->where('u.activationHash !=  NULL AND u.registerdate < :minimumAge')
+            ->where('u.activationHash IS NOT NULL AND u.registerdate < :minimumAge')
             ->setParameter('minimumAge', $minimumAge)
             ->getQuery()
             ->getArrayResult();
