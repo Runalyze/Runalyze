@@ -266,7 +266,7 @@ class Training
     private $groundcontactBalance = null;
 
     /**
-     * @var boolean
+     * @var integer
      *
      * @ORM\Column(name="vertical_oscillation", columnDefinition="tinyint(3) unsigned DEFAULT NULL")
      */
@@ -340,7 +340,7 @@ class Training
      *
      * @ORM\Column(name="route", type="text", length=65535, nullable=true)
      */
-    private $route;
+    private $routeName;
 
     /**
      * @var integer
@@ -461,5 +461,1368 @@ class Training
         return $this->id;
     }
 
-}
+    /**
+     * Set sport
+     *
+     * @param \Runalyze\Bundle\CoreBundle\Entity\Sport $sport
+     *
+     * @return Training
+     */
+    public function setSport(\Runalyze\Bundle\CoreBundle\Entity\Sport $sport = null)
+    {
+        $this->sport = $sport;
 
+        return $this;
+    }
+
+    /**
+     * Get sport
+     *
+     * @return \Runalyze\Bundle\CoreBundle\Entity\Sport
+     */
+    public function getSport()
+    {
+        return $this->sport;
+    }
+
+    /**
+     * Set Type
+     *
+     * @param \Runalyze\Bundle\CoreBundle\Entity\Type $defaultType
+     *
+     * @return Training
+     */
+    public function setType(\Runalyze\Bundle\CoreBundle\Entity\Type $type = null)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get Type
+     *
+     * @return \Runalyze\Bundle\CoreBundle\Entity\Type
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * Set time
+     *
+     * @param integer $time
+     *
+     * @return Training
+     */
+    public function setTime($time)
+    {
+        $this->time = $time;
+
+        return $this;
+    }
+
+    /**
+     * Get time
+     *
+     * @return integer
+     */
+    public function getTime()
+    {
+        return $this->time;
+    }
+
+    /**
+     * Set timezoneOffset
+     *
+     * @param integer $timezoneOffset
+     *
+     * @return Training
+     */
+    public function setTimezoneOffset($timezoneOffset)
+    {
+        $this->timezoneOffset = $timezoneOffset;
+
+        return $this;
+    }
+
+    /**
+     * Get timezoneOffset
+     *
+     * @return integer
+     */
+    public function getTimezoneOffset()
+    {
+        return $this->timezoneOffset;
+    }
+
+    /**
+     * Set created
+     *
+     * @param integer $created
+     *
+     * @return Training
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+
+        return $this;
+    }
+
+    /**
+     * Get created
+     *
+     * @return integer
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * Set edited
+     *
+     * @param integer $edited
+     *
+     * @return Training
+     */
+    public function setEdited($edited)
+    {
+        $this->edited = $edited;
+
+        return $this;
+    }
+
+    /**
+     * Get edited
+     *
+     * @return integer
+     */
+    public function getEdited()
+    {
+        return $this->edited;
+    }
+
+    /**
+     * Set isPublic
+     *
+     * @param boolean $isPublic
+     *
+     * @return Training
+     */
+    public function setIsPublic($isPublic)
+    {
+        $this->isPublic = $isPublic;
+
+        return $this;
+    }
+
+    /**
+     * Get isPublic
+     *
+     * @return boolean
+     */
+    public function getIsPublic()
+    {
+        return $this->isPublic;
+    }
+
+    /**
+     * Set isTrack
+     *
+     * @param boolean $isTrack
+     *
+     * @return Training
+     */
+    public function setIsTrack($isTrack)
+    {
+        $this->isTrack = $isTrack;
+
+        return $this;
+    }
+
+    /**
+     * Get isTrack
+     *
+     * @return boolean
+     */
+    public function getIsTrack()
+    {
+        return $this->isTrack;
+    }
+
+    /**
+     * Set distance
+     *
+     * @param float $distance
+     *
+     * @return Training
+     */
+    public function setDistance($distance)
+    {
+        $this->distance = $distance;
+
+        return $this;
+    }
+
+    /**
+     * Get distance
+     *
+     * @return float
+     */
+    public function getDistance()
+    {
+        return $this->distance;
+    }
+
+    /**
+     * Set s
+     *
+     * @param float $s
+     *
+     * @return Training
+     */
+    public function setS($s)
+    {
+        $this->s = $s;
+
+        return $this;
+    }
+
+    /**
+     * Get s
+     *
+     * @return float
+     */
+    public function getS()
+    {
+        return $this->s;
+    }
+
+    /**
+     * Set elapsedTime
+     *
+     * @param boolean $elapsedTime
+     *
+     * @return Training
+     */
+    public function setElapsedTime($elapsedTime)
+    {
+        $this->elapsedTime = $elapsedTime;
+
+        return $this;
+    }
+
+    /**
+     * Get elapsedTime
+     *
+     * @return integer
+     */
+    public function getElapsedTime()
+    {
+        return $this->elapsedTime;
+    }
+
+    /**
+     * Set elevation
+     *
+     * @param integer $elevation
+     *
+     * @return Training
+     */
+    public function setElevation($elevation)
+    {
+        $this->elevation = $elevation;
+
+        return $this;
+    }
+
+    /**
+     * Get elevation
+     *
+     * @return integer
+     */
+    public function getElevation()
+    {
+        return $this->elevation;
+    }
+
+    /**
+     * Set kcal
+     *
+     * @param integer $kcal
+     *
+     * @return Training
+     */
+    public function setKcal($kcal)
+    {
+        $this->kcal = $kcal;
+
+        return $this;
+    }
+
+    /**
+     * Get kcal
+     *
+     * @return integer
+     */
+    public function getKcal()
+    {
+        return $this->kcal;
+    }
+
+    /**
+     * Set pulseAvg
+     *
+     * @param integer $pulseAvg
+     *
+     * @return Training
+     */
+    public function setPulseAvg($pulseAvg)
+    {
+        $this->pulseAvg = $pulseAvg;
+
+        return $this;
+    }
+
+    /**
+     * Get pulseAvg
+     *
+     * @return integer
+     */
+    public function getPulseAvg()
+    {
+        return $this->pulseAvg;
+    }
+
+    /**
+     * Set pulseMax
+     *
+     * @param integer $pulseMax
+     *
+     * @return Training
+     */
+    public function setPulseMax($pulseMax)
+    {
+        $this->pulseMax = $pulseMax;
+
+        return $this;
+    }
+
+    /**
+     * Get pulseMax
+     *
+     * @return integer
+     */
+    public function getPulseMax()
+    {
+        return $this->pulseMax;
+    }
+
+    /**
+     * Set vdotByTime
+     *
+     * @param float $vdotByTime
+     *
+     * @return Training
+     */
+    public function setVdotByTime($vdotByTime)
+    {
+        $this->vdotByTime = $vdotByTime;
+
+        return $this;
+    }
+
+    /**
+     * Get vdotByTime
+     *
+     * @return float
+     */
+    public function getVdotByTime()
+    {
+        return $this->vdotByTime;
+    }
+
+    /**
+     * Set vdotWithElevation
+     *
+     * @param float $vdotWithElevation
+     *
+     * @return Training
+     */
+    public function setVdotWithElevation($vdotWithElevation)
+    {
+        $this->vdotWithElevation = $vdotWithElevation;
+
+        return $this;
+    }
+
+    /**
+     * Get vdotWithElevation
+     *
+     * @return float
+     */
+    public function getVdotWithElevation()
+    {
+        return $this->vdotWithElevation;
+    }
+
+    /**
+     * Set useVdot
+     *
+     * @param boolean $useVdot
+     *
+     * @return Training
+     */
+    public function setUseVdot($useVdot)
+    {
+        $this->useVdot = $useVdot;
+
+        return $this;
+    }
+
+    /**
+     * Get useVdot
+     *
+     * @return boolean
+     */
+    public function getUseVdot()
+    {
+        return $this->useVdot;
+    }
+
+    /**
+     * Set fitVdotEstimate
+     *
+     * @param float $fitVdotEstimate
+     *
+     * @return Training
+     */
+    public function setFitVdotEstimate($fitVdotEstimate)
+    {
+        $this->fitVdotEstimate = $fitVdotEstimate;
+
+        return $this;
+    }
+
+    /**
+     * Get fitVdotEstimate
+     *
+     * @return float
+     */
+    public function getFitVdotEstimate()
+    {
+        return $this->fitVdotEstimate;
+    }
+
+    /**
+     * Set fitRecoveryTime
+     *
+     * @param integer $fitRecoveryTime
+     *
+     * @return Training
+     */
+    public function setFitRecoveryTime($fitRecoveryTime)
+    {
+        $this->fitRecoveryTime = $fitRecoveryTime;
+
+        return $this;
+    }
+
+    /**
+     * Get fitRecoveryTime
+     *
+     * @return integer
+     */
+    public function getFitRecoveryTime()
+    {
+        return $this->fitRecoveryTime;
+    }
+
+    /**
+     * Set fitHrvAnalysis
+     *
+     * @param integer $fitHrvAnalysis
+     *
+     * @return Training
+     */
+    public function setFitHrvAnalysis($fitHrvAnalysis)
+    {
+        $this->fitHrvAnalysis = $fitHrvAnalysis;
+
+        return $this;
+    }
+
+    /**
+     * Get fitHrvAnalysis
+     *
+     * @return integer
+     */
+    public function getFitHrvAnalysis()
+    {
+        return $this->fitHrvAnalysis;
+    }
+
+    /**
+     * Set fitTrainingEffect
+     *
+     * @param float $fitTrainingEffect
+     *
+     * @return Training
+     */
+    public function setFitTrainingEffect($fitTrainingEffect)
+    {
+        $this->fitTrainingEffect = $fitTrainingEffect;
+
+        return $this;
+    }
+
+    /**
+     * Get fitTrainingEffect
+     *
+     * @return float
+     */
+    public function getFitTrainingEffect()
+    {
+        return $this->fitTrainingEffect;
+    }
+
+    /**
+     * Set fitPerformanceCondition
+     *
+     * @param integer $fitPerformanceCondition
+     *
+     * @return Training
+     */
+    public function setFitPerformanceCondition($fitPerformanceCondition)
+    {
+        $this->fitPerformanceCondition = $fitPerformanceCondition;
+
+        return $this;
+    }
+
+    /**
+     * Get fitPerformanceCondition
+     *
+     * @return integer
+     */
+    public function getFitPerformanceCondition()
+    {
+        return $this->fitPerformanceCondition;
+    }
+
+    /**
+     * Set jdIntensity
+     *
+     * @param integer $jdIntensity
+     *
+     * @return Training
+     */
+    public function setJdIntensity($jdIntensity)
+    {
+        $this->jdIntensity = $jdIntensity;
+
+        return $this;
+    }
+
+    /**
+     * Get jdIntensity
+     *
+     * @return integer
+     */
+    public function getJdIntensity()
+    {
+        return $this->jdIntensity;
+    }
+
+    /**
+     * Set rpe
+     *
+     * @param integer $rpe
+     *
+     * @return Training
+     */
+    public function setRpe($rpe)
+    {
+        $this->rpe = $rpe;
+
+        return $this;
+    }
+
+    /**
+     * Get rpe
+     *
+     * @return integer
+     */
+    public function getRpe()
+    {
+        return $this->rpe;
+    }
+
+    /**
+     * Set trimp
+     *
+     * @param integer $trimp
+     *
+     * @return Training
+     */
+    public function setTrimp($trimp)
+    {
+        $this->trimp = $trimp;
+
+        return $this;
+    }
+
+    /**
+     * Get trimp
+     *
+     * @return integer
+     */
+    public function getTrimp()
+    {
+        return $this->trimp;
+    }
+
+    /**
+     * Set cadence
+     *
+     * @param integer $cadence
+     *
+     * @return Training
+     */
+    public function setCadence($cadence)
+    {
+        $this->cadence = $cadence;
+
+        return $this;
+    }
+
+    /**
+     * Get cadence
+     *
+     * @return integer
+     */
+    public function getCadence()
+    {
+        return $this->cadence;
+    }
+
+    /**
+     * Set power
+     *
+     * @param integer $power
+     *
+     * @return Training
+     */
+    public function setPower($power)
+    {
+        $this->power = $power;
+
+        return $this;
+    }
+
+    /**
+     * Get power
+     *
+     * @return integer
+     */
+    public function getPower()
+    {
+        return $this->power;
+    }
+
+    /**
+     * Set totalStrokes
+     *
+     * @param integer $totalStrokes
+     *
+     * @return Training
+     */
+    public function setTotalStrokes($totalStrokes)
+    {
+        $this->totalStrokes = $totalStrokes;
+
+        return $this;
+    }
+
+    /**
+     * Get totalStrokes
+     *
+     * @return integer
+     */
+    public function getTotalStrokes()
+    {
+        return $this->totalStrokes;
+    }
+
+    /**
+     * Set swolf
+     *
+     * @param integer $swolf
+     *
+     * @return Training
+     */
+    public function setSwolf($swolf)
+    {
+        $this->swolf = $swolf;
+
+        return $this;
+    }
+
+    /**
+     * Get swolf
+     *
+     * @return integer
+     */
+    public function getSwolf()
+    {
+        return $this->swolf;
+    }
+
+    /**
+     * Set strideLength
+     *
+     * @param integer $strideLength
+     *
+     * @return Training
+     */
+    public function setStrideLength($strideLength)
+    {
+        $this->strideLength = $strideLength;
+
+        return $this;
+    }
+
+    /**
+     * Get strideLength
+     *
+     * @return integer
+     */
+    public function getStrideLength()
+    {
+        return $this->strideLength;
+    }
+
+    /**
+     * Set groundcontact
+     *
+     * @param integer $groundcontact
+     *
+     * @return Training
+     */
+    public function setGroundcontact($groundcontact)
+    {
+        $this->groundcontact = $groundcontact;
+
+        return $this;
+    }
+
+    /**
+     * Get groundcontact
+     *
+     * @return integer
+     */
+    public function getGroundcontact()
+    {
+        return $this->groundcontact;
+    }
+
+    /**
+     * Set groundcontactBalance
+     *
+     * @param integer $groundcontactBalance
+     *
+     * @return Training
+     */
+    public function setGroundcontactBalance($groundcontactBalance)
+    {
+        $this->groundcontactBalance = $groundcontactBalance;
+
+        return $this;
+    }
+
+    /**
+     * Get groundcontactBalance
+     *
+     * @return integer
+     */
+    public function getGroundcontactBalance()
+    {
+        return $this->groundcontactBalance;
+    }
+
+    /**
+     * Set verticalOscillation
+     *
+     * @param integer $verticalOscillation
+     *
+     * @return Training
+     */
+    public function setVerticalOscillation($verticalOscillation)
+    {
+        $this->verticalOscillation = $verticalOscillation;
+
+        return $this;
+    }
+
+    /**
+     * Get verticalOscillation
+     *
+     * @return integer
+     */
+    public function getVerticalOscillation()
+    {
+        return $this->verticalOscillation;
+    }
+
+    /**
+     * Set verticalRatio
+     *
+     * @param integer $verticalRatio
+     *
+     * @return Training
+     */
+    public function setVerticalRatio($verticalRatio)
+    {
+        $this->verticalRatio = $verticalRatio;
+
+        return $this;
+    }
+
+    /**
+     * Get verticalRatio
+     *
+     * @return integer
+     */
+    public function getVerticalRatio()
+    {
+        return $this->verticalRatio;
+    }
+
+    /**
+     * Set temperature
+     *
+     * @param integer $temperature
+     *
+     * @return Training
+     */
+    public function setTemperature($temperature)
+    {
+        $this->temperature = $temperature;
+
+        return $this;
+    }
+
+    /**
+     * Get temperature
+     *
+     * @return integer
+     */
+    public function getTemperature()
+    {
+        return $this->temperature;
+    }
+
+    /**
+     * Set windSpeed
+     *
+     * @param integer $windSpeed
+     *
+     * @return Training
+     */
+    public function setWindSpeed($windSpeed)
+    {
+        $this->windSpeed = $windSpeed;
+
+        return $this;
+    }
+
+    /**
+     * Get windSpeed
+     *
+     * @return integer
+     */
+    public function getWindSpeed()
+    {
+        return $this->windSpeed;
+    }
+
+    /**
+     * Set windDeg
+     *
+     * @param integer $windDeg
+     *
+     * @return Training
+     */
+    public function setWindDeg($windDeg)
+    {
+        $this->windDeg = $windDeg;
+
+        return $this;
+    }
+
+    /**
+     * Get windDeg
+     *
+     * @return integer
+     */
+    public function getWindDeg()
+    {
+        return $this->windDeg;
+    }
+
+    /**
+     * Set humidity
+     *
+     * @param integer $humidity
+     *
+     * @return Training
+     */
+    public function setHumidity($humidity)
+    {
+        $this->humidity = $humidity;
+
+        return $this;
+    }
+
+    /**
+     * Get humidity
+     *
+     * @return integer
+     */
+    public function getHumidity()
+    {
+        return $this->humidity;
+    }
+
+    /**
+     * Set pressure
+     *
+     * @param integer $pressure
+     *
+     * @return Training
+     */
+    public function setPressure($pressure)
+    {
+        $this->pressure = $pressure;
+
+        return $this;
+    }
+
+    /**
+     * Get pressure
+     *
+     * @return integer
+     */
+    public function getPressure()
+    {
+        return $this->pressure;
+    }
+
+    /**
+     * Set isNight
+     *
+     * @param boolean $isNight
+     *
+     * @return Training
+     */
+    public function setIsNight($isNight)
+    {
+        $this->isNight = $isNight;
+
+        return $this;
+    }
+
+    /**
+     * Get isNight
+     *
+     * @return boolean
+     */
+    public function getIsNight()
+    {
+        return $this->isNight;
+    }
+
+    /**
+     * Set weatherid
+     *
+     * @param integer $weatherid
+     *
+     * @return Training
+     */
+    public function setWeatherid($weatherid)
+    {
+        $this->weatherid = $weatherid;
+
+        return $this;
+    }
+
+    /**
+     * Get weatherid
+     *
+     * @return integer
+     */
+    public function getWeatherid()
+    {
+        return $this->weatherid;
+    }
+
+    /**
+     * Set weatherSource
+     *
+     * @param integer $weatherSource
+     *
+     * @return Training
+     */
+    public function setWeatherSource($weatherSource)
+    {
+        $this->weatherSource = $weatherSource;
+
+        return $this;
+    }
+
+    /**
+     * Get weatherSource
+     *
+     * @return integer
+     */
+    public function getWeatherSource()
+    {
+        return $this->weatherSource;
+    }
+
+    /**
+     * Set routeName
+     *
+     * @param string $routeName
+     *
+     * @return Training
+     */
+    public function setRouteName($routeName)
+    {
+        $this->routeName = $routeName;
+
+        return $this;
+    }
+
+    /**
+     * Get routeName
+     *
+     * @return string
+     */
+    public function getRouteName()
+    {
+        return $this->routeName;
+    }
+
+    /**
+     * Set route
+     *
+     * @param \Runalyze\Bundle\CoreBundle\Entity\Route $defaultroute
+     *
+     * @return Training
+     */
+    public function setRoute(\Runalyze\Bundle\CoreBundle\Entity\Route $route = null)
+    {
+        $this->route = $route;
+
+        return $this;
+    }
+
+    /**
+     * Get route
+     *
+     * @return \Runalyze\Bundle\CoreBundle\Entity\Route
+     */
+    public function getRoute()
+    {
+        return $this->route;
+    }
+
+    /**
+     * Set splits
+     *
+     * @param string $splits
+     *
+     * @return Training
+     */
+    public function setSplits($splits)
+    {
+        $this->splits = $splits;
+
+        return $this;
+    }
+
+    /**
+     * Get splits
+     *
+     * @return string
+     */
+    public function getSplits()
+    {
+        return $this->splits;
+    }
+
+    /**
+     * Set comment
+     *
+     * @param string $comment
+     *
+     * @return Training
+     */
+    public function setComment($comment)
+    {
+        $this->comment = $comment;
+
+        return $this;
+    }
+
+    /**
+     * Get comment
+     *
+     * @return string
+     */
+    public function getComment()
+    {
+        return $this->comment;
+    }
+
+    /**
+     * Set partner
+     *
+     * @param string $partner
+     *
+     * @return Training
+     */
+    public function setPartner($partner)
+    {
+        $this->partner = $partner;
+
+        return $this;
+    }
+
+    /**
+     * Get partner
+     *
+     * @return string
+     */
+    public function getPartner()
+    {
+        return $this->partner;
+    }
+
+    /**
+     * Set notes
+     *
+     * @param string $notes
+     *
+     * @return Training
+     */
+    public function setNotes($notes)
+    {
+        $this->notes = $notes;
+
+        return $this;
+    }
+
+    /**
+     * Get notes
+     *
+     * @return string
+     */
+    public function getNotes()
+    {
+        return $this->notes;
+    }
+
+    /**
+     * Set account
+     *
+     * @param \Runalyze\Bundle\CoreBundle\Entity\Account $account
+     *
+     * @return Training
+     */
+    public function setAccount(\Runalyze\Bundle\CoreBundle\Entity\Account $account = null)
+    {
+        $this->account= $account;
+
+        return $this;
+    }
+
+    /**
+     * Get account
+     *
+     * @return \Runalyze\Bundle\CoreBundle\Entity\Account
+     */
+    public function getAccount()
+    {
+        return $this->account;
+    }
+
+    /**
+     * Set creator
+     *
+     * @param string $creator
+     *
+     * @return Training
+     */
+    public function setCreator($creator)
+    {
+        $this->creator = $creator;
+
+        return $this;
+    }
+
+    /**
+     * Get creator
+     *
+     * @return string
+     */
+    public function getCreator()
+    {
+        return $this->creator;
+    }
+
+    /**
+     * Set creatorDetails
+     *
+     * @param string $creatorDetails
+     *
+     * @return Training
+     */
+    public function setCreatorDetails($creatorDetails)
+    {
+        $this->creatorDetails = $creatorDetails;
+
+        return $this;
+    }
+
+    /**
+     * Get creatorDetails
+     *
+     * @return string
+     */
+    public function getCreatorDetails()
+    {
+        return $this->creatorDetails;
+    }
+
+    /**
+     * Set activityId
+     *
+     * @param integer $activityId
+     *
+     * @return Training
+     */
+    public function setActivityId($activityId)
+    {
+        $this->activityId = $activityId;
+
+        return $this;
+    }
+
+    /**
+     * Get activityId
+     *
+     * @return integer
+     */
+    public function getActivityId()
+    {
+        return $this->activityId;
+    }
+
+    /**
+     * Set lock
+     *
+     * @param boolean $lock
+     *
+     * @return Training
+     */
+    public function setLock($lock)
+    {
+        $this->lock = $lock;
+
+        return $this;
+    }
+
+    /**
+     * Get lock
+     *
+     * @return boolean
+     */
+    public function getLock()
+    {
+        return $this->lock;
+    }
+
+    /**
+     * Add equipment
+     *
+     * @param \Runalyze\Bundle\CoreBundle\Entity\Equipment $equipment
+     *
+     * @return Training
+     */
+    public function addEquipment(\Runalyze\Bundle\CoreBundle\Entity\Equipment $equipment)
+    {
+        $this->equipment[] = $equipment;
+
+        return $this;
+    }
+
+    /**
+     * Remove equipment
+     *
+     * @param \Runalyze\Bundle\CoreBundle\Entity\Equipment $equipment
+     */
+    public function removeEquipment(\Runalyze\Bundle\CoreBundle\Entity\Equipment $equipment)
+    {
+        $this->equipment->removeElement($equipment);
+    }
+
+    /**
+     * Get equipment
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEquipment()
+    {
+        return $this->equipment;
+    }
+
+    /**
+     * Add tag
+     *
+     * @param \Runalyze\Bundle\CoreBundle\Entity\Tag $tag
+     *
+     * @return Training
+     */
+    public function addTag(\Runalyze\Bundle\CoreBundle\Entity\Tag $tag)
+    {
+        $this->tag[] = $tag;
+
+        return $this;
+    }
+
+    /**
+     * Remove tag
+     *
+     * @param \Runalyze\Bundle\CoreBundle\Entity\Tag $tag
+     */
+    public function removeTag(\Runalyze\Bundle\CoreBundle\Entity\Tag $tag)
+    {
+        $this->tag->removeElement($tag);
+    }
+
+    /**
+     * Get tag
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTag()
+    {
+        return $this->tag;
+    }
+
+}

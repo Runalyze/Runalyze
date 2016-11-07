@@ -344,4 +344,3 @@ class User
         return $this->account;
     }
 }
-

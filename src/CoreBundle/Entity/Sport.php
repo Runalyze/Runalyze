@@ -388,11 +388,11 @@ class Sport
     /**
      * Set defaultType
      *
-     * @param integer $defaultType
+     * @param \Runalyze\Bundle\CoreBundle\Entity\Type $defaultType
      *
      * @return Sport
      */
-    public function setDefaultType($defaultType)
+    public function setDefaultType(\Runalyze\Bundle\CoreBundle\Entity\Type $defaultType = null)
     {
         $this->defaultType = $defaultType;
 
@@ -402,7 +402,7 @@ class Sport
     /**
      * Get defaultType
      *
-     * @return integer
+     * @return \Runalyze\Bundle\CoreBundle\Entity\Type
      */
     public function getDefaultType()
     {

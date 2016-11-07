@@ -178,4 +178,3 @@ class Swimdata
         return $this->activity;
     }
 }
-
