@@ -62,7 +62,7 @@ class EquipmentType
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Sport", mappedBy="equipmentTypeid")
+     * @ORM\ManyToMany(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Sport", mappedBy="equipmentType")
      */
     private $sport;
 

@@ -10,9 +10,6 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 class InstallDatabaseCommandTest extends KernelTestCase
 {
-    /** @var \Symfony\Component\HttpKernel\KernelInterface */
-    protected $Kernel;
-
     /** @var \Doctrine\DBAL\Connection */
     protected $Connection;
 

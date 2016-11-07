@@ -63,7 +63,7 @@ class DefaultController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $registration = new Registration($account);
+            $registration = new Registration($this->getDoctrine()->getManager(), $account);
             $formdata = $request->request->get($form->getName());
 
             $registration->setLocale($request->getLocale());
@@ -73,7 +73,7 @@ class DefaultController extends Controller
                 $registration->requireAccountActivation();
             }
             $registration->setPassword($account->getPlainPassword(), $this->get('security.encoder_factory'));
-            $account = $registration->registerAccount($this->getDoctrine()->getManager());
+            $account = $registration->registerAccount();
 
             $message = Swift_Message::newInstance($this->get('translator')->trans('Please activate your RUNALYZE account'))
                 ->setFrom(array($this->getParameter('mail_sender') => $this->getParameter('mail_name')))
