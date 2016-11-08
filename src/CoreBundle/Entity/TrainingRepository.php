@@ -30,7 +30,7 @@ class TrainingRepository extends EntityRepository
             ->select('s.speed')
             ->from('CoreBundle:Training', 't')
             ->join('t.sport', 's')
-            ->where('t.id = :id AND t.accountid = :account')
+            ->where('t.id = :id AND t.account = :account')
             ->setParameter('id', $activityid)
             ->setParameter('account', $accountid)
             ->getQuery()

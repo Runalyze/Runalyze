@@ -2,6 +2,7 @@
 
 namespace Runalyze\Bundle\CoreBundle\Controller;
 
+    use Runalyze\Bundle\CoreBundle\Component\Account\Registration;
     use Runalyze\Bundle\CoreBundle\Form\Settings\ChangeMailType;
 use Runalyze\Bundle\CoreBundle\Form\Settings\ChangePasswordType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -22,12 +23,9 @@ class SettingsController extends Controller
      * @Route("/settings/account", name="settings-account")
      * @Security("has_role('ROLE_USER')")
      */
-    public function settingsAccountAction(Request $request)
+    public function settingsAccountAction(Request $request, Account $account)
     {
         $Frontend = new \Frontend(true, $this->get('security.token_storage'));
-        $user = $this->get('security.token_storage')->getToken()->getUser();
-        $em = $this->getDoctrine()->getManager();
-        $account = $em->getRepository('CoreBundle:Account')->find($user->getId());
 
         $form = $this->createForm(AccountType::class, $account, array(
             'action' => $this->generateUrl('settings-account')
@@ -39,7 +37,7 @@ class SettingsController extends Controller
             $em = $this->getDoctrine()->getManager();
 
             if (isset($formdata['reset_configuration'])) {
-                Configuration::resetConfiguration($user->getId());
+                Configuration::resetConfiguration($account->getId());
                 $this->addFlash('notice', $this->get('translator')->trans('Default configuration has been restored!'));
             }
 
@@ -63,19 +61,17 @@ class SettingsController extends Controller
      * @Route("/settings/password", name="settings-password")
      * @Security("has_role('ROLE_USER')")
      */
-    public function settingsPasswordAction(Request $request)
+    public function settingsPasswordAction(Request $request, Account $account)
     {
-        $user = $this->get('security.token_storage')->getToken()->getUser();
-        $em = $this->getDoctrine()->getManager();
-        $account = $em->getRepository('CoreBundle:Account')->find($user->getId());
         $form = $this->createForm(ChangePasswordType::class, $account, array(
             'action' => $this->generateUrl('settings-password')
         ));
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
             $formdata = $request->request->get($form->getName());
-            $newSalt = \AccountHandler::getNewSalt();
+            $newSalt = Registration::getNewSalt();
             $hash = $this->encodePassword($account, $newSalt, $formdata['plainPassword']['first']);
             $account->setPassword($hash);
             $account->setSalt($newSalt);
@@ -93,17 +89,15 @@ class SettingsController extends Controller
      * @Route("/settings/mail", name="settings-mail")
      * @Security("has_role('ROLE_USER')")
      */
-    public function settingsMailAction(Request $request)
+    public function settingsMailAction(Request $request, Account $account)
     {
-        $user = $this->get('security.token_storage')->getToken()->getUser();
-        $em = $this->getDoctrine()->getManager();
-        $account = $em->getRepository('CoreBundle:Account')->find($user->getId());
         $form = $this->createForm(ChangeMailType::class, $account, array(
             'action' => $this->generateUrl('settings-mail')
         ));
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
             $em->persist($account);
             $em->flush();
             $this->addFlash('notice', $this->get('translator')->trans('Your mail address has been changed!'));
@@ -125,9 +119,7 @@ class SettingsController extends Controller
      */
     public function windowDeleteAction(Account $account)
     {
-        $user = $this->get('security.token_storage')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();
-        //$account = $em->getRepository('CoreBundle:Account')->find($user->getId());
         $hash = bin2hex(random_bytes(16));
         $account->setDeletionHash($hash);
         $em->persist($account);

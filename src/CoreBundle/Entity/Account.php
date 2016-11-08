@@ -95,7 +95,7 @@ class Account implements AdvancedUserInterface, \Serializable
     /**
      * @var integer
      * @Assert\Type("int")
-     * @ORM\Column(name="gender", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 0")
+     * @ORM\Column(name="gender", type="integer", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 0")
      */
     private $gender = Gender::NONE;
 
@@ -163,15 +163,15 @@ class Account implements AdvancedUserInterface, \Serializable
 
     /**
      * @var integer
-     * @Assert\Type("int")
-     * @ORM\Column(name="allow_mails", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 1")
+     * @Assert\Type("bool")
+     * @ORM\Column(name="allow_mails", type="boolean", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 1")
      */
     private $allowMails = 1;
 
     /**
      * @var integer
-     * @Assert\Type("int")
-     * @ORM\Column(name="allow_support", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 0")
+     * @Assert\Type("bool")
+     * @ORM\Column(name="allow_support", type="boolean", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 0")
      */
     private $allowSupport = 0;
 
