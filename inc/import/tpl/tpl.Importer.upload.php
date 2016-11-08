@@ -59,7 +59,7 @@ if (!qq.supportedFeatures.ajaxUploading)
 	</p>
 
 	<p class="info">
-		<a href="http://help.runalyze.com/en/latest/starting-guide/import.html#different-file-types" target="_blank" title="<?php _e('Table showing included data by filetype'); ?>">
+		<a href="http://help.runalyze.com/latest/starting-guide/import.html#different-file-types" target="_blank" title="<?php _e('Table showing included data by filetype'); ?>">
 		<?php _e('Supported file extensions:'); ?></a> <?php echo '*.'.implode(', *.', $this->Filetypes); ?>
 	</p>
 
