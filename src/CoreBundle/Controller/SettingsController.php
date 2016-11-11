@@ -2,8 +2,8 @@
 
 namespace Runalyze\Bundle\CoreBundle\Controller;
 
-    use Runalyze\Bundle\CoreBundle\Component\Account\Registration;
-    use Runalyze\Bundle\CoreBundle\Form\Settings\ChangeMailType;
+use Runalyze\Bundle\CoreBundle\Entity\AccountRepository;
+use Runalyze\Bundle\CoreBundle\Form\Settings\ChangeMailType;
 use Runalyze\Bundle\CoreBundle\Form\Settings\ChangePasswordType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -11,14 +11,20 @@ use Symfony\Component\HttpFoundation\Request;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Runalyze\Bundle\CoreBundle\Form\Settings\AccountType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\FormError;
 use Runalyze\Configuration;
 use Runalyze\Language;
-use \Swift_Message;
+use Swift_Message;
 
 class SettingsController extends Controller
 {
+    /**
+     * @return AccountRepository
+     */
+    protected function getAccountRepository()
+    {
+        return $this->getDoctrine()->getRepository('CoreBundle:Account');
+    }
+
     /**
      * @Route("/settings/account", name="settings-account")
      * @Security("has_role('ROLE_USER')")
@@ -34,21 +40,20 @@ class SettingsController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $formdata = $request->request->get($form->getName());
-            $em = $this->getDoctrine()->getManager();
 
             if (isset($formdata['reset_configuration'])) {
                 Configuration::resetConfiguration($account->getId());
-                $this->addFlash('notice', $this->get('translator')->trans('Default configuration has been restored!'));
+                $this->addFlash('success', $this->get('translator')->trans('Default configuration has been restored!'));
             }
 
             if (isset($formdata['language'])) {
                 $this->get('session')->set('_locale', $formdata['language']);
                 Language::setLanguage($formdata['language']);
-               // echo Ajax::wrapJS('document.cookie = "lang=" + encodeURIComponent("'.addslashes($_POST['language']).'");');
             }
-            $em->persist($account);
-            $em->flush();
-            $this->addFlash('notice', $this->get('translator')->trans('Your changes have been saved!'));
+
+            $this->getAccountRepository()->save($account);
+
+            $this->addFlash('success', $this->get('translator')->trans('Your changes have been saved!'));
         }
 
         return $this->render('settings/account.html.twig', [
@@ -69,18 +74,15 @@ class SettingsController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
             $formdata = $request->request->get($form->getName());
-            $newSalt = Registration::getNewSalt();
-            $hash = $this->encodePassword($account, $newSalt, $formdata['plainPassword']['first']);
-            $account->setPassword($hash);
-            $account->setSalt($newSalt);
-            $em->persist($account);
-            $em->flush();
-            $this->addFlash('notice', $this->get('translator')->trans('Your new password has been saved!'));
+            $account->setPlainPassword($formdata['plainPassword']['first']);
+            $this->encodePassword($account);
+            $this->getAccountRepository()->save($account);
+
+            $this->addFlash('success', $this->get('translator')->trans('Your new password has been saved!'));
         }
 
-            return $this->render('settings/account-password.html.twig', [
+        return $this->render('settings/account-password.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -97,44 +99,41 @@ class SettingsController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($account);
-            $em->flush();
-            $this->addFlash('notice', $this->get('translator')->trans('Your mail address has been changed!'));
+            $this->getAccountRepository()->save($account);
+            $this->addFlash('success', $this->get('translator')->trans('Your mail address has been changed!'));
         }
-            return $this->render('settings/account-mail.html.twig', [
+
+        return $this->render('settings/account-mail.html.twig', [
             'form' => $form->createView()
         ]);
     }
 
-    private function encodePassword(Account $Account, $salt)
+    protected function encodePassword(Account $account)
     {
-        $encoder = $this->container->get('security.encoder_factory')->getEncoder($Account);
+        $encoder = $this->container->get('security.encoder_factory')->getEncoder($account);
 
-        return $encoder->encodePassword($Account->getPlainPassword(), $salt);
+        $account->setNewSalt();
+        $account->setPassword($encoder->encodePassword($account->getPlainPassword(), $account->getSalt()));
     }
+
     /**
      * @Route("/settings/account/delete", name="settings-account-delete")
      * @Security("has_role('ROLE_USER')")
      */
     public function windowDeleteAction(Account $account)
     {
-        $em = $this->getDoctrine()->getManager();
-        $hash = bin2hex(random_bytes(16));
-        $account->setDeletionHash($hash);
-        $em->persist($account);
-        $em->flush();
+        $account->setNewDeletionHash();
+        $this->getAccountRepository()->save($account);
 
         $message = Swift_Message::newInstance($this->get('translator')->trans('Deletion request of your RUNALYZE account'))
-            ->setFrom(array($this->getParameter('mail_sender') => $this->getParameter('mail_name')))
-            ->setTo(array($account->getMail() => $account->getUsername()))
-            ->setBody($this->renderView('mail/account/deleteAccountRequest.html.twig',
-                array('username' => $account->getUsername(),
-                    'deletion_hash' => $hash)
-            ),'text/html');
+            ->setFrom([$this->getParameter('mail_sender') => $this->getParameter('mail_name')])
+            ->setTo([$account->getMail() => $account->getUsername()])
+            ->setBody($this->renderView('mail/account/deleteAccountRequest.html.twig', [
+                'username' => $account->getUsername(),
+                'deletion_hash' => $account->getDeletionHash()
+            ]), 'text/html');
         $this->get('mailer')->send($message);
 
         return $this->render('settings/account-delete.html.twig');
     }
-
 }

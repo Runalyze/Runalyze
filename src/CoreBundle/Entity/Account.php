@@ -8,7 +8,6 @@ use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Runalyze\Model\Account\UserRole;
 use Runalyze\Profile\Athlete\Gender;
-use Doctrine\ORM\Mapping\UniqueConstraint;
 use Runalyze\Bundle\CoreBundle\Validator\Constraints as RunalyzeAssert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -33,7 +32,7 @@ class Account implements AdvancedUserInterface, \Serializable
     private $plainPassword;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer", precision=10, unique=true, nullable=false, options={"unsigned":true})
      * @ORM\Id
@@ -84,7 +83,7 @@ class Account implements AdvancedUserInterface, \Serializable
     private $language = 'en';
 
     /**
-     * @var integer
+     * @var int
      * @Assert\NotBlank()
      * @Assert\Type("int")
      * @RunalyzeAssert\IsValidTimezone()
@@ -93,103 +92,101 @@ class Account implements AdvancedUserInterface, \Serializable
     private $timezone = Timezone::UTC;
 
     /**
-     * @var integer
+     * @var int
      * @Assert\Type("int")
      * @ORM\Column(name="gender", type="integer", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 0")
      */
     private $gender = Gender::NONE;
 
     /**
-     * @var integer
+     * @var int|null
      * @Assert\Type("int")
      * @ORM\Column(name="birthyear", type="integer", precision=4, nullable=true, options={"unsigned":true})
      */
-    private $birthyear;
+    private $birthyear = null;
 
     /**
      * @var string
      * @ORM\Column(name="password", type="string", length=64, nullable=false, options={"default": ""})
      */
-    private $password;
+    private $password = '';
 
     /**
      * @var string
      *
      * @ORM\Column(name="salt", type="string", length=64, nullable=false, options={"fixed" = true, "default":""})
      */
-    private $salt;
+    private $salt = '';
 
     /**
-     * @var integer
+     * @var int|null
      * @Assert\Type("int")
      * @ORM\Column(name="registerdate", type="integer", nullable=true, options={"unsigned":true})
      */
-    private $registerdate;
+    private $registerdate = null;
 
     /**
-     * @var integer
+     * @var int|null
      * @Assert\Type("int")
      * @ORM\Column(name="lastaction", type="integer", nullable=true, options={"unsigned":true})
      */
-    private $lastaction;
+    private $lastaction = null;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(name="changepw_hash", type="string", length=32, nullable=true, options={"fixed" = true})
      */
     private $changepwHash = null;
 
     /**
-     * @var integer
+     * @var int|null
      *
      * @ORM\Column(name="changepw_timelimit", type="integer", nullable=true, options={"unsigned":true})
      */
-    private $changepwTimelimit;
+    private $changepwTimelimit = null;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(name="activation_hash", type="string", length=32, nullable=true, options={"fixed" = true})
      */
-    private $activationHash;
+    private $activationHash = null;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(name="deletion_hash", type="string", length=32, nullable=true, options={"fixed" = true})
      */
-    private $deletionHash;
+    private $deletionHash = null;
 
     /**
-     * @var integer
+     * @var bool
      * @Assert\Type("bool")
      * @ORM\Column(name="allow_mails", type="boolean", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 1")
      */
-    private $allowMails = 1;
+    private $allowMails = true;
 
     /**
-     * @var integer
+     * @var bool
      * @Assert\Type("bool")
      * @ORM\Column(name="allow_support", type="boolean", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 0")
      */
-    private $allowSupport = 0;
+    private $allowSupport = false;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="role", columnDefinition="tinyint(3) unsigned NOT NULL DEFAULT 1")
      */
-    private $role;
+    private $role = UserRole::ROLE_USER;
 
 
     public function __construct()
     {
-        $this->isActive = true;
-        $this->setRegisterdate(date_timestamp_get(new \DateTime()));
-        $this->setLastAction(date_timestamp_get(new \DateTime()));
-        $this->setSalt(self::getRandomHash(32));
-        $this->setRole(UserRole::ROLE_USER);
+        $this->setRegisterdate(time());
+        $this->setLastAction(time());
+        $this->setNewSalt();
     }
 
     /**
@@ -409,6 +406,13 @@ class Account implements AdvancedUserInterface, \Serializable
         return $this->plainPassword;
     }
 
+    /**
+     * @return Account
+     */
+    public function setNewSalt()
+    {
+        return $this->setSalt(self::getRandomHash(32));
+    }
 
     /**
      * Set salt
@@ -493,9 +497,31 @@ class Account implements AdvancedUserInterface, \Serializable
     }
 
     /**
+     * @return $this
+     */
+    public function setNewChangePasswordHash()
+    {
+        $this->setChangepwHash(self::getRandomHash(16));
+        $this->setChangepwTimelimit(time() + 86400);
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function removeChangePasswordHash()
+    {
+        $this->setChangepwHash(null);
+        $this->setChangepwTimelimit(null);
+
+        return $this;
+    }
+
+    /**
      * Set changepwHash
      *
-     * @param string $changepwHash
+     * @param null|string $changepwHash
      * @return Account
      */
     public function setChangepwHash($changepwHash)
@@ -508,7 +534,7 @@ class Account implements AdvancedUserInterface, \Serializable
     /**
      * Get changepwHash
      *
-     * @return string
+     * @return null|string
      */
     public function getChangepwHash()
     {
@@ -518,7 +544,7 @@ class Account implements AdvancedUserInterface, \Serializable
     /**
      * Set changepwTimelimit
      *
-     * @param integer $changepwTimelimit
+     * @param null|int $changepwTimelimit
      * @return Account
      */
     public function setChangepwTimelimit($changepwTimelimit)
@@ -531,7 +557,7 @@ class Account implements AdvancedUserInterface, \Serializable
     /**
      * Get changepwTimelimit
      *
-     * @return integer
+     * @return null|int
      */
     public function getChangepwTimelimit()
     {
@@ -539,10 +565,28 @@ class Account implements AdvancedUserInterface, \Serializable
     }
 
     /**
+     * @return $this
+     */
+    public function setNewActivationHash()
+    {
+        return $this->setActivationHash(self::getRandomHash(16));
+    }
+
+    /**
+     * @return $this
+     */
+    public function removeActivationHash()
+    {
+        $this->setActivationHash(null);
+
+        return $this;
+    }
+
+    /**
      * Set activationHash
      *
-     * @param string $activationHash
-     * @return Account
+     * @param string|null $activationHash
+     * @return $this
      */
     public function setActivationHash($activationHash)
     {
@@ -554,7 +598,7 @@ class Account implements AdvancedUserInterface, \Serializable
     /**
      * Get activationHash
      *
-     * @return string
+     * @return string|null
      */
     public function getActivationHash()
     {
@@ -562,10 +606,18 @@ class Account implements AdvancedUserInterface, \Serializable
     }
 
     /**
+     * @return $this
+     */
+    public function setNewDeletionHash()
+    {
+        return $this->setDeletionHash(self::getRandomHash(16));
+    }
+
+    /**
      * Set deletionHash
      *
-     * @param string $deletionHash
-     * @return Account
+     * @param string|null $deletionHash
+     * @return $this
      */
     public function setDeletionHash($deletionHash)
     {
@@ -577,7 +629,7 @@ class Account implements AdvancedUserInterface, \Serializable
     /**
      * Get deletionHash
      *
-     * @return string
+     * @return string|null
      */
     public function getDeletionHash()
     {
@@ -587,7 +639,7 @@ class Account implements AdvancedUserInterface, \Serializable
     /**
      * Set allowMails
      *
-     * @param string $allowMails
+     * @param bool $allowMails
      * @return Account
      */
     public function setAllowMails($allowMails)
@@ -600,7 +652,7 @@ class Account implements AdvancedUserInterface, \Serializable
     /**
      * Get allowMails
      *
-     * @return string
+     * @return bool
      */
     public function getAllowMails()
     {
@@ -610,7 +662,7 @@ class Account implements AdvancedUserInterface, \Serializable
     /**
      * Set allowSupport
      *
-     * @param string $allowSupport
+     * @param bool $allowSupport
      * @return Account
      */
     public function setAllowSupport($allowSupport)
@@ -623,7 +675,7 @@ class Account implements AdvancedUserInterface, \Serializable
     /**
      * Get allowSupport
      *
-     * @return string
+     * @return bool
      */
     public function getAllowSupport()
     {
@@ -658,7 +710,9 @@ class Account implements AdvancedUserInterface, \Serializable
         $this->setPlainPassword(null);
     }
 
-
+    /**
+     * @return array
+     */
     public function getRoles()
     {
         return array(UserRole::getRoleName($this->role));
@@ -710,5 +764,4 @@ class Account implements AdvancedUserInterface, \Serializable
     {
 	    return empty($this->getActivationHash());
     }
-
 }

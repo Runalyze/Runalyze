@@ -51,4 +51,60 @@ class AccountRepository extends EntityRepository implements UserLoaderInterface
             ->getQuery()
             ->getSingleScalarResult();
     }
+
+    /**
+     * @param array $criteria
+     * @return bool
+     */
+    public function existsOneWith(array $criteria)
+    {
+        return null !== $this->findOneBy($criteria);
+    }
+
+    /**
+     * @param string $deletionHash
+     * @return bool true on success
+     */
+    public function deleteByHash($deletionHash)
+    {
+        /** @var null|Account $account */
+        $account = $this->findOneBy([
+            'deletionHash' => $deletionHash
+        ]);
+
+        if (null !== $account) {
+            $this->_em->remove($account);
+            $this->_em->flush();
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param string $activationHash
+     * @return bool true on success
+     */
+    public function activateByHash($activationHash)
+    {
+        /** @var null|Account $account */
+        $account = $this->findOneBy([
+            'activationHash' => $activationHash
+        ]);
+
+        if (null !== $account) {
+            $this->save($account->removeActivationHash());
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public function save(Account $account)
+    {
+        $this->_em->persist($account);
+        $this->_em->flush();
+    }
 }

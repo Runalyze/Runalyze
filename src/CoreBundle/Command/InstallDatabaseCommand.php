@@ -2,14 +2,12 @@
 
 namespace Runalyze\Bundle\CoreBundle\Command;
 
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\StringInput;
 use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\Output;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Console\Input\StringInput;
-use Symfony\Component\Console\Input\ArrayInput;
-use Symfony\Component\Console\Application;
 
 class InstallDatabaseCommand extends ContainerAwareCommand
 {
@@ -70,8 +68,8 @@ class InstallDatabaseCommand extends ContainerAwareCommand
         }
     }
 
-    private function addAllMigrationsToDatabase() {
-
+    private function addAllMigrationsToDatabase()
+    {
         $app = $this->getApplication();
         $app->setAutoExit(false);
 
@@ -87,7 +85,8 @@ class InstallDatabaseCommand extends ContainerAwareCommand
      * @param bool $removeDelimiter
      * @return array
      */
-    public function getSqlFileAsArray($filename, $databasePrefix, $removeDelimiter = true) {
+    public function getSqlFileAsArray($filename, $databasePrefix, $removeDelimiter = true)
+    {
         $MRK = array('DELIMITER', 'USE', 'SET', 'LOCK', 'SHOW', 'DROP', 'GRANT', 'ALTER', 'UNLOCK', 'CREATE', 'INSERT', 'UPDATE', 'DELETE', 'REVOKE', 'REPLACE', 'RENAME', 'TRUNCATE');
         $SQL = @file($filename);
         $query  = '';

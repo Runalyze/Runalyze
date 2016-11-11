@@ -9,6 +9,7 @@
  * @author Michael Pohl
  * @author Hannes Christiansen
  * @package Runalyze\System
+ * @deprecated since v3.0
  */
 class SessionAccountHandler {
 	/**
@@ -127,10 +128,10 @@ class SessionAccountHandler {
 
 		return self::$Account['allow_support'];
 	}
-        
+
 	/**
 	 * Get users gender
-	 * @return string 
+	 * @return string
 	 */
 	public static function getGender() {
 		if (!isset(self::$Account['gender'])) {
@@ -139,10 +140,10 @@ class SessionAccountHandler {
 
 		return self::$Account['gender'];
 	}
-        
+
 	/**
 	 * Get users year of birth
-	 * @return string 
+	 * @return string
 	 */
 	public static function getBirthYear() {
 		if (!isset(self::$Account['birthyear'])) {

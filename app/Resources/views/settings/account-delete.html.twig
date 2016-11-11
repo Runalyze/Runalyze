@@ -1,11 +1,14 @@
 {% extends "base_logged_in.twig" %}
+
 {% block content %}
 <div class="panel-heading">
-<h1>{% trans %}Delete your account{% endtrans %}</h1>
+    <h1>{% trans %}Delete your account{% endtrans %}</h1>
 </div>
 <div class="panel-content">
-        <p class="info"><em>{% trans %}A confirmation has been sent via mail.{% endtrans %}</em><br>
-            {% trans %}How sad, that you've decided to delete your account.<br>
-            Your account will be deleted as soon as you click on the confirmation link in your mail.{% endtrans %}</p>
+    <p class="info">
+        <em>{% trans %}A confirmation has been sent via mail.{% endtrans %}</em><br>
+        {% trans %}How sad, that you've decided to delete your account.<br>
+            Your account will be deleted as soon as you click on the confirmation link in your mail.{% endtrans %}
+    </p>
 </div>
 {% endblock %}

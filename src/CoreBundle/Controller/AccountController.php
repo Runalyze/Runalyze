@@ -1,12 +1,14 @@
 <?php
 
-    namespace Runalyze\Bundle\CoreBundle\Controller;
+namespace Runalyze\Bundle\CoreBundle\Controller;
 
+use Runalyze\Bundle\CoreBundle\Entity\Account;
+use Runalyze\Bundle\CoreBundle\Entity\AccountRepository;
 use Runalyze\Bundle\CoreBundle\Form\RecoverPasswordType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use  Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormError;
 use Swift_Message;
 
@@ -16,20 +18,23 @@ use Swift_Message;
 class AccountController extends Controller
 {
     /**
+     * @return AccountRepository
+     */
+    protected function getAccountRepository()
+    {
+        return $this->getDoctrine()->getRepository('CoreBundle:Account');
+    }
+
+    /**
      * @Route("/delete/{hash}/confirmed", name="account_delete_confirmed", requirements={"hash": "[[:xdigit:]]{32}"})
      */
     public function deleteAccountConfirmedAction($hash)
     {
-        $em = $this->getDoctrine()->getManager();
-        $account = $em->getRepository('CoreBundle:Account')->findOneBy(array('deletionHash' => $hash));
-
-        if (null === $account) {
-            return $this->render('account/delete/problem.html.twig');
+        if ($this->getAccountRepository()->deleteByHash($hash)) {
+            return $this->render('account/delete/success.html.twig');
         }
-        $em->remove($account);
-        $em->flush();
 
-        return $this->render('account/delete/success.html.twig');
+        return $this->render('account/delete/problem.html.twig');
     }
 
     /**
@@ -37,18 +42,16 @@ class AccountController extends Controller
      */
     public function deleteAccountAction($hash)
     {
-        $em = $this->getDoctrine()->getManager();
-        $account = $em->getRepository('CoreBundle:Account')->findOneBy(array('deletionHash' => $hash));
+        /** @var Account|null $account */
+        $account = $this->getAccountRepository()->findOneBy(['deletionHash' => $hash]);
 
         if (null === $account) {
             return $this->render('account/delete/problem.html.twig');
         }
 
-        $username = $account->getUsername();
-
         return $this->render('account/delete/please_confirm.html.twig', [
             'deletionHash' => $hash,
-            'username' => $username
+            'username' => $account->getUsername()
         ]);
     }
 
@@ -57,8 +60,8 @@ class AccountController extends Controller
      */
     public function recoverForHashAction($hash, Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-        $account = $em->getRepository('CoreBundle:Account')->findOneBy(array('changepwHash' => $hash));
+        /** @var Account|null $account */
+        $account = $this->getAccountRepository()->findOneBy(array('changepwHash' => $hash));
 
         if (null === $account) {
             return $this->render('account/recover/hash_invalid.html.twig', ['recoverHash' => $hash]);
@@ -68,18 +71,17 @@ class AccountController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $newSalt = \AccountHandler::getNewSalt();
-            $account->setSalt($newSalt);
             $encoder = $this->container->get('security.encoder_factory')->getEncoder($account);
+
+            $account->setNewSalt();
             $account->setPassword($encoder->encodePassword($account->getPlainPassword(), $account->getSalt()));
-            $account->setChangepwHash('');
-            $account->setChangepwTimeLimit(0);
+            $account->removeChangePasswordHash();
 
-            $em->persist($account);
-            $em->flush();
+            $this->getAccountRepository()->save($account);
+
             return $this->render('account/recover/success.html.twig');
-
         }
+
         return $this->render('account/recover/form_new_password.html.twig', [
             'recoverHash' => $hash,
             'form' => $form->createView()
@@ -92,38 +94,38 @@ class AccountController extends Controller
     public function recoverAction(Request $request)
     {
         $form = $this->createFormBuilder()
-            ->add('username', TextType::class, array(
+            ->add('username', TextType::class, [
                 'required' => false,
-                'attr' => array(
+                'attr' => [
                     'autofocus' => true
-                )))->getForm();
+                ]
+            ])->getForm();
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
-            $data = $request->request->get($form->getName());
-            $em = $this->getDoctrine()->getManager();
-            $account = $em->getRepository('CoreBundle:Account')->findOneBy(array('username' => $data['username']));
-            if (null == $account) {
+            /** @var Account|null $account */
+            $account = $this->getAccountRepository()->findOneBy([
+                'username' => $request->request->get($form->getName())['username']
+            ]);
+
+            if (null === $account) {
                 $form->get('username')->addError(new FormError($this->get('translator')->trans('The username is not known.')));
             } else {
-                $ChangePwHash = bin2hex(random_bytes(16));
-                $account->setChangepwHash($ChangePwHash);
-                $account->setChangepwTimelimit(time()+86400);
-                $em->persist($account);
-                $em->flush();
+                $account->setNewChangePasswordHash();
+                $this->getAccountRepository()->save($account);
 
-                $message = Swift_Message::newInstance($this->get('translator')->trans('Reset your RUNALYZE password'))
-                    ->setFrom(array($this->getParameter('mail_sender') => $this->getParameter('mail_name')))
-                    ->setTo(array($account->getMail() => $account->getUsername()))
-                    ->setBody($this->renderView('mail/account/recoverPassword.html.twig',
-                        array('username' => $account->getUsername(),
-                            'changepw_hash' => $ChangePwHash)
-                    ),'text/html');
-                $this->get('mailer')->send($message);
+                $this->get('mailer')->send(
+                    Swift_Message::newInstance($this->get('translator')->trans('Reset your RUNALYZE password'))
+                        ->setFrom([$this->getParameter('mail_sender') => $this->getParameter('mail_name')])
+                        ->setTo([$account->getMail() => $account->getUsername()])
+                        ->setBody($this->renderView('mail/account/recoverPassword.html.twig', [
+                            'username' => $account->getUsername(),
+                            'changepw_hash' => $account->getChangepwHash()
+                        ]), 'text/html')
+                );
 
                 return $this->render('account/recover/mail_delivered.html.twig');
             }
-
         }
 
         return $this->render('account/recover/form_send_mail.html.twig', [
@@ -136,17 +138,10 @@ class AccountController extends Controller
      */
     public function activateAccountAction($hash)
     {
-        $em = $this->getDoctrine()->getManager();
-        $account = $em->getRepository('CoreBundle:Account')->findOneBy(array('activationHash' => $hash));
-
-        if (null === $account) {
-            return $this->render('account/activate/problem.html.twig');
-        } else {
-            $account->setActivationHash(null);
-            $em->persist($account);
-            $em->flush();
+        if ($this->getAccountRepository()->activateByHash($hash)) {
+            return $this->render('account/activate/success.html.twig');
         }
 
-        return $this->render('account/activate/success.html.twig');
+        return $this->render('account/activate/problem.html.twig');
     }
 }
