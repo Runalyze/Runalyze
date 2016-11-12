@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="de" datatype="plaintext" original="file.ext">
     <header>
@@ -547,15 +547,15 @@
         <source>The deletion is permanent and cannot be reversed. Therefore, you should backup your data.</source>
         <target>The deletion is permanent and cannot be reversed. Therefore, you should backup your data.</target>
       </trans-unit>
-      <trans-unit id="c9cc8cce247e49bae79f15173ce97354" resname="Save" approved="yes">
+      <trans-unit id="c9cc8cce247e49bae79f15173ce97354" resname="Save">
         <source>Save</source>
         <target state="translated">Speichern</target>
       </trans-unit>
-      <trans-unit id="5c67ffd65944e4d61ef7a9400ce0392c" resname="Change mail address" approved="yes">
+      <trans-unit id="5c67ffd65944e4d61ef7a9400ce0392c" resname="Change mail address">
         <source>Change mail address</source>
         <target state="translated">E-Mail-Adresse ändern</target>
       </trans-unit>
-      <trans-unit id="f4ec5f57bd4d31b803312d873be40da9" resname="Change" approved="yes">
+      <trans-unit id="f4ec5f57bd4d31b803312d873be40da9" resname="Change">
         <source>Change</source>
         <target state="translated">Ändern</target>
       </trans-unit>
@@ -583,7 +583,7 @@
         <source>If the link does not work, please copy the following URL into the address field of your web browser</source>
         <target>If the link does not work, please copy the following URL into the address field of your web browser</target>
       </trans-unit>
-      <trans-unit id="3f1643974cc828011fe031dd192ca5d6" resname="Your RUNALYZE-Team" approved="yes">
+      <trans-unit id="3f1643974cc828011fe031dd192ca5d6" resname="Your RUNALYZE-Team">
         <source>Your RUNALYZE-Team</source>
         <target state="translated">Dein RUNALYZE-Team</target>
       </trans-unit>
@@ -595,15 +595,15 @@
         <source>You can change your password within the next 24 hours by clicking the link below.</source>
         <target>You can change your password within the next 24 hours by clicking the link below.</target>
       </trans-unit>
-      <trans-unit id="d6bbda66baa2b4c69c3c78f4a8013d46" resname="Activate your RUNALYZE account" approved="yes">
+      <trans-unit id="d6bbda66baa2b4c69c3c78f4a8013d46" resname="Activate your RUNALYZE account">
         <source>Activate your RUNALYZE account</source>
         <target state="translated">Aktiviere deinen RUNALYZE-Account</target>
       </trans-unit>
-      <trans-unit id="e5fe77195f75d3cddc96fb9ce4ff3d1c" resname="Welcome to RUNALYZE!" approved="yes">
+      <trans-unit id="e5fe77195f75d3cddc96fb9ce4ff3d1c" resname="Welcome to RUNALYZE!">
         <source>Welcome to RUNALYZE!</source>
         <target state="translated">Willkommen bei RUNALYZE!</target>
       </trans-unit>
-      <trans-unit id="ffc30dab210834f2baab6e3355a4af04" resname="Hi %s, welcome to RUNALYZE" approved="yes">
+      <trans-unit id="ffc30dab210834f2baab6e3355a4af04" resname="Hi %s, welcome to RUNALYZE">
         <source>Hi %s, welcome to RUNALYZE</source>
         <target state="translated">Hi %s, willkommen bei RUNALYZE</target>
       </trans-unit>
@@ -611,7 +611,7 @@
         <source>Please activate your account by clicking the link below.</source>
         <target>Please activate your account by clicking the link below.</target>
       </trans-unit>
-      <trans-unit id="537ece2f0dc02ee1d7dea6cdeb351593" resname="Confirm email address" approved="yes">
+      <trans-unit id="537ece2f0dc02ee1d7dea6cdeb351593" resname="Confirm email address">
         <source>Confirm email address</source>
         <target state="translated">Bestätige deine Mailadresse</target>
       </trans-unit>
@@ -623,7 +623,7 @@
         <source>To get started right away just take a look at our "getting started" guide at %s.</source>
         <target>To get started right away just take a look at our "getting started" guide at %s.</target>
       </trans-unit>
-      <trans-unit id="3903aab323863bd2e9b68218a7a65ebd" resname="Follow" approved="yes">
+      <trans-unit id="3903aab323863bd2e9b68218a7a65ebd" resname="Follow">
         <source>Follow</source>
         <target state="translated">Folgen</target>
       </trans-unit>
@@ -639,7 +639,7 @@
         <source>Elevation data from Shuttle Radar Topography Mission</source>
         <target>Elevation data from Shuttle Radar Topography Mission</target>
       </trans-unit>
-      <trans-unit id="81db66a50f0cb05c93a8f1c70e6e9450" resname="Miscellaneaous" approved="yes">
+      <trans-unit id="81db66a50f0cb05c93a8f1c70e6e9450" resname="Miscellaneaous">
         <source>Miscellaneaous</source>
         <target state="translated">Sonstiges</target>
       </trans-unit>
@@ -711,11 +711,11 @@
         <source>Pace</source>
         <target>Pace</target>
       </trans-unit>
-      <trans-unit id="4d287b6a65e1d4d3f2505b9256a203ec" resname="Heart rate" approved="yes">
+      <trans-unit id="4d287b6a65e1d4d3f2505b9256a203ec" resname="Heart rate">
         <source>Heart rate</source>
         <target state="translated">Herzfrequenz</target>
       </trans-unit>
-      <trans-unit id="bce431d01a4df1bf31ba7787331ad1dc" resname="Cadence" approved="yes">
+      <trans-unit id="bce431d01a4df1bf31ba7787331ad1dc" resname="Cadence">
         <source>Cadence</source>
         <target state="translated">Kadenz</target>
       </trans-unit>
@@ -779,7 +779,7 @@
         <source>VDOT</source>
         <target>VDOT</target>
       </trans-unit>
-      <trans-unit id="63d5049791d9d79d86e9a108b0a999ca" resname="Reference" approved="yes">
+      <trans-unit id="63d5049791d9d79d86e9a108b0a999ca" resname="Reference">
         <source>Reference</source>
         <target state="translated">Referenz</target>
       </trans-unit>
@@ -787,7 +787,7 @@
         <source>The Daniels/Gilbert Formula by Larry Simpson</source>
         <target>The Daniels/Gilbert Formula by Larry Simpson</target>
       </trans-unit>
-      <trans-unit id="dfe66ed2b784a84ffd0f36565e0e15a5" resname="Correction: based on heartrate" approved="yes">
+      <trans-unit id="dfe66ed2b784a84ffd0f36565e0e15a5" resname="Correction: based on heartrate">
         <source>Correction: based on heartrate</source>
         <target state="translated">Korrektur: anhand der Herzfrequenz</target>
       </trans-unit>
@@ -799,11 +799,11 @@
         <source>Because of a lot of influencing factors these computations are not always accurate.</source>
         <target>Because of a lot of influencing factors these computations are not always accurate.</target>
       </trans-unit>
-      <trans-unit id="51c3f59625962b899c03595d6cdfb284" resname="equals" approved="yes">
+      <trans-unit id="51c3f59625962b899c03595d6cdfb284" resname="equals">
         <source>equals</source>
         <target state="translated">gleich</target>
       </trans-unit>
-      <trans-unit id="138b4e9078580ee8d824b456627c869d" resname="Correction: based on correction factor" approved="yes">
+      <trans-unit id="138b4e9078580ee8d824b456627c869d" resname="Correction: based on correction factor">
         <source>Correction: based on correction factor</source>
         <target state="translated">Korrektur: anhand des Korrekturfaktors</target>
       </trans-unit>
@@ -811,11 +811,11 @@
         <source>To consider some individual factors, we use a correction factor.</source>
         <target>To consider some individual factors, we use a correction factor.</target>
       </trans-unit>
-      <trans-unit id="c77a4a1e49dad746d2b3b13e24250e1d" resname="Correction factor" approved="yes">
+      <trans-unit id="c77a4a1e49dad746d2b3b13e24250e1d" resname="Correction factor">
         <source>Correction factor</source>
         <target state="translated">Korrekturfaktor</target>
       </trans-unit>
-      <trans-unit id="b2111806faf0190ffb9ff266eac8e2eb" resname="uncorrected" approved="yes">
+      <trans-unit id="b2111806faf0190ffb9ff266eac8e2eb" resname="uncorrected">
         <source>uncorrected</source>
         <target state="translated">unkorrigiert</target>
       </trans-unit>
@@ -831,19 +831,19 @@
         <source>Up/Down</source>
         <target>Up/Down</target>
       </trans-unit>
-      <trans-unit id="d35a98028cca23c2a745a0bba43a90ff" resname="Influence" approved="yes">
+      <trans-unit id="d35a98028cca23c2a745a0bba43a90ff" resname="Influence">
         <source>Influence</source>
         <target state="translated">Einfluss</target>
       </trans-unit>
-      <trans-unit id="3a7af6fe0df41f239c0d43d34d19d278" resname="Cleanup is running ..." approved="yes">
+      <trans-unit id="3a7af6fe0df41f239c0d43d34d19d278" resname="Cleanup is running ...">
         <source>Cleanup is running ...</source>
         <target state="translated">Bereinigung wird durchgeführt...</target>
       </trans-unit>
-      <trans-unit id="f435327217fb9eef365101b4bbc39463" resname="back to form" approved="yes">
+      <trans-unit id="f435327217fb9eef365101b4bbc39463" resname="back to form">
         <source>back to form</source>
         <target state="translated">zurück zum Formular</target>
       </trans-unit>
-      <trans-unit id="91e8745deed4bed52c6bb855042df916" resname="Database cleanup" approved="yes">
+      <trans-unit id="91e8745deed4bed52c6bb855042df916" resname="Database cleanup">
         <source>Database cleanup</source>
         <target state="translated">Datenbank-Cleanup</target>
       </trans-unit>
@@ -1288,6 +1288,60 @@
       <trans-unit id="52f5e0bc3859bc5f5e25130b6c7e8881" resname="Position">
         <source>Position</source>
         <target>Position</target>
+      </trans-unit>
+      <trans-unit id="64aa789155cbaedc9ad96c61be98b802" resname="You have successfully unsubscribed">
+        <source>You have successfully unsubscribed</source>
+        <target>__You have successfully unsubscribed</target>
+      </trans-unit>
+      <trans-unit id="e846436111136ea5c7f4320d2cf0797d" resname="You have successfully unsubscribed from all notifications">
+        <source>You have successfully unsubscribed from all notifications</source>
+        <target>__You have successfully unsubscribed from all notifications</target>
+      </trans-unit>
+      <trans-unit id="b1a68eebcd224f68bdfb307397c09b23" resname="Unsubscribe from notification mails of RUNALYZE">
+        <source>Unsubscribe from notification mails of RUNALYZE</source>
+        <target>__Unsubscribe from notification mails of RUNALYZE</target>
+      </trans-unit>
+      <trans-unit id="d231831a87e63c5ce42b05001572e6ec" resname="If you turn off our mail notification you will not be informed about new features and changes at RUNALYZE">
+        <source>If you turn off our mail notification you will not be informed about new features and changes at RUNALYZE</source>
+        <target>__If you turn off our mail notification you will not be informed about new features and changes at RUNALYZE</target>
+      </trans-unit>
+      <trans-unit id="615f885b658e462135aca9fa60f9b588" resname="Unsubscribe now">
+        <source>Unsubscribe now</source>
+        <target>__Unsubscribe now</target>
+      </trans-unit>
+      <trans-unit id="743fa066c257efce78e5bc1b3095bb83" resname="Unsubscribe failure">
+        <source>Unsubscribe failure</source>
+        <target>__Unsubscribe failure</target>
+      </trans-unit>
+      <trans-unit id="e882164a77d02fc1da3c25212822ca05" resname="Sorry, but the url was not valid.">
+        <source>Sorry, but the url was not valid.</source>
+        <target>__Sorry, but the url was not valid.</target>
+      </trans-unit>
+      <trans-unit id="df2ac68c6e2bbe03664073835849191c" resname="Used for calculating energy consumption and age grading.">
+        <source>Used for calculating energy consumption and age grading.</source>
+        <target>__Used for calculating energy consumption and age grading.</target>
+      </trans-unit>
+      <trans-unit id="33bffcd3730a39d7a8379b448d63e757" resname="Used for age grading.">
+        <source>Used for age grading.</source>
+        <target>__Used for age grading.</target>
+      </trans-unit>
+      <trans-unit id="e8440cb9169242e7d0eb638e9634aefa" resname="This will not touch any general settings like gender or main sport.">
+        <source>This will not touch any general settings like gender or main sport.</source>
+        <target>__This will not touch any general settings like gender or main sport.</target>
+      </trans-unit>
+      <trans-unit id="ad2d0a1bcd91f2cf260986d593776080" resname="go back">
+        <source>go back</source>
+        <target>__go back</target>
+      </trans-unit>
+      <trans-unit id="fe716bc62356476bdaa419f12e275591" resname="The calculated value is not equal to what is saved for the activity (%activityVdot%).&#10;            The activity's value has probably been calculated based on other settings.">
+        <source>The calculated value is not equal to what is saved for the activity (%activityVdot%).
+            The activity's value has probably been calculated based on other settings.</source>
+        <target>__The calculated value is not equal to what is saved for the activity (%activityVdot%).
+            The activity's value has probably been calculated based on other settings.</target>
+      </trans-unit>
+      <trans-unit id="5615fc5ac91500a93f58fe572423c507" resname="You can use the %linkStart%database cleanup%linkEnd% to recalculate the value.">
+        <source>You can use the %linkStart%database cleanup%linkEnd% to recalculate the value.</source>
+        <target>__You can use the %linkStart%database cleanup%linkEnd% to recalculate the value.</target>
       </trans-unit>
     </body>
   </file>

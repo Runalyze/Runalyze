@@ -1289,6 +1289,60 @@
         <source>Position</source>
         <target>Position</target>
       </trans-unit>
+      <trans-unit id="64aa789155cbaedc9ad96c61be98b802" resname="You have successfully unsubscribed">
+        <source>You have successfully unsubscribed</source>
+        <target>__You have successfully unsubscribed</target>
+      </trans-unit>
+      <trans-unit id="e846436111136ea5c7f4320d2cf0797d" resname="You have successfully unsubscribed from all notifications">
+        <source>You have successfully unsubscribed from all notifications</source>
+        <target>__You have successfully unsubscribed from all notifications</target>
+      </trans-unit>
+      <trans-unit id="b1a68eebcd224f68bdfb307397c09b23" resname="Unsubscribe from notification mails of RUNALYZE">
+        <source>Unsubscribe from notification mails of RUNALYZE</source>
+        <target>__Unsubscribe from notification mails of RUNALYZE</target>
+      </trans-unit>
+      <trans-unit id="d231831a87e63c5ce42b05001572e6ec" resname="If you turn off our mail notification you will not be informed about new features and changes at RUNALYZE">
+        <source>If you turn off our mail notification you will not be informed about new features and changes at RUNALYZE</source>
+        <target>__If you turn off our mail notification you will not be informed about new features and changes at RUNALYZE</target>
+      </trans-unit>
+      <trans-unit id="615f885b658e462135aca9fa60f9b588" resname="Unsubscribe now">
+        <source>Unsubscribe now</source>
+        <target>__Unsubscribe now</target>
+      </trans-unit>
+      <trans-unit id="743fa066c257efce78e5bc1b3095bb83" resname="Unsubscribe failure">
+        <source>Unsubscribe failure</source>
+        <target>__Unsubscribe failure</target>
+      </trans-unit>
+      <trans-unit id="e882164a77d02fc1da3c25212822ca05" resname="Sorry, but the url was not valid.">
+        <source>Sorry, but the url was not valid.</source>
+        <target>__Sorry, but the url was not valid.</target>
+      </trans-unit>
+      <trans-unit id="df2ac68c6e2bbe03664073835849191c" resname="Used for calculating energy consumption and age grading.">
+        <source>Used for calculating energy consumption and age grading.</source>
+        <target>__Used for calculating energy consumption and age grading.</target>
+      </trans-unit>
+      <trans-unit id="33bffcd3730a39d7a8379b448d63e757" resname="Used for age grading.">
+        <source>Used for age grading.</source>
+        <target>__Used for age grading.</target>
+      </trans-unit>
+      <trans-unit id="e8440cb9169242e7d0eb638e9634aefa" resname="This will not touch any general settings like gender or main sport.">
+        <source>This will not touch any general settings like gender or main sport.</source>
+        <target>__This will not touch any general settings like gender or main sport.</target>
+      </trans-unit>
+      <trans-unit id="ad2d0a1bcd91f2cf260986d593776080" resname="go back">
+        <source>go back</source>
+        <target>__go back</target>
+      </trans-unit>
+      <trans-unit id="fe716bc62356476bdaa419f12e275591" resname="The calculated value is not equal to what is saved for the activity (%activityVdot%).&#10;            The activity's value has probably been calculated based on other settings.">
+        <source>The calculated value is not equal to what is saved for the activity (%activityVdot%).
+            The activity's value has probably been calculated based on other settings.</source>
+        <target>__The calculated value is not equal to what is saved for the activity (%activityVdot%).
+            The activity's value has probably been calculated based on other settings.</target>
+      </trans-unit>
+      <trans-unit id="5615fc5ac91500a93f58fe572423c507" resname="You can use the %linkStart%database cleanup%linkEnd% to recalculate the value.">
+        <source>You can use the %linkStart%database cleanup%linkEnd% to recalculate the value.</source>
+        <target>__You can use the %linkStart%database cleanup%linkEnd% to recalculate the value.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="fr" datatype="plaintext" original="file.ext">
     <header>
@@ -309,23 +309,23 @@
         <source>Runalyze is completely configurable. You can decide by yourself which information of your training you want to record and which statistics are being displayed on which place.</source>
         <target state="translated">Runalyze est entièrement paramétrable. Vous choisissez vous-même quelles données d'entraînement vous souhaitez enregistrer et quelles statistiques doivent être affichées à quel endroit.</target>
       </trans-unit>
-      <trans-unit id="9cf52ba6a030f477b895be03900c5344" resname="By athletes for athletes" approved="yes">
+      <trans-unit id="9cf52ba6a030f477b895be03900c5344" resname="By athletes for athletes">
         <source>By athletes for athletes</source>
         <target state="translated">Par les sportifs, pour les sportifs</target>
       </trans-unit>
-      <trans-unit id="2077caf87751f7f202e5e692cae9e623" resname="Runalyze is created by athletes for athletes. Whenever you have comments, problems or wishes: Please contact our Runalyze team. It's near and dear to us." approved="yes">
+      <trans-unit id="2077caf87751f7f202e5e692cae9e623" resname="Runalyze is created by athletes for athletes. Whenever you have comments, problems or wishes: Please contact our Runalyze team. It's near and dear to us.">
         <source>Runalyze is created by athletes for athletes. Whenever you have comments, problems or wishes: Please contact our Runalyze team. It's near and dear to us.</source>
         <target state="translated">Runalyze est créé par les sportifs pour les sportifs. Si vous avez des commentaires, des problèmes ou des souhaits: contactez votre équipe Runalyze. Cela nous tient à coeur.</target>
       </trans-unit>
-      <trans-unit id="10d0de28911c5f66463b9c8783f8148a" resname="Maintenance" approved="yes">
+      <trans-unit id="10d0de28911c5f66463b9c8783f8148a" resname="Maintenance">
         <source>Maintenance</source>
         <target state="translated">Mise à jour</target>
       </trans-unit>
-      <trans-unit id="19a6166a9bb1ce14f5238a622ea73775" resname="RUNALYZE is temporarily down for maintenance" approved="yes">
+      <trans-unit id="19a6166a9bb1ce14f5238a622ea73775" resname="RUNALYZE is temporarily down for maintenance">
         <source>RUNALYZE is temporarily down for maintenance</source>
         <target state="translated">Vous ne pouvez temporairement pas acccéder à RUNALYZE pour cause de mise à jour</target>
       </trans-unit>
-      <trans-unit id="ad8bfa729c523b6dade80aa9c824bafb" resname="We will resume normal operations as soon as possible." approved="yes">
+      <trans-unit id="ad8bfa729c523b6dade80aa9c824bafb" resname="We will resume normal operations as soon as possible.">
         <source>We will resume normal operations as soon as possible.</source>
         <target state="translated">Nous allons restaurer le fonctionnement normal dès que possible.</target>
       </trans-unit>
@@ -349,7 +349,7 @@
         <source>Password again</source>
         <target state="translated">Répéter le mot de passe</target>
       </trans-unit>
-      <trans-unit id="98fb6a2a59cabcc0dbce38d3be5336d4" resname="By clicking the register button you accept our %link_start%terms of use%link_end%." approved="yes">
+      <trans-unit id="98fb6a2a59cabcc0dbce38d3be5336d4" resname="By clicking the register button you accept our %link_start%terms of use%link_end%.">
         <source>By clicking the register button you accept our %link_start%terms of use%link_end%.</source>
         <target state="translated">En cliquant sur le lien "s'enregistrer", vous acceptez nos  %link_start%conditions d'utilisation%link_end%.</target>
       </trans-unit>
@@ -373,19 +373,19 @@
         <source>Help and Support</source>
         <target state="translated">Aide et support</target>
       </trans-unit>
-      <trans-unit id="be8df1f28c0abc85a0ed0c6860e5d832" resname="Blog" approved="yes">
+      <trans-unit id="be8df1f28c0abc85a0ed0c6860e5d832" resname="Blog">
         <source>Blog</source>
         <target state="translated">Blog</target>
       </trans-unit>
-      <trans-unit id="e29756ffbb4e8264a55c6b0f4a2f7ce2" resname="{1} Until now &lt;strong&gt;%count%&lt;/strong&gt; athlete is registered and|]1,Inf[ Until now &lt;strong&gt;%count%&lt;/strong&gt; athletes are registered and" approved="yes">
+      <trans-unit id="e29756ffbb4e8264a55c6b0f4a2f7ce2" resname="{1} Until now &lt;strong&gt;%count%&lt;/strong&gt; athlete is registered and|]1,Inf[ Until now &lt;strong&gt;%count%&lt;/strong&gt; athletes are registered and">
         <source>{1} Until now &lt;strong&gt;%count%&lt;/strong&gt; athlete is registered and|]1,Inf[ Until now &lt;strong&gt;%count%&lt;/strong&gt; athletes are registered and</source>
-        <target state="translated">{1} Il y a à présent &lt;strong&gt;%count%&lt;/strong&gt; sportifs inscrits et |]1,Inf[ Il y a à présent &lt;strong&gt;%count%&lt;/strong&gt; sportifs inscrits et</target>
+        <target state="translated"><![CDATA[{1} Il y a à présent <strong>%count%</strong> sportifs inscrits et |]1,Inf[ Il y a à présent <strong>%count%</strong> sportifs inscrits et]]></target>
       </trans-unit>
-      <trans-unit id="00b8ae36d5e10d62ba8bc1568d562d3e" resname="{1} has logged &lt;strong&gt;%distance%&lt;/strong&gt;.|]1,Inf[ have logged &lt;strong&gt;%distance%&lt;/strong&gt;." approved="yes">
+      <trans-unit id="00b8ae36d5e10d62ba8bc1568d562d3e" resname="{1} has logged &lt;strong&gt;%distance%&lt;/strong&gt;.|]1,Inf[ have logged &lt;strong&gt;%distance%&lt;/strong&gt;.">
         <source>{1} has logged &lt;strong&gt;%distance%&lt;/strong&gt;.|]1,Inf[ have logged &lt;strong&gt;%distance%&lt;/strong&gt;.</source>
-        <target state="translated">{1} ils ont courru &lt;strong&gt;%distance%&lt;/strong&gt;.|]1,Inf[ ils ont courru &lt;strong&gt;%distance%&lt;/strong&gt;.</target>
+        <target state="translated"><![CDATA[{1} ils ont courru <strong>%distance%</strong>.|]1,Inf[ ils ont courru <strong>%distance%</strong>.]]></target>
       </trans-unit>
-      <trans-unit id="e3e2d5e0295c2f5cd85145baf3c2aeef" resname="You are not logged in anymore." approved="yes">
+      <trans-unit id="e3e2d5e0295c2f5cd85145baf3c2aeef" resname="You are not logged in anymore.">
         <source>You are not logged in anymore.</source>
         <target state="translated">Vous n'êtes plus connecté(e).</target>
       </trans-unit>
@@ -397,27 +397,27 @@
         <source>Runalyze is under maintenance at the moment. No login possible.</source>
         <target state="translated">Runalyze est actuellement en cours de maintenance. Aucune connexion n'est possible.</target>
       </trans-unit>
-      <trans-unit id="ab5a48c9a0cf54a09ce069569065bd47" resname="Click here to update RUNALYZE" approved="yes">
+      <trans-unit id="ab5a48c9a0cf54a09ce069569065bd47" resname="Click here to update RUNALYZE">
         <source>Click here to update RUNALYZE</source>
         <target state="translated">Cliquez ici pour mettre à jour RUNALYZE</target>
       </trans-unit>
-      <trans-unit id="ce0f2b5572750ab2ea4b61b6a849caf3" resname="For large databases (several gigabytes) we recommend updating RUNALYZE via console." approved="yes">
+      <trans-unit id="ce0f2b5572750ab2ea4b61b6a849caf3" resname="For large databases (several gigabytes) we recommend updating RUNALYZE via console.">
         <source>For large databases (several gigabytes) we recommend updating RUNALYZE via console.</source>
         <target state="translated">Pour les grandes bases de données (plusieurs gigabytes) nous recommandons de mettre à jour RUNALYZE via la console.</target>
       </trans-unit>
-      <trans-unit id="35ad75c771ec1cffc7f7ba03cf9457fe" resname="No update needed" approved="yes">
+      <trans-unit id="35ad75c771ec1cffc7f7ba03cf9457fe" resname="No update needed">
         <source>No update needed</source>
         <target state="translated">Pas de mise à jour nécessaire</target>
       </trans-unit>
-      <trans-unit id="a3907cd461d8739aa3266047bc4b8c0c" resname="Docs" approved="yes">
+      <trans-unit id="a3907cd461d8739aa3266047bc4b8c0c" resname="Docs">
         <source>Docs</source>
         <target state="translated">Docs</target>
       </trans-unit>
-      <trans-unit id="b7f224c438e971e018cd6eab38b77fa1" resname="Start the installation of RUNALYZE" approved="yes">
+      <trans-unit id="b7f224c438e971e018cd6eab38b77fa1" resname="Start the installation of RUNALYZE">
         <source>Start the installation of RUNALYZE</source>
         <target state="translated">Démarrer l'installation de RUNALYZE</target>
       </trans-unit>
-      <trans-unit id="d5ac77c95ab94ea30f3d280651ae848f" resname="RUNALYZE has been successfully installed. You can now start analyzing your training." approved="yes">
+      <trans-unit id="d5ac77c95ab94ea30f3d280651ae848f" resname="RUNALYZE has been successfully installed. You can now start analyzing your training.">
         <source>RUNALYZE has been successfully installed. You can now start analyzing your training.</source>
         <target state="translated">RUNALYZE a été installé avec succès. Vous pouvez maintenant analyser vos entrainements.</target>
       </trans-unit>
@@ -425,15 +425,15 @@
         <source>Create an account</source>
         <target state="translated">Créer un nouveau compte</target>
       </trans-unit>
-      <trans-unit id="446a2f17e10ef064822f6719d6b45b36" resname="Migrations have been executed" approved="yes">
+      <trans-unit id="446a2f17e10ef064822f6719d6b45b36" resname="Migrations have been executed">
         <source>Migrations have been executed</source>
         <target state="translated">Les migrations ont été effectuées</target>
       </trans-unit>
-      <trans-unit id="00fca4e93b68706640ba7a4e61e35092" resname="Nothing more to do" approved="yes">
+      <trans-unit id="00fca4e93b68706640ba7a4e61e35092" resname="Nothing more to do">
         <source>Nothing more to do</source>
         <target state="translated">Il n'y a plus rien à faire</target>
       </trans-unit>
-      <trans-unit id="7cfc2601b5944323bb448901eba3a1f3" resname="Go back to RUNALYZE" approved="yes">
+      <trans-unit id="7cfc2601b5944323bb448901eba3a1f3" resname="Go back to RUNALYZE">
         <source>Go back to RUNALYZE</source>
         <target state="translated">Retourner à RUNALYZE</target>
       </trans-unit>
@@ -453,7 +453,7 @@
         <source>End</source>
         <target>End</target>
       </trans-unit>
-      <trans-unit id="4f5d5f295ddc8fd8673e74dd5fbe114a" resname="per page" approved="yes">
+      <trans-unit id="4f5d5f295ddc8fd8673e74dd5fbe114a" resname="per page">
         <source>per page</source>
         <target state="translated">par page</target>
       </trans-unit>
@@ -1288,6 +1288,60 @@
       <trans-unit id="52f5e0bc3859bc5f5e25130b6c7e8881" resname="Position">
         <source>Position</source>
         <target>Position</target>
+      </trans-unit>
+      <trans-unit id="64aa789155cbaedc9ad96c61be98b802" resname="You have successfully unsubscribed">
+        <source>You have successfully unsubscribed</source>
+        <target>__You have successfully unsubscribed</target>
+      </trans-unit>
+      <trans-unit id="e846436111136ea5c7f4320d2cf0797d" resname="You have successfully unsubscribed from all notifications">
+        <source>You have successfully unsubscribed from all notifications</source>
+        <target>__You have successfully unsubscribed from all notifications</target>
+      </trans-unit>
+      <trans-unit id="b1a68eebcd224f68bdfb307397c09b23" resname="Unsubscribe from notification mails of RUNALYZE">
+        <source>Unsubscribe from notification mails of RUNALYZE</source>
+        <target>__Unsubscribe from notification mails of RUNALYZE</target>
+      </trans-unit>
+      <trans-unit id="d231831a87e63c5ce42b05001572e6ec" resname="If you turn off our mail notification you will not be informed about new features and changes at RUNALYZE">
+        <source>If you turn off our mail notification you will not be informed about new features and changes at RUNALYZE</source>
+        <target>__If you turn off our mail notification you will not be informed about new features and changes at RUNALYZE</target>
+      </trans-unit>
+      <trans-unit id="615f885b658e462135aca9fa60f9b588" resname="Unsubscribe now">
+        <source>Unsubscribe now</source>
+        <target>__Unsubscribe now</target>
+      </trans-unit>
+      <trans-unit id="743fa066c257efce78e5bc1b3095bb83" resname="Unsubscribe failure">
+        <source>Unsubscribe failure</source>
+        <target>__Unsubscribe failure</target>
+      </trans-unit>
+      <trans-unit id="e882164a77d02fc1da3c25212822ca05" resname="Sorry, but the url was not valid.">
+        <source>Sorry, but the url was not valid.</source>
+        <target>__Sorry, but the url was not valid.</target>
+      </trans-unit>
+      <trans-unit id="df2ac68c6e2bbe03664073835849191c" resname="Used for calculating energy consumption and age grading.">
+        <source>Used for calculating energy consumption and age grading.</source>
+        <target>__Used for calculating energy consumption and age grading.</target>
+      </trans-unit>
+      <trans-unit id="33bffcd3730a39d7a8379b448d63e757" resname="Used for age grading.">
+        <source>Used for age grading.</source>
+        <target>__Used for age grading.</target>
+      </trans-unit>
+      <trans-unit id="e8440cb9169242e7d0eb638e9634aefa" resname="This will not touch any general settings like gender or main sport.">
+        <source>This will not touch any general settings like gender or main sport.</source>
+        <target>__This will not touch any general settings like gender or main sport.</target>
+      </trans-unit>
+      <trans-unit id="ad2d0a1bcd91f2cf260986d593776080" resname="go back">
+        <source>go back</source>
+        <target>__go back</target>
+      </trans-unit>
+      <trans-unit id="fe716bc62356476bdaa419f12e275591" resname="The calculated value is not equal to what is saved for the activity (%activityVdot%).&#10;            The activity's value has probably been calculated based on other settings.">
+        <source>The calculated value is not equal to what is saved for the activity (%activityVdot%).
+            The activity's value has probably been calculated based on other settings.</source>
+        <target>__The calculated value is not equal to what is saved for the activity (%activityVdot%).
+            The activity's value has probably been calculated based on other settings.</target>
+      </trans-unit>
+      <trans-unit id="5615fc5ac91500a93f58fe572423c507" resname="You can use the %linkStart%database cleanup%linkEnd% to recalculate the value.">
+        <source>You can use the %linkStart%database cleanup%linkEnd% to recalculate the value.</source>
+        <target>__You can use the %linkStart%database cleanup%linkEnd% to recalculate the value.</target>
       </trans-unit>
     </body>
   </file>
