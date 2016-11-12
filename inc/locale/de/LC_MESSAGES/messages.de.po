@@ -1,18 +1,18 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.com\n"
 "POT-Creation-Date: 2016-11-12 09:42+0100\n"
-"PO-Revision-Date: 2016-10-12 19:27+0000\n"
+"PO-Revision-Date: 2016-11-12 11:02+0000\n"
 "Last-Translator: Michael Pohl <michael@mipapo.de>\n"
-"Language-Team: German <http://translate.runalyze.com/projects/runalyze/"
-"runalyze-master-po/de/>\n"
+"Language-Team: German <https://translate.runalyze.com/projects/runalyze"
+"/runalyze-master-po/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.7\n"
+"X-Generator: Weblate 2.8\n"
 "X-Poedit-KeywordsList: __;_ne;_n;_e\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -1644,7 +1644,7 @@ msgstr ""
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:425
 #, php-format
 msgid "via tables by %s"
-msgstr ""
+msgstr "aus den Tabellen von %s"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:382
 msgid "Race Result"
@@ -1992,7 +1992,7 @@ msgstr "Analysiere die Trainingstypen"
 
 #: inc/training/view/class.TrainingView.php:127
 msgid "Find best sub segments"
-msgstr ""
+msgstr "Finde die besten Teilsegmente"
 
 #: inc/training/view/class.TrainingView.php:146
 #: inc/core/Dataset/Keys/Setting.php:135
@@ -2868,7 +2868,7 @@ msgstr ""
 
 #: inc/class.AdminView.php:175
 msgid "ForecastIO API-Key"
-msgstr ""
+msgstr "ForecastIO API-Key"
 
 #: inc/class.AdminView.php:175
 #, fuzzy
@@ -3079,11 +3079,11 @@ msgstr "Veranstaltungsname"
 #: inc/core/Dataset/Keys/HeatIndex.php:44
 #: inc/core/Data/Weather/HeatIndex.php:114
 msgid "Heat index"
-msgstr ""
+msgstr "Hitzeindex"
 
 #: inc/core/Dataset/Keys/HeatIndex.php:53
 msgid "HI"
-msgstr ""
+msgstr "HI"
 
 #: inc/core/Dataset/Keys/HeatIndex.php:63
 msgid ""
@@ -3440,7 +3440,7 @@ msgstr "weiblich"
 
 #: inc/core/Profile/Sport/Generic.php:30
 msgid "Generic"
-msgstr ""
+msgstr "Allgemein"
 
 #: inc/core/Profile/Sport/Cycling.php:30
 msgid "Cycling"
@@ -3926,7 +3926,7 @@ msgstr "interne Datenbank"
 
 #: inc/core/Data/Weather/HeatIndexEffect.php:59
 msgid "No effect"
-msgstr ""
+msgstr "Keine Auswirkungen"
 
 #: inc/core/Data/Weather/HeatIndexEffect.php:61
 #, fuzzy
@@ -3940,7 +3940,7 @@ msgstr "extrem anstrengend"
 
 #: inc/core/Data/Weather/HeatIndexEffect.php:65
 msgid "Danger"
-msgstr ""
+msgstr "Gefahr"
 
 #: inc/core/Data/Weather/HeatIndexEffect.php:67
 #, fuzzy
@@ -3949,7 +3949,7 @@ msgstr "extrem anstrengend"
 
 #: inc/core/Data/Weather/HeatIndexEffect.php:104
 msgid "Temperature and humidity should not have any effect."
-msgstr ""
+msgstr "Temperatur und Luftfeuchtigkeit sollten keine Auswirkungen haben."
 
 #: inc/core/Data/Weather/HeatIndexEffect.php:106
 msgid ""
@@ -4073,7 +4073,7 @@ msgstr "Differenz"
 
 #: inc/core/View/Activity/Plot/Series/Smo2.php:36
 msgid "Smo2 (2)"
-msgstr ""
+msgstr "Smo2 (2)"
 
 #: inc/core/View/Activity/Plot/Series/PaceCumulativeAverage.php:50
 msgid "Moving average"
