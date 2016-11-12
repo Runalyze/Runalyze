@@ -2,7 +2,6 @@
 
 namespace Runalyze\Bundle\CoreBundle\Controller;
 
-use Runalyze\Language;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -79,12 +78,6 @@ class CallController extends Controller
         $ConfigTabs->addTab(new \ConfigTabTypes());
         $ConfigTabs->addTab(new \ConfigTabEquipment());
         $ConfigTabs->display();
-
-        /*if ('config_tab_account' == $request->get('key') && 'true' == $request->get('form')) {
-            $locale = Language::getCurrentLanguage();
-            $request->getSession()->set('_locale', $locale);
-            $request->setLocale($locale);
-        }*/
 
         echo \Ajax::wrapJSforDocumentReady('Runalyze.Overlay.removeClasses();');
 

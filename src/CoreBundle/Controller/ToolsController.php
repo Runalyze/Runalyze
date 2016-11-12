@@ -10,13 +10,11 @@ use Runalyze\Bundle\CoreBundle\Component\Tool\Table\VdotRaceResultsTable;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Table\VdotPaceTable;
 use Runalyze\Bundle\CoreBundle\Component\Tool\VdotAnalysis\VdotAnalysis;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
-use Runalyze\Calculation\Prognosis;
 use Runalyze\Configuration;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 class ToolsController extends Controller
 {

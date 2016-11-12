@@ -80,7 +80,7 @@ class ParserFITSingle extends ParserAbstractSingle {
         'saturated_hemoglobin_percent' => ['smo2_0', 0.1],
         'total_hemoglobin_conc' => ['thb_0', 1]
 	);
-	
+
 	/** @var array */
 	protected $nativeFieldMappingForRecord = array(
 		// TODO: native fields aller verwendeten Arrays
@@ -92,15 +92,15 @@ class ParserFITSingle extends ParserAbstractSingle {
 		54 => [['thb_0', 'thb_1'], 100],
 		57 => [['smo2_0', 'smo2_1'], 1]
 	);
-	
+
 	/** @var array */
 	protected $DeveloperFieldMappingForSession = array();
-	
+
 	/** @var array */
 	protected $nativeFieldMappingForSession = array(
 		9 => ['total_distance', ['default' => 1, 'm' => 100]],
 		11 => ['total_calories'],
-		44 => ['pool_length', ['default' => 1, 'm' => 100]],	
+		44 => ['pool_length', ['default' => 1, 'm' => 100]],
 	);
 
 	protected function readFieldDescription() {
@@ -113,51 +113,15 @@ class ParserFITSingle extends ParserAbstractSingle {
 				break;
 		}
 	}
-		
+
 	protected function readFieldDescriptionForSession() {
 		$this->readFieldDescriptionFor($this->nativeFieldMappingForSession, $this->DeveloperFieldMappingForSession);
-		/*if (
-			isset($this->Values['native_field_num']) &&
-			isset($this->nativeFieldMappingForSession[$this->Values['native_field_num'][0]]) &&
-			!empty($this->nativeFieldMappingForSession[$this->Values['native_field_num'][0]][0]) &&
-			isset($this->Values['developer_data_index']) &&
-			isset($this->Values['field_name'])
-		) {
-			$fieldname = $this->Values['developer_data_index'][0].'_'.str_replace(['"', ' '], ['', '_'], $this->Values['field_name'][0]);
-			$nativeFieldNum = $this->Values['native_field_num'][0];
-			$mappingKey =  $this->nativeFieldMappingForSession[$nativeFieldNum][0];
-			$this->DeveloperFieldMappingForSession[$fieldname] = $mappingKey;
-		}*/
 	}
-	
+
 	protected function readFieldDescriptionForRecord() {
 		$this->readFieldDescriptionFor($this->nativeFieldMappingForRecord, $this->DeveloperFieldMappingForRecord);
-		/*if (
-			isset($this->Values['native_field_num']) &&
-			isset($this->nativeFieldMappingForRecord[$this->Values['native_field_num'][0]]) &&
-			!empty($this->nativeFieldMappingForRecord[$this->Values['native_field_num'][0]][0]) &&
-			isset($this->Values['developer_data_index']) &&
-			isset($this->Values['field_name'])
-		) {
-			$fieldname = $this->Values['developer_data_index'][0].'_'.str_replace(['"', ' '], ['', '_'], $this->Values['field_name'][0]);
-			$nativeFieldNum = $this->Values['native_field_num'][0];
-			$unitDefinition = str_replace('"', '', $this->Values['units'][0]);
-			
-			$mappingKey = $this->nativeFieldMappingForRecord[$nativeFieldNum][0];
-			$mappingFactor = isset($this->nativeFieldMappingForRecord[$nativeFieldNum][1]) ? $this->nativeFieldMappingForRecord[$nativeFieldNum][1] : 1;
-			
-			if (is_array($mappingFactor)) {
-				$mappingFactor = isset($mappingFactor[$unitDefinition]) ? $mappingFactor[$unitDefinition] : $mappingFactor['default'];
-			}
-			
-			if (is_array($mappingKey)) {
-				$mappingKey = array_shift($this->nativeFieldMappingForRecord[$nativeFieldNum][0]);
-			}
-			
-			$this->DeveloperFieldMappingForRecord[$fieldname] = [$mappingKey, $mappingFactor];
-		}*/
 	}
-	
+
 	protected function readFieldDescriptionFor(array &$nativeFieldMapping, array &$fieldMapping) {
 		if (
 			isset($this->Values['native_field_num']) &&
@@ -169,18 +133,18 @@ class ParserFITSingle extends ParserAbstractSingle {
 			$fieldname = $this->Values['developer_data_index'][0].'_'.str_replace(['"', ' '], ['', '_'], $this->Values['field_name'][0]);
 			$nativeFieldNum = $this->Values['native_field_num'][0];
 			$unitDefinition = str_replace('"', '', $this->Values['units'][0]);
-			
+
 			$mappingKey = $nativeFieldMapping[$nativeFieldNum][0];
 			$mappingFactor = isset($nativeFieldMapping[$nativeFieldNum][1]) ? $nativeFieldMapping[$nativeFieldNum][1] : 1;
-			
+
 			if (is_array($mappingFactor)) {
 				$mappingFactor = isset($mappingFactor[$unitDefinition]) ? $mappingFactor[$unitDefinition] : $mappingFactor['default'];
 			}
-			
+
 			if (is_array($mappingKey)) {
 				$mappingKey = array_shift($nativeFieldMapping[$nativeFieldNum][0]);
 			}
-			
+
 			$fieldMapping[$fieldname] = [$mappingKey, $mappingFactor];
 		}
 	}
@@ -378,7 +342,7 @@ class ParserFITSingle extends ParserAbstractSingle {
 	 */
 	protected function readSession() {
 		$this->mapDeveloperFieldsToNativeFieldsFor($this->DeveloperFieldMappingForSession);
-		
+
 		if (isset($this->Values['total_timer_time']))
 			$this->TrainingObject->setTimeInSeconds( round($this->Values['total_timer_time'][0] / 1e3) + $this->TrainingObject->getTimeInSeconds() );
 
@@ -566,7 +530,6 @@ class ParserFITSingle extends ParserAbstractSingle {
 		$this->gps['groundcontact'][] = isset($this->Values['stance_time']) ? round($this->Values['stance_time'][0]/10) : 0;
 		$this->gps['oscillation'][]   = isset($this->Values['vertical_oscillation']) ? round($this->Values['vertical_oscillation'][0]/10) : 0;
 		$this->gps['groundcontact_balance'][] = isset($this->Values['stance_time_balance']) ? (int)$this->Values['stance_time_balance'][0] : 0;
-		//$this->gps['vertical_ratio'][] = isset($this->Values['vertical_ratio']) ? (int)$this->Values['vertical_ratio'][0] : 0;
 
         // Fit developer fields
         $this->gps['smo2_0'][] = isset($this->Values['smo2_0']) ? (int)$this->Values['smo2_0'][0] : 0;

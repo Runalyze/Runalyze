@@ -6,7 +6,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Response;
-use Runalyze\Model\Activity;
 
 class PluginController extends Controller
 {
@@ -181,5 +180,4 @@ class PluginController extends Controller
 
          return new Response();
      }
-
 }

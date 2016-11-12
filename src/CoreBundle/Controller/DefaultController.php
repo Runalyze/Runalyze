@@ -72,24 +72,17 @@ class DefaultController extends Controller
             if (!$this->getParameter('user_disable_account_activation')) {
                 $registration->requireAccountActivation();
             }
+
             $registration->setPassword($account->getPlainPassword(), $this->get('security.encoder_factory'));
             $account = $registration->registerAccount();
-
-            $message = Swift_Message::newInstance($this->get('translator')->trans('Please activate your RUNALYZE account'))
-                ->setFrom(array($this->getParameter('mail_sender') => $this->getParameter('mail_name')))
-                ->setTo(array($account->getMail() => $account->getUsername()))
-                ->setBody($this->renderView('mail/account/registration.html.twig',
-                    array('username' => $account->getUsername(),
-                        'activationHash' => $account->getActivationHash())
-                    ),'text/html');
-            $this->get('mailer')->send($message);
 
             if ($this->getParameter('user_disable_account_activation')) {
                 return $this->render('account/activate/success.html.twig');
             }
 
-            return $this->render('register/mail_delivered.html.twig');
+            $this->get('app.mailer.account')->sendActivationLinkTo($account);
 
+            return $this->render('register/mail_delivered.html.twig');
         }
 
         return $this->render('register/form.html.twig', [
@@ -278,7 +271,7 @@ class DefaultController extends Controller
         $repo = $this->getDoctrine()->getRepository('CoreBundle:Account');
         $account = $repo->findOneBy(array('mail' => $mail));
 
-        if ($account && $hash == md5($account->getUsername())) {
+        if (null !== $account && $hash == md5($account->getUsername())) {
             return $this->render('account/unsubscribe_info.html.twig', array('mail' => $mail, 'hash' => $hash));
         }
 
@@ -290,17 +283,16 @@ class DefaultController extends Controller
      */
     public function unsubscribeMailConfirmAction($mail, $hash)
     {
-        $em = $this->getDoctrine()->getManager();
         $repo = $this->getDoctrine()->getRepository('CoreBundle:Account');
         $account = $repo->findOneBy(array('mail' => $mail));
-        if ($account && $hash == md5($account->getUsername())) {
+
+        if (null !== $account && $hash == md5($account->getUsername())) {
             $account->setAllowMails(false);
-            $em->persist($account);
-            $em->flush();
+            $repo->save($account);
+
             return $this->render('account/unsubscribe_success.html.twig');
         }
 
         return $this->render('account/unsubscribe_failure.html.twig');
     }
-
 }

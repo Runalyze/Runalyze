@@ -10,7 +10,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormError;
-use Swift_Message;
 
 /**
  * @Route("/{_locale}/account")
@@ -114,15 +113,7 @@ class AccountController extends Controller
                 $account->setNewChangePasswordHash();
                 $this->getAccountRepository()->save($account);
 
-                $this->get('mailer')->send(
-                    Swift_Message::newInstance($this->get('translator')->trans('Reset your RUNALYZE password'))
-                        ->setFrom([$this->getParameter('mail_sender') => $this->getParameter('mail_name')])
-                        ->setTo([$account->getMail() => $account->getUsername()])
-                        ->setBody($this->renderView('mail/account/recoverPassword.html.twig', [
-                            'username' => $account->getUsername(),
-                            'changepw_hash' => $account->getChangepwHash()
-                        ]), 'text/html')
-                );
+                $this->get('app.mailer.account')->sendRecoverPasswordLinkTo($account);
 
                 return $this->render('account/recover/mail_delivered.html.twig');
             }

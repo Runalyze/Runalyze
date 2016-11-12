@@ -125,14 +125,7 @@ class SettingsController extends Controller
         $account->setNewDeletionHash();
         $this->getAccountRepository()->save($account);
 
-        $message = Swift_Message::newInstance($this->get('translator')->trans('Deletion request of your RUNALYZE account'))
-            ->setFrom([$this->getParameter('mail_sender') => $this->getParameter('mail_name')])
-            ->setTo([$account->getMail() => $account->getUsername()])
-            ->setBody($this->renderView('mail/account/deleteAccountRequest.html.twig', [
-                'username' => $account->getUsername(),
-                'deletion_hash' => $account->getDeletionHash()
-            ]), 'text/html');
-        $this->get('mailer')->send($message);
+        $this->get('app.mailer.account')->sendDeleteLinkTo($account);
 
         return $this->render('settings/account-delete.html.twig');
     }
