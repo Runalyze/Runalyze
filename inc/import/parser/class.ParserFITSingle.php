@@ -131,6 +131,10 @@ class ParserFITSingle extends ParserAbstractSingle {
 			isset($this->Values['field_name'])
 		) {
 			$fieldname = $this->Values['developer_data_index'][0].'_'.str_replace(['"', ' '], ['', '_'], $this->Values['field_name'][0]);
+			$fieldname = preg_replace_callback('/(\W)/i', function(array $char) {
+			    return sprintf('_%02x_', ord($char[0]));
+			}, preg_replace('/(\s+)/i', '_', $fieldname));
+			
 			$nativeFieldNum = $this->Values['native_field_num'][0];
 			$unitDefinition = str_replace('"', '', $this->Values['units'][0]);
 

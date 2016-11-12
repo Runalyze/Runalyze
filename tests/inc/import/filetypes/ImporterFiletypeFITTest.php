@@ -841,16 +841,16 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 		if (Shell::isPerlAvailable()) {
 			$this->object->parseFile('../tests/testfiles/fit/moxy-float.fit');
             $this->assertTrue($this->object->object()->hasArraySmo2_0());
-            $this->assertTrue($this->object->object()->hasArraySmo2_1());
+            $this->assertFalse($this->object->object()->hasArraySmo2_1());
             $this->assertTrue($this->object->object()->hasArrayThb_0());
-            $this->assertTrue($this->object->object()->hasArrayThb_1());
+            $this->assertFalse($this->object->object()->hasArrayThb_1());
             $this->assertEquals(
-            	[62,62,61,61,59,59,58,58,58,58,58,58,58,58,59],
+            	[0,36,36,37,37,38,38,38,38,38,38,38,38,37,37],
             	array_slice($this->object->object()->getArraySmo2_0(), 0, 15)
         	);
 
             $this->assertEquals(
-            	[1319,1319,1318,1318,1318,1318,1318,1318,1319,1319,1319,1319,1318,1318,1318],
+            	[0,1309,1309,1310,1310,1310,1310,1311,1311,1314,1314,1317,1317,1319,1319],
             	array_slice($this->object->object()->getArrayThb_0(), 0, 15)
         	);
 		}
