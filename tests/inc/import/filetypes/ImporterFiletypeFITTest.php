@@ -778,6 +778,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
             $this->assertEquals(61, $this->object->object()->getTimeInSeconds(), '', 10);
             $this->assertEquals(61, $this->object->object()->getArrayTimeLastPoint(), '', 10);
             $this->assertEquals(0.100, $this->object->object()->getDistance(), '', 0.01);
+            $this->assertEquals(60, $this->object->object()->getCadence(), '', 1);
 
             $this->assertTrue($this->object->object()->hasArrayTime());
             $this->assertTrue($this->object->object()->hasArrayLatitude());
@@ -805,6 +806,53 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertEquals(16.72, $this->object->object()->getDistance(), '', 0.01);
 
 			$this->assertNull($this->object->object()->getFitTrainingEffect());
+		}
+	}
+
+	public function testDeveloperFieldsInSwimFileFromDaniel() {
+		if (Shell::isPerlAvailable()) {
+			$this->object->parseFile('../tests/testfiles/fit/swim-via-iq.fit');
+
+			$this->assertEquals(83, $this->object->object()->getTimeInSeconds(), '', 10);
+			$this->assertEquals(0.15, $this->object->object()->getDistance(), '', 0.01);
+
+            $this->assertTrue($this->object->object()->hasArrayTime());
+            $this->assertTrue($this->object->object()->hasArrayDistance());
+
+			$this->assertEquals(2500, $this->object->object()->getPoolLength());
+		}
+	}
+	
+	public function testDeveloperFieldsInPoolSwimFileFromDaniel() {
+		if (Shell::isPerlAvailable()) {
+			$this->object->parseFile('../tests/testfiles/fit/swim-pool-via-iq.fit');
+
+			$this->assertEquals(2095, $this->object->object()->getTimeInSeconds(), '', 10);
+			$this->assertEquals(1.25, $this->object->object()->getDistance(), '', 0.01);
+
+            $this->assertTrue($this->object->object()->hasArrayTime());
+            $this->assertTrue($this->object->object()->hasArrayDistance());
+
+			$this->assertEquals(2500, $this->object->object()->getPoolLength());
+		}
+	}
+	
+	public function testDeveloperFieldsInNewFormatFromMoxy() {
+		if (Shell::isPerlAvailable()) {
+			$this->object->parseFile('../tests/testfiles/fit/moxy-float.fit');
+            $this->assertTrue($this->object->object()->hasArraySmo2_0());
+            $this->assertTrue($this->object->object()->hasArraySmo2_1());
+            $this->assertTrue($this->object->object()->hasArrayThb_0());
+            $this->assertTrue($this->object->object()->hasArrayThb_1());
+            $this->assertEquals(
+            	[62,62,61,61,59,59,58,58,58,58,58,58,58,58,59],
+            	array_slice($this->object->object()->getArraySmo2_0(), 0, 15)
+        	);
+
+            $this->assertEquals(
+            	[1319,1319,1318,1318,1318,1318,1318,1318,1319,1319,1319,1319,1318,1318,1318],
+            	array_slice($this->object->object()->getArrayThb_0(), 0, 15)
+        	);
 		}
 	}
 }

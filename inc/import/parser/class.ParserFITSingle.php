@@ -76,18 +76,114 @@ class ParserFITSingle extends ParserAbstractSingle {
 
 	/** @var array */
 	protected $DeveloperFieldMappingForRecord = array(
-		'0_Power' => ['power', 1],
-		'0_Cadence' => ['cadence', 0.5],
-		'0_Heart_Rate' => ['heart_rate', 1],
-		'0_Vertical_Oscillation' => ['vertical_oscillation', 100],
 		'0_Ground_Time' => ['stance_time', 10],
-        '0_SmO2_Sensor_0_on_Location_Not_Set' => ['smo2_0', 1],
-        '1_2nd_SmO2_Sensor_0_on_Location_Not_Set' => ['smo2_1', 1],
         'saturated_hemoglobin_percent' => ['smo2_0', 0.1],
-        'total_hemoglobin_conc' => ['thb_0', 1],
-        '0_THb_Sensor_0_on_Location_Not_Set' => ['thb_0', 100],
-        '1_2nd_THb_Sensor_0_on_Location_Not_Set' => ['thb_1', 100],
+        'total_hemoglobin_conc' => ['thb_0', 1]
 	);
+	
+	/** @var array */
+	protected $nativeFieldMappingForRecord = array(
+		// TODO: native fields aller verwendeten Arrays
+		3 => ['heart_rate'],
+		4 => ['cadence', ['default' => 1, 'SPM' => 0.5]],
+		5 => ['distance', ['default' => 1, 'm' => 100]],
+		7 => ['power'],
+		39 => ['vertical_oscillation', ['default' => 1, 'Centimeters' => 100]],
+		54 => [['thb_0', 'thb_1'], 100],
+		57 => [['smo2_0', 'smo2_1'], 1]
+	);
+	
+	/** @var array */
+	protected $DeveloperFieldMappingForSession = array();
+	
+	/** @var array */
+	protected $nativeFieldMappingForSession = array(
+		9 => ['total_distance', ['default' => 1, 'm' => 100]],
+		11 => ['total_calories'],
+		44 => ['pool_length', ['default' => 1, 'm' => 100]],	
+	);
+
+	protected function readFieldDescription() {
+		switch ($this->Values['native_mesg_num'][1]) {
+			case 'record':
+				$this->readFieldDescriptionForRecord();
+				break;
+			case 'session':
+				$this->readFieldDescriptionForSession();
+				break;
+		}
+	}
+		
+	protected function readFieldDescriptionForSession() {
+		$this->readFieldDescriptionFor($this->nativeFieldMappingForSession, $this->DeveloperFieldMappingForSession);
+		/*if (
+			isset($this->Values['native_field_num']) &&
+			isset($this->nativeFieldMappingForSession[$this->Values['native_field_num'][0]]) &&
+			!empty($this->nativeFieldMappingForSession[$this->Values['native_field_num'][0]][0]) &&
+			isset($this->Values['developer_data_index']) &&
+			isset($this->Values['field_name'])
+		) {
+			$fieldname = $this->Values['developer_data_index'][0].'_'.str_replace(['"', ' '], ['', '_'], $this->Values['field_name'][0]);
+			$nativeFieldNum = $this->Values['native_field_num'][0];
+			$mappingKey =  $this->nativeFieldMappingForSession[$nativeFieldNum][0];
+			$this->DeveloperFieldMappingForSession[$fieldname] = $mappingKey;
+		}*/
+	}
+	
+	protected function readFieldDescriptionForRecord() {
+		$this->readFieldDescriptionFor($this->nativeFieldMappingForRecord, $this->DeveloperFieldMappingForRecord);
+		/*if (
+			isset($this->Values['native_field_num']) &&
+			isset($this->nativeFieldMappingForRecord[$this->Values['native_field_num'][0]]) &&
+			!empty($this->nativeFieldMappingForRecord[$this->Values['native_field_num'][0]][0]) &&
+			isset($this->Values['developer_data_index']) &&
+			isset($this->Values['field_name'])
+		) {
+			$fieldname = $this->Values['developer_data_index'][0].'_'.str_replace(['"', ' '], ['', '_'], $this->Values['field_name'][0]);
+			$nativeFieldNum = $this->Values['native_field_num'][0];
+			$unitDefinition = str_replace('"', '', $this->Values['units'][0]);
+			
+			$mappingKey = $this->nativeFieldMappingForRecord[$nativeFieldNum][0];
+			$mappingFactor = isset($this->nativeFieldMappingForRecord[$nativeFieldNum][1]) ? $this->nativeFieldMappingForRecord[$nativeFieldNum][1] : 1;
+			
+			if (is_array($mappingFactor)) {
+				$mappingFactor = isset($mappingFactor[$unitDefinition]) ? $mappingFactor[$unitDefinition] : $mappingFactor['default'];
+			}
+			
+			if (is_array($mappingKey)) {
+				$mappingKey = array_shift($this->nativeFieldMappingForRecord[$nativeFieldNum][0]);
+			}
+			
+			$this->DeveloperFieldMappingForRecord[$fieldname] = [$mappingKey, $mappingFactor];
+		}*/
+	}
+	
+	protected function readFieldDescriptionFor(array &$nativeFieldMapping, array &$fieldMapping) {
+		if (
+			isset($this->Values['native_field_num']) &&
+			isset($nativeFieldMapping[$this->Values['native_field_num'][0]]) &&
+			!empty($nativeFieldMapping[$this->Values['native_field_num'][0]][0]) &&
+			isset($this->Values['developer_data_index']) &&
+			isset($this->Values['field_name'])
+		) {
+			$fieldname = $this->Values['developer_data_index'][0].'_'.str_replace(['"', ' '], ['', '_'], $this->Values['field_name'][0]);
+			$nativeFieldNum = $this->Values['native_field_num'][0];
+			$unitDefinition = str_replace('"', '', $this->Values['units'][0]);
+			
+			$mappingKey = $nativeFieldMapping[$nativeFieldNum][0];
+			$mappingFactor = isset($nativeFieldMapping[$nativeFieldNum][1]) ? $nativeFieldMapping[$nativeFieldNum][1] : 1;
+			
+			if (is_array($mappingFactor)) {
+				$mappingFactor = isset($mappingFactor[$unitDefinition]) ? $mappingFactor[$unitDefinition] : $mappingFactor['default'];
+			}
+			
+			if (is_array($mappingKey)) {
+				$mappingKey = array_shift($nativeFieldMapping[$nativeFieldNum][0]);
+			}
+			
+			$fieldMapping[$fieldname] = [$mappingKey, $mappingFactor];
+		}
+	}
 
 	/**
 	 * Parse
@@ -223,6 +319,10 @@ class ParserFITSingle extends ParserAbstractSingle {
 					$this->readLength();
 					break;
 
+				case 'field_description':
+					$this->readFieldDescription();
+					break;
+
 				case 'activity':
 					break;
 
@@ -277,6 +377,8 @@ class ParserFITSingle extends ParserAbstractSingle {
 	 * Read session
 	 */
 	protected function readSession() {
+		$this->mapDeveloperFieldsToNativeFieldsFor($this->DeveloperFieldMappingForSession);
+		
 		if (isset($this->Values['total_timer_time']))
 			$this->TrainingObject->setTimeInSeconds( round($this->Values['total_timer_time'][0] / 1e3) + $this->TrainingObject->getTimeInSeconds() );
 
@@ -408,7 +510,7 @@ class ParserFITSingle extends ParserAbstractSingle {
 		if ($this->isSwimming)
 			return;
 
-		$this->mapDeveloperFieldsToNativeFieldsForCurrentRecord();
+		$this->mapDeveloperFieldsToNativeFieldsFor($this->DeveloperFieldMappingForRecord);
 
 		if (isset($this->Values['compressed_speed_distance'])) {
 			$time = $this->parseCompressedSpeedDistance();
@@ -477,8 +579,8 @@ class ParserFITSingle extends ParserAbstractSingle {
 		}
 	}
 
-	protected function mapDeveloperFieldsToNativeFieldsForCurrentRecord() {
-		foreach ($this->DeveloperFieldMappingForRecord as $devFieldName => $nativeData) {
+	protected function mapDeveloperFieldsToNativeFieldsFor(array $developerFieldMapping) {
+		foreach ($developerFieldMapping as $devFieldName => $nativeData) {
 			$nativeFieldName = $nativeData[0];
 			$nativeFactor = $nativeData[1];
 
