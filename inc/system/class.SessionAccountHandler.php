@@ -19,28 +19,10 @@ class SessionAccountHandler {
 	private static $Account = array();
 
 	/**
-	 * Error type
-	 * @var int
-	 */
-	public static $ErrorType = 0;
-
-	/**
-	 * Construct a new SessionAccountHandler
-	 * ATTENTION:
-	 * - all used methods from constructor must not use any consts (except PREFIX)
-	 * - all these consts will be defined after setting Account-ID,
-	 *   because some of them need database-connection
-	 */
-	public function __construct() {
-
-	}
-
-	/**
 	 * Is anyone logged in?
 	 * @return boolean
 	 */
 	public static function isLoggedIn() {
-	    //TODO use a symfony security method
 		if (isset($_SESSION['accountid']))
 			return true;
 
@@ -69,28 +51,11 @@ class SessionAccountHandler {
 	 * @return int
 	 */
 	public static function getId() {
-		// Dirty hack for 'global.cleanup.php'
-		if (defined('GLOBAL_CLEANUP') && class_exists('GlobalCleanupAccount')) {
-			return GlobalCleanupAccount::$ID;
-		}
-
 		if (SharedLinker::isOnSharedPage()) {
 			return SharedLinker::getUserId();
 		}
 
 		return isset(self::$Account['id']) ? self::$Account['id'] : -1;
-	}
-
-	/**
-	 * Get mail of current user
-	 * @return string
-	 */
-	public static function getMail() {
-		if (!isset(self::$Account['mail'])) {
-			return '';
-		}
-
-		return self::$Account['mail'];
 	}
 
 	/**
@@ -106,36 +71,12 @@ class SessionAccountHandler {
 	}
 
 	/**
-	 * Get if mails are allowed
-	 * @return string
-	 */
-	public static function getAllowMails() {
-		if (!isset(self::$Account['allow_mails'])) {
-			return '';
-		}
-
-		return self::$Account['allow_mails'];
-	}
-
-	/**
-	 * Get if user allows access to account
-	 * @return string
-	 */
-	public static function getAllowSupport() {
-		if (!isset(self::$Account['allow_support'])) {
-			return '';
-		}
-
-		return self::$Account['allow_support'];
-	}
-
-	/**
 	 * Get users gender
-	 * @return string
+	 * @return mixed
 	 */
 	public static function getGender() {
 		if (!isset(self::$Account['gender'])) {
-			return '';
+			return null;
 		}
 
 		return self::$Account['gender'];
@@ -143,11 +84,11 @@ class SessionAccountHandler {
 
 	/**
 	 * Get users year of birth
-	 * @return string
+	 * @return null|int
 	 */
 	public static function getBirthYear() {
 		if (!isset(self::$Account['birthyear'])) {
-			return '';
+			return null;
 		}
 
 		return self::$Account['birthyear'];
