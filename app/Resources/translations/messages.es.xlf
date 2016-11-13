@@ -269,9 +269,9 @@
         <source>Send link</source>
         <target state="translated">Enlace enviado</target>
       </trans-unit>
-      <trans-unit id="28103f38886a385f79ff2fbfe9ffff5b" resname="Unable to send link. Please contact the administrator.">
+      <trans-unit id="28103f38886a385f79ff2fbfe9ffff5b" resname="Unable to send link. Please contact the administrator." approved="yes">
         <source>Unable to send link. Please contact the administrator.</source>
-        <target>Unable to send link. Please contact the administrator.</target>
+        <target state="translated">No se pudo enviar el enlace. Por favor contacta al administrador.</target>
       </trans-unit>
       <trans-unit id="776d630537e30e4960bedd8b6f39ec72" resname="The link has been sent and will be valid for 24 hours." approved="yes">
         <source>The link has been sent and will be valid for 24 hours.</source>
