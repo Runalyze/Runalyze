@@ -50,6 +50,7 @@ $FIELDS['weight'] = array(
 	'database'	=> array(
 		'type'		=> 'decimal',
 		'precision'	=> '5,2',
+		'null'		=> true
 		),
 	'formular'	=> array(
 		'label'		=> __('Weight'),
@@ -61,6 +62,7 @@ $FIELDS['pulse_rest'] = array(
 	'database'	=> array(
 		'type'		=> 'smallint',
 		'precision'	=> '3',
+		'null'		=> true
 		),
 	'formular'	=> array(
 		'label'		=> __('Resting HR'),
@@ -71,6 +73,7 @@ $FIELDS['pulse_max'] = array(
 	'database'	=> array(
 		'type'		=> 'smallint',
 		'precision'	=> '3',
+		'null'		=> true
 		),
 	'formular'	=> array(
 		'label'		=> __('Maximal HR'),
@@ -81,6 +84,7 @@ $FIELDS['fat'] = array(
 	'database'	=> array(
 		'type'		=> 'decimal',
 		'precision'	=> '3,1',
+		'null'		=> true
 		),
 	'formular'	=> array(
 		'label'		=> __('Body fat'),
@@ -91,6 +95,7 @@ $FIELDS['water'] = array(
 	'database'	=> array(
 		'type'		=> 'decimal',
 		'precision'	=> '3,1',
+		'null'		=> true
 		),
 	'formular'	=> array(
 		'label'		=> __('Body water'),
@@ -101,6 +106,7 @@ $FIELDS['muscles'] = array(
 	'database'	=> array(
 		'type'		=> 'decimal',
 		'precision'	=> '3,1',
+		'null'		=>  true
 		),
 	'formular'	=> array(
 		'label'		=> __('Body muscle'),
@@ -111,7 +117,7 @@ $FIELDS['sleep_duration'] = array(
 	'database'	=> array(
 		'type'		=> 'smallint',
 		'precision'	=> '4',
-		'default'	=> '0'
+		'null'		=> true
 		),
 	'formular'	=> array(
 		'label'		=> __('Sleep Duration'),

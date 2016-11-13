@@ -67,7 +67,7 @@ if (Request::param('reload') == 'true') {
 				<?php $Value = ($Unit == 'date') ? date('d.m.Y', $Info[$Key]) : $Info[$Key]; ?>
 				<?php if ($Unit == 'date') $Unit = ''; ?>
 				<?php if ($Key == 'sleep_duration' && $Value > 0) $Value = (new Duration($Value*60))->string('G:i'); ?>
-				<td><?php echo (!is_numeric($Value) || $Value > 0) ? $Value.$Unit : '-'; ?></td>
+				<td><?php echo (null !== $Value && (!is_numeric($Value) || $Value > 0)) ? $Value.$Unit : '-'; ?></td>
 			<?php endforeach; ?>
 			<td><?php echo htmlspecialchars($Info['notes']); ?></td>
 			</tr>
