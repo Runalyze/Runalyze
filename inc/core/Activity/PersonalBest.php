@@ -6,8 +6,6 @@
 
 namespace Runalyze\Activity;
 
-use Runalyze\Configuration;
-
 use PDO;
 use DB;
 
@@ -27,7 +25,7 @@ class PersonalBest {
 	 * @var float
 	 */
 	protected $Distance;
-	
+
 	/**
 	 * @var int
 	 */
@@ -75,18 +73,18 @@ class PersonalBest {
 
 	/**
 	 * Prefetch multiple PBs
-	 * 
+	 *
 	 * This method should be used to avoid multiple requests.
 	 * It requires the usage of the static cache.
-	 * 
+	 *
 	 * Usage:
 	 * <pre>PersonalBest::activateStaticCache();
 	 * PersonalBest::lookupDistances(array(3, 5, 10), 1, $PDO);
 	 * new PersonalBest(3);
 	 * ...</pre>
-	 * 
+	 *
 	 * @param array $distances distances in [km]
-	 * @param int $sportid sportid 
+	 * @param int $sportid sportid
 	 * @param \PDO $pdo [optional]
 	 * @param boolean $withDetails [optional]
 	 * @return int number of fetches PBs
@@ -171,12 +169,12 @@ class PersonalBest {
 			$this->Time = $this->PDO->query(
 				'SELECT MIN(r.`official_time`), r.`activity_id` FROM `'.PREFIX.'raceresult` as r '.
 				'LEFT JOIN `'.PREFIX.'training` as tr ON tr.`id`= r.`activity_id`'.
-				'WHERE r.`accountid`='.\SessionAccountHandler::getId().'  '. 
+				'WHERE r.`accountid`='.\SessionAccountHandler::getId().'  '.
 				'AND r.`official_distance`="'.$this->Distance.'"'.
-				'AND tr.`sportid`='.$this->SportId.''
+				'AND tr.`sportid`='.$this->SportId
 			)->fetchColumn();
 
-			if ($this->Time == null) {
+			if ($this->Time === null) {
 				$this->Time = false;
 			} elseif (self::$USE_STATIC_CACHE) {
 				self::$PBs[(float)$this->Distance] = $this->Time;

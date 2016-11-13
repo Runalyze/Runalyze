@@ -4,10 +4,6 @@
  * @package Runalyze\Import
  */
 
-use Runalyze\Model\Activity;
-use Runalyze\View\Activity\Linker;
-use Runalyze\View\Activity\Dataview;
-
 /**
  * Multi importer
  *

@@ -34,17 +34,15 @@ use Runalyze\View\Stresscolor;
 use Runalyze\View\Tooltip;
 use Runalyze\Data\RPE as DataRPE;
 
-
 use SessionAccountHandler;
 use SportFactory;
 use SearchLink;
 use Ajax;
 use HTML;
-use Helper;
 
 /**
  * View for data of activities
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\View\Activity
  */
@@ -66,7 +64,7 @@ class Dataview {
 	 * @var \Runalyze\Activity\Energy
 	 */
 	protected $Energy = null;
-	
+
 	/**
 	 * HR max
 	 * @var \Runalyze\Activity\HeartRate
@@ -306,7 +304,7 @@ class Dataview {
 			return new StrideLength($Activity->strideLength());
 		});
 	}
-	
+
 	/**
 	 * Get string for displaying colored trimp
 	 * @return string
@@ -316,7 +314,7 @@ class Dataview {
 
 		return $Stress->string();
 	}
- 
+
  	/**
 	 * Get string for displaying JD points
 	 * @return string
@@ -324,7 +322,7 @@ class Dataview {
 	public function jdIntensity() {
 		return $this->Activity->jdIntensity();
 	}
-	
+
  	/**
 	 * Get string for displaying RPE
 	 * @return string
@@ -335,7 +333,7 @@ class Dataview {
 	    $Tooltip->wrapAround($RPE);
 	    return $RPE;
 	}
- 
+
  	/**
 	 * Get string for displaying JD points with stresscolor
 	 * @return string
@@ -346,7 +344,7 @@ class Dataview {
 
 		return $Stress->string($this->Activity->jdIntensity());
 	}
- 
+
  	/**
 	 * Get string for VO2max estimate
 	 * @return string
@@ -358,7 +356,7 @@ class Dataview {
 
 		return '';
 	}
- 
+
  	/**
 	 * Get string for recovery time
 	 * @return string
@@ -376,7 +374,7 @@ class Dataview {
 
 		return '';
 	}
- 
+
  	/**
 	 * Get string for hrv score
 	 * @return string
@@ -452,7 +450,7 @@ class Dataview {
 
 		return '';
 	}
-	
+
 	/**
 	 * Get vertical ratio
 	 * @return string
@@ -528,7 +526,7 @@ class Dataview {
 			);
 		});
 	}
-	
+
 	/**
 	 * Get heat index
 	 * @return HeatIndex

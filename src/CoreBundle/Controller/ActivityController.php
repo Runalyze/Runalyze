@@ -7,7 +7,6 @@ use Runalyze\Bundle\CoreBundle\Component\Activity\Tool\TimeSeriesStatistics;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\Trackdata;
 use Runalyze\Bundle\CoreBundle\Services\Activity\VdotInfo;
-use Runalyze\Calculation\Math\SubSegmentMaximization;
 use Runalyze\Configuration;
 use Runalyze\Metrics\LegacyUnitConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -40,8 +39,6 @@ class ActivityController extends Controller
     public function createAction()
     {
         $Frontend = new \Frontend(isset($_GET['json']), $this->get('security.token_storage'));
-
-        \System::setMaximalLimits();
 
         if (class_exists('Normalizer')) {
         	if (isset($_GET['file'])) {

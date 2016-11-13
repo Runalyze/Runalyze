@@ -15,7 +15,6 @@
         <?php } ?>
 	<title>RUNALYZE</title>
 
-	<?php echo System::getCodeForExternalJSFiles(); ?>
 	<?php echo System::getCodeForLocalJSFiles(); ?>
 </head>
 

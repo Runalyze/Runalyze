@@ -30,11 +30,6 @@ class ImporterFactory {
 	 * @var string
 	 */
 	public static $CREATOR_GARMIN_COMMUNICATOR = 'garmin-communicator';
-	/**
-	 * Boolean flag: log all filecontents?
-	 * @var bool
-	 */
-	private static $logFileContents = false;
 
 	/**
 	 * Import from garmin communicator
@@ -141,7 +136,7 @@ class ImporterFactory {
 		else
 			$this->constructForSingleFileFromGarminCommunicator();
 	}
- 
+
 	/**
 	 * Construct for multiple files from garmin communicator
 	 */

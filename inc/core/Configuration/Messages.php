@@ -12,7 +12,7 @@ use Ajax;
 
 /**
  * Configuration messages
- * 
+ *
  * Pure static class for displaying hints in the configuration form.
  * @author Hannes Christiansen
  * @package Runalyze\Configuration
@@ -56,14 +56,6 @@ class Messages {
 	 */
 	private static function addWarning($message) {
 		ConfigTabs::addMessage(HTML::warning($message));
-	}
-
-	/**
-	 * Add okay
-	 * @param string $message
-	 */
-	private static function addOkay($message) {
-		ConfigTabs::addMessage(HTML::okay($message));
 	}
 
 	/**

@@ -12,13 +12,14 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class Version20160830124637 extends AbstractMigration implements ContainerAwareInterface
 {
+    /** @var ContainerInterface */
     private $container;
 
-    public function setContainer(ContainerInterface $container = null)
+    public function setContainer(ContainerInterface $container)
     {
         $this->container = $container;
     }
-    
+
     /**
      * @param Schema $schema
      */
@@ -29,7 +30,6 @@ class Version20160830124637 extends AbstractMigration implements ContainerAwareI
         $this->addSql("UPDATE `".$prefix."account` a INNER JOIN `".$prefix."conf` c ON a.id = c.accountid SET a.gender = 1 WHERE c.key='GENDER' AND c.accountid > 0 AND c.value='m'");
         $this->addSql("UPDATE `".$prefix."account` a INNER JOIN `".$prefix."conf` c ON a.id = c.accountid SET a.gender = 2 WHERE c.key='GENDER' AND c.accountid > 0 AND c.value='f'");
         $this->addSql("DELETE FROM `".$prefix."conf` WHERE `key`='GENDER'");
-
     }
 
     /**
@@ -37,8 +37,5 @@ class Version20160830124637 extends AbstractMigration implements ContainerAwareI
      */
     public function down(Schema $schema)
     {
-        /*$prefix = $this->container->getParameter('database_prefix');
-        $this->addSql('ALTER TABLE `'.$prefix.'account` DROP `gender`, DROP `birthyear`');*/
-        //Not possible, because gender is copied from conf table and deleted afterwards
     }
 }

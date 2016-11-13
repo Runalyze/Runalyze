@@ -4,8 +4,6 @@
  * @package Runalyze\System\Config
  */
 
-use Runalyze\Configuration;
-
 /**
  * ConfigTabTypes
  * @author Hannes Christiansen
@@ -63,7 +61,6 @@ class ConfigTabTypes extends ConfigTab {
 			ORDER BY `sportid` ASC, `tcount` DESC
 		')->fetchAll();
 
-		//TODO Change all locations where Typeid is used
 		$Types[] = array('id' => -1, 'sportid' => -1, 'name' => '', 'abbr' => '', 'short' => 2, 'hr_avg' => 120, 'quality_session' => 0);
 		$sportid = false;
 

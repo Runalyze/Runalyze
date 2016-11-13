@@ -16,7 +16,7 @@ use Runalyze\Configuration;
 
 /**
  * Update activity in database
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Model\Activity
  */
@@ -52,7 +52,7 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 	 * @var array
 	 */
 	protected $EquipmentIDsOld = array();
-	
+
 	/**
 	 * @var array
 	 */
@@ -100,7 +100,7 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 		$this->EquipmentIDsNew = $newIDs;
 		$this->EquipmentIDsOld = $oldIDs;
 	}
-	
+
 	/**
 	 * @param array $newTagIDs
 	 * @param array $oldTagIDs
@@ -135,22 +135,6 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 			),
 			Entity::allDatabaseProperties()
 		);
-	}
-
-	/**
-	 * Ignore specific key
-	 * @param string $key
-	 * @return boolean
-	 */
-	protected function ignore($key) {
-		if ($key == Entity::DISTANCE || $key == Entity::TIME_IN_SECONDS) {
-			// TODO: needed if equipment is set
-			if ($this->OldObject == null && false) {
-				throw new \RuntimeException('For an update of distance or duration the old object has to be set.');
-			}
-		}
-
-		return parent::ignore($key);
 	}
 
 	/**
@@ -247,7 +231,7 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 			if (
 				\Runalyze\Context::Factory()->sport($this->NewObject->sportid())->hasPower() &&
 				null !== $this->Trackdata &&
-				$this->Trackdata->has(Model\Trackdata\Entity::TIME) && 
+				$this->Trackdata->has(Model\Trackdata\Entity::TIME) &&
 				$this->Trackdata->has(Model\Trackdata\Entity::DISTANCE)
 			) {
 				$Calculator = new \Runalyze\Calculation\Power\Calculator(
@@ -322,7 +306,7 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 			$this->NewObject->set(Entity::IS_NIGHT, (new NightDetector())->setFromEntities($this->NewObject, $this->Route)->value());
 		}
 	}
-        
+
 	/**
 	 * Tasks after insertion
 	 */
@@ -339,7 +323,7 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 			$this->updateBasicEndurance();
 		}
 	}
-	
+
 	/**
 	 * Update equipment
 	 */
@@ -350,7 +334,7 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 			$EquipmentUpdater->update($this->EquipmentIDsNew, $this->EquipmentIDsOld);
 		}
 	}
-	
+
 	/**
 	 * Update tag
 	 */
@@ -388,7 +372,7 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 
 	/**
 	 * Update vdot shape
-	 * 
+	 *
 	 * This method assumes that the activity is or was marked as running.
 	 */
 	protected function updateVDOTshape() {
@@ -425,7 +409,7 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 
 	/**
 	 * Update vdot corrector
-	 * 
+	 *
 	 * This method assumes that the activity is or was marked as running.
 	 */
 	protected function updateVDOTcorrector() {

@@ -4,12 +4,11 @@
  * @package Runalyze\DataObjects\Training\View\Section
  */
 
-use Runalyze\View\Activity;
 use Runalyze\Model\Trackdata;
 
 /**
  * Section: Running dynamics
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\DataObjects\Training\View\Section
  */

@@ -1,4 +1,5 @@
 <?php
+
 namespace Runalyze\Bundle\CoreBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
@@ -6,18 +7,10 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
-use Symfony\Component\Security\Core\Validator\Constraints as SecurityAssert;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints as Assert;
 
 class RecoverPasswordType extends AbstractType
 {
@@ -47,7 +40,6 @@ class RecoverPasswordType extends AbstractType
             ->add('changepw_hash', HiddenType::class)
         ;
     }
-
 
     public function configureOptions(OptionsResolver $resolver)
     {

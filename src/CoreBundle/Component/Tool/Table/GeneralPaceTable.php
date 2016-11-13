@@ -3,7 +3,6 @@
 namespace Runalyze\Bundle\CoreBundle\Component\Tool\Table;
 
 use Runalyze\Activity\Duration;
-use Runalyze\Configuration;
 
 class GeneralPaceTable
 {

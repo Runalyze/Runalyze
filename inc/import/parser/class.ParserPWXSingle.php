@@ -4,7 +4,6 @@
  * @package Runalyze\Import\Parser
  */
 
-use Runalyze\Configuration;
 use Runalyze\Import\Exception\UnsupportedFileException;
 
 /**

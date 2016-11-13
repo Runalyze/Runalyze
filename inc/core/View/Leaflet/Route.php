@@ -8,7 +8,7 @@ namespace Runalyze\View\Leaflet;
 
 /**
  * Leaflet route
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\View\Leaflet
  */
@@ -33,19 +33,19 @@ class Route {
 
 	/**
 	 * Infos
-	 * 
+	 *
 	 * Information to be displayed on mouseover.
 	 * First entry has to be distance.
-	 * 
+	 *
 	 * @var array
 	 */
 	protected $Infos = array();
 
 	/**
 	 * Labels for infos
-	 * 
+	 *
 	 * Labels for `$Infos`. Can be false to hide on mouseover.
-	 * 
+	 *
 	 * @var array
 	 */
 	protected $InfoLabels = array();
@@ -111,9 +111,9 @@ class Route {
 
 	/**
 	 * Add segment
-	 * 
+	 *
 	 * Caution: Set infos for all paths or for none!
-	 * 
+	 *
 	 * @param array $Path
 	 * @param array $Info [optional] must be of the same size as $Path
 	 */
@@ -137,18 +137,17 @@ class Route {
 	final public function addMarker($Lat, $Lng, $Icon, $Tooltip = '') {
 		$this->Marker[] = 'L.marker(['.$Lat.','.$Lng.'], {icon: '.$Icon.', tooltip: "'.$Tooltip.'"})';
 	}
-	
+
 	/**
 	 * Add marker
-	 * @param float $Lat
-	 * @param float $Lng
+	 * @param string $geohash
 	 * @param string $Icon JS-icon
 	 * @param string $Tooltip [optional]
 	 */
-	final public function addMarkerGeohash($Geohash, $Icon, $Tooltip = '') {
+	final public function addMarkerGeohash($geohash, $Icon, $Tooltip = '') {
 		$geotools       = new \League\Geotools\Geotools();
-		$decoded = $geotools->geohash()->decode($Geohash);
-		
+		$decoded = $geotools->geohash()->decode($geohash);
+
 		$this->Marker[] = 'L.marker(['.$decoded->getCoordinate()->getLatitude().','.$decoded->getCoordinate()->getLongitude().'], {icon: '.$Icon.', tooltip: "'.$Tooltip.'"})';
 	}
 

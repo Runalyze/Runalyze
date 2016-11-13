@@ -15,7 +15,6 @@
 
 	<title><?php echo $this->getPageTitle(); ?> - RUNALYZE</title>
 
-	<?php echo System::getCodeForExternalJSFiles(); ?>
 	<?php echo System::getCodeForLocalJSFiles(); ?>
 </head>
 

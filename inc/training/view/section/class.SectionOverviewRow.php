@@ -4,11 +4,11 @@
  * @package Runalyze\DataObjects\Training\View\Section
  */
 
-use Runalyze\Activity\Distance;
 use Runalyze\View\Activity\Box;
+
 /**
  * Row: Overview
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\DataObjects\Training\View\Section
  */

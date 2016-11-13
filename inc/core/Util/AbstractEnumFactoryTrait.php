@@ -29,7 +29,7 @@ trait AbstractEnumFactoryTrait
      */
     public static function get($enum)
     {
-        if (null == self::$ClassNames) {
+        if (null === self::$ClassNames) {
             self::generateNamespace();
             self::generateClassNamesArray();
         }

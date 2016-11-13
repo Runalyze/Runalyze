@@ -8,9 +8,6 @@ use Runalyze\Model\Activity;
 use Runalyze\Model\Trackdata;
 use Runalyze\Model\Route;
 
-use DB;
-use SessionAccountHandler;
-
 class JobLoop extends Job
 {
 	/**

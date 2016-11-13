@@ -1,6 +1,6 @@
 <?php
-namespace Runalyze\Bundle\CoreBundle\Entity;
 
+namespace Runalyze\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -13,28 +13,28 @@ use Doctrine\ORM\Mapping as ORM;
 class Swimdata
 {
     /**
-     * @var string
+     * @var string array of int separated by |
      *
      * @ORM\Column(name="stroke", type="text", nullable=true)
      */
     private $stroke;
 
     /**
-     * @var string
+     * @var string array of int separated by |
      *
      * @ORM\Column(name="stroketype", type="text", nullable=true)
      */
     private $stroketype;
 
     /**
-     * @var integer
+     * @var int [cm]
      *
      * @ORM\Column(name="pool_length", type="smallint", precision=5, nullable=false, options={"unsigned":true, "default":0})
      */
-    private $poolLength = '0';
+    private $poolLength = 0;
 
     /**
-     * @var \Account
+     * @var Account
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
@@ -46,7 +46,7 @@ class Swimdata
     private $account;
 
     /**
-     * @var \Training
+     * @var Training
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
@@ -59,11 +59,8 @@ class Swimdata
 
 
     /**
-     * Set Stroke
-     *
-     * @param string $stroke
-     *
-     * @return Swimdata
+     * @param string $stroke array of int separated by |
+     * @return $this
      */
     public function setStroke($stroke)
     {
@@ -73,9 +70,7 @@ class Swimdata
     }
 
     /**
-     * Get stroke
-     *
-     * @return string
+     * @return string array of int separated by |
      */
     public function getStroke()
     {
@@ -83,11 +78,8 @@ class Swimdata
     }
 
     /**
-     * Set Stroketype
-     *
-     * @param string $stroketype
-     *
-     * @return Swimdata
+     * @param string $stroketype array of int separated by |
+     * @return $this
      */
     public function setStroketype($stroketype)
     {
@@ -97,9 +89,7 @@ class Swimdata
     }
 
     /**
-     * Get stroketype
-     *
-     * @return string
+     * @return string array of int separated by |
      */
     public function getStroketype()
     {
@@ -107,11 +97,8 @@ class Swimdata
     }
 
     /**
-     * Set poolLength
-     *
-     * @param string $poolLength
-     *
-     * @return Swimdata
+     * @param int $poolLength [cm]
+     * @return $this
      */
     public function setPoolLength($poolLength)
     {
@@ -121,9 +108,7 @@ class Swimdata
     }
 
     /**
-     * Get poolLength
-     *
-     * @return string
+     * @return int [cm]
      */
     public function getPoolLength()
     {
@@ -131,13 +116,10 @@ class Swimdata
     }
 
     /**
-     * Set account
-     *
-     * @param \Runalyze\Bundle\CoreBundle\Entity\Account $account
-     *
-     * @return Conf
+     * @param Account $account
+     * @return $this
      */
-    public function setAccount(\Runalyze\Bundle\CoreBundle\Entity\Account $account = null)
+    public function setAccount(Account $account)
     {
         $this->account = $account;
 
@@ -145,9 +127,7 @@ class Swimdata
     }
 
     /**
-     * Get account
-     *
-     * @return \Runalyze\Bundle\CoreBundle\Entity\Swimdata
+     * @return Account
      */
     public function getAccount()
     {
@@ -155,23 +135,18 @@ class Swimdata
     }
 
     /**
-     * Set activity
-     *
-     * @param \Runalyze\Bundle\CoreBundle\Entity\Training activity
-     *
+     * @param Training $activity
      * @return Conf
      */
-    public function setActivity(\Runalyze\Bundle\CoreBundle\Entity\Training $activity = null)
+    public function setActivity(Training $activity)
     {
-        $this->activity = activity;
+        $this->activity = $activity;
 
         return $this;
     }
 
     /**
-     * Get activity
-     *
-     * @return \Runalyze\Bundle\CoreBundle\Entity\Swimdata
+     * @return Training
      */
     public function getActivity()
     {

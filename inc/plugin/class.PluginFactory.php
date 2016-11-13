@@ -38,7 +38,7 @@ class PluginFactory {
 	private static function fetchAllPlugins() {
 		$data = Cache::get(self::CACHE_KEY);
 
-		if ($data == null) {
+		if ($data === null) {
 			$data = self::fetchAllPluginsFrom(DB::getInstance(), SessionAccountHandler::getId());
 			Cache::set(self::CACHE_KEY, $data, '3600');
 		}
@@ -214,7 +214,7 @@ class PluginFactory {
 	/**
 	 * Get plugins
 	 * @param mixed $type [optional] false or enum
-	 * @param mixed $active [optional] false or enum 
+	 * @param mixed $active [optional] false or enum
 	 * @return array array with plugin keys
 	 */
 	protected function getPlugins($type = false, $active = false) {
@@ -261,7 +261,7 @@ class PluginFactory {
 
 	/**
 	 * Uninstall plugin
-	 * @param string $key 
+	 * @param string $key
 	 */
 	public function uninstallPlugin($key) {
 		DB::getInstance()->exec('DELETE FROM `'.PREFIX.'plugin` WHERE `key`='.DB::getInstance()->escape($key).' LIMIT 1');

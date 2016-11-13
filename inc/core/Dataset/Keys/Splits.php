@@ -7,14 +7,13 @@
 namespace Runalyze\Dataset\Keys;
 
 use Runalyze\Activity;
-use Runalyze\Configuration;
 use Runalyze\Dataset\Context;
 use Runalyze\Model\Activity\Splits\Entity;
 use Runalyze\View\Icon;
 
 /**
  * Dataset key: Splits
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Dataset\Keys
  */

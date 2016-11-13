@@ -28,7 +28,7 @@ class Helper {
 	/**
 	 * Trim all values of an array
 	 * @param array $array
-	 * @return array 
+	 * @return array
 	 */
 	public static function arrayTrim($array) {
 		array_walk($array, 'trimValuesForArray');
@@ -72,7 +72,7 @@ class Helper {
 	 * @return string
 	 */
 	public static function Unknown($var, $string = '?') {
-		if ($var == null || !isset($var))
+		if ($var === null || !isset($var))
 			return $string;
 
 		if ((is_numeric($var) && $var != 0) || (!is_numeric($var) && $var != '') )
@@ -146,7 +146,7 @@ class Helper {
 			Error::getInstance()->addWarning('Du hast ein Training ohne Zeitstempel, also mit dem Datum 01.01.1970.');
 		}
 
-		if ($data === false || $data['time'] == null)
+		if ($data === false || $data['time'] === null)
 			return 0;
 
 		return $data['time'];
@@ -248,7 +248,7 @@ function removeBOMfromString($string) {
 
 /**
  * Trimmer function for array_walk
- * @param array $value 
+ * @param array $value
  */
 function trimValuesForArray(&$value) {
 	$value = trim($value);

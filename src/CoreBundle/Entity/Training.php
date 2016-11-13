@@ -606,13 +606,10 @@ class Training
     }
 
     /**
-     * Set isPublic
-     *
-     * @param boolean $isPublic
-     *
-     * @return Training
+     * @param bool $isPublic
+     * @return $this
      */
-    public function setIsPublic($isPublic)
+    public function setPublic($isPublic)
     {
         $this->isPublic = $isPublic;
 
@@ -620,23 +617,18 @@ class Training
     }
 
     /**
-     * Get isPublic
-     *
-     * @return boolean
+     * @return bool
      */
-    public function getIsPublic()
+    public function isPublic()
     {
         return $this->isPublic;
     }
 
     /**
-     * Set isTrack
-     *
-     * @param boolean $isTrack
-     *
-     * @return Training
+     * @param bool $isTrack
+     * @return $this
      */
-    public function setIsTrack($isTrack)
+    public function setTrack($isTrack)
     {
         $this->isTrack = $isTrack;
 
@@ -644,11 +636,9 @@ class Training
     }
 
     /**
-     * Get isTrack
-     *
-     * @return boolean
+     * @return bool
      */
-    public function getIsTrack()
+    public function isTrack()
     {
         return $this->isTrack;
     }
@@ -1422,13 +1412,10 @@ class Training
     }
 
     /**
-     * Set isNight
-     *
-     * @param boolean $isNight
-     *
-     * @return Training
+     * @param bool $isNight
+     * @return $this
      */
-    public function setIsNight($isNight)
+    public function setNight($isNight)
     {
         $this->isNight = $isNight;
 
@@ -1436,11 +1423,9 @@ class Training
     }
 
     /**
-     * Get isNight
-     *
-     * @return boolean
+     * @return bool
      */
-    public function getIsNight()
+    public function isNight()
     {
         return $this->isNight;
     }

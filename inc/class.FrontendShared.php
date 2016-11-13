@@ -77,7 +77,6 @@ class FrontendShared extends Frontend {
 	 * Init training
 	 */
 	private function initTraining() {
-		// TODO: Cache?
 		$this->ActivityContext = new Activity\Context(SharedLinker::getTrainingId(), SessionAccountHandler::getId());
 
 		if ($this->ActivityContext->activity()->id() <= 0) {

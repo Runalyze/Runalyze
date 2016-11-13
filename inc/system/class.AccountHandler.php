@@ -4,8 +4,6 @@
  * @package Runalyze\System
  */
 
-use Runalyze\Configuration;
-
 /**
  * AccountHandler
  *

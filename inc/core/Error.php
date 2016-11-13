@@ -1,13 +1,11 @@
 <?php
 /**
- * Class: Error - This class handles all errors 
+ * Class: Error - This class handles all errors
  * @author Hannes Christiansen
  * @package Runalyze
  */
 
 namespace Runalyze;
-use HTML;
-use Ajax;
 
 /**
  * This file contains the class to handle errors.
@@ -23,7 +21,7 @@ class Error {
 
 	/**
 	 * Maximum number of errors to stop
-	 * @var int 
+	 * @var int
 	 */
 	private static $MAX_NUM_OF_ERRORS = 100;
 
@@ -86,7 +84,7 @@ class Error {
 	 * @return Error
 	 */
 	public static function getInstance() {
-		if (self::$instance == null)
+		if (self::$instance === null)
 			self::$instance = new self;
 
 		return self::$instance;

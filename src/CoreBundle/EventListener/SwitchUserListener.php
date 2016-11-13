@@ -124,7 +124,7 @@ class SwitchUserListener implements ListenerInterface
         }
 
         $user = $this->provider->loadUserByUsername($username);
-        if ($user->getAllowSupport() == false) {
+        if ($user->getAllowSupport() === false) {
             throw new AccessDeniedException('User does not allow access to his account (allow_support)');
         }
 

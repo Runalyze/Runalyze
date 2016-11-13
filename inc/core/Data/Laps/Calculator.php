@@ -9,7 +9,6 @@ namespace Runalyze\Data\Laps;
 use Runalyze\Activity\Duration;
 use Runalyze\Calculation;
 use Runalyze\Configuration;
-use Runalyze\Data\Elevation;
 use Runalyze\Model\Route;
 use Runalyze\Model\Trackdata;
 use Runalyze\Model\Activity;
@@ -165,7 +164,7 @@ class Calculator
 	 * Convert times from comma-separated string to array
 	 * + at the beginning means treat as intervals
 	 * ' means minutes
-	 * 
+	 *
 	 * @param string $string
 	 * @return array
 	 */
@@ -231,7 +230,7 @@ class Calculator
 	 */
 	protected function addElevationFor(Lap $Lap)
 	{
-		if ($this->RouteLoop == null) {
+		if ($this->RouteLoop === null) {
 			return;
 		}
 

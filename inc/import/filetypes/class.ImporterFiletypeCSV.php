@@ -4,8 +4,6 @@
  * @package Runalyze\Import\Filetype
  */
 
-use Runalyze\Import;
-
 /**
  * Importer: *.csv
  *

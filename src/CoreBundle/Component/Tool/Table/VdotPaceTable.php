@@ -4,7 +4,6 @@ namespace Runalyze\Bundle\CoreBundle\Component\Tool\Table;
 
 use Runalyze\Activity\Duration;
 use Runalyze\Calculation\JD\VDOT;
-use Runalyze\Configuration;
 
 class VdotPaceTable
 {

@@ -28,7 +28,7 @@ if (!empty($Data)) {
 		$Water[$D['time'].'000']    = $D['water'];
 		$Muscles[$D['time'].'000']  = $D['muscles'];
 	}
-} 
+}
 
 $Labels = array_keys($Water);
 foreach ($Labels as $i => &$value) {
@@ -45,12 +45,10 @@ $Plot->Data[] = array('label' => __('Muscles'), 'color' => '#080', 'data' => $Mu
 
 $Plot->setMarginForGrid(5);
 
-//$Plot->hideXLabels();
 $Plot->setXLabels($Labels);
 $Plot->setXAxisTimeFormat('%m/%y');
 $Plot->setXAxisMaxToToday();
 $Plot->Options['xaxis']['labelWidth'] = 50;
-//$Plot->Options['xaxis']['tickLength'] = 3;
 $Plot->Options['yaxis']['autoscaleMargin'] = 0.1;
 $Plot->Options['series']['curvedLines']['monotonicFit'] = true;
 $Plot->PlotOptions['allowSelection'] = false;

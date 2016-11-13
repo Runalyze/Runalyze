@@ -6,8 +6,6 @@ use Runalyze\Bundle\CoreBundle\Component\Tool\Backup\FilenameHandler;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Backup\JsonBackup;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Backup\SqlBackup;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
-use Runalyze\Calculation\Prognosis;
-use Runalyze\Configuration;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;

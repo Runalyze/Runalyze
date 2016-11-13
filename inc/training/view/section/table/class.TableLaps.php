@@ -6,12 +6,11 @@
 
 use Runalyze\View\Splits;
 use Runalyze\Model\Trackdata;
-use Runalyze\Configuration;
 use Runalyze\Util\StringReader;
 
 /**
  * Table: laps
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\DataObjects\Training\View\Section
  */
