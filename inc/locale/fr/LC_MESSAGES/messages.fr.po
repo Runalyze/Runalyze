@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-08-20 08:22+0200\n"
-"PO-Revision-Date: 2016-10-30 13:37+0000\n"
-"Last-Translator: Guillaume van Baalen <postdoc38@yahoo.fr>\n"
+"PO-Revision-Date: 2016-11-14 14:32+0000\n"
+"Last-Translator: Alan <alan.burlot@gmail.com>\n"
 "Language-Team: French "
 "<https://translate.runalyze.com/projects/runalyze/runalyze/fr/>\n"
 "Language: fr\n"
@@ -165,7 +165,7 @@ msgstr "La date n'a pas pu être analysée."
 
 #: inc/html/formular/class.FormularValueParser.php:345
 msgid "The date must not be in the future."
-msgstr "La date ne doit pas être supérieure à la date du jour"
+msgstr "La date ne doit pas être supérieure à la date du jour."
 
 #: inc/html/formular/class.FormularValueParser.php:378
 msgid "The time could not be read."
@@ -4040,11 +4040,11 @@ msgstr "T-shirt"
 
 #: inc/system/class.AccountHandler.php:553
 msgid "singlet"
-msgstr ""
+msgstr "Débardeur"
 
 #: inc/system/class.AccountHandler.php:554
 msgid "jacket"
-msgstr ""
+msgstr "Veste"
 
 #: inc/system/class.AccountHandler.php:555
 msgid "long pants"
