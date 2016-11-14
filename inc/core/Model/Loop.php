@@ -305,7 +305,7 @@ abstract class Loop
 	 */
 	public function sliceObject()
 	{
-		if ($this->Object instanceof \Runalyze\Model\Entity)
+		if ($this->Object instanceof Runalyze\Model\Entity)
 		{
 			throw new \RuntimeException('This object cannot be sliced.');
 		}
