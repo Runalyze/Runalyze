@@ -125,12 +125,17 @@ class AccountController extends Controller
     }
 
     /**
-     * @Route("/activate/{hash}", name="account_activate", requirements={"hash": "[[:xdigit:]]{32}"})
+     * @Route("/activate/{hash}", requirements={"hash": "[[:xdigit:]]{32}"})
+     * @Route("/activate/{hash}/{username}", name="account_activate", requirements={"hash": "[[:xdigit:]]{32}"})
      */
-    public function activateAccountAction($hash)
+    public function activateAccountAction($hash, $username = null)
     {
         if ($this->getAccountRepository()->activateByHash($hash)) {
             return $this->render('account/activate/success.html.twig');
+        } elseif ($username !== NULL) {
+            if ($user = $this->getAccountRepository()->loadUserByUsername($username)) {
+                return $this->render('account/activate/success.html.twig', ['username' => $username, 'alreadyActivated' => true]);
+            }
         }
 
         return $this->render('account/activate/problem.html.twig');

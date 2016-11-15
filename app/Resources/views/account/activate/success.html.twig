@@ -2,7 +2,14 @@
 
 {% block messages %}
     <p class="info">
-        {% trans %}Your account has been activated.{% endtrans %}
+        {% if username %}
+        {% trans with {'%username%': username}%}Hi %username%{% endtrans %}<br>
+        {% endif %}
+        {% if alreadyActivated %}
+            {% trans %}Your account has already been activated.{% endtrans %}
+        {% else %}
+            {% trans %}Your account has been activated.{% endtrans %}
+        {% endif %}
         <br>
         {% trans %}You can now use Runalyze.{% endtrans %}
     </p>
