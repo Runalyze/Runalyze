@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.com\n"
 "POT-Creation-Date: 2016-11-15 17:37+0100\n"
-"PO-Revision-Date: 2016-11-15 17:13+0000\n"
+"PO-Revision-Date: 2016-11-15 18:51+0000\n"
 "Last-Translator: Michael Pohl <michael@mipapo.de>\n"
 "Language-Team: German <https://translate.runalyze.com/projects/runalyze"
 "/runalyze-master-po/de/>\n"
@@ -1666,7 +1666,7 @@ msgstr "Offizielle Zeit"
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:386
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:392
 msgid "Age grade"
-msgstr "AK-Leistung"
+msgstr "AK-Index"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:387
 msgid "Place overall"
