@@ -1,18 +1,18 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.com\n"
 "POT-Creation-Date: 2016-11-15 17:37+0100\n"
-"PO-Revision-Date: 2016-07-27 12:58+0000\n"
-"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
-"Language-Team: Swedish <http://translate.runalyze.com/projects/runalyze/"
-"runalyze/sv/>\n"
+"PO-Revision-Date: 2016-11-16 13:51+0000\n"
+"Last-Translator: Matthias Kristiansen-Kürner <matthias.kr.ku@gmail.com>\n"
+"Language-Team: Swedish <https://translate.runalyze.com/projects/runalyze"
+"/runalyze-master-po/sv/>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.8-dev\n"
+"X-Generator: Weblate 2.9\n"
 "X-Poedit-KeywordsList: __;_ne;_n;_e\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -20,33 +20,32 @@ msgstr ""
 #: src/CoreBundle/Controller/ActivityController.php:99
 #: src/CoreBundle/Controller/ActivityController.php:198
 msgid "The activity has been removed"
-msgstr ""
+msgstr "Aktiviteten har tagits bort"
 
 #: src/CoreBundle/Controller/ActivityController.php:261
-#, fuzzy
 msgid "Corrected elevation data has been removed."
-msgstr "høydmätare är inte korrigerade"
+msgstr "Korrigerad höjddata har tagits bort."
 
 #: src/CoreBundle/Controller/ActivityController.php:263
 #: inc/training/view/class.ElevationInfo.php:249
 msgid "Elevation data has been corrected."
-msgstr ""
+msgstr "Höjddata har korrigerats."
 
 #: src/CoreBundle/Controller/ActivityController.php:276
 msgid "Elevation data could not be retrieved."
-msgstr ""
+msgstr "Höjddata kunde inte hämtas."
 
 #: src/CoreBundle/Controller/CallController.php:146
 msgid "Search for activities"
-msgstr ""
+msgstr "Sök efter aktiviteter"
 
 #: src/CoreBundle/Controller/CallController.php:175
 msgid "There was a problem."
-msgstr ""
+msgstr "Ett problem uppstod."
 
 #: src/CoreBundle/Controller/DefaultController.php:232
 msgid "Click on an activity to see more details."
-msgstr ""
+msgstr "Klicka på en aktivitet för att visa detaljer."
 
 #: src/CoreBundle/Controller/DefaultController.php:233
 msgid "Public activities are marked: "
@@ -54,7 +53,7 @@ msgstr ""
 
 #: src/CoreBundle/Controller/PluginController.php:23
 msgid "Install"
-msgstr ""
+msgstr "Installera"
 
 #: src/CoreBundle/Controller/PluginController.php:29
 msgid "The plugin has been successfully installed."
@@ -65,7 +64,7 @@ msgstr ""
 #: inc/tpl/tpl.Frontend.header.php:37
 #: inc/plugin/config/class.PluginConfigurationWindow.php:114
 msgid "Configuration"
-msgstr ""
+msgstr "Konfiguration"
 
 #: src/CoreBundle/Controller/PluginController.php:38
 msgid "There was a problem, the plugin could not be installed."
@@ -78,7 +77,7 @@ msgstr ""
 
 #: src/CoreBundle/Controller/PluginController.php:59
 msgid "Uninstall"
-msgstr ""
+msgstr "Avinstallera"
 
 #: src/CoreBundle/Controller/PluginController.php:62
 msgid "The plugin has been uninstalled."
@@ -94,7 +93,7 @@ msgstr ""
 
 #: src/CoreBundle/Controller/PluginController.php:165
 msgid "Something went wrong ..."
-msgstr ""
+msgstr "Någonting gick fel ..."
 
 #: src/CoreBundle/Component/Tool/DatabaseCleanup/Job.php:69
 #: inc/core/Configuration/Messages.php:49
@@ -1470,6 +1469,7 @@ msgid "More details about your laps"
 msgstr "mer information om din runda"
 
 #: inc/training/view/section/class.SectionRunningDynamics.php:21
+#, fuzzy
 msgid "Running Dynamics"
 msgstr "Running Dynamics"
 
@@ -1496,12 +1496,12 @@ msgstr "mer om høydemätare"
 #: inc/training/view/section/class.SectionRouteRowElevation.php:93
 #: inc/training/view/section/class.SectionCompositeRow.php:238
 msgid "Elevation data were corrected."
-msgstr "høydmätare är korrigerade"
+msgstr "høydmätare är korrigerade."
 
 #: inc/training/view/section/class.SectionRouteRowElevation.php:95
 #: inc/training/view/section/class.SectionCompositeRow.php:240
 msgid "Elevation data are not corrected."
-msgstr "høydmätare är inte korrigerade"
+msgstr "høydmätare är inte korrigerade."
 
 #: inc/training/view/section/class.SectionOverview.php:17
 msgid "Overview"
@@ -5045,15 +5045,15 @@ msgstr ""
 
 #: plugin/RunalyzePluginStat_Rekorde/class.RunalyzePluginStat_Rekorde.php:150
 msgid "per year"
-msgstr ""
+msgstr "per år"
 
 #: plugin/RunalyzePluginStat_Rekorde/class.RunalyzePluginStat_Rekorde.php:161
 msgid "per month"
-msgstr ""
+msgstr "per månad"
 
 #: plugin/RunalyzePluginStat_Rekorde/class.RunalyzePluginStat_Rekorde.php:171
 msgid "per week"
-msgstr ""
+msgstr "per vecka"
 
 #: plugin/RunalyzePluginStat_Rekorde/class.RunalyzePluginStat_Rekorde.php:191
 msgid "Fastest activities"
