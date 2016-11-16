@@ -1,25 +1,25 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-08-20 08:22+0200\n"
-"PO-Revision-Date: 2016-07-27 12:58+0000\n"
-"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
-"Language-Team: Swedish <http://translate.runalyze.com/projects/runalyze/"
-"runalyze/sv/>\n"
+"PO-Revision-Date: 2016-11-16 13:49+0000\n"
+"Last-Translator: Daniel Bengtsson <daniel.f.bengtsson@gmail.com>\n"
+"Language-Team: Swedish "
+"<https://translate.runalyze.com/projects/runalyze/runalyze/sv/>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.8-dev\n"
+"X-Generator: Weblate 2.9\n"
 "X-Poedit-KeywordsList: __;_ne;_n;_e\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: .\n"
 
 #: src/CoreBundle/Controller/DefaultController.php:251
 msgid "Click on an activity to see more details."
-msgstr ""
+msgstr "Klicka på en aktivitet för att visa detaljer"
 
 #: src/CoreBundle/Controller/DefaultController.php:252
 msgid "Public activities are marked: "
@@ -28,25 +28,24 @@ msgstr ""
 #: src/CoreBundle/Controller/ActivityController.php:92
 #: src/CoreBundle/Controller/ActivityController.php:183
 msgid "The activity has been removed"
-msgstr ""
+msgstr "Aktiviteten har tagits bort"
 
 #: src/CoreBundle/Controller/ActivityController.php:236
-#, fuzzy
 msgid "Corrected elevation data has been removed."
-msgstr "høydmätare är inte korrigerade"
+msgstr "Korrigerad höjddata har tagits bort"
 
 #: src/CoreBundle/Controller/ActivityController.php:238
 #: inc/training/view/class.ElevationInfo.php:249
 msgid "Elevation data has been corrected."
-msgstr ""
+msgstr "Höjddata har korrigerats"
 
 #: src/CoreBundle/Controller/ActivityController.php:251
 msgid "Elevation data could not be retrieved."
-msgstr ""
+msgstr "Höjddata kunde inte hämtas"
 
 #: src/CoreBundle/Controller/PluginController.php:24
 msgid "Install"
-msgstr ""
+msgstr "Installera"
 
 #: src/CoreBundle/Controller/PluginController.php:30
 msgid "The plugin has been successfully installed."
@@ -57,7 +56,7 @@ msgstr ""
 #: inc/plugin/config/class.PluginConfigurationWindow.php:122
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:130
 msgid "Configuration"
-msgstr ""
+msgstr "Konfiguration"
 
 #: src/CoreBundle/Controller/PluginController.php:39
 msgid "There was a problem, the plugin could not be installed."
@@ -70,7 +69,7 @@ msgstr ""
 
 #: src/CoreBundle/Controller/PluginController.php:60
 msgid "Uninstall"
-msgstr ""
+msgstr "Avinstallera"
 
 #: src/CoreBundle/Controller/PluginController.php:63
 msgid "The plugin has been uninstalled."
@@ -86,7 +85,7 @@ msgstr ""
 
 #: src/CoreBundle/Controller/PluginController.php:166
 msgid "Something went wrong ..."
-msgstr ""
+msgstr "Någonting gick fel ..."
 
 #: src/CoreBundle/Controller/CallController.php:147
 msgid "Delete your account."
@@ -105,15 +104,15 @@ msgstr ""
 
 #: src/CoreBundle/Controller/CallController.php:180
 msgid "Search for activities"
-msgstr ""
+msgstr "Sök efter aktiviteter"
 
 #: src/CoreBundle/Controller/CallController.php:209
 msgid "There was a problem."
-msgstr ""
+msgstr "Ett problem uppstod"
 
 #: src/CoreBundle/Controller/CallController.php:243
 msgid "You are not logged in anymore."
-msgstr ""
+msgstr "Du är inte inloggad längre"
 
 #: src/CoreBundle/Controller/CallController.php:244
 #: inc/tpl/tpl.adminWindow.login.php:13
@@ -7044,15 +7043,15 @@ msgstr ""
 
 #: plugin/RunalyzePluginStat_Rekorde/class.RunalyzePluginStat_Rekorde.php:150
 msgid "per year"
-msgstr ""
+msgstr "per år"
 
 #: plugin/RunalyzePluginStat_Rekorde/class.RunalyzePluginStat_Rekorde.php:161
 msgid "per month"
-msgstr ""
+msgstr "per månad"
 
 #: plugin/RunalyzePluginStat_Rekorde/class.RunalyzePluginStat_Rekorde.php:171
 msgid "per week"
-msgstr ""
+msgstr "per vecka"
 
 #: plugin/RunalyzePluginStat_Rekorde/class.RunalyzePluginStat_Rekorde.php:191
 msgid "Fastest activities"
