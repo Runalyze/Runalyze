@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="ca" datatype="plaintext" original="file.ext">
     <header>
@@ -65,9 +65,9 @@
         <source>Documentation</source>
         <target state="translated">Documentació</target>
       </trans-unit>
-      <trans-unit id="6dd08874f83507e9c7b23f1a46b7fa7c" resname="Translation">
+      <trans-unit id="6dd08874f83507e9c7b23f1a46b7fa7c" resname="Translation" approved="yes">
         <source>Translation</source>
-        <target>Translation</target>
+        <target state="translated">Traducció</target>
       </trans-unit>
       <trans-unit id="0ab98b9aea9ad94538cd49800cf73c4e" resname="In a case of urgency you can contact us via email:">
         <source>In a case of urgency you can contact us via email:</source>
@@ -595,13 +595,13 @@
         <source>You can change your password within the next 24 hours by clicking the link below.</source>
         <target>You can change your password within the next 24 hours by clicking the link below.</target>
       </trans-unit>
-      <trans-unit id="d6bbda66baa2b4c69c3c78f4a8013d46" resname="Activate your RUNALYZE account">
+      <trans-unit id="d6bbda66baa2b4c69c3c78f4a8013d46" resname="Activate your RUNALYZE account" approved="yes">
         <source>Activate your RUNALYZE account</source>
-        <target>Activate your RUNALYZE account</target>
+        <target state="translated">Activi el seu compte RUNALYZE</target>
       </trans-unit>
-      <trans-unit id="e5fe77195f75d3cddc96fb9ce4ff3d1c" resname="Welcome to RUNALYZE!">
+      <trans-unit id="e5fe77195f75d3cddc96fb9ce4ff3d1c" resname="Welcome to RUNALYZE!" approved="yes">
         <source>Welcome to RUNALYZE!</source>
-        <target>Welcome to RUNALYZE!</target>
+        <target state="translated">Benvingut a RUNALYZE</target>
       </trans-unit>
       <trans-unit id="ffc30dab210834f2baab6e3355a4af04" resname="Hi %s, welcome to RUNALYZE">
         <source>Hi %s, welcome to RUNALYZE</source>
@@ -615,17 +615,17 @@
         <source>Confirm email address</source>
         <target>Confirm email address</target>
       </trans-unit>
-      <trans-unit id="c5093f03229416cc06a625654429d7f2" resname="Your account has been activated">
+      <trans-unit id="c5093f03229416cc06a625654429d7f2" resname="Your account has been activated" approved="yes">
         <source>Your account has been activated</source>
-        <target>Your account has been activated</target>
+        <target state="translated">El seu compte fou activat.</target>
       </trans-unit>
       <trans-unit id="f64a218688b7f17a218cb554425ea991" resname="To get started right away just take a look at our &quot;getting started&quot; guide at %s.">
         <source>To get started right away just take a look at our "getting started" guide at %s.</source>
         <target>To get started right away just take a look at our "getting started" guide at %s.</target>
       </trans-unit>
-      <trans-unit id="3903aab323863bd2e9b68218a7a65ebd" resname="Follow">
+      <trans-unit id="3903aab323863bd2e9b68218a7a65ebd" resname="Follow" approved="yes">
         <source>Follow</source>
-        <target>Follow</target>
+        <target state="translated">Seguir</target>
       </trans-unit>
       <trans-unit id="0866d0513309fee7479977346ffdbdee" resname="Accept our %a% terms of use %b%">
         <source>Accept our %a% terms of use %b%</source>
@@ -639,9 +639,9 @@
         <source>Elevation data from Shuttle Radar Topography Mission</source>
         <target>Elevation data from Shuttle Radar Topography Mission</target>
       </trans-unit>
-      <trans-unit id="81db66a50f0cb05c93a8f1c70e6e9450" resname="Miscellaneaous">
+      <trans-unit id="81db66a50f0cb05c93a8f1c70e6e9450" resname="Miscellaneaous" approved="yes">
         <source>Miscellaneaous</source>
-        <target>Miscellaneaous</target>
+        <target state="translated">Diversos</target>
       </trans-unit>
       <trans-unit id="61bee55add2db4b395b8c9a58e75b036" resname="Analyze time series">
         <source>Analyze time series</source>
@@ -707,49 +707,49 @@
         <source>quantile</source>
         <target>quantile</target>
       </trans-unit>
-      <trans-unit id="0123797163b8ac9c941854a5da2bd637" resname="Pace">
+      <trans-unit id="0123797163b8ac9c941854a5da2bd637" resname="Pace" approved="yes">
         <source>Pace</source>
-        <target>Pace</target>
+        <target state="translated">Ritme</target>
       </trans-unit>
-      <trans-unit id="4d287b6a65e1d4d3f2505b9256a203ec" resname="Heart rate">
+      <trans-unit id="4d287b6a65e1d4d3f2505b9256a203ec" resname="Heart rate" approved="yes">
         <source>Heart rate</source>
-        <target>Heart rate</target>
+        <target state="translated">Freqüència cardíaca</target>
       </trans-unit>
-      <trans-unit id="bce431d01a4df1bf31ba7787331ad1dc" resname="Cadence">
+      <trans-unit id="bce431d01a4df1bf31ba7787331ad1dc" resname="Cadence" approved="yes">
         <source>Cadence</source>
-        <target>Cadence</target>
+        <target state="translated">Cadència</target>
       </trans-unit>
-      <trans-unit id="c0cc584633afb317352f169baed4ff80" resname="Stride length">
+      <trans-unit id="c0cc584633afb317352f169baed4ff80" resname="Stride length" approved="yes">
         <source>Stride length</source>
-        <target>Stride length</target>
+        <target state="translated">gambada</target>
       </trans-unit>
-      <trans-unit id="dd4fe0cc913f704600b97d1f5dd285de" resname="Power">
+      <trans-unit id="dd4fe0cc913f704600b97d1f5dd285de" resname="Power" approved="yes">
         <source>Power</source>
-        <target>Power</target>
+        <target state="translated">Potència</target>
       </trans-unit>
-      <trans-unit id="8367cf5b52ff99e60a23c9dda469f7a9" resname="Groundcontact">
+      <trans-unit id="8367cf5b52ff99e60a23c9dda469f7a9" resname="Groundcontact" approved="yes">
         <source>Groundcontact</source>
-        <target>Groundcontact</target>
+        <target state="translated">Temps de contacte amb el terra</target>
       </trans-unit>
-      <trans-unit id="fb209c532812de582a0180125e19860f" resname="Groundcontact balance">
+      <trans-unit id="fb209c532812de582a0180125e19860f" resname="Groundcontact balance" approved="yes">
         <source>Groundcontact balance</source>
-        <target>Groundcontact balance</target>
+        <target state="translated">Resultat del temps de contacte amb el terra</target>
       </trans-unit>
-      <trans-unit id="fc69dde293c854fdc5420c4eb726ebcc" resname="Vertical oscillation">
+      <trans-unit id="fc69dde293c854fdc5420c4eb726ebcc" resname="Vertical oscillation" approved="yes">
         <source>Vertical oscillation</source>
-        <target>Vertical oscillation</target>
+        <target state="translated">Desplaçament vertical</target>
       </trans-unit>
-      <trans-unit id="8545e58e1bbc2d3f1e7dce4e182cf23c" resname="Vertical ratio">
+      <trans-unit id="8545e58e1bbc2d3f1e7dce4e182cf23c" resname="Vertical ratio" approved="yes">
         <source>Vertical ratio</source>
-        <target>Vertical ratio</target>
+        <target state="translated">Ràtio vertical</target>
       </trans-unit>
-      <trans-unit id="2aac1cfd7cb2ad989d69d5f5a3d6bc73" resname="Saturated hemoglobin">
+      <trans-unit id="2aac1cfd7cb2ad989d69d5f5a3d6bc73" resname="Saturated hemoglobin" approved="yes">
         <source>Saturated hemoglobin</source>
-        <target>Saturated hemoglobin</target>
+        <target state="translated">L'hemoglobina saturat</target>
       </trans-unit>
-      <trans-unit id="7ac5bc66117cd5a9201c464977f47f4b" resname="Total hemoglobin">
+      <trans-unit id="7ac5bc66117cd5a9201c464977f47f4b" resname="Total hemoglobin" approved="yes">
         <source>Total hemoglobin</source>
-        <target>Total hemoglobin</target>
+        <target state="translated">L'hemoglobina total</target>
       </trans-unit>
       <trans-unit id="581fa1142704e5c00b51a43787f96673" resname="This analysis is currently under development and does not consider your unit settings.">
         <source>This analysis is currently under development and does not consider your unit settings.</source>
@@ -759,17 +759,17 @@
         <source>Help us improving it at %githubLink%.</source>
         <target>Help us improving it at %githubLink%.</target>
       </trans-unit>
-      <trans-unit id="d40600b2f817b5f3527af368d58c68f0" resname="VDOT calculation for: %title%">
+      <trans-unit id="d40600b2f817b5f3527af368d58c68f0" resname="VDOT calculation for: %title%" approved="yes">
         <source>VDOT calculation for: %title%</source>
-        <target>VDOT calculation for: %title%</target>
+        <target state="translated">Càlcul del VDOT per a : %title%</target>
       </trans-unit>
-      <trans-unit id="bb2a07539e662b40d99e3a621d80ead2" resname="Standard calculation: As race result">
+      <trans-unit id="bb2a07539e662b40d99e3a621d80ead2" resname="Standard calculation: As race result" approved="yes">
         <source>Standard calculation: As race result</source>
-        <target>Standard calculation: As race result</target>
+        <target state="translated">Càlcul estàndard: com a cursa</target>
       </trans-unit>
-      <trans-unit id="85d1ac49ac4b353c523122f0ff69b68d" resname="All traditional formulas are being used to calculate a VDOT value for a given race result.">
+      <trans-unit id="85d1ac49ac4b353c523122f0ff69b68d" resname="All traditional formulas are being used to calculate a VDOT value for a given race result." approved="yes">
         <source>All traditional formulas are being used to calculate a VDOT value for a given race result.</source>
-        <target>All traditional formulas are being used to calculate a VDOT value for a given race result.</target>
+        <target state="translated">Les fórmules originals permeten calcular el valor del VDOT mitjançant el temps d'una cursa.</target>
       </trans-unit>
       <trans-unit id="0aa6f4210bf373c95eda00232e93cd98" resname="Distance">
         <source>Distance</source>
@@ -779,145 +779,145 @@
         <source>VDOT</source>
         <target>VDOT</target>
       </trans-unit>
-      <trans-unit id="63d5049791d9d79d86e9a108b0a999ca" resname="Reference">
+      <trans-unit id="63d5049791d9d79d86e9a108b0a999ca" resname="Reference" approved="yes">
         <source>Reference</source>
-        <target>Reference</target>
+        <target state="translated">Referència</target>
       </trans-unit>
       <trans-unit id="7219ff172727ac5ab4cadd0e4f22f3ec" resname="The Daniels/Gilbert Formula by Larry Simpson">
         <source>The Daniels/Gilbert Formula by Larry Simpson</source>
         <target>The Daniels/Gilbert Formula by Larry Simpson</target>
       </trans-unit>
-      <trans-unit id="dfe66ed2b784a84ffd0f36565e0e15a5" resname="Correction: based on heartrate">
+      <trans-unit id="dfe66ed2b784a84ffd0f36565e0e15a5" resname="Correction: based on heartrate" approved="yes">
         <source>Correction: based on heartrate</source>
-        <target>Correction: based on heartrate</target>
+        <target state="translated">Correcció: amb freqüència cardíaca</target>
       </trans-unit>
-      <trans-unit id="73437d19f12e2410bf550135e9b38aee" resname="Jack Daniels has tables to compare &amp;#37;HRmax and &amp;#37;vVDOT.">
+      <trans-unit id="73437d19f12e2410bf550135e9b38aee" resname="Jack Daniels has tables to compare &amp;#37;HRmax and &amp;#37;vVDOT." approved="yes">
         <source>Jack Daniels has tables to compare &amp;#37;HRmax and &amp;#37;vVDOT.</source>
-        <target><![CDATA[Jack Daniels has tables to compare &#37;HRmax and &#37;vVDOT.]]></target>
+        <target state="translated">Jack Daniels té taules per comparar %FCmàx amb %VDOT.</target>
       </trans-unit>
-      <trans-unit id="a9594aef702a9ffbde5996180dd8458f" resname="Because of a lot of influencing factors these computations are not always accurate.">
+      <trans-unit id="a9594aef702a9ffbde5996180dd8458f" resname="Because of a lot of influencing factors these computations are not always accurate." approved="yes">
         <source>Because of a lot of influencing factors these computations are not always accurate.</source>
-        <target>Because of a lot of influencing factors these computations are not always accurate.</target>
+        <target state="translated">Donat els molts factors que influeixen el pols, aquest no sempre és correcte.</target>
       </trans-unit>
-      <trans-unit id="51c3f59625962b899c03595d6cdfb284" resname="equals">
+      <trans-unit id="51c3f59625962b899c03595d6cdfb284" resname="equals" approved="yes">
         <source>equals</source>
-        <target>equals</target>
+        <target state="translated">correspon</target>
       </trans-unit>
-      <trans-unit id="138b4e9078580ee8d824b456627c869d" resname="Correction: based on correction factor">
+      <trans-unit id="138b4e9078580ee8d824b456627c869d" resname="Correction: based on correction factor" approved="yes">
         <source>Correction: based on correction factor</source>
-        <target>Correction: based on correction factor</target>
+        <target state="translated">Correcció: amb factor de correcció</target>
       </trans-unit>
-      <trans-unit id="792ebe4d45ccc3602cca9dd7243d72bc" resname="To consider some individual factors, we use a correction factor.">
+      <trans-unit id="792ebe4d45ccc3602cca9dd7243d72bc" resname="To consider some individual factors, we use a correction factor." approved="yes">
         <source>To consider some individual factors, we use a correction factor.</source>
-        <target>To consider some individual factors, we use a correction factor.</target>
+        <target state="translated">Fem servir un factor de correcció que considera determinats factors.</target>
       </trans-unit>
-      <trans-unit id="c77a4a1e49dad746d2b3b13e24250e1d" resname="Correction factor">
+      <trans-unit id="c77a4a1e49dad746d2b3b13e24250e1d" resname="Correction factor" approved="yes">
         <source>Correction factor</source>
-        <target>Correction factor</target>
+        <target state="translated">Factor de correcció</target>
       </trans-unit>
-      <trans-unit id="b2111806faf0190ffb9ff266eac8e2eb" resname="uncorrected">
+      <trans-unit id="b2111806faf0190ffb9ff266eac8e2eb" resname="uncorrected" approved="yes">
         <source>uncorrected</source>
-        <target>uncorrected</target>
+        <target state="translated">no corregit</target>
       </trans-unit>
-      <trans-unit id="770906778fc399fa87756659a09cc86d" resname="Correction: considering elevation">
+      <trans-unit id="770906778fc399fa87756659a09cc86d" resname="Correction: considering elevation" approved="yes">
         <source>Correction: considering elevation</source>
-        <target>Correction: considering elevation</target>
+        <target state="translated">Correcció: considerant l'elevació</target>
       </trans-unit>
-      <trans-unit id="85ab82888199a4d49203bb34f324304b" resname="This correction method is currently unused.">
+      <trans-unit id="85ab82888199a4d49203bb34f324304b" resname="This correction method is currently unused." approved="yes">
         <source>This correction method is currently unused.</source>
-        <target>This correction method is currently unused.</target>
+        <target state="translated">Aquest mètode de correcció no s'està fent servir ara mateix.</target>
       </trans-unit>
-      <trans-unit id="b45d01117023cc93a154ebe3c64e743d" resname="Up/Down">
+      <trans-unit id="b45d01117023cc93a154ebe3c64e743d" resname="Up/Down" approved="yes">
         <source>Up/Down</source>
-        <target>Up/Down</target>
+        <target state="translated">Pujada/Baixada</target>
       </trans-unit>
-      <trans-unit id="d35a98028cca23c2a745a0bba43a90ff" resname="Influence">
+      <trans-unit id="d35a98028cca23c2a745a0bba43a90ff" resname="Influence" approved="yes">
         <source>Influence</source>
-        <target>Influence</target>
+        <target state="translated">Influència de la distància</target>
       </trans-unit>
-      <trans-unit id="3a7af6fe0df41f239c0d43d34d19d278" resname="Cleanup is running ...">
+      <trans-unit id="3a7af6fe0df41f239c0d43d34d19d278" resname="Cleanup is running ..." approved="yes">
         <source>Cleanup is running ...</source>
-        <target>Cleanup is running ...</target>
+        <target state="translated">Neteja en curs...</target>
       </trans-unit>
-      <trans-unit id="f435327217fb9eef365101b4bbc39463" resname="back to form">
+      <trans-unit id="f435327217fb9eef365101b4bbc39463" resname="back to form" approved="yes">
         <source>back to form</source>
-        <target>back to form</target>
+        <target state="translated">enrere cap a la selecció</target>
       </trans-unit>
-      <trans-unit id="91e8745deed4bed52c6bb855042df916" resname="Database cleanup">
+      <trans-unit id="91e8745deed4bed52c6bb855042df916" resname="Database cleanup" approved="yes">
         <source>Database cleanup</source>
-        <target>Database cleanup</target>
+        <target state="translated">Netegi la base de dades</target>
       </trans-unit>
-      <trans-unit id="23eb3aa5c1281236839c3f1b900c7d5f" resname="General cleanup">
+      <trans-unit id="23eb3aa5c1281236839c3f1b900c7d5f" resname="General cleanup" approved="yes">
         <source>General cleanup</source>
-        <target>General cleanup</target>
+        <target state="translated">Neteja general</target>
       </trans-unit>
-      <trans-unit id="8463f9ee697ceca6f7ea45684e47c1d7" resname="Refresh internal constants">
+      <trans-unit id="8463f9ee697ceca6f7ea45684e47c1d7" resname="Refresh internal constants" approved="yes">
         <source>Refresh internal constants</source>
-        <target>Refresh internal constants</target>
+        <target state="translated">Actualitzi les constants internes</target>
       </trans-unit>
-      <trans-unit id="4a68cfc3a84bd4fe43b22875cdb37007" resname="Recalculate your equipment statistics">
+      <trans-unit id="4a68cfc3a84bd4fe43b22875cdb37007" resname="Recalculate your equipment statistics" approved="yes">
         <source>Recalculate your equipment statistics</source>
-        <target>Recalculate your equipment statistics</target>
+        <target state="translated">Nou càlcul de les seves estadístiques de sabatilles</target>
       </trans-unit>
-      <trans-unit id="6069e44a888729a1cb93a12c28238261" resname="Recalculate your VDOT correction factor">
+      <trans-unit id="6069e44a888729a1cb93a12c28238261" resname="Recalculate your VDOT correction factor" approved="yes">
         <source>Recalculate your VDOT correction factor</source>
-        <target>Recalculate your VDOT correction factor</target>
+        <target state="translated">Nou càlcul del seu factor de correcció del VDOT</target>
       </trans-unit>
-      <trans-unit id="0c07c9cc957af58ba7350640aa4116d6" resname="Recalculate your VDOT shape">
+      <trans-unit id="0c07c9cc957af58ba7350640aa4116d6" resname="Recalculate your VDOT shape" approved="yes">
         <source>Recalculate your VDOT shape</source>
-        <target>Recalculate your VDOT shape</target>
+        <target state="translated">Nou càlcul del valor del VDOT</target>
       </trans-unit>
-      <trans-unit id="861ac2f0926b5c8db0a9da939fba9028" resname="Recalculate your basic endurance">
+      <trans-unit id="861ac2f0926b5c8db0a9da939fba9028" resname="Recalculate your basic endurance" approved="yes">
         <source>Recalculate your basic endurance</source>
-        <target>Recalculate your basic endurance</target>
+        <target state="translated">Nou càlcul de la condició bàsica</target>
       </trans-unit>
-      <trans-unit id="76f3ca31d520cb09650750ae61feca2b" resname="Recalculate maximal TRIMP values">
+      <trans-unit id="76f3ca31d520cb09650750ae61feca2b" resname="Recalculate maximal TRIMP values" approved="yes">
         <source>Recalculate maximal TRIMP values</source>
-        <target>Recalculate maximal TRIMP values</target>
+        <target state="translated">Calculi el valor màxim del TRIMP</target>
       </trans-unit>
       <trans-unit id="7325e986c2c8e5a378e5a8a6bab0980a" resname="Clear your personal cache">
         <source>Clear your personal cache</source>
         <target>Clear your personal cache</target>
       </trans-unit>
-      <trans-unit id="9bf9b4e944fce072a359f5a371349832" resname="Loop through activities">
+      <trans-unit id="9bf9b4e944fce072a359f5a371349832" resname="Loop through activities" approved="yes">
         <source>Loop through activities</source>
-        <target>Loop through activities</target>
+        <target state="translated">Mogui's per tots els entrenaments</target>
       </trans-unit>
-      <trans-unit id="6495be5a13459211eeac7f5563bf428f" resname="These recalculations are only needed if you changed the corresponding settings.">
+      <trans-unit id="6495be5a13459211eeac7f5563bf428f" resname="These recalculations are only needed if you changed the corresponding settings." approved="yes">
         <source>These recalculations are only needed if you changed the corresponding settings.</source>
-        <target>These recalculations are only needed if you changed the corresponding settings.</target>
+        <target state="translated">Aquests nous càlculs són necessaris únicament si ha modificat les configuracions respectives.</target>
       </trans-unit>
-      <trans-unit id="1c3bf2163b97fc15e361fed1de53d857" resname="This task may take some time, since we have to loop through all your activities.">
+      <trans-unit id="1c3bf2163b97fc15e361fed1de53d857" resname="This task may take some time, since we have to loop through all your activities." approved="yes">
         <source>This task may take some time, since we have to loop through all your activities.</source>
-        <target>This task may take some time, since we have to loop through all your activities.</target>
+        <target state="translated">Aquesta tasca trigarà una mica perquè ha de passar per tots els entrenaments.</target>
       </trans-unit>
-      <trans-unit id="5dca42ef182788e3667feeb32ca7e2de" resname="Recalculate elevation">
+      <trans-unit id="5dca42ef182788e3667feeb32ca7e2de" resname="Recalculate elevation" approved="yes">
         <source>Recalculate elevation</source>
-        <target>Recalculate elevation</target>
+        <target state="translated">Nou càlcul de l'elevació</target>
       </trans-unit>
-      <trans-unit id="036e4c2db1b8b6fddbd955454bee8bb2" resname="Overwrite manual values">
+      <trans-unit id="036e4c2db1b8b6fddbd955454bee8bb2" resname="Overwrite manual values" approved="yes">
         <source>Overwrite manual values</source>
-        <target>Overwrite manual values</target>
+        <target state="translated">Sobreescrigui els valors manuals</target>
       </trans-unit>
-      <trans-unit id="f25446aee2d14378206d5ac934ae3ff6" resname="Recalculate VDOT values">
+      <trans-unit id="f25446aee2d14378206d5ac934ae3ff6" resname="Recalculate VDOT values" approved="yes">
         <source>Recalculate VDOT values</source>
-        <target>Recalculate VDOT values</target>
+        <target state="translated">Calculi els valors del VDOT</target>
       </trans-unit>
-      <trans-unit id="1fd50b30766fdd86802b6a1dda297d12" resname="Recalculate JD training points">
+      <trans-unit id="1fd50b30766fdd86802b6a1dda297d12" resname="Recalculate JD training points" approved="yes">
         <source>Recalculate JD training points</source>
-        <target>Recalculate JD training points</target>
+        <target state="translated">Calculi novament els punts d'entrenament JD</target>
       </trans-unit>
-      <trans-unit id="90468898f33d401ff1823753e35272af" resname="Recalculate TRIMP values">
+      <trans-unit id="90468898f33d401ff1823753e35272af" resname="Recalculate TRIMP values" approved="yes">
         <source>Recalculate TRIMP values</source>
-        <target>Recalculate TRIMP values</target>
+        <target state="translated">Calculi nous valors del TRIMP</target>
       </trans-unit>
-      <trans-unit id="8dfdd9172b0e9f7b37a8b5551d70ecce" resname="Allow to force recalculations if settings did not change">
+      <trans-unit id="8dfdd9172b0e9f7b37a8b5551d70ecce" resname="Allow to force recalculations if settings did not change" approved="yes">
         <source>Allow to force recalculations if settings did not change</source>
-        <target>Allow to force recalculations if settings did not change</target>
+        <target state="translated">Permeti nous càlculs forçats per a valors no modificats</target>
       </trans-unit>
-      <trans-unit id="aaf933e75758b9cf0957d53cbc399bda" resname="Start cleanup">
+      <trans-unit id="aaf933e75758b9cf0957d53cbc399bda" resname="Start cleanup" approved="yes">
         <source>Start cleanup</source>
-        <target>Start cleanup</target>
+        <target state="translated">Netegi</target>
       </trans-unit>
       <trans-unit id="4e9b1bb0379d304ec35a4453a74ca6bb" resname="Due to performance reasons, some statistics are saved in the database.&#10;                        You can trigger a recalculation if you think they are wrong.&#10;                        In addition, values for elevation, TRIMP and VDOT can be recalculated.">
         <source>Due to performance reasons, some statistics are saved in the database.
@@ -927,17 +927,15 @@
                         You can trigger a recalculation if you think they are wrong.
                         In addition, values for elevation, TRIMP and VDOT can be recalculated.</target>
       </trans-unit>
-      <trans-unit id="69d3dd650b11da3eea6840d2a2d29432" resname="Analyze your VDOT">
+      <trans-unit id="69d3dd650b11da3eea6840d2a2d29432" resname="Analyze your VDOT" approved="yes">
         <source>Analyze your VDOT</source>
-        <target>Analyze your VDOT</target>
+        <target state="translated">Analitzi el seu VDOT</target>
       </trans-unit>
-      <trans-unit id="284c9a75e5fbafe7659e905de7c82182" resname="Predicting your VDOT based on your training values is imprecise.&#10;                        This plugin lists your races and compares your results with the predicted values.&#10;                        This way you can get an impression of how well the prediction works for you.">
+      <trans-unit id="284c9a75e5fbafe7659e905de7c82182" resname="Predicting your VDOT based on your training values is imprecise.&#10;                        This plugin lists your races and compares your results with the predicted values.&#10;                        This way you can get an impression of how well the prediction works for you." approved="yes">
         <source>Predicting your VDOT based on your training values is imprecise.
                         This plugin lists your races and compares your results with the predicted values.
                         This way you can get an impression of how well the prediction works for you.</source>
-        <target>Predicting your VDOT based on your training values is imprecise.
-                        This plugin lists your races and compares your results with the predicted values.
-                        This way you can get an impression of how well the prediction works for you.</target>
+        <target state="translated">La previsió del seu VDOT basat en els valors dels seus entrenaments no és sempre molt precís. Aquest plugin mostra les seves curses comparades amb els valors calculats i li dona la possibilitat de comprovar com de bona era la previsió.</target>
       </trans-unit>
       <trans-unit id="68471be11d8f56f4032b4adf7b34f123" resname="Running tables">
         <source>Running tables</source>
@@ -947,9 +945,9 @@
         <source>Tables for VDOT values by Jack Daniels and general tables like a pace calculator.</source>
         <target>Tables for VDOT values by Jack Daniels and general tables like a pace calculator.</target>
       </trans-unit>
-      <trans-unit id="382c3dfc34dcd9d4b5bdb1325fc8c381" resname="Multi editor">
+      <trans-unit id="382c3dfc34dcd9d4b5bdb1325fc8c381" resname="Multi editor" approved="yes">
         <source>Multi editor</source>
-        <target>Multi editor</target>
+        <target state="translated">Editor múltiple</target>
       </trans-unit>
       <trans-unit id="7709f3c8b9a48a434d21a6f7b8bd69bd" resname="This tool allows you to edit multiple activities one after another.&#10;                        At the moment it's not possible to edit multiple activities with only one form.">
         <source>This tool allows you to edit multiple activities one after another.
@@ -973,25 +971,23 @@
         <source>This tool allows you to import an existing json dump of any other RUNALYZE installation.</source>
         <target>This tool allows you to import an existing json dump of any other RUNALYZE installation.</target>
       </trans-unit>
-      <trans-unit id="5668c2524a3c0a416ab5e59c9ff642ed" resname="Predicting your VDOT based on your training values is imprecise.&#10;                This tool lists your races and compares all results with predicted values.&#10;                This way you can get an impression of how well our prediction works for you.">
+      <trans-unit id="5668c2524a3c0a416ab5e59c9ff642ed" resname="Predicting your VDOT based on your training values is imprecise.&#10;                This tool lists your races and compares all results with predicted values.&#10;                This way you can get an impression of how well our prediction works for you." approved="yes">
         <source>Predicting your VDOT based on your training values is imprecise.
                 This tool lists your races and compares all results with predicted values.
                 This way you can get an impression of how well our prediction works for you.</source>
-        <target>Predicting your VDOT based on your training values is imprecise.
-                This tool lists your races and compares all results with predicted values.
-                This way you can get an impression of how well our prediction works for you.</target>
+        <target state="translated">La previsió del seu VDOT basat en els valors dels seus entrenaments no és sempre molt precís. Aquest plugin mostra les seves curses comparades amb els valors calculats i li dona la possibilitat de comprovar com de bona era la previsió.</target>
       </trans-unit>
-      <trans-unit id="4e221fc084bb69a82315a154d6dd7879" resname="Race">
+      <trans-unit id="4e221fc084bb69a82315a154d6dd7879" resname="Race" approved="yes">
         <source>Race</source>
-        <target>Race</target>
+        <target state="translated">Cursa</target>
       </trans-unit>
       <trans-unit id="9b05de73d43f8c4ec1110c6bcc5312bc" resname="km">
         <source>km</source>
         <target>km</target>
       </trans-unit>
-      <trans-unit id="a76d4ef5f3f6a672bbfab2865563e530" resname="Time">
+      <trans-unit id="a76d4ef5f3f6a672bbfab2865563e530" resname="Time" approved="yes">
         <source>Time</source>
-        <target>Time</target>
+        <target state="translated">Temps</target>
       </trans-unit>
       <trans-unit id="fd4c638da5f85d025963f99fe90b1b1a" resname="HR">
         <source>HR</source>
@@ -1001,25 +997,25 @@
         <source>by&amp;nbsp;HR</source>
         <target><![CDATA[by&nbsp;HR]]></target>
       </trans-unit>
-      <trans-unit id="3bb94c8fb9436244ce9c3ab2efd8eb64" resname="corrected">
+      <trans-unit id="3bb94c8fb9436244ce9c3ab2efd8eb64" resname="corrected" approved="yes">
         <source>corrected</source>
-        <target>corrected</target>
+        <target state="translated">corregit</target>
       </trans-unit>
-      <trans-unit id="880c1273b27d27cfc82004c3a4b205c9" resname="Shape">
+      <trans-unit id="880c1273b27d27cfc82004c3a4b205c9" resname="Shape" approved="yes">
         <source>Shape</source>
-        <target>Shape</target>
+        <target state="translated">Condició física</target>
       </trans-unit>
-      <trans-unit id="5701b8b69f5521e8a98bacb8bf75933b" resname="Deviation">
+      <trans-unit id="5701b8b69f5521e8a98bacb8bf75933b" resname="Deviation" approved="yes">
         <source>Deviation</source>
-        <target>Deviation</target>
+        <target state="translated">Desviació</target>
       </trans-unit>
-      <trans-unit id="c8e971c41594e5eac2ad92440d4b9e6c" resname="Corrector">
+      <trans-unit id="c8e971c41594e5eac2ad92440d4b9e6c" resname="Corrector" approved="yes">
         <source>Corrector</source>
-        <target>Corrector</target>
+        <target state="translated">Correcció</target>
       </trans-unit>
-      <trans-unit id="3402e547998d10fe6cad2846055f9f0b" resname="You did not run any races.">
+      <trans-unit id="3402e547998d10fe6cad2846055f9f0b" resname="You did not run any races." approved="yes">
         <source>You did not run any races.</source>
-        <target>You did not run any races.</target>
+        <target state="translated">Fins ara no ha fet cap cursa.</target>
       </trans-unit>
       <trans-unit id="eee9ed6441c3bde3f5e7aa5af466f95b" resname="&lt;strong&gt;VDOT/Time:&lt;/strong&gt; by standard formulas derived from Jack Daniels' Running formula&lt;br&gt;&#10;                The time is what you could have reached at your maximal possible heart rate over this distance.">
         <source>&lt;strong&gt;VDOT/Time:&lt;/strong&gt; by standard formulas derived from Jack Daniels' Running formula&lt;br&gt;
@@ -1033,9 +1029,9 @@
         <target><![CDATA[<strong>VDOT/Time (corrected):</strong> after individual VDOT correction (factor: %vdotFactor%)<br>
                 The time is what you could have reached at your maximal possible heart rate over this distance.]]></target>
       </trans-unit>
-      <trans-unit id="1739fa83ff3481c27ab105c839480bcd" resname="&lt;strong&gt;VDOT/Time (corrected):&lt;/strong&gt; VDOT correction is deactivated. (see configuration)">
+      <trans-unit id="1739fa83ff3481c27ab105c839480bcd" resname="&lt;strong&gt;VDOT/Time (corrected):&lt;/strong&gt; VDOT correction is deactivated. (see configuration)" approved="yes">
         <source>&lt;strong&gt;VDOT/Time (corrected):&lt;/strong&gt; VDOT correction is deactivated. (see configuration)</source>
-        <target><![CDATA[<strong>VDOT/Time (corrected):</strong> VDOT correction is deactivated. (see configuration)]]></target>
+        <target state="translated">&lt;strong&gt;VDOT/temps (corregit):&lt;/strong&gt; correcció del VDOT no es troba activada. (miri configuració)</target>
       </trans-unit>
       <trans-unit id="7351632d19a646b745ee3981acfbb912" resname="&lt;strong&gt;VDOT/Time (Shape):&lt;/strong&gt; by your shape at that time&lt;br&gt;&#10;                The time is the prognosis by Runalyze.">
         <source>&lt;strong&gt;VDOT/Time (Shape):&lt;/strong&gt; by your shape at that time&lt;br&gt;
@@ -1043,13 +1039,13 @@
         <target><![CDATA[<strong>VDOT/Time (Shape):</strong> by your shape at that time<br>
                 The time is the prognosis by Runalyze.]]></target>
       </trans-unit>
-      <trans-unit id="4622f3dc2c43806d67076f81b310c74e" resname="&lt;strong&gt;Corrector:&lt;/strong&gt; Ratio between VDOT and VDOT (by HR)">
+      <trans-unit id="4622f3dc2c43806d67076f81b310c74e" resname="&lt;strong&gt;Corrector:&lt;/strong&gt; Ratio between VDOT and VDOT (by HR)" approved="yes">
         <source>&lt;strong&gt;Corrector:&lt;/strong&gt; Ratio between VDOT and VDOT (by HR)</source>
-        <target><![CDATA[<strong>Corrector:</strong> Ratio between VDOT and VDOT (by HR)]]></target>
+        <target state="translated">&lt;strong&gt;factor de correcció:&lt;/strong&gt; Rati de VDOT a VDOT (segons FC)</target>
       </trans-unit>
-      <trans-unit id="9ce4c417434bd2d4580def066bad3cad" resname="The distance correction for elevation is not used in this table.">
+      <trans-unit id="9ce4c417434bd2d4580def066bad3cad" resname="The distance correction for elevation is not used in this table." approved="yes">
         <source>The distance correction for elevation is not used in this table.</source>
-        <target>The distance correction for elevation is not used in this table.</target>
+        <target state="translated">El factor de correcció de la distància per elevació no s'aplica en aquesta taula.</target>
       </trans-unit>
       <trans-unit id="3734c9d4de8177827743603319944380" resname="Import backup">
         <source>Import backup</source>
@@ -1063,33 +1059,33 @@
         <source>Go to database cleanup</source>
         <target>Go to database cleanup</target>
       </trans-unit>
-      <trans-unit id="e6405e2fffd676403740711f86f396f1" resname="Uploaded file">
+      <trans-unit id="e6405e2fffd676403740711f86f396f1" resname="Uploaded file" approved="yes">
         <source>Uploaded file</source>
-        <target>Uploaded file</target>
+        <target state="translated">Pugi l'arxiu</target>
       </trans-unit>
-      <trans-unit id="e4240d6a12f61fea0ee7395e9d0d2cd4" resname="Overwrite general configuration">
+      <trans-unit id="e4240d6a12f61fea0ee7395e9d0d2cd4" resname="Overwrite general configuration" approved="yes">
         <source>Overwrite general configuration</source>
-        <target>Overwrite general configuration</target>
+        <target state="translated">Esborri la configuració general</target>
       </trans-unit>
-      <trans-unit id="11f42bff340f680d8471ee266ae5ba0a" resname="Overwrite dataset configuration">
+      <trans-unit id="11f42bff340f680d8471ee266ae5ba0a" resname="Overwrite dataset configuration" approved="yes">
         <source>Overwrite dataset configuration</source>
-        <target>Overwrite dataset configuration</target>
+        <target state="translated">Sobreescrigui totes les dades de la configuració</target>
       </trans-unit>
-      <trans-unit id="ac98ac81f5c5ba604958b7272c2986da" resname="Overwrite plugins">
+      <trans-unit id="ac98ac81f5c5ba604958b7272c2986da" resname="Overwrite plugins" approved="yes">
         <source>Overwrite plugins</source>
-        <target>Overwrite plugins</target>
+        <target state="translated">Sobreescrigui els plugins</target>
       </trans-unit>
-      <trans-unit id="536349f9584cf768603c8d0649b1b775" resname="Delete all old activities">
+      <trans-unit id="536349f9584cf768603c8d0649b1b775" resname="Delete all old activities" approved="yes">
         <source>Delete all old activities</source>
-        <target>Delete all old activities</target>
+        <target state="translated">Esborri tots els entrenaments existents fins ara</target>
       </trans-unit>
-      <trans-unit id="95ed8133edeab7c226270824cbe8b8e4" resname="Delete all old body values">
+      <trans-unit id="95ed8133edeab7c226270824cbe8b8e4" resname="Delete all old body values" approved="yes">
         <source>Delete all old body values</source>
-        <target>Delete all old body values</target>
+        <target state="translated">Esborri totes les dades corporals</target>
       </trans-unit>
-      <trans-unit id="4d9126da7f62ed75688415926b138bff" resname="There are &lt;strong&gt;%numActivities%&lt;/strong&gt; activities in this file.">
+      <trans-unit id="4d9126da7f62ed75688415926b138bff" resname="There are &lt;strong&gt;%numActivities%&lt;/strong&gt; activities in this file." approved="yes">
         <source>There are &lt;strong&gt;%numActivities%&lt;/strong&gt; activities in this file.</source>
-        <target><![CDATA[There are <strong>%numActivities%</strong> activities in this file.]]></target>
+        <target state="translated">Hi han &lt;strong&gt;%numActivities%&lt;/strong&gt; entrenaments en aquest arxiu.</target>
       </trans-unit>
       <trans-unit id="ce069f6f467b25fe7c56b9041ab82e86" resname="There are &lt;strong&gt;%numBodyValues%&lt;/strong&gt; body values in this file.">
         <source>There are &lt;strong&gt;%numBodyValues%&lt;/strong&gt; body values in this file.</source>
