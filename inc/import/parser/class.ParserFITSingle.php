@@ -446,7 +446,7 @@ class ParserFITSingle extends ParserAbstractSingle {
 
 		$thisTimestamp = $this->strtotime((string)$this->Values['timestamp'][1]);
 
-		if ($this->Values['event_type'][1] == 'stop_all' || $this->Values['event_type'][1] == 'stop') {
+		if (!empty($this->gps['time_in_s']) && ($this->Values['event_type'][1] == 'stop_all' || $this->Values['event_type'][1] == 'stop')) {
 			$this->isPaused = true;
 			$this->lastStopTimestamp = $thisTimestamp;
 		} elseif ($this->Values['event_type'][1] == 'start') {
