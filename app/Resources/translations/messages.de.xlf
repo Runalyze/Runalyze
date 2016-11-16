@@ -1082,7 +1082,7 @@
       </trans-unit>
       <trans-unit id="ce069f6f467b25fe7c56b9041ab82e86" resname="There are &lt;strong&gt;%numBodyValues%&lt;/strong&gt; body values in this file." approved="yes">
         <source>There are &lt;strong&gt;%numBodyValues%&lt;/strong&gt; body values in this file.</source>
-        <target state="translated">Es befinden sich &lt;strong&gt;%s&lt;/strong&gt; Körperdaten in der Datei.</target>
+        <target state="translated">Es befinden sich &lt;strong&gt;%numBodyValues%&lt;/strong&gt; Körperdaten in der Datei.</target>
       </trans-unit>
       <trans-unit id="5e20646580da584d76435da00d6face4" resname="Export data">
         <source>Export data</source>
