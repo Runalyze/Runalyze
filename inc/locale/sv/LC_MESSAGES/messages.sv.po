@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-08-20 08:22+0200\n"
-"PO-Revision-Date: 2016-11-16 13:49+0000\n"
-"Last-Translator: Daniel Bengtsson <daniel.f.bengtsson@gmail.com>\n"
+"PO-Revision-Date: 2016-11-16 13:51+0000\n"
+"Last-Translator: Matthias Kristiansen-Kürner <matthias.kr.ku@gmail.com>\n"
 "Language-Team: Swedish "
 "<https://translate.runalyze.com/projects/runalyze/runalyze/sv/>\n"
 "Language: sv\n"
@@ -19,7 +19,7 @@ msgstr ""
 
 #: src/CoreBundle/Controller/DefaultController.php:251
 msgid "Click on an activity to see more details."
-msgstr "Klicka på en aktivitet för att visa detaljer"
+msgstr "Klicka på en aktivitet för att visa detaljer."
 
 #: src/CoreBundle/Controller/DefaultController.php:252
 msgid "Public activities are marked: "
@@ -32,16 +32,16 @@ msgstr "Aktiviteten har tagits bort"
 
 #: src/CoreBundle/Controller/ActivityController.php:236
 msgid "Corrected elevation data has been removed."
-msgstr "Korrigerad höjddata har tagits bort"
+msgstr "Korrigerad höjddata har tagits bort."
 
 #: src/CoreBundle/Controller/ActivityController.php:238
 #: inc/training/view/class.ElevationInfo.php:249
 msgid "Elevation data has been corrected."
-msgstr "Höjddata har korrigerats"
+msgstr "Höjddata har korrigerats."
 
 #: src/CoreBundle/Controller/ActivityController.php:251
 msgid "Elevation data could not be retrieved."
-msgstr "Höjddata kunde inte hämtas"
+msgstr "Höjddata kunde inte hämtas."
 
 #: src/CoreBundle/Controller/PluginController.php:24
 msgid "Install"
@@ -108,11 +108,11 @@ msgstr "Sök efter aktiviteter"
 
 #: src/CoreBundle/Controller/CallController.php:209
 msgid "There was a problem."
-msgstr "Ett problem uppstod"
+msgstr "Ett problem uppstod."
 
 #: src/CoreBundle/Controller/CallController.php:243
 msgid "You are not logged in anymore."
-msgstr "Du är inte inloggad längre"
+msgstr "Du är inte inloggad längre."
 
 #: src/CoreBundle/Controller/CallController.php:244
 #: inc/tpl/tpl.adminWindow.login.php:13
@@ -776,6 +776,7 @@ msgid "Influence"
 msgstr "Påverkan"
 
 #: inc/training/view/section/class.SectionRunningDynamics.php:21
+#, fuzzy
 msgid "Running Dynamics"
 msgstr "Running Dynamics"
 
@@ -906,12 +907,12 @@ msgstr "mer om høydemätare"
 #: inc/training/view/section/class.SectionRouteRowElevation.php:93
 #: inc/training/view/section/class.SectionCompositeRow.php:238
 msgid "Elevation data were corrected."
-msgstr "høydmätare är korrigerade"
+msgstr "høydmätare är korrigerade."
 
 #: inc/training/view/section/class.SectionRouteRowElevation.php:95
 #: inc/training/view/section/class.SectionCompositeRow.php:240
 msgid "Elevation data are not corrected."
-msgstr "høydmätare är inte korrigerade"
+msgstr "høydmätare är inte korrigerade."
 
 #: inc/training/view/section/class.SectionOverviewRow.php:53
 #: inc/training/view/section/class.SectionCompositeRow.php:99
