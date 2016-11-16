@@ -494,6 +494,44 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
+	 * @see https://github.com/Runalyze/Runalyze/issues/1991
+	 */
+	public function testMultisessionThatStopsDirectlyAfterTransition() {
+		if (Shell::isPerlAvailable()) {
+			$this->object->parseFile('../tests/testfiles/fit/Multisession-stop-after-transition.fit');
+
+			$this->assertFalse($this->object->failed());
+			$this->assertTrue($this->object->hasMultipleTrainings());
+			$this->assertEquals(5, $this->object->numberOfTrainings());
+
+			$Running1 = $this->object->object(0);
+			$this->assertEquals('2016-04-17T09:44:02', LocalTime::date('Y-m-d\TH:i:s', $Running1->getTimestamp()));
+			$this->assertEquals(4.460, $Running1->getDistance());
+			$this->assertEquals(1134, $Running1->getTimeInSeconds());
+
+			$Transition1 = $this->object->object(1);
+			$this->assertEquals('2016-04-17T10:03:10', LocalTime::date('Y-m-d\TH:i:s', $Transition1->getTimestamp()));
+			$this->assertEquals(0.266, $Transition1->getDistance());
+			$this->assertEquals(130, $Transition1->getTimeInSeconds());
+
+			$Cycling = $this->object->object(2);
+			$this->assertEquals('2016-04-17T10:05:16', LocalTime::date('Y-m-d\TH:i:s', $Cycling->getTimestamp()));
+			$this->assertEquals(23.572, $Cycling->getDistance());
+			$this->assertEquals(2692, $Cycling->getTimeInSeconds());
+
+			$Transition2 = $this->object->object(3);
+			$this->assertEquals('2016-04-17T10:50:07', LocalTime::date('Y-m-d\TH:i:s', $Transition2->getTimestamp()));
+			$this->assertEquals(0.193, $Transition2->getDistance());
+			$this->assertEquals(134, $Transition2->getTimeInSeconds());
+
+			$Running2 = $this->object->object(4);
+			$this->assertEquals('2016-04-17T10:52:23', LocalTime::date('Y-m-d\TH:i:s', $Running2->getTimestamp()));
+			$this->assertEquals(2.083, $Running2->getDistance());
+			$this->assertEquals(544, $Running2->getTimeInSeconds());
+		}
+	}
+
+	/**
 	 * Test: 'stop' instead of 'stop_all' in file from osynce
 	 * Filename: "osynce-stop-bug.fit"
 	 */
