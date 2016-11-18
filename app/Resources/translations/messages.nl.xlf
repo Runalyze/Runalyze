@@ -53,25 +53,25 @@
         <source>We give our best to make Runalyze as good as possible for you. - Therefore we would be interested in your suggestions for improvement.</source>
         <target state="translated">Wij doen ons best om Runalyze voor u zo goed mogelijk te maken. Daarom zijn we geïnteresseerd in uw suggesties voor verbetering.</target>
       </trans-unit>
-      <trans-unit id="8972a25e78349104f1c0b9de1e0c2996" resname="In general most questions, problems and ideas are more appropriate to ask in the forum.">
+      <trans-unit id="8972a25e78349104f1c0b9de1e0c2996" resname="In general most questions, problems and ideas are more appropriate to ask in the forum." approved="yes">
         <source>In general most questions, problems and ideas are more appropriate to ask in the forum.</source>
-        <target>In general most questions, problems and ideas are more appropriate to ask in the forum.</target>
+        <target state="translated">In het algemeen kunnen vragen, problemen en ideeën beter gesteld worden in het forum.</target>
       </trans-unit>
       <trans-unit id="e6a7f8a2f42cc35979973da8dfb10720" resname="Forum" approved="yes">
         <source>Forum</source>
         <target state="translated">Formulier</target>
       </trans-unit>
-      <trans-unit id="5b6cf869265c13af8566f192b4ab3d2a" resname="Documentation" approved="no">
+      <trans-unit id="5b6cf869265c13af8566f192b4ab3d2a" resname="Documentation" approved="yes">
         <source>Documentation</source>
-        <target state="needs-translation">Documentation</target>
+        <target state="translated">Documentatie</target>
       </trans-unit>
-      <trans-unit id="6dd08874f83507e9c7b23f1a46b7fa7c" resname="Translation">
+      <trans-unit id="6dd08874f83507e9c7b23f1a46b7fa7c" resname="Translation" approved="yes">
         <source>Translation</source>
-        <target>Translation</target>
+        <target state="translated">Vertaling</target>
       </trans-unit>
-      <trans-unit id="0ab98b9aea9ad94538cd49800cf73c4e" resname="In a case of urgency you can contact us via email:">
+      <trans-unit id="0ab98b9aea9ad94538cd49800cf73c4e" resname="In a case of urgency you can contact us via email:" approved="yes">
         <source>In a case of urgency you can contact us via email:</source>
-        <target>In a case of urgency you can contact us via email:</target>
+        <target state="translated">In geval van urgentie kunt u contact opnemen via e-mail:</target>
       </trans-unit>
       <trans-unit id="95bded74b875da4e05966bf6e0a59fba" resname="Browser Support" approved="yes">
         <source>Browser Support</source>
@@ -85,17 +85,17 @@
         <source>e.g. jQuery 2.x does not support IE8 (or less)</source>
         <target state="translated">bijvoorbeeld jQuery 2.x biedt geen ondersteuning voor IE8 (of ouder)</target>
       </trans-unit>
-      <trans-unit id="948a2e3548aaf7f9941a3192fa607d51" resname="Credits">
+      <trans-unit id="948a2e3548aaf7f9941a3192fa607d51" resname="Credits" approved="yes">
         <source>Credits</source>
-        <target>Credits</target>
+        <target state="translated">Credits</target>
       </trans-unit>
-      <trans-unit id="6013259776820a748d1b5bc3cc542e5d" resname="The plug-in was not unlocked successfully.">
+      <trans-unit id="6013259776820a748d1b5bc3cc542e5d" resname="The plug-in was not unlocked successfully." approved="yes">
         <source>The plug-in was not unlocked successfully.</source>
-        <target>The plug-in was not unlocked successfully.</target>
+        <target state="translated">The plug-in is niet succesvol ontgrendeld.</target>
       </trans-unit>
-      <trans-unit id="6d558cb627c6cbbef5d611d4a4c66c10" resname="The administrator has to set the correct API-key.">
+      <trans-unit id="6d558cb627c6cbbef5d611d4a4c66c10" resname="The administrator has to set the correct API-key." approved="yes">
         <source>The administrator has to set the correct API-key.</source>
-        <target>The administrator has to set the correct API-key.</target>
+        <target state="translated">The beheerder dient de correct API-sleutel te plaatsen.</target>
       </trans-unit>
       <trans-unit id="49ab28040dfa07f53544970c6d147e1e" resname="Connect" approved="yes">
         <source>Connect</source>
@@ -157,25 +157,25 @@
         <source>#{deviceCount} devices found</source>
         <target state="translated">#{deviceCount} apparaten gevonden</target>
       </trans-unit>
-      <trans-unit id="44749712dbec183e983dcd78a7736c41" resname="Date" approved="no">
+      <trans-unit id="44749712dbec183e983dcd78a7736c41" resname="Date" approved="yes">
         <source>Date</source>
-        <target state="needs-translation">Datum</target>
+        <target state="translated">Datum</target>
       </trans-unit>
       <trans-unit id="e02d2ae03de9d493df2b6b2d2813d302" resname="Duration" approved="yes">
         <source>Duration</source>
         <target state="translated">Duur</target>
       </trans-unit>
-      <trans-unit id="ec53a8c4f07baed5d8825072c89799be" resname="Status">
+      <trans-unit id="ec53a8c4f07baed5d8825072c89799be" resname="Status" approved="yes">
         <source>Status</source>
-        <target>Status</target>
+        <target state="translated">Status</target>
       </trans-unit>
       <trans-unit id="47ed49958e2500d72e305f85ed316c91" resname="present" approved="yes">
         <source>present</source>
         <target state="translated">aanwezig</target>
       </trans-unit>
-      <trans-unit id="22af645d1859cb5ca6da0c484f1f37ea" resname="new">
+      <trans-unit id="22af645d1859cb5ca6da0c484f1f37ea" resname="new" approved="yes">
         <source>new</source>
-        <target>new</target>
+        <target state="translated">nieuw</target>
       </trans-unit>
       <trans-unit id="567bc1d268f135496de3d5b946b691f3" resname="ignore" approved="yes">
         <source>ignore</source>
@@ -193,13 +193,13 @@
         <source>Logout</source>
         <target state="translated">Uitloggen</target>
       </trans-unit>
-      <trans-unit id="8625e1de7be14c39b1d14dc03d822497" resname="Tools">
+      <trans-unit id="8625e1de7be14c39b1d14dc03d822497" resname="Tools" approved="yes">
         <source>Tools</source>
-        <target>Tools</target>
+        <target state="translated">Instellingen</target>
       </trans-unit>
-      <trans-unit id="6a26f548831e6a8c26bfbbd9f6ec61e0" resname="Help">
+      <trans-unit id="6a26f548831e6a8c26bfbbd9f6ec61e0" resname="Help" approved="yes">
         <source>Help</source>
-        <target>Help</target>
+        <target state="translated">Help</target>
       </trans-unit>
       <trans-unit id="c0e1a495d527370f5ab1ea42061d9786" resname="Activate account" approved="yes">
         <source>Activate account</source>
@@ -269,9 +269,9 @@
         <source>Send link</source>
         <target state="translated">Link sturen</target>
       </trans-unit>
-      <trans-unit id="28103f38886a385f79ff2fbfe9ffff5b" resname="Unable to send link. Please contact the administrator.">
+      <trans-unit id="28103f38886a385f79ff2fbfe9ffff5b" resname="Unable to send link. Please contact the administrator." approved="yes">
         <source>Unable to send link. Please contact the administrator.</source>
-        <target>Unable to send link. Please contact the administrator.</target>
+        <target state="translated">Niet mogelijk de link te sturen. Neem alstublieft contact op met de beheerder.</target>
       </trans-unit>
       <trans-unit id="776d630537e30e4960bedd8b6f39ec72" resname="The link has been sent and will be valid for 24 hours." approved="yes">
         <source>The link has been sent and will be valid for 24 hours.</source>
@@ -289,9 +289,9 @@
         <source>Change password</source>
         <target state="translated">Wachtwoord wijzigen</target>
       </trans-unit>
-      <trans-unit id="11f581ede2d21a7f2c9c8f6fdc9eb754" resname="Password reset">
+      <trans-unit id="11f581ede2d21a7f2c9c8f6fdc9eb754" resname="Password reset" approved="yes">
         <source>Password reset</source>
-        <target>Password reset</target>
+        <target state="translated">Wachtwoord opnieuw instellen</target>
       </trans-unit>
       <trans-unit id="9bc75a1c6d94e70e8b96d8d59115c0bf" resname="Your password has been changed." approved="yes">
         <source>Your password has been changed.</source>
@@ -317,17 +317,17 @@
         <source>Runalyze is created by athletes for athletes. Whenever you have comments, problems or wishes: Please contact our Runalyze team. It's near and dear to us.</source>
         <target state="translated">Runalyze is gemaakt door atleten voor atleten. Wanneer u commentaar, tips, problemen of wensen heeft: neem contact op met ons Runalyze team. Het gaat ons aan het hart.</target>
       </trans-unit>
-      <trans-unit id="10d0de28911c5f66463b9c8783f8148a" resname="Maintenance">
+      <trans-unit id="10d0de28911c5f66463b9c8783f8148a" resname="Maintenance" approved="yes">
         <source>Maintenance</source>
-        <target>Maintenance</target>
+        <target state="translated">Onderhoud</target>
       </trans-unit>
-      <trans-unit id="19a6166a9bb1ce14f5238a622ea73775" resname="RUNALYZE is temporarily down for maintenance">
+      <trans-unit id="19a6166a9bb1ce14f5238a622ea73775" resname="RUNALYZE is temporarily down for maintenance" approved="yes">
         <source>RUNALYZE is temporarily down for maintenance</source>
-        <target>RUNALYZE is temporarily down for maintenance</target>
+        <target state="translated">RUNALYZE is tijdelijk niet bereikbaar wegens onderhoud</target>
       </trans-unit>
-      <trans-unit id="ad8bfa729c523b6dade80aa9c824bafb" resname="We will resume normal operations as soon as possible.">
+      <trans-unit id="ad8bfa729c523b6dade80aa9c824bafb" resname="We will resume normal operations as soon as possible." approved="yes">
         <source>We will resume normal operations as soon as possible.</source>
-        <target>We will resume normal operations as soon as possible.</target>
+        <target state="translated">We zullen normale activiteit zo snel mogelijk hervatten.</target>
       </trans-unit>
       <trans-unit id="fe1f636b83baeffd7a2ec09518a81ab8" resname="Create a new account" approved="yes">
         <source>Create a new account</source>
@@ -337,9 +337,9 @@
         <source>Name</source>
         <target state="translated">Naam</target>
       </trans-unit>
-      <trans-unit id="ce8ae9da5b7cd6c3df2929543a9af92d" resname="Email" approved="no">
+      <trans-unit id="ce8ae9da5b7cd6c3df2929543a9af92d" resname="Email" approved="yes">
         <source>Email</source>
-        <target state="needs-translation">E-mail</target>
+        <target state="translated">E-mail</target>
       </trans-unit>
       <trans-unit id="dc647eb65e6711e155375218212b3964" resname="Password" approved="yes">
         <source>Password</source>
@@ -349,9 +349,9 @@
         <source>Password again</source>
         <target state="translated">Voer wachtwoord nogmaals in</target>
       </trans-unit>
-      <trans-unit id="98fb6a2a59cabcc0dbce38d3be5336d4" resname="By clicking the register button you accept our %link_start%terms of use%link_end%.">
+      <trans-unit id="98fb6a2a59cabcc0dbce38d3be5336d4" resname="By clicking the register button you accept our %link_start%terms of use%link_end%." approved="yes">
         <source>By clicking the register button you accept our %link_start%terms of use%link_end%.</source>
-        <target>By clicking the register button you accept our %link_start%terms of use%link_end%.</target>
+        <target state="translated">Door op registreer te klikken accepteer je onze %link_start%terms of use%link_end%.</target>
       </trans-unit>
       <trans-unit id="0ba7583639a274c434bbe6ef797115a4" resname="Register" approved="yes">
         <source>Register</source>
@@ -369,21 +369,21 @@
         <source>Forgot your password?</source>
         <target state="translated">Wachtwoord vergeten?</target>
       </trans-unit>
-      <trans-unit id="34ad20ad8855db67abe969867908b754" resname="Help and Support">
+      <trans-unit id="34ad20ad8855db67abe969867908b754" resname="Help and Support" approved="yes">
         <source>Help and Support</source>
-        <target>Help and Support</target>
+        <target state="translated">Help and Ondersteuning</target>
       </trans-unit>
-      <trans-unit id="be8df1f28c0abc85a0ed0c6860e5d832" resname="Blog">
+      <trans-unit id="be8df1f28c0abc85a0ed0c6860e5d832" resname="Blog" approved="yes">
         <source>Blog</source>
-        <target>Blog</target>
+        <target state="translated">Blog</target>
       </trans-unit>
-      <trans-unit id="e29756ffbb4e8264a55c6b0f4a2f7ce2" resname="{1} Until now &lt;strong&gt;%count%&lt;/strong&gt; athlete is registered and|]1,Inf[ Until now &lt;strong&gt;%count%&lt;/strong&gt; athletes are registered and">
+      <trans-unit id="e29756ffbb4e8264a55c6b0f4a2f7ce2" resname="{1} Until now &lt;strong&gt;%count%&lt;/strong&gt; athlete is registered and|]1,Inf[ Until now &lt;strong&gt;%count%&lt;/strong&gt; athletes are registered and" approved="yes">
         <source>{1} Until now &lt;strong&gt;%count%&lt;/strong&gt; athlete is registered and|]1,Inf[ Until now &lt;strong&gt;%count%&lt;/strong&gt; athletes are registered and</source>
-        <target><![CDATA[{1} Until now <strong>%count%</strong> athlete is registered and|]1,Inf[ Until now <strong>%count%</strong> athletes are registered and]]></target>
+        <target state="translated">{1} Tot nu toe is &lt;strong&gt;%count%&lt;/strong&gt; atleet geregistreerd en |]1,Inf[ Tot nu toe zijn &lt;strong&gt;%count%&lt;/strong&gt; atleten geregistreerd en</target>
       </trans-unit>
-      <trans-unit id="00b8ae36d5e10d62ba8bc1568d562d3e" resname="{1} has logged &lt;strong&gt;%distance%&lt;/strong&gt;.|]1,Inf[ have logged &lt;strong&gt;%distance%&lt;/strong&gt;.">
+      <trans-unit id="00b8ae36d5e10d62ba8bc1568d562d3e" resname="{1} has logged &lt;strong&gt;%distance%&lt;/strong&gt;.|]1,Inf[ have logged &lt;strong&gt;%distance%&lt;/strong&gt;." approved="yes">
         <source>{1} has logged &lt;strong&gt;%distance%&lt;/strong&gt;.|]1,Inf[ have logged &lt;strong&gt;%distance%&lt;/strong&gt;.</source>
-        <target><![CDATA[{1} has logged <strong>%distance%</strong>.|]1,Inf[ have logged <strong>%distance%</strong>.]]></target>
+        <target state="translated">{1} heeft &lt;strong&gt;%distance%&lt;/strong&gt; gelogd.|]1,Inf[ hebben &lt;strong&gt;%distance%&lt;/strong&gt; gelogd.</target>
       </trans-unit>
       <trans-unit id="e3e2d5e0295c2f5cd85145baf3c2aeef" resname="You are not logged in anymore." approved="yes">
         <source>You are not logged in anymore.</source>
@@ -397,45 +397,45 @@
         <source>Runalyze is under maintenance at the moment. No login possible.</source>
         <target state="translated">Op dit moment wordt er onderhoud gepleegd aan Runalyze. Inloggen is niet mogelijk.</target>
       </trans-unit>
-      <trans-unit id="ab5a48c9a0cf54a09ce069569065bd47" resname="Click here to update RUNALYZE">
+      <trans-unit id="ab5a48c9a0cf54a09ce069569065bd47" resname="Click here to update RUNALYZE" approved="yes">
         <source>Click here to update RUNALYZE</source>
-        <target>Click here to update RUNALYZE</target>
+        <target state="translated">Klik hier om RUNALYZE te updaten</target>
       </trans-unit>
-      <trans-unit id="ce0f2b5572750ab2ea4b61b6a849caf3" resname="For large databases (several gigabytes) we recommend updating RUNALYZE via console.">
+      <trans-unit id="ce0f2b5572750ab2ea4b61b6a849caf3" resname="For large databases (several gigabytes) we recommend updating RUNALYZE via console." approved="yes">
         <source>For large databases (several gigabytes) we recommend updating RUNALYZE via console.</source>
-        <target>For large databases (several gigabytes) we recommend updating RUNALYZE via console.</target>
+        <target state="translated">Voor grote databases (meerdere gigabytes) adviseren we RUNALYZE via de console te update.</target>
       </trans-unit>
-      <trans-unit id="35ad75c771ec1cffc7f7ba03cf9457fe" resname="No update needed">
+      <trans-unit id="35ad75c771ec1cffc7f7ba03cf9457fe" resname="No update needed" approved="yes">
         <source>No update needed</source>
-        <target>No update needed</target>
+        <target state="translated">Geen update nodig</target>
       </trans-unit>
-      <trans-unit id="a3907cd461d8739aa3266047bc4b8c0c" resname="Docs">
+      <trans-unit id="a3907cd461d8739aa3266047bc4b8c0c" resname="Docs" approved="yes">
         <source>Docs</source>
-        <target>Docs</target>
+        <target state="translated">Documenten</target>
       </trans-unit>
-      <trans-unit id="b7f224c438e971e018cd6eab38b77fa1" resname="Start the installation of RUNALYZE">
+      <trans-unit id="b7f224c438e971e018cd6eab38b77fa1" resname="Start the installation of RUNALYZE" approved="yes">
         <source>Start the installation of RUNALYZE</source>
-        <target>Start the installation of RUNALYZE</target>
+        <target state="translated">Stat de installate van RUNALYZE</target>
       </trans-unit>
-      <trans-unit id="d5ac77c95ab94ea30f3d280651ae848f" resname="RUNALYZE has been successfully installed. You can now start analyzing your training.">
+      <trans-unit id="d5ac77c95ab94ea30f3d280651ae848f" resname="RUNALYZE has been successfully installed. You can now start analyzing your training." approved="yes">
         <source>RUNALYZE has been successfully installed. You can now start analyzing your training.</source>
-        <target>RUNALYZE has been successfully installed. You can now start analyzing your training.</target>
+        <target state="translated">RUNALYZE is succesvol geïnstalleerd. Je kunt nu beginnen je trainingen te analyseren.</target>
       </trans-unit>
       <trans-unit id="2fdfd506efea08144c0794c32ca8250a" resname="Create an account" approved="yes">
         <source>Create an account</source>
         <target state="translated">Maak een nieuwe account</target>
       </trans-unit>
-      <trans-unit id="446a2f17e10ef064822f6719d6b45b36" resname="Migrations have been executed">
+      <trans-unit id="446a2f17e10ef064822f6719d6b45b36" resname="Migrations have been executed" approved="yes">
         <source>Migrations have been executed</source>
-        <target>Migrations have been executed</target>
+        <target state="translated">Migraties zijn uitgevoerd</target>
       </trans-unit>
-      <trans-unit id="00fca4e93b68706640ba7a4e61e35092" resname="Nothing more to do">
+      <trans-unit id="00fca4e93b68706640ba7a4e61e35092" resname="Nothing more to do" approved="yes">
         <source>Nothing more to do</source>
-        <target>Nothing more to do</target>
+        <target state="translated">Niets meer te doen</target>
       </trans-unit>
-      <trans-unit id="7cfc2601b5944323bb448901eba3a1f3" resname="Go back to RUNALYZE">
+      <trans-unit id="7cfc2601b5944323bb448901eba3a1f3" resname="Go back to RUNALYZE" approved="yes">
         <source>Go back to RUNALYZE</source>
-        <target>Go back to RUNALYZE</target>
+        <target state="translated">Ga terug naar RUNALYZE</target>
       </trans-unit>
     </body>
   </file>
