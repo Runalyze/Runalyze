@@ -441,21 +441,21 @@
         <source>Start</source>
         <target>Start</target>
       </trans-unit>
-      <trans-unit id="2327346e833efcd6b2e7b3f0a4df8ebb" resname="previous">
+      <trans-unit id="2327346e833efcd6b2e7b3f0a4df8ebb" resname="previous" approved="yes">
         <source>previous</source>
-        <target>previous</target>
+        <target state="translated">Vorige</target>
       </trans-unit>
-      <trans-unit id="d0cab90d8d20d57e2f2b9be52f7dd25d" resname="next">
+      <trans-unit id="d0cab90d8d20d57e2f2b9be52f7dd25d" resname="next" approved="yes">
         <source>next</source>
-        <target>next</target>
+        <target state="translated">Volgende</target>
       </trans-unit>
       <trans-unit id="87557f11575c0ad78e4e28abedc13b6e" resname="End">
         <source>End</source>
         <target>End</target>
       </trans-unit>
-      <trans-unit id="4f5d5f295ddc8fd8673e74dd5fbe114a" resname="per page">
+      <trans-unit id="4f5d5f295ddc8fd8673e74dd5fbe114a" resname="per page" approved="yes">
         <source>per page</source>
-        <target>per page</target>
+        <target state="translated">per pagina</target>
       </trans-unit>
       <trans-unit id="5e70dd4e82f51ee3e892224e28232d31" resname="The deletion cannot be undone!">
         <source>The deletion cannot be undone!</source>
@@ -469,9 +469,9 @@
         <source>Your password recovery link is not valid. Maybe the link has already expired.</source>
         <target>Your password recovery link is not valid. Maybe the link has already expired.</target>
       </trans-unit>
-      <trans-unit id="800e4dd8dfc264160c0b52347f7f9d4c" resname="Delete your account">
+      <trans-unit id="800e4dd8dfc264160c0b52347f7f9d4c" resname="Delete your account" approved="yes">
         <source>Delete your account</source>
-        <target>Delete your account</target>
+        <target state="translated">Uw account verwijderen</target>
       </trans-unit>
       <trans-unit id="604a6bf2bb345c1f15bd21b79aa6a478" resname="A confirmation has been sent via mail.">
         <source>A confirmation has been sent via mail.</source>
@@ -487,9 +487,9 @@
         <source>Account</source>
         <target>Account</target>
       </trans-unit>
-      <trans-unit id="3bc8bc452287eabbf03c335b6a1ab7c5" resname="Your acccount">
+      <trans-unit id="3bc8bc452287eabbf03c335b6a1ab7c5" resname="Your acccount" approved="yes">
         <source>Your acccount</source>
-        <target>Your acccount</target>
+        <target state="translated">Uw account</target>
       </trans-unit>
       <trans-unit id="7a875db599300694d4bf5e487b39a220" resname="Used for the calculation of energy spent for an activity">
         <source>Used for the calculation of energy spent for an activity</source>
@@ -507,25 +507,25 @@
         <source>E-Mail</source>
         <target>E-Mail</target>
       </trans-unit>
-      <trans-unit id="4d7a8a585a503a3b97b1984511df81c7" resname="At irregular intervals we are sending mails to you. We will never send you spam or advertisement.">
+      <trans-unit id="4d7a8a585a503a3b97b1984511df81c7" resname="At irregular intervals we are sending mails to you. We will never send you spam or advertisement." approved="yes">
         <source>At irregular intervals we are sending mails to you. We will never send you spam or advertisement.</source>
-        <target>At irregular intervals we are sending mails to you. We will never send you spam or advertisement.</target>
+        <target state="translated">Wij sturen u soms e-mails. Wij sturen u nooit spam of advertentie.</target>
       </trans-unit>
       <trans-unit id="dc3bc45d2b0f4c78ae11fe0ff0ec5688" resname="Change your mail address">
         <source>Change your mail address</source>
         <target>Change your mail address</target>
       </trans-unit>
-      <trans-unit id="147debe5b0bc2a6a8819aba5c0fba902" resname="Change your password">
+      <trans-unit id="147debe5b0bc2a6a8819aba5c0fba902" resname="Change your password" approved="yes">
         <source>Change your password</source>
-        <target>Change your password</target>
+        <target state="translated">Uw wachtwoord wijzigen</target>
       </trans-unit>
-      <trans-unit id="58709f31c3eb89326a3b9c3a1e4f1159" resname="Backup your data">
+      <trans-unit id="58709f31c3eb89326a3b9c3a1e4f1159" resname="Backup your data" approved="yes">
         <source>Backup your data</source>
-        <target>Backup your data</target>
+        <target state="translated">Back-up van uw gegevens</target>
       </trans-unit>
-      <trans-unit id="0c8c802a2dbeeca551b58f0bc6d3a403" resname="Please use the plugin">
+      <trans-unit id="0c8c802a2dbeeca551b58f0bc6d3a403" resname="Please use the plugin" approved="yes">
         <source>Please use the plugin</source>
-        <target>Please use the plugin</target>
+        <target state="translated">Gebruik de plugin</target>
       </trans-unit>
       <trans-unit id="496ba323caa924ee0121ec8ca84c94d9" resname="Database import/export">
         <source>Database import/export</source>
@@ -547,9 +547,9 @@
         <source>The deletion is permanent and cannot be reversed. Therefore, you should backup your data.</source>
         <target>The deletion is permanent and cannot be reversed. Therefore, you should backup your data.</target>
       </trans-unit>
-      <trans-unit id="c9cc8cce247e49bae79f15173ce97354" resname="Save">
+      <trans-unit id="c9cc8cce247e49bae79f15173ce97354" resname="Save" approved="yes">
         <source>Save</source>
-        <target>Save</target>
+        <target state="translated">Opslaan</target>
       </trans-unit>
       <trans-unit id="5c67ffd65944e4d61ef7a9400ce0392c" resname="Change mail address">
         <source>Change mail address</source>
@@ -559,13 +559,13 @@
         <source>Change</source>
         <target>Change</target>
       </trans-unit>
-      <trans-unit id="22b653bd8d2edcebb9e0036b4ac79262" resname="Go back">
+      <trans-unit id="22b653bd8d2edcebb9e0036b4ac79262" resname="Go back" approved="yes">
         <source>Go back</source>
-        <target>Go back</target>
+        <target state="translated">Terug</target>
       </trans-unit>
-      <trans-unit id="2b468d5791371547758df6b342be6cd3" resname="Reset your RUNALYZE password">
+      <trans-unit id="2b468d5791371547758df6b342be6cd3" resname="Reset your RUNALYZE password" approved="yes">
         <source>Reset your RUNALYZE password</source>
-        <target>Reset your RUNALYZE password</target>
+        <target state="translated">Uw RUNALYZE-wachtwoord opnieuw instellen</target>
       </trans-unit>
       <trans-unit id="00275a98e4374822a14b1887d23138e7" resname="Hi %s, &lt;br&gt; we are sorry to hear that you wish to delete your RUNALYZE account">
         <source>Hi %s, &lt;br&gt; we are sorry to hear that you wish to delete your RUNALYZE account</source>
@@ -575,17 +575,17 @@
         <source>Complete the process by accessing the following link and confirming the deletion</source>
         <target>Complete the process by accessing the following link and confirming the deletion</target>
       </trans-unit>
-      <trans-unit id="74207a3dec8572d078f8e36c9992b1c3" resname="Delete your RUNALYZE account">
+      <trans-unit id="74207a3dec8572d078f8e36c9992b1c3" resname="Delete your RUNALYZE account" approved="yes">
         <source>Delete your RUNALYZE account</source>
-        <target>Delete your RUNALYZE account</target>
+        <target state="translated">Uw RUNALYZE-account verwijderen</target>
       </trans-unit>
       <trans-unit id="fd6d1341af2a9eb5411fabd62615ea58" resname="If the link does not work, please copy the following URL into the address field of your web browser">
         <source>If the link does not work, please copy the following URL into the address field of your web browser</source>
         <target>If the link does not work, please copy the following URL into the address field of your web browser</target>
       </trans-unit>
-      <trans-unit id="3f1643974cc828011fe031dd192ca5d6" resname="Your RUNALYZE-Team">
+      <trans-unit id="3f1643974cc828011fe031dd192ca5d6" resname="Your RUNALYZE-Team" approved="yes">
         <source>Your RUNALYZE-Team</source>
-        <target>Your RUNALYZE-Team</target>
+        <target state="translated">Uw RUNALYZE-Team</target>
       </trans-unit>
       <trans-unit id="e022748b5abb414946dc22e7c6f07aea" resname="Hi %s, we heard that you forgot your password!">
         <source>Hi %s, we heard that you forgot your password!</source>
@@ -695,9 +695,9 @@
         <source>cov</source>
         <target>cov</target>
       </trans-unit>
-      <trans-unit id="70122e6380205ddb985968a5c75d5d66" resname="standard deviation">
+      <trans-unit id="70122e6380205ddb985968a5c75d5d66" resname="standard deviation" approved="yes">
         <source>standard deviation</source>
-        <target>standard deviation</target>
+        <target state="translated">standaarddeviatie</target>
       </trans-unit>
       <trans-unit id="3730343a16935b8cad369e4995d7466a" resname="std. dev.">
         <source>std. dev.</source>
@@ -767,9 +767,9 @@
         <source>Standard calculation: As race result</source>
         <target>Standard calculation: As race result</target>
       </trans-unit>
-      <trans-unit id="85d1ac49ac4b353c523122f0ff69b68d" resname="All traditional formulas are being used to calculate a VDOT value for a given race result.">
+      <trans-unit id="85d1ac49ac4b353c523122f0ff69b68d" resname="All traditional formulas are being used to calculate a VDOT value for a given race result." approved="yes">
         <source>All traditional formulas are being used to calculate a VDOT value for a given race result.</source>
-        <target>All traditional formulas are being used to calculate a VDOT value for a given race result.</target>
+        <target state="translated">Alle traditionele formules worden gebruikt om een VDOT waarde te bepalen voor een bepaalde wedstrijdresultaat.</target>
       </trans-unit>
       <trans-unit id="0aa6f4210bf373c95eda00232e93cd98" resname="Distance">
         <source>Distance</source>
@@ -779,85 +779,85 @@
         <source>VDOT</source>
         <target>VDOT</target>
       </trans-unit>
-      <trans-unit id="63d5049791d9d79d86e9a108b0a999ca" resname="Reference">
+      <trans-unit id="63d5049791d9d79d86e9a108b0a999ca" resname="Reference" approved="yes">
         <source>Reference</source>
-        <target>Reference</target>
+        <target state="translated">Referentie</target>
       </trans-unit>
       <trans-unit id="7219ff172727ac5ab4cadd0e4f22f3ec" resname="The Daniels/Gilbert Formula by Larry Simpson">
         <source>The Daniels/Gilbert Formula by Larry Simpson</source>
         <target>The Daniels/Gilbert Formula by Larry Simpson</target>
       </trans-unit>
-      <trans-unit id="dfe66ed2b784a84ffd0f36565e0e15a5" resname="Correction: based on heartrate">
+      <trans-unit id="dfe66ed2b784a84ffd0f36565e0e15a5" resname="Correction: based on heartrate" approved="yes">
         <source>Correction: based on heartrate</source>
-        <target>Correction: based on heartrate</target>
+        <target state="translated">Correctie: gebaseerd op hartslag</target>
       </trans-unit>
-      <trans-unit id="73437d19f12e2410bf550135e9b38aee" resname="Jack Daniels has tables to compare &amp;#37;HRmax and &amp;#37;vVDOT.">
+      <trans-unit id="73437d19f12e2410bf550135e9b38aee" resname="Jack Daniels has tables to compare &amp;#37;HRmax and &amp;#37;vVDOT." approved="yes">
         <source>Jack Daniels has tables to compare &amp;#37;HRmax and &amp;#37;vVDOT.</source>
-        <target><![CDATA[Jack Daniels has tables to compare &#37;HRmax and &#37;vVDOT.]]></target>
+        <target state="translated">Jack Daniels heeft tabellen te vergelijken &amp;#37; HRmax en &amp;#37; vVDOT.</target>
       </trans-unit>
-      <trans-unit id="a9594aef702a9ffbde5996180dd8458f" resname="Because of a lot of influencing factors these computations are not always accurate.">
+      <trans-unit id="a9594aef702a9ffbde5996180dd8458f" resname="Because of a lot of influencing factors these computations are not always accurate." approved="yes">
         <source>Because of a lot of influencing factors these computations are not always accurate.</source>
-        <target>Because of a lot of influencing factors these computations are not always accurate.</target>
+        <target state="translated">De berekeningen zijn niet altijd accuraat, door een aantal factoren die hier invloed op hebben.</target>
       </trans-unit>
-      <trans-unit id="51c3f59625962b899c03595d6cdfb284" resname="equals">
+      <trans-unit id="51c3f59625962b899c03595d6cdfb284" resname="equals" approved="yes">
         <source>equals</source>
-        <target>equals</target>
+        <target state="translated">gelijk</target>
       </trans-unit>
-      <trans-unit id="138b4e9078580ee8d824b456627c869d" resname="Correction: based on correction factor">
+      <trans-unit id="138b4e9078580ee8d824b456627c869d" resname="Correction: based on correction factor" approved="yes">
         <source>Correction: based on correction factor</source>
-        <target>Correction: based on correction factor</target>
+        <target state="translated">Correctie: gebaseerd op correctiefactor</target>
       </trans-unit>
-      <trans-unit id="792ebe4d45ccc3602cca9dd7243d72bc" resname="To consider some individual factors, we use a correction factor.">
+      <trans-unit id="792ebe4d45ccc3602cca9dd7243d72bc" resname="To consider some individual factors, we use a correction factor." approved="yes">
         <source>To consider some individual factors, we use a correction factor.</source>
-        <target>To consider some individual factors, we use a correction factor.</target>
+        <target state="translated">Om bepaalde individuele factoren in acht te nemen, gebruiken we een correctiefactor.</target>
       </trans-unit>
-      <trans-unit id="c77a4a1e49dad746d2b3b13e24250e1d" resname="Correction factor">
+      <trans-unit id="c77a4a1e49dad746d2b3b13e24250e1d" resname="Correction factor" approved="yes">
         <source>Correction factor</source>
-        <target>Correction factor</target>
+        <target state="translated">correctiefactor</target>
       </trans-unit>
-      <trans-unit id="b2111806faf0190ffb9ff266eac8e2eb" resname="uncorrected">
+      <trans-unit id="b2111806faf0190ffb9ff266eac8e2eb" resname="uncorrected" approved="yes">
         <source>uncorrected</source>
-        <target>uncorrected</target>
+        <target state="translated">niet gecorrigeerd</target>
       </trans-unit>
-      <trans-unit id="770906778fc399fa87756659a09cc86d" resname="Correction: considering elevation">
+      <trans-unit id="770906778fc399fa87756659a09cc86d" resname="Correction: considering elevation" approved="yes">
         <source>Correction: considering elevation</source>
-        <target>Correction: considering elevation</target>
+        <target state="translated">Correctie: rekeninghoudend met de hoogtemeters</target>
       </trans-unit>
-      <trans-unit id="85ab82888199a4d49203bb34f324304b" resname="This correction method is currently unused.">
+      <trans-unit id="85ab82888199a4d49203bb34f324304b" resname="This correction method is currently unused." approved="yes">
         <source>This correction method is currently unused.</source>
-        <target>This correction method is currently unused.</target>
+        <target state="translated">Deze correctie wordt op dit moment niet gebruikt.</target>
       </trans-unit>
-      <trans-unit id="b45d01117023cc93a154ebe3c64e743d" resname="Up/Down">
+      <trans-unit id="b45d01117023cc93a154ebe3c64e743d" resname="Up/Down" approved="yes">
         <source>Up/Down</source>
-        <target>Up/Down</target>
+        <target state="translated">Omhoog/Omlaag</target>
       </trans-unit>
-      <trans-unit id="d35a98028cca23c2a745a0bba43a90ff" resname="Influence">
+      <trans-unit id="d35a98028cca23c2a745a0bba43a90ff" resname="Influence" approved="yes">
         <source>Influence</source>
-        <target>Influence</target>
+        <target state="translated">Invloed</target>
       </trans-unit>
-      <trans-unit id="3a7af6fe0df41f239c0d43d34d19d278" resname="Cleanup is running ...">
+      <trans-unit id="3a7af6fe0df41f239c0d43d34d19d278" resname="Cleanup is running ..." approved="yes">
         <source>Cleanup is running ...</source>
-        <target>Cleanup is running ...</target>
+        <target state="translated">Opruimen is bezig ...</target>
       </trans-unit>
       <trans-unit id="f435327217fb9eef365101b4bbc39463" resname="back to form">
         <source>back to form</source>
         <target>back to form</target>
       </trans-unit>
-      <trans-unit id="91e8745deed4bed52c6bb855042df916" resname="Database cleanup">
+      <trans-unit id="91e8745deed4bed52c6bb855042df916" resname="Database cleanup" approved="yes">
         <source>Database cleanup</source>
-        <target>Database cleanup</target>
+        <target state="translated">Database opruimen</target>
       </trans-unit>
-      <trans-unit id="23eb3aa5c1281236839c3f1b900c7d5f" resname="General cleanup">
+      <trans-unit id="23eb3aa5c1281236839c3f1b900c7d5f" resname="General cleanup" approved="yes">
         <source>General cleanup</source>
-        <target>General cleanup</target>
+        <target state="translated">Algemene opschoning</target>
       </trans-unit>
-      <trans-unit id="8463f9ee697ceca6f7ea45684e47c1d7" resname="Refresh internal constants">
+      <trans-unit id="8463f9ee697ceca6f7ea45684e47c1d7" resname="Refresh internal constants" approved="yes">
         <source>Refresh internal constants</source>
-        <target>Refresh internal constants</target>
+        <target state="translated">Werk interne constanten bij</target>
       </trans-unit>
-      <trans-unit id="4a68cfc3a84bd4fe43b22875cdb37007" resname="Recalculate your equipment statistics">
+      <trans-unit id="4a68cfc3a84bd4fe43b22875cdb37007" resname="Recalculate your equipment statistics" approved="yes">
         <source>Recalculate your equipment statistics</source>
-        <target>Recalculate your equipment statistics</target>
+        <target state="translated">Herbereken uw uitrustingsstatistieken</target>
       </trans-unit>
       <trans-unit id="6069e44a888729a1cb93a12c28238261" resname="Recalculate your VDOT correction factor">
         <source>Recalculate your VDOT correction factor</source>
