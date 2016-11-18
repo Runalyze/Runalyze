@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-08-20 08:22+0200\n"
-"PO-Revision-Date: 2016-11-18 10:34+0000\n"
+"PO-Revision-Date: 2016-11-18 10:43+0000\n"
 "Last-Translator: Henk Kramer <kramerty88@gmail.com>\n"
 "Language-Team: Dutch "
 "<https://translate.runalyze.com/projects/runalyze/runalyze/nl/>\n"
@@ -1200,7 +1200,7 @@ msgstr "Drempelwaarde"
 
 #: inc/training/view/class.ElevationInfo.php:245
 msgid "Elevation correction"
-msgstr "Hoogte correctie"
+msgstr "Hoogtecorrectie"
 
 #: inc/training/view/class.ElevationInfo.php:252
 msgid "Elevation data has not been corrected."
@@ -3039,7 +3039,7 @@ msgstr "onweer"
 
 #: inc/core/Data/Weather/WindChillFactor.php:83
 msgid "Wind chill factor"
-msgstr "Wind chill factor"
+msgstr "Gevoelstemperatuur"
 
 #: inc/core/Data/Stroketype.php:98 inc/core/Data/Stroketype.php:121
 msgid "Freestyle"
@@ -3308,7 +3308,7 @@ msgstr ""
 
 #: inc/core/Dataset/Keys/Gradient.php:54
 msgid "Grad."
-msgstr "Stijgingspercentage"
+msgstr "Hellingspercentage"
 
 #: inc/core/Dataset/Keys/Gradient.php:63
 msgid ""
@@ -5483,7 +5483,7 @@ msgstr "Resultaat over %s"
 #: plugin/RunalyzePluginStat_Wettkampf/Plot.Bestzeit.php:18
 #, php-format
 msgid "Trend over %s"
-msgstr "Trend over %s"
+msgstr "Trend van %s"
 
 #: plugin/RunalyzePluginStat_Wettkampf/Plot.Bestzeit.php:19
 #, php-format
@@ -7080,7 +7080,7 @@ msgid ""
 "\">The TRIMP-concept</a> (german, netzathleten.de)"
 msgstr ""
 "Zie ook <a href=\"http://www.atletieklogboek.nl/?page=faq&faq_id=17d\" title="
-"\"Waar staat TRIMP voor?\">Waar staat TRIMP voor?</a> (nederlands, "
+"\"Waar staat TRIMP voor\">Waar staat TRIMP voor?</a> (nederlands, "
 "AtletiekLogboek)"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:495
