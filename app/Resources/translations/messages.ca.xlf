@@ -269,9 +269,9 @@
         <source>Send link</source>
         <target state="translated">Enviï link</target>
       </trans-unit>
-      <trans-unit id="28103f38886a385f79ff2fbfe9ffff5b" resname="Unable to send link. Please contact the administrator.">
+      <trans-unit id="28103f38886a385f79ff2fbfe9ffff5b" resname="Unable to send link. Please contact the administrator." approved="yes">
         <source>Unable to send link. Please contact the administrator.</source>
-        <target>Unable to send link. Please contact the administrator.</target>
+        <target state="translated">No ens ha sigut possible enviar-li el link. Si us plau contacti l'administrador.</target>
       </trans-unit>
       <trans-unit id="776d630537e30e4960bedd8b6f39ec72" resname="The link has been sent and will be valid for 24 hours." approved="no">
         <source>The link has been sent and will be valid for 24 hours.</source>
@@ -313,13 +313,13 @@
         <source>By athletes for athletes</source>
         <target>By athletes for athletes</target>
       </trans-unit>
-      <trans-unit id="2077caf87751f7f202e5e692cae9e623" resname="Runalyze is created by athletes for athletes. Whenever you have comments, problems or wishes: Please contact our Runalyze team. It's near and dear to us.">
+      <trans-unit id="2077caf87751f7f202e5e692cae9e623" resname="Runalyze is created by athletes for athletes. Whenever you have comments, problems or wishes: Please contact our Runalyze team. It's near and dear to us." approved="yes">
         <source>Runalyze is created by athletes for athletes. Whenever you have comments, problems or wishes: Please contact our Runalyze team. It's near and dear to us.</source>
-        <target>Runalyze is created by athletes for athletes. Whenever you have comments, problems or wishes: Please contact our Runalyze team. It's near and dear to us.</target>
+        <target state="translated">Runalyze ha sigut creat per atletes per als atletes. Sempre que tingui comentaris, problemes o bé desitjos, digui'ns-ho, ens n'ocuparem</target>
       </trans-unit>
-      <trans-unit id="10d0de28911c5f66463b9c8783f8148a" resname="Maintenance">
+      <trans-unit id="10d0de28911c5f66463b9c8783f8148a" resname="Maintenance" approved="yes">
         <source>Maintenance</source>
-        <target>Maintenance</target>
+        <target state="translated">Manteniment</target>
       </trans-unit>
       <trans-unit id="19a6166a9bb1ce14f5238a622ea73775" resname="RUNALYZE is temporarily down for maintenance">
         <source>RUNALYZE is temporarily down for maintenance</source>
@@ -405,9 +405,9 @@
         <source>For large databases (several gigabytes) we recommend updating RUNALYZE via console.</source>
         <target>For large databases (several gigabytes) we recommend updating RUNALYZE via console.</target>
       </trans-unit>
-      <trans-unit id="35ad75c771ec1cffc7f7ba03cf9457fe" resname="No update needed">
+      <trans-unit id="35ad75c771ec1cffc7f7ba03cf9457fe" resname="No update needed" approved="yes">
         <source>No update needed</source>
-        <target>No update needed</target>
+        <target state="translated">Cap actualització necessària</target>
       </trans-unit>
       <trans-unit id="a3907cd461d8739aa3266047bc4b8c0c" resname="Docs">
         <source>Docs</source>
@@ -425,9 +425,9 @@
         <source>Create an account</source>
         <target state="translated">Crear nou compte</target>
       </trans-unit>
-      <trans-unit id="446a2f17e10ef064822f6719d6b45b36" resname="Migrations have been executed">
+      <trans-unit id="446a2f17e10ef064822f6719d6b45b36" resname="Migrations have been executed" approved="yes">
         <source>Migrations have been executed</source>
-        <target>Migrations have been executed</target>
+        <target state="translated">Les migracions han estat executades</target>
       </trans-unit>
       <trans-unit id="00fca4e93b68706640ba7a4e61e35092" resname="Nothing more to do">
         <source>Nothing more to do</source>
