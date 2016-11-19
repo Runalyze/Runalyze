@@ -1,4 +1,4 @@
-# [Runalyze v3.0.1](http://blog.runalyze.com)
+# [Runalyze v3.0.2](http://blog.runalyze.com)
 
 [![Build Status](https://travis-ci.org/Runalyze/Runalyze.svg?branch=master)](https://travis-ci.org/Runalyze/Runalyze)
 [![Code Coverage](https://scrutinizer-ci.com/g/Runalyze/Runalyze/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/Runalyze/Runalyze/?branch=master)
@@ -42,6 +42,7 @@ You have to apply recent changes from the respective update files in `inc/instal
 ## Changelog
 * [v3.0](http://blog.runalyze.com/en/allgemein-en/runalyze-v3-0-en/), [[update instructions]](https://docs.runalyze.com/en/latest/upgrade/3.x.html#upgrade-from-2-6-to-3-0), 28.08.2016: major release (improved core, no amazing new features)
  * [v3.0.1](https://blog.runalyze.com/en/allgemein-en/runalyze-v3.0.1-en/), 16.10.2016: minor bugfixes
+ * [v3.0.2](https://blog.runalyze.com/en/allgemein-en/runalyze-v3.0.2-en/), 19.11.2016: minor bugfixes
 * [v2.6](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-6-en/), [[update instructions]](http://docs.runalyze.com/en/latest/upgrade/2.x.html#upgrade-from-2-5-to-2-6), 22.05.2016: minor release (race results, improved weather cache ...)
  * [v2.6.1](https://blog.runalyze.com/en/allgemein-en/runalyze-v2-6-1-en/), 31.05.2016: minor bugfixes
  * [v2.6.2](https://blog.runalyze.com/en/allgemein-en/runalyze-v2-6-2-en/), 18.07.2016: minor bugfixes

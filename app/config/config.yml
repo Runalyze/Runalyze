@@ -20,7 +20,7 @@ framework:
       - '%kernel.root_dir%/../inc/locale/'
     
 parameters:
-  RUNALYZE_VERSION: 3.0.1
+  RUNALYZE_VERSION: 3.0.2
 
 services:
   app.locale_listener:
