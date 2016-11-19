@@ -858,9 +858,13 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
             $this->assertTrue($this->object->object()->hasArrayDistance());
 
 			$this->assertEquals(2500, $this->object->object()->getPoolLength());
+			$this->assertEquals(
+				array(0.15),
+				$this->object->object()->Splits()->distancesAsArray()
+			);
 		}
 	}
-	
+
 	public function testDeveloperFieldsInPoolSwimFileFromDaniel() {
 		if (Shell::isPerlAvailable()) {
 			$this->object->parseFile('../tests/testfiles/fit/swim-pool-via-iq.fit');
@@ -872,6 +876,10 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
             $this->assertTrue($this->object->object()->hasArrayDistance());
 
 			$this->assertEquals(2500, $this->object->object()->getPoolLength());
+			$this->assertEquals(
+				array(0.25, 0.25, 0.25, 0.25, 0.15, 0.10),
+				$this->object->object()->Splits()->distancesAsArray()
+			);
 		}
 	}
 	

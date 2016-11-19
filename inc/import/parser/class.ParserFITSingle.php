@@ -103,23 +103,26 @@ class ParserFITSingle extends ParserAbstractSingle {
 		44 => ['pool_length', ['default' => 1, 'm' => 100]],
 	);
 
+	/** @var array */
+	protected $DeveloperFieldMappingForLap = array();
+
+	/** @var array */
+	protected $nativeFieldMappingForLap = array(
+		9 => ['total_distance', ['default' => 1, 'm' => 100]],
+	);
+
 	protected function readFieldDescription() {
 		switch ($this->Values['native_mesg_num'][1]) {
 			case 'record':
-				$this->readFieldDescriptionForRecord();
+				$this->readFieldDescriptionFor($this->nativeFieldMappingForRecord, $this->DeveloperFieldMappingForRecord);
 				break;
 			case 'session':
-				$this->readFieldDescriptionForSession();
+				$this->readFieldDescriptionFor($this->nativeFieldMappingForSession, $this->DeveloperFieldMappingForSession);
+				break;
+			case 'lap':
+				$this->readFieldDescriptionFor($this->nativeFieldMappingForLap, $this->DeveloperFieldMappingForLap);
 				break;
 		}
-	}
-
-	protected function readFieldDescriptionForSession() {
-		$this->readFieldDescriptionFor($this->nativeFieldMappingForSession, $this->DeveloperFieldMappingForSession);
-	}
-
-	protected function readFieldDescriptionForRecord() {
-		$this->readFieldDescriptionFor($this->nativeFieldMappingForRecord, $this->DeveloperFieldMappingForRecord);
 	}
 
 	protected function readFieldDescriptionFor(array &$nativeFieldMapping, array &$fieldMapping) {
@@ -603,7 +606,9 @@ class ParserFITSingle extends ParserAbstractSingle {
 	 * Read lap
 	 */
 	protected function readLap() {
-		if (isset($this->Values['total_timer_time']) && isset($this->Values['total_distance']))
+		$this->mapDeveloperFieldsToNativeFieldsFor($this->DeveloperFieldMappingForLap);
+
+		if (isset($this->Values['total_timer_time']) && isset($this->Values['total_distance']) && round($this->Values['total_timer_time'][0] / 1e3) > 0)
 			$this->TrainingObject->Splits()->addSplit(
 				$this->Values['total_distance'][0] / 1e5,
 				$this->Values['total_timer_time'][0] / 1e3
