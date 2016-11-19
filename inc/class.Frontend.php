@@ -81,7 +81,6 @@ class Frontend {
 		define('FRONTEND_PATH', dirname(__FILE__).'/');
 
 		$this->setAutoloader();
-
 		$this->initCache();
 		$this->initErrorHandling();
 		$this->initConfig();
@@ -102,9 +101,10 @@ class Frontend {
 	 * Setup config
 	 */
 	private function initConfig() {
+		echo FRONTEND_PATH;
 		$this->yamlConfig = array_merge(
-			Yaml::parse(file_get_contents('../app/config/default_config.yml'))['parameters'],
-			Yaml::parse(file_get_contents('../data/config.yml'))['parameters']
+			Yaml::parse(file_get_contents(FRONTEND_PATH.'/../app/config/default_config.yml'))['parameters'],
+			Yaml::parse(file_get_contents(FRONTEND_PATH.'/../data/config.yml'))['parameters']
 		);
 
         define('DARKSKY_API_KEY', $this->yamlConfig['darksky_api_key']);
