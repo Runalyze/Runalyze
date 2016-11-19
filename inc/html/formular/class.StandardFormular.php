@@ -58,7 +58,7 @@ class StandardFormular extends Formular {
 	 * @param DataObject $dataObject
 	 */
 	protected function init(DataObject $dataObject) {
-		$this->wasSubmitted = isset($_POST['submit']);
+		$this->wasSubmitted = isset($_POST['submit']) && !isset($_POST['multi-edit']);
 		$this->dataObject   = $dataObject;
 
 		if (!$this->wasSubmitted)
