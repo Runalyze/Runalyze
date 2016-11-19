@@ -761,7 +761,7 @@
       </trans-unit>
       <trans-unit id="d40600b2f817b5f3527af368d58c68f0" resname="VDOT calculation for: %title%" approved="yes">
         <source>VDOT calculation for: %title%</source>
-        <target state="translated">Calcolo VDOT per: %s</target>
+        <target state="translated">Calcolo VDOT per: %title%</target>
       </trans-unit>
       <trans-unit id="bb2a07539e662b40d99e3a621d80ead2" resname="Standard calculation: As race result" approved="yes">
         <source>Standard calculation: As race result</source>
