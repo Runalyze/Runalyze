@@ -3,8 +3,8 @@
  * This file contains class::ConfigTabTypes
  * @package Runalyze\System\Config
  */
-
-use Runalyze\Configuration;
+ 
+ use Runalyze\Configuration;
 
 /**
  * ConfigTabTypes
@@ -84,12 +84,12 @@ class ConfigTabTypes extends ConfigTab {
 				2 => __('inherit from sport type')
 			);
 
-            $readOnly = $id !== -1 ? 'disabled="true"' : '';
+            $readOnly = $id !== -1 ? ' disabled="true"' : '';
 			$Code .= '
 				<tr class="'.($sportid !== false && $sportid != $Data['sportid'] ? 'top-separated-light' : '').($id == -1 ? ' unimportant' : '').'">
 					<td><input type="text" size="20" name="type[name]['.$id.']" value="'.$Data['name'].'"></td>
 					<td><input type="text" size="3" name="type[abbr]['.$id.']" value="'.$Data['abbr'].'"></td>
-                    <td><select name="type[sportid]['.$id.']" '.$readOnly.'>';
+                    <td><select name="type[sportid]['.$id.']"'.$readOnly.'>';
 
 			foreach ($Sports as $SData)
 				$Code .= '<option value="'.$SData['id'].'"'.HTML::Selected($SData['id'] == $Data['sportid']).'>'.$SData['name'].'</option>';
@@ -129,7 +129,6 @@ class ConfigTabTypes extends ConfigTab {
 			$columns = array(
 				'name',
 				'abbr',
-				'sportid',
 				'short',
 				'hr_avg',
 				'quality_session'
@@ -137,18 +136,21 @@ class ConfigTabTypes extends ConfigTab {
 			$values  = array(
 				$_POST['type']['name'][$id],
 				$_POST['type']['abbr'][$id],
-				$_POST['type']['sportid'][$id],
 				$_POST['type']['short'][$id],
 				$_POST['type']['hr_avg'][$id],
 				isset($_POST['type']['quality_session'][$id])
 			);
 
-			if (isset($_POST['type']['delete'][$id]))
+			if (isset($_POST['type']['delete'][$id])) {
 				DB::getInstance()->deleteByID('type', (int)$id);
-			elseif ($id != -1)
+			} elseif ($id != -1) {
 				DB::getInstance()->update('type', $id, $columns, $values);
-			elseif (strlen($_POST['type']['name'][$id]) > 2)
+			} elseif (strlen($_POST['type']['name'][$id]) > 2) {
+				$columns[] = 'sportid';
+				$values[] = $_POST['type']['sportid'][$id];
+
 				DB::getInstance()->insert('type', $columns, $values);
+			}
 		}
 
 		Ajax::setReloadFlag(Ajax::$RELOAD_DATABROWSER);
