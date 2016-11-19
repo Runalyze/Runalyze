@@ -269,9 +269,9 @@
         <source>Send link</source>
         <target state="translated">Wyślij link</target>
       </trans-unit>
-      <trans-unit id="28103f38886a385f79ff2fbfe9ffff5b" resname="Unable to send link. Please contact the administrator.">
+      <trans-unit id="28103f38886a385f79ff2fbfe9ffff5b" resname="Unable to send link. Please contact the administrator." approved="yes">
         <source>Unable to send link. Please contact the administrator.</source>
-        <target>Unable to send link. Please contact the administrator.</target>
+        <target state="translated">Nie można wysłać linku. Skontaktuj się z administratorem.</target>
       </trans-unit>
       <trans-unit id="776d630537e30e4960bedd8b6f39ec72" resname="The link has been sent and will be valid for 24 hours." approved="yes">
         <source>The link has been sent and will be valid for 24 hours.</source>
@@ -315,15 +315,15 @@
       </trans-unit>
       <trans-unit id="2077caf87751f7f202e5e692cae9e623" resname="Runalyze is created by athletes for athletes. Whenever you have comments, problems or wishes: Please contact our Runalyze team. It's near and dear to us." approved="yes">
         <source>Runalyze is created by athletes for athletes. Whenever you have comments, problems or wishes: Please contact our Runalyze team. It's near and dear to us.</source>
-        <target state="translated">Runalyze is created by athletes for athletes. Whenever you have comments, problems or wishes: Please contact our Runalyze team. It's near and dear to us.</target>
+        <target state="translated">Runalyze tworzą sportowców dla sportowców. Jeśli masz uwagi lub sugestie - skontaktuj się z nami. To dla nas ważne</target>
       </trans-unit>
-      <trans-unit id="10d0de28911c5f66463b9c8783f8148a" resname="Maintenance">
+      <trans-unit id="10d0de28911c5f66463b9c8783f8148a" resname="Maintenance" approved="yes">
         <source>Maintenance</source>
-        <target>Maintenance</target>
+        <target state="translated">Konserwacja</target>
       </trans-unit>
-      <trans-unit id="19a6166a9bb1ce14f5238a622ea73775" resname="RUNALYZE is temporarily down for maintenance">
+      <trans-unit id="19a6166a9bb1ce14f5238a622ea73775" resname="RUNALYZE is temporarily down for maintenance" approved="yes">
         <source>RUNALYZE is temporarily down for maintenance</source>
-        <target>RUNALYZE is temporarily down for maintenance</target>
+        <target state="translated">RUNALYZE jest tymczasowo nieczynny</target>
       </trans-unit>
       <trans-unit id="ad8bfa729c523b6dade80aa9c824bafb" resname="We will resume normal operations as soon as possible.">
         <source>We will resume normal operations as soon as possible.</source>
@@ -397,9 +397,9 @@
         <source>Runalyze is under maintenance at the moment. No login possible.</source>
         <target state="needs-translation">Runalyze jest w trybie konserwacji. Logowanie nie jest możliwe.</target>
       </trans-unit>
-      <trans-unit id="ab5a48c9a0cf54a09ce069569065bd47" resname="Click here to update RUNALYZE">
+      <trans-unit id="ab5a48c9a0cf54a09ce069569065bd47" resname="Click here to update RUNALYZE" approved="yes">
         <source>Click here to update RUNALYZE</source>
-        <target>Click here to update RUNALYZE</target>
+        <target state="translated">Kliknij tutaj, aby zaktualizować RUNALYZE</target>
       </trans-unit>
       <trans-unit id="ce0f2b5572750ab2ea4b61b6a849caf3" resname="For large databases (several gigabytes) we recommend updating RUNALYZE via console.">
         <source>For large databases (several gigabytes) we recommend updating RUNALYZE via console.</source>
