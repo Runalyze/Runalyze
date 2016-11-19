@@ -539,9 +539,9 @@
         <source>This will not touch any general settings like gender and main sport</source>
         <target state="translated">Questo non modificherà alcuna impostazione generale come genere e sport principale.</target>
       </trans-unit>
-      <trans-unit id="e5be67d36c8cdd2f79fa087b0a8e8d0d" resname="You'll receive an email with a link to confirm the deletion.">
+      <trans-unit id="e5be67d36c8cdd2f79fa087b0a8e8d0d" resname="You'll receive an email with a link to confirm the deletion." approved="yes">
         <source>You'll receive an email with a link to confirm the deletion.</source>
-        <target>You'll receive an email with a link to confirm the deletion.</target>
+        <target state="translated">Riceverai un'email con un link per confermare l'eliminazione.</target>
       </trans-unit>
       <trans-unit id="948644d6ea11bdd96c92c24ee0157573" resname="The deletion is permanent and cannot be reversed. Therefore, you should backup your data.">
         <source>The deletion is permanent and cannot be reversed. Therefore, you should backup your data.</source>
@@ -575,9 +575,9 @@
         <source>Complete the process by accessing the following link and confirming the deletion</source>
         <target>Complete the process by accessing the following link and confirming the deletion</target>
       </trans-unit>
-      <trans-unit id="74207a3dec8572d078f8e36c9992b1c3" resname="Delete your RUNALYZE account">
+      <trans-unit id="74207a3dec8572d078f8e36c9992b1c3" resname="Delete your RUNALYZE account" approved="yes">
         <source>Delete your RUNALYZE account</source>
-        <target>Delete your RUNALYZE account</target>
+        <target state="translated">Eliminare il tuo account RUNALYZE</target>
       </trans-unit>
       <trans-unit id="fd6d1341af2a9eb5411fabd62615ea58" resname="If the link does not work, please copy the following URL into the address field of your web browser">
         <source>If the link does not work, please copy the following URL into the address field of your web browser</source>
@@ -623,9 +623,9 @@
         <source>To get started right away just take a look at our "getting started" guide at %s.</source>
         <target>To get started right away just take a look at our "getting started" guide at %s.</target>
       </trans-unit>
-      <trans-unit id="3903aab323863bd2e9b68218a7a65ebd" resname="Follow">
+      <trans-unit id="3903aab323863bd2e9b68218a7a65ebd" resname="Follow" approved="yes">
         <source>Follow</source>
-        <target>Follow</target>
+        <target state="translated">Seguire</target>
       </trans-unit>
       <trans-unit id="0866d0513309fee7479977346ffdbdee" resname="Accept our %a% terms of use %b%">
         <source>Accept our %a% terms of use %b%</source>
@@ -747,9 +747,9 @@
         <source>Saturated hemoglobin</source>
         <target>Saturated hemoglobin</target>
       </trans-unit>
-      <trans-unit id="7ac5bc66117cd5a9201c464977f47f4b" resname="Total hemoglobin">
+      <trans-unit id="7ac5bc66117cd5a9201c464977f47f4b" resname="Total hemoglobin" approved="yes">
         <source>Total hemoglobin</source>
-        <target>Total hemoglobin</target>
+        <target state="translated">Emoglobina totale</target>
       </trans-unit>
       <trans-unit id="581fa1142704e5c00b51a43787f96673" resname="This analysis is currently under development and does not consider your unit settings.">
         <source>This analysis is currently under development and does not consider your unit settings.</source>
@@ -779,9 +779,9 @@
         <source>VDOT</source>
         <target>VDOT</target>
       </trans-unit>
-      <trans-unit id="63d5049791d9d79d86e9a108b0a999ca" resname="Reference">
+      <trans-unit id="63d5049791d9d79d86e9a108b0a999ca" resname="Reference" approved="yes">
         <source>Reference</source>
-        <target>Reference</target>
+        <target state="translated">Riferimento</target>
       </trans-unit>
       <trans-unit id="7219ff172727ac5ab4cadd0e4f22f3ec" resname="The Daniels/Gilbert Formula by Larry Simpson">
         <source>The Daniels/Gilbert Formula by Larry Simpson</source>
@@ -1085,11 +1085,11 @@
       </trans-unit>
       <trans-unit id="4d9126da7f62ed75688415926b138bff" resname="There are &lt;strong&gt;%numActivities%&lt;/strong&gt; activities in this file." approved="yes">
         <source>There are &lt;strong&gt;%numActivities%&lt;/strong&gt; activities in this file.</source>
-        <target state="translated">Ci sono &lt;strong&gt;%s&lt;/strong&gt; attività in questo file.</target>
+        <target state="translated">Ci sono &lt;strong&gt;%numActivities%&lt;/strong&gt; attività in questo file.</target>
       </trans-unit>
       <trans-unit id="ce069f6f467b25fe7c56b9041ab82e86" resname="There are &lt;strong&gt;%numBodyValues%&lt;/strong&gt; body values in this file." approved="yes">
         <source>There are &lt;strong&gt;%numBodyValues%&lt;/strong&gt; body values in this file.</source>
-        <target state="translated">Ci sono &lt;strong&gt;%s&lt;/strong&gt; valori fisici in questo file.</target>
+        <target state="translated">Ci sono &lt;strong&gt;%numBodyValues%&lt;/strong&gt; valori fisici in questo file.</target>
       </trans-unit>
       <trans-unit id="5e20646580da584d76435da00d6face4" resname="Export data">
         <source>Export data</source>
@@ -1115,29 +1115,25 @@
         <source>JSON-format</source>
         <target state="translated">Formato JSON</target>
       </trans-unit>
-      <trans-unit id="1f105947c6e41a7dd84b87e156e3a9f0" resname="Portable backup of your configuration and data -&#10;                                This file can be imported into any other installation, using this tool.&lt;br /&gt;&#10;                                This way you can transfer your data from a local to an online installation and back.">
+      <trans-unit id="1f105947c6e41a7dd84b87e156e3a9f0" resname="Portable backup of your configuration and data -&#10;                                This file can be imported into any other installation, using this tool.&lt;br /&gt;&#10;                                This way you can transfer your data from a local to an online installation and back." approved="yes">
         <source>Portable backup of your configuration and data -
                                 This file can be imported into any other installation, using this tool.&lt;br /&gt;
                                 This way you can transfer your data from a local to an online installation and back.</source>
-        <target><![CDATA[Portable backup of your configuration and data -
-                                This file can be imported into any other installation, using this tool.<br />
-                                This way you can transfer your data from a local to an online installation and back.]]></target>
+        <target state="translated">Backup esportabile della configurazione e dei dati. Questo file può essere importato in qualsiasi altra installazione usando questo plugin. &lt;br /&gt;In questo modo puoi trasferire i dati da un'installazione locale a una online e viceversa.</target>
       </trans-unit>
       <trans-unit id="340844612cdb619a15f3e622d2a33deb" resname="SQL-format">
         <source>SQL-format</source>
         <target>SQL-format</target>
       </trans-unit>
-      <trans-unit id="47fa2f5eab8e66a13cbee64b261c6815" resname="Backup of the complete database -&#10;                                This file can be imported manually with e.g. phpMyAdmin into any database.&lt;br /&gt;&#10;                                This is recommended to create a backup copy or to import your data into a new installation.">
+      <trans-unit id="47fa2f5eab8e66a13cbee64b261c6815" resname="Backup of the complete database -&#10;                                This file can be imported manually with e.g. phpMyAdmin into any database.&lt;br /&gt;&#10;                                This is recommended to create a backup copy or to import your data into a new installation." approved="yes">
         <source>Backup of the complete database -
                                 This file can be imported manually with e.g. phpMyAdmin into any database.&lt;br /&gt;
                                 This is recommended to create a backup copy or to import your data into a new installation.</source>
-        <target><![CDATA[Backup of the complete database -
-                                This file can be imported manually with e.g. phpMyAdmin into any database.<br />
-                                This is recommended to create a backup copy or to import your data into a new installation.]]></target>
+        <target state="translated">Backup dell'intero database. Questo file può essere importato manualmente in un database ad esempio con PHPMyAdmin.&lt;br /&gt;Questa procedura è raccomandata per creare una copia di backup e importare tutti i dati in una nuova installazione.</target>
       </trans-unit>
-      <trans-unit id="70fba2bf4365f391c98e5526515549d4" resname="Your backup has been created.">
+      <trans-unit id="70fba2bf4365f391c98e5526515549d4" resname="Your backup has been created." approved="yes">
         <source>Your backup has been created.</source>
-        <target>Your backup has been created.</target>
+        <target state="translated">Il backup è stato creato.</target>
       </trans-unit>
       <trans-unit id="85a91cf6c85cc76700e8e01106a10cea" resname="Available exports">
         <source>Available exports</source>
