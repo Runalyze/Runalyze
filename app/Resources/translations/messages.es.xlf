@@ -313,9 +313,9 @@
         <source>By athletes for athletes</source>
         <target state="translated">Por atletas para atletas</target>
       </trans-unit>
-      <trans-unit id="2077caf87751f7f202e5e692cae9e623" resname="Runalyze is created by athletes for athletes. Whenever you have comments, problems or wishes: Please contact our Runalyze team. It's near and dear to us.">
+      <trans-unit id="2077caf87751f7f202e5e692cae9e623" resname="Runalyze is created by athletes for athletes. Whenever you have comments, problems or wishes: Please contact our Runalyze team. It's near and dear to us." approved="yes">
         <source>Runalyze is created by athletes for athletes. Whenever you have comments, problems or wishes: Please contact our Runalyze team. It's near and dear to us.</source>
-        <target>Runalyze is created by athletes for athletes. Whenever you have comments, problems or wishes: Please contact our Runalyze team. It's near and dear to us.</target>
+        <target state="translated">Runalyze ha sido creado por corredores para corredores. Siempre que tengas comentarios, problemas o sugerencias: Ponte en contacto con nosotros, nos importa</target>
       </trans-unit>
       <trans-unit id="10d0de28911c5f66463b9c8783f8148a" resname="Maintenance" approved="yes">
         <source>Maintenance</source>
