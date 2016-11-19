@@ -173,6 +173,9 @@ class DefaultController extends Controller
     }
 
     /**
+     * @Route("/shared/{training}&{test}&{testa}&{testsaa}")
+     * @Route("/shared/{training}&{test}&{testa}")
+     * @Route("/shared/{training}&{test}")
      * @Route("/shared/{training}")
      */
     public function sharedTrainingAction($training, Request $request)
