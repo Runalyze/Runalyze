@@ -101,7 +101,6 @@ class Frontend {
 	 * Setup config
 	 */
 	private function initConfig() {
-		echo FRONTEND_PATH;
 		$this->yamlConfig = array_merge(
 			Yaml::parse(file_get_contents(FRONTEND_PATH.'/../app/config/default_config.yml'))['parameters'],
 			Yaml::parse(file_get_contents(FRONTEND_PATH.'/../data/config.yml'))['parameters']
