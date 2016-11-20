@@ -225,9 +225,9 @@
         <source>You can now use Runalyze.</source>
         <target state="translated">Vous pouvez désormais utiliser Runalyze.</target>
       </trans-unit>
-      <trans-unit id="889a33c84af48a585f437344b2b7759b" resname="Do you really want to delete your account, %username%?">
+      <trans-unit id="889a33c84af48a585f437344b2b7759b" resname="Do you really want to delete your account, %username%?" approved="yes">
         <source>Do you really want to delete your account, %username%?</source>
-        <target state="translated">Voulez-vous vraiment supprimer votre compte, %nom utilisateur% ?</target>
+        <target state="translated">Voulez-vous vraiment supprimer votre compte, %username% ?</target>
       </trans-unit>
       <trans-unit id="e6e049c44a797fda2a175d07df838e49" resname="Delete account">
         <source>Delete account</source>
