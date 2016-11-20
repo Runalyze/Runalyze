@@ -13,7 +13,11 @@
 
 {% macro statisticsCellUnitStd(value) %}
     {# @var value \Runalyze\Bundle\CoreBundle\Twig\DisplayableValue #}
-    &plusmn;{{ value.value|abs }} <small>{{ value.unit }}</small>
+    {% if value.value < 0 %}
+        &plusmn;{{ value.value|abs }} <small>{{ value.unit }}</small>
+    {% else %}
+        &plusmn;{{ value.value }} <small>{{ value.unit }}</small>
+    {% endif %}
 {% endmacro %}
 
 {% macro statisticsRow(label, unit, mean, min, max, median, mode, cov, std, q10, q90) %}
@@ -97,13 +101,13 @@
                     {# @var current \Runalyze\Calculation\Distribution\Empirical #}
                     {{ this.statisticsRowUnit(
                         "Pace"|trans,
-                        pace(current.mean, paceUnit),
+                        pace(paceAverage, paceUnit),
                         pace(current.max, paceUnit),
                         pace(current.min, paceUnit),
                         pace(current.median, paceUnit),
                         pace(current.mode, paceUnit),
                         current.coefficientOfVariation,
-                        paceComparison(current.mean, (current.mean + current.stdDev), paceUnit),
+                        paceComparison(paceAverage, (paceAverage - current.stdDev), paceUnit),
                         pace(current.quantile(0.1), paceUnit),
                         pace(current.quantile(0.9), paceUnit)
                     ) }}
