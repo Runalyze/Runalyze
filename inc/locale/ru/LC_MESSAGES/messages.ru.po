@@ -1,19 +1,19 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.com\n"
 "POT-Creation-Date: 2016-11-15 17:37+0100\n"
-"PO-Revision-Date: 2016-08-25 08:21+0000\n"
-"Last-Translator: Sergey <sergey@kashporov.ru>\n"
-"Language-Team: Russian <http://translate.runalyze.com/projects/runalyze/"
-"runalyze/ru/>\n"
+"PO-Revision-Date: 2016-11-24 18:26+0000\n"
+"Last-Translator: Semion Polenok <semapv@gmail.com>\n"
+"Language-Team: Russian <https://translate.runalyze.com/projects/runalyze"
+"/runalyze-master-po/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 2.8-dev\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
+"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 2.9\n"
 "X-Poedit-KeywordsList: __;_ne;_n;_e\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -25,7 +25,7 @@ msgstr "Тренировка удалена"
 
 #: src/CoreBundle/Controller/ActivityController.php:261
 msgid "Corrected elevation data has been removed."
-msgstr ""
+msgstr "Скорректированные данные о высоте были удалены."
 
 #: src/CoreBundle/Controller/ActivityController.php:263
 #: inc/training/view/class.ElevationInfo.php:249
@@ -42,19 +42,19 @@ msgstr "Поиск по тренировкам"
 
 #: src/CoreBundle/Controller/CallController.php:175
 msgid "There was a problem."
-msgstr ""
+msgstr "Возникла проблема."
 
 #: src/CoreBundle/Controller/DefaultController.php:232
 msgid "Click on an activity to see more details."
-msgstr ""
+msgstr "Нажмите на тренировку, чтобы увидеть больше деталей."
 
 #: src/CoreBundle/Controller/DefaultController.php:233
 msgid "Public activities are marked: "
-msgstr ""
+msgstr "Открытые тренировки помечены: "
 
 #: src/CoreBundle/Controller/PluginController.php:23
 msgid "Install"
-msgstr ""
+msgstr "Установить"
 
 #: src/CoreBundle/Controller/PluginController.php:29
 msgid "The plugin has been successfully installed."
@@ -69,7 +69,7 @@ msgstr "Настройки"
 
 #: src/CoreBundle/Controller/PluginController.php:38
 msgid "There was a problem, the plugin could not be installed."
-msgstr ""
+msgstr "Возникла проблема, плагин не может быть установлен."
 
 #: src/CoreBundle/Controller/PluginController.php:42
 #: src/CoreBundle/Controller/PluginController.php:72
@@ -78,23 +78,23 @@ msgstr "вернуться к списку"
 
 #: src/CoreBundle/Controller/PluginController.php:59
 msgid "Uninstall"
-msgstr ""
+msgstr "Удаление"
 
 #: src/CoreBundle/Controller/PluginController.php:62
 msgid "The plugin has been uninstalled."
-msgstr ""
+msgstr "Плагин был удален."
 
 #: src/CoreBundle/Controller/PluginController.php:68
 msgid "There was a problem, the plugin could not be uninstalled."
-msgstr ""
+msgstr "Возникла проблема, плагин не может быть удален."
 
 #: src/CoreBundle/Controller/PluginController.php:93
 msgid "The plugin could not be found."
-msgstr ""
+msgstr "Плагин не может быть найден."
 
 #: src/CoreBundle/Controller/PluginController.php:165
 msgid "Something went wrong ..."
-msgstr ""
+msgstr "Что-то пошло не так ..."
 
 #: src/CoreBundle/Component/Tool/DatabaseCleanup/Job.php:69
 #: inc/core/Configuration/Messages.php:49
@@ -357,7 +357,7 @@ msgstr ""
 #: src/CoreBundle/Component/Account/Registration.php:172
 #: inc/training/class.TrainingFormular.php:265
 msgid "Race"
-msgstr ""
+msgstr "Соревнование"
 
 #: src/CoreBundle/Component/Account/Registration.php:172
 msgid "RC"
@@ -1998,7 +1998,6 @@ msgid "Wind speed"
 msgstr "Скорость ветра"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:65
-#, fuzzy
 msgid "Wind direction"
 msgstr "Направление ветра"
 
@@ -2134,7 +2133,7 @@ msgstr "Макс.ЧСС"
 
 #: inc/training/search/class.SearchFormular.php:186
 msgid "Is race"
-msgstr ""
+msgstr "Соревнование"
 
 #: inc/training/search/class.SearchFormular.php:190
 msgid "Uses VDOT"
@@ -4453,11 +4452,11 @@ msgstr "Добавить ссылку для каждого дня для соз
 
 #: inc/core/Configuration/Category/Trimp.php:99
 msgid "Days for ATL"
-msgstr ""
+msgstr "Дней для ATL"
 
 #: inc/core/Configuration/Category/Trimp.php:100
 msgid "Number of days for ATL time constant"
-msgstr ""
+msgstr "Количество дней для ATL, постоянная времени"
 
 #: inc/core/Configuration/Category/Trimp.php:104
 msgid "Days for CTL"
@@ -4579,11 +4578,11 @@ msgstr "Вы можете скрыть карту для публичного п
 
 #: inc/core/Configuration/Category/Vdot.php:142
 msgid "Time constant length for VDOT"
-msgstr ""
+msgstr "Длина временной константы для VDOT"
 
 #: inc/core/Configuration/Category/Vdot.php:143
 msgid "Time constant length for VDOT rolling average"
-msgstr ""
+msgstr "Длина временной константы для VDOT скользящего среднего"
 
 #: inc/core/Configuration/Category/Vdot.php:147
 msgid "Manual correction factor"
@@ -4604,7 +4603,7 @@ msgstr "Значение должно быть между %s и %s."
 
 #: inc/core/Configuration/Category/Vdot.php:153
 msgid "Use fixed VDOT value"
-msgstr ""
+msgstr "Использовать фиксированное значение VDOT"
 
 #: inc/core/Configuration/Category/Vdot.php:154
 msgid ""
@@ -4628,7 +4627,7 @@ msgstr ""
 
 #: inc/core/Configuration/Category/Vdot.php:163
 msgid "Correction per positive elevation"
-msgstr ""
+msgstr "Коррекция на положительной высоте"
 
 #: inc/core/Configuration/Category/Vdot.php:164
 msgid ""
@@ -4640,7 +4639,7 @@ msgstr ""
 
 #: inc/core/Configuration/Category/Vdot.php:169
 msgid "Correction per negative elevation"
-msgstr ""
+msgstr "Коррекция на отрицательной высоте"
 
 #: inc/core/Configuration/Category/Vdot.php:170
 msgid ""
