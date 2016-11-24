@@ -3,28 +3,28 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-08-20 08:22+0200\n"
-"PO-Revision-Date: 2016-08-25 08:21+0000\n"
-"Last-Translator: Sergey <sergey@kashporov.ru>\n"
+"PO-Revision-Date: 2016-11-24 18:26+0000\n"
+"Last-Translator: Semion Polenok <semapv@gmail.com>\n"
 "Language-Team: Russian "
-"<http://translate.runalyze.com/projects/runalyze/runalyze/ru/>\n"
+"<https://translate.runalyze.com/projects/runalyze/runalyze/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
 "4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 2.8-dev\n"
+"X-Generator: Weblate 2.9\n"
 "X-Poedit-KeywordsList: __;_ne;_n;_e\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: .\n"
 
 #: src/CoreBundle/Controller/DefaultController.php:251
 msgid "Click on an activity to see more details."
-msgstr ""
+msgstr "Нажмите на тренировку, чтобы увидеть больше деталей."
 
 #: src/CoreBundle/Controller/DefaultController.php:252
 msgid "Public activities are marked: "
-msgstr ""
+msgstr "Открытые тренировки помечены: "
 
 #: src/CoreBundle/Controller/ActivityController.php:92
 #: src/CoreBundle/Controller/ActivityController.php:183
@@ -33,7 +33,7 @@ msgstr "Тренировка удалена"
 
 #: src/CoreBundle/Controller/ActivityController.php:236
 msgid "Corrected elevation data has been removed."
-msgstr ""
+msgstr "Скорректированные данные о высоте были удалены."
 
 #: src/CoreBundle/Controller/ActivityController.php:238
 #: inc/training/view/class.ElevationInfo.php:249
@@ -46,7 +46,7 @@ msgstr "Невозможно получить данные о высоте."
 
 #: src/CoreBundle/Controller/PluginController.php:24
 msgid "Install"
-msgstr ""
+msgstr "Установить"
 
 #: src/CoreBundle/Controller/PluginController.php:30
 msgid "The plugin has been successfully installed."
@@ -61,7 +61,7 @@ msgstr "Настройки"
 
 #: src/CoreBundle/Controller/PluginController.php:39
 msgid "There was a problem, the plugin could not be installed."
-msgstr ""
+msgstr "Возникла проблема, плагин не может быть установлен."
 
 #: src/CoreBundle/Controller/PluginController.php:43
 #: src/CoreBundle/Controller/PluginController.php:73
@@ -70,23 +70,23 @@ msgstr "вернуться к списку"
 
 #: src/CoreBundle/Controller/PluginController.php:60
 msgid "Uninstall"
-msgstr ""
+msgstr "Удаление"
 
 #: src/CoreBundle/Controller/PluginController.php:63
 msgid "The plugin has been uninstalled."
-msgstr ""
+msgstr "Плагин был удален."
 
 #: src/CoreBundle/Controller/PluginController.php:69
 msgid "There was a problem, the plugin could not be uninstalled."
-msgstr ""
+msgstr "Возникла проблема, плагин не может быть удален."
 
 #: src/CoreBundle/Controller/PluginController.php:94
 msgid "The plugin could not be found."
-msgstr ""
+msgstr "Плагин не может быть найден."
 
 #: src/CoreBundle/Controller/PluginController.php:166
 msgid "Something went wrong ..."
-msgstr ""
+msgstr "Что-то пошло не так ..."
 
 #: src/CoreBundle/Controller/CallController.php:147
 msgid "Delete your account."
@@ -103,6 +103,9 @@ msgid ""
 "decided to delete your account.<br>Your account will be deleted as soon as "
 "you click on the confirmation link in your mail."
 msgstr ""
+"<em>Подтверждение было отправлено по почте.</em><br>Грустно, что Вы решили "
+"удалить свой аккаунт.<br>Ваш аккаунт будет удален, как только Вы нажмете на "
+"ссылку подтверждения в Вашей почте."
 
 #: src/CoreBundle/Controller/CallController.php:180
 msgid "Search for activities"
@@ -110,11 +113,11 @@ msgstr "Поиск по тренировкам"
 
 #: src/CoreBundle/Controller/CallController.php:209
 msgid "There was a problem."
-msgstr ""
+msgstr "Возникла проблема."
 
 #: src/CoreBundle/Controller/CallController.php:243
 msgid "You are not logged in anymore."
-msgstr ""
+msgstr "Вы не вошли в систему."
 
 #: src/CoreBundle/Controller/CallController.php:244
 #: inc/tpl/tpl.adminWindow.login.php:13
@@ -299,7 +302,6 @@ msgid "Wind speed"
 msgstr "Скорость ветра"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:65
-#, fuzzy
 msgid "Wind direction"
 msgstr "Направление ветра"
 
@@ -539,7 +541,7 @@ msgstr "Мощность"
 
 #: inc/training/search/class.SearchFormular.php:186
 msgid "Is race"
-msgstr ""
+msgstr "Соревнование"
 
 #: inc/training/search/class.SearchFormular.php:188
 #: inc/training/view/class.VDOTinfo.php:74
@@ -1524,7 +1526,7 @@ msgstr ""
 #: inc/system/schemes/set.emptyValues.php:65
 #: plugin/RunalyzePluginTool_AnalyzeVDOT/tpl.Table.php:9
 msgid "Race"
-msgstr ""
+msgstr "Соревнование"
 
 #: inc/training/class.TrainingFormular.php:339
 msgid "Choose tags"
@@ -1999,11 +2001,11 @@ msgstr ""
 
 #: inc/core/Configuration/Category/Vdot.php:170
 msgid "Time constant length for VDOT"
-msgstr ""
+msgstr "Длина временной константы для VDOT"
 
 #: inc/core/Configuration/Category/Vdot.php:171
 msgid "Time constant length for VDOT rolling average"
-msgstr ""
+msgstr "Длина временной константы для VDOT скользящего среднего"
 
 #: inc/core/Configuration/Category/Vdot.php:175
 msgid "Use correction factor"
@@ -2012,7 +2014,7 @@ msgstr "Использовать поправочный коэффициент"
 #: inc/core/Configuration/Category/Vdot.php:176
 msgid "Use a correction factor based on your best race result. (recommended)"
 msgstr ""
-"Использовать поправочный коэффициент, основанный на лучших результатах "
+"Использовать поправочный коэффициент, основанный на лучших Ваших результатах "
 "соревнований. (рекомендуется)"
 
 #: inc/core/Configuration/Category/Vdot.php:180
@@ -2034,7 +2036,7 @@ msgstr "Значение должно быть между %s и %s."
 
 #: inc/core/Configuration/Category/Vdot.php:186
 msgid "Use fixed VDOT value"
-msgstr ""
+msgstr "Использовать фиксированное значение VDOT"
 
 #: inc/core/Configuration/Category/Vdot.php:187
 msgid ""
@@ -2058,7 +2060,7 @@ msgstr ""
 
 #: inc/core/Configuration/Category/Vdot.php:196
 msgid "Correction per positive elevation"
-msgstr ""
+msgstr "Коррекция на положительной высоте"
 
 #: inc/core/Configuration/Category/Vdot.php:197
 msgid ""
@@ -2070,7 +2072,7 @@ msgstr ""
 
 #: inc/core/Configuration/Category/Vdot.php:202
 msgid "Correction per negative elevation"
-msgstr ""
+msgstr "Коррекция на отрицательной высоте"
 
 #: inc/core/Configuration/Category/Vdot.php:203
 msgid ""
@@ -2087,11 +2089,11 @@ msgstr "Форма VDOT"
 
 #: inc/core/Configuration/Category/Trimp.php:99
 msgid "Days for ATL"
-msgstr ""
+msgstr "Дней для ATL"
 
 #: inc/core/Configuration/Category/Trimp.php:100
 msgid "Number of days for ATL time constant"
-msgstr ""
+msgstr "Количество дней для ATL, постоянная времени"
 
 #: inc/core/Configuration/Category/Trimp.php:104
 msgid "Days for CTL"
