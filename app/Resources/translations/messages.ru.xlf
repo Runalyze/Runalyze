@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="ru" datatype="plaintext" original="file.ext">
     <header>
@@ -17,9 +17,9 @@
         <source>If you want to stay up to date on changes and receive tips from time to time, visit our blog at %s.</source>
         <target state="translated">Если вы хотите быть в курсе последних изменений в программе или получить консультацию, посетите наш блог %s.</target>
       </trans-unit>
-      <trans-unit id="440d35dd3bc2ae838fb420a34e1263d2" resname="Runalyze is an open-source project. We are working on it as much as we can in our free time.">
+      <trans-unit id="440d35dd3bc2ae838fb420a34e1263d2" resname="Runalyze is an open-source project. We are working on it as much as we can in our free time." approved="yes">
         <source>Runalyze is an open-source project. We are working on it as much as we can in our free time.</source>
-        <target state="needs-translation">Runalyze - проект с открытым исходным кодом. Мы посвящаем ему все свое свободное время.</target>
+        <target state="translated">Runalyze - проект с открытым исходным кодом. Мы посвящаем ему все свое свободное время.</target>
       </trans-unit>
       <trans-unit id="f67c1b23d5c1a452c90449e350cb4c76" resname="Official developers:">
         <source>Official developers:</source>
@@ -33,9 +33,9 @@
         <source>The main advantage of Runalyze is the ability to adapt everything to your personal needs and wishes.</source>
         <target state="translated">Основным преимуществом Runalyze является возможность настройки программы в соответствии с вашими желаниями.</target>
       </trans-unit>
-      <trans-unit id="867b9932057f82b355bf51ebffeb6a34" resname="Have a look at the configuration window to see what we're talking about.">
+      <trans-unit id="867b9932057f82b355bf51ebffeb6a34" resname="Have a look at the configuration window to see what we're talking about." approved="yes">
         <source>Have a look at the configuration window to see what we're talking about.</source>
-        <target state="needs-translation">Посмотрите на возможности настройки панелей, чтобы понять о чем идет речь.</target>
+        <target state="translated">Посмотрите на окно настроек, чтобы понять о чем идет речь.</target>
       </trans-unit>
       <trans-unit id="a8598a8104d6367c88663ef032e0a234" resname="You can define your own sports or activity types and choose your own way of presentation and configure some parameters of our experimental calculations.">
         <source>You can define your own sports or activity types and choose your own way of presentation and configure some parameters of our experimental calculations.</source>
@@ -49,9 +49,9 @@
         <source>Please let us know if you have wishes or have encountered bugs.</source>
         <target state="translated">Если вы нашли ошибку или у вас есть пожелания о работе программы сообщите об этом нам.</target>
       </trans-unit>
-      <trans-unit id="b920f092b826fd7644faccb7eb418285" resname="We give our best to make Runalyze as good as possible for you. - Therefore we would be interested in your suggestions for improvement.">
+      <trans-unit id="b920f092b826fd7644faccb7eb418285" resname="We give our best to make Runalyze as good as possible for you. - Therefore we would be interested in your suggestions for improvement." approved="yes">
         <source>We give our best to make Runalyze as good as possible for you. - Therefore we would be interested in your suggestions for improvement.</source>
-        <target state="needs-translation">Мы сделаем все возможное, чтобы сделать Runalyze лучше. -Поэтому нам интересно услышать ваши предложения.</target>
+        <target state="translated">Мы сделаем все возможное, чтобы сделать Runalyze как можно лучше. - Поэтому нам интересно услышать ваши предложения.</target>
       </trans-unit>
       <trans-unit id="8972a25e78349104f1c0b9de1e0c2996" resname="In general most questions, problems and ideas are more appropriate to ask in the forum.">
         <source>In general most questions, problems and ideas are more appropriate to ask in the forum.</source>
@@ -65,17 +65,17 @@
         <source>Documentation</source>
         <target state="translated">Документация</target>
       </trans-unit>
-      <trans-unit id="6dd08874f83507e9c7b23f1a46b7fa7c" resname="Translation">
+      <trans-unit id="6dd08874f83507e9c7b23f1a46b7fa7c" resname="Translation" approved="yes">
         <source>Translation</source>
-        <target>Translation</target>
+        <target state="translated">Перевод</target>
       </trans-unit>
       <trans-unit id="0ab98b9aea9ad94538cd49800cf73c4e" resname="In a case of urgency you can contact us via email:">
         <source>In a case of urgency you can contact us via email:</source>
         <target state="translated">Также вы можете связаться с нами по электронной почте:</target>
       </trans-unit>
-      <trans-unit id="95bded74b875da4e05966bf6e0a59fba" resname="Browser Support">
+      <trans-unit id="95bded74b875da4e05966bf6e0a59fba" resname="Browser Support" approved="yes">
         <source>Browser Support</source>
-        <target state="needs-translation">Поддержка браузеров</target>
+        <target state="translated">Поддерживаемые браузеры</target>
       </trans-unit>
       <trans-unit id="802d2a1dea70aa257f0b2849b7d961cd" resname="Runalyze is a modern application and therefore we want to use the most modern web techniques. We will not try to support any outdated browser versions.">
         <source>Runalyze is a modern application and therefore we want to use the most modern web techniques. We will not try to support any outdated browser versions.</source>
@@ -89,25 +89,25 @@
         <source>Credits</source>
         <target state="translated">Благодарности</target>
       </trans-unit>
-      <trans-unit id="6013259776820a748d1b5bc3cc542e5d" resname="The plug-in was not unlocked successfully.">
+      <trans-unit id="6013259776820a748d1b5bc3cc542e5d" resname="The plug-in was not unlocked successfully." approved="yes">
         <source>The plug-in was not unlocked successfully.</source>
-        <target>The plug-in was not unlocked successfully.</target>
+        <target state="translated">Плагин не был успешно разблокирован.</target>
       </trans-unit>
-      <trans-unit id="6d558cb627c6cbbef5d611d4a4c66c10" resname="The administrator has to set the correct API-key.">
+      <trans-unit id="6d558cb627c6cbbef5d611d4a4c66c10" resname="The administrator has to set the correct API-key." approved="yes">
         <source>The administrator has to set the correct API-key.</source>
-        <target>The administrator has to set the correct API-key.</target>
+        <target state="translated">Администратор должен установить правильный ключ API.</target>
       </trans-unit>
-      <trans-unit id="49ab28040dfa07f53544970c6d147e1e" resname="Connect">
+      <trans-unit id="49ab28040dfa07f53544970c6d147e1e" resname="Connect" approved="yes">
         <source>Connect</source>
-        <target>Connect</target>
+        <target state="translated">Подключение</target>
       </trans-unit>
-      <trans-unit id="aae025ecc68c1c8f446c631c1ce70dc3" resname="Searching for devices">
+      <trans-unit id="aae025ecc68c1c8f446c631c1ce70dc3" resname="Searching for devices" approved="yes">
         <source>Searching for devices</source>
-        <target>Searching for devices</target>
+        <target state="translated">Поиск устройств</target>
       </trans-unit>
-      <trans-unit id="31b055f6b0dd1e000252dfe19caa5db5" resname="Transfer complete">
+      <trans-unit id="31b055f6b0dd1e000252dfe19caa5db5" resname="Transfer complete" approved="yes">
         <source>Transfer complete</source>
-        <target>Transfer complete</target>
+        <target state="translated">Передача завершена</target>
       </trans-unit>
       <trans-unit id="9fac221f0e0cc359e9b5860d40b44670" resname="Browse computer">
         <source>Browse computer</source>
