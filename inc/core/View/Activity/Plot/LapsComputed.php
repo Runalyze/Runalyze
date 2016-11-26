@@ -7,6 +7,7 @@
 namespace Runalyze\View\Activity\Plot;
 
 use Runalyze\Activity\Pace as PaceObject;
+use Runalyze\Configuration;
 use Runalyze\Model\Trackdata;
 use Runalyze\View\Activity;
 
@@ -35,13 +36,13 @@ class LapsComputed extends Laps {
 			return;
 		}
 
-		$RawData = $this->computeRounds($context);
-		$num = count($RawData);
+		$laps = $this->computeRounds($context);
+		$num = $laps->num();
 		$Pace = new PaceObject(0, 1);
 		$Pace->setUnit($this->PaceUnit);
 
-		foreach ($RawData as $key => $val) {
-			$km = $key + 1;
+		foreach ($laps->objects() as $i => $lap) {
+			$km = $i + 1;
 			if ($num < 30) {
 				$label = $km;
 			} elseif ($num < 50) {
@@ -52,13 +53,13 @@ class LapsComputed extends Laps {
 				$label = ($km%10 == 0 && $km > 0) ? $km : '';
 			}
 
-			$this->Labels[$key] = array($key, $label);
-			$Pace->setDistance($val['km'])->setTime($val['s']);
+			$this->Labels[$i] = array($i, $label);
+			$Pace->setDistance($lap->distance()->kilometer())->setTime($lap->duration()->seconds());
 
 			if ($this->PaceUnit->isTimeFormat()) {
-				$this->Data[$key] = 1000 * round($Pace->secondsPerKm() * $this->PaceUnit->factorForUnit());
+				$this->Data[$i] = 1000 * round($Pace->secondsPerKm() * $this->PaceUnit->factorForUnit());
 			} else {
-				$this->Data[$key] = (float)str_replace(',', '.', $Pace->value());
+				$this->Data[$i] = (float)str_replace(',', '.', $Pace->value());
 			}
 		}
 
@@ -68,22 +69,26 @@ class LapsComputed extends Laps {
 	}
 
 	/**
-	 * @param \Runalyze\View\Activity\Context $context
-	 * @return array
+	 * @param Activity\Context $context
+	 * @return \Runalyze\Data\Laps\Laps
 	 */
 	protected function computeRounds(Activity\Context $context) {
-		$Loop = new Trackdata\Loop($context->trackdata());
-		$Rounds = array();
+		$singleDistance = Configuration::General()->distanceUnitSystem()->distanceToKmFactor();
+		$totalDistance = $context->trackdata()->totalDistance();
 
-		do {
-			$Loop->nextDistance();
+		if ($totalDistance < 2*$singleDistance) {
+			$Distances = array($singleDistance);
+		} else {
+			$Distances = range($singleDistance, $totalDistance, $singleDistance);
 
-			$Rounds[] = array(
-				'km' => $Loop->difference(Trackdata\Entity::DISTANCE),
-				's' => $Loop->difference(Trackdata\Entity::TIME)
-			);
-		} while (!$Loop->isAtEnd());
+			if (false === $Distances) {
+				$Distances = array($singleDistance);
+			}
+		}
 
-		return $Rounds;
+		$laps = new \Runalyze\Data\Laps\Laps();
+		$laps->calculateFrom($Distances, $context->trackdata());
+
+		return $laps;
 	}
 }
