@@ -52,6 +52,14 @@ class Tcx extends AbstractFileExporter
     }
 
     /**
+     * @return string
+     */
+    protected function mimeType()
+    {
+        return 'application/tcx+xml';
+    }
+
+    /**
      * @return int
      */
     public function enum()

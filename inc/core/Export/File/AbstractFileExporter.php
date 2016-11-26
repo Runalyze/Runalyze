@@ -97,13 +97,20 @@ abstract class AbstractFileExporter extends AbstractExporter
      */
     final public function downloadFile()
     {
-        header("Content-Type: text/plain");
+        header("Content-Type: ".$this->mimeType());
         header("Content-Disposition: attachment; filename=".$this->filename()."");
 
         $this->createFile();
 
         print $this->FileContent;
     }
+
+    /**
+     * @return string
+     *
+     * @see https://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types
+     */
+    abstract protected function mimeType();
 
     /**
      * Get filename
