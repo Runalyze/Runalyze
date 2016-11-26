@@ -5,18 +5,19 @@
  */
 /**
  * Database
- * 
+ *
  * Database class using PDO
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\System
+ * @deprecated since v3.0
  */
 class DB {
 	/**
 	 * Private PDO instance
 	 * @var PDO
 	 */
-	private static $PDO; 
+	private static $PDO;
 
 	/**
 	 * Private constructor
@@ -49,7 +50,7 @@ class DB {
 	/**
 	 * Returns DB instance or create initial connection
 	 * @return PDOforRunalyze
-	 */ 
+	 */
 	public static function getInstance() {
 		if (!self::$PDO)
 			throw new RuntimeException('No active database connection.');

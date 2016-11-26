@@ -4,11 +4,11 @@ namespace Runalyze\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 
-class TrackdataRepository extends EntityRepository
+class RaceresultRepository extends EntityRepository
 {
     /**
      * @param int $activityId
-     * @return null|Trackdata
+     * @return null|Raceresult
      */
     public function findByActivity($activityId)
     {

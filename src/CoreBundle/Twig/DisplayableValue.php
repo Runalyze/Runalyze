@@ -84,4 +84,12 @@ class DisplayableValue
     {
         return $this->Unit;
     }
+
+    /**
+     * @return bool
+     */
+    public function isZero()
+    {
+        return 0 == $this->Value;
+    }
 }

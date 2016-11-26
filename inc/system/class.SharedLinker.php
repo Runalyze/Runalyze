@@ -10,6 +10,7 @@ use Runalyze\Configuration;
  * Class for handling links to shared activities
  * @author Hannes Christiansen
  * @package Runalyze\System
+ * @deprecated since v3.1
  */
 class SharedLinker {
 	/**

@@ -2,7 +2,9 @@
 
 namespace Runalyze\Bundle\CoreBundle\Twig;
 
+use Runalyze\Bundle\CoreBundle\Component\Configuration\RunalyzeConfigurationList;
 use Runalyze\Bundle\CoreBundle\Component\Configuration\UnitSystem;
+use Runalyze\Bundle\CoreBundle\Services\Activity\ActivityContext;
 use Runalyze\Bundle\CoreBundle\Services\Configuration\ConfigurationManager;
 use Runalyze\Metrics\Common\UnitInterface;
 use Runalyze\Metrics\Distance\Unit\AbstractDistanceUnit;
@@ -45,7 +47,9 @@ class ValueExtension extends \Twig_Extension
             new \Twig_SimpleFunction('pace', array($this, 'pace')),
             new \Twig_SimpleFunction('paceComparison', array($this, 'paceComparison')),
             new \Twig_SimpleFunction('temperature', array($this, 'temperature')),
-            new \Twig_SimpleFunction('weight', array($this, 'weight'))
+            new \Twig_SimpleFunction('weight', array($this, 'weight')),
+            new \Twig_SimpleFunction('vdot', array($this, 'vdot')),
+            new \Twig_SimpleFunction('vdotFor', array($this, 'vdotFor')),
         );
     }
 
@@ -195,5 +199,30 @@ class ValueExtension extends \Twig_Extension
         $unit = $unit ?: $this->UnitSystem->getWeightUnit();
 
         return new DisplayableValue($kilogram, $unit, $decimals);
+    }
+
+    /**
+     * @param float $uncorrectedValue
+     * @param RunalyzeConfigurationList $configurationList
+     * @param bool $vdotIsUsedForShape
+     * @return DisplayableVdot
+     */
+    public function vdot($uncorrectedValue, RunalyzeConfigurationList $configurationList, $vdotIsUsedForShape = true)
+    {
+        return new DisplayableVdot($uncorrectedValue, $configurationList, $vdotIsUsedForShape);
+    }
+
+    /**
+     * @param ActivityContext $activityContext
+     * @param RunalyzeConfigurationList $configurationList
+     * @return DisplayableVdot
+     */
+    public function vdotFor(ActivityContext $activityContext, RunalyzeConfigurationList $configurationList)
+    {
+        return $this->vdot(
+            $activityContext->getDecorator()->getUncorrectedVdot($configurationList),
+            $configurationList,
+            $activityContext->getActivity()->getUseVdot()
+        );
     }
 }

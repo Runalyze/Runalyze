@@ -1,0 +1,28 @@
+{% extends "base.html.twig" %}
+
+{% set body_attributes = (body_attributes|default(' id="shared"')) %}
+
+{% block body %}
+    {% if not app.request.xmlHttpRequest %}
+        <div id="flot-loader"></div>
+
+        <div id="headline">
+            <a class="tab logo b" href="https://www.runalyze.com/" title="Runalyze" target="_blank">RUNALYZE</a>
+
+            {% if username %}
+            <span class="tab right">
+                {% trans %}Public activity view of %username%.{% endtrans %}
+            </span>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    {% block content %}
+    {% endblock %}
+
+    {% if not app.request.xmlHttpRequest %}
+        <br class="clear">
+
+        <script>(function($){$(document).ready(function(){ Runalyze.init(); });})(jQuery);</script>
+    {% endif %}
+{% endblock %}

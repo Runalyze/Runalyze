@@ -8,6 +8,19 @@ use Doctrine\ORM\EntityRepository;
 class AccountRepository extends EntityRepository implements UserLoaderInterface
 {
     /**
+     * @param string $username username
+     * @return null|Account
+     */
+    public function findByUsername($username)
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.username = :username')
+            ->setParameter('username', $username)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    /**
      * @param string $username username or mail
      * @return null|Account
      */

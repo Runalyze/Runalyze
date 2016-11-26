@@ -343,11 +343,14 @@ class Training
     private $routeName;
 
     /**
-     * @var integer
+     * @var Route|null
      *
-     * @ORM\Column(name="routeid", type="integer", nullable=false, options={"unsigned":true, "default":0})
+     * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Route")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="routeid", referencedColumnName="id", nullable=true)
+     * })
      */
-    private $routeid = '0';
+    private $route;
 
     /**
      * @var string
@@ -378,9 +381,12 @@ class Training
     private $notes;
 
     /**
-     * @var integer
+     * @var \Runalyze\Bundle\CoreBundle\Entity\Account
      *
-     * @ORM\Column(name="accountid", type="integer", nullable=false, options={"unsigned":true})
+     * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Account")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="accountid", referencedColumnName="id", nullable=false)
+     * })
      */
     private $account;
 
@@ -809,6 +815,26 @@ class Training
     public function getPulseMax()
     {
         return $this->pulseMax;
+    }
+
+    /**
+     * @param float $vdot
+     *
+     * @return $this
+     */
+    public function setVdot($vdot)
+    {
+        $this->vdot = $vdot;
+
+        return $this;
+    }
+
+    /**
+     * @return float
+     */
+    public function getVdot()
+    {
+        return $this->vdot;
     }
 
     /**
@@ -1503,11 +1529,9 @@ class Training
     }
 
     /**
-     * Set route
+     * @param \Runalyze\Bundle\CoreBundle\Entity\Route|null $route
      *
-     * @param \Runalyze\Bundle\CoreBundle\Entity\Route $defaultroute
-     *
-     * @return Training
+     * @return $this
      */
     public function setRoute(\Runalyze\Bundle\CoreBundle\Entity\Route $route = null)
     {
@@ -1517,9 +1541,7 @@ class Training
     }
 
     /**
-     * Get route
-     *
-     * @return \Runalyze\Bundle\CoreBundle\Entity\Route
+     * @return \Runalyze\Bundle\CoreBundle\Entity\Route|null
      */
     public function getRoute()
     {

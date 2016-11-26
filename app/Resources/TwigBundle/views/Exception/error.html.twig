@@ -33,10 +33,9 @@
                         {% block content %}
                             <h3>{% trans %}Sorry!{% endtrans %} - {% trans %}Page not found{% endtrans %}</h3>
 
-                            <p>
+                            <p class="text">
                                 {% trans %}Looks like something went wrong here.{% endtrans %}<br>
-                                {% trans %}Let's go back to RUNALYZE!{% endtrans %}
-                                <a href="{{ path('base_url') }}">{% trans %}Click here{% endtrans %}</a>.
+                                <a href="{{ path('base_url') }}">{% trans %}Let's go back to RUNALYZE!{% endtrans %}</a>.
                             </p>
                         {% endblock %}
                     </div>

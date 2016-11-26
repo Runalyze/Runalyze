@@ -40,8 +40,12 @@ class UnitSystem
     /**
      * @return AbstractPaceUnit
      */
-    public function getPaceUnit()
+    public function getPaceUnit(Sport $sport = null)
     {
+        if (null !== $sport) {
+            return $this->LegacyUnitConverter->getPaceUnit($sport->getSpeed());
+        }
+
         return $this->PaceUnit;
     }
 

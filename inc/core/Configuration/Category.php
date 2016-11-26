@@ -51,7 +51,7 @@ abstract class Category {
 	 * @param array $data values from database
 	 */
 	final public function setUserID($id, $data = null) {
-		if ($id !== $this->UserID) {
+		if ($id !== $this->UserID && $id >= 0) {
 			$this->UserID = (int)$id;
 			$this->loadValues($data);
 		}

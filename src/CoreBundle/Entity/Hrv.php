@@ -1,6 +1,6 @@
 <?php
-namespace Runalyze\Bundle\CoreBundle\Entity;
 
+namespace Runalyze\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -8,19 +8,19 @@ use Doctrine\ORM\Mapping as ORM;
  * Hrv
  *
  * @ORM\Table(name="hrv", indexes={@ORM\Index(name="accountid", columns={"accountid"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\HrvRepository")
  */
 class Hrv
 {
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(name="data", type="text", nullable=true)
      */
     private $data;
 
     /**
-     * @var \Account
+     * @var Account
      *
      * @ORM\ManyToOne(targetEntity="Account")
      * @ORM\JoinColumns({
@@ -30,7 +30,7 @@ class Hrv
     private $account;
 
     /**
-     * @var \Training
+     * @var Training
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
@@ -42,11 +42,9 @@ class Hrv
     private $activity;
 
     /**
-     * Set data
+     * @param string|null $data
      *
-     * @param string $data
-     *
-     * @return Conf
+     * @return $this
      */
     public function setData($data)
     {
@@ -56,9 +54,7 @@ class Hrv
     }
 
     /**
-     * Get data
-     *
-     * @return string
+     * @return string|null
      */
     public function getData()
     {
@@ -66,13 +62,11 @@ class Hrv
     }
 
     /**
-     * Set account
+     * @param Account $account
      *
-     * @param \Runalyze\Bundle\CoreBundle\Entity\Account $account
-     *
-     * @return Hrv
+     * @return $this
      */
-    public function setAccount(\Runalyze\Bundle\CoreBundle\Entity\Account $account = null)
+    public function setAccount(Account $account)
     {
         $this->account = $account;
 
@@ -80,9 +74,7 @@ class Hrv
     }
 
     /**
-     * Get account
-     *
-     * @return \Runalyze\Bundle\CoreBundle\Entity\Account
+     * @return Account
      */
     public function getAccount()
     {
@@ -90,13 +82,11 @@ class Hrv
     }
 
     /**
-     * Set activity
+     * @param Training $activity
      *
-     * @param \Runalyze\Bundle\CoreBundle\Entity\Training $account
-     *
-     * @return Hrv
+     * @return $this
      */
-    public function setActivity(\Runalyze\Bundle\CoreBundle\Entity\Training $activity = null)
+    public function setActivity(Training $activity)
     {
         $this->activity = $activity;
 
@@ -104,13 +94,10 @@ class Hrv
     }
 
     /**
-     * Get activity
-     *
-     * @return \Runalyze\Bundle\CoreBundle\Entity\Training
+     * @return Training
      */
     public function getActivity()
     {
         return $this->activity;
     }
 }
-

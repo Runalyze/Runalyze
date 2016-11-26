@@ -225,4 +225,24 @@ class RunalyzeConfigurationList extends ConfigurationList
 
         return (float)$this->Variables['data.VDOT_CORRECTOR'];
     }
+
+    /**
+     * @return bool
+     */
+    public function useVdotCorrectionForElevation()
+    {
+        return ('true' == $this->Variables['vdot.VDOT_USE_CORRECTION_FOR_ELEVATION']);
+    }
+
+    /**
+     * @return float
+     */
+    public function getCurrentVdot()
+    {
+        if (is_numeric($this->Variables['vdot.VDOT_MANUAL_VALUE'])) {
+            return (float)$this->Variables['vdot.VDOT_MANUAL_VALUE'];
+        }
+
+        return (float)$this->Variables['data.VDOT_FORM'];
+    }
 }

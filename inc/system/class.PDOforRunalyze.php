@@ -5,11 +5,12 @@
  */
 /**
  * Extended PDO
- * 
+ *
  * This extended version of the standard PDO class adds 'accountid' when needed
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\System
+ * @deprecated since v3.0
  */
 class PDOforRunalyze extends PDO {
 	/**
@@ -55,7 +56,7 @@ class PDOforRunalyze extends PDO {
 			return;
 		}
 
-		if (                        
+		if (
 				strpos($statement, PREFIX.'account') === false
 				&& strpos($statement, PREFIX.'plugin_conf') === false
 				&& strpos($statement, PREFIX.'activity_equipment') === false
@@ -91,8 +92,8 @@ class PDOforRunalyze extends PDO {
 			return $this->query('SELECT * FROM `'.PREFIX.$table.'` WHERE `id`='.(int)$ID.' LIMIT 1')->fetch();
 		}
 
-		return $this->query('SELECT * FROM `'.PREFIX.$table.'` WHERE `id`='.(int)$ID.' AND `accountid`="'.SessionAccountHandler::getId().'" LIMIT 1')->fetch();	
-                
+		return $this->query('SELECT * FROM `'.PREFIX.$table.'` WHERE `id`='.(int)$ID.' AND `accountid`="'.SessionAccountHandler::getId().'" LIMIT 1')->fetch();
+
         }
 
 
@@ -143,7 +144,7 @@ class PDOforRunalyze extends PDO {
 
 	/**
 	 * Escapes and inserts the given $values to the $columns in $table
-	 * 
+	 *
 	 * This methods always adds the accountid (unless something is inserted to the account table)
 	 * @param $table   string without PREFIX
 	 * @param $columns array
