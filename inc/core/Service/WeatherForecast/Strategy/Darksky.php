@@ -155,7 +155,7 @@ class Darksky implements StrategyInterface {
 		$WindSpeed = new WindSpeed();
 
 		if (isset($this->Result['currently']) && isset($this->Result['currently']['windSpeed'])) {
-			$WindSpeed->setMeterPerSecond($this->Result['currently']['windSpeed']);
+			$WindSpeed->setMilesPerHour($this->Result['currently']['windSpeed']);
 		}
 
 		return $WindSpeed;

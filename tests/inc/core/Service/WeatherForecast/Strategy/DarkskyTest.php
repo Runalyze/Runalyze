@@ -50,7 +50,7 @@ class DarkskyTest extends \PHPUnit_Framework_TestCase
 		$Temperature->toCelsius();
 
 		$this->assertEquals(WeatherConditionProfile::CHANGEABLE, $this->object->condition()->id());
-		$this->assertEquals(40.32, $this->object->windSpeed()->value(), '', 0.01);
+		$this->assertEquals(18.02, $this->object->windSpeed()->value(), '', 0.01);
 		$this->assertEquals(109, $this->object->windDegree()->value(),'', 0.1);
 		$this->assertEquals(59, $this->object->humidity()->value());
 		$this->assertEquals(1013, $this->object->pressure()->value());
