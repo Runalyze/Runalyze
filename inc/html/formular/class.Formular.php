@@ -5,50 +5,50 @@
  */
 /**
  * Class for displaying a formular
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\HTML\Formular
  */
 class Formular extends HtmlTag {
 	/**
 	 * Array with all hidden values, keys are names
-	 * @var array 
+	 * @var array
 	 */
 	protected $hiddenValues = array();
 
 	/**
 	 * Array with all fieldsets
-	 * @var array 
+	 * @var array
 	 */
 	protected $fieldsets = array();
 
 	/**
 	 * Array with all submit buttons, keys are names
-	 * @var array 
+	 * @var array
 	 */
 	protected $submitButtons = array();
 
 	/**
 	 * Boolean flag: submit buttons centered
-	 * @var boolean 
+	 * @var boolean
 	 */
 	protected $submitButtonsCentered = false;
 
 	/**
 	 * Formular action
-	 * @var string 
+	 * @var string
 	 */
 	protected $action = '';
 
 	/**
 	 * Formular method
-	 * @var string 
+	 * @var string
 	 */
 	protected $method = '';
 
 	/**
 	 * H1-header
-	 * @var string 
+	 * @var string
 	 */
 	protected $header = '';
 
@@ -61,7 +61,7 @@ class Formular extends HtmlTag {
 	/**
 	 * Construct a new formular
 	 * @param string $action
-	 * @param string $method 
+	 * @param string $method
 	 */
 	public function __construct($action = '', $method = 'post') {
 		if (empty($action))
@@ -71,9 +71,13 @@ class Formular extends HtmlTag {
 		$this->method = $method;
 	}
 
+	public function setAction($action) {
+		$this->action = $action;
+	}
+
 	/**
 	 * Set header
-	 * @param string $string 
+	 * @param string $string
 	 */
 	public function setHeader($string) {
 		$this->header = $string;
@@ -82,7 +86,7 @@ class Formular extends HtmlTag {
 	/**
 	 * Add a hidden value
 	 * @param string $name
-	 * @param string $value 
+	 * @param string $value
 	 */
 	public function addHiddenValue($name, $value = '') {
 		if (empty($value) && isset($_POST[$name]))
@@ -93,7 +97,7 @@ class Formular extends HtmlTag {
 
 	/**
 	 * Add a fieldset to formular
-	 * @param FormularFieldset $Fieldset 
+	 * @param FormularFieldset $Fieldset
 	 * @param boolean $opened [optional]
 	 */
 	public function addFieldset(FormularFieldset $Fieldset, $opened = true) {
@@ -123,7 +127,7 @@ class Formular extends HtmlTag {
 	}
 
 	/**
-	 * Set submit buttons centered 
+	 * Set submit buttons centered
 	 */
 	public function setSubmitButtonsCentered() {
 		$this->submitButtonsCentered = true;
@@ -131,7 +135,7 @@ class Formular extends HtmlTag {
 
 	/**
 	 * Add a failure, displayed above submit-button
-	 * @param string $message 
+	 * @param string $message
 	 */
 	public function addFailure($message) {
 		$this->failures[] = $message;
@@ -146,7 +150,7 @@ class Formular extends HtmlTag {
 	}
 
 	/**
-	 * Set toggle-function: only one opened fieldset 
+	 * Set toggle-function: only one opened fieldset
 	 */
 	public function allowOnlyOneOpenedFieldset() {
 		foreach ($this->fieldsets as &$Fieldset)
@@ -154,7 +158,7 @@ class Formular extends HtmlTag {
 	}
 
 	/**
-	 * Prepare object for beeing displayed 
+	 * Prepare object for beeing displayed
 	 */
 	protected function prepareForDisplay() {
 		$this->addAttribute('action', $this->action);
@@ -164,12 +168,12 @@ class Formular extends HtmlTag {
 	}
 
 	/**
-	 * Additional preparation for subclasses 
+	 * Additional preparation for subclasses
 	 */
 	protected function prepareForDisplayInSublcass() {}
 
 	/**
-	 * Display this formular 
+	 * Display this formular
 	 */
 	public function display() {
 		$this->prepareForDisplay();
