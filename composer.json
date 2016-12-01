@@ -4,9 +4,6 @@
         "sensio/framework-extra-bundle": "^3.0",
         "twig/twig": "1.*",
         "monolog/monolog": "^1.19",
-        "symfony/routing": "3.*",
-        "symfony/class-loader": "@stable",
-        "symfony/yaml": "@stable",
         "nojacko/email-validator": "~1.0",
         "league/geotools": "@stable",
         "swiftmailer/swiftmailer": "@stable",
@@ -15,7 +12,6 @@
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/orm": "^2.5",
         "symfony/monolog-bundle": "^2.11",
-        "symfony/finder": "^3.1",
         "doctrine/doctrine-migrations-bundle": "^1.0"
     },
     "autoload": {
