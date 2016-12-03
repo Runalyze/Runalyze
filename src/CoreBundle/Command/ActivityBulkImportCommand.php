@@ -32,6 +32,7 @@ class ActivityBulkImportCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $repository = $this->getContainer()->get('doctrine')->getRepository('CoreBundle:Account');
+
         /** @var Account|null $account */
         $user = $repository->loadUserByUsername($input->getArgument('username'));
         if (NULL === $user) {
@@ -54,8 +55,8 @@ class ActivityBulkImportCommand extends ContainerAwareCommand
             $file = $fileinfo->getFilename();
             if (! is_file($path.'/'.$file))
                 break;
-            $output->writeln('<info>File: '.$file.'</info>');
 
+            $output->writeln('<info>File: '.$file.'</info>');
             $filename = 'bulk-import'.uniqid().$file;
             copy($path.'/'.$file, FRONTEND_PATH.'../data/import/'.$filename);
 
@@ -63,16 +64,23 @@ class ActivityBulkImportCommand extends ContainerAwareCommand
                 $Factory = new ImporterFactory($filename);
             } catch(\Exception $e) {
                 $output->writeln('<fg=red>Failed</>');
-                $this->failedImports[$file] = $e->getMessage();
+                $this->addFailedFile($file, $e->getMessage());
                 break;
             }
 
             foreach ($Factory->trainingObjects() as $training) {
-                if (! $DuplicateFinder->checkForDuplicate($training->getActivityid())) {
-                    $training->insert();
-                    $output->writeln('<fg=green>Successfully imported</>');
-                } else {
-                    $output->writeln('<fg=red>' . $file . ' is a duplicate</>');
+                try {
+                    if (! $DuplicateFinder->checkForDuplicate($training->getActivityid())) {
+                                $training->setWeatherForecast();
+                                $training->insert();
+                                $output->writeln('<fg=green>Successfully imported</>');
+                    } else {
+                                $output->writeln('<fg=red>' . $file . ' is a duplicate</>');
+                    }
+
+                } catch (\Exception $e) {
+                    $this->addFailedFile($file, $e->getMessage());
+                    $output->writeln('<fg=red>'.$e->getMessage().' </>');
                 }
             }
         }
@@ -83,7 +91,12 @@ class ActivityBulkImportCommand extends ContainerAwareCommand
                 $output->writeln('<info>'.$fileName.' - '.$message.'</info>');
             }
         }
+
         $output->writeln('Done');
+    }
+
+    private function addFailedFile($fileName, $error) {
+        $this->failedImports[$fileName] = $error;
     }
 
 }
