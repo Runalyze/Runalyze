@@ -17,7 +17,7 @@ before_script:
     - mysql runalyze_unittest < inc/install/structure.sql
 
 script:
-    - phpunit --colors -c tests/config.xml --coverage-clover build/logs/clover.xml
+    - vendor/bin/phpunit --colors -c tests/config.xml --coverage-clover build/logs/clover.xml
 
 after_script:
     - wget https://scrutinizer-ci.com/ocular.phar && php ocular.phar code-coverage:upload --format=php-clover build/logs/clover.xml
