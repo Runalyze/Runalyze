@@ -25,7 +25,7 @@ class Error {
 	 * Maximum number of errors to stop
 	 * @var int 
 	 */
-	private static $MAX_NUM_OF_ERRORS = 100;
+	public static $MAX_NUM_OF_ERRORS = 100;
 
 	/**
 	 * Internatl instance pointer
