@@ -430,11 +430,13 @@ class ParserFITSingle extends ParserAbstractSingle {
 
 					// TODO: this may need more device and firmware specific conditions
 					if (
-						substr($creator, 0, 5) == 'fr630' ||
+                        substr($creator, 0, 5) == 'fr630' ||
 						substr($creator, 0, 7) == 'fr735xt' ||
 						substr($creator, 0, 6) == 'fenix3'
 					) {
-						$this->TrainingObject->setFitPerformanceCondition((int)$this->Values['data'][1]);
+					    if ((int)$this->Values['data'][1] >= 0 && (int)$this->Values['data'][1] <= 255) {
+                            $this->TrainingObject->setFitPerformanceCondition((int)$this->Values['data'][1]);
+                        }
 					} else {
 						$this->TrainingObject->setFitHRVscore((int)$this->Values['data'][1]);
 					}
