@@ -5,13 +5,13 @@
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
     <body>
-      <trans-unit id="db87c7c1df3b14400cf1ee12cfa94dfd" resname="Runalyze is completely configurable and more detailed than any other tool for analyzing your activities.">
+      <trans-unit id="db87c7c1df3b14400cf1ee12cfa94dfd" resname="Runalyze is completely configurable and more detailed than any other tool for analyzing your activities." approved="yes">
         <source>Runalyze is completely configurable and more detailed than any other tool for analyzing your activities.</source>
-        <target>Runalyze is completely configurable and more detailed than any other tool for analyzing your activities.</target>
+        <target state="translated">Runalyze er fuldstændig konfigurerbar og mere detaljeret end noget andet værktøj til at analysere dine aktiviteter.</target>
       </trans-unit>
-      <trans-unit id="6a07c40d5a06f10f9148318561f91fd1" resname="Please look at our official website %s to get an overview of our features.">
+      <trans-unit id="6a07c40d5a06f10f9148318561f91fd1" resname="Please look at our official website %s to get an overview of our features." approved="yes">
         <source>Please look at our official website %s to get an overview of our features.</source>
-        <target>Please look at our official website %s to get an overview of our features.</target>
+        <target state="translated">Se venligst vores officielle hjemmeside %s for at få et overblik over vores funktioner.</target>
       </trans-unit>
       <trans-unit id="9790f7d3ec77648f1719b71bab36a05f" resname="If you want to stay up to date on changes and receive tips from time to time, visit our blog at %s.">
         <source>If you want to stay up to date on changes and receive tips from time to time, visit our blog at %s.</source>
