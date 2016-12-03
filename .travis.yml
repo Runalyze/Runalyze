@@ -2,7 +2,6 @@ language: php
 sudo: false
 
 php:
-    - 5.5
     - 5.6
     - 7.0
 
@@ -24,10 +23,6 @@ after_script:
 
 matrix:
   include:
-    - php: 5.5
-      env: DB=mariadb
-      addons:
-        mariadb: 5.5
     - php: 5.6
       env: DB=mariadb
       addons:
@@ -37,10 +32,6 @@ matrix:
       addons:
         mariadb: 5.5
 
-    - php: 5.5
-      env: DB=mariadb
-      addons:
-        mariadb: 10.0
     - php: 5.6
       env: DB=mariadb
       addons:

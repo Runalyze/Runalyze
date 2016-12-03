@@ -3,6 +3,7 @@
     "description": "RUNALYZE - training analysis for athletes",
     "homepage": "https://runalyze.com",
     "require": {
+        "php": "~5.6|~7.0",
         "symfony/symfony": "3.1.*",
         "sensio/framework-extra-bundle": "^3.0",
         "twig/twig": "1.*",
