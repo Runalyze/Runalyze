@@ -170,37 +170,77 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 	 * @param string $Creator optional
 	 */
 	protected function guessSportID($String, $Creator = '') {
+        $this->TrainingObject->setSportid(Configuration::General()->mainSport());
+
+        $name = array();
 		// TODO: internationalization?
 		switch (mb_strtolower($Creator)) {
 			case 'garmin swim':
-				$String = 'Schwimmen';
+				$name = 'Schwimmen';
 				break;
 			default:
 				switch (mb_strtolower($String)) {
 					case 'run':
 					case 'running':
-						$String = 'Laufen';
+						$name[] = 'Laufen';
+                        $name[] = 'Laufband';
+                        $name[] = 'Running';
+                        $name[] = 'Bieganie';
+                        $name[] = 'Carrera a pie';
+                        $name[] = 'Hardlopen';
+                        $name[] = 'Бег';
+                        $name[] = 'Corsa';
+                        $name[] = 'Juoksu';
+                        $name[] = 'córrer';
 						break;
+                    case 'mountain bike':
+                        $name[] = 'Mountainbike';
+                        $name[] = 'MTB';
+                        break;
 					case 'cycle':
 					case 'bike':
 					case 'biking':
-					case 'mountain bike':
 					case 'cycling':
 					case 'ergometer':
-						$String = 'Radfahren';
+                        $name[] = 'Radfahren';
+                        $name[] = 'Rennrad';
+                        $name[] = 'Ciclismo';
+                        $name[] = 'Biking';
+                        $name[] = 'Cycling';
+                        $name[] = 'Ciclisme';
+                        $name[] = 'Mountainbike';
+                        $name[] = 'Pyöräily';
+                        $name[] = 'Велосипед';
+                        $name[] = 'Fietsen';
+                        $name[] = 'Bici';
+                        $name[] = 'Cyclisme';
 						break;
 					case 'swim':
 					case 'swimming':
-						$String = 'Schwimmen';
-						break;
+						$name[] = 'Schwimmen';
+                        $name[] = 'Swimming';
+                        $name[] = 'Zwemmen';
+                        $name[] = 'Pływanie';
+                        $name[] = 'Natación';
+                        $name[] = 'Nuoto';
+                    break;
 					case 'other':
-						$String = 'Sonstiges';
+						$name[] = 'Sonstiges';
+                        $name[] = 'Overige';
+                        $name[] = 'Otros';
+                        $name[] = 'Other';
+                        $name[] = 'Inny';
+                        $name[] = 'Altro';
 						break;
 				}
 				break;
 		}
 
-		$this->TrainingObject->setSportid( self::getIDforDatabaseString('sport', $String) );
+        foreach ( \Runalyze\Context::Factory()->allSports() as $sport ) {
+            if ( in_array($sport->name(), $name) ) {
+                $this->TrainingObject->setSportid($sport->id());
+            }
+        }
 	}
 
 	/**
@@ -559,17 +599,14 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 	private static function getIDforDatabaseString($table, $string) {
             $Result = Cache::get($table.$string);
             if(is_null($Result)) {
-		if ($table == 'type')
-			$SearchQuery = 'SELECT id FROM '.PREFIX.$table.' WHERE name LIKE "%'.$string.'%" OR abbr="'.$string.'" LIMIT 1';
-		else
-			$SearchQuery = 'SELECT id FROM '.PREFIX.$table.' WHERE name LIKE "%'.$string.'%" LIMIT 1';
+                if ($table == 'type')
+                    $SearchQuery = 'SELECT id FROM '.PREFIX.$table.' WHERE name LIKE "%'.$string.'%" OR abbr="'.$string.'" LIMIT 1';
+                else
+                    $SearchQuery = 'SELECT id FROM '.PREFIX.$table.' WHERE name LIKE "%'.$string.'%" LIMIT 1';
 
-                $Result = DB::getInstance()->query($SearchQuery)->fetch();
-                Cache::set($table.$string,$Result,'60');
+                        $Result = DB::getInstance()->query($SearchQuery)->fetch();
+                        Cache::set($table.$string,$Result,'60');
             }
-
-		if ($Result === false)
-			return ($table == 'sport') ? Configuration::General()->mainSport() : 0;
 
 		return $Result['id'];
 	}

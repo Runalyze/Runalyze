@@ -2,6 +2,7 @@
 
 namespace Runalyze\Bundle\CoreBundle\Command;
 
+use Runalyze\Error;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -32,6 +33,8 @@ class ActivityBulkImportCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $repository = $this->getContainer()->get('doctrine')->getRepository('CoreBundle:Account');
+
+        Error::$MAX_NUM_OF_ERRORS = 10000;
 
         /** @var Account|null $account */
         $user = $repository->loadUserByUsername($input->getArgument('username'));
