@@ -15,6 +15,12 @@ before_script:
     - php bin/console --env=test doctrine:schema:update --force --complete
     - mysql runalyze_unittest < inc/install/structure.sql
 
+    - mysql -e "SHOW VARIABLES LIKE 'max_allowed_packet';"
+    - echo "[server]\nmax_allowed_packet=64M" | sudo tee -a /etc/mysql/my.cnf
+    - sudo service mysql restart
+    - mysql -e "SET GLOBAL wait_timeout=300;"
+    - mysql -e "SHOW VARIABLES LIKE 'max_allowed_packet';"
+
 script:
     - vendor/bin/phpunit --colors -c tests/config.xml --coverage-clover build/logs/clover.xml
 
