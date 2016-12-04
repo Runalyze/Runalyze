@@ -31,7 +31,7 @@ new qq.FineUploaderBasic({
 					$(".appended-by-uploader").remove();
 
 					if (completedFiles == 1)
-						$("#ajax").loadDiv('<?php echo strtok($_SERVER['REQUEST_URI'], '?'); ?>?file='+encodeURIComponent(fileName));
+						$("#ajax").loadDiv('<?php echo strtok($_SERVER['REQUEST_URI'], '?'); ?>?file='+encodeURIComponent(submittedFiles[0]));
 					else
 						$("#ajax").loadDiv('<?php echo strtok($_SERVER['REQUEST_URI'], '?'); ?>?files='+encodeURIComponent(submittedFiles.join(';')));
 				}
