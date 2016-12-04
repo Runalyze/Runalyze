@@ -18,7 +18,7 @@ new qq.FineUploaderBasic({
 			$("#ajax").append('<p class="error appended-by-uploader">'+name+': '+errorReason+'</p>');
 		},
 		onSubmit: function(id, fileName) {
-			submittedFiles.push(fileName);
+			submittedFiles.push(fileName.replace(/;/g, '_-_'));
 			$("#upload-container").addClass('loading');
 		},
 		onComplete: function(id, fileName, responseJSON) {
