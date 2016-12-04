@@ -176,7 +176,7 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 		// TODO: internationalization?
 		switch (mb_strtolower($Creator)) {
 			case 'garmin swim':
-				$name = 'Schwimmen';
+				$name[] = 'Schwimmen';
 				break;
 			default:
 				switch (mb_strtolower($String)) {
