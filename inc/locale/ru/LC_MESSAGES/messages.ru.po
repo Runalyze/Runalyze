@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.com\n"
 "POT-Creation-Date: 2016-11-15 17:37+0100\n"
-"PO-Revision-Date: 2016-11-24 18:26+0000\n"
+"PO-Revision-Date: 2016-12-04 15:49+0000\n"
 "Last-Translator: Semion Polenok <semapv@gmail.com>\n"
 "Language-Team: Russian <https://translate.runalyze.com/projects/runalyze"
 "/runalyze-master-po/ru/>\n"
@@ -139,12 +139,12 @@ msgstr "Выносливость"
 #: src/CoreBundle/Component/Tool/DatabaseCleanup/JobGeneral.php:164
 #: inc/core/Configuration/Category/Trimp.php:141
 msgid "Maximal CTL"
-msgstr ""
+msgstr "Максимальный CTL"
 
 #: src/CoreBundle/Component/Tool/DatabaseCleanup/JobGeneral.php:165
 #: inc/core/Configuration/Category/Trimp.php:142
 msgid "Maximal ATL"
-msgstr ""
+msgstr "Максимальный ATL"
 
 #: src/CoreBundle/Component/Tool/DatabaseCleanup/JobGeneral.php:166
 msgid "Maximal TRIMP"
@@ -2278,7 +2278,7 @@ msgstr "GPS маршрут"
 #: inc/training/class.TrainingFormular.php:501
 #: inc/core/Dataset/Keys/FitHrvAnalysis.php:53
 msgid "HRV"
-msgstr ""
+msgstr "HRV"
 
 #: inc/training/class.TrainingFormular.php:515
 msgid "Use elevation correction"
@@ -2953,7 +2953,7 @@ msgstr "Файлов не найдено"
 
 #: inc/core/Dataset/Keys/Setting.php:52
 msgid "Setting"
-msgstr ""
+msgstr "Настройки"
 
 #: inc/core/Dataset/Keys/Setting.php:101 inc/core/Dataset/Keys/Setting.php:118
 msgid "Edit"
@@ -2965,7 +2965,7 @@ msgstr "Вид спорта"
 
 #: inc/core/Dataset/Keys/Sport.php:71
 msgid "The sports icon is shown."
-msgstr ""
+msgstr "Отображение значка спорта."
 
 #: inc/core/Dataset/Keys/Energy.php:54
 msgid ""
@@ -2981,6 +2981,8 @@ msgid ""
 "Vertical oscillation is your vertical motion of your torso measured in "
 "centimeters"
 msgstr ""
+"Вертикальные колебания - это вертикальные движения туловища измеряются в "
+"сантиметрах"
 
 #: inc/core/Dataset/Keys/Comment.php:46
 msgid "Comment"
@@ -2989,15 +2991,15 @@ msgstr "Комментарий"
 #: inc/core/Dataset/Keys/Comment.php:56
 #, php-format
 msgid "Comments are automatically cut after %u characters."
-msgstr "Комментарии автоматически обрежутся до %u символов."
+msgstr "Комментарии автоматически обрежутся после %u символов."
 
 #: inc/core/Dataset/Keys/CompleteEquipment.php:34
 msgid "Complete equipment"
-msgstr ""
+msgstr "Инвентарь"
 
 #: inc/core/Dataset/Keys/CompleteEquipment.php:52
 msgid "Your complete equipment is shown as icon with tooltip."
-msgstr ""
+msgstr "Ваше инвентарь отображается как значок с подсказкой."
 
 #: inc/core/Dataset/Keys/RaceResult.php:40
 msgid "Race result"
@@ -3053,11 +3055,14 @@ msgid ""
 "only if there are handmade laps, i.e. there are active and inactive laps, or "
 "if it was a race. "
 msgstr ""
+"Отрезки отображаются как значок часов со списком времени для всех кругов в "
+"подсказке. Они отображаются только при наличии созданных в ручную кругов, "
+"например есть активные и неактивные круги, или если это была гонка. "
 
 #: inc/core/Dataset/Keys/TrainingPartner.php:65
 #, php-format
 msgid "Training partner are automatically cut after %u characters."
-msgstr ""
+msgstr "Партнеры по тренировки автоматически обрежутся после %u символов."
 
 #: inc/core/Dataset/Keys/Type.php:62
 msgid ""
@@ -3070,7 +3075,7 @@ msgstr ""
 #: inc/core/Dataset/Keys/FitHrvAnalysis.php:44
 #: inc/core/View/Activity/Dataview.php:387
 msgid "HRV score"
-msgstr ""
+msgstr "HRV результат"
 
 #: inc/core/Dataset/Keys/FitHrvAnalysis.php:44
 #: inc/core/Dataset/Keys/FitRecoveryTime.php:43
@@ -3078,7 +3083,7 @@ msgstr ""
 #: inc/core/Dataset/Keys/FitVO2maxEstimate.php:44
 #: inc/core/Dataset/Keys/FitPerformanceCondition.php:43
 msgid "(by file)"
-msgstr ""
+msgstr "(из файла)"
 
 #: inc/core/Dataset/Keys/FitHrvAnalysis.php:63
 msgid ""
@@ -3087,6 +3092,11 @@ msgid ""
 "a colored marker, green for low values and red for high values. Garmin shows "
 "this value as recovery status."
 msgstr ""
+"Гармин рассчитывает значение HRV в течение первых 12 минут каждое занятие. "
+"Значение - вероятное время восстановления в минутах - оно отображается как "
+"цветной маркер: зеленый для низких значений и красный для высокого значения. "
+"Гармин показывает это значение в качестве статуса восстановления физической "
+"формы."
 
 #: inc/core/Dataset/Keys/VdotValue.php:48
 msgid "VDOT value"
@@ -3109,37 +3119,45 @@ msgid ""
 "Rating of Perceived Exertion or Borg scale, a scale devised to show "
 "perceived exertion during exercise"
 msgstr ""
+"Оценка воспринимаемой нагрузки или шкала Борга, данные разработаны, чтобы "
+"показать ощущение нагрузки во время тренировки"
 
 #: inc/core/Dataset/Keys/Gradient.php:54
 msgid "Grad."
-msgstr ""
+msgstr "Уклон."
 
 #: inc/core/Dataset/Keys/Gradient.php:63
 msgid ""
 "The gradient describes the ratio of elevation gain (or less) and distance. "
 "Dividing total elevation by total distance gives this value."
 msgstr ""
+"Уклон - это отношение изменения высоты к длине общей дистанции. Разделив "
+"общее изменение высоты на всю пройденную дистанцию - получите этот параметр."
 
 #: inc/core/Dataset/Keys/FitRecoveryTime.php:43
 #: inc/core/Dataset/Keys/FitRecoveryTime.php:52
 msgid "Recovery time"
-msgstr ""
+msgstr "Время восстановления"
 
 #: inc/core/Dataset/Keys/FitRecoveryTime.php:62
 msgid ""
 "Garmin calculates a suggested recovery time based on your heart rate "
 "variablitity right after the end of your activity."
 msgstr ""
+"Гармин рассчитывает рекомендуемое время восстановления, основанное на "
+"вариабельности сердечного ритма сразу после окончания тренировки."
 
 #: inc/core/Dataset/Keys/FitTrainingEffect.php:52
 msgid "TE"
-msgstr ""
+msgstr "TE"
 
 #: inc/core/Dataset/Keys/FitTrainingEffect.php:62
 msgid ""
 "Training Effect is an indicator between 1.0 (easy) and 5.0 (overreaching) to "
 "rate the impact of aerobic exercise on your body."
 msgstr ""
+"Эффективность  тренировки - это показатель между 1.0 (легко) и 5.0 "
+"(перегрузка), помогает оценить влияние аэробных упражнений на Ваш организм."
 
 #: inc/core/Dataset/Keys/Temperature.php:53
 msgid "Temp."
@@ -3161,15 +3179,16 @@ msgstr ""
 
 #: inc/core/Dataset/Keys/JdIntensity.php:44
 msgid "JD intensity"
-msgstr ""
+msgstr "JD интенсивность"
 
 #: inc/core/Dataset/Keys/JdIntensity.php:53
 msgid "JD"
-msgstr ""
+msgstr "JD"
 
 #: inc/core/Dataset/Keys/JdIntensity.php:62
 msgid "Intensity points based on Jack Daniels' Running formula."
 msgstr ""
+"Уровень интенсивности расчеты которого базируются на формуле Джека Дэниелса."
 
 #: inc/core/Dataset/Keys/VdotIcon.php:48
 msgid "VDOT icon"
@@ -3180,6 +3199,9 @@ msgid ""
 "Each VDOT value of an activity is marked with an arrow to show if the value "
 "is (much) higher than your current shape, equal to it or (much) lower:"
 msgstr ""
+"Значение VDOT  в тренировке обозначено стрелкой, чтобы показать, что "
+"значение (гораздо) выше, чем ваша текущая форма, равна ему или (гораздо) "
+"ниже:"
 
 #: inc/core/Dataset/Keys/Daytime.php:43
 msgid "Daytime"
@@ -3192,7 +3214,7 @@ msgstr ""
 
 #: inc/core/Dataset/Keys/MainEquipment.php:35
 msgid "Main Equipment"
-msgstr ""
+msgstr "Основное снаряжение"
 
 #: inc/core/Dataset/Keys/MainEquipment.php:53
 msgid ""
@@ -3205,20 +3227,26 @@ msgid ""
 "You can decide for each activity whether it is visible for everybody or not. "
 "If it is public a linked icon is shown."
 msgstr ""
+"Вы можете решить для каждой тренировки будет она видима для всех или нет. "
+"Если тренировка общедоступная то отобразиться иконка."
 
 #: inc/core/Dataset/Keys/VerticalRatio.php:53
 msgid "Vertical ratio is the ratio of vertical oscillation to stride length."
 msgstr ""
+"Вертикальный коэффициент соотношения - это отношение вертикальных колебаний "
+"к длине горизонтального перемещения."
 
 #: inc/core/Dataset/Keys/WindChill.php:43
 msgid "Windchill"
-msgstr ""
+msgstr "Ощущаемая температура"
 
 #: inc/core/Dataset/Keys/WindChill.php:53
 msgid ""
 "Windchill is the perceived air temperature felt by the body on exposed skin "
 "due to the flow of air."
 msgstr ""
+"Ощущаемая температура - это воспринимаемая телом на открытых участках кожи "
+"температура воздуха, обычно не совпадает с реальной из-за потока воздуха."
 
 #: inc/core/Dataset/Keys/FitVO2maxEstimate.php:44
 #: inc/core/Dataset/Keys/FitVO2maxEstimate.php:53
@@ -3227,16 +3255,17 @@ msgstr "VO2макс"
 
 #: inc/core/Dataset/Keys/FitVO2maxEstimate.php:53
 msgid "(file)"
-msgstr ""
+msgstr "(файл)"
 
 #: inc/core/Dataset/Keys/FitVO2maxEstimate.php:62
 msgid "Garmin's newer devices have an integrated VO2max estimation."
-msgstr ""
+msgstr "Новые устройства Гармин имеют интегральную систему оценку VO2макс."
 
 #: inc/core/Dataset/Keys/FitVO2maxEstimate.php:63
 msgid ""
 "This value refers to your estimated VO2max at the start of the activity."
 msgstr ""
+"Это значение относится к вашей предполагаемой VO2макс в начале тренировки."
 
 #: inc/core/Dataset/Keys/Elevation.php:53
 msgid "Elev."
@@ -3247,6 +3276,8 @@ msgid ""
 "Calculated value for total elevation, i.e. maximum of total ascent or "
 "descent."
 msgstr ""
+"Рассчитанное значение общего изменения высоты, т. е. максимум от общего "
+"подъема или спуска."
 
 #: inc/core/Dataset/Keys/FitPerformanceCondition.php:43
 msgid "Performance Condition"
@@ -3282,7 +3313,7 @@ msgstr "Состояние формы"
 
 #: inc/core/Activity/TrainingEffectLevel.php:70
 msgid "Maintaining workout"
-msgstr ""
+msgstr "Поддерживающая тренировка"
 
 #: inc/core/Activity/TrainingEffectLevel.php:72
 msgid "Improving Fitness"
@@ -3290,43 +3321,52 @@ msgstr "Улучшение физической подготовки"
 
 #: inc/core/Activity/TrainingEffectLevel.php:74
 msgid "Highly Improving"
-msgstr ""
+msgstr "Сильное улучшение"
 
 #: inc/core/Activity/TrainingEffectLevel.php:76
 msgid "Overreaching"
-msgstr ""
+msgstr "Переутомление"
 
 #: inc/core/Activity/TrainingEffectLevel.php:92
 msgid ""
 "Helps recovery (short activities). Improves endurance with longer activities "
 "(more than 40 minutes)."
 msgstr ""
+"Помогает восстановлению (деятельности). Улучшает выносливость при более "
+"длительных тренировках (более 40 минут)."
 
 #: inc/core/Activity/TrainingEffectLevel.php:94
 msgid "Maintains your aerobic fitness."
-msgstr ""
+msgstr "Поддерживает Ваш аэробный уровень."
 
 #: inc/core/Activity/TrainingEffectLevel.php:96
 msgid ""
 "Improves your aerobic fitness if repeated as part of your weekly training "
 "program."
 msgstr ""
+"Улучшает Ваш аэробный уровень, если повторяется как часть еженедельной "
+"программы тренировки."
 
 #: inc/core/Activity/TrainingEffectLevel.php:98
 msgid ""
 "Highly improves your aerobic fitness if repeated 1-2 times per week with "
 "adequate recovery time."
 msgstr ""
+"Сильно улучшает ваш аэробный уровень, если повторяется 1-2 раза в неделю с "
+"необходимыми перерывами для восстановления."
 
 #: inc/core/Activity/TrainingEffectLevel.php:100
 msgid ""
 "Causes temporary overload with high improvement. Train up to this number "
 "with extreme care. Requires additional recovery days."
 msgstr ""
+"Вызывает временную перегрузку со значительным прогрессом. Достигайте этой "
+"цифры с крайней осторожностью. Требуются дополнительные дни для "
+"восстановления."
 
 #: inc/core/Activity/GroundcontactBalance.php:48
 msgid "Groundcontact balance"
-msgstr ""
+msgstr "Распределение времени контакта с землей"
 
 #: inc/core/Profile/Athlete/Gender.php:27
 msgid "not set"
@@ -3360,11 +3400,11 @@ msgstr "снег"
 
 #: inc/core/Parameter/Application/DatabaseOrder.php:39
 msgid "id (oldest first)"
-msgstr ""
+msgstr "ид (сначала старейшие)"
 
 #: inc/core/Parameter/Application/DatabaseOrder.php:40
 msgid "id (latest first)"
-msgstr ""
+msgstr "ид (сначала новейшие)"
 
 #: inc/core/Parameter/Application/DatabaseOrder.php:41
 msgid "alphabetical"
@@ -3413,31 +3453,31 @@ msgstr "никогда"
 
 #: inc/core/Parameter/Application/ActivityRouteBreak.php:28
 msgid "at too big distance (15s)"
-msgstr ""
+msgstr "на слишком большие расстояния (15с)"
 
 #: inc/core/Parameter/Application/ActivityRouteBreak.php:29
 msgid "at too big distance (30s)"
-msgstr ""
+msgstr "на слишком большие расстояния (30с)"
 
 #: inc/core/Parameter/Application/ActivityRouteBreak.php:30
 msgid "at too big distance (60s)"
-msgstr ""
+msgstr "на слишком большие расстояния (60с)"
 
 #: inc/core/Parameter/Application/ActivityRouteBreak.php:31
 msgid "at too big distance (120s)"
-msgstr ""
+msgstr "на слишком большие расстояния (120с)"
 
 #: inc/core/Parameter/Application/ActivityRouteBreak.php:32
 msgid "at too big distance (240s)"
-msgstr ""
+msgstr "на слишком большие расстояния (240с)"
 
 #: inc/core/Parameter/Application/ActivityRouteBreak.php:33
 msgid "at too big distance (300s)"
-msgstr ""
+msgstr "на слишком большие расстояния (300с)"
 
 #: inc/core/Parameter/Application/ActivityRouteBreak.php:34
 msgid "at too big distance (600s)"
-msgstr ""
+msgstr "на слишком большие расстояния (600с)"
 
 #: inc/core/Parameter/Application/ActivityRoutePrivacy.php:40
 msgid "only for race results"
@@ -3530,15 +3570,15 @@ msgstr "Ввод вручную"
 
 #: inc/core/Parameter/Application/PaceAxisType.php:16
 msgid "linear"
-msgstr ""
+msgstr "линейная"
 
 #: inc/core/Parameter/Application/PaceAxisType.php:17
 msgid "reversed linear"
-msgstr ""
+msgstr "обратная линейная"
 
 #: inc/core/Parameter/Application/PaceAxisType.php:18
 msgid "as speed"
-msgstr ""
+msgstr "как скорость"
 
 #: inc/core/Parameter/Application/ActivityPlotPrecision.php:21
 msgid "every 50m a data point"
@@ -3594,7 +3634,7 @@ msgstr "Google+"
 
 #: inc/core/Export/Share/AbstractSharer.php:41
 msgid "I did sport: "
-msgstr ""
+msgstr "Я занимался спортом: "
 
 #: inc/core/Export/Share/AbstractSharer.php:45
 msgid " in "
@@ -3662,7 +3702,7 @@ msgstr "HTML"
 
 #: inc/core/Export/Share/Html.php:67
 msgid "Your training is private: There is no link included."
-msgstr ""
+msgstr "Ваша тренировка приватная: Ссылка отсутствует."
 
 #: inc/core/Export/Share/Facebook.php:73
 msgid "Facebook"
@@ -3670,71 +3710,74 @@ msgstr "Фэйсбук"
 
 #: inc/core/Data/Stroketype.php:98 inc/core/Data/Stroketype.php:121
 msgid "Freestyle"
-msgstr ""
+msgstr "Вольный стиль"
 
 #: inc/core/Data/Stroketype.php:100
 msgid "Backstroke"
-msgstr ""
+msgstr "На спине"
 
 #: inc/core/Data/Stroketype.php:102
 msgid "Breaststroke"
-msgstr ""
+msgstr "Брассом"
 
 #: inc/core/Data/Stroketype.php:104 inc/core/Data/Stroketype.php:127
 msgid "Butterfly"
-msgstr ""
+msgstr "Баттерфляй"
 
 #: inc/core/Data/Stroketype.php:106 inc/core/Data/Stroketype.php:129
+#, fuzzy
 msgid "Drill"
-msgstr ""
+msgstr "Упражнения"
 
 #: inc/core/Data/Stroketype.php:108 inc/core/Data/Stroketype.php:131
 msgid "Mixed"
-msgstr ""
+msgstr "Смешанный"
 
 #: inc/core/Data/Stroketype.php:123
+#, fuzzy
 msgid "Back"
-msgstr ""
+msgstr "Назад"
 
 #: inc/core/Data/Stroketype.php:125
+#, fuzzy
 msgid "Breast"
-msgstr ""
+msgstr "На груди"
 
 #: inc/core/Data/RPE.php:21
 msgid "No exertion at all"
-msgstr ""
+msgstr "Без нагрузки"
 
 #: inc/core/Data/RPE.php:22
 msgid "Extremely light"
-msgstr ""
+msgstr "Экстремально легкая"
 
 #: inc/core/Data/RPE.php:24
 msgid "Very light"
-msgstr ""
+msgstr "Очень легкая"
 
 #: inc/core/Data/RPE.php:26
 msgid "Light"
-msgstr ""
+msgstr "Легкая"
 
 #: inc/core/Data/RPE.php:28
 msgid "Somewhat hard"
-msgstr ""
+msgstr "Немного тяжёлая"
 
 #: inc/core/Data/RPE.php:30
 msgid "Hard"
-msgstr ""
+msgstr "Тяжёлая"
 
 #: inc/core/Data/RPE.php:32
 msgid "Very Hard"
-msgstr ""
+msgstr "Очень тяжёлая"
 
 #: inc/core/Data/RPE.php:34
 msgid "Extremely hard"
-msgstr ""
+msgstr "Экстремально тяжёлая"
 
 #: inc/core/Data/RPE.php:35
 msgid "Maximal exertion"
-msgstr ""
+msgstr "Максимальная нагрузка"
 
 #: inc/core/Data/Cadence/Running.php:28
 msgid "Cadence (running)"
@@ -3746,7 +3789,7 @@ msgstr "ш/мин = шагов в минуту"
 
 #: inc/core/Data/Cadence/General.php:40
 msgid "rpm = rotations per minute"
-msgstr ""
+msgstr "rpm = обороты в минуту"
 
 #: inc/core/Data/Weather.php:206
 msgid "at"
@@ -3754,55 +3797,55 @@ msgstr "на"
 
 #: inc/core/Data/Weather/BeaufortScale.php:119
 msgid "Calm"
-msgstr ""
+msgstr "Штиль"
 
 #: inc/core/Data/Weather/BeaufortScale.php:121
 msgid "Light air"
-msgstr ""
+msgstr "Тихий ветер"
 
 #: inc/core/Data/Weather/BeaufortScale.php:123
 msgid "Light breeze"
-msgstr ""
+msgstr "Легкий ветер"
 
 #: inc/core/Data/Weather/BeaufortScale.php:125
 msgid "Gentle breeze"
-msgstr ""
+msgstr "Слабый ветер"
 
 #: inc/core/Data/Weather/BeaufortScale.php:127
 msgid "Moderate breeze"
-msgstr ""
+msgstr "Умеренный ветер"
 
 #: inc/core/Data/Weather/BeaufortScale.php:129
 msgid "Fresh breeze"
-msgstr ""
+msgstr "Свежий ветер"
 
 #: inc/core/Data/Weather/BeaufortScale.php:131
 msgid "Strong breeze"
-msgstr ""
+msgstr "Сильный ветер"
 
 #: inc/core/Data/Weather/BeaufortScale.php:133
 msgid "High wind"
-msgstr ""
+msgstr "Крепкий ветер"
 
 #: inc/core/Data/Weather/BeaufortScale.php:135
 msgid "Fresh gale"
-msgstr ""
+msgstr "Очень крепкий ветер"
 
 #: inc/core/Data/Weather/BeaufortScale.php:137
 msgid "Strong gale"
-msgstr ""
+msgstr "Шторм"
 
 #: inc/core/Data/Weather/BeaufortScale.php:139
 msgid "Whole gale"
-msgstr ""
+msgstr "Сильный шторм"
 
 #: inc/core/Data/Weather/BeaufortScale.php:141
 msgid "Violent storm"
-msgstr ""
+msgstr "Жесткий шторм"
 
 #: inc/core/Data/Weather/BeaufortScale.php:143
 msgid "Hurricane force"
-msgstr ""
+msgstr "Ураган"
 
 #: inc/core/Data/Weather/BeaufortScale.php:145
 #: inc/core/Data/Weather/Condition.php:117 inc/core/View/Activity/Linker.php:83
@@ -3812,19 +3855,19 @@ msgstr "неизвестно"
 
 #: inc/core/Data/Weather/BeaufortScale.php:169
 msgid "Beaufort scale"
-msgstr ""
+msgstr "Шкала Бофорта"
 
 #: inc/core/Data/Weather/WindChillFactor.php:83
 msgid "Wind chill factor"
-msgstr ""
+msgstr "Фактор ветра"
 
 #: inc/core/Data/Weather/WindDegree.php:58
 msgid "Wind Degree"
-msgstr ""
+msgstr "Сила ветра"
 
 #: inc/core/Data/Weather/Sources.php:40
 msgid "internal database"
-msgstr ""
+msgstr "внутренняя база данных"
 
 #: inc/core/Data/Weather/HeatIndexEffect.php:59
 msgid "No effect"
@@ -3876,35 +3919,35 @@ msgstr ""
 #: inc/core/Data/Weather/CardinalDirection.php:72
 #: inc/core/Data/Weather/CardinalDirection.php:76
 msgid "N"
-msgstr ""
+msgstr "С"
 
 #: inc/core/Data/Weather/CardinalDirection.php:77
 msgid "NE"
-msgstr ""
+msgstr "СВ"
 
 #: inc/core/Data/Weather/CardinalDirection.php:78
 msgid "E"
-msgstr ""
+msgstr "В"
 
 #: inc/core/Data/Weather/CardinalDirection.php:79
 msgid "SE"
-msgstr ""
+msgstr "ЮВ"
 
 #: inc/core/Data/Weather/CardinalDirection.php:80
 msgid "S"
-msgstr ""
+msgstr "Ю"
 
 #: inc/core/Data/Weather/CardinalDirection.php:81
 msgid "SW"
-msgstr ""
+msgstr "ЮЗ"
 
 #: inc/core/Data/Weather/CardinalDirection.php:82
 msgid "W"
-msgstr ""
+msgstr "З"
 
 #: inc/core/Data/Weather/CardinalDirection.php:83
 msgid "NW"
-msgstr ""
+msgstr "СЗ"
 
 #: inc/core/Data/Weather/Condition.php:96
 msgid "sunny"
@@ -3969,27 +4012,28 @@ msgstr "Дуглас-Пекер"
 #: inc/core/View/Activity/Plot/Series/HRVdifferencesWithoutAnomalies.php:56
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:304
 msgid "Difference"
-msgstr ""
+msgstr "Разница"
 
 #: inc/core/View/Activity/Plot/Series/Smo2.php:36
 msgid "Smo2 (2)"
 msgstr ""
 
 #: inc/core/View/Activity/Plot/Series/PaceCumulativeAverage.php:50
+#, fuzzy
 msgid "Moving average"
-msgstr ""
+msgstr "Скользящее среднее"
 
 #: inc/core/View/Activity/Plot/LapsComputed.php:34
 msgid "No GPS-data available. Can\\'t compute laps."
-msgstr ""
+msgstr "Нет GPS-данных. Невозможно рассчитать круги."
 
 #: inc/core/View/Activity/Plot/LapsManual.php:38
 msgid "There are no manual laps."
-msgstr ""
+msgstr "Нет в ручную созданных кругов."
 
 #: inc/core/View/Activity/Plot/ActivityPlot.php:82
 msgid "No plot available."
-msgstr ""
+msgstr "График недоступен."
 
 #: inc/core/View/Activity/Box/ElevationUpDown.php:35
 msgid "Elevation up/down"
@@ -3997,11 +4041,11 @@ msgstr "Высота +/-"
 
 #: inc/core/View/Activity/Box/MaximalHeartRateInPercent.php:64
 msgid "This value exceeds your entered maximal heart rate."
-msgstr ""
+msgstr "Эта величина превышает указанный максимальный пульс."
 
 #: inc/core/View/Activity/Box/MaximalHeartRateInPercent.php:65
 msgid "Please adjust your maximal heart rate."
-msgstr ""
+msgstr "Пожалуйста, измените вашу максимальную частоту сердечных сокращений."
 
 #: inc/core/View/Activity/Box/Pace.php:28
 #: inc/core/View/Activity/Box/Speed.php:37
@@ -4010,11 +4054,11 @@ msgstr "Скорость"
 
 #: inc/core/View/Activity/Box/TotalCadence.php:27
 msgid "Number of steps"
-msgstr ""
+msgstr "Количество шагов"
 
 #: inc/core/View/Activity/Box/TotalCadence.php:29
 msgid "Total cadence"
-msgstr ""
+msgstr "Общий каденс"
 
 #: inc/core/View/Window/Laps/Table.php:143
 msgid "Lap"
@@ -4035,87 +4079,97 @@ msgstr "Средняя"
 
 #: inc/core/View/Window/Laps/Table.php:317
 msgid "Show inactive splits"
-msgstr ""
+msgstr "Показать неактивные отрезки"
 
 #: inc/core/View/Window/Laps/Form.php:41
 msgid "Calculate laps"
-msgstr ""
+msgstr "Расчет кругов"
 
 #: inc/core/View/Window/Laps/Form.php:56 inc/core/View/Window/Laps/Form.php:67
 msgid "Lap every ..."
-msgstr ""
+msgstr "Круг каждые ..."
 
 #: inc/core/View/Window/Laps/Form.php:56
 msgid "Distance, after which a new lap should start"
-msgstr ""
+msgstr "Расстояние, после которого должен начаться новый круг"
 
 #: inc/core/View/Window/Laps/Form.php:67 inc/core/View/Window/Laps/Form.php:79
 #: inc/core/View/Window/Laps/Form.php:82 inc/core/View/Window/Laps/Form.php:93
 #: inc/core/View/Window/Laps/Form.php:96 inc/core/View/Window/Laps/Form.php:118
 msgid "or"
-msgstr ""
+msgstr "или"
 
 #: inc/core/View/Window/Laps/Form.php:67
 msgid "Time, after which a new lap should start"
-msgstr ""
+msgstr "Время, после которого должен начаться новый круг"
 
 #: inc/core/View/Window/Laps/Form.php:79
 msgid "Manual distances"
-msgstr ""
+msgstr "Ручной ввод дистанции"
 
 #: inc/core/View/Window/Laps/Form.php:80
 msgid ""
 "List with all distances, comma seperated. Put \"+\" at the beginning to "
 "treat distances as intervals."
 msgstr ""
+"Список всех отрезков дистанции, разделенных запятыми. Поставьте \"+\" в "
+"начале, что бы вывести отрезки интервалами."
 
 #: inc/core/View/Window/Laps/Form.php:82 inc/core/View/Window/Laps/Form.php:96
 msgid "e.g."
-msgstr ""
+msgstr "т.е."
 
 #: inc/core/View/Window/Laps/Form.php:93
 msgid "Manual times"
-msgstr ""
+msgstr "Ручной ввод времени"
 
 #: inc/core/View/Window/Laps/Form.php:94
 msgid ""
 "List with all times, comma seperated. Put \"+\" at the beginning to treat "
 "times as intervals."
 msgstr ""
+"Список всех отрезков времени, разделенных запятыми. Поставьте \"+\" в "
+"начале, что бы вывести отрезки интервалами."
 
 #: inc/core/View/Window/Laps/Form.php:106
 msgid "Lap time goal"
-msgstr ""
+msgstr "Целевое время круга"
 
 #: inc/core/View/Window/Laps/Form.php:118
 msgid "Pace goal"
-msgstr ""
+msgstr "Целевой темп"
 
 #: inc/core/View/Window/Laps/Form.php:129
+#, fuzzy
 msgid ""
 "Calculate values for handmade splits although total distance does not match."
 msgstr ""
+"Вычислить значения для отрезков созданных вручную, несмотря на то, что общее "
+"расстояние не совпадает."
 
 #: inc/core/View/Window/Laps/Form.php:133
 msgid "The total distance of your handmade laps differs from the gps distance."
 msgstr ""
+"Общая протяженность дистанции созданных в ручную кругов отличается от "
+"расстояния по GPS."
 
 #: inc/core/View/Window/Laps/Form.php:140
 msgid "Leave lap distances empty to use your handmade laps."
 msgstr ""
+"Оставьте длину круга пустой, чтобы использовать созданные в ручную круги."
 
 #: inc/core/View/Window/Laps/Form.php:153
 msgid "Show calculated laps"
-msgstr ""
+msgstr "Показать рассчитанные круги"
 
 #: inc/core/View/Window/Laps/Form.php:154
 msgid "Show manual laps"
-msgstr ""
+msgstr "Показать созданные в ручную круги"
 
 #: inc/core/View/Leaflet/Activity.php:228
 #, php-format
 msgid "<strong>%s. %s</strong> in %s"
-msgstr ""
+msgstr "<strong>%s. %s</strong> в %s"
 
 #: inc/core/View/Leaflet/Activity.php:229
 #: inc/core/View/Leaflet/Activity.php:259
@@ -4132,21 +4186,21 @@ msgstr "<strong>Всего:</strong> %s"
 #: inc/core/View/Leaflet/Activity.php:323
 #, php-format
 msgid "<strong>Pause</strong> of %s"
-msgstr ""
+msgstr "<strong>Остановка</strong>  %s"
 
 #: inc/core/View/Leaflet/Activity.php:324
 #, php-format
 msgid "<strong>Distance:</strong> %s"
-msgstr ""
+msgstr "<strong>Расстояние:</strong> %s"
 
 #: inc/core/View/Leaflet/Activity.php:328
 msgid "<strong>Heart rate:</strong>"
-msgstr ""
+msgstr "<strong>Пульс:</strong>"
 
 #: inc/core/View/Leaflet/Activity.php:328
 #, php-format
 msgid "%s to %s"
-msgstr ""
+msgstr "%s в %s"
 
 #: inc/core/View/Splits/Table.php:157
 msgid "diff"
@@ -4159,7 +4213,7 @@ msgstr "Цель"
 
 #: inc/core/View/Splits/Table.php:243
 msgid "Average (active)"
-msgstr ""
+msgstr "Средняя (активная)"
 
 #: inc/core/View/Splits/Table.php:251
 msgid "Average (total)"
@@ -4172,35 +4226,35 @@ msgstr "1-я/2-я половина"
 #: inc/core/View/RaceResult/Dataview.php:91
 #, php-format
 msgid "of %u overall"
-msgstr ""
+msgstr "%u в целом"
 
 #: inc/core/View/RaceResult/Dataview.php:104
 #, php-format
 msgid "of %u in your age group"
-msgstr ""
+msgstr "%u в вашей возрастной группе"
 
 #: inc/core/View/RaceResult/Dataview.php:117
 #, php-format
 msgid "of %u men/women"
-msgstr ""
+msgstr "%u мужчины/женщины"
 
 #: inc/core/View/RaceResult/Dataview.php:174
-#, php-format
+#, fuzzy, php-format
 msgid "(first %u%%)"
-msgstr ""
+msgstr "(первый %u%%)"
 
 #: inc/core/Configuration/Messages.php:26
 msgid "Database cleanup"
 msgstr "Очистка базы данных"
 
 #: inc/core/Configuration/Messages.php:27
-#, php-format
+#, fuzzy, php-format
 msgid "You can now use the %s to recalculate the concerning values."
-msgstr ""
+msgstr "Теперь вы можете использовать %s для пересчета относительно значений"
 
 #: inc/core/Configuration/Messages.php:34
 msgid "sports configuration"
-msgstr ""
+msgstr "настройки видов спорта"
 
 #: inc/core/Configuration/Messages.php:37
 #, php-format
@@ -4464,7 +4518,7 @@ msgstr "Дни для CTL"
 
 #: inc/core/Configuration/Category/Trimp.php:105
 msgid "Number of days for CTL time constant"
-msgstr ""
+msgstr "Количество дней для постоянной времени CTL"
 
 #: inc/core/Configuration/Category/Trimp.php:109
 msgid "Show ATL/CTL in percent of your maximum"
