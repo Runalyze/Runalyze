@@ -17,7 +17,7 @@ use Runalyze\Activity\DuplicateFinder;
 class MultiImporterFormular extends Formular {
 	/**
 	 * Training objects
-	 * @var array[TrainingObject]
+	 * @var TrainingObject[]
 	 */
 	protected $TrainingObjects = array();
 
