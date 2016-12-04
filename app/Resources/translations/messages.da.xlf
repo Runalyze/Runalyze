@@ -21,9 +21,9 @@
         <source>Runalyze is an open-source project. We are working on it as much as we can in our free time.</source>
         <target>Runalyze is an open-source project. We are working on it as much as we can in our free time.</target>
       </trans-unit>
-      <trans-unit id="f67c1b23d5c1a452c90449e350cb4c76" resname="Official developers:">
+      <trans-unit id="f67c1b23d5c1a452c90449e350cb4c76" resname="Official developers:" approved="yes">
         <source>Official developers:</source>
-        <target>Official developers:</target>
+        <target state="translated">Officielle udviklere:</target>
       </trans-unit>
       <trans-unit id="254f642527b45bc260048e30704edb39" resname="Configuration">
         <source>Configuration</source>
