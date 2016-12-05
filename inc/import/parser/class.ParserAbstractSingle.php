@@ -184,14 +184,22 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 					case 'running':
 						$name[] = 'Laufen';
                         $name[] = 'Laufband';
+                        $name[] = 'Corriendo';
                         $name[] = 'Running';
+                        $name[] = 'In esecuzione';
                         $name[] = 'Bieganie';
                         $name[] = 'Carrera a pie';
                         $name[] = 'Hardlopen';
                         $name[] = 'Бег';
+                        $name[] = 'Fonctionnement';
+                        $name[] = 'Løb';
                         $name[] = 'Corsa';
                         $name[] = 'Juoksu';
+                        $name[] = 'Correndo';
                         $name[] = 'córrer';
+                        $name[] = 'Spring';
+                        $name[] = 'Futás';
+                        $name[] = 'Koşu';
 						break;
                     case 'mountain bike':
                         $name[] = 'Mountainbike';
@@ -214,6 +222,13 @@ abstract class ParserAbstractSingle extends ParserAbstract {
                         $name[] = 'Fietsen';
                         $name[] = 'Bici';
                         $name[] = 'Cyclisme';
+                        $name[] = 'Bicicletta';
+                        $name[] = 'kolarstwo';
+                        $name[] = 'Cykling';
+                        $name[] = 'Vélo';
+                        $name[] = 'Jalgrattasõit';
+                        $name[] = 'Kerékpározás';
+                        $name[] = 'Bisiklet';
 						break;
 					case 'swim':
 					case 'swimming':
@@ -223,6 +238,16 @@ abstract class ParserAbstractSingle extends ParserAbstract {
                         $name[] = 'Pływanie';
                         $name[] = 'Natación';
                         $name[] = 'Nuoto';
+                        $name[] = 'Nadando';
+                        $name[] = 'плавание';
+                        $name[] = 'svømning';
+                        $name[] = 'La natation';
+                        $name[] = 'Uima';
+                        $name[] = 'Natação';
+                        $name[] = 'Simning';
+                        $name[] = 'ujumine';
+                        $name[] = 'Úszás';
+                        $name[] = 'Yüzme';
                     break;
 					case 'other':
 						$name[] = 'Sonstiges';
@@ -231,13 +256,27 @@ abstract class ParserAbstractSingle extends ParserAbstract {
                         $name[] = 'Other';
                         $name[] = 'Inny';
                         $name[] = 'Altro';
+                        $name[] = 'Andre';
+                        $name[] = 'Altri';
+                        $name[] = 'другие';
+                        $name[] = 'Pozostałe';
+                        $name[] = 'anderen';
+                        $name[] = 'Autres';
+                        $name[] = 'altres';
+                        $name[] = 'Muut';
+                        $name[] = 'Outras';
+                        $name[] = 'andra';
+                        $name[] = 'teised';
+                        $name[] = 'Egyéb';
+                        $name[] = 'Diğerleri';
 						break;
 				}
 				break;
 		}
 
+        $name = array_map('strtolower', $name);
         foreach ( \Runalyze\Context::Factory()->allSports() as $sport ) {
-            if ( in_array($sport->name(), $name) ) {
+            if ( in_array( strtolower( $sport->name() ), $name) ) {
                 $this->TrainingObject->setSportid($sport->id());
             }
         }
