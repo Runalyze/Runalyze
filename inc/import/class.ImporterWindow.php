@@ -31,13 +31,13 @@ class ImporterWindow {
 
 	/**
 	 * Tabs
-	 * @var array
+	 * @var ImporterWindowTab[]
 	 */
 	protected $Tabs = array();
 
 	/**
 	 * Array with training objects
-	 * @var array
+	 * @var TrainingObject[]
 	 */
 	protected $TrainingObjects = array();
 
@@ -46,6 +46,9 @@ class ImporterWindow {
 	 * @var array
 	 */
 	protected $Errors = array();
+
+	/** @var bool */
+	protected $ForceMultiEditor = false;
 
 	/**
 	 * Constructor
@@ -61,7 +64,7 @@ class ImporterWindow {
 	private function initTabs() {
 		$this->Tabs['upload']   = new ImporterWindowTabUpload();
 		$this->Tabs['garmin']   = new ImporterWindowTabCommunicator();
-		$this->Tabs['formular'] = new ImporterWindowTabFormular( $this->TrainingObjects );
+		$this->Tabs['formular'] = new ImporterWindowTabFormular($this->TrainingObjects, $this->ForceMultiEditor);
 
 		if (isset($_GET['date']))
 			$this->Tabs['formular']->setVisible();
@@ -112,8 +115,8 @@ class ImporterWindow {
 
 		$Factory = new ImporterFactory($fileNames);
 
+		$this->ForceMultiEditor = true;
 		$this->TrainingObjects = $Factory->trainingObjects();
-
 		$this->Errors = array_merge($this->Errors, $Factory->getErrors());
 	}
 

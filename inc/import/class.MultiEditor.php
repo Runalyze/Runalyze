@@ -133,6 +133,7 @@ class MultiEditor {
 		echo '<div class="panel-content">';
 
 		$Formular = new \TrainingFormular($Training, \StandardFormular::$SUBMIT_MODE_EDIT);
+		$Formular->setAction('activity/multi-editor/'.$id);
 		$Formular->setId('training');
 		$Formular->setLayoutForFields( \FormularFieldset::$LAYOUT_FIELD_W50 );
 		$Formular->display();

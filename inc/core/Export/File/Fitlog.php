@@ -43,6 +43,14 @@ class Fitlog extends AbstractFileExporter
     }
 
     /**
+     * @return string
+     */
+    protected function mimeType()
+    {
+        return 'application/fitlog+xml';
+    }
+
+    /**
      * @return int
      */
     public function enum()

@@ -31,10 +31,10 @@ class Smo2 extends ActivitySeries {
 		$this->initOptions();
         if ($sensorIndex == 1) {
             $trackdataKey = Trackdata::SMO2_1;
-            $this->Label = __('Smo2 (2)');
+            $this->Label = __('SmO2').' (2)';
         } else {
             $trackdataKey = Trackdata::SMO2_0;
-            $this->Label = __('Smo2');
+            $this->Label = __('SmO2');
         }
 		$this->initData($context->trackdata(), $trackdataKey);
 	}

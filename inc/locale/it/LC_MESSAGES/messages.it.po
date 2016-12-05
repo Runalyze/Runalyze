@@ -1,18 +1,18 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-12 09:42+0100\n"
-"PO-Revision-Date: 2016-09-16 15:11+0000\n"
-"Last-Translator: Lorenzo <lorenzo.capitani@gmail.com>\n"
-"Language-Team: Italian <http://translate.runalyze.com/projects/runalyze/"
-"runalyze-master-po/it/>\n"
+"Report-Msgid-Bugs-To: mail@runalyze.com\n"
+"POT-Creation-Date: 2016-11-15 17:37+0100\n"
+"PO-Revision-Date: 2016-11-19 09:21+0000\n"
+"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
+"Language-Team: Italian <https://translate.runalyze.com/projects/runalyze"
+"/runalyze-master-po/it/>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.8-dev\n"
+"X-Generator: Weblate 2.9\n"
 "X-Poedit-KeywordsList: __;_ne;_n;_e\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -35,63 +35,63 @@ msgstr "I dati di elevazione sono stati corretti."
 msgid "Elevation data could not be retrieved."
 msgstr "I dati di elevazione non possono essere recuperati."
 
-#: src/CoreBundle/Controller/CallController.php:153
+#: src/CoreBundle/Controller/CallController.php:146
 msgid "Search for activities"
 msgstr "Cerca attività"
 
-#: src/CoreBundle/Controller/CallController.php:182
+#: src/CoreBundle/Controller/CallController.php:175
 msgid "There was a problem."
 msgstr "Ci sono stati problemi."
 
-#: src/CoreBundle/Controller/DefaultController.php:239
+#: src/CoreBundle/Controller/DefaultController.php:232
 msgid "Click on an activity to see more details."
 msgstr "Clicca su un'attività per maggiori dettagli."
 
-#: src/CoreBundle/Controller/DefaultController.php:240
+#: src/CoreBundle/Controller/DefaultController.php:233
 msgid "Public activities are marked: "
 msgstr "Le attività pubbliche sono state contrassegnate: "
 
-#: src/CoreBundle/Controller/PluginController.php:24
+#: src/CoreBundle/Controller/PluginController.php:23
 msgid "Install"
 msgstr "Installa"
 
-#: src/CoreBundle/Controller/PluginController.php:30
+#: src/CoreBundle/Controller/PluginController.php:29
 msgid "The plugin has been successfully installed."
 msgstr "Il plugin è stato installato correttamente."
 
-#: src/CoreBundle/Controller/PluginController.php:33
+#: src/CoreBundle/Controller/PluginController.php:32
 #: src/CoreBundle/Component/Tool/Backup/JsonImporterResults.php:133
 #: inc/tpl/tpl.Frontend.header.php:37
 #: inc/plugin/config/class.PluginConfigurationWindow.php:114
 msgid "Configuration"
 msgstr "Configurazione"
 
-#: src/CoreBundle/Controller/PluginController.php:39
+#: src/CoreBundle/Controller/PluginController.php:38
 msgid "There was a problem, the plugin could not be installed."
 msgstr "Si è verificato un errore, il plugin non può essere installato."
 
-#: src/CoreBundle/Controller/PluginController.php:43
-#: src/CoreBundle/Controller/PluginController.php:73
+#: src/CoreBundle/Controller/PluginController.php:42
+#: src/CoreBundle/Controller/PluginController.php:72
 msgid "back to list"
 msgstr "torna alla lista"
 
-#: src/CoreBundle/Controller/PluginController.php:60
+#: src/CoreBundle/Controller/PluginController.php:59
 msgid "Uninstall"
 msgstr "Disinstalla"
 
-#: src/CoreBundle/Controller/PluginController.php:63
+#: src/CoreBundle/Controller/PluginController.php:62
 msgid "The plugin has been uninstalled."
 msgstr "Il plugin è stato disinstallato."
 
-#: src/CoreBundle/Controller/PluginController.php:69
+#: src/CoreBundle/Controller/PluginController.php:68
 msgid "There was a problem, the plugin could not be uninstalled."
 msgstr "Si è verificato un problema: il plugin non può essere disinstallato."
 
-#: src/CoreBundle/Controller/PluginController.php:94
+#: src/CoreBundle/Controller/PluginController.php:93
 msgid "The plugin could not be found."
 msgstr "Il plugin non può essere trovato."
 
-#: src/CoreBundle/Controller/PluginController.php:166
+#: src/CoreBundle/Controller/PluginController.php:165
 msgid "Something went wrong ..."
 msgstr "Si è verificato un errore ..."
 
@@ -898,7 +898,6 @@ msgstr ""
 "plugin."
 
 #: inc/system/config/class.ConfigTabDataset.php:106
-#, fuzzy
 msgid "Display"
 msgstr "Display"
 
@@ -1042,7 +1041,7 @@ msgstr "Usato fino al"
 #: inc/training/schemes/scheme.Training.php:57
 #: inc/training/schemes/scheme.Training.php:608
 #: inc/training/schemes/scheme.UserData.php:28
-#: inc/training/schemes/scheme.UserData.php:128
+#: inc/training/schemes/scheme.UserData.php:134
 #: plugin/RunalyzePluginPanel_Equipment/class.RunalyzePluginPanel_Equipment.php:203
 #: plugin/RunalyzePluginPanel_Sportler/window.sportler.table.php:46
 msgid "Notes"
@@ -2442,7 +2441,7 @@ msgstr "Frequenza Cardiaca"
 msgid "Sleep"
 msgstr "Sonno"
 
-#: inc/training/schemes/scheme.UserData.php:55 inc/core/Activity/Weight.php:72
+#: inc/training/schemes/scheme.UserData.php:56 inc/core/Activity/Weight.php:72
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:112
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:162
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:188
@@ -2451,32 +2450,32 @@ msgstr "Sonno"
 msgid "Weight"
 msgstr "Peso"
 
-#: inc/training/schemes/scheme.UserData.php:66
+#: inc/training/schemes/scheme.UserData.php:68
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:116
 #: plugin/RunalyzePluginPanel_Sportler/Plot.gewicht.php:43
 #: plugin/RunalyzePluginPanel_Sportler/window.sportler.table.php:38
 msgid "Resting HR"
 msgstr "Frequenza Cardiaca a riposo"
 
-#: inc/training/schemes/scheme.UserData.php:76
+#: inc/training/schemes/scheme.UserData.php:79
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:117
 #: plugin/RunalyzePluginPanel_Sportler/window.sportler.table.php:39
 msgid "Maximal HR"
 msgstr "Frequenza Cardiaca massimale"
 
-#: inc/training/schemes/scheme.UserData.php:86
+#: inc/training/schemes/scheme.UserData.php:90
 msgid "Body fat"
 msgstr "Grasso corporeo"
 
-#: inc/training/schemes/scheme.UserData.php:96
+#: inc/training/schemes/scheme.UserData.php:101
 msgid "Body water"
 msgstr "Acqua (contenuta nel corpo)"
 
-#: inc/training/schemes/scheme.UserData.php:106
+#: inc/training/schemes/scheme.UserData.php:112
 msgid "Body muscle"
 msgstr "Massa muscolare"
 
-#: inc/training/schemes/scheme.UserData.php:117
+#: inc/training/schemes/scheme.UserData.php:123
 msgid "Sleep Duration"
 msgstr "Durata del sonno"
 
@@ -5861,6 +5860,11 @@ msgstr "Dettagli attività"
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:621
 msgid "Placement"
 msgstr "Piazzamento"
+
+#: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:392
+msgid ""
+"Your result in proportion to the world best performance in your age/gender."
+msgstr ""
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:396
 msgid "Overall"

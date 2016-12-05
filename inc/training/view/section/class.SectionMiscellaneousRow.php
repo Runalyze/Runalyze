@@ -75,7 +75,7 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
         if ($this->Context->trackdata()->has(Trackdata\Entity::SMO2_0) ||
             $this->Context->trackdata()->has(Trackdata\Entity::THB_0)) {
             $Plot = new Activity\Plot\Smo2AndThb($this->Context);
-            $this->addRightContent('smo2AndThb', __('Smo2 & Thb'), $Plot);
+            $this->addRightContent('smo2AndThb', __('SmO2').' / '.__('THb'), $Plot);
         }
 
 	}

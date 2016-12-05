@@ -74,59 +74,75 @@
                 <div class="margin-10 padding-5">
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" name="activity-elevation">
+                            <input type="checkbox" name="activity-elevation" disabled>
                             {% trans %}Recalculate elevation{% endtrans %}
                         </label>
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" name="activity-elevation-overwrite">
+                                <input type="checkbox" name="activity-elevation-overwrite" disabled>
                                 {% trans %}Overwrite manual values{% endtrans %}
                             </label>
                         </div>
                     </div>
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" name="activity-vdot">
+                            <input type="checkbox" name="activity-vdot" disabled>
                             {% trans %}Recalculate VDOT values{% endtrans %}
                         </label>
                     </div>
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" name="activity-jdpoints">
+                            <input type="checkbox" name="activity-jdpoints" disabled>
                             {% trans %}Recalculate JD training points{% endtrans %}
                         </label>
                     </div>
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" name="activity-trimp">
+                            <input type="checkbox" name="activity-trimp" disabled>
                             {% trans %}Recalculate TRIMP values{% endtrans %}
                         </label>
                     </div>
                 </div>
-
-                <div class="margin-10 padding-5" style="display:none;">
-                    <label class="transparent-70">
-                        <input type="checkbox" id="toggle-disabled" name="toggle-disabled" checked disabled>
-                        {% trans %}Allow to force recalculations if settings did not change{% endtrans %}
-                    </label>
-                </div>
             </div>
         </div>
 
-        <input type="submit" name="submit" value="{% trans %}Start cleanup{% endtrans %}">
+        <input class="transparent-70" type="submit" name="submit" value="{% trans %}Start cleanup{% endtrans %}" disabled>
 
     </form>
 
     <script>
         $(function(){
-            $("#cleanup").find("input[type=radio]").change(function(){
+            var $cleanup = $("#cleanup");
+            var $submit = $cleanup.find("input[type=submit]");
+
+            function updateCheckboxes() {
                 if ($(this).is(':checked')) {
                     var val = $(this).attr('value');
-                    $("#cleanup").find(".radio-content").each(function(){
-                        $(this).toggleClass('transparent-70', $(this).attr('data-radio') != val);
+
+                    $cleanup.find(".radio-content").each(function(){
+                        if ($(this).attr('data-radio') != val) {
+                            $(this).addClass('transparent-70');
+                            $(this).find('input[type=checkbox]').attr('disabled', true);
+                        } else {
+                            $(this).removeClass('transparent-70');
+                            $(this).find('input[type=checkbox]').removeAttr('disabled');
+                        }
                     });
                 }
-            });
+            }
+
+            function updateSubmitButton() {
+                if (0 < $cleanup.find("input[type=checkbox]:not(:disabled):checked").length) {
+                    $submit.removeAttr('disabled');
+                    $submit.removeClass('transparent-70');
+                } else {
+                    $submit.attr('disabled', true);
+                    $submit.addClass('transparent-70');
+                }
+            }
+
+            $cleanup.find("input[type=radio]").change(updateCheckboxes);
+            $cleanup.find("input").change(updateSubmitButton);
         });
     </script>
 {% endblock %}

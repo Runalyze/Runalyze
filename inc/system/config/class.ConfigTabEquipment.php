@@ -98,11 +98,11 @@ class ConfigTabEquipment extends ConfigTab {
 			$sportIDs = $isNew ? array(\Runalyze\Configuration::General()->mainSport()) : $this->Model->sportForEquipmentType($id, true);
 			$MaxDistance = new Distance($Type->maxDistance());
 
-            $readOnly = !$isNew ? 'disabled="true"' : '';
+            $readOnly = !$isNew ? ' disabled="true"' : '';
 			$Code .= '
 					<tr class="'.($isNew ? ' unimportant' : '').'">
 						<td><input type="text" class="middle-size" name="equipmenttype[name]['.$id.']" value="'.$Type->name().'"></td>
-						<td><select name="equipmenttype[input]['.$id.']" '.$readOnly.' ">
+						<td><select name="equipmenttype[input]['.$id.']"'.$readOnly.'>
 								<option value="'.EquipmentType\Entity::CHOICE_SINGLE.'" '.HTML::Selected(!$Type->allowsMultipleValues()).'>'.__('Single choice').'</option>
 								<option value="'.EquipmentType\Entity::CHOICE_MULTIPLE.'" '.HTML::Selected($Type->allowsMultipleValues()).'>'.__('Multiple choice').'</option>
 							</select></td>
@@ -211,12 +211,13 @@ class ConfigTabEquipment extends ConfigTab {
 
 			$NewType = clone $Type;
 			$NewType->set(EquipmentType\Entity::NAME, $_POST['equipmenttype']['name'][$id]);
-			$NewType->set(EquipmentType\Entity::INPUT, (int)$_POST['equipmenttype']['input'][$id]);
 			$NewType->set(EquipmentType\Entity::MAX_KM, $MaxDistance->kilometer());
 			$NewType->set(EquipmentType\Entity::MAX_TIME, $MaxTime->seconds());
 
 			if ($isNew) {
 				if ($NewType->name() != '' && isset($_POST['equipmenttype']['sportid'][$id]) && !empty($_POST['equipmenttype']['sportid'][$id])) {
+					$NewType->set(EquipmentType\Entity::INPUT, (int)$_POST['equipmenttype']['input'][$id]);
+
 					$Inserter = new EquipmentType\Inserter($DB, $NewType);
 					$Inserter->setAccountID($accountId);
 					$Inserter->insert();

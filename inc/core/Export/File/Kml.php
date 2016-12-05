@@ -61,6 +61,14 @@ class Kml extends AbstractFileExporter
     }
 
     /**
+     * @return string
+     */
+    protected function mimeType()
+    {
+        return 'application/vnd.google-earth.kml+xml';
+    }
+
+    /**
      * @return int
      */
     public function enum()

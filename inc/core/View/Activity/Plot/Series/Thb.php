@@ -31,10 +31,10 @@ class Thb extends ActivitySeries {
 		$this->initOptions();
         if ($sensorIndex == 1) {
             $trackdataKey = Trackdata::THB_1;
-            $this->Label = _('Thb (2)');
+            $this->Label = _('THb').' (2)';
         } else {
             $trackdataKey = Trackdata::THB_0;
-            $this->Label = _('Thb');
+            $this->Label = _('THb');
         }
 		$this->initData($context->trackdata(), $trackdataKey);
         $this->manipulateData();

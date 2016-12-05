@@ -92,7 +92,7 @@ if (START_TIME != time()) {
 
 			$Data[$currentIndex]['vdot'] = ($currentVdotTimeSum > 0) ? $vdotFactor * $currentVdotWeightedSum / $currentVdotTimeSum : 0;
 
-			if ($Data[$currentIndex]['vdot'] > 0) {
+			if ($Data[$currentIndex]['vdot'] > JD\VDOT::REASONABLE_MINIMUM && $Data[$currentIndex]['vdot'] < JD\VDOT::REASONABLE_MAXIMUM) {
 				$index = strtotime($currentData['date'].' 12:00').'000';
 				$longJogPoints = 0;
 
@@ -107,10 +107,14 @@ if (START_TIME != time()) {
 				$Strategy->setVDOT($Data[$currentIndex]['vdot']);
 				$Strategy->setBasicEnduranceForAdjustment($BasicEndurance[$index]);
 				$Strategy->adjustVDOT(true);
-				$PrognosisWithBasicEndurance[$index] = $PrognosisObj->inSeconds($distance) * 1000;
+				$prognosisInSecondsWithBasicEndurance = $PrognosisObj->inSeconds($distance);
 
-				$Strategy->adjustVDOT(false);
-				$Prognosis[$index] = $PrognosisObj->inSeconds($distance) * 1000;
+				if ($prognosisInSecondsWithBasicEndurance > 0) {
+					$PrognosisWithBasicEndurance[$index] = $prognosisInSecondsWithBasicEndurance * 1000;
+
+					$Strategy->adjustVDOT(false);
+					$Prognosis[$index] = $PrognosisObj->inSeconds($distance) * 1000;
+				}
 			}
 		}
 

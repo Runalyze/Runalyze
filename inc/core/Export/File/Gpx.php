@@ -42,6 +42,14 @@ class Gpx extends AbstractFileExporter
     }
 
     /**
+     * @return string
+     */
+    protected function mimeType()
+    {
+        return 'application/gpx+xml';
+    }
+
+    /**
      * @return int
      */
     public function enum()

@@ -103,23 +103,26 @@ class ParserFITSingle extends ParserAbstractSingle {
 		44 => ['pool_length', ['default' => 1, 'm' => 100]],
 	);
 
+	/** @var array */
+	protected $DeveloperFieldMappingForLap = array();
+
+	/** @var array */
+	protected $nativeFieldMappingForLap = array(
+		9 => ['total_distance', ['default' => 1, 'm' => 100]],
+	);
+
 	protected function readFieldDescription() {
 		switch ($this->Values['native_mesg_num'][1]) {
 			case 'record':
-				$this->readFieldDescriptionForRecord();
+				$this->readFieldDescriptionFor($this->nativeFieldMappingForRecord, $this->DeveloperFieldMappingForRecord);
 				break;
 			case 'session':
-				$this->readFieldDescriptionForSession();
+				$this->readFieldDescriptionFor($this->nativeFieldMappingForSession, $this->DeveloperFieldMappingForSession);
+				break;
+			case 'lap':
+				$this->readFieldDescriptionFor($this->nativeFieldMappingForLap, $this->DeveloperFieldMappingForLap);
 				break;
 		}
-	}
-
-	protected function readFieldDescriptionForSession() {
-		$this->readFieldDescriptionFor($this->nativeFieldMappingForSession, $this->DeveloperFieldMappingForSession);
-	}
-
-	protected function readFieldDescriptionForRecord() {
-		$this->readFieldDescriptionFor($this->nativeFieldMappingForRecord, $this->DeveloperFieldMappingForRecord);
 	}
 
 	protected function readFieldDescriptionFor(array &$nativeFieldMapping, array &$fieldMapping) {
@@ -427,11 +430,13 @@ class ParserFITSingle extends ParserAbstractSingle {
 
 					// TODO: this may need more device and firmware specific conditions
 					if (
-						substr($creator, 0, 5) == 'fr630' ||
+                        substr($creator, 0, 5) == 'fr630' ||
 						substr($creator, 0, 7) == 'fr735xt' ||
 						substr($creator, 0, 6) == 'fenix3'
 					) {
-						$this->TrainingObject->setFitPerformanceCondition((int)$this->Values['data'][1]);
+					    if ((int)$this->Values['data'][1] >= 0 && (int)$this->Values['data'][1] <= 255) {
+                            $this->TrainingObject->setFitPerformanceCondition((int)$this->Values['data'][1]);
+                        }
 					} else {
 						$this->TrainingObject->setFitHRVscore((int)$this->Values['data'][1]);
 					}
@@ -446,7 +451,7 @@ class ParserFITSingle extends ParserAbstractSingle {
 
 		$thisTimestamp = $this->strtotime((string)$this->Values['timestamp'][1]);
 
-		if ($this->Values['event_type'][1] == 'stop_all' || $this->Values['event_type'][1] == 'stop') {
+		if (!empty($this->gps['time_in_s']) && ($this->Values['event_type'][1] == 'stop_all' || $this->Values['event_type'][1] == 'stop')) {
 			$this->isPaused = true;
 			$this->lastStopTimestamp = $thisTimestamp;
 		} elseif ($this->Values['event_type'][1] == 'start') {
@@ -603,7 +608,9 @@ class ParserFITSingle extends ParserAbstractSingle {
 	 * Read lap
 	 */
 	protected function readLap() {
-		if (isset($this->Values['total_timer_time']) && isset($this->Values['total_distance']))
+		$this->mapDeveloperFieldsToNativeFieldsFor($this->DeveloperFieldMappingForLap);
+
+		if (isset($this->Values['total_timer_time']) && isset($this->Values['total_distance']) && round($this->Values['total_timer_time'][0] / 1e3) > 0)
 			$this->TrainingObject->Splits()->addSplit(
 				$this->Values['total_distance'][0] / 1e5,
 				$this->Values['total_timer_time'][0] / 1e3

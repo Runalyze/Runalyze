@@ -58,6 +58,10 @@ class ActivityController extends Controller
         	}
         }
 
+        if (isset($_FILES['qqfile']) && isset($_FILES['qqfile']['name'])) {
+            $_FILES['qqfile']['name'] = str_replace(';', '_-_', $_FILES['qqfile']['name']);
+        }
+
         $Window = new \ImporterWindow();
         $Window->display();
 

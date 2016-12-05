@@ -225,9 +225,9 @@
         <source>You can now use Runalyze.</source>
         <target state="translated">Vous pouvez désormais utiliser Runalyze.</target>
       </trans-unit>
-      <trans-unit id="889a33c84af48a585f437344b2b7759b" resname="Do you really want to delete your account, %username%?">
+      <trans-unit id="889a33c84af48a585f437344b2b7759b" resname="Do you really want to delete your account, %username%?" approved="yes">
         <source>Do you really want to delete your account, %username%?</source>
-        <target state="translated">Voulez-vous vraiment supprimer votre compte, %nom utilisateur% ?</target>
+        <target state="translated">Voulez-vous vraiment supprimer votre compte, %username% ?</target>
       </trans-unit>
       <trans-unit id="e6e049c44a797fda2a175d07df838e49" resname="Delete account">
         <source>Delete account</source>
@@ -441,9 +441,9 @@
         <source>Start</source>
         <target>Start</target>
       </trans-unit>
-      <trans-unit id="2327346e833efcd6b2e7b3f0a4df8ebb" resname="previous">
+      <trans-unit id="2327346e833efcd6b2e7b3f0a4df8ebb" resname="previous" approved="yes">
         <source>previous</source>
-        <target>previous</target>
+        <target state="translated">précédent</target>
       </trans-unit>
       <trans-unit id="d0cab90d8d20d57e2f2b9be52f7dd25d" resname="next" approved="yes">
         <source>next</source>
@@ -547,9 +547,9 @@
         <source>The deletion is permanent and cannot be reversed. Therefore, you should backup your data.</source>
         <target>The deletion is permanent and cannot be reversed. Therefore, you should backup your data.</target>
       </trans-unit>
-      <trans-unit id="c9cc8cce247e49bae79f15173ce97354" resname="Save">
+      <trans-unit id="c9cc8cce247e49bae79f15173ce97354" resname="Save" approved="yes">
         <source>Save</source>
-        <target>Save</target>
+        <target state="translated">sauevgarder</target>
       </trans-unit>
       <trans-unit id="5c67ffd65944e4d61ef7a9400ce0392c" resname="Change mail address">
         <source>Change mail address</source>
@@ -761,7 +761,7 @@
       </trans-unit>
       <trans-unit id="d40600b2f817b5f3527af368d58c68f0" resname="VDOT calculation for: %title%" approved="yes">
         <source>VDOT calculation for: %title%</source>
-        <target state="translated">calcul de la VDOT pour: %s</target>
+        <target state="translated">calcul de la VDOT pour: %title%</target>
       </trans-unit>
       <trans-unit id="bb2a07539e662b40d99e3a621d80ead2" resname="Standard calculation: As race result">
         <source>Standard calculation: As race result</source>
@@ -779,9 +779,9 @@
         <source>VDOT</source>
         <target>VDOT</target>
       </trans-unit>
-      <trans-unit id="63d5049791d9d79d86e9a108b0a999ca" resname="Reference">
+      <trans-unit id="63d5049791d9d79d86e9a108b0a999ca" resname="Reference" approved="yes">
         <source>Reference</source>
-        <target>Reference</target>
+        <target state="translated">Référence</target>
       </trans-unit>
       <trans-unit id="7219ff172727ac5ab4cadd0e4f22f3ec" resname="The Daniels/Gilbert Formula by Larry Simpson">
         <source>The Daniels/Gilbert Formula by Larry Simpson</source>

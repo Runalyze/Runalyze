@@ -324,7 +324,7 @@ class HTML {
 			if (is_array($value_to_be_checked))
 				$value = in_array($value, $value_to_be_checked);
 			else
-				$value = ($value == $value_to_be_checked);
+				$value = ($value_to_be_checked === '') ? ($value === $value_to_be_checked) : ($value == $value_to_be_checked);
 		}
 
 		return ($value === true)

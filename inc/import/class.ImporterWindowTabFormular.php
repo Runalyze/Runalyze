@@ -16,12 +16,17 @@ class ImporterWindowTabFormular extends ImporterWindowTab {
 	 */
 	protected $TrainingObjects = array();
 
+	/** @var bool */
+	protected $ForceMultiImporter = false;
+
 	/**
 	 * Constructor
 	 * @param array $TrainingObjects optional
+	 * @param bool $forceMultiImporter
 	 */
-	public function __construct(array $TrainingObjects) {
+	public function __construct(array $TrainingObjects, $forceMultiImporter = false) {
 		$this->TrainingObjects = $TrainingObjects;
+		$this->ForceMultiImporter = $forceMultiImporter;
 	}
 
 	/**
@@ -44,12 +49,13 @@ class ImporterWindowTabFormular extends ImporterWindowTab {
 	 * Display tab content
 	 */
 	public function displayTab() {
-		if (empty($this->TrainingObjects))
-			$this->displaySingleFormularFor( new TrainingObject(DataObject::$DEFAULT_ID) );
-		elseif (count($this->TrainingObjects) == 1)
-			$this->displaySingleFormularFor( $this->TrainingObjects[0] );
-		else
+		if ($this->ForceMultiImporter || count($this->TrainingObjects) > 1) {
 			$this->displayMultipleFormular();
+		} elseif (empty($this->TrainingObjects)) {
+			$this->displaySingleFormularFor(new TrainingObject(DataObject::$DEFAULT_ID));
+		} else {
+			$this->displaySingleFormularFor($this->TrainingObjects[0]);
+		}
 	}
 
 	/**

@@ -27,9 +27,12 @@ class AccountController extends Controller
     /**
      * @Route("/delete/{hash}/confirmed", name="account_delete_confirmed", requirements={"hash": "[[:xdigit:]]{32}"})
      */
-    public function deleteAccountConfirmedAction($hash)
+    public function deleteAccountConfirmedAction($hash, Request $request)
     {
         if ($this->getAccountRepository()->deleteByHash($hash)) {
+            $this->get('security.token_storage')->setToken(null);
+            $request->getSession()->invalidate();
+
             return $this->render('account/delete/success.html.twig');
         }
 

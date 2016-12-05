@@ -78,20 +78,12 @@
             {% endtrans %}
         </p>
 
-        {% if conf.vdot.useCorrectionForElevation %}
         <p class="info">
             {% trans %}
                 <strong>VDOT/Time (corrected):</strong> after individual VDOT correction (factor: %vdotFactor%)<br>
                 The time is what you could have reached at your maximal possible heart rate over this distance.
             {% endtrans %}
         </p>
-        {% else %}
-        <p class="warning">
-            {% trans %}
-                <strong>VDOT/Time (corrected):</strong> VDOT correction is deactivated. (see configuration)
-            {% endtrans %}
-        </p>
-        {% endif %}
 
         <p class="info">
             {% trans %}

@@ -389,7 +389,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 						<th colspan="2">'.__('Name').'</th>
 						<th class="{sorter: \'distance\'}">'.__('Distance').'</th>
 						<th class="{sorter: \'resulttime\'}">'.__('Time').'</th>
-						'.($this->knowsAgeGrade() ? '<th>'.__('Age grade').'</th>' : '').'
+						'.($this->knowsAgeGrade() ? '<th>'.Ajax::tooltip(__('Age grade').(new \Runalyze\View\Icon(Runalyze\View\Icon::INFO))->code(), __('Your result in proportion to the world best performance in your age/gender.') ).'</th>' : '').'
 						<th>'.__('Pace').'</th>
 						<th '.(new Tooltip(__('Heart rate')))->attributes().'>'.__('HR').'</th>
 						<th class="{sorter: \'temperature\'}">'.__('Weather').'</th>

@@ -441,9 +441,9 @@
         <source>Start</source>
         <target>Start</target>
       </trans-unit>
-      <trans-unit id="2327346e833efcd6b2e7b3f0a4df8ebb" resname="previous">
+      <trans-unit id="2327346e833efcd6b2e7b3f0a4df8ebb" resname="previous" approved="yes">
         <source>previous</source>
-        <target>previous</target>
+        <target state="translated">vorherige</target>
       </trans-unit>
       <trans-unit id="d0cab90d8d20d57e2f2b9be52f7dd25d" resname="next" approved="yes">
         <source>next</source>
@@ -490,13 +490,13 @@
         <source>Your acccount</source>
         <target state="translated">Dein Account</target>
       </trans-unit>
-      <trans-unit id="7a875db599300694d4bf5e487b39a220" resname="Used for the calculation of energy spent for an activity">
+      <trans-unit id="7a875db599300694d4bf5e487b39a220" resname="Used for the calculation of energy spent for an activity" approved="yes">
         <source>Used for the calculation of energy spent for an activity</source>
-        <target>Used for the calculation of energy spent for an activity</target>
+        <target state="translated">Wird für die Berechnung des Energieverbrauchs verwendet</target>
       </trans-unit>
       <trans-unit id="8e9c0cc58b56ba7492316e0cf66b6a1a" resname="Will be used for some upcoming features" approved="yes">
         <source>Will be used for some upcoming features</source>
-        <target state="translated">Wird für zukünftige Funktionen gebraucht.</target>
+        <target state="translated">Wird für zukünftige Funktionen gebraucht</target>
       </trans-unit>
       <trans-unit id="71a62ecdc9c09c77b4c1e38d59fec389" resname="Allow admins in case of support requests to have a look at your data." approved="yes">
         <source>Allow admins in case of support requests to have a look at your data.</source>
@@ -580,7 +580,7 @@
       </trans-unit>
       <trans-unit id="fd6d1341af2a9eb5411fabd62615ea58" resname="If the link does not work, please copy the following URL into the address field of your web browser" approved="yes">
         <source>If the link does not work, please copy the following URL into the address field of your web browser</source>
-        <target state="translated">Sollte der Link nicht funktioneren, dann kopiere die nachfolgende URL in die Adresszeile in deinem Browser.</target>
+        <target state="translated">Sollte der Link nicht funktionieren, dann kopiere die nachfolgende URL in die Adresszeile in deinem Browser.</target>
       </trans-unit>
       <trans-unit id="3f1643974cc828011fe031dd192ca5d6" resname="Your RUNALYZE-Team">
         <source>Your RUNALYZE-Team</source>
@@ -618,9 +618,9 @@
         <source>Your account has been activated</source>
         <target state="translated">Dein Account wurde aktiviert</target>
       </trans-unit>
-      <trans-unit id="f64a218688b7f17a218cb554425ea991" resname="To get started right away just take a look at our &quot;getting started&quot; guide at %s.">
+      <trans-unit id="f64a218688b7f17a218cb554425ea991" resname="To get started right away just take a look at our &quot;getting started&quot; guide at %s." approved="yes">
         <source>To get started right away just take a look at our "getting started" guide at %s.</source>
-        <target>To get started right away just take a look at our "getting started" guide at %s.</target>
+        <target state="translated">Um sofort starten zu können, wirf am besten einen Blick in unserer Startertipps unter %s.</target>
       </trans-unit>
       <trans-unit id="3903aab323863bd2e9b68218a7a65ebd" resname="Follow">
         <source>Follow</source>
@@ -634,9 +634,9 @@
         <source>Icons</source>
         <target>Icons</target>
       </trans-unit>
-      <trans-unit id="899be8f08ea6e36d430ba7d86e74a30f" resname="Elevation data from Shuttle Radar Topography Mission">
+      <trans-unit id="899be8f08ea6e36d430ba7d86e74a30f" resname="Elevation data from Shuttle Radar Topography Mission" approved="yes">
         <source>Elevation data from Shuttle Radar Topography Mission</source>
-        <target>Elevation data from Shuttle Radar Topography Mission</target>
+        <target state="translated">Höheninformationen der Shuttle Radar Topography Mission</target>
       </trans-unit>
       <trans-unit id="81db66a50f0cb05c93a8f1c70e6e9450" resname="Miscellaneaous">
         <source>Miscellaneaous</source>
@@ -650,9 +650,9 @@
         <source>arithmetic mean</source>
         <target state="translated">arithmetisches Mittel</target>
       </trans-unit>
-      <trans-unit id="b93db188572fc4d76cce5660f3823b0a" resname="mean">
+      <trans-unit id="b93db188572fc4d76cce5660f3823b0a" resname="mean" approved="yes">
         <source>mean</source>
-        <target>mean</target>
+        <target state="translated">Mittelwert</target>
       </trans-unit>
       <trans-unit id="e383234c8c5c6cf7eb44a3208e26d50f" resname="minimum">
         <source>minimum</source>
@@ -670,29 +670,29 @@
         <source>max.</source>
         <target>max.</target>
       </trans-unit>
-      <trans-unit id="31fd59dea38ea7619d4066461644030b" resname="i.e. 50% quantile">
+      <trans-unit id="31fd59dea38ea7619d4066461644030b" resname="i.e. 50% quantile" approved="yes">
         <source>i.e. 50% quantile</source>
-        <target>i.e. 50% quantile</target>
+        <target state="translated">d.h. 50%-Quantil</target>
       </trans-unit>
-      <trans-unit id="e90a5c14304f1574c80cb5007ae8f705" resname="median">
+      <trans-unit id="e90a5c14304f1574c80cb5007ae8f705" resname="median" approved="yes">
         <source>median</source>
-        <target>median</target>
+        <target state="translated">Median</target>
       </trans-unit>
-      <trans-unit id="23b2759173683d5048b75084d628b6a8" resname="most common value">
+      <trans-unit id="23b2759173683d5048b75084d628b6a8" resname="most common value" approved="yes">
         <source>most common value</source>
-        <target>most common value</target>
+        <target state="translated">Häufigster Wert</target>
       </trans-unit>
       <trans-unit id="15d61712450a686a7f365adf4fef581f" resname="mode">
         <source>mode</source>
         <target>mode</target>
       </trans-unit>
-      <trans-unit id="39e863ffe56e2851c3b8a7491907da4a" resname="coefficiant of variance = standard deviation / mean">
+      <trans-unit id="39e863ffe56e2851c3b8a7491907da4a" resname="coefficiant of variance = standard deviation / mean" approved="yes">
         <source>coefficiant of variance = standard deviation / mean</source>
-        <target>coefficiant of variance = standard deviation / mean</target>
+        <target state="translated">Variationskoeffizient = Standardabweichung / Mittelwert</target>
       </trans-unit>
-      <trans-unit id="0b1b986bb265e86a359376d3f9ce8f22" resname="cov">
+      <trans-unit id="0b1b986bb265e86a359376d3f9ce8f22" resname="cov" approved="yes">
         <source>cov</source>
-        <target>cov</target>
+        <target state="translated">cov</target>
       </trans-unit>
       <trans-unit id="70122e6380205ddb985968a5c75d5d66" resname="standard deviation" approved="yes">
         <source>standard deviation</source>
@@ -784,7 +784,7 @@
       </trans-unit>
       <trans-unit id="7219ff172727ac5ab4cadd0e4f22f3ec" resname="The Daniels/Gilbert Formula by Larry Simpson" approved="yes">
         <source>The Daniels/Gilbert Formula by Larry Simpson</source>
-        <target state="translated">Ddie Daniels/Gilbert Formel von Larry Simpson</target>
+        <target state="translated">Die Daniels/Gilbert Formel von Larry Simpson</target>
       </trans-unit>
       <trans-unit id="dfe66ed2b784a84ffd0f36565e0e15a5" resname="Correction: based on heartrate">
         <source>Correction: based on heartrate</source>
@@ -874,9 +874,9 @@
         <source>Recalculate maximal TRIMP values</source>
         <target state="translated">Berechne die maximalen TRIMP Werte</target>
       </trans-unit>
-      <trans-unit id="7325e986c2c8e5a378e5a8a6bab0980a" resname="Clear your personal cache">
+      <trans-unit id="7325e986c2c8e5a378e5a8a6bab0980a" resname="Clear your personal cache" approved="yes">
         <source>Clear your personal cache</source>
-        <target>Clear your personal cache</target>
+        <target state="translated">Leere deinen persönlichen Cache</target>
       </trans-unit>
       <trans-unit id="9bf9b4e944fce072a359f5a371349832" resname="Loop through activities" approved="yes">
         <source>Loop through activities</source>
@@ -918,13 +918,11 @@
         <source>Start cleanup</source>
         <target state="translated">Bereinigung durchführen</target>
       </trans-unit>
-      <trans-unit id="4e9b1bb0379d304ec35a4453a74ca6bb" resname="Due to performance reasons, some statistics are saved in the database.&#10;                        You can trigger a recalculation if you think they are wrong.&#10;                        In addition, values for elevation, TRIMP and VDOT can be recalculated.">
+      <trans-unit id="4e9b1bb0379d304ec35a4453a74ca6bb" resname="Due to performance reasons, some statistics are saved in the database.&#10;                        You can trigger a recalculation if you think they are wrong.&#10;                        In addition, values for elevation, TRIMP and VDOT can be recalculated." approved="yes">
         <source>Due to performance reasons, some statistics are saved in the database.
                         You can trigger a recalculation if you think they are wrong.
                         In addition, values for elevation, TRIMP and VDOT can be recalculated.</source>
-        <target>Due to performance reasons, some statistics are saved in the database.
-                        You can trigger a recalculation if you think they are wrong.
-                        In addition, values for elevation, TRIMP and VDOT can be recalculated.</target>
+        <target state="translated">Aus Performancegründen werden einige Statistiken zwischengespeichert. Du kannst manuell eine Neuberechnung anstoßen. Außerdem können Höhenmeter, TRIMP und VDOT neuberechnet werden.</target>
       </trans-unit>
       <trans-unit id="69d3dd650b11da3eea6840d2a2d29432" resname="Analyze your VDOT" approved="yes">
         <source>Analyze your VDOT</source>
@@ -1015,27 +1013,24 @@
         <source>You did not run any races.</source>
         <target state="translated">Du bist bisher keine Wettkämpfe gelaufen.</target>
       </trans-unit>
-      <trans-unit id="eee9ed6441c3bde3f5e7aa5af466f95b" resname="&lt;strong&gt;VDOT/Time:&lt;/strong&gt; by standard formulas derived from Jack Daniels' Running formula&lt;br&gt;&#10;                The time is what you could have reached at your maximal possible heart rate over this distance.">
+      <trans-unit id="eee9ed6441c3bde3f5e7aa5af466f95b" resname="&lt;strong&gt;VDOT/Time:&lt;/strong&gt; by standard formulas derived from Jack Daniels' Running formula&lt;br&gt;&#10;                The time is what you could have reached at your maximal possible heart rate over this distance." approved="yes">
         <source>&lt;strong&gt;VDOT/Time:&lt;/strong&gt; by standard formulas derived from Jack Daniels' Running formula&lt;br&gt;
                 The time is what you could have reached at your maximal possible heart rate over this distance.</source>
-        <target><![CDATA[<strong>VDOT/Time:</strong> by standard formulas derived from Jack Daniels' Running formula<br>
-                The time is what you could have reached at your maximal possible heart rate over this distance.]]></target>
+        <target state="translated">&lt;strong&gt;VDOT/Zeit:&lt;/strong&gt; nach Standardformeln von Jack Daniels' Laufformel&lt;br&gt;Das Ergebnis entsprechend dem theoretisch Möglichen bei maximaler Herzfrequenz (über diese Distanz).</target>
       </trans-unit>
-      <trans-unit id="b7d5d7f79e64c7aaa33a4b2ec6dd213d" resname="&lt;strong&gt;VDOT/Time (corrected):&lt;/strong&gt; after individual VDOT correction (factor: %vdotFactor%)&lt;br&gt;&#10;                The time is what you could have reached at your maximal possible heart rate over this distance.">
+      <trans-unit id="b7d5d7f79e64c7aaa33a4b2ec6dd213d" resname="&lt;strong&gt;VDOT/Time (corrected):&lt;/strong&gt; after individual VDOT correction (factor: %vdotFactor%)&lt;br&gt;&#10;                The time is what you could have reached at your maximal possible heart rate over this distance." approved="yes">
         <source>&lt;strong&gt;VDOT/Time (corrected):&lt;/strong&gt; after individual VDOT correction (factor: %vdotFactor%)&lt;br&gt;
                 The time is what you could have reached at your maximal possible heart rate over this distance.</source>
-        <target><![CDATA[<strong>VDOT/Time (corrected):</strong> after individual VDOT correction (factor: %vdotFactor%)<br>
-                The time is what you could have reached at your maximal possible heart rate over this distance.]]></target>
+        <target state="translated">&lt;strong&gt;VDOT/Zeit (korrigiert):&lt;/strong&gt; nach individueller VDOT-Korrektur (Faktor: %vdotFactor%)&lt;br&gt;Das Ergebnis entsprecht dem theoretisch Möglichen bei deiner persönlichen maximalen Herzfrequenz (über diese Distanz).</target>
       </trans-unit>
       <trans-unit id="1739fa83ff3481c27ab105c839480bcd" resname="&lt;strong&gt;VDOT/Time (corrected):&lt;/strong&gt; VDOT correction is deactivated. (see configuration)" approved="yes">
         <source>&lt;strong&gt;VDOT/Time (corrected):&lt;/strong&gt; VDOT correction is deactivated. (see configuration)</source>
         <target state="translated">&lt;strong&gt;VDOT/Zeit (Korrektur):&lt;/strong&gt; VDOT Korrektur ist deaktiviert (siehe Konfiguration)</target>
       </trans-unit>
-      <trans-unit id="7351632d19a646b745ee3981acfbb912" resname="&lt;strong&gt;VDOT/Time (Shape):&lt;/strong&gt; by your shape at that time&lt;br&gt;&#10;                The time is the prognosis by Runalyze.">
+      <trans-unit id="7351632d19a646b745ee3981acfbb912" resname="&lt;strong&gt;VDOT/Time (Shape):&lt;/strong&gt; by your shape at that time&lt;br&gt;&#10;                The time is the prognosis by Runalyze." approved="yes">
         <source>&lt;strong&gt;VDOT/Time (Shape):&lt;/strong&gt; by your shape at that time&lt;br&gt;
                 The time is the prognosis by Runalyze.</source>
-        <target><![CDATA[<strong>VDOT/Time (Shape):</strong> by your shape at that time<br>
-                The time is the prognosis by Runalyze.]]></target>
+        <target state="translated">&lt;strong&gt;VDOT/Zeit (Form):&lt;/strong&gt; nach deiner Form zum jeweiligen Zeitpunkt&lt;br&gt;Dieses Ergebnis entspricht der damaligen Runalyze-Prognose.</target>
       </trans-unit>
       <trans-unit id="4622f3dc2c43806d67076f81b310c74e" resname="&lt;strong&gt;Corrector:&lt;/strong&gt; Ratio between VDOT and VDOT (by HR)" approved="yes">
         <source>&lt;strong&gt;Corrector:&lt;/strong&gt; Ratio between VDOT and VDOT (by HR)</source>
@@ -1053,9 +1048,9 @@
         <source>Your data has been imported.</source>
         <target state="translated">Deine Daten wurden importiert.</target>
       </trans-unit>
-      <trans-unit id="b2b37568b23efd5f1128def31ed042c2" resname="Go to database cleanup">
+      <trans-unit id="b2b37568b23efd5f1128def31ed042c2" resname="Go to database cleanup" approved="yes">
         <source>Go to database cleanup</source>
-        <target>Go to database cleanup</target>
+        <target state="translated">Gehe zum Datenbank-Cleanup</target>
       </trans-unit>
       <trans-unit id="e6405e2fffd676403740711f86f396f1" resname="Uploaded file" approved="yes">
         <source>Uploaded file</source>
@@ -1087,7 +1082,7 @@
       </trans-unit>
       <trans-unit id="ce069f6f467b25fe7c56b9041ab82e86" resname="There are &lt;strong&gt;%numBodyValues%&lt;/strong&gt; body values in this file." approved="yes">
         <source>There are &lt;strong&gt;%numBodyValues%&lt;/strong&gt; body values in this file.</source>
-        <target state="translated">Es befinden sich &lt;strong&gt;%s&lt;/strong&gt; Körperdaten in der Datei.</target>
+        <target state="translated">Es befinden sich &lt;strong&gt;%numBodyValues%&lt;/strong&gt; Körperdaten in der Datei.</target>
       </trans-unit>
       <trans-unit id="5e20646580da584d76435da00d6face4" resname="Export data">
         <source>Export data</source>
@@ -1173,9 +1168,9 @@ Dieser Export/Import ist sinnvoll, um eine Sicherheitskopie zu erstellen oder di
         <source>There is a problem with your file.</source>
         <target state="translated">Es gab ein Problem mit deiner Datei.</target>
       </trans-unit>
-      <trans-unit id="2267c7ff288065e6b3e1189127b4914e" resname="RUNALYZE version v%runalyzeVersionFile% of your backup file does not match current version v%runalyzeVersion%.">
+      <trans-unit id="2267c7ff288065e6b3e1189127b4914e" resname="RUNALYZE version v%runalyzeVersionFile% of your backup file does not match current version v%runalyzeVersion%." approved="yes">
         <source>RUNALYZE version v%runalyzeVersionFile% of your backup file does not match current version v%runalyzeVersion%.</source>
-        <target>RUNALYZE version v%runalyzeVersionFile% of your backup file does not match current version v%runalyzeVersion%.</target>
+        <target state="translated">RUNALYZE version v%runalyzeVersionFile% der Backup-Datei stimmt nicht mit der aktuellen Version v%runalyzeVersion% überein.</target>
       </trans-unit>
       <trans-unit id="181b90f889f3aaaaea7872b4ee360f69" resname="Create file" approved="yes">
         <source>Create file</source>
@@ -1205,9 +1200,9 @@ Dieser Export/Import ist sinnvoll, um eine Sicherheitskopie zu erstellen oder di
                                 You have to make these changes by hand or delete the existing data in advance.</source>
         <target state="translated">Der Importer wird vorhandene Daten für Equipment, Sportarten oder Trainingstypen nicht ändern.&lt;br&gt;Du musst diese Änderungen selbst vornehmen oder entsprechende Daten vorher löschen.</target>
       </trans-unit>
-      <trans-unit id="d2bc3f89c287b52201e895e12c1a1063" resname="You did not export anything.">
+      <trans-unit id="d2bc3f89c287b52201e895e12c1a1063" resname="You did not export anything." approved="yes">
         <source>You did not export anything.</source>
-        <target>You did not export anything.</target>
+        <target state="translated">Du hast bisher nichts exportiert.</target>
       </trans-unit>
       <trans-unit id="7f943921724d63dc0ac9c6febf99fa88" resname="Easy" approved="yes">
         <source>Easy</source>
@@ -1229,11 +1224,10 @@ Dieser Export/Import ist sinnvoll, um eine Sicherheitskopie zu erstellen oder di
         <source>Repetition</source>
         <target state="translated">Wiederholungsläufe</target>
       </trans-unit>
-      <trans-unit id="79c0e4134c414a27c925862854c495c3" resname="This table is computed by some formulas, derived from the tables in Jack Daniels' Running formula.&#10;            These values do not fit the original table one hundred percent.">
+      <trans-unit id="79c0e4134c414a27c925862854c495c3" resname="This table is computed by some formulas, derived from the tables in Jack Daniels' Running formula.&#10;            These values do not fit the original table one hundred percent." approved="yes">
         <source>This table is computed by some formulas, derived from the tables in Jack Daniels' Running formula.
             These values do not fit the original table one hundred percent.</source>
-        <target>This table is computed by some formulas, derived from the tables in Jack Daniels' Running formula.
-            These values do not fit the original table one hundred percent.</target>
+        <target state="translated">Diese Tabelle wird aus Formeln berechnet, die aus Tabellen von Jack Daniels' Laufformel abgeleitet wurden. Sie stimmen daher nicht 100%ig mit der originalen Tabelle überein.</target>
       </trans-unit>
       <trans-unit id="e3677d75588b404e851173388ed71ba3" resname="VDOT values with equivalent race results" approved="yes">
         <source>VDOT values with equivalent race results</source>
@@ -1263,13 +1257,13 @@ Dieser Export/Import ist sinnvoll, um eine Sicherheitskopie zu erstellen oder di
         <source>This table does &lt;strong&gt;not&lt;/strong&gt; use a correction based on your current basic endurance.</source>
         <target state="translated">In dieser Tabelle wird &lt;strong&gt;kein&lt;/strong&gt; Korrekturfaktor für die Grundlagenausdauer verwendet.</target>
       </trans-unit>
-      <trans-unit id="0c280780d2b7d3f039b2969498e250f2" resname="Best sub segments">
+      <trans-unit id="0c280780d2b7d3f039b2969498e250f2" resname="Best sub segments" approved="yes">
         <source>Best sub segments</source>
-        <target>Best sub segments</target>
+        <target state="translated">Beste Teilabschnitte</target>
       </trans-unit>
-      <trans-unit id="e6c555aa1de3365aaa319f635d647898" resname="Best segment">
+      <trans-unit id="e6c555aa1de3365aaa319f635d647898" resname="Best segment" approved="yes">
         <source>Best segment</source>
-        <target>Best segment</target>
+        <target state="translated">Bester Abschnitt</target>
       </trans-unit>
       <trans-unit id="52f5e0bc3859bc5f5e25130b6c7e8881" resname="Position">
         <source>Position</source>
@@ -1283,51 +1277,50 @@ Dieser Export/Import ist sinnvoll, um eine Sicherheitskopie zu erstellen oder di
         <source>You have successfully unsubscribed from all notifications</source>
         <target state="translated">Sie haben sich erfolgreich aus alle Benachrichtigungen abgemeldet</target>
       </trans-unit>
-      <trans-unit id="b1a68eebcd224f68bdfb307397c09b23" resname="Unsubscribe from notification mails of RUNALYZE">
+      <trans-unit id="b1a68eebcd224f68bdfb307397c09b23" resname="Unsubscribe from notification mails of RUNALYZE" approved="yes">
         <source>Unsubscribe from notification mails of RUNALYZE</source>
-        <target>Unsubscribe from notification mails of RUNALYZE</target>
+        <target state="translated">Melde dich von Benachrichtigungsmails von RUNALYZE ab</target>
       </trans-unit>
-      <trans-unit id="d231831a87e63c5ce42b05001572e6ec" resname="If you turn off our mail notification you will not be informed about new features and changes at RUNALYZE">
+      <trans-unit id="d231831a87e63c5ce42b05001572e6ec" resname="If you turn off our mail notification you will not be informed about new features and changes at RUNALYZE" approved="yes">
         <source>If you turn off our mail notification you will not be informed about new features and changes at RUNALYZE</source>
-        <target>If you turn off our mail notification you will not be informed about new features and changes at RUNALYZE</target>
+        <target state="translated">Wenn du die E-Mail-Benachrichtigungen abbestellst, wirst du zukünftig nicht über neue Features und sonstige Änderungen bei RUNALYZE informiert werden.</target>
       </trans-unit>
       <trans-unit id="615f885b658e462135aca9fa60f9b588" resname="Unsubscribe now" approved="yes">
         <source>Unsubscribe now</source>
         <target state="translated">Jetzt abmelden</target>
       </trans-unit>
-      <trans-unit id="743fa066c257efce78e5bc1b3095bb83" resname="Unsubscribe failure">
+      <trans-unit id="743fa066c257efce78e5bc1b3095bb83" resname="Unsubscribe failure" approved="yes">
         <source>Unsubscribe failure</source>
-        <target>Unsubscribe failure</target>
+        <target state="translated">Fehler beim Abmelden</target>
       </trans-unit>
-      <trans-unit id="e882164a77d02fc1da3c25212822ca05" resname="Sorry, but the url was not valid.">
+      <trans-unit id="e882164a77d02fc1da3c25212822ca05" resname="Sorry, but the url was not valid." approved="yes">
         <source>Sorry, but the url was not valid.</source>
-        <target>Sorry, but the url was not valid.</target>
+        <target state="translated">Sorry, aber die URL war nicht gültig.</target>
       </trans-unit>
-      <trans-unit id="df2ac68c6e2bbe03664073835849191c" resname="Used for calculating energy consumption and age grading.">
+      <trans-unit id="df2ac68c6e2bbe03664073835849191c" resname="Used for calculating energy consumption and age grading." approved="yes">
         <source>Used for calculating energy consumption and age grading.</source>
-        <target>Used for calculating energy consumption and age grading.</target>
+        <target state="translated">Wird für die Berechnung des Energieverbrauchs und Altersklassen-Leistungen verwendet.</target>
       </trans-unit>
-      <trans-unit id="33bffcd3730a39d7a8379b448d63e757" resname="Used for age grading.">
+      <trans-unit id="33bffcd3730a39d7a8379b448d63e757" resname="Used for age grading." approved="yes">
         <source>Used for age grading.</source>
-        <target>Used for age grading.</target>
+        <target state="translated">Wird für Altersklassen-Leistungen verwendet.</target>
       </trans-unit>
       <trans-unit id="e8440cb9169242e7d0eb638e9634aefa" resname="This will not touch any general settings like gender or main sport." approved="yes">
         <source>This will not touch any general settings like gender or main sport.</source>
         <target state="translated">Dies wird keine allgemeinen Einstellungen, wie das Geschlecht oder die Hauptsportart, ändern.</target>
       </trans-unit>
-      <trans-unit id="ad2d0a1bcd91f2cf260986d593776080" resname="go back">
+      <trans-unit id="ad2d0a1bcd91f2cf260986d593776080" resname="go back" approved="yes">
         <source>go back</source>
-        <target>go back</target>
+        <target state="translated">zurück</target>
       </trans-unit>
-      <trans-unit id="fe716bc62356476bdaa419f12e275591" resname="The calculated value is not equal to what is saved for the activity (%activityVdot%).&#10;            The activity's value has probably been calculated based on other settings.">
+      <trans-unit id="fe716bc62356476bdaa419f12e275591" resname="The calculated value is not equal to what is saved for the activity (%activityVdot%).&#10;            The activity's value has probably been calculated based on other settings." approved="yes">
         <source>The calculated value is not equal to what is saved for the activity (%activityVdot%).
             The activity's value has probably been calculated based on other settings.</source>
-        <target>The calculated value is not equal to what is saved for the activity (%activityVdot%).
-            The activity's value has probably been calculated based on other settings.</target>
+        <target state="translated">Der berechnete Wert stimmt nicht mit dem gespeicherten Wert der Aktivität (%activityVdot%) überein. Dieser wurde vermutlich mit anderen Einstellungen berechnet.</target>
       </trans-unit>
-      <trans-unit id="5615fc5ac91500a93f58fe572423c507" resname="You can use the %linkStart%database cleanup%linkEnd% to recalculate the value.">
+      <trans-unit id="5615fc5ac91500a93f58fe572423c507" resname="You can use the %linkStart%database cleanup%linkEnd% to recalculate the value." approved="yes">
         <source>You can use the %linkStart%database cleanup%linkEnd% to recalculate the value.</source>
-        <target>You can use the %linkStart%database cleanup%linkEnd% to recalculate the value.</target>
+        <target state="translated">Du kannst das %linkStart%Datenbank Cleanup%linkEnd% zur Neuberechnung verwenden.</target>
       </trans-unit>
     </body>
   </file>

@@ -241,7 +241,7 @@ class ImporterFactory {
 			foreach ($filenames as $file) {
 				$this->Filename = $file;
 
-				$this->importWithClass( self::classFor($extension) );
+				$this->importWithClass(self::classFor($extension));
 				$this->deleteCurrentFile();
 			}
 		}
@@ -274,16 +274,18 @@ class ImporterFactory {
 
 	/**
 	 * Construct for filename
-	 * @param string $Filename filename
+	 * @param string $filename filename
 	 */
-	private function constructForFilename($Filename) {
-		$this->Filename = ImporterUpload::relativePath($Filename);
+	private function constructForFilename($filename) {
+		$this->Filename = ImporterUpload::relativePath($filename);
 		$extension      = Filesystem::extensionOfFile($this->Filename);
 
-		if (self::canImportExtension($extension)) {
-			$this->importWithClass( self::classFor($extension) );
+		if (!file_exists($this->Filename)) {
+			$this->throwNonExistingFile($filename);
+		} elseif (self::canImportExtension($extension)) {
+			$this->importWithClass(self::classFor($extension));
 		} else {
-			$this->throwUnknownExtension($Filename, $extension);
+			$this->throwUnknownExtension($filename, $extension);
 		}
 	}
 
@@ -292,11 +294,16 @@ class ImporterFactory {
 	 * @param string $Classname class of ImporterFiletypeAbstract
 	 */
 	private function importWithClass($Classname) {
-		$Importer = new $Classname();
-		$Importer->parseFile($this->Filename);
+		try {
+			/** @var ImporterFiletypeAbstract $Importer */
+			$Importer = new $Classname();
+			$Importer->parseFile($this->Filename);
 
-		$this->addObjects($Importer->objects());
-		$this->addErrors($Importer->getErrors());
+			$this->addObjects($Importer->objects());
+			$this->addErrors($Importer->getErrors());
+		} catch (Import\Exception\ParserException $exception) {
+			$this->handleParserException($exception, basename($this->Filename).': ');
+		}
 	}
 
 	/**
@@ -306,14 +313,22 @@ class ImporterFactory {
 	 */
 	protected function throwUnknownExtension($filename, $extension) {
 		// This must not happen as the file uploader should catch unsupported extensions.
-		throw new RuntimeException('There is no importer for *.'.$extension);
+		$this->Errors[] = $filename.': '.__('This file format is not supported.');
+	}
+
+	/**
+	 * @param string $filename
+	 */
+	protected function throwNonExistingFile($filename) {
+		$this->Errors[] = $filename.': '.__('The file could not be saved.');
 	}
 
 	/**
 	 * @TODO use monolog
 	 * @param \Runalyze\Import\Exception\ParserException $e
+	 * @param string $messagePrefix
 	 */
-	protected function handleParserException(Import\Exception\ParserException $e) {
+	protected function handleParserException(Import\Exception\ParserException $e, $messagePrefix = '') {
 		$message = __('There was a problem while importing the file.');
 		$message .= ' ('.$e->getMessage().')';
 		$addErrorMessage = false;
@@ -334,7 +349,7 @@ class ImporterFactory {
 			$message .= '<br><br>'.__('Please add the following information').':<br><code style="height:auto;color:#000;">'.nl2br($e->getMessage()).'</code>';
 		}
 
-		$this->Errors[] = $message;
+		$this->Errors[] = $messagePrefix.$message;
 	}
 
 	/**

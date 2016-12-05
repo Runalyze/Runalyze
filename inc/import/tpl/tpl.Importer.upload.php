@@ -18,7 +18,7 @@ new qq.FineUploaderBasic({
 			$("#ajax").append('<p class="error appended-by-uploader">'+name+': '+errorReason+'</p>');
 		},
 		onSubmit: function(id, fileName) {
-			submittedFiles.push(fileName);
+			submittedFiles.push(fileName.replace(/;/g, '_-_'));
 			$("#upload-container").addClass('loading');
 		},
 		onComplete: function(id, fileName, responseJSON) {
@@ -31,7 +31,7 @@ new qq.FineUploaderBasic({
 					$(".appended-by-uploader").remove();
 
 					if (completedFiles == 1)
-						$("#ajax").loadDiv('<?php echo strtok($_SERVER['REQUEST_URI'], '?'); ?>?file='+encodeURIComponent(fileName));
+						$("#ajax").loadDiv('<?php echo strtok($_SERVER['REQUEST_URI'], '?'); ?>?file='+encodeURIComponent(submittedFiles[0]));
 					else
 						$("#ajax").loadDiv('<?php echo strtok($_SERVER['REQUEST_URI'], '?'); ?>?files='+encodeURIComponent(submittedFiles.join(';')));
 				}
