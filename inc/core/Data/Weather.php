@@ -199,7 +199,7 @@ class Weather {
 	public function fullString($isNight = false) {
 		$icon = $this->Condition->icon();
 
-		if ($isNight == true) {
+		if ($isNight) {
 			$icon->setAsNight();
 		}
 

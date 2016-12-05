@@ -1,0 +1,17 @@
+{% extends "shared/base.html.twig" %}
+
+{% set body_attributes = ' id="shared"' %}
+
+{% block html_head_meta %}
+    {{ parent() }}
+
+    {# (new HTMLMetaForFacebook($this->ActivityContext))->display(); #}
+{% endblock %}
+
+{% block content %}
+
+    <div{% if not app.request.xmlHttpRequest %} id="statistics-inner" class="panel" style="width:960px;margin:5px auto;"{% endif %}>
+        {{ view.display }}
+    </div>
+
+{% endblock %}

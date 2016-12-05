@@ -5,7 +5,6 @@ namespace Runalyze\Bundle\CoreBundle\Component\Tool\VdotAnalysis;
 use Runalyze\Activity\Distance;
 use Runalyze\Activity\Duration;
 use Runalyze\Calculation\JD\VDOTCorrector;
-use Runalyze\Configuration;
 use Runalyze\Model;
 use Runalyze\Calculation\Prognosis\Daniels;
 use Runalyze\Util\LocalTime;

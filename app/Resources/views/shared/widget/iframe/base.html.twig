@@ -1,0 +1,69 @@
+{% extends "shared/base.html.twig" %}
+
+{% set body_attributes = ' id="shared-iframe"' %}
+
+{% import '_macro/leaflet.html.twig' as leaflet %}
+{% from '_macro/utilities.html.twig' import boxedValue, boxedValueFor %}
+
+{% block content %}
+    {# @var activity \Runalyze\Bundle\CoreBundle\Entity\Training #}
+    {% set activity = context.activity %}
+    {# @var configList \Runalyze\Bundle\CoreBundle\Component\Configuration\RunalyzeConfigurationList #}
+    {% set configList = config(context.account) %}
+    {# @var units \Runalyze\Bundle\CoreBundle\Component\Configuration\UnitSystem #}
+    {% set units = configList.unitSystem %}
+    {# @var vdotObject \Runalyze\Bundle\CoreBundle\Twig\DisplayableVdot #}
+    {% set vdotObject = vdotFor(context, configList) %}
+
+    <div id="statistics-inner" class="panel" style="width:97%;margin:0 auto;">
+        <div class="panel-heading panel-inner-heading">
+            <a href="{{ url('base_url') }}" style="display:inline-block;float:right;">
+                <img src="{{ asset('assets/images/runalyze-start.png') }}" height="18px" width="auto">
+            </a>
+
+            <h2>
+                {{ context.decorator.title }}
+                <small style="font-weight:normal;">- {{ context.activity.time|date('d.m.Y, H:i', 'UTC') }}</small>
+            </h2>
+        </div>
+        <div class="training-row fullwidth" id="training-overview">
+            <div class="boxed-values">
+                {{ boxedValueFor(distance(context.activity.distance, units.distanceUnit), "Distance"|trans, '20%') }}
+                {{ boxedValue(context.activity.s|duration, '', "Duration"|trans, '20%') }}
+                {{ boxedValue(context.activity.elapsedTime > 0 ? context.activity.elapsedTime|duration : '-', '', "Elapsed time"|trans, '20%') }}
+                {{ boxedValueFor(pace(context.activity.distance > 0 ? context.activity.s / context.activity.distance : 0, units.paceUnit(context.sport)), "Pace"|trans, '20%') }}
+                {{ boxedValueFor(vdotObject, "VDOT"|trans, '20%', vdotObject.zero ? '' : vdotObject.iconClass) }}
+                {{ boxedValueFor(elevation(context.activity.elevation, units.elevationUnit), "Elevation"|trans, '20%') }}
+                {{ boxedValueFor(heartRate(context.activity.pulseAvg, units.heartRateUnit), "avg."|trans ~ " " ~ "Heart rate"|trans, '20%') }}
+                {{ boxedValueFor(heartRate(context.activity.pulseMax, units.heartRateUnit), "max."|trans ~ " " ~ "Heart rate"|trans, '20%') }}
+                {{ boxedValueFor(energy(context.activity.kcal, units.energyUnit), "Energy"|trans, '20%') }}
+                {{ boxedValue(context.activity.trimp, '', "TRIMP"|trans, '20%') }}
+            </div>
+        </div>
+
+        {% if route %}
+        <div class="panel-heading panel-inner-heading">
+            <h2>{% trans %}Course{% endtrans %}</h2>
+        </div>
+        <div class="training-row fullwidth" id="training-map">
+            {{ leaflet.mapForAthlete("map-" ~ activity.id, activity.account) }}
+
+            <script>
+                {{ route.js|raw }}
+                RunalyzeLeaflet.Routes.routeid="{{ route.id }}";
+
+                function resizeMap() {
+                    var $m = $(".map"), w = $(window).innerHeight(), d = $("body").outerHeight();
+                    $m.height(w - d + $m.height() - 20);
+                    RunalyzeLeaflet.Routes.fitTo("{{ route.id }}");
+                }
+
+                $(document).ready(function(){
+                    $(window).resize(function() { resizeMap(); });
+                    resizeMap();
+                });
+            </script>
+        </div>
+        {% endif %}
+    </div>
+{% endblock %}

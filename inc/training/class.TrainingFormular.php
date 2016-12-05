@@ -10,8 +10,7 @@ use Runalyze\Model\Trackdata\Entity as Trackdata;
 use Runalyze\Model\RaceResult;
 use Runalyze\Model\Route\Entity as Route;
 use Runalyze\Activity\DuplicateFinder;
-use Runalyze\Activity\Duration;
-use Runalyze\Activity\Distance;
+
 /**
  * Formular for trainings
  *

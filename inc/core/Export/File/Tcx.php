@@ -6,7 +6,6 @@
 
 namespace Runalyze\Export\File;
 
-use Runalyze\Configuration;
 use Runalyze\Model\Route;
 use Runalyze\Model\Trackdata;
 use Runalyze\Util\LocalTime;

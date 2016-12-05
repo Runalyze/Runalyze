@@ -232,7 +232,7 @@ class Table {
 				case Activity\Entity::VERTICAL_OSCILLATION:
 					$Code .= '<td>'.$View->verticalOscillation().'</td>';
 					break;
-				    
+
 				case Activity\Entity::VERTICAL_RATIO:
 					$Code .= '<td>'.$View->verticalRatio().'</td>';
 					break;
@@ -290,9 +290,9 @@ class Table {
 	protected function tableFooter() {
 		$Code  = '<tbody>';
 		$Code .= '<tr class="no-zebra"><td colspan="4" class="r">'.__('Average').':</td>';
-		$Code .= '<td class="c">'.($this->AverageTime != null ? $this->AverageTime->string() : '').'</td>';
+		$Code .= '<td class="c">'.($this->AverageTime !== null ? $this->AverageTime->string() : '').'</td>';
 		$Code .= ($this->DemandedTime->isZero() ? '' : '<td></td>');
-		$Code .= '<td class="c">'.($this->AveragePace != null ? $this->AveragePace->valueWithAppendix() : '').'</td>';
+		$Code .= '<td class="c">'.($this->AveragePace !== null ? $this->AveragePace->valueWithAppendix() : '').'</td>';
 		$Code .= ($this->DemandedPace->isEmpty() ? '' : '<td></td>');
 		$Code .= '<td colspan="'.(3 + count($this->AdditionalKeys)).'"></td>';
 		$Code .= '</tr>';

@@ -10,7 +10,6 @@ use Request;
 use Runalyze\Configuration;
 use Runalyze\Model\Factory;
 use Runalyze\Model\Activity;
-use Runalyze\Model\Trackdata;
 
 /**
  * Activity context
@@ -48,7 +47,7 @@ class Context {
 	 * @var \Runalyze\Model\Sport\Entity
 	 */
 	protected $Sport;
-	
+
 	/**
 	 * @var \Runalyze\Model\RaceResult\Entity
 	 */
@@ -74,7 +73,7 @@ class Context {
 		$this->Route = $this->Activity->get(Activity\Entity::ROUTEID) ? $Factory->route($this->Activity->get(Activity\Entity::ROUTEID)) : null;
 		$this->HRV = $Factory->hrv((int)$activityID);
 		$this->Sport = $Factory->sport($this->Activity->sportid());
-		
+
 		$this->Swimdata->fillDistanceArray($this->Trackdata);
 		$this->Swimdata->fillSwolfArray($this->Trackdata);
 		$this->Dataview = new Dataview($this->Activity);
@@ -132,7 +131,7 @@ class Context {
 	public function route() {
 		return $this->Route;
 	}
-	
+
 	/**
 	 * @return \Runalyze\Model\RaceResult\Entity
 	 */
@@ -146,7 +145,7 @@ class Context {
 	public function dataview() {
 		return $this->Dataview;
 	}
-	
+
 	/**
 	 * @return boolean
 	 */

@@ -6,14 +6,13 @@
 
 namespace Runalyze\Model\RaceResult;
 
-use Cache;
 use Runalyze\Model\DeleterWithAccountID;
 use Runalyze\Model;
 use Runalyze\Configuration;
 
 /**
  * Delete object in database
- * 
+ *
  * @author Hannes Christiansen
  * @author Michael Pohl
  * @package Runalyze\Model\RaceResult
@@ -38,7 +37,7 @@ class Deleter extends DeleterWithAccountID
 	{
 		return 'raceresult';
 	}
-	
+
 	/**
 	 * Where clause
 	 * @return string
@@ -47,7 +46,7 @@ class Deleter extends DeleterWithAccountID
 	{
 		return '`activity_id`='.$this->Object->get(Entity::ACTIVITY_ID).' AND '.parent::where();
 	}
-	
+
 	/**
 	 * Tasks before delete
 	 * @throws \RuntimeException
@@ -62,7 +61,7 @@ class Deleter extends DeleterWithAccountID
 
 		(new Model\Factory($this->AccountID))->clearCache($this->table(), $this->Object->get(Entity::ACTIVITY_ID));
 	}
-	
+
 	/**
 	 * Tasks after delete
 	 */
@@ -70,7 +69,7 @@ class Deleter extends DeleterWithAccountID
 	{
 		$this->updateVDOTcorrector();
 	}
-	
+
 	/**
 	 * Update vdot corrector
 	 */

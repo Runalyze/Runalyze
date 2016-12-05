@@ -10,7 +10,7 @@ use Runalyze\Util\AbstractEnum;
 
 /**
  * Enum for dataset keys and their internal ids
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Dataset
  */
@@ -138,28 +138,28 @@ final class Keys extends AbstractEnum
 
 	/** @var int */
 	const WIND_CHILL = 41;
-	
+
 	/** @var int */
 	const SETTING = 42;
 
 	/** @var int */
 	const FIT_TRAINING_EFFECT = 43;
-	
+
 	/** @var int */
 	const RPE = 44;
-	
+
 	/** @var int */
 	const GRADIENT = 45;
 
 	/** @var int */
 	const FIT_PERFORMANCE_CONDITION = 46;
-	
+
 	/** @var int */
 	const RACE_RESULT = 47;
-	
+
 	/** @var int */
 	const HEAT_INDEX = 48;
-	
+
 	/**
 	 * @var array|null
 	 */
@@ -191,7 +191,7 @@ final class Keys extends AbstractEnum
 	 */
 	public static function get($keyid)
 	{
-		if (null == self::$ClassNames) {
+		if (null === self::$ClassNames) {
 			self::generateClassNamesArray();
 		}
 

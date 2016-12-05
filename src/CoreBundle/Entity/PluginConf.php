@@ -1,6 +1,6 @@
 <?php
-namespace Runalyze\Bundle\CoreBundle\Entity;
 
+namespace Runalyze\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class PluginConf
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer", nullable=false, options={"unsigned":true})
      * @ORM\Id
@@ -36,7 +36,7 @@ class PluginConf
     private $value;
 
     /**
-     * @var \Plugin
+     * @var Plugin
      *
      * @ORM\ManyToOne(targetEntity="Plugin")
      * @ORM\JoinColumns({
@@ -46,9 +46,7 @@ class PluginConf
     private $plugin;
 
     /**
-     * Get id
-     *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -56,11 +54,27 @@ class PluginConf
     }
 
     /**
-     * Set value
-     *
+     * @param string $config
+     * @return $this
+     */
+    public function setConfig($config)
+    {
+        $this->config = $config;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getConfig()
+    {
+        return $this->config;
+    }
+
+    /**
      * @param string $value
-     *
-     * @return PluginConf
+     * @return $this
      */
     public function setValue($value)
     {
@@ -70,8 +84,6 @@ class PluginConf
     }
 
     /**
-     * Get value
-     *
      * @return string
      */
     public function getValue()
@@ -80,13 +92,10 @@ class PluginConf
     }
 
     /**
-     * Set plugin
-     *
-     * @param \Runalyze\Bundle\CoreBundle\Entity\Plugin $account
-     *
-     * @return PluginConf
+     * @param Plugin $plugin
+     * @return $this
      */
-    public function setPlugin(\Runalyze\Bundle\CoreBundle\Entity\Plugin $plugin = null)
+    public function setPlugin(\Runalyze\Bundle\CoreBundle\Entity\Plugin $plugin)
     {
         $this->plugin = $plugin;
 
@@ -94,9 +103,7 @@ class PluginConf
     }
 
     /**
-     * Get plugin
-     *
-     * @return \Runalyze\Bundle\CoreBundle\Entity\Plugin
+     * @return Plugin
      */
     public function getPlugin()
     {

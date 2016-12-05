@@ -7,6 +7,7 @@
  * Request
  * @author Hannes Christiansen
  * @package Runalyze\System
+ * @deprecated since v3.1
  */
 class Request {
 	/**
@@ -85,7 +86,7 @@ class Request {
 	/**
 	 * Get parameter send via GET or POST
 	 * @param string $key
-	 * @return string 
+	 * @return string
 	 */
 	public static function param($key) {
 		if (isset($_GET[$key]))

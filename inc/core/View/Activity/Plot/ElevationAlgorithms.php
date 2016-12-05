@@ -11,7 +11,6 @@ use Runalyze\View\Plot\Series as PlotSeries;
 use Runalyze\Parameter\Application\ElevationMethod;
 use Runalyze\Calculation;
 use Runalyze\Configuration;
-use Runalyze\Data;
 use Runalyze\Model\Trackdata;
 use Runalyze\Parameter\Application\DistanceUnitSystem;
 

@@ -1,6 +1,6 @@
 <?php
-namespace Runalyze\Bundle\CoreBundle\Entity;
 
+namespace Runalyze\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -29,7 +29,7 @@ class Tag
     private $tag;
 
     /**
-     * @var \Account
+     * @var Account
      *
      * @ORM\ManyToOne(targetEntity="Account")
      * @ORM\JoinColumns({
@@ -88,13 +88,10 @@ class Tag
     }
 
     /**
-     * Set account
-     *
-     * @param \Runalyze\Bundle\CoreBundle\Entity\Account $account
-     *
-     * @return Tag
+     * @param Account $account
+     * @return $this
      */
-    public function setAccount(\Runalyze\Bundle\CoreBundle\Entity\Account $account = null)
+    public function setAccount(Account $account)
     {
         $this->account = $account;
 
@@ -102,14 +99,10 @@ class Tag
     }
 
     /**
-     * Get account
-     *
-     * @return \Runalyze\Bundle\CoreBundle\Entity\Account
+     * @return Account
      */
     public function getAccount()
     {
         return $this->account;
     }
-
 }
-

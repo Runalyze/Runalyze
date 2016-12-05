@@ -6,15 +6,12 @@
 
 namespace Runalyze\Plugin\Statistic\Races;
 
-use Runalyze\Configuration;
-
 use PDO;
 use DB;
-use Cache;
 
 /**
  * Race container
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Plugin\Statistic\Races
  */
@@ -41,7 +38,7 @@ class RaceContainer {
 	protected $SportId;
 
 	/**
-	 * 
+	 *
 	 * @param PDO $pdo [optional]
 	 * @param int $sportId
 	 */

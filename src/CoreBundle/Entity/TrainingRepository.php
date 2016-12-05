@@ -1,4 +1,5 @@
 <?php
+
 namespace Runalyze\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
@@ -36,4 +37,17 @@ class TrainingRepository extends EntityRepository
             ->getQuery()
             ->getSingleScalarResult();
     }
+
+	/**
+	 * @param int $activityId
+	 * @param int $accountId
+	 * @return null|Training
+	 */
+	public function findForAccount($activityId, $accountId)
+	{
+		return $this->findOneBy([
+			'id' => $activityId,
+			'account' => $accountId
+		]);
+	}
 }

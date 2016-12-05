@@ -19,7 +19,8 @@ class UtilityExtension extends \Twig_Extension
     {
         return array(
             new \Twig_SimpleFilter('duration', array($this, 'duration')),
-            new \Twig_SimpleFilter('filesize', array($this, 'filesizeAsString'))
+            new \Twig_SimpleFilter('filesize', array($this, 'filesizeAsString')),
+            new \Twig_SimpleFilter('nbsp', array($this, 'nbsp')),
         );
     }
 
@@ -75,5 +76,14 @@ class UtilityExtension extends \Twig_Extension
         $FS = array('B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB');
 
         return number_format($bytes / pow(1024, $I = floor(log($bytes, 1024))), ($I >= 1) ? 2 : 0, '.', '').' '.$FS[$I];
+    }
+
+    /**
+     * @param string $stringWithSpaces
+     * @return mixed
+     */
+    public function nbsp($stringWithSpaces)
+    {
+        return str_replace(' ', '&nbsp;', $stringWithSpaces);
     }
 }

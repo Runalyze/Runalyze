@@ -4,8 +4,6 @@
  * @package Runalyze\DataObjects\Training\View\Section
  */
 
-use Runalyze\Model\Trackdata;
-use Runalyze\Model\Swimdata;
 use Runalyze\View\Activity;
 
 /**

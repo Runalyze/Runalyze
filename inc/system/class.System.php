@@ -4,12 +4,11 @@
  * @package Runalyze\System
  */
 
-use Runalyze\Error;
-
 /**
  * System
  * @author Hannes Christiansen
  * @package Runalyze\System
+ * @deprecated since v3.1
  */
 class System {
 	/**
@@ -27,30 +26,11 @@ class System {
 	}
 
 	/**
-	 * Get code to include all external JS-files
-	 * @return string
-	 */
-	public static function getCodeForExternalJSFiles() {
-		return '';
-	}
-
-	/**
 	 * Get code to include all CSS-files
 	 * @return string
 	 */
 	public static function getCodeForAllCSSFiles() {
 		return '<link rel="stylesheet" href="assets/css/runalyze-style.css?v='.RUNALYZE_VERSION.'">';
-	}
-
-	/**
-	 * Set memory- and time-limit as high as possible
-	 */
-	public static function setMaximalLimits() {
-		@ini_set('memory_limit', '-1');
-
-		if (!ini_get('safe_mode')) {
-			set_time_limit(0);
-		}
 	}
 
 	/**

@@ -10,7 +10,7 @@ use Runalyze\Model;
 
 /**
  * Insert new tags from chosen to database
- * 
+ *
  * @author Hannes Christiansen
  * @author Michael Pohl
  * @package Runalyze\Model\Tag
@@ -21,19 +21,19 @@ class ChosenInserter {
 	 * @var \PDO
 	 */
 	protected $PDO;
-        
+
 	/**
 	 * Array TagArrayFromChosen
 	 * @var array TagArrayFromChosen
 	 */
 	protected $TagArrayFromChosen;
-        
+
 	/**
 	 * Object
 	 * @var \Runalyze\Model\Tag\Object
 	 */
 	protected $TagObject;
-        
+
 	/**
 	 * Construct chosen inserter
 	 * @param \PDO $connection
@@ -43,14 +43,14 @@ class ChosenInserter {
 		$this->PDO = $connection;
                 $this->TagArrayFromChosen = $TagArrayFromChosen;
 	}
-        
+
         /*
          * Insert Tags from Array from Chosen
          */
         public function insertTags() {
             $this->checkForNewTags();
         }
-        
+
         /*
          * Returns TagArray for Chosen
          * @return array
@@ -58,14 +58,14 @@ class ChosenInserter {
         public function getNewTagIDs() {
             return $this->TagArrayFromChosen;
         }
-        
+
         /*
          * Check ChosenTagArray for new Tags
          */
         private function checkForNewTags() {
             $Factory = new Model\Factory(\SessionAccountHandler::getId());
-            $allTagIDs = array_map(function ($tag) { return $tag->id(); }, $Factory->allTags());
-            
+            $allTagIDs = array_map(function (Model\Tag\Entity $tag) { return $tag->id(); }, $Factory->allTags());
+
             foreach($this->TagArrayFromChosen as $key => $Tag) {
                 if(!in_array($Tag, $allTagIDs)) {
                     $this->setObjectwithTag($Tag);
@@ -75,7 +75,7 @@ class ChosenInserter {
             }
             $Factory->clearCache('tag');
         }
-        
+
         /*
          * Insert a new tag
          * @return int
@@ -86,7 +86,7 @@ class ChosenInserter {
             $InsertTag->insert();
             return $InsertTag->insertedID();
         }
-        
+
         /*
          * Set a new Tag object
          * @param string Tagname
@@ -96,6 +96,6 @@ class ChosenInserter {
                 $newTag->set(Model\Tag\Entity::TAG, $Tag);
                 $this->TagObject = $newTag;
         }
-        
-        
+
+
 }

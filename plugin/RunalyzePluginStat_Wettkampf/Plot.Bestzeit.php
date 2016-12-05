@@ -4,7 +4,6 @@
  * Call:   include Plot.Bestzeit.php
  */
 
-use Runalyze\Configuration;
 use Runalyze\Activity\Distance;
 
 if (!($this instanceof RunalyzePluginStat_Wettkampf)) {

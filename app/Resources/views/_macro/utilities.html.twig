@@ -11,12 +11,17 @@
 {% macro boxedValue(value, unit, label, width, icon) %}
     <div class="boxed-value-outer"{% if width %} style="width:{{ width }};"{% endif %}>
         <div class="boxed-value-container{% if icon %} with-icon{% endif %}">
-            {{ icon }}
+            {% if icon %}<i class="fa fa-fw {{ icon }}"></i>{% endif %}
             <div class="boxed-value">
                 {{ value|raw }}
                 <div class="boxed-value-unit">{{ unit|raw }}</div>
             </div>
-            <div class="boxed-value-info">{{ label|raw }}</div>
+            <div class="boxed-value-info">{{ label|nbsp|raw }}</div>
         </div>
     </div>
+{% endmacro %}
+
+{% macro boxedValueFor(displayableValue, label, width, icon) %}
+    {# @var displayableValue \Runalyze\Bundle\CoreBundle\Twig\DisplayableValue #}
+    {{ _self.boxedValue(displayableValue.zero ? '-' : displayableValue.value, displayableValue.unit, label, width, icon) }}
 {% endmacro %}

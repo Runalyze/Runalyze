@@ -251,7 +251,6 @@ class ParserXMLsuuntoSingle extends ParserAbstractSingleXML {
 		$this->gps['rpm'][]       = !empty($Sample->Cadence)
 									? (float)$Sample->Cadence * 60
 									: (count($this->gps['rpm']) > 0 ? end($this->gps['rpm']) : 0);
-		//$this->gps['power'][] = 0;
 	}
 
 	/**

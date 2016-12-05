@@ -294,7 +294,6 @@ class Plot {
 
 			$this->Options['xaxis']['min'] = -1;
 			$this->Options['xaxis']['max'] = $maxLength;
-			//$this->Options['xaxis']['autoscaleMargin'] = 0.02;
 		}
 	}
 
@@ -549,12 +548,12 @@ class Plot {
 	 * Set size for ticks on y-axis
 	 * @param int $axis
 	 * @param int $tickSize
-	 * @param int $decimals
+	 * @param bool $decimals
 	 */
 	public function setYTicks($axis, $tickSize, $decimals = false) {
 		$this->Options['yaxes'][$axis-1]['minTickSize'] = $tickSize;
 
-		if ($tickSize == null)
+		if ($tickSize === null)
 			unset($this->Options['yaxes'][$axis-1]['minTickSize']);
 
 		if ($decimals !== false)

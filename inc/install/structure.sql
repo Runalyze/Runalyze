@@ -348,7 +348,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_training` (
   `weatherid` smallint(6) unsigned NOT NULL DEFAULT '1',
   `weather_source` tinyint(2) unsigned DEFAULT NULL,
   `route` text,
-  `routeid` int(10) unsigned NOT NULL DEFAULT '0',
+  `routeid` int(10) unsigned DEFAULT NULL,
   `splits` mediumtext,
   `comment` text,
   `partner` text,
@@ -555,13 +555,13 @@ ALTER TABLE `runalyze_type`
 --
 ALTER TABLE `runalyze_user`
  ADD PRIMARY KEY (`id`), ADD KEY `time` (`accountid`,`time`);
- 
+
 --
 -- Indizes für die Tabelle `runalyze_raceresult`
 --
 ALTER TABLE `runalyze_raceresult`
   ADD PRIMARY KEY (`activity_id`), ADD KEY  `accountid` (`accountid`);
-  
+
 --
 -- Indizes für die Tabelle `runalyze_weathercache`
 --

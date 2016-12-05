@@ -269,9 +269,9 @@ class HTML {
 	 * @return string
 	 */
 	public static function Checked($value, $value_to_be_checked = null) {
-		if ($value_to_be_checked != null)
+		if ($value_to_be_checked !== null)
 			$value = ($value == $value_to_be_checked);
-		if ($value == null || !isset($value))
+		if ($value === null || !isset($value))
 			$value = false;
 
 		return ($value === true)
@@ -320,7 +320,7 @@ class HTML {
 	 * @return string
 	 */
 	public static function Selected($value, $value_to_be_checked = null) {
-		if ($value_to_be_checked != null) {
+		if ($value_to_be_checked !== null) {
 			if (is_array($value_to_be_checked))
 				$value = in_array($value, $value_to_be_checked);
 			else

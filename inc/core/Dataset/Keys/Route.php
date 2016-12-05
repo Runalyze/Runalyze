@@ -6,12 +6,11 @@
 
 namespace Runalyze\Dataset\Keys;
 
-use Runalyze\Model\Activity;
 use Runalyze\Dataset\Context;
 
 /**
  * Dataset key: Route
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Dataset\Keys
  */

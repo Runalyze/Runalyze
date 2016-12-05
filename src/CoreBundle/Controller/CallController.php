@@ -156,24 +156,17 @@ class CallController extends Controller
         return new Response();
     }
 
-    protected function plotSumData() {
+    /**
+     * @return \PlotSumData
+     */
+    protected function getPlotSumData() {
         $Request = Request::createFromGlobals();
 
         if (is_null($Request->query->get('y'))) {
         	$_GET['y'] = \PlotSumData::LAST_12_MONTHS;
         }
 
-        $type = $Request->query->get('type', 'month');
-
-        if ($type == 'week') {
-        	$Plot = new \PlotWeekSumData();
-        	$Plot->display();
-        } elseif ($type == 'month') {
-        	$Plot = new \PlotMonthSumData();
-        	$Plot->display();
-        } else {
-        	echo \HTML::error( __('There was a problem.') );
-        }
+        return 'week' == $Request->query->get('type', 'month') ? new \PlotWeekSumData() : new \PlotMonthSumData();
     }
 
     /**
@@ -182,18 +175,7 @@ class CallController extends Controller
     public function windowsPlotSumDataAction()
     {
         $Frontend = new \Frontend(false, $this->get('security.token_storage'));
-        $this->plotSumData();
-
-        return new Response();
-    }
-
-    /**
-     * @Route("/call/window.plotSumDataShared.php")
-     */
-    public function windowsPlotSumDataSharedAction()
-    {
-        $Frontend = new \FrontendSharedList();
-        $this->plotSumData();
+        $this->getPlotSumData()->display();
 
         return new Response();
     }

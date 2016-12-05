@@ -25,14 +25,14 @@ class Route
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255, nullable=false, options={"default":"})
+     * @ORM\Column(name="name", type="string", length=255, nullable=false, options={"default":""})
      */
     private $name = '';
 
     /**
      * @var string
      *
-     * @ORM\Column(name="cities", type="string", length=255, nullable=false, options={"default":"})
+     * @ORM\Column(name="cities", type="string", length=255, nullable=false, options={"default":""})
      */
     private $cities = '';
 
@@ -65,7 +65,7 @@ class Route
     private $elevationDown = '0';
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(name="geohashes", type="text", nullable=true)
      */
@@ -292,11 +292,9 @@ class Route
     }
 
     /**
-     * Set geohashes
+     * @param string|null $geohashes
      *
-     * @param string $geohashes
-     *
-     * @return Route
+     * @return $this
      */
     public function setGeohashes($geohashes)
     {
@@ -306,13 +304,19 @@ class Route
     }
 
     /**
-     * Get geohashes
-     *
-     * @return string
+     * @return string|null
      */
     public function getGeohashes()
     {
         return $this->geohashes;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasGeohashes()
+    {
+        return null !== $this->geohashes;
     }
 
     /**

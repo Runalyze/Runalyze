@@ -1,6 +1,6 @@
 <?php
-namespace Runalyze\Bundle\CoreBundle\Entity;
 
+namespace Runalyze\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Raceresult
  *
  * @ORM\Table(name="raceresult", indexes={@ORM\Index(name="accountid", columns={"accountid"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\RaceresultRepository")
  */
 class Raceresult
 {
@@ -83,7 +83,7 @@ class Raceresult
     private $participantsAgeclass;
 
     /**
-     * @var \Account
+     * @var Account
      *
      * @ORM\ManyToOne(targetEntity="Account")
      * @ORM\JoinColumns({
@@ -93,7 +93,7 @@ class Raceresult
     private $account;
 
     /**
-     * @var \Training
+     * @var Training
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
@@ -345,13 +345,11 @@ class Raceresult
     }
 
     /**
-     * Set account
+     * @param Account $account
      *
-     * @param \Runalyze\Bundle\CoreBundle\Entity\Account $account
-     *
-     * @return Raceresult
+     * @return $this
      */
-    public function setAccount(\Runalyze\Bundle\CoreBundle\Entity\Account $account = null)
+    public function setAccount(Account $account)
     {
         $this->account = $account;
 
@@ -359,9 +357,7 @@ class Raceresult
     }
 
     /**
-     * Get account
-     *
-     * @return \Runalyze\Bundle\CoreBundle\Entity\Account
+     * @return Account
      */
     public function getAccount()
     {
@@ -369,13 +365,11 @@ class Raceresult
     }
 
     /**
-     * Set activity
+     * @param Training $activity
      *
-     * @param \Runalyze\Bundle\CoreBundle\Entity\Training $account
-     *
-     * @return Raceresult
+     * @return $this
      */
-    public function setActivity(\Runalyze\Bundle\CoreBundle\Entity\Training $activity = null)
+    public function setActivity(Training $activity)
     {
         $this->activity = $activity;
 
@@ -383,14 +377,10 @@ class Raceresult
     }
 
     /**
-     * Get activity
-     *
-     * @return \Runalyze\Bundle\CoreBundle\Entity\Training
+     * @return Training
      */
     public function getActivity()
     {
         return $this->activity;
     }
-
 }
-

@@ -1,0 +1,14 @@
+{% extends "@Twig/Exception/error.html.twig" %}
+
+{% block content %}
+    <h3>{% trans %}Sorry!{% endtrans %} - {% trans %}No athlete found.{% endtrans %}</h3>
+
+    <p class="text">
+        {% trans %}Looks like something went wrong here.{% endtrans %}<br>
+        {% trans %}The requested athlete does not exist or does not share his activities.{% endtrans %}
+    </p>
+
+    <p class="text">
+        <a href="{{ path('base_url') }}">{% trans %}Let's go back to RUNALYZE!{% endtrans %}</a>
+    </p>
+{% endblock %}

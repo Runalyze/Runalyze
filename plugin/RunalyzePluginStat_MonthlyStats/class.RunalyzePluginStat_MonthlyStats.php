@@ -122,7 +122,6 @@ class RunalyzePluginStat_MonthlyStats extends PluginStat {
 				if (isset($Data[$m])) {
 					if ($this->dat == 'km') {
 						echo '<td title="' . Distance::format($Data[$m]['distance']) . '">' . Distance::format($Data[$m]['distance']) . $this->getCircleFor(100 * $Data[$m]['distance'] / $this->maxKm) . '</td>';
-						//echo '<td style="vertical-align: bottom;">' . $tooltip . $circle . '</td>';
 					} else if ($this->dat == 's') {
 						echo '<td title="' . $Data[$m]['s'] . '">' . Duration::format($Data[$m]['s']) . $this->getCircleFor(100 * $Data[$m]['s'] / $this->maxs) . '</td>';
 					} else if ($this->dat == 'em') {

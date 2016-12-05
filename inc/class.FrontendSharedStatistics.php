@@ -14,11 +14,11 @@ use Runalyze\Activity\Distance;
  * @package Runalyze\Frontend
  */
 class FrontendSharedStatistics {
-	/**
-	 * Parent FrontendSharedList
-	 * @var FrontendSharedList
-	 */
-	protected $FrontendSharedList = null;
+	/** @var string */
+	protected $Username;
+
+	/** @var int */
+	protected $Userid;
 
 	/**
 	 * Statistic Tabs
@@ -27,11 +27,12 @@ class FrontendSharedStatistics {
 	protected $StatisticTabs = null;
 
 	/**
-	 * Construct statistics
-	 * @param FrontendSharedList $Parent
+	 * @param string $username
+	 * @param int $userid
 	 */
-	public function __construct(FrontendSharedList $Parent) {
-		$this->FrontendSharedList = $Parent;
+	public function __construct($username, $userid) {
+		$this->Username = $username;
+		$this->Userid = $userid;
 	}
 
 	/**
@@ -47,7 +48,7 @@ class FrontendSharedStatistics {
 	 * Configure statistic tabs
 	 */
 	protected function configureStatisticTabs() {
-		$this->StatisticTabs->setHeader( sprintf( __('Activity data of %s'), $this->FrontendSharedList->getUsername() ) );
+		$this->StatisticTabs->setHeader( sprintf( __('Activity data of %s'), $this->Username ) );
 		$this->StatisticTabs->setFirstTabActive();
 		$this->StatisticTabs->display();
 	}
@@ -58,22 +59,19 @@ class FrontendSharedStatistics {
 	protected function addAllStatisticTabs() {
 		$this->addTabForGeneralStatistics();
 		$this->addTabForComparisonOfYears();
-		//$this->addTabForOtherStatistics();
 	}
 
 	/**
 	 * Add tab for general statistics
 	 */
 	protected function addTabForGeneralStatistics() {
-		$User = $this->FrontendSharedList->getUser();
-
 		$Stats = DB::getInstance()->query('
 			SELECT
 				SUM(1) as num,
 				SUM(distance) as dist_sum,
 				SUM(s) as time_sum
 			FROM `'.PREFIX.'training`
-			WHERE `accountid`="'.$User['id'].'"
+			WHERE `accountid`="'.$this->Userid.'"
 			GROUP BY `accountid`
 			LIMIT 1
 		')->fetch();
@@ -123,27 +121,5 @@ class FrontendSharedStatistics {
 		if ($Content != '') {
 			$this->StatisticTabs->addTab( __('Year on year').' ('.__('Running').')', 'statistics-years', $Content);
 		}
-	}
-
-	/**
-	 * Remove <table> from a string to extract <tbody>/<thead>...
-	 * @param string $string
-	 * @return string
-	 */
-	private function extractTbody($string) {
-		return str_replace(
-				array('<thead>', '</thead>'),
-				array('<tbody class="asThead">', '</tbody>'),
-				strip_tags($string, '<thead><tbody><th><tr><td><em><strong><a><span><i><img>')
-			);
-	}
-
-	/**
-	 * Add tab for other statistics
-	 */
-	protected function addTabForOtherStatistics() {
-		$Content = 'Test';
-
-		$this->StatisticTabs->addTab( __('Miscellaneous'), 'statistics-other', $Content);
 	}
 }

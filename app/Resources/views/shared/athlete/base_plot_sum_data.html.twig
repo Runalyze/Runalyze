@@ -1,0 +1,11 @@
+{% extends "shared/base.html.twig" %}
+
+{% set body_attributes = ' id="shared"' %}
+
+{% block content %}
+
+    <div{% if not app.request.xmlHttpRequest %} id="statistics-inner" class="panel" style="width:810px;margin:5px auto;"{% endif %}>
+        {{ plot.display }}
+    </div>
+
+{% endblock %}

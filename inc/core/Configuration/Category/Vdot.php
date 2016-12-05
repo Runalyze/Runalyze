@@ -12,7 +12,6 @@ use Runalyze\Parameter\Boolean;
 use Runalyze\Parameter\FloatingPoint;
 use Runalyze\Parameter\Textline;
 use Runalyze\Parameter\Integer;
-use Runalyze\Parameter\Application\VdotMethod;
 use Ajax;
 use Helper;
 use FormularUnit;

@@ -13,7 +13,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Runalyze\Bundle\CoreBundle\Form\Settings\AccountType;
 use Runalyze\Configuration;
 use Runalyze\Language;
-use Swift_Message;
 
 class SettingsController extends Controller
 {

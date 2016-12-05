@@ -343,11 +343,14 @@ class Training
     private $routeName;
 
     /**
-     * @var integer
+     * @var Route|null
      *
-     * @ORM\Column(name="routeid", type="integer", nullable=false, options={"unsigned":true, "default":0})
+     * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Route")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="routeid", referencedColumnName="id", nullable=true)
+     * })
      */
-    private $routeid = '0';
+    private $route;
 
     /**
      * @var string
@@ -378,9 +381,12 @@ class Training
     private $notes;
 
     /**
-     * @var integer
+     * @var \Runalyze\Bundle\CoreBundle\Entity\Account
      *
-     * @ORM\Column(name="accountid", type="integer", nullable=false, options={"unsigned":true})
+     * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Account")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="accountid", referencedColumnName="id", nullable=false)
+     * })
      */
     private $account;
 
@@ -606,13 +612,10 @@ class Training
     }
 
     /**
-     * Set isPublic
-     *
-     * @param boolean $isPublic
-     *
-     * @return Training
+     * @param bool $isPublic
+     * @return $this
      */
-    public function setIsPublic($isPublic)
+    public function setPublic($isPublic)
     {
         $this->isPublic = $isPublic;
 
@@ -620,23 +623,18 @@ class Training
     }
 
     /**
-     * Get isPublic
-     *
-     * @return boolean
+     * @return bool
      */
-    public function getIsPublic()
+    public function isPublic()
     {
         return $this->isPublic;
     }
 
     /**
-     * Set isTrack
-     *
-     * @param boolean $isTrack
-     *
-     * @return Training
+     * @param bool $isTrack
+     * @return $this
      */
-    public function setIsTrack($isTrack)
+    public function setTrack($isTrack)
     {
         $this->isTrack = $isTrack;
 
@@ -644,11 +642,9 @@ class Training
     }
 
     /**
-     * Get isTrack
-     *
-     * @return boolean
+     * @return bool
      */
-    public function getIsTrack()
+    public function isTrack()
     {
         return $this->isTrack;
     }
@@ -819,6 +815,26 @@ class Training
     public function getPulseMax()
     {
         return $this->pulseMax;
+    }
+
+    /**
+     * @param float $vdot
+     *
+     * @return $this
+     */
+    public function setVdot($vdot)
+    {
+        $this->vdot = $vdot;
+
+        return $this;
+    }
+
+    /**
+     * @return float
+     */
+    public function getVdot()
+    {
+        return $this->vdot;
     }
 
     /**
@@ -1422,13 +1438,10 @@ class Training
     }
 
     /**
-     * Set isNight
-     *
-     * @param boolean $isNight
-     *
-     * @return Training
+     * @param bool $isNight
+     * @return $this
      */
-    public function setIsNight($isNight)
+    public function setNight($isNight)
     {
         $this->isNight = $isNight;
 
@@ -1436,11 +1449,9 @@ class Training
     }
 
     /**
-     * Get isNight
-     *
-     * @return boolean
+     * @return bool
      */
-    public function getIsNight()
+    public function isNight()
     {
         return $this->isNight;
     }
@@ -1518,11 +1529,9 @@ class Training
     }
 
     /**
-     * Set route
+     * @param \Runalyze\Bundle\CoreBundle\Entity\Route|null $route
      *
-     * @param \Runalyze\Bundle\CoreBundle\Entity\Route $defaultroute
-     *
-     * @return Training
+     * @return $this
      */
     public function setRoute(\Runalyze\Bundle\CoreBundle\Entity\Route $route = null)
     {
@@ -1532,9 +1541,7 @@ class Training
     }
 
     /**
-     * Get route
-     *
-     * @return \Runalyze\Bundle\CoreBundle\Entity\Route
+     * @return \Runalyze\Bundle\CoreBundle\Entity\Route|null
      */
     public function getRoute()
     {

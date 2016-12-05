@@ -47,8 +47,6 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 	 * Set content
 	 */
 	protected function setContent() {
-		//$this->withShadow = true;
-
 		$this->setBoxedValues();
 	}
 

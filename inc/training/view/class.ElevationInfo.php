@@ -7,14 +7,13 @@
 use Runalyze\Calculation;
 use Runalyze\Configuration;
 use Runalyze\Parameter\Application\ElevationMethod;
-use Runalyze\Data;
 use Runalyze\View\Activity\Context;
 use Runalyze\Model;
 use Runalyze\Activity\Elevation;
 
 /**
  * Display elevation info for a training
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\DataObjects\Training\View
  */

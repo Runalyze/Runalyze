@@ -14,7 +14,7 @@ use Runalyze\Context;
 
 /**
  * A single lap
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Data\Laps
  */
@@ -30,12 +30,12 @@ class Lap {
 	const MODE_RESTING = 1;
 
 	/**
-	 * @var \Runalyze\Activity\Duration 
+	 * @var \Runalyze\Activity\Duration
 	 */
 	protected $LapDuration;
 
 	/**
-	 * @var \Runalyze\Activity\Distance 
+	 * @var \Runalyze\Activity\Distance
 	 */
 	protected $LapDistance;
 
@@ -50,12 +50,12 @@ class Lap {
 	protected $Mode;
 
 	/**
-	 * @var \Runalyze\Activity\Duration 
+	 * @var \Runalyze\Activity\Duration
 	 */
 	protected $TrackDurationAtEnd = null;
 
 	/**
-	 * @var \Runalyze\Activity\Distance 
+	 * @var \Runalyze\Activity\Distance
 	 */
 	protected $TrackDistanceAtEnd = null;
 
@@ -173,7 +173,7 @@ class Lap {
 	 * @return \Runalyze\Activity\Pace
 	 */
 	public function pace() {
-		if (null == $this->LapPace) {
+		if (null === $this->LapPace) {
 			$this->LapPace = new Pace($this->LapDuration->seconds(), $this->LapDistance->kilometer());
 		}
 

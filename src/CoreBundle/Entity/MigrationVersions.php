@@ -1,6 +1,6 @@
 <?php
-namespace Runalyze\Bundle\CoreBundle\Entity;
 
+namespace Runalyze\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -21,6 +21,19 @@ class MigrationVersions
      */
     private $version;
 
+    /**
+     * @param string $version
+     */
+    public function setVersion($version)
+    {
+        $this->version = $version;
+    }
 
+    /**
+     * @return string
+     */
+    public function getVersion()
+    {
+        return $this->version;
+    }
 }
-

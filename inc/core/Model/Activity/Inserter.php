@@ -6,12 +6,10 @@
 
 namespace Runalyze\Model\Activity;
 
-use League\Geotools\Geotools;
 use Runalyze\Calculation\NightDetector;
 use Runalyze\Model;
 use Runalyze\Calculation\BasicEndurance;
 use Runalyze\Configuration;
-use Runalyze\Util\TimezoneLookup;
 
 /**
  * Insert activity to database
@@ -275,7 +273,7 @@ class Inserter extends Model\InserterWithAccountID {
 			$this->updateBasicEndurance();
 		}
 	}
-	
+
 	/**
 	 * Update tag
 	 */
@@ -310,7 +308,7 @@ class Inserter extends Model\InserterWithAccountID {
 
 	/**
 	 * Update vdot shape
-	 * 
+	 *
 	 * Note: This method assumes that the activity is marked as running
 	 * Note: vdot corrector will be updated by RaceResult\Inserter if necessary
 	 */
@@ -328,7 +326,7 @@ class Inserter extends Model\InserterWithAccountID {
 
 	/**
 	 * Update basic endurance
-	 * 
+	 *
 	 * Note: This method assumes that the activity is marked as running
 	 */
 	protected function updateBasicEndurance() {

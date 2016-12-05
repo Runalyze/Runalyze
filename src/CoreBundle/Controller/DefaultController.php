@@ -8,11 +8,9 @@ use Runalyze\Bundle\CoreBundle\Form\RegistrationType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
-use SessionAccountHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Swift_Message;
 
 /**
  * Class DefaultController
@@ -170,76 +168,6 @@ class DefaultController extends Controller
         return $this->render('pages/help.html.twig', [
             'version' => $this->getParameter('RUNALYZE_VERSION')
         ]);
-    }
-
-    /**
-     * @Route("/shared/{training}&{test}&{testa}&{testsaa}")
-     * @Route("/shared/{training}&{test}&{testa}")
-     * @Route("/shared/{training}&{test}")
-     * @Route("/shared/{training}")
-     */
-    public function sharedTrainingAction($training, Request $request)
-    {
-        $_GET['url'] = $training;
-        $Frontend = new \FrontendShared();
-
-        if ($request->query->get('mode') == 'iframe')
-        	echo '<div id="statistics-inner" class="panel" style="width:97%;margin:0 auto;">';
-        elseif (!$request->isXmlHttpRequest())
-        	echo '<div id="statistics-inner" class="panel" style="width:960px;margin:5px auto;">';
-        else
-        	echo '<div>';
-
-        $Frontend->displaySharedView();
-
-        echo '</div>';
-
-        return $this->render('legacy_end.html.twig');
-    }
-
-    /**
-     * @Route("/shared/{user}/")
-     */
-    public function sharedUserAction($user, Request $request)
-    {
-        $_GET['user'] = $user;
-
-        if (isset($_GET['view'])) {
-            $_GET['type'] = ($_GET['view'] == 'monthkm') ? 'month' : 'week';
-
-            return $this->forward('CoreBundle:Call:windowsPlotSumDataShared');
-        }
-
-        $Frontend = new \FrontendSharedList();
-
-        if (!$request->isXmlHttpRequest()) {
-        	if ($Frontend->userAllowsStatistics()) {
-        		echo '<div class="panel" style="width:960px;margin:5px auto;">';
-        		$Frontend->displayGeneralStatistics();
-        		echo '</div>';
-        	}
-
-        	echo '<div id="data-browser" class="panel" style="width:960px;margin:5px auto;">';
-        	echo '<div id="'.DATA_BROWSER_SHARED_ID.'">';
-        }
-
-        $Frontend->displaySharedView();
-
-        if (!$request->isXmlHttpRequest()) {
-        	echo '</div>';
-        	echo '</div>';
-
-        	echo '<div id="statistics-inner" class="panel" style="width:960px;margin:5px auto;">
-        	<div class="panel-content">
-        		<p class="info">
-        			'.__('Click on an activity to see more details.').'<br>
-        			'.__('Public activities are marked: ').' '.\Icon::$ADD_SMALL_GREEN.'.
-        		</p>
-        	</div>
-        </div>';
-        }
-
-        return $this->render('legacy_end.html.twig');
     }
 
     /**

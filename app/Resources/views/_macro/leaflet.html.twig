@@ -1,0 +1,28 @@
+{% macro map(id, options) %}
+    {% set options = {
+        'width': '',
+        'height': '',
+        'layer': 'OpenStreetMap',
+        'scroll': 'false',
+        'bounds': []
+    }|merge(options) %}
+
+    <div id="{{ id }}" class="map"{% if options.width or options.height %} style="{% if options.width %}width: {{ options.width }};{% endif %}{% if options.height %}height: {{ options.height }};{% endif %}"{% endif %}></div>
+
+    <script>
+        RunalyzeLeaflet.setDefaultLayer("{{ options.layer }}");
+        RunalyzeLeaflet.init('{{ id }}', { scrollWheelZoom: {{ options.scroll }} } );
+        {% if options.bounds.count() == 4 %}
+        RunalyzeLeaflet.map().fitBounds([[{{ options.bounds[0] }},{{ options.bounds[1] }}],[{{ options.bounds[2] }},{{ options.bounds[3] }}]]);
+        {% endif %}
+    </script>
+{% endmacro %}
+
+{% macro mapForAthlete(id, account, options) %}
+    {% set options = {
+        'layer': config(account).get('activity-view.TRAINING_LEAFLET_LAYER'),
+        'scroll': config(account).get('activity-view.TRAINING_MAP_ZOOM_ON_SCROLL')
+    }|merge(options|default([])) %}
+
+    {{ _self.map(id, options) }}
+{% endmacro %}

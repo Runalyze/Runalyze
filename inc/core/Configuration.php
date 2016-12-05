@@ -10,6 +10,7 @@ namespace Runalyze;
  * Configuration
  * @author Hannes Christiansen
  * @package Runalyze
+ * @deprecated since v3.1
  */
 class Configuration {
 	/**

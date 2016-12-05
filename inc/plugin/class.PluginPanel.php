@@ -95,7 +95,6 @@ abstract class PluginPanel extends Plugin {
 	 */
 	private function displayHeader() {
 		echo '<div class="panel-heading">';
-		//echo '<div class="icons-left"></div>';
 		echo '<div class="panel-menu">'.$this->getRightSymbol().'</div>';
 		echo '<h1 class="link clap" rel="'.$this->id().'">'.$this->name().'</h1>';
 		echo '<div class="hover-icons">'.$this->getConfigLinks().'</div>';

@@ -4,8 +4,6 @@
  * @package Runalyze\Plugins\Panels
  */
 
-use Runalyze\Activity\Distance;
-
 $Factory = new PluginFactory();
 $Plugin = $Factory->newInstance('RunalyzePluginStat_Wettkampf');
 ?>

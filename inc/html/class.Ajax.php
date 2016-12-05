@@ -5,9 +5,10 @@
  */
 /**
  * JavaScript/jQuery class
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\HTML
+ * @deprecated since v3.1
  */
 class Ajax {
 	/**
@@ -86,7 +87,7 @@ class Ajax {
 
 	/**
 	 * Set reload flag
-	 * @param int $Flag 
+	 * @param int $Flag
 	 */
 	public static function setReloadFlag($Flag) {
 		$BothFlags = array($Flag, self::$currentReloadFlag);
@@ -109,7 +110,7 @@ class Ajax {
 
 	/**
 	 * Get reload command
-	 * @return string 
+	 * @return string
 	 */
 	public static function getReloadCommand() {
 		switch(self::$currentReloadFlag) {
@@ -415,13 +416,6 @@ class Ajax {
 		$Code .= self::wrapJSforDocumentReady('$("'.$selector.'").tablesorterWithPager('.($reinit?'true':'').');');
 
 		return $Code;
-	}
-
-	/**
-	 * Print div for pager for tables
-	 */
-	private static function printPagerDiv() {
-		echo self::getPagerDiv();
 	}
 
 	/**

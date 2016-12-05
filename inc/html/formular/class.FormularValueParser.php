@@ -156,7 +156,7 @@ class FormularValueParser {
 			case self::$PARSER_BOOL:
 				return self::validateBool($key);
 			case self::$PARSER_ARRAY_CHECKBOXES:
-				return self::validateArrayCheckboxes($key, $parserOptions);
+				return self::validateArrayCheckboxes($key);
 			case self::$PARSER_SPLITS:
 				return self::validateSplits($key, $parserOptions);
 			case self::$PARSER_WEIGHT:
@@ -170,7 +170,7 @@ class FormularValueParser {
 			case self::$PARSER_DISTANCE:
 				return self::validateDistance($key, $parserOptions);
 			case self::$PARSER_WINDSPEED:
-				return self::validateWindSpeed($key, $parserOptions);
+				return self::validateWindSpeed($key);
 			case self::$PARSER_RPE:
                 return self::validateRPE($key);
 
@@ -349,7 +349,6 @@ class FormularValueParser {
 		} elseif ($numParts == 2) {
 			$_POST[$key] = mktime(0, 0, 0, (int)$dateParts[1], (int)$dateParts[0], date('Y'));
 		} else {
-			//$_POST[$key] = time();
 			return __('The date could not be parsed.');
 		}
 
@@ -472,10 +471,9 @@ class FormularValueParser {
 	/**
 	 * Validator: checkbox array => comma separated string
 	 * @param string $key
-	 * @param array $options
 	 * @return boolean
 	 */
-	private static function validateArrayCheckboxes($key, $options) {
+	private static function validateArrayCheckboxes($key) {
 		if (!isset($_POST[$key]))
 			return true;
 
