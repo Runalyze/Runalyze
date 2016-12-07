@@ -3,6 +3,7 @@
 namespace Runalyze\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Runalyze\Bundle\CoreBundle\Model\Account\AccountStatistics;
 
 class TrainingRepository extends EntityRepository
 {
@@ -50,4 +51,33 @@ class TrainingRepository extends EntityRepository
 			'account' => $accountId
 		]);
 	}
+
+    /**
+     * @param Account $account
+     * @return AccountStatistics
+     */
+    public function getAccountStatistics(Account $account)
+    {
+        $statistics = new AccountStatistics();
+
+        $dataForAccount = $this->_em->createQueryBuilder()
+            ->select(
+                'COUNT(1) as num',
+                'SUM(t.distance) as distance',
+                'SUM(t.s) as duration'
+            )
+            ->from('CoreBundle:Training', 't')
+            ->where('t.account = :account')
+            ->setParameter('account', $account->getId())
+            ->getQuery()
+            ->getOneOrNullResult();
+
+        if (null !== $dataForAccount) {
+            $statistics->setNumberOfActivities($dataForAccount['num']);
+            $statistics->setTotalDistance($dataForAccount['distance']);
+            $statistics->setTotalDuration($dataForAccount['duration']);
+        }
+
+        return $statistics;
+    }
 }

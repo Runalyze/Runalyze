@@ -1,0 +1,11 @@
+<div class="panel-content">
+    <p id="submit-info" class="error">
+        {% trans %}The activity has been removed.{% endtrans %}
+    </p>
+</div>
+
+<script>
+    {% if multiEditorId %}$("#multi-edit-{{ multiEditorId }}").remove();{% endif %}
+    Runalyze.Statistics.resetUrl();
+    Runalyze.reloadContent();
+</script>

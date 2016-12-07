@@ -27,9 +27,6 @@ use Runalyze\Activity\DuplicateFinder;
 use Runalyze\Calculation\Route\Calculator;
 use Runalyze\Service\ElevationCorrection\NoValidStrategyException;
 
-require_once '../inc/class.Frontend.php';
-require_once '../inc/class.FrontendShared.php';
-
 class ActivityController extends Controller
 {
     /**
@@ -97,10 +94,7 @@ class ActivityController extends Controller
                 $Deleter->setEquipmentIDs($Factory->equipmentForActivity($id, true));
                 $Deleter->delete();
 
-                echo '<div class="panel-content"><p id="submit-info" class="error">'.__('The activity has been removed').'</p></div>';
-                echo '<script>Runalyze.Statistics.resetUrl();Runalyze.reloadContent();</script>';
-                exit();
-                break;
+                return $this->render('activity/activity_has_been_removed.html.twig');
         }
 
         if (!Request::createFromGlobals()->query->get('silent')) {
@@ -152,9 +146,9 @@ class ActivityController extends Controller
 
         if (null === $id) {
             return $this->generateResponseForMultiEditorOverview();
-        } else {
-            return $this->generateResponseForMultiEditor($id);
         }
+
+        return $this->generateResponseForMultiEditor($id);
     }
 
     /**
@@ -196,9 +190,9 @@ class ActivityController extends Controller
         $Deleter->setEquipmentIDs($Factory->equipmentForActivity($id, true));
         $Deleter->delete();
 
-        echo '<div class="panel-content"><p id="submit-info" class="error">'.__('The activity has been removed').'</p></div>';
-        echo '<script>$("#multi-edit-'.((int)$id).'").remove();Runalyze.Statistics.resetUrl();Runalyze.reloadContent();</script>';
-        exit();
+        return $this->render('activity/activity_has_been_removed.html.twig', [
+            'multiEditorId' => (int)$id
+        ]);
    }
 
     /**
@@ -230,7 +224,6 @@ class ActivityController extends Controller
      */
     public function elevationCorrectionAction($id)
     {
-
         $Frontend = new \Frontend(false, $this->get('security.token_storage'));
 
         $Factory = \Runalyze\Context::Factory();

@@ -4,10 +4,48 @@
 
 {% block content %}
 
+    {# @var configObject \Runalyze\Bundle\CoreBundle\Component\Configuration\RunalyzeConfigurationList #}
+    {% set configObject = config(account) %}
+
     {% if not app.request.xmlHttpRequest %}
-        {% if statistics %}
+        {% if accountStatistics %}
             <div class="panel" style="width:960px;margin:5px auto;">
-                {{ statistics.display }}
+                <div id="public-tabs">
+                    <div class="panel-heading">
+                        <div class="panel-menu">
+                            <ul class="">
+                                <li><a class="triggered change" target="public-tabs" href="#statistics-general">{% trans %}General statistics{% endtrans %}</a></li>
+                                <li><a class="change" target="public-tabs" href="#statistics-years">{% trans %}Year on year{% endtrans %} ({% trans %}Running{% endtrans %})</a></li>
+                            </ul>
+                        </div>
+
+                        <h1>{% trans with {'%username%': account.username} %}Activity data of %username%{% endtrans %}</h1>
+                    </div>
+                    <div class="panel-content">
+                        <div id="statistics-general" class="change">
+                            <table class="fullwidth">
+                                <tbody>
+                                <tr>
+                                    <td class="b">{% trans %}Total distance{% endtrans %}:</td>
+                                    <td>{{ distance(accountStatistics.totalDistance, configObject.unitSystem.distanceUnit)|raw }}</td>
+                                    <td class="b">{% trans %}Number of activities{% endtrans %}:</td>
+                                    <td>{{ accountStatistics.numberOfActivities }}x</td>
+                                </tr>
+                                <tr>
+                                    <td class="b">{% trans %}Total duration{% endtrans %}:</td>
+                                    <td>{{ accountStatistics.totalDuration|duration }}</td>
+                                    <td class="b">{% trans %}First activity{% endtrans %}:</td>
+                                    <td>{{ configObject.get('data.START_TIME')|date('d.m.Y') }}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="statistics-years" class="change" style="display:none;">
+                            {{ legacyStatistics.yearComparisonTable.display|raw }}
+                            {{ legacyStatistics.tabForComparisonOfYears|raw }}
+                        </div>
+                    </div>
+                </div>
             </div>
         {% endif %}
 

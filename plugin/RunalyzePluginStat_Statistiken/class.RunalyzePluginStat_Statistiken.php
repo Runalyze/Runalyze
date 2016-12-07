@@ -151,19 +151,6 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	}
 
 	/**
-	 * Get table for year comparison - not to use within this plugin!
-	 * @return string
-	 */
-	public function getYearComparisonTable() {
-		$this->year = -1;
-		$this->initVariables();
-
-		ob_start();
-		$this->displayYearTable();
-		return ob_get_clean();
-	}
-
-	/**
 	 * Display table with data for each month
 	 */
 	private function displayYearTable() {

@@ -75,9 +75,19 @@ class SharedController extends Controller
             ]);
         }
 
+        if ($privacy->isListWithStatistics()) {
+            $accountStatistics = $this->getDoctrine()->getRepository('CoreBundle:Training')->getAccountStatistics($account);
+            $legacyStatistics = new \FrontendSharedStatistics();
+        } else {
+            $accountStatistics = null;
+            $legacyStatistics = null;
+        }
+
+
         return $this->render('shared/athlete/base.html.twig', [
-            'username' => $username,
-            'statistics' => $privacy->isListWithStatistics() ? new \FrontendSharedStatistics($username, $account->getId()) : null,
+            'account' => $account,
+            'accountStatistics' => $accountStatistics,
+            'legacyStatistics' => $legacyStatistics,
             'dataBrowser' => new \DataBrowserShared()
         ]);
     }
