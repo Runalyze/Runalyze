@@ -73,9 +73,9 @@
         <source>In a case of urgency you can contact us via email:</source>
         <target state="translated">En cas d'urgence, vous pouvez nous contacter par courriel :</target>
       </trans-unit>
-      <trans-unit id="95bded74b875da4e05966bf6e0a59fba" resname="Browser Support">
+      <trans-unit id="95bded74b875da4e05966bf6e0a59fba" resname="Browser Support" approved="yes">
         <source>Browser Support</source>
-        <target state="translated">compatible avec les navigateurs</target>
+        <target state="translated">Compatibilité avec les Navigateurs Web</target>
       </trans-unit>
       <trans-unit id="802d2a1dea70aa257f0b2849b7d961cd" resname="Runalyze is a modern application and therefore we want to use the most modern web techniques. We will not try to support any outdated browser versions.">
         <source>Runalyze is a modern application and therefore we want to use the most modern web techniques. We will not try to support any outdated browser versions.</source>
@@ -89,25 +89,25 @@
         <source>Credits</source>
         <target state="translated">Crédits</target>
       </trans-unit>
-      <trans-unit id="6013259776820a748d1b5bc3cc542e5d" resname="The plug-in was not unlocked successfully.">
+      <trans-unit id="6013259776820a748d1b5bc3cc542e5d" resname="The plug-in was not unlocked successfully." approved="yes">
         <source>The plug-in was not unlocked successfully.</source>
-        <target state="translated">Le plugin n'a pas été activé.</target>
+        <target state="translated">Le plugin n'a pu être déverrouillé.</target>
       </trans-unit>
       <trans-unit id="6d558cb627c6cbbef5d611d4a4c66c10" resname="The administrator has to set the correct API-key.">
         <source>The administrator has to set the correct API-key.</source>
         <target state="translated">L'administrateur n'a pas saisi une clé API correcte.</target>
       </trans-unit>
-      <trans-unit id="49ab28040dfa07f53544970c6d147e1e" resname="Connect">
+      <trans-unit id="49ab28040dfa07f53544970c6d147e1e" resname="Connect" approved="yes">
         <source>Connect</source>
-        <target state="translated">connecter</target>
+        <target state="translated">Connecter</target>
       </trans-unit>
       <trans-unit id="aae025ecc68c1c8f446c631c1ce70dc3" resname="Searching for devices">
         <source>Searching for devices</source>
         <target state="translated">Recherche des périphériques</target>
       </trans-unit>
-      <trans-unit id="31b055f6b0dd1e000252dfe19caa5db5" resname="Transfer complete">
+      <trans-unit id="31b055f6b0dd1e000252dfe19caa5db5" resname="Transfer complete" approved="yes">
         <source>Transfer complete</source>
-        <target state="translated">transfert terminé</target>
+        <target state="translated">Transfert terminé</target>
       </trans-unit>
       <trans-unit id="9fac221f0e0cc359e9b5860d40b44670" resname="Browse computer">
         <source>Browse computer</source>
@@ -125,9 +125,9 @@
         <source>Browse devices</source>
         <target state="translated">Parcourir les dispositifs</target>
       </trans-unit>
-      <trans-unit id="c03ca67dda321195d74c951097f240c6" resname="Devices">
+      <trans-unit id="c03ca67dda321195d74c951097f240c6" resname="Devices" approved="yes">
         <source>Devices</source>
-        <target state="translated">Dispositifs de</target>
+        <target state="translated">Appareils</target>
       </trans-unit>
       <trans-unit id="6a9af29189122a543830fe6811601ab3" resname="Search for decives">
         <source>Search for decives</source>
