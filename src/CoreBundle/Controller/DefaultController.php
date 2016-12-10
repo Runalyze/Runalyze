@@ -160,17 +160,6 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/dashboard/help", name="help")
-     * @Security("has_role('ROLE_USER')")
-     */
-    public function dashboardHelpAction()
-    {
-        return $this->render('pages/help.html.twig', [
-            'version' => $this->getParameter('RUNALYZE_VERSION')
-        ]);
-    }
-
-    /**
      * @Route("/index.php")
      */
     public function indexPhpAction(Request $request)

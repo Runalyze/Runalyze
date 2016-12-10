@@ -25,7 +25,7 @@ class MaintenanceListener
 
         if ($maintenance && !$debug && !in_array($request->get('_route'), $routes)) {
             $engine = $this->container->get('templating');
-            $content = $engine->render('::maintenance.html.twig');
+            $content = $engine->render('maintenance.html.twig');
             $event->setResponse(new Response($content, 503));
             $event->stopPropagation();
         }

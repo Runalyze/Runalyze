@@ -100,7 +100,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 		$Links = '';
 		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key().'/window.plot.php" '.Ajax::tooltip('', __('Show form'), true, true).'>'.Icon::$LINE_CHART.'</a>').'</li>';
 		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key().'/window.php" '.Ajax::tooltip('', __('How are these values calculated?'), true, true).'>'.Icon::$MAGIC.'</a>').'</li>';
-		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key().'/window.info.php" '.Ajax::tooltip('',  __('Explanations: What are VDOT and TRIMP?'), true, true).'>'.Icon::$INFO.'</a>').'</li>';
+		$Links .= '<li>'.Ajax::window('<a href="dashboard/help-calculations" '.Ajax::tooltip('',  __('Explanations: What are VDOT and TRIMP?'), true, true).'>'.Icon::$INFO.'</a>').'</li>';
 
 		return '<ul>'.$Links.'</ul>';
 	}

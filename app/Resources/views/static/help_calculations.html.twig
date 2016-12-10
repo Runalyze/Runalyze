@@ -1,0 +1,72 @@
+{% extends "base_logged_in.twig" %}
+
+{% block content %}
+<div class="panel-heading">
+	<h1>{% trans %}VDOT{% endtrans %}</h1>
+</div>
+<div class="panel-content">
+	<p class="text">
+		{% trans %}VDOT is the shortform of <em>V-dot-O2Max</em>, the maximum rate of oxygen flow.{% endtrans %}
+        {% trans %}This value is a good measurement for the possible performance of a runner.{% endtrans %}
+        {% trans %}Due to some additional factors, one talks about a <em>pseudo V-dot-O2Max</em>, which is equal for all runners at the same level.{% endtrans %}
+	</p>
+
+	<p class="file">
+		{% trans with {'%s': '<em><a href="http://www.runnersworld.com/workouts/threshold-training-finding-your-vdot" title="Finding Your VDOT | Running Times">Treshold Training: Finding Your VDOT</a> by Jack Daniels, Ph.D.</em>'} %}see %s{% endtrans %}
+	</p>
+</div>
+
+
+<div class="panel-heading panel-sub-heading">
+	<h1>{% trans %}Your Shape: an estimation of your VDOT value{% endtrans %}</h1>
+</div>
+<div class="panel-content">
+	<p class="text">
+        {% trans with {'%s' : 'http://www.amazon.de/gp/product/1450431836?ie=UTF8&tag=runalyze-21'} %}
+            <a href="%s" target="_blank">Jack Daniels' famous Running formula</a> serves some tables estimating the VDOT value.
+            These formulas are used to estimate your VDOT and predict your race performances.
+        {% endtrans %}
+	</p>
+
+	<p class="text">
+        {% trans %}Your personal VDOT value is estimated based on the ratio of heart rate and pace in every of your runs.{% endtrans %}
+        {% trans %}The average over a given period is considered as your current shape.{% endtrans %}
+	</p>
+
+	<p class="text">
+        {% trans %}Each VDOT value of an activity is marked with an arrow, to show if this value is (much) higher than your current shape, equal to it or (much) lower:{% endtrans %}<br>
+		<i class="vdot-icon vdot-up-2"></i>
+		<i class="vdot-icon vdot-up"></i>
+		<i class="vdot-icon vdot-normal"></i>
+		<i class="vdot-icon vdot-down"></i>
+		<i class="vdot-icon vdot-down-2"></i>
+	</p>
+
+	<p class="warning">
+        {% trans %}Warning: Of course, pauses, walking and other factors can heavily influence the ratio of heart rate and pace.{% endtrans %}
+        {% trans %}Activities with known influences or strange results can be ignored for the calculation of your shape.{% endtrans %}
+	</p>
+</div>
+
+
+<div class="panel-heading panel-sub-heading">
+	<h1>{% trans %}TRIMP/ATL/CTL/TSB{% endtrans %}</h1>
+</div>
+<div class="panel-content">
+    <p class="text">
+        {% trans %}The TRIMP-concept gives a possibility to describe the load of a single activity.{% endtrans %}
+        {% trans %}For a single activity the TRIMP is calculated based on the duration and your heart rate.{% endtrans %}
+    </p>
+
+    <p class="text">
+        {% trans %}Your <strong>Actual Training Load</strong>, ATL, also fatigue, is based on the sum of your last TRIMP values in a short period, e.g. for seven days.{% endtrans %}
+        {% trans %}In contrast, your <strong>Chronical Training Load</strong>, CTL, also fitness level, is based on the sum of your last TRIMP values in a long period, e.g. for fourty days.{% endtrans %}
+        {% trans %}The difference of these values is called <strong>Training Stress Balance</strong>, TSB. It describes if you are recovering (positive) or training hard (negative).{% endtrans %}
+    </p>
+
+    <p class="file">
+        {% trans with {'%s': '<em><a href="http://www.netzathleten.de/fitness/richtig-trainieren/item/1481-trainingstagebuch-sinnvoll-oder-nicht" title="Das TRIMP-Konzept">Das TRIMP-Konzept</a>'} %}see %s{% endtrans %}
+        ({% trans %}german{% endtrans %}, nethathleten.de)
+    </p>
+</div>
+{% endblock %}
