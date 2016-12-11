@@ -231,7 +231,8 @@ CREATE TABLE IF NOT EXISTS `runalyze_route` (
   `endpoint` char(10) DEFAULT NULL,
   `min` char(10) DEFAULT NULL,
   `max` char(10) DEFAULT NULL,
-  `in_routenet` tinyint(1) unsigned NOT NULL DEFAULT '0'
+  `in_routenet` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `lock` tinyint(1) unsigned NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------

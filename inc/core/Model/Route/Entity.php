@@ -140,6 +140,18 @@ class Entity extends Model\EntityWithID implements Model\Loopable {
 	 */
 	protected $checkArraySizes = true;
 
+    /**
+     * Construct
+     * @param array $data
+     */
+    public function __construct(array $data = array()) {
+        if (isset($data['geohashes'])) {
+            $data['geohashes'] = implode('|', GeohashLine::extend(explode('|', $data['geohashes'])));
+        }
+
+        parent::__construct($data);
+    }
+
 	/**
 	 * Check array sizes
 	 * @throws \RuntimeException
@@ -207,9 +219,8 @@ class Entity extends Model\EntityWithID implements Model\Loopable {
 			self::ENDPOINT,
 			self::MIN,
 			self::MAX,
-			self::IN_ROUTENET,
-            self::LOCK
-		);
+			self::IN_ROUTENET
+        );
 	}
 
 	/**
@@ -340,7 +351,7 @@ class Entity extends Model\EntityWithID implements Model\Loopable {
 			$geohashes[] = (new Geohash())->encode(new Coordinate(array($latitudes[$i], $longitudes[$i])), self::PATH_GEOHASH_PRECISION)->getGeohash();
 		}
 
-		$this->Data[self::GEOHASHES] = $geohashes;
+		$this->Data[self::GEOHASHES] = GeohashLine::shorten($geohashes);
 		$this->handleNewArraySize($size);
 
 		$this->setMinMaxFromLatitudesLongitudes($latitudes, $longitudes);
@@ -430,7 +441,7 @@ class Entity extends Model\EntityWithID implements Model\Loopable {
 	 * @return string|null
 	 */
 	protected function findEndpoint() {
-		return $this->findFirstNonNullGeohash(array_reverse($this->Data[self::GEOHASHES]));
+		return $this->findFirstNonNullGeohash(array_reverse(GeohashLine::extend($this->Data[self::GEOHASHES])));
 	}
 
 	/**

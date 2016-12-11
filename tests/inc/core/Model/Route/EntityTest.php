@@ -99,7 +99,7 @@ class EntityTest extends \PHPUnit_Framework_TestCase {
 		$Object = new Entity();
 		$Object->setLatitudesLongitudes(array(''), array(''));
 
-		$this->assertEquals(array('7zzzzzzzzzzz'), $Object->get(Entity::GEOHASHES));
+		$this->assertEquals(array(''), $Object->get(Entity::GEOHASHES));
 	}
 
 	public function testEmptyLocationsSynchronized() {

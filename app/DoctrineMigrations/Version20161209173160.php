@@ -32,6 +32,8 @@ class Version20161209173160 extends AbstractMigration implements ContainerAwareI
         $prefix = $this->container->getParameter('database_prefix');
         $this->addSql('ALTER TABLE `'.$prefix.'route`
                   ADD `lock` tinyint(1) unsigned NOT NULL DEFAULT 0');
+        $this->addSql('UPDATE `'.$prefix.'route`
+                  SET `lock` = 1 WHERE geohashes != \'\'');
 
     }
 
