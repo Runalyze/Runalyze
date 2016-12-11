@@ -26,4 +26,12 @@ trait UnitConversionByDividendTrait
     {
         return $this->getDividendFromBaseUnit() / $valueInBaseUnit;
     }
+
+    /**
+     * @return string value in base unit is given as 'd'
+     */
+    public function getJavaScriptConversion()
+    {
+        return $this->getDividendFromBaseUnit().'/d';
+    }
 }

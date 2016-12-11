@@ -1,0 +1,397 @@
+{% extends 'base_logged_in.twig' %}
+
+{% block content %}
+    <div class="panel-heading">
+        <h1><a class="ajax" target="ajax" href="{{ url('tools-anova') }}">{% trans %}ANOVA{% endtrans %}</a></h1>
+    </div>
+
+    <div class="panel-content">
+        {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'id': 'anova-form'}}) }}
+
+            <fieldset>
+                <legend>{% trans %}Data selection{% endtrans %}</legend>
+
+                <div class="w100 with33erLabel">
+                    <label>{% trans %}Time range{% endtrans %}</label>
+
+                    <div class="full-size left">
+                        <span class="input-with-unit">
+                            {{ form_widget(form.dateFrom) }}
+                            <label for="anova_dateFrom" class="input-unit"><i class="fa fa-fw fa-calendar"></i></label>
+                        </span>
+
+                        {% trans %}to{% endtrans %}
+
+                        <span class="input-with-unit">
+                            {{ form_widget(form.dateTo) }}
+                            <label for="anova_dateTo" class="input-unit"><i class="fa fa-fw fa-calendar"></i></label>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="w100 with33erLabel">
+                    <label for="sportid">
+                        {% trans %}Sport type{% endtrans %}
+                        <span class="right small">
+                            <span class="link chosen-select-all" data-target="anova_sport">{% trans %}all{% endtrans %}</span> |
+                            <span class="link chosen-select-none" data-target="anova_sport">{% trans %}none{% endtrans %}</span>&nbsp;
+                        </span>
+                    </label>
+
+                    {{ form_widget(form.sport) }}
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>{% trans %}Factor model{% endtrans %}</legend>
+
+                <div class="w100 with33erLabel">
+                    {{ form_label(form.valueToGroupBy) }}
+                    {{ form_widget(form.valueToGroupBy) }}
+                </div>
+
+                <div class="w100 with33erLabel">
+                    {{ form_label(form.valueToLookAt) }}
+                    {{ form_widget(form.valueToLookAt) }}
+                </div>
+            </fieldset>
+
+            <div class="c">
+                <input type="submit" class="submit" value="{% trans %}Start analysis{% endtrans %}">
+            </div>
+
+        {{ form_end(form) }}
+
+        <div id="anova-plot"></div>
+
+        <script src="http://d3js.org/d3.v3.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.min.js"></script>
+        <script>
+            var $plot = $("#anova-plot");
+            $("#anova-form").unbind('submit').submit(function(e){
+                e.preventDefault();
+
+                var data = $(this).serializeArray();
+                var url = $(this).attr('action');
+
+                $plot.addClass('loading');
+
+                $.post(url, data, function(json){
+                    var numGroups = json.groups.constructor === Array ? json.groups.length : Object.getOwnPropertyNames(json.groups).length;
+
+                    eval("json.tickFormatter = " + json.tickFormatter);
+
+                    $plot.html("");
+
+                    if (numGroups == 0) {
+                        $plot.html('<p class="text"><em>{% trans %}No results.{% endtrans %}</em></p>').removeClass('loading');
+                        return;
+                    }
+
+                    var margin = {top: 50, right: 30, bottom: 30, left: 100};
+                    var height = 30*numGroups;
+                    var width = 810 - margin.left - margin.right;
+
+                    var min = Infinity,
+                        max = -Infinity;
+
+                    var data = [];
+
+                    $.each(json.groups, function(i, row){
+                        data.push([row.label, row.data]);
+
+                        var rowMax = Math.max.apply(null, row.data);
+                        var rowMin = Math.min.apply(null, row.data);
+
+                        if (rowMax > max) max = rowMax;
+                        if (rowMin < min) min = rowMin;
+                    });
+
+                    var chart = d3.box()
+                        .whiskers(iqr(1.5))
+                        .width(width)
+                        .domain([min, max])
+                        .tickFormat(json.tickFormatter);
+
+                    var svg = d3.select("#anova-plot").append("svg")
+                        .attr("width", width + margin.left + margin.right)
+                        .attr("height", height + margin.top + margin.bottom)
+                        .attr("class", "box")
+                        .append("g")
+                        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+                    var x = d3.scale.ordinal()
+                        .domain( data.map(function(d) { return d[0] } ) )
+                        .rangeRoundBands([0, height], 0.3);
+
+                    var y = d3.scale.linear()
+                        .domain([min, max])
+                        .range([10, width]);
+
+                    var xAxis = d3.svg.axis()
+                        .scale(y)
+                        .orient("top")
+                        .tickFormat(json.tickFormatter);
+
+                    var yAxis = d3.svg.axis()
+                        .scale(x)
+                        .orient("left");
+
+                    svg.selectAll(".box")
+                        .data(data)
+                        .enter().append("g")
+                        .attr("transform", function(d) { return "translate(10," + x(d[0]) + ")"; } )
+                        .call(chart.height(x.rangeBand()));
+
+                    svg.append("text")
+                        .attr("x", (width / 2))
+                        .attr("y", -(margin.top / 2))
+                        .attr("text-anchor", "middle")
+                        .style("font-size", "10px")
+                        .text($("#anova_valueToLookAt").find("option:selected").text());
+
+                    svg.append("g")
+                        .attr("class", "y axis")
+                        .call(yAxis);
+
+                    svg.append("g")
+                        .attr("class", "x axis")
+                        .call(xAxis);
+
+                    $plot.removeClass('loading');
+                });
+
+                return false;
+            });
+
+            // Returns a function to compute the interquartile range.
+            function iqr(k) {
+                return function(d, i) {
+                    var q1 = d.quartiles[0],
+                        q3 = d.quartiles[2],
+                        iqr = (q3 - q1) * k,
+                        lower = -1,
+                        upper = d.length;
+                    while (d[++lower] < q1 - iqr);
+                    while (d[--upper] > q3 + iqr);
+                    return [lower, upper];
+                };
+            }
+        </script>
+
+        <style>
+            .box {
+                font-size: 9px;
+            }
+
+            .box line,
+            .box rect,
+            .box circle {
+                fill: #8ab856;
+                fill-opacity: 1.0;
+                stroke: #333;
+                stroke-width: 1px;
+            }
+
+            .box line,
+            .box rect {
+                shape-rendering: crispEdges;
+            }
+
+            .box rect:hover {
+                fill: #009500;
+            }
+
+            .box .center {
+                stroke-dasharray: 3,3;
+            }
+
+            .box .outlier {
+                fill: none;
+                stroke: #333;
+            }
+
+            .axis {
+                font-size: 10px;
+            }
+
+            .axis path,
+            .axis line {
+                fill: none;
+                stroke: #ccc;
+                shape-rendering: crispEdges;
+            }
+
+            .x.axis path {
+                fill: none;
+                stroke: #ccc;
+                shape-rendering: crispEdges;
+            }
+        </style>
+
+        <script>
+            (function() {
+                d3.box = function() {
+                    var width = 1,
+                        height = 1,
+                        domain = null,
+                        value = Number,
+                        whiskers = boxWhiskers,
+                        quartiles = boxQuartiles,
+                        tickFormat = null;
+
+                    // For each small multiple…
+                    function box(g) {
+                        g.each(function(data, i) {
+                            if (data[1].length == 0) return;
+
+                            var d = data[1].sort(d3.ascending);
+
+                            var g = d3.select(this),
+                                n = d.length,
+                                min = d[0],
+                                max = d[n - 1];
+
+                            var quartileData = d.quartiles = quartiles(d);
+                            var whiskerIndices = whiskers && whiskers.call(this, d, i);
+                            var whiskerData = whiskerIndices && whiskerIndices.map(function(i) { return d[i]; });
+                            var outlierIndices = whiskerIndices
+                                ? d3.range(0, whiskerIndices[0]).concat(d3.range(whiskerIndices[1] + 1, n))
+                                : d3.range(n);
+
+                            // X-scale.
+                            var x1 = d3.scale.linear()
+                                .domain(domain && domain.call(this, d, i) || [min, max])
+                                .range([0, width]);
+
+                            var format = tickFormat || x1.tickFormat(8);
+
+                            // Center line: the vertical line spanning the whiskers.
+                            var center = g.selectAll("line.center")
+                                .data(whiskerData ? [whiskerData] : []);
+
+                            //vertical line
+                            center.enter().insert("line", "rect")
+                                .attr("class", "center")
+                                .attr("y1", height / 2)
+                                .attr("y2", height / 2)
+                                .attr("x1", function(d) { return x1(d[0]); })
+                                .attr("x2", function(d) { return x1(d[1]); });
+
+                            // Innerquartile box.
+                            var box = g.selectAll("rect.box")
+                                .data([quartileData]);
+
+                            box.enter().append("rect")
+                                .attr("class", "box")
+                                .attr("y", 0)
+                                .attr("height", height)
+                                .attr("x", function(d) { return x1(d[0]); })
+                                .attr("width", function(d) { return x1(d[2]) - x1(d[0]); });
+
+                            var tip = d3.tip()
+                                .attr('class', 'tooltip top in')
+                                .offset([0, 0])
+                                .html(function(d) {
+                                    return '<div class="tooltip-arrow"></div><div class="tooltip-inner">' +
+                                        '{% trans %}Median{% endtrans %}: ' + format(d[1]) + '<br>' +
+                                        '{% trans %}Quartiles{% endtrans %}: ' + format(d[0]) + ' - ' + format(d[2]) +
+                                        '</div>';
+                                });
+
+                            box.call(tip)
+                                .on('mouseover', tip.show)
+                                .on('mouseout', tip.hide);
+
+                            var medianLine = g.selectAll("line.median")
+                                .data([quartileData[1]]);
+
+                            medianLine.enter().append("line")
+                                .attr("class", "median")
+                                .attr("y1", 0)
+                                .attr("y2", height)
+                                .attr("x1", x1)
+                                .attr("x2", x1);
+
+                            var whisker = g.selectAll("line.whisker")
+                                .data(whiskerData || []);
+
+                            whisker.enter().insert("line", "circle, text")
+                                .attr("class", "whisker")
+                                .attr("y1", 0)
+                                .attr("y2", height)
+                                .attr("x1", x1)
+                                .attr("x2", x1);
+
+                            var outlier = g.selectAll("circle.outlier")
+                                .data(outlierIndices, Number);
+
+                            outlier.enter().insert("circle", "text")
+                                .attr("class", "outlier")
+                                .attr("r", 2)
+                                .attr("cy", height / 2)
+                                .attr("cx", function(i) { return x1(d[i]); });
+                        });
+                        d3.timer.flush();
+                    }
+
+                    box.width = function(x) {
+                        if (!arguments.length) return width;
+                        width = x;
+                        return box;
+                    };
+
+                    box.height = function(x) {
+                        if (!arguments.length) return height;
+                        height = x;
+                        return box;
+                    };
+
+                    box.tickFormat = function(x) {
+                        if (!arguments.length) return tickFormat;
+                        tickFormat = x;
+                        return box;
+                    };
+
+                    box.domain = function(x) {
+                        if (!arguments.length) return domain;
+                        domain = x == null ? x : d3.functor(x);
+                        return box;
+                    };
+
+                    box.value = function(x) {
+                        if (!arguments.length) return value;
+                        value = x;
+                        return box;
+                    };
+
+                    box.whiskers = function(x) {
+                        if (!arguments.length) return whiskers;
+                        whiskers = x;
+                        return box;
+                    };
+
+                    box.quartiles = function(x) {
+                        if (!arguments.length) return quartiles;
+                        quartiles = x;
+                        return box;
+                    };
+
+                    return box;
+                };
+
+                function boxWhiskers(d) {
+                    return [0, d.length - 1];
+                }
+
+                function boxQuartiles(d) {
+                    return [
+                        d3.quantile(d, .25),
+                        d3.quantile(d, .5),
+                        d3.quantile(d, .75)
+                    ];
+                }
+            })();
+        </script>
+    </div>
+{% endblock %}

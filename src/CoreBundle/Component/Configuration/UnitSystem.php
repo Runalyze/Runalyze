@@ -3,6 +3,7 @@
 namespace Runalyze\Bundle\CoreBundle\Component\Configuration;
 
 use Runalyze\Bundle\CoreBundle\Entity\Sport;
+use Runalyze\Metrics\Cadence;
 use Runalyze\Metrics\Distance;
 use Runalyze\Metrics\LegacyUnitConverter;
 use Runalyze\Metrics\Pace\Unit\AbstractPaceUnit;
@@ -47,6 +48,14 @@ class UnitSystem
         }
 
         return $this->PaceUnit;
+    }
+
+    /**
+     * @return Cadence\Unit\AbstractCadenceUnit
+     */
+    public function getCadenceUnit()
+    {
+        return new Cadence\Unit\RoundsPerMinute();
     }
 
     /**

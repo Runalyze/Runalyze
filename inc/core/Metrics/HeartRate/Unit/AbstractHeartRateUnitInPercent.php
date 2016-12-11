@@ -2,6 +2,15 @@
 
 namespace Runalyze\Metrics\HeartRate\Unit;
 
-abstract class AbstractHeartRateUnitInPercent extends AbstractHeartRateUnit
+use Runalyze\Metrics\Common\FormattableUnitInterface;
+
+abstract class AbstractHeartRateUnitInPercent extends AbstractHeartRateUnit implements FormattableUnitInterface
 {
+    /**
+     * @return int
+     */
+    public function getDecimals()
+    {
+        return 0;
+    }
 }
