@@ -80,4 +80,25 @@ class TrainingRepository extends EntityRepository
 
         return $statistics;
     }
+
+    /**
+     * @param Account $account
+     * @return Training[]
+     */
+    public function accountHasLockedTrainings(Account $account)
+    {
+        return $this->createQueryBuilder('t')
+            ->select('t.id')
+            ->setMaxResults(1)
+            ->where('t.account = :accountid AND t.lock = 1')
+            ->setParameter('accountid', $account->getId())
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    public function save(Training $training)
+    {
+        $this->_em->persist($training);
+        $this->_em->flush();
+    }
 }

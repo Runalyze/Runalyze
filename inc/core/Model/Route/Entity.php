@@ -9,6 +9,7 @@ namespace Runalyze\Model\Route;
 use Runalyze\Model;
 use League\Geotools\Geohash\Geohash;
 use \League\Geotools\Coordinate\Coordinate;
+use Runalyze\Calculation\Route\GeohashLine;
 
 /**
  * Route entity
@@ -127,6 +128,12 @@ class Entity extends Model\EntityWithID implements Model\Loopable {
 	 */
 	const IN_ROUTENET = 'in_routenet';
 
+    /**
+     * Key: lock
+     * @var string
+     */
+    const LOCK = 'lock';
+
 	/**
 	 * Flag: ensure arrays to be equally sized
 	 * @var bool
@@ -175,7 +182,8 @@ class Entity extends Model\EntityWithID implements Model\Loopable {
 			self::ENDPOINT,
 			self::MIN,
 			self::MAX,
-			self::IN_ROUTENET
+			self::IN_ROUTENET,
+            self::LOCK
 		);
 	}
 
@@ -199,7 +207,8 @@ class Entity extends Model\EntityWithID implements Model\Loopable {
 			self::ENDPOINT,
 			self::MIN,
 			self::MAX,
-			self::IN_ROUTENET
+			self::IN_ROUTENET,
+            self::LOCK
 		);
 	}
 
