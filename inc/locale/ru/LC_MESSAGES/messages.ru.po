@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.com\n"
 "POT-Creation-Date: 2016-11-15 17:37+0100\n"
-"PO-Revision-Date: 2016-12-04 15:49+0000\n"
+"PO-Revision-Date: 2016-12-12 14:27+0000\n"
 "Last-Translator: Semion Polenok <semapv@gmail.com>\n"
 "Language-Team: Russian <https://translate.runalyze.com/projects/runalyze"
 "/runalyze-master-po/ru/>\n"
@@ -106,11 +106,11 @@ msgstr ""
 
 #: src/CoreBundle/Component/Tool/DatabaseCleanup/JobGeneral.php:95
 msgid "Internal constants have been refreshed."
-msgstr ""
+msgstr "Внутренние константы были обновлены."
 
 #: src/CoreBundle/Component/Tool/DatabaseCleanup/JobGeneral.php:107
 msgid "There was a problem while recalculating your equipment statistics"
-msgstr ""
+msgstr "Возникла проблема при пересчете статистики снаряжения"
 
 #: src/CoreBundle/Component/Tool/DatabaseCleanup/JobGeneral.php:109
 #, php-format
@@ -118,6 +118,7 @@ msgid ""
 "Statistics have been recalculated for all <strong>%s</strong> pieces of "
 "equipment."
 msgstr ""
+"Статистика была пересчитана для всех <strong>%s</strong> единиц снаряжения."
 
 #: src/CoreBundle/Component/Tool/DatabaseCleanup/JobGeneral.php:121
 #: inc/core/Configuration/Category/Vdot.php:189
@@ -126,7 +127,7 @@ msgstr "Форма VDOT"
 
 #: src/CoreBundle/Component/Tool/DatabaseCleanup/JobGeneral.php:132
 msgid "Vdot corrector"
-msgstr ""
+msgstr "VDOT корректор"
 
 #: src/CoreBundle/Component/Tool/DatabaseCleanup/JobGeneral.php:144
 #: inc/core/Configuration/Category/BasicEndurance.php:101
@@ -148,26 +149,26 @@ msgstr "Максимальный ATL"
 
 #: src/CoreBundle/Component/Tool/DatabaseCleanup/JobGeneral.php:166
 msgid "Maximal TRIMP"
-msgstr ""
+msgstr "Максимальный TRIMP"
 
 #: src/CoreBundle/Component/Tool/DatabaseCleanup/JobGeneral.php:176
 msgid "Your personal cache has been cleared."
-msgstr ""
+msgstr "Ваш персональный кэш был очищен."
 
 #: src/CoreBundle/Component/Tool/DatabaseCleanup/JobLoop.php:81
 #, php-format
 msgid "Elevations have been recalculated for %d routes."
-msgstr ""
+msgstr "Высоты были скорректированы для %d маршрутов."
 
 #: src/CoreBundle/Component/Tool/DatabaseCleanup/JobLoop.php:120
 #, php-format
 msgid "There was a problem with activity %d.<br>Error message: %s"
-msgstr ""
+msgstr "Проблема с тренировкой %d.<br>Сообщение об ошибке: %s"
 
 #: src/CoreBundle/Component/Tool/DatabaseCleanup/JobLoop.php:124
 #, php-format
 msgid "%d activities have been updated."
-msgstr ""
+msgstr "Тренировок было обновлено: %d."
 
 #: src/CoreBundle/Component/Tool/Table/VdotPaceTable.php:43
 #: inc/core/Activity/TrainingEffectLevel.php:68
@@ -262,11 +263,11 @@ msgstr "Инвентарь"
 
 #: src/CoreBundle/Component/Tool/Backup/JsonImporterResults.php:147
 msgid "Relation: equipment types to sports"
-msgstr ""
+msgstr "Зависимость: типы снаряжения от спорта"
 
 #: src/CoreBundle/Component/Tool/Backup/JsonImporterResults.php:148
 msgid "Relation: equipment to activities"
-msgstr ""
+msgstr "Зависимость: снаряжение от тренировок"
 
 #: src/CoreBundle/Component/Tool/Backup/JsonImporterResults.php:149
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:293
@@ -277,27 +278,27 @@ msgstr "Теги"
 
 #: src/CoreBundle/Component/Tool/Backup/JsonImporterResults.php:150
 msgid "Relation: tag to activities"
-msgstr ""
+msgstr "Зависимость: теги от тренировок"
 
 #: src/CoreBundle/Component/Tool/Backup/JsonImporterResults.php:151
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:53
 msgid "Race results"
-msgstr ""
+msgstr "Результаты соревнования"
 
 #: src/CoreBundle/Component/Account/Registration.php:88
 #: src/CoreBundle/Component/Account/Registration.php:208
 msgid "Shoes"
-msgstr ""
+msgstr "Обувь"
 
 #: src/CoreBundle/Component/Account/Registration.php:89
 #: src/CoreBundle/Component/Account/Registration.php:207
 msgid "Clothes"
-msgstr ""
+msgstr "Одежда"
 
 #: src/CoreBundle/Component/Account/Registration.php:90
 #: src/CoreBundle/Component/Account/Registration.php:209
 msgid "Bikes"
-msgstr ""
+msgstr "Велосипеды"
 
 #: src/CoreBundle/Component/Account/Registration.php:139
 #: inc/class.FrontendSharedStatistics.php:124
@@ -324,35 +325,39 @@ msgstr "Другое"
 
 #: src/CoreBundle/Component/Account/Registration.php:168
 msgid "Jogging"
-msgstr ""
+msgstr "Джоггинг"
 
 #: src/CoreBundle/Component/Account/Registration.php:168
+#, fuzzy
 msgid "JOG"
-msgstr ""
+msgstr "JOG"
 
 #: src/CoreBundle/Component/Account/Registration.php:169
 msgid "Fartlek"
-msgstr ""
+msgstr "Фартлек"
 
 #: src/CoreBundle/Component/Account/Registration.php:169
+#, fuzzy
 msgid "FL"
-msgstr ""
+msgstr "FL"
 
 #: src/CoreBundle/Component/Account/Registration.php:170
 msgid "Interval training"
-msgstr ""
+msgstr "Интервальная тренировка"
 
 #: src/CoreBundle/Component/Account/Registration.php:170
+#, fuzzy
 msgid "IT"
-msgstr ""
+msgstr "IT"
 
 #: src/CoreBundle/Component/Account/Registration.php:171
 msgid "Tempo Run"
-msgstr ""
+msgstr "Темповый бег"
 
 #: src/CoreBundle/Component/Account/Registration.php:171
+#, fuzzy
 msgid "TR"
-msgstr ""
+msgstr "TR"
 
 #: src/CoreBundle/Component/Account/Registration.php:172
 #: inc/training/class.TrainingFormular.php:265
@@ -360,64 +365,68 @@ msgid "Race"
 msgstr "Соревнование"
 
 #: src/CoreBundle/Component/Account/Registration.php:172
+#, fuzzy
 msgid "RC"
-msgstr ""
+msgstr "RC"
 
 #: src/CoreBundle/Component/Account/Registration.php:173
 msgid "Regeneration Run"
-msgstr ""
+msgstr "Восстановительный бег"
 
 #: src/CoreBundle/Component/Account/Registration.php:173
+#, fuzzy
 msgid "RG"
-msgstr ""
+msgstr "RG"
 
 #: src/CoreBundle/Component/Account/Registration.php:174
 msgid "Long Slow Distance"
-msgstr ""
+msgstr "Длинная медленная дистанция"
 
 #: src/CoreBundle/Component/Account/Registration.php:174
+#, fuzzy
 msgid "LSD"
-msgstr ""
+msgstr "LSD"
 
 #: src/CoreBundle/Component/Account/Registration.php:175
 msgid "Warm-up"
-msgstr ""
+msgstr "Разминка"
 
 #: src/CoreBundle/Component/Account/Registration.php:175
+#, fuzzy
 msgid "WU"
-msgstr ""
+msgstr "WU"
 
 #: src/CoreBundle/Component/Account/Registration.php:219
 msgid "long sleeve"
-msgstr ""
+msgstr "с длинными рукавами"
 
 #: src/CoreBundle/Component/Account/Registration.php:219
 msgid "T-shirt"
-msgstr ""
+msgstr "Футболка"
 
 #: src/CoreBundle/Component/Account/Registration.php:219
 msgid "singlet"
-msgstr ""
+msgstr "майка"
 
 #: src/CoreBundle/Component/Account/Registration.php:219
 msgid "jacket"
-msgstr ""
+msgstr "куртка"
 
 #: src/CoreBundle/Component/Account/Registration.php:219
 msgid "long pants"
-msgstr ""
+msgstr "длинные штаны"
 
 #: src/CoreBundle/Component/Account/Registration.php:219
 msgid "shorts"
-msgstr ""
+msgstr "шорты"
 
 #: src/CoreBundle/Component/Account/Registration.php:219
 msgid "gloves"
-msgstr ""
+msgstr "перчатки"
 
 #: src/CoreBundle/Component/Account/Registration.php:219
 msgid "hat"
-msgstr ""
+msgstr "шляпа"
 
 #: inc/import/filetypes/class.ImporterFiletypeXML.php:59
 #: inc/import/filetypes/class.ImporterFiletypeKML.php:64
@@ -428,17 +437,18 @@ msgstr "%s-файлы поддерживаются устройствами: %s"
 
 #: inc/import/filetypes/class.ImporterFiletypeAbstract.php:75
 msgid "No activities could be found."
-msgstr ""
+msgstr "Тренировки не найдены."
 
 #: inc/import/filetypes/class.ImporterFiletypeAbstract.php:98
 msgid ""
 "There is no parser in ImporterFiletype. Maybe this filetype is not supported."
 msgstr ""
+"Нет парсера в ImporterFiletype. Возможно, этот тип файла не поддерживается."
 
 #: inc/import/filetypes/class.ImporterFiletypeAbstract.php:162
 #, php-format
 msgid "This file is not supported. Supported producers of %s-files: %s."
-msgstr ""
+msgstr "Этот файл не поддерживается. Поддерживаемые производители %s-файл: %s."
 
 #: inc/import/filetypes/class.ImporterFiletypeHRM.php:6
 msgid "hrm- and gpx-files with the same name will be automatically combined."
@@ -451,7 +461,7 @@ msgstr "Загрузить"
 
 #: inc/import/class.ImporterFactory.php:322
 msgid "There was a problem while importing the file."
-msgstr ""
+msgstr "Возникла проблема при импорте файла."
 
 #: inc/import/class.ImporterFactory.php:327
 #, fuzzy
@@ -461,7 +471,7 @@ msgstr "В этом файле <strong>%s</strong> тренировок."
 #: inc/import/class.ImporterFactory.php:328
 #, php-format
 msgid "Please mail the file to %s."
-msgstr ""
+msgstr "Пожалуйста, отправьте файл на %s."
 
 #: inc/import/class.ImporterFactory.php:331
 #, fuzzy
@@ -472,11 +482,11 @@ msgstr ""
 
 #: inc/import/class.ImporterFactory.php:334
 msgid "This file format is not supported."
-msgstr ""
+msgstr "Этот формат файла не поддерживается."
 
 #: inc/import/class.ImporterFactory.php:339
 msgid "Please add the following information"
-msgstr ""
+msgstr "Пожалуйста, добавьте следующую информацию"
 
 #: inc/import/tpl/tpl.Importer.upload.php:2
 msgid "Upload file"
@@ -484,15 +494,16 @@ msgstr "Загрузить файл"
 
 #: inc/import/tpl/tpl.Importer.upload.php:39
 msgid "There were problems while uploading."
-msgstr ""
+msgstr "При загрузке возникли проблемы."
 
 #: inc/import/tpl/tpl.Importer.upload.php:54
 msgid "Your browser does not seem to support this uploader, see"
-msgstr ""
+msgstr "Ваш браузер не поддерживает этот загрузчик, см"
 
 #: inc/import/tpl/tpl.Importer.upload.php:62
+#, fuzzy
 msgid "Table showing included data by filetype"
-msgstr ""
+msgstr "Таблица содержит данные файла в зависимости типа файла"
 
 #: inc/import/tpl/tpl.Importer.upload.php:63
 msgid "Supported file extensions:"
@@ -504,7 +515,7 @@ msgstr "Максимальный размер файла:"
 
 #: inc/import/tpl/tpl.Importer.garminCommunicator.php:10
 msgid "Move your mouse here to start loading the communicator."
-msgstr ""
+msgstr "Наведите указатель мыши сюда, чтобы начать загрузку коммуникатора."
 
 #: inc/import/tpl/tpl.Importer.garminCommunicator.php:25
 #, php-format
@@ -513,6 +524,10 @@ msgid ""
 "like the Garmin Communicator. A <a href=\"%s\">reinstall</a> may work, but "
 "we have documented an alternative way to import the original files at %s. "
 msgstr ""
+"Из-за соображений безопасности производители браузеров откажутся от "
+"поддержки плагинов, таких как Garmin Communicator. <a href=\"%s\""
+">Переустановка</a> может работать, но мы описали альтернативный способ "
+"импортировать исходные файлы в %s. "
 
 #: inc/import/class.ImporterWindowTabCommunicator.php:26
 msgid "Garmin Communicator"
@@ -534,9 +549,9 @@ msgstr "Найдено тренировок: %s ."
 #: inc/import/class.MultiImporterFormular.php:82
 msgid "Found <strong>one</strong> duplicate activity."
 msgid_plural "Found duplicate activities."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Найдена <strong>одна</strong> повторяющаяся тренировки."
+msgstr[1] "Найдены повторяющиеся тренировки."
+msgstr[2] "Найдены повторяющиеся тренировки."
 
 #: inc/import/class.MultiImporterFormular.php:85
 msgid "Import"
@@ -592,11 +607,11 @@ msgstr "Ввод вручную"
 
 #: inc/import/class.MultiImporter.php:88
 msgid "The activities have been successfully imported."
-msgstr ""
+msgstr "Тренировка была успешно импортирована."
 
 #: inc/import/class.MultiEditor.php:46
 msgid "No activities for editing were set."
-msgstr ""
+msgstr "Не выбраны тренировки для редактирования."
 
 #: inc/import/class.MultiEditor.php:59
 msgid "Multi editor"
@@ -614,8 +629,9 @@ msgid "Public link"
 msgstr "Публичная ссылка"
 
 #: inc/system/class.SharedLinker.php:79
+#, fuzzy
 msgid "Public list"
-msgstr ""
+msgstr "Публичный список"
 
 #: inc/system/config/class.ConfigTabs.php:76
 #: inc/tpl/tpl.adminWindow.login.php:6
@@ -642,7 +658,7 @@ msgstr "Для получения подсказки наведите курсо
 
 #: inc/system/config/class.ConfigTabSports.php:39
 msgid "<em>Avg. HF</em> is necessary for the calculation of TRIMP."
-msgstr ""
+msgstr "<em>Средний HF</em> необходим для расчета TRIMP."
 
 #: inc/system/config/class.ConfigTabSports.php:53
 msgid "Icon"
@@ -755,11 +771,11 @@ msgstr "Мощность"
 
 #: inc/system/config/class.ConfigTabSports.php:59
 msgid "Power is recorded or calculated."
-msgstr ""
+msgstr "Мощность записана или рассчитана."
 
 #: inc/system/config/class.ConfigTabSports.php:60
 msgid "Outside"
-msgstr ""
+msgstr "На улице"
 
 #: inc/system/config/class.ConfigTabSports.php:60
 msgid "Sport is performed outdoor: activate route, weather, ..."
