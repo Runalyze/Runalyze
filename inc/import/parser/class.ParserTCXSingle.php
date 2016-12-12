@@ -349,21 +349,26 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 			if (isset($Point->Extensions->TPX) && isset($Point->Extensions->TPX->Watts))
 				$power = (int)$Point->Extensions->TPX->Watts;
 
-			if (count($Point->Extensions->children('ns3',true)) > 0) {
-
-				if (isset($Point->Extensions->children('ns3',true)->TPX)) {
-					$TPX = $Point->Extensions->children('ns3',true)->TPX;
-
-					if (count($TPX->children('ns3',true)) > 0 && isset($TPX->children('ns3',true)->Watts))
-						$power = (int)$TPX->children('ns3',true)->Watts;
-                                        if (count($TPX->children('ns3',true)) > 0 && isset($TPX->children('ns3',true)->RunCadence))
-						$rpm = (int)$TPX->children('ns3',true)->RunCadence;
-				}
-			}
+			$this->parsePowerFromExtensionValues($Point->Extensions, 'ns2', $power, $rpm);
+			$this->parsePowerFromExtensionValues($Point->Extensions, 'ns3', $power, $rpm);
 		}
 
 		$this->gps['power'][] = $power;
 		$this->gps['rpm'][]   = $rpm;
+	}
+	
+	protected function parsePowerFromExtensionValues(SimpleXMLElement $Extensions, $namespace, &$power, &$rpm) {
+		if (count($Extensions->children($namespace,true)) > 0) {
+
+			if (isset($Extensions->children($namespace,true)->TPX)) {
+				$TPX = $Extensions->children($namespace,true)->TPX;
+
+				if (count($TPX->children($namespace,true)) > 0 && isset($TPX->children($namespace,true)->Watts))
+					$power = (int)$TPX->children($namespace,true)->Watts;
+                if (count($TPX->children($namespace,true)) > 0 && isset($TPX->children($namespace,true)->RunCadence))
+					$rpm = (int)$TPX->children($namespace,true)->RunCadence;
+			}
+		}
 	}
 
 	/**

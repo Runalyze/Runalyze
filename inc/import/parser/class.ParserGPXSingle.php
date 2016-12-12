@@ -293,6 +293,12 @@ class ParserGPXSingle extends ParserAbstractSingleXML {
 			count($parentNode->children('ns3',true)->TrackPointExtension) > 0
 		) {
 			return $parentNode->children('ns3',true)->TrackPointExtension->children('ns3', true);
+		} elseif (
+			count($parentNode->children('ns2',true)) > 0 &&
+			isset($parentNode->children('ns2',true)->TrackPointExtension) &&
+			count($parentNode->children('ns2',true)->TrackPointExtension) > 0
+		) {
+			return $parentNode->children('ns2',true)->TrackPointExtension->children('ns2', true);
 		} elseif (count($parentNode->children('gpxdata',true)) > 0) {
 			return $parentNode->children('gpxdata', true);
 		}
