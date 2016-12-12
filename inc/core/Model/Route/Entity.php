@@ -140,6 +140,18 @@ class Entity extends Model\EntityWithID implements Model\Loopable {
 	 */
 	protected $checkArraySizes = true;
 
+    /**
+     * Construct
+     * @param array $data
+     */
+    public function __construct(array $data = array()) {
+        parent::__construct($data);
+
+        if ($this->hasGeohashes() && !empty($this->Data[self::GEOHASHES] )) {
+            $this->Data[self::GEOHASHES] = GeohashLine::extend($this->Data[self::GEOHASHES]);
+        }
+    }
+
 	/**
 	 * Check array sizes
 	 * @throws \RuntimeException
@@ -290,8 +302,20 @@ class Entity extends Model\EntityWithID implements Model\Loopable {
 	 */
 	public function set($key, $value) {
 		parent::set($key, $value);
+
+        if ($key == self::GEOHASHES) {
+            $this->setMinMaxFromGeohashes($value);
+        }
         
 	}
+
+    /**
+     * @param array $geohashes
+     */
+    public function setGeohashesWithoutMinMaxRecalculation(array $geohashes)
+    {
+        $this->Data[self::GEOHASHES] = $geohashes;
+    }
 
 	/**
 	 * @param array $geohashes

@@ -63,8 +63,7 @@ class Inserter extends Model\InserterWithAccountID {
 		$Calculator = new Calculator($this->Object);
 
         if ($this->Object->hasGeohashes()) {
-            $this->Object->setMinMaxFromGeohashes($this->Object->geohashes());
-            $this->Object->set(Entity::GEOHASHES, GeohashLine::shorten($this->Object->geohashes()));
+            $this->Object->setGeohashesWithoutMinMaxRecalculation(GeohashLine::shorten($this->Object->geohashes()));
         }
 
 		if (
