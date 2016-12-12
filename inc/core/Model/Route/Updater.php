@@ -8,6 +8,7 @@ namespace Runalyze\Model\Route;
 
 use Runalyze\Model;
 use Runalyze\Calculation\Route\Calculator;
+use Runalyze\Calculation\Route\GeohashLine;
 
 /**
  * Update route in database
@@ -63,6 +64,11 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 	 */
 	protected function before() {
 		parent::before();
+
+        if ($this->hasChanged(Entity::GEOHASHES)) {
+            $this->NewObject->setMinMaxFromGeohashes($this->NewObject->geohashes());
+            $this->NewObject->set(Entity::GEOHASHES, GeohashLine::shorten($this->NewObject->geohashes()));
+        }
 
 		if ($this->hasChanged(Entity::ELEVATIONS_ORIGINAL) || $this->hasChanged(Entity::ELEVATIONS_CORRECTED)) {
 			$Calculator = new Calculator($this->NewObject);

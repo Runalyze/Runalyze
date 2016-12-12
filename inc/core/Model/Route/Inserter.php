@@ -6,6 +6,7 @@
 
 namespace Runalyze\Model\Route;
 
+use Runalyze\Calculation\Route\GeohashLine;
 use Runalyze\Service\ElevationCorrection\NoValidStrategyException;
 use Runalyze\Model;
 use Runalyze\Calculation\Route\Calculator;
@@ -60,6 +61,11 @@ class Inserter extends Model\InserterWithAccountID {
 		parent::before();
 
 		$Calculator = new Calculator($this->Object);
+
+        if ($this->Object->hasGeohashes()) {
+            $this->Object->setMinMaxFromGeohashes($this->Object->geohashes());
+            $this->Object->set(Entity::GEOHASHES, GeohashLine::shorten($this->Object->geohashes()));
+        }
 
 		if (
 			!$this->Object->hasCorrectedElevations() && (
