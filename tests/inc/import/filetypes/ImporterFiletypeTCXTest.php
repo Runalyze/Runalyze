@@ -205,6 +205,18 @@ class ImporterFiletypeTCXTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
+	 * @see https://github.com/Runalyze/Runalyze/issues/2012
+	 */
+	public function testPowerInNS2Extension() {
+		$this->object->parseFile('../tests/testfiles/tcx/Power-ns2-extension.tcx');
+
+		$this->assertFalse($this->object->failed());
+
+		$this->assertTrue($this->object->object()->hasArrayPower());
+		$this->assertEquals(210, $this->object->object()->getPower());
+	}
+
+	/**
 	 * Test: DistanceMeters are missing
 	 * Filename: "missing-distances.tcx"
 	 */

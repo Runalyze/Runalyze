@@ -166,7 +166,7 @@ class Entity extends Model\EntityWithID {
 	 * @var string
 	 */
 	const JD_INTENSITY = 'jd_intensity';
-	
+
 	/**
 	 * Key: RPE
 	 * @var string
@@ -196,13 +196,13 @@ class Entity extends Model\EntityWithID {
 	 * @var string
 	 */
 	const STRIDE_LENGTH = 'stride_length';
-        
+
 	/**
 	 * Key: total_strokes
 	 * @var string
 	 */
 	const TOTAL_STROKES = 'total_strokes';
-        
+
 	/**
 	 * Key: SWOLF
 	 * @var string
@@ -220,7 +220,7 @@ class Entity extends Model\EntityWithID {
 	 * @var string
 	 */
 	const VERTICAL_OSCILLATION = 'vertical_oscillation';
-	
+
 	/**
 	 * Key: ground contact time balance
 	 * @var string
@@ -238,25 +238,25 @@ class Entity extends Model\EntityWithID {
 	 * @var string
 	 */
 	const TEMPERATURE = 'temperature';
-	
+
 	/**
 	 * Key: wind speed
 	 * @var string
 	 */
 	const WINDSPEED = 'wind_speed';
-	
+
 	/**
 	 * Key: wind degree
 	 * @var string
 	 */
 	const WINDDEG = 'wind_deg';
-	
+
 	/**
 	 * Key: humidity
 	 * @var string
 	 */
 	const HUMIDITY = 'humidity';
-	
+
 	/**
 	 * Key: pressure
 	 * @var string
@@ -460,7 +460,36 @@ class Entity extends Model\EntityWithID {
 	 */
 	protected function canBeNull($key) {
 		switch ($key) {
+            case self::TYPEID:
+            case self::TIMESTAMP_CREATED:
+            case self::TIMESTAMP_EDITED:
 			case self::TIMEZONE_OFFSET:
+            case self::DISTANCE:
+            case self::ELAPSED_TIME:
+            case self::ELEVATION:
+            case self::ENERGY:
+            case self::HR_AVG:
+            case self::HR_MAX:
+            case self::VDOT:
+            case self::VDOT_BY_TIME:
+            case self::VDOT_WITH_ELEVATION:
+            case self::FIT_VO2MAX_ESTIMATE:
+            case self::FIT_RECOVERY_TIME:
+            case self::FIT_HRV_ANALYSIS:
+            case self::FIT_TRAINING_EFFECT:
+            case self::FIT_PERFORMANCE_CONDITION:
+            case self::JD_INTENSITY:
+            case self::RPE:
+            case self::TRIMP:
+            case self::CADENCE:
+            case self::POWER:
+            case self::TOTAL_STROKES:
+            case self::SWOLF:
+            case self::STRIDE_LENGTH:
+            case self::GROUNDCONTACT:
+            case self::GROUNDCONTACT_BALANCE:
+            case self::VERTICAL_OSCILLATION:
+            case self::VERTICAL_RATIO:
 			case self::TEMPERATURE:
 			case self::WINDSPEED:
 			case self::WINDDEG:
@@ -468,12 +497,10 @@ class Entity extends Model\EntityWithID {
 			case self::PRESSURE:
 			case self::WEATHER_SOURCE:
 			case self::IS_NIGHT:
-			case self::RPE:
 			case self::NOTES:
 			case self::CREATOR_DETAILS:
+            case self::ROUTEID:
 			case self::ACTIVITY_ID:
-			case self::FIT_TRAINING_EFFECT:
-			case self::FIT_PERFORMANCE_CONDITION:
 				return true;
 		}
 
@@ -486,13 +513,48 @@ class Entity extends Model\EntityWithID {
 	public function synchronize() {
 		parent::synchronize();
 
-		$this->ensureNullIfEmpty(self::TIMEZONE_OFFSET, true);
+		$this->ensureNullIfEmpty(self::ACTIVITY_ID);
 		$this->ensureNullIfEmpty(self::IS_NIGHT, true);
-		$this->ensureNullIfEmpty(self::FIT_TRAINING_EFFECT, true);
-		$this->ensureNullIfEmpty(self::FIT_PERFORMANCE_CONDITION, true);
+        $this->ensureAllNullOrNumericValues();
 		$this->ensureAllNumericValues();
 		$this->synchronizeObjects();
 	}
+
+	protected function ensureAllNullOrNumericValues() {
+        $this->ensureNullIfEmpty([
+            self::TYPEID,
+            self::TIMESTAMP_CREATED,
+            self::TIMESTAMP_EDITED,
+            self::TIMEZONE_OFFSET,
+            self::DISTANCE,
+            self::ELAPSED_TIME,
+            self::ELEVATION,
+            self::ENERGY,
+            self::HR_AVG,
+            self::HR_MAX,
+            self::VDOT,
+            self::VDOT_BY_TIME,
+            self::VDOT_WITH_ELEVATION,
+            self::FIT_VO2MAX_ESTIMATE,
+            self::FIT_RECOVERY_TIME,
+            self::FIT_HRV_ANALYSIS,
+            self::FIT_TRAINING_EFFECT,
+            self::FIT_PERFORMANCE_CONDITION,
+            self::JD_INTENSITY,
+            self::RPE,
+            self::TRIMP,
+            self::CADENCE,
+            self::POWER,
+            self::TOTAL_STROKES,
+            self::SWOLF,
+            self::STRIDE_LENGTH,
+            self::GROUNDCONTACT,
+            self::GROUNDCONTACT_BALANCE,
+            self::VERTICAL_OSCILLATION,
+            self::VERTICAL_RATIO,
+            self::ROUTEID
+        ], true, true);
+    }
 
 	/**
 	 * Ensure that numeric fields get numeric values
@@ -500,38 +562,11 @@ class Entity extends Model\EntityWithID {
 	protected function ensureAllNumericValues() {
 		$this->ensureNumericValue(array(
 			self::SPORTID,
-			self::TYPEID,
 			self::TIMESTAMP,
-			self::TIMESTAMP_CREATED,
-			self::TIMESTAMP_EDITED,
 			self::IS_PUBLIC,
 			self::IS_TRACK,
-			self::DISTANCE,
 			self::TIME_IN_SECONDS,
-			self::ELAPSED_TIME,
-			self::ELEVATION,
-			self::ENERGY,
-			self::HR_AVG,
-			self::HR_MAX,
-			self::VDOT,
-			self::VDOT_BY_TIME,
-			self::VDOT_WITH_ELEVATION,
-			self::USE_VDOT,
-			self::FIT_VO2MAX_ESTIMATE,
-			self::FIT_RECOVERY_TIME,
-			self::FIT_HRV_ANALYSIS,
-			self::JD_INTENSITY,
-			self::TRIMP,
-			self::CADENCE,
-			self::POWER,
-			self::STRIDE_LENGTH,
-			self::TOTAL_STROKES,
-			self::SWOLF,
-			self::GROUNDCONTACT,
-			self::VERTICAL_OSCILLATION,
-			self::GROUNDCONTACT_BALANCE,
-			self::VERTICAL_RATIO,
-			self::ROUTEID
+			self::USE_VDOT
 		));
 	}
 
@@ -579,7 +614,7 @@ class Entity extends Model\EntityWithID {
 
 	/**
 	 * Typeid
-	 * @return int
+	 * @return null|int
 	 */
 	public function typeid() {
 		return $this->Data[self::TYPEID];
@@ -587,7 +622,7 @@ class Entity extends Model\EntityWithID {
 
 	/**
 	 * Is public?
-	 * @return boolean
+	 * @return bool
 	 */
 	public function isPublic() {
 		return ($this->Data[self::IS_PUBLIC] == 1);
@@ -595,7 +630,7 @@ class Entity extends Model\EntityWithID {
 
 	/**
 	 * On track?
-	 * @return boolean
+	 * @return bool
 	 */
 	public function isTrack() {
 		return ($this->Data[self::IS_TRACK] == 1);
@@ -603,7 +638,7 @@ class Entity extends Model\EntityWithID {
 
 	/**
 	 * Distance
-	 * @return float [km]
+	 * @return null|float [km]
 	 */
 	public function distance() {
 		return $this->Data[self::DISTANCE];
@@ -619,7 +654,7 @@ class Entity extends Model\EntityWithID {
 
 	/**
 	 * Elapsed time
-	 * @return int [s]
+	 * @return null|int [s]
 	 */
 	public function elapsedTime() {
 		return $this->Data[self::ELAPSED_TIME];
@@ -627,7 +662,7 @@ class Entity extends Model\EntityWithID {
 
 	/**
 	 * Elevation
-	 * @return int [m]
+	 * @return null|int [m]
 	 */
 	public function elevation() {
 		return $this->Data[self::ELEVATION];
@@ -635,7 +670,7 @@ class Entity extends Model\EntityWithID {
 
 	/**
 	 * Energy
-	 * @return int [kcal]
+	 * @return null|int [kcal]
 	 */
 	public function energy() {
 		return $this->Data[self::ENERGY];
@@ -643,7 +678,7 @@ class Entity extends Model\EntityWithID {
 
 	/**
 	 * Average heart rate
-	 * @return int [bpm]
+	 * @return null|int [bpm]
 	 */
 	public function hrAvg() {
 		return $this->Data[self::HR_AVG];
@@ -651,7 +686,7 @@ class Entity extends Model\EntityWithID {
 
 	/**
 	 * Maximal heart rate
-	 * @return int [bpm]
+	 * @return null|int [bpm]
 	 */
 	public function hrMax() {
 		return $this->Data[self::HR_MAX];
@@ -659,7 +694,7 @@ class Entity extends Model\EntityWithID {
 
 	/**
 	 * VDOT by heart rate
-	 * @return float
+	 * @return null|float
 	 */
 	public function vdotByHeartRate() {
 		return $this->Data[self::VDOT];
@@ -667,7 +702,7 @@ class Entity extends Model\EntityWithID {
 
 	/**
 	 * VDOT by time
-	 * @return float
+	 * @return null|float
 	 */
 	public function vdotByTime() {
 		return $this->Data[self::VDOT_BY_TIME];
@@ -675,7 +710,7 @@ class Entity extends Model\EntityWithID {
 
 	/**
 	 * VDOT with elevation
-	 * @return float
+	 * @return null|float
 	 */
 	public function vdotWithElevation() {
 		return $this->Data[self::VDOT_WITH_ELEVATION];
@@ -691,7 +726,7 @@ class Entity extends Model\EntityWithID {
 
 	/**
 	 * VO2max estimate from fit file
-	 * @return float
+	 * @return fnull|loat
 	 */
 	public function fitVO2maxEstimate() {
 		return $this->Data[self::FIT_VO2MAX_ESTIMATE];
@@ -699,7 +734,7 @@ class Entity extends Model\EntityWithID {
 
 	/**
 	 * Recovery time advisor from fit file
-	 * @return int [min]
+	 * @return null|int [min]
 	 */
 	public function fitRecoveryTime() {
 		return $this->Data[self::FIT_RECOVERY_TIME];
@@ -707,7 +742,7 @@ class Entity extends Model\EntityWithID {
 
 	/**
 	 * HRV analysis score from fit file
-	 * @return int
+	 * @return null|int
 	 */
 	public function fitHRVscore() {
 		return $this->Data[self::FIT_HRV_ANALYSIS];
@@ -731,15 +766,14 @@ class Entity extends Model\EntityWithID {
 
 	/**
 	 * JD intensity
-	 * @return int
+	 * @return null|int
 	 */
 	public function jdIntensity() {
 		return $this->Data[self::JD_INTENSITY];
 	}
-	
+
 	/**
-	 * JD intensity
-	 * @return int
+	 * @return null|int
 	 */
 	public function rpe() {
 		return $this->Data[self::RPE];
@@ -747,7 +781,7 @@ class Entity extends Model\EntityWithID {
 
 	/**
 	 * TRIMP
-	 * @return int
+	 * @return null|int
 	 */
 	public function trimp() {
 		return $this->Data[self::TRIMP];
@@ -755,7 +789,7 @@ class Entity extends Model\EntityWithID {
 
 	/**
 	 * Cadence
-	 * @return int [rpm]
+	 * @return null|int [rpm]
 	 */
 	public function cadence() {
 		return $this->Data[self::CADENCE];
@@ -763,7 +797,7 @@ class Entity extends Model\EntityWithID {
 
 	/**
 	 * Power
-	 * @return int [W]
+	 * @return null|int [W]
 	 */
 	public function power() {
 		return $this->Data[self::POWER];
@@ -771,23 +805,23 @@ class Entity extends Model\EntityWithID {
 
 	/**
 	 * Stride length
-	 * @return int [cm]
+	 * @return null|int [cm]
 	 */
 	public function strideLength() {
 		return $this->Data[self::STRIDE_LENGTH];
 	}
-        
+
 	/**
 	 * Total strokes
-	 * @return int 
+	 * @return null|int
 	 */
 	public function totalStrokes() {
 		return $this->Data[self::TOTAL_STROKES];
 	}
-        
+
 	/**
 	 * Swolf
-	 * @return int 
+	 * @return null|int
 	 */
 	public function swolf() {
 		return $this->Data[self::SWOLF];
@@ -795,7 +829,7 @@ class Entity extends Model\EntityWithID {
 
 	/**
 	 * Ground contact
-	 * @return int [ms]
+	 * @return null|int [ms]
 	 */
 	public function groundcontact() {
 		return $this->Data[self::GROUNDCONTACT];
@@ -803,44 +837,48 @@ class Entity extends Model\EntityWithID {
 
 	/**
 	 * Vertical oscillation
-	 * @return int [mm]
+	 * @return null|int [mm]
 	 */
 	public function verticalOscillation() {
 		return $this->Data[self::VERTICAL_OSCILLATION];
 	}
-	
+
 	/**
 	 * Ground contact time balance
-	 * @return int [%oo]
+	 * @return null|int [%oo]
 	 */
 	public function groundContactBalance() {
 		return $this->Data[self::GROUNDCONTACT_BALANCE];
 	}
-	
+
 	/**
 	 * Ground contact time balance
-	 * @return int [%]
+	 * @return null|int [%]
 	 */
 	public function groundContactBalanceLeft() {
 		return $this->Data[self::GROUNDCONTACT_BALANCE];
 	}
-	
+
 	/**
 	 * Ground contact time balance
-	 * @return int [%]
+	 * @return null|int [%]
 	 */
 	public function groundContactBalanceRight() {
+	    if (null === $this->Data[self::GROUNDCONTACT_BALANCE]) {
+	        return null;
+        }
+
 		return 10000 - $this->Data[self::GROUNDCONTACT_BALANCE];
 	}
 
 	/**
 	 * Vertical ratio
-	 * @return int [%o]
+	 * @return null|int [%o]
 	 */
 	public function verticalRatio() {
 		return $this->Data[self::VERTICAL_RATIO];
 	}
-        
+
 	/**
 	 * Weather
 	 * @return \Runalyze\Data\Weather
@@ -919,9 +957,9 @@ class Entity extends Model\EntityWithID {
 	 * Unset running values
 	 */
 	public function unsetRunningValues() {
-		$this->set(Entity::VDOT_BY_TIME, 0);
-		$this->set(Entity::VDOT, 0);
-		$this->set(Entity::VDOT_WITH_ELEVATION, 0);
-		$this->set(Entity::JD_INTENSITY, 0);
+		$this->set(Entity::VDOT_BY_TIME, null);
+		$this->set(Entity::VDOT, null);
+		$this->set(Entity::VDOT_WITH_ELEVATION, null);
+		$this->set(Entity::JD_INTENSITY, null);
 	}
 }
