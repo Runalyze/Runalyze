@@ -116,19 +116,19 @@ class Inserter extends Model\InserterWithAccountID {
 	 * Tasks before insertion
 	 */
 	protected function before() {
+        $this->setSportIdIfEmpty();
 		$this->calculateIfActivityWasAtNight();
+        $this->calculateCaloriesIfZero();
+        $this->calculateVDOTAndIntensityAndTrimp();
+        $this->calculatePower();
+        $this->calculateStrideLength();
+        $this->calculateVerticalRatio();
+        $this->calculateSwimValues();
 
 		parent::before();
 
 		$this->Object->set(Entity::TIMESTAMP_CREATED, time());
-		$this->setSportIdIfEmpty();
 		$this->removeDataIfInside();
-		$this->calculateCaloriesIfZero();
-		$this->calculateVDOTAndIntensityAndTrimp();
-		$this->calculatePower();
-		$this->calculateStrideLength();
-		$this->calculateVerticalRatio();
-		$this->calculateSwimValues();
 	}
 
 	/**
@@ -162,7 +162,7 @@ class Inserter extends Model\InserterWithAccountID {
 			$Factory = \Runalyze\Context::Factory();
 			$calories = $Factory->sport($this->Object->sportid())->caloriesPerHour() * $this->Object->duration() / 3600;
 
-			$this->Object->set(Entity::ENERGY, $calories);
+			$this->Object->set(Entity::ENERGY, $calories > 0 ? $calories : null);
 		}
 	}
 
@@ -279,10 +279,10 @@ class Inserter extends Model\InserterWithAccountID {
 	 */
 	protected function updateTag() {
 	    if (!empty($this->TagIDs)) {
-                $AddNewTags = new Model\Tag\ChosenInserter($this->PDO, $this->TagIDs);
-                $AddNewTags->insertTags();
-                $this->TagIDs = $AddNewTags->getNewTagIDs();
-		$TagUpdater = new TagUpdater($this->PDO, $this->Object->id());
+            $AddNewTags = new Model\Tag\ChosenInserter($this->PDO, $this->TagIDs);
+            $AddNewTags->insertTags();
+            $this->TagIDs = $AddNewTags->getNewTagIDs();
+		    $TagUpdater = new TagUpdater($this->PDO, $this->Object->id());
 		    $TagUpdater->update($this->TagIDs);
 	    }
 	}

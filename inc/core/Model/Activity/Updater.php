@@ -142,17 +142,17 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 	 */
 	protected function before() {
 		$this->updateIfActivityWasAtNight();
+        $this->updateVDOTAndIntensityAndTrimp();
+        $this->updatePower();
+        $this->updateStrideLength();
+        $this->updateVerticalRatio();
 
 		parent::before();
 
 		$this->NewObject->set(Entity::TIMESTAMP_EDITED, time());
 
 		$this->removeWeatherIfInside();
-		$this->updateVDOTAndIntensityAndTrimp();
-		$this->deleteIntensityCache();
-		$this->updatePower();
-		$this->updateStrideLength();
-		$this->updateVerticalRatio();
+        $this->deleteIntensityCache();
 	}
 
 	/**
@@ -244,7 +244,7 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 				$this->NewObject->set(Entity::POWER, $Calculator->average());
 			} else {
 				$this->updatePowerForTrackdata(array());
-				$this->NewObject->set(Entity::POWER, 0);
+				$this->NewObject->set(Entity::POWER, null);
 			}
 		}
 	}
@@ -280,7 +280,7 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 			if ($this->NewObject->sportid() == Configuration::General()->runningSport()) {
 				$this->NewObject->set(Entity::STRIDE_LENGTH, \Runalyze\Calculation\StrideLength\Calculator::forActivity($this->NewObject));
 			} else {
-				$this->NewObject->set(Entity::STRIDE_LENGTH, 0);
+				$this->NewObject->set(Entity::STRIDE_LENGTH, null);
 			}
 		}
 	}

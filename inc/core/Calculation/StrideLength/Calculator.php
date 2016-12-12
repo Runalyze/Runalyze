@@ -75,11 +75,11 @@ class Calculator {
 
 	/**
 	 * Calculate average stride length
-	 * @return int [cm]
+	 * @return null|int [cm]
 	 */
 	public function average() {
 		if (empty($this->Strides)) {
-			return 0;
+			return null;
 		}
 
 		$Series = new TimeSeries($this->Strides, $this->Trackdata->time());
@@ -95,7 +95,7 @@ class Calculator {
 	 * @see https://github.com/Runalyze/Runalyze/issues/1951
 	 *
 	 * @param \Runalyze\Model\Activity\Entity $activity
-	 * @return int [cm]
+	 * @return null|int [cm]
 	 */
 	public static function forActivity(Activity\Entity $activity) {
 		if ($activity->cadence() > 0 && $activity->duration() > 0) {
@@ -106,6 +106,6 @@ class Calculator {
 			}
 		}
 
-		return 0;
+		return null;
 	}
 }
