@@ -98,44 +98,16 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 	public function testSimpleInsert() {
 		$Object = $this->fetch(
 			$this->insert(array(
-				Entity::TIME_IN_SECONDS => 3600
+				Entity::TIME_IN_SECONDS => 3600,
+				Entity::DISTANCE => 12.0
 			))
 		);
 
 		$this->assertEquals(time(), $Object->get(Entity::TIMESTAMP_CREATED), '', 10);
 		$this->assertEquals(3600, $Object->duration());
-		$this->assertNull($Object->typeid());
-		$this->assertNull($Object->distance());
-		$this->assertNull($Object->elapsedTime());
-        $this->assertNull($Object->elevation());
-        $this->assertNull($Object->energy());
-        $this->assertNull($Object->hrAvg());
-        $this->assertNull($Object->hrMax());
-        $this->assertNull($Object->vdotByHeartRate());
-        $this->assertNull($Object->vdotByTime());
-        $this->assertNull($Object->vdotWithElevation());
-        $this->assertFalse($Object->usesVDOT());
-        $this->assertNull($Object->fitVO2maxEstimate());
-        $this->assertNull($Object->fitRecoveryTime());
-        $this->assertNull($Object->fitHRVscore());
+		$this->assertEquals(12.0, $Object->distance());
 		$this->assertNull($Object->fitTrainingEffect());
-        $this->assertNull($Object->fitPerformanceCondition());
-        $this->assertNull($Object->jdIntensity());
 		$this->assertNull($Object->rpe());
-        $this->assertNull($Object->trimp());
-        $this->assertNull($Object->cadence());
-        $this->assertNull($Object->power());
-        $this->assertNull($Object->totalStrokes());
-        $this->assertNull($Object->swolf());
-        $this->assertNull($Object->strideLength());
-        $this->assertNull($Object->groundcontact());
-        $this->assertNull($Object->groundContactBalance());
-        $this->assertNull($Object->groundContactBalanceLeft());
-        $this->assertNull($Object->groundContactBalanceRight());
-        $this->assertNull($Object->verticalOscillation());
-        $this->assertNull($Object->verticalRatio());
-        $this->assertNull($Object->get(Entity::ROUTEID));
-        $this->assertNull($Object->get(Entity::ACTIVITY_ID));
 	}
 
 	public function testOutdoorData() {
@@ -236,10 +208,10 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 			Entity::SPORTID => Configuration::General()->runningSport() + 1
 		)));
 
-		$this->assertNull($Object->vdotByTime());
-		$this->assertNull($Object->vdotByHeartRate());
-		$this->assertNull($Object->vdotWithElevation());
-		$this->assertNull($Object->jdIntensity());
+		$this->assertEquals(0, $Object->vdotByTime());
+		$this->assertEquals(0, $Object->vdotByHeartRate());
+		$this->assertEquals(0, $Object->vdotWithElevation());
+		$this->assertEquals(0, $Object->jdIntensity());
 		$this->assertGreaterThan(0, $Object->trimp());
 	}
 
@@ -382,13 +354,13 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 			$Inserter->setTrackdata($Trackdata);
 			$Inserter->insert($ActivityIndoor);
 
-			$this->assertNull($this->fetch($Inserter->insertedID())->power());
+			$this->assertEquals(0, $this->fetch($Inserter->insertedID())->power());
 
 			$ActivityOutdoor = clone $ActivityIndoor;
 			$ActivityOutdoor->set(Entity::SPORTID, $this->OutdoorID);
 			$Inserter->insert($ActivityOutdoor);
 
-			$this->assertGreaterThan(0, $this->fetch($Inserter->insertedID())->power());
+			$this->assertNotEquals(0, $this->fetch($Inserter->insertedID())->power());
 			$this->assertNotEmpty($Trackdata->power());
 		}
 	}
@@ -489,7 +461,7 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		);
 
 		$this->assertFalse($Object->knowsTimezoneOffset());
-		$this->assertNull($Object->timezoneOffset());
+		$this->assertEquals(null, $Object->timezoneOffset());
 
 		$ObjectWithNull = $this->fetch(
 			$this->insert([
@@ -498,7 +470,7 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		);
 
 		$this->assertFalse($ObjectWithNull->knowsTimezoneOffset());
-		$this->assertNull($ObjectWithNull->timezoneOffset());
+		$this->assertEquals(null, $ObjectWithNull->timezoneOffset());
 
 		$ObjectWithOffset = $this->fetch(
 			$this->insert([

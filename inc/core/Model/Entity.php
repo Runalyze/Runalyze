@@ -8,10 +8,10 @@ namespace Runalyze\Model;
 
 /**
  * Abstract entity
- *
+ * 
  * An object represents a set of properties, e.g. a row from database.
  * The internal data array contains all raw values, only arrays are automatically transformed.
- *
+ * 
  * @author Hannes Christiansen
  * @package Runalyze\Model
  */
@@ -144,7 +144,7 @@ abstract class Entity {
 	 * @return array
 	 */
 	abstract public function properties();
-
+        
 	/**
 	 * Synchronize internal models
 	 */
@@ -179,16 +179,15 @@ abstract class Entity {
 	 * Transforms empty strings to null
 	 * @param array|string $keyOrKeys key or array of keys to be checked
 	 * @param bool $ensureNumericIfNotEmpty
-     * @param bool $treatZeroAsNull
 	 */
-	protected function ensureNullIfEmpty($keyOrKeys, $ensureNumericIfNotEmpty = false, $treatZeroAsNull = false) {
+	protected function ensureNullIfEmpty($keyOrKeys, $ensureNumericIfNotEmpty = false) {
 		if (!is_array($keyOrKeys)) {
 			$keyOrKeys = array($keyOrKeys);
 		}
 
 		foreach ($keyOrKeys as $key) {
 			if (array_key_exists($key, $this->Data)) {
-				if ($this->Data[$key] === '' || null === $this->Data[$key] || ($treatZeroAsNull && 0 == $this->Data[$key])) {
+				if ($this->Data[$key] === '' || null === $this->Data[$key]) {
 					$this->Data[$key] = null;
 				} elseif ($ensureNumericIfNotEmpty) {
 					$this->Data[$key] = (float)$this->Data[$key];

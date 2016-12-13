@@ -13,7 +13,7 @@ use Runalyze\Calculation\Distribution\TimeSeries;
 
 /**
  * Vertical Ratio Calculator
- *
+ * 
  * @author Hannes Christiansen
  * @author Michael Pohl
  * @package Runalyze\Calculation\Activity
@@ -36,7 +36,7 @@ class VerticalRatioCalculator {
 	public function __construct(Trackdata\Entity $trackdata) {
 		$this->Trackdata = $trackdata;
 	}
-
+	
 	/**
 	 * Calculate vertical ratio array
 	 * @return array [%o]
@@ -62,21 +62,21 @@ class VerticalRatioCalculator {
 		return $this->VerticalRatio;
 	}
 
-
+	
 	/**
 	 * @return array [%o]
 	*/
 	public function verticalRatioData() {
 	    return $this->VerticalRatio;
 	}
-
+	
 	/**
 	 * Calculate average Vertical Ratio
-	 * @return null|int [%o]
+	 * @return int [%o]
 	 */
 	public function average() {
 		if (empty($this->VerticalRatio)) {
-			return null;
+			return 0;
 		}
 
 		if (!$this->Trackdata->has(Trackdata\Entity::TIME)) {
@@ -88,18 +88,18 @@ class VerticalRatioCalculator {
 
 		return round($Series->mean());
 	}
-
+	
 	/**
 	 * Calculate vertical ratio for activity
 	 * Use this method if trackdata is not available
 	 * @param \Runalyze\Model\Activity\Entity $activity
-	 * @return null|int [%o]
+	 * @return int [%o]
 	 */
 	public static function forActivity(Activity\Entity $activity) {
 		if ($activity->verticalOscillation() > 0 && $activity->strideLength() > 0) {
 			return round(100 * $activity->verticalOscillation() / $activity->strideLength());
 		}
 
-		return null;
+		return 0;
 	}
 }
