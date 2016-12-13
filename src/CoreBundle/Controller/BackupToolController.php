@@ -116,6 +116,10 @@ class BackupToolController extends Controller
      */
     public function backupAction(Account $account)
     {
+
+        $lockedRoutes = $this->getDoctrine()->getManager()->getRepository('CoreBundle:Route')->accountHasLockedRoutes($account);
+        $lockedTrainings = $this->getDoctrine()->getManager()->getRepository('CoreBundle:Training')->accountHasLockedTrainings($account);
+
         $fileHandler = new FilenameHandler($account->getId());
         $finder = new Finder();
         $finder
@@ -131,7 +135,8 @@ class BackupToolController extends Controller
         return $this->render('tools/backup/export.html.twig', [
             'backupWasCreated' => $this->get('session')->getFlashBag()->get('runalyze.backup.created'),
             'hasFiles' => $finder->count() > 0,
-            'files' => $finder->getIterator()
+            'files' => $finder->getIterator(),
+            'hasLocks' => (null == $lockedRoutes && null == $lockedTrainings) ?  true : false
         ]);
     }
 }

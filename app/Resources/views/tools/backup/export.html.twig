@@ -7,6 +7,7 @@
 
             <fieldset>
                 <legend>{% trans %}Export data{% endtrans %}</legend>
+                {% if hasLocks %}
                 <div class="w50">
                     <label for="export-type">{% trans %}File format{% endtrans %}</label>
                     <select name="export-type" id="export-type">
@@ -41,6 +42,9 @@
                         </small>
                     </p>
                 </div>
+                {% else %}
+                    <p class="info">{% trans %}In order to avoid inconsistencies you cannot create an backup of your data in the moment. Usually this happens when a update of RUNALYZE is in progress. Please try it again tomorrow.{% endtrans %} </p>
+                {% endif %}
             </fieldset>
         </form>
     </div>
@@ -50,6 +54,7 @@
         <p class="okay">{% trans %}Your backup has been created.{% endtrans %}</p>
     </div>
     {% endif %}
+
 
     {% if hasFiles %}
     <div class="panel-content">

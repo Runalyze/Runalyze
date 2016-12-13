@@ -414,7 +414,7 @@ class Training
     /**
      * @var boolean
      *
-     * @ORM\Column(name="lock", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 0")
+     * @ORM\Column(name="`lock`", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 0")
      */
     private $lock = '0';
 

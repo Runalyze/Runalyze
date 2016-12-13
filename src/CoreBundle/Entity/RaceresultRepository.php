@@ -16,4 +16,10 @@ class RaceresultRepository extends EntityRepository
             'activity' => $activityId
         ]);
     }
+
+    public function save(Raceresult $raceResult)
+    {
+        $this->_em->persist($raceResult);
+        $this->_em->flush();
+    }
 }

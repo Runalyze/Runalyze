@@ -9,6 +9,7 @@ namespace Runalyze\Model\Route;
 use Runalyze\Model;
 use League\Geotools\Geohash\Geohash;
 use \League\Geotools\Coordinate\Coordinate;
+use Runalyze\Calculation\Route\GeohashLine;
 
 /**
  * Route entity
@@ -127,11 +128,29 @@ class Entity extends Model\EntityWithID implements Model\Loopable {
 	 */
 	const IN_ROUTENET = 'in_routenet';
 
+    /**
+     * Key: lock
+     * @var string
+     */
+    const LOCK = 'lock';
+
 	/**
 	 * Flag: ensure arrays to be equally sized
 	 * @var bool
 	 */
 	protected $checkArraySizes = true;
+
+    /**
+     * Construct
+     * @param array $data
+     */
+    public function __construct(array $data = array()) {
+        parent::__construct($data);
+
+        if ($this->hasGeohashes() && !empty($this->Data[self::GEOHASHES] )) {
+            $this->Data[self::GEOHASHES] = GeohashLine::extend($this->Data[self::GEOHASHES]);
+        }
+    }
 
 	/**
 	 * Check array sizes
@@ -175,7 +194,8 @@ class Entity extends Model\EntityWithID implements Model\Loopable {
 			self::ENDPOINT,
 			self::MIN,
 			self::MAX,
-			self::IN_ROUTENET
+			self::IN_ROUTENET,
+            self::LOCK
 		);
 	}
 
@@ -200,7 +220,7 @@ class Entity extends Model\EntityWithID implements Model\Loopable {
 			self::MIN,
 			self::MAX,
 			self::IN_ROUTENET
-		);
+        );
 	}
 
 	/**
@@ -283,15 +303,24 @@ class Entity extends Model\EntityWithID implements Model\Loopable {
 	public function set($key, $value) {
 		parent::set($key, $value);
 
-		if ($key == self::GEOHASHES) {
-			$this->setMinMaxFromGeohashes($value);
-		}
+        if ($key == self::GEOHASHES) {
+            $this->setMinMaxFromGeohashes($value);
+        }
+        
 	}
+
+    /**
+     * @param array $geohashes
+     */
+    public function setGeohashesWithoutMinMaxRecalculation(array $geohashes)
+    {
+        $this->Data[self::GEOHASHES] = $geohashes;
+    }
 
 	/**
 	 * @param array $geohashes
 	 */
-	protected function setMinMaxFromGeohashes(array $geohashes) {
+	public function setMinMaxFromGeohashes(array $geohashes) {
 		$latitudes = array();
 		$longitudes = array();
 

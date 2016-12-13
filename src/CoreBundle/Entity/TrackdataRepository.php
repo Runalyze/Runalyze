@@ -16,4 +16,10 @@ class TrackdataRepository extends EntityRepository
             'activity' => $activityId
         ]);
     }
+
+    public function save(Trackdata $trackdata)
+    {
+        $this->_em->persist($trackdata);
+        $this->_em->flush();
+    }
 }

@@ -9,7 +9,7 @@ use Runalyze\Bundle\CoreBundle\Entity\Account;
  * Route
  *
  * @ORM\Table(name="route", indexes={@ORM\Index(name="accountid", columns={"accountid"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\RouteRepository")
  */
 class Route
 {
@@ -136,6 +136,13 @@ class Route
      * })
      */
     private $account;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="`lock`", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 0")
+     */
+    private $lock = '0';
 
     /**
      * Get id
@@ -533,6 +540,35 @@ class Route
     public function getAccount()
     {
         return $this->account;
+    }
+
+    /**
+     * Set lock
+     *
+     * @param boolean $lock
+     *
+     * @return Training
+     */
+    public function setLock($lock)
+    {
+        $this->lock = $lock;
+
+        return $this;
+    }
+
+    /**
+     * Get lock
+     *
+     * @return boolean
+     */
+    public function getLock()
+    {
+        return $this->lock;
+    }
+
+    public function isLocked()
+    {
+        return $this->lock;
     }
 }
 
