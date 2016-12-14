@@ -4,6 +4,8 @@ namespace Runalyze\Bundle\CoreBundle\Form\Tools\Anova;
 
 use Runalyze\Bundle\CoreBundle\Component\Tool\Anova\QueryGroup\QueryGroups;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
+use Runalyze\Bundle\CoreBundle\Entity\EquipmentType;
+use Runalyze\Bundle\CoreBundle\Entity\EquipmentTypeRepository;
 use Runalyze\Bundle\CoreBundle\Entity\Sport;
 use Runalyze\Bundle\CoreBundle\Entity\SportRepository;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Anova\QueryValue\QueryValues;
@@ -19,12 +21,20 @@ class AnovaType extends AbstractType
     /** @var SportRepository */
     protected $SportRepository;
 
+    /** @var EquipmentTypeRepository */
+    protected $EquipmentTypeRepository;
+
     /** @var TokenStorage */
     protected $TokenStorage;
 
-    public function __construct(SportRepository $sportRepository, TokenStorage $tokenStorage)
+    public function __construct(
+        SportRepository $sportRepository,
+        EquipmentTypeRepository $equipmentTypeRepository,
+        TokenStorage $tokenStorage
+    )
     {
         $this->SportRepository = $sportRepository;
+        $this->EquipmentTypeRepository = $equipmentTypeRepository;
         $this->TokenStorage = $tokenStorage;
     }
 
@@ -78,8 +88,8 @@ class AnovaType extends AbstractType
                     'General groups' => [
                         'Sport type' => QueryGroups::SPORT,
                         'Activity type' => QueryGroups::TYPE
-                        // TODO: equipment types with 'single'?
-                    ]
+                    ],
+                    'Equipment types' => $this->getGroupsForSingleChoiceEquipmentTypes()
                 ]
             ])
             ->add('valueToLookAt', ChoiceType::class, [
@@ -102,6 +112,21 @@ class AnovaType extends AbstractType
                 ]
             ])
         ;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getGroupsForSingleChoiceEquipmentTypes()
+    {
+        $equipmentTypes = $this->EquipmentTypeRepository->findSingleChoiceTypesFor($this->getAccount());
+        $groups = [];
+
+        foreach ($equipmentTypes as $equipmentType) {
+            $groups[$equipmentType->getName()] = QueryGroups::getEnumForEquipmentType($equipmentType);
+        }
+
+        return $groups;
     }
 
     public function configureOptions(OptionsResolver $resolver)

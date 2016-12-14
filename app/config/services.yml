@@ -46,13 +46,17 @@ services:
     class: Runalyze\Bundle\CoreBundle\Entity\ConfRepository
     factory: ["@doctrine.orm.entity_manager", getRepository]
     arguments: [Runalyze\Bundle\CoreBundle\Entity\Conf]
+  app.repository.equipment_type:
+    class: Runalyze\Bundle\CoreBundle\Entity\EquipmentTypeRepository
+    factory: ["@doctrine.orm.entity_manager", getRepository]
+    arguments: [Runalyze\Bundle\CoreBundle\Entity\EquipmentType]
   app.repository.sport:
     class: Runalyze\Bundle\CoreBundle\Entity\SportRepository
     factory: ["@doctrine.orm.entity_manager", getRepository]
     arguments: [Runalyze\Bundle\CoreBundle\Entity\Sport]
   app.form.type.anova:
     class: Runalyze\Bundle\CoreBundle\Form\Tools\Anova\AnovaType
-    arguments: ["@app.repository.sport", "@security.token_storage"]
+    arguments: ["@app.repository.sport", "@app.repository.equipment_type", "@security.token_storage"]
     tags:
      - { name: form.type }
   app.privacy_guard:

@@ -33,7 +33,7 @@ class AnovaDataQuery
     public function __construct(AnovaData $anovaData)
     {
         $this->AnovaData = $anovaData;
-        $this->QueryGroup = QueryGroups::get($anovaData->getValueToGroupBy());
+        $this->QueryGroup = QueryGroups::getGroup($anovaData->getValueToGroupBy());
         $this->QueryValue = QueryValues::get($anovaData->getValueToLookAt());
     }
 

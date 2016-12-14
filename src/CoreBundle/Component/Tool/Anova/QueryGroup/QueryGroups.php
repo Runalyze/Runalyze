@@ -25,5 +25,23 @@ final class QueryGroups extends AbstractEnum
     const TYPE = 'type';
 
     /** @var int */
-    //const EQUIPMENT = 'equipment';
+    const EQUIPMENT_TYPE = 'equipment';
+
+    public static function getEnumForEquipmentType(\Runalyze\Bundle\CoreBundle\Entity\EquipmentType $equipmentType)
+    {
+        return self::EQUIPMENT_TYPE.'_'.$equipmentType->getId();
+    }
+
+    /**
+     * @param $enum
+     * @return QueryGroupInterface
+     */
+    public static function getGroup($enum)
+    {
+        if (substr($enum, 0, strlen(self::EQUIPMENT_TYPE) + 1) == self::EQUIPMENT_TYPE.'_') {
+            return new EquipmentType(substr($enum, strlen(self::EQUIPMENT_TYPE) + 1));
+        }
+
+        return self::get($enum);
+    }
 }

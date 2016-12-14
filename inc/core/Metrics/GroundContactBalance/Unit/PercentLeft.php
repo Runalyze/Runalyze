@@ -2,9 +2,10 @@
 
 namespace Runalyze\Metrics\GroundContactBalance\Unit;
 
+use Runalyze\Metrics\Common\FormattableUnitInterface;
 use Runalyze\Metrics\Common\UnitConversionByFactorTrait;
 
-class PercentLeft extends AbstractGroundContactBalanceUnit
+class PercentLeft extends AbstractGroundContactBalanceUnit implements FormattableUnitInterface
 {
     use UnitConversionByFactorTrait;
 
@@ -24,5 +25,13 @@ class PercentLeft extends AbstractGroundContactBalanceUnit
     public function getAppendix()
     {
         return '%L';
+    }
+
+    /**
+     * @return int
+     */
+    public function getDecimals()
+    {
+        return 2;
     }
 }
