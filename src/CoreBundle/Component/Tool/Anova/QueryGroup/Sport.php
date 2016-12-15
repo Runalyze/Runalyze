@@ -40,4 +40,12 @@ class Sport implements QueryGroupInterface
 
         return $groups;
     }
+
+    /**
+     * @return bool
+     */
+    public function showEmptyGroups()
+    {
+        return true;
+    }
 }

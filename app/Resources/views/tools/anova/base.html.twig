@@ -63,11 +63,13 @@
         {{ form_end(form) }}
 
         <div id="anova-plot"></div>
+        <div id="anova-plot-messages"></div>
 
         <script src="http://d3js.org/d3.v3.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.min.js"></script>
         <script>
             var $plot = $("#anova-plot");
+
             $("#anova-form").unbind('submit').submit(function(e){
                 e.preventDefault();
 
@@ -121,7 +123,9 @@
                         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
                     var x = d3.scale.ordinal()
-                        .domain( data.map(function(d) { return d[0] } ) )
+                        .domain(data.map(function(d) {
+                            return d[0];
+                        }))
                         .rangeRoundBands([0, height], 0.3);
 
                     var y = d3.scale.linear()
@@ -135,7 +139,10 @@
 
                     var yAxis = d3.svg.axis()
                         .scale(x)
-                        .orient("left");
+                        .orient("left")
+                        .tickFormat(function(label){
+                            return label.length > 16 ? label.substring(0,14) + '\u2026' : label;
+                        });
 
                     svg.selectAll(".box")
                         .data(data)
@@ -240,7 +247,6 @@
                         quartiles = boxQuartiles,
                         tickFormat = null;
 
-                    // For each small multiple…
                     function box(g) {
                         g.each(function(data, i) {
                             if (data[1].length == 0) return;
@@ -259,18 +265,15 @@
                                 ? d3.range(0, whiskerIndices[0]).concat(d3.range(whiskerIndices[1] + 1, n))
                                 : d3.range(n);
 
-                            // X-scale.
                             var x1 = d3.scale.linear()
                                 .domain(domain && domain.call(this, d, i) || [min, max])
                                 .range([0, width]);
 
                             var format = tickFormat || x1.tickFormat(8);
 
-                            // Center line: the vertical line spanning the whiskers.
                             var center = g.selectAll("line.center")
                                 .data(whiskerData ? [whiskerData] : []);
 
-                            //vertical line
                             center.enter().insert("line", "rect")
                                 .attr("class", "center")
                                 .attr("y1", height / 2)
@@ -278,7 +281,6 @@
                                 .attr("x1", function(d) { return x1(d[0]); })
                                 .attr("x2", function(d) { return x1(d[1]); });
 
-                            // Innerquartile box.
                             var box = g.selectAll("rect.box")
                                 .data([quartileData]);
 

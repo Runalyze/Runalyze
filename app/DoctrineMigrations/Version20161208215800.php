@@ -24,7 +24,7 @@ class Version20161208215800 extends AbstractMigration implements ContainerAwareI
         $this->addSql('UPDATE `'.$prefix.'training` SET `typeid` = NULL WHERE `typeid`= 0');
         $this->addSql('UPDATE `'.$prefix.'training` SET `created` = NULL WHERE `created`= 0');
         $this->addSql('UPDATE `'.$prefix.'training` SET `edited` = NULL WHERE `edited`= 0');
-        $this->addSql('UPDATE `'.$prefix.'training` SET `distance` = 0 WHERE `distance` = 0');
+        $this->addSql('UPDATE `'.$prefix.'training` SET `distance` = NULL WHERE `distance` = 0');
         $this->addSql('UPDATE `'.$prefix.'training` SET `elapsed_time` = NULL WHERE `elapsed_time` = 0');
         $this->addSql('UPDATE `'.$prefix.'training` SET `elevation` = NULL WHERE `elevation` = 0');
         $this->addSql('UPDATE `'.$prefix.'training` SET `kcal` = NULL WHERE `kcal` = 0');
@@ -38,7 +38,7 @@ class Version20161208215800 extends AbstractMigration implements ContainerAwareI
         $this->addSql('UPDATE `'.$prefix.'training` SET `fit_hrv_analysis` = NULL WHERE `fit_hrv_analysis`= 0');
         $this->addSql('UPDATE `'.$prefix.'training` SET `fit_performance_condition` = NULL WHERE `fit_performance_condition` = 0');
         $this->addSql('UPDATE `'.$prefix.'training` SET `jd_intensity` = NULL WHERE `jd_intensity`= 0');
-        $this->addSql('UPDATE `'.$prefix.'training` SET `trimp` = 0 WHERE `trimp` = 0');
+        $this->addSql('UPDATE `'.$prefix.'training` SET `trimp` = NULL WHERE `trimp` = 0');
         $this->addSql('UPDATE `'.$prefix.'training` SET `cadence` = NULL WHERE `cadence` = 0');
         $this->addSql('UPDATE `'.$prefix.'training` SET `power` = NULL WHERE `power` = 0');
         $this->addSql('UPDATE `'.$prefix.'training` SET `total_strokes` = NULL WHERE `total_strokes`= 0');

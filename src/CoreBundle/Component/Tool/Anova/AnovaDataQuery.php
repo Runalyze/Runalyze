@@ -72,6 +72,26 @@ class AnovaDataQuery
      */
     public function getResults(TrainingRepository $trainingRepository, Account $account)
     {
+        $iterator = $this->buildQuery($trainingRepository, $account)->iterate(null, AbstractQuery::HYDRATE_ARRAY);
+
+        foreach ($iterator as $row) {
+            $data = array_shift($row);
+
+            $this->Groups[(int)$data['grouping']]['data'][] = (float)$data['value'];
+        }
+
+        $this->filterEmptyGroups();
+
+        return $this->Groups;
+    }
+
+    /**
+     * @param TrainingRepository $trainingRepository
+     * @param Account $account
+     * @return \Doctrine\ORM\Query
+     */
+    protected function buildQuery(TrainingRepository $trainingRepository, Account $account)
+    {
         $queryBuilder = $trainingRepository->createQueryBuilder('t')
             ->select('1')
             ->andWhere('t.account = :account')
@@ -85,15 +105,7 @@ class AnovaDataQuery
         $this->QueryGroup->addSelectionToQuery($queryBuilder, 't', 'grouping', 's');
         $this->QueryValue->addSelectionToQuery($queryBuilder, 't', 'value');
 
-        $iterator = $queryBuilder->getQuery()->iterate(null, AbstractQuery::HYDRATE_ARRAY);
-
-        foreach ($iterator as $row) {
-            $data = array_shift($row);
-
-            $this->Groups[(int)$data['grouping']]['data'][] = (float)$data['value'];
-        }
-
-        return $this->Groups;
+        return $queryBuilder->getQuery();
     }
 
     protected function addSportConditionToQuery(QueryBuilder $queryBuilder)
@@ -102,5 +114,16 @@ class AnovaDataQuery
         $queryBuilder->setParameter(':sports', array_map(function(Sport $sport) {
             return $sport->getId();
         }, $this->AnovaData->getSport()));
+    }
+
+    protected function filterEmptyGroups()
+    {
+        if (!$this->QueryGroup->showEmptyGroups()) {
+            foreach ($this->Groups as $key => $data) {
+                if (empty($data['data'])) {
+                    unset($this->Groups[$key]);
+                }
+            }
+        }
     }
 }

@@ -23,4 +23,9 @@ interface QueryGroupInterface
      * @return array
      */
     public function loadAllGroups(EntityManager $entityManager, Account $account, array $sports);
+
+    /**
+     * @return bool
+     */
+    public function showEmptyGroups();
 }

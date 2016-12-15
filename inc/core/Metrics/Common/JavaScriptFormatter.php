@@ -15,7 +15,7 @@ class JavaScriptFormatter
         } elseif (method_exists($unit, 'getJavaScriptConversion')) {
             $valueConversion = $unit->getJavaScriptConversion();
         } else {
-            $valueConversion = 'd';
+            $valueConversion = 'Math.round(d*100)/100';
         }
 
         return 'function(d){return '.$valueConversion.' + \' '.$unit->getAppendix().'\';}';
