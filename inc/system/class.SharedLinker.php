@@ -77,7 +77,7 @@ class SharedLinker {
 			$text = Icon::$ATTACH;
 		}
 
-		return '<a href="shared/'.SessionAccountHandler::getUsername().'/" target="_blank" '.Ajax::tooltip('', __('Public list'), false, true).'>'.$text.'</a>';
+		return '<a href="athlete/'.SessionAccountHandler::getUsername().'" target="_blank" '.Ajax::tooltip('', __('Public list'), false, true).'>'.$text.'</a>';
 	}
 
 	/**

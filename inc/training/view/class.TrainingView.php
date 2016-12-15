@@ -289,7 +289,7 @@ class TrainingView {
 
 		$this->ToolbarLinks = array();
 		$this->ToolbarLinks[] = SharedLinker::getStandardLinkTo( $this->Context->activity()->id(), Icon::$ATTACH );
-		$this->ToolbarLinks[] = '<a href="shared/'.$User['username'].'/" target="_blank">'.Icon::$TABLE.'</a>';
+		$this->ToolbarLinks[] = '<a href="athlete/'.$User['username'].'" target="_blank">'.Icon::$TABLE.'</a>';
 
 		$this->displayHeaderMenu();
 	}

@@ -54,8 +54,15 @@ class SharedController extends Controller
     /**
      * @Route("/shared/{username}/")
      */
-    public function sharedUserAction($username, Request $request)
+    public function oldSharedUserAction($username)
     {
+        return $this->redirect($this->generateUrl('shared-athlete', array('username' => $username)), 301);
+    }
+
+    /**
+     * @Route("/athlete/{username}", name="shared-athlete")
+     */
+    public function sharedUserAction($username, Request $request) {
         /** @var null|Account $account */
         $account = $this->getDoctrine()->getRepository('CoreBundle:Account')->findByUsername($username);
         $privacy = $this->get('app.configuration_manager')->getList($account)->getPrivacy();
