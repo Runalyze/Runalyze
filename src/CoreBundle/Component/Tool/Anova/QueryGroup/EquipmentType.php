@@ -29,16 +29,10 @@ class EquipmentType implements QueryGroupInterface
         $queryBuilder
             ->addSelect(sprintf('%s.id as %s', 'eq', $as))
             ->leftJoin(Entity\ActivityEquipment::class, 'aceq', Expr\Join::WITH, 'aceq.activity = '.$alias.'.id')
-            ->leftJoin(Entity\Equipment::class, 'eq', 'WITH', 'aceq.equipment = eq.id')
+            ->leftJoin(Entity\Equipment::class, 'eq', Expr\Join::WITH, 'aceq.equipment = eq.id')
             ->andWhere('eq.type = :equipmentTypeId')
             ->setParameter(':equipmentTypeId', $this->EquipmentTypeId)
-        /*    ->addSelect(sprintf('%s.id as %s', 'eq', $as))
-            ->distinct()
-            ->join(sprintf('%s.equipment', $alias), 'eq', Expr\Join::ON, 'eq.type = '.$this->EquipmentTypeId)
-            //->addSelect(sprintf('%s.type as %s', $alias, $as))
-            //->where(sprintf(':equipmentTypeId MEMBER OF %s.type', $alias))
-            //->setParameter(':equipmentTypeId', $this->EquipmentTypeId)
-        */;
+        ;
     }
 
     /**
