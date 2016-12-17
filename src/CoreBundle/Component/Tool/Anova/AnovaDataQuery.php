@@ -40,7 +40,7 @@ class AnovaDataQuery
     public function loadAllGroups(EntityManager $entityManager, Account $account)
     {
         $this->Groups = [];
-        $groups = $this->QueryGroup->loadAllGroups($entityManager, $account, $this->AnovaData->getSport());
+        $groups = $this->QueryGroup->loadAllGroups($entityManager, $account, $this->AnovaData);
 
         foreach ($groups as $id => $label) {
             $this->Groups[(int)$id] = [
@@ -82,7 +82,7 @@ class AnovaDataQuery
 
         $this->filterEmptyGroups();
 
-        return $this->Groups;
+        return array_values($this->Groups);
     }
 
     /**

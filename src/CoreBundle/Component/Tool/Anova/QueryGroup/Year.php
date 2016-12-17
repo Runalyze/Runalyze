@@ -7,7 +7,7 @@ use Doctrine\ORM\QueryBuilder;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Form\Tools\Anova\AnovaData;
 
-class Sport implements QueryGroupInterface
+class Year implements QueryGroupInterface
 {
     /**
      * @param QueryBuilder $queryBuilder
@@ -17,7 +17,7 @@ class Sport implements QueryGroupInterface
      */
     public function addSelectionToQuery(QueryBuilder $queryBuilder, $alias, $as, $sportAlias)
     {
-        $queryBuilder->addSelect(sprintf('%s.id as %s', $sportAlias, $as));
+        $queryBuilder->addSelect(sprintf('YEAR(FROM_UNIXTIME(%s.time)) as %s', $alias, $as));
     }
 
     /**
@@ -28,19 +28,15 @@ class Sport implements QueryGroupInterface
      */
     public function loadAllGroups(EntityManager $entityManager, Account $account, AnovaData $anovaData)
     {
-        $groups = [];
-        $sports = $anovaData->getSport();
+        $startYear = (int)$anovaData->getDateFrom()->format('Y');
+        $endYear = (int)$anovaData->getDateTo()->format('Y');
+        $years = [];
 
-        foreach ($entityManager->getRepository('CoreBundle:Sport')->findAllFor($account) as $sport) {
-            foreach ($sports as $singleSport) {
-                if ($singleSport->getId() == $sport->getId()) {
-                    $groups[$sport->getId()] = $sport->getName();
-                    break;
-                }
-            }
+        for ($year = $startYear; $year <= $endYear; ++$year) {
+            $years[$year] = (string)$year;
         }
 
-        return $groups;
+        return $years;
     }
 
     /**

@@ -7,6 +7,7 @@ use Doctrine\ORM\Query\Expr;
 use Doctrine\ORM\QueryBuilder;
 use Runalyze\Bundle\CoreBundle\Entity;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
+use Runalyze\Bundle\CoreBundle\Form\Tools\Anova\AnovaData;
 
 class EquipmentType implements QueryGroupInterface
 {
@@ -38,10 +39,10 @@ class EquipmentType implements QueryGroupInterface
     /**
      * @param EntityManager $entityManager
      * @param Account $account
-     * @param \Runalyze\Bundle\CoreBundle\Entity\Sport[] $sports
+     * @param AnovaData $anovaData
      * @return array
      */
-    public function loadAllGroups(EntityManager $entityManager, Account $account, array $sports)
+    public function loadAllGroups(EntityManager $entityManager, Account $account, AnovaData $anovaData)
     {
         $groups = [];
 

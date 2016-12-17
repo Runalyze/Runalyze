@@ -10,13 +10,10 @@ final class QueryGroups extends AbstractEnum
     use AbstractEnumFactoryTrait;
 
     /** @var string */
-    //const WEEK = 'week';
-
-    /** @var string */
-    //const MONTH = 'month';
+    const MONTH = 'month';
 
     /** @var int */
-    //const YEAR = 'year';
+    const YEAR = 'year';
 
     /** @var int */
     const SPORT = 'sport';

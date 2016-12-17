@@ -5,6 +5,7 @@ namespace Runalyze\Bundle\CoreBundle\Component\Tool\Anova\QueryGroup;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
+use Runalyze\Bundle\CoreBundle\Form\Tools\Anova\AnovaData;
 
 interface QueryGroupInterface
 {
@@ -19,10 +20,10 @@ interface QueryGroupInterface
     /**
      * @param EntityManager $entityManager
      * @param Account $account
-     * @param \Runalyze\Bundle\CoreBundle\Entity\Sport[] $sports
+     * @param AnovaData $anovaData
      * @return array
      */
-    public function loadAllGroups(EntityManager $entityManager, Account $account, array $sports);
+    public function loadAllGroups(EntityManager $entityManager, Account $account, AnovaData $anovaData);
 
     /**
      * @return bool

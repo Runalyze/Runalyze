@@ -80,11 +80,10 @@ class AnovaType extends AbstractType
             ->add('valueToGroupBy', ChoiceType::class, [
                 //'expanded' => true,
                 'choices' => [
-                    //'Time related' => [
-                    //    'Week' => QueryGroups::WEEK,
-                    //    'Month' => QueryGroups::MONTH,
-                    //    'Year' => QueryGroups::YEAR
-                    //],
+                    'Time related' => [
+                        'Month' => QueryGroups::MONTH,
+                        'Year' => QueryGroups::YEAR
+                    ],
                     'General groups' => [
                         'Sport type' => QueryGroups::SPORT,
                         'Activity type' => QueryGroups::TYPE

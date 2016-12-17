@@ -20,13 +20,15 @@
         "doctrine/doctrine-cache-bundle": "^1.3",
         "runalyze/dem-reader": "^1.0",
         "runalyze/age-grade": "^1.0",
-        "symfony/swiftmailer-bundle": "^2.3"
+        "symfony/swiftmailer-bundle": "^2.3",
+        "beberlei/DoctrineExtensions": "~1.0"
     },
     "autoload": {
         "files": ["src/functions.php", "app/AppKernel.php"],
         "classmap": ["inc/", "plugin/"],
         "exclude-from-classmap": ["inc/core/"],
         "psr-4": {
+            "DoctrineExtensions\\": "vendor/beberlei/DoctrineExtensions/src",
             "Runalyze\\": "inc/core/",
             "Runalyze\\Bundle\\": "src/",
             "Runalyze\\Tests\\": "tests/inc/core/"

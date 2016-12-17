@@ -63,7 +63,6 @@
         {{ form_end(form) }}
 
         <div id="anova-plot"></div>
-        <div id="anova-plot-messages"></div>
 
         <script src="http://d3js.org/d3.v3.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.min.js"></script>
@@ -78,94 +77,104 @@
 
                 $plot.addClass('loading');
 
-                $.post(url, data, function(json){
-                    var numGroups = json.groups.constructor === Array ? json.groups.length : Object.getOwnPropertyNames(json.groups).length;
+                $.post(url, data).done(function(json){
+                    try {
+                        var numGroups = json.groups.constructor === Array ? json.groups.length : Object.getOwnPropertyNames(json.groups).length;
 
-                    eval("json.tickFormatter = " + json.tickFormatter);
+                        eval("json.tickFormatter = " + json.tickFormatter);
 
-                    $plot.html("");
+                        $plot.html("");
 
-                    if (numGroups == 0) {
-                        $plot.html('<p class="text"><em>{% trans %}No results.{% endtrans %}</em></p>').removeClass('loading');
-                        return;
-                    }
+                        if (numGroups == 0) {
+                            $plot.html('<p class="text"><em>{% trans %}No results.{% endtrans %}</em></p>').removeClass('loading');
+                            return;
+                        }
 
-                    var margin = {top: 50, right: 30, bottom: 30, left: 100};
-                    var height = 30*numGroups;
-                    var width = 810 - margin.left - margin.right;
+                        var margin = {top: 50, right: 30, bottom: 30, left: 100};
+                        var height = 30 * numGroups;
+                        var width = 810 - margin.left - margin.right;
 
-                    var min = Infinity,
-                        max = -Infinity;
+                        var min = Infinity,
+                            max = -Infinity;
 
-                    var data = [];
+                        var data = [];
 
-                    $.each(json.groups, function(i, row){
-                        data.push([row.label, row.data]);
+                        $.each(json.groups, function (i, row) {
+                            data.push([row.label, row.data]);
 
-                        var rowMax = Math.max.apply(null, row.data);
-                        var rowMin = Math.min.apply(null, row.data);
+                            var rowMax = Math.max.apply(null, row.data);
+                            var rowMin = Math.min.apply(null, row.data);
 
-                        if (rowMax > max) max = rowMax;
-                        if (rowMin < min) min = rowMin;
-                    });
-
-                    var chart = d3.box()
-                        .whiskers(iqr(1.5))
-                        .width(width)
-                        .domain([min, max])
-                        .tickFormat(json.tickFormatter);
-
-                    var svg = d3.select("#anova-plot").append("svg")
-                        .attr("width", width + margin.left + margin.right)
-                        .attr("height", height + margin.top + margin.bottom)
-                        .attr("class", "box")
-                        .append("g")
-                        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-                    var x = d3.scale.ordinal()
-                        .domain(data.map(function(d) {
-                            return d[0];
-                        }))
-                        .rangeRoundBands([0, height], 0.3);
-
-                    var y = d3.scale.linear()
-                        .domain([min, max])
-                        .range([10, width]);
-
-                    var xAxis = d3.svg.axis()
-                        .scale(y)
-                        .orient("top")
-                        .tickFormat(json.tickFormatter);
-
-                    var yAxis = d3.svg.axis()
-                        .scale(x)
-                        .orient("left")
-                        .tickFormat(function(label){
-                            return label.length > 16 ? label.substring(0,14) + '\u2026' : label;
+                            if (rowMax > max) max = rowMax;
+                            if (rowMin < min) min = rowMin;
                         });
 
-                    svg.selectAll(".box")
-                        .data(data)
-                        .enter().append("g")
-                        .attr("transform", function(d) { return "translate(10," + x(d[0]) + ")"; } )
-                        .call(chart.height(x.rangeBand()));
+                        var chart = d3.box()
+                            .whiskers(iqr(1.5))
+                            .width(width)
+                            .domain([min, max])
+                            .tickFormat(json.tickFormatter);
 
-                    svg.append("text")
-                        .attr("x", (width / 2))
-                        .attr("y", -(margin.top / 2))
-                        .attr("text-anchor", "middle")
-                        .style("font-size", "10px")
-                        .text($("#anova_valueToLookAt").find("option:selected").text());
+                        var svg = d3.select("#anova-plot").append("svg")
+                            .attr("width", width + margin.left + margin.right)
+                            .attr("height", height + margin.top + margin.bottom)
+                            .attr("class", "box")
+                            .append("g")
+                            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-                    svg.append("g")
-                        .attr("class", "y axis")
-                        .call(yAxis);
+                        var x = d3.scale.ordinal()
+                            .domain(data.map(function (d) {
+                                return d[0];
+                            }))
+                            .rangeRoundBands([0, height], 0.3);
 
-                    svg.append("g")
-                        .attr("class", "x axis")
-                        .call(xAxis);
+                        var y = d3.scale.linear()
+                            .domain([min, max])
+                            .range([10, width]);
 
-                    $plot.removeClass('loading');
+                        var xAxis = d3.svg.axis()
+                            .scale(y)
+                            .orient("top")
+                            .tickFormat(json.tickFormatter);
+
+                        var yAxis = d3.svg.axis()
+                            .scale(x)
+                            .orient("left")
+                            .tickFormat(function (label) {
+                                return label.length > 16 ? label.substring(0, 14) + '\u2026' : label;
+                            });
+
+                        svg.selectAll(".box")
+                            .data(data)
+                            .enter().append("g")
+                            .attr("transform", function (d) {
+                                return "translate(10," + x(d[0]) + ")";
+                            })
+                            .call(chart.height(x.rangeBand()));
+
+                        svg.append("text")
+                            .attr("x", (width / 2))
+                            .attr("y", -(margin.top / 2))
+                            .attr("text-anchor", "middle")
+                            .style("font-size", "10px")
+                            .text($("#anova_valueToLookAt").find("option:selected").text());
+
+                        svg.append("g")
+                            .attr("class", "y axis")
+                            .call(yAxis);
+
+                        svg.append("g")
+                            .attr("class", "x axis")
+                            .call(xAxis);
+                    } catch (e) {
+                        console.log(e);
+
+                        $plot.html('<p class="text"><em>{% trans %}There was a problem.{% endtrans %} ({% trans %}Plotting failed{% endtrans %})</em></p>');
+                    } finally {
+                        $plot.removeClass('loading');
+                    }
+                }).fail(function(){
+                    $plot.html('<p class="text"><em>{% trans %}There was a problem.{% endtrans %} ({% trans %}Request failed{% endtrans %})</em></p>').removeClass('loading');
                 });
 
                 return false;
