@@ -63,7 +63,9 @@ class Map {
 	 * @param \Runalyze\View\Leaflet\Route $route
 	 */
 	public function addRoute(Route $route) {
-		$this->Routes[] = $route;
+	    if (!$route->isEmpty()) {
+    		$this->Routes[] = $route;
+        }
 	}
 
 	/**
@@ -113,6 +115,10 @@ class Map {
 	 * @return string
 	 */
 	public function js() {
+	    if (empty($this->Routes)) {
+	        return $this->getJavaScriptForNoRoutes();
+        }
+
 		$scrollOnZoom = Configuration::ActivityView()->mapZoomOnScroll();
 		$Code  = 'RunalyzeLeaflet.setDefaultLayer("'.Configuration::ActivityView()->mapLayer().'");';
 		$Code .= 'RunalyzeLeaflet.init(\''.$this->id.'\', { scrollWheelZoom: '.($scrollOnZoom ? 'true' : 'false').'} );';
@@ -136,4 +142,8 @@ class Map {
             'function(){$("#'.$this->id.'").css("height","auto").html(\'<p><em>'.__('There was a problem trying to show the map.').'</em></p>\');'.
         '});</script>';
 	}
+
+	protected function getJavaScriptForNoRoutes() {
+	    return '<script>(function(){$("#'.$this->id.'").remove();})();</script>';
+    }
 }

@@ -79,6 +79,13 @@ class Route {
 		return $this->id;
 	}
 
+    /**
+     * @return bool
+     */
+	public function isEmpty() {
+	    return empty($this->Paths);
+    }
+
 	/**
 	 * Get JS
 	 * @return string
