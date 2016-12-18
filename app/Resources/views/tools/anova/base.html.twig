@@ -30,7 +30,7 @@
                 </div>
 
                 <div class="w100 with33erLabel">
-                    <label for="sportid">
+                    <label for="anova_sport">
                         {% trans %}Sport type{% endtrans %}
                         <span class="right small">
                             <span class="link chosen-select-all" data-target="anova_sport">{% trans %}all{% endtrans %}</span> |
@@ -78,6 +78,7 @@
                 $.post(url, data).done(function(json){
                     try {
                         var numGroups = json.groups.constructor === Array ? json.groups.length : Object.getOwnPropertyNames(json.groups).length;
+                        var xAxisInverse = json.tickFormatter.indexOf('\/d') !== -1;
 
                         eval("json.tickFormatter = " + json.tickFormatter);
 
@@ -109,19 +110,12 @@
 
                         var tip = d3.tip()
                             .attr('class', 'tooltip top in')
-                            .offset([0, 0])
                             .html(function(d) {
                                 return '<div class="tooltip-arrow"></div><div class="tooltip-inner">' +
                                     '{% trans %}Median{% endtrans %}: ' + json.tickFormatter(d[1]) + '<br>' +
-                                    '{% trans %}Quartiles{% endtrans %}: ' + json.tickFormatter(d[0]) + ' - ' + json.tickFormatter(d[2]) +
+                                    '{% trans %}Quartiles{% endtrans %}: ' + json.tickFormatter(d[xAxisInverse ? 2 : 0]) + ' - ' + json.tickFormatter(d[xAxisInverse ? 0 : 2]) +
                                     '</div>';
                             });
-
-                        var chart = d3.boxplot()
-                            .whiskers(iqr(1.5))
-                            .width(width)
-                            .domain([min, max])
-                            .tooltip(tip);
 
                         var svg = d3.select("#anova-plot").append("svg")
                             .attr("width", width + margin.left + margin.right)
@@ -131,34 +125,60 @@
                             .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
                             .call(tip);
 
-                        var x = d3.scaleBand()
+                        var y = d3.scaleBand()
                             .domain(data.map(function (d) {
                                 return d[0];
                             }))
-                            .rangeRound([0, height])
+                            .rangeRound([10, height + 10])
                             .padding(0.3);
 
-                        var y = d3.scaleLinear()
-                            .domain([min, max])
-                            .range([10, width]);
+                        var x;
+
+                        if (xAxisInverse) {
+                            x = d3.scalePow()
+                                .domain([min, max])
+                                .exponent(-1)
+                                .range([width + 10, 10]);
+                        } else {
+                            x = d3.scaleLinear()
+                                .domain([min, max])
+                                .range([10, width + 10]);
+                        }
 
                         var xAxis = d3.axisTop()
-                            .scale(y)
+                            .scale(x)
                             .tickFormat(json.tickFormatter);
 
+                        if (xAxisInverse) {
+                            var tmpDomain = d3.scaleLinear().domain([1/max, 1/min]).domain();
+                            xAxis.tickValues(
+                                d3.ticks(tmpDomain[0], tmpDomain[1], 10)
+                                    .map(function(v){
+                                        return v > 0 ? 1/v : x.domain()[1];
+                                    })
+                            );
+                        }
+
                         var yAxis = d3.axisLeft()
-                            .scale(x)
+                            .scale(y)
                             .tickFormat(function (label) {
                                 return label.length > 16 ? label.substring(0, 14) + '\u2026' : label;
                             });
+
+                        var chart = d3.boxplot()
+                            .whiskers(iqr(1.5))
+                            .height(height)
+                            .domain([min, max])
+                            .tooltip(tip)
+                            .xAxis(x);
 
                         svg.selectAll(".box")
                             .data(data)
                             .enter().append("g")
                             .attr("transform", function (d) {
-                                return "translate(10," + x(d[0]) + ")";
+                                return "translate(0," + y(d[0]) + ")";
                             })
-                            .call(chart.height(x.bandwidth()));
+                            .call(chart.height(y.bandwidth()));
 
                         svg.append("text")
                             .attr("x", (width / 2))

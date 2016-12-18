@@ -32,6 +32,6 @@ trait UnitConversionByDividendTrait
      */
     public function getJavaScriptConversion()
     {
-        return $this->getDividendFromBaseUnit().'/d';
+        return 'd > 0 ? '.$this->getDividendFromBaseUnit().'/d : 0';
     }
 }
