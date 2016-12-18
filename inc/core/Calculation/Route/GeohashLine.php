@@ -4,37 +4,46 @@ namespace Runalyze\Calculation\Route;
 
 class GeohashLine
 {
-    public static function extend($geolineHashes) {
+    /**
+     * @param array $geolineHashes
+     * @return array
+     */
+    public static function extend(array $geolineHashes)
+    {
         $geohashes = array();
+
         foreach ($geolineHashes as $hash) {
             if (empty($hash)) {
-                $geohashes[] = end($geohashes);
+                $geohashes[] = '7zzzzzzzzzzz';
             } else {
-                $newhash = substr(end($geohashes),0, 12-strlen($hash)).$hash;
-                $geohashes[] = $newhash;
+                $geohashes[] = substr(end($geohashes), 0, 12 - strlen($hash)).$hash;
             }
         }
+
         return $geohashes;
     }
 
-    public static function shorten($geolineHashes) {
+    /**
+     * @param array $geolineHashes
+     * @return array
+     */
+    public static function shorten(array $geolineHashes)
+    {
+        $last = '';
         $newgeoline = array();
-        foreach($geolineHashes as $hash) {
-            if ($hash == '7zzzzzzzzzzz') {
+
+        foreach ($geolineHashes as $hash) {
+            if ($hash == '7zzzzzzzzzzz' || $last == $hash) {
                 $newgeoline[] = '';
-                $last = '';
             } elseif (empty($newgeoline)) {
                 $newgeoline[] = $hash;
-                $last = $hash;
-            } elseif ($last == $hash) {
-                $newgeoline[] = '';
-                $last = '';
             } else {
-                $pos = strspn($last ^ $hash, "\0");
-                $newgeoline[] = substr($hash,$pos);
+                $newgeoline[] = substr($hash, strspn($last ^ $hash, "\0"));
             }
+
             $last = $hash;
         }
+
         return $newgeoline;
     }
 }
