@@ -8,6 +8,8 @@
     "fontIconPicker": "^2.0.0",
     "tablesorter": "jquery.tablesorter#2.18.4",
     "moment": "^2.13.0",
-    "moment-timezone": "^0.5.4"
+    "moment-timezone": "^0.5.4",
+    "d3": "^4.4.0",
+    "d3-tip": "^0.8.0-alpha.1"
   }
 }

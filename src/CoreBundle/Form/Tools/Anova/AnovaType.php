@@ -78,7 +78,6 @@ class AnovaType extends AbstractType
                 'attr' => ['class' => 'chosen-select full-size']
             ])
             ->add('valueToGroupBy', ChoiceType::class, [
-                //'expanded' => true,
                 'choices' => [
                     'Time related' => [
                         'Month' => QueryGroups::MONTH,
@@ -92,7 +91,6 @@ class AnovaType extends AbstractType
                 ]
             ])
             ->add('valueToLookAt', ChoiceType::class, [
-                //'expanded' => true,
                 'choices' => [
                     'Main values' => [
                         'Pace' => QueryValues::PACE,
