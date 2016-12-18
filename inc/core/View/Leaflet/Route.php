@@ -5,6 +5,7 @@
  */
 
 namespace Runalyze\View\Leaflet;
+use League\Geotools\Geotools;
 
 /**
  * Leaflet route
@@ -145,10 +146,13 @@ class Route {
 	 * @param string $Tooltip [optional]
 	 */
 	final public function addMarkerGeohash($geohash, $Icon, $Tooltip = '') {
-		$geotools       = new \League\Geotools\Geotools();
-		$decoded = $geotools->geohash()->decode($geohash);
+	    if ('7zzzzzzzzzzz' == $geohash) {
+	        return;
+        }
 
-		$this->Marker[] = 'L.marker(['.$decoded->getCoordinate()->getLatitude().','.$decoded->getCoordinate()->getLongitude().'], {icon: '.$Icon.', tooltip: "'.$Tooltip.'"})';
+		$coordinate = (new Geotools())->geohash()->decode($geohash)->getCoordinate();
+
+		$this->Marker[] = 'L.marker(['.$coordinate->getLatitude().','.$coordinate->getLongitude().'], {icon: '.$Icon.', tooltip: "'.$Tooltip.'"})';
 	}
 
 	/**

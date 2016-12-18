@@ -129,6 +129,11 @@ class Map {
 	        $Code.= 'RunalyzeLeaflet.Routes.routeid="'.$this->Routes[0]->id().'";';
 		}
 
-		return '<script>'.$Code.'</script>';
+		$Code = '(function(RL,R){'.str_replace('RunalyzeLeaflet', 'RL', str_replace('RunalyzeLeaflet.Routes', 'R', $Code)).'})(RunalyzeLeaflet, RunalyzeLeaflet.Routes);';
+
+		return '<script>Runalyze.try('.
+            'function(){'.$Code.'}, '.
+            'function(){$("#'.$this->id.'").css("height","auto").html(\'<p><em>'.__('There was a problem trying to show the map.').'</em></p>\');'.
+        '});</script>';
 	}
 }
