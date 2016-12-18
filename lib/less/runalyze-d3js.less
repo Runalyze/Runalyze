@@ -1,0 +1,45 @@
+@d3js-axis-color:               #ccc;
+@d3js-plot-color:               #333;
+@d3js-plot-main-color:          #8ab856;
+@d3js-plot-main-color-hover:    #009500;
+
+.d3js {
+  .axis {
+    font-size: 10px;
+
+    path, line {
+      fill: none;
+      stroke: @d3js-axis-color;
+      shape-rendering: crispEdges;
+    }
+  }
+}
+
+.boxplot {
+  line,
+  rect,
+  circle {
+    fill: @d3js-plot-main-color;
+    fill-opacity: 1.0;
+    stroke: @d3js-plot-color;
+    stroke-width: 1px;
+  }
+
+  line,
+  rect {
+    shape-rendering: crispEdges;
+  }
+
+  rect:hover {
+    fill: @d3js-plot-main-color-hover;
+  }
+
+  .center {
+    stroke-dasharray: 3,3;
+  }
+
+  .outlier {
+    fill: none;
+    stroke: @d3js-plot-color;
+  }
+}

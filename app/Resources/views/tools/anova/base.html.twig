@@ -1,0 +1,205 @@
+{% extends 'base_logged_in.twig' %}
+
+{% block content %}
+    <div class="panel-heading">
+        <h1><a class="ajax" target="ajax" href="{{ url('tools-anova') }}">{% trans %}ANOVA{% endtrans %}</a></h1>
+    </div>
+
+    <div class="panel-content">
+        {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'id': 'anova-form'}}) }}
+
+            <fieldset>
+                <legend>{% trans %}Data selection{% endtrans %}</legend>
+
+                <div class="w100 with33erLabel">
+                    <label>{% trans %}Time range{% endtrans %}</label>
+
+                    <div class="full-size left">
+                        <span class="input-with-unit">
+                            {{ form_widget(form.dateFrom) }}
+                            <label for="anova_dateFrom" class="input-unit"><i class="fa fa-fw fa-calendar"></i></label>
+                        </span>
+
+                        {% trans %}to{% endtrans %}
+
+                        <span class="input-with-unit">
+                            {{ form_widget(form.dateTo) }}
+                            <label for="anova_dateTo" class="input-unit"><i class="fa fa-fw fa-calendar"></i></label>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="w100 with33erLabel">
+                    <label for="anova_sport">
+                        {% trans %}Sport type{% endtrans %}
+                        <span class="right small">
+                            <span class="link chosen-select-all" data-target="anova_sport">{% trans %}all{% endtrans %}</span> |
+                            <span class="link chosen-select-none" data-target="anova_sport">{% trans %}none{% endtrans %}</span>&nbsp;
+                        </span>
+                    </label>
+
+                    {{ form_widget(form.sport) }}
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>{% trans %}Factor model{% endtrans %}</legend>
+
+                <div class="w100 with33erLabel">
+                    {{ form_label(form.valueToGroupBy) }}
+                    {{ form_widget(form.valueToGroupBy) }}
+                </div>
+
+                <div class="w100 with33erLabel">
+                    {{ form_label(form.valueToLookAt) }}
+                    {{ form_widget(form.valueToLookAt) }}
+                </div>
+            </fieldset>
+
+            <div class="c">
+                <input type="submit" class="submit" value="{% trans %}Start analysis{% endtrans %}">
+            </div>
+
+        {{ form_end(form) }}
+
+        <div id="anova-plot"></div>
+
+        <script>
+            var $plot = $("#anova-plot");
+
+            $("#anova-form").unbind('submit').submit(function(e){
+                e.preventDefault();
+
+                var data = $(this).serializeArray();
+                var url = $(this).attr('action');
+
+                $plot.addClass('loading');
+
+                $.post(url, data).done(function(json){
+                    try {
+                        var numGroups = json.groups.constructor === Array ? json.groups.length : Object.getOwnPropertyNames(json.groups).length;
+
+                        eval("json.tickFormatter = " + json.tickFormatter);
+
+                        $plot.html("");
+
+                        if (numGroups == 0) {
+                            $plot.html('<p class="text"><em>{% trans %}No results.{% endtrans %}</em></p>').removeClass('loading');
+                            return;
+                        }
+
+                        var margin = {top: 50, right: 30, bottom: 30, left: 100};
+                        var height = 30 * numGroups;
+                        var width = 810 - margin.left - margin.right;
+
+                        var min = Infinity,
+                            max = -Infinity;
+
+                        var data = [];
+
+                        $.each(json.groups, function (i, row) {
+                            data.push([row.label, row.data]);
+
+                            var rowMax = Math.max.apply(null, row.data);
+                            var rowMin = Math.min.apply(null, row.data);
+
+                            if (rowMax > max) max = rowMax;
+                            if (rowMin < min) min = rowMin;
+                        });
+
+                        var tip = d3.tip()
+                            .attr('class', 'tooltip top in')
+                            .html(function(d) {
+                                return '<div class="tooltip-arrow"></div><div class="tooltip-inner">' +
+                                    '{% trans %}Median{% endtrans %}: ' + json.tickFormatter(d[1]) + '<br>' +
+                                    '{% trans %}Quartiles{% endtrans %}: ' + json.tickFormatter(d[0]) + ' - ' + json.tickFormatter(d[2]) +
+                                    '</div>';
+                            });
+
+                        var svg = d3.select("#anova-plot").append("svg")
+                            .attr("width", width + margin.left + margin.right)
+                            .attr("height", height + margin.top + margin.bottom)
+                            .attr("class", "d3js boxplot")
+                            .append("g")
+                            .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+                            .call(tip);
+
+                        var y = d3.scaleBand()
+                            .domain(data.map(function (d) {
+                                return d[0];
+                            }))
+                            .rangeRound([10, height + 10])
+                            .padding(0.3);
+
+                        var x = d3.scaleLinear()
+                            .domain([min, max])
+                            .range([10, width + 10]);
+
+                        var xAxis = d3.axisTop()
+                            .scale(x)
+                            .tickFormat(json.tickFormatter);
+
+                        var yAxis = d3.axisLeft()
+                            .scale(y)
+                            .tickFormat(function (label) {
+                                return label.length > 16 ? label.substring(0, 14) + '\u2026' : label;
+                            });
+
+                        var chart = d3.boxplot()
+                            .whiskers(iqr(1.5))
+                            .height(height)
+                            .domain([min, max])
+                            .tooltip(tip)
+                            .xAxis(x);
+
+                        svg.selectAll(".box")
+                            .data(data)
+                            .enter().append("g")
+                            .attr("transform", function (d) {
+                                return "translate(0," + y(d[0]) + ")";
+                            })
+                            .call(chart.height(y.bandwidth()));
+
+                        svg.append("text")
+                            .attr("x", (width / 2))
+                            .attr("y", -(margin.top / 2))
+                            .attr("text-anchor", "middle")
+                            .style("font-size", "10px")
+                            .text($("#anova_valueToLookAt").find("option:selected").text());
+
+                        svg.append("g")
+                            .attr("class", "y axis")
+                            .call(yAxis);
+
+                        svg.append("g")
+                            .attr("class", "x axis")
+                            .call(xAxis);
+                    } catch (e) {
+                        console.log(e);
+
+                        $plot.html('<p class="text"><em>{% trans %}There was a problem.{% endtrans %} ({% trans %}Plotting failed{% endtrans %})</em></p>');
+                    } finally {
+                        $plot.removeClass('loading');
+                    }
+                }).fail(function(){
+                    $plot.html('<p class="text"><em>{% trans %}There was a problem.{% endtrans %} ({% trans %}Request failed{% endtrans %})</em></p>').removeClass('loading');
+                });
+
+                return false;
+            });
+
+            function iqr(k) {
+                return function(d, i) {
+                    var q1 = d.quartiles[0],
+                        q3 = d.quartiles[2],
+                        iqr = (q3 - q1) * k,
+                        lower = -1,
+                        upper = d.length;
+                    while (d[++lower] < q1 - iqr);
+                    while (d[--upper] > q3 + iqr);
+                    return [lower, upper];
+                };
+            }
+        </script>
+    </div>
+{% endblock %}

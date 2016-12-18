@@ -3,6 +3,7 @@
 namespace Runalyze\Bundle\CoreBundle\Controller;
 
 use Runalyze\Activity\Distance;
+use Runalyze\Bundle\CoreBundle\Component\Tool\Anova\AnovaDataQuery;
 use Runalyze\Bundle\CoreBundle\Component\Tool\DatabaseCleanup\JobGeneral;
 use Runalyze\Bundle\CoreBundle\Component\Tool\DatabaseCleanup\JobLoop;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Table\GeneralPaceTable;
@@ -10,10 +11,14 @@ use Runalyze\Bundle\CoreBundle\Component\Tool\Table\VdotRaceResultsTable;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Table\VdotPaceTable;
 use Runalyze\Bundle\CoreBundle\Component\Tool\VdotAnalysis\VdotAnalysis;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
+use Runalyze\Bundle\CoreBundle\Form\Tools\Anova\AnovaData;
+use Runalyze\Bundle\CoreBundle\Form\Tools\Anova\AnovaType;
 use Runalyze\Configuration;
+use Runalyze\Metrics\Common\JavaScriptFormatter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class ToolsController extends Controller
@@ -117,6 +122,48 @@ class ToolsController extends Controller
         return $this->render('tools/vdot_analysis.html.twig', [
             'races' => $races,
             'vdotFactor' => $vdotFactor
+        ]);
+    }
+
+    /**
+     * @Route("/my/tools/anova", name="tools-anova")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function anovaAction(Request $request, Account $account)
+    {
+        // This should go to AnovaType ... but how?
+        $data = new AnovaData();
+        $data->setSport($this->getDoctrine()->getRepository('CoreBundle:Sport')->findAllFor($account));
+        $data->setDateFrom((new \DateTime())->sub(new \DateInterval('P6M')));
+        $data->setDateTo(new \DateTime());
+
+        $form = $this->createForm(AnovaType::class, $data, [
+            'action' => $this->generateUrl('tools-anova')
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            if (!$form->isValid()) {
+                return $this->json([
+                    'status' => 'There was a problem.'
+                ]);
+            }
+
+            $unitSystem = $this->get('app.configuration_manager')->getList($account)->getUnitSystem();
+            $query = new AnovaDataQuery($data);
+            $query->loadAllGroups($this->getDoctrine()->getManager(), $account);
+
+            return $this->json([
+                'tickFormatter' => JavaScriptFormatter::getFormatter($query->getValueUnit($unitSystem)),
+                'groups' => $query->getResults(
+                    $this->getDoctrine()->getRepository('CoreBundle:Training'),
+                    $account, $unitSystem
+                )
+            ]);
+        }
+
+        return $this->render('tools/anova/base.html.twig', [
+            'form' => $form->createView()
         ]);
     }
 

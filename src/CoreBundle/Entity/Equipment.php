@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Equipment
  *
  * @ORM\Table(name="equipment", indexes={@ORM\Index(name="accountid", columns={"accountid"}), @ORM\Index(name="typeid", columns={"typeid"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\EquipmentRepository")
  */
 class Equipment
 {

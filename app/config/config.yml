@@ -79,6 +79,12 @@ doctrine:
         query_cache_driver:
             type: service
             id: doctrine_cache.providers.vendor_filesystem_query_cache
+        dql:
+            datetime_functions:
+                from_unixtime: DoctrineExtensions\Query\Mysql\FromUnixtime
+                month: DoctrineExtensions\Query\Mysql\Month
+                week: DoctrineExtensions\Query\Mysql\Week
+                year: DoctrineExtensions\Query\Mysql\Year
 
 doctrine_migrations:
     dir_name: "%kernel.root_dir%/DoctrineMigrations"

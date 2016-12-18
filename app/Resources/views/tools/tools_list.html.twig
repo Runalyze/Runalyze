@@ -20,6 +20,17 @@
         </p>
 
         <p class="file">
+            <a class="ajax" href="{{ url('tools-anova') }}" target="ajax">
+                <strong class="block">{% trans %}ANOVA{% endtrans %}</strong>
+                <small class="block">
+                    {% trans %}
+                    Compare your activity's values grouped by common values (e.g. sport or activity type) for a given period.
+                    {% endtrans %}
+                </small>
+            </a>
+        </p>
+
+        <p class="file">
             <a class="ajax" href="{{ url('tools-vdot-analysis') }}" target="ajax">
                 <strong class="block">{% trans %}Analyze your VDOT{% endtrans %}</strong>
                 <small class="block">
