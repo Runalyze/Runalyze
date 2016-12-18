@@ -11,7 +11,7 @@ class JavaScriptFormatter
         if ($unit instanceof AbstractPaceInTimeFormatUnit) {
             $valueConversion = 'Math.floor(d/60) + \':\' + (Math.round(d%60) < 10 ? \'0\' : \'\') + Math.round(d%60)';
         } elseif ($unit instanceof FormattableUnitInterface) {
-            $valueConversion = '('.$unit->getJavaScriptConversion().').toFixed('.$unit->getDecimals().')';
+            $valueConversion = '(d).toFixed('.$unit->getDecimals().')';
         } elseif (method_exists($unit, 'getJavaScriptConversion')) {
             $valueConversion = $unit->getJavaScriptConversion();
         } else {

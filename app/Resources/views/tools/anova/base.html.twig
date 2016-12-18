@@ -78,7 +78,6 @@
                 $.post(url, data).done(function(json){
                     try {
                         var numGroups = json.groups.constructor === Array ? json.groups.length : Object.getOwnPropertyNames(json.groups).length;
-                        var xAxisInverse = json.tickFormatter.indexOf('\/d') !== -1;
 
                         eval("json.tickFormatter = " + json.tickFormatter);
 
@@ -113,7 +112,7 @@
                             .html(function(d) {
                                 return '<div class="tooltip-arrow"></div><div class="tooltip-inner">' +
                                     '{% trans %}Median{% endtrans %}: ' + json.tickFormatter(d[1]) + '<br>' +
-                                    '{% trans %}Quartiles{% endtrans %}: ' + json.tickFormatter(d[xAxisInverse ? 2 : 0]) + ' - ' + json.tickFormatter(d[xAxisInverse ? 0 : 2]) +
+                                    '{% trans %}Quartiles{% endtrans %}: ' + json.tickFormatter(d[0]) + ' - ' + json.tickFormatter(d[2]) +
                                     '</div>';
                             });
 
@@ -132,32 +131,13 @@
                             .rangeRound([10, height + 10])
                             .padding(0.3);
 
-                        var x;
-
-                        if (xAxisInverse) {
-                            x = d3.scalePow()
-                                .domain([min, max])
-                                .exponent(-1)
-                                .range([width + 10, 10]);
-                        } else {
-                            x = d3.scaleLinear()
-                                .domain([min, max])
-                                .range([10, width + 10]);
-                        }
+                        var x = d3.scaleLinear()
+                            .domain([min, max])
+                            .range([10, width + 10]);
 
                         var xAxis = d3.axisTop()
                             .scale(x)
                             .tickFormat(json.tickFormatter);
-
-                        if (xAxisInverse) {
-                            var tmpDomain = d3.scaleLinear().domain([1/max, 1/min]).domain();
-                            xAxis.tickValues(
-                                d3.ticks(tmpDomain[0], tmpDomain[1], 10)
-                                    .map(function(v){
-                                        return v > 0 ? 1/v : x.domain()[1];
-                                    })
-                            );
-                        }
 
                         var yAxis = d3.axisLeft()
                             .scale(y)

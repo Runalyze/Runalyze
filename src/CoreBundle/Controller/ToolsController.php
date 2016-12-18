@@ -157,7 +157,7 @@ class ToolsController extends Controller
                 'tickFormatter' => JavaScriptFormatter::getFormatter($query->getValueUnit($unitSystem)),
                 'groups' => $query->getResults(
                     $this->getDoctrine()->getRepository('CoreBundle:Training'),
-                    $account
+                    $account, $unitSystem
                 )
             ]);
         }

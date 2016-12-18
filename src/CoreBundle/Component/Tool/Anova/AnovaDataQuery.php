@@ -70,14 +70,15 @@ class AnovaDataQuery
      * @param Account $account
      * @return array
      */
-    public function getResults(TrainingRepository $trainingRepository, Account $account)
+    public function getResults(TrainingRepository $trainingRepository, Account $account, UnitSystem $unitSystem)
     {
+        $unit = $this->getValueUnit($unitSystem);
         $iterator = $this->buildQuery($trainingRepository, $account)->iterate(null, AbstractQuery::HYDRATE_ARRAY);
 
         foreach ($iterator as $row) {
             $data = array_shift($row);
 
-            $this->Groups[(int)$data['grouping']]['data'][] = (float)$data['value'];
+            $this->Groups[(int)$data['grouping']]['data'][] = $unit->fromBaseUnit((float)$data['value']);
         }
 
         $this->filterEmptyGroups();

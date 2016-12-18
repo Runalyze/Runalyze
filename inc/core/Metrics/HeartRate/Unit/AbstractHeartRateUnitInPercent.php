@@ -4,13 +4,13 @@ namespace Runalyze\Metrics\HeartRate\Unit;
 
 use Runalyze\Metrics\Common\FormattableUnitInterface;
 
-abstract class AbstractHeartRateUnitInPercent extends AbstractHeartRateUnit implements FormattableUnitInterface
+abstract class AbstractHeartRateUnitInPercent extends AbstractHeartRateUnit
 {
     /**
-     * @return int
+     * @return string
      */
-    public function getDecimals()
+    public function getJavaScriptConversion()
     {
-        return 0;
+        return 'Math.round(d*100)';
     }
 }

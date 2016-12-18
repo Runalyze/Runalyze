@@ -50,12 +50,4 @@ class PercentMaximum extends AbstractHeartRateUnitInPercent
     {
         return $this->MaximalHeartRate;
     }
-
-    /**
-     * @return string value in base unit is given as 'd'
-     */
-    public function getJavaScriptConversion()
-    {
-        return '100*d/'.$this->MaximalHeartRate;
-    }
 }
