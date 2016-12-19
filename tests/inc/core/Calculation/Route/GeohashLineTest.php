@@ -16,7 +16,7 @@ class GeohashLineTest extends \PHPUnit_Framework_TestCase
     public function testEmptyStartPoint()
     {
         $longHashes = ['7zzzzzzzzzzz', 'u1xjnxhj49qr', 'u1xjnxhjr7wb'];
-        $shortHashes = ['', 'u1xjnxhj49qr', 'r7wb'];
+        $shortHashes = ['7zzzzzzzzzzz', 'u1xjnxhj49qr', 'r7wb'];
 
         $this->assertEquals($shortHashes, GeohashLine::shorten($longHashes));
         $this->assertEquals($longHashes, GeohashLine::extend($shortHashes));
@@ -25,7 +25,16 @@ class GeohashLineTest extends \PHPUnit_Framework_TestCase
     public function testEmptyPointsInLine()
     {
         $longHashes = ['u1xjnxhtk8w1', 'u1xjnxhmrvmd', '7zzzzzzzzzzz', 'u1xjnxhmqqg2', '7zzzzzzzzzzz', 'u1xjnxhj49qr', 'u1xjnxhjr7wb', '7zzzzzzzzzzz', '7zzzzzzzzzzz'];
-        $shortHashes = ['u1xjnxhtk8w1', 'mrvmd', '', 'u1xjnxhmqqg2', '', 'u1xjnxhj49qr', 'r7wb', '', ''];
+        $shortHashes = ['u1xjnxhtk8w1', 'mrvmd', '7zzzzzzzzzzz', 'u1xjnxhmqqg2', '7zzzzzzzzzzz', 'u1xjnxhj49qr', 'r7wb', '7zzzzzzzzzzz', ''];
+
+        $this->assertEquals($shortHashes, GeohashLine::shorten($longHashes));
+        $this->assertEquals($longHashes, GeohashLine::extend($shortHashes));
+    }
+
+    public function testEqualPoints()
+    {
+        $longHashes = ['u1xjnxhj49qr', 'u1xjnxhj49qr', 'u1xjnxhjr7wb'];
+        $shortHashes = ['u1xjnxhj49qr', '', 'r7wb'];
 
         $this->assertEquals($shortHashes, GeohashLine::shorten($longHashes));
         $this->assertEquals($longHashes, GeohashLine::extend($shortHashes));

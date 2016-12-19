@@ -14,7 +14,7 @@ class GeohashLine
 
         foreach ($geolineHashes as $hash) {
             if (empty($hash)) {
-                $geohashes[] = '7zzzzzzzzzzz';
+                $geohashes[] = end($geohashes) ?: '7zzzzzzzzzzz';
             } else {
                 $geohashes[] = substr(end($geohashes), 0, 12 - strlen($hash)).$hash;
             }
@@ -33,7 +33,7 @@ class GeohashLine
         $newgeoline = array();
 
         foreach ($geolineHashes as $hash) {
-            if ($hash == '7zzzzzzzzzzz' || $last == $hash) {
+            if ($last == $hash) {
                 $newgeoline[] = '';
             } elseif (empty($newgeoline)) {
                 $newgeoline[] = $hash;
