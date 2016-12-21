@@ -30,7 +30,7 @@ class JobGeneral extends Job
 	 * Task key: vdot corrector
 	 * @var string
 	 */
-	const VDOT_CORRECTOR = 'vdot-corrector';
+	const VDOT_CORRECTOR = 'vdotCorrector';
 
 	/**
 	 * Task key: basic endurance

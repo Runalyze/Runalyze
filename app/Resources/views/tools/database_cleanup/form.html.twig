@@ -1,67 +1,58 @@
 {% extends 'tools/database_cleanup/base.html.twig' %}
 
 {% block toolContent %}
-    <form action="{{ url('tools-cleanup') }}" method="post" id="cleanup" class="ajax no-automatic-reload">
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'ajax no-automatic-reloads'}, 'action': url('tools-cleanup')}) }}
 
         <div class="padding-5">
             <label>
-                <input type="radio" name="mode" value="general" checked>
-                <strong>{% trans %}General cleanup{% endtrans %}</strong>
+                {{ form_widget(form.mode[0]) }}
+                {{ form_label(form.mode[0]) }}
             </label>
 
             <div class="radio-content" data-radio="general">
                 <div class="margin-10 padding-5">
                     <div class="checkbox">
-                        <label>
-                            <input type="checkbox" name="internals">
-                            {% trans %}Refresh internal constants{% endtrans %}
-                        </label>
+                        {{ form_widget(form.internals) }}
+                        {{ form_label(form.internals, 'Refresh internal constants') }}
                     </div>
+
                     <div class="checkbox">
-                        <label>
-                            <input type="checkbox" name="equipment">
-                            {% trans %}Recalculate your equipment statistics{% endtrans %}
-                        </label>
+                        {{ form_widget(form.equipment) }}
+                        {{ form_label(form.equipment, 'Recalculate your equipment statistics') }}
                     </div>
+
                     <div class="checkbox">
-                        <label>
-                            <input type="checkbox" name="vdot-corrector">
-                            {% trans %}Recalculate your VDOT correction factor{% endtrans %}
-                        </label>
+                        {{ form_widget(form.vdotCorrector) }}
+                        {{ form_label(form.vdotCorrector, 'Recalculate your VDOT correction factor') }}
                     </div>
+
                     <div class="checkbox">
-                        <label>
-                            <input type="checkbox" name="vdot">
-                            {% trans %}Recalculate your VDOT shape{% endtrans %}
-                        </label>
+                        {{ form_widget(form.vdot) }}
+                        {{ form_label(form.vdot, 'Recalculate your VDOT shape') }}
                     </div>
+
                     <div class="checkbox">
-                        <label>
-                            <input type="checkbox" name="endurance">
-                            {% trans %}Recalculate your basic endurance{% endtrans %}
-                        </label>
+                        {{ form_widget(form.endurance) }}
+                        {{ form_label(form.endurance, 'Recalculate your basic endurance') }}
                     </div>
+
                     <div class="checkbox">
-                        <label>
-                            <input type="checkbox" name="trimp">
-                            {% trans %}Recalculate maximal TRIMP values{% endtrans %}
-                        </label>
+                        {{ form_widget(form.trimp) }}
+                        {{ form_label(form.trimp, 'Recalculate maximal TRIMP values') }}
                     </div>
+
                     <div class="checkbox">
-                        <label>
-                            <input type="checkbox" name="cacheclean">
-                            {% trans %}Clear your personal cache{% endtrans %}
-                        </label>
+                        {{ form_widget(form.cacheclean) }}
+                        {{ form_label(form.cacheclean, 'Clear your personal cache') }}
                     </div>
+
                 </div>
             </div>
         </div>
 
         <div class="padding-5">
-            <label>
-                <input type="radio" name="mode" value="loop">
-                <strong>{% trans %}Loop through activities{% endtrans %}</strong>
-            </label>
+                {{ form_widget(form.mode[1]) }}
+                {{ form_label(form.mode[1]) }}
 
             <div class="radio-content transparent-70" data-radio="loop">
                 <div class="margin-10">
@@ -73,43 +64,34 @@
 
                 <div class="margin-10 padding-5">
                     <div class="checkbox">
-                        <label>
-                            <input type="checkbox" name="activity-elevation" disabled>
-                            {% trans %}Recalculate elevation{% endtrans %}
-                        </label>
+                        {{ form_widget(form.activityElevation) }}
+                        {{ form_label(form.activityElevation, 'Recalculate elevation') }}
                         <div class="checkbox">
-                            <label>
-                                <input type="checkbox" name="activity-elevation-overwrite" disabled>
-                                {% trans %}Overwrite manual values{% endtrans %}
-                            </label>
+                            {{ form_widget(form.activityElevationOverwrite) }}
+                            {{ form_label(form.activityElevationOverwrite, 'Overwrite manual values') }}
                         </div>
                     </div>
                     <div class="checkbox">
-                        <label>
-                            <input type="checkbox" name="activity-vdot" disabled>
-                            {% trans %}Recalculate VDOT values{% endtrans %}
-                        </label>
+                            {{ form_widget(form.activityVdot) }}
+                            {{ form_label(form.activityVdot, 'Recalculate VDOT values') }}
                     </div>
                     <div class="checkbox">
-                        <label>
-                            <input type="checkbox" name="activity-jdpoints" disabled>
-                            {% trans %}Recalculate JD training points{% endtrans %}
-                        </label>
+                            {{ form_widget(form.activityJdpoints) }}
+                            {{ form_label(form.activityJdpoints, 'Recalculate JD training points') }}
                     </div>
                     <div class="checkbox">
-                        <label>
-                            <input type="checkbox" name="activity-trimp" disabled>
-                            {% trans %}Recalculate TRIMP values{% endtrans %}
-                        </label>
+                            {{ form_widget(form.activityTrimp) }}
+                            {{ form_label(form.activityTrimp, 'Recalculate TRIMP values') }}
                     </div>
                 </div>
             </div>
         </div>
 
-        <input class="transparent-70" type="submit" name="submit" value="{% trans %}Start cleanup{% endtrans %}" disabled>
-
-    </form>
-
+    <div class="c">
+        <input type="submit" class="submit" value="{% trans %}Start cleanup{% endtrans %}">
+    </div>
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
     <script>
         $(function(){
             var $cleanup = $("#cleanup");

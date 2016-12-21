@@ -69,7 +69,7 @@ class ActivityController extends Controller
      * @Route("/call/call.Training.display.php")
      * @Route("/activity/{id}", name="ActivityShow", requirements={"id" = "\d+"})
      */
-    public function displayAction($id = null)
+    public function displayAction($id = null, Account $account)
     {
         $Frontend = new \Frontend(true, $this->get('security.token_storage'));
 
@@ -77,20 +77,20 @@ class ActivityController extends Controller
             $id = Request::createFromGlobals()->query->get('id');
         }
 
-        $Context = new Context($id, \SessionAccountHandler::getId());
+        $Context = new Context($id, $account->getId());
 
         switch (Request::createFromGlobals()->query->get('action')) {
             case 'changePrivacy':
                 $oldActivity = clone $Context->activity();
                 $Context->activity()->set(Activity\Entity::IS_PUBLIC, !$Context->activity()->isPublic());
                 $Updater = new Activity\Updater(\DB::getInstance(), $Context->activity(), $oldActivity);
-                $Updater->setAccountID(\SessionAccountHandler::getId());
+                $Updater->setAccountID($account->getId());
                 $Updater->update();
                 break;
             case 'delete':
                 $Factory = \Runalyze\Context::Factory();
                 $Deleter = new Activity\Deleter(\DB::getInstance(), $Context->activity());
-                $Deleter->setAccountID(\SessionAccountHandler::getId());
+                $Deleter->setAccountID($account->getId());
                 $Deleter->setEquipmentIDs($Factory->equipmentForActivity($id, true));
                 $Deleter->delete();
 
@@ -180,13 +180,13 @@ class ActivityController extends Controller
     * @Route("/activity/{id}/delete", name="ActivityDelete")
     * @Security("has_role('ROLE_USER')")
     */
-   public function deleteAction($id)
+   public function deleteAction($id, Account $account)
    {
         $Frontend = new \Frontend(true, $this->get('security.token_storage'));
 
         $Factory = \Runalyze\Context::Factory();
         $Deleter = new Activity\Deleter(\DB::getInstance(), $Factory->activity($id));
-        $Deleter->setAccountID(\SessionAccountHandler::getId());
+        $Deleter->setAccountID($account->getId());
         $Deleter->setEquipmentIDs($Factory->equipmentForActivity($id, true));
         $Deleter->delete();
 
@@ -199,13 +199,13 @@ class ActivityController extends Controller
      * @Route("/activity/{id}/vdot-info")
      * @Security("has_role('ROLE_USER')")
      */
-    public function vdotInfoAction($id)
+    public function vdotInfoAction($id, Account $account)
     {
         $Frontend = new \Frontend(true, $this->get('security.token_storage'));
 
         $VdotInfo = new VdotInfo();
-        $VdotInfo->setContext(new Context($id, \SessionAccountHandler::getId()));
-        $VdotInfo->setConfiguration(Configuration::Data(), Configuration::Vdot());
+        $VdotInfo->setContext(new Context($id, $account->getId()));
+        $VdotInfo->setConfiguration($this->get('app.configuration_manager')->getList()->getCurrentVdot());
 
         return $this->render(':activity:vdot_info.html.twig', [
             'title' => $VdotInfo->getTitle(),
@@ -222,7 +222,7 @@ class ActivityController extends Controller
      * @Route("/activity/{id}/elevation-correction")
      * @Security("has_role('ROLE_USER')")
      */
-    public function elevationCorrectionAction($id)
+    public function elevationCorrectionAction($id, Account $account)
     {
         $Frontend = new \Frontend(false, $this->get('security.token_storage'));
 
@@ -244,11 +244,11 @@ class ActivityController extends Controller
         	$Activity->set(Activity\Entity::ELEVATION, $Route->elevation());
 
         	$UpdaterRoute = new \Runalyze\Model\Route\Updater(\DB::getInstance(), $Route, $RouteOld);
-        	$UpdaterRoute->setAccountID(\SessionAccountHandler::getId());
+        	$UpdaterRoute->setAccountID($account->getId());
         	$UpdaterRoute->update();
 
         	$UpdaterActivity = new Activity\Updater(\DB::getInstance(), $Activity, $ActivityOld);
-        	$UpdaterActivity->setAccountID(\SessionAccountHandler::getId());
+        	$UpdaterActivity->setAccountID($account->getId());
         	$UpdaterActivity->update();
 
         	if (Request::createFromGlobals()->query->get('strategy') == 'none') {
@@ -277,10 +277,10 @@ class ActivityController extends Controller
      * @Route("/activity/{id}/splits-info", requirements={"id" = "\d+"})
      * @Security("has_role('ROLE_USER')")
      */
-    public function splitsInfoAction($id)
+    public function splitsInfoAction($id, Account $account)
     {
         $Frontend = new \Frontend(false, $this->get('security.token_storage'));
-        $Window = new Window(new Context($id, \SessionAccountHandler::getId()));
+        $Window = new Window(new Context($id, $account->getId()));
         $Window->display();
 
         return new Response();
@@ -291,10 +291,10 @@ class ActivityController extends Controller
      * @Route("/activity/{id}/elevation-info", requirements={"id" = "\d+"})
      * @Security("has_role('ROLE_USER')")
      */
-    public function elevationInfoAction($id)
+    public function elevationInfoAction($id, Account $account)
     {
         $Frontend = new \Frontend(false, $this->get('security.token_storage'));
-        $ElevationInfo = new \ElevationInfo(new Context($id, \SessionAccountHandler::getId()));
+        $ElevationInfo = new \ElevationInfo(new Context($id, $account->getId()));
         $ElevationInfo->display();
 
         return new Response();
@@ -361,18 +361,18 @@ class ActivityController extends Controller
      * @Route("/activity/{id}/export/{type}/{typeid}", requirements={"id" = "\d+"})
      * @Security("has_role('ROLE_USER')")
      */
-    public function exporterExportAction($id, $type, $typeid) {
+    public function exporterExportAction($id, $type, $typeid, Account $account) {
         $Frontend = new \Frontend(true, $this->get('security.token_storage'));
 
         if ($type == 'social' && Share\Types::isValidValue((int)$typeid)) {
-            $Context = new Context((int)$id, \SessionAccountHandler::getId());
+            $Context = new Context((int)$id, $account->getId());
             $Exporter = Share\Types::get((int)$typeid, $Context);
 
             if ($Exporter instanceof Share\AbstractSnippetSharer) {
                 $Exporter->display();
             }
         } elseif ($type == 'file' && File\Types::isValidValue((int)$typeid)) {
-            $Context = new Context((int)$id, \SessionAccountHandler::getId());
+            $Context = new Context((int)$id, $account->getId());
             $Exporter = File\Types::get((int)$typeid, $Context);
 
             if ($Exporter instanceof File\AbstractFileExporter) {
@@ -389,7 +389,7 @@ class ActivityController extends Controller
      * @Route("/activity/matcher", name="activityMatcher")
      * @Security("has_role('ROLE_USER')")
      */
-    public function ajaxActivityMatcher()
+    public function ajaxActivityMatcher(Account $account)
     {
         $Frontend = new \Frontend(true, $this->get('security.token_storage'));
 
@@ -402,7 +402,7 @@ class ActivityController extends Controller
         }
 
         $IgnoreIDs = \Runalyze\Configuration::ActivityForm()->ignoredActivityIDs();
-        $DuplicateFinder = new DuplicateFinder(\DB::getInstance(), \SessionAccountHandler::getId());
+        $DuplicateFinder = new DuplicateFinder(\DB::getInstance(), $account->getId());
 
         $IgnoreIDs = array_map(function($v){
         	try {

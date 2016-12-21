@@ -14,31 +14,31 @@ class JobLoop extends Job
 	 * Task key: elevation
 	 * @var string
 	 */
-	const ELEVATION = 'activity-elevation';
+	const ELEVATION = 'activityElevation';
 
 	/**
 	 * Task key: overwrite elevation
 	 * @var string
 	 */
-	const ELEVATION_OVERWRITE = 'activity-elevation-overwrite';
+	const ELEVATION_OVERWRITE = 'activityElevationOverwrite';
 
 	/**
 	 * Task key: vdot
 	 * @var string
 	 */
-	const VDOT = 'activity-vdot';
+	const VDOT = 'activityVdot';
 
 	/**
 	 * Task key: jd points
 	 * @var string
 	 */
-	const JD_POINTS = 'activity-jdpoints';
+	const JD_POINTS = 'activityJdpoints';
 
 	/**
 	 * Task key: trimp
 	 * @var string
 	 */
-	const TRIMP = 'activity-trimp';
+	const TRIMP = 'activityTrimp';
 
 	/**
 	 * Calculated elevations

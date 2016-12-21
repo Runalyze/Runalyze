@@ -11,6 +11,7 @@ use Runalyze\Bundle\CoreBundle\Component\Tool\Table\VdotRaceResultsTable;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Table\VdotPaceTable;
 use Runalyze\Bundle\CoreBundle\Component\Tool\VdotAnalysis\VdotAnalysis;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
+use Runalyze\Bundle\CoreBundle\Form\Tools\DatabaseCleanupType;
 use Runalyze\Bundle\CoreBundle\Form\Tools\Anova\AnovaData;
 use Runalyze\Bundle\CoreBundle\Form\Tools\Anova\AnovaType;
 use Runalyze\Configuration;
@@ -27,20 +28,22 @@ class ToolsController extends Controller
      * @Route("/my/tools/cleanup", name="tools-cleanup")
      * @Security("has_role('ROLE_USER')")
      *
-     * @TODO use symfony form
      */
     public function cleanupAction(Request $request, Account $account)
     {
-        $Frontend = new \Frontend(true, $this->get('security.token_storage'));
-
-        $mode = $request->request->get('mode');
         $prefix = $this->getParameter('database_prefix');
 
-        if (null !== $mode) {
-            if ('general' === $mode) {
-                $job = new JobGeneral($request->request->all(), \DB::getInstance(), $account->getId(), $prefix);
+        $defaultData = array();
+        $form = $this->createForm(DatabaseCleanupType::class, $defaultData);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid() && null !== $form->getData()['mode']) {
+            $Frontend = new \Frontend(true, $this->get('security.token_storage'));
+
+            if ('general' === $form->getData()['mode']) {
+                $job = new JobGeneral($form->getData(), \DB::getInstance(), $account->getId(), $prefix);
             } else {
-                $job = new JobLoop($request->request->all(), \DB::getInstance(), $account->getId(), $prefix);
+                $job = new JobLoop($form->getData(), \DB::getInstance(), $account->getId(), $prefix);
             }
 
             $job->run();
@@ -50,7 +53,9 @@ class ToolsController extends Controller
             ]);
         }
 
-        return $this->render('tools/database_cleanup/form.html.twig');
+        return $this->render('tools/database_cleanup/form.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 
     /**
@@ -59,10 +64,8 @@ class ToolsController extends Controller
      */
     public function tableVdotPaceAction()
     {
-        $Frontend = new \Frontend(true, $this->get('security.token_storage'));
-
         return $this->render('tools/tables/vdot_paces.html.twig', [
-            'currentVdot' => Configuration::Data()->vdot(),
+            'currentVdot' => $this->get('app.configuration_manager')->getList()->getCurrentVdot(),
             'vdots' => (new VdotPaceTable())->getVdotPaces(range(30, 80))
         ]);
     }
@@ -73,8 +76,6 @@ class ToolsController extends Controller
      */
     public function tableGeneralPaceAction()
     {
-        $Frontend = new \Frontend(true, $this->get('security.token_storage'));
-
         $distances = [0.2, 0.4, 1, 3, 5, 10, 21.1, 42.2, 50];
 
         return $this->render('tools/tables/general_paces.html.twig', [
@@ -90,12 +91,9 @@ class ToolsController extends Controller
      */
     public function tableVdotRaceResultAction()
     {
-        $Frontend = new \Frontend(true, $this->get('security.token_storage'));
-
         $distances = [1, 3, 5, 10, 21.1, 42.2, 50];
-
         return $this->render('tools/tables/vdot.html.twig', [
-            'currentVdot' => Configuration::Data()->vdot(),
+            'currentVdot' => $this->get('app.configuration_manager')->getList()->getCurrentVdot(),
             'distances' => array_map(function($km) { return (new Distance($km))->stringAuto(); }, $distances),
             'vdots' => (new VdotRaceResultsTable())->getVdotRaceResults($distances, range(30, 80))
         ]);

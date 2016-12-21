@@ -10,6 +10,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -30,19 +32,22 @@ class JsonImportToolController extends Controller
      * @Route("/upload", name="tools-backup-json-upload")
      * @Security("has_role('ROLE_USER')")
      *
-     * @TODO use symfony to move uploaded file
      */
-    public function backupUploadAction()
+    public function backupUploadAction(Request $request)
     {
-        if (!FilenameHandler::validateImportFileExtension($_FILES['qqfile']['name'])) {
+
+        $backupFile = $request->files->get('qqfile');
+        if (!FilenameHandler::validateImportFileExtension($backupFile->getClientOriginalName())) {
             return $this->json(['error' => 'Wrong file extension.']);
         }
 
-        if (!move_uploaded_file($_FILES['qqfile']['tmp_name'], $this->getImportFilePath().$_FILES['qqfile']['name'])) {
+        try {
+            $backupFile->move($this->getImportFilePath(), $backupFile->getClientOriginalName());
+        } catch (FileException $e) {
             return $this->json(['error' => 'Moving file did not work. Set chmod 777 for /data/backup-tool/import/']);
         }
 
-        $this->get('session')->getFlashBag()->set('json-import.file', $_FILES['qqfile']['name']);
+        $this->get('session')->getFlashBag()->set('json-import.file', $backupFile->getClientOriginalName());
 
         return $this->json(['success' => true]);
     }
