@@ -79,7 +79,7 @@ class DataBrowserShared extends DataBrowser {
 	 * @return string
 	 */
 	public static function getBaseUrl() {
-		return 'shared/'.Request::param('user').'/';
+		return 'athlete/'.Request::param('user').'';
 	}
 
 	/**
