@@ -119,6 +119,21 @@ class RunalyzePluginPanel_TagsSummary extends PluginPanel {
 				' LEFT JOIN '.PREFIX.'training ON '.PREFIX.'training.sportid = '.$Sport->id().
 				' LEFT JOIN '.PREFIX.'tag ON '.PREFIX.'tag.id = '.PREFIX.'activity_tag.tagid'.
 				' WHERE '.PREFIX.'training.id = activityid GROUP BY tagid ORDER BY count DESC');
+
+		foreach ($countTagsForSport as $data) {
+			if ($max == 0) {
+				$max = (int)$data['count'];
+			}
+
+			echo '<p style="position:relative;">
+				<span class="right">'.$data['count'].'x</span>
+				<strong>'.SearchLink::to('tagid', $data['tagid'], $data['tag']).'</strong>
+				'.$this->getUsageImage((int)$data['count'] / $max).'
+			</p>';
+		}
+
+		if ($countTagsForSport->rowCount() == 0)
+			echo HTML::em( __('You don\'t have tags for this sport') );
 	}
 
 	/**
