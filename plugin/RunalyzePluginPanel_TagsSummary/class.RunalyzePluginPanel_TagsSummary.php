@@ -97,12 +97,28 @@ class RunalyzePluginPanel_TagsSummary extends PluginPanel {
 	 * @see PluginPanel::displayContent()
 	 */
 	protected function displayContent() {
+		$Factory = new Model\Factory(SessionAccountHandler::getId());
+		$Sport = $Factory->sport((int)$this->Configuration()->value('sport'));
+
 		echo $this->getStyle();
 		echo '<div id="equipment">';
-
+		$this->showListFor($Sport);
 		echo '</div>';
 
 		echo HTML::clearBreak();
+	}
+
+	/**
+	 * @param \Runalyze\Model\Sport\Entity $Sport
+	 */
+	protected function showListFor(Model\Sport\Entity $Sport) {
+		$max = 0;
+		$countTagsForSport = DB::getInstance()
+			->query('SELECT '.PREFIX.'activity_tag.tagid, '.PREFIX.'tag.tag, COUNT(tagid) as `count`'.
+				' FROM '.PREFIX.'activity_tag'.
+				' LEFT JOIN '.PREFIX.'training ON '.PREFIX.'training.sportid = '.$Sport->id().
+				' LEFT JOIN '.PREFIX.'tag ON '.PREFIX.'tag.id = '.PREFIX.'activity_tag.tagid'.
+				' WHERE '.PREFIX.'training.id = activityid GROUP BY tagid ORDER BY count DESC');
 	}
 
 	/**
