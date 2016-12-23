@@ -29,9 +29,9 @@ class Raceresult
     /**
      * @var boolean
      *
-     * @ORM\Column(name="officially_measured", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 0")
+     * @ORM\Column(name="officially_measured", type="boolean", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 0")
      */
-    private $officiallyMeasured = '0';
+    private $officiallyMeasured = false;
 
     /**
      * @var string
@@ -155,7 +155,7 @@ class Raceresult
     /**
      * Set officiallyMeasured
      *
-     * @param string $officiallyMeasured
+     * @param bool $officiallyMeasured
      *
      * @return Raceresult
      */
@@ -383,4 +383,6 @@ class Raceresult
     {
         return $this->activity;
     }
+
+
 }

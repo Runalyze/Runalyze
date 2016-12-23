@@ -17,6 +17,19 @@ class RaceresultRepository extends EntityRepository
         ]);
     }
 
+    /**
+     * @param int $activityId
+     * @param int $accountId
+     * @return null|Training
+     */
+    public function findForAccount($activityId, $accountId)
+    {
+        return $this->findOneBy([
+            'activity' => $activityId,
+            'account' => $accountId
+        ]);
+    }
+
     public function save(Raceresult $raceResult)
     {
         $this->_em->persist($raceResult);

@@ -520,7 +520,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 		$Tooltip->setPosition(Tooltip::POSITION_RIGHT);
 		$Tooltip->wrapAround($code);
 
-		return Ajax::window('<a href="plugin/RunalyzePluginStat_Wettkampf/window.raceResult.php?rid='.$id.'">'.$code.'</a>');
+		return Ajax::window('<a href="my/raceresult/'.$id.'">'.$code.'</a>');
 	}
 
 	/**
@@ -572,138 +572,6 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	 */
 	public function isFunCompetition($id) {
 		return (in_array($id, $this->Configuration()->value('fun_ids')));
-	}
-
-	/**
-	 * RaceResult Formular
-	 */
-	public function raceResultForm($id) {
-		$Factory = Runalyze\Context::Factory();
-		$RaceResult = $Factory->raceresult($id);
-		$Activity = $Factory->activity($id);
-		$ActivityView = new Dataview($Activity);
-
-		if (isset($_GET['delete'])) {
-			$this->deleteRaceResult($RaceResult);
-			echo HTML::info(__('Race result was deleted.'));
-		} else {
-		 	if ($_POST) {
-			 	$RaceResult = $this->validatePostDataAndUpdateEntity($RaceResult);
-		 	} elseif ($RaceResult->isEmpty()) {
-				$RaceResult->setDefaultValuesFromActivity($Factory->activity($id));
-			}
-
-			$Factory->clearCache('raceresult', $id);
-		 	$Formular = new Formular('plugin/RunalyzePluginStat_Wettkampf/window.raceResult.php?rid='.$id, 'post');
-			$Formular->setId('raceresult');
-			$Formular->addCSSclass('ajax');
-			$Formular->addCSSclass('no-automatic-reload');
-			$FieldsetDetails = new FormularFieldset( __('Details') );
-
-			$FieldName = new FormularInput('name', __('Event').' '.Ajax::tooltip('<i class="fa fa-fw fa-question-circle"></i>', __('If you participate in an event multiple times you should always enter the same name, i.e. don\'t append the event\'s number or year.')), $RaceResult->name());
-			$FieldName->setSize( FormularInput::$SIZE_MIDDLE);
-
-			$FieldOfficiallyMeasured = new FormularCheckbox('officially_measured', __('Officially measured').' '.Ajax::tooltip('<i class="fa fa-fw fa-question-circle"></i>', __('Was the course officially measured?')), $RaceResult->officiallyMeasured() );
-
-			$FieldOfficialDistance = new FormularInput('official_distance', __('Official distance').' '.Ajax::tooltip('<i class="fa fa-fw fa-question-circle"></i>', __('We use two decimals for convenient reasons.').'<br>'.__('Marathon').': 42.20 km<br>'.__('Half marathon').': 21.10 km'), str_replace(',', '.', (new Distance($RaceResult->officialDistance()))->stringKilometer(false, 2)));
-			$FieldOfficialDistance->setUnit(FormularUnit::$KM);
-			$FieldOfficialTime = new FormularInput('official_time', __('Official time'), Duration::format($RaceResult->officialTime()) );
-
-			$FieldsetDetails->addFields(array($FieldName, $FieldOfficiallyMeasured, $FieldOfficialDistance, $FieldOfficialTime) );
-			$FieldsetDetails->setLayoutForFields(FormularFieldset::$LAYOUT_FIELD_W50);
-			$FieldsetDetails->addFileBlock(
-				__('This race result is linked to the following activity').': '.
-				$ActivityView->date().', '.$ActivityView->titleWithComment().
-				' ('.$ActivityView->distance(2).' / '.$ActivityView->duration()->string().')'
-			);
-
-			$FieldsetDetails->setLayoutForFields( FormularFieldset::$LAYOUT_FIELD_W100);
-			$FieldsetPlacement = new FormularFieldset( __('Placement') );
-			$FieldsetPlacement->addInfo( __('Your official placement.') );
-			$FieldsetPlacement->addField( new FormularInput('placement_total', __('Total'),  $RaceResult->placeTotal() ?: ''));
-			$FieldsetPlacement->addField( new FormularInput('placement_ageclass', __('Age group'), $RaceResult->placeAgeclass() ?: '') );
-			$FieldsetPlacement->addField( new FormularInput('placement_gender', __('Gender'), $RaceResult->placeGender() ?: '') );
-			$FieldsetParticipants = new FormularFieldset( __('Participants') );
-			$FieldsetParticipants->addInfo( __('Number of participants in every category') );
-			$FieldsetParticipants->addField( new FormularInput('participants_total', __('Total'), $RaceResult->participantsTotal() ?: '') );
-			$FieldsetParticipants->addField( new FormularInput('participants_ageclass', __('Age group'), $RaceResult->participantsAgeclass() ?: '') );
-			$FieldsetParticipants->addField( new FormularInput('participants_gender', __('Gender'), $RaceResult->participantsGender() ?: '') );
-			$Formular->addFieldset( $FieldsetDetails );
-			$Formular->addFieldset( $FieldsetPlacement );
-			$Formular->addFieldset( $FieldsetParticipants );
-
-			if (!$RaceResult->isEmpty()) {
-				$deleteLink = Ajax::link('<strong>'.__('Delete this race result').' &raquo;</strong>', 'ajax', 'plugin/RunalyzePluginStat_Wettkampf/window.raceResult.php?rid='.$id.'&delete');
-				$deleteInfo = __('This will only delete the entry as competition. The activity itself will stay untouched.');
-
-				$FieldsetDeletion = new FormularFieldset( __('Delete race result') );
-				$FieldsetDeletion->setCollapsed();
-				$FieldsetDeletion->addWarning($deleteLink.'<br><br><small>'.$deleteInfo.'</small>');
-				$Formular->addFieldset( $FieldsetDeletion );
-			}
-
-			if ($RaceResult->isEmpty()) {
-				$Formular->addSubmitButton( __('Add race result to activity'), 'submit' );
-			} else {
-				$Formular->addSubmitButton( __('Save'), 'submit' );
-			}
-
-			$Formular->setSubmitButtonsCentered();
-			$Formular->setLayoutForFields( FormularFieldset::$LAYOUT_FIELD_W33 );
-
-			$Formular->display();
-		}
-	}
-
-	/**
-	 * Validate RaceResult Formular
-	 * @param \Runalyze\Model\RaceResult\Entity $RaceResult
-	 * @return \Runalyze\Model\RaceResult\Entity updated race result
-	 */
-	protected function validatePostDataAndUpdateEntity(RaceResult\Entity $RaceResult) {
-		$OldRaceResult = clone $RaceResult;
-		$somethingFailed = false;
-		$fieldsToValidate = $this->fieldsToValidate();
-
-		foreach ($fieldsToValidate as $key => $fieldValidation) {
-			$validationResult = FormularValueParser::validatePost($key, $fieldValidation[1], $fieldValidation[2]);
-
-			if (true !== $validationResult) {
-				$somethingFailed = true;
-				FormularField::setKeyAsFailed($key);
-				FormularField::addValidationFailure(false !== $validationResult ? $validationResult : __('Invalid input.'));
-			}
-
-			$RaceResult->set($fieldValidation[0], $_POST[$key]);
-		}
-		if (!$somethingFailed && !$OldRaceResult->isEmpty()) {
-			$this->updateRaceResult($RaceResult, $OldRaceResult);
-		} elseif(!$somethingFailed && $OldRaceResult->isEmpty()) {
-			if (is_numeric($_GET['rid'])) {
-				$RaceResult->set('activity_id', $_GET['rid']);
-				$this->insertRaceResult($RaceResult);
-			}
-		}
-
-		return $RaceResult;
-	}
-
-	/**
-	 * @return array ['post-key' => ['entity-key', $parser, $parserOptions], ...]
-	 */
-	protected function fieldsToValidate() {
-		return array(
-			'name' => array(RaceResult\Entity::NAME, FormularValueParser::$PARSER_STRING, array('notempty' => true)),
-			'official_distance' => array(RaceResult\Entity::OFFICIAL_DISTANCE, FormularValueParser::$PARSER_DISTANCE, array()),
-			'official_time' => array(RaceResult\Entity::OFFICIAL_TIME, FormularValueParser::$PARSER_TIME, array()),
-			'officially_measured' => array(RaceResult\Entity::OFFICIALLY_MEASURED, FormularValueParser::$PARSER_BOOL, array()),
-			'placement_total' => array(RaceResult\Entity::PLACE_TOTAL,FormularValueParser::$PARSER_INT,  array('null' => true, 'max' => $_POST['participants_total'])),
-			'placement_ageclass' => array(RaceResult\Entity::PLACE_AGECLASS,FormularValueParser::$PARSER_INT, array('null' => true, 'max' => $_POST['participants_ageclass'])),
-			'placement_gender' => array(RaceResult\Entity::PLACE_GENDER,FormularValueParser::$PARSER_INT, array('null' => true, 'max' => $_POST['participants_gender'])),
-			'participants_total' => array(RaceResult\Entity::PARTICIPANTS_TOTAL, FormularValueParser::$PARSER_INT, array('null' => true, 'min' => $_POST['placement_total'])),
-			'participants_ageclass' => array(RaceResult\Entity::PARTICIPANTS_AGECLASS, FormularValueParser::$PARSER_INT, array('null' => true, 'min' => $_POST['placement_ageclass'])),
-			'participants_gender' => array(RaceResult\Entity::PARTICIPANTS_GENDER, FormularValueParser::$PARSER_INT, array('null' => true, 'min' => $_POST['placement_gender']))
-		);
 	}
 
 	/**

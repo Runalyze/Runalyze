@@ -1,0 +1,58 @@
+{% extends "base_logged_in.twig" %}
+
+{% block content %}
+    <div class="panel-heading" xmlns="http://www.w3.org/1999/html">
+        <h1>{% trans %}Competition details{% endtrans %}</h1>
+    </div>
+    <div class="panel-content">
+        {% include 'flashmessages.html.twig' %}
+
+        {{ form_start(form, {'attr': {'class': 'ajax no-automatic-reloads'} }) }}
+
+        <fieldset id="raceresult_legend_0">
+            <legend onclick="Runalyze.toggleFieldset(this, 'raceresult_legend_0', false, '')">{% trans %}Details{% endtrans %}</legend>
+
+            {{ form_row(form.name, {'help': 'If you participate in an event multiple times you should always enter the same name, i.e. don\'t append the event\'s number or year.'}) }}
+            {{ form_row(form.official_distance, {'help': 'We use two decimals for convenient reasons.<br>Marathon: 42.20 km<br>Half marathon: 21.10 km'}) }}
+            {{ form_row(form.official_time) }}
+
+            {{ form_row(form.officially_measured, {'help': 'Was the course officially measured?'}) }}
+        </fieldset>
+
+        <fieldset id="raceresult_legend_1">
+            <legend onclick="Runalyze.toggleFieldset(this, 'raceresult_legend_1', false, '')">{% trans %}Placement{% endtrans %}</legend>
+
+            {{ form_row(form.place_total) }}
+            {{ form_row(form.place_gender) }}
+            {{ form_row(form.place_ageclass) }}
+            <div class="fieldset-messages">
+                <p class="info">{% trans %}Your official placement.{% endtrans %}</p>
+            </div>
+
+        </fieldset>
+
+        <fieldset id="raceresult_legend_2">
+            <legend onclick="Runalyze.toggleFieldset(this, 'raceresult_legend_2', false, '')">{% trans %}Participants{% endtrans %}</legend>
+
+            {{ form_row(form.participants_total) }}
+            {{ form_row(form.participants_gender) }}
+            {{ form_row(form.participants_ageclass) }}
+
+            <div class="fieldset-messages">
+                <p class="info">{% trans %}Number of participants in every category{% endtrans %}</p>
+             </div>
+
+        </fieldset>
+
+            <div class="c">
+                <input type="submit" value="{% trans %}Save{% endtrans %}">
+                {% if isNew == false%}
+                {% endif %}
+
+            </div>
+
+    {{ form_rest(form) }}
+
+    {{ form_end(form) }}
+    </div>
+{% endblock %}

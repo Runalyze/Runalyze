@@ -59,6 +59,31 @@ services:
     arguments: ["@app.repository.sport", "@app.repository.equipment_type", "@security.token_storage"]
     tags:
      - { name: form.type }
+  app.form.type.race_result:
+    class: Runalyze\Bundle\CoreBundle\Form\RaceResultType
+    arguments: ["@app.configuration_manager"]
+    tags:
+     - { name: form.type }
+  app.form.type.distance:
+    class: Runalyze\Bundle\CoreBundle\Form\Type\DistanceType
+    arguments: ["@app.configuration_manager"]
+    tags:
+     - { name: form.type }
+  app.form.type.energy:
+    class: Runalyze\Bundle\CoreBundle\Form\Type\EnergyType
+    arguments: ["@app.configuration_manager"]
+    tags:
+     - { name: form.type }
+  app.form.type.temperature:
+    class: Runalyze\Bundle\CoreBundle\Form\Type\TemperatureType
+    arguments: ["@app.configuration_manager"]
+    tags:
+     - { name: form.type }
+  app.form.type.weight:
+    class: Runalyze\Bundle\CoreBundle\Form\Type\WeightType
+    arguments: ["@app.configuration_manager"]
+    tags:
+     - { name: form.type }
   app.privacy_guard:
     class: Runalyze\Bundle\CoreBundle\Services\PrivacyGuard
     arguments: ["@security.token_storage", "@app.configuration_manager"]
