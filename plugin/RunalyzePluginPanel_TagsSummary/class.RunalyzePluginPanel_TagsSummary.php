@@ -26,6 +26,12 @@ class RunalyzePluginPanel_TagsSummary extends PluginPanel {
 	protected $AllSports = array();
 
 	/**
+	 * Timescale in months.
+	 * @var array
+	 */
+	protected $Timescale = array('1' => '1', '3' => '3', '6' => '6', '12' => '12', '24' => '24');
+
+	/**
 	 * Name
 	 * @return string
 	 */
@@ -45,6 +51,8 @@ class RunalyzePluginPanel_TagsSummary extends PluginPanel {
 	 * Init configuration
 	 */
 	protected function initConfiguration() {
+		$Configuration = new PluginConfiguration($this->id());
+
 		foreach (\Runalyze\Context::Factory()->allSports() as $sport) {
     	$this->AllSports[$sport->id()] = $sport->name();
 		}
@@ -52,12 +60,22 @@ class RunalyzePluginPanel_TagsSummary extends PluginPanel {
 		$Sports = new PluginConfigurationValueSelect('sport', __('Sport to summarise tags for'));
 		$Sports->setOptions($this->AllSports);
 
-		$Configuration = new PluginConfiguration($this->id());
 		$Configuration->addValue($Sports);
 
 		if (isset($_GET['sport']) && isset($this->AllSports[$_GET['sport']])) {
 			$Configuration->object('sport')->setValue($_GET['sport']);
 			$Configuration->update('sport');
+			Cache::delete(PluginConfiguration::CACHE_KEY);
+		}
+
+		$Timescale = new PluginConfigurationValueSelect('tagssummary_timescale', __('Show tags for this period of months'));
+		$Timescale->setOptions($this->Timescale);
+
+		$Configuration->addValue($Timescale);
+
+		if (isset($_GET['tagssummary_timescale']) && in_array($_GET['tagssummary_timescale'], $this->Timescale)) {
+			$Configuration->object('tagssummary_timescale')->setValue($_GET['tagssummary_timescale']);
+			$Configuration->update('tagssummary_timescale');
 			Cache::delete(PluginConfiguration::CACHE_KEY);
 		}
 
@@ -70,6 +88,8 @@ class RunalyzePluginPanel_TagsSummary extends PluginPanel {
 	protected function getRightSymbol() {
 		$CurrentSport = '';
 		$SportLinks = [];
+		$CurrentTimescale = '';
+		$TimescaleLinks = [];
 
 		foreach ($this->AllSports as $id => $name) {
 			$active = $id == (int)$this->Configuration()->value('sport');
@@ -80,8 +100,22 @@ class RunalyzePluginPanel_TagsSummary extends PluginPanel {
 			}
 		}
 
+		foreach (array_keys($this->Timescale) as $timescale) {
+			$active = $timescale == $this->Configuration()->value('tagssummary_timescale');
+			$name = $timescale . ' ' . ($timescale != 1 ? __('months') : __('month'));
+			$TimescaleLinks[] = '<li'.($active ? ' class="active"' : '').'>'.Ajax::link($name, 'panel-'.$this->id(), Plugin::$DISPLAY_URL.'/'.$this->id().'?tagssummary_timescale='.$timescale).'</li>';
+
+			if ($active) {
+				$CurrentTimescale = $name;
+			}
+		}
+
 		$Links = '<li class="with-submenu"><span class="link">'.$CurrentSport.'</span>';
 		$Links .= '<ul class="submenu">'.implode('', $SportLinks).'</ul>';
+		$Links .= '</li>';
+
+		$Links .= '<li class="with-submenu"><span class="link">'.$CurrentTimescale.'</span>';
+		$Links .= '<ul class="submenu">'.implode('', $TimescaleLinks).'</ul>';
 		$Links .= '</li>';
 
 		return '<ul>'.$Links.'</ul>';
