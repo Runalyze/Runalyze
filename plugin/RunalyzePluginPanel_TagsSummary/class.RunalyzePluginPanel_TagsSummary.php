@@ -45,22 +45,17 @@ class RunalyzePluginPanel_TagsSummary extends PluginPanel {
 	 * Init configuration
 	 */
 	protected function initConfiguration() {
-		$this->AllSports = DB::getInstance()
-			->query('SELECT `id`, `name` FROM `'.PREFIX.'sport` WHERE `accountid`="'.SessionAccountHandler::getId().'" ORDER BY `id` ASC')
-			->fetchAll();
-		$Options = array();
-
-		foreach ($this->AllSports as $data) {
-			$Options[$data['id']] = $data['name'];
+		foreach (\Runalyze\Context::Factory()->allSports() as $sport) {
+    	$this->AllSports[$sport->id()] = $sport->name();
 		}
 
 		$Sports = new PluginConfigurationValueSelect('sport', __('Sport to summarise tags for'));
-		$Sports->setOptions($Options);
+		$Sports->setOptions($this->AllSports);
 
 		$Configuration = new PluginConfiguration($this->id());
 		$Configuration->addValue($Sports);
 
-		if (isset($_GET['sport']) && isset($Options[$_GET['sport']])) {
+		if (isset($_GET['sport']) && isset($this->AllSports[$_GET['sport']])) {
 			$Configuration->object('sport')->setValue($_GET['sport']);
 			$Configuration->update('sport');
 			Cache::delete(PluginConfiguration::CACHE_KEY);
@@ -76,12 +71,12 @@ class RunalyzePluginPanel_TagsSummary extends PluginPanel {
 		$CurrentSport = '';
 		$SportLinks = [];
 
-		foreach ($this->AllSports as $Sport) {
-			$active = $Sport['id'] == (int)$this->Configuration()->value('sport');
-			$SportLinks[] = '<li'.($active ? ' class="active"' : '').'>'.Ajax::link($Sport['name'], 'panel-'.$this->id(), Plugin::$DISPLAY_URL.'/'.$this->id().'?sport='.$Sport['id']).'</li>';
+		foreach ($this->AllSports as $id => $name) {
+			$active = $id == (int)$this->Configuration()->value('sport');
+			$SportLinks[] = '<li'.($active ? ' class="active"' : '').'>'.Ajax::link($name, 'panel-'.$this->id(), Plugin::$DISPLAY_URL.'/'.$this->id().'?sport='.$id).'</li>';
 
 			if ($active) {
-				$CurrentSport = $Sport['name'];
+				$CurrentSport = $name;
 			}
 		}
 
@@ -97,7 +92,7 @@ class RunalyzePluginPanel_TagsSummary extends PluginPanel {
 	 * @see PluginPanel::displayContent()
 	 */
 	protected function displayContent() {
-		$Factory = new Model\Factory(SessionAccountHandler::getId());
+		$Factory = \Runalyze\Context::Factory();
 		$Sport = $Factory->sport((int)$this->Configuration()->value('sport'));
 
 		echo $this->getStyle();
