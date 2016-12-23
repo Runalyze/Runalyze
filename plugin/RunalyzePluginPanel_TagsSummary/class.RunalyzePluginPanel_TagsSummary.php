@@ -102,7 +102,7 @@ class RunalyzePluginPanel_TagsSummary extends PluginPanel {
 
 		foreach (array_keys($this->Timescale) as $timescale) {
 			$active = $timescale == $this->Configuration()->value('tagssummary_timescale');
-			$name = $timescale . ' ' . ($timescale != 1 ? __('months') : __('month'));
+			$name = $timescale.' '.($timescale != 1 ? __('months') : __('month'));
 			$TimescaleLinks[] = '<li'.($active ? ' class="active"' : '').'>'.Ajax::link($name, 'panel-'.$this->id(), Plugin::$DISPLAY_URL.'/'.$this->id().'?tagssummary_timescale='.$timescale).'</li>';
 
 			if ($active) {
@@ -128,10 +128,11 @@ class RunalyzePluginPanel_TagsSummary extends PluginPanel {
 	protected function displayContent() {
 		$Factory = \Runalyze\Context::Factory();
 		$Sport = $Factory->sport((int)$this->Configuration()->value('sport'));
+		$timescale = $this->Configuration()->value('tagssummary_timescale');
 
 		echo $this->getStyle();
 		echo '<div id="tags-summary">';
-		$this->showListFor($Sport);
+		$this->showListFor($Sport, $timescale);
 		echo '</div>';
 
 		echo HTML::clearBreak();
@@ -140,14 +141,16 @@ class RunalyzePluginPanel_TagsSummary extends PluginPanel {
 	/**
 	 * @param \Runalyze\Model\Sport\Entity $Sport
 	 */
-	protected function showListFor(Model\Sport\Entity $Sport) {
+	protected function showListFor(Model\Sport\Entity $Sport, $timescale) {
 		$max = 0;
 		$countTagsForSport = DB::getInstance()
-			->query('SELECT '.PREFIX.'activity_tag.tagid, '.PREFIX.'tag.tag, COUNT(tagid) as `count`'.
-				' FROM '.PREFIX.'activity_tag'.
-				' LEFT JOIN '.PREFIX.'training ON '.PREFIX.'training.sportid = '.$Sport->id().
-				' LEFT JOIN '.PREFIX.'tag ON '.PREFIX.'tag.id = '.PREFIX.'activity_tag.tagid'.
-				' WHERE '.PREFIX.'training.id = activityid GROUP BY tagid ORDER BY count DESC');
+			->query('SELECT activity_tag.tagid, tag.tag, COUNT(tagid) as `count`'.
+				' FROM '.PREFIX.'activity_tag activity_tag'.
+				' LEFT JOIN '.PREFIX.'training training ON training.sportid = '.$Sport->id().
+				' LEFT JOIN '.PREFIX.'tag tag ON tag.id = activity_tag.tagid'.
+				' WHERE training.id = activityid'.
+				' AND FROM_UNIXTIME(training.time-IFNULL(training.timezone_offset,0)*60) >= NOW()-INTERVAL '.(int)$timescale.' MONTH'.
+				' GROUP BY tagid ORDER BY count DESC');
 
 		foreach ($countTagsForSport as $data) {
 			if ($max == 0) {
