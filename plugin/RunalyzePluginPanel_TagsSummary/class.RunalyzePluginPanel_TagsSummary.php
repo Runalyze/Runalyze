@@ -101,7 +101,7 @@ class RunalyzePluginPanel_TagsSummary extends PluginPanel {
 		$Sport = $Factory->sport((int)$this->Configuration()->value('sport'));
 
 		echo $this->getStyle();
-		echo '<div id="equipment">';
+		echo '<div id="tags-summary">';
 		$this->showListFor($Sport);
 		echo '</div>';
 
@@ -141,7 +141,7 @@ class RunalyzePluginPanel_TagsSummary extends PluginPanel {
 	 * @return string
 	 */
 	protected function getStyle() {
-		return '<style type="text/css">.equipment-usage { position: absolute; bottom: 0; left: 0; background-image:url(assets/images//damage.png); background-position:left center; height: 2px; max-width: 100%; }</style>';
+		return '<style type="text/css">.tags-usage { position: absolute; bottom: 0; left: 0; background-image:url(assets/images/damage.png); background-position:left center; height: 2px; max-width: 100%; }</style>';
 	}
 
 	/**
@@ -150,6 +150,6 @@ class RunalyzePluginPanel_TagsSummary extends PluginPanel {
 	 * @return string
 	 */
 	protected function getUsageImage($percentage) {
-		return '<span class="equipment-usage" style="width:'.round($percentage * 330).'px;"></span>';
+		return '<span class="tags-usage" style="width:'.round($percentage * 330).'px;"></span>';
 	}
 }
