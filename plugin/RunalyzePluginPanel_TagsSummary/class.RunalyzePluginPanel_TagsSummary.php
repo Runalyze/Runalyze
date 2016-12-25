@@ -149,7 +149,7 @@ class RunalyzePluginPanel_TagsSummary extends PluginPanel {
 				' LEFT JOIN '.PREFIX.'training training ON training.sportid = '.$Sport->id().
 				' LEFT JOIN '.PREFIX.'tag tag ON tag.id = activity_tag.tagid'.
 				' WHERE training.id = activityid'.
-				' AND FROM_UNIXTIME(training.time-IFNULL(training.timezone_offset,0)*60) >= NOW()-INTERVAL '.(int)$timescale.' MONTH'.
+				' AND FROM_UNIXTIME(training.time) >= NOW()-INTERVAL '.(int)$timescale.' MONTH'.
 				' GROUP BY tagid ORDER BY count DESC');
 
 		foreach ($countTagsForSport as $data) {
