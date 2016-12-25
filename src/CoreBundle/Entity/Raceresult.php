@@ -13,14 +13,14 @@ use Doctrine\ORM\Mapping as ORM;
 class Raceresult
 {
     /**
-     * @var string
+     * @var int [km]
      *
      * @ORM\Column(name="official_distance", type="decimal", precision=6, scale=2, nullable=false)
      */
     private $officialDistance;
 
     /**
-     * @var string
+     * @var int [s]
      *
      * @ORM\Column(name="official_time", type="decimal", precision=8, scale=2, nullable=false)
      */
@@ -41,42 +41,42 @@ class Raceresult
     private $name = '';
 
     /**
-     * @var integer
+     * @var int|null
      *
      * @ORM\Column(name="place_total", columnDefinition="mediumint(8) unsigned DEFAULT NULL")
      */
     private $placeTotal;
 
     /**
-     * @var integer
+     * @var int|null
      *
      * @ORM\Column(name="place_gender", columnDefinition="mediumint(8) unsigned DEFAULT NULL")
      */
     private $placeGender;
 
     /**
-     * @var integer
+     * @var int|null
      *
      * @ORM\Column(name="place_ageclass", columnDefinition="mediumint(8) unsigned DEFAULT NULL")
      */
     private $placeAgeclass;
 
     /**
-     * @var integer
+     * @var int|null
      *
      * @ORM\Column(name="participants_total", columnDefinition="mediumint(8) unsigned DEFAULT NULL")
      */
     private $participantsTotal;
 
     /**
-     * @var integer
+     * @var int|null
      *
      * @ORM\Column(name="participants_gender", columnDefinition="mediumint(8) unsigned DEFAULT NULL")
      */
     private $participantsGender;
 
     /**
-     * @var integer
+     * @var int|null
      *
      * @ORM\Column(name="participants_ageclass", columnDefinition="mediumint(8) unsigned DEFAULT NULL")
      */
@@ -105,11 +105,9 @@ class Raceresult
     private $activity;
 
     /**
-     * Set officialDistance
+     * @param float $officialDistance [km]
      *
-     * @param string $officialDistance
-     *
-     * @return Raceresult
+     * @return $this
      */
     public function setOfficialDistance($officialDistance)
     {
@@ -119,9 +117,7 @@ class Raceresult
     }
 
     /**
-     * Get officialDistance
-     *
-     * @return string
+     * @return float [km]
      */
     public function getOfficialDistance()
     {
@@ -129,11 +125,9 @@ class Raceresult
     }
 
     /**
-     * Set officialTime
+     * @param float $officialTime [s]
      *
-     * @param string $officialTime
-     *
-     * @return Raceresult
+     * @return $this
      */
     public function setOfficialTime($officialTime)
     {
@@ -143,9 +137,7 @@ class Raceresult
     }
 
     /**
-     * Get officialTime
-     *
-     * @return string
+     * @return float [s]
      */
     public function getOfficialTime()
     {
@@ -153,11 +145,9 @@ class Raceresult
     }
 
     /**
-     * Set officiallyMeasured
-     *
      * @param bool $officiallyMeasured
      *
-     * @return Raceresult
+     * @return $this
      */
     public function setOfficiallyMeasured($officiallyMeasured)
     {
@@ -167,9 +157,7 @@ class Raceresult
     }
 
     /**
-     * Get officiallyMeasured
-     *
-     * @return string
+     * @return bool
      */
     public function getOfficiallyMeasured()
     {
@@ -177,11 +165,9 @@ class Raceresult
     }
 
     /**
-     * Set name
-     *
      * @param string $name
      *
-     * @return Raceresult
+     * @return $this
      */
     public function setName($name)
     {
@@ -191,8 +177,6 @@ class Raceresult
     }
 
     /**
-     * Get name
-     *
      * @return string
      */
     public function getName()
@@ -201,11 +185,9 @@ class Raceresult
     }
 
     /**
-     * Set placeTotal
+     * @param int|null $placeTotal
      *
-     * @param string $placeTotal
-     *
-     * @return Raceresult
+     * @return $this
      */
     public function setPlaceTotal($placeTotal)
     {
@@ -215,9 +197,7 @@ class Raceresult
     }
 
     /**
-     * Get placeTotal
-     *
-     * @return string
+     * @return int|null
      */
     public function getPlaceTotal()
     {
@@ -225,11 +205,9 @@ class Raceresult
     }
 
     /**
-     * Set placeGender
+     * @param int|null $placeGender
      *
-     * @param string $placeGender
-     *
-     * @return Raceresult
+     * @return $this
      */
     public function setPlaceGender($placeGender)
     {
@@ -239,9 +217,7 @@ class Raceresult
     }
 
     /**
-     * Get placeGender
-     *
-     * @return string
+     * @return int|null
      */
     public function getPlaceGender()
     {
@@ -249,11 +225,9 @@ class Raceresult
     }
 
     /**
-     * Set placeAgeclass
+     * @param int|null $placeAgeclass
      *
-     * @param string $placeAgeclass
-     *
-     * @return Raceresult
+     * @return $this
      */
     public function setPlaceAgeclass($placeAgeclass)
     {
@@ -263,9 +237,7 @@ class Raceresult
     }
 
     /**
-     * Get placeAgeclass
-     *
-     * @return string
+     * @return int|null
      */
     public function getPlaceAgeclass()
     {
@@ -273,11 +245,9 @@ class Raceresult
     }
 
     /**
-     * Set participantsTotal
+     * @param int|null $participantsTotal
      *
-     * @param string $participantsTotal
-     *
-     * @return Raceresult
+     * @return $this
      */
     public function setParticipantsTotal($participantsTotal)
     {
@@ -287,9 +257,7 @@ class Raceresult
     }
 
     /**
-     * Get participantsTotal
-     *
-     * @return string
+     * @return int|null
      */
     public function getParticipantsTotal()
     {
@@ -297,11 +265,9 @@ class Raceresult
     }
 
     /**
-     * Set participantsGender
+     * @param int|null $participantsGender
      *
-     * @param string $participantsGender
-     *
-     * @return Raceresult
+     * @return $this
      */
     public function setParticipantsGender($participantsGender)
     {
@@ -311,9 +277,7 @@ class Raceresult
     }
 
     /**
-     * Get participantsGender
-     *
-     * @return string
+     * @return int|null
      */
     public function getParticipantsGender()
     {
@@ -321,11 +285,9 @@ class Raceresult
     }
 
     /**
-     * Set participantsAgeclass
+     * @param int|null $participantsAgeclass
      *
-     * @param string $participantsAgeclass
-     *
-     * @return Raceresult
+     * @return $this
      */
     public function setParticipantsAgeclass($participantsAgeclass)
     {
@@ -335,9 +297,7 @@ class Raceresult
     }
 
     /**
-     * Get participantsAgeclass
-     *
-     * @return string
+     * @return int|null
      */
     public function getParticipantsAgeclass()
     {
@@ -384,5 +344,18 @@ class Raceresult
         return $this->activity;
     }
 
+    /**
+     * @param Training $activity
+     *
+     * @return $this
+     */
+    public function fillFromActivity(Training $activity)
+    {
+        $this->setActivity($activity);
+        $this->setOfficialDistance($activity->getDistance());
+        $this->setOfficialTime($activity->getS());
+        $this->setName($activity->getComment());
 
+        return $this;
+    }
 }

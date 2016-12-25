@@ -41,10 +41,7 @@ class RaceResultController extends Controller
             $isNew = true;
             $raceResult = new Raceresult();
             $raceResult->setAccount($account);
-            $raceResult->setActivity($activity);
-            $raceResult->setOfficialDistance($activity->getDistance());
-            $raceResult->setOfficialTime($activity->getTime());
-            $raceResult->setName($activity->getComment());
+            $raceResult->fillFromActivity($activity);
         }
 
         $form = $this->createForm(RaceResultType::class, $raceResult, array(
@@ -53,7 +50,7 @@ class RaceResultController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            dump($form->getClickedButton());
+            //dump($form->getClickedButton());
 
             //$this->getRaceresultRepository()->save($raceResult);
         }

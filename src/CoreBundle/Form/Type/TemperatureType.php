@@ -1,37 +1,51 @@
 <?php
+
 namespace Runalyze\Bundle\CoreBundle\Form\Type;
 
-use Runalyze\Bundle\CoreBundle\Services\Configuration\ConfigurationManager;
+use Runalyze\Metrics\Temperature\Unit\AbstractTemperatureUnit;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 
-class TemperatureType extends AbstractType
+class TemperatureType extends AbstractType implements DataTransformerInterface
 {
+    /** @var AbstractTemperatureUnit */
+    protected $TemperatureUnit;
 
-    private $configurationManager;
-
-    public function __construct(ConfigurationManager $configurationManager)
+    public function __construct(AbstractTemperatureUnit $temperatureUnit)
     {
-        $this->configurationManager = $configurationManager;
+        $this->TemperatureUnit = $temperatureUnit;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->addModelTransformer($this);
+    }
+
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
+        $view->vars['input_unit'] = $this->TemperatureUnit->getAppendix();
     }
 
     /**
-     *
-     *
-     * @param FormView $view
-     * @param FormInterface $form
-     * @param array $options
+     * @param  mixed $temperature [°C]
+     * @return string
      */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function transform($temperature)
     {
-        $view->vars['input_unit'] = $this->configurationManager->getList()->getUnitSystem()->getTemperatureUnit()->getAppendix();
+        return null === $temperature ? '' : (string)round($this->TemperatureUnit->fromBaseUnit((float)$temperature));
+    }
+
+    /**
+     * @param  null|string $temperature
+     * @return int|null
+     */
+    public function reverseTransform($temperature)
+    {
+        return null === $temperature ? null : (int)$this->TemperatureUnit->toBaseUnit($temperature);
     }
 
     public function getParent()

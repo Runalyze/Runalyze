@@ -1,37 +1,51 @@
 <?php
+
 namespace Runalyze\Bundle\CoreBundle\Form\Type;
 
-use Runalyze\Bundle\CoreBundle\Services\Configuration\ConfigurationManager;
+use Runalyze\Metrics\Energy\Unit\AbstractEnergyUnit;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 
-class EnergyType extends AbstractType
+class EnergyType extends AbstractType implements DataTransformerInterface
 {
+    /** @var AbstractEnergyUnit */
+    protected $EnergyUnit;
 
-    private $configurationManager;
-
-    public function __construct(ConfigurationManager $configurationManager)
+    public function __construct(AbstractEnergyUnit $energyUnit)
     {
-        $this->configurationManager = $configurationManager;
+        $this->EnergyUnit = $energyUnit;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->addModelTransformer($this);
+    }
+
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
+        $view->vars['input_unit'] = $this->EnergyUnit->getAppendix();
     }
 
     /**
-     * 
-     *
-     * @param FormView $view
-     * @param FormInterface $form
-     * @param array $options
+     * @param  mixed $energy [kcal]
+     * @return string
      */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function transform($energy)
     {
-        $view->vars['input_unit'] = $this->configurationManager->getList()->getUnitSystem()->getEnergyUnit()->getAppendix();
+        return null === $energy ? '' : (string)round($this->EnergyUnit->fromBaseUnit((float)$energy));
+    }
+
+    /**
+     * @param  null|string $energy
+     * @return int|null
+     */
+    public function reverseTransform($energy)
+    {
+        return null === $energy ? null : (int)$this->EnergyUnit->toBaseUnit($energy);
     }
 
     public function getParent()
