@@ -159,7 +159,7 @@ class RunalyzePluginPanel_TagsSummary extends PluginPanel {
 		}
 
 		if ($countTagsForSport->rowCount() == 0)
-			echo HTML::em( __('You don\'t have any tags for this sport.') );
+			echo HTML::em( __('You don\'t have any tags for this sport or timescale.') );
 	}
 
 	/**
