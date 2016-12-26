@@ -15,12 +15,6 @@ use Runalyze\Model;
  */
 class RunalyzePluginPanel_TagsSummary extends PluginPanel {
 	/**
-	 * Internal array with all tags from database
-	 * @var array
-	 */
-	private $Tags = null;
-
-	/**
 	 * @var array
 	 */
 	protected $AllSports = array();
