@@ -7,7 +7,9 @@ imports:
 
 framework:
   secret: ThisTokenIsNotSoSecretChangeIt
-  validation: { enable_annotations: true }
+  validation:
+     enable_annotations: true
+#     translation_domain: messages
   session:
     handler_id: session.handler.native_file
     save_path: '%kernel.root_dir%/../data/sessions'
@@ -117,3 +119,13 @@ swiftmailer:
     port:                 '%smtp_port%'
     encryption:           '%smtp_security%'
     sender_address:       '%mail_sender%'
+
+jms_translation:
+    configs:
+        app:
+            dirs: [%kernel.root_dir%/, %kernel.root_dir%/../src]
+            output_dir: %kernel.root_dir%/Resources/translations
+            ignored_domains: [routes]
+            excluded_names: ["*TestCase.php", "*Test.php"]
+            excluded_dirs: [cache, data, logs, test, doctrine]
+            output-format: 'xlf'

@@ -23,6 +23,7 @@ class AppKernel extends \Symfony\Component\HttpKernel\Kernel
             new Symfony\Bundle\TwigBundle\TwigBundle(),
             new \Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
             new Runalyze\Bundle\CoreBundle\CoreBundle(),
+            new JMS\TranslationBundle\JMSTranslationBundle(),
         ];
 
         if ('dev' == $this->getEnvironment()) {
@@ -51,6 +52,7 @@ class AppKernel extends \Symfony\Component\HttpKernel\Kernel
             $routes->mount('/_wdt', $routes->import('@WebProfilerBundle/Resources/config/routing/wdt.xml'));
             $routes->mount('/_profiler', $routes->import('@WebProfilerBundle/Resources/config/routing/profiler.xml'));
     	    $routes->mount('/_error', $routes->import('@TwigBundle/Resources/config/routing/errors.xml'));
+            $routes->add('/_trans', '@JMSTranslationBundle/Controller/TranslateController');
     	}
 
         $routes->mount('/', $routes->import('@CoreBundle/Controller', 'annotation'));
