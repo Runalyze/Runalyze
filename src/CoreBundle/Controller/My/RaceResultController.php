@@ -6,6 +6,8 @@ use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\Raceresult;
 use Runalyze\Bundle\CoreBundle\Entity\RaceresultRepository;
 use Runalyze\Bundle\CoreBundle\Entity\Training;
+use Runalyze\Metrics\LegacyUnitConverter;
+use Runalyze\Parameter\Application\PaceUnit;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Runalyze\Bundle\CoreBundle\Form\RaceResultType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -34,7 +36,7 @@ class RaceResultController extends Controller
         }
 
         /** @var null|Raceresult $raceResult */
-        $raceResult = $this->getDoctrine()->getRepository('CoreBundle:Raceresult')->findForAccount($activityId, $account->getId());
+        $raceResult = $this->getRaceresultRepository()->findForAccount($activityId, $account->getId());
 
         $isNew = false;
         if (null === $raceResult) {
@@ -50,25 +52,33 @@ class RaceResultController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            //dump($form->getClickedButton());
 
-            //$this->getRaceresultRepository()->save($raceResult);
+            $this->getRaceresultRepository()->save($raceResult);
         }
-        //Add race result to activity
-
 
         return $this->render('my/raceresult/form.html.twig', [
             'form' => $form->createView(),
             'isNew' => $isNew,
-            'activityId' => $activityId
+            'activity' => $activity,
+            'unitConverter' => new LegacyUnitConverter()
         ]);
     }
 
     /**
      * @Route("/my/raceresult/{activityId}/delete", name="raceresult-delete")
      */
-    public function raceresultDeleteAction($activityId, Request $request)
+    public function raceresultDeleteAction($activityId, Request $request, Account $account)
     {
+        /** @var null|Raceresult $raceResult */
+        $raceResult = $this->getRaceresultRepository()->findForAccount($activityId, $account->getId());
+
+        if ($raceResult) {
+           $this->getRaceresultRepository()->delete($raceResult);
+        } else {
+            return $this->render('my/raceresult/error.html.twig');
+        }
+
+        return $this->render('my/raceresult/deleted.html.twig');
 
     }
 

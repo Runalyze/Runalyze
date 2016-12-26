@@ -35,4 +35,10 @@ class RaceresultRepository extends EntityRepository
         $this->_em->persist($raceResult);
         $this->_em->flush();
     }
+
+    public function delete(Raceresult $raceResult)
+    {
+        $this->_em->remove($raceResult);
+        $this->_em->flush();
+    }
 }

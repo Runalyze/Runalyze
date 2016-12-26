@@ -17,7 +17,7 @@ class RaceResultType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $placeOrParticipantsOptions = [
-            'attr' => ['min' => 1],
+            'attr' => ['min' => 1, 'class'=> 'small-size'],
             'required' => false
         ];
 
@@ -28,9 +28,13 @@ class RaceResultType extends AbstractType
                     'autofocus' => true
                 )
             ))
-            ->add('official_time', DurationType::class)
+            ->add('official_time', DurationType::class, array(
+                'required' => false,
+                'attr' => ['class' => 'small-size']
+            ))
             ->add('official_distance', DistanceType::class, array(
                 'required' => false,
+                'attr' => ['class' => 'small-size']
             ))
             ->add('officially_measured', CheckboxType::class, array(
                 'required' => false,

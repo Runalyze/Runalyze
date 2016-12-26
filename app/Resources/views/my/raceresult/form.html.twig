@@ -1,6 +1,7 @@
 {% extends "base_logged_in.twig" %}
 
 {% block content %}
+    <div id="close" class="black-rounded-icon" onclick="Runalyze.Overlay.close()"><i class="fa fa-fw fa-times"></i></div>
     <div class="panel-heading">
         <h1>{% trans %}Competition details{% endtrans %}</h1>
     </div>
@@ -11,20 +12,38 @@
 
         <fieldset id="raceresult_legend_0">
             <legend onclick="Runalyze.toggleFieldset(this, 'raceresult_legend_0', false, '')">{% trans %}Details{% endtrans %}</legend>
-
-            {{ form_row(form.name, {'help': 'If you participate in an event multiple times you should always enter the same name, i.e. don\'t append the event\'s number or year.'}) }}
-            {{ form_row(form.official_distance, {'help': 'We use two decimals for convenient reasons.<br>Marathon: 42.20 km<br>Half marathon: 21.10 km'}) }}
-            {{ form_row(form.official_time) }}
-
-            {{ form_row(form.officially_measured, {'help': 'Was the course officially measured?'}) }}
+            <div class="w50">
+                {{ form_row(form.name, {'help': 'If you participate in an event multiple times you should always enter the same name, i.e. don\'t append the event\'s number or year.'}) }}
+            </div>
+            <div class="w50">
+                {{ form_row(form.officially_measured, {'help': 'Was the course officially measured?'}) }}
+            </div>
+            <div class="w50">
+                {{ form_row(form.official_distance, {'help': 'We use two decimals for convenient reasons.<br>Marathon: 42.20 km<br>Half marathon: 21.10 km'}) }}
+            </div>
+            <div class="w50">
+                {{ form_row(form.official_time) }}
+            </div>
+            <div class="w50">
+                {{ form_row(form.officially_measured, {'help': 'Was the course officially measured?'}) }}
+            </div>
+            <p class="file">This race result is linked to the following activity: {{ activity.Time|date("m.d.Y") }}, {{ activity.Comment }}
+                ({{ distance(activity.Distance)|raw }} {{ pace(activity.Distance > 0 ? activity.S / activity.Distance : 0, unitConverter.getPaceUnit(activity.sport.speed))|raw }})
+            </p>
         </fieldset>
 
         <fieldset id="raceresult_legend_1">
             <legend onclick="Runalyze.toggleFieldset(this, 'raceresult_legend_1', false, '')">{% trans %}Placement{% endtrans %}</legend>
 
-            {{ form_row(form.place_total) }}
-            {{ form_row(form.place_gender) }}
-            {{ form_row(form.place_ageclass) }}
+            <div class="w33">
+                {{ form_row(form.place_total) }}
+            </div>
+            <div class="w33">
+                {{ form_row(form.place_gender) }}
+            </div>
+            <div class="w33">
+                {{ form_row(form.place_ageclass) }}
+            </div>
             <div class="fieldset-messages">
                 <p class="info">{% trans %}Your official placement.{% endtrans %}</p>
             </div>
@@ -33,10 +52,15 @@
 
         <fieldset id="raceresult_legend_2">
             <legend onclick="Runalyze.toggleFieldset(this, 'raceresult_legend_2', false, '')">{% trans %}Participants{% endtrans %}</legend>
-
-            {{ form_row(form.participants_total) }}
-            {{ form_row(form.participants_gender) }}
-            {{ form_row(form.participants_ageclass) }}
+            <div class="w33">
+                {{ form_row(form.participants_total) }}
+            </div>
+            <div class="w33">
+                {{ form_row(form.participants_gender) }}
+            </div>
+            <div class="w33">
+                {{ form_row(form.participants_ageclass) }}
+            </div>
 
             <div class="fieldset-messages">
                 <p class="info">{% trans %}Number of participants in every category{% endtrans %}</p>
@@ -46,13 +70,17 @@
 
             <div class="c">
                 <input type="submit" value="{% trans %}Save{% endtrans %}">
+                {{ form_rest(form) }}
+
+                {{ form_end(form) }}
                 {% if isNew == false%}
+                    <form action="{{ url('raceresult-delete', {'activityId': activity.id}) }}" method="post" class="ajax no-automatic-reloads">
+                        <input type="submit" value="{% trans %}Delete{% endtrans %}" />
+                    </form>
                 {% endif %}
 
             </div>
 
-    {{ form_rest(form) }}
 
-    {{ form_end(form) }}
     </div>
 {% endblock %}
