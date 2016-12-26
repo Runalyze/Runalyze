@@ -41,6 +41,9 @@ class RunalyzePluginPanel_TagsSummary extends PluginPanel {
 		return __('Summarises your tags for the selected sport.');
 	}
 
+	private $sportid;
+	private $timescale;
+
 	/**
 	 * Init configuration
 	 */
@@ -76,6 +79,18 @@ class RunalyzePluginPanel_TagsSummary extends PluginPanel {
 		$this->setConfiguration($Configuration);
 	}
 
+	protected function initPlugin() {
+		$this->sportid = $this->Configuration()->value('sport');
+		if (empty($this->sportid)) {
+			$this->sportid = $this->defaultSport();
+		}
+
+		$this->timescale = $this->Configuration()->value('tagssummary_timescale');
+		if (empty($this->timescale)) {
+			$this->timescale = reset($this->Timescale);
+		}
+	}
+
 	/**
 	 * Method for getting the right symbol(s)
 	 */
@@ -86,7 +101,7 @@ class RunalyzePluginPanel_TagsSummary extends PluginPanel {
 		$TimescaleLinks = [];
 
 		foreach ($this->AllSports as $id => $name) {
-			$active = $id == (int)$this->Configuration()->value('sport');
+			$active = $id == (int)$this->sportid;
 			$SportLinks[] = '<li'.($active ? ' class="active"' : '').'>'.Ajax::link($name, 'panel-'.$this->id(), Plugin::$DISPLAY_URL.'/'.$this->id().'?sport='.$id).'</li>';
 
 			if ($active) {
@@ -95,7 +110,7 @@ class RunalyzePluginPanel_TagsSummary extends PluginPanel {
 		}
 
 		foreach (array_keys($this->Timescale) as $timescale) {
-			$active = $timescale == $this->Configuration()->value('tagssummary_timescale');
+			$active = $timescale == $this->timescale;
 			$name = $timescale.' '.($timescale != 1 ? __('months') : __('month'));
 			$TimescaleLinks[] = '<li'.($active ? ' class="active"' : '').'>'.Ajax::link($name, 'panel-'.$this->id(), Plugin::$DISPLAY_URL.'/'.$this->id().'?tagssummary_timescale='.$timescale).'</li>';
 
@@ -121,12 +136,11 @@ class RunalyzePluginPanel_TagsSummary extends PluginPanel {
 	 */
 	protected function displayContent() {
 		$Factory = \Runalyze\Context::Factory();
-		$Sport = $Factory->sport((int)$this->Configuration()->value('sport'));
-		$timescale = $this->Configuration()->value('tagssummary_timescale');
+		$Sport = $Factory->sport((int)$this->sportid);
 
 		echo $this->getStyle();
 		echo '<div id="tags-summary">';
-		$this->showListFor($Sport, $timescale);
+		$this->showListFor($Sport, $this->timescale);
 		echo '</div>';
 
 		echo HTML::clearBreak();
