@@ -41,8 +41,8 @@ class RunalyzePluginPanel_TagsSummary extends PluginPanel {
 		return __('Summarises your tags for the selected sport.');
 	}
 
-	private $sportid;
-	private $timescale;
+	protected $sportid;
+	protected $timescale;
 
 	/**
 	 * Init configuration
