@@ -29,7 +29,7 @@ class RaceResultType extends AbstractType
                 )
             ))
             ->add('official_time', DurationType::class, array(
-                'required' => false,
+                'required' => true,
                 'attr' => ['class' => 'small-size']
             ))
             ->add('official_distance', DistanceType::class, array(

@@ -28,7 +28,7 @@
                 {{ form_row(form.officially_measured, {'help': 'Was the course officially measured?'}) }}
             </div>
             <p class="file">This race result is linked to the following activity: {{ activity.Time|date("m.d.Y") }}, {{ activity.Comment }}
-                ({{ distance(activity.Distance)|raw }} {{ pace(activity.Distance > 0 ? activity.S / activity.Distance : 0, unitConverter.getPaceUnit(activity.sport.speed))|raw }})
+                ({{ distance(activity.Distance)|raw }}, {{ pace(activity.Distance > 0 ? activity.S / activity.Distance : 0, unitConverter.getPaceUnit(activity.sport.speed))|raw }})
             </p>
         </fieldset>
 

@@ -6,12 +6,19 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Exception\TransformationFailedException;
 
 class DurationType extends AbstractType implements DataTransformerInterface
 {
+    /** @var bool */
+    protected $IsRequired = false;
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->addModelTransformer($this);
+        if (isset($options['required'])) {
+            $this->IsRequired = $options['required'];
+        }
     }
 
     /**
@@ -20,16 +27,26 @@ class DurationType extends AbstractType implements DataTransformerInterface
      */
     public function transform($duration)
     {
-        return null === $duration ? null : Duration::format($duration);
+        return null === $duration ? '0:00'  : Duration::format($duration);
     }
 
     /**
-     * @param  null|string $duration
-     * @return float|null
+     * @param  string $duration
+     * @return float
+     * @throws TransformationFailedException if $duration is null
      */
     public function reverseTransform($duration)
     {
-        return null === $duration ? '' : (new Duration($duration))->seconds();
+        dump($this);
+        if (null === $duration) {
+
+            if ($this->IsRequired) {
+                throw new TransformationFailedException('Duration cannot be empty');
+            }
+
+            return null;
+        }
+        return (new Duration($duration))->seconds();
     }
 
     public function getParent()
