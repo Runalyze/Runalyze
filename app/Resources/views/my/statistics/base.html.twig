@@ -1,0 +1,24 @@
+{% extends 'base_logged_in.twig' %}
+
+{% block content %}
+    <div class="panel-heading">
+        <div class="panel-menu">
+            {% block panelHeadingMenu %}
+            {% endblock %}
+        </div>
+
+        <h1>{% block pluginTitle %}{% endblock %}</h1>
+
+        <div class="hover-icons">
+        {% block panelHeadingIcons %}
+            <a data-size="small" class="window" href="{{ url('plugin-config', {'id': pluginId}) }}"><i class="fa fa-fw fa-cog"></i></a>
+            <span class="link" onclick="Runalyze.reloadPlugin('{{ pluginId }}');"><i class="fa fa-fw fa-refresh"></i></span>
+        {% endblock %}
+        </div>
+    </div>
+
+    <div class="panel-content statistics-container">
+        {% block panelContent %}
+        {% endblock %}
+    </div>
+{% endblock %}

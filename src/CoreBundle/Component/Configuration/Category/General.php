@@ -30,6 +30,14 @@ class General extends AbstractCategory
     }
 
     /**
+     * @return int
+     */
+    public function getMainSport()
+    {
+        return (int)$this->Variables['MAINSPORT'];
+    }
+
+    /**
      * @return string
      */
     protected function getLegacyCategoryName()
