@@ -22,7 +22,7 @@ framework:
       - '%kernel.root_dir%/../inc/locale/'
 
 parameters:
-  RUNALYZE_VERSION: 3.1.0
+  RUNALYZE_VERSION: 3.1.1
 
 twig:
   globals:
