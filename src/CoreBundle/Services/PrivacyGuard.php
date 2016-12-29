@@ -10,8 +10,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 class PrivacyGuard
 {
-    /** @var TokenStorage */
-    protected $TokenStorage;
+    use TokenStorageAwareServiceTrait;
 
     /** @var ConfigurationManager */
     protected $ConfigurationManager;
@@ -20,22 +19,6 @@ class PrivacyGuard
     {
         $this->TokenStorage = $tokenStorage;
         $this->ConfigurationManager = $configurationManager;
-    }
-
-    /**
-     * @return bool
-     */
-    protected function knowsUser()
-    {
-        return null !== $this->TokenStorage->getToken() && $this->TokenStorage->getToken()->getUser() instanceof Account;
-    }
-
-    /**
-     * @return Account|null
-     */
-    protected function getUser()
-    {
-        return $this->knowsUser() ? $this->TokenStorage->getToken()->getUser() : null;
     }
 
     /**

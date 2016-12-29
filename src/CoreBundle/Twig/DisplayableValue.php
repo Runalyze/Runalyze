@@ -78,6 +78,25 @@ class DisplayableValue
     }
 
     /**
+     * @param $value
+     * @return $this
+     */
+    public function setRawValue($value)
+    {
+        $this->Value = $value;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRawValue()
+    {
+        return $this->Value;
+    }
+
+    /**
      * @return string
      */
     public function getUnit()
