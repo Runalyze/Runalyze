@@ -11,7 +11,7 @@ use Runalyze\Bundle\CoreBundle\DependencyInjection\Compiler\OverrideServiceCompi
  * So having this will bootstrap a lot of boilerplate for console commands
  * and so on.
  */
-class CoreBundle extends \Symfony\Component\HttpKernel\Bundle\Bundle
+class CoreBundle extends Bundle
 {
     public function build(ContainerBuilder $container)
     {

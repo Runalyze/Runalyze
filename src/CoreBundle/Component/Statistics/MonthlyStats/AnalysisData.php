@@ -42,9 +42,9 @@ class AnalysisData
 
     protected function fetchDataFrom(TrainingRepository $trainingRepository, Account $account)
     {
-        $query = $trainingRepository->getMonthlyStatsFor($account, $this->getColumn(), $this->getSportId());
+        $stats = $trainingRepository->getMonthlyStatsFor($account, $this->getColumn(), $this->getSportId());
 
-        foreach ($query->getArrayResult() as $result) {
+        foreach ($stats as $result) {
             $year = (int)$result['year'];
             $month = (int)$result['month'];
             $value = (float)$result['value'];

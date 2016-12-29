@@ -3,6 +3,11 @@ namespace Runalyze\Bundle\CoreBundle\Twig;
 
 class HtmlExtension extends \Twig_Extension
 {
+    /**
+     * @return string
+     *
+     * @codeCoverageIgnore
+     */
     public function getName()
     {
         return 'runalyze.html_extension';
@@ -10,6 +15,8 @@ class HtmlExtension extends \Twig_Extension
 
     /**
      * @return \Twig_SimpleFilter[]
+     *
+     * @codeCoverageIgnore
      */
     public function getFilters()
     {
@@ -26,6 +33,8 @@ class HtmlExtension extends \Twig_Extension
     /**
      * @param string $string
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function info($string)
     {
@@ -35,6 +44,8 @@ class HtmlExtension extends \Twig_Extension
     /**
      * @param string $string
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function error($string)
     {
@@ -44,6 +55,8 @@ class HtmlExtension extends \Twig_Extension
     /**
      * @param string $string
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function warning($string)
     {
@@ -53,6 +66,8 @@ class HtmlExtension extends \Twig_Extension
     /**
      * @param string $string
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function okay($string)
     {

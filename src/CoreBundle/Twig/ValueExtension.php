@@ -26,6 +26,11 @@ class ValueExtension extends \Twig_Extension
         $this->UnitSystem = new UnitSystem($configurationManager->getList());
     }
 
+    /**
+     * @return string
+     *
+     * @codeCoverageIgnore
+     */
     public function getName()
     {
         return 'runalyze.value_extension';
@@ -33,6 +38,8 @@ class ValueExtension extends \Twig_Extension
 
     /**
      * @return \Twig_SimpleFunction[]
+     *
+     * @codeCoverageIgnore
      */
     public function getFunctions()
     {

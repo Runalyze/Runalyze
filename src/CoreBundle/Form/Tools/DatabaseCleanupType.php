@@ -35,10 +35,4 @@ class DatabaseCleanupType extends AbstractType
             ->add('activityTrimp', CheckboxType::class, array('required' => false))
         ;
     }
-
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults(array(
-        ));
-    }
 }
