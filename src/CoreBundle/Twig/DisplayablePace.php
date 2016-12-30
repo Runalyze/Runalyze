@@ -34,10 +34,11 @@ class DisplayablePace extends DisplayableValue
      */
     public function getValue($decimals = false, $decimalPoint = false, $thousandsSeparator = false)
     {
-        $seconds = round($this->Value);
+        $isNegative = $this->Value < 0;
+        $seconds = round(abs($this->Value));
         $minutes = floor($seconds / 60);
         $seconds -= $minutes * 60;
 
-        return $minutes.':'.str_pad($seconds, 2, '0', STR_PAD_LEFT);
+        return ($isNegative ? '-' : '').$minutes.':'.str_pad($seconds, 2, '0', STR_PAD_LEFT);
     }
 }

@@ -18,6 +18,8 @@ class ConfigurationExtension extends \Twig_Extension
 
     /**
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getName()
     {
@@ -26,6 +28,8 @@ class ConfigurationExtension extends \Twig_Extension
 
     /**
      * @return \Twig_SimpleFunction[]
+     *
+     * @codeCoverageIgnore
      */
     public function getFunctions()
     {

@@ -22,6 +22,8 @@ class AccountRepositoryTest extends KernelTestCase
 
         $this->EntityManager = static::$kernel->getContainer()->get('doctrine')->getManager();
         $this->AccountRepository = $this->EntityManager->getRepository('CoreBundle:Account');
+
+        $this->deleteAllAccounts();
     }
 
     protected function tearDown()

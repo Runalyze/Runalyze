@@ -24,6 +24,9 @@ class RegistrationTest extends KernelTestCase
 
         $this->EntityManager = static::$kernel->getContainer()->get('doctrine')->getManager();
         $this->AccountRepository = $this->EntityManager->getRepository('CoreBundle:Account');
+
+        $this->clearAllOtherTablesAsLongAsCascadeDoesNotWork();
+        $this->deleteAllAccounts();
     }
 
     protected function tearDown()

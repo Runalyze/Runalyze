@@ -43,7 +43,7 @@ class TrainingRepository extends EntityRepository
      * @param Account $account
      * @param null|string $column
      * @param null|int $sportid
-     * @return \Doctrine\ORM\Query
+     * @return array
      */
     public function getMonthlyStatsFor(Account $account, $column = null, $sportid = null)
     {
@@ -70,7 +70,7 @@ class TrainingRepository extends EntityRepository
                 ->setParameter('sportid', $sportid);
         }
 
-        return $queryBuilder->getQuery();
+        return $queryBuilder->getQuery()->getArrayResult();
     }
 
 	/**
