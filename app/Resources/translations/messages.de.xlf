@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
   <file date="2016-12-26T12:31:30Z" source-language="en" target-language="de" datatype="plaintext" original="not.available">
     <header>
@@ -6,15 +6,13 @@
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
     </header>
     <body>
-      <trans-unit id="64b64cc375741f82a39567ffad42d7a09e0465fb" resname="                                Backup of the complete database -&#10;                                This file can be imported manually with e.g. PHPMyAdmin into any database.&lt;br /&gt;&#10;                                This is recommended to create a backup copy or to import your data into a new installation.&#10;                            ">
+      <trans-unit id="64b64cc375741f82a39567ffad42d7a09e0465fb" resname="                                Backup of the complete database -&#10;                                This file can be imported manually with e.g. PHPMyAdmin into any database.&lt;br /&gt;&#10;                                This is recommended to create a backup copy or to import your data into a new installation.&#10;                            " approved="yes">
         <source><![CDATA[                                Backup of the complete database -
                                 This file can be imported manually with e.g. PHPMyAdmin into any database.<br />
                                 This is recommended to create a backup copy or to import your data into a new installation.
                             ]]></source>
-        <target><![CDATA[                                Backup of the complete database -
-                                This file can be imported manually with e.g. PHPMyAdmin into any database.<br />
-                                This is recommended to create a backup copy or to import your data into a new installation.
-                            ]]></target>
+        <target state="translated">Backup der gesamten Datenbank - Die Datei kann manuell über einen PhpMyAdmin eingelesen werden. Dabei werden alle Daten überschrieben.&lt;br /&gt;
+Dieser Export/Import ist sinnvoll, um eine Sicherheitskopie zu erstellen oder die Daten in eine Neuinstallation einzufügen.</target>
         <jms:reference-file line="36">/Resources/views/tools/backup/form_legacy.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="110ca1f639e44270971455b3dc139ba5e711d353" resname="                                Backup of the complete database -&#10;                                This file can be imported manually with e.g. phpMyAdmin into any database.&lt;br /&gt;&#10;                                This is recommended to create a backup copy or to import your data into a new installation.&#10;                            ">
@@ -28,15 +26,13 @@
                             ]]></target>
         <jms:reference-file line="36">/Resources/views/tools/backup/export.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="a8b1fab4568d150f59825d2060b7c19b82d68d92" resname="                                Portable backup of your configuration and data -&#10;                                This file can be imported into any other installation, using this plugin.&lt;br /&gt;&#10;                                This way you can transfer your data from to local to an online installation and back.&#10;                            ">
+      <trans-unit id="a8b1fab4568d150f59825d2060b7c19b82d68d92" resname="                                Portable backup of your configuration and data -&#10;                                This file can be imported into any other installation, using this plugin.&lt;br /&gt;&#10;                                This way you can transfer your data from to local to an online installation and back.&#10;                            " approved="yes">
         <source><![CDATA[                                Portable backup of your configuration and data -
                                 This file can be imported into any other installation, using this plugin.<br />
                                 This way you can transfer your data from to local to an online installation and back.
                             ]]></source>
-        <target><![CDATA[                                Portable backup of your configuration and data -
-                                This file can be imported into any other installation, using this plugin.<br />
-                                This way you can transfer your data from to local to an online installation and back.
-                            ]]></target>
+        <target state="translated">Portables Backup deiner Einstellungen und Daten - Die Datei kann über dieses Plugin in eine bestehende Installation importiert werden. Dabei werden alle Einstellungen und Daten deines Accounts überschrieben.&lt;br /&gt;
+Dieser Export/Import ist sinnvoll, um deine Daten von einer Runalyze-Installation (z.B. lokal) in eine andere (z.B. Online-Version) zu verschieben.</target>
         <jms:reference-file line="26">/Resources/views/tools/backup/form_legacy.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="438be78bc5d4b9517a084c1f960b03773eee6c08" resname="                                Portable backup of your configuration and data -&#10;                                This file can be imported into any other installation, using this tool.&lt;br /&gt;&#10;                                This way you can transfer your data from a local to an online installation and back.&#10;                            ">
@@ -50,40 +46,32 @@
                             ]]></target>
         <jms:reference-file line="26">/Resources/views/tools/backup/export.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="f982375b71bb41aa2ef75e7b2ea0b475092b6e26" resname="                                The file has to be created with the same version of Runalyze!&lt;br&gt;&#10;                                You won't be able to import a file from an older version.&#10;                            ">
+      <trans-unit id="f982375b71bb41aa2ef75e7b2ea0b475092b6e26" resname="                                The file has to be created with the same version of Runalyze!&lt;br&gt;&#10;                                You won't be able to import a file from an older version.&#10;                            " approved="yes">
         <source><![CDATA[                                The file has to be created with the same version of Runalyze!<br>
                                 You won't be able to import a file from an older version.
                             ]]></source>
-        <target><![CDATA[                                The file has to be created with the same version of Runalyze!<br>
-                                You won't be able to import a file from an older version.
-                            ]]></target>
+        <target state="translated">Die Datei muss mit der selben Version von Runalyze erstellt worden sein! &lt;br&gt; Es können keine Daten von älteren Versionen importiert werden.</target>
         <jms:reference-file line="93">/Resources/views/tools/backup/form_legacy.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="c546b364bbc260785df967efb635de14ffe8ac80" resname="                                The importer will not change existing data for equipment, sport types or activity types.&lt;br&gt;&#10;                                You have to make these changes by hand or delete the existing data in advance.&#10;                            ">
+      <trans-unit id="c546b364bbc260785df967efb635de14ffe8ac80" resname="                                The importer will not change existing data for equipment, sport types or activity types.&lt;br&gt;&#10;                                You have to make these changes by hand or delete the existing data in advance.&#10;                            " approved="yes">
         <source><![CDATA[                                The importer will not change existing data for equipment, sport types or activity types.<br>
                                 You have to make these changes by hand or delete the existing data in advance.
                             ]]></source>
-        <target><![CDATA[                                The importer will not change existing data for equipment, sport types or activity types.<br>
-                                You have to make these changes by hand or delete the existing data in advance.
-                            ]]></target>
+        <target state="translated">Der Importer wird vorhandene Daten für Equipment, Sportarten oder Trainingstypen nicht ändern.&lt;br&gt;Du musst diese Änderungen selbst vornehmen oder entsprechende Daten vorher löschen.</target>
         <jms:reference-file line="99">/Resources/views/tools/backup/form_legacy.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="51cdaa070e7ba82f95b3c3af335b0f6417648c02" resname="                            The file has to be created with the same (minor) version of RUNALYZE.&lt;br&gt;&#10;                            You won't be able to import a file from older versions.&#10;                        ">
+      <trans-unit id="51cdaa070e7ba82f95b3c3af335b0f6417648c02" resname="                            The file has to be created with the same (minor) version of RUNALYZE.&lt;br&gt;&#10;                            You won't be able to import a file from older versions.&#10;                        " approved="yes">
         <source><![CDATA[                            The file has to be created with the same (minor) version of RUNALYZE.<br>
                             You won't be able to import a file from older versions.
                         ]]></source>
-        <target><![CDATA[                            The file has to be created with the same (minor) version of RUNALYZE.<br>
-                            You won't be able to import a file from older versions.
-                        ]]></target>
+        <target state="translated">Die Datei muss mit der selben Version von Runalyze erstellt worden sein! &lt;br&gt; Es können keine Daten von älteren Versionen importiert werden.</target>
         <jms:reference-file line="61">/Resources/views/tools/backup/upload_form.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="b571381bb05043ef33ba70c6e268c539a403fbde" resname="                            The importer will not change existing data for equipment, sport types or activity types.&lt;br&gt;&#10;                            You have to make these changes by hand or delete the existing data in advance.&#10;                        ">
+      <trans-unit id="b571381bb05043ef33ba70c6e268c539a403fbde" resname="                            The importer will not change existing data for equipment, sport types or activity types.&lt;br&gt;&#10;                            You have to make these changes by hand or delete the existing data in advance.&#10;                        " approved="yes">
         <source><![CDATA[                            The importer will not change existing data for equipment, sport types or activity types.<br>
                             You have to make these changes by hand or delete the existing data in advance.
                         ]]></source>
-        <target><![CDATA[                            The importer will not change existing data for equipment, sport types or activity types.<br>
-                            You have to make these changes by hand or delete the existing data in advance.
-                        ]]></target>
+        <target state="translated">Der Importer wird vorhandene Daten für Equipment, Sportarten oder Trainingstypen nicht ändern.&lt;br&gt;Du musst diese Änderungen selbst vornehmen oder entsprechende Daten vorher löschen.</target>
         <jms:reference-file line="68">/Resources/views/tools/backup/upload_form.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="70d6fe93e1d6314d7c508b26cddf2150a76cf297" resname="                        Due to performance reasons, some statistics are saved in the database.&#10;                        You can trigger a recalculation if you think they are wrong.&#10;                        In addition, values for elevation, TRIMP and VDOT can be recalculated.&#10;                    ">
@@ -223,9 +211,9 @@
     ]]></target>
         <jms:reference-file line="7">/Resources/views/login/statistics.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="714e8db0a23f92c56dc1d0ac9aa024a7fa956225" resname=" Accept our %a% terms of use %b% ">
+      <trans-unit id="714e8db0a23f92c56dc1d0ac9aa024a7fa956225" resname=" Accept our %a% terms of use %b% " approved="yes">
         <source> Accept our %a% terms of use %b% </source>
-        <target> Accept our %a% terms of use %b% </target>
+        <target state="translated">Akzeptiere unsere %a% Nutzungsbedingungen %b%</target>
         <jms:reference-file line="17">/Resources/views/register/form.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="8808d6be59b159f1221b1b4cb9f01aefe7c10b2d" resname="#{deviceCount} devices found">
@@ -248,9 +236,9 @@
         <target>Ein Link zur Passwortänderung wird an deine eingetragene E-Mail-Adresse gesendet.</target>
         <jms:reference-file line="9">/Resources/views/account/recover/form_send_mail.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="33920c39a699f923804df9f59fc970a24817e018" resname="Accept our terms of use">
+      <trans-unit id="33920c39a699f923804df9f59fc970a24817e018" resname="Accept our terms of use" approved="yes">
         <source>Accept our terms of use</source>
-        <target>Accept our terms of use</target>
+        <target state="translated">Akzeptiere unsere Nutzungsbedingungen</target>
         <jms:reference-file line="45">/../src/CoreBundle/Form/RegistrationType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="85dfa32c97d8618d1bea083609e2c8a29845abe5" resname="Account">
@@ -279,9 +267,9 @@
         <target>Die eigentlichen Formeln dienen dazu, einer Wettkampfzeit einen VDOT-Wert zuzuordnen.</target>
         <jms:reference-file line="14">/Resources/views/activity/vdot_info.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="b38fac0e113cd25464e6f39ac61bdfcefee80c7e" resname="Allow access for support">
+      <trans-unit id="b38fac0e113cd25464e6f39ac61bdfcefee80c7e" resname="Allow access for support" approved="yes">
         <source>Allow access for support</source>
-        <target>Allow access for support</target>
+        <target state="translated">Zugang für Support erlauben</target>
         <jms:reference-file line="69">/../src/CoreBundle/Form/Settings/AccountType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="93e587524f966357c47844732909af86c0d033e7" resname="Allow admins in case of support requests to have a look at your data.">
@@ -500,9 +488,9 @@
         <target>Danksagungen</target>
         <jms:reference-file line="75">/Resources/views/pages/help.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="6e8f4ca5afb7e7b2316a2fe5e9a01e1fe8d7f52f" resname="Current RUNALYZE version: ">
+      <trans-unit id="6e8f4ca5afb7e7b2316a2fe5e9a01e1fe8d7f52f" resname="Current RUNALYZE version: " approved="yes">
         <source>Current RUNALYZE version: </source>
-        <target>Current RUNALYZE version: </target>
+        <target state="translated">Aktuelle RUNALYZE Version:</target>
         <jms:reference-file line="53">/Resources/views/tools/backup/upload_form.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="54f56dcdb73d784f074acd71626601909e0f436b" resname="Database backup">
@@ -540,9 +528,9 @@
         <jms:reference-file line="63">/Resources/views/import/garmin_communicator.html.twig</jms:reference-file>
         <jms:reference-file line="26">/Resources/views/tools/vdot_analysis.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="d245ce64e0359b7bd2410ee23050f22ba893f322" resname="Default configuration has been restored!">
+      <trans-unit id="d245ce64e0359b7bd2410ee23050f22ba893f322" resname="Default configuration has been restored!" approved="yes">
         <source>Default configuration has been restored!</source>
-        <target>Default configuration has been restored!</target>
+        <target state="translated">Die Standardkonfiguration wurde wiederhergestellt!</target>
         <jms:reference-file line="46">/../src/CoreBundle/Controller/SettingsController.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="1753c2061c676db8dd89101b51b92f09a277f51c" resname="Delete account">
@@ -633,9 +621,9 @@
         <target>End</target>
         <jms:reference-file line="8">/Resources/views/_macro/tablesorter.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="9149cfc2a4ecb3f98b8f6d97b09fc179c7f0f1ac" resname="Enter your current password">
+      <trans-unit id="9149cfc2a4ecb3f98b8f6d97b09fc179c7f0f1ac" resname="Enter your current password" approved="yes">
         <source>Enter your current password</source>
-        <target>Enter your current password</target>
+        <target state="translated">Aktuelles Passwort eingeben</target>
         <jms:reference-file line="29">/../src/CoreBundle/Form/Settings/ChangeMailType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="deadb4817c6bb8ab0455d0050fd7819e2dd3f4b5" resname="Export data">
@@ -842,9 +830,9 @@
         <target>Jack Daniels hat Tabellen um %HFmax und %VDOT miteinander zu vergleichen.</target>
         <jms:reference-file line="41">/Resources/views/activity/vdot_info.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="3c0ae71541dfa0f6ed39d15c11d9bdab5b7bbc30" resname="Let's go back to RUNALYZE!">
+      <trans-unit id="3c0ae71541dfa0f6ed39d15c11d9bdab5b7bbc30" resname="Let's go back to RUNALYZE!" approved="yes">
         <source>Let's go back to RUNALYZE!</source>
-        <target>Let's go back to RUNALYZE!</target>
+        <target state="translated">Zurück zu RUNALYZE!</target>
         <jms:reference-file line="38">/Resources/TwigBundle/views/Exception/error.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="4e5a2893bdcc7d239c1db72e4c4ffbe4bea73174" resname="Login">
@@ -862,9 +850,9 @@
         <target>Ausloggen</target>
         <jms:reference-file line="15">/Resources/views/base_logged_in.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="4d3f8338b882b0a12b1754fc7b64acc24922fc09" resname="Looks like something went wrong here.">
+      <trans-unit id="4d3f8338b882b0a12b1754fc7b64acc24922fc09" resname="Looks like something went wrong here." approved="yes">
         <source>Looks like something went wrong here.</source>
-        <target>Looks like something went wrong here.</target>
+        <target state="translated">Sieht so aus als wäre hier etwas schief gelaufen.</target>
         <jms:reference-file line="37">/Resources/TwigBundle/views/Exception/error.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="388929ed36edd0a6db7282b9882b433b135a6c1a" resname="Loop through activities">
@@ -882,9 +870,9 @@
         <target>Wartung</target>
         <jms:reference-file line="6">/Resources/views/maintenance.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="cfba05ccc760fa73d0a2ab762b99bec259d61404" resname="Marathon">
+      <trans-unit id="cfba05ccc760fa73d0a2ab762b99bec259d61404" resname="Marathon" approved="yes">
         <source>Marathon</source>
-        <target>Marathon</target>
+        <target state="translated">Marathon</target>
         <jms:reference-file line="11">/Resources/views/tools/tables/vdot_paces.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="2deaec4409c237ae0bf257a0d4ccf607379bd28d" resname="Migrations have been executed">
@@ -935,9 +923,9 @@
         <target>Offizielle Entwickler:</target>
         <jms:reference-file line="19">/Resources/views/pages/help.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="e3053fbaa7622ccae5f59565e7fb553f9c2d79c8" resname="Old password">
+      <trans-unit id="e3053fbaa7622ccae5f59565e7fb553f9c2d79c8" resname="Old password" approved="yes">
         <source>Old password</source>
-        <target>Old password</target>
+        <target state="translated">Altes Passwort</target>
         <jms:reference-file line="29">/../src/CoreBundle/Form/Settings/ChangePasswordType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="64dde9accf3e5b5df8c680c17ad0b0feb013531d" resname="Overwrite dataset configuration">
@@ -960,15 +948,15 @@
         <target>Überschreibe die Plugins</target>
         <jms:reference-file line="27">/Resources/views/tools/backup/import_form.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="7a9a6226596d8ee2851c67db535d45557a0133f7" resname="Pace">
+      <trans-unit id="7a9a6226596d8ee2851c67db535d45557a0133f7" resname="Pace" approved="yes">
         <source>Pace</source>
-        <target>Pace</target>
+        <target state="translated">Pace</target>
         <jms:reference-file line="40">/Resources/views/activity/tool/best_sub_segments.html.twig</jms:reference-file>
         <jms:reference-file line="103">/Resources/views/activity/tool/time_series_statistics.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="bc3023b36063a7681db24681472b54fa11f0d4ec" resname="Page not found">
+      <trans-unit id="bc3023b36063a7681db24681472b54fa11f0d4ec" resname="Page not found" approved="yes">
         <source>Page not found</source>
-        <target>Page not found</target>
+        <target state="translated">Seite nicht gefunden</target>
         <jms:reference-file line="34">/Resources/TwigBundle/views/Exception/error.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="8be3c943b1609fffbfc51aad666d0a04adf83c9d" resname="Password">
@@ -1119,9 +1107,9 @@
         <target>Registrieren</target>
         <jms:reference-file line="23">/Resources/views/register/form.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="5c25ef724a708355777148660d750c20efbd74d2" resname="Registered since">
+      <trans-unit id="5c25ef724a708355777148660d750c20efbd74d2" resname="Registered since" approved="yes">
         <source>Registered since</source>
-        <target>Registered since</target>
+        <target state="translated">Registriert seit</target>
         <jms:reference-file line="58">/../src/CoreBundle/Form/Settings/AccountType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="6761e2071d6eb623b788580077c6a7b0007b04ed" resname="Registrations are currently disabled.">
@@ -1134,14 +1122,14 @@
         <target>Eingeloggt bleiben</target>
         <jms:reference-file line="19">/Resources/views/login/form.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="bab9bc458f38d4d574e5baa63c72341db6ddaa30" resname="Repeat Password">
+      <trans-unit id="bab9bc458f38d4d574e5baa63c72341db6ddaa30" resname="Repeat Password" approved="yes">
         <source>Repeat Password</source>
-        <target>Repeat Password</target>
+        <target state="translated">Passwort wiederholen</target>
         <jms:reference-file line="36">/../src/CoreBundle/Form/RegistrationType.php</jms:reference-file>
       </trans-unit>
-      <trans-unit id="366c2415f45eda358aa31b5d67c61f41a43a2bd0" resname="Repeat password">
+      <trans-unit id="366c2415f45eda358aa31b5d67c61f41a43a2bd0" resname="Repeat password" approved="yes">
         <source>Repeat password</source>
-        <target>Repeat password</target>
+        <target state="translated">Passwort wiederholen</target>
         <jms:reference-file line="40">/../src/CoreBundle/Form/RecoverPasswordType.php</jms:reference-file>
         <jms:reference-file line="43">/../src/CoreBundle/Form/Settings/ChangePasswordType.php</jms:reference-file>
       </trans-unit>
@@ -1247,9 +1235,9 @@
         <jms:reference-file line="37">/Resources/views/tools/vdot_analysis.html.twig</jms:reference-file>
         <jms:reference-file line="38">/Resources/views/tools/vdot_analysis.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="22959ede33b65d25ed4762705597fb8b954d3a6b" resname="Sorry!">
+      <trans-unit id="22959ede33b65d25ed4762705597fb8b954d3a6b" resname="Sorry!" approved="yes">
         <source>Sorry!</source>
-        <target>Sorry!</target>
+        <target state="translated">Entschuldigung!</target>
         <jms:reference-file line="34">/Resources/TwigBundle/views/Exception/error.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="5b3c7da06faaf88b5646f45a38f5a04ad22e2697" resname="Sorry, but the url was not valid.">
@@ -1420,9 +1408,9 @@
         <target>Um sofort starten zu können, wirf am besten einen Blick in unserer Startertipps unter %s.</target>
         <jms:reference-file line="32">/Resources/views/mail/account/registration.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="4fa8cc860c52b268dc6a3adcde7305e9415db5bb" resname="Tools">
+      <trans-unit id="4fa8cc860c52b268dc6a3adcde7305e9415db5bb" resname="Tools" approved="yes">
         <source>Tools</source>
-        <target>Tools</target>
+        <target state="translated">Tools</target>
         <jms:reference-file line="21">/Resources/views/base_logged_in.twig</jms:reference-file>
         <jms:reference-file line="5">/Resources/views/tools/tools_list.html.twig</jms:reference-file>
       </trans-unit>
@@ -1547,14 +1535,14 @@
         <target>Willkommen bei RUNALYZE!</target>
         <jms:reference-file line="6">/Resources/views/mail/account/registration.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="e721a1481440bd8b46aaaa3d2b69958cf540c6b9" resname="Year of birth">
+      <trans-unit id="e721a1481440bd8b46aaaa3d2b69958cf540c6b9" resname="Year of birth" approved="yes">
         <source>Year of birth</source>
-        <target>Year of birth</target>
+        <target state="translated">Geburtsjahr</target>
         <jms:reference-file line="55">/../src/CoreBundle/Form/Settings/AccountType.php</jms:reference-file>
       </trans-unit>
-      <trans-unit id="5397e0583f14f6c88de06b1ef28f460a1fb5b0ae" resname="Yes">
+      <trans-unit id="5397e0583f14f6c88de06b1ef28f460a1fb5b0ae" resname="Yes" approved="yes">
         <source>Yes</source>
-        <target>Yes</target>
+        <target state="translated">Ja</target>
         <jms:reference-file line="66">/../src/CoreBundle/Form/Settings/AccountType.php</jms:reference-file>
         <jms:reference-file line="73">/../src/CoreBundle/Form/Settings/AccountType.php</jms:reference-file>
       </trans-unit>
@@ -1640,9 +1628,9 @@
         <target>Dein Backup wurde erstellt.</target>
         <jms:reference-file line="50">/Resources/views/tools/backup/export.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="c11c4e3c20ca397712371888b26eb497275e44ad" resname="Your changes have been saved!">
+      <trans-unit id="c11c4e3c20ca397712371888b26eb497275e44ad" resname="Your changes have been saved!" approved="yes">
         <source>Your changes have been saved!</source>
-        <target>Your changes have been saved!</target>
+        <target state="translated">Deine Änderungen wurden gespeichert!</target>
         <jms:reference-file line="56">/../src/CoreBundle/Controller/SettingsController.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="96d0b4f4d1985befcc0f0deab738b1dbc37e3895" resname="Your data has been imported.">
@@ -1650,14 +1638,14 @@
         <target>Deine Daten wurden importiert.</target>
         <jms:reference-file line="12">/Resources/views/tools/backup/import_finish.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="5248d8fd362a06b675231ce1a9192cc2762a9eb9" resname="Your mail address has been changed!">
+      <trans-unit id="5248d8fd362a06b675231ce1a9192cc2762a9eb9" resname="Your mail address has been changed!" approved="yes">
         <source>Your mail address has been changed!</source>
-        <target>Your mail address has been changed!</target>
+        <target state="translated">Deine Email-Adresse wurde geändert!</target>
         <jms:reference-file line="103">/../src/CoreBundle/Controller/SettingsController.php</jms:reference-file>
       </trans-unit>
-      <trans-unit id="2c180543e9d46b3ec347a9b8f50b1ba4939f3e02" resname="Your new password has been saved!">
+      <trans-unit id="2c180543e9d46b3ec347a9b8f50b1ba4939f3e02" resname="Your new password has been saved!" approved="yes">
         <source>Your new password has been saved!</source>
-        <target>Your new password has been saved!</target>
+        <target state="translated">Dein neues Passwort wurde gespeichert!</target>
         <jms:reference-file line="82">/../src/CoreBundle/Controller/SettingsController.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="cf5b92898c9fda4b7848b48e26f1110a5d8780cd" resname="Your password has been changed.">
