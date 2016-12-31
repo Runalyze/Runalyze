@@ -106,8 +106,8 @@ class AccountController extends Controller
 
         if ($form->isSubmitted()) {
             /** @var Account|null $account */
-            $account = $this->getAccountRepository()->findOneBy([
-                'username' => $request->request->get($form->getName())['username']
+            $account = $this->getAccountRepository()->loadUserByUsername([
+                $request->request->get($form->getName())['username']
             ]);
 
             if (null === $account) {

@@ -5,6 +5,7 @@
         {{ form_label(form) }}
         {{ form_widget(form) }}
         {{ form_errors(form) }}
+
         {% if info is defined %}
             <p class="info">{{ info }}</p>
         {% endif %}
@@ -24,3 +25,37 @@
         </p>
     {%- endif -%}
 {%- endblock form_errors -%}
+
+{%- block form_label -%}
+    {% if label is not same as(false) -%}
+        {% if not compound -%}
+            {% set label_attr = label_attr|merge({'for': id}) %}
+        {%- endif -%}
+        {% if required -%}
+            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+        {%- endif -%}
+        {% if label is empty -%}
+            {%- if label_format is not empty -%}
+                {% set label = label_format|replace({
+                '%name%': name,
+                '%id%': id,
+                }) %}
+            {%- else -%}
+                {% set label = name|humanize %}
+            {%- endif -%}
+        {%- endif -%}
+        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ translation_domain is same as(false) ? label : label|trans({}, translation_domain) }}
+        {% if help is defined %}
+            <span rel="tooltip" data-original-title="{{ help }}"><i class="fa fa-fw fa-question-circle"></i></span>
+        {% endif %}
+        </label>
+    {%- endif -%}
+{%- endblock form_label -%}
+
+{%- block form_widget_simple -%}
+    {%- set type = type|default('text') -%}
+    {% if input_unit %}<span class="input-with-unit">{% endif %}
+        <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+    {% if input_unit %}<label for="{{ id }}" class="input-unit">{{ input_unit }}</label></span>{% endif %}
+{%- endblock form_widget_simple -%}
+

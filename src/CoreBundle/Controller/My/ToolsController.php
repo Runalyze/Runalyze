@@ -1,6 +1,6 @@
 <?php
 
-namespace Runalyze\Bundle\CoreBundle\Controller;
+namespace Runalyze\Bundle\CoreBundle\Controller\My;
 
 use Runalyze\Activity\Distance;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Anova\AnovaDataQuery;

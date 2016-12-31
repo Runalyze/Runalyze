@@ -59,6 +59,30 @@ services:
     arguments: ["@app.repository.sport", "@app.repository.equipment_type", "@security.token_storage"]
     tags:
      - { name: form.type }
+  app.form.type.race_result:
+    class: Runalyze\Bundle\CoreBundle\Form\RaceResultType
+    tags:
+     - { name: form.type }
+  app.form.type.distance:
+    class: Runalyze\Bundle\CoreBundle\Form\Type\DistanceType
+    arguments: ["@app.unit_system.distance"]
+    tags:
+     - { name: form.type }
+  app.form.type.energy:
+    class: Runalyze\Bundle\CoreBundle\Form\Type\EnergyType
+    arguments: ["@app.configuration_manager"]
+    tags:
+     - { name: form.type }
+  app.form.type.temperature:
+    class: Runalyze\Bundle\CoreBundle\Form\Type\TemperatureType
+    arguments: ["@app.configuration_manager"]
+    tags:
+     - { name: form.type }
+  app.form.type.weight:
+    class: Runalyze\Bundle\CoreBundle\Form\Type\WeightType
+    arguments: ["@app.configuration_manager"]
+    tags:
+     - { name: form.type }
   app.privacy_guard:
     class: Runalyze\Bundle\CoreBundle\Services\PrivacyGuard
     arguments: ["@security.token_storage", "@app.configuration_manager"]
@@ -71,6 +95,24 @@ services:
   app.sport_selection_factory:
     class: Runalyze\Bundle\CoreBundle\Services\Selection\SportSelectionFactory
     arguments: ["@app.repository.sport", "@app.configuration_manager", "@security.token_storage"]
+  app.unit_system_factory:
+    class: Runalyze\Bundle\CoreBundle\Services\UnitSystemFactory
+  app.unit_system.distance:
+    class: Runalyze\Metrics\Distance\Unit\AbstractDistanceUnit
+    factory: "app.unit_system_factory:getDistanceUnit"
+    arguments: ["@app.configuration_manager"]
+  app.unit_system.energy:
+    class: Runalyze\Metrics\Energy\Unit\AbstractEnergyUnit
+    factory: "app.unit_system_factory:getEnergyUnit"
+    arguments: ["@app.configuration_manager"]
+  app.unit_system.temperature:
+    class: Runalyze\Metrics\Temperature\Unit\AbstractTemperatureUnit
+    factory: "app.unit_system_factory:getTemperatureUnit"
+    arguments: ["@app.configuration_manager"]
+  app.unit_system.weight:
+    class: Runalyze\Metrics\Weight\Unit\AbstractWeightUnit
+    factory: "app.unit_system_factory:getWeightUnit"
+    arguments: ["@app.configuration_manager"]
   app.twig_configuration_extension:
     class: Runalyze\Bundle\CoreBundle\Twig\ConfigurationExtension
     public: false
