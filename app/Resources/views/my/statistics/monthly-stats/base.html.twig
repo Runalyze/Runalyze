@@ -1,0 +1,62 @@
+{% extends 'my/statistics/base.html.twig' %}
+
+{% from '_macro/utilities.html.twig' import tableHeadMonths %}
+
+{% block pluginTitle %}
+    {{ 'Monthly Stats'|trans }}
+{% endblock %}
+
+{% block panelHeadingMenu %}
+{% set analysisList = analysisData.analysisSelection %}
+{% set sportList = analysisData.sportSelection %}
+<ul>
+    <li class="with-submenu">
+        <span class="link">{{ analysisList.currentLabel|trans }}</span>
+        <ul class="submenu">
+            {% for key, label in analysisList.list %}
+            <li{% if key == analysisList.currentKey %} class="active"{% endif %}><a class="ajax" target="statistics-inner" href="{{ url('plugin-display', {'id': pluginId, 'sport': sportList.currentKey, 'dat': key}) }}">{{ label|trans }}</a></li>
+            {% endfor %}
+        </ul>
+    </li><li class="with-submenu">
+        <span class="link">{{ sportList.currentLabel|trans }}</span>
+        <ul class="submenu">
+            {% for id, name in sportList.list %}
+                <li{% if id == sportList.currentKey %} class="active"{% endif %}><a class="ajax" target="statistics-inner" href="{{ url('plugin-display', {'id': pluginId, 'sport': id, 'dat': analysisList.currentKey}) }}">{{ name|trans }}</a></li>
+            {% endfor %}
+        </ul>
+    </li>
+</ul>
+{% endblock %}
+
+{% block panelContent %}
+<style type="text/css">
+    .analysis-table td { position: relative; vertical-align: top; }
+    .analysis-table td .fa-circle { width: 30px; text-align:center;  color: #800; }
+</style>
+
+<table class="analysis-table fullwidth zebra-style r">
+    <thead>{{ tableHeadMonths(8, 1) }}</thead>
+    <tbody>
+    {% if analysisData.empty %}
+        <tr><td colspan="13" class="c"><em>{{ 'No activities found.'|trans }}</em></td></tr>
+    {% else %}
+        {% set maximum = analysisData.maximum %}
+        {% for year in analysisData.years %}
+            <tr>
+                <td class="b l">{{ year }}</td>
+                {% for month in range(1, 12) %}
+                    {# @var value \Runalyze\Bundle\CoreBundle\Twig\DisplayableValue #}
+                    {% set value = analysisData.value(year, month) %}
+                    <td>
+                        {% if not value.zero %}
+                        {{ value.withUnit|nbsp|raw }}<br>
+                        <i class="fa fa-circle" style="opacity:{{ min(1, (value.rawValue/maximum * 0.8)|round(2) + 0.2) }}; font-size: {{ (((value.rawValue/maximum) ** 0.5)*30)|round }}px"></i>
+                        {% endif %}
+                    </td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    {% endif %}
+    </tbody>
+</table>
+{% endblock %}

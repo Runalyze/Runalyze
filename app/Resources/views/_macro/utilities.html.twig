@@ -25,3 +25,33 @@
     {# @var displayableValue \Runalyze\Bundle\CoreBundle\Twig\DisplayableValue #}
     {{ _self.boxedValue(displayableValue.zero ? '-' : displayableValue.value, displayableValue.unit, label, width, icon) }}
 {% endmacro %}
+
+{% macro tableHeadMonths(fixedWidth, emptyCells, tag, withTotalCell) %}
+    {% set width = fixedWidth > 0 ? ' width="' ~ fixedWidth ~ '%"' : '' %}
+    {% set tag = tag|default('th') %}
+    {% set tagOpen = '<' ~ tag ~ width ~ '>' %}
+    {% set tagClose = '</' ~ tag ~ '>' %}
+
+    <tr class="b">
+        {% for i in range(1, emptyCells|default(1)) %}
+            {{ ('<' ~ tag ~ '>' ~ tagClose)|raw }}
+        {% endfor %}
+
+        {{ (tagOpen ~ 'Jan'|trans ~ tagClose)|raw }}
+        {{ (tagOpen ~ 'Feb'|trans ~ tagClose)|raw }}
+        {{ (tagOpen ~ 'Mar'|trans ~ tagClose)|raw }}
+        {{ (tagOpen ~ 'Apr'|trans ~ tagClose)|raw }}
+        {{ (tagOpen ~ 'May'|trans ~ tagClose)|raw }}
+        {{ (tagOpen ~ 'Jun'|trans ~ tagClose)|raw }}
+        {{ (tagOpen ~ 'Jul'|trans ~ tagClose)|raw }}
+        {{ (tagOpen ~ 'Aug'|trans ~ tagClose)|raw }}
+        {{ (tagOpen ~ 'Sep'|trans ~ tagClose)|raw }}
+        {{ (tagOpen ~ 'Oct'|trans ~ tagClose)|raw }}
+        {{ (tagOpen ~ 'Nov'|trans ~ tagClose)|raw }}
+        {{ (tagOpen ~ 'Dec'|trans ~ tagClose)|raw }}
+
+        {% if withTotalCell|default(false) %}
+            {{ (tagOpen ~ 'Total'|trans ~ tagClose)|raw }}
+        {% endif %}
+    </tr>
+{% endmacro %}

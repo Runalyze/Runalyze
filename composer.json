@@ -21,7 +21,8 @@
         "runalyze/dem-reader": "^1.0",
         "runalyze/age-grade": "^1.0",
         "symfony/swiftmailer-bundle": "^2.3",
-        "beberlei/DoctrineExtensions": "~1.0"
+        "beberlei/DoctrineExtensions": "~1.0",
+        "jms/translation-bundle": "dev-master"
     },
     "autoload": {
         "files": ["src/functions.php", "app/AppKernel.php"],

@@ -28,14 +28,17 @@ class AccountType extends AbstractType
                 'empty_data' => ''
             ))
             ->add('mail', EmailType::class, array(
-                'disabled' => true
+                'disabled' => true,
+                'label' => 'Mail'
             ))
             ->add('language', ChoiceType::class, array(
-                'choices' => Language::getChoices()
+                'choices' => Language::getChoices(),
+                'label' => 'Language'
             ))
             ->add('timezone', ChoiceType::class, array(
                 'choices' => Timezone::getChoices(),
-                'choice_translation_domain' => false
+                'choice_translation_domain' => false,
+                'label' => 'Timezone'
             ))
             ->add('gender', ChoiceType::class, array(
                 'choices' => Gender::getChoices(),
@@ -43,7 +46,8 @@ class AccountType extends AbstractType
             ))
             ->add('birthyear', IntegerType::class, array(
                 'attr' => array('min' => 1900, 'max' => date("Y")),
-                'required' => false
+                'required' => false,
+                'label' => 'Year of birth'
             ))
             ->add('registerdate', DateType::class, array(
                     'label' => 'Registered since',

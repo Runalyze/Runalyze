@@ -1,5 +1,7 @@
 <?php
 
+namespace Runalyze\Bundle\CoreBundle\Tests\Services\Configuration;
+
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\Conf;
 use Runalyze\Bundle\CoreBundle\Entity\ConfRepository;

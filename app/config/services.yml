@@ -92,6 +92,9 @@ services:
   app.configuration_manager:
     class: Runalyze\Bundle\CoreBundle\Services\Configuration\ConfigurationManager
     arguments: ["@app.repository.conf", "@security.token_storage"]
+  app.sport_selection_factory:
+    class: Runalyze\Bundle\CoreBundle\Services\Selection\SportSelectionFactory
+    arguments: ["@app.repository.sport", "@app.configuration_manager", "@security.token_storage"]
   app.unit_system_factory:
     class: Runalyze\Bundle\CoreBundle\Services\UnitSystemFactory
   app.unit_system.distance:

@@ -39,6 +39,40 @@ class TrainingRepository extends EntityRepository
             ->getSingleScalarResult();
     }
 
+    /**
+     * @param Account $account
+     * @param null|string $column
+     * @param null|int $sportid
+     * @return array
+     */
+    public function getMonthlyStatsFor(Account $account, $column = null, $sportid = null)
+    {
+        $queryBuilder = $this->_em->createQueryBuilder()
+            ->select(
+                'YEAR(FROM_UNIXTIME(t.time)) AS year',
+                'MONTH(FROM_UNIXTIME(t.time)) AS month'
+            )
+            ->from('CoreBundle:Training', 't')
+            ->where('t.account = :account')
+            ->setParameter('account', $account->getId())
+            ->addGroupBy('year')
+            ->addGroupBy('month');
+
+        if (null !== $column) {
+            $queryBuilder->addSelect('SUM(t.'.$column.') AS value');
+        } else {
+            $queryBuilder->addSelect('SUM(1g) AS value');
+        }
+
+        if (null !== $sportid) {
+            $queryBuilder
+                ->andWhere('t.sport = :sportid')
+                ->setParameter('sportid', $sportid);
+        }
+
+        return $queryBuilder->getQuery()->getArrayResult();
+    }
+
 	/**
 	 * @param int $activityId
 	 * @param int $accountId
