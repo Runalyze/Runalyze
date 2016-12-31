@@ -24,7 +24,7 @@ class RaceResultController extends Controller
     }
 
     /**
-     * @Route("/my/raceresult/{activityId}", name="raceresult-form")
+     * @Route("/my/raceresult/{activityId}", name="raceresult-form", requirements={"activityId" = "\d+"})
      */
     public function raceresultFormAction($activityId, Account $account, Request $request)
     {
@@ -32,13 +32,13 @@ class RaceResultController extends Controller
         $activity = $this->getDoctrine()->getRepository('CoreBundle:Training')->findForAccount($activityId, $account->getId());
 
         if (null === $activity) {
-            return $this->render('my/raceresult/error.html.twig');
+            throw $this->createAccessDeniedException();
         }
 
         /** @var null|Raceresult $raceResult */
         $raceResult = $this->getRaceresultRepository()->findForAccount($activityId, $account->getId());
-
         $isNew = false;
+
         if (null === $raceResult) {
             $isNew = true;
             $raceResult = new Raceresult();
@@ -52,7 +52,6 @@ class RaceResultController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $this->getRaceresultRepository()->save($raceResult);
         }
 
@@ -65,7 +64,7 @@ class RaceResultController extends Controller
     }
 
     /**
-     * @Route("/my/raceresult/{activityId}/delete", name="raceresult-delete")
+     * @Route("/my/raceresult/{activityId}/delete", name="raceresult-delete", requirements={"activityId" = "\d+"})
      */
     public function raceresultDeleteAction($activityId, Request $request, Account $account)
     {
@@ -75,11 +74,9 @@ class RaceResultController extends Controller
         if ($raceResult) {
            $this->getRaceresultRepository()->delete($raceResult);
         } else {
-            return $this->render('my/raceresult/error.html.twig');
+            throw $this->createAccessDeniedException();
         }
 
         return $this->render('my/raceresult/deleted.html.twig');
-
     }
-
 }
