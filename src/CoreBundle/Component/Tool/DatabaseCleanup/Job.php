@@ -40,7 +40,7 @@ abstract class Job
 	 */
 	protected function isRequested($enum)
     {
-		return isset($this->RequestData[$enum]);
+		return isset($this->RequestData[$enum]) && true === $this->RequestData[$enum];
 	}
 
 	/**
