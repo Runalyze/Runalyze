@@ -18,12 +18,6 @@ use Runalyze\Model;
  */
 class RunalyzePluginPanel_Equipment extends PluginPanel {
 	/**
-	 * Internal array with all equipment from database and statistic values
-	 * @var array
-	 */
-	private $Equipment = null;
-
-	/**
 	 * @var array
 	 */
 	protected $AllTypes = array();
@@ -90,7 +84,7 @@ class RunalyzePluginPanel_Equipment extends PluginPanel {
 		$Links .= '<ul class="submenu">'.implode('', $TypeLinks).'</ul>';
 		$Links .= '</li>';
 		$Links .= '<li>'.Ajax::window('<a href="'.ConfigTabs::$CONFIG_URL.'?key=config_tab_equipment" '.Ajax::tooltip('', __('Add/Edit equipment'), true, true).'>'.Icon::$ADD.'</a>').'</li>';
-		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key().'/window.equipment.table.php" '.Ajax::tooltip('', __('Show all equipment'), true, true).'>'.Icon::$TABLE.'</a>', 'big').'</li>';
+		$Links .= '<li>'.Ajax::window('<a href="my/equipment/category/'.(int)$this->Configuration()->value('type').'/table" '.Ajax::tooltip('', __('Show all equipment'), true, true).'>'.Icon::$TABLE.'</a>', 'big').'</li>';
 
 		return '<ul>'.$Links.'</ul>';
 	}
@@ -179,117 +173,5 @@ class RunalyzePluginPanel_Equipment extends PluginPanel {
 	 */
 	protected function getUsageImage($percentage) {
 		return '<span class="equipment-usage" style="width:'.round($percentage * 330).'px;"></span>';
-	}
-
-	/**
-	 * Display table
-	 */
-	public function displayTable() {
-		if (is_null($this->Equipment))
-			$this->initTableData();
-
-		echo '<table id="list-of-all-equipment" class="fullwidth zebra-style">
-			<thead>
-				<tr>
-					<th class="{sorter: \'x\'} small">'.__('x-times').'</th>
-					<th>'.__('Name').'</th>
-					<th class="{sorter: \'germandate\'} small">'.__('since').'</th>
-					<th class="{sorter: \'distance\'}">'.__('avg.').' '.Runalyze\Configuration::General()->distanceUnitSystem()->distanceUnit().'</th>
-					<th>'.__('avg.').' '.__('Pace').'</th>
-					<th class="{sorter: \'distance\'} small"><small>'.__('max.').'</small> '.Runalyze\Configuration::General()->distanceUnitSystem()->distanceUnit().'</th>
-					<th class="small"><small>'.__('min.').'</small> '.__('Pace').'</th>
-					<th class="{sorter: \'resulttime\'}">'.__('Time').'</th>
-					<th class="{sorter: \'distance\'}">'.__('Distance').'</th>
-					<th>'.__('Notes').'</th>
-				</tr>
-			</thead>
-			<tbody>';
-
-		if (!empty($this->Equipment)) {
-			foreach ($this->Equipment as $data) {
-				$Object = new Model\Equipment\Entity($data);
-				$in_use = $Object->isInUse() ? '' : ' unimportant';
-
-				$Pace = new Pace($Object->duration(), $Object->distance());
-				$MaxPace = new Pace($data['pace_in_s'], 1);
-
-				echo '<tr class="'.$in_use.' r" style="position: relative">
-					<td class="small">'.$data['num'].'x</td>
-					<td class="b l">'.SearchLink::to('equipmentid', $Object->id(), $Object->name()).'</td>
-					<td class="small">'.$this->formatData($Object->startDate()).'</td>
-					<td>'.(($data['num'] != 0) ? Distance::format($Object->distance()/$data['num']) : '-').'</td>
-					<td>'.(($Object->duration() > 0) ? $Pace->asMinPerKm().'/km' : '-').'</td>
-					<td class="small">'.Distance::format($data['dist']).'</td>
-					<td class="small">'.$MaxPace->asMinPerKm().'/km'.'</td>
-					<td>'.Duration::format($Object->duration()).'</td>
-					<td>'.Distance::format($Object->totalDistance()).'</td>
-					<td class="small">'.$Object->notes().'</td>
-				</tr>';
-			}
-		} else {
-			echo '<tr><td colspan="9">'.__('You don\'t have any shoes').'</td></tr>';
-		}
-
-		echo '</tbody>';
-		echo '</table>';
-
-		Ajax::createTablesorterFor("#list-of-all-equipment", true);
-	}
-
-	/**
-	 * Format date
-	 * @param string $fromDatabase
-	 * @return string
-	 */
-	protected function formatData($fromDatabase) {
-		if (!$fromDatabase) {
-			return '-';
-		}
-
-		return date('d.m.Y', strtotime($fromDatabase));
-	}
-
-	/**
-	 * Table link
-	 * @return string
-	 */
-	public function tableLink() {
-		return Ajax::window('<a href="plugin/'.$this->key().'/window.equipment.table.php">'.Icon::$TABLE.' '.__('Show all equipment').'</a>');
-	}
-
-	/**
-	 * Initialize internal data
-	 */
-	private function initTableData() {
-		$this->Equipment = array();
-		$Statistics = array();
-
-		// TODO: cache or optimize this query
-		$AllStatistics = DB::getInstance()->query(
-			'SELECT
-				`eq`.`equipmentid` as `equipmentid`,
-				COUNT(*) as `num`,
-				MIN(`s`/`distance`) as `pace_in_s`,
-				MAX(`distance`) as `dist`
-			FROM `'.PREFIX.'training` AS `act`
-            INNER JOIN `'.PREFIX.'activity_equipment` as `eq` ON `act`.`id` = `eq`.`activityid`
-			GROUP BY `eq`.`equipmentid`'
-		)->fetchAll();
-
-		foreach ($AllStatistics as $Statistic)
-			$Statistics[$Statistic['equipmentid']] = $Statistic;
-
-		$AllEquipment = DB::getInstance()->query(
-			'SELECT * FROM `'.PREFIX.'equipment`
-			WHERE `typeid`="'.(int)$this->Configuration()->value('type').'" AND `accountid`="'.SessionAccountHandler::getId().'"
-			ORDER BY ISNULL(`date_end`) DESC, `distance` DESC'
-		)->fetchAll();
-
-		foreach ($AllEquipment as $Equipment) {
-			if (isset($Statistics[$Equipment['id']]))
-				$this->Equipment[] = array_merge($Equipment, $Statistics[$Equipment['id']]);
-			else
-				$this->Equipment[] = array_merge($Equipment, array('num' => 0, 'pace_in_s' => 0, 'dist' => 0));
-		}
 	}
 }

@@ -1,0 +1,50 @@
+{% extends "base_logged_in.twig" %}
+
+{% block content %}
+    <div class="panel-heading">
+        <h1>{{ 'Your equipment'|trans ~ ': ' ~ category.name }}</h1>
+    </div>
+    <div class="panel-content">
+        <table id="list-of-all-equipment" class="fullwidth zebra-style">
+            <thead>
+            <tr>
+                <th class="{sorter: 'x'} small">{{ 'x-times'|trans }}</th>
+                <th>{{ 'Name'|trans }}</th>
+                <th class="{sorter: 'germandate'} small">{{ 'since'|trans }}</th>
+                <th class="{sorter: 'distance'}">{{ 'avg.'|trans }} {{ unitSystem.distanceUnit.appendix }}</th>
+                <th>{{ 'avg.'|trans }} {{ 'Pace'|trans }}</th>
+                <th class="{sorter: 'distance'} small"><small>{{ 'max.'|trans }}</small> {{ unitSystem.distanceUnit.appendix }}</th>
+                <th class="small"><small>{{ 'max.'|trans }}</small> {{ 'Pace'|trans }}</th>
+                <th class="{sorter: 'resulttime'}">{{ 'Time'|trans }}</th>
+                <th class="{sorter: 'distance'}">{{ 'Distance'|trans }}</th>
+                <th>{{ 'Notes'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if statistics.count > 0 %}
+                {% for row in statistics.statistics %}
+                    {# @var row \Runalyze\Bundle\CoreBundle\Model\Equipment\EquipmentStatistic #}
+                    {% set equipment = row.equipment %}
+                    {# @var equipment \Runalyze\Bundle\CoreBundle\Entity\Equipment #}
+                    <tr class="r{% if not equipment.active %} unimportant{% endif %}">
+                        <td class="small">{{ row.numberOfActivities }}x</td>
+                        <td class="b l"><a class="window" href="{{ url('my-search', {'get': 'true', 'equipmentid': equipment.id}) }}" data-size="big">{{ equipment.name }}</a></td>
+                        <td class="small">{{ equipment.dateStart is null ? '-' : equipment.dateStart|date('d.m.Y') }}</td>
+                        <td>{{ row.numberOfActivities > 0 ? distance(equipment.distance / row.numberOfActivities, unitSystem.distanceUnit) : '-' }}</td>
+                        <td>{{ equipment.distance > 0 ? pace(equipment.pace, unitSystem.paceUnit) : '-' }}</td>
+                        <td class="small">{{ row.maximalDistance > 0 ? distance(row.maximalDistance, unitSystem.distanceUnit) : '-' }}</td>
+                        <td class="small">{{ row.maximalPace > 0 ? pace(row.maximalPace, unitSystem.paceUnit) : '-' }}</td>
+                        <td>{{ equipment.time > 0 ? equipment.time|duration(0) : '-' }}</td>
+                        <td>{{ equipment.totalDistance > 0 ? distance(equipment.totalDistance, unitSystem.distanceUnit) : '-' }}</td>
+                        <td class="small">{{ equipment.notes }}</td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr><td colspan="9">{% trans %}There are no equipment objects for this category.{% endtrans %}</td></tr>
+            {% endif %}
+            </tbody>
+        </table>
+
+        <script>$("#list-of-all-equipment").tablesorterAutosort(true);</script>
+    </div>
+{% endblock %}
