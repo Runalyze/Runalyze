@@ -43,20 +43,22 @@ class ValueExtension extends \Twig_Extension
      */
     public function getFunctions()
     {
+        $safeHtmlOptions = array('is_safe' => ['html']);
+
         return array(
-            new \Twig_SimpleFunction('value', array($this, 'value')),
-            new \Twig_SimpleFunction('distance', array($this, 'distance')),
-            new \Twig_SimpleFunction('elevation', array($this, 'elevation')),
-            new \Twig_SimpleFunction('strideLength', array($this, 'strideLength')),
-            new \Twig_SimpleFunction('energy', array($this, 'energy')),
-            new \Twig_SimpleFunction('heartRate', array($this, 'heartRate')),
-            new \Twig_SimpleFunction('heartRateComparison', array($this, 'heartRateComparison')),
-            new \Twig_SimpleFunction('pace', array($this, 'pace')),
-            new \Twig_SimpleFunction('paceComparison', array($this, 'paceComparison')),
-            new \Twig_SimpleFunction('temperature', array($this, 'temperature')),
-            new \Twig_SimpleFunction('weight', array($this, 'weight')),
-            new \Twig_SimpleFunction('vdot', array($this, 'vdot')),
-            new \Twig_SimpleFunction('vdotFor', array($this, 'vdotFor')),
+            new \Twig_SimpleFunction('value', array($this, 'value'), $safeHtmlOptions),
+            new \Twig_SimpleFunction('distance', array($this, 'distance'), $safeHtmlOptions),
+            new \Twig_SimpleFunction('elevation', array($this, 'elevation'), $safeHtmlOptions),
+            new \Twig_SimpleFunction('strideLength', array($this, 'strideLength'), $safeHtmlOptions),
+            new \Twig_SimpleFunction('energy', array($this, 'energy'), $safeHtmlOptions),
+            new \Twig_SimpleFunction('heartRate', array($this, 'heartRate'), $safeHtmlOptions),
+            new \Twig_SimpleFunction('heartRateComparison', array($this, 'heartRateComparison'), $safeHtmlOptions),
+            new \Twig_SimpleFunction('pace', array($this, 'pace'), $safeHtmlOptions),
+            new \Twig_SimpleFunction('paceComparison', array($this, 'paceComparison'), $safeHtmlOptions),
+            new \Twig_SimpleFunction('temperature', array($this, 'temperature'), $safeHtmlOptions),
+            new \Twig_SimpleFunction('weight', array($this, 'weight'), $safeHtmlOptions),
+            new \Twig_SimpleFunction('vdot', array($this, 'vdot'), $safeHtmlOptions),
+            new \Twig_SimpleFunction('vdotFor', array($this, 'vdotFor'), $safeHtmlOptions),
         );
     }
 

@@ -36,35 +36,35 @@ class Equipment
     private $notes = '';
 
     /**
-     * @var string
+     * @var float [km]
      *
      * @ORM\Column(name="distance", columnDefinition="decimal(8,2) unsigned NOT NULL DEFAULT '0.00'")
      */
     private $distance = '0.00';
 
     /**
-     * @var integer
+     * @var int [s]
      *
      * @ORM\Column(name="time", type="integer", nullable=false, options={"unsigned":true, "default":0})
      */
     private $time = '0';
 
     /**
-     * @var integer
+     * @var int [km]
      *
      * @ORM\Column(name="additional_km", type="integer", nullable=false, options={"unsigned":true, "default":0})
      */
     private $additionalKm = '0';
 
     /**
-     * @var \DateTime
+     * @var null|\DateTime
      *
      * @ORM\Column(name="date_start", type="date", nullable=true)
      */
     private $dateStart;
 
     /**
-     * @var \DateTime
+     * @var null|\DateTime
      *
      * @ORM\Column(name="date_end", type="date", nullable=true)
      */
@@ -97,19 +97,13 @@ class Equipment
      */
     private $activity;
 
-    /**
-     * Constructor
-     */
     public function __construct()
     {
         $this->activity = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-
     /**
-     * Get id
-     *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -117,11 +111,9 @@ class Equipment
     }
 
     /**
-     * Set name
-     *
      * @param string $name
      *
-     * @return Equipment
+     * @return $this
      */
     public function setName($name)
     {
@@ -131,8 +123,6 @@ class Equipment
     }
 
     /**
-     * Get name
-     *
      * @return string
      */
     public function getName()
@@ -141,11 +131,9 @@ class Equipment
     }
 
     /**
-     * Set notes
-     *
      * @param string $notes
      *
-     * @return Equipment
+     * @return $this
      */
     public function setNotes($notes)
     {
@@ -155,8 +143,6 @@ class Equipment
     }
 
     /**
-     * Get notes
-     *
      * @return string
      */
     public function getNotes()
@@ -165,11 +151,9 @@ class Equipment
     }
 
     /**
-     * Set distance
+     * @param float $distance [km]
      *
-     * @param string $distance
-     *
-     * @return Equipment
+     * @return $this
      */
     public function setDistance($distance)
     {
@@ -179,9 +163,7 @@ class Equipment
     }
 
     /**
-     * Get distance
-     *
-     * @return string
+     * @return float [km]
      */
     public function getDistance()
     {
@@ -189,11 +171,9 @@ class Equipment
     }
 
     /**
-     * Set time
+     * @param int $time [s]
      *
-     * @param integer $time
-     *
-     * @return Equipment
+     * @return $this
      */
     public function setTime($time)
     {
@@ -203,9 +183,7 @@ class Equipment
     }
 
     /**
-     * Get time
-     *
-     * @return integer
+     * @return int [s]
      */
     public function getTime()
     {
@@ -213,11 +191,17 @@ class Equipment
     }
 
     /**
-     * Set additionalKm
+     * @return float|null [s/km]
+     */
+    public function getPace()
+    {
+        return $this->distance > 0 ? $this->time / $this->distance : null;
+    }
+
+    /**
+     * @param int $additionalKm [km]
      *
-     * @param integer $additionalKm
-     *
-     * @return Equipment
+     * @return $this
      */
     public function setAdditionalKm($additionalKm)
     {
@@ -227,9 +211,7 @@ class Equipment
     }
 
     /**
-     * Get additionalKm
-     *
-     * @return integer
+     * @return int [km]
      */
     public function getAdditionalKm()
     {
@@ -237,13 +219,19 @@ class Equipment
     }
 
     /**
-     * Set dateStart
-     *
-     * @param \DateTime $dateStart
-     *
-     * @return Equipment
+     * @return float [km]
      */
-    public function setDateStart($dateStart)
+    public function getTotalDistance()
+    {
+        return $this->distance + $this->additionalKm;
+    }
+
+    /**
+     * @param null|\DateTime $dateStart
+     *
+     * @return $this
+     */
+    public function setDateStart(\DateTime $dateStart = null)
     {
         $this->dateStart = $dateStart;
 
@@ -251,9 +239,7 @@ class Equipment
     }
 
     /**
-     * Get dateStart
-     *
-     * @return \DateTime
+     * @return null|\DateTime
      */
     public function getDateStart()
     {
@@ -261,13 +247,11 @@ class Equipment
     }
 
     /**
-     * Set dateEnd
+     * @param null|\DateTime $dateEnd
      *
-     * @param \DateTime $dateEnd
-     *
-     * @return Equipment
+     * @return $this
      */
-    public function setDateEnd($dateEnd)
+    public function setDateEnd(\DateTime $dateEnd = null)
     {
         $this->dateEnd = $dateEnd;
 
@@ -275,9 +259,7 @@ class Equipment
     }
 
     /**
-     * Get dateEnd
-     *
-     * @return \DateTime
+     * @return null|\DateTime
      */
     public function getDateEnd()
     {
@@ -285,13 +267,19 @@ class Equipment
     }
 
     /**
-     * Set type
-     *
+     * @return bool
+     */
+    public function isActive()
+    {
+        return null === $this->dateEnd;
+    }
+
+    /**
      * @param \Runalyze\Bundle\CoreBundle\Entity\EquipmentType $type
      *
-     * @return Equipment
+     * @return $this
      */
-    public function setType(\Runalyze\Bundle\CoreBundle\Entity\EquipmentType $type = null)
+    public function setType(\Runalyze\Bundle\CoreBundle\Entity\EquipmentType $type)
     {
         $this->type = $type;
 
@@ -299,8 +287,6 @@ class Equipment
     }
 
     /**
-     * Get type
-     *
      * @return \Runalyze\Bundle\CoreBundle\Entity\EquipmentType
      */
     public function getType()
@@ -309,13 +295,11 @@ class Equipment
     }
 
     /**
-     * Set account
-     *
      * @param \Runalyze\Bundle\CoreBundle\Entity\Account $account
      *
-     * @return Equipment
+     * @return $this
      */
-    public function setAccount(\Runalyze\Bundle\CoreBundle\Entity\Account $account = null)
+    public function setAccount(\Runalyze\Bundle\CoreBundle\Entity\Account $account)
     {
         $this->account = $account;
 
@@ -323,8 +307,6 @@ class Equipment
     }
 
     /**
-     * Get account
-     *
      * @return \Runalyze\Bundle\CoreBundle\Entity\Account
      */
     public function getAccount()
@@ -333,11 +315,9 @@ class Equipment
     }
 
     /**
-     * Add activity
+     * @param Training $activity
      *
-     * @param \Runalyze\Bundle\CoreBundle\Entity\Training $activity
-     *
-     * @return Equipment
+     * @return $this
      */
     public function addActivity(\Runalyze\Bundle\CoreBundle\Entity\Training $activity)
     {
@@ -347,18 +327,14 @@ class Equipment
     }
 
     /**
-     * Remove activity
-     *
-     * @param \Runalyze\Bundle\CoreBundle\Entity\Training $activity
+     * @param Training $activity
      */
-    public function removeActivity(\Runalyze\Bundle\CoreBundle\Entity\Training $activity)
+    public function removeActivity(Training $activity)
     {
         $this->activity->removeElement($activity);
     }
 
     /**
-     * Get activity
-     *
      * @return \Doctrine\Common\Collections\Collection
      */
     public function getActivity()

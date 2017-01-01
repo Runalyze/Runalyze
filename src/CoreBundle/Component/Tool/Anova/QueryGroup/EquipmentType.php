@@ -3,9 +3,7 @@
 namespace Runalyze\Bundle\CoreBundle\Component\Tool\Anova\QueryGroup;
 
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Query\Expr;
 use Doctrine\ORM\QueryBuilder;
-use Runalyze\Bundle\CoreBundle\Entity;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Form\Tools\Anova\AnovaData;
 
@@ -29,10 +27,10 @@ class EquipmentType implements QueryGroupInterface
     {
         $queryBuilder
             ->addSelect(sprintf('%s.id as %s', 'eq', $as))
-            ->leftJoin(Entity\ActivityEquipment::class, 'aceq', Expr\Join::WITH, 'aceq.activity = '.$alias.'.id')
-            ->leftJoin(Entity\Equipment::class, 'eq', Expr\Join::WITH, 'aceq.equipment = eq.id')
+            ->leftJoin(sprintf('%s.equipment', $alias), 'eq')
             ->andWhere('eq.type = :equipmentTypeId')
             ->setParameter(':equipmentTypeId', $this->EquipmentTypeId)
+            ->distinct()
         ;
     }
 

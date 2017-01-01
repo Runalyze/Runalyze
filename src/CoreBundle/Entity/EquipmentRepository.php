@@ -3,6 +3,7 @@
 namespace Runalyze\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Runalyze\Bundle\CoreBundle\Model\Equipment\EquipmentStatistics;
 
 class EquipmentRepository extends EntityRepository
 {
@@ -17,5 +18,32 @@ class EquipmentRepository extends EntityRepository
             'type' => $equipmentTypeId,
             'account' => $account->getId()
         ]);
+    }
+
+    /**
+     * @param int $typeId
+     * @param Account $account
+     * @return EquipmentStatistics
+     */
+    public function getStatisticsForType($typeId, Account $account)
+    {
+        return new EquipmentStatistics($this->createQueryBuilder('eq')
+            ->select('eq')
+            //->addSelect('eq.dateEnd IS NULL as is_alive')
+            ->addSelect('SUM(1) as num')
+            ->addSelect('MIN(t.s/t.distance) as max_pace')
+            ->addSelect('MAX(t.distance) as max_distance')
+            ->join('eq.activity', 't')
+            ->where('eq.type = :typeid')
+            ->andWhere('eq.account = :account')
+            ->setParameter(':typeid', $typeId)
+            ->setParameter(':account', $account->getId())
+            //->addOrderBy('is_alive', 'DESC')
+            ->addOrderBy('eq.distance', 'DESC')
+            ->groupBy('eq.id')
+            ->getQuery()
+            //->useQueryCache(true)
+            ->getResult()
+        );
     }
 }

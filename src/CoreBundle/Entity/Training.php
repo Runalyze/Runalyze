@@ -422,7 +422,7 @@ class Training
      * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\ManyToMany(targetEntity="Equipment", inversedBy="activity")
-     * @ORM\JoinTable(name="ActivityEquipment",
+     * @ORM\JoinTable(name="activity_equipment",
      *   joinColumns={
      *     @ORM\JoinColumn(name="activityid", referencedColumnName="id")
      *   },
