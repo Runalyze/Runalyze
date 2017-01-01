@@ -29,7 +29,6 @@ class EquipmentRepository extends EntityRepository
     {
         return new EquipmentStatistics($this->createQueryBuilder('eq')
             ->select('eq')
-            //->addSelect('eq.dateEnd IS NULL as is_alive')
             ->addSelect('SUM(1) as num')
             ->addSelect('MIN(t.s/t.distance) as max_pace')
             ->addSelect('MAX(t.distance) as max_distance')
@@ -38,11 +37,9 @@ class EquipmentRepository extends EntityRepository
             ->andWhere('eq.account = :account')
             ->setParameter(':typeid', $typeId)
             ->setParameter(':account', $account->getId())
-            //->addOrderBy('is_alive', 'DESC')
             ->addOrderBy('eq.distance', 'DESC')
             ->groupBy('eq.id')
             ->getQuery()
-            //->useQueryCache(true)
             ->getResult()
         );
     }
