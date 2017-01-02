@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
   <file date="2016-12-26T15:59:20Z" source-language="en" target-language="nl" datatype="plaintext" original="not.available">
     <header>
@@ -6,62 +6,48 @@
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
     </header>
     <body>
-      <trans-unit id="64b64cc375741f82a39567ffad42d7a09e0465fb" resname="                                Backup of the complete database -&#10;                                This file can be imported manually with e.g. PHPMyAdmin into any database.&lt;br /&gt;&#10;                                This is recommended to create a backup copy or to import your data into a new installation.&#10;                            ">
+      <trans-unit id="64b64cc375741f82a39567ffad42d7a09e0465fb" resname="                                Backup of the complete database -&#10;                                This file can be imported manually with e.g. PHPMyAdmin into any database.&lt;br /&gt;&#10;                                This is recommended to create a backup copy or to import your data into a new installation.&#10;                            " approved="yes">
         <source><![CDATA[                                Backup of the complete database -
                                 This file can be imported manually with e.g. PHPMyAdmin into any database.<br />
                                 This is recommended to create a backup copy or to import your data into a new installation.
                             ]]></source>
-        <target><![CDATA[                                Backup of the complete database -
-                                This file can be imported manually with e.g. PHPMyAdmin into any database.<br />
-                                This is recommended to create a backup copy or to import your data into a new installation.
-                            ]]></target>
+        <target state="translated">Back-up van de complete database - dit bestand kan handmatig worden geïmporteerd met bijvoorbeeld PHPMyadmin in elke database.&lt;br /&gt;Het is aanbevolen om een kopie van de back-up te maken of te importeren bij elke nieuwe installatie.</target>
         <jms:reference-file line="36">/Resources/views/tools/backup/form_legacy.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="a8b1fab4568d150f59825d2060b7c19b82d68d92" resname="                                Portable backup of your configuration and data -&#10;                                This file can be imported into any other installation, using this plugin.&lt;br /&gt;&#10;                                This way you can transfer your data from to local to an online installation and back.&#10;                            ">
+      <trans-unit id="a8b1fab4568d150f59825d2060b7c19b82d68d92" resname="                                Portable backup of your configuration and data -&#10;                                This file can be imported into any other installation, using this plugin.&lt;br /&gt;&#10;                                This way you can transfer your data from to local to an online installation and back.&#10;                            " approved="yes">
         <source><![CDATA[                                Portable backup of your configuration and data -
                                 This file can be imported into any other installation, using this plugin.<br />
                                 This way you can transfer your data from to local to an online installation and back.
                             ]]></source>
-        <target><![CDATA[                                Portable backup of your configuration and data -
-                                This file can be imported into any other installation, using this plugin.<br />
-                                This way you can transfer your data from to local to an online installation and back.
-                            ]]></target>
+        <target state="translated">Verplaatsbare back-up van uw configuratie en data - dit bestand kan worden geïmporteerd bij elke andere installatie door gebruik te maken van deze plugin.&lt;br /&gt;Op deze manier kunt u uw data overbrengen van een lokale naar een online installatie en andersom.</target>
         <jms:reference-file line="26">/Resources/views/tools/backup/form_legacy.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="f982375b71bb41aa2ef75e7b2ea0b475092b6e26" resname="                                The file has to be created with the same version of Runalyze!&lt;br&gt;&#10;                                You won't be able to import a file from an older version.&#10;                            ">
+      <trans-unit id="f982375b71bb41aa2ef75e7b2ea0b475092b6e26" resname="                                The file has to be created with the same version of Runalyze!&lt;br&gt;&#10;                                You won't be able to import a file from an older version.&#10;                            " approved="yes">
         <source><![CDATA[                                The file has to be created with the same version of Runalyze!<br>
                                 You won't be able to import a file from an older version.
                             ]]></source>
-        <target><![CDATA[                                The file has to be created with the same version of Runalyze!<br>
-                                You won't be able to import a file from an older version.
-                            ]]></target>
+        <target state="translated">Dit bestand moet gemaakt worden met dezelfde versie van Runalyze!&lt;br&gt; U kunt geen bestand vanuit een oudere versie importeren .</target>
         <jms:reference-file line="93">/Resources/views/tools/backup/form_legacy.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="c546b364bbc260785df967efb635de14ffe8ac80" resname="                                The importer will not change existing data for equipment, sport types or activity types.&lt;br&gt;&#10;                                You have to make these changes by hand or delete the existing data in advance.&#10;                            ">
+      <trans-unit id="c546b364bbc260785df967efb635de14ffe8ac80" resname="                                The importer will not change existing data for equipment, sport types or activity types.&lt;br&gt;&#10;                                You have to make these changes by hand or delete the existing data in advance.&#10;                            " approved="yes">
         <source><![CDATA[                                The importer will not change existing data for equipment, sport types or activity types.<br>
                                 You have to make these changes by hand or delete the existing data in advance.
                             ]]></source>
-        <target><![CDATA[                                The importer will not change existing data for equipment, sport types or activity types.<br>
-                                You have to make these changes by hand or delete the existing data in advance.
-                            ]]></target>
+        <target state="translated">Bij het importeren zullen bestaande data over uitrusting, sport typen of typen activiteiten niet worden aangepast.&lt;br&gt;U moet deze aanpassingen zelf handmatig doen of vooraf de  bestaande data verwijderen.</target>
         <jms:reference-file line="99">/Resources/views/tools/backup/form_legacy.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="51cdaa070e7ba82f95b3c3af335b0f6417648c02" resname="                            The file has to be created with the same (minor) version of RUNALYZE.&lt;br&gt;&#10;                            You won't be able to import a file from older versions.&#10;                        ">
+      <trans-unit id="51cdaa070e7ba82f95b3c3af335b0f6417648c02" resname="                            The file has to be created with the same (minor) version of RUNALYZE.&lt;br&gt;&#10;                            You won't be able to import a file from older versions.&#10;                        " approved="yes">
         <source><![CDATA[                            The file has to be created with the same (minor) version of RUNALYZE.<br>
                             You won't be able to import a file from older versions.
                         ]]></source>
-        <target><![CDATA[                            The file has to be created with the same (minor) version of RUNALYZE.<br>
-                            You won't be able to import a file from older versions.
-                        ]]></target>
+        <target state="translated">Dit bestand moet gemaakt worden met dezelfde versie van Runalyze!&lt;br&gt; U kunt geen bestand vanuit een oudere versie importeren .</target>
         <jms:reference-file line="61">/Resources/views/tools/backup/upload_form.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="b571381bb05043ef33ba70c6e268c539a403fbde" resname="                            The importer will not change existing data for equipment, sport types or activity types.&lt;br&gt;&#10;                            You have to make these changes by hand or delete the existing data in advance.&#10;                        ">
+      <trans-unit id="b571381bb05043ef33ba70c6e268c539a403fbde" resname="                            The importer will not change existing data for equipment, sport types or activity types.&lt;br&gt;&#10;                            You have to make these changes by hand or delete the existing data in advance.&#10;                        " approved="yes">
         <source><![CDATA[                            The importer will not change existing data for equipment, sport types or activity types.<br>
                             You have to make these changes by hand or delete the existing data in advance.
                         ]]></source>
-        <target><![CDATA[                            The importer will not change existing data for equipment, sport types or activity types.<br>
-                            You have to make these changes by hand or delete the existing data in advance.
-                        ]]></target>
+        <target state="translated">Bij het importeren zullen bestaande data over uitrusting, sport typen of typen activiteiten niet worden aangepast.&lt;br&gt;U moet deze aanpassingen zelf handmatig doen of vooraf de  bestaande data verwijderen.</target>
         <jms:reference-file line="68">/Resources/views/tools/backup/upload_form.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="a022ec2ea2af263c5f07ee726b7d5551c3d1094f" resname="            &lt;a href=&quot;%s&quot; target=&quot;_blank&quot;&gt;Jack Daniels' famous Running formula&lt;/a&gt; serves some tables estimating the VDOT value.&#10;            These formulas are used to estimate your VDOT and predict your race performances.&#10;        ">
@@ -92,9 +78,9 @@
         <target>#{deviceCount} apparaten gevonden</target>
         <jms:reference-file line="61">/Resources/views/import/garmin_communicator.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="9c75a53924b9b9317da06c02afd85d0d7fcf7377" resname="&lt;strong&gt;Corrector:&lt;/strong&gt; Ratio between VDOT and VDOT (by HR)">
+      <trans-unit id="9c75a53924b9b9317da06c02afd85d0d7fcf7377" resname="&lt;strong&gt;Corrector:&lt;/strong&gt; Ratio between VDOT and VDOT (by HR)" approved="yes">
         <source><![CDATA[<strong>Corrector:</strong> Ratio between VDOT and VDOT (by HR)]]></source>
-        <target><![CDATA[<strong>Corrector:</strong> Ratio between VDOT and VDOT (by HR)]]></target>
+        <target state="translated">&lt;strong&gt;Corrector:&lt;/strong&gt; Ratio tussen VDOT en VDOT (op basis van HS)</target>
         <jms:reference-file line="88">/Resources/views/tools/vdot_analysis.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="106e3a64d599a360a823943c8a36b904ef04fdef" resname="&lt;strong&gt;VDOT/Time (Shape):&lt;/strong&gt; by your shape at that time&lt;br&gt;&#10;                The time is the prognosis by Runalyze.">
