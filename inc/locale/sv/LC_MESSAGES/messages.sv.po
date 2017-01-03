@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: mail@runalyze.com\n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-11-15 17:37+0100\n"
-"PO-Revision-Date: 2016-11-16 13:51+0000\n"
-"Last-Translator: Matthias Kristiansen-Kürner <matthias.kr.ku@gmail.com>\n"
-"Language-Team: Swedish <https://translate.runalyze.com/projects/runalyze"
-"/runalyze-master-po/sv/>\n"
+"PO-Revision-Date: 2017-01-03 13:50+0000\n"
+"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
+"Language-Team: Swedish "
+"<https://translate.runalyze.com/projects/runalyze/runalyze/sv/>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -49,7 +49,7 @@ msgstr "Klicka på en aktivitet för att visa detaljer."
 
 #: src/CoreBundle/Controller/DefaultController.php:233
 msgid "Public activities are marked: "
-msgstr ""
+msgstr "Offentlige aktiviteter är markerade"
 
 #: src/CoreBundle/Controller/PluginController.php:23
 msgid "Install"
@@ -6429,7 +6429,7 @@ msgstr "kalorier"
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:68
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:80
 msgid "by trimp"
-msgstr ""
+msgstr "av trimp"
 
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:69
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:81
