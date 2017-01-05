@@ -115,6 +115,33 @@ class TrainingRepository extends EntityRepository
         return $statistics;
     }
 
+    public function getQueryForJsonPosterData(Account $account, $sportid, $year)
+    {
+        return $this->_em->createQueryBuilder()
+            ->select(
+                't.s',
+                't.time',
+                't.distance',
+                'r.geohashes'
+            )
+            ->from('CoreBundle:Training', 't')
+            ->join('t.route', 'r')
+            ->where('t.account = :account')
+            ->andWhere('t.sport = :sport')
+            ->andWhere('t.distance > 0')
+            ->andWhere('t.time BETWEEN :startTime and :endTime')
+            ->andWhere('r.geohashes IS NOT NULL')
+            ->andWhere('r.geohashes != :empty')
+            ->setParameters([
+                ':account' => $account->getId(),
+                ':sport' => $sportid,
+                ':startTime' => mktime(0, 0, 0, 1, 1, $year),
+                ':endTime' => mktime(23, 59, 59, 12, 31, $year),
+                ':empty' => ''
+            ])
+            ->getQuery();
+    }
+
     /**
      * @param Account $account
      * @return Training[]
