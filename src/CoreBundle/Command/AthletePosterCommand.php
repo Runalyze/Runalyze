@@ -5,10 +5,12 @@ namespace Runalyze\Bundle\CoreBundle\Command;
 use Doctrine\ORM\Query;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\AccountRepository;
+use Runalyze\Bundle\CoreBundle\Entity\RaceresultRepository;
 use Runalyze\Bundle\CoreBundle\Entity\TrainingRepository;
 use Runalyze\Model;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Filesystem\Filesystem;
@@ -23,6 +25,7 @@ class AthletePosterCommand extends ContainerAwareCommand
             ->addArgument('username', InputArgument::REQUIRED, 'Username of requested athlete')
             ->addArgument('dir', InputArgument::REQUIRED, 'Directory to store json files')
             ->addArgument('year', InputArgument::REQUIRED, 'Only data of this year will be fetched')
+            ->addOption('sport', 's', InputOption::VALUE_OPTIONAL, 'Sport id (can be empty to use running)')
         ;
     }
 
@@ -46,7 +49,9 @@ class AthletePosterCommand extends ContainerAwareCommand
         $athlete = $this->getAthlete($input->getArgument('username'));
 
         if (null !== $athlete) {
-            $this->createJsonFilesFor($athlete, $input, $output);
+            $sportid = $this->findSport($athlete, $input);
+            $this->createJsonFilesFor($athlete, $sportid, $input, $output);
+            $this->listSpecialFiles($athlete, $sportid, $input, $output);
 
             return null;
         }
@@ -56,10 +61,28 @@ class AthletePosterCommand extends ContainerAwareCommand
         return 1;
     }
 
-    protected function createJsonFilesFor(Account $athlete, InputInterface $input, OutputInterface $output)
+    /**
+     * @param Account $athlete
+     * @param InputInterface $input
+     * @return int
+     */
+    protected function findSport(Account $athlete, InputInterface $input)
     {
-        $config = $this->getContainer()->get('app.configuration_manager')->getList($athlete);
-        $sportid = $config->getGeneral()->getRunningSport();
+        if (null !== $input->getOption('sport')) {
+            return (int)$input->getOption('sport');
+        }
+
+        return $this->getContainer()->get('app.configuration_manager')->getList($athlete)->getGeneral()->getRunningSport();
+    }
+
+    /**
+     * @param Account $athlete
+     * @param int $sportid
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     */
+    protected function createJsonFilesFor(Account $athlete, $sportid, InputInterface $input, OutputInterface $output)
+    {
         $filesystem = new Filesystem();
         $counter = 0;
 
@@ -116,5 +139,28 @@ class AthletePosterCommand extends ContainerAwareCommand
         }
 
         return $segments;
+    }
+
+    /**
+     * @param Account $athlete
+     * @param int $sportid
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     */
+    protected function listSpecialFiles(Account $athlete, $sportid, InputInterface $input, OutputInterface $output)
+    {
+        /** @var RaceresultRepository $raceRepository */
+        $raceRepository = $this->getContainer()->get('doctrine')->getRepository('CoreBundle:Raceresult');
+        $races = $raceRepository->findBySportAndYear($athlete, $sportid, $input->getArgument('year'));
+
+        if (!empty($races)) {
+            $argument = '';
+
+            foreach ($races as $race) {
+                $argument .= ' --special '.date('Y-m-d-His', $race['time']).'.gpx';
+            }
+
+            $output->writeln($argument);
+        }
     }
 }
