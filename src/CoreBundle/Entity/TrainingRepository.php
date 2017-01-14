@@ -130,8 +130,6 @@ class TrainingRepository extends EntityRepository
             ->andWhere('t.sport = :sport')
             ->andWhere('t.distance > 0')
             ->andWhere('t.time BETWEEN :startTime and :endTime')
-            ->andWhere('r.geohashes IS NOT NULL')
-            ->andWhere('r.geohashes != :empty')
             ->setParameters([
                 ':account' => $account->getId(),
                 ':sport' => $sportid,

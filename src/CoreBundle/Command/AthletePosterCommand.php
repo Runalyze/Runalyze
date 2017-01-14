@@ -100,10 +100,8 @@ class AthletePosterCommand extends ContainerAwareCommand
                 'segments' => $this->getSegmentsFor($data['geohashes'], $data['distance'])
             ];
 
-            if (!empty($json['segments'])) {
                 $filesystem->dumpFile($input->getArgument('dir').'/'.date('Y-m-d-His', $data['time']).'.json', json_encode($json));
                 $counter++;
-            }
         }
 
         $output->writeln(sprintf('%u json files have been saved.', $counter));
@@ -116,12 +114,15 @@ class AthletePosterCommand extends ContainerAwareCommand
      */
     protected function getSegmentsFor($geohashLine, $distance)
     {
+        $segments = [];
+        $segments[] = [];
+        if (null === $geohashLine OR $geohashLine == '') {
+                return $segments;
+        }
         $loop = new Model\Route\Loop(new Model\Route\Entity([Model\Route\Entity::GEOHASHES => $geohashLine]));
         $loop->setStepSize(5);
         $pauseLimit = 50 * 5 * $distance / $loop->num();
         $currentSegment = 0;
-        $segments = [];
-        $segments[] = [];
 
         while ($loop->nextStep()) {
             if ($loop->geohash() != '7zzzzzzzzzzz') {
@@ -157,9 +158,10 @@ class AthletePosterCommand extends ContainerAwareCommand
             $argument = '';
 
             foreach ($races as $race) {
-                $argument .= ' --special '.date('Y-m-d-His', $race['time']).'.gpx';
+                $argument .= ' --special '.date('Y-m-d-His', $race['time']).'.json';
             }
-
+            $filesystem = new Filesystem();
+            $filesystem->dumpFile($input->getArgument('dir').'/special.params', $argument);
             $output->writeln($argument);
         }
     }
