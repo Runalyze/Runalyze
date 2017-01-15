@@ -88,6 +88,14 @@ class Linker {
 	 * @return string HTML-link to this training
 	 */
 	public function linkWithSportIcon($tooltipCssClass = '') {
+		return $this->link($this->codeWithSportIcon($tooltipCssClass));
+	}
+
+	/**
+	 * @param string $tooltipCssClass optional, e.g. 'atRight'
+	 * @return string HTML-code that can be linked to this training
+	 */
+	public function codeWithSportIcon($tooltipCssClass = '') {
 		$Time = new Duration($this->Activity->duration());
 		$Factory = new \Runalyze\Model\Factory(\SessionAccountHandler::getId());
 		$Sport = $Factory->sport($this->Activity->sportid());
@@ -97,7 +105,7 @@ class Linker {
 		$Tooltip->setPosition($tooltipCssClass);
 		$Tooltip->wrapAround($code);
 
-		return $this->link($code);
+		return $code;
 	}
 
 	/**

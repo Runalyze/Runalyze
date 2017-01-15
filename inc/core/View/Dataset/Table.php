@@ -13,7 +13,7 @@ use Runalyze\View\Tooltip;
 
 /**
  * Dataset table
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Dataset
  */
@@ -46,7 +46,7 @@ class Table {
 
 	/**
 	 * Activate automatic distance comparison
-	 * 
+	 *
 	 * This does only work, if <code>codeForColumns()</code> is called in
 	 * respective order.
 	 */
@@ -130,6 +130,6 @@ class Table {
 	 * @return string
 	 */
 	public function codeForShortLink(Context $context) {
-		return $context->linker()->linkWithSportIcon(Tooltip::POSITION_RIGHT);
+		return $context->linker()->codeWithSportIcon(Tooltip::POSITION_RIGHT);
 	}
 }
