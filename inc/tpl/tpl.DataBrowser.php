@@ -105,7 +105,7 @@ foreach ($this->Days as $i => $day) {
 
 				foreach ($day['shorts'] as $short) {
 					$Context->setActivityData($short);
-					echo $Table->codeForShortLink($Context);
+					echo '<span class="link" '.Ajax::trainingLinkAsOnclick($Context->activity()->id()).'>'.$Table->codeForShortLink($Context).'</span>';
 				}
 
 				echo '</td><td class="l as-small-as-possible">'.$this->dateString($day['date']).'</td>';
