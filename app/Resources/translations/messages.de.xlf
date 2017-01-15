@@ -147,7 +147,7 @@ Dieser Export/Import ist sinnvoll, um deine Daten von einer Runalyze-Installatio
       </trans-unit>
       <trans-unit id="e190939aca2d78cce1aefb21b985fb0779710890" resname="Activity data of %username%" approved="yes">
         <source>Activity data of %username%</source>
-        <target state="translated">Trainingsansicht von %Username%</target>
+        <target state="translated">Trainingsansicht von %username%</target>
         <jms:reference-file line="22">/Resources/views/shared/athlete/base.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="b4531de6a89b3912c4ec4722cc7535b66487b3a6" resname="All shared links will be invalid if you (re-)import activities and overwrite all existing activities!">
