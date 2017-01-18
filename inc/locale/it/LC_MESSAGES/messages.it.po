@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: mail@runalyze.com\n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-11-15 17:37+0100\n"
-"PO-Revision-Date: 2016-11-19 09:21+0000\n"
-"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
-"Language-Team: Italian <https://translate.runalyze.com/projects/runalyze"
-"/runalyze-master-po/it/>\n"
+"PO-Revision-Date: 2017-01-18 23:51+0000\n"
+"Last-Translator: Alessandro <ruggiero.alessandro93@gmail.com>\n"
+"Language-Team: Italian "
+"<https://translate.runalyze.com/projects/runalyze/runalyze/it/>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -303,7 +303,7 @@ msgstr "Abbigliamento"
 #: src/CoreBundle/Component/Account/Registration.php:90
 #: src/CoreBundle/Component/Account/Registration.php:209
 msgid "Bikes"
-msgstr ""
+msgstr "Biciclette"
 
 #: src/CoreBundle/Component/Account/Registration.php:139
 #: inc/class.FrontendSharedStatistics.php:124
