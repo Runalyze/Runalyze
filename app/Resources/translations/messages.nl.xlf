@@ -50,13 +50,11 @@
         <target state="translated">Bij het importeren zullen bestaande data over uitrusting, sport typen of typen activiteiten niet worden aangepast.&lt;br&gt;U moet deze aanpassingen zelf handmatig doen of vooraf de  bestaande data verwijderen.</target>
         <jms:reference-file line="68">/Resources/views/tools/backup/upload_form.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="a022ec2ea2af263c5f07ee726b7d5551c3d1094f" resname="            &lt;a href=&quot;%s&quot; target=&quot;_blank&quot;&gt;Jack Daniels' famous Running formula&lt;/a&gt; serves some tables estimating the VDOT value.&#10;            These formulas are used to estimate your VDOT and predict your race performances.&#10;        ">
+      <trans-unit id="a022ec2ea2af263c5f07ee726b7d5551c3d1094f" resname="            &lt;a href=&quot;%s&quot; target=&quot;_blank&quot;&gt;Jack Daniels' famous Running formula&lt;/a&gt; serves some tables estimating the VDOT value.&#10;            These formulas are used to estimate your VDOT and predict your race performances.&#10;        " approved="yes">
         <source><![CDATA[            <a href="%s" target="_blank">Jack Daniels' famous Running formula</a> serves some tables estimating the VDOT value.
             These formulas are used to estimate your VDOT and predict your race performances.
         ]]></source>
-        <target><![CDATA[            <a href="%s" target="_blank">Jack Daniels' famous Running formula</a> serves some tables estimating the VDOT value.
-            These formulas are used to estimate your VDOT and predict your race performances.
-        ]]></target>
+        <target state="translated">&lt;a href="%s" target="_blank"&gt;Jack Daniels' beroemde Running formule&lt;/a&gt; serves some tables estimating the VDOT value. These formulas are used to estimate your VDOT and predict your race performances.</target>
         <jms:reference-file line="25">/Resources/views/static/help_calculations.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="2ec23e05ce24410308126e2b4dfd7f75e877ca87" resname="            This table is computed by some formulas, derived from the tables in Jack Daniels' Running formula.&#10;            These values do not fit the original table one hundred percent.&#10;        ">
@@ -68,14 +66,14 @@
         </target>
         <jms:reference-file line="30">/Resources/views/tools/tables/vdot_paces.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="714e8db0a23f92c56dc1d0ac9aa024a7fa956225" resname=" Accept our %a% terms of use %b% ">
+      <trans-unit id="714e8db0a23f92c56dc1d0ac9aa024a7fa956225" resname=" Accept our %a% terms of use %b% " approved="yes">
         <source> Accept our %a% terms of use %b% </source>
-        <target> Accept our %a% terms of use %b% </target>
+        <target state="translated">Accepteer onze %a% gebruiksvoorwaarden %b%</target>
         <jms:reference-file line="17">/Resources/views/register/form.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="8808d6be59b159f1221b1b4cb9f01aefe7c10b2d" resname="#{deviceCount} devices found">
+      <trans-unit id="8808d6be59b159f1221b1b4cb9f01aefe7c10b2d" resname="#{deviceCount} devices found" approved="yes">
         <source>#{deviceCount} devices found</source>
-        <target>#{deviceCount} apparaten gevonden</target>
+        <target state="translated">#{deviceCount} aantal apparaten gevonden</target>
         <jms:reference-file line="61">/Resources/views/import/garmin_communicator.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="9c75a53924b9b9317da06c02afd85d0d7fcf7377" resname="&lt;strong&gt;Corrector:&lt;/strong&gt; Ratio between VDOT and VDOT (by HR)" approved="yes">
@@ -83,10 +81,10 @@
         <target state="translated">&lt;strong&gt;Corrector:&lt;/strong&gt; Ratio tussen VDOT en VDOT (op basis van HS)</target>
         <jms:reference-file line="88">/Resources/views/tools/vdot_analysis.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="106e3a64d599a360a823943c8a36b904ef04fdef" resname="&lt;strong&gt;VDOT/Time (Shape):&lt;/strong&gt; by your shape at that time&lt;br&gt;&#10;                The time is the prognosis by Runalyze.">
+      <trans-unit id="106e3a64d599a360a823943c8a36b904ef04fdef" resname="&lt;strong&gt;VDOT/Time (Shape):&lt;/strong&gt; by your shape at that time&lt;br&gt;&#10;                The time is the prognosis by Runalyze." approved="yes">
         <source><![CDATA[<strong>VDOT/Time (Shape):</strong> by your shape at that time<br>
                 The time is the prognosis by Runalyze.]]></source>
-        <target state="new"><![CDATA[<strong>VDOT/Time (Shape):</strong> by your shape at that time<br>
+        <target state="translated"><![CDATA[<strong>VDOT/Time (Shape):</strong> by your shape at that time<br>
                 The time is the prognosis by Runalyze.]]></target>
         <jms:reference-file line="83">/Resources/views/tools/vdot_analysis.html.twig</jms:reference-file>
       </trans-unit>
