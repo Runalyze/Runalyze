@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: mail@runalyze.com\n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-11-15 17:37+0100\n"
-"PO-Revision-Date: 2016-11-18 10:43+0000\n"
+"PO-Revision-Date: 2017-01-18 14:23+0000\n"
 "Last-Translator: Henk Kramer <kramerty88@gmail.com>\n"
-"Language-Team: Dutch <https://translate.runalyze.com/projects/runalyze"
-"/runalyze-master-po/nl/>\n"
+"Language-Team: Dutch "
+"<https://translate.runalyze.com/projects/runalyze/runalyze/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -301,7 +301,7 @@ msgstr "Kleding"
 #: src/CoreBundle/Component/Account/Registration.php:90
 #: src/CoreBundle/Component/Account/Registration.php:209
 msgid "Bikes"
-msgstr ""
+msgstr "Fietsen"
 
 #: src/CoreBundle/Component/Account/Registration.php:139
 #: inc/class.FrontendSharedStatistics.php:124
@@ -1567,7 +1567,7 @@ msgstr "Temperatuurdiagram"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:80
 msgid "Smo2 & Thb"
-msgstr ""
+msgstr "Smo2 & Thb"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:107
 #: inc/html/formular/class.FormularInputDayAndDaytime.php:115
@@ -1629,7 +1629,7 @@ msgstr "Trainingspartner"
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:373
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:423
 msgid "Age standard"
-msgstr ""
+msgstr "Leeftijdsstandaard"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:374
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:424
@@ -1640,7 +1640,7 @@ msgstr ""
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:425
 #, php-format
 msgid "via tables by %s"
-msgstr ""
+msgstr "door tabellen van %s"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:382
 msgid "Race Result"
@@ -1971,23 +1971,20 @@ msgid "as %s"
 msgstr "als %s"
 
 #: inc/training/view/class.TrainingView.php:111
-#, fuzzy
 msgid "Analyze splits"
-msgstr "Analyseer typen"
+msgstr "Analyseer tussentijden"
 
 #: inc/training/view/class.TrainingView.php:115
-#, fuzzy
 msgid "Show VDOT calculation"
-msgstr "Meer over de VDOT berekening"
+msgstr "Toon VDOT berekening"
 
 #: inc/training/view/class.TrainingView.php:123
-#, fuzzy
 msgid "Analyze time series"
-msgstr "Analyseer typen"
+msgstr "Analyseer tijdseries"
 
 #: inc/training/view/class.TrainingView.php:127
 msgid "Find best sub segments"
-msgstr ""
+msgstr "Vind beste subsegmenten"
 
 #: inc/training/view/class.TrainingView.php:146
 #: inc/core/Dataset/Keys/Setting.php:135
@@ -2197,7 +2194,7 @@ msgstr "Windsnelheid"
 #: inc/training/schemes/scheme.Training.php:247
 #: inc/core/Dataset/Keys/Energy.php:45 inc/core/Activity/Energy.php:59
 msgid "Energy"
-msgstr ""
+msgstr "Energie"
 
 #: inc/training/search/class.SearchFormular.php:205
 #: inc/core/Dataset/Keys/FitTrainingEffect.php:43
@@ -2285,13 +2282,12 @@ msgstr "Grond contact tijd"
 #: inc/training/class.TrainingFormular.php:473
 #: inc/core/View/Activity/Plot/Series/Smo2.php:39
 msgid "Smo2"
-msgstr ""
+msgstr "Smo2"
 
 #: inc/training/class.TrainingFormular.php:474
 #: inc/training/class.TrainingFormular.php:475
-#, fuzzy
 msgid "Thb"
-msgstr "Do"
+msgstr "tHb"
 
 #: inc/training/class.TrainingFormular.php:486
 msgid "Original elevation"
@@ -2757,7 +2753,7 @@ msgstr "Training"
 
 #: inc/draw/class.PlotSumData.php:612
 msgid "target:"
-msgstr ""
+msgstr "doel:"
 
 #: inc/draw/class.PlotSumData.php:633 inc/core/View/Activity/Plot/Laps.php:121
 #: inc/core/View/Plot/Series.php:160
@@ -2765,21 +2761,16 @@ msgid "avg:"
 msgstr "AVG:"
 
 #: inc/draw/class.PlotSumData.php:664
-#, fuzzy
 msgid "Target is based on current basic endurance calculations."
-msgstr ""
-"Doel en gemiddelde zijn gebaseerd op het huidig berekende basis "
-"uithoudingsvermogen."
+msgstr "Doel is gebaseerd op het actuele berekende uithoudingsvermogen."
 
 #: inc/draw/class.Plot.php:145
-#, fuzzy
 msgid "There is an unknown problem with this plot."
-msgstr "Er waren problemen bij het uploaden."
+msgstr "Er is een onbekend probleem met deze plot."
 
 #: inc/draw/class.Plot.php:146
-#, fuzzy
 msgid "Error code"
-msgstr "Fout"
+msgstr "Foutcode"
 
 #: inc/class.AdminView.php:158
 msgid "Settings"
@@ -2864,15 +2855,15 @@ msgstr ""
 
 #: inc/class.AdminView.php:175
 msgid "ForecastIO API-Key"
-msgstr ""
+msgstr "ForecastIO API-Key"
 
 #: inc/class.AdminView.php:175
-#, fuzzy
 msgid ""
 "Loading weather from forecast.io requires an api key, see https://developer."
 "forecast.io/"
 msgstr ""
-"Laden van weergegevens vereist een api-sleutel, zie openweathermap.org/appid"
+"Laden van weergegevens van forecast.io vereist een api-sleutel, zie "
+"https://developer.forecast.io/"
 
 #: inc/class.AdminView.php:176
 msgid "Nokia/Here App-ID"
@@ -3011,11 +3002,10 @@ msgid "The sports icon is shown."
 msgstr "Het sport icoon wordt getoond."
 
 #: inc/core/Dataset/Keys/Energy.php:54
-#, fuzzy
 msgid ""
 "Energy values are taken from your device or calculated by a simple formula."
 msgstr ""
-"Calorieën zijn afkomstig uit uw apparaat of berekend met een eenvoudige "
+"Calorieën zijn afkomstig van uw apparaat of berekend met een eenvoudige "
 "formule."
 
 #: inc/core/Dataset/Keys/Groundcontact.php:53
@@ -3077,11 +3067,11 @@ msgstr "Wedstrijd naam"
 #: inc/core/Dataset/Keys/HeatIndex.php:44
 #: inc/core/Data/Weather/HeatIndex.php:114
 msgid "Heat index"
-msgstr ""
+msgstr "Hitte index"
 
 #: inc/core/Dataset/Keys/HeatIndex.php:53
 msgid "HI"
-msgstr ""
+msgstr "HI"
 
 #: inc/core/Dataset/Keys/HeatIndex.php:63
 msgid ""
