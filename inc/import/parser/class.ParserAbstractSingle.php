@@ -183,7 +183,6 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 					case 'run':
 					case 'running':
 						$name[] = 'Laufen';
-                        $name[] = 'Laufband';
                         $name[] = 'Corriendo';
                         $name[] = 'Running';
                         $name[] = 'In esecuzione';
@@ -278,6 +277,7 @@ abstract class ParserAbstractSingle extends ParserAbstract {
         foreach ( \Runalyze\Context::Factory()->allSports() as $sport ) {
             if ( in_array( strtolower( $sport->name() ), $name) ) {
                 $this->TrainingObject->setSportid($sport->id());
+                return;
             }
         }
 	}
