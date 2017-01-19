@@ -420,7 +420,7 @@ class SearchResults {
 		} elseif ($key == 'wind_speed') {
 			$value = (new WindSpeed())->setInPreferredUnit($value)->value();
 		} elseif (($key == 'vdot' || $key == 'vdot_with_elevation')) {
-			$value *= Configuration::Data()->vdotFactor();
+			$value /= Configuration::Data()->vdotFactor();
 		} elseif ($key == 'kcal') {
 			$value = (new Energy())->setInPreferredUnit($value)->kcal();
 		} elseif ($key == 'fit_recovery_time') {
