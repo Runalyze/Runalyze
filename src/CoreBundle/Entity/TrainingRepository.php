@@ -134,8 +134,7 @@ class TrainingRepository extends EntityRepository
                 ':account' => $account->getId(),
                 ':sport' => $sportid,
                 ':startTime' => mktime(0, 0, 0, 1, 1, $year),
-                ':endTime' => mktime(23, 59, 59, 12, 31, $year),
-                ':empty' => ''
+                ':endTime' => mktime(23, 59, 59, 12, 31, $year)
             ])
             ->getQuery();
     }
