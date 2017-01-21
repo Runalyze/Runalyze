@@ -202,10 +202,11 @@ class ActivityController extends Controller
     public function vdotInfoAction($id, Account $account)
     {
         $Frontend = new \Frontend(true, $this->get('security.token_storage'));
+        $configList = $this->get('app.configuration_manager')->getList();
 
         $VdotInfo = new VdotInfo();
         $VdotInfo->setContext(new Context($id, $account->getId()));
-        $VdotInfo->setConfiguration($this->get('app.configuration_manager')->getList()->getCurrentVdot());
+        $VdotInfo->setConfiguration($configList->getData()->getLegacyCategory(), $configList->getVdot()->getLegacyCategory());
 
         return $this->render(':activity:vdot_info.html.twig', [
             'title' => $VdotInfo->getTitle(),
