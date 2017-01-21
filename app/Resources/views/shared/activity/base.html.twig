@@ -1,11 +1,33 @@
 {% extends "shared/base.html.twig" %}
 
+{% set html_attributes = ' prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# fitness: http://ogp.me/ns/fitness#"' %}
 {% set body_attributes = ' id="shared"' %}
 
 {% block html_head_meta %}
     {{ parent() }}
 
-    {# (new HTMLMetaForFacebook($this->ActivityContext))->display(); #}
+    <meta property="twitter:card" content="summary">
+    <meta property="twitter:image" content="{{ asset('assets/images/runalyze.png') }}">
+    <meta property="twitter:description" content="{{ metaTitle }}">
+
+    <meta property="fb:app_id" content="473795412675725">
+    <meta property="og:type" content="fitness.course">
+    <meta property="og:url" content="{{ activityUrl }}">
+    <meta property="og:title" content="{{ metaTitle }}">
+    <meta property="og:image" content="{{ asset('assets/images/runalyze.png') }}">
+
+    <meta property="fitness:calories" content="{{ activity.kcal }}">
+    <meta property="fitness:distance:value" content="{{ activity.distance }}">
+    <meta property="fitness:distance:units" content="km">
+    <meta property="fitness:duration:value" content="{{ activity.s }}">
+    <meta property="fitness:duration:units" content="s">
+
+{% if activity.distance > 0 %}
+    <meta property="fitness:pace:value" content="{{ activity.s / activity.distance / 1000 }}">
+    <meta property="fitness:pace:units" content="s/m">
+    <meta property="fitness:speed:value" content="{{ 1000 * activity.distance / activity.s }}">
+    <meta property="fitness:speed:units" content="m/s">
+{% endif %}
 {% endblock %}
 
 {% block content %}

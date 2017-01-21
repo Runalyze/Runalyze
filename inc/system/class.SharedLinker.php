@@ -30,14 +30,7 @@ class SharedLinker {
 	 * @return boolean
 	 */
 	public static function isOnSharedPage() {
-		return in_array('shared', explode('/', Request::Uri())) || in_array('athlete', explode('/', Request::Uri())) || self::isOnMetaCourseForFacebook();
-	}
-
-	/**
-	 * @return bool
-	 */
-	public static function isOnMetaCourseForFacebook() {
-		return (substr(Request::ScriptName(), -19) == 'call.MetaCourse.php');
+		return in_array('shared', explode('/', Request::Uri())) || in_array('athlete', explode('/', Request::Uri()));
 	}
 
 	/**
@@ -103,9 +96,6 @@ class SharedLinker {
 				DB::getInstance()->startAddingAccountID();
 
 				self::$USER_ID = $Data['accountid'];
-			} elseif (self::isOnMetaCourseForFacebook()) {
-				$Data = true;
-				self::$USER_ID = (int)Request::param('account');
 			} else {
 				$Data = false;
 			}

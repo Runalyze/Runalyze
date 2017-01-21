@@ -4,7 +4,9 @@ namespace Runalyze\Bundle\CoreBundle\Controller;
 
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\Training;
+use Runalyze\Export\Share\Facebook;
 use Runalyze\View\Activity\Context;
+use Runalyze\View\Activity\Linker;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -47,6 +49,10 @@ class SharedController extends Controller
 
         return $this->render('shared/activity/base.html.twig', [
             'username' => $activity->getAccount()->getUsername(),
+            'activity' => $activity,
+            'activityUrl' => (new Linker($activityContextLegacy->activity()))->publicUrl(),
+            'activityHasRoute' => $hasRoute,
+            'metaTitle' => (new Facebook($activityContextLegacy))->metaTitle(),
             'view' => new \TrainingView($activityContextLegacy)
         ]);
     }

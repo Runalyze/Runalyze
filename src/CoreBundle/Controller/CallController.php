@@ -53,18 +53,6 @@ class CallController extends Controller
     }
 
     /**
-     * @Route("/call/call.MetaCourse.php")
-     */
-    public function metaCourseAction() {
-        $Frontend = new \FrontendShared(true);
-
-        $Meta = new \HTMLMetaForFacebook();
-        $Meta->displayCourse();
-
-        return new Response();
-    }
-
-    /**
      * @Route("/settings", name="settings")
      * @Security("has_role('ROLE_USER')")
      */
