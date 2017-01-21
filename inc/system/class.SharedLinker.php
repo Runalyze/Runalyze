@@ -30,7 +30,7 @@ class SharedLinker {
 	 * @return boolean
 	 */
 	public static function isOnSharedPage() {
-		return in_array(explode('/', Request::Uri()), ['shared', 'athlete']) || self::isOnMetaCourseForFacebook();
+		return in_array('shared', explode('/', Request::Uri())) || in_array('athlete', explode('/', Request::Uri())) || self::isOnMetaCourseForFacebook();
 	}
 
 	/**
