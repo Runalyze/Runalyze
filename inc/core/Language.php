@@ -59,11 +59,16 @@ class Language implements InterfaceChoosable
         $this->setDomain($domain);
     }
 
+    /**
+     * @return array
+     */
     public static function getChoices() {
-        self::readAvailableLanguages();
+        $languages = [];
+
         foreach (self::availableLanguages() as $name => $lang) {
             $languages[$lang[0]] = $name;
         }
+
         return $languages;
     }
 
@@ -125,11 +130,15 @@ class Language implements InterfaceChoosable
      */
     private static function readAvailableLanguages()
     {
-        $config = Yaml::parse(file_get_contents('../app/config/languages.yml'));
+        $languages = [];
+        $config = Yaml::parse(file_get_contents(__DIR__.'/../../app/config/languages.yml'));
 
-        foreach($config['parameters']['locales'] as $short => $lang) {
-            $languages[$short] = array($lang['name'], $lang['locale']);
+        if (is_array($config) && isset($config['parameters']) && isset($config['parameters']['locales'])) {
+            foreach ($config['parameters']['locales'] as $short => $lang) {
+                $languages[$short] = array($lang['name'], $lang['locale']);
+            }
         }
+
         self::$AVAILABLE_LANGUAGES = $languages;
     }
 
