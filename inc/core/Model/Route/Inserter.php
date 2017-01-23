@@ -62,10 +62,6 @@ class Inserter extends Model\InserterWithAccountID {
 
 		$Calculator = new Calculator($this->Object);
 
-        if ($this->Object->hasGeohashes()) {
-            $this->Object->setGeohashesWithoutMinMaxRecalculation(GeohashLine::shorten($this->Object->geohashes()));
-        }
-
 		if (
 			!$this->Object->hasCorrectedElevations() && (
 				Configuration::ActivityForm()->correctElevation() ||
@@ -80,5 +76,9 @@ class Inserter extends Model\InserterWithAccountID {
 		}
 
 		$Calculator->calculateElevation();
+
+        if ($this->Object->hasGeohashes()) {
+            $this->Object->setGeohashesWithoutMinMaxRecalculation(GeohashLine::shorten($this->Object->geohashes()));
+        }
 	}
 }
