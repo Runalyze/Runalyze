@@ -6,43 +6,45 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.com\n"
 "POT-Creation-Date: 2016-11-15 17:37+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2017-01-23 10:29+0000\n"
+"Last-Translator: Rostyslav <rostyk.kudlak@gmail.com>\n"
+"Language-Team: Ukrainian <https://translate.runalyze.com/projects/runalyze"
+"/runalyze-master-po/uk/>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
+"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 2.9\n"
 
 #: src/CoreBundle/Controller/ActivityController.php:99
 #: src/CoreBundle/Controller/ActivityController.php:198
 msgid "The activity has been removed"
-msgstr ""
+msgstr "Тренування видалено"
 
 #: src/CoreBundle/Controller/ActivityController.php:261
 msgid "Corrected elevation data has been removed."
-msgstr ""
+msgstr "Скоректовані дані про висоту були видалені"
 
 #: src/CoreBundle/Controller/ActivityController.php:263
 #: inc/training/view/class.ElevationInfo.php:249
 msgid "Elevation data has been corrected."
-msgstr ""
+msgstr "Дані про висоту були скореговані"
 
 #: src/CoreBundle/Controller/ActivityController.php:276
 msgid "Elevation data could not be retrieved."
-msgstr ""
+msgstr "Неможливо отримати дані про висоту"
 
 #: src/CoreBundle/Controller/CallController.php:146
 msgid "Search for activities"
-msgstr ""
+msgstr "Пошук по тренуванням"
 
 #: src/CoreBundle/Controller/CallController.php:175
 msgid "There was a problem."
-msgstr ""
+msgstr "Виникла проблема"
 
 #: src/CoreBundle/Controller/DefaultController.php:232
 msgid "Click on an activity to see more details."
