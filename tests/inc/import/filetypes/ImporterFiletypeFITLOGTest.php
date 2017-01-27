@@ -110,4 +110,28 @@ class ImporterFiletypeFITLOGTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue($this->object->object()->hasArrayHeartrate());
 	}
 
+    public function testWithPauses() {
+        $this->object->parseFile('../tests/testfiles/sporttracks/with-pauses.fitlog');
+
+        $this->assertFalse($this->object->hasMultipleTrainings());
+        $this->assertFalse($this->object->failed());
+
+        $object = $this->object->object();
+
+        $this->assertEquals('2008-08-01 10:02', LocalTime::date('Y-m-d H:i', $object->getTimestamp()));
+        $this->assertEquals(120, $object->getTimezoneOffset());
+
+        $this->assertTrue($object->hasArrayTime());
+
+        $this->assertEquals(4384, $object->getTimeInSeconds());
+        $this->assertEquals(4384, $object->getArrayTimeLastPoint());
+        $this->assertEquals(14.67, $object->getDistance());
+
+        $this->assertEquals(2, $object->Pauses()->num());
+        $this->assertEquals([
+            ['time' => 1408, 'duration' => 33, 'hr-start' => 150, 'hr-end' => 112],
+            ['time' => 1771, 'duration' => 228, 'hr-start' => 150, 'hr-end' => 108]
+        ], $object->Pauses()->asArray());
+    }
+
 }

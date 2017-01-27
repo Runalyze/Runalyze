@@ -17,6 +17,9 @@ class ParserFITLOGSingle extends ParserAbstractSingleXML {
 	/** @var bool */
 	protected $HasRoute = true;
 
+	/** @var string */
+	protected $StarttimeString = '';
+
 	/**
 	 * Parse
 	 */
@@ -25,6 +28,8 @@ class ParserFITLOGSingle extends ParserAbstractSingleXML {
 			$this->parseGeneralValues();
 			$this->parseLaps();
 			$this->parseTrack();
+			$this->parsePauses();
+			$this->applyPauses();
 			$this->setGPSarrays();
 		} else {
 			$this->throwNoFITLOGError();
@@ -51,7 +56,8 @@ class ParserFITLOGSingle extends ParserAbstractSingleXML {
 	 * Parse general values
 	 */
 	protected function parseGeneralValues() {
-		$this->setTimestampAndTimezoneOffsetWithUtcFixFrom((string)$this->XML['StartTime']);
+	    $this->StarttimeString = (string)$this->XML['StartTime'];
+		$this->setTimestampAndTimezoneOffsetWithUtcFixFrom($this->StarttimeString);
 
 		if (!empty($this->XML['categoryName']))
 			$this->guessSportID( (string)$this->XML['categoryName'] );
@@ -145,4 +151,17 @@ class ParserFITLOGSingle extends ParserAbstractSingleXML {
 		if ($Calories > 0)
 			$this->TrainingObject->setCalories($Calories);
 	}
+
+	protected function parsePauses() {
+	    if (isset($this->XML->TrackClock)) {
+	        foreach ($this->XML->TrackClock->children() as $Pause) {
+                $this->pausesToApply[] = array(
+                    'time' => strtotime((string)$Pause['StartTime']) - strtotime($this->StarttimeString),
+                    'duration' => (strtotime((string)$Pause['EndTime']) - strtotime((string)$Pause['StartTime']))
+                );
+            }
+
+            $this->TrainingObject->setElapsedTime(end($this->gps['time_in_s']) - $this->gps['time_in_s'][0]);
+        }
+    }
 }
