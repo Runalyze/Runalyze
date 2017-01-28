@@ -26,10 +26,11 @@ class ParserFITLOGSingle extends ParserAbstractSingleXML {
 	protected function parseXML() {
 		if ($this->isCorrectFITLOG()) {
 			$this->parseGeneralValues();
-			$this->parseLaps();
+            $this->parseLaps();
 			$this->parseTrack();
 			$this->parsePauses();
 			$this->applyPauses();
+			$this->finishLaps();
 			$this->setGPSarrays();
 		} else {
 			$this->throwNoFITLOGError();
@@ -134,6 +135,7 @@ class ParserFITLOGSingle extends ParserAbstractSingleXML {
 
 		$Distance = 0;
 		$Calories = 0;
+
 		foreach ($this->XML->Laps->children() as $Lap) {
 			$LapDist = (!empty($Lap->Distance['TotalMeters'])) ? ((int)$Lap->Distance['TotalMeters'])/1000 : 0;
 			$Distance += $LapDist;
@@ -150,6 +152,10 @@ class ParserFITLOGSingle extends ParserAbstractSingleXML {
 			$this->TrainingObject->setDistance($Distance);
 		if ($Calories > 0)
 			$this->TrainingObject->setCalories($Calories);
+
+		if ($Distance == 0 && !empty($this->gps['km'])) {
+		    $this->TrainingObject->Splits()->fillDistancesFromArray($this->gps['time_in_s'], $this->gps['km']);
+        }
 	}
 
 	protected function parsePauses() {
@@ -162,6 +168,12 @@ class ParserFITLOGSingle extends ParserAbstractSingleXML {
             }
 
             $this->TrainingObject->setElapsedTime(end($this->gps['time_in_s']) - $this->gps['time_in_s'][0]);
+        }
+    }
+
+    protected function finishLaps() {
+        if ($this->TrainingObject->Splits()->totalDistance() == 0 && !empty($this->gps['km'])) {
+            $this->TrainingObject->Splits()->fillDistancesFromArray($this->gps['time_in_s'], $this->gps['km']);
         }
     }
 }
