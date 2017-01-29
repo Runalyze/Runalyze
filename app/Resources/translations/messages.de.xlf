@@ -1538,9 +1538,9 @@ Dieses Plugin zeigt deine Wettkämpfe im Vergleich zu den berechneten Werten und
         <target>Die Aktivierung ist fehlgeschlagen.</target>
         <jms:reference-file line="5">/Resources/views/account/activate/problem.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="28eca2b445a103d3945921852100c67ef66ca197" resname="The activity has been removed.">
+      <trans-unit id="28eca2b445a103d3945921852100c67ef66ca197" resname="The activity has been removed." approved="yes">
         <source>The activity has been removed.</source>
-        <target>Die Trainingseinheit wurde entfernt</target>
+        <target state="translated">Die Trainingseinheit wurde entfernt.</target>
         <jms:reference-file line="3">/Resources/views/activity/activity_has_been_removed.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="e564c009d4e2e4ca395b37f22105b484c871ed6e" resname="The administrator has to set the correct API-key.">
@@ -1658,7 +1658,7 @@ Dieses Plugin zeigt deine Wettkämpfe im Vergleich zu den berechneten Werten und
       </trans-unit>
       <trans-unit id="af4fd032da898cc7cd47029f2c0ebcb528c4930b" resname="This race result is linked to the following activity" approved="yes">
         <source>This race result is linked to the following activity</source>
-        <target state="translated">Das Wettkampfergebnis ist mit der folgenden Aktivität verknüpft.</target>
+        <target state="translated">Das Wettkampfergebnis ist mit der folgenden Aktivität verknüpft</target>
         <jms:reference-file line="26">/Resources/views/my/raceresult/form.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="8ea671ccd72432346a2af1ec6b3ff3129a81a11b" resname="This table does &lt;strong&gt;not&lt;/strong&gt; use a correction based on your current basic endurance.">
