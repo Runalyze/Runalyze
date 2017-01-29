@@ -115,7 +115,7 @@ class Inserter extends Model\InserterWithAccountID {
 	/**
 	 * Tasks before insertion
 	 */
-	protected function before() {
+	public function before() {
         $this->setSportIdIfEmpty();
 		$this->calculateIfActivityWasAtNight();
         $this->calculateCaloriesIfZero();

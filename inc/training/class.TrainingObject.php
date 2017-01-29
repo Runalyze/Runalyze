@@ -186,6 +186,96 @@ class TrainingObject extends DataObject {
 		}
 	}
 
+    /**
+     * Insert object to database
+     */
+    public function mergeInto(Runalyze\Model\Activity\Entity $otherActivity, $accountId) {
+        $DB = DB::getInstance();
+        $Route = $this->newRouteObject();
+        $Trackdata = $this->newTrackdataObject();
+        $Swimdata = $this->newSwimObject();
+
+        $oldRoute = (new Runalyze\Model\Factory($accountId))->route($otherActivity->get('routeid'));
+
+        if ($oldRoute->isEmpty()) {
+            if ($Route->name() != '' || $Route->hasPositionData() || $Route->hasElevations()) {
+                $InserterRoute = new Runalyze\Model\Route\Inserter($DB, $Route);
+                $InserterRoute->setAccountID($accountId);
+                $InserterRoute->insert();
+
+                $this->forceToSet('routeid', $InserterRoute->insertedID());
+
+                if ($this->getElevation() == 0) {
+                    $this->setElevation($Route->elevation());
+                }
+            }
+        } else {
+            $Route->setID($oldRoute->id());
+            $Route->set('name', $oldRoute->name());
+            $Route->set('cities', $oldRoute->name());
+            $routeUpdater = new Runalyze\Model\Route\Updater($DB, $Route, $oldRoute);
+            $routeUpdater->setAccountID($accountId);
+            $routeUpdater->update();
+
+            if ($this->getElevation() == 0) {
+                $this->setElevation($Route->elevation());
+            }
+        }
+
+        $this->setSportid($otherActivity->sportid());
+        $newActivity = $this->newActivityObject();
+        $newActivityInserter = new Runalyze\Model\Activity\Inserter($DB, $newActivity);
+        $newActivityInserter->setAccountID($accountId);
+        $newActivityInserter->setRoute($Route);
+        $newActivityInserter->setTrackdata($Trackdata);
+        $newActivityInserter->setSwimdata($Swimdata);
+        $newActivityInserter->before();
+
+        $newActivity->setID($otherActivity->id());
+        $newActivity->set('created', $otherActivity->get('created'));
+        $newActivity->weather()->condition()->set($otherActivity->weather()->condition()->id());
+        $newActivity->weather()->temperature()->setTemperature($otherActivity->weather()->temperature()->value());
+        $newActivity->synchronize();
+
+        foreach ($newActivity->properties() as $key) {
+            if (!$newActivity->has($key) && $otherActivity->has($key)) {
+                if ('partner' == $key) {
+                    $newActivity->partner()->fromString($otherActivity->partner()->asString());
+                } else {
+                    $newActivity->set($key, $otherActivity->get($key));
+                }
+            }
+        }
+
+        $activityUpdater = new Runalyze\Model\Activity\Updater($DB, $newActivity, $otherActivity);
+        $activityUpdater->setAccountID($accountId);
+        $activityUpdater->setTrackdata($Trackdata);
+        $activityUpdater->setRoute($Route);
+        $activityUpdater->update();
+
+        if ($this->hasArrayTime() || $this->hasArrayDistance() || $this->hasArrayHeartrate()) {
+            $Trackdata->set(Runalyze\Model\Trackdata\Entity::ACTIVITYID, $otherActivity->id());
+            $InserterTrack = new Runalyze\Model\Trackdata\Inserter($DB, $Trackdata);
+            $InserterTrack->setAccountID($accountId);
+            $InserterTrack->insert();
+        }
+
+        if ($this->hasArrayStroke() || $this->hasArrayStrokeType() ) {
+            $Swimdata->set(Runalyze\Model\Swimdata\Entity::ACTIVITYID, $otherActivity->id());
+            $InserterSwim = new Runalyze\Model\Swimdata\Inserter($DB, $Swimdata);
+            $InserterSwim->setAccountID($accountId);
+            $InserterSwim->insert();
+        }
+
+        if ($this->hasArrayHRV()) {
+            $HRV = $this->newHRVObject();
+            $HRV->set(Runalyze\Model\HRV\Entity::ACTIVITYID, $otherActivity->id());
+            $InserterHRV = new Runalyze\Model\HRV\Inserter($DB, $HRV);
+            $InserterHRV->setAccountID($accountId);
+            $InserterHRV->insert();
+        }
+    }
+
 	/**
 	 * @return \Runalyze\Model\Activity\Entity
 	 */

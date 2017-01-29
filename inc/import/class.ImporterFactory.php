@@ -280,7 +280,7 @@ class ImporterFactory {
 		$this->Filename = ImporterUpload::relativePath($filename);
 		$extension      = Filesystem::extensionOfFile($this->Filename);
 
-		if (!file_exists($this->Filename)) {
+		if (!file_exists(FRONTEND_PATH.$this->Filename)) {
 			$this->throwNonExistingFile($filename);
 		} elseif (self::canImportExtension($extension)) {
 			$this->importWithClass(self::classFor($extension));
