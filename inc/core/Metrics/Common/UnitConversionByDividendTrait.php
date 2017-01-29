@@ -24,6 +24,10 @@ trait UnitConversionByDividendTrait
      */
     final public function fromBaseUnit($valueInBaseUnit)
     {
+        if (0 == $valueInBaseUnit) {
+            return 0;
+        }
+
         return $this->getDividendFromBaseUnit() / $valueInBaseUnit;
     }
 }

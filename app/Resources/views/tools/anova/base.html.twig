@@ -64,6 +64,19 @@
 
         <div id="anova-plot"></div>
 
+        <p id="anova-info" class="info small">
+            {% trans %}
+            Values are visualized with so-called 'box plots'.
+            They give an impression of how values of a group are distributed.
+            The middle 50% of all values are within the box itself and the so-called whiskers have a length of at most 1.5-times the interquartile range (i.e. the box's width).
+            Data points outside this range are called outliers.
+            {% endtrans %}
+            <br>
+            {% trans %}This way of presentation allows to compare not only average values (e.g. pace over months) but deviations and outliers between different groupings.{% endtrans %}
+            <br>
+            {% trans %}For a detailed explanation of box plots, see <a href="https://en.wikipedia.org/wiki/Box_plot">Wikipedia</a>.{% endtrans %}
+        </p>
+
         <script>
             var $plot = $("#anova-plot");
 
