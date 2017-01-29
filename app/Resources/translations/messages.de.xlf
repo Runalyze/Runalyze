@@ -96,25 +96,22 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target><![CDATA[<strong>Korrekturfaktor:</strong> Verhältnis von VDOT zu VDOT (aus Puls)]]></target>
         <jms:reference-file line="88">/Resources/views/tools/vdot_analysis.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="106e3a64d599a360a823943c8a36b904ef04fdef" resname="&lt;strong&gt;VDOT/Time (Shape):&lt;/strong&gt; by your shape at that time&lt;br&gt;&#10;                The time is the prognosis by Runalyze.">
+      <trans-unit id="106e3a64d599a360a823943c8a36b904ef04fdef" resname="&lt;strong&gt;VDOT/Time (Shape):&lt;/strong&gt; by your shape at that time&lt;br&gt;&#10;                The time is the prognosis by Runalyze." approved="yes">
         <source><![CDATA[<strong>VDOT/Time (Shape):</strong> by your shape at that time<br>
                 The time is the prognosis by Runalyze.]]></source>
-        <target><![CDATA[<strong>VDOT/Time (Shape):</strong> by your shape at that time<br>
-                The time is the prognosis by Runalyze.]]></target>
+        <target state="translated">&lt;strong&gt;VDOT/Zeit (Form):&lt;/strong&gt; gemäß deiner Form zu dem Zeitpunkt&lt;br&gt;Diese Zeit entspricht der Prognose von Runalyze.</target>
         <jms:reference-file line="83">/Resources/views/tools/vdot_analysis.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="b4c08fa4db8c61128900391d951f59b612e89ebe" resname="&lt;strong&gt;VDOT/Time (corrected):&lt;/strong&gt; after individual VDOT correction (factor: %vdotFactor%)&lt;br&gt;&#10;                The time is what you could have reached at your maximal possible heart rate over this distance.">
+      <trans-unit id="b4c08fa4db8c61128900391d951f59b612e89ebe" resname="&lt;strong&gt;VDOT/Time (corrected):&lt;/strong&gt; after individual VDOT correction (factor: %vdotFactor%)&lt;br&gt;&#10;                The time is what you could have reached at your maximal possible heart rate over this distance." approved="yes">
         <source><![CDATA[<strong>VDOT/Time (corrected):</strong> after individual VDOT correction (factor: %vdotFactor%)<br>
                 The time is what you could have reached at your maximal possible heart rate over this distance.]]></source>
-        <target><![CDATA[<strong>VDOT/Time (corrected):</strong> after individual VDOT correction (factor: %vdotFactor%)<br>
-                The time is what you could have reached at your maximal possible heart rate over this distance.]]></target>
+        <target state="translated">&lt;strong&gt;VDOT/Zeit (korrigiert):&lt;/strong&gt; nach individueller VDOT-Korrektur (Faktor: %vdotFactor%)&lt;br&gt;Diese Zeit hättest du laut den Formeln bei der für diese Distanz maximalen Herzfrequenz erreichen können.</target>
         <jms:reference-file line="78">/Resources/views/tools/vdot_analysis.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="c47226217292486c58919f32295319782fbe687a" resname="&lt;strong&gt;VDOT/Time:&lt;/strong&gt; by standard formulas derived from Jack Daniels' Running formula&lt;br&gt;&#10;                The time is what you could have reached at your maximal possible heart rate over this distance.">
+      <trans-unit id="c47226217292486c58919f32295319782fbe687a" resname="&lt;strong&gt;VDOT/Time:&lt;/strong&gt; by standard formulas derived from Jack Daniels' Running formula&lt;br&gt;&#10;                The time is what you could have reached at your maximal possible heart rate over this distance." approved="yes">
         <source><![CDATA[<strong>VDOT/Time:</strong> by standard formulas derived from Jack Daniels' Running formula<br>
                 The time is what you could have reached at your maximal possible heart rate over this distance.]]></source>
-        <target><![CDATA[<strong>VDOT/Time:</strong> by standard formulas derived from Jack Daniels' Running formula<br>
-                The time is what you could have reached at your maximal possible heart rate over this distance.]]></target>
+        <target state="translated">&lt;strong&gt;VDOT/Zeit:&lt;/strong&gt; nach Standardformeln, die aus Jack Daniels "Die Laufformel" abgeleitet wurden&lt;br&gt;Diese Zeit hättest du laut den Formeln bei der für diese Distanz maximalen Herzfrequenz erreichen können.</target>
         <jms:reference-file line="73">/Resources/views/tools/vdot_analysis.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="45f74e5e127b292ad68a799afab18b283b219865" resname="A confirmation has been sent via mail.">
@@ -337,9 +334,9 @@ Dieser Export/Import ist sinnvoll, um eine Sicherheitskopie zu erstellen oder di
         <target>Klicke ein Training an, um weitere Details anzuzeigen.</target>
         <jms:reference-file line="65">/Resources/views/shared/athlete/base.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="8a128d3e497cf86515b3c769349812a4b7a165f9" resname="Compare your activity's values grouped by common values (e.g. sport or activity type) for a given period.">
+      <trans-unit id="8a128d3e497cf86515b3c769349812a4b7a165f9" resname="Compare your activity's values grouped by common values (e.g. sport or activity type) for a given period." approved="yes">
         <source>Compare your activity's values grouped by common values (e.g. sport or activity type) for a given period.</source>
-        <target>Compare your activity's values grouped by common values (e.g. sport or activity type) for a given period.</target>
+        <target state="translated">Vergleiche deine Trainingswerte gruppiert nach gemeinsamen Eigenschaften (z.B. Sportart oder Aktivitätstyp) für einen bestimmten Zeitraum.</target>
         <jms:reference-file line="24">/Resources/views/tools/tools_list.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="a9ac975028d335208a56c225a3d68d93dd2fb139" resname="Competition details" approved="yes">
@@ -957,9 +954,9 @@ Dieser Export/Import ist sinnvoll, um eine Sicherheitskopie zu erstellen oder di
         <target>Startseite</target>
         <jms:reference-file line="11">/Resources/views/account/delete/base.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="a728b4ef9485dbbe84331d5c654cb9e7c744859e" resname="Main values">
+      <trans-unit id="a728b4ef9485dbbe84331d5c654cb9e7c744859e" resname="Main values" approved="yes">
         <source>Main values</source>
-        <target>Main values</target>
+        <target state="translated">Allgemeine Werte</target>
         <jms:reference-file line="95">/../src/CoreBundle/Form/Tools/Anova/AnovaType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="94de303bbef8935622224c5db48199c807ab7d71" resname="Maintenance">
@@ -982,9 +979,9 @@ Dieser Export/Import ist sinnvoll, um eine Sicherheitskopie zu erstellen oder di
         <target state="new">May</target>
         <jms:reference-file line="44">/Resources/views/_macro/utilities.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="b887ba2a5f48de4306096a0c833b73ac7ee01050" resname="Median">
+      <trans-unit id="b887ba2a5f48de4306096a0c833b73ac7ee01050" resname="Median" approved="yes">
         <source>Median</source>
-        <target>Median</target>
+        <target state="translated">Median</target>
         <jms:reference-file line="127">/Resources/views/tools/anova/base.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="2deaec4409c237ae0bf257a0d4ccf607379bd28d" resname="Migrations have been executed">
@@ -1516,9 +1513,9 @@ Dieses Plugin zeigt deine Wettkämpfe im Vergleich zu den berechneten Werten und
         <target>TRIMP/ATL/CTL/TSB</target>
         <jms:reference-file line="53">/Resources/views/static/help_calculations.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="77cb6de5a18c7e76ea266cef64595b558a8ca383" resname="Tables for VDOT values by Jack Daniels and general tables like a pace calculator.">
+      <trans-unit id="77cb6de5a18c7e76ea266cef64595b558a8ca383" resname="Tables for VDOT values by Jack Daniels and general tables like a pace calculator." approved="yes">
         <source>Tables for VDOT values by Jack Daniels and general tables like a pace calculator.</source>
-        <target>Tables for VDOT values by Jack Daniels and general tables like a pace calculator.</target>
+        <target state="translated">Tabellen für VDOT-Werte von Jack Daniels sowie allgemeine Tabellen (z.B. für die Pace).</target>
         <jms:reference-file line="44">/Resources/views/tools/tools_list.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="5a1b598e394b671b7e4bf5d4cbb2c1733b789806" resname="Thanks for your registration. You should receive an email within the next minutes with further instructions for activating your account.">
@@ -1556,11 +1553,11 @@ Dieses Plugin zeigt deine Wettkämpfe im Vergleich zu den berechneten Werten und
         <target>Der Mittelwert über einen längeren Zeitraum wird als deine derzeitige Form aufgefasst.</target>
         <jms:reference-file line="33">/Resources/views/static/help_calculations.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="24dd4f18bdd8ececef469210b0e44c362c1246db" resname="The calculated value is not equal to what is saved for the activity (%activityVdot%).&#10;            The activity's value has probably been calculated based on other settings.">
+      <trans-unit id="24dd4f18bdd8ececef469210b0e44c362c1246db" resname="The calculated value is not equal to what is saved for the activity (%activityVdot%).&#10;            The activity's value has probably been calculated based on other settings." approved="yes">
         <source xml:space="preserve">The calculated value is not equal to what is saved for the activity (%activityVdot%).
             The activity's value has probably been calculated based on other settings.</source>
-        <target xml:space="preserve">The calculated value is not equal to what is saved for the activity (%activityVdot%).
-            The activity's value has probably been calculated based on other settings.</target>
+        <target xml:space="preserve" state="translated">Der berechnete Wert entspricht nicht dem gespeicherten Wert der Aktivität (%activityVdot%).
+            Der gespeicherte Wert wurde vermutlich anhand anderer Einstellungen berechnet.</target>
         <jms:reference-file line="111">/Resources/views/activity/vdot_info.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="246aeab8aa786b99aeae9e55fe38e711d9fead9c" resname="The deletion cannot be undone!">
@@ -1706,9 +1703,9 @@ Dieses Plugin zeigt deine Wettkämpfe im Vergleich zu den berechneten Werten und
         <target>Diese ist entscheidend für die mögliche Leistung eines Läufers.</target>
         <jms:reference-file line="10">/Resources/views/static/help_calculations.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="de63de8d63f7347ac7991ba168ac2e2215cb7ed3" resname="This way of presentation allows to compare not only average values (e.g. pace over months) but deviations and outliers between different groupings.">
+      <trans-unit id="de63de8d63f7347ac7991ba168ac2e2215cb7ed3" resname="This way of presentation allows to compare not only average values (e.g. pace over months) but deviations and outliers between different groupings." approved="yes">
         <source>This way of presentation allows to compare not only average values (e.g. pace over months) but deviations and outliers between different groupings.</source>
-        <target state="new">This way of presentation allows to compare not only average values (e.g. pace over months) but deviations and outliers between different groupings.</target>
+        <target state="translated">Diese Darstellung erlaubt es, nicht nur die Durchschnittswerte (z.B. der Pace im Monatsvergleich) sondern auch die Streuungen und Ausreißer zwischen den verschiedenen Gruppierungen miteinander zu vergleichen.</target>
         <jms:reference-file line="75">/Resources/views/tools/anova/base.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="4923d0bf817190c83a6b69dd0b6eeaea0b3b6d12" resname="This will not touch any general settings like gender or main sport.">
@@ -1735,9 +1732,9 @@ Dieses Plugin zeigt deine Wettkämpfe im Vergleich zu den berechneten Werten und
         <target>Zeitspanne</target>
         <jms:reference-file line="15">/Resources/views/tools/anova/base.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="a59154f2b3630be125eecf142ac445957321a8c2" resname="Time related">
+      <trans-unit id="a59154f2b3630be125eecf142ac445957321a8c2" resname="Time related" approved="yes">
         <source>Time related</source>
-        <target>Time related</target>
+        <target state="translated">Zeitbezogen</target>
         <jms:reference-file line="82">/../src/CoreBundle/Form/Tools/Anova/AnovaType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="d1f7dc891b5e5d1797163b556e805123c9369e4f" resname="Timezone">
@@ -2282,9 +2279,9 @@ Dieses Plugin zeigt deine Wettkämpfe im Vergleich zu den berechneten Werten und
         <target>unkorrigiert</target>
         <jms:reference-file line="76">/Resources/views/activity/vdot_info.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="e738fc45a698ea2e157e03bdc8178871daffbeb0" resname="x-times">
+      <trans-unit id="e738fc45a698ea2e157e03bdc8178871daffbeb0" resname="x-times" approved="yes">
         <source>x-times</source>
-        <target state="new">x-times</target>
+        <target state="translated">x-mal</target>
         <jms:reference-file line="11">/Resources/views/my/equipment/category/table.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="500e4b89724b9b2c26282c027a582badc10afe7c" resname="{1} Until now &lt;strong&gt;%count%&lt;/strong&gt; athlete is registered and|]1,Inf[ Until now &lt;strong&gt;%count%&lt;/strong&gt; athletes are registered and">
