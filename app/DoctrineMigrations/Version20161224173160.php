@@ -26,6 +26,11 @@ class Version20161224173160 extends AbstractMigration implements ContainerAwareI
         $this->container = $container;
     }
 
+    public function isTransactional()
+    {
+        return false;
+    }
+
     /**
      * @param Schema $schema
      */
@@ -33,31 +38,42 @@ class Version20161224173160 extends AbstractMigration implements ContainerAwareI
     {
         /** @var EntityManager $em */
         $em = $this->container->get('doctrine.orm.entity_manager');
+        $em->getConnection()->getConfiguration()->setSQLLogger(null);
 
         $prefix = $this->container->getParameter('database_prefix');
         /** @var EntityManager $em */
-        $repo = $this->container->get('doctrine.orm.entity_manager')->getRepository('CoreBundle:Route');
+        $repo = $em->getRepository('CoreBundle:Route');
 
-        $lockedRoutes = $repo->createQueryBuilder('r')
-            ->select('r')
-            ->where('r.lock = 1')
-            ->getQuery();
+        $countLockedRoutes = $em->createQueryBuilder()
+            ->select('count(route.id)')
+            ->where('route.lock = 1')
+            ->from('CoreBundle:Route','route');
+        $numberLockedRoutes= $countLockedRoutes->getQuery()->getSingleScalarResult();
+        while($numberLockedRoutes > 0) {
+            $lockedRoutes = $repo->createQueryBuilder('r')
+                ->select('r')
+                ->where('r.lock = 1')
+                ->setMaxResults(100)
+                ->getQuery();
 
-        $batchSize = 20;
-        $i = 0;
-        foreach ($lockedRoutes->iterate() as $row) {
-            $route = $row[0];
-            $route->setLock(0);
-            $route->setGeohashes( implode('|', GeohashLine::shorten( explode('|', $route->getGeohashes()) )) );
-            $em->persist($route);
-            if (($i % $batchSize) === 0) {
-                $em->flush();
-                $em->clear();
+            $batchSize = 100;
+            $i = 0;
+            $iterableResult= $lockedRoutes->iterate();
+            foreach ($iterableResult as $row) {
+                $route = $row[0];
+                $route->setLock(0);
+                $route->setGeohashesWithoutMinMaxRecalculation( implode('|', GeohashLine::shorten( explode('|', $route->getGeohashes()) )) );
+                $em->persist($route);
+                if (($i % $batchSize) === 0) {
+                    $em->flush();
+                    $em->clear();
+                    gc_collect_cycles();
+                }
+                ++$i;
             }
-            ++$i;
+            $em->flush();
+            $numberLockedRoutes = $numberLockedRoutes-100;
         }
-        $em->flush();
-
     }
 
     /**
