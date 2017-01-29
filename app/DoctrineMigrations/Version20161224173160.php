@@ -62,7 +62,7 @@ class Version20161224173160 extends AbstractMigration implements ContainerAwareI
             foreach ($iterableResult as $row) {
                 $route = $row[0];
                 $route->setLock(0);
-                $route->setGeohashesWithoutMinMaxRecalculation( implode('|', GeohashLine::shorten( explode('|', $route->getGeohashes()) )) );
+                $route->setGeohashes( implode('|', GeohashLine::shorten( explode('|', $route->getGeohashes()) )) );
                 $em->persist($route);
                 if (($i % $batchSize) === 0) {
                     $em->flush();
