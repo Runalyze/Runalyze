@@ -180,12 +180,12 @@ Dieser Export/Import ist sinnvoll, um deine Daten von einer Runalyze-Installatio
         ]]></target>
         <jms:reference-file line="35">/Resources/views/tools/tables/vdot.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="2ec23e05ce24410308126e2b4dfd7f75e877ca87" resname="            This table is computed by some formulas, derived from the tables in Jack Daniels' Running formula.&#10;            These values do not fit the original table one hundred percent.&#10;        ">
+      <trans-unit id="2ec23e05ce24410308126e2b4dfd7f75e877ca87" resname="            This table is computed by some formulas, derived from the tables in Jack Daniels' Running formula.&#10;            These values do not fit the original table one hundred percent.&#10;        " approved="yes">
         <source xml:space="preserve">            This table is computed by some formulas, derived from the tables in Jack Daniels' Running formula.
             These values do not fit the original table one hundred percent.
         </source>
-        <target xml:space="preserve">            This table is computed by some formulas, derived from the tables in Jack Daniels' Running formula.
-            These values do not fit the original table one hundred percent.
+        <target xml:space="preserve" state="translated">            Diese Tabelle richtet sich nach den aus "Die Laufformel" abgeleiteten Gleichungen.
+            Die Werte stimmen nicht hundertprozentig mit der originalen Tabelle überein. Besonders für niedrige VDOT-Werte gibt es hier einige Abweichungen.
         </target>
         <jms:reference-file line="28">/Resources/views/tools/tables/vdot.html.twig</jms:reference-file>
         <jms:reference-file line="30">/Resources/views/tools/tables/vdot_paces.html.twig</jms:reference-file>
@@ -1414,9 +1414,9 @@ Dieser Export/Import ist sinnvoll, um deine Daten von einer Runalyze-Installatio
         <jms:reference-file line="21">/Resources/views/base_logged_in.twig</jms:reference-file>
         <jms:reference-file line="5">/Resources/views/tools/tools_list.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="b0b02e793ab482ed87998784d7a2e0b2adb3d00f" resname="Total hemoglobin">
+      <trans-unit id="b0b02e793ab482ed87998784d7a2e0b2adb3d00f" resname="Total hemoglobin" approved="yes">
         <source>Total hemoglobin</source>
-        <target>Total hemoglobin</target>
+        <target state="translated">Gesamthämoglobin</target>
         <jms:reference-file line="172">/Resources/views/activity/tool/time_series_statistics.html.twig</jms:reference-file>
         <jms:reference-file line="175">/Resources/views/activity/tool/time_series_statistics.html.twig</jms:reference-file>
       </trans-unit>
