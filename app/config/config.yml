@@ -133,5 +133,5 @@ jms_translation:
 bernard:
     driver: file
     options:
-        directory: '%kernel.root_dir%/../data/queue'
+        directory: '%kernel.root_dir%/../var/queue'
 

@@ -16,6 +16,8 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Bernard\Message\DefaultMessage;
+
 
 /**
  * @Route("/my/tools/backup")
@@ -79,30 +81,13 @@ class BackupToolController extends Controller
     {
         $Frontend = new \Frontend(true, $this->get('security.token_storage'));
 
-        $fileHandler = new FilenameHandler($account->getId());
-        $fileHandler->setRunalyzeVersion($this->getParameter('runalyze_version'));
+        $message = new DefaultMessage('UserBackup', array(
+            'accountid' => $account->getId(),
+            'export-type' => $request->request->get('export-type')
+        ));
+        $this->get('bernard.producer')->produce($message);
 
-        if ($request->request->get('export-type') == 'json') {
-            $Backup = new JsonBackup(
-                $this->getPathToBackupFiles().$fileHandler->generateInternalFilename(FilenameHandler::JSON_FORMAT),
-                $account->getId(),
-                \DB::getInstance(),
-                $this->getParameter('database_prefix'),
-                $this->getParameter('runalyze_version')
-            );
-            $Backup->run();
-        } else {
-            $Backup = new SqlBackup(
-                $this->getPathToBackupFiles().$fileHandler->generateInternalFilename(FilenameHandler::SQL_FORMAT),
-                $account->getId(),
-                \DB::getInstance(),
-                $this->getParameter('database_prefix'),
-                $this->getParameter('runalyze_version')
-            );
-            $Backup->run();
-        }
-
-        $this->get('session')->getFlashBag()->set('runalyze.backup.created', true);
+        $this->get('session')->getFlashBag()->set('runalyze.backupjob.created', true);
 
         return $this->redirectToRoute('tools-backup');
     }
@@ -133,7 +118,7 @@ class BackupToolController extends Controller
         });
 
         return $this->render('tools/backup/export.html.twig', [
-            'backupWasCreated' => $this->get('session')->getFlashBag()->get('runalyze.backup.created'),
+            'backupjobWasCreated' => $this->get('session')->getFlashBag()->get('runalyze.backupjob.created'),
             'hasFiles' => $finder->count() > 0,
             'files' => $finder->getIterator(),
             'hasLocks' => (null == $lockedRoutes && null == $lockedTrainings) ?  true : false

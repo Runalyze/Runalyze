@@ -74,4 +74,13 @@ class AccountMailer
             ]
         );
     }
+
+    public function sendBackupReadyTo($account) {
+        $this->sendMailTo($account, 'RUNALYZE - Backup file is ready to download',
+            'mail/account/backupReady.html.twig', [
+                'username' => $account->getUsername(),
+            ]
+        );
+
+    }
 }
