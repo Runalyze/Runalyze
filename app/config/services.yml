@@ -135,3 +135,9 @@ services:
     arguments: ["@app.configuration_manager"]
     tags:
       - { name: twig.extension }
+  my_receiver:
+    class: Runalyze\Bundle\CoreBundle\Receiver\BackupReceiver
+    arguments:
+      container: "@service_container"
+    tags:
+      - { name: bernard.receiver, message: UserBackup }

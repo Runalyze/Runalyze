@@ -1,6 +1,11 @@
 {% extends 'tools/backup/base.html.twig' %}
 
 {% block toolContent %}
+    {% if backupjobWasCreated %}
+        <div class="panel-container">
+            <p class="okay">{% trans %}Your backup job has been created and is performed in the background.{% endtrans %}{% trans %}You will receive a mail when the file is ready for downloading.{% endtrans %}{% trans %}You can close this window.{% endtrans %}</p>
+        </div>
+    {% else %}
     <div class="panel-content">
         <form action="{{ url('tools-backup-create') }}" method="post" id="database-backup" class="ajax no-automatic-reload">
             <input type="hidden" name="backup" value="true">
@@ -43,11 +48,6 @@
                 {% endif %}
             </fieldset>
         </form>
-    </div>
-
-    {% if backupWasCreated %}
-    <div class="panel-container">
-        <p class="okay">{% trans %}Your backup has been created.{% endtrans %}</p>
     </div>
     {% endif %}
 
