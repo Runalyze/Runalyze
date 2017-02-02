@@ -76,6 +76,9 @@ class ParserFITSingle extends ParserAbstractSingle {
 			if (isset($this->fitData->data_mesgs[$fittype][$fitkey]))
 				$this->gps[$key] = array_values($this->fitData->data_mesgs[$fittype][$fitkey]);
 		}
+		if (isset($this->gps['km']))
+			foreach($this->gps['km'] as &$val)
+				$val /= 1e3;
 
 		if (isset($this->fitData->data_mesgs['session']['num_laps']) &&
 		    isset($this->fitData->data_mesgs['session']['first_lap_index'])) {
