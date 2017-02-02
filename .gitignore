@@ -23,6 +23,7 @@ composer.phar
 node_modules/
 web/assets/css/*.css
 web/assets/js/*.js
+web/assets/js/*.map
 web/vendor/
 npm-debug.log
 

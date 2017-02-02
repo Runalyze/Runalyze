@@ -47,7 +47,7 @@ function scripts() {
         .pipe(gulp.dest(config.js.dest))
         .pipe(uglify())
         .pipe(rename({ extname: '.min.js' }))
-        .pipe(sourcemaps.write())
+        .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(config.js.dest));
 }
 scripts.description = 'Combine and minify javascript files.';
