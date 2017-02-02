@@ -32,6 +32,16 @@ class UpdateController extends Controller
         $application->run($input, $output);
 
         $content = $output->fetch();
+
+        $input = new ArrayInput(array(
+            'command' => 'cache:clear',
+            '--env' => 'prod',
+        ));
+        $output = new BufferedOutput();
+        $application->run($input, $output);
+
+        $content .= $output->fetch();
+
 		$updateAvailable = true;
 		if (substr_count($content, 'Already at latest version') == 1) {
 		    $updateAvailable = false;
