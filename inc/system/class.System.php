@@ -16,11 +16,6 @@ class System {
 	 * @return string
 	 */
 	public static function getCodeForLocalJSFiles() {
-		if (self::isAtLocalhost()) {
-			return '<script>document.addEventListener("touchstart", function(){}, true);</script>'.
-				'<script src="assets/js/scripts.js?v='.RUNALYZE_VERSION.'"></script>';
-		}
-
 		return '<script>document.addEventListener("touchstart", function(){}, true);</script>'.
 			'<script src="assets/js/scripts.min.js?v='.RUNALYZE_VERSION.'"></script>';
 	}
