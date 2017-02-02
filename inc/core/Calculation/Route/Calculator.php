@@ -14,9 +14,9 @@ use Runalyze\Service\ElevationCorrection\Strategy\InvalidResponseException;
 
 /**
  * Calculate properties of route object
- * 
+ *
  * This calculator and correct and compute elevation
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Calculation\Route
  */
@@ -39,7 +39,7 @@ class Calculator {
 
 	/**
 	 * Calculate elevation value
-	 * 
+	 *
 	 * This method does directly update the route object.
 	 */
 	public function calculateElevation() {
@@ -53,9 +53,9 @@ class Calculator {
 
 	/**
 	 * Correct elevation data
-	 * 
+	 *
 	 * This method does directly update the route object.
-	 * 
+	 *
 	 * @param string $strategyName
 	 * @return boolean false if correction did not work
 	 */
@@ -96,7 +96,7 @@ class Calculator {
 	 * Remove elevation correction
 	 */
 	public function removeElevationCorrection() {
-		$this->Route->set(Route\Entity::ELEVATIONS_CORRECTED, array());
+		$this->Route->set(Route\Entity::ELEVATIONS_CORRECTED, null);
 		$this->Route->set(Route\Entity::ELEVATIONS_SOURCE, '');
 	}
 }
