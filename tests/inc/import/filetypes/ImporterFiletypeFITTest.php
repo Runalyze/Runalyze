@@ -771,70 +771,70 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 		}
 	}
 
-    /**
-     * Filename: "moxy-2sensors.fit"
-     */
-    public function testDeveloperFieldsFromMoxy() {
-        if (Shell::isPerlAvailable()) {
-            $this->object->parseFile('../tests/testfiles/fit/moxy-2sensors.fit');
+	/**
+	 * Filename: "moxy-2sensors.fit"
+	 */
+	public function testDeveloperFieldsFromMoxy() {
+		if (Shell::isPerlAvailable()) {
+			$this->object->parseFile('../tests/testfiles/fit/moxy-2sensors.fit');
 
-            $this->assertEquals(83, $this->object->object()->getTimeInSeconds(), '', 10);
-            $this->assertEquals(83, $this->object->object()->getArrayTimeLastPoint(), '', 10);
-            $this->assertEquals(0.117, $this->object->object()->getDistance(), '', 0.01);
+			$this->assertEquals(83, $this->object->object()->getTimeInSeconds(), '', 10);
+			$this->assertEquals(83, $this->object->object()->getArrayTimeLastPoint(), '', 10);
+			$this->assertEquals(0.117, $this->object->object()->getDistance(), '', 0.01);
 
-            $this->assertTrue($this->object->object()->hasArrayTime());
-            $this->assertTrue($this->object->object()->hasArrayLatitude());
-            $this->assertTrue($this->object->object()->hasArrayLongitude());
-            $this->assertTrue($this->object->object()->hasArrayAltitude());
-            $this->assertTrue($this->object->object()->hasArrayDistance());
-            $this->assertTrue($this->object->object()->hasArraySmo2_0());
-            $this->assertTrue($this->object->object()->hasArraySmo2_1());
-            $this->assertTrue($this->object->object()->hasArrayThb_0());
-            $this->assertTrue($this->object->object()->hasArrayThb_1());
+			$this->assertTrue($this->object->object()->hasArrayTime());
+			$this->assertTrue($this->object->object()->hasArrayLatitude());
+			$this->assertTrue($this->object->object()->hasArrayLongitude());
+			$this->assertTrue($this->object->object()->hasArrayAltitude());
+			$this->assertTrue($this->object->object()->hasArrayDistance());
+			$this->assertTrue($this->object->object()->hasArraySmo2_0());
+			$this->assertTrue($this->object->object()->hasArraySmo2_1());
+			$this->assertTrue($this->object->object()->hasArrayThb_0());
+			$this->assertTrue($this->object->object()->hasArrayThb_1());
 
-            $smo2_0_array = array(57,57,57,56,57,57,58,58,59,59,61,61,63,63,64,64,65,65,66,66,67,67,67,67,68,68,68,68,69,69,69,69,69,69,69,69,69,69,69,69,68,68,67,67,66,66,65,65,64,64,63,63,63,62,61,61,61,61,61,60,61,61,61,61,61,61,61,61,62,62,62,62,62,62,63,63,64,64,64,64,64,64,64,64);
-            $smo2_1_array = array(51,51,51,52,52,52,53,53,53,53,53,53,54,54,55,55,56,56,58,58,59,59,59,60,60,60,60,61,61,61,62,62,62,62,62,62,61,61,61,61,60,60,60,60,60,60,60,60,59,59,59,59,59,60,60,60,60,60,60,60,59,59,59,59,59,59,57,57,57,57,57,56,56,56,56,56,56,56,56,56,56,56,56,56);
+			$smo2_0_array = array(57,57,57,56,57,57,58,58,59,59,61,61,63,63,64,64,65,65,66,66,67,67,67,67,68,68,68,68,69,69,69,69,69,69,69,69,69,69,69,69,68,68,67,67,66,66,65,65,64,64,63,63,63,62,61,61,61,61,61,60,61,61,61,61,61,61,61,61,62,62,62,62,62,62,63,63,64,64,64,64,64,64,64,64);
+			$smo2_1_array = array(51,51,51,52,52,52,53,53,53,53,53,53,54,54,55,55,56,56,58,58,59,59,59,60,60,60,60,61,61,61,62,62,62,62,62,62,61,61,61,61,60,60,60,60,60,60,60,60,59,59,59,59,59,60,60,60,60,60,60,60,59,59,59,59,59,59,57,57,57,57,57,56,56,56,56,56,56,56,56,56,56,56,56,56);
 
-            $this->assertEquals($smo2_0_array, $this->object->object()->getArraySmo2_0());
-            $this->assertEquals($smo2_1_array, $this->object->object()->getArraySmo2_1());
+			$this->assertEquals($smo2_0_array, $this->object->object()->getArraySmo2_0());
+			$this->assertEquals($smo2_1_array, $this->object->object()->getArraySmo2_1());
 
-            $thb_0_array = array(1231,1231,1231,1231,1228,1228,1227,1227,1225,1225,1222,1222,1219,1219,1219,1219,1221,1221,1222,1222,1222,1222,1223,1223,1225,1225,1226,1226,1227,1227,1227,1227,1227,1227,1227,1227,1227,1227,1226,1226,1227,1227,1227,1227,1228,1228,1228,1228,1230,1230,1231,1231,1231,1231,1231,1231,1230,1230,1230,1231,1230,1230,1230,1230,1228,1228,1228,1228,1228,1228,1228,1227,1227,1227,1227,1227,1227,1227,1228,1228,1228,1228,1228,1228);
-            $thb_1_array = array(1277,1277,1277,1277,1277,1277,1276,1276,1275,1275,1272,1272,1272,1272,1271,1271,1269,1269,1269,1269,1269,1269,1269,1268,1268,1268,1268,1267,1265,1265,1264,1264,1264,1264,1264,1264,1264,1264,1264,1264,1265,1265,1265,1265,1265,1265,1265,1265,1265,1265,1265,1265,1265,1267,1268,1268,1267,1267,1267,1268,1268,1268,1268,1268,1268,1268,1268,1268,1268,1268,1268,1268,1268,1268,1268,1269,1269,1269,1269,1269,1271,1271,1271,1271);
+			$thb_0_array = array(1231,1231,1231,1231,1228,1228,1227,1227,1225,1225,1222,1222,1219,1219,1219,1219,1221,1221,1222,1222,1222,1222,1223,1223,1225,1225,1226,1226,1227,1227,1227,1227,1227,1227,1227,1227,1227,1227,1226,1226,1227,1227,1227,1227,1228,1228,1228,1228,1230,1230,1231,1231,1231,1231,1231,1231,1230,1230,1230,1231,1230,1230,1230,1230,1228,1228,1228,1228,1228,1228,1228,1227,1227,1227,1227,1227,1227,1227,1228,1228,1228,1228,1228,1228);
+			$thb_1_array = array(1277,1277,1277,1277,1277,1277,1276,1276,1275,1275,1272,1272,1272,1272,1271,1271,1269,1269,1269,1269,1269,1269,1269,1268,1268,1268,1268,1267,1265,1265,1264,1264,1264,1264,1264,1264,1264,1264,1264,1264,1265,1265,1265,1265,1265,1265,1265,1265,1265,1265,1265,1265,1265,1267,1268,1268,1267,1267,1267,1268,1268,1268,1268,1268,1268,1268,1268,1268,1268,1268,1268,1268,1268,1268,1268,1269,1269,1269,1269,1269,1271,1271,1271,1271);
 
-            $this->assertEquals($thb_0_array, $this->object->object()->getArrayThb_0());
-            $this->assertEquals($thb_1_array, $this->object->object()->getArrayThb_1());
-        }
-    }
+			$this->assertEquals($thb_0_array, $this->object->object()->getArrayThb_0());
+			$this->assertEquals($thb_1_array, $this->object->object()->getArrayThb_1());
+		}
+	}
 
-    /**
-     * Filename: "moxy-fr735.fit"
-     */
-    public function testDeveloperFieldsFromMoxyByFR735() {
-        if (Shell::isPerlAvailable()) {
-            $this->object->parseFile('../tests/testfiles/fit/moxy-fr735.fit');
+	/**
+	 * Filename: "moxy-fr735.fit"
+	 */
+	public function testDeveloperFieldsFromMoxyByFR735() {
+		if (Shell::isPerlAvailable()) {
+			$this->object->parseFile('../tests/testfiles/fit/moxy-fr735.fit');
 
-            $this->assertEquals(61, $this->object->object()->getTimeInSeconds(), '', 10);
-            $this->assertEquals(61, $this->object->object()->getArrayTimeLastPoint(), '', 10);
-            $this->assertEquals(0.100, $this->object->object()->getDistance(), '', 0.01);
-            $this->assertEquals(60, $this->object->object()->getCadence(), '', 1);
+			$this->assertEquals(61, $this->object->object()->getTimeInSeconds(), '', 10);
+			$this->assertEquals(61, $this->object->object()->getArrayTimeLastPoint(), '', 10);
+			$this->assertEquals(0.100, $this->object->object()->getDistance(), '', 0.01);
+			$this->assertEquals(60, $this->object->object()->getCadence(), '', 1);
 
-            $this->assertTrue($this->object->object()->hasArrayTime());
-            $this->assertTrue($this->object->object()->hasArrayLatitude());
-            $this->assertTrue($this->object->object()->hasArrayLongitude());
-            $this->assertTrue($this->object->object()->hasArrayAltitude());
-            $this->assertTrue($this->object->object()->hasArrayDistance());
-            $this->assertTrue($this->object->object()->hasArraySmo2_0());
-            $this->assertFalse($this->object->object()->hasArraySmo2_1());
-            $this->assertTrue($this->object->object()->hasArrayThb_0());
-            $this->assertFalse($this->object->object()->hasArrayThb_1());
+			$this->assertTrue($this->object->object()->hasArrayTime());
+			$this->assertTrue($this->object->object()->hasArrayLatitude());
+			$this->assertTrue($this->object->object()->hasArrayLongitude());
+			$this->assertTrue($this->object->object()->hasArrayAltitude());
+			$this->assertTrue($this->object->object()->hasArrayDistance());
+			$this->assertTrue($this->object->object()->hasArraySmo2_0());
+			$this->assertFalse($this->object->object()->hasArraySmo2_1());
+			$this->assertTrue($this->object->object()->hasArrayThb_0());
+			$this->assertFalse($this->object->object()->hasArrayThb_1());
 
-            $smo2_0_array = array(57,0,62,64,63,65,65,65,65,64,61,61,60,59,59);
-            $this->assertEquals($smo2_0_array, $this->object->object()->getArraySmo2_0());
+			$smo2_0_array = array(57,0,62,64,63,65,65,65,65,64,61,61,60,59,59);
+			$this->assertEquals($smo2_0_array, $this->object->object()->getArraySmo2_0());
 
-            $thb_0_array = array(1249,0,1245,1234,1233,1236,1241,1240,1240,1241,1240,1241,1242,1248,1251);
-            $this->assertEquals($thb_0_array, $this->object->object()->getArrayThb_0());
-        }
-    }
+			$thb_0_array = array(1249,0,1245,1234,1233,1236,1241,1240,1240,1241,1240,1241,1242,1248,1251);
+			$this->assertEquals($thb_0_array, $this->object->object()->getArrayThb_0());
+		}
+	}
 
 	public function testThatBadTrainingEffectValuesAreIgnored() {
 		if (Shell::isPerlAvailable()) {
@@ -854,8 +854,8 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertEquals(83, $this->object->object()->getTimeInSeconds(), '', 10);
 			$this->assertEquals(0.15, $this->object->object()->getDistance(), '', 0.01);
 
-            $this->assertTrue($this->object->object()->hasArrayTime());
-            $this->assertTrue($this->object->object()->hasArrayDistance());
+			$this->assertTrue($this->object->object()->hasArrayTime());
+			$this->assertTrue($this->object->object()->hasArrayDistance());
 
 			$this->assertEquals(2500, $this->object->object()->getPoolLength());
 			$this->assertEquals(
@@ -872,8 +872,8 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertEquals(2095, $this->object->object()->getTimeInSeconds(), '', 10);
 			$this->assertEquals(1.25, $this->object->object()->getDistance(), '', 0.01);
 
-            $this->assertTrue($this->object->object()->hasArrayTime());
-            $this->assertTrue($this->object->object()->hasArrayDistance());
+			$this->assertTrue($this->object->object()->hasArrayTime());
+			$this->assertTrue($this->object->object()->hasArrayDistance());
 
 			$this->assertEquals(2500, $this->object->object()->getPoolLength());
 			$this->assertEquals(
@@ -886,19 +886,19 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 	public function testDeveloperFieldsInNewFormatFromMoxy() {
 		if (Shell::isPerlAvailable()) {
 			$this->object->parseFile('../tests/testfiles/fit/moxy-float.fit');
-            $this->assertTrue($this->object->object()->hasArraySmo2_0());
-            $this->assertFalse($this->object->object()->hasArraySmo2_1());
-            $this->assertTrue($this->object->object()->hasArrayThb_0());
-            $this->assertFalse($this->object->object()->hasArrayThb_1());
-            $this->assertEquals(
-            	[0,36,36,37,37,38,38,38,38,38,38,38,38,37,37],
-            	array_slice($this->object->object()->getArraySmo2_0(), 0, 15)
-        	);
+			$this->assertTrue($this->object->object()->hasArraySmo2_0());
+			$this->assertFalse($this->object->object()->hasArraySmo2_1());
+			$this->assertTrue($this->object->object()->hasArrayThb_0());
+			$this->assertFalse($this->object->object()->hasArrayThb_1());
+			$this->assertEquals(
+				[0,36,36,37,37,38,38,38,38,38,38,38,38,37,37],
+				array_slice($this->object->object()->getArraySmo2_0(), 0, 15)
+			);
 
-            $this->assertEquals(
-            	[0,1309,1309,1310,1310,1310,1310,1311,1311,1314,1314,1317,1317,1319,1319],
-            	array_slice($this->object->object()->getArrayThb_0(), 0, 15)
-        	);
+			$this->assertEquals(
+				[0,1309,1309,1310,1310,1310,1310,1311,1311,1314,1314,1317,1317,1319,1319],
+				array_slice($this->object->object()->getArrayThb_0(), 0, 15)
+			);
 		}
 	}
 }
