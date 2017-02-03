@@ -32,7 +32,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 	 * Filename: "Standard.fit"
 	 */
 	public function test_generalFile() {
-		$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/Standard.fit');
+		$this->object->parseFile(__DIR__ . '/../../../testfiles/fit/Standard.fit');
 
 		$this->assertFalse( $this->object->hasMultipleTrainings() );
 		$this->assertFalse( $this->object->failed() );
@@ -64,7 +64,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 	 * Filename: "Fenix-2.fit"
 	 */
 	public function test_FenixFile() {
-		$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/Fenix-2.fit');
+		$this->object->parseFile(__DIR__ . '/../../../testfiles/fit/Fenix-2.fit');
 
 		$this->assertFalse( $this->object->hasMultipleTrainings() );
 		$this->assertFalse( $this->object->failed() );
@@ -104,7 +104,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 	 * Filename: "Fenix-2.fit"
 	 */
 	public function test_FenixFileWithPauses() {
-		$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/Fenix-2-pauses.fit');
+		$this->object->parseFile(__DIR__ . '/../../../testfiles/fit/Fenix-2-pauses.fit');
 
 		$this->assertFalse( $this->object->hasMultipleTrainings() );
 		$this->assertFalse( $this->object->failed() );
@@ -159,7 +159,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 	 * Filename: "Fenix-2.fit"
 	 */
 	public function test_FenixFileNegativeTime() {
-		$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/Fenix-2-negative-times.fit');
+		$this->object->parseFile(__DIR__ . '/../../../testfiles/fit/Fenix-2-negative-times.fit');
 
 		$this->assertFalse( $this->object->failed() );
 
@@ -174,7 +174,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 	 * Test: ignore 'start' for events other than timer
 	 */
 	public function testOtherStartEvents() {
-		$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/FR920-additional-start-events.fit');
+		$this->object->parseFile(__DIR__ . '/../../../testfiles/fit/FR920-additional-start-events.fit');
 
 		$this->assertFalse( $this->object->failed() );
 		$this->assertEquals( 2*3600 + 47*60 + 22, $this->object->object()->getTimeInSeconds() );
@@ -189,7 +189,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 	 * Filename: "Multisession.fit"
 	 */
 	public function testMultisession() {
-		$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/Multisession.fit');
+		$this->object->parseFile(__DIR__ . '/../../../testfiles/fit/Multisession.fit');
 
 		$this->assertFalse( $this->object->failed() );
 		$this->assertTrue( $this->object->hasMultipleTrainings() );
@@ -213,7 +213,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 	 * Filename: "HRV-example.fit"
 	 */
 	public function testSimplePauseExample() {
-		$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/HRV-example.fit');
+		$this->object->parseFile(__DIR__ . '/../../../testfiles/fit/HRV-example.fit');
 
 		$this->assertFalse( $this->object->hasMultipleTrainings() );
 		$this->assertFalse( $this->object->failed() );
@@ -238,7 +238,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 	 * Filename: "swim-25m-lane.fit"
 	 */
 	public function testSimpleSwimmingFile() {
-		$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/swim-25m-lane.fit');
+		$this->object->parseFile(__DIR__ . '/../../../testfiles/fit/swim-25m-lane.fit');
 
 		$this->assertFalse($this->object->hasMultipleTrainings() );
 		$this->assertFalse($this->object->failed() );
@@ -270,7 +270,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 	 * Filename: "swim-fenix-50m.fit"
 	 */
 	public function testSwimmingFileFromFenix() {
-		$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/swim-fenix-50m.fit');
+		$this->object->parseFile(__DIR__ . '/../../../testfiles/fit/swim-fenix-50m.fit');
 
 		$this->assertFalse($this->object->hasMultipleTrainings() );
 		$this->assertFalse($this->object->failed() );
@@ -307,7 +307,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 	 * Filename: "swim-outdoor.fit"
 	 */
 	public function testOutdoorSwimmingFile() {
-		$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/swim-outdoor.fit');
+		$this->object->parseFile(__DIR__ . '/../../../testfiles/fit/swim-outdoor.fit');
 
 		$this->assertFalse($this->object->hasMultipleTrainings() );
 		$this->assertFalse($this->object->failed() );
@@ -342,7 +342,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 	 * Filename: "HRV-example.fit"
 	 */
 	public function testHRV() {
-		$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/HRV-example.fit');
+		$this->object->parseFile(__DIR__ . '/../../../testfiles/fit/HRV-example.fit');
 
 		$this->assertEquals('2015-06-13 11:03', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
 		$this->assertEquals(120, $this->object->object()->getTimezoneOffset());
@@ -370,7 +370,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 	 * Filename: "with-power.fit"
 	 */
 	public function testWithPowerData() {
-		$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/with-power.fit');
+		$this->object->parseFile(__DIR__ . '/../../../testfiles/fit/with-power.fit');
 
 		$this->assertFalse( $this->object->hasMultipleTrainings() );
 		$this->assertFalse( $this->object->failed() );
@@ -399,7 +399,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 	 * Filename: "multisport-triathlon-fenix3.fit"
 	 */
 	public function testMultisportTriathlonFromFenix3() {
-		$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/multisport-triathlon-fenix3.fit');
+		$this->object->parseFile(__DIR__ . '/../../../testfiles/fit/multisport-triathlon-fenix3.fit');
 
 		$this->assertFalse($this->object->failed());
 		$this->assertTrue($this->object->hasMultipleTrainings());
@@ -462,7 +462,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 	 * @see https://github.com/Runalyze/Runalyze/issues/1991
 	 */
 	public function testMultisessionThatStopsDirectlyAfterTransition() {
-		$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/Multisession-stop-after-transition.fit');
+		$this->object->parseFile(__DIR__ . '/../../../testfiles/fit/Multisession-stop-after-transition.fit');
 
 		$this->assertFalse($this->object->failed());
 		$this->assertTrue($this->object->hasMultipleTrainings());
@@ -499,7 +499,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 	 * Filename: "osynce-stop-bug.fit"
 	 */
 	public function testOsynceTimeProblem() {
-		$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/osynce-stop-bug.fit');
+		$this->object->parseFile(__DIR__ . '/../../../testfiles/fit/osynce-stop-bug.fit');
 
 		$this->assertFalse( $this->object->hasMultipleTrainings() );
 		$this->assertFalse( $this->object->failed() );
@@ -540,7 +540,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 	 * @group gcb
 	 */
 	public function testNewRunningDynamicsFromFenix3() {
-		$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/with-new-dynamics.fit');
+		$this->object->parseFile(__DIR__ . '/../../../testfiles/fit/with-new-dynamics.fit');
 
 		$this->assertFalse( $this->object->hasMultipleTrainings() );
 		$this->assertFalse( $this->object->failed() );
@@ -568,7 +568,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 	 * @group gcb
 	 */
 	public function testDataFromFR70WithCompressedSpeedDistance() {
-		$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/FR70-intervals.fit');
+		$this->object->parseFile(__DIR__ . '/../../../testfiles/fit/FR70-intervals.fit');
 
 		$this->assertFalse( $this->object->hasMultipleTrainings() );
 		$this->assertFalse( $this->object->failed() );
@@ -597,7 +597,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 	 * Filename: "FR70-intervals.fit"
 	 */
 	public function testDataFromFR630WithFurtherRunningDataLikeLactateThreshold() {
-		$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/FR630-with-lth.fit');
+		$this->object->parseFile(__DIR__ . '/../../../testfiles/fit/FR630-with-lth.fit');
 
 		$this->assertFalse( $this->object->hasMultipleTrainings() );
 		$this->assertFalse( $this->object->failed() );
@@ -627,7 +627,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 	 * @see https://github.com/Runalyze/Runalyze/issues/1886
 	 */
 	public function testDataFromSuuntoAmbitPeakWithoutFinalLap() {
-		$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/Suunto-Ambit-3-Peak-without-final-lap.fit');
+		$this->object->parseFile(__DIR__ . '/../../../testfiles/fit/Suunto-Ambit-3-Peak-without-final-lap.fit');
 
 		$this->assertFalse( $this->object->hasMultipleTrainings() );
 		$this->assertFalse( $this->object->failed() );
@@ -652,7 +652,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 	 * @see https://github.com/Runalyze/Runalyze/issues/1917
 	 */
 	public function testThatIrregularTimestampsAreIgnored() {
-		$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/One-second-jump-to-past.fit');
+		$this->object->parseFile(__DIR__ . '/../../../testfiles/fit/One-second-jump-to-past.fit');
 
 		$this->assertEquals('fenix2', $this->object->object()->getCreator());
 
@@ -674,7 +674,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 	 * @see https://github.com/Runalyze/Runalyze/issues/1919
 	 */
 	public function testDeveloperFieldsFromDisabledMoxy() {
-		$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/Fenix-3-with-inactive-Moxy.fit');
+		$this->object->parseFile(__DIR__ . '/../../../testfiles/fit/Fenix-3-with-inactive-Moxy.fit');
 
 		$this->assertFalse($this->object->failed());
 
@@ -701,7 +701,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 	 * @see https://github.com/Runalyze/Runalyze/issues/1919
 	 */
 	public function testDeveloperFieldsFromStryd() {
-		$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/FR920xt-with-Stryd.fit');
+		$this->object->parseFile(__DIR__ . '/../../../testfiles/fit/FR920xt-with-Stryd.fit');
 
 		$this->assertFalse($this->object->failed());
 
@@ -729,7 +729,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 	 * Filename: "moxy-2sensors.fit"
 	 */
 	public function testDeveloperFieldsFromMoxy() {
-		$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/moxy-2sensors.fit');
+		$this->object->parseFile(__DIR__ . '/../../../testfiles/fit/moxy-2sensors.fit');
 
 		$this->assertEquals(83, $this->object->object()->getTimeInSeconds(), '', 10);
 		$this->assertEquals(83, $this->object->object()->getArrayTimeLastPoint(), '', 10);
@@ -762,7 +762,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 	 * Filename: "moxy-fr735.fit"
 	 */
 	public function testDeveloperFieldsFromMoxyByFR735() {
-		$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/moxy-fr735.fit');
+		$this->object->parseFile(__DIR__ . '/../../../testfiles/fit/moxy-fr735.fit');
 
 		$this->assertEquals(61, $this->object->object()->getTimeInSeconds(), '', 10);
 		$this->assertEquals(61, $this->object->object()->getArrayTimeLastPoint(), '', 10);
@@ -787,7 +787,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testThatBadTrainingEffectValuesAreIgnored() {
-		$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/Zwift-bad-training-effect.fit');
+		$this->object->parseFile(__DIR__ . '/../../../testfiles/fit/Zwift-bad-training-effect.fit');
 
 		$this->assertEquals(2764, $this->object->object()->getTimeInSeconds(), '', 10);
 		$this->assertEquals(16.72, $this->object->object()->getDistance(), '', 0.01);
@@ -796,7 +796,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testDeveloperFieldsInSwimFileFromDaniel() {
-		$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/swim-via-iq.fit');
+		$this->object->parseFile(__DIR__ . '/../../../testfiles/fit/swim-via-iq.fit');
 
 		$this->assertEquals(83, $this->object->object()->getTimeInSeconds(), '', 10);
 		$this->assertEquals(0.15, $this->object->object()->getDistance(), '', 0.01);
@@ -812,7 +812,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testDeveloperFieldsInPoolSwimFileFromDaniel() {
-		$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/swim-pool-via-iq.fit');
+		$this->object->parseFile(__DIR__ . '/../../../testfiles/fit/swim-pool-via-iq.fit');
 
 		$this->assertEquals(2095, $this->object->object()->getTimeInSeconds(), '', 10);
 		$this->assertEquals(1.25, $this->object->object()->getDistance(), '', 0.01);
@@ -828,7 +828,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 	}
 	
 	public function testDeveloperFieldsInNewFormatFromMoxy() {
-		$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/moxy-float.fit');
+		$this->object->parseFile(__DIR__ . '/../../../testfiles/fit/moxy-float.fit');
 		$this->assertTrue($this->object->object()->hasArraySmo2_0());
 		$this->assertFalse($this->object->object()->hasArraySmo2_1());
 		$this->assertTrue($this->object->object()->hasArrayThb_0());
