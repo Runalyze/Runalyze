@@ -170,15 +170,24 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 	 */
 	protected function mapGPStoFITkey($String, $swim = false) {
 		switch ($String) {
-			case 'time_in_s': return 'timestamp'; break;
-			case 'latitude': return 'position_lat'; break;
-			case 'longitude': return 'position_long'; break;
-			case 'km': return 'distance'; break;
-			case 'stroke': return 'total_strokes'; break;
-			case 'stroketype': return 'swim_stroke'; break;
-			case 'rpm': return $swim ? 'avg_swimming_cadence' : 'cadence'; break;
-			case 'heartrate': return 'heart_rate'; break;
-			case 'temp': return 'temperature'; break;
+			case 'time_in_s':
+				return 'timestamp';
+			case 'latitude':
+				return 'position_lat';
+			case 'longitude':
+				return 'position_long';
+			case 'km':
+				return 'distance';
+			case 'stroke':
+				return 'total_strokes';
+			case 'stroketype':
+				return 'swim_stroke';
+			case 'rpm':
+				return $swim ? 'avg_swimming_cadence' : 'cadence';
+			case 'heartrate':
+				return 'heart_rate';
+			case 'temp':
+				return 'temperature';
 		}
 
 		return $String;
