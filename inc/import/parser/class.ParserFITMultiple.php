@@ -75,8 +75,6 @@ class ParserFITMultiple extends ParserAbstractMultiple {
 					$SingleParser->parse();
 
 					$this->addObject($SingleParser->object());
-
-					$SingleParser = null;
 				}
 			}
 		} else {
