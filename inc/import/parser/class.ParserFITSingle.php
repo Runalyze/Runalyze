@@ -66,10 +66,7 @@ class ParserFITSingle extends ParserAbstractSingle {
 
 		$this->guessSportID(mb_strtolower($this->fitData->sport()), $this->fitData->manufacturer() . ' ' . $this->fitData->product());
 
-		if (substr(mb_strtolower($this->fitData->sport()), 0, 4) == 'swim')
-			$this->isSwim = true;
-		else
-			$this->isSwim = false;
+		$this->isSwim = (substr(mb_strtolower($this->fitData->sport()), 0, 4) == 'swim');
 
 		/* try to map all internal fields to FIT fields */
 		foreach (array_keys($this->gps) as $key) {
