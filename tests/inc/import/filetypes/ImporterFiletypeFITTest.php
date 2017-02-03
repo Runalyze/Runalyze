@@ -24,9 +24,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 	 * @expectedException \Runalyze\Import\Exception\ParserException
 	 */
 	public function test_nonexistingFile() {
-		if (Shell::isPerlAvailable()) {
-			$this->object->parseFile('idontexist.fit');
-		}
+		$this->object->parseFile('idontexist.fit');
 	}
 
 	/**
@@ -34,33 +32,31 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 	 * Filename: "Standard.fit"
 	 */
 	public function test_generalFile() {
-		if (Shell::isPerlAvailable()) {
-			$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/Standard.fit');
+		$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/Standard.fit');
 
-			$this->assertFalse( $this->object->hasMultipleTrainings() );
-			$this->assertFalse( $this->object->failed() );
+		$this->assertFalse( $this->object->hasMultipleTrainings() );
+		$this->assertFalse( $this->object->failed() );
 
-			$this->assertEquals( 0*3600 + 53*60 +  6, $this->object->object()->getTimeInSeconds(), '', 30);
-			$this->assertEquals( 1*3600 + 00*60 + 53, $this->object->object()->getElapsedTime() );
-			$this->assertTrue( $this->object->object()->hasElapsedTime() );
+		$this->assertEquals( 0*3600 + 53*60 +  6, $this->object->object()->getTimeInSeconds(), '', 30);
+		$this->assertEquals( 1*3600 + 00*60 + 53, $this->object->object()->getElapsedTime() );
+		$this->assertTrue( $this->object->object()->hasElapsedTime() );
 
-			$this->assertEquals( 8.98, $this->object->object()->getDistance(), '', 0.1);
-			$this->assertEquals( 305, $this->object->object()->getCalories(), '', 10);
-			$this->assertEquals( 123, $this->object->object()->getPulseAvg(), '', 2);
-			$this->assertEquals( 146, $this->object->object()->getPulseMax(), '', 2);
-			$this->assertTrue( $this->object->object()->hasArrayAltitude() );
-			$this->assertTrue( $this->object->object()->hasArrayDistance() );
-			$this->assertTrue( $this->object->object()->hasArrayHeartrate() );
-			$this->assertTrue( $this->object->object()->hasArrayLatitude() );
-			$this->assertTrue( $this->object->object()->hasArrayLongitude() );
-			$this->assertTrue( $this->object->object()->hasArrayTime() );
-			$this->assertFalse( $this->object->object()->hasArrayGroundContact() );
-			$this->assertFalse( $this->object->object()->hasArrayVerticalOscillation() );
+		$this->assertEquals( 8.98, $this->object->object()->getDistance(), '', 0.1);
+		$this->assertEquals( 305, $this->object->object()->getCalories(), '', 10);
+		$this->assertEquals( 123, $this->object->object()->getPulseAvg(), '', 2);
+		$this->assertEquals( 146, $this->object->object()->getPulseMax(), '', 2);
+		$this->assertTrue( $this->object->object()->hasArrayAltitude() );
+		$this->assertTrue( $this->object->object()->hasArrayDistance() );
+		$this->assertTrue( $this->object->object()->hasArrayHeartrate() );
+		$this->assertTrue( $this->object->object()->hasArrayLatitude() );
+		$this->assertTrue( $this->object->object()->hasArrayLongitude() );
+		$this->assertTrue( $this->object->object()->hasArrayTime() );
+		$this->assertFalse( $this->object->object()->hasArrayGroundContact() );
+		$this->assertFalse( $this->object->object()->hasArrayVerticalOscillation() );
 
-			$this->assertEquals( 1, $this->object->object()->Sport()->id() );
+		$this->assertEquals( 1, $this->object->object()->Sport()->id() );
 
-			$this->assertFalse( $this->object->object()->Splits()->areEmpty() );
-		}
+		$this->assertFalse( $this->object->object()->Splits()->areEmpty() );
 	}
 
 	/**
@@ -68,41 +64,39 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 	 * Filename: "Fenix-2.fit"
 	 */
 	public function test_FenixFile() {
-		if (Shell::isPerlAvailable()) {
-			$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/Fenix-2.fit');
+		$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/Fenix-2.fit');
 
-			$this->assertFalse( $this->object->hasMultipleTrainings() );
-			$this->assertFalse( $this->object->failed() );
+		$this->assertFalse( $this->object->hasMultipleTrainings() );
+		$this->assertFalse( $this->object->failed() );
 
-			$this->assertEquals( 16*60 + 15, $this->object->object()->getTimeInSeconds() );
-			$this->assertEquals( 20*60 + 10, $this->object->object()->getElapsedTime() );
-			$this->assertTrue( $this->object->object()->hasElapsedTime() );
+		$this->assertEquals( 16*60 + 15, $this->object->object()->getTimeInSeconds() );
+		$this->assertEquals( 20*60 + 10, $this->object->object()->getElapsedTime() );
+		$this->assertTrue( $this->object->object()->hasElapsedTime() );
 
-			$this->assertEquals( 2.94, $this->object->object()->getDistance(), '', 0.1);
-			$this->assertEquals( 159, $this->object->object()->getCalories(), '', 10);
-			$this->assertEquals( 137, $this->object->object()->getPulseAvg(), '', 5);
-			$this->assertEquals( 169, $this->object->object()->getPulseMax(), '', 5);
-			$this->assertTrue( $this->object->object()->hasArrayAltitude() );
-			$this->assertTrue( $this->object->object()->hasArrayDistance() );
-			$this->assertTrue( $this->object->object()->hasArrayHeartrate() );
-			$this->assertTrue( $this->object->object()->hasArrayLatitude() );
-			$this->assertTrue( $this->object->object()->hasArrayLongitude() );
-			$this->assertTrue( $this->object->object()->hasArrayTime() );
-			$this->assertTrue( $this->object->object()->hasArrayTemperature() );
-			$this->assertTrue( $this->object->object()->hasArrayGroundContact() );
-			$this->assertTrue( $this->object->object()->hasArrayVerticalOscillation() );
+		$this->assertEquals( 2.94, $this->object->object()->getDistance(), '', 0.1);
+		$this->assertEquals( 159, $this->object->object()->getCalories(), '', 10);
+		$this->assertEquals( 137, $this->object->object()->getPulseAvg(), '', 5);
+		$this->assertEquals( 169, $this->object->object()->getPulseMax(), '', 5);
+		$this->assertTrue( $this->object->object()->hasArrayAltitude() );
+		$this->assertTrue( $this->object->object()->hasArrayDistance() );
+		$this->assertTrue( $this->object->object()->hasArrayHeartrate() );
+		$this->assertTrue( $this->object->object()->hasArrayLatitude() );
+		$this->assertTrue( $this->object->object()->hasArrayLongitude() );
+		$this->assertTrue( $this->object->object()->hasArrayTime() );
+		$this->assertTrue( $this->object->object()->hasArrayTemperature() );
+		$this->assertTrue( $this->object->object()->hasArrayGroundContact() );
+		$this->assertTrue( $this->object->object()->hasArrayVerticalOscillation() );
 
-			$this->assertEquals( 216, $this->object->object()->getGroundContactTime() );
-			$this->assertEquals( 92, $this->object->object()->getVerticalOscillation(), '', 1 );
+		$this->assertEquals( 216, $this->object->object()->getGroundContactTime() );
+		$this->assertEquals( 92, $this->object->object()->getVerticalOscillation(), '', 1 );
 
-			$this->assertEquals( 1, $this->object->object()->Sport()->id() );
+		$this->assertEquals( 1, $this->object->object()->Sport()->id() );
 
-			$this->assertFalse( $this->object->object()->Splits()->areEmpty() );
+		$this->assertFalse( $this->object->object()->Splits()->areEmpty() );
 
-			$this->assertEquals( 53, $this->object->object()->getFitVdotEstimate() );
-			$this->assertEquals( 816, $this->object->object()->getFitRecoveryTime() );
-			$this->assertEquals( 0, $this->object->object()->getFitHRVscore() );
-		}
+		$this->assertEquals( 53, $this->object->object()->getFitVdotEstimate() );
+		$this->assertEquals( 816, $this->object->object()->getFitRecoveryTime() );
+		$this->assertEquals( 0, $this->object->object()->getFitHRVscore() );
 	}
 
 	/**
@@ -110,55 +104,53 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 	 * Filename: "Fenix-2.fit"
 	 */
 	public function test_FenixFileWithPauses() {
-		if (Shell::isPerlAvailable()) {
-			$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/Fenix-2-pauses.fit');
+		$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/Fenix-2-pauses.fit');
 
-			$this->assertFalse( $this->object->hasMultipleTrainings() );
-			$this->assertFalse( $this->object->failed() );
+		$this->assertFalse( $this->object->hasMultipleTrainings() );
+		$this->assertFalse( $this->object->failed() );
 
-			$this->assertEquals( 46*60 + 50, $this->object->object()->getTimeInSeconds(), '', 5 );
-			$this->assertEquals( 50*60 + 46, $this->object->object()->getElapsedTime() );
-			$this->assertTrue( $this->object->object()->hasElapsedTime() );
+		$this->assertEquals( 46*60 + 50, $this->object->object()->getTimeInSeconds(), '', 5 );
+		$this->assertEquals( 50*60 + 46, $this->object->object()->getElapsedTime() );
+		$this->assertTrue( $this->object->object()->hasElapsedTime() );
 
-			$this->assertEquals( 10.55, $this->object->object()->getDistance(), '', 0.1);
-			$this->assertEquals( 564, $this->object->object()->getCalories(), '', 10);
-			$this->assertEquals( 141, $this->object->object()->getPulseAvg(), '', 2);
-			$this->assertEquals( 152, $this->object->object()->getPulseMax(), '', 2);
-			$this->assertTrue( $this->object->object()->hasArrayAltitude() );
-			$this->assertTrue( $this->object->object()->hasArrayDistance() );
-			$this->assertTrue( $this->object->object()->hasArrayHeartrate() );
-			$this->assertTrue( $this->object->object()->hasArrayLatitude() );
-			$this->assertTrue( $this->object->object()->hasArrayLongitude() );
-			$this->assertTrue( $this->object->object()->hasArrayTime() );
-			$this->assertTrue( $this->object->object()->hasArrayTemperature() );
+		$this->assertEquals( 10.55, $this->object->object()->getDistance(), '', 0.1);
+		$this->assertEquals( 564, $this->object->object()->getCalories(), '', 10);
+		$this->assertEquals( 141, $this->object->object()->getPulseAvg(), '', 2);
+		$this->assertEquals( 152, $this->object->object()->getPulseMax(), '', 2);
+		$this->assertTrue( $this->object->object()->hasArrayAltitude() );
+		$this->assertTrue( $this->object->object()->hasArrayDistance() );
+		$this->assertTrue( $this->object->object()->hasArrayHeartrate() );
+		$this->assertTrue( $this->object->object()->hasArrayLatitude() );
+		$this->assertTrue( $this->object->object()->hasArrayLongitude() );
+		$this->assertTrue( $this->object->object()->hasArrayTime() );
+		$this->assertTrue( $this->object->object()->hasArrayTemperature() );
 
-			$this->assertEquals( 1, $this->object->object()->Sport()->id() );
+		$this->assertEquals( 1, $this->object->object()->Sport()->id() );
 
-			$this->assertFalse( $this->object->object()->Splits()->areEmpty() );
-			$this->assertEquals( "10.547|46:49", $this->object->object()->Splits()->asString() );
+		$this->assertFalse( $this->object->object()->Splits()->areEmpty() );
+		$this->assertEquals( "10.547|46:49", $this->object->object()->Splits()->asString() );
 
-			$this->assertEquals( 46*60 + 50, $this->object->object()->getArrayTimeLastPoint(), '', 5 );
+		$this->assertEquals( 46*60 + 50, $this->object->object()->getArrayTimeLastPoint(), '', 5 );
 
-			$this->assertEquals( 65, $this->object->object()->getFitVdotEstimate() );
-			$this->assertEquals( 932, $this->object->object()->getFitRecoveryTime() );
-			$this->assertEquals( 0, $this->object->object()->getFitHRVscore() );
+		$this->assertEquals( 65, $this->object->object()->getFitVdotEstimate() );
+		$this->assertEquals( 932, $this->object->object()->getFitRecoveryTime() );
+		$this->assertEquals( 0, $this->object->object()->getFitHRVscore() );
 
-			$Pauses = $this->object->object()->Pauses();
-			$this->assertEquals(6, $Pauses->num());
+		$Pauses = $this->object->object()->Pauses();
+		$this->assertEquals(6, $Pauses->num());
 
-			foreach ([
-				 [267, 14, 144, 130],
-				 [465, 53, 151, 104],
-				 [1491, 73, 145, 106],
-				 [2575, 35, 139, 111],
-				 [2804, 51, 136, 100],
-				 [2970, 9, 150, 144]
-			 ] as $i => $pause) {
-				$this->assertEquals($pause[0], $Pauses->at($i)->time());
-				$this->assertEquals($pause[1], $Pauses->at($i)->duration());
-				$this->assertEquals($pause[2], $Pauses->at($i)->hrStart());
-				$this->assertEquals($pause[3], $Pauses->at($i)->hrEnd());
-			}
+		foreach ([
+			 [267, 14, 144, 130],
+			 [465, 53, 151, 104],
+			 [1491, 73, 145, 106],
+			 [2575, 35, 139, 111],
+			 [2804, 51, 136, 100],
+			 [2970, 9, 150, 144]
+		 ] as $i => $pause) {
+			$this->assertEquals($pause[0], $Pauses->at($i)->time());
+			$this->assertEquals($pause[1], $Pauses->at($i)->duration());
+			$this->assertEquals($pause[2], $Pauses->at($i)->hrStart());
+			$this->assertEquals($pause[3], $Pauses->at($i)->hrEnd());
 		}
 	}
 
@@ -167,33 +159,29 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 	 * Filename: "Fenix-2.fit"
 	 */
 	public function test_FenixFileNegativeTime() {
-		if (!Shell::isPerlAvailable()) {
-			$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/Fenix-2-negative-times.fit');
+		$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/Fenix-2-negative-times.fit');
 
-			$this->assertFalse( $this->object->failed() );
+		$this->assertFalse( $this->object->failed() );
 
-			$this->assertEquals( "28.08.2014 09:32:59", date('d.m.Y H:i:s', $this->object->object()->getTimestamp()) );
-			$this->assertEquals( 2*3600 + 35*60 + 21, $this->object->object()->getTimeInSeconds() );
+		$this->assertEquals( "28.08.2014 09:32:59", date('d.m.Y H:i:s', $this->object->object()->getTimestamp()) );
+		$this->assertEquals( 2*3600 + 35*60 + 21, $this->object->object()->getTimeInSeconds() );
 
-			$this->assertTrue( $this->object->object()->hasArrayTime() );
-			$this->assertTrue( min($this->object->object()->getArrayTime()) >= 0 );
-		}
+		$this->assertTrue( $this->object->object()->hasArrayTime() );
+		$this->assertTrue( min($this->object->object()->getArrayTime()) >= 0 );
 	}
 
 	/**
 	 * Test: ignore 'start' for events other than timer
 	 */
 	public function testOtherStartEvents() {
-		if (!Shell::isPerlAvailable()) {
-			$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/FR920-additional-start-events.fit');
+		$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/FR920-additional-start-events.fit');
 
-			$this->assertFalse( $this->object->failed() );
-			$this->assertEquals( 2*3600 + 47*60 + 22, $this->object->object()->getTimeInSeconds() );
+		$this->assertFalse( $this->object->failed() );
+		$this->assertEquals( 2*3600 + 47*60 + 22, $this->object->object()->getTimeInSeconds() );
 
-			$time = $this->object->object()->getArrayTime();
-			$this->assertTrue( min($time) >= 0 );
-			$this->assertEquals( 2*3600 + 47*60 + 22, end($time) );
-		}
+		$time = $this->object->object()->getArrayTime();
+		$this->assertTrue( min($time) >= 0 );
+		$this->assertEquals( 2*3600 + 47*60 + 22, end($time) );
 	}
 
 	/**
@@ -201,25 +189,23 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 	 * Filename: "Multisession.fit"
 	 */
 	public function testMultisession() {
-		if (Shell::isPerlAvailable()) {
-			$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/Multisession.fit');
+		$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/Multisession.fit');
 
-			$this->assertFalse( $this->object->failed() );
-			$this->assertTrue( $this->object->hasMultipleTrainings() );
+		$this->assertFalse( $this->object->failed() );
+		$this->assertTrue( $this->object->hasMultipleTrainings() );
 
-			$FirstSession = $this->object->object(0);
-			$this->assertEquals('23.05.2015 12:52:35', LocalTime::date('d.m.Y H:i:s', $FirstSession->getTimestamp()));
-			$this->assertEquals(1131, $FirstSession->getTimeInSeconds());
-			$this->assertEquals(1173, $FirstSession->getElapsedTime());
-			$this->assertEquals(4.111, $FirstSession->getDistance());
+		$FirstSession = $this->object->object(0);
+		$this->assertEquals('23.05.2015 12:52:35', LocalTime::date('d.m.Y H:i:s', $FirstSession->getTimestamp()));
+		$this->assertEquals(1131, $FirstSession->getTimeInSeconds());
+		$this->assertEquals(1173, $FirstSession->getElapsedTime());
+		$this->assertEquals(4.111, $FirstSession->getDistance());
 
-			$SecondSession = $this->object->object(1);
-			$this->assertEquals('23.05.2015 14:31:29', LocalTime::date('d.m.Y H:i:s', $SecondSession->getTimestamp()));
-			$this->assertEquals(1001, $SecondSession->getTimeInSeconds());
-			$this->assertEquals(1001, $SecondSession->getArrayTimeLastPoint(), '', 5);
-			$this->assertEquals(1118, $SecondSession->getElapsedTime());
-			$this->assertEquals(3.746, $SecondSession->getDistance());
-		}
+		$SecondSession = $this->object->object(1);
+		$this->assertEquals('23.05.2015 14:31:29', LocalTime::date('d.m.Y H:i:s', $SecondSession->getTimestamp()));
+		$this->assertEquals(1001, $SecondSession->getTimeInSeconds());
+		$this->assertEquals(1001, $SecondSession->getArrayTimeLastPoint(), '', 5);
+		$this->assertEquals(1118, $SecondSession->getElapsedTime());
+		$this->assertEquals(3.746, $SecondSession->getDistance());
 	}
 
 	/**
@@ -227,26 +213,24 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 	 * Filename: "HRV-example.fit"
 	 */
 	public function testSimplePauseExample() {
-		if (Shell::isPerlAvailable()) {
-			$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/HRV-example.fit');
+		$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/HRV-example.fit');
 
-			$this->assertFalse( $this->object->hasMultipleTrainings() );
-			$this->assertFalse( $this->object->failed() );
+		$this->assertFalse( $this->object->hasMultipleTrainings() );
+		$this->assertFalse( $this->object->failed() );
 
-			$this->assertEquals( 60, $this->object->object()->getTimeInSeconds() );
-			$this->assertEquals( 60 + 69, $this->object->object()->getElapsedTime() );
-			$this->assertTrue( $this->object->object()->hasElapsedTime() );
+		$this->assertEquals( 60, $this->object->object()->getTimeInSeconds() );
+		$this->assertEquals( 60 + 69, $this->object->object()->getElapsedTime() );
+		$this->assertTrue( $this->object->object()->hasElapsedTime() );
 
-			$this->assertEquals( 70, $this->object->object()->getPulseAvg() );
-			$this->assertEquals( 100, $this->object->object()->getPulseMax() );
+		$this->assertEquals( 70, $this->object->object()->getPulseAvg() );
+		$this->assertEquals( 100, $this->object->object()->getPulseMax() );
 
-			$Pauses = $this->object->object()->Pauses();
-			$this->assertEquals( 1, $Pauses->num() );
-			$this->assertEquals( 41, $Pauses->at(0)->time() );
-			$this->assertEquals( 69, $Pauses->at(0)->duration() );
-			$this->assertEquals( 100, $Pauses->at(0)->hrStart() );
-			$this->assertEquals( 69, $Pauses->at(0)->hrEnd() );
-		}
+		$Pauses = $this->object->object()->Pauses();
+		$this->assertEquals( 1, $Pauses->num() );
+		$this->assertEquals( 41, $Pauses->at(0)->time() );
+		$this->assertEquals( 69, $Pauses->at(0)->duration() );
+		$this->assertEquals( 100, $Pauses->at(0)->hrStart() );
+		$this->assertEquals( 69, $Pauses->at(0)->hrEnd() );
 	}
 
 	/**
@@ -254,33 +238,31 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 	 * Filename: "swim-25m-lane.fit"
 	 */
 	public function testSimpleSwimmingFile() {
-		if (Shell::isPerlAvailable()) {
-			$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/swim-25m-lane.fit');
+		$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/swim-25m-lane.fit');
 
-			$this->assertFalse($this->object->hasMultipleTrainings() );
-			$this->assertFalse($this->object->failed() );
+		$this->assertFalse($this->object->hasMultipleTrainings() );
+		$this->assertFalse($this->object->failed() );
 
-			$this->assertEquals('2015-06-17 07:34', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
-			$this->assertEquals(120, $this->object->object()->getTimezoneOffset());
+		$this->assertEquals('2015-06-17 07:34', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
+		$this->assertEquals(120, $this->object->object()->getTimezoneOffset());
 
-			$this->assertEquals('fr910xt', $this->object->object()->getCreator());
-			$this->assertEquals(2500, $this->object->object()->getPoolLength());
-			$this->assertEquals(890, $this->object->object()->getTotalStrokes());
-			$this->assertEquals(25, $this->object->object()->getCadence());
+		$this->assertEquals('fr910xt', $this->object->object()->getCreator());
+		$this->assertEquals(2500, $this->object->object()->getPoolLength());
+		$this->assertEquals(890, $this->object->object()->getTotalStrokes());
+		$this->assertEquals(25, $this->object->object()->getCadence());
 
-			$this->assertEquals(2116, $this->object->object()->getTimeInSeconds());
-			$this->assertEquals(2354, $this->object->object()->getElapsedTime());
-			$this->assertEquals(1.95, $this->object->object()->getDistance());
+		$this->assertEquals(2116, $this->object->object()->getTimeInSeconds());
+		$this->assertEquals(2354, $this->object->object()->getElapsedTime());
+		$this->assertEquals(1.95, $this->object->object()->getDistance());
 
-			$this->assertTrue($this->object->object()->hasArrayStroke());
-			$this->assertTrue($this->object->object()->hasArrayStrokeType());
+		$this->assertTrue($this->object->object()->hasArrayStroke());
+		$this->assertTrue($this->object->object()->hasArrayStrokeType());
 
-			$this->assertTrue($this->object->object()->hasArrayTime());
-			$this->assertFalse($this->object->object()->hasArrayDistance());
+		$this->assertTrue($this->object->object()->hasArrayTime());
+		$this->assertFalse($this->object->object()->hasArrayDistance());
 
-			$timeArray = $this->object->object()->getArrayTime();
-			$this->assertNotEquals(0, $timeArray[0]);
-		}
+		$timeArray = $this->object->object()->getArrayTime();
+		$this->assertNotEquals(0, $timeArray[0]);
 	}
 
 	/**
@@ -288,38 +270,36 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 	 * Filename: "swim-fenix-50m.fit"
 	 */
 	public function testSwimmingFileFromFenix() {
-		if (Shell::isPerlAvailable()) {
-			$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/swim-fenix-50m.fit');
+		$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/swim-fenix-50m.fit');
 
-			$this->assertFalse($this->object->hasMultipleTrainings() );
-			$this->assertFalse($this->object->failed() );
+		$this->assertFalse($this->object->hasMultipleTrainings() );
+		$this->assertFalse($this->object->failed() );
 
-			$this->assertEquals('2015-07-18 08:29', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
-			$this->assertEquals(120, $this->object->object()->getTimezoneOffset());
+		$this->assertEquals('2015-07-18 08:29', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
+		$this->assertEquals(120, $this->object->object()->getTimezoneOffset());
 
-			$this->assertEquals('fenix3', $this->object->object()->getCreator());
-			$this->assertEquals(5000, $this->object->object()->getPoolLength());
-			$this->assertEquals(1750, $this->object->object()->getTotalStrokes());
-			$this->assertEquals(32, $this->object->object()->getCadence());
+		$this->assertEquals('fenix3', $this->object->object()->getCreator());
+		$this->assertEquals(5000, $this->object->object()->getPoolLength());
+		$this->assertEquals(1750, $this->object->object()->getTotalStrokes());
+		$this->assertEquals(32, $this->object->object()->getCadence());
 
-			$this->assertEquals(3272, $this->object->object()->getTimeInSeconds());
-			$this->assertEquals(3817, $this->object->object()->getElapsedTime());
-			$this->assertEquals(2.05, $this->object->object()->getDistance());
+		$this->assertEquals(3272, $this->object->object()->getTimeInSeconds());
+		$this->assertEquals(3817, $this->object->object()->getElapsedTime());
+		$this->assertEquals(2.05, $this->object->object()->getDistance());
 
-			$this->assertTrue($this->object->object()->hasArrayStroke());
-			$this->assertTrue($this->object->object()->hasArrayStrokeType());
+		$this->assertTrue($this->object->object()->hasArrayStroke());
+		$this->assertTrue($this->object->object()->hasArrayStrokeType());
 
-			$this->assertTrue($this->object->object()->hasArrayTime());
-			$this->assertFalse($this->object->object()->hasArrayDistance());
+		$this->assertTrue($this->object->object()->hasArrayTime());
+		$this->assertFalse($this->object->object()->hasArrayDistance());
 
-			$this->assertEquals(
-				array(68, 68+80, 68+80+69, 68+80+69+86, 68+80+69+86+82, 68+80+69+86+82+91, 68+80+69+86+82+91+90, 68+80+69+86+82+91+90+98),
-				array_slice($this->object->object()->getArrayTime(), 0, 8)
-			);
+		$this->assertEquals(
+			array(68, 68+80, 68+80+69, 68+80+69+86, 68+80+69+86+82, 68+80+69+86+82+91, 68+80+69+86+82+91+90, 68+80+69+86+82+91+90+98),
+			array_slice($this->object->object()->getArrayTime(), 0, 8)
+		);
 
-			$timeArray = $this->object->object()->getArrayTime();
-			$this->assertNotEquals(0, $timeArray[0]);
-		}
+		$timeArray = $this->object->object()->getArrayTime();
+		$this->assertNotEquals(0, $timeArray[0]);
 	}
 
 	/**
@@ -327,36 +307,34 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 	 * Filename: "swim-outdoor.fit"
 	 */
 	public function testOutdoorSwimmingFile() {
-		if (Shell::isPerlAvailable()) {
-			$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/swim-outdoor.fit');
+		$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/swim-outdoor.fit');
 
-			$this->assertFalse($this->object->hasMultipleTrainings() );
-			$this->assertFalse($this->object->failed() );
+		$this->assertFalse($this->object->hasMultipleTrainings() );
+		$this->assertFalse($this->object->failed() );
 
-			if (RUNALYZE_TEST_TZ_LOOKUP) {
-				$this->assertEquals('2011-10-15 14:31', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
-				$this->assertEquals(-300, $this->object->object()->getTimezoneOffset());
-			} else {
-				$this->assertEquals('2011-10-15 21:31', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
-				$this->assertEquals(120, $this->object->object()->getTimezoneOffset());
-			}
-
-			$this->assertEquals('fr910xt', $this->object->object()->getCreator());
-			$this->assertEquals(0, $this->object->object()->getPoolLength());
-			$this->assertEquals(424, $this->object->object()->getTotalStrokes());
-			$this->assertEquals(25, $this->object->object()->getCadence());
-
-			$this->assertEquals(1007, $this->object->object()->getTimeInSeconds());
-			$this->assertEquals(1007, $this->object->object()->getElapsedTime());
-			$this->assertEquals(0.985, $this->object->object()->getDistance());
-
-			$this->assertTrue($this->object->object()->hasArrayCadence());
-
-			$this->assertTrue($this->object->object()->hasArrayTime());
-			$this->assertTrue($this->object->object()->hasArrayDistance());
-			$this->assertTrue($this->object->object()->hasArrayLatitude());
-			$this->assertTrue($this->object->object()->hasArrayLongitude());
+		if (RUNALYZE_TEST_TZ_LOOKUP) {
+			$this->assertEquals('2011-10-15 14:31', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
+			$this->assertEquals(-300, $this->object->object()->getTimezoneOffset());
+		} else {
+			$this->assertEquals('2011-10-15 21:31', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
+			$this->assertEquals(120, $this->object->object()->getTimezoneOffset());
 		}
+
+		$this->assertEquals('fr910xt', $this->object->object()->getCreator());
+		$this->assertEquals(0, $this->object->object()->getPoolLength());
+		$this->assertEquals(424, $this->object->object()->getTotalStrokes());
+		$this->assertEquals(25, $this->object->object()->getCadence());
+
+		$this->assertEquals(1007, $this->object->object()->getTimeInSeconds());
+		$this->assertEquals(1007, $this->object->object()->getElapsedTime());
+		$this->assertEquals(0.985, $this->object->object()->getDistance());
+
+		$this->assertTrue($this->object->object()->hasArrayCadence());
+
+		$this->assertTrue($this->object->object()->hasArrayTime());
+		$this->assertTrue($this->object->object()->hasArrayDistance());
+		$this->assertTrue($this->object->object()->hasArrayLatitude());
+		$this->assertTrue($this->object->object()->hasArrayLongitude());
 	}
 
 	/**
@@ -364,28 +342,26 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 	 * Filename: "HRV-example.fit"
 	 */
 	public function testHRV() {
-		if (Shell::isPerlAvailable()) {
-			$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/HRV-example.fit');
+		$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/HRV-example.fit');
 
-			$this->assertEquals('2015-06-13 11:03', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
-			$this->assertEquals(120, $this->object->object()->getTimezoneOffset());
+		$this->assertEquals('2015-06-13 11:03', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
+		$this->assertEquals(120, $this->object->object()->getTimezoneOffset());
 
-			$this->assertFalse( $this->object->hasMultipleTrainings() );
-			$this->assertFalse( $this->object->failed() );
+		$this->assertFalse( $this->object->hasMultipleTrainings() );
+		$this->assertFalse( $this->object->failed() );
 
-			$this->assertTrue( $this->object->object()->hasArrayHRV() );
+		$this->assertTrue( $this->object->object()->hasArrayHRV() );
 
-			$Pauses = $this->object->object()->Pauses();
-			$this->assertEquals(1, $Pauses->num());
+		$Pauses = $this->object->object()->Pauses();
+		$this->assertEquals(1, $Pauses->num());
 
-			foreach ([
-				 [41, 69, 100, 69]
-			 ] as $i => $pause) {
-				$this->assertEquals($pause[0], $Pauses->at($i)->time());
-				$this->assertEquals($pause[1], $Pauses->at($i)->duration());
-				$this->assertEquals($pause[2], $Pauses->at($i)->hrStart());
-				$this->assertEquals($pause[3], $Pauses->at($i)->hrEnd());
-			}
+		foreach ([
+			 [41, 69, 100, 69]
+		 ] as $i => $pause) {
+			$this->assertEquals($pause[0], $Pauses->at($i)->time());
+			$this->assertEquals($pause[1], $Pauses->at($i)->duration());
+			$this->assertEquals($pause[2], $Pauses->at($i)->hrStart());
+			$this->assertEquals($pause[3], $Pauses->at($i)->hrEnd());
 		}
 	}
 
@@ -394,30 +370,28 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 	 * Filename: "with-power.fit"
 	 */
 	public function testWithPowerData() {
-		if (Shell::isPerlAvailable()) {
-			$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/with-power.fit');
+		$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/with-power.fit');
 
-			$this->assertFalse( $this->object->hasMultipleTrainings() );
-			$this->assertFalse( $this->object->failed() );
+		$this->assertFalse( $this->object->hasMultipleTrainings() );
+		$this->assertFalse( $this->object->failed() );
 
-			$this->assertEquals('2015-07-29 15:23', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
-			$this->assertEquals(120, $this->object->object()->getTimezoneOffset());
+		$this->assertEquals('2015-07-29 15:23', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
+		$this->assertEquals(120, $this->object->object()->getTimezoneOffset());
 
-			$this->assertEquals('edge810', $this->object->object()->getCreator());
-			$this->assertEquals(3600 + 18*60 + 9, $this->object->object()->getTimeInSeconds());
-			$this->assertEquals(39.023, $this->object->object()->getDistance());
+		$this->assertEquals('edge810', $this->object->object()->getCreator());
+		$this->assertEquals(3600 + 18*60 + 9, $this->object->object()->getTimeInSeconds());
+		$this->assertEquals(39.023, $this->object->object()->getDistance());
 
-			$this->assertTrue($this->object->object()->hasArrayTime());
-			$this->assertTrue($this->object->object()->hasArrayDistance());
-			$this->assertTrue($this->object->object()->hasArrayAltitude());
-			$this->assertTrue($this->object->object()->hasArrayHeartrate());
-			$this->assertTrue($this->object->object()->hasArrayCadence());
-			$this->assertTrue($this->object->object()->hasArrayTemperature());
-			$this->assertTrue($this->object->object()->hasArrayPower());
+		$this->assertTrue($this->object->object()->hasArrayTime());
+		$this->assertTrue($this->object->object()->hasArrayDistance());
+		$this->assertTrue($this->object->object()->hasArrayAltitude());
+		$this->assertTrue($this->object->object()->hasArrayHeartrate());
+		$this->assertTrue($this->object->object()->hasArrayCadence());
+		$this->assertTrue($this->object->object()->hasArrayTemperature());
+		$this->assertTrue($this->object->object()->hasArrayPower());
 
-			// Read from undocumented block NUMBER=79
-			$this->assertEquals(47.64, $this->object->object()->getFitVdotEstimate());
-		}
+		// Read from undocumented block NUMBER=79
+		$this->assertEquals(47.64, $this->object->object()->getFitVdotEstimate());
 	}
 
 	/**
@@ -425,103 +399,99 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 	 * Filename: "multisport-triathlon-fenix3.fit"
 	 */
 	public function testMultisportTriathlonFromFenix3() {
-		if (Shell::isPerlAvailable()) {
-			$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/multisport-triathlon-fenix3.fit');
+		$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/multisport-triathlon-fenix3.fit');
 
-			$this->assertFalse($this->object->failed());
-			$this->assertTrue($this->object->hasMultipleTrainings());
-			$this->assertEquals(5, $this->object->numberOfTrainings());
+		$this->assertFalse($this->object->failed());
+		$this->assertTrue($this->object->hasMultipleTrainings());
+		$this->assertEquals(5, $this->object->numberOfTrainings());
 
-			$Swimming = $this->object->object(0);
-			$this->assertEquals('09.08.2015 09:13:03', LocalTime::date('d.m.Y H:i:s', $Swimming->getTimestamp()));
-			$this->assertEquals(120, $Swimming->getTimezoneOffset());
-			$this->assertEquals(1.526, $Swimming->getDistance());
-			$this->assertEquals(2033, $Swimming->getTimeInSeconds());
-			$this->assertTrue($Swimming->hasArrayDistance());
-			$this->assertTrue($Swimming->hasArrayCadence());
-			$this->assertFalse($Swimming->hasArrayHeartrate());
-			$this->assertTrue($Swimming->hasArrayAltitude());
-			$this->assertFalse($Swimming->hasArrayVerticalOscillation());
-			$this->assertFalse($Swimming->hasArrayGroundContact());
+		$Swimming = $this->object->object(0);
+		$this->assertEquals('09.08.2015 09:13:03', LocalTime::date('d.m.Y H:i:s', $Swimming->getTimestamp()));
+		$this->assertEquals(120, $Swimming->getTimezoneOffset());
+		$this->assertEquals(1.526, $Swimming->getDistance());
+		$this->assertEquals(2033, $Swimming->getTimeInSeconds());
+		$this->assertTrue($Swimming->hasArrayDistance());
+		$this->assertTrue($Swimming->hasArrayCadence());
+		$this->assertFalse($Swimming->hasArrayHeartrate());
+		$this->assertTrue($Swimming->hasArrayAltitude());
+		$this->assertFalse($Swimming->hasArrayVerticalOscillation());
+		$this->assertFalse($Swimming->hasArrayGroundContact());
 
-			$Transition1 = $this->object->object(1);
-			$this->assertEquals('09.08.2015 09:48:47', LocalTime::date('d.m.Y H:i:s', $Transition1->getTimestamp()));
-			$this->assertEquals(120, $Transition1->getTimezoneOffset());
-			$this->assertEquals(0.367, $Transition1->getDistance());
-			$this->assertEquals(165, $Transition1->getTimeInSeconds());
-			$this->assertEquals(165, $Transition1->getArrayTimeLastPoint(), '', 5);
+		$Transition1 = $this->object->object(1);
+		$this->assertEquals('09.08.2015 09:48:47', LocalTime::date('d.m.Y H:i:s', $Transition1->getTimestamp()));
+		$this->assertEquals(120, $Transition1->getTimezoneOffset());
+		$this->assertEquals(0.367, $Transition1->getDistance());
+		$this->assertEquals(165, $Transition1->getTimeInSeconds());
+		$this->assertEquals(165, $Transition1->getArrayTimeLastPoint(), '', 5);
 
-			$Cycling = $this->object->object(2);
-			$this->assertEquals('09.08.2015 09:51:35', LocalTime::date('d.m.Y H:i:s', $Cycling->getTimestamp()));
-			$this->assertEquals(120, $Cycling->getTimezoneOffset());
-			$this->assertEquals(40.261, $Cycling->getDistance());
-			$this->assertEquals(4455, $Cycling->getTimeInSeconds());
-			$this->assertEquals(4455, $Cycling->getArrayTimeLastPoint(), '', 5);
-			$this->assertTrue($Cycling->hasArrayDistance());
-			$this->assertFalse($Cycling->hasArrayCadence());
-			$this->assertTrue($Cycling->hasArrayHeartrate());
-			$this->assertTrue($Cycling->hasArrayAltitude());
-			$this->assertFalse($Cycling->hasArrayVerticalOscillation());
-			$this->assertFalse($Cycling->hasArrayGroundContact());
+		$Cycling = $this->object->object(2);
+		$this->assertEquals('09.08.2015 09:51:35', LocalTime::date('d.m.Y H:i:s', $Cycling->getTimestamp()));
+		$this->assertEquals(120, $Cycling->getTimezoneOffset());
+		$this->assertEquals(40.261, $Cycling->getDistance());
+		$this->assertEquals(4455, $Cycling->getTimeInSeconds());
+		$this->assertEquals(4455, $Cycling->getArrayTimeLastPoint(), '', 5);
+		$this->assertTrue($Cycling->hasArrayDistance());
+		$this->assertFalse($Cycling->hasArrayCadence());
+		$this->assertTrue($Cycling->hasArrayHeartrate());
+		$this->assertTrue($Cycling->hasArrayAltitude());
+		$this->assertFalse($Cycling->hasArrayVerticalOscillation());
+		$this->assertFalse($Cycling->hasArrayGroundContact());
 
-			$Transition2 = $this->object->object(3);
-			$this->assertEquals('09.08.2015 11:05:48', LocalTime::date('d.m.Y H:i:s', $Transition2->getTimestamp()));
-			$this->assertEquals(120, $Transition2->getTimezoneOffset());
-			$this->assertEquals(0.419, $Transition2->getDistance());
-			$this->assertEquals(109, $Transition2->getTimeInSeconds());
-			$this->assertEquals(109, $Transition2->getArrayTimeLastPoint(), '', 5);
+		$Transition2 = $this->object->object(3);
+		$this->assertEquals('09.08.2015 11:05:48', LocalTime::date('d.m.Y H:i:s', $Transition2->getTimestamp()));
+		$this->assertEquals(120, $Transition2->getTimezoneOffset());
+		$this->assertEquals(0.419, $Transition2->getDistance());
+		$this->assertEquals(109, $Transition2->getTimeInSeconds());
+		$this->assertEquals(109, $Transition2->getArrayTimeLastPoint(), '', 5);
 
-			$Running = $this->object->object(4);
-			$this->assertEquals('09.08.2015 11:07:41', LocalTime::date('d.m.Y H:i:s', $Running->getTimestamp()));
-			$this->assertEquals(120, $Running->getTimezoneOffset());
-			$this->assertEquals(9.317, $Running->getDistance());
-			$this->assertEquals(2381, $Running->getTimeInSeconds());
-			$this->assertEquals(2381, $Running->getArrayTimeLastPoint(), '', 5);
-			$this->assertTrue($Running->hasArrayDistance());
-			$this->assertTrue($Running->hasArrayCadence());
-			$this->assertTrue($Running->hasArrayHeartrate());
-			$this->assertTrue($Running->hasArrayAltitude());
-			$this->assertTrue($Running->hasArrayVerticalOscillation());
-			$this->assertTrue($Running->hasArrayGroundContact());
-		}
+		$Running = $this->object->object(4);
+		$this->assertEquals('09.08.2015 11:07:41', LocalTime::date('d.m.Y H:i:s', $Running->getTimestamp()));
+		$this->assertEquals(120, $Running->getTimezoneOffset());
+		$this->assertEquals(9.317, $Running->getDistance());
+		$this->assertEquals(2381, $Running->getTimeInSeconds());
+		$this->assertEquals(2381, $Running->getArrayTimeLastPoint(), '', 5);
+		$this->assertTrue($Running->hasArrayDistance());
+		$this->assertTrue($Running->hasArrayCadence());
+		$this->assertTrue($Running->hasArrayHeartrate());
+		$this->assertTrue($Running->hasArrayAltitude());
+		$this->assertTrue($Running->hasArrayVerticalOscillation());
+		$this->assertTrue($Running->hasArrayGroundContact());
 	}
 
 	/**
 	 * @see https://github.com/Runalyze/Runalyze/issues/1991
 	 */
 	public function testMultisessionThatStopsDirectlyAfterTransition() {
-		if (Shell::isPerlAvailable()) {
-			$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/Multisession-stop-after-transition.fit');
+		$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/Multisession-stop-after-transition.fit');
 
-			$this->assertFalse($this->object->failed());
-			$this->assertTrue($this->object->hasMultipleTrainings());
-			$this->assertEquals(5, $this->object->numberOfTrainings());
+		$this->assertFalse($this->object->failed());
+		$this->assertTrue($this->object->hasMultipleTrainings());
+		$this->assertEquals(5, $this->object->numberOfTrainings());
 
-			$Running1 = $this->object->object(0);
-			$this->assertEquals('2016-04-17T09:44:02', LocalTime::date('Y-m-d\TH:i:s', $Running1->getTimestamp()));
-			$this->assertEquals(4.460, $Running1->getDistance());
-			$this->assertEquals(1134, $Running1->getTimeInSeconds());
+		$Running1 = $this->object->object(0);
+		$this->assertEquals('2016-04-17T09:44:02', LocalTime::date('Y-m-d\TH:i:s', $Running1->getTimestamp()));
+		$this->assertEquals(4.460, $Running1->getDistance());
+		$this->assertEquals(1134, $Running1->getTimeInSeconds());
 
-			$Transition1 = $this->object->object(1);
-			$this->assertEquals('2016-04-17T10:03:10', LocalTime::date('Y-m-d\TH:i:s', $Transition1->getTimestamp()));
-			$this->assertEquals(0.266, $Transition1->getDistance());
-			$this->assertEquals(130, $Transition1->getTimeInSeconds());
+		$Transition1 = $this->object->object(1);
+		$this->assertEquals('2016-04-17T10:03:10', LocalTime::date('Y-m-d\TH:i:s', $Transition1->getTimestamp()));
+		$this->assertEquals(0.266, $Transition1->getDistance());
+		$this->assertEquals(130, $Transition1->getTimeInSeconds());
 
-			$Cycling = $this->object->object(2);
-			$this->assertEquals('2016-04-17T10:05:16', LocalTime::date('Y-m-d\TH:i:s', $Cycling->getTimestamp()));
-			$this->assertEquals(23.572, $Cycling->getDistance());
-			$this->assertEquals(2692, $Cycling->getTimeInSeconds());
+		$Cycling = $this->object->object(2);
+		$this->assertEquals('2016-04-17T10:05:16', LocalTime::date('Y-m-d\TH:i:s', $Cycling->getTimestamp()));
+		$this->assertEquals(23.572, $Cycling->getDistance());
+		$this->assertEquals(2692, $Cycling->getTimeInSeconds());
 
-			$Transition2 = $this->object->object(3);
-			$this->assertEquals('2016-04-17T10:50:07', LocalTime::date('Y-m-d\TH:i:s', $Transition2->getTimestamp()));
-			$this->assertEquals(0.193, $Transition2->getDistance());
-			$this->assertEquals(134, $Transition2->getTimeInSeconds());
+		$Transition2 = $this->object->object(3);
+		$this->assertEquals('2016-04-17T10:50:07', LocalTime::date('Y-m-d\TH:i:s', $Transition2->getTimestamp()));
+		$this->assertEquals(0.193, $Transition2->getDistance());
+		$this->assertEquals(134, $Transition2->getTimeInSeconds());
 
-			$Running2 = $this->object->object(4);
-			$this->assertEquals('2016-04-17T10:52:23', LocalTime::date('Y-m-d\TH:i:s', $Running2->getTimestamp()));
-			$this->assertEquals(2.083, $Running2->getDistance());
-			$this->assertEquals(544, $Running2->getTimeInSeconds());
-		}
+		$Running2 = $this->object->object(4);
+		$this->assertEquals('2016-04-17T10:52:23', LocalTime::date('Y-m-d\TH:i:s', $Running2->getTimestamp()));
+		$this->assertEquals(2.083, $Running2->getDistance());
+		$this->assertEquals(544, $Running2->getTimeInSeconds());
 	}
 
 	/**
@@ -529,39 +499,37 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 	 * Filename: "osynce-stop-bug.fit"
 	 */
 	public function testOsynceTimeProblem() {
-		if (Shell::isPerlAvailable()) {
-			$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/osynce-stop-bug.fit');
+		$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/osynce-stop-bug.fit');
 
-			$this->assertFalse( $this->object->hasMultipleTrainings() );
-			$this->assertFalse( $this->object->failed() );
-			$this->assertEquals('osynce', $this->object->object()->getCreator());
+		$this->assertFalse( $this->object->hasMultipleTrainings() );
+		$this->assertFalse( $this->object->failed() );
+		$this->assertEquals('osynce', $this->object->object()->getCreator());
 
-			$this->assertEquals('2015-11-04 17:06', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
-			$this->assertEquals(60, $this->object->object()->getTimezoneOffset());
+		$this->assertEquals('2015-11-04 17:06', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
+		$this->assertEquals(60, $this->object->object()->getTimezoneOffset());
 
-			$this->assertEquals(47*60 + 6, $this->object->object()->getTimeInSeconds());
-			$this->assertEquals(47*60 + 6, $this->object->object()->getArrayTimeLastPoint());
-			$this->assertEquals(15.5, $this->object->object()->getDistance(), '', 0.1);
+		$this->assertEquals(47*60 + 6, $this->object->object()->getTimeInSeconds());
+		$this->assertEquals(47*60 + 6, $this->object->object()->getArrayTimeLastPoint());
+		$this->assertEquals(15.5, $this->object->object()->getDistance(), '', 0.1);
 
-			$this->assertTrue($this->object->object()->hasArrayTime());
-			$this->assertTrue($this->object->object()->hasArrayDistance());
-			$this->assertTrue($this->object->object()->hasArrayAltitude());
-			$this->assertTrue($this->object->object()->hasArrayHeartrate());
-			$this->assertTrue($this->object->object()->hasArrayCadence());
-			$this->assertTrue($this->object->object()->hasArrayTemperature());
-			$this->assertTrue($this->object->object()->hasArrayPower());
+		$this->assertTrue($this->object->object()->hasArrayTime());
+		$this->assertTrue($this->object->object()->hasArrayDistance());
+		$this->assertTrue($this->object->object()->hasArrayAltitude());
+		$this->assertTrue($this->object->object()->hasArrayHeartrate());
+		$this->assertTrue($this->object->object()->hasArrayCadence());
+		$this->assertTrue($this->object->object()->hasArrayTemperature());
+		$this->assertTrue($this->object->object()->hasArrayPower());
 
-			$timeArray = $this->object->object()->getArrayTime();
-			$num = count($timeArray);
+		$timeArray = $this->object->object()->getArrayTime();
+		$num = count($timeArray);
 
-			for ($i = 2; $i < $num; ++$i) {
-				if ($timeArray[$i] < $timeArray[$i-1]) {
-					$this->assertTrue(false, sprintf(
-						'Time array is not continuously increasing: %u < %u at index %u',
-						$timeArray[$i], $timeArray[$i-1], $i
-					));
-					break;
-				}
+		for ($i = 2; $i < $num; ++$i) {
+			if ($timeArray[$i] < $timeArray[$i-1]) {
+				$this->assertTrue(false, sprintf(
+					'Time array is not continuously increasing: %u < %u at index %u',
+					$timeArray[$i], $timeArray[$i-1], $i
+				));
+				break;
 			}
 		}
 	}
@@ -572,28 +540,26 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 	 * @group gcb
 	 */
 	public function testNewRunningDynamicsFromFenix3() {
-		if (Shell::isPerlAvailable()) {
-			$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/with-new-dynamics.fit');
+		$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/with-new-dynamics.fit');
 
-			$this->assertFalse( $this->object->hasMultipleTrainings() );
-			$this->assertFalse( $this->object->failed() );
+		$this->assertFalse( $this->object->hasMultipleTrainings() );
+		$this->assertFalse( $this->object->failed() );
 
-			$this->assertEquals('2015-11-21 09:25', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
-			$this->assertEquals(60, $this->object->object()->getTimezoneOffset());
+		$this->assertEquals('2015-11-21 09:25', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
+		$this->assertEquals(60, $this->object->object()->getTimezoneOffset());
 
-			$this->assertEquals(2*3600 + 17*60 + 50, $this->object->object()->getTimeInSeconds());
-			$this->assertEquals(23.5, $this->object->object()->getDistance(), '', 0.1);
+		$this->assertEquals(2*3600 + 17*60 + 50, $this->object->object()->getTimeInSeconds());
+		$this->assertEquals(23.5, $this->object->object()->getDistance(), '', 0.1);
 
-			$this->assertTrue($this->object->object()->hasArrayTime());
-			$this->assertTrue($this->object->object()->hasArrayDistance());
-			$this->assertTrue($this->object->object()->hasArrayCadence());
-			$this->assertTrue($this->object->object()->hasArrayGroundContact());
-			$this->assertTrue($this->object->object()->hasArrayGroundContactBalance());
+		$this->assertTrue($this->object->object()->hasArrayTime());
+		$this->assertTrue($this->object->object()->hasArrayDistance());
+		$this->assertTrue($this->object->object()->hasArrayCadence());
+		$this->assertTrue($this->object->object()->hasArrayGroundContact());
+		$this->assertTrue($this->object->object()->hasArrayGroundContactBalance());
 
-			$this->assertEquals(5198, $this->object->object()->getGroundContactBalance(), '', 10);
+		$this->assertEquals(5198, $this->object->object()->getGroundContactBalance(), '', 10);
 
-			$this->assertEquals(3.6, $this->object->object()->getFitTrainingEffect());
-		}
+		$this->assertEquals(3.6, $this->object->object()->getFitTrainingEffect());
 	}
 
 	/**
@@ -602,30 +568,28 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 	 * @group gcb
 	 */
 	public function testDataFromFR70WithCompressedSpeedDistance() {
-		if (Shell::isPerlAvailable()) {
-			$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/FR70-intervals.fit');
+		$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/FR70-intervals.fit');
 
-			$this->assertFalse( $this->object->hasMultipleTrainings() );
-			$this->assertFalse( $this->object->failed() );
+		$this->assertFalse( $this->object->hasMultipleTrainings() );
+		$this->assertFalse( $this->object->failed() );
 
-			$this->assertEquals('2013-05-27 08:52', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
-			$this->assertEquals(120, $this->object->object()->getTimezoneOffset());
+		$this->assertEquals('2013-05-27 08:52', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
+		$this->assertEquals(120, $this->object->object()->getTimezoneOffset());
 
-			$this->assertEquals(3160, $this->object->object()->getTimeInSeconds(), '', 10);
-			$this->assertEquals(3160, $this->object->object()->getArrayTimeLastPoint(), '', 10);
-			$this->assertEquals(6.234, $this->object->object()->getDistance(), '', 0.01);
+		$this->assertEquals(3160, $this->object->object()->getTimeInSeconds(), '', 10);
+		$this->assertEquals(3160, $this->object->object()->getArrayTimeLastPoint(), '', 10);
+		$this->assertEquals(6.234, $this->object->object()->getDistance(), '', 0.01);
 
-			$this->assertEquals(129, $this->object->object()->getPulseAvg(), '', 2);
-			$this->assertEquals(172, $this->object->object()->getPulseMax());
+		$this->assertEquals(129, $this->object->object()->getPulseAvg(), '', 2);
+		$this->assertEquals(172, $this->object->object()->getPulseMax());
 
-			$this->assertEquals(null, $this->object->object()->getFitTrainingEffect());
-			$this->assertEquals(null, $this->object->object()->getFitPerformanceCondition());
+		$this->assertEquals(null, $this->object->object()->getFitTrainingEffect());
+		$this->assertEquals(null, $this->object->object()->getFitPerformanceCondition());
 
-			$this->assertTrue($this->object->object()->hasArrayTime());
-			$this->assertTrue($this->object->object()->hasArrayDistance());
-			$this->assertTrue($this->object->object()->hasArrayCadence());
-			$this->assertTrue($this->object->object()->hasArrayHeartrate());
-		}
+		$this->assertTrue($this->object->object()->hasArrayTime());
+		$this->assertTrue($this->object->object()->hasArrayDistance());
+		$this->assertTrue($this->object->object()->hasArrayCadence());
+		$this->assertTrue($this->object->object()->hasArrayHeartrate());
 	}
 
 	/**
@@ -633,31 +597,29 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 	 * Filename: "FR70-intervals.fit"
 	 */
 	public function testDataFromFR630WithFurtherRunningDataLikeLactateThreshold() {
-		if (Shell::isPerlAvailable()) {
-			$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/FR630-with-lth.fit');
+		$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/FR630-with-lth.fit');
 
-			$this->assertFalse( $this->object->hasMultipleTrainings() );
-			$this->assertFalse( $this->object->failed() );
+		$this->assertFalse( $this->object->hasMultipleTrainings() );
+		$this->assertFalse( $this->object->failed() );
 
-			$this->assertEquals('2015-11-27 21:02', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
-			$this->assertEquals(60, $this->object->object()->getTimezoneOffset());
+		$this->assertEquals('2015-11-27 21:02', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
+		$this->assertEquals(60, $this->object->object()->getTimezoneOffset());
 
-			$this->assertEquals(819, $this->object->object()->getTimeInSeconds(), '', 10);
-			$this->assertEquals(819, $this->object->object()->getArrayTimeLastPoint(), '', 10);
-			$this->assertEquals(2.029, $this->object->object()->getDistance(), '', 0.01);
+		$this->assertEquals(819, $this->object->object()->getTimeInSeconds(), '', 10);
+		$this->assertEquals(819, $this->object->object()->getArrayTimeLastPoint(), '', 10);
+		$this->assertEquals(2.029, $this->object->object()->getDistance(), '', 0.01);
 
-			$this->assertEquals(40.62, $this->object->object()->getFitVdotEstimate());
-			$this->assertEquals(1307, $this->object->object()->getFitRecoveryTime());
-			$this->assertEquals(3.2, $this->object->object()->getFitTrainingEffect());
+		$this->assertEquals(40.62, $this->object->object()->getFitVdotEstimate());
+		$this->assertEquals(1307, $this->object->object()->getFitRecoveryTime());
+		$this->assertEquals(3.2, $this->object->object()->getFitTrainingEffect());
 
-			// Make sure that it's not 100, see https://github.com/Runalyze/Runalyze/issues/1798
-			$this->assertEquals(0, $this->object->object()->getFitHRVscore());
-			$this->assertEquals('fr630', $this->object->object()->getCreator());
-			$this->assertEquals(100, $this->object->object()->getFitPerformanceCondition());
+		// Make sure that it's not 100, see https://github.com/Runalyze/Runalyze/issues/1798
+		$this->assertEquals(0, $this->object->object()->getFitHRVscore());
+		$this->assertEquals('fr630', $this->object->object()->getCreator());
+		$this->assertEquals(100, $this->object->object()->getFitPerformanceCondition());
 
-			// New values for later on:
-			//  - lactate threshold: 163 bpm / 2.583 m/s
-		}
+		// New values for later on:
+		//  - lactate threshold: 163 bpm / 2.583 m/s
 	}
 
 	/**
@@ -665,26 +627,24 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 	 * @see https://github.com/Runalyze/Runalyze/issues/1886
 	 */
 	public function testDataFromSuuntoAmbitPeakWithoutFinalLap() {
-		if (Shell::isPerlAvailable()) {
-			$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/Suunto-Ambit-3-Peak-without-final-lap.fit');
+		$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/Suunto-Ambit-3-Peak-without-final-lap.fit');
 
-			$this->assertFalse( $this->object->hasMultipleTrainings() );
-			$this->assertFalse( $this->object->failed() );
+		$this->assertFalse( $this->object->hasMultipleTrainings() );
+		$this->assertFalse( $this->object->failed() );
 
-			$this->assertEquals('2016-06-29 17:43', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
-			$this->assertEquals(120, $this->object->object()->getTimezoneOffset());
+		$this->assertEquals('2016-06-29 17:43', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
+		$this->assertEquals(120, $this->object->object()->getTimezoneOffset());
 
-			$this->assertEquals('suunto', $this->object->object()->getCreator());
+		$this->assertEquals('suunto', $this->object->object()->getCreator());
 
-			$this->assertEquals(4961, $this->object->object()->getTimeInSeconds(), '', 10);
-			$this->assertEquals(4961, $this->object->object()->getArrayTimeLastPoint(), '', 10);
-			$this->assertEquals(15.220, $this->object->object()->getDistance(), '', 0.01);
+		$this->assertEquals(4961, $this->object->object()->getTimeInSeconds(), '', 10);
+		$this->assertEquals(4961, $this->object->object()->getArrayTimeLastPoint(), '', 10);
+		$this->assertEquals(15.220, $this->object->object()->getDistance(), '', 0.01);
 
-			$splits = $this->object->object()->Splits();
-			$this->assertEquals(22, count($splits->asArray()));
-			$this->assertEquals(15.220, $splits->totalDistance());
-			$this->assertEquals(4961, $splits->totalTime());
-		}
+		$splits = $this->object->object()->Splits();
+		$this->assertEquals(22, count($splits->asArray()));
+		$this->assertEquals(15.220, $splits->totalDistance());
+		$this->assertEquals(4961, $splits->totalTime());
 	}
 
 	/**
@@ -692,22 +652,20 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 	 * @see https://github.com/Runalyze/Runalyze/issues/1917
 	 */
 	public function testThatIrregularTimestampsAreIgnored() {
-		if (Shell::isPerlAvailable()) {
-			$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/One-second-jump-to-past.fit');
+		$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/One-second-jump-to-past.fit');
 
-			$this->assertEquals('fenix2', $this->object->object()->getCreator());
+		$this->assertEquals('fenix2', $this->object->object()->getCreator());
 
-			$this->assertEquals(7115, $this->object->object()->getTimeInSeconds(), '', 10);
-			$this->assertEquals(7115, $this->object->object()->getArrayTimeLastPoint(), '', 10);
-			$this->assertEquals(42.801, $this->object->object()->getDistance(), '', 0.01);
+		$this->assertEquals(7115, $this->object->object()->getTimeInSeconds(), '', 10);
+		$this->assertEquals(7115, $this->object->object()->getArrayTimeLastPoint(), '', 10);
+		$this->assertEquals(42.801, $this->object->object()->getDistance(), '', 0.01);
 
-			$timedata = $this->object->object()->getArrayTime();
-			$num = count($timedata);
+		$timedata = $this->object->object()->getArrayTime();
+		$num = count($timedata);
 
-			for ($i = 1; $i < $num; ++$i) {
-				if ($timedata[$i-1] >= $timedata[$i]) {
-					$this->fail(sprintf('Time data is not strictly increasing at [%u]: ..., %d, %d, ...', $i, $timedata[$i-1], $timedata[$i]));
-				}
+		for ($i = 1; $i < $num; ++$i) {
+			if ($timedata[$i-1] >= $timedata[$i]) {
+				$this->fail(sprintf('Time data is not strictly increasing at [%u]: ..., %d, %d, ...', $i, $timedata[$i-1], $timedata[$i]));
 			}
 		}
 	}
@@ -716,189 +674,173 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 	 * @see https://github.com/Runalyze/Runalyze/issues/1919
 	 */
 	public function testDeveloperFieldsFromDisabledMoxy() {
-		if (Shell::isPerlAvailable()) {
-			$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/Fenix-3-with-inactive-Moxy.fit');
+		$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/Fenix-3-with-inactive-Moxy.fit');
 
-			$this->assertFalse($this->object->failed());
+		$this->assertFalse($this->object->failed());
 
-			$this->assertEquals('fenix3', $this->object->object()->getCreator());
+		$this->assertEquals('fenix3', $this->object->object()->getCreator());
 
-			$this->assertEquals(1401, $this->object->object()->getTimeInSeconds(), '', 10);
-			$this->assertEquals(1401, $this->object->object()->getArrayTimeLastPoint(), '', 10);
-			$this->assertEquals(3.60, $this->object->object()->getDistance(), '', 0.01);
+		$this->assertEquals(1401, $this->object->object()->getTimeInSeconds(), '', 10);
+		$this->assertEquals(1401, $this->object->object()->getArrayTimeLastPoint(), '', 10);
+		$this->assertEquals(3.60, $this->object->object()->getDistance(), '', 0.01);
 
-			$this->assertTrue($this->object->object()->hasArrayTime());
-			$this->assertTrue($this->object->object()->hasArrayLatitude());
-			$this->assertTrue($this->object->object()->hasArrayLongitude());
-			$this->assertTrue($this->object->object()->hasArrayAltitude());
-			$this->assertTrue($this->object->object()->hasArrayHeartrate());
-			$this->assertTrue($this->object->object()->hasArrayDistance());
-			$this->assertTrue($this->object->object()->hasArrayCadence());
-			$this->assertTrue($this->object->object()->hasArrayTemperature());
-			$this->assertTrue($this->object->object()->hasArrayGroundContact());
-			$this->assertTrue($this->object->object()->hasArrayVerticalOscillation());
-			$this->assertTrue($this->object->object()->hasArrayGroundContactBalance());
-		}
+		$this->assertTrue($this->object->object()->hasArrayTime());
+		$this->assertTrue($this->object->object()->hasArrayLatitude());
+		$this->assertTrue($this->object->object()->hasArrayLongitude());
+		$this->assertTrue($this->object->object()->hasArrayAltitude());
+		$this->assertTrue($this->object->object()->hasArrayHeartrate());
+		$this->assertTrue($this->object->object()->hasArrayDistance());
+		$this->assertTrue($this->object->object()->hasArrayCadence());
+		$this->assertTrue($this->object->object()->hasArrayTemperature());
+		$this->assertTrue($this->object->object()->hasArrayGroundContact());
+		$this->assertTrue($this->object->object()->hasArrayVerticalOscillation());
+		$this->assertTrue($this->object->object()->hasArrayGroundContactBalance());
 	}
 
 	/**
 	 * @see https://github.com/Runalyze/Runalyze/issues/1919
 	 */
 	public function testDeveloperFieldsFromStryd() {
-		if (Shell::isPerlAvailable()) {
-			$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/FR920xt-with-Stryd.fit');
+		$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/FR920xt-with-Stryd.fit');
 
-			$this->assertFalse($this->object->failed());
+		$this->assertFalse($this->object->failed());
 
-			$this->assertEquals('fr920xt', $this->object->object()->getCreator());
+		$this->assertEquals('fr920xt', $this->object->object()->getCreator());
 
-			$this->assertEquals(1931, $this->object->object()->getTimeInSeconds(), '', 10);
-			$this->assertEquals(1931, $this->object->object()->getArrayTimeLastPoint(), '', 10);
-			$this->assertEquals(7.255, $this->object->object()->getDistance(), '', 0.01);
+		$this->assertEquals(1931, $this->object->object()->getTimeInSeconds(), '', 10);
+		$this->assertEquals(1931, $this->object->object()->getArrayTimeLastPoint(), '', 10);
+		$this->assertEquals(7.255, $this->object->object()->getDistance(), '', 0.01);
 
-			$this->assertTrue($this->object->object()->hasArrayTime());
-			$this->assertTrue($this->object->object()->hasArrayLatitude());
-			$this->assertTrue($this->object->object()->hasArrayLongitude());
-			$this->assertTrue($this->object->object()->hasArrayAltitude());
-			$this->assertTrue($this->object->object()->hasArrayHeartrate());
-			$this->assertTrue($this->object->object()->hasArrayDistance());
-			$this->assertTrue($this->object->object()->hasArrayCadence());
-			$this->assertTrue($this->object->object()->hasArrayGroundContact());
-			$this->assertTrue($this->object->object()->hasArrayVerticalOscillation());
+		$this->assertTrue($this->object->object()->hasArrayTime());
+		$this->assertTrue($this->object->object()->hasArrayLatitude());
+		$this->assertTrue($this->object->object()->hasArrayLongitude());
+		$this->assertTrue($this->object->object()->hasArrayAltitude());
+		$this->assertTrue($this->object->object()->hasArrayHeartrate());
+		$this->assertTrue($this->object->object()->hasArrayDistance());
+		$this->assertTrue($this->object->object()->hasArrayCadence());
+		$this->assertTrue($this->object->object()->hasArrayGroundContact());
+		$this->assertTrue($this->object->object()->hasArrayVerticalOscillation());
 
-			$this->assertEquals(214, $this->object->object()->getGroundContactTime(), '', 5);
-			$this->assertEquals(97, $this->object->object()->getVerticalOscillation(), '', 5);
-		}
+		$this->assertEquals(214, $this->object->object()->getGroundContactTime(), '', 5);
+		$this->assertEquals(97, $this->object->object()->getVerticalOscillation(), '', 5);
 	}
 
 	/**
 	 * Filename: "moxy-2sensors.fit"
 	 */
 	public function testDeveloperFieldsFromMoxy() {
-		if (Shell::isPerlAvailable()) {
-			$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/moxy-2sensors.fit');
+		$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/moxy-2sensors.fit');
 
-			$this->assertEquals(83, $this->object->object()->getTimeInSeconds(), '', 10);
-			$this->assertEquals(83, $this->object->object()->getArrayTimeLastPoint(), '', 10);
-			$this->assertEquals(0.117, $this->object->object()->getDistance(), '', 0.01);
+		$this->assertEquals(83, $this->object->object()->getTimeInSeconds(), '', 10);
+		$this->assertEquals(83, $this->object->object()->getArrayTimeLastPoint(), '', 10);
+		$this->assertEquals(0.117, $this->object->object()->getDistance(), '', 0.01);
 
-			$this->assertTrue($this->object->object()->hasArrayTime());
-			$this->assertTrue($this->object->object()->hasArrayLatitude());
-			$this->assertTrue($this->object->object()->hasArrayLongitude());
-			$this->assertTrue($this->object->object()->hasArrayAltitude());
-			$this->assertTrue($this->object->object()->hasArrayDistance());
-			$this->assertTrue($this->object->object()->hasArraySmo2_0());
-			$this->assertTrue($this->object->object()->hasArraySmo2_1());
-			$this->assertTrue($this->object->object()->hasArrayThb_0());
-			$this->assertTrue($this->object->object()->hasArrayThb_1());
+		$this->assertTrue($this->object->object()->hasArrayTime());
+		$this->assertTrue($this->object->object()->hasArrayLatitude());
+		$this->assertTrue($this->object->object()->hasArrayLongitude());
+		$this->assertTrue($this->object->object()->hasArrayAltitude());
+		$this->assertTrue($this->object->object()->hasArrayDistance());
+		$this->assertTrue($this->object->object()->hasArraySmo2_0());
+		$this->assertTrue($this->object->object()->hasArraySmo2_1());
+		$this->assertTrue($this->object->object()->hasArrayThb_0());
+		$this->assertTrue($this->object->object()->hasArrayThb_1());
 
-			$smo2_0_array = array(57,57,57,56,57,57,58,58,59,59,61,61,63,63,64,64,65,65,66,66,67,67,67,67,68,68,68,68,69,69,69,69,69,69,69,69,69,69,69,69,68,68,67,67,66,66,65,65,64,64,63,63,63,62,61,61,61,61,61,60,61,61,61,61,61,61,61,61,62,62,62,62,62,62,63,63,64,64,64,64,64,64,64,64);
-			$smo2_1_array = array(51,51,51,52,52,52,53,53,53,53,53,53,54,54,55,55,56,56,58,58,59,59,59,60,60,60,60,61,61,61,62,62,62,62,62,62,61,61,61,61,60,60,60,60,60,60,60,60,59,59,59,59,59,60,60,60,60,60,60,60,59,59,59,59,59,59,57,57,57,57,57,56,56,56,56,56,56,56,56,56,56,56,56,56);
+		$smo2_0_array = array(57,57,57,56,57,57,58,58,59,59,61,61,63,63,64,64,65,65,66,66,67,67,67,67,68,68,68,68,69,69,69,69,69,69,69,69,69,69,69,69,68,68,67,67,66,66,65,65,64,64,63,63,63,62,61,61,61,61,61,60,61,61,61,61,61,61,61,61,62,62,62,62,62,62,63,63,64,64,64,64,64,64,64,64);
+		$smo2_1_array = array(51,51,51,52,52,52,53,53,53,53,53,53,54,54,55,55,56,56,58,58,59,59,59,60,60,60,60,61,61,61,62,62,62,62,62,62,61,61,61,61,60,60,60,60,60,60,60,60,59,59,59,59,59,60,60,60,60,60,60,60,59,59,59,59,59,59,57,57,57,57,57,56,56,56,56,56,56,56,56,56,56,56,56,56);
 
-			$this->assertEquals($smo2_0_array, $this->object->object()->getArraySmo2_0());
-			$this->assertEquals($smo2_1_array, $this->object->object()->getArraySmo2_1());
+		$this->assertEquals($smo2_0_array, $this->object->object()->getArraySmo2_0());
+		$this->assertEquals($smo2_1_array, $this->object->object()->getArraySmo2_1());
 
-			$thb_0_array = array(1231,1231,1231,1231,1228,1228,1227,1227,1225,1225,1222,1222,1219,1219,1219,1219,1221,1221,1222,1222,1222,1222,1223,1223,1225,1225,1226,1226,1227,1227,1227,1227,1227,1227,1227,1227,1227,1227,1226,1226,1227,1227,1227,1227,1228,1228,1228,1228,1230,1230,1231,1231,1231,1231,1231,1231,1230,1230,1230,1231,1230,1230,1230,1230,1228,1228,1228,1228,1228,1228,1228,1227,1227,1227,1227,1227,1227,1227,1228,1228,1228,1228,1228,1228);
-			$thb_1_array = array(1277,1277,1277,1277,1277,1277,1276,1276,1275,1275,1272,1272,1272,1272,1271,1271,1269,1269,1269,1269,1269,1269,1269,1268,1268,1268,1268,1267,1265,1265,1264,1264,1264,1264,1264,1264,1264,1264,1264,1264,1265,1265,1265,1265,1265,1265,1265,1265,1265,1265,1265,1265,1265,1267,1268,1268,1267,1267,1267,1268,1268,1268,1268,1268,1268,1268,1268,1268,1268,1268,1268,1268,1268,1268,1268,1269,1269,1269,1269,1269,1271,1271,1271,1271);
+		$thb_0_array = array(1231,1231,1231,1231,1228,1228,1227,1227,1225,1225,1222,1222,1219,1219,1219,1219,1221,1221,1222,1222,1222,1222,1223,1223,1225,1225,1226,1226,1227,1227,1227,1227,1227,1227,1227,1227,1227,1227,1226,1226,1227,1227,1227,1227,1228,1228,1228,1228,1230,1230,1231,1231,1231,1231,1231,1231,1230,1230,1230,1231,1230,1230,1230,1230,1228,1228,1228,1228,1228,1228,1228,1227,1227,1227,1227,1227,1227,1227,1228,1228,1228,1228,1228,1228);
+		$thb_1_array = array(1277,1277,1277,1277,1277,1277,1276,1276,1275,1275,1272,1272,1272,1272,1271,1271,1269,1269,1269,1269,1269,1269,1269,1268,1268,1268,1268,1267,1265,1265,1264,1264,1264,1264,1264,1264,1264,1264,1264,1264,1265,1265,1265,1265,1265,1265,1265,1265,1265,1265,1265,1265,1265,1267,1268,1268,1267,1267,1267,1268,1268,1268,1268,1268,1268,1268,1268,1268,1268,1268,1268,1268,1268,1268,1268,1269,1269,1269,1269,1269,1271,1271,1271,1271);
 
-			$this->assertEquals($thb_0_array, $this->object->object()->getArrayThb_0());
-			$this->assertEquals($thb_1_array, $this->object->object()->getArrayThb_1());
-		}
+		$this->assertEquals($thb_0_array, $this->object->object()->getArrayThb_0());
+		$this->assertEquals($thb_1_array, $this->object->object()->getArrayThb_1());
 	}
 
 	/**
 	 * Filename: "moxy-fr735.fit"
 	 */
 	public function testDeveloperFieldsFromMoxyByFR735() {
-		if (Shell::isPerlAvailable()) {
-			$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/moxy-fr735.fit');
+		$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/moxy-fr735.fit');
 
-			$this->assertEquals(61, $this->object->object()->getTimeInSeconds(), '', 10);
-			$this->assertEquals(61, $this->object->object()->getArrayTimeLastPoint(), '', 10);
-			$this->assertEquals(0.100, $this->object->object()->getDistance(), '', 0.01);
-			$this->assertEquals(60, $this->object->object()->getCadence(), '', 1);
+		$this->assertEquals(61, $this->object->object()->getTimeInSeconds(), '', 10);
+		$this->assertEquals(61, $this->object->object()->getArrayTimeLastPoint(), '', 10);
+		$this->assertEquals(0.100, $this->object->object()->getDistance(), '', 0.01);
+		$this->assertEquals(60, $this->object->object()->getCadence(), '', 1);
 
-			$this->assertTrue($this->object->object()->hasArrayTime());
-			$this->assertTrue($this->object->object()->hasArrayLatitude());
-			$this->assertTrue($this->object->object()->hasArrayLongitude());
-			$this->assertTrue($this->object->object()->hasArrayAltitude());
-			$this->assertTrue($this->object->object()->hasArrayDistance());
-			$this->assertTrue($this->object->object()->hasArraySmo2_0());
-			$this->assertFalse($this->object->object()->hasArraySmo2_1());
-			$this->assertTrue($this->object->object()->hasArrayThb_0());
-			$this->assertFalse($this->object->object()->hasArrayThb_1());
+		$this->assertTrue($this->object->object()->hasArrayTime());
+		$this->assertTrue($this->object->object()->hasArrayLatitude());
+		$this->assertTrue($this->object->object()->hasArrayLongitude());
+		$this->assertTrue($this->object->object()->hasArrayAltitude());
+		$this->assertTrue($this->object->object()->hasArrayDistance());
+		$this->assertTrue($this->object->object()->hasArraySmo2_0());
+		$this->assertFalse($this->object->object()->hasArraySmo2_1());
+		$this->assertTrue($this->object->object()->hasArrayThb_0());
+		$this->assertFalse($this->object->object()->hasArrayThb_1());
 
-			$smo2_0_array = array(57,0,62,64,63,65,65,65,65,64,61,61,60,59,59);
-			$this->assertEquals($smo2_0_array, $this->object->object()->getArraySmo2_0());
+		$smo2_0_array = array(57,0,62,64,63,65,65,65,65,64,61,61,60,59,59);
+		$this->assertEquals($smo2_0_array, $this->object->object()->getArraySmo2_0());
 
-			$thb_0_array = array(1249,0,1245,1234,1233,1236,1241,1240,1240,1241,1240,1241,1242,1248,1251);
-			$this->assertEquals($thb_0_array, $this->object->object()->getArrayThb_0());
-		}
+		$thb_0_array = array(1249,0,1245,1234,1233,1236,1241,1240,1240,1241,1240,1241,1242,1248,1251);
+		$this->assertEquals($thb_0_array, $this->object->object()->getArrayThb_0());
 	}
 
 	public function testThatBadTrainingEffectValuesAreIgnored() {
-		if (Shell::isPerlAvailable()) {
-			$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/Zwift-bad-training-effect.fit');
+		$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/Zwift-bad-training-effect.fit');
 
-			$this->assertEquals(2764, $this->object->object()->getTimeInSeconds(), '', 10);
-			$this->assertEquals(16.72, $this->object->object()->getDistance(), '', 0.01);
+		$this->assertEquals(2764, $this->object->object()->getTimeInSeconds(), '', 10);
+		$this->assertEquals(16.72, $this->object->object()->getDistance(), '', 0.01);
 
-			$this->assertNull($this->object->object()->getFitTrainingEffect());
-		}
+		$this->assertNull($this->object->object()->getFitTrainingEffect());
 	}
 
 	public function testDeveloperFieldsInSwimFileFromDaniel() {
-		if (Shell::isPerlAvailable()) {
-			$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/swim-via-iq.fit');
+		$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/swim-via-iq.fit');
 
-			$this->assertEquals(83, $this->object->object()->getTimeInSeconds(), '', 10);
-			$this->assertEquals(0.15, $this->object->object()->getDistance(), '', 0.01);
+		$this->assertEquals(83, $this->object->object()->getTimeInSeconds(), '', 10);
+		$this->assertEquals(0.15, $this->object->object()->getDistance(), '', 0.01);
 
-			$this->assertTrue($this->object->object()->hasArrayTime());
-			$this->assertTrue($this->object->object()->hasArrayDistance());
+		$this->assertTrue($this->object->object()->hasArrayTime());
+		$this->assertTrue($this->object->object()->hasArrayDistance());
 
-			$this->assertEquals(2500, $this->object->object()->getPoolLength());
-			$this->assertEquals(
-				array(0.15),
-				$this->object->object()->Splits()->distancesAsArray()
-			);
-		}
+		$this->assertEquals(2500, $this->object->object()->getPoolLength());
+		$this->assertEquals(
+			array(0.15),
+			$this->object->object()->Splits()->distancesAsArray()
+		);
 	}
 
 	public function testDeveloperFieldsInPoolSwimFileFromDaniel() {
-		if (Shell::isPerlAvailable()) {
-			$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/swim-pool-via-iq.fit');
+		$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/swim-pool-via-iq.fit');
 
-			$this->assertEquals(2095, $this->object->object()->getTimeInSeconds(), '', 10);
-			$this->assertEquals(1.25, $this->object->object()->getDistance(), '', 0.01);
+		$this->assertEquals(2095, $this->object->object()->getTimeInSeconds(), '', 10);
+		$this->assertEquals(1.25, $this->object->object()->getDistance(), '', 0.01);
 
-			$this->assertTrue($this->object->object()->hasArrayTime());
-			$this->assertTrue($this->object->object()->hasArrayDistance());
+		$this->assertTrue($this->object->object()->hasArrayTime());
+		$this->assertTrue($this->object->object()->hasArrayDistance());
 
-			$this->assertEquals(2500, $this->object->object()->getPoolLength());
-			$this->assertEquals(
-				array(0.25, 0.25, 0.25, 0.25, 0.15, 0.10),
-				$this->object->object()->Splits()->distancesAsArray()
-			);
-		}
+		$this->assertEquals(2500, $this->object->object()->getPoolLength());
+		$this->assertEquals(
+			array(0.25, 0.25, 0.25, 0.25, 0.15, 0.10),
+			$this->object->object()->Splits()->distancesAsArray()
+		);
 	}
 	
 	public function testDeveloperFieldsInNewFormatFromMoxy() {
-		if (Shell::isPerlAvailable()) {
-			$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/moxy-float.fit');
-			$this->assertTrue($this->object->object()->hasArraySmo2_0());
-			$this->assertFalse($this->object->object()->hasArraySmo2_1());
-			$this->assertTrue($this->object->object()->hasArrayThb_0());
-			$this->assertFalse($this->object->object()->hasArrayThb_1());
-			$this->assertEquals(
-				[0,36,36,37,37,38,38,38,38,38,38,38,38,37,37],
-				array_slice($this->object->object()->getArraySmo2_0(), 0, 15)
-			);
+		$this->object->parseFile(__DIR__ . '/../tests/testfiles/fit/moxy-float.fit');
+		$this->assertTrue($this->object->object()->hasArraySmo2_0());
+		$this->assertFalse($this->object->object()->hasArraySmo2_1());
+		$this->assertTrue($this->object->object()->hasArrayThb_0());
+		$this->assertFalse($this->object->object()->hasArrayThb_1());
+		$this->assertEquals(
+			[0,36,36,37,37,38,38,38,38,38,38,38,38,37,37],
+			array_slice($this->object->object()->getArraySmo2_0(), 0, 15)
+		);
 
-			$this->assertEquals(
-				[0,1309,1309,1310,1310,1310,1310,1311,1311,1314,1314,1317,1317,1319,1319],
-				array_slice($this->object->object()->getArrayThb_0(), 0, 15)
-			);
-		}
+		$this->assertEquals(
+			[0,1309,1309,1310,1310,1310,1310,1311,1311,1314,1314,1317,1317,1319,1319],
+			array_slice($this->object->object()->getArrayThb_0(), 0, 15)
+		);
 	}
 }
