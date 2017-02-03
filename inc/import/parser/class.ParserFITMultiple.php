@@ -17,7 +17,7 @@ use Runalyze\Import\Exception\UnexpectedContentException;
 class ParserFITMultiple extends ParserAbstractMultiple {
 	/**
 	 * Fit Data
-	 * @var resource
+	 * @var adriangibbons\phpFITFileAnalysis
 	 */
 	protected $fitData = null;
 
