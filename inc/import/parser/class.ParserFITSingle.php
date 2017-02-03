@@ -38,6 +38,8 @@ class ParserFITSingle extends ParserAbstractSingle {
 	 * @throws \Runalyze\Import\Exception\ParserException
 	 */
 	public function parse() {
+		$creatorDetails = '';
+
 		$this->TrainingObject = new TrainingObject(DataObject::$DEFAULT_ID);
 		$this->TrainingObject->setTimestamp(PHP_INT_MAX);
 		$this->TrainingObject->setTimezoneOffset(0);
@@ -50,13 +52,12 @@ class ParserFITSingle extends ParserAbstractSingle {
 			$this->TrainingObject->setCreator($this->fitData->manufacturer());
 
 		if (isset($this->fitData->data_mesgs['file_creator']['software_version']))
-			$this->TrainingObject->setCreatorDetails('firmware '.$this->fitData->data_mesgs['file_creator']['software_version']);
-
+			$creatorDetails = 'firmware '.$this->fitData->data_mesgs['file_creator']['software_version'];
 		if (isset($this->fitData->data_mesgs['file_id']['product']))
-			$this->TrainingObject->setCreatorDetails('product '.$this->fitData->product());
-
+			$creatorDetails .= ($creatorDetails == '' ? '' : ', ') . 'product '.$this->fitData->product();
 		if (isset($this->fitData->data_mesgs['file_id']['serial_number']))
-			$this->TrainingObject->setCreatorDetails('serial number '.$this->fitData->data_mesgs['file_id']['serial_number']);
+			$creatorDetails .= ($creatorDetails == '' ? '' : ', ') . 'serial number '.$this->fitData->data_mesgs['file_id']['serial_number'];
+		$this->TrainingObject->setCreatorDetails($creatorDetails);
 
 		if (isset($this->fitData->data_mesgs['session']['timestamp']))
 			$this->TrainingObject->setTimestamp($this->fitData->data_mesgs['session']['timestamp']);
