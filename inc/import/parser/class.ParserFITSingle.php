@@ -85,10 +85,6 @@ class ParserFITSingle extends ParserAbstractSingle {
 			foreach($this->gps['time_in_s'] as &$val)
 				$val -= $this->TrainingObject->getTimestamp();
 		}
-		/* km in FIT is in meters, convert to km */
-		if (isset($this->gps['km']))
-			foreach($this->gps['km'] as &$val)
-				$val /= 1e3;
 
 		if (isset($this->fitData->data_mesgs['session']['num_laps']) &&
 		    isset($this->fitData->data_mesgs['session']['first_lap_index'])) {
@@ -97,7 +93,7 @@ class ParserFITSingle extends ParserAbstractSingle {
 				    isset($this->fitData->data_mesgs['lap']['total_distance'][$lap]) &&
 				    $this->fitData->data_mesgs['lap']['total_timer_time'][$lap] > 0) {
 					$this->TrainingObject->Splits()->addSplit(
-					    $this->fitData->data_mesgs['lap']['total_distance'][$lap] / 1e3,
+					    $this->fitData->data_mesgs['lap']['total_distance'][$lap],
 					    $this->fitData->data_mesgs['lap']['total_timer_time'][$lap]
 					);
 				}
@@ -117,7 +113,7 @@ class ParserFITSingle extends ParserAbstractSingle {
 			$this->TrainingObject->setElapsedTime($this->fitData->data_mesgs['session']['total_elapsed_time']);
 
 		if (isset($this->fitData->data_mesgs['session']['total_distance']))
-			$this->TrainingObject->setDistance(round($this->fitData->data_mesgs['session']['total_distance'] / 1e3, 3));
+			$this->TrainingObject->setDistance(round($this->fitData->data_mesgs['session']['total_distance'], 3));
 
 		if (isset($this->fitData->data_mesgs['session']['total_calories']))
 			$this->TrainingObject->setCalories($this->fitData->data_mesgs['session']['total_calories']);

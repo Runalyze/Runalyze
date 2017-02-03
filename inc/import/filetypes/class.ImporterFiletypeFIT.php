@@ -19,7 +19,7 @@ class ImporterFiletypeFIT extends ImporterFiletypeAbstract {
 	public function parseFile($Filename) {
 		$options = [
 			'fix_data'		=> ['all'],
-			'units'			=> 'raw',
+			'units'			=> 'metric',
 			'garmin_timestamps'	=> false
 		];
 		$fit = new \adriangibbons\phpFITFileAnalysis($Filename, $options);
