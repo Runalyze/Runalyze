@@ -33,8 +33,6 @@ class ParserFITMultiple extends ParserAbstractMultiple {
 	 * Parse
 	 */
 	public function parse() {
-		$firstActivityStarted = false;
-
 		if (isset($this->fitData->data_mesgs['activity']['num_sessions']) &&
 		    $this->fitData->data_mesgs['activity']['num_sessions'] > 1) {
 			for ($session = 0; $session < $this->fitData->data_mesgs['activity']['num_sessions']; $session++) {
