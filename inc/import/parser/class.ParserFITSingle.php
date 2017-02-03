@@ -70,12 +70,21 @@ class ParserFITSingle extends ParserAbstractSingle {
 		else
 			$this->isSwim = false;
 
+		/* try to map all internal fields to FIT fields */
 		foreach (array_keys($this->gps) as $key) {
 			$fitkey = $this->mapGPStoFITkey($key, $this->isSwim);
 			$fittype = $this->mapFITtoType($fitkey);
 			if (isset($this->fitData->data_mesgs[$fittype][$fitkey]))
 				$this->gps[$key] = array_values($this->fitData->data_mesgs[$fittype][$fitkey]);
 		}
+		/* time_in_s from FIT is an array of timestamps, we need an array of seconds since activity_start */
+		if (isset($this->gps['time_in_s'])) {
+			if ($this->gps['time_in_s'][0] < $this->TrainingObject->getTimestamp())
+				$this->TrainingObject->setTimestamp($this->gps['time_in_s'][0]);
+			foreach($this->gps['time_in_s'] as &$val)
+				$val -= $this->TrainingObject->getTimestamp();
+		}
+		/* km in FIT is in meters, convert to km */
 		if (isset($this->gps['km']))
 			foreach($this->gps['km'] as &$val)
 				$val /= 1e3;
