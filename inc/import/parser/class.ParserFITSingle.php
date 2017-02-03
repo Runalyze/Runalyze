@@ -27,6 +27,12 @@ class ParserFITSingle extends ParserAbstractSingle {
 	protected $isSwim = false;
 
 	/**
+	 * When did the session start?
+	 * @var int
+	 */
+	protected $startTime = 0;
+
+	/**
 	 * Set FIT data
 	 */
 	public function setFitData(adriangibbons\phpFITFileAnalysis $fit) {
@@ -42,7 +48,7 @@ class ParserFITSingle extends ParserAbstractSingle {
 
 		$this->TrainingObject = new TrainingObject(DataObject::$DEFAULT_ID);
 		$this->TrainingObject->setTimestamp(PHP_INT_MAX);
-		$this->TrainingObject->setTimezoneOffset(0);
+		$this->TrainingObject->setTimezoneOffset(null);
 
 		if (isset($this->fitData->data_mesgs['file_id']['type']) &&
 		    $this->fitData->enumData('file', $this->fitData->data_mesgs['file_id']['type']) != 'activity')
@@ -60,9 +66,9 @@ class ParserFITSingle extends ParserAbstractSingle {
 		$this->TrainingObject->setCreatorDetails($creatorDetails);
 
 		if (isset($this->fitData->data_mesgs['session']['timestamp']))
-			$this->TrainingObject->setTimestamp($this->fitData->data_mesgs['session']['timestamp']);
+			$this->startTime = $this->fitData->data_mesgs['session']['timestamp'];
 		else if (isset($this->fitData->data_mesgs['file_id']['time_created']))
-			$this->TrainingObject->setTimestamp($this->fitData->data_mesgs['file_id']['time_created']);
+			$this->startTime = $this->fitData->data_mesgs['file_id']['time_created'];
 
 		$this->guessSportID(mb_strtolower($this->fitData->sport()), $this->fitData->manufacturer() . ' ' . $this->fitData->product());
 
@@ -77,11 +83,13 @@ class ParserFITSingle extends ParserAbstractSingle {
 		}
 		/* time_in_s from FIT is an array of timestamps, we need an array of seconds since activity_start */
 		if (isset($this->gps['time_in_s'])) {
-			if ($this->gps['time_in_s'][0] < $this->TrainingObject->getTimestamp())
-				$this->TrainingObject->setTimestamp($this->gps['time_in_s'][0]);
+			if ($this->gps['time_in_s'][0] < $this->startTime)
+				$this->startTime = $this->gps['time_in_s'][0];
 			foreach($this->gps['time_in_s'] as &$val)
-				$val -= $this->TrainingObject->getTimestamp();
+				$val -= $this->startTime;
 		}
+
+		$this->setTimestampAndTimezoneOffsetWithUtcFixFrom(strftime("%Y-%m-%dT%H:%M:%S%Z", $this->startTime));
 
 		if (isset($this->fitData->data_mesgs['session']['num_laps']) &&
 		    isset($this->fitData->data_mesgs['session']['first_lap_index'])) {
