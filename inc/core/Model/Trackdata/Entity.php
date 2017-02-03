@@ -225,7 +225,17 @@ class Entity extends Model\Entity implements Model\Loopable {
 	 * Synchronize
 	 */
 	public function synchronize() {
-		$this->Data[self::PAUSES] = $this->Pauses->asString();
+	    foreach (self::allDatabaseProperties() as $key) {
+	        if ($this->isArray($key) && empty($this->Data[$key])) {
+	            $this->Data[$key] = null;
+            }
+        }
+
+	    if ($this->Pauses->isEmpty()) {
+	        $this->Data[self::PAUSES] = null;
+        } else {
+    		$this->Data[self::PAUSES] = $this->Pauses->asString();
+        }
 	}
 
 	/**

@@ -2,6 +2,8 @@
     "name": "runalyze/runalyze",
     "description": "RUNALYZE - training analysis for athletes",
     "homepage": "https://runalyze.com",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "require": {
         "php": "~5.6|~7.0",
         "symfony/symfony": "3.1.*",
@@ -23,7 +25,8 @@
         "symfony/swiftmailer-bundle": "^2.3",
         "beberlei/DoctrineExtensions": "~1.0",
         "jms/translation-bundle": "dev-master",
-	"adriangibbons/php-fit-file-analysis": "3.0.*"
+	      "adriangibbons/php-fit-file-analysis": "3.0.*",
+        "bernard/bernard-bundle": "^2.0.0"
     },
     "autoload": {
         "files": ["src/functions.php", "app/AppKernel.php"],

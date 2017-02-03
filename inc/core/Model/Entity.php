@@ -188,7 +188,7 @@ abstract class Entity {
 
 		foreach ($keyOrKeys as $key) {
 			if (array_key_exists($key, $this->Data)) {
-				if ($this->Data[$key] === '' || null === $this->Data[$key] || ($treatZeroAsNull && 0 == $this->Data[$key])) {
+				if ($this->Data[$key] === '' || null === $this->Data[$key] || ($treatZeroAsNull && 0 == $this->Data[$key]) || [] === $this->Data[$key]) {
 					$this->Data[$key] = null;
 				} elseif ($ensureNumericIfNotEmpty) {
 					$this->Data[$key] = (float)$this->Data[$key];

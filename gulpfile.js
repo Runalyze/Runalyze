@@ -43,11 +43,10 @@ stylesInstaller.description = 'Run less to generate stylesheets for the installe
 function scripts() {
     return gulp.src(config.js.src)
         .pipe(sourcemaps.init())
-        .pipe(concat('scripts.js'))
+        .pipe(concat('scripts.min.js'))
         .pipe(gulp.dest(config.js.dest))
         .pipe(uglify())
-        .pipe(rename({ extname: '.min.js' }))
-        .pipe(sourcemaps.write())
+        .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(config.js.dest));
 }
 scripts.description = 'Combine and minify javascript files.';

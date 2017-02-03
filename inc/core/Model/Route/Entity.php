@@ -274,11 +274,18 @@ class Entity extends Model\EntityWithID implements Model\Loopable {
 
 		$this->ensureAllNumericValues();
 		$this->synchronizeStartAndEndpoint();
+        $this->ensureAllNullValues();
 
 		if (!$this->hasCorrectedElevations()) {
 			$this->set(self::ELEVATIONS_SOURCE, '');
 		}
 	}
+
+	protected function ensureAllNullValues() {
+        $this->ensureNullIfEmpty(self::ELEVATIONS_ORIGINAL);
+        $this->ensureNullIfEmpty(self::ELEVATIONS_CORRECTED);
+        $this->ensureNullIfEmpty(self::GEOHASHES);
+    }
 
 	/**
 	 * Ensure that numeric fields get numeric values
@@ -306,7 +313,6 @@ class Entity extends Model\EntityWithID implements Model\Loopable {
         if ($key == self::GEOHASHES) {
             $this->setMinMaxFromGeohashes($value);
         }
-        
 	}
 
     /**
@@ -335,7 +341,6 @@ class Entity extends Model\EntityWithID implements Model\Loopable {
 
 	public function forceToSetMinMaxFromGeohashes() {
 	    $this->setMinMaxFromGeohashes($this->Data[self::GEOHASHES]);
-
 	}
 
 	/**
