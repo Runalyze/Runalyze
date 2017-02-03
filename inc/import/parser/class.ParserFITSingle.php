@@ -16,20 +16,20 @@ use Runalyze\Import\Exception\ParserException;
 class ParserFITSingle extends ParserAbstractSingle {
 	/**
 	 * Current FIT data
-	 * @var string
+	 * @var adriangibbons\phpFITFileAnalysis
 	 */
 	protected $fitData = null;
 
 	/**
 	 * Is this a swim session?
-	 * @var string
+	 * @var bool
 	 */
 	protected $isSwim = false;
 
 	/**
 	 * Set FIT data
 	 */
-	public function setFitData(object $fit) {
+	public function setFitData(adriangibbons\phpFITFileAnalysis $fit) {
 		$this->fitData = $fit;
 	}
 
