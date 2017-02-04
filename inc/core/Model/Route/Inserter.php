@@ -81,4 +81,11 @@ class Inserter extends Model\InserterWithAccountID {
             $this->Object->setGeohashesWithoutMinMaxRecalculation(GeohashLine::shorten($this->Object->geohashes()));
         }
 	}
+
+	protected function after()
+    {
+        parent::after();
+
+        $this->Object->ensureArraysToBeNotNull();
+    }
 }

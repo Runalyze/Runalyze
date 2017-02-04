@@ -43,12 +43,18 @@ class Calculator {
 	 * This method does directly update the route object.
 	 */
 	public function calculateElevation() {
-		$Calculator = new Elevation\Calculator($this->Route->elevations());
-		$Calculator->calculate();
+	    if ($this->Route->hasElevations()) {
+            $Calculator = new Elevation\Calculator($this->Route->elevations());
+            $Calculator->calculate();
 
-		$this->Route->set(Route\Entity::ELEVATION, $Calculator->totalElevation());
-		$this->Route->set(Route\Entity::ELEVATION_UP, $Calculator->elevationUp());
-		$this->Route->set(Route\Entity::ELEVATION_DOWN, $Calculator->elevationDown());
+            $this->Route->set(Route\Entity::ELEVATION, $Calculator->totalElevation());
+            $this->Route->set(Route\Entity::ELEVATION_UP, $Calculator->elevationUp());
+            $this->Route->set(Route\Entity::ELEVATION_DOWN, $Calculator->elevationDown());
+        } else {
+            $this->Route->set(Route\Entity::ELEVATION, 0);
+            $this->Route->set(Route\Entity::ELEVATION_UP, 0);
+            $this->Route->set(Route\Entity::ELEVATION_DOWN, 0);
+        }
 	}
 
 	/**
@@ -96,7 +102,7 @@ class Calculator {
 	 * Remove elevation correction
 	 */
 	public function removeElevationCorrection() {
-		$this->Route->set(Route\Entity::ELEVATIONS_CORRECTED, null);
+		$this->Route->set(Route\Entity::ELEVATIONS_CORRECTED, array());
 		$this->Route->set(Route\Entity::ELEVATIONS_SOURCE, '');
 	}
 }

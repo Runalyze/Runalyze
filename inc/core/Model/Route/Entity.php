@@ -21,7 +21,9 @@ use Runalyze\Calculation\Route\GeohashLine;
  * @author Hannes Christiansen
  * @package Runalyze\Model\Route
  */
-class Entity extends Model\EntityWithID implements Model\Loopable {
+class Entity extends Model\EntityWithID implements Model\Loopable, Model\Common\WithNullableArraysInterface {
+    use Model\Common\WithNullableArraysTrait;
+
 	/**
 	 * Cities separator
 	 * @var string
@@ -274,18 +276,11 @@ class Entity extends Model\EntityWithID implements Model\Loopable {
 
 		$this->ensureAllNumericValues();
 		$this->synchronizeStartAndEndpoint();
-        $this->ensureAllNullValues();
 
 		if (!$this->hasCorrectedElevations()) {
 			$this->set(self::ELEVATIONS_SOURCE, '');
 		}
 	}
-
-	protected function ensureAllNullValues() {
-        $this->ensureNullIfEmpty(self::ELEVATIONS_ORIGINAL);
-        $this->ensureNullIfEmpty(self::ELEVATIONS_CORRECTED);
-        $this->ensureNullIfEmpty(self::GEOHASHES);
-    }
 
 	/**
 	 * Ensure that numeric fields get numeric values
@@ -326,7 +321,13 @@ class Entity extends Model\EntityWithID implements Model\Loopable {
 	/**
 	 * @param array $geohashes
 	 */
-	public function setMinMaxFromGeohashes(array $geohashes) {
+	public function setMinMaxFromGeohashes(array $geohashes = null) {
+	    if (null === $geohashes) {
+	        $this->setMinMaxToNull();
+
+	        return;
+        }
+
 		$latitudes = array();
 		$longitudes = array();
 
