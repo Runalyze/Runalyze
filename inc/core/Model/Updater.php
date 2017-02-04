@@ -8,7 +8,7 @@ namespace Runalyze\Model;
 
 /**
  * Update entity in database
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Model
  */
@@ -63,7 +63,7 @@ abstract class Updater {
 
 	/**
 	 * Ignore specific key
-	 * 
+	 *
 	 * This method may be overwritten in the subclass to ignore some specific keys,
 	 * e.g. don't update `A` if `B` has a specific value.
 	 * @param string $key
@@ -163,13 +163,29 @@ abstract class Updater {
 	protected function before() {
 		if ($this->knowsOldObject()) {
 			$this->OldObject->synchronize();
+
+            if ($this->OldObject instanceof Common\WithNullableArraysInterface) {
+                $this->OldObject->ensureArraysToBeNotNull();
+            }
 		}
 
 		$this->NewObject->synchronize();
+
+        if ($this->NewObject instanceof Common\WithNullableArraysInterface) {
+            $this->NewObject->ensureArraysToBeNotNull();
+        }
 	}
 
 	/**
 	 * Tasks after update
 	 */
-	protected function after() {}
+	protected function after() {
+        if ($this->knowsOldObject() && $this->OldObject instanceof Common\WithNullableArraysInterface) {
+            $this->OldObject->ensureArraysToBeNotNull();
+        }
+
+        if ($this->NewObject instanceof Common\WithNullableArraysInterface) {
+            $this->NewObject->ensureArraysToBeNotNull();
+        }
+    }
 }

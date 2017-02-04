@@ -240,14 +240,14 @@ abstract class Entity {
 			throw new \InvalidArgumentException('"'.$key.'" can not be set.');
 		}
 
-		if ($this->isArray($key) && !is_array($value)) {
+		if ($this->isArray($key) && !is_array($value) && !($this->canBeNull($key) && null === $value)) {
 			throw new \RuntimeException('Value "'.$key.'" must be provided as array.');
 		}
 
 		$this->Data[$key] = $value;
 
 		if ($this->isArray($key)) {
-			$this->handleNewArraySize(count($this->Data[$key]));
+			$this->handleNewArraySize(null === $value ? 0 : count($this->Data[$key]));
 		}
 	}
 

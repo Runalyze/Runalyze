@@ -8,9 +8,9 @@ namespace Runalyze\Model;
 
 /**
  * Insert object to database
- * 
+ *
  * It may be of need to set an object before using prepared statements.
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Model
  */
@@ -161,12 +161,20 @@ abstract class Inserter {
 	 */
 	protected function before() {
 		$this->Object->synchronize();
+
+		if ($this->Object instanceof Common\WithNullableArraysInterface) {
+		    $this->Object->ensureArraysToBeNullIfEmpty();
+        }
 	}
 
 	/**
 	 * Tasks after insertion
 	 */
-	protected function after() {}
+	protected function after() {
+        if ($this->Object instanceof Common\WithNullableArraysInterface) {
+            $this->Object->ensureArraysToBeNotNull();
+        }
+    }
 
 	/**
 	 * Last inserted ID

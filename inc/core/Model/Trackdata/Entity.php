@@ -17,7 +17,9 @@ use Runalyze\Calculation\StrideLength;
  * @author Hannes Christiansen
  * @package Runalyze\Model\Trackdata
  */
-class Entity extends Model\Entity implements Model\Loopable {
+class Entity extends Model\Entity implements Model\Loopable, Model\Common\WithNullableArraysInterface {
+    use Model\Common\WithNullableArraysTrait;
+
 	/**
 	 * Key: activity id
 	 * @var string
@@ -225,12 +227,6 @@ class Entity extends Model\Entity implements Model\Loopable {
 	 * Synchronize
 	 */
 	public function synchronize() {
-	    foreach (self::allDatabaseProperties() as $key) {
-	        if ($this->isArray($key) && empty($this->Data[$key])) {
-	            $this->Data[$key] = null;
-            }
-        }
-
 	    if ($this->Pauses->isEmpty()) {
 	        $this->Data[self::PAUSES] = null;
         } else {

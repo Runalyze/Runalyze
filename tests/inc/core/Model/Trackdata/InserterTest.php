@@ -84,6 +84,7 @@ class InserterTest extends \PHPUnit_Framework_TestCase
             Entity::THB_1,
         ] as $key) {
             $this->assertNull($data[$key], 'Database value for '.$key.' must be null.');
+            $this->assertTrue(is_array($N->get($key)), 'Object data for '.$key.' must be an array.');
             $this->assertEmpty($N->get($key), 'Object data for '.$key.' must be empty.');
         }
 
