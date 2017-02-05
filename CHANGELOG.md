@@ -4,8 +4,8 @@ A complete list of our releases with all minor bugfix versions (vX.Y.*) can be f
 at [github](https://github.com/Runalyze/Runalyze/releases)
 and in our [blog](https://blog.runalyze.com/releases/).
 
-* [v3.2](https://blog.runalyze.com/releases/3-2-0/), [update instructions](https://docs.runalyze.com/en/latest/upgrade/3.x.html#upgrade-from-3-1-to-3-2), 29.01.2017: major release (ANOVA tool, geohashline, refactoring)
-* [v3.1](https://blog.runalyze.com/allgemein-en/minor-changes-in-runalyze-v3-1/), [update instructions](https://docs.runalyze.com/en/latest/upgrade/3.x.html#upgrade-from-3-0-to-3-1), 04.12.2016: major release (age grade, heat index, new tools)
+* [v3.2](https://blog.runalyze.com/releases/3-2-0/), [update instructions](https://docs.runalyze.com/en/latest/upgrade/3.x.html#upgrade-from-3-1-to-3-2), 29.01.2017: minor release (ANOVA tool, geohashline, refactoring)
+* [v3.1](https://blog.runalyze.com/allgemein-en/minor-changes-in-runalyze-v3-1/), [update instructions](https://docs.runalyze.com/en/latest/upgrade/3.x.html#upgrade-from-3-0-to-3-1), 04.12.2016: minor release (age grade, heat index, new tools)
  * warning: requires at least php 5.6
 * [v3.0](https://blog.runalyze.com/en/allgemein-en/runalyze-v3-0-en/), [update instructions](https://docs.runalyze.com/en/latest/upgrade/3.x.html#upgrade-from-2-6-to-3-0), 28.08.2016: major release (improved core, no amazing new features)
  * warning: requires at least php 5.5.9
