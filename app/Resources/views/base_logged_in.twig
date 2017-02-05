@@ -32,5 +32,7 @@
     <br class="clear">
 
     <script>(function($){$(document).ready(function(){ Runalyze.init(); });})(jQuery);</script>
+    {% else %}
+    <script>{{ automaticJavaScriptReload(app.session.flashBag) }}</script>
     {% endif %}
 {% endblock %}
