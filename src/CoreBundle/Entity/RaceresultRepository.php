@@ -32,11 +32,11 @@ class RaceresultRepository extends EntityRepository
 
     /**
      * @param Account $account
-     * @param int $sportid
+     * @param Sport $sport
      * @param int $year
      * @return array
      */
-    public function findBySportAndYear(Account $account, $sportid, $year)
+    public function findBySportAndYear(Account $account, Sport $sport, $year)
     {
         return $this->_em->createQueryBuilder()
             ->select(
@@ -50,7 +50,7 @@ class RaceresultRepository extends EntityRepository
             ->andWhere('t.time BETWEEN :startTime and :endTime')
             ->setParameters([
                 ':account' => $account->getId(),
-                ':sport' => $sportid,
+                ':sport' => $sport->getId(),
                 ':startTime' => mktime(0, 0, 0, 1, 1, $year),
                 ':endTime' => mktime(23, 59, 59, 12, 31, $year)
             ])

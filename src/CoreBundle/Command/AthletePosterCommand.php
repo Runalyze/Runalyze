@@ -89,6 +89,7 @@ class AthletePosterCommand extends ContainerAwareCommand
         /** @var TrainingRepository $trainingRepository */
         $trainingRepository = $this->getContainer()->get('doctrine')->getRepository('CoreBundle:Training');
         $query = $trainingRepository->getQueryForJsonPosterData($athlete, $sportid, $input->getArgument('year'));
+        dump($query->iterate(null, Query::HYDRATE_SCALAR));
         $result = $query->iterate(null, Query::HYDRATE_SCALAR);
 
         while ($data = $result->next()) {

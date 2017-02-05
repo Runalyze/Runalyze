@@ -41,6 +41,31 @@ class TrainingRepository extends EntityRepository
 
     /**
      * @param Account $account
+     * @param null|int $sportid
+     * @return array
+     */
+    public function getActiveYearsFor(Account $account, $sportid = null)
+    {
+        $queryBuilder = $this->_em->createQueryBuilder()
+            ->select(
+                'YEAR(FROM_UNIXTIME(t.time) AS year'
+            )
+            ->from('CoreBundle:Training', 't')
+            ->where('t.account = :account')
+            ->setParameter('account', $account->getId())
+            ->addGroupBy('year');
+
+        if (null !== $sportid) {
+            $queryBuilder
+                ->andWhere('t.sport = :sportid')
+                ->setParameter('sportid', $sportid);
+        }
+
+        return $queryBuilder->getQuery()->getResult("COLUMN_HYDRATOR");
+    }
+
+    /**
+     * @param Account $account
      * @param null|string $column
      * @param null|int $sportid
      * @return array
@@ -115,7 +140,13 @@ class TrainingRepository extends EntityRepository
         return $statistics;
     }
 
-    public function getQueryForJsonPosterData(Account $account, $sportid, $year)
+    /**
+     * @param Account $account
+     * @param Sport $sport
+     * @param $year
+     * @return \Doctrine\ORM\Query
+     */
+    public function getQueryForJsonPosterData(Account $account, Sport $sport, $year)
     {
         return $this->_em->createQueryBuilder()
             ->select(
@@ -132,7 +163,7 @@ class TrainingRepository extends EntityRepository
             ->andWhere('t.time BETWEEN :startTime and :endTime')
             ->setParameters([
                 ':account' => $account->getId(),
-                ':sport' => $sportid,
+                ':sport' => $sport->getId(),
                 ':startTime' => mktime(0, 0, 0, 1, 1, $year),
                 ':endTime' => mktime(23, 59, 59, 12, 31, $year)
             ])

@@ -14,13 +14,17 @@ use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Form\Tools\DatabaseCleanupType;
 use Runalyze\Bundle\CoreBundle\Form\Tools\Anova\AnovaData;
 use Runalyze\Bundle\CoreBundle\Form\Tools\Anova\AnovaType;
+use Runalyze\Bundle\CoreBundle\Form\Tools\PosterType;
 use Runalyze\Configuration;
 use Runalyze\Metrics\Common\JavaScriptFormatter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\Process\Process;
+use Symfony\Component\Process\ProcessBuilder;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Bernard\Message\DefaultMessage;
 
 class ToolsController extends Controller
 {
@@ -163,6 +167,42 @@ class ToolsController extends Controller
         return $this->render('tools/anova/base.html.twig', [
             'form' => $form->createView()
         ]);
+    }
+
+    /**
+     * @Route("/my/tools/poster", name="poster")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function posterAction(Request $request, Account $account)
+    {
+        $this->get('app.poster.generate_json');
+
+$test = new Process('venv/bin/python create_poster.py --year 2012');
+           $test->setWorkingDirectory($this->getParameter('kernel.root_dir').'/../vendor/runalyze/GpxTrackPoster/')
+         ->run();
+  // dump($test->getOutput());
+
+       // $builder->getProcess()->start();
+        //echo $builder->getProcess()->getOutput();
+        echo "test";
+
+        ///echo $process->getOutput();
+
+
+        $message = new DefaultMessage('posterGenerator', array(
+            'accountid' => $account->getId(),
+            'year' => 2012,
+            'types' => ['circular'],
+            'sportid' => 1
+        ));
+        $this->get('bernard.producer')->produce($message);
+
+        $form = $this->createForm(PosterType::class);
+
+        return $this->render('tools/poster/base.html.twig', [
+            'form' => $form->createView()
+        ]);
+
     }
 
     /**

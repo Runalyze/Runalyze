@@ -69,6 +69,7 @@ doctrine:
                     enum:   string
 
 
+
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
         auto_mapping: true
@@ -81,6 +82,8 @@ doctrine:
         query_cache_driver:
             type: service
             id: doctrine_cache.providers.vendor_filesystem_query_cache
+        hydrators:
+            COLUMN_HYDRATOR: Runalyze\Bundle\CoreBundle\Doctrine\Hydrator\ColumnHydrator
         dql:
             datetime_functions:
                 from_unixtime: DoctrineExtensions\Query\Mysql\FromUnixtime

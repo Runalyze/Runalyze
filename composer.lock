@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a7f9a895b9c3655e40a1abcfe71ae1fb",
-    "content-hash": "7fd059a09cdd61e246339d33b4aed43b",
+    "hash": "b61badd8b0d8b15176d0337ee57276a8",
+    "content-hash": "b2d947c62896a3d5b21d12959d7f945b",
     "packages": [
         {
             "name": "beberlei/DoctrineExtensions",
@@ -2112,6 +2112,16 @@
             ],
             "description": "A lightweight implementation of CommonJS Promises/A for PHP",
             "time": "2016-05-03 17:50:52"
+        },
+        {
+            "name": "runalyze/GpxTrackPoster",
+            "version": "1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laufhannes/GpxTrackPoster.git",
+                "reference": "runalyze"
+            },
+            "type": "library"
         },
         {
             "name": "runalyze/age-grade",
