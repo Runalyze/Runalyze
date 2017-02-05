@@ -8,8 +8,8 @@ namespace Runalyze\Calculation\Prognosis;
 
 use Runalyze\Calculation\BasicEndurance;
 use Runalyze\Calculation\JD\VDOT;
-use Runalyze\Calculation\Math\Bisection;
 use Runalyze\Configuration;
+use Runalyze\Mathematics\Numerics\Bisection;
 
 /**
  * Prognosis by Jack Daniels

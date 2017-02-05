@@ -1,6 +1,8 @@
 <?php
 
-namespace Runalyze\Calculation\Math;
+namespace Runalyze\Mathematics\Numerics;
+
+use InvalidArgumentException;
 
 /**
  * Calculate array-wise derivative of f(x) = y
@@ -16,15 +18,17 @@ class Derivative
      * @param array $y
      * @param array $x
      * @return array
+     *
+     * @throws InvalidArgumentException
      */
     public function calculate(array $y, array $x)
     {
         if (count($x) !== $num = count($y)) {
-            throw new \InvalidArgumentException('Input arrays must be of same size.');
+            throw new InvalidArgumentException('Input arrays must be of same size.');
         }
 
         if (0 === $num) {
-            throw new \InvalidArgumentException('Input arrays must not be empty.');
+            throw new InvalidArgumentException('Input arrays must not be empty.');
         }
 
         $ddx = [];

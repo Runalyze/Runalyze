@@ -1,7 +1,8 @@
 <?php
 
-namespace Runalyze\Calculation\Math;
+namespace Runalyze\Tests\Mathematics\Numerics;
 
+use Runalyze\Mathematics\Numerics\Derivative;
 
 class DerivativeTest extends \PHPUnit_Framework_TestCase
 {
