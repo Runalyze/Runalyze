@@ -40,6 +40,8 @@ class BodyValuesController extends Controller
         $form->setLayoutForFields(\FormularFieldset::$LAYOUT_FIELD_W33);
 
         if ($form->submitSucceeded()) {
+            $this->get('app.automatic_reload_flag_setter')->set(AutomaticReloadFlagSetter::FLAG_ALL);
+
             return $this->redirectToRoute('body-values-table');
         }
 
