@@ -14,13 +14,17 @@ class GeneratePoster
 
     protected $kernelRootDir;
 
+    protected $python3path;
+
     /**
      * GenerateJsonData constructor
      * @param string $kernelRootDir
+     * @param string $python3path
      */
-    public function __construct($kernelRootDir)
+    public function __construct($kernelRootDir, $python3path)
     {
         $this->kernelRootDir = $kernelRootDir;
+        $this->python3path = $python3path;
     }
 
     protected function pathToRepository() {
@@ -29,15 +33,10 @@ class GeneratePoster
 
     public function createCommand() {
 
-        var_dump($this->parameter);
-        $builder = new Process('venv/bin/python create_poster.py '.implode(' ', $this->parameter));
+        $builder = new Process($this->python3path.' create_poster.py '.implode(' ', $this->parameter));
         $builder->setWorkingDirectory($this->pathToRepository())
                 ->run();
-        var_dump($builder->getWorkingDirectory());
-        var_dump($builder->getCommandLine());
-var_dump($builder->getOutput());
 
-        ///echo $process->getOutput();
     }
 
     public function buildCommand($type, $jsondir, $year, $athlete) {
