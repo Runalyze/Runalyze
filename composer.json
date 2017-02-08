@@ -6,7 +6,7 @@
     "prefer-stable": true,
     "require": {
         "php": "~5.6|~7.0",
-        "symfony/symfony": "3.1.*",
+        "symfony/symfony": "3.2.*",
         "sensio/framework-extra-bundle": "^3.0",
         "twig/twig": "1.*",
         "monolog/monolog": "^1.19",
