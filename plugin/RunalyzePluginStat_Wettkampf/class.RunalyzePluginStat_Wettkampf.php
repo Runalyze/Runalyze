@@ -12,7 +12,6 @@ use Runalyze\Model\Activity;
 use Runalyze\Model\RaceResult;
 use Runalyze\Model\Factory;
 use Runalyze\View\Activity\Linker;
-use Runalyze\View\Activity\Dataview;
 use Runalyze\View;
 use Runalyze\View\Icon;
 use Runalyze\View\Tooltip;
@@ -572,54 +571,5 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	 */
 	public function isFunCompetition($id) {
 		return (in_array($id, $this->Configuration()->value('fun_ids')));
-	}
-
-	/**
-	 * Update race result
-	 *
-	 * This will echo an ajax reload command.
-	 *
-	 * @param \Runalyze\Model\RaceResult\Entity $NewRaceResult
-	 * @param \Runalyze\Model\RaceResult\Entity $OldRaceResult
-	 */
-	protected function updateRaceResult(RaceResult\Entity $NewRaceResult, RaceResult\Entity $OldRaceResult) {
-		$Update = new RaceResult\Updater(DB::getInstance(), $NewRaceResult, $OldRaceResult);
-		$Update->setAccountID(SessionAccountHandler::getId());
-		$Update->update();
-
-		Ajax::setReloadFlag(AJAX::$RELOAD_PLUGINS);
-		echo Ajax::getReloadCommand();
-	}
-
-	/**
-	 * Insert race result
-	 *
-	 * This will echo an ajax reload command.
-	 *
-	 * @param \Runalyze\Model\RaceResult\Entity $RaceResult
-	 */
-	protected function insertRaceResult(RaceResult\Entity $RaceResult) {
-		$Insert = new RaceResult\Inserter(DB::getInstance(), $RaceResult);
-		$Insert->setAccountID(SessionAccountHandler::getId());
-		$Insert->insert();
-
-		Ajax::setReloadFlag(AJAX::$RELOAD_PLUGINS);
-		echo Ajax::getReloadCommand();
-	}
-
-	/**
-	 * Delete race result
-	 *
-	 * This will echo an ajax reload command.
-	 *
-	 * @param \Runalyze\Model\RaceResult\Entity $RaceResult
-	 */
-	protected function deleteRaceResult(RaceResult\Entity $RaceResult) {
-		$Deleter = new RaceResult\Deleter(DB::getInstance(), $RaceResult);
-		$Deleter->setAccountID(SessionAccountHandler::getId());
-		$Deleter->delete();
-
-		Ajax::setReloadFlag(AJAX::$RELOAD_PLUGINS);
-		echo Ajax::getReloadCommand();
 	}
 }

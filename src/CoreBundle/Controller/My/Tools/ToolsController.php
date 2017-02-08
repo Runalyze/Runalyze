@@ -1,6 +1,6 @@
 <?php
 
-namespace Runalyze\Bundle\CoreBundle\Controller\My;
+namespace Runalyze\Bundle\CoreBundle\Controller\My\Tools;
 
 use Runalyze\Activity\Distance;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Anova\AnovaDataQuery;
@@ -14,12 +14,10 @@ use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Form\Tools\DatabaseCleanupType;
 use Runalyze\Bundle\CoreBundle\Form\Tools\Anova\AnovaData;
 use Runalyze\Bundle\CoreBundle\Form\Tools\Anova\AnovaType;
-use Runalyze\Configuration;
 use Runalyze\Metrics\Common\JavaScriptFormatter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class ToolsController extends Controller
@@ -27,7 +25,6 @@ class ToolsController extends Controller
     /**
      * @Route("/my/tools/cleanup", name="tools-cleanup")
      * @Security("has_role('ROLE_USER')")
-     *
      */
     public function cleanupAction(Request $request, Account $account)
     {

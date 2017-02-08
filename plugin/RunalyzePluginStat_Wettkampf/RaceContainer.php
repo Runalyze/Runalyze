@@ -43,7 +43,7 @@ class RaceContainer {
 	 * @param int $sportId
 	 */
 	public function __construct($sportId, PDO $pdo = null) {
-		$this->PDO = (null == $pdo) ? DB::getInstance() : $pdo;
+		$this->PDO = (null === $pdo) ? DB::getInstance() : $pdo;
 		$this->SportId = $sportId;
 	}
 

@@ -12,7 +12,7 @@
 
             <fieldset>
                 <legend>{% trans %}Export data{% endtrans %}</legend>
-                {% if hasLocks %}
+                {% if not hasLocks %}
                 <div class="w50">
                     <label for="export-type">{% trans %}File format{% endtrans %}</label>
                     <select name="export-type" id="export-type">

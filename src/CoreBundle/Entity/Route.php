@@ -14,7 +14,7 @@ use Runalyze\Bundle\CoreBundle\Entity\Account;
 class Route
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer", precision=10, nullable=false, options={"unsigned":true})
      * @ORM\Id
@@ -37,32 +37,32 @@ class Route
     private $cities = '';
 
     /**
-     * @var string
+     * @var float
      *
      * @ORM\Column(name="distance", columnDefinition="decimal(6,2) unsigned NOT NULL DEFAULT '0.00'")
      */
     private $distance = '0.00';
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="elevation", type="smallint", nullable=false, options={"unsigned":true, "default":0})
      */
-    private $elevation = '0';
+    private $elevation = 0;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="elevation_up", type="smallint", nullable=false, options={"unsigned":true, "default":0})
      */
-    private $elevationUp = '0';
+    private $elevationUp = 0;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="elevation_down", type="smallint", nullable=false, options={"unsigned":true, "default":0})
      */
-    private $elevationDown = '0';
+    private $elevationDown = 0;
 
     /**
      * @var string|null
@@ -72,14 +72,14 @@ class Route
     private $geohashes;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(name="elevations_original", type="text", nullable=true)
      */
     private $elevationsOriginal;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(name="elevations_corrected", type="text", nullable=true)
      */
@@ -93,39 +93,39 @@ class Route
     private $elevationsSource = '';
 
     /**
-     * @var string
+     * @var string|null [geohash]
      *
      * @ORM\Column(name="startpoint", type="string", length=10, nullable=true, options={"fixed" = true})
      */
     private $startpoint;
 
     /**
-     * @var string
+     * @var string|null [geohash]
      *
      * @ORM\Column(name="endpoint", type="string", length=10, nullable=true, options={"fixed" = true})
      */
     private $endpoint;
 
     /**
-     * @var string
+     * @var string|null [geohash]
      *
      * @ORM\Column(name="min", type="string", length=10, nullable=true, options={"fixed" = true})
      */
     private $min;
 
     /**
-     * @var string
+     * @var string|null [geohash]
      *
      * @ORM\Column(name="max", type="string", length=10, nullable=true, options={"fixed" = true})
      */
     private $max;
 
     /**
-     * @var boolean
+     * @var bool
      *
-     * @ORM\Column(name="in_routenet", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 0")
+     * @ORM\Column(name="in_routenet", type="boolean", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 0")
      */
-    private $inRoutenet = '0';
+    private $inRoutenet = false;
 
     /**
      * @var Account
@@ -138,16 +138,14 @@ class Route
     private $account;
 
     /**
-     * @var boolean
+     * @var bool
      *
-     * @ORM\Column(name="`lock`", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 0")
+     * @ORM\Column(name="`lock`", type="boolean", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 0")
      */
-    private $lock = '0';
+    private $lock = false;
 
     /**
-     * Get id
-     *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -155,11 +153,9 @@ class Route
     }
 
     /**
-     * Set name
-     *
      * @param string $name
      *
-     * @return Route
+     * @return $this
      */
     public function setName($name)
     {
@@ -169,8 +165,6 @@ class Route
     }
 
     /**
-     * Get name
-     *
      * @return string
      */
     public function getName()
@@ -179,11 +173,9 @@ class Route
     }
 
     /**
-     * Set cities
-     *
      * @param string $cities
      *
-     * @return Route
+     * @return $this
      */
     public function setCities($cities)
     {
@@ -193,8 +185,6 @@ class Route
     }
 
     /**
-     * Get cities
-     *
      * @return string
      */
     public function getCities()
@@ -203,11 +193,9 @@ class Route
     }
 
     /**
-     * Set distance
+     * @param float $distance
      *
-     * @param string $distance
-     *
-     * @return Route
+     * @return $this
      */
     public function setDistance($distance)
     {
@@ -217,9 +205,7 @@ class Route
     }
 
     /**
-     * Get distance
-     *
-     * @return string
+     * @return float
      */
     public function getDistance()
     {
@@ -227,11 +213,9 @@ class Route
     }
 
     /**
-     * Set elevation
+     * @param int $elevation
      *
-     * @param string $elevation
-     *
-     * @return Route
+     * @return $this
      */
     public function setElevation($elevation)
     {
@@ -241,9 +225,7 @@ class Route
     }
 
     /**
-     * Get elevation
-     *
-     * @return string
+     * @return int
      */
     public function getElevation()
     {
@@ -251,11 +233,9 @@ class Route
     }
 
     /**
-     * Set elevationUp
+     * @param int $elevationUp
      *
-     * @param string $elevationUp
-     *
-     * @return Route
+     * @return $this
      */
     public function setElevationUp($elevationUp)
     {
@@ -265,9 +245,7 @@ class Route
     }
 
     /**
-     * Get elevationUp
-     *
-     * @return string
+     * @return int
      */
     public function getElevationUp()
     {
@@ -275,11 +253,9 @@ class Route
     }
 
     /**
-     * Set elevationDown
+     * @param int $elevationDown
      *
-     * @param string $elevationDown
-     *
-     * @return Route
+     * @return $this
      */
     public function setElevationDown($elevationDown)
     {
@@ -289,9 +265,7 @@ class Route
     }
 
     /**
-     * Get elevationDown
-     *
-     * @return string
+     * @return int
      */
     public function getElevationDown()
     {
@@ -327,11 +301,9 @@ class Route
     }
 
     /**
-     * Set elevationsOriginal
+     * @param string|null $elevationsOriginal
      *
-     * @param string $elevationsOriginal
-     *
-     * @return Route
+     * @return $this
      */
     public function setElevationsOriginal($elevationsOriginal)
     {
@@ -341,9 +313,7 @@ class Route
     }
 
     /**
-     * Get elevationsOriginal
-     *
-     * @return string
+     * @return string|null
      */
     public function getElevationsOriginal()
     {
@@ -351,11 +321,9 @@ class Route
     }
 
     /**
-     * Set elevationsCorrected
+     * @param string|null $elevationsCorrected
      *
-     * @param string $elevationsCorrected
-     *
-     * @return Route
+     * @return $this
      */
     public function setElevationsCorrected($elevationsCorrected)
     {
@@ -365,9 +333,7 @@ class Route
     }
 
     /**
-     * Get elevationsCorrected
-     *
-     * @return string
+     * @return string|null
      */
     public function getElevationsCorrected()
     {
@@ -375,11 +341,9 @@ class Route
     }
 
     /**
-     * Set elevationsSource
+     * @param string|null $elevationsSource
      *
-     * @param string $elevationsSource
-     *
-     * @return Route
+     * @return $this
      */
     public function setElevationsSource($elevationsSource)
     {
@@ -389,9 +353,7 @@ class Route
     }
 
     /**
-     * Get elevationsSource
-     *
-     * @return string
+     * @return string|null
      */
     public function getElevationsSource()
     {
@@ -399,11 +361,9 @@ class Route
     }
 
     /**
-     * Set startpoint
+     * @param string|null $startpoint [geohash]
      *
-     * @param string $startpoint
-     *
-     * @return Route
+     * @return $this
      */
     public function setStartpoint($startpoint)
     {
@@ -413,9 +373,7 @@ class Route
     }
 
     /**
-     * Get startpoint
-     *
-     * @return string
+     * @return string|null [geohash]
      */
     public function getStartpoint()
     {
@@ -423,11 +381,9 @@ class Route
     }
 
     /**
-     * Set endpoint
+     * @param string|null $endpoint [geohash]
      *
-     * @param string $endpoint
-     *
-     * @return Route
+     * @return $this
      */
     public function setEndpoint($endpoint)
     {
@@ -437,9 +393,7 @@ class Route
     }
 
     /**
-     * Get endpoint
-     *
-     * @return string
+     * @return string|null [geohash]
      */
     public function getEndpoint()
     {
@@ -447,11 +401,9 @@ class Route
     }
 
     /**
-     * Set min
+     * @param string|null $min [geohash]
      *
-     * @param string $min
-     *
-     * @return Route
+     * @return $this
      */
     public function setMin($min)
     {
@@ -461,9 +413,7 @@ class Route
     }
 
     /**
-     * Get min
-     *
-     * @return string
+     * @return string|null [geohash]
      */
     public function getMin()
     {
@@ -471,11 +421,9 @@ class Route
     }
 
     /**
-     * Set max
+     * @param string|null $max [geohash]
      *
-     * @param string $max
-     *
-     * @return Route
+     * @return $this
      */
     public function setMax($max)
     {
@@ -485,9 +433,7 @@ class Route
     }
 
     /**
-     * Get max
-     *
-     * @return string
+     * @return string|null [geohash]
      */
     public function getMax()
     {
@@ -495,23 +441,19 @@ class Route
     }
 
     /**
-     * Set inRoutenet
+     * @param bool $inRoutenet
      *
-     * @param string $inRoutenet
-     *
-     * @return Route
+     * @return $this
      */
     public function setInRoutenet($inRoutenet)
     {
-        $this->inRoutenet = $inRoutenet;
+        $this->inRoutenet = (bool)$inRoutenet;
 
         return $this;
     }
 
     /**
-     * Get inRoutenet
-     *
-     * @return string
+     * @return bool
      */
     public function getInRoutenet()
     {
@@ -519,13 +461,11 @@ class Route
     }
 
     /**
-     * Set account
+     * @param Account $account
      *
-     * @param Account|null $account
-     *
-     * @return Route
+     * @return $this
      */
-    public function setAccount(Account $account = null)
+    public function setAccount(Account $account)
     {
         $this->account = $account;
 
@@ -533,9 +473,7 @@ class Route
     }
 
     /**
-     * Get account
-     *
-     * @return Account|null
+     * @return Account
      */
     public function getAccount()
     {
@@ -543,29 +481,28 @@ class Route
     }
 
     /**
-     * Set lock
+     * @param bool $lock
      *
-     * @param boolean $lock
-     *
-     * @return Training
+     * @return $this
      */
     public function setLock($lock)
     {
-        $this->lock = $lock;
+        $this->lock = (bool)$lock;
 
         return $this;
     }
 
     /**
-     * Get lock
-     *
-     * @return boolean
+     * @return bool
      */
     public function getLock()
     {
         return $this->lock;
     }
 
+    /**
+     * @return bool
+     */
     public function isLocked()
     {
         return $this->lock;

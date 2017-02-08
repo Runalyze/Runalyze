@@ -3,6 +3,7 @@
 namespace Runalyze\Bundle\CoreBundle\Receiver;
 
 use Bernard\Message\DefaultMessage;
+use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Backup\FilenameHandler;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Backup\JsonBackup;
@@ -10,9 +11,13 @@ use Runalyze\Bundle\CoreBundle\Component\Tool\Backup\SqlBackup;
 
 class BackupReceiver
 {
-
-    /** @var ContainerInterface|null */
+    /** @var ContainerInterface */
     private $container;
+
+    public function __construct(ContainerInterface $container)
+    {
+        $this->container = $container;
+    }
 
     /**
      * @return string
@@ -22,12 +27,8 @@ class BackupReceiver
         return $this->container->getParameter('kernel.root_dir').'/../data/backup-tool/backup/';
     }
 
-    public function __construct(ContainerInterface $container)
+    public function UserBackup(DefaultMessage $message)
     {
-        $this->container = $container;
-    }
-
-    public function UserBackup($message) {
         $Frontend = new \FrontendShared(true);
 
         $fileHandler = new FilenameHandler($message->get('accountid'));
@@ -57,7 +58,5 @@ class BackupReceiver
             $Backup->run();
             $this->container->get('app.mailer.account')->sendBackupReadyTo($account);
         }
-
     }
-
 }

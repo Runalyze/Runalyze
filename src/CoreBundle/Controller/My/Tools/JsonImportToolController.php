@@ -1,6 +1,6 @@
 <?php
 
-namespace Runalyze\Bundle\CoreBundle\Controller;
+namespace Runalyze\Bundle\CoreBundle\Controller\My\Tools;
 
 use Runalyze\Bundle\CoreBundle\Component\Tool\Backup\FilenameHandler;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Backup\JsonBackupAnalyzer;
@@ -11,9 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
-use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @Route("/my/tools/backup-import")
@@ -31,12 +29,11 @@ class JsonImportToolController extends Controller
     /**
      * @Route("/upload", name="tools-backup-json-upload")
      * @Security("has_role('ROLE_USER')")
-     *
      */
     public function backupUploadAction(Request $request)
     {
-
         $backupFile = $request->files->get('qqfile');
+
         if (!FilenameHandler::validateImportFileExtension($backupFile->getClientOriginalName())) {
             return $this->json(['error' => 'Wrong file extension.']);
         }
@@ -92,10 +89,6 @@ class JsonImportToolController extends Controller
     /**
      * @Route("/import/do", name="tools-backup-json-import-do")
      * @Security("has_role('ROLE_USER')")
-     *
-     * @param Request $request
-     * @param Account $account
-     * @return Response
      */
     public function backupImportDoAction(Request $request, Account $account)
     {
