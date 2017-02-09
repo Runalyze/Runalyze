@@ -1,13 +1,13 @@
 <?php
 
-namespace Runalyze\Bundle\CoreBundle\Receiver;
+namespace Runalyze\Bundle\CoreBundle\Queue\Receiver;
 
 use Bernard\Message\DefaultMessage;
-use Runalyze\Bundle\CoreBundle\Entity\Account;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Backup\FilenameHandler;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Backup\JsonBackup;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Backup\SqlBackup;
+use Runalyze\Bundle\CoreBundle\Entity\Account;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class BackupReceiver
 {
@@ -27,7 +27,7 @@ class BackupReceiver
         return $this->container->getParameter('kernel.root_dir').'/../data/backup-tool/backup/';
     }
 
-    public function UserBackup(DefaultMessage $message)
+    public function userBackup(DefaultMessage $message)
     {
         $Frontend = new \FrontendShared(true);
 
@@ -37,7 +37,7 @@ class BackupReceiver
         /** @var Account $account */
         $account = $this->container->get('doctrine.orm.entity_manager')->getRepository('CoreBundle:Account')->find($message->get('accountid'));
 
-        if ($message->get('export-type') == 'json') {
+        if ('json' == $message->get('export-type')) {
             $Backup = new JsonBackup(
                 $this->getPathToBackupFiles().$fileHandler->generateInternalFilename(FilenameHandler::JSON_FORMAT),
                 $message->get('accountid'),
@@ -46,7 +46,6 @@ class BackupReceiver
                 $this->container->getParameter('runalyze_version')
             );
             $Backup->run();
-            $this->container->get('app.mailer.account')->sendBackupReadyTo($account);
         } else {
             $Backup = new SqlBackup(
                 $this->getPathToBackupFiles().$fileHandler->generateInternalFilename(FilenameHandler::SQL_FORMAT),
@@ -56,7 +55,8 @@ class BackupReceiver
                 $this->container->getParameter('runalyze_version')
             );
             $Backup->run();
-            $this->container->get('app.mailer.account')->sendBackupReadyTo($account);
         }
+
+        $this->container->get('app.mailer.account')->sendBackupReadyTo($account);
     }
 }

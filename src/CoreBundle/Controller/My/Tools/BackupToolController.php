@@ -2,6 +2,7 @@
 
 namespace Runalyze\Bundle\CoreBundle\Controller\My\Tools;
 
+use Bernard\Message\DefaultMessage;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Backup\FilenameHandler;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -13,7 +14,6 @@ use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
-use Bernard\Message\DefaultMessage;
 
 /**
  * @Route("/my/tools/backup")
@@ -71,13 +71,10 @@ class BackupToolController extends Controller
      */
     public function backupCreateAction(Request $request, Account $account)
     {
-        $Frontend = new \Frontend(true, $this->get('security.token_storage'));
-
-        $message = new DefaultMessage('UserBackup', array(
+        $this->get('bernard.producer')->produce(new DefaultMessage('userBackup', [
             'accountid' => $account->getId(),
             'export-type' => $request->request->get('export-type')
-        ));
-        $this->get('bernard.producer')->produce($message);
+        ]));
         $this->get('session')->getFlashBag()->set('runalyze.backupjob.created', true);
 
         return $this->redirectToRoute('tools-backup');

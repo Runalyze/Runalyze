@@ -144,8 +144,8 @@ services:
     tags:
       - { name: twig.extension }
   my_receiver:
-    class: Runalyze\Bundle\CoreBundle\Receiver\BackupReceiver
+    class: Runalyze\Bundle\CoreBundle\Queue\Receiver\BackupReceiver
     arguments:
       container: "@service_container"
     tags:
-      - { name: bernard.receiver, message: UserBackup }
+      - { name: bernard.receiver, message: userBackup }
