@@ -86,7 +86,7 @@ class TrackdataAveragesTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertEquals(0, $Averages->average(Trackdata\Entity::HEARTRATE));
-        $this->assertEquals(36, $Averages->average(Trackdata\Entity::CADENCE));
+        $this->assertEquals(120, $Averages->average(Trackdata\Entity::CADENCE));
         $this->assertEquals(1, $Averages->average(Trackdata\Entity::STRIDE_LENGTH));
     }
 
