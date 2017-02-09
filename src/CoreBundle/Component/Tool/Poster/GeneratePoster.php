@@ -2,7 +2,6 @@
 
 namespace Runalyze\Bundle\CoreBundle\Component\Tool\Poster;
 
-use Symfony\Component\Process\ProcessBuilder;
 use Symfony\Component\Process\Process;
 
 /**
