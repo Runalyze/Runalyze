@@ -5,8 +5,10 @@ namespace Runalyze\Bundle\CoreBundle\Component\Tool\Poster;
 use Symfony\Component\Process\ProcessBuilder;
 use Symfony\Component\Process\Process;
 
-
-
+/**
+ * Class GeneratePoster
+ * @package Runalyze\Bundle\CoreBundle\Component\Tool\Poster
+ */
 class GeneratePoster
 {
 
@@ -15,6 +17,8 @@ class GeneratePoster
     protected $kernelRootDir;
 
     protected $python3path;
+
+    protected $filename;
 
     /**
      * GenerateJsonData constructor
@@ -31,23 +35,30 @@ class GeneratePoster
         return $this->kernelRootDir.'/../vendor/runalyze/GpxTrackPoster/';
     }
 
-    public function createCommand() {
+    protected function pathToSvgDirectory() {
+        return $this->kernelRootDir.'/../var/poster/';
+    }
+
+    protected function randomFileName($athlete, $year) {
+        $this->filename = md5($athlete.$year.strtotime("now")).'.svg';
+    }
+
+    public function generate() {
 
         $builder = new Process($this->python3path.' create_poster.py '.implode(' ', $this->parameter));
         $builder->setWorkingDirectory($this->pathToRepository())
                 ->run();
+        return $this->pathToSvgDirectory().$this->filename;
 
     }
 
     public function buildCommand($type, $jsondir, $year, $athlete) {
+        $this->randomFileName($athlete, $year);
         $this->parameter[] = '--json-dir '.$jsondir;
         $this->parameter[] = '--athlete '.$athlete;
         $this->parameter[] = '--year '.$year;
-
-
-        if (in_array($type, $this->availablePosterTypes())) {
-            $this->parameter[] = '--type '.$type;
-        }
+        $this->parameter[] = '--output '.$this->pathToSvgDirectory().$this->filename;
+        $this->parameter[] = '--type '.$type;
     }
 
     public function availablePosterTypes() {

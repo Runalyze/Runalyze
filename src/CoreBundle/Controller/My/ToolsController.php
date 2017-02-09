@@ -177,15 +177,11 @@ class ToolsController extends Controller
     {
         $this->get('app.poster.generate_json');
 
-        $test = new Process('venv/bin/python create_poster.py --year 2012');
-           $test->setWorkingDirectory($this->getParameter('kernel.root_dir').'/../vendor/runalyze/GpxTrackPoster/')
-         ->run();
-
 
         $message = new DefaultMessage('posterGenerator', array(
             'accountid' => $account->getId(),
             'year' => 2012,
-            'types' => ['circular'],
+            'types' => ['circular', 'calendar', 'grid', 'heatmap'],
             'sportid' => 1
         ));
         $this->get('bernard.producer')->produce($message);

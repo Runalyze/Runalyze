@@ -53,9 +53,15 @@ class PosterReceiver
         $jsonFiles = $this->generateJsonData;
         $jsonFiles->createJsonFilesFor($account, $sport, $message->get('year'));
 
+        /** @var GeneratePoster $posterGenerator */
         $posterGenerator = $this->generatePoster;
-        $posterGenerator->buildCommand($message->get('type'), $jsonFiles->getPathToJsonFiles(), $message->get('year'), $account->getUsername());
-        $posterGenerator->createCommand();
+
+        $svgFiles = array();
+        foreach ($message->get('types') as $type) {
+            $posterGenerator->buildCommand($type, $jsonFiles->getPathToJsonFiles(), $message->get('year'), $account->getUsername());
+            $svgFiles[] = $posterGenerator->generate();
+        }
+
     }
 
 }

@@ -63,8 +63,6 @@ class GenerateJsonData
 
         $filesystem = new Filesystem();
         $filesystem->mkdir($this->getPathToJsonFiles(), 0755);
-        echo $this->getPathToJsonFiles();
-        echo "test";
         $counter = 0;
 
         $query = $this->trainingRepository->getQueryForJsonPosterData($account, $sport, $year);
