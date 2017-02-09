@@ -1,6 +1,6 @@
 <?php
 
-namespace Runalyze\Bundle\CoreBundle\Receiver;
+namespace Runalyze\Bundle\CoreBundle\Queue\Receiver;
 
 use Bernard\Message\DefaultMessage;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Poster\GeneratePoster;

@@ -162,13 +162,13 @@ services:
     class: Runalyze\Bundle\CoreBundle\Component\Tool\Poster\SvgToPngConverter
     arguments: ['%rsvg_path%']
   app.bernard.backup_receiver:
-    class: Runalyze\Bundle\CoreBundle\Receiver\BackupReceiver
+    class: Runalyze\Bundle\CoreBundle\Queue\Receiver\BackupReceiver
     arguments:
       container: "@service_container"
     tags:
       - { name: bernard.receiver, message: UserBackup }
   app.bernard.poster_receiver:
-    class: Runalyze\Bundle\CoreBundle\Receiver\PosterReceiver
+    class: Runalyze\Bundle\CoreBundle\Queue\Receiver\PosterReceiver
     arguments: ["@app.repository.account", "@app.repository.sport", "@app.poster.generate_json", "@app.poster.generate_poster"]
     tags:
       - { name: bernard.receiver, message: posterGenerator }
