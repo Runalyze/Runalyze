@@ -28,7 +28,7 @@ class ImporterFiletypeHRMTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( 59*60 + 39.1, $this->object->object()->getTimeInSeconds() );
 		$this->assertEquals( 133, $this->object->object()->getPulseAvg() );
 		$this->assertEquals( 144, $this->object->object()->getPulseMax() );
-		$this->assertEquals( 82, $this->object->object()->getCadence() );
+		$this->assertEquals( 83, $this->object->object()->getCadence() );
 
 		$this->assertTrue( $this->object->object()->hasArrayHeartrate() );
 

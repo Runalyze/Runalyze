@@ -172,7 +172,7 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 	protected function guessSportID($String, $Creator = '') {
         $this->TrainingObject->setSportid(Configuration::General()->mainSport());
 
-        $name = array();
+        $name = array($String);
 		// TODO: internationalization?
 		switch (mb_strtolower($Creator)) {
 			case 'garmin swim':
