@@ -1,8 +1,8 @@
 <?php
 
-namespace Runalyze\Metrics\Pace\Unit;
+namespace Runalyze\Metrics\Velocity\Unit;
 
-class SecondsPer500m extends AbstractPaceInTimeFormatUnit
+class SecondsPerKilometer extends AbstractPaceInTimeFormatUnit
 {
     /**
      * @return string
@@ -11,14 +11,14 @@ class SecondsPer500m extends AbstractPaceInTimeFormatUnit
      */
     public function getAppendix()
     {
-        return '/500m';
+        return '/km';
     }
 
     /**
-     * @return float
+     * @return int
      */
     public function getFactorFromBaseUnit()
     {
-        return 0.5;
+        return 1;
     }
 }

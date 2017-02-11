@@ -2,7 +2,7 @@
 
 namespace Runalyze\Metrics\Common;
 
-use Runalyze\Metrics\Pace\Unit\AbstractPaceInTimeFormatUnit;
+use Runalyze\Metrics\Velocity\Unit\AbstractPaceInTimeFormatUnit;
 
 class JavaScriptFormatter
 {

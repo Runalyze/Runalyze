@@ -1,6 +1,6 @@
 <?php
 
-namespace Runalyze\Metrics\Pace\Unit;
+namespace Runalyze\Metrics\Velocity\Unit;
 
 use Runalyze\Util\AbstractEnum;
 use Runalyze\Util\AbstractEnumFactoryTrait;

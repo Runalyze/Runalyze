@@ -1,6 +1,6 @@
 <?php
 
-namespace Runalyze\Metrics\Pace\Unit;
+namespace Runalyze\Metrics\Velocity\Unit;
 
 class MeterPerSecond extends AbstractPaceInDecimalFormatUnit
 {

@@ -2,7 +2,7 @@
 
 namespace Runalyze\Bundle\CoreBundle\Twig;
 
-use Runalyze\Metrics\Pace\Unit\AbstractPaceInTimeFormatUnit;
+use Runalyze\Metrics\Velocity\Unit\AbstractPaceInTimeFormatUnit;
 
 class DisplayablePace extends DisplayableValue
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace Runalyze\Metrics\Pace;
+namespace Runalyze\Metrics\Velocity;
 
 use Runalyze\Metrics\Common\AbstractMetric;
-use Runalyze\Metrics\Pace\Unit\SecondsPerKilometer;
+use Runalyze\Metrics\Velocity\Unit\SecondsPerKilometer;
 
 class Pace extends AbstractMetric
 {

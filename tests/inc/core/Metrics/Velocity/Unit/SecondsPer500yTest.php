@@ -1,8 +1,8 @@
 <?php
 
-namespace Runalyze\Tests\Metrics\Pace\Unit;
+namespace Runalyze\Tests\Metrics\Velocity\Unit;
 
-use Runalyze\Metrics\Pace\Unit\SecondsPer500y;
+use Runalyze\Metrics\Velocity\Unit\SecondsPer500y;
 
 class SecondsPer500yTest extends \PHPUnit_Framework_TestCase
 {

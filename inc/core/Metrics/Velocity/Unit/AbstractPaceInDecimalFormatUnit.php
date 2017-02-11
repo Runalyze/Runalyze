@@ -1,6 +1,6 @@
 <?php
 
-namespace Runalyze\Metrics\Pace\Unit;
+namespace Runalyze\Metrics\Velocity\Unit;
 
 use Runalyze\Metrics\Common\FormattableUnitInterface;
 use Runalyze\Metrics\Common\UnitConversionByDividendTrait;

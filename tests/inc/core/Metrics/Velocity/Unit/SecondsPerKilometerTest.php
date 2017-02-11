@@ -1,8 +1,8 @@
 <?php
 
-namespace Runalyze\Tests\Metrics\Pace\Unit;
+namespace Runalyze\Tests\Metrics\Velocity\Unit;
 
-use Runalyze\Metrics\Pace\Unit\SecondsPerKilometer;
+use Runalyze\Metrics\Velocity\Unit\SecondsPerKilometer;
 
 class SecondsPerKilometerTest extends \PHPUnit_Framework_TestCase
 {

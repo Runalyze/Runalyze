@@ -1,8 +1,8 @@
 <?php
 
-namespace Runalyze\Metrics\Pace\Unit;
+namespace Runalyze\Metrics\Velocity\Unit;
 
-class SecondsPer100m extends AbstractPaceInTimeFormatUnit
+class SecondsPerMile extends AbstractPaceInTimeFormatUnit
 {
     /**
      * @return string
@@ -11,7 +11,7 @@ class SecondsPer100m extends AbstractPaceInTimeFormatUnit
      */
     public function getAppendix()
     {
-        return '/100m';
+        return '/mi';
     }
 
     /**
@@ -19,6 +19,6 @@ class SecondsPer100m extends AbstractPaceInTimeFormatUnit
      */
     public function getFactorFromBaseUnit()
     {
-        return 0.1;
+        return 1.0 / 0.621371192;
     }
 }

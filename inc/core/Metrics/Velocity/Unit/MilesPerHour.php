@@ -1,8 +1,8 @@
 <?php
 
-namespace Runalyze\Metrics\Pace\Unit;
+namespace Runalyze\Metrics\Velocity\Unit;
 
-class KilometerPerHour extends AbstractPaceInDecimalFormatUnit
+class MilesPerHour extends AbstractPaceInDecimalFormatUnit
 {
     /**
      * @return string
@@ -11,7 +11,7 @@ class KilometerPerHour extends AbstractPaceInDecimalFormatUnit
      */
     public function getAppendix()
     {
-        return 'km/h';
+        return 'mph';
     }
 
     /**
@@ -19,6 +19,6 @@ class KilometerPerHour extends AbstractPaceInDecimalFormatUnit
      */
     public function getDividendFromBaseUnit()
     {
-        return 3600;
+        return 3600 * 0.621371192;
     }
 }

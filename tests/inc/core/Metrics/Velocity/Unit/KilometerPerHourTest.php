@@ -1,8 +1,8 @@
 <?php
 
-namespace Runalyze\Tests\Metrics\Pace\Unit;
+namespace Runalyze\Tests\Metrics\Velocity\Unit;
 
-use Runalyze\Metrics\Pace\Unit\KilometerPerHour;
+use Runalyze\Metrics\Velocity\Unit\KilometerPerHour;
 
 class KilometerPerHourTest extends \PHPUnit_Framework_TestCase
 {

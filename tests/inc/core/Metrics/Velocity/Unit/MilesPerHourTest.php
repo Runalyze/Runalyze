@@ -1,8 +1,8 @@
 <?php
 
-namespace Runalyze\Tests\Metrics\Pace\Unit;
+namespace Runalyze\Tests\Metrics\Velocity\Unit;
 
-use Runalyze\Metrics\Pace\Unit\MilesPerHour;
+use Runalyze\Metrics\Velocity\Unit\MilesPerHour;
 
 class MilesPerHourTest extends \PHPUnit_Framework_TestCase
 {
