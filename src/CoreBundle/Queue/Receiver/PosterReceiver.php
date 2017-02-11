@@ -2,14 +2,13 @@
 
 namespace Runalyze\Bundle\CoreBundle\Queue\Receiver;
 
-use Bernard\Message\DefaultMessage;
+use Runalyze\Bundle\CoreBundle\Component\Tool\Poster\FileHandler;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Poster\GeneratePoster;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Poster\SvgToPngConverter;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\AccountRepository;
 use Runalyze\Bundle\CoreBundle\Entity\Sport;
 use Runalyze\Bundle\CoreBundle\Entity\SportRepository;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Poster\GenerateJsonData;
 
 class PosterReceiver
@@ -30,23 +29,30 @@ class PosterReceiver
     /** @var SvgToPngConverter */
     protected $svgToPng;
 
+    /** @var FileHandler */
+    protected $fileHandler;
+
     /** @var $kernelRootDir */
     protected $kernelRootDir;
 
     /**
-     * PosterReceiver constructor
+     * PosterReceiver constructor.
      * @param AccountRepository $accountRepository
      * @param SportRepository $sportRepository
      * @param GenerateJsonData $generateJsonData
      * @param GeneratePoster $generatePoster
+     * @param SvgToPngConverter $svgToPng
+     * @param FileHandler $posterFileHandler
+     * @param $kernelRootDir
      */
-    public function __construct(AccountRepository $accountRepository, SportRepository $sportRepository, GenerateJsonData $generateJsonData, GeneratePoster $generatePoster, SvgToPngConverter $svgToPng, $kernelRootDir)
+    public function __construct(AccountRepository $accountRepository, SportRepository $sportRepository, GenerateJsonData $generateJsonData, GeneratePoster $generatePoster, SvgToPngConverter $svgToPng, FileHandler $posterFileHandler, $kernelRootDir)
     {
         $this->accountRepository = $accountRepository;
         $this->sportRepository = $sportRepository;
         $this->generateJsonData = $generateJsonData;
         $this->generatePoster = $generatePoster;
         $this->svgToPng = $svgToPng;
+        $this->fileHandler = $posterFileHandler;
         $this->kernelRootDir = $kernelRootDir;
     }
 
@@ -67,12 +73,12 @@ class PosterReceiver
 
         /** @var SvgToPngConverter $svgToPng */
         $svgToPng = $this->svgToPng;
-        $svgToPng->setHeight('9000');
+        $svgToPng->setHeight($message->get('size'));
 
         foreach ($message->get('types') as $type) {
             $posterGenerator->buildCommand($type, $jsonFiles->getPathToJsonFiles(), $message->get('year'), $account->getUsername(), $message->get('title'));
             $svg = $posterGenerator->generate();
-            $svgToPng->convert($svg, $this->exportDirectory().$this->buildFinalFileName($account, $sport, $message->get('year'), $type));
+            $svgToPng->convert($svg, $this->exportDirectory().$this->fileHandler->buildFinalFileName($account, $sport, $message->get('year'), $type, $message->get('size')));
             $posterGenerator->deleteSvg();
         }
 
@@ -81,16 +87,11 @@ class PosterReceiver
 
     }
 
+    /**
+     * @return string
+     */
     private function exportDirectory() {
         return $this->kernelRootDir.'/../data/poster/';
-    }
-
-    private function buildFinalFileName(Account $account, Sport $sport, $year, $type) {
-        return $account->getId().'-'.$this->filesystemFriendlyName($sport->getName()).'-'.$year.'-'.$type.'.png';
-    }
-
-    private function filesystemFriendlyName($string) {
-        return preg_replace('~[^a-zA-Z0-9]+~', '', $string);;
     }
 
 }

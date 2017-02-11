@@ -36,9 +36,9 @@
 
     <div class="panel-heading panel-sub-heading">
         <h1>{% trans %}Previously generated posters{% endtrans %}</h1>
-        {% for file in listing %}
+        {% for filename, size in listing %}
         <p class="file">
-            <a href="{{ url('poster-download', {'name': file.getFilename}) }}">{{ file.getFilename }}, {{ file.getSize|filesize }}</a>
+            <a href="{{ url('poster-download', {'name': filename}) }}">{{ filename }}, {{ size|filesize }}</a>
         </p>
         {% endfor %}
 

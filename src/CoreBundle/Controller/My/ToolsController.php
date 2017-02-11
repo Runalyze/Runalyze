@@ -186,7 +186,8 @@ class ToolsController extends Controller
                 'year' => $formdata['year'],
                 'types' => $formdata['postertype'],
                 'sportid' => $formdata[ 'sport'],
-                'title' => $formdata[ 'title']
+                'title' => $formdata[ 'title'],
+                'size' => $formdata['size']
             ));
             $this->get('bernard.producer')->produce($message);
         }
@@ -201,7 +202,7 @@ class ToolsController extends Controller
     }
 
     /**
-     * @Route("/my/tools/poster/{name}", name="poster-download")
+     * @Route("/my/tools/poster/{name}", name="poster-download", requirements={"name": ".+"})
      * @Security("has_role('ROLE_USER')")
      */
     public function posterDownloadAction(Account $account, $name)
