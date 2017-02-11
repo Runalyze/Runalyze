@@ -1,0 +1,49 @@
+{% extends 'base_logged_in.twig' %}
+
+{% block content %}
+    <div class="panel-heading">
+        <h1><a href="{{ url('poster') }}">{% trans %}Poster generator{% endtrans %}</a></h1>
+    </div>
+
+    <div class="panel-content">
+
+        {% block toolContent %}
+        <div class="panel-content">
+            <div class="c">
+                <img src="{{ asset('assets/images/poster-collage.png') }}">
+            </div>
+            <p class="info">{% trans %}Based on your data RUNALYZE can generate some posters for you. Poster generations are performed in the background{% endtrans %}</p>
+            {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'ajax no-automatic-reloads'}, 'action': url('poster')}) }}
+            <fieldset>
+
+                {{ form_row(form.postertype, {'label': 'Choose postertype(s)'|trans}) }}
+                {{ form_row(form.sport, {'label': 'Choose sport'|trans}) }}
+                {{ form_row(form.year, {'label': 'Choose year'|trans}) }}
+                {{ form_row(form.title, {'label': 'Poster title'|trans}) }}
+                {{ form_row(form.size, {'label': 'Choose year'|trans}) }}
+                {{ form_rest(form) }}
+
+            <div class="c">
+                <input type="submit" value="{% trans %}Generate posters{% endtrans %}">
+            </div>
+            </fieldset>
+            {{ form_end(form) }}
+
+
+        </div>
+
+        {% endblock %}
+
+    <div class="panel-heading panel-sub-heading">
+        <h1>{% trans %}Previously generated posters{% endtrans %}</h1>
+        {% for file in listing %}
+        <p class="file">
+            <a href="{{ url('poster-download', {'name': file.getFilename}) }}">{{ file.getFilename }}, {{ file.getSize|filesize }}</a>
+        </p>
+        {% endfor %}
+
+        <p class="warning">{% trans with {'%days%': posterStoragePeriod }%}Please download the posters within %days% days{% endtrans %}</p>
+    </div>
+    </div>
+
+{% endblock %}

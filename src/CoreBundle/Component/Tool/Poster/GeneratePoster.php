@@ -3,6 +3,8 @@
 namespace Runalyze\Bundle\CoreBundle\Component\Tool\Poster;
 
 use Symfony\Component\Process\Process;
+use Symfony\Component\Filesystem\Filesystem;
+
 
 /**
  * Class GeneratePoster
@@ -43,24 +45,37 @@ class GeneratePoster
     }
 
     public function generate() {
-
         $builder = new Process($this->python3path.' create_poster.py '.implode(' ', $this->parameter));
-        $builder->setWorkingDirectory($this->pathToRepository())
-                ->run();
+        $builder->setWorkingDirectory($this->pathToRepository())->run();
         return $this->pathToSvgDirectory().$this->filename;
 
     }
 
-    public function buildCommand($type, $jsondir, $year, $athlete) {
+    /**
+     * @param string $type
+     * @param string $jsondir
+     * @param int $year
+     * @param string $athlete
+     * @param null|string $title
+     */
+    public function buildCommand($type, $jsondir, $year, $athlete, $title) {
         $this->randomFileName($athlete, $year);
         $this->parameter[] = '--json-dir '.$jsondir;
         $this->parameter[] = '--athlete '.$athlete;
         $this->parameter[] = '--year '.$year;
         $this->parameter[] = '--output '.$this->pathToSvgDirectory().$this->filename;
         $this->parameter[] = '--type '.$type;
+        if (!empty($title)) {
+            $this->parameter[] = '--title '.$title;
+        }
     }
 
     public function availablePosterTypes() {
         return ['grid', 'calendar', 'circular', 'heatmap'];
+    }
+
+    public function deleteSvg() {
+        $filesystem = new Filesystem();
+        $filesystem->remove($this->pathToSvgDirectory().$this->filename);
     }
 }

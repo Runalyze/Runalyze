@@ -54,13 +54,14 @@ class PosterType extends AbstractType
     {
         $builder
             ->add('postertype', ChoiceType::class, array(
-                'expanded' => true,
                 'multiple' => true,
                 'choices' => array(
-                    'Calendar' => 'calendar',
                     'Circular' => 'circular',
-                    'Grid'     => 'Grid',
-                    'Heatmap'  => 'Heatmap')
+                    'Calendar' => 'calendar',
+                    'Grid'     => 'grid',
+                    'Heatmap'  => 'heatmap'),
+                'attr' => ['class' => 'chosen-select full-size']
+
             ))
             ->add('year', ChoiceType::class, [
                 'choices' => $this->TrainingRepository->getActiveYearsFor($this->getAccount()),
@@ -77,7 +78,16 @@ class PosterType extends AbstractType
                     /** @var Sport $sport */
                     return $sport->getName();
                 },
+                'choice_value' => 'getId',
             ])
+            ->add('size', ChoiceType::class, array(
+                'choices' => array(
+                    'DIN A4' => 4000,
+                    'DIN A3' => 5000,
+                    'DIN A2' => 7000,
+                    'DIN A1' => 10000,
+                    'DIN A0' => 14000),
+            ))
         ;
     }
 

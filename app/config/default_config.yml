@@ -29,3 +29,4 @@ parameters:
   smtp_security:
   smtp_username:
   smtp_password:
+  poster_storage_period: 5

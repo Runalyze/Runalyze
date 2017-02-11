@@ -158,6 +158,9 @@ services:
   app.poster.generate_poster:
     class: Runalyze\Bundle\CoreBundle\Component\Tool\Poster\GeneratePoster
     arguments: ['%kernel.root_dir%', '%python3_path%']
+  app.poster.filehandler:
+    class: Runalyze\Bundle\CoreBundle\Component\Tool\Poster\FileHandler
+    arguments: ['%kernel.root_dir%']
   app.converter.svg_to_png:
     class: Runalyze\Bundle\CoreBundle\Component\Tool\Poster\SvgToPngConverter
     arguments: ['%rsvg_path%']

@@ -6,6 +6,8 @@ use Runalyze\Activity\Distance;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Anova\AnovaDataQuery;
 use Runalyze\Bundle\CoreBundle\Component\Tool\DatabaseCleanup\JobGeneral;
 use Runalyze\Bundle\CoreBundle\Component\Tool\DatabaseCleanup\JobLoop;
+use Runalyze\Bundle\CoreBundle\Component\Tool\Poster\FileHandler;
+use Runalyze\Bundle\CoreBundle\Component\Tool\Poster\Listing;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Table\GeneralPaceTable;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Table\VdotRaceResultsTable;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Table\VdotPaceTable;
@@ -175,23 +177,37 @@ class ToolsController extends Controller
      */
     public function posterAction(Request $request, Account $account)
     {
-        $this->get('app.poster.generate_json');
-
-
-        $message = new DefaultMessage('posterGenerator', array(
-            'accountid' => $account->getId(),
-            'year' => 2012,
-            'types' => ['circular', 'calendar', 'grid', 'heatmap'],
-            'sportid' => 1
-        ));
-        $this->get('bernard.producer')->produce($message);
-
         $form = $this->createForm(PosterType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted()) {
+            $formdata = $request->request->get($form->getName());
+            $message = new DefaultMessage('posterGenerator', array(
+                'accountid' => $account->getId(),
+                'year' => $formdata['year'],
+                'types' => $formdata['postertype'],
+                'sportid' => $formdata[ 'sport'],
+                'title' => $formdata[ 'title']
+            ));
+            $this->get('bernard.producer')->produce($message);
+        }
 
-        return $this->render('tools/poster/base.html.twig', [
-            'form' => $form->createView()
+        /** @var Listing $posterListing */
+        $posterListing = $this->get('app.poster.filehandler');
+        return $this->render('tools/poster.html.twig', [
+            'form' => $form->createView(),
+            'posterStoragePeriod' => $this->getParameter('poster_storage_period'),
+            'listing' => $posterListing->getFileList($account)
         ]);
+    }
 
+    /**
+     * @Route("/my/tools/poster/{name}", name="poster-download")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function posterDownloadAction(Account $account, $name)
+    {
+            /** @var FileHandler */
+            return $this->get('app.poster.filehandler')->getPosterDownloadResponse($account, $name);
     }
 
     /**

@@ -70,10 +70,14 @@ class PosterReceiver
         $svgToPng->setHeight('9000');
 
         foreach ($message->get('types') as $type) {
-            $posterGenerator->buildCommand($type, $jsonFiles->getPathToJsonFiles(), $message->get('year'), $account->getUsername());
+            $posterGenerator->buildCommand($type, $jsonFiles->getPathToJsonFiles(), $message->get('year'), $account->getUsername(), $message->get('title'));
             $svg = $posterGenerator->generate();
             $svgToPng->convert($svg, $this->exportDirectory().$this->buildFinalFileName($account, $sport, $message->get('year'), $type));
+            $posterGenerator->deleteSvg();
         }
+
+        $jsonFiles->deleteGeneratedFiles();
+
 
     }
 
@@ -82,7 +86,11 @@ class PosterReceiver
     }
 
     private function buildFinalFileName(Account $account, Sport $sport, $year, $type) {
-        return $account->getId().'-'.$sport->getId().'-'.$year.'-'.$type.'.png';
+        return $account->getId().'-'.$this->filesystemFriendlyName($sport->getName()).'-'.$year.'-'.$type.'.png';
+    }
+
+    private function filesystemFriendlyName($string) {
+        return preg_replace('~[^a-zA-Z0-9]+~', '', $string);;
     }
 
 }

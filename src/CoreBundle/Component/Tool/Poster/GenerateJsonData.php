@@ -4,11 +4,8 @@ namespace Runalyze\Bundle\CoreBundle\Component\Tool\Poster;
 
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\RaceresultRepository;
-use Runalyze\Bundle\CoreBundle\Entity\Raceresult;
 use Runalyze\Bundle\CoreBundle\Entity\Sport;
-use Runalyze\Bundle\CoreBundle\Entity\SportRepository;
 use Runalyze\Bundle\CoreBundle\Entity\TrainingRepository;
-use Runalyze\Metrics\Common\UnitInterface;
 use Doctrine\ORM\Query;
 use Runalyze\Model;
 use Symfony\Component\Filesystem\Filesystem;
@@ -120,7 +117,7 @@ class GenerateJsonData
     }
 
     /**
-     * @param Account $athlete
+     * @param Account $account
      * @param Sport $sport
      * @param int $year
      */
