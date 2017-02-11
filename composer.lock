@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "63eb7e1f50416baf499a04ecaea8a6e0",
-    "content-hash": "0c76de5294b992e13354fb6b5a97c6ee",
+    "hash": "c00b26be8238afea43f5fa9be68a436f",
+    "content-hash": "8792a03758da5beb63835ffd450034b0",
     "packages": [
         {
             "name": "beberlei/DoctrineExtensions",
@@ -3755,6 +3755,41 @@
             "time": "2015-10-02 06:51:40"
         },
         {
+            "name": "runalyze/playground",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Runalyze/runalyze-playground.git",
+                "reference": "adf5ab9dc16524bafe3fd3eb9bd9147c5657c5cb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Runalyze/runalyze-playground/zipball/adf5ab9dc16524bafe3fd3eb9bd9147c5657c5cb",
+                "reference": "adf5ab9dc16524bafe3fd3eb9bd9147c5657c5cb",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Runalyze\\Bundle\\PlaygroundBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "RUNALYZE Team",
+                    "email": "mail@runalyze.com",
+                    "homepage": "https://runalyze.com"
+                }
+            ],
+            "description": "playground for runalyze - where new ideas grow",
+            "keywords": [
+                "runalyze",
+                "symfony3"
+            ],
+            "time": "2016-09-28 06:13:55"
+        },
+        {
             "name": "sebastian/comparator",
             "version": "1.2.2",
             "source": {
@@ -4182,7 +4217,8 @@
     "stability-flags": {
         "league/geotools": 0,
         "swiftmailer/swiftmailer": 0,
-        "jms/translation-bundle": 20
+        "jms/translation-bundle": 20,
+        "runalyze/playground": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

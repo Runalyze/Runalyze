@@ -17,11 +17,11 @@ class AppKernel extends \Symfony\Component\HttpKernel\Kernel
     	    new Symfony\Bundle\SecurityBundle\SecurityBundle(),
     	    new Symfony\Bundle\MonologBundle\MonologBundle(),
     	    new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
-            new \Doctrine\Bundle\DoctrineCacheBundle\DoctrineCacheBundle(),
+            new Doctrine\Bundle\DoctrineCacheBundle\DoctrineCacheBundle(),
     	    new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Symfony\Bundle\TwigBundle\TwigBundle(),
-            new \Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
+            new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
             new Runalyze\Bundle\CoreBundle\CoreBundle(),
             new JMS\TranslationBundle\JMSTranslationBundle(),
             new Bernard\BernardBundle\BernardBundle(),
@@ -30,6 +30,7 @@ class AppKernel extends \Symfony\Component\HttpKernel\Kernel
         if ('dev' == $this->getEnvironment()) {
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Symfony\Bundle\DebugBundle\DebugBundle();
+            $bundles[] = new Runalyze\Bundle\PlaygroundBundle\PlaygroundBundle();
         }
 
         return $bundles;
@@ -50,13 +51,15 @@ class AppKernel extends \Symfony\Component\HttpKernel\Kernel
     protected function configureRoutes(RouteCollectionBuilder $routes)
     {
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {
-            $routes->mount('/_wdt', $routes->import('@WebProfilerBundle/Resources/config/routing/wdt.xml'));
-            $routes->mount('/_profiler', $routes->import('@WebProfilerBundle/Resources/config/routing/profiler.xml'));
-    	    $routes->mount('/_error', $routes->import('@TwigBundle/Resources/config/routing/errors.xml'));
+            $routes->import('@WebProfilerBundle/Resources/config/routing/wdt.xml', '/_wdt');
+            $routes->import('@WebProfilerBundle/Resources/config/routing/profiler.xml', '/_profiler');
+    	    $routes->import('@TwigBundle/Resources/config/routing/errors.xml', '/_error');
             $routes->add('/_trans', '@JMSTranslationBundle/Controller/TranslateController');
+
+            $routes->import('@PlaygroundBundle/Resources/config/routing.yml', '/_playground');
     	}
 
-        $routes->mount('/', $routes->import('@CoreBundle/Controller', 'annotation'));
+        $routes->import('@CoreBundle/Controller', '/', 'annotation');
     }
 
     /**
