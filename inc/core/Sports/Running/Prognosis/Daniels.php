@@ -84,17 +84,17 @@ class Daniels implements PrognosisInterface
         return VDOT::REASONABLE_MINIMUM <= $this->Vdot && $this->Vdot <= VDOT::REASONABLE_MAXIMUM;
     }
 
-	public function getSeconds($distance)
+    public function getSeconds($distance)
     {
         return self::getPrognosisInSecondsFor($this->getAdjustedVdotForDistanceIfWanted($distance), $distance);
-	}
+    }
 
     /**
      * @param float $distance [km]
      * @param float $vdot
      * @return float|int|null
      */
-	public function getSecondsFor($distance, $vdot)
+    public function getSecondsFor($distance, $vdot)
     {
         return $this->setVdot($vdot)->getSeconds($distance);
     }
@@ -111,7 +111,7 @@ class Daniels implements PrognosisInterface
         }
 
         return (new Bisection($vdotToReach, round(2 * 60 * $distance), round(10 * 60 * $distance),
-            function($seconds) use ($distance) {
+            function ($seconds) use ($distance) {
                 return VDOT::formula($distance, $seconds);
             }
         ))->findValue();

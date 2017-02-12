@@ -1,27 +1,35 @@
 <?php
 
-namespace Runalyze\Calculation\Distribution;
+namespace Runalyze\Mathematics\Distribution;
 
+/**
+ * Multiple time series
+ *
+ * Collection of multiple empirical distributions.
+ * This class is way more efficient to calculate time series statistics for multiple series with
+ * same time axis.
+ */
 class MultipleTimeSeries
 {
-	/** @var Empirical[] */
-	protected $Distributions = [];
+    /** @var EmpiricalDistribution[] */
+    protected $Distributions = [];
 
     /** @var float[] */
     protected $Quantiles = [];
 
-	/**
-	 * @param float[] $quantiles
-	 */
-	public function setQuantiles(array $quantiles)
+    /**
+     * @param float[] $quantiles
+     */
+    public function setQuantiles(array $quantiles)
     {
         $this->Quantiles = $quantiles;
-	}
+    }
 
     /**
      * @param array[] $dataOfMultipleSeries array of multiple data series, array keys are used to get single distributions
      * @param array $time continuous time points
      * @param array $keysThatAllowZero by default '0' is removed from all histograms
+     *
      * @throws \InvalidArgumentException
      */
     public function generateDistributionsFor(array $dataOfMultipleSeries, array $time, array $keysThatAllowZero = [])
@@ -31,6 +39,7 @@ class MultipleTimeSeries
         }
 
         $histograms = $this->generateHistogramsFor($dataOfMultipleSeries, $time);
+
         $this->removeZerosFrom($histograms, array_diff(array_keys($dataOfMultipleSeries), $keysThatAllowZero));
         $this->generateDistributions($histograms);
     }
@@ -84,7 +93,7 @@ class MultipleTimeSeries
     protected function generateDistributions(array $histograms)
     {
         foreach ($histograms as $key => $histogram) {
-            $this->Distributions[$key] = new Empirical($histogram, true);
+            $this->Distributions[$key] = new EmpiricalDistribution($histogram, true);
             $this->Distributions[$key]->calculateStatistic($this->Quantiles);
         }
     }
@@ -106,12 +115,14 @@ class MultipleTimeSeries
 
     /**
      * @param mixed $key key must have been a key in array of data series
-     * @return Empirical
+     * @return EmpiricalDistribution
+     *
+     * @throws \InvalidArgumentException
      */
     public function getDistribution($key)
     {
         if (!isset($this->Distributions[$key])) {
-            throw new \InvalidArgumentException('Unknown distribution key "'.$key.'"');
+            throw new \InvalidArgumentException('Unknown distribution key "' . $key . '"');
         }
 
         return $this->Distributions[$key];

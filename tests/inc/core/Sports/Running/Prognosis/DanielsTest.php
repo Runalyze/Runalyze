@@ -7,14 +7,14 @@ use Runalyze\Sports\Running\Prognosis\Daniels;
 class DanielsTest extends \PHPUnit_Framework_TestCase
 {
     /** @var Daniels */
-	protected $Daniels;
+    protected $Daniels;
 
-	protected function setUp()
+    protected function setUp()
     {
-		$this->Daniels = new Daniels();
-	}
+        $this->Daniels = new Daniels();
+    }
 
-	public function testWithoutReferenceTime()
+    public function testWithoutReferenceTime()
     {
         $this->assertFalse($this->Daniels->areValuesValid());
     }
@@ -25,16 +25,16 @@ class DanielsTest extends \PHPUnit_Framework_TestCase
 
         $distances = array(5.0, 10.0, 21.0975, 42.195);
         $requirements = array(
-            30 => array([0, 30, 40], [1,  3, 46], [2, 21,  4], [4, 49, 17]),
-            35 => array([0, 27,  0], [0, 56,  3], [2,  4, 13], [4, 16, 13]),
-            40 => array([0, 24,  8], [0, 50,  3], [1, 50, 59], [3, 49, 45]),
+            30 => array([0, 30, 40], [1, 3, 46], [2, 21, 4], [4, 49, 17]),
+            35 => array([0, 27, 0], [0, 56, 3], [2, 4, 13], [4, 16, 13]),
+            40 => array([0, 24, 8], [0, 50, 3], [1, 50, 59], [3, 49, 45]),
             45 => array([0, 21, 50], [0, 45, 16], [1, 40, 20], [3, 28, 26]),
             50 => array([0, 19, 57], [0, 41, 21], [1, 31, 35], [3, 10, 49]),
-            55 => array([0, 18, 22], [0, 38,  6], [1, 24, 18], [2, 56,  1]),
-            60 => array([0, 17,  3], [0, 35, 22], [1, 18,  9], [2, 43, 25]),
-            65 => array([0, 15, 54], [0, 33,  1], [1, 12, 53], [2, 32, 35]),
-            70 => array([0, 14, 55], [0, 31,  0], [1,  8, 21], [2, 23, 10]),
-            75 => array([0, 14,  3], [0, 29, 14], [1,  4, 23], [2, 14, 55])
+            55 => array([0, 18, 22], [0, 38, 6], [1, 24, 18], [2, 56, 1]),
+            60 => array([0, 17, 3], [0, 35, 22], [1, 18, 9], [2, 43, 25]),
+            65 => array([0, 15, 54], [0, 33, 1], [1, 12, 53], [2, 32, 35]),
+            70 => array([0, 14, 55], [0, 31, 0], [1, 8, 21], [2, 23, 10]),
+            75 => array([0, 14, 3], [0, 29, 14], [1, 4, 23], [2, 14, 55])
         );
 
         foreach ($requirements as $vdot => $times) {
@@ -44,7 +44,7 @@ class DanielsTest extends \PHPUnit_Framework_TestCase
                 $this->assertEquals(
                     $time[0] * 60 * 60 + $time[1] * 60 + $time[2],
                     $this->Daniels->getSeconds($distances[$i]),
-                    'Failure for VDOT = '.$vdot.' at '.$distances[$i].' km ',
+                    'Failure for VDOT = ' . $vdot . ' at ' . $distances[$i] . ' km ',
                     $distances[$i] * 1.5
                 );
             }

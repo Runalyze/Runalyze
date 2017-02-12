@@ -5,17 +5,18 @@
  */
 $PLUGINKEY = 'RunalyzePluginPanel_Rechenspiele';
 
-use Runalyze\Calculation\Performance;
-use Runalyze\Calculation\BasicEndurance;
-use Runalyze\Calculation\Monotony;
-use Runalyze\Configuration;
-use Runalyze\Calculation\JD\VDOT;
-use Runalyze\Calculation\JD\VDOTCorrector;
 use Runalyze\Activity\Distance;
 use Runalyze\Activity\Duration;
+use Runalyze\Calculation\BasicEndurance;
+use Runalyze\Calculation\JD\VDOT;
+use Runalyze\Calculation\JD\VDOTCorrector;
+use Runalyze\Calculation\Performance;
+use Runalyze\Configuration;
+use Runalyze\Sports\Performance\Model\TsbModel;
+use Runalyze\Sports\Performance\Monotony;
+use Runalyze\Util\LocalTime;
 use Runalyze\Util\Time;
 use Runalyze\View\Tooltip;
-use Runalyze\Util\LocalTime;
 
 /**
  * Class: RunalyzePluginPanel_Rechenspiele
@@ -131,7 +132,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 		$ModelQuery = new Performance\ModelQuery();
 		$ModelQuery->execute(DB::getInstance());
 
-		$TSBmodel = new Performance\TSB(
+		$TSBmodel = new TsbModel(
 			$ModelQuery->data(),
 			Configuration::Trimp()->daysForCTL(),
 			Configuration::Trimp()->daysForATL()
@@ -142,7 +143,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 		$MonotonyQuery->setRange(time()-(Monotony::DAYS-1)*DAY_IN_S, time());
 		$MonotonyQuery->execute(DB::getInstance());
 
-		$Monotony = new Monotony($MonotonyQuery->data());
+		$Monotony = new Monotony($MonotonyQuery->data(), 2 * Configuration::Data()->maxATL());
 		$Monotony->calculate();
 
 		$VDOT        = Configuration::Data()->vdot();
@@ -430,7 +431,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 		$ModelQuery = new Performance\ModelQuery();
 		$ModelQuery->execute(DB::getInstance());
 
-		$TSBmodel = new Performance\TSB(
+		$TSBmodel = new TsbModel(
 			$ModelQuery->data(),
 			Configuration::Trimp()->daysForCTL(),
 			Configuration::Trimp()->daysForATL()

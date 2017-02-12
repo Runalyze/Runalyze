@@ -6,9 +6,9 @@
 
 namespace Runalyze\Calculation\StrideLength;
 
+use Runalyze\Mathematics\Distribution\TimeSeries;
 use Runalyze\Model\Activity;
 use Runalyze\Model\Trackdata;
-use Runalyze\Calculation\Distribution\TimeSeries;
 
 /**
  * Calculate stride length
