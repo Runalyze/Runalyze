@@ -158,6 +158,9 @@ services:
   app.poster.generate_poster:
     class: Runalyze\Bundle\CoreBundle\Component\Tool\Poster\GeneratePoster
     arguments: ["%kernel.root_dir%", "%python3_path%", "@app.repository.training"]
+  app.poster.availability:
+    class: Runalyze\Bundle\CoreBundle\Component\Tool\Poster\Availability
+    arguments: ["%rsvg_path%", "%python3_path%"]
   app.poster.filehandler:
     class: Runalyze\Bundle\CoreBundle\Component\Tool\Poster\FileHandler
     arguments: ["%kernel.root_dir%"]

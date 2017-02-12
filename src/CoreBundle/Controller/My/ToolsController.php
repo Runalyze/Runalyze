@@ -218,6 +218,8 @@ class ToolsController extends Controller
      */
     public function overviewAction()
     {
-        return $this->render('tools/tools_list.html.twig');
+        return $this->render('tools/tools_list.html.twig', [
+            'posterAvailable' => $this->get('app.poster.availability')->isAvailable()
+        ]);
     }
 }
