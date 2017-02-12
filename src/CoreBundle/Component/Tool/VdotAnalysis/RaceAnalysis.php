@@ -6,7 +6,7 @@ use Runalyze\Activity\Distance;
 use Runalyze\Activity\Duration;
 use Runalyze\Calculation\JD\VDOTCorrector;
 use Runalyze\Model;
-use Runalyze\Calculation\Prognosis\Daniels;
+use Runalyze\Sports\Running\Prognosis\Daniels;
 use Runalyze\Util\LocalTime;
 
 class RaceAnalysis
@@ -81,7 +81,7 @@ class RaceAnalysis
     }
 
     /**
-     * @return int
+     * @return int [bpm]
      */
     public function getHeartRateInBpm()
     {
@@ -158,20 +158,16 @@ class RaceAnalysis
 
     /**
      * @param float $vdot
-     * @param float $distance
-     * @return string
+     * @param float $distance [km]
+     * @return float [s]
      */
     protected function prognosisInSecondsFor($vdot, $distance) {
-        $Prognosis = new Daniels();
-        $Prognosis->adjustVDOT(false);
-        $Prognosis->setVDOT($vdot);
-
-        return $Prognosis->inSeconds($distance);
+        return (new Daniels($vdot))->getSeconds($distance);
     }
 
     /**
      * @param float $vdot
-     * @param float $distance
+     * @param float $distance [km]
      * @return string
      */
     protected function prognosisFor($vdot, $distance) {
@@ -179,7 +175,7 @@ class RaceAnalysis
     }
 
     /**
-     * @param int $seconds
+     * @param int $seconds [s]
      * @return string
      */
     protected function formatTime($seconds) {

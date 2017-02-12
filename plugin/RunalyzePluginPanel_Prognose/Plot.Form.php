@@ -7,7 +7,6 @@
 
 use Runalyze\Calculation\BasicEndurance;
 use Runalyze\Calculation\JD;
-use Runalyze\Calculation\Prognosis;
 use Runalyze\Configuration;
 use Runalyze\Activity\Distance;
 use Runalyze\Util\LocalTime;
@@ -30,11 +29,7 @@ $PrognosisWithBasicEndurance = array();
 $BasicEndurance = array();
 $Results = array();
 
-$Strategy = new Prognosis\Daniels();
-$Strategy->adjustVDOT(false);
-
-$PrognosisObj = new Prognosis\Prognosis();
-$PrognosisObj->setStrategy($Strategy);
+$PrognosisObj = new \Runalyze\Sports\Running\Prognosis\Daniels();
 
 $BasicEnduranceObj = new BasicEndurance();
 $BasicEnduranceObj->readSettingsFromConfiguration();
@@ -114,16 +109,16 @@ if (START_TIME != time()) {
 				$longJogPoints /= pow($BasicEnduranceObj->getTargetLongjogKmPerWeek(), 2);
 				$BasicEndurance[$index] = $BasicEnduranceObj->asArray(0, ['km' => $currentKmSum, 'sum' => $longJogPoints])['percentage'];
 
-				$Strategy->setVDOT($Data[$currentIndex]['vdot']);
-				$Strategy->setBasicEnduranceForAdjustment($BasicEndurance[$index]);
-				$Strategy->adjustVDOT(true);
-				$prognosisInSecondsWithBasicEndurance = $PrognosisObj->inSeconds($distance);
+				$PrognosisObj->setVdot($Data[$currentIndex]['vdot']);
+				$PrognosisObj->setBasicEndurance($BasicEndurance[$index]);
+				$PrognosisObj->adjustForBasicEndurance(true);
+				$prognosisInSecondsWithBasicEndurance = $PrognosisObj->getSeconds($distance);
 
 				if ($prognosisInSecondsWithBasicEndurance > 0) {
 					$PrognosisWithBasicEndurance[$index] = $prognosisInSecondsWithBasicEndurance * 1000;
 
-					$Strategy->adjustVDOT(false);
-					$Prognosis[$index] = $PrognosisObj->inSeconds($distance) * 1000;
+					$PrognosisObj->adjustForBasicEndurance(false);
+					$Prognosis[$index] = $PrognosisObj->getSeconds($distance) * 1000;
 				}
 			}
 		}

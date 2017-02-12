@@ -1,8 +1,4 @@
 <?php
-/**
- * This file contains class::AbstractStrategy
- * @package Runalyze\Calculation\Prognosis
- */
 
 namespace Runalyze\Calculation\Prognosis;
 
@@ -11,35 +7,19 @@ use Runalyze\Configuration;
 
 /**
  * Abstract strategy to calculate a race prognosis
- * 
- * @author Hannes Christiansen
- * @package Runalyze\Calculation\Prognosis
+ *
+ * @deprecated since v3.3
  */
-abstract class AbstractStrategy {
+class TopResults
+{
 	/**
-	 * Running setup from database
-	 */
-	abstract public function setupFromDatabase();
-
-	/**
-	 * Prognosis in seconds
-	 */
-	abstract public function inSeconds($distance);
-
-	/**
-	 * @return bool
-	 */
-	public function valuesAreValid() {
-		return true;
-	}
-
-	/**
-	 * Get top results (according to vdot_by_time
+	 * Get top results (according to vdot_by_time)
 	 * @param int $numberOfResults number of results to return
 	 * @param float $minimalDistanceRequired in km
 	 * @return array
 	 */
-	public function getTopResults($numberOfResults = 1, $minimalDistanceRequired = 3) {
+	public function getTopResults($numberOfResults = 1, $minimalDistanceRequired = 3.0)
+    {
 		$Query = '
 			SELECT
 				`time`, `distance`, `s`, `vdot_by_time`

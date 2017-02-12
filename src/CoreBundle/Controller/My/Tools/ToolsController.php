@@ -7,7 +7,6 @@ use Runalyze\Bundle\CoreBundle\Component\Tool\Anova\AnovaDataQuery;
 use Runalyze\Bundle\CoreBundle\Component\Tool\DatabaseCleanup\JobGeneral;
 use Runalyze\Bundle\CoreBundle\Component\Tool\DatabaseCleanup\JobLoop;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Table\GeneralPaceTable;
-use Runalyze\Bundle\CoreBundle\Component\Tool\Table\VdotRaceResultsTable;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Table\VdotPaceTable;
 use Runalyze\Bundle\CoreBundle\Component\Tool\VdotAnalysis\VdotAnalysis;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
@@ -15,6 +14,7 @@ use Runalyze\Bundle\CoreBundle\Form\Tools\DatabaseCleanupType;
 use Runalyze\Bundle\CoreBundle\Form\Tools\Anova\AnovaData;
 use Runalyze\Bundle\CoreBundle\Form\Tools\Anova\AnovaType;
 use Runalyze\Metrics\Common\JavaScriptFormatter;
+use Runalyze\Sports\Running\Prognosis\Daniels;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -88,11 +88,11 @@ class ToolsController extends Controller
      */
     public function tableVdotRaceResultAction()
     {
-        $distances = [1, 3, 5, 10, 21.1, 42.2, 50];
         return $this->render('tools/tables/vdot.html.twig', [
             'currentVdot' => $this->get('app.configuration_manager')->getList()->getCurrentVdot(),
-            'distances' => array_map(function($km) { return (new Distance($km))->stringAuto(); }, $distances),
-            'vdots' => (new VdotRaceResultsTable())->getVdotRaceResults($distances, range(30, 80))
+            'prognosis' => new Daniels(),
+            'distances' => [1.0, 3.0, 5.0, 10.0, 21.1, 42.2, 50],
+            'vdots' => range(30.0, 80.0)
         ]);
     }
 

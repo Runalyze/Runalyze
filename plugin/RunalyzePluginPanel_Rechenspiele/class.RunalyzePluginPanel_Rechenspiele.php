@@ -6,7 +6,6 @@
 $PLUGINKEY = 'RunalyzePluginPanel_Rechenspiele';
 
 use Runalyze\Calculation\Performance;
-use Runalyze\Calculation\Prognosis;
 use Runalyze\Calculation\BasicEndurance;
 use Runalyze\Calculation\Monotony;
 use Runalyze\Configuration;
@@ -562,12 +561,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 		$usedVdot = $BasicEndurance->getUsedVDOT();
 		$BEresults = $BasicEndurance->asArray();
 
-		$Strategy  = new Prognosis\Daniels();
-		$Strategy->setupFromDatabase();
-		$Strategy->setVDOT($usedVdot);
-		$Strategy->adjustVDOT(false);
-		$Prognosis = new Prognosis\Prognosis();
-		$Prognosis->setStrategy($Strategy);
+		$Prognosis = new \Runalyze\Sports\Running\Prognosis\Daniels($usedVdot);
 
 		$GeneralTable = '
 			<table class="fullwidth zebra-style">
@@ -585,7 +579,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 					</tr>
 					<tr>
 						<td>'.__('<strong>Marathon time</strong> <small>(optimal)</small>').'</td>
-						<td class="r">'.Duration::format($Prognosis->inSeconds(42.195)).'</td>
+						<td class="r">'.Duration::format($Prognosis->getSeconds(42.195)).'</td>
 						<td>&nbsp;</td>
 						<td>'.sprintf( __('<strong>Target long run</strong> <small>(%s weeks)</small>'), round($BasicEndurance->getDaysToRecognizeForLongjogs() / 7)).'</td>
 						<td class="r">'.Distance::format($BasicEndurance->getRealTargetLongjogKmPerWeek(), false, 0).'</td>
