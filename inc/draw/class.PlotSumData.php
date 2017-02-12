@@ -661,7 +661,7 @@ abstract class PlotSumData extends Plot {
 			$BasicEndurance = new BasicEndurance();
 			$BasicEndurance->readSettingsFromConfiguration();
 
-			echo HTML::info( __('Target is based on current basic endurance calculations.') );
+			echo HTML::info( __('Target is based on current marathon shape calculations.') );
 		}
 	}
 }

@@ -157,7 +157,7 @@ if (START_TIME != time()) {
 $Plot = new Plot("formverlauf_".str_replace('.', '_', $distance), 800, 450);
 
 $Plot->Data[] = array('label' => __('Prognosis'), 'color' => '#880000', 'data' => $Prognosis, 'lines' => array('show' => true), 'points' => array('show' => false), 'curvedLines' => array('apply' => false));
-$Plot->Data[] = array('label' => __('Prognosis with basic endurance'), 'color' => '#000088', 'data' => $PrognosisWithBasicEndurance, 'lines' => array('show' => true), 'points' => array('show' => false), 'curvedLines' => array('apply' => false));
+$Plot->Data[] = array('label' => __('Prognosis with marathon shape'), 'color' => '#000088', 'data' => $PrognosisWithBasicEndurance, 'lines' => array('show' => true), 'points' => array('show' => false), 'curvedLines' => array('apply' => false));
 $Plot->Data[] = array('label' => __('Result'), 'color' => '#000000', 'data' => $Results, 'lines' => array('show' => false), 'points' => array('show' => true), 'curvedLines' => array('apply' => false));
 
 $Plot->setZeroPointsToNull();

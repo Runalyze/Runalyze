@@ -41,7 +41,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	 * @return string
 	 */
 	final public function description() {
-		return __('Calculate experimental values as shape and fatigue based on TRIMP, basic endurance and your VDOT shape.');
+		return __('Calculate experimental values as shape and fatigue based on TRIMP, marathon shape and your VDOT shape.');
 	}
 
 	/**
@@ -72,8 +72,8 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 		$ShowVDOT->setTooltip( __('Predict current VDOT value') );
 		$ShowVDOT->setDefaultValue(true);
 
-		$ShowBE = new PluginConfigurationValueBool('show_basicendurance', __('Show: Basic endurance'));
-		$ShowBE->setTooltip( __('Guess current basic endurance') );
+		$ShowBE = new PluginConfigurationValueBool('show_basicendurance', __('Show: Marathon shape'));
+		$ShowBE->setTooltip( __('Guess current marathon shape') );
 		$ShowBE->setDefaultValue(true);
 
 		$ShowJD = new PluginConfigurationValueBool('show_jd_intensity', __('Show: Training points'));
@@ -209,7 +209,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 				),
 				'bar-tooltip'	=> '',
 				'value'	=> BasicEndurance::getConst().'&nbsp;&#37;'.(0 == $VDOT ? '&nbsp;<i class="fa fa-fw fa-exclamation-circle"></i>' : ''),
-				'title'	=> __('Basic&nbsp;endurance'),
+				'title'	=> __('Marathon&nbsp;shape'),
 				'small'	=> '',
 				'tooltip'	=> __('<em>Experimental value!</em><br>100 &#37; means: you had enough long runs and kilometers per week to run a good marathon, based on your current VDOT.')
 			),
@@ -552,7 +552,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	}
 
 	/**
-	 * Get fieldset for basic endurance
+	 * Get fieldset for Marathon shape
 	 * @return \FormularFieldset
 	 */
 	public function getFieldsetBasicEndurance() {
@@ -626,8 +626,8 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 		$LongjogTable .= '<p class="small">'.sprintf( __('* In general, all runs with more than %s are being considered.'),
 														Distance::format($BasicEndurance->getMinimalDistanceForLongjogs())).'</p>';
 
-		$Fieldset = new FormularFieldset( __('Basic endurance') );
-		$Fieldset->addBlock( __('Your basic endurance is based on your weekly kilometers and your long jogs.<br>'.
+		$Fieldset = new FormularFieldset( __('Marathon shape') );
+		$Fieldset->addBlock( __('Your marathon shape is based on your weekly kilometers and your long jogs.<br>'.
 								'The target is derived from the possible marathon time based on your current shape.').'<br>&nbsp;' );
 
 		if (0 == Configuration::Data()->vdot()) {
@@ -639,7 +639,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 								'That means, a long jog yesterday gives more points than a long jog two weeks ago '.
 								'and a 30k-jog gives more points than two 20k-jogs.').'<br>&nbsp;' );
 		$Fieldset->addBlock($LongjogTable);
-		$Fieldset->addBlock( __('The basic endurance is <strong>not</strong> from Jack Daniels.<br>'.
+		$Fieldset->addBlock( __('The marathon shape is <strong>not</strong> from Jack Daniels.<br>'.
 								'It\'s our own attempt to adjust the prognosis for long distances based on your current endurance.') );
 
 		return $Fieldset;

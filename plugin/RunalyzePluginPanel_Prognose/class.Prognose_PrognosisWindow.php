@@ -123,7 +123,7 @@ class Prognose_PrognosisWindow {
 		}
 
 		$this->InfoLines['jack-daniels']  = __('Your current VDOT:').' '.$CurrentShape.'. ';
-		$this->InfoLines['jack-daniels'] .= __('Your current basic endurance:').' '.BasicEndurance::getConst().' &#37;.';
+		$this->InfoLines['jack-daniels'] .= __('Your current marathon shape:').' '.BasicEndurance::getConst().' &#37;.';
 
 		$ResultLine = empty($TopResults) ? __('none') : sprintf( __('%s in %s <small>(%s)</small> and %s in %s <small>(%s)</small>'),
 				Distance::format($TopResults[0]['distance']), Duration::format($TopResults[0]['s']), (new LocalTime($TopResults[0]['time']))->format('d.m.Y'),
@@ -405,12 +405,12 @@ class Prognose_PrognosisWindow {
 		$FieldVdot->addCSSclass('hide-on-model-change');
 		$FieldVdot->addCSSclass('only-jack-daniels');
 
-		$FieldEndurance = new FormularCheckbox('endurance', __('Use Basic Endurance'));
+		$FieldEndurance = new FormularCheckbox('endurance', __('Use Marathon Shape'));
 		$FieldEndurance->setLayout( FormularFieldset::$LAYOUT_FIELD_W50 );
 		$FieldEndurance->addCSSclass('hide-on-model-change');
 		$FieldEndurance->addCSSclass('only-jack-daniels');
 
-		$FieldEnduranceValue = new FormularInput('endurance-value', __('Basic Endurance'));
+		$FieldEnduranceValue = new FormularInput('endurance-value', __('Marathon Shape'));
 		$FieldEnduranceValue->setLayout( FormularFieldset::$LAYOUT_FIELD_W50 );
 		$FieldEnduranceValue->addCSSclass('hide-on-model-change');
 		$FieldEnduranceValue->addCSSclass('only-jack-daniels');

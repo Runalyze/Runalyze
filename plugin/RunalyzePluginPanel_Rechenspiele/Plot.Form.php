@@ -193,7 +193,7 @@ $Plot->Data[] = array('label' => __('Fatigue (ATL)'), 'color' => '#CC2222', 'dat
 $Plot->Data[] = array('label' => __('avg VDOT'), 'color' => '#000000', 'data' => $VDOTs, 'yaxis' => 2);
 $Plot->Data[] = array('label' => 'TRIMP', 'color' => '#5555FF', 'data' => $TRIMPs, 'yaxis' => 3);
 $Plot->Data[] = array('label' => __('day VDOT'), 'color' => '#444444', 'data' => $VDOTsday, 'yaxis' => 2);
-$Plot->Data[] = array('label' => __('Basic endurance'), 'color' => '#CC9322', 'data' => $BasicEndurance, 'yaxis' => 4);
+$Plot->Data[] = array('label' => __('Marathon shape'), 'color' => '#CC9322', 'data' => $BasicEndurance, 'yaxis' => 4);
 
 $Plot->setMarginForGrid(5);
 $Plot->setLinesFilled(array(0));
