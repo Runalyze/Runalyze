@@ -26,8 +26,15 @@ class FileHandler
     }
 
     public function getFileList(Account $account) {
+        /** @var Finder $finder */
         $finder = new Finder();
-        $finder->files()->name($account->getId().'-*')->in($this->pathToImages());
+        $finder->files()->name($account->getId().'-*')
+            ->sort(function (\SplFileInfo $a, \SplFileInfo $b) {
+                return ($b->getMTime() - $a->getMTime());
+            })
+            ->in($this->pathToImages());
+
+
         $list = array();
         foreach($finder as $file) {
             $list[str_replace($account->getId().'-', '', $file->getBasename())] = $file->getSize();
@@ -43,7 +50,7 @@ class FileHandler
     public function getPosterDownloadResponse(Account $account, $filename) {
         $fs = new Filesystem();
         $filename = $account->getId().'-'.$filename;
-        if ($fs->exists($this->pathToImages().$filename)) {
+        if ($fs->exists($this->pathToImages().$filename))  {
             $response = new Response();
             $response->headers->set('Cache-Control', 'private');
             $response->headers->set('Content-type', 'image/png');

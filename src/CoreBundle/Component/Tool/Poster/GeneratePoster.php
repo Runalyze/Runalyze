@@ -2,8 +2,11 @@
 
 namespace Runalyze\Bundle\CoreBundle\Component\Tool\Poster;
 
+use Runalyze\Bundle\CoreBundle\Entity\TrainingRepository;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Filesystem\Filesystem;
+use Runalyze\Bundle\CoreBundle\Entity\Account;
+use Runalyze\Bundle\CoreBundle\Entity\Sport;
 
 
 /**
@@ -19,17 +22,22 @@ class GeneratePoster
 
     protected $python3path;
 
+    /** @var TrainingRepository */
+    protected $trainingRepository;
+
     protected $filename;
 
     /**
      * GenerateJsonData constructor
      * @param string $kernelRootDir
      * @param string $python3path
+     * @param TrainingRepository $trainingRepository
      */
-    public function __construct($kernelRootDir, $python3path)
+    public function __construct($kernelRootDir, $python3path, TrainingRepository $trainingRepository)
     {
         $this->kernelRootDir = $kernelRootDir;
         $this->python3path = $python3path;
+        $this->trainingRepository = $trainingRepository;
     }
 
     protected function pathToRepository() {
@@ -48,26 +56,45 @@ class GeneratePoster
         $builder = new Process($this->python3path.' create_poster.py '.implode(' ', $this->parameter));
         $builder->setWorkingDirectory($this->pathToRepository())->run();
         return $this->pathToSvgDirectory().$this->filename;
-
     }
 
     /**
      * @param string $type
      * @param string $jsondir
      * @param int $year
-     * @param string $athlete
+     * @param Account $account
+     * @param Sport $sport
      * @param null|string $title
      */
-    public function buildCommand($type, $jsondir, $year, $athlete, $title) {
-        $this->randomFileName($athlete, $year);
+    public function buildCommand($type, $jsondir, $year, Account $account, Sport $sport, $title) {
+        $fs = new Filesystem();
+        $this->randomFileName($account->getUsername(), $year);
         $this->parameter[] = '--json-dir '.$jsondir;
-        $this->parameter[] = '--athlete '.$athlete;
+        $this->parameter[] = '--athlete '.$account->getUsername();
         $this->parameter[] = '--year '.$year;
         $this->parameter[] = '--output '.$this->pathToSvgDirectory().$this->filename;
         $this->parameter[] = '--type '.$type;
-        if (!empty($title)) {
-            $this->parameter[] = '--title '.$title;
+        $this->addStatsParameter($account, $sport, $year);
+        if ($fs->exists($jsondir.'/special.params')) {
+            $this->parameter[] = file_get_contents($jsondir.'/special.params');
         }
+        if (!empty($title)) {
+            $this->parameter[] = '--title "'.$title.'"';
+        }
+    }
+
+    /**
+     * @param Account $account
+     * @param Sport $sport
+     * @param int $year
+     */
+    private function addStatsParameter(Account $account, Sport $sport, $year) {
+        $stats = $this->trainingRepository->getStatsForPoster($account, $sport, $year)->getArrayResult();
+        $data = $stats[0];
+        $this->parameter[] = '--stat-num '.$data['num'];
+        $this->parameter[] = '--stat-total '.$data['total_distance'];
+        $this->parameter[] = '--stat-min  '.$data['min_distance'];
+        $this->parameter[] = '--stat-max  '.$data['max_distance'];
     }
 
     public function availablePosterTypes() {

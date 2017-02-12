@@ -48,7 +48,7 @@ class TrainingRepository extends EntityRepository
     {
         $queryBuilder = $this->_em->createQueryBuilder()
             ->select(
-                'YEAR(FROM_UNIXTIME(t.time) AS year'
+                'YEAR(FROM_UNIXTIME(t.time)) AS year'
             )
             ->from('CoreBundle:Training', 't')
             ->where('t.account = :account')
@@ -160,6 +160,33 @@ class TrainingRepository extends EntityRepository
             ->where('t.account = :account')
             ->andWhere('t.sport = :sport')
             ->andWhere('t.distance > 0')
+            ->andWhere('t.time BETWEEN :startTime and :endTime')
+            ->setParameters([
+                ':account' => $account->getId(),
+                ':sport' => $sport->getId(),
+                ':startTime' => mktime(0, 0, 0, 1, 1, $year),
+                ':endTime' => mktime(23, 59, 59, 12, 31, $year)
+            ])
+            ->getQuery();
+    }
+
+    /**
+     * @param Account $account
+     * @param Sport $sport
+     * @param int $year
+     * @return \Doctrine\ORM\Query
+     */
+    public function getStatsForPoster(Account $account, Sport $sport, $year) {
+        return $this->_em->createQueryBuilder()
+            ->select(
+                'COUNT(t.id) as num',
+                'SUM(t.distance) as total_distance',
+                'MIN(t.distance) as min_distance',
+                'MAX(t.distance) as max_distance'
+            )
+            ->from('CoreBundle:Training', 't')
+            ->where('t.account = :account')
+            ->andWhere('t.sport = :sport')
             ->andWhere('t.time BETWEEN :startTime and :endTime')
             ->setParameters([
                 ':account' => $account->getId(),

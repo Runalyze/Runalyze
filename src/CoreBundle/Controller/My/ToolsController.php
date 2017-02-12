@@ -13,6 +13,7 @@ use Runalyze\Bundle\CoreBundle\Component\Tool\Table\VdotRaceResultsTable;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Table\VdotPaceTable;
 use Runalyze\Bundle\CoreBundle\Component\Tool\VdotAnalysis\VdotAnalysis;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
+use Runalyze\Bundle\CoreBundle\Entity\TrainingRepository;
 use Runalyze\Bundle\CoreBundle\Form\Tools\DatabaseCleanupType;
 use Runalyze\Bundle\CoreBundle\Form\Tools\Anova\AnovaData;
 use Runalyze\Bundle\CoreBundle\Form\Tools\Anova\AnovaType;
@@ -192,7 +193,7 @@ class ToolsController extends Controller
             $this->get('bernard.producer')->produce($message);
         }
 
-        /** @var Listing $posterListing */
+        /** @var FileHandler $posterListing */
         $posterListing = $this->get('app.poster.filehandler');
         return $this->render('tools/poster.html.twig', [
             'form' => $form->createView(),

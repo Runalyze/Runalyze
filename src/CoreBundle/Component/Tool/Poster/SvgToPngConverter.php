@@ -3,6 +3,7 @@
 namespace Runalyze\Bundle\CoreBundle\Component\Tool\Poster;
 
 use Symfony\Component\Process\Process;
+use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * Class SvgToPngConverter
@@ -43,9 +44,21 @@ class SvgToPngConverter
         $this->parameter[] = '-w' .$width;
     }
 
+    /**
+     * @param $source
+     * @param $target
+     * @return bool
+     */
     protected function callConverter($source, $target) {
-        $builder = new Process($this->rsvgPath.' '.implode(' ', $this->parameter). ' '.$source.' '.$target);
-        $builder->run();
+
+        $fs = new Filesystem();
+        if ($fs->exists($source)) {
+            $builder = new Process($this->rsvgPath . ' ' . implode(' ', $this->parameter) . ' ' . $source . ' ' . $target);
+            $builder->run();
+            return true;
+        } else {
+            return false;
+        }
     }
 
 

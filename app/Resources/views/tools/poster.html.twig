@@ -42,6 +42,10 @@
         </p>
         {% endfor %}
 
+        {% if listing is empty %}
+            <p class="info">{% trans %}You don't have any generated posters yet.{% endtrans %}</p>
+        {% endif %}
+
         <p class="warning">{% trans with {'%days%': posterStoragePeriod }%}Please download the posters within %days% days{% endtrans %}</p>
     </div>
     </div>

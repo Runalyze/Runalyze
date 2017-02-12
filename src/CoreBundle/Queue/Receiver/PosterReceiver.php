@@ -74,9 +74,8 @@ class PosterReceiver
         /** @var SvgToPngConverter $svgToPng */
         $svgToPng = $this->svgToPng;
         $svgToPng->setHeight($message->get('size'));
-
         foreach ($message->get('types') as $type) {
-            $posterGenerator->buildCommand($type, $jsonFiles->getPathToJsonFiles(), $message->get('year'), $account->getUsername(), $message->get('title'));
+            $posterGenerator->buildCommand($type, $jsonFiles->getPathToJsonFiles(), $message->get('year'), $account, $sport, $message->get('title'));
             $svg = $posterGenerator->generate();
             $svgToPng->convert($svg, $this->exportDirectory().$this->fileHandler->buildFinalFileName($account, $sport, $message->get('year'), $type, $message->get('size')));
             $posterGenerator->deleteSvg();
