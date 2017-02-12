@@ -16,18 +16,6 @@ class SqlBackup extends AbstractBackup
 	}
 
 	/**
-	 * Save table structure
-	 * @param string $tableName
-	 */
-	protected function saveTableStructure($tableName)
-    {
-		$createResult = $this->PDO->query('SHOW CREATE TABLE '.$tableName)->fetchColumn(1);
-
-		$this->Writer->addToFile('DROP TABLE IF EXISTS '.$tableName.';'."\n\n");
-		$this->Writer->addToFile($createResult.';'."\n"."\n");
-	}
-
-	/**
 	 * Save rows from statement
 	 * @param string $tableName
 	 * @param array $columnInfo
