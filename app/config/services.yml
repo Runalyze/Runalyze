@@ -54,6 +54,14 @@ services:
     class: Runalyze\Bundle\CoreBundle\Entity\SportRepository
     factory: ["@doctrine.orm.entity_manager", getRepository]
     arguments: [Runalyze\Bundle\CoreBundle\Entity\Sport]
+  app.repository.user:
+    class: Runalyze\Bundle\CoreBundle\Entity\UserRepository
+    factory: ["@doctrine.orm.entity_manager", getRepository]
+    arguments: [Runalyze\Bundle\CoreBundle\Entity\User]
+  app.entity_listener.user:
+    class: Runalyze\Bundle\CoreBundle\EventListener\UserEntityListener
+    tags:
+     - { name: doctrine.orm.entity_listener }
   app.form.type.anova:
     class: Runalyze\Bundle\CoreBundle\Form\Tools\Anova\AnovaType
     arguments: ["@app.repository.sport", "@app.repository.equipment_type", "@security.token_storage"]
@@ -95,6 +103,9 @@ services:
   app.configuration_manager:
     class: Runalyze\Bundle\CoreBundle\Services\Configuration\ConfigurationManager
     arguments: ["@app.repository.conf", "@security.token_storage"]
+  app.configuration_updater:
+    class: Runalyze\Bundle\CoreBundle\Services\Configuration\ConfigurationUpdater
+    arguments: ["@app.repository.conf"]
   app.sport_selection_factory:
     class: Runalyze\Bundle\CoreBundle\Services\Selection\SportSelectionFactory
     arguments: ["@app.repository.sport", "@app.configuration_manager", "@security.token_storage"]

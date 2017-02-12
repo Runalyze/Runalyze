@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="user", indexes={@ORM\Index(name="time", columns={"accountid", "time"}), @ORM\Index(name="accountid", columns={"accountid"})})
  * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\UserRepository")
+ * @ORM\EntityListeners({"Runalyze\Bundle\CoreBundle\EventListener\UserEntityListener"})
  */
 class User
 {
@@ -110,6 +111,16 @@ class User
     public function setTime($time)
     {
         $this->time = $time;
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function setCurrentTimestamp()
+    {
+        $this->time = time();
 
         return $this;
     }
