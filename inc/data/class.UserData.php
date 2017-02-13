@@ -10,11 +10,6 @@
  */
 class UserData extends DataObject {
 	/**
-	 * @var string
-	 */
-	const CACHE_KEY = 'userdata';
-
-	/**
 	* Array containing all rows from database
 	* @var array
 	*/
@@ -31,11 +26,6 @@ class UserData extends DataObject {
 		if ($Factory->isInstalled('RunalyzePluginPanel_Sportler')) {
 			$Plugin = $Factory->newInstance('RunalyzePluginPanel_Sportler');
 
-			if (!$Plugin->Configuration()->value('use_body_fat'))
-				$this->DatabaseScheme->hideFieldset('analyse');
-
-			if (!$Plugin->Configuration()->value('use_pulse'))
-				$this->DatabaseScheme->hideField('pulse_rest');
 		}
 	}
 
@@ -144,24 +134,4 @@ class UserData extends DataObject {
 		return $this->get('notes');
 	}
         
-	/**
-	 * Get all rows from user-data
-	 * @return array
-	 */
-	public static function getFullArray() {
-		if (!is_null(self::$fullArray)) {
-			return self::$fullArray;
-		}
-
-		$userdata = Cache::get(self::CACHE_KEY);
-
-		if (is_null($userdata)) {
-			$userdata = DB::getInstance()->query('SELECT * FROM '.PREFIX.'user WHERE accountid = '.SessionAccountHandler::getId().' ORDER BY `time` ASC')->fetchAll();
-			Cache::set(self::CACHE_KEY, $userdata, '600');
-		}
-
-		self::$fullArray = $userdata;
-
-		return $userdata;
-	}
 }

@@ -71,6 +71,10 @@ services:
     class: Runalyze\Bundle\CoreBundle\Form\RaceResultType
     tags:
      - { name: form.type }
+  app.form.type.body_values:
+    class: Runalyze\Bundle\CoreBundle\Form\BodyValuesType
+    tags:
+     - { name: form.type }
   app.form.type.distance:
     class: Runalyze\Bundle\CoreBundle\Form\Type\DistanceType
     arguments: ["@app.unit_system.distance"]
@@ -83,12 +87,12 @@ services:
      - { name: form.type }
   app.form.type.temperature:
     class: Runalyze\Bundle\CoreBundle\Form\Type\TemperatureType
-    arguments: ["@app.configuration_manager"]
+    arguments: ["@app.unit_system.temperature"]
     tags:
      - { name: form.type }
   app.form.type.weight:
     class: Runalyze\Bundle\CoreBundle\Form\Type\WeightType
-    arguments: ["@app.configuration_manager"]
+    arguments: ["@app.unit_system.weight"]
     tags:
      - { name: form.type }
   app.automatic_reload_flag_setter:

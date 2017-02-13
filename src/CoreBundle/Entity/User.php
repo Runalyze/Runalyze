@@ -3,6 +3,7 @@
 namespace Runalyze\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * User
@@ -52,21 +53,28 @@ class User
 
     /**
      * @var float|null [%]
-     *
+     * @Assert\Range(
+     *     min = 0,
+     *     max = 100)
      * @ORM\Column(name="fat", type="decimal", precision=3, scale=1, nullable=true)
      */
     private $fat;
 
     /**
      * @var float|null [%]
-     *
+     * @Assert\Range(
+     *     min = 0,
+     *     max = 100)
      * @ORM\Column(name="water", type="decimal", precision=3, scale=1, nullable=true)
      */
     private $water;
 
     /**
-     * @var string
+     * @var float|null [%]
      *
+     * @Assert\Range(
+     *     min = 0,
+     *     max = 100)
      * @ORM\Column(name="muscles", type="decimal", precision=3, scale=1, nullable=true)
      */
     private $muscles;
@@ -94,6 +102,11 @@ class User
      * })
      */
     private $account;
+
+    public function __clone() {
+        $this->id = null;
+        $this->notes = '';
+    }
 
     /**
      * @return int

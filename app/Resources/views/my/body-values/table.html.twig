@@ -39,7 +39,7 @@
                         <td><a class="window" href="{{ url('body-values-delete', {'id': entry.id}) }}"><i class="fa fa-fw fa-times"></i></a></td>
                         <td>{{ entry.time|date('d.m.Y') }}</td>
                         <td>{{ (entry.weight ? weight(entry.weight, unitWeight).value ~ '&nbsp;<small>' ~ unitWeight.appendix ~ '</small>' : '-')|raw }}</td>
-                        <td>{{ entry.sleepDuration ? (60 * entry.sleepDuration)|date('G:i') : '-' }}</td>
+                        <td>{{ entry.sleepDuration ? (60 * entry.sleepDuration)|date('G:i', false) : '-' }}</td>
                         <td>{{ (entry.pulseRest ? heartRate(entry.pulseRest, unitHeartRate).value ~ '&nbsp;<small>' ~ unitHeartRate.appendix ~ '</small>' : '-')|raw }}</td>
                         <td>{{ (entry.pulseMax ? heartRate(entry.pulseMax, unitHeartRate).value ~ '&nbsp;<small>' ~ unitHeartRate.appendix ~ '</small>' : '-')|raw }}</td>
                         <td>{{ (entry.fat ? entry.fat ~ '&nbsp;<small>&#37;</small>' : '-')|raw }}</td>

@@ -69,10 +69,25 @@ class UserRepository extends EntityRepository
     }
 
     /**
+     * @param Account $account
+     * @return null|User
+     */
+    public function getLatestEntryFor(Account $account)
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.account = :account')
+            ->setParameter('account', $account->getId())
+            ->addOrderBy('u.time', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    /**
      * @param User $user
      * @param Account $account
      */
-    public function remove(User $user, Account $account)
+    public function remove(User $user)
     {
         $this->_em->remove($user);
         $this->_em->flush($user);
