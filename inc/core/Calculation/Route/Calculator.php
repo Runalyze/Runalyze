@@ -14,9 +14,9 @@ use Runalyze\Service\ElevationCorrection\Strategy\InvalidResponseException;
 
 /**
  * Calculate properties of route object
- * 
+ *
  * This calculator and correct and compute elevation
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Calculation\Route
  */
@@ -39,23 +39,29 @@ class Calculator {
 
 	/**
 	 * Calculate elevation value
-	 * 
+	 *
 	 * This method does directly update the route object.
 	 */
 	public function calculateElevation() {
-		$Calculator = new Elevation\Calculator($this->Route->elevations());
-		$Calculator->calculate();
+	    if ($this->Route->hasElevations()) {
+            $Calculator = new Elevation\Calculator($this->Route->elevations());
+            $Calculator->calculate();
 
-		$this->Route->set(Route\Entity::ELEVATION, $Calculator->totalElevation());
-		$this->Route->set(Route\Entity::ELEVATION_UP, $Calculator->elevationUp());
-		$this->Route->set(Route\Entity::ELEVATION_DOWN, $Calculator->elevationDown());
+            $this->Route->set(Route\Entity::ELEVATION, $Calculator->totalElevation());
+            $this->Route->set(Route\Entity::ELEVATION_UP, $Calculator->elevationUp());
+            $this->Route->set(Route\Entity::ELEVATION_DOWN, $Calculator->elevationDown());
+        } else {
+            $this->Route->set(Route\Entity::ELEVATION, 0);
+            $this->Route->set(Route\Entity::ELEVATION_UP, 0);
+            $this->Route->set(Route\Entity::ELEVATION_DOWN, 0);
+        }
 	}
 
 	/**
 	 * Correct elevation data
-	 * 
+	 *
 	 * This method does directly update the route object.
-	 * 
+	 *
 	 * @param string $strategyName
 	 * @return boolean false if correction did not work
 	 */

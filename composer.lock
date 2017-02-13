@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b61badd8b0d8b15176d0337ee57276a8",
-    "content-hash": "b2d947c62896a3d5b21d12959d7f945b",
+    "hash": "22daae9c8cd372d860d07c5bd58fac69",
+    "content-hash": "f72b8c833d53faa91513f42dada1e3ee",
     "packages": [
         {
             "name": "beberlei/DoctrineExtensions",
@@ -2712,16 +2712,16 @@
         },
         {
             "name": "symfony/symfony",
-            "version": "v3.1.7",
+            "version": "v3.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "db1c32c7237a6594e5e1974524c973d18066b141"
+                "reference": "6306409b3836ed2936c7b0454f00711d0128748c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/db1c32c7237a6594e5e1974524c973d18066b141",
-                "reference": "db1c32c7237a6594e5e1974524c973d18066b141",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/6306409b3836ed2936c7b0454f00711d0128748c",
+                "reference": "6306409b3836ed2936c7b0454f00711d0128748c",
                 "shasum": ""
             },
             "require": {
@@ -2789,6 +2789,7 @@
                 "symfony/validator": "self.version",
                 "symfony/var-dumper": "self.version",
                 "symfony/web-profiler-bundle": "self.version",
+                "symfony/workflow": "self.version",
                 "symfony/yaml": "self.version"
             },
             "require-dev": {
@@ -2798,11 +2799,12 @@
                 "doctrine/dbal": "~2.4",
                 "doctrine/doctrine-bundle": "~1.4",
                 "doctrine/orm": "~2.4,>=2.4.5",
-                "egulias/email-validator": "~1.2,>=1.2.1",
+                "egulias/email-validator": "~1.2,>=1.2.8|~2.0",
                 "monolog/monolog": "~1.11",
                 "ocramius/proxy-manager": "~0.4|~1.0|~2.0",
                 "phpdocumentor/reflection-docblock": "^3.0",
                 "predis/predis": "~1.0",
+                "sensio/framework-extra-bundle": "^3.0.2",
                 "symfony/phpunit-bridge": "~3.2",
                 "symfony/polyfill-apcu": "~1.1",
                 "symfony/security-acl": "~2.8|~3.0"
@@ -2810,7 +2812,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.1-dev"
+                    "dev-master": "3.2-dev"
                 }
             },
             "autoload": {
@@ -2849,7 +2851,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2016-11-21 02:44:44"
+            "time": "2017-02-06 13:15:43"
         },
         {
             "name": "twig/extensions",
@@ -3763,6 +3765,41 @@
             "time": "2015-10-02 06:51:40"
         },
         {
+            "name": "runalyze/playground",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Runalyze/runalyze-playground.git",
+                "reference": "adf5ab9dc16524bafe3fd3eb9bd9147c5657c5cb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Runalyze/runalyze-playground/zipball/adf5ab9dc16524bafe3fd3eb9bd9147c5657c5cb",
+                "reference": "adf5ab9dc16524bafe3fd3eb9bd9147c5657c5cb",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Runalyze\\Bundle\\PlaygroundBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "RUNALYZE Team",
+                    "email": "mail@runalyze.com",
+                    "homepage": "https://runalyze.com"
+                }
+            ],
+            "description": "playground for runalyze - where new ideas grow",
+            "keywords": [
+                "runalyze",
+                "symfony3"
+            ],
+            "time": "2016-09-28 06:13:55"
+        },
+        {
             "name": "sebastian/comparator",
             "version": "1.2.2",
             "source": {
@@ -4190,7 +4227,8 @@
     "stability-flags": {
         "league/geotools": 0,
         "swiftmailer/swiftmailer": 0,
-        "jms/translation-bundle": 20
+        "jms/translation-bundle": 20,
+        "runalyze/playground": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

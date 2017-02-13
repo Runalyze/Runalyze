@@ -4,7 +4,7 @@ namespace Runalyze\Bundle\CoreBundle\Component\Tool\Anova\QueryValue;
 
 use Doctrine\ORM\QueryBuilder;
 use Runalyze\Bundle\CoreBundle\Component\Configuration\UnitSystem;
-use Runalyze\Metrics\Pace\Unit\AbstractPaceUnit;
+use Runalyze\Metrics\Velocity\Unit\AbstractPaceUnit;
 
 class Pace implements QueryValueInterface
 {

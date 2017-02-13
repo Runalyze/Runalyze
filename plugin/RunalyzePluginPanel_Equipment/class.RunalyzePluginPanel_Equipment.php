@@ -7,7 +7,6 @@ $PLUGINKEY = 'RunalyzePluginPanel_Equipment';
 
 use Runalyze\Activity\Duration;
 use Runalyze\Activity\Distance;
-use Runalyze\Activity\Pace;
 use Runalyze\Model;
 
 /**

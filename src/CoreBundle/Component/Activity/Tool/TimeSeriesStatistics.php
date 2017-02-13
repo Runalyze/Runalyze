@@ -2,7 +2,7 @@
 
 namespace Runalyze\Bundle\CoreBundle\Component\Activity\Tool;
 
-use Runalyze\Calculation\Distribution\MultipleTimeSeries;
+use Runalyze\Mathematics\Distribution\MultipleTimeSeries;
 use Runalyze\Model\Trackdata;
 
 class TimeSeriesStatistics
@@ -18,6 +18,7 @@ class TimeSeriesStatistics
 
     /**
      * @param Trackdata\Entity $trackdata
+     *
      * @throws \InvalidArgumentException
      */
     public function __construct(Trackdata\Entity $trackdata)
@@ -83,7 +84,7 @@ class TimeSeriesStatistics
 
     /**
      * @param $key
-     * @return \Runalyze\Calculation\Distribution\Empirical
+     * @return \Runalyze\Mathematics\Distribution\EmpiricalDistribution
      */
     public function getStatisticsFor($key)
     {
@@ -99,7 +100,7 @@ class TimeSeriesStatistics
     }
 
     /**
-     * @return \Runalyze\Calculation\Distribution\Empirical
+     * @return \Runalyze\Mathematics\Distribution\EmpiricalDistribution
      */
     public function getStatisticsForPace()
     {
@@ -115,7 +116,7 @@ class TimeSeriesStatistics
     }
 
     /**
-     * @return \Runalyze\Calculation\Distribution\Empirical
+     * @return \Runalyze\Mathematics\Distribution\EmpiricalDistribution
      */
     public function getStatisticsForHeartRate()
     {
@@ -131,7 +132,7 @@ class TimeSeriesStatistics
     }
 
     /**
-     * @return \Runalyze\Calculation\Distribution\Empirical
+     * @return \Runalyze\Mathematics\Distribution\EmpiricalDistribution
      */
     public function getStatisticsForCadence()
     {
@@ -147,7 +148,7 @@ class TimeSeriesStatistics
     }
 
     /**
-     * @return \Runalyze\Calculation\Distribution\Empirical
+     * @return \Runalyze\Mathematics\Distribution\EmpiricalDistribution
      */
     public function getStatisticsForStrideLength()
     {
@@ -163,7 +164,7 @@ class TimeSeriesStatistics
     }
 
     /**
-     * @return \Runalyze\Calculation\Distribution\Empirical
+     * @return \Runalyze\Mathematics\Distribution\EmpiricalDistribution
      */
     public function getStatisticsForPower()
     {
@@ -179,7 +180,7 @@ class TimeSeriesStatistics
     }
 
     /**
-     * @return \Runalyze\Calculation\Distribution\Empirical
+     * @return \Runalyze\Mathematics\Distribution\EmpiricalDistribution
      */
     public function getStatisticsForGroundcontact()
     {
@@ -195,7 +196,7 @@ class TimeSeriesStatistics
     }
 
     /**
-     * @return \Runalyze\Calculation\Distribution\Empirical
+     * @return \Runalyze\Mathematics\Distribution\EmpiricalDistribution
      */
     public function getStatisticsForGroundcontactBalance()
     {
@@ -211,7 +212,7 @@ class TimeSeriesStatistics
     }
 
     /**
-     * @return \Runalyze\Calculation\Distribution\Empirical
+     * @return \Runalyze\Mathematics\Distribution\EmpiricalDistribution
      */
     public function getStatisticsForVerticalOscillation()
     {
@@ -227,7 +228,7 @@ class TimeSeriesStatistics
     }
 
     /**
-     * @return \Runalyze\Calculation\Distribution\Empirical
+     * @return \Runalyze\Mathematics\Distribution\EmpiricalDistribution
      */
     public function getStatisticsForVerticalRatio()
     {
@@ -243,7 +244,7 @@ class TimeSeriesStatistics
     }
 
     /**
-     * @return \Runalyze\Calculation\Distribution\Empirical
+     * @return \Runalyze\Mathematics\Distribution\EmpiricalDistribution
      */
     public function getStatisticsForSaturatedHemoglobin()
     {
@@ -259,7 +260,7 @@ class TimeSeriesStatistics
     }
 
     /**
-     * @return \Runalyze\Calculation\Distribution\Empirical
+     * @return \Runalyze\Mathematics\Distribution\EmpiricalDistribution
      */
     public function getStatisticsForSaturatedHemoglobin2()
     {
@@ -275,7 +276,7 @@ class TimeSeriesStatistics
     }
 
     /**
-     * @return \Runalyze\Calculation\Distribution\Empirical
+     * @return \Runalyze\Mathematics\Distribution\EmpiricalDistribution
      */
     public function getStatisticsForTotalHemoglobin()
     {
@@ -291,7 +292,7 @@ class TimeSeriesStatistics
     }
 
     /**
-     * @return \Runalyze\Calculation\Distribution\Empirical
+     * @return \Runalyze\Mathematics\Distribution\EmpiricalDistribution
      */
     public function getStatisticsForTotalHemoglobin2()
     {

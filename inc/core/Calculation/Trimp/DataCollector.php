@@ -1,19 +1,15 @@
 <?php
-/**
- * This file contains class::DataCollector
- * @package Runalyze\Calculation\Trimp
- */
 
 namespace Runalyze\Calculation\Trimp;
 
-use Runalyze\Calculation\Distribution\Empirical;
-use Runalyze\Calculation\Distribution\TimeSeries;
+use Runalyze\Mathematics\Distribution\EmpiricalDistribution;
+use Runalyze\Mathematics\Distribution\TimeSeries;
 
 /**
  * Data collector
- * 
+ *
  * This data collector builds the appropriate array for a trimp calculator.
- * 
+ *
  * Example:
  * <code>
  * $Collector = new DataCollector($HeartRateArray);
@@ -28,69 +24,61 @@ use Runalyze\Calculation\Distribution\TimeSeries;
  *  ...
  * )
  * </pre>
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Calculation\Trimp
  */
-class DataCollector {
-	/**
-	 * Heart rate
-	 * @var array
-	 */
-	protected $HeartRate;
+class DataCollector
+{
+    /** @var array [bpm] */
+    protected $HeartRate;
 
-	/**
-	 * Duration
-	 * @var array
-	 */
-	protected $Duration;
+    /** @var array [s] ascending */
+    protected $Duration;
 
-	/**
-	 * Result
-	 * @var array
-	 */
-	protected $Result;
+    /** @var array */
+    protected $Histogram;
 
-	/**
-	 * Construct
-	 * 
-	 * Duration array may be empty. In that case equalsized steps of 1s are assumed
-	 * 
-	 * @param array $HeartRate bpm[]
-	 * @param array $Duration [optional] ascending time in [s]
-	 * @throws \InvalidArgumentException
-	 */
-	public function __construct(array $HeartRate, array $Duration = array()) {
-		$this->HeartRate = $HeartRate;
-		$this->Duration = $Duration;
+    /**
+     * Construct data collector
+     *
+     * Duration array may be empty. In that case equalsized steps of 1s are assumed
+     *
+     * @param array $heartRate [bpm]
+     * @param array $duration ascending time in [s]
+     *
+     * @throws \InvalidArgumentException
+     */
+    public function __construct(array $heartRate, array $duration = array())
+    {
+        $this->HeartRate = $heartRate;
+        $this->Duration = $duration;
 
-		if (empty($HeartRate)) {
-			throw new \InvalidArgumentException('Heart rate array must not be empty.');
-		}
+        if (empty($heartRate)) {
+            throw new \InvalidArgumentException('Heart rate array must not be empty.');
+        }
 
-		if (!empty($Duration) && count($HeartRate) != count($Duration)) {
-			throw new \InvalidArgumentException('Heart rate and duration array must be of equal size.');
-		}
+        if (!empty($duration) && count($heartRate) != count($duration)) {
+            throw new \InvalidArgumentException('Heart rate and duration array must be of equal size.');
+        }
 
-		$this->calculate();
-	}
+        $this->calculate();
+    }
 
-	/**
-	 * Calculate
-	 */
-	protected function calculate() {
-		$Distribution = empty($this->Duration)
-				? new Empirical($this->HeartRate)
-				: new TimeSeries($this->HeartRate, $this->Duration);
+    protected function calculate()
+    {
+        $distribution = empty($this->Duration)
+            ? new EmpiricalDistribution($this->HeartRate)
+            : new TimeSeries($this->HeartRate, $this->Duration);
 
-		$this->Result = $Distribution->histogram();
-	}
+        $this->Histogram = $distribution->histogram();
+    }
 
-	/**
-	 * Result
-	 * @return array
-	 */
-	public function result() {
-		return $this->Result;
-	}
+    /**
+     * @return array histogram
+     */
+    public function result()
+    {
+        return $this->Histogram;
+    }
 }

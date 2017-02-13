@@ -79,7 +79,6 @@ abstract class AbstractBackup
 		);
 
 		foreach ($Tables as $TableName) {
-			$this->saveTableStructure($TableName);
 			$this->saveTableRows($TableName);
 		}
 
@@ -101,12 +100,6 @@ abstract class AbstractBackup
 	 * Finish backup file
 	 */
 	protected function finishBackup() {}
-
-	/**
-	 * Save table structure
-	 * @param string $tableName
-	 */
-	abstract protected function saveTableStructure($tableName);
 
 	/**
 	 * Save table rows

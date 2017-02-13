@@ -6,19 +6,19 @@
 
 namespace Runalyze\Calculation\Activity;
 
-use Runalyze\Model;
 use Runalyze\Calculation\JD;
 use Runalyze\Calculation\Elevation;
 use Runalyze\Calculation\Trimp;
-use Runalyze\Calculation\Distribution\TimeSeries;
 use Runalyze\Context;
 use Runalyze\Configuration;
+use Runalyze\Mathematics\Distribution\TimeSeries;
+use Runalyze\Model;
 
 /**
  * Calculate properties of activity object
- * 
+ *
  * This calculator will compute values as VDOT, TRIMP, etc.
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Calculation\Activity
  */
@@ -124,7 +124,7 @@ class Calculator {
 	public function calculateVDOTbyHeartRateWithElevationFor($up, $down) {
 		$Modifier = new Elevation\DistanceModifier(
 			$this->Activity->distance(),
-			$up, 
+			$up,
 			$down,
 			Configuration::Vdot()
 		);

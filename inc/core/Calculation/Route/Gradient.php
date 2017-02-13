@@ -2,9 +2,9 @@
 
 namespace Runalyze\Calculation\Route;
 
-use Runalyze\Calculation\Math\Derivative;
 use Runalyze\Calculation\Math\MovingAverage\Kernel\AbstractKernel;
 use Runalyze\Calculation\Math\MovingAverage\WithKernel;
+use Runalyze\Mathematics\Numerics\Derivative;
 use Runalyze\Model;
 
 class Gradient

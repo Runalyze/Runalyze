@@ -3,7 +3,10 @@
 {% block toolContent %}
     {% if backupjobWasCreated %}
         <div class="panel-container">
-            <p class="okay">{% trans %}Your backup job has been created and is performed in the background.{% endtrans %}{% trans %}You will receive a mail when the file is ready for downloading.{% endtrans %}{% trans %}You can close this window.{% endtrans %}</p>
+            <p class="okay">
+                {% trans %}Your backup job has been created and is performed in the background.{% endtrans %}
+                {% trans %}You will receive a mail when the file is ready for downloading.{% endtrans %}
+                {% trans %}You can close this window.{% endtrans %}</p>
         </div>
     {% else %}
     <div class="panel-content">
@@ -12,7 +15,7 @@
 
             <fieldset>
                 <legend>{% trans %}Export data{% endtrans %}</legend>
-                {% if hasLocks %}
+                {% if not hasLocks %}
                 <div class="w50">
                     <label for="export-type">{% trans %}File format{% endtrans %}</label>
                     <select name="export-type" id="export-type">
@@ -37,7 +40,7 @@
                     <p class="info">
                         <strong>{% trans %}SQL-format{% endtrans %} (*.sql.gz)</strong><br>
                         <small>
-                            {% trans %}Backup of the complete database -
+                            {% trans %}Backup of all your data -
                                 This file can be imported manually with e.g. phpMyAdmin into any database.<br />
                                 This is recommended to create a backup copy or to import your data into a new installation.{% endtrans %}
                         </small>

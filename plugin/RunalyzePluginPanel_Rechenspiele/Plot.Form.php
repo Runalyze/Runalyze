@@ -8,6 +8,8 @@
 use Runalyze\Configuration;
 use Runalyze\Calculation\BasicEndurance;
 use Runalyze\Calculation\JD;
+use Runalyze\Sports\Performance\Model\BanisterModel;
+use Runalyze\Sports\Performance\Model\TsbModel;
 use Runalyze\Util\Time;
 use Runalyze\Util\LocalTime;
 
@@ -107,9 +109,9 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 	$HighestIndex = $LowestIndex + $NumberOfDays;
 
 	if ($perfmodel == 'banister') {
-		$performanceModel = new Runalyze\Calculation\Performance\Banister($Trimps_raw, $CTLdays, $ATLdays, 1, 3);
+		$performanceModel = new BanisterModel($Trimps_raw, $CTLdays, $ATLdays, 1, 3);
 	} else {
-		$performanceModel = new Runalyze\Calculation\Performance\TSB($Trimps_raw, $CTLdays, $ATLdays);
+		$performanceModel = new TsbModel($Trimps_raw, $CTLdays, $ATLdays);
 	}
 
 	$performanceModel->calculate();
@@ -193,7 +195,7 @@ $Plot->Data[] = array('label' => __('Fatigue (ATL)'), 'color' => '#CC2222', 'dat
 $Plot->Data[] = array('label' => __('avg VDOT'), 'color' => '#000000', 'data' => $VDOTs, 'yaxis' => 2);
 $Plot->Data[] = array('label' => 'TRIMP', 'color' => '#5555FF', 'data' => $TRIMPs, 'yaxis' => 3);
 $Plot->Data[] = array('label' => __('day VDOT'), 'color' => '#444444', 'data' => $VDOTsday, 'yaxis' => 2);
-$Plot->Data[] = array('label' => __('Basic endurance'), 'color' => '#CC9322', 'data' => $BasicEndurance, 'yaxis' => 4);
+$Plot->Data[] = array('label' => __('Marathon shape'), 'color' => '#CC9322', 'data' => $BasicEndurance, 'yaxis' => 4);
 
 $Plot->setMarginForGrid(5);
 $Plot->setLinesFilled(array(0));

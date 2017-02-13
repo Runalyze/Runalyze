@@ -2,6 +2,7 @@
 
 namespace Runalyze\Bundle\CoreBundle\Entity;
 
+use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityRepository;
 use Runalyze\Bundle\CoreBundle\Model\Account\AccountStatistics;
 
@@ -199,17 +200,17 @@ class TrainingRepository extends EntityRepository
 
     /**
      * @param Account $account
-     * @return Training[]
+     * @return bool
      */
     public function accountHasLockedTrainings(Account $account)
     {
-        return $this->createQueryBuilder('t')
+        return null !== $this->createQueryBuilder('t')
             ->select('t.id')
             ->setMaxResults(1)
             ->where('t.account = :accountid AND t.lock = 1')
             ->setParameter('accountid', $account->getId())
             ->getQuery()
-            ->getOneOrNullResult();
+            ->getOneOrNullResult(AbstractQuery::HYDRATE_SCALAR);
     }
 
     public function save(Training $training)

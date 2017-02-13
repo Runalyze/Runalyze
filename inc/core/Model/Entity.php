@@ -188,7 +188,7 @@ abstract class Entity {
 
 		foreach ($keyOrKeys as $key) {
 			if (array_key_exists($key, $this->Data)) {
-				if ($this->Data[$key] === '' || null === $this->Data[$key] || ($treatZeroAsNull && 0 == $this->Data[$key])) {
+				if ($this->Data[$key] === '' || null === $this->Data[$key] || ($treatZeroAsNull && 0 == $this->Data[$key]) || [] === $this->Data[$key]) {
 					$this->Data[$key] = null;
 				} elseif ($ensureNumericIfNotEmpty) {
 					$this->Data[$key] = (float)$this->Data[$key];
@@ -240,14 +240,14 @@ abstract class Entity {
 			throw new \InvalidArgumentException('"'.$key.'" can not be set.');
 		}
 
-		if ($this->isArray($key) && !is_array($value)) {
+		if ($this->isArray($key) && !is_array($value) && !($this->canBeNull($key) && null === $value)) {
 			throw new \RuntimeException('Value "'.$key.'" must be provided as array.');
 		}
 
 		$this->Data[$key] = $value;
 
 		if ($this->isArray($key)) {
-			$this->handleNewArraySize(count($this->Data[$key]));
+			$this->handleNewArraySize(null === $value ? 0 : count($this->Data[$key]));
 		}
 	}
 

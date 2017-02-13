@@ -3,16 +3,21 @@
 namespace Runalyze\Bundle\CoreBundle\Queue\Receiver;
 
 use Bernard\Message\DefaultMessage;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Backup\FilenameHandler;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Backup\JsonBackup;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Backup\SqlBackup;
+use Runalyze\Bundle\CoreBundle\Entity\Account;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class BackupReceiver
 {
-
-    /** @var ContainerInterface|null */
+    /** @var ContainerInterface */
     private $container;
+
+    public function __construct(ContainerInterface $container)
+    {
+        $this->container = $container;
+    }
 
     /**
      * @return string
@@ -22,12 +27,8 @@ class BackupReceiver
         return $this->container->getParameter('kernel.root_dir').'/../data/backup-tool/backup/';
     }
 
-    public function __construct(ContainerInterface $container)
+    public function userBackup(DefaultMessage $message)
     {
-        $this->container = $container;
-    }
-
-    public function UserBackup($message) {
         $Frontend = new \FrontendShared(true);
 
         $fileHandler = new FilenameHandler($message->get('accountid'));
@@ -36,7 +37,7 @@ class BackupReceiver
         /** @var Account $account */
         $account = $this->container->get('doctrine.orm.entity_manager')->getRepository('CoreBundle:Account')->find($message->get('accountid'));
 
-        if ($message->get('export-type') == 'json') {
+        if ('json' == $message->get('export-type')) {
             $Backup = new JsonBackup(
                 $this->getPathToBackupFiles().$fileHandler->generateInternalFilename(FilenameHandler::JSON_FORMAT),
                 $message->get('accountid'),
@@ -45,7 +46,6 @@ class BackupReceiver
                 $this->container->getParameter('runalyze_version')
             );
             $Backup->run();
-            $this->container->get('app.mailer.account')->sendBackupReadyTo($account);
         } else {
             $Backup = new SqlBackup(
                 $this->getPathToBackupFiles().$fileHandler->generateInternalFilename(FilenameHandler::SQL_FORMAT),
@@ -55,9 +55,8 @@ class BackupReceiver
                 $this->container->getParameter('runalyze_version')
             );
             $Backup->run();
-            $this->container->get('app.mailer.account')->sendBackupReadyTo($account);
         }
 
+        $this->container->get('app.mailer.account')->sendBackupReadyTo($account);
     }
-
 }

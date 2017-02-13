@@ -8,16 +8,16 @@
             <tr>
                 <th>VDOT</th>
                 {% for km in distances %}
-                    <th>{{ km|raw }}</th>
+                    <th>{{ distance(km) }}</th>
                 {% endfor %}
             </tr>
         </thead>
         <tbody>
             {% for vdot in vdots %}
-                <tr{% if vdot.value == currentVdot|round %} class="highlight"{% endif %}>
-                    <td class="b">{{ vdot.value }}</td>
-                    {% for time in vdot.results %}
-                        <td>{{ time|raw }}</td>
+                <tr{% if vdot == currentVdot|round %} class="highlight"{% endif %}>
+                    <td class="b">{{ vdot }}</td>
+                    {% for km in distances %}
+                        <td>{{ prognosis.secondsFor(km, vdot)|duration }}</td>
                     {% endfor %}
                 </tr>
             {% endfor %}
@@ -30,6 +30,6 @@
     </p>
 
     <p class="info">
-        {% trans %}This table does <strong>not</strong> use a correction based on your current basic endurance.{% endtrans %}
+        {% trans %}This table does <strong>not</strong> use a correction based on your current marathon shape.{% endtrans %}
     </p>
 {% endblock %}

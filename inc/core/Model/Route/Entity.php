@@ -21,7 +21,9 @@ use Runalyze\Calculation\Route\GeohashLine;
  * @author Hannes Christiansen
  * @package Runalyze\Model\Route
  */
-class Entity extends Model\EntityWithID implements Model\Loopable {
+class Entity extends Model\EntityWithID implements Model\Loopable, Model\Common\WithNullableArraysInterface {
+    use Model\Common\WithNullableArraysTrait;
+
 	/**
 	 * Cities separator
 	 * @var string
@@ -306,7 +308,6 @@ class Entity extends Model\EntityWithID implements Model\Loopable {
         if ($key == self::GEOHASHES) {
             $this->setMinMaxFromGeohashes($value);
         }
-        
 	}
 
     /**
@@ -320,7 +321,13 @@ class Entity extends Model\EntityWithID implements Model\Loopable {
 	/**
 	 * @param array $geohashes
 	 */
-	public function setMinMaxFromGeohashes(array $geohashes) {
+	public function setMinMaxFromGeohashes(array $geohashes = null) {
+	    if (null === $geohashes) {
+	        $this->setMinMaxToNull();
+
+	        return;
+        }
+
 		$latitudes = array();
 		$longitudes = array();
 
@@ -335,7 +342,6 @@ class Entity extends Model\EntityWithID implements Model\Loopable {
 
 	public function forceToSetMinMaxFromGeohashes() {
 	    $this->setMinMaxFromGeohashes($this->Data[self::GEOHASHES]);
-
 	}
 
 	/**

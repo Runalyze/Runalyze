@@ -1,18 +1,14 @@
 <?php
-/**
- * This file contains class::Calculator
- * @package Runalyze\Calculation\Power
- */
 
 namespace Runalyze\Calculation\Power;
 
+use Runalyze\Mathematics\Distribution\TimeSeries;
 use Runalyze\Model\Trackdata;
 use Runalyze\Model\Route;
-use Runalyze\Calculation\Distribution\TimeSeries;
 
 /**
  * Calculate virtual power
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Calculation\Power
  */
@@ -96,10 +92,10 @@ class Calculator {
 
 	/**
 	 * Calculate power array
-	 * 
+	 *
 	 * A constant factor of 1.5 was used in previous versions - and I don't know why.
 	 * Without this factor results equal standard tools.
-	 * 
+	 *
 	 * @author Nils Frohberg
 	 * @author Hannes Christiansen
 	 * @see http://www.blog.ultracycle.net/2010/05/cycling-power-calculations
@@ -129,7 +125,7 @@ class Calculator {
 			if ($i%$everyNthPoint == 0) {
 				if ($i + $n > $this->Size - 1) {
 					$n = $this->Size - $i - 1;
-				}	
+				}
 
 				$distance = ($ArrayDist[$i+$n] - $ArrayDist[$i]) * 1000;
 				$grade = ($distance == 0 || !$calcGrade) ? 0 : ($ArrayElev[$i+$n] - $ArrayElev[$i]) / $distance;

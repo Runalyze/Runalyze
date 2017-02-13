@@ -7,7 +7,6 @@ use Runalyze\Bundle\CoreBundle\Entity\Raceresult;
 use Runalyze\Bundle\CoreBundle\Entity\RaceresultRepository;
 use Runalyze\Bundle\CoreBundle\Entity\Training;
 use Runalyze\Metrics\LegacyUnitConverter;
-use Runalyze\Parameter\Application\PaceUnit;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Runalyze\Bundle\CoreBundle\Form\RaceResultType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;

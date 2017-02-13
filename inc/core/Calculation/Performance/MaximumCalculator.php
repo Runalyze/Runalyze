@@ -1,82 +1,67 @@
 <?php
-/**
- * This file contains class::MaximumCalculator
- * @package Runalyze\Calculation\Performance
- */
 
 namespace Runalyze\Calculation\Performance;
 
-/**
- * Calculate maximum values for fitness/fatigue
- * 
- * @author Hannes Christiansen
- * @package Runalyze\Calculation\Performance
- */
-class MaximumCalculator {
-	/**
-	 * Maximal fitness
-	 * @var int
-	 */
-	protected $MaxFitness = 0;
+use Runalyze\Sports\Performance\Model\AbstractModel;
 
-	/**
-	 * Maximal fatigue
-	 * @var int
-	 */
-	protected $MaxFatigue = 0;
+class MaximumCalculator
+{
+    /** @var int */
+    protected $MaxFitness = 0;
 
-	/**
-	 * Maximal trimp
-	 * @var int
-	 */
-	protected $MaxTrimp = 0;
+    /** @var int */
+    protected $MaxFatigue = 0;
 
-	/**
-	 * Constructor
-	 * @param \Closure $ModelCreator Closure that takes an trimp array as argument and creates a performance model.
-	 * @throws \InvalidArgumentException
-	 */
-	public function __construct(\Closure $ModelCreator, array $Data) {
-		$Model = $ModelCreator($Data);
+    /** @var int */
+    protected $MaxTrimp = 0;
 
-		if ($Model instanceof Model) {
-			$Model->calculate();
-			$Result = $Model->getArrays();
+    /**
+     * @param \Closure $modelCreator Closure that takes an trimp array as argument and creates a performance model.
+     * @param array $data
+     * @throws \InvalidArgumentException
+     */
+    public function __construct(\Closure $modelCreator, array $data)
+    {
+        $model = $modelCreator($data);
 
-			if (!empty($Result)) {
-				$this->MaxFitness = max($Result[Model::FITNESS]);
-				$this->MaxFatigue = max($Result[Model::FATIGUE]);
-			}
+        if ($model instanceof AbstractModel) {
+            $model->calculate();
+            $result = $model->getArrays();
 
-			if (!empty($Data)) {
-				$this->MaxTrimp = max($Data);
-			}
-		} else {
-			throw new \InvalidArgumentException('Closure has to create an instance of Model.');
-		}
-	}
+            if (!empty($result)) {
+                $this->MaxFitness = max($result[AbstractModel::FITNESS]);
+                $this->MaxFatigue = max($result[AbstractModel::FATIGUE]);
+            }
 
-	/**
-	 * Maximal fitness
-	 * @return int
-	 */
-	public function maxFitness() {
-		return round($this->MaxFitness);
-	}
+            if (!empty($data)) {
+                $this->MaxTrimp = max($data);
+            }
+        } else {
+            throw new \InvalidArgumentException('Closure has to create an instance of Model.');
+        }
+    }
 
-	/**
-	 * Maximal fatigue
-	 * @return int
-	 */
-	public function maxFatigue() {
-		return round($this->MaxFatigue);
-	}
+    /**
+     * @return int
+     */
+    public function maxFitness()
+    {
+        return (int)round($this->MaxFitness);
+    }
 
-	/**
-	 * Maximal trimp
-	 * @return int
-	 */
-	public function maxTrimp() {
-		return round($this->MaxTrimp);
-	}
+    /**
+     * @return int
+     */
+    public function maxFatigue()
+    {
+        return (int)round($this->MaxFatigue);
+    }
+
+    /**
+     * @return int
+     */
+    public function maxTrimp()
+    {
+        return (int)round($this->MaxTrimp);
+    }
 }
