@@ -14,12 +14,12 @@ class TrainingRepository extends EntityRepository
      */
     public function getAmountOfLoggedKilometers($cache = true)
     {
-		return $this->createQueryBuilder('t')
-			->select('SUM(t.distance)')
-			->getQuery()
-			->useResultCache($cache)
-			->setResultCacheLifetime(120)
-			->getSingleScalarResult();
+        return $this->createQueryBuilder('t')
+            ->select('SUM(t.distance)')
+            ->getQuery()
+            ->useResultCache($cache)
+            ->setResultCacheLifetime(120)
+            ->getSingleScalarResult();
     }
 
     /**
@@ -27,7 +27,7 @@ class TrainingRepository extends EntityRepository
      * @param int $accountid
      * @return mixed
      */
-	public function getSpeedUnitFor($activityid, $accountid)
+    public function getSpeedUnitFor($activityid, $accountid)
     {
         return $this->_em->createQueryBuilder()
             ->select('s.speed')
@@ -48,9 +48,7 @@ class TrainingRepository extends EntityRepository
     public function getActiveYearsFor(Account $account, $sportid = null)
     {
         $queryBuilder = $this->_em->createQueryBuilder()
-            ->select(
-                'YEAR(FROM_UNIXTIME(t.time)) AS year'
-            )
+            ->select('YEAR(FROM_UNIXTIME(t.time)) AS year')
             ->from('CoreBundle:Training', 't')
             ->where('t.account = :account')
             ->setParameter('account', $account->getId())
@@ -99,18 +97,18 @@ class TrainingRepository extends EntityRepository
         return $queryBuilder->getQuery()->getArrayResult();
     }
 
-	/**
-	 * @param int $activityId
-	 * @param int $accountId
-	 * @return null|Training
-	 */
-	public function findForAccount($activityId, $accountId)
-	{
-		return $this->findOneBy([
-			'id' => $activityId,
-			'account' => $accountId
-		]);
-	}
+    /**
+     * @param int $activityId
+     * @param int $accountId
+     * @return null|Training
+     */
+    public function findForAccount($activityId, $accountId)
+    {
+        return $this->findOneBy([
+            'id' => $activityId,
+            'account' => $accountId
+        ]);
+    }
 
     /**
      * @param Account $account
@@ -144,7 +142,7 @@ class TrainingRepository extends EntityRepository
     /**
      * @param Account $account
      * @param Sport $sport
-     * @param $year
+     * @param int $year
      * @return \Doctrine\ORM\Query
      */
     public function getQueryForJsonPosterData(Account $account, Sport $sport, $year)
@@ -177,7 +175,8 @@ class TrainingRepository extends EntityRepository
      * @param int $year
      * @return \Doctrine\ORM\Query
      */
-    public function getStatsForPoster(Account $account, Sport $sport, $year) {
+    public function getStatsForPoster(Account $account, Sport $sport, $year)
+    {
         return $this->_em->createQueryBuilder()
             ->select(
                 'COUNT(t.id) as num',
@@ -205,12 +204,12 @@ class TrainingRepository extends EntityRepository
     public function accountHasLockedTrainings(Account $account)
     {
         return null !== $this->createQueryBuilder('t')
-            ->select('t.id')
-            ->setMaxResults(1)
-            ->where('t.account = :accountid AND t.lock = 1')
-            ->setParameter('accountid', $account->getId())
-            ->getQuery()
-            ->getOneOrNullResult(AbstractQuery::HYDRATE_SCALAR);
+                ->select('t.id')
+                ->setMaxResults(1)
+                ->where('t.account = :accountid AND t.lock = 1')
+                ->setParameter('accountid', $account->getId())
+                ->getQuery()
+                ->getOneOrNullResult(AbstractQuery::HYDRATE_SCALAR);
     }
 
     public function save(Training $training)

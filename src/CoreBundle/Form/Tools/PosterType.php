@@ -4,8 +4,6 @@ namespace Runalyze\Bundle\CoreBundle\Form\Tools;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
@@ -61,7 +59,6 @@ class PosterType extends AbstractType
                     'Grid'     => 'grid',
                     'Heatmap'  => 'heatmap'),
                 'attr' => ['class' => 'chosen-select full-size']
-
             ))
             ->add('year', ChoiceType::class, [
                 'choices' => $this->TrainingRepository->getActiveYearsFor($this->getAccount()),
@@ -86,9 +83,9 @@ class PosterType extends AbstractType
                     'DIN A3' => 5000,
                     'DIN A2' => 7000,
                     'DIN A1' => 10000,
-                    'DIN A0' => 14000),
+                    'DIN A0' => 14000
+                ),
             ))
         ;
     }
-
 }

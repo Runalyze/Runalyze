@@ -8,78 +8,97 @@ use Symfony\Component\Filesystem\Filesystem;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\Sport;
 
-
-/**
- * Class GeneratePoster
- * @package Runalyze\Bundle\CoreBundle\Component\Tool\Poster
- */
 class GeneratePoster
 {
+    /** @var array */
+    protected $Parameter = [];
 
-    protected $parameter= array();
+    /** @var string */
+    protected $KernelRootDir;
 
-    protected $kernelRootDir;
-
-    protected $python3path;
+    /** @var string */
+    protected $Python3path;
 
     /** @var TrainingRepository */
-    protected $trainingRepository;
+    protected $TrainingRepository;
 
-    protected $filename;
+    /** @var string */
+    protected $Filename;
 
     /**
-     * GenerateJsonData constructor
      * @param string $kernelRootDir
-     * @param string $python3path
+     * @param string $python3Path
      * @param TrainingRepository $trainingRepository
      */
-    public function __construct($kernelRootDir, $python3path, TrainingRepository $trainingRepository)
+    public function __construct($kernelRootDir, $python3Path, TrainingRepository $trainingRepository)
     {
-        $this->kernelRootDir = $kernelRootDir;
-        $this->python3path = $python3path;
-        $this->trainingRepository = $trainingRepository;
+        $this->KernelRootDir = $kernelRootDir;
+        $this->Python3Path = $python3Path;
+        $this->TrainingRepository = $trainingRepository;
     }
 
-    protected function pathToRepository() {
-        return $this->kernelRootDir.'/../vendor/runalyze/GpxTrackPoster/';
+    /**
+     * @return string
+     */
+    protected function pathToRepository()
+    {
+        return $this->KernelRootDir.'/../vendor/runalyze/GpxTrackPoster/';
     }
 
-    protected function pathToSvgDirectory() {
-        return $this->kernelRootDir.'/../var/poster/';
+    /**
+     * @return string
+     */
+    protected function pathToSvgDirectory()
+    {
+        return $this->KernelRootDir.'/../var/poster/';
     }
 
-    protected function randomFileName($athlete, $year) {
-        $this->filename = md5($athlete.$year.strtotime("now")).'.svg';
+    /**
+     * @param string $athlete
+     * @param string $year
+     */
+    protected function generateRandomFileName($athlete, $year)
+    {
+        $this->Filename = md5($athlete.$year.strtotime("now")).'.svg';
     }
 
-    public function generate() {
-        $builder = new Process($this->python3path.' create_poster.py '.implode(' ', $this->parameter));
+    /**
+     * @return string path to generated file
+     */
+    public function generate()
+    {
+        $builder = new Process($this->Python3Path.' create_poster.py '.implode(' ', $this->Parameter));
         $builder->setWorkingDirectory($this->pathToRepository())->run();
-        return $this->pathToSvgDirectory().$this->filename;
+
+        return $this->pathToSvgDirectory().$this->Filename;
     }
 
     /**
      * @param string $type
-     * @param string $jsondir
+     * @param string $jsonDir
      * @param int $year
      * @param Account $account
      * @param Sport $sport
      * @param null|string $title
      */
-    public function buildCommand($type, $jsondir, $year, Account $account, Sport $sport, $title) {
-        $fs = new Filesystem();
-        $this->randomFileName($account->getUsername(), $year);
-        $this->parameter[] = '--json-dir '.$jsondir;
-        $this->parameter[] = '--athlete '.$account->getUsername();
-        $this->parameter[] = '--year '.$year;
-        $this->parameter[] = '--output '.$this->pathToSvgDirectory().$this->filename;
-        $this->parameter[] = '--type '.$type;
+    public function buildCommand($type, $jsonDir, $year, Account $account, Sport $sport, $title)
+    {
+        $this->generateRandomFileName($account->getUsername(), $year);
+
+        $this->Parameter[] = '--json-dir '.$jsonDir;
+        $this->Parameter[] = '--athlete '.$account->getUsername();
+        $this->Parameter[] = '--year '.(int)$year;
+        $this->Parameter[] = '--output '.$this->pathToSvgDirectory().$this->Filename;
+        $this->Parameter[] = '--type '.$type;
+
         $this->addStatsParameter($account, $sport, $year);
-        if ($fs->exists($jsondir.'/special.params')) {
-            $this->parameter[] = file_get_contents($jsondir.'/special.params');
+
+        if ((new Filesystem())->exists($jsonDir.'/special.params')) {
+            $this->Parameter[] = file_get_contents($jsonDir.'/special.params');
         }
+
         if (!empty($title)) {
-            $this->parameter[] = '--title "'.$title.'"';
+            $this->Parameter[] = '--title '.escapeshellarg($title);
         }
     }
 
@@ -88,21 +107,28 @@ class GeneratePoster
      * @param Sport $sport
      * @param int $year
      */
-    private function addStatsParameter(Account $account, Sport $sport, $year) {
-        $stats = $this->trainingRepository->getStatsForPoster($account, $sport, $year)->getArrayResult();
+    private function addStatsParameter(Account $account, Sport $sport, $year)
+    {
+        $stats = $this->TrainingRepository->getStatsForPoster($account, $sport, $year)->getArrayResult();
         $data = $stats[0];
-        $this->parameter[] = '--stat-num '.$data['num'];
-        $this->parameter[] = '--stat-total '.$data['total_distance'];
-        $this->parameter[] = '--stat-min  '.$data['min_distance'];
-        $this->parameter[] = '--stat-max  '.$data['max_distance'];
+
+        $this->Parameter[] = '--stat-num '.(int)$data['num'];
+        $this->Parameter[] = '--stat-total '.(float)$data['total_distance'];
+        $this->Parameter[] = '--stat-min '.(float)$data['min_distance'];
+        $this->Parameter[] = '--stat-max '.(float)$data['max_distance'];
     }
 
-    public function availablePosterTypes() {
+    /**
+     * @return array
+     */
+    public function availablePosterTypes()
+    {
         return ['grid', 'calendar', 'circular', 'heatmap'];
     }
 
-    public function deleteSvg() {
+    public function deleteSvg()
+    {
         $filesystem = new Filesystem();
-        $filesystem->remove($this->pathToSvgDirectory().$this->filename);
+        $filesystem->remove($this->pathToSvgDirectory().$this->Filename);
     }
 }

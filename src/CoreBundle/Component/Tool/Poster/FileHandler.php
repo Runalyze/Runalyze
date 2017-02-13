@@ -7,26 +7,35 @@ use Runalyze\Bundle\CoreBundle\Entity\Sport;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
 class FileHandler
 {
-    protected $kernelRootDir;
+    /** @var string */
+    protected $KernelRootDir;
 
     /**
-     * Listing constructor
-     * @param $kernelRootDir
+     * @param string $kernelRootDir
      */
     public function __construct($kernelRootDir)
     {
-        $this->kernelRootDir = $kernelRootDir;
+        $this->KernelRootDir = $kernelRootDir;
     }
 
-    protected function pathToImages() {
-        return $this->kernelRootDir.'/../data/poster/';
+    /**
+     * @return string
+     */
+    protected function pathToImages()
+    {
+        return $this->KernelRootDir.'/../data/poster/';
     }
 
-    public function getFileList(Account $account) {
-        /** @var Finder $finder */
+    /**
+     * @param Account $account
+     * @return array
+     */
+    public function getFileList(Account $account)
+    {
         $finder = new Finder();
         $finder->files()->name($account->getId().'-*')
             ->sort(function (\SplFileInfo $a, \SplFileInfo $b) {
@@ -34,42 +43,51 @@ class FileHandler
             })
             ->in($this->pathToImages());
 
+        $list = [];
 
-        $list = array();
-        foreach($finder as $file) {
-            $list[str_replace($account->getId().'-', '', $file->getBasename())] = $file->getSize();
+        foreach ($finder as $file) {
+            $list[substr($file->getBasename(), strlen($account->getId()) + 1)] = $file->getSize();
         }
+
         return $list;
     }
 
     /**
      * @param Account $account
-     * @param $filename
+     * @param string $filename
      * @return Response
+     *
+     * @throws ResourceNotFoundException
      */
-    public function getPosterDownloadResponse(Account $account, $filename) {
+    public function getPosterDownloadResponse(Account $account, $filename)
+    {
         $fs = new Filesystem();
         $filename = $account->getId().'-'.$filename;
-        if ($fs->exists($this->pathToImages().$filename))  {
+
+        if ($fs->exists($this->pathToImages().$filename)) {
             $response = new Response();
             $response->headers->set('Cache-Control', 'private');
             $response->headers->set('Content-type', 'image/png');
-            $response->headers->set('Content-Disposition', 'attachment; filename="' . basename($filename) . '";');
-            $response->headers->set('Content-length', filesize($this->pathToImages() . $filename));
-            $response->setContent(file_get_contents($this->pathToImages() . $filename));
+            $response->headers->set('Content-Disposition', 'attachment; filename="'.basename($filename).'";');
+            $response->headers->set('Content-length', filesize($this->pathToImages().$filename));
+            $response->setContent(file_get_contents($this->pathToImages().$filename));
+
             return $response;
         }
+
+        throw new ResourceNotFoundException();
     }
 
     /**
      * @param Account $account
      * @param Sport $sport
-     * @param $year
-     * @param $type
-     * @param $size
+     * @param string|int $year
+     * @param string $type
+     * @param string|int $size
      * @return string
      */
-    public function buildFinalFileName(Account $account, Sport $sport, $year, $type, $size) {
+    public function buildFinalFileName(Account $account, Sport $sport, $year, $type, $size)
+    {
         return sprintf('%s-%s-%s-%s-%s-%s.%s',
             $account->getId(),
             $this->filesystemFriendlyName($sport->getName()),
@@ -82,11 +100,11 @@ class FileHandler
     }
 
     /**
-     * @param $string
+     * @param string $string
      * @return string
      */
-    private function filesystemFriendlyName($string) {
-        return preg_replace('~[^a-zA-Z0-9]+~', '', $string);;
+    protected function filesystemFriendlyName($string)
+    {
+        return preg_replace('~[^a-zA-Z0-9]+~', '', $string);
     }
-
 }

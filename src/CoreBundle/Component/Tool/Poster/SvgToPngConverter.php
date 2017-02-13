@@ -5,62 +5,62 @@ namespace Runalyze\Bundle\CoreBundle\Component\Tool\Poster;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Filesystem\Filesystem;
 
-/**
- * Class SvgToPngConverter
- * @package Runalyze\Bundle\CoreBundle\Component\Tool\Poster
- */
 class SvgToPngConverter
 {
+    /** @var array */
+    protected $Parameter = [];
 
-    protected $parameter = array();
-
-    /** @var rsvg Path */
-    protected $rsvgPath;
+    /** @var string rsvg path */
+    protected $RsvgPath;
 
     /**
-     * SvgToPngConverter constructor.
-     * @param $rsvgPath
+     * @param string $rsvgPath absolut path to rsvg[-convert]
      */
     public function __construct($rsvgPath)
     {
-        $this->rsvgPath = $rsvgPath;
-    }
-
-    public function convert($source, $target) {
-        $this->callConverter($source, $target);
+        $this->RsvgPath = $rsvgPath;
     }
 
     /**
-     * @param $height
+     * @param string $source absolute path to source file
+     * @param string $target absolute path to target file
+     * @return bool true on success
      */
-    public function setHeight($height) {
-        $this->parameter[] = '-h '.$height;
+    public function convert($source, $target)
+    {
+        return $this->callConverter($source, $target);
     }
 
     /**
-     * @param $width
+     * @param int|string $height [px]
      */
-    public function setWidth($width) {
-        $this->parameter[] = '-w' .$width;
+    public function setHeight($height)
+    {
+        $this->Parameter[] = '-h '.(int)$height;
     }
 
     /**
-     * @param $source
-     * @param $target
-     * @return bool
+     * @param int|string $width [px]
      */
-    protected function callConverter($source, $target) {
+    public function setWidth($width)
+    {
+        $this->Parameter[] = '-w '.(int)$width;
+    }
 
-        $fs = new Filesystem();
-        if ($fs->exists($source)) {
-            $builder = new Process($this->rsvgPath . ' ' . implode(' ', $this->parameter) . ' ' . $source . ' ' . $target);
+    /**
+     * @param string $source absolute path to source file
+     * @param string $target absolute path to target file
+     * @return bool true on success
+     */
+    protected function callConverter($source, $target)
+    {
+        if ((new Filesystem())->exists($source)) {
+            $builder = new Process($this->RsvgPath.' -f png '.implode(' ', $this->Parameter).' '.$source.' -o '.$target);
             $builder->run();
+
             return true;
-        } else {
-            return false;
         }
+
+        return false;
     }
-
-
-
 }

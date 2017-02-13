@@ -6,33 +6,43 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class Availability
 {
+    /** @var string */
+    protected $RsvgPath;
 
-    protected $rsvgPath;
+    /** @var string */
+    protected $Python3Path;
 
-    protected $python3path;
-
-    public function __construct($rsvgPath, $python3path)
+    /**
+     * @param string $rsvgPath absolute path of rsvg[-convert]
+     * @param string $python3Path absolute path of Python3
+     */
+    public function __construct($rsvgPath, $python3Path)
     {
-        $this->rsvgPath = $rsvgPath;
-        $this->python3path = $python3path;
+        $this->RsvgPath = $rsvgPath;
+        $this->Python3Path = $python3Path;
     }
 
-    public function isAvailable() {
-        if ($this->isPythonAvailable() && $this->isRsvgConverterAvailable()) {
-            return true;
-        } else {
-            return false;
-        }
+    /**
+     * @return bool
+     */
+    public function isAvailable()
+    {
+        return ($this->isPythonAvailable() && $this->isRsvgConverterAvailable());
     }
 
-    private function isRsvgConverterAvailable() {
-        $rsvg = new Filesystem();
-        return $rsvg->exists($this->rsvgPath);
-
+    /**
+     * @return bool
+     */
+    protected function isRsvgConverterAvailable()
+    {
+        return (new Filesystem())->exists($this->RsvgPath);
     }
 
-    private function isPythonAvailable() {
-        $python = new Filesystem();
-        return $python->exists($this->python3path);
+    /**
+     * @return bool
+     */
+    protected function isPythonAvailable()
+    {
+        return (new Filesystem())->exists($this->Python3Path);
     }
 }

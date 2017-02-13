@@ -2,19 +2,22 @@
 
 {% block content %}
     <div class="panel-heading">
-        <h1><a href="{{ url('poster') }}">{% trans %}Poster generator{% endtrans %}</a></h1>
+        <h1><a class="ajax" target="ajax" href="{{ url('poster') }}">{% trans %}Poster generator{% endtrans %}</a></h1>
     </div>
 
     <div class="panel-content">
-
         {% block toolContent %}
         <div class="panel-content">
-            <div class="c">
-                <img src="{{ asset('assets/images/poster-collage.png') }}">
-            </div>
-            <p class="info">{% trans %}Based on your data RUNALYZE can generate some posters for you. Poster generations are performed in the background{% endtrans %}</p>
             {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'ajax no-automatic-reloads'}, 'action': url('poster')}) }}
+
             <fieldset>
+                <div class="c">
+                    <img src="{{ asset('assets/images/poster-collage.png') }}">
+                </div>
+
+                <p class="info">{% trans %}Based on your data RUNALYZE can generate some posters for you. Poster generations are performed in the background.{% endtrans %}</p>
+
+                <p class="text">&nbsp;</p>
 
                 {{ form_row(form.postertype, {'label': 'Choose postertype(s)'|trans}) }}
                 {{ form_row(form.sport, {'label': 'Choose sport'|trans}) }}
@@ -23,19 +26,21 @@
                 {{ form_row(form.size, {'label': 'Choose year'|trans}) }}
                 {{ form_rest(form) }}
 
-            <div class="c">
-                <input type="submit" value="{% trans %}Generate posters{% endtrans %}">
-            </div>
+                <div class="c">
+                    <input type="submit" value="{% trans %}Generate posters{% endtrans %}">
+                </div>
             </fieldset>
+
             {{ form_end(form) }}
-
-
         </div>
-
         {% endblock %}
+    </div>
 
     <div class="panel-heading panel-sub-heading">
         <h1>{% trans %}Previously generated posters{% endtrans %}</h1>
+    </div>
+
+    <div class="panel-content">
         {% for filename, size in listing %}
         <p class="file">
             <a href="{{ url('poster-download', {'name': filename}) }}">{{ filename }}, {{ size|filesize }}</a>
@@ -43,11 +48,10 @@
         {% endfor %}
 
         {% if listing is empty %}
-            <p class="info">{% trans %}You don't have any generated posters yet.{% endtrans %}</p>
+            <p class="file">{% trans %}There are no posters so far.{% endtrans %}</p>
+        {% else %}
+            <p class="warning">{% trans with {'%days%': posterStoragePeriod }%}Please download the posters within %days% days.{% endtrans %}</p>
         {% endif %}
-
-        <p class="warning">{% trans with {'%days%': posterStoragePeriod }%}Please download the posters within %days% days{% endtrans %}</p>
-    </div>
     </div>
 
 {% endblock %}

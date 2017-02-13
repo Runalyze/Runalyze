@@ -6,7 +6,6 @@ use Runalyze\Activity\Distance;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Anova\AnovaDataQuery;
 use Runalyze\Bundle\CoreBundle\Component\Tool\DatabaseCleanup\JobGeneral;
 use Runalyze\Bundle\CoreBundle\Component\Tool\DatabaseCleanup\JobLoop;
-use Runalyze\Bundle\CoreBundle\Component\Tool\Poster\FileHandler;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Table\GeneralPaceTable;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Table\VdotPaceTable;
 use Runalyze\Bundle\CoreBundle\Component\Tool\VdotAnalysis\VdotAnalysis;
@@ -79,7 +78,9 @@ class ToolsController extends Controller
         $distances = [0.2, 0.4, 1, 3, 5, 10, 21.1, 42.2, 50];
 
         return $this->render('tools/tables/general_paces.html.twig', [
-            'distances' => array_map(function($km) { return (new Distance($km))->stringAuto(); }, $distances),
+            'distances' => array_map(function ($km) {
+                return (new Distance($km))->stringAuto();
+            }, $distances),
             'paces' => (new GeneralPaceTable())->getPaces($distances, range(60, 180))
         ]);
     }
@@ -171,27 +172,35 @@ class ToolsController extends Controller
      */
     public function posterAction(Request $request, Account $account)
     {
-        $form = $this->createForm(PosterType::class);
+        $form = $this->createForm(PosterType::class, [
+            'postertype' => ['heatmap'],
+            'year' => date('Y') - 1,
+            'title' => ' '
+        ]);
         $form->handleRequest($request);
+
         if ($form->isSubmitted()) {
             $formdata = $request->request->get($form->getName());
             $message = new DefaultMessage('posterGenerator', array(
                 'accountid' => $account->getId(),
                 'year' => $formdata['year'],
                 'types' => $formdata['postertype'],
-                'sportid' => $formdata[ 'sport'],
-                'title' => $formdata[ 'title'],
+                'sportid' => $formdata['sport'],
+                'title' => $formdata['title'],
                 'size' => $formdata['size']
             ));
             $this->get('bernard.producer')->produce($message);
+
+            return $this->render('tools/poster_success.html.twig', [
+                'posterStoragePeriod' => $this->getParameter('poster_storage_period'),
+                'listing' => $this->get('app.poster.filehandler')->getFileList($account)
+            ]);
         }
 
-        /** @var FileHandler $posterListing */
-        $posterListing = $this->get('app.poster.filehandler');
         return $this->render('tools/poster.html.twig', [
             'form' => $form->createView(),
             'posterStoragePeriod' => $this->getParameter('poster_storage_period'),
-            'listing' => $posterListing->getFileList($account)
+            'listing' => $this->get('app.poster.filehandler')->getFileList($account)
         ]);
     }
 
@@ -201,8 +210,7 @@ class ToolsController extends Controller
      */
     public function posterDownloadAction(Account $account, $name)
     {
-            /** @var FileHandler */
-            return $this->get('app.poster.filehandler')->getPosterDownloadResponse($account, $name);
+        return $this->get('app.poster.filehandler')->getPosterDownloadResponse($account, $name);
     }
 
     /**
