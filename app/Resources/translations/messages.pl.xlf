@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
   <file date="2017-01-29T17:39:07Z" source-language="en" target-language="pl" datatype="plaintext" original="not.available">
     <header>
@@ -1333,14 +1333,14 @@
         <target>Pamiętaj mnie</target>
         <jms:reference-file line="19">/Resources/views/login/form.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="bab9bc458f38d4d574e5baa63c72341db6ddaa30" resname="Repeat Password">
+      <trans-unit id="bab9bc458f38d4d574e5baa63c72341db6ddaa30" resname="Repeat Password" approved="yes">
         <source>Repeat Password</source>
-        <target>Repeat Password</target>
+        <target state="translated">Powtórz hasło</target>
         <jms:reference-file line="35">/../src/CoreBundle/Form/RegistrationType.php</jms:reference-file>
       </trans-unit>
-      <trans-unit id="366c2415f45eda358aa31b5d67c61f41a43a2bd0" resname="Repeat password">
+      <trans-unit id="366c2415f45eda358aa31b5d67c61f41a43a2bd0" resname="Repeat password" approved="yes">
         <source>Repeat password</source>
-        <target>Repeat password</target>
+        <target state="translated">Powtórz hasło:</target>
         <jms:reference-file line="33">/../src/CoreBundle/Form/RecoverPasswordType.php</jms:reference-file>
         <jms:reference-file line="35">/../src/CoreBundle/Form/Settings/ChangePasswordType.php</jms:reference-file>
       </trans-unit>
@@ -1349,9 +1349,9 @@
         <target>Rytmy</target>
         <jms:reference-file line="14">/Resources/views/tools/tables/vdot_paces.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="9fcda32cc0cb4e4c9f7579af0e1ac967a0eb4cfc" resname="Request failed">
+      <trans-unit id="9fcda32cc0cb4e4c9f7579af0e1ac967a0eb4cfc" resname="Request failed" approved="yes">
         <source>Request failed</source>
-        <target>Request failed</target>
+        <target state="translated">Żądanie nie powiodło się</target>
         <jms:reference-file line="198">/Resources/views/tools/anova/base.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="1d7c76d34a5f676f0c4ae7099ecae62255f24167" resname="Reset configuration">
@@ -1401,9 +1401,9 @@
         <target>Runalyze tworzą sportowców dla sportowców. Jeśli masz uwagi lub sugestie - skontaktuj się z nami. To dla nas ważne</target>
         <jms:reference-file line="28">/Resources/views/home_feature_showcase.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="73989d9c59264da08a15dba21c7d58237a91f08f" resname="Running">
+      <trans-unit id="73989d9c59264da08a15dba21c7d58237a91f08f" resname="Running" approved="yes">
         <source>Running</source>
-        <target>Running</target>
+        <target state="translated">Uruchamianie</target>
         <jms:reference-file line="18">/Resources/views/shared/athlete/base.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="e1d7541e11b44356487e496e24a15b58e286d37f" resname="Running dynamics">
@@ -1462,9 +1462,9 @@
         <jms:reference-file line="35">/Resources/views/tools/vdot_analysis.html.twig</jms:reference-file>
         <jms:reference-file line="36">/Resources/views/tools/vdot_analysis.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="22959ede33b65d25ed4762705597fb8b954d3a6b" resname="Sorry!">
+      <trans-unit id="22959ede33b65d25ed4762705597fb8b954d3a6b" resname="Sorry!" approved="yes">
         <source>Sorry!</source>
-        <target>Sorry!</target>
+        <target state="translated">Przepraszamy!</target>
         <jms:reference-file line="36">/Resources/TwigBundle/views/Exception/error.html.twig</jms:reference-file>
         <jms:reference-file line="4">/Resources/views/shared/invalid_activity.html.twig</jms:reference-file>
         <jms:reference-file line="4">/Resources/views/shared/invalid_athlete.html.twig</jms:reference-file>
@@ -1489,9 +1489,9 @@
         <target>Start</target>
         <jms:reference-file line="4">/Resources/views/_macro/tablesorter.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="2aa6a7ed9250b4c9ae857cc788c641d3b26bdfb5" resname="Start analysis">
+      <trans-unit id="2aa6a7ed9250b4c9ae857cc788c641d3b26bdfb5" resname="Start analysis" approved="yes">
         <source>Start analysis</source>
-        <target>Start analysis</target>
+        <target state="translated">Uruchom analizę</target>
         <jms:reference-file line="60">/Resources/views/tools/anova/base.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="3b7566b620437fe6ae3e90f4e6ea85446cf88e3f" resname="Start cleanup">
@@ -1499,9 +1499,9 @@
         <target>Rozpocznij czyszczenie</target>
         <jms:reference-file line="91">/Resources/views/tools/database_cleanup/form.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="7b416e2c69ca7f04f270b6642129e1d66e4d1733" resname="Start the installation of RUNALYZE">
+      <trans-unit id="7b416e2c69ca7f04f270b6642129e1d66e4d1733" resname="Start the installation of RUNALYZE" approved="yes">
         <source>Start the installation of RUNALYZE</source>
-        <target>Start the installation of RUNALYZE</target>
+        <target state="translated">Uruchom instalację RUNALYZE</target>
         <jms:reference-file line="14">/Resources/views/system/install.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="2086b21f8f49274138c38d476bee317a84a8aecc" resname="Statistics">
@@ -2265,9 +2265,9 @@
         <target>previous</target>
         <jms:reference-file line="5">/Resources/views/_macro/tablesorter.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="2c73eaf9f4bd6d3df699128ec062add0c564ca2f" resname="quantile">
+      <trans-unit id="2c73eaf9f4bd6d3df699128ec062add0c564ca2f" resname="quantile" approved="yes">
         <source>quantile</source>
-        <target>quantile</target>
+        <target state="translated">kwantyl</target>
         <jms:reference-file line="94">/Resources/views/activity/tool/time_series_statistics.html.twig</jms:reference-file>
         <jms:reference-file line="95">/Resources/views/activity/tool/time_series_statistics.html.twig</jms:reference-file>
       </trans-unit>
@@ -2277,9 +2277,9 @@
         <jms:reference-file line="15">/Resources/views/static/help_calculations.html.twig</jms:reference-file>
         <jms:reference-file line="68">/Resources/views/static/help_calculations.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="2eb888e95f113117c63e0d526f68ad90267a45e6" resname="since">
+      <trans-unit id="2eb888e95f113117c63e0d526f68ad90267a45e6" resname="since" approved="yes">
         <source>since</source>
-        <target state="new">since</target>
+        <target state="translated">od</target>
         <jms:reference-file line="13">/Resources/views/my/equipment/category/table.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="552e370787152d8feb565d8516b23e1f29af9d8a" resname="standard deviation">
