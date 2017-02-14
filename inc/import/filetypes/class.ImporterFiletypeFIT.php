@@ -22,7 +22,11 @@ class ImporterFiletypeFIT extends ImporterFiletypeAbstract {
 			'units'			=> 'metric',
 			'garmin_timestamps'	=> false
 		];
-		$fit = new \adriangibbons\phpFITFileAnalysis($Filename, $options);
+		try {
+			$fit = new \adriangibbons\phpFITFileAnalysis($Filename, $options);
+		} catch (Exception $e) {
+			throw new \Runalyze\Import\Exception\ParserException($e->getMessage());
+		}
 
 		$this->Parser = new ParserFITMultiple('');
 		$this->Parser->setFitData($fit);
