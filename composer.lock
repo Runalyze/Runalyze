@@ -4,21 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "40a8c459fd00b87abf67455bf592ba04",
-    "content-hash": "bd5161623cb5c88a3b01518bdc5baafc",
+    "hash": "a6a1403b82e1a3cf120b623b63a5809e",
+    "content-hash": "d994fd8afe58458a67a18e71d531f47f",
     "packages": [
         {
             "name": "adriangibbons/php-fit-file-analysis",
-            "version": "v3.0.11",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/adriangibbons/php-fit-file-analysis.git",
-                "reference": "35816281632dfa62509f0fd725277dd81e68d41c"
+                "url": "https://github.com/undertrained/php-fit-file-analysis.git",
+                "reference": "18d63c0cf6456dd57c80af9aaf5d9b3a344c0bd7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/adriangibbons/php-fit-file-analysis/zipball/35816281632dfa62509f0fd725277dd81e68d41c",
-                "reference": "35816281632dfa62509f0fd725277dd81e68d41c",
+                "url": "https://api.github.com/repos/undertrained/php-fit-file-analysis/zipball/18d63c0cf6456dd57c80af9aaf5d9b3a344c0bd7",
+                "reference": "18d63c0cf6456dd57c80af9aaf5d9b3a344c0bd7",
                 "shasum": ""
             },
             "require-dev": {
@@ -32,14 +32,16 @@
                     "adriangibbons\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "description": "A PHP class for analysing FIT files created by Garmin GPS devices",
             "homepage": "https://github.com/adriangibbons/php-fit-file-analysis",
             "keywords": [
-                "Fit",
+                "fit",
                 "garmin"
             ],
-            "time": "2016-09-10 01:19:51"
+            "support": {
+                "source": "https://github.com/undertrained/php-fit-file-analysis/tree/master"
+            },
+            "time": "2017-02-07 07:20:48"
         },
         {
             "name": "beberlei/DoctrineExtensions",
@@ -4214,7 +4216,8 @@
     "stability-flags": {
         "league/geotools": 0,
         "swiftmailer/swiftmailer": 0,
-        "jms/translation-bundle": 20
+        "jms/translation-bundle": 20,
+        "adriangibbons/php-fit-file-analysis": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
