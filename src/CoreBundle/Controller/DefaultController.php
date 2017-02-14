@@ -149,17 +149,6 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/admin.php", name="admin")
-     */
-    public function adminAction()
-    {
-    	$Frontend = new \Frontend(true);
-    	$Frontend->displayAdminView();
-
-    	return new Response();
-    }
-
-    /**
      * @Route("/plugin/{plugin}/{file}")
      */
     public function pluginAction($plugin, $file)

@@ -170,14 +170,6 @@ class Frontend {
 	}
 
 	/**
-	 * Display admin view
-	 */
-	public function displayAdminView() {
-		$AdminView = new AdminView($this->adminPassAsMD5);
-		$AdminView->display();
-	}
-
-	/**
 	 * Init SessionAccountHandler
 	 */
 	protected function initSessionAccountHandler() {
