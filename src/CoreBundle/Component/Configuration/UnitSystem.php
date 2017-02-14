@@ -6,8 +6,8 @@ use Runalyze\Bundle\CoreBundle\Entity\Sport;
 use Runalyze\Metrics\Cadence;
 use Runalyze\Metrics\Distance;
 use Runalyze\Metrics\LegacyUnitConverter;
-use Runalyze\Metrics\Pace\Unit\AbstractPaceUnit;
-use Runalyze\Metrics\Pace\Unit\KilometerPerHour;
+use Runalyze\Metrics\Velocity\Unit\AbstractPaceUnit;
+use Runalyze\Metrics\Velocity\Unit\KilometerPerHour;
 use Runalyze\Parameter\Application\DistanceUnitSystem;
 
 class UnitSystem

@@ -116,9 +116,11 @@ class AthletePosterCommand extends ContainerAwareCommand
     {
         $segments = [];
         $segments[] = [];
-        if (null === $geohashLine OR $geohashLine == '') {
-                return $segments;
+
+        if (null === $geohashLine || $geohashLine == '') {
+            return $segments;
         }
+
         $loop = new Model\Route\Loop(new Model\Route\Entity([Model\Route\Entity::GEOHASHES => $geohashLine]));
         $loop->setStepSize(5);
         $pauseLimit = 50 * 5 * $distance / $loop->num();

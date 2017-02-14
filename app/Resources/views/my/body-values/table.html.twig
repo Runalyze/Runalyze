@@ -1,0 +1,63 @@
+{% extends "base_logged_in.twig" %}
+
+{% import '_macro/tablesorter.html.twig' as tablesorter %}
+
+{% block content %}
+    <div class="panel-heading">
+        <div class="panel-menu">
+            <ul>
+                <li><a class="window" href="{{ url('body-values-add') }}"><i class="fa fa-fw fa-plus"></i> {{ 'Add a new entry'|trans }}</a></li>
+            </ul>
+        </div>
+
+        <h1>{{ 'Body values'|trans }}</h1>
+    </div>
+
+    <div class="panel-content">
+        <table id="list-of-all-body-values" class="fullwidth zebra-style">
+            <thead>
+            <tr>
+                <th class="{sorter: false}">&nbsp</th>
+                <th class="{sorter: false}">&nbsp</th>
+                <th class="{sorter:'germandate'}">{{ 'Date'|trans }}</th>
+                <th>{{ 'Weight'|trans }}</th>
+                <th>{{ 'Sleep duration'|trans }}</th>
+                <th>{{ 'Resting HR'|trans }}</th>
+                <th>{{ 'Maximal HR'|trans }}</th>
+                <th>&#37; {{ 'Fat'|trans }}</th>
+                <th>&#37; {{ 'Water'|trans }}</th>
+                <th>&#37; {{ 'Muscles'|trans }}</th>
+                <th>{{ 'Notes'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody class="c">
+            {% if values|length > 0 %}
+                {% for entry in values %}
+                    {# @var entry \Runalyze\Bundle\CoreBundle\Entity\User #}
+                    <tr>
+                        <td><a class="window" href="{{ url('body-values-edit', {'id': entry.id}) }}"><i class="fa fa-fw fa-pencil"></i></a></td>
+                        <td><a class="window" href="{{ url('body-values-delete', {'id': entry.id}) }}"><i class="fa fa-fw fa-times"></i></a></td>
+                        <td>{{ entry.time|date('d.m.Y') }}</td>
+                        <td>{{ (entry.weight ? weight(entry.weight, unitWeight).value ~ '&nbsp;<small>' ~ unitWeight.appendix ~ '</small>' : '-')|raw }}</td>
+                        <td>{{ entry.sleepDuration ? (60 * entry.sleepDuration)|date('G:i') : '-' }}</td>
+                        <td>{{ (entry.pulseRest ? heartRate(entry.pulseRest, unitHeartRate).value ~ '&nbsp;<small>' ~ unitHeartRate.appendix ~ '</small>' : '-')|raw }}</td>
+                        <td>{{ (entry.pulseMax ? heartRate(entry.pulseMax, unitHeartRate).value ~ '&nbsp;<small>' ~ unitHeartRate.appendix ~ '</small>' : '-')|raw }}</td>
+                        <td>{{ (entry.fat ? entry.fat ~ '&nbsp;<small>&#37;</small>' : '-')|raw }}</td>
+                        <td>{{ (entry.water ? entry.water ~ '&nbsp;<small>&#37;</small>' : '-')|raw }}</td>
+                        <td>{{ (entry.muscles ? entry.muscles ~ '&nbsp;<small>&#37;</small>' : '-')|raw }}</td>
+                        <td>{{ entry.notes }}</td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr><td colspan="9">{% trans %}No data available.{% endtrans %}</td></tr>
+            {% endif %}
+            </tbody>
+        </table>
+
+        {{ tablesorter.pager('#list-of-all-body-values', true) }}
+    </div>
+
+    {% if reloadRequested %}
+        <script>Runalyze.reloadContent();</script>
+    {% endif %}
+{% endblock %}

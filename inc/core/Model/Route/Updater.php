@@ -12,7 +12,7 @@ use Runalyze\Calculation\Route\GeohashLine;
 
 /**
  * Update route in database
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Model\Route
  */
@@ -67,7 +67,10 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 
         if ($this->hasChanged(Entity::GEOHASHES)) {
             $this->NewObject->setMinMaxFromGeohashes($this->NewObject->geohashes());
-            $this->NewObject->set(Entity::GEOHASHES, GeohashLine::shorten($this->NewObject->geohashes()));
+
+            if ($this->NewObject->has(Entity::GEOHASHES)) {
+                $this->NewObject->set(Entity::GEOHASHES, GeohashLine::shorten($this->NewObject->geohashes()));
+            }
         }
 
 		if ($this->hasChanged(Entity::ELEVATIONS_ORIGINAL) || $this->hasChanged(Entity::ELEVATIONS_CORRECTED)) {

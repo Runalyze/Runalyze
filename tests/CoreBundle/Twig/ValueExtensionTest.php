@@ -80,14 +80,14 @@ class ValueExtensionTest extends \PHPUnit_Framework_TestCase
 
     public function testPaceWithGivenUnit()
     {
-        $this->assertEquals('5:30/km', $this->Extension->pace(330, new Metrics\Pace\Unit\SecondsPerKilometer())->getWithUnit());
-        $this->assertEquals('10.9&nbsp;km/h', $this->Extension->pace(330, new Metrics\Pace\Unit\KilometerPerHour())->getWithUnit());
+        $this->assertEquals('5:30/km', $this->Extension->pace(330, new Metrics\Velocity\Unit\SecondsPerKilometer())->getWithUnit());
+        $this->assertEquals('10.9&nbsp;km/h', $this->Extension->pace(330, new Metrics\Velocity\Unit\KilometerPerHour())->getWithUnit());
     }
 
     public function testPaceComparisonWithGivenUnit()
     {
-        $this->assertEquals('-0:30/km', $this->Extension->paceComparison(300, 330, new Metrics\Pace\Unit\SecondsPerKilometer())->getWithUnit());
-        $this->assertEquals('0.9&nbsp;km/h', $this->Extension->paceComparison(330, 360, new Metrics\Pace\Unit\KilometerPerHour())->getWithUnit());
+        $this->assertEquals('-0:30/km', $this->Extension->paceComparison(300, 330, new Metrics\Velocity\Unit\SecondsPerKilometer())->getWithUnit());
+        $this->assertEquals('0.9&nbsp;km/h', $this->Extension->paceComparison(330, 360, new Metrics\Velocity\Unit\KilometerPerHour())->getWithUnit());
     }
 
     public function testTemperatureWithGivenUnit()

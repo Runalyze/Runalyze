@@ -6,13 +6,13 @@
 
 namespace Runalyze\Calculation\JD;
 
-use Runalyze\Calculation\Distribution\TimeSeries;
+use Runalyze\Mathematics\Distribution\TimeSeries;
 use Runalyze\Model\Activity;
 use Runalyze\Model\Trackdata;
 
 /**
  * Training intensity by Jack Daniels
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Calculation\JD
  */
@@ -61,10 +61,10 @@ class Intensity {
 
 	/**
 	 * Calculate for activity object
-	 * 
+	 *
 	 * This method does not lookup trackdata of the activity!
 	 * If you want an exact intensity value, use `calculateByTrackdata(...)`
-	 * 
+	 *
 	 * @param \Runalyze\Model\Activity\Entity $activity
 	 * @return int
 	 */
@@ -96,7 +96,7 @@ class Intensity {
 
 	/**
 	 * Calculate by heart rate distribution
-	 * @param \Runalyze\Calculation\Distribution\TimeSeries $distribution
+	 * @param TimeSeries $distribution
 	 * @return int
 	 */
 	public function calculateByHeartrate(TimeSeries $distribution) {

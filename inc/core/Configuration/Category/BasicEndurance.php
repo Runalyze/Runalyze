@@ -98,7 +98,7 @@ class BasicEndurance extends \Runalyze\Configuration\Category {
 	 * @return \Runalyze\Configuration\Fieldset
 	 */
 	public function Fieldset() {
-		$Fieldset = new Fieldset( __('Basic endurance') );
+		$Fieldset = new Fieldset( __('Marathon shape') );
 		$Fieldset->addHandle( $this->handle('BE_MIN_KM_FOR_LONGJOG'), array(
 			'label'		=> __('Minimal distance for longjogs'),
 			'tooltip'	=> __('Every run above this distance will be rated.'),
@@ -146,7 +146,7 @@ class BasicEndurance extends \Runalyze\Configuration\Category {
 			CalculationBasicEndurance::recalculateValue();
 			$newValue = CalculationBasicEndurance::getConst();
 
-			Messages::addValueRecalculated(__('Basic endurance'), $newValue.' &#37;', $oldValue.' &#37;');
+			Messages::addValueRecalculated(__('Marathon shape'), $newValue.' &#37;', $oldValue.' &#37;');
 		}
 	}
 }

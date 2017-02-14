@@ -12,7 +12,7 @@ use Runalyze\Data\Stroketype;
 
 /**
  * Display swim lanes
- * 
+ *
  * @author Hannes Christiansen & Michael Pohl
  * @package Runalyze\DataObjects\Training\View\Section
  */
@@ -48,7 +48,7 @@ class TableSwimLane extends TableLapsAbstract {
 
 		$Loop = new Swimdata\Loop($this->Context->swimdata());
 		$TrackLoop = new Trackdata\Loop($this->Context->trackdata());
-		$Stroketype = new Stroketype(Stroketype::FREESTYLE);
+		$Stroketype = new Stroketype(\Runalyze\Profile\Athlete\StrokeTypeProfile::FREESTYLE);
 		$Distance = new Distance(0);
 
 		$max = $Loop->num();
@@ -63,7 +63,7 @@ class TableSwimLane extends TableLapsAbstract {
 			$this->Code .= '<td>'.Duration::format($TrackLoop->difference(Trackdata\Entity::TIME)).'</td>';
 			$this->Code .= '<td>'.$Loop->swolf().'</td>';
 			$this->Code .= '<td>'.$Loop->stroke().'</td>';
-			$this->Code .= '<td>'.$Stroketype->shortstring().'</td>';
+			$this->Code .= '<td>'.$Stroketype->shortString().'</td>';
 			$this->Code .= '</tr>';
 
 			$TrackLoop->nextStep();

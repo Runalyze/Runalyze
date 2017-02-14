@@ -8,7 +8,6 @@ use Runalyze\Bundle\CoreBundle\Component\Account\Registration;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\AccountRepository;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use Symfony\Component\Console\Tester\CommandTester;
 
 class RegistrationTest extends KernelTestCase
 {

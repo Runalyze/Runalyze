@@ -2,23 +2,24 @@
 
 namespace Runalyze\Bundle\CoreBundle\Entity;
 
+use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityRepository;
 
 class RouteRepository extends EntityRepository
 {
     /**
      * @param Account $account
-     * @return Route[]
+     * @return bool
      */
     public function accountHasLockedRoutes(Account $account)
     {
-        return $this->createQueryBuilder('r')
+        return null !== $this->createQueryBuilder('r')
             ->select('r.id')
             ->setMaxResults(1)
             ->where('r.account = :accountid AND r.lock = 1')
             ->setParameter('accountid', $account->getId())
             ->getQuery()
-            ->getOneOrNullResult();
+            ->getOneOrNullResult(AbstractQuery::HYDRATE_SCALAR);
     }
 
     public function save(Route $route)

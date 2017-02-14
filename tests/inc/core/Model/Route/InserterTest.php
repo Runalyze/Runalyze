@@ -79,6 +79,12 @@ class InserterTest extends \PHPUnit_Framework_TestCase
 		$this->assertGreaterThan(0, $N->elevationUp());
 		$this->assertGreaterThan(0, $N->elevationDown());
 
+		$this->assertNotNull($R->get(Entity::ELEVATIONS_ORIGINAL));
+        $this->assertNotNull($R->get(Entity::GEOHASHES));
+
+        $this->assertNull($data[Entity::ELEVATIONS_ORIGINAL]);
+        $this->assertNull($data[Entity::GEOHASHES]);
+
         $this->assertNull($data[Entity::STARTPOINT]);
         $this->assertNull($data[Entity::ENDPOINT]);
         $this->assertNull($data[Entity::MIN]);

@@ -12,7 +12,7 @@ use Runalyze\Model\Trackdata;
  * Calculate averages for trackdata
  *
  * This class is more efficient than constructing a TimeSeries for every key.
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Calculation\Distribution
  */
@@ -63,7 +63,6 @@ class TrackdataAverages
     protected function defaultKeysThatAllowZero()
     {
         return [
-            Trackdata\Entity::CADENCE,
             Trackdata\Entity::TEMPERATURE
         ];
     }

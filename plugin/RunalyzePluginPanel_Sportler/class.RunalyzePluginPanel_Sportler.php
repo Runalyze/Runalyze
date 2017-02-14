@@ -68,8 +68,8 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 	 */
 	protected function getRightSymbol() {
 		$Links = '';
-		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key().'/window.sportler.php" '.Ajax::tooltip('', __('Add data'), true, true).'>'.Icon::$ADD.'</a>').'</li>';
-		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key().'/window.sportler.table.php" '.Ajax::tooltip('', __('Show table'), true, true).'>'.Icon::$TABLE.'</a>').'</li>';
+		$Links .= '<li>'.Ajax::window('<a href="my/body-values/add" '.Ajax::tooltip('', __('Add data'), true, true).'>'.Icon::$ADD.'</a>').'</li>';
+		$Links .= '<li>'.Ajax::window('<a href="my/body-values/table" '.Ajax::tooltip('', __('Show table'), true, true).'>'.Icon::$TABLE.'</a>').'</li>';
 
 		return '<ul>'.$Links.'</ul>';
 	}
@@ -139,7 +139,7 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 		}
 
 		if (!empty($Code)) {
-			echo BoxedValue::wrapValues($Code);
+			BoxedValue::wrapValues($Code);
 		}
 
 		$this->displayPlots();
@@ -186,23 +186,25 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 		if ($this->Configuration()->value('use_weight')) {
 		    $UserWeight = new Weight($UserData->getWeight());
 			$Weight = __('Weight').': <strong>'.Helper::Unknown($UserWeight->string(false), '-').' '.$UserWeight->unit().'</strong><br>';
-                }
+		}
 
 		if ($this->Configuration()->value('use_pulse')) {
 			$Pulse = Helper::Unknown($UserData->getPulseRest(), '-').' bpm / '.Helper::Unknown($UserData->getPulseMax()).' bpm';
-                } else {
+		} else {
 			$Pulse = Helper::Unknown($UserData->getPulseMax(), '-').' bpm';
-                }
-                
+		}
+
 		if ($this->Configuration()->value('use_body_fat')) {
 			$Analyse = __('Fat').': '.Helper::Unknown($UserData->getBodyFat(), '-').' &#37;, '.__('Water').': '.Helper::Unknown($UserData->getWater(), '-').' &#37;, '.__('Muscles').': '.Helper::Unknown($UserData->getMuscles(), '-').' &#37;';
-                }
+		}
 
 		$AnalyseIsHidden = $this->Configuration()->value('use_weight') || $this->Configuration()->value('use_pulse');
 
-                if (!$AnalyseIsHidden && !$this->Configuration()->value('use_body_fat')) { return; }
+		if (!$AnalyseIsHidden && !$this->Configuration()->value('use_body_fat')) {
+		    return;
+		}
 
-		echo('
+		echo '
 			<div id="sportler-content">
 				<span class="right">'.$Pulse.'</span>
 				'.Ajax::flotChange($Weight, 'sportler_flots', 'sportler_weights').'
@@ -212,43 +214,9 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 					<div class="flot '.Ajax::$IMG_WAIT.'" id="sportler_weights" style="width:320px;height:150px;position:absolute;"></div>
 					<div class="flot '.Ajax::$IMG_WAIT.($AnalyseIsHidden ? ' flot-hide' : '').'" id="sportler_analyse" style="width:320px;height:150px;position:absolute;"></div>
 				</div>
-			</div>');
+			</div>';
 
 		include FRONTEND_PATH.'../plugin/'.$this->key().'/Plot.gewicht.php';
 		include FRONTEND_PATH.'../plugin/'.$this->key().'/Plot.analyse.php';
-	}
-
-	/**
-	 * Table link
-	 * @return string
-	 */
-	public function tableLink() {
-		return Ajax::window('<a href="plugin/'.$this->key().'/window.sportler.table.php">'.Icon::$TABLE.' '.__('Show table').'</a>');
-	}
-
-	/**
-	 * Add link
-	 * @return string
-	 */
-	public function addLink() {
-		return Ajax::window('<a href="plugin/'.$this->key().'/window.sportler.php">'.Icon::$ADD.' '.__('Add a new entry').'</a>');
-	}
-
-	/**
-	 * Get edit link for an entry
-	 * @param int $id
-	 * @return string
-	 */
-	public static function getEditLinkFor($id) {
-		return Ajax::window('<a href="plugin/RunalyzePluginPanel_Sportler/window.sportler.php?id='.$id.'">'.Icon::$EDIT.'</a>');
-	}
-
-	/**
-	 * Get delete link for an entry
-	 * @param int $id
-	 * @return string
-	 */
-	public static function getDeleteLinkFor($id) {
-		return Ajax::window('<a href="plugin/RunalyzePluginPanel_Sportler/window.sportler.php?id='.$id.'&delete=true">'.Icon::$DELETE.'</a>');
 	}
 }

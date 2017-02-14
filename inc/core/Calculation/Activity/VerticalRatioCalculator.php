@@ -1,15 +1,10 @@
 <?php
-/**
- * This file contains class::VerticalRatioCalculator
- * @package Runalyze\Calculation\Activity
- */
 
 namespace Runalyze\Calculation\Activity;
 
+use Runalyze\Mathematics\Distribution\TimeSeries;
 use Runalyze\Model\Activity;
 use Runalyze\Model\Trackdata;
-use Runalyze\Calculation\Distribution\TimeSeries;
-
 
 /**
  * Vertical Ratio Calculator

@@ -21,26 +21,28 @@ class UpdateController extends Controller
      */
     public function updateAction($entity_manager = 'default')
     {
+        $output = new BufferedOutput();
         $application = new Application($this->get('kernel'));
         $application->setAutoExit(false);
+        $application->run(new ArrayInput([
+            'command' => 'doctrine:migrations:status',
+            '--em' => $entity_manager,
+        ]), $output);
 
-        $input = new ArrayInput(array(
-           'command' => 'doctrine:migrations:status',
-           '--em' => $entity_manager,
-        ));
-        $output = new BufferedOutput();
-        $application->run($input, $output);
+        if ('prod' == $this->get('kernel')->getEnvironment()) {
+            $application->run(new ArrayInput([
+                'command' => 'cache:clear',
+                '--env' => 'prod',
+                '--no-warmup' => true
+            ]), $output);
+
+            $output->writeln(' To warmup the cache, run `php bin/console cache:clear`.');
+        } else {
+            $output->writeln('');
+            $output->writeln(' Runalyze is running in dev environment. Cache can\'t be cleared automatically.');
+        }
 
         $content = $output->fetch();
-
-        $input = new ArrayInput(array(
-            'command' => 'cache:clear',
-            '--env' => 'prod',
-        ));
-        $output = new BufferedOutput();
-        $application->run($input, $output);
-
-        $content .= $output->fetch();
 
 		$updateAvailable = true;
 		if (substr_count($content, 'Already at latest version') == 1) {
@@ -58,15 +60,13 @@ class UpdateController extends Controller
      */
     public function updateStartAction()
     {
+        $output = new BufferedOutput();
         $application = new Application($this->get('kernel'));
         $application->setAutoExit(false);
-
-        $input = new ArrayInput(array(
-           'command' => 'doctrine:migrations:migrate',
-           '--no-interaction',
-        ));
-        $output = new BufferedOutput();
-        $application->run($input, $output);
+        $application->run(new ArrayInput([
+            'command' => 'doctrine:migrations:migrate',
+            '--no-interaction',
+        ]), $output);
 
         $content = $output->fetch();
 

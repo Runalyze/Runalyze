@@ -273,8 +273,11 @@ class BasicEndurance {
 	 * @return string
 	 */
 	public function getQuery($timestamp = 0, $onlyLongjogs = false) {
-		if ($timestamp == 0)
-			$timestamp = LocalTime::now();
+		if ($timestamp == 0) {
+			$timestamp = LocalTime::fromServerTime(time())->setTime(23, 59, 59)->getTimestamp();
+        } else {
+            $timestamp = LocalTime::fromServerTime($timestamp)->setTime(23, 59, 59)->getTimestamp();
+        }
 
 		$StartTimeForLongjogs = $timestamp - $this->DAYS_FOR_LONGJOGS * DAY_IN_S;
 		$StartTimeForWeekKm   = $timestamp - $this->getDaysForWeekKm() * DAY_IN_S;
@@ -288,7 +291,7 @@ class BasicEndurance {
 					IF (
 						`distance` > '.$this->MIN_KM_FOR_LONGJOG.' AND time >= '.$StartTimeForLongjogs.',
 						(
-							(2 - (2/'.$this->DAYS_FOR_LONGJOGS.') * ( ('.$timestamp.' - `time`) / '.DAY_IN_S.' ) )
+							(2 - (2/'.$this->DAYS_FOR_LONGJOGS.') * FLOOR( ('.$timestamp.' - `time`) / '.DAY_IN_S.' ) )
 							* POW((`distance`-'.$this->MIN_KM_FOR_LONGJOG.')/'.$this->getTargetLongjogKmPerWeek().',2)
 						),
 						0
@@ -306,7 +309,7 @@ class BasicEndurance {
 					IF (
 						`distance` > '.$this->MIN_KM_FOR_LONGJOG.' AND time >= '.$StartTimeForLongjogs.',
 						(
-							(2 - (2/'.$this->DAYS_FOR_LONGJOGS.') * ( ('.$timestamp.' - `time`) / '.DAY_IN_S.' ) )
+							(2 - (2/'.$this->DAYS_FOR_LONGJOGS.') * FLOOR( ('.$timestamp.' - `time`) / '.DAY_IN_S.' ) )
 							* POW((`distance`-'.$this->MIN_KM_FOR_LONGJOG.')/'.$this->getTargetLongjogKmPerWeek().',2)
 						),
 						0
@@ -337,7 +340,7 @@ class BasicEndurance {
 			}
 
 			if ($data['time'] > $startTimeForLongjogs && $data['distance'] > $this->MIN_KM_FOR_LONGJOG) {
-				$points += (2 - 2 / $this->DAYS_FOR_LONGJOGS * ($timestamp - $data['time']) / DAY_IN_S) * pow($data['distance'] - $this->MIN_KM_FOR_LONGJOG, 2) / $targetLongJogSquared;
+				$points += (2 - 2 / $this->DAYS_FOR_LONGJOGS * floor(($timestamp - $data['time']) / DAY_IN_S)) * pow($data['distance'] - $this->MIN_KM_FOR_LONGJOG, 2) / $targetLongJogSquared;
 			}
 		}
 

@@ -141,7 +141,7 @@ class JobGeneral extends Job
 		BasicEndurance::recalculateValue();
 		$newValue = Configuration::Data()->basicEndurance();
 
-		$this->addSuccessMessage(__('Basic endurance'), $oldValue, $newValue);
+		$this->addSuccessMessage(__('Marathon shape'), $oldValue, $newValue);
 	}
 
 	/**

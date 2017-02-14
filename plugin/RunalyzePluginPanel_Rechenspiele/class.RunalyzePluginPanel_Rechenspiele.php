@@ -5,18 +5,18 @@
  */
 $PLUGINKEY = 'RunalyzePluginPanel_Rechenspiele';
 
-use Runalyze\Calculation\Performance;
-use Runalyze\Calculation\Prognosis;
-use Runalyze\Calculation\BasicEndurance;
-use Runalyze\Calculation\Monotony;
-use Runalyze\Configuration;
-use Runalyze\Calculation\JD\VDOT;
-use Runalyze\Calculation\JD\VDOTCorrector;
 use Runalyze\Activity\Distance;
 use Runalyze\Activity\Duration;
+use Runalyze\Calculation\BasicEndurance;
+use Runalyze\Calculation\JD\VDOT;
+use Runalyze\Calculation\JD\VDOTCorrector;
+use Runalyze\Calculation\Performance;
+use Runalyze\Configuration;
+use Runalyze\Sports\Performance\Model\TsbModel;
+use Runalyze\Sports\Performance\Monotony;
+use Runalyze\Util\LocalTime;
 use Runalyze\Util\Time;
 use Runalyze\View\Tooltip;
-use Runalyze\Util\LocalTime;
 
 /**
  * Class: RunalyzePluginPanel_Rechenspiele
@@ -42,7 +42,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	 * @return string
 	 */
 	final public function description() {
-		return __('Calculate experimental values as shape and fatigue based on TRIMP, basic endurance and your VDOT shape.');
+		return __('Calculate experimental values as shape and fatigue based on TRIMP, marathon shape and your VDOT shape.');
 	}
 
 	/**
@@ -73,8 +73,8 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 		$ShowVDOT->setTooltip( __('Predict current VDOT value') );
 		$ShowVDOT->setDefaultValue(true);
 
-		$ShowBE = new PluginConfigurationValueBool('show_basicendurance', __('Show: Basic endurance'));
-		$ShowBE->setTooltip( __('Guess current basic endurance') );
+		$ShowBE = new PluginConfigurationValueBool('show_basicendurance', __('Show: Marathon shape'));
+		$ShowBE->setTooltip( __('Guess current marathon shape') );
 		$ShowBE->setDefaultValue(true);
 
 		$ShowJD = new PluginConfigurationValueBool('show_jd_intensity', __('Show: Training points'));
@@ -132,7 +132,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 		$ModelQuery = new Performance\ModelQuery();
 		$ModelQuery->execute(DB::getInstance());
 
-		$TSBmodel = new Performance\TSB(
+		$TSBmodel = new TsbModel(
 			$ModelQuery->data(),
 			Configuration::Trimp()->daysForCTL(),
 			Configuration::Trimp()->daysForATL()
@@ -143,7 +143,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 		$MonotonyQuery->setRange(time()-(Monotony::DAYS-1)*DAY_IN_S, time());
 		$MonotonyQuery->execute(DB::getInstance());
 
-		$Monotony = new Monotony($MonotonyQuery->data());
+		$Monotony = new Monotony($MonotonyQuery->data(), 2 * Configuration::Data()->maxATL());
 		$Monotony->calculate();
 
 		$VDOT        = Configuration::Data()->vdot();
@@ -210,7 +210,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 				),
 				'bar-tooltip'	=> '',
 				'value'	=> BasicEndurance::getConst().'&nbsp;&#37;'.(0 == $VDOT ? '&nbsp;<i class="fa fa-fw fa-exclamation-circle"></i>' : ''),
-				'title'	=> __('Basic&nbsp;endurance'),
+				'title'	=> __('Marathon&nbsp;shape'),
 				'small'	=> '',
 				'tooltip'	=> __('<em>Experimental value!</em><br>100 &#37; means: you had enough long runs and kilometers per week to run a good marathon, based on your current VDOT.')
 			),
@@ -431,7 +431,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 		$ModelQuery = new Performance\ModelQuery();
 		$ModelQuery->execute(DB::getInstance());
 
-		$TSBmodel = new Performance\TSB(
+		$TSBmodel = new TsbModel(
 			$ModelQuery->data(),
 			Configuration::Trimp()->daysForCTL(),
 			Configuration::Trimp()->daysForATL()
@@ -553,7 +553,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	}
 
 	/**
-	 * Get fieldset for basic endurance
+	 * Get fieldset for Marathon shape
 	 * @return \FormularFieldset
 	 */
 	public function getFieldsetBasicEndurance() {
@@ -562,12 +562,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 		$usedVdot = $BasicEndurance->getUsedVDOT();
 		$BEresults = $BasicEndurance->asArray();
 
-		$Strategy  = new Prognosis\Daniels();
-		$Strategy->setupFromDatabase();
-		$Strategy->setVDOT($usedVdot);
-		$Strategy->adjustVDOT(false);
-		$Prognosis = new Prognosis\Prognosis();
-		$Prognosis->setStrategy($Strategy);
+		$Prognosis = new \Runalyze\Sports\Running\Prognosis\Daniels($usedVdot);
 
 		$GeneralTable = '
 			<table class="fullwidth zebra-style">
@@ -585,7 +580,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 					</tr>
 					<tr>
 						<td>'.__('<strong>Marathon time</strong> <small>(optimal)</small>').'</td>
-						<td class="r">'.Duration::format($Prognosis->inSeconds(42.195)).'</td>
+						<td class="r">'.Duration::format($Prognosis->getSeconds(42.195)).'</td>
 						<td>&nbsp;</td>
 						<td>'.sprintf( __('<strong>Target long run</strong> <small>(%s weeks)</small>'), round($BasicEndurance->getDaysToRecognizeForLongjogs() / 7)).'</td>
 						<td class="r">'.Distance::format($BasicEndurance->getRealTargetLongjogKmPerWeek(), false, 0).'</td>
@@ -632,8 +627,8 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 		$LongjogTable .= '<p class="small">'.sprintf( __('* In general, all runs with more than %s are being considered.'),
 														Distance::format($BasicEndurance->getMinimalDistanceForLongjogs())).'</p>';
 
-		$Fieldset = new FormularFieldset( __('Basic endurance') );
-		$Fieldset->addBlock( __('Your basic endurance is based on your weekly kilometers and your long jogs.<br>'.
+		$Fieldset = new FormularFieldset( __('Marathon shape') );
+		$Fieldset->addBlock( __('Your marathon shape is based on your weekly kilometers and your long jogs.<br>'.
 								'The target is derived from the possible marathon time based on your current shape.').'<br>&nbsp;' );
 
 		if (0 == Configuration::Data()->vdot()) {
@@ -645,7 +640,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 								'That means, a long jog yesterday gives more points than a long jog two weeks ago '.
 								'and a 30k-jog gives more points than two 20k-jogs.').'<br>&nbsp;' );
 		$Fieldset->addBlock($LongjogTable);
-		$Fieldset->addBlock( __('The basic endurance is <strong>not</strong> from Jack Daniels.<br>'.
+		$Fieldset->addBlock( __('The marathon shape is <strong>not</strong> from Jack Daniels.<br>'.
 								'It\'s our own attempt to adjust the prognosis for long distances based on your current endurance.') );
 
 		return $Fieldset;

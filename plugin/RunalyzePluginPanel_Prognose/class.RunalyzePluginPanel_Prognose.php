@@ -20,15 +20,9 @@ $PLUGINKEY = 'RunalyzePluginPanel_Prognose';
 class RunalyzePluginPanel_Prognose extends PluginPanel {
 	/**
 	 * Prognosis
-	 * @var Runalyze\Calculation\Prognosis\Prognosis
+	 * @var \Runalyze\Sports\Running\Prognosis\PrognosisInterface
 	 */
 	protected $Prognosis = null;
-
-	/**
-	 * Prognosis strategy
-	 * @var Runalyze\Calculation\Prognosis\AbstractStrategy
-	 */
-	protected $PrognosisStrategy = null;
 
 	/**
 	 * Number of successfully fetched PBs
@@ -90,7 +84,7 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 		) );
 		$Model->setDefaultValue('jd');
 
-		$BasicEndurance = new PluginConfigurationValueBool('use_be', __('Use basic endurance'), __('Use basic endurance factor to adapt prognosis for long distances (Jack Daniels only).'));
+		$BasicEndurance = new PluginConfigurationValueBool('use_be', __('Use marathon shape'), __('Use marathon shape factor to adapt prognosis for long distances (Jack Daniels only).'));
 		$BasicEndurance->setDefaultValue(true);
 
 		$Configuration = new PluginConfiguration($this->id());
@@ -125,7 +119,7 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 			$this->showPrognosis($km);
 		}
 
-		if (!$this->Prognosis->isValid()) {
+		if (!$this->Prognosis->areValuesValid()) {
 			echo HTML::warning(__('Prognoses can\'t be calculated.'));
 		}
 
@@ -143,37 +137,59 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 		$this->NumberOfPBs = PersonalBest::lookupDistances($this->getDistances(), Configuration::General()->runningSport());
 	}
 
+    /**
+     * @param int $num
+     * @return array
+     */
+	protected function getTopResult($num = 1) {
+	    return (new Prognosis\TopResults())->getTopResults($num);
+    }
+
 	/**
 	 * Prepare calculations
 	 */
 	protected function prepareForPrognosis() {
 		switch ($this->Configuration()->value('model')) {
 			case 'cpp':
-				$this->PrognosisStrategy = new Prognosis\Bock();
+			    $topResults = $this->getTopResult(2);
+			    $this->Prognosis = new \Runalyze\Sports\Running\Prognosis\Bock();
+
+			    if (count($topResults) == 2) {
+			        $this->Prognosis->setFromResults($topResults[0]['distance'], $topResults[0]['s'], $topResults[1]['distance'], $topResults[1]['s']);
+                }
+
 				break;
 
 			case 'steffny':
-				$this->PrognosisStrategy = new Prognosis\Steffny();
+                $topResults = $this->getTopResult(2);
+			    $this->Prognosis = new \Runalyze\Sports\Running\Prognosis\Steffny();
+
+                if (count($topResults) == 2) {
+                    $this->Prognosis->setReferenceResult($topResults[0]['distance'], $topResults[0]['s']);
+                }
+
 				break;
 
 			case 'cameron':
-				$this->PrognosisStrategy = new Prognosis\Cameron();
-				break;
+                $topResults = $this->getTopResult(2);
+                $this->Prognosis = new \Runalyze\Sports\Running\Prognosis\Cameron();
+
+                if (count($topResults) == 2) {
+                    $this->Prognosis->setReferenceResult($topResults[0]['distance'], $topResults[0]['s']);
+                }
+
+                break;
 
 			case 'jd':
 			default:
-				$this->PrognosisStrategy = new Prognosis\Daniels();
+			    $this->Prognosis = new \Runalyze\Sports\Running\Prognosis\Daniels(
+                    Configuration::Data()->vdot(),
+                    $this->Configuration()->value('use_be'),
+                    \Runalyze\Calculation\BasicEndurance::getConst()
+                );
+
 				break;
 		}
-
-		$this->PrognosisStrategy->setupFromDatabase();
-
-		if ($this->Configuration()->value('model') == 'jd' && !$this->Configuration()->value('use_be')) {
-			$this->PrognosisStrategy->setBasicEnduranceForAdjustment(INFINITY);
-		}
-
-		$this->Prognosis = new Prognosis\Prognosis();
-		$this->Prognosis->setStrategy($this->PrognosisStrategy);
 	}
 
 	/**
@@ -187,8 +203,8 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 		$PBString = $PB->exists() ? Ajax::trainingLink($PB->activityId(),$PBTime,true) : $PBTime;
 		$Distance = new Distance($distance);
 
-		if ($this->Prognosis->isValid()) {
-			$prognosis = new Duration($this->Prognosis->inSeconds($distance));
+		if ($this->Prognosis->areValuesValid()) {
+			$prognosis = new Duration($this->Prognosis->getSeconds($distance));
 			$pace = new Pace($prognosis->seconds(), $distance, SportFactory::getSpeedUnitFor(Configuration::General()->runningSport()));
 			$prognosisString = $prognosis->string(Duration::FORMAT_AUTO, 0);
 		} else {

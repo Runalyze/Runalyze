@@ -135,7 +135,7 @@ class AccountController extends Controller
     {
         if ($this->getAccountRepository()->activateByHash($hash)) {
             return $this->render('account/activate/success.html.twig');
-        } elseif ($username !== NULL) {
+        } elseif (null !== $username) {
             if ($user = $this->getAccountRepository()->loadUserByUsername($username)) {
                 return $this->render('account/activate/success.html.twig', ['username' => $username, 'alreadyActivated' => true]);
             }

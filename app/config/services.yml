@@ -83,6 +83,9 @@ services:
     arguments: ["@app.configuration_manager"]
     tags:
      - { name: form.type }
+  app.automatic_reload_flag_setter:
+    class: Runalyze\Bundle\CoreBundle\Services\AutomaticReloadFlagSetter
+    arguments: ["@session.flash_bag"]
   app.privacy_guard:
     class: Runalyze\Bundle\CoreBundle\Services\PrivacyGuard
     arguments: ["@security.token_storage", "@app.configuration_manager"]
@@ -135,9 +138,14 @@ services:
     arguments: ["@app.configuration_manager"]
     tags:
       - { name: twig.extension }
+  app.twig_automatic_reload_flag_extension:
+    class: Runalyze\Bundle\CoreBundle\Twig\AutomaticReloadFlagExtension
+    public: false
+    tags:
+      - { name: twig.extension }
   my_receiver:
-    class: Runalyze\Bundle\CoreBundle\Receiver\BackupReceiver
+    class: Runalyze\Bundle\CoreBundle\Queue\Receiver\BackupReceiver
     arguments:
       container: "@service_container"
     tags:
-      - { name: bernard.receiver, message: UserBackup }
+      - { name: bernard.receiver, message: userBackup }

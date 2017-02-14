@@ -7,7 +7,6 @@
 
 use Runalyze\Calculation\BasicEndurance;
 use Runalyze\Calculation\JD;
-use Runalyze\Calculation\Prognosis;
 use Runalyze\Configuration;
 use Runalyze\Activity\Distance;
 use Runalyze\Util\LocalTime;
@@ -30,11 +29,7 @@ $PrognosisWithBasicEndurance = array();
 $BasicEndurance = array();
 $Results = array();
 
-$Strategy = new Prognosis\Daniels();
-$Strategy->adjustVDOT(false);
-
-$PrognosisObj = new Prognosis\Prognosis();
-$PrognosisObj->setStrategy($Strategy);
+$PrognosisObj = new \Runalyze\Sports\Running\Prognosis\Daniels();
 
 $BasicEnduranceObj = new BasicEndurance();
 $BasicEnduranceObj->readSettingsFromConfiguration();
@@ -70,19 +65,29 @@ if (START_TIME != time()) {
 		$maxAgeOfLongJogs = $BasicEnduranceObj->getDaysToRecognizeForLongjogs();
 		$minKmOfLongJogs = $BasicEnduranceObj->getMinimalDistanceForLongjogs();
 
+		if ($Data[count($Data) - 1]['date_age'] < 0) {
+		    $Data[] = [
+		        'date_age' => 0,
+                'date' => date('Y-m-d'),
+                'distance' => 0,
+                'vdot_weighted' => 0,
+                'vdot_sum_time' => 0
+            ];
+        }
+
 		// Due to performance reasons, this is not clean code
 		// To check values, use Runalyze\Calculation\JD\VdotShape::calculateAt($index)
 		foreach ($Data as $currentIndex => $currentData) {
-			while ($currentFirstIndexForVdot < $currentIndex && $currentData['date_age'] - $Data[$currentFirstIndexForVdot]['date_age'] > $maxAgeOfVdot) {
+			while ($currentFirstIndexForVdot < $currentIndex && $currentData['date_age'] - $Data[$currentFirstIndexForVdot]['date_age'] >= $maxAgeOfVdot) {
 				$currentVdotWeightedSum -= $Data[$currentFirstIndexForVdot]['vdot_weighted'];
 				$currentVdotTimeSum -= $Data[$currentFirstIndexForVdot]['vdot_sum_time'];
 				$currentFirstIndexForVdot++;
 			}
-			while ($currentFirstIndexForKm < $currentIndex && $currentData['date_age'] - $Data[$currentFirstIndexForKm]['date_age'] > $maxAgeOfKm) {
+			while ($currentFirstIndexForKm < $currentIndex && $currentData['date_age'] - $Data[$currentFirstIndexForKm]['date_age'] >= $maxAgeOfKm) {
 				$currentKmSum -= $Data[$currentFirstIndexForKm]['distance'];
 				$currentFirstIndexForKm++;
 			}
-			while ($currentFirstIndexForLongJogs < $currentIndex && $currentData['date_age'] - $Data[$currentFirstIndexForLongJogs]['date_age'] > $maxAgeOfLongJogs) {
+			while ($currentFirstIndexForLongJogs < $currentIndex && $currentData['date_age'] - $Data[$currentFirstIndexForLongJogs]['date_age'] >= $maxAgeOfLongJogs) {
 				$currentFirstIndexForLongJogs++;
 			}
 
@@ -104,16 +109,16 @@ if (START_TIME != time()) {
 				$longJogPoints /= pow($BasicEnduranceObj->getTargetLongjogKmPerWeek(), 2);
 				$BasicEndurance[$index] = $BasicEnduranceObj->asArray(0, ['km' => $currentKmSum, 'sum' => $longJogPoints])['percentage'];
 
-				$Strategy->setVDOT($Data[$currentIndex]['vdot']);
-				$Strategy->setBasicEnduranceForAdjustment($BasicEndurance[$index]);
-				$Strategy->adjustVDOT(true);
-				$prognosisInSecondsWithBasicEndurance = $PrognosisObj->inSeconds($distance);
+				$PrognosisObj->setVdot($Data[$currentIndex]['vdot']);
+				$PrognosisObj->setBasicEndurance($BasicEndurance[$index]);
+				$PrognosisObj->adjustForBasicEndurance(true);
+				$prognosisInSecondsWithBasicEndurance = $PrognosisObj->getSeconds($distance);
 
 				if ($prognosisInSecondsWithBasicEndurance > 0) {
 					$PrognosisWithBasicEndurance[$index] = $prognosisInSecondsWithBasicEndurance * 1000;
 
-					$Strategy->adjustVDOT(false);
-					$Prognosis[$index] = $PrognosisObj->inSeconds($distance) * 1000;
+					$PrognosisObj->adjustForBasicEndurance(false);
+					$Prognosis[$index] = $PrognosisObj->getSeconds($distance) * 1000;
 				}
 			}
 		}
@@ -151,8 +156,8 @@ if (START_TIME != time()) {
 
 $Plot = new Plot("formverlauf_".str_replace('.', '_', $distance), 800, 450);
 
-$Plot->Data[] = array('label' => __('Prognosis'), 'color' => '#880000', 'data' => $Prognosis, 'lines' => array('show' => true), 'points' => array('show' => false));
-$Plot->Data[] = array('label' => __('Prognosis with basic endurance'), 'color' => '#000088', 'data' => $PrognosisWithBasicEndurance, 'lines' => array('show' => true), 'points' => array('show' => false));
+$Plot->Data[] = array('label' => __('Prognosis'), 'color' => '#880000', 'data' => $Prognosis, 'lines' => array('show' => true), 'points' => array('show' => false), 'curvedLines' => array('apply' => false));
+$Plot->Data[] = array('label' => __('Prognosis with marathon shape'), 'color' => '#000088', 'data' => $PrognosisWithBasicEndurance, 'lines' => array('show' => true), 'points' => array('show' => false), 'curvedLines' => array('apply' => false));
 $Plot->Data[] = array('label' => __('Result'), 'color' => '#000000', 'data' => $Results, 'lines' => array('show' => false), 'points' => array('show' => true), 'curvedLines' => array('apply' => false));
 
 $Plot->setZeroPointsToNull();

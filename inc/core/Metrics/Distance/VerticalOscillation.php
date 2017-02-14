@@ -3,7 +3,6 @@
 namespace Runalyze\Metrics\Distance;
 
 use Runalyze\Metrics\Common\AbstractMetric;
-use Runalyze\Metrics\Distance\Unit\Centimeter;
 use Runalyze\Metrics\Distance\Unit\Millimeter;
 
 class VerticalOscillation extends AbstractMetric

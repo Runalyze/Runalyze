@@ -826,7 +826,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->object->object()->Splits()->distancesAsArray()
 		);
 	}
-	
+
 	public function testDeveloperFieldsInNewFormatFromMoxy() {
 		$this->object->parseFile(__DIR__ . '/../../../testfiles/fit/moxy-float.fit');
 		$this->assertTrue($this->object->object()->hasArraySmo2_0());
@@ -843,4 +843,16 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			array_slice($this->object->object()->getArrayThb_0(), 0, 15)
 		);
 	}
+
+    /**
+     * @see https://github.com/Runalyze/Runalyze/issues/2066
+     */
+    public function testThatZerosInCadenceAreIgnoredForAverage() {
+        if (Shell::isPerlAvailable()) {
+            $this->object->parseFile('../tests/testfiles/fit/IPBike-cadence.fit');
+
+            $this->assertTrue($this->object->object()->hasArrayCadence());
+            $this->assertEquals(76, $this->object->object()->getCadence());
+        }
+    }
 }

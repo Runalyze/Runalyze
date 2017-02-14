@@ -19,15 +19,6 @@ class JsonBackup extends AbstractBackup
 	}
 
 	/**
-	 * Save table structure
-	 * @param string $tableName
-	 */
-	protected function saveTableStructure($tableName)
-    {
-		// No structure saved
-	}
-
-	/**
 	 * Start table rows
 	 * @param string $tableName
 	 */

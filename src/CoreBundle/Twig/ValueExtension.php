@@ -11,8 +11,8 @@ use Runalyze\Metrics\Distance\Unit\AbstractDistanceUnit;
 use Runalyze\Metrics\Energy\Unit\AbstractEnergyUnit;
 use Runalyze\Metrics\HeartRate\Unit\AbstractHeartRateUnit;
 use Runalyze\Metrics\HeartRate\Unit\AbstractHeartRateUnitInPercent;
-use Runalyze\Metrics\Pace\Unit\AbstractPaceInTimeFormatUnit;
-use Runalyze\Metrics\Pace\Unit\AbstractPaceUnit;
+use Runalyze\Metrics\Velocity\Unit\AbstractPaceInTimeFormatUnit;
+use Runalyze\Metrics\Velocity\Unit\AbstractPaceUnit;
 use Runalyze\Metrics\Temperature\Unit\AbstractTemperatureUnit;
 use Runalyze\Metrics\Weight\Unit\AbstractWeightUnit;
 
