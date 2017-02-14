@@ -28,6 +28,7 @@ class SvgToPngConverter
      */
     public function convert($source, $target)
     {
+        echo "test";
         return $this->callConverter($source, $target);
     }
 

@@ -19,7 +19,7 @@ parameters:
   geonames_username:
   perl_path: /usr/bin/perl
   python3_path: /usr/bin/python3
-  rsvg_path: /usr/bin/rsvg
+  rsvg_path: /usr/bin/rsvg-convert
   ttbin_path: ../call/perl/ttbincnv
   sqlite_mod_spatialite: libspatialite.so.5
   mail_sender:

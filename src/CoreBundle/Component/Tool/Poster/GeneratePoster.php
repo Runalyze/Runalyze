@@ -90,6 +90,7 @@ class GeneratePoster
         $this->Parameter[] = '--year '.(int)$year;
         $this->Parameter[] = '--output '.$this->pathToSvgDirectory().$this->Filename;
         $this->Parameter[] = '--type '.$type;
+        $this->Parameter[] = '--title '.escapeshellarg($title);
 
         $this->addStatsParameter($account, $sport, $year);
 
@@ -97,9 +98,6 @@ class GeneratePoster
             $this->Parameter[] = file_get_contents($jsonDir.'/special.params');
         }
 
-        if (!empty($title)) {
-            $this->Parameter[] = '--title '.escapeshellarg($title);
-        }
     }
 
     /**

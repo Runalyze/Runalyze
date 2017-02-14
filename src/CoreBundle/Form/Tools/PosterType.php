@@ -68,6 +68,7 @@ class PosterType extends AbstractType
             ])
             ->add('title', TextType::class, array(
                 'required' => true,
+                'attr' => ['maxlength' => 11]
             ))
             ->add('sport', ChoiceType::class, [
                 'choices' => $this->SportRepository->findAllFor($this->getAccount()),
