@@ -81,6 +81,38 @@ class ParserFITSingle extends ParserAbstractSingle {
 			if (isset($this->fitData->data_mesgs[$fittype][$fitkey]))
 				$this->gps[$key] = array_values($this->fitData->data_mesgs[$fittype][$fitkey]);
 		}
+
+		if (isset($this->fitData->data_mesgs['event']) &&
+		    isset($this->fitData->data_mesgs['event']['event_type'])) {
+			$lastStopTime = null;
+
+			foreach ($this->fitData->data_mesgs['event']['event_type'] as $idx => $eventType) {
+				//$time = $this->fitData->data_mesgs['event']['timestamp'][$idx] - $this->startTime;
+				$time = $this->fitData->data_mesgs['event']['timestamp'][$idx];
+
+				if ($time < $this->startTime) {
+					$this->startTime = $time;
+				}
+
+				switch ($this->fitData->enumData('event_type', $eventType)) {
+					case 'start':
+						if (($lastStopTime !== null) && ($time > $lastStopTime)) {
+							$this->pausesToApply[] = array(
+								'time' => $lastStopTime,
+								'duration' => $time - $lastStopTime
+							);
+							$lastStopTime = null;
+						}
+						break;
+					case 'stop':
+					case 'stop_all':
+						$lastStopTime = $time;
+						break;
+				}
+			}
+		}
+		$this->applyPauses();
+
 		/* time_in_s from FIT is an array of timestamps, we need an array of seconds since activity_start */
 		if (isset($this->gps['time_in_s'])) {
 			if ($this->gps['time_in_s'][0] < $this->startTime)
@@ -142,7 +174,10 @@ class ParserFITSingle extends ParserAbstractSingle {
 		    $this->fitData->data_mesgs['session']['total_training_effect'][0] <= 50.0)
 			$this->TrainingObject->setFitTrainingEffect($this->fitData->data_mesgs['session']['total_training_effect']/10);
 
-		$this->applyPauses();
+		/* reorder arrays, unset()s might have happened... */
+		foreach (array_keys($this->gps) as $key)
+			$this->gps[$key] = array_values($this->gps[$key]);
+
 		$this->setGPSarrays();
 	}
 }
