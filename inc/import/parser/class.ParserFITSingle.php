@@ -44,6 +44,7 @@ class ParserFITSingle extends ParserAbstractSingle {
 	 * @throws \Runalyze\Import\Exception\ParserException
 	 */
 	public function parse() {
+		$creator = '';
 		$creatorDetails = '';
 
 		$this->TrainingObject = new TrainingObject(DataObject::$DEFAULT_ID);
@@ -55,12 +56,13 @@ class ParserFITSingle extends ParserAbstractSingle {
 			throw new ParserException('FIT file is not specified as activity.');
 
 		if (isset($this->fitData->data_mesgs['device_info']['manufacturer']))
-			$this->TrainingObject->setCreator($this->fitData->manufacturer());
+			$creator = $this->fitData->manufacturer();
+		if (isset($this->fitData->data_mesgs['device_info']['product']))
+			$creator .= ($creator == '' ? '' : ' ') . $this->fitData->product();
+		$this->TrainingObject->setCreator($creator);
 
 		if (isset($this->fitData->data_mesgs['file_creator']['software_version']))
 			$creatorDetails = 'firmware '.$this->fitData->data_mesgs['file_creator']['software_version'];
-		if (isset($this->fitData->data_mesgs['file_id']['product']))
-			$creatorDetails .= ($creatorDetails == '' ? '' : ', ') . 'product '.$this->fitData->product();
 		if (isset($this->fitData->data_mesgs['file_id']['serial_number']))
 			$creatorDetails .= ($creatorDetails == '' ? '' : ', ') . 'serial number '.$this->fitData->data_mesgs['file_id']['serial_number'];
 		$this->TrainingObject->setCreatorDetails($creatorDetails);
