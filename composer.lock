@@ -13,12 +13,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/undertrained/php-fit-file-analysis.git",
-                "reference": "18d63c0cf6456dd57c80af9aaf5d9b3a344c0bd7"
+                "reference": "2fdee6c46dc9ff2926833a4793ab91bdbd593b79"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/undertrained/php-fit-file-analysis/zipball/18d63c0cf6456dd57c80af9aaf5d9b3a344c0bd7",
-                "reference": "18d63c0cf6456dd57c80af9aaf5d9b3a344c0bd7",
+                "url": "https://api.github.com/repos/undertrained/php-fit-file-analysis/zipball/2fdee6c46dc9ff2926833a4793ab91bdbd593b79",
+                "reference": "2fdee6c46dc9ff2926833a4793ab91bdbd593b79",
                 "shasum": ""
             },
             "require-dev": {
@@ -41,7 +41,7 @@
             "support": {
                 "source": "https://github.com/undertrained/php-fit-file-analysis/tree/master"
             },
-            "time": "2017-02-07 07:20:48"
+            "time": "2017-02-14 10:42:46"
         },
         {
             "name": "beberlei/DoctrineExtensions",
