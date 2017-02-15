@@ -5,11 +5,14 @@ namespace Runalyze\Bundle\CoreBundle\Controller\My;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\User;
 use Runalyze\Bundle\CoreBundle\Entity\UserRepository;
+use Runalyze\Bundle\CoreBundle\Form\BodyValuesType;
 use Runalyze\Bundle\CoreBundle\Services\AutomaticReloadFlagSetter;
 use Runalyze\Metrics\HeartRate\Unit\BeatsPerMinute;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Extension\Core\Type\PercentType;
 
 /**
  * @Route("/my/body-values")
@@ -26,70 +29,80 @@ class BodyValuesController extends Controller
 
     /**
      * @Route("/add", name="body-values-add")
+     * @param Request $request
+     * @param Account $account
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function addAction()
+    public function addAction(Request $request, Account $account)
     {
-        $Frontend = new \Frontend(true, $this->get('security.token_storage'));
+        /** @var User $oldUser */
+        $oldUser = $this->getUserRepository()->getLatestEntryFor($account);
+        if ($oldUser) {
+            $user = clone $oldUser;
+        } else {
+            $user = new User();
+        }
 
-        $user = new \UserData(\DataObject::$LAST_OBJECT);
-        $user->setCurrentTimestamp();
+        $form = $this->createForm(BodyValuesType::class, $user,[
+            'action' => $this->generateUrl('body-values-add')
+        ]);
+        $form->handleRequest($request);
 
-        $form = new \StandardFormular($user, \StandardFormular::$SUBMIT_MODE_CREATE);
-        $form->addCSSclass('no-automatic-reload');
-        $form->setId('sportler');
-        $form->setLayoutForFields(\FormularFieldset::$LAYOUT_FIELD_W33);
-
-        if ($form->submitSucceeded()) {
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getUserRepository()->save($user, $account);
             $this->get('app.automatic_reload_flag_setter')->set(AutomaticReloadFlagSetter::FLAG_ALL);
-
             return $this->redirectToRoute('body-values-table');
         }
 
         return $this->render('my/body-values/form.html.twig', [
-            'isNew' => true,
-            'form' => $form
+            'form' => $form->createView()
         ]);
     }
 
     /**
      * @Route("/{id}/edit", name="body-values-edit")
      * @ParamConverter("user", class="CoreBundle:User")
+     * @param Request $request
+     * @param User $user
+     * @param Account $account
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function editAction(User $user, Account $account)
+    public function editAction(Request $request, User $user, Account $account)
     {
         if ($user->getAccount()->getId() != $account->getId()) {
             throw $this->createNotFoundException();
         }
 
-        $Frontend = new \Frontend(true, $this->get('security.token_storage'));
+        $form = $this->createForm(BodyValuesType::class, $user, [
+            'action' => $this->generateUrl('body-values-edit', ['id' => $user->getId()])
+        ]);
+        $form->handleRequest($request);
 
-        $user = new \UserData($user->getId());
-
-        $form = new \StandardFormular($user, \StandardFormular::$SUBMIT_MODE_EDIT);
-        $form->addCSSclass('no-automatic-reload');
-        $form->setId('sportler');
-        $form->setLayoutForFields(\FormularFieldset::$LAYOUT_FIELD_W33);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getUserRepository()->save($user, $account);
+            $this->get('app.automatic_reload_flag_setter')->set(AutomaticReloadFlagSetter::FLAG_ALL);
+            return $this->redirectToRoute('body-values-table');
+        }
 
         return $this->render('my/body-values/form.html.twig', [
-            'isNew' => false,
-            'form' => $form
+            'form' => $form->createView()
         ]);
     }
 
     /**
      * @Route("/{id}/delete", name="body-values-delete")
      * @ParamConverter("user", class="CoreBundle:User")
+     * @param User $user
+     * @param Account $account
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction(User $user, Account $account)
     {
-        if ($user->getAccount()->getId() != 0 && $account->getId()) {
+        if ($user->getAccount()->getId() != $account->getId()) {
             throw $this->createNotFoundException('No user entry found.');
         }
 
-        // Frontend is needed as long as user repository uses \Cache::delete()
-        $Frontend = new \Frontend(true, $this->get('security.token_storage'));
-
-        $this->getUserRepository()->remove($user, $account);
+        $this->getUserRepository()->remove($user);
         $this->get('app.automatic_reload_flag_setter')->set(AutomaticReloadFlagSetter::FLAG_ALL);
 
         return $this->redirectToRoute('body-values-table');
@@ -97,6 +110,7 @@ class BodyValuesController extends Controller
 
     /**
      * @Route("/table", name="body-values-table")
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function tableAction(Account $account)
     {

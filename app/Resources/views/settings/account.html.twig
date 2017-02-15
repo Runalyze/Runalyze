@@ -12,15 +12,15 @@
 
         <fieldset id="legend0">
             <legend onclick="Runalyze.toggleFieldset(this, 'legend0', false, '')">{% trans %}Your acccount{% endtrans %}</legend>
-            {{ form_row(form.username) }}
-            {{ form_row(form.name) }}
-            {{ form_row(form.mail) }}
-            {{ form_row(form.language) }}
-            {{ form_row(form.timezone) }}
-            {{ form_row(form.registerdate) }}
-            {{ form_row(form.gender, {'info': 'Used for calculating energy consumption and age grading.'|trans }) }}
-            {{ form_row(form.birthyear, {'info': 'Used for age grading.'|trans }) }}
-            {{ form_row(form.allow_support, {'info': 'Allow admins in case of support requests to have a look at your data.'|trans }) }}
+            {{ form_row(form.username, {'div_class': 'w100 block'}) }}
+            {{ form_row(form.name, {'div_class': 'w100 block'}) }}
+            {{ form_row(form.mail, {'div_class': 'w100 block'}) }}
+            {{ form_row(form.language, {'div_class': 'w100 block'}) }}
+            {{ form_row(form.timezone, {'div_class': 'w100 block'}) }}
+            {{ form_row(form.registerdate, {'div_class': 'w100 block'}) }}
+            {{ form_row(form.gender, {'info': 'Used for calculating energy consumption and age grading.'|trans , 'div_class': 'w100 block'}) }}
+            {{ form_row(form.birthyear, {'info': 'Used for age grading.'|trans , 'div_class': 'w100 block'}) }}
+            {{ form_row(form.allow_support, {'info': 'Allow admins in case of support requests to have a look at your data.'|trans , 'div_class': 'w100 block'}) }}
         </fieldset>
 
         <fieldset id="legend1">

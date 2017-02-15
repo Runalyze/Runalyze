@@ -27,6 +27,7 @@ class SettingsController extends Controller
     /**
      * @Route("/settings/account", name="settings-account")
      * @Security("has_role('ROLE_USER')")
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function settingsAccountAction(Request $request, Account $account)
     {
@@ -64,6 +65,7 @@ class SettingsController extends Controller
     /**
      * @Route("/settings/password", name="settings-password")
      * @Security("has_role('ROLE_USER')")
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function settingsPasswordAction(Request $request, Account $account)
     {
@@ -118,6 +120,7 @@ class SettingsController extends Controller
     /**
      * @Route("/settings/account/delete", name="settings-account-delete")
      * @Security("has_role('ROLE_USER')")
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function windowDeleteAction(Account $account)
     {

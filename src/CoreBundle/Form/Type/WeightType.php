@@ -28,6 +28,11 @@ class WeightType extends AbstractType implements DataTransformerInterface
         $builder->addModelTransformer($this);
     }
 
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
+        $view->vars['input_unit'] = $this->WeightUnit->getAppendix();
+    }
+
     /**
      * @param  mixed $weight [kg]
      * @return string
@@ -44,11 +49,6 @@ class WeightType extends AbstractType implements DataTransformerInterface
     public function reverseTransform($weight)
     {
         return null === $weight ? null : (int)$this->WeightUnit->toBaseUnit($weight);
-    }
-
-    public function buildView(FormView $view, FormInterface $form, array $options)
-    {
-        $view->vars['input_unit'] = $this->WeightUnit->getAppendix();
     }
 
     public function getParent()

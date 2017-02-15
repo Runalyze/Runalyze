@@ -11,18 +11,10 @@
 
         <fieldset>
             <legend>{% trans %}Details{% endtrans %}</legend>
-            <div class="w50">
-                {{ form_row(form.name, {'help': 'If you participate in an event multiple times you should always enter the same name, i.e. don\'t append the event\'s number or year.'|trans}) }}
-            </div>
-            <div class="w50">
-                {{ form_row(form.officially_measured, {'help': 'Was the course officially measured?'|trans}) }}
-            </div>
-            <div class="w50">
-                {{ form_row(form.official_distance, {'help': 'We use two decimals for convenient reasons.<br>Marathon: 42.20 km<br>Half marathon: 21.10 km'|trans}) }}
-            </div>
-            <div class="w50">
-                {{ form_row(form.official_time) }}
-            </div>
+                {{ form_row(form.name, {'help': 'If you participate in an event multiple times you should always enter the same name, i.e. don\'t append the event\'s number or year.'|trans, 'div_class': 'w50'}) }}
+                {{ form_row(form.officially_measured, {'help': 'Was the course officially measured?'|trans, 'div_class': 'w50'}) }}
+                {{ form_row(form.official_distance, {'help': 'We use two decimals for convenient reasons.<br>Marathon: 42.20 km<br>Half marathon: 21.10 km'|trans, 'div_class': 'w50'}) }}
+                {{ form_row(form.official_time,  {'div_class': 'w50'}) }}
             <p class="file">{% trans %}This race result is linked to the following activity{% endtrans %}: {{ activity.time|date("d.m.Y") }}, {{ activity.comment }}
                 ({{ distance(activity.distance)|raw }}, {{ activity.s|duration }}, {{ pace(activity.distance > 0 ? activity.s / activity.distance : 0, unitConverter.getPaceUnit(activity.sport.speed))|raw }})
             </p>
@@ -30,25 +22,12 @@
 
         <fieldset>
             <legend>{% trans %}Placement{% endtrans %} / {% trans %}Participants{% endtrans %}</legend>
-
-            <div class="w50">
-                {{ form_row(form.place_total, {'label': 'Place total'|trans}) }}
-            </div>
-            <div class="w50">
-                {{ form_row(form.participants_total, {'label': 'Participants total'|trans}) }}
-            </div>
-            <div class="w50">
-                {{ form_row(form.place_gender, {'label': 'Place gender'|trans}) }}
-            </div>
-            <div class="w50">
-                {{ form_row(form.participants_gender, {'label': 'Participants gender'|trans}) }}
-            </div>
-            <div class="w50">
-                {{ form_row(form.place_ageclass, {'label': 'Place age class'|trans}) }}
-            </div>
-            <div class="w50">
-                {{ form_row(form.participants_ageclass, {'label': 'Participants age class'|trans}) }}
-            </div>
+                {{ form_row(form.place_total, {'label': 'Place total'|trans, 'div_class': 'w50'}) }}
+                {{ form_row(form.participants_total, {'label': 'Participants total'|trans, 'div_class': 'w50'}) }}
+                {{ form_row(form.place_gender, {'label': 'Place gender'|trans, 'div_class': 'w50'}) }}
+                {{ form_row(form.participants_gender, {'label': 'Participants gender'|trans, 'div_class': 'w50'}) }}
+                {{ form_row(form.place_ageclass, {'label': 'Place age class'|trans, 'div_class': 'w50'}) }}
+                {{ form_row(form.participants_ageclass, {'label': 'Participants age class'|trans, 'div_class': 'w50'}) }}
             <div class="fieldset-messages">
                 <p class="info">{% trans %}Your official placement and number of participants in every category.{% endtrans %}</p>
             </div>
