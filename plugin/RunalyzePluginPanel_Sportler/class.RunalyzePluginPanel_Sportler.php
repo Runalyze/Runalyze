@@ -80,9 +80,12 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 	 */
 	protected function displayContentInNewDesign() {
 		$Code = '';
-		$UserData = new UserData( DataObject::$LAST_OBJECT );
+		$userData = array_merge(
+		    ['weight' => 0.0, 'pulse_rest' => 0, 'pulse_max' => 0, 'fat' => 0.0, 'water' => 0.0, 'muscles' => 0.0],
+		    DB::getInstance()->query('SELECT `weight`, `pulse_rest`, `pulse_max`, `fat`, `water`, `muscles` FROM `'.PREFIX.'user` WHERE `accountid`="'.SessionAccountHandler::getId().'" ORDER BY `time` DESC LIMIT 1')->fetch()
+        );
 
-		if ($UserData->getPulseMax()==0){
+		if ($userData['pulse_max'] == 0){
 			$topBox = new BoxedValue(__('Enter maximal HR'), '', __('Otherwise calculations will be wrong'));
 			$topBox->addClass('colored-orange');
 			$topBox->defineAsFloatingBlockWithFixedWidth(1);
@@ -92,11 +95,11 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 		$FirstValues = array();
 		$SecondValues = array();
 
-        $Weight = new Weight($UserData->getWeight());
+        $Weight = new Weight($userData['weight']);
 		$FirstValues[] = new BoxedValue(Helper::Unknown($Weight->string(false), '-'), $Weight->unit(), __('Weight'));
 
-		$FirstValues[] = new BoxedValue(Helper::Unknown($UserData->getPulseRest(), '-'), 'bpm', __('Resting HR'));
-        $FirstValues[] = new BoxedValue(Helper::Unknown($UserData->getPulseMax(), '-'), 'bpm', __('Maximal HR'));
+		$FirstValues[] = new BoxedValue(Helper::Unknown($userData['pulse_rest'], '-'), 'bpm', __('Resting HR'));
+        $FirstValues[] = new BoxedValue(Helper::Unknown($userData['pulse_max'], '-'), 'bpm', __('Maximal HR'));
 
 		$NumberOfFirstValues = count($FirstValues);
 		foreach ($FirstValues as &$Value) {
@@ -108,9 +111,9 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 			$Code .= '<br>';
 		}
 
-			$SecondValues[] = new BoxedValue(Helper::Unknown($UserData->getBodyFat(), '-'), '&#37;', __('Fat'));
-			$SecondValues[] = new BoxedValue(Helper::Unknown($UserData->getWater(), '-'), '&#37;', __('Water'));
-			$SecondValues[] = new BoxedValue(Helper::Unknown($UserData->getMuscles(), '-'), '&#37;', __('Muscles'));
+			$SecondValues[] = new BoxedValue(Helper::Unknown($userData['fat'], '-'), '&#37;', __('Fat'));
+			$SecondValues[] = new BoxedValue(Helper::Unknown($userData['water'], '-'), '&#37;', __('Water'));
+			$SecondValues[] = new BoxedValue(Helper::Unknown($userData['muscles'], '-'), '&#37;', __('Muscles'));
 
 		foreach ($SecondValues as &$Value) {
 			$Value->defineAsFloatingBlock( "w33");
@@ -129,14 +132,14 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 	 */
 	protected function displayPlots() {
 		echo '<div class="panel-content">';
-			echo '<div class="flot-menu flot-menu-inline">';
-			echo Ajax::flotChange(__('Weight'), 'sportler_flots', 'sportler_weights', $AnalyseIsHidden);
-			echo Ajax::flotChange(__('Other values'), 'sportler_flots', 'sportler_analyse', !$AnalyseIsHidden);
-			echo '</div>';
+        echo '<div class="flot-menu flot-menu-inline">';
+        echo Ajax::flotChange(__('Weight'), 'sportler_flots', 'sportler_weights', true);
+        echo Ajax::flotChange(__('Other values'), 'sportler_flots', 'sportler_analyse', false);
+        echo '</div>';
 
 		echo '<div id="sportler_flots" class="flot-changeable" style="position:relative;width:320px;height:150px;margin:0 auto;">
-				<div class="flot '.Ajax::$IMG_WAIT.(!$AnalyseIsHidden ? ' flot-hide' : '').'" id="sportler_weights" style="width:320px;height:150px;position:absolute;"></div>
-				<div class="flot '.Ajax::$IMG_WAIT.($AnalyseIsHidden ? ' flot-hide' : '').'" id="sportler_analyse" style="width:320px;height:150px;position:absolute;"></div>
+				<div class="flot '.Ajax::$IMG_WAIT.(false ? ' flot-hide' : '').'" id="sportler_weights" style="width:320px;height:150px;position:absolute;"></div>
+				<div class="flot '.Ajax::$IMG_WAIT.(true ? ' flot-hide' : '').'" id="sportler_analyse" style="width:320px;height:150px;position:absolute;"></div>
 			</div>';
 
 		include FRONTEND_PATH.'../plugin/'.$this->key().'/Plot.gewicht.php';
