@@ -6,6 +6,8 @@
 
 namespace Runalyze\Export\File;
 
+use League\Geotools\Coordinate\Coordinate;
+use League\Geotools\Geohash\Geohash;
 use Runalyze\Model\Route;
 use Runalyze\Model\Trackdata;
 use Runalyze\Util\LocalTime;
@@ -94,12 +96,17 @@ class Gpx extends AbstractFileExporter
 
         $hasElevation = $this->Context->route()->hasOriginalElevations();
         $hasHeartrate = $this->Context->trackdata()->has(Trackdata\Entity::HEARTRATE);
+        $emptyGeohash = (new Geohash())->encode(new Coordinate(array(0, 0)), Route\Entity::BOUNDARIES_GEOHASH_PRECISION)->getGeohash();
 
         do {
+            $coordinate = $Route->coordinate();
             $Trackpoint = $this->Track->addChild('trkpt');
-            $Trackpoint->addAttribute('lat', $Route->latitude());
-            $Trackpoint->addAttribute('lon', $Route->longitude());
             $Trackpoint->addChild('time', $this->timeToString($Starttime + $Trackdata->time()));
+
+            if (abs($coordinate->getLatitude()) > 1e-5 || abs($coordinate->getLongitude()) > 1e-5) {
+                $Trackpoint->addAttribute('lat', $coordinate->getLatitude());
+                $Trackpoint->addAttribute('lon', $coordinate->getLongitude());
+            }
 
             if ($hasElevation) {
                 $Trackpoint->addChild('ele', $Route->current(Route\Entity::ELEVATIONS_ORIGINAL));
