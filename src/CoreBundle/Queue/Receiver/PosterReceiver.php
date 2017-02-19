@@ -3,9 +3,10 @@
 namespace Runalyze\Bundle\CoreBundle\Queue\Receiver;
 
 use Bernard\Message\DefaultMessage;
+use Runalyze\Bundle\CoreBundle\Component\Tool\Poster\Converter\InkscapeConverter;
+use Runalyze\Bundle\CoreBundle\Component\Tool\Poster\Converter\RsvgConverter;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Poster\FileHandler;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Poster\GeneratePoster;
-use Runalyze\Bundle\CoreBundle\Component\Tool\Poster\SvgToPngConverter;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\AccountRepository;
 use Runalyze\Bundle\CoreBundle\Entity\Sport;
@@ -26,41 +27,47 @@ class PosterReceiver
     /** @var GeneratePoster */
     protected $GeneratePoster;
 
-    /** @var SvgToPngConverter */
-    protected $SvgToPng;
-
     /** @var FileHandler */
     protected $FileHandler;
 
     /** @var $kernelRootDir */
     protected $KernelRootDir;
 
+    /** @var $RsvgPath */
+    protected $RsvgPath;
+
+    /** @var $InkscapePath */
+    protected $InkscapePath;
+
     /**
      * @param AccountRepository $accountRepository
      * @param SportRepository $sportRepository
      * @param GenerateJsonData $generateJsonData
      * @param GeneratePoster $generatePoster
-     * @param SvgToPngConverter $svgToPng
      * @param FileHandler $posterFileHandler
      * @param string $kernelRootDir
+     * @param string $rsvgPath
+     * @param string $inkscapePath
      */
     public function __construct(
         AccountRepository $accountRepository,
         SportRepository $sportRepository,
         GenerateJsonData $generateJsonData,
         GeneratePoster $generatePoster,
-        SvgToPngConverter $svgToPng,
         FileHandler $posterFileHandler,
-        $kernelRootDir
+        $kernelRootDir,
+        $rsvgPath,
+        $inkscapePath
     )
     {
         $this->AccountRepository = $accountRepository;
         $this->SportRepository = $sportRepository;
         $this->GenerateJsonData = $generateJsonData;
         $this->GeneratePoster = $generatePoster;
-        $this->SvgToPng = $svgToPng;
         $this->FileHandler = $posterFileHandler;
         $this->KernelRootDir = $kernelRootDir;
+        $this->RsvgPath = $rsvgPath;
+        $this->InkscapePath = $inkscapePath;
     }
 
     public function posterGenerator(DefaultMessage $message)
@@ -76,11 +83,11 @@ class PosterReceiver
         }
 
         $this->GenerateJsonData->createJsonFilesFor($account, $sport, $message->get('year'));
-        $this->SvgToPng->setHeight($message->get('size'));
-
         foreach ($message->get('types') as $type) {
             $this->GeneratePoster->buildCommand($type, $this->GenerateJsonData->getPathToJsonFiles(), $message->get('year'), $account, $sport, $message->get('title'));
-            $this->SvgToPng->convert(
+            $converter = $this->getConverter($type);
+            $converter->setHeight($message->get('size'));
+            $converter->callConverter(
                 $this->GeneratePoster->generate(),
                 $this->exportDirectory().$this->FileHandler->buildFinalFileName($account, $sport, $message->get('year'), $type, $message->get('size'))
             );
@@ -88,6 +95,15 @@ class PosterReceiver
         }
 
         $this->GenerateJsonData->deleteGeneratedFiles();
+    }
+
+    protected function getConverter($posterType)
+    {
+        if ($posterType == 'circular') {
+            return new InkscapeConverter($this->InkscapePath);
+        } else {
+            return new RsvgConverter($this->RsvgPath);
+        }
     }
 
     /**

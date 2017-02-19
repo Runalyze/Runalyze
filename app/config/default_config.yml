@@ -20,6 +20,7 @@ parameters:
   perl_path: /usr/bin/perl
   python3_path: /usr/bin/python3
   rsvg_path: /usr/bin/rsvg-convert
+  inkscape_path: /usr/bin/inkscape
   ttbin_path: ../call/perl/ttbincnv
   sqlite_mod_spatialite: libspatialite.so.5
   mail_sender:

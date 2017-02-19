@@ -168,13 +168,10 @@ services:
     arguments: ["%kernel.root_dir%", "%python3_path%", "@app.repository.training"]
   app.poster.availability:
     class: Runalyze\Bundle\CoreBundle\Component\Tool\Poster\Availability
-    arguments: ["%rsvg_path%", "%python3_path%"]
+    arguments: ["%rsvg_path%", "%inkscape_path%", "%python3_path%"]
   app.poster.filehandler:
     class: Runalyze\Bundle\CoreBundle\Component\Tool\Poster\FileHandler
     arguments: ["%kernel.root_dir%"]
-  app.converter.svg_to_png:
-    class: Runalyze\Bundle\CoreBundle\Component\Tool\Poster\SvgToPngConverter
-    arguments: ["%rsvg_path%"]
   app.bernard.backup_receiver:
     class: Runalyze\Bundle\CoreBundle\Queue\Receiver\BackupReceiver
     arguments:
@@ -183,6 +180,6 @@ services:
       - { name: bernard.receiver, message: userBackup }
   app.bernard.poster_receiver:
     class: Runalyze\Bundle\CoreBundle\Queue\Receiver\PosterReceiver
-    arguments: ["@app.repository.account", "@app.repository.sport", "@app.poster.generate_json", "@app.poster.generate_poster", "@app.converter.svg_to_png", "@app.poster.filehandler", "%kernel.root_dir%"]
+    arguments: ["@app.repository.account", "@app.repository.sport", "@app.poster.generate_json", "@app.poster.generate_poster", "@app.poster.filehandler", "%kernel.root_dir%", "%rsvg_path%", "%inkscape_path%"]
     tags:
       - { name: bernard.receiver, message: posterGenerator }

@@ -10,15 +10,20 @@ class Availability
     protected $RsvgPath;
 
     /** @var string */
+    protected $InkscapePath;
+
+    /** @var string */
     protected $Python3Path;
 
     /**
      * @param string $rsvgPath absolute path of rsvg[-convert]
+     * @param string $inkscapePath absolute path of inkscape
      * @param string $python3Path absolute path of Python3
      */
-    public function __construct($rsvgPath, $python3Path)
+    public function __construct($rsvgPath, $inkscapePath, $python3Path)
     {
         $this->RsvgPath = $rsvgPath;
+        $this->InkscapePath = $inkscapePath;
         $this->Python3Path = $python3Path;
     }
 
@@ -29,6 +34,15 @@ class Availability
     {
         return ($this->isPythonAvailable() && $this->isRsvgConverterAvailable());
     }
+
+    /**
+     * @return bool
+     */
+    protected function isInkscapeAvailable()
+    {
+        return (new Filesystem())->exists($this->InkscapePath);
+    }
+
 
     /**
      * @return bool

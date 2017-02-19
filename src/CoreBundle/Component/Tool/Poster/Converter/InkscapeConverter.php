@@ -1,34 +1,25 @@
 <?php
 
-namespace Runalyze\Bundle\CoreBundle\Component\Tool\Poster;
+namespace Runalyze\Bundle\CoreBundle\Component\Tool\Poster\Converter;
 
 use Symfony\Component\Process\Process;
 use Symfony\Component\Filesystem\Filesystem;
+use Runalyze\Bundle\CoreBundle\Component\Tool\Poster\Converter\AbstractSvgToPngConverter;
 
-class SvgToPngConverter
+class InkscapeConverter extends AbstractSvgToPngConverter
 {
     /** @var array */
     protected $Parameter = [];
 
     /** @var string rsvg path */
-    protected $RsvgPath;
+    protected $Command;
 
     /**
-     * @param string $rsvgPath absolut path to rsvg[-convert]
+     * @param string $inkscapePath absolut path to inkscape
      */
-    public function __construct($rsvgPath)
+    public function __construct($inkscapePath)
     {
-        $this->RsvgPath = $rsvgPath;
-    }
-
-    /**
-     * @param string $source absolute path to source file
-     * @param string $target absolute path to target file
-     * @return bool true on success
-     */
-    public function convert($source, $target)
-    {
-        return $this->callConverter($source, $target);
+        $this->Command = $inkscapePath;
     }
 
     /**
@@ -52,11 +43,12 @@ class SvgToPngConverter
      * @param string $target absolute path to target file
      * @return bool true on success
      */
-    protected function callConverter($source, $target)
+    public function callConverter($source, $target)
     {
         if ((new Filesystem())->exists($source)) {
-            $builder = new Process($this->RsvgPath.' -f png '.implode(' ', $this->Parameter).' '.$source.' -o '.$target);
+            $builder = new Process($this->Command.' -z -e  '.$target.' '.implode(' ', $this->Parameter).' '.$source);
             $builder->run();
+            echo $builder->getOutput();
 
             return true;
         }
