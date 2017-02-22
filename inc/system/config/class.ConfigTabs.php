@@ -68,13 +68,13 @@ class ConfigTabs {
 	 * Display navigation 
 	 */
 	protected function displayNavigation() {
-		$Links   = array();
-
-		foreach ($this->Tabs as $Tab) {
-			$Links[] = array('tag' => Ajax::link($Tab->getTitle(), self::$TABS_ID, $Tab->getUrl()));
-		}
-            $Links[] = array('tag' => Ajax::link(__('Account'), self::$TABS_ID, 'settings/account'));
-
+        $Links = [array('tag' => Ajax::link(__('General settings'), self::$TABS_ID, 'settings?key=config_tab_general')),
+                array('tag' => Ajax::link(__('Plugins'), self::$TABS_ID, 'settings?key=config_tab_plugins')),
+                array('tag' => Ajax::link(__('Dataset'), self::$TABS_ID, 'settings/dataset')),
+                array('tag' => Ajax::link(__('Sports'), self::$TABS_ID, 'settings?key=config_tab_sports')),
+                array('tag' => Ajax::link(__('Activity Types'), self::$TABS_ID, 'settings?key=config_tab_types')),
+                array('tag' => Ajax::link(__('Equipment'), self::$TABS_ID, 'settings?key=config_tab_equipment')),
+                array('tag' => Ajax::link(__('Account'), self::$TABS_ID, 'settings/account'))];
 
         echo Ajax::toolbarNavigation($Links);
 	}

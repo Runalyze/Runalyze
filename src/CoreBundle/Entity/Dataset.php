@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Dataset
  *
  * @ORM\Table(name="dataset", indexes={@ORM\Index(name="position", columns={"accountid", "position"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\DatasetRepository")
  */
 class Dataset
 {
@@ -33,8 +33,7 @@ class Dataset
 
     /**
      * @var boolean
-     *
-     * @ORM\Column(name="active", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 1")
+     * @ORM\Column(name="active", type="boolean", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 1")
      */
     private $active = 1;
 
@@ -46,7 +45,7 @@ class Dataset
     private $style = '';
 
     /**
-     * @var boolean
+     * @var int
      *
      * @ORM\Column(name="position", columnDefinition="tinyint(3) unsigned NOT NULL DEFAULT 0")
      */

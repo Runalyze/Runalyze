@@ -2,9 +2,13 @@
 
 namespace Runalyze\Bundle\CoreBundle\Controller;
 
+use Runalyze\Bundle\CoreBundle\Component\Configuration\Category\Data;
 use Runalyze\Bundle\CoreBundle\Entity\AccountRepository;
+use Runalyze\Bundle\CoreBundle\Entity\Dataset;
 use Runalyze\Bundle\CoreBundle\Form\Settings\ChangeMailType;
 use Runalyze\Bundle\CoreBundle\Form\Settings\ChangePasswordType;
+use Runalyze\Bundle\CoreBundle\Form\Settings\DatasetCollectionType;
+use Runalyze\Bundle\CoreBundle\Form\Settings\DatasetType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,6 +17,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Runalyze\Bundle\CoreBundle\Form\Settings\AccountType;
 use Runalyze\Configuration;
 use Runalyze\Language;
+use Symfony\Component\Validator\Constraints\DateTime;
+use Runalyze\Dataset as RunalyzeDataset;
+
 
 class SettingsController extends Controller
 {
@@ -130,5 +137,97 @@ class SettingsController extends Controller
         $this->get('app.mailer.account')->sendDeleteLinkTo($account);
 
         return $this->render('settings/account-delete.html.twig');
+    }
+
+    /**
+     * @Route("/settings/dataset", name="settings-dataset")
+     * @Security("has_role('ROLE_USER')")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function datasetAction(Account $account, Request $request)
+    {
+        $Frontend = new \Frontend(true, $this->get('security.token_storage'));
+
+        /** @var Dataset $dataset */
+        $dataset = $this->getDoctrine()->getRepository('CoreBundle:Dataset')->findAllFor($account);
+
+        $defaultDataset = new RunalyzeDataset\DefaultConfiguration();
+        /*foreach (RunalyzeDataset\Keys::getEnum() as $keyid) {
+            dump($keyid);
+        }*/
+
+        $form = $this->createForm(DatasetCollectionType::class, ['datasets' => $dataset], array(
+            'action' => $this->generateUrl('settings-dataset')
+        ));
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+        }
+        return $this->render('settings/dataset.html.twig', [
+            'form' => $form->createView(),
+            'datasetKeys' => new RunalyzeDataset\Keys(),
+            'context' => new RunalyzeDataset\Context($this->getExampleTraining($account), $account->getId())
+        ]);
+    }
+
+    /**
+     * Get array for exemplary training data
+     * @return array
+     */
+    protected function getExampleTraining(Account $account) {
+        $configuration = $this->get('app.configuration_manager')->getList();
+        return array(
+            'id'		=> 0,
+            'sportid'	=> $configuration->getGeneral()->getRunningSport(),
+            'typeid'	=> __('race'),
+            'time'		=> time(),
+            'created'	=> time(),
+            'edited'	=> time(),
+            'is_public'	=> 1,
+            'is_track'	=> 1,
+            'distance'	=> 10,
+            's'			=> 51*60+27,
+            'elevation'	=> 57,
+            'kcal'		=> 691,
+            'pulse_avg'	=> 186,
+            'pulse_max'	=> 193,
+            'vdot_with_elevation'	=> $configuration->getData()->getVdotShape() + 1,
+            'vdot'		=> $configuration->getData()->getVdotShape() + 2,
+            'use_vdot'	=> 0,
+            'fit_vdot_estimate'	=> round($configuration->getData()->getVdotShape()),
+            'fit_recovery_time'	=> 800,
+            'fit_hrv_analysis'	=> 800,
+            'fit_training_effect'	=> 3.1,
+            'fit_performance_condition'	=> 100,
+            'jd_intensity'	=> 27,
+            'rpe'		=> 13,
+            'trimp'		=> 121,
+            'cadence'	=> 90,
+            'stride_length'	=> 108,
+            'groundcontact'	=> 220,
+            'vertical_oscillation'	=> 76,
+            'power'		=> 520,
+            'temperature'	=> 17,
+            'wind_speed' => 27,
+            'wind_deg' => 219,
+            'pressure' => 1025,
+            'humidity' => 63,
+            'weatherid'	=> 5,
+            'splits'	=> '5|26:51-5|24:36',
+            'comment'	=> str_replace(' ', '&nbsp;', __('Test activity')),
+            'partner'	=> 'Peter',
+            'notes'		=> str_replace(' ', '&nbsp;', __('Great run!')),
+            'accountid'	=> $account->getId(),
+            'creator'	=> '',
+            'creator_details'	=> '',
+            'activity_id'	=> '',
+            'elevation_corrected'	=> 1,
+            'swolf'		=> 29,
+            'total_strokes'	=> 1250,
+            'vertical_ratio' => 79,
+            'groundcontact_balance' => 4980
+            //Dataset\Keys\Tags::CONCAT_TAGIDS_KEY => $this->exampleTagID(),
+            //Dataset\Keys\CompleteEquipment::CONCAT_EQUIPMENT_KEY => $this->exampleEquipmentIDs(2)
+        );
     }
 }
