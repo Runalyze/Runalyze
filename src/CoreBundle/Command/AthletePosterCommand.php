@@ -26,6 +26,7 @@ class AthletePosterCommand extends ContainerAwareCommand
             ->addArgument('dir', InputArgument::REQUIRED, 'Directory to store json files')
             ->addArgument('year', InputArgument::REQUIRED, 'Only data of this year will be fetched')
             ->addOption('sport', 's', InputOption::VALUE_OPTIONAL, 'Sport id (can be empty to use running)')
+            ->addOption('stepsize', null, InputOption::VALUE_OPTIONAL, 'Step size to be used during json export', 5)
         ;
     }
 
@@ -97,7 +98,7 @@ class AthletePosterCommand extends ContainerAwareCommand
                 'start' => date('Y-m-d H:i:s', $data['time']),
                 'end' => date('Y-m-d H:i:s', $data['time'] + $data['s']),
                 'length' => 1000.0 * (float)$data['distance'],
-                'segments' => $this->getSegmentsFor($data['geohashes'], $data['distance'])
+                'segments' => $this->getSegmentsFor($data['geohashes'], $data['distance'], $input)
             ];
 
                 $filesystem->dumpFile($input->getArgument('dir').'/'.date('Y-m-d-His', $data['time']).'.json', json_encode($json));
@@ -112,7 +113,7 @@ class AthletePosterCommand extends ContainerAwareCommand
      * @param float $distance
      * @return array
      */
-    protected function getSegmentsFor($geohashLine, $distance)
+    protected function getSegmentsFor($geohashLine, $distance, InputInterface $input)
     {
         $segments = [];
         $segments[] = [];
@@ -122,7 +123,15 @@ class AthletePosterCommand extends ContainerAwareCommand
         }
 
         $loop = new Model\Route\Loop(new Model\Route\Entity([Model\Route\Entity::GEOHASHES => $geohashLine]));
-        $loop->setStepSize(5);
+        if (null !== $input->getOption('stepsize')) {
+        	$stepsize = (int)$input->getOption('stepsize');
+        	if ($stepsize <= 0) {
+        		$stepsize = 5;
+        	}
+        	$loop->setStepSize($stepsize);
+        } else {
+        	$loop->setStepSize(5);
+        }
         $pauseLimit = 50 * 5 * $distance / $loop->num();
         $currentSegment = 0;
 
