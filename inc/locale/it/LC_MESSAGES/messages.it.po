@@ -1,18 +1,18 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: mail@runalyze.com\n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2016-11-15 17:37+0100\n"
-"PO-Revision-Date: 2017-01-18 23:51+0000\n"
-"Last-Translator: Alessandro <ruggiero.alessandro93@gmail.com>\n"
-"Language-Team: Italian <https://translate.runalyze.com/projects/runalyze"
-"/runalyze-master-po/it/>\n"
+"PO-Revision-Date: 2017-02-23 14:43+0000\n"
+"Last-Translator: Antonio <celeritas@libero.it>\n"
+"Language-Team: Italian "
+"<https://translate.runalyze.com/projects/runalyze/runalyze/it/>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.9\n"
+"X-Generator: Weblate 2.11\n"
 "X-Poedit-KeywordsList: __;_ne;_n;_e\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -155,9 +155,8 @@ msgid "Maximal TRIMP"
 msgstr "TRIMP massimo"
 
 #: src/CoreBundle/Component/Tool/DatabaseCleanup/JobGeneral.php:176
-#, fuzzy
 msgid "Your personal cache has been cleared."
-msgstr "il tuo account è stato cancellato."
+msgstr "La tua cache personale è stata pulita."
 
 #: src/CoreBundle/Component/Tool/DatabaseCleanup/JobLoop.php:81
 #, php-format
@@ -337,7 +336,6 @@ msgid "JOG"
 msgstr "JOG"
 
 #: src/CoreBundle/Component/Account/Registration.php:169
-#, fuzzy
 msgid "Fartlek"
 msgstr "Fartlek"
 
@@ -1570,7 +1568,7 @@ msgstr "Grafico della temperatura"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:80
 msgid "Smo2 & Thb"
-msgstr ""
+msgstr "SmO2 & THb"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:107
 #: inc/html/formular/class.FormularInputDayAndDaytime.php:115
@@ -1632,18 +1630,18 @@ msgstr "Compagno d'allenamento"
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:373
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:423
 msgid "Age standard"
-msgstr ""
+msgstr "Age standard"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:374
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:424
 msgid "Open standard"
-msgstr ""
+msgstr "Open standard"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:375
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:425
 #, php-format
 msgid "via tables by %s"
-msgstr ""
+msgstr "dalle tabelle di %s"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:382
 msgid "Race Result"
@@ -1665,9 +1663,8 @@ msgstr "Tempo ufficiale"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:386
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:392
-#, fuzzy
 msgid "Age grade"
-msgstr "Gruppo d'età"
+msgstr "Age grade"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:387
 msgid "Place overall"
@@ -1903,7 +1900,7 @@ msgstr "Diagramma composito"
 #: inc/training/view/section/class.SectionCompositeRow.php:58
 msgid "You will be soon able to configure your own zones."
 msgstr ""
-"Presto sarà possibile configurare le proprie zone della frequenza cardiaca."
+"Presto sarà possibile configurare le proprie zone di frequenza cardiaca."
 
 #: inc/training/view/section/class.SectionCompositeRow.php:52
 #: inc/training/view/section/class.SectionPaceRow.php:32
@@ -1912,7 +1909,7 @@ msgstr "Zone del ritmo di corsa"
 
 #: inc/training/view/section/class.SectionCompositeRow.php:60
 msgid "Heart rate zones"
-msgstr "Zone della frequenza cardiaca"
+msgstr "Zone di frequenza cardiaca"
 
 #: inc/training/view/section/class.SectionCompositeRow.php:140
 #: inc/training/view/section/class.SectionPaceRow.php:75
@@ -1977,23 +1974,20 @@ msgid "as %s"
 msgstr "come %s"
 
 #: inc/training/view/class.TrainingView.php:111
-#, fuzzy
 msgid "Analyze splits"
-msgstr "Analizza i tipi"
+msgstr "Analizza gli intertempi"
 
 #: inc/training/view/class.TrainingView.php:115
-#, fuzzy
 msgid "Show VDOT calculation"
-msgstr "Di più riguardo al calcolo VDOT"
+msgstr "Mostra il calcolo di VDOT"
 
 #: inc/training/view/class.TrainingView.php:123
-#, fuzzy
 msgid "Analyze time series"
-msgstr "Analizza i tipi"
+msgstr "Analizza le serie temporali"
 
 #: inc/training/view/class.TrainingView.php:127
 msgid "Find best sub segments"
-msgstr ""
+msgstr "Cerca i migliori sub-segmenti"
 
 #: inc/training/view/class.TrainingView.php:146
 #: inc/core/Dataset/Keys/Setting.php:135
@@ -2203,7 +2197,7 @@ msgstr "Velocità del vento"
 #: inc/training/schemes/scheme.Training.php:247
 #: inc/core/Dataset/Keys/Energy.php:45 inc/core/Activity/Energy.php:59
 msgid "Energy"
-msgstr ""
+msgstr "Energia"
 
 #: inc/training/search/class.SearchFormular.php:205
 #: inc/core/Dataset/Keys/FitTrainingEffect.php:43
@@ -2290,13 +2284,12 @@ msgstr "Tempo di contatto con il terreno"
 #: inc/training/class.TrainingFormular.php:473
 #: inc/core/View/Activity/Plot/Series/Smo2.php:39
 msgid "Smo2"
-msgstr ""
+msgstr "SmO2"
 
 #: inc/training/class.TrainingFormular.php:474
 #: inc/training/class.TrainingFormular.php:475
-#, fuzzy
 msgid "Thb"
-msgstr "Gi"
+msgstr "THb"
 
 #: inc/training/class.TrainingFormular.php:486
 msgid "Original elevation"
@@ -2764,7 +2757,7 @@ msgstr "Allenamento"
 
 #: inc/draw/class.PlotSumData.php:612
 msgid "target:"
-msgstr ""
+msgstr "obiettivo:"
 
 #: inc/draw/class.PlotSumData.php:633 inc/core/View/Activity/Plot/Laps.php:121
 #: inc/core/View/Plot/Series.php:160
@@ -2772,18 +2765,14 @@ msgid "avg:"
 msgstr "media:"
 
 #: inc/draw/class.PlotSumData.php:664
-#, fuzzy
 msgid "Target is based on current basic endurance calculations."
-msgstr ""
-"Obiettivi e medie sono basati sugli attuali calcoli di resistenza base."
+msgstr "L'obiettivo è basato sugli attuali calcoli di resistenza di base."
 
 #: inc/draw/class.Plot.php:145
-#, fuzzy
 msgid "There is an unknown problem with this plot."
-msgstr "C'è stato un problema durante l'importazione del file."
+msgstr "C'è un problema sconosciuto con questo grafico."
 
 #: inc/draw/class.Plot.php:146
-#, fuzzy
 msgid "Error code"
 msgstr "Errore"
 
@@ -2824,7 +2813,6 @@ msgid "TTBIN Converter Path"
 msgstr "TTBIN convertitore percorso"
 
 #: inc/class.AdminView.php:165
-#, fuzzy
 msgid "Geonames Username"
 msgstr "Geonames Username"
 
@@ -2872,7 +2860,7 @@ msgstr ""
 
 #: inc/class.AdminView.php:175
 msgid "ForecastIO API-Key"
-msgstr ""
+msgstr "ForecastIO API-Key"
 
 #: inc/class.AdminView.php:175
 #, fuzzy
@@ -3020,12 +3008,11 @@ msgid "The sports icon is shown."
 msgstr "L'icona sport è visualizzata."
 
 #: inc/core/Dataset/Keys/Energy.php:54
-#, fuzzy
 msgid ""
 "Energy values are taken from your device or calculated by a simple formula."
 msgstr ""
-"Le calorie sono prese dal tuo dispositivo o calcolate usando una semplice "
-"formula."
+"I valori di calorie sono presi dal tuo dispositivo o calcolate usando una "
+"semplice formula."
 
 #: inc/core/Dataset/Keys/Groundcontact.php:53
 msgid "Groundcontact"
@@ -3086,17 +3073,19 @@ msgstr "Nome gara"
 #: inc/core/Dataset/Keys/HeatIndex.php:44
 #: inc/core/Data/Weather/HeatIndex.php:114
 msgid "Heat index"
-msgstr ""
+msgstr "Indice di calore"
 
 #: inc/core/Dataset/Keys/HeatIndex.php:53
 msgid "HI"
-msgstr ""
+msgstr "HI"
 
 #: inc/core/Dataset/Keys/HeatIndex.php:63
 msgid ""
 "The heat index is a measure of how hot it really feels when relative "
 "humidity is factored with the actual air temperature."
 msgstr ""
+"L'indice di calore è una misura di quanto caldo si avverte realmente quando "
+"l'umidità relativa viene inclusa insieme all'attuale temperatura dell'aria."
 
 #: inc/core/Dataset/Keys/Splits.php:47
 msgid "Splits"
@@ -3435,7 +3424,7 @@ msgstr "Tempo di contatto con il terreno"
 
 #: inc/core/Profile/Athlete/Gender.php:27
 msgid "not set"
-msgstr ""
+msgstr "non configurato"
 
 #: inc/core/Profile/Athlete/Gender.php:29
 msgid "male"
@@ -3447,21 +3436,19 @@ msgstr "donna"
 
 #: inc/core/Profile/Sport/Generic.php:30
 msgid "Generic"
-msgstr ""
+msgstr "Generico"
 
 #: inc/core/Profile/Sport/Cycling.php:30
 msgid "Cycling"
-msgstr ""
+msgstr "Ciclismo"
 
 #: inc/core/Profile/Sport/Hiking.php:30
-#, fuzzy
 msgid "Hiking"
-msgstr "Bici"
+msgstr "Escursionismo"
 
 #: inc/core/Profile/Sport/Rowing.php:30
-#, fuzzy
 msgid "Rowing"
-msgstr "neve"
+msgstr "Canottaggio"
 
 #: inc/core/Parameter/Application/DatabaseOrder.php:39
 msgid "id (oldest first)"
@@ -3613,13 +3600,12 @@ msgid "Month view"
 msgstr "Mese"
 
 #: inc/core/Parameter/Application/EnergyUnit.php:36
-#, fuzzy
 msgid "Kilocalories"
-msgstr "Calorie"
+msgstr "Kilocalorie"
 
 #: inc/core/Parameter/Application/EnergyUnit.php:37
 msgid "Kilojoules"
-msgstr ""
+msgstr "Kilojoules"
 
 #: inc/core/Parameter/Application/ActivityCreationMode.php:39
 msgid "Upload form"
@@ -3933,52 +3919,55 @@ msgstr "database interno"
 
 #: inc/core/Data/Weather/HeatIndexEffect.php:59
 msgid "No effect"
-msgstr ""
+msgstr "Nessun effetto"
 
 #: inc/core/Data/Weather/HeatIndexEffect.php:61
-#, fuzzy
 msgid "Caution"
-msgstr "Calcoli"
+msgstr "Attenzione"
 
 #: inc/core/Data/Weather/HeatIndexEffect.php:63
-#, fuzzy
 msgid "Extreme caution"
-msgstr "Estremamente duro"
+msgstr "Estrema attenzione"
 
 #: inc/core/Data/Weather/HeatIndexEffect.php:65
 msgid "Danger"
-msgstr ""
+msgstr "Pericolo"
 
 #: inc/core/Data/Weather/HeatIndexEffect.php:67
-#, fuzzy
 msgid "Extreme danger"
-msgstr "Estremamente duro"
+msgstr "Pericolo estremo"
 
 #: inc/core/Data/Weather/HeatIndexEffect.php:104
 msgid "Temperature and humidity should not have any effect."
-msgstr ""
+msgstr "Temperatura e umidità non dovrebbero avere alcun effetto."
 
 #: inc/core/Data/Weather/HeatIndexEffect.php:106
 msgid ""
 "Fatigue is possible with prolonged exposure and activity. Continuing "
 "activity could result in heat cramps."
 msgstr ""
+"La fatica è possibile con l'esposizione prolungata e l'attività. Proseguire "
+"l'attività potrebbe causare crampi da calore."
 
 #: inc/core/Data/Weather/HeatIndexEffect.php:108
 msgid ""
 "Heat cramps and heat exhaustion are possible. Continuing activity could "
 "result in heat stroke."
 msgstr ""
+"Possono verificarsi crampi da calore e colpi di calore. Proseguire "
+"l'attività potrebbe causare un colpo di calore."
 
 #: inc/core/Data/Weather/HeatIndexEffect.php:110
 msgid ""
 "Heat cramps and heat exhaustion are likely; heat stroke is probable with "
 "continued activity."
 msgstr ""
+"Crampi di calore e colpi di calore sono probabili; Proseguire l'attività "
+"potrebbe causare un colpo di calore."
 
 #: inc/core/Data/Weather/HeatIndexEffect.php:112
 msgid "Heat stroke is imminent."
-msgstr ""
+msgstr "Un colpo di calore è imminente."
 
 #: inc/core/Data/Weather/CardinalDirection.php:72
 #: inc/core/Data/Weather/CardinalDirection.php:76
@@ -4051,7 +4040,7 @@ msgstr "tuoni"
 
 #: inc/core/Data/Weather/Condition.php:114
 msgid "windy"
-msgstr ""
+msgstr "ventoso"
 
 #: inc/core/View/Activity/Preview.php:131
 msgid "Heartrate data available"
@@ -4080,7 +4069,7 @@ msgstr "Differenza"
 
 #: inc/core/View/Activity/Plot/Series/Smo2.php:36
 msgid "Smo2 (2)"
-msgstr ""
+msgstr "SmO2 (2)"
 
 #: inc/core/View/Activity/Plot/Series/PaceCumulativeAverage.php:50
 msgid "Moving average"
@@ -4474,14 +4463,12 @@ msgid "Show activity after creation"
 msgstr "Mostra l'attività dopo la creazione"
 
 #: inc/core/Configuration/Category/ActivityForm.php:215
-#, fuzzy
 msgid "Calculate energy"
-msgstr "Calcolo della potenza"
+msgstr "Calcola energia"
 
 #: inc/core/Configuration/Category/ActivityForm.php:216
-#, fuzzy
 msgid "Recalculate energy after changing duration by hand"
-msgstr "Ricalcola le calorie dopo aver modificato la durata a mano"
+msgstr "Ricalcola l'energia dopo aver modificato la durata a mano"
 
 #: inc/core/Configuration/Category/ActivityForm.php:220
 msgid "Calculate power"
@@ -4644,9 +4631,8 @@ msgid "Weight unit"
 msgstr "Unità di misura del peso"
 
 #: inc/core/Configuration/Category/General.php:210
-#, fuzzy
 msgid "Energy unit"
-msgstr "Unità di misura del peso"
+msgstr "Unità di misura dell'energia"
 
 #: inc/core/Configuration/Category/General.php:214
 msgid "Temperature unit"
@@ -5865,6 +5851,8 @@ msgstr "Piazzamento"
 msgid ""
 "Your result in proportion to the world best performance in your age/gender."
 msgstr ""
+"Il tuo risultato in proporzione alla migliore prestazione mondiale per la "
+"tua età/sesso."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:396
 msgid "Overall"
@@ -6595,13 +6583,14 @@ msgid "These paces are based on Jack Daniels' recommendation."
 msgstr "Questi ritmi sono basati sulle indicazioni di Jack Daniels."
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:695
-#, fuzzy
 msgid "There are no current activities with a vdot value."
-msgstr "Non ci sono dati per questo intervallo di tempo."
+msgstr "Non ci sono attivitá con questo valore di VDOT."
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:696
 msgid "Vdot values can only be calculated for runs with heart rate data."
 msgstr ""
+"I valori VDOT possono essere calcolati solo per attivitá che contengono dati "
+"della frequenza cardiaca."
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/window.info.php:12
 msgid ""
