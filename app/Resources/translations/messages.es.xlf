@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
   <file date="2017-01-29T17:38:48Z" source-language="en" target-language="es" datatype="plaintext" original="not.available">
     <header>
@@ -6,12 +6,12 @@
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
     </header>
     <body>
-      <trans-unit id="64b64cc375741f82a39567ffad42d7a09e0465fb" resname="                                Backup of the complete database -&#10;                                This file can be imported manually with e.g. PHPMyAdmin into any database.&lt;br /&gt;&#10;                                This is recommended to create a backup copy or to import your data into a new installation.&#10;                            ">
+      <trans-unit id="64b64cc375741f82a39567ffad42d7a09e0465fb" resname="                                Backup of the complete database -&#10;                                This file can be imported manually with e.g. PHPMyAdmin into any database.&lt;br /&gt;&#10;                                This is recommended to create a backup copy or to import your data into a new installation.&#10;                            " approved="yes">
         <source><![CDATA[                                Backup of the complete database -
                                 This file can be imported manually with e.g. PHPMyAdmin into any database.<br />
                                 This is recommended to create a backup copy or to import your data into a new installation.
                             ]]></source>
-        <target><![CDATA[Copia de seguridad de la base de datos completa - Este archivo se puede importar manualmente en cualquier base de datos con p.ej. PHPMyAdmin.<br />Se recomienda para crear una cpia de seguridad o para importar tus datos a una nueva instalación.]]></target>
+        <target state="translated">Copia de seguridad de la base de datos completa - Este archivo se puede importar manualmente en cualquier base de datos con p.ej. PHPMyAdmin.&lt;br /&gt;Se recomienda para crear una copia de seguridad o para importar tus datos a una nueva instalación.</target>
         <jms:reference-file line="36">/Resources/views/tools/backup/form_legacy.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="a8b1fab4568d150f59825d2060b7c19b82d68d92" resname="                                Portable backup of your configuration and data -&#10;                                This file can be imported into any other installation, using this plugin.&lt;br /&gt;&#10;                                This way you can transfer your data from to local to an online installation and back.&#10;                            ">
@@ -57,150 +57,147 @@
         <target><![CDATA[<a href="%s" target="_blank">El libro de Jack Daniels “La Fórmula De Daniels Para Corredores”</a> contiene tablas que permiten estimar el VDOT. Estas fórmulas se usan para estimar tu VDOT y predecir rendimiento es carrera.]]></target>
         <jms:reference-file line="25">/Resources/views/static/help_calculations.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="2ec23e05ce24410308126e2b4dfd7f75e877ca87" resname="            This table is computed by some formulas, derived from the tables in Jack Daniels' Running formula.&#10;            These values do not fit the original table one hundred percent.&#10;        ">
+      <trans-unit id="2ec23e05ce24410308126e2b4dfd7f75e877ca87" resname="            This table is computed by some formulas, derived from the tables in Jack Daniels' Running formula.&#10;            These values do not fit the original table one hundred percent.&#10;        " approved="yes">
         <source xml:space="preserve">            This table is computed by some formulas, derived from the tables in Jack Daniels' Running formula.
             These values do not fit the original table one hundred percent.
         </source>
-        <target xml:space="preserve">            This table is computed by some formulas, derived from the tables in Jack Daniels' Running formula.
-            These values do not fit the original table one hundred percent.
+        <target xml:space="preserve" state="translated">            Esta tabla ha sido calculada con formulas derivadas desde el libro Jack Daniels' Running formula.
+            Estos valores no son 100% compatibles con la tabla original.
         </target>
         <jms:reference-file line="30">/Resources/views/tools/tables/vdot_paces.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="f0e469d7c00959f95a0e245c100d881d1994430b" resname="            Values are visualized with so-called 'box plots'.&#10;            They give an impression of how values of a group are distributed.&#10;            The middle 50% of all values are within the box itself and the so-called whiskers have a length of at most 1.5-times the interquartile range (i.e. the box's width).&#10;            Data points outside this range are called outliers.&#10;            ">
+      <trans-unit id="f0e469d7c00959f95a0e245c100d881d1994430b" resname="            Values are visualized with so-called 'box plots'.&#10;            They give an impression of how values of a group are distributed.&#10;            The middle 50% of all values are within the box itself and the so-called whiskers have a length of at most 1.5-times the interquartile range (i.e. the box's width).&#10;            Data points outside this range are called outliers.&#10;            " approved="yes">
         <source xml:space="preserve">            Values are visualized with so-called 'box plots'.
             They give an impression of how values of a group are distributed.
             The middle 50% of all values are within the box itself and the so-called whiskers have a length of at most 1.5-times the interquartile range (i.e. the box's width).
             Data points outside this range are called outliers.
             </source>
-        <target xml:space="preserve" state="new">            Values are visualized with so-called 'box plots'.
-            They give an impression of how values of a group are distributed.
-            The middle 50% of all values are within the box itself and the so-called whiskers have a length of at most 1.5-times the interquartile range (i.e. the box's width).
-            Data points outside this range are called outliers.
+        <target xml:space="preserve" state="translated">            Los valores están visualizados con 'diagramas de caja'.
+            Estos dan una idea de como están distribuidos los valores de un grupo.
+            El 50% central de todos los valores está dentro de la misma caja y los 'bigotes' de las cajas tienen una longitud al menos 1.5 veces el rango intercuartil (o sea, el ancho de la caja).
+            Los datos fuera de este rango se llaman atípicos.
             </target>
         <jms:reference-file line="68">/Resources/views/tools/anova/base.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="714e8db0a23f92c56dc1d0ac9aa024a7fa956225" resname=" Accept our %a% terms of use %b% ">
+      <trans-unit id="714e8db0a23f92c56dc1d0ac9aa024a7fa956225" resname=" Accept our %a% terms of use %b% " approved="yes">
         <source> Accept our %a% terms of use %b% </source>
-        <target> Accept our %a% terms of use %b% </target>
+        <target state="translated">Acepta nuestro %a% termino de uso %b%</target>
         <jms:reference-file line="17">/Resources/views/register/form.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="8808d6be59b159f1221b1b4cb9f01aefe7c10b2d" resname="#{deviceCount} devices found">
+      <trans-unit id="8808d6be59b159f1221b1b4cb9f01aefe7c10b2d" resname="#{deviceCount} devices found" approved="yes">
         <source>#{deviceCount} devices found</source>
-        <target>#{deviceCount} dispositivos encontrados</target>
+        <target state="translated">#{deviceCount} dispositivos encontrados</target>
         <jms:reference-file line="61">/Resources/views/import/garmin_communicator.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="9c75a53924b9b9317da06c02afd85d0d7fcf7377" resname="&lt;strong&gt;Corrector:&lt;/strong&gt; Ratio between VDOT and VDOT (by HR)">
+      <trans-unit id="9c75a53924b9b9317da06c02afd85d0d7fcf7377" resname="&lt;strong&gt;Corrector:&lt;/strong&gt; Ratio between VDOT and VDOT (by HR)" approved="yes">
         <source><![CDATA[<strong>Corrector:</strong> Ratio between VDOT and VDOT (by HR)]]></source>
-        <target><![CDATA[<strong>Factor de corrección:</strong> Relación entre VDOT y VDOT (de FC)]]></target>
+        <target state="translated"><![CDATA[<strong>Factor de corrección:</strong> Relación entre VDOT y VDOT (de FC)]]></target>
         <jms:reference-file line="88">/Resources/views/tools/vdot_analysis.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="106e3a64d599a360a823943c8a36b904ef04fdef" resname="&lt;strong&gt;VDOT/Time (Shape):&lt;/strong&gt; by your shape at that time&lt;br&gt;&#10;                The time is the prognosis by Runalyze.">
+      <trans-unit id="106e3a64d599a360a823943c8a36b904ef04fdef" resname="&lt;strong&gt;VDOT/Time (Shape):&lt;/strong&gt; by your shape at that time&lt;br&gt;&#10;                The time is the prognosis by Runalyze." approved="yes">
         <source><![CDATA[<strong>VDOT/Time (Shape):</strong> by your shape at that time<br>
                 The time is the prognosis by Runalyze.]]></source>
-        <target><![CDATA[<strong>VDOT/Time (Shape):</strong> by your shape at that time<br>
-                The time is the prognosis by Runalyze.]]></target>
+        <target state="translated">&lt;strong&gt;VDOT/Time (Estado de forma):&lt;/strong&gt; dado por tu estado de forma en ese momento&lt;br&gt; El tiempo es la previsión de Runalyze.</target>
         <jms:reference-file line="83">/Resources/views/tools/vdot_analysis.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="b4c08fa4db8c61128900391d951f59b612e89ebe" resname="&lt;strong&gt;VDOT/Time (corrected):&lt;/strong&gt; after individual VDOT correction (factor: %vdotFactor%)&lt;br&gt;&#10;                The time is what you could have reached at your maximal possible heart rate over this distance.">
+      <trans-unit id="b4c08fa4db8c61128900391d951f59b612e89ebe" resname="&lt;strong&gt;VDOT/Time (corrected):&lt;/strong&gt; after individual VDOT correction (factor: %vdotFactor%)&lt;br&gt;&#10;                The time is what you could have reached at your maximal possible heart rate over this distance." approved="yes">
         <source><![CDATA[<strong>VDOT/Time (corrected):</strong> after individual VDOT correction (factor: %vdotFactor%)<br>
                 The time is what you could have reached at your maximal possible heart rate over this distance.]]></source>
-        <target><![CDATA[<strong>VDOT/Time (corrected):</strong> after individual VDOT correction (factor: %vdotFactor%)<br>
-                The time is what you could have reached at your maximal possible heart rate over this distance.]]></target>
+        <target state="translated">&lt;strong&gt;VDOT/Time (corregido):&lt;/strong&gt; tras corrección del VDOT individual (factor: %vdotFactor%)&lt;br&gt; El tiempo es lo que habías podido alcanzar a tu máxima posible frecuencia cardíaca en esta distancia.</target>
         <jms:reference-file line="78">/Resources/views/tools/vdot_analysis.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="c47226217292486c58919f32295319782fbe687a" resname="&lt;strong&gt;VDOT/Time:&lt;/strong&gt; by standard formulas derived from Jack Daniels' Running formula&lt;br&gt;&#10;                The time is what you could have reached at your maximal possible heart rate over this distance.">
+      <trans-unit id="c47226217292486c58919f32295319782fbe687a" resname="&lt;strong&gt;VDOT/Time:&lt;/strong&gt; by standard formulas derived from Jack Daniels' Running formula&lt;br&gt;&#10;                The time is what you could have reached at your maximal possible heart rate over this distance." approved="yes">
         <source><![CDATA[<strong>VDOT/Time:</strong> by standard formulas derived from Jack Daniels' Running formula<br>
                 The time is what you could have reached at your maximal possible heart rate over this distance.]]></source>
-        <target><![CDATA[<strong>VDOT/Time:</strong> by standard formulas derived from Jack Daniels' Running formula<br>
-                The time is what you could have reached at your maximal possible heart rate over this distance.]]></target>
+        <target state="translated">&lt;strong&gt;VDOT/Time:&lt;/strong&gt; dado por las formulas estándares derivadas por Jack Daniels' Running formula&lt;br&gt; Es el tiempo que habrías podido alcanzar a tu máxima posible frecuencia cardíaca en esta distancia.</target>
         <jms:reference-file line="73">/Resources/views/tools/vdot_analysis.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="45f74e5e127b292ad68a799afab18b283b219865" resname="A confirmation has been sent via mail.">
+      <trans-unit id="45f74e5e127b292ad68a799afab18b283b219865" resname="A confirmation has been sent via mail." approved="yes">
         <source>A confirmation has been sent via mail.</source>
-        <target>A confirmation has been sent via mail.</target>
+        <target state="translated">Se ha enviado una confirmación a tu correo electrónico.</target>
         <jms:reference-file line="9">/Resources/views/settings/account-delete.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="81f0c595d53b607bbd725cdc69cbe1ea2998d201" resname="A link for changing your password will be sent via email.">
+      <trans-unit id="81f0c595d53b607bbd725cdc69cbe1ea2998d201" resname="A link for changing your password will be sent via email." approved="yes">
         <source>A link for changing your password will be sent via email.</source>
-        <target>Un enlace para cambiar su clave se enviará por correo electrónico.</target>
+        <target state="translated">Un enlace para cambiar su contraseña se enviará por correo electrónico.</target>
         <jms:reference-file line="9">/Resources/views/account/recover/form_send_mail.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="98ef99583e33f19cd030340de9c2a3bb45420b9b" resname="ANOVA">
+      <trans-unit id="98ef99583e33f19cd030340de9c2a3bb45420b9b" resname="ANOVA" approved="yes">
         <source>ANOVA</source>
-        <target>ANOVA</target>
+        <target state="translated">ANOVA</target>
         <jms:reference-file line="5">/Resources/views/tools/anova/base.html.twig</jms:reference-file>
         <jms:reference-file line="22">/Resources/views/tools/tools_list.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="33920c39a699f923804df9f59fc970a24817e018" resname="Accept our terms of use">
+      <trans-unit id="33920c39a699f923804df9f59fc970a24817e018" resname="Accept our terms of use" approved="yes">
         <source>Accept our terms of use</source>
-        <target>Accept our terms of use</target>
+        <target state="translated">Acepta nuestros términos de uso</target>
         <jms:reference-file line="44">/../src/CoreBundle/Form/RegistrationType.php</jms:reference-file>
       </trans-unit>
-      <trans-unit id="64343a83ad8c0b8e2789c32ca5ab1eb6abb614e0" resname="Access denied">
+      <trans-unit id="64343a83ad8c0b8e2789c32ca5ab1eb6abb614e0" resname="Access denied" approved="yes">
         <source>Access denied</source>
-        <target state="new">Access denied</target>
+        <target state="translated">Acceso denegado</target>
         <jms:reference-file line="4">/Resources/TwigBundle/views/Exception/error403.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="85dfa32c97d8618d1bea083609e2c8a29845abe5" resname="Account">
+      <trans-unit id="85dfa32c97d8618d1bea083609e2c8a29845abe5" resname="Account" approved="yes">
         <source>Account</source>
-        <target>Account</target>
+        <target state="translated">Cuenta</target>
         <jms:reference-file line="5">/Resources/views/settings/account.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="b9186563deea94527f03558a5ec059806d363c49" resname="Activate account">
+      <trans-unit id="b9186563deea94527f03558a5ec059806d363c49" resname="Activate account" approved="yes">
         <source>Activate account</source>
-        <target>Activar cuenta</target>
+        <target state="translated">Activar cuenta</target>
         <jms:reference-file line="5">/Resources/views/account/activate/base.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="814e3cbcf257d96e1c824e81bba77abf21f66a7e" resname="Activate your RUNALYZE account">
+      <trans-unit id="814e3cbcf257d96e1c824e81bba77abf21f66a7e" resname="Activate your RUNALYZE account" approved="yes">
         <source>Activate your RUNALYZE account</source>
-        <target>Activar ru cuenta de RUNALYZE</target>
+        <target state="translated">Activar su cuenta de RUNALYZE</target>
         <jms:reference-file line="4">/Resources/views/mail/account/registration.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="abdd4c6c9e0b1e7bcf0968a5cac7f0ee87a24dc2" resname="Activities with known influences or strange results can be ignored for the calculation of your shape.">
+      <trans-unit id="abdd4c6c9e0b1e7bcf0968a5cac7f0ee87a24dc2" resname="Activities with known influences or strange results can be ignored for the calculation of your shape." approved="yes">
         <source>Activities with known influences or strange results can be ignored for the calculation of your shape.</source>
-        <target>Se pueden ignorar para el cálculo aquellas actividades que contengan resultados extraños.</target>
+        <target state="translated">Para el cálculo de tu estado de forma se pueden ignorar aquellas actividades que contengan resultados extraños o efectos conocidos.</target>
         <jms:reference-file line="47">/Resources/views/static/help_calculations.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="e190939aca2d78cce1aefb21b985fb0779710890" resname="Activity data of %username%">
+      <trans-unit id="e190939aca2d78cce1aefb21b985fb0779710890" resname="Activity data of %username%" approved="yes">
         <source>Activity data of %username%</source>
-        <target>Activity data of %username%</target>
+        <target state="translated">Datos de actividad de %username%</target>
         <jms:reference-file line="22">/Resources/views/shared/athlete/base.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="b4531de6a89b3912c4ec4722cc7535b66487b3a6" resname="All shared links will be invalid if you (re-)import activities and overwrite all existing activities!">
+      <trans-unit id="b4531de6a89b3912c4ec4722cc7535b66487b3a6" resname="All shared links will be invalid if you (re-)import activities and overwrite all existing activities!" approved="yes">
         <source>All shared links will be invalid if you (re-)import activities and overwrite all existing activities!</source>
-        <target>¡Si importas (de nuevo) todas las actividades y sobreescribes las actuales, los enlaces compartidos dejarán de ser válidos!</target>
+        <target state="translated">¡Si importas (de nuevo) todas las actividades y sobrescribes aquellas actuales, los enlaces compartidos dejarán de ser válidos!</target>
         <jms:reference-file line="90">/Resources/views/tools/backup/form_legacy.html.twig</jms:reference-file>
         <jms:reference-file line="57">/Resources/views/tools/backup/upload_form.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="ef3947d9039885ae0d423c4da1a45f9ae16b50c8" resname="All traditional formulas are being used to calculate a VDOT value for a given race result.">
+      <trans-unit id="ef3947d9039885ae0d423c4da1a45f9ae16b50c8" resname="All traditional formulas are being used to calculate a VDOT value for a given race result." approved="yes">
         <source>All traditional formulas are being used to calculate a VDOT value for a given race result.</source>
-        <target>Todas las formulas tradicionales se usan para calcular el valor VDOT para una determinada competicion.</target>
+        <target state="translated">Todas las formulas tradicionales se usan para calcular el valor VDOT para una determinada competición.</target>
         <jms:reference-file line="14">/Resources/views/activity/vdot_info.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="b38fac0e113cd25464e6f39ac61bdfcefee80c7e" resname="Allow access for support">
+      <trans-unit id="b38fac0e113cd25464e6f39ac61bdfcefee80c7e" resname="Allow access for support" approved="yes">
         <source>Allow access for support</source>
-        <target>Allow access for support</target>
+        <target state="translated">Permitir acceso para soporte</target>
         <jms:reference-file line="64">/../src/CoreBundle/Form/Settings/AccountType.php</jms:reference-file>
       </trans-unit>
-      <trans-unit id="93e587524f966357c47844732909af86c0d033e7" resname="Allow admins in case of support requests to have a look at your data.">
+      <trans-unit id="93e587524f966357c47844732909af86c0d033e7" resname="Allow admins in case of support requests to have a look at your data." approved="yes">
         <source>Allow admins in case of support requests to have a look at your data.</source>
-        <target>Allow admins in case of support requests to have a look at your data.</target>
+        <target state="translated">Permitir a los administradores mirar tus datos en caso de solicitud de soporte.</target>
         <jms:reference-file line="23">/Resources/views/settings/account.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="2508355ba4e17815e5158d0361cc92b831237fa9" resname="Allowed file extension:">
+      <trans-unit id="2508355ba4e17815e5158d0361cc92b831237fa9" resname="Allowed file extension:" approved="yes">
         <source>Allowed file extension:</source>
-        <target>Allowed file extension:</target>
+        <target state="translated">Extensión de fichero permitida:</target>
         <jms:reference-file line="87">/Resources/views/tools/backup/form_legacy.html.twig</jms:reference-file>
         <jms:reference-file line="49">/Resources/views/tools/backup/upload_form.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="61a41ab4461c559b153bc055f090f4e94884d78b" resname="Analyze time series">
+      <trans-unit id="61a41ab4461c559b153bc055f090f4e94884d78b" resname="Analyze time series" approved="yes">
         <source>Analyze time series</source>
-        <target>Analizar series de tiempo</target>
+        <target state="translated">Analizar series de tiempo</target>
         <jms:reference-file line="79">/Resources/views/activity/tool/time_series_statistics.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="96089b22bdf48ac88d1d5ce97a9f09c72afadbe1" resname="Analyze your VDOT">
+      <trans-unit id="96089b22bdf48ac88d1d5ce97a9f09c72afadbe1" resname="Analyze your VDOT" approved="yes">
         <source>Analyze your VDOT</source>
-        <target>Analiza tu VDOT</target>
+        <target state="translated">Analiza tu VDOT</target>
         <jms:reference-file line="31">/Resources/views/tools/tools_list.html.twig</jms:reference-file>
         <jms:reference-file line="11">/Resources/views/tools/vdot_analysis.html.twig</jms:reference-file>
       </trans-unit>
@@ -241,14 +238,14 @@
         <target>Los valores no son siempre correctos debido a los muchos factores que influyen en el pulso.</target>
         <jms:reference-file line="42">/Resources/views/activity/vdot_info.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="e3810cd5e365e9888d60575380be5af98c0c26e2" resname="Best segment">
+      <trans-unit id="e3810cd5e365e9888d60575380be5af98c0c26e2" resname="Best segment" approved="yes">
         <source>Best segment</source>
-        <target>Best segment</target>
+        <target state="translated">Mejor trayecto</target>
         <jms:reference-file line="39">/Resources/views/activity/tool/best_sub_segments.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="eceada21b4aa931d7acd2ca310013e8c00091c2f" resname="Best sub segments">
+      <trans-unit id="eceada21b4aa931d7acd2ca310013e8c00091c2f" resname="Best sub segments" approved="yes">
         <source>Best sub segments</source>
-        <target>Best sub segments</target>
+        <target state="translated">Mejor sub-trayecto</target>
         <jms:reference-file line="27">/Resources/views/activity/tool/best_sub_segments.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="0b9d2b2362bc33581ba11fddcb0cf0590ebd3a7a" resname="Blog">
@@ -273,9 +270,9 @@
         <target>Soporte del explorador</target>
         <jms:reference-file line="65">/Resources/views/static/help.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="87dc57e8714a62b1a86beffe3809c7bbcd86b0e1" resname="By athletes for athletes">
+      <trans-unit id="87dc57e8714a62b1a86beffe3809c7bbcd86b0e1" resname="By athletes for athletes" approved="yes">
         <source>By athletes for athletes</source>
-        <target>By athletes for athletes</target>
+        <target state="translated">Por atletas para atletas</target>
         <jms:reference-file line="27">/Resources/views/home_feature_showcase.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="68af11f0734266c7f5d9a5365941233735f9d8cc" resname="Cadence">
@@ -295,9 +292,9 @@
         <jms:reference-file line="20">/Resources/views/settings/account-mail.html.twig</jms:reference-file>
         <jms:reference-file line="20">/Resources/views/settings/account-password.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="f09379e979f64dcd125ac442845146e644df923d" resname="Change mail address">
+      <trans-unit id="f09379e979f64dcd125ac442845146e644df923d" resname="Change mail address" approved="yes">
         <source>Change mail address</source>
-        <target>Change mail address</target>
+        <target state="translated">Cambiar dirección de correo</target>
         <jms:reference-file line="13">/Resources/views/settings/account-mail.html.twig</jms:reference-file>
         <jms:reference-file line="5">/Resources/views/settings/account-mail.html.twig</jms:reference-file>
       </trans-unit>
@@ -308,9 +305,9 @@
         <jms:reference-file line="13">/Resources/views/settings/account-password.html.twig</jms:reference-file>
         <jms:reference-file line="5">/Resources/views/settings/account-password.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="70c6468640633ddc5601898c21147598ecffa5cd" resname="Change your mail address">
+      <trans-unit id="70c6468640633ddc5601898c21147598ecffa5cd" resname="Change your mail address" approved="yes">
         <source>Change your mail address</source>
-        <target>Change your mail address</target>
+        <target state="translated">Cambia tu correo electrónico</target>
         <jms:reference-file line="30">/Resources/views/settings/account.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="88dee350141b934bd32db882794a951a7a40d898" resname="Change your password">
@@ -319,52 +316,52 @@
         <jms:reference-file line="35">/Resources/views/settings/account.html.twig</jms:reference-file>
         <jms:reference-file line="37">/Resources/views/settings/account.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="d1191831cd6032b9e3991abc855b7fff9aa78118" resname="Choose sport type(s)">
+      <trans-unit id="d1191831cd6032b9e3991abc855b7fff9aa78118" resname="Choose sport type(s)" approved="yes">
         <source>Choose sport type(s)</source>
-        <target>Choose sport type(s)</target>
+        <target state="translated">Elegir tipo(s) de deporte</target>
         <jms:reference-file line="77">/../src/CoreBundle/Form/Tools/Anova/AnovaType.php</jms:reference-file>
       </trans-unit>
-      <trans-unit id="95231ba6261feab53bba9c946a096c614cda17c6" resname="Click here to update RUNALYZE">
+      <trans-unit id="95231ba6261feab53bba9c946a096c614cda17c6" resname="Click here to update RUNALYZE" approved="yes">
         <source>Click here to update RUNALYZE</source>
-        <target>Click here to update RUNALYZE</target>
+        <target state="translated">Haga clic aquí para actualizar RUNALYZE</target>
         <jms:reference-file line="8">/Resources/views/system/update.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="c1385b71609e50f22a8abb9674a08724803909cd" resname="Click on an activity to see more details.">
+      <trans-unit id="c1385b71609e50f22a8abb9674a08724803909cd" resname="Click on an activity to see more details." approved="yes">
         <source>Click on an activity to see more details.</source>
-        <target>haga click sobre una actividad para mostrar más detalles.</target>
+        <target state="translated">Haga clic sobre una actividad para mostrar más detalles.</target>
         <jms:reference-file line="65">/Resources/views/shared/athlete/base.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="8a128d3e497cf86515b3c769349812a4b7a165f9" resname="Compare your activity's values grouped by common values (e.g. sport or activity type) for a given period.">
+      <trans-unit id="8a128d3e497cf86515b3c769349812a4b7a165f9" resname="Compare your activity's values grouped by common values (e.g. sport or activity type) for a given period." approved="yes">
         <source>Compare your activity's values grouped by common values (e.g. sport or activity type) for a given period.</source>
-        <target>Compare your activity's values grouped by common values (e.g. sport or activity type) for a given period.</target>
+        <target state="translated">Compara los valores de su actividad agrupados por valores comunes (por ejemplo, tipo de deporte o de actividad) durante un período determinado.</target>
         <jms:reference-file line="24">/Resources/views/tools/tools_list.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="a9ac975028d335208a56c225a3d68d93dd2fb139" resname="Competition details">
+      <trans-unit id="a9ac975028d335208a56c225a3d68d93dd2fb139" resname="Competition details" approved="yes">
         <source>Competition details</source>
-        <target state="new">Competition details</target>
+        <target state="translated">Detalles de competición</target>
         <jms:reference-file line="5">/Resources/views/my/raceresult/deleted.html.twig</jms:reference-file>
         <jms:reference-file line="5">/Resources/views/my/raceresult/form.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="192252d0921a99689b2fbb72f4651a856f47b393" resname="Complete the process by accessing the following link and confirming the deletion">
+      <trans-unit id="192252d0921a99689b2fbb72f4651a856f47b393" resname="Complete the process by accessing the following link and confirming the deletion" approved="yes">
         <source>Complete the process by accessing the following link and confirming the deletion</source>
-        <target>Complete the process by accessing the following link and confirming the deletion</target>
+        <target state="translated">Complete el proceso accediendo al siguiente enlace y confirmando la eliminación</target>
         <jms:reference-file line="12">/Resources/views/mail/account/deleteAccountRequest.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="754164850f38c1ecdaf6b8ed894cb192bc36c5f4" resname="Configuration">
+      <trans-unit id="754164850f38c1ecdaf6b8ed894cb192bc36c5f4" resname="Configuration" approved="yes">
         <source>Configuration</source>
-        <target>Configuración</target>
+        <target state="translated">Configuración</target>
         <jms:reference-file line="20">/Resources/views/base_logged_in.twig</jms:reference-file>
         <jms:reference-file line="20">/Resources/views/home_feature_showcase.html.twig</jms:reference-file>
         <jms:reference-file line="27">/Resources/views/static/help.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="0e4f1e7ca014c23bb42c16bf0d32af27c235c4ab" resname="Confirm email address">
+      <trans-unit id="0e4f1e7ca014c23bb42c16bf0d32af27c235c4ab" resname="Confirm email address" approved="yes">
         <source>Confirm email address</source>
-        <target>Confirm email address</target>
+        <target state="translated">Confirmar el correo electrónico</target>
         <jms:reference-file line="21">/Resources/views/mail/account/registration.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="b65463cb6a42a17de514acc4659f7fd331e0876a" resname="Connect">
+      <trans-unit id="b65463cb6a42a17de514acc4659f7fd331e0876a" resname="Connect" approved="yes">
         <source>Connect</source>
-        <target>Conectar</target>
+        <target state="translated">Conectar</target>
         <jms:reference-file line="41">/Resources/views/import/garmin_communicator.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="f26abb5b1a196c3919c851df34f421c069e42852" resname="Connected devices">
@@ -392,9 +389,9 @@
         <target>Corrección: considerando la altitud</target>
         <jms:reference-file line="83">/Resources/views/activity/vdot_info.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="4eaf39e26823b9435e75a4dfd3a0a6401cd9487b" resname="Corrector">
+      <trans-unit id="4eaf39e26823b9435e75a4dfd3a0a6401cd9487b" resname="Corrector" approved="yes">
         <source>Corrector</source>
-        <target>Corrector</target>
+        <target state="translated">Corrector</target>
         <jms:reference-file line="37">/Resources/views/tools/vdot_analysis.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="d82b56cad90059583c1183e82edb8cf7d4ef4794" resname="Course">
@@ -481,9 +478,9 @@
         <target state="new">Dec</target>
         <jms:reference-file line="51">/Resources/views/_macro/utilities.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="d245ce64e0359b7bd2410ee23050f22ba893f322" resname="Default configuration has been restored!">
+      <trans-unit id="d245ce64e0359b7bd2410ee23050f22ba893f322" resname="Default configuration has been restored!" approved="yes">
         <source>Default configuration has been restored!</source>
-        <target>Default configuration has been restored!</target>
+        <target state="translated">Se ha restaurado la configuración predeterminada!</target>
         <jms:reference-file line="45">/../src/CoreBundle/Controller/SettingsController.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="f6fdbe48dc54dd86f63097a03bd24094dedd713a" resname="Delete">
@@ -540,9 +537,9 @@
         <jms:reference-file line="19">/Resources/views/my/equipment/category/table.html.twig</jms:reference-file>
         <jms:reference-file line="31">/Resources/views/shared/widget/iframe/base.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="51bc1f0e92209ab0230bc2d56dd1c10e7da9c502" resname="Do you really want to delete your account, %username%?">
+      <trans-unit id="51bc1f0e92209ab0230bc2d56dd1c10e7da9c502" resname="Do you really want to delete your account, %username%?" approved="yes">
         <source>Do you really want to delete your account, %username%?</source>
-        <target>¿De verdad deseas borrar tu cuenta</target>
+        <target state="translated">¿Estás seguro que deseas borrar tu cuenta, %username%?</target>
         <jms:reference-file line="5">/Resources/views/account/delete/please_confirm.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="68a4194227be4ab74bc3d32363417c0fc1f30055" resname="Docs">
@@ -555,13 +552,13 @@
         <target>Documentación</target>
         <jms:reference-file line="50">/Resources/views/static/help.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="5d769af57979e13407f5a77079b63fee3c7c24be" resname="Due to performance reasons, some statistics are saved in the database.&#10;                        You can trigger a recalculation if you think they are wrong.&#10;                        In addition, values for elevation, TRIMP and VDOT can be recalculated.">
+      <trans-unit id="5d769af57979e13407f5a77079b63fee3c7c24be" resname="Due to performance reasons, some statistics are saved in the database.&#10;                        You can trigger a recalculation if you think they are wrong.&#10;                        In addition, values for elevation, TRIMP and VDOT can be recalculated." approved="yes">
         <source xml:space="preserve">Due to performance reasons, some statistics are saved in the database.
                         You can trigger a recalculation if you think they are wrong.
                         In addition, values for elevation, TRIMP and VDOT can be recalculated.</source>
-        <target xml:space="preserve">Due to performance reasons, some statistics are saved in the database.
-                        You can trigger a recalculation if you think they are wrong.
-                        In addition, values for elevation, TRIMP and VDOT can be recalculated.</target>
+        <target xml:space="preserve" state="translated">Por razones de rendimiento, algunas estadísticas se guardan en la base de datos.
+                         Se puede recalcular si crees que están equivocados.
+                         Además, los valores de altitud, TRIMP y VDOT pueden ser recalculados.</target>
         <jms:reference-file line="13">/Resources/views/tools/tools_list.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="efac2bb4d792a55b0729dccf7d97f1d72c86f560" resname="Due to some additional factors, one talks about a &lt;em&gt;pseudo V-dot-O2Max&lt;/em&gt;, which is equal for all runners at the same level.">
@@ -601,9 +598,9 @@
         <target>Altitud</target>
         <jms:reference-file line="36">/Resources/views/shared/widget/iframe/base.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="c47e9064feba9b1502370412b70261197e9977b7" resname="Elevation data from Shuttle Radar Topography Mission">
+      <trans-unit id="c47e9064feba9b1502370412b70261197e9977b7" resname="Elevation data from Shuttle Radar Topography Mission" approved="yes">
         <source>Elevation data from Shuttle Radar Topography Mission</source>
-        <target>Elevation data from Shuttle Radar Topography Mission</target>
+        <target state="translated">Datos de altitud por Shuttle Radar Topography Mission</target>
         <jms:reference-file line="88">/Resources/views/static/help.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="01345289e5e7cc14aea84a4cf1fe9a4a5c3ad6ff" resname="Email me">
@@ -621,9 +618,9 @@
         <target>Energía</target>
         <jms:reference-file line="39">/Resources/views/shared/widget/iframe/base.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="9149cfc2a4ecb3f98b8f6d97b09fc179c7f0f1ac" resname="Enter your current password">
+      <trans-unit id="9149cfc2a4ecb3f98b8f6d97b09fc179c7f0f1ac" resname="Enter your current password" approved="yes">
         <source>Enter your current password</source>
-        <target>Enter your current password</target>
+        <target state="translated">Introducir su contraseña actual</target>
         <jms:reference-file line="19">/../src/CoreBundle/Form/Settings/ChangeMailType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="e7d75f0ebb7605b0851eaf209f229326dadbbaa5" resname="Equipment types">
@@ -659,9 +656,9 @@
         <target>Encuentra tus ritmos de entrenamiento en min/km para unos determiandos valores VDOT.</target>
         <jms:reference-file line="20">/Resources/views/tools/tables/base.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="3fe36ef469ce60dd54312a831d7fd135014f2559" resname="First activity">
+      <trans-unit id="3fe36ef469ce60dd54312a831d7fd135014f2559" resname="First activity" approved="yes">
         <source>First activity</source>
-        <target>Primera actividad:</target>
+        <target state="translated">Primera actividad</target>
         <jms:reference-file line="37">/Resources/views/shared/athlete/base.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="66587a7a62a90fc91c4c88f1872bedaa52d23a35" resname="Follow">
@@ -669,9 +666,9 @@
         <target>Siga</target>
         <jms:reference-file line="70">/Resources/views/mail/transactionBase.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="626bc8c74126cf7aca5e5d268bc175a49410b70a" resname="For a detailed explanation of box plots, see &lt;a href=&quot;https://en.wikipedia.org/wiki/Box_plot&quot;&gt;Wikipedia&lt;/a&gt;.">
+      <trans-unit id="626bc8c74126cf7aca5e5d268bc175a49410b70a" resname="For a detailed explanation of box plots, see &lt;a href=&quot;https://en.wikipedia.org/wiki/Box_plot&quot;&gt;Wikipedia&lt;/a&gt;." approved="yes">
         <source><![CDATA[For a detailed explanation of box plots, see <a href="https://en.wikipedia.org/wiki/Box_plot">Wikipedia</a>.]]></source>
-        <target state="new"><![CDATA[For a detailed explanation of box plots, see <a href="https://en.wikipedia.org/wiki/Box_plot">Wikipedia</a>.]]></target>
+        <target state="translated">Para una explicación detallada de los diagramas de caja, consulte &lt;a href="https://es.wikipedia.org/wiki/Diagrama_de_caja"&gt; Wikipedia &lt;/a&gt;.</target>
         <jms:reference-file line="77">/Resources/views/tools/anova/base.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="21a83f462190300e206ad3ec048971aa4a6e2cf0" resname="For a single activity the TRIMP is calculated based on the duration and your heart rate.">
@@ -679,9 +676,9 @@
         <target>Para una actividad el TRIMP se calcula a partir de la duración de la misma y tu frecuencia cardíaca.</target>
         <jms:reference-file line="58">/Resources/views/static/help_calculations.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="1cfe764137bea4882e1b04f6cc42c924d8466a7a" resname="For large databases (several gigabytes) we recommend updating RUNALYZE via console.">
+      <trans-unit id="1cfe764137bea4882e1b04f6cc42c924d8466a7a" resname="For large databases (several gigabytes) we recommend updating RUNALYZE via console." approved="yes">
         <source>For large databases (several gigabytes) we recommend updating RUNALYZE via console.</source>
-        <target>For large databases (several gigabytes) we recommend updating RUNALYZE via console.</target>
+        <target state="translated">Para bases de datos grandes (varios gigabytes) recomendamos actualizar RUNALYZE a través de la consola.</target>
         <jms:reference-file line="10">/Resources/views/system/update.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="a2f060b7363f54c9f80d62805d36636dd7ebc33c" resname="Forgot your password?">
@@ -728,14 +725,14 @@
         <target>Estadísticas generales</target>
         <jms:reference-file line="17">/Resources/views/shared/athlete/base.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="43cd45e70a501b1e73f02f896774373acd1452a5" resname="Go back to RUNALYZE">
+      <trans-unit id="43cd45e70a501b1e73f02f896774373acd1452a5" resname="Go back to RUNALYZE" approved="yes">
         <source>Go back to RUNALYZE</source>
-        <target>Go back to RUNALYZE</target>
+        <target state="translated">Volver atrás a RUNALYZE</target>
         <jms:reference-file line="12">/Resources/views/system/update_start.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="5537280384e598ba9133a1a6aa7f2b1345f1cc06" resname="Go to database cleanup">
+      <trans-unit id="5537280384e598ba9133a1a6aa7f2b1345f1cc06" resname="Go to database cleanup" approved="yes">
         <source>Go to database cleanup</source>
-        <target>Go to database cleanup</target>
+        <target state="translated">Ir a la limpieza de la base de datos</target>
         <jms:reference-file line="19">/Resources/views/tools/backup/import_finish.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="ad727721f2ae9e9f5e58d45d5673cb9aac16d148" resname="Groundcontact">
@@ -778,19 +775,19 @@
         <jms:reference-file line="56">/Resources/TwigBundle/views/Exception/error.html.twig</jms:reference-file>
         <jms:reference-file line="62">/Resources/views/base_not_logged_in.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="7e217fa4d4b98f78392cd931a62b5db2691ec07a" resname="Hi %s, &lt;br&gt; we are sorry to hear that you wish to delete your RUNALYZE account">
+      <trans-unit id="7e217fa4d4b98f78392cd931a62b5db2691ec07a" resname="Hi %s, &lt;br&gt; we are sorry to hear that you wish to delete your RUNALYZE account" approved="yes">
         <source><![CDATA[Hi %s, <br> we are sorry to hear that you wish to delete your RUNALYZE account]]></source>
-        <target><![CDATA[Hi %s, <br> we are sorry to hear that you wish to delete your RUNALYZE account]]></target>
+        <target state="translated">Hola %s, &lt;br&gt;lamentamos saber que deseas borrar tu cuenta de RUNALYZE</target>
         <jms:reference-file line="9">/Resources/views/mail/account/deleteAccountRequest.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="5c10f3be26d63b9bd2c804cee05cd9a78fd31262" resname="Hi %s, we heard that you forgot your password!">
+      <trans-unit id="5c10f3be26d63b9bd2c804cee05cd9a78fd31262" resname="Hi %s, we heard that you forgot your password!" approved="yes">
         <source>Hi %s, we heard that you forgot your password!</source>
-        <target>Hi %s, we heard that you forgot your password!</target>
+        <target state="translated">Hola %s, hemos escuchado que has olvidado tu contraseña!</target>
         <jms:reference-file line="9">/Resources/views/mail/account/recoverPassword.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="21071b4f3ec96e64a6ab4dff0a75157e7006e5ec" resname="Hi %s, welcome to RUNALYZE">
+      <trans-unit id="21071b4f3ec96e64a6ab4dff0a75157e7006e5ec" resname="Hi %s, welcome to RUNALYZE" approved="yes">
         <source>Hi %s, welcome to RUNALYZE</source>
-        <target>Hi %s, welcome to RUNALYZE</target>
+        <target state="translated">Hola %s, bienvenido a RUNALYZE</target>
         <jms:reference-file line="14">/Resources/views/mail/account/registration.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="c66837f8fa417c1ef930ad73bc60e71e1dd031f1" resname="Hi %username%">
@@ -798,11 +795,10 @@
         <target>Hola %username%</target>
         <jms:reference-file line="6">/Resources/views/account/activate/success.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="f6df823a92ae084d3d771a05c34bf34424d741c4" resname="How sad, that you've decided to delete your account.&lt;br&gt;&#10;            Your account will be deleted as soon as you click on the confirmation link in your mail.">
+      <trans-unit id="f6df823a92ae084d3d771a05c34bf34424d741c4" resname="How sad, that you've decided to delete your account.&lt;br&gt;&#10;            Your account will be deleted as soon as you click on the confirmation link in your mail." approved="yes">
         <source><![CDATA[How sad, that you've decided to delete your account.<br>
             Your account will be deleted as soon as you click on the confirmation link in your mail.]]></source>
-        <target><![CDATA[How sad, that you've decided to delete your account.<br>
-            Your account will be deleted as soon as you click on the confirmation link in your mail.]]></target>
+        <target state="translated">Qué triste que haya decidido eliminar su cuenta. &lt;br&gt; Su cuenta será borrada tan pronto como haga clic en el enlace de confirmación en su correo.</target>
         <jms:reference-file line="10">/Resources/views/settings/account-delete.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="edb8f6c14252759cd8673c61a24376d32e17b93a" resname="Icons">
@@ -810,21 +806,21 @@
         <target>Icons</target>
         <jms:reference-file line="80">/Resources/views/static/help.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="af020665d53d5e3afdce797db7038ee343a5d988" resname="If the link does not work, please copy the following URL into the address field of your web browser">
+      <trans-unit id="af020665d53d5e3afdce797db7038ee343a5d988" resname="If the link does not work, please copy the following URL into the address field of your web browser" approved="yes">
         <source>If the link does not work, please copy the following URL into the address field of your web browser</source>
-        <target>If the link does not work, please copy the following URL into the address field of your web browser</target>
+        <target state="translated">Si el enlace no funciona, copie el siguiente URL en el campo de dirección de su navegador web</target>
         <jms:reference-file line="18">/Resources/views/mail/account/deleteAccountRequest.html.twig</jms:reference-file>
         <jms:reference-file line="18">/Resources/views/mail/account/recoverPassword.html.twig</jms:reference-file>
         <jms:reference-file line="24">/Resources/views/mail/account/registration.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="63149eddcb41883bd18fc09085136c87a3603d8a" resname="If you participate in an event multiple times you should always enter the same name, i.e. don't append the event's number or year.">
+      <trans-unit id="63149eddcb41883bd18fc09085136c87a3603d8a" resname="If you participate in an event multiple times you should always enter the same name, i.e. don't append the event's number or year." approved="yes">
         <source>If you participate in an event multiple times you should always enter the same name, i.e. don't append the event's number or year.</source>
-        <target state="new">If you participate in an event multiple times you should always enter the same name, i.e. don't append the event's number or year.</target>
+        <target state="translated">Si participa en un evento varias veces, debe introducir siempre el mismo nombre, es decir, no añadir el número o el año del evento.</target>
         <jms:reference-file line="15">/Resources/views/my/raceresult/form.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="1bee50d5c852cd41b4ad1ba2b896c01a0bc21c60" resname="If you turn off our mail notification you will not be informed about new features and changes at RUNALYZE">
+      <trans-unit id="1bee50d5c852cd41b4ad1ba2b896c01a0bc21c60" resname="If you turn off our mail notification you will not be informed about new features and changes at RUNALYZE" approved="yes">
         <source>If you turn off our mail notification you will not be informed about new features and changes at RUNALYZE</source>
-        <target>If you turn off our mail notification you will not be informed about new features and changes at RUNALYZE</target>
+        <target state="translated">Si desactiva nuestra notificación por correo no será informado sobre las nuevas características y cambios en RUNALYZE</target>
         <jms:reference-file line="8">/Resources/views/account/unsubscribe_info.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="ef72a3fa69135729747a56c9805209abb8115f00" resname="If you want to stay up to date on changes and receive tips from time to time, visit our blog at %s.">
@@ -867,9 +863,9 @@
         <target>El foro es el lugar más apropiado para la mayoría de las preguntas, problemas e ideas.</target>
         <jms:reference-file line="45">/Resources/views/static/help.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="5284701ad9f6d467da8de0cbd9be6477bf976b1e" resname="In order to avoid inconsistencies you cannot create an backup of your data in the moment. Usually this happens when a update of RUNALYZE is in progress. Please try it again tomorrow.">
+      <trans-unit id="5284701ad9f6d467da8de0cbd9be6477bf976b1e" resname="In order to avoid inconsistencies you cannot create an backup of your data in the moment. Usually this happens when a update of RUNALYZE is in progress. Please try it again tomorrow." approved="yes">
         <source>In order to avoid inconsistencies you cannot create an backup of your data in the moment. Usually this happens when a update of RUNALYZE is in progress. Please try it again tomorrow.</source>
-        <target>In order to avoid inconsistencies you cannot create an backup of your data in the moment. Usually this happens when a update of RUNALYZE is in progress. Please try it again tomorrow.</target>
+        <target state="translated">Con el fin de evitar inconsistencias no se puede crear una copia de seguridad de sus datos en este momento. Esto suele pasar cuando una actualización de RUNALYZE está en proceso. Por favor, inténtelo de nuevo mañana.</target>
         <jms:reference-file line="42">/Resources/views/tools/backup/export.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="03ecfa6479fa3a2e7a65a8600de304ee43c7dd32" resname="Influence">
@@ -913,9 +909,9 @@
         <target>Idioma</target>
         <jms:reference-file line="36">/../src/CoreBundle/Form/Settings/AccountType.php</jms:reference-file>
       </trans-unit>
-      <trans-unit id="3c0ae71541dfa0f6ed39d15c11d9bdab5b7bbc30" resname="Let's go back to RUNALYZE!">
+      <trans-unit id="3c0ae71541dfa0f6ed39d15c11d9bdab5b7bbc30" resname="Let's go back to RUNALYZE!" approved="yes">
         <source>Let's go back to RUNALYZE!</source>
-        <target>Let's go back to RUNALYZE!</target>
+        <target state="translated">Volvemos a RUNALYZE!</target>
         <jms:reference-file line="43">/Resources/TwigBundle/views/Exception/error.html.twig</jms:reference-file>
         <jms:reference-file line="11">/Resources/TwigBundle/views/Exception/error403.html.twig</jms:reference-file>
         <jms:reference-file line="12">/Resources/views/shared/invalid_activity.html.twig</jms:reference-file>
@@ -935,9 +931,9 @@
         <target>Salir</target>
         <jms:reference-file line="15">/Resources/views/base_logged_in.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="4d3f8338b882b0a12b1754fc7b64acc24922fc09" resname="Looks like something went wrong here.">
+      <trans-unit id="4d3f8338b882b0a12b1754fc7b64acc24922fc09" resname="Looks like something went wrong here." approved="yes">
         <source>Looks like something went wrong here.</source>
-        <target>Looks like something went wrong here.</target>
+        <target state="translated">Parece que algo ha ido mal aquí.</target>
         <jms:reference-file line="39">/Resources/TwigBundle/views/Exception/error.html.twig</jms:reference-file>
         <jms:reference-file line="7">/Resources/views/shared/invalid_activity.html.twig</jms:reference-file>
         <jms:reference-file line="7">/Resources/views/shared/invalid_athlete.html.twig</jms:reference-file>
@@ -957,9 +953,9 @@
         <target>Página principal</target>
         <jms:reference-file line="11">/Resources/views/account/delete/base.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="a728b4ef9485dbbe84331d5c654cb9e7c744859e" resname="Main values">
+      <trans-unit id="a728b4ef9485dbbe84331d5c654cb9e7c744859e" resname="Main values" approved="yes">
         <source>Main values</source>
-        <target>Main values</target>
+        <target state="translated">Valores principales</target>
         <jms:reference-file line="95">/../src/CoreBundle/Form/Tools/Anova/AnovaType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="94de303bbef8935622224c5db48199c807ab7d71" resname="Maintenance">
@@ -982,14 +978,14 @@
         <target state="new">May</target>
         <jms:reference-file line="44">/Resources/views/_macro/utilities.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="b887ba2a5f48de4306096a0c833b73ac7ee01050" resname="Median">
+      <trans-unit id="b887ba2a5f48de4306096a0c833b73ac7ee01050" resname="Median" approved="yes">
         <source>Median</source>
-        <target>Median</target>
+        <target state="translated">Mediana</target>
         <jms:reference-file line="127">/Resources/views/tools/anova/base.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="2deaec4409c237ae0bf257a0d4ccf607379bd28d" resname="Migrations have been executed">
+      <trans-unit id="2deaec4409c237ae0bf257a0d4ccf607379bd28d" resname="Migrations have been executed" approved="yes">
         <source>Migrations have been executed</source>
-        <target>Migrations have been executed</target>
+        <target state="translated">Se han ejecutado las migraciones</target>
         <jms:reference-file line="10">/Resources/views/system/update_start.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="d9b3decd4cee4e3a5df4eadb26eceeb9ad19459f" resname="Miscellaneaous">
@@ -997,9 +993,9 @@
         <target>Varios</target>
         <jms:reference-file line="109">/Resources/views/static/help.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="008f5ab2f2d752d9b524065d1d059bfb53ba779e" resname="Monthly Stats">
+      <trans-unit id="008f5ab2f2d752d9b524065d1d059bfb53ba779e" resname="Monthly Stats" approved="yes">
         <source>Monthly Stats</source>
-        <target state="new">Monthly Stats</target>
+        <target state="translated">Estadísticas mensuales</target>
         <jms:reference-file line="6">/Resources/views/my/statistics/monthly-stats/base.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="74cba9f182ea20ad83b8428d9365dd11a4428ec2" resname="Multi editor">
@@ -1024,19 +1020,19 @@
         <jms:reference-file line="62">/../src/CoreBundle/Form/Settings/AccountType.php</jms:reference-file>
         <jms:reference-file line="69">/../src/CoreBundle/Form/Settings/AccountType.php</jms:reference-file>
       </trans-unit>
-      <trans-unit id="5cc9013545b24e0b3d099697fcb2bcd06192ac09" resname="No activities found.">
+      <trans-unit id="5cc9013545b24e0b3d099697fcb2bcd06192ac09" resname="No activities found." approved="yes">
         <source>No activities found.</source>
-        <target state="new">No activities found.</target>
+        <target state="translated">No se han encontrado actividades.</target>
         <jms:reference-file line="41">/Resources/views/my/statistics/monthly-stats/base.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="a583f70afc2894985ba47b8bc07e76e49e52e709" resname="No activity found.">
+      <trans-unit id="a583f70afc2894985ba47b8bc07e76e49e52e709" resname="No activity found." approved="yes">
         <source>No activity found.</source>
-        <target>No activity found.</target>
+        <target state="translated">Ninguna actividad encontrada.</target>
         <jms:reference-file line="4">/Resources/views/shared/invalid_activity.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="36b11606b4755905a584cd911473f6d76055347f" resname="No athlete found.">
+      <trans-unit id="36b11606b4755905a584cd911473f6d76055347f" resname="No athlete found." approved="yes">
         <source>No athlete found.</source>
-        <target>No athlete found.</target>
+        <target state="translated">Ningún atleta encontrado.</target>
         <jms:reference-file line="4">/Resources/views/shared/invalid_athlete.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="aa729739dd7fc861465488ea736619166a72da76" resname="No devices found">
@@ -1044,14 +1040,14 @@
         <target>No se han encontrado dispositivos</target>
         <jms:reference-file line="58">/Resources/views/import/garmin_communicator.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="0035403387839cb4aaa62a675de42063993cbc37" resname="No results.">
+      <trans-unit id="0035403387839cb4aaa62a675de42063993cbc37" resname="No results." approved="yes">
         <source>No results.</source>
-        <target>No results.</target>
+        <target state="translated">No hay resultados.</target>
         <jms:reference-file line="100">/Resources/views/tools/anova/base.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="f4a714581ee399d4a479a2fc5647281ced144ab8" resname="No update needed">
+      <trans-unit id="f4a714581ee399d4a479a2fc5647281ced144ab8" resname="No update needed" approved="yes">
         <source>No update needed</source>
-        <target>No update needed</target>
+        <target state="translated">No se necesita actualización</target>
         <jms:reference-file line="14">/Resources/views/system/update.html.twig</jms:reference-file>
         <jms:reference-file line="6">/Resources/views/system/update_start.html.twig</jms:reference-file>
       </trans-unit>
@@ -1060,9 +1056,9 @@
         <target state="new">Notes</target>
         <jms:reference-file line="20">/Resources/views/my/equipment/category/table.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="52a8f4a07f7bd608068cf4a2bd27ab9f6e0cf57d" resname="Nothing more to do">
+      <trans-unit id="52a8f4a07f7bd608068cf4a2bd27ab9f6e0cf57d" resname="Nothing more to do" approved="no">
         <source>Nothing more to do</source>
-        <target>Nothing more to do</target>
+        <target state="needs-translation">Nada más que hacer</target>
         <jms:reference-file line="10">/Resources/views/system/update_start.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="bb9bfefd5391f52be54267e2a938a126661b0ff7" resname="Nov">
@@ -1070,9 +1066,9 @@
         <target state="new">Nov</target>
         <jms:reference-file line="50">/Resources/views/_macro/utilities.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="e24d13253fa26a5c8a0fda6c428a32c66319ebf3" resname="Number of activities">
+      <trans-unit id="e24d13253fa26a5c8a0fda6c428a32c66319ebf3" resname="Number of activities" approved="yes">
         <source>Number of activities</source>
-        <target>Number of activities</target>
+        <target state="translated">Número de actividades</target>
         <jms:reference-file line="31">/Resources/views/shared/athlete/base.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="51327aef9866e85ef5b5b2294a28494d2715ae59" resname="Oct">
@@ -1085,9 +1081,9 @@
         <target>Desarroladores oficiales:</target>
         <jms:reference-file line="19">/Resources/views/static/help.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="e3053fbaa7622ccae5f59565e7fb553f9c2d79c8" resname="Old password">
+      <trans-unit id="e3053fbaa7622ccae5f59565e7fb553f9c2d79c8" resname="Old password" approved="yes">
         <source>Old password</source>
-        <target>Old password</target>
+        <target state="translated">Contraseña anterior</target>
         <jms:reference-file line="21">/../src/CoreBundle/Form/Settings/ChangePasswordType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="64dde9accf3e5b5df8c680c17ad0b0feb013531d" resname="Overwrite dataset configuration">
@@ -1105,23 +1101,23 @@
         <target>Sobreescribir complementos</target>
         <jms:reference-file line="27">/Resources/views/tools/backup/import_form.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="7a9a6226596d8ee2851c67db535d45557a0133f7" resname="Pace">
+      <trans-unit id="7a9a6226596d8ee2851c67db535d45557a0133f7" resname="Pace" approved="yes">
         <source>Pace</source>
-        <target>Pace</target>
+        <target state="translated">Ritmo</target>
         <jms:reference-file line="40">/Resources/views/activity/tool/best_sub_segments.html.twig</jms:reference-file>
         <jms:reference-file line="103">/Resources/views/activity/tool/time_series_statistics.html.twig</jms:reference-file>
         <jms:reference-file line="15">/Resources/views/my/equipment/category/table.html.twig</jms:reference-file>
         <jms:reference-file line="17">/Resources/views/my/equipment/category/table.html.twig</jms:reference-file>
         <jms:reference-file line="34">/Resources/views/shared/widget/iframe/base.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="bc3023b36063a7681db24681472b54fa11f0d4ec" resname="Page not found">
+      <trans-unit id="bc3023b36063a7681db24681472b54fa11f0d4ec" resname="Page not found" approved="yes">
         <source>Page not found</source>
-        <target>Page not found</target>
+        <target state="translated">Página no encontrada</target>
         <jms:reference-file line="36">/Resources/TwigBundle/views/Exception/error.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="cd56e0839d06af74923cd6ad99d6fc9e7dab8e3a" resname="Participants">
+      <trans-unit id="cd56e0839d06af74923cd6ad99d6fc9e7dab8e3a" resname="Participants" approved="yes">
         <source>Participants</source>
-        <target state="new">Participants</target>
+        <target state="translated">Participantes</target>
         <jms:reference-file line="32">/Resources/views/my/raceresult/form.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="1e2245ed00a712a22c93c7bea2ccd2bae3726b13" resname="Participants age class">
@@ -1171,9 +1167,9 @@
         <target state="new">Placement</target>
         <jms:reference-file line="32">/Resources/views/my/raceresult/form.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="8449737eec5e12184fbad629cb0f34886da28157" resname="Please activate your account by clicking the link below.">
+      <trans-unit id="8449737eec5e12184fbad629cb0f34886da28157" resname="Please activate your account by clicking the link below." approved="yes">
         <source>Please activate your account by clicking the link below.</source>
-        <target>Please activate your account by clicking the link below.</target>
+        <target state="translated">Por favor, active su cuenta haciendo clic en el enlace de abajo.</target>
         <jms:reference-file line="18">/Resources/views/mail/account/registration.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="e65e837deba61f8940be95a71267e2779833f440" resname="Please let us know if you have wishes or have encountered bugs.">
@@ -1229,27 +1225,27 @@
         <target>Predice los resultados sobre diferentes distancias para un determinado VDOT.</target>
         <jms:reference-file line="13">/Resources/views/tools/tables/base.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="d73e92bafba231d1fc6109d6f2da6dcbe3f5120c" resname="Predicting your VDOT based on your training values is imprecise.&#10;                        This plugin lists your races and compares your results with the predicted values.&#10;                        This way you can get an impression of how well the prediction works for you.">
+      <trans-unit id="d73e92bafba231d1fc6109d6f2da6dcbe3f5120c" resname="Predicting your VDOT based on your training values is imprecise.&#10;                        This plugin lists your races and compares your results with the predicted values.&#10;                        This way you can get an impression of how well the prediction works for you." approved="yes">
         <source xml:space="preserve">Predicting your VDOT based on your training values is imprecise.
                         This plugin lists your races and compares your results with the predicted values.
                         This way you can get an impression of how well the prediction works for you.</source>
-        <target xml:space="preserve">Predicting your VDOT based on your training values is imprecise.
-                        This plugin lists your races and compares your results with the predicted values.
-                        This way you can get an impression of how well the prediction works for you.</target>
+        <target xml:space="preserve" state="translated">Predecir su VDOT basado en sus valores de entrenamiento es impreciso.
+                         Este plugin enumera tus carreras y compara tus resultados con los valores previstos.
+                         De esta manera puede tener una idea de lo bien que funciona la predicción para usted.</target>
         <jms:reference-file line="33">/Resources/views/tools/tools_list.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="f9e4a0a181e400706fd4d157c7bd8004ebb80c7d" resname="Predicting your VDOT based on your training values is imprecise.&#10;                This tool lists your races and compares all results with predicted values.&#10;                This way you can get an impression of how well our prediction works for you.">
+      <trans-unit id="f9e4a0a181e400706fd4d157c7bd8004ebb80c7d" resname="Predicting your VDOT based on your training values is imprecise.&#10;                This tool lists your races and compares all results with predicted values.&#10;                This way you can get an impression of how well our prediction works for you." approved="yes">
         <source xml:space="preserve">Predicting your VDOT based on your training values is imprecise.
                 This tool lists your races and compares all results with predicted values.
                 This way you can get an impression of how well our prediction works for you.</source>
-        <target xml:space="preserve">Predicting your VDOT based on your training values is imprecise.
-                This tool lists your races and compares all results with predicted values.
-                This way you can get an impression of how well our prediction works for you.</target>
+        <target xml:space="preserve" state="translated">Predecir su VDOT basado en sus valores de entrenamiento es impreciso.
+                         Esta herramienta enumera tus carreras y compara todos los resultados con los valores previstos.
+                         De esta manera puede tener una idea de lo bien que funciona la predicción para usted.</target>
         <jms:reference-file line="16">/Resources/views/tools/vdot_analysis.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="cfb27956e3baba98b6ac4094925b4127f0c1c18d" resname="Probably the link was wrong or your account has been already activated.">
+      <trans-unit id="cfb27956e3baba98b6ac4094925b4127f0c1c18d" resname="Probably the link was wrong or your account has been already activated." approved="yes">
         <source>Probably the link was wrong or your account has been already activated.</source>
-        <target>Probably the link was wrong or your account has been already activated.</target>
+        <target state="translated">Probablemente el enlace no era correcto o su cuenta ya ha sido activada.</target>
         <jms:reference-file line="7">/Resources/views/account/activate/problem.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="6b6c831ec4889f783bea9e85f02419799f7a579b" resname="Probably the link was wrong.">
@@ -1257,39 +1253,39 @@
         <target>Probablemente el enlace fuere incorrecto.</target>
         <jms:reference-file line="7">/Resources/views/account/delete/problem.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="4cb8775d86c2a56491b31167ef5159bc286ac1af" resname="Public activities are marked: ">
+      <trans-unit id="4cb8775d86c2a56491b31167ef5159bc286ac1af" resname="Public activities are marked: " approved="yes">
         <source>Public activities are marked: </source>
-        <target>Public activities are marked: </target>
+        <target state="translated">Las actividades públicas están marcadas:</target>
         <jms:reference-file line="66">/Resources/views/shared/athlete/base.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="f006bbe49000da71c9f4d99b5593677ee20e78a8" resname="Public activity view of %username%.">
+      <trans-unit id="f006bbe49000da71c9f4d99b5593677ee20e78a8" resname="Public activity view of %username%." approved="yes">
         <source>Public activity view of %username%.</source>
-        <target>Public activity view of %username%.</target>
+        <target state="translated">Vista de actividad pública de %username%.</target>
         <jms:reference-file line="14">/Resources/views/shared/base.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="a666c9c3f8450ab58c1399b5dd51e18f6dd80748" resname="Quartiles">
+      <trans-unit id="a666c9c3f8450ab58c1399b5dd51e18f6dd80748" resname="Quartiles" approved="yes">
         <source>Quartiles</source>
-        <target>Quartiles</target>
+        <target state="translated">Cuartiles</target>
         <jms:reference-file line="128">/Resources/views/tools/anova/base.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="0cdae3ce78bf7662d1b1a89407636e7eea385730" resname="RUNALYZE has been successfully installed. You can now start analyzing your training.">
+      <trans-unit id="0cdae3ce78bf7662d1b1a89407636e7eea385730" resname="RUNALYZE has been successfully installed. You can now start analyzing your training." approved="yes">
         <source>RUNALYZE has been successfully installed. You can now start analyzing your training.</source>
-        <target>RUNALYZE has been successfully installed. You can now start analyzing your training.</target>
+        <target state="translated">RUNALYZE se ha instalado correctamente. Ahora puede comenzar a analizar sus entrenamientos.</target>
         <jms:reference-file line="19">/Resources/views/system/install.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="dbd93b8c35d2f65385db54296d0bd5fc6ed292e2" resname="RUNALYZE is temporarily down for maintenance">
+      <trans-unit id="dbd93b8c35d2f65385db54296d0bd5fc6ed292e2" resname="RUNALYZE is temporarily down for maintenance" approved="yes">
         <source>RUNALYZE is temporarily down for maintenance</source>
-        <target>RUNALYZE is temporarily down for maintenance</target>
+        <target state="translated">RUNALYZE está de momento fuera de servicio por mantenimiento</target>
         <jms:reference-file line="8">/Resources/views/maintenance.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="cb4cb504b829038034eed53fa3f3e88fc8d68c37" resname="RUNALYZE version v%runalyzeVersionFile% of your backup file does not match current version v%runalyzeVersion%.">
+      <trans-unit id="cb4cb504b829038034eed53fa3f3e88fc8d68c37" resname="RUNALYZE version v%runalyzeVersionFile% of your backup file does not match current version v%runalyzeVersion%." approved="yes">
         <source>RUNALYZE version v%runalyzeVersionFile% of your backup file does not match current version v%runalyzeVersion%.</source>
-        <target>RUNALYZE version v%runalyzeVersionFile% of your backup file does not match current version v%runalyzeVersion%.</target>
+        <target state="translated">La versión de RUNALYZE v%runalyzeVersionFile% del archivo de tu copia de seguridad no coincide con la versión actual v%runalyzeVersion%.</target>
         <jms:reference-file line="24">/Resources/views/tools/backup/import_bad_file.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="6643dce8e4d3c9b96317eee572d9ea0ae4d49e57" resname="Race">
+      <trans-unit id="6643dce8e4d3c9b96317eee572d9ea0ae4d49e57" resname="Race" approved="yes">
         <source>Race</source>
-        <target>Race</target>
+        <target state="translated">Carrera</target>
         <jms:reference-file line="25">/Resources/views/tools/vdot_analysis.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="db1c784524e1b54011a95823026161f7c8517fe0" resname="Reference">
@@ -1302,9 +1298,9 @@
         <target>Registrarse</target>
         <jms:reference-file line="23">/Resources/views/register/form.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="5c25ef724a708355777148660d750c20efbd74d2" resname="Registered since">
+      <trans-unit id="5c25ef724a708355777148660d750c20efbd74d2" resname="Registered since" approved="yes">
         <source>Registered since</source>
-        <target>Registered since</target>
+        <target state="translated">Registrado desde</target>
         <jms:reference-file line="53">/../src/CoreBundle/Form/Settings/AccountType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="6761e2071d6eb623b788580077c6a7b0007b04ed" resname="Registrations are currently disabled.">
@@ -1317,14 +1313,14 @@
         <target>Recordarme</target>
         <jms:reference-file line="19">/Resources/views/login/form.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="bab9bc458f38d4d574e5baa63c72341db6ddaa30" resname="Repeat Password">
+      <trans-unit id="bab9bc458f38d4d574e5baa63c72341db6ddaa30" resname="Repeat Password" approved="yes">
         <source>Repeat Password</source>
-        <target>Repeat Password</target>
+        <target state="translated">Repite la contraseña</target>
         <jms:reference-file line="35">/../src/CoreBundle/Form/RegistrationType.php</jms:reference-file>
       </trans-unit>
-      <trans-unit id="366c2415f45eda358aa31b5d67c61f41a43a2bd0" resname="Repeat password">
+      <trans-unit id="366c2415f45eda358aa31b5d67c61f41a43a2bd0" resname="Repeat password" approved="yes">
         <source>Repeat password</source>
-        <target>Repeat password</target>
+        <target state="translated">Repite la contraseña</target>
         <jms:reference-file line="33">/../src/CoreBundle/Form/RecoverPasswordType.php</jms:reference-file>
         <jms:reference-file line="35">/../src/CoreBundle/Form/Settings/ChangePasswordType.php</jms:reference-file>
       </trans-unit>
@@ -1380,9 +1376,9 @@
         <target>Runalyze es completamente configurable. Puedes decidir qué información de tus actividades grabar, qué estadísticas mostrar y dónde mostrarlas.</target>
         <jms:reference-file line="21">/Resources/views/home_feature_showcase.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="9bff0849cf966413a31b9a7c16dc3cc88ff5983b" resname="Runalyze is created by athletes for athletes. Whenever you have comments, problems or wishes: Please contact our Runalyze team. It's near and dear to us.">
+      <trans-unit id="9bff0849cf966413a31b9a7c16dc3cc88ff5983b" resname="Runalyze is created by athletes for athletes. Whenever you have comments, problems or wishes: Please contact our Runalyze team. It's near and dear to us." approved="yes">
         <source>Runalyze is created by athletes for athletes. Whenever you have comments, problems or wishes: Please contact our Runalyze team. It's near and dear to us.</source>
-        <target>Runalyze ha sido creado por corredores para corredores. Siempre que tengas comentarios, problemas o sugerencias: Ponte en contacto con nosotros, nos importa</target>
+        <target state="translated">Runalyze ha sido creado por corredores para corredores. Siempre que tengas comentarios, problemas o sugerencias: No dudes en contactar con nosotros. Nos importa.</target>
         <jms:reference-file line="28">/Resources/views/home_feature_showcase.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="73989d9c59264da08a15dba21c7d58237a91f08f" resname="Running">
@@ -1390,9 +1386,9 @@
         <target>Running</target>
         <jms:reference-file line="18">/Resources/views/shared/athlete/base.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="e1d7541e11b44356487e496e24a15b58e286d37f" resname="Running dynamics">
+      <trans-unit id="e1d7541e11b44356487e496e24a15b58e286d37f" resname="Running dynamics" approved="yes">
         <source>Running dynamics</source>
-        <target>Running dynamics</target>
+        <target state="translated">Dinámica de carrera</target>
         <jms:reference-file line="104">/../src/CoreBundle/Form/Tools/Anova/AnovaType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="3e15ba0eee883109d55be6082c8de03530df5741" resname="Running tables">
@@ -1439,23 +1435,23 @@
         <target state="new">Sep</target>
         <jms:reference-file line="48">/Resources/views/_macro/utilities.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="ea5c1a20b7cfcfec8a35fb4c6a419a1314233755" resname="Shape">
+      <trans-unit id="ea5c1a20b7cfcfec8a35fb4c6a419a1314233755" resname="Shape" approved="no">
         <source>Shape</source>
-        <target>Shape</target>
+        <target state="needs-translation">Estado de forma</target>
         <jms:reference-file line="34">/Resources/views/tools/vdot_analysis.html.twig</jms:reference-file>
         <jms:reference-file line="35">/Resources/views/tools/vdot_analysis.html.twig</jms:reference-file>
         <jms:reference-file line="36">/Resources/views/tools/vdot_analysis.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="22959ede33b65d25ed4762705597fb8b954d3a6b" resname="Sorry!">
+      <trans-unit id="22959ede33b65d25ed4762705597fb8b954d3a6b" resname="Sorry!" approved="yes">
         <source>Sorry!</source>
-        <target>Sorry!</target>
+        <target state="translated">¡Lo sentimos!</target>
         <jms:reference-file line="36">/Resources/TwigBundle/views/Exception/error.html.twig</jms:reference-file>
         <jms:reference-file line="4">/Resources/views/shared/invalid_activity.html.twig</jms:reference-file>
         <jms:reference-file line="4">/Resources/views/shared/invalid_athlete.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="5b3c7da06faaf88b5646f45a38f5a04ad22e2697" resname="Sorry, but the url was not valid.">
+      <trans-unit id="5b3c7da06faaf88b5646f45a38f5a04ad22e2697" resname="Sorry, but the url was not valid." approved="yes">
         <source>Sorry, but the url was not valid.</source>
-        <target>Sorry, but the url was not valid.</target>
+        <target state="translated">Lo sentimos, pero el url no era válido.</target>
         <jms:reference-file line="8">/Resources/views/account/unsubscribe_failure.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="f9171b5cb60c9189bc82f5d163bef2d680850546" resname="Sport type">
@@ -1473,19 +1469,19 @@
         <target>Start</target>
         <jms:reference-file line="4">/Resources/views/_macro/tablesorter.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="2aa6a7ed9250b4c9ae857cc788c641d3b26bdfb5" resname="Start analysis">
+      <trans-unit id="2aa6a7ed9250b4c9ae857cc788c641d3b26bdfb5" resname="Start analysis" approved="yes">
         <source>Start analysis</source>
-        <target>Start analysis</target>
+        <target state="translated">Iniciar análisis</target>
         <jms:reference-file line="60">/Resources/views/tools/anova/base.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="3b7566b620437fe6ae3e90f4e6ea85446cf88e3f" resname="Start cleanup">
+      <trans-unit id="3b7566b620437fe6ae3e90f4e6ea85446cf88e3f" resname="Start cleanup" approved="yes">
         <source>Start cleanup</source>
-        <target>Start cleanup</target>
+        <target state="translated">Iniciar limpieza</target>
         <jms:reference-file line="91">/Resources/views/tools/database_cleanup/form.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="7b416e2c69ca7f04f270b6642129e1d66e4d1733" resname="Start the installation of RUNALYZE">
+      <trans-unit id="7b416e2c69ca7f04f270b6642129e1d66e4d1733" resname="Start the installation of RUNALYZE" approved="yes">
         <source>Start the installation of RUNALYZE</source>
-        <target>Start the installation of RUNALYZE</target>
+        <target state="translated">Iniciar la instalación de RUNALYZE</target>
         <jms:reference-file line="14">/Resources/views/system/install.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="2086b21f8f49274138c38d476bee317a84a8aecc" resname="Statistics">
@@ -1518,9 +1514,9 @@
         <target>TRIMP/ATL/CTL/TSB</target>
         <jms:reference-file line="53">/Resources/views/static/help_calculations.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="77cb6de5a18c7e76ea266cef64595b558a8ca383" resname="Tables for VDOT values by Jack Daniels and general tables like a pace calculator.">
+      <trans-unit id="77cb6de5a18c7e76ea266cef64595b558a8ca383" resname="Tables for VDOT values by Jack Daniels and general tables like a pace calculator." approved="yes">
         <source>Tables for VDOT values by Jack Daniels and general tables like a pace calculator.</source>
-        <target>Tables for VDOT values by Jack Daniels and general tables like a pace calculator.</target>
+        <target state="translated">Tablas para valores de VDOT por Jack Daniels y tablas generales como una calculadora de ritmo de carrera.</target>
         <jms:reference-file line="44">/Resources/views/tools/tools_list.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="5a1b598e394b671b7e4bf5d4cbb2c1733b789806" resname="Thanks for your registration. You should receive an email within the next minutes with further instructions for activating your account.">
@@ -1528,14 +1524,14 @@
         <target>Gracias por registrarte. Deberías recibir un correo electrónico en los próximos minutos con instrucciones para la activación de tu cuenta.</target>
         <jms:reference-file line="8">/Resources/views/register/mail_delivered.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="ba0197961d342c2add738b4e987353b8c519c07d" resname="The Daniels/Gilbert Formula by Larry Simpson">
+      <trans-unit id="ba0197961d342c2add738b4e987353b8c519c07d" resname="The Daniels/Gilbert Formula by Larry Simpson" approved="yes">
         <source>The Daniels/Gilbert Formula by Larry Simpson</source>
-        <target>The Daniels/Gilbert Formula by Larry Simpson</target>
+        <target state="translated">La formula de Daniels/Gilbert by Larry Simpson</target>
         <jms:reference-file line="32">/Resources/views/activity/vdot_info.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="77cb00c08737128c39866f0024de14829218751a" resname="The TRIMP-concept gives a possibility to describe the load of a single activity.">
+      <trans-unit id="77cb00c08737128c39866f0024de14829218751a" resname="The TRIMP-concept gives a possibility to describe the load of a single activity." approved="yes">
         <source>The TRIMP-concept gives a possibility to describe the load of a single activity.</source>
-        <target>The TRIMP-concept gives a possibility to describe the load of a single activity.</target>
+        <target state="translated">El concepto de TRIMP ofrece la posibilidad de describir la carga de una sola actividad.</target>
         <jms:reference-file line="57">/Resources/views/static/help_calculations.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="b15aa594ef795106dae6835f6c6737098ef85c02" resname="The activation did not work.">
@@ -1543,31 +1539,31 @@
         <target>La activación no funcionó.</target>
         <jms:reference-file line="5">/Resources/views/account/activate/problem.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="28eca2b445a103d3945921852100c67ef66ca197" resname="The activity has been removed.">
+      <trans-unit id="28eca2b445a103d3945921852100c67ef66ca197" resname="The activity has been removed." approved="yes">
         <source>The activity has been removed.</source>
-        <target>The activity has been removed.</target>
+        <target state="translated">La actividad ha sido eliminada.</target>
         <jms:reference-file line="3">/Resources/views/activity/activity_has_been_removed.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="e564c009d4e2e4ca395b37f22105b484c871ed6e" resname="The administrator has to set the correct API-key.">
+      <trans-unit id="e564c009d4e2e4ca395b37f22105b484c871ed6e" resname="The administrator has to set the correct API-key." approved="yes">
         <source>The administrator has to set the correct API-key.</source>
-        <target>The administrator has to set the correct API-key.</target>
+        <target state="translated">El administrador tiene que configurar la clave API correcta.</target>
         <jms:reference-file line="29">/Resources/views/import/garmin_communicator.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="24dfec2e195246221b6a900786d4d15d8654c624" resname="The average over a given period is considered as your current shape.">
+      <trans-unit id="24dfec2e195246221b6a900786d4d15d8654c624" resname="The average over a given period is considered as your current shape." approved="yes">
         <source>The average over a given period is considered as your current shape.</source>
-        <target>The average over a given period is considered as your current shape.</target>
+        <target state="translated">El promedio durante un período dado se considera como su forma actual.</target>
         <jms:reference-file line="33">/Resources/views/static/help_calculations.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="24dd4f18bdd8ececef469210b0e44c362c1246db" resname="The calculated value is not equal to what is saved for the activity (%activityVdot%).&#10;            The activity's value has probably been calculated based on other settings.">
+      <trans-unit id="24dd4f18bdd8ececef469210b0e44c362c1246db" resname="The calculated value is not equal to what is saved for the activity (%activityVdot%).&#10;            The activity's value has probably been calculated based on other settings." approved="yes">
         <source xml:space="preserve">The calculated value is not equal to what is saved for the activity (%activityVdot%).
             The activity's value has probably been calculated based on other settings.</source>
-        <target xml:space="preserve">The calculated value is not equal to what is saved for the activity (%activityVdot%).
-            The activity's value has probably been calculated based on other settings.</target>
+        <target xml:space="preserve" state="translated">El valor calculado no es igual a lo que está guardado para la actividad (%activityVdot%).
+             El valor de la actividad se ha calculado probablemente en función de otros ajustes.</target>
         <jms:reference-file line="111">/Resources/views/activity/vdot_info.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="246aeab8aa786b99aeae9e55fe38e711d9fead9c" resname="The deletion cannot be undone!">
+      <trans-unit id="246aeab8aa786b99aeae9e55fe38e711d9fead9c" resname="The deletion cannot be undone!" approved="no">
         <source>The deletion cannot be undone!</source>
-        <target>The deletion cannot be undone!</target>
+        <target state="needs-translation">¡La eliminación no se puede deshacer!</target>
         <jms:reference-file line="7">/Resources/views/account/delete/please_confirm.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="54a6f5467f6955f2689fa7abfd5b5b2ac162cab6" resname="The deletion did not work.">
@@ -1575,14 +1571,14 @@
         <target>El borrado no funcionó.</target>
         <jms:reference-file line="5">/Resources/views/account/delete/problem.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="399b142aafa8a70dfb0b17db243805fa3d16ac88" resname="The deletion is permanent and cannot be reversed. Therefore, you should backup your data.">
+      <trans-unit id="399b142aafa8a70dfb0b17db243805fa3d16ac88" resname="The deletion is permanent and cannot be reversed. Therefore, you should backup your data." approved="yes">
         <source>The deletion is permanent and cannot be reversed. Therefore, you should backup your data.</source>
-        <target>The deletion is permanent and cannot be reversed. Therefore, you should backup your data.</target>
+        <target state="translated">La cancelación es permanente y no puede volver atrás. Por lo tanto, debería hacer una copia de seguridad de sus datos.</target>
         <jms:reference-file line="60">/Resources/views/settings/account.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="6aba51dd76ce252e1abc2c93cfd68ec8a7a9810c" resname="The difference of these values is called &lt;strong&gt;Training Stress Balance&lt;/strong&gt;, TSB. It describes if you are recovering (positive) or training hard (negative).">
+      <trans-unit id="6aba51dd76ce252e1abc2c93cfd68ec8a7a9810c" resname="The difference of these values is called &lt;strong&gt;Training Stress Balance&lt;/strong&gt;, TSB. It describes if you are recovering (positive) or training hard (negative)." approved="yes">
         <source><![CDATA[The difference of these values is called <strong>Training Stress Balance</strong>, TSB. It describes if you are recovering (positive) or training hard (negative).]]></source>
-        <target><![CDATA[The difference of these values is called <strong>Training Stress Balance</strong>, TSB. It describes if you are recovering (positive) or training hard (negative).]]></target>
+        <target state="translated">La diferencia de estos valores se denomina &lt;strong&gt; Balance de estrés de entrenamiento &lt;/strong&gt;, (Training Stress Balance, TSB.) Describe si estás recuperando (positivo) o entrenando duro (negativo).</target>
         <jms:reference-file line="64">/Resources/views/static/help_calculations.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="8e3fb27385d019a80c8ad2bfaf198f72da5c88b5" resname="The distance correction for elevation is not used in this table.">
@@ -1600,24 +1596,24 @@
         <target>La principal ventaja de Runalyze es la capacidad de adaptar todo a sus necesidades personales e ideas.</target>
         <jms:reference-file line="31">/Resources/views/static/help.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="08663189f24692053b4262ce69bf52c84df09948" resname="The plug-in was not unlocked successfully.">
+      <trans-unit id="08663189f24692053b4262ce69bf52c84df09948" resname="The plug-in was not unlocked successfully." approved="yes">
         <source>The plug-in was not unlocked successfully.</source>
-        <target>The plug-in was not unlocked successfully.</target>
+        <target state="translated">El plug-in no ha sido desbloqueado correctamente.</target>
         <jms:reference-file line="29">/Resources/views/import/garmin_communicator.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="90cf70070965b5c485eb776e20e352cc7d5c05d2" resname="The race result has been deleted.">
+      <trans-unit id="90cf70070965b5c485eb776e20e352cc7d5c05d2" resname="The race result has been deleted." approved="yes">
         <source>The race result has been deleted.</source>
-        <target state="new">The race result has been deleted.</target>
+        <target state="translated">El resultado de la carrera ha sido eliminado.</target>
         <jms:reference-file line="9">/Resources/views/my/raceresult/deleted.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="e40d2feb902d4e94e32120f5c6113bd973f11ba5" resname="The requested activity does not exist or is private.">
+      <trans-unit id="e40d2feb902d4e94e32120f5c6113bd973f11ba5" resname="The requested activity does not exist or is private." approved="yes">
         <source>The requested activity does not exist or is private.</source>
-        <target>The requested activity does not exist or is private.</target>
+        <target state="translated">La actividad solicitada no existe o es privada.</target>
         <jms:reference-file line="8">/Resources/views/shared/invalid_activity.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="e84174891f0fd027bc9d452e25ac0c1c88e96d01" resname="The requested athlete does not exist or does not share his activities.">
+      <trans-unit id="e84174891f0fd027bc9d452e25ac0c1c88e96d01" resname="The requested athlete does not exist or does not share his activities." approved="yes">
         <source>The requested athlete does not exist or does not share his activities.</source>
-        <target>The requested athlete does not exist or does not share his activities.</target>
+        <target state="translated">El atleta solicitado no existe o no comparte sus actividades.</target>
         <jms:reference-file line="8">/Resources/views/shared/invalid_athlete.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="c925638e70c774b4ce1abc63b6d112884116a75c" resname="The username is not known.">
@@ -1635,25 +1631,25 @@
         <target><![CDATA[Hay <strong>%numBodyValues%</strong> valores corporales en este archivo.]]></target>
         <jms:reference-file line="47">/Resources/views/tools/backup/import_form.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="6c982f38f8d6e1451dfa6fd3e231da741a0d06ca" resname="There are no equipment objects for this category.">
+      <trans-unit id="6c982f38f8d6e1451dfa6fd3e231da741a0d06ca" resname="There are no equipment objects for this category." approved="yes">
         <source>There are no equipment objects for this category.</source>
-        <target state="new">There are no equipment objects for this category.</target>
+        <target state="translated">No hay equipamiento para esta categoría.</target>
         <jms:reference-file line="43">/Resources/views/my/equipment/category/table.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="7e152c438826cbc8d84ce153e3002facdcd3b627" resname="There is a problem with your file.">
+      <trans-unit id="7e152c438826cbc8d84ce153e3002facdcd3b627" resname="There is a problem with your file." approved="yes">
         <source>There is a problem with your file.</source>
-        <target>There is a problem with your file.</target>
+        <target state="translated">Hay un problema con su archivo.</target>
         <jms:reference-file line="20">/Resources/views/tools/backup/import_bad_file.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="93e4144de7c50db2ea6b9140330179232311c1b3" resname="There was a problem.">
+      <trans-unit id="93e4144de7c50db2ea6b9140330179232311c1b3" resname="There was a problem." approved="yes">
         <source>There was a problem.</source>
-        <target>There was a problem.</target>
+        <target state="translated">Había un problema.</target>
         <jms:reference-file line="193">/Resources/views/tools/anova/base.html.twig</jms:reference-file>
         <jms:reference-file line="198">/Resources/views/tools/anova/base.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="fa49a9dd7b8e7bc63fc42ae92e42ecfb6bef0067" resname="These recalculations are only needed if you changed the corresponding settings.">
+      <trans-unit id="fa49a9dd7b8e7bc63fc42ae92e42ecfb6bef0067" resname="These recalculations are only needed if you changed the corresponding settings." approved="yes">
         <source>These recalculations are only needed if you changed the corresponding settings.</source>
-        <target>These recalculations are only needed if you changed the corresponding settings.</target>
+        <target state="translated">Estos recálculos son necesarios sólo si cambias los ajustes correspondientes.</target>
         <jms:reference-file line="60">/Resources/views/tools/database_cleanup/form.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="dbd5ed274574adcbecc3128364cee1f95770a822" resname="This correction method is currently unused.">
@@ -1661,9 +1657,9 @@
         <target>Esta corrección no se usa actualmente.</target>
         <jms:reference-file line="87">/Resources/views/activity/vdot_info.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="af4fd032da898cc7cd47029f2c0ebcb528c4930b" resname="This race result is linked to the following activity">
+      <trans-unit id="af4fd032da898cc7cd47029f2c0ebcb528c4930b" resname="This race result is linked to the following activity" approved="yes">
         <source>This race result is linked to the following activity</source>
-        <target state="new">This race result is linked to the following activity</target>
+        <target state="translated">El resultado de esta carrera está vinculado a la siguiente actividad</target>
         <jms:reference-file line="26">/Resources/views/my/raceresult/form.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="8ea671ccd72432346a2af1ec6b3ff3129a81a11b" resname="This table does &lt;strong&gt;not&lt;/strong&gt; use a correction based on your current basic endurance.">
@@ -1671,11 +1667,11 @@
         <target><![CDATA[Esta tabla <strong>no</strong> usa un ajuste basado en tu actual resistencia básica.]]></target>
         <jms:reference-file line="33">/Resources/views/tools/tables/vdot.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="02d9d05718e86c7b393d90b55c7c3b5c85a390c3" resname="This table is computed by some formulas, derived from the tables in Jack Daniels' Running formula.&#10;            These values do not fit the original table one hundred percent.">
+      <trans-unit id="02d9d05718e86c7b393d90b55c7c3b5c85a390c3" resname="This table is computed by some formulas, derived from the tables in Jack Daniels' Running formula.&#10;            These values do not fit the original table one hundred percent." approved="yes">
         <source xml:space="preserve">This table is computed by some formulas, derived from the tables in Jack Daniels' Running formula.
             These values do not fit the original table one hundred percent.</source>
-        <target xml:space="preserve">This table is computed by some formulas, derived from the tables in Jack Daniels' Running formula.
-            These values do not fit the original table one hundred percent.</target>
+        <target xml:space="preserve" state="translated">Esta tabla ha sido calculada mediante algunas fórmulas, derivadas de las tablas presentes en Jack Daniels' Running formula.
+             Estos valores no se ajustan a la tabla original cien por ciento.</target>
         <jms:reference-file line="28">/Resources/views/tools/tables/vdot.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="c5ee50be891f115564718211124d5cafe9679dd3" resname="This table shows times for different distances if you run them with the same pace.">
@@ -1683,36 +1679,36 @@
         <target>Esta tabla muestra los tiempos para diferentes distancias si las corres al mismo ritmo.</target>
         <jms:reference-file line="27">/Resources/views/tools/tables/base.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="ae81e225feaa060c4981b74bef40290465f02f06" resname="This task may take some time, since we have to loop through all your activities.">
+      <trans-unit id="ae81e225feaa060c4981b74bef40290465f02f06" resname="This task may take some time, since we have to loop through all your activities." approved="yes">
         <source>This task may take some time, since we have to loop through all your activities.</source>
-        <target>This task may take some time, since we have to loop through all your activities.</target>
+        <target state="translated">Esta tarea puede tardar algún tiempo, ya que tenemos que revisar todas sus actividades.</target>
         <jms:reference-file line="61">/Resources/views/tools/database_cleanup/form.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="be4088c7cac0fbf229f846a6134c660ef8c98ab4" resname="This tool allows you to edit multiple activities one after another.&#10;                        At the moment it's not possible to edit multiple activities with only one form.">
+      <trans-unit id="be4088c7cac0fbf229f846a6134c660ef8c98ab4" resname="This tool allows you to edit multiple activities one after another.&#10;                        At the moment it's not possible to edit multiple activities with only one form." approved="yes">
         <source xml:space="preserve">This tool allows you to edit multiple activities one after another.
                         At the moment it's not possible to edit multiple activities with only one form.</source>
-        <target xml:space="preserve">This tool allows you to edit multiple activities one after another.
-                        At the moment it's not possible to edit multiple activities with only one form.</target>
+        <target xml:space="preserve" state="translated">Esta herramienta le permite editar varias actividades una tras otra.
+                         De momento no es posible editar actividades múltiples con un solo formulario.</target>
         <jms:reference-file line="53">/Resources/views/tools/tools_list.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="16e59bb04fa9297cedece962102621e7f291b7bc" resname="This tool allows you to export your complete data as sql dump or json dump that can be imported into any RUNALYZE installation.">
+      <trans-unit id="16e59bb04fa9297cedece962102621e7f291b7bc" resname="This tool allows you to export your complete data as sql dump or json dump that can be imported into any RUNALYZE installation." approved="yes">
         <source>This tool allows you to export your complete data as sql dump or json dump that can be imported into any RUNALYZE installation.</source>
-        <target>This tool allows you to export your complete data as sql dump or json dump that can be imported into any RUNALYZE installation.</target>
+        <target state="translated">Esta herramienta le permite exportar sus datos completos como dump de sql o dump de json que pueden ser importados a cualquier instalación de RUNALYZE.</target>
         <jms:reference-file line="63">/Resources/views/tools/tools_list.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="e7feb9b7c846cfac20e38a5b483a8ebd98231754" resname="This tool allows you to import an existing json dump of any other RUNALYZE installation.">
+      <trans-unit id="e7feb9b7c846cfac20e38a5b483a8ebd98231754" resname="This tool allows you to import an existing json dump of any other RUNALYZE installation." approved="yes">
         <source>This tool allows you to import an existing json dump of any other RUNALYZE installation.</source>
-        <target>This tool allows you to import an existing json dump of any other RUNALYZE installation.</target>
+        <target state="translated">Esta herramienta le permite importar un dump de json existente de cualquier otra instalación de RUNALYZE.</target>
         <jms:reference-file line="72">/Resources/views/tools/tools_list.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="fdc3fcfcda93879093ec44290807c1f626163f98" resname="This value is a good measurement for the possible performance of a runner.">
+      <trans-unit id="fdc3fcfcda93879093ec44290807c1f626163f98" resname="This value is a good measurement for the possible performance of a runner." approved="yes">
         <source>This value is a good measurement for the possible performance of a runner.</source>
-        <target>This value is a good measurement for the possible performance of a runner.</target>
+        <target state="translated">Este valor es una buena medida para la posible prestación de un corredor.</target>
         <jms:reference-file line="10">/Resources/views/static/help_calculations.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="de63de8d63f7347ac7991ba168ac2e2215cb7ed3" resname="This way of presentation allows to compare not only average values (e.g. pace over months) but deviations and outliers between different groupings.">
+      <trans-unit id="de63de8d63f7347ac7991ba168ac2e2215cb7ed3" resname="This way of presentation allows to compare not only average values (e.g. pace over months) but deviations and outliers between different groupings." approved="yes">
         <source>This way of presentation allows to compare not only average values (e.g. pace over months) but deviations and outliers between different groupings.</source>
-        <target state="new">This way of presentation allows to compare not only average values (e.g. pace over months) but deviations and outliers between different groupings.</target>
+        <target state="translated">Esta forma de presentación permite comparar no sólo los valores medios (por ejemplo, el ritmo de carrera a lo largo de los meses), sino también las desviaciones y los valores atípicos entre las diferentes agrupaciones.</target>
         <jms:reference-file line="75">/Resources/views/tools/anova/base.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="4923d0bf817190c83a6b69dd0b6eeaea0b3b6d12" resname="This will not touch any general settings like gender or main sport.">
@@ -1725,18 +1721,18 @@
         <target>Umbral</target>
         <jms:reference-file line="12">/Resources/views/tools/tables/vdot_paces.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="6c82e6dd86807ee3db07e3c82bec1ae1ce00b08b" resname="Time">
+      <trans-unit id="6c82e6dd86807ee3db07e3c82bec1ae1ce00b08b" resname="Time" approved="yes">
         <source>Time</source>
-        <target>Time</target>
+        <target state="translated">Tiempo</target>
         <jms:reference-file line="18">/Resources/views/my/equipment/category/table.html.twig</jms:reference-file>
         <jms:reference-file line="27">/Resources/views/tools/vdot_analysis.html.twig</jms:reference-file>
         <jms:reference-file line="31">/Resources/views/tools/vdot_analysis.html.twig</jms:reference-file>
         <jms:reference-file line="33">/Resources/views/tools/vdot_analysis.html.twig</jms:reference-file>
         <jms:reference-file line="35">/Resources/views/tools/vdot_analysis.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="22cd3c65b98acc0509280a2ae7cba76b449d2be7" resname="Time range">
+      <trans-unit id="22cd3c65b98acc0509280a2ae7cba76b449d2be7" resname="Time range" approved="yes">
         <source>Time range</source>
-        <target>Time range</target>
+        <target state="translated">Rango de tiempo</target>
         <jms:reference-file line="15">/Resources/views/tools/anova/base.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="a59154f2b3630be125eecf142ac445957321a8c2" resname="Time related">
@@ -1754,9 +1750,9 @@
         <target>Para modelar factores individuales, usamos un factor de corrección.</target>
         <jms:reference-file line="64">/Resources/views/activity/vdot_info.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="dfff5fdae6c0d1d1cc5bdbd44d8dacc2ae47ae08" resname="To get started right away just take a look at our &quot;getting started&quot; guide at %s.">
+      <trans-unit id="dfff5fdae6c0d1d1cc5bdbd44d8dacc2ae47ae08" resname="To get started right away just take a look at our &quot;getting started&quot; guide at %s." approved="yes">
         <source>To get started right away just take a look at our "getting started" guide at %s.</source>
-        <target>To get started right away just take a look at our "getting started" guide at %s.</target>
+        <target state="translated">Para comenzar inmediatamente, eche un vistazo a nuestra guía de "primeros pasos" en %s.</target>
         <jms:reference-file line="32">/Resources/views/mail/account/registration.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="4fa8cc860c52b268dc6a3adcde7305e9415db5bb" resname="Tools">
@@ -1775,9 +1771,9 @@
         <target>Total distance</target>
         <jms:reference-file line="29">/Resources/views/shared/athlete/base.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="03d44bde8f3bcb16ac73251de333060746533c33" resname="Total duration">
+      <trans-unit id="03d44bde8f3bcb16ac73251de333060746533c33" resname="Total duration" approved="yes">
         <source>Total duration</source>
-        <target>Total duration</target>
+        <target state="translated">Duración total</target>
         <jms:reference-file line="35">/Resources/views/shared/athlete/base.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="b0b02e793ab482ed87998784d7a2e0b2adb3d00f" resname="Total hemoglobin">
@@ -1802,19 +1798,19 @@
         <target>No se pudo enviar el enlace. Por favor contacta al administrador.</target>
         <jms:reference-file line="8">/Resources/views/register/mail_could_not_be_delivered.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="0e22bcda5d80472990e68f70026d78674ccda9f2" resname="Unsubscribe failure">
+      <trans-unit id="0e22bcda5d80472990e68f70026d78674ccda9f2" resname="Unsubscribe failure" approved="yes">
         <source>Unsubscribe failure</source>
-        <target>Unsubscribe failure</target>
+        <target state="translated">Error al cancelar suscripción</target>
         <jms:reference-file line="6">/Resources/views/account/unsubscribe_failure.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="94553361b7392d999c7d4f100fb32d8686d9ea49" resname="Unsubscribe from notification mails of RUNALYZE">
+      <trans-unit id="94553361b7392d999c7d4f100fb32d8686d9ea49" resname="Unsubscribe from notification mails of RUNALYZE" approved="yes">
         <source>Unsubscribe from notification mails of RUNALYZE</source>
-        <target>Unsubscribe from notification mails of RUNALYZE</target>
+        <target state="translated">Anular la suscripción a la notificación por correo de RUNALYZE</target>
         <jms:reference-file line="6">/Resources/views/account/unsubscribe_info.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="513f95f25c221958cb4d4983b97049593b346304" resname="Unsubscribe now">
+      <trans-unit id="513f95f25c221958cb4d4983b97049593b346304" resname="Unsubscribe now" approved="yes">
         <source>Unsubscribe now</source>
-        <target>Unsubscribe now</target>
+        <target state="translated">Anular la suscripción ahora</target>
         <jms:reference-file line="11">/Resources/views/account/unsubscribe_info.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="f94510322ecd9b3a2af67a10bd51ecc4ac6a24e7" resname="Up/Down">
@@ -1868,9 +1864,9 @@
         <target>Cálculo de VDOT para: %title%</target>
         <jms:reference-file line="5">/Resources/views/activity/vdot_info.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="bfee7fcfcc0b44f4b2aa0754d4a8bdc9aba0627d" resname="VDOT is the shortform of &lt;em&gt;V-dot-O2Max&lt;/em&gt;, the maximum rate of oxygen flow.">
+      <trans-unit id="bfee7fcfcc0b44f4b2aa0754d4a8bdc9aba0627d" resname="VDOT is the shortform of &lt;em&gt;V-dot-O2Max&lt;/em&gt;, the maximum rate of oxygen flow." approved="yes">
         <source><![CDATA[VDOT is the shortform of <em>V-dot-O2Max</em>, the maximum rate of oxygen flow.]]></source>
-        <target><![CDATA[VDOT is the shortform of <em>V-dot-O2Max</em>, the maximum rate of oxygen flow.]]></target>
+        <target state="translated">VDOT es la forma corta de &lt;em&gt; Vdot-O2Max &lt;/em&gt;, la velocidad máxima de flujo de oxígeno.</target>
         <jms:reference-file line="9">/Resources/views/static/help_calculations.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="2d82182b1dced93369b86b4acb36a32b7125d7db" resname="VDOT values with equivalent paces">
@@ -1893,14 +1889,14 @@
         <target>ratio vertical</target>
         <jms:reference-file line="163">/Resources/views/activity/tool/time_series_statistics.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="c4bb793eb766477cf7a8d1fda3b44bf5ece526c0" resname="Warning: Of course, pauses, walking and other factors can heavily influence the ratio of heart rate and pace.">
+      <trans-unit id="c4bb793eb766477cf7a8d1fda3b44bf5ece526c0" resname="Warning: Of course, pauses, walking and other factors can heavily influence the ratio of heart rate and pace." approved="yes">
         <source>Warning: Of course, pauses, walking and other factors can heavily influence the ratio of heart rate and pace.</source>
-        <target>Warning: Of course, pauses, walking and other factors can heavily influence the ratio of heart rate and pace.</target>
+        <target state="translated">Advertencia: Por supuesto, las pausas, caminar y otros factores pueden afectar en gran medida la proporción entre la frecuencia cardíaca y el ritmo.</target>
         <jms:reference-file line="46">/Resources/views/static/help_calculations.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="fb49c1a8023cbc4c33e3668965072044d0034f86" resname="Was the course officially measured?">
+      <trans-unit id="fb49c1a8023cbc4c33e3668965072044d0034f86" resname="Was the course officially measured?" approved="yes">
         <source>Was the course officially measured?</source>
-        <target state="new">Was the course officially measured?</target>
+        <target state="translated">¿El recorrido ha sido medido oficialmente?</target>
         <jms:reference-file line="18">/Resources/views/my/raceresult/form.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="97286a2b91d94c57dcdfee7525a87c54bdbd02b7" resname="We give our best to make Runalyze as good as possible for you. - Therefore we would be interested in your suggestions for improvement.">
@@ -1908,24 +1904,24 @@
         <target>Queremos hacer Runalyze tan bueno como sea posible. Haznos llegar tus deseos y sugerencias.</target>
         <jms:reference-file line="44">/Resources/views/static/help.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="bc66077ae6e84c6025965c3ccfd4000938d9d58d" resname="We use two decimals for convenient reasons.&lt;br&gt;Marathon: 42.20 km&lt;br&gt;Half marathon: 21.10 km">
+      <trans-unit id="bc66077ae6e84c6025965c3ccfd4000938d9d58d" resname="We use two decimals for convenient reasons.&lt;br&gt;Marathon: 42.20 km&lt;br&gt;Half marathon: 21.10 km" approved="yes">
         <source><![CDATA[We use two decimals for convenient reasons.<br>Marathon: 42.20 km<br>Half marathon: 21.10 km]]></source>
-        <target state="new"><![CDATA[We use two decimals for convenient reasons.<br>Marathon: 42.20 km<br>Half marathon: 21.10 km]]></target>
+        <target state="translated">Se utilizan dos decimales por razones prácticas. &lt;br&gt;Maratón: 42.20 km&lt;br&gt;Medio maratón: 21.10 km</target>
         <jms:reference-file line="21">/Resources/views/my/raceresult/form.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="8b527bc986d8b8d19815696a85f3a6923ee433d1" resname="We will resume normal operations as soon as possible.">
+      <trans-unit id="8b527bc986d8b8d19815696a85f3a6923ee433d1" resname="We will resume normal operations as soon as possible." approved="no">
         <source>We will resume normal operations as soon as possible.</source>
-        <target>We will resume normal operations as soon as possible.</target>
+        <target state="needs-translation">Reanudaremos las operaciones normales lo antes posible.</target>
         <jms:reference-file line="9">/Resources/views/maintenance.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="b9057abb4e87c544851051c754536d61176c9ef3" resname="Welcome to RUNALYZE!">
+      <trans-unit id="b9057abb4e87c544851051c754536d61176c9ef3" resname="Welcome to RUNALYZE!" approved="yes">
         <source>Welcome to RUNALYZE!</source>
-        <target>Bienvenido a RUNALYZE</target>
+        <target state="translated">Bienvenido a RUNALYZE!</target>
         <jms:reference-file line="6">/Resources/views/mail/account/registration.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="e721a1481440bd8b46aaaa3d2b69958cf540c6b9" resname="Year of birth">
+      <trans-unit id="e721a1481440bd8b46aaaa3d2b69958cf540c6b9" resname="Year of birth" approved="yes">
         <source>Year of birth</source>
-        <target>Year of birth</target>
+        <target state="translated">Año de nacimiento</target>
         <jms:reference-file line="50">/../src/CoreBundle/Form/Settings/AccountType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="67482f1a052dc2f70c6c2893ddd6977ea63a1c81" resname="Year on year">
@@ -1933,9 +1929,9 @@
         <target>Year on year</target>
         <jms:reference-file line="18">/Resources/views/shared/athlete/base.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="5397e0583f14f6c88de06b1ef28f460a1fb5b0ae" resname="Yes">
+      <trans-unit id="5397e0583f14f6c88de06b1ef28f460a1fb5b0ae" resname="Yes" approved="yes">
         <source>Yes</source>
-        <target>Yes</target>
+        <target state="translated">Si</target>
         <jms:reference-file line="61">/../src/CoreBundle/Form/Settings/AccountType.php</jms:reference-file>
         <jms:reference-file line="68">/../src/CoreBundle/Form/Settings/AccountType.php</jms:reference-file>
       </trans-unit>
@@ -1944,9 +1940,9 @@
         <target>Has cerrado la sesión.</target>
         <jms:reference-file line="2">/Resources/views/login/ajax_not_logged_in.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="eb9a8723d6a1a22c7cd12c63d19d47f738515497" resname="You can change your password within the next 24 hours by clicking the link below.">
+      <trans-unit id="eb9a8723d6a1a22c7cd12c63d19d47f738515497" resname="You can change your password within the next 24 hours by clicking the link below." approved="yes">
         <source>You can change your password within the next 24 hours by clicking the link below.</source>
-        <target>You can change your password within the next 24 hours by clicking the link below.</target>
+        <target state="translated">Puede cambiar su contraseña en las próximas 24 horas haciendo clic en el enlace de abajo.</target>
         <jms:reference-file line="12">/Resources/views/mail/account/recoverPassword.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="dba9fba7e5027c32cb49d303a53757eca67cbaa8" resname="You can define your own sports or activity types and choose your own way of presentation and configure some parameters of our experimental calculations.">
@@ -1959,14 +1955,14 @@
         <target>Ahora puede usar Runalyze.</target>
         <jms:reference-file line="14">/Resources/views/account/activate/success.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="653ed74d4c654ec310986c20faf5a4bbb19de0c0" resname="You can use the %linkStart%database cleanup%linkEnd% to recalculate the value.">
+      <trans-unit id="653ed74d4c654ec310986c20faf5a4bbb19de0c0" resname="You can use the %linkStart%database cleanup%linkEnd% to recalculate the value." approved="yes">
         <source>You can use the %linkStart%database cleanup%linkEnd% to recalculate the value.</source>
-        <target>You can use the %linkStart%database cleanup%linkEnd% to recalculate the value.</target>
+        <target state="translated">Puede utilizar %linkStart%limpieza de base de datos%linkEnd% para volver a calcular el valor.</target>
         <jms:reference-file line="114">/Resources/views/activity/vdot_info.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="e1bf481d77ef7038e06f1f0041a62f273faf035a" resname="You cannot access this item.">
+      <trans-unit id="e1bf481d77ef7038e06f1f0041a62f273faf035a" resname="You cannot access this item." approved="yes">
         <source>You cannot access this item.</source>
-        <target state="new">You cannot access this item.</target>
+        <target state="translated">No puedes acceder a este elemento.</target>
         <jms:reference-file line="7">/Resources/TwigBundle/views/Exception/error403.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="626ccc4ed62b4890714095ca1063f6361a1d943e" resname="You cannot use Runalyze anymore.">
@@ -1974,14 +1970,14 @@
         <target>Ya no puede usar Runalyze.</target>
         <jms:reference-file line="7">/Resources/views/account/delete/success.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="e62e1c6d1729ec49e62b6276c6715bdb34ae9c34" resname="You did not export anything.">
+      <trans-unit id="e62e1c6d1729ec49e62b6276c6715bdb34ae9c34" resname="You did not export anything." approved="yes">
         <source>You did not export anything.</source>
-        <target>You did not export anything.</target>
+        <target state="translated">No has exportado nada.</target>
         <jms:reference-file line="122">/Resources/views/tools/backup/form_legacy.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="16c83a58a40cd13545b2eb70aa3413ae15487fa6" resname="You did not run any races.">
+      <trans-unit id="16c83a58a40cd13545b2eb70aa3413ae15487fa6" resname="You did not run any races." approved="yes">
         <source>You did not run any races.</source>
-        <target>You did not run any races.</target>
+        <target state="translated">No has corrido ninguna carrera.</target>
         <jms:reference-file line="62">/Resources/views/tools/vdot_analysis.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="0a8893c2610dafde57fc95703bbfac82a0fab3bd" resname="You have successfully unsubscribed">
@@ -1994,26 +1990,26 @@
         <target>You have successfully unsubscribed from all notifications</target>
         <jms:reference-file line="8">/Resources/views/account/unsubscribe_success.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="f8a7bcbb755b913dfdb3a54b3e2d05201afd45a6" resname="You'll receive an email with a link to confirm the deletion.">
+      <trans-unit id="f8a7bcbb755b913dfdb3a54b3e2d05201afd45a6" resname="You'll receive an email with a link to confirm the deletion." approved="yes">
         <source>You'll receive an email with a link to confirm the deletion.</source>
-        <target>You'll receive an email with a link to confirm the deletion.</target>
+        <target state="translated">Recibirás un correo electrónico con un enlace para confirmar la cancelación.</target>
         <jms:reference-file line="59">/Resources/views/settings/account.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="ca34fe3c21712494044fb7fc710213b84319957a" resname="Your &lt;strong&gt;Actual Training Load&lt;/strong&gt;, ATL, also fatigue, is based on the sum of your last TRIMP values in a short period, e.g. for seven days.">
+      <trans-unit id="ca34fe3c21712494044fb7fc710213b84319957a" resname="Your &lt;strong&gt;Actual Training Load&lt;/strong&gt;, ATL, also fatigue, is based on the sum of your last TRIMP values in a short period, e.g. for seven days." approved="yes">
         <source><![CDATA[Your <strong>Actual Training Load</strong>, ATL, also fatigue, is based on the sum of your last TRIMP values in a short period, e.g. for seven days.]]></source>
-        <target><![CDATA[Your <strong>Actual Training Load</strong>, ATL, also fatigue, is based on the sum of your last TRIMP values in a short period, e.g. for seven days.]]></target>
+        <target state="translated">Tu &lt;strong&gt; Carga real de entrenamiento &lt;/strong&gt;, (Actual Training Load, ATL), también la fatiga, se basa en la suma de sus últimos valores de TRIMP en un período corto, por ejemplo durante siete días.</target>
         <jms:reference-file line="62">/Resources/views/static/help_calculations.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="f3254e5b31b19ca10da459df966f2606c06b6997" resname="Your RUNALYZE-Team">
+      <trans-unit id="f3254e5b31b19ca10da459df966f2606c06b6997" resname="Your RUNALYZE-Team" approved="yes">
         <source>Your RUNALYZE-Team</source>
-        <target>Your RUNALYZE-Team</target>
+        <target state="translated">Tu equipo de RUNALYZE</target>
         <jms:reference-file line="21">/Resources/views/mail/account/deleteAccountRequest.html.twig</jms:reference-file>
         <jms:reference-file line="21">/Resources/views/mail/account/recoverPassword.html.twig</jms:reference-file>
         <jms:reference-file line="35">/Resources/views/mail/account/registration.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="3ec0895b39846349e50d8d51ce71f1e4416b2fb2" resname="Your Shape: an estimation of your VDOT value">
+      <trans-unit id="3ec0895b39846349e50d8d51ce71f1e4416b2fb2" resname="Your Shape: an estimation of your VDOT value" approved="yes">
         <source>Your Shape: an estimation of your VDOT value</source>
-        <target>Your Shape: an estimation of your VDOT value</target>
+        <target state="translated">Tu estado de forma: una estimación de su valor VDOT</target>
         <jms:reference-file line="21">/Resources/views/static/help_calculations.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="b700f1f9e4c08264eaa8ac13cf47870c6aa2a020" resname="Your acccount">
@@ -2021,14 +2017,14 @@
         <target>Tu cuenta</target>
         <jms:reference-file line="14">/Resources/views/settings/account.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="d65fd0a7cd82e17b6d4bc85addb1a759db5cb5f5" resname="Your account has already been activated.">
+      <trans-unit id="d65fd0a7cd82e17b6d4bc85addb1a759db5cb5f5" resname="Your account has already been activated." approved="yes">
         <source>Your account has already been activated.</source>
-        <target>Your account has already been activated.</target>
+        <target state="translated">Tu cuenta ya ha sido activada.</target>
         <jms:reference-file line="9">/Resources/views/account/activate/success.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="b11ef060b1f6a631912b0b54c825afe1448a2d38" resname="Your account has been activated">
+      <trans-unit id="b11ef060b1f6a631912b0b54c825afe1448a2d38" resname="Your account has been activated" approved="yes">
         <source>Your account has been activated</source>
-        <target>Su cuenta ha sido activada.</target>
+        <target state="translated">Su cuenta ha sido activada</target>
         <jms:reference-file line="28">/Resources/views/mail/account/registration.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="5f8feb02da3b2d5601cd939183cb4ece3a6f0aa2" resname="Your account has been activated.">
@@ -2041,14 +2037,14 @@
         <target>Su cuenta ha sido borrada.</target>
         <jms:reference-file line="5">/Resources/views/account/delete/success.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="36260a75c9f6ca3eb1734123494f7c6f92229eee" resname="Your backup has been created.">
+      <trans-unit id="36260a75c9f6ca3eb1734123494f7c6f92229eee" resname="Your backup has been created." approved="yes">
         <source>Your backup has been created.</source>
-        <target>Your backup has been created.</target>
+        <target state="translated">Tu copia de seguridad ha sido creada.</target>
         <jms:reference-file line="50">/Resources/views/tools/backup/export.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="c11c4e3c20ca397712371888b26eb497275e44ad" resname="Your changes have been saved!">
+      <trans-unit id="c11c4e3c20ca397712371888b26eb497275e44ad" resname="Your changes have been saved!" approved="yes">
         <source>Your changes have been saved!</source>
-        <target>Your changes have been saved!</target>
+        <target state="translated">¡Tus cambios han sido guardados!</target>
         <jms:reference-file line="55">/../src/CoreBundle/Controller/SettingsController.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="96d0b4f4d1985befcc0f0deab738b1dbc37e3895" resname="Your data has been imported.">
@@ -2061,14 +2057,14 @@
         <target state="new">Your equipment</target>
         <jms:reference-file line="5">/Resources/views/my/equipment/category/table.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="5248d8fd362a06b675231ce1a9192cc2762a9eb9" resname="Your mail address has been changed!">
+      <trans-unit id="5248d8fd362a06b675231ce1a9192cc2762a9eb9" resname="Your mail address has been changed!" approved="yes">
         <source>Your mail address has been changed!</source>
-        <target>Your mail address has been changed!</target>
+        <target state="translated">¡Su dirección de correo ha sido cambiada!</target>
         <jms:reference-file line="102">/../src/CoreBundle/Controller/SettingsController.php</jms:reference-file>
       </trans-unit>
-      <trans-unit id="2c180543e9d46b3ec347a9b8f50b1ba4939f3e02" resname="Your new password has been saved!">
+      <trans-unit id="2c180543e9d46b3ec347a9b8f50b1ba4939f3e02" resname="Your new password has been saved!" approved="yes">
         <source>Your new password has been saved!</source>
-        <target>Your new password has been saved!</target>
+        <target state="translated">¡Se ha guardado su nueva contraseña!</target>
         <jms:reference-file line="81">/../src/CoreBundle/Controller/SettingsController.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="c72e83ec0511b7346c8a5a1873e861369716c1e3" resname="Your official placement and number of participants in every category.">
@@ -2081,14 +2077,14 @@
         <target>Tu contraseña ha sido actualizada.</target>
         <jms:reference-file line="9">/Resources/views/account/recover/success.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="db049d571427fa96ee7174148b180050083de590" resname="Your password recovery link is not valid. Maybe the link has already expired.">
+      <trans-unit id="db049d571427fa96ee7174148b180050083de590" resname="Your password recovery link is not valid. Maybe the link has already expired." approved="yes">
         <source>Your password recovery link is not valid. Maybe the link has already expired.</source>
-        <target>Your password recovery link is not valid. Maybe the link has already expired.</target>
+        <target state="translated">Su enlace de recuperación de contraseña no es válido. Tal vez el enlace ya ha caducado.</target>
         <jms:reference-file line="5">/Resources/views/account/recover/hash_invalid.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="ded5b92158c9a3c8f6ef1617488ae1c01d98bfcc" resname="Your personal VDOT value is estimated based on the ratio of heart rate and pace in every of your runs.">
+      <trans-unit id="ded5b92158c9a3c8f6ef1617488ae1c01d98bfcc" resname="Your personal VDOT value is estimated based on the ratio of heart rate and pace in every of your runs." approved="yes">
         <source>Your personal VDOT value is estimated based on the ratio of heart rate and pace in every of your runs.</source>
-        <target>Your personal VDOT value is estimated based on the ratio of heart rate and pace in every of your runs.</target>
+        <target state="translated">La estimación de tu valor personal de VDOT se basa en la relación entre la frecuencia cardíaca y el ritmo en cada una de sus carreras.</target>
         <jms:reference-file line="32">/Resources/views/static/help_calculations.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="d87c448044defb778f33158d8ccf94a20531d600" resname="all">
@@ -2097,14 +2093,14 @@
         <jms:reference-file line="121">/Resources/views/import/garmin_communicator.html.twig</jms:reference-file>
         <jms:reference-file line="36">/Resources/views/tools/anova/base.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="439e5f33dd6c0beaf32769b7ad497971f4cc4017" resname="arithmetic mean">
+      <trans-unit id="439e5f33dd6c0beaf32769b7ad497971f4cc4017" resname="arithmetic mean" approved="yes">
         <source>arithmetic mean</source>
-        <target>arithmetic mean</target>
+        <target state="translated">media aritmética</target>
         <jms:reference-file line="87">/Resources/views/activity/tool/time_series_statistics.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="1f5334e182df829f6b0eb4702fd92a6ae9eb1da6" resname="avg.">
+      <trans-unit id="1f5334e182df829f6b0eb4702fd92a6ae9eb1da6" resname="avg." approved="yes">
         <source>avg.</source>
-        <target>avg.</target>
+        <target state="translated">promedio</target>
         <jms:reference-file line="14">/Resources/views/my/equipment/category/table.html.twig</jms:reference-file>
         <jms:reference-file line="15">/Resources/views/my/equipment/category/table.html.twig</jms:reference-file>
         <jms:reference-file line="37">/Resources/views/shared/widget/iframe/base.html.twig</jms:reference-file>
@@ -2120,14 +2116,14 @@
         <jms:reference-file line="30">/Resources/views/tools/vdot_analysis.html.twig</jms:reference-file>
         <jms:reference-file line="31">/Resources/views/tools/vdot_analysis.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="da3305ee129eaa67ea4c88fb8bab62dd4dd4dc57" resname="coefficiant of variance = standard deviation / mean">
+      <trans-unit id="da3305ee129eaa67ea4c88fb8bab62dd4dd4dc57" resname="coefficiant of variance = standard deviation / mean" approved="yes">
         <source>coefficiant of variance = standard deviation / mean</source>
-        <target>coefficiant of variance = standard deviation / mean</target>
+        <target state="translated">coeficiente de variación = desviación estándar / media</target>
         <jms:reference-file line="92">/Resources/views/activity/tool/time_series_statistics.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="7cc73f637d7634fd0b4b3baab8388647997f7d22" resname="corrected">
+      <trans-unit id="7cc73f637d7634fd0b4b3baab8388647997f7d22" resname="corrected" approved="yes">
         <source>corrected</source>
-        <target>corrected</target>
+        <target state="translated">corregido</target>
         <jms:reference-file line="32">/Resources/views/tools/vdot_analysis.html.twig</jms:reference-file>
         <jms:reference-file line="33">/Resources/views/tools/vdot_analysis.html.twig</jms:reference-file>
       </trans-unit>
@@ -2151,15 +2147,15 @@
         <target>german</target>
         <jms:reference-file line="69">/Resources/views/static/help_calculations.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="5886bf65d2f3a2d6853301c9d0030def7ff44612" resname="go back">
+      <trans-unit id="5886bf65d2f3a2d6853301c9d0030def7ff44612" resname="go back" approved="yes">
         <source>go back</source>
-        <target>go back</target>
+        <target state="translated">volver atrás</target>
         <jms:reference-file line="27">/Resources/views/settings/account-mail.html.twig</jms:reference-file>
         <jms:reference-file line="27">/Resources/views/settings/account-password.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="42c56bc5361d5f4c2466fa3b86f821af0c9886f3" resname="i.e. 50% quantile">
+      <trans-unit id="42c56bc5361d5f4c2466fa3b86f821af0c9886f3" resname="i.e. 50% quantile" approved="yes">
         <source>i.e. 50% quantile</source>
-        <target>i.e. 50% quantile</target>
+        <target state="translated">es decir el cuantil 50%</target>
         <jms:reference-file line="90">/Resources/views/activity/tool/time_series_statistics.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="8ccbde832c3e0f90c55b72c598844679fff2167d" resname="ignore">
@@ -2185,14 +2181,14 @@
         <target>maximum</target>
         <jms:reference-file line="89">/Resources/views/activity/tool/time_series_statistics.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="5f00f7a0a9f5e57deb39805aa521121fa277e75e" resname="mean">
+      <trans-unit id="5f00f7a0a9f5e57deb39805aa521121fa277e75e" resname="mean" approved="yes">
         <source>mean</source>
-        <target>mean</target>
+        <target state="translated">media</target>
         <jms:reference-file line="87">/Resources/views/activity/tool/time_series_statistics.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="09f3246f599ac9a17e658bc0657edea466004792" resname="median">
+      <trans-unit id="09f3246f599ac9a17e658bc0657edea466004792" resname="median" approved="yes">
         <source>median</source>
-        <target>median</target>
+        <target state="translated">mediana</target>
         <jms:reference-file line="90">/Resources/views/activity/tool/time_series_statistics.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="f6bc8b8a233c6339ffc3356d1cc99f359807b519" resname="min.">
@@ -2210,9 +2206,9 @@
         <target>mode</target>
         <jms:reference-file line="91">/Resources/views/activity/tool/time_series_statistics.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="44b2e2769a3d26c60b847dfa796dc6c3bf7fcce2" resname="most common value">
+      <trans-unit id="44b2e2769a3d26c60b847dfa796dc6c3bf7fcce2" resname="most common value" approved="yes">
         <source>most common value</source>
-        <target>most common value</target>
+        <target state="translated">valor más común</target>
         <jms:reference-file line="91">/Resources/views/activity/tool/time_series_statistics.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="c2a6b03f190dfb2b4aa91f8af8d477a9bc3401dc" resname="new">
@@ -2249,26 +2245,26 @@
         <target>anterior</target>
         <jms:reference-file line="5">/Resources/views/_macro/tablesorter.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="2c73eaf9f4bd6d3df699128ec062add0c564ca2f" resname="quantile">
+      <trans-unit id="2c73eaf9f4bd6d3df699128ec062add0c564ca2f" resname="quantile" approved="yes">
         <source>quantile</source>
-        <target>quantile</target>
+        <target state="translated">cuantil</target>
         <jms:reference-file line="94">/Resources/views/activity/tool/time_series_statistics.html.twig</jms:reference-file>
         <jms:reference-file line="95">/Resources/views/activity/tool/time_series_statistics.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="f638a6fc1b8b33898ae98c39bf65b22a40457eb0" resname="see %s">
+      <trans-unit id="f638a6fc1b8b33898ae98c39bf65b22a40457eb0" resname="see %s" approved="yes">
         <source>see %s</source>
-        <target>see %s</target>
+        <target state="translated">ver %s</target>
         <jms:reference-file line="15">/Resources/views/static/help_calculations.html.twig</jms:reference-file>
         <jms:reference-file line="68">/Resources/views/static/help_calculations.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="2eb888e95f113117c63e0d526f68ad90267a45e6" resname="since">
+      <trans-unit id="2eb888e95f113117c63e0d526f68ad90267a45e6" resname="since" approved="yes">
         <source>since</source>
-        <target state="new">since</target>
+        <target state="translated">desde</target>
         <jms:reference-file line="13">/Resources/views/my/equipment/category/table.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="552e370787152d8feb565d8516b23e1f29af9d8a" resname="standard deviation">
+      <trans-unit id="552e370787152d8feb565d8516b23e1f29af9d8a" resname="standard deviation" approved="yes">
         <source>standard deviation</source>
-        <target>standard deviation</target>
+        <target state="translated">desviación estándar</target>
         <jms:reference-file line="93">/Resources/views/activity/tool/time_series_statistics.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="3cfc48e737ec9216427075c3497e8e888c506049" resname="std. dev.">
@@ -2291,14 +2287,14 @@
         <target state="new">x-times</target>
         <jms:reference-file line="11">/Resources/views/my/equipment/category/table.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="500e4b89724b9b2c26282c027a582badc10afe7c" resname="{1} Until now &lt;strong&gt;%count%&lt;/strong&gt; athlete is registered and|]1,Inf[ Until now &lt;strong&gt;%count%&lt;/strong&gt; athletes are registered and">
+      <trans-unit id="500e4b89724b9b2c26282c027a582badc10afe7c" resname="{1} Until now &lt;strong&gt;%count%&lt;/strong&gt; athlete is registered and|]1,Inf[ Until now &lt;strong&gt;%count%&lt;/strong&gt; athletes are registered and" approved="yes">
         <source><![CDATA[{1} Until now <strong>%count%</strong> athlete is registered and|]1,Inf[ Until now <strong>%count%</strong> athletes are registered and]]></source>
-        <target><![CDATA[{1} Until now <strong>%count%</strong> athlete is registered and|]1,Inf[ Until now <strong>%count%</strong> athletes are registered and]]></target>
+        <target state="translated">{1} Hasta ahora &lt;strong&gt;%count%&lt;/strong&gt; atleta está registrado y|]1, Inf[ Hasta ahora &lt;strong&gt;%count%&lt;/strong&gt; atletas están registrados y</target>
         <jms:reference-file line="3">/Resources/views/login/statistics.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="a7ec5432036499dafce54cfca1a60cb7c4016ce7" resname="{1} has logged &lt;strong&gt;%distance%&lt;/strong&gt;.|]1,Inf[ have logged &lt;strong&gt;%distance%&lt;/strong&gt;.">
+      <trans-unit id="a7ec5432036499dafce54cfca1a60cb7c4016ce7" resname="{1} has logged &lt;strong&gt;%distance%&lt;/strong&gt;.|]1,Inf[ have logged &lt;strong&gt;%distance%&lt;/strong&gt;." approved="yes">
         <source><![CDATA[{1} has logged <strong>%distance%</strong>.|]1,Inf[ have logged <strong>%distance%</strong>.]]></source>
-        <target><![CDATA[{1} has logged <strong>%distance%</strong>.|]1,Inf[ have logged <strong>%distance%</strong>.]]></target>
+        <target state="translated">{1} ha efectuado el acceso &lt;strong&gt;%distance%&lt;/strong&gt;.|]1,Inf[ han efectuado el acceso &lt;strong&gt;%distance%&lt;/strong&gt;.</target>
         <jms:reference-file line="5">/Resources/views/login/statistics.html.twig</jms:reference-file>
       </trans-unit>
     </body>
