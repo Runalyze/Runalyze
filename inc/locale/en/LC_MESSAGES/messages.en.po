@@ -6,16 +6,18 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.com\n"
 "POT-Creation-Date: 2016-11-15 17:37+0100\n"
-"PO-Revision-Date: 2016-04-26 19:29+0200\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2017-02-24 14:47+0000\n"
+"Last-Translator: Antonio <celeritas@libero.it>\n"
+"Language-Team: English <https://translate.runalyze.com/projects/runalyze"
+"/runalyze-master-po/en/>\n"
 "Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 2.11\n"
 
 #: src/CoreBundle/Controller/ActivityController.php:99
 #: src/CoreBundle/Controller/ActivityController.php:198
@@ -152,9 +154,8 @@ msgid "Maximal TRIMP"
 msgstr "Maximal TRIMP"
 
 #: src/CoreBundle/Component/Tool/DatabaseCleanup/JobGeneral.php:176
-#, fuzzy
 msgid "Your personal cache has been cleared."
-msgstr "Your account has been deleted."
+msgstr "Your personal cache has been cleared."
 
 #: src/CoreBundle/Component/Tool/DatabaseCleanup/JobLoop.php:81
 #, php-format
@@ -283,9 +284,8 @@ msgstr "Relation: tag to activities"
 
 #: src/CoreBundle/Component/Tool/Backup/JsonImporterResults.php:151
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:53
-#, fuzzy
 msgid "Race results"
-msgstr "Result"
+msgstr "Race results"
 
 #: src/CoreBundle/Component/Account/Registration.php:88
 #: src/CoreBundle/Component/Account/Registration.php:208
@@ -300,7 +300,7 @@ msgstr "Clothes"
 #: src/CoreBundle/Component/Account/Registration.php:90
 #: src/CoreBundle/Component/Account/Registration.php:209
 msgid "Bikes"
-msgstr ""
+msgstr "Bikes"
 
 #: src/CoreBundle/Component/Account/Registration.php:139
 #: inc/class.FrontendSharedStatistics.php:124
@@ -453,35 +453,31 @@ msgid "Add workout"
 msgstr "Add workout"
 
 #: inc/import/class.ImporterFactory.php:322
-#, fuzzy
 msgid "There was a problem while importing the file."
-msgstr "There were problems while uploading."
+msgstr "There was a problem while importing the file."
 
 #: inc/import/class.ImporterFactory.php:327
-#, fuzzy
 msgid "There are some unexpected contents in the file."
-msgstr "There are <strong>%s</strong> activities in this file."
+msgstr "There are some unexpected contents in the file."
 
 #: inc/import/class.ImporterFactory.php:328
 #, php-format
 msgid "Please mail the file to %s."
-msgstr ""
+msgstr "Please mail the file to %s."
 
 #: inc/import/class.ImporterFactory.php:331
-#, fuzzy
 msgid ""
 "There was an installation specific problem. Please contact the administrator."
-msgstr "Unable to send link. Please contact the administrator."
+msgstr ""
+"There was an installation specific problem. Please contact the administrator."
 
 #: inc/import/class.ImporterFactory.php:334
-#, fuzzy
 msgid "This file format is not supported."
-msgstr "This file does not contain any data."
+msgstr "This file format is not supported."
 
 #: inc/import/class.ImporterFactory.php:339
-#, fuzzy
 msgid "Please add the following information"
-msgstr "Please save the following code as <strong>%s</strong>:"
+msgstr "Please add the following information"
 
 #: inc/import/tpl/tpl.Importer.upload.php:2
 msgid "Upload file"
@@ -648,9 +644,8 @@ msgid "Hover over the headings if the abbreviations are unclear."
 msgstr "Hover over the headings if the abbreviations are unclear."
 
 #: inc/system/config/class.ConfigTabSports.php:39
-#, fuzzy
 msgid "<em>Avg. HF</em> is necessary for the calculation of TRIMP."
-msgstr "<em>&Oslash; HF</em> is necessary for the calculation of TRIMP."
+msgstr "<em>Avg. HF</em> is necessary for the calculation of TRIMP."
 
 #: inc/system/config/class.ConfigTabSports.php:53
 msgid "Icon"
@@ -864,9 +859,8 @@ msgid "A type can only be deleted if no references exist."
 msgstr "A type can only be deleted if no references exist."
 
 #: inc/system/config/class.ConfigTabTypes.php:84
-#, fuzzy
 msgid "inherit from sport type"
-msgstr "Sort: sport types"
+msgstr "inherit from sport type"
 
 #: inc/system/config/class.ConfigTab.php:100
 #: inc/html/formular/class.StandardFormular.php:151 inc/class.AdminView.php:178
@@ -925,9 +919,8 @@ msgid "new"
 msgstr "new"
 
 #: inc/system/config/class.ConfigTabDataset.php:236
-#, fuzzy
 msgid "race"
-msgstr "All races"
+msgstr "race"
 
 #: inc/system/config/class.ConfigTabDataset.php:271
 msgid "Test activity"
@@ -1556,7 +1549,7 @@ msgstr "Temperature plot"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:80
 msgid "Smo2 & Thb"
-msgstr ""
+msgstr "SmO2 & THb"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:107
 #: inc/html/formular/class.FormularInputDayAndDaytime.php:115
@@ -1618,18 +1611,18 @@ msgstr "Training partner"
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:373
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:423
 msgid "Age standard"
-msgstr ""
+msgstr "Age standard"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:374
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:424
 msgid "Open standard"
-msgstr ""
+msgstr "Open standard"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:375
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:425
 #, php-format
 msgid "via tables by %s"
-msgstr ""
+msgstr "via tables by %s"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:382
 #, fuzzy
@@ -1655,7 +1648,7 @@ msgstr "Official developers:"
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:386
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:392
 msgid "Age grade"
-msgstr ""
+msgstr "Age grade"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:387
 #, fuzzy
@@ -1664,7 +1657,7 @@ msgstr "Pace goal"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:388
 msgid "Place age group"
-msgstr ""
+msgstr "Place age group"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:389
 #, fuzzy
@@ -1865,7 +1858,7 @@ msgstr "Pace"
 
 #: inc/training/view/section/table/class.TableLapsComputed.php:66
 msgid "bpm"
-msgstr ""
+msgstr "bpm"
 
 #: inc/training/view/section/table/class.TableLapsComputed.php:67
 msgid "elev."
