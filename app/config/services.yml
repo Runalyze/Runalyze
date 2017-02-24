@@ -180,6 +180,6 @@ services:
       - { name: bernard.receiver, message: userBackup }
   app.bernard.poster_receiver:
     class: Runalyze\Bundle\CoreBundle\Queue\Receiver\PosterReceiver
-    arguments: ["@app.repository.account", "@app.repository.sport", "@app.poster.generate_json", "@app.poster.generate_poster", "@app.poster.filehandler", "%kernel.root_dir%", "%rsvg_path%", "%inkscape_path%"]
+    arguments: ["@app.repository.account", "@app.repository.sport", "@app.poster.generate_json", "@app.poster.generate_poster", "@app.poster.filehandler", "@app.mailer.account", "%kernel.root_dir%", "%rsvg_path%", "%inkscape_path%"]
     tags:
       - { name: bernard.receiver, message: posterGenerator }

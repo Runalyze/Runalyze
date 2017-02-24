@@ -7,7 +7,7 @@ use Symfony\Component\Process\Process;
 use Symfony\Component\Filesystem\Filesystem;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\Sport;
-
+use Symfony\Component\Finder\Finder;
 class GeneratePoster
 {
     /** @var array */
