@@ -180,11 +180,6 @@ class Inserter extends Model\InserterWithAccountID {
 			$this->Object->set(Entity::VDOT_BY_TIME, $Calculator->calculateVDOTbyTime());
 			$this->Object->set(Entity::VDOT, $Calculator->calculateVDOTbyHeartRate());
 			$this->Object->set(Entity::VDOT_WITH_ELEVATION, $Calculator->calculateVDOTbyHeartRateWithElevation());
-			$this->Object->set(Entity::JD_INTENSITY, $Calculator->calculateJDintensity());
-
-			if (class_exists('RunalyzePluginPanel_Rechenspiele') && $this->Object->timestamp() > time() - 14*DAY_IN_S) {
-				\Cache::delete(\RunalyzePluginPanel_Rechenspiele::CACHE_KEY_JD_POINTS);
-			}
 		} else {
 			$this->Object->unsetRunningValues();
 		}

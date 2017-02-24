@@ -133,40 +133,6 @@ class Calculator {
 	}
 
 	/**
-	 * Calculate JD intensity
-	 * @return int
-	 */
-	public function calculateJDintensity() {
-		$ConfigurationData = Configuration::Data();
-
-		JD\Intensity::setVDOTshape($ConfigurationData->vdot());
-		JD\Intensity::setHRmax($ConfigurationData->HRmax());
-
-		$Intensity = new JD\Intensity();
-
-		if ($this->knowsTrackdata() && $this->Trackdata->has(Model\Trackdata\Entity::HEARTRATE) && $this->Trackdata->has(Model\Trackdata\Entity::TIME)) {
-			return $Intensity->calculateByHeartrate(
-				new TimeSeries(
-					$this->Trackdata->heartRate(),
-					$this->Trackdata->time()
-				)
-			);
-		} elseif ($this->Activity->hrAvg() > 0) {
-			return $Intensity->calculateByHeartrateAverage($this->Activity->hrAvg(), $this->Activity->duration());
-		} elseif ($ConfigurationData->vdot() > 0) {
-			return $Intensity->calculateByPace($this->Activity->distance(), $this->Activity->duration());
-		} else {
-			if ($this->Activity->typeid() > 0) {
-				$hr = Context::Factory()->type($this->Activity->typeid())->hrAvg();
-			} else {
-				$hr = Context::Factory()->sport($this->Activity->sportid())->avgHR();
-			}
-
-			return $Intensity->calculateByHeartrateAverage($hr, $this->Activity->duration());
-		}
-	}
-
-	/**
 	 * Calculate trimp
 	 * @return int
 	 */

@@ -2,7 +2,7 @@
 
 {% block content %}
     <div class="panel-heading">
-        <h1>{% trans %}VDOT calculation for: %title%{% endtrans %}</h1>
+        <h1>{% trans %}VO2max estimation for: %title%{% endtrans %}</h1>
     </div>
 
     <div class="panel-content">
@@ -11,7 +11,7 @@
 
             <div>
                 <p class="info small">
-                    {% trans %}All traditional formulas are being used to calculate a VDOT value for a given race result.{% endtrans %}
+                    {% trans %}Traditional formulas are for estimating VO2max for a given race result.{% endtrans %}
                 </p>
 
                 <div class="w50">
@@ -19,8 +19,8 @@
                     <span class="as-input">{{ raceDetails.distance|raw }}</span>
                 </div>
                 <div class="w50 double-height-right">
-                    <label>&rArr; {% trans %}VDOT{% endtrans %}</label>
-                    <span class="as-input">{{ raceDetails.vdot }}</span>
+                    <label>&rArr; {% trans %}VO2max{% endtrans %}</label>
+                    <span class="as-input">{{ raceDetails.vo2max }}</span>
                 </div>
                 <div class="w50">
                     <label>{% trans %}Duration{% endtrans %}</label>
@@ -38,7 +38,7 @@
             <legend>{% trans %}Correction: based on heartrate{% endtrans %}</legend>
             <div>
                 <p class="info small">
-                    {% trans %}Jack Daniels has tables to compare &#37;HRmax and &#37;vVDOT.{% endtrans %}
+                    {% trans %}There exist several studies to approximate a relation between &#37;HRmax and &#37;vVO2max.{% endtrans %}
                     {% trans %}Because of a lot of influencing factors these computations are not always accurate.{% endtrans %}
                 </p>
 
@@ -47,12 +47,12 @@
                     <span class="as-input">{{ hrDetails.hr }} %HRmax</span>
                 </div>
                 <div class="w50 double-height-right">
-                    <label>&rArr; {% trans %}VDOT{% endtrans %}</label>
-                    <span class="as-input">{{ hrDetails.vdot }}</span>
+                    <label>&rArr; {% trans %}VO2max{% endtrans %}</label>
+                    <span class="as-input">{{ hrDetails.vo2max }}</span>
                 </div>
                 <div class="w50">
                     <label>{% trans %}equals{% endtrans %}</label>
-                    <span class="as-input">{{ hrDetails.vVdot }} %vVDOT</span>
+                    <span class="as-input">{{ hrDetails.vVO2max }} %vVO2max</span>
                 </div>
             </div>
         </fieldset>
@@ -69,8 +69,8 @@
                     <span class="as-input">{{ factorDetails.factor }}</span>
                 </div>
                 <div class="w50 double-height-right">
-                    <label>&rArr; {% trans %}VDOT{% endtrans %}</label>
-                    <span class="as-input ">{{ factorDetails.vdot }}</span>
+                    <label>&rArr; {% trans %}VO2max{% endtrans %}</label>
+                    <span class="as-input ">{{ factorDetails.vo2max }}</span>
                 </div>
                 <div class="w50">
                     <label>{% trans %}uncorrected{% endtrans %}</label>
@@ -93,8 +93,8 @@
                     <span class="as-input">+{{ elevationDetails.up|raw }}/-{{ elevationDetails.down|raw }}</span>
                 </div>
                 <div class="w50 double-height-right">
-                    <label>&rArr; {% trans %}VDOT{% endtrans %}</label>
-                    <span class="as-input highlight">{{ elevationDetails.vdot }}</span>
+                    <label>&rArr; {% trans %}VO2max{% endtrans %}</label>
+                    <span class="as-input highlight">{{ elevationDetails.vo2max }}</span>
                 </div>
                 <div class="w50">
                     <label>{% trans %}Influence{% endtrans %}</label>
@@ -104,11 +104,11 @@
         </fieldset>
 
         {% if
-            (useElevationAdjustment and (not (activityVdot|round(1) == elevationDetails.vdot|round(1)))) or
-            ((not useElevationAdjustment) and (not (activityVdot|round(1) == factorDetails.vdot|round(1))))
+            (useElevationAdjustment and (not (activityVO2max|round(1) == elevationDetails.vo2max|round(1)))) or
+            ((not useElevationAdjustment) and (not (activityVO2max|round(1) == factorDetails.vo2max|round(1))))
         %}
         <p class="warning">
-            {% trans with {'%activityVdot%': activityVdot|round(2)} %}The calculated value is not equal to what is saved for the activity (%activityVdot%).
+            {% trans with {'%activityVO2max%': activityVO2max|round(2)} %}The calculated value is not equal to what is saved for the activity (%activityVO2max%).
             The activity's value has probably been calculated based on other settings.{% endtrans %}
 
             {% trans with {'%linkStart%': '<a href="' ~ url('tools-cleanup') ~ '">', '%linkEnd%': '</a>'} %}You can use the %linkStart%database cleanup%linkEnd% to recalculate the value.{% endtrans %}

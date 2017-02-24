@@ -39,7 +39,6 @@ class JobLoopTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals(0, $data['vdot']);
 		$this->assertEquals(0, $data['vdot_by_time']);
 		$this->assertEquals(0, $data['vdot_with_elevation']);
-		$this->assertEquals(0, $data['jd_intensity']);
 		$this->assertEquals(0, $data['trimp']);
 	}
 
@@ -54,7 +53,6 @@ class JobLoopTest extends \PHPUnit_Framework_TestCase
             JobLoop::ELEVATION => true,
             JobLoop::ELEVATION_OVERWRITE => true,
             JobLoop::VDOT => true,
-            JobLoop::JD_POINTS => true,
             JobLoop::TRIMP => true
         ], $this->PDO, 0, 'runalyze_');
 		$Loop->run();
@@ -63,7 +61,6 @@ class JobLoopTest extends \PHPUnit_Framework_TestCase
 		$this->assertNotEquals(0, $data['vdot']);
 		$this->assertNotEquals(0, $data['vdot_by_time']);
 		$this->assertNotEquals(0, $data['vdot_with_elevation']);
-		$this->assertNotEquals(0, $data['jd_intensity']);
 		$this->assertNotEquals(0, $data['trimp']);
 	}
 
@@ -163,7 +160,6 @@ class JobLoopTest extends \PHPUnit_Framework_TestCase
 
 		$Loop = new JobLoop([
             JobLoop::VDOT => true,
-            JobLoop::JD_POINTS => true,
             JobLoop::TRIMP => true
         ], $this->PDO, 0, 'runalyze_');
 		$Loop->run();
@@ -172,7 +168,6 @@ class JobLoopTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals(0, $data['vdot']);
 		$this->assertEquals(0, $data['vdot_by_time']);
 		$this->assertEquals(0, $data['vdot_with_elevation']);
-		$this->assertEquals(0, $data['jd_intensity']);
 		$this->assertNotEquals(0, $data['trimp']);
 	}
 }

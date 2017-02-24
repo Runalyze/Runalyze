@@ -29,12 +29,6 @@ class JobLoop extends Job
 	const VDOT = 'activityVdot';
 
 	/**
-	 * Task key: jd points
-	 * @var string
-	 */
-	const JD_POINTS = 'activityJdpoints';
-
-	/**
 	 * Task key: trimp
 	 * @var string
 	 */
@@ -100,10 +94,6 @@ class JobLoop extends Job
 					$Update->bindValue(':vdot', $calculateVdot ? $Calculator->calculateVDOTbyHeartRate() : 0);
 					$Update->bindValue(':vdot_by_time', $calculateVdot ? $Calculator->calculateVDOTbyTime() : 0);
 					$Update->bindValue(':vdot_with_elevation', $calculateVdot ? $Calculator->calculateVDOTbyHeartRateWithElevation() : 0);
-				}
-
-				if ($this->isRequested(self::JD_POINTS)) {
-					$Update->bindValue(':jd_intensity', $calculateVdot ? $Calculator->calculateJDintensity() : 0);
 				}
 
 				if ($this->isRequested(self::TRIMP)) {
@@ -194,10 +184,6 @@ class JobLoop extends Job
 			$Set[] = 'vdot';
 			$Set[] = 'vdot_by_time';
 			$Set[] = 'vdot_with_elevation';
-		}
-
-		if ($this->isRequested(self::JD_POINTS)) {
-			$Set[] = 'jd_intensity';
 		}
 
 		if ($this->isRequested(self::TRIMP)) {

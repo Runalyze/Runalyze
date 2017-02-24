@@ -19,7 +19,6 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase {
 		$this->assertGreaterThan(0, $Calculator->calculateVDOTbyTime());
 		$this->assertGreaterThan(0, $Calculator->calculateVDOTbyHeartRate());
 		$this->assertGreaterThan(0, $Calculator->calculateVDOTbyHeartRateWithElevation());
-		$this->assertGreaterThan(0, $Calculator->calculateJDintensity());
 		$this->assertGreaterThan(0, $Calculator->calculateTrimp());
 
 		$this->assertGreaterThan($Calculator->calculateVDOTbyTime(), $Calculator->calculateVDOTbyHeartRate());
@@ -31,7 +30,6 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(0, $Calculator->calculateVDOTbyTime());
 		$this->assertEquals(0, $Calculator->calculateVDOTbyHeartRate());
 		$this->assertEquals(0, $Calculator->calculateVDOTbyHeartRateWithElevation());
-		$this->assertEquals(0, $Calculator->calculateJDintensity());
 		$this->assertEquals(0, $Calculator->calculateTrimp());
 	}
 
@@ -102,7 +100,6 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase {
 		)), null);
 
 		$this->assertGreaterThan($CalculatorOnlyActivity->calculateTrimp(), $CalculatorWithTrackdata->calculateTrimp());
-		$this->assertGreaterThan($CalculatorOnlyActivity->calculateJDintensity(), $CalculatorWithTrackdata->calculateJDintensity());
 	}
 
 	public function testCalculationWithEmptyHeartrateArray() {

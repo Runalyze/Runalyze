@@ -17,7 +17,7 @@ class VDOTCorrectorTest extends \PHPUnit_Framework_TestCase {
 	 * @var \PDO
 	 */
 	protected $PDO;
-	
+
 	protected $runningSportId;
 
 	protected function setUp() {
@@ -43,14 +43,6 @@ class VDOTCorrectorTest extends \PHPUnit_Framework_TestCase {
 		$Corrector = new VDOTCorrector(0.95);
 
 		$this->assertEquals(0.95, $Corrector->factor());
-	}
-
-	public function testApply() {
-		$Corrector = new VDOTCorrector(0.9);
-		$VDOT = new VDOT(50);
-		$Corrector->applyTo($VDOT);
-
-		$this->assertEquals(45, $VDOT->value());
 	}
 
 	public function testGlobalFactor() {
@@ -96,7 +88,7 @@ class VDOTCorrectorTest extends \PHPUnit_Framework_TestCase {
 		$RaceResultInserter->setAccountID($accountid);
 		$RaceResultInserter->insert();
 	}
-	
+
 	public function testFromDatabase() {
 		$this->insert(0, 90, 0, $this->runningSportId);
 		$this->insert(50, 25, 0, $this->runningSportId);

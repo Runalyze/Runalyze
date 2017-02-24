@@ -55,7 +55,7 @@ class SectionOverviewRow extends TrainingViewSectionRowFullwidth {
 			new BoxedValue(Helper::Unknown($this->Context->activity()->hrAvg(), '-'), 'bpm', __('avg.').' '.__('Heart rate')),
 			new BoxedValue(Helper::Unknown($this->Context->activity()->hrMax(), '-'), 'bpm', __('max.').' '.__('Heart rate')),
 			new Box\Energy($this->Context),
-			new BoxedValue(Helper::Unknown($this->Context->dataview()->vdot()->value(), '-'), '', __('VDOT'), $this->Context->dataview()->vdotIcon()),
+			new BoxedValue(Helper::Unknown($this->Context->dataview()->vdot()->value(), '-'), '', __('VO2max'), $this->Context->dataview()->vdotIcon()),
 			new BoxedValue($this->Context->activity()->trimp(), '', __('TRIMP')),
 			new Box\Elevation($this->Context)
 		);

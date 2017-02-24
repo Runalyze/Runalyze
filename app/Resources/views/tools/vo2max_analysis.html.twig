@@ -8,30 +8,30 @@
     {% set conf = config() %}
 
     <div class="panel-heading">
-        <h1><a class="ajax" target="ajax" href="{{ url('tools-vdot-analysis') }}">{% trans %}Analyze your VDOT{% endtrans %}</a></h1>
+        <h1><a class="ajax" target="ajax" href="{{ url('tools-vo2max-analysis') }}">{% trans %}Analyze your VO2max{% endtrans %}</a></h1>
     </div>
 
     <div class="panel-content">
         <p class="text">
-            {% trans %}Predicting your VDOT based on your training values is imprecise.
+            {% trans %}Predicting your effective VO2max based on your training values is imprecise.
                 This tool lists your races and compares all results with predicted values.
                 This way you can get an impression of how well our prediction works for you.{% endtrans %}
         </p>
 
-        <table id="vdotAnalysisTable" class="fullwidth zebra-style">
+        <table id="vo2maxAnalysisTable" class="fullwidth zebra-style">
             <thead>
                 <tr>
                     <th class="{sorter:'germandate'}">{% trans %}Date{% endtrans %}</th>
                     <th>{% trans %}Race{% endtrans %}</th>
                     <th class="{sorter:'distance'}">{% trans %}km{% endtrans %}</th>
                     <th>{% trans %}Time{% endtrans %}</th>
-                    <th>{% trans %}VDOT{% endtrans %}</th>
+                    <th>{% trans %}VO2max{% endtrans %}</th>
                     <th>{% trans %}HR{% endtrans %}</th>
-                    <th>{% trans %}VDOT{% endtrans %}<br><small>({% trans %}by&nbsp;HR{% endtrans %})</small></th>
+                    <th>{% trans %}VO2max{% endtrans %}<br><small>({% trans %}by&nbsp;HR{% endtrans %})</small></th>
                     <th>{% trans %}Time{% endtrans %}<br><small>({% trans %}by&nbsp;HR{% endtrans %})</small></th>
-                    <th>{% trans %}VDOT{% endtrans %}<br><small>({% trans %}corrected{% endtrans %})</small></th>
+                    <th>{% trans %}VO2max{% endtrans %}<br><small>({% trans %}corrected{% endtrans %})</small></th>
                     <th>{% trans %}Time{% endtrans %}<br><small>({% trans %}corrected{% endtrans %})</small></th>
-                    <th>{% trans %}VDOT{% endtrans %}<br><small>({% trans %}Shape{% endtrans %})</small></th>
+                    <th>{% trans %}VO2max{% endtrans %}<br><small>({% trans %}Shape{% endtrans %})</small></th>
                     <th>{% trans %}Time{% endtrans %}<br><small>({% trans %}Shape{% endtrans %})</small></th>
                     <th>{% trans %}Deviation{% endtrans %}<br><small>({% trans %}Shape{% endtrans %})</small></th>
                     <th>{% trans %}Corrector{% endtrans %}</th>
@@ -44,13 +44,13 @@
                     <td class="b l">{{ race.name }}</td>
                     <td>{{ race.distance|raw }}</td>
                     <td class="b">{{ race.duration }}</td>
-                    <td>{{ race.vdotByTime|number_format(2) }}</td>
+                    <td>{{ race.vo2maxByTime|number_format(2) }}</td>
                     <td>{{ race.heartRateInBpm }}</td>
-                    <td>{{ race.vdotByHeartRate|number_format(2) }}</td>
+                    <td>{{ race.vo2maxByHeartRate|number_format(2) }}</td>
                     <td class="b">{{ race.prognosisByHeartRate }}</td>
-                    <td>{{ race.vdotByHeartRateAfterCorrection|number_format(2) }}</td>
+                    <td>{{ race.vo2maxByHeartRateAfterCorrection|number_format(2) }}</td>
                     <td class="b">{{ race.prognosisByHeartRateAfterCorrection }}</td>
-                    <td>{{ race.vdotByShape|number_format(2) }}</td>
+                    <td>{{ race.vo2maxByShape|number_format(2) }}</td>
                     <td class="b">{{ race.prognosisByShape }}</td>
                     <td>{{ plusMinus(race.shapeDeviation, race.shapeDeviation ~ " &#37;", 2) }}</td>
                     <td>{{ race.correctionFactor|number_format(4) }}</td>
@@ -66,26 +66,26 @@
         </table>
 
         {% if races is not empty %}
-            {{ tablesorter.pager('#vdotAnalysisTable', true) }}
+            {{ tablesorter.pager('#vo2maxAnalysisTable', true) }}
         {% endif %}
 
         <p class="info">
-            {% trans %}<strong>VDOT/Time:</strong> by standard formulas derived from Jack Daniels' Running formula<br>
+            {% trans %}<strong>VO2max/Time:</strong> by standard formulas.<br>
                 The time is what you could have reached at your maximal possible heart rate over this distance.{% endtrans %}
         </p>
 
         <p class="info">
-            {% trans %}<strong>VDOT/Time (corrected):</strong> after individual VDOT correction (factor: %vdotFactor%)<br>
+            {% trans %}<strong>VO2max/Time (corrected):</strong> after individual correction (factor: %vo2maxFactor%)<br>
                 The time is what you could have reached at your maximal possible heart rate over this distance.{% endtrans %}
         </p>
 
         <p class="info">
-            {% trans %}<strong>VDOT/Time (Shape):</strong> by your shape at that time<br>
+            {% trans %}<strong>VO2max/Time (Shape):</strong> by your shape at that time<br>
                 The time is the prognosis by Runalyze.{% endtrans %}
         </p>
 
         <p class="info">
-            {% trans %}<strong>Corrector:</strong> Ratio between VDOT and VDOT (by HR){% endtrans %}
+            {% trans %}<strong>Corrector:</strong> Ratio between VO2max and VO2max (by HR){% endtrans %}
         </p>
 
         {% if conf.vdot.useCorrectionForElevation %}

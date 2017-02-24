@@ -11,7 +11,7 @@ use Runalyze\Model\Activity;
 
 /**
  * VDOT correction factor
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Calculation\JD
  */
@@ -62,19 +62,11 @@ class VDOTCorrector {
 	}
 
 	/**
-	 * Apply
-	 * @param \Runalyze\Calculation\JD\VDOT $value
-	 */
-	public function applyTo(VDOT $value) {
-		$value->multiply($this->Factor);
-	}
-
-	/**
 	 * Calculate factor from database
-	 * 
+	 *
 	 * Simply looks for the best ratio of vdot by time and by heart rate.
 	 * This method does not regard any other correction (e.g. elevation, ...).
-	 * 
+	 *
 	 * @param PDO $database
 	 * @param int $accountid
 	 * @param int $sportid
@@ -109,10 +101,10 @@ class VDOTCorrector {
 
 	/**
 	 * Calculate factor from activity
-	 * 
+	 *
 	 * Simply calculates the ratio of vdot by time and by heart rate.
 	 * This method does not regard any other correction (e.g. elevation, ...).
-	 * 
+	 *
 	 * @param \Runalyze\Model\Activity\Entity $activity
 	 * @return float
 	 */

@@ -156,8 +156,8 @@ class Linker {
 	 * @param string $data
 	 * @return string
 	 */
-	public function urlToVDOTinfo($data = '') {
-		return 'activity/'.$this->Activity->id().'/vdot-info'.($data != '' ? '?'.$data : '');
+	public function urlToVO2maxinfo($data = '') {
+		return 'activity/'.$this->Activity->id().'/vo2max-info'.($data != '' ? '?'.$data : '');
 	}
 
 	/**

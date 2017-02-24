@@ -12,7 +12,7 @@ use Runalyze\Configuration;
 
 /**
  * Deleter activity in database
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Model\Activity
  */
@@ -26,7 +26,7 @@ class Deleter extends Model\DeleterWithIDAndAccountID {
 	 * @var array
 	 */
 	protected $EquipmentIDs = array();
-	
+
 	/**
 	 * @var array
 	 */
@@ -47,7 +47,7 @@ class Deleter extends Model\DeleterWithIDAndAccountID {
 	public function setEquipmentIDs(array $ids) {
 		$this->EquipmentIDs = $ids;
 	}
-	
+
 	/**
 	 * @param array $ids
 	 */
@@ -91,7 +91,6 @@ class Deleter extends Model\DeleterWithIDAndAccountID {
 	protected function tasksForRunningActivities() {
 		$this->updateVDOTshape();
 		$this->updateBasicEndurance();
-		$this->deleteIntensityCache();
 	}
 
 	/**
@@ -130,7 +129,7 @@ class Deleter extends Model\DeleterWithIDAndAccountID {
 			$EquipmentUpdater->update(array(), $this->EquipmentIDs);
 		}
 	}
-	
+
 	/**
 	 * Update tag
 	 */
@@ -140,7 +139,7 @@ class Deleter extends Model\DeleterWithIDAndAccountID {
 			$TagUpdater->update(array(), $this->TagIDs);
 		}
 	}
-	
+
 	/**
 	 * Update start time
 	 */
@@ -171,19 +170,6 @@ class Deleter extends Model\DeleterWithIDAndAccountID {
 	protected function updateBasicEndurance() {
 		if ($this->Object->timestamp() > time() - 182 * DAY_IN_S) {
 			BasicEndurance::recalculateValue();
-		}
-	}
-
-	/**
-	 * Delete intensity cache for calculations panel
-	 */
-	protected function deleteIntensityCache() {
-		if (!class_exists('RunalyzePluginPanel_Rechenspiele')) {
-			return;
-		}
-
-		if ($this->Object->timestamp() >= time() - 14 * DAY_IN_S) {
-			\Cache::delete(\RunalyzePluginPanel_Rechenspiele::CACHE_KEY_JD_POINTS);
 		}
 	}
 }

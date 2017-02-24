@@ -9,6 +9,7 @@ use Runalyze\Calculation\BasicEndurance;
 use Runalyze\Calculation\JD;
 use Runalyze\Configuration;
 use Runalyze\Activity\Distance;
+use Runalyze\Sports\Running\Prognosis;
 use Runalyze\Util\LocalTime;
 
 if (is_dir(FRONTEND_PATH.'../plugin/RunalyzePluginStat_Wettkampf')) {
@@ -29,7 +30,7 @@ $PrognosisWithBasicEndurance = array();
 $BasicEndurance = array();
 $Results = array();
 
-$PrognosisObj = new \Runalyze\Sports\Running\Prognosis\Daniels();
+$PrognosisObj = new Prognosis\VO2max();
 
 $BasicEnduranceObj = new BasicEndurance();
 $BasicEnduranceObj->readSettingsFromConfiguration();
@@ -42,8 +43,8 @@ if (START_TIME != time()) {
 			DATEDIFF(FROM_UNIXTIME(`time`), "'.date('Y-m-d').'") as `date_age`,
 			DATE(FROM_UNIXTIME(`time`)) as `date`,
 			`distance`,
-			'.JD\Shape::mysqlVDOTsum($withElevation).' as `vdot_weighted`,
-			'.JD\Shape::mysqlVDOTsumTime($withElevation).' as `vdot_sum_time`
+			'.JD\Shape::mysqlVDOTsum($withElevation).' as `vo2max_weighted`,
+			'.JD\Shape::mysqlVDOTsumTime($withElevation).' as `vo2max_sum_time`
 		FROM `'.PREFIX.'training`
 		WHERE
 			`accountid`='.\SessionAccountHandler::getId().' AND
@@ -55,8 +56,8 @@ if (START_TIME != time()) {
 		$currentFirstIndexForKm = 0;
 		$currentFirstIndexForLongJogs = 0;
 
-		$currentVdotWeightedSum = $Data[0]['vdot_weighted'];
-		$currentVdotTimeSum = $Data[0]['vdot_sum_time'];
+		$currentVdotWeightedSum = $Data[0]['vo2max_weighted'];
+		$currentVdotTimeSum = $Data[0]['vo2max_sum_time'];
 		$currentKmSum = $Data[0]['distance'];
 
 		$vdotFactor = Configuration::Data()->vdotFactor();
@@ -70,8 +71,8 @@ if (START_TIME != time()) {
 		        'date_age' => 0,
                 'date' => date('Y-m-d'),
                 'distance' => 0,
-                'vdot_weighted' => 0,
-                'vdot_sum_time' => 0
+                'vo2max_weighted' => 0,
+                'vo2max_sum_time' => 0
             ];
         }
 
@@ -79,8 +80,8 @@ if (START_TIME != time()) {
 		// To check values, use Runalyze\Calculation\JD\VdotShape::calculateAt($index)
 		foreach ($Data as $currentIndex => $currentData) {
 			while ($currentFirstIndexForVdot < $currentIndex && $currentData['date_age'] - $Data[$currentFirstIndexForVdot]['date_age'] >= $maxAgeOfVdot) {
-				$currentVdotWeightedSum -= $Data[$currentFirstIndexForVdot]['vdot_weighted'];
-				$currentVdotTimeSum -= $Data[$currentFirstIndexForVdot]['vdot_sum_time'];
+				$currentVdotWeightedSum -= $Data[$currentFirstIndexForVdot]['vo2max_weighted'];
+				$currentVdotTimeSum -= $Data[$currentFirstIndexForVdot]['vo2max_sum_time'];
 				$currentFirstIndexForVdot++;
 			}
 			while ($currentFirstIndexForKm < $currentIndex && $currentData['date_age'] - $Data[$currentFirstIndexForKm]['date_age'] >= $maxAgeOfKm) {
@@ -91,13 +92,13 @@ if (START_TIME != time()) {
 				$currentFirstIndexForLongJogs++;
 			}
 
-			$currentVdotWeightedSum += $currentData['vdot_weighted'];
-			$currentVdotTimeSum += $currentData['vdot_sum_time'];
+			$currentVdotWeightedSum += $currentData['vo2max_weighted'];
+			$currentVdotTimeSum += $currentData['vo2max_sum_time'];
 			$currentKmSum += $currentData['distance'];
 
-			$Data[$currentIndex]['vdot'] = ($currentVdotTimeSum > 0) ? $vdotFactor * $currentVdotWeightedSum / $currentVdotTimeSum : 0;
+			$Data[$currentIndex]['vo2max'] = ($currentVdotTimeSum > 0) ? $vdotFactor * $currentVdotWeightedSum / $currentVdotTimeSum : 0;
 
-			if ($Data[$currentIndex]['vdot'] > JD\VDOT::REASONABLE_MINIMUM && $Data[$currentIndex]['vdot'] < JD\VDOT::REASONABLE_MAXIMUM) {
+			if ($Data[$currentIndex]['vo2max'] > Prognosis\VO2max::REASONABLE_VO2MAX_MINIMUM && $Data[$currentIndex]['vo2max'] < Prognosis\VO2max::REASONABLE_VO2MAX_MAXIMUM) {
 				$index = strtotime($currentData['date'].' 12:00').'000';
 				$longJogPoints = 0;
 
@@ -105,19 +106,19 @@ if (START_TIME != time()) {
 					$longJogPoints += 2*(1 - ($currentData['date_age'] - $Data[$i]['date_age'])/$maxAgeOfLongJogs) * pow(max(0, $Data[$i]['distance'] - $minKmOfLongJogs), 2);
 				}
 
-				$BasicEnduranceObj->setVDOT($Data[$currentIndex]['vdot']);
+				$BasicEnduranceObj->setEffectiveVO2max($Data[$currentIndex]['vo2max']);
 				$longJogPoints /= pow($BasicEnduranceObj->getTargetLongjogKmPerWeek(), 2);
 				$BasicEndurance[$index] = $BasicEnduranceObj->asArray(0, ['km' => $currentKmSum, 'sum' => $longJogPoints])['percentage'];
 
-				$PrognosisObj->setVdot($Data[$currentIndex]['vdot']);
-				$PrognosisObj->setBasicEndurance($BasicEndurance[$index]);
-				$PrognosisObj->adjustForBasicEndurance(true);
+				$PrognosisObj->setEffectiveVO2max($Data[$currentIndex]['vo2max']);
+				$PrognosisObj->setMarathonShape($BasicEndurance[$index]);
+				$PrognosisObj->adjustForMarathonShape(true);
 				$prognosisInSecondsWithBasicEndurance = $PrognosisObj->getSeconds($distance);
 
 				if ($prognosisInSecondsWithBasicEndurance > 0) {
 					$PrognosisWithBasicEndurance[$index] = $prognosisInSecondsWithBasicEndurance * 1000;
 
-					$PrognosisObj->adjustForBasicEndurance(false);
+					$PrognosisObj->adjustForMarathonShape(false);
 					$Prognosis[$index] = $PrognosisObj->getSeconds($distance) * 1000;
 				}
 			}

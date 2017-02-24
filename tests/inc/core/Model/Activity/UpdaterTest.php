@@ -153,7 +153,6 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals($OldObject->vdotByTime(), $Result->vdotByTime());
 		$this->assertEquals($OldObject->vdotByHeartRate(), $Result->vdotByHeartRate());
 		$this->assertGreaterThan($OldObject->vdotWithElevation(), $Result->vdotWithElevation());
-		$this->assertGreaterThan($OldObject->jdIntensity(), $Result->jdIntensity());
 		$this->assertGreaterThan($OldObject->trimp(), $Result->trimp());
 	}
 
@@ -182,7 +181,6 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 		$this->assertGreaterThan(0, $OldObject->vdotByTime());
 		$this->assertGreaterThan(0, $OldObject->vdotByHeartRate());
 		$this->assertGreaterThan(0, $OldObject->vdotWithElevation());
-		$this->assertGreaterThan(0, $OldObject->jdIntensity());
 		$this->assertGreaterThan(0, $OldObject->trimp());
 
 		$NewObject = clone $OldObject;

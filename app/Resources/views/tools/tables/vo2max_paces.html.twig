@@ -6,7 +6,7 @@
     <table class="zebra-style c" style="width: 700px;">
         <thead>
             <tr>
-                <th>VDOT</th>
+                <th>{% trans %}Effective VO2max{% endtrans %}</th>
                 <th>{% trans %}Easy{% endtrans %}</th>
                 <th>{% trans %}Marathon{% endtrans %}</th>
                 <th>{% trans %}Threshold{% endtrans %}</th>
@@ -15,21 +15,14 @@
             </tr>
         </thead>
         <tbody>
-            {% for vdot in vdots %}
-                <tr{% if vdot.value == currentVdot|round %} class="highlight"{% endif %}>
-                    <td class="b">{{ vdot.value }}</td>
-                    {% for time in vdot.paces %}
+            {% for vo2max in vo2maxValues %}
+                <tr{% if vo2max.value == currentVo2max|round %} class="highlight"{% endif %}>
+                    <td class="b">{{ vo2max.value }}</td>
+                    {% for time in vo2max.paces %}
                         <td>{{ time|raw }}</td>
                     {% endfor %}
                 </tr>
             {% endfor %}
         </tbody>
     </table>
-
-    <p class="info">
-        {% trans %}
-            This table is computed by some formulas, derived from the tables in Jack Daniels' Running formula.
-            These values do not fit the original table one hundred percent.
-        {% endtrans %}
-    </p>
 {% endblock %}

@@ -1,35 +1,35 @@
 <?php
 
-namespace Runalyze\Bundle\CoreBundle\Component\Tool\VdotAnalysis;
+namespace Runalyze\Bundle\CoreBundle\Component\Tool\VO2maxAnalysis;
 
 use Runalyze\Activity\Distance;
 use Runalyze\Activity\Duration;
 use Runalyze\Calculation\JD\VDOTCorrector;
 use Runalyze\Model;
-use Runalyze\Sports\Running\Prognosis\Daniels;
+use Runalyze\Sports\Running\Prognosis\VO2max;
 use Runalyze\Util\LocalTime;
 
 class RaceAnalysis
 {
     /** @var float */
-    protected $VdotFactor;
+    protected $VO2maxFactor;
 
     /** @var float */
-    protected $VdotShape;
+    protected $VO2maxShape;
 
     /** @var Model\Activity\Entity */
     protected $Activity;
 
     /**
      * @param Model\Activity\Entity $activity
-     * @param float $vdotFactor
-     * @param float $vdotShape
+     * @param float $vo2maxFactor
+     * @param float $vo2maxShape
      */
-    public function __construct(Model\Activity\Entity $activity, $vdotFactor, $vdotShape)
+    public function __construct(Model\Activity\Entity $activity, $vo2maxFactor, $vo2maxShape)
     {
         $this->Activity = $activity;
-        $this->VdotFactor = $vdotFactor;
-        $this->VdotShape = $vdotShape;
+        $this->VO2maxFactor = $vo2maxFactor;
+        $this->VO2maxShape = $vo2maxShape;
     }
 
     /**
@@ -73,9 +73,9 @@ class RaceAnalysis
     }
 
     /**
-     * @return float
+     * @return float [ml/kg/min]
      */
-    public function getVdotByTime()
+    public function getVO2maxByTime()
     {
         return $this->Activity->vdotByTime();
     }
@@ -89,9 +89,9 @@ class RaceAnalysis
     }
 
     /**
-     * @return float
+     * @return float [ml/kg/min]
      */
-    public function getVdotByHeartRate()
+    public function getVO2maxByHeartRate()
     {
         return $this->Activity->vdotByHeartRate();
     }
@@ -105,11 +105,11 @@ class RaceAnalysis
     }
 
     /**
-     * @return float
+     * @return float [ml/kg/min]
      */
-    public function getVdotByHeartRateAfterCorrection()
+    public function getVO2maxByHeartRateAfterCorrection()
     {
-        return $this->VdotFactor * $this->Activity->vdotByHeartRate();
+        return $this->VO2maxFactor * $this->Activity->vdotByHeartRate();
     }
 
     /**
@@ -117,15 +117,15 @@ class RaceAnalysis
      */
     public function getPrognosisByHeartRateAfterCorrection()
     {
-        return $this->prognosisFor($this->VdotFactor * $this->Activity->vdotByHeartRate(), $this->Activity->distance());
+        return $this->prognosisFor($this->VO2maxFactor * $this->Activity->vdotByHeartRate(), $this->Activity->distance());
     }
 
     /**
-     * @return float
+     * @return float [ml/kg/min]
      */
-    public function getVdotByShape()
+    public function getVO2maxByShape()
     {
-        return $this->VdotShape;
+        return $this->VO2maxShape;
     }
 
     /**
@@ -133,7 +133,7 @@ class RaceAnalysis
      */
     public function getPrognosisByShape()
     {
-        return $this->prognosisFor($this->VdotShape, $this->Activity->distance());
+        return $this->prognosisFor($this->VO2maxShape, $this->Activity->distance());
     }
 
     /**
@@ -141,7 +141,7 @@ class RaceAnalysis
      */
     public function getShapeDeviation()
     {
-        $prognosis = $this->prognosisInSecondsFor($this->VdotShape, $this->Activity->distance());
+        $prognosis = $this->prognosisInSecondsFor($this->VO2maxShape, $this->Activity->distance());
         $duration = $this->Activity->duration();
         $difference = 100 * ($prognosis - $duration) / $duration;
 
@@ -157,28 +157,31 @@ class RaceAnalysis
     }
 
     /**
-     * @param float $vdot
+     * @param float $vo2max [ml/kg/min]
      * @param float $distance [km]
      * @return float [s]
      */
-    protected function prognosisInSecondsFor($vdot, $distance) {
-        return (new Daniels($vdot))->getSeconds($distance);
+    protected function prognosisInSecondsFor($vo2max, $distance)
+    {
+        return (new VO2max($vo2max))->getSeconds($distance);
     }
 
     /**
-     * @param float $vdot
+     * @param float $vo2max [ml/kg/min]
      * @param float $distance [km]
      * @return string
      */
-    protected function prognosisFor($vdot, $distance) {
-        return $this->formatTime($this->prognosisInSecondsFor($vdot, $distance));
+    protected function prognosisFor($vo2max, $distance)
+    {
+        return $this->formatTime($this->prognosisInSecondsFor($vo2max, $distance));
     }
 
     /**
      * @param int $seconds [s]
      * @return string
      */
-    protected function formatTime($seconds) {
+    protected function formatTime($seconds)
+    {
         $Duration = new Duration($seconds);
 
         return $Duration->string(Duration::FORMAT_WITH_HOURS);

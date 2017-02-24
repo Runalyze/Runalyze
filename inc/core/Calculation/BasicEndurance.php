@@ -33,14 +33,11 @@ class BasicEndurance {
 	 */
 	private static $CONST_VALUE = false;
 
-	/** @var float */
-	const MINIMAL_VDOT = 25.0;
+	/** @var float [ml/kg/min] */
+	const MINIMAL_EFFECTIVE_VO2MAX = 25.0;
 
-	/**
-	 * VDOT to use
-	 * @var int
-	 */
-	protected $VDOT = 0;
+	/** @var float [ml/kg/min] */
+	protected $EffectiveVO2max = 0.0;
 
 	/**
 	 * Minimum distance to be recognized as a longjog
@@ -82,7 +79,7 @@ class BasicEndurance {
 	 * Read settings from configuration
 	 */
 	public function readSettingsFromConfiguration() {
-		$this->VDOT = Configuration::Data()->vdot();
+		$this->EffectiveVO2max = Configuration::Data()->vdot();
 
 		$BasicEndurance = Configuration::BasicEndurance();
 		$this->MIN_KM_FOR_LONGJOG   = $BasicEndurance->minKmForLongjog();
@@ -94,21 +91,17 @@ class BasicEndurance {
 	}
 
 	/**
-	 * Set vdot
-	 *
-	 * Setting VDOT is required to calculated requirements for a sufficient basic endurance
-	 * @param float $VDOT vdot
+     * @param float $EffectiveVO2max [ml/kg/min]
 	 */
-	public function setVDOT($VDOT) {
-		$this->VDOT = $VDOT;
+	public function setEffectiveVO2max($EffectiveVO2max) {
+		$this->EffectiveVO2max = $EffectiveVO2max;
 	}
 
 	/**
-	 * Get used VDOT
-	 * @return float
+	 * @return float [ml/kg/min]
 	 */
-	public function getUsedVDOT() {
-		return max($this->VDOT, self::MINIMAL_VDOT);
+	public function getUsedEffectiveVO2max() {
+		return max($this->EffectiveVO2max, self::MINIMAL_EFFECTIVE_VO2MAX);
 	}
 
 	/**
@@ -367,7 +360,7 @@ class BasicEndurance {
 	 * @return double
 	 */
 	public function getTargetWeekKm() {
-		return pow(max($this->VDOT, self::MINIMAL_VDOT), 1.135);
+		return pow(max($this->EffectiveVO2max, self::MINIMAL_EFFECTIVE_VO2MAX), 1.135);
 	}
 
 	/**
@@ -376,7 +369,7 @@ class BasicEndurance {
 	 * @return double
 	 */
 	public function getTargetLongjogKmPerWeek() {
-		return log(max($this->VDOT, self::MINIMAL_VDOT)/4) * 12 - $this->MIN_KM_FOR_LONGJOG;
+		return log(max($this->EffectiveVO2max, self::MINIMAL_EFFECTIVE_VO2MAX)/4) * 12 - $this->MIN_KM_FOR_LONGJOG;
 	}
 
 	/**
@@ -386,8 +379,6 @@ class BasicEndurance {
 	public function getRealTargetLongjogKmPerWeek() {
 		return $this->getTargetLongjogKmPerWeek() + $this->MIN_KM_FOR_LONGJOG;
 	}
-
-
 
 	/**
 	 * Get const for BASIC_ENDURANCE

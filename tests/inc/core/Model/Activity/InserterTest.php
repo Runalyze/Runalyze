@@ -224,7 +224,6 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		$this->assertGreaterThan(0, $Object->vdotByTime());
 		$this->assertGreaterThan(0, $Object->vdotByHeartRate());
 		$this->assertGreaterThan(0, $Object->vdotWithElevation());
-		$this->assertGreaterThan(0, $Object->jdIntensity());
 		$this->assertGreaterThan(0, $Object->trimp());
 	}
 
@@ -239,7 +238,6 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		$this->assertNull($Object->vdotByTime());
 		$this->assertNull($Object->vdotByHeartRate());
 		$this->assertNull($Object->vdotWithElevation());
-		$this->assertNull($Object->jdIntensity());
 		$this->assertGreaterThan(0, $Object->trimp());
 	}
 
@@ -324,7 +322,6 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		$ObjectWith = $this->fetch( $Inserter->insertedID());
 
 		$this->assertGreaterThan($ObjectWithout->vdotWithElevation(), $ObjectWith->vdotWithElevation());
-		$this->assertGreaterThan($ObjectWithout->jdIntensity(), $ObjectWith->jdIntensity());
 		$this->assertGreaterThan($ObjectWithout->trimp(), $ObjectWith->trimp());
 	}
 

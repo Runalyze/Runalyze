@@ -70,9 +70,8 @@ class SectionPaceRow extends TrainingViewSectionRowTabbedPlot {
 	 * Add: vdot/intensity
 	 */
 	protected function addCalculations() {
-		if ($this->Context->dataview()->vdot()->value() > 0 || $this->Context->activity()->jdIntensity() > 0) {
-			$this->BoxedValues[] = new BoxedValue(Helper::Unknown($this->Context->dataview()->vdot()->value(), '-'), '', __('VDOT'), $this->Context->dataview()->vdotIcon());
-			$this->BoxedValues[] = new BoxedValue(Helper::Unknown($this->Context->activity()->jdIntensity(), '-'), '', __('Training points'));
+		if ($this->Context->dataview()->vdot()->value() > 0) {
+			$this->BoxedValues[] = new BoxedValue(Helper::Unknown($this->Context->dataview()->vdot()->value(), '-'), '', __('Effective VO2max'), $this->Context->dataview()->vdotIcon());
 		}
 	}
 
@@ -80,10 +79,10 @@ class SectionPaceRow extends TrainingViewSectionRowTabbedPlot {
 	 * Add info link
 	 */
 	protected function addInfoLink() {
-		if ($this->Context->dataview()->vdot()->value() > 0 || $this->Context->activity()->jdIntensity() > 0) {
+		if ($this->Context->dataview()->vdot()->value() > 0) {
 			if (!Request::isOnSharedPage()) {
 				$Linker = new Activity\Linker($this->Context->activity());
-				$InfoLink = Ajax::window('<a href="'.$Linker->urlToVDOTInfo().'">'.__('More about VDOT calculation').'</a>', 'small');
+				$InfoLink = Ajax::window('<a href="'.$Linker->urlToVO2maxinfo().'">'.__('More about VO2max estimation').'</a>', 'small');
 
 				$this->Footer = HTML::info( $InfoLink );
 			}

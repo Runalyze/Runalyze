@@ -31,13 +31,6 @@ class VDOTTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(50, $Value->value());
 	}
 
-	public function testMultiplication() {
-		$Value = new VDOT(50);
-		$Value->multiply(0.9);
-
-		$this->assertEquals(45, $Value->value());
-	}
-
 	public function testInvalidResults() {
 		$Value = new VDOT();
 

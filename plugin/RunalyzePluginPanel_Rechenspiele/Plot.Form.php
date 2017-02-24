@@ -162,7 +162,7 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 		if (count($VDOT_slice) != 0 && $Durations_sum != 0) {
 			$VDOTs[$index] = $vdotFactor * ($VDOT_sum / $Durations_sum);
 
-			$BasicEnduranceObj->setVDOT($VDOTs[$index]);
+			$BasicEnduranceObj->setEffectiveVO2max($VDOTs[$index]);
 			$currentKmSum = array_sum(array_slice($Distances_raw, $d - $BEkmDays, $BEkmDays));
 			$longJogPoints = 0;
 

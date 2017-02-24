@@ -161,14 +161,6 @@ class VDOT {
 	}
 
 	/**
-	 * Multiply value
-	 * @param float $factor
-	 */
-	public function multiply($factor) {
-		$this->Value *= $factor;
-	}
-
-	/**
 	 * Calculate VDOT by speed
 	 *
 	 * This formula is simply the oxygen formula of Daniels/Gilbert.

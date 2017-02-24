@@ -147,7 +147,7 @@ class SectionCompositeRow extends TrainingViewSectionRowTabbedPlot {
 	protected function addVdotInfoLink() {
 		if (!Request::isOnSharedPage() && $this->Context->dataview()->vdot()->value() > 0) {
 			$Linker = new Activity\Linker($this->Context->activity());
-			$InfoLink = Ajax::window('<a href="'.$Linker->urlToVDOTInfo().'">'.__('More about VDOT calculation').'</a>', 'small');
+			$InfoLink = Ajax::window('<a href="'.$Linker->urlToVO2maxinfo().'">'.__('More about VDOT calculation').'</a>', 'small');
 
 			$this->Footer .= HTML::info( $InfoLink );
 		}

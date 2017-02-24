@@ -5,32 +5,32 @@ namespace Runalyze\Bundle\CoreBundle\Component\Tool\Table;
 use Runalyze\Activity\Duration;
 use Runalyze\Calculation\JD\VDOT;
 
-class VdotPaceTable
+class EffectiveVO2maxPaceTable
 {
     /**
-     * @param int[] $vdotValues
-     * @return array ['vdot' => ['label' => 'vdot', 'paces' => [..., ...], ...]
+     * @param int[] $vo2maxValues
+     * @return array ['vo2max' => ['label' => 'vo2max', 'paces' => [..., ...], ...]
      */
-    public function getVdotPaces(array $vdotValues)
+    public function getVO2maxPaces(array $vo2maxValues)
     {
         $paceDefinitions = $this->getPaces();
-        $vdotObject = new VDOT;
-        $vdots = [];
+        $vo2maxObject = new VDOT;
+        $result = [];
 
-        foreach ($vdotValues as $vdot) {
-            $vdotObject->setValue($vdot);
+        foreach ($vo2maxValues as $vo2max) {
+            $vo2maxObject->setValue($vo2max);
 
-            $vdots[$vdot] = [
-                'value' => $vdot,
+            $result[$vo2max] = [
+                'value' => $vo2max,
                 'paces' => []
             ];
 
             foreach ($paceDefinitions as $paceDefinition) {
-                $vdots[$vdot]['paces'][] = Duration::format($vdotObject->paceAt($paceDefinition['percent']/100));
+                $result[$vo2max]['paces'][] = Duration::format($vo2maxObject->paceAt($paceDefinition['percent']/100));
             }
         }
 
-        return $vdots;
+        return $result;
     }
 
     /**

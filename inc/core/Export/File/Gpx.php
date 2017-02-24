@@ -96,7 +96,6 @@ class Gpx extends AbstractFileExporter
 
         $hasElevation = $this->Context->route()->hasOriginalElevations();
         $hasHeartrate = $this->Context->trackdata()->has(Trackdata\Entity::HEARTRATE);
-        $emptyGeohash = (new Geohash())->encode(new Coordinate(array(0, 0)), Route\Entity::BOUNDARIES_GEOHASH_PRECISION)->getGeohash();
 
         do {
             $coordinate = $Route->coordinate();

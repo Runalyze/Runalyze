@@ -30,7 +30,6 @@ class DatabaseCleanupType extends AbstractType
             ->add('activityElevation', CheckboxType::class, array('required' => false))
             ->add('activityElevationOverwrite', CheckboxType::class, array('required' => false))
             ->add('activityVdot', CheckboxType::class, array('required' => false))
-            ->add('activityJdpoints', CheckboxType::class, array('required' => false))
             ->add('activityTrimp', CheckboxType::class, array('required' => false))
         ;
     }

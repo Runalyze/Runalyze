@@ -152,7 +152,6 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 		$this->NewObject->set(Entity::TIMESTAMP_EDITED, time());
 
 		$this->removeWeatherIfInside();
-        $this->deleteIntensityCache();
 	}
 
 	/**
@@ -169,9 +168,6 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 		}
 	}
 
-	/**
-	 * Update VDOT, jd intensity, TRIMP
-	 */
 	protected function updateVDOTAndIntensityAndTrimp() {
 		$Calculator = new \Runalyze\Calculation\Activity\Calculator(
 			$this->NewObject,
@@ -183,7 +179,6 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 			$wasNotRunning = $this->knowsOldObject() && $this->hasChanged(Entity::SPORTID);
 			if ($this->ForceRecalculations || $wasNotRunning || $this->hasChanged(Entity::TIME_IN_SECONDS) || $this->hasChanged(Entity::DISTANCE) || $this->hasChanged(Entity::HR_AVG) || $this->hasChanged(Entity::ELEVATION)) {
 				$this->NewObject->set(Entity::VDOT_BY_TIME, $Calculator->calculateVDOTbyTime());
-				$this->NewObject->set(Entity::JD_INTENSITY, $Calculator->calculateJDintensity());
 				$this->NewObject->set(Entity::VDOT, $Calculator->calculateVDOTbyHeartRate());
 				$this->NewObject->set(Entity::VDOT_WITH_ELEVATION, $Calculator->calculateVDOTbyHeartRateWithElevation());
 			}
@@ -198,28 +193,6 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 			)
 		) {
 			$this->NewObject->set(Entity::TRIMP, $Calculator->calculateTrimp());
-		}
-	}
-
-	protected function deleteIntensityCache() {
-		if (!class_exists('RunalyzePluginPanel_Rechenspiele')) {
-			return;
-		}
-
-		$timestampLimit = time() - 14 * DAY_IN_S;
-
-		if (
-			($this->hasChanged(Entity::JD_INTENSITY) && (
-				$this->NewObject->timestamp() >= $timestampLimit ||
-				($this->knowsOldObject() && $this->OldObject->timestamp() >= $timestampLimit)
-			)) || (
-				$this->knowsOldObject() && $this->hasChanged(Entity::TIMESTAMP) && (
-					$this->NewObject->timestamp() >= $timestampLimit ||
-					$this->OldObject->timestamp() >= $timestampLimit
-				)
-			)
-		) {
-			\Cache::delete(\RunalyzePluginPanel_Rechenspiele::CACHE_KEY_JD_POINTS);
 		}
 	}
 
