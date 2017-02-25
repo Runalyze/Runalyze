@@ -73,7 +73,7 @@ class Calculator {
 	 * @return float
 	 */
 	public function calculateVDOTbyTime() {
-		$VDOT = new JD\VDOT;
+		$VDOT = new JD\LegacyEffectiveVO2max;
 		$VDOT->fromPace($this->Activity->distance(), $this->Activity->duration());
 
 		return $VDOT->uncorrectedValue();
@@ -89,7 +89,7 @@ class Calculator {
 			$distance = $this->Activity->distance();
 		}
 
-		$VDOT = new JD\VDOT;
+		$VDOT = new JD\LegacyEffectiveVO2max;
 		$VDOT->fromPaceAndHR(
 			$distance,
 			$this->Activity->duration(),

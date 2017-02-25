@@ -4,7 +4,7 @@ namespace Runalyze\Bundle\CoreBundle\Twig;
 
 use Runalyze\Bundle\CoreBundle\Component\Configuration\RunalyzeConfigurationList;
 
-class DisplayableVdot extends DisplayableValue
+class DisplayableVO2max extends DisplayableValue
 {
     /** @var float */
     protected $UncorrectedValue;
@@ -18,18 +18,18 @@ class DisplayableVdot extends DisplayableValue
     /**
      * @param float $uncorrectedValue
      * @param RunalyzeConfigurationList $configurationList
-     * @param bool $vdotIsUsedForShape
+     * @param bool $valueIsUsedForShape
      */
-    public function __construct($uncorrectedValue, RunalyzeConfigurationList $configurationList, $vdotIsUsedForShape = true)
+    public function __construct($uncorrectedValue, RunalyzeConfigurationList $configurationList, $valueIsUsedForShape = true)
     {
         parent::__construct($uncorrectedValue, '', 2);
 
         $this->correctValue($configurationList);
-        $this->setIconClass($configurationList, $vdotIsUsedForShape);
+        $this->setIconClass($configurationList, $valueIsUsedForShape);
     }
 
     /**
-     * @return float
+     * @return float [ml/kg/min]
      */
     public function getUncorrectedValue()
     {
@@ -47,22 +47,22 @@ class DisplayableVdot extends DisplayableValue
     protected function correctValue(RunalyzeConfigurationList $configurationList)
     {
         $this->UncorrectedValue = $this->Value;
-        $this->Value *= $configurationList->getVdotFactor();
+        $this->Value *= $configurationList->getVO2maxCorrectionFactor();
     }
 
     /**
      * @param RunalyzeConfigurationList $configurationList
-     * @param bool $vdotIsUsedForShape
+     * @param bool $valueIsUsedForShape
      */
-    protected function setIconClass(RunalyzeConfigurationList $configurationList, $vdotIsUsedForShape)
+    protected function setIconClass(RunalyzeConfigurationList $configurationList, $valueIsUsedForShape)
     {
         $classes = [
-            'vdot-icon',
+            'vo2max-icon',
             'small',
-            $this->getIconClassFor($this->Value - $configurationList->getCurrentVdot())
+            $this->getIconClassFor($this->Value - $configurationList->getCurrentVO2maxShape())
         ];
 
-        if (!$vdotIsUsedForShape) {
+        if (!$valueIsUsedForShape) {
             $classes[] = 'unimportant';
         }
 

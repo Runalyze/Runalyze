@@ -12,14 +12,14 @@ use Runalyze\Util\LocalTime;
 
 /**
  * VDOT shape
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Calculation\JD
  */
 class Shape {
 	/**
 	 * PDO
-	 * @var \PDO 
+	 * @var \PDO
 	 */
 	protected $PDO;
 
@@ -43,7 +43,8 @@ class Shape {
 
 	/**
 	 * VDOT corrector
-	 * @var \Runalyze\Calculation\JD\VDOTCorrector 
+	 *
+*@var \Runalyze\Calculation\JD\LegacyEffectiveVO2maxCorrector
 	 */
 	protected $Corrector = null;
 
@@ -69,9 +70,10 @@ class Shape {
 
 	/**
 	 * Set VDOT corrector
-	 * @param \Runalyze\Calculation\JD\VDOTCorrector $corrector
+	 *
+*@param \Runalyze\Calculation\JD\LegacyEffectiveVO2maxCorrector $corrector
 	 */
-	public function setCorrector(VDOTCorrector $corrector) {
+	public function setCorrector(LegacyEffectiveVO2maxCorrector $corrector) {
 		$this->Corrector = $corrector;
 	}
 
@@ -111,10 +113,10 @@ class Shape {
 
 	/**
 	 * Get sum selector for VDOT for mysql
-	 * 
+	 *
 	 * Depends on configuration: `vdot`*`s`*`use_vdot` or `vdot_with_elevation`*`s`*`use_vdot`
 	 *
-	 * @param bool $withElevation [optional] 
+	 * @param bool $withElevation [optional]
 	 * @return string
 	 */
 	public static function mysqlVDOTsum($withElevation = false) {
@@ -123,9 +125,9 @@ class Shape {
 
 	/**
 	 * Get sum selector for time for mysql
-	 * 
+	 *
 	 * `s`*`use_vdot`
-	 * 
+	 *
 	 * @param bool $withElevation [optional]
 	 * @return string
 	 */
@@ -135,22 +137,22 @@ class Shape {
 
 	/**
 	 * VDOT shape
-	 * 
+	 *
 	 * This value is already corrected.
 	 * If no VDOT corrector was set, the global/static one is used.
-	 * 
+	 *
 	 * @return float
 	 */
 	public function value() {
 		if (is_null($this->Corrector)) {
-			$this->Corrector = new VDOTCorrector;
+			$this->Corrector = new LegacyEffectiveVO2maxCorrector;
 		}
 
 		return $this->uncorrectedValue() * $this->Corrector->factor();
 	}
 
 	/**
-	 * Uncorrected VDOT shape 
+	 * Uncorrected VDOT shape
 	 * @return float
 	 * @throws \RuntimeException
 	 */

@@ -8,8 +8,8 @@ $PLUGINKEY = 'RunalyzePluginPanel_Rechenspiele';
 use Runalyze\Activity\Distance;
 use Runalyze\Activity\Duration;
 use Runalyze\Calculation\BasicEndurance;
-use Runalyze\Calculation\JD\VDOT;
-use Runalyze\Calculation\JD\VDOTCorrector;
+use Runalyze\Calculation\JD\LegacyEffectiveVO2max;
+use Runalyze\Calculation\JD\LegacyEffectiveVO2maxCorrector;
 use Runalyze\Calculation\Performance;
 use Runalyze\Configuration;
 use Runalyze\Sports\Performance\Model\TsbModel;
@@ -37,7 +37,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	 * @return string
 	 */
 	final public function description() {
-		return __('Calculate experimental values as shape and fatigue based on TRIMP, marathon shape and your VO2max shape.');
+		return __('Calculate experimental values as shape and fatigue based on TRIMP, marathon shape and your VO<sub>2</sub>max shape.');
 	}
 
 	/**
@@ -52,8 +52,8 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 		$ShowTrimpExtra->setTooltip( __('Show monotony and training strain (based on TRIMP)') );
 		$ShowTrimpExtra->setDefaultValue(true);
 
-		$ShowVDOT = new PluginConfigurationValueBool('show_vo2max', __('Show: VO2max shape'));
-		$ShowVDOT->setTooltip( __('Predict current effective VO2max') );
+		$ShowVDOT = new PluginConfigurationValueBool('show_vo2max', __('Show: VO<sub>2</sub>max shape'));
+		$ShowVDOT->setTooltip( __('Predict current effective VO<sub>2</sub>max') );
 		$ShowVDOT->setDefaultValue(true);
 
 		$ShowBE = new PluginConfigurationValueBool('show_basicendurance', __('Show: Marathon shape'));
@@ -161,7 +161,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 				),
 				'bar-tooltip'	=> '',
 				'value'	=> number_format($EffectiveVO2max, 2).(0 == $EffectiveVO2max ? '&nbsp;<i class="fa fa-fw fa-exclamation-circle"></i>' : ''),
-				'title'	=> __('Effective VO2max'),
+				'title'	=> __('Effective&nbsp;VO<sub>2</sub>max'),
 				'small'	=> '',
 				'tooltip'	=> ''
 			),
@@ -385,7 +385,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	 */
 	public function getFieldsetEffecticeVO2max() {
 		$Tooltip = new Tooltip('');
-		$EffectiveVO2max = new VDOT(0, new VDOTCorrector(Configuration::Data()->vdotFactor()));
+		$EffectiveVO2max = new LegacyEffectiveVO2max(0, new LegacyEffectiveVO2maxCorrector(Configuration::Data()->vdotFactor()));
 		$vdotColumn = Configuration::Vdot()->useElevationCorrection() ? 'IF(`vdot_with_elevation`>0,`vdot_with_elevation`,`vdot`) as `vdot`' : '`vdot`';
 		$EffectiveVO2maxValues = DB::getInstance()->query('SELECT `id`,`time`,`distance`,'.$vdotColumn.' FROM `'.PREFIX.'training` WHERE time>='.(time() - Configuration::Vdot()->days()*DAY_IN_S).' AND vdot>0 AND use_vdot=1 AND accountid = '.SessionAccountHandler::getId().' ORDER BY time ASC')->fetchAll();
 
@@ -395,7 +395,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 			$Table = '<table class="fullwidth zebra-style">
 				<thead>
 					<tr>
-						<th colspan="10">'.sprintf( __('Effective VO2max values of the last %s days'), Configuration::Vdot()->days() ).'</th>
+						<th colspan="10">'.sprintf( __('Effective VO<sub>2</sub>max values of the last %s days'), Configuration::Vdot()->days() ).'</th>
 					</tr>
 				</thead>
 				<tbody class="top-and-bottom-border">';
@@ -419,13 +419,13 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 			$Table .= '</tbody></table>';
 		}
 
-		$Fieldset = new FormularFieldset( __('Effective VO2max') );
-		$Fieldset->addBlock( sprintf( __('The VO2max shape is calculated as the average, weighted by time, of estimated VO2max values of your activities in the last %s days.'), Configuration::Vdot()->days() ) );
-		$Fieldset->addBlock( sprintf( __('Your current VO2max shape: <strong>%s</strong><br>&nbsp;'), Configuration::Data()->vdot() ) );
+		$Fieldset = new FormularFieldset( __('Effective VO<sub>2</sub>max') );
+		$Fieldset->addBlock( sprintf( __('The VO<sub>2</sub>max shape is calculated as the average, weighted by time, of estimated VO<sub>2</sub>max values of your activities in the last %s days.'), Configuration::Vdot()->days() ) );
+		$Fieldset->addBlock( sprintf( __('Your current VO<sub>2</sub>max shape: <strong>%s</strong><br>&nbsp;'), Configuration::Data()->vdot() ) );
 		$Fieldset->addBlock($Table);
-		$Fieldset->addInfo( __('VO2max itself is a scientific metric for the maximal oxygen consumption that can be measured in the laboratory.<br>'.
-								'Two runners with equal VO2max values do not need to perform equally, as running efficiency plays an additional role. '.
-								'To overcome the issue of specifying running efficiency, one can ignore the efficiency and therefore call it effective VO2max.') );
+		$Fieldset->addInfo( __('VO<sub>2</sub>max itself is a scientific metric for the maximal oxygen consumption that can be measured in the laboratory.<br>'.
+								'Two runners with equal VO<sub>2</sub>max values do not need to perform equally, as running efficiency plays an additional role. '.
+								'To overcome the issue of specifying running efficiency, one can ignore the efficiency and therefore call it effective VO<sub>2</sub>max.') );
 
 		return $Fieldset;
 	}
@@ -446,7 +446,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 			<table class="fullwidth zebra-style">
 				<tbody class="top-and-bottom-border">
 					<tr>
-						<td><strong>'.__('Current Effective VO2max').'</strong> <small>('.__('based on heart rate').')</small></td>
+						<td><strong>'.__('Current Effective VO<sub>2</sub>max').'</strong> <small>('.__('based on heart rate').')</small></td>
 						<td class="r">'.round(Configuration::Data()->vdot(), 2).'</td>
 						<td>&nbsp;</td>
 						<td><strong>'.__('Target kilometer per week').'</strong> <small>('.sprintf('%s weeks', round($BasicEndurance->getDaysForWeekKm() / 7)).')</small></td>
@@ -528,7 +528,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	 * @return string
 	 */
 	public function getNoEffectiveVO2maxDataError() {
-		return __('There are no current activities with an estimated VO2max value.').'<br>'.
-			__('VO2max can only be estimated for runs with heart rate data.');
+		return __('There are no current activities with an estimated VO<sub>2</sub>max value.').'<br>'.
+			__('VO<sub>2</sub>max can only be estimated for runs with heart rate data.');
 	}
 }

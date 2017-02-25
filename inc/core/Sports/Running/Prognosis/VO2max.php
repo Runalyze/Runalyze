@@ -3,7 +3,7 @@
 namespace Runalyze\Sports\Running\Prognosis;
 
 use Runalyze\Mathematics\Numerics\Bisection;
-use Runalyze\Sports\Running\VO2max\DanielsGilbertFormula;
+use Runalyze\Sports\Running\VO2max\Estimation\DanielsGilbertFormula;
 
 /**
  * Prognosis based on VO2max [ml/kg/min] (to be correct, there should be a dot above the V)
@@ -114,9 +114,11 @@ class VO2max implements PrognosisInterface
             return null;
         }
 
+        $function = new DanielsGilbertFormula();
+
         return (new Bisection($effectiveVO2maxToReach, round(2 * 60 * $distance), round(10 * 60 * $distance),
-            function ($seconds) use ($distance) {
-                return DanielsGilbertFormula::evaluate($distance, $seconds);
+            function ($seconds) use ($distance, $function) {
+                return $function->estimateFromRaceResult($distance, $seconds);
             }
         ))->findValue();
     }

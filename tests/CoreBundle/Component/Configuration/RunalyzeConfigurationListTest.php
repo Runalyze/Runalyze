@@ -25,7 +25,7 @@ class RunalyzeConfigurationListTest extends \PHPUnit_Framework_TestCase
         $config->getMiscellaneous();
         $config->getPrivacy();
         $config->getTrimp();
-        $config->getVdotFactor();
+        $config->getVO2maxCorrectionFactor();
     }
 
     public function testThatUnitSystemIsPersistent()

@@ -2,12 +2,9 @@
 
 namespace Runalyze\Bundle\CoreBundle\Controller\My\Tools;
 
-use Runalyze\Activity\Distance;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Anova\AnovaDataQuery;
 use Runalyze\Bundle\CoreBundle\Component\Tool\DatabaseCleanup\JobGeneral;
 use Runalyze\Bundle\CoreBundle\Component\Tool\DatabaseCleanup\JobLoop;
-use Runalyze\Bundle\CoreBundle\Component\Tool\Table\GeneralPaceTable;
-use Runalyze\Bundle\CoreBundle\Component\Tool\Table\EffectiveVO2maxPaceTable;
 use Runalyze\Bundle\CoreBundle\Component\Tool\VO2maxAnalysis\VO2maxAnalysis;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Form\Tools\DatabaseCleanupType;
@@ -15,6 +12,7 @@ use Runalyze\Bundle\CoreBundle\Form\Tools\Anova\AnovaData;
 use Runalyze\Bundle\CoreBundle\Form\Tools\Anova\AnovaType;
 use Runalyze\Metrics\Common\JavaScriptFormatter;
 use Runalyze\Sports\Running\Prognosis\VO2max;
+use Runalyze\Sports\Running\VO2max\VO2maxVelocity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -61,9 +59,13 @@ class ToolsController extends Controller
      */
     public function tableVo2maxPaceAction()
     {
+        $config = $this->get('app.configuration_manager')->getList();
+        $running = $this->getDoctrine()->getRepository('CoreBundle:Sport')->find($config->getGeneral()->getRunningSport());
+
         return $this->render('tools/tables/vo2max_paces.html.twig', [
-            'currentVo2max' => $this->get('app.configuration_manager')->getList()->getCurrentVdot(),
-            'vo2maxValues' => (new EffectiveVO2maxPaceTable())->getVO2maxPaces(range(30, 80))
+            'currentVo2max' => $config->getCurrentVO2maxShape(),
+            'vo2maxVelocity' => new VO2maxVelocity(),
+            'paceUnit' => $config->getUnitSystem()->getPaceUnit($running)
         ]);
     }
 
@@ -73,12 +75,7 @@ class ToolsController extends Controller
      */
     public function tableGeneralPaceAction()
     {
-        $distances = [0.2, 0.4, 1, 3, 5, 10, 21.1, 42.2, 50];
-
-        return $this->render('tools/tables/general_paces.html.twig', [
-            'distances' => array_map(function($km) { return (new Distance($km))->stringAuto(); }, $distances),
-            'paces' => (new GeneralPaceTable())->getPaces($distances, range(60, 180))
-        ]);
+        return $this->render('tools/tables/general_paces.html.twig');
     }
 
     /**
@@ -89,7 +86,7 @@ class ToolsController extends Controller
     public function tableVo2maxRaceResultAction()
     {
         return $this->render('tools/tables/vo2max.html.twig', [
-            'currentVo2max' => $this->get('app.configuration_manager')->getList()->getCurrentVdot(),
+            'currentVo2max' => $this->get('app.configuration_manager')->getList()->getCurrentVO2maxShape(),
             'prognosis' => new VO2max(),
             'distances' => [1.0, 3.0, 5.0, 10.0, 21.1, 42.2, 50],
             'vo2maxValues' => range(30.0, 80.0)
@@ -105,18 +102,18 @@ class ToolsController extends Controller
         $Frontend = new \Frontend(true, $this->get('security.token_storage'));
 
         $configuration = $this->get('app.configuration_manager')->getList();
-        $vdotFactor = $configuration->getVdotFactor();
+        $correctionFactor = $configuration->getVO2maxCorrectionFactor();
 
         $analysisTable = new VO2maxAnalysis($configuration->getVdot()->getLegacyCategory());
         $races = $analysisTable->getAnalysisForAllRaces(
-            $vdotFactor,
+            $correctionFactor,
             $configuration->getGeneral()->getRunningSport(),
             $account->getId()
         );
 
         return $this->render('tools/vo2max_analysis.html.twig', [
             'races' => $races,
-            'vo2maxFactor' => $vdotFactor
+            'vo2maxFactor' => $correctionFactor
         ]);
     }
 

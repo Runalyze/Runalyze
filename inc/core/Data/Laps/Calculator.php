@@ -299,7 +299,7 @@ class Calculator
 			$distance = $Lap->distance()->kilometer();
 		}
 
-		$VDOT = new Calculation\JD\VDOT();
+		$VDOT = new Calculation\JD\LegacyEffectiveVO2max();
 		$VDOT->fromPaceAndHR(
 			$distance,
 			$Lap->duration()->seconds(),

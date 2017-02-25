@@ -25,7 +25,7 @@ class Data extends AbstractCategory
     /**
      * @return int
      */
-    public function getVdotShape()
+    public function getCurrentVO2maxShape()
     {
         return (int)$this->Variables['VDOT_FORM'];
     }
@@ -33,7 +33,7 @@ class Data extends AbstractCategory
     /**
      * @return float
      */
-    public function getVdotCorrector()
+    public function getVO2maxCorrectionFactor()
     {
         return (float)$this->Variables['VDOT_CORRECTOR'];
     }

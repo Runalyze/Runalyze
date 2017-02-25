@@ -3,26 +3,42 @@
 {% set activeTable = 2 %}
 
 {% block table %}
-    <table class="zebra-style c" style="width: 700px;">
+    <p class="text">
+        {% trans with {'%vVO2max%': 'vVO<sub>2</sub>max'} %}Definitions for training paces vary a lot, depending on which philosophy one looks at.
+            This table specifies paces at various percentages of %vVO2max%, which equals approximately the maximal pace for 11 minutes.
+        {% endtrans %}
+    </p>
+
+    <table class="zebra-style fullwidth c">
         <thead>
             <tr>
-                <th>{% trans %}Effective VO2max{% endtrans %}</th>
-                <th>{% trans %}Easy{% endtrans %}</th>
-                <th>{% trans %}Marathon{% endtrans %}</th>
-                <th>{% trans %}Threshold{% endtrans %}</th>
-                <th>{% trans %}Interval{% endtrans %}</th>
-                <th>{% trans %}Repetition{% endtrans %}</th>
+                <th>{% trans with {'%VO2max%': 'VO<sub>2</sub>max'} %}Effective %VO2max%{% endtrans %}</th>
+                <th>65 &#37;</th>
+                <th>70 &#37;</th>
+                <th>75 &#37;</th>
+                <th>80 &#37;</th>
+                <th>85 &#37;</th>
+                <th>90 &#37;</th>
+                <th>95 &#37;</th>
+                <th>100 &#37;</th>
+                <th>105 &#37;</th>
+                <th>110 &#37;</th>
             </tr>
         </thead>
         <tbody>
-            {% for vo2max in vo2maxValues %}
-                <tr{% if vo2max.value == currentVo2max|round %} class="highlight"{% endif %}>
-                    <td class="b">{{ vo2max.value }}</td>
-                    {% for time in vo2max.paces %}
-                        <td>{{ time|raw }}</td>
+            {% set percentages = [0.65, 0.70, 0.75, 0.80, 0.85, 0.90, 0.95, 1.00, 1.05, 1.10] %}
+            {% for vo2max in range(30, 80) %}
+                <tr{% if vo2max == currentVo2max|round %} class="highlight"{% endif %}>
+                    <td class="b">{{ vo2max }}</td>
+                    {% for percentage in percentages %}
+                        <td>{{ pace(vo2maxVelocity.pace(vo2max, percentage), paceUnit).value }}</td>
                     {% endfor %}
                 </tr>
             {% endfor %}
         </tbody>
     </table>
+
+    <p class="info">
+        {% trans with {'%unit%': pace(0, paceUnit).unit} %}All paces are in %unit%.{% endtrans %}
+    </p>
 {% endblock %}

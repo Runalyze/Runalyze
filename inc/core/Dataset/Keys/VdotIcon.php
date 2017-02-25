@@ -11,7 +11,7 @@ use Runalyze\Dataset\SummaryMode;
 
 /**
  * Dataset key: VdotIcon
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Dataset\Keys
  */
@@ -69,7 +69,7 @@ class VdotIcon extends AbstractKey
 			'equal to it or (much) lower:'
 		).' ';
 
-		$Icon = new \Runalyze\View\Icon\VdotIcon;
+		$Icon = new \Runalyze\View\Icon\EffectiveVO2maxIcon;
 		$Icon->setUp();
 		$text .= $Icon->code();
 		$Icon->setUpHalf();

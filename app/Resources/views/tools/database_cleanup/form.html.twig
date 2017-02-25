@@ -22,13 +22,13 @@
                     </div>
 
                     <div class="checkbox">
-                        {{ form_widget(form.vdotCorrector) }}
-                        {{ form_label(form.vdotCorrector, 'Recalculate your VDOT correction factor') }}
+                        {{ form_widget(form.vo2maxCorrector) }}
+                        {{ form_label(form.vo2maxCorrector, 'Recalculate your effective VO<sub>2</sub>max correction factor') }}
                     </div>
 
                     <div class="checkbox">
-                        {{ form_widget(form.vdot) }}
-                        {{ form_label(form.vdot, 'Recalculate your VDOT shape') }}
+                        {{ form_widget(form.vo2max) }}
+                        {{ form_label(form.vo2max, 'Recalculate your effective VO<sub>2</sub>max shape') }}
                     </div>
 
                     <div class="checkbox">
@@ -72,8 +72,8 @@
                         </div>
                     </div>
                     <div class="checkbox">
-                            {{ form_widget(form.activityVdot) }}
-                            {{ form_label(form.activityVdot, 'Recalculate VDOT values') }}
+                            {{ form_widget(form.activityVO2max) }}
+                            {{ form_label(form.activityVO2max, 'Recalculate effective VO<sub>2</sub>max values') }}
                     </div>
                     <div class="checkbox">
                             {{ form_widget(form.activityTrimp) }}

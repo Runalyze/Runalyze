@@ -34,18 +34,18 @@ class ActivityDecorator
      * @param RunalyzeConfigurationList $configurationList
      * @return float
      */
-    public function getVdot(RunalyzeConfigurationList $configurationList)
+    public function getEffectiveVO2max(RunalyzeConfigurationList $configurationList)
     {
-        return $configurationList->getVdotFactor() * $this->getUncorrectedVdot($configurationList);
+        return $configurationList->getVO2maxCorrectionFactor() * $this->getUncorrectedVO2max($configurationList);
     }
 
     /**
      * @param RunalyzeConfigurationList $configurationList
      * @return float
      */
-    public function getUncorrectedVdot(RunalyzeConfigurationList $configurationList)
+    public function getUncorrectedVO2max(RunalyzeConfigurationList $configurationList)
     {
-        if ($configurationList->useVdotCorrectionForElevation() && $this->Context->getActivity()->getVdotWithElevation() > 0.0) {
+        if ($configurationList->useVO2maxCorrectionForElevation() && $this->Context->getActivity()->getVdotWithElevation() > 0.0) {
             return $this->Context->getActivity()->getVdotWithElevation();
         }
 

@@ -217,7 +217,7 @@ class RunalyzeConfigurationList extends ConfigurationList
     /**
      * @return float
      */
-    public function getVdotFactor()
+    public function getVO2maxCorrectionFactor()
     {
         if (is_numeric($this->Variables['vdot.VDOT_MANUAL_CORRECTOR'])) {
             return (float)$this->Variables['vdot.VDOT_MANUAL_CORRECTOR'];
@@ -229,7 +229,7 @@ class RunalyzeConfigurationList extends ConfigurationList
     /**
      * @return bool
      */
-    public function useVdotCorrectionForElevation()
+    public function useVO2maxCorrectionForElevation()
     {
         return ('true' == $this->Variables['vdot.VDOT_USE_CORRECTION_FOR_ELEVATION']);
     }
@@ -237,7 +237,7 @@ class RunalyzeConfigurationList extends ConfigurationList
     /**
      * @return float
      */
-    public function getCurrentVdot()
+    public function getCurrentVO2maxShape()
     {
         if (is_numeric($this->Variables['vdot.VDOT_MANUAL_VALUE'])) {
             return (float)$this->Variables['vdot.VDOT_MANUAL_VALUE'];

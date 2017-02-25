@@ -68,11 +68,11 @@ class EffectiveVO2maxInfo
      */
     public function getHeartRateCalculationDetails()
     {
-        $VO2max = new JD\VDOT(
+        $VO2max = new JD\LegacyEffectiveVO2max(
             $this->Context->activity()->vdotByHeartRate(),
-            new JD\VDOTCorrector($this->DataConfig->vdotFactor())
+            new JD\LegacyEffectiveVO2maxCorrector($this->DataConfig->vdotFactor())
         );
-        $vVO2maxinPercent = JD\VDOT::percentageAt($this->Context->activity()->hrAvg() / $this->DataConfig->HRmax());
+        $vVO2maxinPercent = JD\LegacyEffectiveVO2max::percentageAt($this->Context->activity()->hrAvg() / $this->DataConfig->HRmax());
 
         return [
             'hr' => $this->Context->dataview()->hrAvg()->inHRmax(),
@@ -86,9 +86,9 @@ class EffectiveVO2maxInfo
      */
     public function getCorrectionFactorDetails()
     {
-        $VO2max = new JD\VDOT(
+        $VO2max = new JD\LegacyEffectiveVO2max(
             $this->Context->activity()->vdotByHeartRate(),
-            new JD\VDOTCorrector($this->DataConfig->vdotFactor())
+            new JD\LegacyEffectiveVO2maxCorrector($this->DataConfig->vdotFactor())
         );
 
         return [
@@ -107,7 +107,7 @@ class EffectiveVO2maxInfo
 
         $Modifier = new Calculation\Elevation\DistanceModifier($this->Context->activity()->distance(), $up, $down, $this->VO2maxConfig);
 
-        $VO2max = new JD\VDOT(0, new JD\VDOTCorrector($this->DataConfig->vdotFactor()));
+        $VO2max = new JD\LegacyEffectiveVO2max(0, new JD\LegacyEffectiveVO2maxCorrector($this->DataConfig->vdotFactor()));
         $VO2max->fromPaceAndHR(
             $Modifier->correctedDistance(),
             $this->Context->activity()->duration(),

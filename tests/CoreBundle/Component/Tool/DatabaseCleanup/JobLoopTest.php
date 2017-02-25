@@ -52,7 +52,7 @@ class JobLoopTest extends \PHPUnit_Framework_TestCase
 		$Loop = new JobLoop([
             JobLoop::ELEVATION => true,
             JobLoop::ELEVATION_OVERWRITE => true,
-            JobLoop::VDOT => true,
+            JobLoop::VO2MAX => true,
             JobLoop::TRIMP => true
         ], $this->PDO, 0, 'runalyze_');
 		$Loop->run();
@@ -111,7 +111,7 @@ class JobLoopTest extends \PHPUnit_Framework_TestCase
 		$Loop = new JobLoop([
             JobLoop::ELEVATION => true,
             JobLoop::ELEVATION_OVERWRITE => true,
-            JobLoop::VDOT => true
+            JobLoop::VO2MAX => true
         ], $this->PDO, 0, 'runalyze_');
 		$Loop->run();
 
@@ -141,7 +141,7 @@ class JobLoopTest extends \PHPUnit_Framework_TestCase
 		$this->PDO->exec('INSERT INTO `runalyze_route` (`id`, `elevation`, `elevation_up`, `elevation_down`, `accountid`) VALUES (2, 200, 0, 200, 0)');
 
 		$Loop = new JobLoop([
-			JobLoop::VDOT => true
+			JobLoop::VO2MAX => true
 		], $this->PDO, 0, 'runalyze_');
 		$Loop->run();
 
@@ -159,7 +159,7 @@ class JobLoopTest extends \PHPUnit_Framework_TestCase
 		);
 
 		$Loop = new JobLoop([
-            JobLoop::VDOT => true,
+            JobLoop::VO2MAX => true,
             JobLoop::TRIMP => true
         ], $this->PDO, 0, 'runalyze_');
 		$Loop->run();

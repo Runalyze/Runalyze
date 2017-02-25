@@ -10,197 +10,169 @@ use Runalyze\Model\Route;
 
 class JobLoop extends Job
 {
-	/**
-	 * Task key: elevation
-	 * @var string
-	 */
-	const ELEVATION = 'activityElevation';
+    /** @var string */
+    const ELEVATION = 'activityElevation';
 
-	/**
-	 * Task key: overwrite elevation
-	 * @var string
-	 */
-	const ELEVATION_OVERWRITE = 'activityElevationOverwrite';
+    /** @var string */
+    const ELEVATION_OVERWRITE = 'activityElevationOverwrite';
 
-	/**
-	 * Task key: vdot
-	 * @var string
-	 */
-	const VDOT = 'activityVdot';
+    /** @var string */
+    const VO2MAX = 'activityVO2max';
 
-	/**
-	 * Task key: trimp
-	 * @var string
-	 */
-	const TRIMP = 'activityTrimp';
+    /** @var string */
+    const TRIMP = 'activityTrimp';
 
-	/**
-	 * Calculated elevations
-	 * @var array
-	 */
-	protected $ElevationResults = array();
+    /** @var array */
+    protected $ElevationResults = [];
 
-	/**
-	 * Run job
-	 */
-	public function run()
+    public function run()
     {
-		if ($this->isRequested(self::ELEVATION)) {
-			$this->runRouteLoop();
-		}
+        if ($this->isRequested(self::ELEVATION)) {
+            $this->runRouteLoop();
+        }
 
-		if (count($this->updateSet())) {
-			$this->runActivityLoop();
+        if (count($this->updateSet())) {
+            $this->runActivityLoop();
 
-			// This may be removed if single activities are not cached anymore.
-			\Cache::clean();
-		}
-	}
+            // This may be removed if single activities are not cached anymore.
+            \Cache::clean();
+        }
+    }
 
-	/**
-	 * Run route loop
-	 */
-	protected function runRouteLoop()
+    protected function runRouteLoop()
     {
-		require_once __DIR__.'/ElevationsRecalculator.php';
+        require_once __DIR__.'/ElevationsRecalculator.php';
 
-		$Recalculator = new ElevationsRecalculator($this->PDO, $this->AccountId, $this->DatabasePrefix);
-		$Recalculator->run();
+        $Recalculator = new ElevationsRecalculator($this->PDO, $this->AccountId, $this->DatabasePrefix);
+        $Recalculator->run();
 
-		$this->ElevationResults = $Recalculator->results();
+        $this->ElevationResults = $Recalculator->results();
 
-		$this->addMessage( sprintf( __('Elevations have been recalculated for %d routes.'), count($this->ElevationResults)) );
-	}
+        $this->addMessage(sprintf(__('Elevations have been recalculated for %d routes.'), count($this->ElevationResults)));
+    }
 
-	/**
-	 * Run activity loop
-	 */
-	protected function runActivityLoop()
+    protected function runActivityLoop()
     {
-		$i = 0;
-		$Query = $this->getQuery();
-		$Update = $this->prepareUpdate();
+        $i = 0;
+        $Query = $this->getQuery();
+        $Update = $this->prepareUpdate();
 
-		while ($Data = $Query->fetch()) {
-			try {
-				$Calculator = $this->calculatorFor($Data);
+        while ($Data = $Query->fetch()) {
+            try {
+                $Calculator = $this->calculatorFor($Data);
                 $calculateVdot = ($Data['sportid'] == Configuration::General()->runningSport());
 
-				if ($this->isRequested(self::ELEVATION) && $this->isRequested(self::ELEVATION_OVERWRITE)) {
-					$Update->bindValue(':elevation', $this->elevationsFor($Data)[0]);
-				}
+                if ($this->isRequested(self::ELEVATION) && $this->isRequested(self::ELEVATION_OVERWRITE)) {
+                    $Update->bindValue(':elevation', $this->elevationsFor($Data)[0]);
+                }
 
-				if ($this->isRequested(self::VDOT)) {
-					$Update->bindValue(':vdot', $calculateVdot ? $Calculator->calculateVDOTbyHeartRate() : 0);
-					$Update->bindValue(':vdot_by_time', $calculateVdot ? $Calculator->calculateVDOTbyTime() : 0);
-					$Update->bindValue(':vdot_with_elevation', $calculateVdot ? $Calculator->calculateVDOTbyHeartRateWithElevation() : 0);
-				}
+                if ($this->isRequested(self::VO2MAX)) {
+                    $Update->bindValue(':vdot', $calculateVdot ? $Calculator->calculateVDOTbyHeartRate() : 0);
+                    $Update->bindValue(':vdot_by_time', $calculateVdot ? $Calculator->calculateVDOTbyTime() : 0);
+                    $Update->bindValue(':vdot_with_elevation', $calculateVdot ? $Calculator->calculateVDOTbyHeartRateWithElevation() : 0);
+                }
 
-				if ($this->isRequested(self::TRIMP)) {
-					$Update->bindValue(':trimp', $Calculator->calculateTrimp());
-				}
+                if ($this->isRequested(self::TRIMP)) {
+                    $Update->bindValue(':trimp', $Calculator->calculateTrimp());
+                }
 
-				$Update->bindValue(':id', $Data['id']);
-				$Update->execute();
-				$i++;
-			} catch (\RuntimeException $e) {
-				$this->addMessage( sprintf( __('There was a problem with activity %d.<br>Error message: %s'), $Data['id'], $e->getMessage()) );
-			}
-		}
+                $Update->bindValue(':id', $Data['id']);
+                $Update->execute();
+                $i++;
+            } catch (\RuntimeException $e) {
+                $this->addMessage(sprintf(__('There was a problem with activity %d.<br>Error message: %s'), $Data['id'], $e->getMessage()));
+            }
+        }
 
-		$this->addMessage( sprintf( __('%d activities have been updated.'), $i) );
-	}
+        $this->addMessage(sprintf(__('%d activities have been updated.'), $i));
+    }
 
-	/**
-	 * @param array $data
-	 * @return \Runalyze\Calculation\Activity\Calculator
-	 */
-	protected function calculatorFor(array $data)
+    /**
+     * @param array $data
+     * @return \Runalyze\Calculation\Activity\Calculator
+     */
+    protected function calculatorFor(array $data)
     {
-		$elevations = $this->elevationsFor($data);
+        $elevations = $this->elevationsFor($data);
 
-		return new Calculator(
-			new Activity\Entity($data),
-			new Trackdata\Entity(array(
-				Trackdata\Entity::TIME => $data['trackdata_time'],
-				Trackdata\Entity::HEARTRATE => $data['trackdata_heartrate']
-			)),
-			new Route\Entity(array(
-				Route\Entity::ELEVATION => $elevations[0],
-				Route\Entity::ELEVATION_UP => $elevations[1],
-				Route\Entity::ELEVATION_DOWN => $elevations[2]
-			))
-		);
-	}
+        return new Calculator(
+            new Activity\Entity($data),
+            new Trackdata\Entity(array(
+                Trackdata\Entity::TIME => $data['trackdata_time'],
+                Trackdata\Entity::HEARTRATE => $data['trackdata_heartrate']
+            )),
+            new Route\Entity(array(
+                Route\Entity::ELEVATION => $elevations[0],
+                Route\Entity::ELEVATION_UP => $elevations[1],
+                Route\Entity::ELEVATION_DOWN => $elevations[2]
+            ))
+        );
+    }
 
-	/**
-	 * Elevations for activity
-	 * @param array $data activity data
-	 * @return array ('total', 'up', 'down')
-	 */
-	protected function elevationsFor(array $data)
+    /**
+     * @param array $data activity data
+     * @return array ('total', 'up', 'down')
+     */
+    protected function elevationsFor(array $data)
     {
-		if (isset($this->ElevationResults[$data['routeid']])) {
-			return $this->ElevationResults[$data['routeid']];
-		}
+        if (isset($this->ElevationResults[$data['routeid']])) {
+            return $this->ElevationResults[$data['routeid']];
+        }
 
-		if (isset($data['elevation']) && isset($data['elevation_up']) && isset($data['elevation_down'])) {
-			return array($data['elevation'], $data['elevation_up'], $data['elevation_down']);
-		}
+        if (isset($data['elevation']) && isset($data['elevation_up']) && isset($data['elevation_down'])) {
+            return array($data['elevation'], $data['elevation_up'], $data['elevation_down']);
+        }
 
-		return array($data['training_elevation'], $data['training_elevation'], $data['training_elevation']);
-	}
+        return array($data['training_elevation'], $data['training_elevation'], $data['training_elevation']);
+    }
 
-	/**
-	 * Prepare statement
-	 * @return \PDOStatement
-	 */
-	protected function prepareUpdate()
+    /**
+     * @return \PDOStatement
+     */
+    protected function prepareUpdate()
     {
-		$Set = $this->updateSet();
+        $Set = $this->updateSet();
 
-		foreach ($Set as $i => $key) {
-			$Set[$i] = '`'.$key.'`=:'.$key;
-		}
+        foreach ($Set as $i => $key) {
+            $Set[$i] = '`'.$key.'`=:'.$key;
+        }
 
-		$Query = 'UPDATE `'.$this->DatabasePrefix.'training` SET '.implode(',', $Set).' WHERE `id`=:id LIMIT 1';
+        $Query = 'UPDATE `'.$this->DatabasePrefix.'training` SET '.implode(',', $Set).' WHERE `id`=:id LIMIT 1';
 
-		return $this->PDO->prepare($Query);
-	}
+        return $this->PDO->prepare($Query);
+    }
 
-	/**
-	 * Keys to update
-	 * @return array
-	 */
-	protected function updateSet()
+    /**
+     * @return array
+     */
+    protected function updateSet()
     {
-		$Set = array();
+        $Set = array();
 
-		if ($this->isRequested(self::ELEVATION) && $this->isRequested(self::ELEVATION_OVERWRITE)) {
-			$Set[] = 'elevation';
-		}
+        if ($this->isRequested(self::ELEVATION) && $this->isRequested(self::ELEVATION_OVERWRITE)) {
+            $Set[] = 'elevation';
+        }
 
-		if ($this->isRequested(self::VDOT)) {
-			$Set[] = 'vdot';
-			$Set[] = 'vdot_by_time';
-			$Set[] = 'vdot_with_elevation';
-		}
+        if ($this->isRequested(self::VO2MAX)) {
+            $Set[] = 'vdot';
+            $Set[] = 'vdot_by_time';
+            $Set[] = 'vdot_with_elevation';
+        }
 
-		if ($this->isRequested(self::TRIMP)) {
-			$Set[] = 'trimp';
-		}
+        if ($this->isRequested(self::TRIMP)) {
+            $Set[] = 'trimp';
+        }
 
-		return $Set;
-	}
+        return $Set;
+    }
 
-	/**
-	 * Get query statement
-	 * @return \PDOStatement
-	 */
-	protected function getQuery()
+    /**
+     * @return \PDOStatement
+     */
+    protected function getQuery()
     {
-		return $this->PDO->query(
-			'SELECT
+        return $this->PDO->query(
+            'SELECT
 				`'.$this->DatabasePrefix.'training`.`id`,
 				`'.$this->DatabasePrefix.'training`.`routeid`,
 				`'.$this->DatabasePrefix.'training`.`sportid`,
@@ -218,6 +190,6 @@ class JobLoop extends Job
 			LEFT JOIN `'.$this->DatabasePrefix.'trackdata` ON `'.$this->DatabasePrefix.'trackdata`.`activityid` = `'.$this->DatabasePrefix.'training`.`id`
 			LEFT JOIN `'.$this->DatabasePrefix.'route` ON `'.$this->DatabasePrefix.'route`.`id` = `'.$this->DatabasePrefix.'training`.`routeid`
 			WHERE `'.$this->DatabasePrefix.'training`.`accountid` = '.$this->AccountId
-		);
-	}
+        );
+    }
 }

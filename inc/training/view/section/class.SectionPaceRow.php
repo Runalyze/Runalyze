@@ -71,7 +71,7 @@ class SectionPaceRow extends TrainingViewSectionRowTabbedPlot {
 	 */
 	protected function addCalculations() {
 		if ($this->Context->dataview()->vdot()->value() > 0) {
-			$this->BoxedValues[] = new BoxedValue(Helper::Unknown($this->Context->dataview()->vdot()->value(), '-'), '', __('Effective VO2max'), $this->Context->dataview()->vdotIcon());
+			$this->BoxedValues[] = new BoxedValue(Helper::Unknown($this->Context->dataview()->vdot()->value(), '-'), '', __('Effective VO<sub>2</sub>max'), $this->Context->dataview()->vdotIcon());
 		}
 	}
 
@@ -82,7 +82,7 @@ class SectionPaceRow extends TrainingViewSectionRowTabbedPlot {
 		if ($this->Context->dataview()->vdot()->value() > 0) {
 			if (!Request::isOnSharedPage()) {
 				$Linker = new Activity\Linker($this->Context->activity());
-				$InfoLink = Ajax::window('<a href="'.$Linker->urlToVO2maxinfo().'">'.__('More about VO2max estimation').'</a>', 'small');
+				$InfoLink = Ajax::window('<a href="'.$Linker->urlToVO2maxinfo().'">'.__('More about VO<sub>2</sub>max estimation').'</a>', 'small');
 
 				$this->Footer = HTML::info( $InfoLink );
 			}

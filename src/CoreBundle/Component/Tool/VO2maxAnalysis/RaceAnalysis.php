@@ -4,7 +4,7 @@ namespace Runalyze\Bundle\CoreBundle\Component\Tool\VO2maxAnalysis;
 
 use Runalyze\Activity\Distance;
 use Runalyze\Activity\Duration;
-use Runalyze\Calculation\JD\VDOTCorrector;
+use Runalyze\Calculation\JD\LegacyEffectiveVO2maxCorrector;
 use Runalyze\Model;
 use Runalyze\Sports\Running\Prognosis\VO2max;
 use Runalyze\Util\LocalTime;
@@ -153,7 +153,7 @@ class RaceAnalysis
      */
     public function getCorrectionFactor()
     {
-        return (new VDOTCorrector())->fromActivity($this->Activity);
+        return (new LegacyEffectiveVO2maxCorrector())->fromActivity($this->Activity);
     }
 
     /**

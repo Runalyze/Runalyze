@@ -44,7 +44,7 @@ class ShapeTest extends \PHPUnit_Framework_TestCase {
 			);
 		');
 
-		VDOTCorrector::setGlobalFactor(1.0);
+		LegacyEffectiveVO2maxCorrector::setGlobalFactor(1.0);
 	}
 	protected function tearDown() {
 		$this->PDO->exec('DROP TABLE `'.PREFIX.'training`');
@@ -120,7 +120,7 @@ class ShapeTest extends \PHPUnit_Framework_TestCase {
 
 	public function testCorrector() {
 		$Shape = new ShapeFake($this->PDO, 1, 1, new CategoryFake());
-		$Shape->setCorrector(new VDOTCorrector(0.9));
+		$Shape->setCorrector(new LegacyEffectiveVO2maxCorrector(0.9));
 		$Shape->calculate();
 
 		$this->assertEquals(50, $Shape->uncorrectedValue());

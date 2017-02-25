@@ -257,7 +257,7 @@ class Data extends \Runalyze\Configuration\Category {
 	 * @return float new factor
 	 */
 	public function recalculateVDOTcorrector() {
-		$Corrector = new JD\VDOTCorrector;
+		$Corrector = new JD\LegacyEffectiveVO2maxCorrector;
 		$Corrector->fromDatabase(
 			DB::getInstance(),
 			SessionAccountHandler::getId(),
@@ -280,7 +280,7 @@ class Data extends \Runalyze\Configuration\Category {
 			Configuration::General()->runningSport(),
 			Configuration::Vdot()
 		);
-		$Shape->setCorrector(new JD\VDOTCorrector($this->vdotFactor()));
+		$Shape->setCorrector(new JD\LegacyEffectiveVO2maxCorrector($this->vdotFactor()));
 		$Shape->calculate();
 
 		$this->updateVdotShape( $Shape->value() );

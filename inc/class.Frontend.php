@@ -146,7 +146,7 @@ class Frontend {
 
 		Configuration::loadAll();
 
-		\Runalyze\Calculation\JD\VDOTCorrector::setGlobalFactor( Configuration::Data()->vdotFactor() );
+		\Runalyze\Calculation\JD\LegacyEffectiveVO2maxCorrector::setGlobalFactor( Configuration::Data()->vdotFactor() );
 
 		require_once FRONTEND_PATH.'class.Helper.php';
 	}

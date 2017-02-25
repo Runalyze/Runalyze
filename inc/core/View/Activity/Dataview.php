@@ -24,9 +24,9 @@ use Runalyze\Activity\HeartRate;
 use Runalyze\Activity\Pace;
 use Runalyze\Activity\StrideLength;
 use Runalyze\Activity\VerticalRatio;
-use Runalyze\Calculation\JD\VDOT;
-use Runalyze\Calculation\JD\VDOTCorrector;
-use Runalyze\View\Icon\VdotIcon;
+use Runalyze\Calculation\JD\LegacyEffectiveVO2max;
+use Runalyze\Calculation\JD\LegacyEffectiveVO2maxCorrector;
+use Runalyze\View\Icon\EffectiveVO2maxIcon;
 use Runalyze\Context as GeneralContext;
 use Runalyze\Util\Time;
 use Runalyze\Util\LocalTime;
@@ -85,7 +85,8 @@ class Dataview {
 
 	/**
 	 * VDOT
-	 * @var \Runalyze\Calculation\JD\VDOT
+	 *
+*@var \Runalyze\Calculation\JD\LegacyEffectiveVO2max
 	 */
 	protected $VDOT = null;
 
@@ -576,13 +577,14 @@ class Dataview {
 
 	/**
 	 * VDOT
-	 * @return \Runalyze\Calculation\JD\VDOT
+	 *
+*@return \Runalyze\Calculation\JD\LegacyEffectiveVO2max
 	 */
 	public function vdot() {
 		$self = $this;
 
 		return $this->object($this->VDOT, function($Activity) use($self){
-			return new VDOT($self->usedVdot(), new VDOTCorrector);
+			return new LegacyEffectiveVO2max($self->usedVdot(), new LegacyEffectiveVO2maxCorrector);
 		});
 	}
 
@@ -608,7 +610,7 @@ class Dataview {
 		$value = $this->usedVdot() * Configuration::Data()->vdotFactor();
 
 		if ($value > 0) {
-			$Icon = new VdotIcon($value);
+			$Icon = new EffectiveVO2maxIcon($value);
 
 			if (!$this->Activity->usesVDOT()) {
 				$Icon->setTransparent();
