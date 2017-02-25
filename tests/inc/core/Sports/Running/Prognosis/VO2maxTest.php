@@ -51,7 +51,7 @@ class VO2maxTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    public function testGetAdjustedVdotForDistanceIfWanted()
+    public function testGetAdjustedVO2maxForDistanceIfWanted()
     {
         $this->VO2max->setEffectiveVO2max(30.0);
         $this->VO2max->adjustForMarathonShape(true);
@@ -66,7 +66,7 @@ class VO2maxTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(30.0, $this->VO2max->getAdjustedVO2maxForDistanceIfWanted(50.0));
     }
 
-    public function testGetAdjustedVdorForDistance()
+    public function testGetAdjustedVO2maxForDistance()
     {
         $this->VO2max->setEffectiveVO2max(30.0);
         $this->VO2max->setMarathonShape(0.0);

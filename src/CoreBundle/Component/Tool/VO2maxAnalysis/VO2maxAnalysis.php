@@ -17,13 +17,13 @@ class VO2maxAnalysis
     /** @var int */
     protected $RunningSportId;
 
-    /** @var Configuration\Category\Vdot */
+    /** @var Configuration\Category\VO2max */
     protected $VO2maxConfig;
 
     /**
-     * @param Configuration\Category\Vdot $vo2maxConfig
+     * @param Configuration\Category\VO2max $vo2maxConfig
      */
-    public function __construct(Configuration\Category\Vdot $vo2maxConfig)
+    public function __construct(Configuration\Category\VO2max $vo2maxConfig)
     {
         $this->VO2maxConfig = $vo2maxConfig;
     }

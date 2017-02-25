@@ -82,16 +82,16 @@ class JobGeneral extends Job
 
     protected function recalculateVO2maxshape()
     {
-        $oldValue = Configuration::Data()->vdotShape();
-        $newValue = Configuration::Data()->recalculateVDOTshape();
+        $oldValue = Configuration::Data()->vo2maxShape();
+        $newValue = Configuration::Data()->recalculateVO2maxShape();
 
         $this->addSuccessMessage(__('VO<sub>2</sub>max shape'), number_format($oldValue, 1), number_format($newValue, 1));
     }
 
     protected function recalculateVO2maxcorrector()
     {
-        $oldValue = Configuration::Data()->vdotCorrector();
-        $newValue = Configuration::Data()->recalculateVDOTcorrector();
+        $oldValue = Configuration::Data()->vo2maxCorrector();
+        $newValue = Configuration::Data()->recalculateVO2maxCorrector();
 
         $this->addSuccessMessage(__('VO<sub>2</sub>max corrector'), number_format($oldValue, 4), number_format($newValue, 4));
     }

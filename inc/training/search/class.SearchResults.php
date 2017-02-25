@@ -132,7 +132,6 @@ class SearchResults {
 			'fit_hrv_analysis',
 			'fit_training_effect',
 			'fit_performance_condition',
-			'jd_intensity',
 			'rpe',
 			'trimp',
 			'cadence',
@@ -420,7 +419,7 @@ class SearchResults {
 		} elseif ($key == 'wind_speed') {
 			$value = (new WindSpeed())->setInPreferredUnit($value)->value();
 		} elseif (($key == 'vdot' || $key == 'vdot_with_elevation')) {
-			$value /= Configuration::Data()->vdotFactor();
+			$value /= Configuration::Data()->vo2maxCorrectionFactor();
 		} elseif ($key == 'kcal') {
 			$value = (new Energy())->setInPreferredUnit($value)->kcal();
 		} elseif ($key == 'fit_recovery_time') {
@@ -548,7 +547,7 @@ class SearchResults {
 		$order = (!isset($_POST['search-sort-order'])) ? 'DESC' : $this->DB->escape($_POST['search-sort-order'], false);
 
 		if (isset($_POST['search-sort-by'])) {
-			if ($_POST['search-sort-by'] == 'vdot' && Configuration::Vdot()->useElevationCorrection()) {
+			if ($_POST['search-sort-by'] == 'vdot' && Configuration::VO2max()->useElevationCorrection()) {
 				return ' ORDER BY IF(`t`.`vdot_with_elevation`>0, `t`.`vdot_with_elevation`, `t`.`vdot`) '.$order;
 			}
 

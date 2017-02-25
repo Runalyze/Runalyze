@@ -77,7 +77,7 @@ class RaceAnalysis
      */
     public function getVO2maxByTime()
     {
-        return $this->Activity->vdotByTime();
+        return $this->Activity->vo2maxByTime();
     }
 
     /**
@@ -93,7 +93,7 @@ class RaceAnalysis
      */
     public function getVO2maxByHeartRate()
     {
-        return $this->Activity->vdotByHeartRate();
+        return $this->Activity->vo2maxByHeartRate();
     }
 
     /**
@@ -101,7 +101,7 @@ class RaceAnalysis
      */
     public function getPrognosisByHeartRate()
     {
-        return $this->prognosisFor($this->Activity->vdotByHeartRate(), $this->Activity->distance());
+        return $this->prognosisFor($this->Activity->vo2maxByHeartRate(), $this->Activity->distance());
     }
 
     /**
@@ -109,7 +109,7 @@ class RaceAnalysis
      */
     public function getVO2maxByHeartRateAfterCorrection()
     {
-        return $this->VO2maxFactor * $this->Activity->vdotByHeartRate();
+        return $this->VO2maxFactor * $this->Activity->vo2maxByHeartRate();
     }
 
     /**
@@ -117,7 +117,7 @@ class RaceAnalysis
      */
     public function getPrognosisByHeartRateAfterCorrection()
     {
-        return $this->prognosisFor($this->VO2maxFactor * $this->Activity->vdotByHeartRate(), $this->Activity->distance());
+        return $this->prognosisFor($this->VO2maxFactor * $this->Activity->vo2maxByHeartRate(), $this->Activity->distance());
     }
 
     /**

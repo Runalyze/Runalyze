@@ -142,7 +142,7 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 	 */
 	protected function before() {
 		$this->updateIfActivityWasAtNight();
-        $this->updateVDOTAndIntensityAndTrimp();
+        $this->updateVO2maxAndTrimp();
         $this->updatePower();
         $this->updateStrideLength();
         $this->updateVerticalRatio();
@@ -168,7 +168,7 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 		}
 	}
 
-	protected function updateVDOTAndIntensityAndTrimp() {
+	protected function updateVO2maxAndTrimp() {
 		$Calculator = new \Runalyze\Calculation\Activity\Calculator(
 			$this->NewObject,
 			$this->Trackdata,
@@ -178,9 +178,9 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 		if ($this->NewObject->sportid() == Configuration::General()->runningSport()) {
 			$wasNotRunning = $this->knowsOldObject() && $this->hasChanged(Entity::SPORTID);
 			if ($this->ForceRecalculations || $wasNotRunning || $this->hasChanged(Entity::TIME_IN_SECONDS) || $this->hasChanged(Entity::DISTANCE) || $this->hasChanged(Entity::HR_AVG) || $this->hasChanged(Entity::ELEVATION)) {
-				$this->NewObject->set(Entity::VDOT_BY_TIME, $Calculator->calculateVDOTbyTime());
-				$this->NewObject->set(Entity::VDOT, $Calculator->calculateVDOTbyHeartRate());
-				$this->NewObject->set(Entity::VDOT_WITH_ELEVATION, $Calculator->calculateVDOTbyHeartRateWithElevation());
+				$this->NewObject->set(Entity::VO2MAX_BY_TIME, $Calculator->estimateVO2maxByTime());
+				$this->NewObject->set(Entity::VO2MAX, $Calculator->estimateVO2maxByHeartRate());
+				$this->NewObject->set(Entity::VO2MAX_WITH_ELEVATION, $Calculator->estimateVO2maxByHeartRateWithElevation());
 			}
 		} else {
 			$this->NewObject->unsetRunningValues();
@@ -291,8 +291,8 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 		$this->updateStartTime();
 
 		if ($this->sportIsOrWasRunning()) {
-			$this->updateVDOTshape();
-			$this->updateVDOTcorrector();
+			$this->updateVO2maxShape();
+			$this->updateVO2maxCorrector();
 			$this->updateBasicEndurance();
 		}
 	}
@@ -344,27 +344,27 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 	}
 
 	/**
-	 * Update vdot shape
+	 * Update vo2max shape
 	 *
 	 * This method assumes that the activity is or was marked as running.
 	 */
-	protected function updateVDOTshape() {
-		$timestampLimit = time() - Configuration::Vdot()->days() * DAY_IN_S;
+	protected function updateVO2maxShape() {
+		$timestampLimit = time() - Configuration::VO2max()->days() * DAY_IN_S;
 
 		if (
 			$this->hasChanged(Entity::SPORTID) ||
 			(
-				$this->hasChanged(Entity::USE_VDOT) &&
+				$this->hasChanged(Entity::USE_VO2MAX) &&
 				(
 					$this->NewObject->timestamp() >= $timestampLimit ||
 					($this->knowsOldObject() && $this->OldObject->timestamp() > $timestampLimit)
 				)
 			) ||
 			(
-				$this->NewObject->usesVDOT() &&
+				$this->NewObject->usesVO2max() &&
 				(
-					$this->hasChanged(Entity::VDOT) ||
-					$this->hasChanged(Entity::VDOT_WITH_ELEVATION) ||
+					$this->hasChanged(Entity::VO2MAX) ||
+					$this->hasChanged(Entity::VO2MAX_WITH_ELEVATION) ||
 					(
 						$this->hasChanged(Entity::TIMESTAMP) &&
 						$this->knowsOldObject() &&
@@ -376,30 +376,30 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 				)
 			)
 		) {
-			Configuration::Data()->recalculateVDOTshape();
+			Configuration::Data()->recalculateVO2maxShape();
 		}
 	}
 
 	/**
-	 * Update vdot corrector
+	 * Update vo2max corrector
 	 *
 	 * This method assumes that the activity is or was marked as running.
 	 */
-	protected function updateVDOTcorrector() {
+	protected function updateVO2maxCorrector() {
 		if (
 			(
 				$this->hasChanged(Entity::SPORTID) ||
-				$this->hasChanged(Entity::USE_VDOT) ||
+				$this->hasChanged(Entity::USE_VO2MAX) ||
 				(
-					$this->NewObject->usesVDOT() &&
-					$this->hasChanged(Entity::VDOT)
+					$this->NewObject->usesVO2max() &&
+					$this->hasChanged(Entity::VO2MAX)
 				)
 			) &&
 			(
 				!\Runalyze\Context::Factory()->raceresult($this->NewObject->id())->isEmpty()
 			)
 		) {
-			Configuration::Data()->recalculateVDOTcorrector();
+			Configuration::Data()->recalculateVO2maxCorrector();
 		}
 	}
 

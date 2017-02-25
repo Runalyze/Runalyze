@@ -7,7 +7,7 @@ use Runalyze\Activity\Elevation;
 use Runalyze\Calculation;
 use Runalyze\Calculation\JD;
 use Runalyze\Configuration\Category\Data;
-use Runalyze\Configuration\Category\Vdot;
+use Runalyze\Configuration\Category\VO2max;
 use Runalyze\View\Activity\Context;
 
 class EffectiveVO2maxInfo
@@ -18,7 +18,7 @@ class EffectiveVO2maxInfo
     /** @var null|Data */
     protected $DataConfig = null;
 
-    /** @var null|Vdot */
+    /** @var null|VO2max */
     protected $VO2maxConfig = null;
 
     /**
@@ -31,11 +31,11 @@ class EffectiveVO2maxInfo
 
     /**
      * @param Data $dataConfig
-     * @param Vdot $vo2maxConfig
+     * @param VO2max $vo2maxConfig
      *
      * @todo Configuration should be passed via automatic DI as soon as we have a configuration service
      */
-    public function setConfiguration(Data $dataConfig, Vdot $vo2maxConfig)
+    public function setConfiguration(Data $dataConfig, VO2max $vo2maxConfig)
     {
         $this->DataConfig = $dataConfig;
         $this->VO2maxConfig = $vo2maxConfig;
@@ -59,7 +59,7 @@ class EffectiveVO2maxInfo
         return [
             'distance' => $this->Context->dataview()->distance(),
             'duration' => $this->Context->dataview()->duration()->string(),
-            'vo2max' => number_format($this->Context->activity()->vdotByTime(), 2)
+            'vo2max' => number_format($this->Context->activity()->vo2maxByTime(), 2)
         ];
     }
 
@@ -69,8 +69,8 @@ class EffectiveVO2maxInfo
     public function getHeartRateCalculationDetails()
     {
         $VO2max = new JD\LegacyEffectiveVO2max(
-            $this->Context->activity()->vdotByHeartRate(),
-            new JD\LegacyEffectiveVO2maxCorrector($this->DataConfig->vdotFactor())
+            $this->Context->activity()->vo2maxByHeartRate(),
+            new JD\LegacyEffectiveVO2maxCorrector($this->DataConfig->vo2maxCorrectionFactor())
         );
         $vVO2maxinPercent = JD\LegacyEffectiveVO2max::percentageAt($this->Context->activity()->hrAvg() / $this->DataConfig->HRmax());
 
@@ -87,12 +87,12 @@ class EffectiveVO2maxInfo
     public function getCorrectionFactorDetails()
     {
         $VO2max = new JD\LegacyEffectiveVO2max(
-            $this->Context->activity()->vdotByHeartRate(),
-            new JD\LegacyEffectiveVO2maxCorrector($this->DataConfig->vdotFactor())
+            $this->Context->activity()->vo2maxByHeartRate(),
+            new JD\LegacyEffectiveVO2maxCorrector($this->DataConfig->vo2maxCorrectionFactor())
         );
 
         return [
-            'factor' => $this->DataConfig->vdotFactor(),
+            'factor' => $this->DataConfig->vo2maxCorrectionFactor(),
             'vo2max' => $VO2max->value(),
             'uncorrected' => $VO2max->uncorrectedValue()
         ];
@@ -107,7 +107,7 @@ class EffectiveVO2maxInfo
 
         $Modifier = new Calculation\Elevation\DistanceModifier($this->Context->activity()->distance(), $up, $down, $this->VO2maxConfig);
 
-        $VO2max = new JD\LegacyEffectiveVO2max(0, new JD\LegacyEffectiveVO2maxCorrector($this->DataConfig->vdotFactor()));
+        $VO2max = new JD\LegacyEffectiveVO2max(0, new JD\LegacyEffectiveVO2maxCorrector($this->DataConfig->vo2maxCorrectionFactor()));
         $VO2max->fromPaceAndHR(
             $Modifier->correctedDistance(),
             $this->Context->activity()->duration(),
@@ -153,11 +153,11 @@ class EffectiveVO2maxInfo
     public function getActivityVO2max()
     {
         if ($this->VO2maxConfig->useElevationCorrection()) {
-            $vo2max = $this->Context->activity()->vdotWithElevation();
+            $vo2max = $this->Context->activity()->vo2maxWithElevation();
         } else  {
-            $vo2max = $this->Context->activity()->vdotByHeartRate();
+            $vo2max = $this->Context->activity()->vo2maxByHeartRate();
         }
 
-        return $vo2max * $this->DataConfig->vdotFactor();
+        return $vo2max * $this->DataConfig->vo2maxCorrectionFactor();
     }
 }

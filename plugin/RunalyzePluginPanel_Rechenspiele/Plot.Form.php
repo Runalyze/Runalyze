@@ -1,6 +1,6 @@
 <?php
 /**
- * Draw analyse of training: ATL/CTL/VDOT
+ * Draw analyse of training: ATL/CTL/VO2MAX
  * Call:   include Plot.form.php
  * @package Runalyze\Plugins\Panels
  */
@@ -17,9 +17,9 @@ $DataFailed     = false;
 $BasicEndurance = array();
 $ATLs           = array();
 $CTLs           = array();
-$VDOTs          = array();
+$VO2MAXs          = array();
 $TRIMPs         = array();
-$VDOTsday       = array();
+$VO2MAXsday       = array();
 $maxTrimp=0;
 
 $All      = 1*($timerange == 'all'); //0 or 1
@@ -30,7 +30,7 @@ $Year     = $All || $lastHalf || $lastYear ? date('Y') : (int)$timerange;
 $BasicEnduranceObj = new BasicEndurance();
 $BasicEnduranceObj->readSettingsFromConfiguration();
 
-$VDOTdays = Configuration::Vdot()->days();
+$VO2MAXdays = Configuration::VO2max()->days();
 $ATLdays = Configuration::Trimp()->daysForATL();
 $CTLdays = Configuration::Trimp()->daysForCTL();
 $BEkmDays = $BasicEnduranceObj->getDaysForWeekKm();
@@ -52,23 +52,23 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 		$EndTime = mktime(23, 59, 0, 12, 31, $Year);
 	}
 
-	$AddDays      = max(3*max($ATLdays, $CTLdays, $VDOTdays), $BEkmDays, $BElongjogsDays);
+	$AddDays      = max(3*max($ATLdays, $CTLdays, $VO2MAXdays), $BEkmDays, $BElongjogsDays);
 	$NumberOfDays = Time::diffInDays($StartTime, $EndTime);
 	$StartYear    = date('Y', $StartTime);
 	$EndYear      = date('Y', $EndTime);
 
 	$EmptyArray    = array_fill(0, $NumberOfDays + $AddDays + 2, 0);
 	$Trimps_raw    = $EmptyArray;
-	$VDOTs_raw     = $EmptyArray;
+	$VO2MAXs_raw     = $EmptyArray;
 	$Durations_raw = $EmptyArray;
 	$Distances_raw = $EmptyArray;
 	$Longjogs_raw  = array_fill(0, $NumberOfDays + $AddDays + 2, array());
 
-	// Here VDOT will be implemented again
+	// Here VO2MAX will be implemented again
 	// Normal functions are too slow, calling them for each day would trigger each time a query
-	// - VDOT: AVG(`vdot`) for Configuration::Vdot()->days()
+	// - VO2MAX: AVG(`vdot`) for Configuration::Vdot()->days()
 
-	$withElevation = Configuration::Vdot()->useElevationCorrection();
+	$withElevation = Configuration::VO2max()->useElevationCorrection();
 	$StartDay = LocalTime::fromServerTime($StartTime)->format('Y-m-d');
 
 	// Can't cache until we can invalidate it
@@ -77,8 +77,8 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 			DATEDIFF(FROM_UNIXTIME(`time`), "'.$StartDay.'") as `index`,
 			`trimp`,
 			`distance`,
-			'.JD\Shape::mysqlVDOTsum($withElevation).' as `vdot_weighted`,
-			'.JD\Shape::mysqlVDOTsumTime($withElevation).' as `vdot_sum_time`,
+			'.JD\Shape::mysqlVO2MAXsum($withElevation).' as `vdot_weighted`,
+			'.JD\Shape::mysqlVO2MAXsumTime($withElevation).' as `vdot_sum_time`,
 			`sportid` = "'.Configuration::General()->runningSport().'" as `is_running`
 		FROM `'.PREFIX.'training`
 		WHERE
@@ -99,7 +99,7 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 			}
 
 			if ($activity['vdot_weighted'] != 0) {
-				$VDOTs_raw[$index]     += $activity['vdot_weighted'];
+				$VO2MAXs_raw[$index]     += $activity['vdot_weighted'];
 				$Durations_raw[$index] += $activity['vdot_sum_time'];
 			}
 		}
@@ -140,7 +140,7 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 	}
 
 	$StartTime = strtotime($StartDay) + DAY_IN_S * 0.5;
-	$vdotFactor = Configuration::Data()->vdotFactor();
+	$vo2maxFactor = Configuration::Data()->vo2maxCorrectionFactor();
 
 	for ($d = $LowestIndex; $d <= $HighestIndex; $d++) {
 		$index = ($StartTime + DAY_IN_S * ($d - $AddDays)) . '000';
@@ -154,15 +154,15 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 			$maxTrimp = $Trimps_raw[$d];
 		}
 
-		$VDOT_slice      = array_slice($VDOTs_raw, $d - $VDOTdays, $VDOTdays);
-		$Durations_slice = array_slice($Durations_raw, $d - $VDOTdays, $VDOTdays);
-		$VDOT_sum        = array_sum($VDOT_slice);
+		$VO2MAX_slice      = array_slice($VO2MAXs_raw, $d - $VO2MAXdays, $VO2MAXdays);
+		$Durations_slice = array_slice($Durations_raw, $d - $VO2MAXdays, $VO2MAXdays);
+		$VO2MAX_sum        = array_sum($VO2MAX_slice);
 		$Durations_sum   = array_sum($Durations_slice);
 
-		if (count($VDOT_slice) != 0 && $Durations_sum != 0) {
-			$VDOTs[$index] = $vdotFactor * ($VDOT_sum / $Durations_sum);
+		if (count($VO2MAX_slice) != 0 && $Durations_sum != 0) {
+			$VO2MAXs[$index] = $vo2maxFactor * ($VO2MAX_sum / $Durations_sum);
 
-			$BasicEnduranceObj->setEffectiveVO2max($VDOTs[$index]);
+			$BasicEnduranceObj->setEffectiveVO2max($VO2MAXs[$index]);
 			$currentKmSum = array_sum(array_slice($Distances_raw, $d - $BEkmDays, $BEkmDays));
 			$longJogPoints = 0;
 
@@ -175,8 +175,8 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 			$BasicEndurance[$index] = $BasicEnduranceObj->asArray(0, ['km' => $currentKmSum, 'sum' => $longJogPoints])['percentage'];
 		}
 
-		if ($VDOTs_raw[$d]) {
-			$VDOTsday[$index] = $vdotFactor * ($VDOTs_raw[$d] / $Durations_raw[$d]);
+		if ($VO2MAXs_raw[$d]) {
+			$VO2MAXsday[$index] = $vo2maxFactor * ($VO2MAXs_raw[$d] / $Durations_raw[$d]);
 		}
 	}
 } else {
@@ -192,9 +192,9 @@ if ($perfmodel == 'banister') {
 }
 
 $Plot->Data[] = array('label' => __('Fatigue (ATL)'), 'color' => '#CC2222', 'data' => $ATLs);
-$Plot->Data[] = array('label' => __('avg VDOT'), 'color' => '#000000', 'data' => $VDOTs, 'yaxis' => 2);
+$Plot->Data[] = array('label' => __('avg VO2MAX'), 'color' => '#000000', 'data' => $VO2MAXs, 'yaxis' => 2);
 $Plot->Data[] = array('label' => 'TRIMP', 'color' => '#5555FF', 'data' => $TRIMPs, 'yaxis' => 3);
-$Plot->Data[] = array('label' => __('day VDOT'), 'color' => '#444444', 'data' => $VDOTsday, 'yaxis' => 2);
+$Plot->Data[] = array('label' => __('day VO2MAX'), 'color' => '#444444', 'data' => $VO2MAXsday, 'yaxis' => 2);
 $Plot->Data[] = array('label' => __('Marathon shape'), 'color' => '#CC9322', 'data' => $BasicEndurance, 'yaxis' => 4);
 
 $Plot->setMarginForGrid(5);

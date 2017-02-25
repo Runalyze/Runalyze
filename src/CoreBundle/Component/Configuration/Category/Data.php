@@ -13,8 +13,8 @@ class Data extends AbstractCategory
             'START_TIME' => '0',
             'HF_MAX' => '200',
             'HF_REST' => '60',
-            'VDOT_FORM' => '0.0',
-            'VDOT_CORRECTOR' => '1.0',
+            'VO2MAX_FORM' => '0.0',
+            'VO2MAX_CORRECTOR' => '1.0',
             'BASIC_ENDURANCE' => '0',
             'MAX_ATL' => '0',
             'MAX_CTL' => '0',
@@ -27,7 +27,7 @@ class Data extends AbstractCategory
      */
     public function getCurrentVO2maxShape()
     {
-        return (int)$this->Variables['VDOT_FORM'];
+        return (int)$this->Variables['VO2MAX_FORM'];
     }
 
     /**
@@ -35,7 +35,7 @@ class Data extends AbstractCategory
      */
     public function getVO2maxCorrectionFactor()
     {
-        return (float)$this->Variables['VDOT_CORRECTOR'];
+        return (float)$this->Variables['VO2MAX_CORRECTOR'];
     }
 
     /**

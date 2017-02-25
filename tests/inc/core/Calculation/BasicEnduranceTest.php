@@ -53,7 +53,7 @@ class BasicEnduranceTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(0, $this->object->getPercentageForWeekKilometer());
 	}
 
-	public function testThatMinimalVdotIsUsed() {
+	public function testThatMinimalVO2maxIsUsed() {
 		$this->object->setEffectiveVO2max(20);
 		$this->assertEquals(25, $this->object->getUsedEffectiveVO2max());
 	}
@@ -86,7 +86,7 @@ class BasicEnduranceTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(36, $this->object->getRealTargetLongjogKmPerWeek(), '', 1);
 	}
 
-	public function testForVDOT30() {
+	public function testForVO2max30() {
 		$this->object->setEffectiveVO2max(30);
 		$this->object->setDaysToRecognizeForLongjogs(7);
 		$this->object->setDaysToRecognizeForWeekKilometer(7);

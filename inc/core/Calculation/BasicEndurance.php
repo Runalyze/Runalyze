@@ -79,7 +79,7 @@ class BasicEndurance {
 	 * Read settings from configuration
 	 */
 	public function readSettingsFromConfiguration() {
-		$this->EffectiveVO2max = Configuration::Data()->vdot();
+		$this->EffectiveVO2max = Configuration::Data()->vo2max();
 
 		$BasicEndurance = Configuration::BasicEndurance();
 		$this->MIN_KM_FOR_LONGJOG   = $BasicEndurance->minKmForLongjog();

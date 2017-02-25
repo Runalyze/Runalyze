@@ -127,7 +127,7 @@ class JobLoopTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * @see https://github.com/Runalyze/Runalyze/issues/1970
 	 */
-	public function testUsageOfCorrectElevationForVdot()
+	public function testUsageOfCorrectElevationForVO2max()
 	{
 		$this->PDO->exec(
 			'INSERT INTO `runalyze_training` (`id`, `routeid`, `distance`, `s`, `pulse_avg`, `sportid`, `accountid`, `time`) '.
@@ -145,13 +145,13 @@ class JobLoopTest extends \PHPUnit_Framework_TestCase
 		], $this->PDO, 0, 'runalyze_');
 		$Loop->run();
 
-		$vdotElevationDown = $this->PDO->query('SELECT `vdot_with_elevation` FROM `runalyze_training` WHERE `id`=1 LIMIT 1')->fetchColumn();
-		$vdotElevationUp = $this->PDO->query('SELECT `vdot_with_elevation` FROM `runalyze_training` WHERE `id`=2 LIMIT 1')->fetchColumn();
+		$vo2maxElevationDown = $this->PDO->query('SELECT `vdot_with_elevation` FROM `runalyze_training` WHERE `id`=1 LIMIT 1')->fetchColumn();
+		$vo2maxElevationUp = $this->PDO->query('SELECT `vdot_with_elevation` FROM `runalyze_training` WHERE `id`=2 LIMIT 1')->fetchColumn();
 
-		$this->assertGreaterThan($vdotElevationDown, $vdotElevationUp);
+		$this->assertGreaterThan($vo2maxElevationDown, $vo2maxElevationUp);
 	}
 
-	public function testIgnoreVDOTforNotRunning()
+	public function testIgnoreVO2maxForNotRunning()
     {
 		$this->PDO->exec(
 			'INSERT INTO `runalyze_training` (`id`, `distance`, `s`, `pulse_avg`, `sportid`, `accountid`, `time`) '.

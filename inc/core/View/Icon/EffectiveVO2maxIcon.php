@@ -60,7 +60,7 @@ class EffectiveVO2maxIcon extends \Runalyze\View\Icon
     {
         // TODO
         if (null === $currentShape) {
-            $currentShape = Configuration::Data()->vdot();
+            $currentShape = Configuration::Data()->vo2max();
         }
 
         $diff = $value - $currentShape;

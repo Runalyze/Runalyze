@@ -107,7 +107,7 @@ class SectionCompositeRow extends TrainingViewSectionRowTabbedPlot {
 			$this->addCourse();
 		}
 
-		$this->addVdotInfoLink();
+		$this->addVO2maxInfoLink();
 
 		if ($showElevation && $this->Context->hasRoute() && $this->Context->route()->hasElevations()) {
 			$this->addElevationInfoLink();
@@ -132,22 +132,21 @@ class SectionCompositeRow extends TrainingViewSectionRowTabbedPlot {
 	}
 
 	/**
-	 * Add: vdot/intensity
+	 * Add: vo2max
 	 */
 	protected function addCalculations() {
-		if ($this->Context->dataview()->vdot()->value() > 0 || $this->Context->activity()->jdIntensity() > 0) {
-			$this->BoxedValues[] = new BoxedValue(Helper::Unknown($this->Context->dataview()->vdot()->value(), '-'), '', __('VDOT'), $this->Context->dataview()->vdotIcon());
-			$this->BoxedValues[] = new BoxedValue(Helper::Unknown($this->Context->activity()->jdIntensity(), '-'), '', __('Training points'));
+		if ($this->Context->dataview()->vo2max()->value() > 0) {
+			$this->BoxedValues[] = new BoxedValue(Helper::Unknown($this->Context->dataview()->vo2max()->value(), '-'), '', 'VO<sub>2</sub>max', $this->Context->dataview()->effectiveVO2maxIcon());
 		}
 	}
 
 	/**
 	 * Add info link
 	 */
-	protected function addVdotInfoLink() {
-		if (!Request::isOnSharedPage() && $this->Context->dataview()->vdot()->value() > 0) {
+	protected function addVO2maxInfoLink() {
+		if (!Request::isOnSharedPage() && $this->Context->dataview()->vo2max()->value() > 0) {
 			$Linker = new Activity\Linker($this->Context->activity());
-			$InfoLink = Ajax::window('<a href="'.$Linker->urlToVO2maxinfo().'">'.__('More about VDOT calculation').'</a>', 'small');
+			$InfoLink = Ajax::window('<a href="'.$Linker->urlToVO2maxinfo().'">'.__('More about VO<sub>2</sub>max calculation').'</a>', 'small');
 
 			$this->Footer .= HTML::info( $InfoLink );
 		}

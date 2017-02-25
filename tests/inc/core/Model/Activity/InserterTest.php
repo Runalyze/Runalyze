@@ -111,16 +111,15 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
         $this->assertNull($Object->energy());
         $this->assertNull($Object->hrAvg());
         $this->assertNull($Object->hrMax());
-        $this->assertNull($Object->vdotByHeartRate());
-        $this->assertNull($Object->vdotByTime());
-        $this->assertNull($Object->vdotWithElevation());
-        $this->assertFalse($Object->usesVDOT());
+        $this->assertNull($Object->vo2maxByHeartRate());
+        $this->assertNull($Object->vo2maxByTime());
+        $this->assertNull($Object->vo2maxWithElevation());
+        $this->assertFalse($Object->usesVO2max());
         $this->assertNull($Object->fitVO2maxEstimate());
         $this->assertNull($Object->fitRecoveryTime());
         $this->assertNull($Object->fitHRVscore());
 		$this->assertNull($Object->fitTrainingEffect());
         $this->assertNull($Object->fitPerformanceCondition());
-        $this->assertNull($Object->jdIntensity());
 		$this->assertNull($Object->rpe());
         $this->assertNull($Object->trimp());
         $this->assertNull($Object->cadence());
@@ -221,9 +220,9 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 			Entity::SPORTID => Configuration::General()->runningSport()
 		)));
 
-		$this->assertGreaterThan(0, $Object->vdotByTime());
-		$this->assertGreaterThan(0, $Object->vdotByHeartRate());
-		$this->assertGreaterThan(0, $Object->vdotWithElevation());
+		$this->assertGreaterThan(0, $Object->vo2maxByTime());
+		$this->assertGreaterThan(0, $Object->vo2maxByHeartRate());
+		$this->assertGreaterThan(0, $Object->vo2maxWithElevation());
 		$this->assertGreaterThan(0, $Object->trimp());
 	}
 
@@ -235,17 +234,17 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 			Entity::SPORTID => Configuration::General()->runningSport() + 1
 		)));
 
-		$this->assertNull($Object->vdotByTime());
-		$this->assertNull($Object->vdotByHeartRate());
-		$this->assertNull($Object->vdotWithElevation());
+		$this->assertNull($Object->vo2maxByTime());
+		$this->assertNull($Object->vo2maxByHeartRate());
+		$this->assertNull($Object->vo2maxWithElevation());
 		$this->assertGreaterThan(0, $Object->trimp());
 	}
 
-	public function testVDOTshapeUpdate() {
+	public function testVO2maxShapeUpdate() {
 		$current = time();
 		$timeago = mktime(0,0,0,1,1,2000);
 		$running = Configuration::General()->runningSport();
-		Configuration::Data()->updateVdotShape(0);
+		Configuration::Data()->updateVO2maxShape(0);
 
 		$this->insert(array(
 			Entity::TIMESTAMP => $timeago,
@@ -253,7 +252,7 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 			Entity::TIME_IN_SECONDS => 30*60,
 			Entity::HR_AVG => 150,
 			Entity::SPORTID => $running,
-			Entity::USE_VDOT => true
+			Entity::USE_VO2MAX => true
 		));
 		$this->insert(array(
 			Entity::TIMESTAMP => $current,
@@ -261,28 +260,17 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 			Entity::TIME_IN_SECONDS => 30*60,
 			Entity::HR_AVG => 150,
 			Entity::SPORTID => $running + 1,
-			Entity::USE_VDOT => true
+			Entity::USE_VO2MAX => true
 		));
 		$this->insert(array(
 			Entity::TIMESTAMP => $current,
 			Entity::DISTANCE => 10,
 			Entity::TIME_IN_SECONDS => 30*60,
 			Entity::SPORTID => $running,
-			Entity::USE_VDOT => true
+			Entity::USE_VO2MAX => true
 		));
 
-		$this->assertEquals(0, Configuration::Data()->vdotShape());
-
-		$this->insert(array(
-			Entity::TIMESTAMP => $current,
-			Entity::DISTANCE => 10,
-			Entity::TIME_IN_SECONDS => 30*60,
-			Entity::HR_AVG => 150,
-			Entity::SPORTID => $running,
-			Entity::USE_VDOT => true
-		));
-
-		$this->assertNotEquals(0, Configuration::Data()->vdotShape());
+		$this->assertEquals(0, Configuration::Data()->vo2maxShape());
 
 		$this->insert(array(
 			Entity::TIMESTAMP => $current,
@@ -290,10 +278,21 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 			Entity::TIME_IN_SECONDS => 30*60,
 			Entity::HR_AVG => 150,
 			Entity::SPORTID => $running,
-			Entity::USE_VDOT => true
+			Entity::USE_VO2MAX => true
 		));
 
-		$this->assertNotEquals(0, Configuration::Data()->vdotShape());
+		$this->assertNotEquals(0, Configuration::Data()->vo2maxShape());
+
+		$this->insert(array(
+			Entity::TIMESTAMP => $current,
+			Entity::DISTANCE => 10,
+			Entity::TIME_IN_SECONDS => 30*60,
+			Entity::HR_AVG => 150,
+			Entity::SPORTID => $running,
+			Entity::USE_VO2MAX => true
+		));
+
+		$this->assertNotEquals(0, Configuration::Data()->vo2maxShape());
 	}
 
 	public function testWithCalculationsFromAdditionalObjects() {
@@ -321,7 +320,7 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		$Inserter->insert($Activity);
 		$ObjectWith = $this->fetch( $Inserter->insertedID());
 
-		$this->assertGreaterThan($ObjectWithout->vdotWithElevation(), $ObjectWith->vdotWithElevation());
+		$this->assertGreaterThan($ObjectWithout->vo2maxWithElevation(), $ObjectWith->vo2maxWithElevation());
 		$this->assertGreaterThan($ObjectWithout->trimp(), $ObjectWith->trimp());
 	}
 

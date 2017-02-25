@@ -58,7 +58,7 @@ class RunalyzeConfigurationList extends ConfigurationList
             'misc' => Category\Miscellaneous::class,
             'privacy' => Category\Privacy::class,
             'trimp' => Category\Trimp::class,
-            'vdot' => Category\Vdot::class,
+            'vo2max' => Category\VO2max::class,
         ];
     }
 
@@ -195,11 +195,11 @@ class RunalyzeConfigurationList extends ConfigurationList
     }
 
     /**
-     * @return Category\Vdot This category is not persistent, it's created on each call.
+     * @return Category\VO2max This category is not persistent, it's created on each call.
      */
-    public function getVdot()
+    public function getVO2max()
     {
-        return $this->getCategory('vdot');
+        return $this->getCategory('vo2max');
     }
 
     /**
@@ -219,11 +219,11 @@ class RunalyzeConfigurationList extends ConfigurationList
      */
     public function getVO2maxCorrectionFactor()
     {
-        if (is_numeric($this->Variables['vdot.VDOT_MANUAL_CORRECTOR'])) {
-            return (float)$this->Variables['vdot.VDOT_MANUAL_CORRECTOR'];
+        if (is_numeric($this->Variables['vo2max.VO2MAX_MANUAL_CORRECTOR'])) {
+            return (float)$this->Variables['vo2max.VO2MAX_MANUAL_CORRECTOR'];
         }
 
-        return (float)$this->Variables['data.VDOT_CORRECTOR'];
+        return (float)$this->Variables['data.VO2MAX_CORRECTOR'];
     }
 
     /**
@@ -231,7 +231,7 @@ class RunalyzeConfigurationList extends ConfigurationList
      */
     public function useVO2maxCorrectionForElevation()
     {
-        return ('true' == $this->Variables['vdot.VDOT_USE_CORRECTION_FOR_ELEVATION']);
+        return ('true' == $this->Variables['vo2max.VO2MAX_USE_CORRECTION_FOR_ELEVATION']);
     }
 
     /**
@@ -239,10 +239,10 @@ class RunalyzeConfigurationList extends ConfigurationList
      */
     public function getCurrentVO2maxShape()
     {
-        if (is_numeric($this->Variables['vdot.VDOT_MANUAL_VALUE'])) {
-            return (float)$this->Variables['vdot.VDOT_MANUAL_VALUE'];
+        if (is_numeric($this->Variables['vo2max.VO2MAX_MANUAL_VALUE'])) {
+            return (float)$this->Variables['vo2max.VO2MAX_MANUAL_VALUE'];
         }
 
-        return (float)$this->Variables['data.VDOT_FORM'];
+        return (float)$this->Variables['data.VO2MAX_FORM'];
     }
 }

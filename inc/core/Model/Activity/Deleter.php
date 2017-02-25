@@ -89,7 +89,7 @@ class Deleter extends Model\DeleterWithIDAndAccountID {
 	 * Tasks that are only relevant for running
 	 */
 	protected function tasksForRunningActivities() {
-		$this->updateVDOTshape();
+		$this->updateVO2maxShape();
 		$this->updateBasicEndurance();
 	}
 
@@ -152,15 +152,15 @@ class Deleter extends Model\DeleterWithIDAndAccountID {
 	/**
 	 * Update vdot shape and corrector
 	 */
-	protected function updateVDOTshape() {
-		$timestampLimit = time() - Configuration::Vdot()->days() * DAY_IN_S;
+	protected function updateVO2maxShape() {
+		$timestampLimit = time() - Configuration::VO2max()->days() * DAY_IN_S;
 
 		if (
-			$this->Object->vdotByHeartRate() > 0 &&
-			$this->Object->usesVDOT() &&
+			$this->Object->vo2maxByHeartRate() > 0 &&
+			$this->Object->usesVO2max() &&
 			$this->Object->timestamp() > $timestampLimit
 		) {
-			Configuration::Data()->recalculateVDOTshape();
+			Configuration::Data()->recalculateVO2maxShape();
 		}
 	}
 

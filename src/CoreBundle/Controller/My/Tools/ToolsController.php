@@ -104,7 +104,7 @@ class ToolsController extends Controller
         $configuration = $this->get('app.configuration_manager')->getList();
         $correctionFactor = $configuration->getVO2maxCorrectionFactor();
 
-        $analysisTable = new VO2maxAnalysis($configuration->getVdot()->getLegacyCategory());
+        $analysisTable = new VO2maxAnalysis($configuration->getVO2max()->getLegacyCategory());
         $races = $analysisTable->getAnalysisForAllRaces(
             $correctionFactor,
             $configuration->getGeneral()->getRunningSport(),

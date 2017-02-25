@@ -60,16 +60,16 @@ class JobLoop extends Job
         while ($Data = $Query->fetch()) {
             try {
                 $Calculator = $this->calculatorFor($Data);
-                $calculateVdot = ($Data['sportid'] == Configuration::General()->runningSport());
+                $calculateVO2max = ($Data['sportid'] == Configuration::General()->runningSport());
 
                 if ($this->isRequested(self::ELEVATION) && $this->isRequested(self::ELEVATION_OVERWRITE)) {
                     $Update->bindValue(':elevation', $this->elevationsFor($Data)[0]);
                 }
 
                 if ($this->isRequested(self::VO2MAX)) {
-                    $Update->bindValue(':vdot', $calculateVdot ? $Calculator->calculateVDOTbyHeartRate() : 0);
-                    $Update->bindValue(':vdot_by_time', $calculateVdot ? $Calculator->calculateVDOTbyTime() : 0);
-                    $Update->bindValue(':vdot_with_elevation', $calculateVdot ? $Calculator->calculateVDOTbyHeartRateWithElevation() : 0);
+                    $Update->bindValue(':vdot', $calculateVO2max ? $Calculator->estimateVO2maxByHeartRate() : 0);
+                    $Update->bindValue(':vdot_by_time', $calculateVO2max ? $Calculator->estimateVO2maxByTime() : 0);
+                    $Update->bindValue(':vdot_with_elevation', $calculateVO2max ? $Calculator->estimateVO2maxByHeartRateWithElevation() : 0);
                 }
 
                 if ($this->isRequested(self::TRIMP)) {

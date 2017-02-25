@@ -15,7 +15,7 @@ $HIDDEN_KEYS = array(
 	'arr_time', 'arr_lat', 'arr_lon', 'arr_geohashes', 'arr_alt', 'arr_alt_original', 'arr_heart', 'arr_dist', 'arr_cadence', 'arr_power', 'arr_temperature',
 	'arr_groundcontact', 'arr_vertical_oscillation', 'arr_groundcontact_balance', 'arr_smo2_0','arr_smo2_1', 'arr_thb_0', 'arr_thb_1', 'pauses', 'hrv',
 	'fit_vdot_estimate', 'fit_recovery_time', 'fit_hrv_analysis', 'fit_training_effect', 'fit_performance_condition',
-	//'vdot', 'vdot_by_time', 'trimp', 'vdot_with_elevation', 'jd_intensity'
+	//'vdot', 'vdot_by_time', 'trimp', 'vdot_with_elevation'
 	'elapsed_time', 'elevation_calculated', 'groundcontact', 'vertical_oscillation', 'groundcontact_balance', 'vertical_ratio', 'stroke', 'stroketype','total_strokes', 'swolf', 'pool_length', 'weather_source', 'is_night'
 );
 
@@ -309,8 +309,8 @@ $FIELDS = array(
 						'default'	=> '1'
 					),
 					'formular'	=> array(
-						'label'		=> __('VDOT for form'),
-						'help-tooltip'	=> __('VDOTs are estimated from your ratio of heart rate and pace. You can exclude single activities from the calculation of your form and should do so if it\'s heart rate data are not reliable (e.g. a lot of stops, walking breaks, ...).'),
+						'label'		=> __('VO2max for shape'),
+						'help-tooltip'	=> __('VO2max values are estimated from your ratio of heart rate and pace. You can exclude single activities from the calculation of your form and should do so if it\'s heart rate data are not reliable (e.g. a lot of stops, walking breaks, ...).'),
 						'class'		=> 'FormularCheckbox',
 						'css'		=> TrainingFormular::$ONLY_RUNNING_CLASS
 					)
@@ -364,16 +364,6 @@ $FIELDS = array(
 		'formular'	=> array(
 			'hidden'	=> true
 		)
-	),
-	'jd_intensity'		=> array(
-					'database'	=> array(
-						'type'		=> 'smallint',
-						'precision'	=> '4',
-                        'null'		=> true
-					),
-					'formular'	=> array(
-						'hidden'	=> true
-					)
 	),
 	'rpe'		=> array(
 					'database'	=> array(
@@ -884,5 +874,5 @@ $FIELDS = array(
 						'label'		=> __('Pool length'),
 						'unit'		=> FormularUnit::$CM
 					)
-	),   
+	),
 );

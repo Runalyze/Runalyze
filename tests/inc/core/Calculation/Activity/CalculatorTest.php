@@ -16,20 +16,20 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase {
 			Model\Activity\Entity::HR_AVG => 150
 		), null, null));
 
-		$this->assertGreaterThan(0, $Calculator->calculateVDOTbyTime());
-		$this->assertGreaterThan(0, $Calculator->calculateVDOTbyHeartRate());
-		$this->assertGreaterThan(0, $Calculator->calculateVDOTbyHeartRateWithElevation());
+		$this->assertGreaterThan(0, $Calculator->estimateVO2maxByTime());
+		$this->assertGreaterThan(0, $Calculator->estimateVO2maxByHeartRate());
+		$this->assertGreaterThan(0, $Calculator->estimateVO2maxByHeartRateWithElevation());
 		$this->assertGreaterThan(0, $Calculator->calculateTrimp());
 
-		$this->assertGreaterThan($Calculator->calculateVDOTbyTime(), $Calculator->calculateVDOTbyHeartRate());
+		$this->assertGreaterThan($Calculator->estimateVO2maxByTime(), $Calculator->estimateVO2maxByHeartRate());
 	}
 
 	public function testEmptyValues() {
 		$Calculator = new Calculator(new Model\Activity\Entity(), null, null);
 
-		$this->assertEquals(0, $Calculator->calculateVDOTbyTime());
-		$this->assertEquals(0, $Calculator->calculateVDOTbyHeartRate());
-		$this->assertEquals(0, $Calculator->calculateVDOTbyHeartRateWithElevation());
+		$this->assertEquals(0, $Calculator->estimateVO2maxByTime());
+		$this->assertEquals(0, $Calculator->estimateVO2maxByHeartRate());
+		$this->assertEquals(0, $Calculator->estimateVO2maxByHeartRateWithElevation());
 		$this->assertEquals(0, $Calculator->calculateTrimp());
 	}
 
@@ -56,33 +56,33 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase {
 		)));
 
 		$this->assertGreaterThan(
-			$CalculatorOnlyElevation->calculateVDOTbyHeartRateWithElevation(),
-			$CalculatorUpAndDown->calculateVDOTbyHeartRateWithElevation()
+			$CalculatorOnlyElevation->estimateVO2maxByHeartRateWithElevation(),
+			$CalculatorUpAndDown->estimateVO2maxByHeartRateWithElevation()
 		);
 		$this->assertGreaterThan(
-			$CalculatorOnlyDown->calculateVDOTbyHeartRateWithElevation(),
-			$CalculatorOnlyElevation->calculateVDOTbyHeartRateWithElevation()
+			$CalculatorOnlyDown->estimateVO2maxByHeartRateWithElevation(),
+			$CalculatorOnlyElevation->estimateVO2maxByHeartRateWithElevation()
 		);
 		$this->assertGreaterThan(
-			$CalculatorOnlyActivity->calculateVDOTbyHeartRateWithElevation(),
-			$CalculatorOnlyElevation->calculateVDOTbyHeartRateWithElevation()
+			$CalculatorOnlyActivity->estimateVO2maxByHeartRateWithElevation(),
+			$CalculatorOnlyElevation->estimateVO2maxByHeartRateWithElevation()
 		);
 		$this->assertGreaterThan(
-			$CalculatorOnlyActivity->calculateVDOTbyHeartRate(),
-			$CalculatorOnlyActivity->calculateVDOTbyHeartRateWithElevation()
+			$CalculatorOnlyActivity->estimateVO2maxByHeartRate(),
+			$CalculatorOnlyActivity->estimateVO2maxByHeartRateWithElevation()
 		);
 
 		$this->assertEquals(
-			$CalculatorUpAndDown->calculateVDOTbyHeartRateWithElevationFor(500, 100),
-			$CalculatorUpAndDown->calculateVDOTbyHeartRateWithElevation()
+			$CalculatorUpAndDown->estimateVO2maxByHeartRateWithElevationFor(500, 100),
+			$CalculatorUpAndDown->estimateVO2maxByHeartRateWithElevation()
 		);
 		$this->assertEquals(
-			$CalculatorOnlyElevation->calculateVDOTbyHeartRateWithElevationFor(500, 500),
-			$CalculatorOnlyElevation->calculateVDOTbyHeartRateWithElevation()
+			$CalculatorOnlyElevation->estimateVO2maxByHeartRateWithElevationFor(500, 500),
+			$CalculatorOnlyElevation->estimateVO2maxByHeartRateWithElevation()
 		);
 		$this->assertEquals(
-			$CalculatorOnlyActivity->calculateVDOTbyHeartRateWithElevationFor(100, 100),
-			$CalculatorOnlyActivity->calculateVDOTbyHeartRateWithElevation()
+			$CalculatorOnlyActivity->estimateVO2maxByHeartRateWithElevationFor(100, 100),
+			$CalculatorOnlyActivity->estimateVO2maxByHeartRateWithElevation()
 		);
 	}
 

@@ -93,8 +93,8 @@ class LegacyEffectiveVO2maxCorrector
      */
     public function fromActivity(Activity\Entity $activity)
     {
-        if ($activity->vdotByHeartRate() > 0.0) {
-            $this->Factor = $activity->vdotByTime() / $activity->vdotByHeartRate();
+        if ($activity->vo2maxByHeartRate() > 0.0) {
+            $this->Factor = $activity->vo2maxByTime() / $activity->vo2maxByHeartRate();
         } else {
             $this->Factor = 1.0;
         }

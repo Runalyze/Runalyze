@@ -150,9 +150,9 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 			Model\Route\Entity::ELEVATION_DOWN => 100
 		)), true);
 
-		$this->assertEquals($OldObject->vdotByTime(), $Result->vdotByTime());
-		$this->assertEquals($OldObject->vdotByHeartRate(), $Result->vdotByHeartRate());
-		$this->assertGreaterThan($OldObject->vdotWithElevation(), $Result->vdotWithElevation());
+		$this->assertEquals($OldObject->vo2maxByTime(), $Result->vo2maxByTime());
+		$this->assertEquals($OldObject->vo2maxByHeartRate(), $Result->vo2maxByHeartRate());
+		$this->assertGreaterThan($OldObject->vo2maxWithElevation(), $Result->vo2maxWithElevation());
 		$this->assertGreaterThan($OldObject->trimp(), $Result->trimp());
 	}
 
@@ -178,9 +178,9 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 			Entity::SPORTID => Configuration::General()->runningSport()
 		)) );
 
-		$this->assertGreaterThan(0, $OldObject->vdotByTime());
-		$this->assertGreaterThan(0, $OldObject->vdotByHeartRate());
-		$this->assertGreaterThan(0, $OldObject->vdotWithElevation());
+		$this->assertGreaterThan(0, $OldObject->vo2maxByTime());
+		$this->assertGreaterThan(0, $OldObject->vo2maxByHeartRate());
+		$this->assertGreaterThan(0, $OldObject->vo2maxWithElevation());
 		$this->assertGreaterThan(0, $OldObject->trimp());
 
 		$NewObject = clone $OldObject;
@@ -188,19 +188,18 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 
 		$Result = $this->update($NewObject, $OldObject);
 
-		$this->assertEquals(0, $Result->vdotByTime());
-		$this->assertEquals(0, $Result->vdotByHeartRate());
-		$this->assertEquals(0, $Result->vdotWithElevation());
-		$this->assertEquals(0, $Result->jdIntensity());
+		$this->assertEquals(0, $Result->vo2maxByTime());
+		$this->assertEquals(0, $Result->vo2maxByHeartRate());
+		$this->assertEquals(0, $Result->vo2maxWithElevation());
 		$this->assertGreaterThan(0, $Result->trimp());
 	}
 
-	public function testVDOTstatisticsUpdate() {
+	public function testVO2maxStatisticsUpdate() {
 		$current = time();
 		$timeago = mktime(0,0,0,1,1,2000);
 		$running = Configuration::General()->runningSport();
-		Configuration::Data()->updateVdotShape(0);
-		Configuration::Data()->updateVdotCorrector(1);
+		Configuration::Data()->updateVO2maxShape(0);
+		Configuration::Data()->updateVO2maxCorrector(1);
 
 		$Object1 = $this->fetch( $this->insert(array(
 			Entity::TIMESTAMP => $timeago,
@@ -208,25 +207,25 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 			Entity::TIME_IN_SECONDS => 30*60,
 			Entity::HR_AVG => 150,
 			Entity::SPORTID => $running,
-			Entity::USE_VDOT => true
+			Entity::USE_VO2MAX => true
 		)) );
 
-		$this->assertEquals(0, Configuration::Data()->vdotShape());
-		$this->assertEquals(1, Configuration::Data()->vdotFactor());
+		$this->assertEquals(0, Configuration::Data()->vo2maxShape());
+		$this->assertEquals(1, Configuration::Data()->vo2maxCorrectionFactor());
 
 		$Object2 = clone $Object1;
 		$Object2->set(Entity::TIMESTAMP, $current);
 		$this->update($Object2, $Object1);
 
-		$this->assertNotEquals(0, Configuration::Data()->vdotShape());
-		$this->assertEquals(1, Configuration::Data()->vdotFactor());
+		$this->assertNotEquals(0, Configuration::Data()->vo2maxShape());
+		$this->assertEquals(1, Configuration::Data()->vo2maxCorrectionFactor());
 
 		$Object3 = clone $Object2;
 		$Object3->set(Entity::TIMESTAMP, $timeago);
 		$this->update($Object3, $Object2);
 
-		$this->assertEquals(0, Configuration::Data()->vdotShape());
-		$this->assertEquals(1, Configuration::Data()->vdotFactor());
+		$this->assertEquals(0, Configuration::Data()->vo2maxShape());
+		$this->assertEquals(1, Configuration::Data()->vo2maxCorrectionFactor());
 	}
 
 	public function testStartTimeUpdate() {

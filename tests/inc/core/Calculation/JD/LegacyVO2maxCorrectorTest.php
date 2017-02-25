@@ -55,8 +55,8 @@ class LegacyVO2maxCorrectorTest extends \PHPUnit_Framework_TestCase
         $Corrector = new LegacyEffectiveVO2maxCorrector;
         $Corrector->fromActivity(
             $Activity = new Activity\Entity(array(
-                Activity\Entity::VDOT_BY_TIME => 45,
-                Activity\Entity::VDOT => 50
+                Activity\Entity::VO2MAX_BY_TIME => 45,
+                Activity\Entity::VO2MAX => 50
             ))
         );
 
@@ -68,7 +68,7 @@ class LegacyVO2maxCorrectorTest extends \PHPUnit_Framework_TestCase
         $Corrector = new LegacyEffectiveVO2maxCorrector;
         $Corrector->fromActivity(
             $Activity = new Activity\Entity(array(
-                Activity\Entity::VDOT_BY_TIME => 45
+                Activity\Entity::VO2MAX_BY_TIME => 45
             ))
         );
 

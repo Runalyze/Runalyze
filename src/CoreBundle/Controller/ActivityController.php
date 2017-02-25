@@ -205,7 +205,7 @@ class ActivityController extends Controller
 
         $EffectiveVO2maxInfo = new EffectiveVO2maxInfo();
         $EffectiveVO2maxInfo->setContext(new Context($id, $account->getId()));
-        $EffectiveVO2maxInfo->setConfiguration($configList->getData()->getLegacyCategory(), $configList->getVdot()->getLegacyCategory());
+        $EffectiveVO2maxInfo->setConfiguration($configList->getData()->getLegacyCategory(), $configList->getVO2max()->getLegacyCategory());
 
         return $this->render(':activity:vo2max_info.html.twig', [
             'title' => $EffectiveVO2maxInfo->getTitle(),

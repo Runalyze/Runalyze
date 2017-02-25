@@ -7,7 +7,7 @@ use Doctrine\DBAL\Schema\Schema;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class Version20170205101217 extends AbstractMigration implements ContainerAwareInterface
+class Version20170225101217 extends AbstractMigration implements ContainerAwareInterface
 {
     /** @var ContainerInterface|null */
     private $container;
@@ -27,6 +27,11 @@ class Version20170205101217 extends AbstractMigration implements ContainerAwareI
         $this->addSql('DELETE FROM `'.$prefix.'plugin_conf` WHERE `config`="show_trainingpaces" OR `config`="show_jd_intensity" OR `config`="model-jd" OR `config`="model-cpp" OR `config`="model-steffny" OR `config`="model-cameron"');
         $this->addSql('UPDATE `'.$prefix.'plugin_conf` SET `config`="show_vo2max" WHERE `config`="show_vdot"');
         $this->addSql('UPDATE `'.$prefix.'plugin_conf` SET `config`="vo2max" WHERE `config`="model" AND `value`="jd"');
+        $this->addSql('UPDATE `'.$prefix.'conf` SET `category`="vo2max" WHERE `category`="vdot"');
+        $this->addSql('UPDATE `'.$prefix.'conf` SET `key`=REPLACE(`key`, "VDOT_", "VO2MAX_") WHERE SUBSTR(`key`, 1, 5) = "VDOT_"');
+
+        $this->addSql('DELETE FROM `'.$prefix.'dataset` WHERE `keyid`=18');
+        $this->addSql('ALTER TABLE `'.$prefix.'training` DROP `jd_intensity`;');
     }
 
     /**

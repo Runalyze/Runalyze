@@ -185,9 +185,9 @@ class SearchFormular extends Formular {
 		$this->addNumericConditionFIeld('power', __('Power'), FormularInput::$SIZE_SMALL, FormularUnit::$POWER);
 		$this->addBooleanField('is_race', __('Is race'));
 
-		$this->addNumericConditionField(Configuration::Vdot()->useElevationCorrection() ? 'vdot_with_elevation' : 'vdot', __('VDOT'), FormularInput::$SIZE_SMALL);
+		$this->addNumericConditionField(Configuration::VO2max()->useElevationCorrection() ? 'vdot_with_elevation' : 'vdot', 'VO<sub>2</sub>max', FormularInput::$SIZE_SMALL);
 		$this->addNumericConditionField('vertical_oscillation', __('Vertical oscillation'), FormularInput::$SIZE_SMALL, FormularUnit::$CM);
-		$this->addBooleanField('use_vdot', __('Uses VDOT'));
+		$this->addBooleanField('use_vdot', __('Uses VO<sub>2</sub>max'));
 
 		$this->addNumericConditionField('trimp', __('TRIMP'), FormularInput::$SIZE_SMALL);
 		$this->addNumericConditionField('vertical_ratio', __('Vertical ratio'), FormularInput::$SIZE_SMALL, FormularUnit::$PERCENT);
@@ -197,11 +197,11 @@ class SearchFormular extends Formular {
 		$this->addNumericConditionField('groundcontact', __('Ground contact'), FormularInput::$SIZE_SMALL, FormularUnit::$MS);
 		$this->addNumericConditionField('temperature', __('Temperature'), FormularInput::$SIZE_SMALL, Configuration::General()->temperatureUnit()->unit());
 
-		$this->addNumericConditionField('jd_intensity', __('JD points'), FormularInput::$SIZE_SMALL);
+        $this->addNumericConditionField('kcal', __('Energy'), FormularInput::$SIZE_SMALL, Configuration::General()->energyUnit()->unit());
 		$this->addNumericConditionField('groundcontact_balance', __('Ground Contact Balance'), FormularInput::$SIZE_SMALL, 'L'. FormularUnit::$PERCENT);
 		$this->addNumericConditionField('wind_speed', __('Wind Speed'), FormularInput::$SIZE_SMALL, (new WindSpeed())->unit());
 
-		$this->addNumericConditionField('kcal', __('Energy'), FormularInput::$SIZE_SMALL, Configuration::General()->energyUnit()->unit());
+        $this->addNumericConditionField('fit_performance_condition', __('Performance condition'), FormularInput::$SIZE_SMALL);
 		$this->addNumericConditionField('fit_training_effect', __('Training Effect'), FormularInput::$SIZE_SMALL);
 		$this->addNumericConditionField('humidity', __('Humidity'), FormularInput::$SIZE_SMALL, (new Humidity())->unit());
 
@@ -210,7 +210,7 @@ class SearchFormular extends Formular {
 		$this->addNumericConditionField('pressure', __('Pressure'), FormularInput::$SIZE_SMALL, (new Pressure())->unit());
 
 		// Currently missing/not supported:
-		// elapsed_time, fit_hrv_analysis, fit_performance_condition, total_strokes, swolf, wind_deg, is_night
+		// elapsed_time, fit_hrv_analysis, total_strokes, swolf, wind_deg, is_night
 	}
 
 	/**

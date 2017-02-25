@@ -11,7 +11,7 @@ use Runalyze\Configuration;
 
 /**
  * Insert RaceResult to database
- * 
+ *
  * @author Hannes Christiansen & Michael Pohl
  * @package Runalyze\Model\RaceResult
  */
@@ -21,7 +21,7 @@ class Inserter extends Model\InserterWithAccountID {
 	 * @var \Runalyze\Model\RaceResult\Entity
 	 */
 	protected $Object;
-	
+
 	/** @var \Runalyze\Model\Activity\Entity */
 	protected $ActivityObject;
 
@@ -53,7 +53,7 @@ class Inserter extends Model\InserterWithAccountID {
 			Entity::allDatabaseProperties()
 		);
 	}
-	
+
 	/**
 	 * Tasks after insertion
 	 * @throws \RuntimeException
@@ -74,26 +74,23 @@ class Inserter extends Model\InserterWithAccountID {
 			throw new \RuntimeException('There is no valid activity object for this race result entity.');
 		}
 	}
-	
+
 	/**
 	 * Tasks after insertion
 	 */
 	protected function after() {
-		$this->updateVDOTcorrector();
+		$this->updateVO2maxCorrector();
 
 		(new Model\Factory($this->AccountID))->clearCache($this->table(), $this->Object->get(Entity::ACTIVITY_ID));
 	}
-	
-	/**
-	 * Update vdot corrector
-	 */
-	protected function updateVDOTcorrector() {
+
+	protected function updateVO2maxCorrector() {
 		if (
 			$this->ActivityObject->sportid() == Configuration::General()->runningSport() &&
-			$this->ActivityObject->usesVDOT() &&
-			$this->ActivityObject->vdotByHeartRate() > 0
+			$this->ActivityObject->usesVO2max() &&
+			$this->ActivityObject->vo2maxByHeartRate() > 0
 		) {
-			Configuration::Data()->recalculateVDOTcorrector();
+			Configuration::Data()->recalculateVO2maxCorrector();
 		}
 	}
 }

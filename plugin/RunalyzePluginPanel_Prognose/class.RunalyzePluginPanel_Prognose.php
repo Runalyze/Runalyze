@@ -183,7 +183,7 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 			case 'vo2max':
 			default:
 			    $this->Prognosis = new \Runalyze\Sports\Running\Prognosis\VO2max(
-                    Configuration::Data()->vdot(),
+                    Configuration::Data()->vo2max(),
                     $this->Configuration()->value('use_be'),
                     \Runalyze\Calculation\BasicEndurance::getConst()
                 );

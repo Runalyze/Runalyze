@@ -14,7 +14,7 @@ use Runalyze\Configuration;
  * Example: elevation +100/-50m
  * Correction: positive +2, negative -1
  * Result: adds 2*100 -1*50 = 150m to the distance
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Calculation\Elevation
  */
@@ -51,12 +51,13 @@ class DistanceModifier {
 
 	/**
 	 * Construct
-	 * @param float $distance [optional] [km]
+	 *
+*@param float $distance [optional] [km]
 	 * @param int $up [optional] [m]
 	 * @param int $down [optional] [m]
-	 * @param \Runalyze\Configuration\Category\Vdot $config [optional]
+	 * @param \Runalyze\Configuration\Category\VO2max $config [optional]
 	 */
-	public function __construct($distance = 0, $up = 0, $down = 0, Configuration\Category\Vdot $config = null) {
+	public function __construct($distance = 0, $up = 0, $down = 0, Configuration\Category\VO2max $config = null) {
 		if (!is_null($config)) {
 			$this->setCorrectionValues($config->correctionForPositiveElevation(), $config->correctionForNegativeElevation());
 		}

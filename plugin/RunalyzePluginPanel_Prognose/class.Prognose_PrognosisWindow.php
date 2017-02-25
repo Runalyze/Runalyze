@@ -98,7 +98,7 @@ class Prognose_PrognosisWindow {
 		$this->UnitSystem = Configuration::General()->distanceUnitSystem();
 
 		$TopResults = (new Prognosis\TopResults())->getTopResults(2);
-		$CurrentShape = Configuration::Data()->vdotShape();
+		$CurrentShape = Configuration::Data()->vo2maxShape();
 
 		if (empty($_POST)) {
 			$Factory = new PluginFactory();

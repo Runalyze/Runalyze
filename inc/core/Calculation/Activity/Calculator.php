@@ -69,50 +69,47 @@ class Calculator {
 	}
 
 	/**
-	 * Calculate VDOT by time
-	 * @return float
+	 * @return float [ml/kg/min]
 	 */
-	public function calculateVDOTbyTime() {
-		$VDOT = new JD\LegacyEffectiveVO2max;
-		$VDOT->fromPace($this->Activity->distance(), $this->Activity->duration());
+	public function estimateVO2maxByTime() {
+		$VO2max = new JD\LegacyEffectiveVO2max;
+        $VO2max->fromPace($this->Activity->distance(), $this->Activity->duration());
 
-		return $VDOT->uncorrectedValue();
+		return $VO2max->uncorrectedValue();
 	}
 
 	/**
-	 * Calculate VDOT by heart rate
-	 * @param float $distance [optional]
-	 * @return float
+	 * @param float|null $distance [km]
+	 * @return float [ml/kg/min]
 	 */
-	public function calculateVDOTbyHeartRate($distance = null) {
-		if (is_null($distance)) {
+	public function estimateVO2maxByHeartRate($distance = null) {
+		if (null === $distance) {
 			$distance = $this->Activity->distance();
 		}
 
-		$VDOT = new JD\LegacyEffectiveVO2max;
-		$VDOT->fromPaceAndHR(
+        $VO2max = new JD\LegacyEffectiveVO2max;
+        $VO2max->fromPaceAndHR(
 			$distance,
 			$this->Activity->duration(),
 			$this->Activity->hrAvg()/Configuration::Data()->HRmax()
 		);
 
-		return $VDOT->value();
+		return $VO2max->value();
 	}
 
 	/**
-	 * Calculate VDOT by heart rate with elevation influence
-	 * @return float
+	 * @return float [ml/kg/min]
 	 */
-	public function calculateVDOTbyHeartRateWithElevation() {
+	public function estimateVO2maxByHeartRateWithElevation() {
 		if ($this->knowsRoute()) {
 			if ($this->Route->elevationUp() > 0 || $this->Route->elevationDown() > 0) {
-				return $this->calculateVDOTbyHeartRateWithElevationFor($this->Route->elevationUp(), $this->Route->elevationDown());
+				return $this->estimateVO2maxByHeartRateWithElevationFor($this->Route->elevationUp(), $this->Route->elevationDown());
 			}
 
-			return $this->calculateVDOTbyHeartRateWithElevationFor($this->Route->elevation(), $this->Route->elevation());
+			return $this->estimateVO2maxByHeartRateWithElevationFor($this->Route->elevation(), $this->Route->elevation());
 		}
 
-		return $this->calculateVDOTbyHeartRateWithElevationFor($this->Activity->elevation(), $this->Activity->elevation());
+		return $this->estimateVO2maxByHeartRateWithElevationFor($this->Activity->elevation(), $this->Activity->elevation());
 	}
 
 	/**
@@ -121,15 +118,15 @@ class Calculator {
 	 * @param int $down
 	 * @return float
 	 */
-	public function calculateVDOTbyHeartRateWithElevationFor($up, $down) {
+	public function estimateVO2maxByHeartRateWithElevationFor($up, $down) {
 		$Modifier = new Elevation\DistanceModifier(
 			$this->Activity->distance(),
 			$up,
 			$down,
-			Configuration::Vdot()
+			Configuration::VO2max()
 		);
 
-		return $this->calculateVDOTbyHeartRate($Modifier->correctedDistance());
+		return $this->estimateVO2maxByHeartRate($Modifier->correctedDistance());
 	}
 
 	/**

@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Training
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer", precision=10, unique=true, nullable=false, options={"unsigned":true})
      * @ORM\Id
@@ -42,266 +42,259 @@ class Training
     private $type;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="time", type="integer", precision=11, nullable=false)
      */
     private $time = '0';
 
     /**
-     * @var integer
+     * @var int|null
      *
      * @ORM\Column(name="timezone_offset", type="smallint", precision=6, nullable=true)
      */
     private $timezoneOffset;
 
     /**
-     * @var integer
+     * @var int|null
      *
      * @ORM\Column(name="created", type="integer", precision=11, nullable=true, options={"unsigned":true})
      */
     private $created = null;
 
     /**
-     * @var integer
+     * @var int|null
      *
      * @ORM\Column(name="edited", type="integer", precision=11, nullable=true, options={"unsigned":true})
      */
     private $edited = null;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="is_public", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 0")
      */
     private $isPublic = '0';
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="is_track", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 0")
      */
     private $isTrack = '0';
 
     /**
-     * @var string
+     * @var float|null
      *
      * @ORM\Column(name="distance", columnDefinition="decimal(6,2) unsigned DEFAULT NULL")
      */
     private $distance = null;
 
     /**
-     * @var string
+     * @var float|null
      *
      * @ORM\Column(name="s", columnDefinition="decimal(8,2) unsigned NOT NULL")
      */
     private $s = '0.00';
 
     /**
-     * @var integer
+     * @var int|null
      *
      * @ORM\Column(name="elapsed_time", columnDefinition="mediumint unsigned DEFAULT NULL")
      */
     private $elapsedTime = 0;
 
     /**
-     * @var integer
+     * @var int|null
      *
      * @ORM\Column(name="elevation", columnDefinition="smallint unsigned DEFAULT NULL")
      */
     private $elevation = null;
 
     /**
-     * @var integer
+     * @var int|null
      *
      * @ORM\Column(name="kcal", columnDefinition="smallint unsigned DEFAULT NULL")
      */
     private $kcal = null;
 
     /**
-     * @var integer
+     * @var int|null
      *
      * @ORM\Column(name="pulse_avg", columnDefinition="tinyint(3) unsigned DEFAULT NULL")
      */
     private $pulseAvg = null;
 
     /**
-     * @var integer
+     * @var int|null
      *
      * @ORM\Column(name="pulse_max", columnDefinition="tinyint(3) unsigned DEFAULT NULL")
      */
     private $pulseMax = null;
 
     /**
-     * @var string
+     * @var float|null [ml/kg/min]
      *
      * @ORM\Column(name="vdot", columnDefinition="decimal(5,2) unsigned DEFAULT NULL")
      */
     private $vdot = '0.00';
 
     /**
-     * @var string
+     * @var float|null [ml/kg/min]
      *
      * @ORM\Column(name="vdot_by_time", columnDefinition="decimal(5,2) unsigned DEFAULT NULL")
      */
     private $vdotByTime = '0.00';
 
     /**
-     * @var string
+     * @var float|null [ml/kg/min]
      *
      * @ORM\Column(name="vdot_with_elevation", columnDefinition="decimal(5,2) unsigned DEFAULT NULL" )
      */
     private $vdotWithElevation = '0.00';
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="use_vdot", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 1")
      */
     private $useVdot = '1';
 
     /**
-     * @var string
+     * @var float|null
      *
      * @ORM\Column(name="fit_vdot_estimate", columnDefinition="decimal(4,2) unsigned DEFAULT NULL")
      */
     private $fitVdotEstimate = null;
 
     /**
-     * @var integer
+     * @var int|null
      *
      * @ORM\Column(name="fit_recovery_time", type="smallint", nullable=true, options={"unsigned":true})
      */
     private $fitRecoveryTime = null;
 
     /**
-     * @var integer
+     * @var int|null
      *
      * @ORM\Column(name="fit_hrv_analysis", type="smallint", nullable=true, options={"unsigned":true})
      */
     private $fitHrvAnalysis = null;
 
     /**
-     * @var string
+     * @var float|null
      *
      * @ORM\Column(name="fit_training_effect", columnDefinition="decimal(2,1) unsigned DEFAULT NULL")
      */
     private $fitTrainingEffect = null;
 
     /**
-     * @var boolean
+     * @var bool|null
      *
      * @ORM\Column(name="fit_performance_condition", columnDefinition="tinyint(3) unsigned DEFAULT NULL")
      */
     private $fitPerformanceCondition = null;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="jd_intensity", type="smallint", nullable=true, options={"unsigned":true})
-     */
-    private $jdIntensity = null;
-
-    /**
-     * @var boolean
+     * @var bool|null
      *
      * @ORM\Column(name="rpe", columnDefinition="tinyint(2) unsigned DEFAULT NULL")
      */
     private $rpe = null;
 
     /**
-     * @var integer
+     * @var int|null
      *
      * @ORM\Column(name="trimp", columnDefinition="smallint unsigned DEFAULT NULL")
      */
     private $trimp = null;
 
     /**
-     * @var integer
+     * @var int|null
      *
      * @ORM\Column(name="cadence", type="integer", length=3, nullable=true, options={"unsigned":true})
      */
     private $cadence = null;
 
     /**
-     * @var integer
+     * @var int|null
      *
      * @ORM\Column(name="power", type="integer", length=4, nullable=true, options={"unsigned":true})
      */
     private $power = null;
 
     /**
-     * @var integer
+     * @var int|null
      *
      * @ORM\Column(name="total_strokes", type="smallint", nullable=true, options={"unsigned":true})
      */
     private $totalStrokes = null;
 
     /**
-     * @var boolean
+     * @var int|null
      *
      * @ORM\Column(name="swolf", columnDefinition="tinyint(3) unsigned DEFAULT NULL")
      */
-    private $swolf = '0';
+    private $swolf = null;
 
     /**
-     * @var boolean
+     * @var bool|null
      *
      * @ORM\Column(name="stride_length", columnDefinition="tinyint(3) unsigned DEFAULT NULL")
      */
     private $strideLength = null;
 
     /**
-     * @var integer
+     * @var int|null
      *
      * @ORM\Column(name="groundcontact", type="smallint", nullable=true, options={"unsigned":true})
      */
     private $groundcontact = null;
 
     /**
-     * @var integer
+     * @var int|null
      *
      * @ORM\Column(name="groundcontact_balance", type="smallint", nullable=true, options={"unsigned":true})
      */
     private $groundcontactBalance = null;
 
     /**
-     * @var integer
+     * @var int|null
      *
      * @ORM\Column(name="vertical_oscillation", columnDefinition="tinyint(3) unsigned DEFAULT NULL")
      */
     private $verticalOscillation = null;
 
     /**
-     * @var integer
+     * @var int|null
      *
      * @ORM\Column(name="vertical_ratio", type="smallint", nullable=true, options={"unsigned":true})
      */
     private $verticalRatio = null;
 
     /**
-     * @var boolean
+     * @var bool|null
      *
      * @ORM\Column(name="temperature", columnDefinition="tinyint(4) DEFAULT NULL")
      */
     private $temperature = null;
 
     /**
-     * @var boolean
+     * @var bool|null
      *
      * @ORM\Column(name="wind_speed", columnDefinition="tinyint(3) unsigned DEFAULT NULL")
      */
     private $windSpeed = null;
 
     /**
-     * @var integer
+     * @var int|null
      *
      * @ORM\Column(name="wind_deg", columnDefinition="smallint(3) unsigned DEFAULT NULL")
      */
     private $windDeg;
 
     /**
-     * @var boolean
+     * @var bool|null
      *
      * @ORM\Column(name="humidity", columnDefinition="tinyint(3) unsigned DEFAULT NULL")
      */
@@ -315,28 +308,28 @@ class Training
     private $pressure;
 
     /**
-     * @var boolean
+     * @var bool|null
      *
      * @ORM\Column(name="is_night", columnDefinition="tinyint(1) unsigned DEFAULT NULL")
      */
     private $isNight;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="weatherid", type="smallint", nullable=false, options={"unsigned":true, "default":1})
      */
     private $weatherid = '1';
 
     /**
-     * @var boolean
+     * @var bool|null
      *
      * @ORM\Column(name="weather_source", columnDefinition="tinyint(2) unsigned DEFAULT NULL")
      */
     private $weatherSource;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(name="route", type="text", length=65535, nullable=true)
      */
@@ -353,28 +346,28 @@ class Training
     private $route;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(name="splits", type="text", length=16777215, nullable=true)
      */
     private $splits;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(name="comment", type="text", length=65535, nullable=true)
      */
     private $comment;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(name="partner", type="text", length=65535, nullable=true)
      */
     private $partner;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(name="notes", type="text", length=65535, nullable=true)
      */
@@ -398,21 +391,21 @@ class Training
     private $creator;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(name="creator_details", type="text", length=255, nullable=true)
      */
     private $creatorDetails;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="activity_id", type="integer", nullable=true, options={"unsigned":true})
      */
     private $activityId;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="`lock`", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 0")
      */
@@ -1041,16 +1034,6 @@ class Training
         $this->jdIntensity = $jdIntensity;
 
         return $this;
-    }
-
-    /**
-     * Get jdIntensity
-     *
-     * @return integer
-     */
-    public function getJdIntensity()
-    {
-        return $this->jdIntensity;
     }
 
     /**
