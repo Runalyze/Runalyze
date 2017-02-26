@@ -165,6 +165,51 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 	}
 
 	/**
+	 * Try to map FIT arrays to internal GPS arrays (keys)
+	 * @param string $String
+	 */
+	protected function mapGPStoFITkey($String, $swim = false) {
+		switch ($String) {
+			case 'time_in_s':
+				return 'timestamp';
+			case 'latitude':
+				return 'position_lat';
+			case 'longitude':
+				return 'position_long';
+			case 'km':
+				return 'distance';
+			case 'stroke':
+				return 'total_strokes';
+			case 'stroketype':
+				return 'swim_stroke';
+			case 'rpm':
+				return $swim ? 'avg_swimming_cadence' : 'cadence';
+			case 'heartrate':
+				return 'heart_rate';
+			case 'temp':
+				return 'temperature';
+		}
+
+		return $String;
+	}
+
+	/**
+	 * Try to map FIT arrays to FIT internal type
+	 * @param string $String
+	 */
+	protected function mapFITtoType($String) {
+		switch ($String) {
+			case 'stroke':
+			case 'stroketype':
+			case 'avg_swimming_cadence':
+				return 'length';
+				break;
+		}
+
+		return 'record';
+	}
+
+	/**
 	 * Try to set sportid from creator or string
 	 * @param string $String
 	 * @param string $Creator optional

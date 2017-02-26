@@ -4,6 +4,10 @@
     "homepage": "https://runalyze.com",
     "minimum-stability": "dev",
     "prefer-stable": true,
+    "repositories": [{
+        "type": "vcs",
+        "url": "https://github.com/undertrained/php-fit-file-analysis"
+    }],
     "require": {
         "php": "~5.6|~7.0",
         "symfony/symfony": "3.2.*",
@@ -25,6 +29,7 @@
         "symfony/swiftmailer-bundle": "^2.3",
         "beberlei/DoctrineExtensions": "~1.0",
         "jms/translation-bundle": "dev-master",
+        "adriangibbons/php-fit-file-analysis": "dev-master",
         "bernard/bernard-bundle": "^2.0.0"
     },
     "autoload": {

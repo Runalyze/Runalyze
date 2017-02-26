@@ -11,101 +11,78 @@ use Runalyze\Import\Exception\UnexpectedContentException;
 /**
  * Abstract parser for multiple activities in *.fit-file
  *
- * @author Hannes Christiansen
+ * @author undertrained
  * @package Runalyze\Import\Parser
  */
 class ParserFITMultiple extends ParserAbstractMultiple {
-	/** @var string */
-	const PERL_FIT_ERROR_MESSAGE_START = 'main::Garmin::FIT';
-
-	/** @var string */
-	const PERL_GENERAL_MESSAGE_START = 'perl: warning:';
+	/**
+	 * Fit Data
+	 * @var adriangibbons\phpFITFileAnalysis
+	 */
+	protected $fitData = null;
 
 	/**
-	 * Name of output file
-	 * @var string
+	 * Set fit data
+	 * @param object $fit
 	 */
-	protected $Filename = '';
-
-	/**
-	 * Handle
-	 * @var resource
-	 */
-	protected $Handle = null;
-
-	/**
-	 * Set filename
-	 * @param string $filename
-	 */
-	public function setFilename($filename) {
-		$this->Filename = $filename;
+	public function setFitData($fit) {
+		$this->fitData = $fit;
 	}
 
 	/**
 	 * Parse
 	 */
 	public function parse() {
-		$firstActivityStarted = false;
-		$SingleParser = new ParserFITSingle('');
+		if (isset($this->fitData->data_mesgs['activity']['num_sessions']) &&
+		    $this->fitData->data_mesgs['activity']['num_sessions'] > 1) {
+			for ($session = 0; $session < $this->fitData->data_mesgs['activity']['num_sessions']; $session++) {
+				$fitsingle = clone $this->fitData;
 
-		$this->Handle = @fopen($this->Filename, "r");
-		if ($this->Handle) {
-			$this->readFirstLine();
+				if (isset($fitsingle->data_mesgs['session'])) {
+					if (isset($fitsingle->data_mesgs['session']['start_time'][$session]) &&
+					    isset($fitsingle->data_mesgs['session']['total_elapsed_time'][$session])) {
+						$start_time = $fitsingle->data_mesgs['session']['start_time'][$session];
+						$end_time = $fitsingle->data_mesgs['session']['total_elapsed_time'][$session] + $start_time;
 
-			while (($line = stream_get_line($this->Handle, 4096, PHP_EOL)) !== false && !feof($this->Handle)) {
-				if (substr($line, -20) == 'NAME=sport NUMBER=12') {
-					if ($firstActivityStarted) {
-						$SingleParser->finishParsing();
-						$this->addObject($SingleParser->object());
-
-						$SingleParser->startNewActivity();
-					} else {
-						$firstActivityStarted = true;
+						if (isset($fitsingle->data_mesgs['record'])) {
+							foreach (array_keys($fitsingle->data_mesgs['record']) as $key) {
+								if ($key == 'timestamp') {
+									foreach (array_keys($fitsingle->data_mesgs['record'][$key]) as $akey) {
+										if ($fitsingle->data_mesgs['record'][$key][$akey] < $start_time ||
+										    $fitsingle->data_mesgs['record'][$key][$akey] > $end_time) {
+										    unset($fitsingle->data_mesgs['record'][$key][$akey]);
+										}
+									}
+								} else {
+									foreach (array_keys($fitsingle->data_mesgs['record'][$key]) as $akey) {
+										if ($akey < $start_time || $akey > $end_time) {
+										    unset($fitsingle->data_mesgs['record'][$key][$akey]);
+										}
+									}
+								}
+							}
+						}
 					}
+
+					foreach (array_keys($fitsingle->data_mesgs['session']) as $key) {
+						if (is_array($fitsingle->data_mesgs['session'][$key])) {
+							$fitsingle->data_mesgs['session'][$key] = $fitsingle->data_mesgs['session'][$key][$session];
+						}
+					}
+
+					$SingleParser = new ParserFITSingle('');
+					$SingleParser->setFitData($fitsingle);
+					$SingleParser->parse();
+
+					$this->addObject($SingleParser->object());
 				}
-
-				$SingleParser->parseLine($line);
 			}
+		} else {
+			$SingleParser = new ParserFITSingle('');
+			$SingleParser->setFitData($this->fitData);
+			$SingleParser->parse();
 
-			$SingleParser->finishParsing();
 			$this->addObject($SingleParser->object());
-
-			fclose($this->Handle);
 		}
-	}
-
-	/**
-	 * Make sure perl script worked
-	 * @throws RuntimeException
-	 */
-	protected function readFirstLine() {
-		$FirstLine = stream_get_line($this->Handle, 4096, PHP_EOL);
-
-		if (trim($FirstLine) != 'SUCCESS') {
-			fclose($this->Handle);
-			unlink($this->Filename);
-
-			$this->throwErrorForFirstLine($FirstLine);
-		}
-	}
-
-	/**
-	 * @param string $firstLine
-	 * @throws \Runalyze\Import\Exception\ParserException
-	 */
-	protected function throwErrorForFirstLine($firstLine) {
-		$message = 'Reading *.fit-file failed. First line was "'.$firstLine.'".';
-
-		if (substr($firstLine, 0, strlen(self::PERL_FIT_ERROR_MESSAGE_START)) == self::PERL_FIT_ERROR_MESSAGE_START) {
-			throw new UnexpectedContentException($message);
-		}
-
-		if (substr($firstLine, 0, strlen(self::PERL_GENERAL_MESSAGE_START)) == self::PERL_GENERAL_MESSAGE_START) {
-			$message .= NL.NL.'See https://github.com/Runalyze/Runalyze/issues/1701';
-
-			throw new InstallationSpecificException($message);
-		}
-
-		throw new ParserException($message);
 	}
 }
