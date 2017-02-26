@@ -46,7 +46,7 @@ class LegacyEffectiveVO2maxCorrector
     /**
      * Calculate factor from database
      *
-     * Simply looks for the best ratio of vdot by time and by heart rate.
+     * Simply looks for the best ratio of vo2max by time and by heart rate.
      * This method does not regard any other correction (e.g. elevation, ...).
      *
      * @param PDO $database
@@ -59,15 +59,15 @@ class LegacyEffectiveVO2maxCorrector
         $factor = $database->query(
             'SELECT MAX(`factor`) AS `factor`
 			FROM (
-				SELECT `vdot_by_time`*1.0/`vdot` AS `factor` 
+				SELECT `vo2max_by_time`*1.0/`vo2max` AS `factor` 
 				FROM `'.PREFIX.'raceresult` r
 				LEFT JOIN `'.PREFIX.'training` tr ON r.activity_id = tr.id
 				    WHERE
 					tr.`sportid` = '.(int)$sportid.' AND
-					tr.`vdot` > 0 AND
-					tr.`use_vdot` = 1 AND
+					tr.`vo2max` > 0 AND
+					tr.`use_vo2max` = 1 AND
 					r.`accountid` = '.(int)$accountid.'
-				ORDER BY  tr.`vdot_by_time` DESC 
+				ORDER BY  tr.`vo2max_by_time` DESC 
 				LIMIT '.self::DB_LOOKUP_LIMIT.'
 			) AS T
 			LIMIT 1'
@@ -85,7 +85,7 @@ class LegacyEffectiveVO2maxCorrector
     /**
      * Calculate factor from activity
      *
-     * Simply calculates the ratio of vdot by time and by heart rate.
+     * Simply calculates the ratio of vo2max by time and by heart rate.
      * This method does not regard any other correction (e.g. elevation, ...).
      *
      * @param \Runalyze\Model\Activity\Entity $activity

@@ -8,12 +8,12 @@
     {% set conf = config() %}
 
     <div class="panel-heading">
-        <h1><a class="ajax" target="ajax" href="{{ url('tools-vo2max-analysis') }}">{% trans %}Analyze your VO2max{% endtrans %}</a></h1>
+        <h1><a class="ajax" target="ajax" href="{{ url('tools-vo2max-analysis') }}">{% trans with {'%VO2max%': 'VO<sub>2</sub>max'} %}Analyze your %VO2max%{% endtrans %}</a></h1>
     </div>
 
     <div class="panel-content">
         <p class="text">
-            {% trans %}Predicting your effective VO2max based on your training values is imprecise.
+            {% trans with {'%VO2max%': 'VO<sub>2</sub>max'} %}Predicting your effective %VO2max% based on your training values is imprecise.
                 This tool lists your races and compares all results with predicted values.
                 This way you can get an impression of how well our prediction works for you.{% endtrans %}
         </p>
@@ -25,13 +25,13 @@
                     <th>{% trans %}Race{% endtrans %}</th>
                     <th class="{sorter:'distance'}">{% trans %}km{% endtrans %}</th>
                     <th>{% trans %}Time{% endtrans %}</th>
-                    <th>{% trans %}VO2max{% endtrans %}</th>
+                    <th>VO<sub>2</sub>max</th>
                     <th>{% trans %}HR{% endtrans %}</th>
-                    <th>{% trans %}VO2max{% endtrans %}<br><small>({% trans %}by&nbsp;HR{% endtrans %})</small></th>
+                    <th>VO<sub>2</sub>max<br><small>({% trans %}by&nbsp;HR{% endtrans %})</small></th>
                     <th>{% trans %}Time{% endtrans %}<br><small>({% trans %}by&nbsp;HR{% endtrans %})</small></th>
-                    <th>{% trans %}VO2max{% endtrans %}<br><small>({% trans %}corrected{% endtrans %})</small></th>
+                    <th>VO<sub>2</sub>max<br><small>({% trans %}corrected{% endtrans %})</small></th>
                     <th>{% trans %}Time{% endtrans %}<br><small>({% trans %}corrected{% endtrans %})</small></th>
-                    <th>{% trans %}VO2max{% endtrans %}<br><small>({% trans %}Shape{% endtrans %})</small></th>
+                    <th>VO<sub>2</sub>max<br><small>({% trans %}Shape{% endtrans %})</small></th>
                     <th>{% trans %}Time{% endtrans %}<br><small>({% trans %}Shape{% endtrans %})</small></th>
                     <th>{% trans %}Deviation{% endtrans %}<br><small>({% trans %}Shape{% endtrans %})</small></th>
                     <th>{% trans %}Corrector{% endtrans %}</th>
@@ -70,25 +70,25 @@
         {% endif %}
 
         <p class="info">
-            {% trans %}<strong>VO2max/Time:</strong> by standard formulas.<br>
+            {% trans with {'%VO2max%': 'VO<sub>2</sub>max'} %}<strong>%VO2max%/Time:</strong> by standard formulas.<br>
                 The time is what you could have reached at your maximal possible heart rate over this distance.{% endtrans %}
         </p>
 
         <p class="info">
-            {% trans %}<strong>VO2max/Time (corrected):</strong> after individual correction (factor: %vo2maxFactor%)<br>
+            {% trans with {'%VO2max%': 'VO<sub>2</sub>max'} %}<strong>%VO2max%/Time (corrected):</strong> after individual correction (factor: %vo2maxFactor%)<br>
                 The time is what you could have reached at your maximal possible heart rate over this distance.{% endtrans %}
         </p>
 
         <p class="info">
-            {% trans %}<strong>VO2max/Time (Shape):</strong> by your shape at that time<br>
+            {% trans with {'%VO2max%': 'VO<sub>2</sub>max'} %}<strong>%VO2max%/Time (Shape):</strong> by your shape at that time<br>
                 The time is the prognosis by Runalyze.{% endtrans %}
         </p>
 
         <p class="info">
-            {% trans %}<strong>Corrector:</strong> Ratio between VO2max and VO2max (by HR){% endtrans %}
+            {% trans %}<strong>Corrector:</strong> Ratio between %VO2max% and %VO2max% (by HR){% endtrans %}
         </p>
 
-        {% if conf.vdot.useCorrectionForElevation %}
+        {% if conf.vo2max.useCorrectionForElevation %}
         <p class="warning">
             {% trans %}The distance correction for elevation is not used in this table.{% endtrans %}
         </p>

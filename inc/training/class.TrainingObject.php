@@ -740,8 +740,8 @@ class TrainingObject extends DataObject {
 	public function getPulseMax() { return $this->get('pulse_max'); }
 
 
-	public function setFitVO2maxEstimate($vo2max) { $this->set('fit_vdot_estimate', $vo2max); }
-	public function getFitVO2maxEstimate() { return $this->get('fit_vdot_estimate'); }
+	public function setFitVO2maxEstimate($vo2max) { $this->set('fit_vo2max_estimate', $vo2max); }
+	public function getFitVO2maxEstimate() { return $this->get('fit_vo2max_estimate'); }
 
 	public function setFitRecoveryTime($minutes) { $this->set('fit_recovery_time', $minutes); }
 	public function getFitRecoveryTime() { return $this->get('fit_recovery_time'); }

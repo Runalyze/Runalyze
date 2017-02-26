@@ -38,9 +38,9 @@ class ShapeTest extends \PHPUnit_Framework_TestCase {
 			`sportid` int(10),
 			`time` int(10),
 			`s` int(10),
-			`use_vdot` tinyint(1),
-			`vdot` decimal(5,2),
-			`vdot_with_elevation` decimal(5,2)
+			`use_vo2max` tinyint(1),
+			`vo2max` decimal(5,2),
+			`vo2max_with_elevation` decimal(5,2)
 			);
 		');
 

@@ -83,27 +83,27 @@ class Shape
     /**
      * Get sum selector for VO2max for mysql
      *
-     * Depends on configuration: `vdot`*`s`*`use_vdot` or `vdot_with_elevation`*`s`*`use_vdot`
+     * Depends on configuration: `vo2max`*`s`*`use_vo2max` or `vo2max_with_elevation`*`s`*`use_vo2max`
      *
      * @param bool $withElevation
      * @return string
      */
     public static function mysqlVO2maxSum($withElevation = false)
     {
-        return $withElevation ? '(CASE WHEN `vdot_with_elevation`>0 THEN `vdot_with_elevation` ELSE `vdot` END)*`s`*`use_vdot`' : '`vdot`*`s`*`use_vdot`';
+        return $withElevation ? '(CASE WHEN `vo2max_with_elevation`>0 THEN `vo2max_with_elevation` ELSE `vo2max` END)*`s`*`use_vo2max`' : '`vo2max`*`s`*`use_vo2max`';
     }
 
     /**
      * Get sum selector for time for mysql
      *
-     * `s`*`use_vdot`
+     * `s`*`use_vo2max`
      *
      * @param bool $withElevation
      * @return string
      */
     public static function mysqlVO2maxSumTime($withElevation = false)
     {
-        return '`s`*`use_vdot`*('.($withElevation ? '(CASE WHEN `vdot_with_elevation`>0 THEN `vdot_with_elevation` ELSE `vdot` END)' : '`vdot`').' > 0)';
+        return '`s`*`use_vo2max`*('.($withElevation ? '(CASE WHEN `vo2max_with_elevation`>0 THEN `vo2max_with_elevation` ELSE `vo2max` END)' : '`vo2max`').' > 0)';
     }
 
     /**

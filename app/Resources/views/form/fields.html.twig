@@ -44,7 +44,7 @@
                 {% set label = name|humanize %}
             {%- endif -%}
         {%- endif -%}
-        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ translation_domain is same as(false) ? label : label|trans({}, translation_domain) }}
+        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ translation_domain is same as(false) ? label|raw : label|trans({}, translation_domain)|raw }}
         {% if help is defined %}
             <span rel="tooltip" data-original-title="{{ help }}"><i class="fa fa-fw fa-question-circle"></i></span>
         {% endif %}

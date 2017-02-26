@@ -11,7 +11,7 @@ use Runalyze\Dataset\SummaryMode;
 
 /**
  * Dataset key: FitVO2maxEstimate
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Dataset\Keys
  */
@@ -32,7 +32,7 @@ class FitVO2maxEstimate extends AbstractKey
 	 */
 	public function column()
 	{
-		return 'fit_vdot_estimate';
+		return 'fit_vo2max_estimate';
 	}
 
 	/**
@@ -41,7 +41,7 @@ class FitVO2maxEstimate extends AbstractKey
 	 */
 	public function label()
 	{
-		return __('VO2max').' '.__('(by file)');
+		return 'VO<sub>2</sub>max '.__('(by file)');
 	}
 
 	/**
@@ -50,7 +50,7 @@ class FitVO2maxEstimate extends AbstractKey
 	 */
 	public function shortLabel()
 	{
-		return __('VO2max').' '.__('(file)');
+		return 'VO<sub>2</sub>max '.__('(file)');
 	}
 
 	/**

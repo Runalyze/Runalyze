@@ -66,7 +66,7 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 
 	// Here VO2MAX will be implemented again
 	// Normal functions are too slow, calling them for each day would trigger each time a query
-	// - VO2MAX: AVG(`vdot`) for Configuration::Vdot()->days()
+	// - VO2MAX: AVG(`vo2max`) for Configuration::VO2max()->days()
 
 	$withElevation = Configuration::VO2max()->useElevationCorrection();
 	$StartDay = LocalTime::fromServerTime($StartTime)->format('Y-m-d');
@@ -77,8 +77,8 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 			DATEDIFF(FROM_UNIXTIME(`time`), "'.$StartDay.'") as `index`,
 			`trimp`,
 			`distance`,
-			'.JD\Shape::mysqlVO2MAXsum($withElevation).' as `vdot_weighted`,
-			'.JD\Shape::mysqlVO2MAXsumTime($withElevation).' as `vdot_sum_time`,
+			'.JD\Shape::mysqlVO2MAXsum($withElevation).' as `vo2max_weighted`,
+			'.JD\Shape::mysqlVO2MAXsumTime($withElevation).' as `vo2max_sum_time`,
 			`sportid` = "'.Configuration::General()->runningSport().'" as `is_running`
 		FROM `'.PREFIX.'training`
 		WHERE
@@ -98,9 +98,9 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 				$Longjogs_raw[$index][] = $activity['distance'];
 			}
 
-			if ($activity['vdot_weighted'] != 0) {
-				$VO2MAXs_raw[$index]     += $activity['vdot_weighted'];
-				$Durations_raw[$index] += $activity['vdot_sum_time'];
+			if ($activity['vo2max_weighted'] != 0) {
+				$VO2MAXs_raw[$index] += $activity['vo2max_weighted'];
+				$Durations_raw[$index] += $activity['vo2max_sum_time'];
 			}
 		}
 	}

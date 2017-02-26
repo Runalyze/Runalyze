@@ -276,7 +276,7 @@ class Table {
 			case Activity\Entity::STRIDE_LENGTH:
 				return __('Stride length');
 			case Activity\Entity::VO2MAX:
-				return __('VO2max');
+				return 'VO<sub>2</sub>max';
 			case Activity\Entity::POWER:
 				return __('Power');
 		}

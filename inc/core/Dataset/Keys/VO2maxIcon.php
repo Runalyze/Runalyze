@@ -21,10 +21,10 @@ class VO2maxIcon extends AbstractKey
     public function column()
     {
         if (\Runalyze\Configuration::VO2max()->useElevationCorrection()) {
-            return 'vdot_with_elevation';
+            return 'vo2max_with_elevation';
         }
 
-        return 'vdot';
+        return 'vo2max';
     }
 
     /**

@@ -305,7 +305,7 @@ class Inserter extends Model\InserterWithAccountID {
 	 * Update vo2max shape
 	 *
 	 * Note: This method assumes that the activity is marked as running
-	 * Note: vdot corrector will be updated by RaceResult\Inserter if necessary
+	 * Note: vo2max corrector will be updated by RaceResult\Inserter if necessary
 	 */
 	protected function updateVO2maxShape() {
 		$timestampLimit = time() - Configuration::VO2max()->days() * DAY_IN_S;

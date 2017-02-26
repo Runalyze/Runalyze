@@ -152,7 +152,7 @@ class Linker {
 	}
 
 	/**
-	 * URL to vdot info
+	 * URL to vo2max info
 	 * @param string $data
 	 * @return string
 	 */

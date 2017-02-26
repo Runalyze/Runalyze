@@ -231,7 +231,7 @@ class ValueExtension extends \Twig_Extension
         return $this->vo2max(
             $activityContext->getDecorator()->getUncorrectedVO2max($configurationList),
             $configurationList,
-            $activityContext->getActivity()->getUseVdot()
+            $activityContext->getActivity()->getUseVO2max()
         );
     }
 }

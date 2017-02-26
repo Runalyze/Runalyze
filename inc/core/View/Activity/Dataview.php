@@ -537,7 +537,7 @@ class Dataview
     }
 
     /**
-     * Value of used VDOT (uncorrected)
+     * Value of used VO2max (uncorrected)
      *
      * @return float
      */

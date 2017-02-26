@@ -1,7 +1,8 @@
 <?php
+
 namespace Runalyze\Bundle\CoreBundle\Entity;
 
-
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -42,28 +43,28 @@ class Training
     private $type;
 
     /**
-     * @var int
+     * @var int [timestamp]
      *
      * @ORM\Column(name="time", type="integer", precision=11, nullable=false)
      */
-    private $time = '0';
+    private $time = 0;
 
     /**
-     * @var int|null
+     * @var int|null [min]
      *
      * @ORM\Column(name="timezone_offset", type="smallint", precision=6, nullable=true)
      */
-    private $timezoneOffset;
+    private $timezoneOffset = null;
 
     /**
-     * @var int|null
+     * @var int|null [timestamp]
      *
      * @ORM\Column(name="created", type="integer", precision=11, nullable=true, options={"unsigned":true})
      */
     private $created = null;
 
     /**
-     * @var int|null
+     * @var int|null [timestamp]
      *
      * @ORM\Column(name="edited", type="integer", precision=11, nullable=true, options={"unsigned":true})
      */
@@ -72,61 +73,61 @@ class Training
     /**
      * @var bool
      *
-     * @ORM\Column(name="is_public", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 0")
+     * @ORM\Column(name="is_public", type="boolean", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 0")
      */
-    private $isPublic = '0';
+    private $isPublic = false;
 
     /**
      * @var bool
      *
-     * @ORM\Column(name="is_track", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 0")
+     * @ORM\Column(name="is_track", type="boolean", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 0")
      */
-    private $isTrack = '0';
+    private $isTrack = false;
 
     /**
-     * @var float|null
+     * @var float|null [km]
      *
      * @ORM\Column(name="distance", columnDefinition="decimal(6,2) unsigned DEFAULT NULL")
      */
     private $distance = null;
 
     /**
-     * @var float|null
+     * @var float|null [s]
      *
      * @ORM\Column(name="s", columnDefinition="decimal(8,2) unsigned NOT NULL")
      */
-    private $s = '0.00';
+    private $s = 0.0;
 
     /**
-     * @var int|null
+     * @var int|null [s]
      *
      * @ORM\Column(name="elapsed_time", columnDefinition="mediumint unsigned DEFAULT NULL")
      */
-    private $elapsedTime = 0;
+    private $elapsedTime = null;
 
     /**
-     * @var int|null
+     * @var int|null [m]
      *
      * @ORM\Column(name="elevation", columnDefinition="smallint unsigned DEFAULT NULL")
      */
     private $elevation = null;
 
     /**
-     * @var int|null
+     * @var int|null [kcal]
      *
      * @ORM\Column(name="kcal", columnDefinition="smallint unsigned DEFAULT NULL")
      */
     private $kcal = null;
 
     /**
-     * @var int|null
+     * @var int|null [bpm]
      *
      * @ORM\Column(name="pulse_avg", columnDefinition="tinyint(3) unsigned DEFAULT NULL")
      */
     private $pulseAvg = null;
 
     /**
-     * @var int|null
+     * @var int|null [bpm]
      *
      * @ORM\Column(name="pulse_max", columnDefinition="tinyint(3) unsigned DEFAULT NULL")
      */
@@ -135,40 +136,40 @@ class Training
     /**
      * @var float|null [ml/kg/min]
      *
-     * @ORM\Column(name="vdot", columnDefinition="decimal(5,2) unsigned DEFAULT NULL")
+     * @ORM\Column(name="vo2max", columnDefinition="decimal(5,2) unsigned DEFAULT NULL")
      */
-    private $vdot = '0.00';
+    private $vo2max = null;
 
     /**
      * @var float|null [ml/kg/min]
      *
-     * @ORM\Column(name="vdot_by_time", columnDefinition="decimal(5,2) unsigned DEFAULT NULL")
+     * @ORM\Column(name="vo2max_by_time", columnDefinition="decimal(5,2) unsigned DEFAULT NULL")
      */
-    private $vdotByTime = '0.00';
+    private $vo2maxByTime = null;
 
     /**
      * @var float|null [ml/kg/min]
      *
-     * @ORM\Column(name="vdot_with_elevation", columnDefinition="decimal(5,2) unsigned DEFAULT NULL" )
+     * @ORM\Column(name="vo2max_with_elevation", columnDefinition="decimal(5,2) unsigned DEFAULT NULL" )
      */
-    private $vdotWithElevation = '0.00';
+    private $vo2maxWithElevation = null;
 
     /**
      * @var bool
      *
-     * @ORM\Column(name="use_vdot", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 1")
+     * @ORM\Column(name="use_vo2max", type="boolean", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 1")
      */
-    private $useVdot = '1';
+    private $useVO2max = true;
 
     /**
-     * @var float|null
+     * @var float|null [ml/kg/min]
      *
-     * @ORM\Column(name="fit_vdot_estimate", columnDefinition="decimal(4,2) unsigned DEFAULT NULL")
+     * @ORM\Column(name="fit_vo2max_estimate", columnDefinition="decimal(4,2) unsigned DEFAULT NULL")
      */
-    private $fitVdotEstimate = null;
+    private $fitVO2maxEstimate = null;
 
     /**
-     * @var int|null
+     * @var int|null [min]
      *
      * @ORM\Column(name="fit_recovery_time", type="smallint", nullable=true, options={"unsigned":true})
      */
@@ -210,14 +211,14 @@ class Training
     private $trimp = null;
 
     /**
-     * @var int|null
+     * @var int|null [rpm]
      *
      * @ORM\Column(name="cadence", type="integer", length=3, nullable=true, options={"unsigned":true})
      */
     private $cadence = null;
 
     /**
-     * @var int|null
+     * @var int|null [W]
      *
      * @ORM\Column(name="power", type="integer", length=4, nullable=true, options={"unsigned":true})
      */
@@ -238,102 +239,102 @@ class Training
     private $swolf = null;
 
     /**
-     * @var bool|null
+     * @var bool|null [cm]
      *
      * @ORM\Column(name="stride_length", columnDefinition="tinyint(3) unsigned DEFAULT NULL")
      */
     private $strideLength = null;
 
     /**
-     * @var int|null
+     * @var int|null [ms]
      *
      * @ORM\Column(name="groundcontact", type="smallint", nullable=true, options={"unsigned":true})
      */
     private $groundcontact = null;
 
     /**
-     * @var int|null
+     * @var int|null [%ooL]
      *
      * @ORM\Column(name="groundcontact_balance", type="smallint", nullable=true, options={"unsigned":true})
      */
     private $groundcontactBalance = null;
 
     /**
-     * @var int|null
+     * @var int|null [mm]
      *
      * @ORM\Column(name="vertical_oscillation", columnDefinition="tinyint(3) unsigned DEFAULT NULL")
      */
     private $verticalOscillation = null;
 
     /**
-     * @var int|null
+     * @var int|null [%]
      *
      * @ORM\Column(name="vertical_ratio", type="smallint", nullable=true, options={"unsigned":true})
      */
     private $verticalRatio = null;
 
     /**
-     * @var bool|null
+     * @var int|null [°C]
      *
      * @ORM\Column(name="temperature", columnDefinition="tinyint(4) DEFAULT NULL")
      */
     private $temperature = null;
 
     /**
-     * @var bool|null
+     * @var bool|null [km/h]
      *
      * @ORM\Column(name="wind_speed", columnDefinition="tinyint(3) unsigned DEFAULT NULL")
      */
     private $windSpeed = null;
 
     /**
-     * @var int|null
+     * @var int|null [°]
      *
      * @ORM\Column(name="wind_deg", columnDefinition="smallint(3) unsigned DEFAULT NULL")
      */
-    private $windDeg;
+    private $windDeg = null;
 
     /**
-     * @var bool|null
+     * @var bool|null [%]
      *
      * @ORM\Column(name="humidity", columnDefinition="tinyint(3) unsigned DEFAULT NULL")
      */
-    private $humidity;
+    private $humidity = null;
 
     /**
-     * @var integer
+     * @var int [hPa]
      *
      * @ORM\Column(name="pressure", columnDefinition="smallint(4) unsigned DEFAULT NULL")
      */
-    private $pressure;
+    private $pressure = null;
 
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="is_night", columnDefinition="tinyint(1) unsigned DEFAULT NULL")
+     * @ORM\Column(name="is_night", type="boolean", columnDefinition="tinyint(1) unsigned DEFAULT NULL")
      */
-    private $isNight;
+    private $isNight = null;
 
     /**
      * @var int
      *
      * @ORM\Column(name="weatherid", type="smallint", nullable=false, options={"unsigned":true, "default":1})
      */
-    private $weatherid = '1';
+    private $weatherid = 1;
 
     /**
-     * @var bool|null
+     * @var int|null
      *
      * @ORM\Column(name="weather_source", columnDefinition="tinyint(2) unsigned DEFAULT NULL")
      */
-    private $weatherSource;
+    private $weatherSource = null;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="route", type="text", length=65535, nullable=true)
      */
-    private $routeName;
+    private $routeName = null;
 
     /**
      * @var Route|null
@@ -343,35 +344,35 @@ class Training
      *   @ORM\JoinColumn(name="routeid", referencedColumnName="id", nullable=true)
      * })
      */
-    private $route;
+    private $route = null;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="splits", type="text", length=16777215, nullable=true)
      */
-    private $splits;
+    private $splits = null;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="comment", type="text", length=65535, nullable=true)
      */
-    private $comment;
+    private $comment = null;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="partner", type="text", length=65535, nullable=true)
      */
-    private $partner;
+    private $partner = null;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="notes", type="text", length=65535, nullable=true)
      */
-    private $notes;
+    private $notes = null;
 
     /**
      * @var \Runalyze\Bundle\CoreBundle\Entity\Account
@@ -388,28 +389,28 @@ class Training
      *
      * @ORM\Column(name="creator", type="string", length=100, nullable=false, options={"default":""})
      */
-    private $creator;
+    private $creator = '';
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="creator_details", type="text", length=255, nullable=true)
      */
-    private $creatorDetails;
+    private $creatorDetails = null;
 
     /**
-     * @var int
+     * @var int|null
      *
      * @ORM\Column(name="activity_id", type="integer", nullable=true, options={"unsigned":true})
      */
-    private $activityId;
+    private $activityId = null;
 
     /**
      * @var bool
      *
-     * @ORM\Column(name="`lock`", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 0")
+     * @ORM\Column(name="`lock`", type="boolean", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 0")
      */
-    private $lock = '0';
+    private $lock = false;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -441,19 +442,14 @@ class Training
      */
     private $tag;
 
-    /**
-     * Constructor
-     */
     public function __construct()
     {
-        $this->equipment = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->tag = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->equipment = new ArrayCollection();
+        $this->tag = new ArrayCollection();
     }
 
     /**
-     * Get id
-     *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -461,13 +457,11 @@ class Training
     }
 
     /**
-     * Set sport
+     * @param Sport $sport
      *
-     * @param \Runalyze\Bundle\CoreBundle\Entity\Sport $sport
-     *
-     * @return Training
+     * @return $this
      */
-    public function setSport(\Runalyze\Bundle\CoreBundle\Entity\Sport $sport = null)
+    public function setSport(Sport $sport)
     {
         $this->sport = $sport;
 
@@ -475,9 +469,7 @@ class Training
     }
 
     /**
-     * Get sport
-     *
-     * @return \Runalyze\Bundle\CoreBundle\Entity\Sport
+     * @return Sport
      */
     public function getSport()
     {
@@ -485,13 +477,11 @@ class Training
     }
 
     /**
-     * Set Type
+     * @param null|Type $type
      *
-     * @param \Runalyze\Bundle\CoreBundle\Entity\Type $defaultType
-     *
-     * @return Training
+     * @return $this
      */
-    public function setType(\Runalyze\Bundle\CoreBundle\Entity\Type $type = null)
+    public function setType(Type $type = null)
     {
         $this->type = $type;
 
@@ -499,9 +489,7 @@ class Training
     }
 
     /**
-     * Get Type
-     *
-     * @return \Runalyze\Bundle\CoreBundle\Entity\Type
+     * @return null|Type
      */
     public function getType()
     {
@@ -509,11 +497,9 @@ class Training
     }
 
     /**
-     * Set time
+     * @param int $time [timestamp]
      *
-     * @param integer $time
-     *
-     * @return Training
+     * @return $this
      */
     public function setTime($time)
     {
@@ -523,9 +509,7 @@ class Training
     }
 
     /**
-     * Get time
-     *
-     * @return integer
+     * @return int [timestamp]
      */
     public function getTime()
     {
@@ -533,11 +517,9 @@ class Training
     }
 
     /**
-     * Set timezoneOffset
+     * @param null|int $timezoneOffset [min]
      *
-     * @param integer $timezoneOffset
-     *
-     * @return Training
+     * @return $this
      */
     public function setTimezoneOffset($timezoneOffset)
     {
@@ -547,9 +529,7 @@ class Training
     }
 
     /**
-     * Get timezoneOffset
-     *
-     * @return integer
+     * @return null|int [min]
      */
     public function getTimezoneOffset()
     {
@@ -557,11 +537,9 @@ class Training
     }
 
     /**
-     * Set created
+     * @param null|int $created [timestamp]
      *
-     * @param integer $created
-     *
-     * @return Training
+     * @return $this
      */
     public function setCreated($created)
     {
@@ -571,9 +549,7 @@ class Training
     }
 
     /**
-     * Get created
-     *
-     * @return integer
+     * @return null|int [timestamp]
      */
     public function getCreated()
     {
@@ -581,11 +557,9 @@ class Training
     }
 
     /**
-     * Set edited
+     * @param null|int $edited [timestamp]
      *
-     * @param integer $edited
-     *
-     * @return Training
+     * @return $this
      */
     public function setEdited($edited)
     {
@@ -595,9 +569,7 @@ class Training
     }
 
     /**
-     * Get edited
-     *
-     * @return integer
+     * @return null|int [timestamp]
      */
     public function getEdited()
     {
@@ -606,6 +578,7 @@ class Training
 
     /**
      * @param bool $isPublic
+     *
      * @return $this
      */
     public function setPublic($isPublic)
@@ -625,6 +598,7 @@ class Training
 
     /**
      * @param bool $isTrack
+     *
      * @return $this
      */
     public function setTrack($isTrack)
@@ -643,11 +617,9 @@ class Training
     }
 
     /**
-     * Set distance
+     * @param null|float $distance [km]
      *
-     * @param float $distance
-     *
-     * @return Training
+     * @return $this
      */
     public function setDistance($distance)
     {
@@ -657,9 +629,7 @@ class Training
     }
 
     /**
-     * Get distance
-     *
-     * @return float
+     * @return null|float [km]
      */
     public function getDistance()
     {
@@ -667,11 +637,9 @@ class Training
     }
 
     /**
-     * Set s
+     * @param float $s [s]
      *
-     * @param float $s
-     *
-     * @return Training
+     * @return $this
      */
     public function setS($s)
     {
@@ -681,9 +649,7 @@ class Training
     }
 
     /**
-     * Get s
-     *
-     * @return float
+     * @return float [s]
      */
     public function getS()
     {
@@ -691,11 +657,9 @@ class Training
     }
 
     /**
-     * Set elapsedTime
+     * @param null|bool $elapsedTime [s]
      *
-     * @param boolean $elapsedTime
-     *
-     * @return Training
+     * @return $this
      */
     public function setElapsedTime($elapsedTime)
     {
@@ -705,9 +669,7 @@ class Training
     }
 
     /**
-     * Get elapsedTime
-     *
-     * @return integer
+     * @return null|int [s]
      */
     public function getElapsedTime()
     {
@@ -715,11 +677,9 @@ class Training
     }
 
     /**
-     * Set elevation
+     * @param null|int $elevation [m]
      *
-     * @param integer $elevation
-     *
-     * @return Training
+     * @return $this
      */
     public function setElevation($elevation)
     {
@@ -729,9 +689,7 @@ class Training
     }
 
     /**
-     * Get elevation
-     *
-     * @return integer
+     * @return null|int [m]
      */
     public function getElevation()
     {
@@ -739,11 +697,9 @@ class Training
     }
 
     /**
-     * Set kcal
+     * @param null|int $kcal [kcal]
      *
-     * @param integer $kcal
-     *
-     * @return Training
+     * @return $this
      */
     public function setKcal($kcal)
     {
@@ -753,9 +709,7 @@ class Training
     }
 
     /**
-     * Get kcal
-     *
-     * @return integer
+     * @return null|int [kcal]
      */
     public function getKcal()
     {
@@ -763,11 +717,9 @@ class Training
     }
 
     /**
-     * Set pulseAvg
+     * @param null|int $pulseAvg [bpm]
      *
-     * @param integer $pulseAvg
-     *
-     * @return Training
+     * @return $this
      */
     public function setPulseAvg($pulseAvg)
     {
@@ -777,9 +729,7 @@ class Training
     }
 
     /**
-     * Get pulseAvg
-     *
-     * @return integer
+     * @return null|int [bpm]
      */
     public function getPulseAvg()
     {
@@ -787,11 +737,9 @@ class Training
     }
 
     /**
-     * Set pulseMax
+     * @param null|int $pulseMax [bpm]
      *
-     * @param integer $pulseMax
-     *
-     * @return Training
+     * @return $this
      */
     public function setPulseMax($pulseMax)
     {
@@ -801,9 +749,7 @@ class Training
     }
 
     /**
-     * Get pulseMax
-     *
-     * @return integer
+     * @return null|int [bpm]
      */
     public function getPulseMax()
     {
@@ -811,127 +757,109 @@ class Training
     }
 
     /**
-     * @param float $vdot
+     * @param null|float $vo2max [ml/kg/min]
      *
      * @return $this
      */
-    public function setVdot($vdot)
+    public function setVO2max($vo2max)
     {
-        $this->vdot = $vdot;
+        $this->vo2max = $vo2max;
 
         return $this;
     }
 
     /**
-     * @return float
+     * @return null|float [ml/kg/min]
      */
-    public function getVdot()
+    public function getVO2max()
     {
-        return $this->vdot;
+        return $this->vo2max;
     }
 
     /**
-     * Set vdotByTime
+     * @param null|float $vo2maxByTime [ml/kg/min]
      *
-     * @param float $vdotByTime
-     *
-     * @return Training
+     * @return $this
      */
-    public function setVdotByTime($vdotByTime)
+    public function setVO2maxByTime($vo2maxByTime)
     {
-        $this->vdotByTime = $vdotByTime;
+        $this->vo2maxByTime = $vo2maxByTime;
 
         return $this;
     }
 
     /**
-     * Get vdotByTime
-     *
-     * @return float
+     * @return null|float [ml/kg/min]
      */
-    public function getVdotByTime()
+    public function getVO2maxByTime()
     {
-        return $this->vdotByTime;
+        return $this->vo2maxByTime;
     }
 
     /**
-     * Set vdotWithElevation
+     * @param null|float $vo2maxWithElevation [ml/kg/min]
      *
-     * @param float $vdotWithElevation
-     *
-     * @return Training
+     * @return $this
      */
-    public function setVdotWithElevation($vdotWithElevation)
+    public function setVO2maxWithElevation($vo2maxWithElevation)
     {
-        $this->vdotWithElevation = $vdotWithElevation;
+        $this->vo2maxWithElevation = $vo2maxWithElevation;
 
         return $this;
     }
 
     /**
-     * Get vdotWithElevation
-     *
-     * @return float
+     * @return null|float [ml/kg/min]
      */
-    public function getVdotWithElevation()
+    public function getVO2maxWithElevation()
     {
-        return $this->vdotWithElevation;
+        return $this->vo2maxWithElevation;
     }
 
     /**
-     * Set useVdot
+     * @param bool $useVO2max
      *
-     * @param boolean $useVdot
-     *
-     * @return Training
+     * @return $this
      */
-    public function setUseVdot($useVdot)
+    public function setUseVO2max($useVO2max)
     {
-        $this->useVdot = $useVdot;
+        $this->useVO2max = $useVO2max;
 
         return $this;
     }
 
     /**
-     * Get useVdot
-     *
-     * @return boolean
+     * @return bool
      */
-    public function getUseVdot()
+    public function getUseVO2max()
     {
-        return $this->useVdot;
+        return $this->useVO2max;
     }
 
     /**
-     * Set fitVdotEstimate
+     * @param null|float $fitVO2maxEstimate [ml/kg/min]
      *
-     * @param float $fitVdotEstimate
-     *
-     * @return Training
+     * @return $this
      */
-    public function setFitVdotEstimate($fitVdotEstimate)
+    public function setFitVO2maxEstimate($fitVO2maxEstimate)
     {
-        $this->fitVdotEstimate = $fitVdotEstimate;
+        $this->fitVO2maxEstimate = $fitVO2maxEstimate;
 
         return $this;
     }
 
     /**
-     * Get fitVdotEstimate
-     *
-     * @return float
+     * @return null|float [ml/kg/min]
      */
-    public function getFitVdotEstimate()
+    public function getFitVO2maxEstimate()
     {
-        return $this->fitVdotEstimate;
+        return $this->fitVO2maxEstimate;
     }
 
     /**
-     * Set fitRecoveryTime
+     * @param null|int $fitRecoveryTime [min]
      *
-     * @param integer $fitRecoveryTime
-     *
-     * @return Training
+     * @return $this
      */
     public function setFitRecoveryTime($fitRecoveryTime)
     {
@@ -941,9 +869,7 @@ class Training
     }
 
     /**
-     * Get fitRecoveryTime
-     *
-     * @return integer
+     * @return null|int [min]
      */
     public function getFitRecoveryTime()
     {
@@ -951,11 +877,9 @@ class Training
     }
 
     /**
-     * Set fitHrvAnalysis
+     * @param null|int $fitHrvAnalysis
      *
-     * @param integer $fitHrvAnalysis
-     *
-     * @return Training
+     * @return $this
      */
     public function setFitHrvAnalysis($fitHrvAnalysis)
     {
@@ -965,9 +889,7 @@ class Training
     }
 
     /**
-     * Get fitHrvAnalysis
-     *
-     * @return integer
+     * @return null|int
      */
     public function getFitHrvAnalysis()
     {
@@ -975,11 +897,9 @@ class Training
     }
 
     /**
-     * Set fitTrainingEffect
+     * @param null|float $fitTrainingEffect
      *
-     * @param float $fitTrainingEffect
-     *
-     * @return Training
+     * @return $this
      */
     public function setFitTrainingEffect($fitTrainingEffect)
     {
@@ -989,9 +909,7 @@ class Training
     }
 
     /**
-     * Get fitTrainingEffect
-     *
-     * @return float
+     * @return null|float
      */
     public function getFitTrainingEffect()
     {
@@ -999,11 +917,9 @@ class Training
     }
 
     /**
-     * Set fitPerformanceCondition
+     * @param null|int $fitPerformanceCondition
      *
-     * @param integer $fitPerformanceCondition
-     *
-     * @return Training
+     * @return $this
      */
     public function setFitPerformanceCondition($fitPerformanceCondition)
     {
@@ -1013,9 +929,7 @@ class Training
     }
 
     /**
-     * Get fitPerformanceCondition
-     *
-     * @return integer
+     * @return null|int
      */
     public function getFitPerformanceCondition()
     {
@@ -1023,25 +937,9 @@ class Training
     }
 
     /**
-     * Set jdIntensity
+     * @param null|int $rpe
      *
-     * @param integer $jdIntensity
-     *
-     * @return Training
-     */
-    public function setJdIntensity($jdIntensity)
-    {
-        $this->jdIntensity = $jdIntensity;
-
-        return $this;
-    }
-
-    /**
-     * Set rpe
-     *
-     * @param integer $rpe
-     *
-     * @return Training
+     * @return $this
      */
     public function setRpe($rpe)
     {
@@ -1051,9 +949,7 @@ class Training
     }
 
     /**
-     * Get rpe
-     *
-     * @return integer
+     * @return null|int
      */
     public function getRpe()
     {
@@ -1061,11 +957,9 @@ class Training
     }
 
     /**
-     * Set trimp
+     * @param null|int $trimp
      *
-     * @param integer $trimp
-     *
-     * @return Training
+     * @return $this
      */
     public function setTrimp($trimp)
     {
@@ -1075,9 +969,7 @@ class Training
     }
 
     /**
-     * Get trimp
-     *
-     * @return integer
+     * @return null|int
      */
     public function getTrimp()
     {
@@ -1085,11 +977,9 @@ class Training
     }
 
     /**
-     * Set cadence
+     * @param null|int $cadence [rpm]
      *
-     * @param integer $cadence
-     *
-     * @return Training
+     * @return $this
      */
     public function setCadence($cadence)
     {
@@ -1099,9 +989,7 @@ class Training
     }
 
     /**
-     * Get cadence
-     *
-     * @return integer
+     * @return null|int [rpm]
      */
     public function getCadence()
     {
@@ -1109,11 +997,9 @@ class Training
     }
 
     /**
-     * Set power
+     * @param null|int $power [W]
      *
-     * @param integer $power
-     *
-     * @return Training
+     * @return $this
      */
     public function setPower($power)
     {
@@ -1123,9 +1009,7 @@ class Training
     }
 
     /**
-     * Get power
-     *
-     * @return integer
+     * @return null|int [W]
      */
     public function getPower()
     {
@@ -1133,11 +1017,9 @@ class Training
     }
 
     /**
-     * Set totalStrokes
+     * @param null|int $totalStrokes
      *
-     * @param integer $totalStrokes
-     *
-     * @return Training
+     * @return $this
      */
     public function setTotalStrokes($totalStrokes)
     {
@@ -1147,9 +1029,7 @@ class Training
     }
 
     /**
-     * Get totalStrokes
-     *
-     * @return integer
+     * @return null|int
      */
     public function getTotalStrokes()
     {
@@ -1157,11 +1037,9 @@ class Training
     }
 
     /**
-     * Set swolf
+     * @param null|int $swolf
      *
-     * @param integer $swolf
-     *
-     * @return Training
+     * @return $this
      */
     public function setSwolf($swolf)
     {
@@ -1171,9 +1049,7 @@ class Training
     }
 
     /**
-     * Get swolf
-     *
-     * @return integer
+     * @return null|int
      */
     public function getSwolf()
     {
@@ -1181,11 +1057,9 @@ class Training
     }
 
     /**
-     * Set strideLength
+     * @param null|int $strideLength [cm]
      *
-     * @param integer $strideLength
-     *
-     * @return Training
+     * @return $this
      */
     public function setStrideLength($strideLength)
     {
@@ -1195,9 +1069,7 @@ class Training
     }
 
     /**
-     * Get strideLength
-     *
-     * @return integer
+     * @return null|int [cm]
      */
     public function getStrideLength()
     {
@@ -1205,11 +1077,9 @@ class Training
     }
 
     /**
-     * Set groundcontact
+     * @param null|int $groundcontact [ms]
      *
-     * @param integer $groundcontact
-     *
-     * @return Training
+     * @return $this
      */
     public function setGroundcontact($groundcontact)
     {
@@ -1219,9 +1089,7 @@ class Training
     }
 
     /**
-     * Get groundcontact
-     *
-     * @return integer
+     * @return null|int [ms]
      */
     public function getGroundcontact()
     {
@@ -1229,11 +1097,9 @@ class Training
     }
 
     /**
-     * Set groundcontactBalance
+     * @param null|int $groundcontactBalance [%ooL]
      *
-     * @param integer $groundcontactBalance
-     *
-     * @return Training
+     * @return $this
      */
     public function setGroundcontactBalance($groundcontactBalance)
     {
@@ -1243,9 +1109,7 @@ class Training
     }
 
     /**
-     * Get groundcontactBalance
-     *
-     * @return integer
+     * @return null|int [%ooL]
      */
     public function getGroundcontactBalance()
     {
@@ -1253,11 +1117,9 @@ class Training
     }
 
     /**
-     * Set verticalOscillation
+     * @param null|int $verticalOscillation [mm]
      *
-     * @param integer $verticalOscillation
-     *
-     * @return Training
+     * @return $this
      */
     public function setVerticalOscillation($verticalOscillation)
     {
@@ -1267,9 +1129,7 @@ class Training
     }
 
     /**
-     * Get verticalOscillation
-     *
-     * @return integer
+     * @return null|int [mm]
      */
     public function getVerticalOscillation()
     {
@@ -1277,11 +1137,9 @@ class Training
     }
 
     /**
-     * Set verticalRatio
+     * @param null|int $verticalRatio [%]
      *
-     * @param integer $verticalRatio
-     *
-     * @return Training
+     * @return $this
      */
     public function setVerticalRatio($verticalRatio)
     {
@@ -1291,9 +1149,7 @@ class Training
     }
 
     /**
-     * Get verticalRatio
-     *
-     * @return integer
+     * @return null|int [%]
      */
     public function getVerticalRatio()
     {
@@ -1301,11 +1157,9 @@ class Training
     }
 
     /**
-     * Set temperature
+     * @param null|int $temperature [°C]
      *
-     * @param integer $temperature
-     *
-     * @return Training
+     * @return $this
      */
     public function setTemperature($temperature)
     {
@@ -1315,9 +1169,7 @@ class Training
     }
 
     /**
-     * Get temperature
-     *
-     * @return integer
+     * @return null|int [°C]
      */
     public function getTemperature()
     {
@@ -1325,11 +1177,9 @@ class Training
     }
 
     /**
-     * Set windSpeed
+     * @param null|int $windSpeed [km/h]
      *
-     * @param integer $windSpeed
-     *
-     * @return Training
+     * @return $this
      */
     public function setWindSpeed($windSpeed)
     {
@@ -1339,9 +1189,7 @@ class Training
     }
 
     /**
-     * Get windSpeed
-     *
-     * @return integer
+     * @return null|int [km/h]
      */
     public function getWindSpeed()
     {
@@ -1349,11 +1197,9 @@ class Training
     }
 
     /**
-     * Set windDeg
+     * @param null|int $windDeg [°]
      *
-     * @param integer $windDeg
-     *
-     * @return Training
+     * @return $this
      */
     public function setWindDeg($windDeg)
     {
@@ -1363,9 +1209,7 @@ class Training
     }
 
     /**
-     * Get windDeg
-     *
-     * @return integer
+     * @return null|int [°]
      */
     public function getWindDeg()
     {
@@ -1373,11 +1217,9 @@ class Training
     }
 
     /**
-     * Set humidity
+     * @param null|int $humidity [%]
      *
-     * @param integer $humidity
-     *
-     * @return Training
+     * @return $this
      */
     public function setHumidity($humidity)
     {
@@ -1387,9 +1229,7 @@ class Training
     }
 
     /**
-     * Get humidity
-     *
-     * @return integer
+     * @return null|int [%]
      */
     public function getHumidity()
     {
@@ -1397,11 +1237,9 @@ class Training
     }
 
     /**
-     * Set pressure
+     * @param null|int $pressure [hPa]
      *
-     * @param integer $pressure
-     *
-     * @return Training
+     * @return $this
      */
     public function setPressure($pressure)
     {
@@ -1411,9 +1249,7 @@ class Training
     }
 
     /**
-     * Get pressure
-     *
-     * @return integer
+     * @return null|int [hPa]
      */
     public function getPressure()
     {
@@ -1421,7 +1257,8 @@ class Training
     }
 
     /**
-     * @param bool $isNight
+     * @param null|bool $isNight
+     *
      * @return $this
      */
     public function setNight($isNight)
@@ -1432,7 +1269,7 @@ class Training
     }
 
     /**
-     * @return bool
+     * @return null|bool
      */
     public function isNight()
     {
@@ -1440,11 +1277,9 @@ class Training
     }
 
     /**
-     * Set weatherid
+     * @param int $weatherid
      *
-     * @param integer $weatherid
-     *
-     * @return Training
+     * @return $this
      */
     public function setWeatherid($weatherid)
     {
@@ -1454,9 +1289,7 @@ class Training
     }
 
     /**
-     * Get weatherid
-     *
-     * @return integer
+     * @return int
      */
     public function getWeatherid()
     {
@@ -1464,11 +1297,9 @@ class Training
     }
 
     /**
-     * Set weatherSource
+     * @param null|int $weatherSource
      *
-     * @param integer $weatherSource
-     *
-     * @return Training
+     * @return $this
      */
     public function setWeatherSource($weatherSource)
     {
@@ -1478,9 +1309,7 @@ class Training
     }
 
     /**
-     * Get weatherSource
-     *
-     * @return integer
+     * @return null|int
      */
     public function getWeatherSource()
     {
@@ -1488,11 +1317,9 @@ class Training
     }
 
     /**
-     * Set routeName
+     * @param null|string $routeName
      *
-     * @param string $routeName
-     *
-     * @return Training
+     * @return $this
      */
     public function setRouteName($routeName)
     {
@@ -1502,9 +1329,7 @@ class Training
     }
 
     /**
-     * Get routeName
-     *
-     * @return string
+     * @return null|string
      */
     public function getRouteName()
     {
@@ -1512,11 +1337,11 @@ class Training
     }
 
     /**
-     * @param \Runalyze\Bundle\CoreBundle\Entity\Route|null $route
+     * @param null|Route $route
      *
      * @return $this
      */
-    public function setRoute(\Runalyze\Bundle\CoreBundle\Entity\Route $route = null)
+    public function setRoute(Route $route = null)
     {
         $this->route = $route;
 
@@ -1524,7 +1349,7 @@ class Training
     }
 
     /**
-     * @return \Runalyze\Bundle\CoreBundle\Entity\Route|null
+     * @return null|Route
      */
     public function getRoute()
     {
@@ -1532,11 +1357,9 @@ class Training
     }
 
     /**
-     * Set splits
+     * @param null|string $splits
      *
-     * @param string $splits
-     *
-     * @return Training
+     * @return $this
      */
     public function setSplits($splits)
     {
@@ -1546,9 +1369,7 @@ class Training
     }
 
     /**
-     * Get splits
-     *
-     * @return string
+     * @return null|string
      */
     public function getSplits()
     {
@@ -1556,11 +1377,9 @@ class Training
     }
 
     /**
-     * Set comment
+     * @param null|string $comment
      *
-     * @param string $comment
-     *
-     * @return Training
+     * @return $this
      */
     public function setComment($comment)
     {
@@ -1570,9 +1389,7 @@ class Training
     }
 
     /**
-     * Get comment
-     *
-     * @return string
+     * @return null|string
      */
     public function getComment()
     {
@@ -1580,11 +1397,9 @@ class Training
     }
 
     /**
-     * Set partner
+     * @param null|string $partner
      *
-     * @param string $partner
-     *
-     * @return Training
+     * @return $this
      */
     public function setPartner($partner)
     {
@@ -1594,9 +1409,7 @@ class Training
     }
 
     /**
-     * Get partner
-     *
-     * @return string
+     * @return null|string
      */
     public function getPartner()
     {
@@ -1604,11 +1417,9 @@ class Training
     }
 
     /**
-     * Set notes
+     * @param null|string $notes
      *
-     * @param string $notes
-     *
-     * @return Training
+     * @return $this
      */
     public function setNotes($notes)
     {
@@ -1618,9 +1429,7 @@ class Training
     }
 
     /**
-     * Get notes
-     *
-     * @return string
+     * @return null|string
      */
     public function getNotes()
     {
@@ -1628,23 +1437,19 @@ class Training
     }
 
     /**
-     * Set account
+     * @param Account $account
      *
-     * @param \Runalyze\Bundle\CoreBundle\Entity\Account $account
-     *
-     * @return Training
+     * @return $this
      */
-    public function setAccount(\Runalyze\Bundle\CoreBundle\Entity\Account $account = null)
+    public function setAccount(Account $account)
     {
-        $this->account= $account;
+        $this->account = $account;
 
         return $this;
     }
 
     /**
-     * Get account
-     *
-     * @return \Runalyze\Bundle\CoreBundle\Entity\Account
+     * @return Account
      */
     public function getAccount()
     {
@@ -1652,11 +1457,9 @@ class Training
     }
 
     /**
-     * Set creator
-     *
      * @param string $creator
      *
-     * @return Training
+     * @return $this
      */
     public function setCreator($creator)
     {
@@ -1666,8 +1469,6 @@ class Training
     }
 
     /**
-     * Get creator
-     *
      * @return string
      */
     public function getCreator()
@@ -1676,11 +1477,9 @@ class Training
     }
 
     /**
-     * Set creatorDetails
+     * @param null|string $creatorDetails
      *
-     * @param string $creatorDetails
-     *
-     * @return Training
+     * @return $this
      */
     public function setCreatorDetails($creatorDetails)
     {
@@ -1690,9 +1489,7 @@ class Training
     }
 
     /**
-     * Get creatorDetails
-     *
-     * @return string
+     * @return null|string
      */
     public function getCreatorDetails()
     {
@@ -1700,11 +1497,9 @@ class Training
     }
 
     /**
-     * Set activityId
+     * @param null|int $activityId
      *
-     * @param integer $activityId
-     *
-     * @return Training
+     * @return $this
      */
     public function setActivityId($activityId)
     {
@@ -1714,9 +1509,7 @@ class Training
     }
 
     /**
-     * Get activityId
-     *
-     * @return integer
+     * @return null|int
      */
     public function getActivityId()
     {
@@ -1724,11 +1517,9 @@ class Training
     }
 
     /**
-     * Set lock
+     * @param bool $lock
      *
-     * @param boolean $lock
-     *
-     * @return Training
+     * @return $this
      */
     public function setLock($lock)
     {
@@ -1738,9 +1529,7 @@ class Training
     }
 
     /**
-     * Get lock
-     *
-     * @return boolean
+     * @return bool
      */
     public function getLock()
     {
@@ -1748,13 +1537,11 @@ class Training
     }
 
     /**
-     * Add equipment
+     * @param Equipment $equipment
      *
-     * @param \Runalyze\Bundle\CoreBundle\Entity\Equipment $equipment
-     *
-     * @return Training
+     * @return $this
      */
-    public function addEquipment(\Runalyze\Bundle\CoreBundle\Entity\Equipment $equipment)
+    public function addEquipment(Equipment $equipment)
     {
         $this->equipment[] = $equipment;
 
@@ -1762,18 +1549,14 @@ class Training
     }
 
     /**
-     * Remove equipment
-     *
-     * @param \Runalyze\Bundle\CoreBundle\Entity\Equipment $equipment
+     * @param Equipment $equipment
      */
-    public function removeEquipment(\Runalyze\Bundle\CoreBundle\Entity\Equipment $equipment)
+    public function removeEquipment(Equipment $equipment)
     {
         $this->equipment->removeElement($equipment);
     }
 
     /**
-     * Get equipment
-     *
      * @return \Doctrine\Common\Collections\Collection
      */
     public function getEquipment()
@@ -1782,13 +1565,11 @@ class Training
     }
 
     /**
-     * Add tag
+     * @param Tag $tag
      *
-     * @param \Runalyze\Bundle\CoreBundle\Entity\Tag $tag
-     *
-     * @return Training
+     * @return $this
      */
-    public function addTag(\Runalyze\Bundle\CoreBundle\Entity\Tag $tag)
+    public function addTag(Tag $tag)
     {
         $this->tag[] = $tag;
 
@@ -1796,23 +1577,18 @@ class Training
     }
 
     /**
-     * Remove tag
-     *
-     * @param \Runalyze\Bundle\CoreBundle\Entity\Tag $tag
+     * @param Tag $tag
      */
-    public function removeTag(\Runalyze\Bundle\CoreBundle\Entity\Tag $tag)
+    public function removeTag(Tag $tag)
     {
         $this->tag->removeElement($tag);
     }
 
     /**
-     * Get tag
-     *
      * @return \Doctrine\Common\Collections\Collection
      */
     public function getTag()
     {
         return $this->tag;
     }
-
 }

@@ -67,9 +67,9 @@ class JobLoop extends Job
                 }
 
                 if ($this->isRequested(self::VO2MAX)) {
-                    $Update->bindValue(':vdot', $calculateVO2max ? $Calculator->estimateVO2maxByHeartRate() : 0);
-                    $Update->bindValue(':vdot_by_time', $calculateVO2max ? $Calculator->estimateVO2maxByTime() : 0);
-                    $Update->bindValue(':vdot_with_elevation', $calculateVO2max ? $Calculator->estimateVO2maxByHeartRateWithElevation() : 0);
+                    $Update->bindValue(':vo2max', $calculateVO2max ? $Calculator->estimateVO2maxByHeartRate() : 0);
+                    $Update->bindValue(':vo2max_by_time', $calculateVO2max ? $Calculator->estimateVO2maxByTime() : 0);
+                    $Update->bindValue(':vo2max_with_elevation', $calculateVO2max ? $Calculator->estimateVO2maxByHeartRateWithElevation() : 0);
                 }
 
                 if ($this->isRequested(self::TRIMP)) {
@@ -154,9 +154,9 @@ class JobLoop extends Job
         }
 
         if ($this->isRequested(self::VO2MAX)) {
-            $Set[] = 'vdot';
-            $Set[] = 'vdot_by_time';
-            $Set[] = 'vdot_with_elevation';
+            $Set[] = 'vo2max';
+            $Set[] = 'vo2max_by_time';
+            $Set[] = 'vo2max_with_elevation';
         }
 
         if ($this->isRequested(self::TRIMP)) {

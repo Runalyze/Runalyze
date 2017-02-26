@@ -38,7 +38,7 @@ gulp
  * import activity files (*.fit, *.tcx, *.gpx and many more)
  * TRIMP principle
  * long-term form analysis
- * VDOT estimation
+ * VO2max estimation
  * race prediction based on your shape
  * statistics like *Monotony, training strain, stress balance*
  * heart rate variability (HRV) in activity view

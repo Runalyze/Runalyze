@@ -386,8 +386,8 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	public function getFieldsetEffecticeVO2max() {
 		$Tooltip = new Tooltip('');
 		$EffectiveVO2max = new LegacyEffectiveVO2max(0, new LegacyEffectiveVO2maxCorrector(Configuration::Data()->vo2maxCorrectionFactor()));
-		$vo2maxColumn = Configuration::VO2max()->useElevationCorrection() ? 'IF(`vdot_with_elevation`>0,`vdot_with_elevation`,`vdot`) as `vdot`' : '`vdot`';
-		$EffectiveVO2maxValues = DB::getInstance()->query('SELECT `id`,`time`,`distance`,'.$vo2maxColumn.' FROM `'.PREFIX.'training` WHERE time>='.(time() - Configuration::VO2max()->days()*DAY_IN_S).' AND vdot>0 AND use_vdot=1 AND accountid = '.SessionAccountHandler::getId().' ORDER BY time ASC')->fetchAll();
+		$vo2maxColumn = Configuration::VO2max()->useElevationCorrection() ? 'IF(`vo2max_with_elevation`>0,`vo2max_with_elevation`,`vo2max`) as `vo2max`' : '`vo2max`';
+		$EffectiveVO2maxValues = DB::getInstance()->query('SELECT `id`,`time`,`distance`,'.$vo2maxColumn.' FROM `'.PREFIX.'training` WHERE time>='.(time() - Configuration::VO2max()->days()*DAY_IN_S).' AND `vo2max`>0 AND `use_vo2max`=1 AND accountid = '.SessionAccountHandler::getId().' ORDER BY time ASC')->fetchAll();
 
 		if (empty($EffectiveVO2maxValues)) {
 			$Table = '<p class="error">'.$this->getNoEffectiveVO2maxDataError().'</p>';
@@ -405,7 +405,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 					$Table .= '<tr>';
 
 				$Tooltip->setText((new LocalTime($Data['time']))->format('d.m.Y').': '.Distance::format($Data['distance']));
-                $EffectiveVO2max->setValue($Data['vdot']);
+                $EffectiveVO2max->setValue($Data['vo2max']);
 
 				$Table .= '<td '.$Tooltip->attributes().'>'.Ajax::trainingLink($Data['id'], $EffectiveVO2max->value()).'</td>';
 

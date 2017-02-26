@@ -67,7 +67,7 @@ class SectionPaceRow extends TrainingViewSectionRowTabbedPlot {
 	}
 
 	/**
-	 * Add: vdot/intensity
+	 * Add: vo2max
 	 */
 	protected function addCalculations() {
 		if ($this->Context->dataview()->vo2max()->value() > 0) {

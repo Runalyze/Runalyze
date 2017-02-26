@@ -14,8 +14,8 @@ $HIDDEN_KEYS = array(
 	//'elevation_corrected', 'gps_cache_object',
 	'arr_time', 'arr_lat', 'arr_lon', 'arr_geohashes', 'arr_alt', 'arr_alt_original', 'arr_heart', 'arr_dist', 'arr_cadence', 'arr_power', 'arr_temperature',
 	'arr_groundcontact', 'arr_vertical_oscillation', 'arr_groundcontact_balance', 'arr_smo2_0','arr_smo2_1', 'arr_thb_0', 'arr_thb_1', 'pauses', 'hrv',
-	'fit_vdot_estimate', 'fit_recovery_time', 'fit_hrv_analysis', 'fit_training_effect', 'fit_performance_condition',
-	//'vdot', 'vdot_by_time', 'trimp', 'vdot_with_elevation'
+	'fit_vo2max_estimate', 'fit_recovery_time', 'fit_hrv_analysis', 'fit_training_effect', 'fit_performance_condition',
+	//'vo2max', 'vo2max_by_time', 'trimp', 'vo2max_with_elevation'
 	'elapsed_time', 'elevation_calculated', 'groundcontact', 'vertical_oscillation', 'groundcontact_balance', 'vertical_ratio', 'stroke', 'stroketype','total_strokes', 'swolf', 'pool_length', 'weather_source', 'is_night'
 );
 
@@ -48,7 +48,7 @@ $FIELDSETS = array(
 	array(
 		'id'		=> 'other',
 		'legend'	=> __('Miscellaneous'),
-		'fields'	=> array('use_vdot', 'rpe', 'comment', 'partner', 'route'),
+		'fields'	=> array('use_vo2max', 'rpe', 'comment', 'partner', 'route'),
 		'conf'		=> 'OTHER',
 		'layout'	=> FormularFieldset::$LAYOUT_FIELD_W100_IN_W50
 	),
@@ -272,7 +272,7 @@ $FIELDS = array(
 						'unit'		=> FormularUnit::$BPM
 					)
 	),
-	'vdot'				=> array(
+	'vo2max'			=> array(
 					'database'	=> array(
 						'type'		=> 'decimal',
 						'precision'	=> '5,2',
@@ -282,7 +282,7 @@ $FIELDS = array(
 						'hidden'	=> true
 					)
 	),
-	'vdot_by_time'		=> array(
+	'vo2max_by_time'	=> array(
 					'database'	=> array(
 						'type'		=> 'decimal',
 						'precision'	=> '5,2',
@@ -292,7 +292,7 @@ $FIELDS = array(
 						'hidden'	=> true
 					)
 	),
-	'vdot_with_elevation'=> array(
+	'vo2max_with_elevation'=> array(
 					'database'	=> array(
 						'type'		=> 'decimal',
 						'precision'	=> '5,2',
@@ -302,7 +302,7 @@ $FIELDS = array(
 						'hidden'	=> true
 					)
 	),
-	'use_vdot'			=> array(
+	'use_vo2max'		=> array(
 					'database'	=> array(
 						'type'		=> 'tinyint',
 						'precision'	=> '1',
@@ -315,7 +315,7 @@ $FIELDS = array(
 						'css'		=> TrainingFormular::$ONLY_RUNNING_CLASS
 					)
 	),
-	'fit_vdot_estimate'	=> array(
+	'fit_vo2max_estimate'	=> array(
 					'database'	=> array(
 						'type'		=> 'decimal',
 						'precision'	=> '4,2',

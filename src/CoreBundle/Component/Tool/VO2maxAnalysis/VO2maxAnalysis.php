@@ -68,8 +68,8 @@ class VO2maxAnalysis
 				`tr`.`comment`,
 				`tr`.`pulse_avg`,
 				`tr`.`pulse_max`,
-				`tr`.`vdot`,
-				`tr`.`vdot_by_time`
+				`tr`.`vo2max`,
+				`tr`.`vo2max_by_time`
 			FROM `'.PREFIX.'raceresult` `r` LEFT JOIN `'.PREFIX.'training` `tr` ON `tr`.`id` = `r`.`activity_id`
 			WHERE
 				`tr`.`pulse_avg` !=0 AND

@@ -53,7 +53,7 @@ final class SummaryMode extends AbstractEnum
 	const AVG_WITHOUT_NULL = 5;
 
 	/**
-	 * VO2MAX: take only the average of activities with `use_vdot` and respect elevation correction
+	 * VO2MAX: take only the average of activities with `use_vo2max` and respect elevation correction
 	 * @var int
 	 */
 	const VO2MAX = 6;
@@ -135,8 +135,8 @@ final class SummaryMode extends AbstractEnum
 	 */
 	private static function queryForVO2max($key)
 	{
-		$Sum = \Runalyze\Configuration::VO2max()->useElevationCorrection() ? 'IF(`vdot_with_elevation`>0,`vdot_with_elevation`,`vdot`)*`s`' : '`vdot`*`s`';
+		$Sum = \Runalyze\Configuration::VO2max()->useElevationCorrection() ? 'IF(`vo2max_with_elevation`>0,`vo2max_with_elevation`,`vo2max`)*`s`' : '`vo2max`*`s`';
 
-		return 'SUM(IF(`use_vdot`=1 AND `vdot`>0,'.$Sum.',0))/SUM(IF(`use_vdot`=1 AND `vdot`>0,`s`,0)) as `'.$key.'`';
+		return 'SUM(IF(`use_vo2max`=1 AND `vo2max`>0,'.$Sum.',0))/SUM(IF(`use_vo2max`=1 AND `vo2max`>0,`s`,0)) as `'.$key.'`';
 	}
 }

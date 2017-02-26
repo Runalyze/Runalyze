@@ -45,10 +45,10 @@ class ActivityDecorator
      */
     public function getUncorrectedVO2max(RunalyzeConfigurationList $configurationList)
     {
-        if ($configurationList->useVO2maxCorrectionForElevation() && $this->Context->getActivity()->getVdotWithElevation() > 0.0) {
-            return $this->Context->getActivity()->getVdotWithElevation();
+        if ($configurationList->useVO2maxCorrectionForElevation() && $this->Context->getActivity()->getVO2maxWithElevation() > 0.0) {
+            return $this->Context->getActivity()->getVO2maxWithElevation();
         }
 
-        return $this->Context->getActivity()->getVdot();
+        return $this->Context->getActivity()->getVO2max();
     }
 }

@@ -77,7 +77,7 @@ class LegacyVO2maxCorrectorTest extends \PHPUnit_Framework_TestCase
 
     protected function insert($vo2max, $vo2max_by_time, $accountid, $sportid, $useVO2max = true)
     {
-        $this->PDO->exec('INSERT INTO `'.PREFIX.'training` (`vdot`, `vdot_by_time`, `sportid`, `accountid`, `s`, `use_vdot`, `time`) VALUES('.$vo2max.', '.$vo2max_by_time.', '.$sportid.', '.$accountid.', 2400, '.($useVO2max ? 1 : 0).', 1477843525)');
+        $this->PDO->exec('INSERT INTO `'.PREFIX.'training` (`vo2max`, `vo2max_by_time`, `sportid`, `accountid`, `s`, `use_vo2max`, `time`) VALUES('.$vo2max.', '.$vo2max_by_time.', '.$sportid.', '.$accountid.', 2400, '.($useVO2max ? 1 : 0).', 1477843525)');
         $activityId = $this->PDO->lastInsertId();
 
         $RaceResult = new RaceResult\Entity(array(

@@ -185,9 +185,9 @@ class SearchFormular extends Formular {
 		$this->addNumericConditionFIeld('power', __('Power'), FormularInput::$SIZE_SMALL, FormularUnit::$POWER);
 		$this->addBooleanField('is_race', __('Is race'));
 
-		$this->addNumericConditionField(Configuration::VO2max()->useElevationCorrection() ? 'vdot_with_elevation' : 'vdot', 'VO<sub>2</sub>max', FormularInput::$SIZE_SMALL);
+		$this->addNumericConditionField(Configuration::VO2max()->useElevationCorrection() ? 'vo2max_with_elevation' : 'vo2max', 'VO<sub>2</sub>max', FormularInput::$SIZE_SMALL);
 		$this->addNumericConditionField('vertical_oscillation', __('Vertical oscillation'), FormularInput::$SIZE_SMALL, FormularUnit::$CM);
-		$this->addBooleanField('use_vdot', __('Uses VO<sub>2</sub>max'));
+		$this->addBooleanField('use_vo2max', __('Uses VO<sub>2</sub>max'));
 
 		$this->addNumericConditionField('trimp', __('TRIMP'), FormularInput::$SIZE_SMALL);
 		$this->addNumericConditionField('vertical_ratio', __('Vertical ratio'), FormularInput::$SIZE_SMALL, FormularUnit::$PERCENT);
@@ -205,7 +205,7 @@ class SearchFormular extends Formular {
 		$this->addNumericConditionField('fit_training_effect', __('Training Effect'), FormularInput::$SIZE_SMALL);
 		$this->addNumericConditionField('humidity', __('Humidity'), FormularInput::$SIZE_SMALL, (new Humidity())->unit());
 
-		$this->addNumericConditionField('fit_vdot_estimate', Dataset\Keys::get(Dataset\Keys::FIT_VO2MAX_ESTIMATE)->label(), FormularInput::$SIZE_SMALL);
+		$this->addNumericConditionField('fit_vo2max_estimate', Dataset\Keys::get(Dataset\Keys::FIT_VO2MAX_ESTIMATE)->label(), FormularInput::$SIZE_SMALL);
 		$this->addNumericConditionField('fit_recovery_time', Dataset\Keys::get(Dataset\Keys::FIT_RECOVERY_TIME)->label(), FormularInput::$SIZE_SMALL, 'h');
 		$this->addNumericConditionField('pressure', __('Pressure'), FormularInput::$SIZE_SMALL, (new Pressure())->unit());
 

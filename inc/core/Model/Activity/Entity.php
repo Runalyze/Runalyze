@@ -111,31 +111,31 @@ class Entity extends Model\EntityWithID {
 	 * Key: vo2max
 	 * @var string
 	 */
-	const VO2MAX = 'vdot';
+	const VO2MAX = 'vo2max';
 
 	/**
 	 * Key: vo2max by time
 	 * @var string
 	 */
-	const VO2MAX_BY_TIME = 'vdot_by_time';
+	const VO2MAX_BY_TIME = 'vo2max_by_time';
 
 	/**
 	 * Key: vo2max with elevation
 	 * @var string
 	 */
-	const VO2MAX_WITH_ELEVATION = 'vdot_with_elevation';
+	const VO2MAX_WITH_ELEVATION = 'vo2max_with_elevation';
 
 	/**
 	 * Key: use vo2max
 	 * @var string
 	 */
-	const USE_VO2MAX = 'use_vdot';
+	const USE_VO2MAX = 'use_vo2max';
 
 	/**
 	 * Key: vo2max estimate from fit file
 	 * @var string
 	 */
-	const FIT_VO2MAX_ESTIMATE = 'fit_vdot_estimate';
+	const FIT_VO2MAX_ESTIMATE = 'fit_vo2max_estimate';
 
 	/**
 	 * Key: recovery time from fit file
