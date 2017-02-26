@@ -35,7 +35,7 @@ class Dataset
      * @var boolean
      * @ORM\Column(name="active", type="boolean", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 1")
      */
-    private $active = 1;
+    private $active;
 
     /**
      * @var string
@@ -49,7 +49,7 @@ class Dataset
      *
      * @ORM\Column(name="position", columnDefinition="tinyint(3) unsigned NOT NULL DEFAULT 0")
      */
-    private $position = '0';
+    private $position = 0;
 
     /**
      * Set account

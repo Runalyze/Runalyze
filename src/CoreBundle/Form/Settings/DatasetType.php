@@ -16,7 +16,7 @@ class DatasetType extends AbstractType
     {
         $builder
             ->add('active', CheckboxType::class, array(
-                'empty_data' => true,
+                'empty_data' => false,
                 'required' => false
             ))
             ->add('style', TextType::class, array(

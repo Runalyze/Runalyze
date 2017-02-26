@@ -11,9 +11,8 @@
                 <p class="info">{% trans %}You can specify which values show up in the overview of your activities.<br>This does not influence the detailed activity view, the form or any plugin.{% endtrans %}</p>
             </div>
             <div>
-                <table class="c fullwidth zebra-style" id="conf-tab-dataset">
         {% include 'flashmessages.html.twig' %}
-        {{ form_start(form, {'attr': {'class': 'ajax no-automatic-reloads'}, 'action': url('settings-dataset') }) }}
+        {{ form_start(form, {'attr': {'class': 'no-automatic-reloads'}, 'action': url('settings-dataset') }) }}
         <table class="c fullwidth zebra-style" id="conf-tab-dataset">
             <thead>
             <tr>
@@ -26,33 +25,35 @@
             </tr>
             </thead>
             <tbody>
-
+            {% set position = 1 %}
             {% for dataset in form.datasets %}
-                {% set keyValues = datasetKeys.get(dataset.vars.value.keyid) %}
+                {% set keyObject = datasetKeys.get(dataset.vars.value.keyid) %}
                 <tr class="r" id="{{ dataset.vars.value.keyid }}_tr">
                     <td class="c">
-                        {% if keyValues.description() %}
-                            <i class="fa fa-fw fa-info-circle atRight" rel="tooltip" data-original-title="{{ keyValues.description() }}"></i>
+                        {% if keyObject.description() %}
+                            <i class="fa fa-fw fa-info-circle atRight" rel="tooltip" data-original-title="{{ keyObject.description() }}"></i>
                         {% endif %}
                     </td>
                     <td class="l b">
-                        {{ keyValues.label() }}
+                        {{ keyObject.label() }}<sup class="colored-green">{% if missingKeys[dataset.vars.value.keyid] %}{% trans %}new{% endtrans %}</sup>{% endif %}
                     </td>
                     <td class="c">
-                    {{ form_widget(dataset.active) }}
+                        {{ form_widget(dataset.active) }}
                     </td>
                     <td class="c">
-                        <input class="dataset-position" type="text" name="{{ dataset.vars.value.keyid }}_position" value="{{ dataset.vars.value.position }}" size="2">
+                        <input class="dataset-position" type="text" name="{{ dataset.vars.value.keyid }}_position" value="{{ position }}" size="2">
                         <span class="link" onclick="datasetMove({{ dataset.vars.value.keyid }}, 'up')"><i class="fa fa-fw fa-arrow-up"></i></span>
                         <span class="link" onclick="datasetMove({{ dataset.vars.value.keyid }}, 'down')"><i class="fa fa-fw fa-arrow-down"></i></span>
                     </td>
                     <td class="c">
                         {{ form_widget(dataset.style) }}
                     </td>
-                    <td class="{{ keyValues.getStyle() | raw }}"">
-                        {{ keyValues.stringFor(context) | raw }}
+                    <td class="{{ keyObject.getStyle() | raw }}">
+                        {{ keyObject.stringFor(context) | raw }}
                     </td>
                 </tr>
+
+                {% set position = position + 1 %}
             {% endfor %}
             </tbody>
             </table>
@@ -67,22 +68,20 @@
     </div>
 
     <script>
-        function pluginMove(id, way) {
-            var pos = parseInt($("input[name='plugin_order_"+id+"']").val()),
+        function datasetMove(id, way) {
+            var pos = parseInt($("input[name=\'"+id+"_position\']").val()),
                     tr = $("#"+id+"_tr");
-
             if (way == "up" && pos > 1) {
-                $("#"+id+"_tr .plugin-position").val(pos-1);
-                tr.prev().find(".plugin-position").val(pos);
+                $("#"+id+"_tr .dataset-position").val(pos-1);
+                tr.prev().find(".dataset-position").val(pos);
                 tr.prev().toggleClass("swapped");
                 tr.prev().before(tr);
-            } else if (way == "down" && tr.next().find(".plugin-position").val() > 0) {
-                $("#"+id+"_tr .plugin-position").val(pos+1);
-                tr.next().find(".plugin-position").val(pos);
+            } else if (way == "down" && tr.next().find(".dataset-position").val() > 0) {
+                $("#"+id+"_tr .dataset-position").val(pos+1);
+                tr.next().find(".dataset-position").val(pos);
                 tr.next().toggleClass("swapped");
                 tr.next().after(tr);
             }
-
             tr.toggleClass("swapped");
         }
     </script>

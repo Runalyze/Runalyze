@@ -148,24 +148,35 @@ class SettingsController extends Controller
     {
         $Frontend = new \Frontend(true, $this->get('security.token_storage'));
 
+        $em=$this->getDoctrine()->getManager();
+
         /** @var Dataset $dataset */
         $dataset = $this->getDoctrine()->getRepository('CoreBundle:Dataset')->findAllFor($account);
+        $missingKeyObjects = array_flip(RunalyzeDataset\Keys::getEnum());
 
-        $defaultDataset = new RunalyzeDataset\DefaultConfiguration();
-        /*foreach (RunalyzeDataset\Keys::getEnum() as $keyid) {
-            dump($keyid);
-        }*/
+        foreach ($dataset as $datasetObject) {
+            unset($missingKeyObjects[$datasetObject->getKeyId()]);
+        }
+        foreach ($missingKeyObjects as $key => $missingDataset) {
+            $dataset[] = (new Dataset())->setActive(false)->setKeyId($key)->setAccount($account);
+        }
 
         $form = $this->createForm(DatasetCollectionType::class, ['datasets' => $dataset], array(
             'action' => $this->generateUrl('settings-dataset')
         ));
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted()) {
+            foreach($form->get('datasets')->getData() as $datasetObject)
+            {
+                $em->persist($datasetObject);
+            }
+            $em->flush();
         }
         return $this->render('settings/dataset.html.twig', [
             'form' => $form->createView(),
             'datasetKeys' => new RunalyzeDataset\Keys(),
+            'missingKeys' => $missingKeyObjects,
             'context' => new RunalyzeDataset\Context($this->getExampleTraining($account), $account->getId())
         ]);
     }
