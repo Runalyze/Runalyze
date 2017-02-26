@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.com\n"
 "POT-Creation-Date: 2017-02-26 20:58+0100\n"
-"PO-Revision-Date: 2017-02-22 10:35+0000\n"
-"Last-Translator: Hannes <mail@laufhannes.de>\n"
-"Language-Team: German <https://translate.runalyze.com/projects/runalyze/"
-"runalyze-master-po/de/>\n"
+"PO-Revision-Date: 2017-02-26 20:49+0000\n"
+"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
+"Language-Team: German <https://translate.runalyze.com/projects/runalyze"
+"/runalyze-master-po/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -167,11 +167,11 @@ msgstr ""
 #: src/CoreBundle/Component/Tool/DatabaseCleanup/JobGeneral.php:88
 #: inc/core/Configuration/Category/VO2max.php:169
 msgid "VO<sub>2</sub>max shape"
-msgstr ""
+msgstr "VO<sub>2</sub>max Form"
 
 #: src/CoreBundle/Component/Tool/DatabaseCleanup/JobGeneral.php:96
 msgid "VO<sub>2</sub>max corrector"
-msgstr ""
+msgstr "VO<sub>2</sub>max Korrektur"
 
 #: src/CoreBundle/Component/Tool/DatabaseCleanup/JobGeneral.php:105
 #: inc/core/Configuration/Category/BasicEndurance.php:101
@@ -1525,7 +1525,7 @@ msgstr "Temperaturdiagramm"
 #: inc/core/View/Activity/Plot/Series/Smo2.php:34
 #: inc/core/View/Activity/Plot/Series/Smo2.php:37
 msgid "SmO2"
-msgstr ""
+msgstr "SmO2"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:78
 #: inc/training/class.TrainingFormular.php:473
@@ -1895,11 +1895,11 @@ msgstr "Pacediagramm"
 #: inc/core/Dataset/Keys/VO2maxValue.php:36
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:422
 msgid "Effective VO<sub>2</sub>max"
-msgstr ""
+msgstr "Effektiver VO<sub>2</sub>max"
 
 #: inc/training/view/section/class.SectionPaceRow.php:85
 msgid "More about VO<sub>2</sub>max estimation"
-msgstr ""
+msgstr "Mehr über die VO<sub>2</sub>max Schätzung"
 
 #: inc/training/view/class.TrainingView.php:60
 msgid "Show week"
@@ -2112,7 +2112,7 @@ msgstr "Wettkampf"
 
 #: inc/training/search/class.SearchFormular.php:190
 msgid "Uses VO<sub>2</sub>max"
-msgstr ""
+msgstr "Verwendet VO<sub>2</sub>max"
 
 #: inc/training/search/class.SearchFormular.php:194
 #: inc/training/schemes/scheme.Training.php:163
@@ -2874,7 +2874,7 @@ msgstr ""
 
 #: inc/core/Dataset/Keys/VO2maxIcon.php:36
 msgid "Effective VO<sub>2</sub>max icon"
-msgstr ""
+msgstr "Effektiver VO<sub>2</sub>max Symbol"
 
 #: inc/core/Dataset/Keys/VO2maxIcon.php:55
 #, fuzzy
@@ -4158,7 +4158,7 @@ msgstr "Sortierung: Equipment"
 
 #: inc/core/Configuration/Category/VO2max.php:121
 msgid "VO<sub>2</sub>max estimation"
-msgstr ""
+msgstr "VO<sub>2</sub>max Schätzung"
 
 #: inc/core/Configuration/Category/VO2max.php:124
 #, fuzzy
@@ -5069,11 +5069,11 @@ msgstr "Prognosemodell"
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:80
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:397
 msgid "Effective VO2max"
-msgstr ""
+msgstr "Effektiver VO2max"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:87
 msgid "Use marathon shape"
-msgstr ""
+msgstr "Marathon-Form verwenden"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:87
 #, fuzzy
@@ -5689,7 +5689,7 @@ msgstr "Zeige Monotonie und Trainingsbelastung (Basierend auf TRIMP)"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:55
 msgid "Show: VO<sub>2</sub>max shape"
-msgstr ""
+msgstr "Zeige: VO<sub>2</sub>max Form"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:56
 msgid "Predict current effective VO<sub>2</sub>max"
@@ -5697,7 +5697,7 @@ msgstr ""
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:59
 msgid "Show: Marathon shape"
-msgstr ""
+msgstr "Zeige: Marathon Form"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:60
 #, fuzzy
@@ -5724,11 +5724,11 @@ msgstr "Es sind nicht genügend Trainings für eine gute Berechnung vorhanden."
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:164
 msgid "Effective&nbsp;VO<sub>2</sub>max"
-msgstr ""
+msgstr "Effektiver VO<sub>2</sub>max"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:175
 msgid "Marathon&nbsp;shape"
-msgstr ""
+msgstr "Marathon-Form"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:177
 #, fuzzy
