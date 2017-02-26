@@ -172,6 +172,8 @@ class ToolsController extends Controller
      */
     public function posterAction(Request $request, Account $account)
     {
+        $numberOfActivities = $this->getDoctrine()->getRepository('CoreBundle:Training')->getNumberOfActivitiesFor($account, (int)2017, (int)2);
+
         $form = $this->createForm(PosterType::class, [
             'postertype' => ['heatmap'],
             'year' => date('Y') - 1,
@@ -181,20 +183,26 @@ class ToolsController extends Controller
 
         if ($form->isSubmitted()) {
             $formdata = $request->request->get($form->getName());
-            $message = new DefaultMessage('posterGenerator', array(
-                'accountid' => $account->getId(),
-                'year' => $formdata['year'],
-                'types' => $formdata['postertype'],
-                'sportid' => $formdata['sport'],
-                'title' => $formdata['title'],
-                'size' => $formdata['size']
-            ));
-            $this->get('bernard.producer')->produce($message);
 
-            return $this->render('tools/poster_success.html.twig', [
-                'posterStoragePeriod' => $this->getParameter('poster_storage_period'),
-                'listing' => $this->get('app.poster.filehandler')->getFileList($account)
-            ]);
+            $numberOfActivities = $this->getDoctrine()->getRepository('CoreBundle:Training')->getNumberOfActivitiesFor($account, (int)$formdata['year'], (int)$formdata['sport']);
+            if ($numberOfActivities <= 1) {
+                $this->addFlash('error', $this->get('translator')->trans('There are not enough activities to generate a poster. Please change your selection.'));
+            } else {
+                $message = new DefaultMessage('posterGenerator', array(
+                    'accountid' => $account->getId(),
+                    'year' => $formdata['year'],
+                    'types' => $formdata['postertype'],
+                    'sportid' => $formdata['sport'],
+                    'title' => $formdata['title'],
+                    'size' => $formdata['size']
+                ));
+                $this->get('bernard.producer')->produce($message);
+
+                return $this->render('tools/poster_success.html.twig', [
+                    'posterStoragePeriod' => $this->getParameter('poster_storage_period'),
+                    'listing' => $this->get('app.poster.filehandler')->getFileList($account)
+                ]);
+            }
         }
 
         return $this->render('tools/poster.html.twig', [

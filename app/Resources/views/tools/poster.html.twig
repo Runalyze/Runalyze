@@ -17,6 +17,8 @@
 
                 <p class="info">{% trans %}Based on your data RUNALYZE can generate some posters for you. Poster generations are performed in the background.{% endtrans %}</p>
 
+                {% include 'flashmessages.html.twig' %}
+
                 <p class="text">&nbsp;</p>
 
                 {{ form_row(form.postertype, {'label': 'Choose postertype(s)'|trans}) }}

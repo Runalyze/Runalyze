@@ -61,7 +61,7 @@ class PosterType extends AbstractType
                 'attr' => ['class' => 'chosen-select full-size']
             ))
             ->add('year', ChoiceType::class, [
-                'choices' => $this->TrainingRepository->getActiveYearsFor($this->getAccount()),
+                'choices' => $this->TrainingRepository->getActiveYearsFor($this->getAccount(), null, 2),
                 'choice_label' => function($year, $key, $index) {
                     return $year;
                 },

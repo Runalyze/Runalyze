@@ -45,7 +45,7 @@ class TrainingRepository extends EntityRepository
      * @param null|int $sportid
      * @return array
      */
-    public function getActiveYearsFor(Account $account, $sportid = null)
+    public function getActiveYearsFor(Account $account, $sportid = null, $minimumActivities = null)
     {
         $queryBuilder = $this->_em->createQueryBuilder()
             ->select('YEAR(FROM_UNIXTIME(t.time)) AS year')
@@ -60,7 +60,42 @@ class TrainingRepository extends EntityRepository
                 ->setParameter('sportid', $sportid);
         }
 
+        if (null !== $minimumActivities) {
+            $queryBuilder
+                ->having('COUNT(IDENTITY(t.sport)) >= :minimum')
+                ->setParameter('minimum', $minimumActivities);
+        }
+
         return $queryBuilder->getQuery()->getResult("COLUMN_HYDRATOR");
+    }
+
+    /**
+     * @param Account $account
+     * @param null|int $year
+     * @param null|int $sportid
+     * @return array
+     */
+    public function getNumberOfActivitiesFor(Account $account, $year = null, $sportid = null)
+    {
+        $queryBuilder = $this->_em->createQueryBuilder()
+            ->select('COUNT(1) as num')
+            ->from('CoreBundle:Training', 't')
+            ->where('t.account = :account')
+            ->setParameter('account', $account->getId());
+
+        if (null !== $year) {
+            $queryBuilder
+                ->andWhere('YEAR(FROM_UNIXTIME(t.time)) = :year')
+                ->setParameter('year', $year);
+        }
+
+        if (null !== $sportid) {
+            $queryBuilder
+                ->andWhere('t.sport = :sportid')
+                ->setParameter('sportid', $sportid);
+        }
+
+        return $queryBuilder->getQuery()->getSingleScalarResult();
     }
 
     /**
