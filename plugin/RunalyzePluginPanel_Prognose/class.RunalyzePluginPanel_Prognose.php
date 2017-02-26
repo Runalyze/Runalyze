@@ -51,8 +51,8 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 	 */
 	protected function displayLongDescription() {
 		echo HTML::p( __('There are different models that can be used to predict your race performances:') );
-		echo HTML::fileBlock( '<strong>Jack Daniels (VDOT, \'Running formula\')</strong><br>'.
-					__('Your current VDOT is estimated based on the ratio of heart rate and pace. '.
+		echo HTML::fileBlock( '<strong>VO2max</strong><br>'.
+					__('Your current effective VO2max is estimated based on the ratio of heart rate and pace. '.
 						'This value is equivalent to specific performances.') );
 		echo HTML::fileBlock('<strong>Robert Bock (CPP, \'Competitive Performance Predictor\')</strong><br>'.
 					__('Robert Bock uses an individual coefficient for your fatigue over time/distance. '.
@@ -65,7 +65,7 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 					__('David Cameron uses a fixed coefficient for the fatigue over time/distance and slightly different formulas than Robert Bock. '.
 						'This model uses your best result.').'<br>'.
 						'<small>see <a href="http://www.infobarrel.com/Runners_Math_How_to_Predict_Your_Race_Time">http://www.infobarrel.com/Runners_Math_How_to_Predict_Your_Race_Time</a></small>');
-		echo HTML::info( __('The VDOT model is the only one which considers your current shape. '.
+		echo HTML::info( __('The VO2max model is the only one which considers your current shape. '.
 							'The other models are based on your previous race results.') );
 	}
 
@@ -77,14 +77,14 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 
 		$Model = new PluginConfigurationValueSelect('model', __('Prediction model'));
 		$Model->setOptions( array(
-			'jd'		=> 'Jack Daniels',
+			'vo2max'	=> __('Effective VO2max'),
 			'cpp'		=> 'Robert Bock (CPP)',
 			'steffny'	=> 'Herbert Steffny',
 			'cameron'	=> 'David Cameron'
 		) );
-		$Model->setDefaultValue('jd');
+		$Model->setDefaultValue('vo2max');
 
-		$BasicEndurance = new PluginConfigurationValueBool('use_be', __('Use marathon shape'), __('Use marathon shape factor to adapt prognosis for long distances (Jack Daniels only).'));
+		$BasicEndurance = new PluginConfigurationValueBool('use_be', __('Use marathon shape'), __('Use marathon shape factor to adapt prognosis for long distances (VO2max only).'));
 		$BasicEndurance->setDefaultValue(true);
 
 		$Configuration = new PluginConfiguration($this->id());
@@ -180,10 +180,10 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 
                 break;
 
-			case 'jd':
+			case 'vo2max':
 			default:
-			    $this->Prognosis = new \Runalyze\Sports\Running\Prognosis\Daniels(
-                    Configuration::Data()->vdot(),
+			    $this->Prognosis = new \Runalyze\Sports\Running\Prognosis\VO2max(
+                    Configuration::Data()->vo2max(),
                     $this->Configuration()->value('use_be'),
                     \Runalyze\Calculation\BasicEndurance::getConst()
                 );

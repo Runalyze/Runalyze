@@ -12,8 +12,8 @@
     {% set configList = config(context.account) %}
     {# @var units \Runalyze\Bundle\CoreBundle\Component\Configuration\UnitSystem #}
     {% set units = configList.unitSystem %}
-    {# @var vdotObject \Runalyze\Bundle\CoreBundle\Twig\DisplayableVdot #}
-    {% set vdotObject = vdotFor(context, configList) %}
+    {# @var vo2maxObject \Runalyze\Bundle\CoreBundle\Twig\DisplayableVO2max #}
+    {% set vo2maxObject = vo2maxFor(context, configList) %}
 
     <div id="statistics-inner" class="panel" style="width:97%;margin:0 auto;">
         <div class="panel-heading panel-inner-heading">
@@ -32,7 +32,7 @@
                 {{ boxedValue(context.activity.s|duration, '', "Duration"|trans, '20%') }}
                 {{ boxedValue(context.activity.elapsedTime > 0 ? context.activity.elapsedTime|duration : '-', '', "Elapsed time"|trans, '20%') }}
                 {{ boxedValueFor(pace(context.activity.distance > 0 ? context.activity.s / context.activity.distance : 0, units.paceUnit(context.sport)), "Pace"|trans, '20%') }}
-                {{ boxedValueFor(vdotObject, "VDOT"|trans, '20%', vdotObject.zero ? '' : vdotObject.iconClass) }}
+                {{ boxedValueFor(vo2maxObject, "VO<sub>2</sub>max", '20%', vo2maxObject.zero ? '' : vo2maxObject.iconClass) }}
                 {{ boxedValueFor(elevation(context.activity.elevation, units.elevationUnit), "Elevation"|trans, '20%') }}
                 {{ boxedValueFor(heartRate(context.activity.pulseAvg, units.heartRateUnit), "avg."|trans ~ " " ~ "Heart rate"|trans, '20%') }}
                 {{ boxedValueFor(heartRate(context.activity.pulseMax, units.heartRateUnit), "max."|trans ~ " " ~ "Heart rate"|trans, '20%') }}

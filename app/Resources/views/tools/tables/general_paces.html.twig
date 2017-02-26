@@ -1,21 +1,22 @@
 {% extends 'tools/tables/base.html.twig' %}
 
 {% set activeTable = 3 %}
+{% set distances = [0.2, 0.4, 1, 3, 5, 10, 21.1, 42.2, 50] %}
 
 {% block table %}
     <table class="zebra-style c" style="width: 700px;">
         <thead>
             <tr>
                 {% for km in distances %}
-                    <th>{{ km|raw }}</th>
+                    <th>{{ distance(km) }}</th>
                 {% endfor %}
             </tr>
         </thead>
         <tbody>
-            {% for times in paces %}
+            {% for secPer400m in range(60, 180) %}
                 <tr>
-                    {% for time in times %}
-                        <td>{{ time|raw }}</td>
+                    {% for km in distances %}
+                        <td>{{ (secPer400m / 0.4 * km)|duration(km > 0.4 ? 0 : 1) }}</td>
                     {% endfor %}
                 </tr>
             {% endfor %}

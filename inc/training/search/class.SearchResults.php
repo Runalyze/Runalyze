@@ -124,15 +124,14 @@ class SearchResults {
 			'kcal',
 			'pulse_avg',
 			'pulse_max',
-			'vdot',
-			'vdot_with_elevation',
-			'use_vdot',
-			'fit_vdot_estimate',
+			'vo2max',
+			'vo2max_with_elevation',
+			'use_vo2max',
+			'fit_vo2max_estimate',
 			'fit_recovery_time',
 			'fit_hrv_analysis',
 			'fit_training_effect',
 			'fit_performance_condition',
-			'jd_intensity',
 			'rpe',
 			'trimp',
 			'cadence',
@@ -182,8 +181,8 @@ class SearchResults {
 			'distance',
 			'pulse_avg',
 			'pulse_max',
-			'vdot',
-			'fit_vdot_estimate',
+			'vo2max',
+			'fit_vo2max_estimate',
 			'fit_recovery_time',
 			'fit_hrv_analysis',
 			'cadence',
@@ -419,8 +418,8 @@ class SearchResults {
 			$value = (new Temperature())->setInPreferredUnit($value)->celsius();
 		} elseif ($key == 'wind_speed') {
 			$value = (new WindSpeed())->setInPreferredUnit($value)->value();
-		} elseif (($key == 'vdot' || $key == 'vdot_with_elevation')) {
-			$value /= Configuration::Data()->vdotFactor();
+		} elseif (($key == 'vo2max' || $key == 'vo2max_with_elevation')) {
+			$value /= Configuration::Data()->vo2maxCorrectionFactor();
 		} elseif ($key == 'kcal') {
 			$value = (new Energy())->setInPreferredUnit($value)->kcal();
 		} elseif ($key == 'fit_recovery_time') {
@@ -548,8 +547,8 @@ class SearchResults {
 		$order = (!isset($_POST['search-sort-order'])) ? 'DESC' : $this->DB->escape($_POST['search-sort-order'], false);
 
 		if (isset($_POST['search-sort-by'])) {
-			if ($_POST['search-sort-by'] == 'vdot' && Configuration::Vdot()->useElevationCorrection()) {
-				return ' ORDER BY IF(`t`.`vdot_with_elevation`>0, `t`.`vdot_with_elevation`, `t`.`vdot`) '.$order;
+			if ($_POST['search-sort-by'] == 'vo2max' && Configuration::VO2max()->useElevationCorrection()) {
+				return ' ORDER BY IF(`t`.`vo2max_with_elevation`>0, `t`.`vo2max_with_elevation`, `t`.`vo2max`) '.$order;
 			}
 
 			if ($_POST['search-sort-by'] == 'pace') { // addConditionsForOrder() guarantees that `distance` > 0

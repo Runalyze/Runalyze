@@ -110,14 +110,14 @@ class DeleterTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals($current, Configuration::Data()->startTime());
 	}
 
-	public function testVDOTshapeForChanges() {
+	public function testVO2maxShapeForChanges() {
 		$activityData = array(
 			Entity::TIMESTAMP => time(),
 			Entity::DISTANCE => 10,
 			Entity::TIME_IN_SECONDS => 30*60,
 			Entity::HR_AVG => 150,
 			Entity::SPORTID => Configuration::General()->runningSport(),
-			Entity::USE_VDOT => true
+			Entity::USE_VO2MAX => true
 		);
 
 		$trainingId = $this->insert($activityData);
@@ -131,23 +131,23 @@ class DeleterTest extends \PHPUnit_Framework_TestCase {
 		$RaceInserter->setAccountID(0);
 		$RaceInserter->insert();
 
-		Configuration::Data()->updateVdotCorrector(0.85);
+		Configuration::Data()->updateVO2maxCorrector(0.85);
 
-		$this->assertEquals(0.85, Configuration::Data()->vdotCorrector());
-		$this->assertNotEquals(0, Configuration::Data()->vdotShape());
+		$this->assertEquals(0.85, Configuration::Data()->vo2maxCorrector());
+		$this->assertNotEquals(0, Configuration::Data()->vo2maxShape());
 
 		$this->delete($trainingId);
 
-		$this->assertEquals(0.85, Configuration::Data()->vdotCorrector());
-		$this->assertNotEquals(0, Configuration::Data()->vdotShape());
+		$this->assertEquals(0.85, Configuration::Data()->vo2maxCorrector());
+		$this->assertNotEquals(0, Configuration::Data()->vo2maxShape());
 
 		$this->delete($raceId);
 
-		$this->assertNotEquals(0.85, Configuration::Data()->vdotCorrector());
-		$this->assertEquals(0, Configuration::Data()->vdotShape());
+		$this->assertNotEquals(0.85, Configuration::Data()->vo2maxCorrector());
+		$this->assertEquals(0, Configuration::Data()->vo2maxShape());
 	}
 
-	public function testVDOTstatisticsForNoChanges() {
+	public function testVO2maxStatisticsForNoChanges() {
 		$IDs = array();
 		$IDs[] = $this->insert(array(
 			Entity::TIMESTAMP => time(),
@@ -155,7 +155,7 @@ class DeleterTest extends \PHPUnit_Framework_TestCase {
 			Entity::TIME_IN_SECONDS => 30*60,
 			Entity::HR_AVG => 150,
 			Entity::SPORTID => Configuration::General()->runningSport() + 1,
-			Entity::USE_VDOT => true
+			Entity::USE_VO2MAX => true
 		));
 		$IDs[] = $this->insert(array(
 			Entity::TIMESTAMP => time(),
@@ -163,14 +163,14 @@ class DeleterTest extends \PHPUnit_Framework_TestCase {
 			Entity::TIME_IN_SECONDS => 30*60,
 			Entity::HR_AVG => 150,
 			Entity::SPORTID => Configuration::General()->runningSport(),
-			Entity::USE_VDOT => false
+			Entity::USE_VO2MAX => false
 		));
 		$IDs[] = $this->insert(array(
 			Entity::TIMESTAMP => time(),
 			Entity::DISTANCE => 10,
 			Entity::TIME_IN_SECONDS => 30*60,
 			Entity::SPORTID => Configuration::General()->runningSport(),
-			Entity::USE_VDOT => true
+			Entity::USE_VO2MAX => true
 		));
 		$IDs[] = $this->insert(array(
 			Entity::TIMESTAMP => time() - 365*DAY_IN_S,
@@ -178,18 +178,18 @@ class DeleterTest extends \PHPUnit_Framework_TestCase {
 			Entity::TIME_IN_SECONDS => 30*60,
 			Entity::HR_AVG => 150,
 			Entity::SPORTID => Configuration::General()->runningSport(),
-			Entity::USE_VDOT => true
+			Entity::USE_VO2MAX => true
 		));
 
-		Configuration::Data()->updateVdotShape(62.15);
-		Configuration::Data()->updateVdotCorrector(0.85);
+		Configuration::Data()->updateVO2maxShape(62.15);
+		Configuration::Data()->updateVO2maxCorrector(0.85);
 
 		foreach ($IDs as $id) {
 			$this->delete($id);
 		}
 
-		$this->assertEquals(62.15, Configuration::Data()->vdotShape());
-		$this->assertEquals(0.85, Configuration::Data()->vdotCorrector());
+		$this->assertEquals(62.15, Configuration::Data()->vo2maxShape());
+		$this->assertEquals(0.85, Configuration::Data()->vo2maxCorrector());
 	}
 
 	public function testUpdatingBasicEndurance() {

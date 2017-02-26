@@ -253,7 +253,7 @@ class Calculator
 		$SlicedTrackdata = $this->TrackdataLoop->sliceObject();
 
 		$this->addTrackdataAveragesToDataFrom($SlicedTrackdata, $AdditionalData);
-		$this->addVDOTToDataFrom($Lap, $AdditionalData);
+		$this->addVO2maxToDataFrom($Lap, $AdditionalData);
 
 		$Lap->setAdditionalValues($AdditionalData);
 	}
@@ -287,27 +287,27 @@ class Calculator
 	 * @param \Runalyze\Data\Laps\Lap $Lap
 	 * @param array $AdditionalData
 	 */
-	protected function addVDOTToDataFrom(Lap $Lap, array &$AdditionalData) {
-		if (Configuration::Vdot()->useElevationCorrection() && $Lap->hasElevation()) {
+	protected function addVO2maxToDataFrom(Lap $Lap, array &$AdditionalData) {
+		if (Configuration::VO2max()->useElevationCorrection() && $Lap->hasElevation()) {
 			$distance = (new Calculation\Elevation\DistanceModifier(
 				$Lap->distance()->kilometer(),
 				$Lap->elevationUp(),
 				$Lap->elevationDown(),
-				Configuration::Vdot()
+				Configuration::VO2max()
 			))->correctedDistance();
 		} else {
 			$distance = $Lap->distance()->kilometer();
 		}
 
-		$VDOT = new Calculation\JD\VDOT();
-		$VDOT->fromPaceAndHR(
+		$vo2max = new Calculation\JD\LegacyEffectiveVO2max();
+        $vo2max->fromPaceAndHR(
 			$distance,
 			$Lap->duration()->seconds(),
 			$Lap->HRavg()->inHRmax() / 100
 		);
 
-		if ($VDOT->value() > 0) {
-			$AdditionalData[Activity\Entity::VDOT] = $VDOT->value();
+		if ($vo2max->value() > 0) {
+			$AdditionalData[Activity\Entity::VO2MAX] = $vo2max->value();
 		}
 	}
 

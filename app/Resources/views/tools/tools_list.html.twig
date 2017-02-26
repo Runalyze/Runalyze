@@ -10,9 +10,9 @@
             <a class="ajax" href="{{ url('tools-cleanup') }}" target="ajax">
                 <strong class="block">{% trans %}Database cleanup{% endtrans %}</strong>
                 <small class="block">
-                    {% trans %}Due to performance reasons, some statistics are saved in the database.
+                    {% trans with {'%VO2max%': 'VO<sub>2</sub>max'} %}Due to performance reasons, some statistics are saved in the database.
                         You can trigger a recalculation if you think they are wrong.
-                        In addition, values for elevation, TRIMP and VDOT can be recalculated.{% endtrans %}
+                        In addition, values for elevation, TRIMP and %VO2max% can be recalculated.{% endtrans %}
                 </small>
             </a>
         </p>
@@ -27,10 +27,10 @@
         </p>
 
         <p class="file">
-            <a class="ajax" href="{{ url('tools-vdot-analysis') }}" target="ajax">
-                <strong class="block">{% trans %}Analyze your VDOT{% endtrans %}</strong>
+            <a class="ajax" href="{{ url('tools-vo2max-analysis') }}" target="ajax">
+                <strong class="block">{% trans with {'%VO2max%': 'VO<sub>2</sub>max'} %}Analyze your %VO2max%{% endtrans %}</strong>
                 <small class="block">
-                    {% trans %}Predicting your VDOT based on your training values is imprecise.
+                    {% trans with {'%VO2max%': 'VO<sub>2</sub>max'} %}Predicting your effective %VO2max% based on your training values is imprecise.
                         This plugin lists your races and compares your results with the predicted values.
                         This way you can get an impression of how well the prediction works for you.{% endtrans %}
                 </small>
@@ -41,7 +41,7 @@
             <a class="ajax" href="{{ url('tools-tables') }}" target="ajax">
                 <strong class="block">{% trans %}Running tables{% endtrans %}</strong>
                 <small class="block">
-                    {% trans %}Tables for VDOT values by Jack Daniels and general tables like a pace calculator.{% endtrans %}
+                    {% trans with {'%VO2max%': 'VO<sub>2</sub>max'} %}Tables for effective %VO2max% values and general tables like a pace calculator.{% endtrans %}
                 </small>
             </a>
         </p>

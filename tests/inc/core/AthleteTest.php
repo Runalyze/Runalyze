@@ -17,7 +17,7 @@ class AthleteTest extends \PHPUnit_Framework_TestCase {
 		$this->assertFalse( $Athlete->knowsAge() );
         $this->assertFalse( $Athlete->knowsBirthyear() );
         $this->assertFalse( $Athlete->knowsWeight() );
-		$this->assertFalse( $Athlete->knowsVDOT() );
+		$this->assertFalse( $Athlete->knowsEffectiveVO2max() );
 	}
 
 	public function testGenderAndHRmax() {
@@ -45,7 +45,7 @@ class AthleteTest extends \PHPUnit_Framework_TestCase {
 		$this->assertTrue( $Athlete->knowsAge() );
         $this->assertTrue( $Athlete->knowsBirthyear() );
         $this->assertTrue( $Athlete->knowsWeight() );
-		$this->assertTrue( $Athlete->knowsVDOT() );
+		$this->assertTrue( $Athlete->knowsEffectiveVO2max() );
 
 		$this->assertEquals( GENDER::MALE, $Athlete->gender() );
 		$this->assertEquals( 210, $Athlete->maximalHR() );
@@ -53,7 +53,7 @@ class AthleteTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals( 70, $Athlete->weight() );
         $this->assertEquals( 1993, $Athlete->birthyear() );
 		$this->assertEquals( date("Y")-1993, $Athlete->age() );
-		$this->assertEquals( 60, $Athlete->vdot() );
+		$this->assertEquals( 60, $Athlete->vo2max() );
 	}
 
 }

@@ -6,28 +6,23 @@
     <table class="zebra-style c" style="width: 700px;">
         <thead>
             <tr>
-                <th>VDOT</th>
+                <th>{{ 'Effective VO2max'|trans }}</th>
                 {% for km in distances %}
                     <th>{{ distance(km) }}</th>
                 {% endfor %}
             </tr>
         </thead>
         <tbody>
-            {% for vdot in vdots %}
-                <tr{% if vdot == currentVdot|round %} class="highlight"{% endif %}>
-                    <td class="b">{{ vdot }}</td>
+            {% for vo2max in vo2maxValues %}
+                <tr{% if vo2max == currentVo2max|round %} class="highlight"{% endif %}>
+                    <td class="b">{{ vo2max }}</td>
                     {% for km in distances %}
-                        <td>{{ prognosis.secondsFor(km, vdot)|duration }}</td>
+                        <td>{{ prognosis.secondsFor(km, vo2max)|duration }}</td>
                     {% endfor %}
                 </tr>
             {% endfor %}
         </tbody>
     </table>
-
-    <p class="info">
-        {% trans %}This table is computed by some formulas, derived from the tables in Jack Daniels' Running formula.
-            These values do not fit the original table one hundred percent.{% endtrans %}
-    </p>
 
     <p class="info">
         {% trans %}This table does <strong>not</strong> use a correction based on your current marathon shape.{% endtrans %}

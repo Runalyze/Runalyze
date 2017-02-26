@@ -67,22 +67,19 @@ class Deleter extends DeleterWithAccountID
 	 */
 	protected function after()
 	{
-		$this->updateVDOTcorrector();
+		$this->updateVO2maxCorrector();
 	}
 
-	/**
-	 * Update vdot corrector
-	 */
-	protected function updateVDOTcorrector()
+	protected function updateVO2maxCorrector()
 	{
 		$Activity = (new Model\Factory($this->AccountID))->activity($this->Object->activityId());
 
 		if (
 			$Activity->sportid() == Configuration::General()->runningSport() &&
-			$Activity->usesVDOT() &&
-			$Activity->vdotByHeartRate() > 0
+			$Activity->usesVO2max() &&
+			$Activity->vo2maxByHeartRate() > 0
 		) {
-			Configuration::Data()->recalculateVDOTcorrector();
+			Configuration::Data()->recalculateVO2maxCorrector();
 		}
 	}
 }

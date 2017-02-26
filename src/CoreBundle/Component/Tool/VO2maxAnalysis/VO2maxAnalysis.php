@@ -1,15 +1,15 @@
 <?php
 
-namespace Runalyze\Bundle\CoreBundle\Component\Tool\VdotAnalysis;
+namespace Runalyze\Bundle\CoreBundle\Component\Tool\VO2maxAnalysis;
 
 use Runalyze\Calculation\JD\Shape;
 use Runalyze\Configuration;
 use Runalyze\Model;
 
-class VdotAnalysis
+class VO2maxAnalysis
 {
     /** @var float */
-    protected $VdotFactor;
+    protected $VO2maxFactor;
 
     /** @var int */
     protected $AccountId;
@@ -17,15 +17,15 @@ class VdotAnalysis
     /** @var int */
     protected $RunningSportId;
 
-    /** @var Configuration\Category\Vdot */
-    protected $VdotConfig;
+    /** @var Configuration\Category\VO2max */
+    protected $VO2maxConfig;
 
     /**
-     * @param Configuration\Category\Vdot $vdotConfig
+     * @param Configuration\Category\VO2max $vo2maxConfig
      */
-    public function __construct(Configuration\Category\Vdot $vdotConfig)
+    public function __construct(Configuration\Category\VO2max $vo2maxConfig)
     {
-        $this->VdotConfig = $vdotConfig;
+        $this->VO2maxConfig = $vo2maxConfig;
     }
 
     /**
@@ -33,9 +33,9 @@ class VdotAnalysis
      *
      * @TODO use Doctrine
      */
-    public function getAnalysisForAllRaces($vdotFactor, $sportId, $accountId)
+    public function getAnalysisForAllRaces($vo2maxFactor, $sportId, $accountId)
     {
-        $this->VdotFactor = $vdotFactor;
+        $this->VO2maxFactor = $vo2maxFactor;
         $this->RunningSportId = $sportId;
         $this->AccountId = $accountId;
 
@@ -45,8 +45,8 @@ class VdotAnalysis
         while ($data = $statement->fetch()) {
             $analysisData[] = new RaceAnalysis(
                 new Model\Activity\Entity($data),
-                $this->VdotFactor,
-                $this->loadUncorrectedShape($data['time']) * $this->VdotFactor
+                $this->VO2maxFactor,
+                $this->loadUncorrectedShape($data['time']) * $this->VO2maxFactor
             );
         }
 
@@ -68,8 +68,8 @@ class VdotAnalysis
 				`tr`.`comment`,
 				`tr`.`pulse_avg`,
 				`tr`.`pulse_max`,
-				`tr`.`vdot`,
-				`tr`.`vdot_by_time`
+				`tr`.`vo2max`,
+				`tr`.`vo2max_by_time`
 			FROM `'.PREFIX.'raceresult` `r` LEFT JOIN `'.PREFIX.'training` `tr` ON `tr`.`id` = `r`.`activity_id`
 			WHERE
 				`tr`.`pulse_avg` !=0 AND
@@ -80,17 +80,19 @@ class VdotAnalysis
 
     /**
      * Load shape
+     *
      * @param int $time
      * @return float
      *
      * @TODO use Doctrine
      */
-    protected function loadUncorrectedShape($time) {
+    protected function loadUncorrectedShape($time)
+    {
         $Shape = new Shape(
             \DB::getInstance(),
             $this->AccountId,
             $this->RunningSportId,
-            $this->VdotConfig
+            $this->VO2maxConfig
         );
         $Shape->calculateAt($time);
 

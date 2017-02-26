@@ -7,10 +7,10 @@ use Runalyze\Activity\Elevation;
 use Runalyze\Calculation;
 use Runalyze\Calculation\JD;
 use Runalyze\Configuration\Category\Data;
-use Runalyze\Configuration\Category\Vdot;
+use Runalyze\Configuration\Category\VO2max;
 use Runalyze\View\Activity\Context;
 
-class VdotInfo
+class EffectiveVO2maxInfo
 {
     /** @var null|Context */
     protected $Context = null;
@@ -18,8 +18,8 @@ class VdotInfo
     /** @var null|Data */
     protected $DataConfig = null;
 
-    /** @var null|Vdot */
-    protected $VdotConfig = null;
+    /** @var null|VO2max */
+    protected $VO2maxConfig = null;
 
     /**
      * @param Context $context
@@ -31,14 +31,14 @@ class VdotInfo
 
     /**
      * @param Data $dataConfig
-     * @param Vdot $vdotConfig
+     * @param VO2max $vo2maxConfig
      *
      * @todo Configuration should be passed via automatic DI as soon as we have a configuration service
      */
-    public function setConfiguration(Data $dataConfig, Vdot $vdotConfig)
+    public function setConfiguration(Data $dataConfig, VO2max $vo2maxConfig)
     {
         $this->DataConfig = $dataConfig;
-        $this->VdotConfig = $vdotConfig;
+        $this->VO2maxConfig = $vo2maxConfig;
     }
 
     /**
@@ -50,67 +50,65 @@ class VdotInfo
     }
 
     /**
-     * @return array details for ['distance', 'duration', 'vdot']
+     * @return array details for ['distance', 'duration', 'vo2max']
      *
      * @todo replace dataview() with twig extensions and pass only raw values
      */
     public function getRaceCalculationDetails()
     {
-        $VDOT = new JD\VDOT($this->Context->activity()->vdotByTime());
-
         return [
             'distance' => $this->Context->dataview()->distance(),
             'duration' => $this->Context->dataview()->duration()->string(),
-            'vdot' => $VDOT->uncorrectedValue()
+            'vo2max' => number_format($this->Context->activity()->vo2maxByTime(), 2)
         ];
     }
 
     /**
-     * @return array details for ['hr' (in %HRmax), 'vdot', 'vVdot' (in %)]
+     * @return array details for ['hr' (in %HRmax), 'vo2max', 'vVO2max' (in %)]
      */
     public function getHeartRateCalculationDetails()
     {
-        $VDOT = new JD\VDOT(
-            $this->Context->activity()->vdotByHeartRate(),
-            new JD\VDOTCorrector($this->DataConfig->vdotFactor())
+        $VO2max = new JD\LegacyEffectiveVO2max(
+            $this->Context->activity()->vo2maxByHeartRate(),
+            new JD\LegacyEffectiveVO2maxCorrector($this->DataConfig->vo2maxCorrectionFactor())
         );
-        $vVDOTinPercent = JD\VDOT::percentageAt($this->Context->activity()->hrAvg() / $this->DataConfig->HRmax());
+        $vVO2maxinPercent = JD\LegacyEffectiveVO2max::percentageAt($this->Context->activity()->hrAvg() / $this->DataConfig->HRmax());
 
         return [
             'hr' => $this->Context->dataview()->hrAvg()->inHRmax(),
-            'vdot' => $VDOT->uncorrectedValue(),
-            'vVdot' => round(100*$vVDOTinPercent)
+            'vo2max' => $VO2max->uncorrectedValue(),
+            'vVO2max' => round(100 * $vVO2maxinPercent)
         ];
     }
 
     /**
-     * @return array details for ['factor', 'vdot', 'uncorrected']
+     * @return array details for ['factor', 'vo2max', 'uncorrected']
      */
     public function getCorrectionFactorDetails()
     {
-        $VDOT = new JD\VDOT(
-            $this->Context->activity()->vdotByHeartRate(),
-            new JD\VDOTCorrector($this->DataConfig->vdotFactor())
+        $VO2max = new JD\LegacyEffectiveVO2max(
+            $this->Context->activity()->vo2maxByHeartRate(),
+            new JD\LegacyEffectiveVO2maxCorrector($this->DataConfig->vo2maxCorrectionFactor())
         );
 
         return [
-            'factor' => $this->DataConfig->vdotFactor(),
-            'vdot' => $VDOT->value(),
-            'uncorrected' => $VDOT->uncorrectedValue()
+            'factor' => $this->DataConfig->vo2maxCorrectionFactor(),
+            'vo2max' => $VO2max->value(),
+            'uncorrected' => $VO2max->uncorrectedValue()
         ];
     }
 
     /**
-     * @return array details for ['elevation.up', 'elevation.down', 'vdot', 'distance.additional', 'distance.total']
+     * @return array details for ['elevation.up', 'elevation.down', 'vo2max', 'distance.additional', 'distance.total']
      */
     public function getElevationDetails()
     {
         list($up, $down) = $this->getElevationUpAndDown();
 
-        $Modifier = new Calculation\Elevation\DistanceModifier($this->Context->activity()->distance(), $up, $down, $this->VdotConfig);
+        $Modifier = new Calculation\Elevation\DistanceModifier($this->Context->activity()->distance(), $up, $down, $this->VO2maxConfig);
 
-        $VDOT = new JD\VDOT(0, new JD\VDOTCorrector($this->DataConfig->vdotFactor()));
-        $VDOT->fromPaceAndHR(
+        $VO2max = new JD\LegacyEffectiveVO2max(0, new JD\LegacyEffectiveVO2maxCorrector($this->DataConfig->vo2maxCorrectionFactor()));
+        $VO2max->fromPaceAndHR(
             $Modifier->correctedDistance(),
             $this->Context->activity()->duration(),
             $this->Context->activity()->hrAvg() / $this->DataConfig->HRmax()
@@ -119,7 +117,7 @@ class VdotInfo
         return [
             'up' => Elevation::format($up, false),
             'down' => Elevation::format($down, true),
-            'vdot' => $VDOT->value(),
+            'vo2max' => $VO2max->value(),
             'additionalDistance' => Distance::format($Modifier->additionalDistance(), true, 3),
             'totalDistance' => Distance::format($Modifier->correctedDistance(), true, 3)
         ];
@@ -146,20 +144,20 @@ class VdotInfo
      */
     public function usesElevationAdjustment()
     {
-        return $this->VdotConfig->useElevationCorrection();
+        return $this->VO2maxConfig->useElevationCorrection();
     }
 
     /**
-     * @return float
+     * @return float [ml/kg/min]
      */
-    public function getActivityVdot()
+    public function getActivityVO2max()
     {
-        if ($this->VdotConfig->useElevationCorrection()) {
-            $vdot = $this->Context->activity()->vdotWithElevation();
+        if ($this->VO2maxConfig->useElevationCorrection()) {
+            $vo2max = $this->Context->activity()->vo2maxWithElevation();
         } else  {
-            $vdot = $this->Context->activity()->vdotByHeartRate();
+            $vo2max = $this->Context->activity()->vo2maxByHeartRate();
         }
 
-        return $vdot * $this->DataConfig->vdotFactor();
+        return $vo2max * $this->DataConfig->vo2maxCorrectionFactor();
     }
 }

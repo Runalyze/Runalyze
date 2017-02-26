@@ -137,7 +137,7 @@ class ParserFITSingle extends ParserAbstractSingle {
 			$fieldname = preg_replace_callback('/(\W)/i', function(array $char) {
 			    return sprintf('_%02x_', ord($char[0]));
 			}, preg_replace('/(\s+)/i', '_', $fieldname));
-			
+
 			$nativeFieldNum = $this->Values['native_field_num'][0];
 			$unitDefinition = str_replace('"', '', $this->Values['units'][0]);
 
@@ -398,7 +398,7 @@ class ParserFITSingle extends ParserAbstractSingle {
 	 */
 	protected function readUserProfile() {
 		if (isset($this->Values['xxx39'])) {
-			$this->TrainingObject->setFitVdotEstimate(round((float)$this->Values['xxx39'][1] * 3.5, 2));
+			$this->TrainingObject->setFitVO2maxEstimate(round((float)$this->Values['xxx39'][1] * 3.5, 2));
 		}
 	}
 
@@ -406,8 +406,8 @@ class ParserFITSingle extends ParserAbstractSingle {
 	 * Read undocumented user data
 	 */
 	protected function readUndocumentedUserData() {
-		if (isset($this->Values['unknown0']) && $this->TrainingObject->getFitVdotEstimate() == 0) {
-			$this->TrainingObject->setFitVdotEstimate(round((int)$this->Values['unknown0'][1] * 3.5 / 1024, 2));
+		if (isset($this->Values['unknown0']) && $this->TrainingObject->getFitVO2maxEstimate() == 0) {
+			$this->TrainingObject->setFitVO2maxEstimate(round((int)$this->Values['unknown0'][1] * 3.5 / 1024, 2));
 		}
 	}
 
@@ -418,7 +418,7 @@ class ParserFITSingle extends ParserAbstractSingle {
 		if (isset($this->Values['event']) && isset($this->Values['data'])) {
 			switch ((int)$this->Values['event'][1]) {
 				case 37:
-					$this->TrainingObject->setFitVdotEstimate((int)$this->Values['data'][1]);
+					$this->TrainingObject->setFitVO2maxEstimate((int)$this->Values['data'][1]);
 					return;
 
 				case 38:

@@ -4,8 +4,8 @@ namespace Runalyze\Bundle\CoreBundle\Component\Tool\DatabaseCleanup;
 
 abstract class Job
 {
-	/** @var string[] */
-	private $Messages = array();
+    /** @var string[] */
+    private $Messages = array();
 
     /** @var array */
     private $RequestData = array();
@@ -33,49 +33,52 @@ abstract class Job
         $this->DatabasePrefix = $databasePrefix;
     }
 
-	/**
-	 * Is task requested?
-	 * @param string $enum
-	 * @return bool
-	 */
-	protected function isRequested($enum)
+    /**
+     * Is task requested?
+     *
+     * @param string $enum
+     * @return bool
+     */
+    protected function isRequested($enum)
     {
-		return isset($this->RequestData[$enum]) && true === $this->RequestData[$enum];
-	}
+        return isset($this->RequestData[$enum]) && true === $this->RequestData[$enum];
+    }
 
-	/**
-	 * Run job
-	 */
-	abstract public function run();
+    /**
+     * Run job
+     */
+    abstract public function run();
 
-	/**
-	 * Add message
-	 * @param string $string
-	 */
-	final protected function addMessage($string)
+    /**
+     * Add message
+     *
+     * @param string $string
+     */
+    final protected function addMessage($string)
     {
-		$this->Messages[] = $string;
-	}
+        $this->Messages[] = $string;
+    }
 
-	/**
-	 * Add message
-	 * @param string $what
+    /**
+     * Add message
+     *
+     * @param string $what
      * @param mixed $oldValue
      * @param mixed $newValue
-	 */
-	final protected function addSuccessMessage($what, $oldValue, $newValue)
+     */
+    final protected function addSuccessMessage($what, $oldValue, $newValue)
     {
-		$this->Messages[] = sprintf(
+        $this->Messages[] = sprintf(
             __('%s has been recalculated. New value: <strong>%s</strong> (old value: %s)'),
             $what, $newValue, $oldValue
         );
-	}
+    }
 
-	/**
-	 * @return string[]
-	 */
-	final public function messages()
+    /**
+     * @return string[]
+     */
+    final public function messages()
     {
-		return $this->Messages;
-	}
+        return $this->Messages;
+    }
 }
