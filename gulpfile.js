@@ -23,8 +23,8 @@ clean.description = 'Clean output files.';
 function styles() {
     return gulp.src(config.less.main.src)
         .pipe(sourcemaps.init())
-        .pipe(less({ relativeUrls: true, paths: [ config.less.main.root ] }))
-        .pipe(cleanCSS({ processImport: true, relativeTo: config.less.main.root, target: config.less.dest }))
+        .pipe(less({ relativeUrls: true, paths: [ config.less.main.root ], rootpath: config.less.main.root }))
+        .pipe(cleanCSS({ rebaseTo: config.less.dest }))
         .pipe(sourcemaps.write())
         .pipe(gulp.dest(config.less.dest));
 }
@@ -33,8 +33,8 @@ styles.description = 'Run less to generate stylesheets.';
 function stylesInstaller() {
     return gulp.src(config.less.installer.src)
         .pipe(sourcemaps.init())
-        .pipe(less({ relativeUrls: true, paths: [ config.less.installer.root ] }))
-        .pipe(cleanCSS({ processImport: true, relativeTo: config.less.installer.root, target: config.less.dest }))
+        .pipe(less({ relativeUrls: true, paths: [ config.less.installer.root ], rootpath: config.less.main.root }))
+        .pipe(cleanCSS({ rebaseTo: config.less.dest }))
         .pipe(sourcemaps.write())
         .pipe(gulp.dest(config.less.dest));
 }
