@@ -96,22 +96,22 @@ class Privacy extends \Runalyze\Configuration\Category {
 		));
 
 		$Fieldset->addHandle( $this->handle('TRAINING_LIST_PUBLIC'), array(
-			'label'		=> __('Public list: active'),
+			'label'		=> __('Public athlete page: active'),
 			'tooltip'	=> __('If activated: Everyone can see a list of all your (public) activities.')
 		));
 
 		$Fieldset->addHandle( $this->handle('TRAINING_LIST_ALL'), array(
-			'label'		=> __('Public list: private workouts'),
+			'label'		=> __('Public athlete page: private workouts'),
 			'tooltip'	=> __('If activated: Display a summary for each private activity in the public activity list.')
 		));
 
 		$Fieldset->addHandle( $this->handle('TRAINING_LIST_STATISTICS'), array(
-			'label'		=> __('Public list: general statistics'),
+			'label'		=> __('Public athlete page: general statistics'),
 			'tooltip'	=> __('Show some general statistics above the activity list')
 		));
 
 		$Fieldset->addHandle( $this->handle('TRAINING_MAP_PUBLIC_MODE'), array(
-			'label'		=> __('Public view: show map'),
+			'label'		=> __('Public activity view: show map'),
 			'tooltip'	=> __('You can hide the map for the public view'),
 		));
 
