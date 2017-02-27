@@ -1,9 +1,8 @@
-// Forecast Font by Ali Sisk
-// @see http://forecastfont.iconvau.lt/
-// @license SIL open font license, MIT license for code
-
-@font-weather-size:			12px;
-@font-weather-line:			1.4em;
+/**
+ * Forecast Font by Ali Sisk
+ * @see http://forecastfont.iconvau.lt/
+ * @license SIL open font license, MIT license for code
+ */
 
 @font-face {
 	font-family: "iconvault";
@@ -22,25 +21,24 @@
 	position: relative;
 	display: inline-block;
 	font: normal normal normal 14px/1 'iconvault';
-	font-size: @font-weather-size;
-	line-height: @font-weather-line;
+	font-size: 12px;
+	line-height: 1.4em;
 	width: 1.28571429em;
 	height: 1em;
 	font-weight: bold;
 	text-align: center;
 	-webkit-font-smoothing: antialiased;
-
-	&::before,
-	&::after {
-		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-	}
+}
+[class^="weather-"]::before, [class^="weather-"]::after,
+[class*=" weather-"]::before, [class*=" weather-"]::after,
+.weather::before, .weather::after {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
 }
 
-// Base layer
 .weather-basecloud:before,
 .weather-windyraincloud:before,
 .weather-windysnowcloud:before,
@@ -60,7 +58,6 @@
 	content: '\f105';
 }
 
-// Weather symbols
 .weather-thunder::before  {
 	content: "\f114";
 	color: rgb(255, 165, 0);

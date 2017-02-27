@@ -15,7 +15,7 @@
     "bower": "^1.7.9",
     "del": "^2.2.0",
     "gulp": "github:gulpjs/gulp#4.0",
-    "gulp-clean-css": "^2.3.2",
+    "gulp-clean-css": "^3.0.3",
     "gulp-cli": "gulpjs/gulp-cli",
     "gulp-concat": "^2.5.2",
     "gulp-less": "^3.3.0",
