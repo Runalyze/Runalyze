@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
   <file date="2017-02-28T18:38:50Z" source-language="en" target-language="de" datatype="plaintext" original="not.available">
     <header>
@@ -276,9 +276,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Kadenz</target>
         <jms:reference-file line="132">/Resources/views/activity/tool/time_series_statistics.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="adab5090ac6a1b7b5420faac7be86c41721ba27c" resname="Calendar">
+      <trans-unit id="adab5090ac6a1b7b5420faac7be86c41721ba27c" resname="Calendar" approved="yes">
         <source>Calendar</source>
-        <target state="new">Calendar</target>
+        <target state="translated">Kalender</target>
         <jms:reference-file line="58">/../src/CoreBundle/Form/Tools/PosterType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="77dfd2135f4db726c47299bb55be26f7f4525a46" resname="Cancel">
@@ -322,14 +322,14 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target state="new">Choose postertype(s)</target>
         <jms:reference-file line="24">/Resources/views/tools/poster.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="0299fc72de3616f182ac62196e7f385585f1ddbf" resname="Choose size">
+      <trans-unit id="0299fc72de3616f182ac62196e7f385585f1ddbf" resname="Choose size" approved="yes">
         <source>Choose size</source>
-        <target state="new">Choose size</target>
+        <target state="translated">Größe auswählen</target>
         <jms:reference-file line="28">/Resources/views/tools/poster.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="005027c171ec7b5ff802e9f6c2d3cf31d1b1434c" resname="Choose sport">
+      <trans-unit id="005027c171ec7b5ff802e9f6c2d3cf31d1b1434c" resname="Choose sport" approved="yes">
         <source>Choose sport</source>
-        <target state="new">Choose sport</target>
+        <target state="translated">Sportart auswählen</target>
         <jms:reference-file line="25">/Resources/views/tools/poster.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="d1191831cd6032b9e3991abc855b7fff9aa78118" resname="Choose sport type(s)">
@@ -337,14 +337,14 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Sportart(en) auswählen</target>
         <jms:reference-file line="77">/../src/CoreBundle/Form/Tools/Anova/AnovaType.php</jms:reference-file>
       </trans-unit>
-      <trans-unit id="6d3d5991f4ad692df57f1270ccf27c5891b6640e" resname="Choose year">
+      <trans-unit id="6d3d5991f4ad692df57f1270ccf27c5891b6640e" resname="Choose year" approved="yes">
         <source>Choose year</source>
-        <target state="new">Choose year</target>
+        <target state="translated">Jahr auswählen</target>
         <jms:reference-file line="26">/Resources/views/tools/poster.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="782acc59ceecf8f5bf197bf4c4bc95a255bbe1ff" resname="Circular">
+      <trans-unit id="782acc59ceecf8f5bf197bf4c4bc95a255bbe1ff" resname="Circular" approved="yes">
         <source>Circular</source>
-        <target state="new">Circular</target>
+        <target state="translated">Zirkular</target>
         <jms:reference-file line="57">/../src/CoreBundle/Form/Tools/PosterType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="bada87473509e3105d1c48a9e6834bd11708ce01" resname="Clear your personal cache">
@@ -793,9 +793,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Allgemeine Statistiken</target>
         <jms:reference-file line="17">/Resources/views/shared/athlete/base.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="9dc653a63bd3443bcbf33f596ed76029db2ad206" resname="Generate posters">
+      <trans-unit id="9dc653a63bd3443bcbf33f596ed76029db2ad206" resname="Generate posters" approved="yes">
         <source>Generate posters</source>
-        <target state="new">Generate posters</target>
+        <target state="translated">Poster generieren</target>
         <jms:reference-file line="32">/Resources/views/tools/poster.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="43cd45e70a501b1e73f02f896774373acd1452a5" resname="Go back to RUNALYZE">
@@ -888,9 +888,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Hallo %s, deine Backupdatei steht zum Download bereit.</target>
         <jms:reference-file line="11">/Resources/views/mail/account/backupReady.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="afd67abc57e255f3c1fd926305a8c9210111858f" resname="Hi %s, your posters have been generated and are now available for download.">
+      <trans-unit id="afd67abc57e255f3c1fd926305a8c9210111858f" resname="Hi %s, your posters have been generated and are now available for download." approved="yes">
         <source>Hi %s, your posters have been generated and are now available for download.</source>
-        <target state="new">Hi %s, your posters have been generated and are now available for download.</target>
+        <target state="translated">Hi %s, deine Poster wurden generiert und stehen nun zum Download bereit.</target>
         <jms:reference-file line="16">/Resources/views/mail/account/postersReady.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="c66837f8fa417c1ef930ad73bc60e71e1dd031f1" resname="Hi %username%">
@@ -995,9 +995,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Sprache</target>
         <jms:reference-file line="36">/../src/CoreBundle/Form/Settings/AccountType.php</jms:reference-file>
       </trans-unit>
-      <trans-unit id="be1a7d07844cd48e8143115e7166e2b148581ca7" resname="Let us know what is most important for you at %forum%">
+      <trans-unit id="be1a7d07844cd48e8143115e7166e2b148581ca7" resname="Let us know what is most important for you at %forum%" approved="yes">
         <source>Let us know what is most important for you at %forum%</source>
-        <target state="new">Let us know what is most important for you at %forum%</target>
+        <target state="translated">Erzähle uns was dir am Wichtigsten wäre auf %forum%</target>
         <jms:reference-file line="39">/Resources/views/tools/poster.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="3c0ae71541dfa0f6ed39d15c11d9bdab5b7bbc30" resname="Let's go back to RUNALYZE!">
@@ -1022,9 +1022,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Logge dich ein und rufe das Daten-Exporttool auf, um deine Sicherung herunterzuladen</target>
         <jms:reference-file line="14">/Resources/views/mail/account/backupReady.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="422aaab8c2192678d3d3b537d0d544608d57f725" resname="Login and go to the poster tool">
+      <trans-unit id="422aaab8c2192678d3d3b537d0d544608d57f725" resname="Login and go to the poster tool" approved="yes">
         <source>Login and go to the poster tool</source>
-        <target state="new">Login and go to the poster tool</target>
+        <target state="translated">Logge dich ein und gehe zum Postertool</target>
         <jms:reference-file line="18">/Resources/views/mail/account/postersReady.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="c39e44de4dff5513916022c08035460af738d36f" resname="Login now">
@@ -1303,9 +1303,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Bitte aktiviere deinen Account indem du den nachfolgenden Link anklickst.</target>
         <jms:reference-file line="18">/Resources/views/mail/account/registration.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="e777e3e689077418e38de93de76ccbbac843d5e4" resname="Please download the posters within %days% days.">
+      <trans-unit id="e777e3e689077418e38de93de76ccbbac843d5e4" resname="Please download the posters within %days% days." approved="yes">
         <source>Please download the posters within %days% days.</source>
-        <target state="new">Please download the posters within %days% days.</target>
+        <target state="translated">Bitte lade die Poster innerhalb von %days% Tagen herunter.</target>
         <jms:reference-file line="58">/Resources/views/tools/poster.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="e65e837deba61f8940be95a71267e2779833f440" resname="Please let us know if you have wishes or have encountered bugs.">
@@ -1354,15 +1354,15 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Position</target>
         <jms:reference-file line="41">/Resources/views/activity/tool/best_sub_segments.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="711009fb35b2de5a31f11f4580a003326ad0cea4" resname="Poster generator">
+      <trans-unit id="711009fb35b2de5a31f11f4580a003326ad0cea4" resname="Poster generator" approved="yes">
         <source>Poster generator</source>
-        <target state="new">Poster generator</target>
+        <target state="translated">Postergenerator</target>
         <jms:reference-file line="5">/Resources/views/tools/poster.html.twig</jms:reference-file>
         <jms:reference-file line="79">/Resources/views/tools/tools_list.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="b8ee0781e0f4449791ed16d9268d8449a2b04003" resname="Poster title">
+      <trans-unit id="b8ee0781e0f4449791ed16d9268d8449a2b04003" resname="Poster title" approved="yes">
         <source>Poster title</source>
-        <target state="new">Poster title</target>
+        <target state="translated">Postertitel</target>
         <jms:reference-file line="27">/Resources/views/tools/poster.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="7548ab52c3d1d595240379937e08f3e95c072312" resname="Power">
@@ -1393,9 +1393,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
                 This way you can get an impression of how well our prediction works for you.</target>
         <jms:reference-file line="16">/Resources/views/tools/vo2max_analysis.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="78bb3c21204f037ea7948fa07cdfdcb8d79d8c0b" resname="Previously generated posters">
+      <trans-unit id="78bb3c21204f037ea7948fa07cdfdcb8d79d8c0b" resname="Previously generated posters" approved="yes">
         <source>Previously generated posters</source>
-        <target state="new">Previously generated posters</target>
+        <target state="translated">Bisher generierte Poster</target>
         <jms:reference-file line="45">/Resources/views/tools/poster.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="cfb27956e3baba98b6ac4094925b4127f0c1c18d" resname="Probably the link was wrong or your account has been already activated.">
@@ -1519,9 +1519,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Registrierungen sind derzeit deaktiviert.</target>
         <jms:reference-file line="8">/Resources/views/register/disabled.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="530867ad96149b2149d4cc3286dd7f7c35ba765a" resname="Reload window">
+      <trans-unit id="530867ad96149b2149d4cc3286dd7f7c35ba765a" resname="Reload window" approved="yes">
         <source>Reload window</source>
-        <target state="new">Reload window</target>
+        <target state="translated">Fenster neuladen</target>
         <jms:reference-file line="6">/Resources/views/tools/poster_success.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="ced7b308a348567fbf21dd775ee496dd01207f24" resname="Remember me">
@@ -1874,9 +1874,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Es gibt keine Ausrüstung-Objekte in dieser Kategorie.</target>
         <jms:reference-file line="43">/Resources/views/my/equipment/category/table.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="7512d14b566747114ffa119f39c8f2c588a425bc" resname="There are no posters so far.">
+      <trans-unit id="7512d14b566747114ffa119f39c8f2c588a425bc" resname="There are no posters so far." approved="yes">
         <source>There are no posters so far.</source>
-        <target state="new">There are no posters so far.</target>
+        <target state="translated">Bisher wurden für dich keine Poster generiert.</target>
         <jms:reference-file line="56">/Resources/views/tools/poster.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="e05b42e482380b8a60c189113d80fa9a7be8f804" resname="There are not enough activities to generate a poster. Please change your selection.">
@@ -2103,9 +2103,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <jms:reference-file line="96">/Resources/views/activity/vo2max_info.html.twig</jms:reference-file>
         <jms:reference-file line="5">/Resources/views/static/help_calculations.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="54b294919c619741dc51d12ff659e43d5347d972" resname="VO2max estimation for: %title%">
+      <trans-unit id="54b294919c619741dc51d12ff659e43d5347d972" resname="VO2max estimation for: %title%" approved="yes">
         <source>VO2max estimation for: %title%</source>
-        <target>VO2max estimation for: %title%</target>
+        <target state="translated">VO2max Schätzung für: %title%</target>
         <jms:reference-file line="5">/Resources/views/activity/vo2max_info.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="e455897ed8589766daf0a127ba5c4292f017180c" resname="VO2max itself is a scientific metric for the maximal oxygen consumption that can be measured in the laboratory.&lt;br&gt;Two runners with equal VO2max values do not need to perform equally, as running efficiency plays an additional role. To overcome the issue of specifying running efficiency, one can ignore the efficiency and therefore call it effective VO2max.">
