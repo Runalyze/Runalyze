@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-26 20:58+0100\n"
+"POT-Creation-Date: 2017-02-28 18:41+0100\n"
 "PO-Revision-Date: 2016-08-01 04:04+0000\n"
 "Last-Translator: pedro galan <arnoldewald@yahoo.es>\n"
 "Language-Team: Catalan <http://translate.runalyze.com/projects/runalyze/"
@@ -647,9 +647,14 @@ msgstr "Pugi"
 msgid "Public link"
 msgstr "Link públic"
 
-#: inc/system/class.SharedLinker.php:73
-msgid "Public list"
-msgstr "Llista pública"
+#: inc/system/class.SharedLinker.php:70
+msgid ""
+"You can activate your public athlete page at <em>Configuration->Privacy</em>"
+msgstr ""
+
+#: inc/system/class.SharedLinker.php:72
+msgid "Your public athlete page"
+msgstr ""
 
 #: inc/system/config/class.ConfigTabs.php:76
 #: inc/tpl/tpl.adminWindow.login.php:6
@@ -4361,7 +4366,8 @@ msgid "Automatically mark every activity after its creation as public."
 msgstr "Marqui cada entrenament com a públic tot just hagi sigut creat."
 
 #: inc/core/Configuration/Category/Privacy.php:99
-msgid "Public list: active"
+#, fuzzy
+msgid "Public athlete page: active"
 msgstr "Llista pública: activa"
 
 #: inc/core/Configuration/Category/Privacy.php:100
@@ -4370,7 +4376,8 @@ msgstr ""
 "Si s'activa: tothom podrà veure una llista dels seus entrenaments públics."
 
 #: inc/core/Configuration/Category/Privacy.php:104
-msgid "Public list: private workouts"
+#, fuzzy
+msgid "Public athlete page: private workouts"
 msgstr "Llista pública:  entrenaments privats"
 
 #: inc/core/Configuration/Category/Privacy.php:105
@@ -4382,7 +4389,8 @@ msgstr ""
 "d'entrenaments."
 
 #: inc/core/Configuration/Category/Privacy.php:109
-msgid "Public list: general statistics"
+#, fuzzy
+msgid "Public athlete page: general statistics"
 msgstr "Llista pública: estadístiques"
 
 #: inc/core/Configuration/Category/Privacy.php:110
@@ -4391,7 +4399,8 @@ msgstr ""
 "Mostri algunes estadístiques generals per sobre de la llista d'entrenaments"
 
 #: inc/core/Configuration/Category/Privacy.php:114
-msgid "Public view: show map"
+#, fuzzy
+msgid "Public activity view: show map"
 msgstr "Vista pública: mostri els mapes"
 
 #: inc/core/Configuration/Category/Privacy.php:115
@@ -6033,6 +6042,9 @@ msgstr "Estadístiques mensuals"
 #, php-format
 msgid "How many %s/hours did you do per month"
 msgstr "Quants %s o hores has entrenat per mes"
+
+#~ msgid "Public list"
+#~ msgstr "Llista pública"
 
 #~ msgid "The activity has been removed"
 #~ msgstr "L'entrenament ha sigut esborrat"

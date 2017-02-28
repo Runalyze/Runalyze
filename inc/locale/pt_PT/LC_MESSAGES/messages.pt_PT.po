@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-26 20:58+0100\n"
+"POT-Creation-Date: 2017-02-28 18:41+0100\n"
 "PO-Revision-Date: 2016-08-19 21:09+0000\n"
 "Last-Translator: Miguel Robin <dee.hood@gmail.com>\n"
 "Language-Team: Portuguese (Portugal) <http://translate.runalyze.com/projects/"
@@ -629,8 +629,13 @@ msgstr ""
 msgid "Public link"
 msgstr "Link público"
 
-#: inc/system/class.SharedLinker.php:73
-msgid "Public list"
+#: inc/system/class.SharedLinker.php:70
+msgid ""
+"You can activate your public athlete page at <em>Configuration->Privacy</em>"
+msgstr ""
+
+#: inc/system/class.SharedLinker.php:72
+msgid "Your public athlete page"
 msgstr ""
 
 #: inc/system/config/class.ConfigTabs.php:76
@@ -4257,7 +4262,8 @@ msgstr ""
 "Marca automaticamente todas as atividades como público após a sua criação."
 
 #: inc/core/Configuration/Category/Privacy.php:99
-msgid "Public list: active"
+#, fuzzy
+msgid "Public athlete page: active"
 msgstr "Lista pública: ativo"
 
 #: inc/core/Configuration/Category/Privacy.php:100
@@ -4267,7 +4273,8 @@ msgstr ""
 "(públicas)."
 
 #: inc/core/Configuration/Category/Privacy.php:104
-msgid "Public list: private workouts"
+#, fuzzy
+msgid "Public athlete page: private workouts"
 msgstr "Lista pública: treinos privados"
 
 #: inc/core/Configuration/Category/Privacy.php:105
@@ -4279,7 +4286,8 @@ msgstr ""
 "atividade pública."
 
 #: inc/core/Configuration/Category/Privacy.php:109
-msgid "Public list: general statistics"
+#, fuzzy
+msgid "Public athlete page: general statistics"
 msgstr "Lista pública: estatísticas gerais"
 
 #: inc/core/Configuration/Category/Privacy.php:110
@@ -4287,7 +4295,8 @@ msgid "Show some general statistics above the activity list"
 msgstr "Mostrar algumas estatísticas gerais acima da lista de atividade"
 
 #: inc/core/Configuration/Category/Privacy.php:114
-msgid "Public view: show map"
+#, fuzzy
+msgid "Public activity view: show map"
 msgstr "Representação pública: Mostrar mapa"
 
 #: inc/core/Configuration/Category/Privacy.php:115

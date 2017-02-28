@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-26 20:58+0100\n"
+"POT-Creation-Date: 2017-02-28 18:41+0100\n"
 "PO-Revision-Date: 2016-12-03 08:36+0000\n"
 "Last-Translator: SUGU <su.gu@t-online.de>\n"
 "Language-Team: Danish <https://translate.runalyze.com/projects/runalyze/"
@@ -624,8 +624,13 @@ msgstr ""
 msgid "Public link"
 msgstr "Offentligt link"
 
-#: inc/system/class.SharedLinker.php:73
-msgid "Public list"
+#: inc/system/class.SharedLinker.php:70
+msgid ""
+"You can activate your public athlete page at <em>Configuration->Privacy</em>"
+msgstr ""
+
+#: inc/system/class.SharedLinker.php:72
+msgid "Your public athlete page"
 msgstr ""
 
 #: inc/system/config/class.ConfigTabs.php:76
@@ -4215,7 +4220,8 @@ msgid "Automatically mark every activity after its creation as public."
 msgstr "Automatisk marker hver aktivitet som offentlig efter sin oprettelse."
 
 #: inc/core/Configuration/Category/Privacy.php:99
-msgid "Public list: active"
+#, fuzzy
+msgid "Public athlete page: active"
 msgstr "Offentlig liste: aktiv"
 
 #: inc/core/Configuration/Category/Privacy.php:100
@@ -4224,7 +4230,8 @@ msgstr ""
 "Hvis aktiveret: alle kan se en liste over alle dine (offentlige) aktiviteter."
 
 #: inc/core/Configuration/Category/Privacy.php:104
-msgid "Public list: private workouts"
+#, fuzzy
+msgid "Public athlete page: private workouts"
 msgstr "Offentlig liste: privat træning"
 
 #: inc/core/Configuration/Category/Privacy.php:105
@@ -4236,7 +4243,8 @@ msgstr ""
 "offentlige aktivitetsliste."
 
 #: inc/core/Configuration/Category/Privacy.php:109
-msgid "Public list: general statistics"
+#, fuzzy
+msgid "Public athlete page: general statistics"
 msgstr "Offentlig liste: generelle statistikker"
 
 #: inc/core/Configuration/Category/Privacy.php:110
@@ -4244,7 +4252,8 @@ msgid "Show some general statistics above the activity list"
 msgstr "Vis nogle generelle statistikker over aktivitetslisten"
 
 #: inc/core/Configuration/Category/Privacy.php:114
-msgid "Public view: show map"
+#, fuzzy
+msgid "Public activity view: show map"
 msgstr "Offentlig visning: Vis kort"
 
 #: inc/core/Configuration/Category/Privacy.php:115

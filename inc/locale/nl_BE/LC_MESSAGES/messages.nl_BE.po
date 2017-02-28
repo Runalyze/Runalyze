@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-26 20:58+0100\n"
+"POT-Creation-Date: 2017-02-28 18:41+0100\n"
 "PO-Revision-Date: 2015-07-11 16:14+0200\n"
 "Last-Translator: roland <rolandgm@gmail.com>\n"
 "Language-Team: Dutch (Belgium) <http://translate.runalyze.de/projects/"
@@ -626,8 +626,13 @@ msgstr ""
 msgid "Public link"
 msgstr ""
 
-#: inc/system/class.SharedLinker.php:73
-msgid "Public list"
+#: inc/system/class.SharedLinker.php:70
+msgid ""
+"You can activate your public athlete page at <em>Configuration->Privacy</em>"
+msgstr ""
+
+#: inc/system/class.SharedLinker.php:72
+msgid "Your public athlete page"
 msgstr ""
 
 #: inc/system/config/class.ConfigTabs.php:76
@@ -4159,7 +4164,7 @@ msgid "Automatically mark every activity after its creation as public."
 msgstr ""
 
 #: inc/core/Configuration/Category/Privacy.php:99
-msgid "Public list: active"
+msgid "Public athlete page: active"
 msgstr ""
 
 #: inc/core/Configuration/Category/Privacy.php:100
@@ -4167,7 +4172,7 @@ msgid "If activated: Everyone can see a list of all your (public) activities."
 msgstr ""
 
 #: inc/core/Configuration/Category/Privacy.php:104
-msgid "Public list: private workouts"
+msgid "Public athlete page: private workouts"
 msgstr ""
 
 #: inc/core/Configuration/Category/Privacy.php:105
@@ -4177,7 +4182,7 @@ msgid ""
 msgstr ""
 
 #: inc/core/Configuration/Category/Privacy.php:109
-msgid "Public list: general statistics"
+msgid "Public athlete page: general statistics"
 msgstr ""
 
 #: inc/core/Configuration/Category/Privacy.php:110
@@ -4185,7 +4190,7 @@ msgid "Show some general statistics above the activity list"
 msgstr ""
 
 #: inc/core/Configuration/Category/Privacy.php:114
-msgid "Public view: show map"
+msgid "Public activity view: show map"
 msgstr ""
 
 #: inc/core/Configuration/Category/Privacy.php:115

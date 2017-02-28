@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-26 20:58+0100\n"
+"POT-Creation-Date: 2017-02-28 18:41+0100\n"
 "PO-Revision-Date: 2017-01-03 13:50+0000\n"
 "Last-Translator: Michael Pohl <michael@mipapo.de>\n"
 "Language-Team: Swedish <https://translate.runalyze.com/projects/runalyze/"
@@ -626,8 +626,13 @@ msgstr ""
 msgid "Public link"
 msgstr ""
 
-#: inc/system/class.SharedLinker.php:73
-msgid "Public list"
+#: inc/system/class.SharedLinker.php:70
+msgid ""
+"You can activate your public athlete page at <em>Configuration->Privacy</em>"
+msgstr ""
+
+#: inc/system/class.SharedLinker.php:72
+msgid "Your public athlete page"
 msgstr ""
 
 #: inc/system/config/class.ConfigTabs.php:76
@@ -4201,7 +4206,7 @@ msgid "Automatically mark every activity after its creation as public."
 msgstr ""
 
 #: inc/core/Configuration/Category/Privacy.php:99
-msgid "Public list: active"
+msgid "Public athlete page: active"
 msgstr ""
 
 #: inc/core/Configuration/Category/Privacy.php:100
@@ -4209,7 +4214,7 @@ msgid "If activated: Everyone can see a list of all your (public) activities."
 msgstr ""
 
 #: inc/core/Configuration/Category/Privacy.php:104
-msgid "Public list: private workouts"
+msgid "Public athlete page: private workouts"
 msgstr ""
 
 #: inc/core/Configuration/Category/Privacy.php:105
@@ -4219,7 +4224,7 @@ msgid ""
 msgstr ""
 
 #: inc/core/Configuration/Category/Privacy.php:109
-msgid "Public list: general statistics"
+msgid "Public athlete page: general statistics"
 msgstr ""
 
 #: inc/core/Configuration/Category/Privacy.php:110
@@ -4227,8 +4232,9 @@ msgid "Show some general statistics above the activity list"
 msgstr ""
 
 #: inc/core/Configuration/Category/Privacy.php:114
-msgid "Public view: show map"
-msgstr ""
+#, fuzzy
+msgid "Public activity view: show map"
+msgstr "Offentlige aktiviteter är markerade"
 
 #: inc/core/Configuration/Category/Privacy.php:115
 msgid "You can hide the map for the public view"
@@ -5770,9 +5776,6 @@ msgstr ""
 
 #~ msgid "Click on an activity to see more details."
 #~ msgstr "Klicka på en aktivitet för att visa detaljer."
-
-#~ msgid "Public activities are marked: "
-#~ msgstr "Offentlige aktiviteter är markerade"
 
 #~ msgid "VDOT"
 #~ msgstr "VDOT"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-26 20:58+0100\n"
+"POT-Creation-Date: 2017-02-28 18:41+0100\n"
 "PO-Revision-Date: 2016-09-21 09:00+0000\n"
 "Last-Translator: koylio <riku@sdf-eu.org>\n"
 "Language-Team: Finnish <http://translate.runalyze.com/projects/runalyze/"
@@ -629,9 +629,14 @@ msgstr ""
 msgid "Public link"
 msgstr "Julkinen linkki"
 
-#: inc/system/class.SharedLinker.php:73
-msgid "Public list"
-msgstr "Julkinen lista"
+#: inc/system/class.SharedLinker.php:70
+msgid ""
+"You can activate your public athlete page at <em>Configuration->Privacy</em>"
+msgstr ""
+
+#: inc/system/class.SharedLinker.php:72
+msgid "Your public athlete page"
+msgstr ""
 
 #: inc/system/config/class.ConfigTabs.php:76
 #: inc/tpl/tpl.adminWindow.login.php:6
@@ -4266,7 +4271,8 @@ msgid "Automatically mark every activity after its creation as public."
 msgstr "Merkitse automaattisesti jokainen luotu aktiviteetti julkiseksi."
 
 #: inc/core/Configuration/Category/Privacy.php:99
-msgid "Public list: active"
+#, fuzzy
+msgid "Public athlete page: active"
 msgstr "Julkinen lista: käytössä"
 
 #: inc/core/Configuration/Category/Privacy.php:100
@@ -4276,7 +4282,8 @@ msgstr ""
 "aktiviteeteistasi."
 
 #: inc/core/Configuration/Category/Privacy.php:104
-msgid "Public list: private workouts"
+#, fuzzy
+msgid "Public athlete page: private workouts"
 msgstr "Julkinen lista: yksityiset harjoitukset"
 
 #: inc/core/Configuration/Category/Privacy.php:105
@@ -4288,7 +4295,8 @@ msgstr ""
 "julkisessa listassa."
 
 #: inc/core/Configuration/Category/Privacy.php:109
-msgid "Public list: general statistics"
+#, fuzzy
+msgid "Public athlete page: general statistics"
 msgstr "Julkinen lista: yleistiedot"
 
 #: inc/core/Configuration/Category/Privacy.php:110
@@ -4296,7 +4304,8 @@ msgid "Show some general statistics above the activity list"
 msgstr "Näyttää yleistietoja aktiviteettilistauksen yläpuolella"
 
 #: inc/core/Configuration/Category/Privacy.php:114
-msgid "Public view: show map"
+#, fuzzy
+msgid "Public activity view: show map"
 msgstr "Julkinen näkymä: näytä kartta"
 
 #: inc/core/Configuration/Category/Privacy.php:115
@@ -5846,6 +5855,9 @@ msgstr ""
 #, php-format
 msgid "How many %s/hours did you do per month"
 msgstr ""
+
+#~ msgid "Public list"
+#~ msgstr "Julkinen lista"
 
 #~ msgid "The activity has been removed"
 #~ msgstr "Aktivitetti on poistettu"

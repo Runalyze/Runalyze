@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-26 20:58+0100\n"
+"POT-Creation-Date: 2017-02-28 18:41+0100\n"
 "PO-Revision-Date: 2017-02-24 14:47+0000\n"
 "Last-Translator: Antonio <celeritas@libero.it>\n"
 "Language-Team: English <https://translate.runalyze.com/projects/runalyze/"
@@ -634,9 +634,14 @@ msgstr "Upload"
 msgid "Public link"
 msgstr "Public link"
 
-#: inc/system/class.SharedLinker.php:73
-msgid "Public list"
-msgstr "Public list"
+#: inc/system/class.SharedLinker.php:70
+msgid ""
+"You can activate your public athlete page at <em>Configuration->Privacy</em>"
+msgstr ""
+
+#: inc/system/class.SharedLinker.php:72
+msgid "Your public athlete page"
+msgstr ""
 
 #: inc/system/config/class.ConfigTabs.php:76
 #: inc/tpl/tpl.adminWindow.login.php:6
@@ -4312,7 +4317,8 @@ msgid "Automatically mark every activity after its creation as public."
 msgstr "Automatically mark every activity after its creation as public."
 
 #: inc/core/Configuration/Category/Privacy.php:99
-msgid "Public list: active"
+#, fuzzy
+msgid "Public athlete page: active"
 msgstr "Public list: active"
 
 #: inc/core/Configuration/Category/Privacy.php:100
@@ -4320,7 +4326,8 @@ msgid "If activated: Everyone can see a list of all your (public) activities."
 msgstr "If activated: Everyone can see a list of all your (public) activities."
 
 #: inc/core/Configuration/Category/Privacy.php:104
-msgid "Public list: private workouts"
+#, fuzzy
+msgid "Public athlete page: private workouts"
 msgstr "Public list: private workouts"
 
 #: inc/core/Configuration/Category/Privacy.php:105
@@ -4332,7 +4339,8 @@ msgstr ""
 "activity list."
 
 #: inc/core/Configuration/Category/Privacy.php:109
-msgid "Public list: general statistics"
+#, fuzzy
+msgid "Public athlete page: general statistics"
 msgstr "Public list: general statistics"
 
 #: inc/core/Configuration/Category/Privacy.php:110
@@ -4340,7 +4348,8 @@ msgid "Show some general statistics above the activity list"
 msgstr "Show some general statistics above the activity list"
 
 #: inc/core/Configuration/Category/Privacy.php:114
-msgid "Public view: show map"
+#, fuzzy
+msgid "Public activity view: show map"
 msgstr "Public view: show map"
 
 #: inc/core/Configuration/Category/Privacy.php:115
@@ -5982,6 +5991,9 @@ msgstr "Monthly Stats"
 #, php-format
 msgid "How many %s/hours did you do per month"
 msgstr "How many %s/hours did you do per month"
+
+#~ msgid "Public list"
+#~ msgstr "Public list"
 
 #~ msgid "The activity has been removed"
 #~ msgstr "The activity has been removed"
