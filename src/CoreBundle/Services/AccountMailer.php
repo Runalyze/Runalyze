@@ -81,6 +81,15 @@ class AccountMailer
                 'username' => $account->getUsername(),
             ]
         );
-
     }
+
+    public function sendPosterReadyTo(Account $account, $allPostersGenerated) {
+        $this->sendMailTo($account, 'RUNALYZE - Poster generation',
+            'mail/account/postersReady.html.twig', [
+                'username' => $account->getUsername(),
+                'allPostersGenerated' => $allPostersGenerated
+            ]
+        );
+    }
+
 }

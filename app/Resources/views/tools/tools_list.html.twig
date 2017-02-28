@@ -73,5 +73,15 @@
                 </small>
             </a>
         </p>
+        {% if posterAvailable %}
+        <p class="file">
+            <a class="ajax" href="{{ url('poster') }}" target="ajax">
+                <strong class="block">{% trans %}Poster generator{% endtrans %}</strong>
+                <small class="block">
+                    {% trans %}This tool allows you to create beautiful posters of your activity data.{% endtrans %}
+                </small>
+            </a>
+        </p>
+        {% endif %}
     </div>
 {% endblock %}

@@ -42,6 +42,10 @@ services:
     arguments: ["@mailer", "@twig", "@translator"]
     calls:
       - [setFrom, ["%mail_sender%", "%mail_name%"]]
+  app.repository.account:
+    class: Runalyze\Bundle\CoreBundle\Entity\AccountRepository
+    factory: ["@doctrine.orm.entity_manager", getRepository]
+    arguments: [Runalyze\Bundle\CoreBundle\Entity\Account]
   app.repository.conf:
     class: Runalyze\Bundle\CoreBundle\Entity\ConfRepository
     factory: ["@doctrine.orm.entity_manager", getRepository]
@@ -50,10 +54,18 @@ services:
     class: Runalyze\Bundle\CoreBundle\Entity\EquipmentTypeRepository
     factory: ["@doctrine.orm.entity_manager", getRepository]
     arguments: [Runalyze\Bundle\CoreBundle\Entity\EquipmentType]
+  app.repository.race_result:
+    class: Runalyze\Bundle\CoreBundle\Entity\RaceresultRepository
+    factory: ["@doctrine.orm.entity_manager", getRepository]
+    arguments: [Runalyze\Bundle\CoreBundle\Entity\Raceresult]
   app.repository.sport:
     class: Runalyze\Bundle\CoreBundle\Entity\SportRepository
     factory: ["@doctrine.orm.entity_manager", getRepository]
     arguments: [Runalyze\Bundle\CoreBundle\Entity\Sport]
+  app.repository.training:
+    class: Runalyze\Bundle\CoreBundle\Entity\TrainingRepository
+    factory: ["@doctrine.orm.entity_manager", getRepository]
+    arguments: [Runalyze\Bundle\CoreBundle\Entity\Training]
   app.repository.user:
     class: Runalyze\Bundle\CoreBundle\Entity\UserRepository
     factory: ["@doctrine.orm.entity_manager", getRepository]
@@ -65,6 +77,11 @@ services:
   app.form.type.anova:
     class: Runalyze\Bundle\CoreBundle\Form\Tools\Anova\AnovaType
     arguments: ["@app.repository.sport", "@app.repository.equipment_type", "@security.token_storage"]
+    tags:
+     - { name: form.type }
+  app.form.type.poster:
+    class: Runalyze\Bundle\CoreBundle\Form\Tools\PosterType
+    arguments: ["@app.repository.sport", "@app.repository.training", "@security.token_storage"]
     tags:
      - { name: form.type }
   app.form.type.race_result:
@@ -158,9 +175,26 @@ services:
     public: false
     tags:
       - { name: twig.extension }
-  my_receiver:
+  app.poster.generate_json:
+    class: Runalyze\Bundle\CoreBundle\Component\Tool\Poster\GenerateJsonData
+    arguments: ["@app.repository.training", "@app.repository.race_result", "%kernel.root_dir%"]
+  app.poster.generate_poster:
+    class: Runalyze\Bundle\CoreBundle\Component\Tool\Poster\GeneratePoster
+    arguments: ["%kernel.root_dir%", "%python3_path%", "@app.repository.training"]
+  app.poster.availability:
+    class: Runalyze\Bundle\CoreBundle\Component\Tool\Poster\Availability
+    arguments: ["%rsvg_path%", "%inkscape_path%", "%python3_path%"]
+  app.poster.filehandler:
+    class: Runalyze\Bundle\CoreBundle\Component\Tool\Poster\FileHandler
+    arguments: ["%kernel.root_dir%"]
+  app.bernard.backup_receiver:
     class: Runalyze\Bundle\CoreBundle\Queue\Receiver\BackupReceiver
     arguments:
       container: "@service_container"
     tags:
       - { name: bernard.receiver, message: userBackup }
+  app.bernard.poster_receiver:
+    class: Runalyze\Bundle\CoreBundle\Queue\Receiver\PosterReceiver
+    arguments: ["@app.repository.account", "@app.repository.sport", "@app.poster.generate_json", "@app.poster.generate_poster", "@app.poster.filehandler", "@app.mailer.account", "%kernel.root_dir%", "%rsvg_path%", "%inkscape_path%"]
+    tags:
+      - { name: bernard.receiver, message: posterGenerator }
