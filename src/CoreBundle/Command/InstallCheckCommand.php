@@ -56,7 +56,9 @@ class InstallCheckCommand extends ContainerAwareCommand
         'data/log/',
         'data/sessions/',
         'var/cache/',
-        'var/logs/'
+        'var/logs/',
+        'var/tmp/',
+        'data/poster/'
     ];
 
     protected function configure()
