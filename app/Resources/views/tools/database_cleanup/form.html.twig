@@ -13,37 +13,37 @@
                 <div class="margin-10 padding-5">
                     <div class="checkbox">
                         {{ form_widget(form.internals) }}
-                        {{ form_label(form.internals, 'Refresh internal constants') }}
+                        {{ form_label(form.internals, 'Refresh internal constants'|trans) }}
                     </div>
 
                     <div class="checkbox">
                         {{ form_widget(form.equipment) }}
-                        {{ form_label(form.equipment, 'Recalculate your equipment statistics') }}
+                        {{ form_label(form.equipment, 'Recalculate your equipment statistics'|trans) }}
                     </div>
 
                     <div class="checkbox">
-                        {{ form_widget(form.vdotCorrector) }}
-                        {{ form_label(form.vdotCorrector, 'Recalculate your VDOT correction factor') }}
+                        {{ form_widget(form.vo2maxCorrector) }}
+                        {{ form_label(form.vo2maxCorrector, 'Recalculate your effective %VO2max% correction factor'|trans({'%VO2max%': 'VO<sub>2</sub>max'}) ) }}
                     </div>
 
                     <div class="checkbox">
-                        {{ form_widget(form.vdot) }}
-                        {{ form_label(form.vdot, 'Recalculate your VDOT shape') }}
+                        {{ form_widget(form.vo2max) }}
+                        {{ form_label(form.vo2max, 'Recalculate your effective %VO2max% shape'|trans({'%VO2max%': 'VO<sub>2</sub>max'}) ) }}
                     </div>
 
                     <div class="checkbox">
                         {{ form_widget(form.endurance) }}
-                        {{ form_label(form.endurance, 'Recalculate your marathon shape') }}
+                        {{ form_label(form.endurance, 'Recalculate your marathon shape'|trans) }}
                     </div>
 
                     <div class="checkbox">
                         {{ form_widget(form.trimp) }}
-                        {{ form_label(form.trimp, 'Recalculate maximal TRIMP values') }}
+                        {{ form_label(form.trimp, 'Recalculate maximal TRIMP values'|trans) }}
                     </div>
 
                     <div class="checkbox">
                         {{ form_widget(form.cacheclean) }}
-                        {{ form_label(form.cacheclean, 'Clear your personal cache') }}
+                        {{ form_label(form.cacheclean, 'Clear your personal cache'|trans) }}
                     </div>
 
                 </div>
@@ -65,23 +65,19 @@
                 <div class="margin-10 padding-5">
                     <div class="checkbox">
                         {{ form_widget(form.activityElevation) }}
-                        {{ form_label(form.activityElevation, 'Recalculate elevation') }}
+                        {{ form_label(form.activityElevation, 'Recalculate elevation'|trans) }}
                         <div class="checkbox">
                             {{ form_widget(form.activityElevationOverwrite) }}
-                            {{ form_label(form.activityElevationOverwrite, 'Overwrite manual values') }}
+                            {{ form_label(form.activityElevationOverwrite, 'Overwrite manual values'|trans) }}
                         </div>
                     </div>
                     <div class="checkbox">
-                            {{ form_widget(form.activityVdot) }}
-                            {{ form_label(form.activityVdot, 'Recalculate VDOT values') }}
-                    </div>
-                    <div class="checkbox">
-                            {{ form_widget(form.activityJdpoints) }}
-                            {{ form_label(form.activityJdpoints, 'Recalculate JD training points') }}
+                            {{ form_widget(form.activityVO2max) }}
+                            {{ form_label(form.activityVO2max, 'Recalculate effective %VO2max% values'|trans({'%VO2max%': 'VO<sub>2</sub>max'}) ) }}
                     </div>
                     <div class="checkbox">
                             {{ form_widget(form.activityTrimp) }}
-                            {{ form_label(form.activityTrimp, 'Recalculate TRIMP values') }}
+                            {{ form_label(form.activityTrimp, 'Recalculate TRIMP values'|trans) }}
                     </div>
                 </div>
             </div>

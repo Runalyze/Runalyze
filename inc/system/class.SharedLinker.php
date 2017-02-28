@@ -62,16 +62,16 @@ class SharedLinker {
 	 * @return string
 	 */
 	public static function getListLinkForCurrentUser($text = null) {
+        if (is_null($text)) {
+            $text = '<i class="fa fa-fw fa-id-card-o"></i>';
+        }
+
 		if (!Configuration::Privacy()->listIsPublic()) {
-			return '';
-		}
-
-		if (is_null($text)) {
-			$text = Icon::$ATTACH;
-		}
-
-		return '<a href="athlete/'.SessionAccountHandler::getUsername().'" target="_blank" '.Ajax::tooltip('', __('Public list'), false, true).'>'.$text.'</a>';
-	}
+            return '<a class=window tab" href="settings?key=config_tab_general" '.Ajax::tooltip('', __('You can activate your public athlete page at <em>Configuration->Privacy</em>'), false, true).'>'.$text.'</a>';
+		} else {
+            return '<a href="athlete/' . SessionAccountHandler::getUsername() . '" target="_blank" ' . Ajax::tooltip('', __('Your public athlete page'), false, true) . '>' . $text . '</a>';
+        }
+    }
 
 	/**
 	 * Get training ID from request

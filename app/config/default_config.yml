@@ -30,4 +30,5 @@ parameters:
   smtp_security:
   smtp_username:
   smtp_password:
+  backup_storage_period: 5
   poster_storage_period: 5

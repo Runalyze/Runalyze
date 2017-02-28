@@ -1,7 +1,7 @@
 {% extends 'form_div_layout.html.twig' %}
 
 {% block form_row %}
-    <div class="w100 block">
+    <div class="{{ div_class|default('w100') }}">
         {{ form_label(form) }}
         {{ form_widget(form) }}
         {{ form_errors(form) }}
@@ -44,7 +44,7 @@
                 {% set label = name|humanize %}
             {%- endif -%}
         {%- endif -%}
-        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ translation_domain is same as(false) ? label : label|trans({}, translation_domain) }}
+        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ translation_domain is same as(false) ? label|raw : label|trans({}, translation_domain)|raw }}
         {% if help is defined %}
             <span rel="tooltip" data-original-title="{{ help }}"><i class="fa fa-fw fa-question-circle"></i></span>
         {% endif %}
@@ -52,10 +52,10 @@
     {%- endif -%}
 {%- endblock form_label -%}
 
+
 {%- block form_widget_simple -%}
     {%- set type = type|default('text') -%}
     {% if input_unit %}<span class="input-with-unit">{% endif %}
-        <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+    <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
     {% if input_unit %}<label for="{{ id }}" class="input-unit">{{ input_unit }}</label></span>{% endif %}
 {%- endblock form_widget_simple -%}
-

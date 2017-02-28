@@ -6,8 +6,7 @@ use Runalyze\Bundle\CoreBundle\Component\Activity\Tool\BestSubSegmentsStatistics
 use Runalyze\Bundle\CoreBundle\Component\Activity\Tool\TimeSeriesStatistics;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\Trackdata;
-use Runalyze\Bundle\CoreBundle\Services\Activity\VdotInfo;
-use Runalyze\Configuration;
+use Runalyze\Bundle\CoreBundle\Services\Activity\EffectiveVO2maxInfo;
 use Runalyze\Metrics\LegacyUnitConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -196,26 +195,26 @@ class ActivityController extends Controller
    }
 
     /**
-     * @Route("/activity/{id}/vdot-info")
+     * @Route("/activity/{id}/vo2max-info")
      * @Security("has_role('ROLE_USER')")
      */
-    public function vdotInfoAction($id, Account $account)
+    public function vo2maxInfoAction($id, Account $account)
     {
         $Frontend = new \Frontend(true, $this->get('security.token_storage'));
         $configList = $this->get('app.configuration_manager')->getList();
 
-        $VdotInfo = new VdotInfo();
-        $VdotInfo->setContext(new Context($id, $account->getId()));
-        $VdotInfo->setConfiguration($configList->getData()->getLegacyCategory(), $configList->getVdot()->getLegacyCategory());
+        $EffectiveVO2maxInfo = new EffectiveVO2maxInfo();
+        $EffectiveVO2maxInfo->setContext(new Context($id, $account->getId()));
+        $EffectiveVO2maxInfo->setConfiguration($configList->getData()->getLegacyCategory(), $configList->getVO2max()->getLegacyCategory());
 
-        return $this->render(':activity:vdot_info.html.twig', [
-            'title' => $VdotInfo->getTitle(),
-            'raceDetails' => $VdotInfo->getRaceCalculationDetails(),
-            'hrDetails' => $VdotInfo->getHeartRateCalculationDetails(),
-            'factorDetails' => $VdotInfo->getCorrectionFactorDetails(),
-            'elevationDetails' => $VdotInfo->getElevationDetails(),
-            'useElevationAdjustment' => $VdotInfo->usesElevationAdjustment(),
-            'activityVdot' => $VdotInfo->getActivityVdot()
+        return $this->render(':activity:vo2max_info.html.twig', [
+            'title' => $EffectiveVO2maxInfo->getTitle(),
+            'raceDetails' => $EffectiveVO2maxInfo->getRaceCalculationDetails(),
+            'hrDetails' => $EffectiveVO2maxInfo->getHeartRateCalculationDetails(),
+            'factorDetails' => $EffectiveVO2maxInfo->getCorrectionFactorDetails(),
+            'elevationDetails' => $EffectiveVO2maxInfo->getElevationDetails(),
+            'useElevationAdjustment' => $EffectiveVO2maxInfo->usesElevationAdjustment(),
+            'activityVO2max' => $EffectiveVO2maxInfo->getActivityVO2max()
         ]);
     }
 

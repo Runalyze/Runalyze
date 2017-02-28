@@ -24,6 +24,10 @@ class RaceResultController extends Controller
 
     /**
      * @Route("/my/raceresult/{activityId}", name="raceresult-form", requirements={"activityId" = "\d+"})
+     * @param int $activityId
+     * @param Account $account
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function raceresultFormAction($activityId, Account $account, Request $request)
     {

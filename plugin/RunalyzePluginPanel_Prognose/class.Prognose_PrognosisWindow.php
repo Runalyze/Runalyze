@@ -6,7 +6,7 @@
 
 use Runalyze\Configuration;
 use Runalyze\Calculation\BasicEndurance;
-use Runalyze\Calculation\JD\VDOT;
+use Runalyze\Calculation\JD\LegacyEffectiveVO2max;
 use Runalyze\Calculation\Prognosis;
 use Runalyze\Activity\Distance;
 use Runalyze\Activity\Duration;
@@ -98,16 +98,16 @@ class Prognose_PrognosisWindow {
 		$this->UnitSystem = Configuration::General()->distanceUnitSystem();
 
 		$TopResults = (new Prognosis\TopResults())->getTopResults(2);
-		$CurrentShape = Configuration::Data()->vdotShape();
+		$CurrentShape = Configuration::Data()->vo2maxShape();
 
 		if (empty($_POST)) {
 			$Factory = new PluginFactory();
 			$Plugin = $Factory->newInstance('RunalyzePluginPanel_Prognose');
 
-			$_POST['model'] = 'jack-daniels';
+			$_POST['model'] = 'vo2max';
 			$_POST['distances'] = implode(', ', $this->distanceValuesToMiles($Plugin->getDistances()));
 
-			$_POST['vdot'] = $CurrentShape;
+			$_POST['vo2max'] = $CurrentShape;
 			$_POST['endurance'] = true;
 			$_POST['endurance-value'] = BasicEndurance::getConst();
 
@@ -122,8 +122,8 @@ class Prognose_PrognosisWindow {
 			]);
 		}
 
-		$this->InfoLines['jack-daniels']  = __('Your current VDOT:').' '.$CurrentShape.'. ';
-		$this->InfoLines['jack-daniels'] .= __('Your current marathon shape:').' '.BasicEndurance::getConst().' &#37;.';
+		$this->InfoLines['vo2max']  = __('Your current effective VO2max:').' '.$CurrentShape.'. ';
+		$this->InfoLines['vo2max'] .= __('Your current marathon shape:').' '.BasicEndurance::getConst().' &#37;.';
 
 		$ResultLine = empty($TopResults) ? __('none') : sprintf( __('%s in %s <small>(%s)</small> and %s in %s <small>(%s)</small>'),
 				Distance::format($TopResults[0]['distance']), Duration::format($TopResults[0]['s']), (new LocalTime($TopResults[0]['time']))->format('d.m.Y'),
@@ -152,9 +152,9 @@ class Prognose_PrognosisWindow {
                 $this->setupCameronPrognosis();
                 break;
 
-            case 'jack-daniels':
+            case 'vo2max':
             default:
-                $this->setupJackDanielsPrognosis();
+                $this->setupEffectiveVO2maxPrognosis();
         }
 
 		$this->Distances = $this->distanceValuesToKm(Helper::arrayTrim(explode(',', $_POST['distances'])));
@@ -188,10 +188,10 @@ class Prognose_PrognosisWindow {
 		return $values;
 	}
 
-	protected function setupJackDanielsPrognosis()
+	protected function setupEffectiveVO2maxPrognosis()
     {
-        $this->PrognosisObject = new \Runalyze\Sports\Running\Prognosis\Daniels(
-            (float)Helper::CommaToPoint($_POST['vdot']),
+        $this->PrognosisObject = new \Runalyze\Sports\Running\Prognosis\VO2max(
+            (float)Helper::CommaToPoint($_POST['vo2max']),
             isset($_POST['endurance']),
             (int)$_POST['endurance-value']
         );
@@ -237,11 +237,11 @@ class Prognose_PrognosisWindow {
 			$PB = new PersonalBest($km, Configuration::General()->runningSport(), DB::getInstance(), false);
 			$PB->lookupWithDetails();
 
-			$VDOTprognosis = new VDOT;
-			$VDOTprognosis->fromPace($km, $Prognosis);
+			$VO2maxprognosis = new LegacyEffectiveVO2max;
+            $VO2maxprognosis->fromPace($km, $Prognosis);
 
-			$VDOTpb = new VDOT;
-			$VDOTpb->fromPace($km, $PB->seconds());
+            $VO2maxpb = new LegacyEffectiveVO2max;
+            $VO2maxpb->fromPace($km, $PB->seconds());
 
 			$PacePrognosis = new Pace($Prognosis, $km, SportFactory::getSpeedUnitFor(Configuration::General()->runningSport()));
 			$PacePB = new Pace($PB->seconds(), $km, SportFactory::getSpeedUnitFor(Configuration::General()->runningSport()));
@@ -252,12 +252,12 @@ class Prognose_PrognosisWindow {
 				'distance'	=> (new Distance($km))->stringAuto(),
 				'prognosis'		=> $Prognosis > 0 ? Duration::format($Prognosis) : '-',
 				'prognosis-pace'=> $PacePrognosis->valueWithAppendix(),
-				'prognosis-vdot'=> $Prognosis > 0 ? $VDOTprognosis->uncorrectedValue() : '-',
+				'prognosis-vo2max'=> $Prognosis > 0 ? $VO2maxprognosis->uncorrectedValue() : '-',
 				'diff'			=> !$PB->exists() || $Prognosis == 0 ? '-' : ($PB->seconds()>$Prognosis?'+ ':'- ').Duration::format(abs(round($PB->seconds()-$Prognosis))),
 				'diff-class'	=> $PB->seconds() > $Prognosis ? 'plus' : 'minus',
 				'pb'			=> $PB->seconds() > 0 ? Duration::format($PB->seconds()) : '-',
 				'pb-pace'		=> $PB->seconds() > 0 ? $PacePB->valueWithAppendix() : '-',
-				'pb-vdot'		=> $PB->seconds() > 0 ? $VDOTpb->uncorrectedValue() : '-',
+				'pb-vo2max'		=> $PB->seconds() > 0 ? $VO2maxpb->uncorrectedValue() : '-',
 				'pb-date'		=> $PB->seconds() > 0 ? $DateWithLink : '-'
 			);
 		}
@@ -286,11 +286,11 @@ class Prognose_PrognosisWindow {
 					<th>'.__('Distance').'</th>
 					<th>'.__('Prognosis').'</th>
 					<th class="small">'.__('Pace').'</th>
-					<th class="small">'.__('VDOT').'</th>
+					<th class="small">VO2max</th>
 					<th>'.__('Difference').'</th>
 					<th>'.__('Personal best').'</th>
 					<th class="small">'.__('Pace').'</th>
-					<th class="small">'.__('VDOT').'</th>
+					<th class="small">VO2max</th>
 					<th class="small">'.__('Date').'</th>
 				</tr></thead><tbody>';
 	}
@@ -305,11 +305,11 @@ class Prognose_PrognosisWindow {
 					<td class="c">'.$Prognosis['distance'].'</td>
 					<td class="b">'.$Prognosis['prognosis'].'</td>
 					<td class="small">'.$Prognosis['prognosis-pace'].'</td>
-					<td class="small">'.$Prognosis['prognosis-vdot'].'</td>
+					<td class="small">'.$Prognosis['prognosis-vo2max'].'</td>
 					<td class="small '.$Prognosis['diff-class'].'">'.$Prognosis['diff'].'</td>
 					<td class="b">'.$Prognosis['pb'].'</td>
 					<td class="small">'.$Prognosis['pb-pace'].'</td>
-					<td class="small">'.$Prognosis['pb-vdot'].'</td>
+					<td class="small">'.$Prognosis['pb-vo2max'].'</td>
 					<td class="small">'.$Prognosis['pb-date'].'</td>
 				</tr>';
 		}
@@ -330,8 +330,8 @@ class Prognose_PrognosisWindow {
 
 		if ($_POST['model'] == 'robert-bock' && $this->PrognosisObject instanceof \Runalyze\Sports\Running\Prognosis\Bock) {
 			$this->addHintsForRobertBock($this->PrognosisObject);
-		} elseif ($_POST['model'] == 'jack-daniels' && $this->PrognosisObject instanceof \Runalyze\Sports\Running\Prognosis\Daniels) {
-			$this->addHintsForJackDaniels();
+		} elseif ($_POST['model'] == 'vo2max' && $this->PrognosisObject instanceof \Runalyze\Sports\Running\Prognosis\VO2max) {
+			$this->addHintsForEffectiveVO2max();
 		}
 	}
 
@@ -347,14 +347,11 @@ class Prognose_PrognosisWindow {
 		}
 	}
 
-	/**
-	 * Add hints for model: Jack Daniels
-	 */
-	protected function addHintsForJackDaniels() {
+	protected function addHintsForEffectiveVO2max() {
 		if (!$this->PrognosisObject->areValuesValid()) {
 			$this->ResultTable .= HTML::warning(sprintf(
-				__('VDOT must be between %u and %u.'),
-				VDOT::REASONABLE_MINIMUM, VDOT::REASONABLE_MAXIMUM
+				__('Effective VO2max must be between %u and %u.'),
+				\Runalyze\Sports\Running\Prognosis\VO2max::REASONABLE_VO2MAX_MINIMUM, \Runalyze\Sports\Running\Prognosis\VO2max::REASONABLE_VO2MAX_MAXIMUM
 			));
 		}
 	}
@@ -377,7 +374,7 @@ class Prognose_PrognosisWindow {
 			$this->FieldsetInput->addInfo($InfoMessage);
 
 		$FieldModel = new FormularSelectBox('model', __('Model'));
-		$FieldModel->addOption('jack-daniels', 'Jack Daniels (VDOT)');
+		$FieldModel->addOption('vo2max', 'Effective VO2max');
 		$FieldModel->addOption('robert-bock', 'Robert Bock (CPP)');
 		$FieldModel->addOption('herbert-steffny', 'Herbert Steffny');
 		$FieldModel->addOption('david-cameron', 'David Cameron');
@@ -392,31 +389,28 @@ class Prognose_PrognosisWindow {
 		$this->FieldsetInput->addField($FieldModel);
 		$this->FieldsetInput->addField($FieldDistances);
 
-		$this->addFieldsForJackDaniels();
+		$this->addFieldsForEffectiveVO2max();
 		$this->addFieldsForBockAndSteffny();
 	}
 
-	/**
-	 * Add fields for jack daniels
-	 */
-	protected function addFieldsForJackDaniels() {
-		$FieldVdot = new FormularInput('vdot', __('New VDOT'));
-		$FieldVdot->setLayout( FormularFieldset::$LAYOUT_FIELD_W50_AS_W100 );
-		$FieldVdot->addCSSclass('hide-on-model-change');
-		$FieldVdot->addCSSclass('only-jack-daniels');
+	protected function addFieldsForEffectiveVO2max() {
+        $FieldVO2max = new FormularInput('vo2max', __('Effective VO2max'));
+        $FieldVO2max->setLayout( FormularFieldset::$LAYOUT_FIELD_W50_AS_W100 );
+        $FieldVO2max->addCSSclass('hide-on-model-change');
+        $FieldVO2max->addCSSclass('only-vo2max');
 
 		$FieldEndurance = new FormularCheckbox('endurance', __('Use Marathon Shape'));
 		$FieldEndurance->setLayout( FormularFieldset::$LAYOUT_FIELD_W50 );
 		$FieldEndurance->addCSSclass('hide-on-model-change');
-		$FieldEndurance->addCSSclass('only-jack-daniels');
+		$FieldEndurance->addCSSclass('only-vo2max');
 
 		$FieldEnduranceValue = new FormularInput('endurance-value', __('Marathon Shape'));
 		$FieldEnduranceValue->setLayout( FormularFieldset::$LAYOUT_FIELD_W50 );
 		$FieldEnduranceValue->addCSSclass('hide-on-model-change');
-		$FieldEnduranceValue->addCSSclass('only-jack-daniels');
+		$FieldEnduranceValue->addCSSclass('only-vo2max');
 		$FieldEnduranceValue->setUnit( FormularUnit::$PERCENT );
 
-		$this->FieldsetInput->addField($FieldVdot);
+		$this->FieldsetInput->addField($FieldVO2max);
 		$this->FieldsetInput->addField($FieldEnduranceValue);
 		$this->FieldsetInput->addField($FieldEndurance);
 	}

@@ -11,27 +11,29 @@ class DatabaseCleanupType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $notRequiredOptions = [
+            'required' => false
+        ];
+
         $builder
-            ->add('mode', ChoiceType::class, array(
+            ->add('mode', ChoiceType::class, [
                 'expanded' => true,
                 'data' => 'general',
-                'choices' => array(
+                'choices' => [
                     'General cleanup' => 'general',
-                    'Loop through activities' => 'loop')
-            ))
-            ->add('internals', CheckboxType::class, array('required' => false))
-            ->add('equipment', CheckboxType::class, array('required' => false))
-            ->add('vdotCorrector', CheckboxType::class, array('required' => false))
-            ->add('vdot', CheckboxType::class, array('required' => false))
-            ->add('endurance', CheckboxType::class, array('required' => false))
-            ->add('trimp', CheckboxType::class, array('required' => false))
-            ->add('cacheclean', CheckboxType::class, array('required' => false))
-
-            ->add('activityElevation', CheckboxType::class, array('required' => false))
-            ->add('activityElevationOverwrite', CheckboxType::class, array('required' => false))
-            ->add('activityVdot', CheckboxType::class, array('required' => false))
-            ->add('activityJdpoints', CheckboxType::class, array('required' => false))
-            ->add('activityTrimp', CheckboxType::class, array('required' => false))
-        ;
+                    'Loop through activities' => 'loop'
+                ]
+            ])
+            ->add('internals', CheckboxType::class, $notRequiredOptions)
+            ->add('equipment', CheckboxType::class, $notRequiredOptions)
+            ->add('vo2maxCorrector', CheckboxType::class, $notRequiredOptions)
+            ->add('vo2max', CheckboxType::class, $notRequiredOptions)
+            ->add('endurance', CheckboxType::class, $notRequiredOptions)
+            ->add('trimp', CheckboxType::class, $notRequiredOptions)
+            ->add('cacheclean', CheckboxType::class, $notRequiredOptions)
+            ->add('activityElevation', CheckboxType::class, $notRequiredOptions)
+            ->add('activityElevationOverwrite', CheckboxType::class, $notRequiredOptions)
+            ->add('activityVO2max', CheckboxType::class, $notRequiredOptions)
+            ->add('activityTrimp', CheckboxType::class, $notRequiredOptions);
     }
 }

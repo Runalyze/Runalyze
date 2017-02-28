@@ -1,0 +1,140 @@
+/**
+ * Forecast Font by Ali Sisk
+ * @see http://forecastfont.iconvau.lt/
+ * @license SIL open font license, MIT license for code
+ */
+
+@font-face {
+	font-family: "iconvault";
+	src: url("iconvault_forecastfont.eot");
+	src: url("iconvault_forecastfont.eot?#iefix") format("embedded-opentype"),
+		 url("iconvault_forecastfont.woff") format("woff"),
+		 url("iconvault_forecastfont.ttf") format("truetype"),
+		 url("iconvault_forecastfont.svg#iconvault") format("svg");
+	font-weight: normal;
+	font-style: normal;
+}
+
+[class^="weather-"],
+[class*=" weather-"],
+.weather {
+	position: relative;
+	display: inline-block;
+	font: normal normal normal 14px/1 'iconvault';
+	font-size: 12px;
+	line-height: 1.4em;
+	width: 1.28571429em;
+	height: 1em;
+	font-weight: bold;
+	text-align: center;
+	-webkit-font-smoothing: antialiased;
+}
+[class^="weather-"]::before, [class^="weather-"]::after,
+[class*=" weather-"]::before, [class*=" weather-"]::after,
+.weather::before, .weather::after {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+
+.weather-basecloud:before,
+.weather-windyraincloud:before,
+.weather-windysnowcloud:before,
+.weather-basethundercloud:before {
+	color: rgb(204, 204, 204);
+}
+.weather-basecloud:before {
+	content: '\f105';
+}
+.weather-windyraincloud:before {
+	content: '\f111';
+}
+.weather-windysnowcloud:before  {
+	content: '\f109';
+}
+.weather-basethundercloud:before  {
+	content: '\f105';
+}
+
+.weather-thunder::before  {
+	content: "\f114";
+	color: rgb(255, 165, 0);
+}
+.weather-cloudy::before {
+	content: "\f106";
+	color: rgb(204, 204, 204);
+}
+.weather-sunny::after {
+	content: "\f101";
+	color: rgb(255, 165, 0);
+}
+.weather-drizzle::before  {
+	content: "\f10a";
+	color: #82b2e4;
+}
+.weather-hail::before {
+	content: "\f10f";
+	color: rgb(204, 204, 204);
+}
+.weather-showers::before  {
+	content: "\f104";
+	color: #82b2e4;
+}
+.weather-rainy::before {
+	content: "\f107";
+	color: #4681c3;
+}
+.weather-snowy::before  {
+	content: "\f10b";
+	color: #acd3f3;
+}
+.weather-frosty::before {
+	content: "\f102";
+	color: #85d8f7;
+}
+.weather-windy::before  {
+	content: "\f115";
+	color: rgb(204, 204, 204);
+}
+.weather-windyrain::before {
+	content: "\f10e";
+	color: #acd3f3;
+}
+.weather-windysnow::before {
+	content: "\f103";
+	color: #acd3f3;
+}
+.weather-sleet::before  {
+	content: "\f10c";
+	color: #acd3f3;
+}
+.weather-moon::after {
+	content: "\f10d";
+	color: rgb(255, 165, 0);
+}
+.weather-night::after {
+	content: "\f100";
+	color: rgb(255, 165, 0);
+}
+.weather-sun::after {
+	content: "\f113";
+	color: rgb(255, 165, 0);
+}
+.weather-cloud::after {
+	content: "\f106";
+	color: rgb(204, 204, 204);
+}
+.weather-sunrise:before  {
+	content: '\f112';
+	color: rgb(255, 165, 0);
+}
+.weather-sunset:before  {
+	content: '\f110';
+	color: #f96f23;
+}
+.weather-mist:before  {
+	content: '\f108';
+	color: rgb(204, 204, 204);
+}

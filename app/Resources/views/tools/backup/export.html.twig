@@ -9,49 +9,45 @@
                 {% trans %}You can close this window.{% endtrans %}</p>
         </div>
     {% else %}
-    <div class="panel-content">
-        <form action="{{ url('tools-backup-create') }}" method="post" id="database-backup" class="ajax no-automatic-reload">
-            <input type="hidden" name="backup" value="true">
+        <div class="panel-content">
+            {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'ajax no-automatic-reload'}, 'action': url('tools-backup')}) }}
 
             <fieldset>
-                <legend>{% trans %}Export data{% endtrans %}</legend>
-                {% if not hasLocks %}
-                <div class="w50">
-                    <label for="export-type">{% trans %}File format{% endtrans %}</label>
-                    <select name="export-type" id="export-type">
-                        <option value="json">{% trans %}Portable backup{% endtrans %} (*.json.gz)</option>
-                        <option value="sql">{% trans %}Database backup{% endtrans %} (*.sql.gz)</option>
-                    </select>
-                </div>
-
-                <div class="w50">
-                    <input type="submit" value="{% trans %}Create backup{% endtrans %}">
-                </div>
-
-                <div class="fieldset-messages">
-                    <p class="info">
-                        <strong>{% trans %}JSON-format{% endtrans %} (*.json.gz)</strong><br>
-                        <small>
-                            {% trans %}Portable backup of your configuration and data -
-                                This file can be imported into any other installation, using this tool.<br />
-                                This way you can transfer your data from a local to an online installation and back.{% endtrans %}
-                        </small>
-                    </p>
-                    <p class="info">
-                        <strong>{% trans %}SQL-format{% endtrans %} (*.sql.gz)</strong><br>
-                        <small>
-                            {% trans %}Backup of all your data -
-                                This file can be imported manually with e.g. phpMyAdmin into any database.<br />
-                                This is recommended to create a backup copy or to import your data into a new installation.{% endtrans %}
-                        </small>
-                    </p>
-                </div>
-                {% else %}
-                    <p class="info">{% trans %}In order to avoid inconsistencies you cannot create an backup of your data in the moment. Usually this happens when a update of RUNALYZE is in progress. Please try it again tomorrow.{% endtrans %} </p>
-                {% endif %}
+                <legend>{% trans %}Details{% endtrans %}</legend>
+                {{ form_row(form.fileFormat,  {'div_class': 'w50'}) }}
             </fieldset>
-        </form>
-    </div>
+
+            <div class="c">
+                <input type="submit" value="{% trans %}Create backup{% endtrans %}">
+            </div>
+
+            <div class="fieldset-messages">
+                <p class="info">
+                    <strong>{% trans %}JSON-format{% endtrans %} (*.json.gz)</strong><br>
+                    <small>
+                        {% trans %}Portable backup of your configuration and data -
+                        This file can be imported into any other installation, using this plugin.<br />
+                        This way you can transfer your data from to local to an online installation and back.
+                        {% endtrans %}
+                    </small>
+                </p>
+                <p class="info">
+                    <strong>{% trans %}SQL-format{% endtrans %} (*.sql.gz)</strong><br>
+                    <small>
+                        {% trans %}Backup of the complete database -
+                        This file can be imported manually with e.g. PHPMyAdmin into any database.<br />
+                        This is recommended to create a backup copy or to import your data into a new installation.
+                        {% endtrans %}
+                    </small>
+                </p>
+            </div>
+
+
+            {{ form_rest(form) }}
+            {{ form_end(form) }}
+
+
+        </div>
     {% endif %}
 
 

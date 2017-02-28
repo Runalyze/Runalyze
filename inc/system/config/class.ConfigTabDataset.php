@@ -52,7 +52,7 @@ class ConfigTabDataset extends ConfigTab {
 	}
 
 	/**
-	 * Set key and title for form 
+	 * Set key and title for form
 	 */
 	protected function setKeyAndTitle() {
 		$this->key = 'config_tab_dataset';
@@ -73,7 +73,7 @@ class ConfigTabDataset extends ConfigTab {
 
 	/**
 	 * Get code
-	 * @return string 
+	 * @return string
 	 */
 	private function getCode() {
 		$Code = '';
@@ -186,7 +186,7 @@ class ConfigTabDataset extends ConfigTab {
 	}
 
 	/**
-	 * Parse all post values 
+	 * Parse all post values
 	 */
 	public function parsePostData() {
 		$AccountID = SessionAccountHandler::getId();
@@ -227,7 +227,7 @@ class ConfigTabDataset extends ConfigTab {
 
 	/**
 	 * Get array for exemplary training data
-	 * @return array 
+	 * @return array
 	 */
 	protected function getExampleTraining() {
 		return array(
@@ -245,15 +245,14 @@ class ConfigTabDataset extends ConfigTab {
 			'kcal'		=> 691,
 			'pulse_avg'	=> 186,
 			'pulse_max'	=> 193,
-			'vdot_with_elevation'	=> Configuration::Data()->vdot() + 1,
-			'vdot'		=> Configuration::Data()->vdot() + 2,
-			'use_vdot'	=> 0,
-			'fit_vdot_estimate'	=> round(Configuration::Data()->vdot()),
+			'vo2max_with_elevation'	=> Configuration::Data()->vo2max() + 1,
+			'vo2max'	=> Configuration::Data()->vo2max() + 2,
+			'use_vo2max'=> 0,
+			'fit_vo2max_estimate'	=> round(Configuration::Data()->vo2max()),
 			'fit_recovery_time'	=> 800,
 			'fit_hrv_analysis'	=> 800,
 			'fit_training_effect'	=> 3.1,
 			'fit_performance_condition'	=> 100,
-			'jd_intensity'	=> 27,
 			'rpe'		=> 13,
 			'trimp'		=> 121,
 			'cadence'	=> 90,

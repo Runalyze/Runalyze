@@ -740,55 +740,8 @@ class TrainingObject extends DataObject {
 	public function getPulseMax() { return $this->get('pulse_max'); }
 
 
-	/**
-	 * Get uncorrected VDOT
-	 *
-	 * This value is calculated by heartrate and pace without any correction.
-	 * @return double uncorrected vdot
-	 */
-	public function getVdotUncorrected() { return $this->get('vdot'); }
-	/**
-	 * Get corrected VDOT
-	 *
-	 * This value is calculated by heartrate and pace and corrected by
-	 * the user defined/calculated correction factor.
-	 * @return double corrected vdot
-	 */
-	public function getVdotCorrected() { return round(Configuration::Data()->vdotFactor()*$this->getVdotUncorrected(), 2); }
-	/**
-	 * Get VDOT by time
-	 *
-	 * This value is calculated by distance and time without any influence by heartrate.
-	 * @return double vdot by time
-	 */
-	public function getVdotByTime() { return $this->get('vdot_by_time'); }
-	/**
-	 * Get VDOT with elevation
-	 * @return double vdot with elevation influence
-	 */
-	public function getVdotWithElevation() { return $this->get('vdot_with_elevation'); }
-	/**
-	 * Get VDOT with elevation corrected
-	 * @return double vdot with elevation influence
-	 */
-	public function getVdotWithElevationCorrected() { return round(Configuration::Data()->vdotFactor()*$this->getVdotWithElevation(), 2); }
-	/**
-	 * Get VDOT with elevation
-	 * @return double vdot with elevation influence
-	 */
-	public function getCurrentlyUsedVdot() { return (Configuration::Vdot()->useElevationCorrection() && $this->getVdotWithElevation() > 0 ? $this->getVdotWithElevationCorrected() : $this->getVdotCorrected()); }
-
-
-	/**
-	 * Used for vdot?
-	 *
-	 * A user can decide if we wants a training to be used for vdot-shape-calculation.
-	 * @return bool True if user wants this training to influence vdot-shape.
-	 */
-	public function usedForVdot() { return $this->get('use_vdot') == 1; }
-
-	public function setFitVdotEstimate($vdot) { $this->set('fit_vdot_estimate', $vdot); }
-	public function getFitVdotEstimate() { return $this->get('fit_vdot_estimate'); }
+	public function setFitVO2maxEstimate($vo2max) { $this->set('fit_vo2max_estimate', $vo2max); }
+	public function getFitVO2maxEstimate() { return $this->get('fit_vo2max_estimate'); }
 
 	public function setFitRecoveryTime($minutes) { $this->set('fit_recovery_time', $minutes); }
 	public function getFitRecoveryTime() { return $this->get('fit_recovery_time'); }
@@ -801,31 +754,6 @@ class TrainingObject extends DataObject {
 
 	public function setFitPerformanceCondition($value) { $this->set('fit_performance_condition', $value); }
 	public function getFitPerformanceCondition() { return $this->get('fit_performance_condition'); }
-
-
-	/**
-	 * Get JD intensity
-	 * @return int jd intensity
-	 */
-	public function getJDintensity() { return $this->get('jd_intensity'); }
-
-	/**
-	 * Set rpe
-	 * @param int $rpe rpe
-	 */
-	public function setRPE($rpe) { $this->set('rpe', $rpe); }
-	/**
-	 * Get rpe
-	 * @return int rpe value
-	 */
-	public function getRPE() { return $this->get('rpe'); }
-
-
-	/**
-	 * Get trimp
-	 * @return int trimp value
-	 */
-	public function getTrimp() { return $this->get('trimp'); }
 
 
 	/**

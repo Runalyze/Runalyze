@@ -11,12 +11,12 @@ class ShapeFake extends Shape {
 	}
 }
 
-class CategoryFake extends Category\Vdot {
-	public function __construct($vdotDays = 30, $elevationCorrector = false) {
+class CategoryFake extends Category\VO2max {
+	public function __construct($vo2maxDays = 30, $elevationCorrector = false) {
 		parent::__construct();
 
-		$this->object('VDOT_DAYS')->set($vdotDays);
-		$this->object('VDOT_USE_CORRECTION_FOR_ELEVATION')->set($elevationCorrector);
+		$this->object('VO2MAX_DAYS')->set($vo2maxDays);
+		$this->object('VO2MAX_USE_CORRECTION_FOR_ELEVATION')->set($elevationCorrector);
 	}
 }
 
@@ -38,13 +38,13 @@ class ShapeTest extends \PHPUnit_Framework_TestCase {
 			`sportid` int(10),
 			`time` int(10),
 			`s` int(10),
-			`use_vdot` tinyint(1),
-			`vdot` decimal(5,2),
-			`vdot_with_elevation` decimal(5,2)
+			`use_vo2max` tinyint(1),
+			`vo2max` decimal(5,2),
+			`vo2max_with_elevation` decimal(5,2)
 			);
 		');
 
-		VDOTCorrector::setGlobalFactor(1.0);
+		LegacyEffectiveVO2maxCorrector::setGlobalFactor(1.0);
 	}
 	protected function tearDown() {
 		$this->PDO->exec('DROP TABLE `'.PREFIX.'training`');
@@ -90,7 +90,7 @@ class ShapeTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(50, $Shape->value());
 	}
 
-	public function testVDOTdays() {
+	public function testVO2maxDays() {
 		$this->PDO->exec('INSERT INTO `'.PREFIX.'training` VALUES(1, 1, '.time().', 1, 1, 50, 0)');
 		$this->PDO->exec('INSERT INTO `'.PREFIX.'training` VALUES(1, 1, '.(time() - 10*DAY_IN_S).', 1, 1, 80, 0)');
 
@@ -120,7 +120,7 @@ class ShapeTest extends \PHPUnit_Framework_TestCase {
 
 	public function testCorrector() {
 		$Shape = new ShapeFake($this->PDO, 1, 1, new CategoryFake());
-		$Shape->setCorrector(new VDOTCorrector(0.9));
+		$Shape->setCorrector(new LegacyEffectiveVO2maxCorrector(0.9));
 		$Shape->calculate();
 
 		$this->assertEquals(50, $Shape->uncorrectedValue());

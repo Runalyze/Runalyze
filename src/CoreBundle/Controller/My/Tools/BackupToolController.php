@@ -5,6 +5,7 @@ namespace Runalyze\Bundle\CoreBundle\Controller\My\Tools;
 use Bernard\Message\DefaultMessage;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Backup\FilenameHandler;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
+use Runalyze\Bundle\CoreBundle\Form\Tools\BackupExportType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -63,31 +64,25 @@ class BackupToolController extends Controller
     }
 
     /**
-     * @Route("/create", name="tools-backup-create")
-     * @Security("has_role('ROLE_USER')")
-     * @Method("POST")
-     *
-     * @TODO use symfony form and csrf token
-     */
-    public function backupCreateAction(Request $request, Account $account)
-    {
-        $this->get('bernard.producer')->produce(new DefaultMessage('userBackup', [
-            'accountid' => $account->getId(),
-            'export-type' => $request->request->get('export-type')
-        ]));
-        $this->get('session')->getFlashBag()->set('runalyze.backupjob.created', true);
-
-        return $this->redirectToRoute('tools-backup');
-    }
-
-    /**
      * @Route("", name="tools-backup")
      * @Security("has_role('ROLE_USER')")
      */
-    public function backupAction(Account $account)
+    public function backupAction(Account $account, Request $request)
     {
         $lockedRoutes = $this->getDoctrine()->getManager()->getRepository('CoreBundle:Route')->accountHasLockedRoutes($account);
         $hasLockedTrainings = $this->getDoctrine()->getManager()->getRepository('CoreBundle:Training')->accountHasLockedTrainings($account);
+
+        $form = $this->createForm(BackupExportType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $formdata = $request->request->get($form->getName());
+            $this->get('bernard.producer')->produce(new DefaultMessage('userBackup', [
+                'accountid' => $account->getId(),
+                'export-type' => $formdata['fileFormat']
+            ]));
+            $this->get('session')->getFlashBag()->set('runalyze.backupjob.created', true);
+        }
 
         $fileHandler = new FilenameHandler($account->getId());
         $finder = new Finder();
@@ -105,7 +100,8 @@ class BackupToolController extends Controller
             'backupjobWasCreated' => $this->get('session')->getFlashBag()->get('runalyze.backupjob.created'),
             'hasFiles' => $finder->count() > 0,
             'files' => $finder->getIterator(),
-            'hasLocks' => ($lockedRoutes || $hasLockedTrainings)
+            'hasLocks' => ($lockedRoutes || $hasLockedTrainings),
+            'form' => $form->createView()
         ]);
     }
 }

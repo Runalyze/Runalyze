@@ -3,12 +3,14 @@
 namespace Runalyze\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * User
  *
  * @ORM\Table(name="user", indexes={@ORM\Index(name="time", columns={"accountid", "time"}), @ORM\Index(name="accountid", columns={"accountid"})})
  * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\UserRepository")
+ * @ORM\EntityListeners({"Runalyze\Bundle\CoreBundle\EventListener\UserEntityListener"})
  */
 class User
 {
@@ -51,21 +53,28 @@ class User
 
     /**
      * @var float|null [%]
-     *
+     * @Assert\Range(
+     *     min = 0,
+     *     max = 100)
      * @ORM\Column(name="fat", type="decimal", precision=3, scale=1, nullable=true)
      */
     private $fat;
 
     /**
      * @var float|null [%]
-     *
+     * @Assert\Range(
+     *     min = 0,
+     *     max = 100)
      * @ORM\Column(name="water", type="decimal", precision=3, scale=1, nullable=true)
      */
     private $water;
 
     /**
-     * @var string
+     * @var float|null [%]
      *
+     * @Assert\Range(
+     *     min = 0,
+     *     max = 100)
      * @ORM\Column(name="muscles", type="decimal", precision=3, scale=1, nullable=true)
      */
     private $muscles;
@@ -94,6 +103,11 @@ class User
      */
     private $account;
 
+    public function __clone() {
+        $this->id = null;
+        $this->notes = '';
+    }
+
     /**
      * @return int
      */
@@ -110,6 +124,16 @@ class User
     public function setTime($time)
     {
         $this->time = $time;
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function setCurrentTimestamp()
+    {
+        $this->time = time();
 
         return $this;
     }

@@ -33,10 +33,7 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 	 */
 	protected function initPlugin() {
 		$this->dontReloadForTraining = true;
-
-		if (!$this->Configuration()->value('use_old_design')) {
-			$this->removePanelContentPadding = true;
-		}
+		$this->removePanelContentPadding = true;
 	}
 
 	/**
@@ -51,10 +48,6 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 	 */
 	protected function initConfiguration() {
 		$Configuration = new PluginConfiguration($this->id());
-		$Configuration->addValue( new PluginConfigurationValueBool('use_old_design', __('Use old design'), '', false) );
-		$Configuration->addValue( new PluginConfigurationValueBool('use_weight', __('Record body weight'), '', true) );
-		$Configuration->addValue( new PluginConfigurationValueBool('use_body_fat', __('Record body fat'), '', true) );
-		$Configuration->addValue( new PluginConfigurationValueBool('use_pulse', __('Record resting heart rate'), '', true) );
 		$Configuration->addValue( new PluginConfigurationValueInt('wunschgewicht', __('Desired body weight'), '', 0) );
 		$Configuration->addValue( new PluginConfigurationValueInt('plot_points', __('Plot: number of points'), '', 20) );
 		$Configuration->addValue( new PluginConfigurationValueInt('plot_timerange', __('<small>or</small> fixed number of days'), __('Enter a value &ge; 0 to show a fixed time range.'), 0) );
@@ -79,15 +72,7 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 	 * @see PluginPanel::displayContent()
 	 */
 	protected function displayContent() {
-		if ($this->Configuration()->value('use_old_design')) {
-			$this->displayContentInOldDesign();
-		} else {
 			$this->displayContentInNewDesign();
-		}
-
-		if (!$this->Configuration()->value('use_weight') && !$this->Configuration()->value('use_pulse') && !$this->Configuration()->value('use_body_fat')) {
-			echo HTML::warning( __('You have to specify which values to record. (see configuration)') );
-		}
 	}
 
 	/**
@@ -95,9 +80,12 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 	 */
 	protected function displayContentInNewDesign() {
 		$Code = '';
-		$UserData = new UserData( DataObject::$LAST_OBJECT );
+		$userData = array_merge(
+		    ['weight' => 0.0, 'pulse_rest' => 0, 'pulse_max' => 0, 'fat' => 0.0, 'water' => 0.0, 'muscles' => 0.0],
+		    DB::getInstance()->query('SELECT `weight`, `pulse_rest`, `pulse_max`, `fat`, `water`, `muscles` FROM `'.PREFIX.'user` WHERE `accountid`="'.SessionAccountHandler::getId().'" ORDER BY `time` DESC LIMIT 1')->fetch()
+        );
 
-		if ($UserData->getPulseMax()==0){
+		if ($userData['pulse_max'] == 0){
 			$topBox = new BoxedValue(__('Enter maximal HR'), '', __('Otherwise calculations will be wrong'));
 			$topBox->addClass('colored-orange');
 			$topBox->defineAsFloatingBlockWithFixedWidth(1);
@@ -107,15 +95,11 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 		$FirstValues = array();
 		$SecondValues = array();
 
-		if ($this->Configuration()->value('use_weight')) {
-			$Weight = new Weight($UserData->getWeight());
-			$FirstValues[] = new BoxedValue(Helper::Unknown($Weight->string(false), '-'), $Weight->unit(), __('Weight'));
-		}
+        $Weight = new Weight($userData['weight']);
+		$FirstValues[] = new BoxedValue(Helper::Unknown($Weight->string(false), '-'), $Weight->unit(), __('Weight'));
 
-		if ($this->Configuration()->value('use_pulse')) {
-			$FirstValues[] = new BoxedValue(Helper::Unknown($UserData->getPulseRest(), '-'), 'bpm', __('Resting HR'));
-			$FirstValues[] = new BoxedValue(Helper::Unknown($UserData->getPulseMax(), '-'), 'bpm', __('Maximal HR'));
-		}
+		$FirstValues[] = new BoxedValue(Helper::Unknown($userData['pulse_rest'], '-'), 'bpm', __('Resting HR'));
+        $FirstValues[] = new BoxedValue(Helper::Unknown($userData['pulse_max'], '-'), 'bpm', __('Maximal HR'));
 
 		$NumberOfFirstValues = count($FirstValues);
 		foreach ($FirstValues as &$Value) {
@@ -127,11 +111,9 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 			$Code .= '<br>';
 		}
 
-		if ($this->Configuration()->value('use_body_fat')) {
-			$SecondValues[] = new BoxedValue(Helper::Unknown($UserData->getBodyFat(), '-'), '&#37;', __('Fat'));
-			$SecondValues[] = new BoxedValue(Helper::Unknown($UserData->getWater(), '-'), '&#37;', __('Water'));
-			$SecondValues[] = new BoxedValue(Helper::Unknown($UserData->getMuscles(), '-'), '&#37;', __('Muscles'));
-		}
+			$SecondValues[] = new BoxedValue(Helper::Unknown($userData['fat'], '-'), '&#37;', __('Fat'));
+			$SecondValues[] = new BoxedValue(Helper::Unknown($userData['water'], '-'), '&#37;', __('Water'));
+			$SecondValues[] = new BoxedValue(Helper::Unknown($userData['muscles'], '-'), '&#37;', __('Muscles'));
 
 		foreach ($SecondValues as &$Value) {
 			$Value->defineAsFloatingBlock( "w33");
@@ -149,24 +131,15 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 	 * Display plots
 	 */
 	protected function displayPlots() {
-		$AnalyseIsHidden = $this->Configuration()->value('use_weight') || $this->Configuration()->value('use_pulse');
-
-		if (!$AnalyseIsHidden && !$this->Configuration()->value('use_body_fat')) {
-			return;
-		}
-
 		echo '<div class="panel-content">';
-
-		if ($AnalyseIsHidden && $this->Configuration()->value('use_body_fat')) {
-			echo '<div class="flot-menu flot-menu-inline">';
-			echo Ajax::flotChange(__('Weight'), 'sportler_flots', 'sportler_weights', $AnalyseIsHidden);
-			echo Ajax::flotChange(__('Other values'), 'sportler_flots', 'sportler_analyse', !$AnalyseIsHidden);
-			echo '</div>';
-		}
+        echo '<div class="flot-menu flot-menu-inline">';
+        echo Ajax::flotChange(__('Weight'), 'sportler_flots', 'sportler_weights', true);
+        echo Ajax::flotChange(__('Other values'), 'sportler_flots', 'sportler_analyse', false);
+        echo '</div>';
 
 		echo '<div id="sportler_flots" class="flot-changeable" style="position:relative;width:320px;height:150px;margin:0 auto;">
-				<div class="flot '.Ajax::$IMG_WAIT.(!$AnalyseIsHidden ? ' flot-hide' : '').'" id="sportler_weights" style="width:320px;height:150px;position:absolute;"></div>
-				<div class="flot '.Ajax::$IMG_WAIT.($AnalyseIsHidden ? ' flot-hide' : '').'" id="sportler_analyse" style="width:320px;height:150px;position:absolute;"></div>
+				<div class="flot '.Ajax::$IMG_WAIT.(false ? ' flot-hide' : '').'" id="sportler_weights" style="width:320px;height:150px;position:absolute;"></div>
+				<div class="flot '.Ajax::$IMG_WAIT.(true ? ' flot-hide' : '').'" id="sportler_analyse" style="width:320px;height:150px;position:absolute;"></div>
 			</div>';
 
 		include FRONTEND_PATH.'../plugin/'.$this->key().'/Plot.gewicht.php';
@@ -175,48 +148,4 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 		echo '</div>';
 	}
 
-	/**
-	 * Display the content (old design)
-	 */
-	protected function displayContentInOldDesign() {
-		$Weight   = '';
-		$Analyse  = '';
-		$UserData = new UserData( DataObject::$LAST_OBJECT );
-
-		if ($this->Configuration()->value('use_weight')) {
-		    $UserWeight = new Weight($UserData->getWeight());
-			$Weight = __('Weight').': <strong>'.Helper::Unknown($UserWeight->string(false), '-').' '.$UserWeight->unit().'</strong><br>';
-		}
-
-		if ($this->Configuration()->value('use_pulse')) {
-			$Pulse = Helper::Unknown($UserData->getPulseRest(), '-').' bpm / '.Helper::Unknown($UserData->getPulseMax()).' bpm';
-		} else {
-			$Pulse = Helper::Unknown($UserData->getPulseMax(), '-').' bpm';
-		}
-
-		if ($this->Configuration()->value('use_body_fat')) {
-			$Analyse = __('Fat').': '.Helper::Unknown($UserData->getBodyFat(), '-').' &#37;, '.__('Water').': '.Helper::Unknown($UserData->getWater(), '-').' &#37;, '.__('Muscles').': '.Helper::Unknown($UserData->getMuscles(), '-').' &#37;';
-		}
-
-		$AnalyseIsHidden = $this->Configuration()->value('use_weight') || $this->Configuration()->value('use_pulse');
-
-		if (!$AnalyseIsHidden && !$this->Configuration()->value('use_body_fat')) {
-		    return;
-		}
-
-		echo '
-			<div id="sportler-content">
-				<span class="right">'.$Pulse.'</span>
-				'.Ajax::flotChange($Weight, 'sportler_flots', 'sportler_weights').'
-				'.Ajax::flotChange($Analyse, 'sportler_flots', 'sportler_analyse', !$AnalyseIsHidden).'
-
-				<div id="sportler_flots" class="flot-changeable" style="position:relative;width:320px;height:150px;margin:0 auto;">
-					<div class="flot '.Ajax::$IMG_WAIT.'" id="sportler_weights" style="width:320px;height:150px;position:absolute;"></div>
-					<div class="flot '.Ajax::$IMG_WAIT.($AnalyseIsHidden ? ' flot-hide' : '').'" id="sportler_analyse" style="width:320px;height:150px;position:absolute;"></div>
-				</div>
-			</div>';
-
-		include FRONTEND_PATH.'../plugin/'.$this->key().'/Plot.gewicht.php';
-		include FRONTEND_PATH.'../plugin/'.$this->key().'/Plot.analyse.php';
-	}
 }

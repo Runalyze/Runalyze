@@ -37,7 +37,7 @@ class AccountMailer
 
     protected function sendMailTo(Account $account, $subject, $template, array $templateData)
     {
-        $message = \Swift_Message::newInstance($this->Translator->trans($subject))
+        $message = \Swift_Message::newInstance($subject)
             ->setTo([$account->getMail() => $account->getUsername()])
             ->setFrom($this->Sender);
         $message->setBody($this->Twig->render($template, $templateData), 'text/html');
@@ -47,7 +47,7 @@ class AccountMailer
 
     public function sendActivationLinkTo(Account $account)
     {
-        $this->sendMailTo($account, 'Please activate your RUNALYZE account',
+        $this->sendMailTo($account, $this->Translator->trans('Please activate your RUNALYZE account'),
             'mail/account/registration.html.twig', [
                 'username' => $account->getUsername(),
                 'activationHash' => $account->getActivationHash()
@@ -57,7 +57,7 @@ class AccountMailer
 
     public function sendRecoverPasswordLinkTo(Account $account)
     {
-        $this->sendMailTo($account, 'Reset your RUNALYZE password',
+        $this->sendMailTo($account, $this->Translator->trans('Reset your RUNALYZE password'),
             'mail/account/recoverPassword.html.twig', [
                 'username' => $account->getUsername(),
                 'changepw_hash' => $account->getChangepwHash()
@@ -67,7 +67,7 @@ class AccountMailer
 
     public function sendDeleteLinkTo(Account $account)
     {
-        $this->sendMailTo($account, 'Deletion request of your RUNALYZE account',
+        $this->sendMailTo($account, $this->Translator->trans('Deletion request of your RUNALYZE account'),
             'mail/account/deleteAccountRequest.html.twig', [
                 'username' => $account->getUsername(),
                 'deletion_hash' => $account->getDeletionHash()
@@ -76,7 +76,7 @@ class AccountMailer
     }
 
     public function sendBackupReadyTo(Account $account) {
-        $this->sendMailTo($account, 'RUNALYZE - Backup file is ready to download',
+        $this->sendMailTo($account, $this->Translator->trans('RUNALYZE - Backup file is ready to download'),
             'mail/account/backupReady.html.twig', [
                 'username' => $account->getUsername(),
             ]

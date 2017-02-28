@@ -12,13 +12,13 @@ use SessionAccountHandler;
 
 /**
  * Context
- * 
+ *
  * Currently a static container of widely used objects.
- * 
+ *
  * This static container is used over a real dependency injection container
  * or service locator due to missing code completion and due to the fact that
  * Runalyze is not using hundreds of these nearly global dependencies.
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze
  */
@@ -41,7 +41,7 @@ class Context {
 				Configuration::Data()->HRrest(),
 				null,
                 SessionAccountHandler::getBirthYear(),
-				Configuration::Data()->vdot()
+				Configuration::Data()->vo2max()
 			);
 		}
 

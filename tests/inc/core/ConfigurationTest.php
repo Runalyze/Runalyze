@@ -44,19 +44,19 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
 		Configuration::loadAll(1);
 
 		$this->PDO->exec('UPDATE `'.PREFIX.'conf` SET `value`="12345" WHERE `key`="PLZ" AND `accountid`=0');
-		$this->PDO->exec('UPDATE `'.PREFIX.'conf` SET `value`="42" WHERE `key`="VDOT_FORM" AND `accountid`=0');
+		$this->PDO->exec('UPDATE `'.PREFIX.'conf` SET `value`="42" WHERE `key`="VO2MAX_FORM" AND `accountid`=0');
 		$this->PDO->exec('UPDATE `'.PREFIX.'conf` SET `value`="56789" WHERE `key`="PLZ" AND `accountid`=1');
 
 		Configuration::loadAll(0);
 
 		$this->assertEquals('12345', Configuration::ActivityForm()->weatherLocation());
-		$this->assertEquals('42', Configuration::Data()->vdotShape());
+		$this->assertEquals('42', Configuration::Data()->vo2maxShape());
 
 		Configuration::resetConfiguration(0);
 		Configuration::loadAll(0);
 
 		$this->assertEquals('', Configuration::ActivityForm()->weatherLocation());
-		$this->assertEquals('42', Configuration::Data()->vdotShape());
+		$this->assertEquals('42', Configuration::Data()->vo2maxShape());
 
 		Configuration::loadAll(1);
 

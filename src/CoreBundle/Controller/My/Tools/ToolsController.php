@@ -2,20 +2,18 @@
 
 namespace Runalyze\Bundle\CoreBundle\Controller\My\Tools;
 
-use Runalyze\Activity\Distance;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Anova\AnovaDataQuery;
 use Runalyze\Bundle\CoreBundle\Component\Tool\DatabaseCleanup\JobGeneral;
 use Runalyze\Bundle\CoreBundle\Component\Tool\DatabaseCleanup\JobLoop;
-use Runalyze\Bundle\CoreBundle\Component\Tool\Table\GeneralPaceTable;
-use Runalyze\Bundle\CoreBundle\Component\Tool\Table\VdotPaceTable;
-use Runalyze\Bundle\CoreBundle\Component\Tool\VdotAnalysis\VdotAnalysis;
+use Runalyze\Bundle\CoreBundle\Component\Tool\VO2maxAnalysis\VO2maxAnalysis;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Form\Tools\DatabaseCleanupType;
 use Runalyze\Bundle\CoreBundle\Form\Tools\Anova\AnovaData;
 use Runalyze\Bundle\CoreBundle\Form\Tools\Anova\AnovaType;
 use Runalyze\Bundle\CoreBundle\Form\Tools\PosterType;
 use Runalyze\Metrics\Common\JavaScriptFormatter;
-use Runalyze\Sports\Running\Prognosis\Daniels;
+use Runalyze\Sports\Running\Prognosis\VO2max;
+use Runalyze\Sports\Running\VO2max\VO2maxVelocity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -58,14 +56,18 @@ class ToolsController extends Controller
     }
 
     /**
-     * @Route("/my/tools/tables/vdot-pace", name="tools-tables-vdot-pace")
+     * @Route("/my/tools/tables/vo2max-pace", name="tools-tables-vo2max-pace")
      * @Security("has_role('ROLE_USER')")
      */
-    public function tableVdotPaceAction()
+    public function tableVo2maxPaceAction()
     {
-        return $this->render('tools/tables/vdot_paces.html.twig', [
-            'currentVdot' => $this->get('app.configuration_manager')->getList()->getCurrentVdot(),
-            'vdots' => (new VdotPaceTable())->getVdotPaces(range(30, 80))
+        $config = $this->get('app.configuration_manager')->getList();
+        $running = $this->getDoctrine()->getRepository('CoreBundle:Sport')->find($config->getGeneral()->getRunningSport());
+
+        return $this->render('tools/tables/vo2max_paces.html.twig', [
+            'currentVo2max' => $config->getCurrentVO2maxShape(),
+            'vo2maxVelocity' => new VO2maxVelocity(),
+            'paceUnit' => $config->getUnitSystem()->getPaceUnit($running)
         ]);
     }
 
@@ -75,52 +77,45 @@ class ToolsController extends Controller
      */
     public function tableGeneralPaceAction()
     {
-        $distances = [0.2, 0.4, 1, 3, 5, 10, 21.1, 42.2, 50];
-
-        return $this->render('tools/tables/general_paces.html.twig', [
-            'distances' => array_map(function ($km) {
-                return (new Distance($km))->stringAuto();
-            }, $distances),
-            'paces' => (new GeneralPaceTable())->getPaces($distances, range(60, 180))
-        ]);
+        return $this->render('tools/tables/general_paces.html.twig');
     }
 
     /**
-     * @Route("/my/tools/tables/vdot", name="tools-tables-vdot")
+     * @Route("/my/tools/tables/vo2max", name="tools-tables-vo2max")
      * @Route("/my/tools/tables", name="tools-tables")
      * @Security("has_role('ROLE_USER')")
      */
-    public function tableVdotRaceResultAction()
+    public function tableVo2maxRaceResultAction()
     {
-        return $this->render('tools/tables/vdot.html.twig', [
-            'currentVdot' => $this->get('app.configuration_manager')->getList()->getCurrentVdot(),
-            'prognosis' => new Daniels(),
+        return $this->render('tools/tables/vo2max.html.twig', [
+            'currentVo2max' => $this->get('app.configuration_manager')->getList()->getCurrentVO2maxShape(),
+            'prognosis' => new VO2max(),
             'distances' => [1.0, 3.0, 5.0, 10.0, 21.1, 42.2, 50],
-            'vdots' => range(30.0, 80.0)
+            'vo2maxValues' => range(30.0, 80.0)
         ]);
     }
 
     /**
-     * @Route("/my/tools/vdot-analysis", name="tools-vdot-analysis")
+     * @Route("/my/tools/vo2max-analysis", name="tools-vo2max-analysis")
      * @Security("has_role('ROLE_USER')")
      */
-    public function vdotAnalysisAction(Account $account)
+    public function vo2maxAnalysisAction(Account $account)
     {
         $Frontend = new \Frontend(true, $this->get('security.token_storage'));
 
         $configuration = $this->get('app.configuration_manager')->getList();
-        $vdotFactor = $configuration->getVdotFactor();
+        $correctionFactor = $configuration->getVO2maxCorrectionFactor();
 
-        $analysisTable = new VdotAnalysis($configuration->getVdot()->getLegacyCategory());
+        $analysisTable = new VO2maxAnalysis($configuration->getVO2max()->getLegacyCategory());
         $races = $analysisTable->getAnalysisForAllRaces(
-            $vdotFactor,
+            $correctionFactor,
             $configuration->getGeneral()->getRunningSport(),
             $account->getId()
         );
 
-        return $this->render('tools/vdot_analysis.html.twig', [
+        return $this->render('tools/vo2max_analysis.html.twig', [
             'races' => $races,
-            'vdotFactor' => $vdotFactor
+            'vo2maxFactor' => $correctionFactor
         ]);
     }
 

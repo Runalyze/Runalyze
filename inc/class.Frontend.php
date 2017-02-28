@@ -146,7 +146,7 @@ class Frontend {
 
 		Configuration::loadAll();
 
-		\Runalyze\Calculation\JD\VDOTCorrector::setGlobalFactor( Configuration::Data()->vdotFactor() );
+		\Runalyze\Calculation\JD\LegacyEffectiveVO2maxCorrector::setGlobalFactor( Configuration::Data()->vo2maxCorrectionFactor() );
 
 		require_once FRONTEND_PATH.'class.Helper.php';
 	}
@@ -167,14 +167,6 @@ class Frontend {
 		define('PREFIX', $this->yamlConfig['database_prefix']);
 
 		DB::connect($this->yamlConfig['database_host'], $this->yamlConfig['database_port'], $this->yamlConfig['database_user'], $this->yamlConfig['database_password'], $this->yamlConfig['database_name']);
-	}
-
-	/**
-	 * Display admin view
-	 */
-	public function displayAdminView() {
-		$AdminView = new AdminView($this->adminPassAsMD5);
-		$AdminView->display();
 	}
 
 	/**

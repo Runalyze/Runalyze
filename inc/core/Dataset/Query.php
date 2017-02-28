@@ -10,7 +10,7 @@ use Runalyze\Util\LocalTime;
 
 /**
  * Build query to fetch dataset values from `runalyze_training`
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Dataset
  */
@@ -307,7 +307,7 @@ class Query
 	 */
 	protected function defaultColumns()
 	{
-		return array_merge(array('sportid', 'time', 'use_vdot', 'is_track', 'typeid'), $this->AdditionalColumns);
+		return array_merge(array('sportid', 'time', 'use_vo2max', 'is_track', 'typeid'), $this->AdditionalColumns);
 	}
 
 	/**

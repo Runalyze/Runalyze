@@ -31,10 +31,10 @@ class DistanceModifierTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testConfigurationSettings() {
-		$VDOTconfig = new \Runalyze\Configuration\Category\Vdot();
-		$Modifier = new DistanceModifier(10, 100, 100, $VDOTconfig);
+		$VO2maxConfig = new \Runalyze\Configuration\Category\VO2max();
+		$Modifier = new DistanceModifier(10, 100, 100, $VO2maxConfig);
 
-		$addition = 0.1*$VDOTconfig->correctionForPositiveElevation() + 0.1*$VDOTconfig->correctionForNegativeElevation();
+		$addition = 0.1*$VO2maxConfig->correctionForPositiveElevation() + 0.1*$VO2maxConfig->correctionForNegativeElevation();
 
 		$this->assertEquals($addition, $Modifier->additionalDistance());
 		$this->assertEquals(10+$addition, $Modifier->correctedDistance());

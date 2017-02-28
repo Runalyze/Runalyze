@@ -13,7 +13,7 @@ use Runalyze\Configuration;
 class TopResults
 {
 	/**
-	 * Get top results (according to vdot_by_time)
+	 * Get top results (according to vo2max_by_time)
 	 * @param int $numberOfResults number of results to return
 	 * @param float $minimalDistanceRequired in km
 	 * @return array
@@ -22,20 +22,20 @@ class TopResults
     {
 		$Query = '
 			SELECT
-				`time`, `distance`, `s`, `vdot_by_time`
+				`time`, `distance`, `s`, `vo2max_by_time`
 			FROM (
 				SELECT
-					`time`, `distance`, `s`, `vdot_by_time`
+					`time`, `distance`, `s`, `vo2max_by_time`
 				FROM `'.PREFIX.'training`
 				WHERE
 					`accountid`='.\SessionAccountHandler::getId().' AND
 					`sportid`='.Configuration::General()->runningSport().'
 					AND `distance` >= "'.$minimalDistanceRequired.'"
-				ORDER BY `vdot_by_time` DESC
+				ORDER BY `vo2max_by_time` DESC
 				LIMIT 20
 			) as `tmp`
 			GROUP BY `distance`
-			ORDER BY `vdot_by_time` DESC
+			ORDER BY `vo2max_by_time` DESC
 		';
 
 		if ($numberOfResults <= 1)

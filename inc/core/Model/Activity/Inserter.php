@@ -119,7 +119,7 @@ class Inserter extends Model\InserterWithAccountID {
         $this->setSportIdIfEmpty();
 		$this->calculateIfActivityWasAtNight();
         $this->calculateCaloriesIfZero();
-        $this->calculateVDOTAndIntensityAndTrimp();
+        $this->calculateVO2maxAndTrimp();
         $this->calculatePower();
         $this->calculateStrideLength();
         $this->calculateVerticalRatio();
@@ -167,9 +167,9 @@ class Inserter extends Model\InserterWithAccountID {
 	}
 
 	/**
-	 * Calculate VDOT, jd intensity, TRIMP
+	 * Calculate VO2max, TRIMP
 	 */
-	protected function calculateVDOTAndIntensityAndTrimp() {
+	protected function calculateVO2maxAndTrimp() {
 		$Calculator = new \Runalyze\Calculation\Activity\Calculator(
 			$this->Object,
 			$this->Trackdata,
@@ -177,14 +177,9 @@ class Inserter extends Model\InserterWithAccountID {
 		);
 
 		if ($this->Object->sportid() == Configuration::General()->runningSport()) {
-			$this->Object->set(Entity::VDOT_BY_TIME, $Calculator->calculateVDOTbyTime());
-			$this->Object->set(Entity::VDOT, $Calculator->calculateVDOTbyHeartRate());
-			$this->Object->set(Entity::VDOT_WITH_ELEVATION, $Calculator->calculateVDOTbyHeartRateWithElevation());
-			$this->Object->set(Entity::JD_INTENSITY, $Calculator->calculateJDintensity());
-
-			if (class_exists('RunalyzePluginPanel_Rechenspiele') && $this->Object->timestamp() > time() - 14*DAY_IN_S) {
-				\Cache::delete(\RunalyzePluginPanel_Rechenspiele::CACHE_KEY_JD_POINTS);
-			}
+			$this->Object->set(Entity::VO2MAX_BY_TIME, $Calculator->estimateVO2maxByTime());
+			$this->Object->set(Entity::VO2MAX, $Calculator->estimateVO2maxByHeartRate());
+			$this->Object->set(Entity::VO2MAX_WITH_ELEVATION, $Calculator->estimateVO2maxByHeartRateWithElevation());
 		} else {
 			$this->Object->unsetRunningValues();
 		}
@@ -269,7 +264,7 @@ class Inserter extends Model\InserterWithAccountID {
 		$this->updateStartTime();
 
 		if ($this->Object->sportid() == Configuration::General()->runningSport()) {
-			$this->updateVDOTshape();
+			$this->updateVO2maxShape();
 			$this->updateBasicEndurance();
 		}
 	}
@@ -307,20 +302,20 @@ class Inserter extends Model\InserterWithAccountID {
 	}
 
 	/**
-	 * Update vdot shape
+	 * Update vo2max shape
 	 *
 	 * Note: This method assumes that the activity is marked as running
-	 * Note: vdot corrector will be updated by RaceResult\Inserter if necessary
+	 * Note: vo2max corrector will be updated by RaceResult\Inserter if necessary
 	 */
-	protected function updateVDOTshape() {
-		$timestampLimit = time() - Configuration::Vdot()->days() * DAY_IN_S;
+	protected function updateVO2maxShape() {
+		$timestampLimit = time() - Configuration::VO2max()->days() * DAY_IN_S;
 
 		if (
-			$this->Object->usesVDOT() &&
-			$this->Object->vdotByHeartRate() > 0 &&
+			$this->Object->usesVO2max() &&
+			$this->Object->vo2maxByHeartRate() > 0 &&
 			$this->Object->timestamp() > $timestampLimit
 		) {
-			Configuration::Data()->recalculateVDOTshape();
+			Configuration::Data()->recalculateVO2maxShape();
 		}
 	}
 
