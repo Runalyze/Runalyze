@@ -439,9 +439,9 @@
         <target state="translated">Attuale versione di RUNALYZE:</target>
         <jms:reference-file line="53">/Resources/views/tools/backup/upload_form.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="28d138800a45ecbb1695a0aba0ce72b3b1d2199c" resname="Data selection">
+      <trans-unit id="28d138800a45ecbb1695a0aba0ce72b3b1d2199c" resname="Data selection" approved="yes">
         <source>Data selection</source>
-        <target>Data selection</target>
+        <target state="translated">Selezione dei dati</target>
         <jms:reference-file line="12">/Resources/views/tools/anova/base.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="54f56dcdb73d784f074acd71626601909e0f436b" resname="Database backup">
@@ -1744,9 +1744,9 @@
         <target>Time related</target>
         <jms:reference-file line="82">/../src/CoreBundle/Form/Tools/Anova/AnovaType.php</jms:reference-file>
       </trans-unit>
-      <trans-unit id="d1f7dc891b5e5d1797163b556e805123c9369e4f" resname="Timezone">
+      <trans-unit id="d1f7dc891b5e5d1797163b556e805123c9369e4f" resname="Timezone" approved="yes">
         <source>Timezone</source>
-        <target>Timezone</target>
+        <target state="translated">Fuso orario</target>
         <jms:reference-file line="41">/../src/CoreBundle/Form/Settings/AccountType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="a1dced4280f26dc990f79fe441566771d5fa1209" resname="To consider some individual factors, we use a correction factor.">
@@ -1984,9 +1984,9 @@
         <target>Non hai fatto nessuna gara.</target>
         <jms:reference-file line="62">/Resources/views/tools/vdot_analysis.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="0a8893c2610dafde57fc95703bbfac82a0fab3bd" resname="You have successfully unsubscribed">
+      <trans-unit id="0a8893c2610dafde57fc95703bbfac82a0fab3bd" resname="You have successfully unsubscribed" approved="yes">
         <source>You have successfully unsubscribed</source>
-        <target>You have successfully unsubscribed</target>
+        <target state="translated">Hai annullato correttamente l'iscrizione</target>
         <jms:reference-file line="6">/Resources/views/account/unsubscribe_success.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="9819c008c74dc2d49049af28afdce115455f597a" resname="You have successfully unsubscribed from all notifications">
@@ -2102,9 +2102,9 @@
         <target state="translated">media aritmetica</target>
         <jms:reference-file line="87">/Resources/views/activity/tool/time_series_statistics.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="1f5334e182df829f6b0eb4702fd92a6ae9eb1da6" resname="avg.">
+      <trans-unit id="1f5334e182df829f6b0eb4702fd92a6ae9eb1da6" resname="avg." approved="yes">
         <source>avg.</source>
-        <target>avg.</target>
+        <target state="translated">avg.</target>
         <jms:reference-file line="14">/Resources/views/my/equipment/category/table.html.twig</jms:reference-file>
         <jms:reference-file line="15">/Resources/views/my/equipment/category/table.html.twig</jms:reference-file>
         <jms:reference-file line="37">/Resources/views/shared/widget/iframe/base.html.twig</jms:reference-file>
@@ -2286,9 +2286,9 @@
         <target>non corretto</target>
         <jms:reference-file line="76">/Resources/views/activity/vdot_info.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="e738fc45a698ea2e157e03bdc8178871daffbeb0" resname="x-times">
+      <trans-unit id="e738fc45a698ea2e157e03bdc8178871daffbeb0" resname="x-times" approved="yes">
         <source>x-times</source>
-        <target state="new">x-times</target>
+        <target state="translated">x-times</target>
         <jms:reference-file line="11">/Resources/views/my/equipment/category/table.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="500e4b89724b9b2c26282c027a582badc10afe7c" resname="{1} Until now &lt;strong&gt;%count%&lt;/strong&gt; athlete is registered and|]1,Inf[ Until now &lt;strong&gt;%count%&lt;/strong&gt; athletes are registered and" approved="yes">
