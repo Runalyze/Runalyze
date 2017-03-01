@@ -1,6 +1,6 @@
 <?php
 
-namespace Runalyze\Profile\Athlete;
+namespace Runalyze\Profile\FitSdk;
 
 use Runalyze\Util\AbstractEnum;
 

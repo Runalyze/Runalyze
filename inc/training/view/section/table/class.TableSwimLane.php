@@ -48,7 +48,7 @@ class TableSwimLane extends TableLapsAbstract {
 
 		$Loop = new Swimdata\Loop($this->Context->swimdata());
 		$TrackLoop = new Trackdata\Loop($this->Context->trackdata());
-		$Stroketype = new Stroketype(\Runalyze\Profile\Athlete\StrokeTypeProfile::FREESTYLE);
+		$Stroketype = new Stroketype(\Runalyze\Profile\FitSdk\StrokeTypeProfile::FREESTYLE);
 		$Distance = new Distance(0);
 
 		$max = $Loop->num();

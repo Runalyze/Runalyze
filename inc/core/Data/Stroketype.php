@@ -2,7 +2,7 @@
 
 namespace Runalyze\Data;
 
-use Runalyze\Profile\Athlete\StrokeTypeProfile;
+use Runalyze\Profile\FitSdk\StrokeTypeProfile;
 
 class Stroketype
 {
