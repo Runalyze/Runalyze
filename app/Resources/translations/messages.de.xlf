@@ -38,30 +38,27 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>#{deviceCount} Geräte gefunden</target>
         <jms:reference-file line="61">/Resources/views/import/garmin_communicator.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="04bbd88ceca64ef98a75c389a443bddfcbda86fc" resname="&lt;strong&gt;%VO2max%/Time (Shape):&lt;/strong&gt; by your shape at that time&lt;br&gt;&#10;                The time is the prognosis by Runalyze.">
+      <trans-unit id="04bbd88ceca64ef98a75c389a443bddfcbda86fc" resname="&lt;strong&gt;%VO2max%/Time (Shape):&lt;/strong&gt; by your shape at that time&lt;br&gt;&#10;                The time is the prognosis by Runalyze." approved="yes">
         <source><![CDATA[<strong>%VO2max%/Time (Shape):</strong> by your shape at that time<br>
                 The time is the prognosis by Runalyze.]]></source>
-        <target><![CDATA[<strong>%VO2max%/Time (Shape):</strong> by your shape at that time<br>
-                The time is the prognosis by Runalyze.]]></target>
+        <target state="translated">&lt;strong&gt;%VO2max%/Zeit (Form):&lt;/strong&gt; laut deiner Form zu dem Zeitpunkt&lt;br&gt;Diese Zeit entspricht der Vorhersage von Runalyze.</target>
         <jms:reference-file line="83">/Resources/views/tools/vo2max_analysis.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="5a7ba90c2deff7b405c986aa57602a6e29deb26f" resname="&lt;strong&gt;%VO2max%/Time (corrected):&lt;/strong&gt; after individual correction (factor: %vo2maxFactor%)&lt;br&gt;&#10;                The time is what you could have reached at your maximal possible heart rate over this distance.">
+      <trans-unit id="5a7ba90c2deff7b405c986aa57602a6e29deb26f" resname="&lt;strong&gt;%VO2max%/Time (corrected):&lt;/strong&gt; after individual correction (factor: %vo2maxFactor%)&lt;br&gt;&#10;                The time is what you could have reached at your maximal possible heart rate over this distance." approved="yes">
         <source><![CDATA[<strong>%VO2max%/Time (corrected):</strong> after individual correction (factor: %vo2maxFactor%)<br>
                 The time is what you could have reached at your maximal possible heart rate over this distance.]]></source>
-        <target><![CDATA[<strong>%VO2max%/Time (corrected):</strong> after individual correction (factor: %vo2maxFactor%)<br>
-                The time is what you could have reached at your maximal possible heart rate over this distance.]]></target>
+        <target state="translated">&lt;strong&gt;%VO2max%/Zeit (korrigiert):&lt;/strong&gt; nach individueller Korrektur (Faktor: %vo2maxFactor%)&lt;br&gt;Diese Zeit entspricht dem theoretisch Möglichen bei der laut Literatur maximalen Herzfrequenz über die Distanz.</target>
         <jms:reference-file line="78">/Resources/views/tools/vo2max_analysis.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="c1bd827cbbe08d6aedc4006f2e4cace1a7ca4716" resname="&lt;strong&gt;%VO2max%/Time:&lt;/strong&gt; by standard formulas.&lt;br&gt;&#10;                The time is what you could have reached at your maximal possible heart rate over this distance.">
+      <trans-unit id="c1bd827cbbe08d6aedc4006f2e4cace1a7ca4716" resname="&lt;strong&gt;%VO2max%/Time:&lt;/strong&gt; by standard formulas.&lt;br&gt;&#10;                The time is what you could have reached at your maximal possible heart rate over this distance." approved="yes">
         <source><![CDATA[<strong>%VO2max%/Time:</strong> by standard formulas.<br>
                 The time is what you could have reached at your maximal possible heart rate over this distance.]]></source>
-        <target><![CDATA[<strong>%VO2max%/Time:</strong> by standard formulas.<br>
-                The time is what you could have reached at your maximal possible heart rate over this distance.]]></target>
+        <target state="translated">&lt;strong&gt;%VO2max%/Zeit:&lt;/strong&gt; nach Standardformeln.&lt;br&gt;Diese Zeit entspricht dem theoretisch Möglichen bei der laut Literatur maximalen Herzfrequenz über die Distanz.</target>
         <jms:reference-file line="73">/Resources/views/tools/vo2max_analysis.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="c3826737dc25060fdaa3124549263f401340ce15" resname="&lt;strong&gt;Corrector:&lt;/strong&gt; Ratio between %VO2max% and %VO2max% (by HR)">
+      <trans-unit id="c3826737dc25060fdaa3124549263f401340ce15" resname="&lt;strong&gt;Corrector:&lt;/strong&gt; Ratio between %VO2max% and %VO2max% (by HR)" approved="yes">
         <source><![CDATA[<strong>Corrector:</strong> Ratio between %VO2max% and %VO2max% (by HR)]]></source>
-        <target><![CDATA[<strong>Corrector:</strong> Ratio between %VO2max% and %VO2max% (by HR)]]></target>
+        <target state="translated">&lt;strong&gt;Korrektur:&lt;/strong&gt; Verhältnis zwischen %VO2max% und %VO2max% (laut Herzfrequenz)</target>
         <jms:reference-file line="88">/Resources/views/tools/vo2max_analysis.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="45f74e5e127b292ad68a799afab18b283b219865" resname="A confirmation has been sent via mail.">
@@ -130,9 +127,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Daten hinzufügen</target>
         <jms:reference-file line="12">/Resources/views/my/body-values/form.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="1458b58c6250127b83ec15650365c683d73de5f5" resname="All paces are in %unit%.">
+      <trans-unit id="1458b58c6250127b83ec15650365c683d73de5f5" resname="All paces are in %unit%." approved="yes">
         <source>All paces are in %unit%.</source>
-        <target>All paces are in %unit%.</target>
+        <target state="translated">Alle Geschwindigkeiten sind in %unit%.</target>
         <jms:reference-file line="42">/Resources/views/tools/tables/vo2max_paces.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="b4531de6a89b3912c4ec4722cc7535b66487b3a6" resname="All shared links will be invalid if you (re-)import activities and overwrite all existing activities!">
@@ -204,9 +201,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Sichere deine Daten</target>
         <jms:reference-file line="42">/Resources/views/settings/account.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="834c7efb60e21c624d7464be4ce00f78afcc0b36" resname="Based on your data RUNALYZE can generate some posters for you. Poster generations are performed in the background.">
+      <trans-unit id="834c7efb60e21c624d7464be4ce00f78afcc0b36" resname="Based on your data RUNALYZE can generate some posters for you. Poster generations are performed in the background." approved="yes">
         <source>Based on your data RUNALYZE can generate some posters for you. Poster generations are performed in the background.</source>
-        <target state="new">Based on your data RUNALYZE can generate some posters for you. Poster generations are performed in the background.</target>
+        <target state="translated">RUNALYZE kann anhand deiner Daten einige Poster für dich erstellen. Die Generierung erfolgt in Hintergrundprozessen.</target>
         <jms:reference-file line="18">/Resources/views/tools/poster.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="862275ec7d01de0bc9d6f4497a83808767de2e2f" resname="Because of a lot of influencing factors these computations are not always accurate.">
@@ -317,9 +314,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <jms:reference-file line="35">/Resources/views/settings/account.html.twig</jms:reference-file>
         <jms:reference-file line="37">/Resources/views/settings/account.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="1dba7dd902a8d18d0072fe747078f61d341624ba" resname="Choose postertype(s)">
+      <trans-unit id="1dba7dd902a8d18d0072fe747078f61d341624ba" resname="Choose postertype(s)" approved="yes">
         <source>Choose postertype(s)</source>
-        <target state="new">Choose postertype(s)</target>
+        <target state="translated">Wähle Postertyp(en)</target>
         <jms:reference-file line="24">/Resources/views/tools/poster.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="0299fc72de3616f182ac62196e7f385585f1ddbf" resname="Choose size" approved="yes">
@@ -534,12 +531,11 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Die Standardkonfiguration wurde wiederhergestellt!</target>
         <jms:reference-file line="46">/../src/CoreBundle/Controller/SettingsController.php</jms:reference-file>
       </trans-unit>
-      <trans-unit id="aaae84143938ffb5470678a0f315970f6a4fa81d" resname="Definitions for training paces vary a lot, depending on which philosophy one looks at.&#10;            This table specifies paces at various percentages of %vVO2max%, which equals approximately the maximal pace for 11 minutes.&#10;        ">
+      <trans-unit id="aaae84143938ffb5470678a0f315970f6a4fa81d" resname="Definitions for training paces vary a lot, depending on which philosophy one looks at.&#10;            This table specifies paces at various percentages of %vVO2max%, which equals approximately the maximal pace for 11 minutes.&#10;        " approved="yes">
         <source xml:space="preserve">Definitions for training paces vary a lot, depending on which philosophy one looks at.
             This table specifies paces at various percentages of %vVO2max%, which equals approximately the maximal pace for 11 minutes.
         </source>
-        <target xml:space="preserve">Definitions for training paces vary a lot, depending on which philosophy one looks at.
-            This table specifies paces at various percentages of %vVO2max%, which equals approximately the maximal pace for 11 minutes.
+        <target xml:space="preserve" state="translated">Definitionen für Trainingsgeschwindigkeiten unterscheiden sich ja nach Trainingsphilosophie. Diese Tabelle gibt Trainingsgeschwindigkeiten für verschiedene Prozentwerte von %vVO2max% an. 100% entspricht dabei etwa der maximalen Geschwindigkeit, die für 11 Minuten gehalten werden kann.
         </target>
         <jms:reference-file line="7">/Resources/views/tools/tables/vo2max_paces.html.twig</jms:reference-file>
       </trans-unit>
@@ -618,13 +614,11 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Dokumentation</target>
         <jms:reference-file line="50">/Resources/views/static/help.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="3258460f27e660401cf0f821d994bb730138e9c3" resname="Due to performance reasons, some statistics are saved in the database.&#10;                        You can trigger a recalculation if you think they are wrong.&#10;                        In addition, values for elevation, TRIMP and %VO2max% can be recalculated.">
+      <trans-unit id="3258460f27e660401cf0f821d994bb730138e9c3" resname="Due to performance reasons, some statistics are saved in the database.&#10;                        You can trigger a recalculation if you think they are wrong.&#10;                        In addition, values for elevation, TRIMP and %VO2max% can be recalculated." approved="yes">
         <source xml:space="preserve">Due to performance reasons, some statistics are saved in the database.
                         You can trigger a recalculation if you think they are wrong.
                         In addition, values for elevation, TRIMP and %VO2max% can be recalculated.</source>
-        <target xml:space="preserve">Due to performance reasons, some statistics are saved in the database.
-                        You can trigger a recalculation if you think they are wrong.
-                        In addition, values for elevation, TRIMP and %VO2max% can be recalculated.</target>
+        <target xml:space="preserve" state="translated">Aus Performancegründen werden einige Statistiken in der Datenbank zwischengespeichert. Sollte dabei ein Wert nicht von alleine aktualisiert worden sein, kannst du manuell eine Neuberechnung starten. Ebenso können die Höhenmeter und Trimp- sowie %VO2max%-Werte von Aktivitäten neuberechnet werden.</target>
         <jms:reference-file line="13">/Resources/views/tools/tools_list.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="1370004da76fa4f3b7a5180fd5436065ef4c7d5b" resname="Duration">
@@ -639,9 +633,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>E-Mail</target>
         <jms:reference-file line="27">/Resources/views/settings/account.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="a04c9dd51ef8a86482589854c8cbe3d35ec2f317" resname="Each VO2max value is marked with an arrow to show if this value is (much) higher than your current shape, equal to it or (much) lower:">
+      <trans-unit id="a04c9dd51ef8a86482589854c8cbe3d35ec2f317" resname="Each VO2max value is marked with an arrow to show if this value is (much) higher than your current shape, equal to it or (much) lower:" approved="yes">
         <source>Each VO2max value is marked with an arrow to show if this value is (much) higher than your current shape, equal to it or (much) lower:</source>
-        <target>Each VO2max value is marked with an arrow to show if this value is (much) higher than your current shape, equal to it or (much) lower:</target>
+        <target state="translated">Jeder VO2max-Wert ist mit einem Pfeil markiert, um zu zeigen, ob er (deutlich) höher, gleich oder (deutlich) niedriger als deine aktuelle Form ist:</target>
         <jms:reference-file line="28">/Resources/views/static/help_calculations.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="cd36322b78490aa15e99d09ba4ad0fa88276ffba" resname="Edit body values">
@@ -714,9 +708,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Feb</target>
         <jms:reference-file line="41">/Resources/views/_macro/utilities.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="bc66390c1f12928a247c55e56647aa0b22153bb0" resname="Find your training paces in min/km for given VO2max values.">
+      <trans-unit id="bc66390c1f12928a247c55e56647aa0b22153bb0" resname="Find your training paces in min/km for given VO2max values." approved="yes">
         <source>Find your training paces in min/km for given VO2max values.</source>
-        <target>Find your training paces in min/km for given VO2max values.</target>
+        <target state="translated">Zeige Trainingsgeschwindigkeiten für verschiedene VO2max-Werte.</target>
         <jms:reference-file line="20">/Resources/views/tools/tables/base.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="3fe36ef469ce60dd54312a831d7fd135014f2559" resname="First activity">
@@ -808,9 +802,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Gehe zum Datenbank-Cleanup</target>
         <jms:reference-file line="19">/Resources/views/tools/backup/import_finish.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="701c483f813cf119ec80b185a049bcfdc29f9161" resname="Grid">
+      <trans-unit id="701c483f813cf119ec80b185a049bcfdc29f9161" resname="Grid" approved="yes">
         <source>Grid</source>
-        <target state="new">Grid</target>
+        <target state="translated">Grid</target>
         <jms:reference-file line="59">/../src/CoreBundle/Form/Tools/PosterType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="ad727721f2ae9e9f5e58d45d5673cb9aac16d148" resname="Groundcontact">
@@ -846,9 +840,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Herzfrequenz</target>
         <jms:reference-file line="37">/Resources/views/my/body-values/form.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="ee8162d47626a8b3163f395abe117ed720ef53c0" resname="Heatmap">
+      <trans-unit id="ee8162d47626a8b3163f395abe117ed720ef53c0" resname="Heatmap" approved="yes">
         <source>Heatmap</source>
-        <target state="new">Heatmap</target>
+        <target state="translated">Heatmap</target>
         <jms:reference-file line="60">/../src/CoreBundle/Form/Tools/PosterType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="c47ae15370cfe1ed2781eedc1dc2547d12d9e972" resname="Help">
@@ -873,9 +867,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Hi %s, wir haben gehört, dass du dein Passwort vergessen hast!</target>
         <jms:reference-file line="9">/Resources/views/mail/account/recoverPassword.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="b740afce6e02096e2596d59c9d41401f3c90667a" resname="Hi %s, we were not able to generate your requested posters. This happens if there is not enough activity data for your chosen sport and year. Sorry!">
+      <trans-unit id="b740afce6e02096e2596d59c9d41401f3c90667a" resname="Hi %s, we were not able to generate your requested posters. This happens if there is not enough activity data for your chosen sport and year. Sorry!" approved="yes">
         <source>Hi %s, we were not able to generate your requested posters. This happens if there is not enough activity data for your chosen sport and year. Sorry!</source>
-        <target state="new">Hi %s, we were not able to generate your requested posters. This happens if there is not enough activity data for your chosen sport and year. Sorry!</target>
+        <target state="translated">Hallo %s, wir konnten deine gewählten Poster leider nicht generieren. Dies liegt in der Regel daran, dass für die gewählte Kombination von Sportart und Jahr nicht genügend Daten vorhanden sind. Entschuldge dies bitte.</target>
         <jms:reference-file line="12">/Resources/views/mail/account/postersReady.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="21071b4f3ec96e64a6ab4dff0a75157e7006e5ec" resname="Hi %s, welcome to RUNALYZE">
@@ -1338,15 +1332,12 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Portable backup (*.json.gz)</target>
         <jms:reference-file line="17">/../src/CoreBundle/Form/Tools/BackupExportType.php</jms:reference-file>
       </trans-unit>
-      <trans-unit id="a4d09c4f9aa43a74568ce89aa2810af8cdc394bb" resname="Portable backup of your configuration and data -&#10;                        This file can be imported into any other installation, using this plugin.&lt;br /&gt;&#10;                        This way you can transfer your data from to local to an online installation and back.&#10;                        ">
+      <trans-unit id="a4d09c4f9aa43a74568ce89aa2810af8cdc394bb" resname="Portable backup of your configuration and data -&#10;                        This file can be imported into any other installation, using this plugin.&lt;br /&gt;&#10;                        This way you can transfer your data from to local to an online installation and back.&#10;                        " approved="yes">
         <source><![CDATA[Portable backup of your configuration and data -
                         This file can be imported into any other installation, using this plugin.<br />
                         This way you can transfer your data from to local to an online installation and back.
                         ]]></source>
-        <target><![CDATA[Portable backup of your configuration and data -
-                        This file can be imported into any other installation, using this plugin.<br />
-                        This way you can transfer your data from to local to an online installation and back.
-                        ]]></target>
+        <target state="translated">Portables Backup von deinen Daten und der Konfiguration - Diese Datei kann mithilfe dieses Tools in jede andere Installation (gleicher Version) übertragen werden.</target>
         <jms:reference-file line="28">/Resources/views/tools/backup/export.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="cf1c85adba548e8d681255278976584a7e4a44de" resname="Position">
@@ -1370,27 +1361,23 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Leistung</target>
         <jms:reference-file line="151">/Resources/views/activity/tool/time_series_statistics.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="4eb004caa682a0a83804b6fb256eac0d8a9930ac" resname="Predict results on different distances for a given VO2max.">
+      <trans-unit id="4eb004caa682a0a83804b6fb256eac0d8a9930ac" resname="Predict results on different distances for a given VO2max." approved="yes">
         <source>Predict results on different distances for a given VO2max.</source>
-        <target>Predict results on different distances for a given VO2max.</target>
+        <target state="translated">Wettkampfprognosen für unterschiedliche Distanzen für bestimmte VO2max-Werte.</target>
         <jms:reference-file line="13">/Resources/views/tools/tables/base.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="7f6dafa79ed5b41ff997537841bc7c1b41280613" resname="Predicting your effective %VO2max% based on your training values is imprecise.&#10;                        This plugin lists your races and compares your results with the predicted values.&#10;                        This way you can get an impression of how well the prediction works for you.">
+      <trans-unit id="7f6dafa79ed5b41ff997537841bc7c1b41280613" resname="Predicting your effective %VO2max% based on your training values is imprecise.&#10;                        This plugin lists your races and compares your results with the predicted values.&#10;                        This way you can get an impression of how well the prediction works for you." approved="yes">
         <source xml:space="preserve">Predicting your effective %VO2max% based on your training values is imprecise.
                         This plugin lists your races and compares your results with the predicted values.
                         This way you can get an impression of how well the prediction works for you.</source>
-        <target xml:space="preserve">Predicting your effective %VO2max% based on your training values is imprecise.
-                        This plugin lists your races and compares your results with the predicted values.
-                        This way you can get an impression of how well the prediction works for you.</target>
+        <target xml:space="preserve" state="translated">Die Schätzung des effektiven %VO2max% anhand deiner Trainingsdaten kann ungeau sein. Dieses Tool listet deine Wettkämpfe und vergleicht die erzielten Zeiten mit den jeweiligen Prognosen. Das hilft dir, die Güte dieser Schätzung für dich besser einzuschätzen.</target>
         <jms:reference-file line="33">/Resources/views/tools/tools_list.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="acaae0379a0a55f16b259cbbd83eb124ebe4735f" resname="Predicting your effective %VO2max% based on your training values is imprecise.&#10;                This tool lists your races and compares all results with predicted values.&#10;                This way you can get an impression of how well our prediction works for you.">
+      <trans-unit id="acaae0379a0a55f16b259cbbd83eb124ebe4735f" resname="Predicting your effective %VO2max% based on your training values is imprecise.&#10;                This tool lists your races and compares all results with predicted values.&#10;                This way you can get an impression of how well our prediction works for you." approved="yes">
         <source xml:space="preserve">Predicting your effective %VO2max% based on your training values is imprecise.
                 This tool lists your races and compares all results with predicted values.
                 This way you can get an impression of how well our prediction works for you.</source>
-        <target xml:space="preserve">Predicting your effective %VO2max% based on your training values is imprecise.
-                This tool lists your races and compares all results with predicted values.
-                This way you can get an impression of how well our prediction works for you.</target>
+        <target xml:space="preserve" state="translated">Die Schätzung des effektiven %VO2max% anhand deiner Trainingsdaten kann ungeau sein. Dieses Tool listet deine Wettkämpfe und vergleicht die erzielten Zeiten mit den jeweiligen Prognosen. Das hilft dir, die Güte dieser Schätzung für dich besser einzuschätzen.</target>
         <jms:reference-file line="16">/Resources/views/tools/vo2max_analysis.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="78bb3c21204f037ea7948fa07cdfdcb8d79d8c0b" resname="Previously generated posters" approved="yes">
@@ -1429,9 +1416,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <jms:reference-file line="79">/../src/CoreBundle/Services/AccountMailer.php</jms:reference-file>
         <jms:reference-file line="4">/Resources/views/mail/account/backupReady.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="8a670987231cc66d369a172146aa3912607ed4ed" resname="RUNALYZE - Poster generation">
+      <trans-unit id="8a670987231cc66d369a172146aa3912607ed4ed" resname="RUNALYZE - Poster generation" approved="yes">
         <source>RUNALYZE - Poster generation</source>
-        <target state="new">RUNALYZE - Poster generation</target>
+        <target state="translated">RUNALYZE - Poster-Tool</target>
         <jms:reference-file line="4">/Resources/views/mail/account/postersReady.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="0cdae3ce78bf7662d1b1a89407636e7eea385730" resname="RUNALYZE has been successfully installed. You can now start analyzing your training.">
@@ -1489,9 +1476,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Neuberechnung der Statistiken deiner Ausrüstung</target>
         <jms:reference-file line="21">/Resources/views/tools/database_cleanup/form.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="76ac7bfce4dfa5a1b50f3b11fae4fae08b3e077c" resname="Recalculate your marathon shape">
+      <trans-unit id="76ac7bfce4dfa5a1b50f3b11fae4fae08b3e077c" resname="Recalculate your marathon shape" approved="yes">
         <source>Recalculate your marathon shape</source>
-        <target>Recalculate your marathon shape</target>
+        <target state="translated">Neuberechnung deiner Marathonform</target>
         <jms:reference-file line="36">/Resources/views/tools/database_cleanup/form.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="db1c784524e1b54011a95823026161f7c8517fe0" resname="Reference">
@@ -1747,9 +1734,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>TRIMP/ATL/CTL/TSB</target>
         <jms:reference-file line="44">/Resources/views/static/help_calculations.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="1d80b6733d8d9fa8c4386ff87d32aad9a2cc9e99" resname="Tables for effective %VO2max% values and general tables like a pace calculator.">
+      <trans-unit id="1d80b6733d8d9fa8c4386ff87d32aad9a2cc9e99" resname="Tables for effective %VO2max% values and general tables like a pace calculator." approved="yes">
         <source>Tables for effective %VO2max% values and general tables like a pace calculator.</source>
-        <target>Tables for effective %VO2max% values and general tables like a pace calculator.</target>
+        <target state="translated">Tabellen für %VO2max%-Werte und Trainingsgeschwindigkeiten im Allgemeinen.</target>
         <jms:reference-file line="44">/Resources/views/tools/tools_list.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="5a1b598e394b671b7e4bf5d4cbb2c1733b789806" resname="Thanks for your registration. You should receive an email within the next minutes with further instructions for activating your account.">
@@ -1787,11 +1774,10 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Der Mittelwert über einen längeren Zeitraum wird als deine derzeitige Form aufgefasst.</target>
         <jms:reference-file line="24">/Resources/views/static/help_calculations.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="07277d39d496fba2e66d646986fbd378e51b8ee1" resname="The calculated value is not equal to what is saved for the activity (%activityVO2max%).&#10;            The activity's value has probably been calculated based on other settings.">
+      <trans-unit id="07277d39d496fba2e66d646986fbd378e51b8ee1" resname="The calculated value is not equal to what is saved for the activity (%activityVO2max%).&#10;            The activity's value has probably been calculated based on other settings." approved="yes">
         <source xml:space="preserve">The calculated value is not equal to what is saved for the activity (%activityVO2max%).
             The activity's value has probably been calculated based on other settings.</source>
-        <target xml:space="preserve">The calculated value is not equal to what is saved for the activity (%activityVO2max%).
-            The activity's value has probably been calculated based on other settings.</target>
+        <target xml:space="preserve" state="translated">Der berechnete Wert entspricht nicht dem gespeicherten Wert der Aktivität (%activityVO2max%). Dieser wurde vermutlich mit anderen Einstellungen berechnet.</target>
         <jms:reference-file line="111">/Resources/views/activity/vo2max_info.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="246aeab8aa786b99aeae9e55fe38e711d9fead9c" resname="The deletion cannot be undone!">
@@ -1834,9 +1820,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Das Plugin wurde nicht erfolgreich freigeschaltet.</target>
         <jms:reference-file line="29">/Resources/views/import/garmin_communicator.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="ba1764501d4853e0787167ca5cf1496ee4aa9bab" resname="The poster generation has been queued and you will receive a notification as soon as your poster is ready for download.">
+      <trans-unit id="ba1764501d4853e0787167ca5cf1496ee4aa9bab" resname="The poster generation has been queued and you will receive a notification as soon as your poster is ready for download." approved="yes">
         <source>The poster generation has been queued and you will receive a notification as soon as your poster is ready for download.</source>
-        <target state="new">The poster generation has been queued and you will receive a notification as soon as your poster is ready for download.</target>
+        <target state="translated">Die Poster-Generierung wurde in die Warteschlange aufgenommen. Du erhältst eine Benachrichtigung, sobald der Vorgang abgeschlossen ist.</target>
         <jms:reference-file line="5">/Resources/views/tools/poster_success.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="90cf70070965b5c485eb776e20e352cc7d5c05d2" resname="The race result has been deleted.">
@@ -1879,19 +1865,19 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target state="translated">Bisher wurden für dich keine Poster generiert.</target>
         <jms:reference-file line="56">/Resources/views/tools/poster.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="e05b42e482380b8a60c189113d80fa9a7be8f804" resname="There are not enough activities to generate a poster. Please change your selection.">
+      <trans-unit id="e05b42e482380b8a60c189113d80fa9a7be8f804" resname="There are not enough activities to generate a poster. Please change your selection." approved="yes">
         <source>There are not enough activities to generate a poster. Please change your selection.</source>
-        <target state="new">There are not enough activities to generate a poster. Please change your selection.</target>
+        <target state="translated">Es liegen nicht genügend Daten für die Poster-Generierung vor. Bitte ändere deine Wahl.</target>
         <jms:reference-file line="184">/../src/CoreBundle/Controller/My/Tools/ToolsController.php</jms:reference-file>
       </trans-unit>
-      <trans-unit id="05d46cfa07fbbcaaebc5f8871e2fe660de5dea9e" resname="There are some ideas for future improvements of this tool.">
+      <trans-unit id="05d46cfa07fbbcaaebc5f8871e2fe660de5dea9e" resname="There are some ideas for future improvements of this tool." approved="yes">
         <source>There are some ideas for future improvements of this tool.</source>
-        <target state="new">There are some ideas for future improvements of this tool.</target>
+        <target state="translated">Zur Verbesserung des Tools liegen zahlreiche Ideen vor.</target>
         <jms:reference-file line="38">/Resources/views/tools/poster.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="147704a97696789962f0ab2962ea9e0e58c292c8" resname="There exist several studies to approximate a relation between &amp;#37;HRmax and &amp;#37;vVO2max.">
+      <trans-unit id="147704a97696789962f0ab2962ea9e0e58c292c8" resname="There exist several studies to approximate a relation between &amp;#37;HRmax and &amp;#37;vVO2max." approved="yes">
         <source><![CDATA[There exist several studies to approximate a relation between &#37;HRmax and &#37;vVO2max.]]></source>
-        <target><![CDATA[There exist several studies to approximate a relation between &#37;HRmax and &#37;vVO2max.]]></target>
+        <target state="translated">Es existieren verschiedene Studien zur Approximation des Verhältnisses zwischen &amp;#37;HFmax und &amp;#37;vVO2max.</target>
         <jms:reference-file line="41">/Resources/views/activity/vo2max_info.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="7e152c438826cbc8d84ce153e3002facdcd3b627" resname="There is a problem with your file.">
@@ -1935,9 +1921,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Diese Aufgabe dauert vielleicht etwas, da wir durch alle Aktivitäten durchgehen müssen.</target>
         <jms:reference-file line="61">/Resources/views/tools/database_cleanup/form.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="00dd58fa666228f9b2839a13be1e2a0cf2efa954" resname="This tool allows you to create beautiful posters of your activity data.">
+      <trans-unit id="00dd58fa666228f9b2839a13be1e2a0cf2efa954" resname="This tool allows you to create beautiful posters of your activity data." approved="yes">
         <source>This tool allows you to create beautiful posters of your activity data.</source>
-        <target state="new">This tool allows you to create beautiful posters of your activity data.</target>
+        <target state="translated">Mit diesem Tool können Poster deiner Trainingsdaten erzeugt werden.</target>
         <jms:reference-file line="81">/Resources/views/tools/tools_list.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="be4088c7cac0fbf229f846a6134c660ef8c98ab4" resname="This tool allows you to edit multiple activities one after another.&#10;                        At the moment it's not possible to edit multiple activities with only one form.">
@@ -2027,9 +2013,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <jms:reference-file line="172">/Resources/views/activity/tool/time_series_statistics.html.twig</jms:reference-file>
         <jms:reference-file line="175">/Resources/views/activity/tool/time_series_statistics.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="5d3fe9e60de99c1c49126eb8dc901abc7f841579" resname="Traditional formulas are for estimating VO2max for a given race result.">
+      <trans-unit id="5d3fe9e60de99c1c49126eb8dc901abc7f841579" resname="Traditional formulas are for estimating VO2max for a given race result." approved="yes">
         <source>Traditional formulas are for estimating VO2max for a given race result.</source>
-        <target>Traditional formulas are for estimating VO2max for a given race result.</target>
+        <target state="translated">Traditionelle Formeln schätzen den VO2max aus Wettkampfergebnissen.</target>
         <jms:reference-file line="14">/Resources/views/activity/vo2max_info.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="a1deffc955e57e15cecf8ce47d895eb24cf00c9a" resname="Transfer complete">
@@ -2108,9 +2094,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target state="translated">VO2max Schätzung für: %title%</target>
         <jms:reference-file line="5">/Resources/views/activity/vo2max_info.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="e455897ed8589766daf0a127ba5c4292f017180c" resname="VO2max itself is a scientific metric for the maximal oxygen consumption that can be measured in the laboratory.&lt;br&gt;Two runners with equal VO2max values do not need to perform equally, as running efficiency plays an additional role. To overcome the issue of specifying running efficiency, one can ignore the efficiency and therefore call it effective VO2max.">
+      <trans-unit id="e455897ed8589766daf0a127ba5c4292f017180c" resname="VO2max itself is a scientific metric for the maximal oxygen consumption that can be measured in the laboratory.&lt;br&gt;Two runners with equal VO2max values do not need to perform equally, as running efficiency plays an additional role. To overcome the issue of specifying running efficiency, one can ignore the efficiency and therefore call it effective VO2max." approved="yes">
         <source><![CDATA[VO2max itself is a scientific metric for the maximal oxygen consumption that can be measured in the laboratory.<br>Two runners with equal VO2max values do not need to perform equally, as running efficiency plays an additional role. To overcome the issue of specifying running efficiency, one can ignore the efficiency and therefore call it effective VO2max.]]></source>
-        <target><![CDATA[VO2max itself is a scientific metric for the maximal oxygen consumption that can be measured in the laboratory.<br>Two runners with equal VO2max values do not need to perform equally, as running efficiency plays an additional role. To overcome the issue of specifying running efficiency, one can ignore the efficiency and therefore call it effective VO2max.]]></target>
+        <target state="translated">VO&lt;sub&gt;2&lt;/sub&gt;max ist eine wissenschaftliche Größe für die maximale Sauerstoffaufnahme und kann im Labor gemessen werden.&lt;br&gt;Zwei Läufer mit gleichem VO&lt;sub&gt;2&lt;/sub&gt;max müssen aber nicht zwangsläufig gleich schnell sein, da die Laufökonomie eine wichtige Rolle spielt. Wenn zur Umgehung dieses Problems die Laufökonomie außer Acht gelassen wird (zwei Läufer mit gleichem Wert also gleiche Leistungen haben), sprechen wir vom effektiven VO&lt;sub&gt;2&lt;/sub&gt;max.</target>
         <jms:reference-file line="9">/Resources/views/static/help_calculations.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="3739cf9b37d36e1a7590012910f10de488cf481c" resname="VO2max values with equivalent paces">
@@ -2344,9 +2330,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Dein Passwort-Wiederherstellen Link ist ungültig. Der Link ist vielleicht abgelaufen.</target>
         <jms:reference-file line="5">/Resources/views/account/recover/hash_invalid.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="b3ac31de88e0e8708c967f831b6ffd85a51bb2f8" resname="Your personal effective VO2max is estimated based on the ratio of heart rate and pace in every of your runs.">
+      <trans-unit id="b3ac31de88e0e8708c967f831b6ffd85a51bb2f8" resname="Your personal effective VO2max is estimated based on the ratio of heart rate and pace in every of your runs." approved="yes">
         <source>Your personal effective VO2max is estimated based on the ratio of heart rate and pace in every of your runs.</source>
-        <target>Your personal effective VO2max is estimated based on the ratio of heart rate and pace in every of your runs.</target>
+        <target state="translated">Dein aktueller effektiver VO2max wird anhand des Verhältnisses von Herzfrequenz und Pace deiner Läufe geschätzt.</target>
         <jms:reference-file line="23">/Resources/views/static/help_calculations.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="d87c448044defb778f33158d8ccf94a20531d600" resname="all">
