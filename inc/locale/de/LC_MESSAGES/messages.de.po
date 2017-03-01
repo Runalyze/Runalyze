@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.com\n"
 "POT-Creation-Date: 2017-02-28 18:41+0100\n"
-"PO-Revision-Date: 2017-03-01 09:09+0000\n"
+"PO-Revision-Date: 2017-03-01 20:52+0000\n"
 "Last-Translator: Hannes <mail@laufhannes.de>\n"
 "Language-Team: German <https://translate.runalyze.com/projects/runalyze"
 "/runalyze-master-po/de/>\n"
@@ -2873,7 +2873,7 @@ msgstr ""
 
 #: inc/core/Dataset/Keys/VO2maxIcon.php:36
 msgid "Effective VO<sub>2</sub>max icon"
-msgstr "Effektiver VO<sub>2</sub>max Symbol"
+msgstr "Icon für Effektiven VO<sub>2</sub>max"
 
 #: inc/core/Dataset/Keys/VO2maxIcon.php:55
 msgid ""
