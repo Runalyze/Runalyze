@@ -10,21 +10,19 @@
                 <img src="{{ app.request.getSchemeAndHttpHost ~ asset('assets/images/runalyze-start.png') }}">
             </td>
         </tr>
-        {% if allPostersGenerated == 0 %}
-            <tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
-                <td class="content-block" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 0 0 20px;" valign="top">
-                    {% trans with {'%s': username} %}Hi %s, we were not able to generate your requested posters. This
-                    happens if there is not enough activity data for your chosen sport and year. Sorry!{% endtrans %}
-                </td>
-            </tr>
-        {% else %}
-            <tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
-                <td class="content-block" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 0 0 20px;" valign="top">
-                    {% trans with {'%s': username} %}Hi %s, your posters have been generated and are now available for download.{% endtrans %}<br>
+        <tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+            <td class="content-block" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 0 0 20px;" valign="top">
+                {% trans with {'%s': username} %}Hi %s,{% endtrans %}<br>
+                <br>
+                {% if allPostersGenerated == 0 %}
+                    {% trans %}We were not able to generate your requested posters. This happens if there is not enough activity data for your chosen sport and year. Sorry!{% endtrans %}
+                {% else %}
+                    {% trans %}Your posters have been generated and are now available for download.{% endtrans %}<br>
+                    <br>
                     {% trans %}Login and go to the poster tool{% endtrans %}
-                </td>
-            </tr>
-        {% endif %}
+                {% endif %}
+            </td>
+        </tr>
 
         <tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
             <td class="content-block" itemprop="handler" itemscope itemtype="http://schema.org/HttpActionHandler" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 0 0 20px;" valign="top">
