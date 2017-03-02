@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "22daae9c8cd372d860d07c5bd58fac69",
-    "content-hash": "f72b8c833d53faa91513f42dada1e3ee",
+    "hash": "b901d7f92cb7b6a24bde8367872f1c12",
+    "content-hash": "1c7d77e795c0fc22c4bb2aaa56450a4d",
     "packages": [
         {
             "name": "beberlei/DoctrineExtensions",
@@ -2115,11 +2115,11 @@
         },
         {
             "name": "runalyze/GpxTrackPoster",
-            "version": "1.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laufhannes/GpxTrackPoster.git",
-                "reference": "runalyze"
+                "reference": "244107fa70b196bac6798e9c4014c22c3c3b4683"
             },
             "type": "library"
         },
