@@ -2,12 +2,12 @@
 
 namespace Runalyze\Bundle\CoreBundle\Component\Tool\Poster;
 
-use Runalyze\Bundle\CoreBundle\Entity\TrainingRepository;
-use Symfony\Component\Process\Process;
-use Symfony\Component\Filesystem\Filesystem;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
+use Runalyze\Bundle\CoreBundle\Entity\TrainingRepository;
 use Runalyze\Bundle\CoreBundle\Entity\Sport;
-use Symfony\Component\Finder\Finder;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Process\Process;
+
 class GeneratePoster
 {
     /** @var array */
@@ -97,7 +97,6 @@ class GeneratePoster
         if ((new Filesystem())->exists($jsonDir.'/special.params')) {
             $this->Parameter[] = file_get_contents($jsonDir.'/special.params');
         }
-
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace Runalyze\Bundle\CoreBundle\Queue\Receiver;
 
 use Bernard\Message\DefaultMessage;
+use Runalyze\Bundle\CoreBundle\Component\Tool\Poster\Converter\AbstractSvgToPngConverter;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Poster\Converter\InkscapeConverter;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Poster\Converter\RsvgConverter;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Poster\FileHandler;
@@ -90,36 +91,44 @@ class PosterReceiver
         if (null === $account || null === $sport || $sport->getAccount()->getId() != $account->getId()) {
             return;
         }
+
         $generatedFiles = 0;
         $this->GenerateJsonData->createJsonFilesFor($account, $sport, $message->get('year'));
         $jsonFiles = (new Finder())->files()->in($this->GenerateJsonData->getPathToJsonFiles());
-        if ($jsonFiles > 0) {
+
+        if ($jsonFiles->count() > 0) {
             foreach ($message->get('types') as $type) {
                 $this->GeneratePoster->buildCommand($type, $this->GenerateJsonData->getPathToJsonFiles(), $message->get('year'), $account, $sport, $message->get('title'));
+
+                $finalName = $this->exportDirectory() . $this->FileHandler->buildFinalFileName($account, $sport, $message->get('year'), $type, $message->get('size'));
                 $converter = $this->getConverter($type);
                 $converter->setHeight($message->get('size'));
-                $converter->callConverter(
-                    $this->GeneratePoster->generate(),
-                    $finalName = $this->exportDirectory() . $this->FileHandler->buildFinalFileName($account, $sport, $message->get('year'), $type, $message->get('size'))
-                );
+                $converter->callConverter($this->GeneratePoster->generate(), $finalName);
+
                 $this->GeneratePoster->deleteSvg();
+
                 if ((new Filesystem())->exists($finalName)) {
                     $generatedFiles++;
                 }
             }
         }
+
         $this->AccountMailer->sendPosterReadyTo($account,
             (($generatedFiles == count($message->get('types'))) ? true : $generatedFiles));
         $this->GenerateJsonData->deleteGeneratedFiles();
     }
 
+    /**
+     * @param string $posterType
+     * @return AbstractSvgToPngConverter
+     */
     protected function getConverter($posterType)
     {
-        if ($posterType == 'circular') {
+        if ('circular' == $posterType) {
             return new InkscapeConverter($this->InkscapePath);
-        } else {
-            return new RsvgConverter($this->RsvgPath);
         }
+
+        return new RsvgConverter($this->RsvgPath);
     }
 
     /**

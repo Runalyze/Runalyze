@@ -75,7 +75,8 @@ class AccountMailer
         );
     }
 
-    public function sendBackupReadyTo(Account $account) {
+    public function sendBackupReadyTo(Account $account)
+    {
         $this->sendMailTo($account, $this->Translator->trans('RUNALYZE - Backup file is ready to download'),
             'mail/account/backupReady.html.twig', [
                 'username' => $account->getUsername(),
@@ -83,7 +84,12 @@ class AccountMailer
         );
     }
 
-    public function sendPosterReadyTo(Account $account, $allPostersGenerated) {
+    /**
+     * @param Account $account
+     * @param bool|int $allPostersGenerated
+     */
+    public function sendPosterReadyTo(Account $account, $allPostersGenerated)
+    {
         $this->sendMailTo($account, 'RUNALYZE - Poster generation',
             'mail/account/postersReady.html.twig', [
                 'username' => $account->getUsername(),
@@ -91,5 +97,4 @@ class AccountMailer
             ]
         );
     }
-
 }
