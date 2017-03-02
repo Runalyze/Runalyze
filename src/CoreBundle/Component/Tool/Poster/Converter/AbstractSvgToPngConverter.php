@@ -23,7 +23,7 @@ abstract class AbstractSvgToPngConverter
     /**
      * @param string $source absolute path to source file
      * @param string $target absolute path to target file
-     * @return bool true on success
+     * @return int exit code
      */
     abstract public function callConverter($source, $target);
 }

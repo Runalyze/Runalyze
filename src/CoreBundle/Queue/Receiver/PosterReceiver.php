@@ -3,6 +3,7 @@
 namespace Runalyze\Bundle\CoreBundle\Queue\Receiver;
 
 use Bernard\Message\DefaultMessage;
+use Psr\Log\LoggerInterface;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Poster\Converter\AbstractSvgToPngConverter;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Poster\Converter\InkscapeConverter;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Poster\Converter\RsvgConverter;
@@ -19,6 +20,9 @@ use Symfony\Component\Finder\Finder;
 
 class PosterReceiver
 {
+    /** @var LoggerInterface */
+    protected $Logger;
+
     /** @var AccountRepository */
     protected $AccountRepository;
 
@@ -47,6 +51,7 @@ class PosterReceiver
     protected $InkscapePath;
 
     /**
+     * @param LoggerInterface $logger
      * @param AccountRepository $accountRepository
      * @param SportRepository $sportRepository
      * @param GenerateJsonData $generateJsonData
@@ -58,6 +63,7 @@ class PosterReceiver
      * @param string $inkscapePath
      */
     public function __construct(
+        LoggerInterface $logger,
         AccountRepository $accountRepository,
         SportRepository $sportRepository,
         GenerateJsonData $generateJsonData,
@@ -69,6 +75,7 @@ class PosterReceiver
         $inkscapePath
     )
     {
+        $this->Logger = $logger;
         $this->AccountRepository = $accountRepository;
         $this->SportRepository = $sportRepository;
         $this->GenerateJsonData = $generateJsonData;
@@ -98,17 +105,23 @@ class PosterReceiver
 
         if ($jsonFiles->count() > 0) {
             foreach ($message->get('types') as $type) {
-                $this->GeneratePoster->buildCommand($type, $this->GenerateJsonData->getPathToJsonFiles(), $message->get('year'), $account, $sport, $message->get('title'));
+                try {
+                    $this->GeneratePoster->buildCommand($type, $this->GenerateJsonData->getPathToJsonFiles(), $message->get('year'), $account, $sport, $message->get('title'));
 
-                $finalName = $this->exportDirectory() . $this->FileHandler->buildFinalFileName($account, $sport, $message->get('year'), $type, $message->get('size'));
-                $converter = $this->getConverter($type);
-                $converter->setHeight($message->get('size'));
-                $converter->callConverter($this->GeneratePoster->generate(), $finalName);
+                    $finalName = $this->exportDirectory() . $this->FileHandler->buildFinalFileName($account, $sport, $message->get('year'), $type, $message->get('size'));
+                    $converter = $this->getConverter($type);
+                    $converter->setHeight($message->get('size'));
+                    $exitCode = $converter->callConverter($this->GeneratePoster->generate(), $finalName);
 
-                $this->GeneratePoster->deleteSvg();
+                    if ($exitCode > 0) {
+                        $this->Logger->error('Poster converter failed', ['type' => $type, 'exitCode' => $exitCode]);
+                    } elseif ((new Filesystem())->exists($finalName)) {
+                        $generatedFiles++;
+                    }
 
-                if ((new Filesystem())->exists($finalName)) {
-                    $generatedFiles++;
+                    $this->GeneratePoster->deleteSvg();
+                } catch (\Exception $e) {
+                    $this->Logger->error('Poster creation failed', ['type' => $type, 'exception' => $e]);
                 }
             }
         }

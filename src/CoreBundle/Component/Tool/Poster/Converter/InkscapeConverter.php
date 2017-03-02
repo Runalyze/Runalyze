@@ -29,11 +29,9 @@ class InkscapeConverter extends AbstractSvgToPngConverter
     {
         if ((new Filesystem())->exists($source)) {
             $builder = new Process($this->Command.' -z -e  '.$target.' '.implode(' ', $this->Parameter).' '.$source);
-            $builder->run();
-
-            return true;
+            return $builder->run();
         }
 
-        return false;
+        return 1;
     }
 }

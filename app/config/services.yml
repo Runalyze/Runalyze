@@ -9,6 +9,16 @@ services:
     arguments: ['@security.token_storage']
     tags:
       - { name: controller.argument_value_resolver, priority: 50 }
+  app.listener.console_exception:
+    class: Runalyze\Bundle\CoreBundle\EventListener\ConsoleExceptionListener
+    arguments: ['@monolog.logger.console']
+    tags:
+      - { name: kernel.event_listener, event: console.exception }
+  app.listener.console_error_status:
+    class: Runalyze\Bundle\CoreBundle\EventListener\ConsoleErrorStatusListener
+    arguments: ['@monolog.logger.console']
+    tags:
+      - { name: kernel.event_listener, event: console.terminate }
   app.locale_listener:
     class: Runalyze\Bundle\CoreBundle\EventListener\LocaleListener
     arguments: ['%kernel.default_locale%']
@@ -195,6 +205,6 @@ services:
       - { name: bernard.receiver, message: userBackup }
   app.bernard.poster_receiver:
     class: Runalyze\Bundle\CoreBundle\Queue\Receiver\PosterReceiver
-    arguments: ["@app.repository.account", "@app.repository.sport", "@app.poster.generate_json", "@app.poster.generate_poster", "@app.poster.filehandler", "@app.mailer.account", "%kernel.root_dir%", "%rsvg_path%", "%inkscape_path%"]
+    arguments: ["@monolog.logger.queue", "@app.repository.account", "@app.repository.sport", "@app.poster.generate_json", "@app.poster.generate_poster", "@app.poster.filehandler", "@app.mailer.account", "%kernel.root_dir%", "%rsvg_path%", "%inkscape_path%"]
     tags:
       - { name: bernard.receiver, message: posterGenerator }
