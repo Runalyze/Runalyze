@@ -541,8 +541,8 @@ abstract class PlotSumData extends Plot {
 		}
 
 		foreach ($this->RawData as $dat)
-			if ($dat['timer'] >= $this->timerStart && $dat['timer'] <= $this->timerEnd && isset($Types[$dat['typeid']]))
-				$Types[$dat['typeid']]['data'][$dat['timer']-$this->timerStart] = $dat['sum'];
+			if ($dat['timer'] >= $this->timerStart && $dat['timer'] <= $this->timerEnd)
+				$Types[isset($Types[$dat['typeid']]) ? $dat['typeid'] : 0]['data'][$dat['timer']-$this->timerStart] = $dat['sum'];
 
 		foreach ($Types as $Type)
 			$this->Data[] = array('label' => $Type['name'], 'data' => $Type['data']);
