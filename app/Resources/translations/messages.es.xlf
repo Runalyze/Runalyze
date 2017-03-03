@@ -433,9 +433,9 @@
         <target>Versión actual de RUNALYZE:</target>
         <jms:reference-file line="53">/Resources/views/tools/backup/upload_form.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="28d138800a45ecbb1695a0aba0ce72b3b1d2199c" resname="Data selection">
+      <trans-unit id="28d138800a45ecbb1695a0aba0ce72b3b1d2199c" resname="Data selection" approved="yes">
         <source>Data selection</source>
-        <target>Data selection</target>
+        <target state="translated">Selección de datos</target>
         <jms:reference-file line="12">/Resources/views/tools/anova/base.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="54f56dcdb73d784f074acd71626601909e0f436b" resname="Database backup">
@@ -1130,9 +1130,9 @@
         <target state="new">Participants gender</target>
         <jms:reference-file line="44">/Resources/views/my/raceresult/form.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="c4be80f70daca30fff6194f159572a21ae7c769d" resname="Participants total">
+      <trans-unit id="c4be80f70daca30fff6194f159572a21ae7c769d" resname="Participants total" approved="yes">
         <source>Participants total</source>
-        <target state="new">Participants total</target>
+        <target state="translated">Total de participantes</target>
         <jms:reference-file line="38">/Resources/views/my/raceresult/form.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="8be3c943b1609fffbfc51aad666d0a04adf83c9d" resname="Password">
