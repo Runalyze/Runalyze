@@ -90,7 +90,7 @@ class AccountMailer
      */
     public function sendPosterReadyTo(Account $account, $allPostersGenerated)
     {
-        $this->sendMailTo($account, 'RUNALYZE - Poster generation',
+        $this->sendMailTo($account, $this->Translator->trans('RUNALYZE - Poster generation'),
             'mail/account/postersReady.html.twig', [
                 'username' => $account->getUsername(),
                 'allPostersGenerated' => $allPostersGenerated
