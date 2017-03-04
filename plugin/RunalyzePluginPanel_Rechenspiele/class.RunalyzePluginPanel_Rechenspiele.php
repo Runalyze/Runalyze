@@ -76,6 +76,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	protected function getRightSymbol() {
 		$Links = '';
 		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key().'/window.plot.php" '.Ajax::tooltip('', __('Show shape'), true, true).'>'.Icon::$LINE_CHART.'</a>').'</li>';
+        $Links .= '<li>'.Ajax::window('<a href="my/tools/tables/vo2max-pace" '.Ajax::tooltip('', __('Show training paces'), true, true).'><i class="fa fa-fw fa-tachometer"></i></a>').'</li>';
 		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key().'/window.php" '.Ajax::tooltip('', __('How are these values calculated?'), true, true).'>'.Icon::$MAGIC.'</a>').'</li>';
 		$Links .= '<li>'.Ajax::window('<a href="dashboard/help-calculations" '.Ajax::tooltip('',  __('Explanations: What are VO2max and TRIMP?'), true, true).'>'.Icon::$INFO.'</a>').'</li>';
 
