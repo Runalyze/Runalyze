@@ -28,7 +28,7 @@
 <div id="overlay" style="display:block;"></div>
 
 <div id="ajax-outer">
-<div id="ajax" class="panel<?php if (defined('ADMIN_WINDOW')) echo ' big-window'; ?>" style="display:block;">
+<div id="ajax" class="panel" style="display:block;">
 	<div class="panel-heading">
 		<h1><?php echo $title; ?></h1>
 	</div>
