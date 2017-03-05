@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2017-02-28T18:39:32Z" source-language="en" target-language="nl_BE" datatype="plaintext" original="not.available">
+  <file date="2017-03-05T10:32:16Z" source-language="en" target-language="nl_BE" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -213,7 +213,7 @@
       </trans-unit>
       <trans-unit id="834c7efb60e21c624d7464be4ce00f78afcc0b36" resname="Based on your data RUNALYZE can generate some posters for you. Poster generations are performed in the background.">
         <source>Based on your data RUNALYZE can generate some posters for you. Poster generations are performed in the background.</source>
-        <target state="new">Based on your data RUNALYZE can generate some posters for you. Poster generations are performed in the background.</target>
+        <target>Based on your data RUNALYZE can generate some posters for you. Poster generations are performed in the background.</target>
         <jms:reference-file line="18">/Resources/views/tools/poster.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="862275ec7d01de0bc9d6f4497a83808767de2e2f" resname="Because of a lot of influencing factors these computations are not always accurate.">
@@ -285,7 +285,7 @@
       </trans-unit>
       <trans-unit id="adab5090ac6a1b7b5420faac7be86c41721ba27c" resname="Calendar">
         <source>Calendar</source>
-        <target state="new">Calendar</target>
+        <target>Calendar</target>
         <jms:reference-file line="58">/../src/CoreBundle/Form/Tools/PosterType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="77dfd2135f4db726c47299bb55be26f7f4525a46" resname="Cancel">
@@ -326,17 +326,17 @@
       </trans-unit>
       <trans-unit id="1dba7dd902a8d18d0072fe747078f61d341624ba" resname="Choose postertype(s)">
         <source>Choose postertype(s)</source>
-        <target state="new">Choose postertype(s)</target>
+        <target>Choose postertype(s)</target>
         <jms:reference-file line="24">/Resources/views/tools/poster.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="0299fc72de3616f182ac62196e7f385585f1ddbf" resname="Choose size">
         <source>Choose size</source>
-        <target state="new">Choose size</target>
+        <target>Choose size</target>
         <jms:reference-file line="28">/Resources/views/tools/poster.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="005027c171ec7b5ff802e9f6c2d3cf31d1b1434c" resname="Choose sport">
         <source>Choose sport</source>
-        <target state="new">Choose sport</target>
+        <target>Choose sport</target>
         <jms:reference-file line="25">/Resources/views/tools/poster.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="d1191831cd6032b9e3991abc855b7fff9aa78118" resname="Choose sport type(s)">
@@ -346,12 +346,12 @@
       </trans-unit>
       <trans-unit id="6d3d5991f4ad692df57f1270ccf27c5891b6640e" resname="Choose year">
         <source>Choose year</source>
-        <target state="new">Choose year</target>
+        <target>Choose year</target>
         <jms:reference-file line="26">/Resources/views/tools/poster.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="782acc59ceecf8f5bf197bf4c4bc95a255bbe1ff" resname="Circular">
         <source>Circular</source>
-        <target state="new">Circular</target>
+        <target>Circular</target>
         <jms:reference-file line="57">/../src/CoreBundle/Form/Tools/PosterType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="bada87473509e3105d1c48a9e6834bd11708ce01" resname="Clear your personal cache">
@@ -468,27 +468,27 @@
       </trans-unit>
       <trans-unit id="46efcb7560a624acf05b1eba3eaa6c0355e3c341" resname="DIN A0">
         <source>DIN A0</source>
-        <target state="new">DIN A0</target>
+        <target>DIN A0</target>
         <jms:reference-file line="87">/../src/CoreBundle/Form/Tools/PosterType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="d80ef84e49eae085528b8ca0a8e7180e8bc16ae9" resname="DIN A1">
         <source>DIN A1</source>
-        <target state="new">DIN A1</target>
+        <target>DIN A1</target>
         <jms:reference-file line="86">/../src/CoreBundle/Form/Tools/PosterType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="813857d7b7ee691a8d61c6d19f1eb3c23daf6a80" resname="DIN A2">
         <source>DIN A2</source>
-        <target state="new">DIN A2</target>
+        <target>DIN A2</target>
         <jms:reference-file line="85">/../src/CoreBundle/Form/Tools/PosterType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="184a20494260e798ee646a197856327fe0b21c46" resname="DIN A3">
         <source>DIN A3</source>
-        <target state="new">DIN A3</target>
+        <target>DIN A3</target>
         <jms:reference-file line="84">/../src/CoreBundle/Form/Tools/PosterType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="8a16fe09e3a28521bf6b9af2c8e78f1e0ba8259d" resname="DIN A4">
         <source>DIN A4</source>
-        <target state="new">DIN A4</target>
+        <target>DIN A4</target>
         <jms:reference-file line="83">/../src/CoreBundle/Form/Tools/PosterType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="28d138800a45ecbb1695a0aba0ce72b3b1d2199c" resname="Data selection">
@@ -802,7 +802,7 @@
       </trans-unit>
       <trans-unit id="9dc653a63bd3443bcbf33f596ed76029db2ad206" resname="Generate posters">
         <source>Generate posters</source>
-        <target state="new">Generate posters</target>
+        <target>Generate posters</target>
         <jms:reference-file line="32">/Resources/views/tools/poster.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="43cd45e70a501b1e73f02f896774373acd1452a5" resname="Go back to RUNALYZE">
@@ -817,7 +817,7 @@
       </trans-unit>
       <trans-unit id="701c483f813cf119ec80b185a049bcfdc29f9161" resname="Grid">
         <source>Grid</source>
-        <target state="new">Grid</target>
+        <target>Grid</target>
         <jms:reference-file line="59">/../src/CoreBundle/Form/Tools/PosterType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="ad727721f2ae9e9f5e58d45d5673cb9aac16d148" resname="Groundcontact">
@@ -855,7 +855,7 @@
       </trans-unit>
       <trans-unit id="ee8162d47626a8b3163f395abe117ed720ef53c0" resname="Heatmap">
         <source>Heatmap</source>
-        <target state="new">Heatmap</target>
+        <target>Heatmap</target>
         <jms:reference-file line="60">/../src/CoreBundle/Form/Tools/PosterType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="c47ae15370cfe1ed2781eedc1dc2547d12d9e972" resname="Help">
@@ -870,6 +870,11 @@
         <jms:reference-file line="56">/Resources/TwigBundle/views/Exception/error.html.twig</jms:reference-file>
         <jms:reference-file line="62">/Resources/views/base_not_logged_in.html.twig</jms:reference-file>
       </trans-unit>
+      <trans-unit id="920e1a21200bdb5e1f847de7684a962bd92ba99f" resname="Hi %s,">
+        <source>Hi %s,</source>
+        <target state="new">Hi %s,</target>
+        <jms:reference-file line="15">/Resources/views/mail/account/postersReady.html.twig</jms:reference-file>
+      </trans-unit>
       <trans-unit id="7e217fa4d4b98f78392cd931a62b5db2691ec07a" resname="Hi %s, &lt;br&gt; we are sorry to hear that you wish to delete your RUNALYZE account">
         <source><![CDATA[Hi %s, <br> we are sorry to hear that you wish to delete your RUNALYZE account]]></source>
         <target><![CDATA[Hi %s, <br> we are sorry to hear that you wish to delete your RUNALYZE account]]></target>
@@ -880,11 +885,6 @@
         <target>Hi %s, we heard that you forgot your password!</target>
         <jms:reference-file line="9">/Resources/views/mail/account/recoverPassword.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="b740afce6e02096e2596d59c9d41401f3c90667a" resname="Hi %s, we were not able to generate your requested posters. This happens if there is not enough activity data for your chosen sport and year. Sorry!">
-        <source>Hi %s, we were not able to generate your requested posters. This happens if there is not enough activity data for your chosen sport and year. Sorry!</source>
-        <target state="new">Hi %s, we were not able to generate your requested posters. This happens if there is not enough activity data for your chosen sport and year. Sorry!</target>
-        <jms:reference-file line="12">/Resources/views/mail/account/postersReady.html.twig</jms:reference-file>
-      </trans-unit>
       <trans-unit id="21071b4f3ec96e64a6ab4dff0a75157e7006e5ec" resname="Hi %s, welcome to RUNALYZE">
         <source>Hi %s, welcome to RUNALYZE</source>
         <target>Hi %s, welcome to RUNALYZE</target>
@@ -894,11 +894,6 @@
         <source>Hi %s, your backup file is ready to download.</source>
         <target>Hi %s, your backup file is ready to download.</target>
         <jms:reference-file line="11">/Resources/views/mail/account/backupReady.html.twig</jms:reference-file>
-      </trans-unit>
-      <trans-unit id="afd67abc57e255f3c1fd926305a8c9210111858f" resname="Hi %s, your posters have been generated and are now available for download.">
-        <source>Hi %s, your posters have been generated and are now available for download.</source>
-        <target state="new">Hi %s, your posters have been generated and are now available for download.</target>
-        <jms:reference-file line="16">/Resources/views/mail/account/postersReady.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="c66837f8fa417c1ef930ad73bc60e71e1dd031f1" resname="Hi %username%">
         <source>Hi %username%</source>
@@ -1005,7 +1000,7 @@
       </trans-unit>
       <trans-unit id="be1a7d07844cd48e8143115e7166e2b148581ca7" resname="Let us know what is most important for you at %forum%">
         <source>Let us know what is most important for you at %forum%</source>
-        <target state="new">Let us know what is most important for you at %forum%</target>
+        <target>Let us know what is most important for you at %forum%</target>
         <jms:reference-file line="39">/Resources/views/tools/poster.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="3c0ae71541dfa0f6ed39d15c11d9bdab5b7bbc30" resname="Let's go back to RUNALYZE!">
@@ -1032,14 +1027,14 @@
       </trans-unit>
       <trans-unit id="422aaab8c2192678d3d3b537d0d544608d57f725" resname="Login and go to the poster tool">
         <source>Login and go to the poster tool</source>
-        <target state="new">Login and go to the poster tool</target>
-        <jms:reference-file line="18">/Resources/views/mail/account/postersReady.html.twig</jms:reference-file>
+        <target>Login and go to the poster tool</target>
+        <jms:reference-file line="23">/Resources/views/mail/account/postersReady.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="c39e44de4dff5513916022c08035460af738d36f" resname="Login now">
         <source>Login now</source>
         <target>Login now</target>
         <jms:reference-file line="18">/Resources/views/mail/account/backupReady.html.twig</jms:reference-file>
-        <jms:reference-file line="23">/Resources/views/mail/account/postersReady.html.twig</jms:reference-file>
+        <jms:reference-file line="30">/Resources/views/mail/account/postersReady.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="e43d612e11f1568f2373e719d4c4b08dcecdc7cc" resname="Logout">
         <source>Logout</source>
@@ -1313,7 +1308,7 @@
       </trans-unit>
       <trans-unit id="e777e3e689077418e38de93de76ccbbac843d5e4" resname="Please download the posters within %days% days.">
         <source>Please download the posters within %days% days.</source>
-        <target state="new">Please download the posters within %days% days.</target>
+        <target>Please download the posters within %days% days.</target>
         <jms:reference-file line="58">/Resources/views/tools/poster.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="e65e837deba61f8940be95a71267e2779833f440" resname="Please let us know if you have wishes or have encountered bugs.">
@@ -1364,13 +1359,13 @@
       </trans-unit>
       <trans-unit id="711009fb35b2de5a31f11f4580a003326ad0cea4" resname="Poster generator">
         <source>Poster generator</source>
-        <target state="new">Poster generator</target>
+        <target>Poster generator</target>
         <jms:reference-file line="5">/Resources/views/tools/poster.html.twig</jms:reference-file>
         <jms:reference-file line="79">/Resources/views/tools/tools_list.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="b8ee0781e0f4449791ed16d9268d8449a2b04003" resname="Poster title">
         <source>Poster title</source>
-        <target state="new">Poster title</target>
+        <target>Poster title</target>
         <jms:reference-file line="27">/Resources/views/tools/poster.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="7548ab52c3d1d595240379937e08f3e95c072312" resname="Power">
@@ -1403,7 +1398,7 @@
       </trans-unit>
       <trans-unit id="78bb3c21204f037ea7948fa07cdfdcb8d79d8c0b" resname="Previously generated posters">
         <source>Previously generated posters</source>
-        <target state="new">Previously generated posters</target>
+        <target>Previously generated posters</target>
         <jms:reference-file line="45">/Resources/views/tools/poster.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="cfb27956e3baba98b6ac4094925b4127f0c1c18d" resname="Probably the link was wrong or your account has been already activated.">
@@ -1434,13 +1429,14 @@
       <trans-unit id="ef991f422b76136f4b3a1bd13c6b8ce3caef353b" resname="RUNALYZE - Backup file is ready to download">
         <source>RUNALYZE - Backup file is ready to download</source>
         <target>RUNALYZE - Backup file is ready to download</target>
-        <jms:reference-file line="79">/../src/CoreBundle/Services/AccountMailer.php</jms:reference-file>
+        <jms:reference-file line="80">/../src/CoreBundle/Services/AccountMailer.php</jms:reference-file>
         <jms:reference-file line="4">/Resources/views/mail/account/backupReady.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="8a670987231cc66d369a172146aa3912607ed4ed" resname="RUNALYZE - Poster generation">
         <source>RUNALYZE - Poster generation</source>
-        <target state="new">RUNALYZE - Poster generation</target>
-        <jms:reference-file line="4">/Resources/views/mail/account/postersReady.html.twig</jms:reference-file>
+        <target>RUNALYZE - Poster generation</target>
+        <jms:reference-file line="93">/../src/CoreBundle/Services/AccountMailer.php</jms:reference-file>
+        <jms:reference-file line="3">/Resources/views/mail/account/postersReady.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="0cdae3ce78bf7662d1b1a89407636e7eea385730" resname="RUNALYZE has been successfully installed. You can now start analyzing your training.">
         <source>RUNALYZE has been successfully installed. You can now start analyzing your training.</source>
@@ -1526,11 +1522,6 @@
         <source>Registrations are currently disabled.</source>
         <target>Registrations are currently disabled.</target>
         <jms:reference-file line="8">/Resources/views/register/disabled.html.twig</jms:reference-file>
-      </trans-unit>
-      <trans-unit id="530867ad96149b2149d4cc3286dd7f7c35ba765a" resname="Reload window">
-        <source>Reload window</source>
-        <target state="new">Reload window</target>
-        <jms:reference-file line="6">/Resources/views/tools/poster_success.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="ced7b308a348567fbf21dd775ee496dd01207f24" resname="Remember me">
         <source>Remember me</source>
@@ -1844,7 +1835,7 @@
       </trans-unit>
       <trans-unit id="ba1764501d4853e0787167ca5cf1496ee4aa9bab" resname="The poster generation has been queued and you will receive a notification as soon as your poster is ready for download.">
         <source>The poster generation has been queued and you will receive a notification as soon as your poster is ready for download.</source>
-        <target state="new">The poster generation has been queued and you will receive a notification as soon as your poster is ready for download.</target>
+        <target>The poster generation has been queued and you will receive a notification as soon as your poster is ready for download.</target>
         <jms:reference-file line="5">/Resources/views/tools/poster_success.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="90cf70070965b5c485eb776e20e352cc7d5c05d2" resname="The race result has been deleted.">
@@ -1884,17 +1875,17 @@
       </trans-unit>
       <trans-unit id="7512d14b566747114ffa119f39c8f2c588a425bc" resname="There are no posters so far.">
         <source>There are no posters so far.</source>
-        <target state="new">There are no posters so far.</target>
+        <target>There are no posters so far.</target>
         <jms:reference-file line="56">/Resources/views/tools/poster.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="e05b42e482380b8a60c189113d80fa9a7be8f804" resname="There are not enough activities to generate a poster. Please change your selection.">
         <source>There are not enough activities to generate a poster. Please change your selection.</source>
-        <target state="new">There are not enough activities to generate a poster. Please change your selection.</target>
+        <target>There are not enough activities to generate a poster. Please change your selection.</target>
         <jms:reference-file line="184">/../src/CoreBundle/Controller/My/Tools/ToolsController.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="05d46cfa07fbbcaaebc5f8871e2fe660de5dea9e" resname="There are some ideas for future improvements of this tool.">
         <source>There are some ideas for future improvements of this tool.</source>
-        <target state="new">There are some ideas for future improvements of this tool.</target>
+        <target>There are some ideas for future improvements of this tool.</target>
         <jms:reference-file line="38">/Resources/views/tools/poster.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="147704a97696789962f0ab2962ea9e0e58c292c8" resname="There exist several studies to approximate a relation between &amp;#37;HRmax and &amp;#37;vVO2max.">
@@ -1945,7 +1936,7 @@
       </trans-unit>
       <trans-unit id="00dd58fa666228f9b2839a13be1e2a0cf2efa954" resname="This tool allows you to create beautiful posters of your activity data.">
         <source>This tool allows you to create beautiful posters of your activity data.</source>
-        <target state="new">This tool allows you to create beautiful posters of your activity data.</target>
+        <target>This tool allows you to create beautiful posters of your activity data.</target>
         <jms:reference-file line="81">/Resources/views/tools/tools_list.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="be4088c7cac0fbf229f846a6134c660ef8c98ab4" resname="This tool allows you to edit multiple activities one after another.&#10;                        At the moment it's not possible to edit multiple activities with only one form.">
@@ -2167,6 +2158,11 @@
         <target><![CDATA[We use two decimals for convenient reasons.<br>Marathon: 42.20 km<br>Half marathon: 21.10 km]]></target>
         <jms:reference-file line="16">/Resources/views/my/raceresult/form.html.twig</jms:reference-file>
       </trans-unit>
+      <trans-unit id="14c110b10c11c5b2cdad62c60aa1ba6218b399a5" resname="We were not able to generate your requested posters. This happens if there is not enough activity data for your chosen sport and year. Sorry!">
+        <source>We were not able to generate your requested posters. This happens if there is not enough activity data for your chosen sport and year. Sorry!</source>
+        <target state="new">We were not able to generate your requested posters. This happens if there is not enough activity data for your chosen sport and year. Sorry!</target>
+        <jms:reference-file line="19">/Resources/views/mail/account/postersReady.html.twig</jms:reference-file>
+      </trans-unit>
       <trans-unit id="8b527bc986d8b8d19815696a85f3a6923ee433d1" resname="We will resume normal operations as soon as possible.">
         <source>We will resume normal operations as soon as possible.</source>
         <target>We will resume normal operations as soon as possible.</target>
@@ -2274,7 +2270,7 @@
         <target>Your RUNALYZE-Team</target>
         <jms:reference-file line="23">/Resources/views/mail/account/backupReady.html.twig</jms:reference-file>
         <jms:reference-file line="21">/Resources/views/mail/account/deleteAccountRequest.html.twig</jms:reference-file>
-        <jms:reference-file line="28">/Resources/views/mail/account/postersReady.html.twig</jms:reference-file>
+        <jms:reference-file line="36">/Resources/views/mail/account/postersReady.html.twig</jms:reference-file>
         <jms:reference-file line="21">/Resources/views/mail/account/recoverPassword.html.twig</jms:reference-file>
         <jms:reference-file line="35">/Resources/views/mail/account/registration.html.twig</jms:reference-file>
       </trans-unit>
@@ -2358,6 +2354,11 @@
         <target>Your personal effective VO2max is estimated based on the ratio of heart rate and pace in every of your runs.</target>
         <jms:reference-file line="23">/Resources/views/static/help_calculations.html.twig</jms:reference-file>
       </trans-unit>
+      <trans-unit id="585af0ba45df165f678534f590106c5c626da314" resname="Your posters have been generated and are now available for download.">
+        <source>Your posters have been generated and are now available for download.</source>
+        <target state="new">Your posters have been generated and are now available for download.</target>
+        <jms:reference-file line="21">/Resources/views/mail/account/postersReady.html.twig</jms:reference-file>
+      </trans-unit>
       <trans-unit id="d87c448044defb778f33158d8ccf94a20531d600" resname="all">
         <source>all</source>
         <target>all</target>
@@ -2380,6 +2381,7 @@
         <source>back to form</source>
         <target>back to form</target>
         <jms:reference-file line="27">/Resources/views/tools/database_cleanup/results.html.twig</jms:reference-file>
+        <jms:reference-file line="11">/Resources/views/tools/poster_success.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="a77e8ac7d28985989bf64d2b7b8d6739178fd3e3" resname="by&amp;nbsp;HR">
         <source><![CDATA[by&nbsp;HR]]></source>
