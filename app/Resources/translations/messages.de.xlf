@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
   <file date="2017-03-05T10:31:43Z" source-language="en" target-language="de" datatype="plaintext" original="not.available">
     <header>
@@ -2331,9 +2331,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Dein aktueller effektiver VO2max wird anhand des Verhältnisses von Herzfrequenz und Pace deiner Läufe geschätzt.</target>
         <jms:reference-file line="23">/Resources/views/static/help_calculations.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="585af0ba45df165f678534f590106c5c626da314" resname="Your posters have been generated and are now available for download.">
+      <trans-unit id="585af0ba45df165f678534f590106c5c626da314" resname="Your posters have been generated and are now available for download." approved="yes">
         <source>Your posters have been generated and are now available for download.</source>
-        <target state="new">Your posters have been generated and are now available for download.</target>
+        <target state="translated">Deine Poster wurden generiert und stehen jetzt zum Download bereit.</target>
         <jms:reference-file line="21">/Resources/views/mail/account/postersReady.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="d87c448044defb778f33158d8ccf94a20531d600" resname="all">
