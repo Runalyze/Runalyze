@@ -1836,9 +1836,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Der Nutzername ist uns nicht bekannt.</target>
         <jms:reference-file line="114">/../src/CoreBundle/Controller/AccountController.php</jms:reference-file>
       </trans-unit>
-      <trans-unit id="9bf3163dfea3c48494e614aeb1408fd4a47a089f" resname="There are &lt;strong&gt;%numActivities%&lt;/strong&gt; activities in this file.">
+      <trans-unit id="9bf3163dfea3c48494e614aeb1408fd4a47a089f" resname="There are &lt;strong&gt;%numActivities%&lt;/strong&gt; activities in this file." approved="yes">
         <source><![CDATA[There are <strong>%numActivities%</strong> activities in this file.]]></source>
-        <target><![CDATA[Es befinden sich <strong>%s</strong> Trainings in dieser Datei.]]></target>
+        <target state="translated">Es befinden sich &lt;strong&gt;%numActivities%&lt;/strong&gt; Trainings in dieser Datei.</target>
         <jms:reference-file line="43">/Resources/views/tools/backup/import_form.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="29e37fac7d1dfa3388f3a66ec1827ec50bd9dfd5" resname="There are &lt;strong&gt;%numBodyValues%&lt;/strong&gt; body values in this file.">
@@ -1923,14 +1923,14 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Editiere mehrere Aktivitäten nacheinander. Dieses Plugin ist benötigt um mehre Aktivitäten auf einmal hochzuladen.</target>
         <jms:reference-file line="53">/Resources/views/tools/tools_list.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="16e59bb04fa9297cedece962102621e7f291b7bc" resname="This tool allows you to export your complete data as sql dump or json dump that can be imported into any RUNALYZE installation.">
+      <trans-unit id="16e59bb04fa9297cedece962102621e7f291b7bc" resname="This tool allows you to export your complete data as sql dump or json dump that can be imported into any RUNALYZE installation." approved="yes">
         <source>This tool allows you to export your complete data as sql dump or json dump that can be imported into any RUNALYZE installation.</source>
-        <target>Dieses Plugin sichert deine Daten entweder als SQL oder JSON Dump, welches in eine bestehende RUNALYZE Installation eingespielt werden kann.</target>
+        <target state="translated">Mit diesem Tool kannst du deine Daten entweder als SQL- oder als JSON-Datei sichern, welche auch in eine bestehende RUNALYZE Installation eingespielt werden kann.</target>
         <jms:reference-file line="63">/Resources/views/tools/tools_list.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="e7feb9b7c846cfac20e38a5b483a8ebd98231754" resname="This tool allows you to import an existing json dump of any other RUNALYZE installation.">
+      <trans-unit id="e7feb9b7c846cfac20e38a5b483a8ebd98231754" resname="This tool allows you to import an existing json dump of any other RUNALYZE installation." approved="yes">
         <source>This tool allows you to import an existing json dump of any other RUNALYZE installation.</source>
-        <target>Dieses Plugin sichert deine Daten und kann ein vorhandenes Backup importieren.</target>
+        <target state="translated">Mit diesem Tool kannst du die Datensicherung einer anderen RUNALYZE-Installation im JSON-Format importieren.</target>
         <jms:reference-file line="72">/Resources/views/tools/tools_list.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="de63de8d63f7347ac7991ba168ac2e2215cb7ed3" resname="This way of presentation allows to compare not only average values (e.g. pace over months) but deviations and outliers between different groupings.">
