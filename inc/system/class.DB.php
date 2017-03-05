@@ -45,7 +45,6 @@ class DB {
 		if (version_compare(PHP_VERSION, '5.3.6', '<')) {
 			self::$PDO->exec("SET NAMES 'utf8'");
 		}
-		    self::$PDO->exec("SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))");
 	}
 
 	/**
