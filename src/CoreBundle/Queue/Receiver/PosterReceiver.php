@@ -100,7 +100,7 @@ class PosterReceiver
         }
 
         $generatedFiles = 0;
-        /*$this->GenerateJsonData->createJsonFilesFor($account, $sport, $message->get('year'));
+        $this->GenerateJsonData->createJsonFilesFor($account, $sport, $message->get('year'));
         $jsonFiles = (new Finder())->files()->in($this->GenerateJsonData->getPathToJsonFiles());
 
         if ($jsonFiles->count() > 0) {
@@ -124,7 +124,7 @@ class PosterReceiver
                     $this->Logger->error('Poster creation failed', ['type' => $type, 'exception' => $e]);
                 }
             }
-        }*/
+        }
 
         $this->AccountMailer->sendPosterReadyTo($account,
             (($generatedFiles == count($message->get('types'))) ? true : $generatedFiles));
