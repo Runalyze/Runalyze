@@ -64,7 +64,8 @@ doctrine:
                 user:     "%database_user%"
                 password: "%database_password%"
                 charset:  UTF8
-                options: {1002: "SET time_zone = '+00:00'"}
+                options: {1002: "SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))", 1002: "SET time_zone = '+00:00'"}
+
                 mapping_types:
                     enum:   string
 
