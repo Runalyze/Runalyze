@@ -416,12 +416,10 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 		$speed_data = $this->EmptyData;
 
 		foreach ($result as $dat) {
-			if ($this->sportid == Configuration::General()->runningSport()) {
-				if ($dat['group'] > $speed_min)
-					$dat['group'] = $speed_min;
-				else if ($dat['group'] < $speed_max)
-					$dat['group'] = $speed_max;
-			}
+			if ($dat['group'] >= $speed_min)
+				$dat['group'] = $speed_min;
+			else if ($dat['group'] <= $speed_max)
+				$dat['group'] = $speed_max;
 
 			$this->setGroupData($speed_data, $dat);
 			$this->setSumData($speed_data, $dat);
