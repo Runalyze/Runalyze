@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.com\n"
 "POT-Creation-Date: 2017-02-28 18:41+0100\n"
-"PO-Revision-Date: 2017-03-01 20:52+0000\n"
-"Last-Translator: Hannes <mail@laufhannes.de>\n"
+"PO-Revision-Date: 2017-03-07 08:49+0000\n"
+"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
 "Language-Team: German <https://translate.runalyze.com/projects/runalyze"
 "/runalyze-master-po/de/>\n"
 "Language: de\n"
@@ -2919,7 +2919,7 @@ msgstr "(Datei)"
 
 #: inc/core/Dataset/Keys/FitVO2maxEstimate.php:62
 msgid "Garmin's newer devices have an integrated VO2max estimation."
-msgstr "Garmins neuere Geräte besitzen eine integrierte VDOT Schätzung."
+msgstr "Garmins neuere Geräte besitzen eine integrierte VO2max Schätzung."
 
 #: inc/core/Dataset/Keys/FitVO2maxEstimate.php:63
 msgid ""
@@ -4168,15 +4168,15 @@ msgstr ""
 
 #: inc/core/Configuration/Category/VO2max.php:129
 msgid "Manual correction factor"
-msgstr "Manueller VDOT-Korrekturfaktor"
+msgstr "Manueller Korrekturfaktor"
 
 #: inc/core/Configuration/Category/VO2max.php:130
 msgid ""
 "Manual correction factor (e.g. 0.9), if the automatic factor does not fit. "
 "Can be left empty."
 msgstr ""
-"Falls die automatische VDOT-Korrektur nicht passt, kannst du einen manuellen "
-"Faktor hier eingeben."
+"Falls die automatische Vo2max-Korrektur nicht passt, kannst du einen "
+"manuellen Faktor hier eingeben."
 
 #: inc/core/Configuration/Category/VO2max.php:131
 #, php-format
@@ -4198,17 +4198,18 @@ msgstr ""
 
 #: inc/core/Configuration/Category/VO2max.php:140
 msgid "Adapt for elevation"
-msgstr "VDOT: Distanz für Höhenmeter anpassen"
+msgstr "Distanz für Höhenmeter anpassen"
 
 #: inc/core/Configuration/Category/VO2max.php:141
 msgid ""
 "The distance can be corrected by a formula from Peter Greif to adapt for "
 "elevation."
-msgstr "Zur VDOT-Berechnung die Distanz nach Greif an die Höhenmeter anpassen."
+msgstr ""
+"Zur Vo2max-Berechnung die Distanz nach Greif an die Höhenmeter anpassen."
 
 #: inc/core/Configuration/Category/VO2max.php:145
 msgid "Correction per positive elevation"
-msgstr "VDOT: Distanz-Korrektur pro pos. Höhenmeter"
+msgstr "Distanz-Korrektur pro pos. Höhenmeter"
 
 #: inc/core/Configuration/Category/VO2max.php:146
 msgid "Add for each meter upwards X meter to the distance."
@@ -4221,7 +4222,7 @@ msgstr "Nur für die VO<sub>2</sub>max-Schätzung"
 
 #: inc/core/Configuration/Category/VO2max.php:151
 msgid "Correction per negative elevation"
-msgstr "VDOT: Distanz-Korrektur pro neg. Höhenmeter"
+msgstr "Distanz-Korrektur pro neg. Höhenmeter"
 
 #: inc/core/Configuration/Category/VO2max.php:152
 msgid "Add for each meter downwards X meter to the distance."
