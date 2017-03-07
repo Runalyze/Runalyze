@@ -1,18 +1,18 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.com\n"
 "POT-Creation-Date: 2017-02-28 18:41+0100\n"
-"PO-Revision-Date: 2016-12-03 08:36+0000\n"
-"Last-Translator: SUGU <su.gu@t-online.de>\n"
-"Language-Team: Danish <https://translate.runalyze.com/projects/runalyze/"
-"runalyze-master-po/da/>\n"
+"PO-Revision-Date: 2017-03-07 09:20+0000\n"
+"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
+"Language-Team: Danish <https://translate.runalyze.com/projects/runalyze"
+"/runalyze-master-po/da/>\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.9\n"
+"X-Generator: Weblate 2.11\n"
 "X-Poedit-KeywordsList: __;_ne;_n;_e\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -1809,9 +1809,8 @@ msgid "Heart rate zones"
 msgstr "Puls zoner"
 
 #: inc/training/view/section/class.SectionCompositeRow.php:149
-#, fuzzy
 msgid "More about VO<sub>2</sub>max calculation"
-msgstr "Mere om VDOT beregning"
+msgstr "Mere om VO<sub>2</sub>max beregning"
 
 #: inc/training/view/section/class.SectionCompositeRow.php:186
 msgid "Calories"
@@ -1881,9 +1880,8 @@ msgid "Analyze splits"
 msgstr "Analyse"
 
 #: inc/training/view/class.TrainingView.php:115
-#, fuzzy
 msgid "Show VO<sub>2</sub>max calculation"
-msgstr "Mere om VDOT beregning"
+msgstr "Mere om VO<sub>2</sub>max beregning"
 
 #: inc/training/view/class.TrainingView.php:123
 msgid "Analyze time series"
@@ -2269,21 +2267,19 @@ msgstr ""
 "sportstype ændres."
 
 #: inc/training/schemes/scheme.Training.php:312
-#, fuzzy
 msgid "VO2max for shape"
-msgstr "VDOT form"
+msgstr "VO2max form"
 
 #: inc/training/schemes/scheme.Training.php:313
-#, fuzzy
 msgid ""
 "VO2max values are estimated from your ratio of heart rate and pace. You can "
 "exclude single activities from the calculation of your form and should do so "
 "if it's heart rate data are not reliable (e.g. a lot of stops, walking "
 "breaks, ...)."
 msgstr ""
-"VDOTs skønnes ud fra forholdet mellem pulsfrekvens og tempo. Du kan udelukke "
-"enkelte aktiviteter fra beregningen af din form, og det anbefales hvis "
-"pulsen ikke er retvisende (f.eks. mange stop og gangpauser)."
+"VO2max skønnes ud fra forholdet mellem pulsfrekvens og tempo. Du kan "
+"udelukke enkelte aktiviteter fra beregningen af din form, og det anbefales "
+"hvis pulsen ikke er retvisende (f.eks. mange stop og gangpauser)."
 
 #: inc/training/schemes/scheme.Training.php:397
 msgid "Cadence (Running)"
@@ -4034,18 +4030,16 @@ msgid "VO<sub>2</sub>max estimation"
 msgstr ""
 
 #: inc/core/Configuration/Category/VO2max.php:124
-#, fuzzy
 msgid "Time constant length for VO<sub>2</sub>max"
-msgstr "Dage for VDOT"
+msgstr "Dage for VO<sub>2</sub>max"
 
 #: inc/core/Configuration/Category/VO2max.php:125
-#, fuzzy
 msgid "Time constant length for VO<sub>2</sub>max rolling average"
-msgstr "Antal dage der anvendes til beregning af VDOT-formen"
+msgstr "Antal dage der anvendes til beregning af VO<sub>2</sub>max-formen"
 
 #: inc/core/Configuration/Category/VO2max.php:129
 msgid "Manual correction factor"
-msgstr "Manuel VDOT-korrektionsfaktor"
+msgstr "Manuel korrektionsfaktor"
 
 #: inc/core/Configuration/Category/VO2max.php:130
 msgid ""
@@ -4061,22 +4055,20 @@ msgid "Value must be between %s and %s."
 msgstr "Værdien skal være imellem %s og %s."
 
 #: inc/core/Configuration/Category/VO2max.php:135
-#, fuzzy
 msgid "Use fixed VO<sub>2</sub>max value"
-msgstr "Manuel VDOT-værdi"
+msgstr "Manuel VO<sub>2</sub>max-værdi"
 
 #: inc/core/Configuration/Category/VO2max.php:136
-#, fuzzy
 msgid ""
 "Fixed VO<sub>2</sub>max value (e.g. 55), if the estimation does not fit. Can "
 "be left empty."
 msgstr ""
-"Fast VDOT-værdi (f.eks. 55), hvis den skønnede værdi ikke stemmer. Kan blive "
-"tomt."
+"Fast VO<sub>2</sub>max-værdi (f.eks. 55), hvis den skønnede værdi ikke "
+"stemmer. Kan blive tomt."
 
 #: inc/core/Configuration/Category/VO2max.php:140
 msgid "Adapt for elevation"
-msgstr "VDOT: tilpas for højdemeter"
+msgstr "tilpas for højdemeter"
 
 #: inc/core/Configuration/Category/VO2max.php:141
 msgid ""
@@ -4088,14 +4080,11 @@ msgstr ""
 
 #: inc/core/Configuration/Category/VO2max.php:145
 msgid "Correction per positive elevation"
-msgstr "VDOT: distance korrektion per positiv højdemeter"
+msgstr "distance korrektion per positiv højdemeter"
 
 #: inc/core/Configuration/Category/VO2max.php:146
-#, fuzzy
 msgid "Add for each meter upwards X meter to the distance."
-msgstr ""
-"Tilføj X meter til distancen for hver positiv højdemeter. (kun til VDOT "
-"beregningen)"
+msgstr "Tilføj X meter til distancen for hver positiv højdemeter."
 
 #: inc/core/Configuration/Category/VO2max.php:146
 #: inc/core/Configuration/Category/VO2max.php:152
@@ -4104,14 +4093,11 @@ msgstr ""
 
 #: inc/core/Configuration/Category/VO2max.php:151
 msgid "Correction per negative elevation"
-msgstr "VDOT: distance korrektion per negativ højdemeter"
+msgstr "distance korrektion per negativ højdemeter"
 
 #: inc/core/Configuration/Category/VO2max.php:152
-#, fuzzy
 msgid "Add for each meter downwards X meter to the distance."
-msgstr ""
-"Fjern X meter fra distancen for hver negativ højdemeter. (kun til VDOT "
-"beregningen)"
+msgstr "Fjern X meter fra distancen for hver negativ højdemeter."
 
 #: inc/core/Configuration/Category/DataBrowser.php:89
 msgid "Calendar: mode"
