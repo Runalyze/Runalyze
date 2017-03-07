@@ -5,6 +5,7 @@
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Runalyze/Runalyze/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Runalyze/Runalyze/?branch=master)
 [![Translation status](https://translate.runalyze.com/widgets/runalyze/-/svg-badge.svg)](http://translate.runalyze.de/engage/runalyze/?utm_source=widget)
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Runalyze/Runalyze?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=97LV7VEAG4KK6)
 
 [Runalyze](https://blog.runalyze.com) is a web application for analyzing your training - more detailed than any other sports diary.
 We are offering a official hosted version at [runalyze.com](https://runalyze.com).
