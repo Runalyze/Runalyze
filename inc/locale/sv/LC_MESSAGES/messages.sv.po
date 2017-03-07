@@ -1891,9 +1891,8 @@ msgid "Analyze splits"
 msgstr ""
 
 #: inc/training/view/class.TrainingView.php:115
-#, fuzzy
 msgid "Show VO<sub>2</sub>max calculation"
-msgstr "Mer om VDOT beräkninger"
+msgstr "Mer om VO<sub>2</sub>max beräkninger"
 
 #: inc/training/view/class.TrainingView.php:123
 msgid "Analyze time series"
