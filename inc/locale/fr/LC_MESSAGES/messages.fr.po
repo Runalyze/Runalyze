@@ -1,18 +1,18 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.com\n"
 "POT-Creation-Date: 2017-02-28 18:41+0100\n"
-"PO-Revision-Date: 2016-12-09 09:38+0000\n"
-"Last-Translator: Alex Thierry <alex.thierry@openmailbox.org>\n"
-"Language-Team: French <https://translate.runalyze.com/projects/runalyze/"
-"runalyze-master-po/fr/>\n"
+"PO-Revision-Date: 2017-03-07 09:12+0000\n"
+"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
+"Language-Team: French <https://translate.runalyze.com/projects/runalyze"
+"/runalyze-master-po/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 2.9\n"
+"X-Generator: Weblate 2.11\n"
 "X-Poedit-KeywordsList: __;_ne;_n;_e\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -1862,9 +1862,8 @@ msgid "Heart rate zones"
 msgstr "Zones du rythme cardiaque"
 
 #: inc/training/view/section/class.SectionCompositeRow.php:149
-#, fuzzy
 msgid "More about VO<sub>2</sub>max calculation"
-msgstr "Plus à propos du calcul VDOT"
+msgstr "Plus à propos du calcul VO<sub>2</sub>max"
 
 #: inc/training/view/section/class.SectionCompositeRow.php:186
 msgid "Calories"
@@ -1933,9 +1932,8 @@ msgid "Analyze splits"
 msgstr "Analyse par intervalle"
 
 #: inc/training/view/class.TrainingView.php:115
-#, fuzzy
 msgid "Show VO<sub>2</sub>max calculation"
-msgstr "Montrer le calcul de la VDOT"
+msgstr "Montrer le calcul de la VO<sub>2</sub>max"
 
 #: inc/training/view/class.TrainingView.php:123
 msgid "Analyze time series"
@@ -2322,22 +2320,20 @@ msgstr ""
 "longueur ou le type de sport."
 
 #: inc/training/schemes/scheme.Training.php:312
-#, fuzzy
 msgid "VO2max for shape"
-msgstr "Forme VDOT"
+msgstr "Forme VO2max"
 
 #: inc/training/schemes/scheme.Training.php:313
-#, fuzzy
 msgid ""
 "VO2max values are estimated from your ratio of heart rate and pace. You can "
 "exclude single activities from the calculation of your form and should do so "
 "if it's heart rate data are not reliable (e.g. a lot of stops, walking "
 "breaks, ...)."
 msgstr ""
-"Les VDOTs sont estimées à partir du rapport entre rythme cardiaque et rythme "
-"de course. Vous pouvez exclure des activités dans le calcul de votre forme "
-"et devriez le faire si les données de rythme cardiaque ne sont pas fiables "
-"(par ex. de nombreux arrêts, pauses en marchant, ...)."
+"Les VO2max sont estimées à partir du rapport entre rythme cardiaque et "
+"rythme de course. Vous pouvez exclure des activités dans le calcul de votre "
+"forme et devriez le faire si les données de rythme cardiaque ne sont pas "
+"fiables (par ex. de nombreux arrêts, pauses en marchant, ...)."
 
 #: inc/training/schemes/scheme.Training.php:397
 msgid "Cadence (Running)"
@@ -2895,15 +2891,14 @@ msgid "Effective VO<sub>2</sub>max icon"
 msgstr ""
 
 #: inc/core/Dataset/Keys/VO2maxIcon.php:55
-#, fuzzy
 msgid ""
 "Each VO<sub>2</sub>max value of an activity is marked with an arrow to show "
 "if the value is (much) higher than your current shape, equal to it or (much) "
 "lower:"
 msgstr ""
-"Chaque valeur VDOT d'une activité est indiquée avec une flèche pour montrer "
-"si la valeur est (nettement) plus grande, égale ou (nettement) plus faible "
-"que votre forme actuelle :"
+"Chaque valeur VO<sub>2</sub>max d'une activité est indiquée avec une flèche "
+"pour montrer si la valeur est (nettement) plus grande, égale ou (nettement) "
+"plus faible que votre forme actuelle :"
 
 #: inc/core/Dataset/Keys/VerticalRatio.php:53
 msgid "Vertical ratio is the ratio of vertical oscillation to stride length."
@@ -2924,13 +2919,13 @@ msgstr ""
 "peau non couverte du fait de l'écoulement de l'air."
 
 #: inc/core/Dataset/Keys/VO2maxValue.php:55
-#, fuzzy
 msgid ""
 "Estimated VO<sub>2</sub>max based on pace and heart rate. The value is "
 "slightly transparent if it is not used for your VO<sub>2</sub>max shape."
 msgstr ""
-"VDOT estimée basée sur l'allure et la fréquence cardiaque. La valeur est "
-"quelque peu transparente si elle n'est pas utilisée pour votre forme VDOT."
+"VO<sub>2</sub>max estimée basée sur l'allure et la fréquence cardiaque. La "
+"valeur est quelque peu transparente si elle n'est pas utilisée pour votre "
+"forme VO<sub>2</sub>max."
 
 #: inc/core/Dataset/Keys/FitVO2maxEstimate.php:53
 msgid "(file)"
@@ -4176,14 +4171,12 @@ msgid "VO<sub>2</sub>max estimation"
 msgstr ""
 
 #: inc/core/Configuration/Category/VO2max.php:124
-#, fuzzy
 msgid "Time constant length for VO<sub>2</sub>max"
-msgstr "Longueur constante du temps pour VDOT"
+msgstr "Longueur constante du temps pour VO<sub>2</sub>max"
 
 #: inc/core/Configuration/Category/VO2max.php:125
-#, fuzzy
 msgid "Time constant length for VO<sub>2</sub>max rolling average"
-msgstr "Longueur constante du temps pour moyenne mobile VDOT"
+msgstr "Longueur constante du temps pour moyenne mobile VO<sub>2</sub>max"
 
 #: inc/core/Configuration/Category/VO2max.php:129
 msgid "Manual correction factor"
@@ -5039,12 +5032,11 @@ msgstr ""
 "résultats en compétition:"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:55
-#, fuzzy
 msgid ""
 "Your current effective VO2max is estimated based on the ratio of heart rate "
 "and pace. This value is equivalent to specific performances."
 msgstr ""
-"Votre VDOT actuelle est estimée en se basant sur le rapport entre votre "
+"Votre VO2max actuelle est estimée en se basant sur le rapport entre votre "
 "rythme cardiaque et votre rythme de course. Cette valeur est équivalente "
 "pour des performances spécifiques."
 
@@ -5075,13 +5067,12 @@ msgstr ""
 "Bock. Ce modèle utilise votre meilleur résultat."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:68
-#, fuzzy
 msgid ""
 "The VO2max model is the only one which considers your current shape. The "
 "other models are based on your previous race results."
 msgstr ""
-"Le modèle de VDOT est le seul qui prenne en compte votre forme actuelle. Les "
-"autres modèles sont basés sur vos résultats précédents en compétition."
+"Le modèle de VO2max est le seul qui prenne en compte votre forme actuelle. "
+"Les autres modèles sont basés sur vos résultats précédents en compétition."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:76
 msgid "Distances to predict"
@@ -5136,9 +5127,8 @@ msgid "Prognosis calculator: form trend"
 msgstr "Calculateur de pronostic: tendance de forme physique"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:125
-#, fuzzy
 msgid "Your current effective VO2max:"
-msgstr "Votre VDOT actuelle:"
+msgstr "Votre VO2max actuelle:"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:126
 #, fuzzy
@@ -5173,9 +5163,9 @@ msgid "K must be between %u and %u, e between %f and %f."
 msgstr "K doit être entre %u et %u, e entre %f et %f."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:353
-#, fuzzy, php-format
+#, php-format
 msgid "Effective VO2max must be between %u and %u."
-msgstr "VDOT doit être entre %u et %u."
+msgstr "VO2max doit être entre %u et %u."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:371
 msgid "Input"
@@ -5670,14 +5660,12 @@ msgid "Fatigue (ATL)"
 msgstr "Fatigue (ATL)"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/Plot.Form.php:195
-#, fuzzy
 msgid "avg VO2MAX"
-msgstr "VDOT moy"
+msgstr "VO2max moy"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/Plot.Form.php:197
-#, fuzzy
 msgid "day VO2MAX"
-msgstr "VDOT du jour"
+msgstr "VO2max du jour"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/Plot.Form.php:247
 msgid "Shape for all years"
@@ -5693,13 +5681,12 @@ msgid "Calculations"
 msgstr "Calculs"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:40
-#, fuzzy
 msgid ""
 "Calculate experimental values as shape and fatigue based on TRIMP, marathon "
 "shape and your VO<sub>2</sub>max shape."
 msgstr ""
 "Calculer les valeurs expérimentales comme la forme et la fatigue en se "
-"basant sur le TRIMP, l'endurance de base et votre forme VDOT."
+"basant sur le TRIMP, l'endurance de base et votre forme VO<sub>2</sub>max."
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:47
 msgid "Show: ATL/CTL/TSB"
@@ -5747,9 +5734,8 @@ msgid "How are these values calculated?"
 msgstr "Comment ces valeurs sont-elles calculées?"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:80
-#, fuzzy
 msgid "Explanations: What are VO2max and TRIMP?"
-msgstr "Explications: Que sont la VDOT et le TRIMP?"
+msgstr "Explications: Que sont la VO2max et le TRIMP?"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:99
 msgid "There are not enough activities for good calculations."
@@ -5764,7 +5750,6 @@ msgid "Marathon&nbsp;shape"
 msgstr ""
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:177
-#, fuzzy
 msgid ""
 "<em>Experimental value!</em><br>100 &#37; means: you had enough long runs "
 "and kilometers per week to run an optimal marathon based on your current "
@@ -5772,7 +5757,7 @@ msgid ""
 msgstr ""
 "<em>Valeur Expérimentale!</em><br>100 &#37; veut dire: vous avez eu assez de "
 "courses longues et de kilomètres par semaine pour courir un bon marathon, "
-"d'après votre VDOT actuelle."
+"d'après votre VO2max actuelle."
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:184
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:195
@@ -5930,23 +5915,23 @@ msgstr ""
 "Human Performance</a> sur fellrn.com"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:398
-#, fuzzy, php-format
+#, php-format
 msgid "Effective VO<sub>2</sub>max values of the last %s days"
-msgstr "valeurs de VDOT sur les %s derniers jours"
+msgstr "valeurs de VO<sub>2</sub>max sur les %s derniers jours"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:423
-#, fuzzy, php-format
+#, php-format
 msgid ""
 "The VO<sub>2</sub>max shape is calculated as the average, weighted by time, "
 "of estimated VO<sub>2</sub>max values of your activities in the last %s days."
 msgstr ""
-"La valeur de VDOT est la moyenne, pondérée par le temps, des VDOT de vos "
-"activités sur les %s derniers jours."
+"La valeur de VO<sub>2</sub>max est la moyenne, pondérée par le temps, des "
+"VO<sub>2</sub>max de vos activités sur les %s derniers jours."
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:424
-#, fuzzy, php-format
+#, php-format
 msgid "Your current VO<sub>2</sub>max shape: <strong>%s</strong><br>&nbsp;"
-msgstr "Votre forme VDOT actuelle: <strong>%s</strong><br>&nbsp;"
+msgstr "Votre forme VO<sub>2</sub>max actuelle: <strong>%s</strong><br>&nbsp;"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:426
 msgid ""
