@@ -1,18 +1,18 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.com\n"
 "POT-Creation-Date: 2017-02-28 18:41+0100\n"
-"PO-Revision-Date: 2017-01-18 14:23+0000\n"
-"Last-Translator: Henk Kramer <kramerty88@gmail.com>\n"
-"Language-Team: Dutch <https://translate.runalyze.com/projects/runalyze/"
-"runalyze-master-po/nl/>\n"
+"PO-Revision-Date: 2017-03-07 09:07+0000\n"
+"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
+"Language-Team: Dutch <https://translate.runalyze.com/projects/runalyze"
+"/runalyze-master-po/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.9\n"
+"X-Generator: Weblate 2.11\n"
 "X-Poedit-KeywordsList: __;_ne;_n;_e\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -1854,9 +1854,8 @@ msgid "Heart rate zones"
 msgstr "Hartslagzones"
 
 #: inc/training/view/section/class.SectionCompositeRow.php:149
-#, fuzzy
 msgid "More about VO<sub>2</sub>max calculation"
-msgstr "Meer over de VDOT berekening"
+msgstr "Meer over de VO<sub>2</sub>max berekening"
 
 #: inc/training/view/section/class.SectionCompositeRow.php:186
 msgid "Calories"
@@ -1925,9 +1924,8 @@ msgid "Analyze splits"
 msgstr "Analyseer tussentijden"
 
 #: inc/training/view/class.TrainingView.php:115
-#, fuzzy
 msgid "Show VO<sub>2</sub>max calculation"
-msgstr "Toon VDOT berekening"
+msgstr "Toon VO<sub>2</sub>max berekening"
 
 #: inc/training/view/class.TrainingView.php:123
 msgid "Analyze time series"
@@ -2317,20 +2315,19 @@ msgstr ""
 #: inc/training/schemes/scheme.Training.php:312
 #, fuzzy
 msgid "VO2max for shape"
-msgstr "VDOT vorm"
+msgstr "VO2max vorm"
 
 #: inc/training/schemes/scheme.Training.php:313
-#, fuzzy
 msgid ""
 "VO2max values are estimated from your ratio of heart rate and pace. You can "
 "exclude single activities from the calculation of your form and should do so "
 "if it's heart rate data are not reliable (e.g. a lot of stops, walking "
 "breaks, ...)."
 msgstr ""
-"VDOTs worden geschat op basis van de verhouding van uw hartslag en tempo. U "
+"VO2max worden geschat op basis van de verhouding van uw hartslag en tempo. U "
 "kunt afzonderlijke activiteiten uitsluiten van de berekening van uw vorm, en "
-"zou dit ook moeten doen als de hartslaggegevens niet betrouwbaar zijn "
-"(bijvoorbeeld veel stops, wandelen pauzes, ...)."
+"zou dit ook moeten doen als de hartslaggegevens niet betrouwbaar zijn ("
+"bijvoorbeeld veel stops, wandelen pauzes, ...)."
 
 #: inc/training/schemes/scheme.Training.php:397
 msgid "Cadence (Running)"
@@ -2883,15 +2880,14 @@ msgid "Effective VO<sub>2</sub>max icon"
 msgstr ""
 
 #: inc/core/Dataset/Keys/VO2maxIcon.php:55
-#, fuzzy
 msgid ""
 "Each VO<sub>2</sub>max value of an activity is marked with an arrow to show "
 "if the value is (much) higher than your current shape, equal to it or (much) "
 "lower:"
 msgstr ""
-"Elke VDOT-waarde van een activiteit is gemarkeerd met een pijl om aan te "
-"gegeven of deze waarde (veel) hoger is dan uw huidige vorm, eraan gelijk of "
-"(veel) lager:"
+"Elke VO<sub>2</sub>max-waarde van een activiteit is gemarkeerd met een pijl "
+"om aan te gegeven of deze waarde (veel) hoger is dan uw huidige vorm, eraan "
+"gelijk of (veel) lager:"
 
 #: inc/core/Dataset/Keys/VerticalRatio.php:53
 msgid "Vertical ratio is the ratio of vertical oscillation to stride length."
@@ -2913,13 +2909,13 @@ msgstr ""
 "luchtvochtigheid."
 
 #: inc/core/Dataset/Keys/VO2maxValue.php:55
-#, fuzzy
 msgid ""
 "Estimated VO<sub>2</sub>max based on pace and heart rate. The value is "
 "slightly transparent if it is not used for your VO<sub>2</sub>max shape."
 msgstr ""
-"Geschatte VDOT gebaseerd op tempo en hartslag. Deze waarde is lichtelijk "
-"transparant als deze niet wordt gebruikt voor de VDOT vorm."
+"Geschatte VO<sub>2</sub>max gebaseerd op tempo en hartslag. Deze waarde is "
+"lichtelijk transparant als deze niet wordt gebruikt voor de VO<sub>2</sub>"
+"max vorm."
 
 #: inc/core/Dataset/Keys/FitVO2maxEstimate.php:53
 msgid "(file)"
@@ -4167,28 +4163,26 @@ msgid "VO<sub>2</sub>max estimation"
 msgstr ""
 
 #: inc/core/Configuration/Category/VO2max.php:124
-#, fuzzy
 msgid "Time constant length for VO<sub>2</sub>max"
-msgstr "Dagen voor VDOT"
+msgstr "Dagen voor VO<sub>2</sub>max"
 
 #: inc/core/Configuration/Category/VO2max.php:125
-#, fuzzy
 msgid "Time constant length for VO<sub>2</sub>max rolling average"
 msgstr ""
-"Aantal dagen die voor de berekening van het VDOT voortschrijdend gemiddelde "
-"gebruikt worden"
+"Aantal dagen die voor de berekening van het VO<sub>2</sub>max "
+"voortschrijdend gemiddelde gebruikt worden"
 
 #: inc/core/Configuration/Category/VO2max.php:129
 msgid "Manual correction factor"
-msgstr "Handmatige VDOT-correctiefactor"
+msgstr "Handmatige correctiefactor"
 
 #: inc/core/Configuration/Category/VO2max.php:130
 msgid ""
 "Manual correction factor (e.g. 0.9), if the automatic factor does not fit. "
 "Can be left empty."
 msgstr ""
-"Wanneer de handmatige VDOT-correctiefactor (bijvoorbeeld 0.9) niet juist is, "
-"kunt u een handmatige factor ingeven (Kan leeg worden gelaten)."
+"Wanneer de handmatige VO2max-correctiefactor (bijvoorbeeld 0.9) niet juist "
+"is, kunt u een handmatige factor ingeven (Kan leeg worden gelaten)."
 
 #: inc/core/Configuration/Category/VO2max.php:131
 #, php-format
@@ -4196,19 +4190,17 @@ msgid "Value must be between %s and %s."
 msgstr "Waarde moet liggen tussen %s en %s."
 
 #: inc/core/Configuration/Category/VO2max.php:135
-#, fuzzy
 msgid "Use fixed VO<sub>2</sub>max value"
-msgstr "Handmatige VDOT waarde"
+msgstr "Handmatige VO<sub>2</sub>max waarde"
 
 #: inc/core/Configuration/Category/VO2max.php:136
-#, fuzzy
 msgid ""
 "Fixed VO<sub>2</sub>max value (e.g. 55), if the estimation does not fit. Can "
 "be left empty."
 msgstr ""
-"Wanneer u geen hartslagmeter gebruikt of de berekende VDOT waarde er ver "
-"naast ligt, kunt u voor de voorspelling hier een vaste waarde invoeren. Kan "
-"leeg gelaten worden."
+"Wanneer u geen hartslagmeter gebruikt of de berekende VO<sub>2</sub>max "
+"waarde er ver naast ligt, kunt u voor de voorspelling hier een vaste waarde "
+"invoeren. Kan leeg gelaten worden."
 
 #: inc/core/Configuration/Category/VO2max.php:140
 msgid "Adapt for elevation"
@@ -4224,14 +4216,13 @@ msgstr ""
 
 #: inc/core/Configuration/Category/VO2max.php:145
 msgid "Correction per positive elevation"
-msgstr "VDOT: Afstandscorrectie per positieve hoogtemeters"
+msgstr "Afstandscorrectie per positieve hoogtemeters"
 
 #: inc/core/Configuration/Category/VO2max.php:146
-#, fuzzy
 msgid "Add for each meter upwards X meter to the distance."
 msgstr ""
-"Om bij de VDOT-berekening de hoogtemeters in acht te nemen, kan de afstand "
-"van de Hoogtemeters dienovereenkomstig worden aangepast"
+"Om bij de VO2max-berekening de hoogtemeters in acht te nemen, kan de afstand "
+"van de Hoogtemeters dienovereenkomstig worden aangepast."
 
 #: inc/core/Configuration/Category/VO2max.php:146
 #: inc/core/Configuration/Category/VO2max.php:152
@@ -4241,14 +4232,11 @@ msgstr "alleen voor wedstrijden"
 
 #: inc/core/Configuration/Category/VO2max.php:151
 msgid "Correction per negative elevation"
-msgstr "VDOT: Afstandscorrectie per negatieve hoogtemeters"
+msgstr "Afstandscorrectie per negatieve hoogtemeters"
 
 #: inc/core/Configuration/Category/VO2max.php:152
-#, fuzzy
 msgid "Add for each meter downwards X meter to the distance."
-msgstr ""
-"Voor elke meter naar beneden X meter aan de afstand toevoegen. (Alleen voor "
-"de berekening van de VDOT)"
+msgstr "Voor elke meter naar beneden X meter aan de afstand toevoegen."
 
 #: inc/core/Configuration/Category/DataBrowser.php:89
 msgid "Calendar: mode"
@@ -5038,13 +5026,12 @@ msgstr ""
 "wedstrijdprestaties te voorspellen:"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:55
-#, fuzzy
 msgid ""
 "Your current effective VO2max is estimated based on the ratio of heart rate "
 "and pace. This value is equivalent to specific performances."
 msgstr ""
-"Uw huidige VDOT is gebaseerd op de verhouding tussen hartslag en tempo. Deze "
-"waarde is gelijkwaardig met specifieke prestaties."
+"Uw huidige effectieve VO2max is gebaseerd op de verhouding tussen hartslag "
+"en tempo. Deze waarde is gelijkwaardig met specifieke prestaties."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:58
 msgid ""
@@ -5073,13 +5060,12 @@ msgstr ""
 "uw beste resultaat."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:68
-#, fuzzy
 msgid ""
 "The VO2max model is the only one which considers your current shape. The "
 "other models are based on your previous race results."
 msgstr ""
-"Het VDOT model is de enige die rekening houdt met uw huidige vorm. De andere "
-"modellen zijn gebaseerd op uw eerdere wedstrijdresultaten."
+"Het VO2max model is de enige die rekening houdt met uw huidige vorm. De "
+"andere modellen zijn gebaseerd op uw eerdere wedstrijdresultaten."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:76
 msgid "Distances to predict"
@@ -5136,7 +5122,7 @@ msgstr "Berekening voorspelling: vorm trend"
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:125
 #, fuzzy
 msgid "Your current effective VO2max:"
-msgstr "Uw huidige VDOT:"
+msgstr "Uw huidige effectieve VO2max:"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:126
 #, fuzzy
@@ -5171,9 +5157,9 @@ msgid "K must be between %u and %u, e between %f and %f."
 msgstr "K moet tussen %u en %u liggen, e tussen %f en %f."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:353
-#, fuzzy, php-format
+#, php-format
 msgid "Effective VO2max must be between %u and %u."
-msgstr "VDOT waarde moet liggen tussen %u en %u."
+msgstr "Effectieve VO2max waarde moet liggen tussen %u en %u."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:371
 msgid "Input"
@@ -5667,14 +5653,13 @@ msgid "Fatigue (ATL)"
 msgstr "Vermoeidheid (ATL)"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/Plot.Form.php:195
-#, fuzzy
 msgid "avg VO2MAX"
-msgstr "gem. VDOT"
+msgstr "gem. VO2MAX"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/Plot.Form.php:197
 #, fuzzy
 msgid "day VO2MAX"
-msgstr "dag VDOT"
+msgstr "dag VO2MAX"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/Plot.Form.php:247
 msgid "Shape for all years"
@@ -5690,13 +5675,12 @@ msgid "Calculations"
 msgstr "Berekeningen"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:40
-#, fuzzy
 msgid ""
 "Calculate experimental values as shape and fatigue based on TRIMP, marathon "
 "shape and your VO<sub>2</sub>max shape."
 msgstr ""
 "Bereken experimentele waarden zoals vorm en vermoeidheid gebaseerd op TRIMP, "
-"basisuithoudingsvermogen en uw VDOT-vorm."
+"basisuithoudingsvermogen en uw VO<sub>2</sub>max-vorm."
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:47
 msgid "Show: ATL/CTL/TSB"
@@ -5741,9 +5725,8 @@ msgid "How are these values calculated?"
 msgstr "Hoe zijn deze waarden berekend?"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:80
-#, fuzzy
 msgid "Explanations: What are VO2max and TRIMP?"
-msgstr "Uitleg: Wat is VDOT en TRIMP?"
+msgstr "Uitleg: Wat is VO2max en TRIMP?"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:99
 msgid "There are not enough activities for good calculations."
@@ -5758,15 +5741,14 @@ msgid "Marathon&nbsp;shape"
 msgstr ""
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:177
-#, fuzzy
 msgid ""
 "<em>Experimental value!</em><br>100 &#37; means: you had enough long runs "
 "and kilometers per week to run an optimal marathon based on your current "
 "shape."
 msgstr ""
 "<em>Experimentele waarde!</em><br>100 &#37; betekent: u heeft, gebaseerd op "
-"uw huidige VDOT, voldoende lange duurlopen en kilometers per week gemaakt om "
-"een goede marathon te kunnen rennen."
+"uw huidige VO2max, voldoende lange duurlopen en kilometers per week gemaakt "
+"om een goede marathon te kunnen rennen."
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:184
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:195
@@ -5923,23 +5905,23 @@ msgstr ""
 "Human Performance</a> op fellrnr.com"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:398
-#, fuzzy, php-format
+#, php-format
 msgid "Effective VO<sub>2</sub>max values of the last %s days"
-msgstr "VDOT waarden van de laatste %s dagen"
+msgstr "VO<sub>2</sub>max waarden van de laatste %s dagen"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:423
-#, fuzzy, php-format
+#, php-format
 msgid ""
 "The VO<sub>2</sub>max shape is calculated as the average, weighted by time, "
 "of estimated VO<sub>2</sub>max values of your activities in the last %s days."
 msgstr ""
-"De VDOT-waarde is een gemiddelde, gewogen naar de tijd, van de VDOT van uw "
-"activiteiten in de laatste %s dagen."
+"De VO<sub>2</sub>max-waarde is een gemiddelde, gewogen naar de tijd, van de "
+"VO<sub>2</sub>max van uw activiteiten in de laatste %s dagen."
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:424
-#, fuzzy, php-format
+#, php-format
 msgid "Your current VO<sub>2</sub>max shape: <strong>%s</strong><br>&nbsp;"
-msgstr "Uw huidige VDOT-vorm: <strong>%s</strong><br>&nbsp;"
+msgstr "Uw huidige VO<sub>2</sub>max-vorm: <strong>%s</strong><br>&nbsp;"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:426
 msgid ""
