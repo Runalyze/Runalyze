@@ -99,7 +99,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 
 			$this->assertFalse( $this->object->object()->Splits()->areEmpty() );
 
-			$this->assertEquals( 53, $this->object->object()->getFitVdotEstimate() );
+			$this->assertEquals( 53, $this->object->object()->getFitVO2maxEstimate() );
 			$this->assertEquals( 816, $this->object->object()->getFitRecoveryTime() );
 			$this->assertEquals( 0, $this->object->object()->getFitHRVscore() );
 		}
@@ -139,7 +139,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 
 			$this->assertEquals( 46*60 + 50, $this->object->object()->getArrayTimeLastPoint(), '', 5 );
 
-			$this->assertEquals( 65, $this->object->object()->getFitVdotEstimate() );
+			$this->assertEquals( 65, $this->object->object()->getFitVO2maxEstimate() );
 			$this->assertEquals( 932, $this->object->object()->getFitRecoveryTime() );
 			$this->assertEquals( 0, $this->object->object()->getFitHRVscore() );
 
@@ -416,7 +416,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertTrue($this->object->object()->hasArrayPower());
 
 			// Read from undocumented block NUMBER=79
-			$this->assertEquals(47.64, $this->object->object()->getFitVdotEstimate());
+			$this->assertEquals(47.64, $this->object->object()->getFitVO2maxEstimate());
 		}
 	}
 
@@ -646,7 +646,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertEquals(819, $this->object->object()->getArrayTimeLastPoint(), '', 10);
 			$this->assertEquals(2.029, $this->object->object()->getDistance(), '', 0.01);
 
-			$this->assertEquals(40.62, $this->object->object()->getFitVdotEstimate());
+			$this->assertEquals(40.62, $this->object->object()->getFitVO2maxEstimate());
 			$this->assertEquals(1307, $this->object->object()->getFitRecoveryTime());
 			$this->assertEquals(3.2, $this->object->object()->getFitTrainingEffect());
 

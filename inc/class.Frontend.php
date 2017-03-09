@@ -33,12 +33,6 @@ class Frontend {
 	protected $symfonyToken = null;
 
 	/**
-	 * Admin password as md5
-	 * @var string
-	 */
-	protected $adminPassAsMD5 = '';
-
-	/**
 	 * Yaml Configuration
 	 * @var array
 	 */
@@ -146,7 +140,7 @@ class Frontend {
 
 		Configuration::loadAll();
 
-		\Runalyze\Calculation\JD\VDOTCorrector::setGlobalFactor( Configuration::Data()->vdotFactor() );
+		\Runalyze\Calculation\JD\LegacyEffectiveVO2maxCorrector::setGlobalFactor( Configuration::Data()->vo2maxCorrectionFactor() );
 
 		require_once FRONTEND_PATH.'class.Helper.php';
 	}
@@ -162,8 +156,6 @@ class Frontend {
 	 * Connect to database
 	 */
 	private function initDatabase() {
-		$this->adminPassAsMD5 = md5($this->yamlConfig['database_password']);
-
 		define('PREFIX', $this->yamlConfig['database_prefix']);
 
 		DB::connect($this->yamlConfig['database_host'], $this->yamlConfig['database_port'], $this->yamlConfig['database_user'], $this->yamlConfig['database_password'], $this->yamlConfig['database_name']);

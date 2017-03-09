@@ -104,7 +104,7 @@ class Table {
 				Activity\Entity::VERTICAL_OSCILLATION,
 				Activity\Entity::VERTICAL_RATIO,
 				Activity\Entity::STRIDE_LENGTH,
-				Activity\Entity::VDOT
+				Activity\Entity::VO2MAX
 			));
 		}
 	}
@@ -241,8 +241,8 @@ class Table {
 					$Code .= '<td>'.$View->strideLength()->string().'</td>';
 					break;
 
-				case Activity\Entity::VDOT:
-					$Code .= '<td>'.$View->vdot()->value().'</td>';
+				case Activity\Entity::VO2MAX:
+					$Code .= '<td>'.$View->vo2max()->value().'</td>';
 					break;
 
 				case Activity\Entity::POWER:
@@ -275,8 +275,8 @@ class Table {
 				return __('Vertical ratio');
 			case Activity\Entity::STRIDE_LENGTH:
 				return __('Stride length');
-			case Activity\Entity::VDOT:
-				return __('VDOT');
+			case Activity\Entity::VO2MAX:
+				return 'VO<sub>2</sub>max';
 			case Activity\Entity::POWER:
 				return __('Power');
 		}

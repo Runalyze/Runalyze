@@ -1,0 +1,62 @@
+{% extends 'base_logged_in.twig' %}
+
+{% block content %}
+    <div class="panel-heading">
+        <h1><a class="ajax" target="ajax" href="{{ url('poster') }}">{% trans %}Poster generator{% endtrans %}</a></h1>
+    </div>
+
+    <div class="panel-content">
+        {% block toolContent %}
+        <div class="panel-content">
+            {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'ajax no-automatic-reloads'}, 'action': url('poster')}) }}
+
+            <fieldset>
+                <div class="c">
+                    <img src="{{ asset('assets/images/poster-collage.png') }}">
+                </div>
+
+                <p class="info">{% trans %}Based on your data RUNALYZE can generate some posters for you. Poster generations are performed in the background.{% endtrans %}</p>
+
+                {% include 'flashmessages.html.twig' %}
+
+                <p class="text">&nbsp;</p>
+
+                {{ form_row(form.postertype, {'label': 'Choose postertype(s)'|trans}) }}
+                {{ form_row(form.sport, {'label': 'Choose sport'|trans}) }}
+                {{ form_row(form.year, {'label': 'Choose year'|trans}) }}
+                {{ form_row(form.title, {'label': 'Poster title'|trans}) }}
+                {{ form_row(form.size, {'label': 'Choose size'|trans}) }}
+                {{ form_rest(form) }}
+
+                <div class="c">
+                    <input type="submit" value="{% trans %}Generate posters{% endtrans %}">
+                </div>
+            </fieldset>
+
+            {{ form_end(form) }}
+        </div>
+            <p class="info">{% trans %}There are some ideas for future improvements of this tool.{% endtrans %}
+            {% trans with {'%forum%': '<a href="https://forum.runalyze.com/viewtopic.php?f=8&t=604#p2649">forum.runalyze.com</a>'}%}Let us know what is most important for you at %forum%{% endtrans %}</p>
+
+        {% endblock %}
+    </div>
+
+    <div class="panel-heading panel-sub-heading">
+        <h1>{% trans %}Previously generated posters{% endtrans %}</h1>
+    </div>
+
+    <div class="panel-content">
+        {% for filename, size in listing %}
+        <p class="file">
+            <a href="{{ url('poster-download', {'name': filename}) }}">{{ filename }}, {{ size|filesize }}</a>
+        </p>
+        {% endfor %}
+
+        {% if listing is empty %}
+            <p class="file">{% trans %}There are no posters so far.{% endtrans %}</p>
+        {% else %}
+            <p class="warning">{% trans with {'%days%': posterStoragePeriod }%}Please download the posters within %days% days.{% endtrans %}</p>
+        {% endif %}
+    </div>
+
+{% endblock %}

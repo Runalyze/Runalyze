@@ -1,0 +1,13 @@
+{% extends 'tools/poster.html.twig' %}
+
+{% block toolContent %}
+    <p class="okay">
+        {% trans %}The poster generation has been queued and you will receive a notification as soon as your poster is ready for download.{% endtrans %}
+    </p>
+
+    <p class="text"></p>
+
+    <p class="text">
+        <a class="ajax" href="{{ url("poster") }}" target="ajax">&laquo; {% trans %}back to form{% endtrans %}</a>
+    </p>
+{% endblock %}

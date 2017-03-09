@@ -7,8 +7,8 @@
 namespace Runalyze\Dataset;
 
 /**
- * Default dataset configuration that is used 
- * 
+ * Default dataset configuration that is used
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Dataset
  */
@@ -43,13 +43,12 @@ class DefaultConfiguration extends Configuration
 			Keys::SPLITS => true,
 			Keys::COMMENT => true,
 			Keys::TRIMP => true,
-			Keys::VDOT_ICON => true,
-			Keys::VDOT_VALUE => false,
+			Keys::VO2MAX_ICON => true,
+			Keys::VO2MAX_VALUE => false,
 			Keys::TRAININGPARTNER => false,
 			Keys::ROUTE => false,
 			Keys::CADENCE => false,
 			Keys::POWER => false,
-			Keys::JD_INTENSITY => true,
 			Keys::GROUNDCONTACT => true,
 			Keys::VERTICAL_OSCILLATION => true,
 			Keys::STRIDE_LENGTH => false,

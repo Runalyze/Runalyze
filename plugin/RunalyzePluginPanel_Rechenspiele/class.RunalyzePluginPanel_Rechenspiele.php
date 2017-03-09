@@ -8,8 +8,8 @@ $PLUGINKEY = 'RunalyzePluginPanel_Rechenspiele';
 use Runalyze\Activity\Distance;
 use Runalyze\Activity\Duration;
 use Runalyze\Calculation\BasicEndurance;
-use Runalyze\Calculation\JD\VDOT;
-use Runalyze\Calculation\JD\VDOTCorrector;
+use Runalyze\Calculation\JD\LegacyEffectiveVO2max;
+use Runalyze\Calculation\JD\LegacyEffectiveVO2maxCorrector;
 use Runalyze\Calculation\Performance;
 use Runalyze\Configuration;
 use Runalyze\Sports\Performance\Model\TsbModel;
@@ -25,11 +25,6 @@ use Runalyze\View\Tooltip;
  */
 class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	/**
-	 * @var string
-	 */
-	const CACHE_KEY_JD_POINTS = 'JDQuery';
-
-	/**
 	 * Name
 	 * @return string
 	 */
@@ -42,25 +37,13 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	 * @return string
 	 */
 	final public function description() {
-		return __('Calculate experimental values as shape and fatigue based on TRIMP, marathon shape and your VDOT shape.');
-	}
-
-	/**
-	 * Display long description
-	 */
-	protected function displayLongDescription() {
-		echo HTML::p( __('Runalyze uses a lot of tables and derived formulas from Jack Daniels\' Running formula. '.
-						'That way Runalyze is able to predict your current VDOT value.') );
+		return __('Calculate experimental values as shape and fatigue based on TRIMP, marathon shape and your VO<sub>2</sub>max shape.');
 	}
 
 	/**
 	 * Init configuration
 	 */
 	protected function initConfiguration() {
-		$ShowPaces = new PluginConfigurationValueBool('show_trainingpaces', __('Show: Paces'));
-		$ShowPaces->setTooltip( __('Paces based on your curent VDOT') );
-		$ShowPaces->setDefaultValue(true);
-
 		$ShowTrimp = new PluginConfigurationValueBool('show_trimpvalues', __('Show: ATL/CTL/TSB'));
 		$ShowTrimp->setTooltip( __('Show actual/chronical training load and stress balance (based on TRIMP)') );
 		$ShowTrimp->setDefaultValue(true);
@@ -69,25 +52,19 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 		$ShowTrimpExtra->setTooltip( __('Show monotony and training strain (based on TRIMP)') );
 		$ShowTrimpExtra->setDefaultValue(true);
 
-		$ShowVDOT = new PluginConfigurationValueBool('show_vdot', __('Show: VDOT'));
-		$ShowVDOT->setTooltip( __('Predict current VDOT value') );
-		$ShowVDOT->setDefaultValue(true);
+		$ShowVO2max = new PluginConfigurationValueBool('show_vo2max', __('Show: VO<sub>2</sub>max shape'));
+        $ShowVO2max->setTooltip( __('Predict current effective VO<sub>2</sub>max') );
+        $ShowVO2max->setDefaultValue(true);
 
 		$ShowBE = new PluginConfigurationValueBool('show_basicendurance', __('Show: Marathon shape'));
 		$ShowBE->setTooltip( __('Guess current marathon shape') );
 		$ShowBE->setDefaultValue(true);
 
-		$ShowJD = new PluginConfigurationValueBool('show_jd_intensity', __('Show: Training points'));
-		$ShowJD->setTooltip( __('Training intensity by Jack Daniels') );
-		$ShowJD->setDefaultValue(true);
-
 		$Configuration = new PluginConfiguration($this->id());
-		$Configuration->addValue($ShowPaces);
 		$Configuration->addValue($ShowTrimp);
 		$Configuration->addValue($ShowTrimpExtra);
-		$Configuration->addValue($ShowVDOT);
+		$Configuration->addValue($ShowVO2max);
 		$Configuration->addValue($ShowBE);
-		$Configuration->addValue($ShowJD);
 
 		$this->setConfiguration($Configuration);
 	}
@@ -98,9 +75,10 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	 */
 	protected function getRightSymbol() {
 		$Links = '';
-		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key().'/window.plot.php" '.Ajax::tooltip('', __('Show form'), true, true).'>'.Icon::$LINE_CHART.'</a>').'</li>';
+		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key().'/window.plot.php" '.Ajax::tooltip('', __('Show shape'), true, true).'>'.Icon::$LINE_CHART.'</a>').'</li>';
+        $Links .= '<li>'.Ajax::window('<a href="my/tools/tables/vo2max-pace" '.Ajax::tooltip('', __('Show training paces'), true, true).'><i class="fa fa-fw fa-tachometer"></i></a>').'</li>';
 		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key().'/window.php" '.Ajax::tooltip('', __('How are these values calculated?'), true, true).'>'.Icon::$MAGIC.'</a>').'</li>';
-		$Links .= '<li>'.Ajax::window('<a href="dashboard/help-calculations" '.Ajax::tooltip('',  __('Explanations: What are VDOT and TRIMP?'), true, true).'>'.Icon::$INFO.'</a>').'</li>';
+		$Links .= '<li>'.Ajax::window('<a href="dashboard/help-calculations" '.Ajax::tooltip('',  __('Explanations: What are VO2max and TRIMP?'), true, true).'>'.Icon::$INFO.'</a>').'</li>';
 
 		return '<ul>'.$Links.'</ul>';
 	}
@@ -112,12 +90,10 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	protected function displayContent() {
 		$this->showValues();
 
-		if (0 == Configuration::Data()->vdot()) {
-			if ($this->Configuration()->value('show_vdot')) {
-				echo '<p class="error small">'.$this->getNoVdotDataError().'</p>';
+		if (0 == Configuration::Data()->vo2max()) {
+			if ($this->Configuration()->value('show_vo2max')) {
+				echo '<p class="error small">'.$this->getNoEffectiveVO2maxDataError().'</p>';
 			}
-		} elseif ($this->Configuration()->value('show_trainingpaces')) {
-			$this->showPaces();
 		}
 
 		if (Time::diffInDays(START_TIME) < 70) {
@@ -146,7 +122,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 		$Monotony = new Monotony($MonotonyQuery->data(), 2 * Configuration::Data()->maxATL());
 		$Monotony->calculate();
 
-		$VDOT        = Configuration::Data()->vdot();
+		$EffectiveVO2max = Configuration::Data()->vo2max();
 		$ATLmax      = Configuration::Data()->maxATL();
 		$CTLmax      = Configuration::Data()->maxCTL();
 		$ModelATLmax = $TSBmodel->maxFatigue();
@@ -178,30 +154,17 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 		$maxTrimpToBalanced = ceil($TSBmodel->maxTrimpToBalanced($CTLabsolute, $ATLabsolute));
 		$restDays = ceil($TSBmodel->restDays($CTLabsolute, $ATLabsolute));
 
-		$JDQuery = Cache::get(self::CACHE_KEY_JD_POINTS);
-		if (is_null($JDQuery)) {
-			$JDQueryLastWeek = DB::getInstance()->query('SELECT SUM(`jd_intensity`) FROM `'.PREFIX.'training` WHERE `time`>='.Time::weekstart(time() - 7*DAY_IN_S).' AND `time`<'.Time::weekend(time() - 7*DAY_IN_S).' AND accountid = '.SessionAccountHandler::getId());
-
-                        $JDQueryThisWeek = DB::getInstance()->query('SELECT SUM(`jd_intensity`) FROM `'.PREFIX.'training` WHERE `time`>='.Time::weekstart(time()).' AND `time`<'.Time::weekend(time()).' AND accountid = '.SessionAccountHandler::getId());
-                        $JDQuery['LastWeek'] = Helper::Unknown($JDQueryLastWeek->fetchColumn(), 0);
-			$JDQuery['ThisWeek'] = Helper::Unknown($JDQueryThisWeek->fetchColumn(), 0);
-			Cache::set(self::CACHE_KEY_JD_POINTS, $JDQuery, '600');
-		}
-		$JDPointsLastWeek = $JDQuery['LastWeek'];
-		$JDPointsThisWeek = $JDQuery['ThisWeek'];
-		$JDPointsPrognosis = round($JDPointsThisWeek / (7 - (Time::weekend(time()) - time()) / DAY_IN_S) * 7);
-
 		$Values = array(
 			array(
-				'show'	=> $this->Configuration()->value('show_vdot'),
+				'show'	=> $this->Configuration()->value('show_vo2max'),
 				'bars'	=> array(
-					new ProgressBarSingle(2*round($VDOT - 30), ProgressBarSingle::$COLOR_BLUE)
+					new ProgressBarSingle(2*round($EffectiveVO2max - 30), ProgressBarSingle::$COLOR_BLUE)
 				),
 				'bar-tooltip'	=> '',
-				'value'	=> number_format($VDOT, 2).(0 == $VDOT ? '&nbsp;<i class="fa fa-fw fa-exclamation-circle"></i>' : ''),
-				'title'	=> __('VDOT'),
+				'value'	=> number_format($EffectiveVO2max, 2).(0 == $EffectiveVO2max ? '&nbsp;<i class="fa fa-fw fa-exclamation-circle"></i>' : ''),
+				'title'	=> __('Effective&nbsp;VO<sub>2</sub>max'),
 				'small'	=> '',
-				'tooltip'	=> __('Current average VDOT')
+				'tooltip'	=> ''
 			),
 			array(
 				'show'	=> $this->Configuration()->value('show_basicendurance'),
@@ -209,10 +172,10 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 					new ProgressBarSingle(BasicEndurance::getConst(), ProgressBarSingle::$COLOR_BLUE)
 				),
 				'bar-tooltip'	=> '',
-				'value'	=> BasicEndurance::getConst().'&nbsp;&#37;'.(0 == $VDOT ? '&nbsp;<i class="fa fa-fw fa-exclamation-circle"></i>' : ''),
+				'value'	=> BasicEndurance::getConst().'&nbsp;&#37;'.(0 == $EffectiveVO2max ? '&nbsp;<i class="fa fa-fw fa-exclamation-circle"></i>' : ''),
 				'title'	=> __('Marathon&nbsp;shape'),
 				'small'	=> '',
-				'tooltip'	=> __('<em>Experimental value!</em><br>100 &#37; means: you had enough long runs and kilometers per week to run a good marathon, based on your current VDOT.')
+				'tooltip'	=> __('<em>Experimental value!</em><br>100 &#37; means: you had enough long runs and kilometers per week to run an optimal marathon based on your current shape.')
 			),
 			array(
 				'show'	=> $this->Configuration()->value('show_trimpvalues'),
@@ -305,23 +268,6 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 				'title'	=> __('Training&nbsp;strain'),
 				'small'	=> '',
 				'tooltip'	=> __('Training strain<br><small>of your last seven days</small>')
-			),
-			array(
-				'show'	=> $this->Configuration()->value('show_jd_intensity'),
-				'bars'	=> array(
-					new ProgressBarSingle($JDPointsPrognosis/2, ProgressBarSingle::$COLOR_LIGHT),
-					new ProgressBarSingle($JDPointsThisWeek/2, ProgressBarSingle::$COLOR_RED)
-				),
-				'bar-goal'	=> $JDPointsLastWeek/2,
-				'bar-tooltip'	=> sprintf( __('This week: %s training points<br>Prognosis: ca. %s training points<br>Last week: %s training points'), $JDPointsThisWeek, $JDPointsPrognosis, $JDPointsLastWeek ),
-				'value'	=> $JDPointsThisWeek,
-				'title'	=> __('Training&nbsp;points'),
-				'small'	=> '',
-				'tooltip'	=> __('Training intensity by Jack Daniels.<br>'.
-					'Jack Daniels considers the following levels:<br>'.
-					'50 points: Beginner<br>'.
-					'100 points: Advanced Runner<br>'.
-					'200 points: Pro Runner')
 			)
 		);
 
@@ -355,72 +301,6 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 			}
 		}
 		echo '</table>';
-	}
-
-	/**
-	 * Show paces
-	 */
-	protected function showPaces() {
-		echo '</div>';
-		echo '<div class="panel-content panel-sub-content">';
-
-		echo '<table class="fullwidth nomargin">';
-
-		$Paces = $this->getArrayForPaces();
-		$VDOT = new VDOT(Configuration::Data()->vdot());
-		$PaceObject = new Runalyze\Activity\Pace(0, 1, SportFactory::getSpeedUnitFor(Configuration::General()->runningSport()));
-
-		foreach ($Paces as $Pace) {
-			$DisplayedString = '<strong>'.$Pace['short'].'</strong>';
-
-			echo '<tr>';
-			echo '<td>'.Ajax::tooltip($DisplayedString, $Pace['description']).'</td>';
-			echo '<td class="r"><em>'.($PaceObject->setTime($VDOT->paceAt($Pace['limit-high']/100))->value()).'</em> - <em>'.($PaceObject->setTime($VDOT->paceAt($Pace['limit-low']/100))->value()).'</em>'.$PaceObject->appendix().'</td>';
-			echo '</tr>';
-		}
-
-		echo '</table>';
-	}
-
-	/**
-	 * Get array for paces
-	 * @return array
-	 */
-	protected function getArrayForPaces() {
-		$Paces = array(
-			array( /// Easy pace (by Jack Daniels)
-				'short'			=> __('Easy'),
-				'description'	=> __('Easy pace running refers to warm-ups, cool-downs and recovery runs.'),
-				'limit-low'		=> 59,
-				'limit-high'	=> 74
-			),
-			array( /// Marathon pace (by Jack Daniels)
-				'short'			=> __('Marathon'),
-				'description'	=> __('Steady run or long repeats (e.g. 2 x 4 miles at marathon pace)'),
-				'limit-low'		=> 75,
-				'limit-high'	=> 84
-			),
-			array( /// Threshold pace (by Jack Daniels)
-				'short'			=> __('Threshold'),
-				'description'	=> __('Steady, prolonged or tempo runs or intermittent runs, also called cruise intervals.'),
-				'limit-low'		=> 83,
-				'limit-high'	=> 88
-			),
-			array( /// Interval pace (by Jack Daniels)
-				'short'			=> __('Interval'),
-				'description'	=> __('Intervals: It takes about two minutes for you to gear up to functioning at VO2max so the ideal duration of an interval is 3-5 minutes each.'),
-				'limit-low'		=> 95,
-				'limit-high'	=> 100
-			),
-			array( /// Repetition pace (by Jack Daniels)
-				'short'			=> __('Repetition'),
-				'description'	=> __('Repetitions are fast, but not necessarily "hard," because work bouts are relatively short and are followed by relatively long recovery bouts.'),
-				'limit-low'		=> 105,
-				'limit-high'	=> 110
-			),
-		);
-
-		return $Paces;
 	}
 
 	/**
@@ -502,52 +382,51 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	}
 
 	/**
-	 * Get fieldset for VDOT
 	 * @return \FormularFieldset
 	 */
-	public function getFieldsetVDOT() {
+	public function getFieldsetEffecticeVO2max() {
 		$Tooltip = new Tooltip('');
-		$VDOT = new VDOT(0, new VDOTCorrector(Configuration::Data()->vdotFactor()));
-		$vdotColumn = Configuration::Vdot()->useElevationCorrection() ? 'IF(`vdot_with_elevation`>0,`vdot_with_elevation`,`vdot`) as `vdot`' : '`vdot`';
-		$VDOTs = DB::getInstance()->query('SELECT `id`,`time`,`distance`,'.$vdotColumn.' FROM `'.PREFIX.'training` WHERE time>='.(time() - Configuration::Vdot()->days()*DAY_IN_S).' AND vdot>0 AND use_vdot=1 AND accountid = '.SessionAccountHandler::getId().' ORDER BY time ASC')->fetchAll();
+		$EffectiveVO2max = new LegacyEffectiveVO2max(0, new LegacyEffectiveVO2maxCorrector(Configuration::Data()->vo2maxCorrectionFactor()));
+		$vo2maxColumn = Configuration::VO2max()->useElevationCorrection() ? 'IF(`vo2max_with_elevation`>0,`vo2max_with_elevation`,`vo2max`) as `vo2max`' : '`vo2max`';
+		$EffectiveVO2maxValues = DB::getInstance()->query('SELECT `id`,`time`,`distance`,'.$vo2maxColumn.' FROM `'.PREFIX.'training` WHERE time>='.(time() - Configuration::VO2max()->days()*DAY_IN_S).' AND `vo2max`>0 AND `use_vo2max`=1 AND accountid = '.SessionAccountHandler::getId().' ORDER BY time ASC')->fetchAll();
 
-		if (empty($VDOTs)) {
-			$Table = '<p class="error">'.$this->getNoVdotDataError().'</p>';
+		if (empty($EffectiveVO2maxValues)) {
+			$Table = '<p class="error">'.$this->getNoEffectiveVO2maxDataError().'</p>';
 		} else {
 			$Table = '<table class="fullwidth zebra-style">
 				<thead>
 					<tr>
-						<th colspan="10">'.sprintf( __('VDOT values of the last %s days'), Configuration::Vdot()->days() ).'</th>
+						<th colspan="10">'.sprintf( __('Effective VO<sub>2</sub>max values of the last %s days'), Configuration::VO2max()->days() ).'</th>
 					</tr>
 				</thead>
 				<tbody class="top-and-bottom-border">';
 
-			foreach ($VDOTs as $i => $Data) {
+			foreach ($EffectiveVO2maxValues as $i => $Data) {
 				if ($i % 10 == 0)
 					$Table .= '<tr>';
 
 				$Tooltip->setText((new LocalTime($Data['time']))->format('d.m.Y').': '.Distance::format($Data['distance']));
-				$VDOT->setValue($Data['vdot']);
+                $EffectiveVO2max->setValue($Data['vo2max']);
 
-				$Table .= '<td '.$Tooltip->attributes().'>'.Ajax::trainingLink($Data['id'], $VDOT->value()).'</td>';
+				$Table .= '<td '.$Tooltip->attributes().'>'.Ajax::trainingLink($Data['id'], $EffectiveVO2max->value()).'</td>';
 
 				if ($i % 10 == 9)
 					$Table .= '</tr>';
 			}
 
-			if (count($VDOTs) % 10 != 0)
-				$Table .= HTML::emptyTD(10 - count($VDOTs) % 10);
+			if (count($EffectiveVO2maxValues) % 10 != 0)
+				$Table .= HTML::emptyTD(10 - count($EffectiveVO2maxValues) % 10);
 
 			$Table .= '</tbody></table>';
 		}
 
-		$Fieldset = new FormularFieldset( __('VDOT') );
-		$Fieldset->addBlock( sprintf( __('The VDOT value is the average, weighted by the time, of the VDOT of your activities in the last %s days.'), Configuration::Vdot()->days() ) );
-		$Fieldset->addBlock( sprintf( __('Your current VDOT shape: <strong>%s</strong><br>&nbsp;'), Configuration::Data()->vdot() ) );
+		$Fieldset = new FormularFieldset( __('Effective VO<sub>2</sub>max') );
+		$Fieldset->addBlock( sprintf( __('The VO<sub>2</sub>max shape is calculated as the average, weighted by time, of estimated VO<sub>2</sub>max values of your activities in the last %s days.'), Configuration::VO2max()->days() ) );
+		$Fieldset->addBlock( sprintf( __('Your current VO<sub>2</sub>max shape: <strong>%s</strong><br>&nbsp;'), Configuration::Data()->vo2max() ) );
 		$Fieldset->addBlock($Table);
-		$Fieldset->addInfo( __('Jack Daniels uses VDOT as a fixed value and not based on the training progress.<br>'.
-								'We do instead predict the VDOT from all activities based on the heart rate. '.
-								'These formulas are derived from Jack Daniels\' tables as well.') );
+		$Fieldset->addInfo( __('VO<sub>2</sub>max itself is a scientific metric for the maximal oxygen consumption that can be measured in the laboratory.<br>'.
+								'Two runners with equal VO<sub>2</sub>max values do not need to perform equally, as running efficiency plays an additional role. '.
+								'To overcome the issue of specifying running efficiency, one can ignore the efficiency and therefore call it effective VO<sub>2</sub>max.') );
 
 		return $Fieldset;
 	}
@@ -559,19 +438,19 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	public function getFieldsetBasicEndurance() {
 		$BasicEndurance = new BasicEndurance();
 		$BasicEndurance->readSettingsFromConfiguration();
-		$usedVdot = $BasicEndurance->getUsedVDOT();
+		$usedVO2max = $BasicEndurance->getUsedEffectiveVO2max();
 		$BEresults = $BasicEndurance->asArray();
 
-		$Prognosis = new \Runalyze\Sports\Running\Prognosis\Daniels($usedVdot);
+		$Prognosis = new \Runalyze\Sports\Running\Prognosis\VO2max($usedVO2max);
 
 		$GeneralTable = '
 			<table class="fullwidth zebra-style">
 				<tbody class="top-and-bottom-border">
 					<tr>
-						<td>'.__('<strong>Current VDOT</strong> <small>(based on heart rate)</small>').'</td>
-						<td class="r">'.round(Configuration::Data()->vdot(), 2).'</td>
+						<td><strong>'.__('Current Effective VO<sub>2</sub>max').'</strong> <small>('.__('based on heart rate').')</small></td>
+						<td class="r">'.round(Configuration::Data()->vo2max(), 2).'</td>
 						<td>&nbsp;</td>
-						<td>'.sprintf( __('<strong>Target kilometer per week</strong> <small>(%s weeks)</small>'), round($BasicEndurance->getDaysForWeekKm() / 7)).'</td>
+						<td><strong>'.__('Target kilometer per week').'</strong> <small>('.sprintf('%s weeks', round($BasicEndurance->getDaysForWeekKm() / 7)).')</small></td>
 						<td class="r">'.Distance::format($BasicEndurance->getTargetWeekKm(), false, 0).'</td>
 						<td class="small">'.sprintf( __('done by %s&#37;'), round(100*$BEresults['weekkm-percentage']) ).'</td>
 						<td class="small">('.__('avg.').' '.Distance::format(($BEresults['weekkm-result'] / $BasicEndurance->getDaysForWeekKm() * 7), false, 0).')</td>
@@ -631,8 +510,8 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 		$Fieldset->addBlock( __('Your marathon shape is based on your weekly kilometers and your long jogs.<br>'.
 								'The target is derived from the possible marathon time based on your current shape.').'<br>&nbsp;' );
 
-		if (0 == Configuration::Data()->vdot()) {
-			$Fieldset->addBlock('<p class="error">'.$this->getNoVdotDataError().'</p><br>&nbsp;');
+		if (0 == Configuration::Data()->vo2max()) {
+			$Fieldset->addBlock('<p class="error">'.$this->getNoEffectiveVO2maxDataError().'</p><br>&nbsp;');
 		}
 
 		$Fieldset->addBlock($GeneralTable);
@@ -640,45 +519,8 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 								'That means, a long jog yesterday gives more points than a long jog two weeks ago '.
 								'and a 30k-jog gives more points than two 20k-jogs.').'<br>&nbsp;' );
 		$Fieldset->addBlock($LongjogTable);
-		$Fieldset->addBlock( __('The marathon shape is <strong>not</strong> from Jack Daniels.<br>'.
+		$Fieldset->addBlock( __('The marathon shape is <strong>not</strong> scientifically based.<br>'.
 								'It\'s our own attempt to adjust the prognosis for long distances based on your current endurance.') );
-
-		return $Fieldset;
-	}
-
-	/**
-	 * Get fieldset for paces
-	 * @return \FormularFieldset
-	 */
-	public function getFieldsetPaces() {
-		$Table = '<table class="fullwidth zebra-style">
-				<thead>
-					<tr>
-						<th>'.__('Name').'</th>
-						<th class="small">'.__('Pace').'</th>
-						<th class="small">'.__('Description').'</th>
-					</tr>
-				</thead>
-				<tbody>';
-
-		$VDOT = new VDOT(Configuration::Data()->vdot());
-		$PaceObject = new Runalyze\Activity\Pace(0, 1, SportFactory::getSpeedUnitFor(Configuration::General()->runningSport()));
-
-		foreach ($this->getArrayForPaces() as $Pace) {
-			$Table .= '<tr>
-						<td class="b">'.$Pace['short'].'</td>
-						<td class=""><em>'.($PaceObject->setTime($VDOT->paceAt($Pace['limit-high']/100))->value()).'</em> - <em>'.($PaceObject->setTime($VDOT->paceAt($Pace['limit-low']/100))->value()).'</em>'.$PaceObject->appendix().'</td>
-						<td class="">'.$Pace['description'].'</td>
-					</tr>';
-		}
-
-		$Table .= '
-				</tbody>
-			</table>';
-
-		$Fieldset = new FormularFieldset( __('Training paces') );
-		$Fieldset->addBlock($Table);
-		$Fieldset->addInfo( __('These paces are based on Jack Daniels\' recommendation.') );
 
 		return $Fieldset;
 	}
@@ -686,8 +528,8 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	/**
 	 * @return string
 	 */
-	public function getNoVdotDataError() {
-		return __('There are no current activities with a vdot value.').'<br>'.
-			__('Vdot values can only be calculated for runs with heart rate data.');
+	public function getNoEffectiveVO2maxDataError() {
+		return __('There are no current activities with an estimated VO<sub>2</sub>max value.').'<br>'.
+			__('VO<sub>2</sub>max can only be estimated for runs with heart rate data.');
 	}
 }

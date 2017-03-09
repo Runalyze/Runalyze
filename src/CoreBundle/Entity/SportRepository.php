@@ -16,4 +16,15 @@ class SportRepository extends EntityRepository
             'account' => $account->getId()
         ]);
     }
+
+    /**
+     * @param Account $account
+     * @return Sport[]
+     */
+    public function findSportsWithKmFor(Account $account)
+    {
+        return $this->findBy(
+            ['account' => $account->getId(), 'distances' => true]);
+    }
+
 }

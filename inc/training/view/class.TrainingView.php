@@ -111,8 +111,8 @@ class TrainingView {
 			$toolsLinks[] = '<li><a class="window link" data-size="big" href="activity/'.$this->Context->activity()->id().'/splits-info"><i class="fa fa-fw fa-bar-chart"></i> '.__('Analyze splits').'</a></li>';
 		}
 
-		if ($this->Context->activity()->vdotByHeartRate() > 0) {
-			$toolsLinks[] = '<li><a class="window link" data-size="small" href="activity/'.$this->Context->activity()->id().'/vdot-info"><i class="fa fa-fw fa-calculator"></i> '.__('Show VDOT calculation').'</a></li>';
+		if ($this->Context->activity()->vo2maxByHeartRate() > 0) {
+			$toolsLinks[] = '<li><a class="window link" data-size="small" href="activity/'.$this->Context->activity()->id().'/vo2max-info"><i class="fa fa-fw fa-calculator"></i> '.__('Show VO<sub>2</sub>max calculation').'</a></li>';
 		}
 
 		if ($this->Context->hasRoute() && $this->Context->route()->hasElevations()) {

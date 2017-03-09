@@ -2,6 +2,7 @@ imports:
   - { resource: languages.yml }
   - { resource: security.yml }
   - { resource: services.yml }
+  - { resource: queue.yml }
   - { resource: default_config.yml }
   - { resource: ../../data/config.yml }
 
@@ -69,6 +70,7 @@ doctrine:
                     enum:   string
 
 
+
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
         auto_mapping: true
@@ -81,6 +83,8 @@ doctrine:
         query_cache_driver:
             type: service
             id: doctrine_cache.providers.vendor_filesystem_query_cache
+        hydrators:
+            COLUMN_HYDRATOR: Runalyze\Bundle\CoreBundle\Doctrine\Hydrator\ColumnHydrator
         dql:
             datetime_functions:
                 from_unixtime: DoctrineExtensions\Query\Mysql\FromUnixtime
@@ -95,6 +99,7 @@ doctrine_migrations:
     name: RUNALYZE Migrations
 
 monolog:
+    channels: ['queue', 'console']
     handlers:
         applog:
             type: stream
@@ -110,6 +115,16 @@ monolog:
         syslog:
             type: syslog
             level: error
+        queue:
+            type: stream
+            level: debug
+            path: '%kernel.root_dir%/../var/logs/queue.log'
+            channels: ['queue']
+        console:
+            type: stream
+            level: error
+            path: '%kernel.root_dir%/../var/logs/console.log'
+            channels: ['console']
 
 swiftmailer:
     transport:            smtp
@@ -129,9 +144,3 @@ jms_translation:
             excluded_names: ["*TestCase.php", "*Test.php"]
             excluded_dirs: [cache, data, logs, test, doctrine]
             output-format: 'xlf'
-
-bernard:
-    driver: file
-    options:
-        directory: '%kernel.root_dir%/../var/queue'
-

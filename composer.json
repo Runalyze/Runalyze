@@ -25,7 +25,8 @@
         "symfony/swiftmailer-bundle": "^2.3",
         "beberlei/DoctrineExtensions": "~1.0",
         "jms/translation-bundle": "dev-master",
-        "bernard/bernard-bundle": "^2.0.0"
+        "bernard/bernard-bundle": "^2.0.0",
+        "runalyze/GpxTrackPoster": "^1.0.0"
     },
     "autoload": {
         "files": ["src/functions.php", "app/AppKernel.php"],
@@ -41,5 +42,18 @@
     "require-dev": {
         "phpunit/phpunit": "4.8.*",
         "runalyze/playground": "dev-master"
-    }
+    },
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "runalyze/GpxTrackPoster",
+                "version": "1.0.1",
+                "source": {
+                    "url": "https://github.com/laufhannes/GpxTrackPoster.git",
+                    "type": "git",
+                    "reference": "244107fa70b196bac6798e9c4014c22c3c3b4683"
+                }
+            }
+        }]
 }
