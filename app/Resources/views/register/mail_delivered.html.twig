@@ -4,8 +4,13 @@
     <fieldset>
         <legend>{% trans %}Create a new account{% endtrans %}</legend>
 
-        <p class="error">
+        <p class="info">
+            {% trans %}Welcome to RUNALYZE!{% endtrans %}
+            <br>
             {% trans %}Thanks for your registration. You should receive an email within the next minutes with further instructions for activating your account.{% endtrans %}
+            <br><br>
+            {% trans with {'%s': '<a href="https://help.runalyze.com/latest/starting-guide/getting-started.html">help.runalyze.com</a>'} %}To get started right away just take a look at our "getting started" guide at %s.{% endtrans %}
+
         </p>
     </fieldset>
 {% endblock %}
