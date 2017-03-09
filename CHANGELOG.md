@@ -4,6 +4,7 @@ A complete list of our releases with all minor bugfix versions (vX.Y.*) can be f
 at [github](https://github.com/Runalyze/Runalyze/releases)
 and in our [blog](https://blog.runalyze.com/releases/).
 
+* [v4.0](https://blog.runalyze.com/releases/4-0-0/), [update instructions](https://docs.runalyze.com/en/latest/upgrade/4.x.html#upgrade-from-3-2-to-4-0), 12.03.2017: minor release (poster tool, Removal of VDOT features)
 * [v3.2](https://blog.runalyze.com/releases/3-2-0/), [update instructions](https://docs.runalyze.com/en/latest/upgrade/3.x.html#upgrade-from-3-1-to-3-2), 29.01.2017: minor release (ANOVA tool, geohashline, refactoring)
 * [v3.1](https://blog.runalyze.com/allgemein-en/minor-changes-in-runalyze-v3-1/), [update instructions](https://docs.runalyze.com/en/latest/upgrade/3.x.html#upgrade-from-3-0-to-3-1), 04.12.2016: minor release (age grade, heat index, new tools)
  * warning: requires at least php 5.6

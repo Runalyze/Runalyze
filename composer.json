@@ -2,6 +2,7 @@
     "name": "runalyze/runalyze",
     "description": "RUNALYZE - training analysis for athletes",
     "homepage": "https://runalyze.com",
+    "version": "4.0.0",
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
