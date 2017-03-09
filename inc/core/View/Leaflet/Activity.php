@@ -17,7 +17,7 @@ use League\Geotools\Geotools;
 
 /**
  * Leaflet route for an activity
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\View\Leaflet
  */
@@ -179,6 +179,17 @@ class Activity extends LeafletRoute {
 		return $this->RouteLoop->nextStep();
 	}
 
+    /**
+     * @param int $index
+     */
+    protected function goToIndex($index) {
+        if ($this->hasTrackdataLoop()) {
+            $this->TrackdataLoop->goToIndex($index);
+        }
+
+        $this->RouteLoop->goToIndex($index);
+    }
+
 	/**
 	 * Fill current segment
 	 */
@@ -303,15 +314,33 @@ class Activity extends LeafletRoute {
 				$this->PauseIndex < $this->Trackdata->pauses()->num() &&
 				$this->Trackdata->pauses()->at($this->PauseIndex)->time() <= $this->Trackdata->at($this->TrackdataLoop->index(), Trackdata\Entity::TIME)
 			) {
-				$this->addCurrentPauseIcon();
+			    if ($this->Trackdata->pauses()->at($this->PauseIndex)->time() < $this->Trackdata->at($this->TrackdataLoop->index(), Trackdata\Entity::TIME)) {
+			        $this->handleExactPausePosition();
+                } else {
+                    $this->addCurrentPauseIcon();
+                    $this->PathShouldBreak = true;
+                }
 
-				$this->PathShouldBreak = true;
 				$this->PauseIndex++;
 			}
 		} elseif (!Configuration::ActivityView()->routeBreak()->never() && $this->RouteLoop->calculatedStepDistance() > $this->PauseLimit) {
 			$this->addCurrentSegment();
 		}
 	}
+
+	protected function handleExactPausePosition() {
+	    $this->goToIndex($this->RouteLoop->index() - $this->RouteLoop->currentStepSize() + 1);
+
+	    while ($this->Trackdata->pauses()->at($this->PauseIndex)->time() > $this->Trackdata->at($this->TrackdataLoop->index(), Trackdata\Entity::TIME)) {
+	        $this->goToIndex($this->RouteLoop->index() + 1);
+        }
+
+        $this->addCurrentPauseIcon();
+	    $this->fillCurrentSegment();
+        $this->addCurrentSegment();
+
+        $this->goToIndex($this->RouteLoop->index() + 1);
+    }
 
 	/**
 	 * Add icon for current pause
