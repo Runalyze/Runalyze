@@ -12,8 +12,9 @@
             </div>
             <div>
         {% include 'flashmessages.html.twig' %}
-        {{ form_start(form, {'attr': {'class': 'no-automatic-reloads'}, 'action': url('settings-dataset') }) }}
-        <table class="c fullwidth zebra-style" id="conf-tab-dataset">
+                {{ form_start(form, {'attr': {'class': 'ajax no-automatic-reloads'} }) }}
+
+                <table class="c fullwidth zebra-style" id="conf-tab-dataset">
             <thead>
             <tr>
                 <th>&nbsp;</th>
@@ -35,7 +36,7 @@
                         {% endif %}
                     </td>
                     <td class="l b">
-                        {{ keyObject.label() }}<sup class="colored-green">{% if missingKeys[dataset.vars.value.keyid] %}{% trans %}new{% endtrans %}</sup>{% endif %}
+                        {{ keyObject.label() | raw }}<sup class="colored-green">{% if missingKeys[dataset.vars.value.keyid] %}{% trans %}new{% endtrans %}</sup>{% endif %}
                     </td>
                     <td class="c">
                         {{ form_widget(dataset.active) }}

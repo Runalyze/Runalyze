@@ -148,7 +148,7 @@ class SettingsController extends Controller
     {
         $Frontend = new \Frontend(true, $this->get('security.token_storage'));
 
-        $em=$this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
 
         /** @var Dataset $dataset */
         $dataset = $this->getDoctrine()->getRepository('CoreBundle:Dataset')->findAllFor($account);
