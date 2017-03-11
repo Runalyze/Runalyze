@@ -49,11 +49,11 @@
             "type": "package",
             "package": {
                 "name": "runalyze/GpxTrackPoster",
-                "version": "1.0.1",
+                "version": "1.0.2",
                 "source": {
                     "url": "https://github.com/laufhannes/GpxTrackPoster.git",
                     "type": "git",
-                    "reference": "244107fa70b196bac6798e9c4014c22c3c3b4683"
+                    "reference": "8b337ca89e1cf9552dc0bbb08d8b81bc55335c45"
                 }
             }
         }]
