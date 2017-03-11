@@ -14,6 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Runalyze\Bundle\CoreBundle\Form\Settings\AccountType;
 use Runalyze\Configuration;
 use Runalyze\Language;
@@ -138,17 +139,39 @@ class SettingsController extends Controller
     }
 
     /**
+     * @Route("/settings/dataset", name="settings-dataset-update")
+     * @Security("has_role('ROLE_USER')")
+     * @Method("POST")
+     */
+    public function datasetPostAction(Account $account, Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $dataset = $em->getRepository('CoreBundle:Dataset')->findAllFor($account);
+        $form = $this->createForm(DatasetCollectionType::class, ['datasets' => $dataset]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            foreach ($form->get('datasets')->getData() as $datasetObject) {
+                /** @var Dataset $datasetObject */
+                $em->persist($datasetObject);
+            }
+            $em->flush();
+        }
+        return $this->forward('CoreBundle:Settings:dataset');
+    }
+
+    /**
      * @Route("/settings/dataset", name="settings-dataset")
      * @Security("has_role('ROLE_USER')")
+     * @Method("GET")
      */
     public function datasetAction(Account $account, Request $request)
     {
         $Frontend = new \Frontend(true, $this->get('security.token_storage'));
 
-        $em = $this->getDoctrine()->getManager();
-
         /** @var Dataset $dataset */
-        $dataset = $this->getDoctrine()->getRepository('CoreBundle:Dataset')->findAllFor($account);
+        $dataset = $this->getDoctrine()->getManager()->getRepository('CoreBundle:Dataset')->findAllFor($account);
         $missingKeyObjects = array_flip(RunalyzeDataset\Keys::getEnum());
 
         foreach ($dataset as $datasetObject) {
@@ -162,19 +185,6 @@ class SettingsController extends Controller
             'action' => $this->generateUrl('settings-dataset')
         ));
         $form->handleRequest($request);
-
-        if ($form->isSubmitted()) {
-            $i = 1;
-            foreach($form->get('datasets')->getData() as $datasetObject)
-            {
-                dump($datasetObject);
-                /** @var Dataset $datasetObject */
-                //$datasetObject->setPosition($i);
-                $em->persist($datasetObject);
-                $i++;
-            }
-            $em->flush();
-        }
 
         return $this->render('settings/dataset.html.twig', [
             'form' => $form->createView(),
