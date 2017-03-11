@@ -101,7 +101,7 @@ class Linker {
 		$Sport = $Factory->sport($this->Activity->sportid());
 		$code = $Sport->icon()->code();
 
-		$Tooltip = new \Runalyze\View\Tooltip($Sport->name().': '.$Time->string());
+		$Tooltip = new \Runalyze\View\Tooltip($Sport->name().(!$Time->isZero() ? ': '.$Time->string() : ''));
 		$Tooltip->setPosition($tooltipCssClass);
 		$Tooltip->wrapAround($code);
 
