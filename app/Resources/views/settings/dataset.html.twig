@@ -27,9 +27,10 @@
             </thead>
             <tbody>
             {% set position = 1 %}
+
             {% for dataset in form.datasets %}
                 {% set keyObject = datasetKeys.get(dataset.vars.value.keyid) %}
-                <tr class="r" id="{{ dataset.vars.value.keyid }}_tr">
+                <tr class="r" id="{{ position }}_tr">
                     <td class="c">
                         {% if keyObject.description() %}
                             <i class="fa fa-fw fa-info-circle atRight" rel="tooltip" data-original-title="{{ keyObject.description() }}"></i>
@@ -41,10 +42,11 @@
                     <td class="c">
                         {{ form_widget(dataset.active) }}
                     </td>
+
                     <td class="c">
-                        <input class="dataset-position" type="text" name="{{ dataset.vars.value.keyid }}_position" value="{{ position }}" size="2">
-                        <span class="link" onclick="datasetMove({{ dataset.vars.value.keyid }}, 'up')"><i class="fa fa-fw fa-arrow-up"></i></span>
-                        <span class="link" onclick="datasetMove({{ dataset.vars.value.keyid }}, 'down')"><i class="fa fa-fw fa-arrow-down"></i></span>
+                        <input class="dataset-position" type="text" id="{{ dataset.position.vars.id }}" name="{{ dataset.position.vars.full_name }}" value="{{ position }}" size="2">
+                        <span class="link" onclick="datasetMove({{ dataset.position.vars.value }}, 'up')"><i class="fa fa-fw fa-arrow-up"></i></span>
+                        <span class="link" onclick="datasetMove({{ dataset.position.vars.value }}, 'down')"><i class="fa fa-fw fa-arrow-down"></i></span>
                     </td>
                     <td class="c">
                         {{ form_widget(dataset.style) }}
@@ -62,16 +64,19 @@
                     <div class="c">
                         <input type="submit" value="{% trans %}Save{% endtrans %}">
                     </div>
-                    {{ form_rest(form) }}
-                    {{ form_end(form) }}
+                {% do form.datasets.setRendered %}
+
+                {{ form_widget(form._token) }}
+                {{ form_end(form) }}
             </fieldset>
         </div>
     </div>
 
     <script>
         function datasetMove(id, way) {
-            var pos = parseInt($("input[name=\'"+id+"_position\']").val()),
+            var pos = parseInt($("input[id=\'{{ form.vars.name }}_{{ form.datasets.vars.name}}_"+id+"_position\']").val()),
                     tr = $("#"+id+"_tr");
+            console.log(pos);
             if (way == "up" && pos > 1) {
                 $("#"+id+"_tr .dataset-position").val(pos-1);
                 tr.prev().find(".dataset-position").val(pos);

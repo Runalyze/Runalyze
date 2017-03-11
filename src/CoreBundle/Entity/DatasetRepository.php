@@ -12,7 +12,6 @@ class DatasetRepository extends EntityRepository
      */
     public function findAllFor(Account $account)
     {
-
         return $this->findBy(
             ['account' => $account->getId()],
             ['position' => 'ASC']);

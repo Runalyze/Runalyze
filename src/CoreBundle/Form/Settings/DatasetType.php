@@ -3,6 +3,8 @@
 namespace Runalyze\Bundle\CoreBundle\Form\Settings;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -16,8 +18,10 @@ class DatasetType extends AbstractType
     {
         $builder
             ->add('active', CheckboxType::class, array(
-                'empty_data' => false,
                 'required' => false
+            ))
+            ->add('position', NumberType::class, array(
+                'attr' => ['class' => 'dataset-position']
             ))
             ->add('style', TextType::class, array(
                 'required' => false,

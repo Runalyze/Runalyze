@@ -34,7 +34,6 @@ class SettingsController extends Controller
     /**
      * @Route("/settings/account", name="settings-account")
      * @Security("has_role('ROLE_USER')")
-     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function settingsAccountAction(Request $request, Account $account)
     {
@@ -72,7 +71,6 @@ class SettingsController extends Controller
     /**
      * @Route("/settings/password", name="settings-password")
      * @Security("has_role('ROLE_USER')")
-     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function settingsPasswordAction(Request $request, Account $account)
     {
@@ -142,7 +140,6 @@ class SettingsController extends Controller
     /**
      * @Route("/settings/dataset", name="settings-dataset")
      * @Security("has_role('ROLE_USER')")
-     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function datasetAction(Account $account, Request $request)
     {
@@ -167,12 +164,17 @@ class SettingsController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
+            $i = 1;
             foreach($form->get('datasets')->getData() as $datasetObject)
             {
+                /** @var Dataset $datasetObject */
+                //$datasetObject->setPosition($i);
                 $em->persist($datasetObject);
+                //$i++;
             }
             $em->flush();
         }
+
         return $this->render('settings/dataset.html.twig', [
             'form' => $form->createView(),
             'datasetKeys' => new RunalyzeDataset\Keys(),
