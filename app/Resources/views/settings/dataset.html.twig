@@ -45,13 +45,13 @@
 
                     <td class="c">
                         <input class="dataset-position" type="text" id="{{ dataset.position.vars.id }}" name="{{ dataset.position.vars.full_name }}" value="{{ position }}" size="2">
-                        <span class="link" onclick="datasetMove({{ dataset.position.vars.value }}, 'up')"><i class="fa fa-fw fa-arrow-up"></i></span>
-                        <span class="link" onclick="datasetMove({{ dataset.position.vars.value }}, 'down')"><i class="fa fa-fw fa-arrow-down"></i></span>
+                        <span class="link" onclick="datasetMove({{ position }}, 'up')"><i class="fa fa-fw fa-arrow-up"></i></span>
+                        <span class="link" onclick="datasetMove({{ position }}, 'down')"><i class="fa fa-fw fa-arrow-down"></i></span>
                     </td>
                     <td class="c">
                         {{ form_widget(dataset.style) }}
                     </td>
-                    <td class="{{ keyObject.getStyle() | raw }}">
+                    <td class="{{ keyObject.getStyle() | raw }}" style="{{ dataset.style.vars.data }}">
                         {{ keyObject.stringFor(context) | raw }}
                     </td>
                 </tr>
@@ -71,10 +71,11 @@
             </fieldset>
         </div>
     </div>
+#            var pos = parseInt($("input[id=\'{{ form.vars.name }}_{{ form.datasets.vars.name}}_"+id+"_position\']").val()),
 
     <script>
         function datasetMove(id, way) {
-            var pos = parseInt($("input[id=\'{{ form.vars.name }}_{{ form.datasets.vars.name}}_"+id+"_position\']").val()),
+            var pos = parseInt($("#"+id+"_tr .dataset-position").val()),
                     tr = $("#"+id+"_tr");
             console.log(pos);
             if (way == "up" && pos > 1) {

@@ -167,10 +167,11 @@ class SettingsController extends Controller
             $i = 1;
             foreach($form->get('datasets')->getData() as $datasetObject)
             {
+                dump($datasetObject);
                 /** @var Dataset $datasetObject */
                 //$datasetObject->setPosition($i);
                 $em->persist($datasetObject);
-                //$i++;
+                $i++;
             }
             $em->flush();
         }

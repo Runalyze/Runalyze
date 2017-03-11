@@ -20,7 +20,7 @@ class DatasetType extends AbstractType
             ->add('active', CheckboxType::class, array(
                 'required' => false
             ))
-            ->add('position', NumberType::class, array(
+            ->add('position', IntegerType::class, array(
                 'attr' => ['class' => 'dataset-position']
             ))
             ->add('style', TextType::class, array(
