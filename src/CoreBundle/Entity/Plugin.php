@@ -5,15 +5,13 @@ namespace Runalyze\Bundle\CoreBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Plugin
- *
  * @ORM\Table(name="plugin")
  * @ORM\Entity
  */
 class Plugin
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer", options={"unsigned":true})
      * @ORM\Id
@@ -31,19 +29,18 @@ class Plugin
     /**
      * @var string
      * @ORM\Column(name="type", type="string", length=5, nullable=false, options={"default":"stat"})
-     * @TODO this was ORM\Column(name="type", columnDefinition="enum('panel','stat','tool') NOT NULL DEFAULT 'stat'")
      */
     private $type = 'stat';
 
     /**
-     * @var integer
+     * @var int 0: inactive, 1: active, 2: hidden/misc
      *
      * @ORM\Column(name="active", columnDefinition="tinyint unsigned NOT NULL DEFAULT 1")
      */
     private $active = 1;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="`order`", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
      */
@@ -60,9 +57,7 @@ class Plugin
     private $account;
 
     /**
-     * Get id
-     *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -70,11 +65,9 @@ class Plugin
     }
 
     /**
-     * Set key
-     *
      * @param string $key
      *
-     * @return Plugin
+     * @return $this
      */
     public function setKey($key)
     {
@@ -84,8 +77,6 @@ class Plugin
     }
 
     /**
-     * Get key
-     *
      * @return string
      */
     public function getKey()
@@ -94,11 +85,9 @@ class Plugin
     }
 
     /**
-     * Set type
-     *
      * @param string $type
      *
-     * @return Plugin
+     * @return $this
      */
     public function setType($type)
     {
@@ -108,8 +97,6 @@ class Plugin
     }
 
     /**
-     * Get type
-     *
      * @return string
      */
     public function getType()
@@ -118,11 +105,9 @@ class Plugin
     }
 
     /**
-     * Set active
+     * @param int $active 0: inactive, 1: active, 2: hidden/misc
      *
-     * @param integer $active
-     *
-     * @return Plugin
+     * @return $this
      */
     public function setActive($active)
     {
@@ -132,9 +117,7 @@ class Plugin
     }
 
     /**
-     * Get active
-     *
-     * @return integer
+     * @return int 0: inactive, 1: active, 2: hidden/misc
      */
     public function getActive()
     {
@@ -142,11 +125,9 @@ class Plugin
     }
 
     /**
-     * Set order
+     * @param int $order
      *
-     * @param integer $order
-     *
-     * @return Plugin
+     * @return $this
      */
     public function setOrder($order)
     {
@@ -156,9 +137,7 @@ class Plugin
     }
 
     /**
-     * Get order
-     *
-     * @return integer
+     * @return int
      */
     public function getOrder()
     {
@@ -166,13 +145,11 @@ class Plugin
     }
 
     /**
-     * Set account
+     * @param Account $account
      *
-     * @param \Runalyze\Bundle\CoreBundle\Entity\Account $account
-     *
-     * @return Plugin
+     * @return $this
      */
-    public function setAccount(\Runalyze\Bundle\CoreBundle\Entity\Account $account = null)
+    public function setAccount(Account $account)
     {
         $this->account = $account;
 
@@ -180,9 +157,7 @@ class Plugin
     }
 
     /**
-     * Get account
-     *
-     * @return \Runalyze\Bundle\CoreBundle\Entity\Account
+     * @return Account
      */
     public function getAccount()
     {

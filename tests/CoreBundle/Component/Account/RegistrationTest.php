@@ -1,16 +1,19 @@
 <?php
 
-namespace Runalyze\Bundle\CoreBundle\Tests\Entity;
+namespace Runalyze\Bundle\CoreBundle\Tests\Component\Account;
 
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
+use Liip\FunctionalTestBundle\Test\WebTestCase;
 use Runalyze\Bundle\CoreBundle\Component\Account\Registration;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\AccountRepository;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Bundle\FrameworkBundle\Client;
 
-class RegistrationTest extends KernelTestCase
+class RegistrationTest extends WebTestCase
 {
+    /** @var Client */
+    protected $Client;
+
     /** @var EntityManager */
     protected $EntityManager;
 
@@ -19,54 +22,17 @@ class RegistrationTest extends KernelTestCase
 
     protected function setUp()
     {
-        static::bootKernel();
+        $this->loadFixtures([])->getReferenceRepository();
 
-        $this->EntityManager = static::$kernel->getContainer()->get('doctrine')->getManager();
+        $this->Client = $this->getContainer()->get('test.client');
+        $this->Client->disableReboot();
+
+        $this->EntityManager = $this->getContainer()->get('doctrine')->getManager();
+        $this->EntityManager->clear();
+
         $this->AccountRepository = $this->EntityManager->getRepository('CoreBundle:Account');
 
-        $this->clearAllOtherTablesAsLongAsCascadeDoesNotWork();
-        $this->deleteAllAccounts();
-    }
-
-    protected function tearDown()
-    {
-        $this->clearAllOtherTablesAsLongAsCascadeDoesNotWork();
-        $this->deleteAllAccounts();
-
-        parent::tearDown();
-
-        $this->EntityManager->close();
-        $this->EntityManager = null;
-    }
-
-    protected function clearAllOtherTablesAsLongAsCascadeDoesNotWork()
-    {
-        /** @var EntityRepository[] $repositories */
-        $repositories = [
-            $this->EntityManager->getRepository('CoreBundle:Conf'),
-            $this->EntityManager->getRepository('CoreBundle:Equipment'),
-            $this->EntityManager->getRepository('CoreBundle:EquipmentType'),
-            $this->EntityManager->getRepository('CoreBundle:Plugin'),
-            $this->EntityManager->getRepository('CoreBundle:Sport'),
-            $this->EntityManager->getRepository('CoreBundle:Type')
-        ];
-
-        foreach ($repositories as $repository) {
-            foreach ($repository->findAll() as $item) {
-                $this->EntityManager->remove($item);
-            }
-        }
-
-        $this->EntityManager->flush();
-    }
-
-    protected function deleteAllAccounts()
-    {
-        foreach ($this->AccountRepository->findAll() as $account) {
-            $this->EntityManager->remove($account);
-        }
-
-        $this->EntityManager->flush();
+        parent::setUp();
     }
 
     public function testThatRegistrationProcessWorks()
@@ -77,7 +43,7 @@ class RegistrationTest extends KernelTestCase
 
         $registration = new Registration($this->EntityManager, $account);
         $registration->requireAccountActivation();
-        $registration->setPassword('Pa$$w0rd', static::$kernel->getContainer()->get('security.encoder_factory'));
+        $registration->setPassword('Pa$$w0rd', $this->getContainer()->get('security.encoder_factory'));
         $registeredAccount = $registration->registerAccount();
 
         $this->assertEquals('foobar', $this->AccountRepository->find($registeredAccount->getId())->getUsername());
