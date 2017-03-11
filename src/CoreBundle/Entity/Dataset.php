@@ -25,7 +25,7 @@ class Dataset
     /**
      * @var boolean
      *
-     * @ORM\Column(name="keyid", columnDefinition="tinyint(3) unsigned NOT NULL")
+     * @ORM\Column(name="keyid", columnDefinition="tinyint unsigned NOT NULL")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
      */
@@ -34,7 +34,7 @@ class Dataset
     /**
      * @var boolean
      *
-     * @ORM\Column(name="active", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 1")
+     * @ORM\Column(name="active", columnDefinition="tinyint unsigned NOT NULL DEFAULT 1")
      */
     private $active = 1;
 
@@ -48,7 +48,7 @@ class Dataset
     /**
      * @var boolean
      *
-     * @ORM\Column(name="position", columnDefinition="tinyint(3) unsigned NOT NULL DEFAULT 0")
+     * @ORM\Column(name="position", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
      */
     private $position = '0';
 

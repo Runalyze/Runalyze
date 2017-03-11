@@ -85,7 +85,6 @@ class UserRepository extends EntityRepository
 
     /**
      * @param User $user
-     * @param Account $account
      */
     public function remove(User $user)
     {

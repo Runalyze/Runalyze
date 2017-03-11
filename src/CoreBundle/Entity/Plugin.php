@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Plugin
  *
- * @ORM\Table(name="plugin", indexes={@ORM\Index(name="accountid", columns={"accountid"})})
+ * @ORM\Table(name="plugin")
  * @ORM\Entity
  */
 class Plugin
@@ -30,14 +30,15 @@ class Plugin
 
     /**
      * @var string
-     * @ORM\Column(name="type", columnDefinition="enum('panel','stat','tool') NOT NULL DEFAULT 'stat'")
+     * @ORM\Column(name="type", type="string", length=5, nullable=false, options={"default":"stat"})
+     * @TODO this was ORM\Column(name="type", columnDefinition="enum('panel','stat','tool') NOT NULL DEFAULT 'stat'")
      */
     private $type = 'stat';
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="active", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 1")
+     * @ORM\Column(name="active", columnDefinition="tinyint unsigned NOT NULL DEFAULT 1")
      */
     private $active = 1;
 

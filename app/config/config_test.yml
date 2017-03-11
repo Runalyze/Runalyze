@@ -8,3 +8,19 @@ parameters:
   database_name: runalyze_test
   database_user: root
   database_password:
+
+liip_functional_test:
+  cache_sqlite_db: true
+
+framework:
+  test: ~
+  session:
+    storage_id: session.storage.mock_file
+
+doctrine:
+  dbal:
+    default_connection: default
+    connections:
+      default:
+        driver: pdo_sqlite
+        path: %kernel.cache_dir%/test.db

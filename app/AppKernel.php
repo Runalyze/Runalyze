@@ -31,6 +31,9 @@ class AppKernel extends \Symfony\Component\HttpKernel\Kernel
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Symfony\Bundle\DebugBundle\DebugBundle();
             $bundles[] = new Runalyze\Bundle\PlaygroundBundle\PlaygroundBundle();
+        } elseif ('test' == $this->getEnvironment()) {
+            $bundles[] = new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle();
+            $bundles[] = new Liip\FunctionalTestBundle\LiipFunctionalTestBundle();
         }
 
         return $bundles;

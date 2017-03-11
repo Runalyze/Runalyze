@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * User
  *
- * @ORM\Table(name="user", indexes={@ORM\Index(name="time", columns={"accountid", "time"}), @ORM\Index(name="accountid", columns={"accountid"})})
+ * @ORM\Table(name="user", indexes={@ORM\Index(name="accountid_time", columns={"accountid", "time"})})
  * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\UserRepository")
  * @ORM\EntityListeners({"Runalyze\Bundle\CoreBundle\EventListener\UserEntityListener"})
  */
@@ -40,14 +40,14 @@ class User
     /**
      * @var int|null [bpm]
      *
-     * @ORM\Column(name="pulse_rest", columnDefinition="tinyint(3) unsigned DEFAULT NULL")
+     * @ORM\Column(name="pulse_rest", columnDefinition="tinyint unsigned DEFAULT NULL")
      */
     private $pulseRest;
 
     /**
      * @var int|null [bpm]
      *
-     * @ORM\Column(name="pulse_max", columnDefinition="tinyint(3) unsigned DEFAULT NULL")
+     * @ORM\Column(name="pulse_max", columnDefinition="tinyint unsigned DEFAULT NULL")
      */
     private $pulseMax;
 

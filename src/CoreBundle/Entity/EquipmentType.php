@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * EquipmentType
  *
- * @ORM\Table(name="equipment_type", indexes={@ORM\Index(name="accountid", columns={"accountid"})})
+ * @ORM\Table(name="equipment_type")
  * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\EquipmentTypeRepository")
  */
 class EquipmentType
@@ -31,7 +31,7 @@ class EquipmentType
     /**
      * @var boolean
      *
-     * @ORM\Column(name="input", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 0")
+     * @ORM\Column(name="input", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
      */
     private $input;
 
