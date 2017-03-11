@@ -47,7 +47,7 @@ class Training
      *
      * @ORM\Column(name="time", type="integer", precision=11, nullable=false)
      */
-    private $time = 0;
+    private $time;
 
     /**
      * @var int|null [min]
@@ -92,11 +92,11 @@ class Training
     private $distance = null;
 
     /**
-     * @var float|null [s]
+     * @var float [s]
      *
      * @ORM\Column(name="s", type="decimal", precision=8, scale=2, options={"unsigned":true, "default":0.00})
      */
-    private $s = 0.0;
+    private $s;
 
     /**
      * @var int|null [s]

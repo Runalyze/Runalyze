@@ -260,6 +260,30 @@ class Registration
     }
 
     /**
+     * @return Sport
+     */
+    public function getRegisteredSportForRunning()
+    {
+        if (!isset($this->specialVars['RUNNINGSPORT'])) {
+            throw new \LogicException('Account has to be registered first.');
+        }
+
+        return $this->specialVars['RUNNINGSPORT'];
+    }
+
+    /**
+     * @return Sport
+     */
+    public function getRegisteredSportForCycling()
+    {
+        if (!isset($this->specialVars['BIKESPORT'])) {
+            throw new \LogicException('Account has to be registered first.');
+        }
+
+        return $this->specialVars['BIKESPORT'];
+    }
+
+    /**
      * @return string
      */
     public static function getNewSalt()

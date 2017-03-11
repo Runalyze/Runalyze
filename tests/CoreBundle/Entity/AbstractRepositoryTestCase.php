@@ -6,6 +6,7 @@ use Doctrine\Common\DataFixtures\ReferenceRepository;
 use Doctrine\ORM\EntityManager;
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
+use Runalyze\Bundle\CoreBundle\Entity\Sport;
 use Runalyze\Bundle\CoreBundle\Tests\DataFixtures\ORM\LoadAccountData;
 use Symfony\Bundle\FrameworkBundle\Client;
 
@@ -39,8 +40,10 @@ abstract class AbstractRepositoryTestCase extends WebTestCase
     {
         parent::tearDown();
 
-        $this->EntityManager->close();
-        $this->EntityManager = null;
+        if (null !== $this->EntityManager) {
+            $this->EntityManager->close();
+            $this->EntityManager = null;
+        }
     }
 
     /**
@@ -49,6 +52,22 @@ abstract class AbstractRepositoryTestCase extends WebTestCase
     protected function getDefaultAccount()
     {
         return $this->Fixtures->getReference('account-default');
+    }
+
+    /**
+     * @return Sport
+     */
+    protected function getDefaultAccountsRunningSport()
+    {
+        return $this->Fixtures->getReference('account-default.sport-running');
+    }
+
+    /**
+     * @return Sport
+     */
+    protected function getDefaultAccountsCyclingSport()
+    {
+        return $this->Fixtures->getReference('account-default.sport-cycling');
     }
 
     /**

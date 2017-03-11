@@ -45,15 +45,20 @@ class LoadAccountData extends AbstractFixture implements OrderedFixtureInterface
         $defaultAccount->setUsername('default');
         $defaultAccount->setMail('default@test.com');
 
-        $this->addReference('account-default', $this->registerAccount($manager, $defaultAccount, 'defaultPassword'));
+        $registration = $this->registerAccount($manager, $defaultAccount, 'defaultPassword');
+
+        $this->addReference('account-default', $defaultAccount);
+        $this->addReference('account-default.sport-running', $registration->getRegisteredSportForRunning());
+        $this->addReference('account-default.sport-cycling', $registration->getRegisteredSportForCycling());
     }
 
     protected function registerAccount(ObjectManager $manager, Account $account, $password)
     {
         $registration = new Registration($manager, $account);
         $registration->setPassword($password, $this->Container->get('security.encoder_factory'));
+        $registration->registerAccount();
 
-        return $registration->registerAccount();
+        return $registration;
     }
 
     public function getOrder()
