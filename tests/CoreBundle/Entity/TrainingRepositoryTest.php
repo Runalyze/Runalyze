@@ -30,29 +30,43 @@ class TrainingRepositoryTest extends AbstractRepositoryTestCase
     }
 
     /**
-     * @param int $timestamp
+     * @param int|null $timestamp
      * @param int|float $duration
      * @param float|int|null $distance
      * @param Sport|null $sport
      * @return Training
      */
     protected function insertActivityForDefaultAccount(
-        $timestamp,
+        $timestamp = null,
         $duration = 3600,
         $distance = null,
         Sport $sport = null
     )
     {
-        $training = (new Training())
-            ->setS($duration)
-            ->setTime($timestamp ?: time())
-            ->setDistance($distance)
-            ->setSport($sport ?: $this->getDefaultAccountsRunningSport())
-            ->setAccount($this->Account);
+        $activity = $this->getActivitiyForDefaultAccount($timestamp, $duration, $distance, $sport);
 
-        $this->TrainingRepository->save($training);
+        $this->TrainingRepository->save($activity);
 
-        return $training;
+        return $activity;
+    }
+
+    public function testSpeedUnit()
+    {
+        $this->assertEquals(
+            $this->getDefaultAccountsRunningSport()->getSpeed(),
+            $this->TrainingRepository->getSpeedUnitFor(
+                $this->insertActivityForDefaultAccount(null, 3600, null, $this->getDefaultAccountsRunningSport())->getId(),
+                $this->Account->getId()
+            )
+        );
+
+        $this->assertEquals(
+            $this->getDefaultAccountsCyclingSport()->getSpeed(),
+            $this->TrainingRepository->getSpeedUnitFor(
+                $this->insertActivityForDefaultAccount(null, 3600, null, $this->getDefaultAccountsCyclingSport())->getId(),
+                $this->Account->getId()
+            )
+        );
     }
 
     public function testNumberOfActivities()
@@ -91,5 +105,43 @@ class TrainingRepositoryTest extends AbstractRepositoryTestCase
         $this->assertEquals(3, $statistics->getNumberOfActivities());
         $this->assertEquals(14400.0, $statistics->getTotalDuration());
         $this->assertEquals(85.5, $statistics->getTotalDistance());
+    }
+
+    public function testPosterStats()
+    {
+        $this->insertActivityForDefaultAccount(mktime(12, 0, 0, 6, 1, 2015), 5400, 17.5);
+        $this->insertActivityForDefaultAccount(mktime(12, 0, 0, 6, 1, 2016), 3600, 12.5);
+        $this->insertActivityForDefaultAccount(mktime(12, 0, 0, 6, 30, 2016), 3600, 10.0);
+        $this->insertActivityForDefaultAccount(mktime(12, 0, 0, 7, 1, 2016), 3600, 33.3, $this->getDefaultAccountsCyclingSport());
+
+        $this->assertEquals([
+            'num' => '1', 'total_distance' => '17.5', 'min_distance' => '17.5', 'max_distance' => '17.5'
+        ], $this->TrainingRepository->getStatsForPoster($this->Account, $this->getDefaultAccountsRunningSport(), 2015)->getScalarResult()[0]);
+
+        $this->assertEquals([
+            'num' => '2', 'total_distance' => '22.5', 'min_distance' => '10.0', 'max_distance' => '12.5'
+        ], $this->TrainingRepository->getStatsForPoster($this->Account, $this->getDefaultAccountsRunningSport(), 2016)->getScalarResult()[0]);
+
+        $this->assertEquals([
+            'num' => '0', 'total_distance' => null, 'min_distance' => null, 'max_distance' => null
+        ], $this->TrainingRepository->getStatsForPoster($this->Account, $this->getDefaultAccountsCyclingSport(), 2015)->getScalarResult()[0]);
+
+        $this->assertEquals([
+            'num' => '1', 'total_distance' => '33.3', 'min_distance' => '33.3', 'max_distance' => '33.3'
+        ], $this->TrainingRepository->getStatsForPoster($this->Account, $this->getDefaultAccountsCyclingSport(), 2016)->getScalarResult()[0]);
+    }
+
+    public function testLockedActivities()
+    {
+        $this->insertActivityForDefaultAccount();
+
+        $this->assertFalse($this->TrainingRepository->accountHasLockedTrainings($this->Account));
+
+        $activity = $this->getActivitiyForDefaultAccount(time());
+        $activity->setLock(true);
+
+        $this->TrainingRepository->save($activity);
+
+        $this->assertTrue($this->TrainingRepository->accountHasLockedTrainings($this->Account));
     }
 }

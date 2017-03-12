@@ -352,6 +352,7 @@ class Raceresult
     public function fillFromActivity(Training $activity)
     {
         $this->setActivity($activity);
+        $this->setAccount($activity->getAccount());
         $this->setOfficialDistance($activity->getDistance());
         $this->setOfficialTime($activity->getS());
         $this->setName($activity->getComment());

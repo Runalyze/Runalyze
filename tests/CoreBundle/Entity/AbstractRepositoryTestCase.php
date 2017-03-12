@@ -6,7 +6,9 @@ use Doctrine\Common\DataFixtures\ReferenceRepository;
 use Doctrine\ORM\EntityManager;
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
+use Runalyze\Bundle\CoreBundle\Entity\EquipmentType;
 use Runalyze\Bundle\CoreBundle\Entity\Sport;
+use Runalyze\Bundle\CoreBundle\Entity\Training;
 use Runalyze\Bundle\CoreBundle\Tests\DataFixtures\ORM\LoadAccountData;
 use Symfony\Bundle\FrameworkBundle\Client;
 
@@ -71,10 +73,40 @@ abstract class AbstractRepositoryTestCase extends WebTestCase
     }
 
     /**
+     * @return EquipmentType
+     */
+    protected function getDefaultAccountsClothesType()
+    {
+        return $this->Fixtures->getReference('account-default.equipment-type-clothes');
+    }
+
+    /**
      * @return Account
      */
     protected function getEmptyAccount()
     {
         return $this->Fixtures->getReference('account-empty');
+    }
+
+    /**
+     * @param int|null $timestamp
+     * @param int|float $duration
+     * @param float|int|null $distance
+     * @param Sport|null $sport
+     * @return Training
+     */
+    protected function getActivitiyForDefaultAccount(
+        $timestamp = null,
+        $duration = 3600,
+        $distance = null,
+        Sport $sport = null
+    )
+    {
+        return (new Training())
+            ->setS($duration)
+            ->setTime($timestamp ?: time())
+            ->setDistance($distance)
+            ->setSport($sport ?: $this->getDefaultAccountsRunningSport())
+            ->setAccount($this->getDefaultAccount());
     }
 }

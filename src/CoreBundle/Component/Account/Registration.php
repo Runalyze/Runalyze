@@ -284,6 +284,18 @@ class Registration
     }
 
     /**
+     * @return EquipmentType
+     */
+    public function getRegisteredEquipmentTypeClothes()
+    {
+        if (!isset($this->specialVars['EQUIPMENT_CLOTHES'])) {
+            throw new \LogicException('Account has to be registered first.');
+        }
+
+        return $this->specialVars['EQUIPMENT_CLOTHES'];
+    }
+
+    /**
      * @return string
      */
     public static function getNewSalt()

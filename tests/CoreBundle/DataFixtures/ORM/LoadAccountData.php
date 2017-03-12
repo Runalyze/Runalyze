@@ -50,6 +50,7 @@ class LoadAccountData extends AbstractFixture implements OrderedFixtureInterface
         $this->addReference('account-default', $defaultAccount);
         $this->addReference('account-default.sport-running', $registration->getRegisteredSportForRunning());
         $this->addReference('account-default.sport-cycling', $registration->getRegisteredSportForCycling());
+        $this->addReference('account-default.equipment-type-clothes', $registration->getRegisteredEquipmentTypeClothes());
     }
 
     protected function registerAccount(ObjectManager $manager, Account $account, $password)

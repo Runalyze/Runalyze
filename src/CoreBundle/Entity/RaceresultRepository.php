@@ -20,7 +20,7 @@ class RaceresultRepository extends EntityRepository
     /**
      * @param int $activityId
      * @param int $accountId
-     * @return null|Training
+     * @return null|Raceresult
      */
     public function findForAccount($activityId, $accountId)
     {
