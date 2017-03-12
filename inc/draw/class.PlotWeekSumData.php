@@ -90,6 +90,17 @@ class PlotWeekSumData extends PlotSumData {
 		return $this->WeekStart->mysqlWeek('FROM_UNIXTIME(`time`)');
 	}
 
+    protected function whereDate() {
+        if (is_numeric($this->Year)) {
+            $dateStart = (new LocalTime())->setISODate((int)$this->Year, 1, 1 + $this->WeekStart->differenceToMondayInDays())->setTime(0, 0, 0)->getTimestamp();
+            $dateEnd = (new LocalTime())->setISODate((int)$this->Year + 1, 0, 7 + $this->WeekStart->differenceToMondayInDays())->setTime(23, 59, 59)->getTimestamp();
+
+            return '`time` BETWEEN '.$dateStart.' AND '.$dateEnd;
+        }
+
+        return parent::whereDate();
+    }
+
 	/**
 	 * @return int
 	 */
