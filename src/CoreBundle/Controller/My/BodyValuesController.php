@@ -37,7 +37,7 @@ class BodyValuesController extends Controller
     {
         /** @var User $oldUser */
         $oldUser = $this->getUserRepository()->getLatestEntryFor($account);
-        $user = $oldUser ? $oldUser->cloneObjectForForm() : (new User())->setAccount($account);
+        $user = $oldUser ? $oldUser->cloneObjectForForm() : (new User())->setAccount($account)->setCurrentTimestamp();
 
         $form = $this->createForm(BodyValuesType::class, $user,[
             'action' => $this->generateUrl('body-values-add')
