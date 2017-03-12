@@ -12,13 +12,13 @@ use Runalyze\Bundle\CoreBundle\Form\Type\HeartrateType;
 use Runalyze\Bundle\CoreBundle\Form\Type\PercentageType;
 use Runalyze\Bundle\CoreBundle\Form\Type\DurationType;
 
-
 class BodyValuesType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('time', DateType::class, [
+                'label' => 'Date',
                 'widget' => 'single_text',
                 'input' => 'timestamp',
                 'format' => 'dd.MM.yyyy',
