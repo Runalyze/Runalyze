@@ -325,4 +325,20 @@ class User
     {
         return $this->account;
     }
+
+    /**
+     * @return User
+     */
+    public function cloneObjectForForm()
+    {
+        return (new User())
+            ->setAccount($this->account)
+            ->setCurrentTimestamp()
+            ->setPulseMax($this->pulseMax)
+            ->setPulseRest($this->pulseRest)
+            ->setWeight($this->weight)
+            ->setMuscles($this->muscles)
+            ->setFat($this->fat)
+            ->setWater($this->water);
+    }
 }
