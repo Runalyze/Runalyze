@@ -105,7 +105,7 @@ class ImporterFactory {
 
 	/**
 	 * Get training objects
-	 * @return array
+	 * @return TrainingObject[]
 	 */
 	public function trainingObjects() {
 		return $this->TrainingObjects;
@@ -121,7 +121,7 @@ class ImporterFactory {
 
 	/**
 	 * Add objects
-	 * @param array[TrainingObject] $TrainingObjects
+	 * @param TrainingObject[] $TrainingObjects
 	 */
 	protected function addObjects(array $TrainingObjects) {
 		$this->TrainingObjects = array_merge($this->TrainingObjects, $TrainingObjects);
