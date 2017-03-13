@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Raceresult
  *
- * @ORM\Table(name="raceresult", indexes={@ORM\Index(name="accountid", columns={"accountid"})})
+ * @ORM\Table(name="raceresult")
  * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\RaceresultRepository")
  */
 class Raceresult
@@ -29,7 +29,7 @@ class Raceresult
     /**
      * @var boolean
      *
-     * @ORM\Column(name="officially_measured", type="boolean", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 0")
+     * @ORM\Column(name="officially_measured", type="boolean", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
      */
     private $officiallyMeasured = false;
 
@@ -43,42 +43,42 @@ class Raceresult
     /**
      * @var int|null
      *
-     * @ORM\Column(name="place_total", columnDefinition="mediumint(8) unsigned DEFAULT NULL")
+     * @ORM\Column(name="place_total", columnDefinition="mediumint unsigned DEFAULT NULL")
      */
     private $placeTotal;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="place_gender", columnDefinition="mediumint(8) unsigned DEFAULT NULL")
+     * @ORM\Column(name="place_gender", columnDefinition="mediumint unsigned DEFAULT NULL")
      */
     private $placeGender;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="place_ageclass", columnDefinition="mediumint(8) unsigned DEFAULT NULL")
+     * @ORM\Column(name="place_ageclass", columnDefinition="mediumint unsigned DEFAULT NULL")
      */
     private $placeAgeclass;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="participants_total", columnDefinition="mediumint(8) unsigned DEFAULT NULL")
+     * @ORM\Column(name="participants_total", columnDefinition="mediumint unsigned DEFAULT NULL")
      */
     private $participantsTotal;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="participants_gender", columnDefinition="mediumint(8) unsigned DEFAULT NULL")
+     * @ORM\Column(name="participants_gender", columnDefinition="mediumint unsigned DEFAULT NULL")
      */
     private $participantsGender;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="participants_ageclass", columnDefinition="mediumint(8) unsigned DEFAULT NULL")
+     * @ORM\Column(name="participants_ageclass", columnDefinition="mediumint unsigned DEFAULT NULL")
      */
     private $participantsAgeclass;
 
@@ -352,6 +352,7 @@ class Raceresult
     public function fillFromActivity(Training $activity)
     {
         $this->setActivity($activity);
+        $this->setAccount($activity->getAccount());
         $this->setOfficialDistance($activity->getDistance());
         $this->setOfficialTime($activity->getS());
         $this->setName($activity->getComment());
