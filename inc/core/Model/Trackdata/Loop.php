@@ -10,7 +10,7 @@ use Runalyze\Configuration;
 
 /**
  * Loop through trackdata object
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Model\Trackdata
  */
@@ -59,7 +59,7 @@ class Loop extends \Runalyze\Model\Loop {
 
 	/**
 	 * Next kilometer
-	 * 
+	 *
 	 * Alias for <code>moveDistance(1.0)</code>
 	 * @return boolean
 	 */
@@ -68,10 +68,10 @@ class Loop extends \Runalyze\Model\Loop {
 
 		return $this->isAtEnd();
 	}
-        
+
 	/**
 	 * Next mile
-	 * 
+	 *
 	 * Alias for <code>moveDistance(1.60934)</code>
 	 * @return boolean
 	 */
@@ -116,6 +116,35 @@ class Loop extends \Runalyze\Model\Loop {
 	public function moveToDistance($kilometer) {
 		$this->moveTo(Entity::DISTANCE, $kilometer);
 	}
+
+    /**
+     * Average value for current section
+     * @param string $key
+     * @return int
+     */
+    public function average($key)
+    {
+        if ($this->LastIndex < $this->Index && $this->Object->has(Entity::TIME) && $this->Object->has($key)) {
+            $lastTime = $this->Object->at($this->LastIndex, Entity::TIME);
+            $totalTime = 0;
+            $sum = 0;
+
+            for ($i = $this->LastIndex + 1; $i <= $this->Index; ++$i) {
+                $currentTime = $this->Object->at($i, Entity::TIME);
+                $totalTime += $currentTime - $lastTime;
+
+                $sum += $this->Object->at($i, $key) * ($currentTime - $lastTime);
+            }
+
+            if (0 == $totalTime) {
+                return $sum / ($this->Index - $this->LastIndex);
+            }
+
+            return $sum / $totalTime;
+        }
+
+        return parent::average($key);
+    }
 
 	/**
 	 * @param array $data
