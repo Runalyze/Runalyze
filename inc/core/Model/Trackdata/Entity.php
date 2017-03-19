@@ -145,6 +145,9 @@ class Entity extends Model\Entity implements Model\Loopable, Model\Common\WithNu
 	 */
 	protected $checkArraySizes = true;
 
+	/** @var bool */
+	protected $hasTheoreticalPace = false;
+
 	/**
 	 * Clone object
 	 */
@@ -429,6 +432,24 @@ class Entity extends Model\Entity implements Model\Loopable, Model\Common\WithNu
 	public function pace() {
 		return $this->Data[self::PACE];
 	}
+
+    /**
+     * Theoretical pace will force the loop to ignore distance data for average pace
+     * @param array $data
+     * @param bool $flag
+     */
+	public function setTheoreticalPace(array $data, $flag = true) {
+	    $this->set(self::PACE, $data);
+
+	    $this->hasTheoreticalPace = $flag;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasTheoreticalPace() {
+	    return $this->hasTheoreticalPace;
+    }
 
 	/**
 	 * Get heart rate
