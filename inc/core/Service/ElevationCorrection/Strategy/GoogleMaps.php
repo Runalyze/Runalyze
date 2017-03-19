@@ -47,12 +47,12 @@ class GoogleMaps extends AbstractStrategyFromExternalAPI
 			return false;
 		}
 
-		if (is_array($response) && isset($response['results'])) {
+		if (is_array($response) && isset($response['results']) && !empty($response['results'])) {
 			return true;
 		}
 
-		if (isset($response['status'])) {
-			\Runalyze\Error::getInstance ()->addDebug('GoogleMaps response: '.$response['status']);
+		if (isset($response['status']) && 'OVER_QUERY_LIMIT' != $response['status']) {
+		    throw new InvalidResponseException('GoogleMaps returned no data. (status: "'.$response['status'].'")');
 		}
 
 		return false;
