@@ -14,13 +14,13 @@
             {% if is_granted('ROLE_USER') %}
                 <a class="tab right" href="{{ url('logout') }}" title="{% trans %}Logout{% endtrans %}"><i class="fa fa-fw fa-lg fa-sign-out"></i>&nbsp;{% trans %}Logout{% endtrans %}</a>
                 <a class="window tab right b" href="{{ url('settings-account') }}"><i class="fa fa-fw fa-lg fa-user"></i>&nbsp;{{ app.user.username }}</a>
-            {% endif %}
 
-            <span class="left b">
-                <a class="window tab" href="{{ url('settings') }}"><i class="fa fa-fw fa-lg fa-cog"></i>&nbsp;{% trans %}Configuration{% endtrans %}</a>
-                <a class="window tab" href="{{ url('tools') }}"><i class="fa fa-fw fa-lg fa-dashboard"></i>&nbsp;{% trans %}Tools{% endtrans %}</a>
-                <a class="window tab" href="{{ url('help') }}"><i class="fa fa-fw fa-lg fa-question-circle"></i>&nbsp;{% trans %}Help{% endtrans %}</a>
-            </span>
+                <span class="left b">
+                    <a class="window tab" href="{{ url('settings') }}"><i class="fa fa-fw fa-lg fa-cog"></i>&nbsp;{% trans %}Configuration{% endtrans %}</a>
+                    <a class="window tab" href="{{ url('tools') }}"><i class="fa fa-fw fa-lg fa-dashboard"></i>&nbsp;{% trans %}Tools{% endtrans %}</a>
+                    <a class="window tab" href="{{ url('help') }}"><i class="fa fa-fw fa-lg fa-question-circle"></i>&nbsp;{% trans %}Help{% endtrans %}</a>
+                </span>
+            {% endif %}
         {% endblock %}
     </div>
     {% endif %}
