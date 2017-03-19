@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a0e8cd31f68e997d7b00f554d8eeabb1",
-    "content-hash": "4fb8d6755c2a293a67f3d7fc46cad922",
+    "hash": "aa8d7e9bb84258909aac8ff0aeb3324e",
+    "content-hash": "6d61b6cd702f11df208db0aec2fad5d6",
     "packages": [
         {
             "name": "beberlei/DoctrineExtensions",
@@ -2192,6 +2192,51 @@
             "time": "2016-09-25 21:11:15"
         },
         {
+            "name": "runalyze/glossary",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Runalyze/glossary.git",
+                "reference": "ca4322999f851030062b34c9c78aca44030d6375"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Runalyze/glossary/zipball/ca4322999f851030062b34c9c78aca44030d6375",
+                "reference": "ca4322999f851030062b34c9c78aca44030d6375",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.9"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^1.11",
+                "phpunit/phpunit": "4.8.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Runalyze\\Bundle\\GlossaryBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "RUNALYZE Team",
+                    "email": "mail@runalyze.com",
+                    "homepage": "https://runalyze.com"
+                }
+            ],
+            "description": "provides the glossary for runalyze",
+            "keywords": [
+                "runalyze",
+                "symfony3"
+            ],
+            "time": "2016-09-28 16:54:31"
+        },
+        {
             "name": "sensio/framework-extra-bundle",
             "version": "v3.0.16",
             "source": {
@@ -4228,6 +4273,7 @@
         "league/geotools": 0,
         "swiftmailer/swiftmailer": 0,
         "jms/translation-bundle": 20,
+        "runalyze/glossary": 20,
         "runalyze/playground": 20
     },
     "prefer-stable": true,
