@@ -1,0 +1,31 @@
+{% extends "base_logged_in.twig" %}
+
+{% block content %}
+    <div class="panel-heading">
+
+        {% if isNew %}
+            <h1>{{ 'Add equipment category'|trans }}</h1>
+        {% else %}
+            <h1>{{ 'Edit equipment category'|trans }}</h1>
+        {% endif %}
+
+    </div>
+
+    <div class="panel-content">
+        {% include 'flashmessages.html.twig' %}
+
+        {{ form_start(form, {'attr': {'class': 'ajax no-automatic-reloads'} }) }}
+        <fieldset>
+            <legend>{% trans %}Change mail address{% endtrans %}</legend>
+
+            {{ form_rest(form) }}
+
+            <div class="c">
+                <input type="submit" value="{% trans %}Change{% endtrans %}" name="submit">
+            </div>
+        </fieldset>
+
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
