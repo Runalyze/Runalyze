@@ -13,8 +13,16 @@
             </tr>
         </thead>
         <tbody>
+            <tr class="highlight bottom-spacer">
+                <td class="b">{{ currentVo2max|round }}</td>
+                {% for km in distances %}
+                    <td>{{ prognosis.secondsFor(km, currentVo2max|round)|duration }}</td>
+                {% endfor %}
+            </tr>
+        </tbody>
+        <tbody>
             {% for vo2max in vo2maxValues %}
-                <tr{% if vo2max == currentVo2max|round %} class="highlight"{% endif %}>
+                <tr>
                     <td class="b">{{ vo2max }}</td>
                     {% for km in distances %}
                         <td>{{ prognosis.secondsFor(km, vo2max)|duration }}</td>
