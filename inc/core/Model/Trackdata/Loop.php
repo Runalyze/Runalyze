@@ -134,6 +134,7 @@ class Loop extends \Runalyze\Model\Loop {
                 $totalTime += $currentTime - $lastTime;
 
                 $sum += $this->Object->at($i, $key) * ($currentTime - $lastTime);
+                $lastTime = $currentTime;
             }
 
             if (0 == $totalTime) {
