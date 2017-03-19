@@ -43,7 +43,7 @@ class GradeAdjustedPace extends Pace
             return;
         }
 
-		$context->trackdata()->set(Trackdata::PACE, $this->getGradeAdjustedPace($context));
+        $context->trackdata()->setTheoreticalPace($this->getGradeAdjustedPace($context));
 	}
 
     /**
