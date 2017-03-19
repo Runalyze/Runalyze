@@ -44,8 +44,7 @@ class AccountRepository extends EntityRepository implements UserLoaderInterface
             ->select('COUNT(u.id)')
             ->where('u.activationHash is NULL')
             ->getQuery()
-            ->useResultCache($cache)
-            ->setResultCacheLifetime(320)
+            ->useResultCache($cache, 320)
             ->getSingleScalarResult();
     }
 

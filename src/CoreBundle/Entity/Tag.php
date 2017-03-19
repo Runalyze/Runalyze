@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Tag
  *
- * @ORM\Table(name="tag", indexes={@ORM\Index(name="accountid", columns={"accountid"})})
+ * @ORM\Table(name="tag")
  * @ORM\Entity
  */
 class Tag

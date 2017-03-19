@@ -47,7 +47,7 @@ class Training
      *
      * @ORM\Column(name="time", type="integer", precision=11, nullable=false)
      */
-    private $time = 0;
+    private $time;
 
     /**
      * @var int|null [min]
@@ -73,30 +73,30 @@ class Training
     /**
      * @var bool
      *
-     * @ORM\Column(name="is_public", type="boolean", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 0")
+     * @ORM\Column(name="is_public", type="boolean", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
      */
     private $isPublic = false;
 
     /**
      * @var bool
      *
-     * @ORM\Column(name="is_track", type="boolean", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 0")
+     * @ORM\Column(name="is_track", type="boolean", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
      */
     private $isTrack = false;
 
     /**
      * @var float|null [km]
      *
-     * @ORM\Column(name="distance", columnDefinition="decimal(6,2) unsigned DEFAULT NULL")
+     * @ORM\Column(name="distance", type="decimal", precision=6, scale=2, nullable=true, options={"unsigned":true})
      */
     private $distance = null;
 
     /**
-     * @var float|null [s]
+     * @var float [s]
      *
-     * @ORM\Column(name="s", columnDefinition="decimal(8,2) unsigned NOT NULL")
+     * @ORM\Column(name="s", type="decimal", precision=8, scale=2, options={"unsigned":true, "default":0.00})
      */
-    private $s = 0.0;
+    private $s;
 
     /**
      * @var int|null [s]
@@ -122,49 +122,49 @@ class Training
     /**
      * @var int|null [bpm]
      *
-     * @ORM\Column(name="pulse_avg", columnDefinition="tinyint(3) unsigned DEFAULT NULL")
+     * @ORM\Column(name="pulse_avg", columnDefinition="tinyint unsigned DEFAULT NULL")
      */
     private $pulseAvg = null;
 
     /**
      * @var int|null [bpm]
      *
-     * @ORM\Column(name="pulse_max", columnDefinition="tinyint(3) unsigned DEFAULT NULL")
+     * @ORM\Column(name="pulse_max", columnDefinition="tinyint unsigned DEFAULT NULL")
      */
     private $pulseMax = null;
 
     /**
      * @var float|null [ml/kg/min]
      *
-     * @ORM\Column(name="vo2max", columnDefinition="decimal(5,2) unsigned DEFAULT NULL")
+     * @ORM\Column(name="vo2max", type="decimal", precision=5, scale=2, nullable=true, options={"unsigned":true})
      */
     private $vo2max = null;
 
     /**
      * @var float|null [ml/kg/min]
      *
-     * @ORM\Column(name="vo2max_by_time", columnDefinition="decimal(5,2) unsigned DEFAULT NULL")
+     * @ORM\Column(name="vo2max_by_time", type="decimal", precision=5, scale=2, nullable=true, options={"unsigned":true})
      */
     private $vo2maxByTime = null;
 
     /**
      * @var float|null [ml/kg/min]
      *
-     * @ORM\Column(name="vo2max_with_elevation", columnDefinition="decimal(5,2) unsigned DEFAULT NULL" )
+     * @ORM\Column(name="vo2max_with_elevation", type="decimal", precision=5, scale=2, nullable=true, options={"unsigned":true})
      */
     private $vo2maxWithElevation = null;
 
     /**
      * @var bool
      *
-     * @ORM\Column(name="use_vo2max", type="boolean", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 1")
+     * @ORM\Column(name="use_vo2max", type="boolean", columnDefinition="tinyint unsigned NOT NULL DEFAULT 1")
      */
     private $useVO2max = true;
 
     /**
      * @var float|null [ml/kg/min]
      *
-     * @ORM\Column(name="fit_vo2max_estimate", columnDefinition="decimal(4,2) unsigned DEFAULT NULL")
+     * @ORM\Column(name="fit_vo2max_estimate", type="decimal", precision=4, scale=2, nullable=true, options={"unsigned":true})
      */
     private $fitVO2maxEstimate = null;
 
@@ -185,21 +185,21 @@ class Training
     /**
      * @var float|null
      *
-     * @ORM\Column(name="fit_training_effect", columnDefinition="decimal(2,1) unsigned DEFAULT NULL")
+     * @ORM\Column(name="fit_training_effect", type="decimal", precision=2, scale=1, nullable=true, options={"unsigned":true})
      */
     private $fitTrainingEffect = null;
 
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="fit_performance_condition", columnDefinition="tinyint(3) unsigned DEFAULT NULL")
+     * @ORM\Column(name="fit_performance_condition", columnDefinition="tinyint unsigned DEFAULT NULL")
      */
     private $fitPerformanceCondition = null;
 
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="rpe", columnDefinition="tinyint(2) unsigned DEFAULT NULL")
+     * @ORM\Column(name="rpe", columnDefinition="tinyint unsigned DEFAULT NULL")
      */
     private $rpe = null;
 
@@ -234,14 +234,14 @@ class Training
     /**
      * @var int|null
      *
-     * @ORM\Column(name="swolf", columnDefinition="tinyint(3) unsigned DEFAULT NULL")
+     * @ORM\Column(name="swolf", columnDefinition="tinyint unsigned DEFAULT NULL")
      */
     private $swolf = null;
 
     /**
      * @var bool|null [cm]
      *
-     * @ORM\Column(name="stride_length", columnDefinition="tinyint(3) unsigned DEFAULT NULL")
+     * @ORM\Column(name="stride_length", columnDefinition="tinyint unsigned DEFAULT NULL")
      */
     private $strideLength = null;
 
@@ -262,7 +262,7 @@ class Training
     /**
      * @var int|null [mm]
      *
-     * @ORM\Column(name="vertical_oscillation", columnDefinition="tinyint(3) unsigned DEFAULT NULL")
+     * @ORM\Column(name="vertical_oscillation", columnDefinition="tinyint unsigned DEFAULT NULL")
      */
     private $verticalOscillation = null;
 
@@ -276,42 +276,42 @@ class Training
     /**
      * @var int|null [°C]
      *
-     * @ORM\Column(name="temperature", columnDefinition="tinyint(4) DEFAULT NULL")
+     * @ORM\Column(name="temperature", columnDefinition="tinyint DEFAULT NULL")
      */
     private $temperature = null;
 
     /**
      * @var bool|null [km/h]
      *
-     * @ORM\Column(name="wind_speed", columnDefinition="tinyint(3) unsigned DEFAULT NULL")
+     * @ORM\Column(name="wind_speed", columnDefinition="tinyint unsigned DEFAULT NULL")
      */
     private $windSpeed = null;
 
     /**
      * @var int|null [°]
      *
-     * @ORM\Column(name="wind_deg", columnDefinition="smallint(3) unsigned DEFAULT NULL")
+     * @ORM\Column(name="wind_deg", columnDefinition="smallint unsigned DEFAULT NULL")
      */
     private $windDeg = null;
 
     /**
      * @var bool|null [%]
      *
-     * @ORM\Column(name="humidity", columnDefinition="tinyint(3) unsigned DEFAULT NULL")
+     * @ORM\Column(name="humidity", columnDefinition="tinyint unsigned DEFAULT NULL")
      */
     private $humidity = null;
 
     /**
      * @var int [hPa]
      *
-     * @ORM\Column(name="pressure", columnDefinition="smallint(4) unsigned DEFAULT NULL")
+     * @ORM\Column(name="pressure", columnDefinition="smallint unsigned DEFAULT NULL")
      */
     private $pressure = null;
 
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="is_night", type="boolean", columnDefinition="tinyint(1) unsigned DEFAULT NULL")
+     * @ORM\Column(name="is_night", type="boolean", columnDefinition="tinyint unsigned DEFAULT NULL")
      */
     private $isNight = null;
 
@@ -325,7 +325,7 @@ class Training
     /**
      * @var int|null
      *
-     * @ORM\Column(name="weather_source", columnDefinition="tinyint(2) unsigned DEFAULT NULL")
+     * @ORM\Column(name="weather_source", columnDefinition="tinyint unsigned DEFAULT NULL")
      */
     private $weatherSource = null;
 
@@ -408,7 +408,7 @@ class Training
     /**
      * @var bool
      *
-     * @ORM\Column(name="`lock`", type="boolean", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 0")
+     * @ORM\Column(name="`lock`", type="boolean", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
      */
     private $lock = false;
 

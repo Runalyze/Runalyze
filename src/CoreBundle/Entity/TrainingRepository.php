@@ -85,8 +85,9 @@ class TrainingRepository extends EntityRepository
 
         if (null !== $year) {
             $queryBuilder
-                ->andWhere('YEAR(FROM_UNIXTIME(t.time)) = :year')
-                ->setParameter('year', $year);
+                ->andWhere('t.time BETWEEN :startTime and :endTime')
+                ->setParameter('startTime', mktime(0, 0, 0, 1, 1, $year))
+                ->setParameter('endTime', mktime(23, 59, 59, 12, 31, $year));
         }
 
         if (null !== $sportid) {
@@ -120,7 +121,7 @@ class TrainingRepository extends EntityRepository
         if (null !== $column) {
             $queryBuilder->addSelect('SUM(t.'.$column.') AS value');
         } else {
-            $queryBuilder->addSelect('SUM(1g) AS value');
+            $queryBuilder->addSelect('SUM(1) AS value');
         }
 
         if (null !== $sportid) {
@@ -166,9 +167,9 @@ class TrainingRepository extends EntityRepository
             ->getOneOrNullResult();
 
         if (null !== $dataForAccount) {
-            $statistics->setNumberOfActivities($dataForAccount['num']);
-            $statistics->setTotalDistance($dataForAccount['distance']);
-            $statistics->setTotalDuration($dataForAccount['duration']);
+            $statistics->setNumberOfActivities((int)$dataForAccount['num']);
+            $statistics->setTotalDistance((float)$dataForAccount['distance']);
+            $statistics->setTotalDuration((float)$dataForAccount['duration']);
         }
 
         return $statistics;
