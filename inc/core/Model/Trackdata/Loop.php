@@ -118,13 +118,16 @@ class Loop extends \Runalyze\Model\Loop {
 	}
 
     /**
-     * Average value for current section
      * @param string $key
-     * @return int
+     * @return float|int
      */
     public function average($key)
     {
         if ($this->LastIndex < $this->Index && $this->Object->has(Entity::TIME) && $this->Object->has($key)) {
+            if (Entity::PACE == $key) {
+                return $this->Object->hasTheoreticalPace() ? $this->averageTheoreticalPace() : $this->averagePace();
+            }
+
             $lastTime = $this->Object->at($this->LastIndex, Entity::TIME);
             $totalTime = 0;
             $sum = 0;
@@ -145,6 +148,41 @@ class Loop extends \Runalyze\Model\Loop {
         }
 
         return parent::average($key);
+    }
+
+    /**
+     * @return float|int
+     */
+    public function averagePace()
+    {
+        $totalTime = $this->difference(Entity::TIME);
+        $totalDistance = $this->difference(Entity::DISTANCE);
+
+        return $totalDistance > 0 ? $totalTime / $totalDistance : 0;
+    }
+
+    /**
+     * @return float|int
+     */
+    public function averageTheoreticalPace()
+    {
+        $lastTime = $this->Object->at($this->LastIndex, Entity::TIME);
+        $totalTime = 0;
+        $totalDistance = 0;
+
+        for ($i = $this->LastIndex + 1; $i <= $this->Index; ++$i) {
+            $currentPace = $this->Object->at($i, Entity::PACE);
+            $currentTime = $this->Object->at($i, Entity::TIME);
+            $totalTime += $currentTime - $lastTime;
+
+            if ($currentPace > 0) {
+                $totalDistance += ($currentTime - $lastTime) / $currentPace;
+            }
+
+            $lastTime = $currentTime;
+        }
+
+        return $totalDistance > 0 ? $totalTime / $totalDistance : 0;
     }
 
 	/**
