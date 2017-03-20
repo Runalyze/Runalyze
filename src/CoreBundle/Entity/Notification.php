@@ -53,7 +53,7 @@ class Notification
     private $data;
     
     /**
-     * @ORM\Column(name="wasRead", type="bool")
+     * @ORM\Column(name="wasRead", type="boolean")
      */
     protected $wasRead = false;
 
