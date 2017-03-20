@@ -13,11 +13,11 @@
         <target state="translated">Файлът трябва да бъде направен със същата (минимална) версия на RUNALYZE.&lt;br&gt;Вие няма да можете да импортирате файл от по-стари версии.</target>
         <jms:reference-file line="61">/Resources/views/tools/backup/upload_form.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="b571381bb05043ef33ba70c6e268c539a403fbde" resname="                            The importer will not change existing data for equipment, sport types or activity types.&lt;br&gt;&#10;                            You have to make these changes by hand or delete the existing data in advance.&#10;                        " approved="yes">
+      <trans-unit id="b571381bb05043ef33ba70c6e268c539a403fbde" resname="                            The importer will not change existing data for equipment, sport types or activity types.&lt;br&gt;&#10;                            You have to make these changes by hand or delete the existing data in advance.&#10;                        " approved="no">
         <source><![CDATA[                            The importer will not change existing data for equipment, sport types or activity types.<br>
                             You have to make these changes by hand or delete the existing data in advance.
                         ]]></source>
-        <target state="translated">The importer няма да промени съществуващите данни за екипировка, вид спорт или вид дейност.&lt;br&gt; Вие трябва да направите тези промени ръчно или да изтриете съществуващите данни  предварително.</target>
+        <target state="needs-translation">The importer няма да промени съществуващите данни за екипировка, вид спорт или вид дейност.&lt;br&gt; Вие трябва да направите тези промени ръчно или да изтриете съществуващите данни  предварително.</target>
         <jms:reference-file line="68">/Resources/views/tools/backup/upload_form.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="f0e469d7c00959f95a0e245c100d881d1994430b" resname="            Values are visualized with so-called 'box plots'.&#10;            They give an impression of how values of a group are distributed.&#10;            The middle 50% of all values are within the box itself and the so-called whiskers have a length of at most 1.5-times the interquartile range (i.e. the box's width).&#10;            Data points outside this range are called outliers.&#10;            " approved="yes">
@@ -91,7 +91,7 @@
       </trans-unit>
       <trans-unit id="64343a83ad8c0b8e2789c32ca5ab1eb6abb614e0" resname="Access denied" approved="yes">
         <source>Access denied</source>
-        <target state="translated">Отказан достъп.</target>
+        <target state="translated">Отказан достъп</target>
         <jms:reference-file line="4">/Resources/TwigBundle/views/Exception/error403.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="85dfa32c97d8618d1bea083609e2c8a29845abe5" resname="Account" approved="no">
@@ -203,7 +203,7 @@
       </trans-unit>
       <trans-unit id="51b7a940a499a28bd39293a1fdd7dfebfe9a8662" resname="Backup your data" approved="yes">
         <source>Backup your data</source>
-        <target state="translated">Архивирайте Вашите данни.</target>
+        <target state="translated">Архивирайте Вашите данни</target>
         <jms:reference-file line="42">/Resources/views/settings/account.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="834c7efb60e21c624d7464be4ce00f78afcc0b36" resname="Based on your data RUNALYZE can generate some posters for you. Poster generations are performed in the background.">
@@ -661,9 +661,9 @@
         <target state="translated">Ефективен VO2max</target>
         <jms:reference-file line="9">/Resources/views/tools/tables/vo2max.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="5c501758d720d6b23e8aadc62648655316961e3d" resname="Elapsed time">
+      <trans-unit id="5c501758d720d6b23e8aadc62648655316961e3d" resname="Elapsed time" approved="yes">
         <source>Elapsed time</source>
-        <target>Elapsed time</target>
+        <target state="translated">Изминато време</target>
         <jms:reference-file line="33">/Resources/views/shared/widget/iframe/base.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="a514da1094ce1bd6b9267e8a0e3df8736da457a5" resname="Elevation">
@@ -691,14 +691,14 @@
         <target>Energy</target>
         <jms:reference-file line="39">/Resources/views/shared/widget/iframe/base.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="9149cfc2a4ecb3f98b8f6d97b09fc179c7f0f1ac" resname="Enter your current password">
+      <trans-unit id="9149cfc2a4ecb3f98b8f6d97b09fc179c7f0f1ac" resname="Enter your current password" approved="yes">
         <source>Enter your current password</source>
-        <target>Enter your current password</target>
+        <target state="translated">Въведете Вашата текуща парола</target>
         <jms:reference-file line="19">/../src/CoreBundle/Form/Settings/ChangeMailType.php</jms:reference-file>
       </trans-unit>
-      <trans-unit id="e7d75f0ebb7605b0851eaf209f229326dadbbaa5" resname="Equipment types">
+      <trans-unit id="e7d75f0ebb7605b0851eaf209f229326dadbbaa5" resname="Equipment types" approved="yes">
         <source>Equipment types</source>
-        <target>Equipment types</target>
+        <target state="translated">Тип екипировка</target>
         <jms:reference-file line="90">/../src/CoreBundle/Form/Tools/Anova/AnovaType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="1695ec3b5783d23472499b43968a8f056487e011" resname="Factor model">
@@ -706,14 +706,14 @@
         <target>Factor model</target>
         <jms:reference-file line="46">/Resources/views/tools/anova/base.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="7b71bd0c3d7679a8e2749e3877c27f8e48900246" resname="Fat">
+      <trans-unit id="7b71bd0c3d7679a8e2749e3877c27f8e48900246" resname="Fat" approved="yes">
         <source>Fat</source>
-        <target>Fat</target>
+        <target state="translated">Мазнини</target>
         <jms:reference-file line="27">/Resources/views/my/body-values/table.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="dc8415ccfe52505f1d0a74025c76b3c26c88c59d" resname="Feb">
+      <trans-unit id="dc8415ccfe52505f1d0a74025c76b3c26c88c59d" resname="Feb" approved="yes">
         <source>Feb</source>
-        <target>Feb</target>
+        <target state="translated">Февруари</target>
         <jms:reference-file line="41">/Resources/views/_macro/utilities.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="bc66390c1f12928a247c55e56647aa0b22153bb0" resname="Find your training paces in min/km for given VO2max values.">
@@ -726,14 +726,14 @@
         <target>First activity</target>
         <jms:reference-file line="37">/Resources/views/shared/athlete/base.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="66587a7a62a90fc91c4c88f1872bedaa52d23a35" resname="Follow">
+      <trans-unit id="66587a7a62a90fc91c4c88f1872bedaa52d23a35" resname="Follow" approved="yes">
         <source>Follow</source>
-        <target>Follow</target>
+        <target state="translated">Следвай</target>
         <jms:reference-file line="70">/Resources/views/mail/transactionBase.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="626bc8c74126cf7aca5e5d268bc175a49410b70a" resname="For a detailed explanation of box plots, see &lt;a href=&quot;https://en.wikipedia.org/wiki/Box_plot&quot;&gt;Wikipedia&lt;/a&gt;.">
+      <trans-unit id="626bc8c74126cf7aca5e5d268bc175a49410b70a" resname="For a detailed explanation of box plots, see &lt;a href=&quot;https://en.wikipedia.org/wiki/Box_plot&quot;&gt;Wikipedia&lt;/a&gt;." approved="yes">
         <source><![CDATA[For a detailed explanation of box plots, see <a href="https://en.wikipedia.org/wiki/Box_plot">Wikipedia</a>.]]></source>
-        <target><![CDATA[For a detailed explanation of box plots, see <a href="https://en.wikipedia.org/wiki/Box_plot">Wikipedia</a>.]]></target>
+        <target state="translated">За детайлно обяснение на box plots, вижте &lt;a href="https://en.wikipedia.org/wiki/Box_plot"&gt;Wikipedia&lt;/a&gt;.</target>
         <jms:reference-file line="77">/Resources/views/tools/anova/base.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="21a83f462190300e206ad3ec048971aa4a6e2cf0" resname="For a single activity the TRIMP is calculated based on the duration and your heart rate.">
@@ -741,27 +741,27 @@
         <target>For a single activity the TRIMP is calculated based on the duration and your heart rate.</target>
         <jms:reference-file line="49">/Resources/views/static/help_calculations.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="1cfe764137bea4882e1b04f6cc42c924d8466a7a" resname="For large databases (several gigabytes) we recommend updating RUNALYZE via console.">
+      <trans-unit id="1cfe764137bea4882e1b04f6cc42c924d8466a7a" resname="For large databases (several gigabytes) we recommend updating RUNALYZE via console." approved="yes">
         <source>For large databases (several gigabytes) we recommend updating RUNALYZE via console.</source>
-        <target>For large databases (several gigabytes) we recommend updating RUNALYZE via console.</target>
+        <target state="translated">За големи бази данни  (няколко гигабайта) ние препоръчване да обновите RUNALYZE през конзолата.</target>
         <jms:reference-file line="10">/Resources/views/system/update.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="a2f060b7363f54c9f80d62805d36636dd7ebc33c" resname="Forgot your password?">
+      <trans-unit id="a2f060b7363f54c9f80d62805d36636dd7ebc33c" resname="Forgot your password?" approved="yes">
         <source>Forgot your password?</source>
-        <target>Forgot your password?</target>
+        <target state="translated">Забравена парола?</target>
         <jms:reference-file line="53">/Resources/views/base_not_logged_in.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="cf1d2c9702ec3c2c9c19d4853cd487b92618fb0c" resname="Forum">
+      <trans-unit id="cf1d2c9702ec3c2c9c19d4853cd487b92618fb0c" resname="Forum" approved="yes">
         <source>Forum</source>
-        <target>Forum</target>
+        <target state="translated">Форум</target>
         <jms:reference-file line="57">/Resources/TwigBundle/views/Exception/error.html.twig</jms:reference-file>
         <jms:reference-file line="63">/Resources/views/base_not_logged_in.html.twig</jms:reference-file>
         <jms:reference-file line="49">/Resources/views/static/help.html.twig</jms:reference-file>
         <jms:reference-file line="37">/Resources/views/system/base.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="bbba84135de6b052c2210e74e0cc5b2a9d359ddb" resname="Found">
+      <trans-unit id="bbba84135de6b052c2210e74e0cc5b2a9d359ddb" resname="Found" approved="yes">
         <source>Found</source>
-        <target>Found</target>
+        <target state="translated">Намерени</target>
         <jms:reference-file line="59">/Resources/views/import/garmin_communicator.html.twig</jms:reference-file>
         <jms:reference-file line="60">/Resources/views/import/garmin_communicator.html.twig</jms:reference-file>
       </trans-unit>
@@ -830,9 +830,9 @@
         <target>HR</target>
         <jms:reference-file line="29">/Resources/views/tools/vo2max_analysis.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="41981adad934f9f643a25eeaf28afcaf5e9a7944" resname="Have a look at the configuration window to see what we're talking about.">
+      <trans-unit id="41981adad934f9f643a25eeaf28afcaf5e9a7944" resname="Have a look at the configuration window to see what we're talking about." approved="yes">
         <source>Have a look at the configuration window to see what we're talking about.</source>
-        <target>Have a look at the configuration window to see what we're talking about.</target>
+        <target state="translated">Разгледайте настройките в прозореца за конфигурация, за да разберете за какво говорим.</target>
         <jms:reference-file line="32">/Resources/views/static/help.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="410aa15cdff51446fb351cdc0b289f49b9a9c690" resname="Heart rate">
@@ -853,58 +853,57 @@
         <target>Heatmap</target>
         <jms:reference-file line="60">/../src/CoreBundle/Form/Tools/PosterType.php</jms:reference-file>
       </trans-unit>
-      <trans-unit id="c47ae15370cfe1ed2781eedc1dc2547d12d9e972" resname="Help">
+      <trans-unit id="c47ae15370cfe1ed2781eedc1dc2547d12d9e972" resname="Help" approved="yes">
         <source>Help</source>
-        <target>Help</target>
+        <target state="translated">Помощ</target>
         <jms:reference-file line="22">/Resources/views/base_logged_in.twig</jms:reference-file>
         <jms:reference-file line="35">/Resources/views/system/base.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="b5ade63b69c96546886fe11f7dc490911e032631" resname="Help and Support">
+      <trans-unit id="b5ade63b69c96546886fe11f7dc490911e032631" resname="Help and Support" approved="yes">
         <source>Help and Support</source>
-        <target>Help and Support</target>
+        <target state="translated">Помощ и поддръжка</target>
         <jms:reference-file line="56">/Resources/TwigBundle/views/Exception/error.html.twig</jms:reference-file>
         <jms:reference-file line="62">/Resources/views/base_not_logged_in.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="920e1a21200bdb5e1f847de7684a962bd92ba99f" resname="Hi %s,">
+      <trans-unit id="920e1a21200bdb5e1f847de7684a962bd92ba99f" resname="Hi %s," approved="yes">
         <source>Hi %s,</source>
-        <target state="new">Hi %s,</target>
+        <target state="translated">Здравей %s,</target>
         <jms:reference-file line="15">/Resources/views/mail/account/postersReady.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="7e217fa4d4b98f78392cd931a62b5db2691ec07a" resname="Hi %s, &lt;br&gt; we are sorry to hear that you wish to delete your RUNALYZE account">
+      <trans-unit id="7e217fa4d4b98f78392cd931a62b5db2691ec07a" resname="Hi %s, &lt;br&gt; we are sorry to hear that you wish to delete your RUNALYZE account" approved="yes">
         <source><![CDATA[Hi %s, <br> we are sorry to hear that you wish to delete your RUNALYZE account]]></source>
-        <target><![CDATA[Hi %s, <br> we are sorry to hear that you wish to delete your RUNALYZE account]]></target>
+        <target state="translated">Здравей  %s, &lt;br&gt; съжаляваме, че искате да изтриете Вашият RUNALYZE профил</target>
         <jms:reference-file line="9">/Resources/views/mail/account/deleteAccountRequest.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="5c10f3be26d63b9bd2c804cee05cd9a78fd31262" resname="Hi %s, we heard that you forgot your password!">
+      <trans-unit id="5c10f3be26d63b9bd2c804cee05cd9a78fd31262" resname="Hi %s, we heard that you forgot your password!" approved="no">
         <source>Hi %s, we heard that you forgot your password!</source>
-        <target>Hi %s, we heard that you forgot your password!</target>
+        <target state="needs-translation">Здравей  %s, чухме, че сте си забравили паролата!</target>
         <jms:reference-file line="9">/Resources/views/mail/account/recoverPassword.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="21071b4f3ec96e64a6ab4dff0a75157e7006e5ec" resname="Hi %s, welcome to RUNALYZE">
+      <trans-unit id="21071b4f3ec96e64a6ab4dff0a75157e7006e5ec" resname="Hi %s, welcome to RUNALYZE" approved="yes">
         <source>Hi %s, welcome to RUNALYZE</source>
-        <target>Hi %s, welcome to RUNALYZE</target>
+        <target state="translated">Здравей  %s, добре дошъл в RUNALYZE</target>
         <jms:reference-file line="14">/Resources/views/mail/account/registration.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="7d3cc8261112d30b4fb285cd6a3472caba8ae433" resname="Hi %s, your backup file is ready to download.">
+      <trans-unit id="7d3cc8261112d30b4fb285cd6a3472caba8ae433" resname="Hi %s, your backup file is ready to download." approved="no">
         <source>Hi %s, your backup file is ready to download.</source>
-        <target>Hi %s, your backup file is ready to download.</target>
+        <target state="needs-translation">Здравей  %s, твоят архивен файл е готов за сваляне.</target>
         <jms:reference-file line="11">/Resources/views/mail/account/backupReady.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="c66837f8fa417c1ef930ad73bc60e71e1dd031f1" resname="Hi %username%">
+      <trans-unit id="c66837f8fa417c1ef930ad73bc60e71e1dd031f1" resname="Hi %username%" approved="yes">
         <source>Hi %username%</source>
-        <target>Hi %username%</target>
+        <target state="translated">Здравей  %username%</target>
         <jms:reference-file line="6">/Resources/views/account/activate/success.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="f6df823a92ae084d3d771a05c34bf34424d741c4" resname="How sad, that you've decided to delete your account.&lt;br&gt;&#10;            Your account will be deleted as soon as you click on the confirmation link in your mail.">
+      <trans-unit id="f6df823a92ae084d3d771a05c34bf34424d741c4" resname="How sad, that you've decided to delete your account.&lt;br&gt;&#10;            Your account will be deleted as soon as you click on the confirmation link in your mail." approved="yes">
         <source><![CDATA[How sad, that you've decided to delete your account.<br>
             Your account will be deleted as soon as you click on the confirmation link in your mail.]]></source>
-        <target><![CDATA[How sad, that you've decided to delete your account.<br>
-            Your account will be deleted as soon as you click on the confirmation link in your mail.]]></target>
+        <target state="translated">Съжаляваме,че искате да изтриете Вашият профил.&lt;br&gt; Вашият профил ще бъде изтрит след като отворите линка за потвърждения във мейла, който ще получите.</target>
         <jms:reference-file line="10">/Resources/views/settings/account-delete.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="edb8f6c14252759cd8673c61a24376d32e17b93a" resname="Icons">
+      <trans-unit id="edb8f6c14252759cd8673c61a24376d32e17b93a" resname="Icons" approved="yes">
         <source>Icons</source>
-        <target>Icons</target>
+        <target state="translated">Икони</target>
         <jms:reference-file line="80">/Resources/views/static/help.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="af020665d53d5e3afdce797db7038ee343a5d988" resname="If the link does not work, please copy the following URL into the address field of your web browser">
