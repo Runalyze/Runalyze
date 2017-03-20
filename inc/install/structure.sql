@@ -472,6 +472,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_notification` (
   `createdAt` DATETIME NOT NULL,
   `expirationAt` DATETIME DEFAULT NULL,
   `data` TINYTEXT NOT NULL,
+  `wasRead` tinyint(1) unsigned NOT NULL DEFAULT 0,
   `account_id` INT UNSIGNED NOT NULL,
   INDEX IDX_F99B51889B6B5FBA (account_id),
   PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;

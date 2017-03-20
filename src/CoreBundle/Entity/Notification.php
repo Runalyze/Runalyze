@@ -3,6 +3,7 @@
 namespace Runalyze\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Runalyze\Bundle\CoreBundle\Component\Notifications\Message\MessageInterface;
 
 /**
  * Notification
@@ -13,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Notification
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer", options={"unsigned":true})
      * @ORM\Id
@@ -22,11 +23,13 @@ class Notification
     private $id;
 
     /**
-     * @var int|null
+     * @var int
+     * 
+     * @see \Runalyze\Profile\Notifications\MessageTypeProfile
      *
-     * @ORM\Column(name="template", columnDefinition="tinyint unsigned")
+     * @ORM\Column(name="messageType", columnDefinition="tinyint unsigned")
      */
-    private $template;
+    private $messageType;
 
     /**
      * @var \DateTime
@@ -48,6 +51,11 @@ class Notification
      * @ORM\Column(name="data", type="text", length=255)
      */
     private $data;
+    
+    /**
+     * @ORM\Column(name="wasRead", type="bool")
+     */
+    protected $wasRead = false;
 
     /**
      * @var \Runalyze\Bundle\CoreBundle\Entity\Account
@@ -59,6 +67,11 @@ class Notification
      */
     private $account;
 
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime();
+    }
+
     /**
      * @return int
      */
@@ -68,23 +81,27 @@ class Notification
     }
 
     /**
-     * @param null|int $template
+     * @param int $messageType
+     * 
+     * @see \Runalyze\Profile\Notifications\MessageTypeProfile
      *
      * @return $this
      */
-    public function setTemplate($template)
+    public function setMessageType($messageType)
     {
-        $this->template = $template;
+        $this->messageType = $messageType;
 
         return $this;
     }
 
     /**
-     * @return null|int
+     * @return int
+     * 
+     * @see \Runalyze\Profile\Notifications\MessageTypeProfile
      */
-    public function getTemplate()
+    public function getMessageType()
     {
-        return $this->template;
+        return $this->messageType;
     }
 
     /**
@@ -92,7 +109,7 @@ class Notification
      *
      * @return $this
      */
-    public function setCreatedAt(\DateTime $createdAt = null)
+    public function setCreatedAt(\DateTime $createdAt)
     {
         $this->createdAt = $createdAt;
 
@@ -105,6 +122,23 @@ class Notification
     public function getCreatedAt()
     {
         return $this->createdAt;
+    }
+
+    /**
+     * @param null|int $lifetime [days]
+     *
+     * @return $this
+     */
+    public function setLifetime($lifetime = null)
+    {
+        if (null === $lifetime) {
+            $this->expirationAt = null;
+        } else {
+            $this->expirationAt = clone $this->createdAt;
+            $this->expirationAt->modify('+'.(int)$lifetime.' days');
+        }
+
+        return $this;
     }
 
     /**
@@ -127,7 +161,6 @@ class Notification
         return $this->expirationAt;
     }
 
-
     /**
      * @param string $data
      *
@@ -149,11 +182,31 @@ class Notification
     }
 
     /**
-     * @param \Runalyze\Bundle\CoreBundle\Entity\Account $account
+     * @param bool $wasRead
      *
      * @return $this
      */
-    public function setAccount(\Runalyze\Bundle\CoreBundle\Entity\Account $account)
+    public function setRead($wasRead = true)
+    {
+        $this->wasRead = (bool)$wasRead;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function wasRead()
+    {
+        return $this->wasRead;
+    }
+
+    /**
+     * @param Account $account
+     *
+     * @return $this
+     */
+    public function setAccount(Account $account)
     {
         $this->account = $account;
 
@@ -161,11 +214,26 @@ class Notification
     }
 
     /**
-     * @return \Runalyze\Bundle\CoreBundle\Entity\Account
+     * @return Account
      */
     public function getAccount()
     {
         return $this->account;
     }
-    
+
+    /**
+     * @param MessageInterface $message
+     * @param Account $account
+     * @return Notification
+     */
+    public static function createFromMessage(MessageInterface $message, Account $acount)
+    {
+        $notification = new self();
+        $notification->setMessageType($message->getMessageType());
+        $notification->setLifetime($message->getLifetime());
+        $notification->setData($message->getData);
+        $notification->setAccount($account);
+
+        return $notification;
+    }
 }
