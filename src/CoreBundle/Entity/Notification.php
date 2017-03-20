@@ -29,9 +29,9 @@ class Notification
     private $template;
 
     /**
-     * @var null|\DateTime
+     * @var \DateTime
      *
-     * @ORM\Column(name="createdAt", type="datetime", nullable=true)
+     * @ORM\Column(name="createdAt", type="datetime")
      */
     private $createdAt;
 
@@ -88,7 +88,7 @@ class Notification
     }
 
     /**
-     * @param null|\DateTime $createdAt
+     * @param \DateTime $createdAt
      *
      * @return $this
      */
@@ -100,7 +100,7 @@ class Notification
     }
 
     /**
-     * @return null|\DateTime
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
