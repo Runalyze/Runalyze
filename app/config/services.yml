@@ -94,6 +94,11 @@ services:
     arguments: ["@app.repository.sport", "@app.repository.training", "@security.token_storage"]
     tags:
      - { name: form.type }
+  app.form.type.poster:
+    class: Runalyze\Bundle\CoreBundle\Form\EquipmentType
+    arguments: ["@app.repository.equipment_type","@security.token_storage"]
+    tags:
+     - { name: form.type }
   app.form.type.equipment:
     class: Runalyze\Bundle\CoreBundle\Form\EquipmentType
     arguments: ["@app.repository.equipment_type", "@security.token_storage"]

@@ -16,8 +16,12 @@
 
         {{ form_start(form, {'attr': {'class': 'ajax no-automatic-reloads'} }) }}
         <fieldset>
-            <legend>{% trans %}Change mail address{% endtrans %}</legend>
-
+            <legend>{% trans %}Equipment category{% endtrans %}</legend>
+            {{ form_row(form.name, {'div_class': 'w100 block'}) }}
+            {{ form_row(form.input, {'info': 'Choose the correct type for the equipment: <br><b>Single choice</b> You can choose only one object for one activity<br> <b>Multiple choice</b> You can select mulitple objects for one activity'|trans , 'div_class': 'w100 block'}) }}
+            {{ form_row(form.maxKm, {'div_class': 'w100 block'}) }}
+            {{ form_row(form.maxTime, {'div_class': 'w100 block'}) }}
+<p  class="info">You can add a maximal distance (in km) or a maximal time if you want to. This is used for displaying a progress bar in the equipment widget.</p>
             {{ form_rest(form) }}
 
             <div class="c">

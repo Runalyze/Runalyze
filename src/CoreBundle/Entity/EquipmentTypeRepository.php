@@ -8,6 +8,17 @@ class EquipmentTypeRepository extends EntityRepository
 {
     /**
      * @param Account $account
+     * @return Sport[]
+     */
+    public function findAllFor(Account $account)
+    {
+        return $this->findBy([
+            'account' => $account->getId()
+        ]);
+    }
+
+    /**
+     * @param Account $account
      * @return EquipmentType[]
      */
     public function findSingleChoiceTypesFor(Account $account)

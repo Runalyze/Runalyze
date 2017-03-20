@@ -1,0 +1,37 @@
+{% extends "base_logged_in.twig" %}
+
+{% block content %}
+    <div class="panel-heading">
+
+        {% if isNew %}
+            <h1>{{ 'Add equipment'|trans }}</h1>
+        {% else %}
+            <h1>{{ 'Edit equipment'|trans }}</h1>
+        {% endif %}
+
+    </div>
+
+    <div class="panel-content">
+        {% include 'flashmessages.html.twig' %}
+
+        {{ form_start(form, {'attr': {'class': 'ajax no-automatic-reloads'} }) }}
+        <fieldset>
+            <legend>{% trans %}Equipment{% endtrans %}</legend>
+            {{ form_row(form.name, {'div_class': 'w100 block'}) }}
+            {{ form_row(form.type, {'div_class': 'w100 block'}) }}
+            {{ form_row(form.additionalKm, {'div_class': 'w100 block'}) }}
+            {{ form_row(form.dateStart, {'div_class': 'w100 block'}) }}
+            {{ form_row(form.dateEnd, {'div_class': 'w100 block'}) }}
+            {{ form_row(form.notes, {'div_class': 'w100 block'}) }}
+
+            {{ form_rest(form) }}
+
+            <div class="c">
+                <input type="submit" value="{% trans %}Change{% endtrans %}" name="submit">
+            </div>
+        </fieldset>
+
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "base_logged_in.twig" %}
+
+{% block content %}
+    <div class="panel-heading">
+
+        <h1>{{ 'Equipment overview'|trans }}</h1>
+
+
+    </div>
+
+    <div class="panel-content">
+        {% include 'flashmessages.html.twig' %}
+        <table>
+            <tr>
+            <td class="blocklist"><a href="{{ url('equipment-add') }}" title="{{ 'Add equipment'|trans }}"><i class="fa fa-cube"></i> <strong>{{ 'Add equipment'|trans }}</strong></a></td>
+            <td class="blocklist"><a href="{{ url('equipment-category-add') }}" title="{{ 'Add equipment category'|trans }}"><i class="fa fa-cubes"></i><strong>{{ 'Add equipment category'|trans }}</strong></a></td>
+        </tr>
+        </table>
+
+    </div>
+{% endblock %}

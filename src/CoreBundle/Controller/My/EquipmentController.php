@@ -7,8 +7,9 @@ use Runalyze\Bundle\CoreBundle\Entity\Equipment;
 use Runalyze\Bundle\CoreBundle\Entity\EquipmentRepository;
 use Runalyze\Bundle\CoreBundle\Entity\EquipmentType;
 use Runalyze\Bundle\CoreBundle\Entity\EquipmentTypeRepository;
-use Runalyze\Bundle\CoreBundle\Form\EquipmentTypeType;
+use Runalyze\Bundle\CoreBundle\Form;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
@@ -60,13 +61,12 @@ class EquipmentController extends Controller
 
     /**
      * @Route("/category/add", name="equipment-category-add")
-     * @param Request $request
-     * @param Account $account
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function typeAddAction(Request $request, Account $account)
     {
-        $form = $this->createForm(EquipmentTypeType::class, new EquipmentType(),[
+        $equipmentType = new EquipmentType();
+        $form = $this->createForm(Form\EquipmentCategoryType::class, $equipmentType ,[
             'action' => $this->generateUrl('equipment-category-add')
         ]);
         $form->handleRequest($request);
@@ -82,20 +82,29 @@ class EquipmentController extends Controller
     }
 
     /**
+     * @Route("/overview", name="equipment-overview")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function overviewAction(Account $account)
+    {
+        return $this->render('my/equipment/overview.html.twig', [
+        ]);
+    }
+
+    /**
      * @Route("/add", name="equipment-add")
-     * @param Request $request
-     * @param Account $account
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function equipmentAddAction(Request $request, Account $account)
     {
-        $form = $this->createForm(EquipmentType::class, new Equipment(),[
+        $equipment = new Equipment();
+        $form = $this->createForm(Form\EquipmentType::class, $equipment,[
             'action' => $this->generateUrl('equipment-add')
         ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getEquipmentTypeRepository()->save($equipment, $account);
+            $this->getEquipmentRepository()->save($equipment, $account);
             $this->get('app.automatic_reload_flag_setter')->set(AutomaticReloadFlagSetter::FLAG_ALL);
         }
 

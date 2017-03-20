@@ -6,11 +6,8 @@ use Runalyze\Bundle\CoreBundle\Form\Type\DistanceType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Runalyze\Bundle\CoreBundle\Form\Type\WeightType;
-use Runalyze\Bundle\CoreBundle\Form\Type\HeartrateType;
-use Runalyze\Bundle\CoreBundle\Form\Type\PercentageType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Runalyze\Bundle\CoreBundle\Form\Type\DurationType;
 
 class EquipmentCategoryType extends AbstractType
@@ -25,11 +22,12 @@ class EquipmentCategoryType extends AbstractType
                 )
             ))
             ->add('input', ChoiceType::class, array(
-                'choices' => [0 => 'Single choice', 1 => 'Mulitple Choice'],
+                'choices' => ['Single choice' => 0, 'Multiple Choice' => 1],
                 'choice_translation_domain' => false
             ))
             ->add('maxKm', DistanceType::class, array(
                 'required' => true,
+                'empty_data'  => 0,
             ))
             ->add('maxTime', DurationType::class, array(
                 'required' => true,
