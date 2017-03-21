@@ -37,10 +37,15 @@
                         {% endif %}
                     </td>
                     <td class="l b">
-                        {{ keyObject.label() | raw }}<sup class="colored-green">{% if missingKeys[dataset.vars.value.keyid] %}{% trans %}new{% endtrans %}</sup>{% endif %}
+                        {{ keyObject.label() | raw }}{% if missingKeys[dataset.vars.value.keyid] and numberOfExistingKeys > 0 %}<sup class="colored-green">{% trans %}new{% endtrans %}</sup>{% endif %}
                     </td>
                     <td class="c">
+                        {% if numberOfExistingKeys > 0 %}
                         {{ form_widget(dataset.active) }}
+                        {% else %}
+                        {{ form_widget(dataset.active, {'checked' : defaultConfiguration[keyObject.id].active }) }}
+                        {% endif %}
+
                     </td>
 
                     <td class="c">
@@ -49,8 +54,11 @@
                         <span class="link" onclick="datasetMove({{ position }}, 'down')"><i class="fa fa-fw fa-arrow-down"></i></span>
                     </td>
                     <td class="c">
-                        {{ form_widget(dataset.style) }}
-                    </td>
+                        {% if numberOfExistingKeys > 0 %}
+                            {{ form_widget(dataset.style) }}
+                        {% else %}
+                            {{ form_widget(dataset.style, {'value' : defaultConfiguration[keyObject.id].style }) }}
+                        {% endif %}                    </td>
                     <td class="{{ keyObject.getStyle() | raw }}" style="{{ dataset.style.vars.data }}">
                         {{ keyObject.stringFor(context) | raw }}
                     </td>
@@ -71,13 +79,11 @@
             </fieldset>
         </div>
     </div>
-#            var pos = parseInt($("input[id=\'{{ form.vars.name }}_{{ form.datasets.vars.name}}_"+id+"_position\']").val()),
 
     <script>
         function datasetMove(id, way) {
             var pos = parseInt($("#"+id+"_tr .dataset-position").val()),
                     tr = $("#"+id+"_tr");
-            console.log(pos);
             if (way == "up" && pos > 1) {
                 $("#"+id+"_tr .dataset-position").val(pos-1);
                 tr.prev().find(".dataset-position").val(pos);

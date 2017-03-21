@@ -9,6 +9,7 @@ use Runalyze\Bundle\CoreBundle\Form\Settings\ChangeMailType;
 use Runalyze\Bundle\CoreBundle\Form\Settings\ChangePasswordType;
 use Runalyze\Bundle\CoreBundle\Form\Settings\DatasetCollectionType;
 use Runalyze\Bundle\CoreBundle\Form\Settings\DatasetType;
+use Runalyze\Dataset\DefaultConfiguration;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -173,6 +174,7 @@ class SettingsController extends Controller
         /** @var Dataset $dataset */
         $dataset = $this->getDoctrine()->getManager()->getRepository('CoreBundle:Dataset')->findAllFor($account);
         $missingKeyObjects = array_flip(RunalyzeDataset\Keys::getEnum());
+        $numberOfExistingKeys = count($dataset);
 
         foreach ($dataset as $datasetObject) {
             unset($missingKeyObjects[$datasetObject->getKeyId()]);
@@ -185,11 +187,12 @@ class SettingsController extends Controller
             'action' => $this->generateUrl('settings-dataset')
         ));
         $form->handleRequest($request);
-
         return $this->render('settings/dataset.html.twig', [
             'form' => $form->createView(),
             'datasetKeys' => new RunalyzeDataset\Keys(),
             'missingKeys' => $missingKeyObjects,
+            'defaultConfiguration' => (new DefaultConfiguration)->data(),
+            'numberOfExistingKeys' => $numberOfExistingKeys,
             'context' => new RunalyzeDataset\Context($this->getExampleTraining($account), $account->getId())
         ]);
     }
