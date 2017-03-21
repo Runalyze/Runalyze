@@ -25,7 +25,7 @@ body {
 	z-index: @z-index-headline;
 	width: 100%;
 	line-height: 24px;
-	overflow: hidden;
+	//overflow: hidden;
 	background-color: @headline-background;
 	border-bottom: @headline-border-width solid @headline-border-color;
 	-webkit-background-clip: padding-box;
@@ -34,26 +34,79 @@ body {
 	.tab {
 		display: block;
 		float: left;
-		padding: @headline-tab-padding;
-		margin: @headline-tab-margin;
-		color: @headline-tab-color;
-
-		&.right {
-			float: right;
-		}
 
 		&:hover {
 			color: @headline-tab-color-hover;
 		}
+
+		&.right {
+			float: right;
+		}
+	}
+}
+
+#headline .tab,
+.headline-menu .submenu li {
+	padding: @headline-tab-padding;
+	margin: @headline-tab-margin;
+	color: @headline-tab-color;
+}
+
+.headline-menu {
+	.submenu-label {
+		margin: 0;
+		padding: 6px 12px;
+		color: @headline-tab-color;
+
+		&.only-icon {
+			padding: 6px 8px;
+		}
 	}
 
-	.logo {
-		margin: @headline-logo-margin;
-		text-indent: -9999px;
-		background: url(/../web/assets/images/runalyze-header-swoosh.png) no-repeat center center;
-		width: 184px;
-		height: 20px;
+	.submenu-label a:link,
+	.submenu-label a:visited {
+		color: @headline-tab-color;
 	}
+
+	&:hover .submenu-label,
+	&:hover .submenu-label a:link,
+	&:hover .submenu-label a:visited,
+	&:hover .submenu-label a:hover {
+		color: @headline-tab-color-hover;
+	}
+
+	.submenu {
+		z-index: @z-index-headline;
+		top: 100%;
+		border-left: @headline-border-width solid @headline-border-color;
+		border-right: @headline-border-width solid @headline-border-color;
+		border-bottom: @headline-border-width solid @headline-border-color;
+
+		li {
+			background: @headline-background;
+
+			a {
+				color: @headline-tab-color-hover;
+			}
+		}
+
+		a:hover {
+			background: #444;
+		}
+
+		&.right-oriented {
+			right: 0;
+			border-right: 0;
+		}
+	}
+}
+
+#headline .logo {
+	margin: @headline-logo-margin;
+	text-indent: -9999px;
+	background: url(/../web/assets/images/runalyze-header-swoosh.png) no-repeat center center;
+	width: 184px;
+	height: 20px;
 }
 
 #menu-link {
