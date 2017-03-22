@@ -27,12 +27,20 @@
 	<a class="tab logo" href="<?php echo System::getFullDomain(); ?>" title="Runalyze">Runalyze</a>
 
 	<?php if ($this instanceof \Symfony\Component\DependencyInjection\ContainerAwareInterface && $this->get('security.authorization_checker')->isGranted('ROLE_USER')): ?>
+        <?php $username = $this->get('security.token_storage')->getToken()->getUser()->getUsername(); ?>
         <div class="headline-menu right">
             <div class="submenu-label">
-                <?php echo $this->get('security.token_storage')->getToken()->getUser()->getUsername() ?>
-                &nbsp;<i class="fa fa-fw fa-lg fa-user"></i>
+                <?php echo $username ?>&nbsp;<i class="fa fa-fw fa-lg fa-user"></i>
             </div>
             <ul class="submenu right-oriented">
+                <li>
+                    <?php if (\Runalyze\Configuration::Privacy()->listIsPublic()): ?>
+                    <a href="<?php echo $this->get('router')->generate('shared-athlete', ['username' => $username]); ?>"><i class="fa fa-fw fa-id-card-o"></i>&nbsp;<?php _e('Public athlete page'); ?></a>
+                    <?php else: ?>
+                    <span class="no-link cursor-not-allowed unimportant" title="<?php _e('Your public athlete page is deactivated.') ?>"><i class="fa fa-fw fa-id-card-o"></i>&nbsp;<?php _e('Public athlete page'); ?></span>
+                    <?php endif; ?>
+                </li>
+                <li class="separator"></li>
                 <li><a class="window" href="<?php echo $this->get('router')->generate('settings-account'); ?>"><i class="fa fa-fw fa-cogs"></i>&nbsp;<?php _e('Account settings'); ?></a></li>
                 <li><a class="window" href="<?php echo $this->get('router')->generate('logout'); ?>"><i class="fa fa-fw fa-sign-out"></i>&nbsp;<?php _e('Logout'); ?></a></li>
             </ul>
@@ -76,6 +84,6 @@
             </ul>
         </div>
 
-        <a class="tab left b" href="<?php echo $this->get('router')->generate('help') ?>"><i class="fa fa-fw fa-lg fa-question-circle"></i>&nbsp;<?php _e('Help'); ?></a>
+        <a class="window tab left b" href="<?php echo $this->get('router')->generate('help') ?>"><i class="fa fa-fw fa-lg fa-question-circle"></i>&nbsp;<?php _e('Help'); ?></a>
 	<?php endif; ?>
 </div>

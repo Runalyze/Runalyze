@@ -17,6 +17,14 @@
                             {{ app.user.username }}&nbsp;<i class="fa fa-fw fa-lg fa-user"></i>
                         </div>
                         <ul class="submenu right-oriented">
+                            <li>
+                                {% if 'true' == configVar('privacy.TRAINING_LIST_PUBLIC') %}
+                                <a href="{{ url('shared-athlete', {'username': app.user.username}) }}"><i class="fa fa-fw fa-id-card-o"></i>&nbsp;{{ 'Public athlete page'|trans }}</a>
+                                {% else %}
+                                <span class="no-link cursor-not-allowed unimportant" title="{{ 'Your public athlete page is deactivated'|trans }}"><i class="fa fa-fw fa-id-card-o"></i>&nbsp;{{ 'Public athlete page'|trans }}</span>
+                                {% endif %}
+                            </li>
+                            <li class="separator"></li>
                             <li><a class="window" href="{{ url('settings-account') }}"><i class="fa fa-fw fa-cogs"></i>&nbsp;{% trans %}Account settings{% endtrans %}</a></li>
                             <li><a class="window" href="{{ url('logout') }}"><i class="fa fa-fw fa-sign-out"></i>&nbsp;{% trans %}Logout{% endtrans %}</a></li>
                         </ul>
@@ -60,7 +68,7 @@
                         </ul>
                     </div>
 
-                    <a class="tab left b" href="{{ url('help') }}"><i class="fa fa-fw fa-lg fa-question-circle"></i>&nbsp;{% trans %}Help{% endtrans %}</a>
+                    <a class="window tab left b" href="{{ url('help') }}"><i class="fa fa-fw fa-lg fa-question-circle"></i>&nbsp;{% trans %}Help{% endtrans %}</a>
                 {% endif %}
             {% endblock %}
         </div>
