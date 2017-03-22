@@ -51,7 +51,8 @@ class BodyValuesController extends Controller
         }
 
         return $this->render('my/body-values/form.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'isNew' => true
         ]);
     }
 
