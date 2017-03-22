@@ -120,7 +120,7 @@ class TrainingRepository extends EntityRepository
         if (null !== $column) {
             $queryBuilder->addSelect('SUM(t.'.$column.') AS value');
         } else {
-            $queryBuilder->addSelect('SUM(1g) AS value');
+            $queryBuilder->addSelect('SUM(1) AS value');
         }
 
         if (null !== $sportid) {
