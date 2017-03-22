@@ -63,6 +63,7 @@
                         {{ keyObject.stringFor(context) | raw }}
                     </td>
                 </tr>
+                {{ form_widget(dataset.keyId) }}
 
                 {% set position = position + 1 %}
             {% endfor %}

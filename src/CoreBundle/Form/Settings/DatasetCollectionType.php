@@ -18,6 +18,7 @@ class DatasetCollectionType extends AbstractType
         $builder
             ->add('datasets', CollectionType::class, array(
                 'entry_type' => DatasetType::class,
+                'allow_add' => true
             ))
         ;
     }

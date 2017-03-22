@@ -3,6 +3,7 @@
 namespace Runalyze\Bundle\CoreBundle\Form\Settings;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -23,6 +24,7 @@ class DatasetType extends AbstractType
             ->add('position', IntegerType::class, array(
                 'attr' => ['class' => 'dataset-position']
             ))
+            ->add('keyId', HiddenType::class)
             ->add('style', TextType::class, array(
                 'required' => false,
                 'empty_data' => ''

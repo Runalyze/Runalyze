@@ -150,10 +150,11 @@ class SettingsController extends Controller
 
         $dataset = $em->getRepository('CoreBundle:Dataset')->findAllFor($account);
         $form = $this->createForm(DatasetCollectionType::class, ['datasets' => $dataset]);
-        $form->handleRequest($request);
 
+        $form->handleRequest($request);
         if ($form->isSubmitted()) {
             foreach ($form->get('datasets')->getData() as $datasetObject) {
+                $datasetObject->setAccount($account);
                 /** @var Dataset $datasetObject */
                 $em->persist($datasetObject);
             }
@@ -184,7 +185,7 @@ class SettingsController extends Controller
         }
 
         $form = $this->createForm(DatasetCollectionType::class, ['datasets' => $dataset], array(
-            'action' => $this->generateUrl('settings-dataset')
+            'action' => $this->generateUrl('settings-dataset'),
         ));
         $form->handleRequest($request);
         return $this->render('settings/dataset.html.twig', [
