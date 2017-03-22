@@ -2,16 +2,14 @@
 
 namespace Runalyze\Bundle\CoreBundle\Form\Settings;
 
+use Runalyze\Bundle\CoreBundle\Entity\Dataset;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Runalyze\Bundle\CoreBundle\Entity\Dataset;
-
 
 class DatasetType extends AbstractType
 {
@@ -28,9 +26,7 @@ class DatasetType extends AbstractType
             ->add('style', TextType::class, array(
                 'required' => false,
                 'empty_data' => ''
-            ))
-
-        ;
+            ));
     }
 
     public function configureOptions(OptionsResolver $resolver)

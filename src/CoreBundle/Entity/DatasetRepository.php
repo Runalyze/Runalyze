@@ -14,10 +14,9 @@ class DatasetRepository extends EntityRepository
     {
         return $this->findBy(
             ['account' => $account->getId()],
-            ['position' => 'ASC']);
-
+            ['position' => 'ASC']
+        );
     }
-
 
     public function save(Dataset $dataset)
     {
@@ -25,7 +24,7 @@ class DatasetRepository extends EntityRepository
         $this->_em->flush();
     }
 
-    public function delete(Dataset $dataset)
+    public function remove(Dataset $dataset)
     {
         $this->_em->remove($dataset);
         $this->_em->flush();

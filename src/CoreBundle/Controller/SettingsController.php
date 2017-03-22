@@ -2,13 +2,11 @@
 
 namespace Runalyze\Bundle\CoreBundle\Controller;
 
-use Runalyze\Bundle\CoreBundle\Component\Configuration\Category\Data;
 use Runalyze\Bundle\CoreBundle\Entity\AccountRepository;
 use Runalyze\Bundle\CoreBundle\Entity\Dataset;
 use Runalyze\Bundle\CoreBundle\Form\Settings\ChangeMailType;
 use Runalyze\Bundle\CoreBundle\Form\Settings\ChangePasswordType;
 use Runalyze\Bundle\CoreBundle\Form\Settings\DatasetCollectionType;
-use Runalyze\Bundle\CoreBundle\Form\Settings\DatasetType;
 use Runalyze\Dataset\DefaultConfiguration;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -19,9 +17,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Runalyze\Bundle\CoreBundle\Form\Settings\AccountType;
 use Runalyze\Configuration;
 use Runalyze\Language;
-use Symfony\Component\Validator\Constraints\DateTime;
 use Runalyze\Dataset as RunalyzeDataset;
-
 
 class SettingsController extends Controller
 {
@@ -149,18 +145,21 @@ class SettingsController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $dataset = $em->getRepository('CoreBundle:Dataset')->findAllFor($account);
-        $form = $this->createForm(DatasetCollectionType::class, ['datasets' => $dataset]);
 
+        $form = $this->createForm(DatasetCollectionType::class, ['datasets' => $dataset]);
         $form->handleRequest($request);
+
         if ($form->isSubmitted()) {
             foreach ($form->get('datasets')->getData() as $datasetObject) {
-                $datasetObject->setAccount($account);
                 /** @var Dataset $datasetObject */
+                $datasetObject->setAccount($account);
                 $em->persist($datasetObject);
             }
+
             $em->flush();
         }
-        return $this->forward('CoreBundle:Settings:dataset');
+
+        return $this->redirectToRoute('settings-dataset');
     }
 
     /**
@@ -172,7 +171,7 @@ class SettingsController extends Controller
     {
         $Frontend = new \Frontend(true, $this->get('security.token_storage'));
 
-        /** @var Dataset $dataset */
+        /** @var Dataset[] $dataset */
         $dataset = $this->getDoctrine()->getManager()->getRepository('CoreBundle:Dataset')->findAllFor($account);
         $missingKeyObjects = array_flip(RunalyzeDataset\Keys::getEnum());
         $numberOfExistingKeys = count($dataset);
@@ -180,6 +179,7 @@ class SettingsController extends Controller
         foreach ($dataset as $datasetObject) {
             unset($missingKeyObjects[$datasetObject->getKeyId()]);
         }
+
         foreach ($missingKeyObjects as $key => $missingDataset) {
             $dataset[] = (new Dataset())->setActive(false)->setKeyId($key)->setAccount($account);
         }
@@ -188,6 +188,7 @@ class SettingsController extends Controller
             'action' => $this->generateUrl('settings-dataset'),
         ));
         $form->handleRequest($request);
+
         return $this->render('settings/dataset.html.twig', [
             'form' => $form->createView(),
             'datasetKeys' => new RunalyzeDataset\Keys(),
@@ -199,11 +200,11 @@ class SettingsController extends Controller
     }
 
     /**
-     * Get array for exemplary training data
      * @return array
      */
     protected function getExampleTraining(Account $account) {
         $configuration = $this->get('app.configuration_manager')->getList();
+
         return array(
             'id'		=> 0,
             'sportid'	=> $configuration->getGeneral()->getRunningSport(),
