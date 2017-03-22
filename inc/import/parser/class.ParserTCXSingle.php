@@ -130,7 +130,7 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
             $this->TrainingObject->setNotes( (string)$this->XML->Notes );
 
 		if (!empty($this->XML->Training))
-			$this->TrainingObject->setComment( (string)$this->XML->Training->Plan->Name );
+			$this->TrainingObject->setTitle( (string)$this->XML->Training->Plan->Name );
 	}
 
 	/**

@@ -49,7 +49,7 @@ class ConfigTabs {
 
 	/**
 	 * Add a tab and set it as the default one
-	 * @param ConfigTab $Tab 
+	 * @param ConfigTab $Tab
 	 */
 	public function addDefaultTab(ConfigTab $Tab) {
 		$this->defaultKey = $Tab->getKey();
@@ -58,29 +58,14 @@ class ConfigTabs {
 
 	/**
 	 * Add a tab
-	 * @param ConfigTab $Tab 
+	 * @param ConfigTab $Tab
 	 */
 	public function addTab(ConfigTab $Tab) {
 		$this->Tabs[$Tab->getKey()] = $Tab;
 	}
 
 	/**
-	 * Display navigation 
-	 */
-	protected function displayNavigation() {
-        $Links = [array('tag' => Ajax::link(__('General settings'), self::$TABS_ID, 'settings?key=config_tab_general')),
-                array('tag' => Ajax::link(__('Plugins'), self::$TABS_ID, 'settings?key=config_tab_plugins')),
-                array('tag' => Ajax::link(__('Dataset'), self::$TABS_ID, 'settings/dataset')),
-                array('tag' => Ajax::link(__('Sports'), self::$TABS_ID, 'settings?key=config_tab_sports')),
-                array('tag' => Ajax::link(__('Activity Types'), self::$TABS_ID, 'settings?key=config_tab_types')),
-                array('tag' => Ajax::link(__('Equipment'), self::$TABS_ID, 'settings?key=config_tab_equipment')),
-                array('tag' => Ajax::link(__('Account'), self::$TABS_ID, 'settings/account'))];
-
-        echo Ajax::toolbarNavigation($Links);
-	}
-
-	/**
-	 * Display tabs 
+	 * Display tabs
 	 */
 	public function display() {
 		if (Request::param('form') == 'true') {
@@ -96,10 +81,6 @@ class ConfigTabs {
 		}
 
 		if ($this->hasToShowDiv()) {
-			echo '<div class="panel-menu panel-menu-floated">';
-			$this->displayNavigation();
-			echo '</div>';
-
 			echo '<div id="'.self::$TABS_ID.'">';
 		}
 
@@ -119,7 +100,7 @@ class ConfigTabs {
 	}
 
 	/**
-	 * Display current tab 
+	 * Display current tab
 	 */
 	protected function displayCurrentTab() {
 		$CurrentKey = $this->getCurrentKey();

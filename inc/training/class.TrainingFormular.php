@@ -194,7 +194,7 @@ class TrainingFormular extends StandardFormular {
 	 */
 	 protected function insertRaceResult() {
 	 	$RaceResult = new RaceResult\Entity(array(
-	 		RaceResult\Entity::NAME => $this->dataObject->getComment(),
+	 		RaceResult\Entity::NAME => $this->dataObject->getTitle(),
 	 		RaceResult\Entity::OFFICIAL_TIME => $this->dataObject->getTimeInSeconds(),
 	 		RaceResult\Entity::OFFICIAL_DISTANCE => $this->dataObject->getDistance(),
 			RaceResult\Entity::ACTIVITY_ID => $this->dataObject->id()

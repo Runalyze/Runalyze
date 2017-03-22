@@ -6,18 +6,18 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.com\n"
 "POT-Creation-Date: 2017-02-28 18:41+0100\n"
-"PO-Revision-Date: 2016-09-21 09:00+0000\n"
-"Last-Translator: koylio <riku@sdf-eu.org>\n"
-"Language-Team: Finnish <http://translate.runalyze.com/projects/runalyze/"
-"runalyze-master-po/fi/>\n"
+"PO-Revision-Date: 2017-03-08 08:39+0000\n"
+"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
+"Language-Team: Finnish <https://translate.runalyze.com/projects/runalyze"
+"/runalyze-master-po/fi/>\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.8-dev\n"
+"X-Generator: Weblate 2.11\n"
 
 #: src/CoreBundle/Controller/ActivityController.php:255
 msgid "Corrected elevation data has been removed."
@@ -1828,9 +1828,8 @@ msgid "Heart rate zones"
 msgstr "Sykevyöhykkeet"
 
 #: inc/training/view/section/class.SectionCompositeRow.php:149
-#, fuzzy
 msgid "More about VO<sub>2</sub>max calculation"
-msgstr "Tietoa VDOT laskennasta"
+msgstr "Tietoa VO<sub>2</sub> laskennasta"
 
 #: inc/training/view/section/class.SectionCompositeRow.php:186
 msgid "Calories"
@@ -1902,9 +1901,8 @@ msgid "Analyze splits"
 msgstr "Analyysi"
 
 #: inc/training/view/class.TrainingView.php:115
-#, fuzzy
 msgid "Show VO<sub>2</sub>max calculation"
-msgstr "Tietoa VDOT laskennasta"
+msgstr "Tietoa VO<sub>2</sub> laskennasta"
 
 #: inc/training/view/class.TrainingView.php:123
 msgid "Analyze time series"
@@ -2301,14 +2299,13 @@ msgid "VO2max for shape"
 msgstr ""
 
 #: inc/training/schemes/scheme.Training.php:313
-#, fuzzy
 msgid ""
 "VO2max values are estimated from your ratio of heart rate and pace. You can "
 "exclude single activities from the calculation of your form and should do so "
 "if it's heart rate data are not reliable (e.g. a lot of stops, walking "
 "breaks, ...)."
 msgstr ""
-"VDOT arvioidaan sykkeen ja vauhdin välisestä suhteesta. Voit rajata pois "
+"VO2max arvioidaan sykkeen ja vauhdin välisestä suhteesta. Voit rajata pois "
 "yksittäisiä aktiviteetteja arvon laskemisesta, ja niin kannattaakin tehdä "
 "jos syketiedot eivät ole luotettavia (esim. paljon pysähdyksiä, "
 "kävelytaukoja, ...)."
@@ -4086,14 +4083,12 @@ msgid "VO<sub>2</sub>max estimation"
 msgstr ""
 
 #: inc/core/Configuration/Category/VO2max.php:124
-#, fuzzy
 msgid "Time constant length for VO<sub>2</sub>max"
-msgstr "Aikavakion kesto VDOT:iin"
+msgstr "Aikavakion kesto VO<sub>2</sub>max:iin"
 
 #: inc/core/Configuration/Category/VO2max.php:125
-#, fuzzy
 msgid "Time constant length for VO<sub>2</sub>max rolling average"
-msgstr "Aikavakion kesto VDOT:in keskiarvoa varten"
+msgstr "Aikavakion kesto VO<sub>2</sub>max keskiarvoa varten"
 
 #: inc/core/Configuration/Category/VO2max.php:129
 msgid "Manual correction factor"
@@ -4113,18 +4108,16 @@ msgid "Value must be between %s and %s."
 msgstr "Arvon täytyy olla %s ja %s väliltä."
 
 #: inc/core/Configuration/Category/VO2max.php:135
-#, fuzzy
 msgid "Use fixed VO<sub>2</sub>max value"
-msgstr "Käytä pysyvää VDOT -arvoa"
+msgstr "Käytä pysyvää VO<sub>2</sub>max -arvoa"
 
 #: inc/core/Configuration/Category/VO2max.php:136
-#, fuzzy
 msgid ""
 "Fixed VO<sub>2</sub>max value (e.g. 55), if the estimation does not fit. Can "
 "be left empty."
 msgstr ""
-"Pysyvä VDOT -arvo (esim. 55), mikäli arvioitu arvo on väärä. Voidaan jättää "
-"tyhjäksi."
+"Pysyvä  VO<sub>2</sub>max -arvo (esim. 55), mikäli arvioitu arvo on väärä. "
+"Voidaan jättää tyhjäksi."
 
 #: inc/core/Configuration/Category/VO2max.php:140
 msgid "Adapt for elevation"
@@ -4141,11 +4134,8 @@ msgid "Correction per positive elevation"
 msgstr "Korjaus nousuja käyttämällä"
 
 #: inc/core/Configuration/Category/VO2max.php:146
-#, fuzzy
 msgid "Add for each meter upwards X meter to the distance."
-msgstr ""
-"Lisää X metria matkaan jokaista kohtisuoraa nousumetriä kohden. (Vain VDOT -"
-"arvon laskentaan)"
+msgstr "Lisää X metria matkaan jokaista kohtisuoraa nousumetriä kohden."
 
 #: inc/core/Configuration/Category/VO2max.php:146
 #: inc/core/Configuration/Category/VO2max.php:152
@@ -4157,11 +4147,8 @@ msgid "Correction per negative elevation"
 msgstr "Korjaus laskuja käyttämällä"
 
 #: inc/core/Configuration/Category/VO2max.php:152
-#, fuzzy
 msgid "Add for each meter downwards X meter to the distance."
-msgstr ""
-"Lisää X metria matkaan jokaista kohtisuoraa laskumetriä kohden. (Vain VDOT -"
-"arvon laskentaan)"
+msgstr "Lisää X metria matkaan jokaista kohtisuoraa laskumetriä kohden."
 
 #: inc/core/Configuration/Category/DataBrowser.php:89
 msgid "Calendar: mode"
@@ -5006,14 +4993,13 @@ msgid "Prognosis calculator: form trend"
 msgstr ""
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:125
-#, fuzzy
 msgid "Your current effective VO2max:"
-msgstr "Nykyinen VDOT:"
+msgstr "Nykyinen tehokas VO2max:"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:126
 #, fuzzy
 msgid "Your current marathon shape:"
-msgstr "Nykyinen VDOT:"
+msgstr "Nykyinen marathon-muoto:"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:128
 #, php-format

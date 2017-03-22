@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Sport
  *
- * @ORM\Table(name="sport", indexes={@ORM\Index(name="accountid", columns={"accountid"})})
+ * @ORM\Table(name="sport")
  * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\SportRepository")
  */
 class Sport
@@ -38,7 +38,7 @@ class Sport
     /**
      * @var boolean
      *
-     * @ORM\Column(name="short", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 0")
+     * @ORM\Column(name="short", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
      */
     private $short = 0;
 
@@ -52,14 +52,14 @@ class Sport
     /**
      * @var integer
      *
-     * @ORM\Column(name="HFavg", columnDefinition="tinyint(3) unsigned NOT NULL DEFAULT 120")
+     * @ORM\Column(name="HFavg", columnDefinition="tinyint unsigned NOT NULL DEFAULT 120")
      */
     private $hfavg = '120';
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="distances", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 1")
+     * @ORM\Column(name="distances", columnDefinition="tinyint unsigned NOT NULL DEFAULT 1")
      */
     private $distances;
 
@@ -73,14 +73,14 @@ class Sport
     /**
      * @var boolean
      *
-     * @ORM\Column(name="power", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 0")
+     * @ORM\Column(name="power", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
      */
     private $power = '0';
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="outside", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 0")
+     * @ORM\Column(name="outside", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
      */
     private $outside = '0';
 

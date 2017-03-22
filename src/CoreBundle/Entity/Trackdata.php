@@ -8,7 +8,7 @@ use Runalyze\Model;
 /**
  * Trackdata
  *
- * @ORM\Table(name="trackdata", indexes={@ORM\Index(name="accountid", columns={"accountid"})})
+ * @ORM\Table(name="trackdata")
  * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\TrackdataRepository")
  */
 class Trackdata

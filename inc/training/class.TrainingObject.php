@@ -866,20 +866,20 @@ class TrainingObject extends DataObject {
 
 
 	/**
-	 * Set comment
-	 * @param string $comment comment
+	 * Set title
+	 * @param string $title title
 	 */
-	public function setComment($comment) { $this->set('comment', $comment); }
+	public function setTitle($title) { $this->set('title', $title); }
 	/**
-	 * Get comment
-	 * @return string comment
+	 * Get title
+	 * @return string title
 	 */
-	public function getComment() { return $this->get('comment'); }
+	public function getTitle() { return $this->get('title'); }
 	/**
-	 * Has comment?
+	 * Has title?
 	 * @return bool
 	 */
-	public function hasComment() { return strlen($this->get('comment')) > 0; }
+	public function hasTitle() { return strlen($this->get('title')) > 0; }
 
 	/**
 	 * Set total strokes

@@ -51,8 +51,8 @@ abstract class AbstractSharer extends AbstractExporter
         }
 
 
-        if ($this->Context->activity()->comment() != '') {
-            $Text .= ' - '.$this->Context->activity()->comment();
+        if ($this->Context->activity()->title() != '') {
+            $Text .= ' - '.$this->Context->activity()->title();
         }
 
         return strip_tags(str_replace('&nbsp;', '', $Text));

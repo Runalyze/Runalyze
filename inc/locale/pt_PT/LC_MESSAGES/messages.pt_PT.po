@@ -1,18 +1,19 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.com\n"
 "POT-Creation-Date: 2017-02-28 18:41+0100\n"
-"PO-Revision-Date: 2016-08-19 21:09+0000\n"
-"Last-Translator: Miguel Robin <dee.hood@gmail.com>\n"
-"Language-Team: Portuguese (Portugal) <http://translate.runalyze.com/projects/"
-"runalyze/runalyze/pt_PT/>\n"
+"PO-Revision-Date: 2017-03-08 08:32+0000\n"
+"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
+"Language-Team: Portuguese (Portugal) "
+"<https://translate.runalyze.com/projects/runalyze/runalyze-master-po/pt_PT/>"
+"\n"
 "Language: pt_PT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 2.8-dev\n"
+"X-Generator: Weblate 2.11\n"
 "X-Poedit-KeywordsList: __;_ne;_n;_e\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -1825,9 +1826,8 @@ msgid "Heart rate zones"
 msgstr "Zonas de ritmo cardíaco"
 
 #: inc/training/view/section/class.SectionCompositeRow.php:149
-#, fuzzy
 msgid "More about VO<sub>2</sub>max calculation"
-msgstr "Mais sobre o cálculo do VDOT"
+msgstr "Mais sobre o cálculo do VO2<sub></sub>max"
 
 #: inc/training/view/section/class.SectionCompositeRow.php:186
 msgid "Calories"
@@ -1897,9 +1897,8 @@ msgid "Analyze splits"
 msgstr "Análise"
 
 #: inc/training/view/class.TrainingView.php:115
-#, fuzzy
 msgid "Show VO<sub>2</sub>max calculation"
-msgstr "Mais sobre o cálculo do VDOT"
+msgstr "Mais sobre o cálculo do VO<sub>2</sub>max"
 
 #: inc/training/view/class.TrainingView.php:123
 msgid "Analyze time series"
@@ -2287,19 +2286,17 @@ msgid ""
 msgstr ""
 
 #: inc/training/schemes/scheme.Training.php:312
-#, fuzzy
 msgid "VO2max for shape"
-msgstr "Forma VDOT"
+msgstr "Forma VO2max"
 
 #: inc/training/schemes/scheme.Training.php:313
-#, fuzzy
 msgid ""
 "VO2max values are estimated from your ratio of heart rate and pace. You can "
 "exclude single activities from the calculation of your form and should do so "
 "if it's heart rate data are not reliable (e.g. a lot of stops, walking "
 "breaks, ...)."
 msgstr ""
-"VDOTs são estimados a partir do rácio batimentos cardiacos e passo. Pode "
+"VO2max são estimados a partir do rácio batimentos cardiacos e passo. Pode "
 "excluir actividades individuais do cálculo no formulário e deverá fazê-lo se "
 "os dados não forem fiáveis (por exemplo muitas paragens, pausas a andar,...)."
 
@@ -4110,9 +4107,8 @@ msgid "Value must be between %s and %s."
 msgstr ""
 
 #: inc/core/Configuration/Category/VO2max.php:135
-#, fuzzy
 msgid "Use fixed VO<sub>2</sub>max value"
-msgstr "Use o valor fixo VDOT"
+msgstr "Use o valor fixo VO<sub>2</sub>max"
 
 #: inc/core/Configuration/Category/VO2max.php:136
 msgid ""

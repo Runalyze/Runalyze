@@ -8,7 +8,7 @@ use Runalyze\Bundle\CoreBundle\Entity\Account;
 /**
  * Route
  *
- * @ORM\Table(name="route", indexes={@ORM\Index(name="accountid", columns={"accountid"})})
+ * @ORM\Table(name="route")
  * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\RouteRepository")
  */
 class Route
@@ -39,7 +39,7 @@ class Route
     /**
      * @var float
      *
-     * @ORM\Column(name="distance", columnDefinition="decimal(6,2) unsigned NOT NULL DEFAULT '0.00'")
+     * @ORM\Column(name="distance", type="decimal", precision=6, scale=2, options={"unsigned":true, "default":0.00})
      */
     private $distance = '0.00';
 
@@ -123,7 +123,7 @@ class Route
     /**
      * @var bool
      *
-     * @ORM\Column(name="in_routenet", type="boolean", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 0")
+     * @ORM\Column(name="in_routenet", type="boolean", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
      */
     private $inRoutenet = false;
 
@@ -140,7 +140,7 @@ class Route
     /**
      * @var bool
      *
-     * @ORM\Column(name="`lock`", type="boolean", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 0")
+     * @ORM\Column(name="`lock`", type="boolean", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
      */
     private $lock = false;
 

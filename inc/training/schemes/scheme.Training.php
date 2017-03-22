@@ -48,7 +48,7 @@ $FIELDSETS = array(
 	array(
 		'id'		=> 'other',
 		'legend'	=> __('Miscellaneous'),
-		'fields'	=> array('use_vo2max', 'rpe', 'comment', 'partner', 'route'),
+		'fields'	=> array('use_vo2max', 'rpe', 'title', 'partner', 'route'),
 		'conf'		=> 'OTHER',
 		'layout'	=> FormularFieldset::$LAYOUT_FIELD_W100_IN_W50
 	),
@@ -569,7 +569,7 @@ $FIELDS = array(
 						'class'		=> 'TrainingInputSplits'
 					)
 	),
-	'comment'			=> array(
+	'title'			=> array(
 					'database'	=> array(
 						'type'		=> 'tinytext',
 						'null'		=> true

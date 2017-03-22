@@ -1,4 +1,4 @@
-version=3.2
+version=4.0
 
 {"TABLE":"runalyze_account"}
 
@@ -26,8 +26,8 @@ version=3.2
 {"TABLE":"runalyze_route"}
 
 {"TABLE":"runalyze_training"}
-{"1":{"time":"1234567890","sportid":"1","typeid":"1","s":"900.00","routeid":"0","comment":"UNITTEST-1"}}
-{"2":{"time":"1234567890","sportid":"2","typeid":"2","s":"1500.00","routeid":"0","comment":"UNITTEST-RACE"}}
+{"1":{"time":"1234567890","sportid":"1","typeid":"1","s":"900.00","routeid":"0","title":"UNITTEST-1"}}
+{"2":{"time":"1234567890","sportid":"2","typeid":"2","s":"1500.00","routeid":"0","title":"UNITTEST-RACE"}}
 
 {"TABLE":"runalyze_trackdata"}
 

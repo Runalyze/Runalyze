@@ -116,7 +116,7 @@ class ParserGPXSingle extends ParserAbstractSingleXML {
 		$this->TrainingObject->setSportid( Configuration::General()->mainSport() );
 
 		if (!empty($this->XML->desc))
-			$this->TrainingObject->setComment(strip_tags((string)$this->XML->desc));
+			$this->TrainingObject->setTitle(strip_tags((string)$this->XML->desc));
 	}
 
 	/**
@@ -229,7 +229,7 @@ class ParserGPXSingle extends ParserAbstractSingleXML {
   	 */
   	public function parseMetadata($metadata) {
   	    if(isset($metadata->name))
-  		$this->TrainingObject->setComment((string)$metadata->name);
+  		$this->TrainingObject->setTitle((string)$metadata->name);
 
   	    if(isset($metadata->desc))
   		$this->TrainingObject->setNotes((string)$metadata->desc);

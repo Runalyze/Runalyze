@@ -2,99 +2,76 @@
 
 namespace Runalyze\Bundle\CoreBundle\Tests\Entity;
 
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\User;
 use Runalyze\Bundle\CoreBundle\Entity\UserRepository;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-class UserRepositoryTest extends KernelTestCase
+class UserRepositoryTest extends AbstractRepositoryTestCase
 {
-    /** @var EntityManager */
-    protected $EntityManager;
-
     /** @var UserRepository */
     protected $UserRepository;
 
+    /** @var Account */
+    protected $Account;
+
     protected function setUp()
     {
-        static::bootKernel();
+        parent::setUp();
 
-        $this->EntityManager = static::$kernel->getContainer()->get('doctrine')->getManager();
         $this->UserRepository = $this->EntityManager->getRepository('CoreBundle:User');
-
-        $this->clearDatabase();
-    }
-
-    protected function tearDown()
-    {
-        $this->clearDatabase();
-
-        parent::tearDown();
-
-        $this->EntityManager->close();
-        $this->EntityManager = null;
-    }
-
-    protected function clearDatabase()
-    {
-        /** @var EntityRepository[] $repositories */
-        $repositories = [
-            $this->EntityManager->getRepository('CoreBundle:User'),
-            $this->EntityManager->getRepository('CoreBundle:Conf'),
-            $this->EntityManager->getRepository('CoreBundle:Account')
-        ];
-
-        foreach ($repositories as $repository) {
-            foreach ($repository->findAll() as $item) {
-                $this->EntityManager->remove($item);
-            }
-        }
-
-        $this->EntityManager->flush();
-    }
-
-    /**
-     * @param string $username
-     * @param string $mail
-     * @return Account
-     */
-    protected function getNewAccount($username, $mail = '')
-    {
-        if ('' == $mail) {
-            $mail = $username.'@test.com';
-        }
-
-        return (new Account())
-            ->setUsername($username)
-            ->setMail($mail)
-            ->setPassword('');
+        $this->Account = $this->getDefaultAccount();
     }
 
     public function testEmptyDatabase()
     {
         $this->assertNull($this->UserRepository->getCurrentRestingHeartRate(new Account()));
         $this->assertNull($this->UserRepository->getCurrentMaximalHeartRate(new Account()));
+        $this->assertNull($this->UserRepository->getLatestEntryFor(new Account()));
+        $this->assertEmpty($this->UserRepository->findAllFor(new Account()));
+    }
+
+    /**
+     * @param int $heartRateMax
+     * @param int $heartRateRest
+     * @param null|int $timestamp
+     * @return User
+     */
+    protected function insertDataForDefaultAccount($heartRateMax, $heartRateRest, $timestamp = null)
+    {
+        $user = (new User())
+            ->setPulseMax($heartRateMax)
+            ->setPulseRest($heartRateRest)
+            ->setTime($timestamp ?: time())
+            ->setAccount($this->Account);
+
+        $this->UserRepository->save($user, $this->Account);
+
+        return $user;
     }
 
     public function testCurrentHeartRateStats()
     {
-        $account = $this->getNewAccount('tester');
-        $this->EntityManager->getRepository('CoreBundle:Account')->save($account);
+        $this->insertDataForDefaultAccount(197, 48);
 
-        $user = new User();
-        $user->setCurrentTimestamp();
-        $user->setPulseRest(48);
-        $user->setPulseMax(197);
-        $user->setAccount($account);
+        $this->assertEquals(197, $this->UserRepository->getCurrentMaximalHeartRate($this->Account));
+        $this->assertEquals(48, $this->UserRepository->getCurrentRestingHeartRate($this->Account));
 
-        $this->UserRepository->save($user, $account);
+        $this->assertEquals('197', $this->EntityManager->getRepository('CoreBundle:Conf')->findByAccountAndKey($this->Account, 'HF_MAX')->getValue());
+        $this->assertEquals('48', $this->EntityManager->getRepository('CoreBundle:Conf')->findByAccountAndKey($this->Account, 'HF_REST')->getValue());
+    }
 
-        $this->assertEquals(48, $this->UserRepository->getCurrentRestingHeartRate($account));
-        $this->assertEquals(197, $this->UserRepository->getCurrentMaximalHeartRate($account));
+    public function testThatZeroesAreIgnored()
+    {
+        $this->insertDataForDefaultAccount(0, 0, time());
+        $this->insertDataForDefaultAccount(195, 0, time() - 300);
+        $this->insertDataForDefaultAccount(0, 53, time() - 600);
+        $this->insertDataForDefaultAccount(200, 60, time() - 900);
 
-        $this->assertEquals('48', $this->EntityManager->getRepository('CoreBundle:Conf')->findByAccountAndKey($account, 'HF_REST')->getValue());
-        $this->assertEquals('197', $this->EntityManager->getRepository('CoreBundle:Conf')->findByAccountAndKey($account, 'HF_MAX')->getValue());
+        $this->assertEquals(195, $this->UserRepository->getCurrentMaximalHeartRate($this->Account));
+        $this->assertEquals(53, $this->UserRepository->getCurrentRestingHeartRate($this->Account));
+
+        $latestEntry = $this->UserRepository->getLatestEntryFor($this->Account);
+        $this->assertEquals(0, $latestEntry->getPulseMax());
+        $this->assertEquals(0, $latestEntry->getPulseRest());
     }
 }

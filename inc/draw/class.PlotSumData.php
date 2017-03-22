@@ -421,7 +421,7 @@ abstract class PlotSumData extends Plot {
 	/**
 	 * @return string
 	 */
-	private function whereDate() {
+	protected function whereDate() {
 		if (is_numeric($this->Year)) {
 			return '`time` BETWEEN UNIX_TIMESTAMP(\''.(int)$this->Year.'-01-01\') AND UNIX_TIMESTAMP(\''.((int)$this->Year+1).'-01-01\')-1';
 		} elseif ($this->Year == self::LAST_6_MONTHS) {

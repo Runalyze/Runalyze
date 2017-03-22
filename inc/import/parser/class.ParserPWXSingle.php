@@ -80,7 +80,7 @@ class ParserPWXSingle extends ParserAbstractSingleXML {
 		$this->TrainingObject->setCreatorDetails( $this->findCreator() );
 
 		if (!empty($this->XML->cmt))
-			$this->TrainingObject->setComment( (string)$this->XML->cmt );
+			$this->TrainingObject->setTitle( (string)$this->XML->cmt );
 	}
 
 	/**

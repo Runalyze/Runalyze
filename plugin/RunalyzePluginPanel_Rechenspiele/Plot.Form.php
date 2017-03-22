@@ -192,9 +192,9 @@ if ($perfmodel == 'banister') {
 }
 
 $Plot->Data[] = array('label' => __('Fatigue (ATL)'), 'color' => '#CC2222', 'data' => $ATLs);
-$Plot->Data[] = array('label' => __('avg VO2MAX'), 'color' => '#000000', 'data' => $VO2MAXs, 'yaxis' => 2);
+$Plot->Data[] = array('label' => __('avg.').' VO2max', 'color' => '#000000', 'data' => $VO2MAXs, 'yaxis' => 2);
 $Plot->Data[] = array('label' => 'TRIMP', 'color' => '#5555FF', 'data' => $TRIMPs, 'yaxis' => 3);
-$Plot->Data[] = array('label' => __('day VO2MAX'), 'color' => '#444444', 'data' => $VO2MAXsday, 'yaxis' => 2);
+$Plot->Data[] = array('label' => 'VO2max', 'color' => '#444444', 'data' => $VO2MAXsday, 'yaxis' => 2);
 $Plot->Data[] = array('label' => __('Marathon shape'), 'color' => '#CC9322', 'data' => $BasicEndurance, 'yaxis' => 4);
 
 $Plot->setMarginForGrid(5);

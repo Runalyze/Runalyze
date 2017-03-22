@@ -4,6 +4,7 @@ namespace Runalyze\Calculation;
 
 use Runalyze\Configuration;
 use DB;
+use Runalyze\Util\LocalTime;
 
 class BasicEnduranceTest extends \PHPUnit_Framework_TestCase {
 
@@ -95,9 +96,9 @@ class BasicEnduranceTest extends \PHPUnit_Framework_TestCase {
 		$this->object->setPercentageForLongjogs(0.33);
 		$this->object->setPercentageForWeekKilometer(0.67);
 
-		DB::getInstance()->insert('training', array('sportid', 'time', 'distance', 's'), array(Configuration::General()->runningSport(), time() - 1*DAY_IN_S, 15, 2));
-		DB::getInstance()->insert('training', array('sportid', 'time', 'distance', 's'), array(Configuration::General()->runningSport(), time() - 3*DAY_IN_S, 15, 2));
-		DB::getInstance()->insert('training', array('sportid', 'time', 'distance', 's'), array(Configuration::General()->runningSport(), time() - 8*DAY_IN_S, 42, 2));
+		DB::getInstance()->insert('training', array('sportid', 'time', 'distance', 's'), array(Configuration::General()->runningSport(), LocalTime::fromServerTime(time())->getTimestamp() - 1*DAY_IN_S, 15, 2));
+		DB::getInstance()->insert('training', array('sportid', 'time', 'distance', 's'), array(Configuration::General()->runningSport(), LocalTime::fromServerTime(time())->getTimestamp() - 3*DAY_IN_S, 15, 2));
+		DB::getInstance()->insert('training', array('sportid', 'time', 'distance', 's'), array(Configuration::General()->runningSport(), LocalTime::fromServerTime(time())->getTimestamp() - 8*DAY_IN_S, 42, 2));
 
 		$Results = $this->object->asArray();
 		$this->assertEquals(30, $Results['weekkm-result']);
