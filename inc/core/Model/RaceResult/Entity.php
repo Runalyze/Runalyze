@@ -174,7 +174,7 @@ class Entity extends Model\Entity {
 	public function setDefaultValuesFromActivity(Model\Activity\Entity $activity) {
 		$this->set(Entity::OFFICIAL_DISTANCE, $activity->distance());
 		$this->set(Entity::OFFICIAL_TIME, $activity->duration());
-		$this->set(Entity::NAME, $activity->comment());
+		$this->set(Entity::NAME, $activity->title());
 
 		if ($activity->isTrack()) {
 			$this->set(Entity::OFFICIALLY_MEASURED, true);

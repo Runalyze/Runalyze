@@ -43,7 +43,7 @@ class LapsManual extends Laps {
 
 		$num = count($this->Data);
 
-		$Reader = new StringReader($context->activity()->comment());
+		$Reader = new StringReader($context->activity()->title());
 
 		$this->demandedPace = $Reader->findDemandedPace();
 		$this->achievedPace = array_sum($this->Data) / $num;

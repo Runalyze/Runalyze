@@ -157,7 +157,7 @@ class ImporterFiletypeXMLTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( 4.0, $this->object->object(2)->getDistance() );
 		$this->assertEquals( 1000, $this->object->object(2)->getTimeInSeconds() );
 		$this->assertEquals( "Bahn Sentruper Hoehe", $this->object->object(2)->getRoute() );
-		$this->assertEquals( "4 x 1 km, 400 m Trab", $this->object->object(2)->getComment() );
+		$this->assertEquals( "4 x 1 km, 400 m Trab", $this->object->object(2)->getTitle() );
 		$this->assertEquals( 15, $this->object->object(2)->get('temperature') );
 		$this->assertEquals( \Runalyze\Profile\Weather\WeatherConditionProfile::SUNNY, $this->object->object(0)->get('weatherid') );
 

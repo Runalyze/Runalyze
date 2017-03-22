@@ -350,7 +350,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_training` (
   `route` text,
   `routeid` int(10) unsigned DEFAULT NULL,
   `splits` mediumtext,
-  `comment` text,
+  `title` text,
   `partner` text,
   `notes` text,
   `accountid` int(10) unsigned NOT NULL,

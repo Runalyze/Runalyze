@@ -115,8 +115,8 @@ class Dataview
      */
     public function titleWithComment()
     {
-        if ($this->Activity->comment() != '') {
-            return $this->titleByTypeOrSport().': '.$this->Activity->comment();
+        if ($this->Activity->title() != '') {
+            return $this->titleByTypeOrSport().': '.$this->Activity->title();
         }
 
         return $this->titleByTypeOrSport();

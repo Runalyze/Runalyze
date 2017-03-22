@@ -113,8 +113,8 @@ class PDOforRunalyzeTest extends PHPUnit_Framework_TestCase {
 		$this->object->update('training', 3, array('s', 'distance'), array(150, 0.5));
 		$this->assertEquals( array(150, 0.5), $this->object->query('SELECT `s`, `distance` FROM `runalyze_training` WHERE `id`=3 LIMIT 1')->fetch(PDO::FETCH_NUM) );
 
-		$this->object->updateWhere('training', '`distance` > 1', 'comment', 'Super weit.');
-		$this->assertEquals( "1,2", $this->object->query('SELECT GROUP_CONCAT(`id`) FROM `runalyze_training` WHERE `comment`="Super weit." GROUP BY `accountid`')->fetchColumn() );
+		$this->object->updateWhere('training', '`distance` > 1', 'title', 'Super weit.');
+		$this->assertEquals( "1,2", $this->object->query('SELECT GROUP_CONCAT(`id`) FROM `runalyze_training` WHERE `title`="Super weit." GROUP BY `accountid`')->fetchColumn() );
 
 		$this->assertEquals( 3, $this->object->exec('DELETE FROM `runalyze_training`') );
 		$this->assertEquals( 0, $this->object->query('SELECT COUNT(*) FROM `runalyze_training`')->fetchColumn() );

@@ -355,7 +355,7 @@ class Raceresult
         $this->setAccount($activity->getAccount());
         $this->setOfficialDistance($activity->getDistance());
         $this->setOfficialTime($activity->getS());
-        $this->setName($activity->getComment());
+        $this->setName($activity->getTitle());
 
         return $this;
     }

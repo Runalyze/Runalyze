@@ -356,9 +356,9 @@ class Training
     /**
      * @var string|null
      *
-     * @ORM\Column(name="comment", type="text", length=65535, nullable=true)
+     * @ORM\Column(name="title", type="text", length=65535, nullable=true)
      */
-    private $comment = null;
+    private $title = null;
 
     /**
      * @var string|null
@@ -1377,13 +1377,13 @@ class Training
     }
 
     /**
-     * @param null|string $comment
+     * @param null|string $title
      *
      * @return $this
      */
-    public function setComment($comment)
+    public function setTitle($title)
     {
-        $this->comment = $comment;
+        $this->title = $title;
 
         return $this;
     }
@@ -1391,9 +1391,9 @@ class Training
     /**
      * @return null|string
      */
-    public function getComment()
+    public function getTitle()
     {
-        return $this->comment;
+        return $this->title;
     }
 
     /**
