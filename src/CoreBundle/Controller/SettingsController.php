@@ -18,6 +18,7 @@ use Runalyze\Bundle\CoreBundle\Form\Settings\AccountType;
 use Runalyze\Configuration;
 use Runalyze\Language;
 use Runalyze\Dataset as RunalyzeDataset;
+use Runalyze\Dataset\Keys;
 
 class SettingsController extends Controller
 {
@@ -254,9 +255,28 @@ class SettingsController extends Controller
             'swolf'		=> 29,
             'total_strokes'	=> 1250,
             'vertical_ratio' => 79,
-            'groundcontact_balance' => 4980
-            //Dataset\Keys\Tags::CONCAT_TAGIDS_KEY => $this->exampleTagID(),
-            //Dataset\Keys\CompleteEquipment::CONCAT_EQUIPMENT_KEY => $this->exampleEquipmentIDs(2)
+            'groundcontact_balance' => 4980,
+            Keys\Tags::CONCAT_TAGIDS_KEY => $this->exampleTagID($account),
+            Keys\CompleteEquipment::CONCAT_EQUIPMENT_KEY => $this->exampleEquipmentIDs($account)
         );
+    }
+
+    protected function exampleTagID(Account $account) {
+        $tag = $this->getDoctrine()->getRepository('CoreBundle:Tag')->findBy(['account' => $account->getId()], null, 1);
+        if ($tag) {
+            return $tag[0]->getId();
+        }
+        return '';
+    }
+
+    protected function exampleEquipmentIDs(Account $account) {
+        $equipment = $this->getDoctrine()->getRepository('CoreBundle:Equipment')->findBy(['account' => $account->getId()], null, 2);
+        if ($equipment) {
+            foreach ($equipment as $element) {
+                $ids[] = $element->getId();
+            }
+            return implode(',', $ids);
+        }
+        return '';
     }
 }
