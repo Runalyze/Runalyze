@@ -2197,12 +2197,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Runalyze/glossary.git",
-                "reference": "e6991206da7981e3d5c12d66b50a2beb8db8637a"
+                "reference": "05e6ed80a3dfbbe7ca9e45739e684444d0516bda"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Runalyze/glossary/zipball/e6991206da7981e3d5c12d66b50a2beb8db8637a",
-                "reference": "e6991206da7981e3d5c12d66b50a2beb8db8637a",
+                "url": "https://api.github.com/repos/Runalyze/glossary/zipball/05e6ed80a3dfbbe7ca9e45739e684444d0516bda",
+                "reference": "05e6ed80a3dfbbe7ca9e45739e684444d0516bda",
                 "shasum": ""
             },
             "require": {
@@ -2234,7 +2234,7 @@
                 "runalyze",
                 "symfony3"
             ],
-            "time": "2017-03-19 10:36:30"
+            "time": "2017-03-23 19:25:02"
         },
         {
             "name": "sensio/framework-extra-bundle",
