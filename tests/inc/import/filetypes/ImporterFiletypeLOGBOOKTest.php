@@ -58,7 +58,7 @@ class ImporterFiletypeLOGBOOKTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( 9382, $this->object->object(0)->getTimeInSeconds() );
 		$this->assertEquals( 26.743, $this->object->object(0)->getDistance() );
 		$this->assertEquals( 943, $this->object->object(0)->getCalories() );
-		$this->assertEquals( "Buxtehuder Abendlauf", $this->object->object(0)->getComment() );
+		$this->assertEquals( "Buxtehuder Abendlauf", $this->object->object(0)->getTitle() );
 		$this->assertEquals( "Buxtehude", $this->object->object(0)->getRoute() );
 		$this->assertEquals( "20°C\r\n1-2 Bft", $this->object->object(0)->getNotes() );
 
@@ -71,7 +71,7 @@ class ImporterFiletypeLOGBOOKTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( 365, $this->object->object(1)->getElevation() );
 		$this->assertEquals( 156, $this->object->object(1)->getPulseAvg() );
 		$this->assertEquals( 167, $this->object->object(1)->getPulseMax() );
-		$this->assertEquals( "mit Michael Kuthe", $this->object->object(1)->getComment() );
+		$this->assertEquals( "mit Michael Kuthe", $this->object->object(1)->getTitle() );
 		$this->assertEquals( "Horneburg-Helmste-Harsefeld-Bliedersdorf", $this->object->object(1)->getRoute() );
 		$this->assertEquals( "Erster Lauf mit der Forerunner 305  ;o)", $this->object->object(1)->getNotes() );
 		$this->assertEquals( true, $this->object->object(1)->Splits()->areEmpty() );

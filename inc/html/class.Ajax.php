@@ -83,6 +83,10 @@ class Ajax {
 		if (defined('NOKIA_HERE_APPID') && NOKIA_HERE_APPID != '' && defined('NOKIA_HERE_TOKEN') && NOKIA_HERE_TOKEN != '') {
 			echo self::wrapJS('Runalyze.Options.setNokiaLayerAuth("'.NOKIA_HERE_APPID.'", "'.NOKIA_HERE_TOKEN.'")');
 		}
+		if (defined('THUNDERFOREST_API_KEY') && THUNDERFOREST_API_KEY != '') {
+                        echo self::wrapJS('Runalyze.Options.setThunderforestLayerAuth("'.THUNDERFOREST_API_KEY.'")');
+                }
+
 	}
 
 	/**

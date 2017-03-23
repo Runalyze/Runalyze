@@ -295,10 +295,10 @@ class Entity extends Model\EntityWithID {
 	const SPLITS = 'splits';
 
 	/**
-	 * Key: comment
+	 * Key: title
 	 * @var string
 	 */
-	const COMMENT = 'comment';
+	const TITLE = 'title';
 
 	/**
 	 * Key: partner
@@ -407,7 +407,7 @@ class Entity extends Model\EntityWithID {
 			self::ROUTEID,
 			self::ROUTE,
 			self::SPLITS,
-			self::COMMENT,
+			self::TITLE,
 			self::PARTNER,
 			self::NOTES,
 			self::CREATOR,
@@ -905,11 +905,11 @@ class Entity extends Model\EntityWithID {
 	}
 
 	/**
-	 * Comment
+	 * Title
 	 * @return string
 	 */
-	public function comment() {
-		return $this->Data[self::COMMENT];
+	public function title() {
+		return $this->Data[self::TITLE];
 	}
 
 	/**

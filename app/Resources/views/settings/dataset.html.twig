@@ -1,0 +1,113 @@
+{% extends "base_logged_in.twig" %}
+
+{% block content %}
+    <div class="panel-heading">
+        <h1>{% trans %}Dataset{% endtrans %}</h1>
+    </div>
+
+    <div class="panel-content">
+        <div class="panel-content">
+            <fieldset id="dataset" class="">
+                <legend>{% trans %}Your Dataset{% endtrans %}</legend>
+                <div class="fieldset-messages">
+                    <p class="info">
+                        {% trans %}You can specify which values show up in the overview of your
+                        activities.<br>This does not influence the detailed activity view, the form or any
+                        plugin.{% endtrans %}
+                    </p>
+                </div>
+
+                <div>
+                    {% include 'flashmessages.html.twig' %}
+
+                    {{ form_start(form, {'attr': {'class': 'ajax no-automatic-reloads'} }) }}
+
+                    <table class="c fullwidth zebra-style" id="conf-tab-dataset">
+                        <thead>
+                        <tr>
+                            <th>&nbsp;</th>
+                            <th>&nbsp;</th>
+                            <th><span rel="tooltip" title="{% trans %}The information will be shown directly in the row.{% endtrans %}">{% trans %}Display{% endtrans %}</span></th>
+                            <th><span rel="tooltip" title="{% trans %}Indicates the order of appearance.{% endtrans %}">{% trans %}Order{% endtrans %}</span></th>
+                            <th><span rel="tooltip" title="{% trans %}any CSS-Code{% endtrans %}">{% trans %}CSS-Style{% endtrans %}</span></th>
+                            <th>{% trans %}Example{% endtrans %}</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        {% set position = 1 %}
+
+                        {% for dataset in form.datasets %}
+                            {% set keyObject = datasetKeys.get(dataset.vars.value.keyid) %}
+                            <tr class="r" id="{{ position }}_tr">
+                                <td class="c">
+                                    {% if keyObject.description() %}
+                                        <i class="fa fa-fw fa-info-circle atRight" rel="tooltip" data-original-title="{{ keyObject.description() }}"></i>
+                                    {% endif %}
+                                </td>
+                                <td class="l b">
+                                    {{ keyObject.label() | raw }}
+                                    {% if missingKeys[dataset.vars.value.keyid] and numberOfExistingKeys > 0 %}<sup class="colored-green">{% trans %}new{% endtrans %}</sup>{% endif %}
+
+                                    {{ form_widget(dataset.keyId) }}
+                                </td>
+                                <td class="c">
+                                    {% if numberOfExistingKeys > 0 %}
+                                        {{ form_widget(dataset.active) }}
+                                    {% else %}
+                                        {{ form_widget(dataset.active, {'checked' : defaultConfiguration[keyObject.id].active }) }}
+                                    {% endif %}
+                                </td>
+                                <td class="c">
+                                    <input class="dataset-position" type="text" id="{{ dataset.position.vars.id }}" name="{{ dataset.position.vars.full_name }}" value="{{ position }}" size="2">
+                                    <span class="link" onclick="datasetMove({{ position }}, 'up')"><i class="fa fa-fw fa-arrow-up"></i></span>
+                                    <span class="link" onclick="datasetMove({{ position }}, 'down')"><i class="fa fa-fw fa-arrow-down"></i></span>
+                                </td>
+                                <td class="c">
+                                    {% if numberOfExistingKeys > 0 %}
+                                        {{ form_widget(dataset.style) }}
+                                    {% else %}
+                                        {{ form_widget(dataset.style, {'value' : defaultConfiguration[keyObject.id].style }) }}
+                                    {% endif %}                    </td>
+                                <td class="{{ keyObject.getStyle() | raw }}" style="{{ dataset.style.vars.data }}">
+                                    {{ keyObject.stringFor(context) | raw }}
+                                </td>
+                            </tr>
+
+                            {% set position = position + 1 %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                    <div class="c">
+                        <input type="submit" value="{% trans %}Save{% endtrans %}">
+                    </div>
+
+                    {% do form.datasets.setRendered %}
+
+                    {{ form_widget(form._token) }}
+                    {{ form_end(form) }}
+                </div>
+            </fieldset>
+        </div>
+    </div>
+
+    <script>
+        function datasetMove(id, way) {
+            var pos = parseInt($("#" + id + "_tr .dataset-position").val()),
+                tr = $("#" + id + "_tr");
+            if (way == "up" && pos > 1) {
+                $("#" + id + "_tr .dataset-position").val(pos - 1);
+                tr.prev().find(".dataset-position").val(pos);
+                tr.prev().toggleClass("swapped");
+                tr.prev().before(tr);
+            } else if (way == "down" && tr.next().find(".dataset-position").val() > 0) {
+                $("#" + id + "_tr .dataset-position").val(pos + 1);
+                tr.next().find(".dataset-position").val(pos);
+                tr.next().toggleClass("swapped");
+                tr.next().after(tr);
+            }
+            tr.toggleClass("swapped");
+        }
+    </script>
+{% endblock %}

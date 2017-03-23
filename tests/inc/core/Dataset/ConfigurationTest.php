@@ -19,8 +19,6 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
 
 	public function setUp()
 	{
-		Cache::delete(Configuration::CACHE_KEY);
-
 		$this->PDO = new PDO('sqlite::memory:');
 		$this->PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$this->PDO->exec('CREATE TEMP TABLE `'.PREFIX.'dataset` ( `accountid` INTEGER, `keyid` INTEGER, `position` INTEGER, `active` INTEGER, `style` VARCHAR(10) )');
@@ -34,16 +32,12 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
 
 	public function tearDown()
 	{
-		Cache::delete(Configuration::CACHE_KEY);
-
 		$this->PDO->exec('DROP TABLE `'.PREFIX.'dataset`');
 	}
 
 	public function testEmptiness()
 	{
 		$this->assertFalse($this->Configuration->isEmpty());
-
-		Cache::delete(Configuration::CACHE_KEY);
 
 		$this->assertTrue((new Configuration($this->PDO, 2, false))->isEmpty());
 	}

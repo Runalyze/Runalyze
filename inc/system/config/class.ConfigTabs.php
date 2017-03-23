@@ -49,7 +49,7 @@ class ConfigTabs {
 
 	/**
 	 * Add a tab and set it as the default one
-	 * @param ConfigTab $Tab 
+	 * @param ConfigTab $Tab
 	 */
 	public function addDefaultTab(ConfigTab $Tab) {
 		$this->defaultKey = $Tab->getKey();
@@ -58,29 +58,14 @@ class ConfigTabs {
 
 	/**
 	 * Add a tab
-	 * @param ConfigTab $Tab 
+	 * @param ConfigTab $Tab
 	 */
 	public function addTab(ConfigTab $Tab) {
 		$this->Tabs[$Tab->getKey()] = $Tab;
 	}
 
 	/**
-	 * Display navigation 
-	 */
-	protected function displayNavigation() {
-		$Links   = array();
-
-		foreach ($this->Tabs as $Tab) {
-			$Links[] = array('tag' => Ajax::link($Tab->getTitle(), self::$TABS_ID, $Tab->getUrl()));
-		}
-            $Links[] = array('tag' => Ajax::link(__('Account'), self::$TABS_ID, 'settings/account'));
-
-
-        echo Ajax::toolbarNavigation($Links);
-	}
-
-	/**
-	 * Display tabs 
+	 * Display tabs
 	 */
 	public function display() {
 		if (Request::param('form') == 'true') {
@@ -96,10 +81,6 @@ class ConfigTabs {
 		}
 
 		if ($this->hasToShowDiv()) {
-			echo '<div class="panel-menu panel-menu-floated">';
-			$this->displayNavigation();
-			echo '</div>';
-
 			echo '<div id="'.self::$TABS_ID.'">';
 		}
 
@@ -119,7 +100,7 @@ class ConfigTabs {
 	}
 
 	/**
-	 * Display current tab 
+	 * Display current tab
 	 */
 	protected function displayCurrentTab() {
 		$CurrentKey = $this->getCurrentKey();

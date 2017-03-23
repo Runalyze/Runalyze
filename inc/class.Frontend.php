@@ -104,6 +104,7 @@ class Frontend {
         define('OPENWEATHERMAP_API_KEY', $this->yamlConfig['openweathermap_api_key']);
 	    define('NOKIA_HERE_APPID', $this->yamlConfig['nokia_here_appid']);
 	    define('NOKIA_HERE_TOKEN', $this->yamlConfig['nokia_here_token']);
+	    define('THUNDERFOREST_API_KEY', $this->yamlConfig['thunderforest_api_key']);
 	    define('PERL_PATH', $this->yamlConfig['perl_path']);
 	    define('TTBIN_PATH', $this->yamlConfig['ttbin_path']);
 	    define('GEONAMES_USERNAME', $this->yamlConfig['geonames_username']);

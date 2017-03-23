@@ -59,7 +59,7 @@ class LoopTest extends \PHPUnit_Framework_TestCase {
 	public function testStatistics() {
 		$Loop = new Loop(new Entity(array(
 			Entity::TIME => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10),
-			Entity::HEARTRATE => array(80, 85, 90, 90, 95, 100, 90, 90, 90, 90, 90)
+			Entity::HEARTRATE => array(0, 80, 85, 90, 95, 100, 90, 90, 90, 90, 90)
 		)));
 		$Loop->setStepSize(5);
 		$Loop->nextStep();
