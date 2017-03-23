@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Swimdata
  *
- * @ORM\Table(name="swimdata", indexes={@ORM\Index(name="accountid", columns={"accountid"})})
+ * @ORM\Table(name="swimdata")
  * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\SwimdataRepository")
  */
 class Swimdata

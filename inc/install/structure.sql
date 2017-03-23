@@ -189,7 +189,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_hrv` (
 CREATE TABLE IF NOT EXISTS `runalyze_plugin` (
 `id` int(10) unsigned NOT NULL,
   `key` varchar(100) NOT NULL,
-  `type` enum('panel','stat','tool') NOT NULL DEFAULT 'stat',
+  `type` varchar(5) NOT NULL DEFAULT 'stat',
   `active` tinyint(1) unsigned NOT NULL DEFAULT '1',
   `order` tinyint unsigned NOT NULL DEFAULT '0',
   `accountid` int(10) unsigned NOT NULL
@@ -350,7 +350,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_training` (
   `route` text,
   `routeid` int(10) unsigned DEFAULT NULL,
   `splits` mediumtext,
-  `comment` text,
+  `title` text,
   `partner` text,
   `notes` text,
   `accountid` int(10) unsigned NOT NULL,

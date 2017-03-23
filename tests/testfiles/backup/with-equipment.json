@@ -23,9 +23,9 @@ version=4.0
 {"TABLE":"runalyze_route"}
 
 {"TABLE":"runalyze_training"}
-{"21":{"time":"1234567890","sportid":"11","s":"100.00","routeid":"0","comment":"UNITTEST-1"}}
-{"22":{"time":"1234567890","sportid":"11","s":"100.00","routeid":"0","comment":"UNITTEST-2"}}
-{"23":{"time":"1234567890","sportid":"12","s":"100.00","routeid":"0","comment":"UNITTEST-3"}}
+{"21":{"time":"1234567890","sportid":"11","s":"100.00","routeid":"0","title":"UNITTEST-1"}}
+{"22":{"time":"1234567890","sportid":"11","s":"100.00","routeid":"0","title":"UNITTEST-2"}}
+{"23":{"time":"1234567890","sportid":"12","s":"100.00","routeid":"0","title":"UNITTEST-3"}}
 
 {"TABLE":"runalyze_trackdata"}
 

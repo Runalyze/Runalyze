@@ -71,18 +71,6 @@ class Linker {
 	}
 
 	/**
-	 * Get link with comment as text
-	 * @return string HTML-link to this training
-	 */
-	public function linkWithComment() {
-		if ($this->Activity->comment() != '') {
-			return $this->link($this->Activity->comment());
-		}
-
-		return $this->link('<em>'.__('unknown').'</em>');
-	}
-
-	/**
 	 * Get link with icon as text
 	 * @param string $tooltipCssClass optional, e.g. 'atRight'
 	 * @return string HTML-link to this training

@@ -19,7 +19,7 @@ class TableLaps extends TableLapsAbstract {
 	 * Set code
 	 */
 	protected function setCode() {
-		$Reader = new StringReader($this->Context->activity()->comment());
+		$Reader = new StringReader($this->Context->activity()->title());
 
 		$Splits = $this->Context->activity()->splits();
 		$SplitsView = new Splits\Table($Splits, $this->Context->dataview()->pace()->unitEnum());

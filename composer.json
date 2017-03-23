@@ -37,13 +37,16 @@
         "psr-4": {
             "DoctrineExtensions\\": "vendor/beberlei/DoctrineExtensions/src",
             "Runalyze\\": "inc/core/",
+            "Runalyze\\Bundle\\CoreBundle\\Tests\\": "tests/CoreBundle",
             "Runalyze\\Bundle\\": "src/",
             "Runalyze\\Tests\\": "tests/inc/core/"
         }
     },
     "require-dev": {
         "phpunit/phpunit": "4.8.*",
-        "runalyze/playground": "dev-master"
+        "runalyze/playground": "dev-master",
+        "liip/functional-test-bundle": "^1.7",
+        "doctrine/doctrine-fixtures-bundle": "^2.3"
     },
     "repositories": [
         {

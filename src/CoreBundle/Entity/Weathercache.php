@@ -33,14 +33,14 @@ class Weathercache
     /**
      * @var boolean
      *
-     * @ORM\Column(name="temperature", columnDefinition="tinyint(4) DEFAULT NULL")
+     * @ORM\Column(name="temperature", columnDefinition="tinyint DEFAULT NULL")
      */
     private $temperature;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="wind_speed", columnDefinition="tinyint(3) unsigned DEFAULT NULL")
+     * @ORM\Column(name="wind_speed", columnDefinition="tinyint unsigned DEFAULT NULL")
      */
     private $windSpeed;
 
@@ -54,7 +54,7 @@ class Weathercache
     /**
      * @var boolean
      *
-     * @ORM\Column(name="humidity", columnDefinition="tinyint(3) unsigned DEFAULT NULL")
+     * @ORM\Column(name="humidity", columnDefinition="tinyint unsigned DEFAULT NULL")
      */
     private $humidity;
 
@@ -75,7 +75,7 @@ class Weathercache
     /**
      * @var boolean
      *
-     * @ORM\Column(name="weather_source", columnDefinition="TINYINT(2) unsigned DEFAULT NULL")
+     * @ORM\Column(name="weather_source", columnDefinition="TINYINT unsigned DEFAULT NULL")
      */
     private $weatherSource;
 

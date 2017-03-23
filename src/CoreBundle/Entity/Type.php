@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Type
  *
- * @ORM\Table(name="type", indexes={@ORM\Index(name="accountid", columns={"accountid"})})
+ * @ORM\Table(name="type")
  * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\TypeRepository")
  */
 class Type
@@ -48,21 +48,21 @@ class Type
     /**
      * @var boolean
      *
-     * @ORM\Column(name="short", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 0")
+     * @ORM\Column(name="short", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
      */
     private $short = '0';
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="hr_avg", columnDefinition="tinyint(3) unsigned NOT NULL DEFAULT '100'")
+     * @ORM\Column(name="hr_avg", columnDefinition="tinyint unsigned NOT NULL DEFAULT '100'")
      */
     private $hrAvg = '100';
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="quality_session", columnDefinition="tinyint(1) unsigned NOT NULL DEFAULT 0")
+     * @ORM\Column(name="quality_session", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
      */
     private $qualitySession = '0';
 

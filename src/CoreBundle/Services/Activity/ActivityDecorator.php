@@ -19,8 +19,8 @@ class ActivityDecorator
      */
     public function getTitle()
     {
-        if ('' != $this->Context->getActivity()->getComment()) {
-            return sprintf('%s: %s', $this->Context->getSport()->getName(), $this->Context->getActivity()->getComment());
+        if ('' != $this->Context->getActivity()->getTitle()) {
+            return sprintf('%s: %s', $this->Context->getSport()->getName(), $this->Context->getActivity()->getTitle());
         }
 
         if (null !== $this->Context->getActivity()->getType()) {

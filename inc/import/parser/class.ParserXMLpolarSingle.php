@@ -80,7 +80,7 @@ class ParserXMLpolarSingle extends ParserAbstractSingleXML {
         }
 
         if (isset($this->XML->name)) {
-            $this->TrainingObject->setComment((string)$this->XML->name);
+            $this->TrainingObject->setTitle((string)$this->XML->name);
         }
 	}
 

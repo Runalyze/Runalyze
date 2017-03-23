@@ -25,10 +25,19 @@
                 <th>110 &#37;</th>
             </tr>
         </thead>
+        {% set percentages = [0.65, 0.70, 0.75, 0.80, 0.85, 0.90, 0.95, 1.00, 1.05, 1.10] %}
+
         <tbody>
-            {% set percentages = [0.65, 0.70, 0.75, 0.80, 0.85, 0.90, 0.95, 1.00, 1.05, 1.10] %}
+        <tr class="highlight">
+            <td class="b">{{ currentVo2max|round }}</td>
+            {% for percentage in percentages %}
+                <td>{{ pace(vo2maxVelocity.pace(currentVo2max|round, percentage), paceUnit).value }}</td>
+            {% endfor %}
+        </tr>
+        </tbody>
+        <tbody>
             {% for vo2max in range(30, 80) %}
-                <tr{% if vo2max == currentVo2max|round %} class="highlight"{% endif %}>
+                <tr>
                     <td class="b">{{ vo2max }}</td>
                     {% for percentage in percentages %}
                         <td>{{ pace(vo2maxVelocity.pace(vo2max, percentage), paceUnit).value }}</td>
