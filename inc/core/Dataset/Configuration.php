@@ -6,8 +6,6 @@
 
 namespace Runalyze\Dataset;
 
-use Cache;
-
 /**
  * Dataset configuration from database
  * 
@@ -16,9 +14,6 @@ use Cache;
  */
 class Configuration
 {
-	/** @var string */
-	const CACHE_KEY = 'dataset';
-
 	/**
 	 * Complete data from database, sorted by position
 	 * @var array array('keyid' => array('active' => 0/1, 'style' => '...'), ...)
@@ -33,12 +28,9 @@ class Configuration
 	 * @param \PDO $pdo database connection
 	 * @param int $accountID accountid
 	 * @param bool $fallbackToDefault
-	 * @param bool $useCache
 	 */
-	public function __construct(\PDO $pdo, $accountID, $fallbackToDefault = true, $useCache = true)
+	public function __construct(\PDO $pdo, $accountID, $fallbackToDefault = true)
 	{
-		$this->Data = $useCache ? Cache::get(self::CACHE_KEY) : null;
-
 		if (is_null($this->Data)) {
 			$completeData = $pdo->query('SELECT `keyid`, `active`, `style` FROM `'.PREFIX.'dataset` WHERE `accountid`="'.$accountID.'" ORDER BY `position` ASC')->fetchAll();
 
@@ -48,10 +40,6 @@ class Configuration
 				foreach ($completeData as $data) {
 					$this->Data[$data['keyid']] = $data;
 				}
-			}
-
-			if ($useCache) {
-				Cache::set(self::CACHE_KEY, $this->Data, '600');
 			}
 		}
 	}
