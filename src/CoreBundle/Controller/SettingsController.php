@@ -203,57 +203,58 @@ class SettingsController extends Controller
     /**
      * @return array
      */
-    protected function getExampleTraining(Account $account) {
+    protected function getExampleTraining(Account $account)
+    {
         $configuration = $this->get('app.configuration_manager')->getList();
 
         return array(
-            'id'		=> 0,
-            'sportid'	=> $configuration->getGeneral()->getRunningSport(),
-            'typeid'	=> __('race'),
-            'time'		=> time(),
-            'created'	=> time(),
-            'edited'	=> time(),
-            'is_public'	=> 1,
-            'is_track'	=> 1,
-            'distance'	=> 10,
-            's'			=> 51*60+27,
-            'elevation'	=> 57,
-            'kcal'		=> 691,
-            'pulse_avg'	=> 186,
-            'pulse_max'	=> 193,
-            'vo2max_with_elevation'	=> $configuration->getData()->getCurrentVO2maxShape() + 1,
-            'vo2max'		=> $configuration->getData()->getCurrentVO2maxShape() + 2,
-            'use_vo2max'	=> 0,
-            'fit_vo2max_estimate'	=> round($configuration->getData()->getCurrentVO2maxShape()),
-            'fit_recovery_time'	=> 800,
-            'fit_hrv_analysis'	=> 800,
-            'fit_training_effect'	=> 3.1,
-            'fit_performance_condition'	=> 100,
-            'jd_intensity'	=> 27,
-            'rpe'		=> 13,
-            'trimp'		=> 121,
-            'cadence'	=> 90,
-            'stride_length'	=> 108,
-            'groundcontact'	=> 220,
-            'vertical_oscillation'	=> 76,
-            'power'		=> 520,
-            'temperature'	=> 17,
+            'id' => 0,
+            'sportid' => $configuration->getGeneral()->getRunningSport(),
+            'typeid' => __('race'),
+            'time' => time(),
+            'created' => time(),
+            'edited' => time(),
+            'is_public' => 1,
+            'is_track' => 1,
+            'distance' => 10,
+            's' => 51 * 60 + 27,
+            'elevation' => 57,
+            'kcal' => 691,
+            'pulse_avg' => 186,
+            'pulse_max' => 193,
+            'vo2max_with_elevation' => $configuration->getData()->getCurrentVO2maxShape() + 1,
+            'vo2max' => $configuration->getData()->getCurrentVO2maxShape() + 2,
+            'use_vo2max' => 0,
+            'fit_vo2max_estimate' => round($configuration->getData()->getCurrentVO2maxShape()),
+            'fit_recovery_time' => 800,
+            'fit_hrv_analysis' => 800,
+            'fit_training_effect' => 3.1,
+            'fit_performance_condition' => 100,
+            'jd_intensity' => 27,
+            'rpe' => 13,
+            'trimp' => 121,
+            'cadence' => 90,
+            'stride_length' => 108,
+            'groundcontact' => 220,
+            'vertical_oscillation' => 76,
+            'power' => 520,
+            'temperature' => 17,
             'wind_speed' => 27,
             'wind_deg' => 219,
             'pressure' => 1025,
             'humidity' => 63,
-            'weatherid'	=> 5,
-            'splits'	=> '5|26:51-5|24:36',
-            'comment'	=> str_replace(' ', '&nbsp;', __('Test activity')),
-            'partner'	=> 'Peter',
-            'notes'		=> str_replace(' ', '&nbsp;', __('Great run!')),
-            'accountid'	=> $account->getId(),
-            'creator'	=> '',
-            'creator_details'	=> '',
-            'activity_id'	=> '',
-            'elevation_corrected'	=> 1,
-            'swolf'		=> 29,
-            'total_strokes'	=> 1250,
+            'weatherid' => 5,
+            'splits' => '5|26:51-5|24:36',
+            'comment' => str_replace(' ', '&nbsp;', __('Test activity')),
+            'partner' => 'Peter',
+            'notes' => str_replace(' ', '&nbsp;', __('Great run!')),
+            'accountid' => $account->getId(),
+            'creator' => '',
+            'creator_details' => '',
+            'activity_id' => '',
+            'elevation_corrected' => 1,
+            'swolf' => 29,
+            'total_strokes' => 1250,
             'vertical_ratio' => 79,
             'groundcontact_balance' => 4980,
             Keys\Tags::CONCAT_TAGIDS_KEY => $this->exampleTagID($account),
@@ -261,22 +262,34 @@ class SettingsController extends Controller
         );
     }
 
-    protected function exampleTagID(Account $account) {
+    /**
+     * @return string
+     */
+    protected function exampleTagID(Account $account)
+    {
         $tag = $this->getDoctrine()->getRepository('CoreBundle:Tag')->findBy(['account' => $account->getId()], null, 1);
-        if ($tag) {
-            return $tag[0]->getId();
+
+        if (is_array($tag)) {
+            return (string)$tag[0]->getId();
         }
+
         return '';
     }
 
-    protected function exampleEquipmentIDs(Account $account) {
+    /**
+     * @return string
+     */
+    protected function exampleEquipmentIDs(Account $account)
+    {
+        $ids = [];
         $equipment = $this->getDoctrine()->getRepository('CoreBundle:Equipment')->findBy(['account' => $account->getId()], null, 2);
-        if ($equipment) {
+
+        if (is_array($equipment)) {
             foreach ($equipment as $element) {
                 $ids[] = $element->getId();
             }
-            return implode(',', $ids);
         }
-        return '';
+
+        return implode(',', $ids);
     }
 }

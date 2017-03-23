@@ -16,5 +16,4 @@ class TagRepository extends EntityRepository
             'account' => $account->getId()
         ]);
     }
-
 }
