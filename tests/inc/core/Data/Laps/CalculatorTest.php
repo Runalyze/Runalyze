@@ -96,12 +96,12 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase
 
 		$this->assertEquals(6, $this->Laps->num());
 		$this->checkAgainst(array(
-			array(300, 1.0, 300, 1.0, 124, 135, 20, 5),
+			array(300, 1.0, 300, 1.0, 129, 135, 20, 5),
 			array(70, 0.4, 370, 1.4, 163, 175, 0, 0),
 			array(60, 0.2, 430, 1.6, 165, 170, 0, 0),
 			array(68, 0.4, 498, 2.0, 185, 190, 0, 0),
 			array(62, 0.2, 560, 2.2, 180, 185, 0, 0),
-			array(280, 1.0, 840, 3.2, 150, 170, 5, 20)
+			array(280, 1.0, 840, 3.2, 151, 170, 5, 20)
 		));
 	}
 
@@ -114,12 +114,12 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase
 
 		$this->assertEquals(6, $this->Laps->num());
 		$this->checkAgainst(array(
-			array(300, 1.0, 300, 1.0, 124, 135, 0, 0),
+			array(300, 1.0, 300, 1.0, 129, 135, 0, 0),
 			array(70, 0.4, 370, 1.4, 163, 175, 0, 0),
 			array(60, 0.2, 430, 1.6, 165, 170, 0, 0),
 			array(68, 0.4, 498, 2.0, 185, 190, 0, 0),
 			array(62, 0.2, 560, 2.2, 180, 185, 0, 0),
-			array(280, 1.0, 840, 3.2, 150, 170, 0, 0)
+			array(280, 1.0, 840, 3.2, 151, 170, 0, 0)
 		));
 	}
 

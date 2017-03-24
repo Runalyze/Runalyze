@@ -8,41 +8,16 @@ use Runalyze\Bundle\CoreBundle\Entity\AccountRepository;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 
-class AccountRepositoryTest extends KernelTestCase
+class AccountRepositoryTest extends AbstractRepositoryTestCase
 {
-    /** @var EntityManager */
-    protected $EntityManager;
-
     /** @var AccountRepository */
     protected $AccountRepository;
 
     protected function setUp()
     {
-        static::bootKernel();
+        parent::setUp();
 
-        $this->EntityManager = static::$kernel->getContainer()->get('doctrine')->getManager();
         $this->AccountRepository = $this->EntityManager->getRepository('CoreBundle:Account');
-
-        $this->deleteAllAccounts();
-    }
-
-    protected function tearDown()
-    {
-        $this->deleteAllAccounts();
-
-        parent::tearDown();
-
-        $this->EntityManager->close();
-        $this->EntityManager = null;
-    }
-
-    protected function deleteAllAccounts()
-    {
-        foreach ($this->AccountRepository->findAll() as $account) {
-            $this->EntityManager->remove($account);
-        }
-
-        $this->EntityManager->flush();
     }
 
     /**
@@ -81,7 +56,9 @@ class AccountRepositoryTest extends KernelTestCase
 
     public function testNumberOfActivatedUsers()
     {
+        $activeAccounts = $this->AccountRepository->getAmountOfActivatedUsers(false);
         $activatedAccountNames = ['foo', 'bar', 'baz'];
+
         foreach ($activatedAccountNames as $name) {
             $this->EntityManager->persist($this->getNewAccount($name));
         }
@@ -89,7 +66,7 @@ class AccountRepositoryTest extends KernelTestCase
         $this->EntityManager->persist($this->getNewAccount('foobar')->setActivationHash(bin2hex(random_bytes(16))));
         $this->EntityManager->flush();
 
-        $this->assertEquals(3, $this->AccountRepository->getAmountOfActivatedUsers(false));
+        $this->assertEquals($activeAccounts + 3, $this->AccountRepository->getAmountOfActivatedUsers(false));
     }
 
     public function testDeletingNonActivatedUsers()

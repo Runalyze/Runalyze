@@ -97,7 +97,7 @@ class ParserCSVepsonSingle extends ParserAbstractSingle {
 	 */
 	protected function readTrainingResult($line) {
 		if (substr($line, 0, 13) == 'TrainingName,') {
-			$this->TrainingObject->setComment(substr($line, 13));
+			$this->TrainingObject->setTitle(substr($line, 13));
 		} elseif (substr($line, 0, 5) == 'Memo,') {
 			$this->TrainingObject->setNotes(substr($line, 5));
 		} elseif (substr($line, 0, 15) == 'TrainingKindId,') {

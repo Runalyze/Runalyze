@@ -2,40 +2,6 @@
 
 {% block content %}
 <div class="panel-heading">
-	<h1>Runalyze v{{ version }}</h1>
-</div>
-<div class="panel-content">
-	<p class="text">
-		{% trans %}Runalyze is completely configurable and more detailed than any other tool for analyzing your activities.{% endtrans %}
-	</p>
-
-	<p class="text">
-		{% trans with {'%s': '<a href="https://blog.runalyze.com/">blog.runalyze.com</a>'} %}Please look at our official website %s to get an overview of our features.{% endtrans %}<br>
-		{% trans with {'%s': '<a href="https://blog.runalyze.com/blog/">blog.runalyze.com/blog/</a>' } %}If you want to stay up to date on changes and receive tips from time to time, visit our blog at %s.{% endtrans %}
-	</p>
-
-	<p class="text">
-		{% trans %}Runalyze is an open-source project. We are working on it as much as we can in our free time.{% endtrans %}<br>
-		{% trans %}Official developers:{% endtrans %}
-		<a href="http://www.laufhannes.de/" title="Laufblog: Laufhannes">Hannes Christiansen</a>,
-		<a href="https://mipapo.de/" title="Mipapo: Michael Pohl">Michael Pohl</a>
-	</p>
-</div>
-
-
-<div class="panel-heading panel-sub-heading">
-	<h1>{% trans %}Configuration{% endtrans %}</h1>
-</div>
-<div class="panel-content">
-	<p class="text">
-		{% trans %}The main advantage of Runalyze is the ability to adapt everything to your personal needs and wishes.{% endtrans %}
-		{% trans %}Have a look at the configuration window to see what we're talking about.{% endtrans %}
-		{% trans %}You can define your own sports or activity types and choose your own way of presentation and configure some parameters of our experimental calculations.{% endtrans %}
-	</p>
-</div>
-
-
-<div class="panel-heading panel-sub-heading">
 	<h1>{% trans %}Support{% endtrans %}</h1>
 </div>
 <div class="panel-content">
@@ -47,9 +13,10 @@
 
 	<ul class="blocklist blocklist-inline clearfix">
 		<li><a href="https://forum.runalyze.com" title="Board: Runalyze"><i class="fa fa-comments"></i> <strong>{% trans %}Forum{% endtrans %}</strong></a></li>
-		<li><a href="https://help.runalyze.com" title="Runalyze"><i class="fa fa-question"></i> <strong>{% trans %}Documentation{% endtrans %}</strong></a></li>
+		<li><a href="https://help.runalyze.com" title="Runalyze"><i class="fa fa-question-circle"></i> <strong>{% trans %}Documentation{% endtrans %}</strong></a></li>
 		<li><a href="https://translate.runalyze.com" title="Runalyze"><i class="fa fa-globe"></i> <strong>{% trans %}Translation{% endtrans %}</strong></a></li>
 		<li><a href="https://github.com/Runalyze/Runalyze" title="GitHub: Runalyze"><i class="fa fa-github-alt"></i> <strong>GitHub</strong></a></li>
+		<li><a href="https://blog.runalyze.com/blog/" title="Runalyze"><i class="fa fa-newspaper-o"></i> <strong>{% trans %}Blog{% endtrans %}</strong></a></li>
 		<li><a href="http://twitter.com/RunalyzeDE" title="Runalyze"><i class="fa fa-twitter color-twitter"></i> <strong>Twitter</strong></a></li>
 		<li><a href="http://facebook.com/Runalyze" title="Runalyze"><i class="fa fa-facebook color-facebook"></i> <strong>Facebook</strong></a></li>
 		<li><a href="https://www.instagram.com/runalyze/" title="Runalyze"><i class="fa fa-instagram color-instagram"></i> <strong>Instagram</strong></a></li>
@@ -59,16 +26,6 @@
 	<p class="text">
 		{% trans %}In a case of urgency you can contact us via email:{% endtrans %} <a href="mailto:support@runalyze.com" title="Support">support@runalyze.com</a>.
 	</p>
-</div>
-
-<div class="panel-heading panel-sub-heading">
-	<h1>{% trans %}Browser Support{% endtrans %}</h1>
-</div>
-<div class="panel-content">
-	{% trans %}Runalyze is a modern application and therefore we want to use the most modern web techniques. We will not try to support any outdated browser versions.{% endtrans %}
-	<ul>
-		<li>{% trans %}e.g. jQuery 2.x does not support IE8 (or less){% endtrans %}</li>
-	</ul>
 </div>
 
 <div class="panel-heading panel-sub-heading">

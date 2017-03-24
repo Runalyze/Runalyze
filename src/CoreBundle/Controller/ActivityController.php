@@ -29,7 +29,7 @@ use Runalyze\Service\ElevationCorrection\NoValidStrategyException;
 class ActivityController extends Controller
 {
     /**
-     * @Route("/activity/add", name="ActivityAdd")
+     * @Route("/activity/add", name="activity-add")
      * @Security("has_role('ROLE_USER')")
      */
     public function createAction()

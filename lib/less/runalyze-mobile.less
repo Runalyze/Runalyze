@@ -49,13 +49,13 @@
 		white-space: normal;
 	}
 
-        .training-row { 
-                margin-left: 0; 
-        }
-        
-        .training-row-info { 
-                float: none; width: auto; margin-left: 0; 
-        }
+	.training-row {
+			margin-left: 0;
+	}
+
+	.training-row-info {
+			float: none; width: auto; margin-left: 0;
+	}
 
 	#statistics-inner {
 		clear: both;
@@ -83,9 +83,16 @@
 
 @media (max-width: 800px) {
 	#home #headline {
-		.tab { display: none; width: 90%; margin: 5px 0; padding: 2px 5%; }
-		&.menu-expanded .tab, .logo { display: block; }
+		max-height: 100%;
+		overflow-y: scroll;
+
+		.tab, .headline-menu { display: none; width: 90%; margin: 5px 0; padding: 2px 5%; }
+		&.menu-expanded {
+			.tab, .logo, .headline-menu, .submenu { display: block; position: static; }
+		}
 		.left, .right { float: none; }
+		.logo { display: inline-block; margin-left: auto; margin-right: auto; }
+		.submenu { border: 0; }
 	}
 	#shared #headline {
 		max-height: 36px;

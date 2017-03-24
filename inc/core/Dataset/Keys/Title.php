@@ -1,6 +1,6 @@
 <?php
 /**
- * This file contains class::Comment
+ * This file contains class::Title
  * @package Runalyze
  */
 
@@ -9,12 +9,12 @@ namespace Runalyze\Dataset\Keys;
 use Runalyze\Dataset\Context;
 
 /**
- * Dataset key: Comment
+ * Dataset key: Title
  * 
  * @author Hannes Christiansen
  * @package Runalyze\Dataset\Keys
  */
-class Comment extends AbstractKey
+class Title extends AbstractKey
 {
 	/** @var int */
 	const DEFAULT_CUT = 20;
@@ -25,7 +25,7 @@ class Comment extends AbstractKey
 	 */
 	public function id()
 	{
-		return \Runalyze\Dataset\Keys::COMMENT;
+		return \Runalyze\Dataset\Keys::TITLE;
 	}
 
 	/**
@@ -34,7 +34,7 @@ class Comment extends AbstractKey
 	 */
 	public function column()
 	{
-		return 'comment';
+		return 'title';
 	}
 
 	/**
@@ -43,7 +43,7 @@ class Comment extends AbstractKey
 	 */
 	public function label()
 	{
-		return __('Comment');
+		return __('Title');
 	}
 
 	/**
@@ -53,7 +53,7 @@ class Comment extends AbstractKey
 	public function description()
 	{
 		return sprintf(
-			__('Comments are automatically cut after %u characters.'),
+			__('Titles are automatically cut after %u characters.'),
 			self::DEFAULT_CUT
 		);
 	}
@@ -66,7 +66,7 @@ class Comment extends AbstractKey
 	public function stringFor(Context $context)
 	{
 		return \Helper::Cut(
-			$context->activity()->comment(),
+			$context->activity()->title(),
 			20
 		);
 	}

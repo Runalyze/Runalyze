@@ -61,7 +61,6 @@ class CallController extends Controller
         $ConfigTabs = new \ConfigTabs();
         $ConfigTabs->addDefaultTab(new  \ConfigTabGeneral());
         $ConfigTabs->addTab(new \ConfigTabPlugins());
-        $ConfigTabs->addTab(new \ConfigTabDataset());
         $ConfigTabs->addTab(new \ConfigTabSports());
         $ConfigTabs->addTab(new \ConfigTabTypes());
         $ConfigTabs->display();

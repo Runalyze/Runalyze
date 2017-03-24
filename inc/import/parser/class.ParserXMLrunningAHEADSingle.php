@@ -68,7 +68,7 @@ class ParserXMLrunningAHEADSingle extends ParserAbstractSingleXML {
 	protected function parseSplits() {
 		if (isset($this->XML->IntervalCollection)) {
 			if ((string)$this->XML->IntervalCollection['name'] != 'GPS Interval')
-				$this->TrainingObject->setComment( (string)$this->XML->IntervalCollection['name'] );
+				$this->TrainingObject->setTitle( (string)$this->XML->IntervalCollection['name'] );
 
 			foreach ($this->XML->IntervalCollection->Interval as $Interval) {
 				if ((double)$Interval->Duration['seconds'] > 0)

@@ -41,7 +41,7 @@ class DefaultConfiguration extends Configuration
 			Keys::ELEVATION => true,
 			Keys::ENERGY => true,
 			Keys::SPLITS => true,
-			Keys::COMMENT => true,
+			Keys::TITLE => true,
 			Keys::TRIMP => true,
 			Keys::VO2MAX_ICON => true,
 			Keys::VO2MAX_VALUE => false,

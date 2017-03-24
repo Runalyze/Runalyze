@@ -101,7 +101,7 @@ final class Keys extends AbstractEnum
 	const SPLITS = 29;
 
 	/** @var int */
-	const COMMENT = 30;
+	const TITLE = 30;
 
 	/** @var int */
 	const TRAININGPARTNER = 31;
@@ -243,7 +243,7 @@ final class Keys extends AbstractEnum
 			self::WEATHER => 'Weather',
 			self::ROUTE => 'Route',
 			self::SPLITS => 'Splits',
-			self::COMMENT => 'Comment',
+			self::TITLE => 'Title',
 			self::TRAININGPARTNER => 'TrainingPartner',
 			self::TOTAL_STROKES => 'TotalStrokes',
 			self::VERTICAL_RATIO => 'VerticalRatio',

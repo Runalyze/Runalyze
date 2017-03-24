@@ -7,8 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Tag
  *
- * @ORM\Table(name="tag", indexes={@ORM\Index(name="accountid", columns={"accountid"})})
- * @ORM\Entity
+ * @ORM\Table(name="tag")
+ * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\TagRepository")
  */
 class Tag
 {

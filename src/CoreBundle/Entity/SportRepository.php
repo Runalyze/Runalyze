@@ -23,8 +23,9 @@ class SportRepository extends EntityRepository
      */
     public function findSportsWithKmFor(Account $account)
     {
-        return $this->findBy(
-            ['account' => $account->getId(), 'distances' => true]);
+        return $this->findBy([
+            'account' => $account->getId(),
+            'distances' => true
+        ]);
     }
-
 }

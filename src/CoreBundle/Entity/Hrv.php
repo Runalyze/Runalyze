@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Hrv
  *
- * @ORM\Table(name="hrv", indexes={@ORM\Index(name="accountid", columns={"accountid"})})
+ * @ORM\Table(name="hrv")
  * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\HrvRepository")
  */
 class Hrv

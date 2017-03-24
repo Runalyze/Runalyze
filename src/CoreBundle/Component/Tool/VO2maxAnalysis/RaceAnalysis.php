@@ -47,7 +47,7 @@ class RaceAnalysis
      */
     public function getName()
     {
-        return $this->Activity->comment();
+        return $this->Activity->title();
     }
 
     /**

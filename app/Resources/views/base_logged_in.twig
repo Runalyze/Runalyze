@@ -4,35 +4,84 @@
 
 {% block body %}
     {% if not app.request.xmlHttpRequest %}
-    <div id="flot-loader"></div>
+        <div id="flot-loader"></div>
 
-    <div id="headline">
-        {% block headline %}
-            <span id="menu-link" onclick="$('#headline').toggleClass('menu-expanded');"><i class="fa fa-fw fa-bars"></i></span>
-            <a class="tab logo" href="{{ url('base_url') }}" title="Runalyze">Runalyze</a>
+        <div id="headline">
+            {% block headline %}
+                <span id="menu-link" onclick="$('#headline').toggleClass('menu-expanded');"><i class="fa fa-fw fa-bars"></i></span>
+                <a class="tab logo" href="{{ url('base_url') }}" title="Runalyze">Runalyze</a>
 
-            {% if is_granted('ROLE_USER') %}
-                <a class="tab right" href="{{ url('logout') }}" title="{% trans %}Logout{% endtrans %}"><i class="fa fa-fw fa-lg fa-sign-out"></i>&nbsp;{% trans %}Logout{% endtrans %}</a>
-                <a class="window tab right b" href="{{ url('settings-account') }}"><i class="fa fa-fw fa-lg fa-user"></i>&nbsp;{{ app.user.username }}</a>
-            {% endif %}
+                {% if is_granted('ROLE_USER') %}
+                    <div class="headline-menu right">
+                        <div class="submenu-label">
+                            {{ app.user.username }}&nbsp;<i class="fa fa-fw fa-lg fa-user"></i>
+                        </div>
+                        <ul class="submenu right-oriented">
+                            <li>
+                                {% if 'true' == configVar('privacy.TRAINING_LIST_PUBLIC') %}
+                                <a href="{{ url('shared-athlete', {'username': app.user.username}) }}"><i class="fa fa-fw fa-id-card-o"></i>&nbsp;{{ 'Public athlete page'|trans }}</a>
+                                {% else %}
+                                <span class="no-link cursor-not-allowed unimportant" title="{{ 'Your public athlete page is deactivated'|trans }}"><i class="fa fa-fw fa-id-card-o"></i>&nbsp;{{ 'Public athlete page'|trans }}</span>
+                                {% endif %}
+                            </li>
+                            <li class="separator"></li>
+                            <li><a class="window" href="{{ url('settings-account') }}"><i class="fa fa-fw fa-cogs"></i>&nbsp;{% trans %}Account settings{% endtrans %}</a></li>
+                            <li><a class="window" href="{{ url('logout') }}"><i class="fa fa-fw fa-sign-out"></i>&nbsp;{% trans %}Logout{% endtrans %}</a></li>
+                        </ul>
+                    </div>
 
-            <span class="left b">
-                <a class="window tab" href="{{ url('settings') }}"><i class="fa fa-fw fa-lg fa-cog"></i>&nbsp;{% trans %}Configuration{% endtrans %}</a>
-                <a class="window tab" href="{{ url('tools') }}"><i class="fa fa-fw fa-lg fa-dashboard"></i>&nbsp;{% trans %}Tools{% endtrans %}</a>
-                <a class="window tab" href="{{ url('help') }}"><i class="fa fa-fw fa-lg fa-question-circle"></i>&nbsp;{% trans %}Help{% endtrans %}</a>
-            </span>
-        {% endblock %}
-    </div>
+                    <div class="headline-menu right">
+                        <div class="submenu-label only-icon">
+                            <i class="fa fa-fw fa-plus"></i><i class="fa fa-fw fa-caret-down"></i>
+                        </div>
+                        <ul class="submenu">
+                            <li><a class="window" href="{{ url('activity-add') }}?upload" data-size="small"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;{% trans %}Activity upload{% endtrans %}</a></li>
+                            <li><a class="window" href="{{ url('activity-add') }}?date" data-size="small"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;{% trans %}Manual activity{% endtrans %}</a></li>
+                            <li><a class="window" href="{{ url('settings') }}?key=config_tab_equipment"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;{% trans %}New equipment{% endtrans %}</a></li>
+                            <li><a class="window" href="{{ url('body-values-add') }}"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;{% trans %}New body values{% endtrans %}</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="headline-menu left">
+                        <div class="submenu-label b">
+                            <i class="fa fa-fw fa-lg fa-cog"></i>&nbsp;{% trans %}Configuration{% endtrans %}
+                        </div>
+                        <ul class="submenu">
+                            <li><a class="window" href="{{ url('settings') }}?key=config_tab_general"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;{% trans %}General settings{% endtrans %}</a></li>
+                            <li><a class="window" href="{{ url('settings') }}?key=config_tab_plugins"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;{% trans %}Plugins{% endtrans %}</a></li>
+                            <li><a class="window" href="{{ url('settings-dataset') }}"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;{% trans %}Dataset{% endtrans %}</a></li>
+                            <li><a class="window" href="{{ url('settings') }}?key=config_tab_sports"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;{% trans %}Sport types{% endtrans %}</a></li>
+                            <li><a class="window" href="{{ url('settings') }}?key=config_tab_types"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;{% trans %}Activity types{% endtrans %}</a></li>
+                            <li><a class="window" href="{{ url('settings') }}?key=config_tab_equipment"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;{% trans %}Equipment{% endtrans %}</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="headline-menu left">
+                        <div class="submenu-label b">
+                            <a class="window" href="{{ url('tools') }}"><i class="fa fa-fw fa-lg fa-dashboard"></i>&nbsp;{% trans %}Tools{% endtrans %}</a>
+                        </div>
+                        <ul class="submenu">
+                            <li><a class="window" href="{{ url('tools-anova') }}"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;{% trans %}ANOVA{% endtrans %}</a></li>
+                            <li><a class="window" href="{{ url('tools-vo2max-analysis') }}"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;{% trans %}Analyze your VO2max{% endtrans %}</a></li>
+                            <li><a class="window" href="{{ url('tools-tables') }}"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;{% trans %}Running tables{% endtrans %}</a></li>
+                            <li><a class="window" href="{{ url('poster') }}"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;{% trans %}Poster generator{% endtrans %}</a></li>
+                        </ul>
+                    </div>
+
+                    <a class="window tab left b" href="{{ url('help') }}"><i class="fa fa-fw fa-lg fa-question-circle"></i>&nbsp;{% trans %}Help{% endtrans %}</a>
+                {% endif %}
+            {% endblock %}
+        </div>
     {% endif %}
 
     {% block content %}
     {% endblock %}
 
     {% if not app.request.xmlHttpRequest %}
-    <br class="clear">
+        <br class="clear">
 
-    <script>(function($){$(document).ready(function(){ Runalyze.init(); });})(jQuery);</script>
+        <script>(function($){$(document).ready(function(){ Runalyze.init(); });})(jQuery);</script>
     {% else %}
-    <script>{{ automaticJavaScriptReload(app.session.flashBag) }}</script>
+        <script>{{ automaticJavaScriptReload(app.session.flashBag) }}</script>
     {% endif %}
 {% endblock %}

@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Equipment
  *
- * @ORM\Table(name="equipment", indexes={@ORM\Index(name="accountid", columns={"accountid"}), @ORM\Index(name="typeid", columns={"typeid"})})
+ * @ORM\Table(name="equipment")
  * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\EquipmentRepository")
  */
 class Equipment
@@ -38,7 +38,7 @@ class Equipment
     /**
      * @var float [km]
      *
-     * @ORM\Column(name="distance", columnDefinition="decimal(8,2) unsigned NOT NULL DEFAULT '0.00'")
+     * @ORM\Column(name="distance", type="decimal", precision=8, scale=2, options={"unsigned":true, "default":0.00})
      */
     private $distance = '0.00';
 

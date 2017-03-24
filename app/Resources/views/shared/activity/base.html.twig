@@ -3,6 +3,13 @@
 {% set html_attributes = ' prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# fitness: http://ogp.me/ns/fitness#"' %}
 {% set body_attributes = ' id="shared"' %}
 
+{% if activity.comment %}
+{% set page_title = activity.comment ~ ' | ' ~ username ~ ' | RUNALYZE' %}
+{% else %}
+    {% set page_title = username ~ ' | RUNALYZE' %}
+
+{% endif %}
+
 {% block html_head_meta %}
     {{ parent() }}
 

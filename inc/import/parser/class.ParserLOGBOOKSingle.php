@@ -68,7 +68,7 @@ class ParserLOGBOOKSingle extends ParserAbstractSingleXML {
 			$this->TrainingObject->setCalories( (int)$this->XML['totalCalories'] );
 
 		if (!empty($this->XML['name']))
-			$this->TrainingObject->setComment( (string)$this->XML['name'] );
+			$this->TrainingObject->setTitle( (string)$this->XML['name'] );
 
 		if (!empty($this->XML['notes']))
 			$this->TrainingObject->setNotes( (string)$this->XML['notes'] );

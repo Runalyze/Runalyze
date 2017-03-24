@@ -158,14 +158,14 @@ class JsonImporterTest extends \PHPUnit_Framework_TestCase
         );
 		$this->assertEquals(
             [1234567890, $sportId, $typeId, 900],
-            $this->DB->query('SELECT `time`, `sportid`, `typeid`, `s` FROM `runalyze_training` WHERE `accountid`='.$this->AccountID.' AND `comment`="UNITTEST-1" LIMIT 1')->fetch(\PDO::FETCH_NUM)
+            $this->DB->query('SELECT `time`, `sportid`, `typeid`, `s` FROM `runalyze_training` WHERE `accountid`='.$this->AccountID.' AND `title`="UNITTEST-1" LIMIT 1')->fetch(\PDO::FETCH_NUM)
         );
 		$this->assertEquals(
             [1234567890, $newSportId, $newTypeId, 1500],
-            $this->DB->query('SELECT `time`, `sportid`, `typeid`, `s` FROM `runalyze_training` WHERE `accountid`='.$this->AccountID.' AND `comment`="UNITTEST-RACE" LIMIT 1')->fetch(\PDO::FETCH_NUM)
+            $this->DB->query('SELECT `time`, `sportid`, `typeid`, `s` FROM `runalyze_training` WHERE `accountid`='.$this->AccountID.' AND `title`="UNITTEST-RACE" LIMIT 1')->fetch(\PDO::FETCH_NUM)
         );
 
-		$competitionId = $this->DB->query('SELECT `id` FROM `runalyze_training` WHERE `accountid`='.$this->AccountID.' AND `comment`="UNITTEST-RACE" LIMIT 1')->fetchColumn();
+		$competitionId = $this->DB->query('SELECT `id` FROM `runalyze_training` WHERE `accountid`='.$this->AccountID.' AND `title`="UNITTEST-RACE" LIMIT 1')->fetchColumn();
 
 		$this->assertEquals(
             [10.00, 2400],
@@ -187,9 +187,9 @@ class JsonImporterTest extends \PHPUnit_Framework_TestCase
 		$TypeA = $this->DB->query('SELECT `id` FROM `runalyze_equipment_type` WHERE `accountid`='.$this->AccountID.' AND `name`="Typ A"')->fetchColumn();
 		$TypeAB = $this->DB->query('SELECT `id` FROM `runalyze_equipment_type` WHERE `accountid`='.$this->AccountID.' AND `name`="Typ AB"')->fetchColumn();
 
-		$Activity1 = $this->DB->query('SELECT `id` FROM `runalyze_training` WHERE `accountid`='.$this->AccountID.' AND `comment`="UNITTEST-1"')->fetchColumn();
-		$Activity2 = $this->DB->query('SELECT `id` FROM `runalyze_training` WHERE `accountid`='.$this->AccountID.' AND `comment`="UNITTEST-2"')->fetchColumn();
-		$Activity3 = $this->DB->query('SELECT `id` FROM `runalyze_training` WHERE `accountid`='.$this->AccountID.' AND `comment`="UNITTEST-3"')->fetchColumn();
+		$Activity1 = $this->DB->query('SELECT `id` FROM `runalyze_training` WHERE `accountid`='.$this->AccountID.' AND `title`="UNITTEST-1"')->fetchColumn();
+		$Activity2 = $this->DB->query('SELECT `id` FROM `runalyze_training` WHERE `accountid`='.$this->AccountID.' AND `title`="UNITTEST-2"')->fetchColumn();
+		$Activity3 = $this->DB->query('SELECT `id` FROM `runalyze_training` WHERE `accountid`='.$this->AccountID.' AND `title`="UNITTEST-3"')->fetchColumn();
 
 		$EquipmentA1 = $this->DB->query('SELECT `id` FROM `runalyze_equipment` WHERE `accountid`='.$this->AccountID.' AND `name`="A1"')->fetchColumn();
 		$EquipmentAB1 = $this->DB->query('SELECT `id` FROM `runalyze_equipment` WHERE `accountid`='.$this->AccountID.' AND `name`="AB1"')->fetchColumn();

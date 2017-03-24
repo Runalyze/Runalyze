@@ -242,7 +242,7 @@ class DataBrowser {
 	 * Display config link
 	 */
 	protected function getConfigLink() {
-		echo Ajax::window('<a class="tab" href="'.ConfigTabs::$CONFIG_URL.'?key=config_tab_dataset">'.Icon::$CONF.'</a>');
+		echo Ajax::window('<a class="tab" href="settings/dataset">'.Icon::$CONF.'</a>');
 	}
 
 	/**

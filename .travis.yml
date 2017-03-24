@@ -2,44 +2,44 @@ language: php
 sudo: required
 
 php:
-    - 5.6
-    - 7.0
-    - 7.1
+  - 5.6
+  - 7.0
+  - 7.1
 env:
   - BUILD_ARCHIVE=false
 
 addons:
-    ssh_known_hosts: ${PHOST}
+  ssh_known_hosts: ${PHOST}
 
 before_install:
-    - openssl aes-256-cbc -K $encrypted_d056b0ac7927_key -iv $encrypted_d056b0ac7927_iv -in bin/deploy_rsa.enc -out /tmp/deploy_rsa -d
-    - eval "$(ssh-agent -s)"
-    - chmod 600 /tmp/deploy_rsa
-    - ssh-add /tmp/deploy_rsa
-    - nvm install node
+  - openssl aes-256-cbc -K $encrypted_d056b0ac7927_key -iv $encrypted_d056b0ac7927_iv -in bin/deploy_rsa.enc -out /tmp/deploy_rsa -d
+  - eval "$(ssh-agent -s)"
+  - chmod 600 /tmp/deploy_rsa
+  - ssh-add /tmp/deploy_rsa
+  - nvm install node
 
 install:
-    - composer install --prefer-dist --no-interaction
+  - composer install --prefer-dist --no-interaction
 
 before_script:
-    - cp app/config/default_config.yml data/config.yml
-    - mkdir -p build/logs
-    - mysql -uroot -e 'SET @@global.sql_mode = TRADITIONAL; CREATE DATABASE runalyze_unittest; CREATE DATABASE runalyze_test;';
-    - php bin/console --env=test doctrine:schema:update --force --complete
-    - mysql runalyze_unittest < inc/install/structure.sql
+  - cp app/config/default_config.yml data/config.yml
+  - mkdir -p build/logs
 
-    - mysql -e "SHOW VARIABLES LIKE 'max_allowed_packet';"
-    - echo "[server]\nmax_allowed_packet=64M" | sudo tee -a /etc/mysql/my.cnf
-    - sudo service mysql restart
-    - mysql -e "SET GLOBAL wait_timeout=3600;"
-    - mysql -e "SHOW VARIABLES LIKE 'max_allowed_packet';"
+  - mysql -uroot -e 'SET @@global.sql_mode = TRADITIONAL; CREATE DATABASE runalyze_unittest; CREATE DATABASE runalyze_test;';
+  - php bin/console --env=test doctrine:schema:update --force --complete
+  - mysql runalyze_unittest < inc/install/structure.sql
+
+  - mysql -e "SET GLOBAL wait_timeout = 36000;"
+  - mysql -e "SET GLOBAL max_allowed_packet = 134209536;"
+  - mysql -e "SHOW VARIABLES LIKE 'max_allowed_packet';"
+  - mysql -e "SHOW VARIABLES LIKE 'wait_timeout';"
 
 script:
-   - vendor/bin/phpunit --colors -c tests/config.xml --coverage-clover build/logs/clover.xml
+  - vendor/bin/phpunit --colors -c tests/config.xml --coverage-clover build/logs/clover.xml
 
 after_script:
-    - wget https://scrutinizer-ci.com/ocular.phar && php ocular.phar code-coverage:upload --format=php-clover build/logs/clover.xml
-    - chmod +x bin/travis_build.sh | bin/travis_build.sh
+  - wget https://scrutinizer-ci.com/ocular.phar && php ocular.phar code-coverage:upload --format=php-clover build/logs/clover.xml
+  - chmod +x bin/travis_build.sh | bin/travis_build.sh
 
 matrix:
   allow_failures:
