@@ -46,6 +46,22 @@
             </ul>
         </div>
 
+        <!-- TODO: merge this menu into respective twig template -->
+        <div class="headline-menu right">
+            <div class="submenu-label only-icon">
+                <!-- TODO: icon to mark 'new' is still missing -->
+                <i class="fa fa-fw fa-envelope"></i><i class="fa fa-fw fa-caret-down"></i>
+            </div>
+            <ul class="submenu right-oriented">
+                <!-- TODO: using IDs may be better for node selection? -->
+                <li class="no-notification-messages"><em class="no-link"><?php _e('No new notifications'); ?></em></li>
+                <li class="hide notification-message"><a class="window" href="" data-size="small"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<span></span></a></li>
+                <li class="separator"></li>
+                <!-- TODO: use ->generate('notifications') -->
+                <li><a class="window" href="<?php echo $this->get('router')->generate('settings'); ?>"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('Show all notifications'); ?></a></li>
+            </ul>
+        </div>
+
         <div class="headline-menu right">
             <div class="submenu-label only-icon">
                 <i class="fa fa-fw fa-plus"></i><i class="fa fa-fw fa-caret-down"></i>

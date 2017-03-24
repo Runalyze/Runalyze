@@ -9,7 +9,7 @@ use Runalyze\Bundle\CoreBundle\Component\Notifications\Message\MessageInterface;
  * Notification
  *
  * @ORM\Table(name="notification")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\NotificationRepository")
  */
 class Notification
 {
@@ -24,7 +24,7 @@ class Notification
 
     /**
      * @var int
-     * 
+     *
      * @see \Runalyze\Profile\Notifications\MessageTypeProfile
      *
      * @ORM\Column(name="messageType", columnDefinition="tinyint unsigned")
@@ -51,7 +51,7 @@ class Notification
      * @ORM\Column(name="data", type="text", length=255)
      */
     private $data;
-    
+
     /**
      * @ORM\Column(name="wasRead", type="boolean")
      */
@@ -82,7 +82,7 @@ class Notification
 
     /**
      * @param int $messageType
-     * 
+     *
      * @see \Runalyze\Profile\Notifications\MessageTypeProfile
      *
      * @return $this
@@ -96,7 +96,7 @@ class Notification
 
     /**
      * @return int
-     * 
+     *
      * @see \Runalyze\Profile\Notifications\MessageTypeProfile
      */
     public function getMessageType()
@@ -226,12 +226,12 @@ class Notification
      * @param Account $account
      * @return Notification
      */
-    public static function createFromMessage(MessageInterface $message, Account $acount)
+    public static function createFromMessage(MessageInterface $message, Account $account)
     {
         $notification = new self();
         $notification->setMessageType($message->getMessageType());
         $notification->setLifetime($message->getLifetime());
-        $notification->setData($message->getData);
+        $notification->setData($message->getData());
         $notification->setAccount($account);
 
         return $notification;
