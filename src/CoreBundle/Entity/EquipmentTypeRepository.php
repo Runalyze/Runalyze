@@ -28,4 +28,10 @@ class EquipmentTypeRepository extends EntityRepository
             'account' => $account->getId()
         ]);
     }
+
+    public function save(EquipmentType $equipmentType)
+    {
+        $this->_em->persist($equipmentType);
+        $this->_em->flush();
+    }
 }

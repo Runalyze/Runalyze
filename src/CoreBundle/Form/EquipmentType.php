@@ -51,6 +51,7 @@ class EquipmentType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, array(
+                'label' => 'Name',
                 'required' => true,
                 'attr' => array(
                     'autofocus' => true
@@ -59,31 +60,36 @@ class EquipmentType extends AbstractType
             ->add('type', ChoiceType::class, array(
                 'choices' => $this->EquipmentRepository->findAllFor($this->getAccount()),
                 'choice_label' => function($equipmentType, $key, $index) {
-                    /** @var Sport $sport */
+                    /** @var EquipmentType $equipmentType */
                     return $equipmentType->getName();
                 },
                 'choice_value' => 'getId',
+                'label' => 'Category'
             ))
             ->add('additionalKm', DistanceType::class, array(
+                'label' => 'prev. distance',
                 'required' => true,
             ))
             ->add('dateStart', DateType::class, [
-                'label' => 'Date',
+                'label' => 'Start of use',
                 'widget' => 'single_text',
                 'format' => 'dd.MM.yyyy',
                 'html5' => false,
+                'required' => false,
                 'attr' => ['class' => 'pick-a-date small-size']
             ])
             ->add('dateEnd', DateType::class, [
-                'label' => 'Date',
+                'label' => 'End of use',
                 'widget' => 'single_text',
                 'format' => 'dd.MM.yyyy',
                 'html5' => false,
+                'required' => false,
                 'attr' => ['class' => 'pick-a-date small-size']
             ])
             ->add('notes', TextareaType::class, array(
                 'label' => 'Notes',
                 'required' => false,
+                'empty_data' => '',
                 'attr' => ['class' => 'fullwidth']
             ))
         ;

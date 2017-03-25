@@ -3,7 +3,7 @@
 {% block content %}
     <div class="panel-heading">
 
-        {% if isNew %}
+        {% if form.vars.data.id is null%}
             <h1>{{ 'Add equipment category'|trans }}</h1>
         {% else %}
             <h1>{{ 'Edit equipment category'|trans }}</h1>
@@ -18,14 +18,20 @@
         <fieldset>
             <legend>{% trans %}Equipment category{% endtrans %}</legend>
             {{ form_row(form.name, {'div_class': 'w100 block'}) }}
-            {{ form_row(form.input, {'info': 'Choose the correct type for the equipment: <br><b>Single choice</b> You can choose only one object for one activity<br> <b>Multiple choice</b> You can select mulitple objects for one activity'|trans , 'div_class': 'w100 block'}) }}
+            {{ form_row(form.input, {'help': 'Choose the correct type for the equipment: <br><b>Single choice</b> You can choose only one object for an activity<br> <b>Multiple choice</b> You can select mulitple objects for an activity'|trans , 'div_class': 'w100 block'}) }}
             {{ form_row(form.maxKm, {'div_class': 'w100 block'}) }}
             {{ form_row(form.maxTime, {'div_class': 'w100 block'}) }}
-<p  class="info">You can add a maximal distance (in km) or a maximal time if you want to. This is used for displaying a progress bar in the equipment widget.</p>
+            <p  class="info">{% trans %}You can add a maximal distance or a maximal time if you want to. This is used for displaying a progress bar in the equipment widget.{% endtrans %}</p>
+            {{ form_row(form.sport, {'div_class': 'w100 block'}) }}
+
             {{ form_rest(form) }}
 
             <div class="c">
-                <input type="submit" value="{% trans %}Change{% endtrans %}" name="submit">
+                {% if form.vars.data.id is null%}
+                    <input type="submit" value="{% trans %}Add{% endtrans %}" name="submit">
+                {% else %}
+                    <input type="submit" value="{% trans %}Change{% endtrans %}" name="submit">
+                {% endif %}
             </div>
         </fieldset>
 

@@ -2,8 +2,7 @@
 
 {% block content %}
     <div class="panel-heading">
-
-        {% if isNew %}
+        {% if form.vars.data.id is null %}
             <h1>{{ 'Add equipment'|trans }}</h1>
         {% else %}
             <h1>{{ 'Edit equipment'|trans }}</h1>
@@ -17,21 +16,27 @@
         {{ form_start(form, {'attr': {'class': 'ajax no-automatic-reloads'} }) }}
         <fieldset>
             <legend>{% trans %}Equipment{% endtrans %}</legend>
+            <p class="info">{% trans %}RUNALYZE collects data and calculates statistics for each of your equipment objects.{% endtrans %}</p>
             {{ form_row(form.name, {'div_class': 'w100 block'}) }}
             {{ form_row(form.type, {'div_class': 'w100 block'}) }}
-            {{ form_row(form.additionalKm, {'div_class': 'w100 block'}) }}
+            {{ form_row(form.additionalKm, {'div_class': 'w100 block', 'help':'To correctly estimate its lifetime you can specify a previous distance which is added to its calculated distance, e.g. if you used your running shoes for 200 km before tracking them.'}) }}
             {{ form_row(form.dateStart, {'div_class': 'w100 block'}) }}
-            {{ form_row(form.dateEnd, {'div_class': 'w100 block'}) }}
+            {{ form_row(form.dateEnd, {'div_class': 'w100 block', 'help':'Objects will be displayed as inactive as soon as they have reached the end date.'}) }}
             {{ form_row(form.notes, {'div_class': 'w100 block'}) }}
 
             {{ form_rest(form) }}
 
             <div class="c">
-                <input type="submit" value="{% trans %}Change{% endtrans %}" name="submit">
+                <div class="c">
+                    {% if form.vars.data.id is null%}
+                        <input type="submit" value="{% trans %}Add{% endtrans %}" name="submit">
+                    {% else %}
+                        <input type="submit" value="{% trans %}Change{% endtrans %}" name="submit">
+                    {% endif %}
+                </div>
             </div>
         </fieldset>
 
-        {{ form_rest(form) }}
         {{ form_end(form) }}
     </div>
 {% endblock %}

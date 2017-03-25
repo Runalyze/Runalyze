@@ -43,4 +43,10 @@ class EquipmentRepository extends EntityRepository
             ->getResult()
         );
     }
+
+    public function save(Equipment $equipment)
+    {
+        $this->_em->persist($equipment);
+        $this->_em->flush();
+    }
 }
