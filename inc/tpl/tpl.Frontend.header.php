@@ -53,7 +53,7 @@
             <ul class="submenu">
                 <li><a class="window" href="<?php echo $this->get('router')->generate('activity-add'); ?>?upload" data-size="small"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('Activity upload'); ?></a></li>
                 <li><a class="window" href="<?php echo $this->get('router')->generate('activity-add'); ?>?date" data-size="small"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('Manual activity'); ?></a></li>
-                <li><a class="window" href="<?php echo $this->get('router')->generate('settings'); ?>?key=config_tab_equipment"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('New equipment'); ?></a></li>
+                <li><a class="window" href="<?php echo $this->get('router')->generate('equipment-overview'); ?>"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('New equipment'); ?></a></li>
                 <li><a class="window" href="<?php echo $this->get('router')->generate('body-values-add'); ?>"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('New body values'); ?></a></li>
             </ul>
         </div>
@@ -65,10 +65,10 @@
             <ul class="submenu">
                 <li><a class="window" href="<?php echo $this->get('router')->generate('settings'); ?>?key=config_tab_general"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('General settings'); ?></a></li>
                 <li><a class="window" href="<?php echo $this->get('router')->generate('settings'); ?>?key=config_tab_plugins"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('Plugins'); ?></a></li>
-                <li><a class="window" href="<?php echo $this->get('router')->generate('settings'); ?>?key=config_tab_dataset"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('Dataset'); ?></a></li>
+                <li><a class="window" href="<?php echo $this->get('router')->generate('settings-dataset'); ?>"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('Dataset'); ?></a></li>
                 <li><a class="window" href="<?php echo $this->get('router')->generate('settings'); ?>?key=config_tab_sports"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('Sport types'); ?></a></li>
                 <li><a class="window" href="<?php echo $this->get('router')->generate('settings'); ?>?key=config_tab_types"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('Activity types'); ?></a></li>
-                <li><a class="window" href="<?php echo $this->get('router')->generate('settings'); ?>?key=config_tab_equipment"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('Equipment'); ?></a></li>
+                <li><a class="window" href="<?php echo $this->get('router')->generate('equipment-overview'); ?>"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('Equipment'); ?></a></li>
             </ul>
         </div>
 
