@@ -63,6 +63,14 @@ class EquipmentType
      * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\ManyToMany(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Sport", mappedBy="equipmentType")
+     * @ORM\JoinTable(name="equipment_sport",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="equipment_typeid", referencedColumnName="id")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="sportid", referencedColumnName="id")
+     *   }
+     * )
      */
     private $sport;
 
@@ -187,7 +195,7 @@ class EquipmentType
      *
      * @return EquipmentType
      */
-    public function setAccount(\Runalyze\Bundle\CoreBundle\Entity\Account $account = null)
+    public function setAccount(Account $account = null)
     {
         $this->account = $account;
 
@@ -211,7 +219,7 @@ class EquipmentType
      *
      * @return EquipmentType
      */
-    public function addSport(\Runalyze\Bundle\CoreBundle\Entity\Sport $sport)
+    public function addSport(Sport $sport)
     {
         $this->sport[] = $sport;
 
@@ -223,7 +231,7 @@ class EquipmentType
      *
      * @param \Runalyze\Bundle\CoreBundle\Entity\Sport $sport
      */
-    public function removeSport(\Runalyze\Bundle\CoreBundle\Entity\Sport $sport)
+    public function removeSport(Sport $sport)
     {
         $this->sport->removeElement($sport);
     }

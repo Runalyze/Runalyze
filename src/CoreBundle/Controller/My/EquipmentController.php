@@ -85,12 +85,7 @@ class EquipmentController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            dump($equipmentType);
-            foreach ($equipmentType->getSport() as $sport) {
-                $equipmentType->addSport($sport);
-                dump($sport);
-            }
-            $this->getEquipmentTypeRepository()->save($equipmentType, $account);
+            $this->getEquipmentTypeRepository()->save($equipmentType);
             $this->get('app.automatic_reload_flag_setter')->set(AutomaticReloadFlagSetter::FLAG_ALL);
         }
 
@@ -119,7 +114,7 @@ class EquipmentController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getEquipmentTypeRepository()->save($equipmentType, $account);
+            $this->getEquipmentTypeRepository()->save($equipmentType);
             $this->get('app.automatic_reload_flag_setter')->set(AutomaticReloadFlagSetter::FLAG_ALL);
         }
 
@@ -142,7 +137,7 @@ class EquipmentController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getEquipmentRepository()->save($equipment, $account);
+            $this->getEquipmentRepository()->save($equipment);
             $this->get('app.automatic_reload_flag_setter')->set(AutomaticReloadFlagSetter::FLAG_ALL);
         }
 
