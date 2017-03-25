@@ -64,7 +64,7 @@ class EquipmentCategoryType extends AbstractType
             ))
             ->add('maxKm', DistanceType::class, array(
                 'label' => 'max. Km',
-                'empty_data'  => 0
+                'required' => false
             ))
             ->add('maxTime', DurationType::class, array(
                 'label' => 'max. Time',
