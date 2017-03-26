@@ -15,6 +15,8 @@ use Runalyze\Bundle\CoreBundle\Form\Type\DurationType;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\Sport;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormEvent;
 
 class EquipmentCategoryType extends AbstractType
 {
@@ -56,18 +58,26 @@ class EquipmentCategoryType extends AbstractType
                 'attr' => array(
                     'autofocus' => true
                 )
-            ))
-            ->add('input', ChoiceType::class, array(
-                'choices' => ['Single choice' => 0, 'Multiple Choice' => 1],
-                'choice_translation_domain' => false,
-                'label' => 'Type'
-            ))
-            ->add('maxKm', DistanceType::class, array(
+            ));
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+            $equipmentType = $event->getData();
+            $form = $event->getForm();
+            if (!$equipmentType || null === $equipmentType->getId()) {
+                $form->add('input', ChoiceType::class, array(
+                    'choices' => ['Single choice' => 0, 'Multiple Choice' => 1],
+                    'choice_translation_domain' => false,
+                    'label' => 'Type'
+                ));
+            }
+        });
+
+        $builder->add('maxKm', DistanceType::class, array(
                 'label' => 'max. Km',
                 'required' => false
             ))
             ->add('maxTime', DurationType::class, array(
                 'label' => 'max. Time',
+                'attr' => ['class' => 'medium-size']
             ))
             ->add('sport', EntityType::class, [
                 'class'   => Sport::class,

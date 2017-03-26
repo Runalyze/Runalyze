@@ -14,5 +14,40 @@
         </tr>
         </table>
 
+        <fieldset id="legend2" class="">
+            <legend>{% trans %}Your equipment categories{% endtrans %}</legend>
+            <table id="list-of-all-body-values" class="fullwidth zebra-style">
+                <thead>
+                <tr>
+                    <th class="{sorter: false}">&nbsp</th>
+                    <th>{{ 'Name'|trans }}</th>
+                    <th>{{ 'Type'|trans }}</th>
+                    <th>{{ 'max Km.'|trans }}</th>
+                    <th>{{ 'max Time.'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody class="c">
+                {% if equipmentTypes|length > 0 %}
+                    {% for type in equipmentTypes %}
+                        {# @var entry \Runalyze\Bundle\CoreBundle\Entity\EquipmentType #}
+                        <tr>
+                            <td><a class="window" href="{{ url('equipment-category-edit', {'id': type.id}) }}"><i class="fa fa-fw fa-pencil"></i></a></td>
+                            <td>{{ type.name }}</td>
+                            <td>{{ type.type }}</td>
+                            <td>{{ distance(type.maxKm, unitSystem.distanceUnit) }}</td>
+                            <td>{{ type.maxTime|date('z H:i:s', 'UTC') }}</td>
+
+
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr><td colspan="9">{% trans %}No equipment available.{% endtrans %}<br>
+                            <a class="window" href="{{ url('equipment-add') }}" title="{{ 'Add equipment'|trans }}"><strong>{{ 'Add equipment'|trans }}</strong></a>
+                        </td></tr>
+                {% endif %}
+                </tbody>
+            </table>
+        </fieldset>
+
     </div>
 {% endblock %}

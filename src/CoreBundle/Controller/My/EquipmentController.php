@@ -69,7 +69,9 @@ class EquipmentController extends Controller
      */
     public function overviewAction(Account $account)
     {
+        $equipmentType = $this->getEquipmentTypeRepository()->findAllFor($account);
         return $this->render('my/equipment/overview.html.twig', [
+            'equipmentTypes' => $equipmentType
         ]);
     }
 
@@ -118,10 +120,12 @@ class EquipmentController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getEquipmentTypeRepository()->save($equipmentType);
             $this->get('app.automatic_reload_flag_setter')->set(AutomaticReloadFlagSetter::FLAG_ALL);
+            return $this->redirectToRoute('equipment-category-edit', ['id' => $equipmentType->getId()]);
         }
 
         return $this->render('my/equipment/form-category.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'equipment' => $this->getEquipmentRepository()->findByTypeId($equipmentType->getId(), $account)
         ]);
     }
 
@@ -141,6 +145,7 @@ class EquipmentController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getEquipmentRepository()->save($equipment);
             $this->get('app.automatic_reload_flag_setter')->set(AutomaticReloadFlagSetter::FLAG_ALL);
+            return $this->redirectToRoute('equipment-category-edit', ['id' => $equipment->getType()->getId()]);
         }
 
         return $this->render('my/equipment/form-equipment.html.twig', [

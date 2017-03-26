@@ -16,9 +16,10 @@
 
         {{ form_start(form, {'attr': {'class': 'ajax no-automatic-reloads'} }) }}
         <fieldset>
-            <legend>{% trans %}Equipment category{% endtrans %}</legend>
             {{ form_row(form.name, {'div_class': 'w100 block'}) }}
-            {{ form_row(form.input, {'help': 'Choose the correct type for the equipment: <br><b>Single choice</b> You can choose only one object for an activity<br> <b>Multiple choice</b> You can select mulitple objects for an activity'|trans , 'div_class': 'w100 block'}) }}
+            {% if form.vars.data.id is null%}
+                {{ form_row(form.input, {'help': 'Choose the correct type for the equipment: <br><b>Single choice</b> You can choose only one object for an activity<br> <b>Multiple choice</b> You can select mulitple objects for an activity'|trans , 'div_class': 'w100 block'}) }}{{ form_row(form.input, {'help': 'Choose the correct type for the equipment: <br><b>Single choice</b> You can choose only one object for an activity<br> <b>Multiple choice</b> You can select mulitple objects for an activity'|trans , 'div_class': 'w100 block'}) }}
+            {% endif %}
             {{ form_row(form.maxKm, {'div_class': 'w100 block'}) }}
             {{ form_row(form.maxTime, {'div_class': 'w100 block'}) }}
             <p  class="info">{% trans %}You can add a maximal distance or a maximal time if you want to. This is used for displaying a progress bar in the equipment widget.{% endtrans %}</p>
@@ -37,5 +38,45 @@
 
         {{ form_rest(form) }}
         {{ form_end(form) }}
+
+        {% if form.vars.data.id is not null%}
+            <fieldset id="legend2" class="">
+                <legend>{% trans %}Assigned equipment{% endtrans %}</legend>
+                <table id="list-of-all-body-values" class="fullwidth zebra-style">
+                    <thead>
+                    <tr>
+                        <th class="{sorter: false}">&nbsp</th>
+                        <th>{{ 'Name'|trans }}</th>
+                        <th>{{ 'prev. distance'|trans }}</th>
+                        <th>{{ 'Start of use'|trans }}</th>
+                        <th>{{ 'End of use'|trans }}</th>
+                        <th>{{ 'Notes'|trans }}</th>
+                    </tr>
+                    </thead>
+                    <tbody class="c">
+                    {% if equipment|length > 0 %}
+                        {% for entry in equipment %}
+                            {# @var entry \Runalyze\Bundle\CoreBundle\Entity\Equipment #}
+                            <tr>
+                                <td><a class="window" href="{{ url('equipment-edit', {'id': entry.id}) }}"><i class="fa fa-fw fa-pencil"></i></a></td>
+                                <td>{{ entry.name }}</td>
+                                <td>{{ distance(entry.additionalKm, unitSystem.distanceUnit) }}</td>
+                                <td>{{ entry.dateStart ? (entry.dateStart|date('d.m.Y')) : '-' }}</td>
+                                <td>{{ entry.dateEnd ? (entry.dateEnd|date('d.m.Y')) : '-' }}</td>
+                                <td>{{ entry.notes }}</td>
+                            </tr>
+                        {% endfor %}
+                        <tr><td colspan="6"><a class="window" href="{{ url('equipment-add') }}" title="{{ 'Add equipment'|trans }}"><strong>{{ 'Add equipment'|trans }}</strong></a>
+                            </td></tr>
+                    {% else %}
+                        <tr><td colspan="6">{% trans %}No equipment available.{% endtrans %}<br>
+                                <a class="window" href="{{ url('equipment-add') }}" title="{{ 'Add equipment'|trans }}"><strong>{{ 'Add equipment'|trans }}</strong></a>
+                            </td></tr>
+                    {% endif %}
+                    </tbody>
+                </table>
+            </fieldset>
+
+        {% endif %}
     </div>
 {% endblock %}

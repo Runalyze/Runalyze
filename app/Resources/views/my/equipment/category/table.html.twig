@@ -9,6 +9,7 @@
             <thead>
             <tr>
                 <th class="{sorter: false}"></th>
+                <th class="{sorter: 'x'} small">{{ 'x-times'|trans }}</th>
                 <th>{{ 'Name'|trans }}</th>
                 <th class="{sorter: 'germandate'} small">{{ 'since'|trans }}</th>
                 <th class="{sorter: 'distance-en'}">{{ 'avg.'|trans }} {{ unitSystem.distanceUnit.appendix }}</th>
@@ -27,7 +28,7 @@
                     {% set equipment = row.equipment %}
                     {# @var equipment \Runalyze\Bundle\CoreBundle\Entity\Equipment #}
                     <tr class="r{% if not equipment.active %} unimportant{% endif %}">
-                        <td><a class="window small" href="{{ url('equipment-edit', {'id': equipment.id}) }}"><span rel="tooltip" class="atRight" data-original-title="{% trans %}Edit equipment{% endtrans %}"><i class="fa fa-fw fa-pencil"></i></span></a></td>
+                        <td><a class="window small" href="{{ url('equipment-edit', {'id': equipment.id}) }}"><span rel="tooltip" class="atRight" title="{% trans %}Edit equipment{% endtrans %}"><i class="fa fa-fw fa-pencil"></i></span></a></td>
                         <td class="small">{{ row.numberOfActivities }}x</td>
                         <td class="b l"><a class="window" href="{{ url('my-search', {'get': 'true', 'equipmentid': equipment.id}) }}" data-size="big">{{ equipment.name }}</a></td>
                         <td class="small">{{ equipment.dateStart is null ? '-' : equipment.dateStart|date('d.m.Y') }}</td>
