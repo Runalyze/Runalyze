@@ -468,9 +468,9 @@ CREATE TABLE IF NOT EXISTS `bernard_queues` (
 --
 CREATE TABLE IF NOT EXISTS `runalyze_notification` (
   `id` INT UNSIGNED AUTO_INCREMENT NOT NULL,
-  `template`  tinyint unsigned,
-  `createdAt` DATETIME NOT NULL,
-  `expirationAt` DATETIME DEFAULT NULL,
+  `messageType`  tinyint unsigned NOT NULL,
+  `createdAt` int(10) unsigned NOT NULL,
+  `expirationAt` int(10) unsigned DEFAULT NULL,
   `data` TINYTEXT NOT NULL,
   `wasRead` tinyint(1) unsigned NOT NULL DEFAULT 0,
   `account_id` INT UNSIGNED NOT NULL,

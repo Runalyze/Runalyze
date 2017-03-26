@@ -14,10 +14,10 @@ class MessageFactory
      */
     public function getMessage(Notification $notification)
     {
-        if (MessageTypeProfile::TEMPLATE_BASED_MESSAGE === $notification->getMessageType()) {
+        if (MessageTypeProfile::TEMPLATE_BASED_MESSAGE == $notification->getMessageType()) {
             return new TemplateBasedMessage($notification->getData());
         }
 
-        throw new \InvalidArgumentException();
+        throw new \InvalidArgumentException('Given notification is of unknown type.');
     }
 }

@@ -27,21 +27,21 @@ class Notification
      *
      * @see \Runalyze\Profile\Notifications\MessageTypeProfile
      *
-     * @ORM\Column(name="messageType", columnDefinition="tinyint unsigned")
+     * @ORM\Column(name="messageType", columnDefinition="tinyint unsigned not null", nullable=false, options={"unsigned":true})
      */
     private $messageType;
 
     /**
-     * @var \DateTime
+     * @var int
      *
-     * @ORM\Column(name="createdAt", type="datetime")
+     * @ORM\Column(name="createdAt", type="integer", nullable=false, options={"unsigned":true})
      */
     private $createdAt;
 
     /**
-     * @var null|\DateTime
+     * @var null|int
      *
-     * @ORM\Column(name="expirationAt", type="datetime", nullable=true)
+     * @ORM\Column(name="expirationAt", type="integer", nullable=true, options={"unsigned":true})
      */
     private $expirationAt;
 
@@ -69,7 +69,7 @@ class Notification
 
     public function __construct()
     {
-        $this->createdAt = new \DateTime();
+        $this->createdAt = time();
     }
 
     /**
@@ -105,19 +105,19 @@ class Notification
     }
 
     /**
-     * @param \DateTime $createdAt
+     * @param int $createdAt [timestamp]
      *
      * @return $this
      */
-    public function setCreatedAt(\DateTime $createdAt)
+    public function setCreatedAt($createdAt)
     {
-        $this->createdAt = $createdAt;
+        $this->createdAt = (int)$createdAt;
 
         return $this;
     }
 
     /**
-     * @return \DateTime
+     * @return int [timestamp]
      */
     public function getCreatedAt()
     {
@@ -134,27 +134,26 @@ class Notification
         if (null === $lifetime) {
             $this->expirationAt = null;
         } else {
-            $this->expirationAt = clone $this->createdAt;
-            $this->expirationAt->modify('+'.(int)$lifetime.' days');
+            $this->expirationAt = (new \DateTime())->setTimestamp($this->createdAt)->modify('+'.(int)$lifetime.' days')->getTimestamp();
         }
 
         return $this;
     }
 
     /**
-     * @param null|\DateTime $expirationAt
+     * @param null|int $expirationAt [timestamp]
      *
      * @return $this
      */
-    public function setExpirationAt(\DateTime $expirationAt = null)
+    public function setExpirationAt($expirationAt = null)
     {
-        $this->expirationAt = $expirationAt;
+        $this->expirationAt = $expirationAt ? (int)$expirationAt : null;
 
         return $this;
     }
 
     /**
-     * @return null|\DateTime
+     * @return null|int [timestamp]
      */
     public function getExpirationAt()
     {

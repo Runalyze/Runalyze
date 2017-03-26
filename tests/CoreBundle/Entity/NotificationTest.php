@@ -16,7 +16,7 @@ class NotificationTest extends \PHPUnit_Framework_TestCase
 
     public function testThatConstructorSetsCurrentDate()
     {
-        $this->assertEquals((new \DateTime)->format('d.m.Y'), $this->Notification->getCreatedAt()->format('d.m.Y'));
+        $this->assertEquals((new \DateTime('NOW'))->format('d.m.Y'), (new \DateTime())->setTimestamp($this->Notification->getCreatedAt())->format('d.m.Y'));
     }
 
     public function testSetNoLifetime()
@@ -26,6 +26,6 @@ class NotificationTest extends \PHPUnit_Framework_TestCase
 
     public function testSetLifetime()
     {
-        $this->assertEquals('+2 days', (new \DateTime)->diff($this->Notification->setLifetime(2)->getExpirationAt())->format('%R%a days'));
+        $this->assertEquals('+2 days', (new \DateTime('NOW'))->diff((new \DateTime())->setTimestamp($this->Notification->setLifetime(2)->getExpirationAt()))->format('%R%a days'));
     }
 }

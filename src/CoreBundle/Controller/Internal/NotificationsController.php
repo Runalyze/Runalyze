@@ -31,7 +31,7 @@ class NotificationsController extends Controller
      */
     public function readAllNotificationsAction(Account $account)
     {
-        // TODO mark all notifications as read in repository
+        $this->getNotificationsRepository()->markAllAsRead($account);
 
         return new JsonResponse();
     }
@@ -47,7 +47,7 @@ class NotificationsController extends Controller
             return $this->createAccessDeniedException();
         }
 
-        // TODO: mark notification as read in repository
+        $this->getNotificationsRepository()->markAsRead($notification);
 
         return new JsonResponse();
     }
@@ -67,6 +67,7 @@ class NotificationsController extends Controller
         foreach ($notifications as $notification) {
             $message = $factory->getMessage($notification);
             $messages[] = [
+                'id' => $notification->getId(),
                 'link' => $message->hasLink() ? $message->getLink($router) : '',
                 'text' => $message->getText($translator)
             ];

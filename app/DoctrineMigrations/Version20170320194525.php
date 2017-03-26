@@ -26,10 +26,11 @@ class Version20170320194525 extends AbstractMigration implements ContainerAwareI
 
         $this->addSql('CREATE TABLE IF NOT EXISTS `'.$prefix.'notification` (
                           `id` INT UNSIGNED AUTO_INCREMENT NOT NULL,
-                          `template`  tinyint unsigned,
-                          `createdAt` DATETIME NOT NULL,
-                          `expirationAt` DATETIME DEFAULT NULL,
+                          `messageType`  tinyint unsigned NOT NULL,
+                          `createdAt` INT UNSIGNED NOT NULL,
+                          `expirationAt` INT UNSIGNED DEFAULT NULL,
                           `data` TINYTEXT NOT NULL,
+                          `wasRead` tinyint(1) unsigned NOT NULL DEFAULT 0,
                           `account_id` INT UNSIGNED NOT NULL,
                           INDEX IDX_F99B51889B6B5FBA (account_id),
                           PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB

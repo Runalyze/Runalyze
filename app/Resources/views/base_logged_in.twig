@@ -19,7 +19,7 @@
                         <ul class="submenu right-oriented">
                             <li>
                                 {% if 'true' == configVar('privacy.TRAINING_LIST_PUBLIC') %}
-                                <a href="{{ url('shared-athlete', {'username': app.user.username}) }}"><i class="fa fa-fw fa-id-card-o"></i>&nbsp;{{ 'Public athlete page'|trans }}</a>
+                                <a target="_blank" href="{{ url('shared-athlete', {'username': app.user.username}) }}"><i class="fa fa-fw fa-id-card-o"></i>&nbsp;{{ 'Public athlete page'|trans }}</a>
                                 {% else %}
                                 <span class="no-link cursor-not-allowed unimportant" title="{{ 'Your public athlete page is deactivated'|trans }}"><i class="fa fa-fw fa-id-card-o"></i>&nbsp;{{ 'Public athlete page'|trans }}</span>
                                 {% endif %}
@@ -30,11 +30,29 @@
                         </ul>
                     </div>
 
+                    <div id="new-notifications-menu" class="headline-menu right">
+                        <div class="submenu-label only-icon">
+                            <i class="fa fa-fw fa-envelope"><span class="hide new-notifications-indicator"></span></i><i class="fa fa-fw fa-caret-down"></i>
+                        </div>
+                        <ul class="submenu right-oriented">
+                            <li class="no-notifications-messages"><em class="no-link">{% trans %}No new notifications{% endtrans %}</em></li>
+                            <li id="tpl-notification-message-with-internal-link" class="hide notification-message is-new" data-id=""><a class="window" href="" data-size="small"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<span></span></a></li>
+                            <li id="tpl-notification-message-with-external-link" class="hide notification-message is-new" data-id=""><a href="" target="_blank"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<span></span></a></li>
+                            <li id="tpl-notification-message-without-link" class="hide notification-message is-new" data-id=""><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<span></span></li>
+                            <!-- TODO: load messages -->
+                            <li class="separator"></li>
+                            <!-- TODO: use url('notifications') -->
+                            <li><a class="window" href="{{ url('settings') }}"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;{% trans %}Show all notifications{% endtrans %}</a></li>
+                        </ul>
+
+                        <script>Runalyze.Notifications.setLastRequestTime(0);</script>
+                    </div>
+
                     <div class="headline-menu right">
                         <div class="submenu-label only-icon">
                             <i class="fa fa-fw fa-plus"></i><i class="fa fa-fw fa-caret-down"></i>
                         </div>
-                        <ul class="submenu">
+                        <ul class="submenu right-oriented">
                             <li><a class="window" href="{{ url('activity-add') }}?upload" data-size="small"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;{% trans %}Activity upload{% endtrans %}</a></li>
                             <li><a class="window" href="{{ url('activity-add') }}?date" data-size="small"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;{% trans %}Manual activity{% endtrans %}</a></li>
                             <li><a class="window" href="{{ url('settings') }}?key=config_tab_equipment"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;{% trans %}New equipment{% endtrans %}</a></li>
