@@ -23,7 +23,7 @@
             {{ form_row(form.maxKm, {'div_class': 'w100 block'}) }}
             {{ form_row(form.maxTime, {'div_class': 'w100 block'}) }}
             <p  class="info">{% trans %}You can add a maximal distance or a maximal time if you want to. This is used for displaying a progress bar in the equipment widget.{% endtrans %}</p>
-            {{ form_row(form.sport, {'div_class': 'w100 block'}) }}
+            {{ form_row(form.sport, {'div_class': 'w100 block', 'help':'The category will appear at the assigned sport types.'}) }}
 
             {{ form_rest(form) }}
 
@@ -31,18 +31,30 @@
                 {% if form.vars.data.id is null%}
                     <input type="submit" value="{% trans %}Add{% endtrans %}" name="submit">
                 {% else %}
-                    <input type="submit" value="{% trans %}Change{% endtrans %}" name="submit">
+                    <input type="submit" value="{% trans %}Update{% endtrans %}" name="submit">
                 {% endif %}
             </div>
         </fieldset>
 
         {{ form_rest(form) }}
         {{ form_end(form) }}
+        {% if form.vars.data.id is not null%}
+        <div class="c">
+            <form action="{{ url('equipment-category-delete', {'id': form.vars.data.id}) }}" class="window ajax">
+                <div class="c">
+                    <input type="hidden" name="t" value="{{ csrf_token('deleteEquipmentCategory') }}" />
+                    <input type="submit" class="danger" value="{% trans %}Delete{% endtrans %}" />
+                </div>
+            </form>
+        </div>
+        <p class="info">{% trans %}If you delete a category all equipment objects of this category as well as all relations between your activities and this equipment object will be deleted!{% endtrans %}</p>
+
+        {% endif %}
+
 
         {% if form.vars.data.id is not null%}
-            <fieldset id="legend2" class="">
-                <legend>{% trans %}Assigned equipment{% endtrans %}</legend>
-                <table id="list-of-all-body-values" class="fullwidth zebra-style">
+            <div class="panel-heading panel-inner-heading"><h1>{% trans %}Assigned equipment{% endtrans %}</h1></div>
+                <table id="assigned-equipment" class="fullwidth zebra-style">
                     <thead>
                     <tr>
                         <th class="{sorter: false}">&nbsp</th>
@@ -58,7 +70,9 @@
                         {% for entry in equipment %}
                             {# @var entry \Runalyze\Bundle\CoreBundle\Entity\Equipment #}
                             <tr>
-                                <td><a class="window" href="{{ url('equipment-edit', {'id': entry.id}) }}"><i class="fa fa-fw fa-pencil"></i></a></td>
+                                <td><a class="window" href="{{ url('equipment-edit', {'id': entry.id}) }}"><i class="fa fa-fw fa-pencil"></i></a>
+                                    <a class="window" href="{{ url('equipment-delete', { 'id': entry.id, 't': csrf_token('deleteEquipment') }) }}"><i class="fa fa-trash" title="Delete"></i></a>
+                                </td>
                                 <td>{{ entry.name }}</td>
                                 <td>{{ distance(entry.additionalKm, unitSystem.distanceUnit) }}</td>
                                 <td>{{ entry.dateStart ? (entry.dateStart|date('d.m.Y')) : '-' }}</td>
@@ -75,8 +89,8 @@
                     {% endif %}
                     </tbody>
                 </table>
-            </fieldset>
-
+            </div>
+        <p class="info">{% trans %}If you delete an equipment object all relations between your activities and this object will be deleted.{% endtrans %}</p>
         {% endif %}
     </div>
 {% endblock %}

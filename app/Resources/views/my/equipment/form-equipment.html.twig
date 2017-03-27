@@ -31,12 +31,23 @@
                     {% if form.vars.data.id is null%}
                         <input type="submit" value="{% trans %}Add{% endtrans %}" name="submit">
                     {% else %}
-                        <input type="submit" value="{% trans %}Change{% endtrans %}" name="submit">
+                        <input type="submit" value="{% trans %}Update{% endtrans %}" name="submit">
                     {% endif %}
                 </div>
             </div>
         </fieldset>
-
         {{ form_end(form) }}
+
+        {% if form.vars.data.id is not null%}
+        <div class="c">
+            <form action="{{ url('equipment-delete', {'id': form.vars.data.id}) }}" class="window ajax">
+                <div class="c">
+                    <input type="hidden" name="t" value="{{ csrf_token('deleteEquipment') }}" />
+                    <input type="submit" class="danger" value="{% trans %}Delete{% endtrans %}" />
+                </div>
+            </form>
+        {% endif %}
+        </div>
+        <p class="info">{% trans %}If you delete an equipment object all relations between your activities and this object will be deleted.{% endtrans %}</p>
     </div>
 {% endblock %}

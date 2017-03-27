@@ -11,6 +11,7 @@ use Runalyze\Bundle\CoreBundle\Form;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Runalyze\Bundle\CoreBundle\Services\AutomaticReloadFlagSetter;
@@ -90,7 +91,7 @@ class EquipmentController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getEquipmentTypeRepository()->save($equipmentType);
-            $this->get('app.automatic_reload_flag_setter')->set(AutomaticReloadFlagSetter::FLAG_ALL);
+            $this->get('app.automatic_reload_flag_setter')->set(AutomaticReloadFlagSetter::FLAG_PLUGINS);
         }
 
         return $this->render('my/equipment/form-category.html.twig', [
@@ -119,7 +120,7 @@ class EquipmentController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getEquipmentTypeRepository()->save($equipmentType);
-            $this->get('app.automatic_reload_flag_setter')->set(AutomaticReloadFlagSetter::FLAG_ALL);
+            $this->get('app.automatic_reload_flag_setter')->set(AutomaticReloadFlagSetter::FLAG_PLUGINS);
             return $this->redirectToRoute('equipment-category-edit', ['id' => $equipmentType->getId()]);
         }
 
@@ -127,6 +128,27 @@ class EquipmentController extends Controller
             'form' => $form->createView(),
             'equipment' => $this->getEquipmentRepository()->findByTypeId($equipmentType->getId(), $account)
         ]);
+    }
+
+    /**
+     * @Route("/category/{id}/delete", name="equipment-category-delete")
+     * @ParamConverter("equipmentType", class="CoreBundle:EquipmentType")
+     */
+    public function deleteEquipmentTypeAction(Request $request, EquipmentType $equipmentType, Account $account)
+    {
+        if (!$this->isCsrfTokenValid('deleteEquipmentCategory', $request->get('t'))) {
+            $this->addFlash('notice', $this->get('translator')->trans('Invalid token.'));
+            return $this->redirect($this->generateUrl('equipment-overview'));
+        }
+        if ($equipmentType->getAccount()->getId() != $account->getId()) {
+            throw $this->createNotFoundException();
+        }
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($equipmentType);
+        $em->flush();
+        $this->get('app.automatic_reload_flag_setter')->set(AutomaticReloadFlagSetter::FLAG_PLUGINS);
+        $this->addFlash('notice', $this->get('translator')->trans('Equipment category has been deleted.'));
+        return $this->redirect($this->generateUrl('equipment-overview'));
     }
 
     /**
@@ -144,7 +166,7 @@ class EquipmentController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getEquipmentRepository()->save($equipment);
-            $this->get('app.automatic_reload_flag_setter')->set(AutomaticReloadFlagSetter::FLAG_ALL);
+            $this->get('app.automatic_reload_flag_setter')->set(AutomaticReloadFlagSetter::FLAG_PLUGINS);
             return $this->redirectToRoute('equipment-category-edit', ['id' => $equipment->getType()->getId()]);
         }
 
@@ -173,11 +195,33 @@ class EquipmentController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getEquipmentRepository()->save($equipment, $account);
-            $this->get('app.automatic_reload_flag_setter')->set(AutomaticReloadFlagSetter::FLAG_ALL);
+            $this->get('app.automatic_reload_flag_setter')->set(AutomaticReloadFlagSetter::FLAG_PLUGINS);
+            return $this->redirectToRoute('equipment-category-edit', ['id' => $equipment->getType()->getId()]);
         }
 
         return $this->render('my/equipment/form-equipment.html.twig', [
             'form' => $form->createView()
         ]);
+    }
+
+    /**
+     * @Route("/{id}/delete", name="equipment-delete")
+     * @ParamConverter("equipment", class="CoreBundle:Equipment")
+     */
+    public function deleteEquipmentAction(Request $request, Equipment $equipment, Account $account)
+    {
+        if (!$this->isCsrfTokenValid('deleteEquipment', $request->get('t'))) {
+            $this->addFlash('notice', $this->get('translator')->trans('Invalid token.'));
+            return $this->redirect($this->generateUrl('equipment-category-edit', ['id' => $equipment->getType()->getId()]));
+        }
+        if ($equipment->getAccount()->getId() != $account->getId()) {
+            throw $this->createNotFoundException();
+        }
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($equipment);
+        $em->flush();
+        $this->get('app.automatic_reload_flag_setter')->set(AutomaticReloadFlagSetter::FLAG_PLUGINS);
+        $this->addFlash('notice', $this->get('translator')->trans('Equipment has been deleted.'));
+        return $this->redirect($this->generateUrl('equipment-category-edit', ['id' => $equipment->getType()->getId()]));
     }
 }

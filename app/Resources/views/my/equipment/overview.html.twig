@@ -13,10 +13,10 @@
             <td class="blocklist"><a class="window" href="{{ url('equipment-category-add') }}" title="{{ 'Add equipment category'|trans }}"><i class="fa fa-cubes"></i><strong>{{ 'Add equipment category'|trans }}</strong></a></td>
         </tr>
         </table>
-
-        <fieldset id="legend2" class="">
-            <legend>{% trans %}Your equipment categories{% endtrans %}</legend>
-            <table id="list-of-all-body-values" class="fullwidth zebra-style">
+    </div>
+        <div class="panel-heading panel-inner-heading"><h1>{% trans %}Your equipment categories{% endtrans %}</h1></div>
+        <div class="panel-content">
+            <table id="equipment-categories" class="fullwidth zebra-style">
                 <thead>
                 <tr>
                     <th class="{sorter: false}">&nbsp</th>
@@ -31,9 +31,15 @@
                     {% for type in equipmentTypes %}
                         {# @var entry \Runalyze\Bundle\CoreBundle\Entity\EquipmentType #}
                         <tr>
-                            <td><a class="window" href="{{ url('equipment-category-edit', {'id': type.id}) }}"><i class="fa fa-fw fa-pencil"></i></a></td>
+                            <td><a class="window" href="{{ url('equipment-category-edit', {'id': type.id}) }}"><i class="fa fa-fw fa-pencil"></i></a>
+                                <a class="window" href="{{ url('equipment-category-delete', { 'id': type.id, 't': csrf_token('deleteEquipmentCategory') }) }}"><i class="fa fa-trash" title="Delete"></i></a>
+                            </td>
                             <td>{{ type.name }}</td>
-                            <td>{{ type.type }}</td>
+                            {% if type.input == 0 %}
+                                <td>{% trans %}Single choice{% endtrans %}</td>
+                            {% else %}
+                                <td>{% trans %}Multiple choice{% endtrans %}</td>
+                            {% endif %}
                             <td>{{ distance(type.maxKm, unitSystem.distanceUnit) }}</td>
                             <td>{{ type.maxTime|date('z H:i:s', 'UTC') }}</td>
 
@@ -47,7 +53,7 @@
                 {% endif %}
                 </tbody>
             </table>
-        </fieldset>
+        </div>
 
-    </div>
+
 {% endblock %}
