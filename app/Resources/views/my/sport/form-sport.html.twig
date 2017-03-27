@@ -1,0 +1,94 @@
+{% extends "base_logged_in.twig" %}
+
+{% block content %}
+    <div class="panel-heading">
+
+        {% if form.vars.data.id is null%}
+            <h1>{{ 'Add sport'|trans }}</h1>
+        {% else %}
+            <h1>{{ 'Edit sport'|trans }}</h1>
+        {% endif %}
+
+    </div>
+
+    <div class="panel-content">
+    {% include 'flashmessages.html.twig' %}
+
+    {{ form_start(form, {'attr': {'class': 'ajax no-automatic-reloads'} }) }}
+    <fieldset>
+        {{ form_row(form.name, {'div_class': 'w100 block'}) }}
+        {{ form_row(form.distances, {'div_class': 'w100 block'}) }}
+        {{ form_row(form.power, {'div_class': 'w100 block', 'help':'Power is recorded or calculated.'}) }}
+        {{ form_row(form.outside, {'div_class': 'w100 block', 'help':'Sport is performed outdoor: activate route, weather, ...'}) }}
+        {{ form_row(form.mainEquipmenttype, {'div_class': 'w100 block', 'help':'Objects of main equipment type can be shown in the activity overview.'}) }}
+        {{ form_row(form.defaultType, {'div_class': 'w100 block'}) }}
+        {{ form_row(form.kcal, {'div_class': 'w100 block', 'help':'Average energy turnover in kilocalories per hour'}) }}
+        {{ form_row(form.HFavg, {'div_class': 'w100 block', 'help':'Avg. HF is necessary for the calculation of TRIMP.'}) }}
+
+        {{ form_rest(form) }}
+
+        <div class="c">
+            {% if form.vars.data.id is null%}
+                <input type="submit" value="{% trans %}Add{% endtrans %}" name="submit">
+            {% else %}
+                <input type="submit" value="{% trans %}Update{% endtrans %}" name="submit">
+            {% endif %}
+        </div>
+    </fieldset>
+
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+    {% if form.vars.data.id is not null%}
+        <div class="c">
+            <form action="{{ url('sport-delete', {'id': form.vars.data.id}) }}" class="window ajax">
+                <div class="c">
+                    <input type="hidden" name="t" value="{{ csrf_token('deleteSport') }}" />
+                    <input type="submit" class="danger" value="{% trans %}Delete{% endtrans %}" />
+                </div>
+            </form>
+        </div>
+
+    {% endif %}
+
+
+    {% if form.vars.data.id is not null%}
+        <div class="panel-heading panel-inner-heading"><h1>{% trans %}Assigned activity types{% endtrans %}</h1></div>
+        <table id="assigned-sport-types" class="fullwidth zebra-style">
+            <thead>
+            <tr>
+                <th class="{sorter: false}">&nbsp</th>
+                <th>{{ 'Name'|trans }}</th>
+                <th>{{ 'Abbreviation'|trans }}</th>
+                <th>{{ 'avg. HR'|trans }}</th>
+                <th>{{ 'Quality'|trans }}</th>
+                <th>{{ 'Calendar view'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody class="c">
+            {% if types|length > 0 %}
+                {% for type in types %}
+                    {# @var entry \Runalyze\Bundle\CoreBundle\Entity\Type #}
+                    <tr>
+                        <td><a class="window" href="{{ url('sport-type-edit', {'id': type.id}) }}"><i class="fa fa-fw fa-pencil"></i></a>
+                            <a class="window" href="{{ url('sport-type-delete', { 'id': type.id, 't': csrf_token('deleteSportType') }) }}"><i class="fa fa-trash" title="{% trans %}Delete{% endtrans %}"></i></a>
+                            <a class="window" href="my/search?get=true&equipmentid=41{{ type.id }}"><i class="fa fa-search" title="{% trans %}Search{% endtrans %}"></i></a>
+                        </td>
+                        <td>{{ type.name }}</td>
+                        <td>{{ type.abbr }}</td>
+                        <td>{{ type.hrAvg }}</td>
+                        <td>{{ type.qualitySession }}</td>
+                        <td>{{ type.short }}</td>
+                    </tr>
+                {% endfor %}
+                <tr><td colspan="6">
+            {% else %}
+                <tr><td colspan="6">{% trans %}No equipment available.{% endtrans %}<br>
+            {% endif %}
+                        <a class="window" href="{{ url('sport-type-add') }}" title="{{ 'Add activity type'|trans }}"><strong>{{ 'Add activity type'|trans }}</strong></a>
+                    </td></tr>
+            </tbody>
+        </table>
+        </div>
+    {% endif %}
+    </div>
+{% endblock %}

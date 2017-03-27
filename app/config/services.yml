@@ -72,6 +72,10 @@ services:
     class: Runalyze\Bundle\CoreBundle\Entity\SportRepository
     factory: ["@doctrine.orm.entity_manager", getRepository]
     arguments: [Runalyze\Bundle\CoreBundle\Entity\Sport]
+  app.repository.type:
+    class: Runalyze\Bundle\CoreBundle\Entity\TypeRepository
+    factory: ["@doctrine.orm.entity_manager", getRepository]
+    arguments: [Runalyze\Bundle\CoreBundle\Entity\Type]
   app.repository.training:
     class: Runalyze\Bundle\CoreBundle\Entity\TrainingRepository
     factory: ["@doctrine.orm.entity_manager", getRepository]
@@ -92,6 +96,11 @@ services:
   app.form.type.poster:
     class: Runalyze\Bundle\CoreBundle\Form\Tools\PosterType
     arguments: ["@app.repository.sport", "@app.repository.training", "@security.token_storage"]
+    tags:
+     - { name: form.type }
+  app.form.type.sport:
+    class: Runalyze\Bundle\CoreBundle\Form\SportType
+    arguments: ["@app.repository.type", "@app.repository.equipment_type", "@security.token_storage"]
     tags:
      - { name: form.type }
   app.form.type.race_result:

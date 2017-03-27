@@ -36,7 +36,7 @@ class Sport
     private $img = 'unknown.gif';
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="short", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
      */
@@ -57,11 +57,11 @@ class Sport
     private $hfavg = '120';
 
     /**
-     * @var boolean
+     * @var bool
      *
-     * @ORM\Column(name="distances", columnDefinition="tinyint unsigned NOT NULL DEFAULT 1")
+     * @ORM\Column(name="distances", type="boolean", columnDefinition="tinyint unsigned NOT NULL DEFAULT 1")
      */
-    private $distances;
+    private $distances = true;
 
     /**
      * @var string
@@ -73,16 +73,16 @@ class Sport
     /**
      * @var boolean
      *
-     * @ORM\Column(name="power", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
+     * @ORM\Column(name="power", type="boolean", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
      */
-    private $power = '0';
+    private $power = false;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="outside", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
+     * @ORM\Column(name="outside", type="boolean", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
      */
-    private $outside = '0';
+    private $outside = false;
 
     /**
      * @var \Runalyze\Bundle\CoreBundle\Entity\EquipmentType
@@ -196,7 +196,7 @@ class Sport
     /**
      * Set short
      *
-     * @param boolean $short
+     * @param bool $short
      *
      * @return Sport
      */
@@ -210,7 +210,7 @@ class Sport
     /**
      * Get short
      *
-     * @return boolean
+     * @return bool
      */
     public function getShort()
     {
@@ -268,7 +268,7 @@ class Sport
     /**
      * Set distances
      *
-     * @param boolean $distances
+     * @param bool $distances
      *
      * @return Sport
      */
@@ -282,7 +282,7 @@ class Sport
     /**
      * Get distances
      *
-     * @return boolean
+     * @return bool
      */
     public function getDistances()
     {
@@ -316,7 +316,7 @@ class Sport
     /**
      * Set power
      *
-     * @param boolean $power
+     * @param bool $power
      *
      * @return Sport
      */
@@ -330,7 +330,7 @@ class Sport
     /**
      * Get power
      *
-     * @return boolean
+     * @return bool
      */
     public function getPower()
     {
@@ -340,7 +340,7 @@ class Sport
     /**
      * Set outside
      *
-     * @param boolean $outside
+     * @param bool $outside
      *
      * @return Sport
      */
@@ -354,7 +354,7 @@ class Sport
     /**
      * Get outside
      *
-     * @return boolean
+     * @return bool
      */
     public function getOutside()
     {

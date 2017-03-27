@@ -17,4 +17,15 @@ class EquipmentTypeRepository extends EntityRepository
             'account' => $account->getId()
         ]);
     }
+
+    /**
+     * @param Account $account
+     * @return EquipmentType[]
+     */
+    public function findAllFor(Account $account)
+    {
+        return $this->findBy([
+            'account' => $account->getId()
+        ]);
+    }
 }

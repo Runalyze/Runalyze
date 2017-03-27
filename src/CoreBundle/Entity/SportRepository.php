@@ -28,4 +28,10 @@ class SportRepository extends EntityRepository
             'distances' => true
         ]);
     }
+
+    public function save(Sport $sport)
+    {
+        $this->_em->persist($sport);
+        $this->_em->flush();
+    }
 }

@@ -1,0 +1,47 @@
+{% extends "base_logged_in.twig" %}
+
+{% block content %}
+    <div class="panel-heading">
+        <h1>{{ 'Sports'|trans }}</h1>
+    </div>
+
+    <div class="panel-content">
+        {% include 'flashmessages.html.twig' %}
+        <table>
+            <tr>
+                <td class="blocklist"><a class="window" href="{{ url('sport-add') }}" title="{{ 'Add a sport'|trans }}"><i class="fa fa-cube"></i> <strong>{{ 'Add a sport'|trans }}</strong></a></td>
+                <td class="blocklist"><a class="window" href="{{ url('sport-type-add') }}" title="{{ 'Add an activity type'|trans }}"><i class="fa fa-cubes"></i><strong>{{ 'Add an activity type'|trans }}</strong></a></td>
+            </tr>
+        </table>
+    </div>
+    <div class="panel-heading panel-inner-heading"><h1>{% trans %}Your sports{% endtrans %}</h1></div>
+    <div class="panel-content">
+        <table id="sports" class="fullwidth zebra-style">
+            <thead>
+            <tr>
+                <th>&nbsp</th>
+                <th>&nbsp</th>
+                <th>{{ 'Name'|trans }}</th>
+                <th>{{ 'Unit'|trans }}</th>
+                <th>{{ 'Calendar view'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody class="c">
+            {% if sports|length > 0 %}
+                {% for sport in sports %}
+                    {# @var entry \Runalyze\Bundle\CoreBundle\Entity\Sport #}
+                    <tr>
+                        <td><a class="window" href="{{ url('sport-edit', {'id': sport.id}) }}"><i class="fa fa-fw fa-pencil"></i></a></td>
+                        <td>{{ sport.img }}</td>
+                        <td>{{ sport.name }}</td>
+                        <td>{{ sport.speed }}</td>
+                        <td>{{ sport.short }}</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+
+
+{% endblock %}

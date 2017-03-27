@@ -1,0 +1,52 @@
+{% extends "base_logged_in.twig" %}
+
+{% block content %}
+    <div class="panel-heading">
+
+        {% if form.vars.data.id is null%}
+            <h1>{{ 'Add activity type'|trans }}</h1>
+        {% else %}
+            <h1>{{ 'Edit activity type'|trans }}</h1>
+        {% endif %}
+
+    </div>
+
+    <div class="panel-content">
+    {% include 'flashmessages.html.twig' %}
+        <p class="info">{% trans %}Activity types are useful to seperate your training into different categories. An activity type can only belong to one sport.{% endtrans %}</p>
+    {{ form_start(form, {'attr': {'class': 'ajax no-automatic-reloads'} }) }}
+    <fieldset>
+        {{ form_row(form.name, {'div_class': 'w100 block'}) }}
+        {{ form_row(form.abbr, {'div_class': 'w100 block'}) }}
+        {{ form_row(form.hrAvg, {'div_class': 'w100 block', 'help':'Average heart rate (used for calculation of TRIMP)'}) }}
+        {{ form_row(form.qualitySession, {'div_class': 'w100 block', 'help':'Quality sessions will be emphasized in your calendar.'}) }}
+        {{ form_row(form.short, {'div_class': 'w100 block', 'help':'Mode for displaying activities in calendar'}) }}
+
+        {{ form_rest(form) }}
+
+        <div class="c">
+            {% if form.vars.data.id is null%}
+                <input type="submit" value="{% trans %}Add{% endtrans %}" name="submit">
+            {% else %}
+                <input type="submit" value="{% trans %}Update{% endtrans %}" name="submit">
+            {% endif %}
+        </div>
+    </fieldset>
+
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+    {% if form.vars.data.id is not null%}
+        <div class="c">
+            <form action="{{ url('sport-type-delete', {'id': form.vars.data.id}) }}" class="window ajax">
+                <div class="c">
+                    <input type="hidden" name="t" value="{{ csrf_token('deleteSport') }}" />
+                    <input type="submit" class="danger" value="{% trans %}Delete{% endtrans %}" />
+                </div>
+            </form>
+        </div>
+
+    {% endif %}
+
+
+    </div>
+{% endblock %}
