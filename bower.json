@@ -11,6 +11,7 @@
     "moment-timezone": "^0.5.4",
     "d3": "^4.4.0",
     "d3-tip": "^0.8.0-alpha.1",
-    "ifvisible.js": "^1.0.0"
+    "ifvisible.js": "^1.0.0",
+    "jquery-timeago": "^1.5.0"
   }
 }

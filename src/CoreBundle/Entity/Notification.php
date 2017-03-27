@@ -4,6 +4,7 @@ namespace Runalyze\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Runalyze\Bundle\CoreBundle\Component\Notifications\Message\MessageInterface;
+use Runalyze\Bundle\CoreBundle\Component\Notifications\MessageFactory;
 
 /**
  * Notification
@@ -218,6 +219,14 @@ class Notification
     public function getAccount()
     {
         return $this->account;
+    }
+
+    /**
+     * @return MessageInterface
+     */
+    public function getMessage()
+    {
+        return (new MessageFactory())->getMessage($this);
     }
 
     /**

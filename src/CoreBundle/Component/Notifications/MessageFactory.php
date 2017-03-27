@@ -2,6 +2,7 @@
 
 namespace Runalyze\Bundle\CoreBundle\Component\Notifications;
 
+use Runalyze\Bundle\CoreBundle\Component\Notifications\Message\MessageInterface;
 use Runalyze\Bundle\CoreBundle\Component\Notifications\Message\TemplateBasedMessage;
 use Runalyze\Bundle\CoreBundle\Entity\Notification;
 use Runalyze\Profile\Notifications\MessageTypeProfile;
@@ -10,7 +11,7 @@ class MessageFactory
 {
     /**
      * @param Notification $notification
-     * @return TemplateBasedMessage
+     * @return MessageInterface
      */
     public function getMessage(Notification $notification)
     {
