@@ -100,6 +100,21 @@ class TrainingRepository extends EntityRepository
     }
 
     /**
+     * @param Type $type
+     * @return array
+     */
+    public function getNumberOfActivitiesWithActivityType(Type $type)
+    {
+        $queryBuilder = $this->_em->createQueryBuilder()
+            ->select('COUNT(1) as num')
+            ->from('CoreBundle:Training', 't')
+            ->where('t.type = :typeid')
+            ->setParameter('typeid', $type->getId());
+
+        return $queryBuilder->getQuery()->getSingleScalarResult();
+    }
+
+    /**
      * @param Account $account
      * @param null|string $column
      * @param null|int $sportid

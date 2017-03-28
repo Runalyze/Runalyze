@@ -35,7 +35,7 @@
 
     {{ form_rest(form) }}
     {{ form_end(form) }}
-    {% if form.vars.data.id is not null%}
+    {% if form.vars.data.id is not null and numberofActivities is null %}
         <div class="c">
             <form action="{{ url('sport-type-delete', {'id': form.vars.data.id}) }}" class="window ajax">
                 <div class="c">

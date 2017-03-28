@@ -21,9 +21,11 @@
         {{ form_row(form.power, {'div_class': 'w100 block', 'help':'Power is recorded or calculated.'}) }}
         {{ form_row(form.outside, {'div_class': 'w100 block', 'help':'Sport is performed outdoor: activate route, weather, ...'}) }}
         {{ form_row(form.mainEquipmenttype, {'div_class': 'w100 block', 'help':'Objects of main equipment type can be shown in the activity overview.'}) }}
-        {{ form_row(form.defaultType, {'div_class': 'w100 block'}) }}
+        {{ form_row(form.defaultType, {'div_class': 'w100 block', 'help': 'Autoselected activity type'}) }}
         {{ form_row(form.kcal, {'div_class': 'w100 block', 'help':'Average energy turnover in kilocalories per hour'}) }}
         {{ form_row(form.HFavg, {'div_class': 'w100 block', 'help':'Avg. HF is necessary for the calculation of TRIMP.'}) }}
+        {{ form_row(form.short, {'div_class': 'w100 block', 'help':'Mode for displaying activities in calendar'}) }}
+        {{ form_row(form.speed, {'div_class': 'w100 block'}) }}
 
         {{ form_rest(form) }}
 
@@ -71,13 +73,17 @@
                     <tr>
                         <td><a class="window" href="{{ url('sport-type-edit', {'id': type.id}) }}"><i class="fa fa-fw fa-pencil"></i></a>
                             <a class="window" href="{{ url('sport-type-delete', { 'id': type.id, 't': csrf_token('deleteSportType') }) }}"><i class="fa fa-trash" title="{% trans %}Delete{% endtrans %}"></i></a>
-                            <a class="window" href="my/search?get=true&equipmentid=41{{ type.id }}"><i class="fa fa-search" title="{% trans %}Search{% endtrans %}"></i></a>
+                            <a class="window" href="my/search?get=true&typeid=41{{ type.id }}"><i class="fa fa-search" title="{% trans %}Search{% endtrans %}"></i></a>
                         </td>
                         <td>{{ type.name }}</td>
                         <td>{{ type.abbr }}</td>
                         <td>{{ type.hrAvg }}</td>
-                        <td>{{ type.qualitySession }}</td>
-                        <td>{{ type.short }}</td>
+                        {% if type.qualitySession %}
+                            <td><i class="fa fa-fw fa-check"></i></td>
+                        {% else %}
+                            <td></td>
+                        {% endif %}
+                        <td>{{ calendarView.stringFor(type.short) }}</td>
                     </tr>
                 {% endfor %}
                 <tr><td colspan="6">

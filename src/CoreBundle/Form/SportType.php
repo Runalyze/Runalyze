@@ -2,6 +2,8 @@
 
 namespace Runalyze\Bundle\CoreBundle\Form;
 
+use Runalyze\Parameter\Application\PaceUnit;
+use Runalyze\Profile\View\DataBrowserRowProfile;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -84,6 +86,9 @@ class SportType extends AbstractType
                 'required' => false,
                 'label' => 'avg. HR'
             ))
+            ->add('speed', ChoiceType::class, array(
+                'choices' => PaceUnit::getChoices()
+            ))
             ->add('mainEquipmenttype', ChoiceType::class, array(
                 'choices' => $this->EquipmentTypeRepository->findAllFor($this->getAccount()),
                 'choice_label' => function($equipmentType, $key, $index) {
@@ -102,6 +107,11 @@ class SportType extends AbstractType
                 //'choice_value' => 'getId',
                 'label' => 'Default sport type'
             ))
+            ->add('short', ChoiceType::class, array(
+                'choices' => DataBrowserRowProfile::getChoicesWithoutParent(),
+                'choice_translation_domain' => false,
+                'label' => 'Calendar view'
+            ));
         ;
     }
 

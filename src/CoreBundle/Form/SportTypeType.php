@@ -2,7 +2,6 @@
 
 namespace Runalyze\Bundle\CoreBundle\Form;
 
-use Runalyze\Bundle\CoreBundle\Entity\Raceresult;
 use Runalyze\Bundle\CoreBundle\Form\Type\DistanceType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -10,7 +9,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Runalyze\Bundle\CoreBundle\Form\Type\DurationType;
+use Runalyze\Profile\View\DataBrowserRowProfile;
 
 class SportTypeType extends AbstractType
 {
@@ -44,8 +45,9 @@ class SportTypeType extends AbstractType
                 'label' => 'Has a distance'
             ))
             ->add('short', ChoiceType::class, array(
-                'choices' => ['1' => 'foobla'], //TOOD
-                'choice_translation_domain' => false
+                'choices' => DataBrowserRowProfile::getChoices(),
+                'choice_translation_domain' => false,
+                'label' => 'Calendar view'
             ));
     }
 
