@@ -67,6 +67,13 @@ class Type
     private $qualitySession = false;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Training", mappedBy="type", cascade={"persist"}, fetch="EXTRA_LAZY")
+     */
+    protected $trainings;
+
+    /**
      * @var \Runalyze\Bundle\CoreBundle\Entity\Account
      *
      * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Account")
@@ -252,5 +259,15 @@ class Type
     public function getAccount()
     {
         return $this->account;
+    }
+
+    /**
+     * Get trainings
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTrainings()
+    {
+        return $this->trainings;
     }
 }

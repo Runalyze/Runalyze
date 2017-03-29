@@ -31,7 +31,14 @@
                 {% for sport in sports %}
                     {# @var entry \Runalyze\Bundle\CoreBundle\Entity\Sport #}
                     <tr>
-                        <td><a class="window" href="{{ url('sport-edit', {'id': sport.id}) }}"><i class="fa fa-fw fa-pencil"></i></a></td>
+                        <td><a class="window" href="{{ url('sport-edit', {'id': sport.id}) }}"><i class="fa fa-fw fa-pencil"></i></a>
+                            {% if hasTrainings[sport.id] is not defined %}
+                                <a class="window" href="{{ url('sport-delete', { 'id': sport.id, 't': csrf_token('deleteSport') }) }}"><i class="fa fa-trash" title="{% trans %}Delete{% endtrans %}"></i></a>
+                            {% else %}
+                                &nbsp;
+                                &nbsp;
+                            {% endif %}
+                        </td>
                         <td><i class="{{ sport.img }}"></i></td>
                         <td>{{ sport.name }}</td>
                         <td>{{ sport.speed }}</td>

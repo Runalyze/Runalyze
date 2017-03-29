@@ -3,6 +3,7 @@
 namespace Runalyze\Bundle\CoreBundle\Form;
 
 use Runalyze\Parameter\Application\PaceUnit;
+use Runalyze\Profile\Sport\SportProfile;
 use Runalyze\Profile\View\DataBrowserRowProfile;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -111,7 +112,12 @@ class SportType extends AbstractType
                 'choices' => DataBrowserRowProfile::getChoicesWithoutParent(),
                 'choice_translation_domain' => false,
                 'label' => 'Calendar view'
-            ));
+            ))
+            ->add('short', ChoiceType::class, array(
+                'choices' => SportProfile::getEnum(),
+                'choice_translation_domain' => false,
+                'label' => 'Calendar view'
+            ));;
         ;
     }
 

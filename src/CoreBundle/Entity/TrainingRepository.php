@@ -116,6 +116,40 @@ class TrainingRepository extends EntityRepository
 
     /**
      * @param Account $account
+     * @return array
+     */
+    public function getTypesWithTraining(Account $account)
+    {
+        $qb = $this->_em->createQueryBuilder();
+        $queryBuilder = $qb
+            ->select('IDENTITY(t.type)')
+            ->from('CoreBundle:Training', 't')
+            ->where('t.account = :account')
+            ->andWhere($qb->expr()->isNotNull('t.type'))
+            ->addGroupBy('t.type')
+            ->setParameter('account', $account->getId());
+        return $queryBuilder->getQuery()->getResult("COLUMN_HYDRATOR");
+    }
+
+    /**
+     * @param Account $account
+     * @return array
+     */
+    public function getSportsWithTraining(Account $account)
+    {
+        $qb = $this->_em->createQueryBuilder();
+        $queryBuilder = $qb
+            ->select('IDENTITY(t.sport)')
+            ->from('CoreBundle:Training', 't')
+            ->where('t.account = :account')
+            ->andWhere($qb->expr()->isNotNull('t.sport'))
+            ->addGroupBy('t.sport')
+            ->setParameter('account', $account->getId());
+        return $queryBuilder->getQuery()->getResult("COLUMN_HYDRATOR");
+    }
+
+    /**
+     * @param Account $account
      * @param null|string $column
      * @param null|int $sportid
      * @return array

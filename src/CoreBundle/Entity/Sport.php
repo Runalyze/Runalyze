@@ -127,6 +127,13 @@ class Sport
     private $equipmentType;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Training", mappedBy="sport", cascade={"persist"}, fetch="EXTRA_LAZY")
+     */
+    protected $trainings;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -465,5 +472,15 @@ class Sport
     public function getEquipmentType()
     {
         return $this->equipmentType;
+    }
+
+    /**
+     * Get trainings
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTrainings()
+    {
+        return $this->trainings;
     }
 }

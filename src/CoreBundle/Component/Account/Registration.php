@@ -136,11 +136,11 @@ class Registration
     private function setSportData()
     {
         $sportData = array(
-            array(__('Running'), 'icons8-Running', 0, 880, 140, 1, "min/km", 0, 1,),
-            array(__('Swimming'), 'icons8-Swimming', 0, 743, 130, 1, "min/100m", 0, 0),
-            array(__('Biking'), 'icons8-Regular-Biking', 0, 770, 120, 1, "km/h", 1, 1),
-            array(__('Gymnastics'), 'icons8-Yoga', 1, 280, 100, 0, "km/h", 0, 0),
-            array(__('Other'), 'icons8-Sports-Mode', 0, 500, 120, 0, "km/h", 0, 0)
+            array(__('Running'), 'icons8-Running', 0, 880, 140, 1, 2, 0, 1,),
+            array(__('Swimming'), 'icons8-Swimming', 0, 743, 130, 1, 5, 0, 0),
+            array(__('Biking'), 'icons8-Regular-Biking', 0, 770, 120, 1, 0, 1, 1),
+            array(__('Gymnastics'), 'icons8-Yoga', 1, 280, 100, 0, 0, 0, 0),
+            array(__('Other'), 'icons8-Sports-Mode', 0, 500, 120, 0, 0, 0, 0)
         );
 
         foreach ($sportData as $sData) {

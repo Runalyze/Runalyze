@@ -30,7 +30,7 @@
         {{ form_rest(form) }}
 
         <div class="c">
-            {% if form.vars.data.id is null%}
+            {% if form.vars.data.id is null %}
                 <input type="submit" value="{% trans %}Add{% endtrans %}" name="submit">
             {% else %}
                 <input type="submit" value="{% trans %}Update{% endtrans %}" name="submit">
@@ -40,7 +40,7 @@
 
     {{ form_rest(form) }}
     {{ form_end(form) }}
-    {% if form.vars.data.id is not null%}
+    {% if form.vars.data.id is not null and form.vars.data.trainings.count is null %}
         <div class="c">
             <form action="{{ url('sport-delete', {'id': form.vars.data.id}) }}" class="window ajax">
                 <div class="c">
@@ -72,7 +72,12 @@
                     {# @var entry \Runalyze\Bundle\CoreBundle\Entity\Type #}
                     <tr>
                         <td><a class="window" href="{{ url('sport-type-edit', {'id': type.id}) }}"><i class="fa fa-fw fa-pencil"></i></a>
-                            <a class="window" href="{{ url('sport-type-delete', { 'id': type.id, 't': csrf_token('deleteSportType') }) }}"><i class="fa fa-trash" title="{% trans %}Delete{% endtrans %}"></i></a>
+                            {% if hasTrainings[type.id] is not defined %}
+                                <a class="window" href="{{ url('sport-type-delete', { 'id': type.id, 't': csrf_token('deleteSportType') }) }}"><i class="fa fa-trash" title="{% trans %}Delete{% endtrans %}"></i></a>
+                            {% else %}
+                                &nbsp;
+                                &nbsp;
+                            {% endif %}
                             <a class="window" href="my/search?get=true&typeid=41{{ type.id }}"><i class="fa fa-search" title="{% trans %}Search{% endtrans %}"></i></a>
                         </td>
                         <td>{{ type.name }}</td>
