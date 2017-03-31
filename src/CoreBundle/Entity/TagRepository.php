@@ -8,12 +8,18 @@ class TagRepository extends EntityRepository
 {
     /**
      * @param Account $account
-     * @return Tag[]
+     * @return Sport[]
      */
-    public function findByAccount(Account $account)
+    public function findAllFor(Account $account)
     {
         return $this->findBy([
             'account' => $account->getId()
         ]);
+    }
+
+    public function save(Tag $tag)
+    {
+        $this->_em->persist($tag);
+        $this->_em->flush();
     }
 }
