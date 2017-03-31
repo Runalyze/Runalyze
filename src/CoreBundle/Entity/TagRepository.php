@@ -8,7 +8,7 @@ class TagRepository extends EntityRepository
 {
     /**
      * @param Account $account
-     * @return Sport[]
+     * @return Tag[]
      */
     public function findAllFor(Account $account)
     {
