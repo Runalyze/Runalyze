@@ -2,6 +2,7 @@
 
 namespace Runalyze\Bundle\CoreBundle\Entity;
 
+use Doctrine\DBAL\Driver\Statement;
 use Doctrine\ORM\EntityRepository;
 
 class NotificationRepository extends EntityRepository
@@ -59,9 +60,12 @@ class NotificationRepository extends EntityRepository
         $this->_em->clear(Notification::class);
     }
 
+    /**
+     * @return int number of removed notifications
+     */
     public function removeExpiredNotifications()
     {
-        $this->createQueryBuilder('n')
+        $numDeleted = $this->createQueryBuilder('n')
             ->delete()
             ->where('n.expirationAt < :time')
             ->setParameter('time', time())
@@ -69,6 +73,8 @@ class NotificationRepository extends EntityRepository
             ->execute();
 
         $this->_em->clear(Notification::class);
+
+        return $numDeleted;
     }
 
     public function save(Notification $notification)

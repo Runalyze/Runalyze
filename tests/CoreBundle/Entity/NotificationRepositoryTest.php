@@ -100,7 +100,7 @@ class NotificationRepositoryTest extends AbstractRepositoryTestCase
         $idRecent = $this->insertMessageFor($this->Account, 0, time() + 3600);
         $idOtherAccount = $this->insertMessageFor($this->getEmptyAccount(), 0, time() - 3600);
 
-        $this->NotificationRepository->removeExpiredNotifications();
+        $this->assertEquals(3, $this->NotificationRepository->removeExpiredNotifications());
 
         $this->assertNull($this->NotificationRepository->find($idFirst));
         $this->assertNull($this->NotificationRepository->find($idSecond));
