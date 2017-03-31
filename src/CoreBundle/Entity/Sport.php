@@ -54,7 +54,7 @@ class Sport
      *
      * @ORM\Column(name="HFavg", columnDefinition="tinyint unsigned NOT NULL DEFAULT 120")
      */
-    private $hfavg = '120';
+    private $hfavg = 120;
 
     /**
      * @var bool
@@ -103,6 +103,20 @@ class Sport
      * })
      */
     private $defaultType;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="is_main", type="boolean", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
+     */
+    private $isMain = false;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="internal_sport_id", columnDefinition="tinyint unsigned NOT NULL DEFAULT 120")
+     */
+    private $internalSportId = 0;
 
     /**
      * @var \Runalyze\Bundle\CoreBundle\Entity\Account
@@ -417,6 +431,54 @@ class Sport
     public function getDefaultType()
     {
         return $this->defaultType;
+    }
+
+    /**
+     * Set is main
+     *
+     * @param bool $isMain
+     *
+     * @return Sport
+     */
+    public function setIsMain($isMain)
+    {
+        $this->isMain = $isMain;
+
+        return $this;
+    }
+
+    /**
+     * Get is main
+     *
+     * @return bool
+     */
+    public function getIsMain()
+    {
+        return $this->isMain;
+    }
+
+    /**
+     * Set internal sport id
+     *
+     * @param integer $internalSportId
+     *
+     * @return Sport
+     */
+    public function setInternalSportId($internalSportId)
+    {
+        $this->internalSportId = $internalSportId;
+
+        return $this;
+    }
+
+    /**
+     * Get internal sport id
+     *
+     * @return integer
+     */
+    public function getInternalSportId()
+    {
+        return $this->internalSportId;
     }
 
     /**
