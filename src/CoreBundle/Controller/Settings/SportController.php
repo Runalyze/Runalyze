@@ -1,6 +1,6 @@
 <?php
 
-namespace Runalyze\Bundle\CoreBundle\Controller\My;
+namespace Runalyze\Bundle\CoreBundle\Controller\Settings;
 
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\Sport;
@@ -56,7 +56,7 @@ class SportController extends Controller
     public function overviewAction(Account $account)
     {
         $sport = $this->getSportRepository()->findAllFor($account);
-        return $this->render('my/sport/overview.html.twig', [
+        return $this->render('settings/sport/overview.html.twig', [
             'sports' => $sport,
             'hasTrainings' => array_flip($this->getTrainingRepository()->getSportsWithTraining($account)),
             'calendarView' => new DataBrowserRowProfile()
@@ -81,7 +81,7 @@ class SportController extends Controller
             $this->get('app.automatic_reload_flag_setter')->set(AutomaticReloadFlagSetter::FLAG_PLUGINS);
         }
 
-        return $this->render('my/sport/form-type.html.twig', [
+        return $this->render('settings/sport/form-type.html.twig', [
             'form' => $form->createView()
         ]);
     }
@@ -111,7 +111,7 @@ class SportController extends Controller
             return $this->redirectToRoute('sport-type-edit', ['id' => $type->getId()]);
         }
 
-        return $this->render('my/sport/form-type.html.twig', [
+        return $this->render('settings/sport/form-type.html.twig', [
             'form' => $form->createView()
         ]);
     }
@@ -190,7 +190,7 @@ class SportController extends Controller
             return $this->redirectToRoute('sport-edit', ['id' => $sport->getId()]);
         }
 
-        return $this->render('my/sport/form-sport.html.twig', [
+        return $this->render('settings/sport/form-sport.html.twig', [
             'form' => $form->createView(),
             'types' => $this->getTypeRepository()->findAllFor($account, $sport),
             'calendarView' => new DataBrowserRowProfile(),

@@ -5,6 +5,7 @@ namespace Runalyze\Bundle\CoreBundle\Form;
 use Runalyze\Metrics\Velocity\Unit\PaceEnum;
 use Runalyze\Parameter\Application\PaceUnit;
 use Runalyze\Profile\Sport\SportProfile;
+use Runalyze\Profile\Sport\SportRelevance;
 use Runalyze\Profile\View\DataBrowserRowProfile;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -27,6 +28,9 @@ class SportType extends AbstractType
     /** @var TypeRepository */
     protected $TypeRepository;
 
+    /** @var SportRepository */
+    protected $SportRepository;
+
     /** @var EquipmentTypeRepository */
     protected $EquipmentTypeRepository;
 
@@ -35,11 +39,13 @@ class SportType extends AbstractType
 
     public function __construct(
         TypeRepository $typeRepository,
+        SportRepository $sportRepository,
         EquipmentTypeRepository $equipmentTypeRepository,
         TokenStorage $tokenStorage
     )
     {
         $this->TypeRepository = $typeRepository;
+        $this->SportRepository = $sportRepository;
         $this->EquipmentTypeRepository = $equipmentTypeRepository;
         $this->TokenStorage = $tokenStorage;
     }
@@ -60,6 +66,8 @@ class SportType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $usedInternalSportIds = $this->SportRepository->getUsedInternalSportIdsFor($this->getAccount());
+
         $builder
             ->add('name', TextType::class, array(
                 'label' => 'Name',
@@ -106,10 +114,15 @@ class SportType extends AbstractType
                 'choice_translation_domain' => false,
                 'label' => 'Calendar view'
             ))
-            ->add('short', ChoiceType::class, array(
-                'choices' => SportProfile::getEnum(),
+            ->add('internalSportId', ChoiceType::class, array(
+                'choices' => SportProfile::getAvailableChoices($usedInternalSportIds),
                 'choice_translation_domain' => false,
-                'label' => 'Calendar view'
+                'label' => 'Fix sport type'
+            ))
+            ->add('isMain', ChoiceType::class, array(
+                'choices' => SportRelevance::getChoices(),
+                'choice_translation_domain' => false,
+                'label' => 'Sport relevance'
             ));;
         ;
     }

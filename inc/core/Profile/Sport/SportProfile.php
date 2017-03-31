@@ -4,8 +4,11 @@ namespace Runalyze\Profile\Sport;
 
 use Runalyze\Util\AbstractEnum;
 use Runalyze\Util\AbstractEnumFactoryTrait;
+use Symfony\Bundle\FrameworkBundle\CacheWarmer\RouterCacheWarmer;
+use Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle;
+use Runalyze\Util\InterfaceChoosable;
 
-class SportProfile extends AbstractEnum
+class SportProfile extends AbstractEnum implements InterfaceChoosable
 {
     use AbstractEnumFactoryTrait;
 
@@ -26,4 +29,30 @@ class SportProfile extends AbstractEnum
 
     /** @var int */
     const HIKING = 5;
+
+    /**
+     * @return array
+     */
+    static public function getChoices() {
+        return array(
+            __('Generic') => self::GENERIC,
+            __('Running') => self::RUNNING,
+            __('Cycling') => self::CYCLING,
+            __('Swimming') => self::SWIMMING,
+            __('Rowing') => self::ROWING,
+            __('Hiking') => self::HIKING
+        );
+    }
+
+    /**
+     * @return array
+     */
+    static public function getAvailableChoices($usedIds) {
+        $availableIds = array_flip(self::getChoices());
+        foreach ($usedIds as $id) {
+            unset($availableIds[$id]);
+        }
+        return array_flip($availableIds);
+
+    }
 }

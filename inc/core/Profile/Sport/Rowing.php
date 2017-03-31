@@ -25,7 +25,7 @@ class Rowing extends AbstractSport
     /**
      * @return string
      */
-    public function name()
+    public static function name()
     {
         return __('Rowing');
     }

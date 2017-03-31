@@ -100,7 +100,7 @@ services:
      - { name: form.type }
   app.form.type.sport:
     class: Runalyze\Bundle\CoreBundle\Form\SportType
-    arguments: ["@app.repository.type", "@app.repository.equipment_type", "@security.token_storage"]
+    arguments: ["@app.repository.type", "@app.repository.sport", "@app.repository.equipment_type", "@security.token_storage"]
     tags:
      - { name: form.type }
   app.form.type.race_result:
