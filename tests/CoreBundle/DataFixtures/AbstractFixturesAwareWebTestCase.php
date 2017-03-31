@@ -20,14 +20,21 @@ abstract class AbstractFixturesAwareWebTestCase extends WebTestCase
     /** @var ReferenceRepository */
     protected $Fixtures;
 
+    /** @var array|null */
+    protected $FixtureClasses = null;
+
     /** @var EntityManager */
     protected $EntityManager;
 
     protected function setUp()
     {
-        $this->Fixtures = $this->loadFixtures([
-            LoadAccountData::class
-        ])->getReferenceRepository();
+        if (null === $this->FixtureClasses) {
+            $this->FixtureClasses = [
+                LoadAccountData::class
+            ];
+        }
+
+        $this->Fixtures = $this->loadFixtures($this->FixtureClasses)->getReferenceRepository();
 
         $this->Client = $this->getContainer()->get('test.client');
         $this->Client->disableReboot();

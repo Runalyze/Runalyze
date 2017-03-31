@@ -2,6 +2,7 @@
 
 namespace Runalyze\Bundle\CoreBundle\Entity;
 
+use Doctrine\DBAL\Connection;
 use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 use Doctrine\ORM\EntityRepository;
 
@@ -18,6 +19,39 @@ class AccountRepository extends EntityRepository implements UserLoaderInterface
             ->setParameter('username', $username)
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    /**
+     * @param string|string[] $language language key(s)
+     * @param bool $excluded if set, all but given languages will be selected
+     * @return array account ids
+     */
+    public function findAllByLanguage($language, $excluded = false)
+    {
+        return $this->findAllByLanguageQueryBuilder($language, $excluded)->getQuery()->getResult("COLUMN_HYDRATOR");
+    }
+
+    /**
+     * @param string|string[] $language language key(s)
+     * @param bool $excluded if set, all but given languages will be selected
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function findAllByLanguageQueryBuilder($language, $excluded = false)
+    {
+        if (!is_array($language)) {
+            $language = [$language];
+        }
+
+        $queryBuilder = $this->createQueryBuilder('u')
+            ->select('u.id');
+
+        if (!empty($language)) {
+            $queryBuilder
+                ->where('u.language '.($excluded ? 'NOT' : '').' IN (:lang)')
+                ->setParameter('lang', $language, Connection::PARAM_STR_ARRAY);
+        }
+
+        return $queryBuilder;
     }
 
     /**
