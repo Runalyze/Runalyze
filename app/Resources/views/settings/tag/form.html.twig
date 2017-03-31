@@ -13,13 +13,10 @@
 
     <div class="panel-content">
         {% include 'flashmessages.html.twig' %}
-        <p class="info">{% trans %}Activity types are useful to seperate your training into different categories. An activity type can only belong to one sport.{% endtrans %}</p>
         {{ form_start(form, {'attr': {'class': 'ajax no-automatic-reloads'} }) }}
         <fieldset>
             {{ form_row(form.tag, {'div_class': 'w100 block'}) }}
-
             {{ form_rest(form) }}
-
             <div class="c">
                 {% if form.vars.data.id is null%}
                     <input type="submit" value="{% trans %}Add{% endtrans %}" name="submit">
