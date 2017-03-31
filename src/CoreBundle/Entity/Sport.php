@@ -97,7 +97,10 @@ class Sport
     /**
      * @var integer
      *
-     * @ORM\Column(name="default_typeid", type="integer", nullable=true, options={"unsigned":true})
+     * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Type")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="default_typeid", referencedColumnName="id")
+     * })
      */
     private $defaultType;
 

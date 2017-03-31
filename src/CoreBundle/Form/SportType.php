@@ -2,6 +2,7 @@
 
 namespace Runalyze\Bundle\CoreBundle\Form;
 
+use Runalyze\Metrics\Velocity\Unit\PaceEnum;
 use Runalyze\Parameter\Application\PaceUnit;
 use Runalyze\Profile\Sport\SportProfile;
 use Runalyze\Profile\View\DataBrowserRowProfile;
@@ -88,24 +89,16 @@ class SportType extends AbstractType
                 'label' => 'avg. HR'
             ))
             ->add('speed', ChoiceType::class, array(
-                'choices' => PaceUnit::getChoices()
+                'choices' => PaceEnum::getChoices()
             ))
             ->add('mainEquipmenttype', ChoiceType::class, array(
                 'choices' => $this->EquipmentTypeRepository->findAllFor($this->getAccount()),
-                'choice_label' => function($equipmentType, $key, $index) {
-                    /** @var EquipmentType $equipmentType */
-                    return $equipmentType->getName();
-                },
-                //'choice_value' => 'getId',
+                'choice_label' => 'name',
                 'label' => 'Main equipment'
             ))
             ->add('defaultType', ChoiceType::class, array(
                 'choices' => $this->TypeRepository->findAllFor($this->getAccount(), $builder->getData()),
-                'choice_label' => function($sportType, $key, $index) {
-                    /** @var Type $sportType */
-                    return $sportType->getName();
-                },
-                //'choice_value' => 'getId',
+                'choice_label' => 'name',
                 'label' => 'Default sport type'
             ))
             ->add('short', ChoiceType::class, array(

@@ -19,7 +19,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Runalyze\Bundle\CoreBundle\Services\AutomaticReloadFlagSetter;
 
 /**
- * @Route("/my/sport")
+ * @Route("/settings/sport")
  * @Security("has_role('ROLE_USER')")
  */
 class SportController extends Controller

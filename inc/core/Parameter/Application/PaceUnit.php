@@ -8,6 +8,7 @@ namespace Runalyze\Parameter\Application;
 
 use Runalyze\Activity\PaceUnit as PaceUnitObject;
 use Runalyze\Util\AbstractEnum;
+use Runalyze\Util\InterfaceChoosable;
 
 /**
  * Pace unit
