@@ -53,7 +53,7 @@ class AppKernel extends \Symfony\Component\HttpKernel\Kernel
      */
     protected function configureRoutes(RouteCollectionBuilder $routes)
     {
-        if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {
+        if (in_array($this->getEnvironment(), array('dev'), true)) {
             $routes->import('@WebProfilerBundle/Resources/config/routing/wdt.xml', '/_wdt');
             $routes->import('@WebProfilerBundle/Resources/config/routing/profiler.xml', '/_profiler');
     	    $routes->import('@TwigBundle/Resources/config/routing/errors.xml', '/_error');

@@ -466,6 +466,22 @@ CREATE TABLE IF NOT EXISTS `bernard_queues` (
 -- --------------------------------------------------------
 
 --
+-- Tabellenstruktur für Tabelle `runalyze_notification`
+--
+CREATE TABLE IF NOT EXISTS `runalyze_notification` (
+  `id` INT UNSIGNED AUTO_INCREMENT NOT NULL,
+  `messageType`  tinyint unsigned NOT NULL,
+  `createdAt` int(10) unsigned NOT NULL,
+  `expirationAt` int(10) unsigned DEFAULT NULL,
+  `data` TINYTEXT NOT NULL,
+  `wasRead` tinyint(1) unsigned NOT NULL DEFAULT 0,
+  `account_id` INT UNSIGNED NOT NULL,
+  INDEX IDX_F99B51889B6B5FBA (account_id),
+  PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+
+-- --------------------------------------------------------
+
+--
 -- Indizes der exportierten Tabellen
 --
 
@@ -741,3 +757,9 @@ ADD CONSTRAINT `runalyze_trackdata_ibfk_2` FOREIGN KEY (`activityid`) REFERENCES
 ALTER TABLE `runalyze_raceresult`
 ADD CONSTRAINT `runalyze_raceresult_ibfk_1` FOREIGN KEY (`accountid`) REFERENCES `runalyze_account` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
 ADD CONSTRAINT `runalyze_raceresult_ibfk_2` FOREIGN KEY (`activity_id`) REFERENCES `runalyze_training` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+
+--
+-- Constraints der Tabelle `runalyze_notification`
+--
+ALTER TABLE runalyze_notification ADD CONSTRAINT FK_F99B51889B6B5FBA FOREIGN KEY (account_id) REFERENCES runalyze_account (id);

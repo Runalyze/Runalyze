@@ -62,12 +62,6 @@ class Error {
 	private $log_file = '';
 
 	/**
-	 * Boolean flag: Has the header been sent?
-	 * @var bool
-	 */
-	public $header_sent = false;
-
-	/**
 	 * Boolean flag: Has the footer been sent?
 	 * @var bool
 	 */
