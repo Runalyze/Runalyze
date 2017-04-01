@@ -59,10 +59,7 @@ class EquipmentType extends AbstractType
             ))
             ->add('type', ChoiceType::class, array(
                 'choices' => $this->EquipmentRepository->findAllFor($this->getAccount()),
-                'choice_label' => function($equipmentType, $key, $index) {
-                    /** @var EquipmentType $equipmentType */
-                    return $equipmentType->getName();
-                },
+                'choice_label' => 'name',
                 'choice_value' => 'getId',
                 'label' => 'Category'
             ))

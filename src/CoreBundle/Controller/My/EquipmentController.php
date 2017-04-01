@@ -92,6 +92,7 @@ class EquipmentController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getEquipmentTypeRepository()->save($equipmentType);
             $this->get('app.automatic_reload_flag_setter')->set(AutomaticReloadFlagSetter::FLAG_PLUGINS);
+            return $this->redirectToRoute('equipment-category-edit', ['id' => $equipmentType->getId()]);
         }
 
         return $this->render('my/equipment/form-category.html.twig', [
