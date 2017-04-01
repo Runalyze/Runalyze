@@ -99,8 +99,13 @@ services:
     tags:
      - { name: form.type }
   app.form.type.sport:
-    class: Runalyze\Bundle\CoreBundle\Form\SportType
+    class: Runalyze\Bundle\CoreBundle\Form\Settings\SportType
     arguments: ["@app.repository.type", "@app.repository.sport", "@app.repository.equipment_type", "@security.token_storage"]
+    tags:
+     - { name: form.type }
+  app.form.type.sport_type:
+    class: Runalyze\Bundle\CoreBundle\Form\Settings\SportTypeType
+    arguments: ["@security.token_storage"]
     tags:
      - { name: form.type }
   app.form.type.race_result:

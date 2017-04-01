@@ -67,7 +67,7 @@ class SportController extends Controller
     {
         $type = new Type();
         $type->setAccount($account);
-        $form = $this->createForm(Form\SportTypeType::class, $type ,[
+        $form = $this->createForm(Form\Settings\SportTypeType::class, $type ,[
             'action' => $this->generateUrl('sport-type-add')
         ]);
         $form->handleRequest($request);
@@ -92,7 +92,7 @@ class SportController extends Controller
             throw $this->createNotFoundException();
         }
 
-        $form = $this->createForm(Form\SportTypeType::class, $type ,[
+        $form = $this->createForm(Form\Settings\SportTypeType::class, $type ,[
             'action' => $this->generateUrl('sport-type-edit', ['id' => $type->getId()])
         ]);
         $form->handleRequest($request);
@@ -145,7 +145,7 @@ class SportController extends Controller
     {
         $sport = new Sport();
         $sport->setAccount($account);
-        $form = $this->createForm(Form\SportType::class, $sport,[
+        $form = $this->createForm(Form\Settings\SportType::class, $sport,[
             'action' => $this->generateUrl('sport-add')
         ]);
         $form->handleRequest($request);
@@ -171,7 +171,7 @@ class SportController extends Controller
         if ($sport->getAccount()->getId() != $account->getId()) {
             throw $this->createNotFoundException();
         }
-        $form = $this->createForm(Form\SportType::class, $sport,[
+        $form = $this->createForm(Form\Settings\SportType::class, $sport,[
             'action' => $this->generateUrl('sport-edit', ['id' => $sport->getId()])
         ]);
         $form->handleRequest($request);

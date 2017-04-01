@@ -1,6 +1,6 @@
 <?php
 
-namespace Runalyze\Bundle\CoreBundle\Form;
+namespace Runalyze\Bundle\CoreBundle\Form\Settings;
 
 use Runalyze\Metrics\Velocity\Unit\PaceEnum;
 use Runalyze\Parameter\Application\PaceUnit;
@@ -58,7 +58,7 @@ class SportType extends AbstractType
         $account = $this->TokenStorage->getToken() ? $this->TokenStorage->getToken()->getUser() : null;
 
         if (!($account instanceof Account)) {
-            throw new \RuntimeException('Poster type must have a valid account token.');
+            throw new \RuntimeException('Sport type must have a valid account token.');
         }
 
         return $account;
