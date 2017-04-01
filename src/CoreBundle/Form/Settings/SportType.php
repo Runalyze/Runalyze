@@ -67,7 +67,7 @@ class SportType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $usedInternalSportIds = $this->SportRepository->getUsedInternalSportIdsFor($this->getAccount());
-
+        $activityTypes = $this->TypeRepository->findAllFor($this->getAccount(), $builder->getData());
         $builder
             ->add('name', TextType::class, array(
                 'label' => 'Name',
@@ -104,11 +104,6 @@ class SportType extends AbstractType
                 'choice_label' => 'name',
                 'label' => 'Main equipment'
             ))
-            ->add('defaultType', ChoiceType::class, array(
-                'choices' => $this->TypeRepository->findAllFor($this->getAccount(), $builder->getData()),
-                'choice_label' => 'name',
-                'label' => 'Default sport type'
-            ))
             ->add('short', ChoiceType::class, array(
                 'choices' => DataBrowserRowProfile::getChoicesWithoutParent(),
                 'choice_translation_domain' => false,
@@ -123,8 +118,15 @@ class SportType extends AbstractType
                 'choices' => SportRelevance::getChoices(),
                 'choice_translation_domain' => false,
                 'label' => 'Sport relevance'
-            ));;
-        ;
+            ));
+        if (is_null($activityTypes)) {
+            $builder->add('defaultType', ChoiceType::class, array(
+                'choices' => $activityTypes,
+                'choice_label' => 'name',
+                'placeholder' => 'Choose a default activity type',
+                'label' => 'Default activity type'
+            ));
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver)
