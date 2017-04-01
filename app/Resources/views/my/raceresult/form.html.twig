@@ -7,7 +7,7 @@
     <div class="panel-content">
         {% include 'flashmessages.html.twig' %}
 
-        {{ form_start(form, {'attr': {'class': 'ajax no-automatic-reloads'} }) }}
+        {{ form_start(form, {'attr': {'class': 'ajax no-automatic-reload'} }) }}
 
         <fieldset>
             <legend>{% trans %}Details{% endtrans %}</legend>
@@ -42,7 +42,7 @@
         {{ form_end(form) }}
 
         {% if not isNew %}
-        <form action="{{ url('raceresult-delete', {'activityId': activity.id}) }}" method="post" class="ajax no-automatic-reloads">
+        <form action="{{ url('raceresult-delete', {'activityId': activity.id}) }}" method="post" class="ajax no-automatic-reload">
             <div class="c">
                 <input type="submit" class="danger" value="{% trans %}Delete{% endtrans %}" />
             </div>
