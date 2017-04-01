@@ -8,66 +8,63 @@ namespace Runalyze\Parameter\Application;
 
 use Runalyze\Activity\PaceUnit as PaceUnitObject;
 use Runalyze\Util\AbstractEnum;
-use Runalyze\Util\InterfaceChoosable;
 
 /**
- * Pace unit
- * @author Hannes Christiansen
- * @package Runalyze\Parameter\Application
+ * @deprecated since v4.1
  */
 class PaceUnit extends AbstractEnum
 {
 	/**
 	 * Speed unit km/h
-	 * @var string
+	 * @var int
 	 */
 	const KM_PER_H = 0;
 
 	/**
 	 * Speed unit mph
-	 * @var string
+	 * @var int
 	 */
 	const MILES_PER_H = 1;
 
 	/**
 	 * Speed unit min/km
-	 * @var string
+	 * @var int
 	 */
 	const MIN_PER_KM = 2;
 
 	/**
 	 * Speed unit min/mile
-	 * @var string
+	 * @var int
 	 */
 	const MIN_PER_MILE = 3;
 
 	/**
 	 * Speed unit m/s
-	 * @var string
+	 * @var int
 	 */
 	const M_PER_S = 4;
 
 	/**
 	 * Speed unit min/100m
-	 * @var string
+	 * @var int
 	 */
 	const MIN_PER_100M = 5;
 
 	/**
 	 * Speed unit min/100y
-	 * @var string
+	 * @var int
 	 */
 	const MIN_PER_100Y = 6;
 
 	/**
 	 * Speed unit min/500m
-	 * @var string
+	 * @var int
 	 */
 	const MIN_PER_500M = 7;
 
 	/**
 	 * Speed unit min/500y
-	 * @var string
+	 * @var int
 	 */
 	const MIN_PER_500Y = 8;
 
@@ -125,7 +122,7 @@ class PaceUnit extends AbstractEnum
 
 	/**
 	 * Set value
-	 * @param mixed $value new value
+	 * @param mixed $id new value
 	 * @throws \InvalidArgumentException
 	 */
 	public function set($id)
@@ -136,7 +133,6 @@ class PaceUnit extends AbstractEnum
 	/**
 	 * @param int $id
 	 * @return \Runalyze\Activity\PaceUnit\AbstractUnit
-	 * @throws \InvalidArgumentException
 	 */
 	protected function getNewPaceUnitObject($id)
 	{
@@ -160,12 +156,8 @@ class PaceUnit extends AbstractEnum
 			case self::MIN_PER_500Y:
 				return new PaceUnitObject\MinPer500y();
 			default:
-				if ($this->UseFallback) {
-					return new PaceUnitObject\KmPerHour();
-				}
+                return new PaceUnitObject\KmPerHour();
 		}
-
-		throw new \InvalidArgumentException('Invalid id "'.$id.'" for pace unit.');
 	}
 
 	/**

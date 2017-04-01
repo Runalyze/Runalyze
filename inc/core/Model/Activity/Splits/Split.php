@@ -13,7 +13,7 @@ use Runalyze\Parameter\Application\PaceUnit;
 
 /**
  * Single split
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Model\Activity\Splits
  */
@@ -143,11 +143,11 @@ class Split extends StringObject {
 
 	/**
 	 * Pace
-	 * @param string $unit [optional]
+	 * @param int $legacyPaceUnitEnum [optional]
 	 * @return \Runalyze\Activity\Pace
 	 */
-	public function pace($unit = PaceUnit::MIN_PER_KM) {
-		return new Pace($this->Time, $this->Distance, $unit);
+	public function pace($legacyPaceUnitEnum = PaceUnit::MIN_PER_KM) {
+		return new Pace($this->Time, $this->Distance, $legacyPaceUnitEnum);
 	}
 
 	/**

@@ -6,6 +6,7 @@
 
 namespace Runalyze\Model\Sport;
 
+use Runalyze\Metrics\LegacyUnitConverter;
 use Runalyze\Model;
 use Runalyze\Profile\Sport\ProfileInterface;
 use Runalyze\View\Icon\SportIcon;
@@ -83,6 +84,12 @@ class Entity extends Model\EntityWithID implements ProfileInterface {
 	 */
 	const DEFAULT_TYPEID = 'default_typeid';
 
+	/** @var string */
+	const IS_MAIN = 'is_main';
+
+	/** @var string */
+	const INTERNAL_SPORT_ID = 'internal_sport_id';
+
 	/**
 	 * All properties
 	 * @return array
@@ -99,7 +106,9 @@ class Entity extends Model\EntityWithID implements ProfileInterface {
 			self::HAS_POWER,
 			self::IS_OUTSIDE,
 			self::MAIN_EQUIPMENTTYPEID,
-			self::DEFAULT_TYPEID
+			self::DEFAULT_TYPEID,
+            self::IS_MAIN,
+            self::INTERNAL_SPORT_ID
 		);
 	}
 
@@ -157,18 +166,15 @@ class Entity extends Model\EntityWithID implements ProfileInterface {
 	 * @return \Runalyze\Activity\PaceUnit\AbstractUnit
 	 */
 	public function paceUnit() {
-		$Option = new \Runalyze\Parameter\Application\PaceUnit();
-		$Option->set($this->Data[self::PACE_UNIT]);
-
-		return $Option->object();
+        return (new LegacyUnitConverter())->getLegacyPaceUnit($this->Data[self::PACE_UNIT]);
 	}
 
 	/**
 	 * Pace unit
-	 * @return string see \Runalyze\Activity\Pace
+	 * @return int see \Runalyze\Activity\Pace
 	 */
 	public function paceUnitEnum() {
-		return $this->Data[self::PACE_UNIT];
+		return (new LegacyUnitConverter())->getLegacyPaceUnit($this->Data[self::PACE_UNIT], true);
 	}
 
 	/**

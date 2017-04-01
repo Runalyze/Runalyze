@@ -30,7 +30,7 @@ class UnitSystem
 
     public function setPaceUnitFromSport(Sport $sport)
     {
-        $this->PaceUnit = $this->LegacyUnitConverter->getPaceUnit($sport->getSpeed());
+        $this->PaceUnit = $sport->getSpeedUnit();
     }
 
     public function setPaceUnit(AbstractPaceUnit $paceUnit)
@@ -44,7 +44,7 @@ class UnitSystem
     public function getPaceUnit(Sport $sport = null)
     {
         if (null !== $sport) {
-            return $this->LegacyUnitConverter->getPaceUnit($sport->getSpeed());
+            return $sport->getSpeedUnit();
         }
 
         return $this->PaceUnit;
