@@ -12,6 +12,7 @@ use Runalyze\Bundle\CoreBundle\Entity\Sport;
 use Runalyze\Bundle\CoreBundle\Entity\Type;
 use Runalyze\Metrics\Velocity\Unit\PaceEnum;
 use Runalyze\Parameter\Application\Timezone;
+use Runalyze\Profile\Sport\SportProfile;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
 class Registration
@@ -137,11 +138,11 @@ class Registration
     private function setSportData()
     {
         $sportData = array(
-            array(__('Running'), 'icons8-Running', 0, 880, 140, 1, PaceEnum::SECONDS_PER_KILOMETER, 0, 1,),
-            array(__('Swimming'), 'icons8-Swimming', 0, 743, 130, 1, PaceEnum::SECONDS_PER_100M, 0, 0),
-            array(__('Biking'), 'icons8-Regular-Biking', 0, 770, 120, 1, PaceEnum::KILOMETER_PER_HOUR, 1, 1),
-            array(__('Gymnastics'), 'icons8-Yoga', 1, 280, 100, 0, PaceEnum::KILOMETER_PER_HOUR, 0, 0),
-            array(__('Other'), 'icons8-Sports-Mode', 0, 500, 120, 0, PaceEnum::KILOMETER_PER_HOUR, 0, 0)
+            array(__('Running'), 'icons8-Running', 0, 880, 140, 1, PaceEnum::SECONDS_PER_KILOMETER, 0, 1, true, SportProfile::RUNNING),
+            array(__('Swimming'), 'icons8-Swimming', 0, 743, 130, 1, PaceEnum::SECONDS_PER_100M, 0, 0, true, SportProfile::SWIMMING),
+            array(__('Biking'), 'icons8-Regular-Biking', 0, 770, 120, 1, PaceEnum::KILOMETER_PER_HOUR, 1, 1, true, SportProfile::CYCLING),
+            array(__('Gymnastics'), 'icons8-Yoga', 1, 280, 100, 0, PaceEnum::KILOMETER_PER_HOUR, 0, 0, false, null),
+            array(__('Other'), 'icons8-Sports-Mode', 0, 500, 120, 0, PaceEnum::KILOMETER_PER_HOUR, 0, 0, false, null)
         );
 
         foreach ($sportData as $sData) {
@@ -156,6 +157,8 @@ class Registration
             $Sport->setSpeed($sData[6]);
             $Sport->setPower($sData[7]);
             $Sport->setOutside($sData[8]);
+            $Sport->setIsMain($sData[9]);
+            $Sport->setInternalSportId($sData[10]);
 
             $this->em->persist($Sport);
         }

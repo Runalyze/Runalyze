@@ -126,6 +126,10 @@ services:
     arguments: ["@app.configuration_manager"]
     tags:
      - { name: form.type }
+  app.form.type.energy_kcal:
+    class: Runalyze\Bundle\CoreBundle\Form\Type\EnergyKcalType
+    tags:
+     - { name: form.type }
   app.form.type.temperature:
     class: Runalyze\Bundle\CoreBundle\Form\Type\TemperatureType
     arguments: ["@app.unit_system.temperature"]

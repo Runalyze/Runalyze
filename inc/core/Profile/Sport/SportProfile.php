@@ -35,28 +35,12 @@ class SportProfile extends AbstractEnum implements InterfaceChoosable
      */
     public static function getChoices()
     {
-        return array(
-            __('Generic') => self::GENERIC,
-            __('Running') => self::RUNNING,
-            __('Cycling') => self::CYCLING,
-            __('Swimming') => self::SWIMMING,
-            __('Rowing') => self::ROWING,
-            __('Hiking') => self::HIKING
-        );
-    }
+        $choices = [];
 
-    /**
-     * @param array $usedIds
-     * @return array
-     */
-    public static function getAvailableChoices(array $usedIds)
-    {
-        $availableIds = array_flip(self::getChoices());
-
-        foreach ($usedIds as $id) {
-            unset($availableIds[$id]);
+        foreach (self::getEnum() as $enum) {
+            $choices[self::get($enum)->name()] = $enum;
         }
 
-        return array_flip($availableIds);
+        return $choices;
     }
 }

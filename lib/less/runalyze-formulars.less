@@ -183,6 +183,10 @@ fieldset {
 			float: none;
 			line-height: 21px;
 			text-indent: 16px;
+
+			> * {
+				text-indent: initial;
+			}
 		}
 
 		input {
@@ -222,6 +226,11 @@ fieldset {
 :invalid, fieldset .validation-failed {
 	background-color: @formular-invalid-background;
 	border-color: @formular-invalid-border;
+}
+
+form:invalid,
+fieldset:invalid {
+	background-color: transparent;
 }
 
 ol.splits li {

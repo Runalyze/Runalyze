@@ -78,7 +78,8 @@ class SportController extends Controller
         }
 
         return $this->render('settings/sport/form-type.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'sport_id' => null
         ]);
     }
 
@@ -105,7 +106,8 @@ class SportController extends Controller
         }
 
         return $this->render('settings/sport/form-type.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'sport_id' => $type->getSport()->getId()
         ]);
     }
 

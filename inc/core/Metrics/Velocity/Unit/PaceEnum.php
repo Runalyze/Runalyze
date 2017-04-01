@@ -38,17 +38,14 @@ class PaceEnum extends AbstractEnum implements InterfaceChoosable
     /** @var int */
     const METER_PER_SECOND = 8;
 
-    public static function getChoices() {
-        return [
-            (new SecondsPerKilometer())->getAppendix() => self::SECONDS_PER_KILOMETER,
-            (new SecondsPerMile())->getAppendix() => self::SECONDS_PER_MILE,
-            (new SecondsPer500m())->getAppendix() => self::SECONDS_PER_500M,
-            (new SecondsPer500y())->getAppendix() => self::SECONDS_PER_500Y,
-            (new SecondsPer100m())->getAppendix() => self::SECONDS_PER_100M,
-            (new SecondsPer100y())->getAppendix() => self::SECONDS_PER_100Y,
-            (new KilometerPerHour())->getAppendix() => self::KILOMETER_PER_HOUR,
-            (new MilesPerHour())->getAppendix() => self::MILES_PER_HOUR,
-            (new MeterPerSecond())->getAppendix() => self::METER_PER_SECOND
-        ];
+    public static function getChoices()
+    {
+        $choices = [];
+
+        foreach (self::getEnum() as $enum) {
+            $choices[self::get($enum)->getUnit()] = $enum;
+        }
+
+        return $choices;
     }
 }

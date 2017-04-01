@@ -2,11 +2,11 @@
 
 namespace Runalyze\Bundle\CoreBundle\Form\Settings;
 
+use Runalyze\Bundle\CoreBundle\Form\Type\HeartrateType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -22,9 +22,7 @@ class SportTypeType extends AbstractType
     /** @var TokenStorage */
     protected $TokenStorage;
 
-    public function __construct(
-        TokenStorage $tokenStorage
-    )
+    public function __construct(TokenStorage $tokenStorage)
     {
         $this->TokenStorage = $tokenStorage;
     }
@@ -45,55 +43,52 @@ class SportTypeType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
-
         $builder
-            ->add('name', TextType::class, array(
+            ->add('name', TextType::class, [
                 'required' => true,
-                'attr' => array(
+                'attr' => [
                     'autofocus' => true
-                )
-            ))
-            ->add('abbr', TextType::class, array(
+                ]
+            ])
+            ->add('abbr', TextType::class, [
                 'required' => true,
-                'attr' => array(
-                    'autofocus' => true
-                )
-            ))
-            ->add('hrAvg', IntegerType::class, array(
-                'attr' => array('min' => 40, 'max' => 255),
+                'label' => 'Abbreviation'
+            ])
+            ->add('hrAvg', HeartrateType::class, [
+                'attr' => ['min' => 40, 'max' => 255],
                 'required' => false,
                 'label' => 'avg. HR'
-            ))
-            ->add('qualitySession', CheckboxType::class, array(
+            ])
+            ->add('qualitySession', CheckboxType::class, [
                 'required' => false,
-                'label' => 'Has a distance'
-            ))
-            ->add('short', ChoiceType::class, array(
+                'label' => 'Quality session'
+            ])
+            ->add('short', ChoiceType::class, [
                 'choices' => DataBrowserRowProfile::getChoices(),
                 'choice_translation_domain' => false,
                 'label' => 'Calendar view'
-            ));
+            ]);
+
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
             $sportType = $event->getData();
             $form = $event->getForm();
+
             if (!$sportType || null === $sportType->getId()) {
                 $form->add('sport', EntityType::class, [
                     'class'   => Sport::class,
                     'choices' => $this->getAccount()->getSports(),
                     'choice_label' => 'name',
-                    'label' => 'Assigned sports',
+                    'label' => 'Assigned sport type',
                     'expanded' => false
                 ]);
             }
         });
-
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'Runalyze\Bundle\CoreBundle\Entity\Type'
-        ));
+        ]);
     }
 }

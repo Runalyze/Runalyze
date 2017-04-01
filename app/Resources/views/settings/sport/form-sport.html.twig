@@ -17,18 +17,34 @@
         {{ form_start(form, {'attr': {'class': 'ajax no-automatic-reload'} }) }}
 
         <fieldset class="without-legend">
-            {{ form_row(form.name, {'div_class': 'w100 block'}) }}
-            {{ form_row(form.distances, {'div_class': 'w100 block'}) }}
-            {{ form_row(form.power, {'div_class': 'w100 block', 'help': 'Power is recorded or calculated.'}) }}
-            {{ form_row(form.outside, {'div_class': 'w100 block', 'help': 'Sport is performed outdoor: activate route, weather, ...'}) }}
-            {{ form_row(form.mainEquipmenttype, {'div_class': 'w100 block', 'help': 'Objects of main equipment type can be shown in the activity overview.'}) }}
+            {{ form_row(form.name, {'div_class': 'w100 block with50erLabel'}) }}
+
+            {{ form_row(form.internalSportId, {'div_class': 'w100 block with50erLabel'}) }}
+            <p class="info margin-bottom">
+                {% trans %}You can define any sport type you like, but for synchronization and comparisons you can map any of your sport types to our predefined sport types.
+                This mapping will be used to set the correct sport type when importing your activities.{% endtrans %}
+            </p>
+
+            {{ form_row(form.isMain, {'div_class': 'w100 block with50erLabel'}) }}
+            <p class="info margin-bottom-2x">
+                {% trans %}You can group your sport types into 'main' sport types and 'alternative' sport types.
+                For some analyses 'alternative' sport types are grouped together whereas 'main' sport types are always shown standalone from other ones.{% endtrans %}
+            </p>
+
+            {{ form_row(form.distances, {'div_class': 'w100 block checkbox-first'}) }}
+            {{ form_row(form.power, {'div_class': 'w100 block checkbox-first', 'help': 'Power is recorded or calculated.'}) }}
+            {{ form_row(form.outside, {'div_class': 'w100 block checkbox-first margin-bottom', 'help': 'Sport is performed outdoor: activate route, weather, ...'}) }}
+
             {% if form.defaultType %}
-            {{ form_row(form.defaultType, {'div_class': 'w100 block', 'help': 'Autoselected activity type e.g. during upload'}) }}
+                {{ form_row(form.defaultType, {'div_class': 'w100 block with50erLabel', 'help': 'Autoselected activity type e.g. during upload'}) }}
             {% endif %}
-            {{ form_row(form.kcal, {'div_class': 'w100 block', 'help': 'Average energy turnover in kilocalories per hour'}) }}
-            {{ form_row(form.HFavg, {'div_class': 'w100 block', 'help': 'Avg. HF is necessary for the calculation of TRIMP.'}) }}
-            {{ form_row(form.short, {'div_class': 'w100 block', 'help': 'Mode for displaying activities in calendar'}) }}
-            {{ form_row(form.speed, {'div_class': 'w100 block'}) }}
+
+            {{ form_row(form.mainEquipmenttype, {'div_class': 'w100 block with50erLabel', 'help': 'Objects of main equipment type can be shown in the activity overview.'}) }}
+
+            {{ form_row(form.kcal, {'div_class': 'w100 block with50erLabel', 'help': 'Average energy turnover in kilocalories per hour'}) }}
+            {{ form_row(form.HFavg, {'div_class': 'w100 block with50erLabel', 'help': 'Avg. HF is necessary for the calculation of TRIMP.', 'attr': {'class': 'small-size'}}) }}
+            {{ form_row(form.short, {'div_class': 'w100 block with50erLabel', 'help': 'Mode for displaying activities in calendar'}) }}
+            {{ form_row(form.speed, {'div_class': 'w100 block with50erLabel'}) }}
 
             {{ form_rest(form) }}
 
@@ -50,12 +66,13 @@
             <table id="assigned-sport-types" class="fullwidth zebra-style more-padding">
                 <thead>
                 <tr>
-                    <th>&nbsp;</th>
+                    <th></th>
                     <th>{{ 'Name'|trans }}</th>
                     <th>{{ 'Abbreviation'|trans }}</th>
                     <th>{{ 'avg. HR'|trans }}</th>
                     <th>{{ 'Quality'|trans }}</th>
                     <th>{{ 'Calendar view'|trans }}</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody class="c">
@@ -63,26 +80,28 @@
                     {% for type in types %}
                         {# @var type \Runalyze\Bundle\CoreBundle\Entity\Type #}
                         <tr>
-                            <td><a class="window" href="{{ url('sport-type-edit', {'id': type.id}) }}"><i class="fa fa-fw fa-pencil"></i></a>
-                                {% if hasTrainings[type.id] is not defined %}
-                                    <a class="window" href="{{ url('sport-type-delete', { 'id': type.id, 't': csrf_token('deleteSportType') }) }}"><i class="fa fa-trash" title="{% trans %}Delete{% endtrans %}"></i></a>
-                                {% else %}
-                                    &nbsp;
-                                    &nbsp;
-                                {% endif %}
-                                <a class="window" href="{{ url('my-search') }}?get=true&amp;typeid={{ type.id }}"><i class="fa fa-fw fa-search" title="{% trans %}Search activities{% endtrans %}"></i></a>
+                            <td>
+                                <a class="window" href="{{ url('sport-type-edit', {'id': type.id}) }}"><i class="fa fa-fw fa-pencil"></i></a>
+                                <a class="window" href="{{ url('my-search') }}?get=true&amp;typeid={{ type.id }}" data-size="big"><i class="fa fa-fw fa-search" title="{% trans %}Search activities{% endtrans %}"></i></a>
                             </td>
                             <td>{{ type.name }}</td>
                             <td>{{ type.abbr }}</td>
-                            <td>{{ type.hrAvg }}</td>
+                            <td>{{ type.hrAvg }} <small>bpm</small></td>
                             <td>{% if type.qualitySession %}<i class="fa fa-fw fa-check"></i>{% endif %}</td>
                             <td>{{ calendarView.stringFor(type.short) }}</td>
+                            <td>
+                                {% if hasTrainings[type.id] is not defined %}
+                                    <a class="window color-danger" href="{{ url('sport-type-delete', { 'id': type.id, 't': csrf_token('deleteSportType') }) }}" data-confirm="{% trans %}Do you really want to delete this?{% endtrans %}"><i class="fa fa-fw fa-trash" title="{% trans %}Delete{% endtrans %}"></i></a>
+                                {% else %}
+                                    <i class="fa fa-fw fa-trash unimportant cursor-not-allowed" rel="tooltip" title="{% trans %}Activity type cannot be deleted.{% endtrans %}<br>{% trans %}You have activities associated with this type.{% endtrans %}"></i>
+                                {% endif %}
+                            </td>
                         </tr>
                     {% endfor %}
-                    <tr><td colspan="6">
                 {% else %}
-                    <tr><td colspan="6"><em>{% trans %}No activity type available.{% endtrans %}</em><br>
+                    <tr><td colspan="6"><em>{% trans %}No activity type available.{% endtrans %}</em></td></tr>
                 {% endif %}
+                    <tr><td colspan="6">
                         <a class="window" href="{{ url('sport-type-add') }}"><strong><i class="fa fa-fw fa-plus"></i> {{ 'Add activity type'|trans }}</strong></a>
                     </td></tr>
                 </tbody>

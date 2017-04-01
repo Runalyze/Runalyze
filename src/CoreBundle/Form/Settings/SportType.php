@@ -2,29 +2,28 @@
 
 namespace Runalyze\Bundle\CoreBundle\Form\Settings;
 
+use Runalyze\Bundle\CoreBundle\Entity\Account;
+use Runalyze\Bundle\CoreBundle\Entity\EquipmentTypeRepository;
+use Runalyze\Bundle\CoreBundle\Entity\Sport;
+use Runalyze\Bundle\CoreBundle\Entity\SportRepository;
+use Runalyze\Bundle\CoreBundle\Entity\TypeRepository;
+use Runalyze\Bundle\CoreBundle\Form\Type\EnergyKcalType;
+use Runalyze\Bundle\CoreBundle\Form\Type\HeartrateType;
 use Runalyze\Metrics\Velocity\Unit\PaceEnum;
-use Runalyze\Parameter\Application\PaceUnit;
 use Runalyze\Profile\Sport\SportProfile;
 use Runalyze\Profile\Sport\SportRelevance;
 use Runalyze\Profile\View\DataBrowserRowProfile;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Runalyze\Bundle\CoreBundle\Entity\Account;
-use Runalyze\Bundle\CoreBundle\Entity\Sport;
-use Runalyze\Bundle\CoreBundle\Entity\SportRepository;
-use Runalyze\Bundle\CoreBundle\Entity\EquipmentTypeRepository;
-use Runalyze\Bundle\CoreBundle\Entity\TypeRepository;
-use Runalyze\Bundle\CoreBundle\Entity\TrainingRepository;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 class SportType extends AbstractType
 {
-
     /** @var TypeRepository */
     protected $TypeRepository;
 
@@ -66,73 +65,101 @@ class SportType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        /** @var Sport $sport */
+        $sport = $builder->getData();
         $usedInternalSportIds = $this->SportRepository->getUsedInternalSportIdsFor($this->getAccount());
-        $activityTypes = $this->TypeRepository->findAllFor($this->getAccount(), $builder->getData());
+        $activityTypes = $this->TypeRepository->findAllFor($this->getAccount(), $sport);
+        $isRunning = $sport->getInternalSportId() == SportProfile::RUNNING;
+
         $builder
-            ->add('name', TextType::class, array(
+            ->add('name', TextType::class, [
                 'label' => 'Name',
                 'required' => true,
-                'attr' => array(
+                'attr' => [
                     'autofocus' => true
-                )
-            ))
-            ->add('power', CheckboxType::class, array(
+                ]
+            ])
+            ->add('power', CheckboxType::class, [
                 'required' => false,
-            ))
-            ->add('outside', CheckboxType::class, array(
+            ])
+            ->add('outside', CheckboxType::class, [
                 'required' => false,
-            ))
-            ->add('distances', CheckboxType::class, array(
+            ])
+            ->add('distances', CheckboxType::class, [
                 'required' => false,
                 'label' => 'Has a distance'
-            ))
-            ->add('kcal', IntegerType::class, array(
-                'attr' => array('min' => 1, 'max' => 10000),
+            ])
+            ->add('kcal', EnergyKcalType::class, [
+                'attr' => ['min' => 1, 'max' => 10000],
                 'required' => false,
                 'label' => 'kcal/h'
-            ))
-            ->add('HFavg', IntegerType::class, array(
-                'attr' => array('min' => 40, 'max' => 255),
+            ])
+            ->add('HFavg', HeartrateType::class, [
+                'attr' => ['min' => 40, 'max' => 255],
                 'required' => false,
                 'label' => 'avg. HR'
-            ))
-            ->add('speed', ChoiceType::class, array(
+            ])
+            ->add('speed', ChoiceType::class, [
                 'choices' => PaceEnum::getChoices()
-            ))
-            ->add('mainEquipmenttype', ChoiceType::class, array(
+            ])
+            ->add('mainEquipmenttype', ChoiceType::class, [
+                'required' => false,
+                // TODO: Load only equipment types that are set for this sport
+                // + some message if there are none
                 'choices' => $this->EquipmentTypeRepository->findAllFor($this->getAccount()),
                 'choice_label' => 'name',
                 'label' => 'Main equipment'
-            ))
-            ->add('short', ChoiceType::class, array(
+            ])
+            ->add('short', ChoiceType::class, [
                 'choices' => DataBrowserRowProfile::getChoicesWithoutParent(),
                 'choice_translation_domain' => false,
                 'label' => 'Calendar view'
-            ))
-            ->add('internalSportId', ChoiceType::class, array(
-                'choices' => SportProfile::getAvailableChoices($usedInternalSportIds),
+            ])
+            ->add('internalSportId', ChoiceType::class, [
+                'required' => false,
+                'choices' => $this->getFilteredChoicesForInternalSportId($usedInternalSportIds, $sport),
                 'choice_translation_domain' => false,
-                'label' => 'Fix sport type'
-            ))
-            ->add('isMain', ChoiceType::class, array(
+                'label' => 'Internal sport type',
+                'disabled' => $isRunning
+            ])
+            ->add('isMain', ChoiceType::class, [
                 'choices' => SportRelevance::getChoices(),
                 'choice_translation_domain' => false,
                 'label' => 'Sport relevance'
-            ));
-        if (is_null($activityTypes)) {
-            $builder->add('defaultType', ChoiceType::class, array(
+            ]);
+
+        if (!empty($activityTypes)) {
+            $builder->add('defaultType', ChoiceType::class, [
+                'required' => false,
                 'choices' => $activityTypes,
                 'choice_label' => 'name',
                 'placeholder' => 'Choose a default activity type',
                 'label' => 'Default activity type'
-            ));
+            ]);
         }
+    }
+
+    protected function getFilteredChoicesForInternalSportId(array $usedInternalIds, Sport $sport = null)
+    {
+        $choicesWithIdsAsKeys = array_flip(SportProfile::getChoices());
+
+        foreach ($usedInternalIds as $id) {
+            if (null === $sport || $sport->getInternalSportId() != $id) {
+                unset($choicesWithIdsAsKeys[$id]);
+            }
+        }
+
+        if (isset($choicesWithIdsAsKeys[SportProfile::GENERIC])) {
+            unset($choicesWithIdsAsKeys[SportProfile::GENERIC]);
+        }
+
+        return [__('None (custom sport type)') => ''] + array_flip($choicesWithIdsAsKeys);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'Runalyze\Bundle\CoreBundle\Entity\Sport'
-        ));
+        ]);
     }
 }

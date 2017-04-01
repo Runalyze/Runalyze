@@ -24,17 +24,18 @@
                 {% for sport in sports %}
                     {# @var sport \Runalyze\Bundle\CoreBundle\Entity\Sport #}
                     <tr>
-                        <td class="l">
+                        <td>
                             <a class="window" href="{{ url('sport-edit', {'id': sport.id}) }}"><i class="fa fa-fw fa-pencil"></i></a>
+                            <a class="window" href="{{ url('my-search') }}?get=true&amp;sportid={{ sport.id }}" data-size="big"><i class="fa fa-fw fa-search" title="{% trans %}Search activities{% endtrans %}"></i></a>
                         </td>
                         <td><i class="{{ sport.img }}"></i></td>
                         <td>{{ sport.name }}</td>
                         <td>{% if sport.main %}<i class="fa fa-check"></i>{% endif %}</td>
                         <td class="small">{{ sport.speedUnit.unit }}</td>
                         <td>{{ calendarView.stringFor(sport.short) }}</td>
-                        <td class="l">
+                        <td>
                             {% if hasTrainings[sport.id] is not defined %}
-                                <a class="window" href="{{ url('sport-delete', { 'id': sport.id, 't': csrf_token('deleteSport') }) }}" data-confirm="{% trans %}Do you really want to delete this?{% endtrans %}"><i class="fa fa-fw fa-trash" title="{% trans %}Delete{% endtrans %}"></i></a>
+                                <a class="window color-danger" href="{{ url('sport-delete', { 'id': sport.id, 't': csrf_token('deleteSport') }) }}" data-confirm="{% trans %}Do you really want to delete this?{% endtrans %}"><i class="fa fa-fw fa-trash" title="{% trans %}Delete{% endtrans %}"></i></a>
                             {% else %}
                                 <i class="fa fa-fw fa-trash unimportant cursor-not-allowed" rel="tooltip" title="{% trans %}Sport type cannot be deleted.{% endtrans %}<br>{% trans %}You have activities associated with this type.{% endtrans %}"></i>
                             {% endif %}
