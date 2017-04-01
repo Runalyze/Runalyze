@@ -1,0 +1,42 @@
+{% extends "base_logged_in.twig" %}
+
+{% block content %}
+    <div class="panel-heading">
+        <h1>{% trans %}Notifications{% endtrans %}</h1>
+    </div>
+    <div id="full-notifications-list" class="panel-content notifications-list">
+        {% if notifications is empty %}
+            <p class="text c">
+                <i class="fa fa-5x fa-envelope fa-grey"></i>
+            </p>
+
+            <h2 class="c">{% trans %}There are no new notifications.{% endtrans %}</h2>
+
+            <p class="text">
+                &nbsp;
+            </p>
+        {% else %}
+            <ul>
+                {% for notification in notifications %}
+                    {# @var message \Runalyze\Bundle\CoreBundle\Component\Notifications\Message\MessageInterface #}
+                    {% set message = notification.message %}
+                    <li{% if not notification.wasRead %} class="is-new"{% endif %} data-id="{{ notification.id }}">
+                        {% if message.hasLink %}
+                            <a href="{{ message.link(router) }}">{{ message.text(translator) }}</a>
+                        {% else %}
+                            <span class="no-link">{{ message.text(translator) }}</span>
+                        {% endif %}
+
+                        <time class="timeago" datetime="{{ notification.createdAt|date('c') }}">{{ notification.createdAt|date('Y-m-d H:i') }}</time>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <p class="text c">
+                <i class="fa fa-fw fa-check"></i> <a class="read-all-notifications-link external" href="{{ url('internal-notifications-read-all') }}">{% trans %}Mark all as read{% endtrans %}</a>
+            </p>
+
+            <script>Runalyze.Notifications.bindToList('#full-notifications-list');</script>
+        {% endif %}
+    </div>
+{% endblock %}

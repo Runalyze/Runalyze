@@ -35,7 +35,7 @@
             <ul class="submenu right-oriented">
                 <li>
                     <?php if (\Runalyze\Configuration::Privacy()->listIsPublic()): ?>
-                    <a href="<?php echo $this->get('router')->generate('shared-athlete', ['username' => $username]); ?>"><i class="fa fa-fw fa-id-card-o"></i>&nbsp;<?php _e('Public athlete page'); ?></a>
+                    <a target="_blank" href="<?php echo $this->get('router')->generate('shared-athlete', ['username' => $username]); ?>"><i class="fa fa-fw fa-id-card-o"></i>&nbsp;<?php _e('Public athlete page'); ?></a>
                     <?php else: ?>
                     <span class="no-link cursor-not-allowed unimportant" title="<?php _e('Your public athlete page is deactivated.') ?>"><i class="fa fa-fw fa-id-card-o"></i>&nbsp;<?php _e('Public athlete page'); ?></span>
                     <?php endif; ?>
@@ -46,11 +46,27 @@
             </ul>
         </div>
 
+        <div id="new-notifications-menu" class="headline-menu right">
+            <div class="submenu-label only-icon">
+                <i class="fa fa-fw fa-envelope"><span class="hide new-notifications-indicator"></span></i><i class="fa fa-fw fa-caret-down"></i>
+            </div>
+            <ul class="submenu right-oriented">
+                <li class="no-notifications-messages"><em class="no-link"><?php _e('No new notifications'); ?></em></li>
+                <li id="tpl-notification-message-with-internal-link" class="hide notification-message is-new" data-id=""><a class="window" href="" data-size="small"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<span></span></a></li>
+                <li id="tpl-notification-message-with-external-link" class="hide notification-message is-new" data-id=""><a href="" target="_blank"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<span></span></a></li>
+                <li id="tpl-notification-message-without-link" class="hide notification-message is-new" data-id=""><span class="no-link"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<span></span></span></li>
+                <li class="separator"></li>
+                <li><a class="window" data-size="small" href="<?php echo $this->get('router')->generate('notifications-list'); ?>"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('Show all notifications'); ?></a></li>
+            </ul>
+
+            <script>Runalyze.Notifications.setLastRequestTime(0);</script>
+        </div>
+
         <div class="headline-menu right">
             <div class="submenu-label only-icon">
                 <i class="fa fa-fw fa-plus"></i><i class="fa fa-fw fa-caret-down"></i>
             </div>
-            <ul class="submenu">
+            <ul class="submenu right-oriented">
                 <li><a class="window" href="<?php echo $this->get('router')->generate('activity-add'); ?>?upload" data-size="small"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('Activity upload'); ?></a></li>
                 <li><a class="window" href="<?php echo $this->get('router')->generate('activity-add'); ?>?date" data-size="small"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('Manual activity'); ?></a></li>
                 <li><a class="window" href="<?php echo $this->get('router')->generate('equipment-overview'); ?>"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('New equipment'); ?></a></li>
@@ -69,6 +85,7 @@
                 <li><a class="window" href="<?php echo $this->get('router')->generate('settings'); ?>?key=config_tab_sports"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('Sport types'); ?></a></li>
                 <li><a class="window" href="<?php echo $this->get('router')->generate('settings'); ?>?key=config_tab_types"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('Activity types'); ?></a></li>
                 <li><a class="window" href="<?php echo $this->get('router')->generate('equipment-overview'); ?>"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('Equipment'); ?></a></li>
+                <li><a class="window" data-size="small" href="<?php echo $this->get('router')->generate('settings-tags'); ?>"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('Activity tags'); ?></a></li>
             </ul>
         </div>
 

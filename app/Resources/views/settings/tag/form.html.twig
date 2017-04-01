@@ -1,0 +1,45 @@
+{% extends "base_logged_in.twig" %}
+
+{% from '_macro/form.html.twig' import dangerZoneDelete %}
+
+{% block content %}
+    <div class="panel-heading">
+
+        {% if form.vars.data.id is null%}
+            <h1>{{ 'Add activity tag'|trans }}</h1>
+        {% else %}
+            <h1>{{ 'Edit activity tag'|trans }}</h1>
+        {% endif %}
+
+    </div>
+
+    <div class="panel-content margin-bottom-2x">
+        {% include 'flashmessages.html.twig' %}
+
+        {{ form_start(form, {'attr': {'class': 'ajax no-automatic-reload'} }) }}
+
+        <fieldset class="without-legend">
+            {{ form_row(form.tag, {'div_class': 'w100 block with50erLabel', 'attr': {'class': 'full-size'}}) }}
+            {{ form_rest(form) }}
+
+            <div class="c margin-top">
+                {% if form.vars.data.id is null%}
+                    <input type="submit" value="{% trans %}Add{% endtrans %}" name="submit">
+                {% else %}
+                    <input type="submit" value="{% trans %}Update{% endtrans %}" name="submit">
+                {% endif %}
+            </div>
+        </fieldset>
+
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
+
+        <p class="text margin-top">
+            <a class="window" href="{{ url('settings-tags') }}">&laquo; {% trans %}back to list{% endtrans %}</a>
+        </p>
+    </div>
+
+    {% if form.vars.data.id is not null %}
+        {{ dangerZoneDelete(url('settings-tags-delete', {'id': form.vars.data.id}), 'deleteTag') }}
+    {% endif %}
+{% endblock %}

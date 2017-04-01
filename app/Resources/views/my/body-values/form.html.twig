@@ -19,7 +19,7 @@
     <div class="panel-content">
         {% include 'flashmessages.html.twig' %}
 
-        {{ form_start(form, {'attr': {'class': 'ajax no-automatic-reloads'} }) }}
+        {{ form_start(form, {'attr': {'class': 'ajax no-automatic-reload'} }) }}
         <fieldset id="body_general">
             <legend onclick="Runalyze.toggleFieldset(this, 'body_general', false, '')">{% trans %}General information{% endtrans %}</legend>
             {{ form_row(form.time, {'div_class': 'w33'}) }}
