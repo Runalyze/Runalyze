@@ -6,19 +6,17 @@ use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\Tag;
 use Runalyze\Bundle\CoreBundle\Entity\TagRepository;
 use Runalyze\Bundle\CoreBundle\Form\Settings\TagType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Runalyze\Bundle\CoreBundle\Services\AutomaticReloadFlagSetter;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Route("/settings/tags")
  * @Security("has_role('ROLE_USER')")
  */
-class TagController extends Controller
+class TagsController extends Controller
 {
     /**
      * @return TagRepository
@@ -29,20 +27,19 @@ class TagController extends Controller
     }
 
     /**
-     * @Route("/", name="settings-tag")
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("", name="settings-tags")
      */
     public function overviewAction(Account $account)
     {
-        $tags = $this->getTagRepository()->findAllFor($account);
         return $this->render('settings/tag/overview.html.twig', [
-            'tags' => $tags,
+            'tags' => $this->getTagRepository()->findAllFor($account),
         ]);
     }
 
     /**
-     * @Route("/{id}/edit", name="tag-edit")
+     * @Route("/{id}/edit", name="settings-tags-edit")
      * @ParamConverter("tag", class="CoreBundle:Tag")
+     *
      * @param Request $request
      * @param Tag $tag
      * @param Account $account
@@ -53,14 +50,16 @@ class TagController extends Controller
         if ($tag->getAccount()->getId() != $account->getId()) {
             throw $this->createNotFoundException();
         }
+
         $form = $this->createForm(TagType::class, $tag,[
-            'action' => $this->generateUrl('tag-edit', ['id' => $tag->getId()])
+            'action' => $this->generateUrl('settings-tags-edit', ['id' => $tag->getId()])
         ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getTagRepository()->save($tag, $account);
-            return $this->redirectToRoute('settings-tag');
+            $this->getTagRepository()->save($tag);
+
+            return $this->redirectToRoute('settings-tags');
         }
 
         return $this->render('settings/tag/form.html.twig', [
@@ -69,23 +68,25 @@ class TagController extends Controller
     }
 
     /**
-     * @Route("/{id}/delete", name="tag-delete")
+     * @Route("/{id}/delete", name="settings-tags-delete")
      * @ParamConverter("tag", class="CoreBundle:Tag")
      */
     public function tagDeleteAction(Request $request, Tag $tag, Account $account)
     {
         if (!$this->isCsrfTokenValid('deleteTag', $request->get('t'))) {
             $this->addFlash('notice', $this->get('translator')->trans('Invalid token.'));
+
             return $this->redirect($this->generateUrl('settings-tags'));
         }
+
         if ($tag->getAccount()->getId() != $account->getId()) {
             throw $this->createNotFoundException();
         }
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($tag);
-        $em->flush();
+
+        $this->getTagRepository()->remove($tag);
+
         $this->addFlash('notice', $this->get('translator')->trans('Tag has been deleted.'));
 
-        return $this->redirect($this->generateUrl('settings-tag'));
+        return $this->redirect($this->generateUrl('settings-tags'));
     }
 }

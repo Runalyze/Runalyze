@@ -22,4 +22,10 @@ class TagRepository extends EntityRepository
         $this->_em->persist($tag);
         $this->_em->flush();
     }
+
+    public function remove(Tag $tag)
+    {
+        $this->_em->remove($tag);
+        $this->_em->flush();
+    }
 }

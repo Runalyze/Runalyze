@@ -69,8 +69,7 @@
                 <li><a class="window" href="<?php echo $this->get('router')->generate('settings'); ?>?key=config_tab_sports"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('Sport types'); ?></a></li>
                 <li><a class="window" href="<?php echo $this->get('router')->generate('settings'); ?>?key=config_tab_types"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('Activity types'); ?></a></li>
                 <li><a class="window" href="<?php echo $this->get('router')->generate('settings'); ?>?key=config_tab_equipment"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('Equipment'); ?></a></li>
-                <li><a class="window" data-size="small" href="<?php echo $this->get('router')->generate('settings-tag'); ?>"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('Activity tags'); ?></a></li>
-
+                <li><a class="window" data-size="small" href="<?php echo $this->get('router')->generate('settings-tags'); ?>"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('Activity tags'); ?></a></li>
             </ul>
         </div>
 

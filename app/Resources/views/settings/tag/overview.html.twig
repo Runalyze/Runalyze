@@ -1,4 +1,3 @@
-
 {% extends "base_logged_in.twig" %}
 
 {% block content %}
@@ -7,32 +6,36 @@
     </div>
 
     <div class="panel-content">
-        <p class="info">{% trans %}This list shows all your activity tags.{% endtrans %}{% trans %}You can add new tags in the activity form.{% endtrans %}</p>
-        <table id="sports" class="fullwidth zebra-style">
+        <p class="info">
+            {% trans %}This list shows all your activity tags.{% endtrans %}
+            {% trans %}You can add new tags in the activity form.{% endtrans %}
+        </p>
+
+        <table id="sports" class="zebra-style w100 more-more-padding">
             <thead>
-            <tr>
-                <thb colspan="1">&nbsp;</thb>
-                <th colspan="3">{{ 'Tag'|trans }}</th>
-            </tr>
+                <tr>
+                    <th>&nbsp;</th>
+                    <th>{{ 'Tag'|trans }}</th>
+                </tr>
             </thead>
-            <tbody class="c">
+            <tbody>
             {% if tags|length > 0 %}
                 {% for tag in tags %}
                     {# @var tag \Runalyze\Bundle\CoreBundle\Entity\Tag #}
                     <tr>
-                        <td colspan="1">
-                            <a class="window" href="{{ url('tag-edit', {'id': tag.id}) }}"><i class="fa fa-fw fa-pencil"></i></a>
-                            <a class="window" href="{{ url('tag-delete', { 'id': tag.id, 't': csrf_token('deleteTag') }) }}"><i class="fa fa-trash" title="{% trans %}Delete{% endtrans %}"></i></a>
+                        <td class="as-small-as-possible">
+                            <a class="window" href="{{ url('settings-tags-edit', {'id': tag.id}) }}"><i class="fa fa-fw fa-pencil" title="{% trans %}Edit{% endtrans %}"></i></a>
+                            <a class="window" href="{{ url('my-search') }}?get=true&amp;tagid={{ tag.id }}" data-size="big"><i class="fa fa-fw fa-search" title="{% trans %}Search activities{% endtrans %}"></i></a>
+                            <a class="window" href="{{ url('settings-tags-delete', { 'id': tag.id, 't': csrf_token('deleteTag') }) }}" data-confirm="{% trans %}Do you really want to delete this?{% endtrans %}"><i class="fa fa-trash" title="{% trans %}Delete{% endtrans %}"></i></a>
                         </td>
-                        <td colspan="3">{{ tag.tag }}</td>
+                        <td>{{ tag.tag }}</td>
                     </tr>
                 {% endfor %}
-                {% else %}
-            <tr><td colspan="2">{% trans %}You don't have any activity tags.{% endtrans %}<br>
-                    {% endif %}
+            {% else %}
+                <tr><td colspan="2"><em>{% trans %}You don't have any activity tags.{% endtrans %}</em></td></tr>
+            {% endif %}
             </tbody>
         </table>
     </div>
-
 
 {% endblock %}
