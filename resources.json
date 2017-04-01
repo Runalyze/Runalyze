@@ -46,6 +46,7 @@
       "./lib/runalyze.lib.statistics.js",
       "./lib/runalyze.lib.training.js",
       "./lib/runalyze.lib.feature.js",
+      "./lib/runalyze.lib.notifications.js",
 
       "./lib/flot-0.8.3/base64.js",
       "./lib/flot-0.8.3/jquery.flot.min.js",
@@ -76,7 +77,10 @@
       "./web/vendor/fontIconPicker/jquery.fonticonpicker.js",
 
       "./web/vendor/moment/moment.js",
-      "./web/vendor/moment-timezone/builds/moment-timezone-with-data-2010-2020.js"
+      "./web/vendor/moment-timezone/builds/moment-timezone-with-data-2010-2020.js",
+
+      "./web/vendor/ifvisible.js/src/ifvisible.js",
+      "./web/vendor/jquery-timeago/jquery.timeago.js"
     ],
     "dest": "./web/assets/js"
   }

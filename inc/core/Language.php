@@ -106,7 +106,7 @@ class Language implements InterfaceChoosable
         setlocale(LC_ALL, $locale);
         setlocale(LC_NUMERIC, 'C');
 
-        if (!isset($_COOKIE[self::COOKIE_KEY]) || $_COOKIE[self::COOKIE_KEY] != $language) {
+        if (!headers_sent() && (!isset($_COOKIE[self::COOKIE_KEY]) || $_COOKIE[self::COOKIE_KEY] != $language)) {
             setcookie(self::COOKIE_KEY, $language);
         }
 

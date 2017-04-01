@@ -198,8 +198,6 @@ class Frontend {
 
 		if (!Request::isAjax() && !isset($_GET['hideHtmlHeader']))
 			include 'tpl/tpl.Frontend.header.php';
-
-		Error::getInstance()->header_sent = true;
 	}
 
 	/**

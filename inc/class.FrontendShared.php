@@ -17,8 +17,6 @@ class FrontendShared extends Frontend {
 	 */
 	public function displayHeader() {
 		self::$IS_SHOWN  = true;
-
-		Error::getInstance()->header_sent = true;
 	}
 
 	/**

@@ -118,3 +118,41 @@ body {
 #menu-link {
 	display: none;
 }
+
+#new-notifications-menu {
+	.no-notifications-messages {
+		text-align: center;
+	}
+
+	.submenu-label .fa {
+		position: relative;
+	}
+
+	.new-notifications-indicator {
+		position: absolute;
+		top: -6px;
+		right: -6px;
+		z-index: (@z-index-headline + 1);
+		width: 8px;
+		height: 8px;
+		background-color: #67b957;
+		background-image: linear-gradient(#67b957, #3f9235);
+		background-clip: padding-box;
+		border: 2px solid @headline-background;
+		border-radius: 50%;
+	}
+
+	.notification-message {
+		color: @headline-tab-color !important;
+		width: 200px;
+		white-space: normal;
+
+		&.is-new {
+			color: @headline-tab-color-hover !important;
+		}
+
+		a {
+			color: inherit !important;
+		}
+	}
+}
