@@ -406,7 +406,7 @@ class Sport
      *
      * @return $this
      */
-    public function setMain($isMain = true)
+    public function setIsMain($isMain = true)
     {
         $this->isMain = $isMain;
 
