@@ -213,7 +213,7 @@ class CreateNotificationCommand extends ContainerAwareCommand
         }
 
         if (!empty($lang)) {
-            return '`a`.`language` '.($exclude ? 'NOT' : '').' IN ('.implode(', ', $lang).')';
+            return '`a`.`language` '.($exclude ? 'NOT' : '').' IN ("'.implode('", "', $lang).'")';
         }
 
         return '1';
