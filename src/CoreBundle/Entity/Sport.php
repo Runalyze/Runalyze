@@ -3,6 +3,10 @@
 namespace Runalyze\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Runalyze\Metrics\Velocity\Unit\AbstractPaceUnit;
+use Runalyze\Metrics\Velocity\Unit\PaceEnum;
+use Runalyze\Profile\Sport\AbstractSport;
+use Runalyze\Profile\Sport\SportProfile;
 
 /**
  * Sport
@@ -13,7 +17,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Sport
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer", options={"unsigned":true})
      * @ORM\Id
@@ -38,19 +42,19 @@ class Sport
     /**
      * @var bool
      *
-     * @ORM\Column(name="short", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
+     * @ORM\Column(name="short", type="boolean", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
      */
-    private $short = 0;
+    private $short = false;
 
     /**
-     * @var integer
+     * @var int [kcal/h]
      *
      * @ORM\Column(name="kcal", type="smallint", precision=4, nullable=false, options={"unsigned":true, "default":0})
      */
     private $kcal = 0;
 
     /**
-     * @var integer
+     * @var int [bpm]
      *
      * @ORM\Column(name="HFavg", columnDefinition="tinyint unsigned NOT NULL DEFAULT 120")
      */
@@ -64,28 +68,28 @@ class Sport
     private $distances = true;
 
     /**
-     * @var string
+     * @var int see \Runalyze\Metrics\Velocity\Unit\PaceEnum
      *
-     * @ORM\Column(name="speed", type="string", length=10, nullable=false, options={"default":"min/km"})
+     * @ORM\Column(name="speed", columnDefinition="tinyint unsigned NOT NULL DEFAULT 6")
      */
-    private $speed = 'min/km';
+    private $speed = 6;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="power", type="boolean", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
      */
     private $power = false;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="outside", type="boolean", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
      */
     private $outside = false;
 
     /**
-     * @var \Runalyze\Bundle\CoreBundle\Entity\EquipmentType
+     * @var EquipmentType|null
      *
      * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\EquipmentType")
      * @ORM\JoinColumns({
@@ -95,7 +99,7 @@ class Sport
     private $mainEquipmenttype;
 
     /**
-     * @var integer
+     * @var Type|null
      *
      * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Type")
      * @ORM\JoinColumns({
@@ -105,21 +109,26 @@ class Sport
     private $defaultType;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="is_main", type="boolean", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
      */
     private $isMain = false;
 
     /**
-     * @var integer
+     * @var int|null see \Runalyze\Profile\Sport\SportProfile
      *
-     * @ORM\Column(name="internal_sport_id", columnDefinition="tinyint unsigned NOT NULL DEFAULT 120")
+     * @ORM\Column(name="internal_sport_id", nullable=true, columnDefinition="tinyint NULL")
      */
-    private $internalSportId = 0;
+    private $internalSportId = null;
 
     /**
-     * @var \Runalyze\Bundle\CoreBundle\Entity\Account
+     * @var AbstractSport|null
+     */
+    private $internalSport = null;
+
+    /**
+     * @var Account
      *
      * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Account")
      * @ORM\JoinColumns({
@@ -150,19 +159,13 @@ class Sport
      */
     protected $trainings;
 
-    /**
-     * Constructor
-     */
     public function __construct()
     {
         $this->equipmentType = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-
     /**
-     * Get id
-     *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -170,11 +173,9 @@ class Sport
     }
 
     /**
-     * Set name
-     *
      * @param string $name
      *
-     * @return Sport
+     * @return $this
      */
     public function setName($name)
     {
@@ -184,8 +185,6 @@ class Sport
     }
 
     /**
-     * Get name
-     *
      * @return string
      */
     public function getName()
@@ -194,11 +193,9 @@ class Sport
     }
 
     /**
-     * Set img
-     *
      * @param string $img
      *
-     * @return Sport
+     * @return $this
      */
     public function setImg($img)
     {
@@ -208,8 +205,6 @@ class Sport
     }
 
     /**
-     * Get img
-     *
      * @return string
      */
     public function getImg()
@@ -218,11 +213,9 @@ class Sport
     }
 
     /**
-     * Set short
-     *
      * @param bool $short
      *
-     * @return Sport
+     * @return $this
      */
     public function setShort($short)
     {
@@ -233,7 +226,6 @@ class Sport
 
     /**
      * Get short
-     *
      * @return bool
      */
     public function getShort()
@@ -242,11 +234,9 @@ class Sport
     }
 
     /**
-     * Set kcal
+     * @param int $kcal [kcal/h]
      *
-     * @param integer $kcal
-     *
-     * @return Sport
+     * @return $this
      */
     public function setKcal($kcal)
     {
@@ -256,9 +246,7 @@ class Sport
     }
 
     /**
-     * Get kcal
-     *
-     * @return integer
+     * @return int [kcal/h]
      */
     public function getKcal()
     {
@@ -266,23 +254,19 @@ class Sport
     }
 
     /**
-     * Set hfavg
+     * @param int $bpm [bpm]
      *
-     * @param integer $hfavg
-     *
-     * @return Sport
+     * @return $this
      */
-    public function setHfavg($hfavg)
+    public function setHfavg($bpm)
     {
-        $this->hfavg = $hfavg;
+        $this->hfavg = $bpm;
 
         return $this;
     }
 
     /**
-     * Get hfavg
-     *
-     * @return integer
+     * @return int [bpm]
      */
     public function getHfavg()
     {
@@ -290,11 +274,9 @@ class Sport
     }
 
     /**
-     * Set distances
-     *
      * @param bool $distances
      *
-     * @return Sport
+     * @return $this
      */
     public function setDistances($distances)
     {
@@ -304,8 +286,6 @@ class Sport
     }
 
     /**
-     * Get distances
-     *
      * @return bool
      */
     public function getDistances()
@@ -314,11 +294,9 @@ class Sport
     }
 
     /**
-     * Set speed
+     * @param int $speed see \Runalyze\Metrics\Velocity\Unit\PaceEnum
      *
-     * @param string $speed
-     *
-     * @return Sport
+     * @return $this
      */
     public function setSpeed($speed)
     {
@@ -328,9 +306,7 @@ class Sport
     }
 
     /**
-     * Get speed
-     *
-     * @return string
+     * @return int see \Runalyze\Metrics\Velocity\Unit\PaceEnum
      */
     public function getSpeed()
     {
@@ -338,11 +314,17 @@ class Sport
     }
 
     /**
-     * Set power
-     *
+     * @return AbstractPaceUnit
+     */
+    public function getSpeedUnit()
+    {
+        return PaceEnum::get($this->speed);
+    }
+
+    /**
      * @param bool $power
      *
-     * @return Sport
+     * @return $this
      */
     public function setPower($power)
     {
@@ -352,8 +334,6 @@ class Sport
     }
 
     /**
-     * Get power
-     *
      * @return bool
      */
     public function getPower()
@@ -362,11 +342,9 @@ class Sport
     }
 
     /**
-     * Set outside
-     *
      * @param bool $outside
      *
-     * @return Sport
+     * @return $this
      */
     public function setOutside($outside)
     {
@@ -376,8 +354,6 @@ class Sport
     }
 
     /**
-     * Get outside
-     *
      * @return bool
      */
     public function getOutside()
@@ -386,13 +362,11 @@ class Sport
     }
 
     /**
-     * Set mainEquipmenttype
+     * @param EquipmentType|null $mainEquipmenttype
      *
-     * @param \Runalyze\Bundle\CoreBundle\Entity\EquipmentType $mainEquipmenttype
-     *
-     * @return Sport
+     * @return $this
      */
-    public function setMainEquipmenttype(\Runalyze\Bundle\CoreBundle\Entity\EquipmentType $mainEquipmenttype = null)
+    public function setMainEquipmenttype(EquipmentType $mainEquipmenttype = null)
     {
         $this->mainEquipmenttype = $mainEquipmenttype;
 
@@ -400,9 +374,7 @@ class Sport
     }
 
     /**
-     * Get mainEquipmenttype
-     *
-     * @return \Runalyze\Bundle\CoreBundle\Entity\EquipmentType
+     * @return EquipmentType|null
      */
     public function getMainEquipmenttype()
     {
@@ -410,13 +382,11 @@ class Sport
     }
 
     /**
-     * Set defaultType
+     * @param Type $defaultType
      *
-     * @param \Runalyze\Bundle\CoreBundle\Entity\Type $defaultType
-     *
-     * @return Sport
+     * @return $this
      */
-    public function setDefaultType(\Runalyze\Bundle\CoreBundle\Entity\Type $defaultType = null)
+    public function setDefaultType(Type $defaultType = null)
     {
         $this->defaultType = $defaultType;
 
@@ -424,9 +394,7 @@ class Sport
     }
 
     /**
-     * Get defaultType
-     *
-     * @return \Runalyze\Bundle\CoreBundle\Entity\Type
+     * @return Type|null
      */
     public function getDefaultType()
     {
@@ -434,13 +402,11 @@ class Sport
     }
 
     /**
-     * Set is main
-     *
      * @param bool $isMain
      *
-     * @return Sport
+     * @return $this
      */
-    public function setIsMain($isMain)
+    public function setMain($isMain = true)
     {
         $this->isMain = $isMain;
 
@@ -448,33 +414,36 @@ class Sport
     }
 
     /**
-     * Get is main
-     *
      * @return bool
      */
-    public function getIsMain()
+    public function isMain()
     {
         return $this->isMain;
     }
 
     /**
-     * Set internal sport id
+     * @param int|null $internalSportId see \Runalyze\Profile\Sport\SportProfile
      *
-     * @param integer $internalSportId
-     *
-     * @return Sport
+     * @return $this
      */
     public function setInternalSportId($internalSportId)
     {
         $this->internalSportId = $internalSportId;
+        $this->internalSport = null;
 
         return $this;
     }
 
     /**
-     * Get internal sport id
-     *
-     * @return integer
+     * @return bool
+     */
+    public function hasInternalSportId()
+    {
+        return null !== $this->internalSportId && SportProfile::GENERIC != $this->internalSportId;
+    }
+
+    /**
+     * @return int|null see \Runalyze\Profile\Sport\SportProfile
      */
     public function getInternalSportId()
     {
@@ -482,13 +451,30 @@ class Sport
     }
 
     /**
-     * Set account
-     *
-     * @param \Runalyze\Bundle\CoreBundle\Entity\Account $account
-     *
-     * @return Sport
+     * @return null|AbstractSport
      */
-    public function setAccount(\Runalyze\Bundle\CoreBundle\Entity\Account $account = null)
+    public function getInternalSport()
+    {
+        if (null === $this->internalSport) {
+            $id = null === $this->internalSportId ? SportProfile::GENERIC : $this->internalSportId;
+
+            try {
+                $this->internalSport = SportProfile::get($id);
+            } catch (\InvalidArgumentException $e) {
+                $this->internalSportId = null;
+                $this->internalSport = SportProfile::get(SportProfile::GENERIC);
+            }
+        }
+
+        return $this->internalSport;
+    }
+
+    /**
+     * @param Account $account
+     *
+     * @return $this
+     */
+    public function setAccount(Account $account)
     {
         $this->account = $account;
 
@@ -496,9 +482,7 @@ class Sport
     }
 
     /**
-     * Get account
-     *
-     * @return \Runalyze\Bundle\CoreBundle\Entity\Account
+     * @return Account
      */
     public function getAccount()
     {
@@ -506,13 +490,11 @@ class Sport
     }
 
     /**
-     * Add equipmentType
+     * @param EquipmentType $equipmentType
      *
-     * @param \Runalyze\Bundle\CoreBundle\Entity\EquipmentType $equipmentType
-     *
-     * @return Sport
+     * @return $this
      */
-    public function addEquipmentType(\Runalyze\Bundle\CoreBundle\Entity\EquipmentType $equipmentType)
+    public function addEquipmentType(EquipmentType $equipmentType)
     {
         $this->equipmentType[] = $equipmentType;
 
@@ -520,18 +502,14 @@ class Sport
     }
 
     /**
-     * Remove equipmentType
-     *
-     * @param \Runalyze\Bundle\CoreBundle\Entity\EquipmentType $equipmentType
+     * @param EquipmentType $equipmentType
      */
-    public function removeEquipmentType(\Runalyze\Bundle\CoreBundle\Entity\EquipmentType $equipmentType)
+    public function removeEquipmentType(EquipmentType $equipmentType)
     {
         $this->equipmentType->removeElement($equipmentType);
     }
 
     /**
-     * Get equipmentType
-     *
      * @return \Doctrine\Common\Collections\Collection
      */
     public function getEquipmentType()
@@ -540,8 +518,6 @@ class Sport
     }
 
     /**
-     * Get trainings
-     *
      * @return \Doctrine\Common\Collections\Collection
      */
     public function getTrainings()

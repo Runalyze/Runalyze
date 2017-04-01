@@ -31,16 +31,15 @@ class SportRepository extends EntityRepository
 
     /**
      * @param Account $account
-     * @return Sport[]
+     * @return array internal sport ids
      */
     public function getUsedInternalSportIdsFor(Account $account)
     {
-        $qb = $this->_em->createQueryBuilder();
-        $queryBuilder = $qb
+        $queryBuilder = $this->createQueryBuilder('s');
+        $queryBuilder
             ->select('s.internalSportId')
-            ->from('CoreBundle:Sport', 's')
             ->where('s.account = :account')
-            ->andWhere($qb->expr()->isNotNull('s.internalSportId'))
+            ->andWhere($queryBuilder->expr()->isNotNull('s.internalSportId'))
             ->setParameter('account', $account->getId());
 
         return $queryBuilder->getQuery()->getResult("COLUMN_HYDRATOR");
@@ -49,6 +48,12 @@ class SportRepository extends EntityRepository
     public function save(Sport $sport)
     {
         $this->_em->persist($sport);
+        $this->_em->flush();
+    }
+
+    public function remove(Sport $sport)
+    {
+        $this->_em->remove($sport);
         $this->_em->flush();
     }
 }

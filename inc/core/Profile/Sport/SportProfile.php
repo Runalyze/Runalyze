@@ -33,7 +33,8 @@ class SportProfile extends AbstractEnum implements InterfaceChoosable
     /**
      * @return array
      */
-    static public function getChoices() {
+    public static function getChoices()
+    {
         return array(
             __('Generic') => self::GENERIC,
             __('Running') => self::RUNNING,
@@ -45,14 +46,17 @@ class SportProfile extends AbstractEnum implements InterfaceChoosable
     }
 
     /**
+     * @param array $usedIds
      * @return array
      */
-    static public function getAvailableChoices($usedIds) {
+    public static function getAvailableChoices(array $usedIds)
+    {
         $availableIds = array_flip(self::getChoices());
+
         foreach ($usedIds as $id) {
             unset($availableIds[$id]);
         }
-        return array_flip($availableIds);
 
+        return array_flip($availableIds);
     }
 }

@@ -17,7 +17,7 @@ class SportRelevance extends AbstractEnum implements InterfaceChoosable
      * @param int $id id from internal enum
      * @return string
      */
-    static public function stringFor($id)
+    public static function stringFor($id)
     {
         switch ($id) {
             case self::ALTERNATIVE_SPORT:
@@ -32,7 +32,8 @@ class SportRelevance extends AbstractEnum implements InterfaceChoosable
     /**
      * @return array
      */
-    static public function getChoices() {
+    public static function getChoices()
+    {
         return array(
             self::stringFor(self::ALTERNATIVE_SPORT) => self::ALTERNATIVE_SPORT,
             self::stringFor(self::MAIN_SPORT) => self::MAIN_SPORT

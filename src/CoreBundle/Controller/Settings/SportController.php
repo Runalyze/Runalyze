@@ -4,19 +4,18 @@ namespace Runalyze\Bundle\CoreBundle\Controller\Settings;
 
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\Sport;
-use Runalyze\Bundle\CoreBundle\Entity\Training;
+use Runalyze\Bundle\CoreBundle\Entity\SportRepository;
 use Runalyze\Bundle\CoreBundle\Entity\TrainingRepository;
 use Runalyze\Bundle\CoreBundle\Entity\Type;
 use Runalyze\Bundle\CoreBundle\Entity\TypeRepository;
 use Runalyze\Bundle\CoreBundle\Form;
+use Runalyze\Bundle\CoreBundle\Services\AutomaticReloadFlagSetter;
 use Runalyze\Profile\View\DataBrowserRowProfile;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Runalyze\Bundle\CoreBundle\Services\AutomaticReloadFlagSetter;
 
 /**
  * @Route("/settings/sport")
@@ -50,14 +49,12 @@ class SportController extends Controller
 
 
     /**
-     * @Route("/", name="settings-sports")
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("", name="settings-sports")
      */
     public function overviewAction(Account $account)
     {
-        $sport = $this->getSportRepository()->findAllFor($account);
         return $this->render('settings/sport/overview.html.twig', [
-            'sports' => $sport,
+            'sports' => $this->getSportRepository()->findAllFor($account),
             'hasTrainings' => array_flip($this->getTrainingRepository()->getSportsWithTraining($account)),
             'calendarView' => new DataBrowserRowProfile()
         ]);
@@ -65,7 +62,6 @@ class SportController extends Controller
 
     /**
      * @Route("/type/add", name="sport-type-add")
-     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function typeAddAction(Request $request, Account $account)
     {
@@ -89,10 +85,6 @@ class SportController extends Controller
     /**
      * @Route("/type/{id}/edit", name="sport-type-edit")
      * @ParamConverter("type", class="CoreBundle:Type")
-     * @param Request $request
-     * @param Type $type
-     * @param Account $account
-     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function typeEditAction(Request $request, Type $type, Account $account)
     {
@@ -108,6 +100,7 @@ class SportController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getTypeRepository()->save($type);
             $this->get('app.automatic_reload_flag_setter')->set(AutomaticReloadFlagSetter::FLAG_DATA_BROWSER);
+
             return $this->redirectToRoute('sport-type-edit', ['id' => $type->getId()]);
         }
 
@@ -124,8 +117,10 @@ class SportController extends Controller
     {
         if (!$this->isCsrfTokenValid('deleteSportType', $request->get('t'))) {
             $this->addFlash('notice', $this->get('translator')->trans('Invalid token.'));
-            return $this->redirect($this->generateUrl('sport-overview'));
+
+            return $this->redirect($this->generateUrl('settings-sports'));
         }
+
         if ($type->getAccount()->getId() != $account->getId()) {
             throw $this->createNotFoundException();
         }
@@ -137,9 +132,9 @@ class SportController extends Controller
             $this->get('app.automatic_reload_flag_setter')->set(AutomaticReloadFlagSetter::FLAG_DATA_BROWSER);
             $this->addFlash('notice', $this->get('translator')->trans('Activity type has been deleted.'));
         } else {
-            $this->addFlash('notice', $this->get('translator')->trans('Activity type cannot be delete. You have activities associated with this type.'));
+            $this->addFlash('notice', $this->get('translator')->trans('Activity type cannot be deleted.').' '.$this->get('translator')->trans('You have activities associated with this type.'));
         }
-        return $this->redirect($this->generateUrl('sport-overview'));
+        return $this->redirect($this->generateUrl('settings-sports'));
     }
 
     /**
@@ -158,10 +153,11 @@ class SportController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getSportRepository()->save($sport);
             $this->get('app.automatic_reload_flag_setter')->set(AutomaticReloadFlagSetter::FLAG_DATA_BROWSER);
-            return $this->redirectToRoute('sport-type-edit', ['id' => $sport->getType()->getId()]);
+
+            return $this->redirectToRoute('sport-type-edit', ['id' => $sport->getId()]);
         }
 
-        return $this->render('my/sport/form-sport.html.twig', [
+        return $this->render('settings/sport/form-sport.html.twig', [
             'form' => $form->createView()
         ]);
     }
@@ -169,10 +165,6 @@ class SportController extends Controller
     /**
      * @Route("/{id}/edit", name="sport-edit")
      * @ParamConverter("sport", class="CoreBundle:Sport")
-     * @param Request $request
-     * @param Sport $sport
-     * @param Account $account
-     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function sportEditAction(Request $request, Sport $sport, Account $account)
     {
@@ -185,8 +177,9 @@ class SportController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getSportRepository()->save($sport, $account);
+            $this->getSportRepository()->save($sport);
             $this->get('app.automatic_reload_flag_setter')->set(AutomaticReloadFlagSetter::FLAG_DATA_BROWSER);
+
             return $this->redirectToRoute('sport-edit', ['id' => $sport->getId()]);
         }
 
@@ -206,25 +199,22 @@ class SportController extends Controller
     {
         if (!$this->isCsrfTokenValid('deleteSport', $request->get('t'))) {
             $this->addFlash('notice', $this->get('translator')->trans('Invalid token.'));
-            return $this->redirect($this->generateUrl('sport-edit', ['id' => $sport->getType()->getId()]));
+
+            return $this->redirect($this->generateUrl('sport-edit', ['id' => $sport->getId()]));
         }
+
         if ($sport->getAccount()->getId() != $account->getId()) {
             throw $this->createNotFoundException();
         }
-        if ($sport->getTrainings()->count() == NULL) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($type);
-            $em->flush();
+
+        if (0 == $sport->getTrainings()->count()) {
+            $this->getSportRepository()->remove($sport);
             $this->get('app.automatic_reload_flag_setter')->set(AutomaticReloadFlagSetter::FLAG_DATA_BROWSER);
-            $this->addFlash('notice', $this->get('translator')->trans('Sport has been deleted.'));
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($sport);
-        $em->flush();
-        $this->get('app.automatic_reload_flag_setter')->set(AutomaticReloadFlagSetter::FLAG_DATA_BROWSER);
-        $this->addFlash('notice', $this->get('translator')->trans('Sport has been deleted.'));
+            $this->addFlash('notice', $this->get('translator')->trans('Sport type has been deleted.'));
         } else {
-            $this->addFlash('notice', $this->get('translator')->trans('Sport cannot be delete. You have activities associated with this type.'));
+            $this->addFlash('notice', $this->get('translator')->trans('Sport type cannot be deleted.').' '.$this->get('translator')->trans('You have activities associated with this type.'));
         }
+
         return $this->redirect($this->generateUrl('settings-sports'));
     }
 }

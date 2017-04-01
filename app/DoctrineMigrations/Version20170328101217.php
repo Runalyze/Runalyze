@@ -4,9 +4,9 @@ namespace Runalyze\Migrations;
 
 use Doctrine\DBAL\Migrations\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
+use Runalyze\Metrics\Velocity\Unit\PaceEnum;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Runalyze\Metrics\Velocity\Unit\PaceEnum;
 
 class Version20170328101217 extends AbstractMigration implements ContainerAwareInterface
 {
@@ -36,7 +36,7 @@ class Version20170328101217 extends AbstractMigration implements ContainerAwareI
         $this->addSql('UPDATE `'.$prefix.'sport` SET `speed`='.PaceEnum::SECONDS_PER_500Y.' WHERE `speed`="min/500y"');
 
         $this->addSql('UPDATE `'.$prefix.'sport` SET `speed`='.PaceEnum::SECONDS_PER_KILOMETER.' WHERE `speed` NOT IN ("0","1","2","3","4","5","6","7","8")');
-        $this->addSql('ALTER TABLE `'.$prefix.'sport` MODIFY `speed` tinyint unsigned NOT NULL DEFAULT 0');
+        $this->addSql('ALTER TABLE `'.$prefix.'sport` MODIFY `speed` tinyint unsigned NOT NULL DEFAULT 6');
     }
 
     /**
@@ -55,7 +55,5 @@ class Version20170328101217 extends AbstractMigration implements ContainerAwareI
         $this->addSql('UPDATE `'.$prefix.'sport` SET `speed`="min/100y" WHERE `speed`="'.PaceEnum::SECONDS_PER_100Y.'"');
         $this->addSql('UPDATE `'.$prefix.'sport` SET `speed`="min/500m" WHERE `speed`="'.PaceEnum::SECONDS_PER_500M.'"');
         $this->addSql('UPDATE `'.$prefix.'sport` SET `speed`="min/500y" WHERE `speed`="'.PaceEnum::SECONDS_PER_500Y.'"');
-
-
     }
 }
