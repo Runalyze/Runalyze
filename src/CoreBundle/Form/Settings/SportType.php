@@ -100,7 +100,8 @@ class SportType extends AbstractType
                 'label' => 'avg. HR'
             ])
             ->add('speed', ChoiceType::class, [
-                'choices' => PaceEnum::getChoices()
+                'choices' => PaceEnum::getChoices(),
+                'label' => 'Speed unit'
             ])
             ->add('mainEquipmenttype', ChoiceType::class, [
                 'required' => false,
@@ -119,6 +120,10 @@ class SportType extends AbstractType
                 'required' => false,
                 'choices' => $this->getFilteredChoicesForInternalSportId($usedInternalSportIds, $sport),
                 'choice_translation_domain' => false,
+                'placeholder' => 'None (custom sport type)',
+                'preferred_choices' => function ($val, $key) {
+                    return '' == $key;
+                },
                 'label' => 'Internal sport type',
                 'disabled' => $isRunning
             ])
@@ -133,7 +138,10 @@ class SportType extends AbstractType
                 'required' => false,
                 'choices' => $activityTypes,
                 'choice_label' => 'name',
-                'placeholder' => 'Choose a default activity type',
+                'placeholder' => 'None',
+                'preferred_choices' => function ($val, $key) {
+                    return '' == $key;
+                },
                 'label' => 'Default activity type'
             ]);
         }
@@ -153,7 +161,7 @@ class SportType extends AbstractType
             unset($choicesWithIdsAsKeys[SportProfile::GENERIC]);
         }
 
-        return [__('None (custom sport type)') => ''] + array_flip($choicesWithIdsAsKeys);
+        return array_flip($choicesWithIdsAsKeys);
     }
 
     public function configureOptions(OptionsResolver $resolver)

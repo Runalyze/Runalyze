@@ -31,7 +31,7 @@
                         <td><i class="{{ sport.img }}"></i></td>
                         <td>{{ sport.name }}</td>
                         <td>{% if sport.main %}<i class="fa fa-check"></i>{% endif %}</td>
-                        <td class="small">{{ sport.speedUnit.unit }}</td>
+                        <td class="small">{{ sport.distances ? sport.speedUnit.unit : '' }}</td>
                         <td>{{ calendarView.stringFor(sport.short) }}</td>
                         <td>
                             {% if hasTrainings[sport.id] is not defined %}
@@ -55,7 +55,9 @@
         <table class="blocklist fullwidth">
             <tr>
                 <td><a class="window w100" href="{{ url('sport-add') }}"><i class="fa fa-cube"></i> <strong>{{ 'Add a sport type'|trans }}</strong></a></td>
-                <td><a class="window w100" href="{{ url('sport-type-add') }}"><i class="fa fa-cubes"></i> <strong>{{ 'Add an activity type'|trans }}</strong></a></td>
+                <!-- Drop-down for available sport types would be pretty cool -->
+
+                <td><a class="window w100" href="{{ url('sport-add') }}"><i class="fa fa-cube"></i> <strong>{{ 'Add a custom sport type'|trans }}</strong></a></td>
             </tr>
         </table>
     </div>

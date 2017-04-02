@@ -2,6 +2,9 @@
 
 {% from '_macro/form.html.twig' import dangerZoneDelete, addOrUpdateButton %}
 
+{% set configList = config().activityForm %}
+{# @var configList \Runalyze\Bundle\CoreBundle\Component\Configuration\Category\ActivityForm #}
+
 {% block content %}
     <div class="panel-heading">
         {% if form.vars.data.id is null%}
@@ -21,30 +24,48 @@
 
             {{ form_row(form.internalSportId, {'div_class': 'w100 block with50erLabel'}) }}
             <p class="info margin-bottom">
-                {% trans %}You can define any sport type you like, but for synchronization and comparisons you can map any of your sport types to our predefined sport types.
+                {% trans %}You can define any sport type you like, but for synchronization and comparisons you can map your sport types to our predefined ones.
                 This mapping will be used to set the correct sport type when importing your activities.{% endtrans %}
             </p>
 
             {{ form_row(form.isMain, {'div_class': 'w100 block with50erLabel'}) }}
             <p class="info margin-bottom-2x">
-                {% trans %}You can group your sport types into 'main' sport types and 'alternative' sport types.
-                For some analyses 'alternative' sport types are grouped together whereas 'main' sport types are always shown standalone from other ones.{% endtrans %}
+                {% trans %}You can group your sport types into 'main' and 'alternative' ones.
+                For some analyses 'alternative' types are grouped together whereas 'main' types are always shown standalone from each other.{% endtrans %}
             </p>
 
-            {{ form_row(form.distances, {'div_class': 'w100 block checkbox-first'}) }}
-            {{ form_row(form.power, {'div_class': 'w100 block checkbox-first', 'help': 'Power is recorded or calculated.'}) }}
-            {{ form_row(form.outside, {'div_class': 'w100 block checkbox-first margin-bottom', 'help': 'Sport is performed outdoor: activate route, weather, ...'}) }}
-
             {% if form.defaultType %}
-                {{ form_row(form.defaultType, {'div_class': 'w100 block with50erLabel', 'help': 'Autoselected activity type e.g. during upload'}) }}
+                {{ form_row(form.defaultType, {'div_class': 'w100 block with50erLabel'}) }}
+                <p class="info margin-bottom">
+                    {% trans %}The default activity type will be selected automatically when importing activities.{% endtrans %}
+                </p>
             {% endif %}
 
-            {{ form_row(form.mainEquipmenttype, {'div_class': 'w100 block with50erLabel', 'help': 'Objects of main equipment type can be shown in the activity overview.'}) }}
-
             {{ form_row(form.kcal, {'div_class': 'w100 block with50erLabel', 'help': 'Average energy turnover in kilocalories per hour'}) }}
-            {{ form_row(form.HFavg, {'div_class': 'w100 block with50erLabel', 'help': 'Avg. HF is necessary for the calculation of TRIMP.', 'attr': {'class': 'small-size'}}) }}
+            {% if configList.computingEnergyActivated %}
+            <p class="info margin-bottom">
+                {% trans %}Energy turnover will be calculated based on this value when changing sport type or duration.{% endtrans %}
+            </p>
+            {% else %}
+                <p class="info margin-bottom">
+                    {% trans %}You have deactivated automatic calculation of energy turnover in your settings.{% endtrans %}
+                </p>
+            {% endif %}
+
+            {{ form_row(form.HFavg, {'div_class': 'w100 block with50erLabel', 'attr': {'class': 'small-size'}}) }}
+            <p class="info margin-bottom">
+                {% trans %}Average heart rate will be used as fallback for calculations like TRIMP if no heart rate data is available.{% endtrans %}
+            </p>
+
+            {{ form_row(form.power, {'div_class': 'w100 block checkbox-first', 'help': 'Power is recorded or calculated.'}) }}
+            {{ form_row(form.outside, {'div_class': 'w100 block checkbox-first', 'help': 'Sport is performed outdoor: activate route, weather, ...'}) }}
+            {{ form_row(form.distances, {'div_class': 'w100 block checkbox-first'}) }}
+
+            {{ form_row(form.speed, {'div_class': 'w100 block with50erLabel' ~ (form.vars.data.distances ? '' : ' hide')}) }}
+
             {{ form_row(form.short, {'div_class': 'w100 block with50erLabel', 'help': 'Mode for displaying activities in calendar'}) }}
-            {{ form_row(form.speed, {'div_class': 'w100 block with50erLabel'}) }}
+
+            {{ form_row(form.mainEquipmenttype, {'div_class': 'w100 block with50erLabel', 'help': 'Objects of main equipment type can be shown in the activity overview.'}) }}
 
             {{ form_rest(form) }}
 
@@ -55,6 +76,8 @@
 
         {{ form_rest(form) }}
         {{ form_end(form) }}
+
+        <script>$("#sport_distances").off('change').on('change', function(){$("#sport_speed").parent().toggleClass('hide', !$(this).is(':checked'))});</script>
     </div>
 
     {% if form.vars.data.id is not null%}
@@ -63,6 +86,11 @@
         </div>
 
         <div class="panel-content">
+            <p class="info margin-bottom">
+                {% trans %}Activity types are useful to separate your activities into different categories. An activity type can only belong to one sport type.{% endtrans %}
+            </p>
+
+            {% if types|length > 0 %}
             <table id="assigned-sport-types" class="fullwidth zebra-style more-padding">
                 <thead>
                 <tr>
@@ -76,7 +104,6 @@
                 </tr>
                 </thead>
                 <tbody class="c">
-                {% if types|length > 0 %}
                     {% for type in types %}
                         {# @var type \Runalyze\Bundle\CoreBundle\Entity\Type #}
                         <tr>
@@ -98,14 +125,13 @@
                             </td>
                         </tr>
                     {% endfor %}
-                {% else %}
-                    <tr><td colspan="6"><em>{% trans %}No activity type available.{% endtrans %}</em></td></tr>
-                {% endif %}
-                    <tr><td colspan="6">
-                        <a class="window" href="{{ url('sport-type-add') }}"><strong><i class="fa fa-fw fa-plus"></i> {{ 'Add activity type'|trans }}</strong></a>
-                    </td></tr>
                 </tbody>
             </table>
+            {% endif %}
+
+            <div class="c blocklist blocklist-width-auto">
+                <a class="window" href="{{ url('sport-type-add', {'sport_id': form.vars.data.id}) }}"><strong><i class="fa fa-fw fa-plus"></i> {{ 'Add activity type'|trans }}</strong></a>
+            </div>
         </div>
     {% endif %}
 
