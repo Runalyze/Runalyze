@@ -1,29 +1,17 @@
 {% extends "base_logged_in.twig" %}
 
 {% block content %}
-    <div class="panel-heading">
-        <h1>{{ 'Equipment'|trans }}</h1>
-    </div>
-
-    <div class="panel-content">
-        {% include 'flashmessages.html.twig' %}
-        <table>
-            <tr>
-            <td class="blocklist"><a class="window" href="{{ url('equipment-add') }}" title="{{ 'Add equipment'|trans }}"><i class="fa fa-cube"></i> <strong>{{ 'Add equipment'|trans }}</strong></a></td>
-            <td class="blocklist"><a class="window" href="{{ url('equipment-category-add') }}" title="{{ 'Add equipment category'|trans }}"><i class="fa fa-cubes"></i><strong>{{ 'Add equipment category'|trans }}</strong></a></td>
-        </tr>
-        </table>
-    </div>
-        <div class="panel-heading panel-inner-heading"><h1>{% trans %}Your equipment categories{% endtrans %}</h1></div>
+<div class="panel-heading"><h1>{% trans %}Your equipment categories{% endtrans %}</h1></div>
         <div class="panel-content">
+            {% include 'flashmessages.html.twig' %}
             <table id="equipment-categories" class="fullwidth zebra-style">
                 <thead>
                 <tr>
-                    <th class="{sorter: false}">&nbsp</th>
                     <th>{{ 'Name'|trans }}</th>
                     <th>{{ 'Type'|trans }}</th>
                     <th>{{ 'max Km.'|trans }}</th>
                     <th>{{ 'max Time.'|trans }}</th>
+                    <th class="{sorter: false}">&nbsp</th>
                 </tr>
                 </thead>
                 <tbody class="c">
@@ -31,9 +19,6 @@
                     {% for type in equipmentTypes %}
                         {# @var entry \Runalyze\Bundle\CoreBundle\Entity\EquipmentType #}
                         <tr>
-                            <td><a class="window" href="{{ url('equipment-category-edit', {'id': type.id}) }}"><i class="fa fa-fw fa-pencil"></i></a>
-                                <a class="window" href="{{ url('equipment-category-delete', { 'id': type.id, 't': csrf_token('deleteEquipmentCategory') }) }}"><i class="fa fa-trash" title="Delete"></i></a>
-                            </td>
                             <td>{{ type.name }}</td>
                             {% if type.input == 0 %}
                                 <td>{% trans %}Single choice{% endtrans %}</td>
@@ -42,8 +27,9 @@
                             {% endif %}
                             <td>{{ distance(type.maxKm, unitSystem.distanceUnit) }}</td>
                             <td>{{ type.maxTime|date('z H:i:s', 'UTC') }}</td>
-
-
+                            <td><a class="window" href="{{ url('equipment-category-edit', {'id': type.id}) }}"><i class="fa fa-fw fa-pencil"></i></a>
+                                <a class="window" href="{{ url('equipment-category-delete', { 'id': type.id, 't': csrf_token('deleteEquipmentCategory') }) }}"><i class="fa fa-trash" title="Delete"></i></a>
+                            </td>
                         </tr>
                     {% endfor %}
                 {% else %}
@@ -54,6 +40,18 @@
                 </tbody>
             </table>
         </div>
+
+    <div class="panel-heading panel-sub-heading">
+        <h1>{{ 'Equipment'|trans }}</h1>
+    </div>
+    <div class="panel-content">
+        <table>
+            <tr>
+                <td class="blocklist"><a class="window" href="{{ url('equipment-add') }}" title="{{ 'Add equipment'|trans }}"><i class="fa fa-cube"></i> <strong>{{ 'Add equipment'|trans }}</strong></a></td>
+                <td class="blocklist"><a class="window" href="{{ url('equipment-category-add') }}" title="{{ 'Add equipment category'|trans }}"><i class="fa fa-cubes"></i><strong>{{ 'Add equipment category'|trans }}</strong></a></td>
+            </tr>
+        </table>
+    </div>
 
 
 {% endblock %}
