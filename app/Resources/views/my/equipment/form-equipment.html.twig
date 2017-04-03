@@ -1,4 +1,5 @@
 {% extends "base_logged_in.twig" %}
+{% from '_macro/form.html.twig' import dangerZoneDelete %}
 
 {% block content %}
     <div class="panel-heading">
@@ -25,7 +26,6 @@
             {{ form_row(form.notes, {'div_class': 'w100 block'}) }}
 
             {{ form_rest(form) }}
-
             <div class="c">
                 <div class="c">
                     {% if form.vars.data.id is null%}
@@ -39,13 +39,10 @@
         {{ form_end(form) }}
 
         {% if form.vars.data.id is not null%}
-        <div class="c">
-            <form action="{{ url('equipment-delete', {'id': form.vars.data.id}) }}" class="window ajax">
-                <div class="c">
-                    <input type="hidden" name="t" value="{{ csrf_token('deleteEquipment') }}" />
-                    <input type="submit" class="danger" value="{% trans %}Delete{% endtrans %}" />
-                </div>
-            </form>
+            <p class="text margin-top">
+                <a class="window" href="{{ url('equipment-category-edit', {'id': form.vars.data.type.id}) }}">&laquo; {% trans %}back to list{% endtrans %}</a>
+            </p>
+            {{ dangerZoneDelete(url('equipment-delete', {'id': form.vars.data.id}), 'deleteEquipment') }}
         {% endif %}
         </div>
         <p class="info">{% trans %}If you delete an equipment object all relations between your activities and this object will be deleted.{% endtrans %}</p>

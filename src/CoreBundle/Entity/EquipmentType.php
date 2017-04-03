@@ -62,7 +62,7 @@ class EquipmentType
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Sport", mappedBy="equipmentType")
+     * @ORM\ManyToMany(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Sport")
      * @ORM\JoinTable(name="equipment_sport",
      *   joinColumns={
      *     @ORM\JoinColumn(name="equipment_typeid", referencedColumnName="id")

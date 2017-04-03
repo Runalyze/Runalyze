@@ -7,11 +7,11 @@
             <table id="equipment-categories" class="fullwidth zebra-style">
                 <thead>
                 <tr>
+                    <th>&nbsp;</th>
                     <th>{{ 'Name'|trans }}</th>
                     <th>{{ 'Type'|trans }}</th>
                     <th>{{ 'max Km.'|trans }}</th>
                     <th>{{ 'max Time.'|trans }}</th>
-                    <th class="{sorter: false}">&nbsp</th>
                 </tr>
                 </thead>
                 <tbody class="c">
@@ -19,17 +19,27 @@
                     {% for type in equipmentTypes %}
                         {# @var entry \Runalyze\Bundle\CoreBundle\Entity\EquipmentType #}
                         <tr>
+                            <td class="as-small-as-possible"><a class="window" href="{{ url('equipment-category-edit', {'id': type.id}) }}"><i class="fa fa-fw fa-pencil"></i></a>
+                                <a class="window" href="{{ url('equipment-category-delete', { 'id': type.id, 't': csrf_token('deleteEquipmentCategory') }) }}" data-confirm="{% trans %}Do you really want to delete this?{% endtrans %}"><i class="fa fa-trash" title="Delete"></i></a>
+                            </td>
                             <td>{{ type.name }}</td>
                             {% if type.input == 0 %}
                                 <td>{% trans %}Single choice{% endtrans %}</td>
                             {% else %}
                                 <td>{% trans %}Multiple choice{% endtrans %}</td>
                             {% endif %}
+                            {% if type.maxKm == 0 %}
+                            <td>-</td>
+                            {% else %}
                             <td>{{ distance(type.maxKm, unitSystem.distanceUnit) }}</td>
-                            <td>{{ type.maxTime|date('z H:i:s', 'UTC') }}</td>
-                            <td><a class="window" href="{{ url('equipment-category-edit', {'id': type.id}) }}"><i class="fa fa-fw fa-pencil"></i></a>
-                                <a class="window" href="{{ url('equipment-category-delete', { 'id': type.id, 't': csrf_token('deleteEquipmentCategory') }) }}"><i class="fa fa-trash" title="Delete"></i></a>
-                            </td>
+                            {% endif %}
+                            {% if type.maxTime == 0 %}
+                                <td>-</td>
+                            {% elseif type.maxTime|date('z', 'UTC') == 0 %}
+                                <td>{{ type.maxTime|date('H:i:s', 'UTC') }}</td>
+                            {% else %}
+                                <td>{{ type.maxTime|date('z\\d H:i:s', 'UTC') }}</td>
+                            {% endif %}
                         </tr>
                     {% endfor %}
                 {% else %}
@@ -39,6 +49,8 @@
                 {% endif %}
                 </tbody>
             </table>
+            <p class="info">{% trans %}If you delete a category all equipment objects of this category as well as all relations between your activities and that equipment objects will be deleted!{% endtrans %}</p>
+
         </div>
 
     <div class="panel-heading panel-sub-heading">

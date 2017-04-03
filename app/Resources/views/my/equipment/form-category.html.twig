@@ -1,4 +1,5 @@
 {% extends "base_logged_in.twig" %}
+{% from '_macro/form.html.twig' import dangerZoneDelete %}
 
 {% block content %}
     <div class="panel-heading">
@@ -39,25 +40,14 @@
         {{ form_rest(form) }}
         {{ form_end(form) }}
         {% if form.vars.data.id is not null%}
-        <div class="c">
-            <form action="{{ url('equipment-category-delete', {'id': form.vars.data.id}) }}" class="window ajax">
-                <div class="c">
-                    <input type="hidden" name="t" value="{{ csrf_token('deleteEquipmentCategory') }}" />
-                    <input type="submit" class="danger" value="{% trans %}Delete{% endtrans %}" />
-                </div>
-            </form>
-        </div>
-        <p class="info">{% trans %}If you delete a category all equipment objects of this category as well as all relations between your activities and this equipment object will be deleted!{% endtrans %}</p>
-
-        {% endif %}
-
-
-        {% if form.vars.data.id is not null%}
+            <p class="text margin-top">
+                <a class="window" href="{{ url('equipment-overview') }}">&laquo; {% trans %}back to list{% endtrans %}</a>
+            </p>
             <div class="panel-heading panel-inner-heading"><h1>{% trans %}Assigned equipment{% endtrans %}</h1></div>
                 <table id="assigned-equipment" class="fullwidth zebra-style">
                     <thead>
                     <tr>
-                        <th class="{sorter: false}">&nbsp</th>
+                        <th>&nbsp;</th>
                         <th>{{ 'Name'|trans }}</th>
                         <th>{{ 'prev. distance'|trans }}</th>
                         <th>{{ 'Start of use'|trans }}</th>
@@ -70,8 +60,9 @@
                         {% for entry in equipment %}
                             {# @var entry \Runalyze\Bundle\CoreBundle\Entity\Equipment #}
                             <tr>
-                                <td><a class="window" href="{{ url('equipment-edit', {'id': entry.id}) }}"><i class="fa fa-fw fa-pencil"></i></a>
-                                    <a class="window" href="{{ url('equipment-delete', { 'id': entry.id, 't': csrf_token('deleteEquipment') }) }}"><i class="fa fa-trash" title="Delete"></i></a>
+                                <td class="as-small-as-possible">
+                                    <a class="window" href="{{ url('equipment-edit', {'id': entry.id}) }}"><i class="fa fa-fw fa-pencil"></i></a>
+                                    <a class="window" href="{{ url('equipment-delete', { 'id': entry.id, 't': csrf_token('deleteEquipment') }) }}" data-confirm="{% trans %}Do you really want to delete this?{% endtrans %}"><i class="fa fa-trash" title="Delete"></i></a>
                                 </td>
                                 <td>{{ entry.name }}</td>
                                 <td>{{ distance(entry.additionalKm, unitSystem.distanceUnit) }}</td>
@@ -91,6 +82,10 @@
                 </table>
             </div>
         <p class="info">{% trans %}If you delete an equipment object all relations between your activities and this object will be deleted.{% endtrans %}</p>
+        {% endif %}
+        {% if form.vars.data.id is not null%}
+            {{ dangerZoneDelete(url('equipment-category-delete', {'id': form.vars.data.id}), 'deleteEquipmentCategory') }}
+            <p class="info">{% trans %}If you delete a category all equipment objects of this category as well as all relations between your activities and this equipment object will be deleted!{% endtrans %}</p>
         {% endif %}
     </div>
 {% endblock %}

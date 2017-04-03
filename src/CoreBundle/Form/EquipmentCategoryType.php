@@ -83,7 +83,6 @@ class EquipmentCategoryType extends AbstractType
                 'class'   => Sport::class,
                 'choices' => $this->SportRepository->findAllFor($this->getAccount()),
                 'choice_label' => 'name',
-                'choice_value' => 'id',
                 'label' => 'Assigned sports ',
                 'placeholder' => 'Choose sport type(s)',
                 'attr' => ['class' => 'chosen-select full-size'],
