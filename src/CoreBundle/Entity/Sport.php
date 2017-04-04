@@ -346,6 +346,44 @@ class Sport
     }
 
     /**
+     * Set mainEquipmenttype
+     *
+     * @param \Runalyze\Bundle\CoreBundle\Entity\EquipmentType $mainEquipmenttype
+     *
+     * @return Sport
+     */
+    public function setMainEquipmenttype(\Runalyze\Bundle\CoreBundle\Entity\EquipmentType $mainEquipmenttype = null)
+    {
+        $this->mainEquipmenttype = $mainEquipmenttype;
+
+        return $this;
+    }
+
+    /**
+     * Get mainEquipmenttype
+     *
+     * @return \Runalyze\Bundle\CoreBundle\Entity\EquipmentType
+     */
+    public function getMainEquipmenttype()
+    {
+        return $this->mainEquipmenttype;
+    }
+
+    /**
+     * Set defaultType
+     *
+     * @param \Runalyze\Bundle\CoreBundle\Entity\Type $defaultType
+     *
+     * @return Sport
+     */
+    public function setDefaultType(\Runalyze\Bundle\CoreBundle\Entity\Type $defaultType = null)
+    {
+        $this->defaultType = $defaultType;
+
+        return $this;
+    }
+
+    /**
      * Get defaultType
      *
      * @return \Runalyze\Bundle\CoreBundle\Entity\Type
