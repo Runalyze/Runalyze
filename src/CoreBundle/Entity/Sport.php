@@ -112,26 +112,10 @@ class Sport
     private $account;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Runalyze\Bundle\CoreBundle\Entity\EquipmentType")
-     * @ORM\JoinTable(name="equipment_sport",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="sportid", referencedColumnName="id")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="equipment_typeid", referencedColumnName="id")
-     *   }
-     * )
-     */
-    private $equipmentType;
-
-    /**
      * Constructor
      */
     public function __construct()
     {
-        $this->equipmentType = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
 
@@ -359,44 +343,6 @@ class Sport
     public function getOutside()
     {
         return $this->outside;
-    }
-
-    /**
-     * Set mainEquipmenttype
-     *
-     * @param \Runalyze\Bundle\CoreBundle\Entity\EquipmentType $mainEquipmenttype
-     *
-     * @return Sport
-     */
-    public function setMainEquipmenttype(\Runalyze\Bundle\CoreBundle\Entity\EquipmentType $mainEquipmenttype = null)
-    {
-        $this->mainEquipmenttype = $mainEquipmenttype;
-
-        return $this;
-    }
-
-    /**
-     * Get mainEquipmenttype
-     *
-     * @return \Runalyze\Bundle\CoreBundle\Entity\EquipmentType
-     */
-    public function getMainEquipmenttype()
-    {
-        return $this->mainEquipmenttype;
-    }
-
-    /**
-     * Set defaultType
-     *
-     * @param \Runalyze\Bundle\CoreBundle\Entity\Type $defaultType
-     *
-     * @return Sport
-     */
-    public function setDefaultType(\Runalyze\Bundle\CoreBundle\Entity\Type $defaultType = null)
-    {
-        $this->defaultType = $defaultType;
-
-        return $this;
     }
 
     /**
