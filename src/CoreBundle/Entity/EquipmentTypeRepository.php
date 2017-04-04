@@ -28,4 +28,5 @@ class EquipmentTypeRepository extends EntityRepository
             'account' => $account->getId()
         ]);
     }
+
 }

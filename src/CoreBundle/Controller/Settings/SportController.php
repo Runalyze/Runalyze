@@ -104,7 +104,6 @@ class SportController extends Controller
 
             return $this->redirectToRoute('sport-type-edit', ['id' => $type->getId()]);
         }
-
         return $this->render('settings/sport/form-type.html.twig', [
             'form' => $form->createView(),
             'sport_id' => $type->getSport()->getId()
@@ -184,7 +183,6 @@ class SportController extends Controller
 
             return $this->redirectToRoute('sport-edit', ['id' => $sport->getId()]);
         }
-
         return $this->render('settings/sport/form-sport.html.twig', [
             'form' => $form->createView(),
             'types' => $this->getTypeRepository()->findAllFor($account, $sport),

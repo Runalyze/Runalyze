@@ -70,7 +70,7 @@ class SportType extends AbstractType
         $usedInternalSportIds = $this->SportRepository->getUsedInternalSportIdsFor($this->getAccount());
         $activityTypes = $this->TypeRepository->findAllFor($this->getAccount(), $sport);
         $isRunning = $sport->getInternalSportId() == SportProfile::RUNNING;
-
+        $equipmentTypes = $builder->getData()->getEquipmentType();
         $builder
             ->add('name', TextType::class, [
                 'label' => 'Name',
@@ -103,14 +103,6 @@ class SportType extends AbstractType
                 'choices' => PaceEnum::getChoices(),
                 'label' => 'Speed unit'
             ])
-            ->add('mainEquipmenttype', ChoiceType::class, [
-                'required' => false,
-                // TODO: Load only equipment types that are set for this sport
-                // + some message if there are none
-                'choices' => $this->EquipmentTypeRepository->findAllFor($this->getAccount()),
-                'choice_label' => 'name',
-                'label' => 'Main equipment'
-            ])
             ->add('short', ChoiceType::class, [
                 'choices' => DataBrowserRowProfile::getChoicesWithoutParent(),
                 'choice_translation_domain' => false,
@@ -133,6 +125,14 @@ class SportType extends AbstractType
                 'label' => 'Sport relevance'
             ]);
 
+        if (!empty($equipmentTypes)) {
+            $builder->add('mainEquipmenttype', ChoiceType::class, [
+                'required' => false,
+                'choices' => $equipmentTypes,
+                'choice_label' => 'name',
+                'label' => 'Main equipment',
+            ]);
+        }
         if (!empty($activityTypes)) {
             $builder->add('defaultType', ChoiceType::class, [
                 'required' => false,

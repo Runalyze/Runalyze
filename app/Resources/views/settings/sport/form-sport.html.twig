@@ -65,8 +65,9 @@
 
             {{ form_row(form.short, {'div_class': 'w100 block with50erLabel', 'help': 'Mode for displaying activities in calendar'}) }}
 
-            {{ form_row(form.mainEquipmenttype, {'div_class': 'w100 block with50erLabel', 'help': 'Objects of main equipment type can be shown in the activity overview.'}) }}
-
+            {% if form.mainEquipmenttype %}
+                {{ form_row(form.mainEquipmenttype, {'div_class': 'w100 block with50erLabel', 'help': 'Objects of main equipment type can be shown in the activity overview.'}) }}
+            {% endif %}
             {{ form_rest(form) }}
 
             <div class="c margin-top">

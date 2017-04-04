@@ -140,7 +140,7 @@ class Sport
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Runalyze\Bundle\CoreBundle\Entity\EquipmentType", inversedBy="sport")
+     * @ORM\ManyToMany(targetEntity="Runalyze\Bundle\CoreBundle\Entity\EquipmentType")
      * @ORM\JoinTable(name="equipment_sport",
      *   joinColumns={
      *     @ORM\JoinColumn(name="sportid", referencedColumnName="id")
