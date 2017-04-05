@@ -1587,9 +1587,9 @@
         <target>Runalyze is completely configurable. You can decide by yourself which information of your training you want to record and which statistics are being displayed on which place.</target>
         <jms:reference-file line="21">/Resources/views/home_feature_showcase.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="9bff0849cf966413a31b9a7c16dc3cc88ff5983b" resname="Runalyze is created by athletes for athletes. Whenever you have comments, problems or wishes: Please contact our Runalyze team. It's near and dear to us.">
+      <trans-unit id="9bff0849cf966413a31b9a7c16dc3cc88ff5983b" resname="Runalyze is created by athletes for athletes. Whenever you have comments, problems or wishes: Please contact our Runalyze team. It's near and dear to us." approved="no">
         <source>Runalyze is created by athletes for athletes. Whenever you have comments, problems or wishes: Please contact our Runalyze team. It's near and dear to us.</source>
-        <target>Runalyze is created by athletes for athletes. Whenever you have comments, problems or wishes: Please contact our Runalyze team. It's near and dear to us.</target>
+        <target state="needs-translation">Runalyze енаправен от атлети за атлети. Ако имате коментари,проблеми или идеи: Моля свържете се с нашият Runalyze екип. It's near and dear to us.</target>
         <jms:reference-file line="28">/Resources/views/home_feature_showcase.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="73989d9c59264da08a15dba21c7d58237a91f08f" resname="Running">
@@ -1613,32 +1613,32 @@
         <target>SQL-format</target>
         <jms:reference-file line="35">/Resources/views/tools/backup/export.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="cb836b5ea5300a2914ec85fbe15ba3c2456c9beb" resname="Saturated hemoglobin">
+      <trans-unit id="cb836b5ea5300a2914ec85fbe15ba3c2456c9beb" resname="Saturated hemoglobin" approved="yes">
         <source>Saturated hemoglobin</source>
-        <target>Saturated hemoglobin</target>
+        <target state="translated">Наситен хемоглобин</target>
         <jms:reference-file line="166">/Resources/views/activity/tool/time_series_statistics.html.twig</jms:reference-file>
         <jms:reference-file line="169">/Resources/views/activity/tool/time_series_statistics.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="efc007a393f66cdb14d57d385822a3d9e36ef873" resname="Save">
+      <trans-unit id="efc007a393f66cdb14d57d385822a3d9e36ef873" resname="Save" approved="yes">
         <source>Save</source>
-        <target>Save</target>
+        <target state="translated">Запази</target>
         <jms:reference-file line="53">/Resources/views/my/body-values/form.html.twig</jms:reference-file>
         <jms:reference-file line="38">/Resources/views/my/raceresult/form.html.twig</jms:reference-file>
         <jms:reference-file line="65">/Resources/views/settings/account.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="81c52c528b6e6ff9f4f1c8db649d9254c3e15d13" resname="Search for decives">
+      <trans-unit id="81c52c528b6e6ff9f4f1c8db649d9254c3e15d13" resname="Search for decives" approved="yes">
         <source>Search for decives</source>
-        <target>Search for decives</target>
+        <target state="translated">Търсене на устройства</target>
         <jms:reference-file line="54">/Resources/views/import/garmin_communicator.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="304affa01bbeb2a15b6fc1caeb27781bf888537b" resname="Searching for devices">
+      <trans-unit id="304affa01bbeb2a15b6fc1caeb27781bf888537b" resname="Searching for devices" approved="yes">
         <source>Searching for devices</source>
-        <target>Searching for devices</target>
+        <target state="translated">Търсене на устройства</target>
         <jms:reference-file line="43">/Resources/views/import/garmin_communicator.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="0ef25462ad107e31f9de95b8e1784cc1c8859b75" resname="Send link">
+      <trans-unit id="0ef25462ad107e31f9de95b8e1784cc1c8859b75" resname="Send link" approved="yes">
         <source>Send link</source>
-        <target>Send link</target>
+        <target state="translated">Изпрати линк</target>
         <jms:reference-file line="13">/Resources/views/account/recover/form_send_mail.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="fdd289e370bd5cc575f48a16947d05c144ec474b" resname="Sep">
@@ -1653,24 +1653,24 @@
         <jms:reference-file line="35">/Resources/views/tools/vo2max_analysis.html.twig</jms:reference-file>
         <jms:reference-file line="36">/Resources/views/tools/vo2max_analysis.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="445d12dec2a5cd46a068cee8a7be98443ba75bcd" resname="Show table">
+      <trans-unit id="445d12dec2a5cd46a068cee8a7be98443ba75bcd" resname="Show table" approved="yes">
         <source>Show table</source>
-        <target>Show table</target>
+        <target state="translated">Покажи таблица</target>
         <jms:reference-file line="7">/Resources/views/my/body-values/form.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="3cac34e674464c2b62286054cd9a2d2c81149efc" resname="Sleep">
+      <trans-unit id="3cac34e674464c2b62286054cd9a2d2c81149efc" resname="Sleep" approved="yes">
         <source>Sleep</source>
-        <target>Sleep</target>
+        <target state="translated">Сън</target>
         <jms:reference-file line="43">/Resources/views/my/body-values/form.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="b6c93967eefdf28ce333f3d71363411abde57d44" resname="Sleep duration">
+      <trans-unit id="b6c93967eefdf28ce333f3d71363411abde57d44" resname="Sleep duration" approved="yes">
         <source>Sleep duration</source>
-        <target>Sleep duration</target>
+        <target state="translated">Продължителност на съня</target>
         <jms:reference-file line="24">/Resources/views/my/body-values/table.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="22959ede33b65d25ed4762705597fb8b954d3a6b" resname="Sorry!">
+      <trans-unit id="22959ede33b65d25ed4762705597fb8b954d3a6b" resname="Sorry!" approved="yes">
         <source>Sorry!</source>
-        <target>Sorry!</target>
+        <target state="translated">Sorry!</target>
         <jms:reference-file line="36">/Resources/TwigBundle/views/Exception/error.html.twig</jms:reference-file>
         <jms:reference-file line="4">/Resources/views/shared/invalid_activity.html.twig</jms:reference-file>
         <jms:reference-file line="4">/Resources/views/shared/invalid_athlete.html.twig</jms:reference-file>
@@ -1680,9 +1680,9 @@
         <target>Sorry, but the url was not valid.</target>
         <jms:reference-file line="8">/Resources/views/account/unsubscribe_failure.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="f9171b5cb60c9189bc82f5d163bef2d680850546" resname="Sport type">
+      <trans-unit id="f9171b5cb60c9189bc82f5d163bef2d680850546" resname="Sport type" approved="yes">
         <source>Sport type</source>
-        <target>Sport type</target>
+        <target state="translated">Тип спорт</target>
         <jms:reference-file line="34">/Resources/views/tools/anova/base.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="63d361c2dda8c15f5c99600e15d79605b777fc26" resname="Standard calculation: As race result">
@@ -1710,9 +1710,9 @@
         <target>Start the installation of RUNALYZE</target>
         <jms:reference-file line="14">/Resources/views/system/install.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="2086b21f8f49274138c38d476bee317a84a8aecc" resname="Statistics">
+      <trans-unit id="2086b21f8f49274138c38d476bee317a84a8aecc" resname="Statistics" approved="yes">
         <source>Statistics</source>
-        <target>Statistics</target>
+        <target state="translated">Статистики</target>
         <jms:reference-file line="13">/Resources/views/home_feature_showcase.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="bae7d5be70820ed56467bd9a63744e23b47bd711" resname="Status">
@@ -1720,14 +1720,14 @@
         <target>Status</target>
         <jms:reference-file line="65">/Resources/views/import/garmin_communicator.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="d879ff0dc836d75015da140b0a786cff639f70fa" resname="Stride length">
+      <trans-unit id="d879ff0dc836d75015da140b0a786cff639f70fa" resname="Stride length" approved="yes">
         <source>Stride length</source>
-        <target>Stride length</target>
+        <target state="translated">Дължина на крачката</target>
         <jms:reference-file line="138">/Resources/views/activity/tool/time_series_statistics.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="f32d5a3b17e614297417cc279a7ec1cd02274d65" resname="Support">
+      <trans-unit id="f32d5a3b17e614297417cc279a7ec1cd02274d65" resname="Support" approved="yes">
         <source>Support</source>
-        <target>Support</target>
+        <target state="translated">Поддръжка</target>
         <jms:reference-file line="39">/Resources/views/static/help.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="474c100ec318748e00ad01805517a714d20d1e52" resname="TRIMP">
