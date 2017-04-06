@@ -11,7 +11,7 @@ use Runalyze\Profile\Sport\SportProfile;
 /**
  * Sport
  *
- * @ORM\Table(name="sport")
+ * @ORM\Table(name="sport", uniqueConstraints={@ORM\UniqueConstraint(name="unique_internal_id", columns={"accountid", "internal_sport_id"})})
  * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\SportRepository")
  */
 class Sport
