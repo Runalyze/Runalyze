@@ -142,13 +142,18 @@ class SportController extends Controller
     }
 
     /**
-     * @Route("/add", name="sport-add")
+     * @Route("/add/{internalType}", name="sport-add", requirements={"internalType" = "\d+"})
+     * @Route("/add/custom", name="sport-add-custom")
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function sportAddAction(Request $request, Account $account)
+    public function sportAddAction(Request $request, $internalType = null, Account $account)
     {
+
         $sport = new Sport();
         $sport->setAccount($account);
+        if ($internalType !== null) {
+            $sport->setInternalSportId($internalType);
+        }
         $form = $this->createForm(Form\Settings\SportType::class, $sport,[
             'action' => $this->generateUrl('sport-add')
         ]);

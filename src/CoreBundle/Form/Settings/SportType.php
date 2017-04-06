@@ -68,9 +68,11 @@ class SportType extends AbstractType
         /** @var Sport $sport */
         $sport = $builder->getData();
         $usedInternalSportIds = $this->SportRepository->getUsedInternalSportIdsFor($this->getAccount());
-        $activityTypes = $this->TypeRepository->findAllFor($this->getAccount(), $sport);
         $isRunning = $sport->getInternalSportId() == SportProfile::RUNNING;
-        $equipmentTypes = $builder->getData()->getEquipmentType();
+        if ($sport->getId() !== null) {
+            $activityTypes = $this->TypeRepository->findAllFor($this->getAccount(), $sport);
+            $equipmentTypes = $sport->getEquipmentType();
+        }
         $builder
             ->add('name', TextType::class, [
                 'label' => 'Name',
@@ -108,7 +110,14 @@ class SportType extends AbstractType
                 'choice_translation_domain' => false,
                 'label' => 'Calendar view'
             ])
-            ->add('internalSportId', ChoiceType::class, [
+            ->add('isMain', ChoiceType::class, [
+                'choices' => SportRelevance::getChoices(),
+                'choice_translation_domain' => false,
+                'label' => 'Sport relevance'
+            ]);
+
+        if ($sport->getInternalSportId() == null) {
+            $builder->add('internalSportId', ChoiceType::class, [
                 'required' => false,
                 'choices' => $this->getFilteredChoicesForInternalSportId($usedInternalSportIds, $sport),
                 'choice_translation_domain' => false,
@@ -118,13 +127,8 @@ class SportType extends AbstractType
                 },
                 'label' => 'Internal sport type',
                 'disabled' => $isRunning
-            ])
-            ->add('isMain', ChoiceType::class, [
-                'choices' => SportRelevance::getChoices(),
-                'choice_translation_domain' => false,
-                'label' => 'Sport relevance'
             ]);
-
+        }
         if (!empty($equipmentTypes)) {
             $builder->add('mainEquipmenttype', ChoiceType::class, [
                 'required' => false,

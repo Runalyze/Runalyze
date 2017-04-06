@@ -22,11 +22,13 @@
         <fieldset class="without-legend">
             {{ form_row(form.name, {'div_class': 'w100 block with50erLabel'}) }}
 
+            {% if form.internalSportId %}
             {{ form_row(form.internalSportId, {'div_class': 'w100 block with50erLabel'}) }}
             <p class="info margin-bottom">
                 {% trans %}You can define any sport type you like, but for synchronization and comparisons you can map your sport types to our predefined ones.
                 This mapping will be used to set the correct sport type when importing your activities.{% endtrans %}
             </p>
+            {% endif %}
 
             {{ form_row(form.isMain, {'div_class': 'w100 block with50erLabel'}) }}
             <p class="info margin-bottom-2x">
