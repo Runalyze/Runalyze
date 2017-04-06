@@ -69,20 +69,7 @@ class SportTypeType extends AbstractType
                 'label' => 'Calendar view'
             ]);
 
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
-            $sportType = $event->getData();
-            $form = $event->getForm();
 
-            if (!$sportType || null === $sportType->getId()) {
-                $form->add('sport', EntityType::class, [
-                    'class'   => Sport::class,
-                    'choices' => $this->getAccount()->getSports(),
-                    'choice_label' => 'name',
-                    'label' => 'Assigned sport type',
-                    'expanded' => false
-                ]);
-            }
-        });
     }
 
     public function configureOptions(OptionsResolver $resolver)
