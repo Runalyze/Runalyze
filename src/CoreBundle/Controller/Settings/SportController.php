@@ -10,7 +10,9 @@ use Runalyze\Bundle\CoreBundle\Entity\Type;
 use Runalyze\Bundle\CoreBundle\Entity\TypeRepository;
 use Runalyze\Bundle\CoreBundle\Form;
 use Runalyze\Bundle\CoreBundle\Services\AutomaticReloadFlagSetter;
+use Runalyze\Profile\Sport\SportProfile;
 use Runalyze\Profile\View\DataBrowserRowProfile;
+use Runalyze\Util\AbstractEnumFactoryTrait;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -146,14 +148,26 @@ class SportController extends Controller
      * @Route("/add/custom", name="sport-add-custom")
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function sportAddAction(Request $request, $internalType = null, Account $account)
+    public function sportAddAction(Request $request, Account $account, $internalType = null)
     {
-
         $sport = new Sport();
         $sport->setAccount($account);
         if ($internalType !== null) {
+            //should be moved to a new class/method or whatever to reuse this. setSportFromSportProfile
+            $sportProfile = SportProfile::get($internalType);
+            $sport->setImg($sportProfile->icon());
+            $sport->setHfavg($sportProfile->avgHR());
+            $sport->setName($sportProfile->name());
+            $sport->setDistances($sportProfile->hasDistances());
+            $sport->setPower($sportProfile->hasPower());
+            $sport->setOutside($sportProfile->isOutside());
+            $sport->setSpeed($sportProfile->paceUnitEnum());
+            $sport->setKcal($sportProfile->caloriesPerHour());
             $sport->setInternalSportId($internalType);
+            $this->getSportRepository()->save($sport);
+            return $this->redirectToRoute('sport-edit', ['id' => $sport->getId()]);
         }
+
         $form = $this->createForm(Form\Settings\SportType::class, $sport,[
             'action' => $this->generateUrl('sport-add')
         ]);
@@ -163,7 +177,7 @@ class SportController extends Controller
             $this->getSportRepository()->save($sport);
             $this->get('app.automatic_reload_flag_setter')->set(AutomaticReloadFlagSetter::FLAG_DATA_BROWSER);
 
-            return $this->redirectToRoute('sport-type-edit', ['id' => $sport->getId()]);
+            return $this->redirectToRoute('sport-edit', ['id' => $sport->getId()]);
         }
 
         return $this->render('settings/sport/form-sport.html.twig', [

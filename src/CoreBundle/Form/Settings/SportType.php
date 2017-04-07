@@ -116,7 +116,7 @@ class SportType extends AbstractType
                 'label' => 'Sport relevance'
             ]);
 
-        if ($sport->getInternalSportId() == null) {
+        if ($sport->getId() !== null) {
             $builder->add('internalSportId', ChoiceType::class, [
                 'required' => false,
                 'choices' => $this->getFilteredChoicesForInternalSportId($usedInternalSportIds, $sport),
