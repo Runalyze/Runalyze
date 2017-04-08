@@ -75,15 +75,6 @@ class AccountMailer
         );
     }
 
-    public function sendBackupReadyTo(Account $account)
-    {
-        $this->sendMailTo($account, $this->Translator->trans('RUNALYZE - Backup file is ready to download'),
-            'mail/account/backupReady.html.twig', [
-                'username' => $account->getUsername(),
-            ]
-        );
-    }
-
     /**
      * @param Account $account
      * @param bool|int $allPostersGenerated
