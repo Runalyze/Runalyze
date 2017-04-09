@@ -71,14 +71,13 @@ else
     echo "Could not access the database server, no database will be created"
 fi
 
-# perform composer install if no vendor/autoload.php file exists
-if [ ! -f ${ROOTDIR}/vendor/autoload.php ]; then
-    # download latest composer.phar if necessary
-    if [ ! -f ${ROOTDIR}/composer.phar ]; then
-        wget -q -O ${ROOTDIR}/composer.phar https://getcomposer.org/composer.phar
-    fi
-    php ${ROOTDIR}/composer.phar --no-progress -o -d=${ROOTDIR} install
+# perform composer install
+# download latest composer.phar if necessary
+if [ ! -f ${ROOTDIR}/composer.phar ]; then
+    wget -q -O ${ROOTDIR}/composer.phar https://getcomposer.org/composer.phar
 fi
+
+php ${ROOTDIR}/composer.phar --no-progress --no-interaction -o -d=${ROOTDIR} install
 
 #install nodejs and dependencies
 npm install -g bower
