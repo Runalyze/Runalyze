@@ -11,9 +11,6 @@ set_time_limit(0);
  * @var Composer\Autoload\ClassLoader $loader
  */
 
-// change directory to allow calling this script from anywhere within the system
-chdir(__DIR__ . '/../');
-
 $loader = require __DIR__.'/../app/autoload.php';
 $input = new ArgvInput();
 $env = $input->getParameterOption(array('--env', '-e'), getenv('SYMFONY_ENV') ?: 'dev');

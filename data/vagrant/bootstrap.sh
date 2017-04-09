@@ -87,5 +87,9 @@ usermod -a -G www-data ubuntu
 sudo -H -u ubuntu npm --prefix=${ROOTDIR} --no-bin-links install
 sudo -H -u ubuntu gulp --cwd=${ROOTDIR}
 
-# install Runalyze, nothing should happen, if already installed
+# install Runalyze, clear caches, just to be sure
+rm -rf \
+    ${ROOTDIR}/var/cache/* \
+    ${ROOTDIR}/data/cache/*
+
 php ${ROOTDIR}/bin/console runalyze:install
