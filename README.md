@@ -35,6 +35,22 @@ npm install
 gulp
 ```
 
+### Development using Vagrant
+
+It is possible to get you local development environment (Apache/MySql) up and running using [Vagrant](https://www.vagrantup.com/).  
+If you don't have a running Vagrant environment, please see the [Vagrant Installation Documentation](https://www.vagrantup.com/docs/installation/) for information.
+
+If you already have a existing vagrant environment simply run (the first start may take some time):
+```bash
+vagrant up
+```
+
+You should then be able to access Runalyze at [http://localhost:8080](http://localhost:8080)  
+If you need shell access to your Runalyze vagrant box (e.g. to update your installation) simply ssh into your box:
+```bash
+vagrant ssh
+```
+
 ## Features
  * import activity files (*.fit, *.tcx, *.gpx and many more)
  * TRIMP principle
