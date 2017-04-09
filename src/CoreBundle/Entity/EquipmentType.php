@@ -12,8 +12,14 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class EquipmentType
 {
+    /** @var int only one equipment object can be used at once */
+    const CHOICE_SINGLE = 0;
+
+    /** @var int multiple equipment objects can be used at once */
+    const CHOICE_MULTIPLE = 1;
+
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer", precision=10, nullable=false, options={"unsigned":true})
      * @ORM\Id
@@ -26,31 +32,31 @@ class EquipmentType
      *
      * @ORM\Column(name="name", type="string", length=50, nullable=false)
      */
-    private $name;
+    private $name = '';
 
     /**
-     * @var boolean
+     * @var int see self::CHOICE_SINGLE and self::CHOICE_MULTIPLE
      *
      * @ORM\Column(name="input", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
      */
-    private $input;
+    private $input = 0;
 
     /**
-     * @var integer
+     * @var null|int [km]
      *
      * @ORM\Column(name="max_km", columnDefinition="mediumint unsigned DEFAULT NULL")
      */
-    private $maxKm;
+    private $maxKm = null;
 
     /**
-     * @var integer
+     * @var null|int [s]
      *
      * @ORM\Column(name="max_time", columnDefinition="mediumint unsigned DEFAULT NULL")
      */
-    private $maxTime;
+    private $maxTime = null;
 
     /**
-     * @var \Runalyze\Bundle\CoreBundle\Entity\Account
+     * @var Account
      *
      * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Account")
      * @ORM\JoinColumns({
@@ -62,22 +68,25 @@ class EquipmentType
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Sport", mappedBy="equipmentType")
+     * @ORM\ManyToMany(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Sport")
+     * @ORM\JoinTable(name="equipment_sport",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="equipment_typeid", referencedColumnName="id")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="sportid", referencedColumnName="id")
+     *   }
+     * )
      */
     private $sport;
 
-    /**
-     * Constructor
-     */
     public function __construct()
     {
         $this->sport = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
-     * Get id
-     *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -85,11 +94,9 @@ class EquipmentType
     }
 
     /**
-     * Set name
-     *
      * @param string $name
      *
-     * @return EquipmentType
+     * @return $this
      */
     public function setName($name)
     {
@@ -99,8 +106,6 @@ class EquipmentType
     }
 
     /**
-     * Get name
-     *
      * @return string
      */
     public function getName()
@@ -109,11 +114,9 @@ class EquipmentType
     }
 
     /**
-     * Set input
+     * @param int $input see self::CHOICE_SINGLE and self::CHOICE_MULTIPLE
      *
-     * @param boolean $input
-     *
-     * @return EquipmentType
+     * @return $this
      */
     public function setInput($input)
     {
@@ -123,9 +126,7 @@ class EquipmentType
     }
 
     /**
-     * Get input
-     *
-     * @return boolean
+     * @return int see self::CHOICE_SINGLE and self::CHOICE_MULTIPLE
      */
     public function getInput()
     {
@@ -133,11 +134,17 @@ class EquipmentType
     }
 
     /**
-     * Set maxKm
+     * @return bool
+     */
+    public function allowsMultipleValues()
+    {
+        return self::CHOICE_MULTIPLE === $this->input;
+    }
+
+    /**
+     * @param null|int $maxKm [km]
      *
-     * @param integer $maxKm
-     *
-     * @return EquipmentType
+     * @return $this
      */
     public function setMaxKm($maxKm)
     {
@@ -147,9 +154,7 @@ class EquipmentType
     }
 
     /**
-     * Get maxKm
-     *
-     * @return integer
+     * @return null|int [km]
      */
     public function getMaxKm()
     {
@@ -157,11 +162,17 @@ class EquipmentType
     }
 
     /**
-     * Set maxTime
+     * @return bool
+     */
+    public function hasMaximalDistance()
+    {
+        return null !== $this->maxKm && $this->maxKm > 0;
+    }
+
+    /**
+     * @param null|int $maxTime [s]
      *
-     * @param integer $maxTime
-     *
-     * @return EquipmentType
+     * @return $this
      */
     public function setMaxTime($maxTime)
     {
@@ -171,9 +182,7 @@ class EquipmentType
     }
 
     /**
-     * Get maxTime
-     *
-     * @return integer
+     * @return null|int
      */
     public function getMaxTime()
     {
@@ -181,13 +190,19 @@ class EquipmentType
     }
 
     /**
-     * Set account
-     *
-     * @param \Runalyze\Bundle\CoreBundle\Entity\Account $account
-     *
-     * @return EquipmentType
+     * @return bool
      */
-    public function setAccount(\Runalyze\Bundle\CoreBundle\Entity\Account $account = null)
+    public function hasMaximalDuration()
+    {
+        return null !== $this->maxTime && $this->maxTime > 0;
+    }
+
+    /**
+     * @param Account $account
+     *
+     * @return $this
+     */
+    public function setAccount(Account $account)
     {
         $this->account = $account;
 
@@ -195,9 +210,7 @@ class EquipmentType
     }
 
     /**
-     * Get account
-     *
-     * @return \Runalyze\Bundle\CoreBundle\Entity\Account
+     * @return Account
      */
     public function getAccount()
     {
@@ -205,13 +218,11 @@ class EquipmentType
     }
 
     /**
-     * Add sport
+     * @param Sport $sport
      *
-     * @param \Runalyze\Bundle\CoreBundle\Entity\Sport $sport
-     *
-     * @return EquipmentType
+     * @return $this
      */
-    public function addSport(\Runalyze\Bundle\CoreBundle\Entity\Sport $sport)
+    public function addSport(Sport $sport)
     {
         $this->sport[] = $sport;
 
@@ -219,18 +230,14 @@ class EquipmentType
     }
 
     /**
-     * Remove sport
-     *
-     * @param \Runalyze\Bundle\CoreBundle\Entity\Sport $sport
+     * @param Sport $sport
      */
-    public function removeSport(\Runalyze\Bundle\CoreBundle\Entity\Sport $sport)
+    public function removeSport(Sport $sport)
     {
         $this->sport->removeElement($sport);
     }
 
     /**
-     * Get sport
-     *
      * @return \Doctrine\Common\Collections\Collection
      */
     public function getSport()

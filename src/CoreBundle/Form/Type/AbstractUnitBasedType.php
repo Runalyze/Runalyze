@@ -39,7 +39,7 @@ abstract class AbstractUnitBasedType extends AbstractType implements DataTransfo
      */
     public function transform($value)
     {
-        return null === $value ? '' : number_format($this->Unit->fromBaseUnit((float)$value), $this->ViewPrecision);
+        return null === $value ? '' : number_format($this->Unit->fromBaseUnit((float)$value), $this->ViewPrecision, '.', '');
     }
 
     /**

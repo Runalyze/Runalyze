@@ -63,7 +63,6 @@ class CallController extends Controller
         $ConfigTabs->addTab(new \ConfigTabPlugins());
         $ConfigTabs->addTab(new \ConfigTabSports());
         $ConfigTabs->addTab(new \ConfigTabTypes());
-        $ConfigTabs->addTab(new \ConfigTabEquipment());
         $ConfigTabs->display();
 
         echo \Ajax::wrapJSforDocumentReady('Runalyze.Overlay.removeClasses();');

@@ -7,10 +7,10 @@
         {{ form_errors(form) }}
 
         {% if info is defined %}
-            <p class="info">{{ info }}</p>
+            <p class="info">{{ info|raw }}</p>
         {% endif %}
         {% if warning is defined %}
-            <p class="warning">{{ warning }}</p>
+            <p class="warning">{{ warning|raw }}</p>
         {% endif %}
     </div>
 {% endblock form_row %}
@@ -57,5 +57,5 @@
     {%- set type = type|default('text') -%}
     {% if input_unit %}<span class="input-with-unit">{% endif %}
     <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
-    {% if input_unit %}<label for="{{ id }}" class="input-unit">{{ input_unit }}</label></span>{% endif %}
+    {% if input_unit %}<label for="{{ id }}" class="input-unit">{{ input_unit|raw }}</label></span>{% endif %}
 {%- endblock form_widget_simple -%}
