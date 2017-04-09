@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-ROOTDIR="/vagrant"
-DEBIAN_FRONTEND=noninteractive
-
+export ROOTDIR="/vagrant"
+export DEBIAN_FRONTEND=noninteractive
+export COMPOSER_ALLOW_SUPERUSER=1
 
 ##########################
 # Install dependencies
@@ -16,7 +16,7 @@ debconf-set-selections <<< 'mysql-server mysql-server/root_password_again passwo
 curl -sL https://deb.nodesource.com/setup_4.x | bash -
 apt-get install -y \
     apache2 gettext perl libxml2 \
-    php php-intl php-gettext php-zip php-curl php-xml php-mysql libapache2-mod-php \
+    php php-intl php-gettext php-zip php-curl php-xml php-mysql php-sqlite3 php-mbstring libapache2-mod-php \
     mysql-server \
     nodejs
 
@@ -75,6 +75,8 @@ fi
 # download latest composer.phar if necessary
 if [ ! -f ${ROOTDIR}/composer.phar ]; then
     wget -q -O ${ROOTDIR}/composer.phar https://getcomposer.org/composer.phar
+else
+    php ${ROOTDIR}/composer.phar self-update
 fi
 
 php ${ROOTDIR}/composer.phar --no-progress --no-interaction -o -d=${ROOTDIR} install
