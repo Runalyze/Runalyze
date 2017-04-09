@@ -8,12 +8,11 @@ export COMPOSER_ALLOW_SUPERUSER=1
 # Install dependencies
 ##########################
 
-apt-get update
+curl -sL https://deb.nodesource.com/setup_6.x | bash -
 
 debconf-set-selections <<< 'mysql-server mysql-server/root_password password default'
 debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password default'
 
-curl -sL https://deb.nodesource.com/setup_4.x | bash -
 apt-get install -y \
     apache2 gettext perl libxml2 \
     php php-intl php-gettext php-zip php-curl php-xml php-mysql php-sqlite3 php-mbstring libapache2-mod-php \
