@@ -60,11 +60,8 @@ class BackupReceiver
             $Backup->run();
         }
 
-        $notification = Notification::createFromMessage(
-            new BackupReadyMessage(),
-            $this->container->get('doctrine')->getManager()->getReference('CoreBundle:Account',1)
+        $this->container->get('doctrine')->getRepository('CoreBundle:Notification')->save(
+            Notification::createFromMessage(new BackupReadyMessage(), $account)
         );
-        /** @var NotificationRepository $notificationRepository */
-        $this->container->get('doctrine')->getRepository('CoreBundle:Notification')->save($notification);
     }
 }

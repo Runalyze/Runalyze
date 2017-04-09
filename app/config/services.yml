@@ -64,6 +64,10 @@ services:
     class: Runalyze\Bundle\CoreBundle\Entity\EquipmentTypeRepository
     factory: ["@doctrine.orm.entity_manager", getRepository]
     arguments: [Runalyze\Bundle\CoreBundle\Entity\EquipmentType]
+  app.repository.notification:
+    class: Runalyze\Bundle\CoreBundle\Entity\NotificationRepository
+    factory: ["@doctrine.orm.entity_manager", getRepository]
+    arguments: [Runalyze\Bundle\CoreBundle\Entity\Notification]
   app.repository.race_result:
     class: Runalyze\Bundle\CoreBundle\Entity\RaceresultRepository
     factory: ["@doctrine.orm.entity_manager", getRepository]
@@ -205,6 +209,6 @@ services:
       - { name: bernard.receiver, message: userBackup }
   app.bernard.poster_receiver:
     class: Runalyze\Bundle\CoreBundle\Queue\Receiver\PosterReceiver
-    arguments: ["@monolog.logger.queue", "@app.repository.account", "@app.repository.sport", "@app.poster.generate_json", "@app.poster.generate_poster", "@app.poster.filehandler", "@app.mailer.account", "%kernel.root_dir%", "%rsvg_path%", "%inkscape_path%"]
+    arguments: ["@monolog.logger.queue", "@app.repository.account", "@app.repository.sport", "@app.repository.notification", "@app.poster.generate_json", "@app.poster.generate_poster", "@app.poster.filehandler", "@app.mailer.account", "%kernel.root_dir%", "%rsvg_path%", "%inkscape_path%"]
     tags:
       - { name: bernard.receiver, message: posterGenerator }
