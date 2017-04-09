@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 ROOTDIR="/vagrant"
+DEBIAN_FRONTEND=noninteractive
 
 apt-get update
 
