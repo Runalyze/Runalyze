@@ -3,18 +3,27 @@
 ROOTDIR="/vagrant"
 DEBIAN_FRONTEND=noninteractive
 
+
+##########################
+# Install dependencies
+##########################
+
 apt-get update
+
+debconf-set-selections <<< 'mysql-server mysql-server/root_password password default'
+debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password default'
+
+curl -sL https://deb.nodesource.com/setup_4.x | bash -
+apt-get install -y \
+    apache2 gettext perl libxml2 \
+    php php-intl php-gettext php-zip php-curl php-xml php-mysql libapache2-mod-php \
+    mysql-server \
+    nodejs
+
 
 ##########################
 # Bootstrap WebServer part
 ##########################
-
-apt-get install -y apache2
-apt-get install -y gettext perl libxml2
-
-# PHP7
-apt-get install -y php php-intl php-gettext php-zip php-curl php-xml php-mysql
-apt-get install -y libapache2-mod-php
 
 cp ${ROOTDIR}/data/vagrant/runalyze.conf /etc/apache2/sites-available/
 
@@ -28,9 +37,7 @@ service apache2 restart
 ##########################
 # Bootstrap DB-Server part
 ##########################
-debconf-set-selections <<< 'mysql-server mysql-server/root_password password default'
-debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password default'
-apt-get install -y mysql-server
+
 mysql -uroot -pdefault -e "SET PASSWORD FOR root@localhost=PASSWORD('');"
 cp ${ROOTDIR}/data/vagrant/mysql-runalyze.cnf /etc/mysql/mysql.conf.d/
 service mysql restart
@@ -74,11 +81,6 @@ if [ ! -f ${ROOTDIR}/vendor/autoload.php ]; then
 fi
 
 #install nodejs and dependencies
-npm --version > /dev/null 2>&1
-if [ $? -ne 0 ]; then
-    curl -sL https://deb.nodesource.com/setup_4.x | bash -
-    apt-get install -y nodejs
-fi
 npm install -g bower
 npm install -g gulp-cli
 usermod -a -G www-data ubuntu
