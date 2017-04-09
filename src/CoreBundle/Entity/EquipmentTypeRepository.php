@@ -8,7 +8,7 @@ class EquipmentTypeRepository extends EntityRepository
 {
     /**
      * @param Account $account
-     * @return Sport[]
+     * @return EquipmentType[]
      */
     public function findAllFor(Account $account)
     {
@@ -24,7 +24,7 @@ class EquipmentTypeRepository extends EntityRepository
     public function findSingleChoiceTypesFor(Account $account)
     {
         return $this->findBy([
-            'input' => 0,
+            'input' => EquipmentType::CHOICE_SINGLE,
             'account' => $account->getId()
         ]);
     }
@@ -32,6 +32,12 @@ class EquipmentTypeRepository extends EntityRepository
     public function save(EquipmentType $equipmentType)
     {
         $this->_em->persist($equipmentType);
+        $this->_em->flush();
+    }
+
+    public function remove(EquipmentType $equipmentType)
+    {
+        $this->_em->remove($equipmentType);
         $this->_em->flush();
     }
 }

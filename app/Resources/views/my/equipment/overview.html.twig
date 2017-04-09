@@ -1,69 +1,46 @@
 {% extends "base_logged_in.twig" %}
 
 {% block content %}
-<div class="panel-heading"><h1>{% trans %}Your equipment categories{% endtrans %}</h1></div>
-        <div class="panel-content">
-            {% include 'flashmessages.html.twig' %}
-            <table id="equipment-categories" class="fullwidth zebra-style">
-                <thead>
-                <tr>
-                    <th>&nbsp;</th>
-                    <th>{{ 'Name'|trans }}</th>
-                    <th>{{ 'Type'|trans }}</th>
-                    <th>{{ 'max Km.'|trans }}</th>
-                    <th>{{ 'max Time.'|trans }}</th>
-                </tr>
-                </thead>
-                <tbody class="c">
-                {% if equipmentTypes|length > 0 %}
-                    {% for type in equipmentTypes %}
-                        {# @var entry \Runalyze\Bundle\CoreBundle\Entity\EquipmentType #}
-                        <tr>
-                            <td class="as-small-as-possible"><a class="window" href="{{ url('equipment-category-edit', {'id': type.id}) }}"><i class="fa fa-fw fa-pencil"></i></a>
-                                <a class="window" href="{{ url('equipment-category-delete', { 'id': type.id, 't': csrf_token('deleteEquipmentCategory') }) }}" data-confirm="{% trans %}Do you really want to delete this?{% endtrans %}"><i class="fa fa-trash" title="Delete"></i></a>
-                            </td>
-                            <td>{{ type.name }}</td>
-                            {% if type.input == 0 %}
-                                <td>{% trans %}Single choice{% endtrans %}</td>
-                            {% else %}
-                                <td>{% trans %}Multiple choice{% endtrans %}</td>
-                            {% endif %}
-                            {% if type.maxKm == 0 %}
-                            <td>-</td>
-                            {% else %}
-                            <td>{{ distance(type.maxKm, unitSystem.distanceUnit) }}</td>
-                            {% endif %}
-                            {% if type.maxTime == 0 %}
-                                <td>-</td>
-                            {% elseif type.maxTime|date('z', 'UTC') == 0 %}
-                                <td>{{ type.maxTime|date('H:i:s', 'UTC') }}</td>
-                            {% else %}
-                                <td>{{ type.maxTime|date('z\\d H:i:s', 'UTC') }}</td>
-                            {% endif %}
-                        </tr>
-                    {% endfor %}
-                {% else %}
-                    <tr><td colspan="9">{% trans %}No equipment available.{% endtrans %}<br>
-                            <a class="window" href="{{ url('equipment-add') }}" title="{{ 'Add equipment'|trans }}"><strong>{{ 'Add equipment'|trans }}</strong></a>
-                        </td></tr>
-                {% endif %}
-                </tbody>
-            </table>
-            <p class="info">{% trans %}If you delete a category all equipment objects of this category as well as all relations between your activities and that equipment objects will be deleted!{% endtrans %}</p>
-
-        </div>
-
-    <div class="panel-heading panel-sub-heading">
-        <h1>{{ 'Equipment'|trans }}</h1>
+    <div class="panel-heading">
+        <h1>{% trans %}Your equipment categories{% endtrans %}</h1>
     </div>
+
     <div class="panel-content">
-        <table>
-            <tr>
-                <td class="blocklist"><a class="window" href="{{ url('equipment-add') }}" title="{{ 'Add equipment'|trans }}"><i class="fa fa-cube"></i> <strong>{{ 'Add equipment'|trans }}</strong></a></td>
-                <td class="blocklist"><a class="window" href="{{ url('equipment-category-add') }}" title="{{ 'Add equipment category'|trans }}"><i class="fa fa-cubes"></i><strong>{{ 'Add equipment category'|trans }}</strong></a></td>
-            </tr>
-        </table>
-    </div>
+        {% include 'flashmessages.html.twig' %}
 
+        {% if equipmentTypes|length > 0 %}
+        <table class="fullwidth zebra-style more-padding">
+            <thead>
+            <tr>
+                <th></th>
+                <th>{{ 'Name'|trans }}</th>
+                <th>{{ 'Type'|trans }}</th>
+                <th>{{ 'max Km.'|trans }}</th>
+                <th>{{ 'max Time.'|trans }}</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody class="c">
+                {% for type in equipmentTypes %}
+                    {# @var type \Runalyze\Bundle\CoreBundle\Entity\EquipmentType #}
+                    <tr>
+                        <td><a class="window" href="{{ url('equipment-category-edit', {'id': type.id}) }}"><i class="fa fa-fw fa-pencil"></i></a></td>
+                        <td>{{ type.name }}</td>
+                        <td>{{ (type.input == 0 ? 'Single choice' : 'Multiple choice')|trans }}</td>
+                        <td>{{ type.hasMaximalDistance ? distance(type.maxKm, unitSystem.distanceUnit, 0) : '-' }}</td>
+                        <td>{{ type.hasMaximalDuration ? type.maxTime|duration : '-' }}</td>
+                        <td><a class="window color-danger" href="{{ url('equipment-category-delete', { 'id': type.id, 't': csrf_token('deleteEquipmentCategory') }) }}" data-confirm="{% trans %}Do you really want to delete this?{% endtrans %}"><i class="fa fa-trash" title="{{ 'Delete'|trans }}"></i></a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+            <p class="text">{% trans %}You don't have any equipment so far.{% endtrans %}</p>
+        {% endif %}
+
+        <div class="c blocklist blocklist-width-auto margin-top-2x margin-bottom">
+            <a class="window" href="{{ url('equipment-category-add') }}"><strong><i class="fa fa-fw fa-plus"></i> {{ 'Add an equipment category'|trans }}</strong></a>
+        </div>
+    </div>
 
 {% endblock %}

@@ -1,34 +1,48 @@
 {% extends "base_logged_in.twig" %}
 {% from '_macro/form.html.twig' import dangerZoneDelete %}
 
+{% from '_macro/form.html.twig' import dangerZoneDelete %}
+
 {% block content %}
     <div class="panel-heading">
-
         {% if form.vars.data.id is null%}
-            <h1>{{ 'Add equipment category'|trans }}</h1>
+            <h1>{{ 'Add an equipment category'|trans }}</h1>
         {% else %}
             <h1>{{ 'Edit equipment category'|trans }}</h1>
         {% endif %}
-
     </div>
 
     <div class="panel-content">
         {% include 'flashmessages.html.twig' %}
 
-        {{ form_start(form, {'attr': {'class': 'ajax no-automatic-reloads'} }) }}
-        <fieldset>
-            {{ form_row(form.name, {'div_class': 'w100 block'}) }}
+        {{ form_start(form, {'attr': {'class': 'ajax no-automatic-reload'} }) }}
+
+        <fieldset class="without-legend">
+            {{ form_row(form.name, {'div_class': 'w100 block with50erLabel'}) }}
+
             {% if form.vars.data.id is null%}
-                {{ form_row(form.input, {'help': 'Choose the correct type for the equipment: <br><b>Single choice</b> You can choose only one object for an activity<br> <b>Multiple choice</b> You can select mulitple objects for an activity'|trans , 'div_class': 'w100 block'}) }}{{ form_row(form.input, {'help': 'Choose the correct type for the equipment: <br><b>Single choice</b> You can choose only one object for an activity<br> <b>Multiple choice</b> You can select mulitple objects for an activity'|trans , 'div_class': 'w100 block'}) }}
+                {{ form_row(form.input, {'div_class': 'w100 block with50erLabel'}) }}
+                <p class="info margin-bottom">
+                    {% trans %}Choose the correct type for the equipment{% endtrans %}:<br>
+                    <strong>{% trans %}Single choice{% endtrans %}</strong> - {% trans %}You can choose only one object for an activity{% endtrans %}<br>
+                    <strong>{% trans %}Multiple choice{% endtrans %}</strong> - {% trans %}You can select mulitple objects for an activity{% endtrans %}
+                </p>
             {% endif %}
-            {{ form_row(form.maxKm, {'div_class': 'w100 block'}) }}
-            {{ form_row(form.maxTime, {'div_class': 'w100 block'}) }}
-            <p  class="info">{% trans %}You can add a maximal distance or a maximal time if you want to. This is used for displaying a progress bar in the equipment widget.{% endtrans %}</p>
-            {{ form_row(form.sport, {'div_class': 'w100 block', 'help':'The category will appear at the assigned sport types.'}) }}
+
+            {{ form_row(form.sport, {'div_class': 'w100 block with50erLabel'}) }}
+            <p class="info margin-bottom">
+                {% trans %}You can limit equipment categories to specific sport types.{% endtrans %}
+            </p>
+
+            {{ form_row(form.maxKm, {'div_class': 'w100 block with50erLabel'}) }}
+            {{ form_row(form.maxTime, {'div_class': 'w100 block with50erLabel'}) }}
+            <p class="info margin-bottom">
+                {% trans %}You can add a maximal distance or duration if you want to be warned about objects exceeding their theoretical lifetime. This is used for displaying a progress bar in the equipment widget.{% endtrans %}
+            </p>
 
             {{ form_rest(form) }}
 
-            <div class="c">
+            <div class="c margin-top">
                 {% if form.vars.data.id is null%}
                     <input type="submit" value="{% trans %}Add{% endtrans %}" name="submit">
                 {% else %}
@@ -39,53 +53,59 @@
 
         {{ form_rest(form) }}
         {{ form_end(form) }}
-        {% if form.vars.data.id is not null%}
-            <p class="text margin-top">
-                <a class="window" href="{{ url('equipment-overview') }}">&laquo; {% trans %}back to list{% endtrans %}</a>
-            </p>
-            <div class="panel-heading panel-inner-heading"><h1>{% trans %}Assigned equipment{% endtrans %}</h1></div>
-                <table id="assigned-equipment" class="fullwidth zebra-style">
+    </div>
+
+    {% if form.vars.data.id is not null %}
+        <div class="panel-heading panel-sub-heading">
+            <h1>{% trans %}Assigned equipment{% endtrans %}</h1>
+        </div>
+
+        <div class="panel-content">
+            {% if equipment|length > 0 %}
+                <table class="fullwidth zebra-style more-padding">
                     <thead>
-                    <tr>
-                        <th>&nbsp;</th>
-                        <th>{{ 'Name'|trans }}</th>
-                        <th>{{ 'prev. distance'|trans }}</th>
-                        <th>{{ 'Start of use'|trans }}</th>
-                        <th>{{ 'End of use'|trans }}</th>
-                        <th>{{ 'Notes'|trans }}</th>
-                    </tr>
+                        <tr>
+                            <th></th>
+                            <th>{{ 'Name'|trans }}</th>
+                            <th>{{ 'prev. distance'|trans }}</th>
+                            <th>{{ 'Start of use'|trans }}</th>
+                            <th>{{ 'End of use'|trans }}</th>
+                            <th>{{ 'Notes'|trans }}</th>
+                            <th></th>
+                        </tr>
                     </thead>
                     <tbody class="c">
-                    {% if equipment|length > 0 %}
                         {% for entry in equipment %}
                             {# @var entry \Runalyze\Bundle\CoreBundle\Entity\Equipment #}
                             <tr>
-                                <td class="as-small-as-possible">
-                                    <a class="window" href="{{ url('equipment-edit', {'id': entry.id}) }}"><i class="fa fa-fw fa-pencil"></i></a>
-                                    <a class="window" href="{{ url('equipment-delete', { 'id': entry.id, 't': csrf_token('deleteEquipment') }) }}" data-confirm="{% trans %}Do you really want to delete this?{% endtrans %}"><i class="fa fa-trash" title="Delete"></i></a>
-                                </td>
+                                <td><a class="window" href="{{ url('equipment-edit', {'id': entry.id}) }}"><i class="fa fa-fw fa-pencil"></i></a></td>
                                 <td>{{ entry.name }}</td>
-                                <td>{{ distance(entry.additionalKm, unitSystem.distanceUnit) }}</td>
-                                <td>{{ entry.dateStart ? (entry.dateStart|date('d.m.Y')) : '-' }}</td>
-                                <td>{{ entry.dateEnd ? (entry.dateEnd|date('d.m.Y')) : '-' }}</td>
+                                <td>{{ entry.additionalKm > 0 ? distance(entry.additionalKm, unitSystem.distanceUnit, 0) : '-' }}</td>
+                                <td>{{ entry.dateStart ? entry.dateStart|date('d.m.Y') : '-' }}</td>
+                                <td>{{ entry.dateEnd ? entry.dateEnd|date('d.m.Y') : '-' }}</td>
                                 <td>{{ entry.notes }}</td>
+                                <td><a class="window color-danger" href="{{ url('equipment-delete', { 'id': entry.id, 't': csrf_token('deleteEquipment') }) }}" data-confirm="{% trans %}Do you really want to delete this?{% endtrans %}"><i class="fa fa-trash" title="{{ 'Delete'|trans }}"></i></a></td>
                             </tr>
                         {% endfor %}
-                        <tr><td colspan="6"><a class="window" href="{{ url('equipment-add') }}" title="{{ 'Add equipment'|trans }}"><strong>{{ 'Add equipment'|trans }}</strong></a>
-                            </td></tr>
-                    {% else %}
-                        <tr><td colspan="6">{% trans %}No equipment available.{% endtrans %}<br>
-                                <a class="window" href="{{ url('equipment-add') }}" title="{{ 'Add equipment'|trans }}"><strong>{{ 'Add equipment'|trans }}</strong></a>
-                            </td></tr>
-                    {% endif %}
                     </tbody>
                 </table>
+            {% endif %}
+
+            <div class="c blocklist blocklist-width-auto margin-top-2x margin-bottom">
+                <a class="window" href="{{ url('equipment-add', {'id': form.vars.data.id}) }}"><strong><i class="fa fa-fw fa-plus"></i> {{ 'Add an equipment object'|trans }}</strong></a>
             </div>
-        <p class="info">{% trans %}If you delete an equipment object all relations between your activities and this object will be deleted.{% endtrans %}</p>
-        {% endif %}
-        {% if form.vars.data.id is not null%}
-            {{ dangerZoneDelete(url('equipment-category-delete', {'id': form.vars.data.id}), 'deleteEquipmentCategory') }}
-            <p class="info">{% trans %}If you delete a category all equipment objects of this category as well as all relations between your activities and this equipment object will be deleted!{% endtrans %}</p>
-        {% endif %}
+        </div>
+    {% endif %}
+
+    <div class="panel-content">
+        <p class="text margin-top">
+            <a class="window" href="{{ url('equipment-overview') }}">&laquo; {% trans %}back to list{% endtrans %}</a>
+        </p>
     </div>
+
+    {% if form.vars.data.id is not null %}
+        {{ dangerZoneDelete(url('equipment-delete', {'id': form.vars.data.id}), 'deleteSport',
+            'If you delete an equipment category all objects in this category and all relations between your activities and these objects will be deleted.'
+        ) }}
+    {% endif %}
 {% endblock %}

@@ -49,4 +49,10 @@ class EquipmentRepository extends EntityRepository
         $this->_em->persist($equipment);
         $this->_em->flush();
     }
+
+    public function remove(Equipment $equipment)
+    {
+        $this->_em->remove($equipment);
+        $this->_em->flush();
+    }
 }

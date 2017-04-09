@@ -219,7 +219,8 @@ fieldset {
 	}
 }
 
-:invalid, fieldset .validation-failed {
+:invalid, fieldset .validation-failed,
+select.chosen-select:invalid + .chosen-container .chosen-choices {
 	background-color: @formular-invalid-background;
 	border-color: @formular-invalid-border;
 }

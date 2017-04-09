@@ -2,21 +2,21 @@
 
 namespace Runalyze\Bundle\CoreBundle\Form;
 
+use Runalyze\Bundle\CoreBundle\Entity\Account;
+use Runalyze\Bundle\CoreBundle\Entity\EquipmentType;
+use Runalyze\Bundle\CoreBundle\Entity\Sport;
 use Runalyze\Bundle\CoreBundle\Entity\SportRepository;
 use Runalyze\Bundle\CoreBundle\Form\Type\DistanceType;
+use Runalyze\Bundle\CoreBundle\Form\Type\DurationNullableType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Runalyze\Bundle\CoreBundle\Form\Type\DurationType;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
-use Runalyze\Bundle\CoreBundle\Entity\Account;
-use Runalyze\Bundle\CoreBundle\Entity\Sport;
-use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 class EquipmentCategoryType extends AbstractType
 {
@@ -26,10 +26,7 @@ class EquipmentCategoryType extends AbstractType
     /** @var TokenStorage */
     protected $TokenStorage;
 
-    public function __construct(
-        SportRepository $SportRepository,
-        TokenStorage $tokenStorage
-    )
+    public function __construct(SportRepository $SportRepository, TokenStorage $tokenStorage)
     {
         $this->SportRepository = $SportRepository;
         $this->TokenStorage = $tokenStorage;
@@ -58,35 +55,42 @@ class EquipmentCategoryType extends AbstractType
                 'attr' => array(
                     'autofocus' => true
                 )
-            ));
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
-            $equipmentType = $event->getData();
-            $form = $event->getForm();
-            if (!$equipmentType || null === $equipmentType->getId()) {
-                $form->add('input', ChoiceType::class, array(
-                    'choices' => ['Single choice' => 0, 'Multiple Choice' => 1],
-                    'choice_translation_domain' => false,
-                    'label' => 'Type'
-                ));
-            }
-        });
+            ))
+            ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+                $equipmentType = $event->getData();
+                $form = $event->getForm();
 
-        $builder->add('maxKm', DistanceType::class, array(
+                if (!$equipmentType || null === $equipmentType->getId()) {
+                    $form->add('input', ChoiceType::class, array(
+                        'choices' => [
+                            'Single choice' => EquipmentType::CHOICE_SINGLE,
+                            'Multiple Choice' => EquipmentType::CHOICE_MULTIPLE
+                        ],
+                        'choice_translation_domain' => false,
+                        'label' => 'Mode'
+                    ));
+                }
+            })
+            ->add('maxKm', DistanceType::class, array(
                 'label' => 'max. Km',
                 'required' => false
             ))
-            ->add('maxTime', DurationType::class, array(
+            ->add('maxTime', DurationNullableType::class, array(
                 'label' => 'max. Time',
+                'required' => false,
                 'attr' => ['class' => 'medium-size']
             ))
             ->add('sport', EntityType::class, [
-                'class'   => Sport::class,
+                'class' => Sport::class,
                 'choices' => $this->SportRepository->findAllFor($this->getAccount()),
                 'choice_label' => 'name',
-                'label' => 'Assigned sports ',
-                'placeholder' => 'Choose sport type(s)',
-                'attr' => ['class' => 'chosen-select full-size'],
+                'label' => 'Assigned sports',
+                'attr' => [
+                    'class' => 'chosen-select full-size',
+                    'data-placeholder' => 'Choose sport type(s)'
+                ],
                 'multiple' => true,
+                'required' => true,
                 'expanded' => false
             ]);
     }

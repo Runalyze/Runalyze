@@ -40,21 +40,21 @@ class Equipment
      *
      * @ORM\Column(name="distance", type="decimal", precision=8, scale=2, options={"unsigned":true, "default":0.00})
      */
-    private $distance = '0.00';
+    private $distance = 0.00;
 
     /**
      * @var int [s]
      *
      * @ORM\Column(name="time", type="integer", nullable=false, options={"unsigned":true, "default":0})
      */
-    private $time = '0';
+    private $time = 0;
 
     /**
      * @var int [km]
      *
      * @ORM\Column(name="additional_km", type="integer", nullable=false, options={"unsigned":true, "default":0})
      */
-    private $additionalKm = '0';
+    private $additionalKm = 0;
 
     /**
      * @var null|\DateTime
@@ -71,7 +71,7 @@ class Equipment
     private $dateEnd;
 
     /**
-     * @var \Runalyze\Bundle\CoreBundle\Entity\EquipmentType
+     * @var EquipmentType
      *
      * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\EquipmentType")
      * @ORM\JoinColumns({
@@ -81,7 +81,7 @@ class Equipment
     private $type;
 
     /**
-     * @var \Runalyze\Bundle\CoreBundle\Entity\Account
+     * @var Account
      *
      * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Account")
      * @ORM\JoinColumns({
@@ -247,6 +247,14 @@ class Equipment
     }
 
     /**
+     * @return bool
+     */
+    public function hasStartDate()
+    {
+        return null !== $this->dateStart;
+    }
+
+    /**
      * @param null|\DateTime $dateEnd
      *
      * @return $this
@@ -275,11 +283,11 @@ class Equipment
     }
 
     /**
-     * @param \Runalyze\Bundle\CoreBundle\Entity\EquipmentType $type
+     * @param EquipmentType $type
      *
      * @return $this
      */
-    public function setType(\Runalyze\Bundle\CoreBundle\Entity\EquipmentType $type)
+    public function setType(EquipmentType $type)
     {
         $this->type = $type;
 
@@ -295,11 +303,11 @@ class Equipment
     }
 
     /**
-     * @param \Runalyze\Bundle\CoreBundle\Entity\Account $account
+     * @param Account $account
      *
      * @return $this
      */
-    public function setAccount(\Runalyze\Bundle\CoreBundle\Entity\Account $account)
+    public function setAccount(Account $account)
     {
         $this->account = $account;
 
@@ -307,7 +315,7 @@ class Equipment
     }
 
     /**
-     * @return \Runalyze\Bundle\CoreBundle\Entity\Account
+     * @return Account
      */
     public function getAccount()
     {
@@ -319,7 +327,7 @@ class Equipment
      *
      * @return $this
      */
-    public function addActivity(\Runalyze\Bundle\CoreBundle\Entity\Training $activity)
+    public function addActivity(Training $activity)
     {
         $this->activity[] = $activity;
 

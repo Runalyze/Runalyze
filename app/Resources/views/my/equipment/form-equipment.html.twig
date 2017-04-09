@@ -1,50 +1,70 @@
 {% extends "base_logged_in.twig" %}
 {% from '_macro/form.html.twig' import dangerZoneDelete %}
 
+{% from '_macro/form.html.twig' import dangerZoneDelete %}
+
 {% block content %}
     <div class="panel-heading">
         {% if form.vars.data.id is null %}
-            <h1>{{ 'Add equipment'|trans }}</h1>
+            <h1>{{ 'Add an equipment object'|trans }}</h1>
         {% else %}
             <h1>{{ 'Edit equipment'|trans }}</h1>
         {% endif %}
-
     </div>
 
     <div class="panel-content">
         {% include 'flashmessages.html.twig' %}
 
-        {{ form_start(form, {'attr': {'class': 'ajax no-automatic-reloads'} }) }}
-        <fieldset>
-            <legend>{% trans %}Equipment{% endtrans %}</legend>
-            <p class="info">{% trans %}RUNALYZE collects data and calculates statistics for each of your equipment objects.{% endtrans %}</p>
-            {{ form_row(form.name, {'div_class': 'w100 block'}) }}
-            {{ form_row(form.type, {'div_class': 'w100 block'}) }}
-            {{ form_row(form.additionalKm, {'div_class': 'w100 block', 'help':'To correctly estimate its lifetime you can specify a previous distance which is added to its calculated distance, e.g. if you used your running shoes for 200 km before tracking them.'}) }}
-            {{ form_row(form.dateStart, {'div_class': 'w100 block'}) }}
-            {{ form_row(form.dateEnd, {'div_class': 'w100 block', 'help':'Objects will be displayed as inactive as soon as they have reached the end date.'}) }}
-            {{ form_row(form.notes, {'div_class': 'w100 block'}) }}
+        {{ form_start(form, {'attr': {'class': 'ajax no-automatic-reload'} }) }}
+
+        <fieldset class="without-legend">
+            {{ form_row(form.name, {'div_class': 'w100 block with50erLabel'}) }}
+
+            {% if form.type %}
+                {# TODO: @mipapo This should not be visible, as we should not allow to change this value and adding a new object must always happen for a known category. #}
+                {{ form_row(form.type, {'div_class': 'w100 block with50erLabel'}) }}
+            {% endif %}
+
+            {{ form_row(form.additionalKm, {'div_class': 'w100 block with50erLabel'}) }}
+            <p class="info margin-bottom">
+                {% trans %}To correctly estimate its lifetime you can specify a previous distance which is added to its calculated distance, e.g. if you used your running shoes for 200 km before tracking them.{% endtrans %}
+            </p>
+
+            {{ form_row(form.dateStart, {'div_class': 'w100 block with50erLabel', 'input_unit': '<i class="fa fa-fw fa-calendar"></i>'}) }}
+            {{ form_row(form.dateEnd, {'div_class': 'w100 block with50erLabel', 'input_unit': '<i class="fa fa-fw fa-calendar"></i>'}) }}
+            <p class="info margin-bottom">
+                {% trans %}Objects will be displayed as inactive as soon as they have reached their end date.{% endtrans %}
+            </p>
+
+            {{ form_row(form.notes, {'div_class': 'w100 block with50erLabel'}) }}
 
             {{ form_rest(form) }}
-            <div class="c">
-                <div class="c">
-                    {% if form.vars.data.id is null%}
-                        <input type="submit" value="{% trans %}Add{% endtrans %}" name="submit">
-                    {% else %}
-                        <input type="submit" value="{% trans %}Update{% endtrans %}" name="submit">
-                    {% endif %}
-                </div>
+
+            <div class="c margin-top">
+                {% if form.vars.data.id is null%}
+                    <input type="submit" value="{% trans %}Add{% endtrans %}" name="submit">
+                {% else %}
+                    <input type="submit" value="{% trans %}Update{% endtrans %}" name="submit">
+                {% endif %}
             </div>
         </fieldset>
-        {{ form_end(form) }}
 
-        {% if form.vars.data.id is not null%}
-            <p class="text margin-top">
-                <a class="window" href="{{ url('equipment-category-edit', {'id': form.vars.data.type.id}) }}">&laquo; {% trans %}back to list{% endtrans %}</a>
-            </p>
-            {{ dangerZoneDelete(url('equipment-delete', {'id': form.vars.data.id}), 'deleteEquipment') }}
-        {% endif %}
-        </div>
-        <p class="info">{% trans %}If you delete an equipment object all relations between your activities and this object will be deleted.{% endtrans %}</p>
+        {{ form_end(form) }}
     </div>
+
+    <div class="panel-content">
+        <p class="text margin-top">
+            {% if category_id is not null %}
+                <a class="window" href="{{ url('equipment-category-edit', {'id': category_id}) }}">&laquo; {% trans %}back to list{% endtrans %}</a>
+            {% else %}
+                <a class="window" href="{{ url('equipment-overview') }}">&laquo; {% trans %}back to list{% endtrans %}</a>
+            {% endif %}
+        </p>
+    </div>
+
+    {% if form.vars.data.id is not null %}
+        {{ dangerZoneDelete(url('equipment-delete', {'id': form.vars.data.id}), 'deleteSport',
+            'If you delete an equipment object all relations between your activities and this object will be deleted.'|trans
+        ) }}
+    {% endif %}
 {% endblock %}
