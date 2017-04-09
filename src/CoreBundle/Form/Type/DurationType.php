@@ -24,6 +24,14 @@ class DurationType extends AbstractType implements DataTransformerInterface
     }
 
     /**
+     * @param bool $flag
+     */
+    public function setRequired($flag = true)
+    {
+        $this->IsRequired = $flag;
+    }
+
+    /**
      * @param  mixed $duration [s]
      * @return string
      */
