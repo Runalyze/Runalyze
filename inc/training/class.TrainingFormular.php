@@ -224,9 +224,6 @@ class TrainingFormular extends StandardFormular {
 			$this->displayHeader();
 			echo HTML::okay( __('The activity has been successfully created.') );
 			echo Ajax::closeOverlay();
-
-			if (Configuration::ActivityForm()->showActivity())
-				echo Ajax::wrapJS('Runalyze.Training.load('.$this->dataObject->id().');');
 		} else {
 			if (Request::param('mode') == 'multi') {
 				echo Ajax::wrapJS('Runalyze.goToNextMultiEditor();');

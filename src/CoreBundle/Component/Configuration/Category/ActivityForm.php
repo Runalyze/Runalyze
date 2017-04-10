@@ -11,7 +11,6 @@ class ActivityForm extends AbstractCategory
     {
         return [
             'TRAINING_CREATE_MODE' => 'upload',
-            'TRAINING_SHOW_AFTER_CREATE' => 'false',
             'TRAINING_DO_ELEVATION' => 'true',
             'TRAINING_LOAD_WEATHER' => 'true',
             'PLZ' => '',

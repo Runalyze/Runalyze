@@ -269,7 +269,7 @@ class SettingsController extends Controller
     {
         $tag = $this->getDoctrine()->getRepository('CoreBundle:Tag')->findBy(['account' => $account->getId()], null, 1);
 
-        if (is_array($tag)) {
+        if ($tag) {
             return (string)$tag[0]->getId();
         }
 

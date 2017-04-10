@@ -8,6 +8,9 @@ use Runalyze\Bundle\CoreBundle\Component\Tool\Backup\JsonBackup;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Backup\SqlBackup;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Runalyze\Bundle\CoreBundle\Component\Notifications;
+use Runalyze\Bundle\CoreBundle\Entity\Notification;
+use Runalyze\Bundle\CoreBundle\Component\Notifications\Message\BackupReadyMessage;
 
 class BackupReceiver
 {
@@ -57,6 +60,8 @@ class BackupReceiver
             $Backup->run();
         }
 
-        $this->container->get('app.mailer.account')->sendBackupReadyTo($account);
+        $this->container->get('doctrine')->getRepository('CoreBundle:Notification')->save(
+            Notification::createFromMessage(new BackupReadyMessage(), $account)
+        );
     }
 }
