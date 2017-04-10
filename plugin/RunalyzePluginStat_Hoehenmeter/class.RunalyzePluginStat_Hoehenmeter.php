@@ -135,7 +135,7 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 			echo '<tr>
 				<td class="small">'.$Linker->weekLink().'</td>
 				<td>'.$Linker->linkWithSportIcon().'</td>
-				<td>'.$this->labelFor($Data['route'], $Data['comment']).'</td>
+				<td>'.$this->labelFor($Data['route'], $Data['title']).'</td>
 				<td class="r">'.Elevation::format($Data['elevation']).'<br>
 					<small>'.round($grade/10, 2).'&nbsp;&#37;,&nbsp;'.Distance::format($Data['distance']).'</small></td>
 			</tr>';
@@ -162,7 +162,7 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 			echo '<tr>
 				<td class="small">'.$Linker->weekLink().'</td>
 				<td>'.$Linker->linkWithSportIcon().'</td>
-				<td>'.$this->labelFor($Data['route'], $Data['comment']).'</td>
+				<td>'.$this->labelFor($Data['route'], $Data['title']).'</td>
 				<td class="r">
 					'.round($Data['gradient']/10, 2).'&nbsp;&#37;<br>
 					<small>'.Elevation::format($Data['elevation']).',&nbsp;'.Distance::format($Data['distance']).'</small>
@@ -176,18 +176,18 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 	/**
 	 * Get label
 	 * @param string $route
-	 * @param string $comment
+	 * @param string $title
 	 * @return string
 	 */
-	private function labelFor($route, $comment) {
+	private function labelFor($route, $title) {
 		if ($route != '') {
-			if ($comment != '') {
-				return $route.' (<em>'.$comment.'</em>)';
+			if ($title != '') {
+				return $route.' (<em>'.$title.'</em>)';
 			}
 
 			return $route;
-		} elseif ($comment != '') {
-			return '<em>'.$comment.'</em>';
+		} elseif ($title != '') {
+			return '<em>'.$title.'</em>';
 		}
 
 		return '<em>'.__('unlabeled').'</em>';
@@ -226,7 +226,7 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 				`'.PREFIX.'training`.`id`,
 				`'.PREFIX.'training`.`time`,
 				`'.PREFIX.'training`.`sportid`,
-				`'.PREFIX.'training`.`comment`,
+				`'.PREFIX.'training`.`title`,
 				`'.PREFIX.'training`.`s`,
 				`'.PREFIX.'route`.`name` as `route`,
 				`'.PREFIX.'route`.`distance`,
@@ -251,7 +251,7 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 				`'.PREFIX.'training`.`id`,
 				`'.PREFIX.'training`.`time`,
 				`'.PREFIX.'training`.`sportid`,
-				`'.PREFIX.'training`.`comment`,
+				`'.PREFIX.'training`.`title`,
 				`'.PREFIX.'training`.`s`,
 				`'.PREFIX.'route`.`name` as `route`,
 				`'.PREFIX.'route`.`distance`,

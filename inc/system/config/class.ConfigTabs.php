@@ -65,19 +65,6 @@ class ConfigTabs {
 	}
 
 	/**
-	 * Display navigation
-	 */
-	protected function displayNavigation() {
-		$Links   = array();
-
-		foreach ($this->Tabs as $Tab) {
-			$Links[] = array('tag' => Ajax::link($Tab->getTitle(), self::$TABS_ID, $Tab->getUrl()));
-		}
-
-        echo Ajax::toolbarNavigation($Links);
-	}
-
-	/**
 	 * Display tabs
 	 */
 	public function display() {
@@ -94,10 +81,6 @@ class ConfigTabs {
 		}
 
 		if ($this->hasToShowDiv()) {
-			//echo '<div class="panel-menu panel-menu-floated">';
-			//$this->displayNavigation();
-			//echo '</div>';
-
 			echo '<div id="'.self::$TABS_ID.'">';
 		}
 

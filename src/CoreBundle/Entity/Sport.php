@@ -112,26 +112,10 @@ class Sport
     private $account;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Runalyze\Bundle\CoreBundle\Entity\EquipmentType", inversedBy="sport")
-     * @ORM\JoinTable(name="equipment_sport",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="sportid", referencedColumnName="id")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="equipment_typeid", referencedColumnName="id")
-     *   }
-     * )
-     */
-    private $equipmentType;
-
-    /**
      * Constructor
      */
     public function __construct()
     {
-        $this->equipmentType = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
 

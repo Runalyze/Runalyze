@@ -15,6 +15,8 @@ class AccountRepositoryTest extends AbstractRepositoryTestCase
 
     protected function setUp()
     {
+        $this->FixtureClasses = [];
+
         parent::setUp();
 
         $this->AccountRepository = $this->EntityManager->getRepository('CoreBundle:Account');
@@ -112,5 +114,36 @@ class AccountRepositoryTest extends AbstractRepositoryTestCase
         $this->assertFalse($this->AccountRepository->activateByHash('unknownHash'));
         $this->assertTrue($this->AccountRepository->activateByHash($activationHash));
         $this->assertNull($fooAccount->getActivationHash());
+    }
+
+    public function testFindingByLanguage()
+    {
+        $english1 = $this->getNewAccount('en1')->setLanguage('en');
+        $english2 = $this->getNewAccount('en2')->setLanguage('en');
+        $german = $this->getNewAccount('de')->setLanguage('de');
+        $swedish = $this->getNewAccount('sv')->setLanguage('sv');
+
+        $this->EntityManager->persist($english1);
+        $this->EntityManager->persist($english2);
+        $this->EntityManager->persist($german);
+        $this->EntityManager->persist($swedish);
+        $this->EntityManager->flush();
+
+        $this->assertEquals(
+            [$english1->getId(), $english2->getId()],
+            $this->AccountRepository->findAllByLanguage('en')
+        );
+        $this->assertEquals(
+            [$english1->getId(), $english2->getId(), $german->getId()],
+            $this->AccountRepository->findAllByLanguage(['en', 'de'])
+        );
+        $this->assertEquals(
+            [$swedish->getId()],
+            $this->AccountRepository->findAllByLanguage(['en', 'de'], true)
+        );
+        $this->assertEquals(
+            [$german->getId(), $swedish->getId()],
+            $this->AccountRepository->findAllByLanguage('en', true)
+        );
     }
 }

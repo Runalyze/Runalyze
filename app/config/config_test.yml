@@ -11,11 +11,20 @@ parameters:
 
 liip_functional_test:
   cache_sqlite_db: true
+  authentication:
+    username: "default"
+    password: "defaultPassword"
 
 framework:
   test: ~
   session:
     storage_id: session.storage.mock_file
+    name: MOCKSESSID
+
+security:
+  firewalls:
+    default:
+      http_basic: ~
 
 doctrine:
   dbal:

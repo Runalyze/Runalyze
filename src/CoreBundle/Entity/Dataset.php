@@ -1,6 +1,6 @@
 <?php
-namespace Runalyze\Bundle\CoreBundle\Entity;
 
+namespace Runalyze\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Dataset
  *
  * @ORM\Table(name="dataset", indexes={@ORM\Index(name="position", columns={"accountid", "position"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\DatasetRepository")
  */
 class Dataset
 {
@@ -23,7 +23,7 @@ class Dataset
     private $account;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="keyid", columnDefinition="tinyint unsigned NOT NULL")
      * @ORM\Id
@@ -32,11 +32,11 @@ class Dataset
     private $keyid;
 
     /**
-     * @var boolean
+     * @var bool
      *
-     * @ORM\Column(name="active", columnDefinition="tinyint unsigned NOT NULL DEFAULT 1")
+     * @ORM\Column(name="active", type="boolean", columnDefinition="tinyint unsigned NOT NULL DEFAULT 1")
      */
-    private $active = 1;
+    private $active = true;
 
     /**
      * @var string
@@ -46,20 +46,16 @@ class Dataset
     private $style = '';
 
     /**
-     * @var boolean
+     * @var int
      *
      * @ORM\Column(name="position", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
      */
-    private $position = '0';
+    private $position = 0;
 
     /**
-     * Set account
-     *
-     * @param \Runalyze\Bundle\CoreBundle\Entity\Account $account
-     *
-     * @return Dataset
+     * @return $this
      */
-    public function setAccount(\Runalyze\Bundle\CoreBundle\Entity\Account $account = null)
+    public function setAccount(Account $account)
     {
         $this->account = $account;
 
@@ -67,9 +63,7 @@ class Dataset
     }
 
     /**
-     * Get account
-     *
-     * @return \Runalyze\Bundle\CoreBundle\Entity\Account
+     * @return Account
      */
     public function getAccount()
     {
@@ -77,11 +71,9 @@ class Dataset
     }
 
     /**
-     * Set KeyId
-     *
      * @param string $keyId
      *
-     * @return Dataset
+     * @return $this
      */
     public function setKeyId($keyId)
     {
@@ -91,8 +83,6 @@ class Dataset
     }
 
     /**
-     * Get KeyId
-     *
      * @return string
      */
     public function getKeyId()
@@ -101,23 +91,19 @@ class Dataset
     }
 
     /**
-     * Set active
+     * @param bool $active
      *
-     * @param string $active
-     *
-     * @return Dataset
+     * @return $this
      */
     public function setActive($active)
     {
-        $this->active = $active;
+        $this->active = (bool)$active;
 
         return $this;
     }
 
     /**
-     * Get active
-     *
-     * @return string
+     * @return bool
      */
     public function getActive()
     {
@@ -125,11 +111,9 @@ class Dataset
     }
 
     /**
-     * Set style
-     *
      * @param string $style
      *
-     * @return Dataset
+     * @return $this
      */
     public function setStyle($style)
     {
@@ -139,8 +123,6 @@ class Dataset
     }
 
     /**
-     * Get style
-     *
      * @return string
      */
     public function getStyle()
@@ -149,23 +131,19 @@ class Dataset
     }
 
     /**
-     * Set position
+     * @param int $position
      *
-     * @param string $position
-     *
-     * @return Dataset
+     * @return $this
      */
     public function setPosition($position)
     {
-        $this->position = $position;
+        $this->position = (int)$position;
 
         return $this;
     }
 
     /**
-     * Get position
-     *
-     * @return string
+     * @return int
      */
     public function getPosition()
     {

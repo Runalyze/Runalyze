@@ -1,4 +1,5 @@
 <?php
+
 namespace Runalyze\Bundle\CoreBundle\Form\Type;
 
 use Runalyze\Activity\Duration;
@@ -16,9 +17,18 @@ class DurationType extends AbstractType implements DataTransformerInterface
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->addModelTransformer($this);
+
         if (isset($options['required'])) {
             $this->IsRequired = $options['required'];
         }
+    }
+
+    /**
+     * @param bool $flag
+     */
+    public function setRequired($flag = true)
+    {
+        $this->IsRequired = $flag;
     }
 
     /**
@@ -27,11 +37,11 @@ class DurationType extends AbstractType implements DataTransformerInterface
      */
     public function transform($duration)
     {
-        return null === $duration ? '0:00'  : Duration::format($duration);
+        return null === $duration ? '0:00' : Duration::format($duration);
     }
 
     /**
-     * @param  string $duration
+     * @param  string|null $duration
      * @return float
      * @throws TransformationFailedException if $duration is null
      */

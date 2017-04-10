@@ -1,7 +1,7 @@
 {% extends 'tools/database_cleanup/base.html.twig' %}
 
 {% block toolContent %}
-    {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'ajax no-automatic-reloads'}, 'action': url('tools-cleanup')}) }}
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'ajax no-automatic-reload'}, 'action': url('tools-cleanup')}) }}
 
         <div class="padding-5">
             <label>

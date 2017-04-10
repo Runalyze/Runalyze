@@ -8,7 +8,7 @@
     <div class="panel-content">
         {% include 'flashmessages.html.twig' %}
 
-        {{ form_start(form, {'attr': {'class': 'ajax no-automatic-reloads'} }) }}
+        {{ form_start(form, {'attr': {'class': 'ajax no-automatic-reload'} }) }}
 
         <fieldset id="legend0">
             <legend onclick="Runalyze.toggleFieldset(this, 'legend0', false, '')">{% trans %}Your acccount{% endtrans %}</legend>
