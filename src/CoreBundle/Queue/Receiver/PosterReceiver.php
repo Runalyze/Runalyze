@@ -4,6 +4,7 @@ namespace Runalyze\Bundle\CoreBundle\Queue\Receiver;
 
 use Bernard\Message\DefaultMessage;
 use Psr\Log\LoggerInterface;
+use Runalyze\Bundle\CoreBundle\Component\Notifications\Message\PosterGeneratedMessage;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Poster\Converter\AbstractSvgToPngConverter;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Poster\Converter\InkscapeConverter;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Poster\Converter\RsvgConverter;
@@ -11,6 +12,8 @@ use Runalyze\Bundle\CoreBundle\Component\Tool\Poster\FileHandler;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Poster\GeneratePoster;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\AccountRepository;
+use Runalyze\Bundle\CoreBundle\Entity\Notification;
+use Runalyze\Bundle\CoreBundle\Entity\NotificationRepository;
 use Runalyze\Bundle\CoreBundle\Entity\Sport;
 use Runalyze\Bundle\CoreBundle\Entity\SportRepository;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Poster\GenerateJsonData;
@@ -28,6 +31,9 @@ class PosterReceiver
 
     /** @var SportRepository */
     protected $SportRepository;
+
+    /** @var NotificationRepository */
+    protected $NotificationRepository;
 
     /** @var GenerateJsonData */
     protected $GenerateJsonData;
@@ -54,6 +60,7 @@ class PosterReceiver
      * @param LoggerInterface $logger
      * @param AccountRepository $accountRepository
      * @param SportRepository $sportRepository
+     * @param NotificationRepository $notificationRepository
      * @param GenerateJsonData $generateJsonData
      * @param GeneratePoster $generatePoster
      * @param FileHandler $posterFileHandler
@@ -66,6 +73,7 @@ class PosterReceiver
         LoggerInterface $logger,
         AccountRepository $accountRepository,
         SportRepository $sportRepository,
+        NotificationRepository $notificationRepository,
         GenerateJsonData $generateJsonData,
         GeneratePoster $generatePoster,
         FileHandler $posterFileHandler,
@@ -78,6 +86,7 @@ class PosterReceiver
         $this->Logger = $logger;
         $this->AccountRepository = $accountRepository;
         $this->SportRepository = $sportRepository;
+        $this->NotificationRepository = $notificationRepository;
         $this->GenerateJsonData = $generateJsonData;
         $this->GeneratePoster = $generatePoster;
         $this->FileHandler = $posterFileHandler;
@@ -108,7 +117,7 @@ class PosterReceiver
                 try {
                     $this->GeneratePoster->buildCommand($type, $this->GenerateJsonData->getPathToJsonFiles(), $message->get('year'), $account, $sport, $message->get('title'));
 
-                    $finalName = $this->exportDirectory() . $this->FileHandler->buildFinalFileName($account, $sport, $message->get('year'), $type, $message->get('size'));
+                    $finalName = $this->exportDirectory().$this->FileHandler->buildFinalFileName($account, $sport, $message->get('year'), $type, $message->get('size'));
                     $converter = $this->getConverter($type);
                     $converter->setHeight($message->get('size'));
                     $exitCode = $converter->callConverter($this->GeneratePoster->generate(), $finalName);
@@ -126,9 +135,30 @@ class PosterReceiver
             }
         }
 
-        $this->AccountMailer->sendPosterReadyTo($account,
-            (($generatedFiles == count($message->get('types'))) ? true : $generatedFiles));
+        $state = $this->getNotificationState($generatedFiles, count($message->get('types')));
+        $this->NotificationRepository->save(
+            Notification::createFromMessage(new PosterGeneratedMessage($state), $account)
+        );
+
         $this->GenerateJsonData->deleteGeneratedFiles();
+    }
+
+    /**
+     * @param int $generatedFiles
+     * @param int $requestedFiles
+     * @return int
+     */
+    protected function getNotificationState($generatedFiles, $requestedFiles)
+    {
+        if (0 == $generatedFiles) {
+            return PosterGeneratedMessage::STATE_FAILED;
+        }
+
+        if ($requestedFiles != $generatedFiles) {
+            return PosterGeneratedMessage::STATE_PARTIAL;
+        }
+
+        return PosterGeneratedMessage::STATE_SUCCESS;
     }
 
     /**
