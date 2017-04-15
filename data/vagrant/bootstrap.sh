@@ -37,8 +37,10 @@ service apache2 restart
 # Bootstrap DB-Server part
 ##########################
 
+mysql -uroot -pdefault -e "UPDATE mysql.user set host=\"%\" where user=\"root\" AND host=\"localhost\";"
 mysql -uroot -pdefault -e "SET PASSWORD FOR root@localhost=PASSWORD('');"
 cp ${ROOTDIR}/data/vagrant/mysql-runalyze.cnf /etc/mysql/mysql.conf.d/
+sed -i "s/^bind-address/#bind-address/" /etc/mysql/mysql.conf.d/mysqld.cnf
 service mysql restart
 
 
