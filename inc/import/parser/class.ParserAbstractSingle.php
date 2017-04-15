@@ -477,17 +477,23 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 			$num = count($this->gps['latitude']);
 			$this->gps['km'] = array(0);
 			$lastDistance = 0;
+			$lastValidIndex = 0;
 
 			for ($i = 1; $i < $num; ++$i) {
-				$step = round(
-					Runalyze\Model\Route\Entity::gpsDistance(
-						$this->gps['latitude'][$i-1],
-						$this->gps['longitude'][$i-1],
-						$this->gps['latitude'][$i],
-						$this->gps['longitude'][$i]
-					),
-					ParserAbstract::DISTANCE_PRECISION
-				);
+			    if ($this->gps['latitude'][$i] != 0.0 || $this->gps['longitude'][$i] != 0.0) {
+                    $step = round(
+                        Runalyze\Model\Route\Entity::gpsDistance(
+                            $this->gps['latitude'][$lastValidIndex],
+                            $this->gps['longitude'][$lastValidIndex],
+                            $this->gps['latitude'][$i],
+                            $this->gps['longitude'][$i]
+                        ),
+                        ParserAbstract::DISTANCE_PRECISION
+                    );
+                    $lastValidIndex = $i;
+                } else {
+			        $step = 0.0;
+                }
 
 				$this->gps['km'][] = $lastDistance + $step;
 				$lastDistance += $step;
