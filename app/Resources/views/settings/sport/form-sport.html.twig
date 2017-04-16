@@ -19,8 +19,14 @@
 
         {{ form_start(form, {'attr': {'class': 'ajax no-automatic-reload'} }) }}
 
-        <fieldset class="without-legend">
+        <fieldset>
+            <legend>{% trans %}General settings{% endtrans %}</legend>
+
             {{ form_row(form.name, {'div_class': 'w100 block with50erLabel'}) }}
+
+            {{ form_row(form.img, {'div_class': 'w100 block with50erLabel', 'attr': {'class': 'fip-select'}}) }}
+
+            {# TODO: Icon #}
 
             {% if form.internalSportId %}
             {{ form_row(form.internalSportId, {'div_class': 'w100 block with50erLabel'}) }}
@@ -31,10 +37,14 @@
             {% endif %}
 
             {{ form_row(form.isMain, {'div_class': 'w100 block with50erLabel'}) }}
-            <p class="info margin-bottom-2x">
+            <p class="info margin-bottom">
                 {% trans %}You can group your sport types into 'main' and 'alternative' ones.
                 For some analyses 'alternative' types are grouped together whereas 'main' types are always shown standalone from each other.{% endtrans %}
             </p>
+        </fieldset>
+
+        <fieldset>
+            <legend>{% trans %}Activity import{% endtrans %}</legend>
 
             {% if form.defaultType %}
                 {{ form_row(form.defaultType, {'div_class': 'w100 block with50erLabel'}) }}
@@ -61,7 +71,11 @@
 
             {{ form_row(form.power, {'div_class': 'w100 block checkbox-first', 'help': 'Power is recorded or calculated.'}) }}
             {{ form_row(form.outside, {'div_class': 'w100 block checkbox-first', 'help': 'Sport is performed outdoor: activate route, weather, ...'}) }}
-            {{ form_row(form.distances, {'div_class': 'w100 block checkbox-first'}) }}
+            {{ form_row(form.distances, {'div_class': 'w100 block checkbox-first margin-bottom'}) }}
+        </fieldset>
+
+        <fieldset class="margin-bottom">
+            <legend>{% trans %}Display options{% endtrans %}</legend>
 
             {{ form_row(form.speed, {'div_class': 'w100 block with50erLabel' ~ (form.vars.data.distances ? '' : ' hide')}) }}
 
@@ -70,6 +84,9 @@
             {% if form.mainEquipmenttype %}
                 {{ form_row(form.mainEquipmenttype, {'div_class': 'w100 block with50erLabel', 'help': 'Objects of main equipment type can be shown in the activity overview.'}) }}
             {% endif %}
+        </fieldset>
+
+        <fieldset class="without-legend">
             {{ form_rest(form) }}
 
             <div class="c margin-top">

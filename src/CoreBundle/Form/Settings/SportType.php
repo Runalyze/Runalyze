@@ -10,6 +10,7 @@ use Runalyze\Bundle\CoreBundle\Entity\TypeRepository;
 use Runalyze\Bundle\CoreBundle\Form\Type\EnergyKcalType;
 use Runalyze\Bundle\CoreBundle\Form\Type\HeartrateType;
 use Runalyze\Metrics\Velocity\Unit\PaceEnum;
+use Runalyze\Profile\Sport\Icon\SportIconProfile;
 use Runalyze\Profile\Sport\SportProfile;
 use Runalyze\Profile\Sport\SportRelevance;
 use Runalyze\Profile\View\DataBrowserRowProfile;
@@ -80,6 +81,10 @@ class SportType extends AbstractType
                 'attr' => [
                     'autofocus' => true
                 ]
+            ])
+            ->add('img', ChoiceType::class, [
+                'choices' => SportIconProfile::getChoices(),
+                'label' => 'Icon'
             ])
             ->add('power', CheckboxType::class, [
                 'required' => false,

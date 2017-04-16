@@ -35,9 +35,9 @@ class Sport
     /**
      * @var string
      *
-     * @ORM\Column(name="img", type="string", length=100, nullable=false, options={"default":"unknown.gif"})
+     * @ORM\Column(name="img", type="string", length=100, nullable=false, options={"default":"icons8-Sports-Mode"})
      */
-    private $img = 'unknown.gif';
+    private $img = 'icons8-Sports-Mode';
 
     /**
      * @var bool
