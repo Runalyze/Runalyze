@@ -52,13 +52,12 @@
     </div>
 
     <div class="panel-content">
-        <table class="blocklist fullwidth">
-            <tr>
-                <td><a class="window w100" href="{{ url('sport-add', {'internalType': 1}) }}"><i class="fa fa-cube"></i> <strong>{{ 'Add a sport type'|trans }}</strong></a></td>
-                <!-- Drop-down for available sport types would be pretty cool -->
-
-                <td><a class="window w100" href="{{ url('sport-add-custom') }}"><i class="fa fa-cube"></i> <strong>{{ 'Add a custom sport type'|trans }}</strong></a></td>
-            </tr>
-        </table>
+        <div class="c blocklist blocklist-width-auto">
+            <a class="window" href="{{ url('sport-add-custom') }}"><i class="fa fa-cube"></i> <strong>{{ 'Add a custom sport type'|trans }}</strong></a>
+            <br>
+            {% for id, name in freeInternalTypes %}
+                <a class="window" href="{{ url('sport-add', {'internalType': id}) }}"><i class="fa fa-cube"></i> <strong>{% trans with {'%s': name} %}Add "%s"{% endtrans %}</strong></a>
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}

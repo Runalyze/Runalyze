@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Runalyze\Metrics\Velocity\Unit\AbstractPaceUnit;
 use Runalyze\Metrics\Velocity\Unit\PaceEnum;
 use Runalyze\Profile\Sport\AbstractSport;
+use Runalyze\Profile\Sport\ProfileInterface;
 use Runalyze\Profile\Sport\SportProfile;
 
 /**
@@ -154,6 +155,26 @@ class Sport
     public function __construct()
     {
         $this->equipmentType = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * @param int $profileId
+     * @param ProfileInterface $profile
+     * @return $this
+     */
+    public function setDataFrom($profileId, ProfileInterface $profile)
+    {
+        $this->setInternalSportId($profileId);
+        $this->setImg($profile->icon());
+        $this->setHfavg($profile->avgHR());
+        $this->setName($profile->name());
+        $this->setDistances($profile->hasDistances());
+        $this->setPower($profile->hasPower());
+        $this->setOutside($profile->isOutside());
+        $this->setSpeed($profile->paceUnitEnum());
+        $this->setKcal($profile->caloriesPerHour());
+
+        return $this;
     }
 
     /**

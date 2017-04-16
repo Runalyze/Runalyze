@@ -58,6 +58,7 @@ class SportController extends Controller
         return $this->render('settings/sport/overview.html.twig', [
             'sports' => $this->getSportRepository()->findAllFor($account),
             'hasTrainings' => array_flip($this->getTrainingRepository()->getSportsWithTraining($account)),
+            'freeInternalTypes' => $this->getSportRepository()->getFreeInternalTypes($account),
             'calendarView' => new DataBrowserRowProfile()
         ]);
     }
@@ -148,24 +149,18 @@ class SportController extends Controller
      * @Route("/add/custom", name="sport-add-custom")
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function sportAddAction(Request $request, Account $account, $internalType = null)
+    public function sportAddAction(Request $request, Account $account, $internalType)
     {
         $sport = new Sport();
         $sport->setAccount($account);
-        if ($internalType !== null) {
-            //should be moved to a new class/method or whatever to reuse this. setSportFromSportProfile
-            $sportProfile = SportProfile::get($internalType);
-            $sport->setImg($sportProfile->icon());
-            $sport->setHfavg($sportProfile->avgHR());
-            $sport->setName($sportProfile->name());
-            $sport->setDistances($sportProfile->hasDistances());
-            $sport->setPower($sportProfile->hasPower());
-            $sport->setOutside($sportProfile->isOutside());
-            $sport->setSpeed($sportProfile->paceUnitEnum());
-            $sport->setKcal($sportProfile->caloriesPerHour());
-            $sport->setInternalSportId($internalType);
+
+        if ($this->getSportRepository()->isInternalTypeFree($internalType, $account)) {
+            $sport->setDataFrom($internalType, SportProfile::get($internalType));
             $this->getSportRepository()->save($sport);
-            return $this->redirectToRoute('sport-edit', ['id' => $sport->getId()]);
+
+            return $this->redirectToRoute('sport-edit', [
+                'id' => $sport->getId()
+            ]);
         }
 
         $form = $this->createForm(Form\Settings\SportType::class, $sport,[
