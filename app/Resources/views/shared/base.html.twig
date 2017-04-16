@@ -8,11 +8,17 @@
 
         <div id="headline">
             <a class="tab logo b" href="https://www.runalyze.com/" title="Runalyze" target="_blank">RUNALYZE</a>
-
             {% if username %}
-            <span class="tab right">
-                {% trans %}Public activity view of %username%.{% endtrans %}
-            </span>
+                <div class="headline-menu right">
+                    <div class="submenu-label">
+                        <i class="fa fa-fw fa-lg fa-user"></i>
+                {% if hasPublicList %}
+                    <a href="{{ url('shared-athlete', {'username': username}) }}">{% trans %}Athlete page of %username%{% endtrans %}</a>
+                {% else %}
+                    {% trans %}Activity view of %username%{% endtrans %}
+                {% endif %}
+                    </div>
+                </div>
             {% endif %}
         </div>
     {% endif %}
