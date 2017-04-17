@@ -19,6 +19,9 @@ abstract class Job
     /** @var string */
     protected $DatabasePrefix;
 
+    /** @var int */
+    protected $RunningSportId;
+
     /**
      * @param array $requestData
      * @param \PDO $pdo
@@ -31,6 +34,7 @@ abstract class Job
         $this->PDO = $pdo;
         $this->AccountId = $accountId;
         $this->DatabasePrefix = $databasePrefix;
+        $this->RunningSportId = \Runalyze\Configuration::General()->runningSport();
     }
 
     /**

@@ -9,6 +9,7 @@ namespace Runalyze\View\Window\Laps;
 use Runalyze\Configuration;
 use Runalyze\Data\Laps\Calculator;
 use Runalyze\Parameter\Application\DistanceUnitSystem;
+use Runalyze\Profile\Sport\SportProfile;
 use Runalyze\View\Activity\Context;
 use Runalyze\Activity\Duration;
 use Runalyze\Activity\Pace;
@@ -358,7 +359,7 @@ class Window {
 			$this->Laps,
 			$this->DemandedTime,
 			$this->DemandedPace,
-			($this->Context->sport()->id() == Configuration::General()->runningSport())
+			($this->Context->sport()->getInternalProfileEnum() == SportProfile::RUNNING)
 		);
 
 		if ($this->LapDistance > 0) {

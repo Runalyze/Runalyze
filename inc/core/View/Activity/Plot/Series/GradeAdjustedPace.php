@@ -4,6 +4,7 @@ namespace Runalyze\View\Activity\Plot\Series;
 
 use Runalyze\Calculation;
 use Runalyze\Model\Trackdata\Entity as Trackdata;
+use Runalyze\Profile\Sport\SportProfile;
 use Runalyze\Sports\Running\GradeAdjustedPace\Algorithm\Minetti;
 use Runalyze\View\Activity;
 
@@ -37,7 +38,7 @@ class GradeAdjustedPace extends Pace
 
 	protected function adjustTrackdata(Activity\Context $context)
 	{
-        if ($context->sport()->id() != \Runalyze\Configuration::General()->runningSport() || !$context->hasRoute() || !$context->route()->hasElevations() || !$context->hasTrackdata() || !$context->trackdata()->has(Trackdata::DISTANCE)) {
+        if ($context->sport()->getInternalProfileEnum() != SportProfile::RUNNING || !$context->hasRoute() || !$context->route()->hasElevations() || !$context->hasTrackdata() || !$context->trackdata()->has(Trackdata::DISTANCE)) {
             $context->trackdata()->set(Trackdata::PACE, []);
 
             return;
