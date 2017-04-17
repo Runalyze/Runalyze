@@ -524,9 +524,17 @@ class Sport
     /**
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getEquipmentType()
+    public function getEquipmentTypes()
     {
         return $this->equipmentType;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasEquipmentTypes()
+    {
+        return !$this->equipmentType->isEmpty();
     }
 
     /**

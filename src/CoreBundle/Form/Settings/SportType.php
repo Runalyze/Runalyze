@@ -3,9 +3,11 @@
 namespace Runalyze\Bundle\CoreBundle\Form\Settings;
 
 use Runalyze\Bundle\CoreBundle\Entity\Account;
+use Runalyze\Bundle\CoreBundle\Entity\EquipmentType;
 use Runalyze\Bundle\CoreBundle\Entity\EquipmentTypeRepository;
 use Runalyze\Bundle\CoreBundle\Entity\Sport;
 use Runalyze\Bundle\CoreBundle\Entity\SportRepository;
+use Runalyze\Bundle\CoreBundle\Entity\Type;
 use Runalyze\Bundle\CoreBundle\Entity\TypeRepository;
 use Runalyze\Bundle\CoreBundle\Form\Type\EnergyKcalType;
 use Runalyze\Bundle\CoreBundle\Form\Type\HeartrateType;
@@ -14,6 +16,7 @@ use Runalyze\Profile\Sport\Icon\SportIconProfile;
 use Runalyze\Profile\Sport\SportProfile;
 use Runalyze\Profile\Sport\Settings\SportRelevanceProfile;
 use Runalyze\Profile\View\DataBrowserRowProfile;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -72,7 +75,10 @@ class SportType extends AbstractType
 
         if (null !== $sport->getId()) {
             $activityTypes = $this->TypeRepository->findAllFor($this->getAccount(), $sport);
-            $equipmentTypes = $sport->getEquipmentType();
+            $equipmentTypes = $sport->hasEquipmentTypes() ? $sport->getEquipmentTypes() : [];
+        } else {
+            $activityTypes = [];
+            $equipmentTypes = [];
         }
 
         $builder
@@ -137,7 +143,8 @@ class SportType extends AbstractType
         }
 
         if (!empty($equipmentTypes)) {
-            $builder->add('mainEquipmenttype', ChoiceType::class, [
+            $builder->add('mainEquipmenttype', EntityType::class, [
+                'class' => EquipmentType::class,
                 'required' => false,
                 'choices' => $equipmentTypes,
                 'choice_label' => 'name',
@@ -146,7 +153,8 @@ class SportType extends AbstractType
         }
 
         if (!empty($activityTypes)) {
-            $builder->add('defaultType', ChoiceType::class, [
+            $builder->add('defaultType', EntityType::class, [
+                'class' => Type::class,
                 'required' => false,
                 'choices' => $activityTypes,
                 'choice_label' => 'name',
