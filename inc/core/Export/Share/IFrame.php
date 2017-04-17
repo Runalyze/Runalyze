@@ -51,7 +51,7 @@ class IFrame extends AbstractSnippetSharer
      */
 	public function name()
     {
-	    return __('IFrame');
+	    return __('Widget');
 	}
 
     /**
