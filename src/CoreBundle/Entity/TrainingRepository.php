@@ -26,6 +26,7 @@ class TrainingRepository extends EntityRepository
      * @param int $activityid
      * @param int $accountid
      * @return mixed
+     * @see \Runalyze\Metrics\Velocity\Unit\PaceEnum
      */
     public function getSpeedUnitFor($activityid, $accountid)
     {

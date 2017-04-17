@@ -158,21 +158,20 @@ class Sport
     }
 
     /**
-     * @param int $profileId
      * @param ProfileInterface $profile
      * @return $this
      */
-    public function setDataFrom($profileId, ProfileInterface $profile)
+    public function setDataFrom(ProfileInterface $profile)
     {
-        $this->setInternalSportId($profileId);
-        $this->setImg($profile->icon());
-        $this->setHfavg($profile->avgHR());
-        $this->setName($profile->name());
+        $this->setInternalSportId($profile->getInternalProfileEnum());
+        $this->setImg($profile->getIconClass());
+        $this->setHfavg($profile->getAverageHeartRate());
+        $this->setName($profile->getName());
         $this->setDistances($profile->hasDistances());
         $this->setPower($profile->hasPower());
         $this->setOutside($profile->isOutside());
-        $this->setSpeed($profile->paceUnitEnum());
-        $this->setKcal($profile->caloriesPerHour());
+        $this->setSpeed($profile->getPaceUnitEnum());
+        $this->setKcal($profile->getCaloriesPerHour());
 
         return $this;
     }

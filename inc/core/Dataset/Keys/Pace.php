@@ -12,7 +12,7 @@ use Runalyze\Dataset\SummaryMode;
 
 /**
  * Dataset key: Pace
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Dataset\Keys
  */
@@ -69,7 +69,7 @@ class Pace extends AbstractKey
 					$Pace = new Activity\Pace(
 						$context->data(self::DURATION_SUM_WITH_DISTANCE_KEY),
 						$context->activity()->distance(),
-						$context->hasSport() ? $context->sport()->paceUnitEnum() : Activity\Pace::STANDARD
+						$context->hasSport() ? $context->sport()->getLegacyPaceUnitEnum() : Activity\Pace::STANDARD
 					);
 
 					return $Pace->valueWithAppendix();

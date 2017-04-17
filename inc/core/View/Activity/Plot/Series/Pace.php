@@ -55,8 +55,8 @@ class Pace extends ActivitySeries {
 	 * @var \Runalyze\View\Activity\Context $context
 	 */
 	public function __construct(Activity\Context $context) {
-		$this->paceUnit = $context->sport()->paceUnit();
-		$this->paceUnitEnum = $context->sport()->paceUnitEnum();
+		$this->paceUnit = $context->sport()->legacyPaceUnit();
+		$this->paceUnitEnum = $context->sport()->getLegacyPaceUnitEnum();
 
 		$this->isRunning = ($context->sport()->id() == Configuration::General()->runningSport());
 

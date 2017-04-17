@@ -9,6 +9,7 @@ namespace Runalyze\Model\Sport;
 use Runalyze\Metrics\LegacyUnitConverter;
 use Runalyze\Model;
 use Runalyze\Profile\Sport\ProfileInterface;
+use Runalyze\Profile\Sport\SportProfile;
 use Runalyze\View\Icon\SportIcon;
 
 /**
@@ -128,6 +129,14 @@ class Entity extends Model\EntityWithID implements ProfileInterface {
 		return $this->Data[self::NAME];
 	}
 
+    public function getName() {
+        return $this->Data[self::NAME];
+    }
+
+    public function getInternalProfileEnum() {
+        return $this->Data[self::INTERNAL_SPORT_ID] ?: SportProfile::GENERIC;
+    }
+
 	/**
 	 * Icon
 	 * @return \Runalyze\View\Icon\SportIcon
@@ -137,7 +146,11 @@ class Entity extends Model\EntityWithID implements ProfileInterface {
 		return new SportIcon($this->Data[self::IMAGE]);
 	}
 
-	/**
+	public function getIconClass() {
+        return $this->Data[self::IMAGE];
+    }
+
+    /**
 	 * Uses short display?
 	 * @return boolean
 	 */
@@ -153,6 +166,10 @@ class Entity extends Model\EntityWithID implements ProfileInterface {
 		return $this->Data[self::CALORIES_PER_HOUR];
 	}
 
+    public function getCaloriesPerHour() {
+        return $this->Data[self::CALORIES_PER_HOUR];
+    }
+
 	/**
 	 * Average heartrate
 	 * @return int
@@ -161,21 +178,29 @@ class Entity extends Model\EntityWithID implements ProfileInterface {
 		return $this->Data[self::HR_AVG];
 	}
 
+    public function getAverageHeartRate() {
+        return $this->Data[self::HR_AVG];
+    }
+
 	/**
 	 * Pace unit
 	 * @return \Runalyze\Activity\PaceUnit\AbstractUnit
 	 */
-	public function paceUnit() {
+	public function legacyPaceUnit() {
         return (new LegacyUnitConverter())->getLegacyPaceUnit($this->Data[self::PACE_UNIT]);
 	}
 
 	/**
 	 * Pace unit
-	 * @return int see \Runalyze\Activity\Pace
+	 * @return int see \Runalyze\Activity\Pace or \Runalyze\Parameter\Application\PaceUnit
 	 */
-	public function paceUnitEnum() {
+	public function getLegacyPaceUnitEnum() {
 		return (new LegacyUnitConverter())->getLegacyPaceUnit($this->Data[self::PACE_UNIT], true);
 	}
+
+    public function getPaceUnitEnum() {
+        return $this->Data[self::PACE_UNIT];
+    }
 
 	/**
 	 * Has distances?

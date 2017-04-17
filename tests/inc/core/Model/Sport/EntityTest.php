@@ -26,7 +26,7 @@ class EntityTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals('Sport name', $Sport->name());
 		$this->assertEquals(700, $Sport->caloriesPerHour());
 		$this->assertEquals(140, $Sport->avgHR());
-		$this->assertEquals(PaceUnit::M_PER_S, $Sport->paceUnitEnum());
+		$this->assertEquals(PaceUnit::M_PER_S, $Sport->getLegacyPaceUnitEnum());
 		$this->assertEquals(2, $Sport->defaultTypeID());
 		$this->assertTrue($Sport->hasDistances());
 		$this->assertTrue($Sport->isOutside());
@@ -40,7 +40,7 @@ class EntityTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testPaceUnitForEmptySport() {
 		$Sport = new Entity(array());
-		$Sport->paceUnit();
+		$Sport->legacyPaceUnit();
 	}
 
 }

@@ -12,7 +12,7 @@ use Runalyze\Model\Trackdata;
 
 /**
  * Display pace zones
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\DataObjects\Training\View
  */
@@ -38,7 +38,7 @@ class TableZonesPace extends TableZonesAbstract {
 	 * Init data
 	 */
 	protected function initData() {
-		$this->PaceUnit = $this->Context->sport()->paceUnit();
+		$this->PaceUnit = $this->Context->sport()->legacyPaceUnit();
 
 		$Zones = $this->computeZones();
 		$Pace = new Pace(0, 1);

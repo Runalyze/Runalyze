@@ -3,6 +3,7 @@
 namespace Runalyze\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Runalyze\Profile\Sport\Running;
 use Runalyze\Profile\Sport\SportProfile;
 
 class SportRepository extends EntityRepository
@@ -20,9 +21,29 @@ class SportRepository extends EntityRepository
 
     /**
      * @param Account $account
+     * @param bool $returnNull
+     * @return array|Sport
+     */
+    public function findRunningFor(Account $account, $returnNull = false)
+    {
+        $sport = $this->findOneBy([
+            'account' => $account->getId(),
+            'internalSportId' => SportProfile::RUNNING
+        ]);
+
+        if (null === $sport && !$returnNull) {
+            $sport = new Sport();
+            $sport->setDataFrom(new Running());
+        }
+
+        return $sport;
+    }
+
+    /**
+     * @param Account $account
      * @return Sport[]
      */
-    public function findSportsWithKmFor(Account $account)
+    public function findWithDistancesFor(Account $account)
     {
         return $this->findBy([
             'account' => $account->getId(),
@@ -53,10 +74,10 @@ class SportRepository extends EntityRepository
      */
     public function isInternalTypeFree($internalTypeId, Account $account)
     {
-        return empty($this->findBy([
+        return null === $this->findOneBy([
             'account' => $account->getId(),
             'internalSportId' => (int)$internalTypeId
-        ]));
+        ]);
     }
 
     /**

@@ -123,7 +123,7 @@ class SportController extends Controller
     public function deleteSportTypeAction(Request $request, Type $type, Account $account)
     {
         if (!$this->isCsrfTokenValid('deleteSportType', $request->get('t'))) {
-            $this->addFlash('notice', $this->get('translator')->trans('Invalid token.'));
+            $this->addFlash('error', $this->get('translator')->trans('Invalid token.'));
 
             return $this->redirect($this->generateUrl('settings-sports'));
         }
@@ -137,9 +137,9 @@ class SportController extends Controller
             $em->remove($type);
             $em->flush();
             $this->get('app.automatic_reload_flag_setter')->set(AutomaticReloadFlagSetter::FLAG_DATA_BROWSER);
-            $this->addFlash('notice', $this->get('translator')->trans('Activity type has been deleted.'));
+            $this->addFlash('success', $this->get('translator')->trans('The object has been deleted.'));
         } else {
-            $this->addFlash('notice', $this->get('translator')->trans('Activity type cannot be deleted.').' '.$this->get('translator')->trans('You have activities associated with this type.'));
+            $this->addFlash('error', $this->get('translator')->trans('Object cannot be deleted.').' '.$this->get('translator')->trans('You have activities associated with this type.'));
         }
         return $this->redirect($this->generateUrl('settings-sports'));
     }
@@ -155,7 +155,7 @@ class SportController extends Controller
         $sport->setAccount($account);
 
         if ($this->getSportRepository()->isInternalTypeFree($internalType, $account)) {
-            $sport->setDataFrom($internalType, SportProfile::get($internalType));
+            $sport->setDataFrom(SportProfile::get($internalType));
             $this->getSportRepository()->save($sport);
 
             return $this->redirectToRoute('sport-edit', [
@@ -215,7 +215,7 @@ class SportController extends Controller
     public function sportDeleteAction(Request $request, Sport $sport, Account $account)
     {
         if (!$this->isCsrfTokenValid('deleteSport', $request->get('t'))) {
-            $this->addFlash('notice', $this->get('translator')->trans('Invalid token.'));
+            $this->addFlash('error', $this->get('translator')->trans('Invalid token.'));
 
             return $this->redirect($this->generateUrl('sport-edit', ['id' => $sport->getId()]));
         }
@@ -227,9 +227,9 @@ class SportController extends Controller
         if (0 == $sport->getTrainings()->count()) {
             $this->getSportRepository()->remove($sport);
             $this->get('app.automatic_reload_flag_setter')->set(AutomaticReloadFlagSetter::FLAG_DATA_BROWSER);
-            $this->addFlash('notice', $this->get('translator')->trans('Sport type has been deleted.'));
+            $this->addFlash('success', $this->get('translator')->trans('The object has been deleted.'));
         } else {
-            $this->addFlash('notice', $this->get('translator')->trans('Sport type cannot be deleted.').' '.$this->get('translator')->trans('You have activities associated with this type.'));
+            $this->addFlash('error', $this->get('translator')->trans('Object cannot be deleted.').' '.$this->get('translator')->trans('You have activities associated with this type.'));
         }
 
         return $this->redirect($this->generateUrl('settings-sports'));

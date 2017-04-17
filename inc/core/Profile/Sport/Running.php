@@ -2,7 +2,7 @@
 
 namespace Runalyze\Profile\Sport;
 
-use Runalyze\Parameter\Application\PaceUnit;
+use Runalyze\Metrics\Velocity\Unit\PaceEnum;
 
 /**
  * @codeCoverageIgnore
@@ -14,22 +14,22 @@ class Running extends AbstractSport
         parent::__construct(SportProfile::RUNNING);
     }
 
-    public function icon()
+    public function getIconClass()
     {
         return 'icons8-Running';
     }
 
-    public function name()
+    public function getName()
     {
         return __('Running');
     }
 
-    public function caloriesPerHour()
+    public function getCaloriesPerHour()
     {
         return 880;
     }
 
-    public function avgHR()
+    public function getAverageHeartRate()
     {
         return 140;
     }
@@ -49,9 +49,9 @@ class Running extends AbstractSport
         return true;
     }
 
-    public function paceUnitEnum()
+    public function getPaceUnitEnum()
     {
-        return PaceUnit::MIN_PER_KM;
+        return PaceEnum::SECONDS_PER_KILOMETER;
     }
 
     public function usesShortDisplay()

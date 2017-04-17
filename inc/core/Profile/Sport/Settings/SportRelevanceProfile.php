@@ -1,11 +1,11 @@
 <?php
 
-namespace Runalyze\Profile\Sport;
+namespace Runalyze\Profile\Sport\Settings;
 
 use Runalyze\Util\AbstractEnum;
 use Runalyze\Util\InterfaceChoosable;
 
-class SportRelevance extends AbstractEnum implements InterfaceChoosable
+class SportRelevanceProfile extends AbstractEnum implements InterfaceChoosable
 {
     /** @var int */
     const ALTERNATIVE_SPORT = 0;

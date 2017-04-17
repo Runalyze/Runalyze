@@ -38,7 +38,7 @@ class SportProfile extends AbstractEnum implements InterfaceChoosable
         $choices = [];
 
         foreach (self::getEnum() as $enum) {
-            $choices[self::get($enum)->name()] = $enum;
+            $choices[self::get($enum)->getName()] = $enum;
         }
 
         return $choices;

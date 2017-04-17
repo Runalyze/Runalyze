@@ -71,7 +71,7 @@ class PosterType extends AbstractType
                 'attr' => ['maxlength' => 11]
             ))
             ->add('sport', ChoiceType::class, [
-                'choices' => $this->SportRepository->findSportsWithKmFor($this->getAccount()),
+                'choices' => $this->SportRepository->findWithDistancesFor($this->getAccount()),
                 'choice_label' => function($sport, $key, $index) {
                     /** @var Sport $sport */
                     return $sport->getName();

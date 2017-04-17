@@ -2,7 +2,7 @@
 
 namespace Runalyze\Profile\Sport;
 
-use Runalyze\Parameter\Application\PaceUnit;
+use Runalyze\Metrics\Velocity\Unit\PaceEnum;
 
 /**
  * Fallback for user-defined sport types
@@ -16,22 +16,22 @@ class Generic extends AbstractSport
         parent::__construct(SportProfile::GENERIC);
     }
 
-    public function icon()
+    public function getIconClass()
     {
         return 'icons8-Sports-Mode';
     }
 
-    public function name()
+    public function getName()
     {
         return __('Generic');
     }
 
-    public function caloriesPerHour()
+    public function getCaloriesPerHour()
     {
         return 500;
     }
 
-    public function avgHR()
+    public function getAverageHeartRate()
     {
         return 120;
     }
@@ -51,9 +51,9 @@ class Generic extends AbstractSport
         return false;
     }
 
-    public function paceUnitEnum()
+    public function getPaceUnitEnum()
     {
-        return PaceUnit::KM_PER_H;
+        return PaceEnum::KILOMETER_PER_HOUR;
     }
 
     public function usesShortDisplay()

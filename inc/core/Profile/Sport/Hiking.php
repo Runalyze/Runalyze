@@ -2,7 +2,7 @@
 
 namespace Runalyze\Profile\Sport;
 
-use Runalyze\Parameter\Application\PaceUnit;
+use Runalyze\Metrics\Velocity\Unit\PaceEnum;
 
 /**
  * @codeCoverageIgnore
@@ -14,22 +14,22 @@ class Hiking extends AbstractSport
         parent::__construct(SportProfile::HIKING);
     }
 
-    public function icon()
+    public function getIconClass()
     {
         return 'icons8-Trekking';
     }
 
-    public function name()
+    public function getName()
     {
         return __('Hiking');
     }
 
-    public function caloriesPerHour()
+    public function getCaloriesPerHour()
     {
         return 340;
     }
 
-    public function avgHR()
+    public function getAverageHeartRate()
     {
         return 100;
     }
@@ -49,9 +49,9 @@ class Hiking extends AbstractSport
         return true;
     }
 
-    public function paceUnitEnum()
+    public function getPaceUnitEnum()
     {
-        return PaceUnit::KM_PER_H;
+        return PaceEnum::KILOMETER_PER_HOUR;
     }
 
     public function usesShortDisplay()

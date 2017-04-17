@@ -52,12 +52,20 @@
     </div>
 
     <div class="panel-content">
+        {% if freeInternalTypes|length > 0 %}
+            <p class="info margin-bottom">
+                {% trans %}Runalyze offers default configurations for common sport types. This mapping is required to recognize the correct sport type when syncing activities. You can still adjust all settings.{% endtrans %}
+            </p>
+
+            <div class="c blocklist blocklist-width-auto">
+                {% for id, name in freeInternalTypes %}
+                    <a class="window" href="{{ url('sport-add', {'internalType': id}) }}"><i class="fa fa-cube"></i> <strong>{% trans with {'%s': name} %}Add "%s"{% endtrans %}</strong></a>
+                {% endfor %}
+            </div>
+        {% endif %}
+
         <div class="c blocklist blocklist-width-auto">
             <a class="window" href="{{ url('sport-add-custom') }}"><i class="fa fa-cube"></i> <strong>{{ 'Add a custom sport type'|trans }}</strong></a>
-            <br>
-            {% for id, name in freeInternalTypes %}
-                <a class="window" href="{{ url('sport-add', {'internalType': id}) }}"><i class="fa fa-cube"></i> <strong>{% trans with {'%s': name} %}Add "%s"{% endtrans %}</strong></a>
-            {% endfor %}
         </div>
     </div>
 {% endblock %}

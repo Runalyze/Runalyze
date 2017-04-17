@@ -103,7 +103,7 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 					foreach ($data as $j => $dat) {
 						if ($rekord['speed']) {
 							$Pace = new Pace($dat['s'], $dat['distance']);
-							$Pace->setUnit($Sport->paceUnit());
+							$Pace->setUnit($Sport->legacyPaceUnit());
 							$code = $Pace->valueWithAppendix();
 						} else {
 							$code = ($dat['distance'] != 0 ? Distance::format($dat['distance']) : Duration::format($dat['s']));

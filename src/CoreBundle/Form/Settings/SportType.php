@@ -12,12 +12,11 @@ use Runalyze\Bundle\CoreBundle\Form\Type\HeartrateType;
 use Runalyze\Metrics\Velocity\Unit\PaceEnum;
 use Runalyze\Profile\Sport\Icon\SportIconProfile;
 use Runalyze\Profile\Sport\SportProfile;
-use Runalyze\Profile\Sport\SportRelevance;
+use Runalyze\Profile\Sport\Settings\SportRelevanceProfile;
 use Runalyze\Profile\View\DataBrowserRowProfile;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -70,10 +69,12 @@ class SportType extends AbstractType
         $sport = $builder->getData();
         $usedInternalSportIds = $this->SportRepository->getUsedInternalSportIdsFor($this->getAccount());
         $isRunning = $sport->getInternalSportId() == SportProfile::RUNNING;
-        if ($sport->getId() !== null) {
+
+        if (null !== $sport->getId()) {
             $activityTypes = $this->TypeRepository->findAllFor($this->getAccount(), $sport);
             $equipmentTypes = $sport->getEquipmentType();
         }
+
         $builder
             ->add('name', TextType::class, [
                 'label' => 'Name',
@@ -116,12 +117,12 @@ class SportType extends AbstractType
                 'label' => 'Calendar view'
             ])
             ->add('isMain', ChoiceType::class, [
-                'choices' => SportRelevance::getChoices(),
+                'choices' => SportRelevanceProfile::getChoices(),
                 'choice_translation_domain' => false,
                 'label' => 'Sport relevance'
             ]);
 
-        if ($sport->getId() !== null) {
+        if (null !== $sport->getId()) {
             $builder->add('internalSportId', ChoiceType::class, [
                 'required' => false,
                 'choices' => $this->getFilteredChoicesForInternalSportId($usedInternalSportIds, $sport),
@@ -134,6 +135,7 @@ class SportType extends AbstractType
                 'disabled' => $isRunning
             ]);
         }
+
         if (!empty($equipmentTypes)) {
             $builder->add('mainEquipmenttype', ChoiceType::class, [
                 'required' => false,
@@ -142,6 +144,7 @@ class SportType extends AbstractType
                 'label' => 'Main equipment',
             ]);
         }
+
         if (!empty($activityTypes)) {
             $builder->add('defaultType', ChoiceType::class, [
                 'required' => false,
