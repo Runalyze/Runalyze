@@ -164,6 +164,27 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 		return LocalTime::fromString($string)->getTimestamp();
 	}
 
+    /**
+     * @param int $sportEnum
+     * @param \Runalyze\Profile\Mapping\ToInternalMappingInterface|null $mapping
+     * @return bool
+     */
+	protected function setSportTypeFromEnumIfAvailable($sportEnum, \Runalyze\Profile\Mapping\ToInternalMappingInterface $mapping = null) {
+	    if (null !== $mapping) {
+	        $sportEnum = $mapping->toInternal($sportEnum);
+        }
+
+        foreach (\Runalyze\Context::Factory()->allSports() as $sport) {
+            if ($sport->getInternalProfileEnum() == $sportEnum) {
+                $this->TrainingObject->setSportid($sport->id());
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 	/**
 	 * Try to set sportid from creator or string
 	 * @param string $String
