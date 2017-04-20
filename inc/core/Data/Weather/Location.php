@@ -27,10 +27,10 @@ class Location {
 	protected $Longitude = null;
 
 	/**
-	 * Timestamp
+	 * DateTime
 	 * @var int
 	 */
-	protected $Timestamp = null;
+	protected $DateTime = null;
 
 	/**
 	 * Location name
@@ -60,10 +60,10 @@ class Location {
 
 	/**
 	 * Set timestamp
-	 * @param int $timestamp
+	 * @param \DateTime $dateTime
 	 */
-	public function setTimestamp($timestamp) {
-		$this->Timestamp = $timestamp;
+	public function setDateTime($dateTime) {
+		$this->DateTime = $dateTime;
 	}
 
 	/**
@@ -102,10 +102,10 @@ class Location {
 
 	/**
 	 * Time
-	 * @return int
+	 * @return \DateTime
 	 */
-	public function time() {
-		return $this->Timestamp;
+	public function dateTime() {
+		return $this->DateTime;
 	}
 
 	/**
@@ -140,8 +140,8 @@ class Location {
 	 * Is position set?
 	 * @return bool
 	 */
-	public function hasTimestamp() {
-		return !is_null($this->Timestamp) && $this->Timestamp != 0;
+	public function hasDateTime() {
+		return !is_null($this->DateTime);
 	}
 
 	/**
@@ -150,6 +150,6 @@ class Location {
 	 * @return bool true if the timestamp is older than 24 hours
 	 */
 	public function isOlderThan($seconds =  DAY_IN_S) {
-		return $this->hasTimestamp() && ($this->Timestamp < time() - $seconds);
+		return $this->hasDateTime() && ($this->dateTime()->getTimestamp() < time() - $seconds);
 	}
 }

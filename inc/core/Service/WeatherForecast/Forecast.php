@@ -141,9 +141,9 @@ class Forecast {
 	 * Set time to now if date is today and time is unknown
 	 */
 	protected function adjustLocationTimeIfDateIsTodayAndTimeIsUnknown() {
-	    if ($this->Location->hasTimestamp()) {
-			if ($this->Location->time() == LocalTime::fromServerTime(time())->setTime(0, 0, 0)->getTimestamp()) {
-			    $this->Location->setTimestamp(time());
+	    if ($this->Location->hasDateTime()) {
+			if ($this->Location->dateTime() == LocalTime::fromServerTime(time())->setTime(0, 0, 0)) {
+			    $this->Location->setDateTime(new \DateTime());
 			}
 	    }
 	}

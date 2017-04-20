@@ -88,7 +88,7 @@ class Darksky implements StrategyInterface {
 		$this->Location = $Location;
 
 		if ($Location->hasPosition()) {
-			$this->setFromURL( $Location->lat().','.$Location->lon().','.$Location->time() );
+			$this->setFromURL( $Location->lat().','.$Location->lon().','.$Location->dateTime()->getTimestamp() );
 		}
 		$this->updateLocation();
 	}

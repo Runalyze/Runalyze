@@ -39,14 +39,14 @@ class LocationTest extends \PHPUnit_Framework_TestCase {
 	public function testTimestamps() {
 		$this->assertFalse( $this->object->hasTimestamp() );
 
-		$this->object->setTimestamp( time() );
-		$this->assertTrue( $this->object->hasTimestamp() );
+		$this->object->setDateTime( new \DateTime() );
+		$this->assertTrue( $this->object->hasDateTime() );
 		$this->assertFalse( $this->object->isOlderThan() );
 
-		$this->object->setTimestamp( time() - 2*86400 );
+		$this->object->setDateTime( (new \DateTime())->setTimestamp(time() - 2*86400) );
 		$this->assertTrue( $this->object->isOlderThan() );
 		
-		$this->object->setTimestamp( time() - 7100 );
+		$this->object->setDateTime( (new \DateTime())->setTimestamp(time() - 7100) );
 		$this->assertFalse( $this->object->isOlderThan(7200) );
 	}
 
