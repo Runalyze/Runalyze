@@ -44,7 +44,7 @@ class DBWeatherCacheTest extends \PHPUnit_Framework_TestCase
 	public function testLoadForecastWithEmptyCache()
 	{
 		$Location = new Weather\Location();
-		$Location->setTimestamp(1462289510);
+		$Location->setDateTime((new \DateTime())->setTimestamp(1462289510));
 		$Location->setGeohash('u1xjn3n74zxv');
 
 		$this->object->loadForecast($Location);
@@ -67,7 +67,7 @@ class DBWeatherCacheTest extends \PHPUnit_Framework_TestCase
 		]);
 
 		$Location = new Weather\Location();
-		$Location->setTimestamp(1462289510);
+		$Location->setDateTime((new \DateTime())->setTimestamp(1462289510));
 		$Location->setGeohash('u1xjn3n74zxv');
 
 		$this->object->loadForecast($Location);
@@ -96,18 +96,18 @@ class DBWeatherCacheTest extends \PHPUnit_Framework_TestCase
 		]);
 
 		$Location = new Weather\Location();
-		$Location->setTimestamp(1462289510 - Forecast::TIME_PRECISION + 1);
+		$Location->setDateTime((new \DateTime())->setTimestamp(1462289510 - Forecast::TIME_PRECISION + 1));
 		$Location->setGeohash('u1xjn3n74zxv');
 
 		$this->object->loadForecast($Location);
 		$this->assertTrue($this->object->wasSuccessfull());
 
-		$Location->setTimestamp(1462289510 - Forecast::TIME_PRECISION - 1);
+		$Location->setDateTime((new \DateTime())->setTimestamp(1462289510 - Forecast::TIME_PRECISION - 1));
 
 		$this->object->loadForecast($Location);
 		$this->assertFalse($this->object->wasSuccessfull());
 
-		$Location->setTimestamp(1462289510);
+		$Location->setDateTime((new \DateTime())->setTimestamp(1462289510));
 		$Location->setGeohash('u1xm2f8jc');
 
 		$this->object->loadForecast($Location);

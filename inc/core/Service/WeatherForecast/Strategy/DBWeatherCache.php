@@ -94,8 +94,8 @@ class DBWeatherCache implements StrategyInterface {
 	    if ($this->Location->hasPosition()) {
 	    	$qValues = array(
 				'geohash' => substr($this->Location->geohash(), 0, self::GEOHASH_QUERY_PRECISION),
-				'starttime' => $this->Location->time() - Forecast::TIME_PRECISION,
-				'endtime' => $this->Location->time() + Forecast::TIME_PRECISION
+				'starttime' => $this->Location->timestamp() - Forecast::TIME_PRECISION,
+				'endtime' => $this->Location->timestamp() + Forecast::TIME_PRECISION
 			);
 
 	    	$cacheData = $this->PDO->query('SELECT * FROM `'.PREFIX.'weathercache` WHERE `geohash` LIKE "'.$qValues['geohash'].'%" AND `time` BETWEEN "'.$qValues['starttime'].'" AND "'.$qValues['endtime'].'" ORDER BY TIME DESC LIMIT 1')->fetch();

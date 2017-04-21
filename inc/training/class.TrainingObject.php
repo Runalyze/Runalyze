@@ -66,7 +66,7 @@ class TrainingObject extends DataObject {
 			return;
 
 		$Location = new \Runalyze\Data\Weather\Location();
-		$Location->setTimestamp($this->getTimestamp());
+		$Location->setDateTime($this->getDateTime());
 		$Location->setLocationName(Configuration::ActivityForm()->weatherLocation());
 
 		if ($this->hasPositionData()) {
@@ -84,6 +84,19 @@ class TrainingObject extends DataObject {
 		$this->set('humidity', $Weather->humidity()->value());
 		$this->set('pressure', $Weather->pressure()->value());
 		$this->set('weather_source', $Weather->source());
+	}
+
+	/**
+	 * @return \DateTime
+	 */
+	protected function getDateTime() {
+		if (null === $this->getTimezoneOffset()) {
+			$dateTime = (new LocalTime($this->getTimestamp()))->toServerTime();
+		} else {
+			$dateTime = new \DateTime('@'.($this->getTimestamp() - 60 * $this->getTimezoneOffset()));
+		}
+
+		return $dateTime;
 	}
 
 	/**
