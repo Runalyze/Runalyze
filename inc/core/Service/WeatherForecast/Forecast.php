@@ -18,10 +18,10 @@ use Runalyze\Util\LocalTime;
  */
 class Forecast {
 	/**
-	 * Time range for cache lookup (in seconds) (1 hours)
+	 * Time range for cache lookup (in seconds) (+/- 30 min)
 	 * @var int
 	 */
-	const TIME_PRECISION = 3600;
+	const TIME_PRECISION = 1800;
 
 	/**
 	 * Strategy
