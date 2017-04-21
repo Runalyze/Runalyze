@@ -106,7 +106,7 @@ class Forecast {
 
 			if (!$this->locationIsAlreadyCached() && !$WeatherObject->isEmpty()) {
 			    $WeatherCache = new WeatherCache\Entity([
-					WeatherCache\Entity::TIME => $this->Location->time(),
+					WeatherCache\Entity::TIME => $this->Location->timestamp(),
 					WeatherCache\Entity::GEOHASH => $Geohash,
 					WeatherCache\Entity::TEMPERATURE => $Temperature->value(),
 					WeatherCache\Entity::HUMIDITY => $WeatherObject->humidity()->value(),
@@ -129,8 +129,8 @@ class Forecast {
 	protected function locationIsAlreadyCached() {
 		$qValues = array(
 		    'geohash' => substr($this->Location->geohash(), 0, WeatherCache\Entity::GEOHASH_PRECISION),
-		    'starttime' => $this->Location->time() - self::TIME_PRECISION,
-		    'endtime' => $this->Location->time() + self::TIME_PRECISION
+		    'starttime' => $this->Location->timestamp() - self::TIME_PRECISION,
+		    'endtime' => $this->Location->timestamp() + self::TIME_PRECISION
 		);
 		$rowCount = $this->PDO->query('SELECT 1 FROM `'.PREFIX.'weathercache` WHERE `geohash`="'.$qValues['geohash'].'" AND `time` BETWEEN "'.$qValues['starttime'].'" AND "'.$qValues['endtime'].'" LIMIT 1')->rowCount();
 

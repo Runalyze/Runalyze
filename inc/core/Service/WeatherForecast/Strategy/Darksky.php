@@ -221,7 +221,7 @@ class Darksky implements StrategyInterface {
 			$this->Location->setPosition($this->Result['latitude'], $this->Result['longitude']);
 		}
 		if (isset($this->Result['dt']) && is_numeric($this->Result['dt'])) {
-			$this->Location->setTimestamp($this->Result['dt']);
+            $this->Location->setDateTime((new \DateTime())->setTimestamp($this->Result['dt']));
 		}
 	 }
 	/**
