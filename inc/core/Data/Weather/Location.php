@@ -16,19 +16,19 @@ use League\Geotools\Coordinate\Coordinate;
 class Location {
 	/**
 	 * Latitude
-	 * @var float
+	 * @var float|null
 	 */
 	protected $Latitude = null;
 
 	/**
 	 * Longitude
-	 * @var float
+	 * @var float|null
 	 */
 	protected $Longitude = null;
 
 	/**
 	 * DateTime
-	 * @var int
+	 * @var \DateTime|null
 	 */
 	protected $DateTime = null;
 
@@ -59,8 +59,7 @@ class Location {
 	}
 
 	/**
-	 * Set timestamp
-	 * @param \DateTime $dateTime
+	 * @param \DateTime|null $dateTime
 	 */
 	public function setDateTime($dateTime) {
 		$this->DateTime = $dateTime;
@@ -102,10 +101,17 @@ class Location {
 
 	/**
 	 * Time
-	 * @return \DateTime
+	 * @return \DateTime|null
 	 */
 	public function dateTime() {
 		return $this->DateTime;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function timestamp() {
+		return $this->DateTime->getTimestamp();
 	}
 
 	/**
@@ -141,7 +147,7 @@ class Location {
 	 * @return bool
 	 */
 	public function hasDateTime() {
-		return !is_null($this->DateTime);
+		return null !== $this->DateTime;
 	}
 
 	/**
@@ -149,7 +155,7 @@ class Location {
 	 * @param int $seconds
 	 * @return bool true if the timestamp is older than 24 hours
 	 */
-	public function isOlderThan($seconds =  DAY_IN_S) {
-		return $this->hasDateTime() && ($this->dateTime()->getTimestamp() < time() - $seconds);
+	public function isOlderThan($seconds = DAY_IN_S) {
+		return $this->hasDateTime() && ($this->timestamp() < time() - $seconds);
 	}
 }

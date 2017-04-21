@@ -37,7 +37,7 @@ class LocationTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testTimestamps() {
-		$this->assertFalse( $this->object->hasTimestamp() );
+		$this->assertFalse( $this->object->hasDateTime() );
 
 		$this->object->setDateTime( new \DateTime() );
 		$this->assertTrue( $this->object->hasDateTime() );

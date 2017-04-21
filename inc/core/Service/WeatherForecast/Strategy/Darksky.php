@@ -88,8 +88,9 @@ class Darksky implements StrategyInterface {
 		$this->Location = $Location;
 
 		if ($Location->hasPosition()) {
-			$this->setFromURL( $Location->lat().','.$Location->lon().','.$Location->dateTime()->getTimestamp() );
+			$this->setFromURL($Location->lat().','.$Location->lon().','.$Location->timestamp());
 		}
+
 		$this->updateLocation();
 	}
 
@@ -98,8 +99,9 @@ class Darksky implements StrategyInterface {
 	 * @param string $url
 	 */
 	public function setFromURL($url) {
-		if (defined('DARKSKY_API_KEY') && strlen(DARKSKY_API_KEY))
+		if (defined('DARKSKY_API_KEY') && strlen(DARKSKY_API_KEY)) {
 			$url = self::URL.DARKSKY_API_KEY.'/'.$url;
+		}
 
 		$this->setFromJSON( \Filesystem::getExternUrlContent($url) );
 	}
