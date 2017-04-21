@@ -18,10 +18,10 @@ use Runalyze\Util\LocalTime;
  */
 class Forecast {
 	/**
-	 * Time range for cache lookup (in seconds) (1 hours)
+	 * Time range for cache lookup (in seconds) (+/- 30 min)
 	 * @var int
 	 */
-	const TIME_PRECISION = 3600;
+	const TIME_PRECISION = 1800;
 
 	/**
 	 * Strategy
@@ -106,7 +106,7 @@ class Forecast {
 
 			if (!$this->locationIsAlreadyCached() && !$WeatherObject->isEmpty()) {
 			    $WeatherCache = new WeatherCache\Entity([
-					WeatherCache\Entity::TIME => $this->Location->time(),
+					WeatherCache\Entity::TIME => $this->Location->timestamp(),
 					WeatherCache\Entity::GEOHASH => $Geohash,
 					WeatherCache\Entity::TEMPERATURE => $Temperature->value(),
 					WeatherCache\Entity::HUMIDITY => $WeatherObject->humidity()->value(),
@@ -129,8 +129,8 @@ class Forecast {
 	protected function locationIsAlreadyCached() {
 		$qValues = array(
 		    'geohash' => substr($this->Location->geohash(), 0, WeatherCache\Entity::GEOHASH_PRECISION),
-		    'starttime' => $this->Location->time() - self::TIME_PRECISION,
-		    'endtime' => $this->Location->time() + self::TIME_PRECISION
+		    'starttime' => $this->Location->timestamp() - self::TIME_PRECISION,
+		    'endtime' => $this->Location->timestamp() + self::TIME_PRECISION
 		);
 		$rowCount = $this->PDO->query('SELECT 1 FROM `'.PREFIX.'weathercache` WHERE `geohash`="'.$qValues['geohash'].'" AND `time` BETWEEN "'.$qValues['starttime'].'" AND "'.$qValues['endtime'].'" LIMIT 1')->rowCount();
 
@@ -141,9 +141,9 @@ class Forecast {
 	 * Set time to now if date is today and time is unknown
 	 */
 	protected function adjustLocationTimeIfDateIsTodayAndTimeIsUnknown() {
-	    if ($this->Location->hasTimestamp()) {
-			if ($this->Location->time() == LocalTime::fromServerTime(time())->setTime(0, 0, 0)->getTimestamp()) {
-			    $this->Location->setTimestamp(time());
+	    if ($this->Location->hasDateTime()) {
+			if ($this->Location->timestamp() == LocalTime::fromServerTime(time())->setTime(0, 0, 0)->getTimestamp()) {
+			    $this->Location->setDateTime(new \DateTime());
 			}
 	    }
 	}
