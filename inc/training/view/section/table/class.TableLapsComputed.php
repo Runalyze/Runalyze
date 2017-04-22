@@ -11,7 +11,7 @@ use Runalyze\Data\Laps\Laps;
 
 /**
  * Table: computed laps
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\DataObjects\Training\View\Section
  */
@@ -69,7 +69,7 @@ class TableLapsComputed extends TableLapsAbstract {
 
 		$this->Code .= '<tbody>';
 
-		$unit = $this->Context->sport()->paceUnit();
+		$unit = $this->Context->sport()->legacyPaceUnit();
 		foreach ($this->Laps->objects() as $Lap) {
 			$Lap->pace()->setUnit($unit);
 

@@ -1,0 +1,71 @@
+{% extends "base_logged_in.twig" %}
+
+{% block content %}
+    <div class="panel-heading">
+        <h1>{% trans %}Your sport types{% endtrans %}</h1>
+    </div>
+
+    <div class="panel-content">
+        {% include 'flashmessages.html.twig' %}
+
+        <table id="sports" class="fullwidth zebra-style more-padding">
+            <thead>
+            <tr>
+                <th>&nbsp;</th>
+                <th colspan="2">{{ 'Name'|trans }}</th>
+                <th>{{ 'Main sport'|trans }}</th>
+                <th>{{ 'Speed unit'|trans }}</th>
+                <th>{{ 'Calendar view'|trans }}</th>
+                <th>&nbsp;</th>
+            </tr>
+            </thead>
+            <tbody class="c">
+            {% if sports|length > 0 %}
+                {% for sport in sports %}
+                    {# @var sport \Runalyze\Bundle\CoreBundle\Entity\Sport #}
+                    <tr>
+                        <td>
+                            <a class="window" href="{{ url('sport-edit', {'id': sport.id}) }}"><i class="fa fa-fw fa-pencil"></i></a>
+                            <a class="window" href="{{ url('my-search') }}?get=true&amp;sportid={{ sport.id }}" data-size="big"><i class="fa fa-fw fa-search" title="{% trans %}Search activities{% endtrans %}"></i></a>
+                        </td>
+                        <td><i class="{{ sport.img }}"></i></td>
+                        <td>{{ sport.name }}</td>
+                        <td>{% if sport.main %}<i class="fa fa-check"></i>{% endif %}</td>
+                        <td class="small">{{ sport.distances ? sport.speedUnit.unit : '' }}</td>
+                        <td>{{ calendarView.stringFor(sport.short) }}</td>
+                        <td>
+                            {% if hasTrainings[sport.id] is not defined %}
+                                <a class="window color-danger" href="{{ url('sport-delete', { 'id': sport.id, 't': csrf_token('deleteSport') }) }}" data-confirm="{% trans %}Do you really want to delete this?{% endtrans %}"><i class="fa fa-fw fa-trash" title="{% trans %}Delete{% endtrans %}"></i></a>
+                            {% else %}
+                                <i class="fa fa-fw fa-trash unimportant cursor-not-allowed" rel="tooltip" title="{% trans %}Sport type cannot be deleted.{% endtrans %}<br>{% trans %}You have activities associated with this type.{% endtrans %}"></i>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="panel-heading panel-sub-heading">
+        <h1>{{ 'Add a new type'|trans }}</h1>
+    </div>
+
+    <div class="panel-content">
+        {% if freeInternalTypes|length > 0 %}
+            <p class="info margin-bottom">
+                {% trans %}Runalyze offers default configurations for common sport types. This mapping is required to recognize the correct sport type when syncing activities. You can still adjust all settings.{% endtrans %}
+            </p>
+
+            <div class="c blocklist blocklist-width-auto">
+                {% for id, name in freeInternalTypes %}
+                    <a class="window" href="{{ url('sport-add', {'internalType': id}) }}"><i class="fa fa-cube"></i> <strong>{% trans with {'%s': name} %}Add "%s"{% endtrans %}</strong></a>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="c blocklist blocklist-width-auto">
+            <a class="window" href="{{ url('sport-add-custom') }}"><i class="fa fa-cube"></i> <strong>{{ 'Add a custom sport type'|trans }}</strong></a>
+        </div>
+    </div>
+{% endblock %}

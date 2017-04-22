@@ -35,6 +35,22 @@ class ActivityForm extends AbstractCategory
     }
 
     /**
+     * @return bool
+     */
+    public function isComputingEnergyActivated()
+    {
+        return 'true' === $this->Variables['COMPUTE_KCAL'];
+    }
+
+    /**
+     * @return bool
+     */
+    public function isComputingPowerActivated()
+    {
+        return 'true' === $this->Variables['COMPUTE_POWER'];
+    }
+
+    /**
      * @return string
      */
     protected function getLegacyCategoryName()

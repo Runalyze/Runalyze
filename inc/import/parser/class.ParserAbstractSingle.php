@@ -8,6 +8,8 @@ use Runalyze\Calculation\Distribution\TrackdataAverages;
 use Runalyze\Configuration;
 use Runalyze\Import\Exception\UnexpectedContentException;
 use Runalyze\Model\Trackdata;
+use Runalyze\Profile\Sport\Mapping\EnglishLanguageMapping;
+use Runalyze\Profile\Sport\SportProfile;
 use Runalyze\Util\LocalTime;
 use Runalyze\Util\TimezoneLookup;
 
@@ -164,12 +166,60 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 		return LocalTime::fromString($string)->getTimestamp();
 	}
 
+    /**
+     * @param int $sportEnum
+     * @param \Runalyze\Profile\Mapping\ToInternalMappingInterface|null $mapping
+     * @return bool
+     */
+    protected function setSportTypeFromEnumIfAvailable($sportEnum, \Runalyze\Profile\Mapping\ToInternalMappingInterface $mapping = null) {
+        if (null !== $mapping) {
+            $sportEnum = $mapping->toInternal($sportEnum);
+        }
+
+        foreach (\Runalyze\Context::Factory()->allSports() as $sport) {
+            if ($sport->getInternalProfileEnum() == $sportEnum) {
+                $this->TrainingObject->setSportid($sport->id());
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param string $sportName
+     * @param \Runalyze\Profile\Mapping\ToInternalMappingInterface $mapping
+     * @return bool
+     */
+    protected function guessSportTypeFromStringIfAvailable($sportName, \Runalyze\Profile\Mapping\ToInternalMappingInterface $mapping) {
+	    $sportEnum = $mapping->toInternal($sportName);
+
+        if (SportProfile::GENERIC !== $sportEnum) {
+	        foreach (\Runalyze\Context::Factory()->allSports() as $sport) {
+	            if ($sport->getInternalProfileEnum() == $sportEnum) {
+	                $this->TrainingObject->setSportid($sport->id());
+
+	                return true;
+	            }
+	        }
+
+            return true;
+        }
+
+        return false;
+    }
+
 	/**
 	 * Try to set sportid from creator or string
 	 * @param string $String
 	 * @param string $Creator optional
 	 */
 	protected function guessSportID($String, $Creator = '') {
+        if ($this->guessSportTypeFromStringIfAvailable($String, new EnglishLanguageMapping())) {
+            return;
+        }
+
         $this->TrainingObject->setSportid(Configuration::General()->mainSport());
 
         $name = array($String);

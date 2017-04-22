@@ -20,3 +20,11 @@
         </form>
     </div>
 {% endmacro %}
+
+{% macro addOrUpdateButton(entityIsNew) %}
+    {% if entityIsNew %}
+        <input type="submit" value="{% trans %}Add{% endtrans %}" name="submit">
+    {% else %}
+        <input type="submit" value="{% trans %}Update{% endtrans %}" name="submit">
+    {% endif %}
+{% endmacro %}

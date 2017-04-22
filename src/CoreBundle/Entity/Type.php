@@ -48,9 +48,9 @@ class Type
     /**
      * @var boolean
      *
-     * @ORM\Column(name="short", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
+     * @ORM\Column(name="short", type="boolean", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
      */
-    private $short = '0';
+    private $short = false;
 
     /**
      * @var boolean
@@ -62,9 +62,16 @@ class Type
     /**
      * @var boolean
      *
-     * @ORM\Column(name="quality_session", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
+     * @ORM\Column(name="quality_session", type="boolean", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
      */
-    private $qualitySession = '0';
+    private $qualitySession = false;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Training", mappedBy="type", cascade={"persist"}, fetch="EXTRA_LAZY")
+     */
+    protected $trainings;
 
     /**
      * @var \Runalyze\Bundle\CoreBundle\Entity\Account
@@ -161,7 +168,7 @@ class Type
     /**
      * Set short
      *
-     * @param boolean $short
+     * @param bool $short
      *
      * @return Type
      */
@@ -175,7 +182,7 @@ class Type
     /**
      * Get short
      *
-     * @return boolean
+     * @return bool
      */
     public function getShort()
     {
@@ -185,7 +192,7 @@ class Type
     /**
      * Set hrAvg
      *
-     * @param boolean $hrAvg
+     * @param bool $hrAvg
      *
      * @return Type
      */
@@ -199,7 +206,7 @@ class Type
     /**
      * Get hrAvg
      *
-     * @return boolean
+     * @return bool
      */
     public function getHrAvg()
     {
@@ -209,7 +216,7 @@ class Type
     /**
      * Set qualitySession
      *
-     * @param boolean $qualitySession
+     * @param bool $qualitySession
      *
      * @return Type
      */
@@ -223,7 +230,7 @@ class Type
     /**
      * Get qualitySession
      *
-     * @return boolean
+     * @return bool
      */
     public function getQualitySession()
     {
@@ -252,5 +259,15 @@ class Type
     public function getAccount()
     {
         return $this->account;
+    }
+
+    /**
+     * Get trainings
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTrainings()
+    {
+        return $this->trainings;
     }
 }

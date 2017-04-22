@@ -76,6 +76,10 @@ services:
     class: Runalyze\Bundle\CoreBundle\Entity\SportRepository
     factory: ["@doctrine.orm.entity_manager", getRepository]
     arguments: [Runalyze\Bundle\CoreBundle\Entity\Sport]
+  app.repository.type:
+    class: Runalyze\Bundle\CoreBundle\Entity\TypeRepository
+    factory: ["@doctrine.orm.entity_manager", getRepository]
+    arguments: [Runalyze\Bundle\CoreBundle\Entity\Type]
   app.repository.training:
     class: Runalyze\Bundle\CoreBundle\Entity\TrainingRepository
     factory: ["@doctrine.orm.entity_manager", getRepository]
@@ -113,6 +117,16 @@ services:
     arguments: ["@app.repository.sport", "@security.token_storage"]
     tags:
      - { name: form.type }
+  app.form.type.sport:
+    class: Runalyze\Bundle\CoreBundle\Form\Settings\SportType
+    arguments: ["@app.repository.type", "@app.repository.sport", "@app.repository.equipment_type", "@security.token_storage"]
+    tags:
+     - { name: form.type }
+  app.form.type.sport_type:
+    class: Runalyze\Bundle\CoreBundle\Form\Settings\SportTypeType
+    arguments: ["@security.token_storage"]
+    tags:
+     - { name: form.type }
   app.form.type.race_result:
     class: Runalyze\Bundle\CoreBundle\Form\RaceResultType
     tags:
@@ -129,6 +143,10 @@ services:
   app.form.type.energy:
     class: Runalyze\Bundle\CoreBundle\Form\Type\EnergyType
     arguments: ["@app.configuration_manager"]
+    tags:
+     - { name: form.type }
+  app.form.type.energy_kcal:
+    class: Runalyze\Bundle\CoreBundle\Form\Type\EnergyKcalType
     tags:
      - { name: form.type }
   app.form.type.temperature:
