@@ -356,6 +356,14 @@ class Dataview
     }
 
     /**
+     * @return string
+     */
+    public function fitPerformanceConditionEnd()
+    {
+        return PerformanceCondition::format($this->Activity->fitPerformanceConditionEnd());
+    }
+
+    /**
      * @return string power with unit
      */
     public function power()

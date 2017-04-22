@@ -157,7 +157,10 @@ final class Keys extends AbstractEnum
 	/** @var int */
 	const HEAT_INDEX = 48;
 
-	/**
+    /** @var int */
+    const FIT_PERFORMANCE_CONDITION_END = 49;
+
+    /**
 	 * @var array|null
 	 */
 	private static $ClassNames = null;
@@ -261,7 +264,8 @@ final class Keys extends AbstractEnum
 			self::GRADIENT => 'Gradient',
 			self::FIT_PERFORMANCE_CONDITION => 'FitPerformanceCondition',
 			self::RACE_RESULT => 'RaceResult',
-			self::HEAT_INDEX => 'HeatIndex'
-		);
+			self::HEAT_INDEX => 'HeatIndex',
+            self::FIT_PERFORMANCE_CONDITION_END => 'FitPerformanceConditionEnd',
+        );
 	}
 }

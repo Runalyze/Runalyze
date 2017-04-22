@@ -161,6 +161,12 @@ class Entity extends Model\EntityWithID {
 	 */
 	const FIT_PERFORMANCE_CONDITION = 'fit_performance_condition';
 
+    /**
+     * Key: performance condition from fit file
+     * @var string
+     */
+    const FIT_PERFORMANCE_CONDITION_END = 'fit_performance_condition_end';
+
 	/**
 	 * Key: RPE
 	 * @var string
@@ -385,7 +391,8 @@ class Entity extends Model\EntityWithID {
 			self::FIT_HRV_ANALYSIS,
 			self::FIT_TRAINING_EFFECT,
 			self::FIT_PERFORMANCE_CONDITION,
-			self::RPE,
+            self::FIT_PERFORMANCE_CONDITION_END,
+            self::RPE,
 			self::TRIMP,
 			self::CADENCE,
 			self::POWER,
@@ -471,6 +478,7 @@ class Entity extends Model\EntityWithID {
             case self::FIT_HRV_ANALYSIS:
             case self::FIT_TRAINING_EFFECT:
             case self::FIT_PERFORMANCE_CONDITION:
+            case self::FIT_PERFORMANCE_CONDITION_END:
             case self::RPE:
             case self::TRIMP:
             case self::CADENCE:
@@ -532,6 +540,7 @@ class Entity extends Model\EntityWithID {
             self::FIT_HRV_ANALYSIS,
             self::FIT_TRAINING_EFFECT,
             self::FIT_PERFORMANCE_CONDITION,
+            self::FIT_PERFORMANCE_CONDITION_END,
             self::RPE,
             self::TRIMP,
             self::CADENCE,
@@ -750,6 +759,14 @@ class Entity extends Model\EntityWithID {
 	public function fitPerformanceCondition() {
 		return $this->Data[self::FIT_PERFORMANCE_CONDITION];
 	}
+
+    /**
+     * Performance ending condition
+     * @return null|int
+     */
+    public function fitPerformanceConditionEnd() {
+        return $this->Data[self::FIT_PERFORMANCE_CONDITION_END];
+    }
 
 	/**
 	 * @return null|int
