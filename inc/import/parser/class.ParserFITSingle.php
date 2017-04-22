@@ -432,7 +432,8 @@ class ParserFITSingle extends ParserAbstractSingle {
 					if (
                         substr($creator, 0, 5) == 'fr630' ||
 						substr($creator, 0, 7) == 'fr735xt' ||
-						substr($creator, 0, 6) == 'fenix3'
+						substr($creator, 0, 6) == 'fenix3' ||
+                        substr($creator, 0, 6) == 'fenix5'
 					) {
 					    if ((int)$this->Values['data'][1] >= 0 && (int)$this->Values['data'][1] <= 255) {
                             $this->TrainingObject->setFitPerformanceCondition((int)$this->Values['data'][1]);
