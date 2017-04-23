@@ -2791,6 +2791,17 @@ else {
      'gear_combo' => 82,
      'muscle_oxygen' => 83,
      'icon' => 84,
+     'compass_heading' => 85,
+     'gps_heading' => 85,
+     'gps_elevation' => 86,
+     'anaerobic_training_effect' => 87,
+     'course' => 89,
+     'off_course' => 90,
+     'glide_ratio' => 91,
+     'vertical_distance' => 92,
+     'vmg' => 93,
+     'ambient_pressure' => 94,
+     'pressure' => 95
    },
 
    'auto_activity_detect' => +{

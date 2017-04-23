@@ -620,6 +620,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 
 			$this->assertEquals(null, $this->object->object()->getFitTrainingEffect());
 			$this->assertEquals(null, $this->object->object()->getFitPerformanceCondition());
+            $this->assertEquals(null, $this->object->object()->getFitPerformanceConditionEnd());
 
 			$this->assertTrue($this->object->object()->hasArrayTime());
 			$this->assertTrue($this->object->object()->hasArrayDistance());
@@ -654,6 +655,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertEquals(0, $this->object->object()->getFitHRVscore());
 			$this->assertEquals('fr630', $this->object->object()->getCreator());
 			$this->assertEquals(100, $this->object->object()->getFitPerformanceCondition());
+            $this->assertEquals(98, $this->object->object()->getFitPerformanceConditionEnd());
 
 			// New values for later on:
 			//  - lactate threshold: 163 bpm / 2.583 m/s

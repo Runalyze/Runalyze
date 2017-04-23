@@ -768,6 +768,9 @@ class TrainingObject extends DataObject {
 	public function setFitPerformanceCondition($value) { $this->set('fit_performance_condition', $value); }
 	public function getFitPerformanceCondition() { return $this->get('fit_performance_condition'); }
 
+    public function setFitPerformanceConditionEnd($value) { $this->set('fit_performance_condition_end', $value); }
+    public function getFitPerformanceConditionEnd() { return $this->get('fit_performance_condition_end'); }
+
 
 	/**
 	 * Set cadence
