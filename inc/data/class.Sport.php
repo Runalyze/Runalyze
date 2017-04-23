@@ -26,7 +26,7 @@ class Sport {
 
 	/**
 	 * Constructor
-	 * @param int $id
+	 * @param int|bool $id
 	 */
 	public function __construct($id = false) {
 		if ($id === false)
@@ -59,7 +59,7 @@ class Sport {
 	public function name() {
 		return $this->data['name'];
 	}
-	
+
 	/**
 	* Is this sport set to short-mode?
 	* @return bool
@@ -67,7 +67,7 @@ class Sport {
 	public function isShort() {
 		return ($this->data['short'] == 1);
 	}
-	
+
 	/**
 	* Get normal kcal per hour
 	* @return int
@@ -75,7 +75,7 @@ class Sport {
 	public function kcalPerHour() {
 		return $this->data['kcal'];
 	}
-	
+
 	/**
 	* Get average heartfrequence
 	* @return int
@@ -83,8 +83,8 @@ class Sport {
 	public function avgHF() {
 		return $this->data['HFavg'];
 	}
-        
-        /* 
+
+        /*
 	 * Has a training of this sport a distance?
 	 * @return bool
 	 */
@@ -113,9 +113,9 @@ class Sport {
 	 * @return bool
 	 */
 	public function isRunning() {
-		return ($this->id == Configuration::General()->runningSport());
+	    return (\Runalyze\Profile\Sport\SportProfile::RUNNING == $this->data['internal_sport_id']);
 	}
-	
+
 	/**
 	 * Default sport type
 	 * @return int

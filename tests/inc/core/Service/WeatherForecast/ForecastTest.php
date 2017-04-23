@@ -39,7 +39,7 @@ class ForecastTest extends \PHPUnit_Framework_TestCase
 		// @see http://openweathermap.org/price
 		$Location = new Weather\Location();
 		$Location->setLocationName('Berlin, de');
-		$Location->setTimestamp( time() - 28*86500 );
+		$Location->setDateTime( (new \DateTime())->setTimestamp(time() - 28*86500));
 
 		$Forecast = new Forecast($Location, new Strategy\Openweathermap);
 		$object = $Forecast->object();

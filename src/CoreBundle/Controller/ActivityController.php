@@ -7,7 +7,7 @@ use Runalyze\Bundle\CoreBundle\Component\Activity\Tool\TimeSeriesStatistics;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\Trackdata;
 use Runalyze\Bundle\CoreBundle\Services\Activity\EffectiveVO2maxInfo;
-use Runalyze\Metrics\LegacyUnitConverter;
+use Runalyze\Metrics\Velocity\Unit\PaceEnum;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -313,7 +313,7 @@ class ActivityController extends Controller
         ]);
         $trackdataModel = $trackdata->getLegacyModel();
 
-        $paceUnit = (new LegacyUnitConverter())->getPaceUnit(
+        $paceUnit = PaceEnum::get(
             $this->getDoctrine()->getManager()->getRepository('CoreBundle:Training')->getSpeedUnitFor($id, $account->getId())
         );
 
@@ -340,7 +340,7 @@ class ActivityController extends Controller
         ]);
         $trackdataModel = $trackdata->getLegacyModel();
 
-        $paceUnit = (new LegacyUnitConverter())->getPaceUnit(
+        $paceUnit = PaceEnum::get(
             $this->getDoctrine()->getManager()->getRepository('CoreBundle:Training')->getSpeedUnitFor($id, $account->getId())
         );
 

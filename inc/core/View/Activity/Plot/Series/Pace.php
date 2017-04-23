@@ -11,6 +11,7 @@ use Runalyze\Configuration;
 use Runalyze\Model\Trackdata\Entity as Trackdata;
 use Runalyze\Parameter\Application\PaceAxisType;
 use Runalyze\Parameter\Application\PaceUnit;
+use Runalyze\Profile\Sport\SportProfile;
 use Runalyze\View\Activity;
 
 
@@ -55,10 +56,10 @@ class Pace extends ActivitySeries {
 	 * @var \Runalyze\View\Activity\Context $context
 	 */
 	public function __construct(Activity\Context $context) {
-		$this->paceUnit = $context->sport()->paceUnit();
-		$this->paceUnitEnum = $context->sport()->paceUnitEnum();
+		$this->paceUnit = $context->sport()->legacyPaceUnit();
+		$this->paceUnitEnum = $context->sport()->getLegacyPaceUnitEnum();
 
-		$this->isRunning = ($context->sport()->id() == Configuration::General()->runningSport());
+		$this->isRunning = ($context->sport()->getInternalProfileEnum() == SportProfile::RUNNING);
 
 		$this->initOptions();
 		$this->initData($context->trackdata(), Trackdata::PACE);

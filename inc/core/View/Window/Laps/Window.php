@@ -9,6 +9,7 @@ namespace Runalyze\View\Window\Laps;
 use Runalyze\Configuration;
 use Runalyze\Data\Laps\Calculator;
 use Runalyze\Parameter\Application\DistanceUnitSystem;
+use Runalyze\Profile\Sport\SportProfile;
 use Runalyze\View\Activity\Context;
 use Runalyze\Activity\Duration;
 use Runalyze\Activity\Pace;
@@ -98,7 +99,7 @@ class Window {
 	protected function prepareProperties() {
 		$this->DemandedTime = new Duration();
 		$this->DemandedPace = new Pace(0, 1);
-		$this->DemandedPace->setUnitEnum(PaceUnit::MIN_PER_KM);
+		$this->DemandedPace->setLegacyUnitEnum(PaceUnit::MIN_PER_KM);
 
 		if (isset($_POST['distance'])) {
 			$_POST['distance'] = str_replace(',', '.', $_POST['distance']);
@@ -352,13 +353,13 @@ class Window {
 	 * Display rounds
 	 */
 	protected function displayTable() {
-		$this->DemandedPace->setUnit($this->Context->sport()->paceUnit());
+		$this->DemandedPace->setUnit($this->Context->sport()->legacyPaceUnit());
 
 		$Table = new Table(
 			$this->Laps,
 			$this->DemandedTime,
 			$this->DemandedPace,
-			($this->Context->sport()->id() == Configuration::General()->runningSport())
+			($this->Context->sport()->getInternalProfileEnum() == SportProfile::RUNNING)
 		);
 
 		if ($this->LapDistance > 0) {

@@ -352,7 +352,30 @@ class Dataview
      */
     public function fitPerformanceCondition()
     {
+        $start = null !== $this->Activity->fitPerformanceCondition() ? $this->fitPerformanceConditionStart() : '-';
+        $end = null !== $this->Activity->fitPerformanceConditionEnd() ? $this->fitPerformanceConditionEnd() : '-';
+
+        if ('-' == $start && '-' == $end) {
+            return '';
+        }
+
+        return $start.'/'.$end;
+    }
+
+    /**
+     * @return string
+     */
+    public function fitPerformanceConditionStart()
+    {
         return PerformanceCondition::format($this->Activity->fitPerformanceCondition());
+    }
+
+    /**
+     * @return string
+     */
+    public function fitPerformanceConditionEnd()
+    {
+        return PerformanceCondition::format($this->Activity->fitPerformanceConditionEnd());
     }
 
     /**

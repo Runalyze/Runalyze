@@ -306,6 +306,9 @@ class ParserFITSingle extends ParserAbstractSingle {
 				case 79:
 					$this->readUndocumentedUserData();
 					break;
+                case 140:
+                    $this->readUndocumentedDataBlob140();
+                    break;
 			}
 		}
 	}
@@ -371,17 +374,29 @@ class ParserFITSingle extends ParserAbstractSingle {
 		if (isset($this->Values['pool_length']))
 			$this->TrainingObject->setPoolLength($this->Values['pool_length'][0]);
 
-		if (isset($this->Values['sport']))
+		if (isset($this->Values['sport']) && !$this->tryToSetFitSportEnum($this->Values['sport'][0]))
 			$this->guessSportID($this->Values['sport'][1]);
 
 		if (isset($this->Values['total_training_effect']) && $this->Values['total_training_effect'][0] >= 10.0 && $this->Values['total_training_effect'][0] <= 50.0)
 			$this->TrainingObject->setFitTrainingEffect($this->Values['total_training_effect'][0]/10);
 	}
 
+    /**
+     * @param int|string $sportEnum
+     * @return bool
+     */
+	protected function tryToSetFitSportEnum($sportEnum) {
+	    return $this->setSportTypeFromEnumIfAvailable((int)$sportEnum, new \Runalyze\Profile\Sport\Mapping\FitSdkMapping());
+    }
+
 	/**
 	 * Read sport
 	 */
 	protected function readSport() {
+	    if (isset($this->Values['sport']) && $this->tryToSetFitSportEnum($this->Values['sport'][0])) {
+	        return;
+        }
+
 		if (isset($this->Values['name'])) {
 			$this->guessSportID(substr($this->Values['name'][0], 1, -1));
 		}
@@ -411,6 +426,12 @@ class ParserFITSingle extends ParserAbstractSingle {
 		}
 	}
 
+	protected function readUndocumentedDataBlob140() {
+        if (isset($this->Values['unknown17']) && $this->TrainingObject->getFitPerformanceCondition()) {
+            $this->TrainingObject->setFitPerformanceConditionEnd(100 + (float)$this->Values['unknown17'][1]);
+        }
+    }
+
 	/**
 	 * Read event
 	 */
@@ -432,7 +453,8 @@ class ParserFITSingle extends ParserAbstractSingle {
 					if (
                         substr($creator, 0, 5) == 'fr630' ||
 						substr($creator, 0, 7) == 'fr735xt' ||
-						substr($creator, 0, 6) == 'fenix3'
+						substr($creator, 0, 6) == 'fenix3' ||
+                        substr($creator, 0, 6) == 'fenix5'
 					) {
 					    if ((int)$this->Values['data'][1] >= 0 && (int)$this->Values['data'][1] <= 255) {
                             $this->TrainingObject->setFitPerformanceCondition((int)$this->Values['data'][1]);

@@ -16,21 +16,21 @@ use League\Geotools\Coordinate\Coordinate;
 class Location {
 	/**
 	 * Latitude
-	 * @var float
+	 * @var float|null
 	 */
 	protected $Latitude = null;
 
 	/**
 	 * Longitude
-	 * @var float
+	 * @var float|null
 	 */
 	protected $Longitude = null;
 
 	/**
-	 * Timestamp
-	 * @var int
+	 * DateTime
+	 * @var \DateTime|null
 	 */
-	protected $Timestamp = null;
+	protected $DateTime = null;
 
 	/**
 	 * Location name
@@ -59,11 +59,10 @@ class Location {
 	}
 
 	/**
-	 * Set timestamp
-	 * @param int $timestamp
+	 * @param \DateTime|null $dateTime
 	 */
-	public function setTimestamp($timestamp) {
-		$this->Timestamp = $timestamp;
+	public function setDateTime($dateTime) {
+		$this->DateTime = $dateTime;
 	}
 
 	/**
@@ -102,10 +101,17 @@ class Location {
 
 	/**
 	 * Time
+	 * @return \DateTime|null
+	 */
+	public function dateTime() {
+		return $this->DateTime;
+	}
+
+	/**
 	 * @return int
 	 */
-	public function time() {
-		return $this->Timestamp;
+	public function timestamp() {
+		return $this->DateTime->getTimestamp();
 	}
 
 	/**
@@ -140,8 +146,8 @@ class Location {
 	 * Is position set?
 	 * @return bool
 	 */
-	public function hasTimestamp() {
-		return !is_null($this->Timestamp) && $this->Timestamp != 0;
+	public function hasDateTime() {
+		return null !== $this->DateTime;
 	}
 
 	/**
@@ -149,7 +155,7 @@ class Location {
 	 * @param int $seconds
 	 * @return bool true if the timestamp is older than 24 hours
 	 */
-	public function isOlderThan($seconds =  DAY_IN_S) {
-		return $this->hasTimestamp() && ($this->Timestamp < time() - $seconds);
+	public function isOlderThan($seconds = DAY_IN_S) {
+		return $this->hasDateTime() && ($this->timestamp() < time() - $seconds);
 	}
 }

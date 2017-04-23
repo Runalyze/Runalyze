@@ -87,9 +87,11 @@ class SportFactory {
 			'kcal' => 600,
 			'HFavg' => 140,
 			'distances' => 0,
-			'speed' => Pace::STANDARD,
+			'speed' => \Runalyze\Metrics\Velocity\Unit\PaceEnum::KILOMETER_PER_HOUR,
 			'power'	=> 0,
-			'outside' => 0
+			'outside' => 0,
+            'is_main' => 0,
+            'internal_sport_id' => null
 		);
 	}
 
@@ -174,28 +176,13 @@ class SportFactory {
 	}
 
 	/**
-	 * Get how often the sport is used
-	 * @return array ids as keys, counts as values
-	 */
-	public static function CountArray() {
-		$Sports = DB::getInstance()->query('SELECT sportid, COUNT(sportid) as scount FROM `'.PREFIX.'training` WHERE `accountid` = '.SessionAccountHandler::getId().' GROUP BY sportid')->fetchAll();
-		$Counts = array();
-
-		foreach ($Sports as $Sport) {
-			$Counts[$Sport['sportid']] = $Sport['scount'];
-		}
-
-		return $Counts;
-	}
-
-	/**
 	 * Get speed unit for given sportid
 	 * @param int $ID
-	 * @return string
+	 * @return int
 	 */
 	public static function getSpeedUnitFor($ID) {
 		$Sports = self::AllSports();
 
-		return (isset($Sports[$ID])) ? $Sports[$ID]['speed'] : Pace::STANDARD;
+		return (isset($Sports[$ID])) ? (new \Runalyze\Metrics\LegacyUnitConverter())->getLegacyPaceUnit($Sports[$ID]['speed'], true) : Pace::STANDARD;
 	}
 }

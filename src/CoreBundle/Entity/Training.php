@@ -25,7 +25,7 @@ class Training
     /**
      * @var \Runalyze\Bundle\CoreBundle\Entity\Sport
      *
-     * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Sport")
+     * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Sport", inversedBy = "trainings")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="sportid", referencedColumnName="id", nullable=false)
      * })
@@ -35,7 +35,7 @@ class Training
     /**
      * @var \Runalyze\Bundle\CoreBundle\Entity\Type
      *
-     * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Type")
+     * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Type", inversedBy = "trainings")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="typeid", referencedColumnName="id")
      * })

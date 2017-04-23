@@ -10,7 +10,7 @@ use Runalyze\Dataset\Context;
 
 /**
  * Dataset key: FitPerformanceCondition
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Dataset\Keys
  */
@@ -31,7 +31,7 @@ class FitPerformanceCondition extends AbstractKey
 	 */
 	public function column()
 	{
-		return 'fit_performance_condition';
+        return ['fit_performance_condition', 'fit_performance_condition_end'];
 	}
 
 	/**

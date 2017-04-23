@@ -7,12 +7,13 @@
 namespace Runalyze\Dataset;
 
 use Runalyze\Model;
+use Runalyze\Profile\Sport\SportProfile;
 use Runalyze\View\Activity\Dataview;
 use Runalyze\View\Activity\Linker;
 
 /**
  * Context for dataset view
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Dataset
  */
@@ -95,7 +96,7 @@ class Context
 		$this->Sport = $this->Activity->sportid() > 0 ? $this->Factory->sport($this->Activity->sportid()) : null;
 		$this->Type = $this->Activity->typeid() > 0 ? $this->Factory->type($this->Activity->typeid()) : null;
 		$this->ActivityData = $this->Activity->completeData();
-		$this->IsRunning = $this->hasSport() && $this->Sport->id() == \Runalyze\Configuration::General()->runningSport();
+		$this->IsRunning = $this->hasSport() && $this->Sport->getInternalProfileEnum() == SportProfile::RUNNING;
 	}
 
 	/**
@@ -210,7 +211,7 @@ class Context
 
 			throw new \InvalidArgumentException('Provided key "'.$key.'" does not exist in activity data.');
 		}
-		
+
 		return $this->ActivityData[$key];
 	}
 

@@ -24,4 +24,10 @@ class TypeRepository extends EntityRepository
             'account' => $account->getId()
         ]);
     }
+
+    public function save(Type $type)
+    {
+        $this->_em->persist($type);
+        $this->_em->flush();
+    }
 }

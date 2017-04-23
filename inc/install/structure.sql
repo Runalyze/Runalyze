@@ -254,6 +254,8 @@ CREATE TABLE IF NOT EXISTS `runalyze_sport` (
   `outside` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `main_equipmenttypeid` int(10) unsigned DEFAULT NULL,
   `default_typeid` int(10) unsigned DEFAULT NULL,
+  `is_main` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `internal_sport_id` tinyint(4) DEFAULT NULL,
   `accountid` int(10) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -328,6 +330,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_training` (
   `fit_hrv_analysis` smallint(5) unsigned DEFAULT NULL,
   `fit_training_effect` decimal(2,1) unsigned DEFAULT NULL,
   `fit_performance_condition` tinyint(3) unsigned DEFAULT NULL,
+  `fit_performance_condition_end` tinyint(3) unsigned DEFAULT NULL,
   `rpe` tinyint(2) unsigned DEFAULT NULL,
   `trimp` smallint unsigned DEFAULT NULL,
   `cadence` int(3) unsigned DEFAULT NULL,
