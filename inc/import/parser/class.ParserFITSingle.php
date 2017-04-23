@@ -306,6 +306,9 @@ class ParserFITSingle extends ParserAbstractSingle {
 				case 79:
 					$this->readUndocumentedUserData();
 					break;
+                case 140:
+                    $this->readUndocumentedDataBlob140();
+                    break;
 			}
 		}
 	}
@@ -422,6 +425,12 @@ class ParserFITSingle extends ParserAbstractSingle {
 			$this->TrainingObject->setFitVO2maxEstimate(round((int)$this->Values['unknown0'][1] * 3.5 / 1024, 2));
 		}
 	}
+
+	protected function readUndocumentedDataBlob140() {
+        if (isset($this->Values['unknown17']) && $this->TrainingObject->getFitPerformanceCondition()) {
+            $this->TrainingObject->setFitPerformanceConditionEnd(100 + (float)$this->Values['unknown17'][1]);
+        }
+    }
 
 	/**
 	 * Read event

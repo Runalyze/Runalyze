@@ -1,32 +1,20 @@
 <?php
-/**
- * This file contains class::FitPerformanceConditionEnd
- * @package Runalyze\Dataset\Keys
- */
 
 namespace Runalyze\Dataset\Keys;
 
 use Runalyze\Dataset\Context;
 
-/**
- * Dataset key: FitPerformanceConditionEnd
- * 
- * @author Hannes Christiansen
- * @package Runalyze\Dataset\Keys
- */
 class FitPerformanceConditionEnd extends AbstractKey
 {
 	/**
-	 * Enum id
 	 * @return int
 	 */
 	public function id()
 	{
-		return \Runalyze\Dataset\Keys::FIT_PERFORMANCE_CONDITION;
+		return \Runalyze\Dataset\Keys::FIT_PERFORMANCE_CONDITION_END;
 	}
 
 	/**
-	 * Database key
 	 * @return string
 	 */
 	public function column()
@@ -40,7 +28,7 @@ class FitPerformanceConditionEnd extends AbstractKey
 	 */
 	public function label()
 	{
-		return __('Performance Condition Ending').' '.__('(by file)');
+        return __('Performance Condition').' '.__('at the end').' '.__('(by file)');
 	}
 
 	/**
@@ -65,13 +53,12 @@ class FitPerformanceConditionEnd extends AbstractKey
 	}
 
 	/**
-	 * Get string to display this dataset value
 	 * @param \Runalyze\Dataset\Context $context
 	 * @return string
 	 */
 	public function stringFor(Context $context)
 	{
-		return $context->dataview()->fitPerformanceCondition();
+		return $context->dataview()->fitPerformanceConditionEnd();
 	}
 
 	/**

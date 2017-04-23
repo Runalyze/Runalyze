@@ -158,7 +158,10 @@ final class Keys extends AbstractEnum
 	const HEAT_INDEX = 48;
 
     /** @var int */
-    const FIT_PERFORMANCE_CONDITION_END = 49;
+    const FIT_PERFORMANCE_CONDITION_START = 49;
+
+    /** @var int */
+    const FIT_PERFORMANCE_CONDITION_END = 50;
 
     /**
 	 * @var array|null
@@ -265,7 +268,8 @@ final class Keys extends AbstractEnum
 			self::FIT_PERFORMANCE_CONDITION => 'FitPerformanceCondition',
 			self::RACE_RESULT => 'RaceResult',
 			self::HEAT_INDEX => 'HeatIndex',
-            self::FIT_PERFORMANCE_CONDITION_END => 'FitPerformanceConditionEnd',
+            self::FIT_PERFORMANCE_CONDITION_START => 'FitPerformanceConditionStart',
+            self::FIT_PERFORMANCE_CONDITION_END => 'FitPerformanceConditionEnd'
         );
 	}
 }

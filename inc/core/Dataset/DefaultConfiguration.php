@@ -54,6 +54,7 @@ class DefaultConfiguration extends Configuration
 			Keys::STRIDE_LENGTH => false,
 			Keys::FIT_VO2MAX_ESTIMATE => false,
 			Keys::FIT_PERFORMANCE_CONDITION => false,
+            Keys::FIT_PERFORMANCE_CONDITION_START => false,
             Keys::FIT_PERFORMANCE_CONDITION_END => false,
             Keys::FIT_RECOVERY_TIME => false,
 			Keys::FIT_HRV_ANALYSIS => false,

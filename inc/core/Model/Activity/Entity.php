@@ -761,7 +761,7 @@ class Entity extends Model\EntityWithID {
 	}
 
     /**
-     * Performance ending condition
+     * Ending performance condition
      * @return null|int
      */
     public function fitPerformanceConditionEnd() {
