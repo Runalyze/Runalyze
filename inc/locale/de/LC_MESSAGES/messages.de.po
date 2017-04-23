@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.com\n"
 "POT-Creation-Date: 2017-04-23 14:21+0200\n"
-"PO-Revision-Date: 2017-03-07 08:49+0000\n"
+"PO-Revision-Date: 2017-04-23 12:54+0000\n"
 "Last-Translator: Michael Pohl <michael@mipapo.de>\n"
-"Language-Team: German <https://translate.runalyze.com/projects/runalyze/"
-"runalyze-master-po/de/>\n"
+"Language-Team: German <https://translate.runalyze.com/projects/runalyze"
+"/runalyze-master-po/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -922,58 +922,48 @@ msgid "There are no activities for this time range."
 msgstr "Es gibt keine Daten für diese Zeitspanne."
 
 #: inc/tpl/tpl.Frontend.header.php:38 inc/tpl/tpl.Frontend.header.php:40
-#, fuzzy
 msgid "Public athlete page"
-msgstr "Deine öffentliche Athletenseite"
+msgstr "Öffentliche Athletenseite"
 
 #: inc/tpl/tpl.Frontend.header.php:40
-#, fuzzy
 msgid "Your public athlete page is deactivated."
-msgstr "Deine öffentliche Athletenseite"
+msgstr "Deine öffentliche Athletenseite ist deaktiviert."
 
 #: inc/tpl/tpl.Frontend.header.php:44
-#, fuzzy
 msgid "Account settings"
-msgstr "Einstellungen überprüfen"
+msgstr "Kontoeinstellungen"
 
 #: inc/tpl/tpl.Frontend.header.php:45
 msgid "Logout"
 msgstr "Ausloggen"
 
 #: inc/tpl/tpl.Frontend.header.php:54
-#, fuzzy
 msgid "No new notifications"
-msgstr "Benachrichtigungen"
+msgstr "Keine neuen Benachrichtigungen"
 
 #: inc/tpl/tpl.Frontend.header.php:59
-#, fuzzy
 msgid "Show all notifications"
-msgstr "Benachrichtigungen"
+msgstr "Alle Benachrichtigungen anzeigen"
 
 #: inc/tpl/tpl.Frontend.header.php:70
-#, fuzzy
 msgid "Activity upload"
-msgstr "Trainingstyp"
+msgstr "Aktivität hochladen"
 
 #: inc/tpl/tpl.Frontend.header.php:71
-#, fuzzy
 msgid "Manual activity"
-msgstr "Training löschen"
+msgstr "Manuelle Aktivität"
 
 #: inc/tpl/tpl.Frontend.header.php:72
-#, fuzzy
 msgid "New equipment"
-msgstr "Wähle Ausrüstung"
+msgstr "Neue Ausrüstung"
 
 #: inc/tpl/tpl.Frontend.header.php:73
-#, fuzzy
 msgid "New body values"
-msgstr "Daten hinzufügen"
+msgstr "Neue Körperwerte"
 
 #: inc/tpl/tpl.Frontend.header.php:87
-#, fuzzy
 msgid "Activity tags"
-msgstr "Aktivitätdetails"
+msgstr "Aktivitäten Tags"
 
 #: inc/tpl/tpl.Frontend.header.php:93
 #: inc/training/view/class.TrainingView.php:133
@@ -982,25 +972,23 @@ msgstr "Tools"
 
 #: inc/tpl/tpl.Frontend.header.php:96
 msgid "ANOVA"
-msgstr ""
+msgstr "ANOVA"
 
 #: inc/tpl/tpl.Frontend.header.php:97
-#, fuzzy
 msgid "Analyze your VO2max"
-msgstr "Analysiere deinen VDOT"
+msgstr "Analysiere deinen VO2max"
 
 #: inc/tpl/tpl.Frontend.header.php:98
-#, fuzzy
 msgid "Running tables"
-msgstr "Lauf-ABC"
+msgstr "Lauftabellen"
 
 #: inc/tpl/tpl.Frontend.header.php:99
 msgid "Poster generator"
-msgstr ""
+msgstr "Postergenerator"
 
 #: inc/tpl/tpl.Frontend.header.php:100
 msgid "More"
-msgstr ""
+msgstr "Weitere"
 
 #: inc/tpl/tpl.Frontend.header.php:104
 msgid "Help"
@@ -2400,7 +2388,7 @@ msgstr "Performance Condition"
 
 #: inc/core/Dataset/Keys/FitPerformanceConditionEnd.php:31
 msgid "at the end"
-msgstr ""
+msgstr "am Ende"
 
 #: inc/core/Dataset/Keys/FitPerformanceConditionEnd.php:31
 #: inc/core/Dataset/Keys/FitHrvAnalysis.php:44
@@ -2414,7 +2402,7 @@ msgstr "(laut Datei)"
 
 #: inc/core/Dataset/Keys/FitPerformanceConditionEnd.php:40
 msgid "PC End"
-msgstr ""
+msgstr "PC Ende"
 
 #: inc/core/Dataset/Keys/FitPerformanceConditionEnd.php:50
 #: inc/core/Dataset/Keys/FitPerformanceConditionStart.php:50
@@ -2640,9 +2628,9 @@ msgstr ""
 "Exakte Uhrzeit der Aktivität. (Das Datum selbst wird ohnehin angezeigt)"
 
 #: inc/core/Dataset/Keys/Title.php:56
-#, fuzzy, php-format
+#, php-format
 msgid "Titles are automatically cut after %u characters."
-msgstr "Kommentare werden automatisch nach %u Zeichen gekürzt."
+msgstr "Titel werden automatisch nach %u Zeichen gekürzt."
 
 #: inc/core/Dataset/Keys/MainEquipment.php:35
 msgid "Main Equipment"
@@ -2666,14 +2654,12 @@ msgstr ""
 "die Einheit öffentlich ist wird ein Icon angezeigt."
 
 #: inc/core/Dataset/Keys/FitPerformanceConditionStart.php:31
-#, fuzzy
 msgid "at start"
-msgstr "Start"
+msgstr "zu Beginn"
 
 #: inc/core/Dataset/Keys/FitPerformanceConditionStart.php:40
-#, fuzzy
 msgid "PC start"
-msgstr "Start"
+msgstr "PC Start"
 
 #: inc/core/Dataset/Keys/VO2maxIcon.php:36
 msgid "Effective VO<sub>2</sub>max icon"
@@ -2850,16 +2836,14 @@ msgid "only icon"
 msgstr "nur Icon"
 
 #: inc/core/Profile/View/DataBrowserRowProfile.php:30
-#, fuzzy
 msgid "Inherit from sport type"
-msgstr "vererbt von den Sportarten"
+msgstr "Vererbt von der Sportart"
 
 #: inc/core/Profile/Sport/Settings/SportRelevanceProfile.php:24
 msgid "Alternative sport"
-msgstr ""
+msgstr "Alternativer Sport"
 
 #: inc/core/Profile/Sport/Settings/SportRelevanceProfile.php:26
-#, fuzzy
 msgid "Main Sport"
 msgstr "Hauptsportart"
 
@@ -3138,7 +3122,7 @@ msgstr "Twitter"
 
 #: inc/core/Export/Share/IFrame.php:54
 msgid "Widget"
-msgstr ""
+msgstr "Widget"
 
 #: inc/core/Export/Share/IFrame.php:82 inc/core/Export/Share/Html.php:55
 msgid "Code"
@@ -3501,7 +3485,7 @@ msgstr "Herzfrequenz"
 
 #: inc/core/View/Activity/Plot/Series/GradeAdjustedPace.php:35
 msgid "Grade adjusted pace"
-msgstr ""
+msgstr "Grade adjusted pace"
 
 #: inc/core/View/Activity/Plot/LapsComputed.php:35
 msgid "No GPS-data available. Can\\'t compute laps."
@@ -5499,9 +5483,8 @@ msgid "Show shape"
 msgstr "Zeige Form"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:79
-#, fuzzy
 msgid "Show training paces"
-msgstr "Trainingstempo"
+msgstr "Zeige Trainingsgeschwindigkeiten"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:80
 msgid "How are these values calculated?"
