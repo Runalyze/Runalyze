@@ -17,6 +17,7 @@ parameters:
   nokia_here_appid:
   nokia_here_token:
   thunderforest_api_key:
+  mapbox_api_key:
   geonames_username:
   perl_path: /usr/bin/perl
   python3_path: /usr/bin/python3
