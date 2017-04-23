@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "bf0d42a7c66de11499914317170ef4a6",
+    "hash": "70b768aae48327ca1626e1c14f2284d2",
     "content-hash": "31d9ef6073eab82ee5b6f13a53f5ccd1",
     "packages": [
         {
@@ -1360,22 +1360,20 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/schmittjoh/JMSTranslationBundle.git",
-                "reference": "06da85e0778bef3d58e026f17defcf65a1d3c02e"
+                "reference": "c837dc6276e99e95e5bdbfb9190e2d595642ba63"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmittjoh/JMSTranslationBundle/zipball/06da85e0778bef3d58e026f17defcf65a1d3c02e",
-                "reference": "06da85e0778bef3d58e026f17defcf65a1d3c02e",
+                "url": "https://api.github.com/repos/schmittjoh/JMSTranslationBundle/zipball/c837dc6276e99e95e5bdbfb9190e2d595642ba63",
+                "reference": "c837dc6276e99e95e5bdbfb9190e2d595642ba63",
                 "shasum": ""
             },
             "require": {
-                "nikic/php-parser": "^1.4 || ^2.0",
+                "nikic/php-parser": "^1.4 || ^2.0 || ^3.0",
                 "php": "^5.3.3 || ^7.0",
                 "symfony/console": "^2.3 || ^3.0",
-                "symfony/framework-bundle": "^2.3 || ^3.0"
-            },
-            "conflict": {
-                "twig/twig": "<1.12"
+                "symfony/framework-bundle": "^2.3 || ^3.0",
+                "twig/twig": "^1.27 || ^2.0"
             },
             "require-dev": {
                 "jms/di-extra-bundle": "^1.1",
@@ -1385,8 +1383,7 @@
                 "psr/log": "^1.0",
                 "sensio/framework-extra-bundle": "^2.3 || ^3.0",
                 "symfony/expression-language": "^2.6 || ^3.0",
-                "symfony/symfony": "^2.3 || ^3.0",
-                "twig/twig": "^1.12"
+                "symfony/symfony": "^2.3 || ^3.0"
             },
             "type": "symfony-bundle",
             "extra": {
@@ -1421,7 +1418,7 @@
                 "ui",
                 "webinterface"
             ],
-            "time": "2016-10-11 15:07:43"
+            "time": "2017-04-21 15:20:32"
         },
         {
             "name": "league/geotools",
