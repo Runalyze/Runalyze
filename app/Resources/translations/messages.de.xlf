@@ -13,11 +13,11 @@
         <target><![CDATA[Die Datei muss mit der selben Version von Runalyze erstellt worden sein! <br> Es können keine Daten von älteren Versionen importiert werden.]]></target>
         <jms:reference-file line="61">/Resources/views/tools/backup/upload_form.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="b571381bb05043ef33ba70c6e268c539a403fbde" resname="                            The importer will not change existing data for equipment, sport types or activity types.&lt;br&gt;&#10;                            You have to make these changes by hand or delete the existing data in advance.&#10;                        ">
+      <trans-unit id="b571381bb05043ef33ba70c6e268c539a403fbde" resname="                            The importer will not change existing data for equipment, sport types or activity types.&lt;br&gt;&#10;                            You have to make these changes by hand or delete the existing data in advance.&#10;                        " approved="yes">
         <source><![CDATA[                            The importer will not change existing data for equipment, sport types or activity types.<br>
                             You have to make these changes by hand or delete the existing data in advance.
                         ]]></source>
-        <target><![CDATA[Der Importer wird vorhandene Daten für Equipment, Sportarten oder Trainingstypen nicht ändern.<br>Du musst diese Änderungen selbst vornehmen oder entsprechende Daten vorher löschen.]]></target>
+        <target state="translated">Der Importer wird vorhandene Daten für Ausrüstung, Sportarten oder Trainingstypen nicht ändern.&lt;br&gt;Du musst diese Änderungen selbst vornehmen oder entsprechende Daten vorher löschen.</target>
         <jms:reference-file line="68">/Resources/views/tools/backup/upload_form.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="f0e469d7c00959f95a0e245c100d881d1994430b" resname="            Values are visualized with so-called 'box plots'.&#10;            They give an impression of how values of a group are distributed.&#10;            The middle 50% of all values are within the box itself and the so-called whiskers have a length of at most 1.5-times the interquartile range (i.e. the box's width).&#10;            Data points outside this range are called outliers.&#10;            ">
