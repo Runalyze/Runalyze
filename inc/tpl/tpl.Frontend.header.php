@@ -52,9 +52,9 @@
             </div>
             <ul class="submenu right-oriented">
                 <li class="no-notifications-messages"><em class="no-link"><?php _e('No new notifications'); ?></em></li>
-                <li id="tpl-notification-message-with-internal-link" class="hide notification-message is-new" data-id=""><a class="window" href="" data-size="small"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<span></span></a></li>
-                <li id="tpl-notification-message-with-external-link" class="hide notification-message is-new" data-id=""><a href="" target="_blank"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<span></span></a></li>
-                <li id="tpl-notification-message-without-link" class="hide notification-message is-new" data-id=""><span class="no-link"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<span></span></span></li>
+                <li id="tpl-notification-message-with-internal-link" class="hide notification-message is-new"><a class="internal" href=""><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<span></span></a></li>
+                <li id="tpl-notification-message-with-external-link" class="hide notification-message is-new"><a href="" target="_blank"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<span></span></a></li>
+                <li id="tpl-notification-message-without-link" class="hide notification-message is-new"><span class="no-link"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<span></span></span></li>
                 <li class="separator"></li>
                 <li><a class="window" data-size="small" href="<?php echo $this->get('router')->generate('notifications-list'); ?>"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('Show all notifications'); ?></a></li>
             </ul>

@@ -61,4 +61,14 @@ class PosterGeneratedMessage implements MessageInterface
     {
         return $router->generate('poster');
     }
+
+    public function isLinkInternal()
+    {
+        return true;
+    }
+
+    public function getWindowSizeForInternalLink()
+    {
+        return '';
+    }
 }
