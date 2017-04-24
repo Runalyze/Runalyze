@@ -24,7 +24,9 @@
                 {% for type in equipmentTypes %}
                     {# @var type \Runalyze\Bundle\CoreBundle\Entity\EquipmentType #}
                     <tr>
-                        <td><a class="window" href="{{ url('equipment-category-edit', {'id': type.id}) }}"><i class="fa fa-fw fa-pencil"></i></a></td>
+                        <td><a class="window" href="{{ url('equipment-category-edit', {'id': type.id}) }}"><i class="fa fa-fw fa-pencil"></i></a>
+                            <a class="window" href="{{ url('equipment-add', {'id': type.id}) }}" title="{{ 'Add equipment'|trans }}"><i class="fa fa-fw fa-plus"></i></a>
+                        </td>
                         <td>{{ type.name }}</td>
                         <td>{{ (type.input == 0 ? 'Single choice' : 'Multiple choice')|trans }}</td>
                         <td>{{ type.hasMaximalDistance ? distance(type.maxKm, unitSystem.distanceUnit, 0) : '-' }}</td>
