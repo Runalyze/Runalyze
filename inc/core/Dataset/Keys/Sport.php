@@ -10,7 +10,7 @@ use Runalyze\Dataset\Context;
 
 /**
  * Dataset key: Sport
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Dataset\Keys
  */
@@ -50,7 +50,7 @@ class Sport extends AbstractKey
 	 */
 	public function label()
 	{
-		return __('Sport type');
+		return __('Sport');
 	}
 
 	/**

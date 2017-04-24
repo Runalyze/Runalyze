@@ -74,7 +74,7 @@ class AnovaType extends AbstractType
                     /** @var Sport $sport */
                     return $sport->getName();
                 },
-                'placeholder' => 'Choose sport type(s)',
+                'placeholder' => 'Choose sport(s)',
                 'attr' => ['class' => 'chosen-select full-size']
             ])
             ->add('valueToGroupBy', ChoiceType::class, [
