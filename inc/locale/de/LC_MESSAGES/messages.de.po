@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: mail@runalyze.com\n"
-"POT-Creation-Date: 2017-04-23 14:21+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-04-24 21:10+0200\n"
 "PO-Revision-Date: 2017-04-23 12:54+0000\n"
 "Last-Translator: Michael Pohl <michael@mipapo.de>\n"
-"Language-Team: German <https://translate.runalyze.com/projects/runalyze"
-"/runalyze-master-po/de/>\n"
+"Language-Team: German <https://translate.runalyze.com/projects/runalyze/"
+"runalyze-master-po/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -243,7 +243,8 @@ msgstr "Pluginkonfiguration"
 
 #: src/CoreBundle/Component/Tool/Backup/JsonImporterResults.php:137
 #: inc/tpl/tpl.Frontend.header.php:85
-msgid "Sport types"
+#: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:34
+msgid "Sports"
 msgstr "Sportarten"
 
 #: src/CoreBundle/Component/Tool/Backup/JsonImporterResults.php:138
@@ -1765,6 +1766,7 @@ msgstr "Der Multi-Editor ist auf maximal %d Aktivitäten begrenzt."
 #: inc/training/search/class.SearchFormular.php:122
 #: inc/training/schemes/scheme.Training.php:25
 #: inc/training/schemes/scheme.Training.php:86
+#: inc/core/Dataset/Keys/Sport.php:53
 msgid "Sport"
 msgstr "Sport"
 
@@ -2197,7 +2199,7 @@ msgstr "Woche"
 msgid "back"
 msgstr "zurück"
 
-#: inc/class.DataBrowser.php:265 inc/html/class.Ajax.php:435
+#: inc/class.DataBrowser.php:265 inc/html/class.Ajax.php:439
 msgid "next"
 msgstr "weiter"
 
@@ -2235,21 +2237,21 @@ msgstr "Suche nach Trainingseinheiten"
 msgid "Total"
 msgstr "Gesamt"
 
-#: inc/html/class.Ajax.php:432 inc/core/View/Leaflet/Activity.php:265
+#: inc/html/class.Ajax.php:436 inc/core/View/Leaflet/Activity.php:265
 msgid "Start"
 msgstr "Start"
 
-#: inc/html/class.Ajax.php:433
+#: inc/html/class.Ajax.php:437
 msgid "previous"
 msgstr "vorherige"
 
-#: inc/html/class.Ajax.php:436
+#: inc/html/class.Ajax.php:440
 msgid "End"
 msgstr "Ende"
 
-#: inc/html/class.Ajax.php:439 inc/html/class.Ajax.php:440
-#: inc/html/class.Ajax.php:441 inc/html/class.Ajax.php:442
-#: inc/html/class.Ajax.php:443
+#: inc/html/class.Ajax.php:443 inc/html/class.Ajax.php:444
+#: inc/html/class.Ajax.php:445 inc/html/class.Ajax.php:446
+#: inc/html/class.Ajax.php:447
 msgid "per page"
 msgstr "pro Seite"
 
@@ -2422,10 +2424,6 @@ msgstr "Einstellung"
 #: inc/core/Dataset/Keys/Setting.php:101 inc/core/Dataset/Keys/Setting.php:118
 msgid "Edit"
 msgstr "Bearbeiten"
-
-#: inc/core/Dataset/Keys/Sport.php:53
-msgid "Sport type"
-msgstr "Sportart"
 
 #: inc/core/Dataset/Keys/Sport.php:71
 msgid "The sports icon is shown."
@@ -2836,7 +2834,8 @@ msgid "only icon"
 msgstr "nur Icon"
 
 #: inc/core/Profile/View/DataBrowserRowProfile.php:30
-msgid "Inherit from sport type"
+#, fuzzy
+msgid "Inherit from sport"
 msgstr "Vererbt von der Sportart"
 
 #: inc/core/Profile/Sport/Settings/SportRelevanceProfile.php:24
@@ -3938,7 +3937,8 @@ msgstr ""
 "Schnittstellen korrigiert werden."
 
 #: inc/core/Configuration/Category/ActivityForm.php:257
-msgid "Sort: sport types"
+#, fuzzy
+msgid "Sort: sports"
 msgstr "Sortierung: Sportarten"
 
 #: inc/core/Configuration/Category/ActivityForm.php:261
@@ -4291,10 +4291,6 @@ msgid ""
 msgstr ""
 "<em>Es sind keine Statistiken vorhanden. Aktiviere ein Plugin in deiner "
 "Konfiguration.</em>"
-
-#: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:34
-msgid "Sports"
-msgstr "Sportarten"
 
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:42
 msgid "Summary of your activities for each sport."
@@ -5812,6 +5808,12 @@ msgstr "Monatliche Statistiken"
 #, php-format
 msgid "How many %s/hours did you do per month"
 msgstr "Wie viele %s oder Stunden hast du pro Monat trainiert"
+
+#~ msgid "Sport types"
+#~ msgstr "Sportarten"
+
+#~ msgid "Sport type"
+#~ msgstr "Sportart"
 
 #~ msgid "Account"
 #~ msgstr "Account"

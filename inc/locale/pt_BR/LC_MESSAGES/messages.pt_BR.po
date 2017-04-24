@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-23 14:21+0200\n"
+"POT-Creation-Date: 2017-04-24 21:10+0200\n"
 "PO-Revision-Date: 2016-08-24 18:35+0000\n"
 "Last-Translator: Raul Kiaer <rkiaer@uol.com.br>\n"
 "Language-Team: Portuguese (Brazil) <http://translate.runalyze.com/projects/"
@@ -242,7 +242,8 @@ msgstr ""
 
 #: src/CoreBundle/Component/Tool/Backup/JsonImporterResults.php:137
 #: inc/tpl/tpl.Frontend.header.php:85
-msgid "Sport types"
+#: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:34
+msgid "Sports"
 msgstr ""
 
 #: src/CoreBundle/Component/Tool/Backup/JsonImporterResults.php:138
@@ -1757,6 +1758,7 @@ msgstr "Nosso multi editr  é limitado a um máximo de %d atividades."
 #: inc/training/search/class.SearchFormular.php:122
 #: inc/training/schemes/scheme.Training.php:25
 #: inc/training/schemes/scheme.Training.php:86
+#: inc/core/Dataset/Keys/Sport.php:53
 msgid "Sport"
 msgstr "Esporte"
 
@@ -2177,7 +2179,7 @@ msgstr ""
 msgid "back"
 msgstr ""
 
-#: inc/class.DataBrowser.php:265 inc/html/class.Ajax.php:435
+#: inc/class.DataBrowser.php:265 inc/html/class.Ajax.php:439
 msgid "next"
 msgstr "próximo"
 
@@ -2215,21 +2217,21 @@ msgstr ""
 msgid "Total"
 msgstr "Total"
 
-#: inc/html/class.Ajax.php:432 inc/core/View/Leaflet/Activity.php:265
+#: inc/html/class.Ajax.php:436 inc/core/View/Leaflet/Activity.php:265
 msgid "Start"
 msgstr "Início"
 
-#: inc/html/class.Ajax.php:433
+#: inc/html/class.Ajax.php:437
 msgid "previous"
 msgstr "prévio"
 
-#: inc/html/class.Ajax.php:436
+#: inc/html/class.Ajax.php:440
 msgid "End"
 msgstr "Fim"
 
-#: inc/html/class.Ajax.php:439 inc/html/class.Ajax.php:440
-#: inc/html/class.Ajax.php:441 inc/html/class.Ajax.php:442
-#: inc/html/class.Ajax.php:443
+#: inc/html/class.Ajax.php:443 inc/html/class.Ajax.php:444
+#: inc/html/class.Ajax.php:445 inc/html/class.Ajax.php:446
+#: inc/html/class.Ajax.php:447
 msgid "per page"
 msgstr "por página"
 
@@ -2403,10 +2405,6 @@ msgstr "Selecionar"
 #: inc/core/Dataset/Keys/Setting.php:101 inc/core/Dataset/Keys/Setting.php:118
 msgid "Edit"
 msgstr "Editar"
-
-#: inc/core/Dataset/Keys/Sport.php:53
-msgid "Sport type"
-msgstr ""
 
 #: inc/core/Dataset/Keys/Sport.php:71
 msgid "The sports icon is shown."
@@ -2772,7 +2770,7 @@ msgid "only icon"
 msgstr ""
 
 #: inc/core/Profile/View/DataBrowserRowProfile.php:30
-msgid "Inherit from sport type"
+msgid "Inherit from sport"
 msgstr ""
 
 #: inc/core/Profile/Sport/Settings/SportRelevanceProfile.php:24
@@ -3872,8 +3870,9 @@ msgstr ""
 "possível."
 
 #: inc/core/Configuration/Category/ActivityForm.php:257
-msgid "Sort: sport types"
-msgstr ""
+#, fuzzy
+msgid "Sort: sports"
+msgstr "Organizar: Sapatos"
 
 #: inc/core/Configuration/Category/ActivityForm.php:261
 msgid "Sort: activity types"
@@ -4221,10 +4220,6 @@ msgid ""
 msgstr ""
 "<em>Não existem estatísticas disponíveis. Ative um plugin em sua "
 "configuração.</em>"
-
-#: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:34
-msgid "Sports"
-msgstr ""
 
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:42
 msgid "Summary of your activities for each sport."
@@ -6306,9 +6301,6 @@ msgstr ""
 
 #~ msgid "Shoe"
 #~ msgstr "Sapato"
-
-#~ msgid "Sort: shoes"
-#~ msgstr "Organizar: Sapatos"
 
 #, fuzzy
 #~ msgid "Pointcare plot"

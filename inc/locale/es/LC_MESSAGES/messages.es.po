@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-23 14:21+0200\n"
+"POT-Creation-Date: 2017-04-24 21:10+0200\n"
 "PO-Revision-Date: 2017-03-07 09:15+0000\n"
 "Last-Translator: Michael Pohl <michael@mipapo.de>\n"
 "Language-Team: Spanish <https://translate.runalyze.com/projects/runalyze/"
@@ -243,7 +243,8 @@ msgstr "Configuración de complemento"
 
 #: src/CoreBundle/Component/Tool/Backup/JsonImporterResults.php:137
 #: inc/tpl/tpl.Frontend.header.php:85
-msgid "Sport types"
+#: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:34
+msgid "Sports"
 msgstr "Tipos de deporte"
 
 #: src/CoreBundle/Component/Tool/Backup/JsonImporterResults.php:138
@@ -1771,6 +1772,7 @@ msgstr "Nuestro multi-editor está limitado a un máximo de %d actividades."
 #: inc/training/search/class.SearchFormular.php:122
 #: inc/training/schemes/scheme.Training.php:25
 #: inc/training/schemes/scheme.Training.php:86
+#: inc/core/Dataset/Keys/Sport.php:53
 msgid "Sport"
 msgstr "Deporte"
 
@@ -2203,7 +2205,7 @@ msgstr "Semana"
 msgid "back"
 msgstr "Volver"
 
-#: inc/class.DataBrowser.php:265 inc/html/class.Ajax.php:435
+#: inc/class.DataBrowser.php:265 inc/html/class.Ajax.php:439
 msgid "next"
 msgstr "siguiente"
 
@@ -2241,21 +2243,21 @@ msgstr "Buscar una actividad"
 msgid "Total"
 msgstr "Total"
 
-#: inc/html/class.Ajax.php:432 inc/core/View/Leaflet/Activity.php:265
+#: inc/html/class.Ajax.php:436 inc/core/View/Leaflet/Activity.php:265
 msgid "Start"
 msgstr "Inicio"
 
-#: inc/html/class.Ajax.php:433
+#: inc/html/class.Ajax.php:437
 msgid "previous"
 msgstr "anterior"
 
-#: inc/html/class.Ajax.php:436
+#: inc/html/class.Ajax.php:440
 msgid "End"
 msgstr "Fin"
 
-#: inc/html/class.Ajax.php:439 inc/html/class.Ajax.php:440
-#: inc/html/class.Ajax.php:441 inc/html/class.Ajax.php:442
-#: inc/html/class.Ajax.php:443
+#: inc/html/class.Ajax.php:443 inc/html/class.Ajax.php:444
+#: inc/html/class.Ajax.php:445 inc/html/class.Ajax.php:446
+#: inc/html/class.Ajax.php:447
 msgid "per page"
 msgstr "por página"
 
@@ -2429,10 +2431,6 @@ msgstr "Ajuste"
 #: inc/core/Dataset/Keys/Setting.php:101 inc/core/Dataset/Keys/Setting.php:118
 msgid "Edit"
 msgstr "Editar"
-
-#: inc/core/Dataset/Keys/Sport.php:53
-msgid "Sport type"
-msgstr "Tipo de deporte"
 
 #: inc/core/Dataset/Keys/Sport.php:71
 msgid "The sports icon is shown."
@@ -2843,7 +2841,7 @@ msgstr "sólo icono"
 
 #: inc/core/Profile/View/DataBrowserRowProfile.php:30
 #, fuzzy
-msgid "Inherit from sport type"
+msgid "Inherit from sport"
 msgstr "hereda del tipo de deporte"
 
 #: inc/core/Profile/Sport/Settings/SportRelevanceProfile.php:24
@@ -3934,7 +3932,8 @@ msgstr ""
 "de un servicio online."
 
 #: inc/core/Configuration/Category/ActivityForm.php:257
-msgid "Sort: sport types"
+#, fuzzy
+msgid "Sort: sports"
 msgstr "Ordenar: tipo de deporte"
 
 #: inc/core/Configuration/Category/ActivityForm.php:261
@@ -4290,10 +4289,6 @@ msgid ""
 msgstr ""
 "<em>No hay estadísticas disponibles. Activa un complemento en tu "
 "configuración.</em>"
-
-#: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:34
-msgid "Sports"
-msgstr "Tipos de deporte"
 
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:42
 msgid "Summary of your activities for each sport."
@@ -5813,6 +5808,12 @@ msgstr "Estadísticas mensuales"
 #, php-format
 msgid "How many %s/hours did you do per month"
 msgstr "Cuántos %s u horas has entrenado cada mes"
+
+#~ msgid "Sport types"
+#~ msgstr "Tipos de deporte"
+
+#~ msgid "Sport type"
+#~ msgstr "Tipo de deporte"
 
 #~ msgid "Account"
 #~ msgstr "Cuenta"

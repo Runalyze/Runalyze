@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-23 14:21+0200\n"
+"POT-Creation-Date: 2017-04-24 21:10+0200\n"
 "PO-Revision-Date: 2016-07-26 05:50+0000\n"
 "Last-Translator: Burak <radon@thedaemon.de>\n"
 "Language-Team: Turkish <http://translate.runalyze.com/projects/runalyze/"
@@ -240,8 +240,9 @@ msgstr ""
 
 #: src/CoreBundle/Component/Tool/Backup/JsonImporterResults.php:137
 #: inc/tpl/tpl.Frontend.header.php:85
-msgid "Sport types"
-msgstr "spor dalları"
+#: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:34
+msgid "Sports"
+msgstr ""
 
 #: src/CoreBundle/Component/Tool/Backup/JsonImporterResults.php:138
 msgid "Activity types"
@@ -1735,6 +1736,7 @@ msgstr ""
 #: inc/training/search/class.SearchFormular.php:122
 #: inc/training/schemes/scheme.Training.php:25
 #: inc/training/schemes/scheme.Training.php:86
+#: inc/core/Dataset/Keys/Sport.php:53
 msgid "Sport"
 msgstr ""
 
@@ -2147,7 +2149,7 @@ msgstr ""
 msgid "back"
 msgstr ""
 
-#: inc/class.DataBrowser.php:265 inc/html/class.Ajax.php:435
+#: inc/class.DataBrowser.php:265 inc/html/class.Ajax.php:439
 msgid "next"
 msgstr ""
 
@@ -2185,21 +2187,21 @@ msgstr ""
 msgid "Total"
 msgstr ""
 
-#: inc/html/class.Ajax.php:432 inc/core/View/Leaflet/Activity.php:265
+#: inc/html/class.Ajax.php:436 inc/core/View/Leaflet/Activity.php:265
 msgid "Start"
 msgstr ""
 
-#: inc/html/class.Ajax.php:433
+#: inc/html/class.Ajax.php:437
 msgid "previous"
 msgstr ""
 
-#: inc/html/class.Ajax.php:436
+#: inc/html/class.Ajax.php:440
 msgid "End"
 msgstr ""
 
-#: inc/html/class.Ajax.php:439 inc/html/class.Ajax.php:440
-#: inc/html/class.Ajax.php:441 inc/html/class.Ajax.php:442
-#: inc/html/class.Ajax.php:443
+#: inc/html/class.Ajax.php:443 inc/html/class.Ajax.php:444
+#: inc/html/class.Ajax.php:445 inc/html/class.Ajax.php:446
+#: inc/html/class.Ajax.php:447
 msgid "per page"
 msgstr ""
 
@@ -2368,10 +2370,6 @@ msgstr ""
 
 #: inc/core/Dataset/Keys/Setting.php:101 inc/core/Dataset/Keys/Setting.php:118
 msgid "Edit"
-msgstr ""
-
-#: inc/core/Dataset/Keys/Sport.php:53
-msgid "Sport type"
 msgstr ""
 
 #: inc/core/Dataset/Keys/Sport.php:71
@@ -2730,7 +2728,7 @@ msgstr ""
 
 #: inc/core/Profile/View/DataBrowserRowProfile.php:30
 #, fuzzy
-msgid "Inherit from sport type"
+msgid "Inherit from sport"
 msgstr "spor dalları"
 
 #: inc/core/Profile/Sport/Settings/SportRelevanceProfile.php:24
@@ -3796,8 +3794,9 @@ msgid ""
 msgstr ""
 
 #: inc/core/Configuration/Category/ActivityForm.php:257
-msgid "Sort: sport types"
-msgstr ""
+#, fuzzy
+msgid "Sort: sports"
+msgstr "spor dalları"
 
 #: inc/core/Configuration/Category/ActivityForm.php:261
 msgid "Sort: activity types"
@@ -4128,10 +4127,6 @@ msgstr ""
 msgid ""
 "<em>There are no statistics available. Activate a plugin in your "
 "configuration.</em>"
-msgstr ""
-
-#: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:34
-msgid "Sports"
 msgstr ""
 
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:42
