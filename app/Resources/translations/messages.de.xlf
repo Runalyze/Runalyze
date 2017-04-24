@@ -1155,9 +1155,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <jms:reference-file line="18">/Resources/views/mail/account/recoverPassword.html.twig</jms:reference-file>
         <jms:reference-file line="24">/Resources/views/mail/account/registration.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="37baeb5082e32cc6c382445401a93cff0634a668" resname="If you delete an equipment object all relations between your activities and this object will be deleted.">
+      <trans-unit id="37baeb5082e32cc6c382445401a93cff0634a668" resname="If you delete an equipment object all relations between your activities and this object will be deleted." approved="yes">
         <source>If you delete an equipment object all relations between your activities and this object will be deleted.</source>
-        <target state="new">If you delete an equipment object all relations between your activities and this object will be deleted.</target>
+        <target state="translated">Wenn du einen Ausrüstungsgegenstand löschst, dann werden alle Verbindungen zwischen deinen Aktivitäten und dem Gegenstand gelöscht.</target>
         <jms:reference-file line="67">/Resources/views/my/equipment/form-equipment.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="63149eddcb41883bd18fc09085136c87a3603d8a" resname="If you participate in an event multiple times you should always enter the same name, i.e. don't append the event's number or year.">
@@ -1715,13 +1715,11 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Wettkampfprognosen für unterschiedliche Distanzen für bestimmte VO2max-Werte.</target>
         <jms:reference-file line="13">/Resources/views/tools/tables/base.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="4914d8f32f5f72af17a7fed61b8530fe5c2ee54c" resname="Predicting your effective %VO2max% based on your training values is imprecise.&#10;                This plugin lists your races and compares your results with the predicted values.&#10;                This way you can get an impression of how well the prediction works for you.">
+      <trans-unit id="4914d8f32f5f72af17a7fed61b8530fe5c2ee54c" resname="Predicting your effective %VO2max% based on your training values is imprecise.&#10;                This plugin lists your races and compares your results with the predicted values.&#10;                This way you can get an impression of how well the prediction works for you." approved="yes">
         <source xml:space="preserve">Predicting your effective %VO2max% based on your training values is imprecise.
                 This plugin lists your races and compares your results with the predicted values.
                 This way you can get an impression of how well the prediction works for you.</source>
-        <target xml:space="preserve" state="new">Predicting your effective %VO2max% based on your training values is imprecise.
-                This plugin lists your races and compares your results with the predicted values.
-                This way you can get an impression of how well the prediction works for you.</target>
+        <target xml:space="preserve" state="translated">Die Vorhersage deines effektiven %VO2max% anhand deiner Trainingswerte ist leider nicht immer ganz passend. Dieses Plugin zeigt deine Wettkämpfe im Vergleich zu den berechneten Werten und gibt dir die Möglichkeit zu sehen, wie gut die "Vorhersage für dich funktioniert."</target>
         <jms:reference-file line="19">/Resources/views/tools/tools_list.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="acaae0379a0a55f16b259cbbd83eb124ebe4735f" resname="Predicting your effective %VO2max% based on your training values is imprecise.&#10;                This tool lists your races and compares all results with predicted values.&#10;                This way you can get an impression of how well our prediction works for you.">
@@ -1917,9 +1915,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Runalyze ist von Athleten für Athleten. Wann immer du Anmerkungen, Probleme oder Wünsche hast: Sag uns Bescheid, es liegt uns am Herzen!</target>
         <jms:reference-file line="28">/Resources/views/home_feature_showcase.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="e94e1f42f987ab72d95ed4d11a451b60a7e71eaf" resname="Runalyze offers default configurations for common sport types. This mapping is required to recognize the correct sport type when syncing activities. You can still adjust all settings.">
+      <trans-unit id="e94e1f42f987ab72d95ed4d11a451b60a7e71eaf" resname="Runalyze offers default configurations for common sport types. This mapping is required to recognize the correct sport type when syncing activities. You can still adjust all settings." approved="yes">
         <source>Runalyze offers default configurations for common sport types. This mapping is required to recognize the correct sport type when syncing activities. You can still adjust all settings.</source>
-        <target state="new">Runalyze offers default configurations for common sport types. This mapping is required to recognize the correct sport type when syncing activities. You can still adjust all settings.</target>
+        <target state="translated">Runalyze bietet Standardkonfigurationen für übliche Sportarten an. Diese Zuordnung ist nötig, damit die korrekte Sportart beim Importieren von Aktivitäten möglich ist. Du kannst weiterhin alle Einstellungen anpassen.</target>
         <jms:reference-file line="57">/Resources/views/settings/sport/overview.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="73989d9c59264da08a15dba21c7d58237a91f08f" resname="Running">
@@ -2178,9 +2176,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target state="translated">Die Kategorie wurde gelöscht.</target>
         <jms:reference-file line="159">/../src/CoreBundle/Controller/My/EquipmentController.php</jms:reference-file>
       </trans-unit>
-      <trans-unit id="0422b02d2134bafc018ea5c80d152b11d8ee58e6" resname="The default activity type will be selected automatically when importing activities.">
+      <trans-unit id="0422b02d2134bafc018ea5c80d152b11d8ee58e6" resname="The default activity type will be selected automatically when importing activities." approved="yes">
         <source>The default activity type will be selected automatically when importing activities.</source>
-        <target state="new">The default activity type will be selected automatically when importing activities.</target>
+        <target state="translated">Der Standardtrainingstyp wird automatisch beim Importieren von Trainingseinheiten ausgewählt.</target>
         <jms:reference-file line="50">/Resources/views/settings/sport/form-sport.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="246aeab8aa786b99aeae9e55fe38e711d9fead9c" resname="The deletion cannot be undone!">
@@ -2208,9 +2206,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Die Distanzkorrektur für Höhenmeter wird in dieser Tabelle nicht verwendet.</target>
         <jms:reference-file line="93">/Resources/views/tools/vo2max_analysis.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="a1473df39870f5d41afd2736ef2c4fb13cb799d5" resname="The information will be shown directly in the row.">
+      <trans-unit id="a1473df39870f5d41afd2736ef2c4fb13cb799d5" resname="The information will be shown directly in the row." approved="yes">
         <source>The information will be shown directly in the row.</source>
-        <target state="new">The information will be shown directly in the row.</target>
+        <target state="translated">Die Informationen werden direkt in der Zeile angezeigt.</target>
         <jms:reference-file line="30">/Resources/views/settings/dataset.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="6f3578d13f01277f0865175e0f08652f283e769a" resname="The link has been sent and will be valid for 24 hours.">
@@ -2351,11 +2349,11 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Mit diesem Tool können Poster deiner Trainingsdaten erzeugt werden.</target>
         <jms:reference-file line="44">/Resources/views/tools/tools_list.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="08790fa6c482c0285af002861bfc2b43ac6941d5" resname="This tool allows you to edit multiple activities one after another.&#10;                At the moment it's not possible to edit multiple activities with only one form.">
+      <trans-unit id="08790fa6c482c0285af002861bfc2b43ac6941d5" resname="This tool allows you to edit multiple activities one after another.&#10;                At the moment it's not possible to edit multiple activities with only one form." approved="yes">
         <source xml:space="preserve">This tool allows you to edit multiple activities one after another.
                 At the moment it's not possible to edit multiple activities with only one form.</source>
-        <target xml:space="preserve" state="new">This tool allows you to edit multiple activities one after another.
-                At the moment it's not possible to edit multiple activities with only one form.</target>
+        <target xml:space="preserve" state="translated">Dieses Tool erlaubt dir mehrere Aktivitäten hintereinander zu bearbeiten
+                Im Augenblick ist es nicht möglich mehrere Aktivitäten gleichzeitig zu bearbeiten.</target>
         <jms:reference-file line="85">/Resources/views/tools/tools_list.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="16e59bb04fa9297cedece962102621e7f291b7bc" resname="This tool allows you to export your complete data as sql dump or json dump that can be imported into any RUNALYZE installation.">
@@ -2407,9 +2405,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Um bestimmte individuelle Faktoren zu berücksichtigen, benutzen wir einen Korrekturfaktor.</target>
         <jms:reference-file line="64">/Resources/views/activity/vo2max_info.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="fca3fa3d474c6edc26992d8b15da4d804bb78b31" resname="To correctly estimate its lifetime you can specify a previous distance which is added to its calculated distance, e.g. if you used your running shoes for 200 km before tracking them.">
+      <trans-unit id="fca3fa3d474c6edc26992d8b15da4d804bb78b31" resname="To correctly estimate its lifetime you can specify a previous distance which is added to its calculated distance, e.g. if you used your running shoes for 200 km before tracking them." approved="yes">
         <source>To correctly estimate its lifetime you can specify a previous distance which is added to its calculated distance, e.g. if you used your running shoes for 200 km before tracking them.</source>
-        <target state="new">To correctly estimate its lifetime you can specify a previous distance which is added to its calculated distance, e.g. if you used your running shoes for 200 km before tracking them.</target>
+        <target state="translated">Um die Lebensdauer richtig zu erfassen, kannst du die bisherige Distanz angeben, die zu der berechneten Distanz hinzuaddiert wird. (Zum Beispiel wenn du deine Laufschuhe bereits 200 km benutzt hast, bevor du deine Aufzeichnungen beginnst.)</target>
         <jms:reference-file line="30">/Resources/views/my/equipment/form-equipment.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="dfff5fdae6c0d1d1cc5bdbd44d8dacc2ae47ae08" resname="To get started right away just take a look at our &quot;getting started&quot; guide at %s.">
@@ -2632,9 +2630,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target state="new">You can add a maximal distance or duration if you want to be warned about objects exceeding their theoretical lifetime. This is used for displaying a progress bar in the equipment widget.</target>
         <jms:reference-file line="40">/Resources/views/my/equipment/form-category.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="904462fcbe19d6f857a3b4d22b8c7ccf09a518ea" resname="You can add new tags in the activity form.">
+      <trans-unit id="904462fcbe19d6f857a3b4d22b8c7ccf09a518ea" resname="You can add new tags in the activity form." approved="yes">
         <source>You can add new tags in the activity form.</source>
-        <target state="new">You can add new tags in the activity form.</target>
+        <target state="translated">Neue Tags kannst du über das Trainingsformular hinzufügen.</target>
         <jms:reference-file line="11">/Resources/views/settings/tag/overview.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="eb9a8723d6a1a22c7cd12c63d19d47f738515497" resname="You can change your password within the next 24 hours by clicking the link below.">
@@ -2642,9 +2640,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Sie können Ihr Passwort innerhalb der nächsten 24 Stunden ändern, indem Sie auf den untenstehenden Link.</target>
         <jms:reference-file line="12">/Resources/views/mail/account/recoverPassword.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="48fffa73e1a3c0e045bb151e0e5c2081bf7756c4" resname="You can choose only one object for an activity">
+      <trans-unit id="48fffa73e1a3c0e045bb151e0e5c2081bf7756c4" resname="You can choose only one object for an activity" approved="yes">
         <source>You can choose only one object for an activity</source>
-        <target state="new">You can choose only one object for an activity</target>
+        <target state="translated">Du kannst nur ein Ausrüstungsgegenstand für eine Aktivität auswählen.</target>
         <jms:reference-file line="27">/Resources/views/my/equipment/form-category.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="c01b6a1446273f585709defe47b93604452c9593" resname="You can close this window.">
@@ -2710,14 +2708,14 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Du bist bisher keine Wettkämpfe gelaufen.</target>
         <jms:reference-file line="62">/Resources/views/tools/vo2max_analysis.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="d7415a056ec710e5a83ee2629b9fd4ee672e01fc" resname="You don't have any activity tags.">
+      <trans-unit id="d7415a056ec710e5a83ee2629b9fd4ee672e01fc" resname="You don't have any activity tags." approved="yes">
         <source>You don't have any activity tags.</source>
-        <target state="new">You don't have any activity tags.</target>
+        <target state="translated">Du hast bisher keine Aktivität mit Tags versehen.</target>
         <jms:reference-file line="38">/Resources/views/settings/tag/overview.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="68cde17ce53f23a49f91c8da4f94274a53ba55c1" resname="You don't have any equipment so far.">
+      <trans-unit id="68cde17ce53f23a49f91c8da4f94274a53ba55c1" resname="You don't have any equipment so far." approved="yes">
         <source>You don't have any equipment so far.</source>
-        <target state="new">You don't have any equipment so far.</target>
+        <target state="translated">Du hast noch keine Ausrüstungsgegenstand hinterlegt.</target>
         <jms:reference-file line="38">/Resources/views/my/equipment/overview.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="c68ed288b5e76e90c37763dec184be248ed8a2b1" resname="You have activities associated with this type.">
