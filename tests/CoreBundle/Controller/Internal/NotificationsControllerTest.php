@@ -91,7 +91,8 @@ class NotificationsControllerTest extends AbstractFixturesAwareWebTestCase
             json_encode([[
                 'id' => $id,
                 'link' => 'http://runalyze.com/',
-                'text' => 'foobar'
+                'text' => 'foobar',
+                'size' => 'external'
             ]]),
             $this->fetchContent('/_internal/notifications')
         );
