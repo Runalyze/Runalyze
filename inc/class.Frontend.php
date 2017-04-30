@@ -216,17 +216,4 @@ class Frontend {
 
 		Error::getInstance()->footer_sent = true;
 	}
-
-	/**
-	 * Display panels
-	 */
-	public function displayPanels() {
-		$Factory = new PluginFactory();
-		$Panels = $Factory->enabledPanels();
-
-		foreach ($Panels as $key) {
-			$Panel = $Factory->newInstance($key);
-			$Panel->display();
-		}
-	}
 }
