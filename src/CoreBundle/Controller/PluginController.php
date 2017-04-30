@@ -6,13 +6,14 @@ use Runalyze\Bundle\CoreBundle\Component\Statistics\MonthlyStats\AnalysisData;
 use Runalyze\Bundle\CoreBundle\Component\Statistics\MonthlyStats\AnalysisSelection;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Twig\ValueExtension;
+use Runalyze\Util\LocalTime;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class PluginController extends Controller
+class PluginController extends AbstractPluginsAwareController
 {
     /**
      * @Route("/call/call.Plugin.install.php")
@@ -80,7 +81,6 @@ class PluginController extends Controller
         return new Response();
     }
 
-
     /**
      * @Route("/my/plugin/{id}", requirements={"id" = "\d+"}, name="plugin-display")
      * @Security("has_role('ROLE_USER')")
@@ -88,57 +88,8 @@ class PluginController extends Controller
     public function pluginDisplayAction($id, Request $request, Account $account)
     {
         $Frontend = new \Frontend(false, $this->get('security.token_storage'));
-        $Factory = new \PluginFactory();
 
-        try {
-        	$Plugin = $Factory->newInstanceFor($id);
-        } catch (\Exception $E) {
-        	$Plugin = null;
-
-        	echo \HTML::error(__('The plugin could not be found.'));
-        }
-
-        if (null !== $Plugin) {
-        	if ($Plugin instanceof \PluginPanel) {
-        		$Plugin->setSurroundingDivVisible(false);
-        	} elseif ($Plugin instanceof \RunalyzePluginStat_MonthlyStats) {
-        	    return $this->getResponseForMonthlyStats($request, $account, $id);
-            }
-
-        	$Plugin->display();
-        }
-
-        return new Response();
-    }
-
-    /**
-     * @param Request $request
-     * @param Account $account
-     * @param int $pluginId
-     * @return Response
-     */
-    protected function getResponseForMonthlyStats(Request $request, Account $account, $pluginId)
-    {
-        $valueExtension = new ValueExtension($this->get('app.configuration_manager'));
-        $sportSelection = $this->get('app.sport_selection_factory')->getSelection($request->get('sport'));
-        $analysisList = new AnalysisSelection($request->get('dat'));
-
-        if (!$analysisList->hasCurrentKey()) {
-            $analysisList->setCurrentKey(AnalysisSelection::DISTANCE);
-        }
-
-        $analysisData = new AnalysisData(
-            $sportSelection,
-            $analysisList,
-            $this->get('doctrine')->getRepository('CoreBundle:Training'),
-            $account
-        );
-        $analysisData->setDefaultValue($valueExtension);
-
-        return $this->render('my/statistics/monthly-stats/base.html.twig', [
-            'pluginId' => $pluginId,
-            'analysisData' => $analysisData
-        ]);
+        return $this->getResponseFor($id, $request, $account);
     }
 
     /**
@@ -205,16 +156,14 @@ class PluginController extends Controller
         return new Response();
     }
 
-
     /**
      * @Route("/call/call.ContentPanels.php")
      * @Security("has_role('ROLE_USER')")
      */
-     public function contentPanelsAction()
+     public function contentPanelsAction(Request $request, Account $account)
      {
          $Frontend = new \Frontend(false, $this->get('security.token_storage'));
-         $Frontend->displayPanels();
 
-         return new Response();
+         return $this->getResponseForAllEnabledPanels($request, $account);
      }
 }
