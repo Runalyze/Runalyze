@@ -3,106 +3,62 @@
 namespace Runalyze\Bundle\CoreBundle\Tests\Entity;
 
 use Runalyze\Bundle\CoreBundle\Entity\Account;
-use Runalyze\Bundle\CoreBundle\Entity\Sport;
-use Runalyze\Bundle\CoreBundle\Entity\SportRepository;
-use Runalyze\Bundle\CoreBundle\Entity\Training;
-use Runalyze\Bundle\CoreBundle\Entity\TrainingRepository;
-use Runalyze\Profile\Sport\SportProfile;
+use Runalyze\Bundle\CoreBundle\Entity\Plugin;
+use Runalyze\Bundle\CoreBundle\Entity\PluginRepository;
 
-class SportRepositoryTest extends AbstractRepositoryTestCase
+class PluginRepositoryTest extends AbstractRepositoryTestCase
 {
-    /** @var SportRepository */
-    protected $SportRepository;
-
-    /** @var TrainingRepository */
-    protected $TrainingRepository;
+    /** @var PluginRepository */
+    protected $PluginRepository;
 
     /** @var Account */
-    protected $Account;
+    protected $EmptyAccount;
 
     protected function setUp()
     {
         parent::setUp();
 
-        $this->SportRepository = $this->EntityManager->getRepository('CoreBundle:Sport');
-        $this->TrainingRepository = $this->EntityManager->getRepository('CoreBundle:Training');
-        $this->Account = $this->getDefaultAccount();
+        $this->PluginRepository = $this->EntityManager->getRepository('CoreBundle:Plugin');
+        $this->EmptyAccount = $this->getEmptyAccount();
     }
 
     /**
-     * @param int|null $timestamp
-     * @param int|float $duration
-     * @param float|int|null $distance
-     * @param Sport|null $sport
-     * @return Training
+     * @param int $position
+     * @param null|string $key
+     * @return Plugin
      */
-    protected function insertActivityForDefaultAccount(
-        $timestamp = null,
-        $duration = 3600,
-        $distance = null,
-        Sport $sport = null
-    )
+    protected function insertPanel($position, $key = null)
     {
-        $activity = $this->getActivitiyForDefaultAccount($timestamp, $duration, $distance, $sport);
+        $panel = new Plugin();
+        $panel->setAccount($this->EmptyAccount);
+        $panel->setType(Plugin::TYPE_PANEL);
+        $panel->setActive(Plugin::STATE_ACTIVE);
+        $panel->setOrder($position);
+        $panel->setKey($key ?: bin2hex(openssl_random_pseudo_bytes(16)));
 
-        $this->TrainingRepository->save($activity);
+        $this->PluginRepository->save($panel);
 
-        return $activity;
+        return $panel;
     }
 
-    public function testEmptyAccount()
+    public function testMoving()
     {
-        $account = $this->getEmptyAccount();
+        $firstPanel = $this->insertPanel(1);
+        $secondPanel = $this->insertPanel(2);
 
-        $this->assertEmpty($this->SportRepository->findAllFor($account));
-        $this->assertEmpty($this->SportRepository->findWithDistancesFor($account));
-        $this->assertEmpty($this->SportRepository->getUsedInternalSportIdsFor($account));
+        $this->PluginRepository->movePanelUp($secondPanel);
 
-        $this->assertTrue($this->SportRepository->isInternalTypeFree(SportProfile::RUNNING, $account));
-        $this->assertTrue($this->SportRepository->isInternalTypeFree(SportProfile::CYCLING, $account));
-        $this->assertTrue($this->SportRepository->isInternalTypeFree(SportProfile::SWIMMING, $account));
+        $this->assertEquals(1, $secondPanel->getOrder());
+        $this->assertEquals(2, $firstPanel->getOrder());
 
-        $this->assertNull($this->SportRepository->findRunningFor($account, true));
-        $this->assertNull($this->SportRepository->findRunningFor($account)->getId());
-    }
+        $this->PluginRepository->movePanelUp($secondPanel);
 
-    public function testDefaultAccount()
-    {
-        $account = $this->getDefaultAccount();
+        $this->assertEquals(1, $secondPanel->getOrder());
+        $this->assertEquals(2, $firstPanel->getOrder());
 
-        $this->assertFalse($this->SportRepository->isInternalTypeFree(SportProfile::RUNNING, $account));
-        $this->assertFalse($this->SportRepository->isInternalTypeFree(SportProfile::CYCLING, $account));
-        $this->assertFalse($this->SportRepository->isInternalTypeFree(SportProfile::SWIMMING, $account));
+        $this->PluginRepository->movePanelDown($secondPanel);
 
-        $this->assertEquals($this->getDefaultAccountsRunningSport()->getId(), $this->SportRepository->findRunningFor($account)->getId());
-    }
-
-    public function testSportStatisticsWithoutData()
-    {
-        $statistics = $this->SportRepository->getSportStatisticsSince(null, $this->Account);
-
-        $this->assertEquals(0, $statistics->getCount());
-        $this->assertEmpty($statistics->getStatistics());
-    }
-
-    public function testSportStatisticsWithData()
-    {
-        $this->insertActivityForDefaultAccount(1400000000, 3600, 10.0, $this->getDefaultAccountsRunningSport());
-        $this->insertActivityForDefaultAccount(1500000000, 3400, 12.0, $this->getDefaultAccountsRunningSport());
-        $this->insertActivityForDefaultAccount(1400000000, 7600, 63.5, $this->getDefaultAccountsCyclingSport());
-
-        $allTimeStatistics = $this->SportRepository->getSportStatisticsSince(null, $this->Account);
-        $allTimeStatisticsRunning = $allTimeStatistics->getStatisticFor($this->getDefaultAccountsRunningSport());
-        $allTimeStatisticsCycling = $allTimeStatistics->getStatisticFor($this->getDefaultAccountsCyclingSport());
-
-        $this->assertEquals(2, $allTimeStatistics->getCount());
-
-        $this->assertEquals(7000.0, $allTimeStatisticsRunning->getTotalDuration());
-        $this->assertEquals(22.0, $allTimeStatisticsRunning->getTotalDistance());
-        $this->assertEquals(2, $allTimeStatisticsRunning->getNumberOfActivities());
-
-        $this->assertEquals(7600.0, $allTimeStatisticsCycling->getTotalDuration());
-        $this->assertEquals(63.5, $allTimeStatisticsCycling->getTotalDistance());
-        $this->assertEquals(1, $allTimeStatisticsCycling->getNumberOfActivities());
+        $this->assertEquals(2, $secondPanel->getOrder());
+        $this->assertEquals(1, $firstPanel->getOrder());
     }
 }

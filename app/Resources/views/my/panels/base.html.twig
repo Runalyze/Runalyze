@@ -19,7 +19,7 @@
     </div>
 </div>
 
-<div class="panel-content{% if panelContentNoPadding|default(false) %} nopadding{% endif %}">
+<div class="panel-content{% if panelContentNoPadding|default(false) %} nopadding{% endif %}"{% if isHidden|default(false) %} style="display:none;"{% endif %}>
     {% block panelContent %}
     {% endblock %}
 </div>
