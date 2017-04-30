@@ -110,36 +110,6 @@ abstract class PluginPanel extends Plugin {
 	}
 
 	/**
-	 * Function to (un)clap the plugin
-	 */
-	public function clap() {
-		if (!$this->isInActive()) {
-			DB::getInstance()->update('plugin', $this->id(), 'active', ($this->isActive() ? Plugin::ACTIVE_VARIOUS : Plugin::ACTIVE));
-		}
-
-		// TODO: 'update cache' insteada of deleting it?
-		Cache::delete('plugins');
-	}
-
-	/**
-	 * Function to move the panel up or down
-	 * @param string $mode   'up' | 'down'
-	 */
-	public function move($mode) {
-		// TODO: Do this with one query
-		if ($mode == 'up') {
-			DB::getInstance()->exec('UPDATE `'.PREFIX.'plugin` SET `order`='.$this->order().' WHERE `type`="panel" AND `order`='.($this->order()-1).' LIMIT 1');
-			DB::getInstance()->update('plugin', $this->id(), 'order', ($this->order()-1));
-		} elseif ($mode == 'down') {
-			DB::getInstance()->exec('UPDATE `'.PREFIX.'plugin` SET `order`='.($this->order()).' WHERE `type`="panel" AND `order`='.($this->order()+1).' LIMIT 1');
-			DB::getInstance()->update('plugin', $this->id(), 'order', ($this->order()+1));
-		}
-
-		// TODO: 'update cache' insteada of deleting it?
-		Cache::delete('plugins');
-	}
-
-	/**
 	 * Returns the html-link to this plugin for tab-navigation
 	 * @return string
 	 */

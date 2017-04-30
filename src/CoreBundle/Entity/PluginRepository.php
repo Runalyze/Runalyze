@@ -2,84 +2,70 @@
 
 namespace Runalyze\Bundle\CoreBundle\Entity;
 
-use Doctrine\DBAL\Driver\Statement;
 use Doctrine\ORM\EntityRepository;
 
-class NotificationRepository extends EntityRepository
+class PluginRepository extends EntityRepository
 {
     /**
-     * @param Account|null $account
-     * @return Notification[]
-     */
-    public function findAll(Account $account = null)
-    {
-        if (null === $account) {
-            throw new \LogicException('Finding all notifications is only possible for a specific account.');
-        }
-
-        return $this->findAllSince(null, $account);
-    }
-
-    /**
-     * @param null|int $timestamp
      * @param Account $account
-     * @return Notification[]
+     * @param int $position
+     * @return null|Plugin
      */
-    public function findAllSince($timestamp, Account $account)
+    public function findPanelByPosition(Account $account, $position)
     {
-        $queryBuilder = $this->createQueryBuilder('n')
-            ->where('n.account = :account')
-            ->andWhere('n.wasRead = 0') // Only necessary as long as headline menu is filled via request with $timestamp = 0
-            ->setParameter('account', $account);
+        return $this->findOneBy([
+            'account' => $account,
+            'type' => 'panel',
+            'order' => $position
+        ]);
+    }
 
-        if (null !== $timestamp && 0 !== $timestamp) {
-            $queryBuilder
-                ->andWhere('n.createdAt > :time')
-                ->setParameter('time', $timestamp)
-                ->orderBy('n.createdAt', 'DESC');
+    public function movePanelUp(Plugin $panel)
+    {
+        $otherPanel = $this->findPanelByPosition($panel->getAccount(), $panel->getOrder() - 1);
+
+        if (null !== $otherPanel) {
+            $otherPanel->moveDown();
+
+            $panel->moveUp();
+
+            $this->saveMultiple([$panel, $otherPanel]);
         }
-
-        return $queryBuilder->getQuery()->getResult();
     }
 
-    public function markAsRead(Notification $notification)
+    public function movePanelDown(Plugin $panel)
     {
-        $this->save($notification->setRead());
+        $otherPanel = $this->findPanelByPosition($panel->getAccount(), $panel->getOrder() + 1);
+
+        if (null !== $otherPanel) {
+            $otherPanel->moveUp();
+
+            $panel->moveDown();
+
+            $this->saveMultiple([$panel, $otherPanel]);
+        }
     }
 
-    public function markAllAsRead(Account $account)
+    public function toggleHidden(Plugin $plugin)
     {
-        $this->createQueryBuilder('n')
-            ->update()
-            ->set('n.wasRead', true)
-            ->where('n.account = :account')
-            ->setParameter('account', $account)
-            ->getQuery()
-            ->execute();
+        $this->save($plugin->toggleHidden());
+    }
 
-        $this->_em->clear(Notification::class);
+    public function save(Plugin $plugin)
+    {
+        $this->_em->persist($plugin);
+        $this->_em->flush();
     }
 
     /**
-     * @return int number of removed notifications
+     * @param Plugin[] $plugins
      */
-    public function removeExpiredNotifications()
+    public function saveMultiple(array $plugins)
     {
-        $numDeleted = $this->createQueryBuilder('n')
-            ->delete()
-            ->where('n.expirationAt < :time')
-            ->setParameter('time', time())
-            ->getQuery()
-            ->execute();
+        foreach ($plugins as $plugin) {
+            $this->_em->persist($plugin);
+        }
 
-        $this->_em->clear(Notification::class);
-
-        return $numDeleted;
-    }
-
-    public function save(Notification $notification)
-    {
-        $this->_em->persist($notification);
         $this->_em->flush();
     }
 }

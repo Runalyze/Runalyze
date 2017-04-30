@@ -2,40 +2,33 @@
 
 namespace Runalyze\Bundle\CoreBundle\Tests\Entity;
 
-use Runalyze\Bundle\CoreBundle\Entity\Sport;
-use Runalyze\Metrics\Velocity\Unit\PaceEnum;
-use Runalyze\Profile\Sport\Generic;
-use Runalyze\Profile\Sport\SportProfile;
+use Runalyze\Bundle\CoreBundle\Entity\Plugin;
 
-class SportTest extends \PHPUnit_Framework_TestCase
+class PluginTest extends \PHPUnit_Framework_TestCase
 {
-    /** @var Sport */
-    protected $Sport;
+    /** @var Plugin */
+    protected $Plugin;
 
     public function setUp()
     {
-        $this->Sport = new Sport();
+        $this->Plugin = new Plugin();
     }
 
-    public function testEmptyEntity()
+    public function testMoving()
     {
-        $this->assertEquals(PaceEnum::KILOMETER_PER_HOUR, $this->Sport->getSpeed());
+        $this->Plugin->setOrder(4);
 
-        $this->assertFalse($this->Sport->hasInternalSportId());
-        $this->assertInstanceOf(Generic::class, $this->Sport->getInternalSport());
-        $this->assertTrue($this->Sport->getInternalSport()->isCustom());
+        $this->assertEquals(5, $this->Plugin->moveDown()->getOrder());
+        $this->assertEquals(4, $this->Plugin->moveUp()->getOrder());
     }
 
-    public function testRunningAndCycling()
+    public function testTogglingState()
     {
-        $this->Sport->setInternalSportId(SportProfile::RUNNING);
+        $this->Plugin->setActive(Plugin::STATE_ACTIVE);
 
-        $this->assertTrue($this->Sport->hasInternalSportId());
-        $this->assertTrue($this->Sport->getInternalSport()->isRunning());
+        $this->assertEquals(Plugin::STATE_HIDDEN, $this->Plugin->toggleHidden()->getActive());
+        $this->assertEquals(Plugin::STATE_ACTIVE, $this->Plugin->toggleHidden()->getActive());
 
-        $this->Sport->setInternalSportId(SportProfile::CYCLING);
-
-        $this->assertTrue($this->Sport->hasInternalSportId());
-        $this->assertTrue($this->Sport->getInternalSport()->isCycling());
+        $this->assertEquals(Plugin::STATE_INACTIVE, $this->Plugin->setActive(Plugin::STATE_INACTIVE)->toggleHidden()->getActive());
     }
 }

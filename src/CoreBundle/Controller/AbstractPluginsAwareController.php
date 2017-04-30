@@ -61,7 +61,7 @@ abstract class AbstractPluginsAwareController extends Controller
 
         if (null !== $plugin) {
         	if ($plugin instanceof \RunalyzePluginPanel_Sports) {
-        	    return $this->getResponseForSportsPanel($account, $pluginId);
+        	    return $this->getResponseForSportsPanel($account, $plugin);
         	} elseif ($plugin instanceof \RunalyzePluginStat_MonthlyStats) {
         	    return $this->getResponseForMonthlyStats($request, $account, $pluginId);
             } elseif ($plugin instanceof \PluginPanel) {
@@ -81,13 +81,14 @@ abstract class AbstractPluginsAwareController extends Controller
      * @param int $pluginId
      * @return Response
      */
-    protected function getResponseForSportsPanel(Account $account, $pluginId)
+    protected function getResponseForSportsPanel(Account $account, \Plugin $plugin)
     {
         $sportRepository = $this->getDoctrine()->getRepository('CoreBundle:Sport');
         $today = (new LocalTime())->setTime(0, 0, 0);
 
         return $this->render('my/panels/sports/base.html.twig', [
-            'pluginId' => $pluginId,
+            'isHidden' => $plugin->isHidden(),
+            'pluginId' => $plugin->id(),
             'weekStatistics' => $sportRepository->getSportStatisticsSince($today->weekstart(), $account),
             'monthStatistics' => $sportRepository->getSportStatisticsSince($today->setDate($today->format('Y'), $today->format('m'), 1)->getTimestamp(), $account),
             'yearStatistics' => $sportRepository->getSportStatisticsSince($today->setDate($today->format('Y'), 1, 1)->getTimestamp(), $account),

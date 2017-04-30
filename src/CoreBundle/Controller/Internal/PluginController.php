@@ -2,78 +2,96 @@
 
 namespace Runalyze\Bundle\CoreBundle\Controller\Internal;
 
-use Runalyze\Bundle\CoreBundle\Component\Notifications\MessageFactory;
+use Runalyze\Bundle\CoreBundle\Controller\AbstractPluginsAwareController;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
-use Runalyze\Bundle\CoreBundle\Entity\Notification;
+use Runalyze\Bundle\CoreBundle\Entity\Plugin;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @Route("/_internal/notifications")
+ * @Route("/_internal/plugin")
  */
-class PluginController extends Controller
+class PluginController extends AbstractPluginsAwareController
 {
     /**
-     * @return \Runalyze\Bundle\CoreBundle\Entity\NotificationRepository
+     * @return \Runalyze\Bundle\CoreBundle\Entity\PluginRepository
      */
-    protected function getNotificationsRepository()
+    protected function getPluginRepository()
     {
-        return $this->getDoctrine()->getRepository('CoreBundle:Notification');
+        return $this->getDoctrine()->getRepository('CoreBundle:Plugin');
     }
 
     /**
-     * @Route("/read/all", name="internal-notifications-read-all")
+     * @Route("/toggle/{id}", name="internal-plugin-toggle")
+     * @ParamConverter("plugin", class="CoreBundle:Plugin")
      * @Security("has_role('ROLE_USER')")
      */
-    public function readAllNotificationsAction(Account $account)
+    public function togglePanelAction(Plugin $plugin, Account $account)
     {
-        $this->getNotificationsRepository()->markAllAsRead($account);
-
-        return new JsonResponse();
-    }
-
-    /**
-     * @Route("/read/{id}", name="internal-notifications-read")
-     * @ParamConverter("notification", class="CoreBundle:Notification")
-     * @Security("has_role('ROLE_USER')")
-     */
-    public function readNotificationAction(Notification $notification, Account $account)
-    {
-        if ($notification->getAccount()->getId() != $account->getId()) {
+        if ($plugin->getAccount()->getId() != $account->getId()) {
             return $this->createAccessDeniedException();
         }
 
-        $this->getNotificationsRepository()->markAsRead($notification);
+        // Only as long as PluginFactory's cache is in use
+        $Frontend = new \Frontend(true, $this->get('security.token_storage'));
+        \PluginFactory::clearCache();
+
+        $this->getPluginRepository()->toggleHidden($plugin);
 
         return new JsonResponse();
     }
 
     /**
-     * @Route("", name="internal-notifications-list")
+     * @Route("/move/{id}/up", name="internal-plugin-move-up")
+     * @ParamConverter("plugin", class="CoreBundle:Plugin")
      * @Security("has_role('ROLE_USER')")
      */
-    public function newNotificationsAction(Request $request, Account $account)
+    public function movePanelUpAction(Plugin $plugin, Account $account)
     {
-        $messages = [];
-        $factory = new MessageFactory();
-        $router = $this->get('router');
-        $translator = $this->get('translator.default');
-        $notifications = $this->getNotificationsRepository()->findAllSince($request->query->getInt('last_request'), $account);
-
-        foreach ($notifications as $notification) {
-            $message = $factory->getMessage($notification);
-            $messages[] = [
-                'id' => $notification->getId(),
-                'link' => $message->hasLink() ? $message->getLink($router) : '',
-                'text' => $message->getText($translator),
-                'size' => $message->isLinkInternal() ? $message->getWindowSizeForInternalLink() : 'external'
-            ];
+        if ($plugin->getAccount()->getId() != $account->getId()) {
+            return $this->createAccessDeniedException();
         }
 
-        return new JsonResponse($messages);
+        // Only as long as PluginFactory's cache is in use
+        $Frontend = new \Frontend(true, $this->get('security.token_storage'));
+        \PluginFactory::clearCache();
+
+        $this->getPluginRepository()->movePanelUp($plugin);
+
+        return new JsonResponse();
+    }
+
+    /**
+     * @Route("/move/{id}/down", name="internal-plugin-move-down")
+     * @ParamConverter("plugin", class="CoreBundle:Plugin")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function movePanelDownAction(Plugin $plugin, Account $account)
+    {
+        if ($plugin->getAccount()->getId() != $account->getId()) {
+            return $this->createAccessDeniedException();
+        }
+
+        // Only as long as PluginFactory's cache is in use
+        $Frontend = new \Frontend(true, $this->get('security.token_storage'));
+        \PluginFactory::clearCache();
+
+        $this->getPluginRepository()->movePanelDown($plugin);
+
+        return new JsonResponse();
+    }
+
+    /**
+     * @Route("/all-panels", name="internal-plugin-all-panels")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function contentPanelsAction(Request $request, Account $account)
+    {
+        $Frontend = new \Frontend(false, $this->get('security.token_storage'));
+
+        return $this->getResponseForAllEnabledPanels($request, $account);
     }
 }

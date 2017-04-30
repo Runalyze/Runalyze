@@ -70,7 +70,6 @@ class ConfigTabPlugins extends ConfigTab {
 						<th colspan="3">'.PluginType::readableString($PluginType).'</th>
 						<th>'.__('Mode').'</th>
 						<th>'.__('Order').'</th>
-						<th></th>
 					</tr>
 				</thead>
 				<tbody>';
@@ -81,7 +80,6 @@ class ConfigTabPlugins extends ConfigTab {
 			if ($Plugin === false) {
 				$Code .= '
 					<tr class="unimportant">
-						<td>'.PluginInstaller::uninstallLink($Plugin->key()).'</td>
 						<td class="b">'.$Plugin->key().'</td>
 						<td colspan="4">'.__('The plugin cannot be found.').'</td>
 					</tr>';
@@ -101,7 +99,6 @@ class ConfigTabPlugins extends ConfigTab {
 							<span class="link" onclick="pluginMove('.$Plugin->id().', \'up\')">'.Icon::$UP.'</span>
 							<span class="link" onclick="pluginMove('.$Plugin->id().', \'down\')">'.Icon::$DOWN.'</span>
 						</td>
-						<td>'.PluginInstaller::uninstallLink($Plugin->key()).'</td>
 					</tr>';
 			}
 		}
