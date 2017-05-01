@@ -33,7 +33,7 @@ class SharedController extends Controller
         $publicList = $this->get('app.configuration_manager')->getList($account)->getPrivacy()->isListPublic();
 
         $Frontend = new \FrontendShared(true);
-        $activityContext = $this->get('app.activity_context.factory')->getContext($activity->getId(), $activity->getAccount()->getId());
+        $activityContext = $this->get('app.activity_context.factory')->getContext($activity);
         $activityContextLegacy = new Context($activity->getId(), $activity->getAccount()->getId());
 
         $hasRoute = $activityContext->canShowMap() && $this->get('app.privacy_guard')->isMapVisible($activity, $activityContext->getRaceResult());

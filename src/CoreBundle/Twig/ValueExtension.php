@@ -2,9 +2,9 @@
 
 namespace Runalyze\Bundle\CoreBundle\Twig;
 
+use Runalyze\Bundle\CoreBundle\Component\Activity\ActivityContext;
 use Runalyze\Bundle\CoreBundle\Component\Configuration\RunalyzeConfigurationList;
 use Runalyze\Bundle\CoreBundle\Component\Configuration\UnitSystem;
-use Runalyze\Bundle\CoreBundle\Services\Activity\ActivityContext;
 use Runalyze\Bundle\CoreBundle\Services\Configuration\ConfigurationManager;
 use Runalyze\Metrics\Common\UnitInterface;
 use Runalyze\Metrics\Distance\Unit\AbstractDistanceUnit;
@@ -52,6 +52,7 @@ class ValueExtension extends \Twig_Extension
             new \Twig_SimpleFunction('strideLength', array($this, 'strideLength'), $safeHtmlOptions),
             new \Twig_SimpleFunction('energy', array($this, 'energy'), $safeHtmlOptions),
             new \Twig_SimpleFunction('heartRate', array($this, 'heartRate'), $safeHtmlOptions),
+            new \Twig_SimpleFunction('heartRatePercentMaximum', array($this, 'heartRatePercentMaximum'), $safeHtmlOptions),
             new \Twig_SimpleFunction('heartRateComparison', array($this, 'heartRateComparison'), $safeHtmlOptions),
             new \Twig_SimpleFunction('pace', array($this, 'pace'), $safeHtmlOptions),
             new \Twig_SimpleFunction('paceComparison', array($this, 'paceComparison'), $safeHtmlOptions),
@@ -139,6 +140,16 @@ class ValueExtension extends \Twig_Extension
         }
 
         return new DisplayableValue($bpm, $unit);
+    }
+
+    /**
+     * @param int $bpm [bpm]
+     * @param null|int $bpmMax [bpm]
+     * @return DisplayableValueInPercent
+     */
+    public function heartRatePercentMaximum($bpm, $bpmMax = null)
+    {
+        return new DisplayableValueInPercent($bpm, $this->UnitSystem->getHeartRateUnitPercentMaximum($bpmMax));
     }
 
     /**
