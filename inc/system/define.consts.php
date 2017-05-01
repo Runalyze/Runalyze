@@ -5,12 +5,6 @@
  */
 
 /**
- * Current version of Runalyze
- * @var string
- */
-define('RUNALYZE_VERSION', '4.1.0-dev');
-
-/**
  * Maximum value for integers
  * @var int 
  */
