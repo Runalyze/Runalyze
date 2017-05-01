@@ -4,10 +4,12 @@ namespace Runalyze\Bundle\CoreBundle\Controller;
 
 use Runalyze\Bundle\CoreBundle\Component\Activity\Tool\BestSubSegmentsStatistics;
 use Runalyze\Bundle\CoreBundle\Component\Activity\Tool\TimeSeriesStatistics;
+use Runalyze\Bundle\CoreBundle\Component\Activity\VO2maxCalculationDetailsDecorator;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\Trackdata;
-use Runalyze\Bundle\CoreBundle\Services\Activity\EffectiveVO2maxInfo;
+use Runalyze\Bundle\CoreBundle\Entity\Training;
 use Runalyze\Metrics\Velocity\Unit\PaceEnum;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -196,25 +198,21 @@ class ActivityController extends Controller
 
     /**
      * @Route("/activity/{id}/vo2max-info")
+     * @ParamConverter("activity", class="CoreBundle:Training")
      * @Security("has_role('ROLE_USER')")
      */
-    public function vo2maxInfoAction($id, Account $account)
+    public function vo2maxInfoAction(Training $activity, Account $account)
     {
-        $Frontend = new \Frontend(true, $this->get('security.token_storage'));
+        if ($activity->getAccount()->getId() != $account->getId()) {
+            throw $this->createAccessDeniedException();
+        }
+
         $configList = $this->get('app.configuration_manager')->getList();
+        $activityContext = $this->get('app.activity_context.factory')->getContext($activity);
 
-        $EffectiveVO2maxInfo = new EffectiveVO2maxInfo();
-        $EffectiveVO2maxInfo->setContext(new Context($id, $account->getId()));
-        $EffectiveVO2maxInfo->setConfiguration($configList->getData()->getLegacyCategory(), $configList->getVO2max()->getLegacyCategory());
-
-        return $this->render(':activity:vo2max_info.html.twig', [
-            'title' => $EffectiveVO2maxInfo->getTitle(),
-            'raceDetails' => $EffectiveVO2maxInfo->getRaceCalculationDetails(),
-            'hrDetails' => $EffectiveVO2maxInfo->getHeartRateCalculationDetails(),
-            'factorDetails' => $EffectiveVO2maxInfo->getCorrectionFactorDetails(),
-            'elevationDetails' => $EffectiveVO2maxInfo->getElevationDetails(),
-            'useElevationAdjustment' => $EffectiveVO2maxInfo->usesElevationAdjustment(),
-            'activityVO2max' => $EffectiveVO2maxInfo->getActivityVO2max()
+        return $this->render('activity/vo2max_info.html.twig', [
+            'context' => $activityContext,
+            'details' => new VO2maxCalculationDetailsDecorator($activityContext, $configList)
         ]);
     }
 
@@ -423,18 +421,19 @@ class ActivityController extends Controller
             $Matches[$ID] = array('match' => $found);
         }
 
-        $Response = array('matches' => $Matches);
-
-        return new JsonResponse($Response);
+        return new JsonResponse([
+            'matches' => $Matches
+        ]);
     }
 
     /**
      * Adjusted strtotime
      * Timestamps are given in UTC but local timezone offset has to be considered!
-     * @param $string
+     * @param string $string
      * @return int
      */
-    private function parserStrtotime($string) {
+    private function parserStrtotime($string)
+    {
         if (substr($string, -1) == 'Z') {
             return LocalTime::fromServerTime((int)strtotime(substr($string, 0, -1).' UTC'))->getTimestamp();
         }

@@ -23,6 +23,22 @@ class Data extends AbstractCategory
     }
 
     /**
+     * @return int [bpm]
+     */
+    public function getMaximalHeartRate()
+    {
+        return (int)$this->Variables['HF_MAX'];
+    }
+
+    /**
+     * @return int [bpm]
+     */
+    public function getRestingHeartRate()
+    {
+        return (int)$this->Variables['HF_REST'];
+    }
+
+    /**
      * @return int
      */
     public function getCurrentVO2maxShape()

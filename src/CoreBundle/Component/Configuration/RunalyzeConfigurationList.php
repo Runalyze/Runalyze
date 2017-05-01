@@ -215,6 +215,22 @@ class RunalyzeConfigurationList extends ConfigurationList
     }
 
     /**
+     * @return int [bpm]
+     */
+    public function getMaximalHeartRate()
+    {
+        return (int)$this->Variables['data.HF_MAX'];
+    }
+
+    /**
+     * @return int [bpm]
+     */
+    public function getRestingHeartRate()
+    {
+        return (int)$this->Variables['data.HF_REST'];
+    }
+
+    /**
      * @return float
      */
     public function getVO2maxCorrectionFactor()

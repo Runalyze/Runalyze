@@ -1,6 +1,6 @@
 <?php
 
-namespace Runalyze\Bundle\CoreBundle\Services\Activity;
+namespace Runalyze\Bundle\CoreBundle\Component\Activity;
 
 use Runalyze\Bundle\CoreBundle\Component\Configuration\RunalyzeConfigurationList;
 
@@ -28,6 +28,35 @@ class ActivityDecorator
         }
 
         return $this->Context->getSport()->getName();
+    }
+
+    /**
+     * @return int|null [m]
+     */
+    public function getElevationUp()
+    {
+        return $this->getElevation();
+    }
+
+    /**
+     * @return int|null [m]
+     */
+    public function getElevationDown()
+    {
+        return $this->getElevation(false);
+    }
+
+    /**
+     * @param bool $up
+     * @return int|null
+     */
+    protected function getElevation($up = true)
+    {
+        if ($this->Context->hasRoute() && ($this->Context->getRoute()->getElevationUp() > 0 || $this->Context->getRoute()->getElevationDown() > 0)) {
+            return $up ? $this->Context->getRoute()->getElevationUp() : $this->Context->getRoute()->getElevationDown();
+        }
+
+        return $this->Context->getActivity()->getElevation();
     }
 
     /**
