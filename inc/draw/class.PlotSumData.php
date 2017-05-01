@@ -319,9 +319,24 @@ abstract class PlotSumData extends Plot {
 	 */
 	private function init() {
 		$this->initData();
+		$this->adjustDataForUnit();
 		$this->setAxis();
 		$this->setOptions();
 	}
+
+	protected function adjustDataForUnit() {
+	    if (self::ANALYSIS_DEFAULT == $this->Analysis && $this->usesDistance) {
+	        $factor = Configuration::General()->distanceUnitSystem()->distanceToPreferredUnitFactor();
+
+	        if (1 != $factor) {
+	            foreach ($this->Data as $index => $plotData) {
+	                $this->Data[$index]['data'] = array_map(function ($v) use ($factor) {
+                        return $v * $factor;
+                    }, $this->Data[$index]['data']);
+                }
+            }
+        }
+    }
 
 	/**
 	 * Set axis
