@@ -115,14 +115,14 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Aktiviere deinen RUNALYZE-Account</target>
         <jms:reference-file line="4">/Resources/views/mail/account/registration.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="abdd4c6c9e0b1e7bcf0968a5cac7f0ee87a24dc2" resname="Activities with known influences or strange results can be ignored for the calculation of your shape.">
+      <trans-unit id="abdd4c6c9e0b1e7bcf0968a5cac7f0ee87a24dc2" resname="Activities with known influences or strange results can be ignored for the calculation of your shape." approved="yes">
         <source>Activities with known influences or strange results can be ignored for the calculation of your shape.</source>
-        <target>Trainings mit solchen Einflüssen können von der Berechnung ausgeschlossen werden.</target>
+        <target state="translated">Aktivitäten mit solchen Einflüssen können von der Berechnung ausgeschlossen werden.</target>
         <jms:reference-file line="38">/Resources/views/static/help_calculations.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="e190939aca2d78cce1aefb21b985fb0779710890" resname="Activity data of %username%">
+      <trans-unit id="e190939aca2d78cce1aefb21b985fb0779710890" resname="Activity data of %username%" approved="yes">
         <source>Activity data of %username%</source>
-        <target>Trainingsansicht von %username%</target>
+        <target state="translated">Aktivitätssansicht von %username%</target>
         <jms:reference-file line="23">/Resources/views/shared/athlete/base.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="93f2f817e4c7009b3bde2ec460986daee824dd14" resname="Activity import">
@@ -501,9 +501,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Klicke hier, um RUNALYZE zu aktualisieren</target>
         <jms:reference-file line="8">/Resources/views/system/update.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="c1385b71609e50f22a8abb9674a08724803909cd" resname="Click on an activity to see more details.">
+      <trans-unit id="c1385b71609e50f22a8abb9674a08724803909cd" resname="Click on an activity to see more details." approved="yes">
         <source>Click on an activity to see more details.</source>
-        <target>Klicke ein Training an, um weitere Details anzuzeigen.</target>
+        <target state="translated">Klicke eine Aktivität an, um weitere Details anzuzeigen.</target>
         <jms:reference-file line="66">/Resources/views/shared/athlete/base.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="8a128d3e497cf86515b3c769349812a4b7a165f9" resname="Compare your activity's values grouped by common values (e.g. sport or activity type) for a given period.">
@@ -1002,9 +1002,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <jms:reference-file line="59">/Resources/views/import/garmin_communicator.html.twig</jms:reference-file>
         <jms:reference-file line="60">/Resources/views/import/garmin_communicator.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="000170c77c1f00067c38168fbe12115a06d63488" resname="Found #{tracks} activities">
+      <trans-unit id="000170c77c1f00067c38168fbe12115a06d63488" resname="Found #{tracks} activities" approved="yes">
         <source>Found #{tracks} activities</source>
-        <target>#{tracks} Trainings gefunden</target>
+        <target state="translated">#{tracks} Aktivitäten gefunden</target>
         <jms:reference-file line="57">/Resources/views/import/garmin_communicator.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="501806c15fa6c6e39d648f03705ad7327f590af9" resname="General cleanup">
@@ -1433,9 +1433,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <jms:reference-file line="55">/../src/CoreBundle/Form/Settings/AccountType.php</jms:reference-file>
         <jms:reference-file line="62">/../src/CoreBundle/Form/Settings/AccountType.php</jms:reference-file>
       </trans-unit>
-      <trans-unit id="5cc9013545b24e0b3d099697fcb2bcd06192ac09" resname="No activities found.">
+      <trans-unit id="5cc9013545b24e0b3d099697fcb2bcd06192ac09" resname="No activities found." approved="yes">
         <source>No activities found.</source>
-        <target>Es wurden keine Trainingseinheiten gefunden.</target>
+        <target state="translated">Es wurden keine Aktivitäten gefunden.</target>
         <jms:reference-file line="41">/Resources/views/my/statistics/monthly-stats/base.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="a583f70afc2894985ba47b8bc07e76e49e52e709" resname="No activity found.">
@@ -1514,9 +1514,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Nov</target>
         <jms:reference-file line="50">/Resources/views/_macro/utilities.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="e24d13253fa26a5c8a0fda6c428a32c66319ebf3" resname="Number of activities">
+      <trans-unit id="e24d13253fa26a5c8a0fda6c428a32c66319ebf3" resname="Number of activities" approved="yes">
         <source>Number of activities</source>
-        <target>Anzahl Trainings</target>
+        <target state="translated">Anzahl Aktivitäten</target>
         <jms:reference-file line="32">/Resources/views/shared/athlete/base.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="56471a7ed0249ecb3f26afccf53d36397be796de" resname="Object cannot be deleted.">
@@ -1745,9 +1745,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Vermutlich war der Link fehlerhaft.</target>
         <jms:reference-file line="7">/Resources/views/account/delete/problem.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="4cb8775d86c2a56491b31167ef5159bc286ac1af" resname="Public activities are marked: ">
+      <trans-unit id="4cb8775d86c2a56491b31167ef5159bc286ac1af" resname="Public activities are marked: " approved="yes">
         <source>Public activities are marked: </source>
-        <target>Öffentliche Trainings sind gekennzeichnet:</target>
+        <target state="translated">Öffentliche Aktivitäten sind gekennzeichnet:</target>
         <jms:reference-file line="67">/Resources/views/shared/athlete/base.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="cc811067aa252195bf88d9e7c0d64aad7314eb45" resname="Public athlete page">
@@ -1771,9 +1771,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Quartile</target>
         <jms:reference-file line="128">/Resources/views/tools/anova/base.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="0cdae3ce78bf7662d1b1a89407636e7eea385730" resname="RUNALYZE has been successfully installed. You can now start analyzing your training.">
+      <trans-unit id="0cdae3ce78bf7662d1b1a89407636e7eea385730" resname="RUNALYZE has been successfully installed. You can now start analyzing your training." approved="yes">
         <source>RUNALYZE has been successfully installed. You can now start analyzing your training.</source>
-        <target>RUNALYZE wurde erfolgreich installiert. Du kannst nun beginnen dein Training zu analysieren.</target>
+        <target state="translated">RUNALYZE wurde erfolgreich installiert. Du kannst nun beginnen dein Training zu analysieren.</target>
         <jms:reference-file line="19">/Resources/views/system/install.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="dbd93b8c35d2f65385db54296d0bd5fc6ed292e2" resname="RUNALYZE is temporarily down for maintenance">
@@ -2146,9 +2146,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Die Aktivierung ist fehlgeschlagen.</target>
         <jms:reference-file line="5">/Resources/views/account/activate/problem.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="28eca2b445a103d3945921852100c67ef66ca197" resname="The activity has been removed.">
+      <trans-unit id="28eca2b445a103d3945921852100c67ef66ca197" resname="The activity has been removed." approved="yes">
         <source>The activity has been removed.</source>
-        <target>Die Trainingseinheit wurde entfernt.</target>
+        <target state="translated">Die Aktivität wurde entfernt.</target>
         <jms:reference-file line="3">/Resources/views/activity/activity_has_been_removed.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="e564c009d4e2e4ca395b37f22105b484c871ed6e" resname="The administrator has to set the correct API-key.">
@@ -2340,9 +2340,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Diese Aufgabe kann einige Zeit in Anspruch nehmen, da wir alle deiner Aktivitäten einzeln durchgehen müssen.</target>
         <jms:reference-file line="61">/Resources/views/tools/database_cleanup/form.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="00dd58fa666228f9b2839a13be1e2a0cf2efa954" resname="This tool allows you to create beautiful posters of your activity data.">
+      <trans-unit id="00dd58fa666228f9b2839a13be1e2a0cf2efa954" resname="This tool allows you to create beautiful posters of your activity data." approved="yes">
         <source>This tool allows you to create beautiful posters of your activity data.</source>
-        <target>Mit diesem Tool können Poster deiner Trainingsdaten erzeugt werden.</target>
+        <target state="translated">Mit diesem Tool können Poster deiner Aktivitäten erzeugt werden.</target>
         <jms:reference-file line="44">/Resources/views/tools/tools_list.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="08790fa6c482c0285af002861bfc2b43ac6941d5" resname="This tool allows you to edit multiple activities one after another.&#10;                At the moment it's not possible to edit multiple activities with only one form.">
@@ -2677,7 +2677,7 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <source><![CDATA[You can specify which values show up in the overview of your
                         activities.<br>This does not influence the detailed activity view, the form or any
                         plugin.]]></source>
-        <target state="translated">Du kannst auswählen, welche Werte in der Trainingsübersicht angezeigt werden.&lt;br&gt;Dies hat keinen Einfluss auf die Ansicht einzelner Trainings, das Formular oder einzelne Module.</target>
+        <target state="translated">Du kannst auswählen, welche Werte in der Trainingsübersicht angezeigt werden.&lt;br&gt;Dies hat keinen Einfluss auf die Ansicht einzelner Aktivitäten, das Formular oder einzelne Module.</target>
         <jms:reference-file line="14">/Resources/views/settings/dataset.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="653ed74d4c654ec310986c20faf5a4bbb19de0c0" resname="You can use the %linkStart%database cleanup%linkEnd% to recalculate the value.">
@@ -2712,7 +2712,7 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
       </trans-unit>
       <trans-unit id="c68ed288b5e76e90c37763dec184be248ed8a2b1" resname="You have activities associated with this type." approved="yes">
         <source>You have activities associated with this type.</source>
-        <target state="translated">Es existieren Trainings, die mit diesem Typ verknüpft sind.</target>
+        <target state="translated">Es existieren Aktivitäten, die mit diesem Typ verknüpft sind.</target>
         <jms:reference-file line="142">/../src/CoreBundle/Controller/Settings/SportController.php</jms:reference-file>
         <jms:reference-file line="232">/../src/CoreBundle/Controller/Settings/SportController.php</jms:reference-file>
         <jms:reference-file line="141">/Resources/views/settings/sport/form-sport.html.twig</jms:reference-file>
@@ -2748,9 +2748,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Du wirst eine Mail mit einem Bestätigungslink zum Löschen bekommen.</target>
         <jms:reference-file line="58">/Resources/views/settings/account.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="ca34fe3c21712494044fb7fc710213b84319957a" resname="Your &lt;strong&gt;Actual Training Load&lt;/strong&gt;, ATL, also fatigue, is based on the sum of your last TRIMP values in a short period, e.g. for seven days.">
+      <trans-unit id="ca34fe3c21712494044fb7fc710213b84319957a" resname="Your &lt;strong&gt;Actual Training Load&lt;/strong&gt;, ATL, also fatigue, is based on the sum of your last TRIMP values in a short period, e.g. for seven days." approved="yes">
         <source><![CDATA[Your <strong>Actual Training Load</strong>, ATL, also fatigue, is based on the sum of your last TRIMP values in a short period, e.g. for seven days.]]></source>
-        <target><![CDATA[Deine <strong>Aktuelle Trainingsbelastung</strong>, ATL, auch die Erschöpfung, basiert auf der Summe deiner letzten TRIMP Werte innerhalb eines kurzen Zeitbereiches, z.B. von 7 Tagen.]]></target>
+        <target state="translated"><![CDATA[Deine <strong>Aktuelle Trainingsbelastung</strong>, ATL, auch die Erschöpfung, basiert auf der Summe deiner letzten TRIMP Werte innerhalb eines kurzen Zeitbereiches, z.B. von 7 Tagen.]]></target>
         <jms:reference-file line="53">/Resources/views/static/help_calculations.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="058f5c855bce51480c3f8c32e165f98ffcbd7076" resname="Your Dataset">
