@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.com\n"
 "POT-Creation-Date: 2017-04-24 21:10+0200\n"
-"PO-Revision-Date: 2017-04-23 12:54+0000\n"
-"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
-"Language-Team: German <https://translate.runalyze.com/projects/runalyze/"
-"runalyze-master-po/de/>\n"
+"PO-Revision-Date: 2017-05-02 11:03+0000\n"
+"Last-Translator: Hannes <mail@laufhannes.de>\n"
+"Language-Team: German <https://translate.runalyze.com/projects/runalyze"
+"/runalyze-master-po/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -2834,13 +2834,12 @@ msgid "only icon"
 msgstr "nur Icon"
 
 #: inc/core/Profile/View/DataBrowserRowProfile.php:30
-#, fuzzy
 msgid "Inherit from sport"
-msgstr "Vererbt von der Sportart"
+msgstr "Von Sportart übernehmen"
 
 #: inc/core/Profile/Sport/Settings/SportRelevanceProfile.php:24
 msgid "Alternative sport"
-msgstr "Alternativer Sport"
+msgstr "Alternativsport"
 
 #: inc/core/Profile/Sport/Settings/SportRelevanceProfile.php:26
 msgid "Main Sport"
@@ -3937,7 +3936,6 @@ msgstr ""
 "Schnittstellen korrigiert werden."
 
 #: inc/core/Configuration/Category/ActivityForm.php:257
-#, fuzzy
 msgid "Sort: sports"
 msgstr "Sortierung: Sportarten"
 
@@ -5263,8 +5261,8 @@ msgstr "Name"
 msgid ""
 "Your result in proportion to the world best performance in your age/gender."
 msgstr ""
-"Dein Ergebnis im Verhältnis zu der weltbesten Leistung in Ihrem Alter/"
-"Geschlecht."
+"Dein Ergebnis im Verhältnis zur Weltbestleistung innerhalb deiner "
+"Altersklasse."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:395
 msgid "Overall"
