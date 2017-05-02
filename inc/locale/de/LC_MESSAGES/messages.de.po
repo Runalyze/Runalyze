@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.com\n"
 "POT-Creation-Date: 2017-04-24 21:10+0200\n"
-"PO-Revision-Date: 2017-05-02 11:03+0000\n"
+"PO-Revision-Date: 2017-05-02 11:07+0000\n"
 "Last-Translator: Hannes <mail@laufhannes.de>\n"
 "Language-Team: German <https://translate.runalyze.com/projects/runalyze"
 "/runalyze-master-po/de/>\n"
@@ -964,7 +964,7 @@ msgstr "Neue Körperwerte"
 
 #: inc/tpl/tpl.Frontend.header.php:87
 msgid "Activity tags"
-msgstr "Aktivitäten Tags"
+msgstr "Tags für Aktivitäten"
 
 #: inc/tpl/tpl.Frontend.header.php:93
 #: inc/training/view/class.TrainingView.php:133
