@@ -90,7 +90,7 @@ class Shape
      */
     public static function mysqlVO2maxSum($withElevation = false)
     {
-        return $withElevation ? '(CASE WHEN `vo2max_with_elevation`>0 THEN `vo2max_with_elevation` ELSE `vo2max` END)*`s`*`use_vo2max`' : '`vo2max`*`s`*`use_vo2max`';
+        return '`'.self::getVO2maxColumn($withElevation).'`*`s`*`use_vo2max`';
     }
 
     /**
@@ -103,7 +103,16 @@ class Shape
      */
     public static function mysqlVO2maxSumTime($withElevation = false)
     {
-        return '`s`*`use_vo2max`*('.($withElevation ? '(CASE WHEN `vo2max_with_elevation`>0 THEN `vo2max_with_elevation` ELSE `vo2max` END)' : '`vo2max`').' > 0)';
+        return '`s`*`use_vo2max`*(`'.self::getVO2maxColumn($withElevation).'` > 0)';
+    }
+
+    /**
+     * @param bool $withElevation
+     * @return string column name without backticks
+     */
+    public static function getVO2maxColumn($withElevation = false)
+    {
+        return $withElevation ? 'vo2max_with_elevation' : 'vo2max';
     }
 
     /**
@@ -116,7 +125,7 @@ class Shape
      */
     public function value()
     {
-        if (is_null($this->Corrector)) {
+        if (null === $this->Corrector) {
             $this->Corrector = new LegacyEffectiveVO2maxCorrector;
         }
 
@@ -131,7 +140,7 @@ class Shape
      */
     public function uncorrectedValue()
     {
-        if (is_null($this->Value)) {
+        if (null === $this->Value) {
             throw new \RuntimeException('The value has to be calculated first.');
         }
 
