@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-24 21:10+0200\n"
+"POT-Creation-Date: 2017-05-06 15:47+0200\n"
 "PO-Revision-Date: 2017-03-07 09:16+0000\n"
 "Last-Translator: Michael Pohl <michael@mipapo.de>\n"
 "Language-Team: Russian <https://translate.runalyze.com/projects/runalyze/"
@@ -1004,11 +1004,11 @@ msgstr "Показатели бега"
 msgid "Poster generator"
 msgstr ""
 
-#: inc/tpl/tpl.Frontend.header.php:100
+#: inc/tpl/tpl.Frontend.header.php:101
 msgid "More"
 msgstr ""
 
-#: inc/tpl/tpl.Frontend.header.php:104
+#: inc/tpl/tpl.Frontend.header.php:105
 msgid "Help"
 msgstr "Помощь"
 
@@ -2353,34 +2353,34 @@ msgstr "за 6 месяцев"
 msgid "last 12 months"
 msgstr "за 12 месяцев"
 
-#: inc/draw/class.PlotSumData.php:367
+#: inc/draw/class.PlotSumData.php:382
 msgid "There are no data for this timerange."
 msgstr ""
 
-#: inc/draw/class.PlotSumData.php:536
+#: inc/draw/class.PlotSumData.php:551
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:361
 msgid "without"
 msgstr "не указано"
 
-#: inc/draw/class.PlotSumData.php:571
+#: inc/draw/class.PlotSumData.php:586
 #, fuzzy
 msgid "Races"
 msgstr "Результат соревнования"
 
-#: inc/draw/class.PlotSumData.php:572
+#: inc/draw/class.PlotSumData.php:587
 msgid "Training"
 msgstr "Тренировки"
 
-#: inc/draw/class.PlotSumData.php:597
+#: inc/draw/class.PlotSumData.php:612
 msgid "target:"
 msgstr ""
 
-#: inc/draw/class.PlotSumData.php:618 inc/core/View/Activity/Plot/Laps.php:121
+#: inc/draw/class.PlotSumData.php:633 inc/core/View/Activity/Plot/Laps.php:121
 #: inc/core/View/Plot/Series.php:160
 msgid "avg:"
 msgstr "сред:"
 
-#: inc/draw/class.PlotSumData.php:649
+#: inc/draw/class.PlotSumData.php:664
 #, fuzzy
 msgid "Target is based on current marathon shape calculations."
 msgstr "Цель и средние значения рассчитаны на основе выносливости."
