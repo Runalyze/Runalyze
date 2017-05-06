@@ -89,6 +89,9 @@ class Ajax {
 		if (defined('MAPBOX_API_KEY') && MAPBOX_API_KEY != '') {
 				echo self::wrapJS('Runalyze.Options.setMapboxLayerAuth("'.MAPBOX_API_KEY.'")');
 			}
+		if (defined('SWISSTOPOMAP_SHOW') && SWISSTOPOMAP_SHOW != false) {
+			echo self::wrapJS('Runalyze.Options.setshowSwissTopoMap("'.SWISSTOPOMAP_SHOW.'")');
+		}
 
 
 	}
