@@ -149,12 +149,12 @@ class SportController extends Controller
      * @Route("/add/custom", name="sport-add-custom")
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function sportAddAction(Request $request, Account $account, $internalType)
+    public function sportAddAction(Request $request, Account $account, $internalType = null)
     {
         $sport = new Sport();
         $sport->setAccount($account);
 
-        if ($this->getSportRepository()->isInternalTypeFree($internalType, $account)) {
+        if (null !== $internalType && $this->getSportRepository()->isInternalTypeFree($internalType, $account)) {
             $sport->setDataFrom(SportProfile::get($internalType));
             $this->getSportRepository()->save($sport);
 
