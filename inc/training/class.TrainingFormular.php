@@ -111,8 +111,6 @@ class TrainingFormular extends StandardFormular {
 			if($isDuplicate)
 				echo HTML::warning(__('It seems that you already have imported this activity'));
 		}
-
-		$this->appendJavaScript();
 	}
 
 	/**
@@ -215,6 +213,15 @@ class TrainingFormular extends StandardFormular {
 		$DeleteRaceResult->setAccountID(SessionAccountHandler::getId());
 		$DeleteRaceResult->delete();
 	}
+
+    public function display() {
+        if ($this->submitSucceeded())
+            $this->displayAfterSubmit();
+        else
+            parent::display();
+
+        $this->appendJavaScript();
+    }
 
 	/**
 	 * Display after submit
