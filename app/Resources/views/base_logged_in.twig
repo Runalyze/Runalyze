@@ -98,7 +98,7 @@
     {% if not app.request.xmlHttpRequest %}
         <br class="clear">
 
-        <script>(function($){$(document).ready(function(){ Runalyze.init(); });})(jQuery);</script>
+        {{ include('_include/js_init.html.twig') }}
     {% else %}
         <script>{{ automaticJavaScriptReload(app.session.flashBag) }}</script>
     {% endif %}
