@@ -4,6 +4,8 @@
 
 {% block body %}
     {% if not app.request.xmlHttpRequest %}
+        {{ include('_include/js_init.html.twig') }}
+
         <div id="flot-loader"></div>
 
         <div id="headline">
@@ -97,8 +99,6 @@
 
     {% if not app.request.xmlHttpRequest %}
         <br class="clear">
-
-        {{ include('_include/js_init.html.twig') }}
     {% else %}
         <script>{{ automaticJavaScriptReload(app.session.flashBag) }}</script>
     {% endif %}
