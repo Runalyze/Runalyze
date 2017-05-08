@@ -67,16 +67,12 @@ class ActivityController extends Controller
     }
 
     /**
-     * @Route("/call/call.Training.display.php")
      * @Route("/activity/{id}", name="ActivityShow", requirements={"id" = "\d+"})
+     * @Security("has_role('ROLE_USER')")
      */
-    public function displayAction($id = null, Account $account)
+    public function displayAction($id, Account $account)
     {
         $Frontend = new \Frontend(true, $this->get('security.token_storage'));
-
-        if (null === $id) {
-            $id = Request::createFromGlobals()->query->get('id');
-        }
 
         $Context = new Context($id, $account->getId());
 
@@ -110,7 +106,7 @@ class ActivityController extends Controller
      * @Route("/activity/{id}/edit", name="ActivityEdit")
      * @Security("has_role('ROLE_USER')")
      */
-    public function editAction($id = null)
+    public function editAction($id)
     {
         $Frontend = new \Frontend(true, $this->get('security.token_storage'));
 
@@ -285,7 +281,6 @@ class ActivityController extends Controller
     }
 
     /**
-     * @Route("/call/call.Training.elevationInfo.php")
      * @Route("/activity/{id}/elevation-info", requirements={"id" = "\d+"})
      * @Security("has_role('ROLE_USER')")
      */
