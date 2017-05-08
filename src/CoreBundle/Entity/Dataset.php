@@ -19,6 +19,7 @@ class Dataset
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="accountid", referencedColumnName="id", nullable=false)
      * })
+     * @Orm\Id
      */
     private $account;
 
@@ -27,7 +28,6 @@ class Dataset
      *
      * @ORM\Column(name="keyid", columnDefinition="tinyint unsigned NOT NULL")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
      */
     private $keyid;
 
