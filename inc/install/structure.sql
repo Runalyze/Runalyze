@@ -509,6 +509,7 @@ ALTER TABLE `runalyze_conf`
 --
 ALTER TABLE `runalyze_dataset`
  ADD PRIMARY KEY (`accountid`,`keyid`), ADD KEY `position` (`accountid`,`position`);
+CREATE UNIQUE INDEX unique_key ON runalyze_dataset (accountid, keyid);
 
 --
 -- Indizes für die Tabelle `runalyze_equipment`
