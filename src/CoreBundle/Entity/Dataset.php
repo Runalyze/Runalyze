@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Dataset
  *
- * @ORM\Table(name="dataset", indexes={@ORM\Index(name="position", columns={"accountid", "position"})}, uniqueConstraints={@ORM\UniqueConstraint(name="unique_key", columns={"accountid", "keyid"})})
+ * @ORM\Table(name="dataset", indexes={@ORM\Index(name="position", columns={"accountid", "position"})})
  * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\DatasetRepository")
  */
 class Dataset
@@ -19,6 +19,7 @@ class Dataset
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="accountid", referencedColumnName="id", nullable=false)
      * })
+     * @Orm\Id
      */
     private $account;
 
@@ -27,7 +28,6 @@ class Dataset
      *
      * @ORM\Column(name="keyid", columnDefinition="tinyint unsigned NOT NULL")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
      */
     private $keyid;
 
