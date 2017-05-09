@@ -37,6 +37,7 @@ twig:
     nokia_here_token: '%nokia_here_token%'
     thunderforest_api_key: '%thunderforest_api_key%'
     mapbox_api_key: '%mapbox_api_key%'
+    swissTopoMap_show: '%swissTopoMap_show%'
     locales: '%locales%'
   paths:
     '%kernel.root_dir%/../data/views': __main__

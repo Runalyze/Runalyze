@@ -8,5 +8,6 @@
 {% if nokia_here_appid and nokia_here_token %}Runalyze.Options.setNokiaLayerAuth("{{ nokia_here_appid }}", "{{ nokia_here_token }}");{% endif %}
 {% if thunderforest_api_key %}Runalyze.Options.setThunderforestLayerAuth("{{ thunderforest_api_key }}");{% endif %}
 {% if mapbox_api_key %}Runalyze.Options.setMapboxLayerAuth("{{ mapbox_api_key }}");{% endif %}
+{% if swissTopoMap_show %}Runalyze.Options.setshowSwissTopoMap("{{ swissTopoMap_show }}");{% endif %}
 </script>
 {% endif %}
