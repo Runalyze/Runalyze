@@ -139,7 +139,7 @@ class Map {
 
 		return '<script>Runalyze.try('.
             'function(){'.$Code.'}, '.
-            'function(){$("#'.$this->id.'").css("height","auto").html(\'<p><em>'.__('There was a problem trying to show the map.').'</em></p>\');'.
+            'function(){$("#'.$this->id.'").css("height","auto").html('.json_encode('<p><em>'.__('There was a problem trying to show the map.').'</em></p>').');'.
         '});</script>';
 	}
 

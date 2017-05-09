@@ -143,7 +143,7 @@ class Route {
 	 * @param string $Tooltip [optional]
 	 */
 	final public function addMarker($Lat, $Lng, $Icon, $Tooltip = '') {
-		$this->Marker[] = 'L.marker(['.$Lat.','.$Lng.'], {icon: '.$Icon.', tooltip: "'.$Tooltip.'"})';
+		$this->Marker[] = 'L.marker(['.$Lat.','.$Lng.'], {icon: '.$Icon.', tooltip: '.json_encode($Tooltip).'})';
 	}
 
 	/**
@@ -159,7 +159,7 @@ class Route {
 
 		$coordinate = (new Geotools())->geohash()->decode($geohash)->getCoordinate();
 
-		$this->Marker[] = 'L.marker(['.$coordinate->getLatitude().','.$coordinate->getLongitude().'], {icon: '.$Icon.', tooltip: "'.$Tooltip.'"})';
+		$this->Marker[] = 'L.marker(['.$coordinate->getLatitude().','.$coordinate->getLongitude().'], {icon: '.$Icon.', tooltip: '.json_encode($Tooltip).'})';
 	}
 
 	/**
