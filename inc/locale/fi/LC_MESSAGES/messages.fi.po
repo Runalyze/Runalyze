@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-24 21:10+0200\n"
+"POT-Creation-Date: 2017-05-06 15:47+0200\n"
 "PO-Revision-Date: 2017-03-08 08:39+0000\n"
 "Last-Translator: Michael Pohl <michael@mipapo.de>\n"
 "Language-Team: Finnish <https://translate.runalyze.com/projects/runalyze/"
@@ -984,11 +984,11 @@ msgstr "Juoksun dynamiikka"
 msgid "Poster generator"
 msgstr ""
 
-#: inc/tpl/tpl.Frontend.header.php:100
+#: inc/tpl/tpl.Frontend.header.php:101
 msgid "More"
 msgstr ""
 
-#: inc/tpl/tpl.Frontend.header.php:104
+#: inc/tpl/tpl.Frontend.header.php:105
 msgid "Help"
 msgstr ""
 
@@ -2353,34 +2353,34 @@ msgstr "viimeiset 6 kuukautta"
 msgid "last 12 months"
 msgstr "viimeiset 12 kuukautta"
 
-#: inc/draw/class.PlotSumData.php:367
+#: inc/draw/class.PlotSumData.php:382
 msgid "There are no data for this timerange."
 msgstr "Ei tietoja valitulta aikajaksolta."
 
-#: inc/draw/class.PlotSumData.php:536
+#: inc/draw/class.PlotSumData.php:551
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:361
 #, fuzzy
 msgid "without"
 msgstr "ilman"
 
-#: inc/draw/class.PlotSumData.php:571
+#: inc/draw/class.PlotSumData.php:586
 msgid "Races"
 msgstr "Kilpailut"
 
-#: inc/draw/class.PlotSumData.php:572
+#: inc/draw/class.PlotSumData.php:587
 msgid "Training"
 msgstr ""
 
-#: inc/draw/class.PlotSumData.php:597
+#: inc/draw/class.PlotSumData.php:612
 msgid "target:"
 msgstr ""
 
-#: inc/draw/class.PlotSumData.php:618 inc/core/View/Activity/Plot/Laps.php:121
+#: inc/draw/class.PlotSumData.php:633 inc/core/View/Activity/Plot/Laps.php:121
 #: inc/core/View/Plot/Series.php:160
 msgid "avg:"
 msgstr "keskiarvo:"
 
-#: inc/draw/class.PlotSumData.php:649
+#: inc/draw/class.PlotSumData.php:664
 msgid "Target is based on current marathon shape calculations."
 msgstr ""
 

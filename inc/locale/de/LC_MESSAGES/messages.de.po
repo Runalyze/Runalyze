@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-24 21:10+0200\n"
-"PO-Revision-Date: 2017-04-23 12:54+0000\n"
-"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
+"POT-Creation-Date: 2017-05-06 15:47+0200\n"
+"PO-Revision-Date: 2017-05-02 11:07+0000\n"
+"Last-Translator: Hannes <mail@laufhannes.de>\n"
 "Language-Team: German <https://translate.runalyze.com/projects/runalyze/"
 "runalyze-master-po/de/>\n"
 "Language: de\n"
@@ -964,7 +964,7 @@ msgstr "Neue Körperwerte"
 
 #: inc/tpl/tpl.Frontend.header.php:87
 msgid "Activity tags"
-msgstr "Aktivitäten Tags"
+msgstr "Tags für Aktivitäten"
 
 #: inc/tpl/tpl.Frontend.header.php:93
 #: inc/training/view/class.TrainingView.php:133
@@ -987,11 +987,11 @@ msgstr "Lauftabellen"
 msgid "Poster generator"
 msgstr "Postergenerator"
 
-#: inc/tpl/tpl.Frontend.header.php:100
+#: inc/tpl/tpl.Frontend.header.php:101
 msgid "More"
 msgstr "Weitere"
 
-#: inc/tpl/tpl.Frontend.header.php:104
+#: inc/tpl/tpl.Frontend.header.php:105
 msgid "Help"
 msgstr "Hilfe"
 
@@ -2344,33 +2344,33 @@ msgstr "letzten 6 Monate"
 msgid "last 12 months"
 msgstr "letzte 12 Monate"
 
-#: inc/draw/class.PlotSumData.php:367
+#: inc/draw/class.PlotSumData.php:382
 msgid "There are no data for this timerange."
 msgstr "Es gibt keine Daten für diese Zeitspanne."
 
-#: inc/draw/class.PlotSumData.php:536
+#: inc/draw/class.PlotSumData.php:551
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:361
 msgid "without"
 msgstr "ohne"
 
-#: inc/draw/class.PlotSumData.php:571
+#: inc/draw/class.PlotSumData.php:586
 msgid "Races"
 msgstr "Wettkämpfe"
 
-#: inc/draw/class.PlotSumData.php:572
+#: inc/draw/class.PlotSumData.php:587
 msgid "Training"
 msgstr "Training"
 
-#: inc/draw/class.PlotSumData.php:597
+#: inc/draw/class.PlotSumData.php:612
 msgid "target:"
 msgstr "Ziel:"
 
-#: inc/draw/class.PlotSumData.php:618 inc/core/View/Activity/Plot/Laps.php:121
+#: inc/draw/class.PlotSumData.php:633 inc/core/View/Activity/Plot/Laps.php:121
 #: inc/core/View/Plot/Series.php:160
 msgid "avg:"
 msgstr "durchschn:"
 
-#: inc/draw/class.PlotSumData.php:649
+#: inc/draw/class.PlotSumData.php:664
 msgid "Target is based on current marathon shape calculations."
 msgstr "Das Ziel basiert auf deiner aktuell berechneten Marathonform."
 
@@ -2834,13 +2834,12 @@ msgid "only icon"
 msgstr "nur Icon"
 
 #: inc/core/Profile/View/DataBrowserRowProfile.php:30
-#, fuzzy
 msgid "Inherit from sport"
-msgstr "Vererbt von der Sportart"
+msgstr "Von Sportart übernehmen"
 
 #: inc/core/Profile/Sport/Settings/SportRelevanceProfile.php:24
 msgid "Alternative sport"
-msgstr "Alternativer Sport"
+msgstr "Alternativsport"
 
 #: inc/core/Profile/Sport/Settings/SportRelevanceProfile.php:26
 msgid "Main Sport"
@@ -3937,7 +3936,6 @@ msgstr ""
 "Schnittstellen korrigiert werden."
 
 #: inc/core/Configuration/Category/ActivityForm.php:257
-#, fuzzy
 msgid "Sort: sports"
 msgstr "Sortierung: Sportarten"
 
@@ -5263,8 +5261,8 @@ msgstr "Name"
 msgid ""
 "Your result in proportion to the world best performance in your age/gender."
 msgstr ""
-"Dein Ergebnis im Verhältnis zu der weltbesten Leistung in Ihrem Alter/"
-"Geschlecht."
+"Dein Ergebnis im Verhältnis zur Weltbestleistung innerhalb deiner "
+"Altersklasse."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:395
 msgid "Overall"

@@ -1,26 +1,28 @@
-$("#sportid").change(function(){
-	jUpdateSportValues();
+ $("#sportid").change(function(){
+    jUpdateSportValues();
 <?php if (\Runalyze\Configuration::ActivityForm()->computeCalories()): ?>
-	jUpdateKcal();
+    jUpdateKcal();
 <?php endif; ?>
 });
 
 $("#time_day").change(function(){
-	jUpdateAvailableEquipment();
-	jUpdateWeather();
+    jUpdateAvailableEquipment();
+    jUpdateWeather();
 });
 
 $("input[name=distance], input[name=s]").change(function() {
-	jUpdatePace();
-	jUpdateKmh();
+    jUpdatePace();
+    jUpdateKmh();
 <?php if (\Runalyze\Configuration::ActivityForm()->computeCalories()): ?>
-	jUpdateKcal();
+    jUpdateKcal();
 <?php endif; ?>
 });
 
-jUpdateAvailableEquipment();
-jUpdateSportValues();
-jUpdatePace();
+$(function(){
+    jUpdateAvailableEquipment();
+    jUpdateSportValues();
+    jUpdatePace();
 
-if ($("input[name=kcal]").val() == 0)
-	jUpdateKcal();
+    if ($("input[name=kcal]").val() == 0)
+        jUpdateKcal();
+});

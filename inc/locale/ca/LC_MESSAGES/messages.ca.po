@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-24 21:10+0200\n"
+"POT-Creation-Date: 2017-05-06 15:47+0200\n"
 "PO-Revision-Date: 2017-03-07 09:11+0000\n"
 "Last-Translator: Michael Pohl <michael@mipapo.de>\n"
 "Language-Team: Catalan <https://translate.runalyze.com/projects/runalyze/"
@@ -1005,11 +1005,11 @@ msgstr "Exercicis de tècnica"
 msgid "Poster generator"
 msgstr ""
 
-#: inc/tpl/tpl.Frontend.header.php:100
+#: inc/tpl/tpl.Frontend.header.php:101
 msgid "More"
 msgstr ""
 
-#: inc/tpl/tpl.Frontend.header.php:104
+#: inc/tpl/tpl.Frontend.header.php:105
 msgid "Help"
 msgstr "Ajuda"
 
@@ -2362,33 +2362,33 @@ msgstr "últims 6 mesos"
 msgid "last 12 months"
 msgstr "últims 12 mesos"
 
-#: inc/draw/class.PlotSumData.php:367
+#: inc/draw/class.PlotSumData.php:382
 msgid "There are no data for this timerange."
 msgstr "No hi han dades per aquest interval de temps."
 
-#: inc/draw/class.PlotSumData.php:536
+#: inc/draw/class.PlotSumData.php:551
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:361
 msgid "without"
 msgstr "sense"
 
-#: inc/draw/class.PlotSumData.php:571
+#: inc/draw/class.PlotSumData.php:586
 msgid "Races"
 msgstr "Curses"
 
-#: inc/draw/class.PlotSumData.php:572
+#: inc/draw/class.PlotSumData.php:587
 msgid "Training"
 msgstr "Entrenament"
 
-#: inc/draw/class.PlotSumData.php:597
+#: inc/draw/class.PlotSumData.php:612
 msgid "target:"
 msgstr ""
 
-#: inc/draw/class.PlotSumData.php:618 inc/core/View/Activity/Plot/Laps.php:121
+#: inc/draw/class.PlotSumData.php:633 inc/core/View/Activity/Plot/Laps.php:121
 #: inc/core/View/Plot/Series.php:160
 msgid "avg:"
 msgstr "mitjana:"
 
-#: inc/draw/class.PlotSumData.php:649
+#: inc/draw/class.PlotSumData.php:664
 #, fuzzy
 msgid "Target is based on current marathon shape calculations."
 msgstr "Objectiu i mitjana es basen en la teva resistència calculada."
