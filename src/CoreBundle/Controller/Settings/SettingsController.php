@@ -7,6 +7,7 @@ use Runalyze\Bundle\CoreBundle\Entity\Dataset;
 use Runalyze\Bundle\CoreBundle\Form\Settings\ChangeMailType;
 use Runalyze\Bundle\CoreBundle\Form\Settings\ChangePasswordType;
 use Runalyze\Bundle\CoreBundle\Form\Settings\DatasetCollectionType;
+use Runalyze\Bundle\CoreBundle\Services\AutomaticReloadFlagSetter;
 use Runalyze\Dataset\DefaultConfiguration;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -38,6 +39,7 @@ class SettingsController extends Controller
     {
         $Frontend = new \Frontend(true, $this->get('security.token_storage'));
 
+        $currentLanguage = $account->getLanguage();
         $form = $this->createForm(AccountType::class, $account, array(
             'action' => $this->generateUrl('settings-account')
         ));
@@ -49,11 +51,17 @@ class SettingsController extends Controller
             if (isset($formdata['reset_configuration'])) {
                 Configuration::resetConfiguration($account->getId());
                 $this->addFlash('success', $this->get('translator')->trans('Default configuration has been restored!'));
+
+                $this->get('app.automatic_reload_flag_setter')->set(AutomaticReloadFlagSetter::FLAG_ALL);
             }
 
             if (isset($formdata['language'])) {
                 $this->get('session')->set('_locale', $formdata['language']);
                 Language::setLanguage($formdata['language']);
+
+                if ($account->getLanguage() != $currentLanguage) {
+                    $this->get('app.automatic_reload_flag_setter')->set(AutomaticReloadFlagSetter::FLAG_PAGE);
+                }
             }
 
             $this->getAccountRepository()->save($account);
