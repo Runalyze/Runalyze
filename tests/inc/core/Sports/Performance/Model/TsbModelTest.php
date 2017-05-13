@@ -2,6 +2,7 @@
 
 namespace Runalyze\Tests\Sports\Performance\Model;
 
+use Runalyze\Sports\Performance\Model\AbstractModel;
 use Runalyze\Sports\Performance\Model\TsbModel;
 
 class TsbModelTest extends \PHPUnit_Framework_TestCase
@@ -17,6 +18,7 @@ class TsbModelTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(47, $Model->fitnessAt(0));
         $this->assertEquals(250, $Model->fatigueAt(0));
         $this->assertEquals(-203, $Model->performanceAt(0));
+        $this->assertEquals(7.0, $Model->restDaysAt(0), '', 0.5);
     }
 
     public function testSimpleExample()
@@ -115,5 +117,29 @@ class TsbModelTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(0, $Model->restDays(50, 100));
         $this->assertEquals(0, $Model->maxTrimpToBalanced(50, 100));
+    }
+
+    public function testExtremeValuesAtBeginning()
+    {
+        $model = new TsbModel([100, 100, 100, 100, 100, 100, 100, 0, 0, 0, 0, 0, 0, 0], 42, 7);
+        $model->calculate();
+
+        $this->assertEquals([
+                AbstractModel::FITNESS => [5, 9, 13, 17, 21, 25, 28, 27, 26, 25, 23, 22, 21, 20],
+                AbstractModel::FATIGUE => [25, 44, 58, 68, 76, 82, 87, 65, 49, 37, 27, 21, 15, 12],
+                AbstractModel::PERFORMANCE => [-20, -35, -44, -51, -55, -57, -58, -38, -23, -12, -4, 2, 6, 9],
+            ], array_map(function($a) {
+                return array_map(function($v) { return (int)round($v); }, $a);
+            }, $model->getArrays())
+        );
+
+        $restDays = [];
+        for ($i = 0; $i < 14; ++$i) {
+            $restDays[] = round($model->restDaysAt($i), 1);
+        }
+
+        $this->assertEquals([
+            6.7, 6.6, 6.2, 5.8, 5.4, 4.9, 4.7, 3.7, 2.6, 1.6, 0.7, 0.0, 0.0, 0.0
+        ], $restDays);
     }
 }
