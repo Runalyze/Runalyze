@@ -41,7 +41,7 @@ class Route
      *
      * @ORM\Column(name="distance", type="decimal", precision=6, scale=2, options={"unsigned":true, "default":0.00})
      */
-    private $distance = '0.00';
+    private $distance = 0.0;
 
     /**
      * @var int
@@ -65,23 +65,23 @@ class Route
     private $elevationDown = 0;
 
     /**
-     * @var string|null
+     * @var array|null
      *
-     * @ORM\Column(name="geohashes", type="text", nullable=true)
+     * @ORM\Column(name="geohashes", type="pipe_array", nullable=true)
      */
     private $geohashes;
 
     /**
-     * @var string|null
+     * @var array|null
      *
-     * @ORM\Column(name="elevations_original", type="text", nullable=true)
+     * @ORM\Column(name="elevations_original", type="pipe_array", nullable=true)
      */
     private $elevationsOriginal;
 
     /**
-     * @var string|null
+     * @var array|null
      *
-     * @ORM\Column(name="elevations_corrected", type="text", nullable=true)
+     * @ORM\Column(name="elevations_corrected", type="pipe_array", nullable=true)
      */
     private $elevationsCorrected;
 
@@ -273,11 +273,11 @@ class Route
     }
 
     /**
-     * @param string|null $geohashes
+     * @param array|null $geohashes
      *
      * @return $this
      */
-    public function setGeohashes($geohashes)
+    public function setGeohashes(array $geohashes = null)
     {
         $this->geohashes = $geohashes;
 
@@ -285,7 +285,7 @@ class Route
     }
 
     /**
-     * @return string|null
+     * @return array|null
      */
     public function getGeohashes()
     {
@@ -301,11 +301,11 @@ class Route
     }
 
     /**
-     * @param string|null $elevationsOriginal
+     * @param array|null $elevationsOriginal
      *
      * @return $this
      */
-    public function setElevationsOriginal($elevationsOriginal)
+    public function setElevationsOriginal(array $elevationsOriginal = null)
     {
         $this->elevationsOriginal = $elevationsOriginal;
 
@@ -313,7 +313,7 @@ class Route
     }
 
     /**
-     * @return string|null
+     * @return array|null
      */
     public function getElevationsOriginal()
     {
@@ -321,11 +321,11 @@ class Route
     }
 
     /**
-     * @param string|null $elevationsCorrected
+     * @param array|null $elevationsCorrected
      *
      * @return $this
      */
-    public function setElevationsCorrected($elevationsCorrected)
+    public function setElevationsCorrected(array $elevationsCorrected = null)
     {
         $this->elevationsCorrected = $elevationsCorrected;
 
@@ -333,7 +333,7 @@ class Route
     }
 
     /**
-     * @return string|null
+     * @return array|null
      */
     public function getElevationsCorrected()
     {

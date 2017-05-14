@@ -9,10 +9,7 @@ namespace Runalyze\Model\Trackdata;
 use Runalyze\Model\StringArrayObject;
 
 /**
- * Pauses object
- * 
- * @author Hannes Christiansen
- * @package Runalyze\Model\Trackdata
+ * @deprecated since v4.2, use \Runalyze\Bundle\CoreBundle\Model\Trackdata\Pause\PauseCollection instead
  */
 class Pauses extends StringArrayObject {
 	/**

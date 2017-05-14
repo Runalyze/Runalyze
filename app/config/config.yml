@@ -75,7 +75,9 @@ doctrine:
                 options: {1002: "SET time_zone = '+00:00'"}
                 mapping_types:
                     enum:   string
-
+        types:
+            pipe_array: Runalyze\Bundle\CoreBundle\Doctrine\Types\PipeDelimitedArray
+            runalyze_pause_array: Runalyze\Bundle\CoreBundle\Doctrine\Types\RunalyzePauseArray
 
 
     orm:

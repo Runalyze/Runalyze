@@ -7,10 +7,7 @@
 namespace Runalyze\Model\Trackdata;
 
 /**
- * Single Pause object
- * 
- * @author Hannes Christiansen
- * @package Runalyze\Model\Trackdata
+ * @deprecated since v4.2, use \Runalyze\Bundle\CoreBundle\Model\Trackdata\Pause\Pause instead
  */
 class Pause {
 	/**
