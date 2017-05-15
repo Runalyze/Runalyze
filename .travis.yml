@@ -38,6 +38,7 @@ script:
   - vendor/bin/phpunit --colors -c tests/config.xml --coverage-clover build/logs/clover.xml
 
 after_script:
+  - sudo apt-get install gettext -y
   - wget https://scrutinizer-ci.com/ocular.phar && php ocular.phar code-coverage:upload --format=php-clover build/logs/clover.xml
   - chmod +x bin/travis_build.sh | bin/travis_build.sh
 
