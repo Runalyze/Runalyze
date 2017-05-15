@@ -51,7 +51,7 @@ class TsbModel extends AbstractModel
     /**
      * @param int|float $ctl
      * @param int|float $atl
-     * @return int|float
+     * @return int|float number of days required to reach TSB[n+x] <= 0
      */
     public function restDays($ctl, $atl)
     {
@@ -59,24 +59,25 @@ class TsbModel extends AbstractModel
             return 0;
         }
 
-        if ($ctl == 0) {
-            $ctl = 1;
-        }
-
+        $ctl = max(1.0, $ctl);
         $restDays = log($ctl / $atl) / (log((1 - $this->LambdaATL) / (1 - $this->LambdaCTL)));
 
-        if ($ctl < 15) {
-            // for very low CTLs we need some compensation as we get very large number of rest days
-            $restDays = 4 + $restDays / -5;
-        }
+        return max(0.0, $restDays);
+    }
 
-        return max(0, $restDays);
+    /**
+     * @param int $index 0 for today
+     * @return float|int number of days required to reach TSB[n+x] <= 0
+     */
+    public function restDaysAt($index)
+    {
+        return $this->restDays($this->fitnessAt($index), $this->fatigueAt($index));
     }
 
     /**
      * @param int|float $ctl
      * @param int|float $atl
-     * @return float|int
+     * @return float|int maximal trimp value to keep TSB[n+1] >= 0
      */
     public function maxTrimpToBalanced($ctl, $atl)
     {
@@ -85,5 +86,14 @@ class TsbModel extends AbstractModel
         }
 
         return ($atl - $ctl) / ($this->LambdaCTL - $this->LambdaATL);
+    }
+
+    /**
+     * @param int $index 0 for today
+     * @return float|int maximal trimp value to keep TSB[n+1] >= 0
+     */
+    public function maxTrimpToBalancedAt($index)
+    {
+        return $this->maxTrimpToBalanced($this->fitnessAt($index), $this->fatigueAt($index));
     }
 }
