@@ -63,13 +63,11 @@ class SportTypeType extends AbstractType
                 'required' => false,
                 'label' => 'Quality session'
             ])
-            ->add('short', ChoiceType::class, [
+            ->add('displayMode', ChoiceType::class, [
                 'choices' => DataBrowserRowProfile::getChoices(),
                 'choice_translation_domain' => false,
                 'label' => 'Calendar view'
             ]);
-
-
     }
 
     public function configureOptions(OptionsResolver $resolver)
