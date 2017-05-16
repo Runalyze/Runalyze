@@ -16,6 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\PercentType;
 
 /**
  * @Route("/my/body-values")
+ * @Security("has_role('ROLE_USER')")
  */
 class BodyValuesController extends Controller
 {
