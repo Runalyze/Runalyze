@@ -49,8 +49,8 @@
                     {% set value = analysisData.value(year, month) %}
                     <td>
                         {% if not value.zero %}
-                        {{ value.withUnit|nbsp|raw }}<br>
-                        <i class="fa fa-circle" style="opacity:{{ min(1, (value.rawValue/maximum * 0.8)|round(2) + 0.2) }}; font-size: {{ (((value.rawValue/maximum) ** 0.5)*30)|round }}px"></i>
+                            {{ distance(value.RawValue, unitSystem.distanceUnit)|raw }}
+                            <i class="fa fa-circle" style="opacity:{{ min(1, (value.rawValue/maximum * 0.8)|round(2) + 0.2) }}; font-size: {{ (((value.rawValue/maximum) ** 0.5)*30)|round }}px"></i>
                         {% endif %}
                     </td>
                 {% endfor %}

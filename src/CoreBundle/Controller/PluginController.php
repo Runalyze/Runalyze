@@ -134,8 +134,10 @@ class PluginController extends Controller
             $account
         );
         $analysisData->setDefaultValue($valueExtension);
+        $unitSystem = $this->get('app.configuration_manager')->getList()->getUnitSystem();
 
         return $this->render('my/statistics/monthly-stats/base.html.twig', [
+            'unitSystem' => $unitSystem,
             'pluginId' => $pluginId,
             'analysisData' => $analysisData
         ]);
