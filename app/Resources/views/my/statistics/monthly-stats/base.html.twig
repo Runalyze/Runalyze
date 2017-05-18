@@ -9,7 +9,6 @@
 {% block panelHeadingMenu %}
 {% set analysisList = analysisData.analysisSelection %}
 {% set sportList = analysisData.sportSelection %}
-
 <ul>
     <li class="with-submenu">
         <span class="link">{{ analysisList.currentLabel|trans }}</span>
@@ -34,6 +33,7 @@
     .analysis-table td { position: relative; vertical-align: top; }
     .analysis-table td .fa-circle { width: 30px; text-align:center;  color: #800; }
 </style>
+
 <table class="analysis-table fullwidth zebra-style r">
     <thead>{{ tableHeadMonths(8, 1) }}</thead>
     <tbody>
@@ -49,7 +49,7 @@
                     {% set value = analysisData.value(year, month) %}
                     <td>
                         {% if not value.zero %}
-                            {{ distance(value.RawValue, unitSystem.distanceUnit)|raw }}
+                        {{ value.withUnit|nbsp|raw }}<br>
                         <i class="fa fa-circle" style="opacity:{{ min(1, (value.rawValue/maximum * 0.8)|round(2) + 0.2) }}; font-size: {{ (((value.rawValue/maximum) ** 0.5)*30)|round }}px"></i>
                         {% endif %}
                     </td>
