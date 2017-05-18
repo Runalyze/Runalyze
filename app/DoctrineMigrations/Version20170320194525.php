@@ -35,7 +35,7 @@ class Version20170320194525 extends AbstractMigration implements ContainerAwareI
                           INDEX IDX_F99B51889B6B5FBA (account_id),
                           PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB
                         ');
-        $this->addSql('ALTER TABLE runalyze_notification ADD CONSTRAINT FK_F99B51889B6B5FBA FOREIGN KEY (account_id) REFERENCES runalyze_account (id)');
+        $this->addSql('ALTER TABLE '.$prefix.'notification ADD CONSTRAINT FK_F99B51889B6B5FBA FOREIGN KEY (account_id) REFERENCES '.$prefix.'account (id)');
     }
 
     /**
