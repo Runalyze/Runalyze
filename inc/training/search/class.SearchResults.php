@@ -151,7 +151,7 @@ class SearchResults {
 			'is_night',
 			'weatherid',
 			'route',
-			'comment',
+			'title',
 			'partner',
 			'notes'
 		);

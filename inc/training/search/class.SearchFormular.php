@@ -171,7 +171,7 @@ class SearchFormular extends Formular {
 
 		$this->addDurationField('s', __('Duration'));
 		$this->addNumericConditionField('gradient', __('Gradient'), FormularInput::$SIZE_SMALL, FormularUnit::$PERCENT);
-		$this->addStringConditionField('comment', __('Title'), FormularInput::$SIZE_MIDDLE);
+		$this->addStringConditionField('title', __('Title'), FormularInput::$SIZE_MIDDLE);
 
 		$this->addNumericConditionField('pace', __('Pace'), FormularInput::$SIZE_SMALL, FormularUnit::$PACE);
 		$this->addNumericConditionField('cadence', __('Cadence'), FormularInput::$SIZE_SMALL, FormularUnit::$SPM);
