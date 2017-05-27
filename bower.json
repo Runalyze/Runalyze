@@ -2,16 +2,16 @@
   "name": "runalyze",
   "private": true,
   "dependencies": {
-    "jquery": "^2.1.0",
+    "jquery": "~2.2.4",
     "leaflet": "^0.7.7",
-    "font-awesome": "^4.7.0",
-    "fontIconPicker": "^2.0.0",
+    "font-awesome": "~4.7.0",
+    "fontIconPicker": "~2.0.0",
     "tablesorter": "jquery.tablesorter#2.18.4",
-    "moment": "^2.13.0",
-    "moment-timezone": "^0.5.4",
-    "d3": "^4.4.0",
-    "d3-tip": "^0.8.0-alpha.1",
-    "ifvisible.js": "^1.0.0",
-    "jquery-timeago": "^1.5.0"
+    "moment": "~2.14.2",
+    "moment-timezone": "~0.5.13",
+    "d3": "~4.9.1",
+    "d3-tip": "~0.8.0-alpha.1",
+    "ifvisible.js": "~1.0.6",
+    "jquery-timeago": "~1.5.4"
   }
 }
