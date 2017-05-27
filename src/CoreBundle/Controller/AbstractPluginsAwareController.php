@@ -118,7 +118,7 @@ abstract class AbstractPluginsAwareController extends Controller
             $this->get('doctrine')->getRepository('CoreBundle:Training'),
             $account
         );
-        $analysisData->setDefaultValue($valueExtension);
+        $analysisData->setValueExtension($valueExtension);
 
         return $this->render('my/statistics/monthly-stats/base.html.twig', [
             'pluginId' => $pluginId,

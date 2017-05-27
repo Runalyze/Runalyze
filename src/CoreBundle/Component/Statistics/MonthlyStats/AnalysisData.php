@@ -27,6 +27,9 @@ class AnalysisData
     /** @var DisplayableValue */
     protected $DefaultValue;
 
+    /** @var null|ValueExtension */
+    protected $ValueExtension = null;
+
     public function __construct(
         Selection $sportSelection,
         AnalysisSelection $analysisSelection,
@@ -94,32 +97,9 @@ class AnalysisData
         return $this->SportSelection->getCurrentKey();
     }
 
-    /**
-     * @param ValueExtension $valueExtension
-     */
-    public function setDefaultValue(ValueExtension $valueExtension)
+    public function setValueExtension(ValueExtension $valueExtension)
     {
-        $this->DefaultValue = $this->getDefaultValue($valueExtension);
-    }
-
-    /**
-     * @param ValueExtension $valueExtension
-     * @return DisplayableValue
-     */
-    protected function getDefaultValue(ValueExtension $valueExtension)
-    {
-        switch ($this->AnalysisSelection->getCurrentKey()) {
-            case AnalysisSelection::DISTANCE:
-                return $valueExtension->distance(0.0);
-            case AnalysisSelection::TIME:
-                return new DisplayableTime(0);
-            case AnalysisSelection::ENERGY:
-                return $valueExtension->energy(0);
-            case AnalysisSelection::ELEVATION:
-                return $valueExtension->elevation(0);
-        }
-
-        return new DisplayableValue(0, '');
+        $this->ValueExtension = $valueExtension;
     }
 
     /**
@@ -160,12 +140,29 @@ class AnalysisData
      * @param int $year
      * @param int $month
      * @return DisplayableValue
+     *
+     * @throws \RuntimeException
      */
     public function getValue($year, $month)
     {
-        $this->DefaultValue->setRawValue($this->getRawValue($year, $month));
+        if (null === $this->ValueExtension) {
+            throw new \RuntimeException('Value extension must be set');
+        }
 
-        return $this->DefaultValue;
+        $rawValue = $this->getRawValue($year, $month);
+
+        switch ($this->AnalysisSelection->getCurrentKey()) {
+            case AnalysisSelection::DISTANCE:
+                return $this->ValueExtension->distance($rawValue);
+            case AnalysisSelection::TIME:
+                return new DisplayableTime($rawValue);
+            case AnalysisSelection::ENERGY:
+                return $this->ValueExtension->energy($rawValue);
+            case AnalysisSelection::ELEVATION:
+                return $this->ValueExtension->elevation($rawValue);
+        }
+
+        return new DisplayableValue($rawValue, '');
     }
 
     /**
