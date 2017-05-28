@@ -57,7 +57,7 @@
 
         {{ form_end(form) }}
 
-        <div id="trend-analysis-plot"></div>
+        <div id="trend-analysis-plot" class="margin-top-2x"></div>
 
         <script>
             var $plot = $("#trend-analysis-plot");
@@ -103,12 +103,12 @@
                             });
 
                         var xValue = function(d) { return 1000 * d[0]; },
-                            xScale = d3.scaleLinear().range([0, width + 0]).domain([d3.min(data, xValue), d3.max(data, xValue)]).nice(),
+                            xScale = d3.scaleLinear().range([0, width]).domain([d3.min(data, xValue), d3.max(data, xValue)]).nice(),
                             xMap = function(d) { return xScale(xValue(d));},
                             xAxis = d3.axisBottom().scale(xScale).ticks(8).tickFormat(d3.timeFormat("%d.%m.%Y"));
 
                         var yValue = function(d) { return d[1]; },
-                            yScale = d3.scaleLinear().range([height + 0, 0]).domain([d3.min(data, yValue), d3.max(data, yValue)]).nice(),
+                            yScale = d3.scaleLinear().range([height, 0]).domain([d3.min(data, yValue), d3.max(data, yValue)]).nice(),
                             yMap = function(d) { return yScale(yValue(d));},
                             yAxis = d3.axisLeft().scale(yScale).tickFormat(json.tickFormatter);
 
@@ -120,6 +120,8 @@
                             .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
                             .call(tip);
 
+                        svg.append('clipPath').attr('id', 'clip-trend-analysis').append('rect').attr('x', 0).attr('y',0).attr('width', width).attr('height', height);
+
                         svg.append("text")
                             .attr("x", (width / 2))
                             .attr("y", -(margin.top / 2))
@@ -128,9 +130,13 @@
                             .style("font-weight", "bold")
                             .text($("#trend_analysis_valueToLookAt").find("option:selected").text());
 
-                        svg.selectAll("line.x.grid").data(xScale.ticks(8)).enter()
+                        var grid = svg.append("g").attr('clip-path', 'url(#clip-trend-analysis)');
+                        var axes = svg.append("g");
+                        var plotArea = svg.append("g").attr('clip-path', 'url(#clip-trend-analysis)');
+
+                        grid.selectAll("line.grid").data(xScale.ticks(8)).enter()
                             .append("line")
-                            .attr("class", "x grid")
+                            .attr("class", "grid")
                             .attr("x1", function(d){ return xScale(d) + 0.5; })
                             .attr("x2", function(d){ return xScale(d) + 0.5; })
                             .attr("y1", 0)
@@ -147,7 +153,7 @@
                         trendline.points.unshift([xMin, trend(xMin)]);
                         trendline.points.push([xMax, trend(xMax)]);
 
-                        svg.append("path")
+                        plotArea.append("path")
                             .attr("fill", "none")
                             .attr("stroke", "#ccc")
                             .attr("stroke-width", "3px")
@@ -159,7 +165,7 @@
                             median = d3.quantile(sortedY, .5),
                             upperQuantile = d3.quantile(sortedY, .9);
 
-                        svg.append("line")
+                        plotArea.append("line")
                             .attr("class", "y median")
                             .attr("x1", 0).attr("x2", width)
                             .attr("y1", yScale(median)).attr("y2", yScale(median));
@@ -173,25 +179,25 @@
                             .attr("x", width + 5)
                             .attr("y", yScale(median) + 11)
                             .text(json.tickFormatter(median));
-                        svg.append("line")
+                        plotArea.append("line")
                             .attr("class", "y marker")
                             .attr("x1", 0).attr("x2", width)
                             .attr("y1", yScale(lowerQuantile)).attr("y2", yScale(lowerQuantile));
-                        svg.append("line")
+                        plotArea.append("line")
                             .attr("class", "y marker")
                             .attr("x1", 0).attr("x2", width)
                             .attr("y1", yScale(upperQuantile)).attr("y2", yScale(upperQuantile));
 
-                        svg.append("g")
+                        axes.append("g")
                             .attr("class", "y axis")
                             .call(yAxis);
 
-                        svg.append("g")
+                        axes.append("g")
                             .attr("class", "x axis")
                             .attr("transform", "translate(0," + height + ")")
                             .call(xAxis);
 
-                        svg.selectAll(".dot")
+                        plotArea.selectAll(".dot")
                             .data(data)
                             .enter().append("circle")
                             .attr("class", "dot")
