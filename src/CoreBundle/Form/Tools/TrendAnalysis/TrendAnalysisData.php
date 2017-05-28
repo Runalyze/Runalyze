@@ -1,11 +1,11 @@
 <?php
 
-namespace Runalyze\Bundle\CoreBundle\Form\Tools\Anova;
+namespace Runalyze\Bundle\CoreBundle\Form\Tools\TrendAnalysis;
 
 use DateTime;
 use Runalyze\Bundle\CoreBundle\Entity\Sport;
 
-class AnovaData
+class TrendAnalysisData
 {
     /** @var DateTime */
     protected $DateFrom;
@@ -16,20 +16,17 @@ class AnovaData
     /** @var Sport[] */
     protected $Sport = [];
 
-    /** @var string */
-    protected $ValueToGroupBy;
-
-    /** @var string */
-    protected $ValueToLookAt;
+    /** @var string|null */
+    protected $ValueToLookAt = null;
 
     /**
-     * @param Sport[] $sport
-     * @return AnovaData
+     * @param Sport[] $sports
+     * @return TrendAnalysisData
      */
-    public static function getDefault(array $sport)
+    public static function getDefault(array $sports)
     {
         $data = new self;
-        $data->setSport($sport);
+        $data->setSport($sports);
         $data->setDateFrom((new \DateTime())->sub(new \DateInterval('P6M')));
         $data->setDateTo(new \DateTime());
 
@@ -79,11 +76,11 @@ class AnovaData
     }
 
     /**
-     * @param Sport[] $sport
+     * @param Sport[] $sports
      */
-    public function setSport(array $sport)
+    public function setSport(array $sports)
     {
-        $this->Sport = $sport;
+        $this->Sport = $sports;
     }
 
     /**
@@ -94,26 +91,16 @@ class AnovaData
         return $this->Sport;
     }
 
-    public function setValueToGroupBy($valueToGroupBy)
-    {
-        $this->ValueToGroupBy = $valueToGroupBy;
-    }
-
     /**
-     * @return string
+     * @param string|null $valueToLookAt
      */
-    public function getValueToGroupBy()
-    {
-        return $this->ValueToGroupBy;
-    }
-
     public function setValueToLookAt($valueToLookAt)
     {
         $this->ValueToLookAt = $valueToLookAt;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getValueToLookAt()
     {
