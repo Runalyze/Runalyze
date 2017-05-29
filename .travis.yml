@@ -9,7 +9,9 @@ php:
 cache:
   directories:
     - $HOME/.composer/cache
+    - $HOME/.cache/bower
     - node_modules
+    - $HOME/.npm
 
 before_install:
   - nvm install node
