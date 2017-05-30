@@ -7,9 +7,6 @@ use Runalyze\Metrics\Distance\Unit\AbstractDistanceUnit;
 
 class Distance extends AbstractOneColumnValue
 {
-    /**
-     * @return string
-     */
     protected function getColumn()
     {
         return 'distance';

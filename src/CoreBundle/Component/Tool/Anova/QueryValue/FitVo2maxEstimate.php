@@ -3,21 +3,21 @@
 namespace Runalyze\Bundle\CoreBundle\Component\Tool\Anova\QueryValue;
 
 use Runalyze\Bundle\CoreBundle\Component\Configuration\UnitSystem;
-use Runalyze\Metrics\Common\Unit\Simple;
+use Runalyze\Metrics\Common\Unit\None;
 
-class GroundContactTime extends AbstractOneColumnValue
+class FitVo2maxEstimate extends AbstractOneColumnValue
 {
     protected function getColumn()
     {
-        return 'groundcontact';
+        return 'fitVO2maxEstimate';
     }
 
     /**
      * @param UnitSystem $unitSystem
-     * @return Simple
+     * @return None
      */
     public function getValueUnit(UnitSystem $unitSystem)
     {
-        return new Simple('ms');
+        return new None();
     }
 }

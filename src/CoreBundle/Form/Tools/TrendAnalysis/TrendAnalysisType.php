@@ -75,7 +75,7 @@ class TrendAnalysisType extends AbstractType
                         'Pace' => QueryValues::PACE,
                         'Distance' => QueryValues::DISTANCE,
                         'Duration' => QueryValues::DURATION,
-                        'Heart rate' => QueryValues::HEART_RATE,
+                        'Heart rate' => QueryValues::HEART_RATE_AVERAGE,
                         'TRIMP' => QueryValues::TRIMP,
                         'Power' => QueryValues::POWER,
                         'Cadence' => QueryValues::CADENCE
@@ -84,6 +84,14 @@ class TrendAnalysisType extends AbstractType
                         'Ground contact time' => QueryValues::GROUND_CONTACT_TIME,
                         'Ground contact balance' => QueryValues::GROUND_CONTACT_BALANCE,
                         'Vertical oscillation' => QueryValues::VERTICAL_OSCILLATION
+                    ],
+                    'FIT details' => [
+                        'HRV analysis' => QueryValues::FIT_HRV_ANALYSIS,
+                        'Performance condition (start)' => QueryValues::FIT_PERFORMANCE_CONDITION_START,
+                        'Performance condition (end)' => QueryValues::FIT_PERFORMANCE_CONDITION_END,
+                        'Recovery time' => QueryValues::FIT_RECOVERY_TIME,
+                        'Training effect' => QueryValues::FIT_TRAINING_EFFECT,
+                        'VO2max estimate' => QueryValues::FIT_VO2MAX_ESTIMATE
                     ]
                 ]
             ])

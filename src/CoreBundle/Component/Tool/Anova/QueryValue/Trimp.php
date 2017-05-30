@@ -7,9 +7,6 @@ use Runalyze\Metrics\Common\Unit\None;
 
 class Trimp extends AbstractOneColumnValue
 {
-    /**
-     * @return string
-     */
     protected function getColumn()
     {
         return 'trimp';

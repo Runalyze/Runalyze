@@ -3,21 +3,24 @@
 namespace Runalyze\Bundle\CoreBundle\Component\Tool\Anova\QueryValue;
 
 use Runalyze\Bundle\CoreBundle\Component\Configuration\UnitSystem;
-use Runalyze\Metrics\Common\Unit\Simple;
+use Runalyze\Metrics\Common\Unit\Linear;
 
-class GroundContactTime extends AbstractOneColumnValue
+class FitPerformanceConditionStart extends AbstractOneColumnValue
 {
     protected function getColumn()
     {
-        return 'groundcontact';
+        return 'fitPerformanceCondition';
     }
 
     /**
      * @param UnitSystem $unitSystem
-     * @return Simple
+     * @return Linear
      */
     public function getValueUnit(UnitSystem $unitSystem)
     {
-        return new Simple('ms');
+        return new Linear(
+            function ($value) { return $value - 100; },
+            function ($value) { return $value + 100; }
+        );
     }
 }

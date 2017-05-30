@@ -96,7 +96,7 @@ class AnovaType extends AbstractType
                         'Pace' => QueryValues::PACE,
                         'Distance' => QueryValues::DISTANCE,
                         'Duration' => QueryValues::DURATION,
-                        'Heart rate' => QueryValues::HEART_RATE,
+                        'Heart rate' => QueryValues::HEART_RATE_AVERAGE,
                         'TRIMP' => QueryValues::TRIMP,
                         'Power' => QueryValues::POWER,
                         'Cadence' => QueryValues::CADENCE
