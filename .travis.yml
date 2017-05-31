@@ -9,7 +9,7 @@ php:
 env:
   - GROUP=import
   - GROUP=requiresKernel,requiresDoctrine,requiresClient
-  - EXCLUDE_GROUP=import,requiresKernel,requiresDoctrine,requiresClient
+  - GROUP=default,dependsOn,requiresSqlite EXCLUDE_GROUP=import,requiresKernel,requiresDoctrine,requiresClient
 
 before_install:
   - nvm install node
@@ -37,7 +37,7 @@ script:
   - 'if [ $(phpenv version-name) == "7.0" ] && [ "$DB" != "mariadb" ]; then vendor/bin/phpunit --colors -c tests/config.xml --coverage-clover build/logs/clover.xml --group "$GROUP" --exclude-group "dependsOnSRTM,dependsOnTimezoneDatabase,$EXCLUDE_GROUP"; fi'
 
 after_script:
-  - 'if [ $(phpenv version-name) != "7.0" ] || [ "$DB" == "mariadb" ]; then wget https://scrutinizer-ci.com/ocular.phar && php ocular.phar code-coverage:upload --format=php-clover build/logs/clover.xml; fi'
+  - 'if [ $(phpenv version-name) == "7.0" ] && [ "$DB" != "mariadb" ]; then wget https://scrutinizer-ci.com/ocular.phar && php ocular.phar code-coverage:upload --format=php-clover build/logs/clover.xml; fi'
 
 matrix:
   fast_finish: true
