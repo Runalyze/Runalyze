@@ -6,6 +6,10 @@ use Runalyze\Model\Activity;
 use Runalyze\Model\RaceResult;
 use Runalyze\Configuration;
 
+/**
+ * @group dependsOn
+ * @group dependsOnOldDatabase
+ */
 class LegacyVO2maxCorrectorTest extends \PHPUnit_Framework_TestCase
 {
     /** @var \PDO */

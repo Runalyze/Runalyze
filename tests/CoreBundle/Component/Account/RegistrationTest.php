@@ -9,6 +9,10 @@ use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\AccountRepository;
 use Symfony\Bundle\FrameworkBundle\Client;
 
+/**
+ * @group requiresKernel
+ * @group requiresClient
+ */
 class RegistrationTest extends WebTestCase
 {
     /** @var Client */

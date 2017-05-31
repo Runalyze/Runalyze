@@ -4,6 +4,9 @@ namespace Runalyze\Bundle\CoreBundle\Tests\Component\Tool\DatabaseCleanup;
 
 use Runalyze\Bundle\CoreBundle\Component\Tool\DatabaseCleanup\ElevationsRecalculator;
 
+/**
+ * @group requiresSqlite
+ */
 class ElevationsRecalculatorTest extends \PHPUnit_Framework_TestCase
 {
     /** @var \PDO */

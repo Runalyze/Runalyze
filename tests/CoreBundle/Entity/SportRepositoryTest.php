@@ -9,6 +9,9 @@ use Runalyze\Bundle\CoreBundle\Entity\Training;
 use Runalyze\Bundle\CoreBundle\Entity\TrainingRepository;
 use Runalyze\Profile\Sport\SportProfile;
 
+/**
+ * @group requiresDoctrine
+ */
 class SportRepositoryTest extends AbstractRepositoryTestCase
 {
     /** @var SportRepository */

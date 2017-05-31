@@ -4,6 +4,10 @@ namespace Runalyze\Bundle\CoreBundle\Tests\Component\Tool\Backup;
 
 use Runalyze\Bundle\CoreBundle\Component\Tool\Backup\AbstractBackup;
 
+/**
+ * @group dependsOn
+ * @group dependsOnOldDatabase
+ */
 class AbstractBackupTest extends \PHPUnit_Framework_TestCase
 {
     /** @var string */

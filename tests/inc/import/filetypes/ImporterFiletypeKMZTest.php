@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @group import
+ */
 class ImporterFiletypeKMZTest extends PHPUnit_Framework_TestCase {
 
 	/**

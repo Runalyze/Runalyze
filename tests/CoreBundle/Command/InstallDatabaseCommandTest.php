@@ -8,6 +8,10 @@ use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 
+/**
+ * @group requiresKernel
+ * @group requiresDoctrine
+ */
 class InstallDatabaseCommandTest extends KernelTestCase
 {
     /** @var \Doctrine\DBAL\Connection */

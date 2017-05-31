@@ -8,6 +8,10 @@ use Runalyze\Bundle\CoreBundle\Entity\Notification;
 use Runalyze\Bundle\CoreBundle\Entity\NotificationRepository;
 use Runalyze\Bundle\CoreBundle\Tests\DataFixtures\AbstractFixturesAwareWebTestCase;
 
+/**
+ * @group requiresKernel
+ * @group requiresClient
+ */
 class NotificationsControllerTest extends AbstractFixturesAwareWebTestCase
 {
     /** @var NotificationRepository */

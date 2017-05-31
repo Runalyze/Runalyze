@@ -5,6 +5,11 @@ namespace Runalyze\Service\WeatherForecast;
 use Runalyze\Data\Weather;
 use Runalyze\Model\WeatherCache;
 
+/**
+ * @group dependsOn
+ * @group dependsOnService
+ * @group dependsOnOpenWeatherMap
+ */
 class ForecastTest extends \PHPUnit_Framework_TestCase
 {
 
