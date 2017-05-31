@@ -11,6 +11,13 @@ env:
   - GROUP=requiresKernel,requiresDoctrine,requiresClient
   - GROUP=default,dependsOn,requiresSqlite EXCLUDE_GROUP=import,requiresKernel,requiresDoctrine,requiresClient
 
+cache:
+  directories:
+    - $HOME/.composer/cache
+    - $HOME/.cache/bower
+    - node_modules
+    - $HOME/.npm
+
 before_install:
   - nvm install node
 
