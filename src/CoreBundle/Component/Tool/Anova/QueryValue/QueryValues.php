@@ -37,6 +37,12 @@ final class QueryValues extends AbstractEnum
     const CADENCE = 'cadence';
 
     /** @var string */
+    const VO2MAX = 'vo2max';
+
+    /** @var string */
+    const VO2MAX_WITH_ELEVATION = 'vo2max_with_elevation';
+
+    /** @var string */
     const GROUND_CONTACT_TIME = 'ground_contact_time';
 
     /** @var string */

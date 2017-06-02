@@ -6,6 +6,7 @@ use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\Sport;
 use Runalyze\Bundle\CoreBundle\Entity\SportRepository;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Anova\QueryValue\QueryValues;
+use Runalyze\Bundle\CoreBundle\Services\Configuration\ConfigurationManager;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -21,13 +22,18 @@ class TrendAnalysisType extends AbstractType
     /** @var TokenStorage */
     protected $TokenStorage;
 
+    /** @var ConfigurationManager */
+    protected $ConfigurationManager;
+
     public function __construct(
         SportRepository $sportRepository,
-        TokenStorage $tokenStorage
+        TokenStorage $tokenStorage,
+        ConfigurationManager $configurationManager
     )
     {
         $this->SportRepository = $sportRepository;
         $this->TokenStorage = $tokenStorage;
+        $this->ConfigurationManager = $configurationManager;
     }
 
     /**
@@ -78,7 +84,8 @@ class TrendAnalysisType extends AbstractType
                         'Heart rate' => QueryValues::HEART_RATE_AVERAGE,
                         'TRIMP' => QueryValues::TRIMP,
                         'Power' => QueryValues::POWER,
-                        'Cadence' => QueryValues::CADENCE
+                        'Cadence' => QueryValues::CADENCE,
+                        'Effective VO2max' => $this->getQueryValueEnumForVO2max()
                     ],
                     'Running dynamics' => [
                         'Ground contact time' => QueryValues::GROUND_CONTACT_TIME,
@@ -103,5 +110,17 @@ class TrendAnalysisType extends AbstractType
         $resolver->setDefaults([
             'data_class' => TrendAnalysisData::class
         ]);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getQueryValueEnumForVO2max()
+    {
+        if ($this->ConfigurationManager->getList()->useVO2maxCorrectionForElevation()) {
+            return QueryValues::VO2MAX_WITH_ELEVATION;
+        }
+
+        return QueryValues::VO2MAX;
     }
 }

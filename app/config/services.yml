@@ -99,7 +99,7 @@ services:
      - { name: form.type }
   app.form.type.trend_analysis:
     class: Runalyze\Bundle\CoreBundle\Form\Tools\TrendAnalysis\TrendAnalysisType
-    arguments: ["@app.repository.sport", "@security.token_storage"]
+    arguments: ["@app.repository.sport", "@security.token_storage", "@app.configuration_manager"]
     tags:
      - { name: form.type }
   app.form.type.poster:
