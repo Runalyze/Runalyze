@@ -6,6 +6,9 @@ use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\Route;
 use Runalyze\Bundle\CoreBundle\Entity\RouteRepository;
 
+/**
+ * @group requiresDoctrine
+ */
 class RouteRepositoryTest extends AbstractRepositoryTestCase
 {
     /** @var RouteRepository */

@@ -6,6 +6,18 @@ php:
   - 7.0
   - 7.1
 
+env:
+  - GROUP=import
+  - GROUP=requiresKernel,requiresDoctrine,requiresClient
+  - GROUP=default,dependsOn,requiresSqlite EXCLUDE_GROUP=import,requiresKernel,requiresDoctrine,requiresClient
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+    - $HOME/.cache/bower
+    - node_modules
+    - $HOME/.npm
+
 before_install:
   - nvm install node
 
@@ -15,6 +27,8 @@ install:
 before_script:
   - cp app/config/default_config.yml data/config.yml
   - mkdir -p build/logs
+
+  - 'if [ $(phpenv version-name) != "7.0" ] || [ "$DB" == "mariadb" ]; then phpenv config-rm xdebug.ini; fi'
 
   - mysql -uroot -e 'SET @@global.sql_mode = TRADITIONAL; CREATE DATABASE runalyze_unittest; CREATE DATABASE runalyze_test;';
   - php bin/console --env=test doctrine:schema:update --force --complete
@@ -26,10 +40,11 @@ before_script:
   - mysql -e "SHOW VARIABLES LIKE 'wait_timeout';"
 
 script:
-  - vendor/bin/phpunit --colors -c tests/config.xml --coverage-clover build/logs/clover.xml
+  - 'if [ $(phpenv version-name) != "7.0" ] || [ "$DB" == "mariadb" ]; then vendor/bin/phpunit --colors -c tests/config.xml --group "$GROUP" --exclude-group "dependsOnSRTM,dependsOnTimezoneDatabase,$EXCLUDE_GROUP"; fi'
+  - 'if [ $(phpenv version-name) == "7.0" ] && [ "$DB" != "mariadb" ]; then vendor/bin/phpunit --colors -c tests/config.xml --coverage-clover build/logs/clover.xml --group "$GROUP" --exclude-group "dependsOnSRTM,dependsOnTimezoneDatabase,$EXCLUDE_GROUP"; fi'
 
 after_script:
-  - wget https://scrutinizer-ci.com/ocular.phar && php ocular.phar code-coverage:upload --format=php-clover build/logs/clover.xml
+  - 'if [ $(phpenv version-name) == "7.0" ] && [ "$DB" != "mariadb" ]; then wget https://scrutinizer-ci.com/ocular.phar && php ocular.phar code-coverage:upload --format=php-clover build/logs/clover.xml; fi'
 
 matrix:
   fast_finish: true
@@ -37,27 +52,27 @@ matrix:
     - php: 7.1
   include:
     - php: 5.6
-      env: DB=mariadb
+      env: DB=mariadb GROUP=requiresDoctrine,dependsOnOldDatabase
       addons:
         mariadb: 5.5
     - php: 7.0
-      env: DB=mariadb
+      env: DB=mariadb GROUP=requiresDoctrine,dependsOnOldDatabase
       addons:
         mariadb: 5.5
     - php: 7.1
-      env: DB=mariadb
+      env: DB=mariadb GROUP=requiresDoctrine,dependsOnOldDatabase
       addons:
         mariadb: 5.5
     - php: 5.6
-      env: DB=mariadb
+      env: DB=mariadb GROUP=requiresDoctrine,dependsOnOldDatabase
       addons:
         mariadb: 10.0
     - php: 7.0
-      env: DB=mariadb
+      env: DB=mariadb GROUP=requiresDoctrine,dependsOnOldDatabase
       addons:
         mariadb: 10.0
     - php: 7.1
-      env: DB=mariadb
+      env: DB=mariadb GROUP=requiresDoctrine,dependsOnOldDatabase
       addons:
         mariadb: 10.0
     - stage: deploy

@@ -7,6 +7,9 @@ use Runalyze\Bundle\CoreBundle\Entity\Sport;
 use Runalyze\Bundle\CoreBundle\Entity\Training;
 use Runalyze\Bundle\CoreBundle\Entity\TrainingRepository;
 
+/**
+ * @group requiresDoctrine
+ */
 class TrainingRepositoryTest extends AbstractRepositoryTestCase
 {
     /** @var TrainingRepository */

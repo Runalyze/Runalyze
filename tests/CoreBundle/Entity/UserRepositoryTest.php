@@ -6,6 +6,9 @@ use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\User;
 use Runalyze\Bundle\CoreBundle\Entity\UserRepository;
 
+/**
+ * @group requiresDoctrine
+ */
 class UserRepositoryTest extends AbstractRepositoryTestCase
 {
     /** @var UserRepository */

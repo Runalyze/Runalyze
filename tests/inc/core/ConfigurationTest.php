@@ -4,6 +4,10 @@ namespace Runalyze;
 
 use DB;
 
+/**
+ * @group dependsOn
+ * @group dependsOnOldDatabase
+ */
 class ConfigurationTest extends \PHPUnit_Framework_TestCase
 {
 

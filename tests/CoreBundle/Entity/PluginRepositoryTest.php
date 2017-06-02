@@ -6,6 +6,9 @@ use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\Plugin;
 use Runalyze\Bundle\CoreBundle\Entity\PluginRepository;
 
+/**
+ * @group requiresDoctrine
+ */
 class PluginRepositoryTest extends AbstractRepositoryTestCase
 {
     /** @var PluginRepository */

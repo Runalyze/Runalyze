@@ -10,6 +10,10 @@ class GeoTIFFwithoutSmoothing extends GeoTIFF
 	protected $POINTS_TO_GROUP = 1;
 }
 
+/**
+ * @group dependsOn
+ * @group dependsOnSRTM
+ */
 class GeoTIFFTest extends \PHPUnit_Framework_TestCase
 {
 
