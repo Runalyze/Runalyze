@@ -26,6 +26,31 @@
                             {{ form_widget(form.dateTo) }}
                             <label for="trend_analysis_dateTo" class="input-unit"><i class="fa fa-fw fa-calendar"></i></label>
                         </span>
+
+                        {% trans %}or{% endtrans %}
+
+                        {% set startTime = configVar('data.START_TIME') %}
+                        <select id="trend_analysis_dateSelect" name="trend_analysis_dateSelect">
+                            <option disabled selected>{{ 'choose a specific period'|trans }}</option>
+                            <option value="{{ date('-6months')|date('d.m.Y')~'-'~date('now')|date('d.m.Y') }}">{{ 'last 6 months'|trans }}</option>
+                            <option value="{{ date('-12months')|date('d.m.Y')~'-'~date('now')|date('d.m.Y') }}">{{ 'last 12 months'|trans }}</option>
+                            {% if startTime < date('1. jan') %}
+                            {% for year in (date('now')|date('Y'))..(configVar('data.START_TIME')|date('Y'))  %}
+                            <option value="{{ '01.01.'~year~'-31.12.'~year }}">{{ year }}</option>
+                            {% endfor %}
+                            <option value="{{ startTime|date('d.m.Y')~'-'~date('now')|date('d.m.Y') }}">{{ 'entire period'|trans }}</option>
+                            {% endif %}
+                        </select>
+
+                        <script>
+                            var $dateFrom = $("#trend_analysis_dateFrom"),
+                                $dateTo = $("#trend_analysis_dateTo");
+                            $("#trend_analysis_dateSelect").on('change', function(){
+                                var t = $(this).val().split('-');
+                                $dateFrom.val(t[0]);
+                                $dateTo.val(t[1]);
+                            });
+                        </script>
                     </div>
                 </div>
 
@@ -101,11 +126,10 @@
                                     json.tickFormatter(d[1]) +
                                     '</div>';
                             });
-
                         var xValue = function(d) { return 1000 * d[0]; },
-                            xScale = d3.scaleLinear().range([0, width]).domain([d3.min(data, xValue), d3.max(data, xValue)]).nice(),
+                            xScale = d3.scaleTime().range([0, width]).domain([d3.timeParse('%d.%m.%Y')($dateFrom.val()).getTime(), d3.timeParse('%d.%m.%Y')($dateTo.val()).getTime()]),
                             xMap = function(d) { return xScale(xValue(d));},
-                            xAxis = d3.axisBottom().scale(xScale).ticks(8).tickFormat(d3.timeFormat("%d.%m.%Y"));
+                            xAxis = d3.axisBottom().scale(xScale).ticks(6).tickFormat(d3.timeFormat("%d.%m.%Y"));
 
                         var yValue = function(d) { return d[1]; },
                             yScale = d3.scaleLinear().range([height, 0]).domain([d3.min(data, yValue), d3.max(data, yValue)]).nice(),
@@ -134,7 +158,7 @@
                         var axes = svg.append("g");
                         var plotArea = svg.append("g").attr('clip-path', 'url(#clip-trend-analysis)');
 
-                        grid.selectAll("line.grid").data(xScale.ticks(8)).enter()
+                        grid.selectAll("line.grid").data(xScale.ticks(6)).enter()
                             .append("line")
                             .attr("class", "grid")
                             .attr("x1", function(d){ return xScale(d) + 0.5; })
