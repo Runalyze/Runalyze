@@ -4,6 +4,7 @@ namespace Runalyze\Bundle\CoreBundle\Component\Configuration;
 
 use Runalyze\Bundle\CoreBundle\Entity\Sport;
 use Runalyze\Metrics\Cadence;
+use Runalyze\Metrics\Common\Unit\Factorial;
 use Runalyze\Metrics\Distance;
 use Runalyze\Metrics\HeartRate\Unit\PercentMaximum;
 use Runalyze\Metrics\LegacyUnitConverter;
@@ -149,5 +150,14 @@ class UnitSystem
         return $this->LegacyUnitConverter->getWeightUnit(
             $this->Configuration->get('general.WEIGHT_UNIT')
         );
+    }
+
+    /**
+     * @param null|float $correctionFactor
+     * @return Factorial
+     */
+    public function getVO2maxUnit($correctionFactor = null)
+    {
+        return new Factorial('', $correctionFactor ?: $this->Configuration->getVO2maxCorrectionFactor(), 2);
     }
 }

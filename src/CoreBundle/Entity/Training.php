@@ -199,6 +199,13 @@ class Training
     /**
      * @var bool|null
      *
+     * @ORM\Column(name="fit_performance_condition_end", columnDefinition="tinyint unsigned DEFAULT NULL")
+     */
+    private $fitPerformanceConditionEnd = null;
+
+    /**
+     * @var bool|null
+     *
      * @ORM\Column(name="rpe", columnDefinition="tinyint unsigned DEFAULT NULL")
      */
     private $rpe = null;
@@ -934,6 +941,26 @@ class Training
     public function getFitPerformanceCondition()
     {
         return $this->fitPerformanceCondition;
+    }
+
+    /**
+     * @param null|int $fitPerformanceConditionEnd
+     *
+     * @return $this
+     */
+    public function setFitPerformanceConditionEnd($fitPerformanceConditionEnd)
+    {
+        $this->fitPerformanceConditionEnd = $fitPerformanceConditionEnd;
+
+        return $this;
+    }
+
+    /**
+     * @return null|int
+     */
+    public function getFitPerformanceConditionEnd()
+    {
+        return $this->fitPerformanceConditionEnd;
     }
 
     /**

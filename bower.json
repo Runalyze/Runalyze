@@ -12,6 +12,7 @@
     "d3": "~4.9.1",
     "d3-tip": "~0.8.0-alpha.1",
     "ifvisible.js": "~1.0.6",
-    "jquery-timeago": "~1.5.4"
+    "jquery-timeago": "~1.5.4",
+    "regression-js": "~1.4.0"
   }
 }

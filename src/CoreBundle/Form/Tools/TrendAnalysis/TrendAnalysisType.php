@@ -1,14 +1,12 @@
 <?php
 
-namespace Runalyze\Bundle\CoreBundle\Form\Tools\Anova;
+namespace Runalyze\Bundle\CoreBundle\Form\Tools\TrendAnalysis;
 
-use Runalyze\Bundle\CoreBundle\Component\Tool\Anova\QueryGroup\QueryGroups;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
-use Runalyze\Bundle\CoreBundle\Entity\EquipmentType;
-use Runalyze\Bundle\CoreBundle\Entity\EquipmentTypeRepository;
 use Runalyze\Bundle\CoreBundle\Entity\Sport;
 use Runalyze\Bundle\CoreBundle\Entity\SportRepository;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Anova\QueryValue\QueryValues;
+use Runalyze\Bundle\CoreBundle\Services\Configuration\ConfigurationManager;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -16,26 +14,26 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
-class AnovaType extends AbstractType
+class TrendAnalysisType extends AbstractType
 {
     /** @var SportRepository */
     protected $SportRepository;
 
-    /** @var EquipmentTypeRepository */
-    protected $EquipmentTypeRepository;
-
     /** @var TokenStorage */
     protected $TokenStorage;
 
+    /** @var ConfigurationManager */
+    protected $ConfigurationManager;
+
     public function __construct(
         SportRepository $sportRepository,
-        EquipmentTypeRepository $equipmentTypeRepository,
-        TokenStorage $tokenStorage
+        TokenStorage $tokenStorage,
+        ConfigurationManager $configurationManager
     )
     {
         $this->SportRepository = $sportRepository;
-        $this->EquipmentTypeRepository = $equipmentTypeRepository;
         $this->TokenStorage = $tokenStorage;
+        $this->ConfigurationManager = $configurationManager;
     }
 
     /**
@@ -46,7 +44,7 @@ class AnovaType extends AbstractType
         $account = $this->TokenStorage->getToken() ? $this->TokenStorage->getToken()->getUser() : null;
 
         if (!($account instanceof Account)) {
-            throw new \RuntimeException('Anova type must have a valid account token.');
+            throw new \RuntimeException('Trend analysis type must have a valid account token.');
         }
 
         return $account;
@@ -77,19 +75,6 @@ class AnovaType extends AbstractType
                 'placeholder' => 'Choose sport(s)',
                 'attr' => ['class' => 'chosen-select full-size']
             ])
-            ->add('valueToGroupBy', ChoiceType::class, [
-                'choices' => [
-                    'Time related' => [
-                        'Month' => QueryGroups::MONTH,
-                        'Year' => QueryGroups::YEAR
-                    ],
-                    'General groups' => [
-                        'Sport type' => QueryGroups::SPORT,
-                        'Activity type' => QueryGroups::TYPE
-                    ],
-                    'Equipment types' => $this->getGroupsForSingleChoiceEquipmentTypes()
-                ]
-            ])
             ->add('valueToLookAt', ChoiceType::class, [
                 'choices' => [
                     'Main values' => [
@@ -99,37 +84,43 @@ class AnovaType extends AbstractType
                         'Heart rate' => QueryValues::HEART_RATE_AVERAGE,
                         'TRIMP' => QueryValues::TRIMP,
                         'Power' => QueryValues::POWER,
-                        'Cadence' => QueryValues::CADENCE
+                        'Cadence' => QueryValues::CADENCE,
+                        'Effective VO2max' => $this->getQueryValueEnumForVO2max()
                     ],
                     'Running dynamics' => [
                         'Ground contact time' => QueryValues::GROUND_CONTACT_TIME,
                         'Ground contact balance' => QueryValues::GROUND_CONTACT_BALANCE,
                         'Vertical oscillation' => QueryValues::VERTICAL_OSCILLATION
+                    ],
+                    'FIT details' => [
+                        'HRV analysis' => QueryValues::FIT_HRV_ANALYSIS,
+                        'Performance condition (start)' => QueryValues::FIT_PERFORMANCE_CONDITION_START,
+                        'Performance condition (end)' => QueryValues::FIT_PERFORMANCE_CONDITION_END,
+                        'Recovery time' => QueryValues::FIT_RECOVERY_TIME,
+                        'Training effect' => QueryValues::FIT_TRAINING_EFFECT,
+                        'VO2max estimate' => QueryValues::FIT_VO2MAX_ESTIMATE
                     ]
                 ]
             ])
         ;
     }
 
-    /**
-     * @return array
-     */
-    protected function getGroupsForSingleChoiceEquipmentTypes()
-    {
-        $equipmentTypes = $this->EquipmentTypeRepository->findSingleChoiceTypesFor($this->getAccount());
-        $groups = [];
-
-        foreach ($equipmentTypes as $equipmentType) {
-            $groups[$equipmentType->getName()] = QueryGroups::getEnumForEquipmentType($equipmentType);
-        }
-
-        return $groups;
-    }
-
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => AnovaData::class
+            'data_class' => TrendAnalysisData::class
         ]);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getQueryValueEnumForVO2max()
+    {
+        if ($this->ConfigurationManager->getList()->useVO2maxCorrectionForElevation()) {
+            return QueryValues::VO2MAX_WITH_ELEVATION;
+        }
+
+        return QueryValues::VO2MAX;
     }
 }

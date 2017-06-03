@@ -5,6 +5,14 @@
         <h1>{% trans %}Analysis{% endtrans %}</h1>
     </div>
     <p class="file">
+        <a class="ajax" href="{{ url('tools-trend-analysis') }}" target="ajax">
+            <strong class="block">{% trans %}Trend analysis{% endtrans %}</strong>
+            <small class="block">
+                {% trans %}See how your activity's values evolve over time.{% endtrans %}
+            </small>
+        </a>
+    </p>
+    <p class="file">
         <a class="ajax" href="{{ url('tools-anova') }}" target="ajax">
             <strong class="block">{% trans %}ANOVA{% endtrans %}</strong>
             <small class="block">

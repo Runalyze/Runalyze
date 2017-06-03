@@ -1,61 +1,42 @@
 <?php
 
-namespace Runalyze\Bundle\CoreBundle\Component\Tool\Anova;
+namespace Runalyze\Bundle\CoreBundle\Component\Tool\TrendAnalysis;
 
 use Doctrine\ORM\AbstractQuery;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 use Runalyze\Bundle\CoreBundle\Component\Configuration\UnitSystem;
-use Runalyze\Bundle\CoreBundle\Component\Tool\Anova\QueryGroup\QueryGroupInterface;
-use Runalyze\Bundle\CoreBundle\Component\Tool\Anova\QueryGroup\QueryGroups;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Anova\QueryValue\QueryValueInterface;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Anova\QueryValue\QueryValues;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\Sport;
 use Runalyze\Bundle\CoreBundle\Entity\TrainingRepository;
-use Runalyze\Bundle\CoreBundle\Form\Tools\Anova\AnovaData;
+use Runalyze\Bundle\CoreBundle\Form\Tools\TrendAnalysis\TrendAnalysisData;
 use Runalyze\Metrics\Common\UnitInterface;
 
-class AnovaDataQuery
+class TrendAnalysisDataQuery
 {
-    /** @var AnovaData */
-    protected $AnovaData;
-
-    /** @var QueryGroupInterface */
-    protected $QueryGroup;
+    /** @var TrendAnalysisData */
+    protected $TrendAnalysisData;
 
     /** @var QueryValueInterface */
     protected $QueryValue;
 
     /** @var array */
-    protected $Groups = [];
+    protected $Values = [];
 
-    public function __construct(AnovaData $anovaData)
+    public function __construct(TrendAnalysisData $trendAnalysisData)
     {
-        $this->AnovaData = $anovaData;
-        $this->QueryGroup = QueryGroups::getGroup($anovaData->getValueToGroupBy());
-        $this->QueryValue = QueryValues::get($anovaData->getValueToLookAt());
-    }
-
-    public function loadAllGroups(EntityManager $entityManager, Account $account)
-    {
-        $this->Groups = [];
-        $groups = $this->QueryGroup->loadAllGroups($entityManager, $account, $this->AnovaData);
-
-        foreach ($groups as $id => $label) {
-            $this->Groups[(int)$id] = [
-                'label' => $label,
-                'data' => []
-            ];
-        }
+        $this->TrendAnalysisData = $trendAnalysisData;
+        $this->QueryValue = QueryValues::get($trendAnalysisData->getValueToLookAt());
     }
 
     /**
+     * @param UnitSystem $unitSystem
      * @return UnitInterface
      */
     public function getValueUnit(UnitSystem $unitSystem)
     {
-        $sports = $this->AnovaData->getSport();
+        $sports = $this->TrendAnalysisData->getSport();
 
         if (1 == count($sports)) {
             $unitSystem->setPaceUnitFromSport(array_shift($sports));
@@ -75,12 +56,10 @@ class AnovaDataQuery
         foreach ($iterator as $row) {
             $data = array_shift($row);
 
-            $this->Groups[(int)$data['grouping']]['data'][] = $unit->fromBaseUnit((float)$data['value']);
+            $this->Values[(int)$data['time']] = $unit->fromBaseUnit((float)$data['value']);
         }
 
-        $this->filterEmptyGroups();
-
-        return array_values($this->Groups);
+        return $this->Values;
     }
 
     /**
@@ -89,16 +68,15 @@ class AnovaDataQuery
     protected function buildQuery(TrainingRepository $trainingRepository, Account $account)
     {
         $queryBuilder = $trainingRepository->createQueryBuilder('t')
-            ->select('1')
+            ->select('t.time')
             ->andWhere('t.account = :account')
             ->andWhere('t.time BETWEEN :startTime and :endTime')
             ->join('t.sport', 's')
             ->setParameter('account', $account->getId())
-            ->setParameter('startTime', $this->AnovaData->getDateFromTimestamp())
-            ->setParameter('endTime', $this->AnovaData->getDateToTimestamp());
+            ->setParameter('startTime', $this->TrendAnalysisData->getDateFromTimestamp())
+            ->setParameter('endTime', $this->TrendAnalysisData->getDateToTimestamp());
 
         $this->addSportConditionToQuery($queryBuilder);
-        $this->QueryGroup->addSelectionToQuery($queryBuilder, 't', 'grouping', 's');
         $this->QueryValue->addSelectionToQuery($queryBuilder, 't', 'value');
 
         return $queryBuilder->getQuery();
@@ -109,17 +87,6 @@ class AnovaDataQuery
         $queryBuilder->andWhere($queryBuilder->expr()->in('t.sport', ':sports'));
         $queryBuilder->setParameter(':sports', array_map(function(Sport $sport) {
             return $sport->getId();
-        }, $this->AnovaData->getSport()));
-    }
-
-    protected function filterEmptyGroups()
-    {
-        if (!$this->QueryGroup->showEmptyGroups()) {
-            foreach ($this->Groups as $key => $data) {
-                if (empty($data['data'])) {
-                    unset($this->Groups[$key]);
-                }
-            }
-        }
+        }, $this->TrendAnalysisData->getSport()));
     }
 }
