@@ -74,14 +74,15 @@
                 <th>{{ 'Length'|trans }}</th>
                 <th>{{ 'Gradient'|trans }}</th>
                 <th>{{ 'Category'|trans }}</th>
-                <th>{{ 'FIETS'|trans }}</th>
+                <th>{{ 'FIETS'|trans }} <span rel="tooltip" title="{{ 'Index to categorize climbs by Dutch cycling magazine fiets.'|trans }}"><i class="fa fa-fw fa-info-circle"></i></span></th>
                 <th>{{ 'Duration'|trans }}</th>
                 <th>{{ 'Pace'|trans }}</th>
+                <th>{{ 'Vertical pace'|trans }}</th>
             </tr>
             </thead>
             <tbody id="climb-table" class="top-and-bottom-border r">
             <tr>
-                <td colspan="8"><em>{{ 'No significant climbs could be detected.'|trans }}</em></td>
+                <td colspan="9"><em>{{ 'No significant climbs could be detected.'|trans }}</em></td>
             </tr>
             </tbody>
         </table>
@@ -168,7 +169,11 @@
                     '<td>' + climb.scoreFiets.toFixed(1) + '</td>' +
                     '<td>' + d3.utcFormat(climb.duration >= 3600 ? '%-H:%M:%S' : '%-M:%S')(climb.duration*1000) + '</td>' +
                     '<td>' + unitSystem.formatter.pace(unitSystem.transformer.pace(climb.duration / climb.distance)) + '</td>' +
-                    '</tr>').appendTo($table);
+                    '<td>' + unitSystem.formatter.elevation(Math.round(climb.elevation / (climb.duration/3600))) + '/h</td>' +
+                    '</tr>')
+                    .appendTo($table)
+                    .on('mouseover', function(){ $(this).addClass('highlight'); $plot.find('.climb:eq('+i+')').addClass('hover'); })
+                    .on('mouseout', function(){ $(this).removeClass('highlight'); $plot.find('.climb:eq('+i+')').removeClass('hover'); });
             });
         }
 
@@ -198,6 +203,7 @@
             svg.append('clipPath').attr('id', 'clip-trend-analysis').append('rect').attr('x', 0).attr('y',0).attr('width', width).attr('height', height);
 
             var plotArea = svg.append("g").attr('clip-path', 'url(#clip-trend-analysis)');
+            var climbArea = svg.append("g");
             var axes = svg.append("g");
 
             plotArea.append("path")
@@ -215,14 +221,24 @@
                 .attr("d", d3.line().x(xMap).y(yMap)(data));
 
             $.each(score.climbs, function (i, c) {
-                var g = plotArea.append("g")
-                    .attr("class", "climb")
-                    .attr("transform", "translate(" + (xMap([c.distanceStart + c.distance, 0]) - 0) + "," +(yMap([0, c.altitudeTop]) - 10) + ")");
+                var g = climbArea.append("g").attr("class", "climb"),
+                    x = xMap([c.distanceStart + c.distance, 0]),
+                    y = yMap([0, c.altitudeTop]),
+                    b = g.append("g").attr("class", "climb-badge")
+                         .attr("transform", "translate(" + x + "," + (y - 10) + ")");
 
-                g.append("circle")
-                    .attr("r", "7");
-                g.append("text")
-                    .text(c.category);
+                b.append("circle").attr("r", "7");
+                b.append("text").text(c.category);
+
+                g.append("path").attr("class", "climb-profile")
+                    .datum(data.slice(c.indexStart, c.indexEnd))
+                    .attr("d", d3.area().x(xMap).y0(height).y1(yMap));
+
+                g.append("line").attr("class", "climb-start").attr("x1", xMap([c.distanceStart, 0])).attr("x2", xMap([c.distanceStart, 0])).attr("y1", height ).attr("y2", yMap([0, c.altitudeTop - c.elevation]));
+                g.append("line").attr("class", "climb-end").attr("x1", x).attr("x2", x).attr("y1", height).attr("y2", y);
+
+                g.on('mouseover', function (){ $table.find('tr:eq('+ i +')').addClass('highlight') });
+                g.on('mouseout', function (){ $table.find('tr:eq('+ i +')').removeClass('highlight') });
             });
 
             axes.append("g")
@@ -329,15 +345,35 @@
             font-weight: bold;
         }
 
-        .climb circle {
+        .d3js .climb-badge circle {
             fill: #EA463D;
         }
-        .climb text {
+        .d3js .climb-badge text {
             fill: #eee;
             dominant-baseline: central;
             text-anchor: middle;
             font-size: 10px;
             font-family: Arial, sans-serif;
+        }
+        .d3js .climb .climb-profile {
+            fill: none;
+        }
+        .d3js .climb:hover .climb-profile,
+        .d3js .climb.hover .climb-profile {
+            fill: #ccc;
+        }
+        .d3js .climb line {
+            stroke: #ccc;
+            stroke-dasharray: 5,10;
+            shape-rendering: crispEdges;
+        }
+        .d3js .climb line.climb-start {
+            stroke: none;
+        }
+        .d3js .climb:hover line,
+        .d3js .climb.hover line {
+            stroke: #999;
+            stroke-dasharray: none;
         }
     </style>
 {% endblock %}
