@@ -341,6 +341,18 @@ class Route
     }
 
     /**
+     * @return array|null
+     */
+    public function getElevations()
+    {
+        if (null !== $this->elevationsCorrected) {
+            return $this->elevationsCorrected;
+        }
+
+        return $this->elevationsOriginal;
+    }
+
+    /**
      * @param string|null $elevationsSource
      *
      * @return $this

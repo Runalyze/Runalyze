@@ -1,0 +1,343 @@
+{% extends "base_logged_in.twig" %}
+
+{% import _self as this %}
+
+{% macro valueWithUnitFor(value) -%}
+    {# @var value \Runalyze\Bundle\CoreBundle\Twig\DisplayableValue #}
+    {{ value.value }} <small>{{ value.unit }}</small>
+{%- endmacro %}
+
+{% block content %}
+    <div class="panel-heading">
+        <h1>{{ context.activity.time|date('d.m.Y') }}: {{ decorator.title }}</h1>
+    </div>
+
+    <div class="panel-content margin-bottom-2x">
+        <div id="climb-score-{{ context.activity.id }}" class="clearfix">
+            <div class="left" style="width:120px">
+                <h2 class="c" style="padding-left:0;padding-right:0">
+                    {{ 'Climb Score'|trans }}<sup class="colored-green">beta</sup>
+                </h2>
+
+                <div class="climb-score-badge text-center clearfix margin-bottom">
+                    <div id="hill-score-progress" class="radial-progress">
+                        <div class="circle">
+                            <div class="mask full" style="transform: rotate(18deg);">
+                                <div class="fill" style="transform: rotate(18deg);"></div>
+                            </div>
+                            <div class="mask half">
+                                <div class="fill" style="transform: rotate(18deg);"></div>
+                                <div class="fill fix" style="transform: rotate(36deg);"></div>
+                            </div>
+                        </div>
+                        <div class="inset">1.0</div>
+                    </div>
+                </div>
+
+                <div class="climb-score-values margin-bottom">
+                    <strong>{{ this.valueWithUnitFor(distance(context.activity.distance)) }}</strong><br>
+                    <strong>{{ this.valueWithUnitFor(elevation(decorator.elevationUp)) }}</strong>
+                </div>
+
+                <div id="hill-score-hilly-or-not">
+                    <div class="row">
+                        <div class="left hilly-score-hilly-or-not-score">50%</div>
+                        <div class="right hilly-score-hilly-or-not-score">50%</div>
+                    </div>
+                    <div class="row">
+                        <div class="left hilly-score-hilly-or-not-bar" style="width:49.5%"></div>
+                        <div class="right hilly-score-hilly-or-not-bar" style="width:49.5%"></div>
+                    </div>
+                    <div class="row">
+                        <div class="left hilly-score-hilly-or-not-label">{{ 'Hilly'|trans }}</div>
+                        <div class="right hilly-score-hilly-or-not-label">{{ 'Flat'|trans }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="hill-score-elevation-plot" class="svg-container loading" style="min-height:200px;margin-left:120px">
+
+            </div>
+        </div>
+    </div>
+
+    <div class="panel-heading panel-sub-heading">
+        <h2>{{ 'Climbs'|trans }}</h2>
+    </div>
+
+    <div class="panel-content margin-bottom-2x">
+        <table class="zebra-style more-padding fullwidth">
+            <thead>
+            <tr>
+                <th></th>
+                <th>{{ 'Elevation'|trans }}</th>
+                <th>{{ 'Length'|trans }}</th>
+                <th>{{ 'Gradient'|trans }}</th>
+                <th>{{ 'Category'|trans }}</th>
+                <th>{{ 'FIETS'|trans }}</th>
+                <th>{{ 'Duration'|trans }}</th>
+                <th>{{ 'Pace'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody id="climb-table" class="top-and-bottom-border r">
+            <tr>
+                <td colspan="8"><em>{{ 'No significant climbs could be detected.'|trans }}</em></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+<!--
+    <div class="panel-heading panel-sub-heading">
+        <h2>{{ 'Gradient distribution'|trans }}</h2>
+    </div>
+
+    <div class="panel-content">
+        <div id="" class="loading">
+
+        </div>
+    </div>
+-->
+    <script>
+        var unitSystem = {
+            transformer: {
+                pace: {{ jsTransformer(paceUnit) }},
+                distance: {{ jsTransformer(unitSystem().distanceUnit) }},
+                elevation: {{ jsTransformer(unitSystem().elevationUnit) }}
+            },
+            formatter: {
+                pace: {{ jsFormatter(paceUnit) }},
+                distance: {{ jsFormatter(unitSystem().distanceUnit) }},
+                elevation: {{ jsFormatter(unitSystem().elevationUnit) }}
+            }
+        };
+        var stream = {
+            distance: {{ context.trackdata.distance|json_encode }},
+            time: {{ context.trackdata.time|json_encode }},
+            elevation: {{ context.route.elevations|json_encode }}.map(function(v){return v/1000;})
+        };
+
+        var $plot = $("#hill-score-elevation-plot");
+
+        var data = [], untransformedData = [];
+
+        for (var i = 0; i < stream.distance.length; ++i) {
+            untransformedData.push([stream.distance[i], stream.elevation[i] * 1000]);
+            data.push([
+                unitSystem.transformer.distance(stream.distance[i]),
+                unitSystem.transformer.elevation(stream.elevation[i])
+            ]);
+        }
+
+        var score = ClimbScore(untransformedData);
+        var hillScore = score.totalScore.sum;
+
+        var $circleScore = $("#hill-score-progress");
+
+        $circleScore.find('.inset').text(hillScore.toFixed(1));
+        var transform_styles = ['-webkit-transform', '-ms-transform', 'transform'];
+        for (var i in transform_styles) {
+            $circleScore.find('.fill, .mask.full').css(transform_styles[i], 'rotate(' + (hillScore * 18.0) + 'deg)');
+            $circleScore.find('.fill.fix').css(transform_styles[i], 'rotate(' + (hillScore * 36.0) + 'deg)');
+        }
+
+        var $flatOrHilly = $("#hill-score-hilly-or-not");
+        var $flatOrHillyScore = $flatOrHilly.find(".hilly-score-hilly-or-not-score");
+        var $flatOrHillyBar = $flatOrHilly.find(".hilly-score-hilly-or-not-bar");
+
+        $($flatOrHillyScore[0]).text(score.percentageHilly.toFixed(0) + "%");
+        $($flatOrHillyScore[1]).text(score.percentageFlat.toFixed(0) + "%");
+        $($flatOrHillyBar[0]).css('width', (0.99 * score.percentageHilly).toFixed(0) + "%");
+        $($flatOrHillyBar[1]).css('width', (0.99 * score.percentageFlat).toFixed(0) + "%");
+
+        var $table = $("#climb-table");
+
+        if (score.climbs.length) {
+            $table.find("tr").remove();
+
+            $.each(score.climbs, function (i, climb) {
+                score.climbs[i].indexStart = d3.bisect(stream.distance, climb.distanceStart) - 1;
+                score.climbs[i].indexEnd = d3.bisect(stream.distance, climb.distanceStart + climb.distance) - 1;
+                score.climbs[i].duration = stream.time[score.climbs[i].indexEnd] - stream.time[score.climbs[i].indexStart];
+
+                $('<tr>' +
+                    '<td>' + unitSystem.formatter.distance(climb.distanceStart) + '</td>' +
+                    '<td>' + unitSystem.formatter.elevation(climb.elevation) + '</td>' +
+                    '<td>' + unitSystem.formatter.distance(climb.distance) + '</td>' +
+                    '<td>' + climb.gradient.toFixed(1) + ' &#37;</td>' +
+                    '<td class="c">' + climb.category + '</td>' +
+                    '<td>' + climb.scoreFiets.toFixed(1) + '</td>' +
+                    '<td>' + d3.utcFormat(climb.duration >= 3600 ? '%-H:%M:%S' : '%-M:%S')(climb.duration*1000) + '</td>' +
+                    '<td>' + unitSystem.formatter.pace(unitSystem.transformer.pace(climb.duration / climb.distance)) + '</td>' +
+                    '</tr>').appendTo($table);
+            });
+        }
+
+        try {
+            var margin = {top: 10, right: 10, bottom: 30, left: 50},
+                height = 200,
+                width = 690 - margin.left - margin.right;
+
+            var xValue = function(d) { return d[0]; },
+                xScale = d3.scaleLinear().range([0, width]).domain([d3.min(data, xValue), d3.max(data, xValue)]),
+                xMap = function(d) { return xScale(xValue(d));},
+                xAxis = d3.axisBottom().scale(xScale).tickFormat(unitSystem.formatter.distance);
+
+            var yValue = function(d) { return d[1]; },
+                yDomain = [d3.min(data, yValue), d3.max(data, yValue)],
+                yScale = d3.scaleLinear().range([height, 0]).domain([Math.max(Math.min(0, yDomain[0]), yDomain[0]-.2*(yDomain[1]-yDomain[0])), yDomain[1]+.2*(yDomain[1]-yDomain[0])]).nice(),
+                yMap = function(d) { return yScale(yValue(d));},
+                yAxis = d3.axisLeft().scale(yScale).tickFormat(unitSystem.formatter.elevation);
+
+            var svg = d3.select("#hill-score-elevation-plot").append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .attr("class", "d3js")
+                .append("g")
+                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+            svg.append('clipPath').attr('id', 'clip-trend-analysis').append('rect').attr('x', 0).attr('y',0).attr('width', width).attr('height', height);
+
+            var plotArea = svg.append("g").attr('clip-path', 'url(#clip-trend-analysis)');
+            var axes = svg.append("g");
+
+            plotArea.append("path")
+                .datum(data)
+                .attr("class", "area")
+                .attr("stroke-width", "0")
+                .attr("fill", "rgba(227,217,187,.5)")
+                .attr("d", d3.area().x(xMap).y0(height).y1(yMap));
+
+            plotArea.append("path")
+                .attr("fill", "none")
+                .attr("stroke", "rgb(227,217,187)")
+                .attr("stroke-width", "2px")
+                .attr("class", "trend")
+                .attr("d", d3.line().x(xMap).y(yMap)(data));
+
+            $.each(score.climbs, function (i, c) {
+                var g = plotArea.append("g")
+                    .attr("class", "climb")
+                    .attr("transform", "translate(" + (xMap([c.distanceStart + c.distance, 0]) - 0) + "," +(yMap([0, c.altitudeTop]) - 10) + ")");
+
+                g.append("circle")
+                    .attr("r", "7");
+                g.append("text")
+                    .text(c.category);
+            });
+
+            axes.append("g")
+                .attr("class", "y axis")
+                .call(yAxis);
+
+            axes.append("g")
+                .attr("class", "x axis")
+                .attr("transform", "translate(0," + height + ")")
+                .call(xAxis);
+        } catch (e) {
+            console.log(e);
+
+            $plot.html('<p class="text"><em>{% trans %}There was a problem.{% endtrans %} ({% trans %}Plotting failed{% endtrans %})</em></p>');
+        } finally {
+            $plot.removeClass('loading');
+        }
+    </script>
+
+    <style>
+        .climb-score-badge {
+            margin-left: 20px;
+        }
+        .climb-score-values {
+            width: 80%;
+            margin-right: auto;
+            text-align: right;
+            font-size: 12px;
+        }
+        #hill-score-hilly-or-not {
+            width: 120px;
+            line-height: 12px;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        #hill-score-hilly-or-not .row {
+            display: block;
+            clear: both;
+        }
+        #hill-score-hilly-or-not .row:after {
+            content: '';
+            clear: both;
+        }
+        #hill-score-hilly-or-not .left {
+            float: left;
+            text-align: left;
+        }
+        #hill-score-hilly-or-not .right {
+            float: right;
+            text-align: right;
+        }
+        .hilly-score-hilly-or-not-bar {
+            margin: 3px 0;
+            height: 12px;
+        }
+        .hilly-score-hilly-or-not-bar.left {
+            background-color: #2980B9;
+        }
+        .hilly-score-hilly-or-not-bar.right {
+            background-color: #7bbd5b;
+        }
+        .hilly-score-hilly-or-not-label {
+            text-transform: lowercase;
+        }
+
+        .radial-progress { /* via https://codepen.io/paolomazzacani/pen/cAnpy */
+            float: left;
+            margin: 10px;
+            width: 60px;
+            height: 60px;
+            position: relative;
+            background-color: #d7d7d7;
+            border-radius: 50%;
+        }
+        .radial-progress .circle .mask, .radial-progress .circle .fill, .radial-progress .circle .shadow {
+            width: 60px;
+            height: 60px;
+            position: absolute;
+            border-radius: 50%;
+        }
+        .radial-progress .circle .mask, .radial-progress .circle .fill {
+            -webkit-backface-visibility: hidden;
+        }
+        .radial-progress .circle .mask {
+            clip: rect(0px, 60px, 60px, 30px);
+        }
+        .radial-progress .circle .mask .fill {
+            clip: rect(0px, 30px, 60px, 0px);
+            background-color: #EA463D;
+        }
+        .radial-progress .inset {
+            width: 50px !important;
+            height: 50px !important;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin: -25px 0 0 -25px !important;
+            background-color: #fbfbfb;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 50px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .climb circle {
+            fill: #EA463D;
+        }
+        .climb text {
+            fill: #eee;
+            dominant-baseline: central;
+            text-anchor: middle;
+            font-size: 10px;
+            font-family: Arial, sans-serif;
+        }
+    </style>
+{% endblock %}

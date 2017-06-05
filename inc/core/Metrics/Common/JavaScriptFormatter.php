@@ -20,4 +20,19 @@ class JavaScriptFormatter
 
         return 'function(d){return '.$valueConversion.' + \' '.$unit->getAppendix().'\';}';
     }
+
+    public static function getTransformer(UnitInterface $unit)
+    {
+        if (method_exists($unit, 'getFactorFromBaseUnit')) {
+            $valueConversion = 'd*'.$unit->getFactorFromBaseUnit();
+        } elseif (method_exists($unit, 'getDividendFromBaseUnit')) {
+            $valueConversion = 'd==0?0:'.$unit->getDividendFromBaseUnit().'/d';
+        } elseif (1.234 == $unit->toBaseUnit(1.234)) { // check for base units
+            $valueConversion = 'd';
+        } else {
+            throw new \InvalidArgumentException('Unsupported unit. Transformation rule can\'t be determined.');
+        }
+
+        return 'function(d){return '.$valueConversion.';}';
+    }
 }

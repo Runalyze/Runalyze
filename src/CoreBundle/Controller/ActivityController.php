@@ -2,9 +2,11 @@
 
 namespace Runalyze\Bundle\CoreBundle\Controller;
 
+use Runalyze\Bundle\CoreBundle\Component\Activity\ActivityDecorator;
 use Runalyze\Bundle\CoreBundle\Component\Activity\Tool\BestSubSegmentsStatistics;
 use Runalyze\Bundle\CoreBundle\Component\Activity\Tool\TimeSeriesStatistics;
 use Runalyze\Bundle\CoreBundle\Component\Activity\VO2maxCalculationDetailsDecorator;
+use Runalyze\Bundle\CoreBundle\Component\Configuration\UnitSystem;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\Trackdata;
 use Runalyze\Bundle\CoreBundle\Entity\Training;
@@ -346,6 +348,26 @@ class ActivityController extends Controller
             'statistics' => $statistics,
             'distanceArray' => $trackdataModel->distance(),
             'paceUnit' => $paceUnit
+        ]);
+    }
+
+    /**
+     * @Route("/activity/{id}/climb-score", requirements={"id" = "\d+"}, name="activity-tool-climb-score")
+     * @ParamConverter("activity", class="CoreBundle:Training")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function climbScoreAction(Training $activity, Account $account)
+    {
+        $activityContext = $this->get('app.activity_context.factory')->getContext($activity);
+
+        if ($activity->getAccount()->getId() != $account->getId() || !$activityContext->hasTrackdata() || !$activityContext->hasRoute()) {
+            throw $this->createNotFoundException('No activity found.');
+        }
+
+        return $this->render('activity/tool/climb_score.html.twig', [
+            'context' => $activityContext,
+            'decorator' => new ActivityDecorator($activityContext),
+            'paceUnit' => $activity->getSport()->getSpeedUnit()
         ]);
     }
 

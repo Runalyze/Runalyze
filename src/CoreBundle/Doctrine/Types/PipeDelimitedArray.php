@@ -32,7 +32,9 @@ class PipeDelimitedArray extends Type
 
         $value = (is_resource($value)) ? stream_get_contents($value) : $value;
 
-        return explode('|', $value);
+        return array_map(function ($v) {
+            return $v + 0;
+        }, explode('|', $value));
     }
 
     public function getName()

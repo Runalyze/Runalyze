@@ -73,6 +73,7 @@
       "./web/vendor/d3-tip/index.js",
 
       "./app/Resources/public/js/d3js-boxplot.js",
+      "./app/Resources/public/js/climb-score.js",
 
       "./web/vendor/fontIconPicker/jquery.fonticonpicker.js",
 
