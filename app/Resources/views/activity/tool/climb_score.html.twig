@@ -81,7 +81,7 @@
             </tr>
             </thead>
             <tbody id="climb-table" class="top-and-bottom-border r">
-            <tr>
+            <tr class="c">
                 <td colspan="9"><em>{{ 'No significant climbs could be detected.'|trans }}</em></td>
             </tr>
             </tbody>
@@ -130,7 +130,7 @@
         }
 
         var score = ClimbScore(untransformedData);
-        var hillScore = score.totalScore.sum;
+        var hillScore = score.totalScore.weightedSumClimbs;
 
         var $circleScore = $("#hill-score-progress");
 
@@ -160,7 +160,7 @@
                 score.climbs[i].indexEnd = d3.bisect(stream.distance, climb.distanceStart + climb.distance) - 1;
                 score.climbs[i].duration = stream.time[score.climbs[i].indexEnd] - stream.time[score.climbs[i].indexStart];
 
-                $('<tr>' +
+                $('<tr class="climb-details">' +
                     '<td>' + unitSystem.formatter.distance(climb.distanceStart) + '</td>' +
                     '<td>' + unitSystem.formatter.elevation(climb.elevation) + '</td>' +
                     '<td>' + unitSystem.formatter.distance(climb.distance) + '</td>' +
@@ -173,7 +173,118 @@
                     '</tr>')
                     .appendTo($table)
                     .on('mouseover', function(){ $(this).addClass('highlight'); $plot.find('.climb:eq('+i+')').addClass('hover'); })
-                    .on('mouseout', function(){ $(this).removeClass('highlight'); $plot.find('.climb:eq('+i+')').removeClass('hover'); });
+                    .on('mouseout', function(){ $(this).removeClass('highlight'); $plot.find('.climb:eq('+i+')').removeClass('hover'); })
+                    .on('click', function(){
+                        var closeEvent = $(this).find('.highlight').length;
+
+                        $table.find('.highlight').removeClass('highlight');
+                        $table.find('.climb-profile').fadeOut();
+                        $plot.find('.climb.clicked').removeClass('clicked');
+
+                        if (closeEvent) {
+                            return;
+                        }
+
+                        $(this).find('td').addClass('highlight');
+                        $plot.find('.climb:eq('+i+')').addClass('clicked');
+
+                        if ($(this).next().hasClass('climb-profile')) {
+                            $(this).next().fadeIn();
+                        } else {
+                            $('<tr class="climb-profile">' +
+                                '<td colspan="9">' +
+                                '<div id="hill-score-climb-profile-' + i + '" class="svg-container loading" style="min-height:200px;margin-left:auto"></div>' +
+                                '</td></tr>').insertAfter($(this));
+
+                            try {
+                                var climbData = data.slice(climb.indexStart - 1, climb.indexEnd).map(function(v){ return [v[0] - data[climb.indexStart][0], v[1]]; }),
+                                    segWidth = Math.max(0.1, Math.ceil(climbData[climbData.length - 1][0] / 2) / 10),
+                                    numSegs = Math.ceil(climbData[climbData.length - 1][0] / segWidth),
+                                    segStart = NaN, segEnd = 0, segGrade = NaN, segAlpha = NaN, segData = [];
+
+                                var xScaleClimb = d3.scaleLinear().range([0, width]).domain([d3.min(climbData, xValue), d3.max(climbData, xValue)]),
+                                    xMapClimb = function(d) { return xScaleClimb(xValue(d));},
+                                    xAxisClimb = d3.axisBottom().scale(xScaleClimb).tickFormat(unitSystem.formatter.distance);
+
+                                var yDomainClimb = [d3.min(climbData, yValue), d3.max(climbData, yValue)],
+                                    yScaleClimb = d3.scaleLinear().range([height, 0]).domain([yDomainClimb[0] - 0.1*(yDomainClimb[1]-yDomainClimb[0]), yDomainClimb[1]]).nice(),
+                                    yMapClimb = function(d) { return yScaleClimb(yValue(d));},
+                                    yAxisClimb = d3.axisLeft().scale(yScaleClimb).tickFormat(unitSystem.formatter.elevation).ticks(6);
+
+                                var climbSvg = d3.select('#hill-score-climb-profile-'+i).append('svg')
+                                    .attr('width', width + margin.left + margin.right)
+                                    .attr('height', height + margin.top + margin.bottom)
+                                    .attr('class', 'd3js')
+                                    .append('g').attr('transform', 'translate('+ margin.left +','+ margin.top +')');
+
+                                climbSvg.append('clipPath').attr('id', 'clip-hill-score-climb-profile-'+i).append('rect').attr('x', 0).attr('y',0).attr('width', width).attr('height', height);
+
+                                var climbGrid = climbSvg.append("g").attr('clip-path', 'url(#clip-hill-score-climb-profile-'+i+')');
+                                var climbPlotArea = climbSvg.append("g").attr('clip-path', 'url(#clip-hill-score-climb-profile-'+i+')');
+                                var climbAxes = climbSvg.append("g");
+
+                                climbGrid.selectAll("line.grid").data(yScaleClimb.ticks(6)).enter()
+                                    .append("line")
+                                    .attr("class", "grid")
+                                    .attr("y1", function(d){ return yScaleClimb(d) + 0.5; })
+                                    .attr("y2", function(d){ return yScaleClimb(d) + 0.5; })
+                                    .attr("x1", 0)
+                                    .attr("x2", width);
+
+                                for (var seg = 0; seg < numSegs; ++seg) {
+                                    segStart = segEnd;
+
+                                    while (climbData[segEnd][0] < (seg + 1) * segWidth && segEnd < climbData.length - 1) {
+                                        ++segEnd;
+                                    }
+
+                                    if (segStart == segEnd) {
+                                        break;
+                                    }
+
+                                    segData = climbData.slice(Math.max(1, segStart - 1), segEnd);
+                                    segGrade = (climbData[segEnd][1] - climbData[segStart][1]) / (climbData[segEnd][0] - climbData[segStart][0]) / 10;
+                                    segAlpha = Math.min(1.0, Math.max(0.1, 0.1 + segGrade / 20)).toFixed(2); 
+
+                                    climbPlotArea.append("path")
+                                        .datum(segData)
+                                        .attr("class", "area")
+                                        .attr("stroke-width", "0")
+                                        .attr("fill", d3.interpolateOrRd(segAlpha))
+                                        .attr("d", d3.area().x(xMapClimb).y0(height).y1(yMapClimb));
+                        
+                                    climbPlotArea.append("path")
+                                        .attr("fill", "none")
+                                        .attr("stroke", "#999")
+                                        .attr("stroke-width", "2px")
+                                        .attr("d", d3.line().x(xMapClimb).y(yMapClimb)(segData));
+
+                                    if (seg < numSegs - 1 || segData[segData.length-1][0] - segData[0][0] > 0.8*segWidth) {
+                                        climbPlotArea.append("text")
+                                            .attr("class", "c")
+                                            .attr("x", xMapClimb([(segData[segData.length-1][0] + segData[0][0])/2, 0]))
+                                            .attr("y", height-5)
+                                            .text(segGrade.toFixed(1)+'%');
+                                    }
+                                }
+
+                                climbAxes.append("g")
+                                    .attr("class", "y axis")
+                                    .call(yAxisClimb);
+                    
+                                climbAxes.append("g")
+                                    .attr("class", "x axis")
+                                    .attr("transform", "translate(0," + height + ")")
+                                    .call(xAxisClimb);
+                            } catch (e) {
+                                console.log(e);
+                    
+                                $('#hill-score-climb-profile-'+i).html('<p class="text"><em>{% trans %}There was a problem.{% endtrans %} ({% trans %}Plotting failed{% endtrans %})</em></p>');
+                            } finally {
+                                $('#hill-score-climb-profile-'+i).removeClass('loading');
+                            }
+                        }
+                    });
             });
         }
 
@@ -191,7 +302,7 @@
                 yDomain = [d3.min(data, yValue), d3.max(data, yValue)],
                 yScale = d3.scaleLinear().range([height, 0]).domain([Math.max(Math.min(0, yDomain[0]), yDomain[0]-.2*(yDomain[1]-yDomain[0])), yDomain[1]+.2*(yDomain[1]-yDomain[0])]).nice(),
                 yMap = function(d) { return yScale(yValue(d));},
-                yAxis = d3.axisLeft().scale(yScale).tickFormat(unitSystem.formatter.elevation);
+                yAxis = d3.axisLeft().scale(yScale).tickFormat(unitSystem.formatter.elevation).ticks(6);
 
             var svg = d3.select("#hill-score-elevation-plot").append("svg")
                 .attr("width", width + margin.left + margin.right)
@@ -200,11 +311,20 @@
                 .append("g")
                 .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-            svg.append('clipPath').attr('id', 'clip-trend-analysis').append('rect').attr('x', 0).attr('y',0).attr('width', width).attr('height', height);
+            svg.append('clipPath').attr('id', 'clip-hill-score-elevation-plot').append('rect').attr('x', 0).attr('y',0).attr('width', width).attr('height', height);
 
-            var plotArea = svg.append("g").attr('clip-path', 'url(#clip-trend-analysis)');
+            var grid = svg.append("g").attr('clip-path', 'url(#clip-hill-score-elevation-plot)');
+            var plotArea = svg.append("g").attr('clip-path', 'url(#clip-hill-score-elevation-plot)');
             var climbArea = svg.append("g");
             var axes = svg.append("g");
+
+            grid.selectAll("line.grid").data(yScale.ticks(6)).enter()
+                .append("line")
+                .attr("class", "grid")
+                .attr("y1", function(d){ return yScale(d) + 0.5; })
+                .attr("y2", function(d){ return yScale(d) + 0.5; })
+                .attr("x1", 0)
+                .attr("x2", width);
 
             plotArea.append("path")
                 .datum(data)
@@ -217,7 +337,6 @@
                 .attr("fill", "none")
                 .attr("stroke", "rgb(227,217,187)")
                 .attr("stroke-width", "2px")
-                .attr("class", "trend")
                 .attr("d", d3.line().x(xMap).y(yMap)(data));
 
             $.each(score.climbs, function (i, c) {
@@ -237,8 +356,8 @@
                 g.append("line").attr("class", "climb-start").attr("x1", xMap([c.distanceStart, 0])).attr("x2", xMap([c.distanceStart, 0])).attr("y1", height ).attr("y2", yMap([0, c.altitudeTop - c.elevation]));
                 g.append("line").attr("class", "climb-end").attr("x1", x).attr("x2", x).attr("y1", height).attr("y2", y);
 
-                g.on('mouseover', function (){ $table.find('tr:eq('+ i +')').addClass('highlight') });
-                g.on('mouseout', function (){ $table.find('tr:eq('+ i +')').removeClass('highlight') });
+                g.on('mouseover', function (){ $table.find('tr.climb-details:eq('+ i +')').addClass('highlight') });
+                g.on('mouseout', function (){ $table.find('tr.climb-details:eq('+ i +')').removeClass('highlight') });
             });
 
             axes.append("g")
@@ -359,7 +478,8 @@
             fill: none;
         }
         .d3js .climb:hover .climb-profile,
-        .d3js .climb.hover .climb-profile {
+        .d3js .climb.hover .climb-profile,
+        .d3js .climb.clicked .climb-profile {
             fill: #ccc;
         }
         .d3js .climb line {
@@ -371,9 +491,15 @@
             stroke: none;
         }
         .d3js .climb:hover line,
-        .d3js .climb.hover line {
+        .d3js .climb.hover line,
+        .d3js .climb.clicked line {
             stroke: #999;
             stroke-dasharray: none;
+        }
+        .d3js text.c {
+            text-anchor: middle;
+            font-size: 10px;
+            font-family: Arial, sans-serif;
         }
     </style>
 {% endblock %}
