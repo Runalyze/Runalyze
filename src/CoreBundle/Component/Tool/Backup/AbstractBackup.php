@@ -3,6 +3,7 @@
 namespace Runalyze\Bundle\CoreBundle\Component\Tool\Backup;
 
 use Runalyze\Util\File\GZipWriter;
+use Symfony\Component\Filesystem\Filesystem;
 
 abstract class AbstractBackup
 {
@@ -21,6 +22,9 @@ abstract class AbstractBackup
     /** @var string */
     protected $RunalyzeVersion;
 
+    /** @var string */
+    protected $Filename;
+
     /**
      * RunalyzeBackup constructor.
      * @param string $filename
@@ -31,11 +35,12 @@ abstract class AbstractBackup
      */
 	public function __construct($filename, $accountid, \PDO $databaseConnection, $databaseTablePrefix, $runalyzeVersion)
     {
-		$this->Writer = new GZipWriter($filename);
+		$this->Writer = new GZipWriter(md5($filename));
         $this->AccountID = $accountid;
 		$this->PDO = $databaseConnection;
         $this->Prefix = $databaseTablePrefix;
         $this->RunalyzeVersion = $runalyzeVersion;
+        $this->Filename = $filename;
 	}
 
 	/**
@@ -89,7 +94,11 @@ abstract class AbstractBackup
 		}
 
 		$this->Writer->finish();
-	}
+        $fs = new Filesystem();
+        $fs->rename(md5($this->Filename), $this->Filename);
+
+
+    }
 
 	/**
 	 * Start backup file
