@@ -73,8 +73,11 @@
       "./web/vendor/d3-tip/index.js",
       "./node_modules/d3-scale-chromatic/build/d3-scale-chromatic.min.js",
 
+      "./app/Resources/public/js/d3js-runalyzeplot.js",
       "./app/Resources/public/js/d3js-boxplot.js",
       "./app/Resources/public/js/climb-score.js",
+
+      "./app/Resources/public/js/views/climb-score-view.js",
 
       "./web/vendor/fontIconPicker/jquery.fonticonpicker.js",
 
