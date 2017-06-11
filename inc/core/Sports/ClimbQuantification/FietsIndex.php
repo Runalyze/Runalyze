@@ -9,7 +9,10 @@ class FietsIndex extends AbstractAdditiveClimbQuantification implements Categori
 {
     public function getScoreFor($distance, $elevation, $altitudeAtTop = 0)
     {
-        return $elevation * $elevation / ($distance * 10000) + max(0, ($altitudeAtTop - 1000) / 1000);
+        $scoreWithoutAltitudeAtTop = $elevation * $elevation / ($distance * 10000);
+        $scoreForAltitudeAtTop = max(0, ($altitudeAtTop - 1000) / 1000);
+
+        return min($scoreWithoutAltitudeAtTop + $scoreForAltitudeAtTop, 1.5 * $scoreWithoutAltitudeAtTop);
     }
 
     public function getLowerLimitsForCategorization()

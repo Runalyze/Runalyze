@@ -57,15 +57,20 @@ class FietsIndexTest extends \PHPUnit_Framework_TestCase
             $this->Fiets->getScoreFor(7.0, 350, 1000)
         );
 
-        $this->assertEquals(
+        $this->assertLessThanOrEqual(
             $this->Fiets->getScoreFor(7.0, 350) + 1.0,
             $this->Fiets->getScoreFor(7.0, 350, 2000)
         );
 
-        $this->assertEquals(
+        $this->assertLessThanOrEqual(
             $this->Fiets->getScoreFor(7.0, 350) + 1.743,
             $this->Fiets->getScoreFor(7.0, 350, 2743)
         );
+    }
+
+    public function testThatAltitudeAtTopCantDominateScore()
+    {
+        $this->assertEquals(1.5, $this->Fiets->getScoreFor(1.0, 100, 5000));
     }
 
     public function testManuaKea()
