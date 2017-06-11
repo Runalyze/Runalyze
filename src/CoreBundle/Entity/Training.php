@@ -449,6 +449,13 @@ class Training
      */
     private $tag;
 
+    /**
+     * @var Trackdata
+     *
+     * @ORM\OneToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Trackdata", mappedBy="activity")
+     */
+    private $trackdata;
+
     public function __construct()
     {
         $this->equipment = new ArrayCollection();
@@ -1384,6 +1391,14 @@ class Training
     }
 
     /**
+     * @return bool
+     */
+    public function hasRoute()
+    {
+        return null !== $this->route;
+    }
+
+    /**
      * @param null|string $splits
      *
      * @return $this
@@ -1617,5 +1632,26 @@ class Training
     public function getTag()
     {
         return $this->tag;
+    }
+
+    public function setTrackdata(Trackdata $trackdata = null)
+    {
+        $this->trackdata = $trackdata;
+    }
+
+    /**
+     * @return Trackdata
+     */
+    public function getTrackdata()
+    {
+        return $this->trackdata;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasTrackdata()
+    {
+        return null !== $this->trackdata;
     }
 }
