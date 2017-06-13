@@ -76,25 +76,6 @@ class ClimbFinder
      */
     protected function getClimbProfileFor(array $distances, array $elevations)
     {
-        $profile = new ClimbProfile();
-
-        $num = count($distances);
-        $lastIndex = 0;
-        $currentIndex = 1;
-
-        while ($currentIndex < $num) {
-            if ($distances[$currentIndex] - $distances[$lastIndex] >= self::EPSILON_FOR_CLIMB_PROFILE) {
-                $profile->addSegment($distances[$currentIndex] - $distances[$lastIndex], $elevations[$currentIndex] - $elevations[$lastIndex]);
-                $lastIndex = $currentIndex;
-            }
-
-            $currentIndex++;
-        }
-
-        if ($currentIndex != $lastIndex && $distances[$currentIndex - 1] - $distances[$lastIndex] > 0.0) {
-            $profile->addSegment($distances[$currentIndex - 1] - $distances[$lastIndex], $elevations[$currentIndex - 1] - $elevations[$lastIndex]);
-        }
-
-        return $profile;
+        return ClimbProfile::getClimbProfileFor($distances, $elevations, self::EPSILON_FOR_CLIMB_PROFILE);
     }
 }

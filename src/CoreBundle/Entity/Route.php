@@ -353,6 +353,14 @@ class Route
     }
 
     /**
+     * @return bool
+     */
+    public function hasElevations()
+    {
+        return null !== $this->elevationsCorrected || null !== $this->elevationsOriginal;
+    }
+
+    /**
      * @param string|null $elevationsSource
      *
      * @return $this

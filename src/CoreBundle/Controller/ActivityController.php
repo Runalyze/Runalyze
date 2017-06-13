@@ -2,6 +2,8 @@
 
 namespace Runalyze\Bundle\CoreBundle\Controller;
 
+use Runalyze\Bundle\CoreBundle\Bridge\Activity\Calculation\ClimbScoreCalculator;
+use Runalyze\Bundle\CoreBundle\Bridge\Activity\Calculation\FlatOrHillyAnalyzer;
 use Runalyze\Bundle\CoreBundle\Component\Activity\ActivityDecorator;
 use Runalyze\Bundle\CoreBundle\Component\Activity\Tool\BestSubSegmentsStatistics;
 use Runalyze\Bundle\CoreBundle\Component\Activity\Tool\TimeSeriesStatistics;

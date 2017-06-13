@@ -93,8 +93,10 @@ var ClimbScore = (function ($) {
             percentageHilly:    0.0
         };
 
+        var distance = data.map(function(d) { return d[0]; });
+
         result.reducedProfile = DouglasPeucker(data, epsilon);
-        result.gradientProfile = getGradient(result.reducedProfile);
+        result.gradientProfile = getGradientProfile(data, 0.2, 0.0);
         result.gradientHistogram = getGradientHistogram(result.gradientProfile);
 
         var sumUpFlatDown = countUpFlatDown(result.gradientHistogram);
@@ -115,22 +117,21 @@ var ClimbScore = (function ($) {
             var gradient = 100 * (vm / 1000) / dist;
 
             if (vm > 0 && dist > 0.1) {
+                var indexStart = d3.bisect(distance, result.reducedProfile[i - 1][0]) - 1;
+                var indexEnd = d3.bisect(distance, result.reducedProfile[i][0]) - 1;
+
                 var categoryFiets = false;
-                var scores = calculateScores(result.reducedProfile[i - 1], result.reducedProfile[i]);
-                var fiets = scores[1];
+                var climbProfile = getGradientProfile(data.slice(indexStart, indexEnd + 1), 0.1, result.reducedProfile[i - 1][0]);
+                var scores = calculateScores(result.reducedProfile[i - 1], result.reducedProfile[i], climbProfile);
+                var fiets = scores[0];
 
                 totalScore = totalScore + fiets;
                 totalScoreLog = totalScoreLog + Math.log(1.0 + fiets);
-                //totalScoreAvg = totalScoreAvg + fiets * dist / totalDist;
                 totalScoreAvg = totalScoreAvg + fiets / Math.pow(Math.max(1.0, totalDist / 10), 0.75) / 10;
-                //totalScoreAvg2 = totalScoreAvg2 + (fiets * dist / totalDist) * (fiets * dist / totalDist);
-                if (gradient >= 2.0) totalScoreAvg2 = totalScoreAvg2 + Math.pow(fiets, 1.0) / Math.max(1.0, Math.sqrt(totalDist / 20));
 
-                // Alternative score similar to TdF (second condition requires gradient > 6.5:
-                // hc: >1500m (1000m), 1: >800 (600), 2: >400 (300), 3: >200 (150), 4: >100 (100), 5: >100 (50)
-
-                // Alternative score by Strava (requires gradient > 2.0)
-                // hc: > 80, 1: > 64, 2: > 32, 3: > 16, 4: > 8 [, 5: > 4 && gradient > 3.0]
+                if (gradient >= 2.0) {
+                    totalScoreAvg2 = totalScoreAvg2 + fiets / Math.max(1.0, Math.sqrt(totalDist / 20));
+                }
 
                 if (fiets >= 6.5) {
                     categoryFiets = 'hc';
@@ -148,6 +149,8 @@ var ClimbScore = (function ($) {
 
                 if (categoryFiets !== false) {
                     result.climbs.push({
+                        indexStart: indexStart,
+                        indexEnd: indexEnd,
                         reducedStartIndex: i - 1,
                         distanceStart: result.reducedProfile[i - 1][0],
                         elevation: vm,
@@ -173,12 +176,22 @@ var ClimbScore = (function ($) {
             weightedSumClimbs: Math.min(10.0, Math.max(0.0, 2.0 * Math.log2(0.5 + totalScoreAvg2 * flatCompensation)))
         };
 
-        function getGradient(data) {
-            var g = JSON.parse(JSON.stringify(data));
-            g[0][1] = 0.0;
+        function getGradientProfile(data, threshold, firstDistance) {
+            var lastIndex = 0;
+            var currentIndex = 1;
+            var g = [[firstDistance, 0]];
 
-            for (var i = 1; i < data.length; ++i) {
-                g[i][1] = (data[i][0] != data[i - 1][0]) ? 100.0 * (data[i][1] - data[i - 1][1]) / (data[i][0] - data[i - 1][0]) / 1000.0 : 0.0;
+            while (currentIndex < data.length) {
+                if (data[currentIndex][0] - data[lastIndex][0] >= threshold) {
+                    g.push([data[currentIndex][0], 100 * (data[currentIndex][1] - data[lastIndex][1]) / (data[currentIndex][0] - data[lastIndex][0]) / 1000]);
+                    lastIndex = currentIndex;
+                }
+
+                currentIndex++;
+            }
+
+            if (currentIndex > lastIndex + 1 && data[currentIndex - 1][0] - data[lastIndex][0] > 0.0) {
+                g.push([data[currentIndex - 1][0], 100 * (data[currentIndex - 1][1] - data[lastIndex][1]) / (data[currentIndex - 1][0] - data[lastIndex][0]) / 1000]);
             }
 
             return g;
@@ -207,9 +220,9 @@ var ClimbScore = (function ($) {
             var histClass = 0;
             var dist = 0;
 
-            for (var i = 0; i < gradient.length; ++i) {
-                histClass = (Math.floor(gradient[i][1] / 1.0) * 1.0).toString();
-                dist = i > 0 ? gradient[i][0] - gradient[i - 1][0] : gradient[i][0];
+            for (var i = 1; i < gradient.length; ++i) {
+                histClass = (Math.floor(gradient[i][1])).toString();
+                dist = gradient[i][0] - gradient[i - 1][0];
 
                 if (histClass in hist) {
                     hist[histClass] += dist;
@@ -221,20 +234,26 @@ var ClimbScore = (function ($) {
             return hist;
         }
 
-        function calculateScores(pointFrom, pointTo) {
+        function calculateScores(pointFrom, pointTo, climbProfile) {
             var d = pointTo[0] - pointFrom[0]; // [km]
             var h = pointTo[1] - pointFrom[1]; // [m]
             var t = pointTo[1]; // [m]
             var g = h / d / 10; // [%]
 
-            var fietsSum = NaN;
             var fiets = h * h / (d * 10000) + Math.max(0, (t - 1000) / 1000);
             var cbb = 2 * g + h * h / (1000 * d) + d + Math.max(0, (t - 1000) / 100);
             var salite = g * g * d; // Should be a sum for all segments, now it's approx. 100*fiets
             var codifava = (h + 400) / (10 * h) * (g * g * d / 10); // Last part should be a sum
 
-            // TODO: winzige Anstiege (3 hm auf 140m = 1.9% gilt gerade als Anstieg, nur weil der "Gipfel" bei ca. 1600m liegt)
+            var fietsSum = 0.0;
+            for (var i = 1; i < climbProfile.length; ++i) {
+                if (climbProfile[i][1] > 0) {
+                    fietsSum += Math.pow(climbProfile[i][1], 2) * (climbProfile[i][0] - climbProfile[i - 1][0]) / 100;
+                }
+            }
+
             fiets = Math.min(1.5 * h * h / (d * 10000), fiets);
+            fietsSum = Math.min(1.5 * fietsSum, fietsSum + Math.max(0, (t - 1000) / 1000));
 
             return [fietsSum, fiets, cbb, salite, codifava];
         }

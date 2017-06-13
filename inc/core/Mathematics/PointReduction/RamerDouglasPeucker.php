@@ -66,7 +66,7 @@ class RamerDouglasPeucker extends AbstractPointReductionAlgorithm
         $num = count($x);
 
         for ($i = 1; $i < $num - 1; $i++) {
-            $dist = static::perpendicularDistance($x[$i], $y[$i], $x[0], $y[0], $x[$num - 1], $y[$num - 1]);
+            $dist = static::shortestDistance($x[$i], $y[$i], $x[0], $y[0], $x[$num - 1], $y[$num - 1]);
 
             if ($dist > $maxDist) {
                 $index = $i;
@@ -86,16 +86,14 @@ class RamerDouglasPeucker extends AbstractPointReductionAlgorithm
      */
     protected function splitAndReducePointSet(array $x, array $y, $index, $offset)
     {
-        $num = count($x);
-
         list($firstX, $firstY) = $this->reducePointSet(
             array_slice($x, 0, $index + 1),
             array_slice($y, 0, $index + 1),
             $offset
         );
         list($secondX, $secondY) = $this->reducePointSet(
-            array_slice($x, $index, $num - $index),
-            array_slice($y, $index, $num - $index),
+            array_slice($x, $index),
+            array_slice($y, $index),
             $offset + $index
         );
 

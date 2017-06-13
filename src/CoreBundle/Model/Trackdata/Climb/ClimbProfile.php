@@ -4,6 +4,9 @@ namespace Runalyze\Bundle\CoreBundle\Model\Trackdata\Climb;
 
 class ClimbProfile implements \Countable
 {
+    /** @var float [m] */
+    const DEFAULT_SEGMENT_LENGTH = 0.2;
+
     /** @var float[] [km] */
     protected $Distances;
 
@@ -81,5 +84,39 @@ class ClimbProfile implements \Countable
         return array_map(function ($distance, $elevation) {
             return [$distance, $elevation / $distance / 1000];
         }, $this->Distances, $this->Elevations);
+    }
+
+    /**
+     * @param array $distances
+     * @param array $elevations
+     * @param float $segmentLength
+     * @return ClimbProfile
+     */
+    public static function getClimbProfileFor(array $distances, array $elevations, $segmentLength = self::DEFAULT_SEGMENT_LENGTH)
+    {
+        $profile = new self();
+
+        $num = count($distances);
+        $lastIndex = 0;
+        $currentIndex = 1;
+
+        if (count($elevations) != $num) {
+            throw new \InvalidArgumentException('Arrays must be of same size.');
+        }
+
+        while ($currentIndex < $num) {
+            if ($distances[$currentIndex] - $distances[$lastIndex] >= $segmentLength) {
+                $profile->addSegment($distances[$currentIndex] - $distances[$lastIndex], $elevations[$currentIndex] - $elevations[$lastIndex]);
+                $lastIndex = $currentIndex;
+            }
+
+            $currentIndex++;
+        }
+
+        if ($currentIndex > $lastIndex + 1 && $distances[$currentIndex - 1] - $distances[$lastIndex] > 0.0) {
+            $profile->addSegment($distances[$currentIndex - 1] - $distances[$lastIndex], $elevations[$currentIndex - 1] - $elevations[$lastIndex]);
+        }
+
+        return $profile;
     }
 }

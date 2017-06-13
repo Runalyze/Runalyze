@@ -36,8 +36,6 @@ Runalyze.ClimbScoreView = function (stream, unitSystem) {
             width = 690 - margin.left - margin.right;
 
         $.each(score.climbs, function (i, climb) {
-            score.climbs[i].indexStart = d3.bisect(stream.distance, climb.distanceStart) - 1;
-            score.climbs[i].indexEnd = d3.bisect(stream.distance, climb.distanceStart + climb.distance) - 1;
             score.climbs[i].duration = stream.time[score.climbs[i].indexEnd] - stream.time[score.climbs[i].indexStart];
 
             $('<tr class="climb-details">' +
@@ -46,7 +44,7 @@ Runalyze.ClimbScoreView = function (stream, unitSystem) {
                 '<td>' + unitSystem.formatter.distance(climb.distance) + '</td>' +
                 '<td>' + climb.gradient.toFixed(1) + ' &#37;</td>' +
                 '<td class="c">' + climb.category + '</td>' +
-                '<td>' + climb.scoreFiets.toFixed(1) + '</td>' +
+                '<td>' + climb.scoreFietsSum.toFixed(1) + '</td>' +
                 '<td>' + d3.utcFormat(climb.duration >= 3600 ? '%-H:%M:%S' : '%-M:%S')(climb.duration*1000) + '</td>' +
                 '<td>' + unitSystem.formatter.pace(unitSystem.transformer.pace(climb.duration / climb.distance)) + '</td>' +
                 '<td>' + unitSystem.formatter.elevation(Math.round(climb.elevation / (climb.duration/3600))) + '/h</td>' +

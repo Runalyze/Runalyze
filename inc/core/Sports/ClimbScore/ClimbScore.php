@@ -9,7 +9,7 @@ namespace Runalyze\Sports\ClimbScore;
  * weighted by the course's total distance and the course's percentage of flat vs. hilly and finally
  * logarithmically scaled to a scale from 0.0 to 10.0.
  *
- * CS = 2.0 * log2(1.5 + S * (1 - p^2))
+ * CS = 2.0 * log2(0.5 + (1.0 + S) * (1 - p^2))
  *      with S = SUM(Fiets | gradient > 0.02) / max(1.0, sqrt(distance [km] / 20))
  *       and p = percentage flat
  */
@@ -85,7 +85,7 @@ class ClimbScore
     {
         // TODO: Think about stretching the part between 0.0 and 1.0
 
-        return min(10.0, max(0.0, 2.0 * log(1.5 + $sumOfSingleScores * $this->getCompensationForFlatParts($percentageFlat), 2.0)));
+        return min(10.0, max(0.0, 2.0 * log(0.5 + (1.0 + $sumOfSingleScores) * $this->getCompensationForFlatParts($percentageFlat), 2.0)));
     }
 
     /**

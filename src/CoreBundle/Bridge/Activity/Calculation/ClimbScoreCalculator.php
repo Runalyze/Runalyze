@@ -9,8 +9,11 @@ use Runalyze\Sports\ClimbScore\ClimbScore;
 
 class ClimbScoreCalculator
 {
-    /** @var float */
+    /** @var float [m/m] */
     const CLIMB_GRADIENT_THRESHOLD = 0.02;
+
+    /** @var float [km] */
+    const CLIMB_DISTANCE_THRESHOLD = 0.1;
 
     public function calculateFor(Training $activity)
     {
@@ -20,7 +23,7 @@ class ClimbScoreCalculator
             $score->setScoreFromClassifiedClimbs(
                 $this->getFietsIndicesFor($activity),
                 $activity->getRoute()->getDistance(),
-                0.4289286997822117 //$activity->getPercentageFlat()
+                0.4248551385428408 //$activity->getPercentageFlat()
             );
         }
 
@@ -39,7 +42,7 @@ class ClimbScoreCalculator
         $climbs = (new ClimbFinder())->findClimbsFor($activity);
 
         $fietsIndices = array_map(function (Climb $climb) use ($fietsIndex) {
-            if ($climb->getGradient() < self::CLIMB_GRADIENT_THRESHOLD) {
+            if ($climb->getGradient() < self::CLIMB_GRADIENT_THRESHOLD || $climb->getDistance() <= self::CLIMB_DISTANCE_THRESHOLD) {
                 return 0;
             }
 
