@@ -163,6 +163,12 @@ final class Keys extends AbstractEnum
     /** @var int */
     const FIT_PERFORMANCE_CONDITION_END = 50;
 
+    /** @var int */
+    const CLIMB_SCORE = 51;
+
+    /** @var int */
+    const PERCENTAGE_FLAT = 52;
+
     /**
 	 * @var array|null
 	 */
@@ -269,7 +275,9 @@ final class Keys extends AbstractEnum
 			self::RACE_RESULT => 'RaceResult',
 			self::HEAT_INDEX => 'HeatIndex',
             self::FIT_PERFORMANCE_CONDITION_START => 'FitPerformanceConditionStart',
-            self::FIT_PERFORMANCE_CONDITION_END => 'FitPerformanceConditionEnd'
+            self::FIT_PERFORMANCE_CONDITION_END => 'FitPerformanceConditionEnd',
+            self::CLIMB_SCORE => 'ClimbScore',
+            self::PERCENTAGE_FLAT => 'PercentageFlat'
         );
 	}
 }

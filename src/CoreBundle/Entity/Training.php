@@ -113,6 +113,20 @@ class Training
     private $elevation = null;
 
     /**
+     * @var float|null [0.0 .. 10.0]
+     *
+     * @ORM\Column(name="climb_score", type="decimal", precision=3, scale=1, nullable=true, options={"unsigned":true})
+     */
+    private $climbScore = null;
+
+    /**
+     * @var float|null [0.00 .. 1.00]
+     *
+     * @ORM\Column(name="percentage_flat", type="decimal", precision=3, scale=2, nullable=true, options={"unsigned":true})
+     */
+    private $percentageFlat = null;
+
+    /**
      * @var int|null [kcal]
      *
      * @ORM\Column(name="kcal", columnDefinition="smallint unsigned DEFAULT NULL")
@@ -708,6 +722,46 @@ class Training
     public function getElevation()
     {
         return $this->elevation;
+    }
+
+    /**
+     * @param null|float $score [0.0 .. 10.0]
+     *
+     * @return $this
+     */
+    public function setClimbScore($score)
+    {
+        $this->climbScore = $score;
+
+        return $this;
+    }
+
+    /**
+     * @return null|float [0.0 .. 10.0]
+     */
+    public function getClimbScore()
+    {
+        return $this->climbScore;
+    }
+
+    /**
+     * @param null|float $percentage [0.00 .. 1.00]
+     *
+     * @return $this
+     */
+    public function setPercentageFlat($percentage)
+    {
+        $this->percentageFlat = $percentage;
+
+        return $this;
+    }
+
+    /**
+     * @return null|float [0.00 .. 1.00]
+     */
+    public function getPercentageFlat()
+    {
+        return $this->percentageFlat;
     }
 
     /**

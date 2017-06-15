@@ -39,6 +39,8 @@ class FormularSelectSearchSort extends FormularField {
 			Keys::ELAPSED_TIME,
 			Keys::ELEVATION,
 			['gradient', __('Gradient')],
+            Keys::CLIMB_SCORE,
+            Keys::PERCENTAGE_FLAT,
 			Keys::HEARTRATE_AVG,
 			Keys::HEARTRATE_MAX,
 			Keys::TRIMP,

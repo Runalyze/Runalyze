@@ -89,6 +89,18 @@ class Entity extends Model\EntityWithID {
 	 */
 	const ELEVATION = 'elevation';
 
+    /**
+     * Key: climb score
+     * @var string
+     */
+    const CLIMB_SCORE = 'climb_score';
+
+    /**
+     * Key: percentage flat
+     * @var string
+     */
+    const PERCENTAGE_FLAT = 'percentage_flat';
+
 	/**
 	 * Key: energy
 	 * @var string
@@ -379,6 +391,8 @@ class Entity extends Model\EntityWithID {
 			self::TIME_IN_SECONDS,
 			self::ELAPSED_TIME,
 			self::ELEVATION,
+            self::CLIMB_SCORE,
+            self::PERCENTAGE_FLAT,
 			self::ENERGY,
 			self::HR_AVG,
 			self::HR_MAX,
@@ -467,6 +481,8 @@ class Entity extends Model\EntityWithID {
             case self::DISTANCE:
             case self::ELAPSED_TIME:
             case self::ELEVATION:
+            case self::CLIMB_SCORE:
+            case self::PERCENTAGE_FLAT:
             case self::ENERGY:
             case self::HR_AVG:
             case self::HR_MAX:
@@ -515,6 +531,8 @@ class Entity extends Model\EntityWithID {
 
 		$this->ensureNullIfEmpty(self::ACTIVITY_ID);
 		$this->ensureNullIfEmpty(self::IS_NIGHT, true);
+        $this->ensureNullIfEmpty(self::CLIMB_SCORE, true);
+        $this->ensureNullIfEmpty(self::PERCENTAGE_FLAT, true);
         $this->ensureAllNullOrNumericValues();
 		$this->ensureAllNumericValues();
 		$this->synchronizeObjects();
@@ -667,6 +685,20 @@ class Entity extends Model\EntityWithID {
 	public function elevation() {
 		return $this->Data[self::ELEVATION];
 	}
+
+    /**
+     * @return null|float [0.0 .. 1.0]
+     */
+    public function climbScore() {
+        return $this->Data[self::CLIMB_SCORE];
+    }
+
+    /**
+     * @return null|float [0.00 .. 1.00]
+     */
+    public function percentageFlat() {
+        return $this->Data[self::PERCENTAGE_FLAT];
+    }
 
 	/**
 	 * Energy

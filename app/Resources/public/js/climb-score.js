@@ -248,7 +248,7 @@ var ClimbScore = (function ($) {
             var fietsSum = 0.0;
             for (var i = 1; i < climbProfile.length; ++i) {
                 if (climbProfile[i][1] > 0) {
-                    fietsSum += Math.pow(climbProfile[i][1], 2) * (climbProfile[i][0] - climbProfile[i - 1][0]) / 100;
+                    fietsSum += Math.pow(Math.min(25, climbProfile[i][1]), 2) * (climbProfile[i][0] - climbProfile[i - 1][0]) / 100;
                 }
             }
 

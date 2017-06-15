@@ -101,7 +101,7 @@ class ClimbProfile implements \Countable
         $currentIndex = 1;
 
         if (count($elevations) != $num) {
-            throw new \InvalidArgumentException('Arrays must be of same size.');
+            throw new \InvalidArgumentException(sprintf('Arrays must be of same size. (size(distances) = %u, size(elevations) = %u)', $num, count($elevations)));
         }
 
         while ($currentIndex < $num) {

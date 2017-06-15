@@ -87,5 +87,6 @@ class FietsIndexTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(2.5, $this->Fiets->getScoreForProfile([[5.0, 0.05], [5.0, 0.05]]), '', 0.01);
         $this->assertEquals(3.33, $this->Fiets->getScoreForProfile([[2.5, 0.10], [7.5, 0.0333]]), '', 0.01);
+        $this->assertEquals(4.33, $this->Fiets->getScoreForProfile([[2.5, 0.10], [7.5, 0.0333]], 2000), '', 0.01);
     }
 }

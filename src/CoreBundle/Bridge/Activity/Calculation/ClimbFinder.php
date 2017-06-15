@@ -23,7 +23,7 @@ class ClimbFinder
      */
     public function findClimbsFor(Training $activity, $epsilon = self::EPSILON_DEFAULT)
     {
-        if ($activity->hasRoute() && $activity->hasTrackdata() && null !== $activity->getTrackdata()->getDistance()) {
+        if ($activity->hasRoute() && $activity->getRoute()->hasElevations() && $activity->hasTrackdata() && null !== $activity->getTrackdata()->getDistance()) {
             $distances = $activity->getTrackdata()->getDistance();
             $elevations = $activity->getRoute()->getElevations();
             $cuttingIndices = (new RamerDouglasPeucker($distances, $elevations, $epsilon))->getReducedIndices();
@@ -49,7 +49,7 @@ class ClimbFinder
             $index = $indices[$i];
             $endIndex = $indices[$i + 1];
 
-            if ($elevations[$endIndex] > $elevations[$index]) {
+            if ($elevations[$endIndex] > $elevations[$index] && $distances[$endIndex] > $distances[$index]) {
                 $climb = new Climb(
                     $distances[$endIndex] - $distances[$index],
                     $elevations[$endIndex] - $elevations[$index],

@@ -13,6 +13,7 @@ use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\Trackdata;
 use Runalyze\Bundle\CoreBundle\Entity\Training;
 use Runalyze\Metrics\Velocity\Unit\PaceEnum;
+use Runalyze\Service\ElevationCorrection\StepwiseElevationProfileFixer;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -365,6 +366,30 @@ class ActivityController extends Controller
         if ($activity->getAccount()->getId() != $account->getId() || !$activityContext->hasTrackdata() || !$activityContext->hasRoute()) {
             throw $this->createNotFoundException('No activity found.');
         }
+
+        if (
+            $activity->hasRoute() && null !== $activity->getRoute()->getElevationsCorrected() &&
+            $activity->hasTrackdata() && null !== $activity->getTrackdata()->getDistance()
+        ) {
+            $numDistance = count($activity->getTrackdata()->getDistance());
+            $numElevations = count($activity->getRoute()->getElevationsCorrected());
+
+            if ($numElevations > $numDistance) {
+                $activity->getRoute()->setElevationsCorrected(array_slice($activity->getRoute()->getElevationsCorrected(), 0, $numDistance));
+            }
+        }
+
+        if (null !== $activity->getRoute()->getElevationsCorrected() && null !== $activity->getTrackdata()->getDistance()) {
+            $activity->getRoute()->setElevationsCorrected((new StepwiseElevationProfileFixer(
+                5, StepwiseElevationProfileFixer::METHOD_VARIABLE_GROUP_SIZE
+            ))->fixStepwiseElevations(
+                $activity->getRoute()->getElevationsCorrected(),
+                $activity->getTrackdata()->getDistance()
+            ));
+        }
+
+        (new FlatOrHillyAnalyzer())->calculatePercentageFlatFor($activity);
+        (new ClimbScoreCalculator())->calculateFor($activity);
 
         return $this->render('activity/tool/climb_score.html.twig', [
             'context' => $activityContext,

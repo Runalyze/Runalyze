@@ -30,6 +30,10 @@ class Climb
      */
     public function __construct($distance, $elevation, $trackdataStartIndex = null, $trackdataEndIndex = null)
     {
+        if ($distance <= 0.0) {
+            throw new \InvalidArgumentException(sprintf('Climb distance must be positive, %f given.', $distance));
+        }
+
         $this->Distance = $distance;
         $this->Elevation = $elevation;
         $this->TrackdataStartIndex = $trackdataStartIndex;

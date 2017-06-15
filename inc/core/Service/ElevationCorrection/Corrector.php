@@ -52,6 +52,8 @@ class Corrector
 		}
 
 		$this->applyStrategy();
+
+		// TODO: Whereever this is called: fix stepwise elevation and recalculate climb score
 	}
 
 	/**

@@ -27,8 +27,7 @@ class FlatOrHillyAnalyzer
             );
         }
 
-        // TODO
-        // $activity->setPercentageFlat($percentageFlat);
+        $activity->setPercentageFlat($percentageFlat);
 
         return $percentageFlat;
     }
@@ -57,6 +56,6 @@ class FlatOrHillyAnalyzer
             }
         }
 
-        return $distanceFlat / ($distanceFlat + $distanceHilly);
+        return $distanceFlat == 0.0 ? 0.0 : $distanceFlat / ($distanceFlat + $distanceHilly);
     }
 }

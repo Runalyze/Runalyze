@@ -2,7 +2,7 @@ Runalyze.ClimbScoreView = function (stream, unitSystem) {
     var $plot = $("#hill-score-elevation-plot");
     var data = [], untransformedData = [];
 
-    for (var i = 0; i < stream.distance.length; ++i) {
+    for (var i = 1; i < stream.distance.length - 1; ++i) {
         untransformedData.push([stream.distance[i], stream.elevation[i] * 1000]);
         data.push([
             unitSystem.transformer.distance(stream.distance[i]),
@@ -75,7 +75,7 @@ Runalyze.ClimbScoreView = function (stream, unitSystem) {
                             '</td></tr>').insertAfter($(this));
 
                         try {
-                            var climbData = data.slice(climb.indexStart - 1, climb.indexEnd).map(function(v){ return [v[0] - data[climb.indexStart][0], v[1]]; }),
+                            var climbData = data.slice(climb.indexStart, climb.indexEnd + 1).map(function(v){ return [v[0] - data[climb.indexStart][0], v[1]]; }),
                                 segWidth = Math.max(0.1, Math.ceil(climbData[climbData.length - 1][0] / 2) / 10),
                                 numSegs = Math.ceil(climbData[climbData.length - 1][0] / segWidth),
                                 segStart = NaN, segEnd = 0, segGrade = NaN, segAlpha = NaN, segData = [];
@@ -83,7 +83,7 @@ Runalyze.ClimbScoreView = function (stream, unitSystem) {
                             var climbPlot = d3.runalyzeplot(climbData).size(690, 200);
                             climbPlot.yValue = function(d) { return d[1]; };
 
-                            var yDomainClimb = [d3.min(data, climbPlot.yValue), d3.max(data, climbPlot.yValue)],
+                            var yDomainClimb = [d3.min(climbData, climbPlot.yValue), d3.max(climbData, climbPlot.yValue)],
                                 h = climbPlot.height();
 
                             climbPlot.yScale = d3.scaleLinear().range([plot.height(), 0]).domain([yDomainClimb[0] - 0.1*(yDomainClimb[1]-yDomainClimb[0]), yDomainClimb[1]]).nice();
@@ -96,17 +96,19 @@ Runalyze.ClimbScoreView = function (stream, unitSystem) {
                             climbPlot.drawYGrid(6);
 
                             for (var seg = 0; seg < numSegs; ++seg) {
-                                segStart = segEnd;
+                                if (segStart !== segEnd) {
+                                    segStart = segEnd;
+                                }
 
                                 while (climbData[segEnd][0] < (seg + 1) * segWidth && segEnd < climbData.length - 1) {
                                     ++segEnd;
                                 }
 
                                 if (segStart === segEnd) {
-                                    break;
+                                    continue;
                                 }
 
-                                segData = climbData.slice(Math.max(1, segStart - 1), segEnd);
+                                segData = climbData.slice(segStart, segEnd + 1);
                                 segGrade = (climbData[segEnd][1] - climbData[segStart][1]) / (climbData[segEnd][0] - climbData[segStart][0]) / 10;
                                 segAlpha = Math.min(1.0, Math.max(0.1, 0.1 + segGrade / 20)).toFixed(2);
 
@@ -175,7 +177,7 @@ Runalyze.ClimbScoreView = function (stream, unitSystem) {
             b.append("text").text(c.category);
 
             g.append("path").attr("class", "climb-profile")
-                .datum(data.slice(c.indexStart, c.indexEnd))
+                .datum(data.slice(c.indexStart, c.indexEnd + 1))
                 .attr("d", d3.area().x(plot.xMap).y0(h).y1(plot.yMap));
 
             g.append("line").attr("class", "climb-start").attr("x1", x0).attr("x2", x0).attr("y1", h).attr("y2", y0);

@@ -6,6 +6,11 @@
 
 namespace Runalyze\Model\Activity;
 
+use Runalyze\Bundle\CoreBundle\Bridge\Activity\Calculation\ClimbScoreCalculator;
+use Runalyze\Bundle\CoreBundle\Bridge\Activity\Calculation\FlatOrHillyAnalyzer;
+use Runalyze\Bundle\CoreBundle\Entity\Route;
+use Runalyze\Bundle\CoreBundle\Entity\Trackdata;
+use Runalyze\Bundle\CoreBundle\Entity\Training;
 use Runalyze\Calculation\NightDetector;
 use Runalyze\Model;
 use Runalyze\Calculation\BasicEndurance;
@@ -124,6 +129,7 @@ class Inserter extends Model\InserterWithAccountID {
         $this->calculateStrideLength();
         $this->calculateVerticalRatio();
         $this->calculateSwimValues();
+        $this->calculateClimbScore();
 
 		parent::before();
 
@@ -245,6 +251,32 @@ class Inserter extends Model\InserterWithAccountID {
 			}
 		}
 	}
+
+    protected function calculateClimbScore() {
+        if (
+            null !== $this->Route &&
+            $this->Route->hasElevations() &&
+            null !== $this->Trackdata &&
+            $this->Trackdata->has(Model\Trackdata\Entity::DISTANCE)
+        ) {
+            $newRouteEntity = new Route();
+            $newRouteEntity->setElevationsOriginal($this->Route->elevationsOriginal());
+            $newRouteEntity->setElevationsCorrected($this->Route->elevationsCorrected());
+
+            $newTrackdataEntity = new Trackdata();
+            $newTrackdataEntity->setDistance($this->Trackdata->distance());
+
+            $newActivityEntity = new Training();
+            $newActivityEntity->setRoute($newRouteEntity);
+            $newActivityEntity->setTrackdata($newTrackdataEntity);
+
+            (new FlatOrHillyAnalyzer())->calculatePercentageFlatFor($newActivityEntity);
+            (new ClimbScoreCalculator())->calculateFor($newActivityEntity);
+
+            $this->Object->set(Entity::CLIMB_SCORE, $newActivityEntity->getClimbScore());
+            $this->Object->set(Entity::PERCENTAGE_FLAT, $newActivityEntity->getPercentageFlat());
+        }
+    }
 
 	/**
 	 * Calculate if activity was at night
