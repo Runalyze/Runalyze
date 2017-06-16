@@ -270,11 +270,11 @@ class Inserter extends Model\InserterWithAccountID {
             $newActivityEntity->setRoute($newRouteEntity);
             $newActivityEntity->setTrackdata($newTrackdataEntity);
 
-            (new FlatOrHillyAnalyzer())->calculatePercentageFlatFor($newActivityEntity);
+            (new FlatOrHillyAnalyzer())->calculatePercentageHillyFor($newActivityEntity);
             (new ClimbScoreCalculator())->calculateFor($newActivityEntity);
 
             $this->Object->set(Entity::CLIMB_SCORE, $newActivityEntity->getClimbScore());
-            $this->Object->set(Entity::PERCENTAGE_FLAT, $newActivityEntity->getPercentageFlat());
+            $this->Object->set(Entity::PERCENTAGE_HILLY, $newActivityEntity->getPercentageHilly());
         }
     }
 

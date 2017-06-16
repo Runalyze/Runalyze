@@ -388,7 +388,7 @@ class ActivityController extends Controller
             ));
         }
 
-        (new FlatOrHillyAnalyzer())->calculatePercentageFlatFor($activity);
+        (new FlatOrHillyAnalyzer())->calculatePercentageHillyFor($activity);
         (new ClimbScoreCalculator())->calculateFor($activity);
 
         return $this->render('activity/tool/climb_score.html.twig', [

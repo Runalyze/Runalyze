@@ -28,7 +28,7 @@ class FlatOrHillyAnalyzerTest extends \PHPUnit_Framework_TestCase
         $activity->setTrackdata($trackdata);
         $activity->setRoute(new Route());
 
-        $this->assertNull($this->Analyzer->calculatePercentageFlatFor($activity));
+        $this->assertNull($this->Analyzer->calculatePercentageHillyFor($activity));
     }
 
     public function testThatDistancesAreRequired()
@@ -42,7 +42,7 @@ class FlatOrHillyAnalyzerTest extends \PHPUnit_Framework_TestCase
         $activity->setTrackdata(new Trackdata());
         $activity->setRoute($route);
 
-        $this->assertNull($this->Analyzer->calculatePercentageFlatFor($activity));
+        $this->assertNull($this->Analyzer->calculatePercentageHillyFor($activity));
     }
 
     public function testSimpleActivity()
@@ -57,9 +57,9 @@ class FlatOrHillyAnalyzerTest extends \PHPUnit_Framework_TestCase
         $activity->setTrackdata($trackdata);
         $activity->setRoute($route);
 
-        $this->assertEquals(0.30, $this->Analyzer->calculatePercentageFlatFor($activity, 0.01));
-        $this->assertEquals(0.58, $this->Analyzer->calculatePercentageFlatFor($activity, 0.02));
-        $this->assertEquals(0.78, $this->Analyzer->calculatePercentageFlatFor($activity, 0.03));
+        $this->assertEquals(0.30, $this->Analyzer->calculatePercentageHillyFor($activity, 0.01));
+        $this->assertEquals(0.58, $this->Analyzer->calculatePercentageHillyFor($activity, 0.02));
+        $this->assertEquals(0.78, $this->Analyzer->calculatePercentageHillyFor($activity, 0.03));
     }
 
     public function testArrayWithShortPeak()

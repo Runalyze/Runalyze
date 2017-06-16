@@ -15,7 +15,7 @@ class FlatOrHillyAnalyzer
      * @param float $threshold
      * @return float|null
      */
-    public function calculatePercentageFlatFor(Training $activity, $threshold = self::DEFAULT_GRADIENT_THRESHOLD)
+    public function calculatePercentageHillyFor(Training $activity, $threshold = self::DEFAULT_GRADIENT_THRESHOLD)
     {
         $percentageFlat = null;
 
@@ -27,7 +27,7 @@ class FlatOrHillyAnalyzer
             );
         }
 
-        $activity->setPercentageFlat($percentageFlat);
+        $activity->setPercentageHilly(null !== $percentageFlat ? 1.0 - $percentageFlat : null);
 
         return $percentageFlat;
     }

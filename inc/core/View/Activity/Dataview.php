@@ -610,10 +610,10 @@ class Dataview
     /**
      * @return string
      */
-    public function percentageFlat()
+    public function percentageHilly()
     {
-        if (null !== $this->Activity->percentageFlat()) {
-            return (100 * $this->Activity->percentageFlat()).'&nbsp;&#37;';
+        if (null !== $this->Activity->percentageHilly()) {
+            return (100 * $this->Activity->percentageHilly()).'&nbsp;&#37;';
         }
 
         return '';

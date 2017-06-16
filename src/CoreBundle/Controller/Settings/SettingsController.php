@@ -228,7 +228,7 @@ class SettingsController extends Controller
             's' => 51 * 60 + 27,
             'elevation' => 57,
             'climb_score' => 1.3,
-            'percentage_flat' => 0.68,
+            'percentage_hilly' => 0.68,
             'kcal' => 691,
             'pulse_avg' => 186,
             'pulse_max' => 193,

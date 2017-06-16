@@ -319,7 +319,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_training` (
   `elapsed_time` mediumint unsigned DEFAULT NULL,
   `elevation` smallint unsigned DEFAULT NULL,
   `climb_score` decimal(3,1) unsigned DEFAULT NULL,
-  `percentage_flat` decimal(3,2) unsigned DEFAULT NULL,
+  `percentage_hilly` decimal(3,2) unsigned DEFAULT NULL,
   `kcal` smallint unsigned DEFAULT NULL,
   `pulse_avg` tinyint unsigned DEFAULT NULL,
   `pulse_max` tinyint unsigned DEFAULT NULL,

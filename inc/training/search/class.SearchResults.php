@@ -122,7 +122,7 @@ class SearchResults {
 			'elapsed_time',
 			'elevation',
             'climb_score',
-            'percentage_flat',
+            'percentage_hilly',
 			'kcal',
 			'pulse_avg',
 			'pulse_max',
@@ -165,7 +165,7 @@ class SearchResults {
 	protected function setKeysThatShouldIgnoreNull() {
 		$this->KeysThatShouldIgnoreNull = [
 		    'climb_score',
-			'percentage_flat',
+			'percentage_hilly',
 			'fit_training_effect',
 			'fit_performance_condition',
 			'rpe',
@@ -412,7 +412,7 @@ class SearchResults {
 			$value = (new Elevation())->setInPreferredUnit($value)->meter();
 		} elseif ($key == 'distance') {
 			$value = (new Distance())->setInPreferredUnit($value)->kilometer();
-        } elseif ($key == 'percentage_flat') {
+        } elseif ($key == 'percentage_hilly') {
             $value *= 0.01;
 		} elseif ($key == 'vertical_oscillation' || $key == 'vertical_ratio') {
 			$value *= 10;

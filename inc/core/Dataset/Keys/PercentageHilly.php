@@ -4,26 +4,26 @@ namespace Runalyze\Dataset\Keys;
 
 use Runalyze\Dataset\Context;
 
-class PercentageFlat extends AbstractKey
+class PercentageHilly extends AbstractKey
 {
 	public function id()
 	{
-		return \Runalyze\Dataset\Keys::PERCENTAGE_FLAT;
+		return \Runalyze\Dataset\Keys::PERCENTAGE_HILLY;
 	}
 
 	public function column()
 	{
-		return 'percentage_flat';
+		return 'percentage_hilly';
 	}
 
 	public function label()
 	{
-		return __('Percentage flat');
+		return __('Percentage hilly');
 	}
 
 	public function shortLabel()
 	{
-		return __('Flat');
+		return __('Hilly');
 	}
 
 	public function description()
@@ -35,6 +35,6 @@ class PercentageFlat extends AbstractKey
 
 	public function stringFor(Context $context)
 	{
-		return $context->dataview()->percentageFlat();
+		return $context->dataview()->percentageHilly();
 	}
 }

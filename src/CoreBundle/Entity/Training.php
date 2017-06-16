@@ -122,9 +122,9 @@ class Training
     /**
      * @var float|null [0.00 .. 1.00]
      *
-     * @ORM\Column(name="percentage_flat", type="decimal", precision=3, scale=2, nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="percentage_hilly", type="decimal", precision=3, scale=2, nullable=true, options={"unsigned":true})
      */
-    private $percentageFlat = null;
+    private $percentageHilly = null;
 
     /**
      * @var int|null [kcal]
@@ -749,9 +749,9 @@ class Training
      *
      * @return $this
      */
-    public function setPercentageFlat($percentage)
+    public function setPercentageHilly($percentage)
     {
-        $this->percentageFlat = $percentage;
+        $this->percentageHilly = $percentage;
 
         return $this;
     }
@@ -759,9 +759,17 @@ class Training
     /**
      * @return null|float [0.00 .. 1.00]
      */
+    public function getPercentageHilly()
+    {
+        return $this->percentageHilly;
+    }
+
+    /**
+     * @return null|float [0.00 .. 1.00]
+     */
     public function getPercentageFlat()
     {
-        return $this->percentageFlat;
+        return null !== $this->percentageHilly ? 1.0 - $this->percentageHilly : null;
     }
 
     /**

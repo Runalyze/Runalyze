@@ -41,7 +41,7 @@ class Version20170615090403 extends AbstractMigration implements ContainerAwareI
 
         while ($numLocked > 0) {
             $activities = $repo->createQueryBuilder('t')
-                ->select('partial t.{id, climbScore, percentageFlat, route}')
+                ->select('partial t.{id, climbScore, percentageHilly, route}')
                 ->addSelect('partial r.{id, lock, elevationsOriginal, elevationsCorrected}')
                 ->addSelect('partial tr.{activity, distance}')
                 ->join('t.route', 'r')
@@ -72,7 +72,7 @@ class Version20170615090403 extends AbstractMigration implements ContainerAwareI
                 }
 
                 try {
-                    $flatOrHillyAnalyzer->calculatePercentageFlatFor($activity);
+                    $flatOrHillyAnalyzer->calculatePercentageHillyFor($activity);
                     $climbScoreCalculator->calculateFor($activity);
                 } catch (\InvalidArgumentException $e) {
                     $this->write(sprintf(

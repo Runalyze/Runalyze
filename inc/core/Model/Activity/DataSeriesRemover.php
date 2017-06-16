@@ -133,7 +133,7 @@ class DataSeriesRemover {
 
 		if (!$this->Route->hasElevations()) {
 		    $this->Activity->set(Model\Activity\Entity::CLIMB_SCORE, null);
-            $this->Activity->set(Model\Activity\Entity::PERCENTAGE_FLAT, null);
+            $this->Activity->set(Model\Activity\Entity::PERCENTAGE_HILLY, null);
         }
 	}
 

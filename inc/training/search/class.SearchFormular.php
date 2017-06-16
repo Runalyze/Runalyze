@@ -210,7 +210,7 @@ class SearchFormular extends Formular {
 		$this->addNumericConditionField('pressure', __('Pressure'), FormularInput::$SIZE_SMALL, (new Pressure())->unit());
 
         $this->addNumericConditionField('climb_score', __('Climb Score'), FormularInput::$SIZE_SMALL);
-        $this->addNumericConditionField('percentage_flat', __('Percentage Flat'), FormularInput::$SIZE_SMALL, '%');
+        $this->addNumericConditionField('percentage_hilly', __('Percentage Hilly'), FormularInput::$SIZE_SMALL, '%');
 
 		// Currently missing/not supported:
 		// elapsed_time, fit_hrv_analysis, total_strokes, swolf, wind_deg, is_night
