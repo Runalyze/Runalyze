@@ -58,4 +58,13 @@ class StepwiseElevationProfileFixerTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($fixer->isProfileStepwise($profile));
         $this->assertEquals([0, 0, 5, 6, 9, 13, 14, 15, 10, 0, 0, 0], $fixer->fixStepwiseElevations($profile, $distances));
     }
+
+    public function testVariableGroupSize()
+    {
+        $fixer = new StepwiseElevationProfileFixer(3, StepwiseElevationProfileFixer::METHOD_VARIABLE_GROUP_SIZE);
+        $profile = [0, 0, 0, 0, 0, 0, 15, 15, 15, 0, 0, 0];
+
+        $this->assertTrue($fixer->isProfileStepwise($profile));
+        $this->assertEquals([0, 0, 0, 3, 6, 9, 12, 15, 8, 0, 0, 0], $fixer->fixStepwiseElevations($profile));
+    }
 }

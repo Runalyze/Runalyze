@@ -60,6 +60,10 @@ class StepwiseElevationProfileFixer
      */
     protected function getMidpointsForFixedGroupSize($arraySize)
     {
+        if ($this->NumberOfGroupedPoints >= $arraySize) {
+            return [$this->MidpointIndexOfConstantGroup];
+        }
+
         return range($this->MidpointIndexOfConstantGroup, $arraySize - 1, $this->NumberOfGroupedPoints);
     }
 
@@ -81,6 +85,10 @@ class StepwiseElevationProfileFixer
                 $lastDiffIndex = $i - 1;
                 $currentElevation = $elevations[$i];
             }
+        }
+
+        if ($elevations[$numElevations - 1] == $elevations[$numElevations - 2]) {
+            $midpoints[] = floor(($lastDiffIndex + $numElevations - 1) / 2);
         }
 
         return $midpoints;
