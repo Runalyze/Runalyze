@@ -40,6 +40,12 @@ final class QueryValues extends AbstractEnum
     const VO2MAX = 'vo2max';
 
     /** @var string */
+    const CLIMB_SCORE = 'climb_score';
+
+    /** @var string */
+    const PERCENTAGE_HILLY = 'percentage_hilly';
+
+    /** @var string */
     const VO2MAX_WITH_ELEVATION = 'vo2max_with_elevation';
 
     /** @var string */

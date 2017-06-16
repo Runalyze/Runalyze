@@ -85,7 +85,9 @@ class TrendAnalysisType extends AbstractType
                         'TRIMP' => QueryValues::TRIMP,
                         'Power' => QueryValues::POWER,
                         'Cadence' => QueryValues::CADENCE,
-                        'Effective VO2max' => $this->getQueryValueEnumForVO2max()
+                        'Effective VO2max' => $this->getQueryValueEnumForVO2max(),
+                        'Climb Score' => QueryValues::CLIMB_SCORE,
+                        'Percentage hilly' => QueryValues::PERCENTAGE_HILLY
                     ],
                     'Running dynamics' => [
                         'Ground contact time' => QueryValues::GROUND_CONTACT_TIME,
