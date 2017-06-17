@@ -139,6 +139,13 @@ class Linker {
 		return 'activity/'.$this->Activity->id().'/elevation-info'.($data != '' ? '?'.$data : '');
 	}
 
+    /**
+     * @return string
+     */
+    public function urlToClimbScore() {
+        return 'activity/'.$this->Activity->id().'/climb-score';
+    }
+
 	/**
 	 * URL to vo2max info
 	 * @param string $data
