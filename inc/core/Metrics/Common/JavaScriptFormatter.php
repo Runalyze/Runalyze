@@ -9,7 +9,7 @@ class JavaScriptFormatter
     public static function getFormatter(UnitInterface $unit)
     {
         if ($unit instanceof AbstractPaceInTimeFormatUnit) {
-            $valueConversion = 'Math.floor(d/60) + \':\' + (Math.round(d%60) < 10 ? \'0\' : \'\') + Math.round(d%60)';
+            $valueConversion = 'Math.floor(Math.round(d)/60) + \':\' + (Math.round(d)%60 < 10 ? \'0\' : \'\') + Math.round(d)%60';
         } elseif ($unit instanceof FormattableUnitInterface) {
             $valueConversion = '(d).toFixed('.$unit->getDecimals().')';
         } elseif (method_exists($unit, 'getJavaScriptConversion')) {
