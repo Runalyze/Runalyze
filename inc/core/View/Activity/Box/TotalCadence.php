@@ -6,10 +6,11 @@
 
 namespace Runalyze\View\Activity\Box;
 use Runalyze\Configuration;
+use Runalyze\Profile\Sport\SportProfile;
 
 /**
  * Boxed value for total cadence
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\View\Activity\Box
  */
@@ -23,12 +24,12 @@ class TotalCadence extends AbstractBox
 	{
 		$TotalCadence = $Context->dataview()->cadence();
 		$value = round($TotalCadence->value() * ($Context->activity()->duration() / 60));
-		if ($Context->sport()->id() == Configuration::General()->runningSport()) {
+		if ($Context->sport()->getInternalProfileEnum() == SportProfile::RUNNING) {
 		    $label = __('Number of steps');
 		} else {
 		    $label = __('Total cadence');
 		}
-		
+
 		parent::__construct(
 			\Helper::Unknown($value, '-'),
 			'',

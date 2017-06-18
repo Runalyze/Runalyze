@@ -3,6 +3,7 @@
 namespace Runalyze\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Runalyze\Bundle\CoreBundle\Model\Trackdata\Pause\PauseCollection;
 use Runalyze\Model;
 
 /**
@@ -14,105 +15,105 @@ use Runalyze\Model;
 class Trackdata
 {
     /**
-     * @var string
+     * @var array|null [s]
      *
-     * @ORM\Column(name="time", type="text", nullable=true)
+     * @ORM\Column(name="time", type="pipe_array", nullable=true)
      */
     private $time;
 
     /**
-     * @var string
+     * @var array|null [km]
      *
-     * @ORM\Column(name="distance", type="text", nullable=true)
+     * @ORM\Column(name="distance", type="pipe_array", nullable=true)
      */
     private $distance;
 
     /**
-     * @var string
+     * @var array|null [bpm]
      *
-     * @ORM\Column(name="heartrate", type="text", nullable=true)
+     * @ORM\Column(name="heartrate", type="pipe_array", nullable=true)
      */
     private $heartrate;
 
     /**
-     * @var string
+     * @var array|null [rpm]
      *
-     * @ORM\Column(name="cadence", type="text", nullable=true)
+     * @ORM\Column(name="cadence", type="pipe_array", nullable=true)
      */
     private $cadence;
 
     /**
-     * @var string
+     * @var array|null [W]
      *
-     * @ORM\Column(name="power", type="text", nullable=true)
+     * @ORM\Column(name="power", type="pipe_array", nullable=true)
      */
     private $power;
 
     /**
-     * @var string
+     * @var array|null [°C]
      *
-     * @ORM\Column(name="temperature", type="text", nullable=true)
+     * @ORM\Column(name="temperature", type="pipe_array", nullable=true)
      */
     private $temperature;
 
     /**
-     * @var string
+     * @var array|null [ms]
      *
-     * @ORM\Column(name="groundcontact", type="text", nullable=true)
+     * @ORM\Column(name="groundcontact", type="pipe_array", nullable=true)
      */
     private $groundcontact;
 
     /**
-     * @var string
+     * @var array|null [mm]
      *
-     * @ORM\Column(name="vertical_oscillation", type="text", nullable=true)
+     * @ORM\Column(name="vertical_oscillation", type="pipe_array", nullable=true)
      */
     private $verticalOscillation;
 
     /**
-     * @var string
+     * @var array|null [%*100]
      *
-     * @ORM\Column(name="groundcontact_balance", type="text", nullable=true)
+     * @ORM\Column(name="groundcontact_balance", type="pipe_array", nullable=true)
      */
     private $groundcontactBalance;
 
     /**
-     * @var string
+     * @var array|null [%]
      *
-     * @ORM\Column(name="smo2_0", type="text", nullable=true)
+     * @ORM\Column(name="smo2_0", type="pipe_array", nullable=true)
      */
     private $smo20;
 
     /**
-     * @var string
+     * @var array|null [%]
      *
-     * @ORM\Column(name="smo2_1", type="text", nullable=true)
+     * @ORM\Column(name="smo2_1", type="pipe_array", nullable=true)
      */
     private $smo21;
 
     /**
-     * @var string
+     * @var array|null [%]
      *
-     * @ORM\Column(name="thb_0", type="text", nullable=true)
+     * @ORM\Column(name="thb_0", type="pipe_array", nullable=true)
      */
     private $thb0;
 
     /**
-     * @var string
+     * @var array|null [%]
      *
-     * @ORM\Column(name="thb_1", type="text", nullable=true)
+     * @ORM\Column(name="thb_1", type="pipe_array", nullable=true)
      */
     private $thb1;
 
     /**
-     * @var string
+     * @var PauseCollection
      *
-     * @ORM\Column(name="pauses", type="text", length=65535, nullable=true)
+     * @ORM\Column(name="pauses", type="runalyze_pause_array", length=65535, nullable=true)
      */
     private $pauses;
 
     /**
-     * @var \Runalyze\Bundle\CoreBundle\Entity\Training
+     * @var Training
      *
      * @ORM\Id
      * @ORM\OneToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Training")
@@ -123,7 +124,7 @@ class Trackdata
     private $activity;
 
     /**
-     * @var \Runalyze\Bundle\CoreBundle\Entity\Account
+     * @var Account
      *
      * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Account")
      * @ORM\JoinColumns({
@@ -132,16 +133,12 @@ class Trackdata
      */
     private $account;
 
-
-
     /**
-     * Set time
+     * @param array|null $time [s]
      *
-     * @param string $time
-     *
-     * @return Trackdata
+     * @return $this
      */
-    public function setTime($time)
+    public function setTime(array $time = null)
     {
         $this->time = $time;
 
@@ -149,9 +146,7 @@ class Trackdata
     }
 
     /**
-     * Get time
-     *
-     * @return string
+     * @return array|null [s]
      */
     public function getTime()
     {
@@ -159,13 +154,11 @@ class Trackdata
     }
 
     /**
-     * Set distance
+     * @param array|null $distance [km]
      *
-     * @param string $distance
-     *
-     * @return Trackdata
+     * @return $this
      */
-    public function setDistance($distance)
+    public function setDistance(array $distance = null)
     {
         $this->distance = $distance;
 
@@ -173,9 +166,7 @@ class Trackdata
     }
 
     /**
-     * Get distance
-     *
-     * @return string
+     * @return array|null [km]
      */
     public function getDistance()
     {
@@ -183,23 +174,19 @@ class Trackdata
     }
 
     /**
-     * Set heartrate
+     * @param array|null $heartRate [bpm]
      *
-     * @param string $heartrate
-     *
-     * @return Trackdata
+     * @return $this
      */
-    public function setHeartrate($heartrate)
+    public function setHeartrate(array $heartRate = null)
     {
-        $this->heartrate = $heartrate;
+        $this->heartrate = $heartRate;
 
         return $this;
     }
 
     /**
-     * Get heartrate
-     *
-     * @return string
+     * @return array|null [bpm]
      */
     public function getHeartrate()
     {
@@ -207,13 +194,11 @@ class Trackdata
     }
 
     /**
-     * Set cadence
+     * @param array|null $cadence [rpm]
      *
-     * @param string $cadence
-     *
-     * @return Trackdata
+     * @return $this
      */
-    public function setCadence($cadence)
+    public function setCadence(array $cadence = null)
     {
         $this->cadence = $cadence;
 
@@ -221,9 +206,7 @@ class Trackdata
     }
 
     /**
-     * Get cadence
-     *
-     * @return string
+     * @return array|null [rpm]
      */
     public function getCadence()
     {
@@ -231,13 +214,11 @@ class Trackdata
     }
 
     /**
-     * Set power
+     * @param array|null $power [W]
      *
-     * @param string $power
-     *
-     * @return Trackdata
+     * @return $this
      */
-    public function setPower($power)
+    public function setPower(array $power = null)
     {
         $this->power = $power;
 
@@ -245,9 +226,7 @@ class Trackdata
     }
 
     /**
-     * Get power
-     *
-     * @return string
+     * @return array|null [W]
      */
     public function getPower()
     {
@@ -255,13 +234,11 @@ class Trackdata
     }
 
     /**
-     * Set temperature
+     * @param array|null $temperature [°C]
      *
-     * @param string $temperature
-     *
-     * @return Trackdata
+     * @return $this
      */
-    public function setTemperature($temperature)
+    public function setTemperature(array $temperature = null)
     {
         $this->temperature = $temperature;
 
@@ -269,9 +246,7 @@ class Trackdata
     }
 
     /**
-     * Get temperature
-     *
-     * @return string
+     * @return array|null [°C]
      */
     public function getTemperature()
     {
@@ -279,13 +254,11 @@ class Trackdata
     }
 
     /**
-     * Set groundcontact
+     * @param array|null $groundcontact [ms]
      *
-     * @param string $groundcontact
-     *
-     * @return Trackdata
+     * @return $this
      */
-    public function setGroundcontact($groundcontact)
+    public function setGroundcontact(array $groundcontact = null)
     {
         $this->groundcontact = $groundcontact;
 
@@ -293,9 +266,7 @@ class Trackdata
     }
 
     /**
-     * Get groundcontact
-     *
-     * @return string
+     * @return array|null [ms]
      */
     public function getGroundcontact()
     {
@@ -303,13 +274,11 @@ class Trackdata
     }
 
     /**
-     * Set verticalOscillation
+     * @param array|null $verticalOscillation [mm]
      *
-     * @param string $verticalOscillation
-     *
-     * @return Trackdata
+     * @return $this
      */
-    public function setVerticalOscillation($verticalOscillation)
+    public function setVerticalOscillation(array $verticalOscillation = null)
     {
         $this->verticalOscillation = $verticalOscillation;
 
@@ -317,9 +286,7 @@ class Trackdata
     }
 
     /**
-     * Get verticalOscillation
-     *
-     * @return string
+     * @return array|null [mm]
      */
     public function getVerticalOscillation()
     {
@@ -327,13 +294,11 @@ class Trackdata
     }
 
     /**
-     * Set groundcontactBalance
+     * @param array|null $groundcontactBalance [%*100]
      *
-     * @param string $groundcontactBalance
-     *
-     * @return Trackdata
+     * @return $this
      */
-    public function setGroundcontactBalance($groundcontactBalance)
+    public function setGroundcontactBalance(array $groundcontactBalance = null)
     {
         $this->groundcontactBalance = $groundcontactBalance;
 
@@ -341,9 +306,7 @@ class Trackdata
     }
 
     /**
-     * Get groundcontactBalance
-     *
-     * @return string
+     * @return array|null [%*100]
      */
     public function getGroundcontactBalance()
     {
@@ -351,13 +314,11 @@ class Trackdata
     }
 
     /**
-     * Set smo20
+     * @param array|null $smo20 [%]
      *
-     * @param string $smo20
-     *
-     * @return Trackdata
+     * @return $this
      */
-    public function setSmo20($smo20)
+    public function setSmo20(array $smo20 = null)
     {
         $this->smo20 = $smo20;
 
@@ -365,9 +326,7 @@ class Trackdata
     }
 
     /**
-     * Get smo20
-     *
-     * @return string
+     * @return array|null [%]
      */
     public function getSmo20()
     {
@@ -375,13 +334,11 @@ class Trackdata
     }
 
     /**
-     * Set smo21
+     * @param array|null $smo21 [%]
      *
-     * @param string $smo21
-     *
-     * @return Trackdata
+     * @return $this
      */
-    public function setSmo21($smo21)
+    public function setSmo21(array $smo21 = null)
     {
         $this->smo21 = $smo21;
 
@@ -389,9 +346,7 @@ class Trackdata
     }
 
     /**
-     * Get smo21
-     *
-     * @return string
+     * @return array|null [%]
      */
     public function getSmo21()
     {
@@ -399,13 +354,11 @@ class Trackdata
     }
 
     /**
-     * Set thb0
+     * @param array|null $thb0 [%]
      *
-     * @param string $thb0
-     *
-     * @return Trackdata
+     * @return $this
      */
-    public function setThb0($thb0)
+    public function setThb0(array $thb0 = null)
     {
         $this->thb0 = $thb0;
 
@@ -413,9 +366,7 @@ class Trackdata
     }
 
     /**
-     * Get thb0
-     *
-     * @return string
+     * @return array|null [%]
      */
     public function getThb0()
     {
@@ -423,13 +374,11 @@ class Trackdata
     }
 
     /**
-     * Set thb1
+     * @param array|null $thb1 [%]
      *
-     * @param string $thb1
-     *
-     * @return Trackdata
+     * @return $this
      */
-    public function setThb1($thb1)
+    public function setThb1(array $thb1 = null)
     {
         $this->thb1 = $thb1;
 
@@ -437,9 +386,7 @@ class Trackdata
     }
 
     /**
-     * Get thb1
-     *
-     * @return string
+     * @return array|null [%]
      */
     public function getThb1()
     {
@@ -447,13 +394,11 @@ class Trackdata
     }
 
     /**
-     * Set pauses
+     * @param PauseCollection $pauses
      *
-     * @param string $pauses
-     *
-     * @return Trackdata
+     * @return $this
      */
-    public function setPauses($pauses)
+    public function setPauses(PauseCollection $pauses)
     {
         $this->pauses = $pauses;
 
@@ -461,9 +406,7 @@ class Trackdata
     }
 
     /**
-     * Get pauses
-     *
-     * @return string
+     * @return PauseCollection
      */
     public function getPauses()
     {
@@ -471,13 +414,11 @@ class Trackdata
     }
 
     /**
-     * Set activity
+     * @param Training $activity
      *
-     * @param \Runalyze\Bundle\CoreBundle\Entity\Training $activity
-     *
-     * @return Trackdata
+     * @return $this
      */
-    public function setActivity(\Runalyze\Bundle\CoreBundle\Entity\Training $activity = null)
+    public function setActivity(Training $activity)
     {
         $this->activity = $activity;
 
@@ -485,9 +426,7 @@ class Trackdata
     }
 
     /**
-     * Get activity
-     *
-     * @return \Runalyze\Bundle\CoreBundle\Entity\Training
+     * @return Training
      */
     public function getActivity()
     {
@@ -495,13 +434,11 @@ class Trackdata
     }
 
     /**
-     * Set account
+     * @param Account $account
      *
-     * @param \Runalyze\Bundle\CoreBundle\Entity\Account $account
-     *
-     * @return Trackdata
+     * @return $this
      */
-    public function setAccount(\Runalyze\Bundle\CoreBundle\Entity\Account $account = null)
+    public function setAccount(Account $account)
     {
         $this->account = $account;
 
@@ -509,9 +446,7 @@ class Trackdata
     }
 
     /**
-     * Get account
-     *
-     * @return \Runalyze\Bundle\CoreBundle\Entity\Account
+     * @return Account
      */
     public function getAccount()
     {
@@ -523,10 +458,8 @@ class Trackdata
      */
     public function getLegacyModel()
     {
-        // TODO: activity, account (entities have no getId() so far)
         return new Model\Trackdata\Entity([
-            //Model\Trackdata\Entity::ACTIVITY => $this->activity->getId(),
-            //Model\Trackdata\Entity::ACCOUNT => $this->account->getId(),
+            Model\Trackdata\Entity::ACTIVITYID => $this->activity->getId(),
             Model\Trackdata\Entity::TIME => $this->time,
             Model\Trackdata\Entity::DISTANCE => $this->distance,
             Model\Trackdata\Entity::HEARTRATE => $this->heartrate,
@@ -540,7 +473,8 @@ class Trackdata
             Model\Trackdata\Entity::SMO2_1 => $this->smo21,
             Model\Trackdata\Entity::THB_0 => $this->thb0,
             Model\Trackdata\Entity::THB_1 => $this->thb1,
-            Model\Trackdata\Entity::PAUSES => $this->pauses
+            // Legacy model does still use the pauses object
+            //Model\Trackdata\Entity::PAUSES => $this->pauses
         ]);
     }
 }

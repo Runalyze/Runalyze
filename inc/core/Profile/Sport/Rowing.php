@@ -2,7 +2,7 @@
 
 namespace Runalyze\Profile\Sport;
 
-use Runalyze\Parameter\Application\PaceUnit;
+use Runalyze\Metrics\Velocity\Unit\PaceEnum;
 
 /**
  * @codeCoverageIgnore
@@ -14,73 +14,46 @@ class Rowing extends AbstractSport
         parent::__construct(SportProfile::ROWING);
     }
 
-    /**
-     * @return string
-     */
-    public function icon()
+    public function getIconClass()
     {
         return 'icons8-Rowing';
     }
 
-    /**
-     * @return string
-     */
-    public function name()
+    public function getName()
     {
         return __('Rowing');
     }
 
-    /**
-     * @return int
-     */
-    public function caloriesPerHour()
+    public function getCaloriesPerHour()
     {
         return 510;
     }
 
-    /**
-     * @return int
-     */
-    public function avgHR()
+    public function getAverageHeartRate()
     {
         return 120;
     }
 
-    /**
-     * @return bool
-     */
     public function hasDistances()
     {
         return true;
     }
 
-    /**
-     * @return bool
-     */
     public function hasPower()
     {
         return false;
     }
 
-    /**
-     * @return bool
-     */
     public function isOutside()
     {
         return false;
     }
 
-    /**
-     * @return string see \Runalyze\Parameter\Application\PaceUnit
-     */
-    public function paceUnitEnum()
+    public function getPaceUnitEnum()
     {
-        return PaceUnit::MIN_PER_500M;
+        return PaceEnum::SECONDS_PER_500M;
     }
 
-    /**
-     * @return bool
-     */
     public function usesShortDisplay()
     {
         return false;

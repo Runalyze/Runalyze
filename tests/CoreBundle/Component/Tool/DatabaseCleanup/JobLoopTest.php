@@ -4,6 +4,10 @@ namespace Runalyze\Bundle\CoreBundle\Tests\Component\Tool\DatabaseCleanup;
 use Runalyze\Bundle\CoreBundle\Component\Tool\DatabaseCleanup\JobLoop;
 use Runalyze\Configuration;
 
+/**
+ * @group dependsOn
+ * @group dependsOnOldDatabase
+ */
 class JobLoopTest extends \PHPUnit_Framework_TestCase
 {
 	/** @var \PDO */

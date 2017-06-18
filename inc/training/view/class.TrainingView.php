@@ -218,7 +218,7 @@ class TrainingView {
 		if (
 			(
 				$this->Context->trackdata()->has(\Runalyze\Model\Trackdata\Entity::CADENCE) &&
-				$this->Context->sport()->id() == Configuration::General()->runningSport()
+				$this->Context->sport()->getInternalProfileEnum() == \Runalyze\Profile\Sport\SportProfile::RUNNING
 			) ||
 			$this->Context->trackdata()->has(\Runalyze\Model\Trackdata\Entity::GROUNDCONTACT) ||
 			$this->Context->trackdata()->has(\Runalyze\Model\Trackdata\Entity::VERTICAL_OSCILLATION)

@@ -3,6 +3,7 @@
 namespace Runalyze\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Runalyze\Profile\View\DataBrowserRowProfile;
 
 /**
  * Type
@@ -13,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Type
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer", options={"unsigned":true})
      * @ORM\Id
@@ -36,7 +37,7 @@ class Type
     private $abbr = '';
 
     /**
-     * @var \Runalyze\Bundle\CoreBundle\Entity\Sport
+     * @var Sport
      *
      * @ORM\ManyToOne(targetEntity="Sport")
      * @ORM\JoinColumns({
@@ -46,25 +47,34 @@ class Type
     private $sport;
 
     /**
-     * @var boolean
+     * @var int
      *
-     * @ORM\Column(name="short", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
+     * @ORM\Column(name="short", type="integer", columnDefinition="tinyint unsigned NOT NULL DEFAULT 2")
+     *
+     * @see \Runalyze\Profile\View\DataBrowserRowProfile
      */
-    private $short = '0';
+    private $displayMode = 2;
 
     /**
-     * @var boolean
+     * @var int
      *
      * @ORM\Column(name="hr_avg", columnDefinition="tinyint unsigned NOT NULL DEFAULT '100'")
      */
-    private $hrAvg = '100';
+    private $hrAvg = 100;
 
     /**
-     * @var boolean
+     * @var bool
      *
-     * @ORM\Column(name="quality_session", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
+     * @ORM\Column(name="quality_session", type="boolean", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
      */
-    private $qualitySession = '0';
+    private $qualitySession = false;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Training", mappedBy="type", cascade={"persist"}, fetch="EXTRA_LAZY")
+     */
+    protected $trainings;
 
     /**
      * @var \Runalyze\Bundle\CoreBundle\Entity\Account
@@ -77,9 +87,7 @@ class Type
     private $account;
 
     /**
-     * Get id
-     *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -87,11 +95,9 @@ class Type
     }
 
     /**
-     * Set name
-     *
      * @param string $name
      *
-     * @return Type
+     * @return $this
      */
     public function setName($name)
     {
@@ -101,8 +107,6 @@ class Type
     }
 
     /**
-     * Get name
-     *
      * @return string
      */
     public function getName()
@@ -111,11 +115,9 @@ class Type
     }
 
     /**
-     * Set abbr
-     *
      * @param string $abbr
      *
-     * @return Type
+     * @return $this
      */
     public function setAbbr($abbr)
     {
@@ -125,8 +127,6 @@ class Type
     }
 
     /**
-     * Get abbr
-     *
      * @return string
      */
     public function getAbbr()
@@ -135,13 +135,11 @@ class Type
     }
 
     /**
-     * Set sport
+     * @param Sport $sport
      *
-     * @param \Runalyze\Bundle\CoreBundle\Entity\Sport $sport
-     *
-     * @return Type
+     * @return $this
      */
-    public function setSport(\Runalyze\Bundle\CoreBundle\Entity\Sport $sport = null)
+    public function setSport(Sport $sport)
     {
         $this->sport = $sport;
 
@@ -149,9 +147,7 @@ class Type
     }
 
     /**
-     * Get sport
-     *
-     * @return \Runalyze\Bundle\CoreBundle\Entity\Sport
+     * @return Sport
      */
     public function getSport()
     {
@@ -159,35 +155,61 @@ class Type
     }
 
     /**
-     * Set short
+     * @param int $mode see \Runalyze\Profile\View\DataBrowserRowProfile
      *
-     * @param boolean $short
-     *
-     * @return Type
+     * @return $this
      */
-    public function setShort($short)
+    public function setDisplayMode($mode)
     {
-        $this->short = $short;
+        $this->displayMode = $mode;
 
         return $this;
     }
 
     /**
-     * Get short
-     *
-     * @return boolean
+     * @return int see \Runalyze\Profile\View\DataBrowserRowProfile
      */
-    public function getShort()
+    public function getDisplayMode()
     {
-        return $this->short;
+        return $this->displayMode;
     }
 
     /**
-     * Set hrAvg
+     * @return bool
+     */
+    public function showsCompleteRow()
+    {
+        if ($this->inheritsDisplayMode()) {
+            return !$this->sport->getShort();
+        }
+
+        return DataBrowserRowProfile::COMPLETE_ROW == $this->displayMode;
+    }
+
+    /**
+     * @return bool
+     */
+    public function showsOnlyIcon()
+    {
+        if ($this->inheritsDisplayMode()) {
+            return $this->sport->getShort();
+        }
+
+        return DataBrowserRowProfile::ONLY_ICON == $this->displayMode;
+    }
+
+    /**
+     * @return bool
+     */
+    public function inheritsDisplayMode()
+    {
+        return DataBrowserRowProfile::INHERIT_FROM_PARENT == $this->displayMode;
+    }
+
+    /**
+     * @param int $hrAvg [bpm]
      *
-     * @param boolean $hrAvg
-     *
-     * @return Type
+     * @return $this
      */
     public function setHrAvg($hrAvg)
     {
@@ -197,9 +219,7 @@ class Type
     }
 
     /**
-     * Get hrAvg
-     *
-     * @return boolean
+     * @return int $hrAvg [bpm]
      */
     public function getHrAvg()
     {
@@ -207,11 +227,9 @@ class Type
     }
 
     /**
-     * Set qualitySession
+     * @param bool $qualitySession
      *
-     * @param boolean $qualitySession
-     *
-     * @return Type
+     * @return $this
      */
     public function setQualitySession($qualitySession)
     {
@@ -221,9 +239,7 @@ class Type
     }
 
     /**
-     * Get qualitySession
-     *
-     * @return boolean
+     * @return bool
      */
     public function getQualitySession()
     {
@@ -231,13 +247,11 @@ class Type
     }
 
     /**
-     * Set account
+     * @param Account $account
      *
-     * @param \Runalyze\Bundle\CoreBundle\Entity\Account $account
-     *
-     * @return Type
+     * @return $this
      */
-    public function setAccount(\Runalyze\Bundle\CoreBundle\Entity\Account $account = null)
+    public function setAccount(Account $account)
     {
         $this->account= $account;
 
@@ -245,12 +259,18 @@ class Type
     }
 
     /**
-     * Get account
-     *
-     * @return \Runalyze\Bundle\CoreBundle\Entity\Account
+     * @return Account
      */
     public function getAccount()
     {
         return $this->account;
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTrainings()
+    {
+        return $this->trainings;
     }
 }

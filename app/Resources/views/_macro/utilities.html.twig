@@ -11,7 +11,7 @@
 {% macro boxedValue(value, unit, label, width, icon) %}
     <div class="boxed-value-outer"{% if width %} style="width:{{ width }};"{% endif %}>
         <div class="boxed-value-container{% if icon %} with-icon{% endif %}">
-            {% if icon %}<i class="fa fa-fw {{ icon }}"></i>{% endif %}
+            {% if 'icons8' == icon|slice(0, 6) %}<i class="{{ icon }}"></i>{% elseif icon %}<i class="fa fa-fw {{ icon }}"></i>{% endif %}
             <div class="boxed-value">
                 {{ value|raw }}
                 <div class="boxed-value-unit">{{ unit|raw }}</div>

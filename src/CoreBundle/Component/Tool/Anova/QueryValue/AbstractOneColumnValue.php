@@ -6,11 +6,6 @@ use Doctrine\ORM\QueryBuilder;
 
 abstract class AbstractOneColumnValue implements QueryValueInterface
 {
-    /**
-     * @param QueryBuilder $queryBuilder
-     * @param string $alias
-     * @param string $as
-     */
     public function addSelectionToQuery(QueryBuilder $queryBuilder, $alias, $as)
     {
         $queryBuilder

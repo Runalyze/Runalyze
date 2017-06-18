@@ -24,7 +24,7 @@ class TemplateBasedMessage implements MessageInterface
     /**
      * @param string $templateName relative to self::BASE_PATH
      * @param null|int $lifetime [days] (only required for insert progress)
-     * 
+     *
      * @throws \InvalidArgumentException
      */
     public function __construct($templateName, $lifetime = null)
@@ -78,5 +78,19 @@ class TemplateBasedMessage implements MessageInterface
         if (null === $this->TemplateContent) {
             $this->TemplateContent = Yaml::parse(file_get_contents(__DIR__.'/'.self::BASE_PATH.$this->TemplateName));
         }
+    }
+
+    public function isLinkInternal()
+    {
+        $this->loadTemplateIfNotDoneYet();
+
+        return isset($this->TemplateContent['internal']) || (isset($this->TemplateContent['link']) && 'http' != substr($this->TemplateContent['link'], 0, 4));
+    }
+
+    public function getWindowSizeForInternalLink()
+    {
+        $this->loadTemplateIfNotDoneYet();
+
+        return isset($this->TemplateContent['window_size']) ? $this->TemplateContent['window_size'] : '';
     }
 }

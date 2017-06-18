@@ -62,7 +62,7 @@ abstract class Laps extends ActivityPlot {
 	 * @param \Runalyze\View\Activity\Context $context
 	 */
 	protected function initData(Activity\Context $context) {
-		$this->PaceUnit = $context->sport()->paceUnit();
+		$this->PaceUnit = $context->sport()->legacyPaceUnit();
 
 		$this->SplitsAreNotComplete = $this->splitsAreNotComplete($context);
 		$this->loadData($context);

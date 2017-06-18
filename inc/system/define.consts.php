@@ -5,12 +5,6 @@
  */
 
 /**
- * Current version of Runalyze
- * @var string
- */
-define('RUNALYZE_VERSION', '4.0.0');
-
-/**
  * Maximum value for integers
  * @var int 
  */
@@ -51,27 +45,3 @@ define('NBSP', '&nbsp;');
  * @var string
  */
 define('BR', '<br>');
-
-/**
- * Tag-ID for the whole databrowser
- * @const DATA_BROWSER_ID
- */
-define('DATA_BROWSER_ID', 'data-browser-inner');
-
-/**
- * Tag-ID for the public databrowser
- * @const DATA_BROWSER_SHARED_ID
- */
-define('DATA_BROWSER_SHARED_ID', 'publicList');
-
-/**
- * Tag-ID for the search
- * @const DATA_BROWSER_SEARCH_ID
- */
-define('DATA_BROWSER_SEARCH_ID', 'search');
-
-/**
- * Tag-ID for the resultbrowser of the search
- * @const DATA_BROWSER_SEARCHRESULT_ID
- */
-define('DATA_BROWSER_SEARCHRESULT_ID', 'searchResult');

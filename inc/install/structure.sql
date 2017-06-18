@@ -254,6 +254,8 @@ CREATE TABLE IF NOT EXISTS `runalyze_sport` (
   `outside` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `main_equipmenttypeid` int(10) unsigned DEFAULT NULL,
   `default_typeid` int(10) unsigned DEFAULT NULL,
+  `is_main` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `internal_sport_id` tinyint(4) DEFAULT NULL,
   `accountid` int(10) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -328,6 +330,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_training` (
   `fit_hrv_analysis` smallint(5) unsigned DEFAULT NULL,
   `fit_training_effect` decimal(2,1) unsigned DEFAULT NULL,
   `fit_performance_condition` tinyint(3) unsigned DEFAULT NULL,
+  `fit_performance_condition_end` tinyint(3) unsigned DEFAULT NULL,
   `rpe` tinyint(2) unsigned DEFAULT NULL,
   `trimp` smallint unsigned DEFAULT NULL,
   `cadence` int(3) unsigned DEFAULT NULL,
@@ -506,6 +509,7 @@ ALTER TABLE `runalyze_conf`
 --
 ALTER TABLE `runalyze_dataset`
  ADD PRIMARY KEY (`accountid`,`keyid`), ADD KEY `position` (`accountid`,`position`);
+CREATE UNIQUE INDEX unique_key ON runalyze_dataset (accountid, keyid);
 
 --
 -- Indizes für die Tabelle `runalyze_equipment`
@@ -760,4 +764,4 @@ ADD CONSTRAINT `runalyze_raceresult_ibfk_2` FOREIGN KEY (`activity_id`) REFERENC
 --
 -- Constraints der Tabelle `runalyze_notification`
 --
-ALTER TABLE runalyze_notification ADD CONSTRAINT FK_F99B51889B6B5FBA FOREIGN KEY (account_id) REFERENCES runalyze_account (id);
+ALTER TABLE runalyze_notification ADD CONSTRAINT FK_F99B51889B6B5FBA FOREIGN KEY (account_id) REFERENCES runalyze_account (id) ON DELETE CASCADE ON UPDATE CASCADE;

@@ -7,6 +7,9 @@ use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\Notification;
 use Runalyze\Bundle\CoreBundle\Entity\NotificationRepository;
 
+/**
+ * @group requiresDoctrine
+ */
 class NotificationRepositoryTest extends AbstractRepositoryTestCase
 {
     /** @var NotificationRepository */

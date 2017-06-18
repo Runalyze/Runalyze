@@ -5,9 +5,9 @@ namespace Runalyze\Bundle\CoreBundle\Tests\Component\Configuration;
 use Runalyze\Bundle\CoreBundle\Component\Configuration\RunalyzeConfigurationList;
 use Runalyze\Bundle\CoreBundle\Component\Configuration\UnitSystem;
 use Runalyze\Bundle\CoreBundle\Entity\Sport;
+use Runalyze\Metrics\Velocity\Unit\PaceEnum;
 use Runalyze\Metrics\Velocity\Unit\SecondsPer500y;
 use Runalyze\Metrics\Velocity\Unit\SecondsPerMile;
-use Runalyze\Parameter\Application\PaceUnit;
 
 class UnitSystemTest extends \PHPUnit_Framework_TestCase
 {
@@ -34,7 +34,7 @@ class UnitSystemTest extends \PHPUnit_Framework_TestCase
     public function testThatPaceUnitCanBeSetFromSport()
     {
         $sport = new Sport();
-        $sport->setSpeed(PaceUnit::MIN_PER_MILE);
+        $sport->setSpeed(PaceEnum::SECONDS_PER_MILE);
 
         $unitSystem = new UnitSystem(new RunalyzeConfigurationList());
         $unitSystem->setPaceUnitFromSport($sport);

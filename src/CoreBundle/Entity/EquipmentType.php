@@ -58,7 +58,7 @@ class EquipmentType
     /**
      * @var Account
      *
-     * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Account")
+     * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Account", inversedBy="equipmentTypes")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="accountid", referencedColumnName="id", nullable=false)
      * })
@@ -68,7 +68,7 @@ class EquipmentType
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Sport")
+     * @ORM\ManyToMany(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Sport", inversedBy="equipmentType")
      * @ORM\JoinTable(name="equipment_sport",
      *   joinColumns={
      *     @ORM\JoinColumn(name="equipment_typeid", referencedColumnName="id")
@@ -245,4 +245,3 @@ class EquipmentType
         return $this->sport;
     }
 }
-

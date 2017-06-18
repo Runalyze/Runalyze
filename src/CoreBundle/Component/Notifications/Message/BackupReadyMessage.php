@@ -37,4 +37,14 @@ class BackupReadyMessage implements MessageInterface
     {
         return $router->generate('tools-backup');
     }
+
+    public function isLinkInternal()
+    {
+        return true;
+    }
+
+    public function getWindowSizeForInternalLink()
+    {
+        return '';
+    }
 }

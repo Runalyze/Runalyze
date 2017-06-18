@@ -119,6 +119,22 @@ class Athlete
     /**
      * @return bool
      */
+    public function isMale()
+    {
+        return Gender::MALE == $this->Gender;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isFemale()
+    {
+        return Gender::FEMALE == $this->Gender;
+    }
+
+    /**
+     * @return bool
+     */
     public function knowsMaximalHeartRate()
     {
         return (null !== $this->maximalHR);

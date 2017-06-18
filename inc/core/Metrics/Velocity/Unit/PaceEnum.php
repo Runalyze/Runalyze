@@ -2,10 +2,12 @@
 
 namespace Runalyze\Metrics\Velocity\Unit;
 
+use Runalyze\Parameter\Application\PaceUnit;
 use Runalyze\Util\AbstractEnum;
 use Runalyze\Util\AbstractEnumFactoryTrait;
+use Runalyze\Util\InterfaceChoosable;
 
-class PaceEnum extends AbstractEnum
+class PaceEnum extends AbstractEnum implements InterfaceChoosable
 {
     use AbstractEnumFactoryTrait;
 
@@ -35,4 +37,15 @@ class PaceEnum extends AbstractEnum
 
     /** @var int */
     const METER_PER_SECOND = 8;
+
+    public static function getChoices()
+    {
+        $choices = [];
+
+        foreach (self::getEnum() as $enum) {
+            $choices[self::get($enum)->getUnit()] = $enum;
+        }
+
+        return $choices;
+    }
 }

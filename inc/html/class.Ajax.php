@@ -86,6 +86,10 @@ class Ajax {
 		if (defined('THUNDERFOREST_API_KEY') && THUNDERFOREST_API_KEY != '') {
                         echo self::wrapJS('Runalyze.Options.setThunderforestLayerAuth("'.THUNDERFOREST_API_KEY.'")');
                 }
+		if (defined('MAPBOX_API_KEY') && MAPBOX_API_KEY != '') {
+				echo self::wrapJS('Runalyze.Options.setMapboxLayerAuth("'.MAPBOX_API_KEY.'")');
+			}
+
 
 	}
 

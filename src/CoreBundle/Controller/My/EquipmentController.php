@@ -117,7 +117,6 @@ class EquipmentController extends Controller
             throw $this->createNotFoundException();
         }
 
-        dump($equipmentType);
         $form = $this->createForm(Form\EquipmentCategoryType::class, $equipmentType ,[
             'action' => $this->generateUrl('equipment-category-edit', ['id' => $equipmentType->getId()])
         ]);

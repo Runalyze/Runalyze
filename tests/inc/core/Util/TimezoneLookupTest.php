@@ -3,7 +3,9 @@
 namespace Runalyze\Util;
 
 /**
- * Test class for Time
+ * @group dependsOn
+ * @group dependsOnTimezoneDatabase
+ * @group requiresSqlite
  */
 class TimezoneLookupTest extends \PHPUnit_Framework_TestCase
 {

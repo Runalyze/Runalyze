@@ -93,7 +93,7 @@ class DataBrowserShared extends DataBrowser {
 	public static function getLink($name, $start, $end, $title = '') {
 		$href = self::getBaseUrl().'?start='.$start.'&end='.$end;
 
-		return Ajax::link($name, DATA_BROWSER_SHARED_ID, $href, '', $title);
+		return Ajax::link($name, 'publicList', $href, '', $title);
 	}
 
 	/**

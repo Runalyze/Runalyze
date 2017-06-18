@@ -25,7 +25,7 @@ class Training
     /**
      * @var \Runalyze\Bundle\CoreBundle\Entity\Sport
      *
-     * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Sport")
+     * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Sport", inversedBy = "trainings")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="sportid", referencedColumnName="id", nullable=false)
      * })
@@ -35,7 +35,7 @@ class Training
     /**
      * @var \Runalyze\Bundle\CoreBundle\Entity\Type
      *
-     * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Type")
+     * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Type", inversedBy = "trainings")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="typeid", referencedColumnName="id")
      * })
@@ -195,6 +195,13 @@ class Training
      * @ORM\Column(name="fit_performance_condition", columnDefinition="tinyint unsigned DEFAULT NULL")
      */
     private $fitPerformanceCondition = null;
+
+    /**
+     * @var bool|null
+     *
+     * @ORM\Column(name="fit_performance_condition_end", columnDefinition="tinyint unsigned DEFAULT NULL")
+     */
+    private $fitPerformanceConditionEnd = null;
 
     /**
      * @var bool|null
@@ -934,6 +941,26 @@ class Training
     public function getFitPerformanceCondition()
     {
         return $this->fitPerformanceCondition;
+    }
+
+    /**
+     * @param null|int $fitPerformanceConditionEnd
+     *
+     * @return $this
+     */
+    public function setFitPerformanceConditionEnd($fitPerformanceConditionEnd)
+    {
+        $this->fitPerformanceConditionEnd = $fitPerformanceConditionEnd;
+
+        return $this;
+    }
+
+    /**
+     * @return null|int
+     */
+    public function getFitPerformanceConditionEnd()
+    {
+        return $this->fitPerformanceConditionEnd;
     }
 
     /**

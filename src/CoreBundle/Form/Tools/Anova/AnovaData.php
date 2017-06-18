@@ -22,6 +22,20 @@ class AnovaData
     /** @var string */
     protected $ValueToLookAt;
 
+    /**
+     * @param Sport[] $sport
+     * @return AnovaData
+     */
+    public static function getDefault(array $sport)
+    {
+        $data = new self;
+        $data->setSport($sport);
+        $data->setDateFrom((new \DateTime())->sub(new \DateInterval('P6M')));
+        $data->setDateTo(new \DateTime());
+
+        return $data;
+    }
+
     public function setDateFrom(DateTime $dateFrom)
     {
         $this->DateFrom = $dateFrom;

@@ -7,6 +7,9 @@ use Runalyze\Bundle\CoreBundle\Entity\Raceresult;
 use Runalyze\Bundle\CoreBundle\Entity\RaceresultRepository;
 use Runalyze\Bundle\CoreBundle\Entity\TrainingRepository;
 
+/**
+ * @group requiresDoctrine
+ */
 class RaceresultRepositoryTest extends AbstractRepositoryTestCase
 {
     /** @var RaceresultRepository */

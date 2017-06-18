@@ -34,6 +34,11 @@
 			padding: 5px;
 		}
 
+		&.w100 {
+			width: 100%;
+			box-sizing: border-box;
+		}
+
 		.fa {
 			position: absolute;
 			left: 0;
@@ -44,6 +49,12 @@
 			font-size: (@blocklist-height + 2*@blocklist-padding-top-bottom)/2;
 			text-align: center;
 		}
+	}
+
+	&.blocklist-width-auto a {
+		display: inline-block;
+		width: auto;
+		padding-right: (2*@blocklist-padding-top-bottom);
 	}
 }
 

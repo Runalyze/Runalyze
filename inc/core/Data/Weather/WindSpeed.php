@@ -167,10 +167,10 @@ class WindSpeed implements ValueInterface
     public function unit()
     {
         if ($this->UnitSystem->isImperial()) {
-            return PaceUnit::MILES_PER_H;
+            return PaceUnit::stringFor(PaceUnit::MILES_PER_H);
+        } else {
+            return PaceUnit::stringFor(PaceUnit::KM_PER_H);
         }
-
-        return PaceUnit::KM_PER_H;
     }
 
     /*

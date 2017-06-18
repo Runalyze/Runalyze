@@ -3,7 +3,6 @@
 namespace Runalyze\Bundle\CoreBundle\Component\Tool\DatabaseCleanup;
 
 use Runalyze\Calculation\Activity\Calculator;
-use Runalyze\Configuration;
 use Runalyze\Model\Activity;
 use Runalyze\Model\Trackdata;
 use Runalyze\Model\Route;
@@ -60,7 +59,7 @@ class JobLoop extends Job
         while ($Data = $Query->fetch()) {
             try {
                 $Calculator = $this->calculatorFor($Data);
-                $calculateVO2max = ($Data['sportid'] == Configuration::General()->runningSport());
+                $calculateVO2max = ($Data['sportid'] == $this->RunningSportId);
 
                 if ($this->isRequested(self::ELEVATION) && $this->isRequested(self::ELEVATION_OVERWRITE)) {
                     $Update->bindValue(':elevation', $this->elevationsFor($Data)[0]);

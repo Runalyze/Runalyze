@@ -10,7 +10,7 @@ use Runalyze\Model\Trackdata;
 
 /**
  * Display heartrate zones
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\DataObjects\Training\View\Section
  */
@@ -27,7 +27,7 @@ class TableZonesHeartrate extends TableZonesAbstract {
 	protected function initData() {
 		$Zones = $this->computeZones();
 		$Pace = new Pace(0, 0);
-		$Pace->setUnit($this->Context->sport()->paceUnit());
+		$Pace->setUnit($this->Context->sport()->legacyPaceUnit());
 
 		foreach ($Zones as $hf => $Info) {
 			if ($Info['time'] > parent::MINIMUM_TIME_IN_ZONE) {

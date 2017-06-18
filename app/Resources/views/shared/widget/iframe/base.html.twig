@@ -17,9 +17,15 @@
 
     <div id="statistics-inner" class="panel" style="width:97%;margin:0 auto;">
         <div class="panel-heading panel-inner-heading">
+            {% if hasPublicList %}
+                <a href="{{ url('shared-athlete', {'username': username}) }}" title="{% trans %}Athlete page of %username%{% endtrans %}" style="display:inline-block;float:right;">
+                    <img src="{{ asset('assets/images/runalyze-start.png') }}" height="18px" width="auto">
+                </a>
+            {% else %}
             <a href="{{ url('base_url') }}" style="display:inline-block;float:right;">
                 <img src="{{ asset('assets/images/runalyze-start.png') }}" height="18px" width="auto">
             </a>
+            {% endif %}
 
             <h2>
                 {{ context.decorator.title }}

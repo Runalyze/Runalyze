@@ -1,8 +1,9 @@
 <?php
 
-namespace Runalyze\Profile\Sport\Mapping;
+namespace Runalyze\Tests\Profile\Sport\Mapping;
 
 use Runalyze\Profile\FitSdk;
+use Runalyze\Profile\Sport\Mapping\FitSdkMapping;
 use Runalyze\Profile\Sport\SportProfile;
 
 class FitSdkMappingTest extends \PHPUnit_Framework_TestCase

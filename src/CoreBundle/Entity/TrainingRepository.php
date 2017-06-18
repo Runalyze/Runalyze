@@ -26,6 +26,7 @@ class TrainingRepository extends EntityRepository
      * @param int $activityid
      * @param int $accountid
      * @return mixed
+     * @see \Runalyze\Metrics\Velocity\Unit\PaceEnum
      */
     public function getSpeedUnitFor($activityid, $accountid)
     {
@@ -97,6 +98,55 @@ class TrainingRepository extends EntityRepository
         }
 
         return $queryBuilder->getQuery()->getSingleScalarResult();
+    }
+
+    /**
+     * @param Type $type
+     * @return array
+     */
+    public function getNumberOfActivitiesWithActivityType(Type $type)
+    {
+        $queryBuilder = $this->_em->createQueryBuilder()
+            ->select('COUNT(1) as num')
+            ->from('CoreBundle:Training', 't')
+            ->where('t.type = :typeid')
+            ->setParameter('typeid', $type->getId());
+
+        return $queryBuilder->getQuery()->getSingleScalarResult();
+    }
+
+    /**
+     * @param Account $account
+     * @return array
+     */
+    public function getTypesWithTraining(Account $account)
+    {
+        $qb = $this->_em->createQueryBuilder();
+        $queryBuilder = $qb
+            ->select('IDENTITY(t.type)')
+            ->from('CoreBundle:Training', 't')
+            ->where('t.account = :account')
+            ->andWhere($qb->expr()->isNotNull('t.type'))
+            ->addGroupBy('t.type')
+            ->setParameter('account', $account->getId());
+        return $queryBuilder->getQuery()->getResult("COLUMN_HYDRATOR");
+    }
+
+    /**
+     * @param Account $account
+     * @return array
+     */
+    public function getSportsWithTraining(Account $account)
+    {
+        $qb = $this->_em->createQueryBuilder();
+        $queryBuilder = $qb
+            ->select('IDENTITY(t.sport)')
+            ->from('CoreBundle:Training', 't')
+            ->where('t.account = :account')
+            ->andWhere($qb->expr()->isNotNull('t.sport'))
+            ->addGroupBy('t.sport')
+            ->setParameter('account', $account->getId());
+        return $queryBuilder->getQuery()->getResult("COLUMN_HYDRATOR");
     }
 
     /**

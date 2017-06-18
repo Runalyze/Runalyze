@@ -6,6 +6,10 @@ use Runalyze\Configuration;
 use DB;
 use Runalyze\Util\LocalTime;
 
+/**
+ * @group dependsOn
+ * @group dependsOnOldDatabase
+ */
 class BasicEnduranceTest extends \PHPUnit_Framework_TestCase {
 
 	/**

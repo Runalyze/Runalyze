@@ -360,7 +360,7 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 			$ageGrade = null;
 			$ageGradeIcon = '';
 
-			if (Configuration::General()->runningSport() == $this->Context->sport()->id() && $athlete->knowsGender() && $athlete->knowsAge()) {
+			if (\Runalyze\Profile\Sport\SportProfile::RUNNING == $this->Context->sport()->getInternalProfileEnum() && $athlete->knowsGender() && $athlete->knowsAge()) {
 				$table = Gender::FEMALE === $athlete->gender() ? new FemaleTable() : new MaleTable();
 				$lookup = new Lookup($table, $athlete->age());
 

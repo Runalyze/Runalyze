@@ -2,6 +2,9 @@
 
 use Runalyze\Util\LocalTime;
 
+/**
+ * @group import
+ */
 class ImporterFiletypeCSVTest extends PHPUnit_Framework_TestCase {
 
 	/**
@@ -16,7 +19,7 @@ class ImporterFiletypeCSVTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * Test: standard file
 	 * Filename: "Epson.csv"
-	 * @group epson
+	 * @group importerEpson
 	 */
 	public function testEpsonFile() {
 		$this->object->parseFile('../tests/testfiles/csv/Epson.csv');
@@ -56,7 +59,7 @@ class ImporterFiletypeCSVTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * Test: standard file
 	 * Filename: "Epson.csv"
-	 * @group epson
+	 * @group importerEpson
 	 * @see https://github.com/Runalyze/Runalyze/issues/1575
 	 */
 	public function testEpsonFileWithDifferentArraySizes() {
@@ -79,7 +82,7 @@ class ImporterFiletypeCSVTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * Original file was cutted after 500 data points
 	 *
-	 * @group wahoo
+	 * @group importerWahoo
 	 * @see https://github.com/Runalyze/Runalyze/issues/1965
 	 */
 	public function testWahooIPhoneApp() {

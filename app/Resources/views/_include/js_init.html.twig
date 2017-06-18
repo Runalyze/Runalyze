@@ -1,0 +1,12 @@
+{% if not app.request.xmlHttpRequest %}
+<script>
+(function($){$(document).ready(function() {
+    Runalyze.init({{ initOptions|default('') }});
+});})(jQuery);
+
+{% if sharedView %}Runalyze.Options.setSharedView();{% endif %}
+{% if nokia_here_appid and nokia_here_token %}Runalyze.Options.setNokiaLayerAuth("{{ nokia_here_appid }}", "{{ nokia_here_token }}");{% endif %}
+{% if thunderforest_api_key %}Runalyze.Options.setThunderforestLayerAuth("{{ thunderforest_api_key }}");{% endif %}
+{% if mapbox_api_key %}Runalyze.Options.setMapboxLayerAuth("{{ mapbox_api_key }}");{% endif %}
+</script>
+{% endif %}

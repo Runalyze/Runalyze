@@ -52,9 +52,9 @@
             </div>
             <ul class="submenu right-oriented">
                 <li class="no-notifications-messages"><em class="no-link"><?php _e('No new notifications'); ?></em></li>
-                <li id="tpl-notification-message-with-internal-link" class="hide notification-message is-new" data-id=""><a class="window" href="" data-size="small"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<span></span></a></li>
-                <li id="tpl-notification-message-with-external-link" class="hide notification-message is-new" data-id=""><a href="" target="_blank"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<span></span></a></li>
-                <li id="tpl-notification-message-without-link" class="hide notification-message is-new" data-id=""><span class="no-link"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<span></span></span></li>
+                <li id="tpl-notification-message-with-internal-link" class="hide notification-message is-new"><a class="internal" href=""><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<span></span></a></li>
+                <li id="tpl-notification-message-with-external-link" class="hide notification-message is-new"><a href="" target="_blank"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<span></span></a></li>
+                <li id="tpl-notification-message-without-link" class="hide notification-message is-new"><span class="no-link"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<span></span></span></li>
                 <li class="separator"></li>
                 <li><a class="window" data-size="small" href="<?php echo $this->get('router')->generate('notifications-list'); ?>"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('Show all notifications'); ?></a></li>
             </ul>
@@ -81,9 +81,8 @@
             <ul class="submenu">
                 <li><a class="window" href="<?php echo $this->get('router')->generate('settings'); ?>?key=config_tab_general"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('General settings'); ?></a></li>
                 <li><a class="window" href="<?php echo $this->get('router')->generate('settings'); ?>?key=config_tab_plugins"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('Plugins'); ?></a></li>
-                <li><a class="window" href="<?php echo $this->get('router')->generate('settings-dataset'); ?>"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('Dataset'); ?></a></li>
-                <li><a class="window" href="<?php echo $this->get('router')->generate('settings'); ?>?key=config_tab_sports"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('Sport types'); ?></a></li>
-                <li><a class="window" href="<?php echo $this->get('router')->generate('settings'); ?>?key=config_tab_types"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('Activity types'); ?></a></li>
+                <li><a class="window" href="<?php echo $this->get('router')->generate('settings-dataset'); ?>?key=config_tab_dataset"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('Dataset'); ?></a></li>
+                <li><a class="window" href="<?php echo $this->get('router')->generate('settings-sports'); ?>"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('Sports'); ?></a></li>
                 <li><a class="window" href="<?php echo $this->get('router')->generate('equipment-overview'); ?>"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('Equipment'); ?></a></li>
                 <li><a class="window" data-size="small" href="<?php echo $this->get('router')->generate('settings-tags'); ?>"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('Activity tags'); ?></a></li>
             </ul>
@@ -94,10 +93,12 @@
                 <a class="window" href="<?php echo $this->get('router')->generate('tools'); ?>"><i class="fa fa-fw fa-lg fa-dashboard"></i>&nbsp;<?php _e('Tools'); ?></a>
             </div>
             <ul class="submenu">
+                <li><a class="window" href="<?php echo $this->get('router')->generate('tools-trend-analysis'); ?>"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('Trend analysis'); ?></a></li>
                 <li><a class="window" href="<?php echo $this->get('router')->generate('tools-anova'); ?>"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('ANOVA'); ?></a></li>
                 <li><a class="window" href="<?php echo $this->get('router')->generate('tools-vo2max-analysis'); ?>"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('Analyze your VO2max'); ?></a></li>
                 <li><a class="window" href="<?php echo $this->get('router')->generate('tools-tables'); ?>"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('Running tables'); ?></a></li>
                 <li><a class="window" href="<?php echo $this->get('router')->generate('poster'); ?>"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('Poster generator'); ?></a></li>
+                <li class="separator"></li>
                 <li><a class="window" href="<?php echo $this->get('router')->generate('tools'); ?>"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('More'); ?></a></li>
             </ul>
         </div>

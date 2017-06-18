@@ -6,6 +6,7 @@
 
 namespace Runalyze\Activity;
 
+use Runalyze\Metrics\LegacyUnitConverter;
 use Runalyze\Parameter\Application\PaceUnit as PaceUnitOption;
 
 /**
@@ -18,7 +19,7 @@ use Runalyze\Parameter\Application\PaceUnit as PaceUnitOption;
 class Pace {
 	/**
 	 * Default speed (km/h)
-	 * @var string
+	 * @var int
 	 */
 	const STANDARD = PaceUnitOption::KM_PER_H;
 
@@ -40,25 +41,16 @@ class Pace {
 	protected $UnitObject = null;
 
 	/**
-	 * Options
-	 * @return array
-	 * @codeCoverageIgnore
-	 */
-	public static function options() {
-		return (new PaceUnitOption())->options();
-	}
-
-	/**
 	 * Create pace
 	 * @param int $time [s]
 	 * @param float $distance [optional] [km]
-	 * @param string $unitEnum [optional]
+	 * @param int $legacyPaceUnitEnum [optional]
 	 */
-	public function __construct($time, $distance = 1, $unitEnum = self::STANDARD) {
+	public function __construct($time, $distance = 1.0, $legacyPaceUnitEnum = self::STANDARD) {
 		$this->Time = $time;
 		$this->Distance = $distance;
 
-		$this->setUnitEnum($unitEnum);
+		$this->setLegacyUnitEnum($legacyPaceUnitEnum);
 	}
 
 	/**
@@ -103,9 +95,9 @@ class Pace {
 
 	/**
 	 * Enum for pace unit
-	 * 
+	 *
 	 * This is for example what is saved in sports configuration.
-	 * 
+	 *
 	 * @return string
 	 */
 	public function unitEnum() {
@@ -122,14 +114,30 @@ class Pace {
 
 	/**
 	 * Set unit
-	 * @param string $unitEnum
+	 * @param int $legacyPaceUnitEnum
 	 */
-	public function setUnitEnum($unitEnum) {
+	public function setLegacyUnitEnum($legacyPaceUnitEnum) {
 		$Option = new PaceUnitOption();
-		$Option->set($unitEnum);
+		$Option->set($legacyPaceUnitEnum);
 
 		$this->UnitObject = $Option->object();
 	}
+
+    /**
+     * Set unit
+     * @param int $unitEnum
+     */
+    public function setNewUnitEnum($unitEnum) {
+        $this->UnitObject = (new LegacyUnitConverter())->getLegacyPaceUnit($unitEnum);
+    }
+
+    /**
+     * Set unit
+     * @param int $unitEnum
+     */
+    public function setUnitEnum($unitEnum) {
+        // TODO: remove
+    }
 
 	/**
 	 * @return boolean
@@ -204,7 +212,7 @@ class Pace {
 	public function asMinPerKm() {
 		return $this->asUnit(new PaceUnit\MinPerKilometer());
 	}
-	
+
 	/**
 	 * Compare
 	 * Both pace objects must have the same unit and the unit must be comparable.

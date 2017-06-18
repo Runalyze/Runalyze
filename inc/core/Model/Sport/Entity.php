@@ -6,8 +6,10 @@
 
 namespace Runalyze\Model\Sport;
 
+use Runalyze\Metrics\LegacyUnitConverter;
 use Runalyze\Model;
 use Runalyze\Profile\Sport\ProfileInterface;
+use Runalyze\Profile\Sport\SportProfile;
 use Runalyze\View\Icon\SportIcon;
 
 /**
@@ -83,6 +85,12 @@ class Entity extends Model\EntityWithID implements ProfileInterface {
 	 */
 	const DEFAULT_TYPEID = 'default_typeid';
 
+	/** @var string */
+	const IS_MAIN = 'is_main';
+
+	/** @var string */
+	const INTERNAL_SPORT_ID = 'internal_sport_id';
+
 	/**
 	 * All properties
 	 * @return array
@@ -99,7 +107,9 @@ class Entity extends Model\EntityWithID implements ProfileInterface {
 			self::HAS_POWER,
 			self::IS_OUTSIDE,
 			self::MAIN_EQUIPMENTTYPEID,
-			self::DEFAULT_TYPEID
+			self::DEFAULT_TYPEID,
+            self::IS_MAIN,
+            self::INTERNAL_SPORT_ID
 		);
 	}
 
@@ -119,6 +129,14 @@ class Entity extends Model\EntityWithID implements ProfileInterface {
 		return $this->Data[self::NAME];
 	}
 
+    public function getName() {
+        return $this->Data[self::NAME];
+    }
+
+    public function getInternalProfileEnum() {
+        return $this->Data[self::INTERNAL_SPORT_ID] ?: SportProfile::GENERIC;
+    }
+
 	/**
 	 * Icon
 	 * @return \Runalyze\View\Icon\SportIcon
@@ -128,7 +146,11 @@ class Entity extends Model\EntityWithID implements ProfileInterface {
 		return new SportIcon($this->Data[self::IMAGE]);
 	}
 
-	/**
+	public function getIconClass() {
+        return $this->Data[self::IMAGE];
+    }
+
+    /**
 	 * Uses short display?
 	 * @return boolean
 	 */
@@ -144,6 +166,10 @@ class Entity extends Model\EntityWithID implements ProfileInterface {
 		return $this->Data[self::CALORIES_PER_HOUR];
 	}
 
+    public function getCaloriesPerHour() {
+        return $this->Data[self::CALORIES_PER_HOUR];
+    }
+
 	/**
 	 * Average heartrate
 	 * @return int
@@ -152,24 +178,29 @@ class Entity extends Model\EntityWithID implements ProfileInterface {
 		return $this->Data[self::HR_AVG];
 	}
 
+    public function getAverageHeartRate() {
+        return $this->Data[self::HR_AVG];
+    }
+
 	/**
 	 * Pace unit
 	 * @return \Runalyze\Activity\PaceUnit\AbstractUnit
 	 */
-	public function paceUnit() {
-		$Option = new \Runalyze\Parameter\Application\PaceUnit();
-		$Option->set($this->Data[self::PACE_UNIT]);
-
-		return $Option->object();
+	public function legacyPaceUnit() {
+        return (new LegacyUnitConverter())->getLegacyPaceUnit($this->Data[self::PACE_UNIT]);
 	}
 
 	/**
 	 * Pace unit
-	 * @return string see \Runalyze\Activity\Pace
+	 * @return int see \Runalyze\Activity\Pace or \Runalyze\Parameter\Application\PaceUnit
 	 */
-	public function paceUnitEnum() {
-		return $this->Data[self::PACE_UNIT];
+	public function getLegacyPaceUnitEnum() {
+		return (new LegacyUnitConverter())->getLegacyPaceUnit($this->Data[self::PACE_UNIT], true);
 	}
+
+    public function getPaceUnitEnum() {
+        return $this->Data[self::PACE_UNIT];
+    }
 
 	/**
 	 * Has distances?

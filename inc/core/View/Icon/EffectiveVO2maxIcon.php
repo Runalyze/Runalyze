@@ -49,7 +49,7 @@ class EffectiveVO2maxIcon extends \Runalyze\View\Icon
      */
     protected function setTooltipFor($value)
     {
-        $this->setTooltip('VO<sub>2</sub>max: '.round($value, 2));
+        $this->setTooltip('VO<sub>2</sub>max: '.number_format($value, 2));
     }
 
     /**
@@ -113,11 +113,11 @@ class EffectiveVO2maxIcon extends \Runalyze\View\Icon
      */
     public function code()
     {
+        $this->FontAwesomeName = self::BASE_CLASS.' '.$this->Direction;
+
         if ($this->IsTransparent) {
             $this->FontAwesomeName .= ' unimportant';
         }
-
-        $this->FontAwesomeName .= ' '.$this->Direction;
 
         return parent::code();
     }

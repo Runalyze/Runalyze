@@ -28,6 +28,22 @@ class VO2max extends AbstractCategory
     }
 
     /**
+     * @return int [m]
+     */
+    public function getAdditionalDistancePerPositiveElevation()
+    {
+        return (int)$this->Variables['VO2MAX_CORRECTION_POSITIVE_ELEVATION'];
+    }
+
+    /**
+     * @return int [m]
+     */
+    public function getAdditionalDistancePerNegativeElevation()
+    {
+        return (int)$this->Variables['VO2MAX_CORRECTION_NEGATIVE_ELEVATION'];
+    }
+
+    /**
      * @return \Runalyze\Configuration\Category\VO2max
      */
     public function getLegacyCategory()

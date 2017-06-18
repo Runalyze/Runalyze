@@ -65,7 +65,7 @@ class VO2maxAnalysis
 				`tr`.`distance`,
 				`tr`.`s`,
 				`tr`.`is_track`,
-				`tr`.`comment`,
+				`tr`.`title`,
 				`tr`.`pulse_avg`,
 				`tr`.`pulse_max`,
 				`tr`.`vo2max`,

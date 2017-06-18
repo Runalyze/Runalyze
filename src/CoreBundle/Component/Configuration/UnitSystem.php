@@ -2,9 +2,13 @@
 
 namespace Runalyze\Bundle\CoreBundle\Component\Configuration;
 
+use Runalyze\Activity\PaceUnit\KmPerHour;
+use Runalyze\Activity\PaceUnit\MilesPerHour;
 use Runalyze\Bundle\CoreBundle\Entity\Sport;
 use Runalyze\Metrics\Cadence;
+use Runalyze\Metrics\Common\Unit\Factorial;
 use Runalyze\Metrics\Distance;
+use Runalyze\Metrics\HeartRate\Unit\PercentMaximum;
 use Runalyze\Metrics\LegacyUnitConverter;
 use Runalyze\Metrics\Velocity\Unit\AbstractPaceUnit;
 use Runalyze\Metrics\Velocity\Unit\KilometerPerHour;
@@ -30,7 +34,7 @@ class UnitSystem
 
     public function setPaceUnitFromSport(Sport $sport)
     {
-        $this->PaceUnit = $this->LegacyUnitConverter->getPaceUnit($sport->getSpeed());
+        $this->PaceUnit = $sport->getSpeedUnit();
     }
 
     public function setPaceUnit(AbstractPaceUnit $paceUnit)
@@ -44,7 +48,7 @@ class UnitSystem
     public function getPaceUnit(Sport $sport = null)
     {
         if (null !== $sport) {
-            return $this->LegacyUnitConverter->getPaceUnit($sport->getSpeed());
+            return $sport->getSpeedUnit();
         }
 
         return $this->PaceUnit;
@@ -105,8 +109,8 @@ class UnitSystem
     }
 
     /**
-     * @param int|null $maximalHeartRate
-     * @param int|null $restingHeartRate
+     * @param int|null $maximalHeartRate [bpm]
+     * @param int|null $restingHeartRate [bpm]
      * @return \Runalyze\Metrics\HeartRate\Unit\AbstractHeartRateUnit
      */
     public function getHeartRateUnit($maximalHeartRate = null, $restingHeartRate = null)
@@ -119,6 +123,15 @@ class UnitSystem
             $maximalHeartRate,
             $restingHeartRate
         );
+    }
+
+    /**
+     * @param null|int $maximalHeartRate [bpm]
+     * @return PercentMaximum
+     */
+    public function getHeartRateUnitPercentMaximum($maximalHeartRate = null)
+    {
+        return new PercentMaximum($maximalHeartRate ?: $this->Configuration->get('data.HF_MAX'));
     }
 
     /**
@@ -139,5 +152,14 @@ class UnitSystem
         return $this->LegacyUnitConverter->getWeightUnit(
             $this->Configuration->get('general.WEIGHT_UNIT')
         );
+    }
+
+    /**
+     * @param null|float $correctionFactor
+     * @return Factorial
+     */
+    public function getVO2maxUnit($correctionFactor = null)
+    {
+        return new Factorial('', $correctionFactor ?: $this->Configuration->getVO2maxCorrectionFactor(), 2);
     }
 }

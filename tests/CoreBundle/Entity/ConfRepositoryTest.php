@@ -4,6 +4,9 @@ namespace Runalyze\Bundle\CoreBundle\Tests\Entity;
 
 use Runalyze\Bundle\CoreBundle\Entity\ConfRepository;
 
+/**
+ * @group requiresDoctrine
+ */
 class ConfRepositoryTest extends AbstractRepositoryTestCase
 {
     /** @var ConfRepository */

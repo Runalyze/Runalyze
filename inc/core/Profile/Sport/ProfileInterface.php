@@ -5,24 +5,29 @@ namespace Runalyze\Profile\Sport;
 interface ProfileInterface
 {
     /**
-     * @return string
+     * @return int
      */
-    public function icon();
+    public function getInternalProfileEnum();
 
     /**
      * @return string
      */
-    public function name();
+    public function getIconClass();
+
+    /**
+     * @return string
+     */
+    public function getName();
 
     /**
      * @return int
      */
-    public function caloriesPerHour();
+    public function getCaloriesPerHour();
 
     /**
      * @return int
      */
-    public function avgHR();
+    public function getAverageHeartRate();
 
     /**
      * @return bool
@@ -40,9 +45,15 @@ interface ProfileInterface
     public function isOutside();
 
     /**
+     * @return int
+     * @see \Runalyze\Metrics\Velocity\Unit\PaceEnum
+     */
+    public function getPaceUnitEnum();
+
+    /**
      * @return string see \Runalyze\Parameter\Application\PaceUnit
      */
-    public function paceUnitEnum();
+    public function getLegacyPaceUnitEnum();
 
     /**
      * @return bool

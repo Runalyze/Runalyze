@@ -2,6 +2,11 @@
 
 namespace Runalyze\Service\ElevationCorrection\Strategy;
 
+/**
+ * @group dependsOn
+ * @group dependsOnService
+ * @group dependsOnGeonames
+ */
 class GeonamesTest extends \PHPUnit_Framework_TestCase
 {
 

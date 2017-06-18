@@ -61,11 +61,11 @@ class Table {
 
 	/**
 	 * @param \Runalyze\Model\Activity\Splits\Entity $splits
-	 * @param string $paceUnit enum
+	 * @param int $legacyPaceUnitEnum enum
 	 */
-	public function __construct(Splits\Entity $splits, $paceUnit = PaceUnit::MIN_PER_KM) {
+	public function __construct(Splits\Entity $splits, $legacyPaceUnitEnum = PaceUnit::MIN_PER_KM) {
 		$this->Splits = $splits;
-		$this->PaceUnit = $paceUnit;
+		$this->PaceUnit = $legacyPaceUnitEnum;
 
 		$this->init();
 	}

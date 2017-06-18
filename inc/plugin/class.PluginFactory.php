@@ -260,15 +260,6 @@ class PluginFactory {
 	}
 
 	/**
-	 * Uninstall plugin
-	 * @param string $key
-	 */
-	public function uninstallPlugin($key) {
-		DB::getInstance()->exec('DELETE FROM `'.PREFIX.'plugin` WHERE `key`='.DB::getInstance()->escape($key).' LIMIT 1');
-		self::clearCache();
-	}
-
-	/**
 	 * Get the PLUGINKEY for a given ID from database
 	 * @param int $id
 	 * @return string

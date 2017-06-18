@@ -88,8 +88,9 @@ class Darksky implements StrategyInterface {
 		$this->Location = $Location;
 
 		if ($Location->hasPosition()) {
-			$this->setFromURL( $Location->lat().','.$Location->lon().','.$Location->time() );
+			$this->setFromURL($Location->lat().','.$Location->lon().','.$Location->timestamp());
 		}
+
 		$this->updateLocation();
 	}
 
@@ -98,8 +99,9 @@ class Darksky implements StrategyInterface {
 	 * @param string $url
 	 */
 	public function setFromURL($url) {
-		if (defined('DARKSKY_API_KEY') && strlen(DARKSKY_API_KEY))
+		if (defined('DARKSKY_API_KEY') && strlen(DARKSKY_API_KEY)) {
 			$url = self::URL.DARKSKY_API_KEY.'/'.$url;
+		}
 
 		$this->setFromJSON( \Filesystem::getExternUrlContent($url) );
 	}
@@ -219,7 +221,7 @@ class Darksky implements StrategyInterface {
 			$this->Location->setPosition($this->Result['latitude'], $this->Result['longitude']);
 		}
 		if (isset($this->Result['dt']) && is_numeric($this->Result['dt'])) {
-			$this->Location->setTimestamp($this->Result['dt']);
+            $this->Location->setDateTime((new \DateTime())->setTimestamp($this->Result['dt']));
 		}
 	 }
 	/**

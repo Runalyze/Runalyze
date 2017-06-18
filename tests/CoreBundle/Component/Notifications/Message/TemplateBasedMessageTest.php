@@ -21,5 +21,6 @@ class TemplateBasedMessageTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($message->hasLink());
         $this->assertEquals('foobar', $message->getText());
         $this->assertEquals('http://runalyze.com/', $message->getLink());
+        $this->assertFalse($message->isLinkInternal());
     }
 }
