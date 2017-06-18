@@ -80,6 +80,10 @@ ul, ol {
 	padding: @list-padding;
 }
 
+abbr {
+	text-decoration: underline dotted;
+}
+
 .show-on-hover-parent {
 	.show-on-hover {
 		opacity: 0;
@@ -345,5 +349,19 @@ tr.ERROR td {
 .glossary {
 	li {
 		margin-bottom: .5em;
+	}
+}
+
+.see-also {
+	li {
+		display: inline;
+
+		&::after {
+			content: ", ";
+		}
+
+		&:last-of-type::after {
+			content: "";
+		}
 	}
 }
