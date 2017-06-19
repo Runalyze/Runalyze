@@ -260,8 +260,12 @@ class Inserter extends Model\InserterWithAccountID {
             $this->Trackdata->has(Model\Trackdata\Entity::DISTANCE)
         ) {
             $newRouteEntity = new Route();
-            $newRouteEntity->setElevationsOriginal($this->Route->elevationsOriginal());
-            $newRouteEntity->setElevationsCorrected($this->Route->elevationsCorrected());
+
+            if ($this->Route->hasCorrectedElevations()) {
+                $newRouteEntity->setElevationsCorrected($this->Route->elevationsCorrected());
+            } else {
+                $newRouteEntity->setElevationsOriginal($this->Route->elevationsOriginal());
+            }
 
             $newTrackdataEntity = new Trackdata();
             $newTrackdataEntity->setDistance($this->Trackdata->distance());

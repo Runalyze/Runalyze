@@ -130,6 +130,6 @@ class StepwiseElevationProfileFixer
             }
         }
 
-        return true;
+        return $num > $this->NumberOfGroupedPoints;
     }
 }

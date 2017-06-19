@@ -22,12 +22,20 @@ class StepwiseElevationProfileFixerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($profile, $fixer->fixStepwiseElevations($profile));
     }
 
+    public function testVeryShortProfile()
+    {
+        $fixer = new StepwiseElevationProfileFixer(5);
+        $profile = [6, 6];
+
+        $this->assertFalse($fixer->isProfileStepwise($profile));
+    }
+
     public function testThatShortProfileIsNotChanged()
     {
         $fixer = new StepwiseElevationProfileFixer(8);
         $profile = [6, 6, 6, 6, 6, 6];
 
-        $this->assertTrue($fixer->isProfileStepwise($profile));
+        $this->assertFalse($fixer->isProfileStepwise($profile));
         $this->assertEquals($profile, $fixer->fixStepwiseElevations($profile));
     }
 
