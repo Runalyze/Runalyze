@@ -7,6 +7,7 @@ use Runalyze\Bundle\CoreBundle\Entity\Sport;
 use Runalyze\Bundle\CoreBundle\Entity\SportRepository;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Anova\QueryValue\QueryValues;
 use Runalyze\Bundle\CoreBundle\Services\Configuration\ConfigurationManager;
+use Runalyze\Dataset\Query;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -87,7 +88,9 @@ class TrendAnalysisType extends AbstractType
                         'Cadence' => QueryValues::CADENCE,
                         'Effective VO2max' => $this->getQueryValueEnumForVO2max(),
                         'Climb Score' => QueryValues::CLIMB_SCORE,
-                        'Percentage hilly' => QueryValues::PERCENTAGE_HILLY
+                        'Percentage hilly' => QueryValues::PERCENTAGE_HILLY,
+                        'RPE' => QueryValues::RPE,
+                        'Effective VO2max' => $this->getQueryValueEnumForVO2max()
                     ],
                     'Running dynamics' => [
                         'Ground contact time' => QueryValues::GROUND_CONTACT_TIME,
@@ -101,6 +104,11 @@ class TrendAnalysisType extends AbstractType
                         'Recovery time' => QueryValues::FIT_RECOVERY_TIME,
                         'Training effect' => QueryValues::FIT_TRAINING_EFFECT,
                         'VO2max estimate' => QueryValues::FIT_VO2MAX_ESTIMATE
+                    ],
+                    'Weather' => [
+                        'Temperature' => QueryValues::WEATHER_TEMPERATURE,
+                        'Humidity' => QueryValues::WEATHER_HUMIDITY,
+                        'Pressure' => QueryValues::WEATHER_PRESSURE
                     ]
                 ]
             ])

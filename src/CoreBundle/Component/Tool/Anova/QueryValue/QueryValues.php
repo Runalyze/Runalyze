@@ -74,4 +74,16 @@ final class QueryValues extends AbstractEnum
 
     /** @var string */
     const FIT_VO2MAX_ESTIMATE = 'fit_vo2max_estimate';
+
+    /** @var string */
+    const WEATHER_TEMPERATURE = 'temperature';
+
+    /** @var string */
+    const WEATHER_HUMIDITY = 'humidity';
+
+    /** @var string */
+    const WEATHER_PRESSURE = 'pressure';
+
+    /** @var string */
+    const WEATHER_WIND_SPEED = 'wind_speed';
 }

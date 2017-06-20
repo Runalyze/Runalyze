@@ -42,6 +42,7 @@ a:hover, a:active, .link:hover {
 	//transition: color 0.3s ease-out;
 }
 
+.glossary .panel-content a,
 p.text a, p.text a,
 a.external, a.external {
 	&:link, &:visited {
@@ -74,9 +75,13 @@ h1 {
 	a:hover, a:active { color: @link-hover; }
 }
 
-ul {
+ul, ol {
 	margin: @list-margin;
 	padding: @list-padding;
+}
+
+abbr {
+	text-decoration: underline dotted;
 }
 
 .show-on-hover-parent {
@@ -337,6 +342,26 @@ tr.ERROR td {
 			max-width: 25%;
 			color: lighten(@font-color, 50%);
 			font-size: .8em;
+		}
+	}
+}
+
+.glossary {
+	li {
+		margin-bottom: .5em;
+	}
+}
+
+.see-also {
+	li {
+		display: inline;
+
+		&::after {
+			content: ", ";
+		}
+
+		&:last-of-type::after {
+			content: "";
 		}
 	}
 }

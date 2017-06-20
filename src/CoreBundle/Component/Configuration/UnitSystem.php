@@ -2,6 +2,8 @@
 
 namespace Runalyze\Bundle\CoreBundle\Component\Configuration;
 
+use Runalyze\Activity\PaceUnit\KmPerHour;
+use Runalyze\Activity\PaceUnit\MilesPerHour;
 use Runalyze\Bundle\CoreBundle\Entity\Sport;
 use Runalyze\Metrics\Cadence;
 use Runalyze\Metrics\Common\Unit\Factorial;

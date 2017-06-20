@@ -117,14 +117,17 @@ class PosterReceiver
                 try {
                     $this->GeneratePoster->buildCommand($type, $this->GenerateJsonData->getPathToJsonFiles(), $message->get('year'), $account, $sport, $message->get('title'));
 
-                    $finalName = $this->exportDirectory().$this->FileHandler->buildFinalFileName($account, $sport, $message->get('year'), $type, $message->get('size'));
+                    $finalName = $this->FileHandler->buildFinalFileName($account, $sport, $message->get('year'), $type, $message->get('size'));
+                    $finalFile = $this->exportDirectory().$finalName;
                     $converter = $this->getConverter($type);
                     $converter->setHeight($message->get('size'));
-                    $exitCode = $converter->callConverter($this->GeneratePoster->generate(), $finalName);
+                    $exitCode = $converter->callConverter($this->GeneratePoster->generate(), $this->exportDirectory().md5($finalName));
+                    $filesystem = new Filesystem();
+                    $filesystem->rename($this->exportDirectory().md5($finalName), $finalFile);
 
                     if ($exitCode > 0) {
                         $this->Logger->error('Poster converter failed', ['type' => $type, 'exitCode' => $exitCode]);
-                    } elseif ((new Filesystem())->exists($finalName)) {
+                    } elseif ((new Filesystem())->exists($finalFile)) {
                         $generatedFiles++;
                     }
 
