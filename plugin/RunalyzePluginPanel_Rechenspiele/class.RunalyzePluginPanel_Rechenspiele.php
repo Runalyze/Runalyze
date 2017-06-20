@@ -160,22 +160,18 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 				'bars'	=> array(
 					new ProgressBarSingle(2*round($EffectiveVO2max - 30), ProgressBarSingle::$COLOR_BLUE)
 				),
-				'bar-tooltip'	=> '',
 				'value'	=> number_format($EffectiveVO2max, 2).(0 == $EffectiveVO2max ? '&nbsp;<i class="fa fa-fw fa-exclamation-circle"></i>' : ''),
-				'title'	=> __('Effective&nbsp;VO<sub>2</sub>max'),
-				'small'	=> '',
-				'tooltip'	=> ''
+                'title'	=> __('Effective VO<sub>2</sub>max'),
+				'glossary'	=> 'vo2max'
 			),
 			array(
 				'show'	=> $this->Configuration()->value('show_basicendurance'),
 				'bars'	=> array(
 					new ProgressBarSingle(BasicEndurance::getConst(), ProgressBarSingle::$COLOR_BLUE)
 				),
-				'bar-tooltip'	=> '',
 				'value'	=> BasicEndurance::getConst().'&nbsp;&#37;'.(0 == $EffectiveVO2max ? '&nbsp;<i class="fa fa-fw fa-exclamation-circle"></i>' : ''),
-				'title'	=> __('Marathon&nbsp;shape'),
-				'small'	=> '',
-				'tooltip'	=> __('<em>Experimental value!</em><br>100 &#37; means: you had enough long runs and kilometers per week to run an optimal marathon based on your current shape.')
+                'title'	=> __('Marathon shape'),
+				'glossary'	=> 'marathon-shape'
 			),
 			array(
 				'show'	=> $this->Configuration()->value('show_trimpvalues'),
@@ -185,8 +181,8 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 				'bar-tooltip'	=> sprintf( __('Current value: %s<br>Maximal value: %s<br>as percentage: %s &#37;'), $ATLabsolute, $ATLmax, $TrimpValues['ATL']),
 				'value'	=> $TrimpValues['ATLstring'],
 				'title'	=> __('Fatigue'),
-				'small'	=> '(ATL)',
-				'tooltip'	=> __('Actual Training Load<br><small>Average training impulse of the last weeks in relation to your maximal value.</small>')
+				'small'	=> '(<abbr title="'.__('Actual Training Load').'">ATL</abbr>)',
+				'glossary'	=> 'atl'
 			),
 			array(
 				'show'	=> $this->Configuration()->value('show_trimpvalues'),
@@ -196,8 +192,8 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 				'bar-tooltip'	=> sprintf( __('Current value: %s<br>Maximal value: %s<br>as percentage: %s &#37;'), $CTLabsolute, $CTLmax, $TrimpValues['CTL']),
 				'value'	=> $TrimpValues['CTLstring'],
 				'title'	=> __('Fitness&nbsp;level'),
-				'small'	=> '(CTL)',
-				'tooltip'	=> __('Chronical Training Load<br><small>Average training impulse of the last months in relation to your maximal value.</small>')
+                'small'	=> '(<abbr title="'.__('Chronic Training Load').'">CTL</abbr>)',
+				'glossary'	=> 'ctl'
 			),
 			array(
 				'show'	=> $this->Configuration()->value('show_trimpvalues'),
@@ -206,20 +202,17 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 				),
 				'bar-tooltip'	=> 'TSB = CTL - ATL<br>'.sprintf( __('absolute: %s<br>as percentage: %s &#37;'), $CTLabsolute.' - '.$ATLabsolute.' = '.sprintf("%+d", $TSBabsolute), $TrimpValues['TSB']),
 				'value'	=> $TrimpValues['TSBstring'],
-				'title'	=> __('Stress&nbsp;Balance'),
-				'small'	=> '(TSB)',
-				'tooltip'	=> __('Training Stress Balance (= CTL - ATL)<br>&gt; 0: You are relaxing.<br>'.
-					'&lt; 0: You are training hard.')
+				'title'	=> __('Stress Balance'),
+                'small'	=> '(<abbr title="'.__('Training Stress Balance').'">TSB</abbr>)',
+                'glossary'	=> 'tsb'
 			),
 			array(
 				'show'	=> $this->Configuration()->value('show_trimpvalues') && !$TSBisPositive,
 				'bars'	=> array(
 					new ProgressBarSingle(100*$restDays/7, ProgressBarSingle::$COLOR_BLUE)
 				),
-				'bar-tooltip'	=> '',
 				'value'	=> $restDays,
-				'title'	=> __('Rest&nbsp;days'),
-				'small'	=> '',
+				'title'	=> __('Rest days'),
 				'tooltip'	=> __('Rest days needed to reach TSB = 0')
 			),
 			array(
@@ -227,11 +220,9 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 				'bars'	=> array(
 					new ProgressBarSingle(100*$maxTrimpToBalanced/1000, ProgressBarSingle::$COLOR_BLUE)
 				),
-				'bar-tooltip'	=> '',
 				'value'	=> $maxTrimpToBalanced,
-				'title'	=> __('Easy&nbsp;TRIMP'),
-				'small'	=> '',
-				'tooltip'	=> __('Max TRIMP that will still keep you at TSB = 0')
+				'title'	=> __('Easy TRIMP'),
+				'glossary'	=> 'easy-trimp'
 			),
 			array(
 				'show'	=> $this->Configuration()->value('show_trimpvalues_extra'),
@@ -248,8 +239,8 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 				'bar-tooltip'	=> 'Monotony = avg(Trimp)/stddev(Trimp)',
 				'value'	=> number_format($Monotony->value(), 2),
 				'title'	=> __('Monotony'),
-				'small'	=> '',
-				'tooltip'	=> __('Monotony<br><small>Monotony of your last seven days.<br>Values below 1.5 are preferable.</small>')
+				'tooltip'	=> __('Monotony<br><small>Monotony of your last seven days.<br>Values below 1.5 are preferable.</small>'),
+                'glossary'	=> 'monotony'
 			),
 			array(
 				'show'	=> $this->Configuration()->value('show_trimpvalues_extra'),
@@ -265,9 +256,9 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 				),
 				'bar-tooltip'	=> 'Training strain = sum(Trimp)*Monotony',
 				'value'	=> round($Monotony->trainingStrain()),
-				'title'	=> __('Training&nbsp;strain'),
-				'small'	=> '',
-				'tooltip'	=> __('Training strain<br><small>of your last seven days</small>')
+				'title'	=> __('Training strain'),
+				'tooltip'	=> __('Training strain<br><small>of your last seven days</small>'),
+                'glossary'	=> 'training-strain'
 			)
 		);
 
@@ -282,12 +273,15 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 		echo '<table class="fullwidth nomargin">';
 		foreach ($Values as $Value) {
 			if ($Value['show']) {
-				$Label = '<strong>'.$Value['title'].'</strong>&nbsp;<small>'.$Value['small'].'</small>';
-				$Text = $Value['tooltip'] != '' ? Ajax::tooltip($Label, $Value['tooltip']) : $Label;
+				$Label = '<strong>'.str_replace(' ', '&nbsp;', $Value['title']).'</strong>'.(isset($Value['small']) ? '&nbsp;<small>'.$Value['small'].'</small>' : '');
+				$Text = isset($Value['tooltip']) && $Value['tooltip'] != '' ? Ajax::tooltip($Label, $Value['tooltip']) : $Label;
 
 				$ProgressBar = new ProgressBar();
 				$ProgressBar->setInline();
-				$ProgressBar->setTooltip($Value['bar-tooltip']);
+
+				if (isset($Value['bar-tooltip'])) {
+    				$ProgressBar->setTooltip($Value['bar-tooltip']);
+                }
 
 				foreach ($Value['bars'] as &$Bar)
 					$ProgressBar->addBar($Bar);
@@ -297,7 +291,9 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 
 				$Progress = $ProgressBar->getCode();
 
-				echo '<tr><td>'.$Text.'</td><td style="width:99%;vertical-align:middle;">'.$Progress.'</td><td class="r nowrap">'.$Value['value'].'</td></tr>';
+                $glossaryLink = isset($Value['glossary']) && $Value['glossary'] != '' ? '<a class="window" href="glossary/'.$Value['glossary'].'"><i class="fa fa-question-circle-o"></i></a>' : '';
+
+				echo '<tr><td>'.$glossaryLink.'</td><td>'.$Text.'</td><td style="width:99%;vertical-align:middle;">'.$Progress.'</td><td class="r nowrap">'.$Value['value'].'</td></tr>';
 			}
 		}
 		echo '</table>';
