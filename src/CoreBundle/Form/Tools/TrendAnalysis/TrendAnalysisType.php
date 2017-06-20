@@ -89,8 +89,7 @@ class TrendAnalysisType extends AbstractType
                         'Effective VO2max' => $this->getQueryValueEnumForVO2max(),
                         'Climb Score' => QueryValues::CLIMB_SCORE,
                         'Percentage hilly' => QueryValues::PERCENTAGE_HILLY,
-                        'RPE' => QueryValues::RPE,
-                        'Effective VO2max' => $this->getQueryValueEnumForVO2max()
+                        'RPE' => QueryValues::RPE
                     ],
                     'Running dynamics' => [
                         'Ground contact time' => QueryValues::GROUND_CONTACT_TIME,
