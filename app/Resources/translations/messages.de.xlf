@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
   <file date="2017-06-21T09:30:05Z" source-language="en" target-language="de" datatype="plaintext" original="not.available">
     <header>
@@ -311,9 +311,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Verfügbare Exporte</target>
         <jms:reference-file line="58">/Resources/views/tools/backup/export.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="15f86c051ecf0b64e5f8cdc8c689552f42595942" resname="Average">
+      <trans-unit id="15f86c051ecf0b64e5f8cdc8c689552f42595942" resname="Average" approved="yes">
         <source>Average</source>
-        <target state="new">Average</target>
+        <target state="translated">Durchschnitt</target>
         <jms:reference-file line="200">/Resources/views/tools/trend-analysis/base.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="f5ddda878100628b602c3fc855a3774b4f3c5bc8" resname="Average heart rate will be used as fallback for calculations like TRIMP if no heart rate data is available.">
@@ -963,9 +963,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target state="new">FIETS</target>
         <jms:reference-file line="77">/Resources/views/activity/tool/climb_score.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="cf81bf779afb7ccebc0511cac012cfb2f0fc3899" resname="FIT details">
+      <trans-unit id="cf81bf779afb7ccebc0511cac012cfb2f0fc3899" resname="FIT details" approved="yes">
         <source>FIT details</source>
-        <target state="new">FIT details</target>
+        <target state="translated">FIT Details</target>
         <jms:reference-file line="99">/../src/CoreBundle/Form/Tools/TrendAnalysis/TrendAnalysisType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="1695ec3b5783d23472499b43968a8f056487e011" resname="Factor model">
@@ -993,9 +993,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Erste Aktivität</target>
         <jms:reference-file line="38">/Resources/views/shared/athlete/base.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="79c9e13ab7d502c6c70eca7c038f62d6c49fda0d" resname="Flat">
+      <trans-unit id="79c9e13ab7d502c6c70eca7c038f62d6c49fda0d" resname="Flat" approved="yes">
         <source>Flat</source>
-        <target state="new">Flat</target>
+        <target state="translated">Flach</target>
         <jms:reference-file line="53">/Resources/views/activity/tool/climb_score.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="66587a7a62a90fc91c4c88f1872bedaa52d23a35" resname="Follow">
@@ -1093,9 +1093,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Gehe zum Datenbank-Cleanup</target>
         <jms:reference-file line="19">/Resources/views/tools/backup/import_finish.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="36463cf8381e6e972d67a1b70c482d9fb836b2b0" resname="Gradient">
+      <trans-unit id="36463cf8381e6e972d67a1b70c482d9fb836b2b0" resname="Gradient" approved="yes">
         <source>Gradient</source>
-        <target state="new">Gradient</target>
+        <target state="translated">Steigung</target>
         <jms:reference-file line="75">/Resources/views/activity/tool/climb_score.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="439b59a4318e24d72ba33f8b086f0ffe9a6285ac" resname="Gradient distribution">
@@ -1178,9 +1178,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Hallo %username%</target>
         <jms:reference-file line="6">/Resources/views/account/activate/success.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="b2f555e2cf9e4fcda8dacfafbf9b3322d44e5153" resname="Hilly">
+      <trans-unit id="b2f555e2cf9e4fcda8dacfafbf9b3322d44e5153" resname="Hilly" approved="yes">
         <source>Hilly</source>
-        <target state="new">Hilly</target>
+        <target state="translated">Hügelig</target>
         <jms:reference-file line="52">/Resources/views/activity/tool/climb_score.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="f6df823a92ae084d3d771a05c34bf34424d741c4" resname="How sad, that you've decided to delete your account.&lt;br&gt;&#10;            Your account will be deleted as soon as you click on the confirmation link in your mail.">
@@ -1309,9 +1309,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Sprache</target>
         <jms:reference-file line="36">/../src/CoreBundle/Form/Settings/AccountType.php</jms:reference-file>
       </trans-unit>
-      <trans-unit id="3bade34ecbc5d996b2f301ebd4ba689e81c7c9ea" resname="Length">
+      <trans-unit id="3bade34ecbc5d996b2f301ebd4ba689e81c7c9ea" resname="Length" approved="yes">
         <source>Length</source>
-        <target state="new">Length</target>
+        <target state="translated">Länge</target>
         <jms:reference-file line="74">/Resources/views/activity/tool/climb_score.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="be1a7d07844cd48e8143115e7166e2b148581ca7" resname="Let us know what is most important for you at %forum%">
@@ -1430,9 +1430,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Mode</target>
         <jms:reference-file line="70">/../src/CoreBundle/Form/EquipmentCategoryType.php</jms:reference-file>
       </trans-unit>
-      <trans-unit id="082bc378cd60e17a38d99898b21955299c5b60c8" resname="Month">
+      <trans-unit id="082bc378cd60e17a38d99898b21955299c5b60c8" resname="Month" approved="yes">
         <source>Month</source>
-        <target state="new">Month</target>
+        <target state="translated">Monat</target>
         <jms:reference-file line="14">/Resources/views/my/panels/sports/base.html.twig</jms:reference-file>
         <jms:reference-file line="17">/Resources/views/my/panels/sports/base.html.twig</jms:reference-file>
       </trans-unit>
