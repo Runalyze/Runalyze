@@ -2,13 +2,18 @@
 
 namespace Runalyze\Bundle\CoreBundle\Controller;
 
+use Runalyze\Bundle\CoreBundle\Bridge\Activity\Calculation\ClimbScoreCalculator;
+use Runalyze\Bundle\CoreBundle\Bridge\Activity\Calculation\FlatOrHillyAnalyzer;
+use Runalyze\Bundle\CoreBundle\Component\Activity\ActivityDecorator;
 use Runalyze\Bundle\CoreBundle\Component\Activity\Tool\BestSubSegmentsStatistics;
 use Runalyze\Bundle\CoreBundle\Component\Activity\Tool\TimeSeriesStatistics;
 use Runalyze\Bundle\CoreBundle\Component\Activity\VO2maxCalculationDetailsDecorator;
+use Runalyze\Bundle\CoreBundle\Component\Configuration\UnitSystem;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\Trackdata;
 use Runalyze\Bundle\CoreBundle\Entity\Training;
 use Runalyze\Metrics\Velocity\Unit\PaceEnum;
+use Runalyze\Service\ElevationCorrection\StepwiseElevationProfileFixer;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -346,6 +351,47 @@ class ActivityController extends Controller
             'statistics' => $statistics,
             'distanceArray' => $trackdataModel->distance(),
             'paceUnit' => $paceUnit
+        ]);
+    }
+
+    /**
+     * @Route("/activity/{id}/climb-score", requirements={"id" = "\d+"}, name="activity-tool-climb-score")
+     * @ParamConverter("activity", class="CoreBundle:Training")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function climbScoreAction(Training $activity, Account $account)
+    {
+        $activityContext = $this->get('app.activity_context.factory')->getContext($activity);
+
+        if ($activity->getAccount()->getId() != $account->getId() || !$activityContext->hasTrackdata() || !$activityContext->hasRoute()) {
+            throw $this->createNotFoundException('No activity found.');
+        }
+
+        if (
+            $activity->hasRoute() && null !== $activity->getRoute()->getElevationsCorrected() &&
+            $activity->hasTrackdata() && null !== $activity->getTrackdata()->getDistance()
+        ) {
+            $numDistance = count($activity->getTrackdata()->getDistance());
+            $numElevations = count($activity->getRoute()->getElevationsCorrected());
+
+            if ($numElevations > $numDistance) {
+                $activity->getRoute()->setElevationsCorrected(array_slice($activity->getRoute()->getElevationsCorrected(), 0, $numDistance));
+            }
+        }
+
+        if (null !== $activity->getRoute()->getElevationsCorrected() && null !== $activity->getTrackdata()->getDistance()) {
+            $activity->getRoute()->setElevationsCorrected((new StepwiseElevationProfileFixer(
+                5, StepwiseElevationProfileFixer::METHOD_VARIABLE_GROUP_SIZE
+            ))->fixStepwiseElevations(
+                $activity->getRoute()->getElevationsCorrected(),
+                $activity->getTrackdata()->getDistance()
+            ));
+        }
+
+        return $this->render('activity/tool/climb_score.html.twig', [
+            'context' => $activityContext,
+            'decorator' => new ActivityDecorator($activityContext),
+            'paceUnit' => $activity->getSport()->getSpeedUnit()
         ]);
     }
 

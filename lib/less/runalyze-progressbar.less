@@ -70,3 +70,48 @@
 .progress-bar-inner:hover .progress-bar {
 	//opacity: .5;
 }
+
+
+.radial-progress { /* via https://codepen.io/paolomazzacani/pen/cAnpy */
+	float: left;
+	margin: 10px;
+	width: 60px;
+	height: 60px;
+	position: relative;
+	background-color: #d7d7d7;
+	border-radius: 50%;
+
+	.circle .mask,
+	.circle .fill,
+	.circle .shadow {
+		width: 60px;
+		height: 60px;
+		position: absolute;
+		border-radius: 50%;
+	}
+	.circle .mask,
+	.circle .fill {
+		-webkit-backface-visibility: hidden;
+	}
+	.circle .mask {
+		clip: rect(0px, 60px, 60px, 30px);
+	}
+	.circle .mask .fill {
+		clip: rect(0px, 30px, 60px, 0px);
+		background-color: #EA463D;
+	}
+	.inset {
+		width: 50px !important;
+		height: 50px !important;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		margin: -25px 0 0 -25px !important;
+		background-color: #fbfbfb;
+		border-radius: 50%;
+		text-align: center;
+		line-height: 50px;
+		font-size: 18px;
+		font-weight: bold;
+	}
+}

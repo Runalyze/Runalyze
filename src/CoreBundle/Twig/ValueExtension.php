@@ -6,6 +6,7 @@ use Runalyze\Bundle\CoreBundle\Component\Activity\ActivityContext;
 use Runalyze\Bundle\CoreBundle\Component\Configuration\RunalyzeConfigurationList;
 use Runalyze\Bundle\CoreBundle\Component\Configuration\UnitSystem;
 use Runalyze\Bundle\CoreBundle\Services\Configuration\ConfigurationManager;
+use Runalyze\Metrics\Common\JavaScriptFormatter;
 use Runalyze\Metrics\Common\UnitInterface;
 use Runalyze\Metrics\Distance\Unit\AbstractDistanceUnit;
 use Runalyze\Metrics\Energy\Unit\AbstractEnergyUnit;
@@ -60,6 +61,8 @@ class ValueExtension extends \Twig_Extension
             new \Twig_SimpleFunction('weight', array($this, 'weight'), $safeHtmlOptions),
             new \Twig_SimpleFunction('vo2max', array($this, 'vo2max'), $safeHtmlOptions),
             new \Twig_SimpleFunction('vo2maxFor', array($this, 'vo2maxFor'), $safeHtmlOptions),
+            new \Twig_SimpleFunction('jsFormatter', array($this, 'jsFormatter'), $safeHtmlOptions),
+            new \Twig_SimpleFunction('jsTransformer', array($this, 'jsTransformer'), $safeHtmlOptions),
         );
     }
 
@@ -244,5 +247,23 @@ class ValueExtension extends \Twig_Extension
             $configurationList,
             $activityContext->getActivity()->getUseVO2max()
         );
+    }
+
+    /**
+     * @param UnitInterface $unit
+     * @return string
+     */
+    public function jsFormatter(UnitInterface $unit)
+    {
+        return JavaScriptFormatter::getFormatter($unit);
+    }
+
+    /**
+     * @param UnitInterface $unit
+     * @return string
+     */
+    public function jsTransformer(UnitInterface $unit)
+    {
+        return JavaScriptFormatter::getTransformer($unit);
     }
 }
