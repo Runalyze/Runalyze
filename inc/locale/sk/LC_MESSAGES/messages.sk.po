@@ -8,16 +8,18 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.com\n"
 "POT-Creation-Date: 2017-06-21 09:32+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2017-07-02 20:17+0000\n"
+"Last-Translator: Robert Hartl <chami@chami.sk>\n"
+"Language-Team: Slovak <https://translate.runalyze.com/projects/runalyze"
+"/runalyze-master-po/sk/>\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Weblate 2.14\n"
 
 #: src/CoreBundle/Controller/Settings/SettingsController.php:221
 msgid "race"
@@ -29,7 +31,7 @@ msgstr ""
 
 #: src/CoreBundle/Controller/Settings/SettingsController.php:261
 msgid "Great run!"
-msgstr ""
+msgstr "Skvelý beh!"
 
 #: src/CoreBundle/Controller/ActivityController.php:254
 msgid "Corrected elevation data has been removed."
@@ -54,7 +56,7 @@ msgstr ""
 
 #: src/CoreBundle/Controller/PluginController.php:29
 msgid "Install"
-msgstr ""
+msgstr "Inštalovať"
 
 #: src/CoreBundle/Controller/PluginController.php:35
 msgid "The plugin has been successfully installed."
@@ -82,63 +84,63 @@ msgstr ""
 #: src/CoreBundle/Component/Tool/Anova/QueryGroup/Month.php:32
 #: inc/tpl/tpl.DataBrowser.php:29 inc/core/Util/Time.php:109
 msgid "January"
-msgstr ""
+msgstr "Január"
 
 #: src/CoreBundle/Component/Tool/Anova/QueryGroup/Month.php:33
 #: inc/tpl/tpl.DataBrowser.php:29 inc/core/Util/Time.php:110
 msgid "February"
-msgstr ""
+msgstr "Február"
 
 #: src/CoreBundle/Component/Tool/Anova/QueryGroup/Month.php:34
 #: inc/tpl/tpl.DataBrowser.php:29 inc/core/Util/Time.php:111
 msgid "March"
-msgstr ""
+msgstr "Marec"
 
 #: src/CoreBundle/Component/Tool/Anova/QueryGroup/Month.php:35
 #: inc/tpl/tpl.DataBrowser.php:29 inc/core/Util/Time.php:112
 msgid "April"
-msgstr ""
+msgstr "Apríl"
 
 #: src/CoreBundle/Component/Tool/Anova/QueryGroup/Month.php:36
 #: inc/tpl/tpl.DataBrowser.php:29 inc/tpl/tpl.DataBrowser.php:31
 #: inc/draw/class.Plot.php:410 inc/core/Util/Time.php:113
 msgid "May"
-msgstr ""
+msgstr "Máj"
 
 #: src/CoreBundle/Component/Tool/Anova/QueryGroup/Month.php:37
 #: inc/tpl/tpl.DataBrowser.php:29 inc/core/Util/Time.php:114
 msgid "June"
-msgstr ""
+msgstr "Jún"
 
 #: src/CoreBundle/Component/Tool/Anova/QueryGroup/Month.php:38
 #: inc/tpl/tpl.DataBrowser.php:30 inc/core/Util/Time.php:115
 msgid "July"
-msgstr ""
+msgstr "Júl"
 
 #: src/CoreBundle/Component/Tool/Anova/QueryGroup/Month.php:39
 #: inc/tpl/tpl.DataBrowser.php:30 inc/core/Util/Time.php:116
 msgid "August"
-msgstr ""
+msgstr "August"
 
 #: src/CoreBundle/Component/Tool/Anova/QueryGroup/Month.php:40
 #: inc/tpl/tpl.DataBrowser.php:30 inc/core/Util/Time.php:117
 msgid "September"
-msgstr ""
+msgstr "September"
 
 #: src/CoreBundle/Component/Tool/Anova/QueryGroup/Month.php:41
 #: inc/tpl/tpl.DataBrowser.php:30 inc/core/Util/Time.php:118
 msgid "October"
-msgstr ""
+msgstr "Október"
 
 #: src/CoreBundle/Component/Tool/Anova/QueryGroup/Month.php:42
 #: inc/tpl/tpl.DataBrowser.php:30 inc/core/Util/Time.php:119
 msgid "November"
-msgstr ""
+msgstr "November"
 
 #: src/CoreBundle/Component/Tool/Anova/QueryGroup/Month.php:43
 #: inc/tpl/tpl.DataBrowser.php:30 inc/core/Util/Time.php:121
 msgid "December"
-msgstr ""
+msgstr "December"
 
 #: src/CoreBundle/Component/Tool/DatabaseCleanup/Job.php:76
 #: inc/core/Configuration/Messages.php:49
@@ -232,7 +234,7 @@ msgstr ""
 #: inc/tpl/tpl.Frontend.header.php:85
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:12
 msgid "Sports"
-msgstr ""
+msgstr "Športy"
 
 #: src/CoreBundle/Component/Tool/Backup/JsonImporterResults.php:138
 msgid "Activity types"
@@ -244,7 +246,7 @@ msgstr ""
 
 #: src/CoreBundle/Component/Tool/Backup/JsonImporterResults.php:140
 msgid "Activities"
-msgstr ""
+msgstr "Aktivity"
 
 #: src/CoreBundle/Component/Tool/Backup/JsonImporterResults.php:141
 msgid "Trackdata"
@@ -257,7 +259,7 @@ msgstr ""
 #: src/CoreBundle/Component/Tool/Backup/JsonImporterResults.php:143
 #: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:38
 msgid "Routes"
-msgstr ""
+msgstr "Trasy"
 
 #: src/CoreBundle/Component/Tool/Backup/JsonImporterResults.php:144
 msgid "HRV data"
@@ -270,11 +272,11 @@ msgstr ""
 #: inc/core/Dataset/Keys/MainEquipment.php:44
 #: plugin/RunalyzePluginPanel_Equipment/class.RunalyzePluginPanel_Equipment.php:29
 msgid "Equipment"
-msgstr ""
+msgstr "Vybavenie"
 
 #: src/CoreBundle/Component/Tool/Backup/JsonImporterResults.php:146
 msgid "Equipment types"
-msgstr ""
+msgstr "Typy výbavy"
 
 #: src/CoreBundle/Component/Tool/Backup/JsonImporterResults.php:147
 msgid "Relation: equipment types to sports"
@@ -289,7 +291,7 @@ msgstr ""
 #: inc/training/class.TrainingFormular.php:343
 #: inc/core/Dataset/Keys/Tags.php:46
 msgid "Tags"
-msgstr ""
+msgstr "Značky"
 
 #: src/CoreBundle/Component/Tool/Backup/JsonImporterResults.php:150
 msgid "Relation: tag to activities"
@@ -303,31 +305,31 @@ msgstr ""
 #: src/CoreBundle/Component/Account/Registration.php:90
 #: src/CoreBundle/Component/Account/Registration.php:212
 msgid "Shoes"
-msgstr ""
+msgstr "Topánky"
 
 #: src/CoreBundle/Component/Account/Registration.php:91
 #: src/CoreBundle/Component/Account/Registration.php:211
 msgid "Clothes"
-msgstr ""
+msgstr "Oblečenie"
 
 #: src/CoreBundle/Component/Account/Registration.php:92
 #: src/CoreBundle/Component/Account/Registration.php:213
 msgid "Bikes"
-msgstr ""
+msgstr "Bicykle"
 
 #: src/CoreBundle/Component/Account/Registration.php:141
 #: inc/core/Profile/Sport/Running.php:24
 msgid "Running"
-msgstr ""
+msgstr "Beh"
 
 #: src/CoreBundle/Component/Account/Registration.php:142
 #: inc/core/Profile/Sport/Swimming.php:24
 msgid "Swimming"
-msgstr ""
+msgstr "Plávanie"
 
 #: src/CoreBundle/Component/Account/Registration.php:143
 msgid "Biking"
-msgstr ""
+msgstr "Bicyklovanie"
 
 #: src/CoreBundle/Component/Account/Registration.php:144
 msgid "Gymnastics"
@@ -335,7 +337,7 @@ msgstr ""
 
 #: src/CoreBundle/Component/Account/Registration.php:145
 msgid "Other"
-msgstr ""
+msgstr "Ostatné"
 
 #: src/CoreBundle/Component/Account/Registration.php:172
 msgid "Jogging"
@@ -347,7 +349,7 @@ msgstr ""
 
 #: src/CoreBundle/Component/Account/Registration.php:173
 msgid "Fartlek"
-msgstr ""
+msgstr "Fartlek"
 
 #: src/CoreBundle/Component/Account/Registration.php:173
 msgid "FL"
@@ -355,7 +357,7 @@ msgstr ""
 
 #: src/CoreBundle/Component/Account/Registration.php:174
 msgid "Interval training"
-msgstr ""
+msgstr "Intervalový tréning"
 
 #: src/CoreBundle/Component/Account/Registration.php:174
 msgid "IT"
@@ -388,7 +390,7 @@ msgstr ""
 
 #: src/CoreBundle/Component/Account/Registration.php:178
 msgid "Long Slow Distance"
-msgstr ""
+msgstr "Dlhý pomalý beh"
 
 #: src/CoreBundle/Component/Account/Registration.php:178
 msgid "LSD"
@@ -408,7 +410,7 @@ msgstr ""
 
 #: src/CoreBundle/Component/Account/Registration.php:223
 msgid "T-shirt"
-msgstr ""
+msgstr "tričko"
 
 #: src/CoreBundle/Component/Account/Registration.php:223
 msgid "singlet"
@@ -420,19 +422,19 @@ msgstr ""
 
 #: src/CoreBundle/Component/Account/Registration.php:223
 msgid "long pants"
-msgstr ""
+msgstr "dlhé nohavice"
 
 #: src/CoreBundle/Component/Account/Registration.php:223
 msgid "shorts"
-msgstr ""
+msgstr "šortky"
 
 #: src/CoreBundle/Component/Account/Registration.php:223
 msgid "gloves"
-msgstr ""
+msgstr "rukavice"
 
 #: src/CoreBundle/Component/Account/Registration.php:223
 msgid "hat"
-msgstr ""
+msgstr "čiapka"
 
 #: inc/import/filetypes/class.ImporterFiletypeXML.php:59
 #: inc/import/filetypes/class.ImporterFiletypeKML.php:64
@@ -461,12 +463,12 @@ msgstr ""
 
 #: inc/import/class.ImporterWindow.php:220
 msgid "Add workout"
-msgstr ""
+msgstr "Pridať cvičenie"
 
 #: inc/import/class.ImporterFactory.php:316
 #: inc/import/class.ImporterFactory.php:344
 msgid "This file format is not supported."
-msgstr ""
+msgstr "Tento formát súboru nie je podporovaný."
 
 #: inc/import/class.ImporterFactory.php:323
 msgid "The file could not be saved."
@@ -700,11 +702,11 @@ msgstr ""
 
 #: inc/system/config/class.ConfigTabPlugins.php:93
 msgid "enabled"
-msgstr ""
+msgstr "povolené"
 
 #: inc/system/config/class.ConfigTabPlugins.php:94
 msgid "hidden*"
-msgstr ""
+msgstr "skryté*"
 
 #: inc/system/config/class.ConfigTabPlugins.php:95
 msgid "not enabled"
@@ -727,7 +729,7 @@ msgstr ""
 #: inc/training/search/class.SearchFormular.php:159
 #: inc/core/Dataset/Keys/Type.php:52
 msgid "Type"
-msgstr ""
+msgstr "Typ"
 
 #: inc/system/class.Filesystem.php:243
 #, php-format
@@ -742,143 +744,143 @@ msgstr ""
 #: inc/tpl/tpl.DataBrowser.php:26
 #: inc/core/Parameter/Application/WeekStart.php:51 inc/core/Util/Time.php:89
 msgid "Sunday"
-msgstr ""
+msgstr "Nedeľa"
 
 #: inc/tpl/tpl.DataBrowser.php:26
 #: inc/core/Parameter/Application/WeekStart.php:48 inc/core/Util/Time.php:90
 msgid "Monday"
-msgstr ""
+msgstr "Pondelok"
 
 #: inc/tpl/tpl.DataBrowser.php:26 inc/core/Util/Time.php:91
 msgid "Tuesday"
-msgstr ""
+msgstr "Utorok"
 
 #: inc/tpl/tpl.DataBrowser.php:26 inc/core/Util/Time.php:92
 msgid "Wednesday"
-msgstr ""
+msgstr "Streda"
 
 #: inc/tpl/tpl.DataBrowser.php:26 inc/core/Util/Time.php:93
 msgid "Thursday"
-msgstr ""
+msgstr "Štvrtok"
 
 #: inc/tpl/tpl.DataBrowser.php:26 inc/core/Util/Time.php:94
 msgid "Friday"
-msgstr ""
+msgstr "Piatok"
 
 #: inc/tpl/tpl.DataBrowser.php:26 inc/core/Util/Time.php:96
 msgid "Saturday"
-msgstr ""
+msgstr "Sobota"
 
 #: inc/tpl/tpl.DataBrowser.php:27
 msgid "Su"
-msgstr ""
+msgstr "Ne"
 
 #: inc/tpl/tpl.DataBrowser.php:27
 msgid "Mo"
-msgstr ""
+msgstr "Po"
 
 #: inc/tpl/tpl.DataBrowser.php:27
 msgid "Tu"
-msgstr ""
+msgstr "Ut"
 
 #: inc/tpl/tpl.DataBrowser.php:27
 msgid "We"
-msgstr ""
+msgstr "St"
 
 #: inc/tpl/tpl.DataBrowser.php:27
 msgid "Th"
-msgstr ""
+msgstr "Št"
 
 #: inc/tpl/tpl.DataBrowser.php:27
 msgid "Fr"
-msgstr ""
+msgstr "Pi"
 
 #: inc/tpl/tpl.DataBrowser.php:27
 msgid "Sa"
-msgstr ""
+msgstr "So"
 
 #: inc/tpl/tpl.DataBrowser.php:28 inc/core/Util/Time.php:89
 msgid "Sun"
-msgstr ""
+msgstr "Neď"
 
 #: inc/tpl/tpl.DataBrowser.php:28 inc/core/Util/Time.php:90
 msgid "Mon"
-msgstr ""
+msgstr "Pon"
 
 #: inc/tpl/tpl.DataBrowser.php:28 inc/core/Util/Time.php:91
 msgid "Tue"
-msgstr ""
+msgstr "Uto"
 
 #: inc/tpl/tpl.DataBrowser.php:28 inc/core/Util/Time.php:92
 msgid "Wed"
-msgstr ""
+msgstr "Str"
 
 #: inc/tpl/tpl.DataBrowser.php:28 inc/core/Util/Time.php:93
 msgid "Thu"
-msgstr ""
+msgstr "Štv"
 
 #: inc/tpl/tpl.DataBrowser.php:28 inc/core/Util/Time.php:94
 msgid "Fri"
-msgstr ""
+msgstr "Pia"
 
 #: inc/tpl/tpl.DataBrowser.php:28 inc/core/Util/Time.php:96
 msgid "Sat"
-msgstr ""
+msgstr "Sob"
 
 #: inc/tpl/tpl.DataBrowser.php:31 inc/draw/class.Plot.php:406
 #: inc/core/Util/Time.php:109
 msgid "Jan"
-msgstr ""
+msgstr "Jan"
 
 #: inc/tpl/tpl.DataBrowser.php:31 inc/draw/class.Plot.php:407
 #: inc/core/Util/Time.php:110
 msgid "Feb"
-msgstr ""
+msgstr "Feb"
 
 #: inc/tpl/tpl.DataBrowser.php:31 inc/draw/class.Plot.php:408
 #: inc/core/Util/Time.php:111
 msgid "Mar"
-msgstr ""
+msgstr "Mar"
 
 #: inc/tpl/tpl.DataBrowser.php:31 inc/draw/class.Plot.php:409
 #: inc/core/Util/Time.php:112
 msgid "Apr"
-msgstr ""
+msgstr "Apr"
 
 #: inc/tpl/tpl.DataBrowser.php:31 inc/draw/class.Plot.php:411
 #: inc/core/Util/Time.php:114
 msgid "Jun"
-msgstr ""
+msgstr "Jún"
 
 #: inc/tpl/tpl.DataBrowser.php:31 inc/draw/class.Plot.php:412
 #: inc/core/Util/Time.php:115
 msgid "Jul"
-msgstr ""
+msgstr "Júl"
 
 #: inc/tpl/tpl.DataBrowser.php:31 inc/draw/class.Plot.php:413
 #: inc/core/Util/Time.php:116
 msgid "Aug"
-msgstr ""
+msgstr "Aug"
 
 #: inc/tpl/tpl.DataBrowser.php:31 inc/draw/class.Plot.php:414
 #: inc/core/Util/Time.php:117
 msgid "Sep"
-msgstr ""
+msgstr "Sep"
 
 #: inc/tpl/tpl.DataBrowser.php:31 inc/draw/class.Plot.php:415
 #: inc/core/Util/Time.php:118
 msgid "Oct"
-msgstr ""
+msgstr "Okt"
 
 #: inc/tpl/tpl.DataBrowser.php:31 inc/draw/class.Plot.php:416
 #: inc/core/Util/Time.php:119
 msgid "Nov"
-msgstr ""
+msgstr "Nov"
 
 #: inc/tpl/tpl.DataBrowser.php:31 inc/draw/class.Plot.php:417
 #: inc/core/Util/Time.php:121
 msgid "Dec"
-msgstr ""
+msgstr "Dec"
 
 #: inc/tpl/tpl.DataBrowser.php:40
 msgid "You can select any time range by selecting two dates."
@@ -902,19 +904,19 @@ msgstr ""
 
 #: inc/tpl/tpl.Frontend.header.php:44
 msgid "Account settings"
-msgstr ""
+msgstr "Nastavenia účtu"
 
 #: inc/tpl/tpl.Frontend.header.php:45
 msgid "Logout"
-msgstr ""
+msgstr "Odhlásiť"
 
 #: inc/tpl/tpl.Frontend.header.php:54
 msgid "No new notifications"
-msgstr ""
+msgstr "Žiadne nové notifikácie"
 
 #: inc/tpl/tpl.Frontend.header.php:59
 msgid "Show all notifications"
-msgstr ""
+msgstr "Zobraziť všetky notifikácie"
 
 #: inc/tpl/tpl.Frontend.header.php:70
 msgid "Activity upload"
@@ -926,7 +928,7 @@ msgstr ""
 
 #: inc/tpl/tpl.Frontend.header.php:72
 msgid "New equipment"
-msgstr ""
+msgstr "Nové vybavenie"
 
 #: inc/tpl/tpl.Frontend.header.php:73
 msgid "New body values"
@@ -939,7 +941,7 @@ msgstr ""
 #: inc/tpl/tpl.Frontend.header.php:93
 #: inc/training/view/class.TrainingView.php:137
 msgid "Tools"
-msgstr ""
+msgstr "Nástroje"
 
 #: inc/tpl/tpl.Frontend.header.php:96
 msgid "Trend analysis"
@@ -963,11 +965,11 @@ msgstr ""
 
 #: inc/tpl/tpl.Frontend.header.php:102
 msgid "More"
-msgstr ""
+msgstr "Viac"
 
 #: inc/tpl/tpl.Frontend.header.php:106
 msgid "Help"
-msgstr ""
+msgstr "Pomocník"
 
 #: inc/training/view/class.ElevationInfo.php:113
 #, php-format
@@ -992,7 +994,7 @@ msgstr ""
 
 #: inc/training/view/class.ElevationInfo.php:134
 msgid "Lowest point"
-msgstr ""
+msgstr "Najnižší bod"
 
 #: inc/training/view/class.ElevationInfo.php:138
 msgid "calculated value"
@@ -1006,7 +1008,7 @@ msgstr ""
 
 #: inc/training/view/class.ElevationInfo.php:142
 msgid "Highest point"
-msgstr ""
+msgstr "Najvyšší bod"
 
 #: inc/training/view/class.ElevationInfo.php:146
 #: inc/training/view/section/class.SectionHeartrateRow.php:52
@@ -1068,7 +1070,7 @@ msgstr ""
 #: inc/training/view/class.ElevationInfo.php:206
 #: inc/core/View/Activity/Plot/ElevationAlgorithms.php:95
 msgid "Threshold"
-msgstr ""
+msgstr "Prah"
 
 #: inc/training/view/class.ElevationInfo.php:244
 msgid "Elevation correction"
@@ -1269,7 +1271,7 @@ msgstr ""
 #: inc/core/Dataset/Keys/Weather.php:73 inc/core/Activity/Temperature.php:60
 #: inc/core/View/Activity/Plot/Series/Temperature.php:40
 msgid "Temperature"
-msgstr ""
+msgstr "Teplota"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:303
 #: inc/core/Dataset/Keys/TrainingPartner.php:46
@@ -1301,13 +1303,13 @@ msgstr ""
 #: inc/core/Dataset/Keys/RaceResult.php:127
 #: inc/core/Dataset/Keys/RaceResult.php:175
 msgid "Official distance"
-msgstr ""
+msgstr "Oficiálna vzdialenosť"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:383
 #: inc/core/Dataset/Keys/RaceResult.php:128
 #: inc/core/Dataset/Keys/RaceResult.php:176
 msgid "Official time"
-msgstr ""
+msgstr "Oficiálny čas"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:384
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:391
@@ -1331,7 +1333,7 @@ msgstr ""
 #: inc/training/schemes/scheme.Training.php:57
 #: inc/training/schemes/scheme.Training.php:608
 msgid "Notes"
-msgstr ""
+msgstr "Poznámky"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:407
 #, php-format
@@ -1403,7 +1405,7 @@ msgstr ""
 #: inc/core/View/Leaflet/Activity.php:219 inc/core/View/Splits/Table.php:155
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:390
 msgid "Time"
-msgstr ""
+msgstr "Čas"
 
 #: inc/training/view/section/class.SectionOverviewRow.php:53
 #: inc/training/view/section/class.SectionCompositeRow.php:99
@@ -2000,16 +2002,16 @@ msgstr ""
 #: inc/training/schemes/scheme.Training.php:70
 #: inc/core/Configuration/Category/Privacy.php:91
 msgid "Privacy"
-msgstr ""
+msgstr "Súkromie"
 
 #: inc/training/schemes/scheme.Training.php:98
 #: inc/core/Dataset/Keys/Type.php:43
 msgid "Activity type"
-msgstr ""
+msgstr "Typ aktivity"
 
 #: inc/training/schemes/scheme.Training.php:151
 msgid "Public"
-msgstr ""
+msgstr "Verejné"
 
 #: inc/training/schemes/scheme.Training.php:152
 msgid "Public activities will be visible for everybody."
@@ -3401,7 +3403,7 @@ msgstr ""
 #: inc/core/View/Activity/Box/Pace.php:28
 #: inc/core/View/Activity/Box/Speed.php:37
 msgid "Speed"
-msgstr ""
+msgstr "Rýchlosť"
 
 #: inc/core/View/Activity/Box/TotalCadence.php:28
 msgid "Number of steps"
@@ -3448,7 +3450,7 @@ msgstr ""
 #: inc/core/View/Window/Laps/Form.php:82 inc/core/View/Window/Laps/Form.php:93
 #: inc/core/View/Window/Laps/Form.php:96 inc/core/View/Window/Laps/Form.php:118
 msgid "or"
-msgstr ""
+msgstr "alebo"
 
 #: inc/core/View/Window/Laps/Form.php:67
 msgid "Time, after which a new lap should start"
@@ -3971,7 +3973,7 @@ msgstr ""
 
 #: inc/core/Configuration/Category/General.php:222
 msgid "Main sport"
-msgstr ""
+msgstr "Hlavný šport"
 
 #: inc/core/Configuration/Category/Privacy.php:94
 msgid "Publish activities"
