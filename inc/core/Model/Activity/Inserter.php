@@ -15,6 +15,7 @@ use Runalyze\Calculation\NightDetector;
 use Runalyze\Model;
 use Runalyze\Calculation\BasicEndurance;
 use Runalyze\Configuration;
+use Runalyze\Service\ElevationCorrection\StepwiseElevationProfileFixer;
 
 /**
  * Insert activity to database
@@ -260,9 +261,15 @@ class Inserter extends Model\InserterWithAccountID {
             $this->Trackdata->has(Model\Trackdata\Entity::DISTANCE)
         ) {
             $newRouteEntity = new Route();
+            $newRouteEntity->setDistance($this->Route->distance());
 
             if ($this->Route->hasCorrectedElevations()) {
-                $newRouteEntity->setElevationsCorrected($this->Route->elevationsCorrected());
+                $newRouteEntity->setElevationsCorrected((new StepwiseElevationProfileFixer(
+                    5, StepwiseElevationProfileFixer::METHOD_VARIABLE_GROUP_SIZE
+                ))->fixStepwiseElevations(
+                    $this->Route->elevationsCorrected(),
+                    $this->Trackdata->distance()
+                ));
             } else {
                 $newRouteEntity->setElevationsOriginal($this->Route->elevationsOriginal());
             }
