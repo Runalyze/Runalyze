@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2017-06-21T09:31:34Z" source-language="en" target-language="uk" datatype="plaintext" original="not.available">
+  <file date="2017-07-08T11:06:54Z" source-language="en" target-language="uk" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -320,7 +320,7 @@
       </trans-unit>
       <trans-unit id="15f86c051ecf0b64e5f8cdc8c689552f42595942" resname="Average">
         <source>Average</source>
-        <target state="new">Average</target>
+        <target>Average</target>
         <jms:reference-file line="200">/Resources/views/tools/trend-analysis/base.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="f5ddda878100628b602c3fc855a3774b4f3c5bc8" resname="Average heart rate will be used as fallback for calculations like TRIMP if no heart rate data is available.">
@@ -525,12 +525,12 @@
       </trans-unit>
       <trans-unit id="263ea9837762582d973ab584c86eebc849c95111" resname="Climb Score">
         <source>Climb Score</source>
-        <target state="new">Climb Score</target>
+        <target>Climb Score</target>
         <jms:reference-file line="19">/Resources/views/activity/tool/climb_score.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="768a95d73fbc2068c15dfc51099307c477756085" resname="Climbs">
         <source>Climbs</source>
-        <target state="new">Climbs</target>
+        <target>Climbs</target>
         <jms:reference-file line="65">/Resources/views/activity/tool/climb_score.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="8a128d3e497cf86515b3c769349812a4b7a165f9" resname="Compare your activity's values grouped by common values (e.g. sport or activity type) for a given period.">
@@ -973,12 +973,12 @@
       </trans-unit>
       <trans-unit id="5865db90602e99b4a08730ff7963210b372e5d36" resname="FIETS">
         <source>FIETS</source>
-        <target state="new">FIETS</target>
+        <target>FIETS</target>
         <jms:reference-file line="77">/Resources/views/activity/tool/climb_score.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="cf81bf779afb7ccebc0511cac012cfb2f0fc3899" resname="FIT details">
         <source>FIT details</source>
-        <target state="new">FIT details</target>
+        <target>FIT details</target>
         <jms:reference-file line="99">/../src/CoreBundle/Form/Tools/TrendAnalysis/TrendAnalysisType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="1695ec3b5783d23472499b43968a8f056487e011" resname="Factor model">
@@ -1008,7 +1008,7 @@
       </trans-unit>
       <trans-unit id="79c9e13ab7d502c6c70eca7c038f62d6c49fda0d" resname="Flat">
         <source>Flat</source>
-        <target state="new">Flat</target>
+        <target>Flat</target>
         <jms:reference-file line="53">/Resources/views/activity/tool/climb_score.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="66587a7a62a90fc91c4c88f1872bedaa52d23a35" resname="Follow">
@@ -1108,12 +1108,12 @@
       </trans-unit>
       <trans-unit id="36463cf8381e6e972d67a1b70c482d9fb836b2b0" resname="Gradient">
         <source>Gradient</source>
-        <target state="new">Gradient</target>
+        <target>Gradient</target>
         <jms:reference-file line="75">/Resources/views/activity/tool/climb_score.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="439b59a4318e24d72ba33f8b086f0ffe9a6285ac" resname="Gradient distribution">
         <source>Gradient distribution</source>
-        <target state="new">Gradient distribution</target>
+        <target>Gradient distribution</target>
         <jms:reference-file line="92">/Resources/views/activity/tool/climb_score.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="701c483f813cf119ec80b185a049bcfdc29f9161" resname="Grid">
@@ -1193,7 +1193,7 @@
       </trans-unit>
       <trans-unit id="b2f555e2cf9e4fcda8dacfafbf9b3322d44e5153" resname="Hilly">
         <source>Hilly</source>
-        <target state="new">Hilly</target>
+        <target>Hilly</target>
         <jms:reference-file line="52">/Resources/views/activity/tool/climb_score.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="f6df823a92ae084d3d771a05c34bf34424d741c4" resname="How sad, that you've decided to delete your account.&lt;br&gt;&#10;            Your account will be deleted as soon as you click on the confirmation link in your mail.">
@@ -1271,7 +1271,7 @@
       </trans-unit>
       <trans-unit id="68d71b3c12159ba11a1a8b433401182bfd1b8a15" resname="Index to categorize climbs by Dutch cycling magazine fiets.">
         <source>Index to categorize climbs by Dutch cycling magazine fiets.</source>
-        <target state="new">Index to categorize climbs by Dutch cycling magazine fiets.</target>
+        <target>Index to categorize climbs by Dutch cycling magazine fiets.</target>
         <jms:reference-file line="77">/Resources/views/activity/tool/climb_score.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="42401823774f2c1301a6addca86bbc3987435e54" resname="Indicates the order of appearance.">
@@ -1325,7 +1325,7 @@
       </trans-unit>
       <trans-unit id="3bade34ecbc5d996b2f301ebd4ba689e81c7c9ea" resname="Length">
         <source>Length</source>
-        <target state="new">Length</target>
+        <target>Length</target>
         <jms:reference-file line="74">/Resources/views/activity/tool/climb_score.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="be1a7d07844cd48e8143115e7166e2b148581ca7" resname="Let us know what is most important for you at %forum%">
@@ -1446,7 +1446,7 @@
       </trans-unit>
       <trans-unit id="082bc378cd60e17a38d99898b21955299c5b60c8" resname="Month">
         <source>Month</source>
-        <target state="new">Month</target>
+        <target>Month</target>
         <jms:reference-file line="14">/Resources/views/my/panels/sports/base.html.twig</jms:reference-file>
         <jms:reference-file line="17">/Resources/views/my/panels/sports/base.html.twig</jms:reference-file>
       </trans-unit>
@@ -1531,7 +1531,7 @@
       </trans-unit>
       <trans-unit id="4e9fde9f5797c2c3154cbe0edcc6284bb49ca0c5" resname="No data available since %date%.">
         <source>No data available since %date%.</source>
-        <target state="new">No data available since %date%.</target>
+        <target>No data available since %date%.</target>
         <jms:reference-file line="42">/Resources/views/my/panels/sports/base.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="929ebf2080421a22a3a8b01c4e34d2099d5172dc" resname="No data available.">
@@ -1557,7 +1557,7 @@
       </trans-unit>
       <trans-unit id="bf8134993000cbf3c6fad37651c358923e0a91ab" resname="No significant climbs could be detected.">
         <source>No significant climbs could be detected.</source>
-        <target state="new">No significant climbs could be detected.</target>
+        <target>No significant climbs could be detected.</target>
         <jms:reference-file line="85">/Resources/views/activity/tool/climb_score.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="f4a714581ee399d4a479a2fc5647281ced144ab8" resname="No update needed">
@@ -2074,7 +2074,7 @@
       </trans-unit>
       <trans-unit id="6a67dedf624fa9ee5c76eb187ed015ba6ddd9038" resname="See how your activity's values evolve over time.">
         <source>See how your activity's values evolve over time.</source>
-        <target state="new">See how your activity's values evolve over time.</target>
+        <target>See how your activity's values evolve over time.</target>
         <jms:reference-file line="11">/Resources/views/tools/tools_list.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="0ef25462ad107e31f9de95b8e1784cc1c8859b75" resname="Send link">
@@ -2161,7 +2161,7 @@
       </trans-unit>
       <trans-unit id="2fec45a4cba42f573866f1f9bc5a3e328ea963a7" resname="Sports">
         <source>Sports</source>
-        <target state="new">Sports</target>
+        <target>Sports</target>
         <jms:reference-file line="8">/Resources/views/my/panels/sports/base.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="63d361c2dda8c15f5c99600e15d79605b777fc26" resname="Standard calculation: As race result">
@@ -2576,7 +2576,7 @@
       </trans-unit>
       <trans-unit id="8b6325a8286e6a66057a182febcc43952acd7c15" resname="Trend analysis">
         <source>Trend analysis</source>
-        <target state="new">Trend analysis</target>
+        <target>Trend analysis</target>
         <jms:reference-file line="82">/Resources/views/base_logged_in.twig</jms:reference-file>
         <jms:reference-file line="9">/Resources/views/tools/tools_list.html.twig</jms:reference-file>
         <jms:reference-file line="5">/Resources/views/tools/trend-analysis/base.html.twig</jms:reference-file>
@@ -2677,7 +2677,7 @@
       </trans-unit>
       <trans-unit id="8dce170de238b1feda2ecd9674ea3ca0d068fbcb" resname="Value">
         <source>Value</source>
-        <target state="new">Value</target>
+        <target>Value</target>
         <jms:reference-file line="71">/Resources/views/tools/trend-analysis/base.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="75f0922200bcae60cb9437401b832b3ff0fb3f08" resname="Vertical oscillation">
@@ -2687,7 +2687,7 @@
       </trans-unit>
       <trans-unit id="2088f085ef093798a2b2f38e60d883cc9d65a8f5" resname="Vertical pace">
         <source>Vertical pace</source>
-        <target state="new">Vertical pace</target>
+        <target>Vertical pace</target>
         <jms:reference-file line="80">/Resources/views/activity/tool/climb_score.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="e8c71dd530754b22ecdb6590edde702eb6e0062c" resname="Vertical ratio">
@@ -2727,13 +2727,13 @@
       </trans-unit>
       <trans-unit id="284af3e8882bbc45760521be2f100a2d104ff5d8" resname="Weather">
         <source>Weather</source>
-        <target state="new">Weather</target>
+        <target>Weather</target>
         <jms:reference-file line="115">/../src/CoreBundle/Form/Tools/Anova/AnovaType.php</jms:reference-file>
         <jms:reference-file line="107">/../src/CoreBundle/Form/Tools/TrendAnalysis/TrendAnalysisType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="f82be68a7fb4e7dec88f27463de94ad355242ee5" resname="Week">
         <source>Week</source>
-        <target state="new">Week</target>
+        <target>Week</target>
         <jms:reference-file line="16">/Resources/views/my/panels/sports/base.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="69c0b81540bd6771fbae52b1e5922cfd40155633" resname="Weight">
@@ -2750,7 +2750,7 @@
       </trans-unit>
       <trans-unit id="879e32326c5217968ac8e3a14e4a8a5214957264" resname="Year">
         <source>Year</source>
-        <target state="new">Year</target>
+        <target>Year</target>
         <jms:reference-file line="18">/Resources/views/my/panels/sports/base.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="e721a1481440bd8b46aaaa3d2b69958cf540c6b9" resname="Year of birth">
@@ -3083,7 +3083,7 @@
       </trans-unit>
       <trans-unit id="7a9c0c20d35a7bec43039bdf4865c10eaf35a12c" resname="choose a specific period">
         <source>choose a specific period</source>
-        <target state="new">choose a specific period</target>
+        <target>choose a specific period</target>
         <jms:reference-file line="34">/Resources/views/tools/trend-analysis/base.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="da3305ee129eaa67ea4c88fb8bab62dd4dd4dc57" resname="coefficiant of variance = standard deviation / mean">
@@ -3110,7 +3110,7 @@
       </trans-unit>
       <trans-unit id="6cbf1598aa0bed95c52d483d2a9c744b489f146c" resname="entire period">
         <source>entire period</source>
-        <target state="new">entire period</target>
+        <target>entire period</target>
         <jms:reference-file line="41">/Resources/views/tools/trend-analysis/base.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="80b2f559a14748525776894e12e1216b49b5b558" resname="equals">
@@ -3151,22 +3151,22 @@
       </trans-unit>
       <trans-unit id="d9a64ef2a9add3854c3ee648b331914657db5922" resname="last 12 months">
         <source>last 12 months</source>
-        <target state="new">last 12 months</target>
+        <target>last 12 months</target>
         <jms:reference-file line="36">/Resources/views/tools/trend-analysis/base.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="d0b686573b6327149577694ffc41670eb86c876f" resname="last 6 months">
         <source>last 6 months</source>
-        <target state="new">last 6 months</target>
+        <target>last 6 months</target>
         <jms:reference-file line="35">/Resources/views/tools/trend-analysis/base.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="2b2012c4a952a4135c9742455620390a59a1daa4" resname="max Distance">
         <source>max Distance</source>
-        <target state="new">max Distance</target>
+        <target>max Distance</target>
         <jms:reference-file line="18">/Resources/views/my/equipment/overview.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="076cb4729032ed86268546a542f3f939ad8d04e4" resname="max Time">
         <source>max Time</source>
-        <target state="new">max Time</target>
+        <target>max Time</target>
         <jms:reference-file line="19">/Resources/views/my/equipment/overview.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="7e8e654def5444188d35ada75d2dcb250369a2aa" resname="max.">
@@ -3179,7 +3179,7 @@
       </trans-unit>
       <trans-unit id="463d11c67a3fc9345720222bf888b3c6042d1696" resname="max. Distance">
         <source>max. Distance</source>
-        <target state="new">max. Distance</target>
+        <target>max. Distance</target>
         <jms:reference-file line="75">/../src/CoreBundle/Form/EquipmentCategoryType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="6a57ec15218ee69f9a95e05eb39038ce1125e519" resname="max. Time">
@@ -3241,7 +3241,7 @@
       </trans-unit>
       <trans-unit id="1758356db21759f7c5a0da9b4dd1db8fd6feab3f" resname="or">
         <source>or</source>
-        <target state="new">or</target>
+        <target>or</target>
         <jms:reference-file line="30">/Resources/views/tools/trend-analysis/base.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="a9c95f6de85153ced2785347e6bddca700312b88" resname="per page">
