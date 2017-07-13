@@ -8,7 +8,6 @@ use Runalyze\Bundle\CoreBundle\Component\Activity\ActivityDecorator;
 use Runalyze\Bundle\CoreBundle\Component\Activity\Tool\BestSubSegmentsStatistics;
 use Runalyze\Bundle\CoreBundle\Component\Activity\Tool\TimeSeriesStatistics;
 use Runalyze\Bundle\CoreBundle\Component\Activity\VO2maxCalculationDetailsDecorator;
-use Runalyze\Bundle\CoreBundle\Component\Configuration\UnitSystem;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\Trackdata;
 use Runalyze\Bundle\CoreBundle\Entity\Training;
@@ -241,6 +240,39 @@ class ActivityController extends Controller
         if ($result) {
         	$Calculator->calculateElevation();
         	$Activity->set(Activity\Entity::ELEVATION, $Route->elevation());
+
+        	$trackdata = $Factory->trackdata($id);
+            $newRouteEntity = new \Runalyze\Bundle\CoreBundle\Entity\Route();
+            $newRouteEntity->setDistance($Route->distance());
+
+            if ($Route->hasCorrectedElevations()) {
+                $newRouteEntity->setElevationsCorrected((new StepwiseElevationProfileFixer(
+                    5, StepwiseElevationProfileFixer::METHOD_VARIABLE_GROUP_SIZE
+                ))->fixStepwiseElevations(
+                    $Route->elevationsCorrected(),
+                    $trackdata->distance()
+                ));
+            } elseif ($Route->hasOriginalElevations()) {
+                $newRouteEntity->setElevationsOriginal($Route->elevationsOriginal());
+            }
+
+            $newTrackdataEntity = new Trackdata();
+            $newTrackdataEntity->setDistance($trackdata->distance());
+
+            $newActivityEntity = new Training();
+            $newActivityEntity->setRoute($newRouteEntity);
+            $newActivityEntity->setTrackdata($newTrackdataEntity);
+
+            if ($newRouteEntity->hasElevations()) {
+                (new FlatOrHillyAnalyzer())->calculatePercentageHillyFor($newActivityEntity);
+                (new ClimbScoreCalculator())->calculateFor($newActivityEntity);
+
+                $Activity->set(Activity\Entity::CLIMB_SCORE, $newActivityEntity->getClimbScore());
+                $Activity->set(Activity\Entity::PERCENTAGE_HILLY, $newActivityEntity->getPercentageHilly());
+            } else {
+                $Activity->set(Activity\Entity::CLIMB_SCORE, null);
+                $Activity->set(Activity\Entity::PERCENTAGE_HILLY, null);
+            }
 
         	$UpdaterRoute = new \Runalyze\Model\Route\Updater(\DB::getInstance(), $Route, $RouteOld);
         	$UpdaterRoute->setAccountID($account->getId());

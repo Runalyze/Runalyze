@@ -189,6 +189,8 @@ class DataSeriesRemoverTest extends \PHPUnit_Framework_TestCase {
 		$Route = $this->Factory->route($RouteID);
 
 		$this->assertEquals(0, $Activity->get(Entity::ROUTEID));
+		$this->assertNull($Activity->get(Entity::CLIMB_SCORE));
+        $this->assertNull($Activity->get(Entity::PERCENTAGE_HILLY));
 		$this->assertTrue($Route->isEmpty());
 	}
 
