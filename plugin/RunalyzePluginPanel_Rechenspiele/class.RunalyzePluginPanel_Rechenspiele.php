@@ -181,7 +181,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 				'bar-tooltip'	=> sprintf( __('Current value: %s<br>Maximal value: %s<br>as percentage: %s &#37;'), $ATLabsolute, $ATLmax, $TrimpValues['ATL']),
 				'value'	=> $TrimpValues['ATLstring'],
 				'title'	=> __('Fatigue'),
-				'small'	=> '(<abbr title="'.__('Actual Training Load').'">ATL</abbr>)',
+				'small'	=> '(<abbr title="'.__('Acute Training Load').'">ATL</abbr>)',
 				'glossary'	=> 'atl'
 			),
 			array(
@@ -340,7 +340,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 				<tbody>
 					<tr>
 						<td class="b">ATL</td>
-						<td>'.__('Actual Training Load').'</td>
+						<td>'.__('Acute Training Load').'</td>
 						<td class="c">'.$TrimpValues['ATL'].' &#37;</td>
 						<td class="c small">'.sprintf( __('%s days'), Configuration::Trimp()->daysForATL()).'</td>
 						<td class="c">'.$ATL.'</td>
