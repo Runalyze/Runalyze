@@ -19,22 +19,6 @@ class Request {
 	}
 
 	/**
-	 * Get requested script name
-	 * @return string
-	 */
-	public static function ScriptName() {
-		return isset($_SERVER['SCRIPT_NAME']) ? $_SERVER['SCRIPT_NAME'] : '';
-	}
-
-	/**
-	 * Get requested filename
-	 * @return string
-	 */
-	public static function Basename() {
-		return basename(self::Uri());
-	}
-
-	/**
 	 * Is the user on a shared page?
 	 * @return boolean
 	 */

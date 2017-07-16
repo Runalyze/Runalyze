@@ -88,7 +88,7 @@ class SharedLinker {
 	public static function getUserId() {
 		if (self::$USER_ID <= 0) {
 			if (strlen(Request::param('user')) > 0) {
-				$Data = AccountHandler::getDataFor(Request::param('user'));
+                $Data = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'account` WHERE `username`='.DB::getInstance()->escape(Request::param('user')).' LIMIT 1')->fetch();
 				self::$USER_ID = $Data['id'];
 			} elseif (strlen(Request::param('url')) > 0) {
 				DB::getInstance()->stopAddingAccountID();

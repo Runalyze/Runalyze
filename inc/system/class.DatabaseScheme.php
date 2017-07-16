@@ -19,7 +19,7 @@ class DatabaseScheme {
 
 	/**
 	 * Tablename
-	 * @var string 
+	 * @var string
 	 */
 	protected $tableName = '';
 
@@ -37,21 +37,21 @@ class DatabaseScheme {
 
 	/**
 	 * Array with all hidden keys
-	 * @var array 
+	 * @var array
 	 */
 	protected $hiddenKeys = array();
 
 	/**
 	 * Failure messages to display
-	 * @var array 
+	 * @var array
 	 */
 	protected $validationFailures = array();
 
 	/**
 	 * Constructor: Only allowed for DatabaseSchemePool
-	 * 
+	 *
 	 * Always use DatabaseSchemePool::get($schemeFile) to get a DatabaseScheme!
-	 * @param string $schemeFile 
+	 * @param string $schemeFile
 	 */
 	public function __construct($schemeFile) {
 		$this->schemeFile = FRONTEND_PATH.$schemeFile;
@@ -61,7 +61,7 @@ class DatabaseScheme {
 	}
 
 	/**
-	 * Load default scheme 
+	 * Load default scheme
 	 */
 	protected function loadDefaultScheme() {
 		include FRONTEND_PATH.'/system/schemes/scheme.default.php';
@@ -93,14 +93,14 @@ class DatabaseScheme {
 	}
 
 	/**
-	 * Check database structure 
+	 * Check database structure
 	 */
 	public function checkDatabaseStructure() {
 		// TODO
 	}
 
 	/**
-	 * Correct database structure 
+	 * Correct database structure
 	 */
 	public function correctDatabaseStructure() {
 		// TODO
@@ -108,14 +108,14 @@ class DatabaseScheme {
 
 	/**
 	 * Get tablename
-	 * @return string 
+	 * @return string
 	 */
 	public function tableName() {
 		return $this->tableName;
 	}
 
 	/**
-	 * Get default array of scheme 
+	 * Get default array of scheme
 	 * @return array
 	 */
 	public function getDefaultArray() {
@@ -128,16 +128,8 @@ class DatabaseScheme {
 	}
 
 	/**
-	 * Check if there is a field for timestamp
-	 * @return boolean 
-	 */
-	public function hasTimestamp() {
-		return isset($this->fields['time']);
-	}
-
-	/**
 	 * Get all hidden keys
-	 * @return array 
+	 * @return array
 	 */
 	public function hiddenKeys() {
 		return $this->hiddenKeys;
@@ -145,7 +137,7 @@ class DatabaseScheme {
 
 	/**
 	 * Hide a fieldset
-	 * @param string $id 
+	 * @param string $id
 	 */
 	public function hideFieldset($id) {
 		foreach ($this->fieldsets as &$Fieldset)
@@ -155,7 +147,7 @@ class DatabaseScheme {
 
 	/**
 	 * Remove a field
-	 * @param string $fieldKey 
+	 * @param string $fieldKey
 	 */
 	public function hideField($fieldKey) {
 		$this->fields[$fieldKey]['hidden'] = true;
@@ -197,7 +189,7 @@ class DatabaseScheme {
 	}
 
 	/**
-	 * Set default parser for all 
+	 * Set default parser for all
 	 */
 	protected function setDefaultParser() {
 		foreach ($this->fields as $key => &$options) {
@@ -248,7 +240,7 @@ class DatabaseScheme {
 
 	/**
 	 * Get default value
-	 * @param string $fieldKey 
+	 * @param string $fieldKey
 	 * @return mixed
 	 */
 	protected function fieldDefaultValue($fieldKey) {

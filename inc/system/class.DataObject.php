@@ -8,26 +8,20 @@ use Runalyze\Error;
 
 /**
  * Object for data from database
- * 
+ *
  * A DataObject represents a row from database.
  * Each subclass needs its own DatabaseScheme.
  * All columns (and fields/fieldsets) are defined there.
- * 
+ *
  * A DataObject has standard (protected!) get()- and set()-methods for all properties.
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\DataObjects
  */
 abstract class DataObject {
 	/**
-	 * Enum as argument for constructor: get last object
-	 * @var string 
-	 */
-	public static $LAST_OBJECT = 'LAST';
-
-	/**
 	 * Default id for empty object
-	 * @var int 
+	 * @var int
 	 */
 	public static $DEFAULT_ID = -1;
 
@@ -63,12 +57,12 @@ abstract class DataObject {
 
 	/**
 	 * DatabaseScheme
-	 * @var DatabaseScheme 
+	 * @var DatabaseScheme
 	 */
 	protected $DatabaseScheme = null;
 
 	/**
-	 * Subclass must init $tableName and $schemeFile 
+	 * Subclass must init $tableName and $schemeFile
 	 */
 	abstract protected function initDatabaseScheme();
 
@@ -97,22 +91,6 @@ abstract class DataObject {
 			$this->data = $idOrArrayOrKey;
 		elseif (is_numeric($idOrArrayOrKey))
 			$this->data = DB::getInstance()->fetchByID($this->tableName(), $idOrArrayOrKey);
-		elseif ($idOrArrayOrKey === self::$LAST_OBJECT)
-			$this->loadLastObject();
-	}
-
-	/**
-	 * Load last object
-	 */
-	private function loadLastObject() {
-		if ($this->DatabaseScheme->hasTimestamp()) {
-			$this->data = DB::getInstance()->query('SELECT * FROM `'.$this->tableName().'` WHERE accountid = '.SessionAccountHandler::getId().' ORDER BY `time` DESC LIMIT 1')->fetch();
-                } else {
-			$this->data = DB::getInstance()->query('SELECT * FROM `'.$this->tableName().'` WHERE accountid = '.SessionAccountHandler::getId().' ORDER BY `id` DESC LIMIT 1')->fetch();
-                }
-
-		if (empty($this->data))
-			$this->constructAsDefaultObject();
 	}
 
 	/**
@@ -128,14 +106,14 @@ abstract class DataObject {
 
 	/**
 	 * Fill default object with values
-	 * 
+	 *
 	 * This function can be implemented in the subclass.
 	 * With this function, complex values can be set for the default object.
 	 */
 	protected function fillDefaultObject() {}
 
 	/**
-	 * Check internal data or raise error 
+	 * Check internal data or raise error
 	 */
 	private function checkForCorrectData() {
 		if (empty($this->data)) {
@@ -147,7 +125,7 @@ abstract class DataObject {
 
 	/**
 	 * Get id
-	 * @return int 
+	 * @return int
 	 */
 	public function id() {
 		return $this->id;
@@ -171,7 +149,7 @@ abstract class DataObject {
 
 	/**
 	 * Get DatabaseScheme
-	 * @return DatabaseScheme 
+	 * @return DatabaseScheme
 	 */
 	final public function databaseScheme() {
 		return $this->DatabaseScheme;
@@ -179,7 +157,7 @@ abstract class DataObject {
 
 	/**
 	 * Get DatabaseScheme
-	 * @return &DatabaseScheme 
+	 * @return &DatabaseScheme
 	 */
 	final public function &databaseSchemeReference() {
 		return $this->DatabaseScheme;
@@ -276,7 +254,7 @@ abstract class DataObject {
 
 	/**
 	 * Set a given value
-	 * 
+	 *
 	 * To avoid properties being set directly, use isAllowedToSet($propertyName) in subclass
 	 * @param string $propertyName
 	 * @param mixed $value
@@ -295,7 +273,7 @@ abstract class DataObject {
 
 	/**
 	 * Force to set a given value
-	 * 
+	 *
 	 * WARNING: Only use this method if you know what you are doing!
 	 * @param string $propertyName
 	 * @param mixed $value
@@ -306,7 +284,7 @@ abstract class DataObject {
 
 	/**
 	 * Force to remove a given property
-	 * 
+	 *
 	 * WARNING: Only use this method if you know what you are doing!
 	 * @param string $propertyName
 	 */
@@ -358,7 +336,7 @@ abstract class DataObject {
 
 	/**
 	 * Is it allowed to set this property?
-	 * 
+	 *
 	 * Should be overwritten by subclass
 	 * @param string $propertyName
 	 * @return bool

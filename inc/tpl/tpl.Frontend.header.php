@@ -6,7 +6,7 @@
 
 	<base href="<?php echo System::getFullDomain(); ?>">
 
-	<?php echo System::getCodeForAllCSSFiles(); ?>
+    <link rel="stylesheet" href="assets/css/runalyze-style.css?v=<?php echo RUNALYZE_VERSION; ?>">
 
 	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 	<link rel="manifest" href="assets/appmanifest.json">
@@ -15,7 +15,8 @@
         <?php } ?>
 	<title>RUNALYZE</title>
 
-	<?php echo System::getCodeForLocalJSFiles(); ?>
+    <script>document.addEventListener("touchstart", function(){}, true);</script>
+    <script src="assets/js/scripts.min.js?v=<?php echo RUNALYZE_VERSION; ?>"></script>
 </head>
 
 <body id="home" style="background-image:url(<?php echo \Runalyze\Configuration::Design()->backgroundImage(); ?>);">
@@ -81,7 +82,7 @@
             <ul class="submenu">
                 <li><a class="window" href="<?php echo $this->get('router')->generate('settings'); ?>?key=config_tab_general"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('General settings'); ?></a></li>
                 <li><a class="window" href="<?php echo $this->get('router')->generate('settings'); ?>?key=config_tab_plugins"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('Plugins'); ?></a></li>
-                <li><a class="window" href="<?php echo $this->get('router')->generate('settings-dataset'); ?>?key=config_tab_dataset"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('Dataset'); ?></a></li>
+                <li><a class="window" href="<?php echo $this->get('router')->generate('settings-dataset'); ?>"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('Dataset'); ?></a></li>
                 <li><a class="window" href="<?php echo $this->get('router')->generate('settings-sports'); ?>"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('Sports'); ?></a></li>
                 <li><a class="window" href="<?php echo $this->get('router')->generate('equipment-overview'); ?>"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('Equipment'); ?></a></li>
                 <li><a class="window" data-size="small" href="<?php echo $this->get('router')->generate('settings-tags'); ?>"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('Activity tags'); ?></a></li>

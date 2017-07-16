@@ -122,14 +122,6 @@ class HTML {
 	}
 
 	/**
-	 * Return a break
-	 * @return string
-	 */
-	public static function br() {
-		return '<br>';
-	}
-
-	/**
 	 * Return a header
 	 * @param string $text
 	 * @return string
