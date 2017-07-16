@@ -76,6 +76,12 @@ class BoxedValue {
 	 */
 	protected $Info = '';
 
+    /**
+     * Glossary
+     * @var string
+     */
+    protected $Glossary = '';
+
 	/**
 	 * Additional classes 
 	 * @var string
@@ -107,12 +113,14 @@ class BoxedValue {
 	 * @param string $Unit [optional]
 	 * @param string $Info [optional]
 	 * @param string $Icon [optional]
-	 */
-	public function __construct($Value = '', $Unit = '', $Info = '', $Icon = '') {
+     * @param string $Glossary [optional]
+     */
+	public function __construct($Value = '', $Unit = '', $Info = '', $Icon = '', $Glossary = '') {
 		$this->setValue($Value);
 		$this->setUnit($Unit);
 		$this->setInfo($Info);
 		$this->setIcon($Icon);
+		$this->setGlossary($Glossary);
 	}
 
 	/**
@@ -146,6 +154,14 @@ class BoxedValue {
 	public function setInfo($Info) {
 		$this->Info = $Info;
 	}
+
+    /**
+     * Set glossary
+     * @param string $Glossary
+     */
+    public function setGlossary($Glossary) {
+        $this->Glossary = $Glossary;
+    }
 
 	/**
 	 * Add class
@@ -269,7 +285,10 @@ class BoxedValue {
 
 		$Code = '<div class="'.self::$VALUE_INFO_DIV.'">';
 		$Code .= str_replace(' ', '&nbsp;', $this->Info);
-		$Code .= '</div>';
+		if (!empty($this->Glossary)) {
+            $Code .= '<a class="window" href="glossary/'.$this->Glossary.'"><i class="fa fa-question-circle-o"></i></a>';
+        }
+        $Code .= '</div>';
 
 		return $Code;
 	}
