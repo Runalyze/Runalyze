@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
   <file date="2017-07-08T11:06:23Z" source-language="en" target-language="de" datatype="plaintext" original="not.available">
     <header>
@@ -513,14 +513,14 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Klicke eine Aktivität an, um weitere Details anzuzeigen.</target>
         <jms:reference-file line="66">/Resources/views/shared/athlete/base.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="263ea9837762582d973ab584c86eebc849c95111" resname="Climb Score">
+      <trans-unit id="263ea9837762582d973ab584c86eebc849c95111" resname="Climb Score" approved="yes">
         <source>Climb Score</source>
-        <target>Climb Score</target>
+        <target state="translated">Climb Score</target>
         <jms:reference-file line="19">/Resources/views/activity/tool/climb_score.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="768a95d73fbc2068c15dfc51099307c477756085" resname="Climbs">
+      <trans-unit id="768a95d73fbc2068c15dfc51099307c477756085" resname="Climbs" approved="yes">
         <source>Climbs</source>
-        <target>Climbs</target>
+        <target state="translated">Anstiege</target>
         <jms:reference-file line="65">/Resources/views/activity/tool/climb_score.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="8a128d3e497cf86515b3c769349812a4b7a165f9" resname="Compare your activity's values grouped by common values (e.g. sport or activity type) for a given period.">
@@ -1098,9 +1098,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Steigung</target>
         <jms:reference-file line="75">/Resources/views/activity/tool/climb_score.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="439b59a4318e24d72ba33f8b086f0ffe9a6285ac" resname="Gradient distribution">
+      <trans-unit id="439b59a4318e24d72ba33f8b086f0ffe9a6285ac" resname="Gradient distribution" approved="yes">
         <source>Gradient distribution</source>
-        <target>Gradient distribution</target>
+        <target state="translated">Steigungsverteilung</target>
         <jms:reference-file line="92">/Resources/views/activity/tool/climb_score.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="701c483f813cf119ec80b185a049bcfdc29f9161" resname="Grid">
@@ -1255,9 +1255,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Die meisten Fragen, Probleme und Ideen sind im Forum am Besten aufgehoben.</target>
         <jms:reference-file line="14">/Resources/views/static/help.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="68d71b3c12159ba11a1a8b433401182bfd1b8a15" resname="Index to categorize climbs by Dutch cycling magazine fiets.">
+      <trans-unit id="68d71b3c12159ba11a1a8b433401182bfd1b8a15" resname="Index to categorize climbs by Dutch cycling magazine fiets." approved="yes">
         <source>Index to categorize climbs by Dutch cycling magazine fiets.</source>
-        <target>Index to categorize climbs by Dutch cycling magazine fiets.</target>
+        <target state="translated">Index zur Kategorisierung von Anstieg nach dem holländischen Fahrrad-Magazin Fiets.</target>
         <jms:reference-file line="77">/Resources/views/activity/tool/climb_score.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="42401823774f2c1301a6addca86bbc3987435e54" resname="Indicates the order of appearance.">
@@ -1515,9 +1515,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Keinen Athleten gefunden.</target>
         <jms:reference-file line="4">/Resources/views/shared/invalid_athlete.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="4e9fde9f5797c2c3154cbe0edcc6284bb49ca0c5" resname="No data available since %date%.">
+      <trans-unit id="4e9fde9f5797c2c3154cbe0edcc6284bb49ca0c5" resname="No data available since %date%." approved="yes">
         <source>No data available since %date%.</source>
-        <target>No data available since %date%.</target>
+        <target state="translated">Keine Daten verfügbar seit %date%.</target>
         <jms:reference-file line="42">/Resources/views/my/panels/sports/base.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="929ebf2080421a22a3a8b01c4e34d2099d5172dc" resname="No data available.">
@@ -1541,9 +1541,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <jms:reference-file line="100">/Resources/views/tools/anova/base.html.twig</jms:reference-file>
         <jms:reference-file line="107">/Resources/views/tools/trend-analysis/base.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="bf8134993000cbf3c6fad37651c358923e0a91ab" resname="No significant climbs could be detected.">
+      <trans-unit id="bf8134993000cbf3c6fad37651c358923e0a91ab" resname="No significant climbs could be detected." approved="yes">
         <source>No significant climbs could be detected.</source>
-        <target>No significant climbs could be detected.</target>
+        <target state="translated">Es wurden keine signifikanten Anstiege gefunden.</target>
         <jms:reference-file line="85">/Resources/views/activity/tool/climb_score.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="f4a714581ee399d4a479a2fc5647281ced144ab8" resname="No update needed">
@@ -2051,9 +2051,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Suche nach Geräten</target>
         <jms:reference-file line="43">/Resources/views/import/garmin_communicator.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="6a67dedf624fa9ee5c76eb187ed015ba6ddd9038" resname="See how your activity's values evolve over time.">
+      <trans-unit id="6a67dedf624fa9ee5c76eb187ed015ba6ddd9038" resname="See how your activity's values evolve over time." approved="yes">
         <source>See how your activity's values evolve over time.</source>
-        <target>See how your activity's values evolve over time.</target>
+        <target state="translated">Schau dir an, wie sich deine Aktivitätswerte im Verlauf der Zeit geändert haben.</target>
         <jms:reference-file line="11">/Resources/views/tools/tools_list.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="0ef25462ad107e31f9de95b8e1784cc1c8859b75" resname="Send link">
@@ -2133,14 +2133,14 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Sportrelevanz</target>
         <jms:reference-file line="128">/../src/CoreBundle/Form/Settings/SportType.php</jms:reference-file>
       </trans-unit>
-      <trans-unit id="3eaa78011ccd8b7c7877057230258648779d9237" resname="Sport types">
+      <trans-unit id="3eaa78011ccd8b7c7877057230258648779d9237" resname="Sport types" approved="yes">
         <source>Sport types</source>
-        <target>Sport types</target>
+        <target state="translated">Sportarten</target>
         <jms:reference-file line="72">/Resources/views/base_logged_in.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="2fec45a4cba42f573866f1f9bc5a3e328ea963a7" resname="Sports">
+      <trans-unit id="2fec45a4cba42f573866f1f9bc5a3e328ea963a7" resname="Sports" approved="yes">
         <source>Sports</source>
-        <target>Sports</target>
+        <target state="translated">Sportarten</target>
         <jms:reference-file line="8">/Resources/views/my/panels/sports/base.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="63d361c2dda8c15f5c99600e15d79605b777fc26" resname="Standard calculation: As race result">
@@ -2552,9 +2552,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <jms:reference-file line="64">/Resources/views/base_not_logged_in.html.twig</jms:reference-file>
         <jms:reference-file line="20">/Resources/views/static/help.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="8b6325a8286e6a66057a182febcc43952acd7c15" resname="Trend analysis">
+      <trans-unit id="8b6325a8286e6a66057a182febcc43952acd7c15" resname="Trend analysis" approved="yes">
         <source>Trend analysis</source>
-        <target>Trend analysis</target>
+        <target state="translated">Trendanalyse</target>
         <jms:reference-file line="82">/Resources/views/base_logged_in.twig</jms:reference-file>
         <jms:reference-file line="9">/Resources/views/tools/tools_list.html.twig</jms:reference-file>
         <jms:reference-file line="5">/Resources/views/tools/trend-analysis/base.html.twig</jms:reference-file>
@@ -2653,9 +2653,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>VO2max Werte mit entsprechenden Wettkampfzeiten</target>
         <jms:reference-file line="12">/Resources/views/tools/tables/base.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="8dce170de238b1feda2ecd9674ea3ca0d068fbcb" resname="Value">
+      <trans-unit id="8dce170de238b1feda2ecd9674ea3ca0d068fbcb" resname="Value" approved="yes">
         <source>Value</source>
-        <target>Value</target>
+        <target state="translated">Wert</target>
         <jms:reference-file line="71">/Resources/views/tools/trend-analysis/base.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="75f0922200bcae60cb9437401b832b3ff0fb3f08" resname="Vertical oscillation">
@@ -2663,9 +2663,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Vertikale Bewegung</target>
         <jms:reference-file line="160">/Resources/views/activity/tool/time_series_statistics.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="2088f085ef093798a2b2f38e60d883cc9d65a8f5" resname="Vertical pace">
+      <trans-unit id="2088f085ef093798a2b2f38e60d883cc9d65a8f5" resname="Vertical pace" approved="yes">
         <source>Vertical pace</source>
-        <target>Vertical pace</target>
+        <target state="translated">Vertikale Geschwindigkeit</target>
         <jms:reference-file line="80">/Resources/views/activity/tool/climb_score.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="e8c71dd530754b22ecdb6590edde702eb6e0062c" resname="Vertical ratio">
@@ -2703,15 +2703,15 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Wir werden im Normalbetrieb so bald wie möglich fortsetzen.</target>
         <jms:reference-file line="9">/Resources/views/maintenance.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="284af3e8882bbc45760521be2f100a2d104ff5d8" resname="Weather">
+      <trans-unit id="284af3e8882bbc45760521be2f100a2d104ff5d8" resname="Weather" approved="yes">
         <source>Weather</source>
-        <target>Weather</target>
+        <target state="translated">Wetter</target>
         <jms:reference-file line="115">/../src/CoreBundle/Form/Tools/Anova/AnovaType.php</jms:reference-file>
         <jms:reference-file line="107">/../src/CoreBundle/Form/Tools/TrendAnalysis/TrendAnalysisType.php</jms:reference-file>
       </trans-unit>
-      <trans-unit id="f82be68a7fb4e7dec88f27463de94ad355242ee5" resname="Week">
+      <trans-unit id="f82be68a7fb4e7dec88f27463de94ad355242ee5" resname="Week" approved="yes">
         <source>Week</source>
-        <target>Week</target>
+        <target state="translated">Woche</target>
         <jms:reference-file line="16">/Resources/views/my/panels/sports/base.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="69c0b81540bd6771fbae52b1e5922cfd40155633" resname="Weight">
@@ -2726,9 +2726,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <jms:reference-file line="6">/Resources/views/mail/account/registration.html.twig</jms:reference-file>
         <jms:reference-file line="8">/Resources/views/register/mail_delivered.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="879e32326c5217968ac8e3a14e4a8a5214957264" resname="Year">
+      <trans-unit id="879e32326c5217968ac8e3a14e4a8a5214957264" resname="Year" approved="yes">
         <source>Year</source>
-        <target>Year</target>
+        <target state="translated">Jahr</target>
         <jms:reference-file line="18">/Resources/views/my/panels/sports/base.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="e721a1481440bd8b46aaaa3d2b69958cf540c6b9" resname="Year of birth">
@@ -3055,9 +3055,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <jms:reference-file line="30">/Resources/views/tools/vo2max_analysis.html.twig</jms:reference-file>
         <jms:reference-file line="31">/Resources/views/tools/vo2max_analysis.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="7a9c0c20d35a7bec43039bdf4865c10eaf35a12c" resname="choose a specific period">
+      <trans-unit id="7a9c0c20d35a7bec43039bdf4865c10eaf35a12c" resname="choose a specific period" approved="yes">
         <source>choose a specific period</source>
-        <target>choose a specific period</target>
+        <target state="translated">wähle einen bestimmten Zeitraum</target>
         <jms:reference-file line="34">/Resources/views/tools/trend-analysis/base.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="da3305ee129eaa67ea4c88fb8bab62dd4dd4dc57" resname="coefficiant of variance = standard deviation / mean">
@@ -3082,9 +3082,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <jms:reference-file line="69">/../src/CoreBundle/Form/EquipmentType.php</jms:reference-file>
         <jms:reference-file line="77">/../src/CoreBundle/Form/EquipmentType.php</jms:reference-file>
       </trans-unit>
-      <trans-unit id="6cbf1598aa0bed95c52d483d2a9c744b489f146c" resname="entire period">
+      <trans-unit id="6cbf1598aa0bed95c52d483d2a9c744b489f146c" resname="entire period" approved="yes">
         <source>entire period</source>
-        <target>entire period</target>
+        <target state="translated">gesamter Zeitraum</target>
         <jms:reference-file line="41">/Resources/views/tools/trend-analysis/base.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="80b2f559a14748525776894e12e1216b49b5b558" resname="equals">
@@ -3123,14 +3123,14 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>km</target>
         <jms:reference-file line="26">/Resources/views/tools/vo2max_analysis.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="d9a64ef2a9add3854c3ee648b331914657db5922" resname="last 12 months">
+      <trans-unit id="d9a64ef2a9add3854c3ee648b331914657db5922" resname="last 12 months" approved="yes">
         <source>last 12 months</source>
-        <target>last 12 months</target>
+        <target state="translated">letzten 12 Monate</target>
         <jms:reference-file line="36">/Resources/views/tools/trend-analysis/base.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="d0b686573b6327149577694ffc41670eb86c876f" resname="last 6 months">
+      <trans-unit id="d0b686573b6327149577694ffc41670eb86c876f" resname="last 6 months" approved="yes">
         <source>last 6 months</source>
-        <target>last 6 months</target>
+        <target state="translated">letzten 6 Monate</target>
         <jms:reference-file line="35">/Resources/views/tools/trend-analysis/base.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="2b2012c4a952a4135c9742455620390a59a1daa4" resname="max Distance">
@@ -3138,9 +3138,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>max Distance</target>
         <jms:reference-file line="18">/Resources/views/my/equipment/overview.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="076cb4729032ed86268546a542f3f939ad8d04e4" resname="max Time">
+      <trans-unit id="076cb4729032ed86268546a542f3f939ad8d04e4" resname="max Time" approved="yes">
         <source>max Time</source>
-        <target>max Time</target>
+        <target state="translated">max Zeit</target>
         <jms:reference-file line="19">/Resources/views/my/equipment/overview.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="7e8e654def5444188d35ada75d2dcb250369a2aa" resname="max.">
