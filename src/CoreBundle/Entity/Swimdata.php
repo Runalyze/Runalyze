@@ -13,16 +13,16 @@ use Doctrine\ORM\Mapping as ORM;
 class Swimdata
 {
     /**
-     * @var string array of int separated by |
+     * @var array|null
      *
-     * @ORM\Column(name="stroke", type="text", nullable=true)
+     * @ORM\Column(name="stroke", type="pipe_array", nullable=true)
      */
     private $stroke;
 
     /**
-     * @var string array of int separated by |
+     * @var array|null
      *
-     * @ORM\Column(name="stroketype", type="text", nullable=true)
+     * @ORM\Column(name="stroketype", type="pipe_array", nullable=true)
      */
     private $stroketype;
 
@@ -59,10 +59,10 @@ class Swimdata
 
 
     /**
-     * @param string $stroke array of int separated by |
+     * @param array|null
      * @return $this
      */
-    public function setStroke($stroke)
+    public function setStroke(array $stroke = null)
     {
         $this->stroke = $stroke;
 
@@ -70,7 +70,7 @@ class Swimdata
     }
 
     /**
-     * @return string array of int separated by |
+     * @return array|null
      */
     public function getStroke()
     {
@@ -78,10 +78,10 @@ class Swimdata
     }
 
     /**
-     * @param string $stroketype array of int separated by |
+     * @param array|null
      * @return $this
      */
-    public function setStroketype($stroketype)
+    public function setStroketype(array $stroketype = null)
     {
         $this->stroketype = $stroketype;
 
@@ -89,7 +89,7 @@ class Swimdata
     }
 
     /**
-     * @return string array of int separated by |
+     * @return array|null
      */
     public function getStroketype()
     {
@@ -136,7 +136,7 @@ class Swimdata
 
     /**
      * @param Training $activity
-     * @return Conf
+     * @return $this
      */
     public function setActivity(Training $activity)
     {
