@@ -2045,9 +2045,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Sportrelevanz</target>
         <jms:reference-file line="128">/../src/CoreBundle/Form/Settings/SportType.php</jms:reference-file>
       </trans-unit>
-      <trans-unit id="3eaa78011ccd8b7c7877057230258648779d9237" resname="Sport types">
+      <trans-unit id="3eaa78011ccd8b7c7877057230258648779d9237" resname="Sport types" approved="yes">
         <source>Sport types</source>
-        <target state="new">Sport types</target>
+        <target state="translated">Sportarten</target>
         <jms:reference-file line="70">/Resources/views/base_logged_in.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="63d361c2dda8c15f5c99600e15d79605b777fc26" resname="Standard calculation: As race result">
