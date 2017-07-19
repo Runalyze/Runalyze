@@ -26,6 +26,7 @@ class DefaultConfiguration extends Configuration
 			Keys::SHARED_LINK => false,
 			Keys::WEATHER => true,
 			Keys::TEMPERATURE => true,
+			Keys::HEAT_INDEX => false,
 			Keys::WIND_CHILL => false,
 			Keys::WIND => false,
 			Keys::HUMIDITY => false,
@@ -39,6 +40,9 @@ class DefaultConfiguration extends Configuration
 			Keys::HEARTRATE_AVG => true,
 			Keys::HEARTRATE_MAX => false,
 			Keys::ELEVATION => true,
+            Keys::CLIMB_SCORE => true,
+            Keys::PERCENTAGE_HILLY => false,
+            Keys::GRADIENT => false,
 			Keys::ENERGY => true,
 			Keys::SPLITS => true,
 			Keys::TITLE => true,
@@ -67,7 +71,6 @@ class DefaultConfiguration extends Configuration
 			Keys::COMPLETE_EQUIPMENT => false,
 			Keys::MAIN_EQUIPMENT => false,
 			Keys::RPE => false,
-			Keys::GRADIENT => false,
 			Keys::RACE_RESULT => false
 		));
 	}
