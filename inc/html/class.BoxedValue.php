@@ -5,7 +5,7 @@
  */
 /**
  * Boxed value
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\HTML
  */
@@ -83,7 +83,7 @@ class BoxedValue {
     protected $Glossary = '';
 
 	/**
-	 * Additional classes 
+	 * Additional classes
 	 * @var string
 	 */
 	protected $AdditionalClasses = '';
@@ -176,9 +176,9 @@ class BoxedValue {
 
 	/**
 	 * Define as floating block
-	 * 
+	 *
 	 * Multiple classes can be set, e.g. "w100 flexible-height".
-	 * 
+	 *
 	 * @param string $widthClass e.g. "w25", "w33", "w50"
 	 */
 	public function defineAsFloatingBlock($widthClass) {
@@ -286,7 +286,7 @@ class BoxedValue {
 		$Code = '<div class="'.self::$VALUE_INFO_DIV.'">';
 		$Code .= str_replace(' ', '&nbsp;', $this->Info);
 		if (!empty($this->Glossary)) {
-            $Code .= '<a class="window" href="glossary/'.$this->Glossary.'"><i class="fa fa-question-circle-o"></i></a>';
+            $Code .= '<a class="window left" href="glossary/'.$this->Glossary.'"><i class="fa fa-question-circle-o"></i></a>';
         }
         $Code .= '</div>';
 
