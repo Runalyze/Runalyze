@@ -67,10 +67,14 @@ class VO2maxValue extends AbstractKey
     {
         if ($context->isRunning() && $context->dataview()->usedVO2maxValue() > 0) {
             if (!$context->activity()->usesVO2max()) {
-                return '<span class="unimportant">'.$context->dataview()->vo2max()->value().'</span>';
+                return '<a class="window unimportant" href="activity/'.$context->activity()->id().'/vo2max-info">'.$context->dataview()->vo2max()->value()."</a>";
             }
 
-            return $context->dataview()->vo2max()->value();
+            if (!\Request::isOnSharedPage()) {
+                return '<a class="window" href="activity/' . $context->activity()->id() . '/vo2max-info">' . $context->dataview()->vo2max()->value() . "</a>";
+            } else {
+                return $context->dataview()->vo2max()->value();
+            }
         }
 
         return '';
