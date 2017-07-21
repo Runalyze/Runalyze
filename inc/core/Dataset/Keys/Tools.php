@@ -34,7 +34,7 @@ class Tools extends AbstractKey
 	 */
 	public function column()
 	{
-		return 'is_public';
+		return 'elevation';
 	}
 
 	/**
@@ -122,18 +122,6 @@ class Tools extends AbstractKey
         $html .= '<li><span class="link"><i class="fa fa-fw fa-bar-chart"></i>'.__('Sub segments').'</span> </li>';
 
 		return $html;
-	}
-
-	/**
-	 * @param \Runalyze\Dataset\Context $context
-	 * @return string
-	 */
-	protected function privacyIconAndLabel(Context $context)
-	{
-		if ($context->activity()->has(Route\Entity::ELEVATION)) {
-            return '<i class="fa fa-fw fa-area-chart"><span class="link">'.__('Climb Score').'</span></i>';
-
-		}
 	}
 
 	/**

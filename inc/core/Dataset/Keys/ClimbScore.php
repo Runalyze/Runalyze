@@ -38,7 +38,7 @@ class ClimbScore extends AbstractKey
         if (!\Request::isOnSharedPage()) {
             return '<a class="window" href="activity/'.$context->activity()->id().'/climb-score">'.$context->dataview()->climbScore()."</a>";
         } else {
-            $context->dataview()->climbScore();
+            return $context->dataview()->climbScore();
         }
     }
 

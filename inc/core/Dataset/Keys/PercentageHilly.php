@@ -38,7 +38,7 @@ class PercentageHilly extends AbstractKey
         if (!\Request::isOnSharedPage()) {
             return '<a class="window" href="activity/'.$context->activity()->id().'/climb-score">'.$context->dataview()->percentageHilly()."</a>";
         } else {
-            $context->dataview()->percentageHilly();
+            return $context->dataview()->percentageHilly();
         }
 	}
 }
