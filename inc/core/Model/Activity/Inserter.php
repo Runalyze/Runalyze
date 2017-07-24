@@ -6,10 +6,16 @@
 
 namespace Runalyze\Model\Activity;
 
+use Runalyze\Bundle\CoreBundle\Bridge\Activity\Calculation\ClimbScoreCalculator;
+use Runalyze\Bundle\CoreBundle\Bridge\Activity\Calculation\FlatOrHillyAnalyzer;
+use Runalyze\Bundle\CoreBundle\Entity\Route;
+use Runalyze\Bundle\CoreBundle\Entity\Trackdata;
+use Runalyze\Bundle\CoreBundle\Entity\Training;
 use Runalyze\Calculation\NightDetector;
 use Runalyze\Model;
 use Runalyze\Calculation\BasicEndurance;
 use Runalyze\Configuration;
+use Runalyze\Service\ElevationCorrection\StepwiseElevationProfileFixer;
 
 /**
  * Insert activity to database
@@ -124,6 +130,7 @@ class Inserter extends Model\InserterWithAccountID {
         $this->calculateStrideLength();
         $this->calculateVerticalRatio();
         $this->calculateSwimValues();
+        $this->calculateClimbScore();
 
 		parent::before();
 
@@ -245,6 +252,42 @@ class Inserter extends Model\InserterWithAccountID {
 			}
 		}
 	}
+
+    protected function calculateClimbScore() {
+        if (
+            null !== $this->Route &&
+            $this->Route->hasElevations() &&
+            null !== $this->Trackdata &&
+            $this->Trackdata->has(Model\Trackdata\Entity::DISTANCE)
+        ) {
+            $newRouteEntity = new Route();
+            $newRouteEntity->setDistance($this->Route->distance());
+
+            if ($this->Route->hasCorrectedElevations()) {
+                $newRouteEntity->setElevationsCorrected((new StepwiseElevationProfileFixer(
+                    5, StepwiseElevationProfileFixer::METHOD_VARIABLE_GROUP_SIZE
+                ))->fixStepwiseElevations(
+                    $this->Route->elevationsCorrected(),
+                    $this->Trackdata->distance()
+                ));
+            } else {
+                $newRouteEntity->setElevationsOriginal($this->Route->elevationsOriginal());
+            }
+
+            $newTrackdataEntity = new Trackdata();
+            $newTrackdataEntity->setDistance($this->Trackdata->distance());
+
+            $newActivityEntity = new Training();
+            $newActivityEntity->setRoute($newRouteEntity);
+            $newActivityEntity->setTrackdata($newTrackdataEntity);
+
+            (new FlatOrHillyAnalyzer())->calculatePercentageHillyFor($newActivityEntity);
+            (new ClimbScoreCalculator())->calculateFor($newActivityEntity);
+
+            $this->Object->set(Entity::CLIMB_SCORE, $newActivityEntity->getClimbScore());
+            $this->Object->set(Entity::PERCENTAGE_HILLY, $newActivityEntity->getPercentageHilly());
+        }
+    }
 
 	/**
 	 * Calculate if activity was at night

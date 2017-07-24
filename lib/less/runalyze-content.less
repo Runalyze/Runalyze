@@ -42,6 +42,7 @@ a:hover, a:active, .link:hover {
 	//transition: color 0.3s ease-out;
 }
 
+.glossary .panel-content a,
 p.text a, p.text a,
 a.external, a.external {
 	&:link, &:visited {
@@ -74,9 +75,13 @@ h1 {
 	a:hover, a:active { color: @link-hover; }
 }
 
-ul {
+ul, ol {
 	margin: @list-margin;
 	padding: @list-padding;
+}
+
+abbr {
+	text-decoration: underline dotted;
 }
 
 .show-on-hover-parent {
@@ -210,6 +215,7 @@ tr.ERROR td {
 .c { text-align: center; }
 .l { text-align: left; }
 .r { text-align: right; }
+.vc { vertical-align: middle; }
 .small { font-size: 0.8em; }
 .small.not-smaller .small { font-size: 1em; }
 .wk.highlight td { background: @table-background-highlight !important; font-weight: bold; }
@@ -337,6 +343,26 @@ tr.ERROR td {
 			max-width: 25%;
 			color: lighten(@font-color, 50%);
 			font-size: .8em;
+		}
+	}
+}
+
+.glossary {
+	li {
+		margin-bottom: .5em;
+	}
+}
+
+.see-also {
+	li {
+		display: inline;
+
+		&::after {
+			content: ", ";
+		}
+
+		&:last-of-type::after {
+			content: "";
 		}
 	}
 }

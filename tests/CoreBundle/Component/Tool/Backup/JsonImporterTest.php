@@ -5,6 +5,10 @@ namespace Runalyze\Bundle\CoreBundle\Tests\Component\Tool\Backup;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Backup\JsonImporter;
 use Runalyze\Configuration;
 
+/**
+ * @group dependsOn
+ * @group dependsOnOldDatabase
+ */
 class JsonImporterTest extends \PHPUnit_Framework_TestCase
 {
     /** @var string */

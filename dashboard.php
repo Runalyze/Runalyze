@@ -89,7 +89,7 @@ if (!isset($request) || !$request->isXmlHttpRequest()) {
 	</div>
 
 	<div id="panels">
-		<?php $Frontend->displayPanels(); ?>
+		<?php echo $panelsContent; ?>
 	</div>
 </div>
 <?php

@@ -7,6 +7,10 @@ use Runalyze\Model;
 use Runalyze\Profile\Weather\WeatherConditionProfile;
 use Runalyze\Service\WeatherForecast\Forecast;
 
+/**
+ * @group dependsOn
+ * @group dependsOnOldDatabase
+ */
 class DBWeatherCacheTest extends \PHPUnit_Framework_TestCase
 {
 	/** @var \Runalyze\Service\WeatherForecast\Strategy\DBWeatherCache */

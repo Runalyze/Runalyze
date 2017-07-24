@@ -2,6 +2,11 @@
 
 use Runalyze\Util\LocalTime;
 
+/**
+ * @group import
+ * @group dependsOn
+ * @group dependsOnOldDatabase
+ */
 class ImporterFiletypeXMLTest extends PHPUnit_Framework_TestCase {
 
 	/** @var ImporterFiletypeXML */

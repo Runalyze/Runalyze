@@ -5,9 +5,6 @@ namespace Runalyze\Calculation\Activity;
 use Runalyze\Model\Activity;
 use Runalyze\Model\Trackdata;
 
-/**
- * @group verticalRatio
- */
 class VerticalRatioCalculatorTest extends \PHPUnit_Framework_TestCase
 {
 

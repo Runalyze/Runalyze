@@ -4,6 +4,9 @@ namespace Runalyze\Dataset;
 
 use PDO;
 
+/**
+ * @group requiresSqlite
+ */
 class SummaryModeTest extends \PHPUnit_Framework_TestCase
 {
 

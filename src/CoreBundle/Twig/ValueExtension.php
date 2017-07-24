@@ -2,10 +2,11 @@
 
 namespace Runalyze\Bundle\CoreBundle\Twig;
 
+use Runalyze\Bundle\CoreBundle\Component\Activity\ActivityContext;
 use Runalyze\Bundle\CoreBundle\Component\Configuration\RunalyzeConfigurationList;
 use Runalyze\Bundle\CoreBundle\Component\Configuration\UnitSystem;
-use Runalyze\Bundle\CoreBundle\Services\Activity\ActivityContext;
 use Runalyze\Bundle\CoreBundle\Services\Configuration\ConfigurationManager;
+use Runalyze\Metrics\Common\JavaScriptFormatter;
 use Runalyze\Metrics\Common\UnitInterface;
 use Runalyze\Metrics\Distance\Unit\AbstractDistanceUnit;
 use Runalyze\Metrics\Energy\Unit\AbstractEnergyUnit;
@@ -52,6 +53,7 @@ class ValueExtension extends \Twig_Extension
             new \Twig_SimpleFunction('strideLength', array($this, 'strideLength'), $safeHtmlOptions),
             new \Twig_SimpleFunction('energy', array($this, 'energy'), $safeHtmlOptions),
             new \Twig_SimpleFunction('heartRate', array($this, 'heartRate'), $safeHtmlOptions),
+            new \Twig_SimpleFunction('heartRatePercentMaximum', array($this, 'heartRatePercentMaximum'), $safeHtmlOptions),
             new \Twig_SimpleFunction('heartRateComparison', array($this, 'heartRateComparison'), $safeHtmlOptions),
             new \Twig_SimpleFunction('pace', array($this, 'pace'), $safeHtmlOptions),
             new \Twig_SimpleFunction('paceComparison', array($this, 'paceComparison'), $safeHtmlOptions),
@@ -59,6 +61,8 @@ class ValueExtension extends \Twig_Extension
             new \Twig_SimpleFunction('weight', array($this, 'weight'), $safeHtmlOptions),
             new \Twig_SimpleFunction('vo2max', array($this, 'vo2max'), $safeHtmlOptions),
             new \Twig_SimpleFunction('vo2maxFor', array($this, 'vo2maxFor'), $safeHtmlOptions),
+            new \Twig_SimpleFunction('jsFormatter', array($this, 'jsFormatter'), $safeHtmlOptions),
+            new \Twig_SimpleFunction('jsTransformer', array($this, 'jsTransformer'), $safeHtmlOptions),
         );
     }
 
@@ -139,6 +143,16 @@ class ValueExtension extends \Twig_Extension
         }
 
         return new DisplayableValue($bpm, $unit);
+    }
+
+    /**
+     * @param int $bpm [bpm]
+     * @param null|int $bpmMax [bpm]
+     * @return DisplayableValueInPercent
+     */
+    public function heartRatePercentMaximum($bpm, $bpmMax = null)
+    {
+        return new DisplayableValueInPercent($bpm, $this->UnitSystem->getHeartRateUnitPercentMaximum($bpmMax));
     }
 
     /**
@@ -233,5 +247,23 @@ class ValueExtension extends \Twig_Extension
             $configurationList,
             $activityContext->getActivity()->getUseVO2max()
         );
+    }
+
+    /**
+     * @param UnitInterface $unit
+     * @return string
+     */
+    public function jsFormatter(UnitInterface $unit)
+    {
+        return JavaScriptFormatter::getFormatter($unit);
+    }
+
+    /**
+     * @param UnitInterface $unit
+     * @return string
+     */
+    public function jsTransformer(UnitInterface $unit)
+    {
+        return JavaScriptFormatter::getTransformer($unit);
     }
 }

@@ -25,7 +25,7 @@ framework:
       - '%kernel.root_dir%/../inc/locale/'
 
 parameters:
-  RUNALYZE_VERSION: 4.1.0
+  RUNALYZE_VERSION: 4.2.0-dev
 
 twig:
   globals:
@@ -76,7 +76,9 @@ doctrine:
                 options: {1002: "SET time_zone = '+00:00'"}
                 mapping_types:
                     enum:   string
-
+        types:
+            pipe_array: Runalyze\Bundle\CoreBundle\Doctrine\Types\PipeDelimitedArray
+            runalyze_pause_array: Runalyze\Bundle\CoreBundle\Doctrine\Types\RunalyzePauseArray
 
 
     orm:
@@ -146,8 +148,8 @@ swiftmailer:
 jms_translation:
     configs:
         app:
-            dirs: [%kernel.root_dir%/, %kernel.root_dir%/../src]
-            output_dir: %kernel.root_dir%/Resources/translations
+            dirs: ['%kernel.root_dir%/', '%kernel.root_dir%/../src']
+            output_dir: '%kernel.root_dir%/Resources/translations'
             ignored_domains: [routes]
             excluded_names: ["*TestCase.php", "*Test.php"]
             excluded_dirs: [cache, data, logs, test, doctrine]

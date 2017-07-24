@@ -8,7 +8,7 @@ namespace Runalyze\Service\ElevationCorrection;
 
 /**
  * Elevation corrector
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Service\ElevationCorrection
  */
@@ -158,11 +158,11 @@ class Corrector
 
 	/**
 	 * Try to use Google API
-	 * 
+	 *
 	 * This method is currently not used.
 	 * Googles terms do not allow to use the api without displaying the data on a map.
 	 * As long as the other apis work, we do not need to use Google's api anymore.
-	 * 
+	 *
 	 * @see https://developers.google.com/maps/terms?hl=de#section_10_12
 	 */
 	protected function tryToUseGoogleAPI()

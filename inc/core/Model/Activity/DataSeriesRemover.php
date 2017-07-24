@@ -11,7 +11,7 @@ use Runalyze\Calculation\Route\Calculator;
 
 /**
  * Remove single data series and update activity
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Model\Activity
  */
@@ -130,6 +130,11 @@ class DataSeriesRemover {
 			$Calculator = new Calculator($this->Route);
 			$Calculator->calculateElevation();
 		}
+
+		if (!$this->Route->hasElevations()) {
+		    $this->Activity->set(Model\Activity\Entity::CLIMB_SCORE, null);
+            $this->Activity->set(Model\Activity\Entity::PERCENTAGE_HILLY, null);
+        }
 	}
 
 	/**

@@ -8,6 +8,10 @@ use DB;
 use Runalyze\Model\Activity;
 use Runalyze\Model\Factory;
 
+/**
+ * @group dependsOn
+ * @group dependsOnOldDatabase
+ */
 class DeleterTest extends \PHPUnit_Framework_TestCase
 {
 	/** @var \PDO */

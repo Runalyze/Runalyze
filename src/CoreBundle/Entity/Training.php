@@ -113,6 +113,20 @@ class Training
     private $elevation = null;
 
     /**
+     * @var float|null [0.0 .. 10.0]
+     *
+     * @ORM\Column(name="climb_score", type="decimal", precision=3, scale=1, nullable=true, options={"unsigned":true})
+     */
+    private $climbScore = null;
+
+    /**
+     * @var float|null [0.00 .. 1.00]
+     *
+     * @ORM\Column(name="percentage_hilly", type="decimal", precision=3, scale=2, nullable=true, options={"unsigned":true})
+     */
+    private $percentageHilly = null;
+
+    /**
      * @var int|null [kcal]
      *
      * @ORM\Column(name="kcal", columnDefinition="smallint unsigned DEFAULT NULL")
@@ -195,6 +209,13 @@ class Training
      * @ORM\Column(name="fit_performance_condition", columnDefinition="tinyint unsigned DEFAULT NULL")
      */
     private $fitPerformanceCondition = null;
+
+    /**
+     * @var bool|null
+     *
+     * @ORM\Column(name="fit_performance_condition_end", columnDefinition="tinyint unsigned DEFAULT NULL")
+     */
+    private $fitPerformanceConditionEnd = null;
 
     /**
      * @var bool|null
@@ -441,6 +462,13 @@ class Training
      * )
      */
     private $tag;
+
+    /**
+     * @var Trackdata
+     *
+     * @ORM\OneToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Trackdata", mappedBy="activity")
+     */
+    private $trackdata;
 
     public function __construct()
     {
@@ -697,6 +725,54 @@ class Training
     }
 
     /**
+     * @param null|float $score [0.0 .. 10.0]
+     *
+     * @return $this
+     */
+    public function setClimbScore($score)
+    {
+        $this->climbScore = $score;
+
+        return $this;
+    }
+
+    /**
+     * @return null|float [0.0 .. 10.0]
+     */
+    public function getClimbScore()
+    {
+        return $this->climbScore;
+    }
+
+    /**
+     * @param null|float $percentage [0.00 .. 1.00]
+     *
+     * @return $this
+     */
+    public function setPercentageHilly($percentage)
+    {
+        $this->percentageHilly = $percentage;
+
+        return $this;
+    }
+
+    /**
+     * @return null|float [0.00 .. 1.00]
+     */
+    public function getPercentageHilly()
+    {
+        return $this->percentageHilly;
+    }
+
+    /**
+     * @return null|float [0.00 .. 1.00]
+     */
+    public function getPercentageFlat()
+    {
+        return null !== $this->percentageHilly ? 1.0 - $this->percentageHilly : null;
+    }
+
+    /**
      * @param null|int $kcal [kcal]
      *
      * @return $this
@@ -934,6 +1010,26 @@ class Training
     public function getFitPerformanceCondition()
     {
         return $this->fitPerformanceCondition;
+    }
+
+    /**
+     * @param null|int $fitPerformanceConditionEnd
+     *
+     * @return $this
+     */
+    public function setFitPerformanceConditionEnd($fitPerformanceConditionEnd)
+    {
+        $this->fitPerformanceConditionEnd = $fitPerformanceConditionEnd;
+
+        return $this;
+    }
+
+    /**
+     * @return null|int
+     */
+    public function getFitPerformanceConditionEnd()
+    {
+        return $this->fitPerformanceConditionEnd;
     }
 
     /**
@@ -1357,6 +1453,14 @@ class Training
     }
 
     /**
+     * @return bool
+     */
+    public function hasRoute()
+    {
+        return null !== $this->route;
+    }
+
+    /**
      * @param null|string $splits
      *
      * @return $this
@@ -1590,5 +1694,26 @@ class Training
     public function getTag()
     {
         return $this->tag;
+    }
+
+    public function setTrackdata(Trackdata $trackdata = null)
+    {
+        $this->trackdata = $trackdata;
+    }
+
+    /**
+     * @return Trackdata
+     */
+    public function getTrackdata()
+    {
+        return $this->trackdata;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasTrackdata()
+    {
+        return null !== $this->trackdata;
     }
 }

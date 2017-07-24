@@ -96,6 +96,7 @@ class Frontend {
 	 */
 	private function initConfig() {
 		$this->yamlConfig = array_merge(
+			Yaml::parse(file_get_contents(FRONTEND_PATH.'/../app/config/config.yml'))['parameters'],
 			Yaml::parse(file_get_contents(FRONTEND_PATH.'/../app/config/default_config.yml'))['parameters'],
 			Yaml::parse(file_get_contents(FRONTEND_PATH.'/../data/config.yml'))['parameters']
 		);
@@ -216,18 +217,5 @@ class Frontend {
 		}
 
 		Error::getInstance()->footer_sent = true;
-	}
-
-	/**
-	 * Display panels
-	 */
-	public function displayPanels() {
-		$Factory = new PluginFactory();
-		$Panels = $Factory->enabledPanels();
-
-		foreach ($Panels as $key) {
-			$Panel = $Factory->newInstance($key);
-			$Panel->display();
-		}
 	}
 }

@@ -8,6 +8,10 @@ use DB;
 use \Runalyze\Model\RaceResult;
 use \Runalyze\Model\Activity;
 
+/**
+ * @group dependsOn
+ * @group dependsOnOldDatabase
+ */
 class RaceContainerTest extends \PHPUnit_Framework_TestCase {
 	/**
 	 * @var \Runalyze\Plugin\Statistic\Races\RaceContainer

@@ -51,7 +51,6 @@ class AnovaDataQuery
     }
 
     /**
-     * @param UnitSystem $unitSystem
      * @return UnitInterface
      */
     public function getValueUnit(UnitSystem $unitSystem)
@@ -66,8 +65,6 @@ class AnovaDataQuery
     }
 
     /**
-     * @param TrainingRepository $trainingRepository
-     * @param Account $account
      * @return array
      */
     public function getResults(TrainingRepository $trainingRepository, Account $account, UnitSystem $unitSystem)
@@ -87,8 +84,6 @@ class AnovaDataQuery
     }
 
     /**
-     * @param TrainingRepository $trainingRepository
-     * @param Account $account
      * @return \Doctrine\ORM\Query
      */
     protected function buildQuery(TrainingRepository $trainingRepository, Account $account)

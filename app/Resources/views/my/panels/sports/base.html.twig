@@ -1,0 +1,47 @@
+{% extends 'my/panels/base.html.twig' %}
+
+{% from '_macro/utilities.html.twig' import boxedValue, boxedValueFor %}
+
+{% set panelContentNoPadding = true %}
+
+{% block pluginTitle %}
+    {{ 'Sports'|trans }}
+{% endblock %}
+
+{% block panelHeadingMenu %}
+    <ul>
+        <li class="with-submenu">
+            <span class="link">{{ 'Month'|trans }}</span>
+            <ul class="submenu">
+                <li><a class="change" target="sports" href="#sports_0">{{ 'Week'|trans }}</a></li>
+                <li class="triggered"><a class="triggered change" target="sports" href="#sports_1">{{ 'Month'|trans }}</a></li>
+                <li><a class="change" target="sports" href="#sports_2">{{ 'Year'|trans }}</a></li>
+                <li><a class="change" target="sports" href="#sports_3">{{ 'Total'|trans }}</a></li>
+            </ul>
+        </li>
+    </ul>
+{% endblock %}
+
+{% block panelContent %}
+    <div id="sports">
+    {% for stats in [weekStatistics, monthStatistics, yearStatistics, totalStatistics] %}
+        {# @var stats \Runalyze\Bundle\CoreBundle\Model\Sport\SportStatistics #}
+        <div id="sports_{{ loop.index0 }}" class="change"{% if loop.index0 != 1 %} style="display:none;"{% endif %}>
+        {% if stats.count %}
+            <div class="boxed-values at-bottom">
+            {% for stat in stats.statistics %}
+                {# @var stat \Runalyze\Bundle\CoreBundle\Model\Sport\SportStatistic #}
+                {% if stat.sport.distances and stat.areMostActivitiesWithDistance %}
+                    {{ boxedValueFor(distance(stat.totalDistance), stat.sport.name, '50%', stat.sport.img) }}
+                {% else %}
+                    {{ boxedValue(stat.totalDuration|duration, '', stat.sport.name, '50%', stat.sport.img) }}
+                {% endif %}
+            {% endfor %}
+            </div>
+        {% else %}
+            <div class="panel-content"><p><em>{{ 'No data available since %date%.'|trans({'%date%': stats.startDate.format('d.m.Y')}) }}</em></p></div>
+        {% endif %}
+        </div>
+    {% endfor %}
+    </div>
+{% endblock %}

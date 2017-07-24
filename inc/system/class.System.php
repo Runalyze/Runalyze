@@ -12,23 +12,6 @@
  */
 class System {
 	/**
-	 * Get code to include all local JS-files
-	 * @return string
-	 */
-	public static function getCodeForLocalJSFiles() {
-		return '<script>document.addEventListener("touchstart", function(){}, true);</script>'.
-			'<script src="assets/js/scripts.min.js?v='.RUNALYZE_VERSION.'"></script>';
-	}
-
-	/**
-	 * Get code to include all CSS-files
-	 * @return string
-	 */
-	public static function getCodeForAllCSSFiles() {
-		return '<link rel="stylesheet" href="assets/css/runalyze-style.css?v='.RUNALYZE_VERSION.'">';
-	}
-
-	/**
 	 * Get domain where Runalyze is running
 	 * @return string
 	 */

@@ -2,6 +2,9 @@
 
 use Runalyze\Util\LocalTime;
 
+/**
+ * @group import
+ */
 class ImporterFiletypeHRMTest extends PHPUnit_Framework_TestCase {
 
 	/**

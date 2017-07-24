@@ -133,7 +133,7 @@
                             <td>{{ type.abbr }}</td>
                             <td>{{ type.hrAvg }} <small>bpm</small></td>
                             <td>{% if type.qualitySession %}<i class="fa fa-fw fa-check"></i>{% endif %}</td>
-                            <td>{{ calendarView.stringFor(type.short) }}</td>
+                            <td>{{ calendarView.stringFor(type.displayMode) }}</td>
                             <td>
                                 {% if hasTrainings[type.id] is not defined %}
                                     <a class="window color-danger" href="{{ url('sport-type-delete', { 'id': type.id, 't': csrf_token('deleteSportType') }) }}" data-confirm="{% trans %}Do you really want to delete this?{% endtrans %}"><i class="fa fa-fw fa-trash" title="{% trans %}Delete{% endtrans %}"></i></a>

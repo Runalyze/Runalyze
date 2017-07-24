@@ -9,6 +9,7 @@ use Runalyze\Bundle\CoreBundle\Entity\EquipmentTypeRepository;
 use Runalyze\Bundle\CoreBundle\Entity\Sport;
 use Runalyze\Bundle\CoreBundle\Entity\SportRepository;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Anova\QueryValue\QueryValues;
+use Runalyze\Bundle\CoreBundle\Services\Configuration\ConfigurationManager;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -30,12 +31,15 @@ class AnovaType extends AbstractType
     public function __construct(
         SportRepository $sportRepository,
         EquipmentTypeRepository $equipmentTypeRepository,
-        TokenStorage $tokenStorage
+        TokenStorage $tokenStorage,
+        ConfigurationManager $configurationManager
     )
     {
         $this->SportRepository = $sportRepository;
         $this->EquipmentTypeRepository = $equipmentTypeRepository;
         $this->TokenStorage = $tokenStorage;
+        $this->ConfigurationManager = $configurationManager;
+
     }
 
     /**
@@ -96,15 +100,22 @@ class AnovaType extends AbstractType
                         'Pace' => QueryValues::PACE,
                         'Distance' => QueryValues::DISTANCE,
                         'Duration' => QueryValues::DURATION,
-                        'Heart rate' => QueryValues::HEART_RATE,
+                        'Heart rate' => QueryValues::HEART_RATE_AVERAGE,
                         'TRIMP' => QueryValues::TRIMP,
                         'Power' => QueryValues::POWER,
-                        'Cadence' => QueryValues::CADENCE
+                        'Cadence' => QueryValues::CADENCE,
+                        'RPE' => QueryValues::RPE,
+                        'Effective VO2max' => $this->getQueryValueEnumForVO2max()
                     ],
                     'Running dynamics' => [
                         'Ground contact time' => QueryValues::GROUND_CONTACT_TIME,
                         'Ground contact balance' => QueryValues::GROUND_CONTACT_BALANCE,
                         'Vertical oscillation' => QueryValues::VERTICAL_OSCILLATION
+                    ],
+                    'Weather' => [
+                        'Temperature' => QueryValues::WEATHER_TEMPERATURE,
+                        'Humidity' => QueryValues::WEATHER_HUMIDITY,
+                        'Pressure' => QueryValues::WEATHER_PRESSURE
                     ]
                 ]
             ])
@@ -131,5 +142,17 @@ class AnovaType extends AbstractType
         $resolver->setDefaults([
             'data_class' => AnovaData::class
         ]);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getQueryValueEnumForVO2max()
+    {
+        if ($this->ConfigurationManager->getList()->useVO2maxCorrectionForElevation()) {
+            return QueryValues::VO2MAX_WITH_ELEVATION;
+        }
+
+        return QueryValues::VO2MAX;
     }
 }

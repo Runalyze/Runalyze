@@ -27,7 +27,8 @@
         "beberlei/DoctrineExtensions": "~1.0",
         "jms/translation-bundle": "dev-master",
         "bernard/bernard-bundle": "^2.0.0",
-        "runalyze/GpxTrackPoster": "^1.0.0"
+        "runalyze/GpxTrackPoster": "^1.0.0",
+        "runalyze/glossary": "dev-master"
     },
     "autoload": {
         "files": ["src/functions.php", "app/AppKernel.php"],

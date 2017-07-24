@@ -71,16 +71,23 @@
 
       "./web/vendor/d3/d3.js",
       "./web/vendor/d3-tip/index.js",
+      "./node_modules/d3-scale-chromatic/build/d3-scale-chromatic.min.js",
 
+      "./app/Resources/public/js/d3js-runalyzeplot.js",
       "./app/Resources/public/js/d3js-boxplot.js",
+      "./app/Resources/public/js/climb-score.js",
+
+      "./app/Resources/public/js/views/climb-score-view.js",
 
       "./web/vendor/fontIconPicker/jquery.fonticonpicker.js",
 
       "./web/vendor/moment/moment.js",
-      "./web/vendor/moment-timezone/builds/moment-timezone-with-data-2010-2020.js",
+      "./web/vendor/moment-timezone/builds/moment-timezone-with-data-2012-2022.min.js",
 
       "./web/vendor/ifvisible.js/src/ifvisible.js",
-      "./web/vendor/jquery-timeago/jquery.timeago.js"
+      "./web/vendor/jquery-timeago/jquery.timeago.js",
+
+      "./web/vendor/regression-js/build/regression.min.js"
     ],
     "dest": "./web/assets/js"
   }

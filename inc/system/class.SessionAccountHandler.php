@@ -42,7 +42,7 @@ class SessionAccountHandler {
 	 */
 	public static function setAccountFromRequest() {
 		if (empty(self::$Account)) {
-			self::$Account = AccountHandler::getDataForId( SharedLinker::getUserId() );
+			self::$Account = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'account` WHERE `id`="'.(int)SharedLinker::getUserId().'" LIMIT 1')->fetch();
 		}
 	}
 

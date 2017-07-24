@@ -2,6 +2,9 @@
 
 use Runalyze\Util\LocalTime;
 
+/**
+ * @group import
+ */
 class ImporterFiletypeTRKTest extends PHPUnit_Framework_TestCase {
 
 	/**

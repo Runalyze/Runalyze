@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
  * Class DefaultController
  * @package Runalyze\Bundle\CoreBundle\Controller
  */
-class DefaultController extends Controller
+class DefaultController extends AbstractPluginsAwareController
 {
     /**
      * @param string $file
@@ -38,9 +38,12 @@ class DefaultController extends Controller
      * @Route("/dashboard", name="dashboard")
      * @Security("has_role('ROLE_USER')")
      */
-    public function dashboardAction()
+    public function dashboardAction(Request $request, Account $account)
     {
         $Frontend = new \Frontend(true, $this->get('security.token_storage'));
+
+        $panelsContent = $this->getResponseForAllEnabledPanels($request, $account)->getContent();
+
         include '../dashboard.php';
 
         return $this->render('legacy_end.html.twig');
@@ -159,10 +162,12 @@ class DefaultController extends Controller
     /**
      * @Route("/index.php")
      */
-    public function indexPhpAction(Request $request)
+    public function indexPhpAction(Request $request, Account $account)
     {
         if ($request->isXmlHttpRequest()) {
             $Frontend = new \Frontend(true, $this->get('security.token_storage'));
+
+            $panelsContent = $this->getResponseForAllEnabledPanels($request, $account)->getContent();
 
             include $this->getParameter('kernel.root_dir').'/../dashboard.php';
 

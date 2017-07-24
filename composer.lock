@@ -4,8 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "70b768aae48327ca1626e1c14f2284d2",
-    "content-hash": "31d9ef6073eab82ee5b6f13a53f5ccd1",
+    "content-hash": "bb2d09854b31a690ab686527f97c2f90",
     "packages": [
         {
             "name": "beberlei/DoctrineExtensions",
@@ -67,7 +66,7 @@
                 "doctrine",
                 "orm"
             ],
-            "time": "2016-12-06 02:57:23"
+            "time": "2016-12-06T02:57:23+00:00"
         },
         {
             "name": "beberlei/assert",
@@ -122,7 +121,7 @@
                 "assertion",
                 "validation"
             ],
-            "time": "2017-01-24 15:14:39"
+            "time": "2017-01-24T15:14:39+00:00"
         },
         {
             "name": "bernard/bernard",
@@ -190,7 +189,7 @@
                 "message queue",
                 "queue"
             ],
-            "time": "2016-10-12 07:10:56"
+            "time": "2016-10-12T07:10:56+00:00"
         },
         {
             "name": "bernard/bernard-bundle",
@@ -232,7 +231,7 @@
             ],
             "description": "Integrates Bernard into a Symfony2 application.",
             "homepage": "http://bernard.readthedocs.org/",
-            "time": "2016-12-06 08:16:49"
+            "time": "2016-12-06T08:16:49+00:00"
         },
         {
             "name": "bernard/normalt",
@@ -275,7 +274,7 @@
                 "denormalization",
                 "normalization"
             ],
-            "time": "2016-05-03 08:09:59"
+            "time": "2016-05-03T08:09:59+00:00"
         },
         {
             "name": "doctrine/annotations",
@@ -343,7 +342,7 @@
                 "docblock",
                 "parser"
             ],
-            "time": "2016-10-24 11:45:47"
+            "time": "2016-10-24T11:45:47+00:00"
         },
         {
             "name": "doctrine/cache",
@@ -413,7 +412,7 @@
                 "cache",
                 "caching"
             ],
-            "time": "2016-10-29 11:16:17"
+            "time": "2016-10-29T11:16:17+00:00"
         },
         {
             "name": "doctrine/collections",
@@ -479,7 +478,7 @@
                 "collections",
                 "iterator"
             ],
-            "time": "2015-04-14 22:21:58"
+            "time": "2015-04-14T22:21:58+00:00"
         },
         {
             "name": "doctrine/common",
@@ -552,7 +551,7 @@
                 "persistence",
                 "spl"
             ],
-            "time": "2016-11-30 16:50:46"
+            "time": "2016-11-30T16:50:46+00:00"
         },
         {
             "name": "doctrine/dbal",
@@ -623,7 +622,7 @@
                 "persistence",
                 "queryobject"
             ],
-            "time": "2016-09-09 19:13:33"
+            "time": "2016-09-09T19:13:33+00:00"
         },
         {
             "name": "doctrine/doctrine-bundle",
@@ -704,7 +703,7 @@
                 "orm",
                 "persistence"
             ],
-            "time": "2016-08-10 15:35:22"
+            "time": "2016-08-10T15:35:22+00:00"
         },
         {
             "name": "doctrine/doctrine-cache-bundle",
@@ -792,7 +791,7 @@
                 "cache",
                 "caching"
             ],
-            "time": "2016-01-26 17:28:51"
+            "time": "2016-01-26T17:28:51+00:00"
         },
         {
             "name": "doctrine/doctrine-migrations-bundle",
@@ -853,7 +852,7 @@
                 "migrations",
                 "schema"
             ],
-            "time": "2016-06-30 19:26:35"
+            "time": "2016-06-30T19:26:35+00:00"
         },
         {
             "name": "doctrine/inflector",
@@ -920,7 +919,7 @@
                 "singularize",
                 "string"
             ],
-            "time": "2015-11-06 14:35:42"
+            "time": "2015-11-06T14:35:42+00:00"
         },
         {
             "name": "doctrine/instantiator",
@@ -974,7 +973,7 @@
                 "constructor",
                 "instantiate"
             ],
-            "time": "2015-06-14 21:17:01"
+            "time": "2015-06-14T21:17:01+00:00"
         },
         {
             "name": "doctrine/lexer",
@@ -1028,7 +1027,7 @@
                 "lexer",
                 "parser"
             ],
-            "time": "2014-09-09 13:34:57"
+            "time": "2014-09-09T13:34:57+00:00"
         },
         {
             "name": "doctrine/migrations",
@@ -1101,7 +1100,7 @@
                 "database",
                 "migrations"
             ],
-            "time": "2016-03-14 12:29:11"
+            "time": "2016-03-14T12:29:11+00:00"
         },
         {
             "name": "doctrine/orm",
@@ -1177,7 +1176,7 @@
                 "database",
                 "orm"
             ],
-            "time": "2016-09-10 18:51:13"
+            "time": "2016-09-10T18:51:13+00:00"
         },
         {
             "name": "egeloen/http-adapter",
@@ -1256,7 +1255,7 @@
                 "psr-7"
             ],
             "abandoned": "php-http/httplug",
-            "time": "2015-08-12 09:35:40"
+            "time": "2015-08-12T09:35:40+00:00"
         },
         {
             "name": "igorw/get-in",
@@ -1301,7 +1300,7 @@
                 "assoc-array",
                 "hash-map"
             ],
-            "time": "2014-12-15 23:03:51"
+            "time": "2014-12-15T23:03:51+00:00"
         },
         {
             "name": "jdorn/sql-formatter",
@@ -1351,7 +1350,7 @@
                 "highlight",
                 "sql"
             ],
-            "time": "2014-01-12 16:20:24"
+            "time": "2014-01-12T16:20:24+00:00"
         },
         {
             "name": "jms/translation-bundle",
@@ -1492,7 +1491,7 @@
                 "geometry",
                 "geotools"
             ],
-            "time": "2016-02-03 16:31:33"
+            "time": "2016-02-03T16:31:33+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -1570,7 +1569,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2016-11-26 00:15:39"
+            "time": "2016-11-26T00:15:39+00:00"
         },
         {
             "name": "nikic/php-parser",
@@ -1621,7 +1620,7 @@
                 "parser",
                 "php"
             ],
-            "time": "2016-09-16 12:04:44"
+            "time": "2016-09-16T12:04:44+00:00"
         },
         {
             "name": "nojacko/email-data-disposable",
@@ -1659,7 +1658,7 @@
                 }
             ],
             "description": "Disposable email domains",
-            "time": "2016-10-04 15:25:37"
+            "time": "2016-10-04T15:25:37+00:00"
         },
         {
             "name": "nojacko/email-validator",
@@ -1710,7 +1709,7 @@
                 "validater",
                 "validation"
             ],
-            "time": "2016-08-09 11:04:18"
+            "time": "2016-08-09T11:04:18+00:00"
         },
         {
             "name": "ocramius/proxy-manager",
@@ -1773,7 +1772,7 @@
                 "proxy pattern",
                 "service proxies"
             ],
-            "time": "2015-08-09 04:28:19"
+            "time": "2015-08-09T04:28:19+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -1821,7 +1820,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2016-11-07 23:38:38"
+            "time": "2016-11-07T23:38:38+00:00"
         },
         {
             "name": "phpfastcache/phpfastcache",
@@ -1877,7 +1876,7 @@
                 "redis",
                 "wincache"
             ],
-            "time": "2015-12-28 22:01:56"
+            "time": "2015-12-28T22:01:56+00:00"
         },
         {
             "name": "psr/cache",
@@ -1923,7 +1922,7 @@
                 "psr",
                 "psr-6"
             ],
-            "time": "2016-08-06 20:24:11"
+            "time": "2016-08-06T20:24:11+00:00"
         },
         {
             "name": "psr/http-message",
@@ -1973,7 +1972,7 @@
                 "request",
                 "response"
             ],
-            "time": "2016-08-06 14:39:51"
+            "time": "2016-08-06T14:39:51+00:00"
         },
         {
             "name": "psr/log",
@@ -2020,7 +2019,7 @@
                 "psr",
                 "psr-3"
             ],
-            "time": "2016-10-10 12:19:37"
+            "time": "2016-10-10T12:19:37+00:00"
         },
         {
             "name": "react/event-loop",
@@ -2064,7 +2063,7 @@
                 "asynchronous",
                 "event-loop"
             ],
-            "time": "2016-03-08 02:09:32"
+            "time": "2016-03-08T02:09:32+00:00"
         },
         {
             "name": "react/promise",
@@ -2108,7 +2107,7 @@
                 }
             ],
             "description": "A lightweight implementation of CommonJS Promises/A for PHP",
-            "time": "2016-05-03 17:50:52"
+            "time": "2016-05-03T17:50:52+00:00"
         },
         {
             "name": "runalyze/GpxTrackPoster",
@@ -2152,7 +2151,7 @@
                 "MIT"
             ],
             "description": "Age grading for race results (running) based on tables provided by WMA",
-            "time": "2016-10-04 10:03:35"
+            "time": "2016-10-04T10:03:35+00:00"
         },
         {
             "name": "runalyze/dem-reader",
@@ -2186,7 +2185,52 @@
                 "MIT"
             ],
             "description": "Read digital elevation files such as GeoTIFF files for srtm data or similar.",
-            "time": "2016-09-25 21:11:15"
+            "time": "2016-09-25T21:11:15+00:00"
+        },
+        {
+            "name": "runalyze/glossary",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Runalyze/glossary.git",
+                "reference": "07ddcc685610fe2fdfb3b6ca54b43b29574b816a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Runalyze/glossary/zipball/07ddcc685610fe2fdfb3b6ca54b43b29574b816a",
+                "reference": "07ddcc685610fe2fdfb3b6ca54b43b29574b816a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.9"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^1.11",
+                "phpunit/phpunit": "4.8.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Runalyze\\Bundle\\GlossaryBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "RUNALYZE Team",
+                    "email": "mail@runalyze.com",
+                    "homepage": "https://runalyze.com"
+                }
+            ],
+            "description": "provides the glossary for runalyze",
+            "keywords": [
+                "runalyze",
+                "symfony3"
+            ],
+            "time": "2017-07-14 10:21:34"
         },
         {
             "name": "sensio/framework-extra-bundle",
@@ -2248,7 +2292,7 @@
                 "annotations",
                 "controllers"
             ],
-            "time": "2016-03-25 17:08:27"
+            "time": "2016-03-25T17:08:27+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -2302,7 +2346,7 @@
                 "mail",
                 "mailer"
             ],
-            "time": "2016-12-29 10:02:40"
+            "time": "2016-12-29T10:02:40+00:00"
         },
         {
             "name": "symfony/monolog-bundle",
@@ -2362,7 +2406,7 @@
                 "log",
                 "logging"
             ],
-            "time": "2016-11-06 18:54:50"
+            "time": "2016-11-06T18:54:50+00:00"
         },
         {
             "name": "symfony/polyfill-intl-icu",
@@ -2420,7 +2464,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2016-11-14 01:06:16"
+            "time": "2016-11-14T01:06:16+00:00"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -2479,7 +2523,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2016-11-14 01:06:16"
+            "time": "2016-11-14T01:06:16+00:00"
         },
         {
             "name": "symfony/polyfill-php56",
@@ -2535,7 +2579,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2016-11-14 01:06:16"
+            "time": "2016-11-14T01:06:16+00:00"
         },
         {
             "name": "symfony/polyfill-php70",
@@ -2594,7 +2638,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2016-11-14 01:06:16"
+            "time": "2016-11-14T01:06:16+00:00"
         },
         {
             "name": "symfony/polyfill-util",
@@ -2646,7 +2690,7 @@
                 "polyfill",
                 "shim"
             ],
-            "time": "2016-11-14 01:06:16"
+            "time": "2016-11-14T01:06:16+00:00"
         },
         {
             "name": "symfony/swiftmailer-bundle",
@@ -2705,7 +2749,7 @@
             ],
             "description": "Symfony SwiftmailerBundle",
             "homepage": "http://symfony.com",
-            "time": "2016-10-27 17:59:30"
+            "time": "2016-10-27T17:59:30+00:00"
         },
         {
             "name": "symfony/symfony",
@@ -2848,7 +2892,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2017-02-06 13:15:43"
+            "time": "2017-02-06T13:15:43+00:00"
         },
         {
             "name": "twig/extensions",
@@ -2900,7 +2944,7 @@
                 "i18n",
                 "text"
             ],
-            "time": "2016-10-25 17:34:14"
+            "time": "2016-10-25T17:34:14+00:00"
         },
         {
             "name": "twig/twig",
@@ -2961,19 +3005,19 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2016-11-23 18:41:40"
+            "time": "2016-11-23T18:41:40+00:00"
         },
         {
             "name": "willdurand/geocoder",
             "version": "v3.3.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/geocoder-php/Geocoder.git",
+                "url": "https://github.com/geocoder-php/php-common.git",
                 "reference": "ccc178e2984c0af24881faa0ffe515f20e5e8c23"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/geocoder-php/Geocoder/zipball/ccc178e2984c0af24881faa0ffe515f20e5e8c23",
+                "url": "https://api.github.com/repos/geocoder-php/php-common/zipball/ccc178e2984c0af24881faa0ffe515f20e5e8c23",
                 "reference": "ccc178e2984c0af24881faa0ffe515f20e5e8c23",
                 "shasum": ""
             },
@@ -3021,7 +3065,7 @@
                 "geocoding",
                 "geoip"
             ],
-            "time": "2015-12-06 20:17:20"
+            "time": "2015-12-06T20:17:20+00:00"
         },
         {
             "name": "zendframework/zend-code",
@@ -3073,7 +3117,7 @@
                 "code",
                 "zf2"
             ],
-            "time": "2016-04-20 17:26:42"
+            "time": "2016-04-20T17:26:42+00:00"
         },
         {
             "name": "zendframework/zend-diactoros",
@@ -3123,7 +3167,7 @@
                 "psr",
                 "psr-7"
             ],
-            "time": "2016-10-11 13:25:21"
+            "time": "2016-10-11T13:25:21+00:00"
         },
         {
             "name": "zendframework/zend-eventmanager",
@@ -3177,7 +3221,7 @@
                 "events",
                 "zf2"
             ],
-            "time": "2016-02-18 20:53:00"
+            "time": "2016-02-18T20:53:00+00:00"
         }
     ],
     "packages-dev": [
@@ -3238,7 +3282,7 @@
             "keywords": [
                 "database"
             ],
-            "time": "2016-09-20 10:07:57"
+            "time": "2016-09-20T10:07:57+00:00"
         },
         {
             "name": "doctrine/doctrine-fixtures-bundle",
@@ -3295,7 +3339,7 @@
                 "Fixture",
                 "persistence"
             ],
-            "time": "2015-11-04 21:23:23"
+            "time": "2015-11-04T21:23:23+00:00"
         },
         {
             "name": "liip/functional-test-bundle",
@@ -3373,7 +3417,7 @@
             "keywords": [
                 "Symfony2"
             ],
-            "time": "2017-01-11 18:04:59"
+            "time": "2017-01-11T18:04:59+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -3427,7 +3471,7 @@
                 "reflection",
                 "static analysis"
             ],
-            "time": "2015-12-27 11:43:31"
+            "time": "2015-12-27T11:43:31+00:00"
         },
         {
             "name": "phpdocumentor/reflection-docblock",
@@ -3472,7 +3516,7 @@
                 }
             ],
             "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
-            "time": "2016-09-30 07:12:33"
+            "time": "2016-09-30T07:12:33+00:00"
         },
         {
             "name": "phpdocumentor/type-resolver",
@@ -3519,7 +3563,7 @@
                     "email": "me@mikevanriel.com"
                 }
             ],
-            "time": "2016-11-25 06:54:22"
+            "time": "2016-11-25T06:54:22+00:00"
         },
         {
             "name": "phpspec/prophecy",
@@ -3582,7 +3626,7 @@
                 "spy",
                 "stub"
             ],
-            "time": "2016-11-21 14:58:47"
+            "time": "2016-11-21T14:58:47+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -3644,7 +3688,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2015-10-06 15:47:00"
+            "time": "2015-10-06T15:47:00+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -3691,7 +3735,7 @@
                 "filesystem",
                 "iterator"
             ],
-            "time": "2016-10-03 07:40:28"
+            "time": "2016-10-03T07:40:28+00:00"
         },
         {
             "name": "phpunit/php-text-template",
@@ -3732,7 +3776,7 @@
             "keywords": [
                 "template"
             ],
-            "time": "2015-06-21 13:50:34"
+            "time": "2015-06-21T13:50:34+00:00"
         },
         {
             "name": "phpunit/php-timer",
@@ -3776,7 +3820,7 @@
             "keywords": [
                 "timer"
             ],
-            "time": "2016-05-12 18:03:57"
+            "time": "2016-05-12T18:03:57+00:00"
         },
         {
             "name": "phpunit/php-token-stream",
@@ -3825,7 +3869,7 @@
             "keywords": [
                 "tokenizer"
             ],
-            "time": "2016-11-15 14:06:22"
+            "time": "2016-11-15T14:06:22+00:00"
         },
         {
             "name": "phpunit/phpunit",
@@ -3897,7 +3941,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2016-12-01 17:05:48"
+            "time": "2016-12-01T17:05:48+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -3953,7 +3997,7 @@
                 "mock",
                 "xunit"
             ],
-            "time": "2015-10-02 06:51:40"
+            "time": "2015-10-02T06:51:40+00:00"
         },
         {
             "name": "runalyze/playground",
@@ -4052,7 +4096,7 @@
                 "compare",
                 "equality"
             ],
-            "time": "2016-11-19 09:18:40"
+            "time": "2016-11-19T09:18:40+00:00"
         },
         {
             "name": "sebastian/diff",
@@ -4104,7 +4148,7 @@
             "keywords": [
                 "diff"
             ],
-            "time": "2015-12-08 07:14:41"
+            "time": "2015-12-08T07:14:41+00:00"
         },
         {
             "name": "sebastian/environment",
@@ -4154,7 +4198,7 @@
                 "environment",
                 "hhvm"
             ],
-            "time": "2016-08-18 05:49:44"
+            "time": "2016-08-18T05:49:44+00:00"
         },
         {
             "name": "sebastian/exporter",
@@ -4221,7 +4265,7 @@
                 "export",
                 "exporter"
             ],
-            "time": "2016-06-17 09:04:28"
+            "time": "2016-06-17T09:04:28+00:00"
         },
         {
             "name": "sebastian/global-state",
@@ -4272,7 +4316,7 @@
             "keywords": [
                 "global state"
             ],
-            "time": "2015-10-12 03:26:01"
+            "time": "2015-10-12T03:26:01+00:00"
         },
         {
             "name": "sebastian/recursion-context",
@@ -4325,7 +4369,7 @@
             ],
             "description": "Provides functionality to recursively process PHP variables",
             "homepage": "http://www.github.com/sebastianbergmann/recursion-context",
-            "time": "2015-11-11 19:50:13"
+            "time": "2015-11-11T19:50:13+00:00"
         },
         {
             "name": "sebastian/version",
@@ -4360,7 +4404,7 @@
             ],
             "description": "Library that helps with managing the version number of Git-hosted PHP projects",
             "homepage": "https://github.com/sebastianbergmann/version",
-            "time": "2015-06-21 13:59:46"
+            "time": "2015-06-21T13:59:46+00:00"
         },
         {
             "name": "webmozart/assert",
@@ -4410,7 +4454,7 @@
                 "check",
                 "validate"
             ],
-            "time": "2016-11-23 20:04:58"
+            "time": "2016-11-23T20:04:58+00:00"
         }
     ],
     "aliases": [],
@@ -4419,6 +4463,7 @@
         "league/geotools": 0,
         "swiftmailer/swiftmailer": 0,
         "jms/translation-bundle": 20,
+        "runalyze/glossary": 20,
         "runalyze/playground": 20
     },
     "prefer-stable": true,

@@ -27,28 +27,6 @@ class Filesystem {
 	}
 
 	/**
-	 * Get all file names from a path
-	 * @param string $Path
-	 * @return array
-	 */
-	public static function getFileNamesFromPath($Path) {
-		$Files = array();
-		$handle = opendir(FRONTEND_PATH.$Path);
-
-		if ($handle) {
-			while (false !== ($file = readdir($handle))) {
-				if (substr($file,0,1) != ".") {
-					$Files[] = $file;
-				}
-			}
-
-			closedir($handle);
-		}
-
-		return $Files;
-	}
-
-	/**
 	 * Get content from extern url
 	 * @param string $url
 	 * @return string
@@ -127,18 +105,6 @@ class Filesystem {
 	}
 
 	/**
-	 * Get file content and delete it afterwards
-	 * @param string $fileName relative to FRONTEND_PATH
-	 * @return string
-	 */
-	public static function openFileAndDelete($fileName) {
-		$content = self::openFile($fileName);
-		unlink(FRONTEND_PATH.$fileName);
-
-		return $content;
-	}
-
-	/**
 	 * Get file content
 	 * @param string $fileName relative to FRONTEND_PATH
 	 * @return string
@@ -153,17 +119,6 @@ class Filesystem {
 	 */
 	public static function deleteFile($fileName) {
 		unlink(FRONTEND_PATH.$fileName);
-	}
-
-	/**
-	 * Get filesize
-	 * @param string $file
-	 * @return string
-	 */
-	public static function getFilesize($file) {
-		$size = ($file && @is_file($file)) ? filesize($file) : null;
-
-		return self::bytesToString($size);
 	}
 
 	/**

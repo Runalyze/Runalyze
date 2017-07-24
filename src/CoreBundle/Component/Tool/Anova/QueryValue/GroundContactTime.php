@@ -7,9 +7,6 @@ use Runalyze\Metrics\Common\Unit\Simple;
 
 class GroundContactTime extends AbstractOneColumnValue
 {
-    /**
-     * @return string
-     */
     protected function getColumn()
     {
         return 'groundcontact';

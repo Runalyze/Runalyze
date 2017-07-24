@@ -215,12 +215,13 @@ class TrainingFormular extends StandardFormular {
 	}
 
     public function display() {
-        if ($this->submitSucceeded())
+        if ($this->submitSucceeded()) {
             $this->displayAfterSubmit();
-        else
+        } else {
             parent::display();
 
-        $this->appendJavaScript();
+            $this->appendJavaScript();
+        }
     }
 
 	/**
@@ -236,6 +237,8 @@ class TrainingFormular extends StandardFormular {
 				echo Ajax::wrapJS('Runalyze.goToNextMultiEditor();');
 			} else {
 				parent::displayAfterSubmit();
+
+                $this->appendJavaScript();
 			}
 		}
 	}

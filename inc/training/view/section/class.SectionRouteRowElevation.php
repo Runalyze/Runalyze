@@ -28,6 +28,7 @@ class SectionRouteRowElevation extends TrainingViewSectionRow {
 	 */
 	protected function setContent() {
 		$this->addElevation();
+        $this->addClimbScore();
 
 		foreach ($this->BoxedValues as &$Value) {
 			$Value->defineAsFloatingBlock('w50');
@@ -65,6 +66,22 @@ class SectionRouteRowElevation extends TrainingViewSectionRow {
 		}
 	}
 
+    protected function addClimbScore() {
+        if (null !== $this->Context->activity()->climbScore()) {
+            $this->BoxedValues[] = new BoxedValue(
+                number_format($this->Context->activity()->climbScore(), 1),
+                '',
+                __('Climb Score')
+            );
+
+            $this->BoxedValues[] = new BoxedValue(
+                round(100 * $this->Context->activity()->percentageHilly()),
+                '&#37;',
+                __('Percentage hilly')
+            );
+        }
+    }
+
 	/**
 	 * Add: course
 	 */
@@ -81,12 +98,16 @@ class SectionRouteRowElevation extends TrainingViewSectionRow {
 	 * Add info link
 	 */
 	protected function addInfoLink() {
+        $this->Footer = '';
+
 		if (!Request::isOnSharedPage()) {
 			$Linker = new Linker($this->Context->activity());
-			$InfoLink = Ajax::window('<a href="'.$Linker->urlToElevationInfo().'">'.__('More about elevation').'</a>', 'normal');
-			$this->Footer = HTML::info( $InfoLink );
-		} else {
-			$this->Footer = '';
+
+			if (null !== $this->Context->activity()->climbScore()) {
+                $this->Footer .= HTML::info(Ajax::window('<a href="'.$Linker->urlToClimbScore().'">'.__('Climb Score view').'</a>', 'normal'));
+            }
+
+            $this->Footer .= HTML::info(Ajax::window('<a href="'.$Linker->urlToElevationInfo().'">'.__('More about elevation').'</a>', 'normal'));
 		}
 
 		if ($this->Context->route()->hasCorrectedElevations()) {

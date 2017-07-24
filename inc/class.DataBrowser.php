@@ -53,17 +53,14 @@ class DataBrowser {
 	 */
 	protected $Days;
 
-	/**
-	 * Array containing IDs for 'short' sports
-	 * @var array
-	 */
-	protected $SportsShort;
+	/** @var array sport ids that are explicitly set as 'only icon' */
+	protected $SportsShort = [];
 
-	/**
-	 * Array containing IDs for 'short' types
-	 * @var array
-	 */
-	protected $TypesShort;
+	/** @var array type ids that are explicitly set as 'only icon' */
+	protected $TypesShort = [];
+
+	/** @var array type ids that are explicitly set as 'complete row' */
+	protected $TypesNotShort = [];
 
 	/** @var int */
 	protected $AccountID;

@@ -94,17 +94,17 @@ services:
      - { name: doctrine.orm.entity_listener }
   app.form.type.anova:
     class: Runalyze\Bundle\CoreBundle\Form\Tools\Anova\AnovaType
-    arguments: ["@app.repository.sport", "@app.repository.equipment_type", "@security.token_storage"]
+    arguments: ["@app.repository.sport", "@app.repository.equipment_type", "@security.token_storage", "@app.configuration_manager"]
+    tags:
+     - { name: form.type }
+  app.form.type.trend_analysis:
+    class: Runalyze\Bundle\CoreBundle\Form\Tools\TrendAnalysis\TrendAnalysisType
+    arguments: ["@app.repository.sport", "@security.token_storage", "@app.configuration_manager"]
     tags:
      - { name: form.type }
   app.form.type.poster:
     class: Runalyze\Bundle\CoreBundle\Form\Tools\PosterType
     arguments: ["@app.repository.sport", "@app.repository.training", "@security.token_storage"]
-    tags:
-     - { name: form.type }
-  app.form.type.poster:
-    class: Runalyze\Bundle\CoreBundle\Form\EquipmentType
-    arguments: ["@app.repository.equipment_type","@security.token_storage"]
     tags:
      - { name: form.type }
   app.form.type.equipment:

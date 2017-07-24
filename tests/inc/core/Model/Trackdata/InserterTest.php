@@ -12,6 +12,9 @@ class InvalidInserterObjectForTrackdata_MockTester extends \Runalyze\Model\Entit
 	}
 }
 
+/**
+ * @group requiresSqlite
+ */
 class InserterTest extends \PHPUnit_Framework_TestCase
 {
 	/** @var \PDO */

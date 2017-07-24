@@ -13,7 +13,7 @@
 @panel-hover-icons-color-hover:	#000;
 
 @loading-min-height:			50px;
-@loading-background-image:		url(/../web/assets/v2.x/img/wait.gif);
+@loading-background-image:		url(../../web/assets/v2.x/img/wait.gif);
 @loading-background-color:		@panel-background;
 
 @databox-border:				#ccc;
@@ -29,6 +29,28 @@
 	margin: @panel-margin;
 	background: @panel-background;
 	border: 1px solid @panel-border;
+}
+
+.panel-heading,
+.panel-content {
+	h1 {
+		padding: @panel-padding;
+		margin: 0;
+		font-size: @panel-heading-font-size;
+		text-transform: uppercase;
+		color: @panel-heading-color;
+		border: none;
+	}
+
+	h2 {
+		padding: @panel-padding;
+		margin: 0;
+		font-size: @panel-heading-font-size;
+		font-weight: bold;
+		text-transform: none;
+		letter-spacing: 1px;
+		border: none;
+	}
 }
 
 .panel-heading {
@@ -47,24 +69,10 @@
 		border-bottom: none;
 	}
 
-	h1 {
+	h1, h2 {
 		display: inline;
 		padding: 0;
 		margin: 0;
-		font-size: @panel-heading-font-size;
-		text-transform: uppercase;
-		color: @panel-heading-color;
-		border: none;
-	}
-
-	h2 {
-		padding: 0;
-		margin: 0;
-		font-size: @panel-heading-font-size;
-		font-weight: bold;
-		text-transform: none;
-		letter-spacing: 1px;
-		border: none;
 	}
 
 	.hover-icons {

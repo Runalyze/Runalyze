@@ -25,8 +25,13 @@
 		background-position: 9px center;
 		background-repeat: no-repeat;
 
-		&:hover {
+		&:hover,
+		&.triggered {
 			background-color: @blocklist-bg-color-hover;
+		}
+
+		&.triggered {
+			color: #000;
 		}
 
 		&.nopadding {
