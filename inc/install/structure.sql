@@ -762,6 +762,12 @@ ALTER TABLE `runalyze_raceresult`
 ADD CONSTRAINT `runalyze_raceresult_ibfk_1` FOREIGN KEY (`accountid`) REFERENCES `runalyze_account` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
 ADD CONSTRAINT `runalyze_raceresult_ibfk_2` FOREIGN KEY (`activity_id`) REFERENCES `runalyze_training` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
+--
+-- Constraints der Tabelle `runalyze_sport`
+--
+ALTER TABLE `runalyze_sport` ADD FOREIGN KEY (`main_equipmenttypeid`) REFERENCES `runalyze_equipment_type` (id) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `runalyze_sport` ADD FOREIGN KEY (`default_typeid`) REFERENCES `runalyze_type` (id) ON DELETE SET NULL ON UPDATE CASCADE;
+
 
 --
 -- Constraints der Tabelle `runalyze_notification`
