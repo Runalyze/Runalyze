@@ -3,12 +3,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.com\n"
 "POT-Creation-Date: 2017-07-08 11:26+0200\n"
-"PO-Revision-Date: 2017-06-22 07:29+0000\n"
-"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
-"Language-Team: German <https://translate.runalyze.com/projects/runalyze/"
-"runalyze-master-po/de/>\n"
+"PO-Revision-Date: 2017-07-25 13:59+0000\n"
+"Last-Translator: Hannes <mail@laufhannes.de>\n"
+"Language-Team: German <https://translate.runalyze.com/projects/runalyze"
+"/runalyze-master-po/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -993,7 +993,7 @@ msgstr ""
 #: inc/core/Dataset/Keys/PercentageHilly.php:21
 #: inc/training/view/section/class.SectionRouteRowElevation.php:80
 msgid "Percentage hilly"
-msgstr ""
+msgstr "Anteil hügelig"
 
 #: inc/core/Dataset/Keys/PercentageHilly.php:26
 msgid "Hilly"
@@ -1128,12 +1128,11 @@ msgstr "Veröffentlichen"
 #: inc/training/search/class.SearchFormular.php:212
 #: inc/training/view/section/class.SectionRouteRowElevation.php:74
 msgid "Climb Score"
-msgstr ""
+msgstr "Climb Score"
 
 #: inc/core/Dataset/Keys/ClimbScore.php:26
-#, fuzzy
 msgid "CS"
-msgstr "S"
+msgstr "CS"
 
 #: inc/core/Dataset/Keys/ElapsedTime.php:44
 #: inc/training/schemes/scheme.Training.php:200
@@ -2907,7 +2906,7 @@ msgstr "Balance Bodenkontaktzeit"
 
 #: inc/training/search/class.SearchFormular.php:213
 msgid "Percentage Hilly"
-msgstr ""
+msgstr "Anteil hügelig"
 
 #: inc/training/search/class.SearchFormular.php:313
 msgid "Yes"
@@ -3216,7 +3215,7 @@ msgstr "Strecke"
 
 #: inc/training/view/section/class.SectionRouteRowElevation.php:107
 msgid "Climb Score view"
-msgstr ""
+msgstr "Climb Score-Ansicht"
 
 #: inc/training/view/section/class.SectionRouteRowElevation.php:110
 #: inc/training/view/section/class.SectionCompositeRow.php:232
@@ -3540,9 +3539,8 @@ msgid "Show VO<sub>2</sub>max calculation"
 msgstr "Zeige die VO<sub>2</sub>max-Berechnung"
 
 #: inc/training/view/class.TrainingView.php:123
-#, fuzzy
 msgid "Climb score"
-msgstr "HRV Wert"
+msgstr "Climb Score"
 
 #: inc/training/view/class.TrainingView.php:127
 msgid "Analyze time series"
@@ -3833,9 +3831,8 @@ msgid "Activity tags"
 msgstr "Tags für Aktivitäten"
 
 #: inc/tpl/tpl.Frontend.header.php:96
-#, fuzzy
 msgid "Trend analysis"
-msgstr "Tag Analyse"
+msgstr "Trendanalyse"
 
 #: inc/tpl/tpl.Frontend.header.php:97
 msgid "ANOVA"
@@ -5219,9 +5216,8 @@ msgid "Fitness&nbsp;level"
 msgstr "Fitnessgrad"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:195
-#, fuzzy
 msgid "Chronic Training Load"
-msgstr "Chronical Training Load"
+msgstr "Chronic Training Load"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:203
 #, php-format
@@ -5229,7 +5225,6 @@ msgid "absolute: %s<br>as percentage: %s &#37;"
 msgstr "absolut: %s<br>in Prozent: %s &#37;"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:205
-#, fuzzy
 msgid "Stress Balance"
 msgstr "Stress Balance"
 
@@ -5239,16 +5234,14 @@ msgid "Training Stress Balance"
 msgstr "Stress Balance"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:215
-#, fuzzy
 msgid "Rest days"
-msgstr "%s Tage"
+msgstr "Ruhetage"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:216
 msgid "Rest days needed to reach TSB = 0"
 msgstr "Benötigte Ruhetage um TSB = 0 zu erreichen"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:224
-#, fuzzy
 msgid "Easy TRIMP"
 msgstr "Entspannter&nbsp;TRIMP"
 
@@ -5265,7 +5258,6 @@ msgstr ""
 "unter 1.5 ist empfehlenswert.</small>"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:259
-#, fuzzy
 msgid "Training strain"
 msgstr "Trainingsbelastung"
 
