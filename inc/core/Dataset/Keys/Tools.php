@@ -7,8 +7,6 @@
 namespace Runalyze\Dataset\Keys;
 
 use Runalyze\Dataset\Context;
-use Runalyze\Model\Trackdata;
-use Runalyze\Model\Route;
 
 /**
  * Dataset key: Tools
