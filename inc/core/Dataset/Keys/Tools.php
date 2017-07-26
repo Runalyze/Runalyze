@@ -6,6 +6,7 @@
 
 namespace Runalyze\Dataset\Keys;
 
+use Runalyze\Bundle\CoreBundle\Entity\Trackdata;
 use Runalyze\Dataset\Context;
 
 /**
@@ -97,9 +98,12 @@ class Tools extends AbstractKey
 	protected function inlineDropdownWithRealLinks(Context $context)
 	{
 		$id = $context->activity()->id();
-        $html = '<li><a class="window" href="activity/'.$id.'/splits-info"><i class="fa fa-fw fa-bar-chart"></i>'.__('Analyze splits').'</a> </li>';
-        $html .= '<li><a class="window" href="activity/'.$id.'/elevation-info"><i class="fa fa-fw fa-area-chart"></i>'.__('Elevation info').'</a> </li>';
-        $html .= '<li><a class="window" href="activity/'.$id.'/climb-score"><i class="fa fa-fw fa-area-chart"></i>'.__('Climb score').'</a> </li>';
+
+        $html = '<li><a class="window" data-size="big" href="activity/'.$id.'/splits-info"><i class="fa fa-fw fa-bar-chart"></i>'.__('Analyze splits').'</a> </li>';
+        if ($context->activity()->elevation() > 0) {
+            $html .= '<li><a class="window" href="activity/' . $id . '/elevation-info"><i class="fa fa-fw fa-area-chart"></i>' . __('Elevation info') . '</a> </li>';
+            $html .= '<li><a class="window" href="activity/' . $id . '/climb-score"><i class="fa fa-fw fa-area-chart"></i>' . __('Climb score') . '</a> </li>';
+        }
         $html .= '<li><a class="window" href="activity/'.$id.'/time-series-info"><i class="fa fa-fw fa-line-chart"></i>'.__('Time series').'</a> </li>';
         $html .= '<li><a class="window" href="activity/'.$id.'/sub-segments-info"><i class="fa fa-fw fa-bar-chart"></i>'.__('Sub segments').'</a> </li>';
 
