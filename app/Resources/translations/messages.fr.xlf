@@ -38,10 +38,10 @@
         <target>#{deviceCount}appareils trouvés</target>
         <jms:reference-file line="61">/Resources/views/import/garmin_communicator.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="04bbd88ceca64ef98a75c389a443bddfcbda86fc" resname="&lt;strong&gt;%VO2max%/Time (Shape):&lt;/strong&gt; by your shape at that time&lt;br&gt;&#10;                The time is the prognosis by Runalyze." approved="no">
+      <trans-unit id="04bbd88ceca64ef98a75c389a443bddfcbda86fc" resname="&lt;strong&gt;%VO2max%/Time (Shape):&lt;/strong&gt; by your shape at that time&lt;br&gt;&#10;                The time is the prognosis by Runalyze." approved="yes">
         <source><![CDATA[<strong>%VO2max%/Time (Shape):</strong> by your shape at that time<br>
                 The time is the prognosis by Runalyze.]]></source>
-        <target state="needs-translation">&lt;strong&gt;%VO2max%/Temps (forme):&lt;/strong&gt; par votre forme actuel&lt;br&gt;Le temps est un pronostique par RUNALYZE.</target>
+        <target state="translated">&lt;strong&gt;%VO2max%/Temps (forme):&lt;/strong&gt; par votre forme actuelle&lt;br&gt;Le temps est un pronostic par Runalyze.</target>
         <jms:reference-file line="83">/Resources/views/tools/vo2max_analysis.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="5a7ba90c2deff7b405c986aa57602a6e29deb26f" resname="&lt;strong&gt;%VO2max%/Time (corrected):&lt;/strong&gt; after individual correction (factor: %vo2maxFactor%)&lt;br&gt;&#10;                The time is what you could have reached at your maximal possible heart rate over this distance.">
@@ -117,9 +117,9 @@
         <target state="translated">Activez votre compte RUNALYZE</target>
         <jms:reference-file line="4">/Resources/views/mail/account/registration.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="abdd4c6c9e0b1e7bcf0968a5cac7f0ee87a24dc2" resname="Activities with known influences or strange results can be ignored for the calculation of your shape." approved="no">
+      <trans-unit id="abdd4c6c9e0b1e7bcf0968a5cac7f0ee87a24dc2" resname="Activities with known influences or strange results can be ignored for the calculation of your shape." approved="yes">
         <source>Activities with known influences or strange results can be ignored for the calculation of your shape.</source>
-        <target state="needs-translation">Activités avec des influences connu ou des résultat étrange sont ignorés dans le calcule de votre forme.</target>
+        <target state="translated">Les activités avec des influences connues ou des résultats étranges peuvent être ignorées dans le calcul de votre forme.</target>
         <jms:reference-file line="38">/Resources/views/static/help_calculations.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="e190939aca2d78cce1aefb21b985fb0779710890" resname="Activity data of %username%" approved="yes">
@@ -200,7 +200,7 @@
       </trans-unit>
       <trans-unit id="5abd9b5fddbc83aa9ca1ecfe161fc45cd15633f9" resname="Add an equipment object" approved="no">
         <source>Add an equipment object</source>
-        <target state="needs-translation">Ajouter un nouvel équipement</target>
+        <target state="needs-translation">Ajouter un objet d'équipement</target>
         <jms:reference-file line="95">/Resources/views/my/equipment/form-category.html.twig</jms:reference-file>
         <jms:reference-file line="9">/Resources/views/my/equipment/form-equipment.html.twig</jms:reference-file>
       </trans-unit>
@@ -242,7 +242,7 @@
       </trans-unit>
       <trans-unit id="2508355ba4e17815e5158d0361cc92b831237fa9" resname="Allowed file extension:" approved="yes">
         <source>Allowed file extension:</source>
-        <target state="translated">Extension de fichier permis:</target>
+        <target state="translated">Extensions de fichier autorisées :</target>
         <jms:reference-file line="49">/Resources/views/tools/backup/upload_form.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="62c7fcf46e2780a0ee480a6514b7a8e0687f0c27" resname="Analysis">
