@@ -1,18 +1,18 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2017-05-06 15:47+0200\n"
-"PO-Revision-Date: 2017-05-05 23:03+0000\n"
+"PO-Revision-Date: 2017-07-26 20:22+0000\n"
 "Last-Translator: jgachelin <contact@jgachelin.fr>\n"
-"Language-Team: French <https://translate.runalyze.com/projects/runalyze/"
-"runalyze-master-po/fr/>\n"
+"Language-Team: French "
+"<https://translate.runalyze.com/projects/runalyze/runalyze/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 2.11\n"
+"X-Generator: Weblate 2.14\n"
 "X-Poedit-KeywordsList: __;_ne;_n;_e\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -27,7 +27,7 @@ msgstr "Activité test"
 
 #: src/CoreBundle/Controller/Settings/SettingsController.php:251
 msgid "Great run!"
-msgstr "Bonne course!"
+msgstr "Bonne course !"
 
 #: src/CoreBundle/Controller/ActivityController.php:255
 msgid "Corrected elevation data has been removed."
@@ -533,11 +533,11 @@ msgstr "Tableau montrant les données inclues par type de fichiers"
 
 #: inc/import/tpl/tpl.Importer.upload.php:63
 msgid "Supported file extensions:"
-msgstr "Extensions de fichiers qui sont supportées:"
+msgstr "Extensions de fichiers supportées :"
 
 #: inc/import/tpl/tpl.Importer.upload.php:68
 msgid "Supported file size:"
-msgstr "Taille de fichier supportée:"
+msgstr "Taille de fichier supportée :"
 
 #: inc/import/tpl/tpl.Importer.garminCommunicator.php:10
 msgid "Move your mouse here to start loading the communicator."
@@ -1273,6 +1273,7 @@ msgstr "Coups"
 #: inc/core/Dataset/Keys/Swolf.php:44
 #: inc/core/View/Activity/Plot/Series/Swolf.php:63
 #: inc/core/View/Activity/Plot/Series/Swolfcycles.php:62
+#, fuzzy
 msgid "Swolf"
 msgstr "Swolf"
 
@@ -1448,7 +1449,7 @@ msgstr "Temps"
 #: inc/training/schemes/scheme.Training.php:200
 #: inc/core/Dataset/Keys/ElapsedTime.php:44
 msgid "Elapsed time"
-msgstr "Temps passé"
+msgstr "Temps écoulé"
 
 #: inc/training/view/section/class.SectionOverviewRow.php:56
 #: inc/core/Dataset/Keys/HeartrateMaximum.php:44
@@ -1507,7 +1508,7 @@ msgstr "Oscillation"
 #: inc/core/View/Activity/Plot/Series/GroundContactBalance.php:58
 #: inc/core/View/Window/Laps/Table.php:271
 msgid "Ground contact balance"
-msgstr "Equilibre du contact au sol"
+msgstr "Équilibre du contact au sol"
 
 #: inc/training/view/section/class.SectionMiscellaneous.php:34
 #: inc/training/schemes/scheme.Training.php:50
@@ -1681,7 +1682,7 @@ msgstr "Trouver les meilleurs sous-segments"
 #: inc/training/view/class.TrainingView.php:146
 #: inc/core/Dataset/Keys/Setting.php:135
 msgid "Make private"
-msgstr "rendre confidentiel"
+msgstr "Rendre confidentiel"
 
 #: inc/training/view/class.TrainingView.php:149
 #: inc/core/Dataset/Keys/Setting.php:138
@@ -2152,7 +2153,7 @@ msgstr "En alternance :"
 
 #: inc/training/formular/class.TrainingInputSplits.php:57
 msgid "first resting"
-msgstr "premier au repos"
+msgstr "premier repos"
 
 #: inc/training/formular/class.TrainingInputSplits.php:58
 msgid "first active"
@@ -2309,11 +2310,11 @@ msgstr "Vous devez entrer un temps."
 
 #: inc/draw/class.PlotWeekSumData.php:55
 msgid "Weekly chart:"
-msgstr "Graphique hebdomadaire:"
+msgstr "Graphique hebdomadaire :"
 
 #: inc/draw/class.PlotMonthSumData.php:38
 msgid "Monthly chart:"
-msgstr "Graphique mensuel:"
+msgstr "Graphique mensuel :"
 
 #: inc/draw/class.PlotSumData.php:188 inc/draw/class.PlotSumData.php:193
 msgid "By type"
@@ -2366,7 +2367,7 @@ msgstr "Entrainement"
 
 #: inc/draw/class.PlotSumData.php:612
 msgid "target:"
-msgstr "cible:"
+msgstr "cible :"
 
 #: inc/draw/class.PlotSumData.php:633 inc/core/View/Activity/Plot/Laps.php:121
 #: inc/core/View/Plot/Series.php:160
@@ -2434,12 +2435,11 @@ msgid "The sports icon is shown."
 msgstr "L'icône des sports est affiché."
 
 #: inc/core/Dataset/Keys/Energy.php:54
-#, fuzzy
 msgid ""
 "Energy values are taken from your device or calculated by a simple formula."
 msgstr ""
-"Les calories sont prises directement depuis votre appareil ou calculées par "
-"une formule simple."
+"Les calories sont issues directement de votre appareil ou calculées par une "
+"formule simple."
 
 #: inc/core/Dataset/Keys/Groundcontact.php:53
 msgid "Groundcontact"
@@ -2624,7 +2624,7 @@ msgstr "ECS"
 #: inc/core/Dataset/Keys/GroundcontactBalance.php:62
 msgid "Ground contact time balance measures your running symmetry."
 msgstr ""
-"Le bilan des temps de contact au sol mesure la symmétrie de votre foulée."
+"Le bilan des temps de contact au sol mesure la symétrie de votre foulée."
 
 #: inc/core/Dataset/Keys/Weather.php:89 inc/core/Data/Weather/WindDegree.php:58
 msgid "Wind Degree"
@@ -2675,7 +2675,7 @@ msgstr "Début"
 
 #: inc/core/Dataset/Keys/VO2maxIcon.php:36
 msgid "Effective VO<sub>2</sub>max icon"
-msgstr ""
+msgstr "Icône de VO<sub>2</sub>max effective"
 
 #: inc/core/Dataset/Keys/VO2maxIcon.php:55
 msgid ""
@@ -2803,7 +2803,7 @@ msgid ""
 "Highly improves your aerobic fitness if repeated 1-2 times per week with "
 "adequate recovery time."
 msgstr ""
-"Améliore sensiblement votre conditíon aérobie si on le répète 1-2 fois par "
+"Améliore sensiblement votre condition aérobie si on le répète 1-2 fois par "
 "semaine avec suffisamment de périodes de repos."
 
 #: inc/core/Activity/TrainingEffectLevel.php:100
@@ -2817,7 +2817,7 @@ msgstr ""
 
 #: inc/core/Activity/GroundcontactBalance.php:48
 msgid "Groundcontact balance"
-msgstr "équilibre du contact au sol"
+msgstr "Équilibre du contact au sol"
 
 #: inc/core/Activity/Weight.php:72
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:99
@@ -4391,7 +4391,7 @@ msgstr "Si vous avez couru aujourd'hui: "
 
 #: plugin/RunalyzePluginStat_Statistiken/class.RunalyzePluginStat_Statistiken.php:245
 msgid "You don't have a streak. Go out and start one!"
-msgstr "Vous n'avez pas de série. Sortez et commencez-en une!"
+msgstr "Vous n'avez pas de série. Sortez et commencez-en une !"
 
 #: plugin/RunalyzePluginStat_Statistiken/class.RunalyzePluginStat_Statistiken.php:249
 #, php-format
@@ -4820,8 +4820,8 @@ msgid ""
 "There are different models that can be used to predict your race "
 "performances:"
 msgstr ""
-"Il y a différents modèles qui peuvent être utilités pour prédire vos "
-"résultats en compétition:"
+"Il y a différents modèles qui peuvent être utilisés pour prédire vos "
+"résultats en compétition :"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:55
 msgid ""
@@ -4919,11 +4919,11 @@ msgstr "Calculateur de pronostic: tendance de forme physique"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:125
 msgid "Your current effective VO2max:"
-msgstr "Votre VO2max actuelle:"
+msgstr "Votre VO2max effective actuelle :"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:126
 msgid "Your current marathon shape:"
-msgstr "Votre allure Marathon actuelle:"
+msgstr "Votre allure Marathon actuelle :"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:128
 #, php-format
@@ -4932,7 +4932,7 @@ msgstr "%s en %s<small>(%s)</small> et %s en%s<small>(%s)</small>"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:132
 msgid "Your two best results:"
-msgstr "Vos deux meilleurs résultats en compétition:"
+msgstr "Vos deux meilleurs résultats en compétition :"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:291
 msgid "Personal best"
@@ -5068,7 +5068,6 @@ msgid "There are no routes."
 msgstr "Il n'y a pas de routes."
 
 #: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:196
-#, fuzzy
 msgid "Rare places"
 msgstr "Endroits insolites"
 
@@ -5511,9 +5510,8 @@ msgid "Show shape"
 msgstr "Montrer l'allure"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:79
-#, fuzzy
 msgid "Show training paces"
-msgstr "Cadences d'entraînement"
+msgstr "Montrer les cadences d'entraînement"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:80
 msgid "How are these values calculated?"
@@ -5599,7 +5597,7 @@ msgstr "Repos&nbsp;jours"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:223
 msgid "Rest days needed to reach TSB = 0"
-msgstr "Jours de repos nécessaires pour retrouver TSB = 0"
+msgstr "Jours de repos nécessaires pour atteindre TSB = 0"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:232
 msgid "Easy&nbsp;TRIMP"
@@ -5665,7 +5663,7 @@ msgstr "Charge d'entraînement sur une longue période"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:365
 msgid "Training Stress Balance"
-msgstr "Balance de la charge d'entraînement"
+msgstr "Balance d'entraînement"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:368
 msgid "Current impulse<br>positive: recovery<br>negative: hard training"
@@ -5738,9 +5736,8 @@ msgid "based on heart rate"
 msgstr "basée sur le rythme cardiaque"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:453
-#, fuzzy
 msgid "Target kilometer per week"
-msgstr "Comparer les kilomètres par semaine"
+msgstr "Objectif de kilomètres par semaine"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:455
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:466
@@ -5808,10 +5805,9 @@ msgstr ""
 "distances se basant sur votre endurance actuelle."
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:532
-#, fuzzy
 msgid ""
 "There are no current activities with an estimated VO<sub>2</sub>max value."
-msgstr "Il n'y a pas d'activité pour cette période."
+msgstr "Il n'y a pas d'activité avec une valeur de VO<sub>2</sub>max estimée."
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:533
 msgid "VO<sub>2</sub>max can only be estimated for runs with heart rate data."
