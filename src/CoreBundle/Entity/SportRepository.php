@@ -7,6 +7,7 @@ use Runalyze\Bundle\CoreBundle\Model\Sport\SportStatistics;
 use Runalyze\Profile\Sport\Running;
 use Runalyze\Profile\Sport\SportProfile;
 use Runalyze\Util\LocalTime;
+use Doctrine\ORM\Query\Expr\Join;
 
 class SportRepository extends EntityRepository
 {
@@ -117,7 +118,7 @@ class SportRepository extends EntityRepository
             ->addSelect('SUM(t.s) as time_in_s')
             ->addSelect('SUM(CASE WHEN t.distance > 0 THEN 1 ELSE 0 END) as count_distance')
             ->from('CoreBundle:Sport', 's')
-            ->innerJoin('s.trainings', 't')
+            ->innerJoin('s.trainings', 't','WITH', 't.account = :account')
             ->where('s.account = :account')
             ->setParameter(':account', $account->getId())
             ->groupBy('s.id')
