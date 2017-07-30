@@ -28,7 +28,9 @@
         "jms/translation-bundle": "dev-master",
         "bernard/bernard-bundle": "^2.0.0",
         "runalyze/GpxTrackPoster": "^1.0.0",
-        "runalyze/glossary": "dev-master"
+        "runalyze/glossary": "dev-master",
+        "snc/redis-bundle": "2.*",
+        "predis/predis": "^1.0"
     },
     "autoload": {
         "files": ["src/functions.php", "app/AppKernel.php"],
