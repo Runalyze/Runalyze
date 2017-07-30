@@ -389,13 +389,12 @@ class ActivityController extends Controller
     /**
      * @Route("/activity/{id}/climb-score", requirements={"id" = "\d+"}, name="activity-tool-climb-score")
      * @ParamConverter("activity", class="CoreBundle:Training")
-     * @Security("has_role('ROLE_USER')")
      */
-    public function climbScoreAction(Training $activity, Account $account)
+    public function climbScoreAction(Training $activity, Account $account = null)
     {
         $activityContext = $this->get('app.activity_context.factory')->getContext($activity);
 
-        if ($activity->getAccount()->getId() != $account->getId() || !$activityContext->hasTrackdata() || !$activityContext->hasRoute()) {
+        if ((!$activity->isPublic() && $account == null) || !$activityContext->hasTrackdata() || !$activityContext->hasRoute()) {
             throw $this->createNotFoundException('No activity found.');
         }
 
