@@ -33,7 +33,8 @@ class DataBrowser extends \Runalyze\Configuration\Category {
 		$this->createHandle('DB_SHOW_DATASET_LABELS', new Boolean(true));
 		$this->createHandle('DB_SHOW_CREATELINK_FOR_DAYS', new Boolean(false));
 		$this->createHandle('DB_SHOW_ACTIVE_DAYS_ONLY', new Boolean(false));
-	}
+        $this->createHandle('DB_REVERSE_MODE', new Boolean(false));
+    }
 
 	/**
 	 * Mode
@@ -67,6 +68,14 @@ class DataBrowser extends \Runalyze\Configuration\Category {
 		return $this->get('DB_SHOW_ACTIVE_DAYS_ONLY');
 	}
 
+    /**
+     * Show days with activities only
+     * @return bool
+     */
+    public function reverseMode() {
+        return $this->get('DB_REVERSE_MODE');
+    }
+
 	/**
 	 * Register onchange events
 	 */
@@ -74,6 +83,7 @@ class DataBrowser extends \Runalyze\Configuration\Category {
 		$this->handle('DB_SHOW_DATASET_LABELS')->registerOnchangeFlag(Ajax::$RELOAD_DATABROWSER);
 		$this->handle('DB_SHOW_CREATELINK_FOR_DAYS')->registerOnchangeFlag(Ajax::$RELOAD_DATABROWSER);
 		$this->handle('DB_SHOW_ACTIVE_DAYS_ONLY')->registerOnchangeFlag(Ajax::$RELOAD_DATABROWSER);
+        $this->handle('DB_REVERSE_MODE')->registerOnchangeFlag(Ajax::$RELOAD_DATABROWSER);
 
 		$this->handle('DB_DISPLAY_MODE')->registerOnchangeEvent('Runalyze\\Configuration\\Category\\DataBrowser::showNewTimerangeInDB');
 	}
@@ -102,6 +112,11 @@ class DataBrowser extends \Runalyze\Configuration\Category {
 			'label'		=> __('Calendar: create button'),
 			'tooltip'	=> __('Add a link for every day to create a new activity.')
 		));
+
+        $Fieldset->addHandle( $this->handle('DB_REVERSE_MODE'), array(
+            'label'		=> __('Calendar').': '.__('reverse order'),
+            'tooltip'	=> __('Show days in reverse orders')
+        ));
 
 		return $Fieldset;
 	}

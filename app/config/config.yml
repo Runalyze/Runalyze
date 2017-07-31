@@ -12,7 +12,7 @@ framework:
      enable_annotations: true
 #     translation_domain: messages
   session:
-    handler_id: session.handler.native_file
+    handler_id: '%session.handler_id%'
     save_path: '%kernel.root_dir%/../data/sessions'
   form: ~
   csrf_protection: true
@@ -154,3 +154,10 @@ jms_translation:
             excluded_names: ["*TestCase.php", "*Test.php"]
             excluded_dirs: [cache, data, logs, test, doctrine]
             output-format: 'xlf'
+
+snc_redis:
+    clients:
+        default:
+            type: predis
+            alias: default
+            dsn: '%redis.default.dsn%'

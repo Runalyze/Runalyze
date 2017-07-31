@@ -25,6 +25,7 @@ class AppKernel extends \Symfony\Component\HttpKernel\Kernel
             new Runalyze\Bundle\CoreBundle\CoreBundle(),
             new JMS\TranslationBundle\JMSTranslationBundle(),
             new Bernard\BernardBundle\BernardBundle(),
+            new Snc\RedisBundle\SncRedisBundle(),
             new Runalyze\Bundle\GlossaryBundle\GlossaryBundle(),
         ];
 

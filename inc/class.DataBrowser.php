@@ -154,6 +154,9 @@ class DataBrowser {
 			}
 			$this->AllDaysEmpty = false;
 		}
+		if (\Runalyze\Configuration::DataBrowser()->reverseMode()) {
+		    $this->Days = array_reverse($this->Days);
+        }
 	}
 
 	/**
