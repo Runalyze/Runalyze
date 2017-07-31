@@ -100,13 +100,13 @@ class SectionRouteRowElevation extends TrainingViewSectionRow {
 	protected function addInfoLink() {
         $this->Footer = '';
 
+        $Linker = new Linker($this->Context->activity());
+
+        if (null !== $this->Context->activity()->climbScore()) {
+            $this->Footer .= HTML::info(Ajax::window('<a href="'.$Linker->urlToClimbScore().'">'.__('Climb Score view').'</a>', 'normal'));
+        }
+
 		if (!Request::isOnSharedPage()) {
-			$Linker = new Linker($this->Context->activity());
-
-			if (null !== $this->Context->activity()->climbScore()) {
-                $this->Footer .= HTML::info(Ajax::window('<a href="'.$Linker->urlToClimbScore().'">'.__('Climb Score view').'</a>', 'normal'));
-            }
-
             $this->Footer .= HTML::info(Ajax::window('<a href="'.$Linker->urlToElevationInfo().'">'.__('More about elevation').'</a>', 'normal'));
 		}
 
