@@ -7,7 +7,7 @@ use Runalyze\Bundle\CoreBundle\Component\Tool\Backup\JsonBackupAnalyzer;
 class JsonBackupAnalyzerTest extends \PHPUnit_Framework_TestCase
 {
     /** @var string */
-    const CURRENT_VERSION = '4.1.0';
+    const CURRENT_VERSION = '4.2.0';
 
     /** @var string */
     protected $Base;
