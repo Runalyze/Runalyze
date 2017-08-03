@@ -16,6 +16,7 @@
   },
   "js": {
     "src": [
+      "./app/Resources/public/js/polyfill.js",
       "./web/vendor/jquery/dist/jquery.js",
 
       "./lib/jquery.form.js",
