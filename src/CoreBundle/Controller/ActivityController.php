@@ -331,16 +331,16 @@ class ActivityController extends Controller
     }
 
     /**
-     * @Route("/activity/{id}/time-series-info", requirements={"id" = "\d+"}, name="activity-tool-time-series-info")
+     * @Route("/activity/{id}/time-series-info", requirements={"id" = "\d+"}, name="activity-tool-time-series-info")+
+     * @ParamConverter("trackdata", class="CoreBundle:Trackdata", options={"activity" = "id"})
      * @Security("has_role('ROLE_USER')")
      */
-    public function timeSeriesInfoAction($id, Account $account)
+    public function timeSeriesInfoAction($id, Trackdata $trackdata, Account $account)
     {
-        /** @var Trackdata $trackdata */
-        $trackdata = $this->getDoctrine()->getManager()->getRepository('CoreBundle:Trackdata')->findOneBy([
-            'activity' => $id,
-            'account' => $account->getId()
-        ]);
+        if ($trackdata->getAccount()->getId() != $account->getId()) {
+            throw $this->createAccessDeniedException();
+        }
+
         $trackdataModel = $trackdata->getLegacyModel();
 
         $paceUnit = PaceEnum::get(
@@ -359,15 +359,15 @@ class ActivityController extends Controller
 
     /**
      * @Route("/activity/{id}/sub-segments-info", requirements={"id" = "\d+"}, name="activity-tool-sub-segments-info")
+     * @ParamConverter("trackdata", class="CoreBundle:Trackdata", options={"activity" = "id"})
      * @Security("has_role('ROLE_USER')")
      */
-    public function subSegmentInfoAction($id, Account $account)
+    public function subSegmentInfoAction($id, Trackdata $trackdata, Account $account)
     {
-        /** @var Trackdata $trackdata */
-        $trackdata = $this->getDoctrine()->getManager()->getRepository('CoreBundle:Trackdata')->findOneBy([
-            'activity' => $id,
-            'account' => $account->getId()
-        ]);
+        if ($trackdata->getAccount()->getId() != $account->getId()) {
+            throw $this->createAccessDeniedException();
+        }
+
         $trackdataModel = $trackdata->getLegacyModel();
 
         $paceUnit = PaceEnum::get(

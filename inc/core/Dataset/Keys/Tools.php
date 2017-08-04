@@ -33,7 +33,7 @@ class Tools extends AbstractKey
 	 */
 	public function column()
 	{
-		return 'elevation';
+		return ['elevation', 'splits'];
 	}
 
 	/**
@@ -98,8 +98,11 @@ class Tools extends AbstractKey
 	protected function inlineDropdownWithRealLinks(Context $context)
 	{
 		$id = $context->activity()->id();
+        $html = '';
 
-        $html = '<li><a class="window" data-size="big" href="activity/'.$id.'/splits-info"><i class="fa fa-fw fa-bar-chart"></i>'.__('Analyze splits').'</a> </li>';
+        if ($context->activity()->splits()->hasActiveAndInactiveLaps()) {
+            $html = '<li><a class="window" data-size="big" href="activity/' . $id . '/splits-info"><i class="fa fa-fw fa-bar-chart"></i>' . __('Analyze splits') . '</a> </li>';
+        }
         if ($context->activity()->elevation() > 0) {
             $html .= '<li><a class="window" href="activity/' . $id . '/elevation-info"><i class="fa fa-fw fa-area-chart"></i>' . __('Elevation info') . '</a> </li>';
             $html .= '<li><a class="window" href="activity/' . $id . '/climb-score"><i class="fa fa-fw fa-area-chart"></i>' . __('Climb score') . '</a> </li>';
