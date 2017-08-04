@@ -47,6 +47,21 @@
             </ul>
         </div>
 
+        <div class="headline-menu right">
+            <div class="submenu-label only-icon">
+                <i class="fa fa-fw fa-lg fa-book"></i>
+            </div>
+            <ul class="submenu right-oriented">
+                <li><a class="window" href="<?php echo $this->get('router')->generate('glossary-index'); ?>"><i class="fa fa-fw fa-book"></i>&nbsp;<?php _e('Glossary'); ?></a></li>
+                <li><a href="https://help.runalyze.com"><i class="fa fa-fw fa-book"></i>&nbsp;<?php _e('Documentation'); ?></a></li>
+                <li class="separator"></li>
+                <li><a href="https://forum.runalyze.com"><i class="fa fa-fw fa-comments"></i>&nbsp;<?php _e('Forum'); ?></a></li>
+                <li><a href="https://blog.runalyze.com"><i class="fa fa-fw fa-rss"></i>&nbsp;<?php _e('Blog'); ?></a></li>
+                <li class="separator"></li>
+                <li><a class="window" href="<?php echo $this->get('router')->generate('help'); ?>"><i class="fa fa-fw fa-building"></i>&nbsp;<?php _e('About us'); ?></a></li>
+            </ul>
+        </div>
+
         <div id="new-notifications-menu" class="headline-menu right">
             <div class="submenu-label only-icon">
                 <i class="fa fa-fw fa-envelope"><span class="hide new-notifications-indicator"></span></i><i class="fa fa-fw fa-caret-down"></i>
@@ -104,6 +119,6 @@
             </ul>
         </div>
 
-        <a class="window tab left b" href="<?php echo $this->get('router')->generate('help') ?>"><i class="fa fa-fw fa-lg fa-question-circle"></i>&nbsp;<?php _e('Help'); ?></a>
+        <a class="window tab left b" data-size="big" href="<?php echo $this->get('router')->generate('my-search') ?>"><i class="fa fa-fw fa-lg fa-search"></i>&nbsp;<?php _e('Search'); ?></a>
 	<?php endif; ?>
 </div>
