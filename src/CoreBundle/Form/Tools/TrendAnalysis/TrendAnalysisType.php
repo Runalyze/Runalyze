@@ -6,6 +6,8 @@ use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\Sport;
 use Runalyze\Bundle\CoreBundle\Entity\SportRepository;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Anova\QueryValue\QueryValues;
+use Runalyze\Bundle\CoreBundle\Entity\Type;
+use Runalyze\Bundle\CoreBundle\Entity\TypeRepository;
 use Runalyze\Bundle\CoreBundle\Services\Configuration\ConfigurationManager;
 use Runalyze\Dataset\Query;
 use Symfony\Component\Form\AbstractType;
@@ -20,6 +22,9 @@ class TrendAnalysisType extends AbstractType
     /** @var SportRepository */
     protected $SportRepository;
 
+    /** @var TypeRepository */
+    protected $TypeRepository;
+
     /** @var TokenStorage */
     protected $TokenStorage;
 
@@ -28,11 +33,13 @@ class TrendAnalysisType extends AbstractType
 
     public function __construct(
         SportRepository $sportRepository,
+        TypeRepository $typeRepository,
         TokenStorage $tokenStorage,
         ConfigurationManager $configurationManager
     )
     {
         $this->SportRepository = $sportRepository;
+        $this->TypeRepository = $typeRepository;
         $this->TokenStorage = $tokenStorage;
         $this->ConfigurationManager = $configurationManager;
     }
@@ -75,6 +82,20 @@ class TrendAnalysisType extends AbstractType
                 },
                 'placeholder' => 'Choose sport(s)',
                 'attr' => ['class' => 'chosen-select full-size']
+            ])
+            ->add('type', ChoiceType::class, [
+                'multiple' => true,
+                'choices' => $this->TypeRepository->findAllFor($this->getAccount()),
+                'choice_label' => function($type, $key, $index) {
+                    /** @var Type $type */
+                    return $type->getName();
+                },
+                'placeholder' => 'Choose activity type(s)',
+                'attr' => ['class' => 'chosen-select full-size'],
+                'choice_attr' => function($type, $key, $index) {
+                    /* @var Type $type */
+                    return ['data-sportid' => $type->getSport()->getId()];
+                }
             ])
             ->add('valueToLookAt', ChoiceType::class, [
                 'choices' => [

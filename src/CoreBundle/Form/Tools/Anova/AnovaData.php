@@ -16,6 +16,9 @@ class AnovaData
     /** @var Sport[] */
     protected $Sport = [];
 
+    /** @var Type[] */
+    protected $Type = [];
+
     /** @var string */
     protected $ValueToGroupBy;
 
@@ -26,10 +29,11 @@ class AnovaData
      * @param Sport[] $sport
      * @return AnovaData
      */
-    public static function getDefault(array $sport)
+    public static function getDefault(array $sport, array $type)
     {
         $data = new self;
         $data->setSport($sport);
+        $data->setType($type);
         $data->setDateFrom((new \DateTime())->sub(new \DateInterval('P6M')));
         $data->setDateTo(new \DateTime());
 
@@ -92,6 +96,22 @@ class AnovaData
     public function getSport()
     {
         return $this->Sport;
+    }
+
+    /**
+     * @param Type[] $type
+     */
+    public function setType(array $type)
+    {
+        $this->Type = $type;
+    }
+
+    /**
+     * @return Type[]
+     */
+    public function getType()
+    {
+        return $this->Type;
     }
 
     public function setValueToGroupBy($valueToGroupBy)
