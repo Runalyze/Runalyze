@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2017-05-06 15:47+0200\n"
-"PO-Revision-Date: 2017-07-26 20:22+0000\n"
-"Last-Translator: jgachelin <contact@jgachelin.fr>\n"
+"PO-Revision-Date: 2017-08-05 03:04+0000\n"
+"Last-Translator: nicolas ghysbrecht <kosnik@kanet.xyz>\n"
 "Language-Team: French "
 "<https://translate.runalyze.com/projects/runalyze/runalyze/fr/>\n"
 "Language: fr\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 2.14\n"
+"X-Generator: Weblate 2.15\n"
 "X-Poedit-KeywordsList: __;_ne;_n;_e\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -1273,7 +1273,6 @@ msgstr "Coups"
 #: inc/core/Dataset/Keys/Swolf.php:44
 #: inc/core/View/Activity/Plot/Series/Swolf.php:63
 #: inc/core/View/Activity/Plot/Series/Swolfcycles.php:62
-#, fuzzy
 msgid "Swolf"
 msgstr "Swolf"
 
@@ -3025,9 +3024,8 @@ msgid "Month view"
 msgstr "Affichage mensuelle"
 
 #: inc/core/Parameter/Application/EnergyUnit.php:36
-#, fuzzy
 msgid "Kilocalories"
-msgstr "Calories"
+msgstr "KiloCalories"
 
 #: inc/core/Parameter/Application/EnergyUnit.php:37
 msgid "Kilojoules"
@@ -3993,13 +3991,12 @@ msgid "Use fixed VO<sub>2</sub>max value"
 msgstr "Utiliser une valeur de VO2Max fixe"
 
 #: inc/core/Configuration/Category/VO2max.php:136
-#, fuzzy
 msgid ""
 "Fixed VO<sub>2</sub>max value (e.g. 55), if the estimation does not fit. Can "
 "be left empty."
 msgstr ""
-"Valeur de VO2Max fixée (ex : 55), si l'estimation n'est pas pertinente. Peut "
-"être laissé vide."
+"Valeur de VO<sub>2</sub>Max fixée (ex : 55), si l'estimation n'est pas "
+"pertinente. Peut être laissé vide."
 
 #: inc/core/Configuration/Category/VO2max.php:140
 msgid "Adapt for elevation"
@@ -4187,9 +4184,8 @@ msgid "Show some general statistics above the activity list"
 msgstr "Montrer des statistiques générales au-dessus de la liste d'activités"
 
 #: inc/core/Configuration/Category/Privacy.php:114
-#, fuzzy
 msgid "Public activity view: show map"
-msgstr "Vue publique : montrer la carte"
+msgstr "Vue activité publique : voir la carte"
 
 #: inc/core/Configuration/Category/Privacy.php:115
 msgid "You can hide the map for the public view"
@@ -4794,7 +4790,6 @@ msgid "Season"
 msgstr "Saison"
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:428
-#, fuzzy
 msgid "Note: Season means the current season in the german &quot;kmspiel&quot;"
 msgstr ""
 "Note: Saison signifie la saison actuelle dans le &quot;kmspiel&quot; allemand"
