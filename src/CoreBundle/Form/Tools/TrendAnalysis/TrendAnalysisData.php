@@ -16,6 +16,9 @@ class TrendAnalysisData
     /** @var Sport[] */
     protected $Sport = [];
 
+    /** @var Type[] */
+    protected $Type = [];
+
     /** @var string|null */
     protected $ValueToLookAt = null;
 
@@ -23,10 +26,11 @@ class TrendAnalysisData
      * @param Sport[] $sports
      * @return TrendAnalysisData
      */
-    public static function getDefault(array $sports)
+    public static function getDefault(array $sports, array $types)
     {
         $data = new self;
         $data->setSport($sports);
+        $data->setType($types);
         $data->setDateFrom((new \DateTime())->sub(new \DateInterval('P6M')));
         $data->setDateTo(new \DateTime());
 
@@ -89,6 +93,22 @@ class TrendAnalysisData
     public function getSport()
     {
         return $this->Sport;
+    }
+
+    /**
+     * @param Type[] $typs
+     */
+    public function setType(array $types)
+    {
+        $this->Type = $types;
+    }
+
+    /**
+     * @return Type[]
+     */
+    public function getType()
+    {
+        return $this->Type;
     }
 
     /**
