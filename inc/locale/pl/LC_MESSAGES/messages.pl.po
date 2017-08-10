@@ -1,19 +1,19 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2017-05-06 15:47+0200\n"
-"PO-Revision-Date: 2017-03-07 09:18+0000\n"
+"PO-Revision-Date: 2017-08-10 14:43+0000\n"
 "Last-Translator: Michael Pohl <michael@mipapo.de>\n"
-"Language-Team: Polish <https://translate.runalyze.com/projects/runalyze/"
-"runalyze-master-po/pl/>\n"
+"Language-Team: Polish "
+"<https://translate.runalyze.com/projects/runalyze/runalyze/pl/>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 2.11\n"
+"X-Generator: Weblate 2.15\n"
 "X-Poedit-KeywordsList: __;_ne;_n;_e\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -209,9 +209,8 @@ msgid "Maximal TRIMP"
 msgstr "Max TRIMP"
 
 #: src/CoreBundle/Component/Tool/DatabaseCleanup/JobGeneral.php:131
-#, fuzzy
 msgid "Your personal cache has been cleared."
-msgstr "Twoje konto zostało usunięte."
+msgstr "Twoje dane osobiste zostały usunięte."
 
 #: src/CoreBundle/Component/Tool/DatabaseCleanup/JobLoop.php:50
 #, php-format
