@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2017-05-06 15:47+0200\n"
-"PO-Revision-Date: 2017-07-02 20:17+0000\n"
-"Last-Translator: Robert Hartl <chami@chami.sk>\n"
+"PO-Revision-Date: 2017-08-10 14:43+0000\n"
+"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
 "Language-Team: Slovak "
 "<https://translate.runalyze.com/projects/runalyze/runalyze/sk/>\n"
 "Language: sk\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 2.14\n"
+"X-Generator: Weblate 2.15\n"
 
 #: src/CoreBundle/Controller/Settings/SettingsController.php:213
 msgid "race"
@@ -3313,7 +3313,7 @@ msgstr ""
 
 #: inc/core/Data/Weather/Condition.php:110
 msgid "foggy"
-msgstr ""
+msgstr "hmlisto"
 
 #: inc/core/Data/Weather/Condition.php:112
 msgid "thundery"
@@ -3321,7 +3321,7 @@ msgstr ""
 
 #: inc/core/Data/Weather/Condition.php:114
 msgid "windy"
-msgstr ""
+msgstr "veterno"
 
 #: inc/core/View/Activity/Preview.php:131
 msgid "Heartrate data available"
