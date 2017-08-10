@@ -6,7 +6,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: mail@runalyze.com\n"
 "POT-Creation-Date: 2017-07-08 11:26+0200\n"
 "PO-Revision-Date: 2017-08-10 14:44+0000\n"
-"Last-Translator: jgachelin <contact@jgachelin.fr>\n"
+"Last-Translator: nicolas ghysbrecht <kosnik@kanet.xyz>\n"
 "Language-Team: French <https://translate.runalyze.com/projects/runalyze"
 "/runalyze-master-po/fr/>\n"
 "Language: fr\n"
@@ -5774,9 +5774,8 @@ msgid "No routes found."
 msgstr "Aucune route n'a été trouvée."
 
 #: plugin/RunalyzePluginStat_Hoehenmeter/class.RunalyzePluginStat_Hoehenmeter.php:124
-#, fuzzy
 msgid "Most elevation"
-msgstr "La plupart des altitudes"
+msgstr "La plus haute des altitudes"
 
 #: plugin/RunalyzePluginStat_Hoehenmeter/class.RunalyzePluginStat_Hoehenmeter.php:152
 msgid "Steepest routes"
