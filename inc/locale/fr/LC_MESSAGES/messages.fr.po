@@ -5,8 +5,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.com\n"
 "POT-Creation-Date: 2017-07-08 11:26+0200\n"
-"PO-Revision-Date: 2017-08-10 14:43+0000\n"
-"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
+"PO-Revision-Date: 2017-08-10 14:44+0000\n"
+"Last-Translator: jgachelin <contact@jgachelin.fr>\n"
 "Language-Team: French <https://translate.runalyze.com/projects/runalyze"
 "/runalyze-master-po/fr/>\n"
 "Language: fr\n"
@@ -5013,12 +5013,11 @@ msgstr ""
 "- vous pouvez voir à quel point vous êtes en avance ou en retard."
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:60
-#, fuzzy
 msgid ""
 "Note: &quot;Saison&quot; refers to the current season in the german &quot;"
 "kmspiel&quot;."
 msgstr ""
-"Note: La &quot;Saison&quot; fait référence à la saison actuelle dans le "
+"Note: La &quot;saison&quot; fait référence à la saison actuelle dans le "
 "&quot;kmspiel&quot; allemand."
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:71
@@ -5384,6 +5383,10 @@ msgid ""
 "running efficiency, one can ignore the efficiency and therefore call it "
 "effective VO<sub>2</sub>max."
 msgstr ""
+"La VO<sub>2</sub>max est en soi une méthode scientifique pour mesurer la "
+"consommation maximale d'oxygène en laboratoire.<br>Deux coureurs avec des "
+"valeurs de VO<sub>2</sub>max identiques ne courent pas forcément à la même "
+"vitesse, car l'efficacité en course joue un rôle additionnel. "
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:446
 msgid "Current Effective VO<sub>2</sub>max"
