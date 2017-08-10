@@ -3,18 +3,19 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.com\n"
 "POT-Creation-Date: 2017-07-08 11:26+0200\n"
-"PO-Revision-Date: 2017-03-08 08:32+0000\n"
-"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
-"Language-Team: Portuguese (Portugal) <https://translate.runalyze.com/"
-"projects/runalyze/runalyze-master-po/pt_PT/>\n"
+"PO-Revision-Date: 2017-08-10 14:45+0000\n"
+"Last-Translator: Miguel Robin <dee.hood@gmail.com>\n"
+"Language-Team: Portuguese (Portugal) "
+"<https://translate.runalyze.com/projects/runalyze/runalyze-master-po/pt_PT/>"
+"\n"
 "Language: pt_PT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 2.11\n"
+"X-Generator: Weblate 2.15\n"
 "X-Poedit-KeywordsList: __;_ne;_n;_e\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -1357,9 +1358,8 @@ msgid ""
 msgstr ""
 
 #: inc/core/Configuration/Category/General.php:206
-#, fuzzy
 msgid "Weight unit"
-msgstr "Peso"
+msgstr "Unidade de peso"
 
 #: inc/core/Configuration/Category/General.php:210
 #, fuzzy
@@ -1367,9 +1367,8 @@ msgid "Energy unit"
 msgstr "Peso"
 
 #: inc/core/Configuration/Category/General.php:214
-#, fuzzy
 msgid "Temperature unit"
-msgstr "Temperatura"
+msgstr "Unidade de temperatura"
 
 #: inc/core/Configuration/Category/General.php:218
 msgid "Heart rate unit"
@@ -1543,7 +1542,7 @@ msgstr "Cada corrida acima desta distância vai ser avaliado."
 
 #: inc/core/Configuration/Category/BasicEndurance.php:108
 msgid "Days for longjogs"
-msgstr "Dias para longjogs"
+msgstr "Dias para Corridas longas"
 
 #: inc/core/Configuration/Category/BasicEndurance.php:109
 msgid "Number of days to look at for longjog goal."
@@ -2846,7 +2845,7 @@ msgstr "HR máximo"
 
 #: inc/training/search/class.SearchFormular.php:186
 msgid "Is race"
-msgstr ""
+msgstr "É corrida"
 
 #: inc/training/search/class.SearchFormular.php:190
 msgid "Uses VO<sub>2</sub>max"
@@ -2939,6 +2938,8 @@ msgid ""
 "(if activated in your configuration) only if you change the duration or the "
 "type of sport."
 msgstr ""
+"Este valor será calculado automaticamente a partir da duração e tipo de "
+"desporto (se activado na sua configuração) apenas se houver alguma alteração."
 
 #: inc/training/schemes/scheme.Training.php:312
 msgid "VO2max for shape"
@@ -3044,14 +3045,12 @@ msgid "THb"
 msgstr "5a"
 
 #: inc/training/class.TrainingFormular.php:492
-#, fuzzy
 msgid "Original elevation"
-msgstr "Dados originais"
+msgstr "Elevação original"
 
 #: inc/training/class.TrainingFormular.php:493
-#, fuzzy
 msgid "Corrected elevation"
-msgstr "Dados de elevação correta"
+msgstr "Elevação corrigida"
 
 #: inc/training/class.TrainingFormular.php:497
 msgid "GPS path"
@@ -3417,9 +3416,8 @@ msgstr "Correção de altitude"
 
 #: inc/training/view/class.ElevationInfo.php:248
 #: src/CoreBundle/Controller/ActivityController.php:256
-#, fuzzy
 msgid "Elevation data has been corrected."
-msgstr "Os dados de altitude foram corrigidos."
+msgstr "Os dados de elevação foram corrigidos."
 
 #: inc/training/view/class.ElevationInfo.php:251
 msgid "Elevation data has not been corrected."
