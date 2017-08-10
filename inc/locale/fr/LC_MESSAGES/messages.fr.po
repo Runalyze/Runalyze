@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2017-05-06 15:47+0200\n"
-"PO-Revision-Date: 2017-08-05 03:04+0000\n"
-"Last-Translator: nicolas ghysbrecht <kosnik@kanet.xyz>\n"
+"PO-Revision-Date: 2017-08-10 14:44+0000\n"
+"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
 "Language-Team: French "
 "<https://translate.runalyze.com/projects/runalyze/runalyze/fr/>\n"
 "Language: fr\n"
@@ -162,7 +162,7 @@ msgstr ""
 
 #: src/CoreBundle/Component/Tool/DatabaseCleanup/JobGeneral.php:68
 msgid "Internal constants have been refreshed."
-msgstr "Les constantes internes ont été rafraîchies."
+msgstr "Les constantes internes ont été rafraichies."
 
 #: src/CoreBundle/Component/Tool/DatabaseCleanup/JobGeneral.php:77
 msgid "There was a problem while recalculating your equipment statistics"
@@ -192,7 +192,7 @@ msgstr "correcteur VO<sub>2</sub>max"
 #: plugin/RunalyzePluginPanel_Rechenspiele/Plot.Form.php:198
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:509
 msgid "Marathon shape"
-msgstr "allure Marathon"
+msgstr "forme Marathon"
 
 #: src/CoreBundle/Component/Tool/DatabaseCleanup/JobGeneral.php:122
 #: inc/core/Configuration/Category/Trimp.php:141
@@ -983,9 +983,8 @@ msgid "Analyze your VO2max"
 msgstr "Analysez votre VO<sub>2</sub>max"
 
 #: inc/tpl/tpl.Frontend.header.php:98
-#, fuzzy
 msgid "Running tables"
-msgstr "En réalisant des exercices"
+msgstr "Tableau de course"
 
 #: inc/tpl/tpl.Frontend.header.php:99
 msgid "Poster generator"
@@ -4693,12 +4692,11 @@ msgstr ""
 "- vous pouvez voir à quel point vous êtes en avance ou en retard."
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:60
-#, fuzzy
 msgid ""
 "Note: &quot;Saison&quot; refers to the current season in the german &quot;"
 "kmspiel&quot;."
 msgstr ""
-"Note: La &quot;Saison&quot; fait référence à la saison actuelle dans le "
+"Note: La &quot;saison&quot; fait référence à la saison actuelle dans le "
 "&quot;kmspiel&quot; allemand."
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:71
@@ -5015,9 +5013,8 @@ msgid "No routes found."
 msgstr "Aucune route n'a été trouvée."
 
 #: plugin/RunalyzePluginStat_Hoehenmeter/class.RunalyzePluginStat_Hoehenmeter.php:124
-#, fuzzy
 msgid "Most elevation"
-msgstr "La plupart des altitudes"
+msgstr "La plus haute des altitudes"
 
 #: plugin/RunalyzePluginStat_Hoehenmeter/class.RunalyzePluginStat_Hoehenmeter.php:152
 msgid "Steepest routes"
@@ -5721,6 +5718,10 @@ msgid ""
 "running efficiency, one can ignore the efficiency and therefore call it "
 "effective VO<sub>2</sub>max."
 msgstr ""
+"La VO<sub>2</sub>max est en soi une méthode scientifique pour mesurer la "
+"consommation maximale d'oxygène en laboratoire.<br>Deux coureurs avec des "
+"valeurs de VO<sub>2</sub>max identiques ne courent pas forcément à la même "
+"vitesse, car l'efficacité en course joue un rôle additionnel. "
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:450
 msgid "Current Effective VO<sub>2</sub>max"
