@@ -8,18 +8,18 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.com\n"
 "POT-Creation-Date: 2017-07-08 11:26+0200\n"
-"PO-Revision-Date: 2017-07-02 20:17+0000\n"
+"PO-Revision-Date: 2017-08-10 14:43+0000\n"
 "Last-Translator: Robert Hartl <chami@chami.sk>\n"
-"Language-Team: Slovak <https://translate.runalyze.com/projects/runalyze/"
-"runalyze-master-po/sk/>\n"
+"Language-Team: Slovak <https://translate.runalyze.com/projects/runalyze"
+"/runalyze-master-po/sk/>\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 2.14\n"
+"X-Generator: Weblate 2.15\n"
 
 #: inc/core/View/RaceResult/Dataview.php:91
 #, php-format
@@ -1911,7 +1911,7 @@ msgstr ""
 
 #: inc/core/Data/Weather/Condition.php:110
 msgid "foggy"
-msgstr ""
+msgstr "hmlisto"
 
 #: inc/core/Data/Weather/Condition.php:112
 msgid "thundery"
@@ -1919,7 +1919,7 @@ msgstr ""
 
 #: inc/core/Data/Weather/Condition.php:114
 msgid "windy"
-msgstr ""
+msgstr "veterno"
 
 #: inc/core/Data/Weather/Condition.php:117
 #: inc/core/Data/Weather/BeaufortScale.php:145
