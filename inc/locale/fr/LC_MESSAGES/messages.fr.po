@@ -6,7 +6,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: mail@runalyze.com\n"
 "POT-Creation-Date: 2017-07-08 11:26+0200\n"
 "PO-Revision-Date: 2017-08-10 14:43+0000\n"
-"Last-Translator: nicolas ghysbrecht <kosnik@kanet.xyz>\n"
+"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
 "Language-Team: French <https://translate.runalyze.com/projects/runalyze"
 "/runalyze-master-po/fr/>\n"
 "Language: fr\n"
@@ -4067,7 +4067,7 @@ msgstr "%d activités ont été mises à jour."
 
 #: src/CoreBundle/Component/Tool/DatabaseCleanup/JobGeneral.php:68
 msgid "Internal constants have been refreshed."
-msgstr "Les constantes internes ont été rafraîchies."
+msgstr "Les constantes internes ont été rafraichies."
 
 #: src/CoreBundle/Component/Tool/DatabaseCleanup/JobGeneral.php:77
 msgid "There was a problem while recalculating your equipment statistics"
