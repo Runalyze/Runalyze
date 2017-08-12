@@ -39,6 +39,7 @@
 
                         {% for dataset in form.datasets %}
                             {% set keyObject = datasetKeys.get(dataset.vars.value.keyid) %}
+                            {# @var keyObject \Runalyze\Dataset\Keys\AbstractKey #}
                             <tr class="r" id="{{ position }}_tr">
                                 <td class="c">
                                     {% if keyObject.description() %}
@@ -69,8 +70,8 @@
                                     {% else %}
                                         {{ form_widget(dataset.style, {'value' : defaultConfiguration[keyObject.id].style }) }}
                                     {% endif %}                    </td>
-                                <td class="{{ keyObject.getStyle() | raw }}" style="{{ dataset.style.vars.data }}">
-                                    {{ keyObject.stringFor(context) | raw }}
+                                <td class="{{ keyObject.cssClass() | raw }}" style="{{ dataset.style.vars.data }}">
+                                    {{ keyObject.stringForExample(context) | raw }}
                                 </td>
                             </tr>
 

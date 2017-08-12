@@ -11,7 +11,7 @@ use Runalyze\Dataset\SummaryMode;
 
 /**
  * Abstract dataset key
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Dataset\Keys
  */
@@ -89,6 +89,16 @@ abstract class AbstractKey
 	 */
 	abstract public function stringFor(Context $context);
 
+    /**
+     * Get string to display this dataset value for fake data
+     * @param \Runalyze\Dataset\Context $context
+     * @return string
+     */
+    public function stringForExample(Context $context)
+    {
+        return $this->stringFor($context);
+    }
+
 	/**
 	 * @return int see \Runalyze\Dataset\SummaryMode for enum
 	 */
@@ -107,10 +117,10 @@ abstract class AbstractKey
 
 	/**
 	 * Is this key always shown?
-	 * 
+	 *
 	 * By default users can hide each dataset.
 	 * Some keys can be forced to be always visible, e.g. duration and sport.
-	 * 
+	 *
 	 * @return bool
 	 * @codeCoverageIgnore
 	 */

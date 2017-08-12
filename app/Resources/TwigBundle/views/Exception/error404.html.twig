@@ -1,10 +1,10 @@
 {% extends "@Twig/Exception/error.html.twig" %}
 
 {% block content %}
-    <h3>{% trans %}Access denied{% endtrans %}</h3>
+    <h3>{% trans %}Sorry!{% endtrans %} - {% trans %}Page not found{% endtrans %}</h3>
 
     <p class="text">
-        {% trans %}You cannot access this item.{% endtrans %}
+        {% trans %}Looks like something went wrong here.{% endtrans %}
 
         {% if not app.request.xmlHttpRequest %}
             <br>
