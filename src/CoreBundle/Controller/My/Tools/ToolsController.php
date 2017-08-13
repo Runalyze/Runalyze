@@ -129,7 +129,7 @@ class ToolsController extends Controller
      */
     public function anovaAction(Request $request, Account $account)
     {
-        $data = AnovaData::getDefault($this->getDoctrine()->getRepository('CoreBundle:Sport')->findAllFor($account), $this->getDoctrine()->getRepository('CoreBundle:Type')->findAllFor($account));
+        $data = AnovaData::getDefault($this->getDoctrine()->getRepository('CoreBundle:Sport')->findAllFor($account), []);
 
         $form = $this->createForm(AnovaType::class, $data, [
             'action' => $this->generateUrl('tools-anova')
@@ -165,7 +165,7 @@ class ToolsController extends Controller
      */
     public function trendAnalysisAction(Request $request, Account $account)
     {
-        $data = TrendAnalysisData::getDefault($this->getDoctrine()->getRepository('CoreBundle:Sport')->findAllFor($account), $this->getDoctrine()->getRepository('CoreBundle:Type')->findAllFor($account));
+        $data = TrendAnalysisData::getDefault($this->getDoctrine()->getRepository('CoreBundle:Sport')->findAllFor($account), []);
 
         $form = $this->createForm(TrendAnalysisType::class, $data, [
             'action' => $this->generateUrl('tools-trend-analysis')

@@ -80,18 +80,27 @@ class TrendAnalysisType extends AbstractType
                     /** @var Sport $sport */
                     return $sport->getName();
                 },
-                'placeholder' => 'Choose sport(s)',
-                'attr' => ['class' => 'chosen-select full-size']
+                'attr' => [
+                    'data-placeholder' => __('Choose sport(s)'),
+                    'class' => 'chosen-select full-size'
+                ],
+                'choice_attr' => function($sport, $key, $index) {
+                    /* @var Sport $sport */
+                    return ['data-id' => $sport->getId()];
+                }
             ])
             ->add('type', ChoiceType::class, [
+                'required' => false,
                 'multiple' => true,
                 'choices' => $this->TypeRepository->findAllFor($this->getAccount()),
                 'choice_label' => function($type, $key, $index) {
                     /** @var Type $type */
                     return $type->getName();
                 },
-                'placeholder' => 'Choose activity type(s)',
-                'attr' => ['class' => 'chosen-select full-size'],
+                'attr' => [
+                    'data-placeholder' => __('Choose activity type(s)'),
+                    'class' => 'chosen-select full-size'
+                ],
                 'choice_attr' => function($type, $key, $index) {
                     /* @var Type $type */
                     return ['data-sportid' => $type->getSport()->getId()];

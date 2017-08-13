@@ -4,6 +4,7 @@ namespace Runalyze\Bundle\CoreBundle\Form\Tools\Anova;
 
 use DateTime;
 use Runalyze\Bundle\CoreBundle\Entity\Sport;
+use Runalyze\Bundle\CoreBundle\Entity\Type;
 
 class AnovaData
 {
@@ -27,6 +28,7 @@ class AnovaData
 
     /**
      * @param Sport[] $sport
+     * @param Type[] $type
      * @return AnovaData
      */
     public static function getDefault(array $sport, array $type)

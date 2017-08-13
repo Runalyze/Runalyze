@@ -116,10 +116,14 @@ class AnovaDataQuery
 
     protected function addTypeConditionToQuery(QueryBuilder $queryBuilder)
     {
-        $queryBuilder->andWhere($queryBuilder->expr()->in('t.type', ':types'));
-        $queryBuilder->setParameter(':types', array_map(function(Type $type) {
-            return $type->getId();
-        }, $this->AnovaData->getType()));
+        $types = $this->AnovaData->getType();
+
+        if (!empty($types)) {
+            $queryBuilder->andWhere($queryBuilder->expr()->in('t.type', ':types'));
+            $queryBuilder->setParameter(':types', array_map(function(Type $type) {
+                return $type->getId();
+            }, $types));
+        }
     }
 
     protected function filterEmptyGroups()

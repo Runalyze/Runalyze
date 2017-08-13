@@ -4,6 +4,7 @@ namespace Runalyze\Bundle\CoreBundle\Form\Tools\TrendAnalysis;
 
 use DateTime;
 use Runalyze\Bundle\CoreBundle\Entity\Sport;
+use Runalyze\Bundle\CoreBundle\Entity\Type;
 
 class TrendAnalysisData
 {
@@ -96,7 +97,7 @@ class TrendAnalysisData
     }
 
     /**
-     * @param Type[] $typs
+     * @param Type[] $types
      */
     public function setType(array $types)
     {

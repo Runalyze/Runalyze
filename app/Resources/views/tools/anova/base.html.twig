@@ -78,6 +78,18 @@
 
                     {{ form_widget(form.type) }}
                 </div>
+
+                <script>
+                    $("#trend_analysis_sport").chosen().change(function(){
+                        var type = $("#trend_analysis_type");
+
+                        type.find('option').attr('disabled', 'disabled');
+                        $(this).find('option:selected').each(function(i){
+                            type.find('option[data-sportid='+$(this).data('id')+']').removeAttr('disabled');
+                        });
+                        type.trigger('chosen:updated');
+                    });
+                </script>
             </fieldset>
 
             <fieldset>
