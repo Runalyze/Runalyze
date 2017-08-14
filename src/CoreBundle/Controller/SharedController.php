@@ -86,7 +86,7 @@ class SharedController extends Controller
 
         $Frontend = new \FrontendSharedList();
 
-        if (isset($_GET['view'])) {
+        if (isset($_GET['type'])) {
             return $this->render('shared/athlete/base_plot_sum_data.html.twig', [
                 'username' => $username,
                 'plot' => $this->getPlotSumData()
@@ -121,6 +121,6 @@ class SharedController extends Controller
             $_GET['y'] = \PlotSumData::LAST_12_MONTHS;
         }
 
-        return 'week' == $Request->query->get('view', 'month') ? new \PlotWeekSumData() : new \PlotMonthSumData();
+        return 'week' == $Request->query->get('type', 'month') ? new \PlotWeekSumData() : new \PlotMonthSumData();
     }
 }
