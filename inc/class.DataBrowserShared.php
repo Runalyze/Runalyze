@@ -101,7 +101,7 @@ class DataBrowserShared extends DataBrowser {
 	 * @return string
 	 */
 	public static function getUrlForMonthKm() {
-		return self::getBaseUrl().'?view=month';
+		return self::getBaseUrl().'?type=month';
 	}
 
 	/**
@@ -109,7 +109,7 @@ class DataBrowserShared extends DataBrowser {
 	 * @return string
 	 */
 	public static function getUrlForWeekKm() {
-		return self::getBaseUrl().'?view=week';
+		return self::getBaseUrl().'?type=week';
 	}
 
 	/**
