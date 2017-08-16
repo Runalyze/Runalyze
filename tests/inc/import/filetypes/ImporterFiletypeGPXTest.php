@@ -2,6 +2,9 @@
 
 use Runalyze\Util\LocalTime;
 
+/**
+ * @group import
+ */
 class ImporterFiletypeGPXTest extends PHPUnit_Framework_TestCase
 {
 	/** @var ImporterFiletypeGPX */
@@ -229,5 +232,24 @@ class ImporterFiletypeGPXTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($this->object->object()->hasArrayAltitude());
         $this->assertTrue($this->object->object()->hasArrayHeartrate());
         $this->assertTrue($this->object->object()->hasArrayCadence());
+    }
+
+    /**
+     * @see https://github.com/Runalyze/Runalyze/issues/2194
+     */
+    public function testBreakBetweenTrackSegments()
+    {
+        $this->object->parseFile('../tests/testfiles/gpx/break-between-trkseg.gpx');
+
+        $this->assertFalse($this->object->hasMultipleTrainings());
+        $this->assertFalse($this->object->failed());
+
+        $this->assertEquals('2010-04-02 10:26', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
+        $this->assertEquals(120, $this->object->object()->getTimezoneOffset());
+        $this->assertEquals(5*60*60 + 17*60 + 21, $this->object->object()->getTimeInSeconds(), '', 10);
+        $this->assertEquals(1, $this->object->object()->Pauses()->num());
+
+        $this->assertEquals(13402, $this->object->object()->Pauses()->at(0)->time());
+        $this->assertEquals(3780, $this->object->object()->Pauses()->at(0)->duration());
     }
 }

@@ -7,6 +7,10 @@ use DB;
 
 use Runalyze\Model\Activity;
 
+/**
+ * @group dependsOn
+ * @group dependsOnOldDatabase
+ */
 class UpdaterTest extends \PHPUnit_Framework_TestCase
 {
 	/** @var \PDO */

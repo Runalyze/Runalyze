@@ -14,6 +14,7 @@ class DataBrowser extends AbstractCategory
             'DB_SHOW_DATASET_LABELS' => 'true',
             'DB_SHOW_CREATELINK_FOR_DAYS' => 'false',
             'DB_SHOW_ACTIVE_DAYS_ONLY' => 'false',
+            'DB_REVERSE_MODE' => 'false',
         ];
     }
 

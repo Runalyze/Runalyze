@@ -121,6 +121,8 @@ class SearchResults {
 			's',
 			'elapsed_time',
 			'elevation',
+            'climb_score',
+            'percentage_hilly',
 			'kcal',
 			'pulse_avg',
 			'pulse_max',
@@ -151,7 +153,7 @@ class SearchResults {
 			'is_night',
 			'weatherid',
 			'route',
-			'comment',
+			'title',
 			'partner',
 			'notes'
 		);
@@ -162,6 +164,8 @@ class SearchResults {
 	 */
 	protected function setKeysThatShouldIgnoreNull() {
 		$this->KeysThatShouldIgnoreNull = [
+		    'climb_score',
+			'percentage_hilly',
 			'fit_training_effect',
 			'fit_performance_condition',
 			'rpe',
@@ -408,6 +412,8 @@ class SearchResults {
 			$value = (new Elevation())->setInPreferredUnit($value)->meter();
 		} elseif ($key == 'distance') {
 			$value = (new Distance())->setInPreferredUnit($value)->kilometer();
+        } elseif ($key == 'percentage_hilly') {
+            $value *= 0.01;
 		} elseif ($key == 'vertical_oscillation' || $key == 'vertical_ratio') {
 			$value *= 10;
 		} elseif ($key == 'groundcontact_balance') {
@@ -638,7 +644,7 @@ class SearchResults {
 		$MultiEditor = new MultiEditor($IDs);
 		$MultiEditor->display();
 
-		echo Ajax::wrapJS('$("#ajax > .panel-heading, #ajax > .panel-content").remove();$("#ajax").removeClass("big-window").addClass("small-window");');
+		echo Ajax::wrapJS('$("#ajax").removeClass("big-window").addClass("small-window");');
 	}
 
 	/**

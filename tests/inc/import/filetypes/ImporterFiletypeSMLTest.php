@@ -2,6 +2,10 @@
 
 use Runalyze\Util\LocalTime;
 
+/**
+ * @group import
+ * @group dependsOnOldFactory
+ */
 class ImporterFiletypeSMLTest extends PHPUnit_Framework_TestCase {
 
 	/**

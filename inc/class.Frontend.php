@@ -96,6 +96,7 @@ class Frontend {
 	 */
 	private function initConfig() {
 		$this->yamlConfig = array_merge(
+			Yaml::parse(file_get_contents(FRONTEND_PATH.'/../app/config/config.yml'))['parameters'],
 			Yaml::parse(file_get_contents(FRONTEND_PATH.'/../app/config/default_config.yml'))['parameters'],
 			Yaml::parse(file_get_contents(FRONTEND_PATH.'/../data/config.yml'))['parameters']
 		);
@@ -105,12 +106,13 @@ class Frontend {
 	    define('NOKIA_HERE_APPID', $this->yamlConfig['nokia_here_appid']);
 	    define('NOKIA_HERE_TOKEN', $this->yamlConfig['nokia_here_token']);
 	    define('THUNDERFOREST_API_KEY', $this->yamlConfig['thunderforest_api_key']);
-			define('MAPBOX_API_KEY', $this->yamlConfig['mapbox_api_key']);
+        define('MAPBOX_API_KEY', $this->yamlConfig['mapbox_api_key']);
 	    define('PERL_PATH', $this->yamlConfig['perl_path']);
 	    define('TTBIN_PATH', $this->yamlConfig['ttbin_path']);
 	    define('GEONAMES_USERNAME', $this->yamlConfig['geonames_username']);
 	    define('USER_DISABLE_ACCOUNT_ACTIVATION', $this->yamlConfig['user_disable_account_activation']);
 	    define('SQLITE_MOD_SPATIALITE', $this->yamlConfig['sqlite_mod_spatialite']);
+        define('RUNALYZE_VERSION', $this->yamlConfig['RUNALYZE_VERSION']);
 	}
 
 	/**
@@ -214,18 +216,5 @@ class Frontend {
 		}
 
 		Error::getInstance()->footer_sent = true;
-	}
-
-	/**
-	 * Display panels
-	 */
-	public function displayPanels() {
-		$Factory = new PluginFactory();
-		$Panels = $Factory->enabledPanels();
-
-		foreach ($Panels as $key) {
-			$Panel = $Factory->newInstance($key);
-			$Panel->display();
-		}
 	}
 }

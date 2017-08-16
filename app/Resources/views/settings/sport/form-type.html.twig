@@ -21,7 +21,7 @@
             {{ form_row(form.abbr, {'div_class': 'w100 block with50erLabel', 'attr': {'class': 'small-size'}}) }}
             {{ form_row(form.hrAvg, {'div_class': 'w100 block with50erLabel', 'help': 'Average heart rate (used for calculation of TRIMP)', 'attr': {'class': 'small-size'}}) }}
             {{ form_row(form.qualitySession, {'div_class': 'w100 block with50erLabel', 'help': 'Quality sessions will be emphasized in your calendar.'}) }}
-            {{ form_row(form.short, {'div_class': 'w100 block with50erLabel', 'help': 'Mode for displaying activities in calendar'}) }}
+            {{ form_row(form.displayMode, {'div_class': 'w100 block with50erLabel', 'help': 'Mode for displaying activities in calendar'}) }}
 
             {{ form_rest(form) }}
 
@@ -48,7 +48,7 @@
         </p>
     </div>
 
-    {% if form.vars.data.id is not null and form.vars.data.trainings.count is null %}
+    {% if form.vars.data.id is not null and form.vars.data.trainings.count() is null %}
         {{ dangerZoneDelete(url('sport-type-delete', {'id': form.vars.data.id}), 'deleteSport') }}
     {% endif %}
 {% endblock %}

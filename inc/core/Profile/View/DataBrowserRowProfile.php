@@ -27,7 +27,7 @@ class DataBrowserRowProfile extends AbstractEnum
             case self::ONLY_ICON:
                 return __('only icon');
             case self::INHERIT_FROM_PARENT:
-                return __('Inherit from sport type');
+                return __('Inherit from sport');
             default:
                 throw new \InvalidArgumentException('Invalid databrowser row id "'.$id.'".');
         }

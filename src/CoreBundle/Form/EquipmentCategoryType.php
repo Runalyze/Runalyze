@@ -72,7 +72,7 @@ class EquipmentCategoryType extends AbstractType
                 }
             })
             ->add('maxKm', DistanceType::class, array(
-                'label' => 'max. Km',
+                'label' => 'max. Distance',
                 'required' => false
             ))
             ->add('maxTime', DurationNullableType::class, array(
@@ -87,7 +87,7 @@ class EquipmentCategoryType extends AbstractType
                 'label' => 'Assigned sports',
                 'attr' => [
                     'class' => 'chosen-select full-size',
-                    'data-placeholder' => 'Choose sport type(s)'
+                    'data-placeholder' => 'Choose sport(s)'
                 ],
                 'multiple' => true,
                 'required' => true,

@@ -79,19 +79,25 @@ class ElevationInfo {
 	 * Display
 	 */
 	public function display() {
-		$this->calculateValues();
-
 		echo '<div class="panel-heading">';
 		$this->displayHeader();
 		echo '</div>';
 
 		echo '<div class="panel-content">';
-		$this->displayStandardValues();
-		$this->displayDifferentAlgorithms();
-		$this->displayDifferentAlgorithmsWithOriginalData();
-		$this->displayPlot();
-		$this->displayElevationCorrection();
-		$this->displayInformation();
+
+		if ($this->Context->hasRoute()) {
+            $this->calculateValues();
+
+            $this->displayStandardValues();
+            $this->displayDifferentAlgorithms();
+            $this->displayDifferentAlgorithmsWithOriginalData();
+            $this->displayPlot();
+            $this->displayElevationCorrection();
+            $this->displayInformation();
+        } else {
+            $this->displayNoRouteAvailable();
+        }
+
 		echo '</div>';
 	}
 
@@ -306,4 +312,15 @@ class ElevationInfo {
 
 		$Fieldset->display();
 	}
+
+    protected function displayNoRouteAvailable()
+    {
+        $Fieldset = new FormularFieldset( __('Problem') );
+        $Fieldset->setId('problem');
+        $Fieldset->addError(
+            __('No elevation data available.')
+        );
+
+        $Fieldset->display();
+    }
 }

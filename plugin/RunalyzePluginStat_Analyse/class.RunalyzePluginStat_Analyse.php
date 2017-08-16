@@ -396,7 +396,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 			if (!empty($MinMax)) {
 				$speed_min  = round((float)$MinMax['max']);
 				$speed_max  = round((float)$MinMax['min']);
-				$speed_step = ($speed_min == $speed_max) ? 1 : round(($speed_min - $speed_max)/10);
+				$speed_step = ($speed_min == $speed_max) ? 1 : max(1, (int)round(($speed_min - $speed_max)/10));
 				$ceil_corr  = ($speed_min == $speed_max) ? 1 : $speed_min % $speed_step;
 			}
 		}

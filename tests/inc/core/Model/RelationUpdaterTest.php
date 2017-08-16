@@ -23,6 +23,9 @@ class RelationUpdaterForObject_MockTester extends RelationUpdater {
 	}
 }
 
+/**
+ * @group requiresSqlite
+ */
 class RelationUpdaterTest extends \PHPUnit_Framework_TestCase {
 
 	/**

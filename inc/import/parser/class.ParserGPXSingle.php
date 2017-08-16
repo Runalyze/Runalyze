@@ -140,10 +140,24 @@ class ParserGPXSingle extends ParserAbstractSingleXML {
 	 * Parse all log entries
 	 */
 	protected function parseTrack() {
+	    $i = 0;
+	    $j = 0;
+        $this->lastTimestamp = 0;
+        $lookForPauses = $this->lookForPauses;
+
 		foreach ($this->XML->trkseg as $TrackSegment) {
-			$this->lastTimestamp = 0;
-			foreach ($TrackSegment->trkpt as $Point)
+			foreach ($TrackSegment->trkpt as $Point) {
+			    if ($i > 0 && !$lookForPauses) {
+			        $this->lookForPauses = $j == 0;
+                }
+
 				$this->parseTrackpoint($Point);
+
+			    ++$j;
+            }
+
+            ++$i;
+			$j = 0;
 		}
 
 		$this->parseSpoQExtension();

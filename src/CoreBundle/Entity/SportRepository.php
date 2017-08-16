@@ -3,8 +3,11 @@
 namespace Runalyze\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Runalyze\Bundle\CoreBundle\Model\Sport\SportStatistics;
 use Runalyze\Profile\Sport\Running;
 use Runalyze\Profile\Sport\SportProfile;
+use Runalyze\Util\LocalTime;
+use Doctrine\ORM\Query\Expr\Join;
 
 class SportRepository extends EntityRepository
 {
@@ -99,6 +102,35 @@ class SportRepository extends EntityRepository
         }
 
         return $allTypes;
+    }
+
+    /**
+     * @param int|null $timestamp
+     * @param Account $account
+     * @return SportStatistics
+     */
+    public function getSportStatisticsSince($timestamp, Account $account)
+    {
+        $queryBuilder = $this->_em->createQueryBuilder()
+            ->select('s')
+            ->addSelect('COUNT(t.id) as num')
+            ->addSelect('SUM(t.distance) as distance')
+            ->addSelect('SUM(t.s) as time_in_s')
+            ->addSelect('SUM(CASE WHEN t.distance > 0 THEN 1 ELSE 0 END) as count_distance')
+            ->from('CoreBundle:Sport', 's')
+            ->innerJoin('s.trainings', 't','WITH', 't.account = :account')
+            ->where('s.account = :account')
+            ->setParameter(':account', $account->getId())
+            ->groupBy('s.id')
+            ->orderBy('distance', 'DESC')
+            ->addOrderBy('time_in_s', 'DESC');
+
+        if (null !== $timestamp) {
+            $queryBuilder->andWhere('t.time > :startTime');
+            $queryBuilder->setParameter(':startTime', $timestamp);
+        }
+
+        return new SportStatistics((new LocalTime($timestamp))->toServerTime(), $queryBuilder->getQuery()->getResult());
     }
 
     public function save(Sport $sport)

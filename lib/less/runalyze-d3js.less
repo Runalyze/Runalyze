@@ -1,9 +1,16 @@
-@d3js-axis-color:               #ccc;
+@d3js-axis-color:               #999;
+@d3js-grid-color:               #eee;
 @d3js-plot-color:               #333;
 @d3js-plot-main-color:          #8ab856;
 @d3js-plot-main-color-hover:    #009500;
 
 .d3js {
+  text.c {
+    text-anchor: middle;
+    font-size: 10px;
+    font-family: Arial, sans-serif;
+  }
+
   .axis {
     font-size: 10px;
 
@@ -12,6 +19,44 @@
       stroke: @d3js-axis-color;
       shape-rendering: crispEdges;
     }
+  }
+
+  line {
+    &.grid,
+    &.median,
+    &.marker {
+      fill: none;
+      stroke-width: 1;
+      shape-rendering: crispEdges;
+    }
+  }
+
+  line.grid {
+    stroke: @d3js-grid-color;
+  }
+
+  line.median {
+    stroke: @d3js-plot-color;
+    stroke-dasharray: 5,5;
+  }
+
+  line.marker {
+    stroke: lighten(@d3js-plot-color, 50%);
+    stroke-dasharray: 5,20;
+  }
+
+  text.label {
+    font-size: 10px;
+  }
+
+  .elevation {
+    fill: none;
+    stroke: rgb(227, 217, 187);
+    stroke-width: 2px;
+  }
+  .area.elevation {
+    fill: rgba(227, 217, 187, .5);
+    stroke-width: 0;
   }
 }
 
@@ -41,5 +86,17 @@
   .outlier {
     fill: none;
     stroke: @d3js-plot-color;
+  }
+}
+
+.scatterplot {
+  circle {
+    fill: @d3js-plot-main-color;
+    stroke: rgba(0, 0, 0, 0.5);
+    stroke-width: 0.5px;
+  }
+
+  circle:hover {
+    fill: @d3js-plot-main-color-hover;
   }
 }

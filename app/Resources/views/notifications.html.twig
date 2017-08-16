@@ -22,7 +22,11 @@
                     {% set message = notification.message %}
                     <li{% if not notification.wasRead %} class="is-new"{% endif %} data-id="{{ notification.id }}">
                         {% if message.hasLink %}
-                            <a href="{{ message.link(router) }}">{{ message.text(translator) }}</a>
+                            {% if message.linkInternal %}
+                                <a class="internal" href="{{ message.link(router) }}" data-size="{{ message.windowSizeForInternalLink }}">{{ message.text(translator) }}</a>
+                            {% else %}
+                                <a href="{{ message.link(router) }}" target="_blank">{{ message.text(translator) }}</a>
+                            {% endif %}
                         {% else %}
                             <span class="no-link">{{ message.text(translator) }}</span>
                         {% endif %}

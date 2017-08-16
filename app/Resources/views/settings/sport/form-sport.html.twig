@@ -8,9 +8,9 @@
 {% block content %}
     <div class="panel-heading">
         {% if form.vars.data.id is null%}
-            <h1>{{ 'Add sport type'|trans }}</h1>
+            <h1>{{ 'Add new sport'|trans }}</h1>
         {% else %}
-            <h1>{{ 'Edit sport type'|trans }}</h1>
+            <h1>{{ 'Edit sport'|trans }}</h1>
         {% endif %}
     </div>
 
@@ -29,14 +29,14 @@
             {% if form.internalSportId %}
             {{ form_row(form.internalSportId, {'div_class': 'w100 block with50erLabel'}) }}
             <p class="info margin-bottom">
-                {% trans %}You can define any sport type you like, but for synchronization and comparisons you can map your sport types to our predefined ones.
-                This mapping will be used to set the correct sport type when importing your activities.{% endtrans %}
+                {% trans %}You can define any sport you like, but for synchronization and comparisons you can map your sports to our predefined ones.
+                This mapping will be used to set the correct sport when importing your activities.{% endtrans %}
             </p>
             {% endif %}
 
             {{ form_row(form.isMain, {'div_class': 'w100 block with50erLabel'}) }}
             <p class="info margin-bottom">
-                {% trans %}You can group your sport types into 'main' and 'alternative' ones.
+                {% trans %}You can group your sports into 'main' and 'alternative' ones.
                 For some analyses 'alternative' types are grouped together whereas 'main' types are always shown standalone from each other.{% endtrans %}
             </p>
         </fieldset>
@@ -54,7 +54,7 @@
             {{ form_row(form.kcal, {'div_class': 'w100 block with50erLabel', 'help': 'Average energy turnover in kilocalories per hour'}) }}
             {% if configList.computingEnergyActivated %}
             <p class="info margin-bottom">
-                {% trans %}Energy turnover will be calculated based on this value when changing sport type or duration.{% endtrans %}
+                {% trans %}Energy turnover will be calculated based on this value when changing sport or duration.{% endtrans %}
             </p>
             {% else %}
                 <p class="info margin-bottom">
@@ -105,7 +105,7 @@
 
         <div class="panel-content">
             <p class="info margin-bottom">
-                {% trans %}Activity types are useful to separate your activities into different categories. An activity type can only belong to one sport type.{% endtrans %}
+                {% trans %}Activity types are useful to separate your activities into different categories. An activity type can only belong to one sport.{% endtrans %}
             </p>
 
             {% if types|length > 0 %}
@@ -133,7 +133,7 @@
                             <td>{{ type.abbr }}</td>
                             <td>{{ type.hrAvg }} <small>bpm</small></td>
                             <td>{% if type.qualitySession %}<i class="fa fa-fw fa-check"></i>{% endif %}</td>
-                            <td>{{ calendarView.stringFor(type.short) }}</td>
+                            <td>{{ calendarView.stringFor(type.displayMode) }}</td>
                             <td>
                                 {% if hasTrainings[type.id] is not defined %}
                                     <a class="window color-danger" href="{{ url('sport-type-delete', { 'id': type.id, 't': csrf_token('deleteSportType') }) }}" data-confirm="{% trans %}Do you really want to delete this?{% endtrans %}"><i class="fa fa-fw fa-trash" title="{% trans %}Delete{% endtrans %}"></i></a>
@@ -159,7 +159,7 @@
         </p>
     </div>
 
-    {% if form.vars.data.id is not null and form.vars.data.trainings.count is null %}
+    {% if form.vars.data.id is not null and form.vars.data.trainings.count() is null %}
         {{ dangerZoneDelete(url('sport-delete', {'id': form.vars.data.id}), 'deleteSport') }}
     {% endif %}
 {% endblock %}

@@ -1,0 +1,272 @@
+{% extends 'base_logged_in.twig' %}
+
+{% block content %}
+    <div class="panel-heading">
+        <h1><a class="ajax" target="ajax" href="{{ url('tools-trend-analysis') }}">{% trans %}Trend analysis{% endtrans %}</a></h1>
+    </div>
+
+    <div class="panel-content">
+        {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'id': 'trend-analysis-form'}}) }}
+
+            <fieldset>
+                <legend>{% trans %}Data selection{% endtrans %}</legend>
+
+                <div class="w100 with33erLabel">
+                    <label>{% trans %}Time range{% endtrans %}</label>
+
+                    <div class="full-size left">
+                        <span class="input-with-unit">
+                            {{ form_widget(form.dateFrom) }}
+                            <label for="trend_analysis_dateFrom" class="input-unit"><i class="fa fa-fw fa-calendar"></i></label>
+                        </span>
+
+                        {% trans %}to{% endtrans %}
+
+                        <span class="input-with-unit">
+                            {{ form_widget(form.dateTo) }}
+                            <label for="trend_analysis_dateTo" class="input-unit"><i class="fa fa-fw fa-calendar"></i></label>
+                        </span>
+
+                        {% trans %}or{% endtrans %}
+
+                        {% set startTime = configVar('data.START_TIME') %}
+                        <select id="trend_analysis_dateSelect" name="trend_analysis_dateSelect">
+                            <option disabled selected>{{ 'choose a specific period'|trans }}</option>
+                            <option value="{{ date('-6months')|date('d.m.Y')~'-'~date('now')|date('d.m.Y') }}">{{ 'last 6 months'|trans }}</option>
+                            <option value="{{ date('-12months')|date('d.m.Y')~'-'~date('now')|date('d.m.Y') }}">{{ 'last 12 months'|trans }}</option>
+                            {% if startTime < date('1. jan') %}
+                            {% for year in (date('now')|date('Y'))..(configVar('data.START_TIME')|date('Y'))  %}
+                            <option value="{{ '01.01.'~year~'-31.12.'~year }}">{{ year }}</option>
+                            {% endfor %}
+                            <option value="{{ startTime|date('d.m.Y')~'-'~date('now')|date('d.m.Y') }}">{{ 'entire period'|trans }}</option>
+                            {% endif %}
+                        </select>
+
+                        <script>
+                            var $dateFrom = $("#trend_analysis_dateFrom"),
+                                $dateTo = $("#trend_analysis_dateTo");
+                            $("#trend_analysis_dateSelect").on('change', function(){
+                                var t = $(this).val().split('-');
+                                $dateFrom.val(t[0]);
+                                $dateTo.val(t[1]);
+                            });
+                        </script>
+                    </div>
+                </div>
+
+                <div class="w100 with33erLabel">
+                    <label for="trend_analysis_sport">
+                        {% trans %}Sport{% endtrans %}
+                        <span class="right small">
+                            <span class="link chosen-select-all" data-target="trend_analysis_sport">{% trans %}all{% endtrans %}</span> |
+                            <span class="link chosen-select-none" data-target="trend_analysis_sport">{% trans %}none{% endtrans %}</span>&nbsp;
+                        </span>
+                    </label>
+
+                    {{ form_widget(form.sport) }}
+                </div>
+
+                <div class="w100 with33erLabel">
+                    <label for="trend_analysis_type">
+                        {% trans %}Activity type{% endtrans %}
+                        <span class="right small">
+                            <span class="link chosen-select-all" data-target="trend_analysis_type">{% trans %}all{% endtrans %}</span> |
+                            <span class="link chosen-select-none" data-target="trend_analysis_type">{% trans %}none{% endtrans %}</span>&nbsp;
+                        </span>
+                    </label>
+
+                    {{ form_widget(form.type) }}
+                </div>
+
+                <script>
+                    $("#trend_analysis_sport").chosen().change(function(){
+                        var type = $("#trend_analysis_type");
+
+                        type.find('option').attr('disabled', 'disabled');
+                        $(this).find('option:selected').each(function(i){
+                            type.find('option[data-sportid='+$(this).data('id')+']').removeAttr('disabled');
+                        });
+                        type.trigger('chosen:updated');
+                    });
+                </script>
+            </fieldset>
+
+            <fieldset>
+                <legend>{% trans %}Value{% endtrans %}</legend>
+
+                <div class="w100 with33erLabel">
+                    {{ form_label(form.valueToLookAt) }}
+                    {{ form_widget(form.valueToLookAt) }}
+                </div>
+            </fieldset>
+
+            <div class="c">
+                <input type="submit" class="submit" value="{% trans %}Start analysis{% endtrans %}">
+            </div>
+
+        {{ form_end(form) }}
+
+        <div id="trend-analysis-plot" class="margin-top-2x"></div>
+
+        <script>
+            var $plot = $("#trend-analysis-plot");
+
+            $("#trend-analysis-form").unbind('submit').submit(function(e){
+                e.preventDefault();
+
+                var data = $(this).serializeArray();
+                var url = $(this).attr('action');
+
+                $plot.addClass('loading');
+
+                $.post(url, data).done(function(json){
+                    try {
+                        var numValues = json.values.constructor === Array ? json.values.length : Object.getOwnPropertyNames(json.values).length;
+
+                        eval("json.tickFormatter = " + json.tickFormatter);
+
+                        $plot.html("");
+
+                        if (numValues == 0) {
+                            $plot.html('<p class="text"><em>{% trans %}No results.{% endtrans %}</em></p>').removeClass('loading');
+                            return;
+                        }
+
+                        var margin = {top: 30, right: 100, bottom: 30, left: 100};
+                        var height = 200;
+                        var width = 810 - margin.left - margin.right;
+
+                        var data = [];
+
+                        $.each(json.values, function (index, value) {
+                            data.push([index, value]);
+                        });
+
+                        var tip = d3.tip()
+                            .attr('class', 'tooltip top in')
+                            .html(function(d) {
+                                return '<div class="tooltip-arrow"></div><div class="tooltip-inner">' +
+                                    d3.timeFormat("%d.%m.%Y")(1000 * d[0]) + ': ' +
+                                    json.tickFormatter(d[1]) +
+                                    '</div>';
+                            });
+                        var xValue = function(d) { return 1000 * d[0]; },
+                            xScale = d3.scaleTime().range([0, width]).domain([d3.timeParse('%d.%m.%Y')($dateFrom.val()).getTime(), d3.timeParse('%d.%m.%Y')($dateTo.val()).getTime()]),
+                            xMap = function(d) { return xScale(xValue(d));},
+                            xAxis = d3.axisBottom().scale(xScale).ticks(6).tickFormat(d3.timeFormat("%d.%m.%Y"));
+
+                        var yValue = function(d) { return d[1]; },
+                            yScale = d3.scaleLinear().range([height, 0]).domain([d3.min(data, yValue), d3.max(data, yValue)]).nice(),
+                            yMap = function(d) { return yScale(yValue(d));},
+                            yAxis = d3.axisLeft().scale(yScale).tickFormat(json.tickFormatter);
+
+                        var svg = d3.select("#trend-analysis-plot").append("svg")
+                            .attr("width", width + margin.left + margin.right)
+                            .attr("height", height + margin.top + margin.bottom)
+                            .attr("class", "d3js scatterplot")
+                            .append("g")
+                            .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+                            .call(tip);
+
+                        svg.append('clipPath').attr('id', 'clip-trend-analysis').append('rect').attr('x', 0).attr('y',0).attr('width', width).attr('height', height);
+
+                        svg.append("text")
+                            .attr("x", (width / 2))
+                            .attr("y", -(margin.top / 2))
+                            .attr("text-anchor", "middle")
+                            .style("font-size", "12px")
+                            .style("font-weight", "bold")
+                            .text($("#trend_analysis_valueToLookAt").find("option:selected").text());
+
+                        var grid = svg.append("g").attr('clip-path', 'url(#clip-trend-analysis)');
+                        var axes = svg.append("g");
+                        var plotArea = svg.append("g").attr('clip-path', 'url(#clip-trend-analysis)');
+
+                        grid.selectAll("line.grid").data(xScale.ticks(6)).enter()
+                            .append("line")
+                            .attr("class", "grid")
+                            .attr("x1", function(d){ return xScale(d) + 0.5; })
+                            .attr("x2", function(d){ return xScale(d) + 0.5; })
+                            .attr("y1", 0)
+                            .attr("y2", height);
+
+                        var trendline = regression('polynomial', data, 4),
+                            trend = function (x) {
+                                return trendline.equation.reduce(function (sum, coeff, power) {
+                                    return sum + coeff * Math.pow(x, power);
+                                }, 0);
+                            },
+                            xMin = xScale.domain()[0] / 1000,
+                            xMax = xScale.domain()[1] / 1000;
+                        trendline.points.unshift([xMin, trend(xMin)]);
+                        trendline.points.push([xMax, trend(xMax)]);
+
+                        plotArea.append("path")
+                            .attr("fill", "none")
+                            .attr("stroke", "#ccc")
+                            .attr("stroke-width", "3px")
+                            .attr("class", "trend")
+                            .attr("d", d3.line().x(xMap).y(yMap).curve(d3.curveCatmullRom.alpha(1.0))(trendline.points));
+
+                        var sortedY = data.map(yValue).sort(d3.ascending),
+                            lowerQuantile = d3.quantile(sortedY, .1),
+                            median = d3.quantile(sortedY, .5),
+                            upperQuantile = d3.quantile(sortedY, .9);
+
+                        plotArea.append("line")
+                            .attr("class", "y median")
+                            .attr("x1", 0).attr("x2", width)
+                            .attr("y1", yScale(median)).attr("y2", yScale(median));
+                        svg.append("text")
+                            .attr("class", "y marker label")
+                            .attr("x", width + 5)
+                            .attr("y", yScale(median))
+                            .text("{{ "Average"|trans }}");
+                        svg.append("text")
+                            .attr("class", "y marker label")
+                            .attr("x", width + 5)
+                            .attr("y", yScale(median) + 11)
+                            .text(json.tickFormatter(median));
+                        plotArea.append("line")
+                            .attr("class", "y marker")
+                            .attr("x1", 0).attr("x2", width)
+                            .attr("y1", yScale(lowerQuantile)).attr("y2", yScale(lowerQuantile));
+                        plotArea.append("line")
+                            .attr("class", "y marker")
+                            .attr("x1", 0).attr("x2", width)
+                            .attr("y1", yScale(upperQuantile)).attr("y2", yScale(upperQuantile));
+
+                        axes.append("g")
+                            .attr("class", "y axis")
+                            .call(yAxis);
+
+                        axes.append("g")
+                            .attr("class", "x axis")
+                            .attr("transform", "translate(0," + height + ")")
+                            .call(xAxis);
+
+                        plotArea.selectAll(".dot")
+                            .data(data)
+                            .enter().append("circle")
+                            .attr("class", "dot")
+                            .attr("cx", xMap)
+                            .attr("cy", yMap)
+                            .attr("r", 3)
+                            .on("mouseover", tip.show)
+                            .on("mouseout", tip.hide);
+                    } catch (e) {
+                        console.log(e);
+
+                        $plot.html('<p class="text"><em>{% trans %}There was a problem.{% endtrans %} ({% trans %}Plotting failed{% endtrans %})</em></p>');
+                    } finally {
+                        $plot.removeClass('loading');
+                    }
+                }).fail(function(){
+                    $plot.html('<p class="text"><em>{% trans %}There was a problem.{% endtrans %} ({% trans %}Request failed{% endtrans %})</em></p>').removeClass('loading');
+                });
+
+                return false;
+            });
+        </script>
+    </div>
+{% endblock %}

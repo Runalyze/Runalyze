@@ -1,0 +1,97 @@
+@hilly-or-not-left-color:   #2980B9;
+@hilly-or-not-right-color:  #7bbd5b;
+@climb-score-color:         #EA463D;
+
+.climb-score-badge {
+  margin-left: 20px;
+}
+.climb-score-values {
+  width: 80%;
+  margin-right: auto;
+  text-align: right;
+  font-size: 12px;
+}
+
+#hill-score-hilly-or-not {
+  width: 120px;
+  line-height: 12px;
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+
+  .row {
+    display: block;
+    clear: both;
+
+    &:after {
+      content: '';
+      clear: both;
+    }
+  }
+
+  .left {
+    float: left;
+    text-align: left;
+  }
+  .right {
+    float: right;
+    text-align: right;
+  }
+}
+
+.hilly-score-hilly-or-not-bar {
+  margin: 3px 0;
+  height: 12px;
+
+  &.left {
+    background-color: @hilly-or-not-left-color;
+  }
+  &.right {
+    background-color: @hilly-or-not-right-color;
+  }
+}
+.hilly-score-hilly-or-not-label {
+  text-transform: lowercase;
+}
+
+.d3js .climb-badge {
+  circle {
+    fill: @climb-score-color;
+  }
+  text {
+    fill: #eee;
+    dominant-baseline: central;
+    text-anchor: middle;
+    font-size: 10px;
+    font-family: Arial, sans-serif;
+  }
+}
+
+.d3js .climb {
+  .climb-profile {
+    fill: none;
+  }
+
+  line {
+    stroke: #ccc;
+    stroke-dasharray: 5,10;
+    shape-rendering: crispEdges;
+
+    &.climb-start {
+      stroke: none;
+    }
+  }
+
+  &:hover,
+  &.hover,
+  &.clicked {
+    .climb-profile {
+      fill: #ccc;
+    }
+
+    line {
+      stroke: #999;
+      stroke-dasharray: none;
+    }
+  }
+}

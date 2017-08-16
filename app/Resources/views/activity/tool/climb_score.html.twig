@@ -1,0 +1,119 @@
+{% extends "base_logged_in.twig" %}
+
+{% import _self as this %}
+
+{% macro valueWithUnitFor(value) -%}
+    {# @var value \Runalyze\Bundle\CoreBundle\Twig\DisplayableValue #}
+    {{ value.value }} <small>{{ value.unit }}</small>
+{%- endmacro %}
+
+{% block content %}
+    <div class="panel-heading">
+        <h1>{{ context.activity.time|date('d.m.Y') }}: {{ decorator.title }}</h1>
+    </div>
+
+    <div class="panel-content margin-bottom-2x">
+        <div id="climb-score-{{ context.activity.id }}" class="clearfix">
+            <div class="left" style="width:120px">
+                <h2 class="c" style="padding-left:0;padding-right:0">
+                    {{ 'Climb Score'|trans }}<sup class="colored-green">beta</sup>
+                </h2>
+
+                <div class="climb-score-badge text-center clearfix margin-bottom">
+                    <div id="hill-score-progress" class="radial-progress">
+                        <div class="circle">
+                            <div class="mask full" style="transform: rotate(18deg);">
+                                <div class="fill" style="transform: rotate(18deg);"></div>
+                            </div>
+                            <div class="mask half">
+                                <div class="fill" style="transform: rotate(18deg);"></div>
+                                <div class="fill fix" style="transform: rotate(36deg);"></div>
+                            </div>
+                        </div>
+                        <div class="inset">1.0</div>
+                    </div>
+                </div>
+
+                <div class="climb-score-values margin-bottom">
+                    <strong>{{ this.valueWithUnitFor(distance(context.activity.distance)) }}</strong><br>
+                    <strong>{{ this.valueWithUnitFor(elevation(decorator.elevationUp)) }}</strong><br>
+                </div>
+
+                <div id="hill-score-hilly-or-not">
+                    <div class="row">
+                        <div class="left hilly-score-hilly-or-not-score">50%</div>
+                        <div class="right hilly-score-hilly-or-not-score">50%</div>
+                    </div>
+                    <div class="row">
+                        <div class="left hilly-score-hilly-or-not-bar" style="width:49.5%"></div>
+                        <div class="right hilly-score-hilly-or-not-bar" style="width:49.5%"></div>
+                    </div>
+                    <div class="row">
+                        <div class="left hilly-score-hilly-or-not-label">{{ 'Hilly'|trans }}</div>
+                        <div class="right hilly-score-hilly-or-not-label">{{ 'Flat'|trans }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="hill-score-elevation-plot" class="svg-container loading" style="min-height:200px;margin-left:120px">
+
+            </div>
+        </div>
+    </div>
+
+    <div class="panel-heading panel-sub-heading">
+        <h2>{{ 'Climbs'|trans }}</h2>
+    </div>
+
+    <div class="panel-content margin-bottom-2x">
+        <table class="zebra-style more-padding fullwidth">
+            <thead>
+            <tr>
+                <th></th>
+                <th>{{ 'Elevation'|trans }}</th>
+                <th>{{ 'Length'|trans }}</th>
+                <th>{{ 'Gradient'|trans }}</th>
+                <th>{{ 'Category'|trans }}</th>
+                <th>{{ 'FIETS'|trans }} <span rel="tooltip" title="{{ 'Index to categorize climbs by Dutch cycling magazine fiets.'|trans }}"><i class="fa fa-fw fa-info-circle"></i></span></th>
+                <th>{{ 'Duration'|trans }}</th>
+                <th>{{ 'Pace'|trans }}</th>
+                <th>{{ 'Vertical pace'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody id="climb-table" class="top-and-bottom-border r">
+            <tr class="c">
+                <td colspan="9"><em>{{ 'No significant climbs could be detected.'|trans }}</em></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+<!--
+    <div class="panel-heading panel-sub-heading">
+        <h2>{{ 'Gradient distribution'|trans }}</h2>
+    </div>
+
+    <div class="panel-content">
+        <div id="" class="loading">
+
+        </div>
+    </div>
+-->
+    <script>
+        Runalyze.ClimbScoreView({
+            distance: {{ context.trackdata.distance|json_encode }},
+            time: {{ context.trackdata.time|json_encode }},
+            elevation: ({{ context.route.elevations|json_encode }}).map(function(v){return v/1000;})
+        }, {
+            transformer: {
+                pace: {{ jsTransformer(paceUnit) }},
+                distance: {{ jsTransformer(unitSystem().distanceUnit) }},
+                elevation: {{ jsTransformer(unitSystem().elevationUnit) }}
+            },
+            formatter: {
+                pace: {{ jsFormatter(paceUnit) }},
+                distance: {{ jsFormatter(unitSystem().distanceUnit) }},
+                elevation: {{ jsFormatter(unitSystem().elevationUnit) }}
+            }
+        });
+    </script>
+{% endblock %}

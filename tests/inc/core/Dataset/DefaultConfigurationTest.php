@@ -4,13 +4,12 @@ namespace Runalyze\Dataset;
 
 class DefaultConfigurationTest extends \PHPUnit_Framework_TestCase
 {
-
 	public function testThatAllKeysFromEnumAppearInDefaultConfiguration()
 	{
 		$allKeys = (new DefaultConfiguration)->allKeys();
 
 		foreach (Keys::getEnum() as $key) {
-			in_array($key, $allKeys);
+			$this->assertTrue(in_array($key, $allKeys), 'Key '.$key.' is missing in default dataset config.');
 		}
 	}
 
@@ -19,8 +18,7 @@ class DefaultConfigurationTest extends \PHPUnit_Framework_TestCase
 		$DefaultConfiguration = new DefaultConfiguration;
 
 		foreach ($DefaultConfiguration->allKeys() as $key) {
-			$this->assertTrue(Keys::isValidValue($key));
+			$this->assertTrue(Keys::isValidValue($key), 'Key '.$key.' is invalid.');
 		}
 	}
-
 }

@@ -183,8 +183,8 @@ class SectionCompositeRow extends TrainingViewSectionRowTabbedPlot {
 	 */
 	protected function addCaloriesAndTrimp() {
 		if ($this->Context->activity()->energy() > 0 || $this->Context->activity()->trimp() > 0) {
-			$this->BoxedValues[] = new BoxedValue($this->Context->activity()->energy(), 'kcal', __('Calories'));
-			$this->BoxedValues[] = new BoxedValue($this->Context->activity()->trimp(), '', __('TRIMP'));
+			$this->BoxedValues[] = new Box\Energy($this->Context);
+			$this->BoxedValues[] = new Box\Trimp($this->Context);
 		}
 	}
 

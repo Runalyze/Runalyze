@@ -119,6 +119,10 @@ class TrainingView {
 			$toolsLinks[] = '<li><a class="window link" data-size="normal" href="activity/'.$this->Context->activity()->id().'/elevation-info"><i class="fa fa-fw fa-area-chart"></i> '.__('More about elevation').'</a></li>';
 		}
 
+        if ($this->Context->hasTrackdata() && $this->Context->trackdata()->has(Model\Trackdata\Entity::TIME) && $this->Context->trackdata()->has(Model\Trackdata\Entity::DISTANCE) && $this->Context->hasRoute() && $this->Context->route()->hasElevations()) {
+            $toolsLinks[] = '<li><a class="window link" data-size="normal" href="activity/'.$this->Context->activity()->id().'/climb-score"><i class="fa fa-fw fa-area-chart"></i> '.__('Climb score').'</a></li>';
+        }
+
 		if ($this->Context->hasTrackdata() && $this->Context->trackdata()->has(Model\Trackdata\Entity::TIME)) {
 			$toolsLinks[] = '<li><a class="window link" data-size="big" href="activity/'.$this->Context->activity()->id().'/time-series-info"><i class="fa fa-fw fa-line-chart"></i> '.__('Analyze time series').'</a></li>';
 		}
@@ -285,7 +289,7 @@ class TrainingView {
 	 * Display shared menu
 	 */
 	protected function displaySharedMenu() {
-		$User = AccountHandler::getDataForId(SharedLinker::getUserId());
+		$User = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'account` WHERE `id`="'.(int)SharedLinker::getUserId().'" LIMIT 1')->fetch();
 
 		$this->ToolbarLinks = array();
 		$this->ToolbarLinks[] = SharedLinker::getStandardLinkTo( $this->Context->activity()->id(), Icon::$ATTACH );

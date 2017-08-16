@@ -5,18 +5,22 @@ namespace Runalyze\Bundle\CoreBundle\Controller\My\Tools;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Anova\AnovaDataQuery;
 use Runalyze\Bundle\CoreBundle\Component\Tool\DatabaseCleanup\JobGeneral;
 use Runalyze\Bundle\CoreBundle\Component\Tool\DatabaseCleanup\JobLoop;
+use Runalyze\Bundle\CoreBundle\Component\Tool\TrendAnalysis\TrendAnalysisDataQuery;
 use Runalyze\Bundle\CoreBundle\Component\Tool\VO2maxAnalysis\VO2maxAnalysis;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
-use Runalyze\Bundle\CoreBundle\Form\Tools\DatabaseCleanupType;
 use Runalyze\Bundle\CoreBundle\Form\Tools\Anova\AnovaData;
 use Runalyze\Bundle\CoreBundle\Form\Tools\Anova\AnovaType;
+use Runalyze\Bundle\CoreBundle\Form\Tools\DatabaseCleanupType;
 use Runalyze\Bundle\CoreBundle\Form\Tools\PosterType;
+use Runalyze\Bundle\CoreBundle\Form\Tools\TrendAnalysis\TrendAnalysisData;
+use Runalyze\Bundle\CoreBundle\Form\Tools\TrendAnalysis\TrendAnalysisType;
 use Runalyze\Metrics\Common\JavaScriptFormatter;
 use Runalyze\Sports\Running\Prognosis\VO2max;
 use Runalyze\Sports\Running\VO2max\VO2maxVelocity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Bernard\Message\DefaultMessage;
 
@@ -125,11 +129,7 @@ class ToolsController extends Controller
      */
     public function anovaAction(Request $request, Account $account)
     {
-        // This should go to AnovaType ... but how?
-        $data = new AnovaData();
-        $data->setSport($this->getDoctrine()->getRepository('CoreBundle:Sport')->findAllFor($account));
-        $data->setDateFrom((new \DateTime())->sub(new \DateInterval('P6M')));
-        $data->setDateTo(new \DateTime());
+        $data = AnovaData::getDefault($this->getDoctrine()->getRepository('CoreBundle:Sport')->findAllFor($account), []);
 
         $form = $this->createForm(AnovaType::class, $data, [
             'action' => $this->generateUrl('tools-anova')
@@ -138,16 +138,14 @@ class ToolsController extends Controller
 
         if ($form->isSubmitted()) {
             if (!$form->isValid()) {
-                return $this->json([
-                    'status' => 'There was a problem.'
-                ]);
+                return new JsonResponse(['status' => 'There was a problem.']);
             }
 
             $unitSystem = $this->get('app.configuration_manager')->getList($account)->getUnitSystem();
             $query = new AnovaDataQuery($data);
             $query->loadAllGroups($this->getDoctrine()->getManager(), $account);
 
-            return $this->json([
+            return new JsonResponse([
                 'tickFormatter' => JavaScriptFormatter::getFormatter($query->getValueUnit($unitSystem)),
                 'groups' => $query->getResults(
                     $this->getDoctrine()->getRepository('CoreBundle:Training'),
@@ -157,6 +155,41 @@ class ToolsController extends Controller
         }
 
         return $this->render('tools/anova/base.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/my/tools/trend-analysis", name="tools-trend-analysis")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function trendAnalysisAction(Request $request, Account $account)
+    {
+        $data = TrendAnalysisData::getDefault($this->getDoctrine()->getRepository('CoreBundle:Sport')->findAllFor($account), []);
+
+        $form = $this->createForm(TrendAnalysisType::class, $data, [
+            'action' => $this->generateUrl('tools-trend-analysis')
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            if (!$form->isValid()) {
+                return new JsonResponse(['status' => 'There was a problem.']);
+            }
+
+            $unitSystem = $this->get('app.configuration_manager')->getList($account)->getUnitSystem();
+            $query = new TrendAnalysisDataQuery($data);
+
+            return new JsonResponse([
+                'tickFormatter' => JavaScriptFormatter::getFormatter($query->getValueUnit($unitSystem)),
+                'values' => $query->getResults(
+                    $this->getDoctrine()->getRepository('CoreBundle:Training'),
+                    $account, $unitSystem
+                )
+            ]);
+        }
+
+        return $this->render('tools/trend-analysis/base.html.twig', [
             'form' => $form->createView()
         ]);
     }

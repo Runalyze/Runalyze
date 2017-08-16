@@ -10,7 +10,7 @@ use Runalyze\Dataset\Context;
 
 /**
  * Dataset key: Setting
- * 
+ *
  * @author Hannes Christiansen
  * @author Michael Pohl
  * @package Runalyze\Dataset\Keys
@@ -51,7 +51,7 @@ class Setting extends AbstractKey
 	{
 		return __('Setting');
 	}
-	
+
 	/**
 	 * @return string
 	 * @codeCoverageIgnore
@@ -61,33 +61,36 @@ class Setting extends AbstractKey
 		return '';
 	}
 
-	/**
-	 * Get string to display this dataset value
-	 * @param \Runalyze\Dataset\Context $context
-	 * @return string
-	 */
-	public function stringFor(Context $context)
-	{
-	    if (!\Request::isOnSharedPage()) {
-		switch ($context->activity()->id()) {
-			case 0:
-				return '';
-			case -1:
-				$dropdown = $this->inlineDropdownWithFakeLinks($context);
-				break;
-			default:
-				$dropdown = $this->inlineDropdownWithRealLinks($context);
-				break;
-		}
+    /**
+     * Get string to display this dataset value
+     * @param \Runalyze\Dataset\Context $context
+     * @return string
+     */
+    public function stringFor(Context $context)
+    {
+        if (!\Request::isOnSharedPage() && $context->activity()->id() > 0) {
+            return $this->getCodeForDropdown($this->inlineDropdownWithRealLinks($context));
+        }
 
-		return '<div class="inline-menu"><ul><li class="with-submenu">'.
-			'<span class="link"><i class="fa fa-fw fa-wrench"></i></span>'.
-			'<ul class="submenu">'.$dropdown.'</ul>'.
-			'</li></ul></div>';
-	    } else {
-		return '';
-	    }
-	}
+        return '';
+    }
+
+    public function stringForExample(Context $context)
+    {
+        return $this->getCodeForDropdown($this->inlineDropdownWithFakeLinks($context));
+    }
+
+    /**
+     * @param string $menu
+     * @return string
+     */
+    protected function getCodeForDropdown($menu)
+    {
+        return '<div class="inline-menu"><ul><li class="with-submenu">'.
+            '<span class="link"><i class="fa fa-fw fa-wrench"></i></span>'.
+            '<ul class="submenu">'.$menu.'</ul>'.
+            '</li></ul></div>';
+    }
 
 	/**
 	 * @param \Runalyze\Dataset\Context $context

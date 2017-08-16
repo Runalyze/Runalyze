@@ -171,7 +171,7 @@ class SearchFormular extends Formular {
 
 		$this->addDurationField('s', __('Duration'));
 		$this->addNumericConditionField('gradient', __('Gradient'), FormularInput::$SIZE_SMALL, FormularUnit::$PERCENT);
-		$this->addStringConditionField('comment', __('Title'), FormularInput::$SIZE_MIDDLE);
+		$this->addStringConditionField('title', __('Title'), FormularInput::$SIZE_MIDDLE);
 
 		$this->addNumericConditionField('pace', __('Pace'), FormularInput::$SIZE_SMALL, FormularUnit::$PACE);
 		$this->addNumericConditionField('cadence', __('Cadence'), FormularInput::$SIZE_SMALL, FormularUnit::$SPM);
@@ -208,6 +208,9 @@ class SearchFormular extends Formular {
 		$this->addNumericConditionField('fit_vo2max_estimate', Dataset\Keys::get(Dataset\Keys::FIT_VO2MAX_ESTIMATE)->label(), FormularInput::$SIZE_SMALL);
 		$this->addNumericConditionField('fit_recovery_time', Dataset\Keys::get(Dataset\Keys::FIT_RECOVERY_TIME)->label(), FormularInput::$SIZE_SMALL, 'h');
 		$this->addNumericConditionField('pressure', __('Pressure'), FormularInput::$SIZE_SMALL, (new Pressure())->unit());
+
+        $this->addNumericConditionField('climb_score', __('Climb Score'), FormularInput::$SIZE_SMALL);
+        $this->addNumericConditionField('percentage_hilly', __('Percentage Hilly'), FormularInput::$SIZE_SMALL, '%');
 
 		// Currently missing/not supported:
 		// elapsed_time, fit_hrv_analysis, total_strokes, swolf, wind_deg, is_night

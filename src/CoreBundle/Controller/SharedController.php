@@ -33,7 +33,7 @@ class SharedController extends Controller
         $publicList = $this->get('app.configuration_manager')->getList($account)->getPrivacy()->isListPublic();
 
         $Frontend = new \FrontendShared(true);
-        $activityContext = $this->get('app.activity_context.factory')->getContext($activity->getId(), $activity->getAccount()->getId());
+        $activityContext = $this->get('app.activity_context.factory')->getContext($activity);
         $activityContextLegacy = new Context($activity->getId(), $activity->getAccount()->getId());
 
         $hasRoute = $activityContext->canShowMap() && $this->get('app.privacy_guard')->isMapVisible($activity, $activityContext->getRaceResult());
@@ -86,7 +86,7 @@ class SharedController extends Controller
 
         $Frontend = new \FrontendSharedList();
 
-        if (isset($_GET['view'])) {
+        if (isset($_GET['type'])) {
             return $this->render('shared/athlete/base_plot_sum_data.html.twig', [
                 'username' => $username,
                 'plot' => $this->getPlotSumData()
@@ -121,6 +121,6 @@ class SharedController extends Controller
             $_GET['y'] = \PlotSumData::LAST_12_MONTHS;
         }
 
-        return 'week' == $Request->query->get('view', 'month') ? new \PlotWeekSumData() : new \PlotMonthSumData();
+        return 'week' == $Request->query->get('type', 'month') ? new \PlotWeekSumData() : new \PlotMonthSumData();
     }
 }

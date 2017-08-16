@@ -8,11 +8,6 @@ use Runalyze\Metrics\Velocity\Unit\AbstractPaceUnit;
 
 class Pace implements QueryValueInterface
 {
-    /**
-     * @param QueryBuilder $queryBuilder
-     * @param string $alias
-     * @param string $as
-     */
     public function addSelectionToQuery(QueryBuilder $queryBuilder, $alias, $as)
     {
         $queryBuilder

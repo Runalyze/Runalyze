@@ -6,10 +6,25 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="plugin")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\PluginRepository")
  */
 class Plugin
 {
+    /** @var int */
+    const STATE_INACTIVE = 0;
+
+    /** @var int */
+    const STATE_ACTIVE = 1;
+
+    /** @var int */
+    const STATE_HIDDEN = 2;
+
+    /** @var string */
+    const TYPE_STAT = 'stat';
+
+    /** @var string */
+    const TYPE_PANEL = 'panel';
+
     /**
      * @var int
      *
@@ -105,6 +120,22 @@ class Plugin
     }
 
     /**
+     * @return bool
+     */
+    public function isStatistic()
+    {
+        return self::TYPE_STAT == $this->type;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPanel()
+    {
+        return self::TYPE_PANEL == $this->type;
+    }
+
+    /**
      * @param int $active 0: inactive, 1: active, 2: hidden/misc
      *
      * @return $this
@@ -117,11 +148,49 @@ class Plugin
     }
 
     /**
+     * @return $this
+     */
+    public function toggleHidden()
+    {
+        if ($this->isActive()) {
+            $this->setActive(self::STATE_HIDDEN);
+        } elseif ($this->isHidden()) {
+            $this->setActive(self::STATE_ACTIVE);
+        }
+
+        return $this;
+    }
+
+    /**
      * @return int 0: inactive, 1: active, 2: hidden/misc
      */
     public function getActive()
     {
         return $this->active;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isInactive()
+    {
+        return self::STATE_INACTIVE == $this->active;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isActive()
+    {
+        return self::STATE_ACTIVE == $this->active;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isHidden()
+    {
+        return self::STATE_HIDDEN == $this->active;
     }
 
     /**
@@ -142,6 +211,20 @@ class Plugin
     public function getOrder()
     {
         return $this->order;
+    }
+
+    public function moveUp()
+    {
+        --$this->order;
+
+        return $this;
+    }
+
+    public function moveDown()
+    {
+        ++$this->order;
+
+        return $this;
     }
 
     /**

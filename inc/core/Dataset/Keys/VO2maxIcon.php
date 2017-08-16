@@ -81,7 +81,11 @@ class VO2maxIcon extends AbstractKey
     public function stringFor(Context $context)
     {
         if ($context->isRunning() && $context->dataview()->usedVO2maxValue() > 0) {
-            return $context->dataview()->effectiveVO2maxIcon();
+            if (!\Request::isOnSharedPage() && $context->activity()->id() > 0) {
+                return '<a class="window" href="activity/' . $context->activity()->id() . '/vo2max-info">' . $context->dataview()->effectiveVO2maxIcon() . "</a>";
+            } else {
+                return $context->dataview()->effectiveVO2maxIcon();
+            }
         }
 
         return '';

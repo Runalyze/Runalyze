@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @group import
+ */
 class ImporterFiletypeHRMandGPXTest extends PHPUnit_Framework_TestCase {
 
 	/**

@@ -6,7 +6,7 @@ use PDO;
 use Cache;
 
 /**
- * @group dataset
+ * @group requiresSqlite
  */
 class ConfigurationTest extends \PHPUnit_Framework_TestCase
 {

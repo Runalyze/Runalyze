@@ -254,7 +254,7 @@ class ActivityForm extends \Runalyze\Configuration\Category {
 	 */
 	private function addHandlesForSortingTo(Fieldset $Fieldset) {
 		$Fieldset->addHandle( $this->handle('TRAINING_SORT_SPORTS'), array(
-			'label'		=> __('Sort: sport types')
+			'label'		=> __('Sort: sports')
 		));
 
 		$Fieldset->addHandle( $this->handle('TRAINING_SORT_TYPES'), array(

@@ -133,11 +133,11 @@ class SportType extends AbstractType
                 'required' => false,
                 'choices' => $this->getFilteredChoicesForInternalSportId($usedInternalSportIds, $sport),
                 'choice_translation_domain' => false,
-                'placeholder' => 'None (custom sport type)',
+                'placeholder' => 'None (custom sport)',
                 'preferred_choices' => function ($val, $key) {
                     return '' == $key;
                 },
-                'label' => 'Internal sport type',
+                'label' => 'Internal sport',
                 'disabled' => $isRunning
             ]);
         }

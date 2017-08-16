@@ -74,7 +74,11 @@ class Splits extends AbstractKey
 				$Icon = new Icon( Icon::CLOCK );
 				$Icon->setTooltip($this->stringForActiveLaps($context->activity()->splits()));
 
-				return $Icon->code();
+                if (!\Request::isOnSharedPage() && $context->activity()->id() > 0) {
+                    return '<a class="window large" data-size="big" href="activity/' . $context->activity()->id() . '/splits-info">' . $Icon->code() . "</a>";
+                } else {
+                    return $Icon->code();
+                }
 			}
 		}
 

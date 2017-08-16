@@ -6,6 +6,9 @@ use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\EquipmentRepository;
 use Runalyze\Bundle\CoreBundle\Entity\TrainingRepository;
 
+/**
+ * @group requiresDoctrine
+ */
 class EquipmentRepositoryTest extends AbstractRepositoryTestCase
 {
     /** @var EquipmentRepository */

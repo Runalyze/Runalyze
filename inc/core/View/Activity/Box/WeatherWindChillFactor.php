@@ -9,7 +9,7 @@ namespace Runalyze\View\Activity\Box;
 use Runalyze\View\Activity\Context;
 
 /**
- * Boxed value for Pressure
+ * Boxed value for WindChillFactor
  * 
  * @author Hannes Christiansen
  * @author Michael Pohl

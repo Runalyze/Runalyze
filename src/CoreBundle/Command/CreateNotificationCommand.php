@@ -12,6 +12,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Question\ConfirmationQuestion;
 
 class CreateNotificationCommand extends ContainerAwareCommand
 {
@@ -24,7 +25,13 @@ class CreateNotificationCommand extends ContainerAwareCommand
             ->addOption('lang', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'Languages to select accounts')
             ->addOption('exclude-lang', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'Excluded languages to select accounts')
             ->addOption('account', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'Account ids')
-            ->addOption('lifetime', null, InputOption::VALUE_REQUIRED, 'Lifetime [days]');
+            ->addOption('lifetime', null, InputOption::VALUE_REQUIRED, 'Lifetime [days]')
+            ->addOption('force', null, InputOption::VALUE_NONE, 'Force creation of notifications without prompt')
+            ->addOption('last-action-before', null, InputOption::VALUE_OPTIONAL, 'Last action before x (timestamp)')
+            ->addOption('last-action-after', null, InputOption::VALUE_OPTIONAL, 'Last action after x (timestamp)')
+            ->addOption('registration-before', null, InputOption::VALUE_OPTIONAL, 'Registration before x (timestamp)')
+            ->addOption('registration-after', null, InputOption::VALUE_OPTIONAL, 'Registration after x (timestamp)')
+        ;
     }
 
     /**
@@ -39,12 +46,27 @@ class CreateNotificationCommand extends ContainerAwareCommand
             return 1;
         }
 
+        if (!($input->getOption('force'))  ) {
+            $helper = $this->getHelper('question');
+            $question = new ConfirmationQuestion('Continue with this action? (y/n)', false);
+
+            if (!$helper->ask($input, $output, $question)) {
+                return;
+            }
+        }
+
         $notification = $this->createNotification($input->getArgument('template'), $input->getOption('lifetime'));
 
         if (!empty($input->getOption('account'))) {
             $num = $this->insertSingleNotifications($notification, $input->getOption('account'));
         } else {
-            $num = $this->insertNotificationsWithSubquery($notification, $input->getOption('lang'), $input->getOption('exclude-lang'));
+            $num = $this->insertNotificationsWithSubquery($notification, $input->getOption('lang'),
+                $input->getOption('exclude-lang'),
+                $input->getOption('last-action-before'),
+                $input->getOption('last-action-after'),
+                $input->getOption('registration-before'),
+                $input->getOption('registration-after')
+            );
         }
 
         $output->writeln(sprintf('<info>%u notifications have been created.</info>', $num));
@@ -178,10 +200,10 @@ class CreateNotificationCommand extends ContainerAwareCommand
         return $num;
     }
 
-    protected function insertNotificationsWithSubquery(Notification $notification, array $lang, array $excludeLang)
+    protected function insertNotificationsWithSubquery(Notification $notification, array $lang, array $excludeLang, $lastActionBefore, $lastActionAfter, $registrationBefore, $registrationAfter)
     {
         $prefix = $this->getContainer()->getParameter('database_prefix');
-        $accountWhere = $this->getWhereToFindRelevantAccounts($lang, $excludeLang);
+        $accountWhere = $this->getWhereToFindRelevantAccounts($lang, $excludeLang, $lastActionBefore, $lastActionAfter, $registrationBefore, $registrationAfter);
 
         $statement = $this->getContainer()->get('doctrine.dbal.default_connection')->prepare(
             'INSERT INTO `'.$prefix.'notification` (`messageType`, `createdAt`, `expirationAt`, `data`, `account_id`) '.
@@ -203,9 +225,26 @@ class CreateNotificationCommand extends ContainerAwareCommand
      * @param array $excludeLang
      * @return string
      */
-    protected function getWhereToFindRelevantAccounts(array $lang, array $excludeLang)
+    protected function getWhereToFindRelevantAccounts(array $lang, array $excludeLang, $lastActionBefore, $lastActionAfter, $registrationBefore, $registrationAfter)
     {
         $exclude = false;
+
+        if (!empty($lastActionAfter)) {
+            $whereCondition[] = '`a`.`lastaction` > '.$lastActionAfter;
+        }
+
+        if (!empty($lastActionBefore)) {
+            $whereCondition[] = '`a`.`lastaction` < '.$lastActionBefore;
+        }
+
+        if (!empty($registrationAfter)) {
+            $whereCondition[] = '`a`.`registerdate` > '.$registrationAfter;
+        }
+
+        if (!empty($registrationBefore)) {
+            $whereCondition[] = '`a`.`registerdate` < '.$registrationBefore;
+
+        }
 
         if (!empty($excludeLang)) {
             $exclude = true;
@@ -213,7 +252,11 @@ class CreateNotificationCommand extends ContainerAwareCommand
         }
 
         if (!empty($lang)) {
-            return '`a`.`language` '.($exclude ? 'NOT' : '').' IN ("'.implode('", "', $lang).'")';
+            $whereCondition[] = '`a`.`language` '.($exclude ? 'NOT' : '').' IN ("'.implode('", "', $lang).'")';
+        }
+
+        if ($whereCondition) {
+            return implode(" AND ", $whereCondition);
         }
 
         return '1';

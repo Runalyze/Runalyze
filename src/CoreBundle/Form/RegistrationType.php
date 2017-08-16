@@ -30,7 +30,7 @@ class RegistrationType extends AbstractType
             ))
             ->add('plainPassword', RepeatedType::class, array(
                 'type' => PasswordType::class,
-                'required' => false,
+                'required' => true,
                 'first_options'  => array('label' => 'Password'),
                 'second_options' => array('label' => 'Repeat Password'),
                 'constraints' => array(

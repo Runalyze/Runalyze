@@ -8,6 +8,10 @@ use Runalyze\Bundle\CoreBundle\Entity\Notification;
 use Runalyze\Bundle\CoreBundle\Entity\NotificationRepository;
 use Runalyze\Bundle\CoreBundle\Tests\DataFixtures\AbstractFixturesAwareWebTestCase;
 
+/**
+ * @group requiresKernel
+ * @group requiresClient
+ */
 class NotificationsControllerTest extends AbstractFixturesAwareWebTestCase
 {
     /** @var NotificationRepository */
@@ -34,6 +38,7 @@ class NotificationsControllerTest extends AbstractFixturesAwareWebTestCase
             new TemplateBasedMessage('../../../tests/CoreBundle/DataFixtures/messages/test-message.yml'),
             $account
         );
+        $notification->setCreatedAt(10);
         $this->NotificationRepository->save($notification);
 
         return $notification->getId();
@@ -91,7 +96,9 @@ class NotificationsControllerTest extends AbstractFixturesAwareWebTestCase
             json_encode([[
                 'id' => $id,
                 'link' => 'http://runalyze.com/',
-                'text' => 'foobar'
+                'text' => 'foobar',
+                'size' => 'external',
+                'createdAt' => 10
             ]]),
             $this->fetchContent('/_internal/notifications')
         );

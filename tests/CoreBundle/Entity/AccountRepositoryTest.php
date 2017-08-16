@@ -8,6 +8,9 @@ use Runalyze\Bundle\CoreBundle\Entity\AccountRepository;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 
+/**
+ * @group requiresDoctrine
+ */
 class AccountRepositoryTest extends AbstractRepositoryTestCase
 {
     /** @var AccountRepository */

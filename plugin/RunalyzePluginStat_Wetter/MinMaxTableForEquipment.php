@@ -10,7 +10,7 @@ use Runalyze\Activity\Temperature;
 
 /**
  * Table to show max/min/avg temperature for equipment type
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Plugin\Stat\Wetter
  */
@@ -124,7 +124,7 @@ class MinMaxTableForEquipment
 
 		if ($i % 3 != 0) {
 			echo '<td colspan="'.(3 * (3 - $i % 3)).'">&nbsp;</td></tr>';
-		} elseif (empty($data)) {
+		} elseif ($i == 0) {
 			echo '<td colspan="11" class="c"><em>'.__('No data found.').'</em></td>';
 		}
 

@@ -318,6 +318,8 @@ CREATE TABLE IF NOT EXISTS `runalyze_training` (
   `s` decimal(8,2) unsigned NOT NULL,
   `elapsed_time` mediumint unsigned DEFAULT NULL,
   `elevation` smallint unsigned DEFAULT NULL,
+  `climb_score` decimal(3,1) unsigned DEFAULT NULL,
+  `percentage_hilly` decimal(3,2) unsigned DEFAULT NULL,
   `kcal` smallint unsigned DEFAULT NULL,
   `pulse_avg` tinyint unsigned DEFAULT NULL,
   `pulse_max` tinyint unsigned DEFAULT NULL,
@@ -509,6 +511,7 @@ ALTER TABLE `runalyze_conf`
 --
 ALTER TABLE `runalyze_dataset`
  ADD PRIMARY KEY (`accountid`,`keyid`), ADD KEY `position` (`accountid`,`position`);
+CREATE UNIQUE INDEX unique_key ON runalyze_dataset (accountid, keyid);
 
 --
 -- Indizes für die Tabelle `runalyze_equipment`
@@ -759,8 +762,14 @@ ALTER TABLE `runalyze_raceresult`
 ADD CONSTRAINT `runalyze_raceresult_ibfk_1` FOREIGN KEY (`accountid`) REFERENCES `runalyze_account` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
 ADD CONSTRAINT `runalyze_raceresult_ibfk_2` FOREIGN KEY (`activity_id`) REFERENCES `runalyze_training` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
+--
+-- Constraints der Tabelle `runalyze_sport`
+--
+ALTER TABLE `runalyze_sport` ADD FOREIGN KEY (`main_equipmenttypeid`) REFERENCES `runalyze_equipment_type` (id) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `runalyze_sport` ADD FOREIGN KEY (`default_typeid`) REFERENCES `runalyze_type` (id) ON DELETE SET NULL ON UPDATE CASCADE;
+
 
 --
 -- Constraints der Tabelle `runalyze_notification`
 --
-ALTER TABLE runalyze_notification ADD CONSTRAINT FK_F99B51889B6B5FBA FOREIGN KEY (account_id) REFERENCES runalyze_account (id);
+ALTER TABLE runalyze_notification ADD CONSTRAINT FK_F99B51889B6B5FBA FOREIGN KEY (account_id) REFERENCES runalyze_account (id) ON DELETE CASCADE ON UPDATE CASCADE;

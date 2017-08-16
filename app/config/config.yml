@@ -12,7 +12,7 @@ framework:
      enable_annotations: true
 #     translation_domain: messages
   session:
-    handler_id: session.handler.native_file
+    handler_id: '%session.handler_id%'
     save_path: '%kernel.root_dir%/../data/sessions'
   form: ~
   csrf_protection: true
@@ -25,11 +25,18 @@ framework:
       - '%kernel.root_dir%/../inc/locale/'
 
 parameters:
-  RUNALYZE_VERSION: 4.0.0
+  RUNALYZE_VERSION: 4.2.0
 
 twig:
   globals:
     RUNALYZE_VERSION: '%RUNALYZE_VERSION%'
+    garmin_api_key: '%garmin_api_key%'
+    openweathermap_api_key: '%openweathermap_api_key%'
+    darksky_api_key: '%darksky_api_key%'
+    nokia_here_appid: '%nokia_here_appid%'
+    nokia_here_token: '%nokia_here_token%'
+    thunderforest_api_key: '%thunderforest_api_key%'
+    mapbox_api_key: '%mapbox_api_key%'
     locales: '%locales%'
   paths:
     '%kernel.root_dir%/../data/views': __main__
@@ -68,7 +75,9 @@ doctrine:
                 options: {1002: "SET time_zone = '+00:00'"}
                 mapping_types:
                     enum:   string
-
+        types:
+            pipe_array: Runalyze\Bundle\CoreBundle\Doctrine\Types\PipeDelimitedArray
+            runalyze_pause_array: Runalyze\Bundle\CoreBundle\Doctrine\Types\RunalyzePauseArray
 
 
     orm:
@@ -138,9 +147,16 @@ swiftmailer:
 jms_translation:
     configs:
         app:
-            dirs: [%kernel.root_dir%/, %kernel.root_dir%/../src]
-            output_dir: %kernel.root_dir%/Resources/translations
+            dirs: ['%kernel.root_dir%/', '%kernel.root_dir%/../src']
+            output_dir: '%kernel.root_dir%/Resources/translations'
             ignored_domains: [routes]
             excluded_names: ["*TestCase.php", "*Test.php"]
             excluded_dirs: [cache, data, logs, test, doctrine]
             output-format: 'xlf'
+
+snc_redis:
+    clients:
+        default:
+            type: predis
+            alias: default
+            dsn: '%redis.default.dsn%'

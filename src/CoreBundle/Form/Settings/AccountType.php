@@ -49,13 +49,6 @@ class AccountType extends AbstractType
                 'required' => false,
                 'label' => 'Year of birth'
             ))
-            ->add('registerdate', DateType::class, array(
-                    'label' => 'Registered since',
-                    'input' => 'timestamp',
-                    'disabled' => true,
-                    'widget' =>  'single_text',
-                    'format' => 'yyyy-MM-dd'
-            ))
             ->add('allow_support', ChoiceType::class, array(
                 'choices' => array(
                     'Yes' => true,

@@ -134,7 +134,7 @@ class JsonImporterResults
 			'runalyze_dataset'		=> __('Dataset'),
 			'runalyze_plugin'		=> __('Plugin'),
 			'runalyze_plugin_conf'	=> __('Plugin configuration'),
-			'runalyze_sport'		=> __('Sport types'),
+			'runalyze_sport'		=> __('Sports'),
 			'runalyze_type'			=> __('Activity types'),
 			'runalyze_user'			=> __('Body data'),
 			'runalyze_training'		=> __('Activities'),

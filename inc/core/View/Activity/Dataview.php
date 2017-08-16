@@ -594,4 +594,28 @@ class Dataview
 
         return '';
     }
+
+    /**
+     * @return string
+     */
+    public function climbScore()
+    {
+        if (null !== $this->Activity->climbScore()) {
+            return number_format($this->Activity->climbScore(), 1);
+        }
+
+        return '';
+    }
+
+    /**
+     * @return string
+     */
+    public function percentageHilly()
+    {
+        if (null !== $this->Activity->percentageHilly()) {
+            return (100 * $this->Activity->percentageHilly()).'&nbsp;&#37;';
+        }
+
+        return '';
+    }
 }

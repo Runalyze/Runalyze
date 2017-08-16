@@ -2,7 +2,7 @@
 
 {% block content %}
     <div class="panel-heading">
-        <h1>{% trans %}Your sport types{% endtrans %}</h1>
+        <h1>{% trans %}Your sports{% endtrans %}</h1>
     </div>
 
     <div class="panel-content">
@@ -37,7 +37,7 @@
                             {% if hasTrainings[sport.id] is not defined %}
                                 <a class="window color-danger" href="{{ url('sport-delete', { 'id': sport.id, 't': csrf_token('deleteSport') }) }}" data-confirm="{% trans %}Do you really want to delete this?{% endtrans %}"><i class="fa fa-fw fa-trash" title="{% trans %}Delete{% endtrans %}"></i></a>
                             {% else %}
-                                <i class="fa fa-fw fa-trash unimportant cursor-not-allowed" rel="tooltip" title="{% trans %}Sport type cannot be deleted.{% endtrans %}<br>{% trans %}You have activities associated with this type.{% endtrans %}"></i>
+                                <i class="fa fa-fw fa-trash unimportant cursor-not-allowed" rel="tooltip" title="{% trans %}Sport cannot be deleted.{% endtrans %}<br>{% trans %}You have activities associated with this type.{% endtrans %}"></i>
                             {% endif %}
                         </td>
                     </tr>
@@ -48,13 +48,13 @@
     </div>
 
     <div class="panel-heading panel-sub-heading">
-        <h1>{{ 'Add a new type'|trans }}</h1>
+        <h1>{{ 'Add new sport'|trans }}</h1>
     </div>
 
     <div class="panel-content">
         {% if freeInternalTypes|length > 0 %}
             <p class="info margin-bottom">
-                {% trans %}Runalyze offers default configurations for common sport types. This mapping is required to recognize the correct sport type when syncing activities. You can still adjust all settings.{% endtrans %}
+                {% trans %}Runalyze offers default configurations for common types of sport. This mapping is required to recognize the correct type of sport when syncing activities. You can still adjust all settings.{% endtrans %}
             </p>
 
             <div class="c blocklist blocklist-width-auto">
@@ -65,7 +65,7 @@
         {% endif %}
 
         <div class="c blocklist blocklist-width-auto">
-            <a class="window" href="{{ url('sport-add-custom') }}"><i class="fa fa-cube"></i> <strong>{{ 'Add a custom sport type'|trans }}</strong></a>
+            <a class="window" href="{{ url('sport-add-custom') }}"><i class="fa fa-cube"></i> <strong>{{ 'Add a custom sport'|trans }}</strong></a>
         </div>
     </div>
 {% endblock %}

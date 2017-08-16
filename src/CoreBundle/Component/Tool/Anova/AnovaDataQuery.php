@@ -12,6 +12,7 @@ use Runalyze\Bundle\CoreBundle\Component\Tool\Anova\QueryValue\QueryValueInterfa
 use Runalyze\Bundle\CoreBundle\Component\Tool\Anova\QueryValue\QueryValues;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\Sport;
+use Runalyze\Bundle\CoreBundle\Entity\Type;
 use Runalyze\Bundle\CoreBundle\Entity\TrainingRepository;
 use Runalyze\Bundle\CoreBundle\Form\Tools\Anova\AnovaData;
 use Runalyze\Metrics\Common\UnitInterface;
@@ -51,7 +52,6 @@ class AnovaDataQuery
     }
 
     /**
-     * @param UnitSystem $unitSystem
      * @return UnitInterface
      */
     public function getValueUnit(UnitSystem $unitSystem)
@@ -66,8 +66,6 @@ class AnovaDataQuery
     }
 
     /**
-     * @param TrainingRepository $trainingRepository
-     * @param Account $account
      * @return array
      */
     public function getResults(TrainingRepository $trainingRepository, Account $account, UnitSystem $unitSystem)
@@ -87,8 +85,6 @@ class AnovaDataQuery
     }
 
     /**
-     * @param TrainingRepository $trainingRepository
-     * @param Account $account
      * @return \Doctrine\ORM\Query
      */
     protected function buildQuery(TrainingRepository $trainingRepository, Account $account)
@@ -103,6 +99,7 @@ class AnovaDataQuery
             ->setParameter('endTime', $this->AnovaData->getDateToTimestamp());
 
         $this->addSportConditionToQuery($queryBuilder);
+        $this->addTypeConditionToQuery($queryBuilder);
         $this->QueryGroup->addSelectionToQuery($queryBuilder, 't', 'grouping', 's');
         $this->QueryValue->addSelectionToQuery($queryBuilder, 't', 'value');
 
@@ -115,6 +112,18 @@ class AnovaDataQuery
         $queryBuilder->setParameter(':sports', array_map(function(Sport $sport) {
             return $sport->getId();
         }, $this->AnovaData->getSport()));
+    }
+
+    protected function addTypeConditionToQuery(QueryBuilder $queryBuilder)
+    {
+        $types = $this->AnovaData->getType();
+
+        if (!empty($types)) {
+            $queryBuilder->andWhere($queryBuilder->expr()->in('t.type', ':types'));
+            $queryBuilder->setParameter(':types', array_map(function(Type $type) {
+                return $type->getId();
+            }, $types));
+        }
     }
 
     protected function filterEmptyGroups()

@@ -1,8 +1,11 @@
 {% extends "base_logged_in.twig" %}
 
 {% block content %}
+    {# @var conf \Runalyze\Bundle\CoreBundle\Component\Configuration\RunalyzeConfigurationList #}
+    {% set conf = config() %}
+
     <div class="panel-heading">
-        <h1>{% trans %}VO2max estimation for: %title%{% endtrans %}</h1>
+        <h1>{% trans with {'%title%': context.decorator.title} %}VO2max estimation for: %title%{% endtrans %}</h1>
     </div>
 
     <div class="panel-content">
@@ -16,15 +19,15 @@
 
                 <div class="w50">
                     <label>{% trans %}Distance{% endtrans %}</label>
-                    <span class="as-input">{{ raceDetails.distance|raw }}</span>
+                    <span class="as-input">{{ distance(context.activity.distance) }}</span>
                 </div>
                 <div class="w50 double-height-right">
                     <label>&rArr; {% trans %}VO2max{% endtrans %}</label>
-                    <span class="as-input">{{ raceDetails.vo2max }}</span>
+                    <span class="as-input">{{ context.activity.vO2maxByTime|number_format(2) }}</span>
                 </div>
                 <div class="w50">
                     <label>{% trans %}Duration{% endtrans %}</label>
-                    <span class="as-input">{{ raceDetails.duration|raw }}</span>
+                    <span class="as-input">{{ context.activity.s|duration }}</span>
                 </div>
 
                 <p class="file">
@@ -44,15 +47,15 @@
 
                 <div class="w50">
                     <label>{% trans %}Heart rate{% endtrans %}</label>
-                    <span class="as-input">{{ hrDetails.hr }} %HRmax</span>
+                    <span class="as-input">{{ heartRatePercentMaximum(context.activity.pulseAvg).value }} %HRmax</span>
                 </div>
                 <div class="w50 double-height-right">
                     <label>&rArr; {% trans %}VO2max{% endtrans %}</label>
-                    <span class="as-input">{{ hrDetails.vo2max }}</span>
+                    <span class="as-input">{{ context.activity.vO2max|number_format(2) }}</span>
                 </div>
                 <div class="w50">
                     <label>{% trans %}equals{% endtrans %}</label>
-                    <span class="as-input">{{ hrDetails.vVO2max }} %vVO2max</span>
+                    <span class="as-input">{{ details.percentVO2maxVelocityByHeartRate }} %vVO2max</span>
                 </div>
             </div>
         </fieldset>
@@ -66,22 +69,25 @@
 
                 <div class="w50">
                     <label>{% trans %}Correction factor{% endtrans %}</label>
-                    <span class="as-input">{{ factorDetails.factor }}</span>
+                    <span class="as-input">{{ conf.vO2maxCorrectionFactor|number_format(2) }}</span>
                 </div>
                 <div class="w50 double-height-right">
                     <label>&rArr; {% trans %}VO2max{% endtrans %}</label>
-                    <span class="as-input ">{{ factorDetails.vo2max }}</span>
+                    <span class="as-input ">{{ details.correctedVO2max|number_format(2) }}</span>
                 </div>
                 <div class="w50">
                     <label>{% trans %}uncorrected{% endtrans %}</label>
-                    <span class="as-input">{{ factorDetails.uncorrected }}</span>
+                    <span class="as-input">{{ context.activity.vO2max|number_format(2) }}</span>
                 </div>
             </div>
         </fieldset>
 
+        {% set useElevationAdjustment = conf.useVO2maxCorrectionForElevation %}
+        {% set activityVO2max = context.decorator.effectiveVO2max(conf) %}
+        {% set distanceModifier = details.distanceModifierForElevationAdjustment %}
         <fieldset>
             <legend>{% trans %}Correction: considering elevation{% endtrans %}</legend>
-            <div>
+            <div{% if not useElevationAdjustment %} class="unimportant"{% endif %}>
                 {% if not useElevationAdjustment %}
                 <p class="warning hide">
                     {% trans %}This correction method is currently unused.{% endtrans %}
@@ -90,22 +96,22 @@
 
                 <div class="w50">
                     <label>{% trans %}Up/Down{% endtrans %}</label>
-                    <span class="as-input">+{{ elevationDetails.up|raw }}/-{{ elevationDetails.down|raw }}</span>
+                    <span class="as-input">+{{ elevation(context.decorator.elevationUp).value }}/-{{ elevation(context.decorator.elevationDown) }}</span>
                 </div>
                 <div class="w50 double-height-right">
                     <label>&rArr; {% trans %}VO2max{% endtrans %}</label>
-                    <span class="as-input highlight">{{ elevationDetails.vo2max }}</span>
+                    <span class="as-input highlight">{{ details.correctedVO2maxWithElevationAdjustment|number_format(2) }}</span>
                 </div>
                 <div class="w50">
                     <label>{% trans %}Influence{% endtrans %}</label>
-                    <span class="as-input">{{ elevationDetails.additionalDistance|raw }} =&gt; {{ elevationDetails.totalDistance|raw }}</span>
+                    <span class="as-input">{% if distanceModifier.additionalDistance >= 0 %}+{% endif %}{{ distance(distanceModifier.additionalDistance) }} =&gt; {{ distance(distanceModifier.correctedDistance) }}</span>
                 </div>
             </div>
         </fieldset>
 
         {% if
-            (useElevationAdjustment and (not (activityVO2max|round(1) == elevationDetails.vo2max|round(1)))) or
-            ((not useElevationAdjustment) and (not (activityVO2max|round(1) == factorDetails.vo2max|round(1))))
+            (useElevationAdjustment and (not (activityVO2max|round(1) == details.correctedVO2maxWithElevationAdjustment|round(1)))) or
+            ((not useElevationAdjustment) and (not (activityVO2max|round(1) == details.correctedVO2max|round(1))))
         %}
         <p class="warning">
             {% trans with {'%activityVO2max%': activityVO2max|round(2)} %}The calculated value is not equal to what is saved for the activity (%activityVO2max%).

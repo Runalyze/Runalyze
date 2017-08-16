@@ -25,6 +25,8 @@ class AppKernel extends \Symfony\Component\HttpKernel\Kernel
             new Runalyze\Bundle\CoreBundle\CoreBundle(),
             new JMS\TranslationBundle\JMSTranslationBundle(),
             new Bernard\BernardBundle\BernardBundle(),
+            new Snc\RedisBundle\SncRedisBundle(),
+            new Runalyze\Bundle\GlossaryBundle\GlossaryBundle(),
         ];
 
         if ('dev' == $this->getEnvironment()) {
@@ -63,6 +65,7 @@ class AppKernel extends \Symfony\Component\HttpKernel\Kernel
     	}
 
         $routes->import('@CoreBundle/Controller', '/', 'annotation');
+        $routes->import('@GlossaryBundle/Controller', '/glossary', 'annotation');
     }
 
     /**

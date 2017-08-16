@@ -1,0 +1,15 @@
+{% extends "@Twig/Exception/error.html.twig" %}
+
+{% block content %}
+    <h3>{% trans %}Tool not available{% endtrans %}</h3>
+
+    <p class="error">
+        {% trans %}This tool is not available for this activity.{% endtrans %}
+    </p>
+
+    {% if not app.request.xmlHttpRequest %}
+        <p class="text">
+            <a href="{{ path('base_url') }}">{% trans %}Let's go back to RUNALYZE!{% endtrans %}</a>
+        </p>
+    {% endif %}
+{% endblock %}

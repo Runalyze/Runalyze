@@ -2,12 +2,18 @@
 
 namespace Runalyze\Bundle\CoreBundle\Controller;
 
+use Runalyze\Bundle\CoreBundle\Bridge\Activity\Calculation\ClimbScoreCalculator;
+use Runalyze\Bundle\CoreBundle\Bridge\Activity\Calculation\FlatOrHillyAnalyzer;
+use Runalyze\Bundle\CoreBundle\Component\Activity\ActivityDecorator;
 use Runalyze\Bundle\CoreBundle\Component\Activity\Tool\BestSubSegmentsStatistics;
 use Runalyze\Bundle\CoreBundle\Component\Activity\Tool\TimeSeriesStatistics;
+use Runalyze\Bundle\CoreBundle\Component\Activity\VO2maxCalculationDetailsDecorator;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\Trackdata;
-use Runalyze\Bundle\CoreBundle\Services\Activity\EffectiveVO2maxInfo;
+use Runalyze\Bundle\CoreBundle\Entity\Training;
 use Runalyze\Metrics\Velocity\Unit\PaceEnum;
+use Runalyze\Service\ElevationCorrection\StepwiseElevationProfileFixer;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -65,16 +71,12 @@ class ActivityController extends Controller
     }
 
     /**
-     * @Route("/call/call.Training.display.php")
      * @Route("/activity/{id}", name="ActivityShow", requirements={"id" = "\d+"})
+     * @Security("has_role('ROLE_USER')")
      */
-    public function displayAction($id = null, Account $account)
+    public function displayAction($id, Account $account)
     {
         $Frontend = new \Frontend(true, $this->get('security.token_storage'));
-
-        if (null === $id) {
-            $id = Request::createFromGlobals()->query->get('id');
-        }
 
         $Context = new Context($id, $account->getId());
 
@@ -108,7 +110,7 @@ class ActivityController extends Controller
      * @Route("/activity/{id}/edit", name="ActivityEdit")
      * @Security("has_role('ROLE_USER')")
      */
-    public function editAction($id = null)
+    public function editAction($id)
     {
         $Frontend = new \Frontend(true, $this->get('security.token_storage'));
 
@@ -196,25 +198,21 @@ class ActivityController extends Controller
 
     /**
      * @Route("/activity/{id}/vo2max-info")
+     * @ParamConverter("activity", class="CoreBundle:Training")
      * @Security("has_role('ROLE_USER')")
      */
-    public function vo2maxInfoAction($id, Account $account)
+    public function vo2maxInfoAction(Training $activity, Account $account)
     {
-        $Frontend = new \Frontend(true, $this->get('security.token_storage'));
+        if ($activity->getAccount()->getId() != $account->getId()) {
+            throw $this->createAccessDeniedException();
+        }
+
         $configList = $this->get('app.configuration_manager')->getList();
+        $activityContext = $this->get('app.activity_context.factory')->getContext($activity);
 
-        $EffectiveVO2maxInfo = new EffectiveVO2maxInfo();
-        $EffectiveVO2maxInfo->setContext(new Context($id, $account->getId()));
-        $EffectiveVO2maxInfo->setConfiguration($configList->getData()->getLegacyCategory(), $configList->getVO2max()->getLegacyCategory());
-
-        return $this->render(':activity:vo2max_info.html.twig', [
-            'title' => $EffectiveVO2maxInfo->getTitle(),
-            'raceDetails' => $EffectiveVO2maxInfo->getRaceCalculationDetails(),
-            'hrDetails' => $EffectiveVO2maxInfo->getHeartRateCalculationDetails(),
-            'factorDetails' => $EffectiveVO2maxInfo->getCorrectionFactorDetails(),
-            'elevationDetails' => $EffectiveVO2maxInfo->getElevationDetails(),
-            'useElevationAdjustment' => $EffectiveVO2maxInfo->usesElevationAdjustment(),
-            'activityVO2max' => $EffectiveVO2maxInfo->getActivityVO2max()
+        return $this->render('activity/vo2max_info.html.twig', [
+            'context' => $activityContext,
+            'details' => new VO2maxCalculationDetailsDecorator($activityContext, $configList)
         ]);
     }
 
@@ -242,6 +240,39 @@ class ActivityController extends Controller
         if ($result) {
         	$Calculator->calculateElevation();
         	$Activity->set(Activity\Entity::ELEVATION, $Route->elevation());
+
+        	$trackdata = $Factory->trackdata($id);
+            $newRouteEntity = new \Runalyze\Bundle\CoreBundle\Entity\Route();
+            $newRouteEntity->setDistance($Route->distance());
+
+            if ($Route->hasCorrectedElevations()) {
+                $newRouteEntity->setElevationsCorrected((new StepwiseElevationProfileFixer(
+                    5, StepwiseElevationProfileFixer::METHOD_VARIABLE_GROUP_SIZE
+                ))->fixStepwiseElevations(
+                    $Route->elevationsCorrected(),
+                    $trackdata->distance()
+                ));
+            } elseif ($Route->hasOriginalElevations()) {
+                $newRouteEntity->setElevationsOriginal($Route->elevationsOriginal());
+            }
+
+            $newTrackdataEntity = new Trackdata();
+            $newTrackdataEntity->setDistance($trackdata->distance());
+
+            $newActivityEntity = new Training();
+            $newActivityEntity->setRoute($newRouteEntity);
+            $newActivityEntity->setTrackdata($newTrackdataEntity);
+
+            if ($newRouteEntity->hasElevations()) {
+                (new FlatOrHillyAnalyzer())->calculatePercentageHillyFor($newActivityEntity);
+                (new ClimbScoreCalculator())->calculateFor($newActivityEntity);
+
+                $Activity->set(Activity\Entity::CLIMB_SCORE, $newActivityEntity->getClimbScore());
+                $Activity->set(Activity\Entity::PERCENTAGE_HILLY, $newActivityEntity->getPercentageHilly());
+            } else {
+                $Activity->set(Activity\Entity::CLIMB_SCORE, null);
+                $Activity->set(Activity\Entity::PERCENTAGE_HILLY, null);
+            }
 
         	$UpdaterRoute = new \Runalyze\Model\Route\Updater(\DB::getInstance(), $Route, $RouteOld);
         	$UpdaterRoute->setAccountID($account->getId());
@@ -280,21 +311,32 @@ class ActivityController extends Controller
     public function splitsInfoAction($id, Account $account)
     {
         $Frontend = new \Frontend(false, $this->get('security.token_storage'));
-        $Window = new Window(new Context($id, $account->getId()));
+        $context = new Context($id, $account->getId());
+
+        if (!$context->hasTrackdata()) {
+            return $this->render('activity/tool/not_possible.html.twig');
+        }
+
+        $Window = new Window($context);
         $Window->display();
 
         return new Response();
     }
 
     /**
-     * @Route("/call/call.Training.elevationInfo.php")
      * @Route("/activity/{id}/elevation-info", requirements={"id" = "\d+"})
      * @Security("has_role('ROLE_USER')")
      */
     public function elevationInfoAction($id, Account $account)
     {
         $Frontend = new \Frontend(false, $this->get('security.token_storage'));
-        $ElevationInfo = new \ElevationInfo(new Context($id, $account->getId()));
+        $context = new Context($id, $account->getId());
+
+        if (!$context->hasRoute()) {
+            return $this->render('activity/tool/not_possible.html.twig');
+        }
+
+        $ElevationInfo = new \ElevationInfo($context);
         $ElevationInfo->display();
 
         return new Response();
@@ -302,15 +344,19 @@ class ActivityController extends Controller
 
     /**
      * @Route("/activity/{id}/time-series-info", requirements={"id" = "\d+"}, name="activity-tool-time-series-info")
+     * @ParamConverter("trackdata", class="CoreBundle:Trackdata", options={"activity" = "id"}, isOptional="true")
      * @Security("has_role('ROLE_USER')")
      */
-    public function timeSeriesInfoAction($id, Account $account)
+    public function timeSeriesInfoAction($id, Account $account, Trackdata $trackdata = null)
     {
-        /** @var Trackdata $trackdata */
-        $trackdata = $this->getDoctrine()->getManager()->getRepository('CoreBundle:Trackdata')->findOneBy([
-            'activity' => $id,
-            'account' => $account->getId()
-        ]);
+        if (null === $trackdata) {
+            return $this->render('activity/tool/not_possible.html.twig');
+        }
+
+        if ($trackdata->getAccount()->getId() != $account->getId()) {
+            throw $this->createAccessDeniedException();
+        }
+
         $trackdataModel = $trackdata->getLegacyModel();
 
         $paceUnit = PaceEnum::get(
@@ -329,15 +375,19 @@ class ActivityController extends Controller
 
     /**
      * @Route("/activity/{id}/sub-segments-info", requirements={"id" = "\d+"}, name="activity-tool-sub-segments-info")
+     * @ParamConverter("trackdata", class="CoreBundle:Trackdata", options={"activity" = "id"}, isOptional="true")
      * @Security("has_role('ROLE_USER')")
      */
-    public function subSegmentInfoAction($id, Account $account)
+    public function subSegmentInfoAction($id, Account $account, Trackdata $trackdata = null)
     {
-        /** @var Trackdata $trackdata */
-        $trackdata = $this->getDoctrine()->getManager()->getRepository('CoreBundle:Trackdata')->findOneBy([
-            'activity' => $id,
-            'account' => $account->getId()
-        ]);
+        if (null === $trackdata) {
+            return $this->render('activity/tool/not_possible.html.twig');
+        }
+
+        if ($trackdata->getAccount()->getId() != $account->getId()) {
+            throw $this->createAccessDeniedException();
+        }
+
         $trackdataModel = $trackdata->getLegacyModel();
 
         $paceUnit = PaceEnum::get(
@@ -353,6 +403,50 @@ class ActivityController extends Controller
             'statistics' => $statistics,
             'distanceArray' => $trackdataModel->distance(),
             'paceUnit' => $paceUnit
+        ]);
+    }
+
+    /**
+     * @Route("/activity/{id}/climb-score", requirements={"id" = "\d+"}, name="activity-tool-climb-score")
+     * @ParamConverter("activity", class="CoreBundle:Training")
+     */
+    public function climbScoreAction(Training $activity, Account $account = null)
+    {
+        $activityContext = $this->get('app.activity_context.factory')->getContext($activity);
+
+        if ((!$activity->isPublic() && $account == null)) {
+            throw $this->createNotFoundException('No activity found.');
+        }
+
+        if (!$activityContext->hasTrackdata() || !$activityContext->hasRoute()) {
+            return $this->render('activity/tool/not_possible.html.twig');
+        }
+
+        if (
+            $activity->hasRoute() && null !== $activity->getRoute()->getElevationsCorrected() &&
+            $activity->hasTrackdata() && null !== $activity->getTrackdata()->getDistance()
+        ) {
+            $numDistance = count($activity->getTrackdata()->getDistance());
+            $numElevations = count($activity->getRoute()->getElevationsCorrected());
+
+            if ($numElevations > $numDistance) {
+                $activity->getRoute()->setElevationsCorrected(array_slice($activity->getRoute()->getElevationsCorrected(), 0, $numDistance));
+            }
+        }
+
+        if (null !== $activity->getRoute()->getElevationsCorrected() && null !== $activity->getTrackdata()->getDistance()) {
+            $activity->getRoute()->setElevationsCorrected((new StepwiseElevationProfileFixer(
+                5, StepwiseElevationProfileFixer::METHOD_VARIABLE_GROUP_SIZE
+            ))->fixStepwiseElevations(
+                $activity->getRoute()->getElevationsCorrected(),
+                $activity->getTrackdata()->getDistance()
+            ));
+        }
+
+        return $this->render('activity/tool/climb_score.html.twig', [
+            'context' => $activityContext,
+            'decorator' => new ActivityDecorator($activityContext),
+            'paceUnit' => $activity->getSport()->getSpeedUnit()
         ]);
     }
 
@@ -423,18 +517,19 @@ class ActivityController extends Controller
             $Matches[$ID] = array('match' => $found);
         }
 
-        $Response = array('matches' => $Matches);
-
-        return new JsonResponse($Response);
+        return new JsonResponse([
+            'matches' => $Matches
+        ]);
     }
 
     /**
      * Adjusted strtotime
      * Timestamps are given in UTC but local timezone offset has to be considered!
-     * @param $string
+     * @param string $string
      * @return int
      */
-    private function parserStrtotime($string) {
+    private function parserStrtotime($string)
+    {
         if (substr($string, -1) == 'Z') {
             return LocalTime::fromServerTime((int)strtotime(substr($string, 0, -1).' UTC'))->getTimestamp();
         }

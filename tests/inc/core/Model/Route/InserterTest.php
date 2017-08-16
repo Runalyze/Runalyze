@@ -13,6 +13,10 @@ class InvalidInserterObjectForRoute_MockTester extends \Runalyze\Model\Entity
 	}
 }
 
+/**
+ * @group dependsOn
+ * @group dependsOnOldDatabase
+ */
 class InserterTest extends \PHPUnit_Framework_TestCase
 {
 	/** @var \PDO */
