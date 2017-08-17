@@ -463,7 +463,7 @@ class Sport
     }
 
     /**
-     * @return null|AbstractSport
+     * @return AbstractSport
      */
     public function getInternalSport()
     {

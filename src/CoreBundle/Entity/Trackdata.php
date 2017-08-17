@@ -154,6 +154,14 @@ class Trackdata
     }
 
     /**
+     * @return bool
+     */
+    public function hasTime()
+    {
+        return null !== $this->time;
+    }
+
+    /**
      * @param array|null $distance [km]
      *
      * @return $this
@@ -171,6 +179,14 @@ class Trackdata
     public function getDistance()
     {
         return $this->distance;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasDistance()
+    {
+        return null !== $this->distance;
     }
 
     /**
@@ -194,6 +210,14 @@ class Trackdata
     }
 
     /**
+     * @return bool
+     */
+    public function hasHeartrate()
+    {
+        return null !== $this->heartrate;
+    }
+
+    /**
      * @param array|null $cadence [rpm]
      *
      * @return $this
@@ -211,6 +235,14 @@ class Trackdata
     public function getCadence()
     {
         return $this->cadence;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasCadence()
+    {
+        return null !== $this->cadence;
     }
 
     /**
@@ -234,6 +266,14 @@ class Trackdata
     }
 
     /**
+     * @return bool
+     */
+    public function hasPower()
+    {
+        return null !== $this->power;
+    }
+
+    /**
      * @param array|null $temperature [°C]
      *
      * @return $this
@@ -251,6 +291,14 @@ class Trackdata
     public function getTemperature()
     {
         return $this->temperature;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasTemperature()
+    {
+        return null !== $this->temperature;
     }
 
     /**
@@ -274,6 +322,14 @@ class Trackdata
     }
 
     /**
+     * @return bool
+     */
+    public function hasGroundcontact()
+    {
+        return null !== $this->groundcontact;
+    }
+
+    /**
      * @param array|null $verticalOscillation [mm]
      *
      * @return $this
@@ -291,6 +347,14 @@ class Trackdata
     public function getVerticalOscillation()
     {
         return $this->verticalOscillation;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasVerticalOscillation()
+    {
+        return null !== $this->verticalOscillation;
     }
 
     /**
@@ -314,6 +378,14 @@ class Trackdata
     }
 
     /**
+     * @return bool
+     */
+    public function hasGroundcontactBalance()
+    {
+        return null !== $this->groundcontactBalance;
+    }
+
+    /**
      * @param array|null $smo20 [%]
      *
      * @return $this
@@ -331,6 +403,14 @@ class Trackdata
     public function getSmo20()
     {
         return $this->smo20;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasSmo20()
+    {
+        return null !== $this->smo20;
     }
 
     /**
@@ -354,6 +434,14 @@ class Trackdata
     }
 
     /**
+     * @return bool
+     */
+    public function hasSmo21()
+    {
+        return null !== $this->smo21;
+    }
+
+    /**
      * @param array|null $thb0 [%]
      *
      * @return $this
@@ -374,6 +462,14 @@ class Trackdata
     }
 
     /**
+     * @return bool
+     */
+    public function hasThb0()
+    {
+        return null !== $this->thb0;
+    }
+
+    /**
      * @param array|null $thb1 [%]
      *
      * @return $this
@@ -391,6 +487,14 @@ class Trackdata
     public function getThb1()
     {
         return $this->thb1;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasThb1()
+    {
+        return null !== $this->thb1;
     }
 
     /**
