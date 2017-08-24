@@ -4120,12 +4120,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Runalyze/runalyze-playground.git",
-                "reference": "adf5ab9dc16524bafe3fd3eb9bd9147c5657c5cb"
+                "reference": "fd1070e381ce7b98a130d48bb0f75c35f026a404"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Runalyze/runalyze-playground/zipball/adf5ab9dc16524bafe3fd3eb9bd9147c5657c5cb",
-                "reference": "adf5ab9dc16524bafe3fd3eb9bd9147c5657c5cb",
+                "url": "https://api.github.com/repos/Runalyze/runalyze-playground/zipball/fd1070e381ce7b98a130d48bb0f75c35f026a404",
+                "reference": "fd1070e381ce7b98a130d48bb0f75c35f026a404",
                 "shasum": ""
             },
             "type": "library",
