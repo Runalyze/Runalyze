@@ -112,7 +112,7 @@ class FormularInputDayAndDaytime extends FormularField {
 		$this->FieldDay->addCSSclass('pick-a-date');
 		$this->FieldDay->setParser(FormularValueParser::$PARSER_DATE);
 
-		$this->FieldDaytime = new FormularInput($this->getFieldDaytimeName(), __('Time of day'), $this->value);
+		$this->FieldDaytime = new FormularInputTime($this->getFieldDaytimeName(), __('Time of day'), $this->value);
 		$this->FieldDaytime->setParser(FormularValueParser::$PARSER_DAYTIME);
 	}
 
