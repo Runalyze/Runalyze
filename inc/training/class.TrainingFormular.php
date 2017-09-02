@@ -336,22 +336,26 @@ class TrainingFormular extends StandardFormular {
 	/**
 	 * Display fieldset: Tag
 	 */
-	protected function initTagFieldset() {
-		$isCreateForm = ($this->submitMode == StandardFormular::$SUBMIT_MODE_CREATE);
-		$Factory = new Factory(SessionAccountHandler::getId());
-		$CurrentTags = $isCreateForm ? array() : $Factory->tagForActivity($this->dataObject->id(), true);
-		$Fieldset = new FormularFieldset( __('Tags') );
-		$Fieldset->addField(new FormularInputHidden('tag_old', '', implode(',', $CurrentTags)));
+	protected function initTagFieldset()
+    {
+        $isCreateForm = ($this->submitMode == StandardFormular::$SUBMIT_MODE_CREATE);
+        $Factory = new Factory(SessionAccountHandler::getId());
+        $CurrentTags = $isCreateForm ? array() : $Factory->tagForActivity($this->dataObject->id(), true);
+        $Fieldset = new FormularFieldset(__('Tags'));
+        $Fieldset->addField(new FormularInputHidden('tag_old', '', implode(',', $CurrentTags)));
 
-		if (isset($_POST['tags'])) {
-			$CurrentTags = self::readTagFromPost();
+        if (isset($_POST['tags'])) {
+            $CurrentTags = self::readTagFromPost();
+        }
+
+        $Field = new FormularSelectBox('tags', 'Tags', $CurrentTags);
+
+        foreach ($Factory->allTags() as $tag) {
+            $tags[$tag->id()] = $tag->tag();
 		}
+		sort($tags);
+        $Field->setOptions($tags);
 
-		$Field = new FormularSelectBox('tags', 'Tags', $CurrentTags);
-
-		foreach ($Factory->allTags() as $tag) {
-			$Field->addOption($tag->id(), $tag->tag());
-		}
 
 		$Field->setLayout( FormularFieldset::$LAYOUT_FIELD_W100_IN_W50 );
 		$Field->addCSSclass('chosen-select-create full-size');
