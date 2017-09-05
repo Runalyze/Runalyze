@@ -5,8 +5,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.com\n"
 "POT-Creation-Date: 2017-07-08 11:26+0200\n"
-"PO-Revision-Date: 2017-08-10 14:43+0000\n"
-"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
+"PO-Revision-Date: 2017-09-05 11:19+0000\n"
+"Last-Translator: Jedrzej Bulas <edekbul@gmail.com>\n"
 "Language-Team: Polish <https://translate.runalyze.com/projects/runalyze"
 "/runalyze-master-po/pl/>\n"
 "Language: pl\n"
@@ -124,9 +124,10 @@ msgid "Total cadence"
 msgstr "Całkowita kadencja"
 
 #: inc/core/View/Activity/Box/MaximalHeartRateInPercent.php:64
-#, fuzzy
 msgid "This value exceeds your entered maximal heart rate."
-msgstr "Wartość odnosi się do szacowanego VO2max na początku treningu."
+msgstr ""
+"Ta wartość jest wieksza niż zadeklarowane przez Ciebie Twoje maksymalne "
+"tetno."
 
 #: inc/core/View/Activity/Box/MaximalHeartRateInPercent.php:65
 msgid "Please adjust your maximal heart rate."
@@ -565,15 +566,13 @@ msgid "%s to %s"
 msgstr "%s do %s"
 
 #: inc/core/View/Leaflet/Map.php:142
-#, fuzzy
 msgid "There was a problem trying to show the map."
-msgstr "Wystąpił problem w trakcie przesyłania."
+msgstr "Wystąpił problem w trakcie wyświetlania mapy"
 
 #: inc/core/Activity/PerformanceCondition.php:58
 #: inc/training/search/class.SearchFormular.php:204
-#, fuzzy
 msgid "Performance condition"
-msgstr "Model formy"
+msgstr "Stan Formy"
 
 #: inc/core/Activity/PerformanceCondition.php:67
 #: inc/core/Dataset/Keys/FitPerformanceCondition.php:52
@@ -594,9 +593,8 @@ msgid "Improving Fitness"
 msgstr "Poprawianie kondycji"
 
 #: inc/core/Activity/TrainingEffectLevel.php:74
-#, fuzzy
 msgid "Highly Improving"
-msgstr "Najwyższy punkt"
+msgstr "Znacząca Poprawa"
 
 #: inc/core/Activity/TrainingEffectLevel.php:76
 msgid "Overreaching"
@@ -866,14 +864,12 @@ msgstr "Temp."
 #: inc/core/Dataset/Keys/FitPerformanceConditionStart.php:31
 #: inc/core/Dataset/Keys/FitPerformanceCondition.php:43
 #: inc/core/Dataset/Keys/FitPerformanceConditionEnd.php:31
-#, fuzzy
 msgid "Performance Condition"
-msgstr "Model formy"
+msgstr "Stan Formy"
 
 #: inc/core/Dataset/Keys/FitPerformanceConditionStart.php:31
-#, fuzzy
 msgid "at start"
-msgstr "Start"
+msgstr "na początku"
 
 #: inc/core/Dataset/Keys/FitPerformanceConditionStart.php:31
 #: inc/core/Dataset/Keys/FitHrvAnalysis.php:44
@@ -886,9 +882,8 @@ msgid "(by file)"
 msgstr "(wg pliku)"
 
 #: inc/core/Dataset/Keys/FitPerformanceConditionStart.php:40
-#, fuzzy
 msgid "PC start"
-msgstr "Start"
+msgstr "PC Start"
 
 #: inc/core/Dataset/Keys/FitPerformanceConditionStart.php:50
 #: inc/core/Dataset/Keys/FitPerformanceCondition.php:62
@@ -974,7 +969,6 @@ msgid "Exact daytime of the activity. (the date itself is always shown)"
 msgstr "Dokładna godzina dnia aktywności. (sama data zawsze jest widoczna)"
 
 #: inc/core/Dataset/Keys/Energy.php:54
-#, fuzzy
 msgid ""
 "Energy values are taken from your device or calculated by a simple formula."
 msgstr ""
@@ -1002,7 +996,6 @@ msgid "The sports icon is shown."
 msgstr "Ikona sportu jest pokazywana."
 
 #: inc/core/Dataset/Keys/Gradient.php:54
-#, fuzzy
 msgid "Grad."
 msgstr "Nachylenie"
 
@@ -1017,9 +1010,8 @@ msgid "GCB"
 msgstr "GCB"
 
 #: inc/core/Dataset/Keys/GroundcontactBalance.php:62
-#, fuzzy
 msgid "Ground contact time balance measures your running symmetry."
-msgstr "Balans czasu kontaktu z podłożem"
+msgstr "Bilans czasu kontaktu z podłożem mierzy Twoją symetrie biegu."
 
 #: inc/core/Dataset/Keys/Title.php:46
 #: inc/training/search/class.SearchFormular.php:174
@@ -1028,9 +1020,9 @@ msgid "Title"
 msgstr "Tytuł"
 
 #: inc/core/Dataset/Keys/Title.php:56
-#, fuzzy, php-format
+#, php-format
 msgid "Titles are automatically cut after %u characters."
-msgstr "Komentarze są automatycznie ucinane po %u znakach."
+msgstr "Tytuły są automatycznie ucinane po %u znakach."
 
 #: inc/core/Dataset/Keys/Elevation.php:53
 msgid "Elev."
@@ -1120,9 +1112,8 @@ msgid "Climb Score"
 msgstr ""
 
 #: inc/core/Dataset/Keys/ClimbScore.php:26
-#, fuzzy
 msgid "CS"
-msgstr "S"
+msgstr "CS"
 
 #: inc/core/Dataset/Keys/ElapsedTime.php:44
 #: inc/training/schemes/scheme.Training.php:200
@@ -1160,9 +1151,8 @@ msgstr ""
 "są pogrubieniem."
 
 #: inc/core/Dataset/Keys/FitTrainingEffect.php:52
-#, fuzzy
 msgid "TE"
-msgstr "E"
+msgstr "TE"
 
 #: inc/core/Dataset/Keys/FitTrainingEffect.php:62
 msgid ""
@@ -1258,16 +1248,14 @@ msgid "Race result"
 msgstr "Wynik zawodów"
 
 #: inc/core/Dataset/Keys/RaceResult.php:88
-#, fuzzy
 msgid "Your placements at races"
-msgstr "Kategorie sprzętu"
+msgstr "Twoje miejsca w wyścigu"
 
 #: inc/core/Dataset/Keys/RaceResult.php:127
 #: inc/core/Dataset/Keys/RaceResult.php:175
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:382
-#, fuzzy
 msgid "Official distance"
-msgstr "Całkowity dystans:"
+msgstr "Oficjalny Czas"
 
 #: inc/core/Dataset/Keys/RaceResult.php:128
 #: inc/core/Dataset/Keys/RaceResult.php:176
@@ -1296,9 +1284,8 @@ msgid "Gender"
 msgstr "Płeć"
 
 #: inc/core/Dataset/Keys/RaceResult.php:160
-#, fuzzy
 msgid "Race name"
-msgstr "Strefy tempa"
+msgstr "Nazwa wyscigu"
 
 #: inc/core/Dataset/Keys/TrainingPartner.php:46
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:303
@@ -1358,7 +1345,6 @@ msgid "Recovery time"
 msgstr "Czas regeneracji"
 
 #: inc/core/Dataset/Keys/FitRecoveryTime.php:62
-#, fuzzy
 msgid ""
 "Garmin calculates a suggested recovery time based on your heart rate "
 "variability right after the end of your activity."
@@ -1393,9 +1379,8 @@ msgid "Weight unit"
 msgstr "Jednostka wagi"
 
 #: inc/core/Configuration/Category/General.php:210
-#, fuzzy
 msgid "Energy unit"
-msgstr "Jednostka wagi"
+msgstr "Jednostka energi"
 
 #: inc/core/Configuration/Category/General.php:214
 msgid "Temperature unit"
@@ -1434,9 +1419,9 @@ msgstr ""
 "pasuje. Może być pusty."
 
 #: inc/core/Configuration/Category/VO2max.php:131
-#, fuzzy, php-format
+#, php-format
 msgid "Value must be between %s and %s."
-msgstr "K musi być pomiędzy %u i %u, e pomiędzy %f i %f."
+msgstr "Wartosć musi być pomiędzy %u i %u, oraz pomiędzy %f i %f."
 
 #: inc/core/Configuration/Category/VO2max.php:135
 msgid "Use fixed VO<sub>2</sub>max value"
@@ -1472,9 +1457,8 @@ msgstr "Za każdy metr w górę dodaj X metrów do odległości."
 
 #: inc/core/Configuration/Category/VO2max.php:146
 #: inc/core/Configuration/Category/VO2max.php:152
-#, fuzzy
 msgid "Only for VO2max estimation"
-msgstr "tylko dla zawodów"
+msgstr "Tylko dla oszacowania VO2max"
 
 #: inc/core/Configuration/Category/VO2max.php:151
 msgid "Correction per negative elevation"
@@ -1503,9 +1487,8 @@ msgid "Automatically mark every activity after its creation as public."
 msgstr "Po utworzeniu automatycznie ustaw trening jako publiczny."
 
 #: inc/core/Configuration/Category/Privacy.php:99
-#, fuzzy
 msgid "Public athlete page: active"
-msgstr "Lista publiczna: aktywna"
+msgstr "Publiczna strona: aktywna"
 
 #: inc/core/Configuration/Category/Privacy.php:100
 msgid "If activated: Everyone can see a list of all your (public) activities."
@@ -1513,9 +1496,8 @@ msgstr ""
 "Jeśli aktywne: Wszyscy mogą przeglądać listę Twoich publicznych treningów."
 
 #: inc/core/Configuration/Category/Privacy.php:104
-#, fuzzy
 msgid "Public athlete page: private workouts"
-msgstr "Lista publiczna: prywatne treningi"
+msgstr "Strona publiczna: prywatne treningi"
 
 #: inc/core/Configuration/Category/Privacy.php:105
 msgid ""
@@ -1526,18 +1508,16 @@ msgstr ""
 "treningów publicznych."
 
 #: inc/core/Configuration/Category/Privacy.php:109
-#, fuzzy
 msgid "Public athlete page: general statistics"
-msgstr "Lista publiczna: statystyki ogólne"
+msgstr "Strona publiczna: statystyki ogólne"
 
 #: inc/core/Configuration/Category/Privacy.php:110
 msgid "Show some general statistics above the activity list"
 msgstr "Pokazuje statystyki ogólne powyżej listy publicznych treningów"
 
 #: inc/core/Configuration/Category/Privacy.php:114
-#, fuzzy
 msgid "Public activity view: show map"
-msgstr "Lista publiczna: pokaż mapę"
+msgstr "Strona publiczna: pokaż mapę"
 
 #: inc/core/Configuration/Category/Privacy.php:115
 msgid "You can hide the map for the public view"
@@ -1563,9 +1543,8 @@ msgstr "Liczba wyświetlanych wyników na każdej stronie."
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:173
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:505
 #: plugin/RunalyzePluginPanel_Rechenspiele/Plot.Form.php:198
-#, fuzzy
 msgid "Marathon shape"
-msgstr "Maratońskie"
+msgstr "Kondycja Maratońska"
 
 #: inc/core/Configuration/Category/BasicEndurance.php:103
 msgid "Minimal distance for longjogs"
@@ -1757,12 +1736,10 @@ msgid "Default window"
 msgstr "Domyślne okno"
 
 #: inc/core/Configuration/Category/ActivityForm.php:202
-#, fuzzy
 msgid "Calculate energy"
-msgstr "Wylicz moc"
+msgstr "Wylicz energię"
 
 #: inc/core/Configuration/Category/ActivityForm.php:203
-#, fuzzy
 msgid "Recalculate energy after changing duration by hand"
 msgstr "Przelicz kalorie po ręcznej zmianie czasu trwania"
 
@@ -1811,9 +1788,8 @@ msgstr ""
 "Zamiast gps-elevation możliwa jest korekta za pomocą zewnętrznych serwisów."
 
 #: inc/core/Configuration/Category/ActivityForm.php:257
-#, fuzzy
 msgid "Sort: sports"
-msgstr "Sortuj: sport"
+msgstr "Sortuj: sporty"
 
 #: inc/core/Configuration/Category/ActivityForm.php:261
 msgid "Sort: activity types"
@@ -1966,9 +1942,8 @@ msgid "NW"
 msgstr "NW"
 
 #: inc/core/Data/Weather/Sources.php:40
-#, fuzzy
 msgid "internal database"
-msgstr "Dane ogólne"
+msgstr "wewnętrzna baza danych"
 
 #: inc/core/Data/Weather/Condition.php:96
 msgid "sunny"
@@ -2073,7 +2048,6 @@ msgid "Hurricane force"
 msgstr "Huragan"
 
 #: inc/core/Data/Weather/BeaufortScale.php:169
-#, fuzzy
 msgid "Beaufort scale"
 msgstr "Skala Beauforta"
 
@@ -2082,9 +2056,8 @@ msgid "No effect"
 msgstr ""
 
 #: inc/core/Data/Weather/HeatIndexEffect.php:60
-#, fuzzy
 msgid "Caution"
-msgstr "Wyliczenia"
+msgstr "Uwaga"
 
 #: inc/core/Data/Weather/HeatIndexEffect.php:62
 msgid "Extreme caution"
@@ -2125,23 +2098,20 @@ msgid "Heat stroke is imminent."
 msgstr ""
 
 #: inc/core/Data/RPE.php:21
-#, fuzzy
 msgid "No exertion at all"
-msgstr "Uwaga do danych dotyczących wysokości"
+msgstr "Brak wysiłku"
 
 #: inc/core/Data/RPE.php:22
 msgid "Extremely light"
 msgstr ""
 
 #: inc/core/Data/RPE.php:24
-#, fuzzy
 msgid "Very light"
-msgstr "Limit pamięci"
+msgstr "Bardzo lekki"
 
 #: inc/core/Data/RPE.php:26
-#, fuzzy
 msgid "Light"
-msgstr "Noc"
+msgstr "Lekki"
 
 #: inc/core/Data/RPE.php:28
 msgid "Somewhat hard"
@@ -2160,9 +2130,8 @@ msgid "Extremely hard"
 msgstr ""
 
 #: inc/core/Data/RPE.php:35
-#, fuzzy
 msgid "Maximal exertion"
-msgstr "Tętno maksymalne"
+msgstr "Maksymalny wysiłek"
 
 #: inc/core/Data/Cadence/General.php:40
 msgid "rpm = rotations per minute"
@@ -2221,9 +2190,8 @@ msgid "only icon"
 msgstr "tylko ikona"
 
 #: inc/core/Profile/View/DataBrowserRowProfile.php:30
-#, fuzzy
 msgid "Inherit from sport"
-msgstr "Sortuj: sport"
+msgstr "Dziedzicz po typie sportu"
 
 #: inc/core/Profile/Sport/Generic.php:26
 msgid "Generic"
@@ -2232,16 +2200,15 @@ msgstr ""
 #: inc/core/Profile/Sport/Hiking.php:24
 #, fuzzy
 msgid "Hiking"
-msgstr "Rower"
+msgstr "Wspinaczka/Turystyka piesza"
 
 #: inc/core/Profile/Sport/Cycling.php:24
 msgid "Cycling"
 msgstr ""
 
 #: inc/core/Profile/Sport/Rowing.php:24
-#, fuzzy
 msgid "Rowing"
-msgstr "śnieg"
+msgstr "Wioślarstwo"
 
 #: inc/core/Profile/Sport/Running.php:24
 #: src/CoreBundle/Component/Account/Registration.php:141
@@ -2258,7 +2225,6 @@ msgid "Alternative sport"
 msgstr ""
 
 #: inc/core/Profile/Sport/Settings/SportRelevanceProfile.php:26
-#, fuzzy
 msgid "Main Sport"
 msgstr "Główny sport"
 
@@ -2292,9 +2258,8 @@ msgid "never"
 msgstr "nigdy"
 
 #: inc/core/Parameter/Application/ActivityRoutePrivacy.php:40
-#, fuzzy
 msgid "only for race results"
-msgstr "Najlepszy wynik"
+msgstr "tylko dla wyników zawodów"
 
 #: inc/core/Parameter/Application/ActivityRoutePrivacy.php:41
 msgid "always"
@@ -2465,7 +2430,6 @@ msgid "Fahrenheit (°F)"
 msgstr "Fahrenheit (°F)"
 
 #: inc/core/Parameter/Application/EnergyUnit.php:36
-#, fuzzy
 msgid "Kilocalories"
 msgstr "Kalorie"
 
@@ -2646,7 +2610,6 @@ msgid "Please enter a number."
 msgstr "Wprowadź liczbę."
 
 #: inc/html/formular/class.FormularValueParser.php:270
-#, fuzzy
 msgid "This value is too large."
 msgstr "Wartość zbyt duża."
 
@@ -2878,9 +2841,8 @@ msgid "max. HR"
 msgstr "max. tętno"
 
 #: inc/training/search/class.SearchFormular.php:186
-#, fuzzy
 msgid "Is race"
-msgstr "Wszystkie zawody"
+msgstr "Jest wyścigiem"
 
 #: inc/training/search/class.SearchFormular.php:190
 msgid "Uses VO<sub>2</sub>max"
@@ -2925,7 +2887,6 @@ msgid "Wind speed"
 msgstr "Prędkość wiatru"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:67
-#, fuzzy
 msgid "Wind direction"
 msgstr "Kierunek wiatru"
 
@@ -2950,9 +2911,8 @@ msgid "Public"
 msgstr "Publiczny"
 
 #: inc/training/schemes/scheme.Training.php:152
-#, fuzzy
 msgid "Public activities will be visible for everybody."
-msgstr "Publiczne treningi będą widoczne dla każdego"
+msgstr "Publiczne aktywności będą widoczne dla każdego."
 
 #: inc/training/schemes/scheme.Training.php:164
 msgid ""
@@ -3062,9 +3022,8 @@ msgstr "Balans czasu kontaktu z podłożem"
 #: inc/training/class.TrainingFormular.php:480
 #: inc/training/class.TrainingFormular.php:481
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:78
-#, fuzzy
 msgid "THb"
-msgstr "Cz"
+msgstr "THb"
 
 #: inc/training/class.TrainingFormular.php:492
 msgid "Original elevation"
@@ -3501,9 +3460,8 @@ msgid "as %s"
 msgstr "jako %s"
 
 #: inc/training/view/class.TrainingView.php:111
-#, fuzzy
 msgid "Analyze splits"
-msgstr "Analizuj typy"
+msgstr "Analizuj podziały"
 
 #: inc/training/view/class.TrainingView.php:115
 msgid "Show VO<sub>2</sub>max calculation"
@@ -3512,12 +3470,11 @@ msgstr "Więcej na temat wyliczania VVO<sub>2</sub>maxOT"
 #: inc/training/view/class.TrainingView.php:123
 #, fuzzy
 msgid "Climb score"
-msgstr "Wynik HRV"
+msgstr "Punkty za Pokonaną wysokość"
 
 #: inc/training/view/class.TrainingView.php:127
-#, fuzzy
 msgid "Analyze time series"
-msgstr "Analizuj typy"
+msgstr "Analizuj czasu"
 
 #: inc/training/view/class.TrainingView.php:131
 msgid "Find best sub segments"
@@ -3664,24 +3621,20 @@ msgstr "Multi-edytor"
 
 #: inc/import/class.ImporterFactory.php:316
 #: inc/import/class.ImporterFactory.php:344
-#, fuzzy
 msgid "This file format is not supported."
-msgstr "Plik nie zawiera żadnych danych."
+msgstr "Ten typ pliku nie jest obsługiwany."
 
 #: inc/import/class.ImporterFactory.php:323
-#, fuzzy
 msgid "The file could not be saved."
-msgstr "Nie można odczytać czasu."
+msgstr "Nie można zapisać pliku."
 
 #: inc/import/class.ImporterFactory.php:332
-#, fuzzy
 msgid "There was a problem while importing the file."
-msgstr "Wystąpił problem w trakcie przesyłania."
+msgstr "Wystąpił problem w trakcie importu pliku."
 
 #: inc/import/class.ImporterFactory.php:337
-#, fuzzy
 msgid "There are some unexpected contents in the file."
-msgstr "W pliku znajduje się <strong>%s</strong> butów."
+msgstr "W pliku znajduje się niespodziewana zawartość."
 
 #: inc/import/class.ImporterFactory.php:338
 #, php-format
@@ -3689,15 +3642,13 @@ msgid "Please mail the file to %s."
 msgstr ""
 
 #: inc/import/class.ImporterFactory.php:341
-#, fuzzy
 msgid ""
 "There was an installation specific problem. Please contact the administrator."
-msgstr "Nie można wysłać linku. Skontaktuj się z administratorem."
+msgstr "Wystąpił problem podczas instalacji. Skontaktuj się z administratorem."
 
 #: inc/import/class.ImporterFactory.php:349
-#, fuzzy
 msgid "Please add the following information"
-msgstr "Zapisz następujący kod jako <strong>%s</strong>:"
+msgstr "Dodaj następujące informacje:"
 
 #: inc/tpl/tpl.DataBrowser.php:20
 msgid "Choose a date ..."
@@ -3744,53 +3695,44 @@ msgid "There are no activities for this time range."
 msgstr "Brak danych dla tego zakresu."
 
 #: inc/tpl/tpl.Frontend.header.php:38 inc/tpl/tpl.Frontend.header.php:40
-#, fuzzy
 msgid "Public athlete page"
-msgstr "Lista publiczna: aktywna"
+msgstr "Strona publiczna użytkownika"
 
 #: inc/tpl/tpl.Frontend.header.php:40
-#, fuzzy
 msgid "Your public athlete page is deactivated."
-msgstr "Lista publiczna: aktywna"
+msgstr "Twoja publiczna strona użytkownika jest nieaktywna."
 
 #: inc/tpl/tpl.Frontend.header.php:44
-#, fuzzy
 msgid "Account settings"
-msgstr "Sprawdź ustawienia"
+msgstr "Ustawienia Konta"
 
 #: inc/tpl/tpl.Frontend.header.php:45
 msgid "Logout"
 msgstr "Wyloguj"
 
 #: inc/tpl/tpl.Frontend.header.php:54
-#, fuzzy
 msgid "No new notifications"
-msgstr "Powiadomienia"
+msgstr "Brak nowych powiadomień"
 
 #: inc/tpl/tpl.Frontend.header.php:59
-#, fuzzy
 msgid "Show all notifications"
-msgstr "Powiadomienia"
+msgstr "Pokaz wszystkie powiadomienia"
 
 #: inc/tpl/tpl.Frontend.header.php:70
-#, fuzzy
 msgid "Activity upload"
-msgstr "Typ treningu"
+msgstr "Wyślij aktywność"
 
 #: inc/tpl/tpl.Frontend.header.php:71
-#, fuzzy
 msgid "Manual activity"
-msgstr "Usuń trening"
+msgstr "Ręcznie dodana aktywność"
 
 #: inc/tpl/tpl.Frontend.header.php:72
-#, fuzzy
 msgid "New equipment"
-msgstr "Wybierz sprzęt"
+msgstr "Nowy sprzęt"
 
 #: inc/tpl/tpl.Frontend.header.php:73
-#, fuzzy
 msgid "New body values"
-msgstr "Dodaj parametry ciała"
+msgstr "Dodaj nowe parametry ciała"
 
 #: inc/tpl/tpl.Frontend.header.php:83
 #: inc/system/config/class.ConfigTabPlugins.php:17
@@ -3809,28 +3751,25 @@ msgid "Sports"
 msgstr "Sport"
 
 #: inc/tpl/tpl.Frontend.header.php:87
-#, fuzzy
 msgid "Activity tags"
-msgstr "Dane treningowe %s"
+msgstr "Tagi aktywności"
 
 #: inc/tpl/tpl.Frontend.header.php:96
-#, fuzzy
 msgid "Trend analysis"
-msgstr "Analiza tagów"
+msgstr "Analiza trendów"
 
 #: inc/tpl/tpl.Frontend.header.php:97
 msgid "ANOVA"
 msgstr ""
 
 #: inc/tpl/tpl.Frontend.header.php:98
-#, fuzzy
 msgid "Analyze your VO2max"
-msgstr "Analizuj swój VDOT"
+msgstr "Analizuj swój VO2max"
 
 #: inc/tpl/tpl.Frontend.header.php:99
 #, fuzzy
 msgid "Running tables"
-msgstr "Ćwiczenia biegowe"
+msgstr "Tabele biegowe"
 
 #: inc/tpl/tpl.Frontend.header.php:100
 msgid "Poster generator"
@@ -3914,19 +3853,16 @@ msgid "target:"
 msgstr ""
 
 #: inc/draw/class.PlotSumData.php:664
-#, fuzzy
 msgid "Target is based on current marathon shape calculations."
 msgstr "Cel i średnia w oparciu o bieżące wyliczenia wytrzymałości bazowej."
 
 #: inc/draw/class.Plot.php:145
-#, fuzzy
 msgid "There is an unknown problem with this plot."
-msgstr "Wystąpił problem w trakcie przesyłania."
+msgstr "Wystąpił nieznany problem z tym wydrukiem"
 
 #: inc/draw/class.Plot.php:146
-#, fuzzy
 msgid "Error code"
-msgstr "Błąd"
+msgstr "Kod błędu"
 
 #: inc/draw/class.PlotWeekSumData.php:55
 msgid "Weekly chart:"
@@ -4107,9 +4043,8 @@ msgstr "Powiązanie: tag do treningów"
 
 #: src/CoreBundle/Component/Tool/Backup/JsonImporterResults.php:151
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:52
-#, fuzzy
 msgid "Race results"
-msgstr "Wynik"
+msgstr "Wynik zawodów"
 
 #: src/CoreBundle/Component/Account/Registration.php:90
 #: src/CoreBundle/Component/Account/Registration.php:212
@@ -4259,9 +4194,8 @@ msgid "The plugin could not be found."
 msgstr "Nie można odnaleźć wtyczki."
 
 #: src/CoreBundle/Controller/Settings/SettingsController.php:221
-#, fuzzy
 msgid "race"
-msgstr "Wszystkie zawody"
+msgstr "zawody"
 
 #: src/CoreBundle/Controller/Settings/SettingsController.php:259
 msgid "Test activity"
@@ -4444,14 +4378,12 @@ msgid "Heart Rate Zones"
 msgstr "Strefy Tętna"
 
 #: plugin/RunalyzePluginPanel_TagsSummary/class.RunalyzePluginPanel_TagsSummary.php:33
-#, fuzzy
 msgid "Tags summary"
-msgstr "Podsumowanie"
+msgstr "Podsumowanie tagów"
 
 #: plugin/RunalyzePluginPanel_TagsSummary/class.RunalyzePluginPanel_TagsSummary.php:41
-#, fuzzy
 msgid "Summarises your tags for the selected sport."
-msgstr "Podsumowanie treningów dla każdego sportu."
+msgstr "Podsumowanie tagów dla wybranego sportu."
 
 #: plugin/RunalyzePluginPanel_TagsSummary/class.RunalyzePluginPanel_TagsSummary.php:57
 msgid "Sport to summarise tags for"
@@ -4462,19 +4394,16 @@ msgid "Show tags for this period of months"
 msgstr ""
 
 #: plugin/RunalyzePluginPanel_TagsSummary/class.RunalyzePluginPanel_TagsSummary.php:114
-#, fuzzy
 msgid "months"
-msgstr "/miesiąc"
+msgstr "miesiące"
 
 #: plugin/RunalyzePluginPanel_TagsSummary/class.RunalyzePluginPanel_TagsSummary.php:114
-#, fuzzy
 msgid "month"
-msgstr "/miesiąc"
+msgstr "miesiąc"
 
 #: plugin/RunalyzePluginPanel_TagsSummary/class.RunalyzePluginPanel_TagsSummary.php:176
-#, fuzzy
 msgid "You don't have any tags for this sport or timescale."
-msgstr "Nie masz żadnych butów"
+msgstr "Nie masz żadnych tagów dla tego sportu lub wybranego zakresu czasu"
 
 #: plugin/RunalyzePluginStat_Statistiken/class.SummaryTable.php:178
 msgid "No activities"
@@ -4699,8 +4628,8 @@ msgid ""
 "Your current effective VO2max is estimated based on the ratio of heart rate "
 "and pace. This value is equivalent to specific performances."
 msgstr ""
-"Twój aktualny VO2max jest oszacowany na podstawie tempa i tętna. Jest "
-"równoważny konkretnym wynikom."
+"Twój aktualny VO2max jest szacowany na podstawie tempa i tętna. Wynik ten "
+"jest ekwiwalentem konkretnych wyników."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:58
 msgid ""
@@ -4759,8 +4688,8 @@ msgid ""
 "Use marathon shape factor to adapt prognosis for long distances (VO2max "
 "only)."
 msgstr ""
-"Użyj Wytrzymałości bazowej do dostosowania prognozy dla długich dystansów "
-"(tylko Jack Daniels)."
+"Użyj kondycji maratońskiej do dostosowania prognozy dla długich dystansów ("
+"tylko dla VO2max)."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:104
 msgid "Show prognosis trend"
@@ -4787,7 +4716,7 @@ msgstr "<small>od</small> %s <small>do</small> <strong>%s</strong>"
 #: plugin/RunalyzePluginPanel_Prognose/Plot.Form.php:161
 #, fuzzy
 msgid "Prognosis with marathon shape"
-msgstr "Użyj Wytrzymałości bazowej"
+msgstr "Prognoza dla kondycji maratońskiej."
 
 #: plugin/RunalyzePluginPanel_Prognose/Plot.Form.php:162
 msgid "Result"
@@ -4804,7 +4733,7 @@ msgstr "Twój aktualny VO2max:"
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:126
 #, fuzzy
 msgid "Your current marathon shape:"
-msgstr "Twoja aktualna wytrzymałość bazowa:"
+msgstr "Twoja aktualna kondycja maratońska."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:128
 #, php-format
@@ -4834,9 +4763,9 @@ msgid "K must be between %u and %u, e between %f and %f."
 msgstr "K musi być pomiędzy %u i %u, e pomiędzy %f i %f."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:353
-#, fuzzy, php-format
+#, php-format
 msgid "Effective VO2max must be between %u and %u."
-msgstr "K musi być pomiędzy %u i %u, e pomiędzy %f i %f."
+msgstr "Efektywne VO2max musi być pomiędzy %u oraz %u."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:371
 msgid "Input"
@@ -4853,12 +4782,12 @@ msgstr "Dystanse"
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:402
 #, fuzzy
 msgid "Use Marathon Shape"
-msgstr "Maratońskie"
+msgstr "Używaj kondycji maratońskiej"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:407
 #, fuzzy
 msgid "Marathon Shape"
-msgstr "Maratońskie"
+msgstr "Kondycja maratońska"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:422
 msgid "Best result"
@@ -5018,9 +4947,8 @@ msgstr "Bieżący"
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:165
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:181
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:195
-#, fuzzy
 msgid "Day"
-msgstr "Maj"
+msgstr "Dzień"
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:178
 #, php-format
@@ -5165,17 +5093,15 @@ msgstr ""
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:60
 #, fuzzy
 msgid "Guess current marathon shape"
-msgstr "Oszacuj aktualną wytrzymałość bazową"
+msgstr "Oszacuj aktualną kondycję maratońską."
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:78
-#, fuzzy
 msgid "Show shape"
-msgstr "Pokaż tabelę"
+msgstr "Pokaż kondycję"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:79
-#, fuzzy
 msgid "Show training paces"
-msgstr "Tempa treningowe"
+msgstr "Pokaz tempa treningowe"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:80
 msgid "How are these values calculated?"
@@ -5213,7 +5139,7 @@ msgstr "Stałe&nbsp;obciążenie"
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:195
 #, fuzzy
 msgid "Chronic Training Load"
-msgstr "Chronical Training Load"
+msgstr "Chronic Training Load"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:203
 #, php-format
@@ -5223,7 +5149,7 @@ msgstr "bezwzględna: %s<br>procentowa: %s &#37;"
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:205
 #, fuzzy
 msgid "Stress Balance"
-msgstr "Bilans&nbsp;obciążenia"
+msgstr "Stress Balance"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:206
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:361
@@ -5231,9 +5157,8 @@ msgid "Training Stress Balance"
 msgstr "Training Stress Balance"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:215
-#, fuzzy
 msgid "Rest days"
-msgstr "%s dni"
+msgstr "Dzień odpoczynku"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:216
 msgid "Rest days needed to reach TSB = 0"
@@ -5242,7 +5167,7 @@ msgstr "Dni odpoczynku potrzebne by osiągnąć TSB = 0"
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:224
 #, fuzzy
 msgid "Easy TRIMP"
-msgstr "Łatwy&nbsp;TRIMP"
+msgstr "Łagodny TRIMP"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:241
 msgid "Monotony"
@@ -5257,9 +5182,8 @@ msgstr ""
 "poniżej 1.5.</small>"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:259
-#, fuzzy
 msgid "Training strain"
-msgstr "Zmęczenie&nbsp;treningiem"
+msgstr "Zmęczenie treningowe"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:260
 msgid "Training strain<br><small>of your last seven days</small>"
@@ -5275,7 +5199,6 @@ msgid "in &#37;"
 msgstr "w &#37;"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:335
-#, fuzzy
 msgid "value/day"
 msgstr "wartość/dzień"
 
@@ -5368,14 +5291,13 @@ msgid "Current Effective VO<sub>2</sub>max"
 msgstr ""
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:446
-#, fuzzy
 msgid "based on heart rate"
-msgstr "Korekta: według tętna"
+msgstr "na bazie tętna"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:449
 #, fuzzy
 msgid "Target kilometer per week"
-msgstr "Porównuj kilometry tygodniowo"
+msgstr "Zadana odległość na tydzień"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:451
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:462
@@ -5433,14 +5355,13 @@ msgstr ""
 "po 20km."
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:518
-#, fuzzy
 msgid ""
 "The marathon shape is <strong>not</strong> scientifically based.<br>It's our "
 "own attempt to adjust the prognosis for long distances based on your current "
 "endurance."
 msgstr ""
-"Wystrzymałość bazowa <strong>nie</strong> pochodzi od Jacka Danielsa.<br>To "
-"nasza własna próba dostosowania prognozy do długich dystansów w oparciu o "
+"Kondycja maratońska <strong>nie</strong> posiada podstaw naukowych.<br>To "
+"nasza własna próba dostosowania prognozy dla długich dystansów w oparciu o "
 "Twoją aktualną wytrzymałość."
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:528
@@ -5487,12 +5408,10 @@ msgid "TSB"
 msgstr "TSB"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:60
-#, fuzzy
 msgid "Personal bests and everything else related to your competitions."
 msgstr "Rekordy życiowe i wszystko inne związane z zawodami."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:68
-#, fuzzy
 msgid ""
 "This plugin lists all your competitions. It shows you a summary of all race "
 "results and of your personal bests (over all distances with at least two "
@@ -5502,7 +5421,6 @@ msgstr ""
 "rekordów życiowych (wszystkie dystanse z co najmniej dwoma wynikami)."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:71
-#, fuzzy
 msgid ""
 "In addition, it plots the trend of your results over a specific distance.If "
 "you do a race just for fun, you can mark it as a 'fun race' to ignore it in "
@@ -5524,9 +5442,8 @@ msgid "Personal bests"
 msgstr "Rekordy życiowe"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:93
-#, fuzzy
 msgid "All race results"
-msgstr "Najlepszy wynik"
+msgstr "Wszystkie wyniki zawodów"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:181
 msgid "There are no races."
@@ -5545,9 +5462,8 @@ msgid ""
 msgstr ""
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:239
-#, fuzzy
 msgid "There are no race results for the given distances."
-msgstr "Brak zawodów na tym dystansie."
+msgstr "Brak wyników zawodów na tym dystansie."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:263
 msgid "Results trend"
@@ -5564,9 +5480,8 @@ msgid "Official distance & time"
 msgstr ""
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:381
-#, fuzzy
 msgid "Activity details"
-msgstr "Dane treningowe %s"
+msgstr "Szczegóły aktywności"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:382
 msgid "Placement"
@@ -5586,9 +5501,8 @@ msgid "AG"
 msgstr ""
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:397
-#, fuzzy
 msgid "male/female"
-msgstr "kobieta"
+msgstr "mężczyzna/kobieta"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:397
 msgid "M/F"
@@ -5605,14 +5519,12 @@ msgid "Weather statistics"
 msgstr "Statystyki pogody"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:504
-#, fuzzy
 msgid "Edit the activity"
-msgstr "Trening prywatny"
+msgstr "Edytuj aktywność"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:518
-#, fuzzy
 msgid "Edit the race result details"
-msgstr "Typ treningu: zawody"
+msgstr "Edytuj szczegóły zawodów"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:534
 msgid "Fun race | Click to mark this activity as a 'normal race'."
@@ -5700,9 +5612,8 @@ msgid "Please choose an equipment type in the plugin configuration."
 msgstr "Wybierz typ sprzętu w konfiguracji wtyczki."
 
 #: plugin/RunalyzePluginPanel_Equipment/class.RunalyzePluginPanel_Equipment.php:113
-#, fuzzy
 msgid "Show/Hide unused equipment"
-msgstr "Pokaż nieużywany sprzęt"
+msgstr "Pokaż/Ukryj nieużywany sprzęt"
 
 #: plugin/RunalyzePluginPanel_Equipment/class.RunalyzePluginPanel_Equipment.php:154
 msgid "You don't have any equipment"
