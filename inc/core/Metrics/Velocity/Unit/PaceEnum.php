@@ -3,8 +3,8 @@
 namespace Runalyze\Metrics\Velocity\Unit;
 
 use Runalyze\Parameter\Application\PaceUnit;
-use Runalyze\Util\AbstractEnum;
-use Runalyze\Util\AbstractEnumFactoryTrait;
+use Runalyze\Common\Enum\AbstractEnum;
+use Runalyze\Common\Enum\AbstractEnumFactoryTrait;
 use Runalyze\Util\InterfaceChoosable;
 
 class PaceEnum extends AbstractEnum implements InterfaceChoosable

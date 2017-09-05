@@ -6,7 +6,7 @@
 
 namespace Runalyze\Dataset;
 
-use Runalyze\Util\AbstractEnum;
+use Runalyze\Common\Enum\AbstractEnum;
 
 /**
  * Enum for summary modes for dataset

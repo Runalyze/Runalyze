@@ -2,8 +2,8 @@
 
 namespace Runalyze\Bundle\CoreBundle\Component\Tool\Anova\QueryValue;
 
-use Runalyze\Util\AbstractEnum;
-use Runalyze\Util\AbstractEnumFactoryTrait;
+use Runalyze\Common\Enum\AbstractEnum;
+use Runalyze\Common\Enum\AbstractEnumFactoryTrait;
 
 final class QueryValues extends AbstractEnum
 {

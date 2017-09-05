@@ -15,7 +15,7 @@ namespace Runalyze\Parameter\Application;
  * @author Michael Pohl
  * @package Runalyze\Util
  */
-class Timezone extends \Runalyze\Util\AbstractEnum
+class Timezone extends \Runalyze\Common\Enum\AbstractEnum
 {
     /** @var int */
     const UTC  = 0;

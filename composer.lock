@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "c50ad6b72151ed292702c2e8a7cfaec8",
+    "content-hash": "5ca54e3450320c213fae23f90d5dae27",
     "packages": [
         {
             "name": "beberlei/DoctrineExtensions",
@@ -2204,6 +2204,40 @@
             "time": "2016-10-04T10:03:35+00:00"
         },
         {
+            "name": "runalyze/common",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Runalyze/common.git",
+                "reference": "c685f9cfee4778514666dd9a32470096dc5a36d6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Runalyze/common/zipball/c685f9cfee4778514666dd9a32470096dc5a36d6",
+                "reference": "c685f9cfee4778514666dd9a32470096dc5a36d6",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.9"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^1.11",
+                "phpunit/phpunit": "4.8.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Runalyze\\Common\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Common classes of Runalyze",
+            "time": "2017-09-05 17:52:57"
+        },
+        {
             "name": "runalyze/dem-reader",
             "version": "v1.0.4",
             "source": {
@@ -4147,7 +4181,7 @@
                 "runalyze",
                 "symfony3"
             ],
-            "time": "2016-09-28 06:13:55"
+            "time": "2016-09-28T06:13:55+00:00"
         },
         {
             "name": "sebastian/comparator",
@@ -4579,6 +4613,7 @@
         "swiftmailer/swiftmailer": 0,
         "jms/translation-bundle": 20,
         "runalyze/glossary": 20,
+        "runalyze/common": 20,
         "runalyze/playground": 20
     },
     "prefer-stable": true,

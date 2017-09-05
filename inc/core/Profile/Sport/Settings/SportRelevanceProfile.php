@@ -2,7 +2,7 @@
 
 namespace Runalyze\Profile\Sport\Settings;
 
-use Runalyze\Util\AbstractEnum;
+use Runalyze\Common\Enum\AbstractEnum;
 use Runalyze\Util\InterfaceChoosable;
 
 class SportRelevanceProfile extends AbstractEnum implements InterfaceChoosable

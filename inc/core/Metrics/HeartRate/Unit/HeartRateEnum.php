@@ -2,7 +2,7 @@
 
 namespace Runalyze\Metrics\HeartRate\Unit;
 
-use Runalyze\Util\AbstractEnum;
+use Runalyze\Common\Enum\AbstractEnum;
 
 class HeartRateEnum extends AbstractEnum
 {

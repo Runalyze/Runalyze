@@ -2,7 +2,7 @@
 
 namespace Runalyze\Model\Account;
 
-use Runalyze\Util\AbstractEnum;
+use Runalyze\Common\Enum\AbstractEnum;
 
 final class UserRole extends AbstractEnum
 {

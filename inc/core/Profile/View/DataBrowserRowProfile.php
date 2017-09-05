@@ -2,7 +2,7 @@
 
 namespace Runalyze\Profile\View;
 
-use Runalyze\Util\AbstractEnum;
+use Runalyze\Common\Enum\AbstractEnum;
 
 class DataBrowserRowProfile extends AbstractEnum
 {

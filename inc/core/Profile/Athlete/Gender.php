@@ -2,7 +2,7 @@
 
 namespace Runalyze\Profile\Athlete;
 
-use Runalyze\Util\AbstractEnum;
+use Runalyze\Common\Enum\AbstractEnum;
 use Runalyze\Util\InterfaceChoosable;
 
 class Gender extends AbstractEnum implements InterfaceChoosable

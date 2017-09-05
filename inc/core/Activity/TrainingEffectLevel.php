@@ -6,7 +6,7 @@
 
 namespace Runalyze\Activity;
 
-use Runalyze\Util\AbstractEnum;
+use Runalyze\Common\Enum\AbstractEnum;
 
 /**
  * Enum for training effect levels
