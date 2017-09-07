@@ -39,7 +39,6 @@ class Configuration
         self::DataBrowser();
         self::Design();
         self::General();
-        self::Misc();
         self::Privacy();
         self::Trimp();
         self::VO2max();
@@ -188,11 +187,4 @@ class Configuration
         return self::get('BasicEndurance');
     }
 
-    /**
-     * @return \Runalyze\Configuration\Category\Misc
-     */
-    public static function Misc()
-    {
-        return self::get('Misc');
-    }
 }

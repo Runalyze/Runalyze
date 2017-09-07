@@ -34,9 +34,8 @@ class ConfigTabGeneral extends ConfigTab {
 			Configuration::DataBrowser(),
 			Configuration::VO2max(),
 			Configuration::Trimp(),
-			Configuration::BasicEndurance(),
-			Configuration::Misc()
-		);
+			Configuration::BasicEndurance()
+        );
 	}
 
 	/**

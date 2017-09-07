@@ -22,7 +22,6 @@ class RunalyzeConfigurationListTest extends \PHPUnit_Framework_TestCase
         $config->getDataBrowser();
         $config->getDesign();
         $config->getGeneral();
-        $config->getMiscellaneous();
         $config->getPrivacy();
         $config->getTrimp();
         $config->getVO2maxCorrectionFactor();
