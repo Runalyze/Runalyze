@@ -93,13 +93,15 @@ class SearchResults {
 	 */
 	public function __construct($withResults = true) {
 		$this->WithResults = $withResults;
-		$this->ResultsPerPage = Configuration::Misc()->searchResultsPerPage();
 
 		$this->setAllowedKeys();
 		$this->setKeysThatShouldIgnoreNull();
 		$this->setKeysThatShouldIgnoreZero();
 
-		if ($withResults) {
+        $this->ResultsPerPage = (is_numeric($_POST['resultsPerPage'])) ? $_POST['resultsPerPage'] : 20;
+
+
+        if ($withResults) {
 			$this->initDataset();
 			$this->searchTrainings();
 		}

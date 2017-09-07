@@ -34,6 +34,7 @@ class SearchFormular extends Formular {
 		$this->initGeneralFieldset();
 		$this->initConditions();
 		$this->addFieldSendToMultiEditor();
+		$this->addResultsPerPageField();
 		$this->addSubmitBlock();
 		$this->addPager();
 		$this->addFieldset($this->Fieldset);
@@ -114,6 +115,20 @@ class SearchFormular extends Formular {
 
 		$this->Fieldset->addField( $Field );
 	}
+    /**
+     * Add field results per page
+     */
+    private function addResultsPerPageField() {
+        $Field = new FormularSelectBox('resultsPerPage', __('Results per page'), 20);
+        $Field->setOptions([10 => 10,
+            20 => 20,
+            50 => 50,
+            100 => 100,
+            200 => 200]);
+        $Field->setLayout( FormularFieldset::$LAYOUT_FIELD_W33 );
+
+        $this->Fieldset->addField($Field);
+    }
 
 	/**
 	 * Add field: sport
