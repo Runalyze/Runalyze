@@ -172,6 +172,12 @@ final class Keys extends AbstractEnum
     /** @var int */
     const TOOLS = 53;
 
+    /** @var int */
+    const FLIGHT_TIME = 54;
+
+    /** @var int */
+    const FLIGHT_RATIO = 55;
+
     /**
 	 * @var array|null
 	 */
@@ -281,7 +287,9 @@ final class Keys extends AbstractEnum
             self::FIT_PERFORMANCE_CONDITION_END => 'FitPerformanceConditionEnd',
             self::CLIMB_SCORE => 'ClimbScore',
             self::PERCENTAGE_HILLY => 'PercentageHilly',
-            self::TOOLS => 'Tools'
+            self::TOOLS => 'Tools',
+            self::FLIGHT_TIME => 'FlightTime',
+            self::FLIGHT_RATIO => 'FlightRatio'
         );
 	}
 }

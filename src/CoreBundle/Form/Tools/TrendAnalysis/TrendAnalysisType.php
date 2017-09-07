@@ -124,7 +124,9 @@ class TrendAnalysisType extends AbstractType
                     'Running dynamics' => [
                         'Ground contact time' => QueryValues::GROUND_CONTACT_TIME,
                         'Ground contact balance' => QueryValues::GROUND_CONTACT_BALANCE,
-                        'Vertical oscillation' => QueryValues::VERTICAL_OSCILLATION
+                        'Vertical oscillation' => QueryValues::VERTICAL_OSCILLATION,
+                        'Flight time' => QueryValues::FLIGHT_TIME,
+                        'Flight ratio' => QueryValues::FLIGHT_RATIO
                     ],
                     'FIT details' => [
                         'HRV analysis' => QueryValues::FIT_HRV_ANALYSIS,

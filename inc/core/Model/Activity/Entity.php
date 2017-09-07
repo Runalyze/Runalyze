@@ -907,6 +907,28 @@ class Entity extends Model\EntityWithID {
 		return $this->Data[self::VERTICAL_RATIO];
 	}
 
+    /**
+     * @return float|null [ms] can be negative for walking
+     */
+    public function flightTime() {
+        if ($this->Data[self::CADENCE] > 0 && $this->Data[self::GROUNDCONTACT] > 0) {
+            return 30000.0 / $this->Data[self::CADENCE] - $this->Data[self::GROUNDCONTACT];
+        }
+
+        return null;
+    }
+
+    /**
+     * @return float|null [%] can be negative for walking
+     */
+    public function flightRatio() {
+        if ($this->Data[self::CADENCE] > 0 && $this->Data[self::GROUNDCONTACT] > 0) {
+            return 1.0 - $this->Data[self::CADENCE] * $this->Data[self::GROUNDCONTACT] / 30000.0;
+        }
+
+        return null;
+    }
+
 	/**
 	 * Weather
 	 * @return \Runalyze\Data\Weather

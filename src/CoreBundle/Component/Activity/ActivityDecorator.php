@@ -80,4 +80,34 @@ class ActivityDecorator
 
         return $this->Context->getActivity()->getVO2max();
     }
+
+    /**
+     * @return float|null [ms] can be negative for walking
+     */
+    public function getFlightTime()
+    {
+        $cadence = $this->Context->getActivity()->getCadence();
+        $groundContactTime = $this->Context->getActivity()->getGroundcontact();
+
+        if ($cadence > 0 && $groundContactTime > 0) {
+            return 30000.0 / $cadence - $groundContactTime;
+        }
+
+        return null;
+    }
+
+    /**
+     * @return float|null [%] can be negative for walking
+     */
+    public function getFlightRatio()
+    {
+        $cadence = $this->Context->getActivity()->getCadence();
+        $groundContactTime = $this->Context->getActivity()->getGroundcontact();
+
+        if ($cadence > 0 && $groundContactTime > 0) {
+            return 1.0 - $cadence * $groundContactTime / 30000.0;
+        }
+
+        return null;
+    }
 }

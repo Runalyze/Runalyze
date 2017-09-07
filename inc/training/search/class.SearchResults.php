@@ -567,6 +567,14 @@ class SearchResults {
 				return ' ORDER BY `t`.`elevation`/`t`.`distance` '.$order;
 			}
 
+            if ($_POST['search-sort-by'] == 'flight_time') {
+                return ' ORDER BY (30000/`t`.`cadence` - `t`.`groundcontact`) '.$order;
+            }
+
+            if ($_POST['search-sort-by'] == 'flight_ratio') {
+                return ' ORDER BY (1 - `t`.`cadence` * `t`.`groundcontact` / 30000) '.$order;
+            }
+
 			if (in_array($_POST['search-sort-by'], $this->AllowedKeys)) {
 				return ' ORDER BY `t`.'.$this->DB->escape($_POST['search-sort-by'], false).' '.$order;
 			}
@@ -588,6 +596,9 @@ class SearchResults {
 		} elseif ($_POST['search-sort-by'] == 'gradient') {
 			$conditions[] = '`t`.`distance` > 0';
 			$conditions[] = '`t`.`elevation` > 0';
+        } elseif ($_POST['search-sort-by'] == 'flight_time' || $_POST['search-sort-by'] == 'flight_ratio') {
+            $conditions[] = '`t`.`cadence` > 0';
+            $conditions[] = '`t`.`groundcontact` > 0';
 		} elseif (in_array($_POST['search-sort-by'], $this->KeysThatShouldIgnoreZero)) {
 			$conditions[] = '`t`.`'.$_POST['search-sort-by'].'` != 0';
 		} elseif (in_array($_POST['search-sort-by'], $this->KeysThatShouldIgnoreNull)) {

@@ -58,6 +58,12 @@ final class QueryValues extends AbstractEnum
     const VERTICAL_OSCILLATION = 'vertical_oscillation';
 
     /** @var string */
+    const FLIGHT_TIME = 'flight_time';
+
+    /** @var string */
+    const FLIGHT_RATIO = 'flight_ratio';
+
+    /** @var string */
     const FIT_HRV_ANALYSIS = 'fit_hrv_analysis';
 
     /** @var string */

@@ -54,6 +54,8 @@ class FormularSelectSearchSort extends FormularField {
 			Keys::GROUNDCONTACT_BALANCE,
 			Keys::VERTICAL_OSCILLATION,
 			Keys::VERTICAL_RATIO,
+            ['flight_time', __('Flight time')],
+            ['flight_ratio', __('Flight ratio')],
 			Keys::TOTAL_STROKES,
 			Keys::SWOLF,
 			Keys::FIT_VO2MAX_ESTIMATE,

@@ -436,6 +436,34 @@ class Dataview
     }
 
     /**
+     * @return string
+     */
+    public function flightTime()
+    {
+        $flightTime = $this->Activity->flightTime();
+
+        if (null !== $flightTime) {
+            return round($flightTime).'&nbsp;ms';
+        }
+
+        return '';
+    }
+
+    /**
+     * @return string
+     */
+    public function flightRatio()
+    {
+        $flightRatio = $this->Activity->flightRatio();
+
+        if (null !== $flightRatio) {
+            return number_format(100 * $flightRatio, 1, '.', '').'&nbsp;%';
+        }
+
+        return '';
+    }
+
+    /**
      * @return \Runalyze\Activity\Energy
      */
     public function energy()
