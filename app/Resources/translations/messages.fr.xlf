@@ -198,9 +198,9 @@
         <jms:reference-file line="9">/Resources/views/my/equipment/form-category.html.twig</jms:reference-file>
         <jms:reference-file line="44">/Resources/views/my/equipment/overview.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="5abd9b5fddbc83aa9ca1ecfe161fc45cd15633f9" resname="Add an equipment object" approved="no">
+      <trans-unit id="5abd9b5fddbc83aa9ca1ecfe161fc45cd15633f9" resname="Add an equipment object" approved="yes">
         <source>Add an equipment object</source>
-        <target state="needs-translation">Ajouter un objet d'équipement</target>
+        <target state="translated">Ajouter un équipement</target>
         <jms:reference-file line="95">/Resources/views/my/equipment/form-category.html.twig</jms:reference-file>
         <jms:reference-file line="9">/Resources/views/my/equipment/form-equipment.html.twig</jms:reference-file>
       </trans-unit>
@@ -2042,17 +2042,17 @@
         <jms:reference-file line="166">/Resources/views/activity/tool/time_series_statistics.html.twig</jms:reference-file>
         <jms:reference-file line="169">/Resources/views/activity/tool/time_series_statistics.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="efc007a393f66cdb14d57d385822a3d9e36ef873" resname="Save">
+      <trans-unit id="efc007a393f66cdb14d57d385822a3d9e36ef873" resname="Save" approved="yes">
         <source>Save</source>
-        <target>sauevgarder</target>
+        <target state="translated">Sauvegarder</target>
         <jms:reference-file line="53">/Resources/views/my/body-values/form.html.twig</jms:reference-file>
         <jms:reference-file line="38">/Resources/views/my/raceresult/form.html.twig</jms:reference-file>
         <jms:reference-file line="64">/Resources/views/settings/account.html.twig</jms:reference-file>
         <jms:reference-file line="83">/Resources/views/settings/dataset.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="f6e83824ac208e82ca136af4fb425962524f5819" resname="Search activities">
+      <trans-unit id="f6e83824ac208e82ca136af4fb425962524f5819" resname="Search activities" approved="yes">
         <source>Search activities</source>
-        <target>Search activities</target>
+        <target state="translated">Rechercher des activités</target>
         <jms:reference-file line="130">/Resources/views/settings/sport/form-sport.html.twig</jms:reference-file>
         <jms:reference-file line="29">/Resources/views/settings/sport/overview.html.twig</jms:reference-file>
         <jms:reference-file line="29">/Resources/views/settings/tag/overview.html.twig</jms:reference-file>
@@ -2726,14 +2726,14 @@
         <jms:reference-file line="115">/../src/CoreBundle/Form/Tools/Anova/AnovaType.php</jms:reference-file>
         <jms:reference-file line="107">/../src/CoreBundle/Form/Tools/TrendAnalysis/TrendAnalysisType.php</jms:reference-file>
       </trans-unit>
-      <trans-unit id="f82be68a7fb4e7dec88f27463de94ad355242ee5" resname="Week">
+      <trans-unit id="f82be68a7fb4e7dec88f27463de94ad355242ee5" resname="Week" approved="yes">
         <source>Week</source>
-        <target>Week</target>
+        <target state="translated">Semaine</target>
         <jms:reference-file line="16">/Resources/views/my/panels/sports/base.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="69c0b81540bd6771fbae52b1e5922cfd40155633" resname="Weight">
+      <trans-unit id="69c0b81540bd6771fbae52b1e5922cfd40155633" resname="Weight" approved="yes">
         <source>Weight</source>
-        <target>Weight</target>
+        <target state="translated">Poids</target>
         <jms:reference-file line="29">/../src/CoreBundle/Form/BodyValuesType.php</jms:reference-file>
         <jms:reference-file line="23">/Resources/views/my/body-values/table.html.twig</jms:reference-file>
       </trans-unit>
@@ -2748,9 +2748,9 @@
         <target>Year</target>
         <jms:reference-file line="18">/Resources/views/my/panels/sports/base.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="e721a1481440bd8b46aaaa3d2b69958cf540c6b9" resname="Year of birth">
+      <trans-unit id="e721a1481440bd8b46aaaa3d2b69958cf540c6b9" resname="Year of birth" approved="yes">
         <source>Year of birth</source>
-        <target>Year of birth</target>
+        <target state="translated">Année de naissance</target>
         <jms:reference-file line="50">/../src/CoreBundle/Form/Settings/AccountType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="67482f1a052dc2f70c6c2893ddd6977ea63a1c81" resname="Year on year">
