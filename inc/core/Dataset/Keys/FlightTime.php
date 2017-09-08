@@ -3,7 +3,6 @@
 namespace Runalyze\Dataset\Keys;
 
 use Runalyze\Dataset\Context;
-use Runalyze\Dataset\SummaryMode;
 
 class FlightTime extends AbstractKey
 {
@@ -25,11 +24,6 @@ class FlightTime extends AbstractKey
 	public function stringFor(Context $context)
 	{
 		return $context->dataview()->flightTime();
-	}
-
-	public function summaryMode()
-	{
-		return SummaryMode::AVG;
 	}
 
 	public function cssClass()

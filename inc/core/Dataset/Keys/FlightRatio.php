@@ -3,7 +3,6 @@
 namespace Runalyze\Dataset\Keys;
 
 use Runalyze\Dataset\Context;
-use Runalyze\Dataset\SummaryMode;
 
 class FlightRatio extends AbstractKey
 {
@@ -25,11 +24,6 @@ class FlightRatio extends AbstractKey
 	public function stringFor(Context $context)
 	{
 	    return $context->dataview()->flightRatio();
-	}
-
-	public function summaryMode()
-	{
-		return SummaryMode::AVG;
 	}
 
 	public function cssClass()
