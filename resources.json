@@ -19,7 +19,6 @@
       "./app/Resources/public/js/polyfill.js",
       "./web/vendor/jquery/dist/jquery.js",
 
-      "./lib/jquery.form.js",
       "./lib/jquery.metadata.js",
 
       "./web/vendor/tablesorter/js/jquery.tablesorter.js",
@@ -34,6 +33,7 @@
       "./lib/jquery.chosen.min.js",
 
       "./lib/runalyze.lib.js",
+      "./lib/runalyze.lib.common.js",
       "./lib/runalyze.lib.plot.js",
       "./lib/runalyze.lib.plot.options.js",
       "./lib/runalyze.lib.plot.saver.js",
@@ -46,6 +46,7 @@
       "./lib/runalyze.lib.databrowser.js",
       "./lib/runalyze.lib.statistics.js",
       "./lib/runalyze.lib.training.js",
+      "./lib/runalyze.lib.activity.form.js",
       "./lib/runalyze.lib.feature.js",
       "./lib/runalyze.lib.notifications.js",
 
