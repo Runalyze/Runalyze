@@ -55,14 +55,14 @@ $(function(){
                 $e.find(".weatherdata-source").html("via "+data.source.name);
                 $("#weather_source").val(data.source.id);
 
-                $e.find(".weatherdata-none-text, .weatherdata-loading-text").addClass("hide");
-                $e.find(".w50, .weatherdata-source").removeClass("hide");
+                $e.find(".weatherdata-none-text, .weatherdata-button-edit, .weatherdata-loading-text").addClass("hide");
+                $e.find(".w50, .weatherdata-source, .weatherdata-button-remove").removeClass("hide");
             } else {
-                $e.find(".weatherdata-none-text").removeClass("hide");
-                $e.find(".w50, .weatherdata-loading-text, .weatherdata-source").addClass("hide");
+                $e.find(".weatherdata-none-text, .weatherdata-button-edit").removeClass("hide");
+                $e.find(".w50, .weatherdata-source, .weatherdata-button-remove, .weatherdata-loading-text").addClass("hide");
             }
         }).fail(function(){
-            $e.find(".weatherdata-none-text").removeClass("hide");
+            $e.find(".weatherdata-none-text, .weatherdata-button-edit").removeClass("hide");
             $e.find(".w50, .weatherdata-loading-text, .weatherdata-source").addClass("hide");
         });
     });
