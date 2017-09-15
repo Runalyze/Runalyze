@@ -25,6 +25,9 @@ class JsonImporter
 	/** @var array */
 	protected $ExistingData = array();
 
+    /** @var array */
+    protected $InternalSportIds = array();
+
 	/** @var JsonImporterResults */
 	protected $Results;
 
@@ -130,10 +133,17 @@ class JsonImporter
 
 		foreach ($Tables as $Table => $Column) {
 			$this->ExistingData['runalyze_'.$Table] = array();
-			$statement = $this->DB->query('SELECT `id`,`'.$Column.'` FROM `'.$this->DatabasePrefix.$Table.'`');
+			if ($Table == 'sport') {
+                $statement = $this->DB->query('SELECT `id`, `internal_sport_id`, `' . $Column . '` FROM `' . $this->DatabasePrefix . $Table . '`');
+            } else {
+                $statement = $this->DB->query('SELECT `id`,`' . $Column . '` FROM `' . $this->DatabasePrefix . $Table . '`');
+            }
 
 			while ($row = $statement->fetch()) {
 				$this->ExistingData['runalyze_'.$Table][$row[$Column]] = $row['id'];
+				if ($Table == 'sport' && !empty($row['internal_sport_id'])) {
+				    $this->InternalSportIds[$row['internal_sport_id']] = $row['id'];
+                }
 			}
 		}
 
@@ -317,7 +327,7 @@ class JsonImporter
 			$id = key($completeRow);
 			$row = current($completeRow);
 			$values = array_values($row);
-
+			$columnIds = array_flip($columns);
 			if (in_array($tableName, array(
 				'runalyze_equipment',
 				'runalyze_equipment_type',
@@ -327,6 +337,13 @@ class JsonImporter
 				'runalyze_type',
 				'runalyze_tag'
 			))) {
+			    if ($tableName == 'runalyze_sport') {
+			        $isi = $values[$columnIds['internal_sport_id']];
+			        if ( isset($this->InternalSportIds[$isi])) {
+                        $this->ReplaceIDs[$tableName][$id] = $this->InternalSportIds[$isi];
+                        break;
+                    }
+                }
 				if (isset($this->ExistingData[$tableName][$values[0]])) {
 					$this->ReplaceIDs[$tableName][$id] = $this->ExistingData[$tableName][$values[0]];
 				} else {
@@ -335,7 +352,7 @@ class JsonImporter
 					$this->ReplaceIDs[$tableName][$id] = $bulkInserter->insert(array_values($row));
 					$this->Results->addInserts($tableName, 1);
 				}
-			} elseif (
+            } elseif (
 				$tableName == 'runalyze_equipment_sport' &&
 				$this->equipmentSportRelationDoesExist($row['sportid'], $row['equipment_typeid'])
 			) {
@@ -354,6 +371,7 @@ class JsonImporter
 
 			$line = $this->Reader->readLine();
 		}
+
 	}
 
 	/**
