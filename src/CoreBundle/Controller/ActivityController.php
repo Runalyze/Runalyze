@@ -117,6 +117,12 @@ class ActivityController extends Controller
         $Training = new \TrainingObject($id);
         $Activity = new Activity\Entity($Training->getArray());
 
+        $Training->setStartPoint(
+            $this->getDoctrine()->getRepository('CoreBundle:Route')->getStartCoordinatesFor(
+                $Training->get('routeid')
+            )
+        );
+
         $Linker = new Linker($Activity);
         $Dataview = new Dataview($Activity);
 

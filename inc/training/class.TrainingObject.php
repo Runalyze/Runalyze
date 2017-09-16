@@ -357,6 +357,10 @@ class TrainingObject extends DataObject {
 		));
 	}
 
+	public function setStartPoint(\League\Geotools\Coordinate\CoordinateInterface $startpoint = null) {
+	    $this->forceToSet('startpoint', $startpoint);
+    }
+
 	/**
 	 * Update object in database
 	 */

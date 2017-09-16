@@ -256,14 +256,26 @@ class TrainingFormular extends StandardFormular {
 	 */
 	protected function addOldObjectData() {
 		$this->addHiddenValue('old-data', base64_encode(serialize($this->dataObject->getArray())));
+		$this->addHiddenValue('start-coordinates', $this->getStartCoordinatesAsString());
 	}
+
+	protected function getStartCoordinatesAsString() {
+	    $startpoint = $this->dataObject->get('startpoint');
+
+	    if ($startpoint instanceof \League\Geotools\Coordinate\CoordinateInterface) {
+	        return $startpoint->getLatitude().','.$startpoint->getLongitude();
+        }
+
+        return '';
+    }
 
 	protected function adjustWeatherFieldset() {
         foreach ($this->fieldsets as $fieldset) {
             if ('fieldset-weather' == $fieldset->getId()) {
+                $canLoadWeather = strlen(DARKSKY_API_KEY) || strlen(OPENWEATHERMAP_API_KEY);
                 $fieldset->setHtmlCodeBeforeFields(
                     '<div class="margin-bottom only-outside inline-span-menu">'.
-                    '<span class="inline-span-menu-item link weatherdata-button-load">'.__('Load weather data').'</span> '.
+                    ($canLoadWeather ? '<span class="inline-span-menu-item link weatherdata-button-load">'.__('Load weather data').'</span> ' : '').
                     '<span class="inline-span-menu-item link weatherdata-button-edit hide">'.__('Add weather data').'</span> '.
                     '<span class="inline-span-menu-item link weatherdata-button-remove">'.__('Remove all weather data').'</span> '.
                     '</div>'.
