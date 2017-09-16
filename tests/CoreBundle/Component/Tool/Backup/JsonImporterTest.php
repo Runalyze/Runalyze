@@ -133,7 +133,7 @@ class JsonImporterTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testInserts()
     {
-        $insertSport = $this->DB->prepare('INSERT INTO `runalyze_sport` (`name`, `accountid`, `internal_sport_id`) VALUES (?, ?)');
+        $insertSport = $this->DB->prepare('INSERT INTO `runalyze_sport` (`name`, `accountid`) VALUES (?, ?)');
         $insertSport->execute(['Testsport', $this->AccountID]);
         $sportId = $this->DB->lastInsertId();
         $insertType = $this->DB->prepare('INSERT INTO `runalyze_type` (`name`, `sportid`, `accountid`) VALUES (?, ?, ?)');

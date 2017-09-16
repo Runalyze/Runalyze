@@ -337,10 +337,10 @@ class JsonImporter
 				'runalyze_type',
 				'runalyze_tag'
 			))) {
-			    if ($tableName == 'runalyze_sport') {
-			        $isi = $values[$columnIds['internal_sport_id']];
-			        if ( isset($this->InternalSportIds[$isi])) {
-                        $this->ReplaceIDs[$tableName][$id] = $this->InternalSportIds[$isi];
+			    if ($tableName == 'runalyze_sport' && isset($columnIds['internal_sport_id'])) {
+			        $internalId = $values[$columnIds['internal_sport_id']];
+			        if ( isset($this->InternalSportIds[$internalId])) {
+                        $this->ReplaceIDs[$tableName][$id] = $this->InternalSportIds[$internalId];
                         break;
                     }
                 }
