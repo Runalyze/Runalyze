@@ -405,8 +405,13 @@ class JsonImporter
 		if ($tableName == 'runalyze_training') {
             $this->correctActivity($row);
         } elseif ($tableName == 'runalyze_sport') {
-            $row['default_typeid'] = null;
-            $row['main_equipmenttypeid'] = null;
+		    if (isset($row['default_typeid'])) {
+                $row['default_typeid'] = null;
+            }
+
+            if (isset($row['main_equipmenttypeid'])) {
+                $row['main_equipmenttypeid'] = null;
+            }
 		} elseif ($tableName == 'runalyze_plugin_conf') {
 			$row['pluginid'] = $this->correctID('runalyze_plugin', $row['pluginid']);
 		} elseif ($tableName == 'runalyze_trackdata') {
