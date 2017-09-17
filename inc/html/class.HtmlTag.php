@@ -11,33 +11,40 @@
 abstract class HtmlTag {
 	/**
 	 * ID, must be unique
-	 * @var string 
+	 * @var string
 	 */
 	protected $Id = '';
 
 	/**
 	 * Css-classes
-	 * @var array 
+	 * @var array
 	 */
 	protected $cssClasses = array();
 
 	/**
 	 * All attributes
-	 * @var array 
+	 * @var array
 	 */
 	protected $attributes = array();
 
 	/**
 	 * Set ID
-	 * @param string $id 
+	 * @param string $id
 	 */
 	public function setId($id) {
 		$this->Id = $id;
 	}
 
+    /**
+     * @return string
+     */
+	public function getId() {
+        return $this->Id;
+    }
+
 	/**
 	 * Add a css-class
-	 * @param string $class 
+	 * @param string $class
 	 */
 	public function addCSSclass($class) {
 		$this->cssClasses[] = $class;
@@ -45,8 +52,8 @@ abstract class HtmlTag {
 
 	/**
 	 * Add an attribute
-	 * @param string $name 
-	 * @param string $value 
+	 * @param string $name
+	 * @param string $value
 	 */
 	public function addAttribute($name, $value) {
 		$this->attributes[] = $name.'="'.htmlspecialchars($value).'"';
@@ -54,7 +61,7 @@ abstract class HtmlTag {
 
 	/**
 	 * Get string for all attributes
-	 * @return string 
+	 * @return string
 	 */
 	public function attributes() {
 		if (!empty($this->Id))

@@ -18,7 +18,7 @@ class Formular extends HtmlTag {
 
 	/**
 	 * Array with all fieldsets
-	 * @var array
+	 * @var FormularFieldset[]
 	 */
 	protected $fieldsets = array();
 
@@ -101,7 +101,9 @@ class Formular extends HtmlTag {
 	 * @param boolean $opened [optional]
 	 */
 	public function addFieldset(FormularFieldset $Fieldset, $opened = true) {
-		$Fieldset->setId($this->Id.'_legend_'.count($this->fieldsets));
+	    if ('' == $Fieldset->getId()) {
+    		$Fieldset->setId($this->Id.'_legend_'.count($this->fieldsets));
+        }
 
 		if (!$opened)
 			$Fieldset->setCollapsed();

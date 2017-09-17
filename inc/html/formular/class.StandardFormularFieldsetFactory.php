@@ -56,6 +56,7 @@ class StandardFormularFieldsetFactory {
 	 */
 	private function setAttributesToFieldset(FormularFieldset $Fieldset, array $FieldsetArray) {
 		$Fieldset->setTitle($FieldsetArray['legend']);
+		$Fieldset->setId('fieldset-'.$FieldsetArray['id']);
 
 		if (isset($FieldsetArray['layout']))
 			$Fieldset->setLayoutForFields($FieldsetArray['layout']);

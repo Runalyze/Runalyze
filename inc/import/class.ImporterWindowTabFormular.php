@@ -63,9 +63,6 @@ class ImporterWindowTabFormular extends ImporterWindowTab {
 	 * @param TrainingObject $SingleObject
 	 */
 	protected function displaySingleFormularFor(TrainingObject $SingleObject) {
-		if ($SingleObject->Weather()->isEmpty())
-			$SingleObject->setWeatherForecast();
-
 		$Formular = new TrainingFormular($SingleObject, StandardFormular::$SUBMIT_MODE_CREATE);
 		$Formular->setId('training');
 		$Formular->setLayoutForFields( FormularFieldset::$LAYOUT_FIELD_W50 );
