@@ -47,7 +47,6 @@ services:
       - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
   app.mailer.account:
     class: Runalyze\Bundle\CoreBundle\Services\AccountMailer
-    arguments: ["@mailer", "@twig", "@translator"]
     calls:
       - [setFrom, ["%mail_sender%", "%mail_name%"]]
   app.repository.account:
