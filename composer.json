@@ -7,7 +7,7 @@
     "prefer-stable": true,
     "require": {
         "php": "~5.6|~7.0",
-        "symfony/symfony": "3.3",
+        "symfony/symfony": "3.3.*",
         "sensio/framework-extra-bundle": "^3.0",
         "twig/twig": "2.x",
         "monolog/monolog": "^1.19",
@@ -31,8 +31,7 @@
         "runalyze/glossary": "dev-master",
         "snc/redis-bundle": "2.*",
         "predis/predis": "^1.0",
-        "runalyze/common": "dev-master",
-        "phpunit/phpunit": "4.8.*"
+        "runalyze/common": "dev-master"
     },
     "autoload": {
         "files": ["src/functions.php", "app/AppKernel.php"],
@@ -49,7 +48,8 @@
     "require-dev": {
         "runalyze/playground": "dev-master",
         "liip/functional-test-bundle": "^1.7",
-        "doctrine/doctrine-fixtures-bundle": "^2.3"
+        "doctrine/doctrine-fixtures-bundle": "^2.3",
+        "phpunit/phpunit": "4.8.*"
     },
     "repositories": [
         {
