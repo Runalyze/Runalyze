@@ -387,7 +387,9 @@ class TrainingFormular extends StandardFormular {
         foreach ($Factory->allTags() as $tag) {
             $tags[$tag->id()] = $tag->tag();
 		}
-        natcasesort($tags);
+		if (is_array($tags)) {
+            natcasesort($tags);
+		}
         $Field->setOptions($tags);
 
 
