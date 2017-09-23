@@ -7,23 +7,23 @@
     "prefer-stable": true,
     "require": {
         "php": "~5.6|~7.0",
-        "symfony/symfony": "3.2.*",
+        "symfony/symfony": "3.3.*",
         "sensio/framework-extra-bundle": "^3.0",
-        "twig/twig": "1.*",
+        "twig/twig": "1.34",
         "monolog/monolog": "^1.19",
         "nojacko/email-validator": "~1.0",
-        "league/geotools": "@stable",
+        "league/geotools": "^0.7.0",
         "swiftmailer/swiftmailer": "@stable",
         "phpfastcache/phpfastcache": "3.0.23",
         "twig/extensions": "^1.3",
-        "doctrine/doctrine-bundle": "^1.6",
+        "doctrine/doctrine-bundle": "1.6.*",
         "doctrine/orm": "^2.5",
-        "symfony/monolog-bundle": "^2.11",
+        "symfony/monolog-bundle": "~2.4",
         "doctrine/doctrine-migrations-bundle": "^1.0",
         "doctrine/doctrine-cache-bundle": "^1.3",
         "runalyze/dem-reader": "^1.0",
         "runalyze/age-grade": "^1.0",
-        "symfony/swiftmailer-bundle": "^2.3",
+        "symfony/swiftmailer-bundle": "2.6.*",
         "beberlei/DoctrineExtensions": "~1.0",
         "jms/translation-bundle": "dev-master",
         "bernard/bernard-bundle": "^2.0.0",
@@ -46,10 +46,10 @@
         }
     },
     "require-dev": {
-        "phpunit/phpunit": "4.8.*",
         "runalyze/playground": "dev-master",
         "liip/functional-test-bundle": "^1.7",
-        "doctrine/doctrine-fixtures-bundle": "^2.3"
+        "doctrine/doctrine-fixtures-bundle": "^2.3",
+        "phpunit/phpunit": "4.8.*"
     },
     "repositories": [
         {

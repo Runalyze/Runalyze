@@ -4,19 +4,23 @@ sensio_framework_extra:
     auto_convert: false
 
 services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  Doctrine\ORM\EntityManager:
+      alias: doctrine.orm.default_entity_manager
+      public: false
   app.value_resolver.account:
     class: Runalyze\Bundle\CoreBundle\ArgumentResolver\AccountValueResolver
-    arguments: ['@security.token_storage']
     tags:
       - { name: controller.argument_value_resolver, priority: 50 }
   app.listener.console_exception:
     class: Runalyze\Bundle\CoreBundle\EventListener\ConsoleExceptionListener
-    arguments: ['@monolog.logger.console']
     tags:
       - { name: kernel.event_listener, event: console.exception }
   app.listener.console_error_status:
     class: Runalyze\Bundle\CoreBundle\EventListener\ConsoleErrorStatusListener
-    arguments: ['@monolog.logger.console']
     tags:
       - { name: kernel.event_listener, event: console.terminate }
   app.locale_listener:
@@ -31,7 +35,7 @@ services:
       - { name: kernel.event_listener, event: security.interactive_login, method: onInteractiveLogin }
   app.account_last_action_listener:
     class: Runalyze\Bundle\CoreBundle\EventListener\AccountLastActionListener
-    arguments: ['@security.token_storage', '@doctrine.orm.entity_manager']
+    arguments: ['@security.token_storage']
     tags:
       - { name: kernel.event_listener, event: kernel.controller, method: onCoreController }
   app.sha256salted_encoder:
@@ -43,13 +47,10 @@ services:
       - { name: doctrine.event_subscriber }
   app.listener.maintenance:
     class: Runalyze\Bundle\CoreBundle\EventListener\MaintenanceListener
-    arguments:
-        container: "@service_container"
     tags:
       - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
   app.mailer.account:
     class: Runalyze\Bundle\CoreBundle\Services\AccountMailer
-    arguments: ["@mailer", "@twig", "@translator"]
     calls:
       - [setFrom, ["%mail_sender%", "%mail_name%"]]
   app.repository.account:
@@ -236,8 +237,6 @@ services:
     arguments: ["%kernel.root_dir%"]
   app.bernard.backup_receiver:
     class: Runalyze\Bundle\CoreBundle\Queue\Receiver\BackupReceiver
-    arguments:
-      container: "@service_container"
     tags:
       - { name: bernard.receiver, message: userBackup }
   app.bernard.poster_receiver:
