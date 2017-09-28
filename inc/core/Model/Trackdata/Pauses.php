@@ -9,7 +9,7 @@ namespace Runalyze\Model\Trackdata;
 use Runalyze\Model\StringArrayObject;
 
 /**
- * @deprecated since v4.2, use \Runalyze\Bundle\CoreBundle\Model\Trackdata\Pause\PauseCollection instead
+ * @deprecated since v4.2, use \Runalyze\Parser\Activity\Common\Data\Pause\PauseCollection instead
  */
 class Pauses extends StringArrayObject {
 	/**

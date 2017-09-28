@@ -3,7 +3,7 @@
 namespace Runalyze\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Runalyze\Bundle\CoreBundle\Model\Trackdata\Pause\PauseCollection;
+use Runalyze\Parser\Activity\Common\Data\Pause\PauseCollection;
 use Runalyze\Model;
 
 /**
@@ -106,7 +106,7 @@ class Trackdata
     private $thb1;
 
     /**
-     * @var PauseCollection
+     * @var \Runalyze\Parser\Activity\Common\Data\Pause\PauseCollection
      *
      * @ORM\Column(name="pauses", type="runalyze_pause_array", length=65535, nullable=true)
      */
@@ -498,7 +498,7 @@ class Trackdata
     }
 
     /**
-     * @param PauseCollection $pauses
+     * @param \Runalyze\Parser\Activity\Common\Data\Pause\PauseCollection $pauses
      *
      * @return $this
      */
@@ -510,7 +510,7 @@ class Trackdata
     }
 
     /**
-     * @return PauseCollection
+     * @return \Runalyze\Parser\Activity\Common\Data\Pause\PauseCollection
      */
     public function getPauses()
     {

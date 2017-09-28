@@ -197,28 +197,28 @@ class Training
     private $fitHrvAnalysis = null;
 
     /**
-     * @var float|null
+     * @var float|null [1.0 .. 5.0]
      *
      * @ORM\Column(name="fit_training_effect", type="decimal", precision=2, scale=1, nullable=true, options={"unsigned":true})
      */
     private $fitTrainingEffect = null;
 
     /**
-     * @var bool|null
+     * @var int|null
      *
      * @ORM\Column(name="fit_performance_condition", columnDefinition="tinyint unsigned DEFAULT NULL")
      */
     private $fitPerformanceCondition = null;
 
     /**
-     * @var bool|null
+     * @var int|null
      *
      * @ORM\Column(name="fit_performance_condition_end", columnDefinition="tinyint unsigned DEFAULT NULL")
      */
     private $fitPerformanceConditionEnd = null;
 
     /**
-     * @var bool|null
+     * @var int|null [6 .. 20]
      *
      * @ORM\Column(name="rpe", columnDefinition="tinyint unsigned DEFAULT NULL")
      */
@@ -302,7 +302,7 @@ class Training
     private $temperature = null;
 
     /**
-     * @var bool|null [km/h]
+     * @var int|null [km/h]
      *
      * @ORM\Column(name="wind_speed", columnDefinition="tinyint unsigned DEFAULT NULL")
      */
@@ -316,14 +316,14 @@ class Training
     private $windDeg = null;
 
     /**
-     * @var bool|null [%]
+     * @var int|null [%]
      *
      * @ORM\Column(name="humidity", columnDefinition="tinyint unsigned DEFAULT NULL")
      */
     private $humidity = null;
 
     /**
-     * @var int [hPa]
+     * @var int|null [hPa]
      *
      * @ORM\Column(name="pressure", columnDefinition="smallint unsigned DEFAULT NULL")
      */

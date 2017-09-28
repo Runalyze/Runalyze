@@ -1,6 +1,6 @@
 <?php
 
-namespace Runalyze\Bundle\CoreBundle\Model\Trackdata\Pause;
+namespace Runalyze\Parser\Activity\Common\Data\Pause;
 
 class Pause
 {

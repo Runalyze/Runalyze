@@ -4,8 +4,8 @@ namespace Runalyze\Bundle\CoreBundle\Tests\Doctrine\Types;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Runalyze\Bundle\CoreBundle\Doctrine\Types\RunalyzePauseArray;
-use Runalyze\Bundle\CoreBundle\Model\Trackdata\Pause\Pause;
-use Runalyze\Bundle\CoreBundle\Model\Trackdata\Pause\PauseCollection;
+use Runalyze\Parser\Activity\Common\Data\Pause\Pause;
+use Runalyze\Parser\Activity\Common\Data\Pause\PauseCollection;
 
 class RunalyzePauseArrayTest extends \PHPUnit_Framework_TestCase
 {

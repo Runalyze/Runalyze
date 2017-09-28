@@ -4,8 +4,8 @@ namespace Runalyze\Bundle\CoreBundle\Doctrine\Types;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
-use Runalyze\Bundle\CoreBundle\Model\Trackdata\Pause\Pause;
-use Runalyze\Bundle\CoreBundle\Model\Trackdata\Pause\PauseCollection;
+use Runalyze\Parser\Activity\Common\Data\Pause\Pause;
+use Runalyze\Parser\Activity\Common\Data\Pause\PauseCollection;
 
 class RunalyzePauseArray extends Type
 {

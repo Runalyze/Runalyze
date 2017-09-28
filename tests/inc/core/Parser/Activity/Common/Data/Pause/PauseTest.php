@@ -1,10 +1,8 @@
 <?php
 
-namespace Runalyze\Bundle\CoreBundle\Tests\Model\Trackdata\Pause;
+namespace Runalyze\Tests\Parser\Activity\Common\Data\Pause;
 
-use Runalyze\Bundle\CoreBundle\Form\Type\DurationType;
-use Runalyze\Bundle\CoreBundle\Model\Trackdata\Pause\Pause;
-use Symfony\Component\Form\Exception\TransformationFailedException;
+use Runalyze\Parser\Activity\Common\Data\Pause\Pause;
 
 class PauseTest extends \PHPUnit_Framework_TestCase
 {

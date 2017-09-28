@@ -7,7 +7,7 @@
 namespace Runalyze\Model\Trackdata;
 
 /**
- * @deprecated since v4.2, use \Runalyze\Bundle\CoreBundle\Model\Trackdata\Pause\Pause instead
+ * @deprecated since v4.2, use \Runalyze\Parser\Activity\Common\Data\Pause\Pause instead
  */
 class Pause {
 	/**

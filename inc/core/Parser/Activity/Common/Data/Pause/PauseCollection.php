@@ -1,6 +1,6 @@
 <?php
 
-namespace Runalyze\Bundle\CoreBundle\Model\Trackdata\Pause;
+namespace Runalyze\Parser\Activity\Common\Data\Pause;
 
 class PauseCollection implements \Countable, \ArrayAccess
 {
@@ -12,7 +12,9 @@ class PauseCollection implements \Countable, \ArrayAccess
      */
     public function __construct(array $elements = [])
     {
-        $this->Elements = $elements;
+        foreach ($elements as $offset => $value) {
+            $this->offsetSet($offset, $value);
+        }
     }
 
     public function add(Pause $pause)
@@ -56,7 +58,7 @@ class PauseCollection implements \Countable, \ArrayAccess
     }
 
     /**
-     * @param int $offset
+     * @param int|null $offset
      * @param Pause $value
      *
      * @throws \InvalidArgumentException
@@ -67,11 +69,29 @@ class PauseCollection implements \Countable, \ArrayAccess
             throw new \InvalidArgumentException('Pause collection does only accept instances of Pause as elements.');
         }
 
-        $this->Elements[$offset] = $value;
+        if (null === $offset) {
+            $this->Elements[] = $value;
+        } else {
+            $this->Elements[$offset] = $value;
+        }
     }
 
     public function offsetUnset($offset)
     {
         unset($this->Elements[$offset]);
+    }
+
+    /**
+     * @return int
+     */
+    public function getTotalDuration()
+    {
+        return array_reduce(
+            $this->getElements(),
+            function ($carry, Pause $pause) {
+                return $carry + $pause->getDuration();
+            },
+            0
+        );
     }
 }
