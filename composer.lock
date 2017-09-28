@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "1e7db21f941aa6dae713014299d23f12",
+    "content-hash": "070ec3db43d62c395debc288d4aaee7e",
     "packages": [
         {
             "name": "beberlei/DoctrineExtensions",
@@ -2409,12 +2409,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Runalyze/common.git",
-                "reference": "c685f9cfee4778514666dd9a32470096dc5a36d6"
+                "reference": "b5d14283b809b9e039c7d73ad7b1a3b3da00757c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Runalyze/common/zipball/c685f9cfee4778514666dd9a32470096dc5a36d6",
-                "reference": "c685f9cfee4778514666dd9a32470096dc5a36d6",
+                "url": "https://api.github.com/repos/Runalyze/common/zipball/b5d14283b809b9e039c7d73ad7b1a3b3da00757c",
+                "reference": "b5d14283b809b9e039c7d73ad7b1a3b3da00757c",
                 "shasum": ""
             },
             "require": {
@@ -2435,7 +2435,7 @@
                 "MIT"
             ],
             "description": "Common classes of Runalyze",
-            "time": "2017-09-05 17:52:57"
+            "time": "2017-09-17 19:16:31"
         },
         {
             "name": "runalyze/dem-reader",
@@ -2470,6 +2470,41 @@
             ],
             "description": "Read digital elevation files such as GeoTIFF files for srtm data or similar.",
             "time": "2016-09-25T21:11:15+00:00"
+        },
+        {
+            "name": "runalyze/devices",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Runalyze/devices.git",
+                "reference": "e00bdfe2b69285f0870394810cc5b26138c8ca19"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Runalyze/devices/zipball/e00bdfe2b69285f0870394810cc5b26138c8ca19",
+                "reference": "e00bdfe2b69285f0870394810cc5b26138c8ca19",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.9",
+                "runalyze/common": "dev-master"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^1.11",
+                "phpunit/phpunit": "4.8.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Runalyze\\Devices\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Runalyze Device List",
+            "time": "2017-09-21 19:04:55"
         },
         {
             "name": "runalyze/glossary",
@@ -4448,7 +4483,7 @@
                 "runalyze",
                 "symfony3"
             ],
-            "time": "2017-08-18 17:00:54"
+            "time": "2017-08-18T17:00:54+00:00"
         },
         {
             "name": "sebastian/comparator",
@@ -4880,6 +4915,7 @@
         "jms/translation-bundle": 20,
         "runalyze/glossary": 20,
         "runalyze/common": 20,
+        "runalyze/devices": 20,
         "runalyze/playground": 20
     },
     "prefer-stable": true,
