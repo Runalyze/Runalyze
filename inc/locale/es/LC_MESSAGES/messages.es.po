@@ -3,12 +3,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: mail@runalyze.com\n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2017-07-08 11:26+0200\n"
-"PO-Revision-Date: 2017-08-10 14:46+0000\n"
-"Last-Translator: anonymous <>\n"
-"Language-Team: Spanish <https://translate.runalyze.com/projects/runalyze"
-"/runalyze-master-po/es/>\n"
+"PO-Revision-Date: 2017-09-30 20:41+0000\n"
+"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
+"Language-Team: Spanish "
+"<https://translate.runalyze.com/projects/runalyze/runalyze/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -128,7 +128,7 @@ msgstr "Este valor excede tu frecuencia cardíaca máxima introducida."
 
 #: inc/core/View/Activity/Box/MaximalHeartRateInPercent.php:65
 msgid "Please adjust your maximal heart rate."
-msgstr ""
+msgstr "Por favor, ajusta tu frecuencia cardíaca maxima"
 
 #: inc/core/View/Activity/Box/ElevationUpDown.php:35
 msgid "Elevation up/down"
