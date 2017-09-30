@@ -1,8 +1,8 @@
 <?php
 
-namespace Runalyze\Tests\Parser\Activity;
+namespace Runalyze\Tests\Parser\Activity\FileType;
 
-use Runalyze\Parser\Activity\Trk;
+use Runalyze\Parser\Activity\FileType\Trk;
 use Runalyze\Util\LocalTime;
 
 class TrkTest extends AbstractActivityParserTestCase

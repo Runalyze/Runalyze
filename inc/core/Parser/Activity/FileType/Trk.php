@@ -1,6 +1,6 @@
 <?php
 
-namespace Runalyze\Parser\Activity;
+namespace Runalyze\Parser\Activity\FileType;
 
 use Runalyze\Parser\Activity\Common\AbstractSingleParser;
 use Runalyze\Parser\Activity\Common\Data\Pause\Pause;

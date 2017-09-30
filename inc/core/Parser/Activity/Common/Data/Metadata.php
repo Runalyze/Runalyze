@@ -2,6 +2,8 @@
 
 namespace Runalyze\Parser\Activity\Common\Data;
 
+use Runalyze\Util\LocalTime;
+
 class Metadata
 {
     /** @var int|null timestamp in local time, i.e. assuming the activity was in utc */
@@ -64,6 +66,12 @@ class Metadata
     public function getTimezoneOffset()
     {
         return $this->TimezoneOffset;
+    }
+
+    public function interpretTimestampAsServerTime($timestamp)
+    {
+        $this->TimezoneOffset = round((new \DateTime())->setTimestamp($timestamp)->getOffset() / 60);
+        $this->Timestamp = LocalTime::fromServerTime($timestamp)->getTimestamp();
     }
 
     /**

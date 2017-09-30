@@ -1,6 +1,6 @@
 <?php
 
-namespace Runalyze\Tests\Parser\Activity;
+namespace Runalyze\Tests\Parser\Activity\FileType;
 
 use Runalyze\Parser\Activity\Common\Data\ActivityDataContainer;
 use Runalyze\Parser\Common\FileContentAwareParserInterface;
@@ -18,7 +18,7 @@ abstract class AbstractActivityParserTestCase extends \PHPUnit_Framework_TestCas
     protected function parseFile(FileContentAwareParserInterface $parser, $file, $completeAfterwards = true)
     {
         $parser->setFileContent(
-            file_get_contents(__DIR__.'/../../../../testfiles/'.$file)
+            file_get_contents(__DIR__.'/../../../../../testfiles/'.$file)
         );
         $parser->parse();
 

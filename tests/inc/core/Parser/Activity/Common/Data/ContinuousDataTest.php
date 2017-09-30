@@ -14,6 +14,13 @@ class ContinuousDataTest extends \PHPUnit_Framework_TestCase
         $this->Data = new ContinuousData();
     }
 
+    public function testPropertyAccessByName()
+    {
+        foreach ($this->Data->getPropertyNamesOfArrays() as $name) {
+            $this->assertTrue(is_array($this->Data->$name), 'Can\'t access property "'.$name.'".');
+        }
+    }
+
     public function testDistanceCalculationForEmptyData()
     {
         $this->Data->calculateDistancesIfRequired();

@@ -17,9 +17,9 @@ class RoundCollection implements \Countable, \ArrayAccess
         }
     }
 
-    public function add(Round $pause)
+    public function add(Round $round)
     {
-        $this->Elements[] = $pause;
+        $this->Elements[] = $round;
     }
 
     /**

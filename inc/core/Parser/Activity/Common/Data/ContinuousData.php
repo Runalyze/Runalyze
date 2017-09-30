@@ -66,6 +66,32 @@ class ContinuousData
     public $StrokeType = [];
 
     /**
+     * @return array
+     */
+    public function getPropertyNamesOfArrays()
+    {
+        return [
+            'Time',
+            'Distance',
+            'Latitude',
+            'Longitude',
+            'Altitude',
+            'HeartRate',
+            'Cadence',
+            'Power',
+            'Temperature',
+            'GroundContactTime',
+            'VerticalOscillation',
+            'GroundContactBalance',
+            'MuscleOxygenation',
+            'MuscleOxygenation_2',
+            'TotalHaemoglobin',
+            'TotalHaemoglobin_2',
+            'Strokes'
+        ];
+    }
+
+    /**
      * @return int|null [s]
      */
     public function getTotalDuration()
