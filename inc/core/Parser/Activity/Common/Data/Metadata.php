@@ -68,10 +68,47 @@ class Metadata
         return $this->TimezoneOffset;
     }
 
+    /**
+     * @param int $timestamp
+     */
     public function interpretTimestampAsServerTime($timestamp)
     {
         $this->TimezoneOffset = round((new \DateTime())->setTimestamp($timestamp)->getOffset() / 60);
         $this->Timestamp = LocalTime::fromServerTime($timestamp)->getTimestamp();
+    }
+
+    /**
+     * @param string $stringWithTimezoneInformation
+     */
+    public function setTimestampAndTimezoneOffsetFrom($stringWithTimezoneInformation)
+    {
+        try {
+            $dateTime = new \DateTime($stringWithTimezoneInformation);
+
+            $this->setTimestamp(
+                $dateTime->getTimestamp() + $dateTime->getOffset(),
+                round($dateTime->getOffset() / 60)
+            );
+        } catch (\Exception $e) {
+            // Invalid date
+        }
+    }
+
+    /**
+     * @param string $string if this string ends with 'Z', its interpreted as in server timezone
+     */
+    public function setTimestampAndTimezoneOffsetWithUtcFixFrom($string)
+    {
+        if (substr($string, -1) == 'Z') {
+            $localTimestamp = LocalTime::fromServerTime(strtotime(substr($string, 0, -1).' UTC'))->getTimestamp();
+
+            $this->setTimestamp(
+                $localTimestamp,
+                round((new \DateTime())->setTimestamp($localTimestamp)->getOffset() / 60)
+            );
+        } else {
+            $this->setTimestampAndTimezoneOffsetFrom($string);
+        }
     }
 
     /**

@@ -38,6 +38,11 @@ class PauseCollection implements \Countable, \ArrayAccess
         return empty($this->Elements);
     }
 
+    public function clear()
+    {
+        $this->Elements = [];
+    }
+
     public function count()
     {
         return count($this->Elements);
