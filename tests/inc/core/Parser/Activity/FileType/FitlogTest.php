@@ -6,6 +6,9 @@ use Runalyze\Import\Exception\UnsupportedFileException;
 use Runalyze\Parser\Activity\FileType\Fitlog;
 use Runalyze\Util\LocalTime;
 
+/**
+ * @group import
+ */
 class FitlogTest extends AbstractActivityParserTestCase
 {
     /** @var Fitlog */

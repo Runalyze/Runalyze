@@ -2,9 +2,6 @@
 
 namespace Runalyze\Parser\Activity\Common\Data;
 
-use Runalyze\Parser\Activity\Common\Data\Pause\Pause;
-use Runalyze\Parser\Activity\Common\Data\Pause\PauseCollection;
-
 class ContinuousData
 {
     /** @var array [s] */
@@ -140,77 +137,5 @@ class ContinuousData
         }
 
         return null;
-    }
-
-    public function calculateDistancesIfRequired()
-    {
-        if ($this->distancesShouldBeCalculated()) {
-            (new GpsDistanceCalculator())->calculateDistancesFor($this);
-        }
-    }
-
-    /**
-     * @return bool
-     */
-    protected function distancesShouldBeCalculated()
-    {
-        return (
-            empty($this->Distance) &&
-            !empty($this->Latitude) &&
-            !empty($this->Longitude)
-        );
-    }
-
-    /**
-     * @param PauseCollection $pausesToApply
-     * @return PauseCollection
-     */
-    public function applyPauses(PauseCollection $pausesToApply)
-    {
-        $resultingPauses = new PauseCollection();
-
-        $num = count($this->Time);
-        $numPauses = $pausesToApply->count();
-        $keys = $this->getPropertyNamesOfArrays();
-        $hasHeartRate = !empty($this->HeartRate);
-        $hrStart = null;
-        $pauseInSeconds = 0;
-        $pauseIndex = 0;
-        $pauseUntil = 0;
-        $pauseTime = $pausesToApply[$pauseIndex]->getTimeIndex();
-        $isPause = false;
-
-        for ($i = 0; $i < $num; $i++) {
-            if (!$isPause && $this->Time[$i] > $pauseTime) {
-                if ($pauseIndex < $numPauses) {
-                    $isPause = true;
-                    $hrStart = !$hasHeartRate ? null : (isset($this->HeartRate[$i - 1]) ? $this->HeartRate[$i - 1] : $this->HeartRate[$i]);
-                    $pauseInSeconds += $pausesToApply[$pauseIndex]->getDuration();
-                    $pauseUntil = $pausesToApply[$pauseIndex]->getDuration() + $pausesToApply[$pauseIndex]->getTimeIndex();
-                    $pauseIndex++;
-                    $pauseTime = ($pauseIndex < $numPauses) ? $pausesToApply[$pauseIndex]->getTimeIndex() : PHP_INT_MAX;
-                }
-            }
-
-            if ($isPause && $this->Time[$i] >= $pauseUntil) {
-                $isPause = false;
-                $newPause = clone $pausesToApply[$pauseIndex - 1];
-                $newPause->setHeartRateDetails($hrStart, $hasHeartRate ? $this->HeartRate[$i] : null);
-
-                $resultingPauses->add($newPause);
-            }
-
-            if ($isPause) {
-                foreach ($keys as $key) {
-                    if (isset($this->{$key}[$i])) {
-                        unset($this->{$key}[$i]);
-                    }
-                }
-            } else {
-                $this->Time[$i] -= $pauseInSeconds;
-            }
-        }
-
-        return $resultingPauses;
     }
 }

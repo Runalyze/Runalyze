@@ -46,7 +46,9 @@ class RoundCollectionFillerTest extends \PHPUnit_Framework_TestCase
 
     public function testThatCompletionWithEmptyCollectionDoesNotFail()
     {
-        $filler = new RoundCollectionFiller(new RoundCollection());
+        $collection = new RoundCollection();
+
+        $filler = new RoundCollectionFiller($collection);
         $filler->fillDistancesFromArray([1, 2, 3], [0.01, 0.02, 0.03]);
         $filler->fillTimesFromArray([1, 2, 3], [0.01, 0.02, 0.03]);
     }

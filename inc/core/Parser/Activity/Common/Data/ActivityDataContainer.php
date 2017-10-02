@@ -17,6 +17,9 @@ class ActivityDataContainer
     /** @var ContinuousData */
     public $ContinuousData;
 
+    /** @var ContinuousDataAdapter */
+    protected $ContinuousDataAdapter;
+
     /** @var RoundCollection */
     public $Rounds;
 
@@ -40,6 +43,7 @@ class ActivityDataContainer
         $this->Metadata = new Metadata();
         $this->ActivityData = new ActivityData();
         $this->ContinuousData = new ContinuousData();
+        $this->ContinuousDataAdapter = new ContinuousDataAdapter($this->ContinuousData);
         $this->Rounds = new RoundCollection();
         $this->Pauses = new PauseCollection();
         $this->PausesToApply = new PauseCollection();
@@ -49,7 +53,8 @@ class ActivityDataContainer
 
     public function completeActivityData()
     {
-        $this->ContinuousData->calculateDistancesIfRequired();
+        $this->ContinuousDataAdapter->calculateDistancesIfRequired();
+        $this->ContinuousDataAdapter->clearEmptyArrays();
 
         $this->completeRoundsIfRequired();
         $this->applyPauses();
@@ -79,7 +84,7 @@ class ActivityDataContainer
     protected function applyPauses()
     {
         if (!$this->PausesToApply->isEmpty() && !empty($this->ContinuousData->Time)) {
-            $this->Pauses = $this->ContinuousData->applyPauses($this->PausesToApply);
+            $this->Pauses = $this->ContinuousDataAdapter->applyPauses($this->PausesToApply);
             $this->PausesToApply->clear();
         }
     }

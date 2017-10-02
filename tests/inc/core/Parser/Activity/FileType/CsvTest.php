@@ -6,6 +6,9 @@ use Runalyze\Parser\Activity\Common\Data\Round\Round;
 use Runalyze\Parser\Activity\FileType\Csv;
 use Runalyze\Util\LocalTime;
 
+/**
+ * @group import
+ */
 class CsvTest extends AbstractActivityParserTestCase
 {
     /** @var Csv */

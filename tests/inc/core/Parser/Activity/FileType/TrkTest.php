@@ -5,6 +5,9 @@ namespace Runalyze\Tests\Parser\Activity\FileType;
 use Runalyze\Parser\Activity\FileType\Trk;
 use Runalyze\Util\LocalTime;
 
+/**
+ * @group import
+ */
 class TrkTest extends AbstractActivityParserTestCase
 {
     /** @var Trk */

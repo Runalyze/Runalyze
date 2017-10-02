@@ -4,6 +4,9 @@ namespace Runalyze\Tests\Parser\Activity\FileType;
 
 use Runalyze\Parser\Activity\FileType\CsvEpson;
 
+/**
+ * @group import
+ */
 class CsvEpsonTest extends AbstractActivityParserTestCase
 {
     /** @var CsvEpson */
