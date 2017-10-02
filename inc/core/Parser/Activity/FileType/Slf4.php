@@ -3,11 +3,7 @@
 namespace Runalyze\Parser\Activity\FileType;
 
 use Runalyze\Import\Exception\UnsupportedFileException;
-use Runalyze\Metrics\Common\Unit\Simple;
-use Runalyze\Parser\Activity\Common\AbstractSingleParser;
-use Runalyze\Parser\Activity\Common\Data\Pause\Pause;
 use Runalyze\Parser\Activity\Common\Data\Round\Round;
-use Runalyze\Parser\Common\XmlParserTrait;
 use SimpleXMLElement;
 
 class Slf4 extends Slf3

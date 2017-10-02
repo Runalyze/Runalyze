@@ -6,6 +6,9 @@ use Runalyze\Parser\Activity\Common\Data\Pause\PauseCollection;
 
 class ContinuousDataAdapter
 {
+    /** @var int */
+    const RPM_LIMIT_FOR_CORRECTION = 130;
+
     /** @var ContinuousData */
     protected $ContinuousData;
 
@@ -31,6 +34,22 @@ class ContinuousDataAdapter
             !empty($this->ContinuousData->Latitude) &&
             !empty($this->ContinuousData->Longitude)
         );
+    }
+
+    /**
+     * @see https://github.com/Runalyze/Runalyze/issues/1367
+     */
+    public function correctCadenceIfRequired()
+    {
+        if (!empty($this->ContinuousData->Cadence)) {
+            $avg = array_sum($this->ContinuousData->Cadence) / count($this->ContinuousData->Cadence);
+
+            if ($avg > self::RPM_LIMIT_FOR_CORRECTION) {
+                $this->ContinuousData->Cadence = array_map(function ($v) {
+                    return round($v / 2);
+                }, $this->ContinuousData->Cadence);
+            }
+        }
     }
 
     public function clearEmptyArrays()

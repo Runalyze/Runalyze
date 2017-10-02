@@ -54,6 +54,7 @@ class ActivityDataContainer
     public function completeActivityData()
     {
         $this->ContinuousDataAdapter->calculateDistancesIfRequired();
+        $this->ContinuousDataAdapter->correctCadenceIfRequired();
         $this->ContinuousDataAdapter->clearEmptyArrays();
 
         $this->completeRoundsIfRequired();
