@@ -77,8 +77,8 @@ class ActivityMergeCommand extends ContainerAwareCommand
 
         $fileName = (new \SplFileInfo($file))->getFilename();
 
-        if (false === copy($file, FRONTEND_PATH.'../data/import/'.$fileName)) {
-            return $this->fail($output, sprintf('Can\'t copy "%s" to "%s".', $file, FRONTEND_PATH.'../data/import/'.$fileName));
+        if (false === copy($file, DATA_DIRECTORY.'/import/'.$fileName)) {
+            return $this->fail($output, sprintf('Can\'t copy "%s" to "%s".', $file, DATA_DIRECTORY.'/import/'.$fileName));
         }
 
         $factory = new ImporterFactory($fileName);

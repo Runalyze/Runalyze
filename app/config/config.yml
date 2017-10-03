@@ -4,6 +4,7 @@ imports:
   - { resource: services.yml }
   - { resource: queue.yml }
   - { resource: default_config.yml }
+  - { resource: expert_config.yml }
   - { resource: ../../data/config.yml }
 
 framework:
@@ -13,7 +14,7 @@ framework:
 #     translation_domain: messages
   session:
     handler_id: '%session.handler_id%'
-    save_path: '%kernel.root_dir%/../data/sessions'
+    save_path: '%data_directory%/sessions'
   form: ~
   csrf_protection: true
   assets: ~
@@ -39,7 +40,7 @@ twig:
     mapbox_api_key: '%mapbox_api_key%'
     locales: '%locales%'
   paths:
-    '%kernel.root_dir%/../data/views': __main__
+    '%data_directory%/views': __main__
   form_themes:
      - 'form/fields.html.twig'
 

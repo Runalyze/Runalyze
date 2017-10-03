@@ -37,7 +37,7 @@ class GeoTIFF extends AbstractStrategy
         $this->Reader = new DEM\Reader();
         $this->Reader->addProvider(
             new DEM\Provider\GeoTIFF\SRTM4Provider(
-                FRONTEND_PATH.'../data/srtm',
+                DATA_DIRECTORY.'/srtm',
                 new DEM\Interpolation\BilinearInterpolation()
             )
         );

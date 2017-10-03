@@ -27,7 +27,7 @@ class TimezoneLookupTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstructorWithWrongExtensionName()
     {
-        new TimezoneLookup(false, FRONTEND_PATH.'../data/timezone.sqlite', 'non-existant-extension.so');
+        new TimezoneLookup(false, DATA_DIRECTORY.'/timezone.sqlite', 'non-existant-extension.so');
     }
 
     public function testSimpleLocations()

@@ -62,7 +62,7 @@ class ActivityBulkImportCommand extends ContainerAwareCommand
 
             $output->writeln('<info>'.$file.'</info>');
             $filename = 'bulk-import'.uniqid().$file;
-            copy($path.'/'.$file, FRONTEND_PATH.'../data/import/'.$filename);
+            copy($path.'/'.$file, DATA_DIRECTORY.'/import/'.$filename);
 
             try {
                 $Factory = new ImporterFactory($filename);
