@@ -26,6 +26,7 @@ class Fitlog extends AbstractMultipleParser implements FileContentAwareParserInt
     protected function parseSingleActivity(SimpleXMLElement $activity)
     {
         $activityParser = new FitlogActivity($activity);
+        $activityParser->setLogger($this->logger);
         $activityParser->parse();
 
         $this->Container[] = $activityParser->getActivityDataContainer();

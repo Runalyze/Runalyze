@@ -61,6 +61,14 @@ class Metadata
     }
 
     /**
+     * @param null|int $timezoneOffset [min]
+     */
+    public function setTimezoneOffset($timezoneOffset)
+    {
+        $this->TimezoneOffset = $timezoneOffset;
+    }
+
+    /**
      * @return int|null timezone offset in minutes
      */
     public function getTimezoneOffset()

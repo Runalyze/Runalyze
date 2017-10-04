@@ -99,7 +99,8 @@ class TcxTest extends AbstractActivityParserTestCase
         $this->assertEquals(2.355, $this->Container[2]->ActivityData->Distance, '', 0.1);
     }
 
-    public function testFileFromDakota() {
+    public function testFileFromDakota()
+    {
         $this->parseFile($this->Parser, 'tcx/Dakota.tcx');
 
         $this->assertEquals('2012-08-19 09:21', LocalTime::date('Y-m-d H:i', $this->Container->Metadata->getTimestamp()));
@@ -209,7 +210,8 @@ class TcxTest extends AbstractActivityParserTestCase
     /**
      * @see https://github.com/Runalyze/Runalyze/issues/1445
      */
-    public function testFirstPointEmpty() {
+    public function testFirstPointEmpty()
+    {
         $this->parseFile($this->Parser, 'tcx/First-point-empty.tcx');
 
         $this->assertEquals(142, $this->Container->ActivityData->Duration);
