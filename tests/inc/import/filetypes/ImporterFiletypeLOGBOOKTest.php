@@ -31,7 +31,7 @@ class ImporterFiletypeLOGBOOKTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test: incorrect xml-file 
+	 * Test: incorrect xml-file
 	 */
 	public function test_incorrectString() {
 		$this->object->parseString('<any><xml><file></file></xml></any>');
@@ -43,7 +43,7 @@ class ImporterFiletypeLOGBOOKTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * Test: Polar file
-	 * Filename: "test.logbook" 
+	 * Filename: "test.logbook"
 	 */
 	public function test_StandardFile() {
 		$this->object->parseFile('../tests/testfiles/sporttracks/test.logbook');
@@ -72,7 +72,7 @@ class ImporterFiletypeLOGBOOKTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( 365, $this->object->object(1)->getElevation() );
 		$this->assertEquals( 156, $this->object->object(1)->getPulseAvg() );
 		$this->assertEquals( 167, $this->object->object(1)->getPulseMax() );
-		$this->assertEquals( "mit Michael Kuthe", $this->object->object(1)->getTitle() );
+		$this->assertEquals( "mit Michael", $this->object->object(1)->getTitle() );
 		$this->assertEquals( "Horneburg-Helmste-Harsefeld-Bliedersdorf", $this->object->object(1)->getRoute() );
 		$this->assertEquals( "Erster Lauf mit der Forerunner 305  ;o)", $this->object->object(1)->getNotes() );
 		$this->assertEquals( true, $this->object->object(1)->Splits()->areEmpty() );

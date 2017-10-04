@@ -58,11 +58,22 @@ abstract class AbstractActivityParserTestCase extends \PHPUnit_Framework_TestCas
      */
     protected function checkExpectedRoundData(array $expectedRounds, $deltaDuration = 0, $deltaDistance = 0.0)
     {
-        $this->assertEquals(count($expectedRounds), $this->Container->Rounds->count());
+        $this->checkExpectedRoundDataFor($this->Container, $expectedRounds, $deltaDuration, $deltaDistance);
+    }
+
+    /**
+     * @param ActivityDataContainer $container
+     * @param array $expectedRounds [[duration [s], distance [km]], ...]
+     * @param int $deltaDuration [s]
+     * @param float $deltaDistance [km]
+     */
+    protected function checkExpectedRoundDataFor(ActivityDataContainer $container, array $expectedRounds, $deltaDuration = 0, $deltaDistance = 0.0)
+    {
+        $this->assertEquals(count($expectedRounds), $container->Rounds->count());
 
         foreach ($expectedRounds as $i => $expectedRoundData) {
-            $this->assertEquals($expectedRoundData[0], $this->Container->Rounds[$i]->getDuration(), 'Round #'.$i.' has wrong duration.', $deltaDuration);
-            $this->assertEquals($expectedRoundData[1], $this->Container->Rounds[$i]->getDistance(), 'Round #'.$i.' has wrong distance.', $deltaDistance);
+            $this->assertEquals($expectedRoundData[0], $container->Rounds[$i]->getDuration(), 'Round #'.$i.' has wrong duration.', $deltaDuration);
+            $this->assertEquals($expectedRoundData[1], $container->Rounds[$i]->getDistance(), 'Round #'.$i.' has wrong distance.', $deltaDistance);
         }
     }
 
