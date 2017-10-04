@@ -109,7 +109,7 @@ class SportRepository extends EntityRepository
      * @param Account $account
      * @return SportStatistics
      */
-    public function getSportStatisticsSince($timestamp, Account $account)
+    public function getSportStatisticsSince($timestamp, Account $account, $raw = false)
     {
         $queryBuilder = $this->_em->createQueryBuilder()
             ->select('s')
@@ -128,6 +128,10 @@ class SportRepository extends EntityRepository
         if (null !== $timestamp) {
             $queryBuilder->andWhere('t.time > :startTime');
             $queryBuilder->setParameter(':startTime', $timestamp);
+        }
+
+        if ($raw) {
+            return $queryBuilder->getQuery()->getResult();
         }
 
         return new SportStatistics((new LocalTime($timestamp))->toServerTime(), $queryBuilder->getQuery()->getResult());

@@ -2,96 +2,35 @@
 
 namespace Runalyze\Bundle\CoreBundle\Controller\Internal;
 
-use Runalyze\Bundle\CoreBundle\Controller\AbstractPluginsAwareController;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
-use Runalyze\Bundle\CoreBundle\Entity\Plugin;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Runalyze\Util\LocalTime;
 
 /**
- * @Route("/_internal/plugin")
+ * @Route("/_internal/panel")
  */
-class PluginController extends AbstractPluginsAwareController
+class PanelController extends Controller
 {
-    /**
-     * @return \Runalyze\Bundle\CoreBundle\Entity\PluginRepository
-     */
-    protected function getPluginRepository()
-    {
-        return $this->getDoctrine()->getRepository('CoreBundle:Plugin');
-    }
 
     /**
-     * @Route("/toggle/{id}", name="internal-plugin-toggle")
-     * @ParamConverter("plugin", class="CoreBundle:Plugin")
+     * @Route("/sport", name="internal-sport-panel")
      * @Security("has_role('ROLE_USER')")
      */
-    public function togglePanelAction(Plugin $plugin, Account $account)
+    public function sportStatAction(Request $request, Account $account)
     {
-        if ($plugin->getAccount()->getId() != $account->getId()) {
-            return $this->createAccessDeniedException();
-        }
+        $sportRepository = $this->getDoctrine()->getRepository('CoreBundle:Sport');
+        $today = (new LocalTime())->setTime(0, 0, 0);
 
-        // Only as long as PluginFactory's cache is in use
-        $Frontend = new \Frontend(true, $this->get('security.token_storage'));
-        \PluginFactory::clearCache();
-
-        $this->getPluginRepository()->toggleHidden($plugin);
-
-        return new JsonResponse();
-    }
-
-    /**
-     * @Route("/move/{id}/up", name="internal-plugin-move-up")
-     * @ParamConverter("plugin", class="CoreBundle:Plugin")
-     * @Security("has_role('ROLE_USER')")
-     */
-    public function movePanelUpAction(Plugin $plugin, Account $account)
-    {
-        if ($plugin->getAccount()->getId() != $account->getId()) {
-            return $this->createAccessDeniedException();
-        }
-
-        // Only as long as PluginFactory's cache is in use
-        $Frontend = new \Frontend(true, $this->get('security.token_storage'));
-        \PluginFactory::clearCache();
-
-        $this->getPluginRepository()->movePanelUp($plugin);
-
-        return new JsonResponse();
-    }
-
-    /**
-     * @Route("/move/{id}/down", name="internal-plugin-move-down")
-     * @ParamConverter("plugin", class="CoreBundle:Plugin")
-     * @Security("has_role('ROLE_USER')")
-     */
-    public function movePanelDownAction(Plugin $plugin, Account $account)
-    {
-        if ($plugin->getAccount()->getId() != $account->getId()) {
-            return $this->createAccessDeniedException();
-        }
-
-        // Only as long as PluginFactory's cache is in use
-        $Frontend = new \Frontend(true, $this->get('security.token_storage'));
-        \PluginFactory::clearCache();
-
-        $this->getPluginRepository()->movePanelDown($plugin);
-
-        return new JsonResponse();
-    }
-
-    /**
-     * @Route("/all-panels", name="internal-plugin-all-panels")
-     * @Security("has_role('ROLE_USER')")
-     */
-    public function contentPanelsAction(Request $request, Account $account)
-    {
-        $Frontend = new \Frontend(false, $this->get('security.token_storage'));
-
-        return $this->getResponseForAllEnabledPanels($request, $account);
+        return new JsonResponse( [
+            'weekStatistics' => $sportRepository->getSportStatisticsSince($today->weekstart(), $account, true),
+            'monthStatistics' => $sportRepository->getSportStatisticsSince($today->setDate($today->format('Y'), $today->format('m'), 1)->getTimestamp(), $account, true),
+            'yearStatistics' => $sportRepository->getSportStatisticsSince($today->setDate($today->format('Y'), 1, 1)->getTimestamp(), $account, true),
+            'totalStatistics' => $sportRepository->getSportStatisticsSince(null, $account, true)
+        ]);
     }
 }
