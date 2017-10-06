@@ -244,3 +244,5 @@ services:
     arguments: ["@monolog.logger.queue", "@app.repository.account", "@app.repository.sport", "@app.repository.notification", "@app.poster.generate_json", "@app.poster.generate_poster", "@app.poster.filehandler", "@app.mailer.account", "%data_directory%", "%rsvg_path%", "%inkscape_path%"]
     tags:
       - { name: bernard.receiver, message: posterGenerator }
+  app.activity.feed:
+    class: Runalyze\View\Activity\Feed
