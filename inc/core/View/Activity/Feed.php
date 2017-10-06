@@ -4,7 +4,6 @@ namespace Runalyze\View\Activity;
 use PicoFeed\Syndication\Rss20FeedBuilder;
 use PicoFeed\Syndication\Rss20ItemBuilder;
 use Runalyze\Bundle\CoreBundle\Component\Activity\ActivityContext;
-use Runalyze\Bundle\CoreBundle\Component\Activity\ActivityDecorator;
 use Runalyze\Bundle\CoreBundle\Services\Activity\ActivityContextFactory;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Runalyze\Util\LocalTime;
@@ -28,6 +27,7 @@ class Feed {
     /**
      * Feed constructor.
      * @param TranslatorInterface $translator
+     * @param ActivityContextFactory $activityContextFactory
      */
     public function __construct(TranslatorInterface $translator, ActivityContextFactory $activityContextFactory)
     {
@@ -140,7 +140,7 @@ class Feed {
 
         $item->withTitle($time.' '.$activityContext->getActivity()->getDistance(). ' ' .$activityContext->getDecorator()->getTitle());
         $item->withPublishedDate(new LocalTime($activityContext->getActivity()->getTime()));
-        $item->withContent($this->createItemContent($activity, $activityContext));
+        $item->withContent($this->createItemContent($activityContext));
         $item->withAuthor($activity->getAccount()->getUsername());
         if ($activityContext->getActivity()->isPublic()) {
             //$item->withUrl($this->generateUrl('shared-activity', array('activityHash' => $activityContext->getActivity()->getId()), UrlGeneratorInterface::ABSOLUTE_URL));
