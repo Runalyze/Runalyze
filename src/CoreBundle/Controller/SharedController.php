@@ -5,18 +5,13 @@ namespace Runalyze\Bundle\CoreBundle\Controller;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\Training;
 use Runalyze\Export\Share\Facebook;
-use Runalyze\Util\LocalTime;
 use Runalyze\View\Activity\Context;
-use Runalyze\View\Activity\Feed;
 use Runalyze\View\Activity\Linker;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use PicoFeed\Syndication\Rss20FeedBuilder;
-use PicoFeed\Syndication\Rss20ItemBuilder;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Runalyze\Bundle\CoreBundle\Component\Activity\ActivityDecorator;
 
 
 class SharedController extends Controller
@@ -136,9 +131,9 @@ class SharedController extends Controller
 
         $feed = $this->get('app.activity.feed');
         $feed->setFeedTitle('RUNALYZE athlete '.$username)
-                ->setFeedUrl($this->generateUrl('shared-athlete-feed', array('username' => $username), UrlGeneratorInterface::ABSOLUTE_URL));
-        $feed->setSiteUrl($this->generateUrl('shared-athlete', array('username' => $username), UrlGeneratorInterface::ABSOLUTE_URL));
-        $feed->setFeedAuthor($username);
+                ->setFeedUrl($this->generateUrl('shared-athlete-feed', array('username' => $username), UrlGeneratorInterface::ABSOLUTE_URL))
+                ->setSiteUrl($this->generateUrl('shared-athlete', array('username' => $username), UrlGeneratorInterface::ABSOLUTE_URL))
+                ->setFeedAuthor($username);
 
         if (null === $account || !$privacy->isListPublic()) {
             return new Response(
@@ -148,8 +143,7 @@ class SharedController extends Controller
             );
         }
 
-        $activities = $this->getTrainingRepository()->latestActivities($account);
-        $feed->setActivities($activities);
+        $feed->setActivities($this->getTrainingRepository()->latestActivities($account));
 
         return new Response(
             $feed->buildFeed(),

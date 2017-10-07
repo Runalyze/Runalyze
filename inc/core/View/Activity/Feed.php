@@ -6,10 +6,12 @@ use PicoFeed\Syndication\Rss20ItemBuilder;
 use Runalyze\Bundle\CoreBundle\Component\Activity\ActivityContext;
 use Runalyze\Bundle\CoreBundle\Services\Activity\ActivityContextFactory;
 use Runalyze\Bundle\CoreBundle\Services\Configuration\ConfigurationManager;
+use Runalyze\Data\Cadence\Unit;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Runalyze\Util\LocalTime;
 use Symfony\Component\Translation\TranslatorInterface;
 use Runalyze\Bundle\CoreBundle\Entity\Training;
+use Runalyze\Activity\PaceUnit;
 use Runalyze\Bundle\CoreBundle\Twig\ValueExtension;
 
 class Feed {
@@ -132,14 +134,16 @@ class Feed {
      */
     private function createItemContent(ActivityContext $activityContext, ValueExtension $valueDecorator)
     {
-        $content = '<b>'.$this->Translator->trans('Sport') . '</b>: ' . $activityContext->getActivity()->getSport()->getName();
-        if ($activityContext->getActivity()->getType() !== null) {
-            $content .= '<br><b>'.$this->Translator->trans('Activity type') . '</b>: ' . $activityContext->getActivity()->getType()->getName();
+        $activity = $activityContext->getActivity();
+        $content = '<b>'.$this->Translator->trans('Sport') . '</b>: ' . $activity->getSport()->getName();
+        if ($activity->getType() !== null) {
+            $content .= '<br><b>'.$this->Translator->trans('Activity type') . '</b>: ' . $activity->getType()->getName();
         }
         $content .= '<br><b>'.$this->Translator->trans('Duration') . '</b>: '.(new \DateTime())->setTimezone(new \DateTimeZone("UTC"))->setTimestamp($activityContext->getActivity()->getElapsedTime())->format('H:i:s');
 
-        if ($activityContext->getActivity()->getDistance()) {
-            $content .= '<br><b>'.$this->Translator->trans('Distance') . '</b>: ' .$valueDecorator->distance($activityContext->getActivity()->getDistance());
+        if ($activity->getDistance()) {
+            $content .= '<br><b>' . $this->Translator->trans('Distance') . '</b>: ' . $valueDecorator->distance($activity->getDistance());
+            $content .= '<br><b>' . $this->Translator->trans('Pace') . '</b>: ' . $valueDecorator->pace($activity->getElapsedTime() / $activity->getDistance(), $activity->getSport()->getSpeedUnit());
         }
 
         if ($activityContext->getActivity()->getNotes()) {
