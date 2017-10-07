@@ -3,6 +3,11 @@
 {% set body_attributes = ' id="shared"' %}
 {% set page_title = 'Athlete'|trans ~ ': ' ~ account.username ~ ' | RUNALYZE' %}
 
+{% block html_head_links %}
+{{ parent() }}
+    <link rel="alternate" type="application/rss+xml" href="{{ url('shared-athlete-feed', {'username': account.username}) }}" />
+{% endblock %}
+
 {% block content %}
 
     {# @var configObject \Runalyze\Bundle\CoreBundle\Component\Configuration\RunalyzeConfigurationList #}
@@ -19,8 +24,8 @@
                                 <li><a class="change" target="public-tabs" href="#statistics-years">{% trans %}Year on year{% endtrans %} ({% trans %}Running{% endtrans %})</a></li>
                             </ul>
                         </div>
-
                         <h1>{% trans with {'%username%': account.username} %}Activity data of %username%{% endtrans %}</h1>
+                        <a rel="alternate" type="application/rss+xml" href="{{ url('shared-athlete-feed', {'username': account.username}) }}" title="{% trans with {'%username%': account.username} %}Follow %username% via RSS-Feed{% endtrans %}"><i class="fa fa-fw fa fa-rss"></i></a>
                     </div>
                     <div class="panel-content">
                         <div id="statistics-general" class="change">
