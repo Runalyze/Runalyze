@@ -139,7 +139,7 @@ class Feed {
         if ($activity->getType() !== null) {
             $content .= '<br><b>'.$this->Translator->trans('Activity type') . '</b>: ' . $activity->getType()->getName();
         }
-        $content .= '<br><b>'.$this->Translator->trans('Duration') . '</b>: '.(new \DateTime())->setTimezone(new \DateTimeZone("UTC"))->setTimestamp($activityContext->getActivity()->getElapsedTime())->format('H:i:s');
+        $content .= '<br><b>'.$this->Translator->trans('Duration') . '</b>: '.(new \DateTime())->setTimezone(new \DateTimeZone("UTC"))->setTimestamp($activityContext->getActivity()->getS())->format('H:i:s');
 
         if ($activity->getDistance()) {
             $content .= '<br><b>' . $this->Translator->trans('Distance') . '</b>: ' . $valueDecorator->distance($activity->getDistance());
@@ -147,7 +147,7 @@ class Feed {
         }
 
         if ($activityContext->getActivity()->getNotes()) {
-            $content .= '<br><b>'.$this->Translator->trans('Notes') . '</b><br>'.$activityContext->getActivity()->getNotes();
+            $content .= '<br><b>'.$this->Translator->trans('Notes:') . '</b><br>'.$activityContext->getActivity()->getNotes();
         }
 
         if ($activityContext->getActivity()->isPublic()) {
@@ -166,7 +166,7 @@ class Feed {
 
         $item = new Rss20ItemBuilder($this->FeedBuilder);
         $activityContext = $this->ActivityContextFactory->getContext($activity);
-        $time = (new LocalTime($activityContext->getActivity()->getTime()))->format('d.m.Y H:i');
+        $time = (new LocalTime($activityContext->getActivity()->getTime()))->format('d.m.Y');
         $account = $activity->getAccount();
         $valueDecorator = new ValueExtension($this->ConfigurationManager);
         $item->withTitle($time.' - '.$activityContext->getSport()->getName().' - '.$valueDecorator->distance($activity->getDistance()));
