@@ -26,6 +26,7 @@ use Runalyze\View\Icon\EffectiveVO2maxIcon;
 use Runalyze\Context as GeneralContext;
 use Runalyze\Util\Time;
 use Runalyze\Util\LocalTime;
+use Runalyze\View\Rpecolor;
 use Runalyze\View\Stresscolor;
 use Runalyze\View\Tooltip;
 use Runalyze\Data\RPE as DataRPE;
@@ -283,15 +284,18 @@ class Dataview
     }
 
     /**
-     * @return string
+     * @param bool $valueOnly
+     * @return int|null|string
+     *
      */
-    public function rpe()
+    public function rpe($valueOnly = false)
     {
-        $Tooltip = new Tooltip(DataRPE::getString($this->Activity->rpe()));
-        $RPE = $this->Activity->rpe();
-        $Tooltip->wrapAround($RPE);
-
-        return $RPE;
+        if ($valueOnly) {
+            return $this->Activity->rpe();
+        } else {
+            $Rpe = new Rpecolor($this->Activity->rpe());
+            return $Rpe->string();
+        }
     }
 
     /**
