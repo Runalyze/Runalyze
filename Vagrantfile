@@ -15,7 +15,7 @@ Vagrant.configure("2") do |config|
   config.vm.synced_folder "./", "/vagrant", id: "vagrant-root",
     owner: "www-data",
     group: "www-data",
-    mount_options: ["dmode=775,fmode=664"]
+    mount_options: ["dmode=775,fmode=774"]
 
   config.vm.post_up_message = "Congratulations! Your Runalyze Development Box has been setup.
    Now login or create an account here http://localhost:8080/
