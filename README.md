@@ -15,8 +15,8 @@ Runalyze is mainly developed by [laufhannes](https://github.com/laufhannes) and 
 We provide two different documentations:
 * [help.runalyze.com](https://help.runalyze.com) - faq for users
 * [docs.runalyze.com](https://docs.runalyze.com) - docs for admins/developers
-  * [Installation](https://docs.runalyze.com/en/latest/installation/3.x.html)
-  * [Update](https://docs.runalyze.com/en/latest/upgrade/3.x.html)
+  * [Installation](https://docs.runalyze.com/en/latest/installation/4.x.html)
+  * [Update](https://docs.runalyze.com/en/latest/upgrade/4.x.html)
   * [Checkout](https://docs.runalyze.com/en/latest/checkout.html)
   * [Contributing](https://docs.runalyze.com/en/latest/contribute.html)
 
@@ -24,9 +24,9 @@ Both documentations have their own repos: [docs](https://github.com/Runalyze/doc
 
 ## Install / Development
 Runalyze requires [composer](https://getcomposer.org/doc/00-intro.md#system-requirements) and
-[npm](https://nodejs.org/download/)
-(plus [bower](http://bower.io/) and
-[gulp](https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md), will be installed via npm).
+[npm](https://nodejs.org/en/download/)
+(plus [bower](https://bower.io/) and
+[gulp](https://gulpjs.com/), will be installed via npm).
 
 To install dependencies and build:
 ```
@@ -46,7 +46,7 @@ gulp
  * elevation correction and calculation
  * ...
 
-Look at [help.runalyze.com](https://help.runalyze.com/latest/features.html) for a feature list with screenshots.
+Look at [help.runalyze.com](https://help.runalyze.com/en/latest/features.html) for a feature list with screenshots.
 
 
 ## Support
@@ -66,23 +66,23 @@ If you discover a security vulnerability, please send an e-mail to us at support
 
 ## Credits
 * Icons
-	* [Font Awesome](http://fontawesome.io/) by Dave Gandy
-	* [Forecast Font](http://forecastfont.iconvau.lt/) by Ali Sisk
-	* [Icons8 Font](http://icons8.com/) by VisualPharm
+  * [Font Awesome](http://fontawesome.io/) by Dave Gandy
+  * [Forecast Font](http://forecastfont.iconvau.lt/) by Ali Sisk
+  * [Icons8 Font](https://icons8.com/) by VisualPharm
 * Elevation data from Shuttle Radar Topography Mission
-	* [SRTM tiles](http://dwtkns.com/srtm/) grabbed via Derek Watkins
-	* [SRTM files](http://srtm.csi.cgiar.org/) by International  Centre for Tropical  Agriculture (CIAT)
-	* [SRTMGeoTIFFReader](http://www.osola.org.uk/elevations/index.htm) by Bob Osola
-* [jQuery](http://jquery.org/) by jQuery Foundation, Inc.
-    * [Bootstrap Tooltip](http://twitter.github.com/bootstrap/javascript.html#tooltips) by Twitter, Inc.
-    * [Flot](http://www.flotcharts.org/) by IOLA and Ole Laursen
-    * [Leaflet](http://leafletjs.com/) by Vladimir Agafonkin
-    * [FineUploader](https://github.com/Widen/fine-uploader) by Widen Enterprises, Inc.
-    * [Tablesorter](http://tablesorter.com/docs/) by Christian Bach
-    * [Datepicker](http://www.eyecon.ro/) by Stefan Petre
-    * [Chosen](http://getharvest.com/) by Patrick Filler for Harvest
-    * [FontIconPicker](http://codeb.it/) by Alessandro Benoit &amp; Swashata Ghosh
+  * [SRTM tiles](http://dwtkns.com/srtm/) grabbed via Derek Watkins
+  * [SRTM files](http://srtm.csi.cgiar.org/) by International Centre for Tropical  Agriculture (CIAT)
+  * [SRTMGeoTIFFReader](https://www.osola.org.uk/elevations/index.htm) by Bob Osola
+* [jQuery](https://jquery.org/) by jQuery Foundation, Inc.
+  * [Bootstrap Tooltip](https://bootstrapdocs.com/v2.0.0/docs/javascript.html#tooltips) by Twitter, Inc.
+  * [Flot](http://www.flotcharts.org/) by IOLA and Ole Laursen
+  * [Leaflet](http://leafletjs.com/) by Vladimir Agafonkin
+  * [FineUploader](https://github.com/Widen/fine-uploader) by Widen Enterprises, Inc.
+  * [Tablesorter](http://tablesorter.com/docs/) by Christian Bach
+  * [Datepicker](http://www.eyecon.ro/) by Stefan Petre
+  * [Chosen](https://www.getharvest.com/) by Patrick Filler for Harvest
+  * [FontIconPicker](https://codeb.it/) by Alessandro Benoit &amp; Swashata Ghosh
 * Miscellaneaous
-    * [phpFastCache](https://github.com/khoaofgod/phpfastcache) by Khoa Bui
-    * [Garmin Communicator](http://developer.garmin.com/web-device/garmin-communicator-plugin/) by Garmin Ltd.
-    * [Weather data](http://openweathermap.org) from OpenWeatherMap Inc.
+  * [phpFastCache](https://github.com/khoaofgod/phpfastcache) by Khoa Bui
+  * [Garmin Communicator](https://software.garmin.com/de-DE/gcp.html) by Garmin Ltd.
+  * [Weather data](http://openweathermap.org) from OpenWeatherMap Inc.
