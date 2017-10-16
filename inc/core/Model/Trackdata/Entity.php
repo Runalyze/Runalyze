@@ -6,6 +6,7 @@
 
 namespace Runalyze\Model\Trackdata;
 
+use Runalyze\Calculation\Activity\TimeArrayMinifier;
 use Runalyze\Model;
 use Runalyze\Calculation\Activity\PaceCalculator;
 use Runalyze\Calculation\Activity\VerticalRatioCalculator;
@@ -383,7 +384,7 @@ class Entity extends Model\Entity implements Model\Loopable, Model\Common\WithNu
 	 * @return array unit: [s]
 	 */
 	public function time() {
-		return $this->Data[self::TIME];
+		return TimeArrayMinifier::extend($this->Data[self::TIME]);
 	}
 
 	/**

@@ -134,6 +134,13 @@ class Trackdata
     private $account;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="`lock`", type="boolean", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
+     */
+    private $lock = false;
+
+    /**
      * @param array|null $time [s]
      *
      * @return $this
@@ -555,6 +562,34 @@ class Trackdata
     public function getAccount()
     {
         return $this->account;
+    }
+
+    /**
+     * @param bool $lock
+     *
+     * @return $this
+     */
+    public function setLock($lock)
+    {
+        $this->lock = (bool)$lock;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getLock()
+    {
+        return $this->lock;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isLocked()
+    {
+        return $this->lock;
     }
 
     /**
