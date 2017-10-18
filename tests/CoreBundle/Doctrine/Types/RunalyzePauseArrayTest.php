@@ -81,9 +81,6 @@ class RunalyzePauseArrayTest extends \PHPUnit_Framework_TestCase
             $this->PlatformMock
         );
 
-        $this->assertEquals(null, $collection);
-
-
-
+        $this->assertTrue($collection->isEmpty());
     }
 }

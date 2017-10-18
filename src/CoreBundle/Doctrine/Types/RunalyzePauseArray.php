@@ -53,8 +53,6 @@ class RunalyzePauseArray extends Type
                 foreach ($pauses as $pause) {
                     $collection->add($this->getPauseForNativeValue($pause));
                 }
-            } else {
-                return null;
             }
         }
 
