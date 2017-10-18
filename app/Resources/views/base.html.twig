@@ -9,7 +9,7 @@
 
         <base href="{{ url('base_url') }}">
 
-        <script data-pace-options='{ "ajax": true, document: true }' src="/vendor/PACE/pace.min.js"></script>
+        <script data-pace-options='{"ajax": {"ignoreURLs": ["_internal/notifications"]}, "document": true }' src="{{ asset('vendor/pace/pace.min.js') }}"></script>
 
 
         {% block html_head_links %}
