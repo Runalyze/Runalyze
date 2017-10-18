@@ -6,6 +6,8 @@
 
 	<base href="<?php echo System::getFullDomain(); ?>">
 
+    <script data-pace-options='{"ajax": {"ignoreURLs": ["_internal/notifications"]}, "document": true }' src="vendor/pace/pace.min.js"></script>
+
     <link rel="stylesheet" href="assets/css/runalyze-style.css?v=<?php echo RUNALYZE_VERSION; ?>">
 
 	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">

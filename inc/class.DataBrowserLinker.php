@@ -28,7 +28,7 @@ class DataBrowserLinker {
 
 		$href = 'call/call.DataBrowser.display.php?start='.$startTimestampInNoTimezone.'&end='.$endTimestampInNoTimezone;
 
-		return Ajax::link($name, 'data-browser-inner', $href, $rel, $title);
+		return Ajax::link($name, 'data-browser-inner', $href, $rel, $title, 'Pace.restart()');
 	}
 
 	/**
