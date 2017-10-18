@@ -43,7 +43,7 @@ class GoogleMaps extends AbstractStrategyFromExternalAPI
 		$url = 'http://maps.googleapis.com/maps/api/elevation/json?locations=49.4,7.7&sensor=false';
 		$response = json_decode(\Filesystem::getExternUrlContent($url), true);
 
-		if (is_null($response)) {
+		if (null === $response) {
 			return false;
 		}
 
@@ -77,7 +77,15 @@ class GoogleMaps extends AbstractStrategyFromExternalAPI
 		$url = 'http://maps.googleapis.com/maps/api/elevation/json?locations='.substr($coordinatesString, 0, -1).'&sensor=false';
 		$response = json_decode(\Filesystem::getExternUrlContent($url), true);
 
-		if (is_null($response) || !is_array($response) || !isset($response['results']) || !isset($response['results'][0]['elevation'])) {
+		if (null === $response) {
+		    throw new NoResponseException('Request for '.$url.' failed without response.');
+        }
+
+        if (is_array($response) && isset($response['status']) && 'OVER_QUERY_LIMIT' == $response['status']) {
+		    throw new OverQueryLimitException($response['error_message']);
+        }
+
+		if (!is_array($response) || !isset($response['results']) || !isset($response['results'][0]['elevation'])) {
 			throw new InvalidResponseException('GoogleMaps returned malformed code.');
 		}
 
