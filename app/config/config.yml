@@ -78,6 +78,7 @@ doctrine:
                     enum:   string
         types:
             pipe_array: Runalyze\Bundle\CoreBundle\Doctrine\Types\PipeDelimitedArray
+            time_array: Runalyze\Bundle\CoreBundle\Doctrine\Types\RunalyzeTimeArray
             runalyze_pause_array: Runalyze\Bundle\CoreBundle\Doctrine\Types\RunalyzePauseArray
 
 

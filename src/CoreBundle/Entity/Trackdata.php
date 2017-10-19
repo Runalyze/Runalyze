@@ -17,7 +17,7 @@ class Trackdata
     /**
      * @var array|null [s]
      *
-     * @ORM\Column(name="time", type="pipe_array", nullable=true)
+     * @ORM\Column(name="time", type="time_array", nullable=true)
      */
     private $time;
 

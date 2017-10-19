@@ -59,7 +59,7 @@ class Version20171016214533 extends AbstractMigration implements ContainerAwareI
                 $trackdata = $row[0];
                 $trackdata->setLock(0);
                 if ( $trackdata->getTime() !== null && $trackdata->getTime() != '') {
-                    $trackdata->setTime( TimeArrayMinifier::shorten($trackdata->getTime()) );
+                    $trackdata->setTime(  TimeArrayMinifier::shorten(TimeArrayMinifier::shorten($trackdata->getTime())) );
                 }
                 $em->persist($trackdata);
 
