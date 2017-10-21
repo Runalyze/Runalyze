@@ -22,25 +22,12 @@ class RpecolorTest extends \PHPUnit_Framework_TestCase {
         $Stress = new Rpecolor();
 
         $this->assertEquals(null, $Stress->setValue(0)->backgroundColor());
-        $this->assertEquals('c000ff', $Stress->setValue(6)->backgroundColor());
-        $this->assertEquals('3600b3', $Stress->setValue(9)->backgroundColor());
-        $this->assertEquals('00d900', $Stress->setValue(12)->backgroundColor());
-        $this->assertEquals('efff00', $Stress->setValue(14)->backgroundColor());
-        $this->assertEquals('ff7e00', $Stress->setValue(18)->backgroundColor());
-        $this->assertEquals('ff0000', $Stress->setValue(20)->backgroundColor());
-    }
-
-    public function testTextColor()
-    {
-        $Stress = new Rpecolor();
-
-        $this->assertEquals(null, $Stress->setValue(0)->textColor());
-        $this->assertEquals('ffffff', $Stress->setValue(6)->textColor());
-        $this->assertEquals('ffffff', $Stress->setValue(9)->textColor());
-        $this->assertEquals('000000', $Stress->setValue(12)->textColor());
-        $this->assertEquals('000000', $Stress->setValue(14)->textColor());
-        $this->assertEquals('ffffff', $Stress->setValue(18)->textColor());
-        $this->assertEquals('ffffff', $Stress->setValue(20)->textColor());
+        $this->assertEquals('225ea8', $Stress->setValue(6)->backgroundColor());
+        $this->assertEquals('41b6c4', $Stress->setValue(9)->backgroundColor());
+        $this->assertEquals('a1dab4', $Stress->setValue(12)->backgroundColor());
+        $this->assertEquals('fecc5c', $Stress->setValue(14)->backgroundColor());
+        $this->assertEquals('fd8d3c', $Stress->setValue(18)->backgroundColor());
+        $this->assertEquals('e31a1c', $Stress->setValue(20)->backgroundColor());
     }
 
 }

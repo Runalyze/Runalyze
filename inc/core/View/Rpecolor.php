@@ -70,30 +70,6 @@ class Rpecolor {
         }
 	}
 
-    /**
-     * @return string
-     */
-    public function textColor()
-    {
-        if ($this->value() < 6 || $this->value() > 20) {
-            return null;
-        } elseif ($this->value() == 6) {
-            return "ffffff";
-        } elseif($this->value() < 10) {
-            return "ffffff";
-        } elseif($this->value() < 13) {
-            return "000000";
-        } elseif($this->value() < 16) {
-            return "000000";
-        } elseif($this->value() < 20) {
-            return "ffffff";
-        } elseif ($this->value() == 20) {
-            return "ffffff";
-        }  else {
-            return null;
-        }
-    }
-
 	/**
 	 * String representation
 	 *
