@@ -10,14 +10,25 @@ use Runalyze\View\Activity\Linker;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+
 
 class SharedController extends Controller
 {
     /**
+     * @return TrainingRepository
+     */
+    protected function getTrainingRepository()
+    {
+        return $this->getDoctrine()->getRepository('CoreBundle:Training');
+    }
+
+    /**
      * @Route("/shared/{activityHash}&{foo}&{bar}&{baz}", requirements={"activityHash": "[a-zA-Z0-9]+"})
      * @Route("/shared/{activityHash}&{foo}&{bar}", requirements={"activityHash": "[a-zA-Z0-9]+"})
      * @Route("/shared/{activityHash}&{foo}", requirements={"activityHash": "[a-zA-Z0-9]+"})
-     * @Route("/shared/{activityHash}", requirements={"activityHash": "[a-zA-Z0-9]+"})
+     * @Route("/shared/{activityHash}", requirements={"activityHash": "[a-zA-Z0-9]+"}, name="shared-activity")
      */
     public function sharedTrainingAction($activityHash, Request $request)
     {
@@ -108,6 +119,38 @@ class SharedController extends Controller
             'legacyStatistics' => $legacyStatistics,
             'dataBrowser' => new \DataBrowserShared()
         ]);
+    }
+
+    /**
+     * @Route("/athlete/{username}/feed", name="shared-athlete-feed")
+     */
+    public function publicUserFeedAction($username, Request $request) {
+        /** @var null|Account $account */
+        $account = $this->getDoctrine()->getRepository('CoreBundle:Account')->findByUsername($username);
+        $privacy = $this->get('app.configuration_manager')->getList($account)->getPrivacy();
+
+        $feed = $this->get('app.activity.feed');
+        $feed->setFeedTitle('RUNALYZE athlete '.$username)
+                ->setFeedUrl($this->generateUrl('shared-athlete-feed', array('username' => $username), UrlGeneratorInterface::ABSOLUTE_URL))
+                ->setSiteUrl($this->generateUrl('shared-athlete', array('username' => $username), UrlGeneratorInterface::ABSOLUTE_URL))
+                ->setFeedAuthor($username);
+
+        if (null === $account || !$privacy->isListPublic()) {
+            return new Response(
+                $feed->buildFeed(),
+                Response::HTTP_OK,
+                array('content-type' => 'text/xml')
+            );
+        }
+
+        $feed->setActivities($this->getTrainingRepository()->latestActivities($account));
+
+        return new Response(
+            $feed->buildFeed(),
+            Response::HTTP_OK,
+            array('content-type' => 'text/xml')
+        );
+
     }
 
     /**

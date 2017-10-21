@@ -37,7 +37,7 @@ class RouteRepository extends EntityRepository
             ->getQuery()
             ->getOneOrNullResult(AbstractQuery::HYDRATE_SCALAR);
 
-        if (null !== $result) {
+        if (null !== $result && null !== $result['startpoint']) {
             return (new Geohash())->decode($result['startpoint'])->getCoordinate();
         }
 

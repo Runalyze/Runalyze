@@ -3,25 +3,32 @@
 {% set body_attributes = ' id="shared"' %}
 {% set page_title = 'Athlete'|trans ~ ': ' ~ account.username ~ ' | RUNALYZE' %}
 
+{% block html_head_links %}
+    {{ parent() }}
+    <link rel="alternate" type="application/rss+xml" href="{{ url('shared-athlete-feed', {'username': account.username}) }}" />
+{% endblock %}
+
 {% block content %}
 
     {# @var configObject \Runalyze\Bundle\CoreBundle\Component\Configuration\RunalyzeConfigurationList #}
     {% set configObject = config(account) %}
 
     {% if not app.request.xmlHttpRequest %}
-        {% if accountStatistics %}
-            <div class="panel" style="width:960px;margin:5px auto;">
-                <div id="public-tabs">
-                    <div class="panel-heading">
+        <div class="panel" style="width:960px;margin:5px auto;">
+            <div id="public-tabs">
+                <div class="panel-heading">
+                    {% if accountStatistics %}
                         <div class="panel-menu">
                             <ul class="">
                                 <li><a class="triggered change" target="public-tabs" href="#statistics-general">{% trans %}General statistics{% endtrans %}</a></li>
                                 <li><a class="change" target="public-tabs" href="#statistics-years">{% trans %}Year on year{% endtrans %} ({% trans %}Running{% endtrans %})</a></li>
                             </ul>
                         </div>
-
-                        <h1>{% trans with {'%username%': account.username} %}Activity data of %username%{% endtrans %}</h1>
-                    </div>
+                    {% endif %}
+                    <h1>{% trans with {'%username%': account.username} %}Activity data of %username%{% endtrans %}</h1>
+                    <a rel="alternate" type="application/rss+xml" href="{{ url('shared-athlete-feed', {'username': account.username}) }}" title="{% trans with {'%username%': account.username} %}Follow %username% via RSS-Feed{% endtrans %}"><i class="fa fa-fw fa fa-rss"></i></a>
+                </div>
+                {% if accountStatistics %}
                     <div class="panel-content">
                         <div id="statistics-general" class="change">
                             <table class="fullwidth">
@@ -46,18 +53,18 @@
                             {{ legacyStatistics.tabForComparisonOfYears|raw }}
                         </div>
                     </div>
-                </div>
+                {% endif %}
             </div>
-        {% endif %}
+        </div>
 
         <div id="data-browser" class="panel" style="width:960px;margin:5px auto;">
-            <div id="publicList">
+        <div id="publicList">
     {% endif %}
 
-                {{ dataBrowser.display }}
+    {{ dataBrowser.display }}
 
     {% if not app.request.xmlHttpRequest %}
-            </div>
+        </div>
         </div>
 
         <div id="statistics-inner" class="panel" style="width:960px;margin:5px auto;">

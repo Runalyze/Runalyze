@@ -97,7 +97,8 @@ class Frontend {
 	private function initConfig() {
 		$this->yamlConfig = array_merge(
 			Yaml::parse(file_get_contents(FRONTEND_PATH.'/../app/config/config.yml'))['parameters'],
-			Yaml::parse(file_get_contents(FRONTEND_PATH.'/../app/config/default_config.yml'))['parameters'],
+            Yaml::parse(file_get_contents(FRONTEND_PATH.'/../app/config/expert_config.yml'))['parameters'],
+            Yaml::parse(file_get_contents(FRONTEND_PATH.'/../app/config/default_config.yml'))['parameters'],
 			Yaml::parse(file_get_contents(FRONTEND_PATH.'/../data/config.yml'))['parameters']
 		);
 
@@ -113,6 +114,7 @@ class Frontend {
 	    define('USER_DISABLE_ACCOUNT_ACTIVATION', $this->yamlConfig['user_disable_account_activation']);
 	    define('SQLITE_MOD_SPATIALITE', $this->yamlConfig['sqlite_mod_spatialite']);
         define('RUNALYZE_VERSION', $this->yamlConfig['RUNALYZE_VERSION']);
+        define('DATA_DIRECTORY', $this->yamlConfig['data_directory']);
 	}
 
 	/**

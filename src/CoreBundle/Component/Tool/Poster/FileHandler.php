@@ -12,14 +12,14 @@ use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 class FileHandler
 {
     /** @var string */
-    protected $KernelRootDir;
+    protected $DataDir;
 
     /**
-     * @param string $kernelRootDir
+     * @param string $dataDir
      */
-    public function __construct($kernelRootDir)
+    public function __construct($dataDir)
     {
-        $this->KernelRootDir = $kernelRootDir;
+        $this->DataDir = $dataDir;
     }
 
     /**
@@ -27,7 +27,7 @@ class FileHandler
      */
     protected function pathToImages()
     {
-        return $this->KernelRootDir.'/../data/poster/';
+        return $this->DataDir.'/poster/';
     }
 
     /**

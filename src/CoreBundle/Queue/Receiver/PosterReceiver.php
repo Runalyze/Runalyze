@@ -47,8 +47,8 @@ class PosterReceiver
     /** @var AccountMailer */
     protected $AccountMailer;
 
-    /** @var $kernelRootDir */
-    protected $KernelRootDir;
+    /** @var $Datadir */
+    protected $DataDir;
 
     /** @var $RsvgPath */
     protected $RsvgPath;
@@ -65,7 +65,7 @@ class PosterReceiver
      * @param GeneratePoster $generatePoster
      * @param FileHandler $posterFileHandler
      * @param AccountMailer $accountMailer
-     * @param string $kernelRootDir
+     * @param string $dataDir
      * @param string $rsvgPath
      * @param string $inkscapePath
      */
@@ -78,7 +78,7 @@ class PosterReceiver
         GeneratePoster $generatePoster,
         FileHandler $posterFileHandler,
         AccountMailer $accountMailer,
-        $kernelRootDir,
+        $dataDir,
         $rsvgPath,
         $inkscapePath
     )
@@ -91,7 +91,7 @@ class PosterReceiver
         $this->GeneratePoster = $generatePoster;
         $this->FileHandler = $posterFileHandler;
         $this->AccountMailer = $accountMailer;
-        $this->KernelRootDir = $kernelRootDir;
+        $this->DataDir = $dataDir;
         $this->RsvgPath = $rsvgPath;
         $this->InkscapePath = $inkscapePath;
     }
@@ -182,6 +182,6 @@ class PosterReceiver
      */
     protected function exportDirectory()
     {
-        return $this->KernelRootDir.'/../data/poster/';
+        return $this->DataDir.'/poster/';
     }
 }

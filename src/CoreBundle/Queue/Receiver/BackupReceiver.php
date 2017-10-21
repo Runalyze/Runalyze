@@ -27,7 +27,7 @@ class BackupReceiver
      */
     protected function getPathToBackupFiles()
     {
-        return $this->container->getParameter('kernel.root_dir').'/../data/backup-tool/backup/';
+        return $this->container->getParameter('data_directory').'/backup-tool/backup/';
     }
 
     public function userBackup(DefaultMessage $message)

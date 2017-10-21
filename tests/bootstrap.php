@@ -35,6 +35,9 @@ if (!defined('PERL_PATH'))
 if (!defined('TTBIN_PATH'))
 	define('TTBIN_PATH', FRONTEND_PATH.'../call/perl/ttbincnv');
 
+if (!defined('DATA_DIRECTORY'))
+    define('DATA_DIRECTORY', FRONTEND_PATH.'../data');
+
 if (!defined('GEONAMES_USERNAME'))
 	define('GEONAMES_USERNAME', 'runalyze');
 

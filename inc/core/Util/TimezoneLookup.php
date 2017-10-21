@@ -46,7 +46,7 @@ class TimezoneLookup
      */
     public function __construct($silenceExceptions = true, $pathToDatabase = false, $extensionName = SQLITE_MOD_SPATIALITE) {
         try {
-            $this->SQLiteTzWorldDatabase = $pathToDatabase ? $pathToDatabase : FRONTEND_PATH.'../data/timezone.sqlite';
+            $this->SQLiteTzWorldDatabase = $pathToDatabase ? $pathToDatabase : DATA_DIRECTORY.'/timezone.sqlite';
             $this->SpatialiteExtensionName = $extensionName;
 
             $this->connectSQLite();

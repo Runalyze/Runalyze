@@ -298,6 +298,22 @@ class TrainingRepository extends EntityRepository
                 ->getOneOrNullResult(AbstractQuery::HYDRATE_SCALAR);
     }
 
+    /**
+     * @param Account $account
+     * @return bool
+     */
+    public function latestActivities(Account $account, $limit = 20)
+    {
+        return $this->createQueryBuilder('t')
+                ->select('t')
+                ->where('t.account= :accountid')
+                ->setParameter('accountid', $account->getId())
+                ->orderBy('t.time', 'DESC')
+                ->setMaxResults($limit)
+                ->getQuery()
+                ->getResult();
+    }
+
     public function save(Training $training)
     {
         $this->_em->persist($training);
