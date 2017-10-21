@@ -56,17 +56,17 @@ class Rpecolor {
 	    if ($this->value() < 6 || $this->value() > 20) {
             return null;
         } elseif ($this->value() == 6) {
-            return "c000ff";
+            return "225ea8";
         } elseif($this->value() < 10) {
-            return "3600b3";
+            return "41b6c4";
         } elseif($this->value() < 13) {
-            return "00d900";
+            return "a1dab4";
         } elseif($this->value() < 16) {
-            return "efff00";
+            return "fecc5c";
         } elseif($this->value() < 20) {
-            return "ff7e00";
+            return "fd8d3c";
         } elseif ($this->value() == 20) {
-            return "ff0000";
+            return "e31a1c";
         }
 	}
 
@@ -102,6 +102,6 @@ class Rpecolor {
 	 */
 	public function string() {
 	    if ($this->value() > 5 && $this->value() < 21)
-        return '<span class="windicon" style="background-color:#'.$this->backgroundColor().';color:#'.$this->textColor().';" rel="tooltip" data-original-title="'.$this->value().'"> '.$this->value().'</span>';
+        return '<span class="rpeicon" style="border: 1px solid #'.$this->backgroundColor().';" rel="tooltip" data-original-title="'.$this->value().'"> '.$this->value().'</span>';
 	}
 }
