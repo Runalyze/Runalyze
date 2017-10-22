@@ -26,10 +26,8 @@ use Runalyze\View\Icon\EffectiveVO2maxIcon;
 use Runalyze\Context as GeneralContext;
 use Runalyze\Util\Time;
 use Runalyze\Util\LocalTime;
-use Runalyze\View\Rpecolor;
+use Runalyze\View\RpeColor;
 use Runalyze\View\Stresscolor;
-use Runalyze\View\Tooltip;
-use Runalyze\Data\RPE as DataRPE;
 
 use SessionAccountHandler;
 use SportFactory;
@@ -292,10 +290,9 @@ class Dataview
     {
         if ($valueOnly) {
             return $this->Activity->rpe();
-        } else {
-            $Rpe = new Rpecolor($this->Activity->rpe());
-            return $Rpe->string();
         }
+
+        return (new RpeColor($this->Activity->rpe()))->string();
     }
 
     /**
