@@ -9,12 +9,14 @@ use Runalyze\Parser\Activity\Common\Data\Pause\Pause;
 use Runalyze\Parser\Activity\Common\Data\Round\Round;
 use Runalyze\Parser\Activity\Common\PauseDetectionCapableParserInterface;
 use Runalyze\Parser\Activity\Common\PauseDetectionCapableTrait;
+use Runalyze\Parser\Activity\Common\StrtotimeWithLocalTimezoneOffsetTrait;
 use Runalyze\Util\LocalTime;
 use SimpleXMLElement;
 
 class TcxActivity extends AbstractSingleParser implements PauseDetectionCapableParserInterface
 {
     use PauseDetectionCapableTrait;
+    use StrtotimeWithLocalTimezoneOffsetTrait;
 
     /** @var SimpleXMLElement */
     protected $Xml;
@@ -60,22 +62,6 @@ class TcxActivity extends AbstractSingleParser implements PauseDetectionCapableP
         if (!property_exists($xml, 'Id') || !property_exists($xml, 'Lap')) {
             throw new UnsupportedFileException('Given XML object is not a valid tcx activity. &lt;Id&gt;- or &lt;Lap&gt;-tag could not be located.');
         }
-    }
-
-    /**
-     * Timestamps are given in UTC but local timezone offset has to be considered!
-     *
-     * @param string $string
-     *
-     * @return int
-     */
-    protected function strtotime($string)
-    {
-        if (substr($string, -1) == 'Z') {
-            return LocalTime::fromServerTime(strtotime(substr($string, 0, -1).' UTC'))->getTimestamp();
-        }
-
-        return LocalTime::fromString($string)->getTimestamp();
     }
 
     public function parse()
