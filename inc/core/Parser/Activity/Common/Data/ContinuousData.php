@@ -92,6 +92,20 @@ class ContinuousData
     }
 
     /**
+     * @return int size of first non-empty array property
+     */
+    public function getLength()
+    {
+        foreach ($this->getPropertyNamesOfArrays() as $property) {
+            if (!empty($this->{$property})) {
+                return count($this->{$property});
+            }
+        }
+
+        return 0;
+    }
+
+    /**
      * @return int|null [s]
      */
     public function getTotalDuration()

@@ -17,6 +17,13 @@ class RoundCollection implements \Countable, \ArrayAccess
         }
     }
 
+    public function __clone()
+    {
+        foreach ($this->Elements as $i => $element) {
+            $this->Elements[$i] = clone $element;
+        }
+    }
+
     public function add(Round $round)
     {
         $this->Elements[] = $round;

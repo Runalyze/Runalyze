@@ -17,6 +17,13 @@ class PauseCollection implements \Countable, \ArrayAccess
         }
     }
 
+    public function __clone()
+    {
+        foreach ($this->Elements as $i => $element) {
+            $this->Elements[$i] = clone $element;
+        }
+    }
+
     public function add(Pause $pause)
     {
         $this->Elements[] = $pause;

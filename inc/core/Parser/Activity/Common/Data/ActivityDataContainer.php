@@ -51,6 +51,19 @@ class ActivityDataContainer
         $this->WeatherData = new WeatherData();
     }
 
+    public function __clone()
+    {
+        $this->Metadata = clone $this->Metadata;
+        $this->ActivityData = clone $this->ActivityData;
+        $this->ContinuousData = clone $this->ContinuousData;
+        $this->ContinuousDataAdapter = new ContinuousDataAdapter($this->ContinuousData);
+        $this->Rounds = clone $this->Rounds;
+        $this->Pauses = clone $this->Pauses;
+        $this->PausesToApply = clone $this->PausesToApply;
+        $this->FitDetails = clone $this->FitDetails;
+        $this->WeatherData = clone $this->WeatherData;
+    }
+
     public function completeActivityData()
     {
         $this->ContinuousDataAdapter->clearEmptyArrays();

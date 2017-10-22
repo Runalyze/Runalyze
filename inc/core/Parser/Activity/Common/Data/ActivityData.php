@@ -64,6 +64,33 @@ class ActivityData
     /** @var int|null */
     public $PoolLength = null;
 
+    /**
+     * @return array
+     */
+    public function getPropertyNames()
+    {
+        return [
+            'Duration',
+            'ElapsedTime',
+            'Distance',
+            'Elevation',
+            'ElevationAscent',
+            'ElevationDescent',
+            'EnergyConsumption',
+            'Trimp',
+            'RPE',
+            'AvgPower',
+            'MaxPower',
+            'AvgHeartRate',
+            'MaxHeartRate',
+            'AvgCadence',
+            'AvgGroundContactTime',
+            'AvgGroundContactBalance',
+            'AvgVerticalOscillation',
+            'PoolLength'
+        ];
+    }
+
     public function completeFromContinuousData(ContinuousData $data)
     {
         $this->completeTotalValuesFromContinuousData($data);
