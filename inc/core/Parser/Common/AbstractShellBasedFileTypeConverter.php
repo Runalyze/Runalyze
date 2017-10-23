@@ -4,18 +4,10 @@ namespace Runalyze\Parser\Common;
 
 use Runalyze\Import\Exception\UnsupportedFileException;
 
-abstract class AbstractShellBasedFileTypeConverter
+abstract class AbstractShellBasedFileTypeConverter implements FileTypeConverterInterface
 {
-    /**
-     * @return string|array
-     */
     abstract public function getConvertibleFileExtension();
 
-    /**
-     * @param string $inputFile
-     *
-     * @return string
-     */
     abstract public function getConvertedFileName($inputFile);
 
     /**
@@ -26,11 +18,6 @@ abstract class AbstractShellBasedFileTypeConverter
      */
     abstract protected function buildCommand($inputFile, $outputFile);
 
-    /**
-     * @param string $inputFile
-     *
-     * @return string name of output file
-     */
     public function convertFile($inputFile)
     {
         $outputFile = $this->getConvertedFileName($inputFile);

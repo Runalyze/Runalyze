@@ -3,6 +3,7 @@
 namespace Runalyze\Tests\Parser\Activity\FileType;
 
 use Runalyze\Import\Exception\UnsupportedFileException;
+use Runalyze\Parser\Activity\Converter\KmzConverter;
 use Runalyze\Parser\Activity\FileType\Kml;
 use Runalyze\Util\LocalTime;
 
@@ -115,5 +116,19 @@ class KmlTest extends AbstractActivityParserTestCase
         $this->assertNotEmpty($this->Container->ContinuousData->Altitude);
         $this->assertNotEmpty($this->Container->ContinuousData->Cadence);
         $this->assertNotEmpty($this->Container->ContinuousData->Temperature);
+    }
+
+    public function testZippedFile()
+    {
+        $this->convertAndParseFile(new KmzConverter(), $this->Parser, 'kmz/Baechenstock.kmz', [
+            'kmz/Baechenstock.kmz.doc.kml'
+        ]);
+
+        $this->assertEquals(12.896, $this->Container->ActivityData->Distance, '', 0.001);
+
+        $this->assertNotEmpty($this->Container->ContinuousData->Latitude);
+        $this->assertNotEmpty($this->Container->ContinuousData->Longitude);
+        $this->assertNotEmpty($this->Container->ContinuousData->Altitude);
+        $this->assertNotEmpty($this->Container->ContinuousData->Distance);
     }
 }

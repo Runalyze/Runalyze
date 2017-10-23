@@ -4,11 +4,78 @@ namespace Runalyze\Tests\Parser\Activity\FileType;
 
 use Runalyze\Parser\Activity\Common\Data\ActivityDataContainer;
 use Runalyze\Parser\Common\FileContentAwareParserInterface;
+use Runalyze\Parser\Common\FileTypeConverterInterface;
 
 abstract class AbstractActivityParserTestCase extends \PHPUnit_Framework_TestCase
 {
     /** @var null|ActivityDataContainer|ActivityDataContainer[] */
     protected $Container;
+
+    /** @var string[] */
+    protected $FilesToClear = [];
+
+    public function tearDown()
+    {
+        foreach ($this->FilesToClear as $file) {
+            if (file_exists($file)) {
+                unlink($file);
+            }
+        }
+    }
+
+    /**
+     * @return string
+     */
+    protected function pathToTestFiles()
+    {
+        return __DIR__.'/../../../../../testfiles/';
+    }
+
+    /**
+     * @param FileTypeConverterInterface $converter
+     * @param FileContentAwareParserInterface $parser
+     * @param string $file file path relative to 'testfiles/'
+     * @param string[] $expectedOutputFiles
+     * @param bool $completeAfterwards
+     */
+    protected function convertAndParseFile(FileTypeConverterInterface $converter, FileContentAwareParserInterface $parser, $file, array $expectedOutputFiles, $completeAfterwards = true)
+    {
+        $outputFile = $converter->convertFile($this->pathToTestFiles().$file);
+
+        if (!is_array($outputFile)) {
+            $outputFile = [$outputFile];
+        }
+
+        $this->FilesToClear = $outputFile;
+        $path = $this->pathToTestFiles();
+        $outputFile = array_map(function ($file) use ($path) {
+            return str_replace($path, '', $file);
+        }, $outputFile);
+
+        $this->assertEquals($expectedOutputFiles, $outputFile);
+
+        $this->parseFiles($parser, $outputFile, $completeAfterwards);
+    }
+
+    protected function parseFiles(FileContentAwareParserInterface $parser, array $files, $completeAfterwards = true)
+    {
+        $path = $this->pathToTestFiles();
+        $tmpContainer = [];
+
+        foreach ($files as $currentFile) {
+            $this->parseFile($parser, $currentFile, $completeAfterwards);
+
+            unlink($path.$currentFile);
+
+            if (!is_array($this->Container)) {
+                $tmpContainer[] = $this->Container;
+            } else {
+                $tmpContainer = $tmpContainer + $this->Container;
+            }
+        }
+
+        $this->Container = 1 == count($tmpContainer) ? $tmpContainer[0] : $tmpContainer;
+    }
 
     /**
      * @param FileContentAwareParserInterface $parser
@@ -17,7 +84,7 @@ abstract class AbstractActivityParserTestCase extends \PHPUnit_Framework_TestCas
      */
     protected function parseFile(FileContentAwareParserInterface $parser, $file, $completeAfterwards = true)
     {
-        $this->parseFileContent($parser, file_get_contents(__DIR__.'/../../../../../testfiles/'.$file), $completeAfterwards);
+        $this->parseFileContent($parser, file_get_contents($this->pathToTestFiles().$file), $completeAfterwards);
     }
 
     /**

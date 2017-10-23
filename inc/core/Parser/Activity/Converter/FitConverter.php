@@ -31,9 +31,6 @@ class FitConverter extends AbstractShellBasedFileTypeConverter
         $this->PathToFitPerlScript = $pathToFitPerlScript;
     }
 
-    /**
-     * @return string
-     */
     public function getConvertibleFileExtension()
     {
         return 'fit';
