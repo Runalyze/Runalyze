@@ -14,13 +14,11 @@ class Xml extends AbstractMultipleParserWithSubParser implements FileContentAwar
     public function parse()
     {
         if ($this->isPolarFile()) {
-            // TODO
-            //$this->useSubParser(new XmlPolar());
+            $this->useSubParser(new XmlPolar());
         } elseif ($this->isSuuntoFile()) {
             $this->useSubParser(new XmlSuunto());
         } elseif ($this->isRunningAheadFile()) {
-            // TODO
-            //$this->useSubParser(new XmlRunningAhead());
+            throw new UnsupportedFileException('Support for xml-files from RunningAHEAD has been dropped.');
         }
 
         throw new UnsupportedFileException();
