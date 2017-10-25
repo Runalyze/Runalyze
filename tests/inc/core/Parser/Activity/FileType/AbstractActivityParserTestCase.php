@@ -3,6 +3,7 @@
 namespace Runalyze\Tests\Parser\Activity\FileType;
 
 use Runalyze\Parser\Activity\Common\Data\ActivityDataContainer;
+use Runalyze\Parser\Activity\Common\ParserInterface;
 use Runalyze\Parser\Common\FileContentAwareParserInterface;
 use Runalyze\Parser\Common\FileTypeConverterInterface;
 
@@ -28,7 +29,7 @@ abstract class AbstractActivityParserTestCase extends \PHPUnit_Framework_TestCas
      */
     protected function pathToTestFiles()
     {
-        return __DIR__.'/../../../../../testfiles/';
+        return TESTS_ROOT.'/testfiles/';
     }
 
     /**
@@ -65,8 +66,6 @@ abstract class AbstractActivityParserTestCase extends \PHPUnit_Framework_TestCas
         foreach ($files as $currentFile) {
             $this->parseFile($parser, $currentFile, $completeAfterwards);
 
-            unlink($path.$currentFile);
-
             if (!is_array($this->Container)) {
                 $tmpContainer[] = $this->Container;
             } else {
@@ -97,24 +96,28 @@ abstract class AbstractActivityParserTestCase extends \PHPUnit_Framework_TestCas
         $parser->setFileContent($fileContent);
         $parser->parse();
 
-        $numActivities = $parser->getNumberOfActivities();
+        $this->setContainerFrom($parser, $completeAfterwards);
+    }
 
-        if ($numActivities <= 1) {
-            $this->Container = $parser->getActivityDataContainer();
+    /**
+     * @param ParserInterface $parser
+     * @param bool $completeAfterwards
+     */
+    protected function setContainerFrom(ParserInterface $parser, $completeAfterwards = true)
+    {
+        $numActivities = $parser->getNumberOfActivities();
+        $this->Container = [];
+
+        for ($i = 0; $i < $numActivities; ++$i) {
+            $this->Container[] = $parser->getActivityDataContainer($i);
 
             if ($completeAfterwards) {
-                $this->Container->completeActivityData();
+                $this->Container[$i]->completeActivityData();
             }
-        } else {
-            $this->Container = [];
+        }
 
-            for ($i = 0; $i < $numActivities; ++$i) {
-                $this->Container[] = $parser->getActivityDataContainer($i);
-
-                if ($completeAfterwards) {
-                    $this->Container[$i]->completeActivityData();
-                }
-            }
+        if (1 == $numActivities) {
+            $this->Container = $this->Container[0];
         }
     }
 

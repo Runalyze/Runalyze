@@ -64,6 +64,9 @@ class ActivityData
     /** @var int|null */
     public $PoolLength = null;
 
+    /** @var int|null */
+    public $TotalStrokes = null;
+
     /**
      * @return array
      */
@@ -87,7 +90,8 @@ class ActivityData
             'AvgGroundContactTime',
             'AvgGroundContactBalance',
             'AvgVerticalOscillation',
-            'PoolLength'
+            'PoolLength',
+            'TotalStrokes'
         ];
     }
 

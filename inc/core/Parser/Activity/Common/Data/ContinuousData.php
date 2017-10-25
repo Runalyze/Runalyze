@@ -58,6 +58,9 @@ class ContinuousData
     /** @var array [-] */
     public $Strokes = [];
 
+    /** @var array [%ooL] */
+    public $LeftRightBalance = [];
+
     /**
      * @var array
      *
@@ -87,7 +90,8 @@ class ContinuousData
             'MuscleOxygenation_2',
             'TotalHaemoglobin',
             'TotalHaemoglobin_2',
-            'Strokes'
+            'Strokes',
+            'LeftRightBalance'
         ];
     }
 

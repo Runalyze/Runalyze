@@ -10,7 +10,7 @@ class FileExtensionToParserMapping
     const MAPPING = [
         'csv' => FileType\Csv::class,
         'fitlog' => FileType\Fitlog::class,
-        //'fittemp' => FileType\Fit::class,
+        'fittemp' => FileType\Fit::class,
         'gpx' => FileType\Gpx::class,
         'hrm' => FileType\Hrm::class,
         'kml' => FileType\Kml::class,
