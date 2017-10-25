@@ -43,21 +43,27 @@ class Fit extends AbstractMultipleParserWithSubParser implements FileNameAwarePa
         if (!$this->ParsingStarted) {
             $this->checkFirstLine($line);
         } else {
-            if (substr($line, -20) == 'NAME=sport NUMBER=12') {
-                if (null !== $this->CurrentSubParser) {
-                    $this->finishCurrentSubParser();
-                    $this->startAnotherSubParser();
-                } else {
-                    $this->CurrentSubParser = new FitActivity();
-                }
+            if (substr($line, -20) == 'NAME=sport NUMBER=12' && !$this->currentContainerIsEmpty()) {
+                $this->finishCurrentSubParser();
+                $this->startAnotherSubParser();
             }
 
             $this->CurrentSubParser->parseLine($line);
         }
     }
 
+    /**
+     * @return bool
+     */
+    protected function currentContainerIsEmpty()
+    {
+        return null !== $this->CurrentSubParser && $this->CurrentSubParser->getActivityDataContainer()->ContinuousData->isEmpty();
+    }
+
     protected function finishCurrentSubParser()
     {
+        $this->CurrentSubParser->finishParsing();
+
         $this->Container[] = $this->CurrentSubParser->getActivityDataContainer();
     }
 

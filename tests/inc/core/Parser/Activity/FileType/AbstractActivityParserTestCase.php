@@ -12,6 +12,9 @@ abstract class AbstractActivityParserTestCase extends \PHPUnit_Framework_TestCas
     /** @var null|ActivityDataContainer|ActivityDataContainer[] */
     protected $Container;
 
+    /** @var int */
+    protected $NumberOfActivities = 0;
+
     /** @var string[] */
     protected $FilesToClear = [];
 
@@ -73,7 +76,8 @@ abstract class AbstractActivityParserTestCase extends \PHPUnit_Framework_TestCas
             }
         }
 
-        $this->Container = 1 == count($tmpContainer) ? $tmpContainer[0] : $tmpContainer;
+        $this->NumberOfActivities = count($tmpContainer);
+        $this->Container = 1 == $this->NumberOfActivities ? $tmpContainer[0] : $tmpContainer;
     }
 
     /**
@@ -105,10 +109,10 @@ abstract class AbstractActivityParserTestCase extends \PHPUnit_Framework_TestCas
      */
     protected function setContainerFrom(ParserInterface $parser, $completeAfterwards = true)
     {
-        $numActivities = $parser->getNumberOfActivities();
+        $this->NumberOfActivities = $parser->getNumberOfActivities();
         $this->Container = [];
 
-        for ($i = 0; $i < $numActivities; ++$i) {
+        for ($i = 0; $i < $this->NumberOfActivities; ++$i) {
             $this->Container[] = $parser->getActivityDataContainer($i);
 
             if ($completeAfterwards) {
@@ -116,7 +120,7 @@ abstract class AbstractActivityParserTestCase extends \PHPUnit_Framework_TestCas
             }
         }
 
-        if (1 == $numActivities) {
+        if (1 == $this->NumberOfActivities) {
             $this->Container = $this->Container[0];
         }
     }

@@ -89,6 +89,20 @@ class FitActivity extends AbstractSingleParser
         throw new \RuntimeException('FitActivity does not support parse().');
     }
 
+	/**
+	 * @see https://github.com/Runalyze/Runalyze/issues/1886
+	 */
+    public function finishParsing()
+    {
+        if ('suunto' == $this->Container->Metadata->getCreator()) {
+            $this->Container->ActivityData->Duration = end($this->Container->ContinuousData->Time);
+            $this->Container->Rounds->add(new Round(
+                end($this->Container->ContinuousData->Distance) - $this->Container->Rounds->getTotalDistance(),
+                $this->Container->ActivityData->Duration - $this->Container->Rounds->getTotalDuration()
+            ));
+        }
+    }
+
     public function readMetadataForMultiSessionFrom(Metadata $metadata)
     {
         $this->Container->Metadata->setCreator($metadata->getCreator(), $metadata->getCreatorDetails());
@@ -513,7 +527,7 @@ class FitActivity extends AbstractSingleParser
         $i = key($this->Container->ContinuousData->Time);
 
         foreach ($this->Container->ContinuousData->getPropertyNamesOfArrays() as $key) {
-            if (isset($this->Container->ContinuousData->{$key}[$i])) {
+            if (array_key_exists($i, $this->Container->ContinuousData->{$key})) {
                 $last = $this->Container->ContinuousData->{$key}[$i - 1];
                 $current = array_pop($this->Container->ContinuousData->{$key});
 

@@ -55,11 +55,11 @@ class ContinuousData
     /** @var array [100 * g/dL] */
     public $TotalHaemoglobin_2 = [];
 
-    /** @var array [-] */
-    public $Strokes = [];
-
     /** @var array [%ooL] */
     public $LeftRightBalance = [];
+
+    /** @var array [-] */
+    public $Strokes = [];
 
     /**
      * @var array
@@ -90,8 +90,9 @@ class ContinuousData
             'MuscleOxygenation_2',
             'TotalHaemoglobin',
             'TotalHaemoglobin_2',
+            'LeftRightBalance',
             'Strokes',
-            'LeftRightBalance'
+            'StrokeType'
         ];
     }
 
@@ -107,6 +108,20 @@ class ContinuousData
         }
 
         return 0;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEmpty()
+    {
+        foreach ($this->getPropertyNamesOfArrays() as $property) {
+            if (!empty($this->{$property})) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**
