@@ -1,6 +1,6 @@
 <?php
 
-namespace Runalyze\Tests\Parser\Activity\Data;
+namespace Runalyze\Tests\Parser\Activity;
 
 use Runalyze\Parser\Activity\Common\ParserInterface;
 use Runalyze\Parser\Activity\FileExtensionToParserMapping;
