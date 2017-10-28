@@ -38,7 +38,7 @@ class RaceresultRepositoryTest extends AbstractRepositoryTestCase
 
     public function testSingleRace()
     {
-        $raceActivity = $this->getActivitiyForDefaultAccount(mktime(3, 14, 15, 9, 26, 2016), 2400, 10.0);
+        $raceActivity = $this->getActivityForDefaultAccount(mktime(3, 14, 15, 9, 26, 2016), 2400, 10.0);
 
         $this->TrainingRepository->save($raceActivity);
 

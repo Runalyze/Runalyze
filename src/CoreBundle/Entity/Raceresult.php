@@ -27,7 +27,7 @@ class Raceresult
     private $officialTime;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="officially_measured", type="boolean", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
      */

@@ -78,7 +78,9 @@ doctrine:
                     enum:   string
         types:
             pipe_array: Runalyze\Bundle\CoreBundle\Doctrine\Types\PipeDelimitedArray
+            geohash_array: Runalyze\Bundle\CoreBundle\Doctrine\Types\GeohashArray
             runalyze_pause_array: Runalyze\Bundle\CoreBundle\Doctrine\Types\RunalyzePauseArray
+            runalyze_round_array: Runalyze\Bundle\CoreBundle\Doctrine\Types\RunalyzeRoundArray
 
 
     orm:

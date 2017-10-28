@@ -4,6 +4,7 @@ namespace Runalyze\Bundle\CoreBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Runalyze\Parser\Activity\Common\Data\Round\RoundCollection;
 
 /**
  * Training
@@ -368,11 +369,11 @@ class Training
     private $route = null;
 
     /**
-     * @var string|null
+     * @var \Runalyze\Parser\Activity\Common\Data\Round\RoundCollection
      *
-     * @ORM\Column(name="splits", type="text", length=16777215, nullable=true)
+     * @ORM\Column(name="splits", type="runalyze_round_array", length=16777215, nullable=true)
      */
-    private $splits = null;
+    private $splits;
 
     /**
      * @var string|null
@@ -464,16 +465,38 @@ class Training
     private $tag;
 
     /**
-     * @var Trackdata
+     * @var Trackdata|null
      *
      * @ORM\OneToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Trackdata", mappedBy="activity")
      */
     private $trackdata;
 
+    /**
+     * @var Swimdata|null
+     *
+     * @ORM\OneToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Swimdata", mappedBy="activity")
+     */
+    private $swimdata;
+
+    /**
+     * @var Hrv|null
+     *
+     * @ORM\OneToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Hrv", mappedBy="activity")
+     */
+    private $hrv;
+
+    /**
+     * @var Raceresult|null
+     *
+     * @ORM\OneToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Raceresult", mappedBy="activity")
+     */
+    private $raceresult;
+
     public function __construct()
     {
         $this->equipment = new ArrayCollection();
         $this->tag = new ArrayCollection();
+        $this->splits = new RoundCollection();
     }
 
     /**
@@ -1461,11 +1484,11 @@ class Training
     }
 
     /**
-     * @param null|string $splits
+     * @param RoundCollection $splits
      *
      * @return $this
      */
-    public function setSplits($splits)
+    public function setSplits(RoundCollection $splits)
     {
         $this->splits = $splits;
 
@@ -1473,7 +1496,7 @@ class Training
     }
 
     /**
-     * @return null|string
+     * @return RoundCollection
      */
     public function getSplits()
     {
@@ -1702,7 +1725,7 @@ class Training
     }
 
     /**
-     * @return Trackdata
+     * @return Trackdata|null
      */
     public function getTrackdata()
     {
@@ -1715,5 +1738,68 @@ class Training
     public function hasTrackdata()
     {
         return null !== $this->trackdata;
+    }
+
+    public function setSwimdata(Swimdata $swimdata = null)
+    {
+        $this->swimdata = $swimdata;
+    }
+
+    /**
+     * @return Swimdata|null
+     */
+    public function getSwimdata()
+    {
+        return $this->swimdata;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasSwimdata()
+    {
+        return null !== $this->swimdata;
+    }
+
+    public function setHrv(Hrv $hrv = null)
+    {
+        $this->hrv = $hrv;
+    }
+
+    /**
+     * @return Hrv|null
+     */
+    public function getHrv()
+    {
+        return $this->hrv;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasHrv()
+    {
+        return null !== $this->hrv;
+    }
+
+    public function setRaceresult(Raceresult $raceresult = null)
+    {
+        $this->raceresult = $raceresult;
+    }
+
+    /**
+     * @return Raceresult|null
+     */
+    public function getRaceresult()
+    {
+        return $this->raceresult;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasRaceresult()
+    {
+        return null !== $this->raceresult;
     }
 }

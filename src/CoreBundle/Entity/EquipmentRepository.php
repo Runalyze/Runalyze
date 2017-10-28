@@ -21,6 +21,19 @@ class EquipmentRepository extends EntityRepository
     }
 
     /**
+     * @param string|string[] $equipmentName
+     * @param Account $account
+     * @return Equipment[]
+     */
+    public function findByName($equipmentName, Account $account)
+    {
+        return $this->findBy([
+            'account' => $account->getId(),
+            'name' => $equipmentName
+        ]);
+    }
+
+    /**
      * @param int $typeId
      * @param Account $account
      * @return EquipmentStatistics

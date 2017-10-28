@@ -13,9 +13,9 @@ use Doctrine\ORM\Mapping as ORM;
 class Hrv
 {
     /**
-     * @var string|null
+     * @var array|null
      *
-     * @ORM\Column(name="data", type="text", nullable=true)
+     * @ORM\Column(name="data", type="pipe_array", nullable=true)
      */
     private $data;
 
@@ -42,11 +42,11 @@ class Hrv
     private $activity;
 
     /**
-     * @param string|null $data
+     * @param array|null $data
      *
      * @return $this
      */
-    public function setData($data)
+    public function setData($data = null)
     {
         $this->data = $data;
 
@@ -54,7 +54,7 @@ class Hrv
     }
 
     /**
-     * @return string|null
+     * @return array|null
      */
     public function getData()
     {

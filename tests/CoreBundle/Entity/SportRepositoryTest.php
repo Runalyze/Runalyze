@@ -46,7 +46,7 @@ class SportRepositoryTest extends AbstractRepositoryTestCase
         Sport $sport = null
     )
     {
-        $activity = $this->getActivitiyForDefaultAccount($timestamp, $duration, $distance, $sport);
+        $activity = $this->getActivityForDefaultAccount($timestamp, $duration, $distance, $sport);
 
         $this->TrainingRepository->save($activity);
 

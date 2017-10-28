@@ -133,6 +133,11 @@ class Trackdata
      */
     private $account;
 
+    public function __construct()
+    {
+        $this->pauses = new PauseCollection();
+    }
+
     /**
      * @param array|null $time [s]
      *
@@ -555,6 +560,29 @@ class Trackdata
     public function getAccount()
     {
         return $this->account;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEmpty()
+    {
+        return (
+            (null === $this->time && empty($this->time)) &&
+            (null === $this->distance && empty($this->distance)) &&
+            (null === $this->heartrate && empty($this->heartrate)) &&
+            (null === $this->cadence && empty($this->cadence)) &&
+            (null === $this->power && empty($this->power)) &&
+            (null === $this->temperature && empty($this->temperature)) &&
+            (null === $this->groundcontact && empty($this->groundcontact)) &&
+            (null === $this->groundcontactBalance && empty($this->groundcontactBalance)) &&
+            (null === $this->verticalOscillation && empty($this->verticalOscillation)) &&
+            (null === $this->smo20 && empty($this->smo20)) &&
+            (null === $this->smo21 && empty($this->smo21)) &&
+            (null === $this->thb0 && empty($this->thb0)) &&
+            (null === $this->thb1 && empty($this->thb1)) &&
+            $this->pauses->isEmpty()
+        );
     }
 
     /**

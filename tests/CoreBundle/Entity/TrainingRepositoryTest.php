@@ -6,6 +6,7 @@ use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\Sport;
 use Runalyze\Bundle\CoreBundle\Entity\Training;
 use Runalyze\Bundle\CoreBundle\Entity\TrainingRepository;
+use Runalyze\Parser\Activity\Common\Data\Round\RoundCollection;
 
 /**
  * @group requiresDoctrine
@@ -46,7 +47,7 @@ class TrainingRepositoryTest extends AbstractRepositoryTestCase
         Sport $sport = null
     )
     {
-        $activity = $this->getActivitiyForDefaultAccount($timestamp, $duration, $distance, $sport);
+        $activity = $this->getActivityForDefaultAccount($timestamp, $duration, $distance, $sport);
 
         $this->TrainingRepository->save($activity);
 
@@ -140,11 +141,29 @@ class TrainingRepositoryTest extends AbstractRepositoryTestCase
 
         $this->assertFalse($this->TrainingRepository->accountHasLockedTrainings($this->Account));
 
-        $activity = $this->getActivitiyForDefaultAccount(time());
+        $activity = $this->getActivityForDefaultAccount(time());
         $activity->setLock(true);
 
         $this->TrainingRepository->save($activity);
 
         $this->assertTrue($this->TrainingRepository->accountHasLockedTrainings($this->Account));
+    }
+
+    public function testThatActivityCanExistWithoutRelatedObjects()
+    {
+        $activity = $this->insertActivityForDefaultAccount();
+
+        $this->TrainingRepository->save($activity);
+
+        /** @var Training $insertedActivity */
+        $insertedActivity = $this->TrainingRepository->find($activity->getId());
+
+        $this->assertNull($insertedActivity->getTrackdata());
+        $this->assertNull($insertedActivity->getSwimdata());
+        $this->assertNull($insertedActivity->getHrv());
+        $this->assertNull($insertedActivity->getRaceresult());
+
+        $this->assertInstanceOf(RoundCollection::class, $insertedActivity->getSplits());
+        $this->assertTrue($insertedActivity->getSplits()->isEmpty());
     }
 }

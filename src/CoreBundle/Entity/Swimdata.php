@@ -152,4 +152,15 @@ class Swimdata
     {
         return $this->activity;
     }
+
+    /**
+     * @return bool
+     */
+    public function isEmpty()
+    {
+        return (
+            (null === $this->stroke || empty($this->stroke)) &&
+            (null === $this->stroketype || empty($this->stroketype))
+        );
+    }
 }

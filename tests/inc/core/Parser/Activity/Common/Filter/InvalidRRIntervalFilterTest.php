@@ -2,7 +2,10 @@
 
 namespace Runalyze\Tests\Parser\Activity\Common\Filter;
 
+use Monolog\Handler\TestHandler;
+use Monolog\Logger;
 use Runalyze\Parser\Activity\Common\Data\ActivityDataContainer;
+use Runalyze\Parser\Activity\Common\Exception\InvalidDataException;
 use Runalyze\Parser\Activity\Common\Filter\InvalidRRIntervalFilter;
 
 class InvalidRRIntervalFilterTest extends \PHPUnit_Framework_TestCase
@@ -42,5 +45,26 @@ class InvalidRRIntervalFilterTest extends \PHPUnit_Framework_TestCase
         $this->Filter->filter($this->Container);
 
         $this->assertEquals([], $this->Container->RRIntervals);
+    }
+
+    public function testStrictMode()
+    {
+        $this->Container->RRIntervals = [469, 0, 471];
+
+        $this->setExpectedException(InvalidDataException::class);
+
+        $this->Filter->filter($this->Container, true);
+    }
+
+    public function testLogMessageInNonStrictMode()
+    {
+        $handler = new TestHandler();
+        $this->Filter->setLogger(new Logger('test', [$handler]));
+        $this->Container->RRIntervals = [723, 751, 0, 739, 760, 0, 747];
+
+        $this->Filter->filter($this->Container);
+
+        $this->assertTrue($handler->hasWarningThatContains('2 invalid'));
+        $this->assertEquals([723, 751, 739, 760, 747], $this->Container->RRIntervals);
     }
 }

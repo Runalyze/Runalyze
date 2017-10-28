@@ -7,7 +7,6 @@ use Runalyze\Bundle\CoreBundle\Model\Sport\SportStatistics;
 use Runalyze\Profile\Sport\Running;
 use Runalyze\Profile\Sport\SportProfile;
 use Runalyze\Util\LocalTime;
-use Doctrine\ORM\Query\Expr\Join;
 
 class SportRepository extends EntityRepository
 {
@@ -23,16 +22,26 @@ class SportRepository extends EntityRepository
     }
 
     /**
+     * @param int $internalTypeId
+     * @param Account $account
+     * @return null|Sport
+     */
+    public function findInternalIdFor($internalTypeId, Account $account)
+    {
+        return $this->findOneBy([
+            'account' => $account->getId(),
+            'internalSportId' => (int)$internalTypeId
+        ]);
+    }
+
+    /**
      * @param Account $account
      * @param bool $returnNull
      * @return array|Sport
      */
     public function findRunningFor(Account $account, $returnNull = false)
     {
-        $sport = $this->findOneBy([
-            'account' => $account->getId(),
-            'internalSportId' => SportProfile::RUNNING
-        ]);
+        $sport = $this->findInternalIdFor(SportProfile::RUNNING, $account);
 
         if (null === $sport && !$returnNull) {
             $sport = new Sport();
@@ -77,10 +86,7 @@ class SportRepository extends EntityRepository
      */
     public function isInternalTypeFree($internalTypeId, Account $account)
     {
-        return null === $this->findOneBy([
-            'account' => $account->getId(),
-            'internalSportId' => (int)$internalTypeId
-        ]);
+        return null === $this->findInternalIdFor((int)$internalTypeId, $account);
     }
 
     /**
@@ -107,7 +113,8 @@ class SportRepository extends EntityRepository
     /**
      * @param int|null $timestamp
      * @param Account $account
-     * @return SportStatistics
+     * @param bool $raw if enabled, raw array data is returned
+     * @return SportStatistics|array
      */
     public function getSportStatisticsSince($timestamp, Account $account, $raw = false)
     {

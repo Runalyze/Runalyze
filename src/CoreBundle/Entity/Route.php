@@ -3,6 +3,8 @@
 namespace Runalyze\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use League\Geotools\Coordinate\Coordinate;
+use League\Geotools\Geohash\Geohash;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 
 /**
@@ -13,6 +15,12 @@ use Runalyze\Bundle\CoreBundle\Entity\Account;
  */
 class Route
 {
+    /** @var int */
+    const PATH_GEOHASH_PRECISION = 12;
+
+    /** @var int */
+    const BOUNDARIES_GEOHASH_PRECISION = 10;
+
     /**
      * @var int
      *
@@ -67,7 +75,7 @@ class Route
     /**
      * @var array|null
      *
-     * @ORM\Column(name="geohashes", type="pipe_array", nullable=true)
+     * @ORM\Column(name="geohashes", type="geohash_array", nullable=true)
      */
     private $geohashes;
 
@@ -143,6 +151,9 @@ class Route
      * @ORM\Column(name="`lock`", type="boolean", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
      */
     private $lock = false;
+
+    /** @var bool */
+    private $areMinMaxSynchronized = true;
 
     /**
      * @return int
@@ -279,6 +290,7 @@ class Route
      */
     public function setGeohashes(array $geohashes = null)
     {
+        $this->areMinMaxSynchronized = false;
         $this->geohashes = $geohashes;
 
         return $this;
@@ -298,6 +310,69 @@ class Route
     public function hasGeohashes()
     {
         return null !== $this->geohashes;
+    }
+
+    /**
+     * @param array $latitudes
+     * @param array $longitudes
+     *
+     * @return $this
+     */
+    public function setLatitudesAndLongitudes(array $latitudes, array $longitudes)
+    {
+        $size = count($latitudes);
+
+        if ($size != count($longitudes)) {
+            throw new \InvalidArgumentException('Latitude and longitude array must be of same length.');
+        }
+
+        $latitudes = array_map(function ($value) { return ($value == '') ? 0.0 : (double)$value; }, $latitudes);
+        $longitudes = array_map(function ($value) { return ($value == '') ? 0.0 : (double)$value; }, $longitudes);
+
+        $this->areMinMaxSynchronized = false;
+        $this->geohashes = [];;
+
+        for ($i = 0; $i < $size; ++$i) {
+            $this->geohashes[] = (new Geohash())->encode(
+                new Coordinate([$latitudes[$i], $longitudes[$i]]),
+                self::PATH_GEOHASH_PRECISION
+            )->getGeohash();
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return array [[lat1, lat2, ...], [lng1, lng2, ...]]
+     */
+    public function getLatitudesAndLongitudes()
+    {
+        $coordinates = [[], []];
+        $size = count($this->geohashes);
+
+        for ($i = 0; $i < $size; $i++) {
+            $coordinate = (new Geohash())->decode($this->geohashes[$i])->getCoordinate();
+            $coordinates[0][] = round($coordinate->getLatitude(), 6);
+            $coordinates[1][] = round($coordinate->getLongitude(), 6);
+        }
+
+        return $coordinates;
+    }
+
+    /**
+     * @return array
+     */
+    public function getLatitudes()
+    {
+        return $this->getLatitudesAndLongitudes()[0];
+    }
+
+    /**
+     * @return array
+     */
+    public function getLongitudes()
+    {
+        return $this->getLatitudesAndLongitudes()[1];
     }
 
     /**
@@ -527,5 +602,26 @@ class Route
     {
         return $this->lock;
     }
-}
 
+    /**
+     * @return bool
+     */
+    public function isEmpty()
+    {
+        return (
+            '' == $this->name &&
+            '' == $this->cities &&
+            (null === $this->geohashes || empty($this->geohashes)) &&
+            (null === $this->elevationsOriginal || empty($this->elevationsOriginal)) &&
+            (null === $this->elevationsCorrected || empty($this->elevationsCorrected))
+        );
+    }
+
+    /**
+     * @return bool
+     */
+    public function areMinMaxGeohashSynchronized()
+    {
+        return $this->areMinMaxSynchronized;
+    }
+}

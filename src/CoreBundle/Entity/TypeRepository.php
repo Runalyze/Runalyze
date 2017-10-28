@@ -25,6 +25,19 @@ class TypeRepository extends EntityRepository
         ]);
     }
 
+    /**
+     * @param string $typeName
+     * @param Account $account
+     * @return null|Type
+     */
+    public function findByNameFor($typeName, Account $account)
+    {
+        return $this->findOneBy([
+            'account' => $account->getId(),
+            'name' => (string)$typeName
+        ]);
+    }
+
     public function save(Type $type)
     {
         $this->_em->persist($type);
