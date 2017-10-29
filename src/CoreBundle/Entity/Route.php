@@ -5,13 +5,14 @@ namespace Runalyze\Bundle\CoreBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use League\Geotools\Coordinate\Coordinate;
 use League\Geotools\Geohash\Geohash;
-use Runalyze\Bundle\CoreBundle\Entity\Account;
+use Runalyze\Calculation\Route\GeohashLine;
 
 /**
  * Route
  *
  * @ORM\Table(name="route")
  * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\RouteRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Route
 {
@@ -348,12 +349,15 @@ class Route
     public function getLatitudesAndLongitudes()
     {
         $coordinates = [[], []];
-        $size = count($this->geohashes);
 
-        for ($i = 0; $i < $size; $i++) {
-            $coordinate = (new Geohash())->decode($this->geohashes[$i])->getCoordinate();
-            $coordinates[0][] = round($coordinate->getLatitude(), 6);
-            $coordinates[1][] = round($coordinate->getLongitude(), 6);
+        if (null !== $this->geohashes) {
+            $size = count($this->geohashes);
+
+            for ($i = 0; $i < $size; $i++) {
+                $coordinate = (new Geohash())->decode($this->geohashes[$i])->getCoordinate();
+                $coordinates[0][] = round($coordinate->getLatitude(), 6);
+                $coordinates[1][] = round($coordinate->getLongitude(), 6);
+            }
         }
 
         return $coordinates;
@@ -623,5 +627,61 @@ class Route
     public function areMinMaxGeohashSynchronized()
     {
         return $this->areMinMaxSynchronized;
+    }
+
+    /**
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function synchronize()
+    {
+        $this->setStartEndGeohashes();
+        $this->synchronizeMinMaxGeohashIfRequired();
+
+        if (null === $this->elevationsCorrected) {
+            $this->elevationsSource = '';
+        }
+    }
+
+    public function synchronizeMinMaxGeohashIfRequired()
+    {
+        if (!$this->areMinMaxSynchronized) {
+            $this->setMinMaxGeohashes();
+        }
+    }
+
+    public function setMinMaxGeohashes()
+    {
+        $this->min = null;
+        $this->max = null;
+
+        $coordinates = $this->getLatitudesAndLongitudes();
+        $latitudes = array_filter($coordinates[0]);
+        $longitudes = array_filter($coordinates[1]);
+
+        if (!empty($latitudes) && !empty($longitudes)) {
+            $minCoordinate = new Coordinate([min($latitudes), min($longitudes)]);
+            $maxCoordinate = new Coordinate([max($latitudes), max($longitudes)]);
+
+            $this->min = (new Geohash())->encode($minCoordinate, self::BOUNDARIES_GEOHASH_PRECISION)->getGeohash();
+            $this->max = (new Geohash())->encode($maxCoordinate, self::BOUNDARIES_GEOHASH_PRECISION)->getGeohash();
+        }
+
+        $this->areMinMaxSynchronized = true;
+    }
+
+    public function setStartEndGeohashes()
+    {
+        if (null !== $this->geohashes) {
+            $this->startpoint = GeohashLine::findFirstNonNullGeohash($this->geohashes, self::BOUNDARIES_GEOHASH_PRECISION);
+            $this->endpoint = GeohashLine::findFirstNonNullGeohash(array_reverse($this->geohashes), self::BOUNDARIES_GEOHASH_PRECISION);
+
+            if (null === $this->startpoint) {
+                $this->geohashes = null;
+            }
+        } else {
+            $this->startpoint = null;
+            $this->endpoint = null;
+        }
     }
 }

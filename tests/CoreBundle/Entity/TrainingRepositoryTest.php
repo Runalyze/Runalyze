@@ -149,6 +149,24 @@ class TrainingRepositoryTest extends AbstractRepositoryTestCase
         $this->assertTrue($this->TrainingRepository->accountHasLockedTrainings($this->Account));
     }
 
+    public function testThatCreatedAndEditedTimestampsAreUpdatedAutomatically()
+    {
+        $activity = $this->insertActivityForDefaultAccount();
+
+        $this->TrainingRepository->save($activity);
+
+        $this->assertEquals(time(), $activity->getCreated(), '', 1);
+        $this->assertNull($activity->getEdited());
+
+        $createdAt = mktime(12, 0, 0, 3, 14, 2017);
+        $activity->setCreated($createdAt);
+
+        $this->TrainingRepository->save($activity);
+
+        $this->assertEquals($createdAt, $activity->getCreated());
+        $this->assertEquals(time(), $activity->getEdited(), '', 1);
+    }
+
     public function testThatActivityCanExistWithoutRelatedObjects()
     {
         $activity = $this->insertActivityForDefaultAccount();

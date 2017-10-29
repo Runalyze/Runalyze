@@ -11,6 +11,7 @@ use Runalyze\Parser\Activity\Common\Data\Round\RoundCollection;
  *
  * @ORM\Table(name="training", indexes={@ORM\Index(name="time", columns={"accountid", "time"}), @ORM\Index(name="sportid", columns={"accountid", "sportid"}), @ORM\Index(name="typeid", columns={"accountid", "typeid"})})
  * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\TrainingRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Training
 {
@@ -608,6 +609,14 @@ class Training
     }
 
     /**
+     * @ORM\PrePersist
+     */
+    public function setCreatedToNow()
+    {
+        $this->setCreated(time());
+    }
+
+    /**
      * @param null|int $edited [timestamp]
      *
      * @return $this
@@ -625,6 +634,14 @@ class Training
     public function getEdited()
     {
         return $this->edited;
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function setEditedToNow()
+    {
+        $this->setEdited(time());
     }
 
     /**
