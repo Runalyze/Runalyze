@@ -97,8 +97,8 @@ class FitlogActivity extends AbstractSingleParser
             $this->Container->ContinuousData->Latitude[] = round((double)$point['lat'], 7);
             $this->Container->ContinuousData->Longitude[] = round((double)$point['lon'], 7);
         } elseif (count($this->Container->ContinuousData->Latitude)) {
-            $this->Container->ContinuousData->Latitude[] = end($this->Container->ContinuousData->Latitude[]);
-            $this->Container->ContinuousData->Longitude[] = end($this->Container->ContinuousData->Longitude[]);
+            $this->Container->ContinuousData->Latitude[] = end($this->Container->ContinuousData->Latitude);
+            $this->Container->ContinuousData->Longitude[] = end($this->Container->ContinuousData->Longitude);
         }
 
         $this->Container->ContinuousData->Time[] = (int)$point['tm'];
