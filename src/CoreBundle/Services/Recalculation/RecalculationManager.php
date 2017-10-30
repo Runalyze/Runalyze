@@ -102,7 +102,7 @@ class RecalculationManager
      * @param string $taskName
      * @return bool
      */
-    protected function isTaskScheduled(Account $account, $taskName)
+    public function isTaskScheduled(Account $account, $taskName)
     {
         $accountId = $account->getId();
 
@@ -127,5 +127,7 @@ class RecalculationManager
     {
         $this->Tasks->runAllTasks();
         $this->Tasks->clear();
+
+        $this->AccountRelatedTaskNames = [];
     }
 }

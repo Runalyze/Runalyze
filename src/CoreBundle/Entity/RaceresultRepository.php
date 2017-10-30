@@ -2,7 +2,6 @@
 
 namespace Runalyze\Bundle\CoreBundle\Entity;
 
-use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityRepository;
 
 class RaceresultRepository extends EntityRepository

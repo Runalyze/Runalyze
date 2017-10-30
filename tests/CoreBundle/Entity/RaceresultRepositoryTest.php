@@ -7,6 +7,7 @@ use Runalyze\Bundle\CoreBundle\Entity\Raceresult;
 use Runalyze\Bundle\CoreBundle\Entity\RaceresultRepository;
 use Runalyze\Bundle\CoreBundle\Entity\Training;
 use Runalyze\Bundle\CoreBundle\Entity\TrainingRepository;
+use Runalyze\Bundle\CoreBundle\Services\Recalculation\Task\VO2maxCorrectionFactorCalculation;
 
 /**
  * @group requiresDoctrine
@@ -64,6 +65,8 @@ class RaceresultRepositoryTest extends AbstractRepositoryTestCase
         $this->assertEquals(mktime(3, 14, 15, 9, 26, 2016), $races[0]['time']);
         $this->assertEquals('10', $races[0][0]['officialDistance']);
         $this->assertEquals('Awesome pirace', $races[0][0]['name']);
+
+        $this->assertEquals(0, $this->getContainer()->get('app.recalculation_manager')->getNumberOfScheduledTasksFor($this->Account));
     }
 
     public function testFindingVO2maxCorrectionFactorForSingleRace()
@@ -76,6 +79,9 @@ class RaceresultRepositoryTest extends AbstractRepositoryTestCase
             $this->Account,
             $this->getDefaultAccountsRunningSport()->getId()
         ));
+
+        $this->assertGreaterThan(0, $this->getContainer()->get('app.recalculation_manager')->getNumberOfScheduledTasksFor($this->Account));
+        $this->assertTrue($this->getContainer()->get('app.recalculation_manager')->isTaskScheduled($this->Account, VO2maxCorrectionFactorCalculation::class));
     }
 
     public function testFindingVO2maxCorrectionFactorForMultipleRaces()

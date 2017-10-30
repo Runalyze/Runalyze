@@ -100,6 +100,11 @@ services:
     arguments: ["@app.configuration_updater", "@app.repository.user"]
     tags:
      - { name: doctrine.orm.entity_listener, lazy: true }
+  app.entity_listener.race_result:
+    class: Runalyze\Bundle\CoreBundle\EntityListener\RaceResultListener
+    arguments: ["@app.recalculation_manager"]
+    tags:
+     - { name: doctrine.orm.entity_listener, lazy: true }
   app.form.type.anova:
     class: Runalyze\Bundle\CoreBundle\Form\Tools\Anova\AnovaType
     arguments: ["@app.repository.sport", "@app.repository.type", "@app.repository.equipment_type", "@security.token_storage", "@app.configuration_manager"]
