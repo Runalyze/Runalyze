@@ -152,7 +152,7 @@ class Feed {
 
         if ($activityContext->getActivity()->isPublic()) {
             $content .= '<br><a href="'.$this->UrlGenerator->generate('shared-activity', array('activityHash' => base_convert((int)$activityContext->getActivity()->getId(), 10, 35)), UrlGeneratorInterface::ABSOLUTE_URL);
-            $content .= '">'.$this->Translator->trans('View full activity').'</a>';
+	     $content .= '?utm_medium=feed&utm_campaign=feed">'.$this->Translator->trans('View full activity').'</a>';
         }
 
         return $content;
