@@ -28,6 +28,9 @@ class AnovaType extends AbstractType
     /** @var TokenStorage */
     protected $TokenStorage;
 
+    /** @var ConfigurationManager */
+    protected $ConfigurationManager;
+
     public function __construct(
         SportRepository $sportRepository,
         EquipmentTypeRepository $equipmentTypeRepository,
