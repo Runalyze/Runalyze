@@ -5,6 +5,7 @@ namespace Runalyze\Bundle\CoreBundle\Tests\Entity;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\Raceresult;
 use Runalyze\Bundle\CoreBundle\Entity\RaceresultRepository;
+use Runalyze\Bundle\CoreBundle\Entity\Training;
 use Runalyze\Bundle\CoreBundle\Entity\TrainingRepository;
 
 /**
@@ -34,19 +35,17 @@ class RaceresultRepositoryTest extends AbstractRepositoryTestCase
     {
         $this->assertNull($this->RaceresultRepository->findByActivity(1));
         $this->assertNull($this->RaceresultRepository->findForAccount(1, 1));
+
+        $this->assertEquals(1.0, $this->RaceresultRepository->getEffectiveVO2maxCorrectionFactor(
+            $this->Account,
+            $this->getDefaultAccountsRunningSport()->getId()
+        ));
     }
 
     public function testSingleRace()
     {
         $raceActivity = $this->getActivityForDefaultAccount(mktime(3, 14, 15, 9, 26, 2016), 2400, 10.0);
-
-        $this->TrainingRepository->save($raceActivity);
-
-        $race = new Raceresult();
-        $race->fillFromActivity($raceActivity);
-        $race->setName('Awesome pirace');
-
-        $this->RaceresultRepository->save($race);
+        $race = $this->insertRace('Awesome pirace', $raceActivity);
 
         $this->assertNull($this->RaceresultRepository->findForAccount($race->getActivity()->getId(), $this->Account->getId() + 1));
         $this->assertEquals(
@@ -65,5 +64,59 @@ class RaceresultRepositoryTest extends AbstractRepositoryTestCase
         $this->assertEquals(mktime(3, 14, 15, 9, 26, 2016), $races[0]['time']);
         $this->assertEquals('10', $races[0][0]['officialDistance']);
         $this->assertEquals('Awesome pirace', $races[0][0]['name']);
+    }
+
+    public function testFindingVO2maxCorrectionFactorForSingleRace()
+    {
+        $activity = $this->getActivityForDefaultAccount(time(), 2400, 10.0);
+        $activity->setVO2max(50.0)->setVO2maxByTime(40.0)->setUseVO2max(true);
+        $this->insertRace('foobar', $activity);
+
+        $this->assertEquals(0.80, $this->RaceresultRepository->getEffectiveVO2maxCorrectionFactor(
+            $this->Account,
+            $this->getDefaultAccountsRunningSport()->getId()
+        ));
+    }
+
+    public function testFindingVO2maxCorrectionFactorForMultipleRaces()
+    {
+        $activity = $this->getActivityForDefaultAccount(time(), 2400, 10.0);
+        $activity->setVO2max(50.0)->setVO2maxByTime(40.0)->setUseVO2max(true);
+        $this->insertRace('foobar', $activity);
+
+        $activity = $this->getActivityForDefaultAccount(time(), 2100, 10.0);
+        $activity->setVO2max(48.0)->setVO2maxByTime(42.0)->setUseVO2max(true);
+        $this->insertRace('foobar', $activity);
+
+        $activity = $this->getActivityForDefaultAccount(time(), 1200, 5.0);
+        $activity->setVO2max(48.0)->setVO2maxByTime(38.0)->setUseVO2max(true);
+        $this->insertRace('foobar', $activity);
+
+        $activity = $this->getActivityForDefaultAccount(time(), 2400, 5.0);
+        $activity->setVO2max(10.0)->setVO2maxByTime(20.0)->setUseVO2max(true);
+        $this->insertRace('foobar', $activity);
+
+        $this->assertEquals(0.875, $this->RaceresultRepository->getEffectiveVO2maxCorrectionFactor(
+            $this->Account,
+            $this->getDefaultAccountsRunningSport()->getId()
+        ));
+    }
+
+    /**
+     * @param string $name
+     * @param Training $activity
+     * @return Raceresult
+     */
+    protected function insertRace($name, Training $activity)
+    {
+        $this->TrainingRepository->save($activity);
+
+        $race = new Raceresult();
+        $race->fillFromActivity($activity);
+        $race->setName($name);
+
+        $this->RaceresultRepository->save($race);
+
+        return $race;
     }
 }

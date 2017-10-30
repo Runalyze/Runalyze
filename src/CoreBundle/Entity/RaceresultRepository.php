@@ -2,10 +2,14 @@
 
 namespace Runalyze\Bundle\CoreBundle\Entity;
 
+use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityRepository;
 
 class RaceresultRepository extends EntityRepository
 {
+    /** @var int */
+    const NUMBER_OF_RACES_TO_CONSIDER_FOR_CORRECTION_FACTOR = 3;
+
     /**
      * @param int $activityId
      * @return null|Raceresult
@@ -56,6 +60,38 @@ class RaceresultRepository extends EntityRepository
             ])
             ->getQuery()
             ->getArrayResult();
+    }
+
+    /**
+     * @param Account $account
+     * @param int $sportId
+     * @return float
+     */
+    public function getEffectiveVO2maxCorrectionFactor(Account $account, $sportId)
+    {
+        $result = $this->createQueryBuilder('r')
+            ->join('r.activity', 't')
+            ->select([
+                't.vo2maxByTime * 1.0 / t.vo2max as factor'
+            ])
+            ->where('r.account = :account')
+            ->andWhere('t.sport = :sport')
+            ->andWhere('t.useVO2max = 1')
+            ->andWhere('t.vo2max > 0')
+            ->setParameter('account', $account->getId())
+            ->setParameter('sport', $sportId)
+            ->orderBy('t.vo2maxByTime', 'DESC')
+            ->setMaxResults(self::NUMBER_OF_RACES_TO_CONSIDER_FOR_CORRECTION_FACTOR)
+            ->getQuery()
+            ->getResult("COLUMN_HYDRATOR");
+
+        if (empty($result)) {
+            return 1.0;
+        }
+
+        return max(array_map(function($v) {
+            return (float)$v;
+        }, $result));
     }
 
     public function save(Raceresult $raceResult)

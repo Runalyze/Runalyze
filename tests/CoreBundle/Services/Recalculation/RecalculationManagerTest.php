@@ -4,6 +4,7 @@ namespace Runalyze\Bundle\CoreBundle\Tests\Services\Recalculation;
 
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\ConfRepository;
+use Runalyze\Bundle\CoreBundle\Entity\RaceresultRepository;
 use Runalyze\Bundle\CoreBundle\Entity\TrainingRepository;
 use Runalyze\Bundle\CoreBundle\Services\Configuration\ConfigurationManager;
 use Runalyze\Bundle\CoreBundle\Services\Configuration\ConfigurationUpdater;
@@ -30,14 +31,17 @@ class RecalculationManagerTest extends \PHPUnit_Framework_TestCase
         $tokenStorage->setToken(new PreAuthenticatedToken($this->Account, 'foo', 'bar'));
 
         $this->ConfigurationManager = new ConfigurationManager($confRepository, $tokenStorage);
-        $this->ConfigurationManager->getList()->set('data.START_TIME', '0');
-        $this->ConfigurationManager->getList()->set('data.VO2MAX_FORM', '0');
-        $this->ConfigurationManager->getList()->set('data.BASIC_ENDURANCE', '0');
+        $list = $this->ConfigurationManager->getList();
+        $list->set('data.START_TIME', '0');
+        $list->set('data.VO2MAX_FORM', '0');
+        $list->set('data.VO2MAX_CORRECTOR', '1.00');
+        $list->set('data.BASIC_ENDURANCE', '0');
 
         $this->Manager = new RecalculationManager(
             $this->ConfigurationManager,
             new ConfigurationUpdater($confRepository, $this->ConfigurationManager),
-            $this->getTrainingRepositoryMock()
+            $this->getTrainingRepositoryMock(),
+            $this->getRaceResultRepositoryMock()
         );
     }
 
@@ -49,6 +53,7 @@ class RecalculationManagerTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('0', $this->ConfigurationManager->getList($this->Account)->get('data.START_TIME'));
         $this->assertEquals('0', $this->ConfigurationManager->getList($this->Account)->get('data.VO2MAX_FORM'));
+        $this->assertEquals('1.00', $this->ConfigurationManager->getList($this->Account)->get('data.VO2MAX_CORRECTOR'));
         $this->assertEquals('0', $this->ConfigurationManager->getList($this->Account)->get('data.BASIC_ENDURANCE'));
     }
 
@@ -73,15 +78,17 @@ class RecalculationManagerTest extends \PHPUnit_Framework_TestCase
     public function testThatResultsOfTasksAreForwardedToConfiguration()
     {
         $this->Manager->scheduleStartTimeCalculation($this->Account);
+        $this->Manager->scheduleEffectiveVO2maxCorrectionFactorCalculation($this->Account);
         $this->Manager->scheduleEffectiveVO2maxShapeCalculation($this->Account);
         $this->Manager->scheduleMarathonShapeCalculation($this->Account);
 
-        $this->assertEquals(3, $this->Manager->getNumberOfScheduledTasksFor($this->Account));
+        $this->assertEquals(4, $this->Manager->getNumberOfScheduledTasksFor($this->Account));
 
         $this->Manager->runScheduledTasks();
 
         $this->assertEquals('123456789', $this->ConfigurationManager->getList($this->Account)->get('data.START_TIME'));
         $this->assertEquals('42.0', $this->ConfigurationManager->getList($this->Account)->get('data.VO2MAX_FORM'));
+        $this->assertEquals('0.85', $this->ConfigurationManager->getList($this->Account)->get('data.VO2MAX_CORRECTOR'));
         $this->assertEquals('68', $this->ConfigurationManager->getList($this->Account)->get('data.BASIC_ENDURANCE'));
     }
 
@@ -127,6 +134,26 @@ class RecalculationManagerTest extends \PHPUnit_Framework_TestCase
             ->expects($this->any())
             ->method('calculateMarathonShape')
             ->will($this->returnValue(68));
+
+        return $repository;
+    }
+
+    /**
+     * @return RaceresultRepository
+     */
+    protected function getRaceResultRepositoryMock()
+    {
+        /** @var RaceresultRepository */
+        $repository = $this
+            ->getMockBuilder(RaceresultRepository::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['getEffectiveVO2maxCorrectionFactor'])
+            ->getMock();
+
+        $repository
+            ->expects($this->any())
+            ->method('getEffectiveVO2maxCorrectionFactor')
+            ->will($this->returnValue(0.85));
 
         return $repository;
     }

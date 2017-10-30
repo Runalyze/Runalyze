@@ -39,6 +39,11 @@ services:
     arguments: ['@security.token_storage']
     tags:
       - { name: kernel.event_listener, event: kernel.controller, method: onCoreController }
+  app.listener.recalculation_tasks_performer_listener:
+    class: Runalyze\Bundle\CoreBundle\EventListener\RecalculationTasksPerformerListener
+    arguments: ["@app.recalculation_manager"]
+    tags:
+      - { name: kernel.event_listener, event: kernel.terminate, method: onTerminate }
   app.sha256salted_encoder:
     class: Runalyze\Bundle\CoreBundle\Services\Sha256SaltedEncoder
   app.event.doctrine.table_prefix_subscriber:
@@ -177,6 +182,10 @@ services:
   app.configuration_updater:
     class: Runalyze\Bundle\CoreBundle\Services\Configuration\ConfigurationUpdater
     arguments: ["@app.repository.conf", "@app.configuration_manager"]
+    lazy: true
+  app.recalculation_manager:
+    class: Runalyze\Bundle\CoreBundle\Services\Recalculation\RecalculationManager
+    arguments: ["@app.configuration_manager", "@app.configuration_updater", "@app.repository.training", "@app.repository.race_result"]
     lazy: true
   app.sport_selection_factory:
     class: Runalyze\Bundle\CoreBundle\Services\Selection\SportSelectionFactory
