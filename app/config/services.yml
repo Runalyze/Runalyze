@@ -177,6 +177,7 @@ services:
   app.configuration_updater:
     class: Runalyze\Bundle\CoreBundle\Services\Configuration\ConfigurationUpdater
     arguments: ["@app.repository.conf", "@app.configuration_manager"]
+    lazy: true
   app.sport_selection_factory:
     class: Runalyze\Bundle\CoreBundle\Services\Selection\SportSelectionFactory
     arguments: ["@app.repository.sport", "@app.configuration_manager", "@security.token_storage"]
