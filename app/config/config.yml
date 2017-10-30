@@ -103,6 +103,9 @@ doctrine:
                 month: DoctrineExtensions\Query\Mysql\Month
                 week: DoctrineExtensions\Query\Mysql\Week
                 year: DoctrineExtensions\Query\Mysql\Year
+            numeric_functions:
+                round: DoctrineExtensions\Query\Mysql\Round
+                round: DoctrineExtensions\Query\Sqlite\Round
 
 doctrine_migrations:
     dir_name: "%kernel.root_dir%/DoctrineMigrations"

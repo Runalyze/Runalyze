@@ -2,6 +2,8 @@
 
 namespace Runalyze\Bundle\CoreBundle\Tests\Entity;
 
+use Runalyze\Bundle\CoreBundle\Component\Configuration\Category\BasicEndurance;
+use Runalyze\Bundle\CoreBundle\Component\Configuration\Category\VO2max;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\Sport;
 use Runalyze\Bundle\CoreBundle\Entity\Training;
@@ -183,5 +185,100 @@ class TrainingRepositoryTest extends AbstractRepositoryTestCase
 
         $this->assertInstanceOf(RoundCollection::class, $insertedActivity->getSplits());
         $this->assertTrue($insertedActivity->getSplits()->isEmpty());
+    }
+
+    public function testStartTimeForEmptyAccount()
+    {
+        $this->assertNull($this->TrainingRepository->getStartTime($this->getDefaultAccount()));
+    }
+
+    public function testStartTimeForSimpleExample()
+    {
+        $this->insertActivityForDefaultAccount(987654321);
+        $this->insertActivityForDefaultAccount(123456789);
+
+        $this->assertEquals(123456789, $this->TrainingRepository->getStartTime($this->getDefaultAccount()));
+    }
+
+    public function testVO2maxShapeCalculationForEmptyAccount()
+    {
+        $this->assertEquals(0.0, $this->TrainingRepository->calculateVO2maxShape(
+            $this->getDefaultAccount(),
+            new VO2max(),
+            $this->getDefaultAccountsRunningSport()->getId(),
+            time()
+        ));
+    }
+
+    public function testVO2maxShapeCalculationForASingleActivity()
+    {
+        $activity = $this->getActivityForDefaultAccount(time() - 86400, 3600, 10.0);
+        $activity->setVO2max(50.0);
+        $activity->setVO2maxWithElevation(50.0);
+
+        $this->TrainingRepository->save($activity);
+
+        $this->assertEquals(50.0, $this->TrainingRepository->calculateVO2maxShape(
+            $this->getDefaultAccount(),
+            new VO2max(),
+            $this->getDefaultAccountsRunningSport()->getId(),
+            time()
+        ));
+    }
+
+    public function testVO2maxShapeCalculationForSomeActivities()
+    {
+        $config = new VO2max();
+        $config->set('VO2MAX_USE_CORRECTION_FOR_ELEVATION', 'true');
+
+        $this->TrainingRepository->save(
+            $this->getActivityForDefaultAccount(time() - 86400, 1000, 4.0)
+                ->setVO2max(40.0)->setVO2maxWithElevation(50.0)
+        );
+        $this->TrainingRepository->save(
+            $this->getActivityForDefaultAccount(time() - 2 * 86400, 2000, 8.0)
+                ->setVO2max(40.0)->setVO2maxWithElevation(65.0)
+        );
+        $this->TrainingRepository->save(
+            $this->getActivityForDefaultAccount(time() - 200 * 86400, 10000, 40.0)
+                ->setVO2max(76.0)->setVO2maxWithElevation(75.0)
+        );
+
+        $this->assertEquals(60.0, $this->TrainingRepository->calculateVO2maxShape(
+            $this->getDefaultAccount(),
+            $config,
+            $this->getDefaultAccountsRunningSport()->getId(),
+            time()
+        ));
+    }
+
+    public function testMarathonShapeCalculationForEmptyAccount()
+    {
+        $this->assertEquals(0.0, $this->TrainingRepository->calculateMarathonShape(
+            $this->getDefaultAccount(),
+            new BasicEndurance(),
+            50.0,
+            $this->getDefaultAccountsRunningSport()->getId(),
+            time()
+        ));
+    }
+
+    public function testMarathonShapeCalculationForOnlyLongJog()
+    {
+        $date = mktime(12, 0, 0, 1, 10, 2015);
+        $config = new BasicEndurance();
+        $config->set('BE_DAYS_FOR_LONGJOGS', '10');
+        $config->set('BE_DAYS_FOR_WEEK_KM', '365');
+        $config->set('BE_PERCENTAGE_WEEK_KM', '0.00');
+
+        $this->insertActivityForDefaultAccount($date - 5 * 86400, 10800, 32.5);
+
+        $this->assertEquals(70.0, $this->TrainingRepository->calculateMarathonShape(
+            $this->getDefaultAccount(),
+            $config,
+            60.0,
+            $this->getDefaultAccountsRunningSport()->getId(),
+            $date
+        ));
     }
 }

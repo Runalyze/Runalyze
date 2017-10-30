@@ -4,7 +4,10 @@ namespace Runalyze\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityRepository;
+use Runalyze\Bundle\CoreBundle\Component\Configuration\Category\BasicEndurance;
+use Runalyze\Bundle\CoreBundle\Component\Configuration\Category\VO2max;
 use Runalyze\Bundle\CoreBundle\Model\Account\AccountStatistics;
+use Runalyze\Sports\Running\MarathonShape;
 
 class TrainingRepository extends EntityRepository
 {
@@ -300,7 +303,8 @@ class TrainingRepository extends EntityRepository
 
     /**
      * @param Account $account
-     * @return bool
+     * @param int $limit
+     * @return Training[]
      */
     public function latestActivities(Account $account, $limit = 20)
     {
@@ -312,6 +316,110 @@ class TrainingRepository extends EntityRepository
                 ->setMaxResults($limit)
                 ->getQuery()
                 ->getResult();
+    }
+
+    /**
+     * @param Account $account
+     * @return int|null
+     */
+    public function getStartTime(Account $account)
+    {
+        $result = $this->createQueryBuilder('t')
+            ->select('MIN(t.time)')
+            ->where('t.account = :account')
+            ->setParameter('account', $account->getId())
+            ->groupBy('t.account')
+            ->getQuery()
+            ->getOneOrNullResult(AbstractQuery::HYDRATE_SINGLE_SCALAR);
+
+        return null === $result ? $result : (int)$result;
+    }
+
+    /**
+     * @param Account $account
+     * @param VO2max $configuration
+     * @param int $sportId
+     * @param int $timestamp
+     * @return int [0, inf)
+     */
+    public function calculateVO2maxShape(Account $account, VO2max $configuration, $sportId, $timestamp)
+    {
+        $vo2maxColumn = $configuration->useCorrectionForElevation() ? 'vo2maxWithElevation' : 'vo2max';
+
+        $result = $this->createQueryBuilder('t')
+            ->select([
+                'SUM(t.s * t.useVO2max * t.'.$vo2maxColumn.') as value',
+                'SUM(CASE WHEN t.'.$vo2maxColumn.' > 0 THEN t.s * t.useVO2max ELSE 0 END) as ssum',
+            ])
+            ->where('t.account = :account')
+            ->andWhere('t.time BETWEEN :timeStart AND :timeEnd')
+            ->andWhere('t.sport = :sport')
+            ->setParameter('account', $account->getId())
+            ->setParameter('timeStart', $timestamp - $configuration->getNumberOfDaysToConsider() * 86400)
+            ->setParameter('timeEnd', $timestamp)
+            ->setParameter('sport', $sportId)
+            ->groupBy('t.account')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult(AbstractQuery::HYDRATE_SCALAR);
+
+        if (null === $result) {
+            return 0.0;
+        }
+
+        return round($result['value'] / $result['ssum'], 5);
+    }
+
+    /**
+     * @param Account $account
+     * @param BasicEndurance $configuration
+     * @param float $effectiveVO2max
+     * @param int $sportId
+     * @param int $timestamp
+     * @return int [0, inf)
+     */
+    public function calculateMarathonShape(Account $account, BasicEndurance $configuration, $effectiveVO2max, $sportId, $timestamp)
+    {
+        $startTimeForLongJogs = $timestamp - $configuration->getDaysToConsiderForLongJogs() * 86400;
+        $startTimeForWeeklyMileage = $timestamp - $configuration->getDaysToConsiderForWeeklyMileage() * 86400;
+        $marathonShape = new MarathonShape($effectiveVO2max, $configuration);
+
+        $result = $this->createQueryBuilder('t')
+            ->select([
+                'SUM(CASE WHEN t.time >= :timeStartWeek THEN t.distance ELSE 0 END) as km',
+                'SUM(
+                    CASE WHEN
+                        t.distance > :minLongJog AND t.time >= :timeStartLongJog
+                    THEN
+                        (2 - :weight * ROUND((:timeEnd - t.time) / 86400 - 0.5) )
+                        * ((t.distance - :minLongJog) / :longJogTarget)
+                        * ((t.distance - :minLongJog) / :longJogTarget)
+                    ELSE 0
+                    END
+                ) as points'
+            ])
+            ->where('t.account = :account')
+            ->andWhere('t.time BETWEEN :timeStart AND :timeEnd')
+            ->andWhere('t.sport = :sport')
+            ->setParameter('account', $account->getId())
+            ->setParameter('timeStart', min($startTimeForLongJogs, $startTimeForWeeklyMileage))
+            ->setParameter('timeStartWeek', $startTimeForWeeklyMileage)
+            ->setParameter('timeStartLongJog', $startTimeForLongJogs)
+            ->setParameter('timeEnd', $timestamp)
+            ->setParameter('weight', 2.0 / $configuration->getDaysToConsiderForLongJogs())
+            ->setParameter('minLongJog', $configuration->getMinimalDistanceForLongJog())
+            ->setParameter('longJogTarget', $marathonShape->getTargetForLongJogEachWeek() - $configuration->getMinimalDistanceForLongJog())
+            ->setParameter('sport', $sportId)
+            ->groupBy('t.account')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult(AbstractQuery::HYDRATE_SCALAR);
+
+        if (null === $result) {
+            return 0.0;
+        }
+
+        return $marathonShape->getShapeFor($result['km'], $result['points']);
     }
 
     public function save(Training $training)
