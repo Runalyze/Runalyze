@@ -22,7 +22,7 @@ class Weathercache
     private $geohash = '';
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="time", type="integer", precision=11, nullable=false)
      * @ORM\Id
@@ -31,60 +31,58 @@ class Weathercache
     private $time;
 
     /**
-     * @var boolean
+     * @var int|null [°C]
      *
-     * @ORM\Column(name="temperature", columnDefinition="tinyint DEFAULT NULL")
+     * @ORM\Column(name="temperature", type="tinyint", nullable=true)
      */
     private $temperature;
 
     /**
-     * @var boolean
+     * @var int|null [km/h]
      *
-     * @ORM\Column(name="wind_speed", columnDefinition="tinyint unsigned DEFAULT NULL")
+     * @ORM\Column(name="wind_speed", type="tinyint", nullable=true, options={"unsigned":true})
      */
     private $windSpeed;
 
     /**
-     * @var integer
+     * @var int|null [°]
      *
      * @ORM\Column(name="wind_deg", type="smallint", precision=3, nullable=true, options={"unsigned":true})
      */
     private $windDeg;
 
     /**
-     * @var boolean
+     * @var int|null [%]
      *
-     * @ORM\Column(name="humidity", columnDefinition="tinyint unsigned DEFAULT NULL")
+     * @ORM\Column(name="humidity", type="tinyint", nullable=true, options={"unsigned":true})
      */
     private $humidity;
 
     /**
-     * @var integer
+     * @var int [hPa]
      *
-     * @ORM\Column(name="pressure", type="smallint", precision=4, nullable=true,  options={"unsigned":true})
+     * @ORM\Column(name="pressure", type="smallint", precision=4, nullable=true, options={"unsigned":true})
      */
     private $pressure;
 
     /**
-     * @var integer
+     * @var int
      *
-     * @ORM\Column(name="weatherid", type="smallint", nullable=false, options={"default":1})
+     * @ORM\Column(name="weatherid", type="smallint", nullable=false)
      */
-    private $weatherid = '1';
+    private $weatherid = 1;
 
     /**
-     * @var boolean
+     * @var int|null
      *
-     * @ORM\Column(name="weather_source", columnDefinition="TINYINT unsigned DEFAULT NULL")
+     * @ORM\Column(name="weather_source", type="tinyint", nullable=true, options={"unsigned":true})
      */
     private $weatherSource;
 
     /**
-     * Set geohash
-     *
      * @param string $geohash
      *
-     * @return Weathercache
+     * @return $this
      */
     public function setGeohash($geohash)
     {
@@ -94,8 +92,6 @@ class Weathercache
     }
 
     /**
-     * Get geohash
-     *
      * @return string
      */
     public function getGeohash()
@@ -104,11 +100,9 @@ class Weathercache
     }
 
     /**
-     * Set time
+     * @param int $time
      *
-     * @param string $time
-     *
-     * @return Weathercache
+     * @return $this
      */
     public function setTime($time)
     {
@@ -118,9 +112,7 @@ class Weathercache
     }
 
     /**
-     * Get time
-     *
-     * @return string
+     * @return int
      */
     public function getTime()
     {
@@ -128,11 +120,9 @@ class Weathercache
     }
 
     /**
-     * Set temperature
+     * @param int|null $temperature [°C]
      *
-     * @param string $temperature
-     *
-     * @return Weathercache
+     * @return $this
      */
     public function setTemperature($temperature)
     {
@@ -142,9 +132,7 @@ class Weathercache
     }
 
     /**
-     * Get temperature
-     *
-     * @return string
+     * @return int|null [°C]
      */
     public function getTemperature()
     {
@@ -152,11 +140,9 @@ class Weathercache
     }
 
     /**
-     * Set windSpeed
+     * @param int|null $windSpeed [km/h]
      *
-     * @param string $windSpeed
-     *
-     * @return Weathercache
+     * @return $this
      */
     public function setWindSpeed($windSpeed)
     {
@@ -166,9 +152,7 @@ class Weathercache
     }
 
     /**
-     * Get windSpeed
-     *
-     * @return string
+     * @return int|null [km/h]
      */
     public function getWindSpeed()
     {
@@ -176,11 +160,9 @@ class Weathercache
     }
 
     /**
-     * Set windDeg
+     * @param int|null $windDeg [°]
      *
-     * @param string $windDeg
-     *
-     * @return Weathercache
+     * @return $this
      */
     public function setWindDeg($windDeg)
     {
@@ -190,9 +172,7 @@ class Weathercache
     }
 
     /**
-     * Get windDeg
-     *
-     * @return string
+     * @return int|null [°]
      */
     public function getWindDeg()
     {
@@ -200,11 +180,9 @@ class Weathercache
     }
 
     /**
-     * Set humidity
+     * @param int|null $humidity [%]
      *
-     * @param string $humidity
-     *
-     * @return Weathercache
+     * @return $this
      */
     public function setHumidity($humidity)
     {
@@ -214,9 +192,7 @@ class Weathercache
     }
 
     /**
-     * Get humidity
-     *
-     * @return string
+     * @return int|null [%]
      */
     public function getHumidity()
     {
@@ -224,11 +200,9 @@ class Weathercache
     }
 
     /**
-     * Set pressure
+     * @param int|null $pressure [hPa]
      *
-     * @param string $pressure
-     *
-     * @return Weathercache
+     * @return $this
      */
     public function setPressure($pressure)
     {
@@ -238,9 +212,7 @@ class Weathercache
     }
 
     /**
-     * Get pressure
-     *
-     * @return string
+     * @return int|null [hPa]
      */
     public function getPressure()
     {
@@ -248,11 +220,9 @@ class Weathercache
     }
 
     /**
-     * Set weatherid
+     * @param int $weatherid
      *
-     * @param string $weatherid
-     *
-     * @return Weathercache
+     * @return $this
      */
     public function setWeatherid($weatherid)
     {
@@ -262,9 +232,7 @@ class Weathercache
     }
 
     /**
-     * Get weatherid
-     *
-     * @return string
+     * @return int
      */
     public function getWeatherid()
     {
@@ -272,11 +240,9 @@ class Weathercache
     }
 
     /**
-     * Set weatherSource
+     * @param int|null $weatherSource
      *
-     * @param string $weatherSource
-     *
-     * @return Weathercache
+     * @return $this
      */
     public function setWeatherSource($weatherSource)
     {
@@ -286,9 +252,7 @@ class Weathercache
     }
 
     /**
-     * Get weatherSource
-     *
-     * @return string
+     * @return int|null
      */
     public function getWeatherSource()
     {

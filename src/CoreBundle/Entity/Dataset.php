@@ -26,7 +26,7 @@ class Dataset
     /**
      * @var bool
      *
-     * @ORM\Column(name="keyid", columnDefinition="tinyint unsigned NOT NULL")
+     * @ORM\Column(name="keyid", type="tinyint", options={"unsigned":true})
      * @ORM\Id
      */
     private $keyid;
@@ -34,7 +34,7 @@ class Dataset
     /**
      * @var bool
      *
-     * @ORM\Column(name="active", type="boolean", columnDefinition="tinyint unsigned NOT NULL DEFAULT 1")
+     * @ORM\Column(name="active", type="boolean")
      */
     private $active = true;
 
@@ -48,11 +48,12 @@ class Dataset
     /**
      * @var int
      *
-     * @ORM\Column(name="position", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
+     * @ORM\Column(name="position", type="tinyint", options={"unsigned":true})
      */
     private $position = 0;
 
     /**
+     * @param Account $account
      * @return $this
      */
     public function setAccount(Account $account)
@@ -91,13 +92,13 @@ class Dataset
     }
 
     /**
-     * @param bool $active
+     * @param bool $flag
      *
      * @return $this
      */
-    public function setActive($active)
+    public function setActive($flag = true)
     {
-        $this->active = (bool)$active;
+        $this->active = (bool)$flag;
 
         return $this;
     }

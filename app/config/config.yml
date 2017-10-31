@@ -77,6 +77,7 @@ doctrine:
                 mapping_types:
                     enum:   string
         types:
+            tinyint: Runalyze\Bundle\CoreBundle\Doctrine\Types\TinyIntType
             pipe_array: Runalyze\Bundle\CoreBundle\Doctrine\Types\PipeDelimitedArray
             geohash_array: Runalyze\Bundle\CoreBundle\Doctrine\Types\GeohashArray
             runalyze_pause_array: Runalyze\Bundle\CoreBundle\Doctrine\Types\RunalyzePauseArray

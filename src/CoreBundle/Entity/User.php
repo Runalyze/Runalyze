@@ -40,14 +40,14 @@ class User
     /**
      * @var int|null [bpm]
      *
-     * @ORM\Column(name="pulse_rest", columnDefinition="tinyint unsigned DEFAULT NULL")
+     * @ORM\Column(name="pulse_rest", type="tinyint", nullable=true, options={"unsigned":true})
      */
     private $pulseRest;
 
     /**
      * @var int|null [bpm]
      *
-     * @ORM\Column(name="pulse_max", columnDefinition="tinyint unsigned DEFAULT NULL")
+     * @ORM\Column(name="pulse_max", type="tinyint", nullable=true, options={"unsigned":true})
      */
     private $pulseMax;
 

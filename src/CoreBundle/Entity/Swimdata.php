@@ -29,7 +29,7 @@ class Swimdata
     /**
      * @var int [cm]
      *
-     * @ORM\Column(name="pool_length", type="smallint", precision=5, nullable=false, options={"unsigned":true, "default":0})
+     * @ORM\Column(name="pool_length", type="smallint", precision=5, nullable=false, options={"unsigned":true})
      */
     private $poolLength = 0;
 
@@ -59,7 +59,7 @@ class Swimdata
 
 
     /**
-     * @param array|null
+     * @param array|null $stroke
      * @return $this
      */
     public function setStroke(array $stroke = null)
@@ -78,12 +78,12 @@ class Swimdata
     }
 
     /**
-     * @param array|null
+     * @param array|null $strokeType
      * @return $this
      */
-    public function setStroketype(array $stroketype = null)
+    public function setStroketype(array $strokeType = null)
     {
-        $this->stroketype = $stroketype;
+        $this->stroketype = $strokeType;
 
         return $this;
     }

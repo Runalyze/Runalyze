@@ -2,6 +2,7 @@
 
 namespace Runalyze\Bundle\CoreBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -13,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Tag
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer", nullable=false, options={"unsigned":true})
      * @ORM\Id
@@ -45,18 +46,13 @@ class Tag
      */
     private $activity;
 
-    /**
-     * Constructor
-     */
     public function __construct()
     {
-        $this->activity = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->activity = new ArrayCollection();
     }
 
     /**
-     * Get id
-     *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -64,11 +60,9 @@ class Tag
     }
 
     /**
-     * Set tag
-     *
      * @param string $tag
      *
-     * @return Tag
+     * @return $this
      */
     public function setTag($tag)
     {
@@ -78,8 +72,6 @@ class Tag
     }
 
     /**
-     * Get tag
-     *
      * @return string
      */
     public function getTag()

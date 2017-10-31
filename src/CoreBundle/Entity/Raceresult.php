@@ -30,7 +30,7 @@ class Raceresult
     /**
      * @var bool
      *
-     * @ORM\Column(name="officially_measured", type="boolean", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
+     * @ORM\Column(name="officially_measured", type="boolean")
      */
     private $officiallyMeasured = false;
 
@@ -44,42 +44,42 @@ class Raceresult
     /**
      * @var int|null
      *
-     * @ORM\Column(name="place_total", columnDefinition="mediumint unsigned DEFAULT NULL")
+     * @ORM\Column(name="place_total", type="integer", nullable=true, options={"unsigned":true})
      */
     private $placeTotal;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="place_gender", columnDefinition="mediumint unsigned DEFAULT NULL")
+     * @ORM\Column(name="place_gender", type="integer", nullable=true, options={"unsigned":true})
      */
     private $placeGender;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="place_ageclass", columnDefinition="mediumint unsigned DEFAULT NULL")
+     * @ORM\Column(name="place_ageclass", type="integer", nullable=true, options={"unsigned":true})
      */
     private $placeAgeclass;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="participants_total", columnDefinition="mediumint unsigned DEFAULT NULL")
+     * @ORM\Column(name="participants_total", type="integer", nullable=true, options={"unsigned":true})
      */
     private $participantsTotal;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="participants_gender", columnDefinition="mediumint unsigned DEFAULT NULL")
+     * @ORM\Column(name="participants_gender", type="integer", nullable=true, options={"unsigned":true})
      */
     private $participantsGender;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="participants_ageclass", columnDefinition="mediumint unsigned DEFAULT NULL")
+     * @ORM\Column(name="participants_ageclass", type="integer", nullable=true, options={"unsigned":true})
      */
     private $participantsAgeclass;
 
@@ -146,13 +146,13 @@ class Raceresult
     }
 
     /**
-     * @param bool $officiallyMeasured
+     * @param bool $flag
      *
      * @return $this
      */
-    public function setOfficiallyMeasured($officiallyMeasured)
+    public function setOfficiallyMeasured($flag)
     {
-        $this->officiallyMeasured = $officiallyMeasured;
+        $this->officiallyMeasured = $flag;
 
         return $this;
     }

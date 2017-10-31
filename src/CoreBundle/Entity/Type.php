@@ -49,23 +49,23 @@ class Type
     /**
      * @var int
      *
-     * @ORM\Column(name="short", type="integer", columnDefinition="tinyint unsigned NOT NULL DEFAULT 2")
+     * @ORM\Column(name="short", type="tinyint", options={"unsigned":true})
      *
      * @see \Runalyze\Profile\View\DataBrowserRowProfile
      */
     private $displayMode = 2;
 
     /**
-     * @var int
+     * @var int [bpm]
      *
-     * @ORM\Column(name="hr_avg", columnDefinition="tinyint unsigned NOT NULL DEFAULT '100'")
+     * @ORM\Column(name="hr_avg", type="tinyint", options={"unsigned":true})
      */
     private $hrAvg = 100;
 
     /**
      * @var bool
      *
-     * @ORM\Column(name="quality_session", type="boolean", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
+     * @ORM\Column(name="quality_session", type="boolean")
      */
     private $qualitySession = false;
 

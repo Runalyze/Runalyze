@@ -2,6 +2,7 @@
 
 namespace Runalyze\Bundle\CoreBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -37,21 +38,21 @@ class EquipmentType
     /**
      * @var int see self::CHOICE_SINGLE and self::CHOICE_MULTIPLE
      *
-     * @ORM\Column(name="input", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
+     * @ORM\Column(name="input", type="tinyint", options={"unsigned":true})
      */
     private $input = 0;
 
     /**
      * @var null|int [km]
      *
-     * @ORM\Column(name="max_km", columnDefinition="mediumint unsigned DEFAULT NULL")
+     * @ORM\Column(name="max_km", type="integer", nullable=true, options={"unsigned":true})
      */
     private $maxKm = null;
 
     /**
      * @var null|int [s]
      *
-     * @ORM\Column(name="max_time", columnDefinition="mediumint unsigned DEFAULT NULL")
+     * @ORM\Column(name="max_time", type="integer", nullable=true, options={"unsigned":true})
      */
     private $maxTime = null;
 
@@ -82,7 +83,7 @@ class EquipmentType
 
     public function __construct()
     {
-        $this->sport = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->sport = new ArrayCollection();
     }
 
     /**

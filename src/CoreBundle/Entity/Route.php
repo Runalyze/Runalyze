@@ -46,30 +46,30 @@ class Route
     private $cities = '';
 
     /**
-     * @var float
+     * @var float [km]
      *
-     * @ORM\Column(name="distance", type="decimal", precision=6, scale=2, options={"unsigned":true, "default":0.00})
+     * @ORM\Column(name="distance", type="decimal", precision=6, scale=2, options={"unsigned":true})
      */
     private $distance = 0.0;
 
     /**
-     * @var int
+     * @var int [m]
      *
-     * @ORM\Column(name="elevation", type="smallint", nullable=false, options={"unsigned":true, "default":0})
+     * @ORM\Column(name="elevation", type="smallint", nullable=false, options={"unsigned":true})
      */
     private $elevation = 0;
 
     /**
-     * @var int
+     * @var int [m]
      *
-     * @ORM\Column(name="elevation_up", type="smallint", nullable=false, options={"unsigned":true, "default":0})
+     * @ORM\Column(name="elevation_up", type="smallint", nullable=false, options={"unsigned":true})
      */
     private $elevationUp = 0;
 
     /**
-     * @var int
+     * @var int [m]
      *
-     * @ORM\Column(name="elevation_down", type="smallint", nullable=false, options={"unsigned":true, "default":0})
+     * @ORM\Column(name="elevation_down", type="smallint", nullable=false, options={"unsigned":true})
      */
     private $elevationDown = 0;
 
@@ -81,14 +81,14 @@ class Route
     private $geohashes;
 
     /**
-     * @var array|null
+     * @var array|null [m]
      *
      * @ORM\Column(name="elevations_original", type="pipe_array", nullable=true)
      */
     private $elevationsOriginal;
 
     /**
-     * @var array|null
+     * @var array|null [m]
      *
      * @ORM\Column(name="elevations_corrected", type="pipe_array", nullable=true)
      */
@@ -132,7 +132,7 @@ class Route
     /**
      * @var bool
      *
-     * @ORM\Column(name="in_routenet", type="boolean", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
+     * @ORM\Column(name="in_routenet", type="boolean")
      */
     private $inRoutenet = false;
 
@@ -149,7 +149,7 @@ class Route
     /**
      * @var bool
      *
-     * @ORM\Column(name="`lock`", type="boolean", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
+     * @ORM\Column(name="`lock`", type="boolean")
      */
     private $lock = false;
 
@@ -205,7 +205,7 @@ class Route
     }
 
     /**
-     * @param float $distance
+     * @param float $distance [km]
      *
      * @return $this
      */
@@ -217,7 +217,7 @@ class Route
     }
 
     /**
-     * @return float
+     * @return float [km]
      */
     public function getDistance()
     {
@@ -225,7 +225,7 @@ class Route
     }
 
     /**
-     * @param int $elevation
+     * @param int $elevation [m]
      *
      * @return $this
      */
@@ -237,7 +237,7 @@ class Route
     }
 
     /**
-     * @return int
+     * @return int [m]
      */
     public function getElevation()
     {
@@ -245,7 +245,7 @@ class Route
     }
 
     /**
-     * @param int $elevationUp
+     * @param int $elevationUp [m]
      *
      * @return $this
      */
@@ -257,7 +257,7 @@ class Route
     }
 
     /**
-     * @return int
+     * @return int [m]
      */
     public function getElevationUp()
     {
@@ -265,7 +265,7 @@ class Route
     }
 
     /**
-     * @param int $elevationDown
+     * @param int $elevationDown [m]
      *
      * @return $this
      */
@@ -277,7 +277,7 @@ class Route
     }
 
     /**
-     * @return int
+     * @return int [m]
      */
     public function getElevationDown()
     {
@@ -380,7 +380,7 @@ class Route
     }
 
     /**
-     * @param array|null $elevationsOriginal
+     * @param array|null $elevationsOriginal [m]
      *
      * @return $this
      */
@@ -392,7 +392,7 @@ class Route
     }
 
     /**
-     * @return array|null
+     * @return array|null [m]
      */
     public function getElevationsOriginal()
     {
@@ -400,7 +400,7 @@ class Route
     }
 
     /**
-     * @param array|null $elevationsCorrected
+     * @param array|null $elevationsCorrected [m]
      *
      * @return $this
      */
@@ -412,7 +412,7 @@ class Route
     }
 
     /**
-     * @return array|null
+     * @return array|null [m]
      */
     public function getElevationsCorrected()
     {
@@ -420,7 +420,7 @@ class Route
     }
 
     /**
-     * @return array|null
+     * @return array|null [m]
      */
     public function getElevations()
     {
@@ -540,13 +540,13 @@ class Route
     }
 
     /**
-     * @param bool $inRoutenet
+     * @param bool $flag
      *
      * @return $this
      */
-    public function setInRoutenet($inRoutenet)
+    public function setInRoutenet($flag)
     {
-        $this->inRoutenet = (bool)$inRoutenet;
+        $this->inRoutenet = (bool)$flag;
 
         return $this;
     }
@@ -580,13 +580,13 @@ class Route
     }
 
     /**
-     * @param bool $lock
+     * @param bool $flag
      *
      * @return $this
      */
-    public function setLock($lock)
+    public function setLock($flag)
     {
-        $this->lock = (bool)$lock;
+        $this->lock = (bool)$flag;
 
         return $this;
     }

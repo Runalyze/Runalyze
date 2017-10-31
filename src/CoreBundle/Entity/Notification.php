@@ -33,14 +33,14 @@ class Notification
     private $messageType;
 
     /**
-     * @var int
+     * @var int [timestamp]
      *
      * @ORM\Column(name="createdAt", type="integer", nullable=false, options={"unsigned":true})
      */
     private $createdAt;
 
     /**
-     * @var null|int
+     * @var null|int [timestamp]
      *
      * @ORM\Column(name="expirationAt", type="integer", nullable=true, options={"unsigned":true})
      */
@@ -54,6 +54,8 @@ class Notification
     private $data;
 
     /**
+     * @var bool
+     *
      * @ORM\Column(name="wasRead", type="boolean")
      */
     protected $wasRead = false;
@@ -182,13 +184,13 @@ class Notification
     }
 
     /**
-     * @param bool $wasRead
+     * @param bool $flag
      *
      * @return $this
      */
-    public function setRead($wasRead = true)
+    public function setRead($flag = true)
     {
-        $this->wasRead = (bool)$wasRead;
+        $this->wasRead = (bool)$flag;
 
         return $this;
     }

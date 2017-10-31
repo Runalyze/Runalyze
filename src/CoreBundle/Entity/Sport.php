@@ -2,6 +2,7 @@
 
 namespace Runalyze\Bundle\CoreBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Runalyze\Metrics\Velocity\Unit\AbstractPaceUnit;
 use Runalyze\Metrics\Velocity\Unit\PaceEnum;
@@ -43,49 +44,49 @@ class Sport
     /**
      * @var bool
      *
-     * @ORM\Column(name="short", type="boolean", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
+     * @ORM\Column(name="short", type="boolean")
      */
     private $short = false;
 
     /**
      * @var int [kcal/h]
      *
-     * @ORM\Column(name="kcal", type="smallint", precision=4, nullable=false, options={"unsigned":true, "default":0})
+     * @ORM\Column(name="kcal", type="smallint", precision=4, nullable=false, options={"unsigned":true})
      */
     private $kcal = 0;
 
     /**
      * @var int [bpm]
      *
-     * @ORM\Column(name="HFavg", columnDefinition="tinyint unsigned NOT NULL DEFAULT 120")
+     * @ORM\Column(name="HFavg", type="tinyint", options={"unsigned":true})
      */
     private $hfavg = 120;
 
     /**
      * @var bool
      *
-     * @ORM\Column(name="distances", type="boolean", columnDefinition="tinyint unsigned NOT NULL DEFAULT 1")
+     * @ORM\Column(name="distances", type="boolean")
      */
     private $distances = true;
 
     /**
      * @var int see \Runalyze\Metrics\Velocity\Unit\PaceEnum
      *
-     * @ORM\Column(name="speed", columnDefinition="tinyint unsigned NOT NULL DEFAULT 6")
+     * @ORM\Column(name="speed", type="tinyint", options={"unsigned":true})
      */
     private $speed = 6;
 
     /**
      * @var bool
      *
-     * @ORM\Column(name="power", type="boolean", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
+     * @ORM\Column(name="power", type="boolean")
      */
     private $power = false;
 
     /**
      * @var bool
      *
-     * @ORM\Column(name="outside", type="boolean", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
+     * @ORM\Column(name="outside", type="boolean")
      */
     private $outside = false;
 
@@ -112,14 +113,14 @@ class Sport
     /**
      * @var bool
      *
-     * @ORM\Column(name="is_main", type="boolean", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
+     * @ORM\Column(name="is_main", type="boolean")
      */
     private $isMain = false;
 
     /**
      * @var int|null see \Runalyze\Profile\Sport\SportProfile
      *
-     * @ORM\Column(name="internal_sport_id", nullable=true, columnDefinition="tinyint NULL")
+     * @ORM\Column(name="internal_sport_id", type="tinyint", nullable=true, options={"unsigned":true})
      */
     private $internalSportId = null;
 
@@ -154,7 +155,7 @@ class Sport
 
     public function __construct()
     {
-        $this->equipmentType = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->equipmentType = new ArrayCollection();
     }
 
     /**
@@ -225,19 +226,18 @@ class Sport
     }
 
     /**
-     * @param bool $short
+     * @param bool $flag
      *
      * @return $this
      */
-    public function setShort($short)
+    public function setShort($flag)
     {
-        $this->short = $short;
+        $this->short = $flag;
 
         return $this;
     }
 
     /**
-     * Get short
      * @return bool
      */
     public function getShort()
@@ -286,13 +286,13 @@ class Sport
     }
 
     /**
-     * @param bool $distances
+     * @param bool $flag
      *
      * @return $this
      */
-    public function setDistances($distances)
+    public function setDistances($flag)
     {
-        $this->distances = $distances;
+        $this->distances = $flag;
 
         return $this;
     }
@@ -306,13 +306,13 @@ class Sport
     }
 
     /**
-     * @param int $speed see \Runalyze\Metrics\Velocity\Unit\PaceEnum
+     * @param int $enum see \Runalyze\Metrics\Velocity\Unit\PaceEnum
      *
      * @return $this
      */
-    public function setSpeed($speed)
+    public function setSpeed($enum)
     {
-        $this->speed = $speed;
+        $this->speed = $enum;
 
         return $this;
     }
@@ -334,13 +334,13 @@ class Sport
     }
 
     /**
-     * @param bool $power
+     * @param bool $flag
      *
      * @return $this
      */
-    public function setPower($power)
+    public function setPower($flag)
     {
-        $this->power = $power;
+        $this->power = $flag;
 
         return $this;
     }
@@ -354,13 +354,13 @@ class Sport
     }
 
     /**
-     * @param bool $outside
+     * @param bool $flag
      *
      * @return $this
      */
-    public function setOutside($outside)
+    public function setOutside($flag)
     {
-        $this->outside = $outside;
+        $this->outside = $flag;
 
         return $this;
     }
@@ -394,7 +394,7 @@ class Sport
     }
 
     /**
-     * @param Type $defaultType
+     * @param Type|null $defaultType
      *
      * @return $this
      */
@@ -414,13 +414,13 @@ class Sport
     }
 
     /**
-     * @param bool $isMain
+     * @param bool $flag
      *
      * @return $this
      */
-    public function setIsMain($isMain = true)
+    public function setIsMain($flag = true)
     {
-        $this->isMain = $isMain;
+        $this->isMain = $flag;
 
         return $this;
     }

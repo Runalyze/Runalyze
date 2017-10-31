@@ -120,6 +120,7 @@ Helper::Unknown('');
 require_once FRONTEND_PATH.'../tests/fake/FakeContext.php';
 
 // Add doctrine types (required for test cases that do not use the kernel)
+\Doctrine\DBAL\Types\Type::addType(\Runalyze\Bundle\CoreBundle\Doctrine\Types\TinyIntType::TINYINT, \Runalyze\Bundle\CoreBundle\Doctrine\Types\TinyIntType::class);
 \Doctrine\DBAL\Types\Type::addType(\Runalyze\Bundle\CoreBundle\Doctrine\Types\PipeDelimitedArray::PIPE_ARRAY, \Runalyze\Bundle\CoreBundle\Doctrine\Types\PipeDelimitedArray::class);
 \Doctrine\DBAL\Types\Type::addType(\Runalyze\Bundle\CoreBundle\Doctrine\Types\GeohashArray::GEOHASH_ARRAY, \Runalyze\Bundle\CoreBundle\Doctrine\Types\GeohashArray::class);
 \Doctrine\DBAL\Types\Type::addType(\Runalyze\Bundle\CoreBundle\Doctrine\Types\RunalyzePauseArray::RUNALYZE_PAUSE_ARRAY, \Runalyze\Bundle\CoreBundle\Doctrine\Types\RunalyzePauseArray::class);
