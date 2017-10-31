@@ -92,6 +92,15 @@ class RecalculationManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('68', $this->ConfigurationManager->getList($this->Account)->get('data.BASIC_ENDURANCE'));
     }
 
+    public function testThatStartTimeCanBeUpdatedWithoutFullRecalculation()
+    {
+        $this->Manager->addStartTimeCheck($this->Account, 100000000, false);
+        $this->Manager->runScheduledTasks();
+
+        $this->assertEquals('100000000', $this->ConfigurationManager->getList($this->Account)->get('data.START_TIME'));
+
+    }
+
     protected function getAccountMock()
     {
         /** @var Account */

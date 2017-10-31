@@ -206,6 +206,10 @@ class ActivityDataContainerToActivityContextConverter
         if (null !== $trackData) {
             $trackData->setActivity($activity);
             $activity->setTrackdata($trackData);
+
+            if ($trackData->hasPower()) {
+                $activity->setPowerCalculated(false);
+            }
         }
     }
 

@@ -20,6 +20,9 @@ class RecalculationManager
     /** @var array */
     protected $AccountRelatedTaskNames = [];
 
+    /** @var array [accountId => startTime] */
+    protected $CurrentStartTimes = [];
+
     /** @var ConfigurationManager */
     protected $ConfigurationManager;
 
@@ -59,12 +62,64 @@ class RecalculationManager
         return count($this->AccountRelatedTaskNames[$account->getId()]);
     }
 
-    public function scheduleStartTimeCalculation(Account $account)
+    /**
+     * @param Account $account
+     * @param int $timestamp
+     * @param bool $isRemoved
+     */
+    public function addStartTimeCheck(Account $account, $timestamp, $isRemoved)
+    {
+        $currentStartTime = $this->getCurrentStartTime($account);
+
+        if ($isRemoved) {
+            if ($timestamp <= $currentStartTime) {
+                $this->scheduleStartTimeCalculation($account, true);
+            }
+        } else {
+            if ($timestamp < $currentStartTime) {
+                $task = $this->scheduleStartTimeCalculation($account, false);
+                $task->setNewStartTime($timestamp);
+            }
+        }
+    }
+
+    /**
+     * @param Account $account
+     * @return int
+     */
+    protected function getCurrentStartTime(Account $account)
+    {
+        if (!isset($this->CurrentStartTimes[$account->getId()])) {
+            $this->CurrentStartTimes[$account->getId()] = $this->ConfigurationManager->getList($account)->getData()->getStartTime();
+
+            if (0 == $this->CurrentStartTimes[$account->getId()]) {
+                $this->CurrentStartTimes[$account->getId()] = PHP_INT_MAX;
+            }
+        }
+
+        return $this->CurrentStartTimes[$account->getId()];
+    }
+
+    /**
+     * @param Account $account
+     * @param bool $forceRecalculation
+     * @return StartTimeCalculation
+     */
+    public function scheduleStartTimeCalculation(Account $account, $forceRecalculation = true)
     {
         if (!$this->isTaskScheduled($account, StartTimeCalculation::class)) {
             $task = new StartTimeCalculation($this->TrainingRepository, $this->ConfigurationUpdater);
             $this->scheduleTaskForAccount($account, $task);
+        } else {
+            /** @var StartTimeCalculation $task */
+            $task = $this->Tasks->offsetGet($this->AccountRelatedTaskNames[$account->getId()][StartTimeCalculation::class]);
         }
+
+        if ($forceRecalculation) {
+            $task->forceRecalculation();
+        }
+
+        return $task;
     }
 
     public function scheduleEffectiveVO2maxCorrectionFactorCalculation(Account $account)
@@ -79,6 +134,7 @@ class RecalculationManager
     {
         if (!$this->isTaskScheduled($account, VO2maxShapeCalculation::class)) {
             if ($this->isTaskScheduled($account, MarathonShapeCalculation::class)) {
+                $this->Tasks->offsetUnset($this->AccountRelatedTaskNames[$account->getId()][VO2maxShapeCalculation::class]);
                 unset($this->AccountRelatedTaskNames[$account->getId()][VO2maxShapeCalculation::class]);
             }
 
@@ -119,8 +175,8 @@ class RecalculationManager
         $taskName = get_class($task);
 
         $task->setAccount($account);
-        $this->Tasks->addTask($task);
-        $this->AccountRelatedTaskNames[$accountId][$taskName] = true;
+
+        $this->AccountRelatedTaskNames[$accountId][$taskName] = $this->Tasks->addTask($task);
     }
 
     public function runScheduledTasks()
@@ -129,5 +185,6 @@ class RecalculationManager
         $this->Tasks->clear();
 
         $this->AccountRelatedTaskNames = [];
+        $this->CurrentStartTimes = [];
     }
 }

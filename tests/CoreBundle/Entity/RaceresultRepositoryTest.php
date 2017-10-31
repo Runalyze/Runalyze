@@ -66,7 +66,7 @@ class RaceresultRepositoryTest extends AbstractRepositoryTestCase
         $this->assertEquals('10', $races[0][0]['officialDistance']);
         $this->assertEquals('Awesome pirace', $races[0][0]['name']);
 
-        $this->assertEquals(0, $this->getContainer()->get('app.recalculation_manager')->getNumberOfScheduledTasksFor($this->Account));
+        $this->assertFalse($this->getContainer()->get('app.recalculation_manager')->isTaskScheduled($this->Account, VO2maxCorrectionFactorCalculation::class));
     }
 
     public function testFindingVO2maxCorrectionFactorForSingleRace()
@@ -80,7 +80,6 @@ class RaceresultRepositoryTest extends AbstractRepositoryTestCase
             $this->getDefaultAccountsRunningSport()->getId()
         ));
 
-        $this->assertGreaterThan(0, $this->getContainer()->get('app.recalculation_manager')->getNumberOfScheduledTasksFor($this->Account));
         $this->assertTrue($this->getContainer()->get('app.recalculation_manager')->isTaskScheduled($this->Account, VO2maxCorrectionFactorCalculation::class));
     }
 

@@ -4,6 +4,7 @@ namespace Runalyze\Bundle\CoreBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Runalyze\Bundle\CoreBundle\Entity\Adapter\ActivityAdapter;
 use Runalyze\Parser\Activity\Common\Data\Round\RoundCollection;
 
 /**
@@ -11,6 +12,7 @@ use Runalyze\Parser\Activity\Common\Data\Round\RoundCollection;
  *
  * @ORM\Table(name="training", indexes={@ORM\Index(name="time", columns={"accountid", "time"}), @ORM\Index(name="sportid", columns={"accountid", "sportid"}), @ORM\Index(name="typeid", columns={"accountid", "typeid"})})
  * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\TrainingRepository")
+ * @ORM\EntityListeners({"Runalyze\Bundle\CoreBundle\EntityListener\ActivityListener"})
  * @ORM\HasLifecycleCallbacks()
  */
 class Training
@@ -246,6 +248,11 @@ class Training
      * @ORM\Column(name="power", type="integer", length=4, nullable=true, options={"unsigned":true})
      */
     private $power = null;
+
+    /**
+     * @var bool|null
+     */
+    private $isPowerCalculated = null;
 
     /**
      * @var int|null
@@ -492,6 +499,9 @@ class Training
      * @ORM\OneToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Raceresult", mappedBy="activity")
      */
     private $raceresult;
+
+    /** @var null|ActivityAdapter */
+    private $Adapter;
 
     public function __construct()
     {
@@ -1150,6 +1160,25 @@ class Training
     public function getPower()
     {
         return $this->power;
+    }
+
+    /**
+     * @param bool|null $flag
+     * @return $this
+     */
+    public function setPowerCalculated($flag)
+    {
+        $this->isPowerCalculated = null === $flag ? null : (bool)$flag;
+
+        return $this;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isPowerCalculated()
+    {
+        return $this->isPowerCalculated;
     }
 
     /**
@@ -1818,5 +1847,17 @@ class Training
     public function hasRaceresult()
     {
         return null !== $this->raceresult;
+    }
+
+    /**
+     * @return ActivityAdapter
+     */
+    public function getAdapter()
+    {
+        if (null === $this->Adapter) {
+            $this->Adapter = new ActivityAdapter($this);
+        }
+
+        return $this->Adapter;
     }
 }

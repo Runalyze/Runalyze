@@ -17,10 +17,31 @@ class StartTimeCalculation implements RecalculationTaskInterface
     /** @var ConfigurationUpdater */
     protected $ConfigurationUpdater;
 
+    /** @var bool */
+    protected $ForceRecalculation = false;
+
+    /** @var int|null */
+    protected $NewStartTime = null;
+
     public function __construct(TrainingRepository $repository, ConfigurationUpdater $updater)
     {
         $this->TrainingRepository = $repository;
         $this->ConfigurationUpdater = $updater;
+    }
+
+    public function forceRecalculation()
+    {
+        $this->ForceRecalculation = true;
+    }
+
+    /**
+     * @param int $timestamp
+     */
+    public function setNewStartTime($timestamp)
+    {
+        if (null === $this->NewStartTime || $timestamp < $this->NewStartTime) {
+            $this->NewStartTime = $timestamp;
+        }
     }
 
     public function run()
@@ -29,8 +50,10 @@ class StartTimeCalculation implements RecalculationTaskInterface
             return;
         }
 
-        $startTime = $this->TrainingRepository->getStartTime($this->Account);
+        if ($this->ForceRecalculation || null === $this->NewStartTime) {
+            $this->NewStartTime = $this->TrainingRepository->getStartTime($this->Account);
+        }
 
-        $this->ConfigurationUpdater->updateStartTime($this->Account, $startTime);
+        $this->ConfigurationUpdater->updateStartTime($this->Account, $this->NewStartTime);
     }
 }
