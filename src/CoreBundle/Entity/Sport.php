@@ -147,6 +147,13 @@ class Sport
     private $equipmentType;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection|Type[]
+     *
+     * @ORM\OneToMany(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Type", mappedBy="sport", fetch="EXTRA_LAZY")
+     */
+    protected $types;
+
+    /**
      * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\OneToMany(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Training", mappedBy="sport", cascade={"persist"}, fetch="EXTRA_LAZY")
@@ -156,6 +163,8 @@ class Sport
     public function __construct()
     {
         $this->equipmentType = new ArrayCollection();
+        $this->types = new ArrayCollection();
+        $this->trainings = new ArrayCollection();
     }
 
     /**
@@ -535,6 +544,14 @@ class Sport
     public function hasEquipmentTypes()
     {
         return !$this->equipmentType->isEmpty();
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\Collection|Type[]
+     */
+    public function getTypes()
+    {
+        return $this->types;
     }
 
     /**

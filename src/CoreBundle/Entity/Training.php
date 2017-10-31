@@ -49,42 +49,42 @@ class Training
     /**
      * @var int [timestamp]
      *
-     * @ORM\Column(name="time", type="integer", precision=11, nullable=false)
+     * @ORM\Column(name="time", type="integer", nullable=false)
      */
     private $time;
 
     /**
      * @var int|null [min]
      *
-     * @ORM\Column(name="timezone_offset", type="smallint", precision=6, nullable=true)
+     * @ORM\Column(name="timezone_offset", type="smallint", nullable=true)
      */
     private $timezoneOffset = null;
 
     /**
      * @var int|null [timestamp]
      *
-     * @ORM\Column(name="created", type="integer", precision=11, nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="created", type="integer", nullable=true, options={"unsigned":true})
      */
     private $created = null;
 
     /**
      * @var int|null [timestamp]
      *
-     * @ORM\Column(name="edited", type="integer", precision=11, nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="edited", type="integer", nullable=true, options={"unsigned":true})
      */
     private $edited = null;
 
     /**
      * @var bool
      *
-     * @ORM\Column(name="is_public", type="boolean", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
+     * @ORM\Column(name="is_public", type="boolean")
      */
     private $isPublic = false;
 
     /**
      * @var bool
      *
-     * @ORM\Column(name="is_track", type="boolean", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
+     * @ORM\Column(name="is_track", type="boolean")
      */
     private $isTrack = false;
 
@@ -98,21 +98,21 @@ class Training
     /**
      * @var float [s]
      *
-     * @ORM\Column(name="s", type="decimal", precision=8, scale=2, options={"unsigned":true, "default":0.00})
+     * @ORM\Column(name="s", type="decimal", precision=8, scale=2, options={"unsigned":true})
      */
     private $s;
 
     /**
      * @var int|null [s]
      *
-     * @ORM\Column(name="elapsed_time", columnDefinition="mediumint unsigned DEFAULT NULL")
+     * @ORM\Column(name="elapsed_time", type="integer", nullable=true, options={"unsigned":true})
      */
     private $elapsedTime = null;
 
     /**
      * @var int|null [m]
      *
-     * @ORM\Column(name="elevation", columnDefinition="smallint unsigned DEFAULT NULL")
+     * @ORM\Column(name="elevation", type="smallint", nullable=true, options={"unsigned":true})
      */
     private $elevation = null;
 
@@ -133,21 +133,21 @@ class Training
     /**
      * @var int|null [kcal]
      *
-     * @ORM\Column(name="kcal", columnDefinition="smallint unsigned DEFAULT NULL")
+     * @ORM\Column(name="kcal", type="smallint", nullable=true, options={"unsigned":true})
      */
     private $kcal = null;
 
     /**
      * @var int|null [bpm]
      *
-     * @ORM\Column(name="pulse_avg", columnDefinition="tinyint unsigned DEFAULT NULL")
+     * @ORM\Column(name="pulse_avg", type="tinyint", nullable=true, options={"unsigned":true})
      */
     private $pulseAvg = null;
 
     /**
      * @var int|null [bpm]
      *
-     * @ORM\Column(name="pulse_max", columnDefinition="tinyint unsigned DEFAULT NULL")
+     * @ORM\Column(name="pulse_max", type="tinyint", nullable=true, options={"unsigned":true})
      */
     private $pulseMax = null;
 
@@ -175,7 +175,7 @@ class Training
     /**
      * @var bool
      *
-     * @ORM\Column(name="use_vo2max", type="boolean", columnDefinition="tinyint unsigned NOT NULL DEFAULT 1")
+     * @ORM\Column(name="use_vo2max", type="boolean")
      */
     private $useVO2max = true;
 
@@ -210,42 +210,42 @@ class Training
     /**
      * @var int|null
      *
-     * @ORM\Column(name="fit_performance_condition", columnDefinition="tinyint unsigned DEFAULT NULL")
+     * @ORM\Column(name="fit_performance_condition", type="tinyint", nullable=true, options={"unsigned":true})
      */
     private $fitPerformanceCondition = null;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="fit_performance_condition_end", columnDefinition="tinyint unsigned DEFAULT NULL")
+     * @ORM\Column(name="fit_performance_condition_end", type="tinyint", nullable=true, options={"unsigned":true})
      */
     private $fitPerformanceConditionEnd = null;
 
     /**
      * @var int|null [6 .. 20]
      *
-     * @ORM\Column(name="rpe", columnDefinition="tinyint unsigned DEFAULT NULL")
+     * @ORM\Column(name="rpe", type="tinyint", nullable=true, options={"unsigned":true})
      */
     private $rpe = null;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="trimp", columnDefinition="smallint unsigned DEFAULT NULL")
+     * @ORM\Column(name="trimp", type="smallint", nullable=true, options={"unsigned":true})
      */
     private $trimp = null;
 
     /**
      * @var int|null [rpm]
      *
-     * @ORM\Column(name="cadence", type="integer", length=3, nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="cadence", type="smallint", nullable=true, options={"unsigned":true})
      */
     private $cadence = null;
 
     /**
      * @var int|null [W]
      *
-     * @ORM\Column(name="power", type="integer", length=4, nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="power", type="smallint", nullable=true, options={"unsigned":true})
      */
     private $power = null;
 
@@ -264,14 +264,14 @@ class Training
     /**
      * @var int|null
      *
-     * @ORM\Column(name="swolf", columnDefinition="tinyint unsigned DEFAULT NULL")
+     * @ORM\Column(name="swolf", type="tinyint", nullable=true, options={"unsigned":true})
      */
     private $swolf = null;
 
     /**
      * @var bool|null [cm]
      *
-     * @ORM\Column(name="stride_length", columnDefinition="tinyint unsigned DEFAULT NULL")
+     * @ORM\Column(name="stride_length", type="tinyint", nullable=true, options={"unsigned":true})
      */
     private $strideLength = null;
 
@@ -292,7 +292,7 @@ class Training
     /**
      * @var int|null [mm]
      *
-     * @ORM\Column(name="vertical_oscillation", columnDefinition="tinyint unsigned DEFAULT NULL")
+     * @ORM\Column(name="vertical_oscillation", type="tinyint", nullable=true, options={"unsigned":true})
      */
     private $verticalOscillation = null;
 
@@ -306,47 +306,47 @@ class Training
     /**
      * @var int|null [°C]
      *
-     * @ORM\Column(name="temperature", columnDefinition="tinyint DEFAULT NULL")
+     * @ORM\Column(name="temperature", type="tinyint", nullable=true)
      */
     private $temperature = null;
 
     /**
      * @var int|null [km/h]
      *
-     * @ORM\Column(name="wind_speed", columnDefinition="tinyint unsigned DEFAULT NULL")
+     * @ORM\Column(name="wind_speed", type="tinyint", nullable=true, options={"unsigned":true})
      */
     private $windSpeed = null;
 
     /**
      * @var int|null [°]
      *
-     * @ORM\Column(name="wind_deg", columnDefinition="smallint unsigned DEFAULT NULL")
+     * @ORM\Column(name="wind_deg", type="smallint", nullable=true, options={"unsigned":true})
      */
     private $windDeg = null;
 
     /**
      * @var int|null [%]
      *
-     * @ORM\Column(name="humidity", columnDefinition="tinyint unsigned DEFAULT NULL")
+     * @ORM\Column(name="humidity", type="tinyint", nullable=true, options={"unsigned":true})
      */
     private $humidity = null;
 
     /**
      * @var int|null [hPa]
      *
-     * @ORM\Column(name="pressure", columnDefinition="smallint unsigned DEFAULT NULL")
+     * @ORM\Column(name="pressure", type="smallint", nullable=true, options={"unsigned":true})
      */
     private $pressure = null;
 
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="is_night", type="boolean", columnDefinition="tinyint unsigned DEFAULT NULL")
+     * @ORM\Column(name="is_night", type="boolean", nullable=true)
      */
     private $isNight = null;
 
     /**
-     * @var int
+     * @var int enum, see \Runalyze\Profile\Weather\WeatherConditionProfile
      *
      * @ORM\Column(name="weatherid", type="smallint", nullable=false, options={"unsigned":true, "default":1})
      */
@@ -355,7 +355,7 @@ class Training
     /**
      * @var int|null
      *
-     * @ORM\Column(name="weather_source", columnDefinition="tinyint unsigned DEFAULT NULL")
+     * @ORM\Column(name="weather_source", type="tinyint", nullable=true, options={"unsigned":true})
      */
     private $weatherSource = null;
 
@@ -438,7 +438,7 @@ class Training
     /**
      * @var bool
      *
-     * @ORM\Column(name="`lock`", type="boolean", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
+     * @ORM\Column(name="`lock`", type="boolean")
      */
     private $lock = false;
 
@@ -1442,7 +1442,7 @@ class Training
     }
 
     /**
-     * @param int $weatherid
+     * @param int $weatherid enum, see \Runalyze\Profile\Weather\WeatherConditionProfile
      *
      * @return $this
      */
@@ -1454,7 +1454,7 @@ class Training
     }
 
     /**
-     * @return int
+     * @return int enum, see \Runalyze\Profile\Weather\WeatherConditionProfile
      */
     public function getWeatherid()
     {
@@ -1859,5 +1859,14 @@ class Training
         }
 
         return $this->Adapter;
+    }
+
+    /**
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function updateSimpleCalculatedValues()
+    {
+        $this->getAdapter()->updateSimpleCalculatedValues();
     }
 }

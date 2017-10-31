@@ -8,6 +8,7 @@ use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\Sport;
 use Runalyze\Bundle\CoreBundle\Entity\Training;
 use Runalyze\Bundle\CoreBundle\Entity\TrainingRepository;
+use Runalyze\Bundle\CoreBundle\Entity\Type;
 use Runalyze\Parser\Activity\Common\Data\Round\RoundCollection;
 
 /**
@@ -54,6 +55,33 @@ class TrainingRepositoryTest extends AbstractRepositoryTestCase
         $this->TrainingRepository->save($activity);
 
         return $activity;
+    }
+
+    public function testThatSportIsSetToDefaultIfEmpty()
+    {
+        $activity = new Training();
+        $activity->setS(3600);
+        $activity->setTime(time());
+        $activity->setAccount($this->getDefaultAccount());
+
+        $this->TrainingRepository->save($activity);
+
+        $this->assertEquals($this->getDefaultAccountsRunningSport()->getId(), $activity->getSport()->getId());
+    }
+
+    public function testThatTypeIsRemovedIfInvalidForSport()
+    {
+        $type = new Type();
+        $type->setName('Easy ride');
+        $type->setAccount($this->getDefaultAccount());
+        $type->setSport($this->getDefaultAccountsCyclingSport());
+
+        $activity = $this->getActivityForDefaultAccount(null, 3600, 25.0);
+        $activity->setType($type);
+
+        $this->TrainingRepository->save($activity);
+
+        $this->assertNull($activity->getType());
     }
 
     public function testSpeedUnit()

@@ -2,6 +2,7 @@
 
 namespace Runalyze\Bundle\CoreBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -99,7 +100,7 @@ class Equipment
 
     public function __construct()
     {
-        $this->activity = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->activity = new ArrayCollection();
     }
 
     /**

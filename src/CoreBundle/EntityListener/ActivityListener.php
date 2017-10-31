@@ -6,6 +6,8 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Runalyze\Bundle\CoreBundle\Bridge\Activity\Calculation\PowerCalculator;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
+use Runalyze\Bundle\CoreBundle\Entity\Sport;
+use Runalyze\Bundle\CoreBundle\Entity\SportRepository;
 use Runalyze\Bundle\CoreBundle\Entity\Training;
 use Runalyze\Bundle\CoreBundle\Services\Configuration\ConfigurationManager;
 use Runalyze\Bundle\CoreBundle\Services\Recalculation\RecalculationManager;
@@ -19,10 +21,18 @@ class ActivityListener
     /** @var ConfigurationManager */
     protected $ConfigurationManager;
 
-    public function __construct(RecalculationManager $recalculationManager, ConfigurationManager $configurationManager)
+    /** @var SportRepository */
+    protected $SportRepository;
+
+    public function __construct(
+        RecalculationManager $recalculationManager,
+        ConfigurationManager $configurationManager,
+        SportRepository $sportRepository
+    )
     {
         $this->RecalculationManager = $recalculationManager;
         $this->ConfigurationManager = $configurationManager;
+        $this->SportRepository = $sportRepository;
     }
 
     /**
@@ -45,7 +55,11 @@ class ActivityListener
 
     public function prePersist(Training $activity, LifecycleEventArgs $args)
     {
+        $this->checkRelatedEntitiesForConsistency($activity);
+        $this->removeWeatherIfInside($activity);
+        $this->calculateEnergyConsumptionIfEmpty($activity);
         $this->calculatePower($activity);
+        $this->calculateIfActivityWasAtNight($activity);
     }
 
     public function postPersist(Training $activity, LifecycleEventArgs $args)
@@ -56,8 +70,15 @@ class ActivityListener
 
     public function preUpdate(Training $activity, PreUpdateEventArgs $args)
     {
+        $this->checkRelatedEntitiesForConsistency($activity, $args);
+
         if ($args->hasChangedField('sport')) {
+            $this->removeWeatherIfInside($activity);
             $this->calculatePower($activity);
+        }
+
+        if ($args->hasChangedField('time') || $args->hasChangedField('s')) {
+            $this->calculateIfActivityWasAtNight($activity);
         }
 
         $this->scheduleRunningRelatedRecalculationsIfRequiredForUpdate($activity, $args);
@@ -71,10 +92,6 @@ class ActivityListener
         }
     }
 
-    public function postUpdate(Training $activity, LifecycleEventArgs $args)
-    {
-    }
-
     public function postRemove(Training $activity, LifecycleEventArgs $args)
     {
         $this->scheduleRunningRelatedRecalculationsIfRequired($activity);
@@ -82,9 +99,59 @@ class ActivityListener
         $this->addStartTimeCheck($activity->getAccount(), $activity->getTime(), true);
     }
 
+    protected function checkRelatedEntitiesForConsistency(Training $activity, PreUpdateEventArgs $args = null)
+    {
+        if (null === $args || $args->hasChangedField('sport')) {
+            $this->setSportIfEmpty($activity);
+        }
+
+        if (null === $args || $args->hasChangedField('sport') || $args->hasChangedField('type')) {
+            $this->removeTypeIfInvalidForSport($activity);
+        }
+    }
+
+    protected function setSportIfEmpty(Training $activity)
+    {
+        if (null === $activity->getSport()) {
+            /** @var Sport $mainSport */
+            $mainSport = $this->SportRepository->find(
+                $this->ConfigurationManager->getList($activity->getAccount())->getGeneral()->getMainSport()
+            );
+            $activity->setSport($mainSport);
+        }
+    }
+
+    protected function removeTypeIfInvalidForSport(Training $activity)
+    {
+        if (null !== $activity->getType() && $activity->getType()->getSport()->getId() != $activity->getSport()->getId()) {
+            $activity->setType(null);
+        }
+    }
+
+    public function removeWeatherIfInside(Training $activity)
+    {
+        if (!$activity->getSport()->getOutside()) {
+            $activity->getAdapter()->removeWeather();
+        }
+    }
+
+    protected function calculateEnergyConsumptionIfEmpty(Training $activity)
+    {
+        if (null === $activity->getKcal() || 0 == $activity->getKcal()) {
+            $energyConsumption = $activity->getSport()->getKcal() * $activity->getS() / 3600.0;
+
+            $activity->setKcal($energyConsumption > 0 ? $energyConsumption : null);
+        }
+    }
+
     protected function calculatePower(Training $activity)
     {
         $activity->getAdapter()->calculatePower();
+    }
+
+    protected function calculateIfActivityWasAtNight(Training $activity)
+    {
+        $activity->getAdapter()->calculateIfActivityWasAtNight();
     }
 
     /**
