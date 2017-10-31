@@ -225,9 +225,9 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 				$PBdata = array();
 
 				foreach ($Races as $data) {
-					if ($data['s'] < $PB) {
+					if ($data['official_time'] < $PB) {
 						$PBdata = $data;
-						$PB = $data['s'];
+						$PB = $data['official_time'];
 					}
 				}
 
@@ -301,8 +301,8 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 			foreach($kms as $km)
 				if ($km == $wk['official_distance']) {
 					$year[$wk['y']][(string)$km]['sum']++;
-					if ($wk['s'] < $year[$wk['y']][(string)$km]['pb'])
-						$year[$wk['y']][(string)$km]['pb'] = $wk['s'];
+					if ($wk['official_time'] < $year[$wk['y']][(string)$km]['pb'])
+						$year[$wk['y']][(string)$km]['pb'] = $wk['official_time'];
 				}
 		}
 
