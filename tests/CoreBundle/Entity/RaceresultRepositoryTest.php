@@ -72,10 +72,12 @@ class RaceresultRepositoryTest extends AbstractRepositoryTestCase
     public function testFindingVO2maxCorrectionFactorForSingleRace()
     {
         $activity = $this->getActivityForDefaultAccount(time(), 2400, 10.0);
-        $activity->setVO2max(50.0)->setVO2maxByTime(40.0)->setUseVO2max(true);
+        $activity->setPulseAvg(160)->setUseVO2max(true);
         $this->insertRace('foobar', $activity);
 
-        $this->assertEquals(0.80, $this->RaceresultRepository->getEffectiveVO2maxCorrectionFactor(
+        $expectedFactor = $activity->getVO2maxByTime() / $activity->getVO2max();
+
+        $this->assertEquals($expectedFactor, $this->RaceresultRepository->getEffectiveVO2maxCorrectionFactor(
             $this->Account,
             $this->getDefaultAccountsRunningSport()->getId()
         ));
@@ -86,22 +88,23 @@ class RaceresultRepositoryTest extends AbstractRepositoryTestCase
     public function testFindingVO2maxCorrectionFactorForMultipleRaces()
     {
         $activity = $this->getActivityForDefaultAccount(time(), 2400, 10.0);
-        $activity->setVO2max(50.0)->setVO2maxByTime(40.0)->setUseVO2max(true);
+        $activity->setPulseAvg(160)->setUseVO2max(true);
         $this->insertRace('foobar', $activity);
 
         $activity = $this->getActivityForDefaultAccount(time(), 2100, 10.0);
-        $activity->setVO2max(48.0)->setVO2maxByTime(42.0)->setUseVO2max(true);
+        $activity->setPulseAvg(140)->setUseVO2max(true);
         $this->insertRace('foobar', $activity);
 
         $activity = $this->getActivityForDefaultAccount(time(), 1200, 5.0);
-        $activity->setVO2max(48.0)->setVO2maxByTime(38.0)->setUseVO2max(true);
+        $activity->setPulseAvg(180)->setUseVO2max(true);
         $this->insertRace('foobar', $activity);
+        $expectedFactor = $activity->getVO2maxByTime() / $activity->getVO2max();
 
         $activity = $this->getActivityForDefaultAccount(time(), 2400, 5.0);
-        $activity->setVO2max(10.0)->setVO2maxByTime(20.0)->setUseVO2max(true);
+        $activity->setPulseAvg(100)->setUseVO2max(true);
         $this->insertRace('foobar', $activity);
 
-        $this->assertEquals(0.875, $this->RaceresultRepository->getEffectiveVO2maxCorrectionFactor(
+        $this->assertEquals($expectedFactor, $this->RaceresultRepository->getEffectiveVO2maxCorrectionFactor(
             $this->Account,
             $this->getDefaultAccountsRunningSport()->getId()
         ));

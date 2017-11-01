@@ -7,6 +7,7 @@ use Runalyze\Bundle\CoreBundle\Bridge\Activity\Calculation\FlatOrHillyAnalyzer;
 use Runalyze\Bundle\CoreBundle\Bridge\Activity\Calculation\NightDetector;
 use Runalyze\Bundle\CoreBundle\Bridge\Activity\Calculation\PowerCalculator;
 use Runalyze\Bundle\CoreBundle\Bridge\Activity\Calculation\TrimpCalculator;
+use Runalyze\Bundle\CoreBundle\Bridge\Activity\Calculation\VO2maxCalculator;
 use Runalyze\Bundle\CoreBundle\Entity\Training;
 use Runalyze\Profile\Weather\WeatherConditionProfile;
 use Runalyze\Service\ElevationCorrection\StepwiseElevationProfileFixer;
@@ -155,6 +156,24 @@ class ActivityAdapter
     {
         $calculator = new TrimpCalculator();
         $calculator->calculateFor($this->Activity, $gender, $heartRateMaximum, $heartRateResting);
+    }
+
+    /**
+     * @param int $heartRateMaximum [bpm]
+     * @param int $correctionForPositiveElevation [m]
+     * @param int $correctionForNegativeElevation [m]
+     */
+    public function calculateEffectiveVO2max($heartRateMaximum, $correctionForPositiveElevation, $correctionForNegativeElevation)
+    {
+        $calculator = new VO2maxCalculator();
+        $calculator->calculateFor($this->Activity, $heartRateMaximum, $correctionForPositiveElevation, $correctionForNegativeElevation);
+    }
+
+    public function removeEffectiveVO2max()
+    {
+        $this->Activity->setVO2maxByTime(null);
+        $this->Activity->setVO2max(null);
+        $this->Activity->setVO2maxWithElevation(null);
     }
 
     /**

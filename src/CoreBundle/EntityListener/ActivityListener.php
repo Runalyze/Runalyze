@@ -59,6 +59,7 @@ class ActivityListener
         $this->removeWeatherIfInside($activity);
         $this->calculateEnergyConsumptionIfEmpty($activity);
         $this->calculateTrimp($activity);
+        $this->calculateVO2max($activity);
         $this->calculatePower($activity);
         $this->calculateIfActivityWasAtNight($activity);
         $this->calculateClimbScore($activity);
@@ -78,6 +79,14 @@ class ActivityListener
         if ($args->hasChangedField('sport')) {
             $this->removeWeatherIfInside($activity);
             $this->calculatePower($activity);
+        }
+
+        if ($this->updateRequiresTrimpCalculation($activity, $args)) {
+            $this->calculateTrimp($activity);
+        }
+
+        if ($this->updateRequiresVO2maxCalculation($activity, $args)) {
+            $this->calculateVO2max($activity);
         }
 
         if ($args->hasChangedField('time') || $args->hasChangedField('s')) {
@@ -154,6 +163,25 @@ class ActivityListener
         );
     }
 
+    protected function calculateVO2max(Training $activity)
+    {
+        if (!$activity->getAdapter()->isRunning()) {
+            $activity->getAdapter()->removeEffectiveVO2max();
+
+            return;
+        }
+
+        $configuration = $this->ConfigurationManager->getList($activity->getAccount());
+        $dataConfiguration = $configuration->getData();
+        $vo2maxConfiguration = $configuration->getVO2max();
+
+        $activity->getAdapter()->calculateEffectiveVO2max(
+            $dataConfiguration->getMaximalHeartRate(),
+            $vo2maxConfiguration->getAdditionalDistancePerPositiveElevation(),
+            $vo2maxConfiguration->getAdditionalDistancePerNegativeElevation()
+        );
+    }
+
     protected function calculatePower(Training $activity)
     {
         $activity->getAdapter()->calculatePower();
@@ -206,6 +234,10 @@ class ActivityListener
         if ($this->updateRequiresMarathonShapeCalculation($activity, $args)) {
             $this->RecalculationManager->scheduleMarathonShapeCalculation($activity->getAccount());
         }
+
+        if ($this->updateRequiresEffectiveVO2maxCorrectionFactorCalculation($activity, $args)) {
+            $this->RecalculationManager->scheduleEffectiveVO2maxCorrectionFactorCalculation($activity->getAccount());
+        }
     }
 
     protected function updateRequiresEffectiveVO2maxShapeCalculation(Training $activity, PreUpdateEventArgs $args)
@@ -240,6 +272,59 @@ class ActivityListener
             $activity->getAdapter()->isRunning() &&
             $this->timestampEnteredOrLeftPeriodOfLastXDays($this->getNumberOfDaysToConsiderForMarathonShape($activity->getAccount()), $args)
         );
+    }
+
+    /**
+     * @param Training $activity
+     * @param PreUpdateEventArgs $args
+     * @return bool
+     */
+    protected function updateRequiresEffectiveVO2maxCorrectionFactorCalculation(Training $activity, PreUpdateEventArgs $args)
+    {
+        return (
+            $activity->hasRaceresult() &&
+            $args->hasChangedField('vo2max') ||
+            $args->hasChangedField('vo2maxByTime')
+        );
+    }
+
+    /**
+     * @param Training $activity
+     * @param PreUpdateEventArgs $args
+     * @return bool
+     */
+    protected function updateRequiresTrimpCalculation(Training $activity, PreUpdateEventArgs $args)
+    {
+        return (
+            (!$activity->hasTrackdata() || !$activity->getTrackdata()->hasHeartrate()) && (
+                $args->hasChangedField('pulseAvg') ||
+                $args->hasChangedField('s') ||
+                (
+                    null === $activity->getPulseAvg() && (
+                        $args->hasChangedField('sport') ||
+                        $args->hasChangedField('type')
+                    )
+                )
+            )
+        );
+    }
+
+    /**
+     * @param Training $activity
+     * @param PreUpdateEventArgs $args
+     * @return bool
+     */
+    protected function updateRequiresVO2maxCalculation(Training $activity, PreUpdateEventArgs $args)
+    {
+        return ((
+            $activity->getAdapter()->isRunning() && (
+                $args->hasChangedField('pulseAvg') ||
+                $args->hasChangedField('s') ||
+                $args->hasChangedField('distance')
+            )
+        ) || (
+            $args->hasChangedField('sport')
+        ));
     }
 
     /**

@@ -363,11 +363,11 @@ class TrainingRepository extends EntityRepository
             ->getQuery()
             ->getOneOrNullResult(AbstractQuery::HYDRATE_SCALAR);
 
-        if (null === $result) {
+        if (null === $result || 0.0 == (float)$result['ssum']) {
             return 0.0;
         }
 
-        return round($result['value'] / $result['ssum'], 5);
+        return round((float)$result['value'] / (float)$result['ssum'], 5);
     }
 
     /**

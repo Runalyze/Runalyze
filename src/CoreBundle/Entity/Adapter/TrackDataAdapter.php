@@ -59,16 +59,6 @@ class TrackDataAdapter
         }
     }
 
-    public function getSmoothPace()
-    {
-        // TODO
-    }
-
-    public function getSmoothGradient()
-    {
-        // TODO
-    }
-
     public function calculateStrideLength()
     {
         if (!$this->TrackData->hasStrideLength()) {
@@ -109,5 +99,15 @@ class TrackDataAdapter
         }
 
         $this->TrackData->setVerticalRatio($verticalRatio);
+    }
+
+    public function getSmoothPace()
+    {
+        // TODO
+    }
+
+    public function getSmoothGradient()
+    {
+        // TODO
     }
 }

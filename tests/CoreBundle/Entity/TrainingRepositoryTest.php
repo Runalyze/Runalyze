@@ -240,18 +240,16 @@ class TrainingRepositoryTest extends AbstractRepositoryTestCase
 
     public function testVO2maxShapeCalculationForASingleActivity()
     {
-        $activity = $this->getActivityForDefaultAccount(time() - 86400, 3600, 10.0);
-        $activity->setVO2max(50.0);
-        $activity->setVO2maxWithElevation(50.0);
+        $activity = $this->getActivityForDefaultAccount(time() - 86400, 3600, 10.0)->setPulseAvg(160);
 
         $this->TrainingRepository->save($activity);
 
-        $this->assertEquals(50.0, $this->TrainingRepository->calculateVO2maxShape(
+        $this->assertEquals($activity->getVO2max(), $this->TrainingRepository->calculateVO2maxShape(
             $this->getDefaultAccount(),
             new VO2max(),
             $this->getDefaultAccountsRunningSport()->getId(),
             time()
-        ));
+        ), '', 0.001);
     }
 
     public function testVO2maxShapeCalculationForSomeActivities()
@@ -259,25 +257,22 @@ class TrainingRepositoryTest extends AbstractRepositoryTestCase
         $config = new VO2max();
         $config->set('VO2MAX_USE_CORRECTION_FOR_ELEVATION', 'true');
 
-        $this->TrainingRepository->save(
-            $this->getActivityForDefaultAccount(time() - 86400, 1000, 4.0)
-                ->setVO2max(40.0)->setVO2maxWithElevation(50.0)
-        );
-        $this->TrainingRepository->save(
-            $this->getActivityForDefaultAccount(time() - 2 * 86400, 2000, 8.0)
-                ->setVO2max(40.0)->setVO2maxWithElevation(65.0)
-        );
-        $this->TrainingRepository->save(
-            $this->getActivityForDefaultAccount(time() - 200 * 86400, 10000, 40.0)
-                ->setVO2max(76.0)->setVO2maxWithElevation(75.0)
-        );
+        $activity1 = $this->getActivityForDefaultAccount(time() - 86400, 1000, 4.0)->setPulseAvg(160);
+        $activity2 = $this->getActivityForDefaultAccount(time() - 2 * 86400, 2000, 8.0)->setPulseAvg(160);
+        $activity3 = $this->getActivityForDefaultAccount(time() - 200 * 86400, 10000, 40.0)->setPulseAvg(160);
 
-        $this->assertEquals(60.0, $this->TrainingRepository->calculateVO2maxShape(
+        $this->TrainingRepository->save($activity1);
+        $this->TrainingRepository->save($activity2);
+        $this->TrainingRepository->save($activity3);
+
+        $expectedShape = ($activity1->getVO2max() + 2 * $activity2->getVO2max()) / 3;
+
+        $this->assertEquals($expectedShape, $this->TrainingRepository->calculateVO2maxShape(
             $this->getDefaultAccount(),
             $config,
             $this->getDefaultAccountsRunningSport()->getId(),
             time()
-        ));
+        ), '', 0.001);
     }
 
     public function testMarathonShapeCalculationForEmptyAccount()
