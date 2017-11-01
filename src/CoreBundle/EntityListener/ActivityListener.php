@@ -58,8 +58,11 @@ class ActivityListener
         $this->checkRelatedEntitiesForConsistency($activity);
         $this->removeWeatherIfInside($activity);
         $this->calculateEnergyConsumptionIfEmpty($activity);
+        $this->calculateTrimp($activity);
         $this->calculatePower($activity);
         $this->calculateIfActivityWasAtNight($activity);
+        $this->calculateClimbScore($activity);
+        $this->calculateValuesForSwimming($activity);
     }
 
     public function postPersist(Training $activity, LifecycleEventArgs $args)
@@ -137,11 +140,18 @@ class ActivityListener
 
     protected function calculateEnergyConsumptionIfEmpty(Training $activity)
     {
-        if (null === $activity->getKcal() || 0 == $activity->getKcal()) {
-            $energyConsumption = $activity->getSport()->getKcal() * $activity->getS() / 3600.0;
+        $activity->getAdapter()->calculateEnergyConsumptionIfEmpty();
+    }
 
-            $activity->setKcal($energyConsumption > 0 ? $energyConsumption : null);
-        }
+    protected function calculateTrimp(Training $activity)
+    {
+        $dataConfiguration = $this->ConfigurationManager->getList($activity->getAccount())->getData();
+
+        $activity->getAdapter()->calculateTrimp(
+            $activity->getAccount()->getGender(),
+            $dataConfiguration->getMaximalHeartRate(),
+            $dataConfiguration->getRestingHeartRate()
+        );
     }
 
     protected function calculatePower(Training $activity)
@@ -152,6 +162,16 @@ class ActivityListener
     protected function calculateIfActivityWasAtNight(Training $activity)
     {
         $activity->getAdapter()->calculateIfActivityWasAtNight();
+    }
+
+    protected function calculateClimbScore(Training $activity)
+    {
+        $activity->getAdapter()->calculateClimbScore();
+    }
+
+    protected function calculateValuesForSwimming(Training $activity)
+    {
+        $activity->getAdapter()->calculateValuesForSwimming();
     }
 
     /**

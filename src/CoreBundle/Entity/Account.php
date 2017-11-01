@@ -91,7 +91,7 @@ class Account implements AdvancedUserInterface, \Serializable
     private $timezone = Timezone::UTC;
 
     /**
-     * @var int enum
+     * @var int enum, see \Runalyze\Profile\Athlete\Gender
      * @Assert\Type("int")
      * @ORM\Column(name="gender", type="tinyint", nullable=true, options={"unsigned":true})
      */
@@ -306,7 +306,7 @@ class Account implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * @param int $enum enum
+     * @param int $enum enum, see \Runalyze\Profile\Athlete\Gender
      * @return $this
      */
     public function setGender($enum)
@@ -317,7 +317,7 @@ class Account implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * @return int enum
+     * @return int enum, see \Runalyze\Profile\Athlete\Gender
      */
     public function getGender()
     {
@@ -325,7 +325,31 @@ class Account implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * @param int $birthYear
+     * @return bool
+     */
+    public function knowsGender()
+    {
+        return Gender::NONE !== $this->gender;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isMale()
+    {
+        return Gender::MALE == $this->gender;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isFemale()
+    {
+        return Gender::FEMALE == $this->gender;
+    }
+
+    /**
+     * @param int|null $birthYear
      * @return $this
      */
     public function setBirthyear($birthYear)
@@ -336,11 +360,27 @@ class Account implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * @return int
+     * @return int|null
      */
     public function getBirthyear()
     {
         return $this->birthyear;
+    }
+
+    /**
+     * @return bool
+     */
+    public function knowsBirthYear()
+    {
+        return null !== $this->birthyear;
+    }
+
+    /**
+     * @return int|null [years]
+     */
+    public function getAge()
+    {
+        return $this->knowsBirthYear() ? (int)date('Y') - $this->birthyear : null;
     }
 
     /**

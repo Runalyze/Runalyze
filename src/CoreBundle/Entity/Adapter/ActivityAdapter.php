@@ -2,10 +2,14 @@
 
 namespace Runalyze\Bundle\CoreBundle\Entity\Adapter;
 
+use Runalyze\Bundle\CoreBundle\Bridge\Activity\Calculation\ClimbScoreCalculator;
+use Runalyze\Bundle\CoreBundle\Bridge\Activity\Calculation\FlatOrHillyAnalyzer;
 use Runalyze\Bundle\CoreBundle\Bridge\Activity\Calculation\NightDetector;
 use Runalyze\Bundle\CoreBundle\Bridge\Activity\Calculation\PowerCalculator;
+use Runalyze\Bundle\CoreBundle\Bridge\Activity\Calculation\TrimpCalculator;
 use Runalyze\Bundle\CoreBundle\Entity\Training;
 use Runalyze\Profile\Weather\WeatherConditionProfile;
+use Runalyze\Service\ElevationCorrection\StepwiseElevationProfileFixer;
 use Runalyze\Util\LocalTime;
 
 class ActivityAdapter
@@ -57,6 +61,22 @@ class ActivityAdapter
     public function isSwimming()
     {
         return null !== $this->Activity->getSport() && $this->Activity->getSport()->getInternalSport()->isSwimming();
+    }
+
+    /**
+     * @return int [bpm]
+     */
+    public function getAverageHeartRateWithFallbackToTypeOrSport()
+    {
+        if ($this->Activity->getPulseAvg() > 0) {
+            return $this->Activity->getPulseAvg();
+        }
+
+        if (null !== $this->Activity->getType()) {
+            return $this->Activity->getType()->getHrAvg();
+        }
+
+        return null !== $this->Activity->getSport() ? $this->Activity->getSport()->getHfavg() : 100;
     }
 
     public function updateSimpleCalculatedValues()
@@ -117,6 +137,26 @@ class ActivityAdapter
         );
     }
 
+    public function calculateEnergyConsumptionIfEmpty()
+    {
+        if (null === $this->Activity->getKcal() || 0 == $this->Activity->getKcal()) {
+            $energyConsumption = $this->Activity->getSport()->getKcal() * $this->Activity->getS() / 3600.0;
+
+            $this->Activity->setKcal($energyConsumption > 0 ? $energyConsumption : null);
+        }
+    }
+
+    /**
+     * @param int $gender enum, see \Runalyze\Profile\Athlete\Gender
+     * @param int $heartRateMaximum [bpm]
+     * @param int $heartRateResting [bpm]
+     */
+    public function calculateTrimp($gender, $heartRateMaximum, $heartRateResting)
+    {
+        $calculator = new TrimpCalculator();
+        $calculator->calculateFor($this->Activity, $gender, $heartRateMaximum, $heartRateResting);
+    }
+
     /**
      * @param float|int|null $athleteWeight [kg]
      * @param float|int|null $bikeWeight [kg]
@@ -152,6 +192,89 @@ class ActivityAdapter
     {
         if (null !== $this->Activity->getRoute() && $this->Activity->getRoute()->hasGeohashes()) {
             $this->Activity->setNight((new NightDetector())->isActivityAtNight($this->Activity));
+        } else {
+            $this->Activity->setNight(null);
         }
+    }
+
+    public function calculateValuesForSwimming()
+    {
+        $this->calculateTotalNumberOfStrokes();
+        $this->calculateSwolf();
+    }
+
+    public function calculateTotalNumberOfStrokes()
+    {
+        if (null !== $this->Activity->getSwimdata() && $this->Activity->getSwimdata()->hasStrokes()) {
+            $this->Activity->setTotalStrokes(array_sum($this->Activity->getSwimdata()->getStroke()));
+        } else {
+            $this->Activity->setTotalStrokes(null);
+        }
+    }
+
+    public function calculateSwolf()
+    {
+        if (null !== $this->Activity->getTotalStrokes() && null !== $this->Activity->getTrackdata() && $this->Activity->getTrackdata()->hasTime()) {
+            $trackDataTime = $this->Activity->getTrackdata()->getTime();
+            $totalTime = end($trackDataTime);
+            $numberOfPoints = count($trackDataTime);
+
+            $this->Activity->setSwolf((int)round(($this->Activity->getTotalStrokes() + $totalTime) / $numberOfPoints));
+        } else {
+            $this->Activity->setSwolf(null);
+        }
+    }
+
+    public function calculateClimbScore()
+    {
+        if ($this->canCalculateClimbScore()) {
+            $elevationsBackup = $this->temporarilyFixStepwiseElevationsInRoute();
+
+            (new FlatOrHillyAnalyzer())->calculatePercentageHillyFor($this->Activity);
+            (new ClimbScoreCalculator())->calculateFor($this->Activity);
+
+            $this->revertTemporaryFixForStepwiseElevationsInRoute($elevationsBackup);
+        } else {
+            $this->Activity->setPercentageHilly(null);
+            $this->Activity->setClimbScore(null);
+        }
+    }
+
+    /**
+     * @return bool
+     */
+    protected function canCalculateClimbScore()
+    {
+        return (
+            null !== $this->Activity->getRoute() &&
+            $this->Activity->getRoute()->hasElevations() &&
+            null !== $this->Activity->getTrackdata() &&
+            $this->Activity->getTrackdata()->hasDistance()
+        );
+    }
+
+    protected function temporarilyFixStepwiseElevationsInRoute()
+    {
+        $backupElevations = $this->Activity->getRoute()->getElevationsCorrected();
+
+        if (null !== $backupElevations) {
+            $this->Activity->getRoute()->setElevationsCorrected(
+                (new StepwiseElevationProfileFixer(5, StepwiseElevationProfileFixer::METHOD_VARIABLE_GROUP_SIZE))
+                    ->fixStepwiseElevations(
+                        $this->Activity->getRoute()->getElevationsCorrected(),
+                        $this->Activity->getTrackdata()->getDistance()
+                    )
+            );
+        }
+
+        return $backupElevations;
+    }
+
+    /**
+     * @param array|null $backupElevations [m]
+     */
+    protected function revertTemporaryFixForStepwiseElevationsInRoute(array $backupElevations = null)
+    {
+        $this->Activity->getRoute()->setElevationsCorrected($backupElevations);
     }
 }

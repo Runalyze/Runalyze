@@ -78,6 +78,14 @@ class Swimdata
     }
 
     /**
+     * @return bool
+     */
+    public function hasStrokes()
+    {
+        return null !== $this->stroke;
+    }
+
+    /**
      * @param array|null $strokeType
      * @return $this
      */
@@ -94,6 +102,14 @@ class Swimdata
     public function getStroketype()
     {
         return $this->stroketype;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasStrokeTypes()
+    {
+        return null !== $this->stroketype;
     }
 
     /**
