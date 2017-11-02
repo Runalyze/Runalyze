@@ -701,6 +701,16 @@ class Account implements AdvancedUserInterface, \Serializable
     }
 
     /**
+     * Get activity/sport types
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getActivityTypes()
+    {
+        return $this->activityTypes;
+    }
+
+    /**
      * @return \Doctrine\Common\Collections\Collection
      */
     public function getEquipmentTypes()
