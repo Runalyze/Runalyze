@@ -11,7 +11,6 @@ use Runalyze\Bundle\CoreBundle\Component\Activity\VO2maxCalculationDetailsDecora
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\Trackdata;
 use Runalyze\Bundle\CoreBundle\Entity\Training;
-use Runalyze\Bundle\CoreBundle\Form\ActivityType;
 use Runalyze\Metrics\Velocity\Unit\PaceEnum;
 use Runalyze\Service\ElevationCorrection\StepwiseElevationProfileFixer;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -35,26 +34,6 @@ use Runalyze\Service\ElevationCorrection\NoValidStrategyException;
 
 class ActivityController extends Controller
 {
-
-    /**
-     * @Route("/activity/form")
-     * @Security("has_role('ROLE_USER')")
-     */
-    public function activityformAction(Request $request, Account $account)
-    {
-        $form = $this->createForm(ActivityType::class);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-        }
-
-        return $this->render('activity/form.html.twig', [
-            'form' => $form->createView()
-        ]);
-    }
-
-
     /**
      * @Route("/activity/add", name="activity-add")
      * @Security("has_role('ROLE_USER')")
