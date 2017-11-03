@@ -12,7 +12,6 @@ class ActivityView extends AbstractCategory
         return [
             'GMAP_PATH_PRECISION' => '5',
             'GMAP_PATH_BREAK' => '15',
-            'TRAINING_MAP_COLOR' => '#FF5500',
             'TRAINING_LEAFLET_LAYER' => 'OpenStreetMap',
             'TRAINING_MAP_SHOW_FIRST' => 'false',
             'TRAINING_MAP_ZOOM_ON_SCROLL' => 'false',
