@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Runalyze\Bundle\CoreBundle\Entity\Adapter\ActivityAdapter;
 use Runalyze\Parser\Activity\Common\Data\Round\RoundCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Training
@@ -29,6 +30,7 @@ class Training
     /**
      * @var \Runalyze\Bundle\CoreBundle\Entity\Sport
      *
+     * @Assert\NotBlank(message = "You need to choose a sport.")
      * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Sport", inversedBy = "trainings")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="sportid", referencedColumnName="id", nullable=false)
@@ -48,7 +50,8 @@ class Training
 
     /**
      * @var int [timestamp]
-     *
+     * @Assert\NotBlank(message = "Every activity needs a time")
+
      * @ORM\Column(name="time", type="integer", nullable=false)
      */
     private $time;
@@ -140,13 +143,25 @@ class Training
     /**
      * @var int|null [bpm]
      *
+     * @Assert\Range(
+     *      min = 30,
+     *      max = 255,
+     *      minMessage = "Your average heartrate must be at least {{ limit }} bpm",
+     *      maxMessage = "Your average heartrate cannot be greater than {{ limit }} bpm"
+     * )
+     *
      * @ORM\Column(name="pulse_avg", type="tinyint", nullable=true, options={"unsigned":true})
      */
     private $pulseAvg = null;
 
     /**
      * @var int|null [bpm]
-     *
+     * @Assert\Range(
+     *      min = 30,
+     *      max = 255,
+     *      minMessage = "Your maximum heartrate must be at least {{ limit }} bpm",
+     *      maxMessage = "Your maximum heartrate cannot be greater than {{ limit }} bpm"
+     * )
      * @ORM\Column(name="pulse_max", type="tinyint", nullable=true, options={"unsigned":true})
      */
     private $pulseMax = null;
@@ -319,14 +334,24 @@ class Training
 
     /**
      * @var int|null [°]
-     *
+     * @Assert\Range(
+     *      min = 0,
+     *      max = 359,
+     *      minMessage = "The wind direction cannot be less than {{ limit }}",
+     *      maxMessage = "The wind direction cannot be greater than {{ limit }}"
+     * )
      * @ORM\Column(name="wind_deg", type="smallint", nullable=true, options={"unsigned":true})
      */
     private $windDeg = null;
 
     /**
      * @var int|null [%]
-     *
+     * @Assert\Range(
+     *      min = 0,
+     *      max = 359,
+     *      minMessage = "The humidity cannot be less than {{ limit }}",
+     *      maxMessage = "The humidity cannot be greater than {{ limit }}. Even if it feels like this."
+     * )
      * @ORM\Column(name="humidity", type="tinyint", nullable=true, options={"unsigned":true})
      */
     private $humidity = null;

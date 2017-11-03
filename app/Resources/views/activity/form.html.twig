@@ -3,6 +3,64 @@
 {% block content %}
 {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'ajax no-automatic-reload'}, 'action': url('poster')}) }}
 
+
+    <fieldset id="general">
+        <legend onclick="Runalyze.toggleFieldset(this, 'general', false, '')">{% trans %}General{% endtrans %}</legend>
+            {{ form_row(form.sport, {'div_class': 'w50'}) }}
+            {{ form_row(form.type, {'div_class': 'w50'}) }}
+            {{ form_row(form.use_vo2max, {'div_class': 'w50'}) }}
+            {{ form_row(form.distance, {'div_class': 'w50'}) }}
+            {{ form_row(form.pace, {'div_class': 'w50'}) }}
+            {{ form_row(form.elevation, {'div_class': 'w50', 'help':'Will be calculated afterwards from the activity\'s elevation profile.'}) }}
+
+            {{ form_row(form.s, {'div_class': 'w50'}) }}
+            {{ form_row(form.is_public, {'div_class': 'w50'}) }}
+            {{ form_row(form.is_track, {'div_class': 'w50'}) }}
+            {{ form_row(form.is_race, {'div_class': 'w50', 'help': 'Race results are treated in a special way to show your personal bests and are independent of the chosen activity type. You can add some details below.'}) }}
+
+
+    </fieldset>
+    <fieldset id="pulse">
+        <legend onclick="Runalyze.toggleFieldset(this, 'pulse', false, '')">{% trans %}Weather{% endtrans %}</legend>
+        {{ form_row(form.pulseAvg, {'div_class': 'w50'}) }}
+        {{ form_row(form.pulseMax, {'div_class': 'w50'}) }}
+
+        {{ form_row(form.kcal, {'div_class': 'w50', 'help':'This value will be calculated automatically from duration and sport settings (if activated in your configuration) only if you change the duration or the type of sport.'}) }}
+        {{ form_row(form.title, {'div_class': 'w50'}) }}
+        {{ form_row(form.kcal, {'div_class': 'w50'}) }}
+        {{ form_row(form.route, {'div_class': 'w50'}) }}
+        {{ form_row(form.partner, {'div_class': 'w50'}) }}
+
+    </fieldset>
+    <fieldset id="weather">
+        <legend onclick="Runalyze.toggleFieldset(this, 'weather', false, '')">{% trans %}Weather{% endtrans %}</legend>
+        {{ form_row(form.weatherid) }}
+
+        {{ form_row(form.temperature, {'div_class': 'w50'}) }}
+        {{ form_row(form.wind_deg, {'div_class': 'w50'}) }}
+        {{ form_row(form.wind_speed, {'div_class': 'w50'}) }}
+        {{ form_row(form.humidity, {'div_class': 'w50'}) }}
+        {{ form_row(form.pressure, {'div_class': 'w50'}) }}
+
+        {{ form_row(form.pulseAvg, {'div_class': 'w50'}) }}
+        {{ form_row(form.pulseMax, {'div_class': 'w50'}) }}
+
+        {{ form_row(form.kcal, {'div_class': 'w50'}) }}
+        {{ form_row(form.rpe, {'div_class': 'w50', 'help': 'Rating of Perceived Exertion or Borg scale, a scale devised to show perceived exertion during exercise'}) }}
+        {{ form_row(form.title, {'div_class': 'w50'}) }}
+        {{ form_row(form.kcal, {'div_class': 'w50'}) }}
+        {{ form_row(form.route, {'div_class': 'w50'}) }}
+        {{ form_row(form.partner, {'div_class': 'w50'}) }}
+
+        {{ form_row(form.notes, {'div_class': 'w50'}) }}
+
+
+    </fieldset>
+    <fieldset id="equipment">
+        <legend onclick="Runalyze.toggleFieldset(this, 'equipment', false, '')">{% trans %}Equipment{% endtrans %}</legend>
+
+
+    </fieldset>
     {{ form_rest(form) }}
 
 

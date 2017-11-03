@@ -163,6 +163,11 @@ services:
     arguments: ["@app.unit_system.distance"]
     tags:
      - { name: form.type }
+  app.form.type.elevation:
+    class: Runalyze\Bundle\CoreBundle\Form\Type\ElevationType
+    arguments: ["@app.unit_system.elevation"]
+    tags:
+     - { name: form.type }
   app.form.type.energy:
     class: Runalyze\Bundle\CoreBundle\Form\Type\EnergyType
     arguments: ["@app.configuration_manager"]
@@ -210,6 +215,10 @@ services:
   app.unit_system.distance:
     class: Runalyze\Metrics\Distance\Unit\AbstractDistanceUnit
     factory: "app.unit_system_factory:getDistanceUnit"
+    arguments: ["@app.configuration_manager"]
+  app.unit_system.elevation:
+    class: Runalyze\Metrics\Distance\Unit\AbstractDistanceUnit
+    factory: "app.unit_system_factory:getElevationUnit"
     arguments: ["@app.configuration_manager"]
   app.unit_system.energy:
     class: Runalyze\Metrics\Energy\Unit\AbstractEnergyUnit

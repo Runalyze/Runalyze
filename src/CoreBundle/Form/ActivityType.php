@@ -5,9 +5,12 @@ namespace Runalyze\Bundle\CoreBundle\Form;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\Training;
 use Runalyze\Bundle\CoreBundle\Form\Type\DistanceType;
+use Runalyze\Bundle\CoreBundle\Form\Type\ElevationType;
 use Runalyze\Bundle\CoreBundle\Form\Type\HumidityType;
 use Runalyze\Bundle\CoreBundle\Form\Type\PressureType;
+use Runalyze\Bundle\CoreBundle\Form\Type\RpeType;
 use Runalyze\Bundle\CoreBundle\Form\Type\TemperatureType;
+use Runalyze\Bundle\CoreBundle\Form\Type\WeatherConditionType;
 use Runalyze\Bundle\CoreBundle\Form\Type\WindDirectionType;
 use Runalyze\Data\RPE;
 use Symfony\Component\Form\AbstractType;
@@ -64,6 +67,16 @@ class ActivityType extends AbstractType
                 'required' => false,
                 'attr' => ['class' => 'small-size']
             ))
+            ->add('elevation', ElevationType::class, array(
+                'required' => false,
+                'attr' => ['class' => 'small-size']
+            ))
+            ->add('pace', IntegerType::class, array(
+                'required' => false,
+                'mapped' => false,
+                'empty_data'  => null,
+                'label' => 'Pace'
+            ))
             ->add('sport', ChoiceType::class, array(
                 'choices' => $this->getAccount()->getSports(),
                 'choice_label' => 'name',
@@ -76,62 +89,66 @@ class ActivityType extends AbstractType
                 'choice_value' => 'getId',
                 'label' => 'Activity type',
             ))
+            ->add('use_vo2max', CheckboxType::class, array(
+                'required' => false,
+                'label' => 'VO2max for shape'
+            ))
+            ->add('is_public', CheckboxType::class, array(
+                'required' => false,
+                'label' => 'Public'
+            ))
+            ->add('is_track', CheckboxType::class, array(
+                'required' => false,
+                'label' => 'Track'
+            ))
+            ->add('is_race', CheckboxType::class, array(
+                'required' => false,
+                'label' => 'Race',
+                'mapped' => false
+            ))
             ->add('title', TextType::class, array(
                 'required' => true,
-                'attr' => array(
-                    'autofocus' => true
-                )
             ))
-
-
 
             ->add('kcal', EnergyKcalType::class, array(
                 'required' => true,
-                'attr' => array(
-                    'autofocus' => true
-                )
+                'label' => 'Energy'
             ))
             ->add('pulseAvg', HeartrateType::class, array(
                 'required' => true,
-                'attr' => array(
-                    'autofocus' => true
-                )
+                'label' => 'avg. HR'
             ))
             ->add('pulseMax', HeartrateType::class, array(
                 'required' => true,
-                'attr' => array(
-                    'autofocus' => true
-                )
+                'label' => 'max. HR'
             ))
-            ->add('rpe', ChoiceType::class, array(
-                'choices' => RPE::completeList(),
+            ->add('rpe', RpeType::class, array(
                 'label' => 'RPE',
             ))
 
 
             ->add('temperature', TemperatureType::class, array(
                 'required' => true,
-                'attr' => array(
-                    'autofocus' => true
-                )
+            ))
+            ->add('wind_speed', WindDirectionType::class, array(
+                'required' => true,
+                'label' => 'Wind speed'
             ))
             ->add('wind_deg', WindDirectionType::class, array(
                 'required' => true,
-                'attr' => array(
-                    'autofocus' => true
-                )
+                'label' => 'Wind degrees'
             ))
             ->add('humidity', HumidityType::class, array(
                 'required' => true,
-                'attr' => array(
-                    'autofocus' => true
-                )
+                'label' => 'Humidity'
             ))
             ->add('pressure', PressureType::class, array(
                 'required' => true,
-                'attr' => array(
-                    'autofocus' => true
-                )
+                'label' => 'Pressure'
+            ))
+            ->add('weatherid', WeatherConditionType::class, array(
+                'required' => true,
+                'label' => 'Weather'
             ))
             ->add('notes', TextareaType::class, array(
                 'label' => 'Notes',
@@ -140,15 +157,9 @@ class ActivityType extends AbstractType
             ))
             ->add('route', TextType::class, array(
                 'required' => true,
-                'attr' => array(
-                    'autofocus' => true
-                )
             ))
             ->add('partner', TextType::class, array(
                 'required' => true,
-                'attr' => array(
-                    'autofocus' => true
-                )
             ))
 
         ;
