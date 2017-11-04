@@ -60,7 +60,9 @@ class CreateNotificationCommand extends ContainerAwareCommand
         if (!empty($input->getOption('account'))) {
             $num = $this->insertSingleNotifications($notification, $input->getOption('account'));
         } else {
-            $num = $this->insertNotificationsWithSubquery($notification, $input->getOption('lang'),
+            $num = $this->insertNotificationsWithSubquery(
+                $notification,
+                $input->getOption('lang'),
                 $input->getOption('exclude-lang'),
                 $input->getOption('last-action-before'),
                 $input->getOption('last-action-after'),
@@ -200,7 +202,25 @@ class CreateNotificationCommand extends ContainerAwareCommand
         return $num;
     }
 
-    protected function insertNotificationsWithSubquery(Notification $notification, array $lang, array $excludeLang, $lastActionBefore, $lastActionAfter, $registrationBefore, $registrationAfter)
+    /**
+     * @param Notification $notification
+     * @param array $lang
+     * @param array $excludeLang
+     * @param mixed $lastActionBefore
+     * @param mixed $lastActionAfter
+     * @param mixed $registrationBefore
+     * @param mixed $registrationAfter
+     * @return int number of created notifications
+     */
+    protected function insertNotificationsWithSubquery(
+        Notification $notification,
+        array $lang,
+        array $excludeLang,
+        $lastActionBefore,
+        $lastActionAfter,
+        $registrationBefore,
+        $registrationAfter
+    )
     {
         $prefix = $this->getContainer()->getParameter('database_prefix');
         $accountWhere = $this->getWhereToFindRelevantAccounts($lang, $excludeLang, $lastActionBefore, $lastActionAfter, $registrationBefore, $registrationAfter);
@@ -223,26 +243,38 @@ class CreateNotificationCommand extends ContainerAwareCommand
     /**
      * @param array $lang
      * @param array $excludeLang
+     * @param mixed $lastActionBefore
+     * @param mixed $lastActionAfter
+     * @param mixed $registrationBefore
+     * @param mixed $registrationAfter
      * @return string
      */
-    protected function getWhereToFindRelevantAccounts(array $lang, array $excludeLang, $lastActionBefore, $lastActionAfter, $registrationBefore, $registrationAfter)
+    protected function getWhereToFindRelevantAccounts(
+        array $lang,
+        array $excludeLang,
+        $lastActionBefore,
+        $lastActionAfter,
+        $registrationBefore,
+        $registrationAfter
+    )
     {
+        $whereCondition = [];
         $exclude = false;
 
-        if (!empty($lastActionAfter)) {
-            $whereCondition[] = '`a`.`lastaction` > '.$lastActionAfter;
+        if ($lastActionAfter) {
+            $whereCondition[] = '`a`.`lastaction` > '.(int)$lastActionAfter;
         }
 
-        if (!empty($lastActionBefore)) {
-            $whereCondition[] = '`a`.`lastaction` < '.$lastActionBefore;
+        if ($lastActionBefore) {
+            $whereCondition[] = '`a`.`lastaction` < '.(int)$lastActionBefore;
         }
 
-        if (!empty($registrationAfter)) {
-            $whereCondition[] = '`a`.`registerdate` > '.$registrationAfter;
+        if ($registrationAfter) {
+            $whereCondition[] = '`a`.`registerdate` > '.(int)$registrationAfter;
         }
 
-        if (!empty($registrationBefore)) {
-            $whereCondition[] = '`a`.`registerdate` < '.$registrationBefore;
+        if ($registrationBefore) {
+            $whereCondition[] = '`a`.`registerdate` < '.(int)$registrationBefore;
 
         }
 
@@ -255,7 +287,7 @@ class CreateNotificationCommand extends ContainerAwareCommand
             $whereCondition[] = '`a`.`language` '.($exclude ? 'NOT' : '').' IN ("'.implode('", "', $lang).'")';
         }
 
-        if ($whereCondition) {
+        if (!empty($whereCondition)) {
             return implode(" AND ", $whereCondition);
         }
 
