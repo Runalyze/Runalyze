@@ -49,14 +49,11 @@ class ActivityView extends \Runalyze\Configuration\Category {
 	 * Create: map options
 	 * - GMAP_PATH_PRECISION
 	 * - GMAP_PATH_BREAK
-	 * - TRAINING_MAP_COLOR
 	 * - TRAINING_LEAFLET_LAYER
 	 */
 	protected function createMapOptions() {
 		$this->createHandle('GMAP_PATH_PRECISION', new ActivityRoutePrecision());
 		$this->createHandle('GMAP_PATH_BREAK', new ActivityRouteBreak());
-
-		$this->createHandle('TRAINING_MAP_COLOR', new Textline('#FF5500'));
 
 		$this->createHandle('TRAINING_LEAFLET_LAYER', new Textline('OpenStreetMap'));
 		$this->createHandle('TRAINING_MAP_SHOW_FIRST', new Boolean(false));
@@ -77,14 +74,6 @@ class ActivityView extends \Runalyze\Configuration\Category {
 	 */
 	public function routeBreak() {
 		return $this->object('GMAP_PATH_BREAK');
-	}
-
-	/**
-	 * Route color
-	 * @return string
-	 */
-	public function routeColor() {
-		return $this->get('TRAINING_MAP_COLOR');
 	}
 
 	/**
@@ -387,11 +376,6 @@ class ActivityView extends \Runalyze\Configuration\Category {
 		$Fieldset->addHandle($this->handle('GMAP_PATH_PRECISION'), array(
 			'label' => __('Map: precision'),
 			'tooltip' => __('How many data points shoud be displayed?')
-		));
-
-		$Fieldset->addHandle($this->handle('TRAINING_MAP_COLOR'), array(
-			'label' => __('Map: line color'),
-			'tooltip' => __('as hexadecimal rgb (e.g. #ff5500)')
 		));
 
 		$Fieldset->addHandle($this->handle('TRAINING_MAP_SHOW_FIRST'), array(

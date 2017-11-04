@@ -98,7 +98,7 @@ class Kml extends AbstractFileExporter
     {
         $this->XML->Folder->name = $this->nameForKml();
         $this->XML->Folder->Placemark->name = $this->nameForKml();
-        $this->XML->Folder->Placemark->Style->geomColor = self::rgbToKmlColor( Configuration::ActivityView()->routeColor() );
+        $this->XML->Folder->Placemark->Style->geomColor = self::rgbToKmlColor( '#FF5500' );
     }
 
     /**

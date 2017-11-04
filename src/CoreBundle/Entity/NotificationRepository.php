@@ -29,12 +29,15 @@ class NotificationRepository extends EntityRepository
     {
         $queryBuilder = $this->createQueryBuilder('n')
             ->where('n.account = :account')
-            ->setParameter('account', $account);
+            ->setParameter('account', $account)
+            ->orderBy('n.createdAt', 'DESC');
+
         if (null !== $timestamp && 0 !== $timestamp) {
-            $queryBuilder->andWhere('n.wasRead = 0') // Only necessary as long as headline menu is filled via request with $timestamp = 0
+            $queryBuilder
+                ->andWhere('n.wasRead = 0') // Only necessary as long as headline menu is filled via request with $timestamp = 1
                 ->andWhere('n.createdAt > :time')
                 ->setParameter('time', $timestamp)
-                ->orderBy('n.createdAt', 'DESC');
+                ->orderBy('n.createdAt', 'ASC');
         }
 
         return $queryBuilder->getQuery()->getResult();
