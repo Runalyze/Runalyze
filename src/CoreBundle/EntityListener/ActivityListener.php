@@ -55,6 +55,7 @@ class ActivityListener
 
     public function prePersist(Training $activity, LifecycleEventArgs $args)
     {
+        $this->setActivityIdIfEmpty($activity);
         $this->checkRelatedEntitiesForConsistency($activity);
         $this->removeWeatherIfInside($activity);
         $this->calculateEnergyConsumptionIfEmpty($activity);
@@ -109,6 +110,13 @@ class ActivityListener
         $this->scheduleRunningRelatedRecalculationsIfRequired($activity);
 
         $this->addStartTimeCheck($activity->getAccount(), $activity->getTime(), true);
+    }
+
+    protected function setActivityIdIfEmpty(Training $activity)
+    {
+        if (null === $activity->getActivityId()) {
+            $activity->setActivityId((int)floor($activity->getTime() / 60.0) * 60);
+        }
     }
 
     protected function checkRelatedEntitiesForConsistency(Training $activity, PreUpdateEventArgs $args = null)

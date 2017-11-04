@@ -109,4 +109,13 @@ class ActivityDataContainerToActivityContextConverterTest extends AbstractFixtur
 
         $this->assertEquals($this->Container->RRIntervals, $activityContext->getHrv()->getData());
     }
+
+    public function testDistanceRounding()
+    {
+        $this->Container->ContinuousData->Distance = [0.12345678, 0.98765432];
+
+        $activityContext = $this->Converter->getContextFor($this->Container);
+
+        $this->assertEquals([0.12346, 0.98765], $activityContext->getTrackdata()->getDistance());
+    }
 }

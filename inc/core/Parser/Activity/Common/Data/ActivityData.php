@@ -10,7 +10,7 @@ use Runalyze\Parser\Activity\Common\Data\Round\RoundCollection;
 
 class ActivityData
 {
-    /** @var int|null [s] */
+    /** @var int|float|null [s] */
     public $Duration = null;
 
     /** @var int|null [s] */
@@ -37,28 +37,28 @@ class ActivityData
     /** @var int|null [6 .. 20] */
     public $RPE = null;
 
-    /** @var int|null [W] */
+    /** @var int|float|null [W] */
     public $AvgPower = null;
 
     /** @var int|null [W] */
     public $MaxPower = null;
 
-    /** @var int|null [bpm] */
+    /** @var int|float|null [bpm] */
     public $AvgHeartRate = null;
 
     /** @var int|null [bpm] */
     public $MaxHeartRate = null;
 
-    /** @var int|null [rpm] */
+    /** @var int|float|null [rpm] */
     public $AvgCadence = null;
 
-    /** @var int|null [ms] */
+    /** @var int|float|null [ms] */
     public $AvgGroundContactTime = null;
 
-    /** @var int|null [%ooL] */
+    /** @var int|float|null [%ooL] */
     public $AvgGroundContactBalance = null;
 
-    /** @var int|null [mm] */
+    /** @var int|float|null [mm] */
     public $AvgVerticalOscillation = null;
 
     /** @var int|null */

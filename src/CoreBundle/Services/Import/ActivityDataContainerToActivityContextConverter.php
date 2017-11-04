@@ -24,6 +24,12 @@ use Runalyze\Profile\Weather\Mapping\EnglishTextMapping;
 
 class ActivityDataContainerToActivityContextConverter
 {
+    /** @var int number of decimals */
+    const DISTANCE_PRECISION_FOR_ACTIVITY_DATA = 2;
+
+    /** @var int number of decimals */
+    const DISTANCE_PRECISION_FOR_TRACK_DATA = 5;
+
     /** @var SportRepository */
     protected $SportRepository;
 
@@ -89,6 +95,7 @@ class ActivityDataContainerToActivityContextConverter
     {
         $activity->setTime($metadata->getTimestamp());
         $activity->setTimezoneOffset($metadata->getTimezoneOffset());
+        $activity->setActivityId($metadata->getActivityId());
 
         $activity->setCreator($metadata->getCreator());
         $activity->setCreatorDetails($metadata->getCreatorDetails());
@@ -155,19 +162,37 @@ class ActivityDataContainerToActivityContextConverter
     {
         $activity->setS($activityData->Duration);
         $activity->setElapsedTime($activityData->ElapsedTime);
-        $activity->setDistance($activityData->Distance);
+        $activity->setDistance($this->getRoundedValue($activityData->Distance, self::DISTANCE_PRECISION_FOR_ACTIVITY_DATA));
         $activity->setElevation($activityData->Elevation);
         $activity->setKcal($activityData->EnergyConsumption);
-        $activity->setPower($activityData->AvgPower);
-        $activity->setPulseAvg($activityData->AvgHeartRate);
+        $activity->setPower($this->getRoundedValue($activityData->AvgPower));
+        $activity->setPulseAvg($this->getRoundedValue($activityData->AvgHeartRate));
         $activity->setPulseMax($activityData->MaxHeartRate);
-        $activity->setCadence($activityData->AvgCadence);
-        $activity->setGroundcontact($activityData->AvgGroundContactTime);
-        $activity->setGroundcontactBalance($activityData->AvgGroundContactBalance);
-        $activity->setVerticalOscillation($activityData->AvgVerticalOscillation);
+        $activity->setCadence($this->getRoundedValue($activityData->AvgCadence));
+        $activity->setGroundcontact($this->getRoundedValue($activityData->AvgGroundContactTime));
+        $activity->setGroundcontactBalance($this->getRoundedValue($activityData->AvgGroundContactBalance));
+        $activity->setVerticalOscillation($this->getRoundedValue($activityData->AvgVerticalOscillation));
         $activity->setTotalStrokes($activityData->TotalStrokes);
         $activity->setTrimp($activityData->Trimp);
         $activity->setRpe($activityData->RPE);
+    }
+
+    /**
+     * @param mixed $value
+     * @param int $precision
+     * @return float|int|null
+     */
+    protected function getRoundedValue($value, $precision = 0)
+    {
+        if (null === $value) {
+            return null;
+        }
+
+        if (0 == $precision) {
+            return (int)round($value);
+        }
+
+        return round($value, $precision);
     }
 
     protected function setActivityFitDetailsFor(Training $activity, FitDetails $fitDetails)
@@ -186,11 +211,11 @@ class ActivityDataContainerToActivityContextConverter
             return;
         }
 
-        $activity->setTemperature($weatherData->Temperature);
-        $activity->setWindSpeed($weatherData->WindSpeed);
+        $activity->setTemperature($this->getRoundedValue($weatherData->Temperature));
+        $activity->setWindSpeed($this->getRoundedValue($weatherData->WindSpeed));
         $activity->setWindDeg($weatherData->WindDirection);
         $activity->setHumidity($weatherData->Humidity);
-        $activity->setPressure($weatherData->AirPressure);
+        $activity->setPressure($this->getRoundedValue($weatherData->AirPressure));
 
         if (null !== $weatherData->InternalConditionId) {
             $activity->setWeatherid($weatherData->InternalConditionId);
@@ -223,7 +248,7 @@ class ActivityDataContainerToActivityContextConverter
         $trackData->setAccount($this->Account);
         $trackData->setPauses($container->Pauses);
         $trackData->setTime($container->ContinuousData->Time ?: null);
-        $trackData->setDistance($container->ContinuousData->Distance ?: null);
+        $trackData->setDistance($this->getRoundedContinuousDistanceData($container->ContinuousData->Distance));
         $trackData->setHeartrate($container->ContinuousData->HeartRate ?: null);
         $trackData->setCadence($container->ContinuousData->Cadence ?: null);
         $trackData->setPower($container->ContinuousData->Power ?: null);
@@ -241,6 +266,21 @@ class ActivityDataContainerToActivityContextConverter
         }
 
         return $trackData;
+    }
+
+    /**
+     * @param array $distance [km]
+     * @return array|null
+     */
+    protected function getRoundedContinuousDistanceData(array $distance)
+    {
+        if (empty($distance)) {
+            return null;
+        }
+
+        return array_map(function ($v) {
+            return round($v, self::DISTANCE_PRECISION_FOR_TRACK_DATA);
+        }, $distance);
     }
 
     protected function setSwimdataFor(Training $activity, ActivityDataContainer $container)

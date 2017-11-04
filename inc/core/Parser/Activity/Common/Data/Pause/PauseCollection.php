@@ -106,4 +106,9 @@ class PauseCollection implements \Countable, \ArrayAccess
             0
         );
     }
+
+    public function rebase()
+    {
+        $this->Elements = array_values($this->Elements);
+    }
 }

@@ -76,4 +76,25 @@ class PauseCollectionTest extends \PHPUnit_Framework_TestCase
     {
         $this->Collection[] = 'foobar';
     }
+
+    public function testRebasing()
+    {
+        $this->Collection->add(new Pause(10, 1));
+        $this->Collection->add(new Pause(20, 1));
+        $this->Collection->add(new Pause(30, 1));
+        $this->Collection->offsetUnset(1);
+
+        $this->Collection->rebase();
+
+        $this->assertEquals(2, $this->Collection->count());
+        $this->assertEquals(10, $this->Collection[0]->getTimeIndex());
+        $this->assertEquals(30, $this->Collection[1]->getTimeIndex());
+    }
+
+    public function testRebasingWithEmptyCollection()
+    {
+        $this->Collection->rebase();
+
+        $this->assertEmpty($this->Collection->getElements());
+    }
 }
