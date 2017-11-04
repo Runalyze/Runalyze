@@ -682,4 +682,13 @@ class FitTest extends AbstractActivityParserTestCase
         $this->assertNotEmpty($this->Container->ContinuousData->Cadence);
         $this->assertEquals(76, $this->Container->ActivityData->AvgCadence, '', 0.5);
     }
+
+    public function testThatInvalidAltitudeAndEmptyRecordAreIgnored()
+    {
+        $this->convertAndParse('fit/invalid-altitude-and-empty-record-at-end.fit');
+
+        $this->assertNotEmpty($this->Container->ContinuousData->Altitude);
+        $this->assertNull($this->Container->ContinuousData->Altitude[0]);
+        $this->assertNotNull(end($this->Container->ContinuousData->Altitude));
+    }
 }

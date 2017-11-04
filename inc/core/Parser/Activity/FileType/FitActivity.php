@@ -437,7 +437,12 @@ class FitActivity extends AbstractSingleParser
 
     protected function readRecord()
     {
-        if ($this->IsPaused) { // Should not happen?
+        if (
+            $this->IsPaused || // Should not happen?
+            $this->IsSwimming ||
+            count($this->Values) == 1 ||
+            (!isset($this->Values['compressed_speed_distance']) && !isset($this->Values['timestamp']))
+        ) {
             return;
         }
 
@@ -451,9 +456,6 @@ class FitActivity extends AbstractSingleParser
             $time = $this->parseCompressedSpeedDistance();
             $last = -1;
         } else {
-            if (!isset($this->Values['timestamp']))
-                return;
-
             if (empty($this->Container->ContinuousData->Time)) {
                 $startTime = $this->strtotime((string)$this->Values['timestamp'][1]);
 
@@ -482,7 +484,7 @@ class FitActivity extends AbstractSingleParser
 
         $this->Container->ContinuousData->Latitude[] = isset($this->Values['position_lat']) ? substr($this->Values['position_lat'][1], 0, -4) : null;
         $this->Container->ContinuousData->Longitude[] = isset($this->Values['position_long']) ? substr($this->Values['position_long'][1], 0, -4) : null;
-        $this->Container->ContinuousData->Altitude[] = isset($this->Values['altitude']) ? substr($this->Values['altitude'][1], 0, -4) : null;
+        $this->Container->ContinuousData->Altitude[] = isset($this->Values['altitude']) && $this->Values['altitude'][0] != 0 ? substr($this->Values['altitude'][1], 0, -4) : null;
         $this->Container->ContinuousData->Distance[] = isset($this->Values['distance']) ? $this->Values['distance'][0] / 1e5 : end($this->Container->ContinuousData->Distance);
         $this->Container->ContinuousData->HeartRate[] = isset($this->Values['heart_rate']) ? (int)$this->Values['heart_rate'][0] : null;
         $this->Container->ContinuousData->Cadence[] = isset($this->Values['cadence']) ? (int)$this->Values['cadence'][0] : null;
