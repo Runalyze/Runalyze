@@ -77,7 +77,7 @@
                 <li><a class="window" data-size="small" href="<?php echo $this->get('router')->generate('notifications-list'); ?>"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('Show all notifications'); ?></a></li>
             </ul>
 
-            <script>Runalyze.Notifications.setLastRequestTime(0);</script>
+            <script>Runalyze.Notifications.setLastRequestTime(1);</script>
         </div>
 
         <div class="headline-menu right">
