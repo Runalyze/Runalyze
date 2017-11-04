@@ -3,7 +3,7 @@
 {% block content %}
 {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'ajax no-automatic-reload'}, 'action': url('poster')}) }}
 
-
+<div id="left">
     <fieldset id="general">
         <legend onclick="Runalyze.toggleFieldset(this, 'general', false, '')">{% trans %}General{% endtrans %}</legend>
             {{ form_row(form.sport, {'div_class': 'w50'}) }}
@@ -52,7 +52,6 @@
         {{ form_row(form.route, {'div_class': 'w50'}) }}
         {{ form_row(form.partner, {'div_class': 'w50'}) }}
 
-        {{ form_row(form.notes, {'div_class': 'w50'}) }}
 
 
     </fieldset>
@@ -61,6 +60,15 @@
 
 
     </fieldset>
+</div>
+    <div id="right">
+        <fieldset id="fieldset-right">
+
+        {{ form_row(form.notes, {'div_class': 'w50'}) }}
+            <br>
+            Laps...
+
+    </div>
     {{ form_rest(form) }}
 
 

@@ -4,15 +4,17 @@ namespace Runalyze\Bundle\CoreBundle\Form;
 
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\Training;
+use Runalyze\Bundle\CoreBundle\Form\Type\ActivityTypeChoiceType;
 use Runalyze\Bundle\CoreBundle\Form\Type\DistanceType;
 use Runalyze\Bundle\CoreBundle\Form\Type\ElevationType;
 use Runalyze\Bundle\CoreBundle\Form\Type\HumidityType;
 use Runalyze\Bundle\CoreBundle\Form\Type\PressureType;
 use Runalyze\Bundle\CoreBundle\Form\Type\RpeType;
+use Runalyze\Bundle\CoreBundle\Form\Type\SportChoiceType;
+use Runalyze\Bundle\CoreBundle\Form\Type\SportType;
 use Runalyze\Bundle\CoreBundle\Form\Type\TemperatureType;
 use Runalyze\Bundle\CoreBundle\Form\Type\WeatherConditionType;
 use Runalyze\Bundle\CoreBundle\Form\Type\WindDirectionType;
-use Runalyze\Data\RPE;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -20,6 +22,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Runalyze\Bundle\CoreBundle\Form\Type\EnergyKcalType;
 use Runalyze\Bundle\CoreBundle\Form\Type\DurationType;
@@ -52,12 +55,11 @@ class ActivityType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $placeOrParticipantsOptions = [
-            'attr' => ['min' => 1, 'class'=> 'small-size'],
-            'required' => false
-        ];
-
         $builder
+            ->add('temporaryHash', HiddenType::class, array(
+                'mapped' => false,
+                'required' => false
+            ))
             ->add('s', DurationType::class, array(
                 'required' => true,
                 'attr' => ['class' => 'small-size'],
@@ -77,17 +79,13 @@ class ActivityType extends AbstractType
                 'empty_data'  => null,
                 'label' => 'Pace'
             ))
-            ->add('sport', ChoiceType::class, array(
-                'choices' => $this->getAccount()->getSports(),
-                'choice_label' => 'name',
-                'choice_value' => 'getId',
-                'label' => 'Sport type',
+            ->add('sport', SportChoiceType::class, array(
+                'required' => false,
+                'empty_data'  => null,
             ))
-            ->add('type', ChoiceType::class, array(
-                'choices' => $this->getAccount()->getActivityTypes(),
-                'choice_label' => 'name',
-                'choice_value' => 'getId',
-                'label' => 'Activity type',
+            ->add('type', ActivityTypeChoiceType::class, array(
+                'required' => false,
+                'empty_data'  => null,
             ))
             ->add('use_vo2max', CheckboxType::class, array(
                 'required' => false,
@@ -111,15 +109,12 @@ class ActivityType extends AbstractType
             ))
 
             ->add('kcal', EnergyKcalType::class, array(
-                'required' => true,
                 'label' => 'Energy'
             ))
             ->add('pulseAvg', HeartrateType::class, array(
-                'required' => true,
                 'label' => 'avg. HR'
             ))
             ->add('pulseMax', HeartrateType::class, array(
-                'required' => true,
                 'label' => 'max. HR'
             ))
             ->add('rpe', RpeType::class, array(
@@ -131,19 +126,15 @@ class ActivityType extends AbstractType
                 'required' => true,
             ))
             ->add('wind_speed', WindDirectionType::class, array(
-                'required' => true,
                 'label' => 'Wind speed'
             ))
             ->add('wind_deg', WindDirectionType::class, array(
-                'required' => true,
                 'label' => 'Wind degrees'
             ))
             ->add('humidity', HumidityType::class, array(
-                'required' => true,
                 'label' => 'Humidity'
             ))
             ->add('pressure', PressureType::class, array(
-                'required' => true,
                 'label' => 'Pressure'
             ))
             ->add('weatherid', WeatherConditionType::class, array(
