@@ -39,7 +39,7 @@ class Type
     /**
      * @var Sport
      *
-     * @ORM\ManyToOne(targetEntity="Sport")
+     * @ORM\ManyToOne(targetEntity="Sport", inversedBy="types")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="sportid", referencedColumnName="id", nullable=false)
      * })

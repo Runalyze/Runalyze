@@ -50,7 +50,7 @@ class Swimdata
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="Training")
+     * @ORM\OneToOne(targetEntity="Training", inversedBy = "swimdata")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="activityid", referencedColumnName="id")
      * })

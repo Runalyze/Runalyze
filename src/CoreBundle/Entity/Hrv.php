@@ -34,7 +34,7 @@ class Hrv
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="Training")
+     * @ORM\OneToOne(targetEntity="Training", inversedBy = "hrv")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="activityid", referencedColumnName="id")
      * })
