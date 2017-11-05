@@ -295,7 +295,8 @@ CREATE TABLE IF NOT EXISTS `runalyze_trackdata` (
   `smo2_1` longtext,
   `thb_0` longtext,
   `thb_1` longtext,
-  `pauses` text
+  `pauses` text,
+  `lock` tinyint(1) unsigned NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------

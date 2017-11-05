@@ -134,6 +134,13 @@ class Trackdata
      */
     private $account;
 
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="`lock`", type="boolean")
+     */
+    private $lock = false;
+
     /** @var TrackDataAdapter */
     private $Adapter;
 
@@ -612,6 +619,33 @@ class Trackdata
     public function getAccount()
     {
         return $this->account;
+    }
+
+    /**
+     * @param bool $flag
+     * @return $this
+     */
+    public function setLock($flag)
+    {
+        $this->lock = (bool)$flag;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getLock()
+    {
+        return $this->lock;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isLocked()
+    {
+        return $this->lock;
     }
 
     /**

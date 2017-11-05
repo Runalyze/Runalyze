@@ -47,7 +47,7 @@ class NegativeTimeStepFilter extends AbstractFilter
         $indicesToRemove = [];
 
         foreach ($negativeTimeSteps as $index => $duration) {
-            if ($continuousData->Time[$index + 1] >= $continuousData->Time[$index - 1]) {
+            if (isset($continuousData->Time[$index + 1]) && $continuousData->Time[$index + 1] >= $continuousData->Time[$index - 1]) {
                 $indicesToRemove[] = $index;
 
                 $this->logger->warning(sprintf('Negative time step #%u of %ds removed.', $index, -$duration));
