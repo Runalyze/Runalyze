@@ -9,13 +9,10 @@ namespace Runalyze\Activity;
 use PDO;
 
 /**
- * Duplicate Activity Checker for new activites
- *
- * @author Hannes Christiansen
- * @author Michael Pohl
- * @package Runalyze\Import\Filetype
+ * @deprecated since v4.3
+ * @see \Runalyze\Bundle\CoreBundle\Services\Import\DuplicateFinder
  */
-class DuplicateFinder 
+class DuplicateFinder
 {
     /** @var string */
     const COLUMN_WITH_ID = 'activity_id';
@@ -31,19 +28,19 @@ class DuplicateFinder
 	 * @param \PDO $pdo
 	 * @param int $accountId
 	 */
-    public function __construct(PDO $pdo, $accountId) 
+    public function __construct(PDO $pdo, $accountId)
     {
 	    $this->PDO = $pdo;
 	    $this->AccountId = (int)$accountId;
     }
-    
+
     /*
      * Find duplicate by original activityID (Timestamp)
      * @param int|null $activityId
      * @return bool
      * @throws \InvalidArgumentException
      */
-    public function checkForDuplicate($activityId) 
+    public function checkForDuplicate($activityId)
     {
         if (null === $activityId) {
             return false;

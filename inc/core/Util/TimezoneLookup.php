@@ -6,10 +6,8 @@
 namespace Runalyze\Util;
 
 /**
- * TimezoneLookup
- *
- * @author Michael Pohl
- * @package Runalyze\Util
+ * @deprecated since v4.3
+ * @see \Runalyze\Bundle\CoreBundle\Services\Import\TimezoneLookup
  */
 class TimezoneLookup
 {

@@ -6,10 +6,8 @@
 namespace Runalyze\Util;
 
 /**
- * Exception for TimezoneLookup
- *
- * @author Hannes Christiansen
- * @package Runalyze\Util
+ * @deprecated since v4.3
+ * @see \Runalyze\Bundle\CoreBundle\Services\Import\TimezoneLookupException
  */
 class TimezoneLookupException extends \Exception
 {
