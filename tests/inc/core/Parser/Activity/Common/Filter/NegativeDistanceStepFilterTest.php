@@ -60,7 +60,7 @@ class NegativeDistanceStepFilterTest extends \PHPUnit_Framework_TestCase
 
     public function testUnrecoverableDistanceStep()
     {
-        $this->Container->ContinuousData->Distance = [1.0, 2.0, 1.4, 4.0, 5.0];
+        $this->Container->ContinuousData->Distance = [1.0, 2.0, 1.4, 1.6, 4.0, 5.0];
 
         $this->setExpectedException(InvalidDataException::class);
 
