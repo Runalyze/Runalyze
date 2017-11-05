@@ -84,6 +84,35 @@ class TrainingRepositoryTest extends AbstractRepositoryTestCase
         $this->assertNull($activity->getType());
     }
 
+    public function testPossibleDuplicate()
+    {
+        $existingActivity = $this->getActivityForDefaultAccount();
+        $existingActivity->setActivityId(123456789);
+
+        $this->TrainingRepository->save($existingActivity);
+
+        $activityToCheck = new Training();
+        $activityToCheck->setActivityId(123456789);
+
+        $this->assertFalse($this->TrainingRepository->isPossibleDuplicate($activityToCheck));
+
+        $activityToCheck->setAccount($this->getEmptyAccount());
+
+        $this->assertFalse($this->TrainingRepository->isPossibleDuplicate($activityToCheck));
+
+        $activityToCheck->setAccount($this->getDefaultAccount());
+
+        $this->assertTrue($this->TrainingRepository->isPossibleDuplicate($activityToCheck));
+
+        $activityToCheck->setActivityId(100000000);
+
+        $this->assertFalse($this->TrainingRepository->isPossibleDuplicate($activityToCheck));
+
+        $activityToCheck->setActivityId(null);
+
+        $this->assertFalse($this->TrainingRepository->isPossibleDuplicate($activityToCheck));
+    }
+
     public function testSpeedUnit()
     {
         $this->assertEquals(

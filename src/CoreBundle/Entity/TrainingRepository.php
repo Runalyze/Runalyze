@@ -45,6 +45,25 @@ class TrainingRepository extends EntityRepository
     }
 
     /**
+     * @param Training $activity
+     * @return bool
+     */
+    public function isPossibleDuplicate(Training $activity)
+    {
+        if (null === $activity->getAccount() || !is_numeric($activity->getAccount()->getId()) || null == $activity->getActivityId()) {
+            return false;
+        }
+
+        return null !== $this->createQueryBuilder('t')
+            ->select('1')
+            ->where('t.account = :account AND t.activityId = :id')
+            ->setParameter('account', $activity->getAccount())
+            ->setParameter('id', $activity->getActivityId())
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    /**
      * @param Account $account
      * @param null|int $sportid
      * @return array
