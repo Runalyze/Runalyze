@@ -16,6 +16,7 @@ use Runalyze\Bundle\CoreBundle\Form\Type\TemperatureType;
 use Runalyze\Bundle\CoreBundle\Form\Type\WeatherConditionType;
 use Runalyze\Bundle\CoreBundle\Form\Type\WindDirectionType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\LanguageType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -160,6 +161,8 @@ class ActivityType extends AbstractType
 
 
         ;
+
+        new LanguageType();
 
     }
 

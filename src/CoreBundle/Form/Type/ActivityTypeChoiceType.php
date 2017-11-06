@@ -12,17 +12,26 @@ use Runalyze\Bundle\CoreBundle\Form\AbstractTokenStorageAwareType;
 
 class ActivityTypeChoiceType extends AbstractTokenStorageAwareType
 {
-    public function buildView(FormView $view, FormInterface $form, array $options)
+
+    /**
+     * {@inheritdoc}
+     */
+    public function configureOptions(OptionsResolver $resolver)
     {
-        $view->vars['choices'] = $this->getAccount()->getActivityTypes();
-        $view->vars['choice_label'] = function($type, $key, $index) {
-        /** @var Type $type */
-        return $type->getName();
-    };
-               $view->vars['choice_attr'] = function($type, $key, $index) {
-        /* @var Type $type */
-        return ['data-id' => $type->getId()];
-    };
+        $resolver->setDefaults(array(
+            'choices' => $this->getAccount()->getActivityTypes(),
+            'choice_label' => function($type, $key, $index) {
+                /** @var Type $type */
+                return $type->getName();
+            },
+            'choice_value' => function (Type $type = null) {
+                return $type ? $type->getId() : '';
+            },
+            'choice_attr' => function($type, $key, $index) {
+                /* @var Type $type */
+                return ['data-sportid' => $type->getSport()->getId()];
+            }
+        ));
     }
 
     public function getParent()

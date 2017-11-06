@@ -12,9 +12,20 @@ use Runalyze\Data\RPE;
 
 class RpeType extends AbstractType
 {
-
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    /**
+     * {@inheritdoc}
+     */
+    public function configureOptions(OptionsResolver $resolver)
     {
+        $rpe = RPE::completeList();
+
+        $resolver->setDefaults(array(
+            'choices' => RPE::completeList(),
+            'choice_label' => function ($value, $key, $index) {
+                return $value;
+            },
+            'placeholder' => '-'
+        ));
     }
 
     public function getParent()

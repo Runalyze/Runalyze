@@ -2,37 +2,27 @@
 
 namespace Runalyze\Bundle\CoreBundle\Form\Type;
 
+use Runalyze\Dataset\Context;
 use Runalyze\Profile\Weather\WeatherConditionProfile;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\FormView;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Runalyze\Data\Weather\Condition;
 
 class WeatherConditionType extends AbstractType
 {
 
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    /**
+     * {@inheritdoc}
+     */
+    public function configureOptions(OptionsResolver $resolver)
     {
-        $view->vars['input_unit'] = '°';
-
-        $conditions = [];
-        $Condition = new Condition(0);
-
-        foreach (Condition::completeList() as $id) {
-            $Condition->set($id);
-
-            $conditions[$id] = $Condition->string();
-        }
-
-      //  $view->vars['choices'] = $conditions;
-
-       /* foreach (Condition::completeList() as $id) {
-            $Condition->set($id);
-
-            $this->addOption($id, $Condition->string());
-        }*/
+        $resolver->setDefaults(array(
+            'choices' => Condition::completeList(),
+            'choice_label' => function ($value, $key, $index) {
+                return (new Condition($value))->string();
+            },
+        ));
     }
 
     public function getParent()

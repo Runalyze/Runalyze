@@ -2,29 +2,38 @@
 
 namespace Runalyze\Bundle\CoreBundle\Form\Type;
 
-use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\FormView;
-use Symfony\Component\Form\FormInterface;
+use Runalyze\Bundle\CoreBundle\Entity\Sport;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Runalyze\Bundle\CoreBundle\Form\AbstractTokenStorageAwareType;
 
 class SportChoiceType extends AbstractTokenStorageAwareType
 {
 
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    /**
+     * {@inheritdoc}
+     */
+    public function configureOptions(OptionsResolver $resolver)
     {
-        $view->vars['choices'] = $this->getAccount()->getSports();
-        $view->vars['choice_label'] = function($sport, $key, $index) {
-        /** @var Sport $sport */
-        return $sport->getName();
-    };
-               $view->vars['choice_attr'] = function($sport, $key, $index) {
-        /* @var Sport $sport */
-        return ['data-id' => $sport->getId()];
-    };
+        $resolver->setDefaults(array(
+            'choices' => $this->getAccount()->getSports(),
+            'choice_label' => function($sport, $key, $index) {
+                /** @var Sport $sport */
+                return $sport->getName();
+            },
+            'choice_value' => function (Sport $sport = null) {
+                return $sport ? $sport->getId() : '';
+            },
+            'choice_attr' => function($sport, $key, $index) {
+                /* @var Sport $sport */
+                return ['data-outside' => $sport->getOutside(),
+                    'data-kcal' => $sport->getKcal(),
+                    'data-distance' => $sport->getDistances(),
+                    'data-speed' => $sport->getSpeed()];
+            }
+        ));
     }
+
 
     public function getParent()
     {
