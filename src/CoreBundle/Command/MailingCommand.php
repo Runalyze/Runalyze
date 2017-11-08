@@ -61,7 +61,7 @@ class MailingCommand extends ContainerAwareCommand
         $mailer = $this->getContainer()->get('app.mailer.account');
 
         foreach($accounts as $account) {
-            $mailer->sendMailTo($account, 'test', $this->customMailDirectory . $input->getArgument('template'), []);
+            $mailer->sendMailTo($account, $input->getOption('subject'), $this->customMailDirectory . $input->getArgument('template'), []);
         }
         $output->writeln(sprintf('<info>%u mail(s) have been sent.</info>', count($accounts)));
         $output->writeln('');
