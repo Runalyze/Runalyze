@@ -104,8 +104,13 @@ class MailingCommand extends ContainerAwareCommand
         }
 
         if (!empty($input->getOption('lang'))) {
-             $query->andWhere('a.language '.($exclude ? 'NOT' : '').' IN ("'.implode('", "', $input->getOption('lang')).'")');
+             $query->andWhere('a.language '.($exclude ? 'NOT' : '').' IN (\''.implode('", "', $input->getOption('lang')).'\')');
         }
+
+        if (!empty($input->getOption('account'))) {
+            $query->andWhere('a.id IN ('.implode(', ', $input->getOption('account')).')');
+        }
+
         return $query->getQuery()->getResult();
 
     }
