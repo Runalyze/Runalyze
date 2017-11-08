@@ -23,7 +23,7 @@ class MailingCommand extends ContainerAwareCommand
             ->setName('runalyze:mails:send')
             ->setDescription('Send out a mails to users with custom templates in data/vies/mail/custom')
             ->addArgument('template', InputArgument::REQUIRED, 'Template file')
-            ->addOption('subject', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'Mail subject')
+            ->addOption('subject', null, InputOption::VALUE_REQUIRED, 'Mail subject')
             ->addOption('lang', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'Languages to select accounts')
             ->addOption('exclude-lang', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'Excluded languages to select accounts')
             ->addOption('account', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'Account ids')
@@ -59,9 +59,9 @@ class MailingCommand extends ContainerAwareCommand
             }
         }
         $mailer = $this->getContainer()->get('app.mailer.account');
-
         foreach($accounts as $account) {
-            $mailer->sendMailTo($account, $input->getOption('subject'), $this->customMailDirectory . $input->getArgument('template'), []);
+            /** Account $account */
+            $mailer->sendMailTo($account, $input->getOption('subject'), $this->customMailDirectory . $input->getArgument('template'), ['account' => $account]);
         }
         $output->writeln(sprintf('<info>%u mail(s) have been sent.</info>', count($accounts)));
         $output->writeln('');
