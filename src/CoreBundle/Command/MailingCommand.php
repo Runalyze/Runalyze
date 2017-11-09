@@ -24,7 +24,7 @@ class MailingCommand extends ContainerAwareCommand
             ->setDescription('Send out a mails to users with custom templates in data/vies/mail/custom')
             ->addArgument('template', InputArgument::REQUIRED, 'Template file')
             ->addOption('subject', null, InputOption::VALUE_REQUIRED, 'Mail subject')
-            ->addOption('lang', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'Languages to select accounts')
+            ->addOption('lang', null, InputOption::VALUE_REQUIRED, 'Languages to select accounts')
             ->addOption('exclude-lang', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'Excluded languages to select accounts')
             ->addOption('account', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'Account ids')
             ->addOption('force', null, InputOption::VALUE_NONE, 'Force creation of notifications without prompt')
@@ -104,7 +104,7 @@ class MailingCommand extends ContainerAwareCommand
         }
 
         if (!empty($input->getOption('lang'))) {
-             $query->andWhere('a.language '.($exclude ? 'NOT' : '').' IN (\''.implode('", "', $input->getOption('lang')).'\')');
+            $query->andWhere('a.language '.($exclude ? 'NOT' : '').' IN (\''.implode('", "', $input->getOption('lang')).'\')');
         }
 
         if (!empty($input->getOption('account'))) {
