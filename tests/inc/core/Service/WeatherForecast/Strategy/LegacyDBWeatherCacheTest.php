@@ -5,15 +5,15 @@ namespace Runalyze\Service\WeatherForecast\Strategy;
 use Runalyze\Data\Weather;
 use Runalyze\Model;
 use Runalyze\Profile\Weather\WeatherConditionProfile;
-use Runalyze\Service\WeatherForecast\Forecast;
+use Runalyze\Service\WeatherForecast\LegacyForecast;
 
 /**
  * @group dependsOn
  * @group dependsOnOldDatabase
  */
-class DBWeatherCacheTest extends \PHPUnit_Framework_TestCase
+class LegacyDBWeatherCacheTest extends \PHPUnit_Framework_TestCase
 {
-	/** @var \Runalyze\Service\WeatherForecast\Strategy\DBWeatherCache */
+	/** @var \Runalyze\Service\WeatherForecast\Strategy\LegacyDBWeatherCache */
 	protected $object;
 
 	/** @var \PDO */
@@ -21,7 +21,7 @@ class DBWeatherCacheTest extends \PHPUnit_Framework_TestCase
 
 	protected function setUp()
 	{
-		$this->object = new DBWeatherCache;
+		$this->object = new LegacyDBWeatherCache;
 		$this->PDO = \DB::getInstance();
 		$this->PDO->exec('DELETE FROM `'.PREFIX.'weathercache`');
 	}
@@ -100,13 +100,13 @@ class DBWeatherCacheTest extends \PHPUnit_Framework_TestCase
 		]);
 
 		$Location = new Weather\Location();
-		$Location->setDateTime((new \DateTime())->setTimestamp(1462289510 - Forecast::TIME_PRECISION + 1));
+		$Location->setDateTime((new \DateTime())->setTimestamp(1462289510 - LegacyForecast::TIME_PRECISION + 1));
 		$Location->setGeohash('u1xjn3n74zxv');
 
 		$this->object->loadForecast($Location);
 		$this->assertTrue($this->object->wasSuccessfull());
 
-		$Location->setDateTime((new \DateTime())->setTimestamp(1462289510 - Forecast::TIME_PRECISION - 1));
+		$Location->setDateTime((new \DateTime())->setTimestamp(1462289510 - LegacyForecast::TIME_PRECISION - 1));
 
 		$this->object->loadForecast($Location);
 		$this->assertFalse($this->object->wasSuccessfull());

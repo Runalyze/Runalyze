@@ -5,14 +5,14 @@ namespace Runalyze\Service\WeatherForecast\Strategy;
 use Runalyze\Data\Weather;
 use Runalyze\Profile\Weather\WeatherConditionProfile;
 
-class DarkskyTest extends \PHPUnit_Framework_TestCase
+class LegacyDarkskyTest extends \PHPUnit_Framework_TestCase
 {
-	/** @var \Runalyze\Service\WeatherForecast\Strategy\Darksky */
+	/** @var \Runalyze\Service\WeatherForecast\Strategy\LegacyDarksky */
 	protected $object;
 
 	protected function setUp()
 	{
-		$this->object = new Darksky();
+		$this->object = new LegacyDarksky();
 	}
 
 	public function testEmptyValues()

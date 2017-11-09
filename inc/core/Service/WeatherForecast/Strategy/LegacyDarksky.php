@@ -1,6 +1,6 @@
 <?php
 /**
- * This file contains class::Openweathermap
+ * This file contains class::Darksky
  * @package Runalyze\Service\WeatherForecast\Strategy
  */
 
@@ -14,32 +14,19 @@ use Runalyze\Data\Weather\WindDegree;
 use Runalyze\Data\Weather\Condition;
 use Runalyze\Data\Weather\Sources;
 use Runalyze\Data\Weather\Location;
-use Runalyze\Profile\Weather\Mapping\OpenWeatherMapMapping;
+use Runalyze\Profile\Weather\Mapping\DarkskyMapping;
 use Runalyze\Profile\Weather\WeatherConditionProfile;
 
 /**
- * Forecast-strategy for using openweathermap.org
- *
- * This weather forecast strategy uses the api of openweathermap.org
- * To use this api, a location has to be set.
- *
- * The strategy uses <code>OPENWEATHERMAP_API_KEY</code> if defined.
- *
- * @author Hannes Christiansen
- * @package Runalyze\Service\WeatherForecast\Strategy
+ * @deprecated since v4.3
+ * @see DarkSky
  */
-class Openweathermap implements StrategyInterface {
+class LegacyDarksky implements LegacyStrategyInterface {
 	/**
 	 * URL for catching forecast
 	 * @var string
 	 */
-	const URL = 'http://api.openweathermap.org/data/2.5/weather';
-
-	/**
-	 * URL for catching forecast
-	 * @var string
-	 */
-	const URL_HISTORY = 'http://api.openweathermap.org/data/2.5/history';
+	const URL = 'https://api.darksky.net/forecast/';
 
 	/**
 	 * Location
@@ -57,7 +44,7 @@ class Openweathermap implements StrategyInterface {
 	 * @return boolean
 	 */
 	public function isPossible() {
-	    return (defined('OPENWEATHERMAP_API_KEY') && strlen(OPENWEATHERMAP_API_KEY))  ? true : false;
+	    return (defined('DARKSKY_API_KEY') && strlen(DARKSKY_API_KEY))  ? true : false;
 	}
 
 	/**
@@ -80,7 +67,7 @@ class Openweathermap implements StrategyInterface {
 	 */
 	public function sourceId()
 	{
-		return Sources::OPENWEATHERMAP;
+		return Sources::DARKSKY;
 	}
 
 	/**
@@ -91,12 +78,8 @@ class Openweathermap implements StrategyInterface {
 		$this->Result = array();
 		$this->Location = $Location;
 
-		if (!$Location->isOlderThan(7200)) {
-			if ($Location->hasPosition()) {
-				$this->setFromURL( self::URL.'?lat='.$Location->lat().'&lon='.$Location->lon() );
-			} elseif ($Location->hasLocationName()) {
-				$this->setFromURL( self::URL.'?q='.$Location->name() );
-			}
+		if ($Location->hasPosition()) {
+			$this->setFromURL($Location->lat().','.$Location->lon().','.$Location->timestamp());
 		}
 
 		$this->updateLocation();
@@ -107,8 +90,9 @@ class Openweathermap implements StrategyInterface {
 	 * @param string $url
 	 */
 	public function setFromURL($url) {
-		if (defined('OPENWEATHERMAP_API_KEY') && strlen(OPENWEATHERMAP_API_KEY))
-			$url .= '&APPID='.OPENWEATHERMAP_API_KEY;
+		if (defined('DARKSKY_API_KEY') && strlen(DARKSKY_API_KEY)) {
+			$url = self::URL.DARKSKY_API_KEY.'/'.$url;
+		}
 
 		$this->setFromJSON( \Filesystem::getExternUrlContent($url) );
 	}
@@ -120,7 +104,6 @@ class Openweathermap implements StrategyInterface {
 	public function setFromJSON($JSON) {
 		if ($JSON) {
 			$this->Result = json_decode($JSON, true);
-
 			if (isset($this->Result['list'])) {
 				if (!empty($this->Result['list'])) {
 					$this->Result = $this->Result['list'][0];
@@ -136,11 +119,11 @@ class Openweathermap implements StrategyInterface {
 	 * @return \Runalyze\Data\Weather\Condition
 	 */
 	public function condition() {
-		if (!isset($this->Result['weather'])) {
+		if (!isset($this->Result['currently']['icon'])) {
 			return new Condition(WeatherConditionProfile::UNKNOWN);
 		}
 
-		return $this->translateCodeToCondition($this->Result['weather'][0]['id']);
+		return $this->translateCodeToCondition($this->Result['currently']['icon']);
 	}
 
 	/**
@@ -148,13 +131,13 @@ class Openweathermap implements StrategyInterface {
 	 * @return \Runalyze\Data\Weather\Temperature
 	 */
 	public function temperature() {
-		if (isset($this->Result['main']) && isset($this->Result['main']['temp'])) {
-			$value = round($this->Result['main']['temp']);
+		if (isset($this->Result['currently']) && isset($this->Result['currently']['temperature'])) {
+			$value = round($this->Result['currently']['temperature']);
 		} else {
 			$value = null;
 		}
 
-		return new Temperature($value, Temperature::KELVIN);
+		return new Temperature($value, Temperature::FAHRENHEIT);
 	}
 
 	/**
@@ -164,8 +147,8 @@ class Openweathermap implements StrategyInterface {
 	public function windSpeed() {
 		$WindSpeed = new WindSpeed();
 
-		if (isset($this->Result['wind']) && isset($this->Result['wind']['speed'])) {
-			$WindSpeed->setMeterPerSecond($this->Result['wind']['speed']);
+		if (isset($this->Result['currently']) && isset($this->Result['currently']['windSpeed'])) {
+			$WindSpeed->setMilesPerHour($this->Result['currently']['windSpeed']);
 		}
 
 		return $WindSpeed;
@@ -176,8 +159,8 @@ class Openweathermap implements StrategyInterface {
 	 * @return \Runalyze\Data\Weather\WindDegree
 	 */
 	public function windDegree() {
-		if (isset($this->Result['wind']) && isset($this->Result['wind']['deg'])) {
-			$value = round($this->Result['wind']['deg']);
+		if (isset($this->Result['currently']) && isset($this->Result['currently']['windBearing'])) {
+			$value = round($this->Result['currently']['windBearing']);
 		} else {
 			$value = null;
 		}
@@ -190,8 +173,8 @@ class Openweathermap implements StrategyInterface {
 	 * @return \Runalyze\Data\Weather\Humidity
 	 */
 	public function humidity() {
-		if (isset($this->Result['main']) && isset($this->Result['main']['humidity'])) {
-			$value = round($this->Result['main']['humidity']);
+		if (isset($this->Result['currently']) && isset($this->Result['currently']['humidity'])) {
+			$value = $this->Result['currently']['humidity']*100;
 		} else {
 			$value = null;
 		}
@@ -204,8 +187,8 @@ class Openweathermap implements StrategyInterface {
 	 * @return \Runalyze\Data\Weather\Pressure
 	 */
 	public function pressure() {
-		if (isset($this->Result['main']) && isset($this->Result['main']['pressure'])) {
-			$value = round($this->Result['main']['pressure']);
+		if (isset($this->Result['currently']) && isset($this->Result['currently']['pressure'])) {
+			$value = round($this->Result['currently']['pressure']);
 		} else {
 			$value = null;
 		}
@@ -224,23 +207,22 @@ class Openweathermap implements StrategyInterface {
 	/**
 	 * Update Location Object
 	 */
-	protected function updateLocation() {
-		if (isset($this->Result['coord']) && isset($this->Result['coord']['lon']) && isset($this->Result['coord']['lat'])) {
-			$this->Location->setPosition($this->Result['coord']['lat'], $this->Result['coord']['lon']);
+	 protected function updateLocation() {
+		if (isset($this->Result['latitude']) && isset($this->Result['longitude'])) {
+			$this->Location->setPosition($this->Result['latitude'], $this->Result['longitude']);
 		}
 		if (isset($this->Result['dt']) && is_numeric($this->Result['dt'])) {
-			$this->Location->setDateTime((new \DateTime())->setTimestamp($this->Result['dt']));
+            $this->Location->setDateTime((new \DateTime())->setTimestamp($this->Result['dt']));
 		}
-	}
-
+	 }
 	/**
-	 * Translate api code to condition
+	 * Translate api icon string to condition
 	 *
-	 * @see http://openweathermap.org/weather-conditions
-	 * @param int $code Code from openweathermap.org
+	 * @see https://developer.forecast.io/docs/v2
+	 * @param string $icon from forecast.io
 	 * @return \Runalyze\Data\Weather\Condition
 	 */
-	private function translateCodeToCondition($code) {
-		return new Condition((new OpenWeatherMapMapping())->toInternal($code));
+	private function translateCodeToCondition($icon) {
+		return new Condition((new DarkskyMapping())->toInternal($icon));
 	}
 }

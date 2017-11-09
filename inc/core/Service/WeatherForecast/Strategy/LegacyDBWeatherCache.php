@@ -8,16 +8,13 @@ namespace Runalyze\Service\WeatherForecast\Strategy;
 
 use Runalyze\Model\WeatherCache;
 use Runalyze\Data\Weather;
-use Runalyze\Service\WeatherForecast\Forecast;
+use Runalyze\Service\WeatherForecast\LegacyForecast;
 
 /**
- * Forecast-strategy for using local database cache
- *
- * @author Hannes Christiansen
- * @author Michael Pohl
- * @package Runalyze\Service\WeatherForecast\Strategy
+ * @deprecated since v4.3
+ * @see DatabaseCache
  */
-class DBWeatherCache implements StrategyInterface {
+class LegacyDBWeatherCache implements LegacyStrategyInterface {
 	/**
 	 * Geohash Query Precision
 	 * @var int
@@ -94,8 +91,8 @@ class DBWeatherCache implements StrategyInterface {
 	    if ($this->Location->hasPosition()) {
 	    	$qValues = array(
 				'geohash' => substr($this->Location->geohash(), 0, self::GEOHASH_QUERY_PRECISION),
-				'starttime' => $this->Location->timestamp() - Forecast::TIME_PRECISION,
-				'endtime' => $this->Location->timestamp() + Forecast::TIME_PRECISION
+				'starttime' => $this->Location->timestamp() - LegacyForecast::TIME_PRECISION,
+				'endtime' => $this->Location->timestamp() + LegacyForecast::TIME_PRECISION
 			);
 
 	    	$cacheData = $this->PDO->query('SELECT * FROM `'.PREFIX.'weathercache` WHERE `geohash` LIKE "'.$qValues['geohash'].'%" AND `time` BETWEEN "'.$qValues['starttime'].'" AND "'.$qValues['endtime'].'" ORDER BY TIME DESC LIMIT 1')->fetch();

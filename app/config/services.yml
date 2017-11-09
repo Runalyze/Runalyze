@@ -95,6 +95,10 @@ services:
     class: Runalyze\Bundle\CoreBundle\Entity\UserRepository
     factory: ["@doctrine.orm.entity_manager", getRepository]
     arguments: [Runalyze\Bundle\CoreBundle\Entity\User]
+  app.repository.weathercache:
+    class: Runalyze\Bundle\CoreBundle\Entity\WeathercacheRepository
+    factory: ["@doctrine.orm.entity_manager", getRepository]
+    arguments: [Runalyze\Bundle\CoreBundle\Entity\Weathercache]
   app.entity_listener.activity:
     class: Runalyze\Bundle\CoreBundle\EntityListener\ActivityListener
     arguments: ["@app.recalculation_manager", "@app.configuration_manager", "@app.repository.sport"]
@@ -292,3 +296,21 @@ services:
       - { name: bernard.receiver, message: posterGenerator }
   app.activity.feed:
     class: Runalyze\View\Activity\Feed
+  app.http_client:
+    class: GuzzleHttp\Client
+  app.weather_forecast.darksky:
+    class: Runalyze\Service\WeatherForecast\Strategy\DarkSky
+    arguments: ["%darksky_api_key%", "@app.http_client", "@logger"]
+    tags:
+      - { name: monolog.logger, channel: external_services }
+  app.weather_forecast.openweathermap:
+    class: Runalyze\Service\WeatherForecast\Strategy\OpenWeatherMap
+    arguments: ["%openweathermap_api_key%", "@app.http_client", "@logger"]
+    tags:
+      - { name: monolog.logger, channel: external_services }
+  app.weather_forecast.cache:
+    class: Runalyze\Service\WeatherForecast\Strategy\DatabaseCache
+    arguments: ["@app.repository.weathercache"]
+  app.weather_forecast:
+    class: Runalyze\Bundle\CoreBundle\Services\Import\WeatherForecast
+    arguments: ["@app.weather_forecast.cache", "@app.weather_forecast.darksky", "@app.weather_forecast.openweathermap", "@app.repository.weathercache"]

@@ -6,9 +6,9 @@ use Runalyze\Data\Weather;
 use Runalyze\Model\WeatherCache;
 use Runalyze\Service\WeatherForecast\Strategy;
 
-require_once 'Strategy/FakeStrategy.php';
+require_once 'Strategy/FakeLegacyStrategy.php';
 
-class FakeStrategyImpossible extends Strategy\FakeStrategy
+class FakeStrategyImpossible extends Strategy\FakeLegacyStrategy
 {
 	public function __construct()
 	{
@@ -16,7 +16,7 @@ class FakeStrategyImpossible extends Strategy\FakeStrategy
 	}
 }
 
-class FakeStrategyUnsuccessfull extends Strategy\FakeStrategy
+class FakeStrategyUnsuccessfull extends Strategy\FakeLegacyStrategy
 {
 	public function __construct()
 	{
@@ -24,7 +24,7 @@ class FakeStrategyUnsuccessfull extends Strategy\FakeStrategy
 	}
 }
 
-class FakeStrategySuccessfull extends Strategy\FakeStrategy
+class FakeStrategySuccessfull extends Strategy\FakeLegacyStrategy
 {
 	public function __construct()
 	{
@@ -32,7 +32,7 @@ class FakeStrategySuccessfull extends Strategy\FakeStrategy
 	}
 }
 
-class FakeStrategyUnsuccessfull2 extends Strategy\FakeStrategy
+class FakeStrategyUnsuccessfull2 extends Strategy\FakeLegacyStrategy
 {
 	/** @var boolean */
 	public static $WasReached = false;
@@ -45,7 +45,7 @@ class FakeStrategyUnsuccessfull2 extends Strategy\FakeStrategy
 	}
 }
 
-class FakeForecast extends Forecast
+class FakeLegacyForecast extends LegacyForecast
 {
 	/** @var array */
 	protected $Strategies = [
@@ -66,22 +66,22 @@ class ForecastWithFakeStrategiesTest extends \PHPUnit_Framework_TestCase
 
 	public function testThatForecastCanLoopThroughStrategies()
 	{
-		new Forecast(new Weather\Location, null);
+		new LegacyForecast(new Weather\Location, null);
 	}
 
 	public function testThatImpossibleStrategyThrowsNoError()
 	{
-		new Forecast(new Weather\Location, new Strategy\FakeStrategy(false, false));
+		new LegacyForecast(new Weather\Location, new Strategy\FakeLegacyStrategy(false, false));
 	}
 
 	public function testThatUnsuccessfullStrategyThrowsNoError()
 	{
-		new Forecast(new Weather\Location, new Strategy\FakeStrategy(true, false));
+		new LegacyForecast(new Weather\Location, new Strategy\FakeLegacyStrategy(true, false));
 	}
 
 	public function testThatStrategyLoopEndsAfterSuccessfullForecast()
 	{
-		new FakeForecast(new Weather\Location, null);
+		new FakeLegacyForecast(new Weather\Location, null);
 
 		$this->assertFalse(FakeStrategyUnsuccessfull2::$WasReached);
 	}

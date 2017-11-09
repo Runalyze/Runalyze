@@ -115,7 +115,7 @@ doctrine_migrations:
     name: RUNALYZE Migrations
 
 monolog:
-    channels: ['queue', 'console']
+    channels: ['queue', 'console', 'external_services']
     handlers:
         applog:
             type: stream
@@ -141,6 +141,11 @@ monolog:
             level: error
             path: '%kernel.root_dir%/../var/logs/console.log'
             channels: ['console']
+        external_services:
+            type: stream
+            level: warning
+            path: '%kernel.root_dir%/../var/logs/external_services.log'
+            channels: ['external_services']
 
 swiftmailer:
     transport:            smtp

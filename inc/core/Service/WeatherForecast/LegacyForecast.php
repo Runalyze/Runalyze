@@ -11,12 +11,10 @@ use Runalyze\Model\WeatherCache;
 use Runalyze\Util\LocalTime;
 
 /**
- * Weather forecast
- *
- * @author Hannes Christiansen
- * @package Runalyze\Service\WeatherForecast
+ * @deprecated since v4.3
+ * @see \Runalyze\Bundle\CoreBundle\Services\Import\WeatherForecast
  */
-class Forecast {
+class LegacyForecast {
 	/**
 	 * Time range for cache lookup (in seconds) (+/- 30 min)
 	 * @var int
@@ -25,7 +23,8 @@ class Forecast {
 
 	/**
 	 * Strategy
-	 * @var \Runalyze\Service\WeatherForecast\Strategy\StrategyInterface
+	 *
+	 * @var \Runalyze\Service\WeatherForecast\Strategy\LegacyStrategyInterface
 	 */
 	protected $Strategy = null;
 
@@ -46,17 +45,17 @@ class Forecast {
 	 * @var array class names (absolute path) of available strategies
 	 */
 	protected $Strategies = [
-		'\\Runalyze\\Service\\WeatherForecast\\Strategy\\DBWeatherCache',
-		'\\Runalyze\\Service\\WeatherForecast\\Strategy\\Openweathermap',
-        '\\Runalyze\\Service\\WeatherForecast\\Strategy\\Darksky',
+        '\\Runalyze\\Service\\WeatherForecast\\Strategy\\LegacyDBWeatherCache',
+        '\\Runalyze\\Service\\WeatherForecast\\Strategy\\LegacyOpenweathermap',
+        '\\Runalyze\\Service\\WeatherForecast\\Strategy\\LegacyDarksky',
 	];
 
 	/**
 	 * Constructor
 	 * @param \Runalyze\Data\Weather\Location $Location
-	 * @param null|\Runalyze\Service\WeatherForecast\Strategy\StrategyInterface $StrategyToUse can be null to loop through all available strategies
+	 * @param null|\Runalyze\Service\WeatherForecast\Strategy\LegacyStrategyInterface $StrategyToUse can be null to loop through all available strategies
 	 */
-	public function __construct(Weather\Location $Location, Strategy\StrategyInterface $StrategyToUse = null) {
+	public function __construct(Weather\Location $Location, Strategy\LegacyStrategyInterface $StrategyToUse = null) {
 		$this->Location = $Location;
 		$this->PDO = \DB::getInstance();
 
@@ -66,9 +65,9 @@ class Forecast {
 	}
 
 	/**
-	 * @param null|\Runalyze\Service\WeatherForecast\Strategy\StrategyInterface $StrategyToUse can be null to loop through all available strategies
+	 * @param null|\Runalyze\Service\WeatherForecast\Strategy\LegacyStrategyInterface $StrategyToUse can be null to loop through all available strategies
 	 */
-	protected function tryStrategies(Strategy\StrategyInterface $StrategyToUse = null) {
+	protected function tryStrategies(Strategy\LegacyStrategyInterface $StrategyToUse = null) {
 	    if ($StrategyToUse !== null) {
 			$this->tryToLoadForecast($StrategyToUse);
 	    } else {
@@ -81,10 +80,10 @@ class Forecast {
 	}
 
 	/**
-	 * @param \Runalyze\Service\WeatherForecast\Strategy\StrategyInterface $Strategy
+	 * @param \Runalyze\Service\WeatherForecast\Strategy\LegacyStrategyInterface $Strategy
 	 * @return bool flag if forecast could be loaded
 	 */
-	protected function tryToLoadForecast(Strategy\StrategyInterface $Strategy) {
+	protected function tryToLoadForecast(Strategy\LegacyStrategyInterface $Strategy) {
 		$this->Strategy = $Strategy;
 
 		if ($this->Strategy->isPossible()) {

@@ -3,9 +3,10 @@
 namespace Runalyze\Bundle\CoreBundle\Controller\Internal\Service;
 
 use Runalyze\Bundle\CoreBundle\Entity\Account;
-use Runalyze\Data\Weather\Location;
-use Runalyze\Service\WeatherForecast\Forecast;
-use Runalyze\Util\LocalTime;
+use Runalyze\Parser\Activity\Common\Data\WeatherData;
+use Runalyze\Profile\Weather\Source\SourceInterface;
+use Runalyze\Profile\Weather\Source\WeatherSourceProfile;
+use Runalyze\Service\WeatherForecast\Location;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -23,31 +24,31 @@ class WeatherController extends Controller
      */
     public function fetchWeatherDataAction(Request $request, Account $account)
     {
-        // As long as forecast uses old db connection for weather cache
-        $frontend = new \Frontend(true, $this->get('security.token_storage'));
         $location = $this->getLocationForRequest($request, $account);
 
-        $weather = (new Forecast($location))->object();
-        $weather->temperature()->toCelsius();
+        $weather = $this->get('app.weather_forecast')->loadForecast($location) ?: new WeatherData();
+
+        /** @var SourceInterface|null $source */
+        $source = $weather->Source ? WeatherSourceProfile::get($weather->Source) : null;
 
         return new JsonResponse([
             'empty' => $weather->isEmpty(),
             'location' => [
-                'name' => $location->name(),
-                'lat' => $location->hasPosition() ? $location->lat() : '',
-                'lng' => $location->hasPosition() ? $location->lon() : '',
-                'date' => $location->hasDateTime() ? $location->dateTime()->format('c') : ''
+                'name' => $location->getLocationName(),
+                'lat' => $location->hasPosition() ? $location->getLatitude() : '',
+                'lng' => $location->hasPosition() ? $location->getLongitude() : '',
+                'date' => $location->hasDateTime() ? $location->getDateTime()->format('c') : ''
             ],
             'source' => [
-                'id' => $weather->source(),
-                'name' => $weather->sourceAsString()
+                'id' => $weather->Source,
+                'name' => null !== $source ? $source->getAttribution($this->get('translator.default')) : ''
             ],
-            'weatherid' => $weather->condition()->id(),
-            'temperature' => $weather->temperature()->value(),
-            'wind_speed' => $weather->windSpeed()->value(),
-            'wind_deg' => $weather->windDegree()->value(),
-            'humidity' => $weather->humidity()->value(),
-            'pressure' => $weather->pressure()->value()
+            'weatherid' => $weather->InternalConditionId,
+            'temperature' => $weather->Temperature,
+            'wind_speed' => $weather->WindSpeed,
+            'wind_deg' => $weather->WindDirection,
+            'humidity' => $weather->Humidity,
+            'pressure' => $weather->AirPressure
         ]);
     }
 
@@ -63,10 +64,10 @@ class WeatherController extends Controller
         if ($request->query->has('geohash')) {
             $location->setGeohash($request->query->get('geohash'));
         } elseif ($request->query->has('latlng')) {
-            $latlng = explode(',', $request->query->get('latlng'));
+            $latLng = explode(',', $request->query->get('latlng'));
 
-            if (2 == count($latlng)) {
-                $location->setPosition($latlng[0], $latlng[1]);
+            if (2 == count($latLng)) {
+                $location->setPosition($latLng[0], $latLng[1]);
             }
         }
 

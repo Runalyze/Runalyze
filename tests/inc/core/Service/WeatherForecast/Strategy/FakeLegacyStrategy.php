@@ -14,7 +14,7 @@ use Runalyze\Data\Weather;
  * @author Hannes Christiansen
  * @package Runalyze\Service\WeatherForecast\Strategy
  */
-class FakeStrategy implements StrategyInterface
+class FakeLegacyStrategy implements LegacyStrategyInterface
 {
 	/** @var bool */
 	protected $IsPossible = true;
@@ -39,7 +39,7 @@ class FakeStrategy implements StrategyInterface
 	{
 		return 1;
 	}
-	
+
 	/**
 	 * Is it possible to receive weather data?
 	 * @return boolean
@@ -48,7 +48,7 @@ class FakeStrategy implements StrategyInterface
 	{
 		return $this->IsPossible;
 	}
-	
+
 	/**
 	 * Should this data be cached?
 	 * @return boolean
@@ -92,7 +92,7 @@ class FakeStrategy implements StrategyInterface
 	{
 		return new Weather\Temperature();
 	}
-	
+
 	/**
 	 * Wind Speed
 	 * @return \Runalyze\Data\Weather\WindSpeed
@@ -101,7 +101,7 @@ class FakeStrategy implements StrategyInterface
 	{
 		return new Weather\WindSpeed();
 	}
-	
+
 	/**
 	 * Wind degree
 	 * @return \Runalyze\Data\Weather\WindDegree
@@ -110,7 +110,7 @@ class FakeStrategy implements StrategyInterface
 	{
 		return new Weather\WindDegree();
 	}
-	
+
 	/**
 	 * Humidity
 	 * @return \Runalyze\Data\Weather\Humidity
@@ -119,7 +119,7 @@ class FakeStrategy implements StrategyInterface
 	{
 		return new Weather\Humidity();
 	}
-	
+
 	/**
 	 * Pressure
 	 * @return \Runalyze\Data\Weather\Pressure
@@ -128,7 +128,7 @@ class FakeStrategy implements StrategyInterface
 	{
 		return new Weather\Pressure();
 	}
-	
+
 	/**
 	 * Location object
 	 * @return \Runalyze\Data\Weather\Location

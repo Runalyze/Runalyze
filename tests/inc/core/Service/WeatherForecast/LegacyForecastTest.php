@@ -10,12 +10,12 @@ use Runalyze\Model\WeatherCache;
  * @group dependsOnService
  * @group dependsOnOpenWeatherMap
  */
-class ForecastTest extends \PHPUnit_Framework_TestCase
+class LegacyForecastTest extends \PHPUnit_Framework_TestCase
 {
 
 	public function testOpenweathermapEmptyLocation()
 	{
-		$Forecast = new Forecast(new Weather\Location, new Strategy\Openweathermap);
+		$Forecast = new LegacyForecast(new Weather\Location, new Strategy\LegacyOpenweathermap);
 		$object = $Forecast->object();
 
 		$this->assertTrue( $object->isEmpty() );
@@ -27,7 +27,7 @@ class ForecastTest extends \PHPUnit_Framework_TestCase
 		$Location = new Weather\Location();
 		$Location->setLocationName('Berlin, de');
 
-		$Forecast = new Forecast($Location, new Strategy\Openweathermap);
+		$Forecast = new LegacyForecast($Location, new Strategy\LegacyOpenweathermap);
 		$object = $Forecast->object();
 
 		if ($object->isEmpty()) {
@@ -46,7 +46,7 @@ class ForecastTest extends \PHPUnit_Framework_TestCase
 		$Location->setLocationName('Berlin, de');
 		$Location->setDateTime( (new \DateTime())->setTimestamp(time() - 28*86500));
 
-		$Forecast = new Forecast($Location, new Strategy\Openweathermap);
+		$Forecast = new LegacyForecast($Location, new Strategy\LegacyOpenweathermap);
 		$object = $Forecast->object();
 
 		if ($object->isEmpty()) {
@@ -61,7 +61,7 @@ class ForecastTest extends \PHPUnit_Framework_TestCase
 		$Location = new Weather\Location();
 		$Location->setPosition(49.9, 7.77);
 
-		$Forecast = new Forecast($Location, new Strategy\Openweathermap);
+		$Forecast = new LegacyForecast($Location, new Strategy\LegacyOpenweathermap);
 		$object = $Forecast->object();
 
 		if ($object->isEmpty()) {

@@ -73,7 +73,7 @@ class TrainingObject extends DataObject {
 			$Location->setPosition($this->getFirstNonEmptyArrayPoint('arr_lat'), $this->getFirstNonEmptyArrayPoint('arr_lon'));
 		}
 
-		$Forecast = new \Runalyze\Service\WeatherForecast\Forecast($Location);
+		$Forecast = new \Runalyze\Service\WeatherForecast\LegacyForecast($Location);
 		$Weather = $Forecast->object();
 		$Weather->temperature()->toCelsius();
 

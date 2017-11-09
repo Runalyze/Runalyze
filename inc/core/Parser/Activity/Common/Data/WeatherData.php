@@ -2,6 +2,8 @@
 
 namespace Runalyze\Parser\Activity\Common\Data;
 
+use Runalyze\Profile\Weather\Source\WeatherSourceProfile;
+
 class WeatherData
 {
     /** @var string */
@@ -24,6 +26,13 @@ class WeatherData
 
     /** @var null|int|float [hPa] */
     public $AirPressure = null;
+
+    /**
+     * @var null|int
+     *
+     * @see WeatherSourceProfile
+     */
+    public $Source = null;
 
     /**
      * @return bool

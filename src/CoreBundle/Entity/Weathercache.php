@@ -3,15 +3,23 @@ namespace Runalyze\Bundle\CoreBundle\Entity;
 
 
 use Doctrine\ORM\Mapping as ORM;
+use Runalyze\Parser\Activity\Common\Data\WeatherData;
+use Runalyze\Service\WeatherForecast\Location;
 
 /**
  * Weathercache
  *
  * @ORM\Table(name="weathercache")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\WeathercacheRepository")
  */
 class Weathercache
 {
+    /** @var int */
+    const GEOHASH_PRECISION_DATABASE = 5;
+
+    /** @var int */
+    const GEOHASH_PRECISION_LOOKUP = 4;
+
     /**
      * @var string
      *
@@ -86,7 +94,7 @@ class Weathercache
      */
     public function setGeohash($geohash)
     {
-        $this->geohash = $geohash;
+        $this->geohash = substr($geohash, 0, self::GEOHASH_PRECISION_DATABASE);
 
         return $this;
     }
@@ -258,5 +266,38 @@ class Weathercache
     {
         return $this->weatherSource;
     }
-}
 
+    /**
+     * @return WeatherData
+     */
+    public function getAsWeatherData()
+    {
+        $data = new WeatherData();
+        $data->InternalConditionId = $this->weatherid;
+        $data->Temperature = $this->temperature;
+        $data->AirPressure = $this->pressure;
+        $data->Humidity = $this->humidity;
+        $data->WindSpeed = $this->windSpeed;
+        $data->WindDirection = $this->windDeg;
+        $data->Source = $this->weatherSource;
+
+        return $data;
+    }
+
+    public function setWeatherData(WeatherData $data)
+    {
+        $this->weatherid = $data->InternalConditionId;
+        $this->temperature = $data->Temperature;
+        $this->pressure = $data->AirPressure;
+        $this->humidity = $data->Humidity;
+        $this->windSpeed = $data->WindSpeed;
+        $this->windDeg = $data->WindDirection;
+        $this->weatherSource = $data->Source;
+    }
+
+    public function setLocation(Location $location)
+    {
+        $this->setGeohash($location->getGeohash());
+        $this->setTime($location->getTimestamp());
+    }
+}

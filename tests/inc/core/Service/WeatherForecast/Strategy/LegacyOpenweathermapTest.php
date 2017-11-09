@@ -5,14 +5,14 @@ namespace Runalyze\Service\WeatherForecast\Strategy;
 use Runalyze\Data\Weather;
 use Runalyze\Profile\Weather\WeatherConditionProfile;
 
-class OpenweathermapTest extends \PHPUnit_Framework_TestCase
+class LegacyOpenweathermapTest extends \PHPUnit_Framework_TestCase
 {
-	/** @var \Runalyze\Service\WeatherForecast\Strategy\Openweathermap */
+	/** @var \Runalyze\Service\WeatherForecast\Strategy\LegacyOpenweathermap */
 	protected $object;
 
 	protected function setUp()
 	{
-		$this->object = new Openweathermap;
+		$this->object = new LegacyOpenweathermap;
 	}
 
 	public function testEmptyValues()
