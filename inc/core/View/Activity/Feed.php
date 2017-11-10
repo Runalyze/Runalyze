@@ -205,7 +205,7 @@ class Feed {
         $title .= ': '. (new \DateTime())->setTimezone(new \DateTimeZone("UTC"))->setTimestamp($activityContext->getActivity()->getS())->format('H:i:s').'h - ';
 
         if ($activityContext->getActivity()->getDistance() > 0) {
-            $title .= $valueDecorator->distance($activityContext->getActivity()->getDistance()). '';
+            $title .= str_replace('&nbsp;', ' ',$valueDecorator->distance($activityContext->getActivity()->getDistance())). '';
         }
 
         if ('' != $activityContext->getActivity()->getTitle()) {
