@@ -185,7 +185,7 @@ class Feed {
         $item->withContent($this->createItemContent($activityContext, $valueDecorator));
         $item->withAuthor($account->getUsername());
         if ($activity->isPublic()) {
-            $item->withUrl($this->UrlGenerator->generate('shared-activity', array('activityHash' => base_convert((int)$activity->getId(), 10, 35)), UrlGeneratorInterface::ABSOLUTE_URL));
+            $item->withUrl($this->UrlGenerator->generate('shared-activity', array('activityHash' => base_convert((int)$activity->getId(), 10, 35)), UrlGeneratorInterface::ABSOLUTE_URL).'?utm_medium=feed&utm_campaign=feed');
         }
         $this->FeedBuilder->withItem($item);
     }
