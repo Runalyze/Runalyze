@@ -2,30 +2,16 @@
 
 namespace Runalyze\Tests\Service\WeatherForecast\Strategy;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Handler\MockHandler;
-use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use Runalyze\Profile\Weather\Source\WeatherSourceProfile;
 use Runalyze\Profile\Weather\WeatherConditionProfile;
 use Runalyze\Service\WeatherForecast\Location;
 use Runalyze\Service\WeatherForecast\Strategy\DarkSky;
+use Runalyze\Tests\Service\HttpClientAwareTestCaseTrait;
 
 class DarkSkyTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * @param array $responses
-     * @return Client
-     */
-    protected function getMockForResponses(array $responses)
-    {
-        $mock = new MockHandler($responses);
-        $handler = HandlerStack::create($mock);
-
-        return new Client([
-            'handler' => $handler
-        ]);
-    }
+    use HttpClientAwareTestCaseTrait;
 
     public function testEmptyResponse()
     {

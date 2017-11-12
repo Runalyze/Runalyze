@@ -314,3 +314,22 @@ services:
   app.weather_forecast:
     class: Runalyze\Bundle\CoreBundle\Services\Import\WeatherForecast
     arguments: ["@app.weather_forecast.cache", "@app.weather_forecast.darksky", "@app.weather_forecast.openweathermap", "@app.repository.weathercache"]
+  app.elevation_correction.geotiff_reader:
+    class: Runalyze\Bundle\CoreBundle\Services\Import\GeoTiffReader
+    arguments: ["%data_directory%/srtm"]
+  app.elevation_correction.geotiff:
+    class: Runalyze\Service\ElevationCorrection\Strategy\GeoTiff
+    arguments: ["@app.elevation_correction.geotiff_reader"]
+  app.elevation_correction.geonames:
+    class: Runalyze\Service\ElevationCorrection\Strategy\Geonames
+    arguments: ["%geonames_username%", "@app.http_client", "@logger"]
+    tags:
+      - { name: monolog.logger, channel: external_services }
+  app.elevation_correction.google_maps:
+    class: Runalyze\Service\ElevationCorrection\Strategy\GoogleMaps
+    arguments: ["@app.http_client", "@logger"]
+    tags:
+      - { name: monolog.logger, channel: external_services }
+  app.elevation_correction:
+    class: Runalyze\Service\ElevationCorrection\ElevationCorrection
+    arguments: ["@app.elevation_correction.geotiff", "@app.elevation_correction.geonames", "@app.elevation_correction.google_maps"]

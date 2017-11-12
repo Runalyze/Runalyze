@@ -114,7 +114,7 @@ class Frontend {
 	    define('USER_DISABLE_ACCOUNT_ACTIVATION', $this->yamlConfig['user_disable_account_activation']);
 	    define('SQLITE_MOD_SPATIALITE', $this->yamlConfig['sqlite_mod_spatialite']);
         define('RUNALYZE_VERSION', $this->yamlConfig['RUNALYZE_VERSION']);
-        define('DATA_DIRECTORY', $this->yamlConfig['data_directory']);
+        define('DATA_DIRECTORY', str_replace('%kernel.root_dir%', FRONTEND_PATH.'/../app', $this->yamlConfig['data_directory']));
 	}
 
 	/**

@@ -31,7 +31,7 @@ use Runalyze\Export\File;
 use Runalyze\View\Window\Laps\Window;
 use Runalyze\Activity\DuplicateFinder;
 use Runalyze\Calculation\Route\Calculator;
-use Runalyze\Service\ElevationCorrection\NoValidStrategyException;
+use Runalyze\Service\ElevationCorrection\Exception\NoValidStrategyException;
 
 class ActivityController extends Controller
 {

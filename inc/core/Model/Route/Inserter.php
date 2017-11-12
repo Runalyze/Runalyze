@@ -7,7 +7,7 @@
 namespace Runalyze\Model\Route;
 
 use Runalyze\Calculation\Route\GeohashLine;
-use Runalyze\Service\ElevationCorrection\NoValidStrategyException;
+use Runalyze\Service\ElevationCorrection\Exception\NoValidStrategyException;
 use Runalyze\Model;
 use Runalyze\Calculation\Route\Calculator;
 use Runalyze\Configuration;
