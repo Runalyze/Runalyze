@@ -35,7 +35,7 @@ class NegativeDistanceStepFilter extends AbstractFilter
 
                     $this->logger->warning(sprintf('Missing or negative distance at #%u fixed.', $i));
                 } else {
-                    throw new InvalidDataException(sprintf('Negative distance step #%u of %ds detected.', $i, $container->ContinuousData->Distance[$i] - $container->ContinuousData->Distance[$i - 1]));
+                    throw new InvalidDataException(sprintf('Negative distance step #%u of %.3f km detected.', $i, $container->ContinuousData->Distance[$i] - $container->ContinuousData->Distance[$i - 1]));
                 }
             }
         }

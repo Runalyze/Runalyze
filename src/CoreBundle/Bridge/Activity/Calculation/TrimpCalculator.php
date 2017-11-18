@@ -9,6 +9,22 @@ use Runalyze\Calculation\Trimp\DataCollector;
 
 class TrimpCalculator
 {
+    /** @var int */
+    protected $MaximalTrimp;
+
+    /** @var int */
+    protected $MaximalTrimpPerHour;
+
+    /**
+     * @param int $maximalTrimp
+     * @param int $maximalTrimpPerHour
+     */
+    public function __construct($maximalTrimp = 10000, $maximalTrimpPerHour = 400)
+    {
+        $this->MaximalTrimp = $maximalTrimp;
+        $this->MaximalTrimpPerHour = $maximalTrimpPerHour;
+    }
+
     /**
      * @param Training $activity
      * @param int $gender enum, see \Runalyze\Profile\Athlete\Gender
@@ -22,7 +38,11 @@ class TrimpCalculator
             $this->getHeartRateHistogram($activity)
         );
 
-        $activity->setTrimp((int)$calculator->value());
+        $value = (int)$calculator->value();
+
+        $this->checkIfValueIsOutOfRange($value, $activity);
+
+        $activity->setTrimp($value);
     }
 
     /**
@@ -36,5 +56,20 @@ class TrimpCalculator
         }
 
         return [$activity->getAdapter()->getAverageHeartRateWithFallbackToTypeOrSport() => $activity->getS()];
+    }
+
+    /**
+     * @param int|null $value
+     * @param Training $activity
+     */
+    protected function checkIfValueIsOutOfRange(&$value, Training $activity)
+    {
+        if (null !== $value) {
+            if ($value > $this->MaximalTrimp) {
+                $value = null;
+            } elseif ($activity->getS() > 0 && $value / ($activity->getS() / 3600) > $this->MaximalTrimpPerHour) {
+                $value = null;
+            }
+        }
     }
 }

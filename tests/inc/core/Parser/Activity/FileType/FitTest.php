@@ -30,8 +30,9 @@ class FitTest extends AbstractActivityParserTestCase
     /**
      * @param string $file file path relative to 'testfiles/'
      * @param bool $completeAfterwards
+     * @param bool $runFilter
      */
-    protected function convertAndParse($file, $completeAfterwards = true)
+    protected function convertAndParse($file, $completeAfterwards = true, $runFilter = true)
     {
         $outputFile = $this->Converter->convertFile($this->pathToTestFiles().$file);
         $this->FilesToClear[] = $outputFile;
@@ -39,7 +40,7 @@ class FitTest extends AbstractActivityParserTestCase
         $this->Parser->setFileName($outputFile);
         $this->Parser->parse();
 
-        $this->setContainerFrom($this->Parser, $completeAfterwards);
+        $this->setContainerFrom($this->Parser, $completeAfterwards, $runFilter);
     }
 
     protected function checkThatTimeIsStrictIncreasing(ActivityDataContainer $container = null)
@@ -360,7 +361,7 @@ class FitTest extends AbstractActivityParserTestCase
 	 */
 	public function testMultisessionThatStopsDirectlyAfterTransition()
 	{
-        $this->convertAndParse('fit/Multisession-stop-after-transition.fit');
+        $this->convertAndParse('fit/Multisession-stop-after-transition.fit', true, false);
 
         $this->assertEquals(5, $this->NumberOfActivities);
 

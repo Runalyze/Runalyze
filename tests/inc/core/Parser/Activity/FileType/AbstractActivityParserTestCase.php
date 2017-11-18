@@ -3,6 +3,7 @@
 namespace Runalyze\Tests\Parser\Activity\FileType;
 
 use Runalyze\Parser\Activity\Common\Data\ActivityDataContainer;
+use Runalyze\Parser\Activity\Common\Filter\DefaultFilterCollection;
 use Runalyze\Parser\Activity\Common\ParserInterface;
 use Runalyze\Parser\Common\FileContentAwareParserInterface;
 use Runalyze\Parser\Common\FileTypeConverterInterface;
@@ -18,7 +19,7 @@ abstract class AbstractActivityParserTestCase extends \PHPUnit_Framework_TestCas
     /** @var string[] */
     protected $FilesToClear = [];
 
-    public function tearDown()
+    protected function tearDown()
     {
         foreach ($this->FilesToClear as $file) {
             if (file_exists($file)) {
@@ -63,7 +64,6 @@ abstract class AbstractActivityParserTestCase extends \PHPUnit_Framework_TestCas
 
     protected function parseFiles(FileContentAwareParserInterface $parser, array $files, $completeAfterwards = true)
     {
-        $path = $this->pathToTestFiles();
         $tmpContainer = [];
 
         foreach ($files as $currentFile) {
@@ -106,9 +106,11 @@ abstract class AbstractActivityParserTestCase extends \PHPUnit_Framework_TestCas
     /**
      * @param ParserInterface $parser
      * @param bool $completeAfterwards
+     * @param bool $runFilter
      */
-    protected function setContainerFrom(ParserInterface $parser, $completeAfterwards = true)
+    protected function setContainerFrom(ParserInterface $parser, $completeAfterwards = true, $runFilter = true)
     {
+        $filterCollection = new DefaultFilterCollection();
         $this->NumberOfActivities = $parser->getNumberOfActivities();
         $this->Container = [];
 
@@ -117,6 +119,10 @@ abstract class AbstractActivityParserTestCase extends \PHPUnit_Framework_TestCas
 
             if ($completeAfterwards) {
                 $this->Container[$i]->completeActivityData();
+            }
+
+            if ($runFilter) {
+                $this->Container[$i]->filterActivityData($filterCollection);
             }
         }
 

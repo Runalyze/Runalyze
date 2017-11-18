@@ -348,7 +348,7 @@ class Training
      * @var int|null [%]
      * @Assert\Range(
      *      min = 0,
-     *      max = 359,
+     *      max = 100,
      *      minMessage = "The humidity cannot be less than {{ limit }}",
      *      maxMessage = "The humidity cannot be greater than {{ limit }}. Even if it feels like this."
      * )

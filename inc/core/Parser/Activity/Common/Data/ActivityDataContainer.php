@@ -5,6 +5,7 @@ namespace Runalyze\Parser\Activity\Common\Data;
 use Runalyze\Parser\Activity\Common\Data\Pause\PauseCollection;
 use Runalyze\Parser\Activity\Common\Data\Round\RoundCollection;
 use Runalyze\Parser\Activity\Common\Data\Round\RoundCollectionFiller;
+use Runalyze\Parser\Activity\Common\Filter\FilterCollection;
 
 class ActivityDataContainer
 {
@@ -78,6 +79,11 @@ class ActivityDataContainer
         $this->ActivityData->completeFromPauses($this->Pauses);
     }
 
+    public function filterActivityData(FilterCollection $filter)
+    {
+        $filter->filter($this);
+    }
+
     protected function completeRoundsIfRequired()
     {
         if (!$this->Rounds->isEmpty() && !empty($this->ContinuousData->Time) && !empty($this->ContinuousData->Distance)) {
@@ -100,6 +106,8 @@ class ActivityDataContainer
         if (!$this->PausesToApply->isEmpty() && !empty($this->ContinuousData->Time)) {
             $this->Pauses = $this->ContinuousDataAdapter->applyPauses($this->PausesToApply);
             $this->PausesToApply->clear();
+
+            $this->ContinuousDataAdapter->reIndexArrays();
         }
     }
 }

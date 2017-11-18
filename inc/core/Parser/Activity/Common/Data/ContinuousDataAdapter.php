@@ -126,7 +126,7 @@ class ContinuousDataAdapter
 
             if ($isPause) {
                 foreach ($keys as $key) {
-                    if (isset($this->ContinuousData->{$key}[$i])) {
+                    if (array_key_exists($i, $this->ContinuousData->{$key})) {
                         unset($this->ContinuousData->{$key}[$i]);
                     }
                 }
@@ -136,5 +136,12 @@ class ContinuousDataAdapter
         }
 
         return $resultingPauses;
+    }
+
+    public function reIndexArrays()
+    {
+        foreach ($this->ContinuousData->getPropertyNamesOfArrays() as $key) {
+            $this->ContinuousData->{$key} = array_merge($this->ContinuousData->{$key});
+        }
     }
 }
