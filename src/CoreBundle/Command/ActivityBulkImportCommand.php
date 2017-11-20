@@ -57,7 +57,7 @@ class ActivityBulkImportCommand extends ContainerAwareCommand
             $file = $fileinfo->getFilename();
 
             if (!is_file($path.'/'.$file)) {
-                break;
+                continue;
             }
 
             $output->writeln('<info>'.$file.'</info>');
