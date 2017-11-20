@@ -29,7 +29,7 @@ class ActivityTypeChoiceType extends AbstractTokenStorageAwareType
             },
             'choice_attr' => function($type, $key, $index) {
                 /* @var Type $type */
-                return ['data-sportid' => $type->getSport()->getId()];
+                return ['data-sport' => $type->getSport()->getId()];
             }
         ));
     }

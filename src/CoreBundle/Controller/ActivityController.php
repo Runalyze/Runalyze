@@ -37,12 +37,19 @@ class ActivityController extends Controller
 {
 
     /**
-     * @Route("/activity/form")
+     * @Route("/activity/form/{id}", name="activity-form", requirements={"id" = "\d+"})
      * @Security("has_role('ROLE_USER')")
+     * @ParamConverter("activity", class="CoreBundle:Training")
      */
-    public function activityformAction(Request $request, Account $account)
+    public function activityformAction(Request $request, Training $activity, Account $account)
     {
-        $form = $this->createForm(ActivityType::class);
+        if ($activity->getAccount()->getId() != $account->getId()) {
+            throw $this->createNotFoundException();
+        }
+
+        $form = $this->createForm(ActivityType::class, $activity ,[
+            'action' => $this->generateUrl('activity-form', ['id' => $activity->getId()])
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

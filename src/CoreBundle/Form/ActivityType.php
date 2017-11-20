@@ -16,6 +16,7 @@ use Runalyze\Bundle\CoreBundle\Form\Type\TemperatureType;
 use Runalyze\Bundle\CoreBundle\Form\Type\WeatherConditionType;
 use Runalyze\Bundle\CoreBundle\Form\Type\WindDirectionType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\LanguageType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -90,7 +91,8 @@ class ActivityType extends AbstractType
             ))
             ->add('use_vo2max', CheckboxType::class, array(
                 'required' => false,
-                'label' => 'VO2max for shape'
+                'label' => 'VO2max for shape',
+                'attr' => ['class' => 'only-running']
             ))
             ->add('is_public', CheckboxType::class, array(
                 'required' => false,
@@ -106,40 +108,46 @@ class ActivityType extends AbstractType
                 'mapped' => false
             ))
             ->add('title', TextType::class, array(
-                'required' => true,
+                'required' => false
             ))
 
             ->add('kcal', EnergyKcalType::class, array(
-                'label' => 'Energy'
+                'label' => 'Energy',
+                'required' => false
             ))
             ->add('pulseAvg', HeartrateType::class, array(
-                'label' => 'avg. HR'
+                'label' => 'avg. HR',
+                'required' => false
             ))
             ->add('pulseMax', HeartrateType::class, array(
-                'label' => 'max. HR'
+                'label' => 'max. HR',
+                'required' => false
             ))
             ->add('rpe', RpeType::class, array(
                 'label' => 'RPE',
+                'required' => false
             ))
-
-
             ->add('temperature', TemperatureType::class, array(
-                'required' => true,
+                'required' => false
             ))
             ->add('wind_speed', WindDirectionType::class, array(
-                'label' => 'Wind speed'
+                'label' => 'Wind speed',
+                'required' => false
             ))
             ->add('wind_deg', WindDirectionType::class, array(
-                'label' => 'Wind degrees'
+                'label' => 'Wind degrees',
+                'required' => false
             ))
             ->add('humidity', HumidityType::class, array(
-                'label' => 'Humidity'
+                'label' => 'Humidity',
+                'required' => false
             ))
             ->add('pressure', PressureType::class, array(
-                'label' => 'Pressure'
+                'label' => 'Pressure',
+                'required' => false
             ))
             ->add('weatherid', WeatherConditionType::class, array(
-                'required' => true,
+                'required' => false,
                 'label' => 'Weather'
             ))
             ->add('notes', TextareaType::class, array(
@@ -147,22 +155,14 @@ class ActivityType extends AbstractType
                 'required' => false,
                 'attr' => ['class' => 'fullwidth']
             ))
-            ->add('route', TextType::class, array(
-                'required' => true,
+            ->add('routename', TextType::class, array(
+                'required' => false
             ))
             ->add('partner', TextType::class, array(
-                'required' => true,
+                'required' => false
             ))
-
         ;
 
-
-
-
-
-        ;
-
-        new LanguageType();
 
     }
 
