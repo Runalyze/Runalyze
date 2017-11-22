@@ -1,0 +1,12 @@
+{% extends "base_not_logged_in.html.twig" %}
+
+{% block content %}
+<div>
+    <h1>{% trans %}Technical problems{% endtrans %}</h1>
+
+    <p>
+        <strong>{% trans %}RUNALYZE seems to be temporarily down.{% endtrans %}</strong><br />
+        {% trans %}We are working to bring it back!{% endtrans %}
+    </p>
+</div>
+{% endblock content %}

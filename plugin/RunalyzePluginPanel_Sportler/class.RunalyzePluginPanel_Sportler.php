@@ -110,15 +110,22 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 		if (!empty($Code)) {
 			$Code .= '<br>';
 		}
+        if ( $userData['fat'] ) {
+            $SecondValues[] = new BoxedValue(Helper::Unknown($userData['fat'], '-'), '&#37;', __('Fat'));
+        }
+        if ( $userData['water'] ) {
+            $SecondValues[] = new BoxedValue(Helper::Unknown($userData['water'], '-'), '&#37;', __('Water'));
+        }
+        if ( $userData['muscles'] ) {
+            $SecondValues[] = new BoxedValue(Helper::Unknown($userData['muscles'], '-'), '&#37;', __('Muscles'));
+        }
 
-			$SecondValues[] = new BoxedValue(Helper::Unknown($userData['fat'], '-'), '&#37;', __('Fat'));
-			$SecondValues[] = new BoxedValue(Helper::Unknown($userData['water'], '-'), '&#37;', __('Water'));
-			$SecondValues[] = new BoxedValue(Helper::Unknown($userData['muscles'], '-'), '&#37;', __('Muscles'));
-
-		foreach ($SecondValues as &$Value) {
-			$Value->defineAsFloatingBlock( "w33");
-			$Code .= $Value->getCode();
-		}
+        if (count($SecondValues) > 0 ) {
+            foreach ($SecondValues as &$Value) {
+                $Value->defineAsFloatingBlock("w33");
+                $Code .= $Value->getCode();
+            }
+        }
 
 		if (!empty($Code)) {
 			BoxedValue::wrapValues($Code);
