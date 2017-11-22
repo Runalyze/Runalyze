@@ -101,7 +101,7 @@ services:
     arguments: [Runalyze\Bundle\CoreBundle\Entity\Weathercache]
   app.entity_listener.activity:
     class: Runalyze\Bundle\CoreBundle\EntityListener\ActivityListener
-    arguments: ["@app.recalculation_manager", "@app.configuration_manager", "@app.repository.sport"]
+    arguments: ["@app.recalculation_manager", "@app.configuration_manager", "@app.repository.sport", "@app.timezone_lookup"]
     tags:
      - { name: doctrine.orm.entity_listener, lazy: true }
   app.entity_listener.user:
@@ -112,6 +112,11 @@ services:
   app.entity_listener.race_result:
     class: Runalyze\Bundle\CoreBundle\EntityListener\RaceResultListener
     arguments: ["@app.recalculation_manager"]
+    tags:
+     - { name: doctrine.orm.entity_listener, lazy: true }
+  app.entity_listener.route:
+    class: Runalyze\Bundle\CoreBundle\EntityListener\RouteListener
+    arguments: ["@app.configuration_manager", "@app.elevation_correction"]
     tags:
      - { name: doctrine.orm.entity_listener, lazy: true }
   app.form.activity:
@@ -331,5 +336,8 @@ services:
     tags:
       - { name: monolog.logger, channel: external_services }
   app.elevation_correction:
-    class: Runalyze\Service\ElevationCorrection\ElevationCorrection
+    class: Runalyze\Bundle\CoreBundle\Services\Import\ElevationCorrection
     arguments: ["@app.elevation_correction.geotiff", "@app.elevation_correction.geonames", "@app.elevation_correction.google_maps"]
+  app.timezone_lookup:
+    class: Runalyze\Bundle\CoreBundle\Services\Import\TimezoneLookup
+    arguments: ["%data_directory%", "%sqlite_mod_spatialite%"]

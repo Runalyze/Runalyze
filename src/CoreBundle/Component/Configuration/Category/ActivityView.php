@@ -2,6 +2,8 @@
 
 namespace Runalyze\Bundle\CoreBundle\Component\Configuration\Category;
 
+use Runalyze\Parameter\Application\ElevationMethod;
+
 class ActivityView extends AbstractCategory
 {
     /**
@@ -29,6 +31,25 @@ class ActivityView extends AbstractCategory
             'ELEVATION_METHOD' => 'treshold',
             'ELEVATION_TRESHOLD' => '3',
         ];
+    }
+
+    /**
+     * @return ElevationMethod
+     */
+    public function getElevationCalculationMethod()
+    {
+        $method = new ElevationMethod();
+        $method->setFromString($this->Variables['ELEVATION_METHOD']);
+
+        return $method;
+    }
+
+    /**
+     * @return int
+     */
+    public function getElevationCalculationThreshold()
+    {
+        return (int)$this->Variables['ELEVATION_TRESHOLD'];
     }
 
     /**

@@ -5,6 +5,7 @@ namespace Runalyze\Bundle\CoreBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use League\Geotools\Coordinate\Coordinate;
 use League\Geotools\Geohash\Geohash;
+use Runalyze\Bundle\CoreBundle\Entity\Adapter\RouteAdapter;
 use Runalyze\Calculation\Route\GeohashLine;
 
 /**
@@ -12,6 +13,7 @@ use Runalyze\Calculation\Route\GeohashLine;
  *
  * @ORM\Table(name="route")
  * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\RouteRepository")
+ * @ORM\EntityListeners({"Runalyze\Bundle\CoreBundle\EntityListener\RouteListener"})
  * @ORM\HasLifecycleCallbacks()
  */
 class Route
@@ -155,6 +157,9 @@ class Route
 
     /** @var bool */
     private $areMinMaxSynchronized = true;
+
+    /** @var RouteAdapter */
+    private $Adapter;
 
     /**
      * @return int
@@ -627,6 +632,18 @@ class Route
     public function areMinMaxGeohashSynchronized()
     {
         return $this->areMinMaxSynchronized;
+    }
+
+    /**
+     * @return RouteAdapter
+     */
+    public function getAdapter()
+    {
+        if (null === $this->Adapter) {
+            $this->Adapter = new RouteAdapter($this);
+        }
+
+        return $this->Adapter;
     }
 
     /**

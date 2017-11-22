@@ -37,6 +37,30 @@ class ActivityForm extends AbstractCategory
     /**
      * @return bool
      */
+    public function isAutomaticElevationCorrectionActivated()
+    {
+        return 'true' === $this->Variables['TRAINING_DO_ELEVATION'];
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAutomaticWeatherForecastActivated()
+    {
+        return 'true' === $this->Variables['TRAINING_LOAD_WEATHER'];
+    }
+
+    /**
+     * @return string
+     */
+    public function getDefaultLocationForWeatherForecast()
+    {
+        return $this->Variables['PLZ'];
+    }
+
+    /**
+     * @return bool
+     */
     public function isComputingEnergyActivated()
     {
         return 'true' === $this->Variables['COMPUTE_KCAL'];
@@ -48,6 +72,14 @@ class ActivityForm extends AbstractCategory
     public function isComputingPowerActivated()
     {
         return 'true' === $this->Variables['COMPUTE_POWER'];
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAutomaticPauseDetectionActivated()
+    {
+        return 'true' === $this->Variables['DETECT_PAUSES'];
     }
 
     /**

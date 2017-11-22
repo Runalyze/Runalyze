@@ -1,6 +1,6 @@
 <?php
 
-namespace Runalyze\Service\ElevationCorrection;
+namespace Runalyze\Bundle\CoreBundle\Services\Import;
 
 use Runalyze\Service\ElevationCorrection\Strategy\Geonames;
 use Runalyze\Service\ElevationCorrection\Strategy\GeoTiff;

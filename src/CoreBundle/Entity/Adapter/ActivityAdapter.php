@@ -2,6 +2,7 @@
 
 namespace Runalyze\Bundle\CoreBundle\Entity\Adapter;
 
+use League\Geotools\Geohash\Geohash;
 use Runalyze\Bundle\CoreBundle\Bridge\Activity\Calculation\ClimbScoreCalculator;
 use Runalyze\Bundle\CoreBundle\Bridge\Activity\Calculation\FlatOrHillyAnalyzer;
 use Runalyze\Bundle\CoreBundle\Bridge\Activity\Calculation\NightDetector;
@@ -9,6 +10,7 @@ use Runalyze\Bundle\CoreBundle\Bridge\Activity\Calculation\PowerCalculator;
 use Runalyze\Bundle\CoreBundle\Bridge\Activity\Calculation\TrimpCalculator;
 use Runalyze\Bundle\CoreBundle\Bridge\Activity\Calculation\VO2maxCalculator;
 use Runalyze\Bundle\CoreBundle\Entity\Training;
+use Runalyze\Bundle\CoreBundle\Services\Import\TimezoneLookup;
 use Runalyze\Profile\Weather\WeatherConditionProfile;
 use Runalyze\Service\ElevationCorrection\StepwiseElevationProfileFixer;
 use Runalyze\Util\LocalTime;
@@ -244,6 +246,15 @@ class ActivityAdapter
         }
     }
 
+    public function useElevationFromRoute()
+    {
+        if ($this->Activity->hasRoute()) {
+            $this->Activity->setElevation($this->Activity->getElevation());
+        } else {
+            $this->Activity->setElevation(null);
+        }
+    }
+
     public function calculateClimbScore()
     {
         if ($this->canCalculateClimbScore()) {
@@ -295,5 +306,39 @@ class ActivityAdapter
     protected function revertTemporaryFixForStepwiseElevationsInRoute(array $backupElevations = null)
     {
         $this->Activity->getRoute()->setElevationsCorrected($backupElevations);
+    }
+
+    public function guessTimezoneBasedOnCoordinates(TimezoneLookup $timezoneLookup)
+    {
+        if (
+            null === $this->Activity->getTimezoneOffset() &&
+            $this->Activity->hasRoute() &&
+            $this->Activity->getRoute()->hasGeohashes() &&
+            $timezoneLookup->isPossible()
+        ) {
+            $this->Activity->getRoute()->setStartEndGeohashes();
+
+            $startPoint = $this->Activity->getRoute()->getStartpoint();
+
+            if (null !== $startPoint) {
+                $coordinate = (new Geohash())->decode($startPoint)->getCoordinate();
+                $timezone = $timezoneLookup->getTimezoneForCoordinate($coordinate->getLongitude(), $coordinate->getLatitude());
+                $this->updateTimezoneForActivity($timezone);
+            }
+        }
+    }
+
+    /**
+     * @param string $timezone
+     */
+    protected function updateTimezoneForActivity($timezone)
+    {
+        $newOffset = (new \DateTime(null, new \DateTimeZone($timezone)))->setTimestamp($this->Activity->getTime())->getOffset() / 60;
+
+        if (null !== $this->Activity->getTimezoneOffset()) {
+            $this->Activity->setTime($this->Activity->getTime() + 60 * ($newOffset - $this->Activity->getTimezoneOffset()));
+        }
+
+        $this->Activity->setTimezoneOffset($newOffset);
     }
 }

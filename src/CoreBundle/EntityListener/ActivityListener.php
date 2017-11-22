@@ -10,6 +10,7 @@ use Runalyze\Bundle\CoreBundle\Entity\Sport;
 use Runalyze\Bundle\CoreBundle\Entity\SportRepository;
 use Runalyze\Bundle\CoreBundle\Entity\Training;
 use Runalyze\Bundle\CoreBundle\Services\Configuration\ConfigurationManager;
+use Runalyze\Bundle\CoreBundle\Services\Import\TimezoneLookup;
 use Runalyze\Bundle\CoreBundle\Services\Recalculation\RecalculationManager;
 use Runalyze\Util\LocalTime;
 
@@ -24,15 +25,21 @@ class ActivityListener
     /** @var SportRepository */
     protected $SportRepository;
 
+    /** @var TimezoneLookup */
+    protected $TimezoneLookup;
+
     public function __construct(
         RecalculationManager $recalculationManager,
         ConfigurationManager $configurationManager,
-        SportRepository $sportRepository
+        SportRepository $sportRepository,
+        TimezoneLookup $timezoneLookup
     )
     {
         $this->RecalculationManager = $recalculationManager;
         $this->ConfigurationManager = $configurationManager;
         $this->SportRepository = $sportRepository;
+        $this->TimezoneLookup = $timezoneLookup;
+        $this->TimezoneLookup->silentExceptions();
     }
 
     /**
@@ -65,6 +72,7 @@ class ActivityListener
         $this->calculateIfActivityWasAtNight($activity);
         $this->calculateClimbScore($activity);
         $this->calculateValuesForSwimming($activity);
+        $this->guessTimezoneBasedOnCoordinates($activity);
     }
 
     public function postPersist(Training $activity, LifecycleEventArgs $args)
@@ -208,6 +216,11 @@ class ActivityListener
     protected function calculateValuesForSwimming(Training $activity)
     {
         $activity->getAdapter()->calculateValuesForSwimming();
+    }
+
+    protected function guessTimezoneBasedOnCoordinates(Training $activity)
+    {
+        $activity->getAdapter()->guessTimezoneBasedOnCoordinates($this->TimezoneLookup);
     }
 
     /**

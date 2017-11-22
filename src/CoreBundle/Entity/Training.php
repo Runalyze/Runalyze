@@ -1894,4 +1894,14 @@ class Training
     {
         $this->getAdapter()->updateSimpleCalculatedValues();
     }
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function useElevationFromRouteIfEmpty()
+    {
+        if (null === $this->elevation || 0 == $this->elevation) {
+            $this->getAdapter()->useElevationFromRoute();
+        }
+    }
 }
