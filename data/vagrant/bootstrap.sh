@@ -17,10 +17,16 @@ debconf-set-selections <<< 'mysql-server mysql-server/root_password_again passwo
 
 apt-get install -y \
     apache2 gettext perl libxml2 \
-    php php-intl php-gettext php-zip php-curl php-xml php-mysql php-sqlite3 php-mbstring libapache2-mod-php \
+    php php-intl php-gettext php-zip php-curl php-xml php-mysql php-sqlite3 php-mbstring php-xdebug libapache2-mod-php \
     mysql-server \
     nodejs
 
+
+##########################
+# Enable PHP Debugger
+##########################
+echo "xdebug.remote_enable = On" >> /etc/php/7.0/mods-available/xdebug.ini
+echo "xdebug.remote_connect_back = On" >> /etc/php/7.0/mods-available/xdebug.ini
 
 ##########################
 # Bootstrap WebServer part
