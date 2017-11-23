@@ -4,6 +4,8 @@ export ROOTDIR="/vagrant"
 export DEBIAN_FRONTEND=noninteractive
 export COMPOSER_ALLOW_SUPERUSER=1
 
+MYSQL_PASSWORD=default
+
 ##########################
 # Install dependencies
 ##########################
@@ -37,8 +39,6 @@ service apache2 restart
 # Bootstrap DB-Server part
 ##########################
 
-mysql -uroot -pdefault -e "UPDATE mysql.user set host=\"%\" where user=\"root\" AND host=\"localhost\";"
-mysql -uroot -pdefault -e "SET PASSWORD FOR root@localhost=PASSWORD('');"
 cp ${ROOTDIR}/data/vagrant/mysql-runalyze.cnf /etc/mysql/mysql.conf.d/
 sed -i "s/^bind-address/#bind-address/" /etc/mysql/mysql.conf.d/mysqld.cnf
 service mysql restart
@@ -51,25 +51,28 @@ service mysql restart
 if [ ! -f ${ROOTDIR}/data/config.yml ]; then
     echo "copying default config file to data folder"
     cp ${ROOTDIR}/app/config/default_config.yml ${ROOTDIR}/data/config.yml
+    sed -i "s/database_password:$/database_password: default/" ${ROOTDIR}/data/config.yml
 fi
 
 # check if we can access the database
-mysql -uroot -e "SELECT @@VERSION;" > /dev/null 2>&1
+mysql -uroot -p${MYSQL_PASSWORD} -e "SELECT @@VERSION;" > /dev/null 2>&1
 if [ $? -eq 0 ]; then
     # we have access, so we can check if we need to create a database
-    mysql -uroot -e "USE runalyze;" > /dev/null 2>&1
+    mysql -uroot -p${MYSQL_PASSWORD} -e "USE runalyze;" > /dev/null 2>&1
     if [ $? -ne 0 ]; then
-        mysql -uroot -e "CREATE DATABASE runalyze;" > /dev/null 2>&1
+        mysql -uroot -p${MYSQL_PASSWORD} -e "CREATE DATABASE runalyze;" > /dev/null 2>&1
         if [ $? -eq 0 ]; then
             echo "Runalyze database created successfully"
         else
             echo "Error Creating the Database"
+            exit 1
         fi
     else
         echo "Runalyze database already exists."
     fi
 else
     echo "Could not access the database server, no database will be created"
+    exit 1
 fi
 
 # perform composer install
