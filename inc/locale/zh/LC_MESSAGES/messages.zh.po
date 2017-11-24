@@ -3,16 +3,18 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.com\n"
 "POT-Creation-Date: 2017-07-08 11:26+0200\n"
-"PO-Revision-Date: 2014-11-05 20:52+0100\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2017-11-24 09:50+0000\n"
+"Last-Translator: Li Jian <ddljdd@gmail.com>\n"
+"Language-Team: Chinese <https://translate.runalyze.com/projects/runalyze"
+"/runalyze-master-po/zh/>\n"
 "Language: zh\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.7\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 2.15\n"
 "X-Poedit-KeywordsList: __;_ne;_n;_e\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -54,7 +56,7 @@ msgstr ""
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:473
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:389
 msgid "Distance"
-msgstr ""
+msgstr "距离"
 
 #: inc/core/View/Splits/Table.php:155
 #: inc/core/View/Activity/Plot/Series/TimeSeries.php:37
@@ -69,7 +71,7 @@ msgstr ""
 #: inc/training/view/section/class.SectionCompositeRow.php:84
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:390
 msgid "Time"
-msgstr ""
+msgstr "时间"
 
 #: inc/core/View/Splits/Table.php:156 inc/core/View/Activity/Box/Pace.php:28
 #: inc/core/View/Activity/Box/PaceAlternative.php:37
@@ -84,24 +86,24 @@ msgstr ""
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:292
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:392
 msgid "Pace"
-msgstr ""
+msgstr "配速"
 
 #: inc/core/View/Splits/Table.php:157
 msgid "diff"
-msgstr ""
+msgstr "差异"
 
 #: inc/core/View/Splits/Table.php:230
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:175
 msgid "Goal"
-msgstr ""
+msgstr "目标"
 
 #: inc/core/View/Splits/Table.php:243
 msgid "Average (active)"
-msgstr ""
+msgstr "平均(当前)"
 
 #: inc/core/View/Splits/Table.php:251
 msgid "Average (total)"
-msgstr ""
+msgstr "平均配速(总体)"
 
 #: inc/core/View/Splits/Table.php:266
 msgid "1st/2nd Half"
@@ -110,27 +112,27 @@ msgstr ""
 #: inc/core/View/Activity/Dataview.php:334
 #: inc/core/Dataset/Keys/FitHrvAnalysis.php:44
 msgid "HRV score"
-msgstr ""
+msgstr "HRV 得分"
 
 #: inc/core/View/Activity/Box/TotalCadence.php:28
 msgid "Number of steps"
-msgstr ""
+msgstr "总共步数"
 
 #: inc/core/View/Activity/Box/TotalCadence.php:30
 msgid "Total cadence"
-msgstr ""
+msgstr "整体步频"
 
 #: inc/core/View/Activity/Box/MaximalHeartRateInPercent.php:64
 msgid "This value exceeds your entered maximal heart rate."
-msgstr ""
+msgstr "数值超出心率上限。"
 
 #: inc/core/View/Activity/Box/MaximalHeartRateInPercent.php:65
 msgid "Please adjust your maximal heart rate."
-msgstr ""
+msgstr "请调整最大心率"
 
 #: inc/core/View/Activity/Box/ElevationUpDown.php:35
 msgid "Elevation up/down"
-msgstr ""
+msgstr "垂直上升/下降"
 
 #: inc/core/View/Activity/Box/Gradient.php:26
 #: inc/core/View/Activity/Box/Pace.php:28
@@ -161,7 +163,7 @@ msgstr ""
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:452
 #: plugin/RunalyzePluginPanel_Rechenspiele/Plot.Form.php:195
 msgid "avg."
-msgstr ""
+msgstr "平均."
 
 #: inc/core/View/Activity/Box/Gradient.php:26
 #: inc/core/View/Activity/Plot/Series/Gradient.php:54
@@ -170,20 +172,20 @@ msgstr ""
 #: inc/training/search/class.FormularSelectSearchSort.php:41
 #: inc/training/view/class.ElevationInfo.php:146
 msgid "Gradient"
-msgstr ""
+msgstr "坡度"
 
 #: inc/core/View/Activity/Box/RPE.php:30 inc/core/Dataset/Keys/RPE.php:52
 #: inc/training/search/class.SearchFormular.php:196
 #: inc/training/schemes/scheme.Training.php:385
 msgid "RPE"
-msgstr ""
+msgstr "RPE 强度"
 
 #: inc/core/View/Activity/Box/MaximalHeartRate.php:48
 #: inc/core/View/Window/Laps/Table.php:149
 #: inc/core/Dataset/Keys/HeartrateMaximum.php:44
 #: inc/training/view/section/class.SectionOverviewRow.php:56
 msgid "max."
-msgstr ""
+msgstr "最大."
 
 #: inc/core/View/Activity/Box/MaximalHeartRate.php:48
 #: inc/core/Dataset/Keys/HeartrateAverage.php:44
@@ -197,12 +199,12 @@ msgstr ""
 #: inc/training/view/section/class.SectionCompositeRow.php:163
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:393
 msgid "Heart rate"
-msgstr ""
+msgstr "心率"
 
 #: inc/core/View/Activity/Box/Pace.php:28
 #: inc/core/View/Activity/Box/Speed.php:37
 msgid "Speed"
-msgstr ""
+msgstr "速度"
 
 #: inc/core/View/Activity/Plot/Series/Temperature.php:40
 #: inc/core/Activity/Temperature.php:60
@@ -213,11 +215,11 @@ msgstr ""
 #: inc/training/class.TrainingFormular.php:477
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:205
 msgid "Temperature"
-msgstr ""
+msgstr "温度"
 
 #: inc/core/View/Activity/Plot/Series/Heartrate.php:56
 msgid "Heartrate"
-msgstr ""
+msgstr "心率"
 
 #: inc/core/View/Activity/Plot/Series/VerticalRatio.php:42
 #: inc/core/View/Window/Laps/Table.php:275
@@ -226,11 +228,11 @@ msgstr ""
 #: inc/training/search/class.SearchFormular.php:193
 #: inc/training/view/section/class.SectionRunningDynamicsRow.php:51
 msgid "Vertical ratio"
-msgstr ""
+msgstr "垂直 比率"
 
 #: inc/core/View/Activity/Plot/Series/PaceCumulativeAverage.php:50
 msgid "Moving average"
-msgstr ""
+msgstr "平均运动"
 
 #: inc/core/View/Activity/Plot/Series/StrideLength.php:54
 #: inc/core/View/Window/Laps/Table.php:277
@@ -239,7 +241,7 @@ msgstr ""
 #: inc/training/search/class.SearchFormular.php:181
 #: inc/training/view/section/class.SectionRunningDynamicsRow.php:48
 msgid "Stride length"
-msgstr ""
+msgstr "步长"
 
 #: inc/core/View/Activity/Plot/Series/GradeAdjustedPace.php:35
 msgid "Grade adjusted pace"
@@ -264,21 +266,22 @@ msgstr ""
 #: inc/training/schemes/scheme.Training.php:223
 #: plugin/RunalyzePluginStat_Hoehenmeter/class.RunalyzePluginStat_Hoehenmeter.php:28
 msgid "Elevation"
-msgstr ""
+msgstr "海拔"
 
 #: inc/core/View/Activity/Plot/Series/GroundContactBalance.php:58
 #: inc/core/View/Window/Laps/Table.php:271
 #: inc/core/Dataset/Keys/GroundcontactBalance.php:44
 #: inc/training/view/section/class.SectionRunningDynamicsRow.php:67
+#, fuzzy
 msgid "Ground contact balance"
-msgstr ""
+msgstr "触地平衡"
 
 #: inc/core/View/Activity/Plot/Series/HRV.php:90
 #: inc/core/View/Activity/Plot/HRVPoincare.php:50
 #: inc/core/View/Activity/Plot/HRVPoincare.php:59
 #: inc/training/view/section/class.SectionHRVRow.php:45
 msgid "R-R interval"
-msgstr ""
+msgstr "R-R 间隔"
 
 #: inc/core/View/Activity/Plot/Series/GroundContact.php:40
 #: inc/training/search/class.SearchFormular.php:197
@@ -286,7 +289,7 @@ msgstr ""
 #: inc/training/view/section/class.SectionRunningDynamicsRow.php:108
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:177
 msgid "Ground contact"
-msgstr ""
+msgstr "落地时间"
 
 #: inc/core/View/Activity/Plot/Series/Power.php:38
 #: inc/core/View/Window/Laps/Table.php:281 inc/core/Dataset/Keys/Power.php:44
@@ -296,7 +299,7 @@ msgstr ""
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:132
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:140
 msgid "Power"
-msgstr ""
+msgstr "功率"
 
 #: inc/core/View/Activity/Plot/Series/VerticalOscillation.php:41
 #: inc/core/View/Window/Laps/Table.php:273
@@ -306,12 +309,12 @@ msgstr ""
 #: inc/training/view/section/class.SectionRunningDynamicsRow.php:102
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:180
 msgid "Vertical oscillation"
-msgstr ""
+msgstr "垂直摆幅"
 
 #: inc/core/View/Activity/Plot/Series/HRVdifferencesWithoutAnomalies.php:55
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:290
 msgid "Difference"
-msgstr ""
+msgstr "差异"
 
 #: inc/core/View/Activity/Plot/Series/Smo2.php:34
 #: inc/core/View/Activity/Plot/Series/Smo2.php:37
@@ -323,12 +326,12 @@ msgstr ""
 
 #: inc/core/View/Activity/Plot/ElevationAlgorithms.php:82
 msgid "Original data"
-msgstr ""
+msgstr "原始数据"
 
 #: inc/core/View/Activity/Plot/ElevationAlgorithms.php:95
 #: inc/training/view/class.ElevationInfo.php:206
 msgid "Threshold"
-msgstr ""
+msgstr "临界值"
 
 #: inc/core/View/Activity/Plot/ElevationAlgorithms.php:107
 msgid "Douglas-Peucker"
@@ -337,49 +340,49 @@ msgstr ""
 #: inc/core/View/Activity/Plot/LapsComputed.php:26
 #: inc/training/view/section/class.SectionLaps.php:27
 msgid "Computed Laps"
-msgstr ""
+msgstr "计算圈数"
 
 #: inc/core/View/Activity/Plot/LapsComputed.php:35
 msgid "No GPS-data available. Can\\'t compute laps."
-msgstr ""
+msgstr "没有GPS数据。不能计算圈数。"
 
 #: inc/core/View/Activity/Plot/Laps.php:121 inc/core/View/Plot/Series.php:160
 #: inc/draw/class.PlotSumData.php:633
 msgid "avg:"
-msgstr ""
+msgstr "平均:"
 
 #: inc/core/View/Activity/Plot/ActivityPlot.php:82
 msgid "No plot available."
-msgstr ""
+msgstr "无有效图片。"
 
 #: inc/core/View/Activity/Plot/LapsManual.php:27
 #: inc/training/view/section/class.SectionLaps.php:23
 msgid "Manual Laps"
-msgstr ""
+msgstr "人工圈数"
 
 #: inc/core/View/Activity/Plot/LapsManual.php:38
 msgid "There are no manual laps."
-msgstr ""
+msgstr "没有人工圈数信息。"
 
 #: inc/core/View/Activity/Preview.php:131
 msgid "Heartrate data available"
-msgstr ""
+msgstr "存在心率数据"
 
 #: inc/core/View/Activity/Preview.php:145
 msgid "Lap data available"
-msgstr ""
+msgstr "存在圈数数据"
 
 #: inc/core/View/Activity/Preview.php:159
 msgid "Route data available"
-msgstr ""
+msgstr "存在路径信息"
 
 #: inc/core/View/Window/Laps/Form.php:41
 msgid "Calculate laps"
-msgstr ""
+msgstr "计算圈数"
 
 #: inc/core/View/Window/Laps/Form.php:56 inc/core/View/Window/Laps/Form.php:67
 msgid "Lap every ..."
-msgstr ""
+msgstr "平均每圈 ..."
 
 #: inc/core/View/Window/Laps/Form.php:56
 msgid "Distance, after which a new lap should start"
@@ -389,15 +392,15 @@ msgstr ""
 #: inc/core/View/Window/Laps/Form.php:82 inc/core/View/Window/Laps/Form.php:93
 #: inc/core/View/Window/Laps/Form.php:96 inc/core/View/Window/Laps/Form.php:118
 msgid "or"
-msgstr ""
+msgstr "或"
 
 #: inc/core/View/Window/Laps/Form.php:67
 msgid "Time, after which a new lap should start"
-msgstr ""
+msgstr "每圈时间"
 
 #: inc/core/View/Window/Laps/Form.php:79
 msgid "Manual distances"
-msgstr ""
+msgstr "手动距离"
 
 #: inc/core/View/Window/Laps/Form.php:80
 msgid ""
@@ -5454,7 +5457,7 @@ msgstr ""
 
 #: plugin/RunalyzePluginStat_Tag/class.RunalyzePluginStat_Tag.php:129
 msgid "No activities found."
-msgstr ""
+msgstr "没有找到活动记录。"
 
 #: plugin/RunalyzePluginStat_Hoehenmeter/class.RunalyzePluginStat_Hoehenmeter.php:36
 msgid "Your steepest activities and an overview of your cumulated elevation."
