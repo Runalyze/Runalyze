@@ -51,6 +51,13 @@ service mysql restart
 
 
 ##########################
+# Bootstrap misc
+##########################
+
+locale-gen de_DE.UTF-8
+
+
+##########################
 # Bootstrap Runalyze
 ##########################
 
