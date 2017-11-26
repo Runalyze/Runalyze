@@ -26,9 +26,37 @@ class PipeDelimitedArrayTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($this->Type->convertToDatabaseValue([], $this->PlatformMock));
     }
 
-    public function testSimpleData()
+    /**
+     * @param $pipedData
+     * @param $rawData
+     * @dataProvider provideData
+     */
+    public function testSimpleData($pipedData, $rawData)
     {
-        $this->assertEquals([3.14, 42, 0], $this->Type->convertToPHPValue('3.14|42|0', $this->PlatformMock));
-        $this->assertEquals('3.14|42|0', $this->Type->convertToDatabaseValue([3.14, 42, 0], $this->PlatformMock));
+
+        $this->assertSame($pipedData, $this->Type->convertToDatabaseValue($rawData, $this->PlatformMock));
+        $this->assertSame($rawData, $this->Type->convertToPHPValue($pipedData, $this->PlatformMock));
+    }
+
+    public function provideData()
+    {
+        return [
+            [
+                '3.14|42|0',
+                [3.14, 42, 0]
+            ],
+            [
+                'foo|bar',
+                ['foo', 'bar']
+            ],
+            [
+                'coffee|abba', // hexadecimal characters only
+                ['coffee', 'abba']
+            ],
+            [
+                '68e7|1234', // first is a geohash and must not be converted
+                ['68e7', 1234]
+            ]
+        ];
     }
 }
