@@ -62,6 +62,8 @@
 
             {{ form_row(form.title, {'div_class': 'w100 with50erLabel', 'attr': {'class': 'full-size'}}) }}
 
+            {{ form_row(form.tag, {'div_class': 'w100 with50erLabel'}) }}
+
             {{ form_row(form.partner, {'div_class': 'w100 with50erLabel', 'attr': {'class': 'full-size'}}) }}
 
             {{ form_row(form.routename, {'div_class': 'w100 with50erLabel only-outside', 'attr': {'class': 'full-size'}}) }}
@@ -99,12 +101,6 @@
 
             {# TODO: render via js as e.g. 'via Powered by DarkSky' #}
             {{ form_row(form.weatherSource) }}
-        </fieldset>
-
-        <fieldset id="fieldset-tags">
-            <legend onclick="Runalyze.toggleFieldset(this, 'fieldset-tags', false, '')">{% trans %}Tags{% endtrans %}</legend>
-
-            ...
         </fieldset>
 
         <fieldset id="fieldset-equipment">

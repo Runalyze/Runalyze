@@ -3,6 +3,7 @@
 namespace Runalyze\Bundle\CoreBundle\Form;
 
 use Runalyze\Bundle\CoreBundle\Entity\Training;
+use Runalyze\Bundle\CoreBundle\Entity\Tag;
 use Runalyze\Bundle\CoreBundle\Form\Type\ActivityTypeChoiceType;
 use Runalyze\Bundle\CoreBundle\Form\Type\DistanceType;
 use Runalyze\Bundle\CoreBundle\Form\Type\DurationType;
@@ -15,8 +16,11 @@ use Runalyze\Bundle\CoreBundle\Form\Type\RpeType;
 use Runalyze\Bundle\CoreBundle\Form\Type\SportChoiceType;
 use Runalyze\Bundle\CoreBundle\Form\Type\TemperatureType;
 use Runalyze\Bundle\CoreBundle\Form\Type\WeatherConditionType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Runalyze\Bundle\CoreBundle\Form\Type\WindDirectionType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Runalyze\Bundle\CoreBundle\Form\Type\WindSpeedType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -29,16 +33,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ActivityType extends AbstractTokenStorageAwareType
 {
+
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('temporaryHash', HiddenType::class, [
                 'mapped' => false,
                 'required' => false
-            ])
-            ->add('time', IntegerType::class, [
-                // TODO: split into day and daytime
-                'required' => true
             ])
             ->add('s', DurationType::class, [
                 'required' => true,
@@ -152,6 +154,19 @@ class ActivityType extends AbstractTokenStorageAwareType
                 'allow_add'=>true,
                 'allow_delete'=>true
             ])
+            ->add('tag', EntityType::class, [
+                'class' => Tag::class,
+                'choices' => $this->getAccount()->getTags(),
+                'choice_label' => 'tag',
+                'label' => 'Assigned tags',
+                'attr' => [
+                    'class' => 'chosen-select full-size',
+                    'data-placeholder' => 'Choose tag(s)'
+                ],
+                'multiple' => true,
+                'expanded' => false,
+                'required' => false
+            ]);
         ;
     }
 

@@ -32,7 +32,7 @@ class Tag
     /**
      * @var Account
      *
-     * @ORM\ManyToOne(targetEntity="Account")
+     * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Account", inversedBy="tags")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="accountid", referencedColumnName="id", nullable=false)
      * })
