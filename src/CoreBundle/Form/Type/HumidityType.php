@@ -8,18 +8,13 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-
 class HumidityType extends AbstractType
 {
-
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars['input_unit'] = '%';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(

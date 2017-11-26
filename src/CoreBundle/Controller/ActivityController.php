@@ -35,13 +35,12 @@ use Runalyze\Service\ElevationCorrection\Exception\NoValidStrategyException;
 
 class ActivityController extends Controller
 {
-
     /**
      * @Route("/activity/form/{id}", name="activity-form", requirements={"id" = "\d+"})
      * @Security("has_role('ROLE_USER')")
      * @ParamConverter("activity", class="CoreBundle:Training")
      */
-    public function activityformAction(Request $request, Training $activity, Account $account)
+    public function activityFormAction(Request $request, Training $activity, Account $account)
     {
         if ($activity->getAccount()->getId() != $account->getId()) {
             throw $this->createNotFoundException();
@@ -56,8 +55,12 @@ class ActivityController extends Controller
 
         }
 
+        $context = $this->get('app.activity_context.factory')->getContext($activity);
+
         return $this->render('activity/form.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'isNew' => false,
+            'decorator' => new ActivityDecorator($context)
         ]);
     }
 

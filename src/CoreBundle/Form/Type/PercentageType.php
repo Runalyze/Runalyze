@@ -10,7 +10,6 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-
 class PercentageType extends AbstractType implements DataTransformerInterface
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -41,9 +40,6 @@ class PercentageType extends AbstractType implements DataTransformerInterface
         return null === $value ? null : (float)str_replace(',', '.', $value);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(

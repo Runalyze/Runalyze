@@ -7,9 +7,8 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 
-class HeartrateType extends AbstractType
+class HeartRateType extends AbstractType
 {
-
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars['input_unit'] = 'bpm';

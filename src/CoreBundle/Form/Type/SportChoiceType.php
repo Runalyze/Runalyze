@@ -2,17 +2,13 @@
 
 namespace Runalyze\Bundle\CoreBundle\Form\Type;
 
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Runalyze\Bundle\CoreBundle\Entity\Sport;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Runalyze\Bundle\CoreBundle\Form\AbstractTokenStorageAwareType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SportChoiceType extends AbstractTokenStorageAwareType
 {
-
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
@@ -35,7 +31,6 @@ class SportChoiceType extends AbstractTokenStorageAwareType
             }
         ));
     }
-
 
     public function getParent()
     {

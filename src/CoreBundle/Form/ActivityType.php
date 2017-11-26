@@ -2,35 +2,33 @@
 
 namespace Runalyze\Bundle\CoreBundle\Form;
 
-use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\Training;
 use Runalyze\Bundle\CoreBundle\Form\Type\ActivityTypeChoiceType;
 use Runalyze\Bundle\CoreBundle\Form\Type\DistanceType;
+use Runalyze\Bundle\CoreBundle\Form\Type\DurationType;
 use Runalyze\Bundle\CoreBundle\Form\Type\ElevationType;
+use Runalyze\Bundle\CoreBundle\Form\Type\EnergyKcalType;
+use Runalyze\Bundle\CoreBundle\Form\Type\HeartRateType;
 use Runalyze\Bundle\CoreBundle\Form\Type\HumidityType;
 use Runalyze\Bundle\CoreBundle\Form\Type\PressureType;
 use Runalyze\Bundle\CoreBundle\Form\Type\RpeType;
 use Runalyze\Bundle\CoreBundle\Form\Type\SportChoiceType;
-use Runalyze\Bundle\CoreBundle\Form\Type\SportType;
 use Runalyze\Bundle\CoreBundle\Form\Type\TemperatureType;
 use Runalyze\Bundle\CoreBundle\Form\Type\WeatherConditionType;
 use Runalyze\Bundle\CoreBundle\Form\Type\WindDirectionType;
+use Runalyze\Bundle\CoreBundle\Form\Type\WindSpeedType;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Runalyze\Bundle\CoreBundle\Form\Type\EnergyKcalType;
-use Runalyze\Bundle\CoreBundle\Form\Type\DurationType;
-use Runalyze\Bundle\CoreBundle\Form\Type\HeartrateType;
-use Runalyze\Bundle\CoreBundle\Form\AbstractTokenStorageAwareType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ActivityType extends AbstractTokenStorageAwareType
 {
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -38,20 +36,21 @@ class ActivityType extends AbstractTokenStorageAwareType
                 'mapped' => false,
                 'required' => false
             ])
+            ->add('time', IntegerType::class, [
+                // TODO: split into day and daytime
+                'required' => true
+            ])
             ->add('s', DurationType::class, [
                 'required' => true,
-                'attr' => ['class' => 'small-size'],
                 'label' => 'Duration'
             ])
             ->add('distance', DistanceType::class, [
-                'required' => false,
-                'attr' => ['class' => 'small-size']
+                'required' => false
             ])
             ->add('elevation', ElevationType::class, [
-                'required' => false,
-                'attr' => ['class' => 'small-size']
+                'required' => false
             ])
-            ->add('pace', IntegerType::class, [
+            ->add('pace', TextType::class, [
                 'required' => false,
                 'mapped' => false,
                 'empty_data'  => null,
@@ -65,10 +64,15 @@ class ActivityType extends AbstractTokenStorageAwareType
                 'required' => false,
                 'empty_data'  => null,
             ])
+            ->add('cadence', IntegerType::class, [
+                // TODO: unit
+                // TODO: unit depends on sport
+                // TODO: label depends on sport
+                'required' => false
+            ])
             ->add('use_vo2max', CheckboxType::class, [
                 'required' => false,
-                'label' => 'VO2max for shape',
-                'attr' => ['class' => 'only-running']
+                'label' => 'VO2max for shape'
             ])
             ->add('is_public', CheckboxType::class, [
                 'required' => false,
@@ -86,16 +90,15 @@ class ActivityType extends AbstractTokenStorageAwareType
             ->add('title', TextType::class, [
                 'required' => false
             ])
-
             ->add('kcal', EnergyKcalType::class, [
                 'label' => 'Energy',
                 'required' => false
             ])
-            ->add('pulseAvg', HeartrateType::class, [
+            ->add('pulseAvg', HeartRateType::class, [
                 'label' => 'avg. HR',
                 'required' => false
             ])
-            ->add('pulseMax', HeartrateType::class, [
+            ->add('pulseMax', HeartRateType::class, [
                 'label' => 'max. HR',
                 'required' => false
             ])
@@ -106,7 +109,7 @@ class ActivityType extends AbstractTokenStorageAwareType
             ->add('temperature', TemperatureType::class, [
                 'required' => false
             ])
-            ->add('wind_speed', WindDirectionType::class, [
+            ->add('wind_speed', WindSpeedType::class, [
                 'label' => 'Wind speed',
                 'required' => false
             ])
@@ -125,6 +128,11 @@ class ActivityType extends AbstractTokenStorageAwareType
             ->add('weatherid', WeatherConditionType::class, [
                 'required' => false,
                 'label' => 'Weather'
+            ])
+            ->add('weatherSource', HiddenType::class, [
+                'required' => false
+            ])
+            ->add('notes', TextareaType::class, [
             ])
             ->add('notes', TextareaType::class, [
                 'label' => 'Notes',

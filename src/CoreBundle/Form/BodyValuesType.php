@@ -8,7 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Runalyze\Bundle\CoreBundle\Form\Type\WeightType;
-use Runalyze\Bundle\CoreBundle\Form\Type\HeartrateType;
+use Runalyze\Bundle\CoreBundle\Form\Type\HeartRateType;
 use Runalyze\Bundle\CoreBundle\Form\Type\PercentageType;
 use Runalyze\Bundle\CoreBundle\Form\Type\DurationType;
 
@@ -48,12 +48,12 @@ class BodyValuesType extends AbstractType
                 'empty_data'  => null,
                 'attr' => ['class' => 'small-size']
             ))
-            ->add('pulse_rest', HeartrateType::class, array(
+            ->add('pulse_rest', HeartRateType::class, array(
                 'label' => 'Resting HR',
                 'required' => false,
                 'attr' => ['class' => 'small-size']
             ))
-            ->add('pulse_max', HeartrateType::class, array(
+            ->add('pulse_max', HeartRateType::class, array(
                 'label' => 'Maximal HR',
                 'required' => false,
                 'attr' => ['class' => 'small-size']

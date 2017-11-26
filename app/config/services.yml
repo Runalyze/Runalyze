@@ -179,7 +179,7 @@ services:
      - { name: form.type }
   app.form.type.energy:
     class: Runalyze\Bundle\CoreBundle\Form\Type\EnergyType
-    arguments: ["@app.configuration_manager"]
+    arguments: ["@app.unit_system.energy"]
     tags:
      - { name: form.type }
   app.form.type.energy_kcal:

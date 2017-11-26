@@ -1,87 +1,143 @@
 {% extends "base_logged_in.twig" %}
 
 {% block content %}
-{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'ajax no-automatic-reload', 'id': 'activity'}, 'action': url('poster')}) }}
+    <div class="panel-heading">
+        {% if isNew %}
+            <h1>{{ 'Add activity'|trans }}</h1>
+        {% else %}
+            <h1>{{ decorator.title }}, {{ decorator.dateTime|date('d.m.Y H:i') }}</h1>
+        {% endif %}
+    </div>
 
-<div id="left">
-    <fieldset id="general">
-        <legend onclick="Runalyze.toggleFieldset(this, 'general', false, '')">{% trans %}General{% endtrans %}</legend>
+    <div class="panel-content">
+        {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'ajax no-automatic-reload', 'id': 'activity'}, 'action': url('poster')}) }}
+
+        <fieldset id="fieldset-sports">
+            <legend onclick="Runalyze.toggleFieldset(this, 'fieldset-sports', false, 'SPORT')">{% trans %}Sport{% endtrans %}</legend>
+
             {{ form_row(form.sport, {'div_class': 'w50'}) }}
             {{ form_row(form.type, {'div_class': 'w50'}) }}
-          {{ form_row(form.s, {'div_class': 'w50'}) }}
-         {{ form_row(form.rpe, {'div_class': 'w50', 'help': 'Rating of Perceived Exertion or Borg scale, a scale devised to show perceived exertion during exercise'}) }}
 
-            {{ form_row(form.use_vo2max, {'div_class': 'w50 only-running'}) }}
-            {{ form_row(form.distance, {'div_class': 'w50'}) }}
-            {{ form_row(form.pace, {'div_class': 'w50'}) }}
-
-            {{ form_row(form.is_public, {'div_class': 'w50'}) }}
             {{ form_row(form.is_race, {'div_class': 'w50', 'help': 'Race results are treated in a special way to show your personal bests and are independent of the chosen activity type. You can add some details below.'}) }}
-    </fieldset>
-        <fieldset id="miscellaneous">
-        <legend onclick="Runalyze.toggleFieldset(this, 'pulse', false, '')">{% trans %}miscellaneous{% endtrans %}</legend>
-        {{ form_row(form.pulseAvg, {'div_class': 'w50'}) }}
-        {{ form_row(form.pulseMax, {'div_class': 'w50'}) }}
+            {{ form_row(form.is_public, {'div_class': 'w50', 'help': 'Public activities will be visible for everybody.'}) }}
+        </fieldset>
 
-        {{ form_row(form.kcal, {'div_class': 'w50', 'help':'This value will be calculated automatically from duration and sport settings (if activated in your configuration) only if you change the duration or the type of sport.'}) }}
-        {{ form_row(form.title, {'div_class': 'w50'}) }}
-        {{ form_row(form.kcal, {'div_class': 'w50'}) }}
-        {{ form_row(form.routename, {'div_class': 'w50'}) }}
-        {{ form_row(form.partner, {'div_class': 'w50'}) }}
+        <fieldset id="fieldset-general">
+            <legend onclick="Runalyze.toggleFieldset(this, 'fieldset-general', false, 'GENERAL')">{% trans %}General information{% endtrans %}</legend>
 
-    </fieldset>
+            {{ form_row(form.time, {'div_class': 'w50', 'attr': {'class': 'small-size'}}) }}
+            <div class="w50"><label>Daytime</label> <input type="time"></div>
 
-    <fieldset id="routeDetails">
-        <legend onclick="Runalyze.toggleFieldset(this, 'pulse', false, '')">{% trans %}Route Details{% endtrans %}</legend>
-        {{ form_row(form.elevation, {'div_class': 'w50', 'help':'Will be calculated afterwards from the activity\'s elevation profile.'}) }}
-        {{ form_row(form.is_track, {'div_class': 'w50'}) }}
+            {{ form_row(form.s, {'div_class': 'w50', 'attr': {'class': 'small-size'}}) }}
+            {{ form_row(form.kcal, {'div_class': 'w50', 'attr': {'class': 'small-size'}, 'help':'This value will be calculated automatically from duration and sport settings (if activated in your configuration) only if you change the duration or the type of sport.'}) }}
 
+            {{ form_row(form.pulseAvg, {'div_class': 'w50', 'attr': {'class': 'small-size'}}) }}
+            {{ form_row(form.pulseMax, {'div_class': 'w50', 'attr': {'class': 'small-size'}}) }}
+        </fieldset>
 
-    </fieldset>
+        <fieldset id="fieldset-distance" class="only-distances">
+            <legend onclick="Runalyze.toggleFieldset(this, 'fieldset-distance', false, 'DISTANCE')">{% trans %}Distance{% endtrans %}</legend>
 
-    <fieldset id="weather">
-        <legend onclick="Runalyze.toggleFieldset(this, 'weather', false, '')">{% trans %}Weather{% endtrans %}</legend>
-        {{ form_row(form.weatherid, {'div_class': 'only-outside'}) }}
+            {{ form_row(form.distance, {'div_class': 'w50', 'attr': {'class': 'small-size'}}) }}
+            {{ form_row(form.is_track, {'div_class': 'w50', 'help': 'This field is only meant for official track races such that distances can be shown correctly, e.g. as 10.000m. Use tags for all other purposes.'}) }}
 
-        {{ form_row(form.temperature, {'div_class': 'w50 only-outside'}) }}
-        {{ form_row(form.wind_deg, {'div_class': 'w50 only-outside'}) }}
-        {{ form_row(form.wind_speed, {'div_class': 'w50 only-outside'}) }}
-        {{ form_row(form.humidity, {'div_class': 'w50 only-outside'}) }}
-        {{ form_row(form.pressure, {'div_class': 'w50 only-outside'}) }}
+            {{ form_row(form.elevation, {'div_class': 'w50 only-outside', 'attr': {'class': 'small-size'}, 'help':'Will be calculated afterwards from the activity\'s elevation profile.'}) }}
+            {{ form_row(form.pace, {'div_class': 'w50', 'attr': {'class': 'small-size'}}) }}
 
-        {{ form_row(form.pulseAvg, {'div_class': 'w50'}) }}
-        {{ form_row(form.pulseMax, {'div_class': 'w50'}) }}
+            {{ form_row(form.cadence, {'div_class': 'w50', 'attr': {'class': 'small-size'}}) }}
+        </fieldset>
 
-        {{ form_row(form.kcal, {'div_class': 'w50'}) }}
-        {{ form_row(form.title, {'div_class': 'w50'}) }}
-        {{ form_row(form.kcal, {'div_class': 'w50'}) }}
-        {{ form_row(form.partner, {'div_class': 'w50'}) }}
+        <fieldset id="fieldset-splits" class="only-distances">
+            <legend onclick="Runalyze.toggleFieldset(this, 'fieldset-splits', false, 'SPLITS')">{% trans %}Laps{% endtrans %}</legend>
 
-
-
-    </fieldset>
-    <fieldset id="equipment">
-        <legend onclick="Runalyze.toggleFieldset(this, 'equipment', false, '')">{% trans %}Equipment{% endtrans %}</legend>
-
-
-    </fieldset>
-</div>
-    <div id="right">
-        <fieldset id="fieldset-right">
-
-        {{ form_row(form.notes, {'div_class': 'w50'}) }}
-            <br>
             Laps...
+        </fieldset>
 
+        <fieldset id="fieldset-other">
+            <legend onclick="Runalyze.toggleFieldset(this, 'fieldset-other', false, 'OTHER')">{% trans %}Miscellaneous{% endtrans %}</legend>
+
+            {{ form_row(form.use_vo2max, {'div_class': 'w100 with50erLabel only-running'}) }}
+
+            {{ form_row(form.rpe, {'div_class': 'w100 with50erLabel', 'help': 'Rating of Perceived Exertion or Borg scale, a scale devised to show perceived exertion during exercise'}) }}
+
+            {{ form_row(form.title, {'div_class': 'w100 with50erLabel', 'attr': {'class': 'full-size'}}) }}
+
+            {{ form_row(form.partner, {'div_class': 'w100 with50erLabel', 'attr': {'class': 'full-size'}}) }}
+
+            {{ form_row(form.routename, {'div_class': 'w100 with50erLabel only-outside', 'attr': {'class': 'full-size'}}) }}
+        </fieldset>
+
+        <fieldset id="fieldset-notes">
+            <legend onclick="Runalyze.toggleFieldset(this, 'fieldset-notes', false, 'NOTES')">{% trans %}Notes{% endtrans %}</legend>
+
+            {{ form_row(form.notes, {'div_class': 'w100 with50erLabel', 'attr': {'class': 'full-size'}}) }}
+        </fieldset>
+
+        <fieldset id="fieldset-weather" class="only-outside">
+            <legend onclick="Runalyze.toggleFieldset(this, 'fieldset-weather', false, 'WEATHER')">{% trans %}Weather{% endtrans %}</legend>
+
+            <div class="margin-bottom only-outside inline-span-menu">
+                <span class="inline-span-menu-item link weatherdata-button-load">{% trans %}Load weather data{% endtrans %}</span>
+                <span class="inline-span-menu-item link weatherdata-button-edit hide">{% trans %}Add weather data{% endtrans %}</span>
+                <span class="inline-span-menu-item link weatherdata-button-remove">{% trans %}Remove all weather data{% endtrans %}</span>
+            </div>
+
+            <div class="margin-bottom only-outside weatherdata-none-text hide">
+                <p><em>{% trans %}No weather data present{% endtrans %}</em></p>
+            </div>
+
+            <div class="margin-bottom only-outside weatherdata-loading-text hide">
+                <p><em class="loading-ellipsis">{% trans %}Requesting weather data{% endtrans %} </em></p>
+            </div>
+
+            {{ form_row(form.weatherid, {'div_class': 'w50 only-outside'}) }}
+            {{ form_row(form.temperature, {'div_class': 'w50 only-outside', 'attr': {'class': 'small-size'}}) }}
+            {{ form_row(form.wind_speed, {'div_class': 'w50 only-outside', 'attr': {'class': 'small-size'}}) }}
+            {{ form_row(form.wind_deg, {'div_class': 'w50 only-outside', 'attr': {'class': 'small-size'}}) }}
+            {{ form_row(form.humidity, {'div_class': 'w50 only-outside', 'attr': {'class': 'small-size'}}) }}
+            {{ form_row(form.pressure, {'div_class': 'w50 only-outside', 'attr': {'class': 'small-size'}}) }}
+
+            {# TODO: render via js as e.g. 'via Powered by DarkSky' #}
+            {{ form_row(form.weatherSource) }}
+        </fieldset>
+
+        <fieldset id="fieldset-tags">
+            <legend onclick="Runalyze.toggleFieldset(this, 'fieldset-tags', false, '')">{% trans %}Tags{% endtrans %}</legend>
+
+            ...
+        </fieldset>
+
+        <fieldset id="fieldset-equipment">
+            <legend onclick="Runalyze.toggleFieldset(this, 'fieldset-equipment', false, '')">{% trans %}Equipment{% endtrans %}</legend>
+
+            ...
+        </fieldset>
+
+        {% if not isNew %}
+            <fieldset id="fieldset-elevation-correction" class="collapsed">
+                <legend onclick="Runalyze.toggleFieldset(this, 'fieldset-elevation-correction', false, '')">{% trans %}Use elevation correction{% endtrans %}</legend>
+
+                ...
+            </fieldset>
+
+            <fieldset id="fieldset-remove-data-series" class="collapsed">
+                <legend onclick="Runalyze.toggleFieldset(this, 'fieldset-remove-data-series', false, '')">{% trans %}Remove data series{% endtrans %}</legend>
+
+                ...
+            </fieldset>
+        {% endif %}
+
+        {{ form_rest(form) }}
+
+        {{ form_end(form) }}
     </div>
-    {{ form_rest(form) }}
 
-
-{{ form_end(form) }}
-    <script type="text/javascript">$(function(){
-            Runalyze.ActivityForm.init($('#activity'), {
-                calculateCalories: true,
-                loadWeather: true    });
+    <script type="text/javascript">
+    $(function(){
+        Runalyze.ActivityForm.init($('#activity'), {
+            calculateCalories: true, /* TODO */
+            loadWeather: true /* TODO */
         });
+    });
     </script>
 {% endblock %}

@@ -10,7 +10,7 @@ use Runalyze\Bundle\CoreBundle\Entity\SportRepository;
 use Runalyze\Bundle\CoreBundle\Entity\Type;
 use Runalyze\Bundle\CoreBundle\Entity\TypeRepository;
 use Runalyze\Bundle\CoreBundle\Form\Type\EnergyKcalType;
-use Runalyze\Bundle\CoreBundle\Form\Type\HeartrateType;
+use Runalyze\Bundle\CoreBundle\Form\Type\HeartRateType;
 use Runalyze\Metrics\Velocity\Unit\PaceEnum;
 use Runalyze\Profile\Sport\Icon\SportIconProfile;
 use Runalyze\Profile\Sport\SportProfile;
@@ -108,7 +108,7 @@ class SportType extends AbstractType
                 'required' => false,
                 'label' => 'kcal/h'
             ])
-            ->add('HFavg', HeartrateType::class, [
+            ->add('HFavg', HeartRateType::class, [
                 'attr' => ['min' => 40, 'max' => 255],
                 'required' => false,
                 'label' => 'avg. HR'

@@ -3,6 +3,7 @@
 namespace Runalyze\Bundle\CoreBundle\Component\Activity;
 
 use Runalyze\Bundle\CoreBundle\Component\Configuration\RunalyzeConfigurationList;
+use Runalyze\Util\LocalTime;
 
 class ActivityDecorator
 {
@@ -28,6 +29,14 @@ class ActivityDecorator
         }
 
         return $this->Context->getSport()->getName();
+    }
+
+    /**
+     * @return LocalTime
+     */
+    public function getDateTime()
+    {
+        return new LocalTime($this->Context->getActivity()->getTime());
     }
 
     /**
