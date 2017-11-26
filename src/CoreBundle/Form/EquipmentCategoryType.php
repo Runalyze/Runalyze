@@ -49,37 +49,37 @@ class EquipmentCategoryType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class, array(
+            ->add('name', TextType::class, [
                 'label' => 'Name',
                 'required' => true,
-                'attr' => array(
+                'attr' => [
                     'autofocus' => true
-                )
-            ))
+                ]
+            ])
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
                 $equipmentType = $event->getData();
                 $form = $event->getForm();
 
                 if (!$equipmentType || null === $equipmentType->getId()) {
-                    $form->add('input', ChoiceType::class, array(
+                    $form->add('input', ChoiceType::class, [
                         'choices' => [
                             'Single choice' => EntityEquipmentType::CHOICE_SINGLE,
                             'Multiple Choice' => EntityEquipmentType::CHOICE_MULTIPLE
                         ],
                         'choice_translation_domain' => false,
                         'label' => 'Mode'
-                    ));
+                    ]);
                 }
             })
-            ->add('maxKm', DistanceType::class, array(
+            ->add('maxKm', DistanceType::class, [
                 'label' => 'max. Distance',
                 'required' => false
-            ))
-            ->add('maxTime', DurationNullableType::class, array(
+            ])
+            ->add('maxTime', DurationNullableType::class, [
                 'label' => 'max. Time',
                 'required' => false,
                 'attr' => ['class' => 'medium-size']
-            ))
+            ])
             ->add('sport', EntityType::class, [
                 'class' => Sport::class,
                 'choices' => $this->SportRepository->findAllFor($this->getAccount()),
@@ -97,8 +97,8 @@ class EquipmentCategoryType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'Runalyze\Bundle\CoreBundle\Entity\EquipmentType'
-        ));
+        ]);
     }
 }

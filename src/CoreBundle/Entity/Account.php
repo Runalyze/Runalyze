@@ -729,7 +729,7 @@ class Account implements AdvancedUserInterface, \Serializable
      */
     public function getRoles()
     {
-        return array(UserRole::getRoleName($this->role));
+        return [UserRole::getRoleName($this->role)];
     }
 
     /**

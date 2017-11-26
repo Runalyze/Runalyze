@@ -49,17 +49,17 @@ class EquipmentType extends AbstractType
         $equipment = $builder->getData();
 
         $builder
-            ->add('name', TextType::class, array(
+            ->add('name', TextType::class, [
                 'label' => 'Name',
                 'required' => true,
-                'attr' => array(
+                'attr' => [
                     'autofocus' => true
-                )
-            ))
-            ->add('additionalKm', DistanceType::class, array(
+                ]
+            ])
+            ->add('additionalKm', DistanceType::class, [
                 'label' => 'prev. distance',
                 'required' => true,
-            ))
+            ])
             ->add('dateStart', DateType::class, [
                 'label' => 'Start of use',
                 'widget' => 'single_text',
@@ -76,29 +76,29 @@ class EquipmentType extends AbstractType
                 'required' => false,
                 'attr' => ['class' => 'pick-a-date small-size', 'placeholder' => 'dd.mm.YYYY']
             ])
-            ->add('notes', TextareaType::class, array(
+            ->add('notes', TextareaType::class, [
                 'label' => 'Notes',
                 'required' => false,
                 'empty_data' => '',
                 'attr' => ['class' => 'fullwidth']
-            ));
+            ]);
 
         if (null === $equipment->getId()) {
             $builder
-                ->add('type', ChoiceType::class, array(
+                ->add('type', ChoiceType::class, [
                     'choices' => $this->EquipmentRepository->findAllFor($this->getAccount()),
                     'choice_label' => 'name',
                     'choice_value' => 'getId',
                     'label' => 'Category',
                     'disabled' => true
-                ));
+                ]);
         }
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'Runalyze\Bundle\CoreBundle\Entity\Equipment'
-        ));
+        ]);
     }
 }
