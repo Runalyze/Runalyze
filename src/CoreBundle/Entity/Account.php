@@ -2,6 +2,7 @@
 
 namespace Runalyze\Bundle\CoreBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Runalyze\Parameter\Application\Timezone;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
@@ -210,6 +211,8 @@ class Account implements AdvancedUserInterface, \Serializable
 
     public function __construct()
     {
+        $this->tags = new ArrayCollection();
+
         $this->setRegisterdate(time());
         $this->setLastAction(time());
         $this->setNewSalt();

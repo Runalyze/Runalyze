@@ -12,6 +12,8 @@
     <div class="panel-content">
         {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'ajax no-automatic-reload', 'id': 'activity'}, 'action': url('poster')}) }}
 
+        <input type="hidden" name="distance-to-km-factor" value="{{ unitSystem().distanceUnit.toBaseUnit(1) }}">
+
         <fieldset id="fieldset-sports">
             <legend onclick="Runalyze.toggleFieldset(this, 'fieldset-sports', false, 'SPORT')">{% trans %}Sport{% endtrans %}</legend>
 
@@ -25,8 +27,8 @@
         <fieldset id="fieldset-general">
             <legend onclick="Runalyze.toggleFieldset(this, 'fieldset-general', false, 'GENERAL')">{% trans %}General information{% endtrans %}</legend>
 
-            {{ form_row(form.time, {'div_class': 'w50', 'attr': {'class': 'small-size'}}) }}
-            <div class="w50"><label>Daytime</label> <input type="time"></div>
+            {{ form_row(form.time.date, {'div_class': 'w50', 'attr': {'class': 'pick-a-date', 'data-format': 'Y-m-d'}}) }}
+            {{ form_row(form.time.time, {'div_class': 'w50', 'attr': {'class': 'small-size'}}) }}
 
             {{ form_row(form.s, {'div_class': 'w50', 'attr': {'class': 'small-size'}}) }}
             {{ form_row(form.kcal, {'div_class': 'w50', 'attr': {'class': 'small-size'}, 'help':'This value will be calculated automatically from duration and sport settings (if activated in your configuration) only if you change the duration or the type of sport.'}) }}

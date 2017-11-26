@@ -2,9 +2,10 @@
 
 namespace Runalyze\Bundle\CoreBundle\Form;
 
-use Runalyze\Bundle\CoreBundle\Entity\Training;
 use Runalyze\Bundle\CoreBundle\Entity\Tag;
+use Runalyze\Bundle\CoreBundle\Entity\Training;
 use Runalyze\Bundle\CoreBundle\Form\Type\ActivityTypeChoiceType;
+use Runalyze\Bundle\CoreBundle\Form\Type\CadenceType;
 use Runalyze\Bundle\CoreBundle\Form\Type\DistanceType;
 use Runalyze\Bundle\CoreBundle\Form\Type\DurationType;
 use Runalyze\Bundle\CoreBundle\Form\Type\ElevationType;
@@ -16,15 +17,12 @@ use Runalyze\Bundle\CoreBundle\Form\Type\RpeType;
 use Runalyze\Bundle\CoreBundle\Form\Type\SportChoiceType;
 use Runalyze\Bundle\CoreBundle\Form\Type\TemperatureType;
 use Runalyze\Bundle\CoreBundle\Form\Type\WeatherConditionType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Runalyze\Bundle\CoreBundle\Form\Type\WindDirectionType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Runalyze\Bundle\CoreBundle\Form\Type\WindSpeedType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -33,14 +31,18 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ActivityType extends AbstractTokenStorageAwareType
 {
-
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('temporaryHash', HiddenType::class, [
                 'mapped' => false,
                 'required' => false
+            ])
+            ->add('time', DateTimeType::class, [
+                'required' => true,
+                'date_widget' => 'single_text',
+                'time_widget' => 'single_text',
+                'input' => 'timestamp'
             ])
             ->add('s', DurationType::class, [
                 'required' => true,
@@ -66,9 +68,7 @@ class ActivityType extends AbstractTokenStorageAwareType
                 'required' => false,
                 'empty_data'  => null,
             ])
-            ->add('cadence', IntegerType::class, [
-                // TODO: unit
-                // TODO: unit depends on sport
+            ->add('cadence', CadenceType::class, [
                 // TODO: label depends on sport
                 'required' => false
             ])
