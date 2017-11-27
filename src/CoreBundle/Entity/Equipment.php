@@ -74,7 +74,7 @@ class Equipment
     /**
      * @var EquipmentType
      *
-     * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\EquipmentType")
+     * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\EquipmentType", inversedBy="equipment")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="typeid", referencedColumnName="id", nullable=false)
      * })
@@ -84,7 +84,7 @@ class Equipment
     /**
      * @var Account
      *
-     * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Account")
+     * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Account", inversedBy="equipment")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="accountid", referencedColumnName="id", nullable=false)
      * })

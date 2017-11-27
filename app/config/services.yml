@@ -124,6 +124,11 @@ services:
     arguments: ["@security.token_storage"]
     tags:
      - { name: form.type }
+  app.form.activity.equipment:
+    class: Runalyze\Bundle\CoreBundle\Form\ActivityEquipmentType
+    arguments: ["@security.token_storage"]
+    tags:
+     - { name: form.type }
   app.form.anova:
     class: Runalyze\Bundle\CoreBundle\Form\Tools\Anova\AnovaType
     arguments: ["@app.repository.sport", "@app.repository.type", "@app.repository.equipment_type", "@security.token_storage", "@app.configuration_manager"]

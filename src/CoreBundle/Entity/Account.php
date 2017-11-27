@@ -198,6 +198,13 @@ class Account implements AdvancedUserInterface, \Serializable
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
+     * @ORM\OneToMany(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Equipment", mappedBy="account", cascade={"persist"}, fetch="EXTRA_LAZY")
+     */
+    protected $equipment;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
      * @ORM\OneToMany(targetEntity="Runalyze\Bundle\CoreBundle\Entity\EquipmentType", mappedBy="account", cascade={"persist"}, fetch="EXTRA_LAZY")
      */
     protected $equipmentTypes;
@@ -733,6 +740,14 @@ class Account implements AdvancedUserInterface, \Serializable
     public function getTags()
     {
         return $this->tags;
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEquipment()
+    {
+        return $this->equipment;
     }
 
     /**

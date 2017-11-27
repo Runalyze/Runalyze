@@ -21,13 +21,19 @@ class SportChoiceType extends AbstractTokenStorageAwareType
                 return $sport ? $sport->getId() : '';
             },
             'choice_attr' => function($sport, $key, $index) {
+                $equipmentTypes=[];
+                foreach($sport->getEquipmentTypes() as $type) {
+                    $equipmentTypes[] = $type->getId();
+                }
                 /* @var Sport $sport */
                 return ['data-outside' => $sport->getOutside(),
                     'data-energy' => $sport->getKcal(),
                     'data-internal' => $sport->getInternalSportId(),
                     'data-distances' => ($sport->getDistances() ? '1' : '0'),
                     'data-speed' => $sport->getSpeed(),
-                    'data-activity-type' => ($sport->getDefaultType() ? $sport->getDefaultType()->getId() : '')];
+                    'data-activity-type' => ($sport->getDefaultType() ? $sport->getDefaultType()->getId() : ''),
+                    'data-equipment-types' => json_encode($equipmentTypes, JSON_FORCE_OBJECT)
+                ];
             }
         ));
     }

@@ -166,7 +166,11 @@ class ActivityType extends AbstractTokenStorageAwareType
                 'multiple' => true,
                 'expanded' => false,
                 'required' => false
-            ]);
+            ])
+            ->add('equipment', ActivityEquipmentType::class,
+            [
+                 'mapped' => false
+            ])
         ;
     }
 
