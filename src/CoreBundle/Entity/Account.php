@@ -219,6 +219,8 @@ class Account implements AdvancedUserInterface, \Serializable
     public function __construct()
     {
         $this->tags = new ArrayCollection();
+        $this->equipment = new ArrayCollection();
+        $this->equipmentTypes = new ArrayCollection();
 
         $this->setRegisterdate(time());
         $this->setLastAction(time());

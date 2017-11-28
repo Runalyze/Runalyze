@@ -52,6 +52,7 @@
         <fieldset id="fieldset-splits" class="only-distances">
             <legend onclick="Runalyze.toggleFieldset(this, 'fieldset-splits', false, 'SPLITS')">{% trans %}Laps{% endtrans %}</legend>
 
+            {# TODO #}
             Laps...
         </fieldset>
 
@@ -101,26 +102,38 @@
             {{ form_row(form.humidity, {'div_class': 'w50 only-outside', 'attr': {'class': 'small-size'}}) }}
             {{ form_row(form.pressure, {'div_class': 'w50 only-outside', 'attr': {'class': 'small-size'}}) }}
 
-            {# TODO: render via js as e.g. 'via Powered by DarkSky' #}
             {{ form_row(form.weatherSource) }}
+            <p class="weatherdata-source only-outside small r"></p>
         </fieldset>
 
         <fieldset id="fieldset-equipment">
             <legend onclick="Runalyze.toggleFieldset(this, 'fieldset-equipment', false, '')">{% trans %}Equipment{% endtrans %}</legend>
 
+            {# TODO #}
             ...
         </fieldset>
 
         {% if not isNew %}
+            {% if showElevationCorrectionLink %}
             <fieldset id="fieldset-elevation-correction" class="collapsed">
                 <legend onclick="Runalyze.toggleFieldset(this, 'fieldset-elevation-correction', false, '')">{% trans %}Use elevation correction{% endtrans %}</legend>
 
-                ...
+                <div class="fieldset-messages">
+                    <p class="info">
+                        <a class="ajax" target="gps-results" href="{{ url('activity-elevation-correction', {'id': activity_id}) }}"><strong>{% trans %}Correct elevation data{% endtrans %}</strong></a><br>
+                        <br>
+                        <small id="gps-results" class="block">
+                            {% trans %}Elevation data via GPS is very inaccurate. Therefore you can correct it via some satellite data.{% endtrans %}
+                        </small>
+                    </p>
+                </div>
             </fieldset>
+            {% endif %}
 
             <fieldset id="fieldset-remove-data-series" class="collapsed">
                 <legend onclick="Runalyze.toggleFieldset(this, 'fieldset-remove-data-series', false, '')">{% trans %}Remove data series{% endtrans %}</legend>
 
+                {# TODO #}
                 ...
             </fieldset>
         {% endif %}
@@ -133,8 +146,9 @@
     <script type="text/javascript">
     $(function(){
         Runalyze.ActivityForm.init($('#activity'), {
-            calculateCalories: true, /* TODO */
-            loadWeather: true /* TODO */
+            isNew: {{ isNew ? 'true' : 'false' }},
+            calculateCalories: {{ configVar('activity-form.COMPUTE_KCAL') }},
+            loadWeather: {{ configVar('activity-form.TRAINING_LOAD_WEATHER') }}
         });
     });
     </script>

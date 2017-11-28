@@ -16,6 +16,7 @@ use Runalyze\Bundle\CoreBundle\Form\Type\PressureType;
 use Runalyze\Bundle\CoreBundle\Form\Type\RpeType;
 use Runalyze\Bundle\CoreBundle\Form\Type\SportChoiceType;
 use Runalyze\Bundle\CoreBundle\Form\Type\TemperatureType;
+use Runalyze\Bundle\CoreBundle\Form\Type\UnitPlaceholderType;
 use Runalyze\Bundle\CoreBundle\Form\Type\WeatherConditionType;
 use Runalyze\Bundle\CoreBundle\Form\Type\WindDirectionType;
 use Runalyze\Bundle\CoreBundle\Form\Type\WindSpeedType;
@@ -35,6 +36,7 @@ class ActivityType extends AbstractTokenStorageAwareType
     {
         $builder
             ->add('temporaryHash', HiddenType::class, [
+                // TODO: cache additional objects and set hash
                 'mapped' => false,
                 'required' => false
             ])
@@ -54,7 +56,7 @@ class ActivityType extends AbstractTokenStorageAwareType
             ->add('elevation', ElevationType::class, [
                 'required' => false
             ])
-            ->add('pace', TextType::class, [
+            ->add('pace', UnitPlaceholderType::class, [
                 'required' => false,
                 'mapped' => false,
                 'empty_data'  => null,
@@ -62,11 +64,12 @@ class ActivityType extends AbstractTokenStorageAwareType
             ])
             ->add('sport', SportChoiceType::class, [
                 'required' => false,
-                'empty_data'  => null,
+                'empty_data' => null,
+                'placeholder' => null
             ])
             ->add('type', ActivityTypeChoiceType::class, [
                 'required' => false,
-                'empty_data'  => null,
+                'empty_data' => null
             ])
             ->add('cadence', CadenceType::class, [
                 // TODO: label depends on sport
@@ -129,7 +132,8 @@ class ActivityType extends AbstractTokenStorageAwareType
             ])
             ->add('weatherid', WeatherConditionType::class, [
                 'required' => false,
-                'label' => 'Weather'
+                'label' => 'Weather',
+                'placeholder' => null
             ])
             ->add('weatherSource', HiddenType::class, [
                 'required' => false
@@ -167,10 +171,14 @@ class ActivityType extends AbstractTokenStorageAwareType
                 'expanded' => false,
                 'required' => false
             ])
-            ->add('equipment', ActivityEquipmentType::class,
-            [
-                 'mapped' => false
+            ->add('start-coordinates', HiddenType::class, [
+                // TODO: set start coordinates
+                'mapped' => false,
+                'required' => false
             ])
+            ->add('equipment', ActivityEquipmentType::class, [
+                 'mapped' => false
+            ]);
         ;
     }
 

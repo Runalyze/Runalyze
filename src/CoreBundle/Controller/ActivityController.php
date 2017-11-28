@@ -60,7 +60,9 @@ class ActivityController extends Controller
         return $this->render('activity/form.html.twig', [
             'form' => $form->createView(),
             'isNew' => false,
-            'decorator' => new ActivityDecorator($context)
+            'decorator' => new ActivityDecorator($context),
+            'activity_id' => $activity->getId(),
+            'showElevationCorrectionLink' => $context->hasRoute() && !$context->getRoute()->hasCorrectedElevations()
         ]);
     }
 
@@ -254,7 +256,7 @@ class ActivityController extends Controller
     }
 
     /**
-     * @Route("/activity/{id}/elevation-correction")
+     * @Route("/activity/{id}/elevation-correction", name="activity-elevation-correction")
      * @Security("has_role('ROLE_USER')")
      */
     public function elevationCorrectionAction($id, Account $account)

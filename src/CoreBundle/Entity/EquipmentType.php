@@ -91,6 +91,7 @@ class EquipmentType
     public function __construct()
     {
         $this->sport = new ArrayCollection();
+        $this->equipment = new ArrayCollection();
     }
 
     /**

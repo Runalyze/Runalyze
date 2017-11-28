@@ -34,6 +34,7 @@
 
       "./lib/runalyze.lib.js",
       "./lib/runalyze.lib.common.js",
+      "./lib/runalyze.lib.formatter.js",
       "./lib/runalyze.lib.plot.js",
       "./lib/runalyze.lib.plot.options.js",
       "./lib/runalyze.lib.plot.saver.js",
