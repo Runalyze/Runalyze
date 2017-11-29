@@ -11,6 +11,7 @@ use Runalyze\Bundle\CoreBundle\Component\Activity\VO2maxCalculationDetailsDecora
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\Trackdata;
 use Runalyze\Bundle\CoreBundle\Entity\Training;
+use Runalyze\Bundle\CoreBundle\Entity\TrainingRepository;
 use Runalyze\Bundle\CoreBundle\Form\ActivityType;
 use Runalyze\Metrics\Velocity\Unit\PaceEnum;
 use Runalyze\Service\ElevationCorrection\StepwiseElevationProfileFixer;
@@ -36,6 +37,14 @@ use Runalyze\Service\ElevationCorrection\Exception\NoValidStrategyException;
 class ActivityController extends Controller
 {
     /**
+     * @return TrainingRepository
+     */
+    protected function getTrainingRepository()
+    {
+        return $this->getDoctrine()->getRepository('CoreBundle:Training');
+    }
+
+    /**
      * @Route("/activity/form/{id}", name="activity-form", requirements={"id" = "\d+"})
      * @Security("has_role('ROLE_USER')")
      * @ParamConverter("activity", class="CoreBundle:Training")
@@ -52,6 +61,8 @@ class ActivityController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $this->getTrainingRepository()->save($activity, $account);
+            $this->get('app.automatic_reload_flag_setter')->set(AutomaticReloadFlagSetter::FLAG_ALL);
 
         }
 
@@ -66,12 +77,38 @@ class ActivityController extends Controller
         ]);
     }
 
+    /**
+     * @Route("/activity/communicator", name="activity-communicator")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function communicatorAction()
+    {
+        return $this->render('activity/import_garmin_communicator.html.twig');
+    }
+
+    /**
+     * @Route("/activity/upload", name="activity-upload")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function uploadAction()
+    {
+        return $this->render('activity/import_upload.html.twig');
+    }
 
     /**
      * @Route("/activity/add", name="activity-add")
      * @Security("has_role('ROLE_USER')")
      */
     public function createAction()
+    {
+        //TODO render user default import method or use upload
+
+        $response = $this->forward('CoreBundle:Activity:upload');
+        return $response;
+    }
+
+
+    /**public function createAction()
     {
         $Frontend = new \Frontend(isset($_GET['json']), $this->get('security.token_storage'));
 
@@ -101,7 +138,7 @@ class ActivityController extends Controller
         $Window->display();
 
         return new Response();
-    }
+    }*/
 
     /**
      * @Route("/activity/{id}", name="ActivityShow", requirements={"id" = "\d+"})
@@ -490,7 +527,6 @@ class ActivityController extends Controller
     }
 
     /**
-     * @Route("/call/call.Exporter.export.php")
      * @Route("/activity/{id}/export/{type}/{typeid}", requirements={"id" = "\d+"})
      * @Security("has_role('ROLE_USER')")
      */

@@ -11,6 +11,12 @@ class SportChoiceType extends AbstractTokenStorageAwareType
 {
     public function configureOptions(OptionsResolver $resolver)
     {
+        $equipmentTypes = [];
+        foreach($this->getAccount()->getEquipmentTypes() as $type) {
+            $equipmentTypes[] = $type->getId();
+        }
+        //TODO query equipment_sport relation to just have one query instead of multiple queries
+
         $resolver->setDefaults(array(
             'choices' => $this->getAccount()->getSports(),
             'choice_label' => function($sport, $key, $index) {
