@@ -10,7 +10,7 @@
     </div>
 
     <div class="panel-content">
-        {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'ajax no-automatic-reload', 'id': 'activity'}, 'action': url('poster')}) }}
+        {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'ajax no-automatic-reload', 'id': 'activity'}}) }}
 
         <input type="hidden" name="distance-to-km-factor" value="{{ unitSystem().distanceUnit.toBaseUnit(1) }}">
 
@@ -109,8 +109,7 @@
         <fieldset id="fieldset-equipment">
             <legend onclick="Runalyze.toggleFieldset(this, 'fieldset-equipment', false, '')">{% trans %}Equipment{% endtrans %}</legend>
 
-            {# TODO #}
-            ...
+            {{ form_row(form.equipment, {'div_class': 'depends-on-date'}) }}
         </fieldset>
 
         {% if not isNew %}
@@ -139,6 +138,10 @@
         {% endif %}
 
         {{ form_rest(form) }}
+
+        <div class="c">
+            <input type="submit" value="{% trans %}Save{% endtrans %}">
+        </div>
 
         {{ form_end(form) }}
     </div>

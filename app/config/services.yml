@@ -125,7 +125,7 @@ services:
     tags:
      - { name: form.type }
   app.form.activity.equipment:
-    class: Runalyze\Bundle\CoreBundle\Form\ActivityEquipmentType
+    class: Runalyze\Bundle\CoreBundle\Form\Type\ActivityEquipmentType
     arguments: ["@security.token_storage"]
     tags:
      - { name: form.type }
@@ -193,7 +193,7 @@ services:
      - { name: form.type }
   app.form.type.sport:
     class: Runalyze\Bundle\CoreBundle\Form\Type\SportChoiceType
-    arguments: ["@security.token_storage"]
+    arguments: ["@security.token_storage", "@app.repository.sport"]
     tags:
      - { name: form.type }
   app.form.type.activity_type:

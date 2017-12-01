@@ -2,8 +2,11 @@
 
 namespace Runalyze\Bundle\CoreBundle\Form;
 
+use League\Geotools\Geohash\Geohash;
 use Runalyze\Bundle\CoreBundle\Entity\Tag;
 use Runalyze\Bundle\CoreBundle\Entity\Training;
+use Runalyze\Bundle\CoreBundle\Form\Type\ActivityEquipmentType;
+use Runalyze\Bundle\CoreBundle\Form\Type\ActivitySplitType;
 use Runalyze\Bundle\CoreBundle\Form\Type\ActivityTypeChoiceType;
 use Runalyze\Bundle\CoreBundle\Form\Type\CadenceType;
 use Runalyze\Bundle\CoreBundle\Form\Type\DistanceType;
@@ -21,17 +24,21 @@ use Runalyze\Bundle\CoreBundle\Form\Type\WeatherConditionType;
 use Runalyze\Bundle\CoreBundle\Form\Type\WindDirectionType;
 use Runalyze\Bundle\CoreBundle\Form\Type\WindSpeedType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ActivityType extends AbstractTokenStorageAwareType
+class ActivityType extends AbstractType
 {
+    use TokenStorageAwareTypeTrait;
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -172,13 +179,10 @@ class ActivityType extends AbstractTokenStorageAwareType
                 'required' => false
             ])
             ->add('start-coordinates', HiddenType::class, [
-                // TODO: set start coordinates
                 'mapped' => false,
                 'required' => false
             ])
-            ->add('equipment', ActivityEquipmentType::class, [
-                 'mapped' => false
-            ]);
+            ->add('equipment', ActivityEquipmentType::class);
         ;
     }
 
@@ -187,5 +191,13 @@ class ActivityType extends AbstractTokenStorageAwareType
         $resolver->setDefaults([
             'data_class' => Training::class
         ]);
+    }
+
+    public static function setStartCoordinates(Form $form, Training $activity)
+    {
+        if ($activity->hasRoute() && $activity->getRoute()->hasGeohashes()) {
+            $coordinate = (new Geohash())->decode($activity->getRoute()->getStartpoint())->getCoordinate();
+            $form->get('start-coordinates')->setData($coordinate->getLatitude().','.$coordinate->getLongitude());
+        }
     }
 }

@@ -1,12 +1,12 @@
 <?php
 
-namespace Runalyze\Bundle\CoreBundle\Form;
+namespace Runalyze\Bundle\CoreBundle\Form\Type;
 
 use Runalyze\Bundle\CoreBundle\Form\Type\DistanceType;
+use Runalyze\Bundle\CoreBundle\Form\Type\DurationType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Runalyze\Bundle\CoreBundle\Form\Type\DurationType;
 
 class ActivitySplitType extends AbstractType
 {
@@ -25,5 +25,4 @@ class ActivitySplitType extends AbstractType
             ])
         ;
     }
-
 }

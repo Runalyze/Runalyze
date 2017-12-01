@@ -2,6 +2,7 @@
 
 namespace Runalyze\Bundle\CoreBundle\Controller;
 
+use Runalyze\Activity\DuplicateFinder;
 use Runalyze\Bundle\CoreBundle\Bridge\Activity\Calculation\ClimbScoreCalculator;
 use Runalyze\Bundle\CoreBundle\Bridge\Activity\Calculation\FlatOrHillyAnalyzer;
 use Runalyze\Bundle\CoreBundle\Component\Activity\ActivityDecorator;
@@ -13,26 +14,26 @@ use Runalyze\Bundle\CoreBundle\Entity\Trackdata;
 use Runalyze\Bundle\CoreBundle\Entity\Training;
 use Runalyze\Bundle\CoreBundle\Entity\TrainingRepository;
 use Runalyze\Bundle\CoreBundle\Form\ActivityType;
+use Runalyze\Bundle\CoreBundle\Services\AutomaticReloadFlagSetter;
+use Runalyze\Calculation\Route\Calculator;
+use Runalyze\Export\File;
+use Runalyze\Export\Share;
 use Runalyze\Metrics\Velocity\Unit\PaceEnum;
+use Runalyze\Model\Activity;
+use Runalyze\Service\ElevationCorrection\Exception\NoValidStrategyException;
 use Runalyze\Service\ElevationCorrection\StepwiseElevationProfileFixer;
+use Runalyze\Util\LocalTime;
+use Runalyze\View\Activity\Context;
+use Runalyze\View\Activity\Dataview;
+use Runalyze\View\Activity\Linker;
+use Runalyze\View\Window\Laps\Window;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use Runalyze\View\Activity\Context;
-use Runalyze\View\Activity\Linker;
-use Runalyze\View\Activity\Dataview;
-use Runalyze\Export\Share;
-use Runalyze\Model\Activity;
-use Runalyze\Util\LocalTime;
-use Runalyze\Export\File;
-use Runalyze\View\Window\Laps\Window;
-use Runalyze\Activity\DuplicateFinder;
-use Runalyze\Calculation\Route\Calculator;
-use Runalyze\Service\ElevationCorrection\Exception\NoValidStrategyException;
+use Symfony\Component\HttpFoundation\Response;
 
 class ActivityController extends Controller
 {
@@ -58,12 +59,13 @@ class ActivityController extends Controller
         $form = $this->createForm(ActivityType::class, $activity ,[
             'action' => $this->generateUrl('activity-form', ['id' => $activity->getId()])
         ]);
+        ActivityType::setStartCoordinates($form, $activity);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getTrainingRepository()->save($activity, $account);
+            //$this->getTrainingRepository()->save($activity, $account);
+            $this->addFlash('success', $this->get('translator')->trans('Changes have been saved.'));
             $this->get('app.automatic_reload_flag_setter')->set(AutomaticReloadFlagSetter::FLAG_ALL);
-
         }
 
         $context = $this->get('app.activity_context.factory')->getContext($activity);

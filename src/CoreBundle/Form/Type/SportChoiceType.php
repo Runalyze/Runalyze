@@ -3,22 +3,38 @@
 namespace Runalyze\Bundle\CoreBundle\Form\Type;
 
 use Runalyze\Bundle\CoreBundle\Entity\Sport;
+use Runalyze\Bundle\CoreBundle\Entity\SportRepository;
 use Runalyze\Bundle\CoreBundle\Form\AbstractTokenStorageAwareType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 class SportChoiceType extends AbstractTokenStorageAwareType
 {
+    /** @var SportRepository */
+    protected $SportRepository;
+
+    public function __construct(TokenStorage $tokenStorage, SportRepository $sportRepository)
+    {
+        parent::__construct($tokenStorage);
+
+        $this->SportRepository = $sportRepository;
+    }
+
     public function configureOptions(OptionsResolver $resolver)
     {
-        $equipmentTypes = [];
-        foreach($this->getAccount()->getEquipmentTypes() as $type) {
-            $equipmentTypes[] = $type->getId();
-        }
-        //TODO query equipment_sport relation to just have one query instead of multiple queries
+        $mapIdFunction = function($object) {
+            /** @var object $object */
+            return $object->getId();
+        };
+
+        $allSports = $this->getAccount()->getSports();
+        $sportIds = $allSports->map($mapIdFunction)->toArray();
+        $sportToEquipmentCategoryRelations = $this->SportRepository->findEquipmentCategoryIdsFor($sportIds);
+        $allEquipmentTypeIds = $this->getAccount()->getEquipmentTypes()->map($mapIdFunction)->toArray();
 
         $resolver->setDefaults(array(
-            'choices' => $this->getAccount()->getSports(),
+            'choices' => $allSports,
             'choice_label' => function($sport, $key, $index) {
                 /** @var Sport $sport */
                 return $sport->getName();
@@ -26,12 +42,15 @@ class SportChoiceType extends AbstractTokenStorageAwareType
             'choice_value' => function (Sport $sport = null) {
                 return $sport ? $sport->getId() : '';
             },
-            'choice_attr' => function($sport, $key, $index) {
+            'choice_attr' => function($sport, $key, $index) use ($sportToEquipmentCategoryRelations) {
                 /* @var Sport $sport */
-                $equipmentTypes = [];
+                $sportId = $sport->getId();
+                $availableEquipmentTypes = [];
 
-                foreach( $sport->getEquipmentTypes() as $type) {
-                    $equipmentTypes[] = $type->getId();
+                foreach ($sportToEquipmentCategoryRelations as $relation) {
+                    if ($sportId == $relation['sport_id']) {
+                        $availableEquipmentTypes[] = $relation['equipment_type_id'];
+                    }
                 }
 
                 return [
@@ -41,7 +60,7 @@ class SportChoiceType extends AbstractTokenStorageAwareType
                     'data-distances' => $sport->getDistances() ? '1' : '0',
                     'data-speed' => $sport->getSpeed(),
                     'data-activity-type' => $sport->getDefaultType() ? $sport->getDefaultType()->getId() : '',
-                    'data-equipment-types' => json_encode($equipmentTypes, JSON_FORCE_OBJECT)
+                    'data-equipment-types' => json_encode($availableEquipmentTypes)
                 ];
             }
         ));

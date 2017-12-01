@@ -63,6 +63,20 @@ class SportRepository extends EntityRepository
         ]);
     }
 
+    public function findEquipmentCategoryIdsFor(array $sportIds)
+    {
+        // TODO: this query results in two joins with one of them being useless
+        // SELECT r0_.id AS id_0, r1_.id AS id_1 FROM runalyze_sport r0_ INNER JOIN runalyze_equipment_sport r2_ ON r0_.id = r2_.sportid INNER JOIN runalyze_equipment_type r1_ ON r1_.id = r2_.equipment_typeid WHERE r0_.id IN (?)
+
+        return $this->createQueryBuilder('s')
+            ->innerJoin('s.equipmentType', 'e')
+            ->select('s.id as sport_id, e.id as equipment_type_id')
+            ->where('s.id IN(:sports)')
+            ->setParameter('sports', $sportIds)
+            ->getQuery()
+            ->getResult();
+    }
+
     /**
      * @param Account $account
      * @return array internal sport ids
