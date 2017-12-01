@@ -74,6 +74,7 @@ class Table {
 
 		foreach ($this->ActiveKeys as $keyid) {
 			$Key = Keys::get($keyid);
+			if ($Key->isPrivate())
 			$Header = $icon ?: $Key->shortLabel();
 
 			$Tooltip->setText($Key->label());

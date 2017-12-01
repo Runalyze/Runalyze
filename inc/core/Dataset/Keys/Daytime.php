@@ -52,6 +52,14 @@ class Daytime extends AbstractKey
 		return __('Time');
 	}
 
+    /**
+     * @return bool
+     */
+    public function isPrivate()
+    {
+        return true;
+    }
+
 	/**
 	 * @return string
 	 * @codeCoverageIgnore
