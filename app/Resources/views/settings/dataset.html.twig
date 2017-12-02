@@ -61,10 +61,10 @@
                                     {% endif %}
                                 </td>
                                 <td class="c">
-                                    {% if numberOfExistingKeys > 0 %}
-                                        {{ form_widget(dataset.privacy) }}
-                                    {% else %}
+                                    {% if missingKeys[dataset.vars.value.keyid] and numberOfExistingKeys > 0 %}
                                         {{ form_widget(dataset.privacy, {'checked' : defaultConfiguration[keyObject.id].privacy }) }}
+                                    {% else %}
+                                        {{ form_widget(dataset.privacy) }}
                                     {% endif %}
                                 </td>
                                 <td class="c">

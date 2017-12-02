@@ -56,9 +56,9 @@ class Dataset
     /**
      * @var bool
      *
-     * @ORM\Column(name="privacy", type="boolean", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
+     * @ORM\Column(name="privacy", type="boolean", columnDefinition="tinyint unsigned NOT NULL DEFAULT 1")
      */
-    private $privacy = false;
+    private $privacy = DatasetPrivacyProfile::PUBLIC_KEY;
 
     /**
      * @return $this
@@ -165,7 +165,7 @@ class Dataset
      */
     public function setPrivacy($privacy)
     {
-        $this->privacy = $privacy;
+        $this->privacy = (bool)$privacy;
 
         return $this;
     }
@@ -175,7 +175,7 @@ class Dataset
      */
     public function getPrivacy()
     {
-        return $this->privacy;
+        return (bool)$this->privacy;
     }
 
     /**

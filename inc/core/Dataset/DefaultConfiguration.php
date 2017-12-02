@@ -95,7 +95,8 @@ class DefaultConfiguration extends Configuration
 		foreach ($keysArray as $keyid => $isActive) {
 			$this->Data[$keyid] = array(
 				'active' => $isActive,
-				'style' => Keys::get($keyid)->defaultCssStyle()
+				'style' => Keys::get($keyid)->defaultCssStyle(),
+                'privacy' => Keys::get($keyid)->privacy()
 			);
 		}
 	}

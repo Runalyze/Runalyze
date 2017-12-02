@@ -9,6 +9,7 @@ namespace Runalyze\View\Dataset;
 use Runalyze\Dataset\Configuration;
 use Runalyze\Dataset\Context;
 use Runalyze\Dataset\Keys;
+use Runalyze\Profile\View\DatasetPrivacyProfile;
 use Runalyze\View\Tooltip;
 
 /**
@@ -71,19 +72,16 @@ class Table {
 	{
 		$Tooltip = new Tooltip('');
 		$Code = '';
-
 		foreach ($this->ActiveKeys as $keyid) {
 			$Key = Keys::get($keyid);
-			if ($Key->isPrivate())
 			$Header = $icon ?: $Key->shortLabel();
 
-			$Tooltip->setText($Key->label());
-			$Tooltip->wrapAround($Header);
+            $Tooltip->setText($Key->label());
+            $Tooltip->wrapAround($Header);
 
-			$Code .= '<td>'.$Header.'</td>';
+            $Code .= '<td>' . $Header . '</td>';
 		}
-
-		return $Code;
+        return $Code;
 	}
 
 	/**

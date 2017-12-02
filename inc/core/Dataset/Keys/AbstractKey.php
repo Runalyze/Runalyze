@@ -74,6 +74,15 @@ abstract class AbstractKey
 		return $this->label();
 	}
 
+    /**
+     * @return int
+     * @codeCoverageIgnore
+     */
+    public function privacy()
+    {
+        return DatasetPrivacyProfile::PUBLIC_KEY;
+    }
+
 	/**
 	 * @return string
 	 * @codeCoverageIgnore
@@ -82,30 +91,6 @@ abstract class AbstractKey
 	{
 		return '';
 	}
-
-    /**
-     * @return string
-     * @codeCoverageIgnore
-     */
-    abstract public function privacy();
-
-    /**
-     * @return string
-     * @codeCoverageIgnore
-     */
-    public function isPrivate()
-    {
-        return (DatasetPrivacyProfile::PRIVATE_KEY == $this->label());
-    }
-
-    /**
-     * @return string
-     * @codeCoverageIgnore
-     */
-    public function isPublic()
-    {
-        return (DatasetPrivacyProfile::PUBLIC_KEY == $this->label());
-    }
 
 	/**
 	 * Get string to display this dataset value

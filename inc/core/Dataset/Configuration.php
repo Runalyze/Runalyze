@@ -5,6 +5,7 @@
  */
 
 namespace Runalyze\Dataset;
+use Runalyze\Profile\View\DatasetPrivacyProfile;
 
 /**
  * Dataset configuration from database
@@ -32,7 +33,7 @@ class Configuration
 	public function __construct(\PDO $pdo, $accountID, $fallbackToDefault = true)
 	{
 		if (is_null($this->Data)) {
-			$completeData = $pdo->query('SELECT `keyid`, `active`, `style` FROM `'.PREFIX.'dataset` WHERE `accountid`="'.$accountID.'" ORDER BY `position` ASC')->fetchAll();
+			$completeData = $pdo->query('SELECT `keyid`, `active`, `style`, `privacy` FROM `'.PREFIX.'dataset` WHERE `accountid`="'.$accountID.'" ORDER BY `position` ASC')->fetchAll();
 
 			if (empty($completeData) && $fallbackToDefault) {
 				$this->Data = (new DefaultConfiguration)->data();
@@ -97,7 +98,7 @@ class Configuration
 		$activeKeys = array();
 
 		foreach ($this->Data as $keyid => $keyData) {
-			if ($keyData['active'] == 1) {
+			if (!(DatasetPrivacyProfile::PRIVATE_KEY == $keyData['privacy'] && \Request::isOnSharedPage()) && $keyData['active'] == 1) {
 				$activeKeys[] = $keyid;
 			}
 		}

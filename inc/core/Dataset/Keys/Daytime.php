@@ -7,6 +7,7 @@
 namespace Runalyze\Dataset\Keys;
 
 use Runalyze\Dataset\Context;
+use Runalyze\Profile\View\DatasetPrivacyProfile;
 
 /**
  * Dataset key: Daytime
@@ -53,11 +54,11 @@ class Daytime extends AbstractKey
 	}
 
     /**
-     * @return bool
+     * @return string
+     * @codeCoverageIgnore
      */
-    public function isPrivate()
-    {
-        return true;
+    public function privacy() {
+        return (bool)DatasetPrivacyProfile::PRIVATE_KEY;
     }
 
 	/**
