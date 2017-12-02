@@ -35,6 +35,15 @@ class ActivityForm extends AbstractCategory
     }
 
     /**
+     * @param string $key
+     * @return bool
+     */
+    public function fieldSetIsCollapsed($key)
+    {
+        return isset($this->Variables['FORMULAR_SHOW_'.$key]) && 'true' !== $this->Variables['FORMULAR_SHOW_'.$key];
+    }
+
+    /**
      * @return bool
      */
     public function isAutomaticElevationCorrectionActivated()

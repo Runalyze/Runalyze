@@ -1,6 +1,10 @@
 {% extends "base_logged_in.twig" %}
 
 {% block content %}
+    {% set formConfig = config().activityForm %}
+    {% set collapsed = ' class=collapsed' %}
+    {# @var formConfig \Runalyze\Bundle\CoreBundle\Component\Configuration\Category\ActivityForm #}
+
     <div class="panel-heading">
         {% if isNew %}
             <h1>{{ 'Add activity'|trans }}</h1>
@@ -14,7 +18,7 @@
 
         <input type="hidden" name="distance-to-km-factor" value="{{ unitSystem().distanceUnit.toBaseUnit(1) }}">
 
-        <fieldset id="fieldset-sports">
+        <fieldset id="fieldset-sports"{{ formConfig.fieldSetIsCollapsed('SPORT') ? collapsed : '' }}>
             <legend onclick="Runalyze.toggleFieldset(this, 'fieldset-sports', false, 'SPORT')">{% trans %}Sport{% endtrans %}</legend>
 
             {{ form_row(form.sport, {'div_class': 'w50'}) }}
@@ -24,7 +28,7 @@
             {{ form_row(form.is_public, {'div_class': 'w50', 'help': 'Public activities will be visible for everybody.'}) }}
         </fieldset>
 
-        <fieldset id="fieldset-general">
+        <fieldset id="fieldset-general"{{ formConfig.fieldSetIsCollapsed('GENERAL') ? collapsed : '' }}>
             <legend onclick="Runalyze.toggleFieldset(this, 'fieldset-general', false, 'GENERAL')">{% trans %}General information{% endtrans %}</legend>
 
             {{ form_row(form.time.date, {'div_class': 'w50', 'attr': {'class': 'pick-a-date', 'data-format': 'Y-m-d'}}) }}
@@ -37,26 +41,26 @@
             {{ form_row(form.pulseMax, {'div_class': 'w50', 'attr': {'class': 'small-size'}}) }}
         </fieldset>
 
-        <fieldset id="fieldset-distance" class="only-distances">
+        <fieldset id="fieldset-distance" class="only-distances{{ formConfig.fieldSetIsCollapsed('DISTANCE') ? ' collapsed' : '' }}">
             <legend onclick="Runalyze.toggleFieldset(this, 'fieldset-distance', false, 'DISTANCE')">{% trans %}Distance{% endtrans %}</legend>
 
             {{ form_row(form.distance, {'div_class': 'w50', 'attr': {'class': 'small-size'}}) }}
             {{ form_row(form.is_track, {'div_class': 'w50', 'help': 'This field is only meant for official track races such that distances can be shown correctly, e.g. as 10.000m. Use tags for all other purposes.'}) }}
 
             {{ form_row(form.elevation, {'div_class': 'w50 only-outside', 'attr': {'class': 'small-size'}, 'help':'Will be calculated afterwards from the activity\'s elevation profile.'}) }}
-            {{ form_row(form.pace, {'div_class': 'w50', 'attr': {'class': 'small-size'}}) }}
+            {{ form_row(form.pace, {'div_class': 'w50', 'attr': {'class': 'small-size', 'disabled': 'disabled'}}) }}
 
             {{ form_row(form.cadence, {'div_class': 'w50', 'attr': {'class': 'small-size'}}) }}
         </fieldset>
 
-        <fieldset id="fieldset-splits" class="only-distances">
+        <fieldset id="fieldset-splits" class="only-distances{{ formConfig.fieldSetIsCollapsed('SPLITS') ? ' collapsed' : '' }}">
             <legend onclick="Runalyze.toggleFieldset(this, 'fieldset-splits', false, 'SPLITS')">{% trans %}Laps{% endtrans %}</legend>
 
             {# TODO #}
             Laps...
         </fieldset>
 
-        <fieldset id="fieldset-other">
+        <fieldset id="fieldset-other"{{ formConfig.fieldSetIsCollapsed('OTHER') ? collapsed : '' }}>
             <legend onclick="Runalyze.toggleFieldset(this, 'fieldset-other', false, 'OTHER')">{% trans %}Miscellaneous{% endtrans %}</legend>
 
             {{ form_row(form.use_vo2max, {'div_class': 'w100 with50erLabel only-running'}) }}
@@ -72,13 +76,13 @@
             {{ form_row(form.routename, {'div_class': 'w100 with50erLabel only-outside', 'attr': {'class': 'full-size'}}) }}
         </fieldset>
 
-        <fieldset id="fieldset-notes">
+        <fieldset id="fieldset-notes"{{ formConfig.fieldSetIsCollapsed('NOTES') ? collapsed : '' }}>
             <legend onclick="Runalyze.toggleFieldset(this, 'fieldset-notes', false, 'NOTES')">{% trans %}Notes{% endtrans %}</legend>
 
             {{ form_row(form.notes, {'div_class': 'w100 with50erLabel', 'attr': {'class': 'full-size'}}) }}
         </fieldset>
 
-        <fieldset id="fieldset-weather" class="only-outside">
+        <fieldset id="fieldset-weather" class="only-outside{{ formConfig.fieldSetIsCollapsed('WEATHER') ? ' collapsed' : '' }}">
             <legend onclick="Runalyze.toggleFieldset(this, 'fieldset-weather', false, 'WEATHER')">{% trans %}Weather{% endtrans %}</legend>
 
             <div class="margin-bottom only-outside inline-span-menu">
@@ -131,6 +135,16 @@
 
             <fieldset id="fieldset-remove-data-series" class="collapsed">
                 <legend onclick="Runalyze.toggleFieldset(this, 'fieldset-remove-data-series', false, '')">{% trans %}Remove data series{% endtrans %}</legend>
+
+                <div class="fieldset-messages">
+                    <p class="info">
+                        {% trans %}You may want to remove a data series if a sensor, e.g. your heart rate strap, produced unusable data.{% endtrans %}
+                    </p>
+
+                    <p class="warning">
+                        {% trans %}Attention: This operation cannot be undone.{% endtrans %}
+                    </p>
+                </div>
 
                 {# TODO #}
                 ...
