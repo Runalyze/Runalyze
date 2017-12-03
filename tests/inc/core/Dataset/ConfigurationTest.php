@@ -21,11 +21,11 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
 	{
 		$this->PDO = new PDO('sqlite::memory:');
 		$this->PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$this->PDO->exec('CREATE TEMP TABLE `'.PREFIX.'dataset` ( `accountid` INTEGER, `keyid` INTEGER, `position` INTEGER, `active` INTEGER, `style` VARCHAR(10) )');
-		$this->PDO->exec('INSERT INTO `'.PREFIX.'dataset` VALUES(0, 1, 7, 1, "")');
-		$this->PDO->exec('INSERT INTO `'.PREFIX.'dataset` VALUES(0, 2, 2, 1, "test")');
-		$this->PDO->exec('INSERT INTO `'.PREFIX.'dataset` VALUES(0, 3, 9, 0, "")');
-		$this->PDO->exec('INSERT INTO `'.PREFIX.'dataset` VALUES(1, 4, 3, 1, "")');
+		$this->PDO->exec('CREATE TEMP TABLE `'.PREFIX.'dataset` ( `accountid` INTEGER, `keyid` INTEGER, `position` INTEGER, `active` INTEGER, `style` VARCHAR(10), `privacy` INTEGER )');
+		$this->PDO->exec('INSERT INTO `'.PREFIX.'dataset` VALUES(0, 1, 7, 1, "", 0)');
+		$this->PDO->exec('INSERT INTO `'.PREFIX.'dataset` VALUES(0, 2, 2, 1, "test", 1)');
+		$this->PDO->exec('INSERT INTO `'.PREFIX.'dataset` VALUES(0, 3, 9, 0, "", 0)');
+		$this->PDO->exec('INSERT INTO `'.PREFIX.'dataset` VALUES(1, 4, 3, 1, "", 0)');
 
 		$this->Configuration = new Configuration($this->PDO, 0);
 	}
@@ -98,6 +98,13 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals('', $this->Configuration->getStyle(1));
 		$this->assertEquals('test', $this->Configuration->getStyle(2));
 		$this->assertEquals('', $this->Configuration->getStyle(3));
-	}
+
+        $this->assertEquals(0, $this->Configuration->getPrivacy(1));
+        $this->assertEquals(1, $this->Configuration->getPrivacy(2));
+
+
+
+
+    }
 
 }

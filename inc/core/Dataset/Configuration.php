@@ -154,4 +154,19 @@ class Configuration
 
 		return $this->Data[$keyid]['style'];
 	}
+
+    /**
+     * Get privacy for dataset
+     * @param int $keyid enum, see \Runalyze\Dataset\Keys or $this->allKeys()
+     * @return string
+     * @throws \InvalidArgumentException
+     */
+    public function getPrivacy($keyid)
+    {
+        if (!isset($this->Data[$keyid])) {
+            throw new \InvalidArgumentException('Unknown dataset key "'.$keyid.'".');
+        }
+
+        return $this->Data[$keyid]['privacy'];
+    }
 }
