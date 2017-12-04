@@ -56,8 +56,43 @@
         <fieldset id="fieldset-splits" class="only-distances{{ formConfig.fieldSetIsCollapsed('SPLITS') ? ' collapsed' : '' }}">
             <legend onclick="Runalyze.toggleFieldset(this, 'fieldset-splits', false, 'SPLITS')">{% trans %}Laps{% endtrans %}</legend>
 
-            {# TODO #}
-            Laps...
+            <div class="w100 with50erLabel">
+                {{ form_label(form.splits, null, {'help': 'Defining some laps as \'resting\' will hide them in the respective plot.'}) }}
+
+                <div class="full-size left">
+                    <ol class="splits">
+                    {% for splitField in form.splits %}
+                        <li>
+                            <div class="inline split-distance">{{ form_widget(splitField.distance) }}</div> &nbsp;{{ 'in'|trans }}&nbsp;
+                            <div class="inline split-duration">{{ form_widget(splitField.duration) }}</div>
+                            <div class="inline split-intensity">{{ form_widget(splitField.isActive) }}</div> &nbsp;
+                            <span class="link split-remove"><i class="fa fa-fw fa-times"></i></span>
+                            <span class="link split-copy"><i class="fa fa-fw fa-plus"></i></span>
+                        </li>
+                    {% endfor %}
+                    </ol>
+
+                    <div class="hide split-prototype">
+                        <div class="inline split-distance">{{ form_widget(form.splits.vars.prototype.distance) }}</div> &nbsp;{{ 'in'|trans }}&nbsp;
+                        <div class="inline split-duration">{{ form_widget(form.splits.vars.prototype.duration) }}</div>
+                        <div class="inline split-intensity">{{ form_widget(form.splits.vars.prototype.isActive) }}</div> &nbsp;
+                        <span class="link split-remove"><i class="fa fa-fw fa-times"></i></span>
+                        <span class="link split-copy"><i class="fa fa-fw fa-plus"></i></span>
+                    </div>
+
+                    <p id="addSplitsLink"><span class="link add-split">{{ 'add new lap'|trans }}</span></p>
+                    {% if configVar('general.DISTANCE_UNIT_SYSTEM') == 'metric' %}<p><span class="link round-splits">{{ 'round for 100m'|trans }}</span></p>{% endif %}
+                    <p><span class="link sum-splits">{{ 'apply as total distance'|trans }}</span></p>
+                    <p><span class="link active-splits">{{ 'all active'|trans }}</span> - <span class="link rest-splits">{{ 'all resting'|trans }}</span></p>
+                    <p>
+                        {{ 'alternating:'|trans }}
+                        <span class="link alternate-splits-rest">{{ 'first resting'|trans }}</span> -
+                        <span class="link alternate-splits-active">{{ 'first active'|trans }}</span>
+                    </p>
+
+                    {{ form_errors(form.splits) }}
+                </div>
+		    </div>
         </fieldset>
 
         <fieldset id="fieldset-other"{{ formConfig.fieldSetIsCollapsed('OTHER') ? collapsed : '' }}>

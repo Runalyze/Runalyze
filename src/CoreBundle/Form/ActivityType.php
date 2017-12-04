@@ -6,7 +6,7 @@ use League\Geotools\Geohash\Geohash;
 use Runalyze\Bundle\CoreBundle\Entity\Tag;
 use Runalyze\Bundle\CoreBundle\Entity\Training;
 use Runalyze\Bundle\CoreBundle\Form\Type\ActivityEquipmentType;
-use Runalyze\Bundle\CoreBundle\Form\Type\ActivitySplitType;
+use Runalyze\Bundle\CoreBundle\Form\Type\ActivityRoundType;
 use Runalyze\Bundle\CoreBundle\Form\Type\ActivityTypeChoiceType;
 use Runalyze\Bundle\CoreBundle\Form\Type\CadenceType;
 use Runalyze\Bundle\CoreBundle\Form\Type\DistanceType;
@@ -23,6 +23,8 @@ use Runalyze\Bundle\CoreBundle\Form\Type\UnitPlaceholderType;
 use Runalyze\Bundle\CoreBundle\Form\Type\WeatherConditionType;
 use Runalyze\Bundle\CoreBundle\Form\Type\WindDirectionType;
 use Runalyze\Bundle\CoreBundle\Form\Type\WindSpeedType;
+use Runalyze\Parser\Activity\Common\Data\Round\Round;
+use Runalyze\Parser\Activity\Common\Data\Round\RoundCollection;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -159,11 +161,11 @@ class ActivityType extends AbstractType
                 'required' => false
             ])
             ->add('splits', CollectionType::class, [
-                'entry_type'   => ActivitySplitType::class,
-                'mapped' => false,
-                'prototype'=>true,
-                'allow_add'=>true,
-                'allow_delete'=>true
+                'entry_type' => ActivityRoundType::class,
+                'mapped' => true,
+                'prototype' => true,
+                'allow_add' => true,
+                'allow_delete' => true
             ])
             ->add('tag', EntityType::class, [
                 'class' => Tag::class,

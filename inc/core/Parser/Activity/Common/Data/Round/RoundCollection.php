@@ -2,10 +2,13 @@
 
 namespace Runalyze\Parser\Activity\Common\Data\Round;
 
-class RoundCollection implements \Countable, \ArrayAccess
+class RoundCollection implements \Countable, \ArrayAccess, \Iterator
 {
     /** @var Round[] */
     protected $Elements = [];
+
+    /** @var int */
+    protected $CurrentOffset = 0;
 
     /**
      * @param Round[] $elements
@@ -86,6 +89,31 @@ class RoundCollection implements \Countable, \ArrayAccess
     public function offsetUnset($offset)
     {
         unset($this->Elements[$offset]);
+    }
+
+    public function current()
+    {
+        return $this->Elements[$this->CurrentOffset];
+    }
+
+    public function key()
+    {
+        return $this->CurrentOffset;
+    }
+
+    public function next()
+    {
+        ++$this->CurrentOffset;
+    }
+
+    public function rewind()
+    {
+        $this->CurrentOffset = 0;
+    }
+
+    public function valid()
+    {
+        return isset($this->Elements[$this->CurrentOffset]);
     }
 
     /**
