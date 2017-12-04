@@ -34,6 +34,10 @@ class JsonImportToolController extends Controller
     {
         $backupFile = $request->files->get('qqfile');
 
+        if (null === $backupFile) {
+            return $this->json(['error' => 'File upload did not work.']);
+        }
+
         if (!FilenameHandler::validateImportFileExtension($backupFile->getClientOriginalName())) {
             return $this->json(['error' => 'Wrong file extension.']);
         }
