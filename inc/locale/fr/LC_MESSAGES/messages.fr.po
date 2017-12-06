@@ -5,8 +5,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.com\n"
 "POT-Creation-Date: 2017-07-08 11:26+0200\n"
-"PO-Revision-Date: 2017-08-10 14:44+0000\n"
-"Last-Translator: nicolas ghysbrecht <kosnik@kanet.xyz>\n"
+"PO-Revision-Date: 2017-12-06 16:46+0000\n"
+"Last-Translator: ftorto <dev.torto@gmail.com>\n"
 "Language-Team: French <https://translate.runalyze.com/projects/runalyze"
 "/runalyze-master-po/fr/>\n"
 "Language: fr\n"
@@ -35,9 +35,9 @@ msgid "of %u men/women"
 msgstr "du %u hommes/femmes"
 
 #: inc/core/View/RaceResult/Dataview.php:174
-#, fuzzy, php-format
+#, php-format
 msgid "(first %u%%)"
-msgstr "(d'abord %u%%)"
+msgstr "(premiers %u%%)"
 
 #: inc/core/View/Splits/Table.php:154
 #: inc/core/View/Activity/Plot/Series/DistanceSeries.php:39
@@ -998,11 +998,11 @@ msgstr ""
 #: inc/core/Dataset/Keys/PercentageHilly.php:21
 #: inc/training/view/section/class.SectionRouteRowElevation.php:80
 msgid "Percentage hilly"
-msgstr ""
+msgstr "Pourcentage de côte"
 
 #: inc/core/Dataset/Keys/PercentageHilly.php:26
 msgid "Hilly"
-msgstr ""
+msgstr "Vallonné"
 
 #: inc/core/Dataset/Keys/Sport.php:53
 #: inc/training/search/class.SearchFormular.php:122
@@ -1212,7 +1212,7 @@ msgstr "à la fin"
 
 #: inc/core/Dataset/Keys/FitPerformanceConditionEnd.php:40
 msgid "PC End"
-msgstr ""
+msgstr "Fin de la condition de performance"
 
 #: inc/core/Dataset/Keys/VerticalOscillation.php:53
 msgid ""
@@ -1368,7 +1368,7 @@ msgstr "Météo"
 #: inc/core/Dataset/Keys/Weather.php:85 inc/core/Data/Weather/WindSpeed.php:63
 #: inc/training/search/class.SearchFormular.php:202
 msgid "Wind Speed"
-msgstr "Vitesse du vente"
+msgstr "Vitesse du vent"
 
 #: inc/core/Dataset/Keys/Weather.php:89 inc/core/Data/Weather/WindDegree.php:58
 msgid "Wind Degree"
