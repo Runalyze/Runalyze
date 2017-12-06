@@ -98,7 +98,7 @@ class Raceresult
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="Training", inversedBy = "raceresult")
+     * @ORM\OneToOne(targetEntity="Training", inversedBy="raceresult")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="activity_id", referencedColumnName="id", nullable=false)
      * })

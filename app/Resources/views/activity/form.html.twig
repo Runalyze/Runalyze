@@ -14,6 +14,8 @@
     </div>
 
     <div class="panel-content">
+        {% include 'flashmessages.html.twig' %}
+
         {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'ajax no-automatic-reload', 'id': 'activity'}}) }}
 
         <input type="hidden" name="distance-to-km-factor" value="{{ unitSystem().distanceUnit.toBaseUnit(1) }}">
@@ -91,6 +93,7 @@
                     </p>
 
                     {{ form_errors(form.splits) }}
+                    {% do form.splits.setRendered() %}
                 </div>
 		    </div>
         </fieldset>
@@ -152,7 +155,7 @@
         </fieldset>
 
         {% if not isNew %}
-            {% if showElevationCorrectionLink %}
+            {% if showElevationCorrectionLink|default(false) %}
             <fieldset id="fieldset-elevation-correction" class="collapsed">
                 <legend onclick="Runalyze.toggleFieldset(this, 'fieldset-elevation-correction', false, '')">{% trans %}Use elevation correction{% endtrans %}</legend>
 
@@ -179,10 +182,10 @@
                     <p class="warning">
                         {% trans %}Attention: This operation cannot be undone.{% endtrans %}
                     </p>
-                </div>
 
-                {# TODO #}
-                ...
+                    {# TODO #}
+                    ...
+                </div>
             </fieldset>
         {% endif %}
 

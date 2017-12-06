@@ -443,7 +443,19 @@ class TrainingRepository extends EntityRepository
 
     public function save(Training $training)
     {
+        if (null !== $training->getRoute()) {
+            $this->_em->persist($training->getRoute());
+        }
+
+        $raceResult = $training->getRaceresult();
+        $training->setRaceresult(null);
+
         $this->_em->persist($training);
         $this->_em->flush();
+
+        if (null !== $raceResult) {
+            $this->_em->persist($raceResult);
+            $this->_em->flush();
+        }
     }
 }

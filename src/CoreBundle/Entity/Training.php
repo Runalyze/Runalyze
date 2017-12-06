@@ -101,6 +101,7 @@ class Training
     /**
      * @var float [s]
      *
+     * @Assert\GreaterThan(0)
      * @ORM\Column(name="s", type="decimal", precision=8, scale=2, options={"unsigned":true})
      */
     private $s;
@@ -686,9 +687,19 @@ class Training
      */
     public function setPublic($isPublic)
     {
-        $this->isPublic = $isPublic;
+        $this->isPublic = (bool)$isPublic;
 
         return $this;
+    }
+
+    /**
+     * @param bool $isPublic
+     *
+     * @return $this
+     */
+    public function setIsPublic($isPublic)
+    {
+        return $this->setPublic($isPublic);
     }
 
     /**
@@ -706,9 +717,19 @@ class Training
      */
     public function setTrack($isTrack)
     {
-        $this->isTrack = $isTrack;
+        $this->isTrack = (bool)$isTrack;
 
         return $this;
+    }
+
+    /**
+     * @param bool $isTrack
+     *
+     * @return $this
+     */
+    public function setIsTrack($isTrack)
+    {
+        return $this->setTrack($isTrack);
     }
 
     /**

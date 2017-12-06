@@ -85,8 +85,8 @@
                 <i class="fa fa-fw fa-plus"></i><i class="fa fa-fw fa-caret-down"></i>
             </div>
             <ul class="submenu right-oriented">
-                <li><a class="window" href="<?php echo $this->get('router')->generate('activity-add'); ?>?upload" data-size="small"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('Activity upload'); ?></a></li>
-                <li><a class="window" href="<?php echo $this->get('router')->generate('activity-add'); ?>?date" data-size="small"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('Manual activity'); ?></a></li>
+                <li><a class="window" href="<?php echo $this->get('router')->generate('activity-upload'); ?>" data-size="small"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('Activity upload'); ?></a></li>
+                <li><a class="window" href="<?php echo $this->get('router')->generate('activity-new'); ?>" data-size="small"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('Manual activity'); ?></a></li>
                 <li><a class="window" href="<?php echo $this->get('router')->generate('equipment-overview'); ?>"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('New equipment'); ?></a></li>
                 <li><a class="window" href="<?php echo $this->get('router')->generate('body-values-add'); ?>"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('New body values'); ?></a></li>
             </ul>

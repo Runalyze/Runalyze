@@ -100,6 +100,7 @@ class ActivityType extends AbstractType
                 'required' => false,
                 'label' => 'Race',
                 'mapped' => false
+                // TODO: needs to be handled
             ])
             ->add('title', TextType::class, [
                 'required' => false

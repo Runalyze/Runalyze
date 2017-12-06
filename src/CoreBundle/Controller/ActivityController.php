@@ -10,6 +10,8 @@ use Runalyze\Bundle\CoreBundle\Component\Activity\Tool\BestSubSegmentsStatistics
 use Runalyze\Bundle\CoreBundle\Component\Activity\Tool\TimeSeriesStatistics;
 use Runalyze\Bundle\CoreBundle\Component\Activity\VO2maxCalculationDetailsDecorator;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
+use Runalyze\Bundle\CoreBundle\Entity\Raceresult;
+use Runalyze\Bundle\CoreBundle\Entity\Route as EntityRoute;
 use Runalyze\Bundle\CoreBundle\Entity\Trackdata;
 use Runalyze\Bundle\CoreBundle\Entity\Training;
 use Runalyze\Bundle\CoreBundle\Entity\TrainingRepository;
@@ -56,7 +58,7 @@ class ActivityController extends Controller
             throw $this->createNotFoundException();
         }
 
-        $form = $this->createForm(ActivityType::class, $activity ,[
+        $form = $this->createForm(ActivityType::class, $activity, [
             'action' => $this->generateUrl('activity-form', ['id' => $activity->getId()])
         ]);
         ActivityType::setStartCoordinates($form, $activity);
@@ -80,6 +82,23 @@ class ActivityController extends Controller
     }
 
     /**
+     * @Route("/activity/add", name="activity-add")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function createAction()
+    {
+        //TODO render user default import method or use upload
+
+        if (false) {
+            return $this->forward('CoreBundle:Activity:communicator');
+        } elseif (false) {
+            return $this->forward('CoreBundle:Activity:new');
+        }
+
+        return $this->forward('CoreBundle:Activity:upload');
+    }
+
+    /**
      * @Route("/activity/communicator", name="activity-communicator")
      * @Security("has_role('ROLE_USER')")
      */
@@ -98,17 +117,78 @@ class ActivityController extends Controller
     }
 
     /**
-     * @Route("/activity/add", name="activity-add")
+     * @Route("/activity/new", name="activity-new")
      * @Security("has_role('ROLE_USER')")
      */
-    public function createAction()
+    public function newAction(Request $request, Account $account)
     {
-        //TODO render user default import method or use upload
+        $activity = $this->getDefaultNewActivity($account);
 
-        $response = $this->forward('CoreBundle:Activity:upload');
-        return $response;
+        $form = $this->createForm(ActivityType::class, $activity, [
+            'action' => $this->generateUrl('activity-new')
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ('' != $activity->getRouteName()) {
+                $route = (new EntityRoute())
+                    ->setAccount($account)
+                    ->setName($activity->getRouteName())
+                    ->setElevation($activity->getElevation() ?: 0);
+                $activity->setRoute($route);
+            }
+
+            if ($form->get('is_race')->getData()) {
+                $raceResult = (new Raceresult())->fillFromActivity($activity);
+                $activity->setRaceresult($raceResult);
+            }
+
+            $this->getTrainingRepository()->save($activity);
+            $this->addFlash('success', $this->get('translator')->trans('The activity has been successfully created.'));
+            $this->get('app.automatic_reload_flag_setter')->set(AutomaticReloadFlagSetter::FLAG_ALL);
+
+            return $this->render('util/close_overlay.html.twig');
+        }
+
+        return $this->render('activity/form.html.twig', [
+            'form' => $form->createView(),
+            'isNew' => true
+        ]);
     }
 
+    /**
+     * @param Account $account
+     * @return Training
+     */
+    protected function getDefaultNewActivity(Account $account)
+    {
+        $activity = new Training();
+        $activity->setAccount($account);
+        $activity->setTime(LocalTime::now());
+        $activity->setSport($this->getMainSport($account));
+
+        if (null !== $activity->getSport()) {
+            $activity->setType($activity->getSport()->getDefaultType());
+        }
+
+        return $activity;
+    }
+
+    /**
+     * @param Account $account
+     * @return null|\Runalyze\Bundle\CoreBundle\Entity\Sport
+     */
+    protected function getMainSport(Account $account)
+    {
+        $mainSportId = $this->get('app.configuration_manager')->getList()->getGeneral()->getMainSport();
+        $sport = $this->getDoctrine()->getRepository('CoreBundle:Sport')->find($mainSportId);
+
+        if (null === $sport || $account->getId() != $sport->getAccount()->getId()) {
+            return null;
+        }
+
+        return $sport;
+    }
 
     /**public function createAction()
     {
