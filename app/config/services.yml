@@ -67,6 +67,10 @@ services:
     class: Runalyze\Bundle\CoreBundle\Entity\ConfRepository
     factory: ["@doctrine.orm.entity_manager", getRepository]
     arguments: [Runalyze\Bundle\CoreBundle\Entity\Conf]
+  app.repository.equipment:
+    class: Runalyze\Bundle\CoreBundle\Entity\EquipmentRepository
+    factory: ["@doctrine.orm.entity_manager", getRepository]
+    arguments: [Runalyze\Bundle\CoreBundle\Entity\Equipment]
   app.repository.equipment_type:
     class: Runalyze\Bundle\CoreBundle\Entity\EquipmentTypeRepository
     factory: ["@doctrine.orm.entity_manager", getRepository]
@@ -308,6 +312,18 @@ services:
     class: Runalyze\View\Activity\Feed
   app.http_client:
     class: GuzzleHttp\Client
+  app.file_converter.fit:
+    class: Runalyze\Parser\Activity\Converter\FitConverter
+    arguments: ["%perl_path%", "%kernel.root_dir%/../call/perl/fittorunalyze.pl"]
+  app.file_converter.ttbin:
+    class: Runalyze\Parser\Activity\Converter\TtbinConverter
+    arguments: ["%kernel.root_dir%/%ttbin_path%"]
+  app.file_importer:
+    class: Runalyze\Bundle\CoreBundle\Services\Import\FileImporter
+    arguments: ["@app.file_converter.fit", "@app.file_converter.ttbin"]
+  app.activity_data_container_converter:
+    class: Runalyze\Bundle\CoreBundle\Services\Import\ActivityDataContainerToActivityContextConverter
+    arguments: ["@app.repository.sport", "@app.repository.type", "@app.repository.equipment"]
   app.weather_forecast.darksky:
     class: Runalyze\Service\WeatherForecast\Strategy\DarkSky
     arguments: ["%darksky_api_key%", "@app.http_client", "@logger"]

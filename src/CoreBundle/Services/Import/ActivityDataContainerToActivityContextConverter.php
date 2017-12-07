@@ -46,12 +46,17 @@ class ActivityDataContainerToActivityContextConverter
         SportRepository $sportRepository,
         TypeRepository $typeRepository,
         EquipmentRepository $equipmentRepository,
-        Account $account
+        Account $account = null
     )
     {
         $this->SportRepository = $sportRepository;
         $this->TypeRepository = $typeRepository;
         $this->EquipmentRepository = $equipmentRepository;
+        $this->Account = $account;
+    }
+
+    public function setAccount(Account $account)
+    {
         $this->Account = $account;
     }
 

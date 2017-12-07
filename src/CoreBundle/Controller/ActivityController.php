@@ -22,6 +22,8 @@ use Runalyze\Export\File;
 use Runalyze\Export\Share;
 use Runalyze\Metrics\Velocity\Unit\PaceEnum;
 use Runalyze\Model\Activity;
+use Runalyze\Parser\Activity\Common\Data\ActivityDataContainer;
+use Runalyze\Parser\Activity\Common\Filter\DefaultFilterCollection;
 use Runalyze\Service\ElevationCorrection\Exception\NoValidStrategyException;
 use Runalyze\Service\ElevationCorrection\StepwiseElevationProfileFixer;
 use Runalyze\Util\LocalTime;
@@ -111,9 +113,54 @@ class ActivityController extends Controller
      * @Route("/activity/upload", name="activity-upload")
      * @Security("has_role('ROLE_USER')")
      */
-    public function uploadAction()
+    public function uploadAction(Request $request, Account $account)
     {
+        $importResult = null;
+        $importDir = $this->getParameter('data_directory').'/import/';
+
+        // TODO: delete files afterwards
+        if ($request->query->has('file')) {
+            $importer = $this->get('app.file_importer');
+            $importResult = $importer->importSingleFile($importDir.$request->query->get('file'));
+        } elseif ($request->query->has('files')) {
+            $importer = $this->get('app.file_importer');
+            $importResult = $importer->importFiles(
+                array_map(function ($file) use ($importDir) {
+                    return $importDir.$file;
+                }, explode(';', $request->query->get('files')))
+            );
+        }
+
+        if (null !== $importResult) {
+            if ($importResult->getTotalNumberOfActivities() == 1) {
+                return $this->getResponseForNewSingleActivity(
+                    $this->containerToActivity($importResult[0]->getContainer()[0], $account),
+                    $account,
+                    $request
+                );
+            } else {
+                // TODO
+            }
+        }
+
         return $this->render('activity/import_upload.html.twig');
+    }
+
+    /**
+     * @param ActivityDataContainer $container
+     * @param Account $account
+     * @return Training
+     */
+    protected function containerToActivity(ActivityDataContainer $container, Account $account)
+    {
+        $converter = $this->get('app.activity_data_container_converter');
+        $converter->setAccount($account);
+
+        $container->completeActivityData();
+
+        (new DefaultFilterCollection())->filter($container);
+
+        return $converter->getContextFor($container)->getActivity();
     }
 
     /**
@@ -122,7 +169,16 @@ class ActivityController extends Controller
      */
     public function newAction(Request $request, Account $account)
     {
-        $activity = $this->getDefaultNewActivity($account);
+        return $this->getResponseForNewSingleActivity(
+            $this->getDefaultNewActivity($account),
+            $account,
+            $request
+        );
+    }
+
+    protected function getResponseForNewSingleActivity(Training $activity, Account $account, Request $request = null)
+    {
+        // TODO: temporary hash with additional objects
 
         $form = $this->createForm(ActivityType::class, $activity, [
             'action' => $this->generateUrl('activity-new')
@@ -131,6 +187,7 @@ class ActivityController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             if ('' != $activity->getRouteName()) {
+                // TODO: route may already exist via temporary hash
                 $route = (new EntityRoute())
                     ->setAccount($account)
                     ->setName($activity->getRouteName())

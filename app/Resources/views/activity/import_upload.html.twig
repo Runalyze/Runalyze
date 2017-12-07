@@ -11,46 +11,47 @@
     new qq.FineUploaderBasic({
         button: $("#file-upload")[0],
         request: {
-            endpoint: '<?php echo strtok($_SERVER['REQUEST_URI'], '?'); ?>?json=true'
+            endpoint: "{{ url('internal-activity-upload') }}"
         },
         validation: {
-            allowedExtensions: [<?php echo "'".implode("', '", $this->Filetypes)."'"; ?>]
-    },
-    callbacks: {
-        onError: function(id, name, errorReason, xhr) {
-            $("#ajax").append('<p class="error appended-by-uploader">'+name+': '+errorReason+'</p>');
+            //allowedExtensions: [<?php echo "'".implode("', '", $this->Filetypes)."'"; ?>]
         },
-        onSubmit: function(id, fileName) {
-            submittedFiles.push(fileName.replace(/;/g, '_-_'));
-            $("#upload-container").addClass('loading');
-        },
-        onComplete: function(id, fileName, responseJSON) {
-            uploadedFiles++;
+        callbacks: {
+            onError: function(id, name, errorReason, xhr) {
+                $("#ajax").append('<p class="error appended-by-uploader">'+name+': '+errorReason+'</p>');
+            },
+            onSubmit: function(id, fileName) {
+                submittedFiles.push(fileName.replace(/;/g, '_-_'));
+                $("#upload-container").addClass('loading');
+            },
+            onComplete: function(id, fileName, responseJSON) {
+                uploadedFiles++;
 
-            if (responseJSON.success) {
-                completedFiles++;
+                if (responseJSON.success) {
+                    completedFiles++;
 
-                if (completedFiles == submittedFiles.length) {
-                    $(".appended-by-uploader").remove();
+                    if (completedFiles == submittedFiles.length) {
+                        $(".appended-by-uploader").remove();
 
-                    if (completedFiles == 1)
-                        $("#ajax").loadDiv('<?php echo strtok($_SERVER['REQUEST_URI'], '?'); ?>?file='+encodeURIComponent(submittedFiles[0]));
-                else
-                    $("#ajax").loadDiv('<?php echo strtok($_SERVER['REQUEST_URI'], '?'); ?>?files='+encodeURIComponent(submittedFiles.join(';')));
+                        if (completedFiles == 1) {
+                            $("#ajax").loadDiv('{{ url('activity-upload') }}?file='+encodeURIComponent(submittedFiles[0]));
+                        } else {
+                            $("#ajax").loadDiv('{{ url('activity-upload') }}?files='+encodeURIComponent(submittedFiles.join(';')));
+                        }
+                    }
+                } else {
+                    $("#ajax").append('<p class="error appended-by-uploader">{% trans %}There were problems while uploading.{% endtrans %}</p>');
                 }
-            } else {
-                $("#ajax").append('<p class="error appended-by-uploader">{% trans %}There were problems while uploading.{% endtrans %}</p>');
-            }
 
-            if (uploadedFiles == submittedFiles.length) {
-                $("#upload-container").removeClass('loading');
+                if (uploadedFiles == submittedFiles.length) {
+                    $("#upload-container").removeClass('loading');
 
-                submittedFiles = [];
-                completedFiles = 0;
-                uploadedFiles = 0;
+                    submittedFiles = [];
+                    completedFiles = 0;
+                    uploadedFiles = 0;
+                }
             }
         }
-    }
     });
 
     if (!qq.supportedFeatures.ajaxUploading)
@@ -62,19 +63,21 @@
 </p>
 
 <p class="info">
-    <a href="http://help.runalyze.com/latest/starting-guide/import.html#different-file-types" target="_blank" title="<?php _e('Table showing included data by filetype'); ?>">
-        {% trans %}Supported file extensions{% endtrans %}</a> <?php echo '*.'.implode(', *.', $this->Filetypes); ?>
+    <a href="http://help.runalyze.com/latest/starting-guide/import.html#different-file-types" target="_blank">{% trans %}Supported file extensions{% endtrans %}</a>
+    ...
 </p>
 
-<?php if (Filesystem::getMaximumFilesize() != INFINITY): ?>
-<p class="info">
-    {% trans %}Supported file size:{% endtrans %} <?php echo Filesystem::getMaximumFilesizeAsString(); ?>
-</p>
-<?php endif; ?>
+{#
+    <?php if (Filesystem::getMaximumFilesize() != INFINITY): ?>
+    <p class="info">
+        {% trans %}Supported file size:{% endtrans %} <?php echo Filesystem::getMaximumFilesizeAsString(); ?>
+    </p>
+    <?php endif; ?>
 
-<?php foreach ($this->filetypeInfo() as $info): ?>
-<p class="info">
-    <?php echo $info; ?>
-</p>
-<?php endforeach; ?>
+    <?php foreach ($this->filetypeInfo() as $info): ?>
+    <p class="info">
+        <?php echo $info; ?>
+    </p>
+    <?php endforeach; ?>
+#}
 {% endblock %}
