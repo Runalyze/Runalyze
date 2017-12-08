@@ -320,10 +320,20 @@ services:
     arguments: ["%kernel.root_dir%/%ttbin_path%"]
   app.file_importer:
     class: Runalyze\Bundle\CoreBundle\Services\Import\FileImporter
-    arguments: ["@app.file_converter.fit", "@app.file_converter.ttbin"]
-  app.activity_data_container_converter:
+    arguments: ["@app.file_converter.fit", "@app.file_converter.ttbin", "%data_directory%/import/activity/failed/", "@logger"]
+    tags:
+      - { name: monolog.logger, channel: activity_uploads }
+  app.activity_duplicate_finder:
+    class: Runalyze\Bundle\CoreBundle\Services\Import\DuplicateFinder
+    arguments: ["@app.repository.training"]
+  app.activity_data_container.converter:
     class: Runalyze\Bundle\CoreBundle\Services\Import\ActivityDataContainerToActivityContextConverter
     arguments: ["@app.repository.sport", "@app.repository.type", "@app.repository.equipment"]
+  app.activity_data_container.filter:
+    class: Runalyze\Bundle\CoreBundle\Services\Import\ActivityDataContainerFilter
+    arguments: ["@logger"]
+    tags:
+      - { name: monolog.logger, channel: activity_uploads }
   app.weather_forecast.darksky:
     class: Runalyze\Service\WeatherForecast\Strategy\DarkSky
     arguments: ["%darksky_api_key%", "@app.http_client", "@logger"]

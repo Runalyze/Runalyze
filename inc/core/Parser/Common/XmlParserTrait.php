@@ -2,6 +2,8 @@
 
 namespace Runalyze\Parser\Common;
 
+use Runalyze\Import\Exception\UnsupportedFileException;
+
 trait XmlParserTrait
 {
     /** @var \SimpleXMLElement */
@@ -17,14 +19,24 @@ trait XmlParserTrait
 
     /**
      * @param string $content
+     *
+     * @throws UnsupportedFileException
      */
     public function setFileContent($content)
     {
+        libxml_use_internal_errors(true);
+
         $this->Xml = simplexml_load_string(
             $this->correctXmlNamespace($this->removeBomFromFileContent($content)),
             null,
             LIBXML_PARSEHUGE
         );
+
+        if (false === $this->Xml) {
+            $errors = libxml_get_errors();
+
+            throw new UnsupportedFileException($errors[0]->message);
+        }
     }
 
     /**
@@ -33,7 +45,7 @@ trait XmlParserTrait
      */
     protected function correctXmlNamespace($content)
     {
-        return str_replace('xmlns=', 'ns=', removeBOMfromString($content));
+        return str_replace('xmlns=', 'ns=', $this->removeBomFromFileContent($content));
     }
 
     /**

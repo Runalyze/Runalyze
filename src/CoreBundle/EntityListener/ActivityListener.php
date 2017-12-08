@@ -122,9 +122,7 @@ class ActivityListener
 
     protected function setActivityIdIfEmpty(Training $activity)
     {
-        if (null === $activity->getActivityId()) {
-            $activity->setActivityId((int)floor($activity->getTime() / 60.0) * 60);
-        }
+        $activity->getAdapter()->setActivityIdIfEmpty();
     }
 
     protected function checkRelatedEntitiesForConsistency(Training $activity, PreUpdateEventArgs $args = null)

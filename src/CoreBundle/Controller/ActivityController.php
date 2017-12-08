@@ -17,6 +17,7 @@ use Runalyze\Bundle\CoreBundle\Entity\Training;
 use Runalyze\Bundle\CoreBundle\Entity\TrainingRepository;
 use Runalyze\Bundle\CoreBundle\Form\ActivityType;
 use Runalyze\Bundle\CoreBundle\Services\AutomaticReloadFlagSetter;
+use Runalyze\Bundle\CoreBundle\Services\Import\FileImportResultCollection;
 use Runalyze\Calculation\Route\Calculator;
 use Runalyze\Export\File;
 use Runalyze\Export\Share;
@@ -35,6 +36,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -87,17 +89,17 @@ class ActivityController extends Controller
      * @Route("/activity/add", name="activity-add")
      * @Security("has_role('ROLE_USER')")
      */
-    public function createAction()
+    public function createAction(Request $request)
     {
-        //TODO render user default import method or use upload
+        $defaultUploadMode = $this->get('app.configuration_manager')->getList()->getActivityForm()->get('TRAINING_CREATE_MODE');
 
-        if (false) {
+        if ('garmin' == $defaultUploadMode) {
             return $this->forward('CoreBundle:Activity:communicator');
-        } elseif (false) {
+        } elseif ('form' == $defaultUploadMode) {
             return $this->forward('CoreBundle:Activity:new');
         }
 
-        return $this->forward('CoreBundle:Activity:upload');
+        return $this->getUploadFormResponse();
     }
 
     /**
@@ -110,6 +112,15 @@ class ActivityController extends Controller
     }
 
     /**
+     * @Route("/activity/communicator/iframe", name="activity-communicator-iframe")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function communicatorIFrameAction()
+    {
+        return $this->render('import/garmin_communicator.html.twig');
+    }
+
+    /**
      * @Route("/activity/upload", name="activity-upload")
      * @Security("has_role('ROLE_USER')")
      */
@@ -118,7 +129,6 @@ class ActivityController extends Controller
         $importResult = null;
         $importDir = $this->getParameter('data_directory').'/import/';
 
-        // TODO: delete files afterwards
         if ($request->query->has('file')) {
             $importer = $this->get('app.file_importer');
             $importResult = $importer->importSingleFile($importDir.$request->query->get('file'));
@@ -132,18 +142,51 @@ class ActivityController extends Controller
         }
 
         if (null !== $importResult) {
-            if ($importResult->getTotalNumberOfActivities() == 1) {
-                return $this->getResponseForNewSingleActivity(
-                    $this->containerToActivity($importResult[0]->getContainer()[0], $account),
-                    $account,
-                    $request
-                );
-            } else {
-                // TODO
+            return $this->getResponseForImportResults($importResult, $account, $request);
+        }
+
+        return $this->getUploadFormResponse();
+    }
+
+    /**
+     * @param FileImportResultCollection $results
+     * @param Account $account
+     * @param Request $request
+     * @return Response
+     */
+    protected function getResponseForImportResults(FileImportResultCollection $results, Account $account, Request $request)
+    {
+        foreach ($results as $result) {
+            if ($result->isFailed()) {
+                $this->addFlash('error', sprintf('%s: %s', pathinfo($result->getOriginalFileName(), PATHINFO_BASENAME), $result->getException()->getMessage()));
             }
         }
 
-        return $this->render('activity/import_upload.html.twig');
+        $numActivities = $results->getTotalNumberOfActivities();
+
+        if (1 == $numActivities) {
+            return $this->getResponseForNewSingleActivity(
+                $this->containerToActivity($results[0]->getContainer()[0], $account),
+                $request
+            );
+        } elseif (1 < $numActivities) {
+            // TODO: Multi importer form (DuplicateFinder + cache activity) + save form (convert to activity, weather forecast, persist)
+            $this->addFlash('error', 'MultiImporter is not refactored so far.');
+        }
+
+        return $this->getUploadFormResponse();
+    }
+
+    /**
+     * @return Response
+     */
+    protected function getUploadFormResponse()
+    {
+        $maxFileSize = \Filesystem::getMaximumFilesize();
+
+        return $this->render('activity/import_upload.html.twig', [
+            'maxFileSize' => $maxFileSize < PHP_INT_MAX ? $maxFileSize : false
+        ]);
     }
 
     /**
@@ -153,14 +196,11 @@ class ActivityController extends Controller
      */
     protected function containerToActivity(ActivityDataContainer $container, Account $account)
     {
-        $converter = $this->get('app.activity_data_container_converter');
-        $converter->setAccount($account);
-
         $container->completeActivityData();
 
-        (new DefaultFilterCollection())->filter($container);
+        $this->get('app.activity_data_container.filter')->filter($container);
 
-        return $converter->getContextFor($container)->getActivity();
+        return $this->get('app.activity_data_container.converter')->getActivityFor($container, $account);
     }
 
     /**
@@ -171,14 +211,19 @@ class ActivityController extends Controller
     {
         return $this->getResponseForNewSingleActivity(
             $this->getDefaultNewActivity($account),
-            $account,
             $request
         );
     }
 
-    protected function getResponseForNewSingleActivity(Training $activity, Account $account, Request $request = null)
+    protected function getResponseForNewSingleActivity(Training $activity, Request $request = null)
     {
         // TODO: temporary hash with additional objects
+
+        // Example of how to use custom cache:
+        // $cache = $this->get('app.cache.activity_uploads');
+        // $item = $cache->getItem('test');
+        // $item->set($account);
+        // $cache->save($item);
 
         $form = $this->createForm(ActivityType::class, $activity, [
             'action' => $this->generateUrl('activity-new')
@@ -186,21 +231,8 @@ class ActivityController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if ('' != $activity->getRouteName()) {
-                // TODO: route may already exist via temporary hash
-                $route = (new EntityRoute())
-                    ->setAccount($account)
-                    ->setName($activity->getRouteName())
-                    ->setElevation($activity->getElevation() ?: 0);
-                $activity->setRoute($route);
-            }
+            $this->handleSubmitOfNewActivityForm($activity, $form);
 
-            if ($form->get('is_race')->getData()) {
-                $raceResult = (new Raceresult())->fillFromActivity($activity);
-                $activity->setRaceresult($raceResult);
-            }
-
-            $this->getTrainingRepository()->save($activity);
             $this->addFlash('success', $this->get('translator')->trans('The activity has been successfully created.'));
             $this->get('app.automatic_reload_flag_setter')->set(AutomaticReloadFlagSetter::FLAG_ALL);
 
@@ -209,8 +241,29 @@ class ActivityController extends Controller
 
         return $this->render('activity/form.html.twig', [
             'form' => $form->createView(),
-            'isNew' => true
+            'isNew' => true,
+            'isDuplicate' => $this->get('app.activity_duplicate_finder')->isPossibleDuplicate($activity)
         ]);
+    }
+
+    protected function handleSubmitOfNewActivityForm(Training $activity, Form $form)
+    {
+        if ('' != $activity->getRouteName()) {
+            if (!$activity->hasRoute()) {
+                $activity->setRoute((new EntityRoute())->setAccount($activity->getAccount()));
+            }
+
+            if (0 != (int)$activity->getElevation() && 0 == $activity->getRoute()->getElevation()) {
+                $activity->getRoute()->setElevation($activity->getElevation());
+            }
+        }
+
+        if ($form->get('is_race')->getData()) {
+            $raceResult = (new Raceresult())->fillFromActivity($activity);
+            $activity->setRaceresult($raceResult);
+        }
+
+        $this->getTrainingRepository()->save($activity);
     }
 
     /**
@@ -252,25 +305,9 @@ class ActivityController extends Controller
         $Frontend = new \Frontend(isset($_GET['json']), $this->get('security.token_storage'));
 
         if (class_exists('Normalizer')) {
-        	if (isset($_GET['file'])) {
-        		$_GET['file'] = \Normalizer::normalize($_GET['file']);
-        	}
-
-        	if (isset($_GET['files'])) {
-        		$_GET['files'] = \Normalizer::normalize($_GET['files']);
-        	}
-
         	if (isset($_POST['forceAsFileName'])) {
         		$_POST['forceAsFileName'] = \Normalizer::normalize($_POST['forceAsFileName']);
         	}
-
-        	if (isset($_FILES['qqfile']) && isset($_FILES['qqfile']['name'])) {
-        		$_FILES['qqfile']['name'] = \Normalizer::normalize($_FILES['qqfile']['name']);
-        	}
-        }
-
-        if (isset($_FILES['qqfile']) && isset($_FILES['qqfile']['name'])) {
-            $_FILES['qqfile']['name'] = str_replace(';', '_-_', $_FILES['qqfile']['name']);
         }
 
         $Window = new \ImporterWindow();

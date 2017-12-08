@@ -2,6 +2,10 @@
 
 namespace Runalyze\Bundle\CoreBundle\Services\Import;
 
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerAwareTrait;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 use Runalyze\Import\Exception\ParserException;
 use Runalyze\Import\Exception\UnsupportedFileException;
 use Runalyze\Parser\Activity\Common\Data\ActivityDataContainer;
@@ -14,9 +18,12 @@ use Runalyze\Parser\Activity\FileExtensionToParserMapping;
 use Runalyze\Parser\Common\FileContentAwareParserInterface;
 use Runalyze\Parser\Common\FileNameAwareParserInterface;
 use Runalyze\Parser\Common\FileTypeConverterInterface;
+use Symfony\Component\Filesystem\Filesystem;
 
-class FileImporter
+class FileImporter implements LoggerAwareInterface
 {
+    use LoggerAwareTrait;
+
     /** @var \Runalyze\Parser\Common\FileTypeConverterInterface[] */
     protected $Converter = [];
 
@@ -26,14 +33,30 @@ class FileImporter
     /** @var FileExtensionToParserMapping */
     protected $ParserMapping;
 
+    /** @var Filesystem */
+    protected $Filesystem;
+
+    /** @var string|null */
+    protected $DirectoryForFailedImports;
+
+    /**
+     * @param FitConverter $fitConverter
+     * @param TTbinConverter $ttbinConverter
+     * @param string|null $directoryForFailedImports
+     */
     public function __construct(
         FitConverter $fitConverter,
-        TTbinConverter $ttbinConverter
+        TTbinConverter $ttbinConverter,
+        $directoryForFailedImports = null,
+        LoggerInterface $logger = null
     )
     {
         $this->ParserMapping = new FileExtensionToParserMapping();
         $this->Converter = [$fitConverter, $ttbinConverter, new KmzConverter()];
         $this->ZipConverter = new ZipConverter($this->getSupportedFileExtensions());
+        $this->Filesystem = new Filesystem();
+        $this->DirectoryForFailedImports = $directoryForFailedImports;
+        $this->logger = $logger ?: new NullLogger();
     }
 
     /**
@@ -62,7 +85,7 @@ class FileImporter
             $results->merge($this->importSingleFile($fileName));
         }
 
-        return $results;
+        return $this->handleResults($results);
     }
 
     /**
@@ -77,6 +100,19 @@ class FileImporter
         foreach ($convertedFileNames as $convertedFileName) {
             $results->add($this->getFileImportResultFor($convertedFileName, $fileName));
         }
+
+        return $this->handleResults($results);
+    }
+
+    /**
+     * @param FileImportResultCollection $results
+     * @return FileImportResultCollection
+     */
+    protected function handleResults(FileImportResultCollection $results)
+    {
+        // TODO: merge hrm + gpx
+
+        $this->logFileImports($results);
 
         return $results;
     }
@@ -117,6 +153,7 @@ class FileImporter
 
             foreach ($zipFiles as $zipFile) {
                 $convertedFileNames = array_merge($convertedFileNames, $this->convertFileNameIfRequired($zipFile));
+                $this->Filesystem->remove($zipFile);
             }
 
             return $convertedFileNames;
@@ -138,19 +175,41 @@ class FileImporter
      * @return ActivityDataContainer[]
      *
      * @throws UnsupportedFileException
-     * @throws ParserException
      */
     protected function parseSingleFile($fileName)
     {
         $extension = pathinfo($fileName, PATHINFO_EXTENSION);
-        $parser = $this->ParserMapping->getParserClassFor($extension);
+        $parserClass = $this->ParserMapping->getParserClassFor($extension);
 
-        if (null === $parser) {
+        if (null === $parserClass) {
             throw new UnsupportedFileException();
         }
 
         /** @var ParserInterface $parser */
-        $parser = new $parser;
+        $parser = new $parserClass;
+        $this->letParserParseFile($parser, $fileName);
+
+        $container = [];
+        $numContainer = $parser->getNumberOfActivities();
+
+        for ($i = 0; $i < $numContainer; ++$i) {
+            $container[] = $parser->getActivityDataContainer($i);
+        }
+
+        return $container;
+    }
+
+    /**
+     * @param ParserInterface $parser
+     * @param string $fileName
+     *
+     * @throws ParserException
+     */
+    protected function letParserParseFile(ParserInterface $parser, $fileName)
+    {
+        if ($parser instanceof LoggerAwareInterface) {
+            $parser->setLogger($this->logger);
+        }
 
         if ($parser instanceof FileNameAwareParserInterface) {
             $parser->setFileName($fileName);
@@ -161,14 +220,47 @@ class FileImporter
         }
 
         $parser->parse();
+    }
 
-        $container = [];
-        $numContainer = $parser->getNumberOfActivities();
+    protected function logFileImports(FileImportResultCollection $results)
+    {
+        foreach ($results as $result) {
+            $this->logSingleFileImport($result);
+        }
+    }
 
-        for ($i = 0; $i < $numContainer; ++$i) {
-            $container[] = $parser->getActivityDataContainer($i);
+    protected function logSingleFileImport(FileImportResult $result)
+    {
+        if ($result->isFailed()) {
+            $this->logger->error(sprintf('File upload of %s failed.', $this->getFileNameForLog($result)), [
+                'exception' => $result->getException()
+            ]);
+
+            if (null !== $this->DirectoryForFailedImports && '' != $this->DirectoryForFailedImports) {
+                $this->Filesystem->rename($result->getOriginalFileName(), $this->DirectoryForFailedImports.'/'.pathinfo($result->getOriginalFileName(), PATHINFO_BASENAME), true);
+            } else {
+                $this->Filesystem->remove($result->getOriginalFileName());
+            }
+        } else {
+            $this->logger->info(sprintf('Successfull file upload of %s.', $this->getFileNameForLog($result)));
+            $this->Filesystem->remove($result->getOriginalFileName());
         }
 
-        return $container;
+        if ($result->getOriginalFileName() != $result->getFileName()) {
+            $this->Filesystem->remove($result->getFileName());
+        }
+    }
+
+    /**
+     * @param FileImportResult $result
+     * @return string
+     */
+    protected function getFileNameForLog(FileImportResult $result)
+    {
+        if ($result->getOriginalFileName() != $result->getFileName()) {
+            return sprintf('%s (original %s)', pathinfo($result->getFileName(), PATHINFO_BASENAME), pathinfo($result->getOriginalFileName(), PATHINFO_BASENAME));
+        }
+
+        return pathinfo($result->getFileName(), PATHINFO_BASENAME);
     }
 }

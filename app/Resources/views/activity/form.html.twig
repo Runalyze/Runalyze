@@ -1,6 +1,16 @@
 {% extends "base_logged_in.twig" %}
 
 {% block content %}
+    {% if isNew %}
+    <div class="panel-menu panel-menu-floated">
+        <ul>
+            <li><a class="window" data-size="small" href="{{ url('activity-upload') }}">{% trans %}Upload{% endtrans %}</a></li>{#-
+            -#}<li><a class="window" data-size="small" href="{{ url('activity-communicator') }}">Garmin Communicator</a></li>{#-
+            -#}<li class="triggered"><a class="window" data-size="small" href="{{ url('activity-new') }}">Form</a></li>
+        </ul>
+    </div>
+    {% endif %}
+
     {% set formConfig = config().activityForm %}
     {% set collapsed = ' class=collapsed' %}
     {# @var formConfig \Runalyze\Bundle\CoreBundle\Component\Configuration\Category\ActivityForm #}
@@ -15,6 +25,12 @@
 
     <div class="panel-content">
         {% include 'flashmessages.html.twig' %}
+
+        {% if isDuplicate|default(false) %}
+        <p class="warning">
+            {% trans %}It seems that you already have imported this activity{% endtrans %}.
+        </p>
+        {% endif %}
 
         {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'ajax no-automatic-reload', 'id': 'activity'}}) }}
 

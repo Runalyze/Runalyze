@@ -149,8 +149,6 @@ class ActivityType extends AbstractType
                 'required' => false
             ])
             ->add('notes', TextareaType::class, [
-            ])
-            ->add('notes', TextareaType::class, [
                 'label' => 'Notes',
                 'required' => false,
                 'attr' => ['class' => 'fullwidth']
@@ -185,7 +183,10 @@ class ActivityType extends AbstractType
                 'mapped' => false,
                 'required' => false
             ])
-            ->add('equipment', ActivityEquipmentType::class);
+            ->add('equipment', ActivityEquipmentType::class)
+            ->add('activityId', HiddenType::class, [
+                'required' => false
+            ])
         ;
     }
 

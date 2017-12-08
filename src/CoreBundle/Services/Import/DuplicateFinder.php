@@ -21,6 +21,8 @@ class DuplicateFinder
      */
     public function isPossibleDuplicate(Training $activity)
     {
+        $activity->getAdapter()->setActivityIdIfEmpty();
+
         return $this->TrainingRepository->isPossibleDuplicate($activity);
     }
 }

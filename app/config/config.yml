@@ -24,6 +24,12 @@ framework:
     fallbacks: ['%locale%']
     paths:
       - '%kernel.root_dir%/../inc/locale/'
+  cache:
+    pools:
+      app.cache.activity_uploads:
+        adapter: cache.app
+        public: true
+        default_lifetime: 86400
 
 parameters:
   RUNALYZE_VERSION: 4.2.0
@@ -115,7 +121,7 @@ doctrine_migrations:
     name: RUNALYZE Migrations
 
 monolog:
-    channels: ['queue', 'console', 'external_services']
+    channels: ['queue', 'console', 'external_services', 'activity_uploads']
     handlers:
         applog:
             type: stream
@@ -146,6 +152,11 @@ monolog:
             level: warning
             path: '%kernel.root_dir%/../var/logs/external_services.log'
             channels: ['external_services']
+        activity_uploads:
+            type: stream
+            level: debug
+            path: '%kernel.root_dir%/../var/logs/activity_uploads.log'
+            channels: ['activity_uploads']
 
 swiftmailer:
     transport:            smtp

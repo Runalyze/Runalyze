@@ -62,10 +62,15 @@ class ActivityDataContainerToActivityContextConverter
 
     /**
      * @param ActivityDataContainer $container
-     * @return ActivityContext
+     * @param Account $account
+     * @return Training
      */
-    public function getContextFor(ActivityDataContainer $container)
+    public function getActivityFor(ActivityDataContainer $container, Account $account = null)
     {
+        if (null !== $account) {
+            $this->Account = $account;
+        }
+
         $activity = new Training();
         $activity->setAccount($this->Account);
 
@@ -75,6 +80,18 @@ class ActivityDataContainerToActivityContextConverter
         $this->setRouteFor($activity, $container);
         $this->setHrvFor($activity, $container);
         $this->setRaceResultFor($activity, $container);
+
+        return $activity;
+    }
+
+    /**
+     * @param ActivityDataContainer $container
+     * @param Account $account
+     * @return ActivityContext
+     */
+    public function getContextFor(ActivityDataContainer $container, Account $account = null)
+    {
+        $activity = $this->getActivityFor($container, $account);
 
         return new ActivityContext(
             $activity,

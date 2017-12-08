@@ -82,6 +82,13 @@ class ActivityAdapter
         return null !== $this->Activity->getSport() ? $this->Activity->getSport()->getHfavg() : 100;
     }
 
+    public function setActivityIdIfEmpty()
+    {
+        if (null === $this->Activity->getActivityId()) {
+            $this->Activity->setActivityId((int)floor($this->Activity->getTime() / 60.0) * 60);
+        }
+    }
+
     public function updateSimpleCalculatedValues()
     {
         $this->calculateStrideLength();

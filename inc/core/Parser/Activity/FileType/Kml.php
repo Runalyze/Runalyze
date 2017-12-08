@@ -20,7 +20,7 @@ class Kml extends AbstractMultipleParserWithSubParser implements FileContentAwar
         } elseif ($this->isDefaultFile()) {
             $this->useSubParser(new KmlGoogle());
         } else {
-            throw new UnsupportedFileException();
+            throw new UnsupportedFileException('Kml file is not from TomTom or Google or does not contain any coordinates.');
         }
     }
 
