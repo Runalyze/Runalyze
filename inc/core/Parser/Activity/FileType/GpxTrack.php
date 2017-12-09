@@ -202,10 +202,10 @@ class GpxTrack extends AbstractSingleParser
     private function parseExtensionValues(SimpleXMLElement $point)
     {
         $currentNum = count($this->Container->ContinuousData->Time);
-        $bpm  = 0;
-        $rpm  = 0;
-        $temp = 0;
-        $altitude = 0;
+        $bpm  = null;
+        $rpm  = null;
+        $temp = null;
+        $altitude = null;
 
         if (isset($point->extensions)) {
             foreach ($this->getExtensionNodesOf($point->extensions[0]) as $extensionNode) {

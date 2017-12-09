@@ -22,7 +22,7 @@ class FileImportResultCollection implements \Countable, \ArrayAccess, \Iterator
 
     public function merge(FileImportResultCollection $other)
     {
-        $this->Elements = array_merge($this->Elements, $other);
+        $this->Elements = array_merge($this->Elements, $other->getElements());
     }
 
     public function add(FileImportResult $result)
@@ -114,6 +114,11 @@ class FileImportResultCollection implements \Countable, \ArrayAccess, \Iterator
         return isset($this->Elements[$this->CurrentOffset]);
     }
 
+    public function reindex()
+    {
+        $this->Elements = array_values($this->Elements);
+    }
+
     /**
      * @return int
      */
@@ -131,13 +136,26 @@ class FileImportResultCollection implements \Countable, \ArrayAccess, \Iterator
     /**
      * @return string[]
      */
+    public function getAllFileNames()
+    {
+        return array_map(function($element) {
+            /** @var FileImportResult $element */
+            return $element->getFileName();
+        }, $this->Elements);
+    }
+
+    /**
+     * @return string[]
+     */
     public function getAllOriginalFileNames()
     {
-        return array_unique(
-            array_map(function($element) {
-                /** @var FileImportResult $element */
-                return $element->getOriginalFileName();
-            }, $this->Elements)
+        return array_values(
+            array_unique(
+                array_map(function($element) {
+                    /** @var FileImportResult $element */
+                    return $element->getOriginalFileName();
+                }, $this->Elements)
+            )
         );
     }
 

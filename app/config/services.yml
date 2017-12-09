@@ -29,6 +29,11 @@ services:
     arguments: ['%kernel.default_locale%']
     tags:
       - { name: kernel.event_subscriber }
+  app.listener.user_timezone:
+    class: Runalyze\Bundle\CoreBundle\EventListener\UserTimezoneListener
+    arguments: ["@security.token_storage"]
+    tags:
+      - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
   app.user_locale_listener:
     class: Runalyze\Bundle\CoreBundle\EventListener\UserLocaleListener
     arguments: ['@session']
@@ -334,6 +339,9 @@ services:
     arguments: ["@logger"]
     tags:
       - { name: monolog.logger, channel: activity_uploads }
+  app.activity_context.cache:
+    class: Runalyze\Bundle\CoreBundle\Services\Import\ActivityCache
+    arguments: ["@app.cache.activity_uploads"]
   app.weather_forecast.darksky:
     class: Runalyze\Service\WeatherForecast\Strategy\DarkSky
     arguments: ["%darksky_api_key%", "@app.http_client", "@logger"]
@@ -371,4 +379,4 @@ services:
     arguments: ["@app.elevation_correction.geotiff", "@app.elevation_correction.geonames", "@app.elevation_correction.google_maps"]
   app.timezone_lookup:
     class: Runalyze\Bundle\CoreBundle\Services\Import\TimezoneLookup
-    arguments: ["%data_directory%", "%sqlite_mod_spatialite%"]
+    arguments: ["%data_directory%/timezone.sqlite", "%sqlite_mod_spatialite%", true]

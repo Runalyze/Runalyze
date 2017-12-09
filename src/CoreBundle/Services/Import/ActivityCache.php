@@ -1,0 +1,85 @@
+<?php
+
+namespace Runalyze\Bundle\CoreBundle\Services\Import;
+
+use Runalyze\Bundle\CoreBundle\Entity\Account;
+use Runalyze\Bundle\CoreBundle\Entity\Training;
+use Symfony\Component\Cache\Adapter\AdapterInterface;
+
+class ActivityCache
+{
+    /** @var AdapterInterface */
+    protected $Cache;
+
+    public function __construct(AdapterInterface $cache)
+    {
+        $this->Cache = $cache;
+    }
+
+    /**
+     * @param Training $activity
+     * @return string
+     */
+    public function save(Training $activity)
+    {
+        $hash = $this->getRandomHash($activity->getAccount());
+        $item = $this->Cache->getItem($hash);
+        $item->set($activity);
+
+        $this->Cache->save($item);
+
+        return $hash;
+    }
+
+    /**
+     * @param string|null $hash
+     * @param Training|null $activityToMerge
+     * @return Training|null
+     */
+    public function get($hash, Training $activityToMerge = null)
+    {
+        if (null === $hash || '' == $hash) {
+            return $activityToMerge;
+        }
+
+        /** @var Training $context */
+        $activity = $this->Cache->getItem($hash)->get();
+
+        if (!($activity instanceof Training)) {
+            return $activityToMerge;
+        }
+
+        if (null !== $activityToMerge) {
+            return $this->merge($activity, $activityToMerge);
+        }
+
+        return $activity;
+    }
+
+    /**
+     * @param Training $activityFromCache
+     * @param Training $activityToMerge
+     * @return Training
+     */
+    public function merge(Training $activityFromCache, Training $activityToMerge)
+    {
+        $activityToMerge->setRoute($activityFromCache->getRoute());
+        $activityToMerge->setTrackdata($activityFromCache->getTrackdata());
+        $activityToMerge->setSwimdata($activityFromCache->getSwimdata());
+        $activityToMerge->setHrv($activityFromCache->getHrv());
+        $activityToMerge->setRaceresult($activityFromCache->getRaceResult());
+
+        $activityToMerge->getAdapter()->setAccountToRelatedEntities();
+
+        return $activityToMerge;
+    }
+
+    /**
+     * @param Account|null $account
+     * @return string
+     */
+    protected function getRandomHash(Account $account = null)
+    {
+        return hash('sha256', ($account ? $account->getName() : '').uniqid());
+    }
+}

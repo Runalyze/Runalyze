@@ -83,6 +83,10 @@ class ContinuousDataAdapter
         foreach ($arrayKeysWithData as $key) {
             $this->ContinuousData->{$key} = [];
         }
+
+        if (!empty($this->ContinuousData->Distance) && 0 == end($this->ContinuousData->Distance)) {
+            $this->ContinuousData->Distance = [];
+        }
     }
 
     /**

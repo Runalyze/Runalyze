@@ -1556,6 +1556,10 @@ class Training
     {
         $this->route = $route;
 
+        if (null !== $route && null !== $this->account) {
+            $route->setAccount($this->account);
+        }
+
         return $this;
     }
 
@@ -1811,9 +1815,17 @@ class Training
         return $this->tag;
     }
 
-    public function setTrackdata(Trackdata $trackdata = null)
+    public function setTrackdata(Trackdata $trackData = null)
     {
-        $this->trackdata = $trackdata;
+        $this->trackdata = $trackData;
+
+        if (null !== $trackData) {
+            $trackData->setActivity($this);
+
+            if (null !== $this->account) {
+                $trackData->setAccount($this->account);
+            }
+        }
     }
 
     /**
@@ -1832,9 +1844,17 @@ class Training
         return null !== $this->trackdata;
     }
 
-    public function setSwimdata(Swimdata $swimdata = null)
+    public function setSwimdata(Swimdata $swimData = null)
     {
-        $this->swimdata = $swimdata;
+        $this->swimdata = $swimData;
+
+        if (null !== $swimData) {
+            $swimData->setActivity($this);
+
+            if (null !== $this->account) {
+                $swimData->setAccount($this->account);
+            }
+        }
     }
 
     /**
@@ -1856,6 +1876,14 @@ class Training
     public function setHrv(Hrv $hrv = null)
     {
         $this->hrv = $hrv;
+
+        if (null !== $hrv) {
+            $hrv->setActivity($this);
+
+            if (null !== $this->account) {
+                $hrv->setAccount($this->account);
+            }
+        }
     }
 
     /**
@@ -1874,9 +1902,17 @@ class Training
         return null !== $this->hrv;
     }
 
-    public function setRaceresult(Raceresult $raceresult = null)
+    public function setRaceresult(Raceresult $raceResult = null)
     {
-        $this->raceresult = $raceresult;
+        $this->raceresult = $raceResult;
+
+        if (null !== $raceResult) {
+            $raceResult->setActivity($this);
+
+            if (null !== $this->account) {
+                $raceResult->setAccount($this->account);
+            }
+        }
     }
 
     /**
@@ -1913,6 +1949,10 @@ class Training
      */
     public function updateSimpleCalculatedValues()
     {
+        if (0.0 == $this->distance) {
+            $this->distance = null;
+        }
+
         $this->getAdapter()->updateSimpleCalculatedValues();
     }
 

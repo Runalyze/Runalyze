@@ -9,6 +9,7 @@ use Psr\Log\NullLogger;
 use Runalyze\Import\Exception\ParserException;
 use Runalyze\Import\Exception\UnsupportedFileException;
 use Runalyze\Parser\Activity\Common\Data\ActivityDataContainer;
+use Runalyze\Parser\Activity\Common\Data\Merge\ActivityDataContainerMerger;
 use Runalyze\Parser\Activity\Common\ParserInterface;
 use Runalyze\Parser\Activity\Converter\FitConverter;
 use Runalyze\Parser\Activity\Converter\KmzConverter;
@@ -39,10 +40,17 @@ class FileImporter implements LoggerAwareInterface
     /** @var string|null */
     protected $DirectoryForFailedImports;
 
+    /** @var ParserException[] */
+    protected $ConverterExceptions = [];
+
+    /** @var bool */
+    protected $RemoveFiles = true;
+
     /**
      * @param FitConverter $fitConverter
      * @param TTbinConverter $ttbinConverter
      * @param string|null $directoryForFailedImports
+     * @param LoggerInterface|null $logger
      */
     public function __construct(
         FitConverter $fitConverter,
@@ -57,6 +65,21 @@ class FileImporter implements LoggerAwareInterface
         $this->Filesystem = new Filesystem();
         $this->DirectoryForFailedImports = $directoryForFailedImports;
         $this->logger = $logger ?: new NullLogger();
+    }
+
+    public function disableFileDeletion($flag = true)
+    {
+        $this->RemoveFiles = !$flag;
+    }
+
+    /**
+     * @param string $fileName
+     */
+    protected function remove($fileName)
+    {
+        if ($this->RemoveFiles) {
+            $this->Filesystem->remove($fileName);
+        }
     }
 
     /**
@@ -79,6 +102,7 @@ class FileImporter implements LoggerAwareInterface
      */
     public function importFiles(array $fileNames)
     {
+        $this->ConverterExceptions = [];
         $results = new FileImportResultCollection();
 
         foreach ($fileNames as $fileName) {
@@ -94,8 +118,9 @@ class FileImporter implements LoggerAwareInterface
      */
     public function importSingleFile($fileName)
     {
+        $this->ConverterExceptions = [];
         $results = new FileImportResultCollection();
-        $convertedFileNames = $this->convertFileNameIfRequired($fileName);
+        $convertedFileNames = $this->tryToConvertFileNameIfRequired($fileName);
 
         foreach ($convertedFileNames as $convertedFileName) {
             $results->add($this->getFileImportResultFor($convertedFileName, $fileName));
@@ -110,11 +135,50 @@ class FileImporter implements LoggerAwareInterface
      */
     protected function handleResults(FileImportResultCollection $results)
     {
-        // TODO: merge hrm + gpx
+        $this->findAndMergeRelatedHrmAndGpx($results);
 
         $this->logFileImports($results);
 
         return $results;
+    }
+
+    protected function findAndMergeRelatedHrmAndGpx(FileImportResultCollection $results)
+    {
+        $matchingIndices = [];
+        $lookupTable = array_flip($results->getAllFileNames());
+
+        foreach ($lookupTable as $fileName => $index) {
+            if (substr($fileName, -4) == '.hrm' && isset($lookupTable[substr($fileName, 0, -4).'.gpx'])) {
+                $matchingIndices[$index] = $lookupTable[substr($fileName, 0, -4).'.gpx'];
+            }
+        }
+
+        if (!empty($matchingIndices)) {
+            $this->mergeResultsOfRelatedHrmAndGpx($results, $matchingIndices);
+        }
+    }
+
+    protected function mergeResultsOfRelatedHrmAndGpx(FileImportResultCollection $results, $matchingIndices)
+    {
+        foreach ($matchingIndices as $firstIndex => $secondIndex) {
+            $merger = new ActivityDataContainerMerger(
+                $results[$firstIndex]->getContainer(0),
+                $results[$secondIndex]->getContainer(0)
+            );
+
+            $results[] = new FileImportResult(
+                [$merger->getResultingContainer()],
+                $results[$firstIndex]->getFileName(),
+                $results[$firstIndex]->getOriginalFileName()
+            );
+
+            $this->remove($results[$secondIndex]->getFileName());
+
+            unset($results[$firstIndex]);
+            unset($results[$secondIndex]);
+        }
+
+        $results->reindex();
     }
 
     /**
@@ -143,6 +207,21 @@ class FileImporter implements LoggerAwareInterface
      * @param string $fileName
      * @return string[] converted file names
      */
+    protected function tryToConvertFileNameIfRequired($fileName)
+    {
+        try {
+            return $this->convertFileNameIfRequired($fileName);
+        } catch (ParserException $e) {
+            $this->ConverterExceptions[$fileName] = $e;
+        }
+
+        return [$fileName];
+    }
+
+    /**
+     * @param string $fileName
+     * @return string[] converted file names
+     */
     protected function convertFileNameIfRequired($fileName)
     {
         $extension = pathinfo($fileName, PATHINFO_EXTENSION);
@@ -152,8 +231,8 @@ class FileImporter implements LoggerAwareInterface
             $zipFiles = $this->ZipConverter->convertFile($fileName);
 
             foreach ($zipFiles as $zipFile) {
-                $convertedFileNames = array_merge($convertedFileNames, $this->convertFileNameIfRequired($zipFile));
-                $this->Filesystem->remove($zipFile);
+                $convertedFileNames = array_merge($convertedFileNames, $this->tryToConvertFileNameIfRequired($zipFile));
+                $this->remove($zipFile);
             }
 
             return $convertedFileNames;
@@ -175,9 +254,14 @@ class FileImporter implements LoggerAwareInterface
      * @return ActivityDataContainer[]
      *
      * @throws UnsupportedFileException
+     * @throws ParserException
      */
     protected function parseSingleFile($fileName)
     {
+        if (isset($this->ConverterExceptions[$fileName])) {
+            throw $this->ConverterExceptions[$fileName];
+        }
+
         $extension = pathinfo($fileName, PATHINFO_EXTENSION);
         $parserClass = $this->ParserMapping->getParserClassFor($extension);
 
@@ -214,7 +298,11 @@ class FileImporter implements LoggerAwareInterface
         if ($parser instanceof FileNameAwareParserInterface) {
             $parser->setFileName($fileName);
         } elseif ($parser instanceof FileContentAwareParserInterface) {
-            $parser->setFileContent(file_get_contents($fileName));
+            if (file_exists($fileName) && $content = file_get_contents($fileName)) {
+                $parser->setFileContent($content);
+            } else {
+                throw new ParserException('Cannot open file.');
+            }
         } else {
             throw new ParserException('Chosen parser has no method to set file name or content.');
         }
@@ -239,15 +327,15 @@ class FileImporter implements LoggerAwareInterface
             if (null !== $this->DirectoryForFailedImports && '' != $this->DirectoryForFailedImports) {
                 $this->Filesystem->rename($result->getOriginalFileName(), $this->DirectoryForFailedImports.'/'.pathinfo($result->getOriginalFileName(), PATHINFO_BASENAME), true);
             } else {
-                $this->Filesystem->remove($result->getOriginalFileName());
+                $this->remove($result->getOriginalFileName());
             }
         } else {
             $this->logger->info(sprintf('Successfull file upload of %s.', $this->getFileNameForLog($result)));
-            $this->Filesystem->remove($result->getOriginalFileName());
+            $this->remove($result->getOriginalFileName());
         }
 
         if ($result->getOriginalFileName() != $result->getFileName()) {
-            $this->Filesystem->remove($result->getFileName());
+            $this->remove($result->getFileName());
         }
     }
 

@@ -25,6 +25,29 @@ class ActivityAdapter
         $this->Activity = $activity;
     }
 
+    public function setAccountToRelatedEntities()
+    {
+        if ($this->Activity->hasRoute()) {
+            $this->Activity->getRoute()->setAccount($this->Activity->getAccount());
+        }
+
+        if ($this->Activity->hasTrackdata()) {
+            $this->Activity->getTrackdata()->setAccount($this->Activity->getAccount());
+        }
+
+        if ($this->Activity->hasSwimdata()) {
+            $this->Activity->getSwimdata()->setAccount($this->Activity->getAccount());
+        }
+
+        if ($this->Activity->hasHrv()) {
+            $this->Activity->getHrv()->setAccount($this->Activity->getAccount());
+        }
+
+        if ($this->Activity->hasRaceresult()) {
+            $this->Activity->getRaceresult()->setAccount($this->Activity->getAccount());
+        }
+    }
+
     /**
      * @return int
      */
@@ -256,7 +279,7 @@ class ActivityAdapter
     public function useElevationFromRoute()
     {
         if ($this->Activity->hasRoute()) {
-            $this->Activity->setElevation($this->Activity->getElevation());
+            $this->Activity->setElevation($this->Activity->getRoute()->getElevation());
         } else {
             $this->Activity->setElevation(null);
         }
@@ -336,10 +359,14 @@ class ActivityAdapter
     }
 
     /**
-     * @param string $timezone
+     * @param string|null $timezone
      */
     protected function updateTimezoneForActivity($timezone)
     {
+        if (null === $timezone) {
+            return;
+        }
+
         $newOffset = (new \DateTime(null, new \DateTimeZone($timezone)))->setTimestamp($this->Activity->getTime())->getOffset() / 60;
 
         if (null !== $this->Activity->getTimezoneOffset()) {

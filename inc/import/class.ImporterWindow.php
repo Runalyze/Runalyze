@@ -23,6 +23,12 @@ class ImporterWindow {
 	 */
 	public static $URL = 'activity/add';
 
+    /**
+     * URL for window
+     * @var string
+     */
+    public static $URL_FORM = 'activity/new';
+
 	/**
 	 * Show upload form?
 	 * @var bool
@@ -232,6 +238,6 @@ class ImporterWindow {
 
 		$date = date('d.m.Y', $timestampInServerTime);
 
-		return Ajax::window('<a href="'.self::$URL.'?date='.$date.'">'.Icon::$ADD_SMALL.'</a>', 'small');
+		return Ajax::window('<a href="'.self::$URL_FORM.'?date='.$date.'">'.Icon::$ADD_SMALL.'</a>', 'small');
 	}
 }

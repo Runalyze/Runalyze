@@ -447,15 +447,23 @@ class TrainingRepository extends EntityRepository
             $this->_em->persist($training->getRoute());
         }
 
-        $raceResult = $training->getRaceresult();
-        $training->setRaceresult(null);
+        if (null !== $training->getTrackdata()) {
+            $this->_em->persist($training->getTrackdata());
+        }
+
+        if (null !== $training->getSwimdata()) {
+            $this->_em->persist($training->getSwimdata());
+        }
+
+        if (null !== $training->getHrv()) {
+            $this->_em->persist($training->getHrv());
+        }
+
+        if (null !== $training->getRaceresult()) {
+            $this->_em->persist($training->getRaceresult());
+        }
 
         $this->_em->persist($training);
         $this->_em->flush();
-
-        if (null !== $raceResult) {
-            $this->_em->persist($raceResult);
-            $this->_em->flush();
-        }
     }
 }

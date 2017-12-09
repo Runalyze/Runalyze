@@ -238,7 +238,6 @@ class ActivityDataContainerToActivityContextConverter
         $trackData = $this->getTrackdataFor($container);
 
         if (null !== $trackData) {
-            $trackData->setActivity($activity);
             $activity->setTrackdata($trackData);
 
             if ($trackData->hasPower()) {
@@ -254,7 +253,6 @@ class ActivityDataContainerToActivityContextConverter
     protected function getTrackdataFor(ActivityDataContainer $container)
     {
         $trackData = new Trackdata();
-        $trackData->setAccount($this->Account);
         $trackData->setPauses($container->Pauses);
         $trackData->setTime($container->ContinuousData->Time ?: null);
         $trackData->setDistance($this->getRoundedContinuousDistanceData($container->ContinuousData->Distance));
@@ -297,7 +295,6 @@ class ActivityDataContainerToActivityContextConverter
         $swimData = $this->getSwimdataFor($container);
 
         if (null !== $swimData) {
-            $swimData->setActivity($activity);
             $activity->setSwimdata($swimData);
         }
     }
@@ -309,7 +306,6 @@ class ActivityDataContainerToActivityContextConverter
     protected function getSwimdataFor(ActivityDataContainer $container)
     {
         $swimData = new Swimdata();
-        $swimData->setAccount($this->Account);
         $swimData->setPoolLength($container->ActivityData->PoolLength ?: 0);
         $swimData->setStroke($container->ContinuousData->Strokes ?: null);
         $swimData->setStroketype($container->ContinuousData->StrokeType ?: null);
@@ -337,7 +333,6 @@ class ActivityDataContainerToActivityContextConverter
     protected function getRouteFor(ActivityDataContainer $container)
     {
         $route = new Route();
-        $route->setAccount($this->Account);
         $route->setDistance($container->ActivityData->Distance ?: 0.0);
         $route->setName($container->Metadata->getRouteDescription());
         $route->setElevation($container->ActivityData->Elevation);
@@ -364,7 +359,6 @@ class ActivityDataContainerToActivityContextConverter
         $hrv = $this->getHrvFor($container);
 
         if (null !== $hrv) {
-            $hrv->setActivity($activity);
             $activity->setHrv($hrv);
         }
     }
@@ -380,7 +374,6 @@ class ActivityDataContainerToActivityContextConverter
         }
 
         $hrv = new Hrv();
-        $hrv->setAccount($this->Account);
         $hrv->setData($container->RRIntervals);
 
         return $hrv;
@@ -391,7 +384,6 @@ class ActivityDataContainerToActivityContextConverter
         $raceResult = $this->getRaceResultFor($container);
 
         if (null !== $raceResult) {
-            $raceResult->setActivity($activity);
             $raceResult->fillFromActivity($activity);
             $activity->setRaceresult($raceResult);
         }

@@ -19,11 +19,13 @@ class TimezoneLookup
     /**
      * @param string $pathToDatabase absolute path to database
      * @param string $extensionName
+     * @param bool $silentExceptions
      */
-    public function __construct($pathToDatabase, $extensionName)
+    public function __construct($pathToDatabase, $extensionName, $silentExceptions = false)
     {
         $this->PathToTimeZoneDatabase = $pathToDatabase;
         $this->SpatialiteExtensionName = $extensionName;
+        $this->SilentExceptions = $silentExceptions;
     }
 
     /**

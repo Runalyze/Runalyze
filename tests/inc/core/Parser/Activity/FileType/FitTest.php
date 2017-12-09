@@ -278,6 +278,8 @@ class FitTest extends AbstractActivityParserTestCase
 		$this->assertEquals(120, $this->Container->Metadata->getTimezoneOffset());
 
         $this->assertNotEmpty($this->Container->RRIntervals);
+
+        $this->assertEmpty($this->Container->ContinuousData->Distance);
 	}
 
 	public function testFileWithPowerDataFromEdge810()

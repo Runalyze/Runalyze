@@ -51,7 +51,7 @@ class TrimpCalculator
      */
     protected function getHeartRateHistogram(Training $activity)
     {
-        if ($activity->hasTrackdata() && $activity->getTrackdata()->hasHeartrate()) {
+        if ($activity->hasTrackdata() && $activity->getTrackdata()->hasHeartrate() && $activity->getTrackdata()->hasTime()) {
             return (new DataCollector($activity->getTrackdata()->getHeartrate(), $activity->getTrackdata()->getTime()))->result();
         }
 

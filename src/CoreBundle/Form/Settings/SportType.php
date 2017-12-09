@@ -159,9 +159,6 @@ class SportType extends AbstractType
                 'choices' => $activityTypes,
                 'choice_label' => 'name',
                 'placeholder' => 'None',
-                'preferred_choices' => function ($val, $key) {
-                    return '' == $key;
-                },
                 'label' => 'Default activity type'
             ]);
         }

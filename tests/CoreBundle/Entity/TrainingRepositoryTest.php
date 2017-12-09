@@ -5,7 +5,12 @@ namespace Runalyze\Bundle\CoreBundle\Tests\Entity;
 use Runalyze\Bundle\CoreBundle\Component\Configuration\Category\BasicEndurance;
 use Runalyze\Bundle\CoreBundle\Component\Configuration\Category\VO2max;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
+use Runalyze\Bundle\CoreBundle\Entity\Hrv;
+use Runalyze\Bundle\CoreBundle\Entity\Raceresult;
+use Runalyze\Bundle\CoreBundle\Entity\Route;
 use Runalyze\Bundle\CoreBundle\Entity\Sport;
+use Runalyze\Bundle\CoreBundle\Entity\Swimdata;
+use Runalyze\Bundle\CoreBundle\Entity\Trackdata;
 use Runalyze\Bundle\CoreBundle\Entity\Training;
 use Runalyze\Bundle\CoreBundle\Entity\TrainingRepository;
 use Runalyze\Bundle\CoreBundle\Entity\Type;
@@ -242,6 +247,83 @@ class TrainingRepositoryTest extends AbstractRepositoryTestCase
 
         $this->assertInstanceOf(RoundCollection::class, $insertedActivity->getSplits());
         $this->assertTrue($insertedActivity->getSplits()->isEmpty());
+    }
+
+    public function testActivityWithRelatedObjects()
+    {
+        $activity = $this->getActivityForDefaultAccount(
+            123456789,
+            116,
+            0.5
+        );
+
+        $route = new Route();
+        $route->setElevationsCorrected([122, 125, 128, 130, 129, 130]);
+
+        $trackData = new Trackdata();
+        $trackData->setDistance([0.0, 0.1, 0.2, 0.3, 0.4, 0.5]);
+        $trackData->setHeartrate([140, 141, 140, 142, 143, 143]);
+
+        $hrv = new Hrv();
+        $hrv->setData([428, 429, 425, 426, 428, 440, 424, 415, 422, 465, 421, 420]);
+
+        $activity->setRoute($route);
+        $activity->setTrackdata($trackData);
+        $activity->setHrv($hrv);
+
+        $this->TrainingRepository->save($activity);
+
+        $result = $this->TrainingRepository->findForAccount($activity->getId(), $this->getDefaultAccount()->getId());
+
+        $this->assertTrue($result->hasRoute());
+        $this->assertTrue($result->hasTrackdata());
+        $this->assertTrue($result->hasHrv());
+
+        $this->assertGreaterThan(0, $result->getRoute()->getElevation());
+        $this->assertNotNull($result->getClimbScore());
+    }
+
+    public function testActivityWithRaceResult()
+    {
+        $activity = $this->getActivityForDefaultAccount(
+            123456789,
+            629,
+            3.0
+        );
+
+        $raceResult = new Raceresult();
+        $raceResult->fillFromActivity($activity);
+        $raceResult->setName('Event');
+        $activity->setRaceresult($raceResult);
+
+        $this->TrainingRepository->save($activity);
+
+        $result = $this->TrainingRepository->findForAccount($activity->getId(), $this->getDefaultAccount()->getId());
+
+        $this->assertTrue($result->hasRaceresult());
+        $this->assertEquals(3.0, $result->getRaceresult()->getOfficialDistance());
+    }
+
+    public function testActivityWithSwimData()
+    {
+        $swimData = new Swimdata();
+        $swimData->setPoolLength(5000);
+        $swimData->setStroke([32, 30, 35, 28]);
+
+        $activity = $this->getActivityForDefaultAccount(
+            123456789,
+            300,
+            0.2
+        );
+        $activity->setSwimdata($swimData);
+
+        $this->TrainingRepository->save($activity);
+
+        $result = $this->TrainingRepository->findForAccount($activity->getId(), $this->getDefaultAccount()->getId());
+
+        $this->assertTrue($result->hasSwimdata());
+        $this->assertEquals(125, $result->getTotalStrokes());
+        $this->assertEquals(5000, $result->getSwimdata()->getPoolLength());
     }
 
     public function testStartTimeForEmptyAccount()

@@ -209,25 +209,25 @@ class ActivityController extends Controller
      */
     public function newAction(Request $request, Account $account)
     {
+        if ($request->query->has('date')) {
+            $time = LocalTime::fromString($request->query->get('date'))->getTimestamp();
+        } else {
+            $time = null;
+        }
+
         return $this->getResponseForNewSingleActivity(
-            $this->getDefaultNewActivity($account),
-            $request
+            $this->getDefaultNewActivity($account, $time),
+            $request,
+            false
         );
     }
 
-    protected function getResponseForNewSingleActivity(Training $activity, Request $request = null)
+    protected function getResponseForNewSingleActivity(Training $activity, Request $request = null, $setCache = true)
     {
-        // TODO: temporary hash with additional objects
-
-        // Example of how to use custom cache:
-        // $cache = $this->get('app.cache.activity_uploads');
-        // $item = $cache->getItem('test');
-        // $item->set($account);
-        // $cache->save($item);
-
         $form = $this->createForm(ActivityType::class, $activity, [
             'action' => $this->generateUrl('activity-new')
         ]);
+        ActivityType::setStartCoordinates($form, $activity);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -237,6 +237,10 @@ class ActivityController extends Controller
             $this->get('app.automatic_reload_flag_setter')->set(AutomaticReloadFlagSetter::FLAG_ALL);
 
             return $this->render('util/close_overlay.html.twig');
+        } elseif (!$form->isSubmitted() && $setCache) {
+            $form->get('temporaryHash')->setData(
+                $this->get('app.activity_context.cache')->save($activity)
+            );
         }
 
         return $this->render('activity/form.html.twig', [
@@ -246,8 +250,11 @@ class ActivityController extends Controller
         ]);
     }
 
-    protected function handleSubmitOfNewActivityForm(Training $activity, Form $form)
+    protected function handleSubmitOfNewActivityForm(Training $newActivity, Form $form)
     {
+        // TODO: delete cache item as well?
+        $activity = $this->get('app.activity_context.cache')->get($form->get('temporaryHash')->getData(), $newActivity);
+
         if ('' != $activity->getRouteName()) {
             if (!$activity->hasRoute()) {
                 $activity->setRoute((new EntityRoute())->setAccount($activity->getAccount()));
@@ -268,13 +275,14 @@ class ActivityController extends Controller
 
     /**
      * @param Account $account
+     * @param int|null $time
      * @return Training
      */
-    protected function getDefaultNewActivity(Account $account)
+    protected function getDefaultNewActivity(Account $account, $time = null)
     {
         $activity = new Training();
         $activity->setAccount($account);
-        $activity->setTime(LocalTime::now());
+        $activity->setTime($time ?: LocalTime::now());
         $activity->setSport($this->getMainSport($account));
 
         if (null !== $activity->getSport()) {

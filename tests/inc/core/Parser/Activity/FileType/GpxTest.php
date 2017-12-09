@@ -38,6 +38,7 @@ class GpxTest extends AbstractActivityParserTestCase
         $this->assertNotEmpty($this->Container->ContinuousData->Latitude);
         $this->assertNotEmpty($this->Container->ContinuousData->Longitude);
         $this->assertNotEmpty($this->Container->ContinuousData->Altitude);
+        $this->assertEmpty($this->Container->ContinuousData->Temperature);
     }
 
     /**

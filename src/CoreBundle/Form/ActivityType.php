@@ -45,7 +45,6 @@ class ActivityType extends AbstractType
     {
         $builder
             ->add('temporaryHash', HiddenType::class, [
-                // TODO: cache additional objects and set hash
                 'mapped' => false,
                 'required' => false
             ])
@@ -53,7 +52,9 @@ class ActivityType extends AbstractType
                 'required' => true,
                 'date_widget' => 'single_text',
                 'time_widget' => 'single_text',
-                'input' => 'timestamp'
+                'input' => 'timestamp',
+                'model_timezone' => 'UTC',
+                'view_timezone' => 'UTC'
             ])
             ->add('s', DurationType::class, [
                 'required' => true,
@@ -78,6 +79,7 @@ class ActivityType extends AbstractType
             ])
             ->add('type', ActivityTypeChoiceType::class, [
                 'required' => false,
+                'placeholder' => 'select type',
                 'empty_data' => null
             ])
             ->add('cadence', CadenceType::class, [
@@ -154,7 +156,8 @@ class ActivityType extends AbstractType
                 'attr' => ['class' => 'fullwidth']
             ])
             ->add('routename', TextType::class, [
-                'required' => false
+                'required' => false,
+                'label' => 'Route'
             ])
             ->add('partner', TextType::class, [
                 'required' => false
@@ -200,8 +203,14 @@ class ActivityType extends AbstractType
     public static function setStartCoordinates(Form $form, Training $activity)
     {
         if ($activity->hasRoute() && $activity->getRoute()->hasGeohashes()) {
-            $coordinate = (new Geohash())->decode($activity->getRoute()->getStartpoint())->getCoordinate();
-            $form->get('start-coordinates')->setData($coordinate->getLatitude().','.$coordinate->getLongitude());
+            if (null === $activity->getRoute()->getStartpoint()) {
+                $activity->getRoute()->setStartEndGeohashes();
+            }
+
+            if (null !== $activity->getRoute()->getStartpoint()) {
+                $coordinate = (new Geohash())->decode($activity->getRoute()->getStartpoint())->getCoordinate();
+                $form->get('start-coordinates')->setData($coordinate->getLatitude().','.$coordinate->getLongitude());
+            }
         }
     }
 }

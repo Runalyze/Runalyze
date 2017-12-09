@@ -47,6 +47,6 @@ class VO2maxShapeCalculation implements RecalculationTaskInterface
             $timestamp
         );
 
-        $this->ConfigurationUpdater->updateVO2maxShape($this->Account, $shape);
+        $this->ConfigurationUpdater->updateVO2maxShape($this->Account, $shape * $configList->getVO2maxCorrectionFactor());
     }
 }
