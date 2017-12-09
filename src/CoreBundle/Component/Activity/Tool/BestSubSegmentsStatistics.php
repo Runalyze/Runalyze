@@ -4,6 +4,7 @@ namespace Runalyze\Bundle\CoreBundle\Component\Activity\Tool;
 
 use Runalyze\Calculation\Math\SubSegmentMaximization;
 use Runalyze\Model\Trackdata;
+use Runalyze\Model\Route\Entity as RouteEntity;
 
 class BestSubSegmentsStatistics
 {
@@ -69,6 +70,44 @@ class BestSubSegmentsStatistics
 
         $this->TimeSegments = new SubSegmentMaximization($distanceAsDeltas, $timeAsDeltas, $this->Times);
         $this->TimeSegments->maximize();
+    }
+
+    /**
+     * @param RouteEntity $route
+     * @return array
+     */
+    public function getDistanceSegmentPaths(RouteEntity $route)
+    {
+        return $this->getSegments($this->getDistanceSegments(), $route);
+    }
+
+    /**
+     * @param RouteEntity $route
+     * @return array
+     */
+    public function getTimeSegmentPaths(RouteEntity $route)
+    {
+        return $this->getSegments($this->getTimeSegments(), $route);
+    }
+
+    /**
+     * @param SubSegmentMaximization $subSegmentMaximization
+     * @param RouteEntity $route
+     * @return array
+     */
+    private function getSegments(SubSegmentMaximization $subSegmentMaximization, RouteEntity $route)
+    {
+        $latLongs = $route->latitudesAndLongitudesFromGeohash();
+        $seg = [];
+        foreach($subSegmentMaximization->getAvailableSegmentLengths() as $index => $length) {
+            $segIndices = $subSegmentMaximization->getIndizesOfMaximumForLengthIndex($index);
+            $seg[$index] = [];
+            for($i = $segIndices[0]; $i <= $segIndices[1]; $i++){
+                $seg[$index][] = array($latLongs['lat'][$i], $latLongs['lng'][$i]);
+            }
+
+        }
+        return $seg;
     }
 
     /**
