@@ -5,12 +5,15 @@ namespace Runalyze\Bundle\CoreBundle\Form\Type;
 use Runalyze\Bundle\CoreBundle\Entity\Sport;
 use Runalyze\Bundle\CoreBundle\Entity\SportRepository;
 use Runalyze\Bundle\CoreBundle\Form\AbstractTokenStorageAwareType;
+use Runalyze\Bundle\CoreBundle\Form\ConfigurationManagerAwareTrait;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 class SportChoiceType extends AbstractTokenStorageAwareType
 {
+    use ConfigurationManagerAwareTrait;
+
     /** @var SportRepository */
     protected $SportRepository;
 
@@ -28,10 +31,11 @@ class SportChoiceType extends AbstractTokenStorageAwareType
             return $object->getId();
         };
 
-        $allSports = $this->getAccount()->getSports();
+        $allSports = $this->getConfigurationList()->getActivityForm()->getDatabaseOrderForSport()->sortCollection(
+            $this->getAccount()->getSports()
+        );
         $sportIds = $allSports->map($mapIdFunction)->toArray();
         $sportToEquipmentCategoryRelations = $this->SportRepository->findEquipmentCategoryIdsFor($sportIds);
-        $allEquipmentTypeIds = $this->getAccount()->getEquipmentTypes()->map($mapIdFunction)->toArray();
 
         $resolver->setDefaults(array(
             'choices' => $allSports,

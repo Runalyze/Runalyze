@@ -87,7 +87,7 @@ class RecalculationManagerTest extends \PHPUnit_Framework_TestCase
         $this->Manager->runScheduledTasks();
 
         $this->assertEquals('123456789', $this->ConfigurationManager->getList($this->Account)->get('data.START_TIME'));
-        $this->assertEquals('42.0', $this->ConfigurationManager->getList($this->Account)->get('data.VO2MAX_FORM'));
+        $this->assertEquals('35.7', $this->ConfigurationManager->getList($this->Account)->get('data.VO2MAX_FORM'));
         $this->assertEquals('0.85', $this->ConfigurationManager->getList($this->Account)->get('data.VO2MAX_CORRECTOR'));
         $this->assertEquals('68', $this->ConfigurationManager->getList($this->Account)->get('data.BASIC_ENDURANCE'));
     }

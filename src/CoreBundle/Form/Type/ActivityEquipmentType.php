@@ -6,7 +6,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Runalyze\Bundle\CoreBundle\Entity\Equipment;
 use Runalyze\Bundle\CoreBundle\Entity\EquipmentType;
+use Runalyze\Bundle\CoreBundle\Form\ConfigurationManagerAwareTrait;
 use Runalyze\Bundle\CoreBundle\Form\TokenStorageAwareTypeTrait;
+use Runalyze\Bundle\CoreBundle\Services\Configuration\ConfigurationManager;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\DataTransformerInterface;
@@ -15,12 +17,15 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ActivityEquipmentType extends AbstractType implements DataTransformerInterface
 {
+    use ConfigurationManagerAwareTrait;
     use TokenStorageAwareTypeTrait;
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $equipmentCategories = $this->getAccount()->getEquipmentTypes();
-        $accountEquipment = $this->getAccount()->getEquipment();
+        $accountEquipment = $this->getConfigurationList()->getActivityForm()->getDatabaseOrderForEquipment()->sortCollection(
+            $this->getAccount()->getEquipment()
+        );
 
         $equipment = [];
         /** @var Equipment $acEqp */

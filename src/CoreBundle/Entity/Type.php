@@ -3,6 +3,8 @@
 namespace Runalyze\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Runalyze\Bundle\CoreBundle\Entity\Common\IdentifiableEntityInterface;
+use Runalyze\Bundle\CoreBundle\Entity\Common\NamedEntityInterface;
 use Runalyze\Profile\View\DataBrowserRowProfile;
 
 /**
@@ -11,7 +13,7 @@ use Runalyze\Profile\View\DataBrowserRowProfile;
  * @ORM\Table(name="type")
  * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\TypeRepository")
  */
-class Type
+class Type implements IdentifiableEntityInterface, NamedEntityInterface
 {
     /**
      * @var int

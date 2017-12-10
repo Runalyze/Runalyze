@@ -136,6 +136,8 @@ services:
   app.form.activity.equipment:
     class: Runalyze\Bundle\CoreBundle\Form\Type\ActivityEquipmentType
     arguments: ["@security.token_storage"]
+    calls:
+     - [setConfigurationManager, ["@app.configuration_manager"]]
     tags:
      - { name: form.type }
   app.form.anova:
@@ -203,11 +205,15 @@ services:
   app.form.type.sport:
     class: Runalyze\Bundle\CoreBundle\Form\Type\SportChoiceType
     arguments: ["@security.token_storage", "@app.repository.sport"]
+    calls:
+     - [setConfigurationManager, ["@app.configuration_manager"]]
     tags:
      - { name: form.type }
   app.form.type.activity_type:
     class: Runalyze\Bundle\CoreBundle\Form\Type\ActivityTypeChoiceType
     arguments: ["@security.token_storage"]
+    calls:
+     - [setConfigurationManager, ["@app.configuration_manager"]]
     tags:
      - { name: form.type }
   app.form.type.temperature:

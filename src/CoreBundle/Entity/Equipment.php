@@ -4,6 +4,8 @@ namespace Runalyze\Bundle\CoreBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Runalyze\Bundle\CoreBundle\Entity\Common\IdentifiableEntityInterface;
+use Runalyze\Bundle\CoreBundle\Entity\Common\NamedEntityInterface;
 
 /**
  * Equipment
@@ -11,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="equipment")
  * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\EquipmentRepository")
  */
-class Equipment
+class Equipment implements IdentifiableEntityInterface, NamedEntityInterface
 {
     /**
      * @var integer

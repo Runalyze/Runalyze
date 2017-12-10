@@ -2,6 +2,8 @@
 
 namespace Runalyze\Bundle\CoreBundle\Component\Configuration\Category;
 
+use Runalyze\Parameter\Application\DatabaseOrder;
+
 class ActivityForm extends AbstractCategory
 {
     /**
@@ -89,6 +91,41 @@ class ActivityForm extends AbstractCategory
     public function isAutomaticPauseDetectionActivated()
     {
         return 'true' === $this->Variables['DETECT_PAUSES'];
+    }
+
+    /**
+     * @return DatabaseOrder
+     */
+    public function getDatabaseOrderForSport()
+    {
+        return $this->getDatabaseOrderFor('TRAINING_SORT_SPORTS');
+    }
+
+    /**
+     * @return DatabaseOrder
+     */
+    public function getDatabaseOrderForTypes()
+    {
+        return $this->getDatabaseOrderFor('TRAINING_SORT_TYPES');
+    }
+
+    /**
+     * @return DatabaseOrder
+     */
+    public function getDatabaseOrderForEquipment()
+    {
+        return $this->getDatabaseOrderFor('TRAINING_SORT_SHOES');
+    }
+
+    /**
+     * @return DatabaseOrder
+     */
+    protected function getDatabaseOrderFor($key)
+    {
+        $order = new DatabaseOrder();
+        $order->set($this->Variables[$key]);
+
+        return $order;
     }
 
     /**

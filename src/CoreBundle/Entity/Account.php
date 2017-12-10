@@ -4,6 +4,7 @@ namespace Runalyze\Bundle\CoreBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Runalyze\Bundle\CoreBundle\Entity\Common\IdentifiableEntityInterface;
 use Runalyze\Parameter\Application\Timezone;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -20,7 +21,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @UniqueEntity("mail", message="This mail address is already in use")
  * @UniqueEntity("username", message="This username is already in use")
  */
-class Account implements AdvancedUserInterface, \Serializable
+class Account implements AdvancedUserInterface, \Serializable, IdentifiableEntityInterface
 {
     /**
      * @var string
