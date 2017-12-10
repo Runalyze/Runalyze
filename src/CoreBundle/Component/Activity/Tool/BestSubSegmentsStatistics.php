@@ -102,10 +102,10 @@ class BestSubSegmentsStatistics
     {
         $latLongs = $route->latitudesAndLongitudesFromGeohash();
         $seg = [];
-        foreach($subSegmentMaximization->getAvailableSegmentLengths() as $index => $length) {
+        foreach ($subSegmentMaximization->getAvailableSegmentLengths() as $index => $length) {
             $segIndices = $subSegmentMaximization->getIndizesOfMaximumForLengthIndex($index);
             $seg[$index] = [];
-            for($i = $segIndices[0]; $i <= $segIndices[1]; $i+=$precision){
+            for ($i = $segIndices[0]; $i <= $segIndices[1]; $i += $precision) {
                 $seg[$index][] = array($latLongs['lat'][$i], $latLongs['lng'][$i]);
             }
 
