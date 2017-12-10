@@ -418,8 +418,9 @@ class ActivityController extends Controller
             )
         );
 
-        $distanceSegments = $statistics->getDistanceSegmentPaths($route);
-        $timeSegments = $statistics->getTimeSegmentPaths($route);
+        $precision = $this->get('app.configuration_manager')->getList()->getActivityView()->get('GMAP_PATH_PRECISION');
+        $distanceSegments = $statistics->getDistanceSegmentPaths($route, $precision);
+        $timeSegments = $statistics->getTimeSegmentPaths($route, $precision);
 
         return $this->render('activity/tool/best_sub_segments.html.twig', [
             'statistics' => $statistics,

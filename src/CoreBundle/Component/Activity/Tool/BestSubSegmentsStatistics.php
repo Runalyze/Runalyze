@@ -74,35 +74,38 @@ class BestSubSegmentsStatistics
 
     /**
      * @param RouteEntity $route
+     * @param int $precision only add every nth point to path
      * @return array
      */
-    public function getDistanceSegmentPaths(RouteEntity $route)
+    public function getDistanceSegmentPaths(RouteEntity $route, $precision = 1)
     {
-        return $this->getSegments($this->getDistanceSegments(), $route);
+        return $this->getSegments($this->getDistanceSegments(), $route, $precision);
     }
 
     /**
      * @param RouteEntity $route
+     * @param int $precision only add every nth point to path
      * @return array
      */
-    public function getTimeSegmentPaths(RouteEntity $route)
+    public function getTimeSegmentPaths(RouteEntity $route, $precision = 1)
     {
-        return $this->getSegments($this->getTimeSegments(), $route);
+        return $this->getSegments($this->getTimeSegments(), $route, $precision);
     }
 
     /**
      * @param SubSegmentMaximization $subSegmentMaximization
      * @param RouteEntity $route
+     * @param int $precision only add every nth point to path
      * @return array
      */
-    private function getSegments(SubSegmentMaximization $subSegmentMaximization, RouteEntity $route)
+    private function getSegments(SubSegmentMaximization $subSegmentMaximization, RouteEntity $route, $precision)
     {
         $latLongs = $route->latitudesAndLongitudesFromGeohash();
         $seg = [];
         foreach($subSegmentMaximization->getAvailableSegmentLengths() as $index => $length) {
             $segIndices = $subSegmentMaximization->getIndizesOfMaximumForLengthIndex($index);
             $seg[$index] = [];
-            for($i = $segIndices[0]; $i <= $segIndices[1]; $i++){
+            for($i = $segIndices[0]; $i <= $segIndices[1]; $i+=$precision){
                 $seg[$index][] = array($latLongs['lat'][$i], $latLongs['lng'][$i]);
             }
 
