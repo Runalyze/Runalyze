@@ -418,7 +418,7 @@ class ActivityController extends Controller
             )
         );
 
-        $precision = $this->get('app.configuration_manager')->getList()->getActivityView()->get('GMAP_PATH_PRECISION');
+        $precision = (int) $this->get('app.configuration_manager')->getList()->getActivityView()->get('GMAP_PATH_PRECISION');
         $distanceSegments = $statistics->getDistanceSegmentPaths($route, $precision);
         $timeSegments = $statistics->getTimeSegmentPaths($route, $precision);
 
