@@ -75,10 +75,10 @@ abstract class AbstractKey
 	}
 
     /**
-     * @return int
+     * @return int|bool
      * @codeCoverageIgnore
      */
-    public function privacy()
+    public function defaultPrivacy()
     {
         return DatasetPrivacyProfile::PUBLIC_KEY;
     }

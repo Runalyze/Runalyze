@@ -6,9 +6,7 @@
 
 namespace Runalyze\Dataset\Keys;
 
-use Runalyze\Bundle\CoreBundle\Entity\Dataset;
 use Runalyze\Dataset\Context;
-use Runalyze\Profile\View\DatasetPrivacyProfile;
 
 /**
  * Dataset key: Tools

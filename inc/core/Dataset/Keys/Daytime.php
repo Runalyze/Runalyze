@@ -54,11 +54,11 @@ class Daytime extends AbstractKey
 	}
 
     /**
-     * @return string
+     * @return int
      * @codeCoverageIgnore
      */
-    public function privacy() {
-        return (bool)DatasetPrivacyProfile::PRIVATE_KEY;
+    public function defaultPrivacy() {
+        return DatasetPrivacyProfile::PRIVATE_KEY;
     }
 
 	/**

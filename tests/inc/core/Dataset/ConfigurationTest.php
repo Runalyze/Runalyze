@@ -101,10 +101,6 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(0, $this->Configuration->getPrivacy(1));
         $this->assertEquals(1, $this->Configuration->getPrivacy(2));
-
-
-
-
     }
 
 }

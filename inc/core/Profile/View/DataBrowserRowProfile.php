@@ -3,8 +3,9 @@
 namespace Runalyze\Profile\View;
 
 use Runalyze\Common\Enum\AbstractEnum;
+use Runalyze\Util\InterfaceChoosable;
 
-class DataBrowserRowProfile extends AbstractEnum
+class DataBrowserRowProfile extends AbstractEnum implements InterfaceChoosable
 {
     /** @var int */
     const COMPLETE_ROW = 0;

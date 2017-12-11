@@ -5,6 +5,7 @@
  */
 
 namespace Runalyze\Dataset;
+
 use Runalyze\Profile\View\DatasetPrivacyProfile;
 
 /**
@@ -158,7 +159,7 @@ class Configuration
     /**
      * Get privacy for dataset
      * @param int $keyid enum, see \Runalyze\Dataset\Keys or $this->allKeys()
-     * @return string
+     * @return int
      * @throws \InvalidArgumentException
      */
     public function getPrivacy($keyid)

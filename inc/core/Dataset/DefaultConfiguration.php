@@ -93,10 +93,12 @@ class DefaultConfiguration extends Configuration
 	protected function generateDataFor(array $keysArray)
 	{
 		foreach ($keysArray as $keyid => $isActive) {
+			$keyObject = Keys::get($keyid);
+
 			$this->Data[$keyid] = array(
 				'active' => $isActive,
-				'style' => Keys::get($keyid)->defaultCssStyle(),
-                'privacy' => Keys::get($keyid)->privacy()
+				'style' => $keyObject->defaultCssStyle(),
+                'privacy' => $keyObject->defaultPrivacy()
 			);
 		}
 	}

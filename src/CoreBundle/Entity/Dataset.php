@@ -55,10 +55,11 @@ class Dataset
 
     /**
      * @var bool
+     * @see \Runalyze\Profile\View\DatasetPrivacyProfile
      *
-     * @ORM\Column(name="privacy", type="boolean", columnDefinition="tinyint unsigned NOT NULL DEFAULT 1")
+     * @ORM\Column(name="privacy", type="boolean")
      */
-    private $privacy = DatasetPrivacyProfile::PUBLIC_KEY;
+    private $privacy = true;
 
     /**
      * @return $this
@@ -175,7 +176,7 @@ class Dataset
      */
     public function getPrivacy()
     {
-        return (bool)$this->privacy;
+        return $this->privacy;
     }
 
     /**
@@ -183,7 +184,7 @@ class Dataset
      */
     public function isPrivate()
     {
-        return DatasetPrivacyProfile::PRIVATE_KEY == $this->privacy;
+        return (bool)DatasetPrivacyProfile::PRIVATE_KEY == $this->privacy;
     }
 
     /**
@@ -191,7 +192,7 @@ class Dataset
      */
     public function isPublic()
     {
-        return DatasetPrivacyProfile::PUBLIC_KEY == $this->privacy;
+        return (bool)DatasetPrivacyProfile::PUBLIC_KEY == $this->privacy;
     }
 }
 

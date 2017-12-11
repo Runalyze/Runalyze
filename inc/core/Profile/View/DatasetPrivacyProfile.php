@@ -3,8 +3,9 @@
 namespace Runalyze\Profile\View;
 
 use Runalyze\Common\Enum\AbstractEnum;
+use Runalyze\Util\InterfaceChoosable;
 
-class DatasetPrivacyProfile extends AbstractEnum
+class DatasetPrivacyProfile extends AbstractEnum implements InterfaceChoosable
 {
     /** @var int */
     const PRIVATE_KEY = 0;
