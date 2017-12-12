@@ -233,7 +233,7 @@ class Query
 			}
 		}
 
-		return empty($arrayOfKeys) ? '1' : implode(', ', $columnSelects);
+		return empty($columnSelects) ? '1' : implode(', ', $columnSelects);
 	}
 
 	/**
