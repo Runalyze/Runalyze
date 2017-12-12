@@ -4,6 +4,7 @@ namespace Runalyze\Bundle\CoreBundle\Controller;
 
 use Runalyze\Activity\Distance;
 use Runalyze\Bundle\CoreBundle\Component\Account\Registration;
+use Runalyze\Bundle\CoreBundle\Form\FeedbackType;
 use Runalyze\Bundle\CoreBundle\Form\RegistrationType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -216,5 +217,30 @@ class DefaultController extends AbstractPluginsAwareController
         }
 
         return $this->render('account/unsubscribe_failure.html.twig');
+    }
+
+    /**
+     * @Route("/feedback", name="feedback")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function feedbackAction(Request $request, Account $account)
+    {
+        $form = $this->createForm(FeedbackType::class,null,[
+            'action' => $this->generateUrl('feedback'),
+        ]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            return $this->render('feedback.html.twig', array(
+                'form' => $form->createView()
+            ));
+        }
+
+        return $this->render('feedback.html.twig', array(
+            'form' => $form->createView()
+        ));
+
+        return $this->redirectToRoute('dashboard');
     }
 }
