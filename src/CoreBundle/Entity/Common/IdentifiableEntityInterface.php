@@ -5,7 +5,7 @@ namespace Runalyze\Bundle\CoreBundle\Entity\Common;
 interface IdentifiableEntityInterface
 {
     /**
-     * @return string
+     * @return int
      */
     public function getId();
 }
