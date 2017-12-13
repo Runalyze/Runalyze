@@ -3,6 +3,7 @@
 namespace Runalyze\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Runalyze\Profile\View\DatasetPrivacyProfile;
 
 /**
  * Dataset
@@ -51,6 +52,14 @@ class Dataset
      * @ORM\Column(name="position", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
      */
     private $position = 0;
+
+    /**
+     * @var bool
+     * @see \Runalyze\Profile\View\DatasetPrivacyProfile
+     *
+     * @ORM\Column(name="privacy", type="boolean")
+     */
+    private $privacy = true;
 
     /**
      * @return $this
@@ -148,6 +157,42 @@ class Dataset
     public function getPosition()
     {
         return $this->position;
+    }
+
+    /**
+     * @param bool $privacy
+     *
+     * @return $this
+     */
+    public function setPrivacy($privacy)
+    {
+        $this->privacy = (bool)$privacy;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getPrivacy()
+    {
+        return $this->privacy;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPrivate()
+    {
+        return (bool)DatasetPrivacyProfile::PRIVATE_KEY == $this->privacy;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPublic()
+    {
+        return (bool)DatasetPrivacyProfile::PUBLIC_KEY == $this->privacy;
     }
 }
 

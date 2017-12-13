@@ -8,6 +8,7 @@ namespace Runalyze\Dataset\Keys;
 
 use Runalyze\Dataset\Context;
 use Runalyze\Dataset\SummaryMode;
+use Runalyze\Profile\View\DatasetPrivacyProfile;
 
 /**
  * Abstract dataset key
@@ -72,6 +73,15 @@ abstract class AbstractKey
 	{
 		return $this->label();
 	}
+
+    /**
+     * @return int|bool
+     * @codeCoverageIgnore
+     */
+    public function defaultPrivacy()
+    {
+        return DatasetPrivacyProfile::PUBLIC_KEY;
+    }
 
 	/**
 	 * @return string

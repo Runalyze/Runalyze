@@ -19,6 +19,9 @@ class DatasetType extends AbstractType
             ->add('active', CheckboxType::class, [
                 'required' => false
             ])
+            ->add('privacy', CheckboxType::class, [
+                'required' => false
+            ])
             ->add('position', IntegerType::class, [
                 'attr' => ['class' => 'dataset-position']
             ])
