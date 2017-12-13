@@ -110,6 +110,8 @@ class ActivityDataContainerToActivityContextConverter
         $this->setActivityFitDetailsFor($activity, $container->FitDetails);
         $this->setActivityWeatherDataFor($activity, $container->WeatherData);
 
+        $container->Rounds->roundDurations();
+
         $activity->setSplits($container->Rounds);
     }
 

@@ -44,6 +44,7 @@ class ActivityCacheTest extends \PHPUnit_Framework_TestCase
     {
         $activityToCache = new Training();
         $activityToCache->setDistance(10.0);
+        $activityToCache->setElapsedTime(3625);
         $activityToCache->setAccount((new Account())->setName('tester'));
         $activityToCache->setRoute((new Route())->setDistance(10.0));
         $activityToCache->setTrackdata((new Trackdata())->setDistance([0.0, 5.0, 10.0]));
@@ -60,6 +61,7 @@ class ActivityCacheTest extends \PHPUnit_Framework_TestCase
 
         $this->assertNotNull($result);
         $this->assertEquals(12.3, $result->getDistance());
+        $this->assertEquals(3625, $result->getElapsedTime());
         $this->assertEquals($mergerAccount, $result->getAccount());
         $this->assertEquals($mergerAccount, $result->getRoute()->getAccount());
         $this->assertEquals($mergerAccount, $result->getTrackdata()->getAccount());

@@ -23,8 +23,6 @@ use Runalyze\Bundle\CoreBundle\Form\Type\UnitPlaceholderType;
 use Runalyze\Bundle\CoreBundle\Form\Type\WeatherConditionType;
 use Runalyze\Bundle\CoreBundle\Form\Type\WindDirectionType;
 use Runalyze\Bundle\CoreBundle\Form\Type\WindSpeedType;
-use Runalyze\Parser\Activity\Common\Data\Round\Round;
-use Runalyze\Parser\Activity\Common\Data\Round\RoundCollection;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;

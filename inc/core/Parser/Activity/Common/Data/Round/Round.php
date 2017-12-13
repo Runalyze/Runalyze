@@ -7,7 +7,7 @@ class Round
     /** @var float [km] */
     protected $Distance;
 
-    /** @var int [s] */
+    /** @var int|float [s] */
     protected $Duration;
 
     /** @var bool */
@@ -15,7 +15,7 @@ class Round
 
     /**
      * @param float $distance [km]
-     * @param int $duration [s]
+     * @param int|float $duration [s]
      * @param bool $isActive
      */
     public function __construct($distance, $duration, $isActive = true)
@@ -42,7 +42,7 @@ class Round
     }
 
     /**
-     * @param int $duration [s]
+     * @param int|float $duration [s]
      */
     public function setDuration($duration)
     {
@@ -50,11 +50,16 @@ class Round
     }
 
     /**
-     * @return int [s]
+     * @return int|float [s]
      */
     public function getDuration()
     {
         return $this->Duration;
+    }
+
+    public function roundDuration()
+    {
+        $this->Duration = (int)round($this->Duration);
     }
 
     /**

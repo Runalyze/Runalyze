@@ -781,7 +781,7 @@ class Training
     }
 
     /**
-     * @param null|bool $elapsedTime [s]
+     * @param null|int $elapsedTime [s]
      *
      * @return $this
      */

@@ -52,12 +52,22 @@ class RoundCollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(260, $this->Collection[1]->getDuration());
     }
 
-    public function testAddingPauses()
+    public function testAddingRounds()
     {
         $this->Collection->add(new Round(1.0, 285));
         $this->Collection->add(new Round(1.0, 260));
 
         $this->assertEquals(2, $this->Collection->count());
+    }
+
+    public function testRoundingDurations()
+    {
+        $this->Collection->add(new Round(1.0, 285.12));
+        $this->Collection->add(new Round(1.0, 260.74));
+        $this->Collection->roundDurations();
+
+        $this->assertEquals(285, $this->Collection[0]->getDuration());
+        $this->assertEquals(261, $this->Collection[1]->getDuration());
     }
 
     /**

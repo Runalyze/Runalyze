@@ -63,6 +63,8 @@ class ActivityCache
      */
     public function merge(Training $activityFromCache, Training $activityToMerge)
     {
+        $this->mergeActivityDataFromParserThatIsNotInForm($activityFromCache, $activityToMerge);
+
         $activityToMerge->setRoute($activityFromCache->getRoute());
         $activityToMerge->setTrackdata($activityFromCache->getTrackdata());
         $activityToMerge->setSwimdata($activityFromCache->getSwimdata());
@@ -72,6 +74,25 @@ class ActivityCache
         $activityToMerge->getAdapter()->setAccountToRelatedEntities();
 
         return $activityToMerge;
+    }
+
+    protected function mergeActivityDataFromParserThatIsNotInForm(Training $activityFromCache, Training $activityToMerge)
+    {
+        $activityToMerge->setTimezoneOffset($activityFromCache->getTimezoneOffset());
+        $activityToMerge->setElapsedTime($activityFromCache->getElapsedTime());
+        $activityToMerge->setFitVO2maxEstimate($activityFromCache->getFitVO2maxEstimate());
+        $activityToMerge->setFitHrvAnalysis($activityFromCache->getFitHrvAnalysis());
+        $activityToMerge->setFitRecoveryTime($activityFromCache->getFitRecoveryTime());
+        $activityToMerge->setFitTrainingEffect($activityFromCache->getFitTrainingEffect());
+        $activityToMerge->setFitPerformanceCondition($activityFromCache->getFitPerformanceCondition());
+        $activityToMerge->setFitPerformanceConditionEnd($activityFromCache->getFitPerformanceConditionEnd());
+        $activityToMerge->setPowerCalculated($activityFromCache->isPowerCalculated());
+        $activityToMerge->setGroundcontact($activityFromCache->getGroundcontact());
+        $activityToMerge->setGroundcontactBalance($activityFromCache->getGroundcontactBalance());
+        $activityToMerge->setVerticalOscillation($activityFromCache->getVerticalOscillation());
+        $activityToMerge->setCreator($activityFromCache->getCreator());
+        $activityToMerge->setCreatorDetails($activityFromCache->getCreatorDetails());
+        $activityToMerge->setActivityId($activityFromCache->getActivityId());
     }
 
     /**

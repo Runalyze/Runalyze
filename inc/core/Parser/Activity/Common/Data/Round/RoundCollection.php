@@ -143,4 +143,11 @@ class RoundCollection implements \Countable, \ArrayAccess, \Iterator
             0.0
         );
     }
+
+    public function roundDurations()
+    {
+        foreach ($this->Elements as $round) {
+            $round->roundDuration();
+        }
+    }
 }
