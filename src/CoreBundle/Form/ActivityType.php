@@ -23,9 +23,11 @@ use Runalyze\Bundle\CoreBundle\Form\Type\UnitPlaceholderType;
 use Runalyze\Bundle\CoreBundle\Form\Type\WeatherConditionType;
 use Runalyze\Bundle\CoreBundle\Form\Type\WindDirectionType;
 use Runalyze\Bundle\CoreBundle\Form\Type\WindSpeedType;
+use Runalyze\Bundle\CoreBundle\Services\Activity\DataSeriesRemover;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -209,6 +211,22 @@ class ActivityType extends AbstractType
                 $coordinate = (new Geohash())->decode($activity->getRoute()->getStartpoint())->getCoordinate();
                 $form->get('start-coordinates')->setData($coordinate->getLatitude().','.$coordinate->getLongitude());
             }
+        }
+    }
+
+    public static function addDataSeriesRemoverFields(Form $form, Training $activity)
+    {
+        $choices = DataSeriesRemover::getChoicesForActivity($activity);
+
+        if (!empty($choices)) {
+            $form->add('data_series_remover', ChoiceType::class, [
+                'label' => 'Remove data series',
+                'choices' => $choices,
+                'mapped' => false,
+                'required' => false,
+                'multiple' => true,
+                'expanded' => true
+            ]);
         }
     }
 }

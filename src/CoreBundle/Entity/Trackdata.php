@@ -4,6 +4,7 @@ namespace Runalyze\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Runalyze\Bundle\CoreBundle\Entity\Adapter\TrackDataAdapter;
+use Runalyze\Bundle\CoreBundle\Entity\Common\AccountRelatedEntityInterface;
 use Runalyze\Parser\Activity\Common\Data\Pause\PauseCollection;
 use Runalyze\Model;
 
@@ -13,7 +14,7 @@ use Runalyze\Model;
  * @ORM\Table(name="trackdata")
  * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\TrackdataRepository")
  */
-class Trackdata
+class Trackdata implements AccountRelatedEntityInterface
 {
     /**
      * @var array|null [s]

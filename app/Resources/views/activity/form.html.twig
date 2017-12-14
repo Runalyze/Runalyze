@@ -199,8 +199,12 @@
                         {% trans %}Attention: This operation cannot be undone.{% endtrans %}
                     </p>
 
-                    {# TODO #}
-                    ...
+                    {% for data_series_field in form.data_series_remover %}
+                        {{ form_row(data_series_field, {'div_class': 'w100 checkbox-first'}) }}
+                    {% endfor %}
+
+                    {{ form_errors(form.splits) }}
+                    {% do form.splits.setRendered() %}
                 </div>
             </fieldset>
         {% endif %}

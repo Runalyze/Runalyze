@@ -5,6 +5,8 @@ namespace Runalyze\Bundle\CoreBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Runalyze\Bundle\CoreBundle\Entity\Adapter\ActivityAdapter;
+use Runalyze\Bundle\CoreBundle\Entity\Common\AccountRelatedEntityInterface;
+use Runalyze\Bundle\CoreBundle\Entity\Common\IdentifiableEntityInterface;
 use Runalyze\Parser\Activity\Common\Data\Round\RoundCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -16,7 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\EntityListeners({"Runalyze\Bundle\CoreBundle\EntityListener\ActivityListener"})
  * @ORM\HasLifecycleCallbacks()
  */
-class Training
+class Training implements IdentifiableEntityInterface, AccountRelatedEntityInterface
 {
     /**
      * @var int

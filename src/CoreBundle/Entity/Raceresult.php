@@ -3,6 +3,7 @@
 namespace Runalyze\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Runalyze\Bundle\CoreBundle\Entity\Common\AccountRelatedEntityInterface;
 
 /**
  * Raceresult
@@ -11,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\RaceresultRepository")
  * @ORM\EntityListeners({"Runalyze\Bundle\CoreBundle\EntityListener\RaceResultListener"})
  */
-class Raceresult
+class Raceresult implements AccountRelatedEntityInterface
 {
     /**
      * @var int [km]

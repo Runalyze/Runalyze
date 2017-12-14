@@ -348,6 +348,9 @@ services:
   app.activity_context.cache:
     class: Runalyze\Bundle\CoreBundle\Services\Import\ActivityCache
     arguments: ["@app.cache.activity_uploads"]
+  app.data_series_remover:
+    class: Runalyze\Bundle\CoreBundle\Services\Activity\DataSeriesRemover
+    arguments: ["@doctrine.orm.entity_manager"]
   app.weather_forecast.darksky:
     class: Runalyze\Service\WeatherForecast\Strategy\DarkSky
     arguments: ["%darksky_api_key%", "@app.http_client", "@logger"]

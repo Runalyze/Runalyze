@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use League\Geotools\Coordinate\Coordinate;
 use League\Geotools\Geohash\Geohash;
 use Runalyze\Bundle\CoreBundle\Entity\Adapter\RouteAdapter;
+use Runalyze\Bundle\CoreBundle\Entity\Common\AccountRelatedEntityInterface;
 use Runalyze\Calculation\Route\GeohashLine;
 
 /**
@@ -16,7 +17,7 @@ use Runalyze\Calculation\Route\GeohashLine;
  * @ORM\EntityListeners({"Runalyze\Bundle\CoreBundle\EntityListener\RouteListener"})
  * @ORM\HasLifecycleCallbacks()
  */
-class Route
+class Route implements AccountRelatedEntityInterface
 {
     /** @var int */
     const PATH_GEOHASH_PRECISION = 12;
@@ -442,6 +443,14 @@ class Route
     public function hasElevations()
     {
         return null !== $this->elevationsCorrected || null !== $this->elevationsOriginal;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasOriginalElevations()
+    {
+        return null !== $this->elevationsOriginal;
     }
 
     /**

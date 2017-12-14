@@ -4,6 +4,7 @@ namespace Runalyze\Bundle\CoreBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Runalyze\Bundle\CoreBundle\Entity\Common\AccountRelatedEntityInterface;
 use Runalyze\Bundle\CoreBundle\Entity\Common\IdentifiableEntityInterface;
 use Runalyze\Bundle\CoreBundle\Entity\Common\NamedEntityInterface;
 use Runalyze\Metrics\Velocity\Unit\AbstractPaceUnit;
@@ -18,7 +19,7 @@ use Runalyze\Profile\Sport\SportProfile;
  * @ORM\Table(name="sport", uniqueConstraints={@ORM\UniqueConstraint(name="unique_internal_id", columns={"accountid", "internal_sport_id"})})
  * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\SportRepository")
  */
-class Sport implements IdentifiableEntityInterface, NamedEntityInterface
+class Sport implements IdentifiableEntityInterface, NamedEntityInterface, AccountRelatedEntityInterface
 {
     /**
      * @var int

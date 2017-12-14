@@ -3,6 +3,8 @@
 namespace Runalyze\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Runalyze\Bundle\CoreBundle\Entity\Common\AccountRelatedEntityInterface;
+use Runalyze\Bundle\CoreBundle\Entity\Common\IdentifiableEntityInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -12,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\UserRepository")
  * @ORM\EntityListeners({"Runalyze\Bundle\CoreBundle\EntityListener\UserListener"})
  */
-class User
+class User implements IdentifiableEntityInterface, AccountRelatedEntityInterface
 {
     /**
      * @var int

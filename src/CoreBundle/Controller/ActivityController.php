@@ -10,6 +10,7 @@ use Runalyze\Bundle\CoreBundle\Component\Activity\Tool\BestSubSegmentsStatistics
 use Runalyze\Bundle\CoreBundle\Component\Activity\Tool\TimeSeriesStatistics;
 use Runalyze\Bundle\CoreBundle\Component\Activity\VO2maxCalculationDetailsDecorator;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
+use Runalyze\Bundle\CoreBundle\Entity\Common\AccountRelatedEntityInterface;
 use Runalyze\Bundle\CoreBundle\Entity\Raceresult;
 use Runalyze\Bundle\CoreBundle\Entity\Route as EntityRoute;
 use Runalyze\Bundle\CoreBundle\Entity\Trackdata;
@@ -51,25 +52,34 @@ class ActivityController extends Controller
         return $this->getDoctrine()->getRepository('CoreBundle:Training');
     }
 
+    protected function checkThatEntityBelongsToActivity(AccountRelatedEntityInterface $entity, Account $account)
+    {
+        if ($entity->getAccount()->getId() != $account->getId()) {
+            throw $this->createNotFoundException();
+        }
+    }
+
     /**
-     * @Route("/activity/form/{id}", name="activity-form", requirements={"id" = "\d+"})
+     * @Route("/activity/{id}/edit", name="activity-edit", requirements={"id" = "\d+"})
      * @Security("has_role('ROLE_USER')")
      * @ParamConverter("activity", class="CoreBundle:Training")
      */
-    public function activityFormAction(Request $request, Training $activity, Account $account)
+    public function activityEditAction(Request $request, Training $activity, Account $account)
     {
-        if ($activity->getAccount()->getId() != $account->getId()) {
-            throw $this->createNotFoundException();
-        }
+        $this->checkThatEntityBelongsToActivity($activity, $account);
 
         $form = $this->createForm(ActivityType::class, $activity, [
-            'action' => $this->generateUrl('activity-form', ['id' => $activity->getId()])
+            'action' => $this->generateUrl('activity-edit', ['id' => $activity->getId()])
         ]);
         ActivityType::setStartCoordinates($form, $activity);
+        ActivityType::addDataSeriesRemoverFields($form, $activity);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            //$this->getTrainingRepository()->save($activity, $account);
+            $this->get('app.data_series_remover')->handleRequest($form->get('data_series_remover')->getData(), $activity);
+
+            $this->getTrainingRepository()->save($activity);
+
             $this->addFlash('success', $this->get('translator')->trans('Changes have been saved.'));
             $this->get('app.automatic_reload_flag_setter')->set(AutomaticReloadFlagSetter::FLAG_ALL);
         }
@@ -360,11 +370,7 @@ class ActivityController extends Controller
         return new Response();
     }
 
-    /**
-     * @Route("/activity/{id}/edit", name="ActivityEdit")
-     * @Security("has_role('ROLE_USER')")
-     */
-    public function editAction($id)
+    /*public function editAction($id)
     {
         $Frontend = new \Frontend(true, $this->get('security.token_storage'));
 
@@ -395,7 +401,7 @@ class ActivityController extends Controller
         echo '</div>';
 
         return new Response();
-    }
+    }*/
 
     /**
      * @Route("/activity/multi-editor/{id}", name="multi-editor", requirements={"id" = "\d+"}, defaults={"id" = null})
@@ -463,9 +469,7 @@ class ActivityController extends Controller
      */
     public function vo2maxInfoAction(Training $activity, Account $account)
     {
-        if ($activity->getAccount()->getId() != $account->getId()) {
-            throw $this->createAccessDeniedException();
-        }
+        $this->checkThatEntityBelongsToActivity($activity, $account);
 
         $configList = $this->get('app.configuration_manager')->getList();
         $activityContext = $this->get('app.activity_context.factory')->getContext($activity);
@@ -613,9 +617,7 @@ class ActivityController extends Controller
             return $this->render('activity/tool/not_possible.html.twig');
         }
 
-        if ($trackdata->getAccount()->getId() != $account->getId()) {
-            throw $this->createAccessDeniedException();
-        }
+        $this->checkThatEntityBelongsToActivity($trackdata, $account);
 
         $trackdataModel = $trackdata->getLegacyModel();
 
@@ -644,9 +646,7 @@ class ActivityController extends Controller
             return $this->render('activity/tool/not_possible.html.twig');
         }
 
-        if ($trackdata->getAccount()->getId() != $account->getId()) {
-            throw $this->createAccessDeniedException();
-        }
+        $this->checkThatEntityBelongsToActivity($trackdata, $account);
 
         $trackdataModel = $trackdata->getLegacyModel();
 
@@ -674,7 +674,7 @@ class ActivityController extends Controller
     {
         $activityContext = $this->get('app.activity_context.factory')->getContext($activity);
 
-        if ((!$activity->isPublic() && $account == null)) {
+        if (!$activity->isPublic() && $account === null) {
             throw $this->createNotFoundException('No activity found.');
         }
 

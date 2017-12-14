@@ -5,6 +5,7 @@ namespace Runalyze\Bundle\CoreBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Runalyze\Bundle\CoreBundle\Component\Notifications\Message\MessageInterface;
 use Runalyze\Bundle\CoreBundle\Component\Notifications\MessageFactory;
+use Runalyze\Bundle\CoreBundle\Entity\Common\AccountRelatedEntityInterface;
 
 /**
  * Notification
@@ -12,7 +13,7 @@ use Runalyze\Bundle\CoreBundle\Component\Notifications\MessageFactory;
  * @ORM\Table(name="notification")
  * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\NotificationRepository")
  */
-class Notification
+class Notification implements AccountRelatedEntityInterface
 {
     /**
      * @var int

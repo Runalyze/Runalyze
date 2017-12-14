@@ -3,12 +3,13 @@
 namespace Runalyze\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Runalyze\Bundle\CoreBundle\Entity\Common\AccountRelatedEntityInterface;
 
 /**
  * @ORM\Table(name="plugin")
  * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\PluginRepository")
  */
-class Plugin
+class Plugin implements AccountRelatedEntityInterface
 {
     /** @var int */
     const STATE_INACTIVE = 0;
