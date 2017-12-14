@@ -2777,10 +2777,10 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Du kannst dieses Fenster schließen.</target>
         <jms:reference-file line="9">/Resources/views/tools/backup/export.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="a638530c9d2eb2998d339cfeecb2f1c19c6ca346" resname="You can define any sport you like, but for synchronization and comparisons you can map your sports to our predefined ones.&#10;                This mapping will be used to set the correct sport when importing your activities.">
+      <trans-unit id="a638530c9d2eb2998d339cfeecb2f1c19c6ca346" resname="You can define any sport you like, but for synchronization and comparisons you can map your sports to our predefined ones.&#10;                This mapping will be used to set the correct sport when importing your activities." approved="yes">
         <source xml:space="preserve">You can define any sport you like, but for synchronization and comparisons you can map your sports to our predefined ones.
                 This mapping will be used to set the correct sport when importing your activities.</source>
-        <target>Du kannst jede beliebige Sportart definieren, aber für die Synchronisation und Vergleiche sollte die Sportart einer vorgegebenen Sportart zugehordnet werden. Diese Zuordnung wird zum Setzen der richtigen Sportart beim Import verwendet.</target>
+        <target state="translated">Du kannst jede beliebige Sportart definieren, aber für die Synchronisation und Vergleiche sollte die Sportart einer vorgegebenen Sportart zugeordnet werden. Diese Zuordnung wird zum Setzen der richtigen Sportart beim Import verwendet.</target>
         <jms:reference-file line="32">/Resources/views/settings/sport/form-sport.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="e656cf23968829caaaf06281696a8b26d60f6577" resname="You can group your sports into 'main' and 'alternative' ones.&#10;                For some analyses 'alternative' types are grouped together whereas 'main' types are always shown standalone from each other.">
