@@ -34,9 +34,10 @@ class ActivityCache
     /**
      * @param string|null $hash
      * @param Training|null $activityToMerge
+     * @param bool $removerAfterwards
      * @return Training|null
      */
-    public function get($hash, Training $activityToMerge = null)
+    public function get($hash, Training $activityToMerge = null, $removerAfterwards = false)
     {
         if (null === $hash || '' == $hash) {
             return $activityToMerge;
@@ -44,6 +45,10 @@ class ActivityCache
 
         /** @var Training $context */
         $activity = $this->Cache->getItem($hash)->get();
+
+        if ($removerAfterwards) {
+            $this->remove($hash);
+        }
 
         if (!($activity instanceof Training)) {
             return $activityToMerge;
@@ -54,6 +59,14 @@ class ActivityCache
         }
 
         return $activity;
+    }
+
+    /**
+     * @param string $hash
+     */
+    public function remove($hash)
+    {
+        $this->Cache->deleteItem($hash);
     }
 
     /**

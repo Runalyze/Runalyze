@@ -4,7 +4,9 @@ namespace Runalyze\Bundle\CoreBundle\Controller;
 
 use Runalyze\Bundle\CoreBundle\Bridge\Activity\Calculation\ClimbScoreCalculator;
 use Runalyze\Bundle\CoreBundle\Bridge\Activity\Calculation\FlatOrHillyAnalyzer;
+use Runalyze\Bundle\CoreBundle\Component\Activity\ActivityContext;
 use Runalyze\Bundle\CoreBundle\Component\Activity\ActivityDecorator;
+use Runalyze\Bundle\CoreBundle\Component\Activity\ActivityPreview;
 use Runalyze\Bundle\CoreBundle\Component\Activity\Tool\BestSubSegmentsStatistics;
 use Runalyze\Bundle\CoreBundle\Component\Activity\Tool\TimeSeriesStatistics;
 use Runalyze\Bundle\CoreBundle\Component\Activity\VO2maxCalculationDetailsDecorator;
@@ -16,6 +18,7 @@ use Runalyze\Bundle\CoreBundle\Entity\Trackdata;
 use Runalyze\Bundle\CoreBundle\Entity\Training;
 use Runalyze\Bundle\CoreBundle\Entity\TrainingRepository;
 use Runalyze\Bundle\CoreBundle\Form\ActivityType;
+use Runalyze\Bundle\CoreBundle\Form\MultiImporterType;
 use Runalyze\Bundle\CoreBundle\Services\AutomaticReloadFlagSetter;
 use Runalyze\Bundle\CoreBundle\Services\Import\FileImportResultCollection;
 use Runalyze\Calculation\Route\Calculator;
@@ -175,8 +178,7 @@ class ActivityController extends Controller
                 $request
             );
         } elseif (1 < $numActivities) {
-            // TODO: Multi importer form (DuplicateFinder + cache activity) + save form (convert to activity, weather forecast, persist)
-            $this->addFlash('error', 'MultiImporter is not refactored so far.');
+            return $this->getResponseForMultipleNewActivities($results, $request, $account);
         }
 
         return $this->getUploadFormResponse();
@@ -206,6 +208,81 @@ class ActivityController extends Controller
         $this->get('app.activity_data_container.filter')->filter($container);
 
         return $this->get('app.activity_data_container.converter')->getActivityFor($container, $account);
+    }
+
+    protected function getResponseForMultipleNewActivities(FileImportResultCollection $results, Request $request, Account $account)
+    {
+        $cache = $this->get('app.activity_context.cache');
+        $duplicateFinder = $this->get('app.activity_duplicate_finder');
+        $activityHashes = [];
+        $errors = [];
+        $previews = [];
+
+        foreach ($results as $result) {
+            if ($result->isFailed()) {
+                $errors[] = sprintf('%s: %s', $result->getOriginalFileName(), $result->getException()->getMessage());
+            } else {
+                foreach ($result->getContainer() as $container) {
+                    $activity = $this->containerToActivity($container, $account);
+                    $previews[] = new ActivityPreview($activity, $duplicateFinder->isPossibleDuplicate($activity));
+                    $activityHashes[] = $cache->save($activity);
+                }
+            }
+        }
+
+        $form = $this->createForm(MultiImporterType::class, $activityHashes, [
+            'action' => $this->generateUrl('activity-multi-importer')
+        ]);
+        $form->handleRequest($request);
+
+        return $this->render('activity/multi_importer.html.twig', [
+            'form' => $form->createView(),
+            'errors' => $errors,
+            'previews' => $previews
+        ]);
+    }
+
+    /**
+     * @Route("/activity/multi-import", name="activity-multi-importer")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function multiImporterAction(Request $request, Account $account)
+    {
+        $form = $this->createForm(MultiImporterType::class, [], [
+            'action' => $this->generateUrl('activity-multi-importer')
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            $hashes = $form->get('activity')->getData();
+
+            if (!is_array($hashes)) {
+                return $this->redirectToRoute('activity-upload');
+            }
+
+            $repository = $this->getTrainingRepository();
+            $cache = $this->get('app.activity_context.cache');
+            $contextAdapterFactory = $this->get('app.activity_context_adapter_factory');
+            $defaultLocation = $this->get('app.configuration_manager')->getList()->getActivityForm()->getDefaultLocationForWeatherForecast();
+
+            foreach ($hashes as $hash) {
+                $activity = $cache->get($hash, null, true);
+                $activity->setAccount($account);
+                $activity->getAdapter()->setAccountToRelatedEntities();
+
+                $context = new ActivityContext($activity, null, null, $activity->getRoute());
+                $contextAdapterFactory->getAdapterFor($context)->guessWeatherConditions($defaultLocation);
+
+                $repository->save($activity);
+            }
+
+            $this->addFlash('success', $this->get('translator')->trans('The activities have been successfully imported.'));
+            $this->get('app.automatic_reload_flag_setter')->set(AutomaticReloadFlagSetter::FLAG_ALL);
+
+            return $this->render('util/close_overlay.html.twig');
+        }
+
+        return $this->redirectToRoute('activity-upload');
     }
 
     /**
@@ -257,8 +334,7 @@ class ActivityController extends Controller
 
     protected function handleSubmitOfNewActivityForm(Training $newActivity, Form $form)
     {
-        // TODO: delete cache item as well?
-        $activity = $this->get('app.activity_context.cache')->get($form->get('temporaryHash')->getData(), $newActivity);
+        $activity = $this->get('app.activity_context.cache')->get($form->get('temporaryHash')->getData(), $newActivity, true);
 
         if ('' != $activity->getRouteName()) {
             if (!$activity->hasRoute()) {
@@ -312,22 +388,6 @@ class ActivityController extends Controller
 
         return $sport;
     }
-
-    /**public function createAction()
-    {
-        $Frontend = new \Frontend(isset($_GET['json']), $this->get('security.token_storage'));
-
-        if (class_exists('Normalizer')) {
-        	if (isset($_POST['forceAsFileName'])) {
-        		$_POST['forceAsFileName'] = \Normalizer::normalize($_POST['forceAsFileName']);
-        	}
-        }
-
-        $Window = new \ImporterWindow();
-        $Window->display();
-
-        return new Response();
-    }*/
 
     /**
      * @Route("/activity/{id}", name="ActivityShow", requirements={"id" = "\d+"})

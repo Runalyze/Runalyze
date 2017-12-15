@@ -16,15 +16,24 @@ class ActivityDecorator
     }
 
     /**
+     * @param bool $typeWithSport
      * @return string
      */
-    public function getTitle()
+    public function getTitle($typeWithSport = false)
     {
+        if (null === $this->Context->getActivity()->getSport()) {
+            return '';
+        }
+
         if ('' != $this->Context->getActivity()->getTitle()) {
             return sprintf('%s: %s', $this->Context->getSport()->getName(), $this->Context->getActivity()->getTitle());
         }
 
         if (null !== $this->Context->getActivity()->getType()) {
+            if ($typeWithSport) {
+                return sprintf('%s: %s', $this->Context->getSport()->getName(), $this->Context->getActivity()->getType()->getName());
+            }
+
             return $this->Context->getActivity()->getType()->getName();
         }
 

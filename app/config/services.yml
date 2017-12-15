@@ -133,6 +133,10 @@ services:
     arguments: ["@security.token_storage"]
     tags:
      - { name: form.type }
+  app.form.multi_importer:
+    class: Runalyze\Bundle\CoreBundle\Form\MultiImporterType
+    tags:
+     - { name: form.type }
   app.form.activity.equipment:
     class: Runalyze\Bundle\CoreBundle\Form\Type\ActivityEquipmentType
     arguments: ["@security.token_storage"]
@@ -331,7 +335,7 @@ services:
     arguments: ["%kernel.root_dir%/%ttbin_path%"]
   app.file_importer:
     class: Runalyze\Bundle\CoreBundle\Services\Import\FileImporter
-    arguments: ["@app.file_converter.fit", "@app.file_converter.ttbin", "%data_directory%/import/activity/failed/", "@logger"]
+    arguments: ["@app.file_converter.fit", "@app.file_converter.ttbin", "%data_directory%/import/activity/failed", "@logger"]
     tags:
       - { name: monolog.logger, channel: activity_uploads }
   app.activity_duplicate_finder:
@@ -348,6 +352,9 @@ services:
   app.activity_context.cache:
     class: Runalyze\Bundle\CoreBundle\Services\Import\ActivityCache
     arguments: ["@app.cache.activity_uploads"]
+  app.activity_context_adapter_factory:
+    class: Runalyze\Bundle\CoreBundle\Services\Import\ActivityContextAdapterFactory
+    arguments: ["@app.weather_forecast", "@app.activity_duplicate_finder"]
   app.data_series_remover:
     class: Runalyze\Bundle\CoreBundle\Services\Activity\DataSeriesRemover
     arguments: ["@doctrine.orm.entity_manager"]

@@ -19,6 +19,7 @@ use Runalyze\Parser\Activity\FileExtensionToParserMapping;
 use Runalyze\Parser\Common\FileContentAwareParserInterface;
 use Runalyze\Parser\Common\FileNameAwareParserInterface;
 use Runalyze\Parser\Common\FileTypeConverterInterface;
+use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem;
 
 class FileImporter implements LoggerAwareInterface
@@ -224,7 +225,7 @@ class FileImporter implements LoggerAwareInterface
      */
     protected function convertFileNameIfRequired($fileName)
     {
-        $extension = pathinfo($fileName, PATHINFO_EXTENSION);
+        $extension = mb_strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
 
         if ('zip' == $extension) {
             $convertedFileNames = [];
@@ -266,7 +267,7 @@ class FileImporter implements LoggerAwareInterface
         $parserClass = $this->ParserMapping->getParserClassFor($extension);
 
         if (null === $parserClass) {
-            throw new UnsupportedFileException();
+            throw new UnsupportedFileException('Unsupported file extension.');
         }
 
         /** @var ParserInterface $parser */
@@ -325,7 +326,14 @@ class FileImporter implements LoggerAwareInterface
             ]);
 
             if (null !== $this->DirectoryForFailedImports && '' != $this->DirectoryForFailedImports) {
-                $this->Filesystem->rename($result->getOriginalFileName(), $this->DirectoryForFailedImports.'/'.pathinfo($result->getOriginalFileName(), PATHINFO_BASENAME), true);
+                try {
+                    $this->Filesystem->rename($result->getOriginalFileName(), $this->DirectoryForFailedImports.'/'.pathinfo($result->getOriginalFileName(), PATHINFO_BASENAME), true);
+                } catch (IOException $e) {
+                    $this->logger->warning('File cannot be renamed.', [
+                        'file' => $result->getOriginalFileName(),
+                        'exception' => $e
+                    ]);
+                }
             } else {
                 $this->remove($result->getOriginalFileName());
             }
