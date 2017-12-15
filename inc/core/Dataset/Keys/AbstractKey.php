@@ -83,6 +83,14 @@ abstract class AbstractKey
         return DatasetPrivacyProfile::PUBLIC_KEY;
     }
 
+    /**
+     * @return bool
+     * @codeCoverageIgnore
+     */
+    public function hasPrivacyOption() {
+        return true;
+    }
+
 	/**
 	 * @return string
 	 * @codeCoverageIgnore

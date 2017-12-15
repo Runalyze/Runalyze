@@ -98,7 +98,8 @@ class DefaultConfiguration extends Configuration
 			$this->Data[$keyid] = array(
 				'active' => $isActive,
 				'style' => $keyObject->defaultCssStyle(),
-                'privacy' => $keyObject->defaultPrivacy()
+                'privacy' => $keyObject->defaultPrivacy(),
+                'privacyOption' => $keyObject->hasPrivacyOption()
 			);
 		}
 	}
