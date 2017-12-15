@@ -1,4 +1,5 @@
 parameters:
   session.handler_id: session.handler.native_file
   redis.default.dsn: redis://localhost
+  feedback_mail:
   data_directory: '%kernel.root_dir%/../data'
