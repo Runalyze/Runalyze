@@ -128,6 +128,13 @@ class ActivityForm extends AbstractCategory
         return $order;
     }
 
+    public function getIgnoredActivityIds()
+    {
+        return array_filter(
+            explode(',', $this->Variables['GARMIN_IGNORE_IDS'])
+        );
+    }
+
     /**
      * @return string
      */

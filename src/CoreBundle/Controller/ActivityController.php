@@ -2,7 +2,6 @@
 
 namespace Runalyze\Bundle\CoreBundle\Controller;
 
-use Runalyze\Activity\DuplicateFinder;
 use Runalyze\Bundle\CoreBundle\Bridge\Activity\Calculation\ClimbScoreCalculator;
 use Runalyze\Bundle\CoreBundle\Bridge\Activity\Calculation\FlatOrHillyAnalyzer;
 use Runalyze\Bundle\CoreBundle\Component\Activity\ActivityDecorator;
@@ -25,13 +24,10 @@ use Runalyze\Export\Share;
 use Runalyze\Metrics\Velocity\Unit\PaceEnum;
 use Runalyze\Model\Activity;
 use Runalyze\Parser\Activity\Common\Data\ActivityDataContainer;
-use Runalyze\Parser\Activity\Common\Filter\DefaultFilterCollection;
 use Runalyze\Service\ElevationCorrection\Exception\NoValidStrategyException;
 use Runalyze\Service\ElevationCorrection\StepwiseElevationProfileFixer;
 use Runalyze\Util\LocalTime;
 use Runalyze\View\Activity\Context;
-use Runalyze\View\Activity\Dataview;
-use Runalyze\View\Activity\Linker;
 use Runalyze\View\Window\Laps\Window;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -735,64 +731,5 @@ class ActivityController extends Controller
         }
 
         return new Response();
-    }
-
-    /**
-     * @Route("/call/ajax.activityMatcher.php")
-     * @Route("/activity/matcher", name="activityMatcher")
-     * @Security("has_role('ROLE_USER')")
-     */
-    public function ajaxActivityMatcher(Account $account)
-    {
-        $Frontend = new \Frontend(true, $this->get('security.token_storage'));
-
-        $IDs     = array();
-        $Matches = array();
-        $Array   = explode('&', urldecode(file_get_contents('php://input')));
-        foreach ($Array as $String) {
-        	if (substr($String,0,12) == 'externalIds=')
-        		$IDs[] = substr($String,12);
-        }
-
-        $IgnoreIDs = \Runalyze\Configuration::ActivityForm()->ignoredActivityIDs();
-        $DuplicateFinder = new DuplicateFinder(\DB::getInstance(), $account->getId());
-
-        $IgnoreIDs = array_map(function($v){
-        	try {
-        		return (int)floor($this->parserStrtotime($v)/60)*60;
-        	} catch (\Exception $e) {
-        		return 0;
-        	}
-        }, $IgnoreIDs);
-
-        foreach ($IDs as $ID) {
-            try {
-                $dup = $DuplicateFinder->checkForDuplicate((int)floor($this->parserStrtotime($ID)/60)*60);
-            } catch (\Exception $e) {
-                $dup = false;
-            }
-
-            $found = $dup || in_array($ID, $IgnoreIDs);
-            $Matches[$ID] = array('match' => $found);
-        }
-
-        return new JsonResponse([
-            'matches' => $Matches
-        ]);
-    }
-
-    /**
-     * Adjusted strtotime
-     * Timestamps are given in UTC but local timezone offset has to be considered!
-     * @param string $string
-     * @return int
-     */
-    private function parserStrtotime($string)
-    {
-        if (substr($string, -1) == 'Z') {
-            return LocalTime::fromServerTime((int)strtotime(substr($string, 0, -1).' UTC'))->getTimestamp();
-        }
-
-        return LocalTime::fromString($string)->getTimestamp();
     }
 }
