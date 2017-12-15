@@ -232,6 +232,7 @@ class DefaultController extends AbstractPluginsAwareController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $this->get('app.mailer.account')->sendCustomFeedbackToSystem($account, $this->getParameter('feedback_mail'), $form->getData()['message']);
             return $this->render('feedback.html.twig', array(
                 'form' => $form->createView()
             ));
