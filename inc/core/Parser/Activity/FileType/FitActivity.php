@@ -14,6 +14,9 @@ class FitActivity extends AbstractSingleParser
 {
     use StrtotimeWithLocalTimezoneOffsetTrait;
 
+    /** @var int [s] */
+    const TIME_LIMIT_FOR_TIME_JUMP = 3600;
+
     /** @var array */
     protected $Header = [];
 
@@ -22,6 +25,9 @@ class FitActivity extends AbstractSingleParser
 
     /** @var int */
     protected $PauseInSeconds = 0;
+
+    /** @var int */
+    protected $TimeJumpsInSeconds = 0;
 
     /** @var bool */
     protected $IsSwimming = false;
@@ -463,7 +469,7 @@ class FitActivity extends AbstractSingleParser
                     $this->Container->Metadata->setTimestampAndTimezoneOffsetWithUtcFixFrom((string)$this->Values['timestamp'][1]);
                 }
             }
-            $time = $this->strtotime((string)$this->Values['timestamp'][1]) - $this->Container->Metadata->getTimestamp() - $this->PauseInSeconds;
+            $time = $this->strtotime((string)$this->Values['timestamp'][1]) - $this->Container->Metadata->getTimestamp() - $this->PauseInSeconds - $this->TimeJumpsInSeconds;
             $last = end($this->Container->ContinuousData->Time);
 
             if ($this->WasPaused) {
@@ -475,6 +481,10 @@ class FitActivity extends AbstractSingleParser
 
                 $this->Container->Pauses->add($pause);
                 $this->WasPaused = false;
+            } elseif ($time - $last > self::TIME_LIMIT_FOR_TIME_JUMP) {
+                $this->TimeJumpsInSeconds += $time - $last;
+
+                return;
             }
         }
 

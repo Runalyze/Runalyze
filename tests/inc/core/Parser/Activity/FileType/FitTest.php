@@ -694,4 +694,17 @@ class FitTest extends AbstractActivityParserTestCase
         $this->assertNull($this->Container->ContinuousData->Altitude[0]);
         $this->assertNotNull(end($this->Container->ContinuousData->Altitude));
     }
+
+    /**
+     * @see https://github.com/Runalyze/Runalyze/issues/2077
+     */
+    public function testThatTimeJumpIsHandledCorrectly()
+    {
+        $this->convertAndParse('fit/time-jump.fit');
+
+        $this->assertEquals(3389, $this->Container->ActivityData->Duration);
+        $this->assertEquals(3389, $this->Container->ActivityData->ElapsedTime);
+
+        $this->assertEquals(3389, end($this->Container->ContinuousData->Time), '', 10);
+    }
 }
