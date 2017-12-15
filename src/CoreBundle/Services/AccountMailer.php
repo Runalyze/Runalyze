@@ -37,8 +37,8 @@ class AccountMailer
 
     /**
      * @param Account $account
-     * @param $subject
-     * @param $template
+     * @param string $subject
+     * @param string $template
      * @param array $templateData
      */
     public function sendMailTo(Account $account, $subject, $template, array $templateData)
@@ -54,9 +54,8 @@ class AccountMailer
 
     /**
      * @param Account $account
-     * @param $mailTo
-     * @param $subject
-     * @param $manualText
+     * @param string $mailTo
+     * @param string $customText
      */
     public function sendCustomFeedbackToSystem(Account $account, $mailTo, $customText)
     {

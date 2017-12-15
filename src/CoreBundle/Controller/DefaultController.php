@@ -225,23 +225,25 @@ class DefaultController extends AbstractPluginsAwareController
      */
     public function feedbackAction(Request $request, Account $account)
     {
-        $form = $this->createForm(FeedbackType::class,null,[
-            'action' => $this->generateUrl('feedback'),
-        ]);
+        if (!empty($this->getParameter('feedback_mail'))) {
+            $form = $this->createForm(FeedbackType::class, null, [
+                'action' => $this->generateUrl('feedback'),
+            ]);
 
-        $form->handleRequest($request);
+            $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->get('app.mailer.account')->sendCustomFeedbackToSystem($account, $this->getParameter('feedback_mail'), $form->getData()['message']);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $this->get('app.mailer.account')->sendCustomFeedbackToSystem($account, $this->getParameter('feedback_mail'), $form->getData()['message']);
+                return $this->render('feedback.html.twig', [
+                    'form' => $form->createView()
+                ]);
+            }
+
             return $this->render('feedback.html.twig', array(
                 'form' => $form->createView()
             ));
+        } else {
+            throw $this->createNotFoundException();
         }
-
-        return $this->render('feedback.html.twig', array(
-            'form' => $form->createView()
-        ));
-
-        return $this->redirectToRoute('dashboard');
     }
 }
