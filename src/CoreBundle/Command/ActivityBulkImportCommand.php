@@ -3,13 +3,18 @@
 namespace Runalyze\Bundle\CoreBundle\Command;
 
 use ImporterFactory;
-use Runalyze\Activity\DuplicateFinder;
+use Runalyze\Bundle\CoreBundle\Entity\TrainingRepository;
+use Runalyze\Bundle\CoreBundle\Services\Import\FileImportResult;
 use Runalyze\Error;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Runalyze\Parser\Activity\Common\Data\ActivityDataContainer;
+use Runalyze\Bundle\CoreBundle\Entity\Account;
+use Runalyze\Bundle\CoreBundle\Component\Activity\ActivityContext;
 
 class ActivityBulkImportCommand extends ContainerAwareCommand
 {
@@ -23,6 +28,14 @@ class ActivityBulkImportCommand extends ContainerAwareCommand
             ->setDescription('Bulk import of activity files')
             ->addArgument('username', InputArgument::REQUIRED, 'username')
             ->addArgument('path', InputArgument::REQUIRED, 'Path to files');
+    }
+
+    /**
+     * @return TrainingRepository
+     */
+    protected function getTrainingRepository()
+    {
+        return $this->getContainer()->get('doctrine')->getRepository('CoreBundle:Training');
     }
 
     /**
@@ -47,12 +60,13 @@ class ActivityBulkImportCommand extends ContainerAwareCommand
         $token = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
         $this->getContainer()->get('security.token_storage')->setToken($token);
 
-        new \Frontend(true, $this->getContainer()->get('security.token_storage'));
-        $DuplicateFinder = new DuplicateFinder(\DB::getInstance(), $user->getId());
-
+        $importer = $this->getContainer()->get('app.file_importer');
+        $dataDirectory = $this->getContainer()->getParameter('data_directory');
         $path = $input->getArgument('path');
         $it = new \FilesystemIterator($path);
+        $fs = new Filesystem();
 
+        $files = [];
         foreach ($it as $fileinfo) {
             $file = $fileinfo->getFilename();
 
@@ -60,35 +74,35 @@ class ActivityBulkImportCommand extends ContainerAwareCommand
                 break;
             }
 
-            $output->writeln('<info>'.$file.'</info>');
             $filename = 'bulk-import'.uniqid().$file;
-            copy($path.'/'.$file, DATA_DIRECTORY.'/import/'.$filename);
-
-            try {
-                $Factory = new ImporterFactory($filename);
-            } catch (\Exception $e) {
-                $output->writeln('<fg=red> ... failed</>');
-                $this->addFailedFile($file, $e->getMessage());
-                break;
-            }
-
-            foreach ($Factory->trainingObjects() as $training) {
-                try {
-                    if (!$DuplicateFinder->checkForDuplicate($training->getActivityid())) {
-                        $training->setWeatherForecast();
-                        $training->updateAfterParsing();
-                        $training->insert();
-
-                        $output->writeln('<fg=green> ... successfully imported</>');
-                    } else {
-                        $output->writeln('<fg=red> ... is a duplicate</>');
-                    }
-                } catch (\Exception $e) {
-                    $this->addFailedFile($file, $e->getMessage());
-                }
-            }
+            $fs->copy($path.'/'.$file, $dataDirectory.'/import/'.$filename);
+            $files[] = $dataDirectory.'/import/'.$filename;
         }
+        $importResult = $importer->importFiles($files);
+        $contextAdapterFactory = $this->getContainer()->get('app.activity_context_adapter_factory');
+        $defaultLocation = $this->getContainer()->get('app.configuration_manager')->getList()->getActivityForm()->getDefaultLocationForWeatherForecast();
 
+        foreach ($importResult as $result) {
+            /** @var $result FileImportResult */
+            if (1 == $result->getNumberOfActivities()) {
+                $activity = $this->containerToActivity($result->getContainer()[0], $user);
+                $context = new ActivityContext($activity, null, null, $activity->getRoute());
+                $contextAdapterFactory->getAdapterFor($context)->guessWeatherConditions($defaultLocation);
+                $this->getTrainingRepository()->save($activity);
+                $output->writeln('<info>'.$result->getOriginalFileName().'</info>');
+                $output->writeln('<fg=green> ... successfully imported</>');
+                //$output->writeln('<fg=red> ... is a duplicate</>');
+                // $output->writeln('<fg=red> ... failed</>');
+                //$this->addFailedFile($file, $e->getMessage());
+
+
+            } else {
+                //TODO Multi activity files
+
+            }
+
+
+        }
         if (!empty($this->FailedImports)) {
             $output->writeln('');
             $output->writeln('<fg=red>Failed imports:</>');
@@ -100,6 +114,21 @@ class ActivityBulkImportCommand extends ContainerAwareCommand
 
         $output->writeln('');
         $output->writeln('Done.');
+    }
+
+
+    /**
+     * @param ActivityDataContainer $container
+     * @param Account $account
+     * @return Training
+     */
+    protected function containerToActivity(ActivityDataContainer $container, Account $account)
+    {
+        $container->completeActivityData();
+
+        $this->getContainer()->get('app.activity_data_container.filter')->filter($container);
+
+        return $this->getContainer()->get('app.activity_data_container.converter')->getActivityFor($container, $account);
     }
 
     private function addFailedFile($fileName, $error)
