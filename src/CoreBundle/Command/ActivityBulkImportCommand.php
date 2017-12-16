@@ -2,7 +2,6 @@
 
 namespace Runalyze\Bundle\CoreBundle\Command;
 
-use ImporterFactory;
 use Runalyze\Bundle\CoreBundle\Entity\TrainingRepository;
 use Runalyze\Bundle\CoreBundle\Services\Import\FileImportResult;
 use Runalyze\Error;
