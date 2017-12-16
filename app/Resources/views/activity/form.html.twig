@@ -219,12 +219,25 @@
     </div>
 
     <script type="text/javascript">
-    $(function(){
+    (function($){
         Runalyze.ActivityForm.init($('#activity'), {
             isNew: {{ isNew ? 'true' : 'false' }},
             calculateCalories: {{ configVar('activity-form.COMPUTE_KCAL') }},
             loadWeather: {{ configVar('activity-form.TRAINING_LOAD_WEATHER') }}
         });
-    });
+
+        {% if isMulti %}
+        var $nav = $("#ajax-navigation");
+        $nav.find("tr.link.highlight").removeClass("highlight").addClass("edited");
+        $nav.find("tr[data-activity={{ activity_id }}]").removeClass("edited").addClass("highlight");
+
+        var $next = $nav.find(".highlight + tr");
+
+        if ($next.length) {
+            $("#activity_next-multi-editor").val($next.data("activity"));
+            $("#activity").find("input[type=submit]").val("{% trans %}Save and continue{% endtrans %}");
+        }
+        {% endif %}
+    })(jQuery);
     </script>
 {% endblock %}

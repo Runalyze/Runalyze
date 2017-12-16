@@ -338,6 +338,34 @@ class TrainingRepository extends EntityRepository
     }
 
     /**
+     * @param int[] $ids
+     * @param Account|null $account
+     * @param int $limit
+     * @return Training[]
+     */
+    public function getPartialEntitiesForPreview(array $ids, Account $account = null, $limit = 20)
+    {
+        $queryBuilder = $this->createQueryBuilder('t')
+            ->select('partial t.{id, time, s, distance, pulseAvg, splits, route, title}');
+
+        if (empty($ids)) {
+            if (null === $account) {
+                return [];
+            }
+
+            $queryBuilder->where('t.account = :accountid')
+                ->setParameter('accountid', $account->getId())
+                ->orderBy('t.time', 'DESC')
+                ->setMaxResults($limit);
+        } else {
+            $queryBuilder->where('t.id IN(:ids)')
+                ->setParameter('ids', $ids);
+        }
+
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+    /**
      * @param Account $account
      * @return int|null
      */
@@ -441,6 +469,10 @@ class TrainingRepository extends EntityRepository
         return $marathonShape->getShapeFor($result['km'], $result['points']);
     }
 
+    /**
+     * @param Training $training
+     * @return int activity id
+     */
     public function save(Training $training)
     {
         if (null !== $training->getRoute()) {
@@ -465,5 +497,7 @@ class TrainingRepository extends EntityRepository
 
         $this->_em->persist($training);
         $this->_em->flush();
+
+        return $training->getId();
     }
 }

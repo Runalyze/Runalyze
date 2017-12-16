@@ -41,16 +41,18 @@
                         <td>{{ preview.dateTime|date('d.m.Y', false) }} - <small>{{ preview.dateTime|date('H:i', false) }}</small></td>
                         <td>{{ preview.duration|duration }}</td>
                         <td>{{ preview.distance > 0 ? distance(preview.distance) : '' }}</td>
-                        <td>{% if preview.sportIcon %}<i class="{{ preview.sportIcon }}" rel="tooltip" title="{{ preview.sportName }}">{% else %}{{ preview.sportName }}{% endif %}</td>
-                        <td>{% if preview.hasHeartRate %}<i class="fa fa-fw fa-heart">{% endif %}</td>
-                        <td>{% if preview.hasRoute %}<i class="fa fa-fw fa-location-arrow">{% endif %}</td>
-                        <td>{% if preview.hasRounds %}<i class="fa fa-fw fa-clock-o">{% endif %}</td>
+                        <td>{% if preview.sportIcon %}<i class="{{ preview.sportIcon }}" rel="tooltip" title="{{ preview.sportName }}"></i>{% else %}{{ preview.sportName }}{% endif %}</td>
+                        <td>{% if preview.hasHeartRate %}<i class="fa fa-fw fa-heart"></i>{% endif %}</td>
+                        <td>{% if preview.hasRoute %}<i class="fa fa-fw fa-location-arrow"></i>{% endif %}</td>
+                        <td>{% if preview.hasRounds %}<i class="fa fa-fw fa-clock-o"></i>{% endif %}</td>
                     </tr>
                 {% endfor %}
                 </tbody>
             </table>
 
             {% do form.activity.setRendered() %}
+
+            {{ form_row(form.show_multi_editor, {'div_class': 'w100 checkbox-first'}) }}
         </fieldset>
 
         {{ form_rest(form) }}

@@ -122,6 +122,11 @@ class CallController extends Controller
         }
 
         $Results = new \SearchResults($showResults);
+
+        if ($showResults && $Results->multiEditorRequested()) {
+            return $this->redirectToRoute('multi-editor', ['ids' => implode(',', $Results->getIdsForMultiEditor())]);
+        }
+
         $Results->display();
 
         return new Response();

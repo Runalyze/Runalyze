@@ -102,7 +102,6 @@ class ActivityType extends AbstractType
                 'required' => false,
                 'label' => 'Race',
                 'mapped' => false
-                // TODO: needs to be handled
             ])
             ->add('title', TextType::class, [
                 'required' => false
@@ -188,6 +187,10 @@ class ActivityType extends AbstractType
             ])
             ->add('equipment', ActivityEquipmentType::class)
             ->add('activityId', HiddenType::class, [
+                'required' => false
+            ])
+            ->add('next-multi-editor', HiddenType::class, [
+                'mapped' => false,
                 'required' => false
             ])
         ;

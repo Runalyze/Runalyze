@@ -627,38 +627,26 @@ class SearchResults {
 	 * Display
 	 */
 	public function display() {
-		if ($this->multiEditorRequested() && !empty($this->Trainings)) {
-			$this->sendResultsToMultiEditor();
-		} else {
-			echo '<div id="searchResult">';
-			$this->displayResults();
-			echo '</div>';
-		}
+        echo '<div id="searchResult">';
+        $this->displayResults();
+        echo '</div>';
 	}
 
 	/**
-	 * @return boolean
+	 * @return bool
 	 */
-	protected function multiEditorRequested() {
+	public function multiEditorRequested() {
 		return isset($_POST['send-to-multi-editor']);
 	}
 
-	/**
-	 * Send results to Multi Editor
-	 */
-	protected function sendResultsToMultiEditor() {
-		$IDs = array();
-		foreach ($this->Trainings as $data) {
-			$IDs[] = $data['id'];
-		}
-
-		$_POST = array();
-
-		$MultiEditor = new MultiEditor($IDs);
-		$MultiEditor->display();
-
-		echo Ajax::wrapJS('$("#ajax").removeClass("big-window").addClass("small-window");');
-	}
+    /**
+     * @return int[]
+     */
+	public function getIdsForMultiEditor() {
+	    return array_map(function($data) {
+	        return (int)$data['id'];
+        }, $this->Trainings);
+    }
 
 	/**
 	 * Display results

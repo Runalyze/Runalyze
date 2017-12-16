@@ -74,22 +74,35 @@ class ActivityController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->get('app.data_series_remover')->handleRequest($form->get('data_series_remover')->getData(), $activity);
+            if ($form->has('data_series_remover')) {
+                $this->get('app.data_series_remover')->handleRequest($form->get('data_series_remover')->getData(), $activity);
+            }
+
+            // TODO: Handle 'is_race' checkbox
 
             $this->getTrainingRepository()->save($activity);
 
             $this->addFlash('success', $this->get('translator')->trans('Changes have been saved.'));
             $this->get('app.automatic_reload_flag_setter')->set(AutomaticReloadFlagSetter::FLAG_ALL);
+
+            $nextId = $form->get('next-multi-editor')->getData();
+
+            if (is_numeric($nextId)) {
+                return $this->redirectToRoute('activity-edit', ['id' => (int)$nextId, 'multi' => '1']);
+            }
         }
 
         $context = $this->get('app.activity_context.factory')->getContext($activity);
 
+        // TODO: edit navigation
+
         return $this->render('activity/form.html.twig', [
             'form' => $form->createView(),
             'isNew' => false,
+            'isMulti' => (bool)$request->get('multi', false),
             'decorator' => new ActivityDecorator($context),
             'activity_id' => $activity->getId(),
-            'showElevationCorrectionLink' => $context->hasRoute() && !$context->getRoute()->hasCorrectedElevations()
+            'showElevationCorrectionLink' => $activity->hasRoute() && !$activity->getRoute()->hasCorrectedElevations()
         ]);
     }
 
@@ -97,7 +110,7 @@ class ActivityController extends Controller
      * @Route("/activity/add", name="activity-add")
      * @Security("has_role('ROLE_USER')")
      */
-    public function createAction(Request $request)
+    public function createAction()
     {
         $defaultUploadMode = $this->get('app.configuration_manager')->getList()->getActivityForm()->get('TRAINING_CREATE_MODE');
 
@@ -264,6 +277,7 @@ class ActivityController extends Controller
             $cache = $this->get('app.activity_context.cache');
             $contextAdapterFactory = $this->get('app.activity_context_adapter_factory');
             $defaultLocation = $this->get('app.configuration_manager')->getList()->getActivityForm()->getDefaultLocationForWeatherForecast();
+            $activityIds = [];
 
             foreach ($hashes as $hash) {
                 $activity = $cache->get($hash, null, true);
@@ -273,11 +287,16 @@ class ActivityController extends Controller
                 $context = new ActivityContext($activity, null, null, $activity->getRoute());
                 $contextAdapterFactory->getAdapterFor($context)->guessWeatherConditions($defaultLocation);
 
-                $repository->save($activity);
+                $activityIds[] = $repository->save($activity);
+            }
+
+            $this->get('app.automatic_reload_flag_setter')->set(AutomaticReloadFlagSetter::FLAG_ALL);
+
+            if ($form->get('show_multi_editor')->getData()) {
+                return $this->getResponseForMultiEditor($activityIds, $account);
             }
 
             $this->addFlash('success', $this->get('translator')->trans('The activities have been successfully imported.'));
-            $this->get('app.automatic_reload_flag_setter')->set(AutomaticReloadFlagSetter::FLAG_ALL);
 
             return $this->render('util/close_overlay.html.twig');
         }
@@ -425,77 +444,31 @@ class ActivityController extends Controller
         return new Response();
     }
 
-    /*public function editAction($id)
-    {
-        $Frontend = new \Frontend(true, $this->get('security.token_storage'));
-
-        $Training = new \TrainingObject($id);
-        $Activity = new Activity\Entity($Training->getArray());
-
-        $Training->setStartPoint(
-            $this->getDoctrine()->getRepository('CoreBundle:Route')->getStartCoordinatesFor(
-                $Training->get('routeid')
-            )
-        );
-
-        $Linker = new Linker($Activity);
-        $Dataview = new Dataview($Activity);
-
-        echo $Linker->editNavigation();
-
-        echo '<div class="panel-heading">';
-        echo '<h1>'.$Dataview->titleWithComment().', '.$Dataview->dateAndDaytime().'</h1>';
-        echo '</div>';
-        echo '<div class="panel-content">';
-
-        $Formular = new \TrainingFormular($Training, \StandardFormular::$SUBMIT_MODE_EDIT);
-        $Formular->setId('training');
-        $Formular->setLayoutForFields( \FormularFieldset::$LAYOUT_FIELD_W50 );
-        $Formular->display();
-
-        echo '</div>';
-
-        return new Response();
-    }*/
-
     /**
-     * @Route("/activity/multi-editor/{id}", name="multi-editor", requirements={"id" = "\d+"}, defaults={"id" = null})
+     * @Route("/activity/multi-editor", name="multi-editor")
      * @Security("has_role('ROLE_USER')")
      */
-    public function multiEditorAction($id)
+    public function multiEditorAction(Request $request, Account $account)
     {
-        $Frontend = new \Frontend(true, $this->get('security.token_storage'));
+        $ids = explode(',', $request->get('ids', ''));
 
-        if (null === $id) {
-            return $this->generateResponseForMultiEditorOverview();
-        }
-
-        return $this->generateResponseForMultiEditor($id);
+        return $this->getResponseForMultiEditor($ids, $account);
     }
 
     /**
+     * @param array $activityIds
+     * @param Account $account
      * @return Response
      */
-    protected function generateResponseForMultiEditorOverview()
+    protected function getResponseForMultiEditor(array $activityIds, Account $account)
     {
-        $IDs = \DB::getInstance()->query('SELECT `id` FROM `'.PREFIX.'training` ORDER BY `id` DESC LIMIT 20')->fetchAll(\PDO::FETCH_COLUMN, 0);
+        $previews = array_map(function (Training $activity) {
+            return new ActivityPreview($activity);
+        }, $this->getTrainingRepository()->getPartialEntitiesForPreview($activityIds, $account, 20));
 
-        $MultiEditor = new \MultiEditor($IDs);
-        $MultiEditor->display();
-
-        return new Response(\Ajax::wrapJS('$("#ajax").addClass("small-window");'));
-    }
-
-    /**
-     * @param int $id
-     * @return Response
-     */
-    protected function generateResponseForMultiEditor($id)
-    {
-        $MultiEditor = new \MultiEditor();
-        $MultiEditor->displayEditor($id);
-
-        return new Response();
+        return $this->render('activity/multi_editor_navigation.html.twig', [
+            'previews' => $previews
+        ]);
     }
 
    /**

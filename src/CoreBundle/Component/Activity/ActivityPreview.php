@@ -7,6 +7,9 @@ use Runalyze\Bundle\CoreBundle\Entity\Training;
 
 class ActivityPreview
 {
+    /** @var int */
+    protected $ActivityId;
+
     /** @var string */
     protected $Title;
 
@@ -50,6 +53,7 @@ class ActivityPreview
 
     protected function setSimplePropertiesFromActivity(Training $activity)
     {
+        $this->ActivityId = $activity->getId();
         $this->Duration = $activity->getS();
         $this->Distance = $activity->getDistance();
         $this->HasHeartRate = null !== $activity->getPulseAvg();
@@ -79,6 +83,14 @@ class ActivityPreview
     public function setPossibleDuplicate($flag)
     {
         $this->IsPossibleDuplicate = $flag;
+    }
+
+    /**
+     * @return int
+     */
+    public function getActivityId()
+    {
+        return $this->ActivityId;
     }
 
     /**

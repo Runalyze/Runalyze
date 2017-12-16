@@ -3,6 +3,7 @@
 namespace Runalyze\Bundle\CoreBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -14,6 +15,12 @@ class MultiImporterType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->add('show_multi_editor', CheckboxType::class, [
+            'required' => false,
+            'mapped' => false,
+            'label' => 'Show multi editor afterwards'
+        ]);
+
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
             $activityHashes = $event->getData();
 
