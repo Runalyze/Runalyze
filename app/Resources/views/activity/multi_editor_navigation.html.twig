@@ -54,10 +54,14 @@
         });
     });
 
-    Runalyze.Overlay.setSmallSize();
+    {% if previews[0].activityId %}
+    $("#ajax").append('<div class="panel-content" style="min-height:400px;"></div>');
+
     Runalyze.Overlay.load("{{ path('activity-edit', {'id': previews[0].activityId}) }}", {
-        success: onSuccess
+        success: onSuccess,
+        size: 'small'
     });
+    {% endif %}
 })(jQuery);
     </script>
 {% endblock %}

@@ -450,7 +450,7 @@ class ActivityController extends Controller
      */
     public function multiEditorAction(Request $request, Account $account)
     {
-        $ids = explode(',', $request->get('ids', ''));
+        $ids = array_filter(explode(',', $request->get('ids', '')));
 
         return $this->getResponseForMultiEditor($ids, $account);
     }
