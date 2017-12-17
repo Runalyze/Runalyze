@@ -41,9 +41,15 @@
             $("#activity_next-multi-editor").val($next.data("activity"));
             $("#activity").find("input[type=submit]").val("{% trans %}Save and continue{% endtrans %}");
         }
+
+        $("#ajax-prev, #ajax-next").remove();
     };
 
     $nav.appendTo($("#ajax-outer")).removeClass('hide');
+    $nav.find(".multi-edit-remove-link").click(function(e){
+        $(this).parent().parent().remove();
+        e.stopPropagation();
+    });
     $nav.find("tr.link").click(function(){
         $nav.find("tr.link.highlight").removeClass("highlight").addClass("edited");
 

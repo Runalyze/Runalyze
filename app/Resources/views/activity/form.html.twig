@@ -218,6 +218,14 @@
         {{ form_end(form) }}
     </div>
 
+    {% if prev_activity_id is not null and not isMulti %}
+    <a data-size="small" id="ajax-prev" class="window black-rounded-icon" href="{{ url('activity-edit', {'id': prev_activity_id}) }}"><i class="fa fa-fw fa-chevron-left"></i></a>
+    {% endif %}
+
+    {% if next_activity_id is not null and not isMulti %}
+        <a data-size="small" id="ajax-next" class="window black-rounded-icon" href="{{ url('activity-edit', {'id': next_activity_id}) }}"><i class="fa fa-fw fa-chevron-right"></i></a>
+    {% endif %}
+
     <script type="text/javascript">
     (function($){
         Runalyze.ActivityForm.init($('#activity'), {

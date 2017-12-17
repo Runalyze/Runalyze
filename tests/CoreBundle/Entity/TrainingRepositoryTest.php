@@ -415,4 +415,28 @@ class TrainingRepositoryTest extends AbstractRepositoryTestCase
             $date
         ));
     }
+
+    public function testActivityNavigation()
+    {
+        $activity1 = $this->insertActivityForDefaultAccount(mktime(12, 0, 0, 6, 1, 2015));
+        $activity2 = $this->insertActivityForDefaultAccount(mktime(12, 0, 0, 6, 1, 2015));
+        $activity3 = $this->insertActivityForDefaultAccount(mktime(12, 0, 0, 6, 1, 2016));
+        $activity4 = $this->insertActivityForDefaultAccount(mktime(12, 0, 0, 6, 30, 2016));
+        $activity5 = $this->insertActivityForDefaultAccount(mktime(12, 0, 0, 6, 30, 2016));
+
+        $this->assertNull($this->TrainingRepository->getIdOfPreviousActivity($activity1));
+        $this->assertEquals($activity2->getId(), $this->TrainingRepository->getIdOfNextActivity($activity1));
+
+        $this->assertEquals($activity1->getId(), $this->TrainingRepository->getIdOfPreviousActivity($activity2));
+        $this->assertEquals($activity3->getId(), $this->TrainingRepository->getIdOfNextActivity($activity2));
+
+        $this->assertEquals($activity2->getId(), $this->TrainingRepository->getIdOfPreviousActivity($activity3));
+        $this->assertEquals($activity4->getId(), $this->TrainingRepository->getIdOfNextActivity($activity3));
+
+        $this->assertEquals($activity3->getId(), $this->TrainingRepository->getIdOfPreviousActivity($activity4));
+        $this->assertEquals($activity5->getId(), $this->TrainingRepository->getIdOfNextActivity($activity4));
+
+        $this->assertEquals($activity4->getId(), $this->TrainingRepository->getIdOfPreviousActivity($activity5));
+        $this->assertNull($this->TrainingRepository->getIdOfNextActivity($activity5));
+    }
 }

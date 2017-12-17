@@ -66,6 +66,7 @@ class ActivityController extends Controller
     {
         $this->checkThatEntityBelongsToActivity($activity, $account);
 
+        $repository = $this->getTrainingRepository();
         $form = $this->createForm(ActivityType::class, $activity, [
             'action' => $this->generateUrl('activity-edit', ['id' => $activity->getId()])
         ]);
@@ -80,7 +81,7 @@ class ActivityController extends Controller
 
             // TODO: Handle 'is_race' checkbox
 
-            $this->getTrainingRepository()->save($activity);
+            $repository->save($activity);
 
             $this->addFlash('success', $this->get('translator')->trans('Changes have been saved.'));
             $this->get('app.automatic_reload_flag_setter')->set(AutomaticReloadFlagSetter::FLAG_ALL);
@@ -102,6 +103,8 @@ class ActivityController extends Controller
             'isMulti' => (bool)$request->get('multi', false),
             'decorator' => new ActivityDecorator($context),
             'activity_id' => $activity->getId(),
+            'prev_activity_id' => $repository->getIdOfPreviousActivity($activity),
+            'next_activity_id' => $repository->getIdOfNextActivity($activity),
             'showElevationCorrectionLink' => $activity->hasRoute() && !$activity->getRoute()->hasCorrectedElevations()
         ]);
     }

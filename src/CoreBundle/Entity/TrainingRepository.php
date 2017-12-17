@@ -67,36 +67,40 @@ class TrainingRepository extends EntityRepository
      * @param Training $activity
      * @return null|int
      */
-    public function getIdOfNextActivity(Training $activity, $timestamp) {
-        return null !== $this->createQueryBuilder('t')
-                ->select('t.id')
-                ->where('(t.time > :time AND t.id != :id)')
-                ->orWhere('(t.time = :time AND t.id > :id)')
-                ->andWhere('t.account = :account')
-                ->setParameter('account', $activity->getAccount())
-                ->setParameter('id', $activity->getId())
-                ->setParameter('time', $timestamp)
-                ->setMaxResults(1)
-                ->getQuery()
-                ->getOneOrNullResult();
+    public function getIdOfNextActivity(Training $activity) {
+        return $this->createQueryBuilder('t')
+            ->select('t.id')
+            ->where('(t.time > :time AND t.id != :id)')
+            ->orWhere('(t.time = :time AND t.id > :id)')
+            ->andWhere('t.account = :account')
+            ->setParameter('account', $activity->getAccount())
+            ->setParameter('id', $activity->getId())
+            ->setParameter('time', $activity->getTime())
+            ->orderBy('t.time', 'ASC')
+            ->addOrderBy('t.id', 'ASC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult(AbstractQuery::HYDRATE_SINGLE_SCALAR);
     }
 
     /**
      * @param Training $activity
      * @return null|int
      */
-    public function getIdOfPreviousActivity(Training $activity, $timestamp) {
-        return null !== $this->createQueryBuilder('t')
-                ->select('t.id')
-                ->where('(t.time < :time AND t.id != :id)')
-                ->orWhere('(t.time = :time AND t.id < :id)')
-                ->andWhere('t.account = :account')
-                ->setParameter('account', $activity->getAccount())
-                ->setParameter('id', $activity->getActivityId())
-                ->setParameter('time', $timestamp)
-                ->setMaxResults(1)
-                ->getQuery()
-                ->getOneOrNullResult();
+    public function getIdOfPreviousActivity(Training $activity) {
+        return $this->createQueryBuilder('t')
+            ->select('t.id')
+            ->where('(t.time < :time AND t.id != :id)')
+            ->orWhere('(t.time = :time AND t.id < :id)')
+            ->andWhere('t.account = :account')
+            ->setParameter('account', $activity->getAccount())
+            ->setParameter('id', $activity->getId())
+            ->setParameter('time', $activity->getTime())
+            ->orderBy('t.time', 'DESC')
+            ->addOrderBy('t.id', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult(AbstractQuery::HYDRATE_SINGLE_SCALAR);
     }
 
     /**
