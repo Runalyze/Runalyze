@@ -58,7 +58,7 @@ class TrainingRepository extends EntityRepository
             ->select('1')
             ->where('t.account = :account AND t.activityId = :id')
             ->setParameter('account', $activity->getAccount())
-            ->setParameter('id', $activity->getId())
+            ->setParameter('id', $activity->getActivityId())
             ->getQuery()
             ->getOneOrNullResult();
     }
