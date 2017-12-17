@@ -115,11 +115,10 @@ class ActivityBulkImportCommand extends ContainerAwareCommand
         $output->writeln('Done.');
     }
 
-
     /**
      * @param ActivityDataContainer $container
      * @param Account $account
-     * @return Training
+     * @return \Runalyze\Bundle\CoreBundle\Entity\Training
      */
     protected function containerToActivity(ActivityDataContainer $container, Account $account)
     {

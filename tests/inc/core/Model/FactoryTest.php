@@ -94,7 +94,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase {
 		$this->DB->exec('INSERT INTO `runalyze_activity_tag` (`activityid`, `tagid`) VALUES(1, 2)');
 		$this->DB->exec('INSERT INTO `runalyze_activity_tag` (`activityid`, `tagid`) VALUES(2, 3)');
 		$this->DB->exec('INSERT INTO `runalyze_activity_tag` (`activityid`, `tagid`) VALUES(3, 4)');
-                
+
 		$this->assertEquals(array(1, 2), $this->object->tagForActivity(1, true));
 		$this->assertEquals(array(
 			$this->object->tag(1), $this->object->tag(2)
@@ -114,7 +114,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase {
 			$this->object->tag(1), $this->object->tag(2), $this->object->tag(3), $this->object->tag(4)
 		), $this->object->allTags());
         }
-        
+
 	public function testEquipment() {
 		$this->DB->exec('INSERT INTO `runalyze_sport` (`id`, `name`, `accountid`) VALUES(1, "Sport A", '.$this->accountID.')');
 		$this->DB->exec('INSERT INTO `runalyze_sport` (`id`, `name`, `accountid`) VALUES(2, "Sport B", '.$this->accountID.')');
@@ -136,16 +136,6 @@ class FactoryTest extends \PHPUnit_Framework_TestCase {
 		$this->DB->exec('INSERT INTO `runalyze_activity_equipment` (`activityid`, `equipmentid`) VALUES(2, 3)');
 		$this->DB->exec('INSERT INTO `runalyze_activity_equipment` (`activityid`, `equipmentid`) VALUES(3, 4)');
 
-		$this->assertEquals(array(1, 2), $this->object->sportForEquipmentType(1, true));
-		$this->assertEquals(array(
-			$this->object->sport(1), $this->object->sport(2)
-		), $this->object->sportForEquipmentType(1));
-
-		$this->assertEquals(array(3), $this->object->sportForEquipmentType(2, true));
-		$this->assertEquals(array(
-			$this->object->sport(3)
-		), $this->object->sportForEquipmentType(2));
-
 		$this->assertEquals(array(1, 2), $this->object->equipmentForActivity(1, true));
 		$this->assertEquals(array(
 			$this->object->equipment(1), $this->object->equipment(2)
@@ -166,14 +156,6 @@ class FactoryTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(array(
 			$this->object->sport(1), $this->object->sport(2), $this->object->sport(3)
 		), $this->object->allSports());
-
-		$this->assertEquals(array(
-			$this->object->equipmentType(1), $this->object->equipmentType(2)
-		), $this->object->allEquipmentTypes());
-
-		$this->assertEquals(array(
-			$this->object->equipment(1), $this->object->equipment(2), $this->object->equipment(3), $this->object->equipment(4)
-		), $this->object->allEquipments());
 	}
 
 }

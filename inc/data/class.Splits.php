@@ -13,12 +13,6 @@ use Runalyze\Activity\Duration;
  */
 class Splits {
 	/**
-	 * Enum for constructor: Take data from post
-	 * @var string
-	 */
-	public static $FROM_POST = 'TAKE_PARAMETER_FROM_POST';
-
-	/**
 	 * Splits as string
 	 * @var string
 	 */
@@ -41,9 +35,6 @@ class Splits {
 	 * @param array $options
 	 */
 	public function __construct($data = '', $options = array()) {
-		if ($data == self::$FROM_POST)
-			$data = isset($_POST['splits']) ? $_POST['splits'] : array();
-
 		if (isset($options['transform-unit']) && $options['transform-unit'] === true) {
 			$this->transformDistanceUnit = true;
 		}
@@ -161,7 +152,7 @@ class Splits {
 	/**
 	 * Get splits as readable string
 	 * @param bool $restingLaps optional
-	 * @return string 
+	 * @return string
 	 */
 	public function asReadableString($restingLaps = false) {
 		$strings = array();
@@ -185,7 +176,7 @@ class Splits {
 	}
 
 	/**
-	 * Transform splits from internal string to array 
+	 * Transform splits from internal string to array
 	 */
 	private function stringToArray() {
 		$this->asArray = array();
@@ -209,7 +200,7 @@ class Splits {
 	}
 
 	/**
-	 * Clean internal array 
+	 * Clean internal array
 	 */
 	private function cleanArray() {
 		foreach ($this->asArray as $key => $split) {
@@ -257,7 +248,7 @@ class Splits {
 	/**
 	 * Get all times as array
 	 * @param bool $restingLaps optional
-	 * @return array 
+	 * @return array
 	 */
 	public function timesAsArray($restingLaps = false) {
 		$times = array();
@@ -327,7 +318,7 @@ class Splits {
 	/**
 	 * Get all distances as array
 	 * @param bool $restingLaps optional
-	 * @return array 
+	 * @return array
 	 */
 	public function distancesAsArray($restingLaps = false) {
 		$distances = array();
@@ -355,7 +346,7 @@ class Splits {
 	/**
 	 * Get all paces as array
 	 * @param bool $restingLaps optional
-	 * @return array 
+	 * @return array
 	 */
 	public function pacesAsArray($restingLaps = false) {
 		$paces = array();
@@ -420,21 +411,5 @@ class Splits {
 		}
 
 		$this->arrayToString();
-	}
-
-	/**
-	 * Get fieldset
-	 * @return FormularFieldset
-	 * @codeCoverageIgnore
-	 */
-	public function getFieldset() {
-		$Fieldset = new FormularFieldset( __('Laps') );
-		$Fieldset->addField( new TrainingInputSplits() );
-                $Fieldset->addCSSclass( TrainingFormular::$ONLY_DISTANCES_CLASS );
-
-		if ($this->areEmpty())
-			$Fieldset->setCollapsed();
-
-		return $Fieldset;
 	}
 }

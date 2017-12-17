@@ -70,10 +70,11 @@ SessionAccountHandler::setAccount(array(
 ));
 // Define RUNALYZE_TEST_TZ_LOOKUP
 try {
-	(new \Runalyze\Util\TimezoneLookup(false))->getTimezoneForCoordinate(13.41, 52.52);
+    $lookup = new \Runalyze\Bundle\CoreBundle\Services\Import\TimezoneLookup(TESTS_ROOT.'/../data/timezone.sqlite', 'libspatialite.so.5');
+    $lookup->getTimezoneForCoordinate(13.41, 52.52);
 
 	define('RUNALYZE_TEST_TZ_LOOKUP', true);
-} catch (\Runalyze\Util\TimezoneLookupException $e) {
+} catch (\Runalyze\Bundle\CoreBundle\Services\Import\TimezoneLookupException $e) {
 	define('RUNALYZE_TEST_TZ_LOOKUP', false);
 }
 

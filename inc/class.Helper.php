@@ -220,33 +220,6 @@ class Helper {
 }
 
 /**
- * Load a given XML-string with simplexml, correcting encoding
- * @param string $Xml
- * @return SimpleXMLElement
- */
-function simplexml_load_string_utf8($Xml) {
-	return simplexml_load_string(simplexml_correct_ns($Xml), null, LIBXML_PARSEHUGE);
-}
-
-/**
- * Correct namespace for using xpath in simplexml
- * @param string $string
- * @return string
- */
-function simplexml_correct_ns($string) {
-	return str_replace('xmlns=', 'ns=', removeBOMfromString($string));
-}
-
-/**
- * Remove leading BOM from string
- * @param string $string
- * @return string
- */
-function removeBOMfromString($string) {
-	return mb_substr($string, mb_strpos($string, "<"));
-}
-
-/**
  * Trimmer function for array_walk
  * @param array $value
  */
