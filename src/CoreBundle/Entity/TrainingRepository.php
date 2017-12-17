@@ -58,9 +58,45 @@ class TrainingRepository extends EntityRepository
             ->select('1')
             ->where('t.account = :account AND t.activityId = :id')
             ->setParameter('account', $activity->getAccount())
-            ->setParameter('id', $activity->getActivityId())
+            ->setParameter('id', $activity->getId())
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    /**
+     * @param Training $activity
+     * @return null|int
+     */
+    public function getIdOfNextActivity(Training $activity, $timestamp) {
+        return null !== $this->createQueryBuilder('t')
+                ->select('t.id')
+                ->where('(t.time > :time AND t.id != :id)')
+                ->orWhere('(t.time = :time AND t.id > :id)')
+                ->andWhere('t.account = :account')
+                ->setParameter('account', $activity->getAccount())
+                ->setParameter('id', $activity->getId())
+                ->setParameter('time', $timestamp)
+                ->setMaxResults(1)
+                ->getQuery()
+                ->getOneOrNullResult();
+    }
+
+    /**
+     * @param Training $activity
+     * @return null|int
+     */
+    public function getIdOfPreviousActivity(Training $activity, $timestamp) {
+        return null !== $this->createQueryBuilder('t')
+                ->select('t.id')
+                ->where('(t.time < :time AND t.id != :id)')
+                ->orWhere('(t.time = :time AND t.id < :id)')
+                ->andWhere('t.account = :account')
+                ->setParameter('account', $activity->getAccount())
+                ->setParameter('id', $activity->getActivityId())
+                ->setParameter('time', $timestamp)
+                ->setMaxResults(1)
+                ->getQuery()
+                ->getOneOrNullResult();
     }
 
     /**

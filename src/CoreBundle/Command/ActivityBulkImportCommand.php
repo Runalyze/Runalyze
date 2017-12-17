@@ -83,21 +83,18 @@ class ActivityBulkImportCommand extends ContainerAwareCommand
 
         foreach ($importResult as $result) {
             /** @var $result FileImportResult */
-            if (1 == $result->getNumberOfActivities()) {
-                $activity = $this->containerToActivity($result->getContainer()[0], $user);
+            foreach ($result->getContainer() as $container) {
+                $activity = $this->containerToActivity($container, $user);
                 $context = new ActivityContext($activity, null, null, $activity->getRoute());
-                $contextAdapterFactory->getAdapterFor($context)->guessWeatherConditions($defaultLocation);
-                $this->getTrainingRepository()->save($activity);
+                $contextAdapter = $contextAdapterFactory->getAdapterFor($context);
                 $output->writeln('<info>'.$result->getOriginalFileName().'</info>');
+                if ( $contextAdapter->isPossibleDuplicate() ) {
+                    $output->writeln('<fg=yellow> ... is a duplicate</>');
+                    break;
+                }
+                $contextAdapter->guessWeatherConditions($defaultLocation);
+                $this->getTrainingRepository()->save($activity);
                 $output->writeln('<fg=green> ... successfully imported</>');
-                //$output->writeln('<fg=red> ... is a duplicate</>');
-                // $output->writeln('<fg=red> ... failed</>');
-                //$this->addFailedFile($file, $e->getMessage());
-
-
-            } else {
-                //TODO Multi activity files
-
             }
 
 
