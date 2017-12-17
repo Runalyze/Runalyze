@@ -70,7 +70,7 @@ class ActivityBulkImportCommand extends ContainerAwareCommand
             $file = $fileinfo->getFilename();
 
             if (!is_file($path.'/'.$file)) {
-                break;
+                continue;
             }
 
             $filename = 'bulk-import'.uniqid().$file;

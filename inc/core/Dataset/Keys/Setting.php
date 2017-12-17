@@ -62,6 +62,14 @@ class Setting extends AbstractKey
 	}
 
     /**
+     * @return bool
+     * @codeCoverageIgnore
+     */
+    public function hasPrivacyOption() {
+        return false;
+    }
+
+    /**
      * Get string to display this dataset value
      * @param \Runalyze\Dataset\Context $context
      * @return string

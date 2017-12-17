@@ -716,7 +716,7 @@ class Account implements AdvancedUserInterface, \Serializable, IdentifiableEntit
      */
     public function getRoles()
     {
-        return array(UserRole::getRoleName($this->role));
+        return [UserRole::getRoleName($this->role)];
     }
 
     /**

@@ -16,36 +16,36 @@ class ChangePasswordType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('password', PasswordType::class, array(
+            ->add('password', PasswordType::class, [
                 'required' => false,
                 'label' => 'Old password',
                 'mapped' => false,
                 'empty_data' => null,
-                'constraints' => new UserPassword(array('message' => 'Please enter your current password')),
-                'attr' => array(
+                'constraints' => new UserPassword(['message' => 'Please enter your current password']),
+                'attr' => [
                     'autofocus' => true
-                )
-            ))
-            ->add('plainPassword', RepeatedType::class, array(
+                ]
+            ])
+            ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'invalid_message' => 'The password fields must match.',
-                'options' => array('attr' => array('class' => 'password-field')),
+                'options' => ['attr' => ['class' => 'password-field']],
                 'required' => false,
-                'first_options'  => array('label' => 'New password'),
-                'second_options' => array('label' => 'Repeat password'),
+                'first_options'  => ['label' => 'New password'],
+                'second_options' => ['label' => 'Repeat password'],
                 'empty_data'  => null,
-                'constraints' => array(
+                'constraints' => [
                     new NotBlank(),
-                    new Length(array('min' => 8)),
-                ),
-            ))
+                    new Length(['min' => 8]),
+                ],
+            ])
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'Runalyze\Bundle\CoreBundle\Entity\Account'
-        ));
+        ]);
     }
 }

@@ -20,13 +20,13 @@ class JsonImporter
     protected $DatabasePrefix;
 
 	/** @var array $ReplaceIDs[table][oldID] = newID */
-	protected $ReplaceIDs = array();
+	protected $ReplaceIDs = [];
 
 	/** @var array */
-	protected $ExistingData = array();
+	protected $ExistingData = [];
 
     /** @var array */
-    protected $InternalSportIds = array();
+    protected $InternalSportIds = [];
 
 	/** @var JsonImporterResults */
 	protected $Results;
@@ -122,17 +122,17 @@ class JsonImporter
     {
 		Configuration::loadAll();
 
-		$Tables = array(
+		$Tables = [
 			'sport'		=> 'name',
 			'type'		=> 'name',
 			'plugin'	=> 'key',
 			'equipment'	=> 'name',
 			'equipment_type' => 'name',
 			'tag'		=> 'tag'
-		);
+		];
 
 		foreach ($Tables as $Table => $Column) {
-			$this->ExistingData['runalyze_'.$Table] = array();
+			$this->ExistingData['runalyze_'.$Table] = [];
 			if ($Table == 'sport') {
                 $statement = $this->DB->query('SELECT `id`, `internal_sport_id`, `' . $Column . '` FROM `' . $this->DatabasePrefix . $Table . '`');
             } else {
@@ -148,7 +148,7 @@ class JsonImporter
 		}
 
 		$FetchEquipmentSportRelation = $this->DB->query('SELECT CONCAT(`sportid`, "-", `equipment_typeid`) FROM `'.$this->DatabasePrefix.'equipment_sport`');
-		$this->ExistingData['runalyze_equipment_sport'] = array();
+		$this->ExistingData['runalyze_equipment_sport'] = [];
 
 		while ($Relation = $FetchEquipmentSportRelation->fetchColumn()) {
 			$this->ExistingData['runalyze_equipment_sport'][] = $Relation;
@@ -176,8 +176,8 @@ class JsonImporter
 	 */
 	private function readTable($tableName)
     {
-        $tableSettings = array(
-			'import'	=> array(
+        $tableSettings = [
+			'import'	=> [
 				'runalyze_sport',
 				'runalyze_type',
 				'runalyze_user',
@@ -193,14 +193,14 @@ class JsonImporter
 				'runalyze_tag',
 				'runalyze_activity_tag',
 				'runalyze_raceresult'
-			),
-			'update'	=> array(
+			],
+			'update'	=> [
 				'runalyze_conf'			=> $this->OverwriteConfig,
 				'runalyze_dataset'		=> $this->OverwriteDataset,
 				'runalyze_plugin'		=> $this->OverwritePlugins,
 				'runalyze_plugin_conf'	=> $this->OverwritePlugins
-			)
-		);
+			]
+		];
 
 		if (in_array($tableName, $tableSettings['import'])) {
 			$this->importTable($tableName);
@@ -339,9 +339,12 @@ class JsonImporter
 			))) {
 			    if ($tableName == 'runalyze_sport' && isset($columnIds['internal_sport_id'])) {
 			        $internalId = $values[$columnIds['internal_sport_id']];
-			        if ( isset($this->InternalSportIds[$internalId])) {
+
+			        if (isset($this->InternalSportIds[$internalId])) {
                         $this->ReplaceIDs[$tableName][$id] = $this->InternalSportIds[$internalId];
-                        break;
+                        $line = $this->Reader->readLine();
+
+                        continue;
                     }
                 }
                 if (isset($this->ExistingData[$tableName][$values[0]])) {

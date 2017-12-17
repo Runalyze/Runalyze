@@ -12,16 +12,16 @@ class TagType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('tag', TextType::class, array(
+            ->add('tag', TextType::class, [
                 'required' => true
-            ))
+            ])
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'Runalyze\Bundle\CoreBundle\Entity\Tag'
-        ));
+        ]);
     }
 }

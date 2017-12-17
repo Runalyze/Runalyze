@@ -28,6 +28,7 @@
                             <th>&nbsp;</th>
                             <th>&nbsp;</th>
                             <th><span rel="tooltip" title="{% trans %}The information will be shown directly in the row.{% endtrans %}">{% trans %}Display{% endtrans %}</span></th>
+                            <th><span rel="tooltip" title="{% trans %}The information will be shown on your public athlete page if checked.{% endtrans %}">{% trans %}Public{% endtrans %}</span></th>
                             <th><span rel="tooltip" title="{% trans %}Indicates the order of appearance.{% endtrans %}">{% trans %}Order{% endtrans %}</span></th>
                             <th><span rel="tooltip" title="{% trans %}any CSS-Code{% endtrans %}">{% trans %}CSS-Style{% endtrans %}</span></th>
                             <th>{% trans %}Example{% endtrans %}</th>
@@ -57,6 +58,15 @@
                                         {{ form_widget(dataset.active) }}
                                     {% else %}
                                         {{ form_widget(dataset.active, {'checked' : defaultConfiguration[keyObject.id].active }) }}
+                                    {% endif %}
+                                </td>
+                                <td class="c">
+                                    {% if defaultConfiguration[keyObject.id].privacyOption %}
+                                        {% if missingKeys[dataset.vars.value.keyid] and numberOfExistingKeys > 0 %}
+                                            {{ form_widget(dataset.privacy, {'checked' : defaultConfiguration[keyObject.id].privacy }) }}
+                                        {% else %}
+                                            {{ form_widget(dataset.privacy) }}
+                                        {% endif %}
                                     {% endif %}
                                 </td>
                                 <td class="c">

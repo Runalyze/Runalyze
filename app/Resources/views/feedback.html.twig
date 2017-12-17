@@ -1,0 +1,34 @@
+{% extends 'base_logged_in.twig' %}
+
+{% block content %}
+    <div class="panel-heading">
+        <h1><a class="ajax" target="ajax" href="{{ url('feedback') }}">{% trans %}Share your thoughts{% endtrans %}</a></h1>
+    </div>
+
+    <div class="panel-content">
+        {% if form.vars.submitted == false %}
+            <div class="panel-content">
+                <p class="margin-bottom">
+                    {% trans %}We are happy to hear your thoughts and ideas about our service. We will review every feedback and discuss topics internally.{% endtrans %}
+                    {% trans %}Please use the forum for any support question.{% endtrans %}
+                </p>
+                {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'ajax no-automatic-reload'}, 'action': url('feedback')}) }}
+
+                <fieldset class="c">
+
+                    {{ form_widget( form.message, {'attr': {'style': 'width: 300px;  height: 150px;'}}) }}
+
+                    <div class="c">
+                        <input type="submit" value="{% trans %}Send feedback{% endtrans %}">
+                    </div>
+                </fieldset>
+
+                {{ form_end(form) }}
+            </div>
+            {% else %}
+            <p class="info">{% trans %}Thanks for sharing your thoughts!{% endtrans %}</p>
+        {% endif %}
+
+    </div>
+
+{% endblock %}

@@ -233,7 +233,7 @@ class Query
 			}
 		}
 
-		return implode(', ', $columnSelects);
+		return empty($columnSelects) ? '1' : implode(', ', $columnSelects);
 	}
 
 	/**
@@ -266,7 +266,7 @@ class Query
 	 */
 	protected function queryToSelectKeys(array $arrayOfKeys)
 	{
-		return '`t`.`'.implode('`, `t`.`', $arrayOfKeys).'`';
+		return empty($arrayOfKeys) ? '1' : '`t`.`'.implode('`, `t`.`', $arrayOfKeys).'`';
 	}
 
 	/**

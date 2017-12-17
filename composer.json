@@ -10,7 +10,7 @@
         "symfony/symfony": "3.3.*",
         "sensio/framework-extra-bundle": "^3.0",
         "twig/twig": "1.34",
-        "monolog/monolog": "^1.19",
+        "monolog/monolog": "^1.20",
         "nojacko/email-validator": "~1.0",
         "league/geotools": "^0.7.0",
         "swiftmailer/swiftmailer": "@stable",

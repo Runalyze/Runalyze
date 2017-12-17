@@ -51,25 +51,25 @@ class PosterType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('postertype', ChoiceType::class, array(
+            ->add('postertype', ChoiceType::class, [
                 'multiple' => true,
-                'choices' => array(
+                'choices' => [
                     'Circular' => 'circular',
                     'Calendar' => 'calendar',
                     'Grid'     => 'grid',
-                    'Heatmap'  => 'heatmap'),
+                    'Heatmap'  => 'heatmap'],
                 'attr' => ['class' => 'chosen-select full-size']
-            ))
+            ])
             ->add('year', ChoiceType::class, [
                 'choices' => $this->TrainingRepository->getActiveYearsFor($this->getAccount(), null, 2),
                 'choice_label' => function($year, $key, $index) {
                     return $year;
                 },
             ])
-            ->add('title', TextType::class, array(
+            ->add('title', TextType::class, [
                 'required' => true,
                 'attr' => ['maxlength' => 11]
-            ))
+            ])
             ->add('sport', ChoiceType::class, [
                 'choices' => $this->SportRepository->findWithDistancesFor($this->getAccount()),
                 'choice_label' => function($sport, $key, $index) {
@@ -78,15 +78,15 @@ class PosterType extends AbstractType
                 },
                 'choice_value' => 'getId',
             ])
-            ->add('size', ChoiceType::class, array(
-                'choices' => array(
+            ->add('size', ChoiceType::class, [
+                'choices' => [
                     'DIN A4' => 4000,
                     'DIN A3' => 5000,
                     'DIN A2' => 7000,
                     'DIN A1' => 10000,
                     'DIN A0' => 14000
-                ),
-            ))
+                 ],
+            ])
         ;
     }
 }

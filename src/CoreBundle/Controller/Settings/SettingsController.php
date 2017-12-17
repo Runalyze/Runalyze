@@ -166,6 +166,7 @@ class SettingsController extends Controller
             }
 
             $em->flush();
+            $this->get('app.automatic_reload_flag_setter')->set(AutomaticReloadFlagSetter::FLAG_DATA_BROWSER);
         }
 
         return $this->redirectToRoute('settings-dataset');

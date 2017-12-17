@@ -1603,9 +1603,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <jms:reference-file line="142">/../src/CoreBundle/Controller/Settings/SportController.php</jms:reference-file>
         <jms:reference-file line="232">/../src/CoreBundle/Controller/Settings/SportController.php</jms:reference-file>
       </trans-unit>
-      <trans-unit id="abffb03580df0114b369bfe21b0017e6289e6062" resname="Objects will be displayed as inactive as soon as they have reached their end date.">
+      <trans-unit id="abffb03580df0114b369bfe21b0017e6289e6062" resname="Objects will be displayed as inactive as soon as they have reached their end date." approved="yes">
         <source>Objects will be displayed as inactive as soon as they have reached their end date.</source>
-        <target>Objekte werden als inaktiv angezeigt, sobald sie ihre Enddatum erreicht haben.</target>
+        <target state="translated">Objekte werden als inaktiv angezeigt, sobald sie ihr Enddatum erreicht haben.</target>
         <jms:reference-file line="36">/Resources/views/my/equipment/form-equipment.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="51327aef9866e85ef5b5b2294a28494d2715ae59" resname="Oct">

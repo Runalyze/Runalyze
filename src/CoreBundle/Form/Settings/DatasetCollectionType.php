@@ -12,10 +12,10 @@ class DatasetCollectionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('datasets', CollectionType::class, array(
+            ->add('datasets', CollectionType::class, [
                 'entry_type' => DatasetType::class,
                 'allow_add' => true
-            ));
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

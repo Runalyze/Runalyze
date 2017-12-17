@@ -24,6 +24,7 @@ class UtilityExtension extends \Twig_Extension
         return array(
             new \Twig_SimpleFilter('duration', array($this, 'duration')),
             new \Twig_SimpleFilter('filesize', array($this, 'filesizeAsString')),
+            new \Twig_SimpleFilter('md5', array($this, 'md5'))
         );
     }
 
@@ -82,4 +83,13 @@ class UtilityExtension extends \Twig_Extension
 
         return number_format($bytes / pow(1024, $I = floor(log($bytes, 1024))), ($I >= 1) ? 2 : 0, '.', '').' '.$FS[$I];
     }
+
+    /**
+     * @param $value
+     * @return string
+     */
+    public function md5($value) {
+        return md5($value);
+    }
+
 }

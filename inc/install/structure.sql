@@ -95,6 +95,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_dataset` (
   `active` tinyint(1) unsigned NOT NULL DEFAULT '1',
   `style` varchar(100) NOT NULL DEFAULT '',
   `position` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `privacy` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `accountid` int(10) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
