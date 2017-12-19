@@ -540,4 +540,12 @@ class TrainingRepository extends EntityRepository
 
         return $training->getId();
     }
+
+    public function remove(Training $activity)
+    {
+        // TODO: remove other entities?
+
+        $this->_em->remove($activity);
+        $this->_em->flush();
+    }
 }

@@ -57,6 +57,26 @@ class EquipmentRepository extends EntityRepository
         );
     }
 
+    /**
+     * @param Equipment[] $equipment
+     * @param int|float $additionalDuration [s]
+     * @param float $additionalDistance [km]
+     * @param bool $flush
+     */
+    public function updateEquipment(array $equipment, $additionalDuration, $additionalDistance = 0.0, $flush = true)
+    {
+        foreach ($equipment as $object) {
+            $object->addTime($additionalDuration);
+            $object->addDistance($additionalDistance);
+
+            $this->_em->persist($object);
+        }
+
+        if ($flush) {
+            $this->_em->flush($equipment);
+        }
+    }
+
     public function save(Equipment $equipment)
     {
         $this->_em->persist($equipment);

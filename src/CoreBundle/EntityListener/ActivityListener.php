@@ -4,8 +4,11 @@ namespace Runalyze\Bundle\CoreBundle\EntityListener;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
+use Doctrine\ORM\PersistentCollection;
 use Runalyze\Bundle\CoreBundle\Bridge\Activity\Calculation\PowerCalculator;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
+use Runalyze\Bundle\CoreBundle\Entity\Equipment;
+use Runalyze\Bundle\CoreBundle\Entity\EquipmentRepository;
 use Runalyze\Bundle\CoreBundle\Entity\Sport;
 use Runalyze\Bundle\CoreBundle\Entity\SportRepository;
 use Runalyze\Bundle\CoreBundle\Entity\Training;
@@ -25,6 +28,9 @@ class ActivityListener
     /** @var SportRepository */
     protected $SportRepository;
 
+    /** @var EquipmentRepository */
+    protected $EquipmentRepository;
+
     /** @var TimezoneLookup */
     protected $TimezoneLookup;
 
@@ -32,12 +38,14 @@ class ActivityListener
         RecalculationManager $recalculationManager,
         ConfigurationManager $configurationManager,
         SportRepository $sportRepository,
+        EquipmentRepository $equipmentRepository,
         TimezoneLookup $timezoneLookup
     )
     {
         $this->RecalculationManager = $recalculationManager;
         $this->ConfigurationManager = $configurationManager;
         $this->SportRepository = $sportRepository;
+        $this->EquipmentRepository = $equipmentRepository;
         $this->TimezoneLookup = $timezoneLookup;
         $this->TimezoneLookup->silentExceptions();
     }
@@ -77,6 +85,7 @@ class ActivityListener
 
     public function postPersist(Training $activity, LifecycleEventArgs $args)
     {
+        $this->addStatisticsToEquipment($activity);
         $this->scheduleRunningRelatedRecalculationsIfRequired($activity);
         $this->addStartTimeCheck($activity->getAccount(), $activity->getTime(), false);
     }
@@ -102,6 +111,8 @@ class ActivityListener
             $this->calculateIfActivityWasAtNight($activity);
         }
 
+        $this->updateStatisticsForEquipment($activity, $args);
+
         $this->scheduleRunningRelatedRecalculationsIfRequiredForUpdate($activity, $args);
 
         if ($args->hasChangedField('time')) {
@@ -115,6 +126,8 @@ class ActivityListener
 
     public function postRemove(Training $activity, LifecycleEventArgs $args)
     {
+        $this->removeStatisticsFromEquipment($activity);
+
         $this->scheduleRunningRelatedRecalculationsIfRequired($activity);
 
         $this->addStartTimeCheck($activity->getAccount(), $activity->getTime(), true);
@@ -365,5 +378,71 @@ class ActivityListener
             ($ageOfOldDate <= $numberOfDays && $ageOfNewDate > $numberOfDays) ||
             ($ageOfOldDate > $numberOfDays && $ageOfNewDate <= $numberOfDays)
         );
+    }
+
+    protected function addStatisticsToEquipment(Training $activity)
+    {
+        $this->EquipmentRepository->updateEquipment(
+            $activity->getEquipment()->toArray(),
+            $activity->getS(),
+            $activity->getDistance(),
+            false
+        );
+    }
+
+    protected function removeStatisticsFromEquipment(Training $activity)
+    {
+        $this->EquipmentRepository->updateEquipment(
+            $activity->getEquipment()->toArray(),
+            -$activity->getS(),
+            -$activity->getDistance(),
+            false
+        );
+    }
+
+    protected function updateStatisticsForEquipment(Training $activity, PreUpdateEventArgs $args)
+    {
+        $newEquipment = [];
+        $removedEquipment = [];
+        $updates = $args->getEntityManager()->getUnitOfWork()->getScheduledCollectionUpdates();
+
+        foreach ($updates as $collection) {
+            /** @var PersistentCollection $collection */
+            if (
+                $collection->isDirty() && $collection->getTypeClass()->getName() == Equipment::class &&
+                $collection->getOwner() instanceof Training && $collection->getOwner()->getId() == $activity->getId()
+            ) {
+                $newEquipment = $collection->getInsertDiff();
+                $removedEquipment = $collection->getDeleteDiff();
+            }
+        }
+
+        $handledIds = array_map(function(Equipment $equipment) {
+            return $equipment->getId();
+        }, array_merge($newEquipment, $removedEquipment));
+
+        if (!empty($removedEquipment)) {
+            $this->EquipmentRepository->updateEquipment($removedEquipment, -$activity->getS(), -$activity->getDistance(), false);
+        }
+
+        if (!empty($newEquipment)) {
+            $this->EquipmentRepository->updateEquipment($newEquipment, $activity->getS(), $activity->getDistance(), false);
+        }
+
+        $durationChange = $args->hasChangedField('s') ? $args->getNewValue('s') - $args->getOldValue('s') : 0;
+        $distanceChange = $args->hasChangedField('distance') ? $args->getNewValue('distance') - $args->getOldValue('distance') : 0.0;
+
+        if (0 != $durationChange || 0.0 != $distanceChange) {
+            /** @var Equipment[] $unchangedEquipment */
+            $unchangedEquipment = $activity->getEquipment()->toArray();
+
+            foreach ($unchangedEquipment as $i => $equipment) {
+                if (in_array($equipment->getId(), $handledIds)) {
+                    unset($unchangedEquipment[$i]);
+                }
+            }
+
+            $this->EquipmentRepository->updateEquipment($unchangedEquipment, $durationChange, $distanceChange, false);
+        }
     }
 }

@@ -439,4 +439,63 @@ class TrainingRepositoryTest extends AbstractRepositoryTestCase
         $this->assertEquals($activity4->getId(), $this->TrainingRepository->getIdOfPreviousActivity($activity5));
         $this->assertNull($this->TrainingRepository->getIdOfNextActivity($activity5));
     }
+
+    public function testEquipmentStatistics()
+    {
+        $someEquipment = $this->EntityManager->getRepository('CoreBundle:Equipment')->findBy(
+            ['account' => $this->getDefaultAccount()],
+            null,
+            3
+        );
+
+        if (count($someEquipment) < 3) {
+            $this->markTestSkipped('Test requires at least three existing equipment objects for default account.');
+        } else {
+            $activity = $this->getActivityForDefaultAccount(null, 3600, 10.0);
+            $activity->addEquipment($someEquipment[0]);
+
+            $this->TrainingRepository->save($activity);
+
+            $this->assertEquals(3600, $someEquipment[0]->getTime());
+            $this->assertEquals(10.0, $someEquipment[0]->getDistance());
+            $this->assertEquals(0, $someEquipment[1]->getTime());
+            $this->assertEquals(0.0, $someEquipment[1]->getDistance());
+            $this->assertEquals(0, $someEquipment[2]->getTime());
+            $this->assertEquals(0.0, $someEquipment[2]->getDistance());
+
+            $activity->addEquipment($someEquipment[1]);
+            $activity->setDistance(12.0);
+            $activity->setS(3580);
+
+            $this->TrainingRepository->save($activity);
+
+            $this->assertEquals(3580, $someEquipment[0]->getTime());
+            $this->assertEquals(12.0, $someEquipment[0]->getDistance());
+            $this->assertEquals(3580, $someEquipment[1]->getTime());
+            $this->assertEquals(12.0, $someEquipment[1]->getDistance());
+            $this->assertEquals(0, $someEquipment[2]->getTime());
+            $this->assertEquals(0.0, $someEquipment[2]->getDistance());
+
+            $activity->removeEquipment($someEquipment[0]);
+            $activity->addEquipment($someEquipment[2]);
+
+            $this->TrainingRepository->save($activity);
+
+            $this->assertEquals(0, $someEquipment[0]->getTime());
+            $this->assertEquals(0.0, $someEquipment[0]->getDistance());
+            $this->assertEquals(3580, $someEquipment[1]->getTime());
+            $this->assertEquals(12.0, $someEquipment[1]->getDistance());
+            $this->assertEquals(3580, $someEquipment[2]->getTime());
+            $this->assertEquals(12.0, $someEquipment[2]->getDistance());
+
+            $this->TrainingRepository->remove($activity);
+
+            $this->assertEquals(0, $someEquipment[0]->getTime());
+            $this->assertEquals(0.0, $someEquipment[0]->getDistance());
+            $this->assertEquals(0, $someEquipment[1]->getTime());
+            $this->assertEquals(0.0, $someEquipment[1]->getDistance());
+            $this->assertEquals(0, $someEquipment[2]->getTime());
+            $this->assertEquals(0.0, $someEquipment[2]->getDistance());
+        }
+    }
 }

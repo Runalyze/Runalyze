@@ -167,6 +167,18 @@ class Equipment implements IdentifiableEntityInterface, NamedEntityInterface, Ac
     }
 
     /**
+     * @param float $distance [km]
+     *
+     * @return $this
+     */
+    public function addDistance($distance)
+    {
+        $this->distance += $distance;
+
+        return $this;
+    }
+
+    /**
      * @return float [km]
      */
     public function getDistance()
@@ -182,6 +194,18 @@ class Equipment implements IdentifiableEntityInterface, NamedEntityInterface, Ac
     public function setTime($time)
     {
         $this->time = $time;
+
+        return $this;
+    }
+
+    /**
+     * @param int $time [s]
+     *
+     * @return $this
+     */
+    public function addTime($time)
+    {
+        $this->time += $time;
 
         return $this;
     }
