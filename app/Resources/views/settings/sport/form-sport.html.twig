@@ -39,6 +39,11 @@
                 {% trans %}You can group your sports into 'main' and 'alternative' ones.
                 For some analyses 'alternative' types are grouped together whereas 'main' types are always shown standalone from each other.{% endtrans %}
             </p>
+
+            {{ form_row(form.defaultPrivacy, {'div_class': 'w100 block with50erLabel'}) }}
+            <p class="info margin-bottom">
+                {% trans %}Default privacy setting for all new created activities of this sport type.{% endtrans %}
+            </p>
         </fieldset>
 
         <fieldset>

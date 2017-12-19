@@ -94,6 +94,13 @@ class Sport implements IdentifiableEntityInterface, NamedEntityInterface, Accoun
     private $outside = false;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="default_privacy", type="boolean")
+     */
+    private $defaultPrivacy = false;
+
+    /**
      * @var EquipmentType|null
      *
      * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\EquipmentType")
@@ -383,6 +390,26 @@ class Sport implements IdentifiableEntityInterface, NamedEntityInterface, Accoun
     public function getOutside()
     {
         return $this->outside;
+    }
+
+    /**
+     * @param bool $privacy
+     *
+     * @return $this
+     */
+    public function setDefaultPrivacy($privacy)
+    {
+        $this->defaultPrivacy = $privacy;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getDefaultPrivacy()
+    {
+        return $this->defaultPrivacy;
     }
 
     /**

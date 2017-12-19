@@ -24,6 +24,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use Symfony\Component\Validator\Constraints\Choice;
 
 class SportType extends AbstractType
 {
@@ -102,6 +103,14 @@ class SportType extends AbstractType
             ->add('distances', CheckboxType::class, [
                 'required' => false,
                 'label' => 'Has a distance'
+            ])
+            ->add('defaultPrivacy', ChoiceType::class, [
+                'required' => true,
+                'label' => 'Default privacy',
+                'choices' => array(
+                    'private' => true,
+                    'public' => false
+                ),
             ])
             ->add('kcal', EnergyKcalType::class, [
                 'attr' => ['min' => 1, 'max' => 10000],

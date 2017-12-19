@@ -10,7 +10,6 @@ class Privacy extends AbstractCategory
     public function getDefaultVariables()
     {
         return [
-            'TRAINING_MAKE_PUBLIC' => 'false',
             'TRAINING_LIST_PUBLIC' => 'false',
             'TRAINING_LIST_ALL' => 'false',
             'TRAINING_LIST_STATISTICS' => 'false',
