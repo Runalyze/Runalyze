@@ -5,6 +5,9 @@
 {% set configList = config().activityForm %}
 {# @var configList \Runalyze\Bundle\CoreBundle\Component\Configuration\Category\ActivityForm #}
 
+{% set generalConfig = config().general %}
+{# @var configList \Runalyze\Bundle\CoreBundle\Component\Configuration\Category\General #}
+
 {% block content %}
     <div class="panel-heading">
         {% if form.vars.data.id is null%}
@@ -159,7 +162,7 @@
         </p>
     </div>
 
-    {% if form.vars.data.id is not null and form.vars.data.trainings.count() is null %}
-        {{ dangerZoneDelete(url('sport-delete', {'id': form.vars.data.id}), 'deleteSport') }}
+    {% if form.vars.data.id is not null and form.vars.data.trainings.count() < 1 and generalConfig.getMainSport != form.vars.data.id %}
+       {{ dangerZoneDelete(url('sport-delete', {'id': form.vars.data.id}), 'deleteSport') }}
     {% endif %}
 {% endblock %}

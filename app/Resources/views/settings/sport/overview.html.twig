@@ -20,6 +20,10 @@
             </tr>
             </thead>
             <tbody class="c">
+            {% set generalConfig = config().general %}
+            {# @var configList \Runalyze\Bundle\CoreBundle\Component\Configuration\Category\General #}
+            {% set mainSport = generalConfig.getMainSport %}
+
             {% if sports|length > 0 %}
                 {% for sport in sports %}
                     {# @var sport \Runalyze\Bundle\CoreBundle\Entity\Sport #}
@@ -34,7 +38,9 @@
                         <td class="small">{{ sport.distances ? sport.speedUnit.unit : '' }}</td>
                         <td>{{ calendarView.stringFor(sport.short) }}</td>
                         <td>
-                            {% if hasTrainings[sport.id] is not defined %}
+                            {% if mainSport == sport.id %}
+                                <i class="fa fa-fw fa-trash unimportant cursor-not-allowed" rel="tooltip" title="{% trans %}Sport cannot be deleted.{% endtrans %}<br>{% trans %}This is your main sport.{% endtrans %}"></i>
+                            {% elseif hasTrainings[sport.id] is not defined %}
                                 <a class="window color-danger" href="{{ url('sport-delete', { 'id': sport.id, 't': csrf_token('deleteSport') }) }}" data-confirm="{% trans %}Do you really want to delete this?{% endtrans %}"><i class="fa fa-fw fa-trash" title="{% trans %}Delete{% endtrans %}"></i></a>
                             {% else %}
                                 <i class="fa fa-fw fa-trash unimportant cursor-not-allowed" rel="tooltip" title="{% trans %}Sport cannot be deleted.{% endtrans %}<br>{% trans %}You have activities associated with this type.{% endtrans %}"></i>
