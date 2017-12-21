@@ -309,6 +309,7 @@ class CreateController extends Controller
         $activity->setAccount($account);
         $activity->setTime($time ?: LocalTime::now());
         $activity->setSport($this->getMainSport($account));
+        $activity->setPublic(!$activity->getSport()->getDefaultPrivacy());
 
         if (null !== $activity->getSport()) {
             $activity->setType($activity->getSport()->getDefaultType());

@@ -94,11 +94,11 @@ class Sport implements IdentifiableEntityInterface, NamedEntityInterface, Accoun
     private $outside = false;
 
     /**
-     * @var bool
+     * @var bool true: defaults to private
      *
      * @ORM\Column(name="default_privacy", type="boolean")
      */
-    private $defaultPrivacy = false;
+    private $defaultPrivacy = true;
 
     /**
      * @var EquipmentType|null
@@ -393,7 +393,7 @@ class Sport implements IdentifiableEntityInterface, NamedEntityInterface, Accoun
     }
 
     /**
-     * @param bool $privacy
+     * @param bool $privacy true: defaults to private
      *
      * @return $this
      */
@@ -405,7 +405,7 @@ class Sport implements IdentifiableEntityInterface, NamedEntityInterface, Accoun
     }
 
     /**
-     * @return bool
+     * @return bool true: defaults to private
      */
     public function getDefaultPrivacy()
     {
