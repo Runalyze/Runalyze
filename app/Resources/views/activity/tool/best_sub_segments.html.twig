@@ -11,10 +11,10 @@
     {{ value.value }} <small>{{ value.unit }}</small>
 {% endmacro %}
 
-{% macro tableRow(rowLabel, baseValue, pace, from, to) %}
+{% macro tableRow(rowLabel, baseValue, pace, from, to, segmentType, segmentIndex) %}
     {% import _self as this %}
 
-    <tr class="c">
+    <tr class="c" data-segment-index="{{ segmentIndex }}" data-segment-type="{{ segmentType }}">
         <td class="l"><strong>{{ rowLabel }}</strong></td>
         <td>{{ baseValue }}</td>
         <td>{{ this.tableCellFor(pace) }}</td>
@@ -33,7 +33,8 @@
     {% set timeSegments = statistics.timeSegments %}
 
     <div class="panel-content">
-        <table class="zebra-style more-padding" style="width: 400px;">
+        {{ map|raw }}
+        <table class="zebra-style more-padding fullwidth">
             <thead>
             <tr>
                 <th colspan="2">{% trans %}Best segment{% endtrans %}</th>
@@ -52,7 +53,9 @@
                         achievedTime|duration,
                         pace(achievedTime / distance, paceUnit),
                         distanceArray[fromTo[0]],
-                        distanceArray[fromTo[1]]
+                        distanceArray[fromTo[1]],
+                        "distance",
+                        i
                     ) }}
                 {% endif %}
             {% endfor %}
@@ -68,11 +71,24 @@
                         this.tableCellFor(distance(achievedDistance)),
                         pace(time / achievedDistance, paceUnit),
                         distanceArray[fromTo[0]],
-                        distanceArray[fromTo[1]]
+                        distanceArray[fromTo[1]],
+                        "time",
+                        i
                     ) }}
                 {% endif %}
             {% endfor %}
             </tbody>
         </table>
+        <script>
+            var segments = {{ segments|json_encode|raw }};
+            var polyline = null;
+            $("tr[data-segment-index]").on("mouseover", function(){
+                var index = $(this).attr('data-segment-index');
+                var type = $(this).attr('data-segment-type');
+                polyline = L.polyline(segments[type][index], {color: 'yellow'}).addTo(RunalyzeLeaflet.map());
+            }).on("mouseout", function(){
+                RunalyzeLeaflet.map().removeLayer(polyline);
+            });
+        </script>
     </div>
 {% endblock %}

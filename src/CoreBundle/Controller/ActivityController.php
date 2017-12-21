@@ -13,6 +13,7 @@ use Runalyze\Bundle\CoreBundle\Entity\Trackdata;
 use Runalyze\Bundle\CoreBundle\Entity\Training;
 use Runalyze\Metrics\Velocity\Unit\PaceEnum;
 use Runalyze\Service\ElevationCorrection\StepwiseElevationProfileFixer;
+use Runalyze\View\Leaflet\Map;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -405,10 +406,28 @@ class ActivityController extends Controller
         $statistics->setTimesToAnalyze([30, 60, 120, 300, 600, 720, 1800, 3600, 7200]);
         $statistics->findSegments();
 
+        $Frontend = new \Frontend(false, $this->get('security.token_storage'));
+        $context = new Context($id, $account->getId());
+        $route = $context->route();
+        $map = new Map('map-'.$trackdata->getActivity()->getActivityId());
+        $map->addRoute(
+            new \Runalyze\View\Leaflet\Activity(
+                'route-'.$trackdata->getActivity()->getActivityId(),
+                $route,
+                $trackdataModel
+            )
+        );
+
+        $precision = (int) $this->get('app.configuration_manager')->getList()->getActivityView()->get('GMAP_PATH_PRECISION');
+        $distanceSegments = $statistics->getDistanceSegmentPaths($route, $precision);
+        $timeSegments = $statistics->getTimeSegmentPaths($route, $precision);
+
         return $this->render('activity/tool/best_sub_segments.html.twig', [
             'statistics' => $statistics,
             'distanceArray' => $trackdataModel->distance(),
-            'paceUnit' => $paceUnit
+            'paceUnit' => $paceUnit,
+            'segments' => ['time' => $timeSegments, 'distance' => $distanceSegments],
+            'map' => $map->code(),
         ]);
     }
 
