@@ -65,7 +65,7 @@ class ActivityDataContainer
         $this->WeatherData = clone $this->WeatherData;
     }
 
-    public function completeActivityData()
+    public function completeContinuousData()
     {
         $this->ContinuousDataAdapter->clearEmptyArrays();
         $this->ContinuousDataAdapter->calculateDistancesIfRequired();
@@ -73,7 +73,10 @@ class ActivityDataContainer
 
         $this->completeRoundsIfRequired();
         $this->applyPauses();
+    }
 
+    public function completeActivityData()
+    {
         $this->ActivityData->completeFromContinuousData($this->ContinuousData);
         $this->ActivityData->completeFromRounds($this->Rounds);
         $this->ActivityData->completeFromPauses($this->Pauses);

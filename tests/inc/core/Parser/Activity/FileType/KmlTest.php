@@ -94,7 +94,7 @@ class KmlTest extends AbstractActivityParserTestCase
         $this->assertEquals('2015-03-15 07:29', LocalTime::date('Y-m-d H:i', $this->Container->Metadata->getTimestamp()));
         $this->assertEquals(60, $this->Container->Metadata->getTimezoneOffset());
 
-        $this->assertEquals(5 * 3600 + 51 * 60 + 51, $this->Container->ActivityData->Duration);
+        $this->assertEquals(5 * 3600 + 50 * 60 + 6, $this->Container->ActivityData->Duration);
         $this->assertEquals(12.816, $this->Container->ActivityData->Distance, '', 0.1);
 
         $this->assertNotEmpty($this->Container->ContinuousData->Time);

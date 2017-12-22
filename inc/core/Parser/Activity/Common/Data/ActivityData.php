@@ -130,16 +130,20 @@ class ActivityData
             return;
         }
 
-        $averages = new TrackdataAverages(
-            (new ContinuousDataConverter($data))->convertToLegacyTrackdataModel(), [
-                Trackdata\Entity::POWER,
-                Trackdata\Entity::HEARTRATE,
-                Trackdata\Entity::CADENCE,
-                Trackdata\Entity::GROUNDCONTACT,
-                Trackdata\Entity::VERTICAL_OSCILLATION,
-                Trackdata\Entity::GROUNDCONTACT_BALANCE
-            ]
-        );
+        try {
+            $averages = new TrackdataAverages(
+                (new ContinuousDataConverter($data))->convertToLegacyTrackdataModel(), [
+                    Trackdata\Entity::POWER,
+                    Trackdata\Entity::HEARTRATE,
+                    Trackdata\Entity::CADENCE,
+                    Trackdata\Entity::GROUNDCONTACT,
+                    Trackdata\Entity::VERTICAL_OSCILLATION,
+                    Trackdata\Entity::GROUNDCONTACT_BALANCE
+                ]
+            );
+        } catch (\InvalidArgumentException $e) {
+            return;
+        }
 
         if (null === $this->AvgPower) {
             $this->AvgPower = $averages->average(Trackdata\Entity::POWER);

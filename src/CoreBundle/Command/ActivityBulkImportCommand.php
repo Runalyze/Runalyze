@@ -2,18 +2,17 @@
 
 namespace Runalyze\Bundle\CoreBundle\Command;
 
+use Runalyze\Bundle\CoreBundle\Component\Activity\ActivityContext;
+use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\TrainingRepository;
 use Runalyze\Bundle\CoreBundle\Services\Import\FileImportResult;
-use Runalyze\Error;
+use Runalyze\Parser\Activity\Common\Data\ActivityDataContainer;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use Runalyze\Parser\Activity\Common\Data\ActivityDataContainer;
-use Runalyze\Bundle\CoreBundle\Entity\Account;
-use Runalyze\Bundle\CoreBundle\Component\Activity\ActivityContext;
 
 class ActivityBulkImportCommand extends ContainerAwareCommand
 {
@@ -45,8 +44,6 @@ class ActivityBulkImportCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        Error::$MAX_NUM_OF_ERRORS = 10000;
-
         $repository = $this->getContainer()->get('doctrine')->getRepository('CoreBundle:Account');
         $user = $repository->loadUserByUsername($input->getArgument('username'));
 
@@ -66,6 +63,7 @@ class ActivityBulkImportCommand extends ContainerAwareCommand
         $fs = new Filesystem();
 
         $files = [];
+
         foreach ($it as $fileinfo) {
             $file = $fileinfo->getFilename();
 
@@ -77,6 +75,7 @@ class ActivityBulkImportCommand extends ContainerAwareCommand
             $fs->copy($path.'/'.$file, $dataDirectory.'/import/'.$filename);
             $files[] = $dataDirectory.'/import/'.$filename;
         }
+
         $importResult = $importer->importFiles($files);
         $contextAdapterFactory = $this->getContainer()->get('app.activity_context_adapter_factory');
         $defaultLocation = $this->getContainer()->get('app.configuration_manager')->getList()->getActivityForm()->getDefaultLocationForWeatherForecast();
@@ -88,17 +87,18 @@ class ActivityBulkImportCommand extends ContainerAwareCommand
                 $context = new ActivityContext($activity, null, null, $activity->getRoute());
                 $contextAdapter = $contextAdapterFactory->getAdapterFor($context);
                 $output->writeln('<info>'.$result->getOriginalFileName().'</info>');
-                if ( $contextAdapter->isPossibleDuplicate() ) {
+
+                if ($contextAdapter->isPossibleDuplicate()) {
                     $output->writeln('<fg=yellow> ... is a duplicate</>');
                     break;
                 }
+
                 $contextAdapter->guessWeatherConditions($defaultLocation);
                 $this->getTrainingRepository()->save($activity);
                 $output->writeln('<fg=green> ... successfully imported</>');
             }
-
-
         }
+
         if (!empty($this->FailedImports)) {
             $output->writeln('');
             $output->writeln('<fg=red>Failed imports:</>');
@@ -119,9 +119,11 @@ class ActivityBulkImportCommand extends ContainerAwareCommand
      */
     protected function containerToActivity(ActivityDataContainer $container, Account $account)
     {
-        $container->completeActivityData();
+        $container->completeContinuousData();
 
         $this->getContainer()->get('app.activity_data_container.filter')->filter($container);
+
+        $container->completeActivityData();
 
         return $this->getContainer()->get('app.activity_data_container.converter')->getActivityFor($container, $account);
     }

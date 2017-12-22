@@ -141,9 +141,11 @@ class CreateController extends Controller
      */
     protected function containerToActivity(ActivityDataContainer $container, Account $account)
     {
-        $container->completeActivityData();
+        $container->completeContinuousData();
 
         $this->get('app.activity_data_container.filter')->filter($container);
+
+        $container->completeActivityData();
 
         return $this->get('app.activity_data_container.converter')->getActivityFor($container, $account);
     }

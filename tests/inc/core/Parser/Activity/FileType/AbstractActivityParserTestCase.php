@@ -118,11 +118,15 @@ abstract class AbstractActivityParserTestCase extends \PHPUnit_Framework_TestCas
             $this->Container[] = $parser->getActivityDataContainer($i);
 
             if ($completeAfterwards) {
-                $this->Container[$i]->completeActivityData();
+                $this->Container[$i]->completeContinuousData();
             }
 
             if ($runFilter) {
                 $this->Container[$i]->filterActivityData($filterCollection);
+            }
+
+            if ($completeAfterwards) {
+                $this->Container[$i]->completeActivityData();
             }
         }
 

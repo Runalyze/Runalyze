@@ -13,10 +13,12 @@ class InvalidRRIntervalFilter extends AbstractFilter
         $container->RRIntervals = array_values(array_filter($container->RRIntervals));
         $filteredLength = count($container->RRIntervals);
 
-        if ($strict && $filteredLength != $originalLength) {
-            throw new InvalidDataException('Invalid r-r intervals detected.');
-        } else {
-            $this->logger->warning(sprintf('%u invalid r-r intervals removed.', $originalLength - $filteredLength));
+        if ($filteredLength != $originalLength) {
+            if ($strict) {
+                throw new InvalidDataException('Invalid r-r intervals detected.');
+            } else {
+                $this->logger->warning(sprintf('%u invalid r-r intervals removed.', $originalLength - $filteredLength));
+            }
         }
     }
 }

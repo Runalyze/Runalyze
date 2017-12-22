@@ -242,4 +242,20 @@ class GpxTest extends AbstractActivityParserTestCase
             [13402, 3780]
         ]);
     }
+
+    /**
+     * @see https://github.com/Runalyze/Runalyze/issues/2255
+     */
+    public function testNegativeTimeStepsFromRunkeeper()
+    {
+        $this->parseFile($this->Parser, 'gpx/runkeeper-negative-time-step-at-start.gpx');
+
+        $this->assertInstanceOf(ActivityDataContainer::class, $this->Container);
+
+        $this->assertNotEmpty($this->Container->ContinuousData->Time);
+
+        $this->assertEquals(3329, $this->Container->ActivityData->Duration, '', 10);
+        $this->assertEquals(3329, $this->Container->ActivityData->ElapsedTime, '', 10);
+        $this->assertEquals(151, $this->Container->ActivityData->AvgHeartRate, '', 0.5);
+    }
 }
