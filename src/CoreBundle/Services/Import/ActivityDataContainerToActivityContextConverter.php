@@ -13,6 +13,7 @@ use Runalyze\Bundle\CoreBundle\Entity\Swimdata;
 use Runalyze\Bundle\CoreBundle\Entity\Trackdata;
 use Runalyze\Bundle\CoreBundle\Entity\Training;
 use Runalyze\Bundle\CoreBundle\Entity\TypeRepository;
+use Runalyze\Bundle\CoreBundle\Services\Configuration\ConfigurationManager;
 use Runalyze\Parser\Activity\Common\Data\ActivityData;
 use Runalyze\Parser\Activity\Common\Data\ActivityDataContainer;
 use Runalyze\Parser\Activity\Common\Data\FitDetails;
@@ -39,6 +40,9 @@ class ActivityDataContainerToActivityContextConverter
     /** @var EquipmentRepository */
     protected $EquipmentRepository;
 
+    /** @var ConfigurationManager */
+    protected $ConfigurationManager;
+
     /** @var Account */
     protected $Account;
 
@@ -46,12 +50,14 @@ class ActivityDataContainerToActivityContextConverter
         SportRepository $sportRepository,
         TypeRepository $typeRepository,
         EquipmentRepository $equipmentRepository,
+        ConfigurationManager $configurationManager,
         Account $account = null
     )
     {
         $this->SportRepository = $sportRepository;
         $this->TypeRepository = $typeRepository;
         $this->EquipmentRepository = $equipmentRepository;
+        $this->ConfigurationManager = $configurationManager;
         $this->Account = $account;
     }
 
@@ -134,15 +140,22 @@ class ActivityDataContainerToActivityContextConverter
 
     protected function tryToSetSportFor(Training $activity, Metadata $metadata)
     {
+        $sport = null;
         $internalId = $this->getInternalSportIdFrom($metadata);
 
         if (null !== $internalId) {
             $sport = $this->SportRepository->findInternalIdFor($internalId, $this->Account);
+        }
 
-            if (null !== $sport) {
-                $activity->setSport($sport);
-                $activity->setPublic(!$activity->getSport()->getDefaultPrivacy());
-            }
+        if (null === $sport) {
+            $sport = $this->SportRepository->find(
+                $this->ConfigurationManager->getList($this->Account)->getGeneral()->getMainSport()
+            );
+        }
+
+        if (null !== $sport) {
+            $activity->setSport($sport);
+            $activity->setPublic(!$activity->getSport()->getDefaultPrivacy());
         }
     }
 

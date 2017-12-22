@@ -343,7 +343,7 @@ services:
     arguments: ["@app.repository.training"]
   app.activity_data_container.converter:
     class: Runalyze\Bundle\CoreBundle\Services\Import\ActivityDataContainerToActivityContextConverter
-    arguments: ["@app.repository.sport", "@app.repository.type", "@app.repository.equipment"]
+    arguments: ["@app.repository.sport", "@app.repository.type", "@app.repository.equipment", "@app.configuration_manager"]
   app.activity_data_container.filter:
     class: Runalyze\Bundle\CoreBundle\Services\Import\ActivityDataContainerFilter
     arguments: ["@logger"]

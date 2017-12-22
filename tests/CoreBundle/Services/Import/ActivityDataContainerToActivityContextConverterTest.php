@@ -2,9 +2,12 @@
 
 namespace Runalyze\Bundle\CoreBundle\Tests\Services\Import;
 
+use Runalyze\Bundle\CoreBundle\Services\Configuration\ConfigurationManager;
 use Runalyze\Bundle\CoreBundle\Services\Import\ActivityDataContainerToActivityContextConverter;
 use Runalyze\Bundle\CoreBundle\Tests\DataFixtures\AbstractFixturesAwareWebTestCase;
 use Runalyze\Parser\Activity\Common\Data\ActivityDataContainer;
+use Symfony\Component\Security\Core\Authentication\Token\PreAuthenticatedToken;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 /**
  * @group requiresDoctrine
@@ -26,6 +29,12 @@ class ActivityDataContainerToActivityContextConverterTest extends AbstractFixtur
             $this->EntityManager->getRepository('CoreBundle:Sport'),
             $this->EntityManager->getRepository('CoreBundle:Type'),
             $this->EntityManager->getRepository('CoreBundle:Equipment'),
+            new ConfigurationManager(
+                $this->EntityManager->getRepository('CoreBundle:Conf'),
+                new TokenStorage(
+                    new PreAuthenticatedToken($this->getDefaultAccount(), 'foo', 'bar')
+                )
+            ),
             $this->getDefaultAccount()
         );
     }
