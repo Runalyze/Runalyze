@@ -45,7 +45,7 @@ class ActivityDataContainerToActivityContextConverterTest extends AbstractFixtur
 
         $this->assertEquals($this->getDefaultAccount(), $activityContext->getAccount());
 
-        $this->assertNull($activityContext->getSport());
+        $this->assertNotNull($activityContext->getSport());
         $this->assertNull($activityContext->getActivity()->getType());
         $this->assertNull($activityContext->getRoute());
         $this->assertNull($activityContext->getTrackdata());
