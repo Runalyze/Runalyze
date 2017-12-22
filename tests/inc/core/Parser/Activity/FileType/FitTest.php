@@ -707,4 +707,15 @@ class FitTest extends AbstractActivityParserTestCase
 
         $this->assertEquals(3389, end($this->Container->ContinuousData->Time), '', 10);
     }
+
+    /**
+     * @see https://github.com/Runalyze/Runalyze/issues/2253
+     */
+    public function testThatGarminRunPowerIsReadFromDeveloperFields()
+    {
+        $this->convertAndParse('fit/garmin-runPower.fit');
+
+        $this->assertNotEmpty($this->Container->ContinuousData->Power);
+        $this->assertEquals(360, $this->Container->ActivityData->AvgPower, '', 5);
+    }
 }
