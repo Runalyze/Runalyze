@@ -78,7 +78,8 @@ class ParserFITSingle extends ParserAbstractSingle {
 	protected $DeveloperFieldMappingForRecord = array(
 		'0_Ground_Time' => ['stance_time', 10],
         'saturated_hemoglobin_percent' => ['smo2_0', 0.1],
-        'total_hemoglobin_conc' => ['thb_0', 1]
+        'total_hemoglobin_conc' => ['thb_0', 1],
+        '0_RP_Power' => ['power', 1],
 	);
 
 	/** @var array */
