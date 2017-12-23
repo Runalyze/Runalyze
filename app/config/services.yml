@@ -113,6 +113,10 @@ services:
     arguments: ["@app.recalculation_manager", "@app.configuration_manager", "@app.repository.sport", "@app.repository.equipment", "@app.timezone_lookup"]
     tags:
      - { name: doctrine.orm.entity_listener, lazy: true }
+  app.entity_subscriber.equipment_update:
+    class: Runalyze\Bundle\CoreBundle\EntityListener\EquipmentUpdateSubscriber
+    tags:
+     - { name: doctrine.event_subscriber, connection: default, lazy: true }
   app.entity_listener.user:
     class: Runalyze\Bundle\CoreBundle\EntityListener\UserListener
     arguments: ["@app.configuration_updater", "@app.repository.user"]

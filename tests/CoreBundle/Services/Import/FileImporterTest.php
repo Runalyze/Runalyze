@@ -19,6 +19,7 @@ class FileImporterTest extends \PHPUnit_Framework_TestCase
             new FitConverter('', ''),
             new TtbinConverter('')
         );
+        $this->Importer->disableFileDeletion();
     }
 
     /**

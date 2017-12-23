@@ -162,6 +162,10 @@ class FileImporter implements LoggerAwareInterface
     protected function mergeResultsOfRelatedHrmAndGpx(FileImportResultCollection $results, $matchingIndices)
     {
         foreach ($matchingIndices as $firstIndex => $secondIndex) {
+            if (0 == $results[$firstIndex]->getNumberOfActivities() || 0 == $results[$secondIndex]->getNumberOfActivities()) {
+                continue;
+            }
+
             $merger = new ActivityDataContainerMerger(
                 $results[$firstIndex]->getContainer(0),
                 $results[$secondIndex]->getContainer(0)

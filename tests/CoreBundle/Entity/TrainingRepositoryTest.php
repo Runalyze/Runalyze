@@ -5,6 +5,8 @@ namespace Runalyze\Bundle\CoreBundle\Tests\Entity;
 use Runalyze\Bundle\CoreBundle\Component\Configuration\Category\BasicEndurance;
 use Runalyze\Bundle\CoreBundle\Component\Configuration\Category\VO2max;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
+use Runalyze\Bundle\CoreBundle\Entity\Common\IdentifiableEntityInterface;
+use Runalyze\Bundle\CoreBundle\Entity\Equipment;
 use Runalyze\Bundle\CoreBundle\Entity\Hrv;
 use Runalyze\Bundle\CoreBundle\Entity\Raceresult;
 use Runalyze\Bundle\CoreBundle\Entity\Route;
@@ -469,6 +471,8 @@ class TrainingRepositoryTest extends AbstractRepositoryTestCase
 
             $this->TrainingRepository->save($activity);
 
+            $this->refreshEquipment($someEquipment);
+
             $this->assertEquals(3580, $someEquipment[0]->getTime());
             $this->assertEquals(12.0, $someEquipment[0]->getDistance());
             $this->assertEquals(3580, $someEquipment[1]->getTime());
@@ -481,6 +485,8 @@ class TrainingRepositoryTest extends AbstractRepositoryTestCase
 
             $this->TrainingRepository->save($activity);
 
+            $this->refreshEquipment($someEquipment);
+
             $this->assertEquals(0, $someEquipment[0]->getTime());
             $this->assertEquals(0.0, $someEquipment[0]->getDistance());
             $this->assertEquals(3580, $someEquipment[1]->getTime());
@@ -490,12 +496,24 @@ class TrainingRepositoryTest extends AbstractRepositoryTestCase
 
             $this->TrainingRepository->remove($activity);
 
+            $this->refreshEquipment($someEquipment);
+
             $this->assertEquals(0, $someEquipment[0]->getTime());
             $this->assertEquals(0.0, $someEquipment[0]->getDistance());
             $this->assertEquals(0, $someEquipment[1]->getTime());
             $this->assertEquals(0.0, $someEquipment[1]->getDistance());
             $this->assertEquals(0, $someEquipment[2]->getTime());
             $this->assertEquals(0.0, $someEquipment[2]->getDistance());
+        }
+    }
+
+    /**
+     * @param Equipment[] $entities
+     */
+    protected function refreshEquipment(array $entities)
+    {
+        foreach ($entities as $key => $entity) {
+            $this->EntityManager->getUnitOfWork()->refresh($entity);
         }
     }
 }
