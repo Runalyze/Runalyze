@@ -362,7 +362,7 @@ class TrainingRepositoryTest extends AbstractRepositoryTestCase
             new VO2max(),
             $this->getDefaultAccountsRunningSport()->getId(),
             time()
-        ), '', 0.001);
+        ), '', 0.01);
     }
 
     public function testVO2maxShapeCalculationForSomeActivities()
@@ -385,7 +385,7 @@ class TrainingRepositoryTest extends AbstractRepositoryTestCase
             $config,
             $this->getDefaultAccountsRunningSport()->getId(),
             time()
-        ), '', 0.001);
+        ), '', 0.01);
     }
 
     public function testMarathonShapeCalculationForEmptyAccount()

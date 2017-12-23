@@ -96,7 +96,7 @@ class Training implements IdentifiableEntityInterface, AccountRelatedEntityInter
     /**
      * @var float|null [km]
      *
-     * @ORM\Column(name="distance", type="decimal", precision=6, scale=2, nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="distance", type="casted_decimal_2", precision=6, scale=2, nullable=true, options={"unsigned":true})
      */
     private $distance = null;
 
@@ -104,7 +104,7 @@ class Training implements IdentifiableEntityInterface, AccountRelatedEntityInter
      * @var float [s]
      *
      * @Assert\GreaterThan(0)
-     * @ORM\Column(name="s", type="decimal", precision=8, scale=2, options={"unsigned":true})
+     * @ORM\Column(name="s", type="casted_decimal_2", precision=8, scale=2, options={"unsigned":true})
      */
     private $s;
 
@@ -125,14 +125,14 @@ class Training implements IdentifiableEntityInterface, AccountRelatedEntityInter
     /**
      * @var float|null [0.0 .. 10.0]
      *
-     * @ORM\Column(name="climb_score", type="decimal", precision=3, scale=1, nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="climb_score", type="casted_decimal_1", precision=3, scale=1, nullable=true, options={"unsigned":true})
      */
     private $climbScore = null;
 
     /**
      * @var float|null [0.00 .. 1.00]
      *
-     * @ORM\Column(name="percentage_hilly", type="decimal", precision=3, scale=2, nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="percentage_hilly", type="casted_decimal_2", precision=3, scale=2, nullable=true, options={"unsigned":true})
      */
     private $percentageHilly = null;
 
@@ -172,21 +172,21 @@ class Training implements IdentifiableEntityInterface, AccountRelatedEntityInter
     /**
      * @var float|null [ml/kg/min]
      *
-     * @ORM\Column(name="vo2max", type="decimal", precision=5, scale=2, nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="vo2max", type="casted_decimal_2", precision=5, scale=2, nullable=true, options={"unsigned":true})
      */
     private $vo2max = null;
 
     /**
      * @var float|null [ml/kg/min]
      *
-     * @ORM\Column(name="vo2max_by_time", type="decimal", precision=5, scale=2, nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="vo2max_by_time", type="casted_decimal_2", precision=5, scale=2, nullable=true, options={"unsigned":true})
      */
     private $vo2maxByTime = null;
 
     /**
      * @var float|null [ml/kg/min]
      *
-     * @ORM\Column(name="vo2max_with_elevation", type="decimal", precision=5, scale=2, nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="vo2max_with_elevation", type="casted_decimal_2", precision=5, scale=2, nullable=true, options={"unsigned":true})
      */
     private $vo2maxWithElevation = null;
 
@@ -200,7 +200,7 @@ class Training implements IdentifiableEntityInterface, AccountRelatedEntityInter
     /**
      * @var float|null [ml/kg/min]
      *
-     * @ORM\Column(name="fit_vo2max_estimate", type="decimal", precision=4, scale=2, nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="fit_vo2max_estimate", type="casted_decimal_2", precision=4, scale=2, nullable=true, options={"unsigned":true})
      */
     private $fitVO2maxEstimate = null;
 
@@ -221,7 +221,7 @@ class Training implements IdentifiableEntityInterface, AccountRelatedEntityInter
     /**
      * @var float|null [1.0 .. 5.0]
      *
-     * @ORM\Column(name="fit_training_effect", type="decimal", precision=2, scale=1, nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="fit_training_effect", type="casted_decimal_1", precision=2, scale=1, nullable=true, options={"unsigned":true})
      */
     private $fitTrainingEffect = null;
 
@@ -769,7 +769,7 @@ class Training implements IdentifiableEntityInterface, AccountRelatedEntityInter
      */
     public function setS($s)
     {
-        $this->s = $s;
+        $this->s = (double)$s;
 
         return $this;
     }
@@ -809,7 +809,7 @@ class Training implements IdentifiableEntityInterface, AccountRelatedEntityInter
      */
     public function setElevation($elevation)
     {
-        $this->elevation = $elevation;
+        $this->elevation = null === $elevation ? null : (int)$elevation;
 
         return $this;
     }
@@ -1376,7 +1376,7 @@ class Training implements IdentifiableEntityInterface, AccountRelatedEntityInter
      */
     public function setTemperature($temperature)
     {
-        $this->temperature = $temperature;
+        $this->temperature = null === $temperature ? null : (int)$temperature;
 
         return $this;
     }
@@ -1516,7 +1516,7 @@ class Training implements IdentifiableEntityInterface, AccountRelatedEntityInter
      */
     public function setWeatherSource($weatherSource)
     {
-        $this->weatherSource = $weatherSource;
+        $this->weatherSource = null === $weatherSource ? null : (int)$weatherSource;
 
         return $this;
     }
@@ -1728,7 +1728,7 @@ class Training implements IdentifiableEntityInterface, AccountRelatedEntityInter
      */
     public function setActivityId($activityId)
     {
-        $this->activityId = $activityId;
+        $this->activityId = null === $activityId ? null : (int)$activityId;
 
         return $this;
     }

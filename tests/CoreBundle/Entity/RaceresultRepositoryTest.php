@@ -80,7 +80,7 @@ class RaceresultRepositoryTest extends AbstractRepositoryTestCase
         $this->assertEquals($expectedFactor, $this->RaceresultRepository->getEffectiveVO2maxCorrectionFactor(
             $this->Account,
             $this->getDefaultAccountsRunningSport()->getId()
-        ));
+        ), '', 0.01);
 
         $this->assertTrue($this->getContainer()->get('app.recalculation_manager')->isTaskScheduled($this->Account, VO2maxCorrectionFactorCalculation::class));
     }
@@ -107,7 +107,7 @@ class RaceresultRepositoryTest extends AbstractRepositoryTestCase
         $this->assertEquals($expectedFactor, $this->RaceresultRepository->getEffectiveVO2maxCorrectionFactor(
             $this->Account,
             $this->getDefaultAccountsRunningSport()->getId()
-        ));
+        ), '', 0.01);
     }
 
     /**

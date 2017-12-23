@@ -51,7 +51,7 @@ class Route implements AccountRelatedEntityInterface
     /**
      * @var float [km]
      *
-     * @ORM\Column(name="distance", type="decimal", precision=6, scale=2, options={"unsigned":true})
+     * @ORM\Column(name="distance", type="casted_decimal_2", precision=6, scale=2, options={"unsigned":true})
      */
     private $distance = 0.0;
 

@@ -17,14 +17,14 @@ class Raceresult implements AccountRelatedEntityInterface
     /**
      * @var int [km]
      *
-     * @ORM\Column(name="official_distance", type="decimal", precision=6, scale=2, nullable=false)
+     * @ORM\Column(name="official_distance", type="casted_decimal_2", precision=6, scale=2, nullable=false)
      */
     private $officialDistance;
 
     /**
      * @var int [s]
      *
-     * @ORM\Column(name="official_time", type="decimal", precision=8, scale=2, nullable=false)
+     * @ORM\Column(name="official_time", type="casted_decimal_2", precision=8, scale=2, nullable=false)
      */
     private $officialTime;
 

@@ -83,6 +83,8 @@ doctrine:
                 mapping_types:
                     enum:   string
         types:
+            casted_decimal_1: Runalyze\Bundle\CoreBundle\Doctrine\Types\CastedDecimalScale1Type
+            casted_decimal_2: Runalyze\Bundle\CoreBundle\Doctrine\Types\CastedDecimalScale2Type
             tinyint: Runalyze\Bundle\CoreBundle\Doctrine\Types\TinyIntType
             pipe_array: Runalyze\Bundle\CoreBundle\Doctrine\Types\PipeDelimitedArray
             geohash_array: Runalyze\Bundle\CoreBundle\Doctrine\Types\GeohashArray

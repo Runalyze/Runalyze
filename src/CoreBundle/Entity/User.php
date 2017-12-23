@@ -35,7 +35,7 @@ class User implements IdentifiableEntityInterface, AccountRelatedEntityInterface
     /**
      * @var float|null [kg]
      *
-     * @ORM\Column(name="weight", type="decimal", precision=5, scale=2, nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="weight", type="casted_decimal_2", precision=5, scale=2, nullable=true, options={"unsigned":true})
      */
     private $weight;
 
@@ -58,7 +58,7 @@ class User implements IdentifiableEntityInterface, AccountRelatedEntityInterface
      * @Assert\Range(
      *     min = 0,
      *     max = 100)
-     * @ORM\Column(name="fat", type="decimal", precision=3, scale=1, nullable=true)
+     * @ORM\Column(name="fat", type="casted_decimal_1", precision=3, scale=1, nullable=true)
      */
     private $fat;
 
@@ -67,7 +67,7 @@ class User implements IdentifiableEntityInterface, AccountRelatedEntityInterface
      * @Assert\Range(
      *     min = 0,
      *     max = 100)
-     * @ORM\Column(name="water", type="decimal", precision=3, scale=1, nullable=true)
+     * @ORM\Column(name="water", type="casted_decimal_1", precision=3, scale=1, nullable=true)
      */
     private $water;
 
@@ -77,7 +77,7 @@ class User implements IdentifiableEntityInterface, AccountRelatedEntityInterface
      * @Assert\Range(
      *     min = 0,
      *     max = 100)
-     * @ORM\Column(name="muscles", type="decimal", precision=3, scale=1, nullable=true)
+     * @ORM\Column(name="muscles", type="casted_decimal_1", precision=3, scale=1, nullable=true)
      */
     private $muscles;
 
