@@ -50,11 +50,9 @@ class ViewController extends Controller
                 $updater->update();
                 break;
             case 'delete':
-                $factory = \Runalyze\Context::Factory();
-                $deleter = new Activity\Deleter(\DB::getInstance(), $context->activity());
-                $deleter->setAccountID($account->getId());
-                $deleter->setEquipmentIDs($factory->equipmentForActivity($id, true));
-                $deleter->delete();
+                $trainingRepository = $this->getDoctrine()->getRepository('CoreBundle:Training');
+                $activity = $trainingRepository->find($id);
+                $trainingRepository->remove($activity);
 
                 return $this->render('activity/activity_has_been_removed.html.twig');
         }

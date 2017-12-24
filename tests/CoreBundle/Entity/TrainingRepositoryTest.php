@@ -283,6 +283,13 @@ class TrainingRepositoryTest extends AbstractRepositoryTestCase
 
         $this->assertGreaterThan(0, $result->getRoute()->getElevation());
         $this->assertNotNull($result->getClimbScore());
+
+        $routeId = $result->getRoute()->getId();
+        $this->TrainingRepository->remove($activity);
+
+        $this->assertNull($this->EntityManager->getRepository('CoreBundle:Route')->find($routeId));
+        $this->assertNull($this->EntityManager->getRepository('CoreBundle:Trackdata')->findByActivity($activity->getId(), $this->getDefaultAccount()));
+        $this->assertNull($this->EntityManager->getRepository('CoreBundle:Hrv')->findByActivity($activity->getId()));
     }
 
     public function testActivityWithRaceResult()
@@ -304,6 +311,10 @@ class TrainingRepositoryTest extends AbstractRepositoryTestCase
 
         $this->assertTrue($result->hasRaceresult());
         $this->assertEquals(3.0, $result->getRaceresult()->getOfficialDistance());
+
+        $this->TrainingRepository->remove($activity);
+
+        $this->assertNull($this->EntityManager->getRepository('CoreBundle:Raceresult')->findByActivity($activity->getId()));
     }
 
     public function testActivityWithSwimData()
@@ -326,6 +337,10 @@ class TrainingRepositoryTest extends AbstractRepositoryTestCase
         $this->assertTrue($result->hasSwimdata());
         $this->assertEquals(125, $result->getTotalStrokes());
         $this->assertEquals(5000, $result->getSwimdata()->getPoolLength());
+
+        $this->TrainingRepository->remove($activity);
+
+        $this->assertNull($this->EntityManager->getRepository('CoreBundle:Swimdata')->findByActivity($activity->getId()));
     }
 
     public function testStartTimeForEmptyAccount()

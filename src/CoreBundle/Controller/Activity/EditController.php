@@ -119,21 +119,20 @@ class EditController extends Controller
     }
 
    /**
-    * @Route("/activity/{id}/delete", name="ActivityDelete")
+    * @Route("/activity/{id}/delete", name="activity-delete", requirements={"id" = "\d+"})
     * @Security("has_role('ROLE_USER')")
+    * @ParamConverter("activity", class="CoreBundle:Training")
     */
-   public function deleteAction($id, Account $account)
+   public function deleteAction(Training $activity, Account $account)
    {
-        $Frontend = new \Frontend(true, $this->get('security.token_storage'));
+       $activityId = $activity->getId();
 
-        $Factory = \Runalyze\Context::Factory();
-        $Deleter = new Activity\Deleter(\DB::getInstance(), $Factory->activity($id));
-        $Deleter->setAccountID($account->getId());
-        $Deleter->setEquipmentIDs($Factory->equipmentForActivity($id, true));
-        $Deleter->delete();
+       $this->checkThatEntityBelongsToActivity($activity, $account);
+
+       $this->getTrainingRepository()->remove($activity);
 
         return $this->render('activity/activity_has_been_removed.html.twig', [
-            'multiEditorId' => (int)$id
+            'multiEditorId' => (int)$activityId
         ]);
    }
 

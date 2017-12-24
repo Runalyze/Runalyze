@@ -543,7 +543,9 @@ class TrainingRepository extends EntityRepository
 
     public function remove(Training $activity)
     {
-        // TODO: remove other entities?
+        if (null !== $activity->getRoute()) {
+            $this->_em->remove($activity->getRoute());
+        }
 
         $this->_em->remove($activity);
         $this->_em->flush();
