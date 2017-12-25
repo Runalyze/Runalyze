@@ -255,7 +255,6 @@ class CreateController extends Controller
         $form = $this->createForm(ActivityType::class, $activity, [
             'action' => $this->generateUrl('activity-new')
         ]);
-        ActivityType::setStartCoordinates($form, $activity);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

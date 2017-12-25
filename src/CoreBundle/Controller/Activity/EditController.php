@@ -6,6 +6,7 @@ use Runalyze\Bundle\CoreBundle\Component\Activity\ActivityDecorator;
 use Runalyze\Bundle\CoreBundle\Component\Activity\ActivityPreview;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\Common\AccountRelatedEntityInterface;
+use Runalyze\Bundle\CoreBundle\Entity\Raceresult;
 use Runalyze\Bundle\CoreBundle\Entity\Training;
 use Runalyze\Bundle\CoreBundle\Entity\TrainingRepository;
 use Runalyze\Bundle\CoreBundle\Form\ActivityType;
@@ -47,8 +48,6 @@ class EditController extends Controller
         $form = $this->createForm(ActivityType::class, $activity, [
             'action' => $this->generateUrl('activity-edit', ['id' => $activity->getId()])
         ]);
-        ActivityType::setStartCoordinates($form, $activity);
-        ActivityType::addDataSeriesRemoverFields($form, $activity);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -56,7 +55,13 @@ class EditController extends Controller
                 $this->get('app.data_series_remover')->handleRequest($form->get('data_series_remover')->getData(), $activity);
             }
 
-            // TODO: Handle 'is_race' checkbox
+            if ($form->get('is_race')->getData() && !$activity->hasRaceresult()) {
+                $raceResult = (new Raceresult())->fillFromActivity($activity);
+                $activity->setRaceresult($raceResult);
+            } elseif (!$form->get('is_race')->getData() && $activity->hasRaceresult()) {
+                $this->getDoctrine()->getRepository('CoreBundle:Raceresult')->delete($activity->getRaceresult());
+                $activity->setRaceresult(null);
+            }
 
             $repository->save($activity);
             $this->get('app.legacy_cache')->clearActivityCache($activity);

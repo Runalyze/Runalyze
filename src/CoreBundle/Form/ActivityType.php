@@ -35,6 +35,9 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ActivityType extends AbstractType
@@ -97,11 +100,6 @@ class ActivityType extends AbstractType
             ->add('is_track', CheckboxType::class, [
                 'required' => false,
                 'label' => 'Track'
-            ])
-            ->add('is_race', CheckboxType::class, [
-                'required' => false,
-                'label' => 'Race',
-                'mapped' => false
             ])
             ->add('title', TextType::class, [
                 'required' => false
@@ -181,10 +179,6 @@ class ActivityType extends AbstractType
                 'expanded' => false,
                 'required' => false
             ])
-            ->add('start-coordinates', HiddenType::class, [
-                'mapped' => false,
-                'required' => false
-            ])
             ->add('equipment', ActivityEquipmentType::class)
             ->add('activityId', HiddenType::class, [
                 'required' => false
@@ -194,6 +188,24 @@ class ActivityType extends AbstractType
                 'required' => false
             ])
         ;
+
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
+            /** @var Training $activity */
+            $activity = $event->getData();
+
+            $event->getForm()->add('is_race', CheckboxType::class, [
+                'required' => false,
+                'label' => 'Race',
+                'mapped' => false,
+                'data' => $activity->hasRaceresult()
+            ]);
+
+            $this->setStartCoordinates($event->getForm(), $activity);
+
+            if ($activity->getId()) {
+                $this->addDataSeriesRemoverFields($event->getForm(), $activity);
+            }
+        });
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -203,8 +215,10 @@ class ActivityType extends AbstractType
         ]);
     }
 
-    public static function setStartCoordinates(Form $form, Training $activity)
+    protected function setStartCoordinates(FormInterface $form, Training $activity)
     {
+        $data = '';
+
         if ($activity->hasRoute() && $activity->getRoute()->hasGeohashes()) {
             if (null === $activity->getRoute()->getStartpoint()) {
                 $activity->getRoute()->setStartEndGeohashes();
@@ -212,12 +226,18 @@ class ActivityType extends AbstractType
 
             if (null !== $activity->getRoute()->getStartpoint()) {
                 $coordinate = (new Geohash())->decode($activity->getRoute()->getStartpoint())->getCoordinate();
-                $form->get('start-coordinates')->setData($coordinate->getLatitude().','.$coordinate->getLongitude());
+                $data = $coordinate->getLatitude().','.$coordinate->getLongitude();
             }
         }
+
+        $form->add('start-coordinates', HiddenType::class, [
+            'mapped' => false,
+            'required' => false,
+            'data' => $data
+        ]);
     }
 
-    public static function addDataSeriesRemoverFields(Form $form, Training $activity)
+    protected function addDataSeriesRemoverFields(FormInterface $form, Training $activity)
     {
         $choices = DataSeriesRemover::getChoicesForActivity($activity);
 

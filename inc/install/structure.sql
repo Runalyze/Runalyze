@@ -429,7 +429,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_weathercache` (
 --
 
 CREATE TABLE IF NOT EXISTS `runalyze_raceresult` (
-  `official_distance` decimal(6,2) NOT NULL,
+  `official_distance` decimal(6,2) DEFAULT NULL,
   `official_time` decimal(8,2) NOT NULL,
   `officially_measured` tinyint(1)  unsigned NOT NULL DEFAULT 0,
   `name` varchar(50) NOT NULL DEFAULT '',

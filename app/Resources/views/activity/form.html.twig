@@ -187,6 +187,7 @@
             </fieldset>
             {% endif %}
 
+            {% if form.data_series_remover %}
             <fieldset id="fieldset-remove-data-series" class="collapsed">
                 <legend onclick="Runalyze.toggleFieldset(this, 'fieldset-remove-data-series', false, '')">{% trans %}Remove data series{% endtrans %}</legend>
 
@@ -207,6 +208,7 @@
                     {% do form.splits.setRendered() %}
                 </div>
             </fieldset>
+            {% endif %}
         {% endif %}
 
         {{ form_rest(form) }}

@@ -17,7 +17,7 @@ class Raceresult implements AccountRelatedEntityInterface
     /**
      * @var int [km]
      *
-     * @ORM\Column(name="official_distance", type="casted_decimal_2", precision=6, scale=2, nullable=false)
+     * @ORM\Column(name="official_distance", type="casted_decimal_2", precision=6, scale=2, nullable=true)
      */
     private $officialDistance;
 
@@ -357,9 +357,9 @@ class Raceresult implements AccountRelatedEntityInterface
     {
         $this->setActivity($activity);
         $this->setAccount($activity->getAccount());
-        $this->setOfficialDistance($activity->getDistance());
+        $this->setOfficialDistance($activity->getDistance() ?: 0.0);
         $this->setOfficialTime($activity->getS());
-        $this->setName($activity->getTitle());
+        $this->setName($activity->getTitle() ?: '');
 
         return $this;
     }
