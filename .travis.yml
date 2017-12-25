@@ -5,6 +5,7 @@ php:
   - 5.6
   - 7.0
   - 7.1
+  - 7.2
 
 env:
   - GROUP=import
@@ -50,6 +51,7 @@ matrix:
   fast_finish: true
   allow_failures:
     - php: 7.1
+    - php: 7.2
   include:
     - php: 5.6
       env: DB=mariadb GROUP=requiresDoctrine,dependsOnOldDatabase
@@ -63,6 +65,10 @@ matrix:
       env: DB=mariadb GROUP=requiresDoctrine,dependsOnOldDatabase
       addons:
         mariadb: 5.5
+    - php: 7.2
+      env: DB=mariadb GROUP=requiresDoctrine,dependsOnOldDatabase
+      addons:
+        mariadb: 5.5  
     - php: 5.6
       env: DB=mariadb GROUP=requiresDoctrine,dependsOnOldDatabase
       addons:
@@ -72,6 +78,10 @@ matrix:
       addons:
         mariadb: 10.0
     - php: 7.1
+      env: DB=mariadb GROUP=requiresDoctrine,dependsOnOldDatabase
+      addons:
+        mariadb: 10.0
+    - php: 7.2
       env: DB=mariadb GROUP=requiresDoctrine,dependsOnOldDatabase
       addons:
         mariadb: 10.0
