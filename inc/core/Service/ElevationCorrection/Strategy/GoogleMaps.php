@@ -43,15 +43,15 @@ class GoogleMaps extends AbstractStrategyFromExternalAPI
 
     protected function checkApiResult(array $json)
     {
+        if (isset($json['error_message'])) {
+            $this->logger->warning(sprintf('GoogleMaps request failed: %s', $json['error_message']));
+        }
+
         if (isset($json['status']) && 'OVER_QUERY_LIMIT' == $json['status']) {
             throw new OverQueryLimitException($json['error_message']);
         }
 
         if (!isset($json['results']) || !isset($json['results'][0]['elevation'])) {
-            if (isset($json['error_message'])) {
-                $this->logger->warning(sprintf('GoogleMaps request failed: %s', $json['error_message']));
-            }
-
             throw new InvalidResponseException('GoogleMaps returned malformed code.');
         }
 

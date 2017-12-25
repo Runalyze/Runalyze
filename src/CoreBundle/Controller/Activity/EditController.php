@@ -2,21 +2,14 @@
 
 namespace Runalyze\Bundle\CoreBundle\Controller\Activity;
 
-use Runalyze\Bundle\CoreBundle\Bridge\Activity\Calculation\ClimbScoreCalculator;
-use Runalyze\Bundle\CoreBundle\Bridge\Activity\Calculation\FlatOrHillyAnalyzer;
 use Runalyze\Bundle\CoreBundle\Component\Activity\ActivityDecorator;
 use Runalyze\Bundle\CoreBundle\Component\Activity\ActivityPreview;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\Common\AccountRelatedEntityInterface;
-use Runalyze\Bundle\CoreBundle\Entity\Trackdata;
 use Runalyze\Bundle\CoreBundle\Entity\Training;
 use Runalyze\Bundle\CoreBundle\Entity\TrainingRepository;
 use Runalyze\Bundle\CoreBundle\Form\ActivityType;
 use Runalyze\Bundle\CoreBundle\Services\AutomaticReloadFlagSetter;
-use Runalyze\Calculation\Route\Calculator;
-use Runalyze\Model\Activity;
-use Runalyze\Service\ElevationCorrection\Exception\NoValidStrategyException;
-use Runalyze\Service\ElevationCorrection\StepwiseElevationProfileFixer;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -66,6 +59,7 @@ class EditController extends Controller
             // TODO: Handle 'is_race' checkbox
 
             $repository->save($activity);
+            $this->get('app.legacy_cache')->clearActivityCache($activity);
 
             $this->addFlash('success', $this->get('translator')->trans('Changes have been saved.'));
             $this->get('app.automatic_reload_flag_setter')->set(AutomaticReloadFlagSetter::FLAG_ALL);
@@ -137,90 +131,80 @@ class EditController extends Controller
    }
 
     /**
-     * @Route("/activity/{id}/elevation-correction", name="activity-elevation-correction")
+     * @Route("/activity/{id}/elevation-correction", name="activity-elevation-correction", requirements={"id" = "\d+"})
      * @Security("has_role('ROLE_USER')")
+     * @ParamConverter("activity", class="CoreBundle:Training")
      */
-    public function elevationCorrectionAction($id, Account $account)
+    public function elevationCorrectionAction(Request $request, Training $activity, Account $account)
     {
-        $Frontend = new \Frontend(false, $this->get('security.token_storage'));
+        $this->checkThatEntityBelongsToActivity($activity, $account);
 
-        $Factory = \Runalyze\Context::Factory();
-        $Activity = $Factory->activity($id);
-        $ActivityOld = clone $Activity;
-        $Route = $Factory->route($Activity->get(Activity\Entity::ROUTEID));
-        $RouteOld = clone $Route;
+        $translator = $this->get('translator');
+        $success = false;
 
-        try {
-        	$Calculator = new Calculator($Route);
-        	$result = $Calculator->tryToCorrectElevation(Request::createFromGlobals()->query->get('strategy'));
-        } catch (NoValidStrategyException $Exception) {
-        	$result = false;
-        }
+        if ($activity->hasRoute()) {
+            $routeAdapter = $activity->getRoute()->getAdapter();
+            $strategy = null;
 
-        if ($result) {
-        	$Calculator->calculateElevation();
-        	$Activity->set(Activity\Entity::ELEVATION, $Route->elevation());
-
-        	$trackdata = $Factory->trackdata($id);
-            $newRouteEntity = new \Runalyze\Bundle\CoreBundle\Entity\Route();
-            $newRouteEntity->setDistance($Route->distance());
-
-            if ($Route->hasCorrectedElevations()) {
-                $newRouteEntity->setElevationsCorrected((new StepwiseElevationProfileFixer(
-                    5, StepwiseElevationProfileFixer::METHOD_VARIABLE_GROUP_SIZE
-                ))->fixStepwiseElevations(
-                    $Route->elevationsCorrected(),
-                    $trackdata->distance()
-                ));
-            } elseif ($Route->hasOriginalElevations()) {
-                $newRouteEntity->setElevationsOriginal($Route->elevationsOriginal());
-            }
-
-            $newTrackdataEntity = new Trackdata();
-            $newTrackdataEntity->setDistance($trackdata->distance());
-
-            $newActivityEntity = new Training();
-            $newActivityEntity->setRoute($newRouteEntity);
-            $newActivityEntity->setTrackdata($newTrackdataEntity);
-
-            if ($newRouteEntity->hasElevations()) {
-                (new FlatOrHillyAnalyzer())->calculatePercentageHillyFor($newActivityEntity);
-                (new ClimbScoreCalculator())->calculateFor($newActivityEntity);
-
-                $Activity->set(Activity\Entity::CLIMB_SCORE, $newActivityEntity->getClimbScore());
-                $Activity->set(Activity\Entity::PERCENTAGE_HILLY, $newActivityEntity->getPercentageHilly());
+            if ('none' == $request->query->get('strategy')) {
+                $routeAdapter->removeElevation();
+                $this->addFlash('notice', $translator->trans('Corrected elevation data has been removed.'));
+                $success = true;
             } else {
-                $Activity->set(Activity\Entity::CLIMB_SCORE, null);
-                $Activity->set(Activity\Entity::PERCENTAGE_HILLY, null);
+                $strategy = $this->getElevationCorrectionStrategyFromRequest($request->query->get('strategy'));
+
+                if ($routeAdapter->correctElevation($this->get('app.elevation_correction'), $strategy)) {
+                    $this->addFlash('success', $translator->trans('Elevation data has been corrected.'));
+                    $success = true;
+                }
             }
-
-        	$UpdaterRoute = new \Runalyze\Model\Route\Updater(\DB::getInstance(), $Route, $RouteOld);
-        	$UpdaterRoute->setAccountID($account->getId());
-        	$UpdaterRoute->update();
-
-        	$UpdaterActivity = new Activity\Updater(\DB::getInstance(), $Activity, $ActivityOld);
-        	$UpdaterActivity->setAccountID($account->getId());
-        	$UpdaterActivity->update();
-
-        	if (Request::createFromGlobals()->query->get('strategy') == 'none') {
-        		echo __('Corrected elevation data has been removed.');
-        	} else {
-        		echo __('Elevation data has been corrected.');
-        	}
-
-        	\Ajax::setReloadFlag( \Ajax::$RELOAD_DATABROWSER_AND_TRAINING );
-        	echo \Ajax::getReloadCommand();
-        	echo \Ajax::wrapJS(
-        		'if ($("#ajax").is(":visible") && $("#training").length) {'.
-        			'Runalyze.Overlay.load(\'activity/'.$id.'/edit\');'.
-        		'} else if ($("#ajax").is(":visible") && $("#gps-results").length) {'.
-        			'Runalyze.Overlay.load(\'activity/'.$id.'/elevation-info\');'.
-        		'}'
-        	);
-        } else {
-        	echo __('Elevation data could not be retrieved.');
         }
 
-        return new Response;
+        if ($success) {
+            $this->adjustAndSaveRouteAndActivityForElevationCorrection($activity);
+        } else {
+            $this->addFlash('error', $translator->trans('Elevation data could not be retrieved.'));
+        }
+
+        return $this->render('util/flashmessages_only.html.twig', [
+            'reloadActivityOverlay' => $success,
+            'activityId' => $activity->getId()
+        ]);
+    }
+
+    protected function adjustAndSaveRouteAndActivityForElevationCorrection(Training $activity)
+    {
+        $configuration = $this->get('app.configuration_manager')->getList($activity->getAccount())->getActivityView();
+
+        $activity->getRoute()->getAdapter()->calculateElevation(
+            $configuration->getElevationCalculationMethod(),
+            $configuration->getElevationCalculationThreshold()
+        );
+
+        $activityAdapter = $activity->getAdapter();
+        $activityAdapter->useElevationFromRoute();
+        $activityAdapter->calculateClimbScore();
+
+        $this->getTrainingRepository()->save($activity);
+
+        $this->get('app.legacy_cache')->clearActivityCache($activity);
+        $this->get('app.automatic_reload_flag_setter')->set(AutomaticReloadFlagSetter::FLAG_TRAINING_AND_DATA_BROWSER);
+    }
+
+    /**
+     * @param $string
+     * @return null|\Runalyze\Service\ElevationCorrection\Strategy\StrategyInterface
+     */
+    protected function getElevationCorrectionStrategyFromRequest($string)
+    {
+        if ('GeoTIFF' == $string) {
+            return $this->get('app.elevation_correction.geotiff');
+        } elseif ('Geonames' == $string) {
+            return $this->get('app.elevation_correction.geonames');
+        } elseif ('GoogleMaps' == $string) {
+            return $this->get('app.elevation_correction.google_maps');
+        }
+
+        return null;
     }
 }

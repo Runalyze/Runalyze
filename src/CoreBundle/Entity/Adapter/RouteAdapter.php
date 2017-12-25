@@ -6,6 +6,7 @@ use Runalyze\Bundle\CoreBundle\Bridge\Activity\Calculation\ElevationCalculator;
 use Runalyze\Bundle\CoreBundle\Entity\Route;
 use Runalyze\Bundle\CoreBundle\Services\Import\ElevationCorrection;
 use Runalyze\Parameter\Application\ElevationMethod;
+use Runalyze\Service\ElevationCorrection\Strategy\StrategyInterface;
 
 class RouteAdapter
 {
@@ -17,17 +18,32 @@ class RouteAdapter
         $this->Route = $route;
     }
 
-    public function correctElevation(ElevationCorrection $elevationCorrection)
+    /**
+     * @param ElevationCorrection $elevationCorrection
+     * @param StrategyInterface|null $strategy
+     * @return bool true on success
+     */
+    public function correctElevation(ElevationCorrection $elevationCorrection, StrategyInterface $strategy = null)
     {
         if ($this->Route->hasGeohashes()) {
             list($latitudes, $longitudes) = $this->Route->getLatitudesAndLongitudes();
-            $altitudeData = $elevationCorrection->loadAltitudeData($latitudes, $longitudes);
+            $altitudeData = $elevationCorrection->loadAltitudeData($latitudes, $longitudes, $strategy);
 
             if (null !== $altitudeData) {
                 $this->Route->setElevationsCorrected($altitudeData);
                 $this->Route->setElevationsSource($this->getStrategyName($elevationCorrection->getLastSuccessfulStrategy()));
+
+                return true;
             }
         }
+
+        return false;
+    }
+
+    public function removeElevation()
+    {
+        $this->Route->setElevationsCorrected(null);
+        $this->Route->setElevationsSource(null);
     }
 
     /**

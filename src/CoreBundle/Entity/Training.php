@@ -705,6 +705,16 @@ class Training implements IdentifiableEntityInterface, AccountRelatedEntityInter
     }
 
     /**
+     * @return $this
+     */
+    public function togglePrivacy()
+    {
+        $this->isPublic = !$this->isPublic;
+
+        return $this;
+    }
+
+    /**
      * @return bool
      */
     public function isPublic()

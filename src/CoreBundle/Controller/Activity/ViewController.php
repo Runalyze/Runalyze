@@ -10,6 +10,7 @@ use Runalyze\Bundle\CoreBundle\Entity\Training;
 use Runalyze\Bundle\CoreBundle\Component\Activity\Tool\BestSubSegmentsStatistics;
 use Runalyze\Bundle\CoreBundle\Component\Activity\Tool\TimeSeriesStatistics;
 use Runalyze\Bundle\CoreBundle\Component\Activity\VO2maxCalculationDetailsDecorator;
+use Runalyze\Bundle\CoreBundle\Entity\TrainingRepository;
 use Runalyze\Metrics\Velocity\Unit\PaceEnum;
 use Runalyze\Model\Activity;
 use Runalyze\Service\ElevationCorrection\StepwiseElevationProfileFixer;
@@ -24,6 +25,14 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ViewController extends Controller
 {
+    /**
+     * @return TrainingRepository
+     */
+    protected function getTrainingRepository()
+    {
+        return $this->getDoctrine()->getRepository('CoreBundle:Training');
+    }
+
     protected function checkThatEntityBelongsToActivity(AccountRelatedEntityInterface $entity, Account $account)
     {
         if ($entity->getAccount()->getId() != $account->getId()) {
@@ -34,30 +43,27 @@ class ViewController extends Controller
     /**
      * @Route("/activity/{id}", name="ActivityShow", requirements={"id" = "\d+"})
      * @Security("has_role('ROLE_USER')")
+     * @ParamConverter("activity", class="CoreBundle:Training")
      */
-    public function displayAction($id, Account $account)
+    public function displayAction(Request $request, Training $activity, Account $account)
     {
-        $Frontend = new \Frontend(true, $this->get('security.token_storage'));
+        $this->checkThatEntityBelongsToActivity($activity, $account);
 
-        $context = new Context($id, $account->getId());
-
-        switch (Request::createFromGlobals()->query->get('action')) {
+        switch ($request->query->get('action')) {
             case 'changePrivacy':
-                $oldActivity = clone $context->activity();
-                $context->activity()->set(Activity\Entity::IS_PUBLIC, !$context->activity()->isPublic());
-                $updater = new Activity\Updater(\DB::getInstance(), $context->activity(), $oldActivity);
-                $updater->setAccountID($account->getId());
-                $updater->update();
+                $this->getTrainingRepository()->save($activity->togglePrivacy());
+                $this->get('app.legacy_cache')->clearActivityCache($activity);
                 break;
             case 'delete':
-                $trainingRepository = $this->getDoctrine()->getRepository('CoreBundle:Training');
-                $activity = $trainingRepository->find($id);
-                $trainingRepository->remove($activity);
+                $this->getTrainingRepository()->remove($activity);
 
                 return $this->render('activity/activity_has_been_removed.html.twig');
         }
 
-        if (!Request::createFromGlobals()->query->get('silent')) {
+        if (!$request->query->get('silent')) {
+            $frontend = new \Frontend(true, $this->get('security.token_storage'));
+            $context = new Context($activity->getId(), $account->getId());
+
             $view = new \TrainingView($context);
             $view->display();
         }
@@ -107,8 +113,19 @@ class ViewController extends Controller
      * @Route("/activity/{id}/elevation-info", requirements={"id" = "\d+"})
      * @Security("has_role('ROLE_USER')")
      */
-    public function elevationInfoAction($id, Account $account)
+    public function elevationInfoAction($id, Request $request, Account $account)
     {
+        if ($request->get('use-calculated-value') == 'true') {
+            /** @var Training $activity */
+            $activity = $this->getTrainingRepository()->find($id);
+
+            $this->checkThatEntityBelongsToActivity($activity, $account);
+
+            $activity->getAdapter()->useElevationFromRoute();
+
+            $this->getTrainingRepository()->save($activity);
+        }
+
         $Frontend = new \Frontend(false, $this->get('security.token_storage'));
 
         $context = new Context($id, $account->getId());
@@ -138,7 +155,7 @@ class ViewController extends Controller
         $trackdataModel = $trackdata->getLegacyModel();
 
         $paceUnit = PaceEnum::get(
-            $this->getDoctrine()->getManager()->getRepository('CoreBundle:Training')->getSpeedUnitFor($id, $account->getId())
+            $this->getTrainingRepository()->getSpeedUnitFor($id, $account->getId())
         );
 
         $statistics = new TimeSeriesStatistics($trackdataModel);
@@ -166,7 +183,7 @@ class ViewController extends Controller
         $trackdataModel = $trackdata->getLegacyModel();
 
         $paceUnit = PaceEnum::get(
-            $this->getDoctrine()->getManager()->getRepository('CoreBundle:Training')->getSpeedUnitFor($id, $account->getId())
+            $this->getTrainingRepository()->getSpeedUnitFor($id, $account->getId())
         );
 
         $statistics = new BestSubSegmentsStatistics($trackdataModel);

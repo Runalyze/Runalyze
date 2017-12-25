@@ -8,7 +8,6 @@ use Runalyze\Calculation;
 use Runalyze\Configuration;
 use Runalyze\Parameter\Application\ElevationMethod;
 use Runalyze\View\Activity\Context;
-use Runalyze\Model;
 use Runalyze\Activity\Elevation;
 
 /**
@@ -53,26 +52,6 @@ class ElevationInfo {
 	 */
 	public function __construct(Context $context) {
 		$this->Context = $context;
-
-		$this->handleRequest();
-	}
-
-	/**
-	 * Handle request
-	 */
-	protected function handleRequest() {
-		if (Request::param('use-calculated-value') == 'true') {
-			$oldObject = clone $this->Context->activity();
-			$this->Context->activity()->set(Model\Activity\Entity::ELEVATION, $this->Context->route()->elevation());
-
-			$Updater = new Model\Activity\Updater(
-				DB::getInstance(),
-				$this->Context->activity(),
-				$oldObject
-			);
-			$Updater->setAccountID(SessionAccountHandler::getId());
-			$Updater->update();
-		}
 	}
 
 	/**

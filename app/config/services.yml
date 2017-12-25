@@ -64,6 +64,9 @@ services:
     class: Runalyze\Bundle\CoreBundle\Services\AccountMailer
     calls:
       - [setFrom, ["%mail_sender%", "%mail_name%"]]
+  app.legacy_cache:
+    class: Runalyze\Bundle\CoreBundle\Services\LegacyCache
+    arguments: ["%data_directory%"]
   app.repository.account:
     class: Runalyze\Bundle\CoreBundle\Entity\AccountRepository
     factory: ["@doctrine.orm.entity_manager", getRepository]
