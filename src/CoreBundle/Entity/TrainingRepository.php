@@ -300,18 +300,34 @@ class TrainingRepository extends EntityRepository
 
     /**
      * @param Account $account
-     * @return bool
+     * @param int $limit
+     * @param bool $onlyPublic
+     * @return Training[]
      */
-    public function latestActivities(Account $account, $limit = 20)
+    public function getLatestActivities(Account $account, $limit = 20, $onlyPublic = false)
     {
-        return $this->createQueryBuilder('t')
+        $queryBuilder = $this->createQueryBuilder('t')
                 ->select('t')
-                ->where('t.account= :accountid')
+                ->where('t.account = :accountid')
                 ->setParameter('accountid', $account->getId())
                 ->orderBy('t.time', 'DESC')
-                ->setMaxResults($limit)
-                ->getQuery()
-                ->getResult();
+                ->setMaxResults($limit);
+
+        if ($onlyPublic) {
+            $queryBuilder->andWhere('t.isPublic = 1');
+        }
+
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+    /**
+     * @param Account $account
+     * @param int $limit
+     * @return Training[]
+     */
+    public function getLatestPublicActivities(Account $account, $limit = 20)
+    {
+        return $this->getLatestActivities($account, $limit, true);
     }
 
     public function save(Training $training)

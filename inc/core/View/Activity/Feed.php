@@ -1,25 +1,21 @@
 <?php
+
 namespace Runalyze\View\Activity;
 
 use PicoFeed\Syndication\Rss20FeedBuilder;
 use PicoFeed\Syndication\Rss20ItemBuilder;
-use Runalyze\Bundle\CoreBundle\Component\Activity\ActivityContext;
-use Runalyze\Bundle\CoreBundle\Component\Activity\ActivityDecorator;
+use Runalyze\Bundle\CoreBundle\Component\Configuration\UnitSystem;
+use Runalyze\Bundle\CoreBundle\Entity\Training;
 use Runalyze\Bundle\CoreBundle\Services\Activity\ActivityContextFactory;
 use Runalyze\Bundle\CoreBundle\Services\Configuration\ConfigurationManager;
-use Runalyze\Data\Cadence\Unit;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Runalyze\Util\LocalTime;
-use Symfony\Component\Translation\TranslatorInterface;
-use Runalyze\Bundle\CoreBundle\Entity\Training;
-use Runalyze\Activity\PaceUnit;
 use Runalyze\Bundle\CoreBundle\Twig\ValueExtension;
-use Runalyze\Bundle\CoreBundle\Component\Configuration\UnitSystem;
-use Runalyze\Bundle\CoreBundle\Twig\DisplayableValue;
+use Runalyze\Util\LocalTime;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
-class Feed {
-
-    /** @var array $Activities */
+class Feed
+{
+    /** @var array */
     protected $Activities;
 
     /** @var Rss20FeedBuilder */
@@ -41,7 +37,6 @@ class Feed {
     protected $UnitSystem;
 
     /**
-     * Feed constructor.
      * @param TranslatorInterface $translator
      * @param ActivityContextFactory $activityContextFactory
      * @param UrlGeneratorInterface $urlGenerator
@@ -55,13 +50,11 @@ class Feed {
         $this->UrlGenerator = $urlGenerator;
         $this->ConfigurationManager = $configurationManager;
         $this->FeedBuilder->withDate(new \DateTime());
-        $this->UnitSystem = new UnitSystem($configurationManager->getList());
+        $this->UnitSystem = $configurationManager->getList()->getUnitSystem();
     }
 
-    /**
-     * @param TranslatorInterface $translator
-     */
-    public function setTranslator(TranslatorInterface $translator) {
+    public function setTranslator(TranslatorInterface $translator)
+    {
         $this->Translator = $translator;
     }
 
@@ -75,7 +68,7 @@ class Feed {
     }
 
     /**
-     * @param $activities
+     * @param array $activities
      * @return $this
      */
     public function setActivities($activities)
@@ -95,7 +88,7 @@ class Feed {
     }
 
     /**
-     * @param $title
+     * @param string $title
      * @return $this
      */
     public function setFeedTitle($title)
@@ -105,7 +98,7 @@ class Feed {
     }
 
     /**
-     * @param $feed
+     * @param string $feed
      * @return $this
      */
     public function setFeedUrl($feed)
@@ -115,7 +108,7 @@ class Feed {
     }
 
     /**
-     * @param $site
+     * @param string $site
      * @return $this
      */
     public function setSiteUrl($site)
@@ -135,33 +128,33 @@ class Feed {
     }
 
     /**
-     * @param ActivityContext $activityContext
+     * @param Training $activity
      * @param ValueExtension $valueDecorator
      * @return string
      */
-    private function createItemContent(ActivityContext $activityContext, ValueExtension $valueDecorator)
+    private function createItemContent(Training $activity, ValueExtension $valueDecorator)
     {
-        $activity = $activityContext->getActivity();
         $content = '<b>'.$this->Translator->trans('Sport') . '</b>: ' . $activity->getSport()->getName();
+
         if ($activity->getType() !== null) {
             $content .= '<br><b>'.$this->Translator->trans('Activity type') . '</b>: ' . $activity->getType()->getName();
         }
-        $content .= '<br><b>'.$this->Translator->trans('Date') . '</b>: '.(new LocalTime($activityContext->getActivity()->getTime()))->format('d.m.Y');
 
-        $content .= '<br><b>'.$this->Translator->trans('Duration') . '</b>: '.(new \DateTime())->setTimezone(new \DateTimeZone("UTC"))->setTimestamp($activityContext->getActivity()->getS())->format('H:i:s');
+        $content .= '<br><b>'.$this->Translator->trans('Date') . '</b>: '.(new LocalTime($activity->getTime()))->format('d.m.Y');
+        $content .= '<br><b>'.$this->Translator->trans('Duration') . '</b>: '.(new \DateTime())->setTimezone(new \DateTimeZone("UTC"))->setTimestamp($activity->getS())->format('H:i:s');
 
         if ($activity->getDistance()) {
             $content .= '<br><b>' . $this->Translator->trans('Distance') . '</b>: ' . $valueDecorator->distance($activity->getDistance());
             $content .= '<br><b>' . $this->Translator->trans('Pace') . '</b>: ' . $valueDecorator->pace($activity->getS() / $activity->getDistance(), $activity->getSport()->getSpeedUnit());
         }
 
-        if ($activityContext->getActivity()->getNotes()) {
-            $content .= '<br><b>'.$this->Translator->trans('Notes:') . '</b><br>'.$activityContext->getActivity()->getNotes();
+        if ($activity->getNotes()) {
+            $content .= '<br><b>'.$this->Translator->trans('Notes') . '</b>:<br>'.$activity->getNotes();
         }
 
-        if ($activityContext->getActivity()->isPublic()) {
-            $content .= '<br><a href="'.$this->UrlGenerator->generate('shared-activity', array('activityHash' => base_convert((int)$activityContext->getActivity()->getId(), 10, 35)), UrlGeneratorInterface::ABSOLUTE_URL);
-	     $content .= '?utm_medium=feed&utm_campaign=feed">'.$this->Translator->trans('View full activity').'</a>';
+        if ($activity->isPublic()) {
+            $content .= '<br><a href="'.$this->UrlGenerator->generate('shared-activity', ['activityHash' => base_convert((int)$activity->getId(), 10, 35)], UrlGeneratorInterface::ABSOLUTE_URL);
+	        $content .= '?utm_medium=feed&utm_campaign=feed">'.$this->Translator->trans('View full activity').'</a>';
         }
 
         return $content;
@@ -173,43 +166,41 @@ class Feed {
     private function createItem(Training $activity)
     {
         $item = new Rss20ItemBuilder($this->FeedBuilder);
-        $activityContext = $this->ActivityContextFactory->getContext($activity);
-        $activity = $activityContext->getActivity();
-        $time = (new LocalTime($activity->getTime()))->format('d.m.Y');
-        $account = $activity->getAccount();
         $valueDecorator = new ValueExtension($this->ConfigurationManager);
 
-        $item->withTitle($this->getFeedTitle($activityContext, $valueDecorator));
-
+        $item->withTitle($this->getFeedTitle($activity, $valueDecorator));
         $item->withPublishedDate(new LocalTime($activity->getTime()));
-        $item->withContent($this->createItemContent($activityContext, $valueDecorator));
-        $item->withAuthor($account->getUsername());
+        $item->withContent($this->createItemContent($activity, $valueDecorator));
+        $item->withAuthor($activity->getAccount()->getUsername());
+
         if ($activity->isPublic()) {
             $item->withUrl($this->UrlGenerator->generate('shared-activity', array('activityHash' => base_convert((int)$activity->getId(), 10, 35)), UrlGeneratorInterface::ABSOLUTE_URL).'?utm_medium=feed&utm_campaign=feed');
         }
+
         $this->FeedBuilder->withItem($item);
     }
 
     /**
-     * @param ActivityContext $activityContext
+     * @param Training $activity
      * @param ValueExtension $valueDecorator
      * @return string
      */
-    private function getFeedTitle(ActivityContext $activityContext, ValueExtension $valueDecorator)
+    private function getFeedTitle(Training $activity, ValueExtension $valueDecorator)
     {
-        $title = $activityContext->getSport()->getName();
+        $title = $activity->getSport()->getName();
 
-        if (null !== $activityContext->getActivity()->getType()) {
-            $title .= ' ('. $activityContext->getActivity()->getType()->getName().')';
-        }
-        $title .= ': '. (new \DateTime())->setTimezone(new \DateTimeZone("UTC"))->setTimestamp($activityContext->getActivity()->getS())->format('H:i:s').'h - ';
-
-        if ($activityContext->getActivity()->getDistance() > 0) {
-            $title .= str_replace('&nbsp;', ' ',$valueDecorator->distance($activityContext->getActivity()->getDistance())). '';
+        if (null !== $activity->getType()) {
+            $title .= ' ('. $activity->getType()->getName().')';
         }
 
-        if ('' != $activityContext->getActivity()->getTitle()) {
-            $title .= ' - '.$activityContext->getActivity()->getTitle();
+        $title .= ': '. (new \DateTime())->setTimezone(new \DateTimeZone("UTC"))->setTimestamp($activity->getS())->format('H:i:s').'h';
+
+        if ($activity->getDistance() > 0) {
+            $title .= ' - '.str_replace('&nbsp;', ' ', $valueDecorator->distance($activity->getDistance()));
+        }
+
+        if ('' != $activity->getTitle()) {
+            $title .= ' - '.$activity->getTitle();
         }
 
         return $title;
