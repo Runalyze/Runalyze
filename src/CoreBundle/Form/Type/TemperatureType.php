@@ -7,7 +7,7 @@ use Runalyze\Metrics\Temperature\Unit\AbstractTemperatureUnit;
 class TemperatureType extends AbstractUnitBasedType
 {
     /** @var int */
-    protected $ViewPrecision = 1;
+    protected $ViewPrecision = 0;
 
     public function __construct(AbstractTemperatureUnit $temperatureUnit)
     {

@@ -33,7 +33,7 @@ class ConfigurationManager
      */
     public function getList(Account $account = null)
     {
-        if (null === $account) {
+        if (null === $account || (null !== $this->getCurrentUser() && $account->getId() == $this->getCurrentUser()->getId())) {
             if (null === $this->CurrentConfigurationList) {
                 $this->setListForCurrentUser();
             }
@@ -64,12 +64,20 @@ class ConfigurationManager
 
     protected function setListForCurrentUser()
     {
-        $user = $this->TokenStorage->getToken() ? $this->TokenStorage->getToken()->getUser() : null;
+        $user = $this->getCurrentUser();
 
         if ($user instanceof Account) {
             $this->CurrentConfigurationList = $this->getListFor($user);
         } else {
             $this->CurrentConfigurationList = new RunalyzeConfigurationList();
         }
+    }
+
+    /**
+     * @return mixed|null
+     */
+    protected function getCurrentUser()
+    {
+        return $this->TokenStorage->getToken() ? $this->TokenStorage->getToken()->getUser() : null;
     }
 }

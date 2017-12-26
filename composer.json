@@ -31,6 +31,7 @@
         "runalyze/glossary": "dev-master",
         "snc/redis-bundle": "2.*",
         "predis/predis": "^1.0",
+        "guzzlehttp/guzzle": "^6.0",
         "runalyze/common": "dev-master",
         "runalyze/devices": "dev-master",
         "miniflux/picofeed": "@stable"

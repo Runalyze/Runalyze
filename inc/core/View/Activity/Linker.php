@@ -110,19 +110,6 @@ class Linker {
 	}
 
 	/**
-	 * Navigation for editor
-	 * @return string
-	 */
-	public function editNavigation() {
-		if (Request::param('mode') == 'multi') {
-			return '';
-		}
-
-		return self::editPrevLink($this->Activity->id(), $this->Activity->timestamp()).
-				self::editNextLink($this->Activity->id(), $this->Activity->timestamp());
-	}
-
-	/**
 	 * URL to elevation correction
 	 * @return string
 	 */
@@ -213,37 +200,5 @@ class Linker {
 		$NextTraining = DB::getInstance()->query('SELECT `id` FROM `'.PREFIX.'training` WHERE ((`time`>"'.$timestampInNoTimezone.'" AND `id`!='.$id.') OR (`time`="'.$timestampInNoTimezone.'" AND `id`>'.$id.')) AND `accountid` = '.SessionAccountHandler::getId().' ORDER BY `time` ASC, `id` ASC LIMIT 1')->fetch();
 
 		return (isset($NextTraining['id'])) ? $NextTraining['id'] : false;
-	}
-
-	/**
-	 * Get array for navigating back to previous training in editor
-	 * @param int $id
-	 * @param int $timestampInNoTimezone
-	 * @return string
-	 * @codeCoverageIgnore
-	 */
-	public static function editPrevLink($id, $timestampInNoTimezone) {
-		$prevId = self::prevId($id, $timestampInNoTimezone);
-
-		if ($prevId !== false)
-			return self::editLink($prevId, Icon::$BACK, 'ajax-prev', 'black-rounded-icon');
-
-		return '';
-	}
-
-	/**
-	 * Get array for navigating for to next training in editor
-	 * @param int $id
-	 * @param int $timestampInNoTimezone
-	 * @return string
-	 * @codeCoverageIgnore
-	 */
-	public static function editNextLink($id, $timestampInNoTimezone) {
-		$nextId = self::nextId($id, $timestampInNoTimezone);
-
-		if ($nextId !== false)
-			return self::editLink($nextId, Icon::$NEXT, 'ajax-next', 'black-rounded-icon');
-
-		return '';
 	}
 }

@@ -39,7 +39,7 @@ class ActivityContext
         Swimdata $swimdata = null,
         Route $route = null,
         Hrv $hrv = null,
-        RaceResult $raceResult = null
+        Raceresult $raceResult = null
     )
     {
         $this->Activity = $activity;

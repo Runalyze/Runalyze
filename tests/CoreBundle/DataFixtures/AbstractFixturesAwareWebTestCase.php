@@ -102,7 +102,7 @@ abstract class AbstractFixturesAwareWebTestCase extends WebTestCase
      * @param Sport|null $sport
      * @return Training
      */
-    protected function getActivitiyForDefaultAccount(
+    protected function getActivityForDefaultAccount(
         $timestamp = null,
         $duration = 3600,
         $distance = null,

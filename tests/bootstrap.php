@@ -14,6 +14,8 @@ if (!defined('RUNALYZE_TEST'))
 if (!defined('FRONTEND_PATH'))
 	define('FRONTEND_PATH', dirname(__FILE__).'/../inc/');
 
+define('TESTS_ROOT', __DIR__);
+
 require_once FRONTEND_PATH.'../app/autoload.php';
 
 require_once FRONTEND_PATH.'system/define.consts.php';
@@ -68,10 +70,11 @@ SessionAccountHandler::setAccount(array(
 ));
 // Define RUNALYZE_TEST_TZ_LOOKUP
 try {
-	(new \Runalyze\Util\TimezoneLookup(false))->getTimezoneForCoordinate(13.41, 52.52);
+    $lookup = new \Runalyze\Bundle\CoreBundle\Services\Import\TimezoneLookup(TESTS_ROOT.'/../data/timezone.sqlite', 'libspatialite.so.5');
+    $lookup->getTimezoneForCoordinate(13.41, 52.52);
 
 	define('RUNALYZE_TEST_TZ_LOOKUP', true);
-} catch (\Runalyze\Util\TimezoneLookupException $e) {
+} catch (\Runalyze\Bundle\CoreBundle\Services\Import\TimezoneLookupException $e) {
 	define('RUNALYZE_TEST_TZ_LOOKUP', false);
 }
 
@@ -118,5 +121,8 @@ Helper::Unknown('');
 require_once FRONTEND_PATH.'../tests/fake/FakeContext.php';
 
 // Add doctrine types (required for test cases that do not use the kernel)
+\Doctrine\DBAL\Types\Type::addType(\Runalyze\Bundle\CoreBundle\Doctrine\Types\TinyIntType::TINYINT, \Runalyze\Bundle\CoreBundle\Doctrine\Types\TinyIntType::class);
 \Doctrine\DBAL\Types\Type::addType(\Runalyze\Bundle\CoreBundle\Doctrine\Types\PipeDelimitedArray::PIPE_ARRAY, \Runalyze\Bundle\CoreBundle\Doctrine\Types\PipeDelimitedArray::class);
+\Doctrine\DBAL\Types\Type::addType(\Runalyze\Bundle\CoreBundle\Doctrine\Types\GeohashArray::GEOHASH_ARRAY, \Runalyze\Bundle\CoreBundle\Doctrine\Types\GeohashArray::class);
 \Doctrine\DBAL\Types\Type::addType(\Runalyze\Bundle\CoreBundle\Doctrine\Types\RunalyzePauseArray::RUNALYZE_PAUSE_ARRAY, \Runalyze\Bundle\CoreBundle\Doctrine\Types\RunalyzePauseArray::class);
+\Doctrine\DBAL\Types\Type::addType(\Runalyze\Bundle\CoreBundle\Doctrine\Types\RunalyzeRoundArray::RUNALYZE_ROUND_ARRAY, \Runalyze\Bundle\CoreBundle\Doctrine\Types\RunalyzeRoundArray::class);

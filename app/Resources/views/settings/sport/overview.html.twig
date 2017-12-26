@@ -15,6 +15,7 @@
                 <th colspan="2">{{ 'Name'|trans }}</th>
                 <th>{{ 'Main sport'|trans }}</th>
                 <th>{{ 'Speed unit'|trans }}</th>
+                <th>{{ 'Default privacy'|trans }}</th>
                 <th>{{ 'Calendar view'|trans }}</th>
                 <th>&nbsp;</th>
             </tr>
@@ -36,6 +37,7 @@
                         <td>{{ sport.name }}</td>
                         <td>{% if sport.main %}<i class="fa fa-check"></i>{% endif %}</td>
                         <td class="small">{{ sport.distances ? sport.speedUnit.unit : '' }}</td>
+                        <td class="small">{{ sport.defaultPrivacy ? '<i class="fa fa-lock"></i>' : '<i class="fa fa-unlock"></i>' }}</td>
                         <td>{{ calendarView.stringFor(sport.short) }}</td>
                         <td>
                             {% if mainSport == sport.id %}

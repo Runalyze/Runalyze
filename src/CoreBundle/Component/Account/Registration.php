@@ -189,6 +189,8 @@ class Registration
             $Type->setSport($this->specialVars['RUNNINGSPORT']);
             $this->em->persist($Type);
         }
+
+        $this->em->flush();
     }
 
     private function collectSpecialVars()

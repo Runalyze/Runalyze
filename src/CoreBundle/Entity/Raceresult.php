@@ -3,33 +3,35 @@
 namespace Runalyze\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Runalyze\Bundle\CoreBundle\Entity\Common\AccountRelatedEntityInterface;
 
 /**
  * Raceresult
  *
  * @ORM\Table(name="raceresult")
  * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\RaceresultRepository")
+ * @ORM\EntityListeners({"Runalyze\Bundle\CoreBundle\EntityListener\RaceResultListener"})
  */
-class Raceresult
+class Raceresult implements AccountRelatedEntityInterface
 {
     /**
      * @var int [km]
      *
-     * @ORM\Column(name="official_distance", type="decimal", precision=6, scale=2, nullable=false)
+     * @ORM\Column(name="official_distance", type="casted_decimal_2", precision=6, scale=2, nullable=true)
      */
     private $officialDistance;
 
     /**
      * @var int [s]
      *
-     * @ORM\Column(name="official_time", type="decimal", precision=8, scale=2, nullable=false)
+     * @ORM\Column(name="official_time", type="casted_decimal_2", precision=8, scale=2, nullable=false)
      */
     private $officialTime;
 
     /**
-     * @var boolean
+     * @var bool
      *
-     * @ORM\Column(name="officially_measured", type="boolean", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
+     * @ORM\Column(name="officially_measured", type="boolean")
      */
     private $officiallyMeasured = false;
 
@@ -43,51 +45,53 @@ class Raceresult
     /**
      * @var int|null
      *
-     * @ORM\Column(name="place_total", columnDefinition="mediumint unsigned DEFAULT NULL")
+     * @ORM\Column(name="place_total", type="integer", nullable=true, options={"unsigned":true})
      */
     private $placeTotal;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="place_gender", columnDefinition="mediumint unsigned DEFAULT NULL")
+     * @ORM\Column(name="place_gender", type="integer", nullable=true, options={"unsigned":true})
      */
     private $placeGender;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="place_ageclass", columnDefinition="mediumint unsigned DEFAULT NULL")
+     * @ORM\Column(name="place_ageclass", type="integer", nullable=true, options={"unsigned":true})
      */
     private $placeAgeclass;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="participants_total", columnDefinition="mediumint unsigned DEFAULT NULL")
+     * @ORM\Column(name="participants_total", type="integer", nullable=true, options={"unsigned":true})
      */
     private $participantsTotal;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="participants_gender", columnDefinition="mediumint unsigned DEFAULT NULL")
+     * @ORM\Column(name="participants_gender", type="integer", nullable=true, options={"unsigned":true})
      */
     private $participantsGender;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="participants_ageclass", columnDefinition="mediumint unsigned DEFAULT NULL")
+     * @ORM\Column(name="participants_ageclass", type="integer", nullable=true, options={"unsigned":true})
      */
     private $participantsAgeclass;
 
     /**
      * @var Account
      *
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
      * @ORM\ManyToOne(targetEntity="Account")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="accountid", referencedColumnName="id", nullable=false)
+     *   @ORM\JoinColumn(name="accountid", referencedColumnName="id")
      * })
      */
     private $account;
@@ -97,9 +101,9 @@ class Raceresult
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="Training")
+     * @ORM\OneToOne(targetEntity="Training", inversedBy="raceresult")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="activity_id", referencedColumnName="id", nullable=false)
+     *   @ORM\JoinColumn(name="activity_id", referencedColumnName="id")
      * })
      */
     private $activity;
@@ -145,13 +149,13 @@ class Raceresult
     }
 
     /**
-     * @param bool $officiallyMeasured
+     * @param bool $flag
      *
      * @return $this
      */
-    public function setOfficiallyMeasured($officiallyMeasured)
+    public function setOfficiallyMeasured($flag)
     {
-        $this->officiallyMeasured = $officiallyMeasured;
+        $this->officiallyMeasured = $flag;
 
         return $this;
     }
@@ -353,9 +357,9 @@ class Raceresult
     {
         $this->setActivity($activity);
         $this->setAccount($activity->getAccount());
-        $this->setOfficialDistance($activity->getDistance());
+        $this->setOfficialDistance($activity->getDistance() ?: 0.0);
         $this->setOfficialTime($activity->getS());
-        $this->setName($activity->getTitle());
+        $this->setName($activity->getTitle() ?: '');
 
         return $this;
     }

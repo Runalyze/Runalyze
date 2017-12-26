@@ -3,6 +3,7 @@
 namespace Runalyze\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Runalyze\Bundle\CoreBundle\Entity\Common\AccountRelatedEntityInterface;
 use Runalyze\Profile\View\DatasetPrivacyProfile;
 
 /**
@@ -11,7 +12,7 @@ use Runalyze\Profile\View\DatasetPrivacyProfile;
  * @ORM\Table(name="dataset", indexes={@ORM\Index(name="position", columns={"accountid", "position"})}, uniqueConstraints={@ORM\UniqueConstraint(name="unique_key", columns={"accountid", "keyid"})})
  * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\DatasetRepository")
  */
-class Dataset
+class Dataset implements AccountRelatedEntityInterface
 {
     /**
      * @var \Runalyze\Bundle\CoreBundle\Entity\Account
@@ -27,7 +28,7 @@ class Dataset
     /**
      * @var bool
      *
-     * @ORM\Column(name="keyid", columnDefinition="tinyint unsigned NOT NULL")
+     * @ORM\Column(name="keyid", type="tinyint", options={"unsigned":true})
      * @ORM\Id
      */
     private $keyid;
@@ -35,7 +36,7 @@ class Dataset
     /**
      * @var bool
      *
-     * @ORM\Column(name="active", type="boolean", columnDefinition="tinyint unsigned NOT NULL DEFAULT 1")
+     * @ORM\Column(name="active", type="boolean")
      */
     private $active = true;
 
@@ -49,7 +50,7 @@ class Dataset
     /**
      * @var int
      *
-     * @ORM\Column(name="position", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
+     * @ORM\Column(name="position", type="tinyint", options={"unsigned":true})
      */
     private $position = 0;
 
@@ -62,6 +63,7 @@ class Dataset
     private $privacy = true;
 
     /**
+     * @param Account $account
      * @return $this
      */
     public function setAccount(Account $account)
@@ -100,13 +102,13 @@ class Dataset
     }
 
     /**
-     * @param bool $active
+     * @param bool $flag
      *
      * @return $this
      */
-    public function setActive($active)
+    public function setActive($flag = true)
     {
-        $this->active = (bool)$active;
+        $this->active = (bool)$flag;
 
         return $this;
     }

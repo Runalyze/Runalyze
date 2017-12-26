@@ -1,0 +1,253 @@
+{% extends "base_logged_in.twig" %}
+
+{% block content %}
+    {% if isNew %}
+    <div class="panel-menu panel-menu-floated">
+        <ul>
+            <li><a class="window" data-size="small" href="{{ url('activity-upload') }}">{% trans %}Upload{% endtrans %}</a></li>{#-
+            -#}<li><a class="window" data-size="small" href="{{ url('activity-communicator') }}">Garmin Communicator</a></li>{#-
+            -#}<li class="triggered"><a class="window" data-size="small" href="{{ url('activity-new') }}">Form</a></li>
+        </ul>
+    </div>
+    {% endif %}
+
+    {% set formConfig = config().activityForm %}
+    {% set collapsed = ' class=collapsed' %}
+    {# @var formConfig \Runalyze\Bundle\CoreBundle\Component\Configuration\Category\ActivityForm #}
+
+    <div class="panel-heading">
+        {% if isNew %}
+            <h1>{{ 'Add activity'|trans }}</h1>
+        {% else %}
+            <h1>{{ decorator.title }}, {{ decorator.dateTime|date('d.m.Y H:i') }}</h1>
+        {% endif %}
+    </div>
+
+    <div class="panel-content">
+        {% include 'flashmessages.html.twig' %}
+
+        {% if isDuplicate|default(false) %}
+        <p class="warning">
+            {% trans %}It seems that you already have imported this activity{% endtrans %}.
+        </p>
+        {% endif %}
+
+        {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'ajax no-automatic-reload', 'id': 'activity'}}) }}
+
+        <input type="hidden" name="distance-to-km-factor" value="{{ unitSystem().distanceUnit.toBaseUnit(1) }}">
+
+        <fieldset id="fieldset-sports"{{ formConfig.fieldSetIsCollapsed('SPORT') ? collapsed : '' }}>
+            <legend onclick="Runalyze.toggleFieldset(this, 'fieldset-sports', false, 'SPORT')">{% trans %}Sport{% endtrans %}</legend>
+
+            {{ form_row(form.sport, {'div_class': 'w50'}) }}
+            {{ form_row(form.type, {'div_class': 'w50'}) }}
+
+            {{ form_row(form.is_race, {'div_class': 'w50', 'help': 'Race results are treated in a special way to show your personal bests and are independent of the chosen activity type. You can add some details below.'}) }}
+            {{ form_row(form.is_public, {'div_class': 'w50', 'help': 'Public activities will be visible for everybody.'}) }}
+        </fieldset>
+
+        <fieldset id="fieldset-general"{{ formConfig.fieldSetIsCollapsed('GENERAL') ? collapsed : '' }}>
+            <legend onclick="Runalyze.toggleFieldset(this, 'fieldset-general', false, 'GENERAL')">{% trans %}General information{% endtrans %}</legend>
+
+            {{ form_row(form.time.date, {'div_class': 'w50', 'attr': {'class': 'pick-a-date', 'data-format': 'Y-m-d'}}) }}
+            {{ form_row(form.time.time, {'div_class': 'w50', 'attr': {'class': 'small-size'}}) }}
+
+            {{ form_row(form.s, {'div_class': 'w50', 'attr': {'class': 'small-size'}}) }}
+            {{ form_row(form.kcal, {'div_class': 'w50', 'attr': {'class': 'small-size'}, 'help':'This value will be calculated automatically from duration and sport settings (if activated in your configuration) only if you change the duration or the type of sport.'}) }}
+
+            {{ form_row(form.pulseAvg, {'div_class': 'w50', 'attr': {'class': 'small-size'}}) }}
+            {{ form_row(form.pulseMax, {'div_class': 'w50', 'attr': {'class': 'small-size'}}) }}
+        </fieldset>
+
+        <fieldset id="fieldset-distance" class="only-distances{{ formConfig.fieldSetIsCollapsed('DISTANCE') ? ' collapsed' : '' }}">
+            <legend onclick="Runalyze.toggleFieldset(this, 'fieldset-distance', false, 'DISTANCE')">{% trans %}Distance{% endtrans %}</legend>
+
+            {{ form_row(form.distance, {'div_class': 'w50', 'attr': {'class': 'small-size'}}) }}
+            {{ form_row(form.is_track, {'div_class': 'w50', 'help': 'This field is only meant for official track races such that distances can be shown correctly, e.g. as 10.000m. Use tags for all other purposes.'}) }}
+
+            {{ form_row(form.elevation, {'div_class': 'w50 only-outside', 'attr': {'class': 'small-size'}, 'help':'Will be calculated afterwards from the activity\'s elevation profile.'}) }}
+            {{ form_row(form.pace, {'div_class': 'w50', 'attr': {'class': 'small-size', 'disabled': 'disabled'}}) }}
+
+            {{ form_row(form.cadence, {'div_class': 'w50', 'attr': {'class': 'small-size'}}) }}
+        </fieldset>
+
+        <fieldset id="fieldset-splits" class="only-distances{{ formConfig.fieldSetIsCollapsed('SPLITS') ? ' collapsed' : '' }}">
+            <legend onclick="Runalyze.toggleFieldset(this, 'fieldset-splits', false, 'SPLITS')">{% trans %}Laps{% endtrans %}</legend>
+
+            <div class="w100 with50erLabel">
+                {{ form_label(form.splits, null, {'help': 'Defining some laps as \'resting\' will hide them in the respective plot.'}) }}
+
+                <div class="full-size left">
+                    <ol class="splits">
+                    {% for splitField in form.splits %}
+                        <li>
+                            <div class="inline split-distance">{{ form_widget(splitField.distance) }}</div> &nbsp;{{ 'in'|trans }}&nbsp;
+                            <div class="inline split-duration">{{ form_widget(splitField.duration) }}</div>
+                            <div class="inline split-intensity">{{ form_widget(splitField.isActive) }}</div> &nbsp;
+                            <span class="link split-remove"><i class="fa fa-fw fa-times"></i></span>
+                            <span class="link split-copy"><i class="fa fa-fw fa-plus"></i></span>
+                        </li>
+                    {% endfor %}
+                    </ol>
+
+                    <div class="hide split-prototype">
+                        <div class="inline split-distance">{{ form_widget(form.splits.vars.prototype.distance) }}</div> &nbsp;{{ 'in'|trans }}&nbsp;
+                        <div class="inline split-duration">{{ form_widget(form.splits.vars.prototype.duration) }}</div>
+                        <div class="inline split-intensity">{{ form_widget(form.splits.vars.prototype.isActive) }}</div> &nbsp;
+                        <span class="link split-remove"><i class="fa fa-fw fa-times"></i></span>
+                        <span class="link split-copy"><i class="fa fa-fw fa-plus"></i></span>
+                    </div>
+
+                    <p id="addSplitsLink"><span class="link add-split">{{ 'add new lap'|trans }}</span></p>
+                    {% if configVar('general.DISTANCE_UNIT_SYSTEM') == 'metric' %}<p><span class="link round-splits">{{ 'round for 100m'|trans }}</span></p>{% endif %}
+                    <p><span class="link sum-splits">{{ 'apply as total distance'|trans }}</span></p>
+                    <p><span class="link active-splits">{{ 'all active'|trans }}</span> - <span class="link rest-splits">{{ 'all resting'|trans }}</span></p>
+                    <p>
+                        {{ 'alternating:'|trans }}
+                        <span class="link alternate-splits-rest">{{ 'first resting'|trans }}</span> -
+                        <span class="link alternate-splits-active">{{ 'first active'|trans }}</span>
+                    </p>
+
+                    {{ form_errors(form.splits) }}
+                    {% do form.splits.setRendered() %}
+                </div>
+		    </div>
+        </fieldset>
+
+        <fieldset id="fieldset-other"{{ formConfig.fieldSetIsCollapsed('OTHER') ? collapsed : '' }}>
+            <legend onclick="Runalyze.toggleFieldset(this, 'fieldset-other', false, 'OTHER')">{% trans %}Miscellaneous{% endtrans %}</legend>
+
+            {{ form_row(form.use_vo2max, {'div_class': 'w100 with50erLabel only-running'}) }}
+
+            {{ form_row(form.rpe, {'div_class': 'w100 with50erLabel', 'help': 'Rating of Perceived Exertion or Borg scale, a scale devised to show perceived exertion during exercise'}) }}
+
+            {{ form_row(form.title, {'div_class': 'w100 with50erLabel', 'attr': {'class': 'full-size'}}) }}
+
+            {{ form_row(form.tag, {'div_class': 'w100 with50erLabel'}) }}
+
+            {{ form_row(form.partner, {'div_class': 'w100 with50erLabel', 'attr': {'class': 'full-size'}}) }}
+
+            {{ form_row(form.routename, {'div_class': 'w100 with50erLabel only-outside', 'attr': {'class': 'full-size'}}) }}
+        </fieldset>
+
+        <fieldset id="fieldset-notes"{{ formConfig.fieldSetIsCollapsed('NOTES') ? collapsed : '' }}>
+            <legend onclick="Runalyze.toggleFieldset(this, 'fieldset-notes', false, 'NOTES')">{% trans %}Notes{% endtrans %}</legend>
+
+            {{ form_row(form.notes, {'div_class': 'w100 with50erLabel', 'attr': {'class': 'full-size'}}) }}
+        </fieldset>
+
+        <fieldset id="fieldset-weather" class="only-outside{{ formConfig.fieldSetIsCollapsed('WEATHER') ? ' collapsed' : '' }}">
+            <legend onclick="Runalyze.toggleFieldset(this, 'fieldset-weather', false, 'WEATHER')">{% trans %}Weather{% endtrans %}</legend>
+
+            <div class="margin-bottom only-outside inline-span-menu">
+                <span class="inline-span-menu-item link weatherdata-button-load">{% trans %}Load weather data{% endtrans %}</span>
+                <span class="inline-span-menu-item link weatherdata-button-edit hide">{% trans %}Add weather data{% endtrans %}</span>
+                <span class="inline-span-menu-item link weatherdata-button-remove">{% trans %}Remove all weather data{% endtrans %}</span>
+            </div>
+
+            <div class="margin-bottom only-outside weatherdata-none-text hide">
+                <p><em>{% trans %}No weather data present{% endtrans %}</em></p>
+            </div>
+
+            <div class="margin-bottom only-outside weatherdata-loading-text hide">
+                <p><em class="loading-ellipsis">{% trans %}Requesting weather data{% endtrans %} </em></p>
+            </div>
+
+            {{ form_row(form.weatherid, {'div_class': 'w50 only-outside'}) }}
+            {{ form_row(form.temperature, {'div_class': 'w50 only-outside', 'attr': {'class': 'small-size'}}) }}
+            {{ form_row(form.wind_speed, {'div_class': 'w50 only-outside', 'attr': {'class': 'small-size'}}) }}
+            {{ form_row(form.wind_deg, {'div_class': 'w50 only-outside', 'attr': {'class': 'small-size'}}) }}
+            {{ form_row(form.humidity, {'div_class': 'w50 only-outside', 'attr': {'class': 'small-size'}}) }}
+            {{ form_row(form.pressure, {'div_class': 'w50 only-outside', 'attr': {'class': 'small-size'}}) }}
+
+            {{ form_row(form.weatherSource) }}
+            <p class="weatherdata-source only-outside small r"></p>
+        </fieldset>
+
+        <fieldset id="fieldset-equipment">
+            <legend onclick="Runalyze.toggleFieldset(this, 'fieldset-equipment', false, '')">{% trans %}Equipment{% endtrans %}</legend>
+
+            {{ form_row(form.equipment, {'div_class': 'depends-on-date'}) }}
+        </fieldset>
+
+        {% if not isNew %}
+            {% if showElevationCorrectionLink|default(false) %}
+            <fieldset id="fieldset-elevation-correction" class="collapsed">
+                <legend onclick="Runalyze.toggleFieldset(this, 'fieldset-elevation-correction', false, '')">{% trans %}Use elevation correction{% endtrans %}</legend>
+
+                <div class="fieldset-messages">
+                    <p class="info">
+                        <a class="ajax" target="gps-results" href="{{ url('activity-elevation-correction', {'id': activity_id}) }}"><strong>{% trans %}Correct elevation data{% endtrans %}</strong></a><br>
+                        <br>
+                        <small id="gps-results" class="block">
+                            {% trans %}Elevation data via GPS is very inaccurate. Therefore you can correct it via some satellite data.{% endtrans %}
+                        </small>
+                    </p>
+                </div>
+            </fieldset>
+            {% endif %}
+
+            {% if form.data_series_remover %}
+            <fieldset id="fieldset-remove-data-series" class="collapsed">
+                <legend onclick="Runalyze.toggleFieldset(this, 'fieldset-remove-data-series', false, '')">{% trans %}Remove data series{% endtrans %}</legend>
+
+                <div class="fieldset-messages">
+                    <p class="info">
+                        {% trans %}You may want to remove a data series if a sensor, e.g. your heart rate strap, produced unusable data.{% endtrans %}
+                    </p>
+
+                    <p class="warning">
+                        {% trans %}Attention: This operation cannot be undone.{% endtrans %}
+                    </p>
+
+                    {% for data_series_field in form.data_series_remover %}
+                        {{ form_row(data_series_field, {'div_class': 'w100 checkbox-first'}) }}
+                    {% endfor %}
+
+                    {{ form_errors(form.splits) }}
+                    {% do form.splits.setRendered() %}
+                </div>
+            </fieldset>
+            {% endif %}
+        {% endif %}
+
+        {{ form_rest(form) }}
+
+        <div class="c">
+            <input type="submit" value="{% trans %}Save{% endtrans %}">
+        </div>
+
+        {{ form_end(form) }}
+    </div>
+
+    {% if prev_activity_id is not null and not isMulti %}
+    <a data-size="small" id="ajax-prev" class="window black-rounded-icon" href="{{ url('activity-edit', {'id': prev_activity_id}) }}"><i class="fa fa-fw fa-chevron-left"></i></a>
+    {% endif %}
+
+    {% if next_activity_id is not null and not isMulti %}
+        <a data-size="small" id="ajax-next" class="window black-rounded-icon" href="{{ url('activity-edit', {'id': next_activity_id}) }}"><i class="fa fa-fw fa-chevron-right"></i></a>
+    {% endif %}
+
+    <script type="text/javascript">
+    (function($){
+        Runalyze.ActivityForm.init($('#activity'), {
+            isNew: {{ isNew ? 'true' : 'false' }},
+            calculateCalories: {{ configVar('activity-form.COMPUTE_KCAL') }},
+            loadWeather: {{ configVar('activity-form.TRAINING_LOAD_WEATHER') }}
+        });
+
+        {% if isMulti %}
+        var $nav = $("#ajax-navigation");
+        $nav.find("tr.link.highlight").removeClass("highlight").addClass("edited");
+        $nav.find("tr[data-activity={{ activity_id }}]").removeClass("edited").addClass("highlight");
+
+        var $next = $nav.find(".highlight + tr");
+
+        if ($next.length) {
+            $("#activity_next-multi-editor").val($next.data("activity"));
+            $("#activity").find("input[type=submit]").val("{% trans %}Save and continue{% endtrans %}");
+        }
+        {% endif %}
+    })(jQuery);
+    </script>
+{% endblock %}

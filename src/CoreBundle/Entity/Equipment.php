@@ -2,7 +2,11 @@
 
 namespace Runalyze\Bundle\CoreBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Runalyze\Bundle\CoreBundle\Entity\Common\AccountRelatedEntityInterface;
+use Runalyze\Bundle\CoreBundle\Entity\Common\IdentifiableEntityInterface;
+use Runalyze\Bundle\CoreBundle\Entity\Common\NamedEntityInterface;
 
 /**
  * Equipment
@@ -10,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="equipment")
  * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\EquipmentRepository")
  */
-class Equipment
+class Equipment implements IdentifiableEntityInterface, NamedEntityInterface, AccountRelatedEntityInterface
 {
     /**
      * @var integer
@@ -38,21 +42,21 @@ class Equipment
     /**
      * @var float [km]
      *
-     * @ORM\Column(name="distance", type="decimal", precision=8, scale=2, options={"unsigned":true, "default":0.00})
+     * @ORM\Column(name="distance", type="casted_decimal_2", precision=8, scale=2, options={"unsigned":true})
      */
     private $distance = 0.00;
 
     /**
      * @var int [s]
      *
-     * @ORM\Column(name="time", type="integer", nullable=false, options={"unsigned":true, "default":0})
+     * @ORM\Column(name="time", type="integer", nullable=false, options={"unsigned":true})
      */
     private $time = 0;
 
     /**
      * @var int [km]
      *
-     * @ORM\Column(name="additional_km", type="integer", nullable=false, options={"unsigned":true, "default":0})
+     * @ORM\Column(name="additional_km", type="smallint", nullable=false, options={"unsigned":true})
      */
     private $additionalKm = 0;
 
@@ -73,7 +77,7 @@ class Equipment
     /**
      * @var EquipmentType
      *
-     * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\EquipmentType")
+     * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\EquipmentType", inversedBy="equipment")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="typeid", referencedColumnName="id", nullable=false)
      * })
@@ -83,7 +87,7 @@ class Equipment
     /**
      * @var Account
      *
-     * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Account")
+     * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Account", inversedBy="equipment")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="accountid", referencedColumnName="id", nullable=false)
      * })
@@ -99,7 +103,7 @@ class Equipment
 
     public function __construct()
     {
-        $this->activity = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->activity = new ArrayCollection();
     }
 
     /**
@@ -163,6 +167,18 @@ class Equipment
     }
 
     /**
+     * @param float $distance [km]
+     *
+     * @return $this
+     */
+    public function addDistance($distance)
+    {
+        $this->distance += $distance;
+
+        return $this;
+    }
+
+    /**
      * @return float [km]
      */
     public function getDistance()
@@ -178,6 +194,18 @@ class Equipment
     public function setTime($time)
     {
         $this->time = $time;
+
+        return $this;
+    }
+
+    /**
+     * @param int $time [s]
+     *
+     * @return $this
+     */
+    public function addTime($time)
+    {
+        $this->time += $time;
 
         return $this;
     }

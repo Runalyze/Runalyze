@@ -296,7 +296,8 @@ CREATE TABLE IF NOT EXISTS `runalyze_trackdata` (
   `smo2_1` longtext,
   `thb_0` longtext,
   `thb_1` longtext,
-  `pauses` text
+  `pauses` text,
+  `lock` tinyint(1) unsigned NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -428,7 +429,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_weathercache` (
 --
 
 CREATE TABLE IF NOT EXISTS `runalyze_raceresult` (
-  `official_distance` decimal(6,2) NOT NULL,
+  `official_distance` decimal(6,2) DEFAULT NULL,
   `official_time` decimal(8,2) NOT NULL,
   `officially_measured` tinyint(1)  unsigned NOT NULL DEFAULT 0,
   `name` varchar(50) NOT NULL DEFAULT '',

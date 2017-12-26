@@ -4,14 +4,21 @@ namespace Runalyze\Bundle\CoreBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Runalyze\Bundle\CoreBundle\Entity\Adapter\ActivityAdapter;
+use Runalyze\Bundle\CoreBundle\Entity\Common\AccountRelatedEntityInterface;
+use Runalyze\Bundle\CoreBundle\Entity\Common\IdentifiableEntityInterface;
+use Runalyze\Parser\Activity\Common\Data\Round\RoundCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Training
  *
  * @ORM\Table(name="training", indexes={@ORM\Index(name="time", columns={"accountid", "time"}), @ORM\Index(name="sportid", columns={"accountid", "sportid"}), @ORM\Index(name="typeid", columns={"accountid", "typeid"})})
  * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\TrainingRepository")
+ * @ORM\EntityListeners({"Runalyze\Bundle\CoreBundle\EntityListener\ActivityListener"})
+ * @ORM\HasLifecycleCallbacks()
  */
-class Training
+class Training implements IdentifiableEntityInterface, AccountRelatedEntityInterface
 {
     /**
      * @var int
@@ -25,6 +32,7 @@ class Training
     /**
      * @var \Runalyze\Bundle\CoreBundle\Entity\Sport
      *
+     * @Assert\NotBlank(message = "You need to choose a sport.")
      * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Sport", inversedBy = "trainings")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="sportid", referencedColumnName="id", nullable=false)
@@ -44,141 +52,155 @@ class Training
 
     /**
      * @var int [timestamp]
-     *
-     * @ORM\Column(name="time", type="integer", precision=11, nullable=false)
+     * @Assert\NotBlank(message = "Every activity needs a time")
+
+     * @ORM\Column(name="time", type="integer", nullable=false)
      */
     private $time;
 
     /**
      * @var int|null [min]
      *
-     * @ORM\Column(name="timezone_offset", type="smallint", precision=6, nullable=true)
+     * @ORM\Column(name="timezone_offset", type="smallint", nullable=true)
      */
     private $timezoneOffset = null;
 
     /**
      * @var int|null [timestamp]
      *
-     * @ORM\Column(name="created", type="integer", precision=11, nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="created", type="integer", nullable=true, options={"unsigned":true})
      */
     private $created = null;
 
     /**
      * @var int|null [timestamp]
      *
-     * @ORM\Column(name="edited", type="integer", precision=11, nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="edited", type="integer", nullable=true, options={"unsigned":true})
      */
     private $edited = null;
 
     /**
      * @var bool
      *
-     * @ORM\Column(name="is_public", type="boolean", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
+     * @ORM\Column(name="is_public", type="boolean")
      */
     private $isPublic = false;
 
     /**
      * @var bool
      *
-     * @ORM\Column(name="is_track", type="boolean", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
+     * @ORM\Column(name="is_track", type="boolean")
      */
     private $isTrack = false;
 
     /**
      * @var float|null [km]
      *
-     * @ORM\Column(name="distance", type="decimal", precision=6, scale=2, nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="distance", type="casted_decimal_2", precision=6, scale=2, nullable=true, options={"unsigned":true})
      */
     private $distance = null;
 
     /**
      * @var float [s]
      *
-     * @ORM\Column(name="s", type="decimal", precision=8, scale=2, options={"unsigned":true, "default":0.00})
+     * @Assert\GreaterThan(0)
+     * @ORM\Column(name="s", type="casted_decimal_2", precision=8, scale=2, options={"unsigned":true})
      */
     private $s;
 
     /**
      * @var int|null [s]
      *
-     * @ORM\Column(name="elapsed_time", columnDefinition="mediumint unsigned DEFAULT NULL")
+     * @ORM\Column(name="elapsed_time", type="integer", nullable=true, options={"unsigned":true})
      */
     private $elapsedTime = null;
 
     /**
      * @var int|null [m]
      *
-     * @ORM\Column(name="elevation", columnDefinition="smallint unsigned DEFAULT NULL")
+     * @ORM\Column(name="elevation", type="smallint", nullable=true, options={"unsigned":true})
      */
     private $elevation = null;
 
     /**
      * @var float|null [0.0 .. 10.0]
      *
-     * @ORM\Column(name="climb_score", type="decimal", precision=3, scale=1, nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="climb_score", type="casted_decimal_1", precision=3, scale=1, nullable=true, options={"unsigned":true})
      */
     private $climbScore = null;
 
     /**
      * @var float|null [0.00 .. 1.00]
      *
-     * @ORM\Column(name="percentage_hilly", type="decimal", precision=3, scale=2, nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="percentage_hilly", type="casted_decimal_2", precision=3, scale=2, nullable=true, options={"unsigned":true})
      */
     private $percentageHilly = null;
 
     /**
      * @var int|null [kcal]
      *
-     * @ORM\Column(name="kcal", columnDefinition="smallint unsigned DEFAULT NULL")
+     * @ORM\Column(name="kcal", type="smallint", nullable=true, options={"unsigned":true})
      */
     private $kcal = null;
 
     /**
      * @var int|null [bpm]
      *
-     * @ORM\Column(name="pulse_avg", columnDefinition="tinyint unsigned DEFAULT NULL")
+     * @Assert\Range(
+     *      min = 30,
+     *      max = 255,
+     *      minMessage = "Your average heartrate must be at least {{ limit }} bpm",
+     *      maxMessage = "Your average heartrate cannot be greater than {{ limit }} bpm"
+     * )
+     *
+     * @ORM\Column(name="pulse_avg", type="tinyint", nullable=true, options={"unsigned":true})
      */
     private $pulseAvg = null;
 
     /**
      * @var int|null [bpm]
-     *
-     * @ORM\Column(name="pulse_max", columnDefinition="tinyint unsigned DEFAULT NULL")
+     * @Assert\Range(
+     *      min = 30,
+     *      max = 255,
+     *      minMessage = "Your maximum heartrate must be at least {{ limit }} bpm",
+     *      maxMessage = "Your maximum heartrate cannot be greater than {{ limit }} bpm"
+     * )
+     * @ORM\Column(name="pulse_max", type="tinyint", nullable=true, options={"unsigned":true})
      */
     private $pulseMax = null;
 
     /**
      * @var float|null [ml/kg/min]
      *
-     * @ORM\Column(name="vo2max", type="decimal", precision=5, scale=2, nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="vo2max", type="casted_decimal_2", precision=5, scale=2, nullable=true, options={"unsigned":true})
      */
     private $vo2max = null;
 
     /**
      * @var float|null [ml/kg/min]
      *
-     * @ORM\Column(name="vo2max_by_time", type="decimal", precision=5, scale=2, nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="vo2max_by_time", type="casted_decimal_2", precision=5, scale=2, nullable=true, options={"unsigned":true})
      */
     private $vo2maxByTime = null;
 
     /**
      * @var float|null [ml/kg/min]
      *
-     * @ORM\Column(name="vo2max_with_elevation", type="decimal", precision=5, scale=2, nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="vo2max_with_elevation", type="casted_decimal_2", precision=5, scale=2, nullable=true, options={"unsigned":true})
      */
     private $vo2maxWithElevation = null;
 
     /**
      * @var bool
      *
-     * @ORM\Column(name="use_vo2max", type="boolean", columnDefinition="tinyint unsigned NOT NULL DEFAULT 1")
+     * @ORM\Column(name="use_vo2max", type="boolean")
      */
     private $useVO2max = true;
 
     /**
      * @var float|null [ml/kg/min]
      *
-     * @ORM\Column(name="fit_vo2max_estimate", type="decimal", precision=4, scale=2, nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="fit_vo2max_estimate", type="casted_decimal_2", precision=4, scale=2, nullable=true, options={"unsigned":true})
      */
     private $fitVO2maxEstimate = null;
 
@@ -197,53 +219,58 @@ class Training
     private $fitHrvAnalysis = null;
 
     /**
-     * @var float|null
+     * @var float|null [1.0 .. 5.0]
      *
-     * @ORM\Column(name="fit_training_effect", type="decimal", precision=2, scale=1, nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="fit_training_effect", type="casted_decimal_1", precision=2, scale=1, nullable=true, options={"unsigned":true})
      */
     private $fitTrainingEffect = null;
 
     /**
-     * @var bool|null
+     * @var int|null
      *
-     * @ORM\Column(name="fit_performance_condition", columnDefinition="tinyint unsigned DEFAULT NULL")
+     * @ORM\Column(name="fit_performance_condition", type="tinyint", nullable=true, options={"unsigned":true})
      */
     private $fitPerformanceCondition = null;
 
     /**
-     * @var bool|null
+     * @var int|null
      *
-     * @ORM\Column(name="fit_performance_condition_end", columnDefinition="tinyint unsigned DEFAULT NULL")
+     * @ORM\Column(name="fit_performance_condition_end", type="tinyint", nullable=true, options={"unsigned":true})
      */
     private $fitPerformanceConditionEnd = null;
 
     /**
-     * @var bool|null
+     * @var int|null [6 .. 20]
      *
-     * @ORM\Column(name="rpe", columnDefinition="tinyint unsigned DEFAULT NULL")
+     * @ORM\Column(name="rpe", type="tinyint", nullable=true, options={"unsigned":true})
      */
     private $rpe = null;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="trimp", columnDefinition="smallint unsigned DEFAULT NULL")
+     * @ORM\Column(name="trimp", type="smallint", nullable=true, options={"unsigned":true})
      */
     private $trimp = null;
 
     /**
      * @var int|null [rpm]
      *
-     * @ORM\Column(name="cadence", type="integer", length=3, nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="cadence", type="smallint", nullable=true, options={"unsigned":true})
      */
     private $cadence = null;
 
     /**
      * @var int|null [W]
      *
-     * @ORM\Column(name="power", type="integer", length=4, nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="power", type="smallint", nullable=true, options={"unsigned":true})
      */
     private $power = null;
+
+    /**
+     * @var bool|null
+     */
+    private $isPowerCalculated = null;
 
     /**
      * @var int|null
@@ -255,14 +282,14 @@ class Training
     /**
      * @var int|null
      *
-     * @ORM\Column(name="swolf", columnDefinition="tinyint unsigned DEFAULT NULL")
+     * @ORM\Column(name="swolf", type="tinyint", nullable=true, options={"unsigned":true})
      */
     private $swolf = null;
 
     /**
      * @var bool|null [cm]
      *
-     * @ORM\Column(name="stride_length", columnDefinition="tinyint unsigned DEFAULT NULL")
+     * @ORM\Column(name="stride_length", type="tinyint", nullable=true, options={"unsigned":true})
      */
     private $strideLength = null;
 
@@ -283,7 +310,7 @@ class Training
     /**
      * @var int|null [mm]
      *
-     * @ORM\Column(name="vertical_oscillation", columnDefinition="tinyint unsigned DEFAULT NULL")
+     * @ORM\Column(name="vertical_oscillation", type="tinyint", nullable=true, options={"unsigned":true})
      */
     private $verticalOscillation = null;
 
@@ -297,47 +324,57 @@ class Training
     /**
      * @var int|null [°C]
      *
-     * @ORM\Column(name="temperature", columnDefinition="tinyint DEFAULT NULL")
+     * @ORM\Column(name="temperature", type="tinyint", nullable=true)
      */
     private $temperature = null;
 
     /**
-     * @var bool|null [km/h]
+     * @var int|null [km/h]
      *
-     * @ORM\Column(name="wind_speed", columnDefinition="tinyint unsigned DEFAULT NULL")
+     * @ORM\Column(name="wind_speed", type="tinyint", nullable=true, options={"unsigned":true})
      */
     private $windSpeed = null;
 
     /**
      * @var int|null [°]
-     *
-     * @ORM\Column(name="wind_deg", columnDefinition="smallint unsigned DEFAULT NULL")
+     * @Assert\Range(
+     *      min = 0,
+     *      max = 359,
+     *      minMessage = "The wind direction cannot be less than {{ limit }}",
+     *      maxMessage = "The wind direction cannot be greater than {{ limit }}"
+     * )
+     * @ORM\Column(name="wind_deg", type="smallint", nullable=true, options={"unsigned":true})
      */
     private $windDeg = null;
 
     /**
-     * @var bool|null [%]
-     *
-     * @ORM\Column(name="humidity", columnDefinition="tinyint unsigned DEFAULT NULL")
+     * @var int|null [%]
+     * @Assert\Range(
+     *      min = 0,
+     *      max = 100,
+     *      minMessage = "The humidity cannot be less than {{ limit }}",
+     *      maxMessage = "The humidity cannot be greater than {{ limit }}. Even if it feels like this."
+     * )
+     * @ORM\Column(name="humidity", type="tinyint", nullable=true, options={"unsigned":true})
      */
     private $humidity = null;
 
     /**
-     * @var int [hPa]
+     * @var int|null [hPa]
      *
-     * @ORM\Column(name="pressure", columnDefinition="smallint unsigned DEFAULT NULL")
+     * @ORM\Column(name="pressure", type="smallint", nullable=true, options={"unsigned":true})
      */
     private $pressure = null;
 
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="is_night", type="boolean", columnDefinition="tinyint unsigned DEFAULT NULL")
+     * @ORM\Column(name="is_night", type="boolean", nullable=true)
      */
     private $isNight = null;
 
     /**
-     * @var int
+     * @var int enum, see \Runalyze\Profile\Weather\WeatherConditionProfile
      *
      * @ORM\Column(name="weatherid", type="smallint", nullable=false, options={"unsigned":true, "default":1})
      */
@@ -346,7 +383,7 @@ class Training
     /**
      * @var int|null
      *
-     * @ORM\Column(name="weather_source", columnDefinition="tinyint unsigned DEFAULT NULL")
+     * @ORM\Column(name="weather_source", type="tinyint", nullable=true, options={"unsigned":true})
      */
     private $weatherSource = null;
 
@@ -368,11 +405,11 @@ class Training
     private $route = null;
 
     /**
-     * @var string|null
+     * @var \Runalyze\Parser\Activity\Common\Data\Round\RoundCollection
      *
-     * @ORM\Column(name="splits", type="text", length=16777215, nullable=true)
+     * @ORM\Column(name="splits", type="runalyze_round_array", length=16777215, nullable=true)
      */
-    private $splits = null;
+    private $splits;
 
     /**
      * @var string|null
@@ -429,7 +466,7 @@ class Training
     /**
      * @var bool
      *
-     * @ORM\Column(name="`lock`", type="boolean", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
+     * @ORM\Column(name="`lock`", type="boolean")
      */
     private $lock = false;
 
@@ -464,16 +501,41 @@ class Training
     private $tag;
 
     /**
-     * @var Trackdata
+     * @var Trackdata|null
      *
      * @ORM\OneToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Trackdata", mappedBy="activity")
      */
     private $trackdata;
 
+    /**
+     * @var Swimdata|null
+     *
+     * @ORM\OneToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Swimdata", mappedBy="activity")
+     */
+    private $swimdata;
+
+    /**
+     * @var Hrv|null
+     *
+     * @ORM\OneToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Hrv", mappedBy="activity")
+     */
+    private $hrv;
+
+    /**
+     * @var Raceresult|null
+     *
+     * @ORM\OneToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Raceresult", mappedBy="activity")
+     */
+    private $raceresult;
+
+    /** @var null|ActivityAdapter */
+    private $Adapter;
+
     public function __construct()
     {
         $this->equipment = new ArrayCollection();
         $this->tag = new ArrayCollection();
+        $this->splits = new RoundCollection();
     }
 
     /**
@@ -585,6 +647,14 @@ class Training
     }
 
     /**
+     * @ORM\PrePersist
+     */
+    public function setCreatedToNow()
+    {
+        $this->setCreated(time());
+    }
+
+    /**
      * @param null|int $edited [timestamp]
      *
      * @return $this
@@ -605,13 +675,41 @@ class Training
     }
 
     /**
+     * @ORM\PreUpdate
+     */
+    public function setEditedToNow()
+    {
+        $this->setEdited(time());
+    }
+
+    /**
      * @param bool $isPublic
      *
      * @return $this
      */
     public function setPublic($isPublic)
     {
-        $this->isPublic = $isPublic;
+        $this->isPublic = (bool)$isPublic;
+
+        return $this;
+    }
+
+    /**
+     * @param bool $isPublic
+     *
+     * @return $this
+     */
+    public function setIsPublic($isPublic)
+    {
+        return $this->setPublic($isPublic);
+    }
+
+    /**
+     * @return $this
+     */
+    public function togglePrivacy()
+    {
+        $this->isPublic = !$this->isPublic;
 
         return $this;
     }
@@ -631,9 +729,19 @@ class Training
      */
     public function setTrack($isTrack)
     {
-        $this->isTrack = $isTrack;
+        $this->isTrack = (bool)$isTrack;
 
         return $this;
+    }
+
+    /**
+     * @param bool $isTrack
+     *
+     * @return $this
+     */
+    public function setIsTrack($isTrack)
+    {
+        return $this->setTrack($isTrack);
     }
 
     /**
@@ -671,7 +779,7 @@ class Training
      */
     public function setS($s)
     {
-        $this->s = $s;
+        $this->s = (double)$s;
 
         return $this;
     }
@@ -685,7 +793,7 @@ class Training
     }
 
     /**
-     * @param null|bool $elapsedTime [s]
+     * @param null|int $elapsedTime [s]
      *
      * @return $this
      */
@@ -711,7 +819,7 @@ class Training
      */
     public function setElevation($elevation)
     {
-        $this->elevation = $elevation;
+        $this->elevation = null === $elevation ? null : (int)$elevation;
 
         return $this;
     }
@@ -1113,6 +1221,25 @@ class Training
     }
 
     /**
+     * @param bool|null $flag
+     * @return $this
+     */
+    public function setPowerCalculated($flag)
+    {
+        $this->isPowerCalculated = null === $flag ? null : (bool)$flag;
+
+        return $this;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isPowerCalculated()
+    {
+        return $this->isPowerCalculated;
+    }
+
+    /**
      * @param null|int $totalStrokes
      *
      * @return $this
@@ -1259,7 +1386,7 @@ class Training
      */
     public function setTemperature($temperature)
     {
-        $this->temperature = $temperature;
+        $this->temperature = null === $temperature ? null : (int)$temperature;
 
         return $this;
     }
@@ -1373,7 +1500,7 @@ class Training
     }
 
     /**
-     * @param int $weatherid
+     * @param int $weatherid enum, see \Runalyze\Profile\Weather\WeatherConditionProfile
      *
      * @return $this
      */
@@ -1385,7 +1512,7 @@ class Training
     }
 
     /**
-     * @return int
+     * @return int enum, see \Runalyze\Profile\Weather\WeatherConditionProfile
      */
     public function getWeatherid()
     {
@@ -1399,7 +1526,7 @@ class Training
      */
     public function setWeatherSource($weatherSource)
     {
-        $this->weatherSource = $weatherSource;
+        $this->weatherSource = null === $weatherSource ? null : (int)$weatherSource;
 
         return $this;
     }
@@ -1421,6 +1548,10 @@ class Training
     {
         $this->routeName = $routeName;
 
+        if ($this->hasRoute()) {
+            $this->getRoute()->setName($routeName);
+        }
+
         return $this;
     }
 
@@ -1440,6 +1571,10 @@ class Training
     public function setRoute(Route $route = null)
     {
         $this->route = $route;
+
+        if (null !== $route && null !== $this->account) {
+            $route->setAccount($this->account);
+        }
 
         return $this;
     }
@@ -1461,11 +1596,11 @@ class Training
     }
 
     /**
-     * @param null|string $splits
+     * @param RoundCollection $splits
      *
      * @return $this
      */
-    public function setSplits($splits)
+    public function setSplits(RoundCollection $splits)
     {
         $this->splits = $splits;
 
@@ -1473,7 +1608,7 @@ class Training
     }
 
     /**
-     * @return null|string
+     * @return RoundCollection
      */
     public function getSplits()
     {
@@ -1607,7 +1742,7 @@ class Training
      */
     public function setActivityId($activityId)
     {
-        $this->activityId = $activityId;
+        $this->activityId = null === $activityId ? null : (int)$activityId;
 
         return $this;
     }
@@ -1696,13 +1831,21 @@ class Training
         return $this->tag;
     }
 
-    public function setTrackdata(Trackdata $trackdata = null)
+    public function setTrackdata(Trackdata $trackData = null)
     {
-        $this->trackdata = $trackdata;
+        $this->trackdata = $trackData;
+
+        if (null !== $trackData) {
+            $trackData->setActivity($this);
+
+            if (null !== $this->account) {
+                $trackData->setAccount($this->account);
+            }
+        }
     }
 
     /**
-     * @return Trackdata
+     * @return Trackdata|null
      */
     public function getTrackdata()
     {
@@ -1715,5 +1858,127 @@ class Training
     public function hasTrackdata()
     {
         return null !== $this->trackdata;
+    }
+
+    public function setSwimdata(Swimdata $swimData = null)
+    {
+        $this->swimdata = $swimData;
+
+        if (null !== $swimData) {
+            $swimData->setActivity($this);
+
+            if (null !== $this->account) {
+                $swimData->setAccount($this->account);
+            }
+        }
+    }
+
+    /**
+     * @return Swimdata|null
+     */
+    public function getSwimdata()
+    {
+        return $this->swimdata;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasSwimdata()
+    {
+        return null !== $this->swimdata;
+    }
+
+    public function setHrv(Hrv $hrv = null)
+    {
+        $this->hrv = $hrv;
+
+        if (null !== $hrv) {
+            $hrv->setActivity($this);
+
+            if (null !== $this->account) {
+                $hrv->setAccount($this->account);
+            }
+        }
+    }
+
+    /**
+     * @return Hrv|null
+     */
+    public function getHrv()
+    {
+        return $this->hrv;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasHrv()
+    {
+        return null !== $this->hrv;
+    }
+
+    public function setRaceresult(Raceresult $raceResult = null)
+    {
+        $this->raceresult = $raceResult;
+
+        if (null !== $raceResult) {
+            $raceResult->setActivity($this);
+
+            if (null !== $this->account) {
+                $raceResult->setAccount($this->account);
+            }
+        }
+    }
+
+    /**
+     * @return Raceresult|null
+     */
+    public function getRaceresult()
+    {
+        return $this->raceresult;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasRaceresult()
+    {
+        return null !== $this->raceresult;
+    }
+
+    /**
+     * @return ActivityAdapter
+     */
+    public function getAdapter()
+    {
+        if (null === $this->Adapter) {
+            $this->Adapter = new ActivityAdapter($this);
+        }
+
+        return $this->Adapter;
+    }
+
+    /**
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function updateSimpleCalculatedValues()
+    {
+        if (0.0 == $this->distance) {
+            $this->distance = null;
+        }
+
+        $this->getAdapter()->updateSimpleCalculatedValues();
+    }
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function useElevationFromRouteIfEmpty()
+    {
+        if (null === $this->elevation || 0 == $this->elevation) {
+            $this->getAdapter()->useElevationFromRoute();
+        }
     }
 }

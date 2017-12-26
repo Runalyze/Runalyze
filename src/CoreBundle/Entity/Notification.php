@@ -5,6 +5,7 @@ namespace Runalyze\Bundle\CoreBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Runalyze\Bundle\CoreBundle\Component\Notifications\Message\MessageInterface;
 use Runalyze\Bundle\CoreBundle\Component\Notifications\MessageFactory;
+use Runalyze\Bundle\CoreBundle\Entity\Common\AccountRelatedEntityInterface;
 
 /**
  * Notification
@@ -12,7 +13,7 @@ use Runalyze\Bundle\CoreBundle\Component\Notifications\MessageFactory;
  * @ORM\Table(name="notification")
  * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\NotificationRepository")
  */
-class Notification
+class Notification implements AccountRelatedEntityInterface
 {
     /**
      * @var int
@@ -33,14 +34,14 @@ class Notification
     private $messageType;
 
     /**
-     * @var int
+     * @var int [timestamp]
      *
      * @ORM\Column(name="createdAt", type="integer", nullable=false, options={"unsigned":true})
      */
     private $createdAt;
 
     /**
-     * @var null|int
+     * @var null|int [timestamp]
      *
      * @ORM\Column(name="expirationAt", type="integer", nullable=true, options={"unsigned":true})
      */
@@ -54,6 +55,8 @@ class Notification
     private $data;
 
     /**
+     * @var bool
+     *
      * @ORM\Column(name="wasRead", type="boolean")
      */
     protected $wasRead = false;
@@ -182,13 +185,13 @@ class Notification
     }
 
     /**
-     * @param bool $wasRead
+     * @param bool $flag
      *
      * @return $this
      */
-    public function setRead($wasRead = true)
+    public function setRead($flag = true)
     {
-        $this->wasRead = (bool)$wasRead;
+        $this->wasRead = (bool)$flag;
 
         return $this;
     }

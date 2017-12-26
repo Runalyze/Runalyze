@@ -2,7 +2,9 @@
 
 namespace Runalyze\Bundle\CoreBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Runalyze\Bundle\CoreBundle\Entity\Common\IdentifiableEntityInterface;
 use Runalyze\Parameter\Application\Timezone;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -19,9 +21,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @UniqueEntity("mail", message="This mail address is already in use")
  * @UniqueEntity("username", message="This username is already in use")
  */
-class Account implements AdvancedUserInterface, \Serializable
+class Account implements AdvancedUserInterface, \Serializable, IdentifiableEntityInterface
 {
-
     /**
      * @var string
      * @Assert\Length(
@@ -83,25 +84,25 @@ class Account implements AdvancedUserInterface, \Serializable
     private $language = 'en';
 
     /**
-     * @var int
+     * @var int enum
      * @Assert\NotBlank()
      * @Assert\Type("int")
      * @RunalyzeAssert\IsValidTimezone()
-     * @ORM\Column(name="timezone", type="smallint", length=5, nullable=false, options={"unsigned":true, "default":0})
+     * @ORM\Column(name="timezone", type="smallint", nullable=false, options={"unsigned":true, "default":0})
      */
     private $timezone = Timezone::UTC;
 
     /**
-     * @var int
+     * @var int enum, see \Runalyze\Profile\Athlete\Gender
      * @Assert\Type("int")
-     * @ORM\Column(name="gender", type="integer", columnDefinition="TINYINT UNSIGNED NOT NULL DEFAULT 0")
+     * @ORM\Column(name="gender", type="tinyint", nullable=true, options={"unsigned":true})
      */
     private $gender = Gender::NONE;
 
     /**
      * @var int|null
      * @Assert\Type("int")
-     * @ORM\Column(name="birthyear", type="integer", precision=4, nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="birthyear", type="smallint", nullable=true, options={"unsigned":true})
      */
     private $birthyear = null;
 
@@ -119,14 +120,14 @@ class Account implements AdvancedUserInterface, \Serializable
     private $salt = '';
 
     /**
-     * @var int|null
+     * @var int|null [timestamp]
      * @Assert\Type("int")
      * @ORM\Column(name="registerdate", type="integer", nullable=true, options={"unsigned":true})
      */
     private $registerdate = null;
 
     /**
-     * @var int|null
+     * @var int|null [timestmap]
      * @Assert\Type("int")
      * @ORM\Column(name="lastaction", type="integer", nullable=true, options={"unsigned":true})
      */
@@ -140,7 +141,7 @@ class Account implements AdvancedUserInterface, \Serializable
     private $changepwHash = null;
 
     /**
-     * @var int|null
+     * @var int|null [timestamp]
      *
      * @ORM\Column(name="changepw_timelimit", type="integer", nullable=true, options={"unsigned":true})
      */
@@ -163,14 +164,14 @@ class Account implements AdvancedUserInterface, \Serializable
     /**
      * @var bool
      * @Assert\Type("bool")
-     * @ORM\Column(name="allow_mails", type="boolean", columnDefinition="TINYINT UNSIGNED NOT NULL DEFAULT 1")
+     * @ORM\Column(name="allow_mails", type="boolean")
      */
     private $allowMails = true;
 
     /**
      * @var bool
      * @Assert\Type("bool")
-     * @ORM\Column(name="allow_support", type="boolean", columnDefinition="TINYINT UNSIGNED NOT NULL DEFAULT 0")
+     * @ORM\Column(name="allow_support", type="boolean")
      */
     private $allowSupport = false;
 
@@ -184,6 +185,27 @@ class Account implements AdvancedUserInterface, \Serializable
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
+     * @ORM\OneToMany(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Type", mappedBy="account", cascade={"persist"}, fetch="EXTRA_LAZY")
+     */
+    protected $activityTypes;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Tag", mappedBy="account", cascade={"persist"}, fetch="EXTRA_LAZY")
+     */
+    protected $tags;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Equipment", mappedBy="account", cascade={"persist"}, fetch="EXTRA_LAZY")
+     */
+    protected $equipment;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
      * @ORM\OneToMany(targetEntity="Runalyze\Bundle\CoreBundle\Entity\EquipmentType", mappedBy="account", cascade={"persist"}, fetch="EXTRA_LAZY")
      */
     protected $equipmentTypes;
@@ -191,21 +213,22 @@ class Account implements AdvancedUserInterface, \Serializable
     /**
      * @var int
      *
-     * @ORM\Column(name="role", columnDefinition="TINYINT UNSIGNED NOT NULL DEFAULT 1")
+     * @ORM\Column(name="role", type="tinyint", nullable=true, options={"unsigned":true})
      */
     private $role = UserRole::ROLE_USER;
 
-
     public function __construct()
     {
+        $this->tags = new ArrayCollection();
+        $this->equipment = new ArrayCollection();
+        $this->equipmentTypes = new ArrayCollection();
+
         $this->setRegisterdate(time());
         $this->setLastAction(time());
         $this->setNewSalt();
     }
 
     /**
-     * Get id
-     *
      * @return int
      */
     public function getId()
@@ -214,10 +237,8 @@ class Account implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * Set username
-     *
      * @param string $username
-     * @return Account
+     * @return $this
      */
     public function setUsername($username)
     {
@@ -227,8 +248,6 @@ class Account implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * Get username
-     *
      * @return string
      */
     public function getUsername()
@@ -237,10 +256,8 @@ class Account implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * Set name
-     *
      * @param string $name
-     * @return Account
+     * @return $this
      */
     public function setName($name)
     {
@@ -250,8 +267,6 @@ class Account implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * Get name
-     *
      * @return string
      */
     public function getName()
@@ -260,8 +275,6 @@ class Account implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * Set mail
-     *
      * @param string $mail
      * @return Account
      */
@@ -273,8 +286,6 @@ class Account implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * Get mail
-     *
      * @return string
      */
     public function getMail()
@@ -283,10 +294,8 @@ class Account implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * Set language
-     *
      * @param string $language
-     * @return Account
+     * @return $this
      */
     public function setLanguage($language)
     {
@@ -296,7 +305,6 @@ class Account implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * Get language
      * @Assert\Type("string")
      * @return string
      */
@@ -306,22 +314,18 @@ class Account implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * Set timezone
-     *
-     * @param string $timezone
-     * @return Account
+     * @param int $enum enum
+     * @return $this
      */
-    public function setTimezone($timezone)
+    public function setTimezone($enum)
     {
-        $this->timezone = $timezone;
+        $this->timezone = $enum;
 
         return $this;
     }
 
     /**
-     * Get timezone
-     *
-     * @return string
+     * @return int enum
      */
     public function getTimezone()
     {
@@ -329,22 +333,18 @@ class Account implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * Set gender
-     *
-     * @param string $gender
-     * @return Account
+     * @param int $enum enum, see \Runalyze\Profile\Athlete\Gender
+     * @return $this
      */
-    public function setGender($gender)
+    public function setGender($enum)
     {
-        $this->gender = $gender;
+        $this->gender = $enum;
 
         return $this;
     }
 
     /**
-     * Get gender
-     *
-     * @return string
+     * @return int enum, see \Runalyze\Profile\Athlete\Gender
      */
     public function getGender()
     {
@@ -352,22 +352,42 @@ class Account implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * Set birthyear
-     *
-     * @param string $birthyear
-     * @return Account
+     * @return bool
      */
-    public function setBirthyear($birthyear)
+    public function knowsGender()
     {
-        $this->birthyear = $birthyear;
+        return Gender::NONE !== $this->gender;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isMale()
+    {
+        return Gender::MALE == $this->gender;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isFemale()
+    {
+        return Gender::FEMALE == $this->gender;
+    }
+
+    /**
+     * @param int|null $birthYear
+     * @return $this
+     */
+    public function setBirthyear($birthYear)
+    {
+        $this->birthyear = $birthYear;
 
         return $this;
     }
 
     /**
-     * Get birthyear
-     *
-     * @return string
+     * @return int|null
      */
     public function getBirthyear()
     {
@@ -375,10 +395,24 @@ class Account implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * Set password
-     *
+     * @return bool
+     */
+    public function knowsBirthYear()
+    {
+        return null !== $this->birthyear;
+    }
+
+    /**
+     * @return int|null [years]
+     */
+    public function getAge()
+    {
+        return $this->knowsBirthYear() ? (int)date('Y') - $this->birthyear : null;
+    }
+
+    /**
      * @param string $password
-     * @return Account
+     * @return $this
      */
     public function setPassword($password)
     {
@@ -388,8 +422,6 @@ class Account implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * Get password
-     *
      * @return string
      */
     public function getPassword()
@@ -398,8 +430,6 @@ class Account implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * Set plain password
-     *
      * @param string $plainPassword
      * @return Account
      */
@@ -411,8 +441,6 @@ class Account implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * Get plain password
-     *
      * @return string
      */
     public function getPlainPassword()
@@ -429,10 +457,8 @@ class Account implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * Set salt
-     *
      * @param string $salt
-     * @return Account
+     * @return $this
      */
     public function setSalt($salt)
     {
@@ -442,8 +468,6 @@ class Account implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * Get salt
-     *
      * @return string
      */
     public function getSalt()
@@ -452,7 +476,6 @@ class Account implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * Get hash.
      * @param int $bytes
      * @return string hash of length 2*$bytes
      */
@@ -461,22 +484,18 @@ class Account implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * Set registerdate
-     *
-     * @param integer $registerdate
-     * @return Account
+     * @param int $registerDate [timestamp]
+     * @return $this
      */
-    public function setRegisterdate($registerdate)
+    public function setRegisterdate($registerDate)
     {
-        $this->registerdate = $registerdate;
+        $this->registerdate = $registerDate;
 
         return $this;
     }
 
     /**
-     * Get registerdate
-     *
-     * @return integer
+     * @return int [timestamp]
      */
     public function getRegisterdate()
     {
@@ -484,26 +503,22 @@ class Account implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * Set lastaction
-     *
-     * @param integer $lastaction
-     * @return Account
+     * @param int|null $lastAction [timestamp]
+     * @return $this
      */
-    public function setLastAction($lastaction = null)
+    public function setLastAction($lastAction = null)
     {
-        if (is_null($lastaction)) {
-            $lastaction = (int)(new \DateTime())->getTimestamp();
+        if (null === $lastAction) {
+            $lastAction = (int)(new \DateTime())->getTimestamp();
         }
 
-        $this->lastaction = $lastaction;
+        $this->lastaction = $lastAction;
 
         return $this;
     }
 
     /**
-     * Get lastaction
-     *
-     * @return integer
+     * @return int [timestamp]
      */
     public function getLastAction()
     {
@@ -533,10 +548,8 @@ class Account implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * Set changepwHash
-     *
      * @param null|string $changepwHash
-     * @return Account
+     * @return $this
      */
     public function setChangepwHash($changepwHash)
     {
@@ -546,8 +559,6 @@ class Account implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * Get changepwHash
-     *
      * @return null|string
      */
     public function getChangepwHash()
@@ -556,10 +567,8 @@ class Account implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * Set changepwTimelimit
-     *
      * @param null|int $changepwTimelimit
-     * @return Account
+     * @return $this
      */
     public function setChangepwTimelimit($changepwTimelimit)
     {
@@ -569,8 +578,6 @@ class Account implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * Get changepwTimelimit
-     *
      * @return null|int
      */
     public function getChangepwTimelimit()
@@ -597,8 +604,6 @@ class Account implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * Set activationHash
-     *
      * @param string|null $activationHash
      * @return $this
      */
@@ -610,8 +615,6 @@ class Account implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * Get activationHash
-     *
      * @return string|null
      */
     public function getActivationHash()
@@ -628,8 +631,6 @@ class Account implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * Set deletionHash
-     *
      * @param string|null $deletionHash
      * @return $this
      */
@@ -641,8 +642,6 @@ class Account implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * Get deletionHash
-     *
      * @return string|null
      */
     public function getDeletionHash()
@@ -651,21 +650,17 @@ class Account implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * Set allowMails
-     *
-     * @param bool $allowMails
-     * @return Account
+     * @param bool $flag
+     * @return $this
      */
-    public function setAllowMails($allowMails)
+    public function setAllowMails($flag)
     {
-        $this->allowMails = $allowMails;
+        $this->allowMails = $flag;
 
         return $this;
     }
 
     /**
-     * Get allowMails
-     *
      * @return bool
      */
     public function getAllowMails()
@@ -674,21 +669,17 @@ class Account implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * Set allowSupport
-     *
-     * @param bool $allowSupport
-     * @return Account
+     * @param bool $flag
+     * @return $this
      */
-    public function setAllowSupport($allowSupport)
+    public function setAllowSupport($flag)
     {
-        $this->allowSupport = $allowSupport;
+        $this->allowSupport = $flag;
 
         return $this;
     }
 
     /**
-     * Get allowSupport
-     *
      * @return bool
      */
     public function getAllowSupport()
@@ -697,10 +688,8 @@ class Account implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * Set role
-     *
      * @param string $role
-     * @return Account
+     * @return $this
      */
     public function setRole($role)
     {
@@ -710,8 +699,6 @@ class Account implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * Get role
-     *
      * @return string
      */
     public function getRole()
@@ -733,8 +720,6 @@ class Account implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * Get sports
-     *
      * @return \Doctrine\Common\Collections\Collection
      */
     public function getSports()
@@ -743,8 +728,32 @@ class Account implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * Get equipment types
+     * Get activity/sport types
      *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getActivityTypes()
+    {
+        return $this->activityTypes;
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTags()
+    {
+        return $this->tags;
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEquipment()
+    {
+        return $this->equipment;
+    }
+
+    /**
      * @return \Doctrine\Common\Collections\Collection
      */
     public function getEquipmentTypes()

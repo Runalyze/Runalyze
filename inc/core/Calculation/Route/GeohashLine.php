@@ -2,6 +2,9 @@
 
 namespace Runalyze\Calculation\Route;
 
+use League\Geotools\Coordinate\Coordinate;
+use League\Geotools\Geohash\Geohash;
+
 class GeohashLine
 {
     /**
@@ -45,5 +48,24 @@ class GeohashLine
         }
 
         return $newgeoline;
+    }
+
+    /**
+     * @param array $geohashes
+     * @return null|string
+     */
+    public static function findFirstNonNullGeohash(array $geohashes, $precision)
+    {
+        $nullGeohash = (new Geohash())->encode(new Coordinate([0.0, 0.0]), $precision)->getGeohash();
+
+        foreach ($geohashes as $geohash) {
+            $geohash = substr($geohash, 0, $precision);
+
+            if ($geohash != $nullGeohash) {
+                return $geohash;
+            }
+        }
+
+        return null;
     }
 }

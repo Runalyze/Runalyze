@@ -2,7 +2,7 @@
 
 namespace Runalyze\Bundle\CoreBundle\Form\Settings;
 
-use Runalyze\Bundle\CoreBundle\Form\Type\HeartrateType;
+use Runalyze\Bundle\CoreBundle\Form\Type\HeartRateType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -54,7 +54,7 @@ class SportTypeType extends AbstractType
                 'required' => true,
                 'label' => 'Abbreviation'
             ])
-            ->add('hrAvg', HeartrateType::class, [
+            ->add('hrAvg', HeartRateType::class, [
                 'attr' => ['min' => 40, 'max' => 255],
                 'required' => false,
                 'label' => 'avg. HR'

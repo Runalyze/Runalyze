@@ -21,6 +21,19 @@ class EquipmentRepository extends EntityRepository
     }
 
     /**
+     * @param string|string[] $equipmentName
+     * @param Account $account
+     * @return Equipment[]
+     */
+    public function findByName($equipmentName, Account $account)
+    {
+        return $this->findBy([
+            'account' => $account->getId(),
+            'name' => $equipmentName
+        ]);
+    }
+
+    /**
      * @param int $typeId
      * @param Account $account
      * @return EquipmentStatistics
@@ -42,6 +55,26 @@ class EquipmentRepository extends EntityRepository
             ->getQuery()
             ->getResult()
         );
+    }
+
+    /**
+     * @param Equipment[] $equipment
+     * @param int|float $additionalDuration [s]
+     * @param float $additionalDistance [km]
+     * @param bool $flush
+     */
+    public function updateEquipment(array $equipment, $additionalDuration, $additionalDistance = 0.0, $flush = true)
+    {
+        foreach ($equipment as $object) {
+            $object->addTime($additionalDuration);
+            $object->addDistance($additionalDistance);
+
+            $this->_em->persist($object);
+        }
+
+        if ($flush) {
+            $this->_em->flush($equipment);
+        }
     }
 
     public function save(Equipment $equipment)

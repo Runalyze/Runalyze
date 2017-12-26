@@ -204,7 +204,7 @@ class LocalTime extends \DateTime
      */
     public static function now()
     {
-        return (new self)->getTimestamp();
+        return self::fromServerTime(time())->getTimestamp();
     }
 
     /**
@@ -215,6 +215,10 @@ class LocalTime extends \DateTime
      */
     public static function date($format, $timestamp = null)
     {
+        if (null === $timestamp) {
+            return self::fromServerTime(time())->format($format);
+        }
+
         return (new self($timestamp))->format($format);
     }
 

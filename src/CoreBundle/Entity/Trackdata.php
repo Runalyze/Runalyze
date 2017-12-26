@@ -3,7 +3,9 @@
 namespace Runalyze\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Runalyze\Bundle\CoreBundle\Model\Trackdata\Pause\PauseCollection;
+use Runalyze\Bundle\CoreBundle\Entity\Adapter\TrackDataAdapter;
+use Runalyze\Bundle\CoreBundle\Entity\Common\AccountRelatedEntityInterface;
+use Runalyze\Parser\Activity\Common\Data\Pause\PauseCollection;
 use Runalyze\Model;
 
 /**
@@ -12,7 +14,7 @@ use Runalyze\Model;
  * @ORM\Table(name="trackdata")
  * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\TrackdataRepository")
  */
-class Trackdata
+class Trackdata implements AccountRelatedEntityInterface
 {
     /**
      * @var array|null [s]
@@ -106,7 +108,7 @@ class Trackdata
     private $thb1;
 
     /**
-     * @var PauseCollection
+     * @var \Runalyze\Parser\Activity\Common\Data\Pause\PauseCollection
      *
      * @ORM\Column(name="pauses", type="runalyze_pause_array", length=65535, nullable=true)
      */
@@ -116,6 +118,7 @@ class Trackdata
      * @var Training
      *
      * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
      * @ORM\OneToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Training", inversedBy="trackdata")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="activityid", referencedColumnName="id", unique=true)
@@ -126,12 +129,44 @@ class Trackdata
     /**
      * @var Account
      *
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
      * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Account")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="accountid", referencedColumnName="id", nullable=false)
      * })
      */
     private $account;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="`lock`", type="boolean")
+     */
+    private $lock = false;
+
+    /** @var TrackDataAdapter */
+    private $Adapter;
+
+    /** @var false|null|array [s/km] */
+    private $pace = false;
+
+    /** @var false|null|array [s/km] */
+    private $gradeAdjustedPace = false;
+
+    /** @var false|null|array (-100 .. 100) */
+    private $gradient = false;
+
+    /** @var false|null|array [cm] */
+    private $strideLength = false;
+
+    /** @var false|null|array [%] */
+    private $verticalRatio = false;
+
+    public function __construct()
+    {
+        $this->pauses = new PauseCollection();
+    }
 
     /**
      * @param array|null $time [s]
@@ -141,6 +176,8 @@ class Trackdata
     public function setTime(array $time = null)
     {
         $this->time = $time;
+
+        $this->pace = false;
 
         return $this;
     }
@@ -162,6 +199,18 @@ class Trackdata
     }
 
     /**
+     * @return int [s]
+     */
+    public function getTotalDuration()
+    {
+        if (!$this->hasTime()) {
+            return 0;
+        }
+
+        return end($this->time);
+    }
+
+    /**
      * @param array|null $distance [km]
      *
      * @return $this
@@ -169,6 +218,9 @@ class Trackdata
     public function setDistance(array $distance = null)
     {
         $this->distance = $distance;
+
+        $this->pace = false;
+        $this->gradient = false;
 
         return $this;
     }
@@ -187,6 +239,18 @@ class Trackdata
     public function hasDistance()
     {
         return null !== $this->distance;
+    }
+
+    /**
+     * @return float [km]
+     */
+    public function getTotalDistance()
+    {
+        if (!$this->hasDistance()) {
+            return 0.0;
+        }
+
+        return end($this->distance);
     }
 
     /**
@@ -225,6 +289,8 @@ class Trackdata
     public function setCadence(array $cadence = null)
     {
         $this->cadence = $cadence;
+
+        $this->strideLength = false;
 
         return $this;
     }
@@ -337,6 +403,8 @@ class Trackdata
     public function setVerticalOscillation(array $verticalOscillation = null)
     {
         $this->verticalOscillation = $verticalOscillation;
+
+        $this->verticalRatio = false;
 
         return $this;
     }
@@ -498,7 +566,7 @@ class Trackdata
     }
 
     /**
-     * @param PauseCollection $pauses
+     * @param \Runalyze\Parser\Activity\Common\Data\Pause\PauseCollection $pauses
      *
      * @return $this
      */
@@ -510,7 +578,7 @@ class Trackdata
     }
 
     /**
-     * @return PauseCollection
+     * @return \Runalyze\Parser\Activity\Common\Data\Pause\PauseCollection
      */
     public function getPauses()
     {
@@ -558,6 +626,56 @@ class Trackdata
     }
 
     /**
+     * @param bool $flag
+     * @return $this
+     */
+    public function setLock($flag)
+    {
+        $this->lock = (bool)$flag;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getLock()
+    {
+        return $this->lock;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isLocked()
+    {
+        return $this->lock;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEmpty()
+    {
+        return (
+            (null === $this->time && empty($this->time)) &&
+            (null === $this->distance && empty($this->distance)) &&
+            (null === $this->heartrate && empty($this->heartrate)) &&
+            (null === $this->cadence && empty($this->cadence)) &&
+            (null === $this->power && empty($this->power)) &&
+            (null === $this->temperature && empty($this->temperature)) &&
+            (null === $this->groundcontact && empty($this->groundcontact)) &&
+            (null === $this->groundcontactBalance && empty($this->groundcontactBalance)) &&
+            (null === $this->verticalOscillation && empty($this->verticalOscillation)) &&
+            (null === $this->smo20 && empty($this->smo20)) &&
+            (null === $this->smo21 && empty($this->smo21)) &&
+            (null === $this->thb0 && empty($this->thb0)) &&
+            (null === $this->thb1 && empty($this->thb1)) &&
+            $this->pauses->isEmpty()
+        );
+    }
+
+    /**
      * @return Model\Trackdata\Entity
      */
     public function getLegacyModel()
@@ -580,5 +698,141 @@ class Trackdata
             // Legacy model does still use the pauses object
             //Model\Trackdata\Entity::PAUSES => $this->pauses
         ]);
+    }
+
+    /**
+     * @return TrackDataAdapter
+     */
+    public function getAdapter()
+    {
+        if (null === $this->Adapter) {
+            $this->Adapter = new TrackDataAdapter($this);
+        }
+
+        return $this->Adapter;
+    }
+
+    /**
+     * @return array|null [s/km]
+     */
+    public function getPace()
+    {
+        if (false === $this->pace) {
+            $this->getAdapter()->calculatePace();
+        }
+
+        return $this->pace;
+    }
+
+    /**
+     * @param array|null $pace [s/km]
+     */
+    public function setPace(array $pace = null)
+    {
+        $this->pace = $pace;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasPace()
+    {
+        return null !== $this->time && null !== $this->distance;
+    }
+
+    /**
+     * @return array|null [s/km]
+     */
+    public function getGradeAdjustedPace()
+    {
+        if (false === $this->gradeAdjustedPace || false === $this->pace || false === $this->gradient) {
+            $this->getAdapter()->calculateGradeAdjustedPace();
+        }
+
+        return $this->gradeAdjustedPace;
+    }
+
+    /**
+     * @param array|null $gradeAdjustedPace [s/km]
+     */
+    public function setGradeAdjustedPace(array $gradeAdjustedPace = null)
+    {
+        $this->gradeAdjustedPace = $gradeAdjustedPace;
+    }
+
+    /**
+     * @return array|null (-100 .. 100)
+     */
+    public function getGradient()
+    {
+        if (false === $this->gradient) {
+            $this->getAdapter()->calculateGradient();
+        }
+
+        return $this->gradient;
+    }
+
+    /**
+     * @param array|null $gradient (-100 .. 100)
+     */
+    public function setGradient(array $gradient = null)
+    {
+        $this->gradient = $gradient;
+    }
+
+    /**
+     * @return array|null [cm]
+     */
+    public function getStrideLength()
+    {
+        if (false === $this->strideLength || false === $this->pace) {
+            $this->getAdapter()->calculateStrideLength();
+        }
+
+        return $this->strideLength;
+    }
+
+    /**
+     * @param array|null $strideLength [cm]
+     */
+    public function setStrideLength(array $strideLength = null)
+    {
+        $this->strideLength = $strideLength;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasStrideLength()
+    {
+        return null !== $this->cadence && $this->hasPace();
+    }
+
+    /**
+     * @return array|null [%]
+     */
+    public function getVerticalRatio()
+    {
+        if (false === $this->verticalRatio || false === $this->strideLength) {
+            $this->getAdapter()->calculateVerticalRatio();
+        }
+
+        return $this->verticalRatio;
+    }
+
+    /**
+     * @param array|null $verticalRatio [%]
+     */
+    public function setVerticalRatio(array $verticalRatio = null)
+    {
+        $this->verticalRatio = $verticalRatio;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasVerticalRatio()
+    {
+        return null !== $this->verticalOscillation && $this->hasStrideLength();
     }
 }
