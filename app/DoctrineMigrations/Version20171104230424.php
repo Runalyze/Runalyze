@@ -49,7 +49,7 @@ class Version20171104230424 extends AbstractMigration implements ContainerAwareI
             $activities = $repo->createQueryBuilder('t')
                 ->select('partial t.{id, route}')
                 ->addSelect('partial r.{id, lock, elevationsCorrected}')
-                ->addSelect('partial tr.{activity, lock, time, distance, cadence, heartrate}')
+                ->addSelect('partial tr.{activity, account, lock, time, distance, cadence, heartrate}')
                 ->join('t.route', 'r')
                 ->join('t.trackdata', 'tr')
                 ->where('r.lock = 1')
