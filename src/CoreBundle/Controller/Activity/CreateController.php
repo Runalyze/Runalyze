@@ -14,6 +14,7 @@ use Runalyze\Bundle\CoreBundle\Services\AutomaticReloadFlagSetter;
 use Runalyze\Bundle\CoreBundle\Services\Import\FileImportResultCollection;
 use Runalyze\Parser\Activity\Common\Data\ActivityDataContainer;
 use Runalyze\Util\LocalTime;
+use Runalyze\Util\ServerParams;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -127,7 +128,8 @@ class CreateController extends Controller
      */
     protected function getUploadFormResponse()
     {
-        $maxFileSize = \Filesystem::getMaximumFilesize();
+        $serverParams = new ServerParams();
+        $maxFileSize = min($serverParams->getPostMaxSizeInBytes(), $serverParams->getUploadMaxFilesize());
 
         return $this->render('activity/import_upload.html.twig', [
             'maxFileSize' => $maxFileSize < PHP_INT_MAX ? $maxFileSize : false
