@@ -57,12 +57,16 @@ class RouteAdapter
     }
 
     /**
-     * @param object $object
+     * @param object|null $object
      *
-     * @return string
+     * @return string|null
      */
     protected function getStrategyName($object)
     {
+        if (null === $object) {
+            return null;
+        }
+
         $fullClassName = get_class($object);
 
         return substr($fullClassName, strrpos($fullClassName, '\\')+1);

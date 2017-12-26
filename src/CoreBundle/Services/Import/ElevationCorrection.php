@@ -13,6 +13,9 @@ class ElevationCorrection
     /** @var StrategyCollection */
 	protected $StrategyCollection;
 
+	/** @var null|StrategyInterface */
+	protected $LastSuccessfulStrategy = null;
+
 	public function __construct(
 	    GeoTiff $geoTiff,
         Geonames $geonames,
@@ -35,8 +38,12 @@ class ElevationCorrection
     public function loadAltitudeData(array $latitudes, array $longitudes, StrategyInterface $strategy = null)
     {
         if (null !== $strategy) {
+            $this->LastSuccessfulStrategy = $strategy;
+
             return $strategy->loadAltitudeData($latitudes, $longitudes);
         }
+
+        $this->LastSuccessfulStrategy = null;
 
         return $this->StrategyCollection->loadAltitudeData($latitudes, $longitudes);
     }
@@ -46,6 +53,10 @@ class ElevationCorrection
      */
     public function getLastSuccessfulStrategy()
     {
+        if (null !== $this->LastSuccessfulStrategy) {
+            return $this->LastSuccessfulStrategy;
+        }
+
         return $this->StrategyCollection->getLastSuccessfulStrategy();
     }
 }
