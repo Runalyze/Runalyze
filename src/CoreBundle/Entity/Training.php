@@ -1548,6 +1548,10 @@ class Training implements IdentifiableEntityInterface, AccountRelatedEntityInter
     {
         $this->routeName = $routeName;
 
+        if ($this->hasRoute()) {
+            $this->getRoute()->setName($routeName);
+        }
+
         return $this;
     }
 

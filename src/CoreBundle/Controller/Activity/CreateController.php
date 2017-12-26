@@ -286,6 +286,8 @@ class CreateController extends Controller
                 $activity->setRoute((new EntityRoute())->setAccount($activity->getAccount()));
             }
 
+            $activity->getRoute()->setName($activity->getRouteName());
+
             if (0 != (int)$activity->getElevation() && 0 == $activity->getRoute()->getElevation()) {
                 $activity->getRoute()->setElevation($activity->getElevation());
             }

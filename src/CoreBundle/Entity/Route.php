@@ -177,7 +177,8 @@ class Route implements AccountRelatedEntityInterface
      */
     public function setName($name)
     {
-        $this->name = $name;
+        $this->name = $name ?: '';
+        $this->cities = $name ?: '';
 
         return $this;
     }
@@ -197,7 +198,8 @@ class Route implements AccountRelatedEntityInterface
      */
     public function setCities($cities)
     {
-        $this->cities = $cities;
+        $this->cities = $cities ?: '';
+        $this->name = $cities ?: '';
 
         return $this;
     }
