@@ -5,7 +5,6 @@
  */
 
 use Runalyze\Configuration;
-use Runalyze\Error;
 use Runalyze\Timezone;
 use Symfony\Component\Yaml\Yaml;
 
@@ -38,6 +37,8 @@ class Frontend {
 	 */
 	protected $yamlConfig = array();
 
+	protected $HideFooter = false;
+
 	/**
 	 * Constructor
 	 *
@@ -56,15 +57,15 @@ class Frontend {
 		if (!$hideHeaderAndFooter)
 			$this->displayHeader();
 		else
-			Error::getInstance()->footer_sent = true;
+		    $this->HideFooter = true;
 	}
 
 	/**
 	 * Destructor
 	 */
 	public function __destruct() {
-		if (!Error::getInstance()->footer_sent)
-			$this->displayFooter();
+	    if (!$this->HideFooter)
+    		$this->displayFooter();
 	}
 
 	/**
@@ -76,7 +77,6 @@ class Frontend {
 
 		$this->setAutoloader();
 		$this->initCache();
-		$this->initErrorHandling();
 		$this->initConfig();
 		$this->initDatabase();
 		$this->initSessionAccountHandler();
@@ -152,13 +152,6 @@ class Frontend {
 	}
 
 	/**
-	 * Include class::Error and and initialise it
-	 */
-	protected function initErrorHandling() {
-		\Runalyze\Error::init(Request::Uri());
-	}
-
-	/**
 	 * Connect to database
 	 */
 	private function initDatabase() {
@@ -209,14 +202,8 @@ class Frontend {
 	 * Display the HTML-Footer
 	 */
 	public function displayFooter() {
-		if (Error::getInstance()->hasErrors()) {
-			Error::getInstance()->display();
-		}
-
 		if (!Request::isAjax() && !isset($_GET['hideHtmlHeader'])) {
 			include 'tpl/tpl.Frontend.footer.php';
 		}
-
-		Error::getInstance()->footer_sent = true;
 	}
 }

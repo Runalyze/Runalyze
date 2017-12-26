@@ -14,8 +14,7 @@ class Filesystem {
 		if ($file !== false) {
 			fwrite($file, $fileContent);
 			fclose($file);
-		} else
-			\Runalyze\Error::getInstance()->addError('Die Datei "'.$fileName.'" konnte zum Schreiben nicht erstellt/ge&ouml;ffnet werden.');
+		}
 	}
 
 	/**

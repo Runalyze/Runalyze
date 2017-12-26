@@ -5,7 +5,6 @@
  */
 
 use Runalyze\Configuration;
-use Runalyze\Error;
 
 /**
  * Timestamp of the first training
@@ -143,7 +142,6 @@ class Helper {
 
 		if (isset($data['time']) && $data['time'] == 0) {
 			$data = DB::getInstance()->query('SELECT MIN(`time`) as `time` FROM `'.PREFIX.'training` WHERE `time` != 0 AND accountid = '.SessionAccountHandler::getId())->fetch();
-			Error::getInstance()->addWarning('Du hast ein Training ohne Zeitstempel, also mit dem Datum 01.01.1970.');
 		}
 
 		if ($data === false || $data['time'] === null)

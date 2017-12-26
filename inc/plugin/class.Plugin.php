@@ -287,7 +287,6 @@ abstract class Plugin {
 	 */
 	final public function install() {
 		if ($this->id() != PluginInstaller::ID) {
-			Error::getInstance()->addError('Plugin can not be installed, id is set wrong.');
 			return false;
 		}
 
