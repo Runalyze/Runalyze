@@ -55,8 +55,7 @@ class FitActivity extends AbstractSingleParser
 
     /** @var array */
     protected $DeveloperFieldMappingForRecord = [
-        '0_Ground_Time' => ['stance_time', 10],
-        '0_RP_Power' => ['power', 1],
+        'RP_Power' => ['power', 1],
         'saturated_hemoglobin_percent' => ['smo2_0', 0.1],
         'total_hemoglobin_conc' => ['thb_0', 1]
     ];
@@ -69,6 +68,7 @@ class FitActivity extends AbstractSingleParser
         5 => ['distance', ['default' => 1, 'm' => 100]],
         7 => ['power'],
         39 => ['vertical_oscillation', ['default' => 1, 'Centimeters' => 100]],
+        40 => ['stance_time', ['default' => 1, 'Milliseconds' => 10]],
         54 => [['thb_0', 'thb_1'], 100],
         57 => [['smo2_0', 'smo2_1'], 1]
     ];
@@ -135,18 +135,21 @@ class FitActivity extends AbstractSingleParser
 
     protected function readFieldDescriptionFor(array &$nativeFieldMapping, array &$fieldMapping)
     {
+        if (!isset($this->Values['developer_data_index']) || !isset($this->Values['field_name'])) {
+            return;
+        }
+
+        $devFieldName = str_replace(['"', ' '], ['', '_'], $this->Values['field_name'][0]);
+        $fieldName = $this->Values['developer_data_index'][0].'_'.$devFieldName;
+        $fieldName = preg_replace_callback('/(\W)/i', function(array $char) {
+            return sprintf('_%02x_', ord($char[0]));
+        }, preg_replace('/(\s+)/i', '_', $fieldName));
+
         if (
             isset($this->Values['native_field_num']) &&
             isset($nativeFieldMapping[$this->Values['native_field_num'][0]]) &&
-            !empty($nativeFieldMapping[$this->Values['native_field_num'][0]][0]) &&
-            isset($this->Values['developer_data_index']) &&
-            isset($this->Values['field_name'])
+            !empty($nativeFieldMapping[$this->Values['native_field_num'][0]][0])
         ) {
-            $fieldName = $this->Values['developer_data_index'][0].'_'.str_replace(['"', ' '], ['', '_'], $this->Values['field_name'][0]);
-            $fieldName = preg_replace_callback('/(\W)/i', function(array $char) {
-                return sprintf('_%02x_', ord($char[0]));
-            }, preg_replace('/(\s+)/i', '_', $fieldName));
-
             $nativeFieldNum = $this->Values['native_field_num'][0];
             $unitDefinition = str_replace('"', '', $this->Values['units'][0]);
 
@@ -158,10 +161,16 @@ class FitActivity extends AbstractSingleParser
             }
 
             if (is_array($mappingKey)) {
+                if (empty($mappingKey)) {
+                    return;
+                }
+
                 $mappingKey = array_shift($nativeFieldMapping[$nativeFieldNum][0]);
             }
 
             $fieldMapping[$fieldName] = [$mappingKey, $mappingFactor];
+        } elseif (isset($fieldMapping[$devFieldName])) {
+            $fieldMapping[$fieldName] = $fieldMapping[$devFieldName];
         }
     }
 
