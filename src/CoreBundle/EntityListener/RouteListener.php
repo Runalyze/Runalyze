@@ -38,10 +38,6 @@ class RouteListener
     public function preUpdate(Route $route, PreUpdateEventArgs $args)
     {
         if ($this->hasChangedElevations($args)) {
-            if ($this->userWantsElevationsToBeCorrected($route->getAccount())) {
-                $route->getAdapter()->correctElevation($this->ElevationCorrection);
-            }
-
             $this->calculateElevation($route);
         }
     }
