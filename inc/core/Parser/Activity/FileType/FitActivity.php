@@ -69,8 +69,8 @@ class FitActivity extends AbstractSingleParser
         7 => ['power'],
         39 => ['vertical_oscillation', ['default' => 1, 'Centimeters' => 100]],
         40 => ['stance_time', ['default' => 1, 'Milliseconds' => 10]],
-        54 => [['thb_0', 'thb_1'], 100],
-        57 => [['smo2_0', 'smo2_1'], 1]
+        54 => [['thb_0', 'thb_1'], ['default' => 100, 'base_type' => ['uint16' => 1]]],
+        57 => [['smo2_0', 'smo2_1'], ['default' => 1, 'base_type' => ['uint16' => 0.1]]]
     ];
 
     /** @var array */
@@ -135,12 +135,12 @@ class FitActivity extends AbstractSingleParser
 
     protected function readFieldDescriptionFor(array &$nativeFieldMapping, array &$fieldMapping)
     {
-        if (!isset($this->Values['developer_data_index']) || !isset($this->Values['field_name'])) {
+        if (!isset($this->Values['developer_data_index']) || !isset($this->Values['field_name']) || !isset($this->Values['field_definition_number'])) {
             return;
         }
 
         $devFieldName = str_replace(['"', ' '], ['', '_'], $this->Values['field_name'][0]);
-        $fieldName = $this->Values['developer_data_index'][0].'_'.$devFieldName;
+        $fieldName = $this->Values['developer_data_index'][0].'_'.$this->Values['field_definition_number'][0].'_'.$devFieldName;
         $fieldName = preg_replace_callback('/(\W)/i', function(array $char) {
             return sprintf('_%02x_', ord($char[0]));
         }, preg_replace('/(\s+)/i', '_', $fieldName));
@@ -157,7 +157,13 @@ class FitActivity extends AbstractSingleParser
             $mappingFactor = isset($nativeFieldMapping[$nativeFieldNum][1]) ? $nativeFieldMapping[$nativeFieldNum][1] : 1;
 
             if (is_array($mappingFactor)) {
-                $mappingFactor = isset($mappingFactor[$unitDefinition]) ? $mappingFactor[$unitDefinition] : $mappingFactor['default'];
+                if (isset($mappingFactor[$unitDefinition])) {
+                    $mappingFactor = $mappingFactor[$unitDefinition];
+                } elseif (isset($this->Values['fit_base_type_id']) && isset($mappingFactor['base_type']) && isset($mappingFactor['base_type'][$this->Values['fit_base_type_id'][1]])) {
+                    $mappingFactor = $mappingFactor['base_type'][$this->Values['fit_base_type_id'][1]];
+                } else {
+                    $mappingFactor = $mappingFactor['default'];
+                }
             }
 
             if (is_array($mappingKey)) {

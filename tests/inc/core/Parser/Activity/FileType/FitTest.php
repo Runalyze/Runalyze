@@ -588,7 +588,7 @@ class FitTest extends AbstractActivityParserTestCase
         );
 
         $this->assertEquals(
-            [1231, 1231, 1231, 1231, 1228, 1228, 1227, 1227, 1225, 1225],
+            [1231, 1231, 1231, 1231, 1229, 1229, 1227, 1227, 1225, 1225],
             array_slice($this->Container->ContinuousData->TotalHaemoglobin, 0, 10)
         );
         $this->assertEquals(
@@ -609,6 +609,15 @@ class FitTest extends AbstractActivityParserTestCase
         $this->assertEmpty($this->Container->ContinuousData->MuscleOxygenation_2);
         $this->assertNotEmpty($this->Container->ContinuousData->TotalHaemoglobin);
         $this->assertEmpty($this->Container->ContinuousData->TotalHaemoglobin_2);
+
+        $this->assertEquals(
+            [57, 0, 62, 64, 63],
+            array_slice($this->Container->ContinuousData->MuscleOxygenation, 0, 5)
+        );
+        $this->assertEquals(
+            [1249, 0, 1245, 1234, 1233],
+            array_slice($this->Container->ContinuousData->TotalHaemoglobin, 0, 5)
+        );
     }
 
 	public function testThatBadTrainingEffectValuesAreIgnored()
