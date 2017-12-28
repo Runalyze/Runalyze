@@ -32,7 +32,7 @@ framework:
         default_lifetime: 86400
 
 parameters:
-  RUNALYZE_VERSION: 4.2.0
+  RUNALYZE_VERSION: 4.3.0-dev
 
 twig:
   globals:
