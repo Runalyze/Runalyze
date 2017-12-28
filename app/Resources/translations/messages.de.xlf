@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
   <file date="2017-12-28T16:47:19Z" source-language="en" target-language="de" datatype="plaintext" original="not.available">
     <header>
@@ -38,9 +38,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>#{deviceCount} Geräte gefunden</target>
         <jms:reference-file line="61">/Resources/views/import/garmin_communicator.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="04e4ab1f101e58c92753f1c92a2622b76f703616" resname="%s-files are supported from: %s">
+      <trans-unit id="04e4ab1f101e58c92753f1c92a2622b76f703616" resname="%s-files are supported from: %s" approved="yes">
         <source>%s-files are supported from: %s</source>
-        <target state="new">%s-files are supported from: %s</target>
+        <target state="translated">%s-Dateien werden unterstützt von: %s</target>
         <jms:reference-file line="81">/Resources/views/activity/import_upload.html.twig</jms:reference-file>
         <jms:reference-file line="87">/Resources/views/activity/import_upload.html.twig</jms:reference-file>
         <jms:reference-file line="97">/Resources/views/activity/import_upload.html.twig</jms:reference-file>
@@ -153,9 +153,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <jms:reference-file line="74">/Resources/views/base_logged_in.twig</jms:reference-file>
         <jms:reference-file line="5">/Resources/views/settings/tag/overview.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="c6609225788847c9e753363c5a32610b7062d826" resname="Activity type">
+      <trans-unit id="c6609225788847c9e753363c5a32610b7062d826" resname="Activity type" approved="yes">
         <source>Activity type</source>
-        <target state="new">Activity type</target>
+        <target state="translated">Trainingstypen</target>
         <jms:reference-file line="72">/Resources/views/tools/anova/base.html.twig</jms:reference-file>
         <jms:reference-file line="71">/Resources/views/tools/trend-analysis/base.html.twig</jms:reference-file>
       </trans-unit>
@@ -203,9 +203,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Neuen Eintrag hinzufügen</target>
         <jms:reference-file line="9">/Resources/views/my/body-values/table.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="63b759a297289f9025ddd5d3f3f1c124e2c72258" resname="Add activity">
+      <trans-unit id="63b759a297289f9025ddd5d3f3f1c124e2c72258" resname="Add activity" approved="yes">
         <source>Add activity</source>
-        <target state="new">Add activity</target>
+        <target state="translated">Aktivität hinzufügen</target>
         <jms:reference-file line="20">/Resources/views/activity/form.html.twig</jms:reference-file>
         <jms:reference-file line="13">/Resources/views/activity/multi_importer.html.twig</jms:reference-file>
       </trans-unit>
@@ -248,9 +248,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <jms:reference-file line="14">/Resources/views/settings/sport/form-sport.html.twig</jms:reference-file>
         <jms:reference-file line="59">/Resources/views/settings/sport/overview.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="875e19d453a0708f1fabc24489eca58421f0d512" resname="Add weather data">
+      <trans-unit id="875e19d453a0708f1fabc24489eca58421f0d512" resname="Add weather data" approved="yes">
         <source>Add weather data</source>
-        <target state="new">Add weather data</target>
+        <target state="translated">Wetterdaten hinzufügen</target>
         <jms:reference-file line="144">/Resources/views/activity/form.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="1458b58c6250127b83ec15650365c683d73de5f5" resname="All paces are in %unit%.">
@@ -320,9 +320,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Zugewiesene Sportarten</target>
         <jms:reference-file line="87">/../src/CoreBundle/Form/EquipmentCategoryType.php</jms:reference-file>
       </trans-unit>
-      <trans-unit id="c78087290c26b8b54be804eea69ffcebc832a086" resname="Assigned tags">
+      <trans-unit id="c78087290c26b8b54be804eea69ffcebc832a086" resname="Assigned tags" approved="yes">
         <source>Assigned tags</source>
-        <target state="new">Assigned tags</target>
+        <target state="translated">Zugeordnete Tags</target>
         <jms:reference-file line="173">/../src/CoreBundle/Form/ActivityType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="52b2fb69daaad46e95828e2ebecbdfb4c7dd240c" resname="At irregular intervals we are sending mails to you. We will never send you spam or advertisement.">
@@ -341,9 +341,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <jms:reference-file line="18">/Resources/views/shared/base.html.twig</jms:reference-file>
         <jms:reference-file line="21">/Resources/views/shared/widget/iframe/base.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="6107d1b8d1b19ea71744966a33fd406df287e874" resname="Attention: This operation cannot be undone.">
+      <trans-unit id="6107d1b8d1b19ea71744966a33fd406df287e874" resname="Attention: This operation cannot be undone." approved="yes">
         <source>Attention: This operation cannot be undone.</source>
-        <target state="new">Attention: This operation cannot be undone.</target>
+        <target state="translated">Achtung: Dieser Vorgang kann nicht rückgängig gemacht werden.</target>
         <jms:reference-file line="200">/Resources/views/activity/form.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="75629af51d7c7f120dbb5b462013bfa48af33285" resname="Aug">
@@ -507,14 +507,14 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <jms:reference-file line="34">/Resources/views/settings/account.html.twig</jms:reference-file>
         <jms:reference-file line="36">/Resources/views/settings/account.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="acebc3f2d39cc87711a34bccb87fbd2ce30bd958" resname="Changes have been saved.">
+      <trans-unit id="acebc3f2d39cc87711a34bccb87fbd2ce30bd958" resname="Changes have been saved." approved="yes">
         <source>Changes have been saved.</source>
-        <target state="new">Changes have been saved.</target>
+        <target state="translated">Die Änderungen wurden gespeichert.</target>
         <jms:reference-file line="69">/../src/CoreBundle/Controller/Activity/EditController.php</jms:reference-file>
       </trans-unit>
-      <trans-unit id="3902f06aa7d1143ebc954eaafb5586a0b9653981" resname="Choose activities">
+      <trans-unit id="3902f06aa7d1143ebc954eaafb5586a0b9653981" resname="Choose activities" approved="yes">
         <source>Choose activities</source>
-        <target state="new">Choose activities</target>
+        <target state="translated">Aktivtäten auswählen</target>
         <jms:reference-file line="20">/Resources/views/activity/multi_importer.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="1dba7dd902a8d18d0072fe747078f61d341624ba" resname="Choose postertype(s)">
@@ -609,14 +609,14 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Verbundene Geräte</target>
         <jms:reference-file line="51">/Resources/views/import/garmin_communicator.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="fac0cdf818027aec5512aae94d98912275d40a4f" resname="Correct elevation data">
+      <trans-unit id="fac0cdf818027aec5512aae94d98912275d40a4f" resname="Correct elevation data" approved="yes">
         <source>Correct elevation data</source>
-        <target state="new">Correct elevation data</target>
+        <target state="translated">Höhenmeter korrigieren</target>
         <jms:reference-file line="180">/Resources/views/activity/form.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="1c0ca291b0680535d87385f085e37f5c6fc8f548" resname="Corrected elevation data has been removed.">
+      <trans-unit id="1c0ca291b0680535d87385f085e37f5c6fc8f548" resname="Corrected elevation data has been removed." approved="yes">
         <source>Corrected elevation data has been removed.</source>
-        <target state="new">Corrected elevation data has been removed.</target>
+        <target state="translated">Die korrigierten Höhenmeter wurden entfernt.</target>
         <jms:reference-file line="156">/../src/CoreBundle/Controller/Activity/EditController.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="f7f6a12b856b173ba0566b50674d0b6d4675c0ea" resname="Correction factor">
@@ -678,9 +678,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Aktuelle RUNALYZE Version:</target>
         <jms:reference-file line="53">/Resources/views/tools/backup/upload_form.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="fc59b7680813e392a47dce4ce3ea565563315cb7" resname="Customer feedback">
+      <trans-unit id="fc59b7680813e392a47dce4ce3ea565563315cb7" resname="Customer feedback" approved="yes">
         <source>Customer feedback</source>
-        <target state="new">Customer feedback</target>
+        <target state="translated">Kundenfeedback</target>
         <jms:reference-file line="62">/../src/CoreBundle/Services/AccountMailer.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="46efcb7560a624acf05b1eba3eaa6c0355e3c341" resname="DIN A0">
@@ -783,9 +783,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <jms:reference-file line="109">/../src/CoreBundle/Form/Settings/SportType.php</jms:reference-file>
         <jms:reference-file line="18">/Resources/views/settings/sport/overview.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="a54ee46a423126edefebe7a306f4ce3d6e1bdee2" resname="Default privacy setting for all new created activities of this sport type.">
+      <trans-unit id="a54ee46a423126edefebe7a306f4ce3d6e1bdee2" resname="Default privacy setting for all new created activities of this sport type." approved="yes">
         <source>Default privacy setting for all new created activities of this sport type.</source>
-        <target state="new">Default privacy setting for all new created activities of this sport type.</target>
+        <target state="translated">Standardprivatsphäreneinstellungen für alle neu erstellen Aktvitäten dieser Sportart.</target>
         <jms:reference-file line="48">/Resources/views/settings/sport/form-sport.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="aaae84143938ffb5470678a0f315970f6a4fa81d" resname="Definitions for training paces vary a lot, depending on which philosophy one looks at.&#10;            This table specifies paces at various percentages of %vVO2max%, which equals approximately the maximal pace for 11 minutes.&#10;        ">
@@ -995,9 +995,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <jms:reference-file line="73">/Resources/views/activity/tool/climb_score.html.twig</jms:reference-file>
         <jms:reference-file line="42">/Resources/views/shared/widget/iframe/base.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="47b894445772b36938b2d3d972ea24d73733d95f" resname="Elevation data could not be retrieved.">
+      <trans-unit id="47b894445772b36938b2d3d972ea24d73733d95f" resname="Elevation data could not be retrieved." approved="yes">
         <source>Elevation data could not be retrieved.</source>
-        <target state="new">Elevation data could not be retrieved.</target>
+        <target state="translated">Die Höhemeterdaten konnten nicht empfangen werden.</target>
         <jms:reference-file line="171">/../src/CoreBundle/Controller/Activity/EditController.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="c47e9064feba9b1502370412b70261197e9977b7" resname="Elevation data from Shuttle Radar Topography Mission">
@@ -1005,14 +1005,14 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Höheninformationen der Shuttle Radar Topography Mission</target>
         <jms:reference-file line="49">/Resources/views/static/help.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="481bd96b48a7da413a93809f9688355271e12ae7" resname="Elevation data has been corrected.">
+      <trans-unit id="481bd96b48a7da413a93809f9688355271e12ae7" resname="Elevation data has been corrected." approved="yes">
         <source>Elevation data has been corrected.</source>
-        <target state="new">Elevation data has been corrected.</target>
+        <target state="translated">Die Höhenmeterdaten wurden korrigiert.</target>
         <jms:reference-file line="162">/../src/CoreBundle/Controller/Activity/EditController.php</jms:reference-file>
       </trans-unit>
-      <trans-unit id="5471b2be79bb47603a146ca69bfce43099601a1a" resname="Elevation data via GPS is very inaccurate. Therefore you can correct it via some satellite data.">
+      <trans-unit id="5471b2be79bb47603a146ca69bfce43099601a1a" resname="Elevation data via GPS is very inaccurate. Therefore you can correct it via some satellite data." approved="yes">
         <source>Elevation data via GPS is very inaccurate. Therefore you can correct it via some satellite data.</source>
-        <target state="new">Elevation data via GPS is very inaccurate. Therefore you can correct it via some satellite data.</target>
+        <target state="translated">Höhenmeterdaten via GPS sind ziemlich ungenau. Deshalb kannst du diese über Satellitendaten von uns korrigieren lassen.</target>
         <jms:reference-file line="183">/Resources/views/activity/form.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="01345289e5e7cc14aea84a4cf1fe9a4a5c3ad6ff" resname="Email me">
@@ -1108,9 +1108,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Folgen</target>
         <jms:reference-file line="70">/Resources/views/mail/transactionBase.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="1d892a6e06d8d8b9cec13bcb9b4517b0d6576bdb" resname="Follow %username% via RSS-Feed">
+      <trans-unit id="1d892a6e06d8d8b9cec13bcb9b4517b0d6576bdb" resname="Follow %username% via RSS-Feed" approved="yes">
         <source>Follow %username% via RSS-Feed</source>
-        <target state="new">Follow %username% via RSS-Feed</target>
+        <target state="translated">Folge %username% via RSS-Feed</target>
         <jms:reference-file line="29">/Resources/views/shared/athlete/base.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="626bc8c74126cf7aca5e5d268bc175a49410b70a" resname="For a detailed explanation of box plots, see &lt;a href=&quot;https://en.wikipedia.org/wiki/Box_plot&quot;&gt;Wikipedia&lt;/a&gt;.">
@@ -1152,9 +1152,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>#{tracks} Aktivitäten gefunden</target>
         <jms:reference-file line="57">/Resources/views/import/garmin_communicator.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="3890a55f029c2ef7cfafd299022c8e7de863c234" resname="Found %s activities.">
+      <trans-unit id="3890a55f029c2ef7cfafd299022c8e7de863c234" resname="Found %s activities." approved="yes">
         <source>Found %s activities.</source>
-        <target state="new">Found %s activities.</target>
+        <target state="translated">%s Aktivitäten gefunden.</target>
         <jms:reference-file line="22">/Resources/views/activity/multi_importer.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="501806c15fa6c6e39d648f03705ad7327f590af9" resname="General cleanup">
@@ -1199,9 +1199,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Spielerei</target>
         <jms:reference-file line="44">/Resources/views/tools/tools_list.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="7427cf697be16a4ec1d916910128a59d920125e7" resname="Glossary">
+      <trans-unit id="7427cf697be16a4ec1d916910128a59d920125e7" resname="Glossary" approved="yes">
         <source>Glossary</source>
-        <target state="new">Glossary</target>
+        <target state="translated">Glossar</target>
         <jms:reference-file line="62">/Resources/views/base_not_logged_in.html.twig</jms:reference-file>
         <jms:reference-file line="23">/Resources/views/static/help.html.twig</jms:reference-file>
       </trans-unit>
@@ -1311,9 +1311,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target><![CDATA[Schade, dass du dich dazu entschieden hast deinen Account zu löschen.<br> Sobald du den Bestätigungslink in der verschickten Mail angeklickt hast wird dein Account gelöscht.]]></target>
         <jms:reference-file line="10">/Resources/views/settings/account-delete.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="65adb9c296d2e3526c7527aa60f1a66fea425a3e" resname="Humidity">
+      <trans-unit id="65adb9c296d2e3526c7527aa60f1a66fea425a3e" resname="Humidity" approved="yes">
         <source>Humidity</source>
-        <target state="new">Humidity</target>
+        <target state="translated">Luftfeuchtigkeit</target>
         <jms:reference-file line="135">/../src/CoreBundle/Form/ActivityType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="716f63b96e0c263222949a3b8a00cdb4f46d3183" resname="Icon">
@@ -1373,9 +1373,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Importiere Daten</target>
         <jms:reference-file line="7">/Resources/views/tools/backup/upload_form.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="ab155b67afc1209f5f911efd75c331b7fe996c76" resname="Import selected activities">
+      <trans-unit id="ab155b67afc1209f5f911efd75c331b7fe996c76" resname="Import selected activities" approved="yes">
         <source>Import selected activities</source>
-        <target state="new">Import selected activities</target>
+        <target state="translated">Importiere ausgewählte Aktivtäten</target>
         <jms:reference-file line="61">/Resources/views/activity/multi_importer.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="410d34d7655662c649fdf892068f483330b66427" resname="In a case of urgency you can contact us via email:">
@@ -1422,9 +1422,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <jms:reference-file line="218">/../src/CoreBundle/Controller/Settings/SportController.php</jms:reference-file>
         <jms:reference-file line="77">/../src/CoreBundle/Controller/Settings/TagsController.php</jms:reference-file>
       </trans-unit>
-      <trans-unit id="0b97ca90664eebd4d7a8b89fe93ca9680c0221ba" resname="It seems that you already have imported this activity">
+      <trans-unit id="0b97ca90664eebd4d7a8b89fe93ca9680c0221ba" resname="It seems that you already have imported this activity" approved="yes">
         <source>It seems that you already have imported this activity</source>
-        <target state="new">It seems that you already have imported this activity</target>
+        <target state="translated">Es sieht so aus als hättest du diese Aktivität schon einmal importiert</target>
         <jms:reference-file line="31">/Resources/views/activity/form.html.twig</jms:reference-file>
         <jms:reference-file line="39">/Resources/views/activity/multi_importer.html.twig</jms:reference-file>
       </trans-unit>
@@ -1453,9 +1453,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Sprache</target>
         <jms:reference-file line="36">/../src/CoreBundle/Form/Settings/AccountType.php</jms:reference-file>
       </trans-unit>
-      <trans-unit id="cfc26f2fc49319a629d75e7dd0b1c6f730adb579" resname="Laps">
+      <trans-unit id="cfc26f2fc49319a629d75e7dd0b1c6f730adb579" resname="Laps" approved="yes">
         <source>Laps</source>
-        <target state="new">Laps</target>
+        <target state="translated">Runden</target>
         <jms:reference-file line="75">/Resources/views/activity/form.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="3bade34ecbc5d996b2f301ebd4ba689e81c7c9ea" resname="Length">
@@ -1478,9 +1478,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <jms:reference-file line="12">/Resources/views/shared/invalid_activity.html.twig</jms:reference-file>
         <jms:reference-file line="12">/Resources/views/shared/invalid_athlete.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="b1a9a2cc60852adc91a9721fc3cb1e74844ca7ba" resname="Load weather data">
+      <trans-unit id="b1a9a2cc60852adc91a9721fc3cb1e74844ca7ba" resname="Load weather data" approved="yes">
         <source>Load weather data</source>
-        <target state="new">Load weather data</target>
+        <target state="translated">Wetterdaten laden</target>
         <jms:reference-file line="143">/Resources/views/activity/form.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="4e5a2893bdcc7d239c1db72e4c4ffbe4bea73174" resname="Login">
@@ -1582,9 +1582,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Sonstiges</target>
         <jms:reference-file line="70">/Resources/views/static/help.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="5f2cbd107037ed23248e5058a7a64cd6bae05468" resname="Miscellaneous">
+      <trans-unit id="5f2cbd107037ed23248e5058a7a64cd6bae05468" resname="Miscellaneous" approved="yes">
         <source>Miscellaneous</source>
-        <target state="new">Miscellaneous</target>
+        <target state="translated">Sonstiges</target>
         <jms:reference-file line="118">/Resources/views/activity/form.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="a7b93d2128e820f861fc8dfccd9f5521e89ad21f" resname="Mode">
@@ -1715,9 +1715,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <jms:reference-file line="14">/Resources/views/system/update.html.twig</jms:reference-file>
         <jms:reference-file line="6">/Resources/views/system/update_start.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="967cc7c86103bddb80ee5da25ffadc30702050da" resname="No weather data present">
+      <trans-unit id="967cc7c86103bddb80ee5da25ffadc30702050da" resname="No weather data present" approved="yes">
         <source>No weather data present</source>
-        <target state="new">No weather data present</target>
+        <target state="translated">Es sind keine Wetterdaten vorhanden</target>
         <jms:reference-file line="149">/Resources/views/activity/form.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="6eef6648406c333a4035cd5e60d0bf2ecf2606d7" resname="None">
@@ -1909,9 +1909,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Wir freuen uns über alle Wünsche und Fehlermeldungen von Dir.</target>
         <jms:reference-file line="12">/Resources/views/static/help.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="f79c83dad8ee5ae6c1acf8b57c2503966581fe5a" resname="Please use the forum for any support question.">
+      <trans-unit id="f79c83dad8ee5ae6c1acf8b57c2503966581fe5a" resname="Please use the forum for any support question." approved="yes">
         <source>Please use the forum for any support question.</source>
-        <target state="new">Please use the forum for any support question.</target>
+        <target state="translated">Bitte benutze das Forum für jegliche Supportanfragen.</target>
         <jms:reference-file line="13">/Resources/views/feedback.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="80c94c4a4b8b317f1130bd6b96e7b78502ac4b3a" resname="Please use the plugin">
@@ -1989,9 +1989,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Die Schätzung des effektiven %VO2max% anhand deiner Trainingsdaten kann ungenau sein. Dieses Tool listet deine Wettkämpfe und vergleicht die erzielten Zeiten mit den jeweiligen Prognosen. Das hilft dir, die Güte dieser Schätzung für dich besser einzuschätzen.</target>
         <jms:reference-file line="16">/Resources/views/tools/vo2max_analysis.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="d1222178efa7946ad8940a0b57a0d3cb3856180c" resname="Pressure">
+      <trans-unit id="d1222178efa7946ad8940a0b57a0d3cb3856180c" resname="Pressure" approved="yes">
         <source>Pressure</source>
-        <target state="new">Pressure</target>
+        <target state="translated">Luftdruck</target>
         <jms:reference-file line="139">/../src/CoreBundle/Form/ActivityType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="78bb3c21204f037ea7948fa07cdfdcb8d79d8c0b" resname="Previously generated posters">
@@ -2009,14 +2009,14 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Vermutlich war der Link fehlerhaft.</target>
         <jms:reference-file line="7">/Resources/views/account/delete/problem.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="1baa06b4c8bc2d63f9db4d4cc86a2e2b12a7e893" resname="Problem">
+      <trans-unit id="1baa06b4c8bc2d63f9db4d4cc86a2e2b12a7e893" resname="Problem" approved="yes">
         <source>Problem</source>
-        <target state="new">Problem</target>
+        <target state="translated">Problem</target>
         <jms:reference-file line="32">/Resources/TwigBundle/views/Exception/error.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="dc5eb704bbcae1aff4efb71c55461d47767dabe7" resname="Public">
+      <trans-unit id="dc5eb704bbcae1aff4efb71c55461d47767dabe7" resname="Public" approved="yes">
         <source>Public</source>
-        <target state="new">Public</target>
+        <target state="translated">Öffentlich</target>
         <jms:reference-file line="98">/../src/CoreBundle/Form/ActivityType.php</jms:reference-file>
         <jms:reference-file line="31">/Resources/views/settings/dataset.html.twig</jms:reference-file>
       </trans-unit>
@@ -2137,14 +2137,14 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Eingeloggt bleiben</target>
         <jms:reference-file line="19">/Resources/views/login/form.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="51daaecafcd288a24d18949f5c3ac96972840e43" resname="Remove all weather data">
+      <trans-unit id="51daaecafcd288a24d18949f5c3ac96972840e43" resname="Remove all weather data" approved="yes">
         <source>Remove all weather data</source>
-        <target state="new">Remove all weather data</target>
+        <target state="translated">Alle Wetterdaten entfernen</target>
         <jms:reference-file line="145">/Resources/views/activity/form.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="f3c519b57ea1e4f9a3d32f51bcf082e3edec886a" resname="Remove data series">
+      <trans-unit id="f3c519b57ea1e4f9a3d32f51bcf082e3edec886a" resname="Remove data series" approved="yes">
         <source>Remove data series</source>
-        <target state="new">Remove data series</target>
+        <target state="translated">Datenserien entfernen</target>
         <jms:reference-file line="246">/../src/CoreBundle/Form/ActivityType.php</jms:reference-file>
         <jms:reference-file line="192">/Resources/views/activity/form.html.twig</jms:reference-file>
       </trans-unit>
@@ -2165,9 +2165,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <jms:reference-file line="248">/Resources/views/tools/anova/base.html.twig</jms:reference-file>
         <jms:reference-file line="265">/Resources/views/tools/trend-analysis/base.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="b9b90467c80e919319d36b2d26f8366c3993c915" resname="Requesting weather data">
+      <trans-unit id="b9b90467c80e919319d36b2d26f8366c3993c915" resname="Requesting weather data" approved="yes">
         <source>Requesting weather data</source>
-        <target state="new">Requesting weather data</target>
+        <target state="translated">Wetterdaten werden geholt</target>
         <jms:reference-file line="153">/Resources/views/activity/form.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="1d7c76d34a5f676f0c4ae7099ecae62255f24167" resname="Reset configuration">
@@ -2183,9 +2183,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <jms:reference-file line="15">/Resources/views/mail/account/recoverPassword.html.twig</jms:reference-file>
         <jms:reference-file line="3">/Resources/views/mail/account/recoverPassword.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="296d1007b69db41813cb12265975dd7d51f34739" resname="Resting">
+      <trans-unit id="296d1007b69db41813cb12265975dd7d51f34739" resname="Resting" approved="yes">
         <source>Resting</source>
-        <target state="new">Resting</target>
+        <target state="translated">Ruhe</target>
         <jms:reference-file line="31">/../src/CoreBundle/Form/Type/ActivityRoundType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="26677094aacbc7052a2fe0373288330005b45a72" resname="Resting HR">
@@ -2262,9 +2262,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <jms:reference-file line="64">/Resources/views/settings/account.html.twig</jms:reference-file>
         <jms:reference-file line="94">/Resources/views/settings/dataset.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="3b033f4c0bb998c03df5cc509c9d51edc69a3fbb" resname="Save and continue">
+      <trans-unit id="3b033f4c0bb998c03df5cc509c9d51edc69a3fbb" resname="Save and continue" approved="yes">
         <source>Save and continue</source>
-        <target state="new">Save and continue</target>
+        <target state="translated">Speichern und weiter</target>
         <jms:reference-file line="248">/Resources/views/activity/form.html.twig</jms:reference-file>
         <jms:reference-file line="42">/Resources/views/activity/multi_editor_navigation.html.twig</jms:reference-file>
       </trans-unit>
@@ -2290,9 +2290,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Schau dir an, wie sich deine Aktivitätswerte im Verlauf der Zeit geändert haben.</target>
         <jms:reference-file line="11">/Resources/views/tools/tools_list.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="c431a2625852003b667ee065326d1d644a9e859f" resname="Send feedback">
+      <trans-unit id="c431a2625852003b667ee065326d1d644a9e859f" resname="Send feedback" approved="yes">
         <source>Send feedback</source>
-        <target state="new">Send feedback</target>
+        <target state="translated">Feedback senden</target>
         <jms:reference-file line="22">/Resources/views/feedback.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="0ef25462ad107e31f9de95b8e1784cc1c8859b75" resname="Send link">
@@ -2312,14 +2312,14 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <jms:reference-file line="35">/Resources/views/tools/vo2max_analysis.html.twig</jms:reference-file>
         <jms:reference-file line="36">/Resources/views/tools/vo2max_analysis.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="b81bb95dfaa91b752d5edb19b6cc54d97fc40016" resname="Share your feedback here">
+      <trans-unit id="b81bb95dfaa91b752d5edb19b6cc54d97fc40016" resname="Share your feedback here" approved="yes">
         <source>Share your feedback here</source>
-        <target state="new">Share your feedback here</target>
+        <target state="translated">Teile uns dein Feedback hier mit</target>
         <jms:reference-file line="17">/../src/CoreBundle/Form/FeedbackType.php</jms:reference-file>
       </trans-unit>
-      <trans-unit id="af963ba784844536b0afc4b9d6c1beb208033365" resname="Share your thoughts">
+      <trans-unit id="af963ba784844536b0afc4b9d6c1beb208033365" resname="Share your thoughts" approved="yes">
         <source>Share your thoughts</source>
-        <target state="new">Share your thoughts</target>
+        <target state="translated">Teile uns deine Gedanken mit</target>
         <jms:reference-file line="5">/Resources/views/feedback.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="895af357f95b6985daa759e0b6753e03a1312d40" resname="Show all notifications">
@@ -2327,9 +2327,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Alle Benachrichtigungen anzeigen</target>
         <jms:reference-file line="46">/Resources/views/base_logged_in.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="7c4f3d398b3e461de0f6b8ca85aa082189dd21e7" resname="Show multi editor afterwards">
+      <trans-unit id="7c4f3d398b3e461de0f6b8ca85aa082189dd21e7" resname="Show multi editor afterwards" approved="yes">
         <source>Show multi editor afterwards</source>
-        <target state="new">Show multi editor afterwards</target>
+        <target state="translated">Zeige anschließend den Multieditor</target>
         <jms:reference-file line="21">/../src/CoreBundle/Form/MultiImporterType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="445d12dec2a5cd46a068cee8a7be98443ba75bcd" resname="Show table">
@@ -2452,14 +2452,14 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Support</target>
         <jms:reference-file line="8">/Resources/views/static/help.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="c2e3464e3e2954f6c67c23a2e753e72ce42873be" resname="Supported file extensions">
+      <trans-unit id="c2e3464e3e2954f6c67c23a2e753e72ce42873be" resname="Supported file extensions" approved="yes">
         <source>Supported file extensions</source>
-        <target state="new">Supported file extensions</target>
+        <target state="translated">Unterstützte Dateiformate</target>
         <jms:reference-file line="79">/Resources/views/activity/import_upload.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="4187e165032d12db72ad915dd5988d63a6efa157" resname="Supported file size:">
+      <trans-unit id="4187e165032d12db72ad915dd5988d63a6efa157" resname="Supported file size:" approved="yes">
         <source>Supported file size:</source>
-        <target state="new">Supported file size:</target>
+        <target state="translated">Maximale Dateigröße:</target>
         <jms:reference-file line="103">/Resources/views/activity/import_upload.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="474c100ec318748e00ad01805517a714d20d1e52" resname="TRIMP">
@@ -2487,9 +2487,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Tag wurde gelöscht.</target>
         <jms:reference-file line="88">/../src/CoreBundle/Controller/Settings/TagsController.php</jms:reference-file>
       </trans-unit>
-      <trans-unit id="08cbfac1e2545912621d38d233987530cdf47555" resname="Thanks for sharing your thoughts!">
+      <trans-unit id="08cbfac1e2545912621d38d233987530cdf47555" resname="Thanks for sharing your thoughts!" approved="yes">
         <source>Thanks for sharing your thoughts!</source>
-        <target state="new">Thanks for sharing your thoughts!</target>
+        <target state="translated">Danke fürs Mitteilen!</target>
         <jms:reference-file line="29">/Resources/views/feedback.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="5a1b598e394b671b7e4bf5d4cbb2c1733b789806" resname="Thanks for your registration. You should receive an email within the next minutes with further instructions for activating your account.">
@@ -2512,9 +2512,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Die Aktivierung ist fehlgeschlagen.</target>
         <jms:reference-file line="5">/Resources/views/account/activate/problem.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="36557bf13f99a9f83d2165189b088c340368389f" resname="The activities have been successfully imported.">
+      <trans-unit id="36557bf13f99a9f83d2165189b088c340368389f" resname="The activities have been successfully imported." approved="yes">
         <source>The activities have been successfully imported.</source>
-        <target state="new">The activities have been successfully imported.</target>
+        <target state="translated">Die Aktivitäten wurden erfolgreich importiert.</target>
         <jms:reference-file line="228">/../src/CoreBundle/Controller/Activity/CreateController.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="28eca2b445a103d3945921852100c67ef66ca197" resname="The activity has been removed.">
@@ -2522,9 +2522,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Die Aktivität wurde entfernt.</target>
         <jms:reference-file line="3">/Resources/views/activity/activity_has_been_removed.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="5a8eba9323b7911d1f9cdb5503cb7e69e5ccefeb" resname="The activity has been successfully created.">
+      <trans-unit id="5a8eba9323b7911d1f9cdb5503cb7e69e5ccefeb" resname="The activity has been successfully created." approved="yes">
         <source>The activity has been successfully created.</source>
-        <target state="new">The activity has been successfully created.</target>
+        <target state="translated">Die Aktivität wurde erfolgreich erstellt.</target>
         <jms:reference-file line="265">/../src/CoreBundle/Controller/Activity/CreateController.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="e564c009d4e2e4ca395b37f22105b484c871ed6e" resname="The administrator has to set the correct API-key.">
@@ -2583,9 +2583,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Die Informationen werden direkt in der Zeile angezeigt.</target>
         <jms:reference-file line="30">/Resources/views/settings/dataset.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="107e75d25238464949dd7069d753324192009049" resname="The information will be shown on your public athlete page if checked.">
+      <trans-unit id="107e75d25238464949dd7069d753324192009049" resname="The information will be shown on your public athlete page if checked." approved="yes">
         <source>The information will be shown on your public athlete page if checked.</source>
-        <target state="new">The information will be shown on your public athlete page if checked.</target>
+        <target state="translated">The information will be shown on your public athlete page if checked.</target>
         <jms:reference-file line="31">/Resources/views/settings/dataset.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="6f3578d13f01277f0865175e0f08652f283e769a" resname="The link has been sent and will be valid for 24 hours.">
@@ -2684,9 +2684,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <jms:reference-file line="260">/Resources/views/tools/trend-analysis/base.html.twig</jms:reference-file>
         <jms:reference-file line="265">/Resources/views/tools/trend-analysis/base.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="60bfac38170c8f751ad286754ce50a1460bd2fb1" resname="There were problems while uploading.">
+      <trans-unit id="60bfac38170c8f751ad286754ce50a1460bd2fb1" resname="There were problems while uploading." approved="yes">
         <source>There were problems while uploading.</source>
-        <target state="new">There were problems while uploading.</target>
+        <target state="translated">Es gab ein Problem während des Uploads</target>
         <jms:reference-file line="56">/Resources/views/activity/import_upload.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="fa49a9dd7b8e7bc63fc42ae92e42ecfb6bef0067" resname="These recalculations are only needed if you changed the corresponding settings.">
@@ -2704,9 +2704,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Diese Korrektur wird derzeit nicht verwendet.</target>
         <jms:reference-file line="93">/Resources/views/activity/vo2max_info.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="414bdd61d7140f3d6eb536c84f4fd68d6837b63e" resname="This is your main sport.">
+      <trans-unit id="414bdd61d7140f3d6eb536c84f4fd68d6837b63e" resname="This is your main sport." approved="yes">
         <source>This is your main sport.</source>
-        <target state="new">This is your main sport.</target>
+        <target state="translated">Das ist deine Hautsportart.</target>
         <jms:reference-file line="44">/Resources/views/settings/sport/overview.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="ff3cf6c5a9404adfdfe68c9da50055dc65af8ad7" resname="This list shows all your activity tags.">
@@ -2756,9 +2756,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Mit diesem Tool kannst du die Datensicherung einer anderen RUNALYZE-Installation im JSON-Format importieren.</target>
         <jms:reference-file line="74">/Resources/views/tools/tools_list.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="d1c0ea3c33ebb4d469fdf942621c45e76b1cf558" resname="This tool is not available for this activity.">
+      <trans-unit id="d1c0ea3c33ebb4d469fdf942621c45e76b1cf558" resname="This tool is not available for this activity." approved="yes">
         <source>This tool is not available for this activity.</source>
-        <target state="new">This tool is not available for this activity.</target>
+        <target state="translated">Dieses Tool ist für diese Aktivität nicht verfügbar.</target>
         <jms:reference-file line="7">/Resources/views/activity/tool/not_possible.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="de63de8d63f7347ac7991ba168ac2e2215cb7ed3" resname="This way of presentation allows to compare not only average values (e.g. pace over months) but deviations and outliers between different groupings.">
@@ -2812,9 +2812,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <jms:reference-file line="32">/Resources/views/mail/account/registration.html.twig</jms:reference-file>
         <jms:reference-file line="12">/Resources/views/register/mail_delivered.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="bb43c1d8b7f1a7d79ff87743ad55f61859179bb4" resname="Tool not available">
+      <trans-unit id="bb43c1d8b7f1a7d79ff87743ad55f61859179bb4" resname="Tool not available" approved="yes">
         <source>Tool not available</source>
-        <target state="new">Tool not available</target>
+        <target state="translated">Tool nicht verfügbar</target>
         <jms:reference-file line="4">/Resources/views/activity/tool/not_possible.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="4fa8cc860c52b268dc6a3adcde7305e9415db5bb" resname="Tools">
@@ -2844,9 +2844,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <jms:reference-file line="172">/Resources/views/activity/tool/time_series_statistics.html.twig</jms:reference-file>
         <jms:reference-file line="175">/Resources/views/activity/tool/time_series_statistics.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="b1c5a7af06ba8c911bcfd11f72d7463fed9a472d" resname="Track">
+      <trans-unit id="b1c5a7af06ba8c911bcfd11f72d7463fed9a472d" resname="Track" approved="yes">
         <source>Track</source>
-        <target state="new">Track</target>
+        <target state="translated">Bahn</target>
         <jms:reference-file line="102">/../src/CoreBundle/Form/ActivityType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="5d3fe9e60de99c1c49126eb8dc901abc7f841579" resname="Traditional formulas are for estimating VO2max for a given race result.">
@@ -2933,9 +2933,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <jms:reference-file line="13">/Resources/views/tools/backup/import_bad_file.html.twig</jms:reference-file>
         <jms:reference-file line="12">/Resources/views/tools/backup/import_form.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="3dee6fe67e78e1aad983d72fcf11c290eb0c2891" resname="Use elevation correction">
+      <trans-unit id="3dee6fe67e78e1aad983d72fcf11c290eb0c2891" resname="Use elevation correction" approved="yes">
         <source>Use elevation correction</source>
-        <target state="new">Use elevation correction</target>
+        <target state="translated">Höhenkorrektur verwenden</target>
         <jms:reference-file line="176">/Resources/views/activity/form.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="337756d5a70064118bb4bf9797f01f352ad6fb52" resname="Used for age grading.">
@@ -2967,9 +2967,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>VO2max Schätzung für: %title%</target>
         <jms:reference-file line="8">/Resources/views/activity/vo2max_info.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="bfd0cdff1a03adbe2f268748a011596646e53f08" resname="VO2max for shape">
+      <trans-unit id="bfd0cdff1a03adbe2f268748a011596646e53f08" resname="VO2max for shape" approved="yes">
         <source>VO2max for shape</source>
-        <target state="new">VO2max for shape</target>
+        <target state="translated">VO2max für Form</target>
         <jms:reference-file line="94">/../src/CoreBundle/Form/ActivityType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="e455897ed8589766daf0a127ba5c4292f017180c" resname="VO2max itself is a scientific metric for the maximal oxygen consumption that can be measured in the laboratory.&lt;br&gt;Two runners with equal VO2max values do not need to perform equally, as running efficiency plays an additional role. To overcome the issue of specifying running efficiency, one can ignore the efficiency and therefore call it effective VO2max.">
@@ -3022,9 +3022,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Wasser</target>
         <jms:reference-file line="28">/Resources/views/my/body-values/table.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="c0a94c4c5d9475e59d367c4f5508e0037572fbef" resname="We are happy to hear your thoughts and ideas about our service. We will review every feedback and discuss topics internally.">
+      <trans-unit id="c0a94c4c5d9475e59d367c4f5508e0037572fbef" resname="We are happy to hear your thoughts and ideas about our service. We will review every feedback and discuss topics internally." approved="yes">
         <source>We are happy to hear your thoughts and ideas about our service. We will review every feedback and discuss topics internally.</source>
-        <target state="new">We are happy to hear your thoughts and ideas about our service. We will review every feedback and discuss topics internally.</target>
+        <target state="translated">Wir freuen uns deine Gedanken und Ideen über unseren Service zu hören.  Wir werden jedes Feedback lesen und intern über die Themen reden.</target>
         <jms:reference-file line="12">/Resources/views/feedback.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="97286a2b91d94c57dcdfee7525a87c54bdbd02b7" resname="We give our best to make Runalyze as good as possible for you. - Therefore we would be interested in your suggestions for improvement.">
@@ -3037,9 +3037,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target><![CDATA[Wir verwenden aus Gründen der Konsistenz zwei Dezimalstellen.<br>Marathon: 42.20 km<br>Halbmarathon: 21.10 km]]></target>
         <jms:reference-file line="16">/Resources/views/my/raceresult/form.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="cfde945b216bfeddfb176af73aa8bb1be930c63a" resname="We will notify you when the file is ready for downloading.">
+      <trans-unit id="cfde945b216bfeddfb176af73aa8bb1be930c63a" resname="We will notify you when the file is ready for downloading." approved="yes">
         <source>We will notify you when the file is ready for downloading.</source>
-        <target state="new">We will notify you when the file is ready for downloading.</target>
+        <target state="translated">Wir werden dich informieren, wenn die Datei zum Download bereitsteht.</target>
         <jms:reference-file line="8">/Resources/views/tools/backup/export.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="8b527bc986d8b8d19815696a85f3a6923ee433d1" resname="We will resume normal operations as soon as possible.">
@@ -3072,14 +3072,14 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <jms:reference-file line="6">/Resources/views/mail/account/registration.html.twig</jms:reference-file>
         <jms:reference-file line="8">/Resources/views/register/mail_delivered.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="bb74815c6b0beb6dd119fc7dc4ccda65706922f0" resname="Wind degrees">
+      <trans-unit id="bb74815c6b0beb6dd119fc7dc4ccda65706922f0" resname="Wind degrees" approved="yes">
         <source>Wind degrees</source>
-        <target state="new">Wind degrees</target>
+        <target state="translated">Windrichtung</target>
         <jms:reference-file line="131">/../src/CoreBundle/Form/ActivityType.php</jms:reference-file>
       </trans-unit>
-      <trans-unit id="0ec8afde4c0478286dfbc5ac77a2d98c4f8159bf" resname="Wind speed">
+      <trans-unit id="0ec8afde4c0478286dfbc5ac77a2d98c4f8159bf" resname="Wind speed" approved="yes">
         <source>Wind speed</source>
-        <target state="new">Wind speed</target>
+        <target state="translated">Windgeschwindigkeit</target>
         <jms:reference-file line="127">/../src/CoreBundle/Form/ActivityType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="879e32326c5217968ac8e3a14e4a8a5214957264" resname="Year">
@@ -3220,9 +3220,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Sie haben sich erfolgreich aus alle Benachrichtigungen abgemeldet</target>
         <jms:reference-file line="8">/Resources/views/account/unsubscribe_success.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="18863791bf142a030d9496505dc6df5fcf0d074a" resname="You may want to remove a data series if a sensor, e.g. your heart rate strap, produced unusable data.">
+      <trans-unit id="18863791bf142a030d9496505dc6df5fcf0d074a" resname="You may want to remove a data series if a sensor, e.g. your heart rate strap, produced unusable data." approved="yes">
         <source>You may want to remove a data series if a sensor, e.g. your heart rate strap, produced unusable data.</source>
-        <target state="new">You may want to remove a data series if a sensor, e.g. your heart rate strap, produced unusable data.</target>
+        <target state="translated">Du kannst hier Datenserien entfernen, wenn ein Sensor wie. z.B. dein Pulsgurt falsche Daten geliefert hat.</target>
         <jms:reference-file line="196">/Resources/views/activity/form.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="ab1c7ebfd81b3ac7df302fe951b5213c20367b15" resname="You requested posters could not be generated.">
@@ -3362,9 +3362,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Deine Sportarten</target>
         <jms:reference-file line="5">/Resources/views/settings/sport/overview.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="5695f686b22368b7aa96013b0b4f26420471f8fc" resname="add new lap">
+      <trans-unit id="5695f686b22368b7aa96013b0b4f26420471f8fc" resname="add new lap" approved="yes">
         <source>add new lap</source>
-        <target state="new">add new lap</target>
+        <target state="translated">neue Runde hinzufügen</target>
         <jms:reference-file line="101">/Resources/views/activity/form.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="d87c448044defb778f33158d8ccf94a20531d600" resname="all">
@@ -3376,19 +3376,19 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <jms:reference-file line="61">/Resources/views/tools/trend-analysis/base.html.twig</jms:reference-file>
         <jms:reference-file line="73">/Resources/views/tools/trend-analysis/base.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="f4da43ddd712169a0e52fda302874a8239982d62" resname="all active">
+      <trans-unit id="f4da43ddd712169a0e52fda302874a8239982d62" resname="all active" approved="yes">
         <source>all active</source>
-        <target state="new">all active</target>
+        <target state="translated">alle aktiv</target>
         <jms:reference-file line="104">/Resources/views/activity/form.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="b7fe617d7953f79948025a4b384f860cbd728ce4" resname="all resting">
+      <trans-unit id="b7fe617d7953f79948025a4b384f860cbd728ce4" resname="all resting" approved="yes">
         <source>all resting</source>
-        <target state="new">all resting</target>
+        <target state="translated">alle ruhe</target>
         <jms:reference-file line="104">/Resources/views/activity/form.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="8ef4e058dfdccc371985b6af78ea70ffed8255e9" resname="alternating:">
+      <trans-unit id="8ef4e058dfdccc371985b6af78ea70ffed8255e9" resname="alternating:" approved="yes">
         <source>alternating:</source>
-        <target state="new">alternating:</target>
+        <target state="translated">abwechselnd:</target>
         <jms:reference-file line="106">/Resources/views/activity/form.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="c5a3606b645e3dc04994fea8f81ea4ff44a7dea0" resname="any CSS-Code">
@@ -3396,9 +3396,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>CSS-Code</target>
         <jms:reference-file line="33">/Resources/views/settings/dataset.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="6ad10a991bb95a4b4dd803bbbdafcf5a2e8e3925" resname="apply as total distance">
+      <trans-unit id="6ad10a991bb95a4b4dd803bbbdafcf5a2e8e3925" resname="apply as total distance" approved="yes">
         <source>apply as total distance</source>
-        <target state="new">apply as total distance</target>
+        <target state="translated">als Gesamtdistanz übernehmen</target>
         <jms:reference-file line="103">/Resources/views/activity/form.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="439e5f33dd6c0beaf32769b7ad497971f4cc4017" resname="arithmetic mean">
@@ -3483,14 +3483,14 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>gleich</target>
         <jms:reference-file line="57">/Resources/views/activity/vo2max_info.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="1eb09049303a2efb51cae050f56b4974e77d23eb" resname="first active">
+      <trans-unit id="1eb09049303a2efb51cae050f56b4974e77d23eb" resname="first active" approved="yes">
         <source>first active</source>
-        <target state="new">first active</target>
+        <target state="translated">Erste Runde "Aktiv"</target>
         <jms:reference-file line="108">/Resources/views/activity/form.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="48f8bfd5b85acbaa1172312ed1fa927a64fb6732" resname="first resting">
+      <trans-unit id="48f8bfd5b85acbaa1172312ed1fa927a64fb6732" resname="first resting" approved="yes">
         <source>first resting</source>
-        <target state="new">first resting</target>
+        <target state="translated">Erste Runde "Ruhe"</target>
         <jms:reference-file line="107">/Resources/views/activity/form.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="d8680aea3e8adf668a249eba62192fa1ed9336f1" resname="german">
@@ -3504,9 +3504,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <jms:reference-file line="27">/Resources/views/settings/account-mail.html.twig</jms:reference-file>
         <jms:reference-file line="27">/Resources/views/settings/account-password.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="bbf96d5eac7d8a6c284064549786e15237971e2a" resname="hrm- and gpx-files with the same name will be automatically combined.">
+      <trans-unit id="bbf96d5eac7d8a6c284064549786e15237971e2a" resname="hrm- and gpx-files with the same name will be automatically combined." approved="yes">
         <source>hrm- and gpx-files with the same name will be automatically combined.</source>
-        <target state="new">hrm- and gpx-files with the same name will be automatically combined.</target>
+        <target state="translated">Gleichnamige hrm- und gpx-Dateien werden automatisch zusammengeführt.</target>
         <jms:reference-file line="86">/Resources/views/activity/import_upload.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="42c56bc5361d5f4c2466fa3b86f821af0c9886f3" resname="i.e. 50% quantile">
@@ -3670,9 +3670,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target state="new">private</target>
         <jms:reference-file line="111">/../src/CoreBundle/Form/Settings/SportType.php</jms:reference-file>
       </trans-unit>
-      <trans-unit id="61c9b2b17db77a27841bbeeabff923448b0f6388" resname="public">
+      <trans-unit id="61c9b2b17db77a27841bbeeabff923448b0f6388" resname="public" approved="yes">
         <source>public</source>
-        <target state="new">public</target>
+        <target state="translated">Öffentlich</target>
         <jms:reference-file line="112">/../src/CoreBundle/Form/Settings/SportType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="2c73eaf9f4bd6d3df699128ec062add0c564ca2f" resname="quantile">
@@ -3681,9 +3681,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <jms:reference-file line="94">/Resources/views/activity/tool/time_series_statistics.html.twig</jms:reference-file>
         <jms:reference-file line="95">/Resources/views/activity/tool/time_series_statistics.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="cd5cd5f3003757a358754d913f647648ebf2f8c4" resname="round for 100m">
+      <trans-unit id="cd5cd5f3003757a358754d913f647648ebf2f8c4" resname="round for 100m" approved="yes">
         <source>round for 100m</source>
-        <target state="new">round for 100m</target>
+        <target state="translated">Distanzen auf 100m runden</target>
         <jms:reference-file line="102">/Resources/views/activity/form.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="f638a6fc1b8b33898ae98c39bf65b22a40457eb0" resname="see %s">
