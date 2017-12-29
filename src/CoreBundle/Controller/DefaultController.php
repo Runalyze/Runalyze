@@ -52,11 +52,15 @@ class DefaultController extends AbstractPluginsAwareController
 
     /**
      * @Route("/", name="base_url")
-     * @Security("has_role('ROLE_USER')")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        return $this->redirect($this->generateUrl('dashboard'));
+        $securityContext = $this->container->get('security.authorization_checker');
+        if ($securityContext->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->redirect($this->generateUrl('dashboard'));
+        } else {
+            return $this->forward('CoreBundle:Default:register', $request->attributes->all());
+        }
     }
 
     /**

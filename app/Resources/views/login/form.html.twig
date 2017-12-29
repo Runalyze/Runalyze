@@ -32,6 +32,9 @@
 
         <div class="c">
             <input type="submit" value="{% trans %}Login{% endtrans %}" name="submit">
+
+            <p class="text small login-window-stats"><a href="{{ path('account_recover') }}"><i class="fa fa-fw fa-lg fa-lock"></i> {% trans %}Forgot your password?{% endtrans %}</a></p>
+
         </div>
     </form>
 {% endblock %}

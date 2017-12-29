@@ -5,23 +5,43 @@
 $(function(){
 document.getElementById("registration_textTimezone").value = moment.tz.guess();
 });
+
+    function reveal_pass(check_box){
+        var textbox_elem = document.getElementById("registration_plainPassword");
+        if(check_box.checked)
+            textbox_elem.setAttribute("type", "text");
+        else
+            textbox_elem.setAttribute("type", "password");
+    }
 </script>
 
     {{ form_start(form) }}
 <fieldset>
-    <legend>{% trans %}Create a new account{% endtrans %}</legend>
+    <legend>{% trans %}Sign up{% endtrans %}</legend>
     {{ form_row(form.username) }}
     {{ form_row(form.mail) }}
-    {{ form_row(form.plainPassword) }}
-    <label for="registration_termsAccepted">
-    {% trans with {'%a%': '<a href="https://blog.runalyze.com/de/nutzungsbedingungen/" target="_blank">', '%b%':'</a>'} %}Accept our %a% terms of use %b%{% endtrans %}
-    </label>
+
+    <div class="w100 clear">
+        {{ form_label(form.plainPassword) }}
+    {{ form_errors(form.plainPassword) }}
+        <input type="password" id="registration_plainPassword" name="registration[plainPassword]" required="required" data-cip-id="registration_plainPassword"> <input type="checkbox" value="1" class="small" name="reveal" id="reveal" onchange="reveal_pass(this); ">{% trans %}Show{% endtrans %}
+    </div>
+
+        <label for="registration_termsAccepted">
+            {% trans with {'%a%': '<a href="https://blog.runalyze.com/de/nutzungsbedingungen/" target="_blank">', '%b%':'</a>'} %}Accept our %a% terms of use %b%{% endtrans %}
+        </label>
     {{ form_widget(form.termsAccepted) }}
     {{ form_errors(form.termsAccepted) }}
+    {% do form.plainPassword.setRendered %}
+    {{ form_rest(form) }}
+
     {{ form_rest(form) }}
     <div class="c">
         <input type="submit" value="{% trans %}Register{% endtrans %}" name="submit">
     </div>
+
+
+
 </fieldset>
     {{ form_end(form) }}
 {% endblock %}
