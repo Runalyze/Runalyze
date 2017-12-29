@@ -87,7 +87,7 @@ class ActivityEquipmentType extends AbstractType implements DataTransformerInter
 
     /**
      * @param  mixed $value
-     * @return float|null
+     * @return ArrayCollection
      */
     public function reverseTransform($value)
     {
