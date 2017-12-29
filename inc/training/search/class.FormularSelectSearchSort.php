@@ -62,7 +62,7 @@ class FormularSelectSearchSort extends FormularField {
 			Keys::FIT_RECOVERY_TIME,
 			Keys::FIT_HRV_ANALYSIS,
 			Keys::FIT_TRAINING_EFFECT,
-			Keys::FIT_PERFORMANCE_CONDITION,
+			Keys::FIT_PERFORMANCE_CONDITION_START,
             Keys::FIT_PERFORMANCE_CONDITION_END,
             Keys::TEMPERATURE,
 			['wind_speed', __('Wind speed')],
@@ -88,7 +88,10 @@ class FormularSelectSearchSort extends FormularField {
 				$this->SortByOptions[$keyIdOrArray[0]] = $keyIdOrArray[1];
 			} else {
 				$Key = Keys::get($keyIdOrArray);
-				$this->SortByOptions[$Key->column()] = $Key->label();
+
+				if (!is_array($Key->column())) {
+    				$this->SortByOptions[$Key->column()] = $Key->label();
+                }
 			}
 		}
 	}

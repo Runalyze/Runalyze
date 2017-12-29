@@ -98,8 +98,7 @@ class SearchResults {
 		$this->setKeysThatShouldIgnoreNull();
 		$this->setKeysThatShouldIgnoreZero();
 
-        $this->ResultsPerPage = (is_numeric($_POST['resultsPerPage'])) ? $_POST['resultsPerPage'] : 20;
-
+        $this->ResultsPerPage = (isset($_POST['resultsPerPage']) && is_numeric($_POST['resultsPerPage'])) ? $_POST['resultsPerPage'] : 20;
 
         if ($withResults) {
 			$this->initDataset();

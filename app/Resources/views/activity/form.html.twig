@@ -63,7 +63,7 @@
             <legend onclick="Runalyze.toggleFieldset(this, 'fieldset-distance', false, 'DISTANCE')">{% trans %}Distance{% endtrans %}</legend>
 
             {{ form_row(form.distance, {'div_class': 'w50', 'attr': {'class': 'small-size'}}) }}
-            {{ form_row(form.is_track, {'div_class': 'w50', 'help': 'This field is only meant for official track races such that distances can be shown correctly, e.g. as 10.000m. Use tags for all other purposes.'}) }}
+            {{ form_row(form.is_track, {'div_class': 'w50 only-race', 'help': 'This field is only meant for official track races such that distances can be shown correctly, e.g. as 10.000m. Use tags for all other purposes.'}) }}
 
             {{ form_row(form.elevation, {'div_class': 'w50 only-outside', 'attr': {'class': 'small-size'}, 'help':'Will be calculated afterwards from the activity\'s elevation profile.'}) }}
             {{ form_row(form.pace, {'div_class': 'w50', 'attr': {'class': 'small-size', 'disabled': 'disabled'}}) }}
