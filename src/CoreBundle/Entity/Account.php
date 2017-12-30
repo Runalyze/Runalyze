@@ -193,6 +193,7 @@ class Account implements AdvancedUserInterface, \Serializable, IdentifiableEntit
      * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\OneToMany(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Tag", mappedBy="account", cascade={"persist"}, fetch="EXTRA_LAZY")
+     * @ORM\OrderBy({"tag" = "ASC"})
      */
     protected $tags;
 
