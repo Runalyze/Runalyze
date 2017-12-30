@@ -526,10 +526,15 @@ class TrainingRepository extends EntityRepository
 
     /**
      * @param Training $training
+     * @param bool $ensureThatSportAndTypeAreManaged
      * @return int activity id
      */
-    public function save(Training $training)
+    public function save(Training $training, $ensureThatSportAndTypeAreManaged = false)
     {
+        if ($ensureThatSportAndTypeAreManaged) {
+            $this->ensureThatSportAndTypeAreManaged($training);
+        }
+
         if (null !== $training->getRoute()) {
             $this->_em->persist($training->getRoute());
         }
@@ -554,6 +559,24 @@ class TrainingRepository extends EntityRepository
         $this->_em->flush();
 
         return $training->getId();
+    }
+
+    protected function ensureThatSportAndTypeAreManaged(Training $activity)
+    {
+        $sport = $activity->getSport();
+        $type = $activity->getType();
+
+        if (null !== $sport && $sport->getId() && !$this->_em->getUnitOfWork()->isInIdentityMap($sport)) {
+            $activity->setSport(
+                $this->_em->find(Sport::class, $sport->getId())
+            );
+        }
+
+        if (null !== $type && $type->getId() && !$this->_em->getUnitOfWork()->isInIdentityMap($type)) {
+            $activity->setType(
+                $this->_em->find(Type::class, $type->getId())
+            );
+        }
     }
 
     public function remove(Training $activity)

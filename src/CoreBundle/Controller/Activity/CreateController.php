@@ -216,7 +216,7 @@ class CreateController extends Controller
                 $context = new ActivityContext($activity, null, null, $activity->getRoute());
                 $contextAdapterFactory->getAdapterFor($context)->guessWeatherConditions($defaultLocation);
 
-                $activityIds[] = $repository->save($activity);
+                $activityIds[] = $repository->save($activity, true);
             }
 
             $this->get('app.automatic_reload_flag_setter')->set(AutomaticReloadFlagSetter::FLAG_ALL);
