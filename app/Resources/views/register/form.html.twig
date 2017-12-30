@@ -6,14 +6,11 @@ $(function(){
 document.getElementById("registration_textTimezone").value = moment.tz.guess();
 });
 
-    function reveal_pass(check_box){
-        var textbox_elem = document.getElementById("registration_plainPassword");
-        if(check_box.checked)
-            textbox_elem.setAttribute("type", "text");
-        else
-            textbox_elem.setAttribute("type", "password");
-    }
+function reveal_pass(flag){
+    document.getElementById("registration_plainPassword").setAttribute("type", flag ? "text" : "password");
+}
 </script>
+<style>.input-with-unit input { padding-right: 2px; } .input-with-unit .input-unit:hover { color: inherit; } .input-unit { cursor: pointer; }</style>
 
     {{ form_start(form) }}
 <fieldset>
@@ -23,25 +20,27 @@ document.getElementById("registration_textTimezone").value = moment.tz.guess();
 
     <div class="w100 clear">
         {{ form_label(form.plainPassword) }}
-    {{ form_errors(form.plainPassword) }}
-        <input type="password" id="registration_plainPassword" name="registration[plainPassword]" required="required" data-cip-id="registration_plainPassword"> <input type="checkbox" value="1" class="small" name="reveal" id="reveal" onchange="reveal_pass(this); ">{% trans %}Show{% endtrans %}
+        {{ form_errors(form.plainPassword) }}
+        <span class="input-with-unit">
+            {{ form_widget(form.plainPassword) }}
+            <span class="input-unit" onmousedown="reveal_pass(true)" onmouseup="reveal_pass(false)"><i class="fa fa-fw fa-eye"></i></span>
+        </span>
     </div>
 
+    <div class="w100 checkbox-first small">
         <label for="registration_termsAccepted">
             {% trans with {'%a%': '<a href="https://blog.runalyze.com/de/nutzungsbedingungen/" target="_blank">', '%b%':'</a>'} %}Accept our %a% terms of use %b%{% endtrans %}
         </label>
-    {{ form_widget(form.termsAccepted) }}
-    {{ form_errors(form.termsAccepted) }}
-    {% do form.plainPassword.setRendered %}
-    {{ form_rest(form) }}
+        {{ form_widget(form.termsAccepted) }}
+        {{ form_errors(form.termsAccepted) }}
+        {% do form.plainPassword.setRendered %}
+    </div>
 
     {{ form_rest(form) }}
+
     <div class="c">
         <input type="submit" value="{% trans %}Register{% endtrans %}" name="submit">
     </div>
-
-
-
 </fieldset>
     {{ form_end(form) }}
 {% endblock %}

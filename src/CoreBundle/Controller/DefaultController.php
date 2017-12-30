@@ -56,11 +56,12 @@ class DefaultController extends AbstractPluginsAwareController
     public function indexAction(Request $request)
     {
         $securityContext = $this->container->get('security.authorization_checker');
+
         if ($securityContext->isGranted('IS_AUTHENTICATED_FULLY')) {
             return $this->redirect($this->generateUrl('dashboard'));
-        } else {
-            return $this->forward('CoreBundle:Default:register', $request->attributes->all());
         }
+
+        return $this->forward('CoreBundle:Default:register', $request->attributes->all());
     }
 
     /**
