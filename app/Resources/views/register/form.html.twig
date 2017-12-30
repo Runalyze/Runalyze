@@ -20,11 +20,11 @@ function reveal_pass(flag){
 
     <div class="w100 clear">
         {{ form_label(form.plainPassword) }}
-        {{ form_errors(form.plainPassword) }}
         <span class="input-with-unit">
             {{ form_widget(form.plainPassword) }}
             <span class="input-unit" onmousedown="reveal_pass(true)" onmouseup="reveal_pass(false)"><i class="fa fa-fw fa-eye"></i></span>
         </span>
+        {{ form_errors(form.plainPassword) }}
     </div>
 
     <div class="w100 checkbox-first small">

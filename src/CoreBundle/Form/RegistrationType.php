@@ -30,10 +30,7 @@ class RegistrationType extends AbstractType
             ])
             ->add('plainPassword', PasswordType::class, [
                 'required' => true,
-                'label' => 'Password',
-                'constraints' => [
-                    new Length(['min' => 8]),
-                ],
+                'label' => 'Password'
             ])
             ->add('termsAccepted', CheckboxType::class, [
                 'mapped' => false,
