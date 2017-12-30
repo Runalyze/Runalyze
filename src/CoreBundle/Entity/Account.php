@@ -26,7 +26,7 @@ class Account implements AdvancedUserInterface, \Serializable, IdentifiableEntit
     /**
      * @var string
      * @Assert\Length(
-     *     min = 6,
+     *     min = 8,
      *     minMessage = "Your password must be at least {{ limit }} characters long"
      * )
      */
