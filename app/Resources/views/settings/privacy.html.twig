@@ -1,0 +1,63 @@
+{% extends "base_logged_in.twig" %}
+
+{% block content %}
+<div class="panel-heading">
+    <h1>{% trans %}Privacy settings{% endtrans %}</h1>
+</div>
+<div class="panel-content">
+    <div class="panel-content">
+        {% include 'flashmessages.html.twig' %}
+
+        {{ form_start(form, {'attr': {'class': 'ajax no-automatic-reload'} }) }}
+
+        <fieldset>
+            <legend>{% trans %}Public athlete page{% endtrans %}</legend>
+
+            {{ form_row(form.AthletePageActive, {'div_class': 'w100 checkbox-first'}) }}
+            <p class="info">{% trans %}If activated: Everyone can see a list of all your (public) activities.{% endtrans %}</p>
+
+            <p id="athlete-page-link" class="file text">{% trans %}Public athlete page{% endtrans %}: <a target="_blank" href="{{ url('shared-athlete', {'username': app.user.username}) }}">{{ url('shared-athlete', {'username': app.user.username}) }}</a></p>
+
+            <div id="athlete-page-details">
+                {{ form_row(form.ShowPrivateInList, {'div_class': 'w100 checkbox-first'}) }}
+                <p class="info">{% trans %}If activated: Display a summary for each private activity in the public activity list.{% endtrans %}</p>
+
+                {{ form_row(form.ShowStatisticsInList, {'div_class': 'w100 checkbox-first'}) }}
+                <p class="info">{% trans %}Show some general statistics above the activity list{% endtrans %}</p>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>{% trans %}Activities{% endtrans %}</legend>
+
+            <p class="text">
+                {% trans %}You can define the default privacy of new activities by sport type in the associated sport configuration.{% endtrans %}
+            </p>
+
+            {{ form_row(form.MapPrivacy, {'div_class': 'w100 with33erLabel', 'info': 'You can hide the map for public activities'|trans}) }}
+        </fieldset>
+
+        <input type="submit" value="{% trans %}Save{% endtrans %}" />
+
+        {{ form_end(form) }}
+    </div>
+
+    {# TODO: Link to public athlete page #}
+    {# TODO: Link to search: all public activities #}
+</div>
+
+<script>
+(function($){
+    var $details = $("#athlete-page-details");
+    var $detailsBox = $("#privacy_AthletePageActive");
+    var $link = $("#athlete-page-link");
+    var updateView = function(){
+        $details.toggleClass('disabled', !$detailsBox.prop('checked'));
+        $link.toggle($detailsBox.prop('checked'));
+    };
+
+    $detailsBox.on('change', updateView);
+    updateView();
+})(jQuery);
+</script>
+{% endblock %}
