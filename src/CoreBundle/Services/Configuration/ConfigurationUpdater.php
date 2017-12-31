@@ -4,6 +4,7 @@ namespace Runalyze\Bundle\CoreBundle\Services\Configuration;
 
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\ConfRepository;
+use Runalyze\Bundle\CoreBundle\Form\Settings\PrivacyData;
 
 class ConfigurationUpdater
 {
@@ -109,5 +110,15 @@ class ConfigurationUpdater
     public function updateMaximalTrimp(Account $account, $trimp)
     {
         $this->updateInDataConfiguration($account, 'MAX_TRIMP', (string)$trimp);
+    }
+
+    public function updatePrivacyDetails(Account $account, array $values)
+    {
+        $list = $this->Manager->getList($account);
+
+        foreach ($values as $key => $value) {
+            $this->Repository->updateOrInsert($account, 'privacy', $key, $value);
+            $list->set('privacy.'.$key, $value);
+        }
     }
 }

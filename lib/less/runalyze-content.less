@@ -166,6 +166,7 @@ p.error, tr.ERROR td.errortype {
 
 p.file {
 	&:before { content: @p-message-file-icon; }
+	&.file-search:before { content: "\f002"; }
 	background-color: @p-message-file-background;
 	color: @p-message-file-color;
 }
@@ -247,6 +248,7 @@ tr.ERROR td {
 .nowrap { white-space: nowrap; }
 .cursor-not-allowed { cursor: not-allowed; }
 
+.disabled { opacity: .5; pointer-events: none; }
 .unimportant { opacity: .5; }
 .unimportant:hover { opacity: 1; }
 .nopadding tr, .nopadding td { padding: 0; }
