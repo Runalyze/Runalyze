@@ -36,8 +36,8 @@ class OutOfRangeValueFilter extends AbstractFilter
     {
         $this->checkValue($fitDetails->VO2maxEstimate, 0.0, 100.0, 'VO2maxEstimate');
         $this->checkValue($fitDetails->TrainingEffect, 1.0, 5.0, 'TrainingEffect');
-        $this->checkValue($fitDetails->PerformanceCondition, 80, 100, 'PerformanceCondition');
-        $this->checkValue($fitDetails->PerformanceConditionEnd, 80, 100, 'PerformanceConditionEnd');
+        $this->checkValue($fitDetails->PerformanceCondition, 80, 120, 'PerformanceCondition');
+        $this->checkValue($fitDetails->PerformanceConditionEnd, 80, 120, 'PerformanceConditionEnd');
     }
 
     protected function checkWeatherDataValues(WeatherData $weatherData)

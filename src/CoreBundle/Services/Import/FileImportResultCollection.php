@@ -174,4 +174,11 @@ class FileImportResultCollection implements \Countable, \ArrayAccess, \Iterator
 
         return $convertedFiles;
     }
+
+    public function completeAndFilterResults(ActivityDataContainerFilter $filter)
+    {
+        foreach ($this->Elements as $element) {
+            $element->completeAndFilterContainer($filter);
+        }
+    }
 }

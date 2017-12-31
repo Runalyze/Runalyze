@@ -103,6 +103,8 @@ class CreateController extends Controller
      */
     protected function getResponseForImportResults(FileImportResultCollection $results, Account $account, Request $request)
     {
+        $results->completeAndFilterResults($this->get('app.activity_data_container.filter'));
+
         foreach ($results as $result) {
             if ($result->isFailed()) {
                 $this->addFlash('error', sprintf('%s: %s', pathinfo($result->getOriginalFileName(), PATHINFO_BASENAME), $result->getException()->getMessage()));
@@ -143,12 +145,6 @@ class CreateController extends Controller
      */
     protected function containerToActivity(ActivityDataContainer $container, Account $account)
     {
-        $container->completeContinuousData();
-
-        $this->get('app.activity_data_container.filter')->filter($container);
-
-        $container->completeActivityData();
-
         return $this->get('app.activity_data_container.converter')->getActivityFor($container, $account);
     }
 

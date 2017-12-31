@@ -77,6 +77,7 @@ class ActivityBulkImportCommand extends ContainerAwareCommand
         }
 
         $importResult = $importer->importFiles($files);
+        $importResult->completeAndFilterResults($this->getContainer()->get('app.activity_data_container.filter'));
         $contextAdapterFactory = $this->getContainer()->get('app.activity_context_adapter_factory');
         $defaultLocation = $this->getContainer()->get('app.configuration_manager')->getList()->getActivityForm()->getDefaultLocationForWeatherForecast();
 
@@ -119,12 +120,6 @@ class ActivityBulkImportCommand extends ContainerAwareCommand
      */
     protected function containerToActivity(ActivityDataContainer $container, Account $account)
     {
-        $container->completeContinuousData();
-
-        $this->getContainer()->get('app.activity_data_container.filter')->filter($container);
-
-        $container->completeActivityData();
-
         return $this->getContainer()->get('app.activity_data_container.converter')->getActivityFor($container, $account);
     }
 
