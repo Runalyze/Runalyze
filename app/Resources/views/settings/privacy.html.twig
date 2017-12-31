@@ -35,15 +35,14 @@
             </p>
 
             {{ form_row(form.MapPrivacy, {'div_class': 'w100 with33erLabel', 'info': 'You can hide the map for public activities'|trans}) }}
+
+            <p class="file file-search"><a class="window" data-size="big" href="{{ url('my-search') }}?get=true&amp;is_public=1">{% trans %}Search for public activities{% endtrans %}</a></p>
         </fieldset>
 
         <input type="submit" value="{% trans %}Save{% endtrans %}" />
 
         {{ form_end(form) }}
     </div>
-
-    {# TODO: Link to public athlete page #}
-    {# TODO: Link to search: all public activities #}
 </div>
 
 <script>
