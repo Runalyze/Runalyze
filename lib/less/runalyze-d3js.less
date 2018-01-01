@@ -1,10 +1,14 @@
 @d3js-axis-color:               #999;
 @d3js-grid-color:               #eee;
 @d3js-plot-color:               #333;
-@d3js-plot-main-color:          #8ab856;
-@d3js-plot-main-color-hover:    #009500;
+@d3js-plot-main-color:          #59B144;
+@d3js-plot-main-color-hover:    #328593;
 
 .d3js {
+  .plot-area {
+    fill: #fafafa;
+  }
+
   text.c {
     text-anchor: middle;
     font-size: 10px;
@@ -58,6 +62,38 @@
     fill: rgba(227, 217, 187, .5);
     stroke-width: 0;
   }
+
+  .crossbar {
+    stroke: #999;
+    pointer-events: none;
+    shape-rendering: crispedges;
+  }
+  .crossbar-text {
+    fill: #666;
+    pointer-events: none;
+  }
+
+  .y-axis-labels {
+    text-anchor: middle;
+    font-weight: bold;
+    letter-spacing: 1px;
+    user-select: none;
+
+    rect {
+      fill: transparent;
+      cursor: pointer;
+    }
+
+    tspan {
+      pointer-events: none;
+    }
+
+    .separator {
+      fill: #999;
+      font-weight: normal;
+      letter-spacing: -2px;
+    }
+  }
 }
 
 .boxplot {
@@ -68,6 +104,21 @@
     fill-opacity: 1.0;
     stroke: @d3js-plot-color;
     stroke-width: 1px;
+  }
+
+  circle:hover, circle.clicked {
+    fill: #328593;
+    fill-opacity: 1;
+    stroke: #328593;
+    stroke-opacity: .5;
+    stroke-width: 7;
+  }
+
+  circle.disabled,
+  circle.disabled:hover,
+  circle.disabled.clicked {
+    fill: #999;
+    stroke: #999;
   }
 
   line,
@@ -99,4 +150,21 @@
   circle:hover {
     fill: @d3js-plot-main-color-hover;
   }
+}
+
+#crossbar-info {
+  pointer-events: none;
+}
+#crossbar-info rect {
+  stroke: #ccc;
+  fill: rgba(255, 255, 255, .9);
+  shape-rendering: crispedges;
+  font-size: .9em;
+}
+#crossbar-info tspan.title,
+#crossbar-info tspan.value {
+  font-weight: bold;
+}
+#crossbar-info tspan.label {
+  font-weight: normal;
 }

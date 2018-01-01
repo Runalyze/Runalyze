@@ -1,0 +1,62 @@
+.race-performance-chart {
+  .y-axis-labels.y-axis-agegrade .y-axis-label-pace,
+  .y-axis-labels.y-axis-agegrade .y-axis-label-vo2max,
+  .y-axis-labels.y-axis-pace .y-axis-label-agegrade,
+  .y-axis-labels.y-axis-pace .y-axis-label-vo2max,
+  .y-axis-labels.y-axis-vo2max .y-axis-label-pace,
+  .y-axis-labels.y-axis-vo2max .y-axis-label-agegrade {
+    fill: #999;
+  }
+
+  .pb-main-distances circle {
+    fill: #59B144;
+  }
+  .other-races circle {
+    stroke: none;
+    fill: #59B144;
+    fill-opacity: .25;
+  }
+  .world-records circle {
+    fill: transparent;
+  }
+  .with-year-selection .race circle {
+    fill: #59B144;
+    fill-opacity: .125;
+    stroke: none;
+  }
+  .with-year-selection .race circle.current-year {
+    fill: #59B144;
+    fill-opacity: 1;
+    stroke: rgba(0,0,0,.5);
+    stroke-width: .5px;
+  }
+
+  .d3js circle.clicked,
+  .d3js circle:hover,
+  .with-year-selection .race circle.clicked,
+  .with-year-selection .race circle:hover {
+    fill: #328593;
+    fill-opacity: 1;
+    stroke: #328593;
+    stroke-opacity: .5;
+    stroke-width: 7;
+  }
+
+  path.pb-main-distances {
+    stroke: #59B144;
+    stroke-opacity: .5;
+    fill: none;
+  }
+
+  path.world-records {
+    stroke: rgba(0, 0, 0, 0.125);
+    fill: none;
+  }
+
+  path.age-grade-max {
+    stroke: rgba(255, 0, 0, 0.5);
+    stroke-dasharray: 5,5;
+    fill: none;
+    shape-rendering: crispedges;
+  }
+}

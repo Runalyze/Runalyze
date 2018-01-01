@@ -365,6 +365,9 @@ services:
   app.data_series_remover:
     class: Runalyze\Bundle\CoreBundle\Services\Activity\DataSeriesRemover
     arguments: ["@doctrine.orm.entity_manager"]
+  app.age_grade_lookup:
+    class: Runalyze\Bundle\CoreBundle\Services\Activity\AgeGradeLookup
+    arguments: ["@security.token_storage"]
   app.weather_forecast.darksky:
     class: Runalyze\Service\WeatherForecast\Strategy\DarkSky
     arguments: ["%darksky_api_key%", "@app.http_client", "@logger"]
