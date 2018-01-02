@@ -69,7 +69,7 @@ Runalyze.RacePerformanceChartView = function (selector, url, options) {
                     vo2maxByHr: +d.vo2max,
                     vo2maxByTime: +d.vo2max_by_time,
                     name: d.name,
-                    ageGrade: options.mainDistanceKeys.indexOf((+d.distance).toFixed(2)) === -1 ? NaN : options.worldRecordTimes[options.mainDistanceKeys.indexOf((+d.distance).toFixed(2))] / (+d.duration),
+                    ageGrade: +d.age_grade,
                     isPb: false
                 };
             }).sort(function(x, y){
@@ -84,19 +84,18 @@ Runalyze.RacePerformanceChartView = function (selector, url, options) {
             var currentHoverRace = false;
             var pbTimes = [];
             var data = {};
-            data.worldRecords = [];
+            data.ageStandards = [];
 
-            for (var i = 0; i < options.worldRecordTimes.length; ++i) {
-                // TODO: male vs. female
-                data.worldRecords.push({
+            for (var i = 0; i < options.ageStandardTimes.length; ++i) {
+                data.ageStandards.push({
                     date: null,
                     distanceKey: options.mainDistances[i].toFixed(2),
                     distance: options.mainDistances[i],
-                    duration: options.worldRecordTimes[i],
-                    pace: options.worldRecordTimes[i] / options.mainDistances[i],
+                    duration: options.ageStandardTimes[i],
+                    pace: options.ageStandardTimes[i] / options.mainDistances[i],
                     vo2maxByHr: NaN,
-                    vo2maxByTime: options.worldRecordVo2max[i],
-                    name: options.wrLabel,
+                    vo2maxByTime: options.mainDistances[i] >= 1.0 ? options.ageStandardVO2max[i] : NaN,
+                    name: options.ageStandardLabel,
                     ageGrade: 1.00,
                     isPb: false
                 });
@@ -151,7 +150,7 @@ Runalyze.RacePerformanceChartView = function (selector, url, options) {
                 var isPace = yunit == "pace";
                 var isAgeGrade = yunit == "agegrade";
                 var isVo2max = yunit == "vo2max";
-                var wrData = data.worldRecords;
+                var ageStandardData = data.ageStandards;
 
                 plot.gridArea().selectAll(':not(.plot-area)').remove();
                 plot.plotArea().selectAll('*').remove();
@@ -179,11 +178,11 @@ Runalyze.RacePerformanceChartView = function (selector, url, options) {
                     plot.yAxis = d3.axisLeft().scale(plot.yScale);
                     plot.yAxis.tickFormat(function(d) { return (100 * d).toFixed(0) + "%"; });
                 } else if (isVo2max) {
-                    wrData = wrData.filter(function(d) { return !isNaN(d.vo2maxByTime); });
-                    d = filterRacesToVo2max(d, wr ? wrData.map(function(d) { return d.distanceKey; }) : [], 1.0);
+                    ageStandardData = ageStandardData.filter(function(d) { return !isNaN(d.vo2maxByTime); });
+                    d = filterRacesToVo2max(d, wr ? ageStandardData.map(function(d) { return d.distanceKey; }) : [], 1.0);
 
                     plot.yValue = function(d) { return d.vo2maxByTime; };
-                    plot.yScale.domain([0.9 * d3.min(d, plot.yValue), d3.max([wr ? d3.max(wrData, plot.yValue) : 0, d3.max(d, plot.yValue)]) * 1.1]).nice();
+                    plot.yScale.domain([0.9 * d3.min(d, plot.yValue), d3.max([wr ? d3.max(ageStandardData, plot.yValue) : 0, d3.max(d, plot.yValue)]) * 1.1]).nice();
                     plot.yMap = function(d) { return plot.yScale(plot.yValue(d)); };
                     plot.yAxis = d3.axisLeft().scale(plot.yScale);
                     plot.yAxis.tickFormat(function(d) { return d.toFixed(1); });
@@ -200,7 +199,7 @@ Runalyze.RacePerformanceChartView = function (selector, url, options) {
 
                 plot.drawLine(d.filter(isPb), "pb-main-distances", d3.curveCatmullRom);
 
-                if (wr && !isAgeGrade) plot.drawLine(wrData, "world-records", d3.curveCatmullRom);
+                if (wr && !isAgeGrade) plot.drawLine(ageStandardData, "age-standards", d3.curveCatmullRom);
 
                 if (isAgeGrade || isVo2max) {
                     var bestValue = d3.max(d, plot.yValue);
@@ -221,8 +220,8 @@ Runalyze.RacePerformanceChartView = function (selector, url, options) {
                                         label: distanceToString(bestResult.distance) + ": " + secondsToString(bestResult.duration),
                                         title: "Best result: " + (isAgeGrade ? (100 * bestValue).toFixed(1) + "%" : bestValue.toFixed(1))
                                     },
-                                    dy: -30,
-                                    dx: plot.xMap(bestResult) < plot.xScale.range()[0] / 2 ? -0.1 : 0.1,
+                                    dy: plot.yMap(bestResult) < 65 ? 30 : -30,
+                                    dx: plot.xMap(bestResult) < plot.xScale.range()[1] / 2 ? 0.1 : -0.1,
                                     subject: {
                                         x1: plot.xScale(0.9 * d3.min(d, plot.xValue)),
                                         x2: plot.xScale(1.1 * d3.max(d, plot.xValue))
@@ -245,7 +244,7 @@ Runalyze.RacePerformanceChartView = function (selector, url, options) {
 
                 drawCircles(d.filter(isNotPb), "race other-races");
                 drawCircles(d.filter(isPb), "race pb-main-distances");
-                if (wr && !isAgeGrade) drawCircles(wrData, "world-records");
+                if (wr && !isAgeGrade) drawCircles(ageStandardData, "age-standards");
 
                 currentRaceFixed = false;
 
@@ -285,15 +284,15 @@ Runalyze.RacePerformanceChartView = function (selector, url, options) {
                 plot.yAxisLabelsGroup.classed("y-axis-vo2max", currentYUnit == "vo2max");
 
                 drawPlot(
-                    options.onlyPb.is(':checked') ? allRaces.filter(isPb) : allRaces,
-                    options.wr.is(':checked'),
+                    options.gui.showOnlyPb.is(':checked') ? allRaces.filter(isPb) : allRaces,
+                    options.gui.showAgeStandard.is(':checked'),
                     currentYUnit
                 );
 
                 updateYearSelection();
             };
             var updateYearSelection = function() {
-                var y = options.year.val();
+                var y = options.gui.year.val();
 
                 if (y == "all") {
                     $plot.removeClass("with-year-selection");
@@ -345,12 +344,12 @@ Runalyze.RacePerformanceChartView = function (selector, url, options) {
                 redraw();
             });
 
-            options.onlyPb.click(redraw);
-            options.wr.click(redraw);
-            options.year.on('change', updateYearSelection);
+            options.gui.showOnlyPb.click(redraw);
+            options.gui.showAgeStandard.click(redraw);
+            options.gui.year.on('change', updateYearSelection);
         } catch (e) {
             console.log(e);
-    
+
             $plot.html('<p class="text"><em>' + options.errorMessage + '</em></p>');
         } finally {
             $plot.removeClass('loading');

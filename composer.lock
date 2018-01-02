@@ -2605,16 +2605,16 @@
         },
         {
             "name": "runalyze/age-grade",
-            "version": "v1.0.0",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Runalyze/age-grade.git",
-                "reference": "c91059dd6d27a3e3b68fd2b696189d7630c029f6"
+                "reference": "83bd3e8a70ee99fcbb3b4abc26ed4fc9e2b4709e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Runalyze/age-grade/zipball/c91059dd6d27a3e3b68fd2b696189d7630c029f6",
-                "reference": "c91059dd6d27a3e3b68fd2b696189d7630c029f6",
+                "url": "https://api.github.com/repos/Runalyze/age-grade/zipball/83bd3e8a70ee99fcbb3b4abc26ed4fc9e2b4709e",
+                "reference": "83bd3e8a70ee99fcbb3b4abc26ed4fc9e2b4709e",
                 "shasum": ""
             },
             "require": {
@@ -2635,7 +2635,7 @@
                 "MIT"
             ],
             "description": "Age grading for race results (running) based on tables provided by WMA",
-            "time": "2016-10-04T10:03:35+00:00"
+            "time": "2018-01-02T19:36:43+00:00"
         },
         {
             "name": "runalyze/common",
