@@ -94,7 +94,7 @@ class PosterType extends AbstractType
             ])
             ->add('trackColor', ColorType::class, [
                 'data' => '#4DD2FF',
-                'label' => 'Track'
+                'label' => 'Activity'
             ])
             ->add('textColor', ColorType::class, [
                 'data' => '#FFFFFF',

@@ -17,7 +17,7 @@
 
             <div class="w100 clear">
                 <label for="remember_me" class="small">{% trans %}Remember me{% endtrans %}</label>
-                <input id="remember_me" name="_remember_me" type="checkbox">
+                <input id="remember_me" name="_remember_me" type="checkbox" checked>
             </div>
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
         </fieldset>
