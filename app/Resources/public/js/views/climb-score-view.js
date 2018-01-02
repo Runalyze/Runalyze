@@ -136,7 +136,7 @@ Runalyze.ClimbScoreView = function (stream, unitSystem, errorMessage) {
                         } catch (e) {
                             console.log(e);
 
-                            $('#hill-score-climb-profile-'+i).html('<p class="text"><em></em></p>');
+                            $('#hill-score-climb-profile-'+i).html('<p class="text"><em>' + errorMessage + '</em></p>');
                         } finally {
                             $('#hill-score-climb-profile-'+i).removeClass('loading');
                         }
