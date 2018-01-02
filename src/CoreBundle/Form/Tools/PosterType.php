@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Runalyze\Bundle\CoreBundle\Form\Type\ColorType;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\Sport;
 use Runalyze\Bundle\CoreBundle\Entity\SportRepository;
@@ -86,6 +87,22 @@ class PosterType extends AbstractType
                     'DIN A1' => 10000,
                     'DIN A0' => 14000
                  ],
+            ])
+            ->add('backgroundColor', ColorType::class, [
+                'data' => '#222222',
+                'label' => 'Background'
+            ])
+            ->add('trackColor', ColorType::class, [
+                'data' => '#4DD2FF',
+                'label' => 'Track'
+            ])
+            ->add('textColor', ColorType::class, [
+                'data' => '#FFFFFF',
+                'label' => 'Text'
+            ])
+            ->add('raceColor', ColorType::class, [
+                'data' => '#FFFF00',
+                'label' => 'Race'
             ])
         ;
     }

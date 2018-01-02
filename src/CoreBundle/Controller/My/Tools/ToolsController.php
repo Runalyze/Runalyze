@@ -222,7 +222,11 @@ class ToolsController extends Controller
                     'types' => $formdata['postertype'],
                     'sportid' => $formdata['sport'],
                     'title' => $formdata['title'],
-                    'size' => $formdata['size']
+                    'size' => $formdata['size'],
+                    'backgroundColor' => $formdata['backgroundColor'],
+                    'trackColor' => $formdata['trackColor'],
+                    'textColor' => $formdata['textColor'],
+                    'raceColor' => $formdata['raceColor'],
                 ));
                 $this->get('bernard.producer')->produce($message);
 

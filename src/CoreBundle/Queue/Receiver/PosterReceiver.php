@@ -115,7 +115,18 @@ class PosterReceiver
         if ($jsonFiles->count() > 0) {
             foreach ($message->get('types') as $type) {
                 try {
-                    $this->GeneratePoster->buildCommand($type, $this->GenerateJsonData->getPathToJsonFiles(), $message->get('year'), $account, $sport, $message->get('title'));
+                    $this->GeneratePoster->buildCommand(
+                        $type,
+                        $this->GenerateJsonData->getPathToJsonFiles(),
+                        $message->get('year'),
+                        $account,
+                        $sport,
+                        $message->get('title'),
+                        $message->get('backgroundColor'),
+                        $message->get('trackColor'),
+                        $message->get('textColor'),
+                        $message->get('raceColor')
+                    );
 
                     $finalName = $this->FileHandler->buildFinalFileName($account, $sport, $message->get('year'), $type, $message->get('size'));
                     $finalFile = $this->exportDirectory().$finalName;
