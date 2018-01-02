@@ -1,4 +1,4 @@
-Runalyze.ClimbScoreView = function (stream, unitSystem) {
+Runalyze.ClimbScoreView = function (stream, unitSystem, errorMessage) {
     var $plot = $("#hill-score-elevation-plot");
     var data = [], untransformedData = [];
 
@@ -136,7 +136,7 @@ Runalyze.ClimbScoreView = function (stream, unitSystem) {
                         } catch (e) {
                             console.log(e);
 
-                            $('#hill-score-climb-profile-'+i).html('<p class="text"><em>{% trans %}There was a problem.{% endtrans %} ({% trans %}Plotting failed{% endtrans %})</em></p>');
+                            $('#hill-score-climb-profile-'+i).html('<p class="text"><em></em></p>');
                         } finally {
                             $('#hill-score-climb-profile-'+i).removeClass('loading');
                         }
@@ -189,7 +189,7 @@ Runalyze.ClimbScoreView = function (stream, unitSystem) {
     } catch (e) {
         console.log(e);
 
-        $plot.html('<p class="text"><em>{% trans %}There was a problem.{% endtrans %} ({% trans %}Plotting failed{% endtrans %})</em></p>');
+        $plot.html('<p class="text"><em>' + errorMessage + '</em></p>');
     } finally {
         $plot.removeClass('loading');
     }

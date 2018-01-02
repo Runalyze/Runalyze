@@ -114,6 +114,6 @@
                 distance: {{ jsFormatter(unitSystem().distanceUnit) }},
                 elevation: {{ jsFormatter(unitSystem().elevationUnit) }}
             }
-        });
+        }, "{% trans %}There was a problem.{% endtrans %} ({% trans %}Plotting failed{% endtrans %})");
     </script>
 {% endblock %}
