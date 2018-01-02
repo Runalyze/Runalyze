@@ -1,60 +1,62 @@
+/*global Runalyze, d3, $*/
+
 Runalyze.RacePerformanceChartView = function (selector, url, options) {
     var $plot = $(selector);
 
     options.mainDistanceKeys = options.mainDistances.map(function(d) { return d.toFixed(2); });
 
-    try {
-        var secondsToString = Runalyze.Formatter.formatRaceDuration;
-        var distanceToString = function(d) {
-            // TODO: read 'is_track'
-            return Runalyze.Formatter.formatRaceDistance(d, d <= 3.0);
-        };
-        var closest = function(num, arr) {
-            var curr = arr[0];
-            var diff = Math.abs(num - curr);
-            for (var val = 0; val < arr.length; val++) {
-                var newdiff = Math.abs(num - arr[val]);
-                if (newdiff < diff) {
-                    diff = newdiff;
-                    curr = arr[val];
-                }
+    var secondsToString = Runalyze.Formatter.formatRaceDuration;
+    var distanceToString = function(d) {
+        // TODO: read 'is_track'
+        return Runalyze.Formatter.formatRaceDistance(d, d <= 3.0);
+    };
+    var closest = function(num, arr) {
+        var curr = arr[0];
+        var diff = Math.abs(num - curr);
+        for (var val = 0; val < arr.length; val++) {
+            var newdiff = Math.abs(num - arr[val]);
+            if (newdiff < diff) {
+                diff = newdiff;
+                curr = arr[val];
             }
-            return curr;
+        }
+        return curr;
+    };
+    var isPb = function(d) {
+        return d.isPb;
+    };
+    var isNotPb = function(d) {
+        return !d.isPb;
+    };
+    var filterRacesToPb = function(data, mainDistances) {
+        var selected = [];
+        mainDistances = mainDistances || [];
+        return data.filter(function(d) {
+            return selected.indexOf(d.distanceKey) !== -1 || (mainDistances.length && mainDistances.indexOf(d.distanceKey) === -1) ? false : !!selected.push(d.distanceKey);
+        });
+    };
+    var filterRacesToVo2max = function(data, mainDistances, minDistance) {
+        mainDistances = mainDistances || [];
+        return data.filter(function(d) {
+            return (mainDistances.length && mainDistances.indexOf(d.distanceKey) === -1) ? false : !isNaN(d.vo2maxByTime) && (!minDistance || d.distance >= minDistance);
+        });
+    };
+    var wrapText = function(w, p) {
+        p = p || 0;
+        return function() {
+            var self = d3.select(this),
+                textLength = self.node().getComputedTextLength(),
+                text = self.text();
+            while (textLength > (w - 2 * p) && text.length > 0) {
+                text = text.slice(0, -1);
+                self.text(text + '\u2026');
+                textLength = self.node().getComputedTextLength();
+            }
         };
-        var isPb = function(d) {
-            return d.isPb;
-        };
-        var isNotPb = function(d) {
-            return !d.isPb;
-        };
-        var filterRacesToPb = function(data, mainDistances) {
-            var selected = [];
-            mainDistances = mainDistances || [];
-            return data.filter(function(d) {
-                return selected.indexOf(d.distanceKey) !== -1 || (mainDistances.length && mainDistances.indexOf(d.distanceKey) === -1) ? false : !!selected.push(d.distanceKey);
-            });
-        };
-        var filterRacesToVo2max = function(data, mainDistances, minDistance) {
-            mainDistances = mainDistances || [];
-            return data.filter(function(d) {
-                return (mainDistances.length && mainDistances.indexOf(d.distanceKey) === -1) ? false : !isNaN(d.vo2maxByTime) && (!minDistance || d.distance >= minDistance);
-            });
-        };
-        var wrapText = function(w, p) {
-            p = p || 0;
-            return function() {
-                var self = d3.select(this),
-                    textLength = self.node().getComputedTextLength(),
-                    text = self.text();
-                while (textLength > (w - 2 * p) && text.length > 0) {
-                    text = text.slice(0, -1);
-                    self.text(text + '\u2026');
-                    textLength = self.node().getComputedTextLength();
-                }
-            };
-        };
+    };
 
-        d3.json(url, function(raceData){
+    d3.json(url, function(raceData){
+        try {
             $plot.removeClass('loading');
 
             var allRaces = raceData.map(function(d) {
@@ -84,7 +86,7 @@ Runalyze.RacePerformanceChartView = function (selector, url, options) {
             var data = {};
             data.worldRecords = [];
 
-            for (i = 0; i < options.worldRecordTimes.length; ++i) {
+            for (var i = 0; i < options.worldRecordTimes.length; ++i) {
                 // TODO: male vs. female
                 data.worldRecords.push({
                     date: null,
@@ -94,7 +96,7 @@ Runalyze.RacePerformanceChartView = function (selector, url, options) {
                     pace: options.worldRecordTimes[i] / options.mainDistances[i],
                     vo2maxByHr: NaN,
                     vo2maxByTime: options.worldRecordVo2max[i],
-                    name: "{{ 'World record'|trans }}",
+                    name: options.wrLabel,
                     ageGrade: 1.00,
                     isPb: false
                 });
@@ -162,8 +164,8 @@ Runalyze.RacePerformanceChartView = function (selector, url, options) {
                 if (isPace) {
                     plot.yValue = function(d) { return d.pace; };
                     plot.yScale.domain([d3.max(d, plot.yValue), wr ? 90 : d3.min(d, plot.yValue)]).nice();
-                    self.yMap = function(d) { return self.yScale(self.yValue(d)); };
-                    self.yAxis = d3.axisLeft().scale(self.yScale);
+                    plot.yMap = function(d) { return plot.yScale(plot.yValue(d)); };
+                    plot.yAxis = d3.axisLeft().scale(plot.yScale);
                     plot.yAxis.tickFormat(function(d) {
                         // TODO: support different pace units (wrt sport)
                         return Runalyze.Formatter.formatPace(d, 0, 'short');
@@ -173,8 +175,8 @@ Runalyze.RacePerformanceChartView = function (selector, url, options) {
 
                     plot.yValue = function(d) { return d.ageGrade; };
                     plot.yScale.domain([0.9 * d3.min(d, plot.yValue), d3.max(d, plot.yValue) * 1.1]).nice();
-                    self.yMap = function(d) { return self.yScale(self.yValue(d)); };
-                    self.yAxis = d3.axisLeft().scale(self.yScale);
+                    plot.yMap = function(d) { return plot.yScale(plot.yValue(d)); };
+                    plot.yAxis = d3.axisLeft().scale(plot.yScale);
                     plot.yAxis.tickFormat(function(d) { return (100 * d).toFixed(0) + "%"; });
                 } else if (isVo2max) {
                     wrData = wrData.filter(function(d) { return !isNaN(d.vo2maxByTime); });
@@ -182,8 +184,8 @@ Runalyze.RacePerformanceChartView = function (selector, url, options) {
 
                     plot.yValue = function(d) { return d.vo2maxByTime; };
                     plot.yScale.domain([0.9 * d3.min(d, plot.yValue), d3.max([wr ? d3.max(wrData, plot.yValue) : 0, d3.max(d, plot.yValue)]) * 1.1]).nice();
-                    self.yMap = function(d) { return self.yScale(self.yValue(d)); };
-                    self.yAxis = d3.axisLeft().scale(self.yScale);
+                    plot.yMap = function(d) { return plot.yScale(plot.yValue(d)); };
+                    plot.yAxis = d3.axisLeft().scale(plot.yScale);
                     plot.yAxis.tickFormat(function(d) { return d.toFixed(1); });
                 }
 
@@ -220,7 +222,7 @@ Runalyze.RacePerformanceChartView = function (selector, url, options) {
                                         title: "Best result: " + (isAgeGrade ? (100 * bestValue).toFixed(1) + "%" : bestValue.toFixed(1))
                                     },
                                     dy: -30,
-                                    dx: -0.1, // TODO: this should depend on plot.yMap(bestResult)
+                                    dx: plot.xMap(bestResult) < plot.xScale.range()[0] / 2 ? -0.1 : 0.1,
                                     subject: {
                                         x1: plot.xScale(0.9 * d3.min(d, plot.xValue)),
                                         x2: plot.xScale(1.1 * d3.max(d, plot.xValue))
@@ -346,12 +348,12 @@ Runalyze.RacePerformanceChartView = function (selector, url, options) {
             options.onlyPb.click(redraw);
             options.wr.click(redraw);
             options.year.on('change', updateYearSelection);
-        });
-    } catch (e) {
-        console.log(e);
-
-        $plot.html('<p class="text"><em>{% trans %}There was a problem.{% endtrans %} ({% trans %}Plotting failed{% endtrans %})</em></p>');
-    } finally {
-        $plot.removeClass('loading');
-    }
+        } catch (e) {
+            console.log(e);
+    
+            $plot.html('<p class="text"><em>' + options.errorMessage + '</em></p>');
+        } finally {
+            $plot.removeClass('loading');
+        }
+    });
 };

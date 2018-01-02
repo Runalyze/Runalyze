@@ -45,6 +45,8 @@
             "#races-plot",
             "{{ url('internal-data-race-results-all') }}",
             {
+                errorMessage: "{% trans %}There was a problem.{% endtrans %} ({% trans %}Plotting failed{% endtrans %})",
+                wrLabel: "{{ 'World record'|trans }}",
                 onlyPb: $("#checkbox-only-pb"),
                 wr: $("#checkbox-world-records"),
                 year: $("#select-year"),
