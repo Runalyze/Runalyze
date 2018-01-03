@@ -57,9 +57,9 @@ Runalyze.RacePerformanceChartView = function (selector, url, options) {
 
     d3.json(url, function(raceData){
         try {
-            $plot.removeClass('loading');
-
-            var allRaces = raceData.map(function(d) {
+            var allRaces = raceData.filter(function(d) {
+                return (+d.sport_id == options.sportId);
+            }).map(function(d) {
                 return {
                     date: new Date(d.date),
                     distanceKey: (+d.distance).toFixed(2),
@@ -76,6 +76,10 @@ Runalyze.RacePerformanceChartView = function (selector, url, options) {
                 var sortOrder = d3.ascending(x.distance, y.distance);
                 return sortOrder == 0 ? d3.ascending(x.duration, y.duration) : sortOrder;
             });
+
+            if (allRaces.length == 0) {
+                $plot.append('<p class="text c">' + options.noDataMessage + '</p>');
+            }
 
             var allRaceDistances = allRaces.map(function(d) { return d.distance; }).filter(function(value, index, self) { return self.indexOf(value) === index; });
             var allPbRaces = filterRacesToPb(allRaces);
@@ -166,7 +170,6 @@ Runalyze.RacePerformanceChartView = function (selector, url, options) {
                     plot.yMap = function(d) { return plot.yScale(plot.yValue(d)); };
                     plot.yAxis = d3.axisLeft().scale(plot.yScale);
                     plot.yAxis.tickFormat(function(d) {
-                        // TODO: support different pace units (wrt sport)
                         return Runalyze.Formatter.formatPace(d, 0, 'short');
                     });
                 } else if (isAgeGrade) {

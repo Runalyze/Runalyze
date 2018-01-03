@@ -31,8 +31,6 @@
                     {% endfor %}
                 </select>
             </div>
-
-            <!-- TODO: Menu for sport -->
         </fieldset>
     </div>
 
@@ -46,12 +44,14 @@
             "{{ url('internal-data-race-results-all') }}",
             {
                 errorMessage: "{% trans %}There was a problem.{% endtrans %} ({% trans %}Plotting failed{% endtrans %})",
+                noDataMessage: "{% trans %}There are no race results for running to plot.{% endtrans %}",
                 ageStandardLabel: "{{ 'Age standard'|trans }}",
                 gui: {
                     showOnlyPb: $("#checkbox-only-pb"),
                     showAgeStandard: $("#checkbox-age-standards"),
                     year: $("#select-year")
                 },
+                sportId: {{ runningSportId }},
                 mainDistances: {{ mainDistances|json_encode }},
                 mainDistanceTicks: {{ mainDistanceTicks|json_encode }},
                 ageStandardTimes: {{ ageStandardTimes|json_encode }},
