@@ -5,10 +5,13 @@ namespace Runalyze\Bundle\CoreBundle\Services\Configuration;
 use Runalyze\Bundle\CoreBundle\Component\Configuration\RunalyzeConfigurationList;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\ConfRepository;
+use Runalyze\Bundle\CoreBundle\Services\TokenStorageAwareServiceTrait;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 class ConfigurationManager
 {
+    use TokenStorageAwareServiceTrait;
+
     /** @var ConfRepository */
     protected $Repository;
 
@@ -33,7 +36,7 @@ class ConfigurationManager
      */
     public function getList(Account $account = null)
     {
-        if (null === $account || (null !== $this->getCurrentUser() && $account->getId() == $this->getCurrentUser()->getId())) {
+        if (null === $account || ($this->knowsUser() && $account->getId() == $this->getUser()->getId())) {
             if (null === $this->CurrentConfigurationList) {
                 $this->setListForCurrentUser();
             }
@@ -64,20 +67,12 @@ class ConfigurationManager
 
     protected function setListForCurrentUser()
     {
-        $user = $this->getCurrentUser();
+        $user = $this->getUser();
 
         if ($user instanceof Account) {
             $this->CurrentConfigurationList = $this->getListFor($user);
         } else {
             $this->CurrentConfigurationList = new RunalyzeConfigurationList();
         }
-    }
-
-    /**
-     * @return mixed|null
-     */
-    protected function getCurrentUser()
-    {
-        return $this->TokenStorage->getToken() ? $this->TokenStorage->getToken()->getUser() : null;
     }
 }
