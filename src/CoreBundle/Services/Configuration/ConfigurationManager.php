@@ -15,9 +15,6 @@ class ConfigurationManager
     /** @var ConfRepository */
     protected $Repository;
 
-    /** @var TokenStorage */
-    protected $TokenStorage;
-
     /** @var null|RunalyzeConfigurationList */
     protected $CurrentConfigurationList = null;
 
