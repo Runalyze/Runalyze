@@ -12,10 +12,7 @@ class RpeType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'choices' => RPE::completeList(),
-            'choice_label' => function ($value, $key, $index) {
-                return $value;
-            },
+            'choices' => array_flip(RPE::completeList()),
             'placeholder' => '-'
         ));
     }
