@@ -4,28 +4,28 @@
 
 {% block content %}
     <div class="panel-heading">
-        <h1>{% trans %}Race results{% endtrans %}: {% trans %}Performance Chart{% endtrans %}</h1>
+        <h1>{% trans %}Race results{% endtrans %}: {% trans %}Performance chart{% endtrans %}</h1>
     </div>
 
     <div class="panel-content">
         <fieldset class="without-legend" style="line-height: 21px;">
             <div class="w25 checkbox-first">
                 <label>
-                    <input id="checkbox-only-pb" type="checkbox"> Show only personal bests
+                    <input id="checkbox-only-pb" type="checkbox"> {% trans %}Show only personal bests{% endtrans %}
                 </label>
             </div>
             <div class="w25 checkbox-first">
                 <label>
-                    <input id="checkbox-age-standards" type="checkbox" checked> Compare with age standards
+                    <input id="checkbox-age-standards" type="checkbox" checked> {% trans %}Compare with age standards{% endtrans %}
                 </label>
             </div>
             <div class="w25">
                 <label></label>
             </div>
             <div class="w25">
-                <label for="select-year">Year:</label>
+                <label for="select-year">{% trans %}Year{% endtrans %}:</label>
                 <select id="select-year" name="select-year">
-                    <option value="all">Show all years</option>
+                    <option value="all">{% trans %}Show all years{% endtrans %}</option>
                     {% for year in (date('now')|date('Y'))..(configVar('data.START_TIME')|date('Y'))  %}
                     <option value="{{ year }}">{{ year }}</option>
                     {% endfor %}
