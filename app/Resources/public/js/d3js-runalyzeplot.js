@@ -71,6 +71,7 @@ String.prototype.hashCode = function () {
             svg.append('clipPath').attr('id', 'clip-'+id).append('rect').attr('x', 0).attr('y',0).attr('width', width).attr('height', height);
 
             plot.gridArea = svg.append("g").attr('clip-path', 'url(#clip-'+id+')');
+            plot.gridArea.append('rect').attr("class", "plot-area").attr('x', 0).attr('y', 0).attr('width', width).attr('height', height);
             plot.plotArea = svg.append("g").attr('clip-path', 'url(#clip-'+id+')');
             plot.axesArea = svg.append("g");
 
@@ -169,13 +170,15 @@ String.prototype.hashCode = function () {
             ];
         };
 
-        self.drawCircles = function(d, c) {
+        self.drawCircles = function(d, c, r) {
             d = d || data;
             c = c || "";
+            r = r || 3.5;
 
-            return plot.plotArea.append("g").attr("class", c)
+            return plot.plotArea.append("g").attr("class", c).selectAll("circle")
                 .data(d)
                 .enter().append("circle")
+                .attr("r", r)
                 .attr("cx", self.xMap)
                 .attr("cy", self.yMap);
         };

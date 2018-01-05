@@ -1,0 +1,62 @@
+{% extends "base_logged_in.twig" %}
+
+{% import _self as this %}
+
+{% block content %}
+    <div class="panel-heading">
+        <h1>{% trans %}Race results{% endtrans %}: {% trans %}Performance Chart{% endtrans %}</h1>
+    </div>
+
+    <div class="panel-content">
+        <fieldset class="without-legend" style="line-height: 21px;">
+            <div class="w25 checkbox-first">
+                <label>
+                    <input id="checkbox-only-pb" type="checkbox"> Show only personal bests
+                </label>
+            </div>
+            <div class="w25 checkbox-first">
+                <label>
+                    <input id="checkbox-age-standards" type="checkbox" checked> Compare with age standards
+                </label>
+            </div>
+            <div class="w25">
+                <label></label>
+            </div>
+            <div class="w25">
+                <label for="select-year">Year:</label>
+                <select id="select-year" name="select-year">
+                    <option value="all">Show all years</option>
+                    {% for year in (date('now')|date('Y'))..(configVar('data.START_TIME')|date('Y'))  %}
+                    <option value="{{ year }}">{{ year }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </fieldset>
+    </div>
+
+    <div class="panel-content race-performance-chart">
+        <div id="races-plot" class="scatterplot loading"></div>
+    </div>
+
+    <script>
+        Runalyze.RacePerformanceChartView(
+            "#races-plot",
+            "{{ url('internal-data-race-results-all') }}",
+            {
+                errorMessage: "{% trans %}There was a problem.{% endtrans %} ({% trans %}Plotting failed{% endtrans %})",
+                noDataMessage: "{% trans %}There are no race results for running to plot.{% endtrans %}",
+                ageStandardLabel: "{{ 'Age standard'|trans }}",
+                gui: {
+                    showOnlyPb: $("#checkbox-only-pb"),
+                    showAgeStandard: $("#checkbox-age-standards"),
+                    year: $("#select-year")
+                },
+                sportId: {{ runningSportId }},
+                mainDistances: {{ mainDistances|json_encode }},
+                mainDistanceTicks: {{ mainDistanceTicks|json_encode }},
+                ageStandardTimes: {{ ageStandardTimes|json_encode }},
+                ageStandardVO2max: {{ ageStandardVO2max|json_encode }}
+            }
+        );
+    </script>
+{% endblock %}

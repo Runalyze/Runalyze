@@ -37,7 +37,7 @@ class SportRepository extends EntityRepository
     /**
      * @param Account $account
      * @param bool $returnNull
-     * @return array|Sport
+     * @return null|Sport
      */
     public function findRunningFor(Account $account, $returnNull = false)
     {

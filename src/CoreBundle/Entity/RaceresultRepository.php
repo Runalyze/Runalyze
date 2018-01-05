@@ -63,6 +63,24 @@ class RaceresultRepository extends EntityRepository
 
     /**
      * @param Account $account
+     * @return array|Raceresult[]
+     */
+    public function findAllWithActivityStats(Account $account)
+    {
+        return $this->createQueryBuilder('r')
+            ->select('r')
+            ->addSelect('partial a.{id, time, sport, vo2max, vo2maxByTime, vo2maxWithElevation}')
+            ->join('r.activity', 'a')
+            ->where('r.account = :account')
+            ->setParameters([
+                ':account' => $account
+            ])
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @param Account $account
      * @param int $sportId
      * @return float
      */

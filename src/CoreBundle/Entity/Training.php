@@ -8,6 +8,7 @@ use Runalyze\Bundle\CoreBundle\Entity\Adapter\ActivityAdapter;
 use Runalyze\Bundle\CoreBundle\Entity\Common\AccountRelatedEntityInterface;
 use Runalyze\Bundle\CoreBundle\Entity\Common\IdentifiableEntityInterface;
 use Runalyze\Parser\Activity\Common\Data\Round\RoundCollection;
+use Runalyze\Util\LocalTime;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -604,6 +605,14 @@ class Training implements IdentifiableEntityInterface, AccountRelatedEntityInter
     public function getTime()
     {
         return $this->time;
+    }
+
+    /**
+     * @return LocalTime
+     */
+    public function getDateTime()
+    {
+        return new LocalTime($this->time);
     }
 
     /**
