@@ -95,6 +95,10 @@ services:
     class: Runalyze\Bundle\CoreBundle\Entity\SportRepository
     factory: ["@doctrine.orm.entity_manager", getRepository]
     arguments: [Runalyze\Bundle\CoreBundle\Entity\Sport]
+  app.repository.tag:
+    class: Runalyze\Bundle\CoreBundle\Entity\TagRepository
+    factory: ["@doctrine.orm.entity_manager", getRepository]
+    arguments: [Runalyze\Bundle\CoreBundle\Entity\Tag]
   app.repository.type:
     class: Runalyze\Bundle\CoreBundle\Entity\TypeRepository
     factory: ["@doctrine.orm.entity_manager", getRepository]
@@ -137,7 +141,7 @@ services:
      - { name: doctrine.orm.entity_listener, lazy: true }
   app.form.activity:
     class: Runalyze\Bundle\CoreBundle\Form\ActivityType
-    arguments: ["@security.token_storage"]
+    arguments: ["@security.token_storage", "@app.repository.tag"]
     tags:
      - { name: form.type }
   app.form.multi_importer:

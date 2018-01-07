@@ -4,6 +4,7 @@ namespace Runalyze\Bundle\CoreBundle\Form;
 
 use League\Geotools\Geohash\Geohash;
 use Runalyze\Bundle\CoreBundle\Entity\Tag;
+use Runalyze\Bundle\CoreBundle\Entity\TagRepository;
 use Runalyze\Bundle\CoreBundle\Entity\Training;
 use Runalyze\Bundle\CoreBundle\Form\Type\ActivityEquipmentType;
 use Runalyze\Bundle\CoreBundle\Form\Type\ActivityRoundType;
@@ -34,6 +35,8 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Form;
+use Runalyze\Bundle\CoreBundle\Entity\Account;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -42,7 +45,35 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ActivityType extends AbstractType
 {
-    use TokenStorageAwareTypeTrait;
+    /** @var TagRepository */
+    protected $TagRepository;
+
+    /** @var TokenStorage */
+    protected $TokenStorage;
+
+
+    public function __construct(
+        TokenStorage $tokenStorage,
+        TagRepository $tagRepository
+    )
+    {
+        $this->TokenStorage = $tokenStorage;
+        $this->TagRepository = $tagRepository;
+    }
+
+    /**
+     * @return Account
+     */
+    protected function getAccount()
+    {
+        $account = $this->TokenStorage->getToken() ? $this->TokenStorage->getToken()->getUser() : null;
+
+        if (!($account instanceof Account)) {
+            throw new \RuntimeException('Activity type must have a valid account token.');
+        }
+
+        return $account;
+    }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -166,19 +197,6 @@ class ActivityType extends AbstractType
                 'allow_add' => true,
                 'allow_delete' => true
             ])
-            ->add('tag', EntityType::class, [
-                'class' => Tag::class,
-                'choices' => $this->getAccount()->getTags(),
-                'choice_label' => 'tag',
-                'label' => 'Assigned tags',
-                'attr' => [
-                    'class' => 'chosen-select full-size',
-                    'data-placeholder' => 'Choose tag(s)'
-                ],
-                'multiple' => true,
-                'expanded' => false,
-                'required' => false
-            ])
             ->add('equipment', ActivityEquipmentType::class)
             ->add('activityId', HiddenType::class, [
                 'required' => false
@@ -188,7 +206,6 @@ class ActivityType extends AbstractType
                 'required' => false
             ])
         ;
-
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
             /** @var Training $activity */
             $activity = $event->getData();
@@ -200,11 +217,54 @@ class ActivityType extends AbstractType
                 'data' => $activity->hasRaceresult()
             ]);
 
+            $event->getForm()->add('tag', EntityType::class, [
+                'class' => Tag::class,
+                'choices' => $this->TagRepository->findAllFor($this->getAccount()),
+                'choice_label' => 'tag',
+                'label' => 'Assigned tags',
+                'attr' => [
+                    'class' => 'chosen-select-create full-size',
+                    'data-placeholder' => 'Choose tag(s)'
+                ],
+                'multiple' => true,
+                'expanded' => false,
+                'required' => false
+            ]);
+
             $this->setStartCoordinates($event->getForm(), $activity);
 
             if ($activity->getId()) {
                 $this->addDataSeriesRemoverFields($event->getForm(), $activity);
             }
+        });
+
+
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
+            $data = $event->getData();
+            /** @var Training $activity */
+            $activity = $event->getForm()->getData();
+
+            if (empty($data['tag'])) {
+                return;
+            }
+
+            $tags = $data['tag'];
+            foreach($tags as $key => $tag) {
+                if (!is_numeric($tag)) {
+                    $tagElement = (new Tag())->setTag($tag)->setAccount($this->getAccount());
+                    $this->TagRepository->save($tagElement);
+                    $activity->addTag($tagElement);
+                    $tags[$key] = $tagElement->getId();
+                }
+            }
+            $event->getForm()->remove('tag');
+
+            $data['tag'] = $tags;
+
+            $event->setData($data);
+            $event->getForm()->setData($activity);
+
+
         });
     }
 
