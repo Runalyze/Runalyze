@@ -150,4 +150,22 @@ class RoundCollection implements \Countable, \ArrayAccess, \Iterator
             $round->roundDuration();
         }
     }
+
+    /**
+     * @return bool
+     */
+    public function isEqualTo(RoundCollection $other)
+    {
+        if ($this->count() != $other->count()) {
+            return false;
+        }
+
+        foreach ($this->Elements as $key => $round) {
+            if (!$round->isEqualTo($other->offsetGet($key))) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }

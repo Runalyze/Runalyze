@@ -1616,6 +1616,11 @@ class Training implements IdentifiableEntityInterface, AccountRelatedEntityInter
         return $this;
     }
 
+    public function setSplitsToClone()
+    {
+        $this->splits = clone $this->splits;
+    }
+
     /**
      * @return RoundCollection
      */

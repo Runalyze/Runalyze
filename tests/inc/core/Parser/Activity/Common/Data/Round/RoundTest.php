@@ -33,4 +33,26 @@ class RoundTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(104, $round->getDuration());
         $this->assertTrue($round->isActive());
     }
+
+    /**
+     * @dataProvider getProviderForComparison
+     */
+    public function testComparison($expectedComparison, $distanceFirst, $durationFirst, $isActiveFirst, $distanceSecond, $durationSecond, $isActiveSecond)
+    {
+        $this->assertEquals(
+            $expectedComparison,
+            (new Round($distanceFirst, $durationFirst, $isActiveFirst))
+                ->isEqualTo(new Round($distanceSecond, $durationSecond, $isActiveSecond))
+        );
+    }
+
+    public function getProviderForComparison()
+    {
+        return [
+            [true, 1.0, 265, false, 1.0, 265, false],
+            [false, 1.0, 265, true, 1.0, 265, false],
+            [false, 1.0, 265, false, 1.01, 265, false],
+            [false, 1.0, 264, false, 1.0, 265, false]
+        ];
+    }
 }

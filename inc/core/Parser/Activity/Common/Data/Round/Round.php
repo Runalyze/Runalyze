@@ -77,4 +77,16 @@ class Round
     {
         return $this->IsActive;
     }
+
+    /**
+     * @return bool
+     */
+    public function isEqualTo(Round $other)
+    {
+        return (
+            $this->IsActive == $other->isActive() &&
+            $this->Duration == $other->getDuration() &&
+            $this->Distance == $other->getDistance()
+        );
+    }
 }

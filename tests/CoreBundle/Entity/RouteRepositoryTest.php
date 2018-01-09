@@ -71,4 +71,37 @@ class RouteRepositoryTest extends AbstractRepositoryTestCase
         $this->assertEquals('u1xjnxhjr7', $route->getEndpoint());
         $this->assertEquals('device', $route->getElevationsSource());
     }
+
+    public function testRecalculationOfElevation()
+    {
+        $route = new Route();
+        $route->setAccount($this->getDefaultAccount());
+        $route->setElevationsCorrected([0, 2, 3, 5, 8, 10, 10, 10, 12, 13, 13, 15, 20, 25, 25, 26, 26, 28, 29, 29, 30]);
+
+        $this->RouteRepository->save($route);
+
+        $this->assertEquals(30, $route->getElevationUp());
+        $this->assertEquals(0, $route->getElevationDown());
+        $this->assertEquals(30, $route->getElevation());
+
+        $this->EntityManager->getUnitOfWork()->refresh($route);
+
+        $this->assertEquals(30, $route->getElevationUp());
+        $this->assertEquals(0, $route->getElevationDown());
+        $this->assertEquals(30, $route->getElevation());
+
+        $route->setElevationsCorrected([30, 29, 29, 28, 26, 26, 25, 25, 20, 15, 13, 13, 12, 10, 10, 10]);
+
+        $this->RouteRepository->save($route);
+
+        $this->assertEquals(0, $route->getElevationUp());
+        $this->assertEquals(20, $route->getElevationDown());
+        $this->assertEquals(20, $route->getElevation());
+
+        $this->EntityManager->getUnitOfWork()->refresh($route);
+
+        $this->assertEquals(0, $route->getElevationUp());
+        $this->assertEquals(20, $route->getElevationDown());
+        $this->assertEquals(20, $route->getElevation());
+    }
 }

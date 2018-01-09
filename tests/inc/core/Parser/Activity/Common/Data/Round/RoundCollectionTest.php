@@ -88,4 +88,13 @@ class RoundCollectionTest extends \PHPUnit_Framework_TestCase
     {
         $this->Collection[] = 'foobar';
     }
+
+    public function testThatComparison()
+    {
+        $this->Collection->add(new Round(1.0, 285));
+        $this->Collection->add(new Round(1.0, 260));
+
+        $this->assertTrue($this->Collection->isEqualTo(clone $this->Collection));
+        $this->assertFalse($this->Collection->isEqualTo(new RoundCollection()));
+    }
 }
