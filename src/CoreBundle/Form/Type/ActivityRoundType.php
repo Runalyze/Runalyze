@@ -2,14 +2,11 @@
 
 namespace Runalyze\Bundle\CoreBundle\Form\Type;
 
-use Runalyze\Bundle\CoreBundle\Form\Type\DistanceType;
-use Runalyze\Bundle\CoreBundle\Form\Type\DurationType;
 use Runalyze\Parser\Activity\Common\Data\Round\Round;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ActivityRoundType extends AbstractType implements DataTransformerInterface
 {
@@ -46,7 +43,7 @@ class ActivityRoundType extends AbstractType implements DataTransformerInterface
      */
     public function transform($value)
     {
-        if (!($value instanceof \Runalyze\Parser\Activity\Common\Data\Round\Round)) {
+        if (!($value instanceof Round)) {
             return null;
         }
 
