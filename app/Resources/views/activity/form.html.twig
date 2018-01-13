@@ -69,6 +69,7 @@
             {{ form_row(form.pace, {'div_class': 'w50', 'attr': {'class': 'small-size', 'disabled': 'disabled'}}) }}
 
             {{ form_row(form.cadence, {'div_class': 'w50', 'attr': {'class': 'small-size'}}) }}
+            {{ form_row(form.power, {'div_class': 'w50 only-power', 'attr': {'class': 'small-size'}}) }}
         </fieldset>
 
         <fieldset id="fieldset-splits" class="only-distances{{ formConfig.fieldSetIsCollapsed('SPLITS') ? ' collapsed' : '' }}">

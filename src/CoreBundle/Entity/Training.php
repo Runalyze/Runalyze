@@ -270,6 +270,8 @@ class Training implements IdentifiableEntityInterface, AccountRelatedEntityInter
 
     /**
      * @var bool|null
+     *
+     * @ORM\Column(name="is_power_calculated", type="boolean", nullable=true, options={"default":null})
      */
     private $isPowerCalculated = null;
 

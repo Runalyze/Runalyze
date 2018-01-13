@@ -217,6 +217,10 @@ services:
     class: Runalyze\Bundle\CoreBundle\Form\Type\EnergyKcalType
     tags:
      - { name: form.type }
+  app.form.type.power:
+    class: Runalyze\Bundle\CoreBundle\Form\Type\PowerType
+    tags:
+     - { name: form.type }
   app.form.type.sport:
     class: Runalyze\Bundle\CoreBundle\Form\Type\SportChoiceType
     arguments: ["@security.token_storage", "@app.repository.sport"]
