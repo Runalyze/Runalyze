@@ -155,7 +155,11 @@ class ActivityDataContainerToActivityContextConverter
 
         if (null !== $sport) {
             $activity->setSport($sport);
-            $activity->setPublic(!$activity->getSport()->getDefaultPrivacy());
+            $activity->setPublic(!$sport->getDefaultPrivacy());
+
+            if (null !== $sport->getDefaultType()) {
+                $activity->setType($sport->getDefaultType());
+            }
         }
     }
 

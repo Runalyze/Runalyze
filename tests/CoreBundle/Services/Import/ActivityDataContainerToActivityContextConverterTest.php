@@ -70,6 +70,23 @@ class ActivityDataContainerToActivityContextConverterTest extends AbstractFixtur
         $this->assertEquals('singlet', $activityContext->getActivity()->getEquipment()[0]->getName());
     }
 
+    public function testThatSportsDefaultTypeIsUsed()
+    {
+        $this->Container->Metadata->setSportName('Running');
+
+        $backupDefaultType = $this->getDefaultAccountsRunningSport()->getDefaultType();
+        $defaultType = $this->EntityManager->getRepository('CoreBundle:Type')->findBy(['name' => 'Fartlek'])[0];
+        $this->getDefaultAccountsRunningSport()->setDefaultType($defaultType);
+
+        $activityContext = $this->Converter->getContextFor($this->Container);
+
+        $this->assertEquals($this->getDefaultAccountsRunningSport(), $activityContext->getSport());
+        $this->assertNotNull($activityContext->getActivity()->getType());
+        $this->assertEquals('Fartlek', $activityContext->getActivity()->getType()->getName());
+
+        $this->getDefaultAccountsRunningSport()->setDefaultType($backupDefaultType);
+    }
+
     public function testThatSwimmingCanBeGuessedByName()
     {
         $this->Container->Metadata->setSportName('Swimming');
