@@ -9,13 +9,17 @@
 @headline-tab-color-hover:				#eee;
 @headline-tab-margin:					4px 18px;
 @headline-tab-padding:					2px;
-
+@headline-notification:					#67b957;
 
 
 
 
 body {
 	padding-top: 41px;
+}
+
+@keyframes blinker {
+	50% { opacity: 0; }
 }
 
 #headline {
@@ -135,11 +139,12 @@ body {
 		z-index: (@z-index-headline + 1);
 		width: 8px;
 		height: 8px;
-		background-color: #67b957;
-		background-image: linear-gradient(#67b957, #3f9235);
+		background-color: @headline-notification;
+		background-image: linear-gradient(@headline-notification, #3f9235);
 		background-clip: padding-box;
 		border: 2px solid @headline-background;
 		border-radius: 50%;
+		animation: blinker 4s linear infinite;
 	}
 
 	.submenu {

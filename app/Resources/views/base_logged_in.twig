@@ -38,13 +38,12 @@
                             <i class="fa fa-fw fa-envelope"><span class="hide new-notifications-indicator"></span></i><i class="fa fa-fw fa-caret-down"></i>
                         </div>
                         <ul class="submenu right-oriented">
+                            <li class="separator"></li>
                             <li class="no-notifications-messages"><em class="no-link">{% trans %}No new notifications{% endtrans %}</em></li>
+                            <li><a class="window" data-size="small" href="{{ url('notifications-list') }}"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;{% trans %}Show all notifications{% endtrans %}</a></li>
                             <li id="tpl-notification-message-with-internal-link" class="hide notification-message is-new"><a class="internal" href=""><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<span></span></a></li>
                             <li id="tpl-notification-message-with-external-link" class="hide notification-message is-new"><a href="" target="_blank"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<span></span></a></li>
                             <li id="tpl-notification-message-without-link" class="hide notification-message is-new"><span class="no-link"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<span></span></span></li>
-                            <!-- TODO: load messages -->
-                            <li class="separator"></li>
-                            <li><a class="window" data-size="small" href="{{ url('notifications-list') }}"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;{% trans %}Show all notifications{% endtrans %}</a></li>
                         </ul>
 
                         <script>Runalyze.Notifications.setLastRequestTime(1);</script>

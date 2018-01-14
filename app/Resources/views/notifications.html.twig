@@ -16,6 +16,9 @@
                 &nbsp;
             </p>
         {% else %}
+            <p class="text c">
+                <i class="fa fa-fw fa-check"></i> <a class="read-all-notifications-link external" href="{{ url('internal-notifications-read-all') }}">{% trans %}Mark all as read{% endtrans %}</a>
+            </p>
             <ul>
                 {% for notification in notifications %}
                     {# @var message \Runalyze\Bundle\CoreBundle\Component\Notifications\Message\MessageInterface #}
@@ -35,10 +38,6 @@
                     </li>
                 {% endfor %}
             </ul>
-
-            <p class="text c">
-                <i class="fa fa-fw fa-check"></i> <a class="read-all-notifications-link external" href="{{ url('internal-notifications-read-all') }}">{% trans %}Mark all as read{% endtrans %}</a>
-            </p>
 
             <script>Runalyze.Notifications.bindToList('#full-notifications-list');</script>
         {% endif %}
