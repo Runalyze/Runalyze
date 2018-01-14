@@ -35,7 +35,19 @@
     </div>
 
     <div class="panel-content race-performance-chart">
-        <div id="races-plot" class="scatterplot loading"></div>
+        <div id="races-plot" class="scatterplot loading" style="min-height:440px;"></div>
+    </div>
+
+    <div class="panel-content margin-top">
+        <p class="info">
+            {% trans %}Age standards and personal bests are only considered for the following official distances{% endtrans %}:<br>
+            {% for km in mainDistances %}
+                {{- km <= 3 ? ((km * 1000) ~ "m") : (km|number_format(1, '.') ~ " km") -}}{% if not loop.last %}, {% endif %}
+            {% endfor %}
+        </p>
+        <p class="info">
+            {% trans %}Effective VO2max values are only available for distances of at least one kilometer.{% endtrans %}
+        </p>
     </div>
 
     <script>

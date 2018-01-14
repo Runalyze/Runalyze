@@ -58,7 +58,7 @@ Runalyze.RacePerformanceChartView = function (selector, url, options) {
     d3.json(url, function(raceData){
         try {
             var allRaces = raceData.filter(function(d) {
-                return (+d.sport_id == options.sportId);
+                return (+d.sport_id == options.sportId) && !(+d.is_fun);
             }).map(function(d) {
                 return {
                     date: new Date(d.date),
