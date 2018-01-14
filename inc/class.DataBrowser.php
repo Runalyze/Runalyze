@@ -225,7 +225,6 @@ class DataBrowser {
 		echo '<li>'.$this->getSharedListLink().'</li>';
 		echo '<li>'.$this->getMonthKmLink().'</li>';
 		echo '<li>'.$this->getWeekKmLink().'</li>';
-		echo '<li>'.$this->getNaviSearchLink().'</li>';
 		echo '<li>'.$this->getAddLink().'</li>';
 		echo '</ul>';
 	}
