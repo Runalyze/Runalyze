@@ -203,6 +203,12 @@ class Entity extends Model\EntityWithID {
 	 */
 	const POWER = 'power';
 
+    /**
+     * Key: power
+     * @var string
+     */
+    const IS_POWER_CALCULATED = 'is_power_calculated';
+
 	/**
 	 * Key: stride length
 	 * @var string
@@ -410,6 +416,7 @@ class Entity extends Model\EntityWithID {
 			self::TRIMP,
 			self::CADENCE,
 			self::POWER,
+			self::IS_POWER_CALCULATED,
 			self::STRIDE_LENGTH,
 			self::SWOLF,
 			self::TOTAL_STROKES,
@@ -499,6 +506,7 @@ class Entity extends Model\EntityWithID {
             case self::TRIMP:
             case self::CADENCE:
             case self::POWER:
+            case self::IS_POWER_CALCULATED:
             case self::TOTAL_STROKES:
             case self::SWOLF:
             case self::STRIDE_LENGTH:
@@ -563,6 +571,7 @@ class Entity extends Model\EntityWithID {
             self::TRIMP,
             self::CADENCE,
             self::POWER,
+            self::IS_POWER_CALCULATED,
             self::TOTAL_STROKES,
             self::SWOLF,
             self::STRIDE_LENGTH,
@@ -830,6 +839,13 @@ class Entity extends Model\EntityWithID {
 	public function power() {
 		return $this->Data[self::POWER];
 	}
+
+    /**
+     * @return null|bool
+     */
+	public function isPowerCalculated() {
+	    return null === $this->Data[self::IS_POWER_CALCULATED] ? null : 1 == $this->Data[self::IS_POWER_CALCULATED];
+    }
 
 	/**
 	 * Stride length
