@@ -232,15 +232,19 @@ class FileImporter implements LoggerAwareInterface
         $extension = mb_strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
 
         if ('zip' == $extension) {
-            $convertedFileNames = [];
+            $allConvertedFileNames = [];
             $zipFiles = $this->ZipConverter->convertFile($fileName);
 
             foreach ($zipFiles as $zipFile) {
-                $convertedFileNames = array_merge($convertedFileNames, $this->tryToConvertFileNameIfRequired($zipFile));
-                $this->remove($zipFile);
+                $convertedFiles = $this->tryToConvertFileNameIfRequired($zipFile);
+                $allConvertedFileNames = array_merge($allConvertedFileNames, $convertedFiles);
+
+                if ($convertedFiles != [$zipFile]) {
+                    $this->remove($zipFile);
+                }
             }
 
-            return $convertedFileNames;
+            return $allConvertedFileNames;
         }
 
         foreach ($this->Converter as $converter) {
