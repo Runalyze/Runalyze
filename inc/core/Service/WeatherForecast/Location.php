@@ -30,14 +30,19 @@ class Location
     }
 
     /**
-     * @param string $geohash
+     * @param string|mixed $geohash
      */
     public function setGeohash($geohash)
     {
-        $decoded = (new Geohash)->decode($geohash)->getCoordinate();
+        try {
+            $decoded = (new Geohash)->decode($geohash)->getCoordinate();
 
-        $this->Latitude = $decoded->getLatitude();
-        $this->Longitude = $decoded->getLongitude();
+            $this->Latitude = $decoded->getLatitude();
+            $this->Longitude = $decoded->getLongitude();
+        } catch (\InvalidArgumentException $e) {
+            $this->Latitude = null;
+            $this->Longitude = null;
+        }
     }
 
     public function setDateTime(\DateTime $dateTime = null)
