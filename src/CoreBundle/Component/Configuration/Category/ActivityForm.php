@@ -17,7 +17,6 @@ class ActivityForm extends AbstractCategory
             'TRAINING_LOAD_WEATHER' => 'true',
             'PLZ' => '',
             'COMPUTE_KCAL' => 'true',
-            'COMPUTE_POWER' => 'true',
             'TRAINING_SORT_SPORTS' => 'id-asc',
             'TRAINING_SORT_TYPES' => 'id-asc',
             'TRAINING_SORT_SHOES' => 'id-asc',
@@ -75,14 +74,6 @@ class ActivityForm extends AbstractCategory
     public function isComputingEnergyActivated()
     {
         return 'true' === $this->Variables['COMPUTE_KCAL'];
-    }
-
-    /**
-     * @return bool
-     */
-    public function isComputingPowerActivated()
-    {
-        return 'true' === $this->Variables['COMPUTE_POWER'];
     }
 
     /**
