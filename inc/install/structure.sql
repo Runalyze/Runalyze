@@ -297,6 +297,14 @@ CREATE TABLE IF NOT EXISTS `runalyze_trackdata` (
   `smo2_1` longtext,
   `thb_0` longtext,
   `thb_1` longtext,
+  `impact_gs_left` longtext,
+  `impact_gs_right` longtext,
+  `braking_gs_left` longtext,
+  `braking_gs_right` longtext,
+  `footstrike_type_left` longtext,
+  `footstrike_type_right` longtext,
+  `pronation_excursion_left` longtext,
+  `pronation_excursion_right` longtext,
   `pauses` text,
   `lock` tinyint(1) unsigned NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
