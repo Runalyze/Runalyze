@@ -155,7 +155,7 @@ class Trackdata implements AccountRelatedEntityInterface
      * @ORM\Column(name="pronation_excursion_left", type="pipe_array", nullable=true)
      */
     private $pronationExcursionLeft;
-Version20160912090538
+
     /**
      * @var array|null [°]
      *
