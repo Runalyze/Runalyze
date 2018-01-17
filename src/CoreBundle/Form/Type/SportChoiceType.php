@@ -65,7 +65,8 @@ class SportChoiceType extends AbstractTokenStorageAwareType
                     'data-speed' => $sport->getSpeed(),
                     'data-activity-type' => $sport->getDefaultType() ? $sport->getDefaultType()->getId() : '',
                     'data-equipment-types' => json_encode($availableEquipmentTypes),
-                    'data-privacy' => $sport->getDefaultPrivacy() ? '1' : '0'
+                    'data-privacy' => $sport->getDefaultPrivacy() ? '1' : '0',
+                    'data-power' => $sport->getPower() ? '1' : '0'
                 ];
             }
         ));

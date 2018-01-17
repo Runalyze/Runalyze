@@ -271,7 +271,8 @@ class CreateController extends Controller
         return $this->render('activity/form.html.twig', [
             'form' => $form->createView(),
             'isNew' => true,
-            'isDuplicate' => $this->get('app.activity_duplicate_finder')->isPossibleDuplicate($activity)
+            'isDuplicate' => $this->get('app.activity_duplicate_finder')->isPossibleDuplicate($activity),
+            'isPowerLocked' => null !== $activity->isPowerCalculated()
         ]);
     }
 
