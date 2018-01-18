@@ -136,14 +136,14 @@ class Trackdata implements AccountRelatedEntityInterface
     private $brakingGsRight;
 
     /**
-     * @var array|null [G]
+     * @var array|null [°]
      *
      * @ORM\Column(name="footstrike_type_left", type="pipe_array", nullable=true)
      */
     private $footstrikeTypeLeft;
 
     /**
-     * @var array|null [G]
+     * @var array|null [°]
      *
      * @ORM\Column(name="footstrike_type_right", type="pipe_array", nullable=true)
      */
@@ -734,7 +734,7 @@ class Trackdata implements AccountRelatedEntityInterface
     }
 
     /**
-     * @param array|null $footstrikeTypeLeft [G]
+     * @param array|null $footstrikeTypeLeft [°]
      *
      * @return $this
      */
@@ -746,7 +746,7 @@ class Trackdata implements AccountRelatedEntityInterface
     }
 
     /**
-     * @return array|null [G]
+     * @return array|null [°]
      */
     public function getFootstrikeTypeLeft()
     {
@@ -762,7 +762,7 @@ class Trackdata implements AccountRelatedEntityInterface
     }
 
     /**
-     * @param array|null $footstrikeTypeRight [G]
+     * @param array|null $footstrikeTypeRight [°]
      *
      * @return $this
      */
@@ -774,7 +774,7 @@ class Trackdata implements AccountRelatedEntityInterface
     }
 
     /**
-     * @return array|null [G]
+     * @return array|null [°]
      */
     public function getFootstrikeTypeRight()
     {

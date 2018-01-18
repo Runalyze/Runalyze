@@ -323,6 +323,62 @@ class Training implements IdentifiableEntityInterface, AccountRelatedEntityInter
     private $verticalRatio = null;
 
     /**
+     * @var float|null [G]
+     *
+     * @ORM\Column(name="avg_impact_gs_left", type="double", nullable=true, options={"unsigned":true})
+     */
+    private $avgImpactGsLeft = null;
+
+    /**
+     * @var float|null [G]
+     *
+     * @ORM\Column(name="avg_impact_gs_right", type="double", nullable=true, options={"unsigned":true})
+     */
+    private $avgImpactGsRight = null;
+
+    /**
+     * @var float|null [G]
+     *
+     * @ORM\Column(name="avg_braking_gs_left", type="double", nullable=true, options={"unsigned":true})
+     */
+    private $avgBrakingGsLeft = null;
+
+    /**
+     * @var float|null [G]
+     *
+     * @ORM\Column(name="avg_braking_gs_right", type="double", nullable=true, options={"unsigned":true})
+     */
+    private $avgBrakingGsRight = null;
+
+    /**
+     * @var int|null [°]
+     *
+     * @ORM\Column(name="avg_footstrike_type_left", type="int", nullable=true, options={"unsigned":true})
+     */
+    private $avgFootstrikeTypeLeft = null;
+
+    /**
+     * @var int|null [°]
+     *
+     * @ORM\Column(name="avg_footstrike_type_right", type="int", nullable=true, options={"unsigned":true})
+     */
+    private $avgFootstrikeTypeRight = null;
+
+    /**
+     * @var float|null [°]
+     *
+     * @ORM\Column(name="avg_pronation_excursion_left", type="int", nullable=true)
+     */
+    private $avgPronationExcursionLeft = null;
+
+    /**
+     * @var float|null [°]
+     *
+     * @ORM\Column(name="avg_pronation_excursion_right", type="int", nullable=true)
+     */
+    private $avgPronationExcursionRight = null;
+
+    /**
      * @var int|null [°C]
      *
      * @ORM\Column(name="temperature", type="tinyint", nullable=true)
@@ -1386,6 +1442,167 @@ class Training implements IdentifiableEntityInterface, AccountRelatedEntityInter
     public function getVerticalRatio()
     {
         return $this->verticalRatio;
+    }
+    
+
+    /**
+     * @param null|float $avgImpactGsLeft [G]
+     *
+     * @return $this
+     */
+    public function setAvgImpactGsLeft($avgImpactGsLeft)
+    {
+        $this->avgImpactGsLeft = $avgImpactGsLeft;
+
+        return $this;
+    }
+
+    /**
+     * @return null|float [G]
+     */
+    public function getAvgImpactGsLeft()
+    {
+        return $this->avgImpactGsLeft;
+    }
+
+    /**
+     * @param null|float $avgImpactGsRight [G]
+     *
+     * @return $this
+     */
+    public function setAvgImpactGsRight($avgImpactGsRight)
+    {
+        $this->avgImpactGsRight = $avgImpactGsRight;
+
+        return $this;
+    }
+
+    /**
+     * @return null|float [G]
+     */
+    public function getAvgImpactGsRight()
+    {
+        return $this->avgImpactGsRight;
+    }
+
+    /**
+     * @param null|float $avgBrakingGsLeft [G]
+     *
+     * @return $this
+     */
+    public function setAvgBrakingGsLeft($avgBrakingGsLeft)
+    {
+        $this->avgBrakingGsLeft = $avgBrakingGsLeft;
+
+        return $this;
+    }
+
+    /**
+     * @return null|float [G]
+     */
+    public function getAvgBrakingGsLeft()
+    {
+        return $this->avgBrakingGsLeft;
+    }
+
+    /**
+     * @param null|float $avgBrakingGsRight [G]
+     *
+     * @return $this
+     */
+    public function setAvgBrakingGsRight($avgBrakingGsRight)
+    {
+        $this->avgBrakingGsRight = $avgBrakingGsRight;
+
+        return $this;
+    }
+
+    /**
+     * @return null|float [G]
+     */
+    public function getAvgBrakingGsRight()
+    {
+        return $this->avgBrakingGsRight;
+    }
+
+    /**
+     * @param null|int $avgFootstrikeTypeLeft [°]
+     *
+     * @return $this
+     */
+    public function setAvgFootstrikeTypeLeft($avgFootstrikeTypeLeft)
+    {
+        $this->avgFootstrikeTypeLeft = $avgFootstrikeTypeLeft;
+
+        return $this;
+    }
+
+    /**
+     * @return null|int [°]
+     */
+    public function getAvgFootstrikeTypeLeft()
+    {
+        return $this->avgFootstrikeTypeLeft;
+    }
+
+    /**
+     * @param null|int $avgFootstrikeTypeRight [°]
+     *
+     * @return $this
+     */
+    public function setAvgFootstrikeTypeRight($avgFootstrikeTypeRight)
+    {
+        $this->avgFootstrikeTypeRight = $avgFootstrikeTypeRight;
+
+        return $this;
+    }
+
+    /**
+     * @return null|int [°]
+     */
+    public function getAvgFootstrikeTypeRight()
+    {
+        return $this->avgFootstrikeTypeRight;
+    }
+
+    /**
+     * @param null|float $avgPronationExcursionLeft [°]
+     *
+     * @return $this
+     */
+    public function setAvgPronationExcursionLeft($avgPronationExcursionLeft)
+    {
+        $this->avgPronationExcursionLeft = $avgPronationExcursionLeft;
+
+        return $this;
+    }
+
+    /**
+     * @return null|float [°]
+     */
+    public function getAvgPronationExcursionLeft()
+    {
+        return $this->avgPronationExcursionLeft;
+    }
+
+    /**
+     * @param null|float $avgPronationExcursionRight [°]
+     *
+     * @return $this
+     */
+    public function setAvgPronationExcursionRight($avgPronationExcursionRight)
+    {
+        $this->avgPronationExcursionRight = $avgPronationExcursionRight;
+
+        return $this;
+    }
+
+    /**
+     * @return null|float [°]
+     */
+    public function getAvgPronationExcursionRight()
+    {
+        return $this->avgPronationExcursionRight;
     }
 
     /**
