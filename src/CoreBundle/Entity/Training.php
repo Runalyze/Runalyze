@@ -325,56 +325,56 @@ class Training implements IdentifiableEntityInterface, AccountRelatedEntityInter
     /**
      * @var float|null [G]
      *
-     * @ORM\Column(name="avg_impact_gs_left", type="double", nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="avg_impact_gs_left", type="float", nullable=true, options={"unsigned":true})
      */
     private $avgImpactGsLeft = null;
 
     /**
      * @var float|null [G]
      *
-     * @ORM\Column(name="avg_impact_gs_right", type="double", nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="avg_impact_gs_right", type="float", nullable=true, options={"unsigned":true})
      */
     private $avgImpactGsRight = null;
 
     /**
      * @var float|null [G]
      *
-     * @ORM\Column(name="avg_braking_gs_left", type="double", nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="avg_braking_gs_left", type="float", nullable=true, options={"unsigned":true})
      */
     private $avgBrakingGsLeft = null;
 
     /**
      * @var float|null [G]
      *
-     * @ORM\Column(name="avg_braking_gs_right", type="double", nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="avg_braking_gs_right", type="float", nullable=true, options={"unsigned":true})
      */
     private $avgBrakingGsRight = null;
 
     /**
      * @var int|null [°]
      *
-     * @ORM\Column(name="avg_footstrike_type_left", type="int", nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="avg_footstrike_type_left", type="tinyint", nullable=true, options={"unsigned":true})
      */
     private $avgFootstrikeTypeLeft = null;
 
     /**
      * @var int|null [°]
      *
-     * @ORM\Column(name="avg_footstrike_type_right", type="int", nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="avg_footstrike_type_right", type="tinyint", nullable=true, options={"unsigned":true})
      */
     private $avgFootstrikeTypeRight = null;
 
     /**
      * @var float|null [°]
      *
-     * @ORM\Column(name="avg_pronation_excursion_left", type="int", nullable=true)
+     * @ORM\Column(name="avg_pronation_excursion_left", type="float", nullable=true)
      */
     private $avgPronationExcursionLeft = null;
 
     /**
      * @var float|null [°]
      *
-     * @ORM\Column(name="avg_pronation_excursion_right", type="int", nullable=true)
+     * @ORM\Column(name="avg_pronation_excursion_right", type="float", nullable=true)
      */
     private $avgPronationExcursionRight = null;
 
