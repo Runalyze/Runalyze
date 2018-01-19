@@ -66,6 +66,7 @@ class EquipmentType extends AbstractType
                 'format' => 'dd.MM.yyyy',
                 'html5' => false,
                 'required' => false,
+                'data' => new \DateTime("now"),
                 'attr' => ['class' => 'pick-a-date small-size', 'placeholder' => 'dd.mm.YYYY']
             ])
             ->add('dateEnd', DateType::class, [
