@@ -23,7 +23,8 @@ framework:
   translator:
     fallbacks: ['%locale%']
     paths:
-      - '%kernel.root_dir%/../inc/locale/'
+      - '%kernel.root_dir%/../vendor/runalyze/translations/xlf'
+      - '%kernel.root_dir%/../vendor/runalyze/translations/gettext'
   cache:
     pools:
       app.cache.activity_uploads:
@@ -173,7 +174,7 @@ jms_translation:
     configs:
         app:
             dirs: ['%kernel.root_dir%/', '%kernel.root_dir%/../src']
-            output_dir: '%kernel.root_dir%/Resources/translations'
+            output_dir: '%kernel.root_dir%/../vendor/runalyze/translations/xlf'
             ignored_domains: [routes]
             excluded_names: ["*TestCase.php", "*Test.php"]
             excluded_dirs: [cache, data, logs, test, doctrine]
