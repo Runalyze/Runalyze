@@ -287,6 +287,14 @@ class ActivityDataContainerToActivityContextConverter
         $trackData->setSmo21($container->ContinuousData->MuscleOxygenation_2 ?: null);
         $trackData->setThb0($container->ContinuousData->TotalHaemoglobin ?: null);
         $trackData->setThb1($container->ContinuousData->TotalHaemoglobin_2 ?: null);
+        $trackData->setImpactGsLeft($container->ContinuousData->ImpactGsLeft ?: null);
+        $trackData->setImpactGsRight($container->ContinuousData->ImpactGsRight ?: null);
+        $trackData->setBrakingGsLeft($container->ContinuousData->BrakingGsLeft ?: null);
+        $trackData->setBrakingGsRight($container->ContinuousData->BrakingGsRight ?: null);
+        $trackData->setFootstrikeTypeLeft($container->ContinuousData->FootstrikeTypeLeft ?: null);
+        $trackData->setFootstrikeTypeRight($container->ContinuousData->FootstrikeTypeRight ?: null);
+        $trackData->setPronationExcursionLeft($container->ContinuousData->PronationExcursionLeft ?: null);
+        $trackData->setPronationExcursionRight($container->ContinuousData->PronationExcursionRight ?: null);
 
         if ($trackData->isEmpty()) {
             return null;

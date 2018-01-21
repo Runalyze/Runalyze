@@ -34,7 +34,15 @@ class ContinuousDataConverter
             Trackdata\Entity::SMO2_0 => $this->Data->MuscleOxygenation,
             Trackdata\Entity::SMO2_1 => $this->Data->MuscleOxygenation_2,
             Trackdata\Entity::THB_0 => $this->Data->TotalHaemoglobin,
-            Trackdata\Entity::THB_1 => $this->Data->TotalHaemoglobin_2
+            Trackdata\Entity::THB_1 => $this->Data->TotalHaemoglobin_2,
+            Trackdata\Entity::IMPACT_GS_LEFT => $this->Data->ImpactGsLeft,
+            Trackdata\Entity::IMPACT_GS_RIGHT => $this->Data->ImpactGsRight,
+            Trackdata\Entity::BRAKING_GS_LEFT => $this->Data->BrakingGsLeft,
+            Trackdata\Entity::BRAKING_GS_RIGHT => $this->Data->BrakingGsRight,
+            Trackdata\Entity::FOOTSTRIKE_TYPE_LEFT => $this->Data->FootstrikeTypeLeft,
+            Trackdata\Entity::FOOTSTRIKE_TYPE_RIGHT => $this->Data->FootstrikeTypeRight,
+            Trackdata\Entity::PRONATION_EXCURSION_LEFT => $this->Data->PronationExcursionLeft,
+            Trackdata\Entity::PRONATION_EXCURSION_RIGHT => $this->Data->PronationExcursionRight
         ]);
     }
 

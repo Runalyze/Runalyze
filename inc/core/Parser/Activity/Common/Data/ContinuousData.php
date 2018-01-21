@@ -55,6 +55,30 @@ class ContinuousData
     /** @var array [100 * g/dL] */
     public $TotalHaemoglobin_2 = [];
 
+    /** @var float[] [G] */
+    public $ImpactGsLeft = [];
+
+    /** @var float[] [G] */
+    public $ImpactGsRight = [];
+
+    /** @var float[] [G] */
+    public $BrakingGsLeft = [];
+
+    /** @var float[] [G] */
+    public $BrakingGsRight = [];
+
+    /** @var int[] [°] */
+    public $FootstrikeTypeLeft = [];
+
+    /** @var int[] [°] */
+    public $FootstrikeTypeRight = [];
+
+    /** @var float[] [°] */
+    public $PronationExcursionLeft = [];
+
+    /** @var float[] [°] */
+    public $PronationExcursionRight = [];
+
     /** @var array [%ooL] */
     public $LeftRightBalance = [];
 
@@ -90,6 +114,14 @@ class ContinuousData
             'MuscleOxygenation_2',
             'TotalHaemoglobin',
             'TotalHaemoglobin_2',
+            'ImpactGsLeft',
+            'ImpactGsRight',
+            'BrakingGsLeft',
+            'BrakingGsRight',
+            'FootstrikeTypeLeft',
+            'FootstrikeTypeRight',
+            'PronationExcursionLeft',
+            'PronationExcursionRight',
             'LeftRightBalance',
             'Strokes',
             'StrokeType'

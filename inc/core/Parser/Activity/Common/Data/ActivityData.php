@@ -61,6 +61,30 @@ class ActivityData
     /** @var int|float|null [mm] */
     public $AvgVerticalOscillation = null;
 
+    /** @var int|float|null [G] */
+    public $AvgImpactGsLeft = null;
+
+    /** @var int|float|null [G] */
+    public $AvgImpactGsRight = null;
+
+    /** @var int|float|null [G] */
+    public $AvgBrakingGsLeft = null;
+
+    /** @var int|float|null [G] */
+    public $AvgBrakingGsRight = null;
+
+    /** @var int|null [°] */
+    public $AvgFootstrikeTypeLeft = null;
+
+    /** @var int|null [°] */
+    public $AvgFootstrikeTypeRight = null;
+
+    /** @var int|null [°] */
+    public $AvgPronationExcursionLeft = null;
+
+    /** @var int|null [°] */
+    public $AvgPronationExcursionRight = null;
+
     /** @var int|null */
     public $PoolLength = null;
 
@@ -90,6 +114,14 @@ class ActivityData
             'AvgGroundContactTime',
             'AvgGroundContactBalance',
             'AvgVerticalOscillation',
+            'AvgImpactGsLeft',
+            'AvgImpactGsRight',
+            'AvgBrakingGsLeft',
+            'AvgBrakingGsRight',
+            'AvgFootstrikeTypeLeft',
+            'AvgFootstrikeTypeRight',
+            'AvgPronationExcursionLeft',
+            'AvgPronationExcursionRight',
             'PoolLength',
             'TotalStrokes'
         ];
@@ -138,13 +170,28 @@ class ActivityData
                     Trackdata\Entity::CADENCE,
                     Trackdata\Entity::GROUNDCONTACT,
                     Trackdata\Entity::VERTICAL_OSCILLATION,
-                    Trackdata\Entity::GROUNDCONTACT_BALANCE
+                    Trackdata\Entity::GROUNDCONTACT_BALANCE,
+                    Trackdata\Entity::IMPACT_GS_LEFT,
+                    Trackdata\Entity::IMPACT_GS_RIGHT,
+                    Trackdata\Entity::BRAKING_GS_LEFT,
+                    Trackdata\Entity::BRAKING_GS_RIGHT,
+                    Trackdata\Entity::FOOTSTRIKE_TYPE_LEFT,
+                    Trackdata\Entity::FOOTSTRIKE_TYPE_RIGHT,
+                    Trackdata\Entity::PRONATION_EXCURSION_LEFT,
+                    Trackdata\Entity::PRONATION_EXCURSION_RIGHT
                 ]
             );
         } catch (\InvalidArgumentException $e) {
             return;
         }
 
+        $this->completeStandardAverageValuesFromAverages($averages);
+        $this->completeRunningDynamicsAverageValuesFromAverages($averages);
+        $this->completeRunScribeDataAverageValuesFromAverages($averages);
+    }
+
+    public function completeStandardAverageValuesFromAverages(TrackdataAverages $averages)
+    {
         if (null === $this->AvgPower) {
             $this->AvgPower = $averages->average(Trackdata\Entity::POWER);
         }
@@ -156,7 +203,10 @@ class ActivityData
         if (null === $this->AvgCadence) {
             $this->AvgCadence = $averages->average(Trackdata\Entity::CADENCE);
         }
+    }
 
+    public function completeRunningDynamicsAverageValuesFromAverages(TrackdataAverages $averages)
+    {
         if (null === $this->AvgGroundContactTime) {
             $this->AvgGroundContactTime = $averages->average(Trackdata\Entity::GROUNDCONTACT);
         }
@@ -167,6 +217,41 @@ class ActivityData
 
         if (null === $this->AvgGroundContactBalance) {
             $this->AvgGroundContactBalance = $averages->average(Trackdata\Entity::GROUNDCONTACT_BALANCE);
+        }
+    }
+
+    public function completeRunScribeDataAverageValuesFromAverages(TrackdataAverages $averages)
+    {
+        if (null === $this->AvgImpactGsLeft) {
+            $this->AvgImpactGsLeft = $averages->average(Trackdata\Entity::IMPACT_GS_LEFT);
+        }
+
+        if (null === $this->AvgImpactGsRight) {
+            $this->AvgImpactGsRight = $averages->average(Trackdata\Entity::IMPACT_GS_RIGHT);
+        }
+
+        if (null === $this->AvgBrakingGsLeft) {
+            $this->AvgBrakingGsLeft = $averages->average(Trackdata\Entity::BRAKING_GS_LEFT);
+        }
+
+        if (null === $this->AvgBrakingGsRight) {
+            $this->AvgBrakingGsRight = $averages->average(Trackdata\Entity::BRAKING_GS_RIGHT);
+        }
+
+        if (null === $this->AvgFootstrikeTypeLeft) {
+            $this->AvgFootstrikeTypeLeft = $averages->average(Trackdata\Entity::FOOTSTRIKE_TYPE_LEFT);
+        }
+
+        if (null === $this->AvgFootstrikeTypeRight) {
+            $this->AvgFootstrikeTypeRight = $averages->average(Trackdata\Entity::FOOTSTRIKE_TYPE_RIGHT);
+        }
+
+        if (null === $this->AvgPronationExcursionLeft) {
+            $this->AvgPronationExcursionLeft = $averages->average(Trackdata\Entity::PRONATION_EXCURSION_LEFT);
+        }
+
+        if (null === $this->AvgPronationExcursionRight) {
+            $this->AvgPronationExcursionRight = $averages->average(Trackdata\Entity::PRONATION_EXCURSION_RIGHT);
         }
     }
 

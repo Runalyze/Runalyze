@@ -17,6 +17,9 @@ class FitActivity extends AbstractSingleParser
     /** @var int [s] */
     const TIME_LIMIT_FOR_TIME_JUMP = 3600;
 
+    /** @var string */
+    const APP_ID_RUNSCRIBE_LIGHT = '80,32,146,179,176,221,69,173,137,179,71,42,178,6,10,182';
+
     /** @var array */
     protected $Header = [];
 
@@ -91,6 +94,9 @@ class FitActivity extends AbstractSingleParser
         9 => ['total_distance', ['default' => 1, 'm' => 100]],
     ];
 
+    /** @var array [developer_data_index => application_id] */
+    protected $DeveloperDataAppIds = [];
+
     public function parse()
     {
         throw new \RuntimeException('FitActivity does not support parse().');
@@ -116,6 +122,13 @@ class FitActivity extends AbstractSingleParser
         $this->Container->Metadata->setTimestamp(PHP_INT_MAX, $metadata->getTimezoneOffset());
     }
 
+    protected function readDeveloperDataId()
+    {
+        if ($this->Values['application_id']) {
+            $this->DeveloperDataAppIds[(int)$this->Values['developer_data_index'][0]] = $this->Values['application_id'][1];
+        }
+    }
+
     protected function readFieldDescription()
     {
         switch ($this->Values['native_mesg_num'][1]) {
@@ -135,6 +148,10 @@ class FitActivity extends AbstractSingleParser
 
     protected function readFieldDescriptionFor(array &$nativeFieldMapping, array &$fieldMapping)
     {
+        if (isset($this->Values['developer_data_index']) && isset($this->DeveloperDataAppIds[(int)$this->Values['developer_data_index'][0]])) {
+            $this->adjustFieldDescriptionForDeveloperApp($this->DeveloperDataAppIds[(int)$this->Values['developer_data_index'][0]]);
+        }
+
         if (!isset($this->Values['developer_data_index']) || !isset($this->Values['field_name']) || !isset($this->Values['field_definition_number'])) {
             return;
         }
@@ -177,6 +194,39 @@ class FitActivity extends AbstractSingleParser
             $fieldMapping[$fieldName] = [$mappingKey, $mappingFactor];
         } elseif (isset($fieldMapping[$devFieldName])) {
             $fieldMapping[$fieldName] = $fieldMapping[$devFieldName];
+        }
+    }
+
+    protected function adjustFieldDescriptionForDeveloperApp($appId)
+    {
+        if (self::APP_ID_RUNSCRIBE_LIGHT == $appId) {
+            $this->adjustFieldDescriptionForRunScribeLight();
+        }
+    }
+
+    /**
+     * @see https://github.com/ScribeLabs/garmin-connect-iq-runscribe-light/blob/master/resources/resources.xml
+     */
+    protected function adjustFieldDescriptionForRunScribeLight()
+    {
+        $fieldName = $this->Values['developer_data_index'][0].'_'.$this->Values['field_definition_number'][0].'_';
+        $resultingFieldNames = [
+            0 => 'impact_gs_left',
+            1 => 'braking_gs_left',
+            2 => 'fs_type_left',
+            3 => 'pronation_left',
+            6 => 'impact_gs_right',
+            7 => 'braking_gs_right',
+            8 => 'fs_type_right',
+            9 => 'pronation_right',
+            12 => 'power'
+        ];
+
+        if (isset($resultingFieldNames[(int)$this->Values['field_definition_number'][0]])) {
+            $this->DeveloperFieldMappingForRecord[$fieldName] = [
+                $resultingFieldNames[(int)$this->Values['field_definition_number'][0]],
+                1.0
+            ];
         }
     }
 
@@ -266,6 +316,10 @@ class FitActivity extends AbstractSingleParser
 
                 case 'length':
                     $this->readLength();
+                    break;
+
+                case 'developer_data_id':
+                    $this->readDeveloperDataId();
                     break;
 
                 case 'field_description':
@@ -530,6 +584,16 @@ class FitActivity extends AbstractSingleParser
         $this->Container->ContinuousData->MuscleOxygenation_2[] = isset($this->Values['smo2_1']) ? (int)$this->Values['smo2_1'][0] : null;
         $this->Container->ContinuousData->TotalHaemoglobin[] = isset($this->Values['thb_0']) ? (int)$this->Values['thb_0'][0] : null;
         $this->Container->ContinuousData->TotalHaemoglobin_2[] = isset($this->Values['thb_1']) ? (int)$this->Values['thb_1'][0] : null;
+
+        // RunScribe fields
+        $this->Container->ContinuousData->ImpactGsLeft[] = isset($this->Values['impact_gs_left']) ? round($this->Values['impact_gs_left'][0], 1) : null;
+        $this->Container->ContinuousData->ImpactGsRight[] = isset($this->Values['impact_gs_right']) ? round($this->Values['impact_gs_right'][0], 1) : null;
+        $this->Container->ContinuousData->BrakingGsLeft[] = isset($this->Values['braking_gs_left']) ? round($this->Values['braking_gs_left'][0], 1) : null;
+        $this->Container->ContinuousData->BrakingGsRight[] = isset($this->Values['braking_gs_right']) ? round($this->Values['braking_gs_right'][0], 1) : null;
+        $this->Container->ContinuousData->FootstrikeTypeLeft[] = isset($this->Values['fs_type_left']) ? (int)$this->Values['fs_type_left'][0] : null;
+        $this->Container->ContinuousData->FootstrikeTypeRight[] = isset($this->Values['fs_type_right']) ? (int)$this->Values['fs_type_right'][0] : null;
+        $this->Container->ContinuousData->PronationExcursionLeft[] = isset($this->Values['pronation_left']) ? round($this->Values['pronation_left'][0], 1) : null;
+        $this->Container->ContinuousData->PronationExcursionRight[] = isset($this->Values['pronation_right']) ? round($this->Values['pronation_right'][0], 1) : null;
 
         if ($time === $last) {
             $this->mergeRecord();
