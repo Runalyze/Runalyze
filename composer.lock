@@ -2791,12 +2791,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Runalyze/translations.git",
-                "reference": "ddeab29680614656efccfc1772630e01252e21d9"
+                "reference": "f2daee62a308cfaafb58db831e3b5887c5d5fd2f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Runalyze/translations/zipball/ddeab29680614656efccfc1772630e01252e21d9",
-                "reference": "ddeab29680614656efccfc1772630e01252e21d9",
+                "url": "https://api.github.com/repos/Runalyze/translations/zipball/f2daee62a308cfaafb58db831e3b5887c5d5fd2f",
+                "reference": "f2daee62a308cfaafb58db831e3b5887c5d5fd2f",
                 "shasum": ""
             },
             "type": "library",
@@ -2805,7 +2805,7 @@
                 "MIT"
             ],
             "description": "Translation of Runalyze",
-            "time": "2018-01-21 19:27:20"
+            "time": "2018-01-21 19:35:31"
         },
         {
             "name": "sensio/framework-extra-bundle",
