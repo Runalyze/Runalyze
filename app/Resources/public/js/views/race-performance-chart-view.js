@@ -58,7 +58,7 @@ Runalyze.RacePerformanceChartView = function (selector, url, options) {
     d3.json(url, function(raceData){
         try {
             var allRaces = raceData.filter(function(d) {
-                return (+d.sport_id == options.sportId);
+                return (+d.sport_id == options.sportId) && !(+d.is_fun);
             }).map(function(d) {
                 return {
                     date: new Date(d.date),
@@ -66,8 +66,8 @@ Runalyze.RacePerformanceChartView = function (selector, url, options) {
                     distance: +d.distance,
                     duration: +d.duration,
                     pace: +d.duration / (+d.distance),
-                    vo2maxByHr: +d.vo2max,
-                    vo2maxByTime: +d.vo2max_by_time,
+                    vo2maxByHr: d.vo2max ? +d.vo2max : NaN,
+                    vo2maxByTime: d.vo2max_by_time ? +d.vo2max_by_time : NaN,
                     name: d.name,
                     ageGrade: +d.age_grade,
                     isPb: false
@@ -78,7 +78,7 @@ Runalyze.RacePerformanceChartView = function (selector, url, options) {
             });
 
             if (allRaces.length == 0) {
-                $plot.append('<p class="text c">' + options.noDataMessage + '</p>');
+                $plot.append('<p class="text c no-data-message">' + options.noDataMessage + '</p>');
             }
 
             var allRaceDistances = allRaces.map(function(d) { return d.distance; }).filter(function(value, index, self) { return self.indexOf(value) === index; });
@@ -159,8 +159,18 @@ Runalyze.RacePerformanceChartView = function (selector, url, options) {
                 plot.gridArea().selectAll(':not(.plot-area)').remove();
                 plot.plotArea().selectAll('*').remove();
                 plot.axesArea().selectAll('*').remove();
+                $plot.find(".no-data-message").remove();
+
+                if (isAgeGrade) {
+                    d = d.filter(function(d) { return !isNaN(d.ageGrade); });
+                } else if (isVo2max) {
+                    ageStandardData = ageStandardData.filter(function(d) { return !isNaN(d.vo2maxByTime); });
+                    d = filterRacesToVo2max(d, wr ? ageStandardData.map(function(d) { return d.distanceKey; }) : [], 1.0);
+                }
 
                 if (d.length == 0) {
+                    $plot.append('<p class="text c no-data-message">' + options.noDataMessage + '</p>');
+
                     return;
                 }
 
@@ -173,17 +183,12 @@ Runalyze.RacePerformanceChartView = function (selector, url, options) {
                         return Runalyze.Formatter.formatPace(d, 0, 'short');
                     });
                 } else if (isAgeGrade) {
-                    d = d.filter(function(d) { return !isNaN(d.ageGrade); });
-
                     plot.yValue = function(d) { return d.ageGrade; };
                     plot.yScale.domain([0.9 * d3.min(d, plot.yValue), d3.max(d, plot.yValue) * 1.1]).nice();
                     plot.yMap = function(d) { return plot.yScale(plot.yValue(d)); };
                     plot.yAxis = d3.axisLeft().scale(plot.yScale);
                     plot.yAxis.tickFormat(function(d) { return (100 * d).toFixed(0) + "%"; });
                 } else if (isVo2max) {
-                    ageStandardData = ageStandardData.filter(function(d) { return !isNaN(d.vo2maxByTime); });
-                    d = filterRacesToVo2max(d, wr ? ageStandardData.map(function(d) { return d.distanceKey; }) : [], 1.0);
-
                     plot.yValue = function(d) { return d.vo2maxByTime; };
                     plot.yScale.domain([0.9 * d3.min(d, plot.yValue), d3.max([wr ? d3.max(ageStandardData, plot.yValue) : 0, d3.max(d, plot.yValue)]) * 1.1]).nice();
                     plot.yMap = function(d) { return plot.yScale(plot.yValue(d)); };

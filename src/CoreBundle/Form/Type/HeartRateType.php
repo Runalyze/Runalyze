@@ -12,6 +12,7 @@ class HeartRateType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars['input_unit'] = 'bpm';
+        $view->vars['attr']['min'] = 0;
     }
 
     public function getParent()

@@ -82,7 +82,6 @@ class ActivityForm extends \Runalyze\Configuration\Category {
 		$this->createHandle('TRAINING_LOAD_WEATHER', new Boolean(true));
 		$this->createHandle('PLZ', new Textline(''));
 		$this->createHandle('COMPUTE_KCAL', new Boolean(true));
-		$this->createHandle('COMPUTE_POWER', new Boolean(true));
 		$this->createHandle('TRAINING_SORT_SPORTS', new DatabaseOrder());
 		$this->createHandle('TRAINING_SORT_TYPES', new DatabaseOrder());
 		$this->createHandle('TRAINING_SORT_SHOES', new DatabaseOrder());
@@ -128,14 +127,6 @@ class ActivityForm extends \Runalyze\Configuration\Category {
 	 */
 	public function computeCalories() {
 		return $this->get('COMPUTE_KCAL');
-	}
-
-	/**
-	 * Compute power
-	 * @return bool
-	 */
-	public function computePower() {
-		return $this->get('COMPUTE_POWER');
 	}
 
 	/**
@@ -201,11 +192,6 @@ class ActivityForm extends \Runalyze\Configuration\Category {
 		$Fieldset->addHandle( $this->handle('COMPUTE_KCAL'), array(
 			'label'		=> __('Calculate energy'),
 			'tooltip'	=> __('Recalculate energy after changing duration by hand')
-		));
-
-		$Fieldset->addHandle( $this->handle('COMPUTE_POWER'), array(
-			'label'		=> __('Calculate power'),
-			'tooltip'	=> __('Calculate power by speed and grade for cycling')
 		));
 
 		$Fieldset->addHandle( $this->handle('DETECT_PAUSES'), array(

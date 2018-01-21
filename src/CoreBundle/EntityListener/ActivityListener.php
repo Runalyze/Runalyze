@@ -4,10 +4,7 @@ namespace Runalyze\Bundle\CoreBundle\EntityListener;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
-use Doctrine\ORM\PersistentCollection;
-use Runalyze\Bundle\CoreBundle\Bridge\Activity\Calculation\PowerCalculator;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
-use Runalyze\Bundle\CoreBundle\Entity\Equipment;
 use Runalyze\Bundle\CoreBundle\Entity\EquipmentRepository;
 use Runalyze\Bundle\CoreBundle\Entity\Sport;
 use Runalyze\Bundle\CoreBundle\Entity\SportRepository;
@@ -15,7 +12,6 @@ use Runalyze\Bundle\CoreBundle\Entity\Training;
 use Runalyze\Bundle\CoreBundle\Services\Configuration\ConfigurationManager;
 use Runalyze\Bundle\CoreBundle\Services\Import\TimezoneLookup;
 use Runalyze\Bundle\CoreBundle\Services\Recalculation\RecalculationManager;
-use Runalyze\Parser\Activity\Common\Data\Round\RoundCollection;
 use Runalyze\Util\LocalTime;
 
 class ActivityListener

@@ -86,7 +86,8 @@ class EditController extends Controller
             'activity_id' => $activity->getId(),
             'prev_activity_id' => $repository->getIdOfPreviousActivity($activity),
             'next_activity_id' => $repository->getIdOfNextActivity($activity),
-            'showElevationCorrectionLink' => $activity->hasRoute() && !$activity->getRoute()->hasCorrectedElevations()
+            'showElevationCorrectionLink' => $activity->hasRoute() && !$activity->getRoute()->hasCorrectedElevations(),
+            'isPowerLocked' => null !== $activity->isPowerCalculated()
         ]);
     }
 

@@ -17,6 +17,7 @@ use Runalyze\Bundle\CoreBundle\Form\Type\ElevationType;
 use Runalyze\Bundle\CoreBundle\Form\Type\EnergyKcalType;
 use Runalyze\Bundle\CoreBundle\Form\Type\HeartRateType;
 use Runalyze\Bundle\CoreBundle\Form\Type\HumidityType;
+use Runalyze\Bundle\CoreBundle\Form\Type\PowerType;
 use Runalyze\Bundle\CoreBundle\Form\Type\PressureType;
 use Runalyze\Bundle\CoreBundle\Form\Type\RpeType;
 use Runalyze\Bundle\CoreBundle\Form\Type\SportChoiceType;
@@ -137,6 +138,10 @@ class ActivityType extends AbstractType
             ])
             ->add('kcal', EnergyKcalType::class, [
                 'label' => 'Energy',
+                'required' => false
+            ])
+            ->add('power', PowerType::class, [
+                'label' => 'Power',
                 'required' => false
             ])
             ->add('pulseAvg', HeartRateType::class, [

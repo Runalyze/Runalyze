@@ -12,6 +12,8 @@ class WindDirectionType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars['input_unit'] = '°';
+        $view->vars['attr']['min'] = 0;
+        $view->vars['attr']['max'] = 360;
     }
 
     public function getParent()

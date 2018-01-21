@@ -13,6 +13,7 @@ class HumidityType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars['input_unit'] = '%';
+        $view->vars['attr']['min'] = 0;
     }
 
     public function configureOptions(OptionsResolver $resolver)

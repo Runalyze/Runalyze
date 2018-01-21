@@ -7,12 +7,11 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 
-class CadenceType extends AbstractType
+class PowerType extends AbstractType
 {
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $view->vars['input_unit'] = 'rpm';
-        $view->vars['attr']['min'] = 0;
+        $view->vars['input_unit'] = 'W';
     }
 
     public function getParent()
