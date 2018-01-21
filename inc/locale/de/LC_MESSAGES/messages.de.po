@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2017-07-08 11:26+0200\n"
-"PO-Revision-Date: 2017-12-14 17:07+0000\n"
+"PO-Revision-Date: 2018-01-21 12:03+0000\n"
 "Last-Translator: Hannes <mail@laufhannes.de>\n"
 "Language-Team: German "
 "<https://translate.runalyze.com/projects/runalyze/runalyze/de/>\n"
@@ -659,7 +659,7 @@ msgstr "Poollänge"
 #: inc/core/Dataset/Keys/FitTrainingEffect.php:43
 #: inc/training/search/class.SearchFormular.php:205
 msgid "Training Effect"
-msgstr "Training Effekt"
+msgstr "Trainingseffekt"
 
 #: inc/core/Util/Time.php:89 inc/tpl/tpl.DataBrowser.php:28
 msgid "Sun"
