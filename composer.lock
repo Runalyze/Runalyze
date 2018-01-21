@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "8f035b486bc91d887d3c9267cfafb2cb",
+    "content-hash": "eb231d9d67ea8d383f9bfa1965bff42f",
     "packages": [
         {
             "name": "beberlei/DoctrineExtensions",
@@ -2786,6 +2786,28 @@
             "time": "2017-07-14 10:21:34"
         },
         {
+            "name": "runalyze/translations",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Runalyze/translations.git",
+                "reference": "f2daee62a308cfaafb58db831e3b5887c5d5fd2f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Runalyze/translations/zipball/f2daee62a308cfaafb58db831e3b5887c5d5fd2f",
+                "reference": "f2daee62a308cfaafb58db831e3b5887c5d5fd2f",
+                "shasum": ""
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Translation of Runalyze",
+            "time": "2018-01-21 19:35:31"
+        },
+        {
             "name": "sensio/framework-extra-bundle",
             "version": "v3.0.16",
             "source": {
@@ -5198,6 +5220,7 @@
         "runalyze/common": 20,
         "runalyze/devices": 20,
         "miniflux/picofeed": 0,
+        "runalyze/translations": 20,
         "runalyze/playground": 20
     },
     "prefer-stable": true,
