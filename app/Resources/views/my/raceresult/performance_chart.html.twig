@@ -35,7 +35,7 @@
     </div>
 
     <div class="panel-content race-performance-chart">
-        <div id="races-plot" class="scatterplot loading" style="min-height:440px;"></div>
+        <div id="races-plot" class="scatterplot loading" style="min-height:440px;position:relative;"></div>
     </div>
 
     <div class="panel-content margin-top">
@@ -71,4 +71,13 @@
             }
         );
     </script>
+
+    <style>
+#races-plot .no-data-message {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+}
+    </style>
 {% endblock %}
