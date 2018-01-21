@@ -31,6 +31,7 @@ class RaceResultsController extends Controller
         $result = [];
         $races = $this->getRaceResultRepository()->findAllWithActivityStats($account);
         $ageGradeLookup = $this->get('app.age_grade_lookup')->getLookup() ?: $this->get('app.age_grade_lookup')->getDefaultLookup();
+        $funIds = $this->getDoctrine()->getRepository('CoreBundle:PluginConf')->getAllActivityIdsOfFunRaces($account);
 
         foreach ($races as $race) {
             $ageGrade = $ageGradeLookup->getAgeGrade(
@@ -55,7 +56,8 @@ class RaceResultsController extends Controller
                 'vo2max' => $race->getActivity()->getVO2max(),
                 'vo2max_by_time' => $race->getActivity()->getVO2maxByTime(),
                 'vo2max_with_elevation' => $race->getActivity()->getVO2maxWithElevation(),
-                'age_grade' => $ageGrade->getPerformance()
+                'age_grade' => $ageGrade->getPerformance(),
+                'is_fun' => in_array($race->getActivity()->getId(), $funIds)
             ];
         }
 
