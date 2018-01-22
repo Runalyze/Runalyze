@@ -214,6 +214,14 @@ class ActivityDataContainerToActivityContextConverter
         $activity->setGroundcontact($this->getRoundedValue($activityData->AvgGroundContactTime));
         $activity->setGroundcontactBalance($this->getRoundedValue($activityData->AvgGroundContactBalance));
         $activity->setVerticalOscillation($this->getRoundedValue($activityData->AvgVerticalOscillation));
+        $activity->setAvgImpactGsLeft($this->getRoundedValue($activityData->AvgImpactGsLeft, 1));
+        $activity->setAvgImpactGsRight($this->getRoundedValue($activityData->AvgImpactGsRight, 1));
+        $activity->setAvgBrakingGsLeft($this->getRoundedValue($activityData->AvgBrakingGsLeft, 1));
+        $activity->setAvgBrakingGsRight($this->getRoundedValue($activityData->AvgBrakingGsRight, 1));
+        $activity->setAvgFootstrikeTypeLeft($this->getRoundedValue($activityData->AvgFootstrikeTypeLeft));
+        $activity->setAvgFootstrikeTypeRight($this->getRoundedValue($activityData->AvgFootstrikeTypeRight));
+        $activity->setAvgPronationExcursionLeft($this->getRoundedValue($activityData->AvgPronationExcursionLeft, 1));
+        $activity->setAvgPronationExcursionRight($this->getRoundedValue($activityData->AvgPronationExcursionRight, 1));
         $activity->setTotalStrokes($activityData->TotalStrokes);
         $activity->setTrimp($activityData->Trimp);
         $activity->setRpe($activityData->RPE);
