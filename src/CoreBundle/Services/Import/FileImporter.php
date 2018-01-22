@@ -79,7 +79,7 @@ class FileImporter implements LoggerAwareInterface
     protected function remove($fileName)
     {
         if ($this->RemoveFiles) {
-            //$this->Filesystem->remove($fileName);
+            $this->Filesystem->remove($fileName);
         }
     }
 
