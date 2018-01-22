@@ -269,6 +269,14 @@ class SettingsController extends Controller
             'total_strokes' => 1250,
             'vertical_ratio' => 79,
             'groundcontact_balance' => 4980,
+            'avg_impact_gs_left' => 10.3,
+            'avg_impact_gs_right' => 10.7,
+            'avg_braking_gs_left' => 9.8,
+            'avg_braking_gs_right' => 9.6,
+            'avg_footstrike_type_left' => 12,
+            'avg_footstrike_type_right' => 13,
+            'avg_pronation_excursion_left' => -9.4,
+            'avg_pronation_excursion_right' => -15.0,
             Keys\Tags::CONCAT_TAGIDS_KEY => $this->exampleTagID($account),
             Keys\CompleteEquipment::CONCAT_EQUIPMENT_KEY => $this->exampleEquipmentIDs($account)
         );

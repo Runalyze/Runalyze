@@ -251,6 +251,46 @@ class Entity extends Model\EntityWithID {
 	 */
 	const VERTICAL_RATIO = 'vertical_ratio';
 
+    /**
+     * @var string
+     */
+    const AVG_IMPACT_GS_LEFT = 'avg_impact_gs_left';
+
+    /**
+     * @var string
+     */
+    const AVG_IMPACT_GS_RIGHT = 'avg_impact_gs_right';
+
+    /**
+     * @var string
+     */
+    const AVG_BRAKING_GS_LEFT = 'avg_braking_gs_left';
+
+    /**
+     * @var string
+     */
+    const AVG_BRAKING_GS_RIGHT = 'avg_braking_gs_right';
+
+    /**
+     * @var string
+     */
+    const AVG_FOOTSTRIKE_TYPE_LEFT = 'avg_footstrike_type_left';
+
+    /**
+     * @var string
+     */
+    const AVG_FOOTSTRIKE_TYPE_RIGHT = 'avg_footstrike_type_right';
+
+    /**
+     * @var string
+     */
+    const AVG_PRONATION_EXCURSION_LEFT = 'avg_pronation_excursion_left';
+
+    /**
+     * @var string
+     */
+    const AVG_PRONATION_EXCURSION_RIGHT = 'avg_pronation_excursion_right';
+
 	/**
 	 * Key: temperature
 	 * @var string
@@ -424,6 +464,14 @@ class Entity extends Model\EntityWithID {
 			self::VERTICAL_OSCILLATION,
 			self::GROUNDCONTACT_BALANCE,
 			self::VERTICAL_RATIO,
+			self::AVG_IMPACT_GS_LEFT,
+			self::AVG_IMPACT_GS_RIGHT,
+			self::AVG_BRAKING_GS_LEFT,
+			self::AVG_BRAKING_GS_RIGHT,
+			self::AVG_FOOTSTRIKE_TYPE_LEFT,
+			self::AVG_FOOTSTRIKE_TYPE_RIGHT,
+			self::AVG_PRONATION_EXCURSION_LEFT,
+			self::AVG_PRONATION_EXCURSION_RIGHT,
 			self::TEMPERATURE,
 			self::WINDSPEED,
 			self::WINDDEG,
@@ -514,6 +562,14 @@ class Entity extends Model\EntityWithID {
             case self::GROUNDCONTACT_BALANCE:
             case self::VERTICAL_OSCILLATION:
             case self::VERTICAL_RATIO:
+            case self::AVG_IMPACT_GS_LEFT:
+            case self::AVG_IMPACT_GS_RIGHT:
+            case self::AVG_BRAKING_GS_LEFT:
+            case self::AVG_BRAKING_GS_RIGHT:
+            case self::AVG_FOOTSTRIKE_TYPE_LEFT:
+            case self::AVG_FOOTSTRIKE_TYPE_RIGHT:
+            case self::AVG_PRONATION_EXCURSION_LEFT:
+            case self::AVG_PRONATION_EXCURSION_RIGHT:
 			case self::TEMPERATURE:
 			case self::WINDSPEED:
 			case self::WINDDEG:
@@ -579,6 +635,14 @@ class Entity extends Model\EntityWithID {
             self::GROUNDCONTACT_BALANCE,
             self::VERTICAL_OSCILLATION,
             self::VERTICAL_RATIO,
+            self::AVG_IMPACT_GS_LEFT,
+            self::AVG_IMPACT_GS_RIGHT,
+            self::AVG_BRAKING_GS_LEFT,
+            self::AVG_BRAKING_GS_RIGHT,
+            self::AVG_FOOTSTRIKE_TYPE_LEFT,
+            self::AVG_FOOTSTRIKE_TYPE_RIGHT,
+            self::AVG_PRONATION_EXCURSION_LEFT,
+            self::AVG_PRONATION_EXCURSION_RIGHT,
             self::ROUTEID
         ], true, true);
     }
@@ -943,6 +1007,62 @@ class Entity extends Model\EntityWithID {
         }
 
         return null;
+    }
+
+    /**
+     * @return null|float [G]
+     */
+    public function impactGsLeft() {
+        return $this->Data[self::AVG_IMPACT_GS_LEFT];
+    }
+
+    /**
+     * @return null|float [G]
+     */
+    public function impactGsRight() {
+        return $this->Data[self::AVG_IMPACT_GS_RIGHT];
+    }
+
+    /**
+     * @return null|float [G]
+     */
+    public function brakingGsLeft() {
+        return $this->Data[self::AVG_BRAKING_GS_LEFT];
+    }
+
+    /**
+     * @return null|float [G]
+     */
+    public function brakingGsRight() {
+        return $this->Data[self::AVG_BRAKING_GS_RIGHT];
+    }
+
+    /**
+     * @return null|int [°]
+     */
+    public function footstrikeTypeLeft() {
+        return $this->Data[self::AVG_FOOTSTRIKE_TYPE_LEFT];
+    }
+
+    /**
+     * @return null|int [°]
+     */
+    public function footstrikeTypeRight() {
+        return $this->Data[self::AVG_FOOTSTRIKE_TYPE_RIGHT];
+    }
+
+    /**
+     * @return null|float [°]
+     */
+    public function pronationExcursionLeft() {
+        return $this->Data[self::AVG_PRONATION_EXCURSION_LEFT];
+    }
+
+    /**
+     * @return null|float [°]
+     */
+    public function pronationExcursionRight() {
+        return $this->Data[self::AVG_PRONATION_EXCURSION_RIGHT];
     }
 
 	/**
