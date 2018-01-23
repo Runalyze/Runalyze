@@ -1648,9 +1648,9 @@ Datenpunkte außerhalb der Whisker werden als Ausreißer bezeichnet.
         <target>Überschreibe die Plugins</target>
         <jms:reference-file line="27">/Resources/views/tools/backup/import_form.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="7a9a6226596d8ee2851c67db535d45557a0133f7" resname="Pace">
+      <trans-unit id="7a9a6226596d8ee2851c67db535d45557a0133f7" resname="Pace" approved="yes">
         <source>Pace</source>
-        <target>Pace</target>
+        <target state="translated">Pace</target>
         <jms:reference-file line="40">/Resources/views/activity/tool/best_sub_segments.html.twig</jms:reference-file>
         <jms:reference-file line="79">/Resources/views/activity/tool/climb_score.html.twig</jms:reference-file>
         <jms:reference-file line="103">/Resources/views/activity/tool/time_series_statistics.html.twig</jms:reference-file>
