@@ -684,6 +684,20 @@ class Entity extends Model\Entity implements Model\Loopable, Model\Common\WithNu
         return $this->Data[self::PRONATION_EXCURSION_RIGHT];
     }
 
+    /**
+     * @return bool
+     */
+    public function hasRunScribeData() {
+        return !empty($this->Data[self::IMPACT_GS_LEFT]) ||
+            !empty($this->Data[self::IMPACT_GS_RIGHT]) ||
+            !empty($this->Data[self::BRAKING_GS_LEFT]) ||
+            !empty($this->Data[self::BRAKING_GS_RIGHT]) ||
+            !empty($this->Data[self::FOOTSTRIKE_TYPE_LEFT]) ||
+            !empty($this->Data[self::FOOTSTRIKE_TYPE_RIGHT]) ||
+            !empty($this->Data[self::PRONATION_EXCURSION_LEFT]) ||
+            !empty($this->Data[self::PRONATION_EXCURSION_RIGHT]);
+    }
+
 	/**
 	 * Get pauses
 	 * @return \Runalyze\Model\Trackdata\Pauses
