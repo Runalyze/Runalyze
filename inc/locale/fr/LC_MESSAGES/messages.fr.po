@@ -5,8 +5,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2017-07-08 11:26+0200\n"
-"PO-Revision-Date: 2017-12-06 16:46+0000\n"
-"Last-Translator: ftorto <dev.torto@gmail.com>\n"
+"PO-Revision-Date: 2018-01-24 20:10+0000\n"
+"Last-Translator: Olivier Raggi <olivier@raggi.fr>\n"
 "Language-Team: French "
 "<https://translate.runalyze.com/projects/runalyze/runalyze/fr/>\n"
 "Language: fr\n"
@@ -322,7 +322,7 @@ msgstr "Différence"
 #: inc/training/class.TrainingFormular.php:479
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:78
 msgid "SmO2"
-msgstr ""
+msgstr "SmO2"
 
 #: inc/core/View/Activity/Plot/ElevationAlgorithms.php:82
 msgid "Original data"
@@ -348,8 +348,9 @@ msgstr "Pas de données GPS disponibles. Impossible de calculer les tours."
 
 #: inc/core/View/Activity/Plot/Laps.php:121 inc/core/View/Plot/Series.php:160
 #: inc/draw/class.PlotSumData.php:633
+#, fuzzy
 msgid "avg:"
-msgstr "moyenne:"
+msgstr "moy. :"
 
 #: inc/core/View/Activity/Plot/ActivityPlot.php:82
 msgid "No plot available."
@@ -2148,12 +2149,16 @@ msgid ""
 "Heat cramps and heat exhaustion are possible. Continuing activity could "
 "result in heat stroke."
 msgstr ""
+"Les crampes de chaleur et l'épuisement par la chaleur sont possibles. Une "
+"activité continue pourrait entraîner un coup de chaleur."
 
 #: inc/core/Data/Weather/HeatIndexEffect.php:109
 msgid ""
 "Heat cramps and heat exhaustion are likely; heat stroke is probable with "
 "continued activity."
 msgstr ""
+"Les crampes de chaleur et l'épuisement dû à la chaleur sont probables ; un "
+"coup de chaleur est probable si l'activité continue."
 
 #: inc/core/Data/Weather/HeatIndexEffect.php:111
 msgid "Heat stroke is imminent."
@@ -2921,7 +2926,7 @@ msgstr "Équilibre du contact au sol"
 
 #: inc/training/search/class.SearchFormular.php:213
 msgid "Percentage Hilly"
-msgstr ""
+msgstr "Pourcentage de pente"
 
 #: inc/training/search/class.SearchFormular.php:313
 msgid "Yes"
@@ -4607,7 +4612,7 @@ msgstr[1] "%d jours de course depuis %s"
 
 #: plugin/RunalyzePluginStat_Trainingspartner/class.RunalyzePluginStat_Trainingspartner.php:44
 msgid "How often did you train with whom?"
-msgstr "Combien de fois vous êtes-vous entraîné avec qui?"
+msgstr "Combien de fois vous êtes-vous entraîné avec qui ?"
 
 #: plugin/RunalyzePluginStat_Trainingspartner/class.RunalyzePluginStat_Trainingspartner.php:81
 msgid "All training partners"
@@ -5107,7 +5112,8 @@ msgstr "Saison"
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:428
 msgid "Note: Season means the current season in the german &quot;kmspiel&quot;"
 msgstr ""
-"Note: Saison signifie la saison actuelle dans le &quot;kmspiel&quot; allemand"
+"Note : Saison signifie la saison en cours dans le &quot;kmspiel&quot; "
+"allemand"
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:429
 msgid "Year"
@@ -5207,11 +5213,11 @@ msgstr "Montrer les cadences d'entraînement"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:80
 msgid "How are these values calculated?"
-msgstr "Comment ces valeurs sont-elles calculées?"
+msgstr "Comment ces valeurs sont-elles calculées ?"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:81
 msgid "Explanations: What are VO2max and TRIMP?"
-msgstr "Explications: Que sont la VO2max et le TRIMP?"
+msgstr "Explications : Que sont la VO2max et le TRIMP ?"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:100
 msgid "There are not enough activities for good calculations."
@@ -5302,7 +5308,7 @@ msgstr "valeur/jour"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:336
 msgid "max. value"
-msgstr "valeur max."
+msgstr "valeur max"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:345
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:354
@@ -5495,7 +5501,7 @@ msgstr "Forme"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/window.php:2
 msgid "Explanation: How are these experimental values calculated?"
-msgstr "Explication: Comment ces valeurs sont-elles calculées?"
+msgstr "Explication : Comment ces valeurs expérimentales sont-elles calculées ?"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/window.plot.php:22
 msgid "Last half year"
