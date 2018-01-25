@@ -3,21 +3,21 @@
 namespace Runalyze\Bundle\CoreBundle\Component\Tool\Anova\QueryValue;
 
 use Runalyze\Bundle\CoreBundle\Component\Configuration\UnitSystem;
-use Runalyze\Metrics\Distance\Unit\AbstractDistanceUnit;
+use Runalyze\Metrics\Common\Unit\None;
 
-class Distance extends AbstractOneColumnValue
+class FootstrikeTypeRight extends AbstractOneColumnValue
 {
     protected function getColumn()
     {
-        return 'distance';
+        return 'avgFootstrikeTypeRight';
     }
 
     /**
      * @param UnitSystem $unitSystem
-     * @return AbstractDistanceUnit
+     * @return None
      */
     public function getValueUnit(UnitSystem $unitSystem)
     {
-        return $unitSystem->getDistanceUnit();
+        return new None();
     }
 }
