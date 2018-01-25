@@ -34,7 +34,8 @@
         "guzzlehttp/guzzle": "^6.0",
         "runalyze/common": "dev-master",
         "runalyze/devices": "dev-master",
-        "miniflux/picofeed": "@stable"
+        "miniflux/picofeed": "@stable",
+        "runalyze/translations": "dev-master"
     },
     "autoload": {
         "files": ["src/functions.php", "app/AppKernel.php"],
