@@ -61,6 +61,8 @@ class FitActivity extends AbstractSingleParser
 
     /** @var array */
     protected $DeveloperFieldMappingForRecord = [
+        'Power' => ['power', 1],
+        'ContactTime' => ['stance_time', 10],
         'RP_Power' => ['power', 1],
         'saturated_hemoglobin_percent' => ['smo2_0', 0.1],
         'total_hemoglobin_conc' => ['thb_0', 1]
