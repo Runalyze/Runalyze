@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "8f035b486bc91d887d3c9267cfafb2cb",
+    "content-hash": "ad2f84d4e2a4180be25325b6fdc1b5dc",
     "packages": [
         {
             "name": "beberlei/DoctrineExtensions",
@@ -2605,16 +2605,16 @@
         },
         {
             "name": "runalyze/age-grade",
-            "version": "1.1.0",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Runalyze/age-grade.git",
-                "reference": "83bd3e8a70ee99fcbb3b4abc26ed4fc9e2b4709e"
+                "reference": "945b3d2a40ec398342137aa57dec97271af475c8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Runalyze/age-grade/zipball/83bd3e8a70ee99fcbb3b4abc26ed4fc9e2b4709e",
-                "reference": "83bd3e8a70ee99fcbb3b4abc26ed4fc9e2b4709e",
+                "url": "https://api.github.com/repos/Runalyze/age-grade/zipball/945b3d2a40ec398342137aa57dec97271af475c8",
+                "reference": "945b3d2a40ec398342137aa57dec97271af475c8",
                 "shasum": ""
             },
             "require": {
@@ -2635,7 +2635,7 @@
                 "MIT"
             ],
             "description": "Age grading for race results (running) based on tables provided by WMA",
-            "time": "2018-01-02T19:36:43+00:00"
+            "time": "2018-01-25T18:04:21+00:00"
         },
         {
             "name": "runalyze/common",
