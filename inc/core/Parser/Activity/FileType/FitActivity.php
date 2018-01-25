@@ -20,6 +20,9 @@ class FitActivity extends AbstractSingleParser
     /** @var string */
     const APP_ID_RUNSCRIBE_LIGHT = '80,32,146,179,176,221,69,173,137,179,71,42,178,6,10,182';
 
+    /** @var string */
+    const APP_ID_RUNSCRIBE_PLUS = '193,245,200,10,90,5,78,138,151,179,253,163,78,149,112,53';
+
     /** @var array */
     protected $Header = [];
 
@@ -199,7 +202,7 @@ class FitActivity extends AbstractSingleParser
 
     protected function adjustFieldDescriptionForDeveloperApp($appId)
     {
-        if (self::APP_ID_RUNSCRIBE_LIGHT == $appId) {
+        if (self::APP_ID_RUNSCRIBE_LIGHT == $appId || self::APP_ID_RUNSCRIBE_PLUS == $appId) {
             $this->adjustFieldDescriptionForRunScribeLight();
         }
     }
