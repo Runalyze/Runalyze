@@ -327,28 +327,28 @@ class Training implements IdentifiableEntityInterface, AccountRelatedEntityInter
     /**
      * @var float|null [G]
      *
-     * @ORM\Column(name="avg_impact_gs_left", type="float", nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="avg_impact_gs_left", type="float", nullable=true, options={"unsigned":true}, columnDefinition="FLOAT")
      */
     private $avgImpactGsLeft = null;
 
     /**
      * @var float|null [G]
      *
-     * @ORM\Column(name="avg_impact_gs_right", type="float", nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="avg_impact_gs_right", type="float", nullable=true, options={"unsigned":true}, columnDefinition="FLOAT")
      */
     private $avgImpactGsRight = null;
 
     /**
      * @var float|null [G]
      *
-     * @ORM\Column(name="avg_braking_gs_left", type="float", nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="avg_braking_gs_left", type="float", nullable=true, options={"unsigned":true}, columnDefinition="FLOAT")
      */
     private $avgBrakingGsLeft = null;
 
     /**
      * @var float|null [G]
      *
-     * @ORM\Column(name="avg_braking_gs_right", type="float", nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="avg_braking_gs_right", type="float", nullable=true, options={"unsigned":true}, columnDefinition="FLOAT")
      */
     private $avgBrakingGsRight = null;
 
@@ -369,14 +369,14 @@ class Training implements IdentifiableEntityInterface, AccountRelatedEntityInter
     /**
      * @var float|null [°]
      *
-     * @ORM\Column(name="avg_pronation_excursion_left", type="float", nullable=true)
+     * @ORM\Column(name="avg_pronation_excursion_left", type="float", nullable=true, columnDefinition="FLOAT")
      */
     private $avgPronationExcursionLeft = null;
 
     /**
      * @var float|null [°]
      *
-     * @ORM\Column(name="avg_pronation_excursion_right", type="float", nullable=true)
+     * @ORM\Column(name="avg_pronation_excursion_right", type="float", nullable=true, columnDefinition="FLOAT")
      */
     private $avgPronationExcursionRight = null;
 
@@ -1445,7 +1445,7 @@ class Training implements IdentifiableEntityInterface, AccountRelatedEntityInter
     {
         return $this->verticalRatio;
     }
-    
+
 
     /**
      * @param null|float $avgImpactGsLeft [G]

@@ -25,14 +25,14 @@ class Version20180118193118 extends AbstractMigration implements ContainerAwareI
         $prefix = $this->container->getParameter('database_prefix');
 
         $this->addSql('ALTER TABLE `'.$prefix.'training`
-                                ADD `avg_impact_gs_left` DOUBLE PRECISION DEFAULT NULL AFTER `vertical_ratio`,
-                                ADD `avg_impact_gs_right` DOUBLE PRECISION DEFAULT NULL AFTER `avg_impact_gs_left`,
-                                ADD `avg_braking_gs_left` DOUBLE PRECISION DEFAULT NULL AFTER `avg_impact_gs_right`,
-                                ADD `avg_braking_gs_right` DOUBLE PRECISION DEFAULT NULL AFTER `avg_braking_gs_left`,
+                                ADD `avg_impact_gs_left` FLOAT DEFAULT NULL AFTER `vertical_ratio`,
+                                ADD `avg_impact_gs_right` FLOAT DEFAULT NULL AFTER `avg_impact_gs_left`,
+                                ADD `avg_braking_gs_left` FLOAT DEFAULT NULL AFTER `avg_impact_gs_right`,
+                                ADD `avg_braking_gs_right` FLOAT DEFAULT NULL AFTER `avg_braking_gs_left`,
                                 ADD `avg_footstrike_type_left` TINYINT UNSIGNED DEFAULT NULL COMMENT \'(DC2Type:tinyint)\' AFTER `avg_braking_gs_right`,
                                 ADD `avg_footstrike_type_right` TINYINT UNSIGNED DEFAULT NULL COMMENT \'(DC2Type:tinyint)\' AFTER `avg_footstrike_type_left`,
-                                ADD `avg_pronation_excursion_left` DOUBLE PRECISION DEFAULT NULL AFTER `avg_footstrike_type_right`,
-                                ADD `avg_pronation_excursion_right` DOUBLE PRECISION DEFAULT NULL AFTER `avg_pronation_excursion_left`;
+                                ADD `avg_pronation_excursion_left` FLOAT DEFAULT NULL AFTER `avg_footstrike_type_right`,
+                                ADD `avg_pronation_excursion_right` FLOAT DEFAULT NULL AFTER `avg_pronation_excursion_left`;
                                 ');
     }
 
