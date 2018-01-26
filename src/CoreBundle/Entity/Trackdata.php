@@ -108,6 +108,62 @@ class Trackdata implements AccountRelatedEntityInterface
     private $thb1;
 
     /**
+     * @var array|null [G]
+     *
+     * @ORM\Column(name="impact_gs_left", type="pipe_array", nullable=true)
+     */
+    private $impactGsLeft;
+
+    /**
+     * @var array|null [G]
+     *
+     * @ORM\Column(name="impact_gs_right", type="pipe_array", nullable=true)
+     */
+    private $impactGsRight;
+
+    /**
+     * @var array|null [G]
+     *
+     * @ORM\Column(name="braking_gs_left", type="pipe_array", nullable=true)
+     */
+    private $brakingGsLeft;
+
+    /**
+     * @var array|null [G]
+     *
+     * @ORM\Column(name="braking_gs_right", type="pipe_array", nullable=true)
+     */
+    private $brakingGsRight;
+
+    /**
+     * @var array|null [°]
+     *
+     * @ORM\Column(name="footstrike_type_left", type="pipe_array", nullable=true)
+     */
+    private $footstrikeTypeLeft;
+
+    /**
+     * @var array|null [°]
+     *
+     * @ORM\Column(name="footstrike_type_right", type="pipe_array", nullable=true)
+     */
+    private $footstrikeTypeRight;
+
+    /**
+     * @var array|null [°]
+     *
+     * @ORM\Column(name="pronation_excursion_left", type="pipe_array", nullable=true)
+     */
+    private $pronationExcursionLeft;
+
+    /**
+     * @var array|null [°]
+     *
+     * @ORM\Column(name="pronation_excursion_right", type="pipe_array", nullable=true)
+     */
+    private $pronationExcursionRight;
+
+    /**
      * @var \Runalyze\Parser\Activity\Common\Data\Pause\PauseCollection
      *
      * @ORM\Column(name="pauses", type="runalyze_pause_array", length=65535, nullable=true)
@@ -566,6 +622,230 @@ class Trackdata implements AccountRelatedEntityInterface
     }
 
     /**
+     * @param array|null $impactGsLeft [G]
+     *
+     * @return $this
+     */
+    public function setImpactGsLeft(array $impactGsLeft = null)
+    {
+        $this->impactGsLeft = $impactGsLeft;
+
+        return $this;
+    }
+
+    /**
+     * @return array|null [G]
+     */
+    public function getImpactGsLeft()
+    {
+        return $this->impactGsLeft;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasImpactGsLeft()
+    {
+        return null !== $this->impactGsLeft;
+    }
+
+    /**
+     * @param array|null $impactGsRight [G]
+     *
+     * @return $this
+     */
+    public function setImpactGsRight(array $impactGsRight = null)
+    {
+        $this->impactGsRight = $impactGsRight;
+
+        return $this;
+    }
+
+    /**
+     * @return array|null [G]
+     */
+    public function getImpactGsRight()
+    {
+        return $this->impactGsRight;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasImpactGsRight()
+    {
+        return null !== $this->impactGsRight;
+    }
+
+    /**
+     * @param array|null $brakingGsLeft [G]
+     *
+     * @return $this
+     */
+    public function setBrakingGsLeft(array $brakingGsLeft = null)
+    {
+        $this->brakingGsLeft = $brakingGsLeft;
+
+        return $this;
+    }
+
+    /**
+     * @return array|null [G]
+     */
+    public function getBrakingGsLeft()
+    {
+        return $this->brakingGsLeft;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasBrakingGsLeft()
+    {
+        return null !== $this->brakingGsLeft;
+    }
+
+    /**
+     * @param array|null $brakingGsRight [G]
+     *
+     * @return $this
+     */
+    public function setBrakingGsRight(array $brakingGsRight = null)
+    {
+        $this->brakingGsRight = $brakingGsRight;
+
+        return $this;
+    }
+
+    /**
+     * @return array|null [G]
+     */
+    public function getBrakingGsRight()
+    {
+        return $this->brakingGsRight;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasBrakingGsRight()
+    {
+        return null !== $this->brakingGsRight;
+    }
+
+    /**
+     * @param array|null $footstrikeTypeLeft [°]
+     *
+     * @return $this
+     */
+    public function setFootstrikeTypeLeft(array $footstrikeTypeLeft = null)
+    {
+        $this->footstrikeTypeLeft = $footstrikeTypeLeft;
+
+        return $this;
+    }
+
+    /**
+     * @return array|null [°]
+     */
+    public function getFootstrikeTypeLeft()
+    {
+        return $this->footstrikeTypeLeft;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasFootstrikeTypeLeft()
+    {
+        return null !== $this->footstrikeTypeLeft;
+    }
+
+    /**
+     * @param array|null $footstrikeTypeRight [°]
+     *
+     * @return $this
+     */
+    public function setFootstrikeTypeRight(array $footstrikeTypeRight = null)
+    {
+        $this->footstrikeTypeRight = $footstrikeTypeRight;
+
+        return $this;
+    }
+
+    /**
+     * @return array|null [°]
+     */
+    public function getFootstrikeTypeRight()
+    {
+        return $this->footstrikeTypeRight;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasFootstrikeTypeRight()
+    {
+        return null !== $this->footstrikeTypeRight;
+    }
+
+    /**
+     * @param array|null $pronationExcursionLeft [°]
+     *
+     * @return $this
+     */
+    public function setPronationExcursionLeft(array $pronationExcursionLeft = null)
+    {
+        $this->pronationExcursionLeft = $pronationExcursionLeft;
+
+        return $this;
+    }
+
+    /**
+     * @return array|null [°]
+     */
+    public function getPronationExcursionLeft()
+    {
+        return $this->pronationExcursionLeft;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasPronationExcursionLeft()
+    {
+        return null !== $this->pronationExcursionLeft;
+    }
+
+    /**
+     * @param array|null $pronationExcursionRight [°]
+     *
+     * @return $this
+     */
+    public function setPronationExcursionRight(array $pronationExcursionRight = null)
+    {
+        $this->pronationExcursionRight = $pronationExcursionRight;
+
+        return $this;
+    }
+
+    /**
+     * @return array|null [°]
+     */
+    public function getPronationExcursionRight()
+    {
+        return $this->pronationExcursionRight;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasPronationExcursionRight()
+    {
+        return null !== $this->pronationExcursionRight;
+    }
+
+    /**
      * @param \Runalyze\Parser\Activity\Common\Data\Pause\PauseCollection $pauses
      *
      * @return $this
@@ -671,6 +951,14 @@ class Trackdata implements AccountRelatedEntityInterface
             (null === $this->smo21 && empty($this->smo21)) &&
             (null === $this->thb0 && empty($this->thb0)) &&
             (null === $this->thb1 && empty($this->thb1)) &&
+            (null === $this->impactGsLeft && empty($this->impactGsLeft)) &&
+            (null === $this->impactGsRight && empty($this->impactGsRight)) &&
+            (null === $this->brakingGsLeft && empty($this->brakingGsLeft)) &&
+            (null === $this->brakingGsRight && empty($this->brakingGsRight)) &&
+            (null === $this->footstrikeTypeLeft && empty($this->footstrikeTypeLeft)) &&
+            (null === $this->footstrikeTypeRight && empty($this->footstrikeTypeRight)) &&
+            (null === $this->pronationExcursionLeft && empty($this->pronationExcursionLeft)) &&
+            (null === $this->pronationExcursionRight && empty($this->pronationExcursionRight)) &&
             $this->pauses->isEmpty()
         );
     }
@@ -695,6 +983,15 @@ class Trackdata implements AccountRelatedEntityInterface
             Model\Trackdata\Entity::SMO2_1 => $this->smo21,
             Model\Trackdata\Entity::THB_0 => $this->thb0,
             Model\Trackdata\Entity::THB_1 => $this->thb1,
+            Model\Trackdata\Entity::IMPACT_GS_LEFT => $this->impactGsLeft,
+            Model\Trackdata\Entity::IMPACT_GS_RIGHT => $this->impactGsRight,
+            Model\Trackdata\Entity::BRAKING_GS_LEFT => $this->brakingGsLeft,
+            Model\Trackdata\Entity::BRAKING_GS_RIGHT => $this->brakingGsRight,
+            Model\Trackdata\Entity::FOOTSTRIKE_TYPE_LEFT => $this->footstrikeTypeLeft,
+            Model\Trackdata\Entity::FOOTSTRIKE_TYPE_RIGHT => $this->footstrikeTypeRight,
+            Model\Trackdata\Entity::PRONATION_EXCURSION_LEFT => $this->pronationExcursionLeft,
+            Model\Trackdata\Entity::PRONATION_EXCURSION_RIGHT => $this->pronationExcursionRight,
+
             // Legacy model does still use the pauses object
             //Model\Trackdata\Entity::PAUSES => $this->pauses
         ]);

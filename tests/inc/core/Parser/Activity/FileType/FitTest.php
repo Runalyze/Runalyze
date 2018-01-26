@@ -738,4 +738,27 @@ class FitTest extends AbstractActivityParserTestCase
         $this->assertNotEmpty($this->Container->ContinuousData->Power);
         $this->assertEquals(335, $this->Container->ActivityData->AvgPower, '', 5);
     }
+
+    public function testRunScribeDataForAdditionalFields()
+    {
+        $this->convertAndParse('fit/Fenix-3-with-runscribe-v1-38.fit');
+
+        $this->assertNotEmpty($this->Container->ContinuousData->ImpactGsLeft);
+        $this->assertNotEmpty($this->Container->ContinuousData->ImpactGsRight);
+        $this->assertNotEmpty($this->Container->ContinuousData->BrakingGsLeft);
+        $this->assertNotEmpty($this->Container->ContinuousData->BrakingGsRight);
+        $this->assertNotEmpty($this->Container->ContinuousData->FootstrikeTypeLeft);
+        $this->assertNotEmpty($this->Container->ContinuousData->FootstrikeTypeRight);
+        $this->assertNotEmpty($this->Container->ContinuousData->PronationExcursionLeft);
+        $this->assertNotEmpty($this->Container->ContinuousData->PronationExcursionRight);
+
+        $this->assertEquals(11.3, $this->Container->ActivityData->AvgImpactGsLeft, '', 0.1);
+        $this->assertEquals(10.7, $this->Container->ActivityData->AvgImpactGsRight, '', 0.1);
+        $this->assertEquals(12.2, $this->Container->ActivityData->AvgBrakingGsLeft, '', 0.1);
+        $this->assertEquals(12.5, $this->Container->ActivityData->AvgBrakingGsRight, '', 0.1);
+        $this->assertEquals(11.9, $this->Container->ActivityData->AvgFootstrikeTypeLeft, '', 0.1);
+        $this->assertEquals(10.1, $this->Container->ActivityData->AvgFootstrikeTypeRight, '', 0.1);
+        $this->assertEquals(-10.0, $this->Container->ActivityData->AvgPronationExcursionLeft, '', 0.1);
+        $this->assertEquals(-7.0, $this->Container->ActivityData->AvgPronationExcursionRight, '', 0.1);
+    }
 }

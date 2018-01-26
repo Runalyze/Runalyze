@@ -64,6 +64,30 @@ final class QueryValues extends AbstractEnum
     const FLIGHT_RATIO = 'flight_ratio';
 
     /** @var string */
+    const IMPACT_GS_LEFT = 'impact_gs_left';
+
+    /** @var string */
+    const IMPACT_GS_RIGHT = 'impact_gs_right';
+
+    /** @var string */
+    const BRAKING_GS_LEFT = 'braking_gs_left';
+
+    /** @var string */
+    const BRAKING_GS_RIGHT = 'braking_gs_right';
+
+    /** @var string */
+    const FOOTSTRIKE_TYPE_LEFT = 'footstrike_type_left';
+
+    /** @var string */
+    const FOOTSTRIKE_TYPE_RIGHT = 'footstrike_type_right';
+
+    /** @var string */
+    const PRONATION_EXCURSION_LEFT = 'pronation_excursion_left';
+
+    /** @var string */
+    const PRONATION_EXCURSION_RIGHT = 'pronation_excursion_right';
+
+    /** @var string */
     const FIT_HRV_ANALYSIS = 'fit_hrv_analysis';
 
     /** @var string */

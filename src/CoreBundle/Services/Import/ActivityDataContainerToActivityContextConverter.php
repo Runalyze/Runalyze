@@ -214,6 +214,14 @@ class ActivityDataContainerToActivityContextConverter
         $activity->setGroundcontact($this->getRoundedValue($activityData->AvgGroundContactTime));
         $activity->setGroundcontactBalance($this->getRoundedValue($activityData->AvgGroundContactBalance));
         $activity->setVerticalOscillation($this->getRoundedValue($activityData->AvgVerticalOscillation));
+        $activity->setAvgImpactGsLeft($this->getRoundedValue($activityData->AvgImpactGsLeft, 1));
+        $activity->setAvgImpactGsRight($this->getRoundedValue($activityData->AvgImpactGsRight, 1));
+        $activity->setAvgBrakingGsLeft($this->getRoundedValue($activityData->AvgBrakingGsLeft, 1));
+        $activity->setAvgBrakingGsRight($this->getRoundedValue($activityData->AvgBrakingGsRight, 1));
+        $activity->setAvgFootstrikeTypeLeft($this->getRoundedValue($activityData->AvgFootstrikeTypeLeft));
+        $activity->setAvgFootstrikeTypeRight($this->getRoundedValue($activityData->AvgFootstrikeTypeRight));
+        $activity->setAvgPronationExcursionLeft($this->getRoundedValue($activityData->AvgPronationExcursionLeft, 1));
+        $activity->setAvgPronationExcursionRight($this->getRoundedValue($activityData->AvgPronationExcursionRight, 1));
         $activity->setTotalStrokes($activityData->TotalStrokes);
         $activity->setTrimp($activityData->Trimp);
         $activity->setRpe($activityData->RPE);
@@ -287,6 +295,14 @@ class ActivityDataContainerToActivityContextConverter
         $trackData->setSmo21($container->ContinuousData->MuscleOxygenation_2 ?: null);
         $trackData->setThb0($container->ContinuousData->TotalHaemoglobin ?: null);
         $trackData->setThb1($container->ContinuousData->TotalHaemoglobin_2 ?: null);
+        $trackData->setImpactGsLeft($container->ContinuousData->ImpactGsLeft ?: null);
+        $trackData->setImpactGsRight($container->ContinuousData->ImpactGsRight ?: null);
+        $trackData->setBrakingGsLeft($container->ContinuousData->BrakingGsLeft ?: null);
+        $trackData->setBrakingGsRight($container->ContinuousData->BrakingGsRight ?: null);
+        $trackData->setFootstrikeTypeLeft($container->ContinuousData->FootstrikeTypeLeft ?: null);
+        $trackData->setFootstrikeTypeRight($container->ContinuousData->FootstrikeTypeRight ?: null);
+        $trackData->setPronationExcursionLeft($container->ContinuousData->PronationExcursionLeft ?: null);
+        $trackData->setPronationExcursionRight($container->ContinuousData->PronationExcursionRight ?: null);
 
         if ($trackData->isEmpty()) {
             return null;

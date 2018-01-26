@@ -100,8 +100,7 @@ class RaceResultController extends Controller
         $distances = [0.06, 0.1, 0.2, 0.4, 0.8, 1.0, 1.5, 3.0, 5.0, 10.0, 21.1, 42.2, 50.0];
         $distanceTicks = [0.06, 0.1, 0.2, 0.4, 0.8, 1.5, 3.0, 5.0, 10.0, 21.1, 42.2];
         $ageStandardTimes = array_map(function($kilometer) use ($ageGradeLookup) {
-            // TODO: use better way (see https://github.com/Runalyze/age-grade/issues/3; these values are rounded)
-            return $ageGradeLookup->getAgeGrade($kilometer, 1)->getAgeStandard();
+            return $ageGradeLookup->getAgeStandard($kilometer);
         }, $distances);
         $ageStandardVO2max = array_map(function($kilometer, $seconds) use ($danielsGilbertFormula) {
             return $danielsGilbertFormula->estimateFromRaceResult($kilometer, $seconds);

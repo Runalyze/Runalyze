@@ -178,6 +178,18 @@ final class Keys extends AbstractEnum
     /** @var int */
     const FLIGHT_RATIO = 55;
 
+    /** @var int */
+    const AVG_IMPACT_GS = 56;
+
+    /** @var int */
+    const AVG_BRAKING_GS = 57;
+
+    /** @var int */
+    const AVG_FOOTSTRIKE_TYPE = 58;
+
+    /** @var int */
+    const AVG_PRONATION_EXCURSION = 59;
+
     /**
 	 * @var array|null
 	 */
@@ -289,7 +301,11 @@ final class Keys extends AbstractEnum
             self::PERCENTAGE_HILLY => 'PercentageHilly',
             self::TOOLS => 'Tools',
             self::FLIGHT_TIME => 'FlightTime',
-            self::FLIGHT_RATIO => 'FlightRatio'
+            self::FLIGHT_RATIO => 'FlightRatio',
+            self::AVG_IMPACT_GS => 'AverageImpactGs',
+            self::AVG_BRAKING_GS => 'AverageBrakingGs',
+            self::AVG_FOOTSTRIKE_TYPE => 'AverageFootstrikeType',
+            self::AVG_PRONATION_EXCURSION => 'AveragePronationExcursion'
         );
 	}
 }

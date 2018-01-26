@@ -146,6 +146,16 @@ class AnovaType extends AbstractType
                         'Flight time' => QueryValues::FLIGHT_TIME,
                         'Flight ratio' => QueryValues::FLIGHT_RATIO
                     ],
+                    'RunScribe' => [
+                        'Impact Gs (left)' => QueryValues::IMPACT_GS_LEFT,
+                        'Impact Gs (right)' => QueryValues::IMPACT_GS_RIGHT,
+                        'Braking Gs (left)' => QueryValues::BRAKING_GS_LEFT,
+                        'Braking Gs (right)' => QueryValues::BRAKING_GS_RIGHT,
+                        'Footstrike type (left)' => QueryValues::FOOTSTRIKE_TYPE_LEFT,
+                        'Footstrike type (right)' => QueryValues::FOOTSTRIKE_TYPE_RIGHT,
+                        'Pronation excursion (left)' => QueryValues::PRONATION_EXCURSION_LEFT,
+                        'Pronation excursion (right)' => QueryValues::PRONATION_EXCURSION_RIGHT,
+                    ],
                     'Weather' => [
                         'Temperature' => QueryValues::WEATHER_TEMPERATURE,
                         'Humidity' => QueryValues::WEATHER_HUMIDITY,

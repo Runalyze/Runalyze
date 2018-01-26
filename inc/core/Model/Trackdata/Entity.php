@@ -122,7 +122,56 @@ class Entity extends Model\Entity implements Model\Loopable, Model\Common\WithNu
      */
     const THB_1 = 'thb_1';
 
-	/**
+    /**
+     * Key: impact GS left
+     * @var string
+     */
+    const IMPACT_GS_LEFT = 'impact_gs_left';
+
+    /**
+     * Key: impact GS right
+     * @var string
+     */
+    const IMPACT_GS_RIGHT = 'impact_gs_right';
+
+    /**
+     * Key: braking GS left
+     * @var string
+     */
+    const BRAKING_GS_LEFT = 'braking_gs_left';
+
+    /**
+     * Key: braking GS right
+     * @var string
+     */
+    const BRAKING_GS_RIGHT = 'braking_gs_right';
+
+    /**
+     * Key: footstrike type left
+     * @var string
+     */
+    const FOOTSTRIKE_TYPE_LEFT = 'footstrike_type_left';
+
+    /**
+     * Key: footstrike type right
+     * @var string
+     */
+    const FOOTSTRIKE_TYPE_RIGHT = 'footstrike_type_right';
+
+    /**
+     * Key: pronation excursion left
+     * @var string
+     */
+    const PRONATION_EXCURSION_LEFT = 'pronation_excursion_left';
+
+    /**
+     * Key: pronation excursion right
+     * @var string
+     */
+    const PRONATION_EXCURSION_RIGHT = 'pronation_excursion_right';
+
+
+    /**
 	 * Key: pauses
 	 * @var string
 	 */
@@ -257,6 +306,14 @@ class Entity extends Model\Entity implements Model\Loopable, Model\Common\WithNu
             self::SMO2_1,
             self::THB_0,
             self::THB_1,
+			self::IMPACT_GS_LEFT,
+			self::IMPACT_GS_RIGHT,
+			self::BRAKING_GS_LEFT,
+			self::BRAKING_GS_RIGHT,
+			self::FOOTSTRIKE_TYPE_LEFT,
+			self::FOOTSTRIKE_TYPE_RIGHT,
+			self::PRONATION_EXCURSION_LEFT,
+			self::PRONATION_EXCURSION_RIGHT,
 			self::PAUSES
 		);
 	}
@@ -304,6 +361,14 @@ class Entity extends Model\Entity implements Model\Loopable, Model\Common\WithNu
             case self::SMO2_1:
             case self::THB_0:
             case self::THB_1:
+            case self::IMPACT_GS_LEFT:
+            case self::IMPACT_GS_RIGHT:
+            case self::BRAKING_GS_LEFT:
+            case self::BRAKING_GS_RIGHT:
+            case self::FOOTSTRIKE_TYPE_LEFT:
+            case self::FOOTSTRIKE_TYPE_RIGHT:
+            case self::PRONATION_EXCURSION_LEFT:
+            case self::PRONATION_EXCURSION_RIGHT:
 			case self::PAUSES:
 				return true;
 		}
@@ -548,11 +613,89 @@ class Entity extends Model\Entity implements Model\Loopable, Model\Common\WithNu
     }
 
     /**
-     * Get thb (11)
+     * Get thb (1)
      * @return array unit: [%]
      */
     public function thb_1() {
         return $this->Data[self::THB_1];
+    }
+
+    /**
+     * Get impact GS left
+     * @return array unit: [G]
+     */
+    public function impactGsLeft() {
+        return $this->Data[self::IMPACT_GS_LEFT];
+    }
+
+    /**
+     * Get impact GS right
+     * @return array unit: [G]
+     */
+    public function impactGsRight() {
+        return $this->Data[self::IMPACT_GS_RIGHT];
+    }
+
+    /**
+     * Get braking GS left
+     * @return array unit: [G]
+     */
+    public function brakingGsLeft() {
+        return $this->Data[self::BRAKING_GS_LEFT];
+    }
+
+    /**
+     * Get braking GS right
+     * @return array unit: [G]
+     */
+    public function brakingGsRight() {
+        return $this->Data[self::BRAKING_GS_RIGHT];
+    }
+
+    /**
+     * Get footstrike type left
+     * @return array unit: [G]
+     */
+    public function footstrikeTypeLeft() {
+        return $this->Data[self::FOOTSTRIKE_TYPE_LEFT];
+    }
+
+    /**
+     * Get footstrike type right
+     * @return array unit: [G]
+     */
+    public function footstrikeTypeRight() {
+        return $this->Data[self::FOOTSTRIKE_TYPE_RIGHT];
+    }
+
+    /**
+     * Get footstrike type left
+     * @return array unit: [°]
+     */
+    public function pronationExcursionLeft() {
+        return $this->Data[self::PRONATION_EXCURSION_LEFT];
+    }
+
+    /**
+     * Get footstrike type right
+     * @return array unit: [°]
+     */
+    public function pronationExcursionRight() {
+        return $this->Data[self::PRONATION_EXCURSION_RIGHT];
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasRunScribeData() {
+        return !empty($this->Data[self::IMPACT_GS_LEFT]) ||
+            !empty($this->Data[self::IMPACT_GS_RIGHT]) ||
+            !empty($this->Data[self::BRAKING_GS_LEFT]) ||
+            !empty($this->Data[self::BRAKING_GS_RIGHT]) ||
+            !empty($this->Data[self::FOOTSTRIKE_TYPE_LEFT]) ||
+            !empty($this->Data[self::FOOTSTRIKE_TYPE_RIGHT]) ||
+            !empty($this->Data[self::PRONATION_EXCURSION_LEFT]) ||
+            !empty($this->Data[self::PRONATION_EXCURSION_RIGHT]);
     }
 
 	/**
