@@ -88,9 +88,13 @@ final class SummaryMode extends AbstractEnum
 	 * @param string $key
 	 * @return string
 	 */
-	private static function queryForAvg($key)
+    public static function queryForAvg($key)
 	{
-		return 'SUM(`s`*`'.$key.'`*(`'.$key.'` > 0))'.'/SUM(`s`*(`'.$key.'` > 0)) as `'.$key.'`';
+	    if (is_array($key)) {
+	        return implode(', ', array_map(array(self::class, 'queryForAvg'), $key));
+        }
+
+		return 'SUM(`s`*`'.$key.'`*(`'.$key.'` != 0))'.'/SUM(`s`*(`'.$key.'` != 0)) as `'.$key.'`';
 	}
 
 	/**

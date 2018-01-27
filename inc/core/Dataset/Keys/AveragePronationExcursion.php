@@ -3,6 +3,7 @@
 namespace Runalyze\Dataset\Keys;
 
 use Runalyze\Dataset\Context;
+use Runalyze\Dataset\SummaryMode;
 
 class AveragePronationExcursion extends AbstractKey
 {
@@ -30,6 +31,11 @@ class AveragePronationExcursion extends AbstractKey
 	{
 		return $context->dataview()->pronationExcursion();
 	}
+
+    public function summaryMode()
+    {
+        return SummaryMode::AVG;
+    }
 
 	public function cssClass()
 	{
