@@ -64,7 +64,9 @@ class CreateController extends Controller
      */
     public function communicatorIFrameAction()
     {
-        return $this->render('import/garmin_communicator.html.twig');
+        return $this->render('import/garmin_communicator.html.twig', [
+            'garminAPIKey' => $this->getParameter('garmin_api_key'),
+        ]);
     }
 
     /**
