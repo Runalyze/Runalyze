@@ -3,6 +3,7 @@
 namespace Runalyze\Dataset\Keys;
 
 use Runalyze\Dataset\Context;
+use Runalyze\Dataset\SummaryMode;
 
 class AverageFootstrikeType extends AbstractKey
 {
@@ -25,6 +26,11 @@ class AverageFootstrikeType extends AbstractKey
 	{
 		return $context->dataview()->footstrikeType();
 	}
+
+    public function summaryMode()
+    {
+        return SummaryMode::AVG;
+    }
 
 	public function cssClass()
 	{

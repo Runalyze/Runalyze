@@ -3,6 +3,7 @@
 namespace Runalyze\Dataset\Keys;
 
 use Runalyze\Dataset\Context;
+use Runalyze\Dataset\SummaryMode;
 
 class AverageBrakingGs extends AbstractKey
 {
@@ -25,6 +26,11 @@ class AverageBrakingGs extends AbstractKey
 	{
 		return $context->dataview()->brakingGs();
 	}
+
+    public function summaryMode()
+    {
+        return SummaryMode::AVG;
+    }
 
 	public function cssClass()
 	{
