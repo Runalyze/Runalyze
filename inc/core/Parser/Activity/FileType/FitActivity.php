@@ -449,7 +449,7 @@ class FitActivity extends AbstractSingleParser
 
     protected function readUndocumentedDataBlob140()
     {
-        if (isset($this->Values['unknown17']) && null !== $this->Container->FitDetails->PerformanceCondition) {
+        if (isset($this->Values['unknown17'])) {
             $this->Container->FitDetails->PerformanceConditionEnd = 100 + (float)$this->Values['unknown17'][1];
         }
     }
