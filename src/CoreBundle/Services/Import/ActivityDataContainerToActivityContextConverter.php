@@ -148,8 +148,9 @@ class ActivityDataContainerToActivityContextConverter
         }
 
         if (null === $sport) {
-            $sport = $this->SportRepository->find(
-                $this->ConfigurationManager->getList($this->Account)->getGeneral()->getMainSport()
+            $sport = $this->SportRepository->findThisOrAny(
+                $this->ConfigurationManager->getList($this->Account)->getGeneral()->getMainSport(),
+                $this->Account
             );
         }
 

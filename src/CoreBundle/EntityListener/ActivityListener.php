@@ -148,8 +148,9 @@ class ActivityListener
     {
         if (null === $activity->getSport()) {
             /** @var Sport $mainSport */
-            $mainSport = $this->SportRepository->find(
-                $this->ConfigurationManager->getList($activity->getAccount())->getGeneral()->getMainSport()
+            $mainSport = $this->SportRepository->findThisOrAny(
+                $this->ConfigurationManager->getList($activity->getAccount())->getGeneral()->getMainSport(),
+                $activity->getAccount()
             );
             $activity->setSport($mainSport);
         }

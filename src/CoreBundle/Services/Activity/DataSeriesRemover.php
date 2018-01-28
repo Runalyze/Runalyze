@@ -35,6 +35,30 @@ class DataSeriesRemover
     const KEY_TRACKDATA_GROUND_CONTACT_BALANCE = 'groundContactBalance';
 
     /** @var string */
+    const KEY_TRACKDATA_IMPACT_GS_LEFT = 'impact_gs_left';
+
+    /** @var string */
+    const KEY_TRACKDATA_IMPACT_GS_RIGHT = 'impact_gs_right';
+
+    /** @var string */
+    const KEY_TRACKDATA_BRAKING_GS_LEFT = 'braking_gs_left';
+
+    /** @var string */
+    const KEY_TRACKDATA_BRAKING_GS_RIGHT = 'braking_gs_right';
+
+    /** @var string */
+    const KEY_TRACKDATA_FOOTSTRIKE_TYPE_LEFT = 'footstrike_type_left';
+
+    /** @var string */
+    const KEY_TRACKDATA_FOOTSTRIKE_TYPE_RIGHT = 'footstrike_type_right';
+
+    /** @var string */
+    const KEY_TRACKDATA_PRONATION_EXCURSION_LEFT = 'pronation_excursion_left';
+
+    /** @var string */
+    const KEY_TRACKDATA_PRONATION_EXCURSION_RIGHT = 'pronation_excursion_right';
+
+    /** @var string */
     const KEY_TRACKDATA_MUSCLE_OXYGENATION = 'smo2';
 
     /** @var string */
@@ -149,10 +173,57 @@ class DataSeriesRemover
             $trackData->setTemperature(null);
         }
 
+        $this->handleTrackDataForRunScribeKeys($keys, $activity);
+
         if ($trackData->isEmpty()) {
             $this->EntityManager->remove($trackData);
 
             $activity->setTrackdata(null);
+        }
+    }
+
+    protected function handleTrackDataForRunScribeKeys(array $keys, Training $activity)
+    {
+        $trackData = $activity->getTrackdata();
+
+        if (isset($keys[self::KEY_TRACKDATA_IMPACT_GS_LEFT]) && $trackData->hasImpactGsLeft()) {
+            $trackData->setImpactGsLeft(null);
+            $activity->setAvgImpactGsLeft(null);
+        }
+
+        if (isset($keys[self::KEY_TRACKDATA_IMPACT_GS_RIGHT]) && $trackData->hasImpactGsRight()) {
+            $trackData->setImpactGsRight(null);
+            $activity->setAvgImpactGsRight(null);
+        }
+
+        if (isset($keys[self::KEY_TRACKDATA_BRAKING_GS_LEFT]) && $trackData->hasBrakingGsLeft()) {
+            $trackData->setBrakingGsLeft(null);
+            $activity->setAvgBrakingGsLeft(null);
+        }
+
+        if (isset($keys[self::KEY_TRACKDATA_BRAKING_GS_RIGHT]) && $trackData->hasBrakingGsRight()) {
+            $trackData->setBrakingGsRight(null);
+            $activity->setAvgBrakingGsRight(null);
+        }
+
+        if (isset($keys[self::KEY_TRACKDATA_FOOTSTRIKE_TYPE_LEFT]) && $trackData->hasFootstrikeTypeLeft()) {
+            $trackData->setFootstrikeTypeLeft(null);
+            $activity->setAvgFootstrikeTypeLeft(null);
+        }
+
+        if (isset($keys[self::KEY_TRACKDATA_FOOTSTRIKE_TYPE_RIGHT]) && $trackData->hasFootstrikeTypeRight()) {
+            $trackData->setFootstrikeTypeRight(null);
+            $activity->setAvgFootstrikeTypeRight(null);
+        }
+
+        if (isset($keys[self::KEY_TRACKDATA_PRONATION_EXCURSION_LEFT]) && $trackData->hasPronationExcursionLeft()) {
+            $trackData->setPronationExcursionLeft(null);
+            $activity->setAvgPronationExcursionLeft(null);
+        }
+
+        if (isset($keys[self::KEY_TRACKDATA_PRONATION_EXCURSION_RIGHT]) && $trackData->hasPronationExcursionRight()) {
+            $trackData->setPronationExcursionRight(null);
+            $activity->setAvgPronationExcursionRight(null);
         }
     }
 
@@ -201,6 +272,7 @@ class DataSeriesRemover
     {
         $choices = array_merge(
             self::getChoicesForTrackData($activity->getTrackdata()),
+            self::getChoicesForTrackDataForRunScribe($activity->getTrackdata()),
             self::getChoicesForRoute($activity->getRoute()),
             self::getChoicesForHrv($activity->getHrv())
         );
@@ -270,6 +342,53 @@ class DataSeriesRemover
 
         if ($trackData->hasTemperature()) {
             $choices['Temperature'] = self::KEY_TRACKDATA_TEMPERATURE;
+        }
+
+        return $choices;
+    }
+
+    /**
+     * @param Trackdata|null $trackData
+     * @return array
+     */
+    private static function getChoicesForTrackDataForRunScribe(Trackdata $trackData = null)
+    {
+        $choices = [];
+
+        if (null === $trackData) {
+            return [];
+        }
+
+        if ($trackData->hasImpactGsLeft()) {
+            $choices['Impact Gs (left)'] = self::KEY_TRACKDATA_IMPACT_GS_LEFT;
+        }
+
+        if ($trackData->hasImpactGsRight()) {
+            $choices['Impact Gs (right)'] = self::KEY_TRACKDATA_IMPACT_GS_RIGHT;
+        }
+
+        if ($trackData->hasBrakingGsLeft()) {
+            $choices['Braking Gs (left)'] = self::KEY_TRACKDATA_BRAKING_GS_LEFT;
+        }
+
+        if ($trackData->hasBrakingGsRight()) {
+            $choices['Braking Gs (right)'] = self::KEY_TRACKDATA_BRAKING_GS_RIGHT;
+        }
+
+        if ($trackData->hasFootstrikeTypeLeft()) {
+            $choices['Footstrike type (left)'] = self::KEY_TRACKDATA_FOOTSTRIKE_TYPE_LEFT;
+        }
+
+        if ($trackData->hasFootstrikeTypeRight()) {
+            $choices['Footstrike type (right)'] = self::KEY_TRACKDATA_FOOTSTRIKE_TYPE_RIGHT;
+        }
+
+        if ($trackData->hasPronationExcursionLeft()) {
+            $choices['Pronation excursion (left)'] = self::KEY_TRACKDATA_PRONATION_EXCURSION_LEFT;
+        }
+
+        if ($trackData->hasPronationExcursionRight()) {
+            $choices['Pronation excursion (right)'] = self::KEY_TRACKDATA_PRONATION_EXCURSION_RIGHT;
         }
 
         return $choices;

@@ -64,7 +64,9 @@ class CreateController extends Controller
      */
     public function communicatorIFrameAction()
     {
-        return $this->render('import/garmin_communicator.html.twig');
+        return $this->render('import/garmin_communicator.html.twig', [
+            'garminAPIKey' => $this->getParameter('garmin_api_key'),
+        ]);
     }
 
     /**
@@ -327,7 +329,7 @@ class CreateController extends Controller
     protected function getMainSport(Account $account)
     {
         $mainSportId = $this->get('app.configuration_manager')->getList()->getGeneral()->getMainSport();
-        $sport = $this->getDoctrine()->getRepository('CoreBundle:Sport')->find($mainSportId);
+        $sport = $this->getDoctrine()->getRepository('CoreBundle:Sport')->findThisOrAny($mainSportId, $account);
 
         if (null === $sport || $account->getId() != $sport->getAccount()->getId()) {
             return null;
