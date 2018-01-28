@@ -329,7 +329,7 @@ class CreateController extends Controller
     protected function getMainSport(Account $account)
     {
         $mainSportId = $this->get('app.configuration_manager')->getList()->getGeneral()->getMainSport();
-        $sport = $this->getDoctrine()->getRepository('CoreBundle:Sport')->find($mainSportId);
+        $sport = $this->getDoctrine()->getRepository('CoreBundle:Sport')->findThisOrAny($mainSportId, $account);
 
         if (null === $sport || $account->getId() != $sport->getAccount()->getId()) {
             return null;

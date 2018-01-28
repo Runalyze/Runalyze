@@ -63,6 +63,35 @@ class SportRepository extends EntityRepository
         ]);
     }
 
+    /**
+     * @param int $sportId
+     * @param Account $account
+     * @return null|Sport|object
+     */
+    public function findThisOrAny($sportId, Account $account)
+    {
+        /** @var null|Sport $requestedSport */
+        $requestedSport = $this->find($sportId);
+
+        if (null !== $requestedSport && $requestedSport->getAccount()->getId() != $account->getId()) {
+            $requestedSport = null;
+        }
+
+        if (null === $requestedSport) {
+            $results = $this->findBy(
+                ['account' => $account->getId()],
+                null,
+                1
+            );
+
+            if (is_array($results) && count($results) == 1) {
+                return $results[0];
+            }
+        }
+
+        return $requestedSport;
+    }
+
     public function findEquipmentCategoryIdsFor(array $sportIds)
     {
         // TODO: this query results in two joins with one of them being useless
