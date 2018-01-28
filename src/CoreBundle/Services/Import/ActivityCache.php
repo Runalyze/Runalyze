@@ -115,7 +115,7 @@ class ActivityCache
         $activityToMerge->setCreatorDetails($activityFromCache->getCreatorDetails());
         $activityToMerge->setActivityId($activityFromCache->getActivityId());
 
-        if (null === $activityToMerge->getPower()) {
+        if (null !== $activityFromCache->isPowerCalculated()) {
             $activityToMerge->setPower($activityFromCache->getPower());
         }
     }
