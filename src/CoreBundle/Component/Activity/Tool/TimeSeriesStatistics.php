@@ -30,6 +30,7 @@ class TimeSeriesStatistics
         $this->Trackdata = $trackdata;
 
         $this->determineAvailableKeys();
+        $this->manipulateNonIntegerSeries();
     }
 
     protected function determineAvailableKeys()
@@ -44,6 +45,14 @@ class TimeSeriesStatistics
             Trackdata\Entity::GROUNDCONTACT_BALANCE,
             Trackdata\Entity::VERTICAL_OSCILLATION,
             Trackdata\Entity::VERTICAL_RATIO,
+            Trackdata\Entity::IMPACT_GS_LEFT,
+            Trackdata\Entity::IMPACT_GS_RIGHT,
+            Trackdata\Entity::BRAKING_GS_LEFT,
+            Trackdata\Entity::BRAKING_GS_RIGHT,
+            Trackdata\Entity::FOOTSTRIKE_TYPE_LEFT,
+            Trackdata\Entity::FOOTSTRIKE_TYPE_RIGHT,
+            Trackdata\Entity::PRONATION_EXCURSION_LEFT,
+            Trackdata\Entity::PRONATION_EXCURSION_RIGHT,
             Trackdata\Entity::SMO2_0,
             Trackdata\Entity::SMO2_1,
             Trackdata\Entity::THB_0,
@@ -53,6 +62,36 @@ class TimeSeriesStatistics
         foreach ($potentialKeys as $key) {
             if ($this->Trackdata->has($key)) {
                 $this->AvailableKeys[$key] = true;
+            }
+        }
+    }
+
+    protected function manipulateNonIntegerSeries()
+    {
+        $nonIntegerKeys = [
+            Trackdata\Entity::IMPACT_GS_LEFT => 10,
+            Trackdata\Entity::IMPACT_GS_RIGHT => 10,
+            Trackdata\Entity::BRAKING_GS_LEFT => 10,
+            Trackdata\Entity::BRAKING_GS_RIGHT => 10,
+            Trackdata\Entity::PRONATION_EXCURSION_LEFT => 10,
+            Trackdata\Entity::PRONATION_EXCURSION_RIGHT => 10
+        ];
+        $hasNonIntegerKeys = false;
+
+        foreach (array_keys($nonIntegerKeys) as $key) {
+            if (isset($this->AvailableKeys[$key])) {
+                $hasNonIntegerKeys = true;
+                break;
+            }
+        }
+
+        if ($hasNonIntegerKeys) {
+            $this->Trackdata = clone $this->Trackdata;
+
+            foreach ($nonIntegerKeys as $key => $factor) {
+                $this->Trackdata->set($key, array_map(function($v) use ($factor) {
+                    return (int)round($v * $factor);
+                }, $this->Trackdata->get($key)));
             }
         }
     }
@@ -297,5 +336,133 @@ class TimeSeriesStatistics
     public function getStatisticsForTotalHemoglobin2()
     {
         return $this->MultipleTimeSeries->getDistribution(Trackdata\Entity::THB_1);
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasStatisticsForImpactGsLeft()
+    {
+        return $this->hasStatisticsFor(Trackdata\Entity::IMPACT_GS_LEFT);
+    }
+
+    /**
+     * @return \Runalyze\Mathematics\Distribution\EmpiricalDistribution
+     */
+    public function getStatisticsForImpactGsLeft()
+    {
+        return $this->MultipleTimeSeries->getDistribution(Trackdata\Entity::IMPACT_GS_LEFT);
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasStatisticsForImpactGsRight()
+    {
+        return $this->hasStatisticsFor(Trackdata\Entity::IMPACT_GS_RIGHT);
+    }
+
+    /**
+     * @return \Runalyze\Mathematics\Distribution\EmpiricalDistribution
+     */
+    public function getStatisticsForImpactGsRight()
+    {
+        return $this->MultipleTimeSeries->getDistribution(Trackdata\Entity::IMPACT_GS_RIGHT);
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasStatisticsForBrakingGsLeft()
+    {
+        return $this->hasStatisticsFor(Trackdata\Entity::BRAKING_GS_LEFT);
+    }
+
+    /**
+     * @return \Runalyze\Mathematics\Distribution\EmpiricalDistribution
+     */
+    public function getStatisticsForBrakingGsLeft()
+    {
+        return $this->MultipleTimeSeries->getDistribution(Trackdata\Entity::BRAKING_GS_LEFT);
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasStatisticsForBrakingGsRight()
+    {
+        return $this->hasStatisticsFor(Trackdata\Entity::BRAKING_GS_RIGHT);
+    }
+
+    /**
+     * @return \Runalyze\Mathematics\Distribution\EmpiricalDistribution
+     */
+    public function getStatisticsForBrakingGsRight()
+    {
+        return $this->MultipleTimeSeries->getDistribution(Trackdata\Entity::BRAKING_GS_RIGHT);
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasStatisticsForFootstrikeTypeLeft()
+    {
+        return $this->hasStatisticsFor(Trackdata\Entity::FOOTSTRIKE_TYPE_LEFT);
+    }
+
+    /**
+     * @return \Runalyze\Mathematics\Distribution\EmpiricalDistribution
+     */
+    public function getStatisticsForFootstrikeTypeLeft()
+    {
+        return $this->MultipleTimeSeries->getDistribution(Trackdata\Entity::FOOTSTRIKE_TYPE_RIGHT);
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasStatisticsForFootstrikeTypeRight()
+    {
+        return $this->hasStatisticsFor(Trackdata\Entity::FOOTSTRIKE_TYPE_RIGHT);
+    }
+
+    /**
+     * @return \Runalyze\Mathematics\Distribution\EmpiricalDistribution
+     */
+    public function getStatisticsForFootstrikeTypeRight()
+    {
+        return $this->MultipleTimeSeries->getDistribution(Trackdata\Entity::FOOTSTRIKE_TYPE_LEFT);
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasStatisticsForPronationExcursionLeft()
+    {
+        return $this->hasStatisticsFor(Trackdata\Entity::PRONATION_EXCURSION_LEFT);
+    }
+
+    /**
+     * @return \Runalyze\Mathematics\Distribution\EmpiricalDistribution
+     */
+    public function getStatisticsForPronationExcursionLeft()
+    {
+        return $this->MultipleTimeSeries->getDistribution(Trackdata\Entity::PRONATION_EXCURSION_LEFT);
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasStatisticsForPronationExcursionRight()
+    {
+        return $this->hasStatisticsFor(Trackdata\Entity::PRONATION_EXCURSION_RIGHT);
+    }
+
+    /**
+     * @return \Runalyze\Mathematics\Distribution\EmpiricalDistribution
+     */
+    public function getStatisticsForPronationExcursionRight()
+    {
+        return $this->MultipleTimeSeries->getDistribution(Trackdata\Entity::PRONATION_EXCURSION_RIGHT);
     }
 }

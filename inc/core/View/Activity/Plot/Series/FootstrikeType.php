@@ -34,4 +34,17 @@ class FootstrikeType extends ActivitySeries
 		$this->TickSize = 1;
 		$this->TickDecimals = 0;
 	}
+
+	public function addTo(\Plot $Plot, $yAxis, $addAnnotations = true)
+	{
+		parent::addTo($Plot, $yAxis, $addAnnotations);
+
+		if (!empty($this->Data)) {
+			$Plot->setYLimits($yAxis, 0, 16.5);
+			$Plot->setYAxisLabels($yAxis, [6, 12]);
+
+			$Plot->addMarkingArea('y'.$yAxis, 6, 12, 'rgba(124,181,236,0.05)');
+			$Plot->addMarkingArea('y'.$yAxis, 12, 16.5, 'rgba(124,181,236,0.15)');
+		}
+	}
 }

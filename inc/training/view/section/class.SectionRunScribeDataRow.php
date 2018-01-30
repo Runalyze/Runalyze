@@ -7,22 +7,55 @@ class SectionRunScribeDataRow extends TrainingViewSectionRowTabbedPlot
 {
 	protected function setContent()
     {
-        $this->BoxedValues[] = new BoxedValue(Helper::Unknown($this->Context->activity()->impactGsLeft(), '-'), 'G', __('Impact').' ('.__('left').')');
-        $this->BoxedValues[] = new BoxedValue(Helper::Unknown($this->Context->activity()->impactGsRight(), '-'), 'G', __('Impact').' ('.__('right').')');
+        $this->BoxedValues[] = new BoxedValue($this->formatNumber($this->Context->activity()->impactGsLeft(), 1), 'G', __('Impact').' ('.__('left').')');
+        $this->BoxedValues[] = new BoxedValue($this->formatNumber($this->Context->activity()->impactGsRight(), 1), 'G', __('Impact').' ('.__('right').')');
 
-        $this->BoxedValues[] = new BoxedValue(Helper::Unknown($this->Context->activity()->brakingGsLeft(), '-'), 'G', __('Braking').' ('.__('left').')');
-        $this->BoxedValues[] = new BoxedValue(Helper::Unknown($this->Context->activity()->brakingGsRight(), '-'), 'G', __('Braking').' ('.__('right').')');
+        $this->BoxedValues[] = new BoxedValue($this->formatNumber($this->Context->activity()->brakingGsLeft(), 1), 'G', __('Braking').' ('.__('left').')');
+        $this->BoxedValues[] = new BoxedValue($this->formatNumber($this->Context->activity()->brakingGsRight(), 1), 'G', __('Braking').' ('.__('right').')');
 
-        $this->BoxedValues[] = new BoxedValue(Helper::Unknown($this->Context->activity()->footstrikeTypeLeft(), '-'), '', __('Footstrike').' ('.__('left').')');
-        $this->BoxedValues[] = new BoxedValue(Helper::Unknown($this->Context->activity()->footstrikeTypeRight(), '-'), '', __('Footstrike').' ('.__('right').')');
+        $this->BoxedValues[] = new BoxedValue($this->formatFootstrikeType($this->Context->activity()->footstrikeTypeLeft()), '', __('Footstrike').' ('.__('left').')');
+        $this->BoxedValues[] = new BoxedValue($this->formatFootstrikeType($this->Context->activity()->footstrikeTypeRight()), '', __('Footstrike').' ('.__('right').')');
 
-        $this->BoxedValues[] = new BoxedValue(Helper::Unknown($this->Context->activity()->pronationExcursionLeft(), '-'), '&deg;', __('Pronation excursion').' ('.__('left').')');
-        $this->BoxedValues[] = new BoxedValue(Helper::Unknown($this->Context->activity()->pronationExcursionRight(), '-'), '&deg;', __('Pronation excursion').' ('.__('right').')');
+        $this->BoxedValues[] = new BoxedValue($this->formatNumber($this->Context->activity()->pronationExcursionLeft(), 1), '&deg;', __('Pronation excursion').' ('.__('left').')');
+        $this->BoxedValues[] = new BoxedValue($this->formatNumber($this->Context->activity()->pronationExcursionRight(), 1), '&deg;', __('Pronation excursion').' ('.__('right').')');
 
         foreach ($this->BoxedValues as $boxedValue) {
             $boxedValue->defineAsFloatingBlock('w50');
         }
 	}
+
+    /**
+     * @param mixed $value
+     * @param int $precision
+     * @param string $unknown
+     *
+     * @return string
+     */
+    protected function formatNumber($value, $precision = 0, $unknown = '-')
+    {
+        if (null === $value || 0 == $value) {
+            return $unknown;
+        }
+
+        return number_format($value, $precision);
+    }
+
+    /**
+     * @param mixed $value
+     * @param string $unknown
+     *
+     * @return string
+     */
+    protected function formatFootstrikeType($value, $unknown = '-')
+    {
+        if (null === $value || 0 == $value) {
+            return $unknown;
+        }
+
+        $type = $value >= 12 ? __('Fore-foot') : ($value >= 6 ? __('Mid-foot') : __('Heel'));
+
+        return (string)$value.' / '.$type;
+    }
 
 	protected function setRightContent()
     {
