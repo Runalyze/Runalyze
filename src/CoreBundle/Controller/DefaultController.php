@@ -57,7 +57,7 @@ class DefaultController extends AbstractPluginsAwareController
     {
         $securityContext = $this->container->get('security.authorization_checker');
 
-        if ($securityContext->isGranted('IS_AUTHENTICATED_FULLY')) {
+        if ($securityContext->isGranted('IS_AUTHENTICATED_FULLY') || $securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('dashboard'));
         }
 
