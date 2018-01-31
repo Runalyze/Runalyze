@@ -414,3 +414,11 @@ services:
   app.timezone_lookup:
     class: Runalyze\Bundle\CoreBundle\Services\Import\TimezoneLookup
     arguments: ["%data_directory%/timezone.sqlite", "%sqlite_mod_spatialite%", true]
+  Runalyze\Bundle\CoreBundle\Services\SessionRequestProcessor:
+    autowire: true
+    tags:
+      - { name: monolog.processor, method: processRecord }
+  monolog.formatter.session_request:
+    class: Monolog\Formatter\LineFormatter
+    arguments:
+      - "[%%datetime%%] [%%extra.token%%] %%channel%%.%%level_name%%: %%message%% %%context%% %%extra%%\n"
