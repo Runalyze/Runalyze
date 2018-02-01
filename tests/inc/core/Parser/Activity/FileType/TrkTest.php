@@ -54,7 +54,7 @@ class TrkTest extends AbstractActivityParserTestCase
         $this->assertEquals(120, $this->Container->Metadata->getTimezoneOffset());
 
         $this->assertEquals(range(0, 20), $this->Container->ContinuousData->Time);
-        $this->assertNotEmpty($this->Container->ContinuousData->HeartRate);
+        $this->assertEmpty($this->Container->ContinuousData->HeartRate);
         $this->assertNotEmpty($this->Container->ContinuousData->Latitude);
         $this->assertNotEmpty($this->Container->ContinuousData->Longitude);
         $this->assertNotEmpty($this->Container->ContinuousData->Altitude);
