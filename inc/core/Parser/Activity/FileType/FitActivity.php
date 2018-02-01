@@ -64,6 +64,17 @@ class FitActivity extends AbstractSingleParser
         'Power' => ['power', 1],
         'ContactTime' => ['stance_time', 10],
         'RP_Power' => ['power', 1],
+        'RS_Power_AVG' => ['power', 1],
+        'RS_ContactTime_L' => ['stance_time_left', 10],
+        'RS_ContactTime_R' => ['stance_time_right', 10],
+        'RS_Impact_GS_L' => ['impact_gs_left', 1],
+        'RS_Impact_GS_R' => ['impact_gs_right', 1],
+        'RS_Braking_GS_L' => ['braking_gs_left', 1],
+        'RS_Braking_GS_R' => ['braking_gs_right', 1],
+        'RS_FootStrike_L' => ['fs_type_left', 1],
+        'RS_FootStrike_R' => ['fs_type_right', 1],
+        'RS_Pronation_L' => ['pronation_left', 1],
+        'RS_Pronation_R' => ['pronation_right', 1],
         'saturated_hemoglobin_percent' => ['smo2_0', 0.1],
         'total_hemoglobin_conc' => ['thb_0', 1]
     ];
@@ -580,9 +591,13 @@ class FitActivity extends AbstractSingleParser
         $this->Container->ContinuousData->Time[] = $time;
 
         //Running Dynamics
-        $this->Container->ContinuousData->GroundContactTime[] = isset($this->Values['stance_time']) ? round($this->Values['stance_time'][0]/10) : null;
+        $this->Container->ContinuousData->GroundContactTime[] = isset($this->Values['stance_time']) ? round($this->Values['stance_time'][0]/10) : (
+            isset($this->Values['stance_time_left']) && isset($this->Values['stance_time_right']) ? round(($this->Values['stance_time_left'][0] + $this->Values['stance_time_right'][0]) / 2 / 10) : null
+        );
         $this->Container->ContinuousData->VerticalOscillation[] = isset($this->Values['vertical_oscillation']) ? round($this->Values['vertical_oscillation'][0] / 10) : null;
-        $this->Container->ContinuousData->GroundContactBalance[] = isset($this->Values['stance_time_balance']) ? (int)$this->Values['stance_time_balance'][0] : null;
+        $this->Container->ContinuousData->GroundContactBalance[] = isset($this->Values['stance_time_balance']) ? (int)$this->Values['stance_time_balance'][0] : (
+            isset($this->Values['stance_time_left']) && isset($this->Values['stance_time_right']) ? round(10000 * $this->Values['stance_time_left'][0] / ($this->Values['stance_time_left'][0] + $this->Values['stance_time_right'][0])) : null
+        );
 
         // Fit developer fields
         $this->Container->ContinuousData->MuscleOxygenation[] = isset($this->Values['smo2_0']) ? (int)$this->Values['smo2_0'][0] : null;

@@ -27,6 +27,12 @@ class RoundCollection implements \Countable, \ArrayAccess, \Iterator
         }
     }
 
+    public function clear()
+    {
+        $this->Elements = [];
+        $this->CurrentOffset = 0;
+    }
+
     public function add(Round $round)
     {
         $this->Elements[] = $round;

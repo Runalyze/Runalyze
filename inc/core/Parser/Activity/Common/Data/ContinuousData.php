@@ -129,6 +129,16 @@ class ContinuousData
     }
 
     /**
+     * @return array
+     */
+    public function getPropertyNamesOfArraysThatShouldNotContainZeros()
+    {
+        return [
+            'HeartRate'
+        ];
+    }
+
+    /**
      * @return int size of first non-empty array property
      */
     public function getLength()

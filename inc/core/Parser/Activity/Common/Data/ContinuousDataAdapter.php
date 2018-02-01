@@ -52,6 +52,19 @@ class ContinuousDataAdapter
         }
     }
 
+    public function filterUnwantedZeros()
+    {
+        foreach ($this->ContinuousData->getPropertyNamesOfArraysThatShouldNotContainZeros() as $key) {
+            if (!empty($this->ContinuousData->{$key})) {
+                foreach ($this->ContinuousData->{$key} as $i => $value) {
+                    if (0 == $value) {
+                        $this->ContinuousData->{$key}[$i] = null;
+                    }
+                }
+            }
+        }
+    }
+
     public function clearEmptyArrays()
     {
         $arrayKeys = $this->ContinuousData->getPropertyNamesOfArrays();

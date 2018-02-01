@@ -67,11 +67,13 @@ class ActivityDataContainer
 
     public function completeContinuousData()
     {
+        $this->ContinuousDataAdapter->filterUnwantedZeros();
         $this->ContinuousDataAdapter->clearEmptyArrays();
         $this->ContinuousDataAdapter->calculateDistancesIfRequired();
         $this->ContinuousDataAdapter->correctCadenceIfRequired();
 
         $this->completeRoundsIfRequired();
+        $this->clearRoundsIfOnlyOneRoundIsThere();
         $this->applyPauses();
     }
 
@@ -101,6 +103,13 @@ class ActivityDataContainer
                     $this->ContinuousData->Distance
                 );
             }
+        }
+    }
+
+    protected function clearRoundsIfOnlyOneRoundIsThere()
+    {
+        if (!$this->Rounds->isEmpty() && $this->Rounds->count() == 1) {
+            $this->Rounds->clear();
         }
     }
 

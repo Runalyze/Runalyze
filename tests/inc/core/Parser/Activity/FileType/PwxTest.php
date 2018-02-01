@@ -64,8 +64,6 @@ class PwxTest extends AbstractActivityParserTestCase
         $this->assertEquals(89.535, $this->Container->ActivityData->Distance, '', 0.1);
         $this->assertEquals(148, $this->Container->ActivityData->AvgHeartRate, '', 2);
         $this->assertEquals(174, $this->Container->ActivityData->MaxHeartRate, '', 2);
-
-        $this->assertEquals(1, $this->Container->Rounds->count());
     }
 
     public function testFileWithPower()

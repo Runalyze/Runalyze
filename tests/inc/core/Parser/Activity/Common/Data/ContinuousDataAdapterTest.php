@@ -66,4 +66,23 @@ class ContinuousDataAdapterTest extends \PHPUnit_Framework_TestCase
         $this->assertNotEmpty($this->Data->HeartRate);
         $this->assertEmpty($this->Data->Altitude);
     }
+
+    public function testFilteringUnwantedZeros()
+    {
+        $this->Data->HeartRate = [0, 120, 140, 0];
+
+        $this->Adapter->filterUnwantedZeros();
+
+        $this->assertEquals([null, 120, 140, null], $this->Data->HeartRate);
+    }
+
+    public function testClearingEmptyArraysAfterFilteringUnwantedZeros()
+    {
+        $this->Data->HeartRate = [0, 0, 0, 0];
+
+        $this->Adapter->filterUnwantedZeros();
+        $this->Adapter->clearEmptyArrays();
+
+        $this->assertEmpty($this->Data->HeartRate);
+    }
 }

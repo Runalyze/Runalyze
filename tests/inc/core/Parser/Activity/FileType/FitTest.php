@@ -122,10 +122,6 @@ class FitTest extends AbstractActivityParserTestCase
 		$this->assertEquals(65, $this->Container->FitDetails->VO2maxEstimate);
 		$this->assertEquals(932, $this->Container->FitDetails->RecoveryTime);
 
-        $this->checkExpectedRoundData([
-            [2810, 10.547]
-        ], 1, 0.001);
-
         $this->checkExpectedPauseData([
 			 [267, 14, 144, 130],
 			 [465, 53, 151, 104],
@@ -637,10 +633,6 @@ class FitTest extends AbstractActivityParserTestCase
         $this->assertEquals(83, $this->Container->ActivityData->Duration);
         $this->assertEquals(0.15, $this->Container->ActivityData->Distance, '', 0.001);
         $this->assertEquals(2500, $this->Container->ActivityData->PoolLength);
-
-        $this->checkExpectedRoundData([
-            [83, 0.15]
-        ], 0.5);
 	}
 
 	public function testDeveloperFieldsInPoolSwimFileFromDaniel()
@@ -760,5 +752,43 @@ class FitTest extends AbstractActivityParserTestCase
         $this->assertEquals(10.1, $this->Container->ActivityData->AvgFootstrikeTypeRight, '', 0.1);
         $this->assertEquals(-10.0, $this->Container->ActivityData->AvgPronationExcursionLeft, '', 0.1);
         $this->assertEquals(-7.0, $this->Container->ActivityData->AvgPronationExcursionRight, '', 0.1);
+    }
+
+    public function testRunScribeDataFromPlusDatafieldForAdditionalFields()
+    {
+        $this->convertAndParse('fit/FR920xt-with-runscribe-plus.fit');
+
+        $this->assertNotEmpty($this->Container->ContinuousData->ImpactGsLeft);
+        $this->assertNotEmpty($this->Container->ContinuousData->ImpactGsRight);
+        $this->assertNotEmpty($this->Container->ContinuousData->BrakingGsLeft);
+        $this->assertNotEmpty($this->Container->ContinuousData->BrakingGsRight);
+        $this->assertNotEmpty($this->Container->ContinuousData->FootstrikeTypeLeft);
+        $this->assertNotEmpty($this->Container->ContinuousData->FootstrikeTypeRight);
+        $this->assertNotEmpty($this->Container->ContinuousData->PronationExcursionLeft);
+        $this->assertNotEmpty($this->Container->ContinuousData->PronationExcursionRight);
+
+        $this->assertEquals(13.1, $this->Container->ActivityData->AvgImpactGsLeft, '', 0.1);
+        $this->assertEquals(13.7, $this->Container->ActivityData->AvgImpactGsRight, '', 0.1);
+        $this->assertEquals(7.3, $this->Container->ActivityData->AvgBrakingGsLeft, '', 0.1);
+        $this->assertEquals(8.0, $this->Container->ActivityData->AvgBrakingGsRight, '', 0.1);
+        $this->assertEquals(1.4, $this->Container->ActivityData->AvgFootstrikeTypeLeft, '', 0.1);
+        $this->assertEquals(1.9, $this->Container->ActivityData->AvgFootstrikeTypeRight, '', 0.1);
+        $this->assertEquals(-12.6, $this->Container->ActivityData->AvgPronationExcursionLeft, '', 0.1);
+        $this->assertEquals(-10.2, $this->Container->ActivityData->AvgPronationExcursionRight, '', 0.1);
+
+        $this->assertEquals(253, $this->Container->ActivityData->AvgGroundContactTime, '', 0.5);
+        $this->assertEquals(4940, $this->Container->ActivityData->AvgGroundContactBalance, '', 0.5);
+
+        $this->assertEquals([652, 653, 654, 658, 655, 510, 328], array_slice($this->Container->ContinuousData->GroundContactTime, 0, 7));
+        $this->assertEquals([5027, 5031, 5023, 5034, 5053, 4975, 4975], array_slice($this->Container->ContinuousData->GroundContactBalance, 0, 7));
+    }
+
+    public function testEmptyHeartRateSeries()
+    {
+        $this->convertAndParse('fit/hr-only-zeros.fit');
+
+        $this->assertEmpty($this->Container->ContinuousData->HeartRate);
+        $this->assertNull($this->Container->ActivityData->AvgHeartRate);
+        $this->assertNull($this->Container->ActivityData->MaxHeartRate);
     }
 }
