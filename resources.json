@@ -74,7 +74,7 @@
 
       "./web/vendor/d3/d3.js",
       "./web/vendor/d3-tip/index.js",
-      "./node_modules/d3-scale-chromatic/build/d3-scale-chromatic.min.js",
+      "./node_modules/d3-scale-chromatic/dist/d3-scale-chromatic.min.js",
 
       "./app/Resources/public/js/d3js-runalyzeplot.js",
       "./app/Resources/public/js/d3js-boxplot.js",
