@@ -432,8 +432,35 @@ class TrainingRepositoryTest extends AbstractRepositoryTestCase
             $this->getDefaultAccountsRunningSport()->getId(),
             $date
         ));
+    }
 
-        // TODO: check with $timestampfOfFirstActivity
+    public function testMarathonShapeCalculationForWithRespectingFirstActivityData()
+    {
+        $date = mktime(12, 0, 0, 1, 10, 2015);
+        $config = new BasicEndurance();
+        $config->set('BE_DAYS_FOR_LONGJOGS', '100');
+        $config->set('BE_DAYS_FOR_WEEK_KM', '14');
+        $config->set('BE_DAYS_FOR_WEEK_KM_MIN', '7');
+        $config->set('BE_PERCENTAGE_WEEK_KM', '1.00');
+
+        $this->insertActivityForDefaultAccount($date - 7 * 86400, 10800, 32.5);
+
+        $this->assertEquals(16.0, $this->TrainingRepository->calculateMarathonShape(
+            $this->getDefaultAccount(),
+            $config,
+            60.0,
+            $this->getDefaultAccountsRunningSport()->getId(),
+            $date
+        ));
+
+        $this->assertEquals(31.0, $this->TrainingRepository->calculateMarathonShape(
+            $this->getDefaultAccount(),
+            $config,
+            60.0,
+            $this->getDefaultAccountsRunningSport()->getId(),
+            $date,
+            $date - 7 * 86400
+        ));
     }
 
     public function testActivityNavigation()

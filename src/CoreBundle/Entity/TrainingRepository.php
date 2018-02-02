@@ -485,7 +485,7 @@ class TrainingRepository extends EntityRepository
     {
         $startTimeForLongJogs = $timestamp - $configuration->getDaysToConsiderForLongJogs() * 86400;
         $startTimeForWeeklyMileage = $timestamp - $configuration->getDaysToConsiderForWeeklyMileage() * 86400;
-        $numberOfDaysSinceFirstActivity = null === $timestampOfFirstActivity ? null : \Runalyze\Util\Time::diffInDays($timestampOfFirstActivity);
+        $numberOfDaysSinceFirstActivity = null === $timestampOfFirstActivity ? null : \Runalyze\Util\Time::diffInDays($timestampOfFirstActivity, $timestamp);
         $marathonShape = new MarathonShape($effectiveVO2max, $configuration);
 
         $result = $this->createQueryBuilder('t')
