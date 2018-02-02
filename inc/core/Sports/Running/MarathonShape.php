@@ -39,11 +39,12 @@ class MarathonShape
     /**
      * @param float $totalDistanceInTimePeriod [km]
      * @param float $totalWeightedRelativeLongJogPoints one point per week matches the target
+     * @param int|null $numberOfDaysSinceFirstActivity
      * @return int [0, inf)
      */
-    public function getShapeFor($totalDistanceInTimePeriod, $totalWeightedRelativeLongJogPoints)
+    public function getShapeFor($totalDistanceInTimePeriod, $totalWeightedRelativeLongJogPoints, $numberOfDaysSinceFirstActivity = null)
     {
-        $percentageWeekly = $totalDistanceInTimePeriod * 7.0 / $this->Configuration->getDaysToConsiderForWeeklyMileage() / $this->getTargetForWeeklyMileage();
+        $percentageWeekly = $totalDistanceInTimePeriod * 7.0 / $this->Configuration->getDaysToConsiderForWeeklyMileage($numberOfDaysSinceFirstActivity) / $this->getTargetForWeeklyMileage();
         $percentageLongJogs = $totalWeightedRelativeLongJogPoints * 7.0 / $this->Configuration->getDaysToConsiderForLongJogs();
 
         return (int)round(100.0 * (

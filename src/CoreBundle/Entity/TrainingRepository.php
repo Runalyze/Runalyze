@@ -478,12 +478,14 @@ class TrainingRepository extends EntityRepository
      * @param float $effectiveVO2max
      * @param int $sportId
      * @param int $timestamp
+     * @param int|null $timestampOfFirstActivity
      * @return int [0, inf)
      */
-    public function calculateMarathonShape(Account $account, BasicEndurance $configuration, $effectiveVO2max, $sportId, $timestamp)
+    public function calculateMarathonShape(Account $account, BasicEndurance $configuration, $effectiveVO2max, $sportId, $timestamp, $timestampOfFirstActivity = null)
     {
         $startTimeForLongJogs = $timestamp - $configuration->getDaysToConsiderForLongJogs() * 86400;
         $startTimeForWeeklyMileage = $timestamp - $configuration->getDaysToConsiderForWeeklyMileage() * 86400;
+        $numberOfDaysSinceFirstActivity = null === $timestampOfFirstActivity ? null : \Runalyze\Util\Time::diffInDays($timestampOfFirstActivity);
         $marathonShape = new MarathonShape($effectiveVO2max, $configuration);
 
         $result = $this->createQueryBuilder('t')
@@ -521,7 +523,7 @@ class TrainingRepository extends EntityRepository
             return 0.0;
         }
 
-        return $marathonShape->getShapeFor($result['km'], $result['points']);
+        return $marathonShape->getShapeFor($result['km'], $result['points'], $numberOfDaysSinceFirstActivity);
     }
 
     /**

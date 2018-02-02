@@ -432,6 +432,8 @@ class TrainingRepositoryTest extends AbstractRepositoryTestCase
             $this->getDefaultAccountsRunningSport()->getId(),
             $date
         ));
+
+        // TODO: check with $timestampfOfFirstActivity
     }
 
     public function testActivityNavigation()

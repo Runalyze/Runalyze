@@ -296,9 +296,16 @@ class ActivityListener
      */
     protected function updateRequiresMarathonShapeCalculation(Training $activity, PreUpdateEventArgs $args)
     {
+        $daysToConsider = $this->getNumberOfDaysToConsiderForMarathonShape($activity->getAccount());
+
         return (
-            $activity->getAdapter()->isRunning() &&
-            $this->timestampEnteredOrLeftPeriodOfLastXDays($this->getNumberOfDaysToConsiderForMarathonShape($activity->getAccount()), $args)
+            $activity->getAdapter()->isRunning() && (
+                $args->hasChangedField('distance') ||
+                $this->timestampEnteredOrLeftPeriodOfLastXDays($daysToConsider, $args)
+            )
+        ) || (
+            $args->hasChangedField('sport') &&
+            $activity->getAdapter()->isNotOlderThanXDays($daysToConsider)
         );
     }
 
