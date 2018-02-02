@@ -18,6 +18,9 @@ abstract class AbstractUnitBasedType extends AbstractType implements DataTransfo
     /** @var int */
     protected $ViewPrecision = 1;
 
+    /** @var int|null */
+    protected $ModelPrecision = null;
+
     public function __construct(UnitInterface $unit)
     {
         $this->Unit = $unit;
@@ -48,7 +51,13 @@ abstract class AbstractUnitBasedType extends AbstractType implements DataTransfo
      */
     public function reverseTransform($value)
     {
-        return null === $value ? null : $this->Unit->toBaseUnit((float)str_replace(',', '.', $value));
+        if (null === $value) {
+            return null;
+        }
+
+        $value = $this->Unit->toBaseUnit((float)str_replace(',', '.', $value));
+
+        return null === $this->ModelPrecision ? $value : round($value, $this->ModelPrecision);
     }
 
     public function getParent()

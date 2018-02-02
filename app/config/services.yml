@@ -240,6 +240,11 @@ services:
     arguments: ["@app.unit_system.temperature"]
     tags:
      - { name: form.type }
+  app.form.type.wind_speed:
+    class: Runalyze\Bundle\CoreBundle\Form\Type\WindSpeedType
+    arguments: ["@app.unit_system.wind_speed"]
+    tags:
+     - { name: form.type }
   app.form.type.weight:
     class: Runalyze\Bundle\CoreBundle\Form\Type\WeightType
     arguments: ["@app.unit_system.weight"]
@@ -285,6 +290,10 @@ services:
   app.unit_system.temperature:
     class: Runalyze\Metrics\Temperature\Unit\AbstractTemperatureUnit
     factory: "app.unit_system_factory:getTemperatureUnit"
+    arguments: ["@app.configuration_manager"]
+  app.unit_system.wind_speed:
+    class: Runalyze\Metrics\Velocity\Unit\AbstractPaceInDecimalFormatUnit
+    factory: "app.unit_system_factory:getWindSpeedUnit"
     arguments: ["@app.configuration_manager"]
   app.unit_system.weight:
     class: Runalyze\Metrics\Weight\Unit\AbstractWeightUnit

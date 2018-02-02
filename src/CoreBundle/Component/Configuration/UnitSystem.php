@@ -2,8 +2,6 @@
 
 namespace Runalyze\Bundle\CoreBundle\Component\Configuration;
 
-use Runalyze\Activity\PaceUnit\KmPerHour;
-use Runalyze\Activity\PaceUnit\MilesPerHour;
 use Runalyze\Bundle\CoreBundle\Entity\Sport;
 use Runalyze\Metrics\Cadence;
 use Runalyze\Metrics\Common\Unit\Factorial;
@@ -12,6 +10,7 @@ use Runalyze\Metrics\HeartRate\Unit\PercentMaximum;
 use Runalyze\Metrics\LegacyUnitConverter;
 use Runalyze\Metrics\Velocity\Unit\AbstractPaceUnit;
 use Runalyze\Metrics\Velocity\Unit\KilometerPerHour;
+use Runalyze\Metrics\Velocity\Unit\MilesPerHour;
 use Runalyze\Parameter\Application\DistanceUnitSystem;
 
 class UnitSystem
@@ -142,6 +141,18 @@ class UnitSystem
         return $this->LegacyUnitConverter->getTemperatureUnit(
             $this->Configuration->get('general.TEMPERATURE_UNIT')
         );
+    }
+
+    /**
+     * @return \Runalyze\Metrics\Velocity\Unit\AbstractPaceInDecimalFormatUnit
+     */
+    public function getWindSpeedUnit()
+    {
+        if (DistanceUnitSystem::IMPERIAL === $this->Configuration->get('general.DISTANCE_UNIT_SYSTEM')) {
+            return new MilesPerHour();
+        }
+
+        return new KilometerPerHour();
     }
 
     /**
