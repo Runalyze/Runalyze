@@ -71,7 +71,7 @@
             {{ form_row(form.cadence, {'div_class': 'w50', 'attr': {'class': 'small-size'}}) }}
 
             {% if isPowerLocked|default(false) %}
-                {{ form_row(form.power, {'div_class': 'w50 only-power', 'attr': {'class': 'small-size', 'disabled': 'disabled', 'help': ''}}) }}
+                {{ form_row(form.power, {'div_class': 'w50 only-power', 'attr': {'class': 'small-size', 'readonly': 'readonly', 'help': ''}}) }}
             {% else %}
                 {{ form_row(form.power, {'div_class': 'w50 only-power', 'attr': {'class': 'small-size'}}) }}
             {% endif %}

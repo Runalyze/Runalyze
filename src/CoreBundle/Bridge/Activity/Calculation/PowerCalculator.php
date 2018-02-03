@@ -38,7 +38,7 @@ class PowerCalculator
             list($powerData, $avgPower) = $this->calculatePower();
 
             $this->setPowerValues($this->Activity, $powerData, $avgPower);
-        } else {
+        } elseif (true === $this->Activity->isPowerCalculated()) {
             $this->setPowerValuesToNull($this->Activity);
         }
     }
