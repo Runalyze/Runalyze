@@ -45,7 +45,8 @@ class MarathonShapeCalculation implements RecalculationTaskInterface
             $configList->getBasicEndurance(),
             $configList->getCurrentVO2maxShape(),
             $configList->getGeneral()->getRunningSport(),
-            $timestamp
+            $timestamp,
+            $configList->getData()->getStartTime()
         );
 
         $this->ConfigurationUpdater->updateMarathonShape($this->Account, $shape);

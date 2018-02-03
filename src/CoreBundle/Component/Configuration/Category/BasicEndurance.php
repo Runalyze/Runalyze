@@ -40,8 +40,15 @@ class BasicEndurance extends AbstractCategory
     /**
      * @return int
      */
-    public function getDaysToConsiderForWeeklyMileage()
+    public function getDaysToConsiderForWeeklyMileage($numberOfDaysSinceFirstActivity = null)
     {
+        if (null !== $numberOfDaysSinceFirstActivity) {
+            return max(
+                min((int)$this->Variables['BE_DAYS_FOR_WEEK_KM'], $numberOfDaysSinceFirstActivity),
+                (int)$this->Variables['BE_DAYS_FOR_WEEK_KM_MIN']
+            );
+        }
+
         return (int)$this->Variables['BE_DAYS_FOR_WEEK_KM'];
     }
 
