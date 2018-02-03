@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "550fcba89b934f52acbb978411016978",
+    "content-hash": "36f66b9f2338ece9e080d1117c336916",
     "packages": [
         {
             "name": "beberlei/DoctrineExtensions",
@@ -2791,12 +2791,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Runalyze/translations.git",
-                "reference": "f2daee62a308cfaafb58db831e3b5887c5d5fd2f"
+                "reference": "71b68d49430439be041966e498745cf1a2f7d281"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Runalyze/translations/zipball/f2daee62a308cfaafb58db831e3b5887c5d5fd2f",
-                "reference": "f2daee62a308cfaafb58db831e3b5887c5d5fd2f",
+                "url": "https://api.github.com/repos/Runalyze/translations/zipball/71b68d49430439be041966e498745cf1a2f7d281",
+                "reference": "71b68d49430439be041966e498745cf1a2f7d281",
                 "shasum": ""
             },
             "type": "library",
@@ -2805,7 +2805,7 @@
                 "MIT"
             ],
             "description": "Translation of Runalyze",
-            "time": "2018-01-21 19:35:31"
+            "time": "2018-01-27 15:19:52"
         },
         {
             "name": "sensio/framework-extra-bundle",
