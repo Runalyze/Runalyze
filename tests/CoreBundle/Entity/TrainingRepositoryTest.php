@@ -293,6 +293,38 @@ class TrainingRepositoryTest extends AbstractRepositoryTestCase
         $this->assertNull($this->EntityManager->getRepository('CoreBundle:Hrv')->findByActivity($activity->getId()));
     }
 
+    public function testThatPowerIsNotRemovedAtUpdate()
+    {
+        $activity = $this->getActivityForDefaultAccount(
+            123456789,
+            116,
+            0.5
+        );
+        $activity->setPowerCalculated(false);
+        $activity->setPower(141);
+
+        $trackData = new Trackdata();
+        $trackData->setPower([140, 141, 140, 142, 142, 141]);
+
+        $activity->setTrackdata($trackData);
+
+        $this->TrainingRepository->save($activity);
+
+        $result = $this->TrainingRepository->findForAccount($activity->getId(), $this->getDefaultAccount()->getId());
+
+        $this->assertEquals(141, $result->getPower());
+        $this->assertFalse($result->isPowerCalculated());
+
+        $activity->setEdited(time());
+
+        $this->TrainingRepository->save($activity);
+
+        $result = $this->TrainingRepository->findForAccount($activity->getId(), $this->getDefaultAccount()->getId());
+
+        $this->assertEquals(141, $result->getPower());
+        $this->assertFalse($result->isPowerCalculated());
+    }
+
     public function testActivityWithRaceResult()
     {
         $activity = $this->getActivityForDefaultAccount(
