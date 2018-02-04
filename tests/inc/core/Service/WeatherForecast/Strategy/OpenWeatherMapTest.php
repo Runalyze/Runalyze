@@ -62,4 +62,23 @@ class OpenWeatherMapTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(17.0, $result->Temperature, '', 0.1);
         $this->assertEquals(WeatherSourceProfile::OPEN_WEATHER_MAP, $result->Source);
     }
+
+    public function testWindDirectionOf360()
+    {
+        $darkSky = new OpenWeatherMap('', $this->getMockForResponses([
+            new Response(200, [], '{
+				"wind":{"speed":1.76,"deg":359.9}
+			}')
+        ]));
+
+        $location = new Location();
+        $location->setPosition(49.45, 7.75);
+        $location->setDateTime(new \DateTime());
+
+        $result = $darkSky->loadForecast($location);
+
+        $this->assertNotNull($result);
+
+        $this->assertEquals(0, $result->WindDirection);
+    }
 }
