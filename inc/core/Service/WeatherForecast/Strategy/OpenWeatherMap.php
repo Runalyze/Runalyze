@@ -117,7 +117,7 @@ class OpenWeatherMap implements StrategyInterface, LoggerAwareInterface
         }
 
         if (isset($wind['deg'])) {
-            $data->WindDirection = (int)round($wind['deg']);
+            $data->WindDirection = ((int)round($wind['deg'])) % 360;
         }
     }
 
