@@ -72,13 +72,17 @@ class AnovaType extends AbstractType
                 'widget' => 'single_text',
                 'format' => 'dd.MM.yyyy',
                 'html5' => false,
-                'attr' => ['class' => 'pick-a-date small-size']
+                'attr' => ['class' => 'pick-a-date small-size'],
+                'model_timezone' => 'UTC',
+                'view_timezone' => 'UTC'
             ])
             ->add('dateTo', DateType::class, [
                 'widget' => 'single_text',
                 'format' => 'dd.MM.yyyy',
                 'html5' => false,
-                'attr' => ['class' => 'pick-a-date small-size']
+                'attr' => ['class' => 'pick-a-date small-size'],
+                'model_timezone' => 'UTC',
+                'view_timezone' => 'UTC'
             ])
             ->add('sport', ChoiceType::class, [
                 'multiple' => true,
