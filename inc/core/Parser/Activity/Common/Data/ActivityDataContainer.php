@@ -73,7 +73,6 @@ class ActivityDataContainer
         $this->ContinuousDataAdapter->correctCadenceIfRequired();
 
         $this->completeRoundsIfRequired();
-        $this->clearRoundsIfOnlyOneRoundIsThere();
         $this->applyPauses();
     }
 
@@ -82,6 +81,8 @@ class ActivityDataContainer
         $this->ActivityData->completeFromContinuousData($this->ContinuousData);
         $this->ActivityData->completeFromRounds($this->Rounds);
         $this->ActivityData->completeFromPauses($this->Pauses);
+
+        $this->clearRoundsIfOnlyOneRoundIsThere();
     }
 
     public function filterActivityData(FilterCollection $filter)

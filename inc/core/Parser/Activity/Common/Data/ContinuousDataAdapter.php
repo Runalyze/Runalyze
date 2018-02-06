@@ -63,6 +63,22 @@ class ContinuousDataAdapter
                 }
             }
         }
+
+        if (!empty($this->ContinuousData->Distance) && 0 == end($this->ContinuousData->Distance)) {
+            $this->ContinuousData->Distance = [];
+        }
+
+        if (!empty($this->ContinuousData->Altitude) && 0 == $this->ContinuousData->Altitude[0] && 0 == min($this->ContinuousData->Altitude) && 0 == max($this->ContinuousData->Altitude)) {
+            $this->ContinuousData->Altitude = [];
+        }
+
+        if (!empty($this->ContinuousData->Latitude) && 0 == $this->ContinuousData->Latitude[0] && 0 == min($this->ContinuousData->Latitude) && 0 == max($this->ContinuousData->Latitude)) {
+            $this->ContinuousData->Latitude = [];
+        }
+
+        if (!empty($this->ContinuousData->Longitude) && 0 == $this->ContinuousData->Longitude[0] && 0 == min($this->ContinuousData->Longitude) && 0 == max($this->ContinuousData->Longitude)) {
+            $this->ContinuousData->Longitude = [];
+        }
     }
 
     public function clearEmptyArrays()
@@ -95,10 +111,6 @@ class ContinuousDataAdapter
 
         foreach ($arrayKeysWithData as $key) {
             $this->ContinuousData->{$key} = [];
-        }
-
-        if (!empty($this->ContinuousData->Distance) && 0 == end($this->ContinuousData->Distance)) {
-            $this->ContinuousData->Distance = [];
         }
     }
 

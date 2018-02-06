@@ -171,7 +171,7 @@ class ContinuousData
      */
     public function getTotalDuration()
     {
-        if (!empty($this->Time)) {
+        if (!empty($this->Time) && end($this->Time) > 0.0) {
             return end($this->Time);
         }
 
@@ -183,7 +183,7 @@ class ContinuousData
      */
     public function getTotalDistance()
     {
-        if (!empty($this->Distance)) {
+        if (!empty($this->Distance) && end($this->Distance) > 0.0) {
             return end($this->Distance);
         }
 
