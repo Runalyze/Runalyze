@@ -129,13 +129,13 @@ Runalyze.RacePerformanceChartView = function (selector, url, options) {
             plot.select(selector);
             plot.xAxis.tickFormat(distanceToString);
             plot.yAxisLabelsGroup = plot.svg().append("g").attr("class", "y-axis-labels y-axis-agegrade").attr("transform", "translate(-55,0)");
-            plot.yAxisLabelsBox = plot.yAxisLabelsGroup.append("rect").attr("transform", "rotate(270)");
             plot.yAxisLabels = plot.yAxisLabelsGroup.append("text").attr("y", 0).attr("x", -plot.height() / 2).attr("transform", "rotate(270)");
             plot.yAxisLabels.append("tspan").text("Age grade").attr("class", "y-axis-label-agegrade");
             plot.yAxisLabels.append("tspan").attr("class", "separator").text("//").attr("dx", "8");
             plot.yAxisLabels.append("tspan").text("VO2max").attr("class", "y-axis-label-vo2max").attr("dx", "10");
             plot.yAxisLabels.append("tspan").attr("class", "separator").text("//").attr("dx", "8");
             plot.yAxisLabels.append("tspan").text("Pace").attr("class", "y-axis-label-pace").attr("dx", "10");
+            plot.yAxisLabelsBox = plot.yAxisLabelsGroup.append("rect").attr("transform", "rotate(270)");
 
             var bbox = plot.yAxisLabels.node().getBBox();
             plot.yAxisLabelsBox.attr('x', bbox.x).attr('y', bbox.y).attr('width', bbox.width).attr('height', bbox.height);
