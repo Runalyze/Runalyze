@@ -199,8 +199,6 @@ class TcxTest extends AbstractActivityParserTestCase
 
         $this->assertNotEmpty($this->Container->ContinuousData->Time);
         $this->assertNotEmpty($this->Container->ContinuousData->Distance);
-        $this->assertNotEmpty($this->Container->ContinuousData->Latitude);
-        $this->assertNotEmpty($this->Container->ContinuousData->Longitude);
         $this->assertNotEmpty($this->Container->ContinuousData->Cadence);
         $this->assertNotEmpty($this->Container->ContinuousData->HeartRate);
 
@@ -257,5 +255,26 @@ class TcxTest extends AbstractActivityParserTestCase
         foreach ($this->Container->Pauses as $pause) {
             $this->assertGreaterThan(0, $pause->getDuration());
         }
+    }
+
+    /**
+     * @see Supportticket #001865
+     */
+    public function testIndoorActivityWithDistanceForSingleLap()
+    {
+        $this->parseFile($this->Parser, 'tcx/Polar-one-lap-indoor-with-distance.tcx');
+
+        $this->assertEquals(13, $this->Container->ActivityData->Duration);
+        $this->assertEquals(0.094, $this->Container->ActivityData->Distance, '', 0.001);
+
+        $this->assertNotEmpty($this->Container->ContinuousData->Time);
+        $this->assertNotEmpty($this->Container->ContinuousData->HeartRate);
+
+        $this->assertEmpty($this->Container->ContinuousData->Latitude);
+        $this->assertEmpty($this->Container->ContinuousData->Longitude);
+        $this->assertEmpty($this->Container->ContinuousData->Distance);
+        $this->assertEmpty($this->Container->ContinuousData->Altitude);
+
+        $this->assertNull($this->Container->ActivityData->AvgPower);
     }
 }
