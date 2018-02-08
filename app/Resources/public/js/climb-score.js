@@ -49,7 +49,7 @@ var DouglasPeucker = function (points, epsilon) {
         var lineLength = pointDistance(i, j);
 
         if (lineLength == 0) {
-            return pointDistance(p, a);
+            return pointDistance(p, i);
         }
 
         var t = ((p.x - i.x) * (j.x - i.x) + (p.y - i.y) * (j.y - i.y)) / lineLength;

@@ -108,6 +108,7 @@ class ActivityListener
             $this->calculateIfActivityWasAtNight($activity);
         }
 
+        $this->recomputeOwnChangeSet($activity, $args);
         $this->scheduleRunningRelatedRecalculationsIfRequiredForUpdate($activity, $args);
 
         if ($args->hasChangedField('time')) {
@@ -399,5 +400,12 @@ class ActivityListener
             -$activity->getS(),
             -$activity->getDistance()
         );
+    }
+
+    protected function recomputeOwnChangeSet(Training $activity, PreUpdateEventArgs $args)
+    {
+        $metaData = $args->getEntityManager()->getClassMetadata(Training::class);
+        $unitOfWork = $args->getEntityManager()->getUnitOfWork();
+        $unitOfWork->computeChangeSet($metaData, $activity);
     }
 }
