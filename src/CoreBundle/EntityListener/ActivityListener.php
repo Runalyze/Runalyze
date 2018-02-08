@@ -406,6 +406,6 @@ class ActivityListener
     {
         $metaData = $args->getEntityManager()->getClassMetadata(Training::class);
         $unitOfWork = $args->getEntityManager()->getUnitOfWork();
-        $unitOfWork->computeChangeSet($metaData, $activity);
+        $unitOfWork->recomputeSingleEntityChangeSet($metaData, $activity);
     }
 }
