@@ -16,6 +16,10 @@ use Runalyze\Bundle\CoreBundle\Entity\Trackdata;
 use Runalyze\Bundle\CoreBundle\Entity\Training;
 use Runalyze\Bundle\CoreBundle\Entity\TrainingRepository;
 use Runalyze\Bundle\CoreBundle\Entity\Type;
+use Runalyze\Bundle\CoreBundle\Services\Recalculation\Task\MarathonShapeCalculation;
+use Runalyze\Bundle\CoreBundle\Services\Recalculation\Task\StartTimeCalculation;
+use Runalyze\Bundle\CoreBundle\Services\Recalculation\Task\VO2maxCorrectionFactorCalculation;
+use Runalyze\Bundle\CoreBundle\Services\Recalculation\Task\VO2maxShapeCalculation;
 use Runalyze\Parser\Activity\Common\Data\Round\Round;
 use Runalyze\Parser\Activity\Common\Data\Round\RoundCollection;
 
@@ -374,6 +378,35 @@ class TrainingRepositoryTest extends AbstractRepositoryTestCase
         $this->TrainingRepository->remove($activity);
 
         $this->assertNull($this->EntityManager->getRepository('CoreBundle:Swimdata')->findByActivity($activity->getId()));
+    }
+
+    /**
+     * @group idontcare
+     */
+    public function testThatVO2maxUpdateInListenerRecalculatesMarathonShape()
+    {
+        $recalculationManager = $this->getContainer()->get('app.recalculation_manager');
+
+        $activity = $this->getActivityForDefaultAccount(time(), 2700, 10.0, $this->getDefaultAccountsRunningSport());
+        $activity->setPulseAvg(140);
+
+        $this->TrainingRepository->save($activity);
+
+        $this->assertTrue($recalculationManager->isTaskScheduled($this->getDefaultAccount(), VO2maxShapeCalculation::class));
+        $this->assertTrue($recalculationManager->isTaskScheduled($this->getDefaultAccount(), MarathonShapeCalculation::class));
+
+        $recalculationManager->runScheduledTasks();
+
+        $this->assertFalse($recalculationManager->isTaskScheduled($this->getDefaultAccount(), VO2maxShapeCalculation::class));
+        $this->assertFalse($recalculationManager->isTaskScheduled($this->getDefaultAccount(), MarathonShapeCalculation::class));
+
+        $this->EntityManager->getUnitOfWork()->refresh($activity);
+        $activity->setPulseAvg(150);
+
+        $this->TrainingRepository->save($activity);
+
+        $this->assertTrue($recalculationManager->isTaskScheduled($this->getDefaultAccount(), VO2maxShapeCalculation::class));
+        $this->assertTrue($recalculationManager->isTaskScheduled($this->getDefaultAccount(), MarathonShapeCalculation::class));
     }
 
     public function testStartTimeForEmptyAccount()

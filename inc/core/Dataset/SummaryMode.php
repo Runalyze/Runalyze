@@ -59,6 +59,12 @@ final class SummaryMode extends AbstractEnum
 	const VO2MAX = 6;
 
 	/**
+	 * AVG_WITH_ZERO: This value will not ignore zeros.
+	 * @var int
+	 */
+	const AVG_WITH_ZERO = 7;
+
+	/**
 	 *
 	 * @param int $mode int from internal enum
 	 * @param string $key key of database column
@@ -79,6 +85,8 @@ final class SummaryMode extends AbstractEnum
 				return self::queryForAvgWithoutNull($key);
 			case self::VO2MAX:
 				return self::queryForVO2max($key);
+			case self::AVG_WITH_ZERO:
+				return self::queryForAvgWithZero($key);
 			default:
 				return '';
 		}
@@ -131,6 +139,19 @@ final class SummaryMode extends AbstractEnum
 	private static function queryForAvgWithoutNull($key)
 	{
 		return 'AVG(NULLIF(`'.$key.'`,0)) as `'.$key.'`';
+	}
+
+	/**
+	 * @param string $key
+	 * @return string
+	 */
+    public static function queryForAvgWithZero($key)
+	{
+	    if (is_array($key)) {
+	        return implode(', ', array_map(array(self::class, 'queryForAvgWithZero'), $key));
+        }
+
+		return 'SUM(`s`*`'.$key.'`)'.'/SUM(`s`) as `'.$key.'`';
 	}
 
 	/**
