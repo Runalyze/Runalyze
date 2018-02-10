@@ -45,4 +45,9 @@ class VO2maxCorrectionFactorCalculation implements RecalculationTaskInterface
 
         $this->ConfigurationUpdater->updateVO2maxCorrectionFactor($this->Account, $factor);
     }
+
+    public function getOrder()
+    {
+        return 2;
+    }
 }
