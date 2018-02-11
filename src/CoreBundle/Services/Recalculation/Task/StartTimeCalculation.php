@@ -56,4 +56,9 @@ class StartTimeCalculation implements RecalculationTaskInterface
 
         $this->ConfigurationUpdater->updateStartTime($this->Account, $this->NewStartTime);
     }
+
+    public function getOrder()
+    {
+        return 1;
+    }
 }
