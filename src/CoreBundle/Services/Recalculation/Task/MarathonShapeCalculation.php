@@ -51,4 +51,9 @@ class MarathonShapeCalculation implements RecalculationTaskInterface
 
         $this->ConfigurationUpdater->updateMarathonShape($this->Account, $shape);
     }
+
+    public function getOrder()
+    {
+        return 4;
+    }
 }

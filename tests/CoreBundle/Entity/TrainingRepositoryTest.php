@@ -422,6 +422,33 @@ class TrainingRepositoryTest extends AbstractRepositoryTestCase
         $this->assertEquals(123456789, $this->TrainingRepository->getStartTime($this->getDefaultAccount()));
     }
 
+    public function testThatStartTimeForSimpleExampleIsCalculated()
+    {
+        $this->insertActivityForDefaultAccount(987654321);
+        $firstActivity = $this->insertActivityForDefaultAccount(123456789);
+
+        $this->getContainer()->get('app.recalculation_manager')->runScheduledTasks();
+        $configList = $this->getContainer()->get('app.configuration_manager')->getList($this->getDefaultAccount());
+
+        $this->assertEquals(123456789, $configList->get('data.START_TIME'));
+
+        $firstActivity->setTime(100000000);
+
+        $this->TrainingRepository->save($firstActivity);
+
+        $this->getContainer()->get('app.recalculation_manager')->runScheduledTasks();
+        $configList = $this->getContainer()->get('app.configuration_manager')->getList($this->getDefaultAccount());
+
+        $this->assertEquals(100000000, $configList->get('data.START_TIME'));
+
+        $this->TrainingRepository->remove($firstActivity);
+
+        $this->getContainer()->get('app.recalculation_manager')->runScheduledTasks();
+        $configList = $this->getContainer()->get('app.configuration_manager')->getList($this->getDefaultAccount());
+
+        $this->assertEquals(987654321, $configList->get('data.START_TIME'));
+    }
+
     public function testVO2maxShapeCalculationForEmptyAccount()
     {
         $this->assertEquals(0.0, $this->TrainingRepository->calculateVO2maxShape(

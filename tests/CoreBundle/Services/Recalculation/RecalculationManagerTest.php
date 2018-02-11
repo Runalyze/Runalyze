@@ -23,6 +23,9 @@ class RecalculationManagerTest extends \PHPUnit_Framework_TestCase
     /** @var ConfigurationManager */
     protected $ConfigurationManager;
 
+    /** @var ConfigurationUpdater */
+    protected $ConfigurationUpdater;
+
     public function setUp()
     {
         $this->Account = new Account();
@@ -37,9 +40,11 @@ class RecalculationManagerTest extends \PHPUnit_Framework_TestCase
         $list->set('data.VO2MAX_CORRECTOR', '1.00');
         $list->set('data.BASIC_ENDURANCE', '0');
 
+        $this->ConfigurationUpdater = new ConfigurationUpdater($confRepository, $this->ConfigurationManager);
+
         $this->Manager = new RecalculationManager(
             $this->ConfigurationManager,
-            new ConfigurationUpdater($confRepository, $this->ConfigurationManager),
+            $this->ConfigurationUpdater,
             $this->getTrainingRepositoryMock(),
             $this->getRaceResultRepositoryMock()
         );
@@ -77,10 +82,10 @@ class RecalculationManagerTest extends \PHPUnit_Framework_TestCase
 
     public function testThatResultsOfTasksAreForwardedToConfiguration()
     {
-        $this->Manager->scheduleStartTimeCalculation($this->Account);
-        $this->Manager->scheduleEffectiveVO2maxCorrectionFactorCalculation($this->Account);
         $this->Manager->scheduleEffectiveVO2maxShapeCalculation($this->Account);
         $this->Manager->scheduleMarathonShapeCalculation($this->Account);
+        $this->Manager->scheduleStartTimeCalculation($this->Account);
+        $this->Manager->scheduleEffectiveVO2maxCorrectionFactorCalculation($this->Account);
 
         $this->assertEquals(4, $this->Manager->getNumberOfScheduledTasksFor($this->Account));
 
@@ -98,7 +103,50 @@ class RecalculationManagerTest extends \PHPUnit_Framework_TestCase
         $this->Manager->runScheduledTasks();
 
         $this->assertEquals('100000000', $this->ConfigurationManager->getList($this->Account)->get('data.START_TIME'));
+    }
 
+    public function testThatNewStartTimeAboveCurrentValueDoesNotChangeAnything()
+    {
+        $this->ConfigurationUpdater->updateStartTime($this->Account, 100000000);
+
+        $this->Manager->addStartTimeCheck($this->Account, 123456789, false);
+        $this->Manager->addStartTimeCheck($this->Account, 154321000, false);
+        $this->Manager->runScheduledTasks();
+
+        $this->assertEquals('100000000', $this->ConfigurationManager->getList($this->Account)->get('data.START_TIME'));
+    }
+
+    public function testMultipleStartTimeUpdates()
+    {
+        $this->ConfigurationUpdater->updateStartTime($this->Account, 100000000);
+
+        $this->Manager->addStartTimeCheck($this->Account, 123456789, false);
+        $this->Manager->addStartTimeCheck($this->Account, 154321000, false);
+        $this->Manager->addStartTimeCheck($this->Account, 98765432, false);
+        $this->Manager->addStartTimeCheck($this->Account, 23456789, false);
+        $this->Manager->runScheduledTasks();
+
+        $this->assertEquals('23456789', $this->ConfigurationManager->getList($this->Account)->get('data.START_TIME'));
+    }
+
+    public function testThatStartTimeIsNotChangedIfRemovedActivityIsTooNew()
+    {
+        $this->ConfigurationUpdater->updateStartTime($this->Account, 100000000);
+
+        $this->Manager->addStartTimeCheck($this->Account, 100000001, true);
+        $this->Manager->runScheduledTasks();
+
+        $this->assertEquals('100000000', $this->ConfigurationManager->getList($this->Account)->get('data.START_TIME'));
+    }
+
+    public function testThatStartTimeIsChangedIfRemovedActivityWasTheOldestOne()
+    {
+        $this->ConfigurationUpdater->updateStartTime($this->Account, 100000000);
+
+        $this->Manager->addStartTimeCheck($this->Account, 100000000, true);
+        $this->Manager->runScheduledTasks();
+
+        $this->assertEquals('123456789', $this->ConfigurationManager->getList($this->Account)->get('data.START_TIME'));
     }
 
     protected function getAccountMock()
