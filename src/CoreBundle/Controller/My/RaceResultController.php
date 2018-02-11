@@ -62,6 +62,7 @@ class RaceResultController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getRaceresultRepository()->save($raceResult);
+            $this->get('app.legacy_cache')->clearRaceResultCache($raceResult);
         }
 
         return $this->render('my/raceresult/form.html.twig', [
@@ -81,7 +82,8 @@ class RaceResultController extends Controller
         $raceResult = $this->getRaceresultRepository()->findForAccount($activityId, $account->getId());
 
         if ($raceResult) {
-           $this->getRaceresultRepository()->delete($raceResult);
+            $this->getRaceresultRepository()->delete($raceResult);
+            $this->get('app.legacy_cache')->clearRaceResultCache($raceResult);
         } else {
             throw $this->createAccessDeniedException();
         }
