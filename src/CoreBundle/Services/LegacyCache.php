@@ -2,6 +2,7 @@
 
 namespace Runalyze\Bundle\CoreBundle\Services;
 
+use Runalyze\Bundle\CoreBundle\Entity\Raceresult;
 use Runalyze\Bundle\CoreBundle\Entity\Training;
 
 class LegacyCache
@@ -61,5 +62,12 @@ class LegacyCache
         }
 
         $this->delete('training'.$activity->getId(), $accountId);
+    }
+
+    public function clearRaceResultCache(Raceresult $raceResult)
+    {
+        $accountId = $raceResult->getAccount()->getId();
+
+        $this->delete('raceresult'.$raceResult->getActivity()->getId(), $accountId);
     }
 }
