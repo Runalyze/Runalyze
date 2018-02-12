@@ -2,7 +2,7 @@
 
 namespace Runalyze\Profile\Notifications;
 
-use Runalyze\Util\AbstractEnum;
+use Runalyze\Common\Enum\AbstractEnum;
 
 class MessageTypeProfile extends AbstractEnum
 {

@@ -55,7 +55,6 @@ class RunalyzeConfigurationList extends ConfigurationList
             'data-browser' => Category\DataBrowser::class,
             'design' => Category\Design::class,
             'general' => Category\General::class,
-            'misc' => Category\Miscellaneous::class,
             'privacy' => Category\Privacy::class,
             'trimp' => Category\Trimp::class,
             'vo2max' => Category\VO2max::class,
@@ -168,14 +167,6 @@ class RunalyzeConfigurationList extends ConfigurationList
     public function getGeneral()
     {
         return $this->getCategory('general');
-    }
-
-    /**
-     * @return Category\Miscellaneous This category is not persistent, it's created on each call.
-     */
-    public function getMiscellaneous()
-    {
-        return $this->getCategory('misc');
     }
 
     /**

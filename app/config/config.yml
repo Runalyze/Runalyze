@@ -4,6 +4,7 @@ imports:
   - { resource: services.yml }
   - { resource: queue.yml }
   - { resource: default_config.yml }
+  - { resource: expert_config.yml }
   - { resource: ../../data/config.yml }
 
 framework:
@@ -13,7 +14,7 @@ framework:
 #     translation_domain: messages
   session:
     handler_id: '%session.handler_id%'
-    save_path: '%kernel.root_dir%/../data/sessions'
+    save_path: '%data_directory%/sessions'
   form: ~
   csrf_protection: true
   assets: ~
@@ -22,10 +23,17 @@ framework:
   translator:
     fallbacks: ['%locale%']
     paths:
-      - '%kernel.root_dir%/../inc/locale/'
+      - '%kernel.root_dir%/../vendor/runalyze/translations/xlf'
+      - '%kernel.root_dir%/../vendor/runalyze/translations/gettext'
+  cache:
+    pools:
+      app.cache.activity_uploads:
+        adapter: cache.app
+        public: true
+        default_lifetime: 86400
 
 parameters:
-  RUNALYZE_VERSION: 4.2.0-dev
+  RUNALYZE_VERSION: 4.3.0
 
 twig:
   globals:
@@ -40,7 +48,7 @@ twig:
     swissTopoMap_show: '%swissTopoMap_show%'
     locales: '%locales%'
   paths:
-    '%kernel.root_dir%/../data/views': __main__
+    '%data_directory%/views': __main__
   form_themes:
      - 'form/fields.html.twig'
 
@@ -77,8 +85,13 @@ doctrine:
                 mapping_types:
                     enum:   string
         types:
+            casted_decimal_1: Runalyze\Bundle\CoreBundle\Doctrine\Types\CastedDecimalScale1Type
+            casted_decimal_2: Runalyze\Bundle\CoreBundle\Doctrine\Types\CastedDecimalScale2Type
+            tinyint: Runalyze\Bundle\CoreBundle\Doctrine\Types\TinyIntType
             pipe_array: Runalyze\Bundle\CoreBundle\Doctrine\Types\PipeDelimitedArray
+            geohash_array: Runalyze\Bundle\CoreBundle\Doctrine\Types\GeohashArray
             runalyze_pause_array: Runalyze\Bundle\CoreBundle\Doctrine\Types\RunalyzePauseArray
+            runalyze_round_array: Runalyze\Bundle\CoreBundle\Doctrine\Types\RunalyzeRoundArray
 
 
     orm:
@@ -101,6 +114,9 @@ doctrine:
                 month: DoctrineExtensions\Query\Mysql\Month
                 week: DoctrineExtensions\Query\Mysql\Week
                 year: DoctrineExtensions\Query\Mysql\Year
+            numeric_functions:
+                round: DoctrineExtensions\Query\Mysql\Round
+                round: DoctrineExtensions\Query\Sqlite\Round
 
 doctrine_migrations:
     dir_name: "%kernel.root_dir%/DoctrineMigrations"
@@ -109,7 +125,7 @@ doctrine_migrations:
     name: RUNALYZE Migrations
 
 monolog:
-    channels: ['queue', 'console']
+    channels: ['queue', 'console', 'external_services', 'activity_uploads']
     handlers:
         applog:
             type: stream
@@ -135,6 +151,16 @@ monolog:
             level: error
             path: '%kernel.root_dir%/../var/logs/console.log'
             channels: ['console']
+        external_services:
+            type: stream
+            level: warning
+            path: '%kernel.root_dir%/../var/logs/external_services.log'
+            channels: ['external_services']
+        activity_uploads:
+            type: stream
+            level: debug
+            path: '%kernel.root_dir%/../var/logs/activity_uploads.log'
+            channels: ['activity_uploads']
 
 swiftmailer:
     transport:            smtp
@@ -149,7 +175,7 @@ jms_translation:
     configs:
         app:
             dirs: ['%kernel.root_dir%/', '%kernel.root_dir%/../src']
-            output_dir: '%kernel.root_dir%/Resources/translations'
+            output_dir: '%kernel.root_dir%/../vendor/runalyze/translations/xlf'
             ignored_domains: [routes]
             excluded_names: ["*TestCase.php", "*Test.php"]
             excluded_dirs: [cache, data, logs, test, doctrine]

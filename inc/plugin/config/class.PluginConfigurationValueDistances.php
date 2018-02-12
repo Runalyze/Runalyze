@@ -13,7 +13,7 @@ use Runalyze\Configuration;
  */
 class PluginConfigurationValueDistances extends PluginConfigurationValueArray {
 	/** @var int */
-	const PRECISION = 1;
+	const PRECISION = 2;
 
 	/**
 	 * @var null|\Runalyze\Parameter\Application\DistanceUnitSystem
@@ -35,7 +35,7 @@ class PluginConfigurationValueDistances extends PluginConfigurationValueArray {
 
 	/**
 	 * Set value from string
-	 * 
+	 *
 	 * Has to be overwritten in subclasses.
 	 * @param string $Value
 	 * @param bool $transformValues

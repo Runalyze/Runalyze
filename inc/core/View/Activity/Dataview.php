@@ -26,9 +26,8 @@ use Runalyze\View\Icon\EffectiveVO2maxIcon;
 use Runalyze\Context as GeneralContext;
 use Runalyze\Util\Time;
 use Runalyze\Util\LocalTime;
+use Runalyze\View\RpeColor;
 use Runalyze\View\Stresscolor;
-use Runalyze\View\Tooltip;
-use Runalyze\Data\RPE as DataRPE;
 
 use SessionAccountHandler;
 use SportFactory;
@@ -283,15 +282,17 @@ class Dataview
     }
 
     /**
-     * @return string
+     * @param bool $valueOnly
+     * @return int|null|string
+     *
      */
-    public function rpe()
+    public function rpe($valueOnly = false)
     {
-        $Tooltip = new Tooltip(DataRPE::getString($this->Activity->rpe()));
-        $RPE = $this->Activity->rpe();
-        $Tooltip->wrapAround($RPE);
+        if ($valueOnly) {
+            return $this->Activity->rpe();
+        }
 
-        return $RPE;
+        return (new RpeColor($this->Activity->rpe()))->string();
     }
 
     /**
@@ -355,11 +356,7 @@ class Dataview
         $start = null !== $this->Activity->fitPerformanceCondition() ? $this->fitPerformanceConditionStart() : '-';
         $end = null !== $this->Activity->fitPerformanceConditionEnd() ? $this->fitPerformanceConditionEnd() : '-';
 
-        if ('-' == $start && '-' == $end) {
-            return '';
-        }
-
-        return $start.'/'.$end;
+        return $this->formatTwoPartValue($start, $end);
     }
 
     /**
@@ -433,6 +430,80 @@ class Dataview
         }
 
         return '';
+    }
+
+    /**
+     * @return string
+     */
+    public function flightTime()
+    {
+        $flightTime = $this->Activity->flightTime();
+
+        if (null !== $flightTime) {
+            return round($flightTime).'&nbsp;ms';
+        }
+
+        return '';
+    }
+
+    /**
+     * @return string
+     */
+    public function flightRatio()
+    {
+        $flightRatio = $this->Activity->flightRatio();
+
+        if (null !== $flightRatio) {
+            return number_format(100 * $flightRatio, 1, '.', '').'&nbsp;%';
+        }
+
+        return '';
+    }
+
+    /**
+     * @return string
+     */
+    public function impactGs()
+    {
+        return $this->formatRunScribeValues($this->Activity->impactGsLeft(), $this->Activity->impactGsRight());
+    }
+
+    /**
+     * @return string
+     */
+    public function brakingGs()
+    {
+        return $this->formatRunScribeValues($this->Activity->brakingGsLeft(), $this->Activity->brakingGsRight());
+    }
+
+    /**
+     * @return string
+     */
+    public function footstrikeType()
+    {
+        return $this->formatRunScribeValues($this->Activity->footstrikeTypeLeft(), $this->Activity->footstrikeTypeRight(), 0);
+    }
+
+    /**
+     * @return string
+     */
+    public function pronationExcursion()
+    {
+        return $this->formatRunScribeValues($this->Activity->pronationExcursionLeft(), $this->Activity->pronationExcursionRight());
+    }
+
+    /**
+     * @param null|float|int $left
+     * @param null|float|int $right
+     * @param int $precision
+     * @return string
+     */
+    protected function formatRunScribeValues($left, $right, $precision = 1)
+    {
+        return $this->formatTwoPartValue(
+            null !== $left ? number_format($left, $precision) : '-',
+            null !== $right ? number_format($right, $precision) : '-'
+        );
     }
 
     /**
@@ -617,5 +688,20 @@ class Dataview
         }
 
         return '';
+    }
+
+    /**
+     * @param string $leftString
+     * @param string $rightString
+     * @param string $empty
+     * @return string
+     */
+    protected function formatTwoPartValue($leftString, $rightString, $empty = '-')
+    {
+        if ($empty == $leftString && $empty == $rightString) {
+            return '';
+        }
+
+        return $leftString.'/'.$rightString;
     }
 }

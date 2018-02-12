@@ -26,6 +26,32 @@
                             {{ form_widget(form.dateTo) }}
                             <label for="anova_dateTo" class="input-unit"><i class="fa fa-fw fa-calendar"></i></label>
                         </span>
+
+                        {% trans %}or{% endtrans %}
+
+                        {% set startTime = configVar('data.START_TIME') %}
+                        <select id="anova_dateSelect" name="anova_dateSelect">
+                            <option disabled selected>{{ 'choose a specific period'|trans }}</option>
+                            <option value="{{ date('-6months')|date('d.m.Y')~'-'~date('now')|date('d.m.Y') }}">{{ 'last 6 months'|trans }}</option>
+                            <option value="{{ date('-12months')|date('d.m.Y')~'-'~date('now')|date('d.m.Y') }}">{{ 'last 12 months'|trans }}</option>
+                            {% if startTime < date('1. jan') %}
+                                {% for year in (date('now')|date('Y'))..(configVar('data.START_TIME')|date('Y'))  %}
+                                    <option value="{{ '01.01.'~year~'-31.12.'~year }}">{{ year }}</option>
+                                {% endfor %}
+                                <option value="{{ startTime|date('d.m.Y')~'-'~date('now')|date('d.m.Y') }}">{{ 'entire period'|trans }}</option>
+                            {% endif %}
+                        </select>
+
+                        <script>
+                            var $dateFrom = $("#anova_dateFrom"),
+                                $dateTo = $("#anova_dateTo");
+                            $("#anova_dateSelect").on('change', function(){
+                                var t = $(this).val().split('-');
+                                $dateFrom.val(t[0]);
+                                $dateTo.val(t[1]);
+                            });
+                        </script>
+
                     </div>
                 </div>
 
@@ -40,6 +66,30 @@
 
                     {{ form_widget(form.sport) }}
                 </div>
+
+                <div class="w100 with33erLabel">
+                    <label for="anova_type">
+                        {% trans %}Activity type{% endtrans %}
+                        <span class="right small">
+                            <span class="link chosen-select-all" data-target="anova_type">{% trans %}all{% endtrans %}</span> |
+                            <span class="link chosen-select-none" data-target="anova_type">{% trans %}none{% endtrans %}</span>&nbsp;
+                        </span>
+                    </label>
+
+                    {{ form_widget(form.type) }}
+                </div>
+
+                <script>
+                    $("#trend_analysis_sport").chosen().change(function(){
+                        var type = $("#trend_analysis_type");
+
+                        type.find('option').attr('disabled', 'disabled');
+                        $(this).find('option:selected').each(function(i){
+                            type.find('option[data-sportid='+$(this).data('id')+']').removeAttr('disabled');
+                        });
+                        type.trigger('chosen:updated');
+                    });
+                </script>
             </fieldset>
 
             <fieldset>

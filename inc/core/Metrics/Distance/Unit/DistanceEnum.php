@@ -2,8 +2,8 @@
 
 namespace Runalyze\Metrics\Distance\Unit;
 
-use Runalyze\Util\AbstractEnum;
-use Runalyze\Util\AbstractEnumFactoryTrait;
+use Runalyze\Common\Enum\AbstractEnum;
+use Runalyze\Common\Enum\AbstractEnumFactoryTrait;
 
 class DistanceEnum extends AbstractEnum
 {

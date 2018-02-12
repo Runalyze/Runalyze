@@ -6,7 +6,7 @@
 
 namespace Runalyze\Export\File;
 
-use Runalyze\Util\AbstractEnum;
+use Runalyze\Common\Enum\AbstractEnum;
 use Runalyze\View\Activity\Context;
 
 /**

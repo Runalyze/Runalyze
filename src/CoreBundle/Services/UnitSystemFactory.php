@@ -70,6 +70,16 @@ class UnitSystemFactory
     /**
      * @param ConfigurationManager $configurationManager
      * @param Account|null $account
+     * @return \Runalyze\Metrics\Velocity\Unit\AbstractPaceInDecimalFormatUnit
+     */
+    public function getWindSpeedUnit(ConfigurationManager $configurationManager, Account $account = null)
+    {
+        return $this->getUnitSystem($configurationManager, $account)->getWindSpeedUnit();
+    }
+
+    /**
+     * @param ConfigurationManager $configurationManager
+     * @param Account|null $account
      * @return \Runalyze\Metrics\Weight\Unit\AbstractWeightUnit
      */
     public function getWeightUnit(ConfigurationManager $configurationManager, Account $account = null)

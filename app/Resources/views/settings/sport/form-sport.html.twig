@@ -5,6 +5,9 @@
 {% set configList = config().activityForm %}
 {# @var configList \Runalyze\Bundle\CoreBundle\Component\Configuration\Category\ActivityForm #}
 
+{% set generalConfig = config().general %}
+{# @var configList \Runalyze\Bundle\CoreBundle\Component\Configuration\Category\General #}
+
 {% block content %}
     <div class="panel-heading">
         {% if form.vars.data.id is null%}
@@ -38,6 +41,11 @@
             <p class="info margin-bottom">
                 {% trans %}You can group your sports into 'main' and 'alternative' ones.
                 For some analyses 'alternative' types are grouped together whereas 'main' types are always shown standalone from each other.{% endtrans %}
+            </p>
+
+            {{ form_row(form.defaultPrivacy, {'div_class': 'w100 block with50erLabel'}) }}
+            <p class="info margin-bottom">
+                {% trans %}Default privacy setting for all new created activities of this sport type.{% endtrans %}
             </p>
         </fieldset>
 
@@ -159,7 +167,7 @@
         </p>
     </div>
 
-    {% if form.vars.data.id is not null and form.vars.data.trainings.count() is null %}
-        {{ dangerZoneDelete(url('sport-delete', {'id': form.vars.data.id}), 'deleteSport') }}
+    {% if form.vars.data.id is not null and form.vars.data.trainings.count() < 1 and generalConfig.getMainSport != form.vars.data.id %}
+       {{ dangerZoneDelete(url('sport-delete', {'id': form.vars.data.id}), 'deleteSport') }}
     {% endif %}
 {% endblock %}

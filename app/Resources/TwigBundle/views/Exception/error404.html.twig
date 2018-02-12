@@ -1,0 +1,14 @@
+{% extends "@Twig/Exception/error.html.twig" %}
+
+{% block content %}
+    <h3>{% trans %}Sorry!{% endtrans %} - {% trans %}Page not found{% endtrans %}</h3>
+
+    <p class="text">
+        {% trans %}Looks like something went wrong here.{% endtrans %}
+
+        {% if not app.request.xmlHttpRequest %}
+            <br>
+            <a href="{{ path('base_url') }}">{% trans %}Let's go back to RUNALYZE!{% endtrans %}</a>
+        {% endif %}
+    </p>
+{% endblock %}

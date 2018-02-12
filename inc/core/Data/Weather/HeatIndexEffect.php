@@ -2,7 +2,7 @@
 
 namespace Runalyze\Data\Weather;
 
-use Runalyze\Util\AbstractEnum;
+use Runalyze\Common\Enum\AbstractEnum;
 
 /**
  * Heat index effect as defined by the U.S. National Oceanic and Atmospheric Administration

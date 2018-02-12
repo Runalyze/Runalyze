@@ -1,3 +1,4 @@
+
 {% macro plusMinus(value, string, epsilon) %}
     {% if value > epsilon|default(0) %}
         <span class="plus">{{ string|default(value)|raw }}</span>
@@ -22,8 +23,9 @@
 {% endmacro %}
 
 {% macro boxedValueFor(displayableValue, label, width, icon) %}
+    {% import _self as utils %}
     {# @var displayableValue \Runalyze\Bundle\CoreBundle\Twig\DisplayableValue #}
-    {{ _self.boxedValue(displayableValue.zero ? '-' : displayableValue.value, displayableValue.unit, label, width, icon) }}
+    {{ utils.boxedValue(displayableValue.zero ? '-' : displayableValue.value, displayableValue.unit, label, width, icon) }}
 {% endmacro %}
 
 {% macro tableHeadMonths(fixedWidth, emptyCells, tag, withTotalCell) %}

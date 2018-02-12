@@ -4,8 +4,8 @@ namespace Runalyze\Bundle\CoreBundle\Tests\Doctrine\Types;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Runalyze\Bundle\CoreBundle\Doctrine\Types\RunalyzePauseArray;
-use Runalyze\Bundle\CoreBundle\Model\Trackdata\Pause\Pause;
-use Runalyze\Bundle\CoreBundle\Model\Trackdata\Pause\PauseCollection;
+use Runalyze\Parser\Activity\Common\Data\Pause\Pause;
+use Runalyze\Parser\Activity\Common\Data\Pause\PauseCollection;
 
 class RunalyzePauseArrayTest extends \PHPUnit_Framework_TestCase
 {
@@ -70,5 +70,17 @@ class RunalyzePauseArrayTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals([93, 46, 136, 91], [$collection[0]->getTimeIndex(), $collection[0]->getDuration(), $collection[0]->getHeartRateAtStart(), $collection[0]->getHeartRateAtEnd()]);
         $this->assertEquals([339, 49, 150, 109], [$collection[1]->getTimeIndex(), $collection[1]->getDuration(), $collection[1]->getHeartRateAtStart(), $collection[1]->getHeartRateAtEnd()]);
         $this->assertEquals([621, 9, 142, 140], [$collection[2]->getTimeIndex(), $collection[2]->getDuration(), $collection[2]->getHeartRateAtStart(), $collection[2]->getHeartRateAtEnd()]);
+    }
+
+    public function testBrokenExample()
+    {
+        $collection = $this->Type->convertToPHPValue(
+            '[{"time":93,"duration":46,"hr-start":136,"hr-end":91},'.
+            '{"time":339,"duration":49,"hr-start":150,"hr-end":109},'.
+            '{"time":621,"duration":9,"hr-sta',
+            $this->PlatformMock
+        );
+
+        $this->assertTrue($collection->isEmpty());
     }
 }

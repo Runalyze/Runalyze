@@ -79,7 +79,7 @@ class Temperature extends AbstractKey
 	 */
 	public function summaryMode()
 	{
-		return SummaryMode::AVG_WITHOUT_NULL;
+		return SummaryMode::AVG_WITH_ZERO;
 	}
 
 	/**

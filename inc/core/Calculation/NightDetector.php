@@ -1,8 +1,4 @@
 <?php
-/**
- * This file contains class::NightDetector
- * @package Runalyze\Calculation
- */
 
 namespace Runalyze\Calculation;
 
@@ -11,16 +7,7 @@ use League\Geotools\Geohash\Geohash;
 use Runalyze\Model\Activity;
 use Runalyze\Model\Route;
 use Runalyze\Util\LocalTime;
-use Runalyze\View\Activity\Context;
 
-/**
- * Night detector
- *
- * Detect if an activity was at night (between sunset and sunrise) or not.
- *
- * @author Hannes Christiansen
- * @package Runalyze\Calculation
- */
 class NightDetector
 {
     /** @var float */
@@ -32,7 +19,6 @@ class NightDetector
     protected $Value = null;
 
     /**
-     * NightDetector constructor
      * @param bool|int $timestamp
      * @param \League\Geotools\Coordinate\CoordinateInterface|null $coordinate
      */
@@ -81,21 +67,6 @@ class NightDetector
         }
 
         return $this;
-    }
-
-    /**
-     * @param \Runalyze\View\Activity\Context $context
-     * @return \Runalyze\Calculation\NightDetector $this-reference
-     */
-    public function setFromContext(Context $context)
-    {
-        if (!$context->hasRoute()) {
-            $this->Value = null;
-
-            return $this;
-        }
-
-        return $this->setFromEntities($context->activity(), $context->route());
     }
 
     /**

@@ -129,7 +129,7 @@ class ToolsController extends Controller
      */
     public function anovaAction(Request $request, Account $account)
     {
-        $data = AnovaData::getDefault($this->getDoctrine()->getRepository('CoreBundle:Sport')->findAllFor($account));
+        $data = AnovaData::getDefault($this->getDoctrine()->getRepository('CoreBundle:Sport')->findAllFor($account), []);
 
         $form = $this->createForm(AnovaType::class, $data, [
             'action' => $this->generateUrl('tools-anova')
@@ -165,7 +165,7 @@ class ToolsController extends Controller
      */
     public function trendAnalysisAction(Request $request, Account $account)
     {
-        $data = TrendAnalysisData::getDefault($this->getDoctrine()->getRepository('CoreBundle:Sport')->findAllFor($account));
+        $data = TrendAnalysisData::getDefault($this->getDoctrine()->getRepository('CoreBundle:Sport')->findAllFor($account), []);
 
         $form = $this->createForm(TrendAnalysisType::class, $data, [
             'action' => $this->generateUrl('tools-trend-analysis')
@@ -209,7 +209,7 @@ class ToolsController extends Controller
         ]);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $formdata = $request->request->get($form->getName());
 
             $numberOfActivities = $this->getDoctrine()->getRepository('CoreBundle:Training')->getNumberOfActivitiesFor($account, (int)$formdata['year'], (int)$formdata['sport']);
@@ -222,7 +222,11 @@ class ToolsController extends Controller
                     'types' => $formdata['postertype'],
                     'sportid' => $formdata['sport'],
                     'title' => $formdata['title'],
-                    'size' => $formdata['size']
+                    'size' => $formdata['size'],
+                    'backgroundColor' => $formdata['backgroundColor'],
+                    'trackColor' => $formdata['trackColor'],
+                    'textColor' => $formdata['textColor'],
+                    'raceColor' => $formdata['raceColor'],
                 ));
                 $this->get('bernard.producer')->produce($message);
 

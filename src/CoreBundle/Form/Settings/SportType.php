@@ -10,7 +10,7 @@ use Runalyze\Bundle\CoreBundle\Entity\SportRepository;
 use Runalyze\Bundle\CoreBundle\Entity\Type;
 use Runalyze\Bundle\CoreBundle\Entity\TypeRepository;
 use Runalyze\Bundle\CoreBundle\Form\Type\EnergyKcalType;
-use Runalyze\Bundle\CoreBundle\Form\Type\HeartrateType;
+use Runalyze\Bundle\CoreBundle\Form\Type\HeartRateType;
 use Runalyze\Metrics\Velocity\Unit\PaceEnum;
 use Runalyze\Profile\Sport\Icon\SportIconProfile;
 use Runalyze\Profile\Sport\SportProfile;
@@ -24,6 +24,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use Symfony\Component\Validator\Constraints\Choice;
 
 class SportType extends AbstractType
 {
@@ -103,12 +104,20 @@ class SportType extends AbstractType
                 'required' => false,
                 'label' => 'Has a distance'
             ])
+            ->add('defaultPrivacy', ChoiceType::class, [
+                'required' => true,
+                'label' => 'Default privacy',
+                'choices' => array(
+                    'private' => true,
+                    'public' => false
+                ),
+            ])
             ->add('kcal', EnergyKcalType::class, [
                 'attr' => ['min' => 1, 'max' => 10000],
                 'required' => false,
                 'label' => 'kcal/h'
             ])
-            ->add('HFavg', HeartrateType::class, [
+            ->add('HFavg', HeartRateType::class, [
                 'attr' => ['min' => 40, 'max' => 255],
                 'required' => false,
                 'label' => 'avg. HR'
@@ -159,9 +168,6 @@ class SportType extends AbstractType
                 'choices' => $activityTypes,
                 'choice_label' => 'name',
                 'placeholder' => 'None',
-                'preferred_choices' => function ($val, $key) {
-                    return '' == $key;
-                },
                 'label' => 'Default activity type'
             ]);
         }

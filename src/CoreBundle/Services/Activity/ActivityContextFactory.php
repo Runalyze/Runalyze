@@ -26,11 +26,11 @@ class ActivityContextFactory
 
         return new ActivityContext(
             $activity,
-            $this->EntityManager->getRepository('CoreBundle:Trackdata')->findByActivity($activityId),
-            $this->EntityManager->getRepository('CoreBundle:Swimdata')->findByActivity($activityId),
+            $activity->getTrackdata(),
+            $activity->getSwimdata(),
             $activity->getRoute(),
-            $this->EntityManager->getRepository('CoreBundle:Hrv')->findByActivity($activityId),
-            $this->EntityManager->getRepository('CoreBundle:Raceresult')->findByActivity($activityId)
+            $activity->getHrv(),
+            $activity->getRaceresult()
         );
     }
 

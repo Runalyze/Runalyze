@@ -80,21 +80,22 @@ class NightDetectorTest extends \PHPUnit_Framework_TestCase
         );
         $Context->route()->synchronize();
 
-        $this->assertTrue($Detector->setFromContext($Context)->isNight());
+        $this->assertTrue($Detector->setFromEntities($Context->activity(), $Context->route())->isNight());
 
         $Context->activity()->set(Activity\Entity::TIME_IN_SECONDS, 3600);
-        $this->assertFalse($Detector->setFromContext($Context)->isNight());
+        $this->assertFalse($Detector->setFromEntities($Context->activity(), $Context->route())->isNight());
     }
 
     public function testContextWithoutRoute()
     {
-        $Detector = new NightDetector();
-        $Detector->setFromContext(FakeContext::onlyWithActivity(
+        $Context = FakeContext::onlyWithActivity(
             new Activity\Entity([
                 Activity\Entity::TIMESTAMP => time(),
                 Activity\Entity::TIME_IN_SECONDS => 600
-            ]))
+            ])
         );
+        $Detector = new NightDetector();
+        $Detector->setFromEntities($Context->activity(), $Context->route());
 
         $this->assertFalse($Detector->isKnown());
     }

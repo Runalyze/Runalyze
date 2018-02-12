@@ -22,23 +22,23 @@ class RaceResultType extends AbstractType
         ];
 
         $builder
-            ->add('name', TextType::class, array(
+            ->add('name', TextType::class, [
                 'required' => true,
-                'attr' => array(
+                'attr' => [
                     'autofocus' => true
-                )
-            ))
-            ->add('official_time', DurationType::class, array(
+                ]
+            ])
+            ->add('official_time', DurationType::class, [
                 'required' => true,
                 'attr' => ['class' => 'small-size']
-            ))
-            ->add('official_distance', DistanceType::class, array(
+            ])
+            ->add('official_distance', DistanceType::class, [
                 'required' => false,
                 'attr' => ['class' => 'small-size']
-            ))
-            ->add('officially_measured', CheckboxType::class, array(
+            ])
+            ->add('officially_measured', CheckboxType::class, [
                 'required' => false,
-            ))
+            ])
             ->add('place_total', IntegerType::class, $placeOrParticipantsOptions)
             ->add('place_gender', IntegerType::class, $placeOrParticipantsOptions)
             ->add('place_ageclass', IntegerType::class, $placeOrParticipantsOptions)
@@ -49,8 +49,8 @@ class RaceResultType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => Raceresult::class
-        ));
+        ]);
     }
 }

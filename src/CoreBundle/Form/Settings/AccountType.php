@@ -20,61 +20,61 @@ class AccountType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('username', TextType::class, array(
+            ->add('username', TextType::class, [
                     'disabled' => true
-            ))
-            ->add('name', TextType::class, array(
+            ])
+            ->add('name', TextType::class, [
                 'required' => false,
                 'empty_data' => ''
-            ))
-            ->add('mail', EmailType::class, array(
+            ])
+            ->add('mail', EmailType::class, [
                 'disabled' => true,
                 'label' => 'Mail'
-            ))
-            ->add('language', ChoiceType::class, array(
+            ])
+            ->add('language', ChoiceType::class, [
                 'choices' => Language::getChoices(),
                 'label' => 'Language'
-            ))
-            ->add('timezone', ChoiceType::class, array(
+            ])
+            ->add('timezone', ChoiceType::class, [
                 'choices' => Timezone::getChoices(),
                 'choice_translation_domain' => false,
                 'label' => 'Timezone'
-            ))
-            ->add('gender', ChoiceType::class, array(
+            ])
+            ->add('gender', ChoiceType::class, [
                 'choices' => Gender::getChoices(),
                 'choice_translation_domain' => false
-            ))
-            ->add('birthyear', IntegerType::class, array(
-                'attr' => array('min' => 1900, 'max' => date("Y")),
+            ])
+            ->add('birthyear', IntegerType::class, [
+                'attr' => ['min' => 1900, 'max' => date("Y")],
                 'required' => false,
                 'label' => 'Year of birth'
-            ))
-            ->add('allow_support', ChoiceType::class, array(
-                'choices' => array(
+            ])
+            ->add('allow_support', ChoiceType::class, [
+                'choices' => [
                     'Yes' => true,
                     'No' => false
-                ),
+                ],
                 'label' => 'Allow access for support'
-            ))
-            ->add('allow_mails', ChoiceType::class, array(
-                'choices' => array(
+            ])
+            ->add('allow_mails', ChoiceType::class, [
+                'choices' => [
                     'Yes' => true,
                     'No' => false
-                ),
+                ],
                 'label' => 'Email me'
-            ))
-            ->add('reset_configuration', CheckboxType::class, array(
+            ])
+            ->add('reset_configuration', CheckboxType::class, [
                 'required' => false,
                 'mapped' => false,
                 'empty_data'  => null
-            ))
+            ])
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'Runalyze\Bundle\CoreBundle\Entity\Account'
-        ));
+        ]);
     }
 }

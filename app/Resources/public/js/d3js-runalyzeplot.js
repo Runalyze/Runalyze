@@ -9,6 +9,7 @@ String.prototype.hashCode = function () {
 };
 
 (function() {
+    /* global d3 */
     d3.runalyzeplot = function(plotData) {
         var data = plotData,
             svg = [],
@@ -70,6 +71,7 @@ String.prototype.hashCode = function () {
             svg.append('clipPath').attr('id', 'clip-'+id).append('rect').attr('x', 0).attr('y',0).attr('width', width).attr('height', height);
 
             plot.gridArea = svg.append("g").attr('clip-path', 'url(#clip-'+id+')');
+            plot.gridArea.append('rect').attr("class", "plot-area").attr('x', 0).attr('y', 0).attr('width', width).attr('height', height);
             plot.plotArea = svg.append("g").attr('clip-path', 'url(#clip-'+id+')');
             plot.axesArea = svg.append("g");
 
@@ -114,7 +116,9 @@ String.prototype.hashCode = function () {
         };
 
         self.drawXGrid = function(ticks) {
-            plot.gridArea.selectAll("line.grid").data(self.xScale.ticks(ticks)).enter()
+            ticks = ticks || self.xScale.ticks().length;
+
+            plot.gridArea.selectAll("line.grid.x").data(self.xScale.ticks(ticks)).enter()
                 .append("line")
                 .attr("class", "grid")
                 .attr("x1", function(d){ return self.xScale(d) + 0.5; })
@@ -124,7 +128,9 @@ String.prototype.hashCode = function () {
         };
 
         self.drawYGrid = function(ticks) {
-            plot.gridArea.selectAll("line.grid").data(self.yScale.ticks(ticks)).enter()
+            ticks = ticks || self.yScale.ticks().length;
+
+            plot.gridArea.selectAll("line.grid.y").data(self.yScale.ticks(ticks)).enter()
                 .append("line")
                 .attr("class", "grid")
                 .attr("y1", function(d){ return self.yScale(d) + 0.5; })
@@ -133,7 +139,26 @@ String.prototype.hashCode = function () {
                 .attr("x2", width);
         };
 
+        self.drawLine = function(d, c, interpolation) {
+            d = d || data;
+            c = c || "";
+            interpolation = interpolation || d3.curveBasis;
+
+            return plot.plotArea.append("path")
+                .datum(d)
+                .attr("class", "line "+ c)
+                .attr("d", d3.line()
+                    .x(self.xMap)
+                    .y(self.yMap)
+                    .curve(interpolation)
+                )
+            ;
+        };
+
         self.drawArea = function(d, c) {
+            d = d || data;
+            c = c || "";
+
             return [
                 plot.plotArea.append("path")
                     .datum(d)
@@ -143,6 +168,19 @@ String.prototype.hashCode = function () {
                     .attr("class", c)
                     .attr("d", d3.line().x(self.xMap).y(self.yMap)(d))
             ];
+        };
+
+        self.drawCircles = function(d, c, r) {
+            d = d || data;
+            c = c || "";
+            r = r || 3.5;
+
+            return plot.plotArea.append("g").attr("class", c).selectAll("circle")
+                .data(d)
+                .enter().append("circle")
+                .attr("r", r)
+                .attr("cx", self.xMap)
+                .attr("cy", self.yMap);
         };
 
         return self;

@@ -5,7 +5,6 @@
  */
 
 use Runalyze\Configuration;
-use Runalyze\Error;
 use Runalyze\Timezone;
 use Symfony\Component\Yaml\Yaml;
 
@@ -38,6 +37,8 @@ class Frontend {
 	 */
 	protected $yamlConfig = array();
 
+	protected $HideFooter = false;
+
 	/**
 	 * Constructor
 	 *
@@ -56,15 +57,15 @@ class Frontend {
 		if (!$hideHeaderAndFooter)
 			$this->displayHeader();
 		else
-			Error::getInstance()->footer_sent = true;
+		    $this->HideFooter = true;
 	}
 
 	/**
 	 * Destructor
 	 */
 	public function __destruct() {
-		if (!Error::getInstance()->footer_sent)
-			$this->displayFooter();
+	    if (!$this->HideFooter)
+    		$this->displayFooter();
 	}
 
 	/**
@@ -76,7 +77,6 @@ class Frontend {
 
 		$this->setAutoloader();
 		$this->initCache();
-		$this->initErrorHandling();
 		$this->initConfig();
 		$this->initDatabase();
 		$this->initSessionAccountHandler();
@@ -97,23 +97,26 @@ class Frontend {
 	private function initConfig() {
 		$this->yamlConfig = array_merge(
 			Yaml::parse(file_get_contents(FRONTEND_PATH.'/../app/config/config.yml'))['parameters'],
-			Yaml::parse(file_get_contents(FRONTEND_PATH.'/../app/config/default_config.yml'))['parameters'],
+            Yaml::parse(file_get_contents(FRONTEND_PATH.'/../app/config/expert_config.yml'))['parameters'],
+            Yaml::parse(file_get_contents(FRONTEND_PATH.'/../app/config/default_config.yml'))['parameters'],
 			Yaml::parse(file_get_contents(FRONTEND_PATH.'/../data/config.yml'))['parameters']
 		);
 
-	define('DARKSKY_API_KEY', $this->yamlConfig['darksky_api_key']);
-	define('OPENWEATHERMAP_API_KEY', $this->yamlConfig['openweathermap_api_key']);
-	define('NOKIA_HERE_APPID', $this->yamlConfig['nokia_here_appid']);
-	define('NOKIA_HERE_TOKEN', $this->yamlConfig['nokia_here_token']);
-	define('THUNDERFOREST_API_KEY', $this->yamlConfig['thunderforest_api_key']);
-	define('MAPBOX_API_KEY', $this->yamlConfig['mapbox_api_key']);
-	define('SWISSTOPOMAP_SHOW', $this->yamlConfig['swissTopoMap_show']);
-	define('PERL_PATH', $this->yamlConfig['perl_path']);
-	define('TTBIN_PATH', $this->yamlConfig['ttbin_path']);
-	define('GEONAMES_USERNAME', $this->yamlConfig['geonames_username']);
-	define('USER_DISABLE_ACCOUNT_ACTIVATION', $this->yamlConfig['user_disable_account_activation']);
-	define('SQLITE_MOD_SPATIALITE', $this->yamlConfig['sqlite_mod_spatialite']);
-	define('RUNALYZE_VERSION', $this->yamlConfig['RUNALYZE_VERSION']);
+
+        define('DARKSKY_API_KEY', $this->yamlConfig['darksky_api_key']);
+        define('OPENWEATHERMAP_API_KEY', $this->yamlConfig['openweathermap_api_key']);
+	    define('NOKIA_HERE_APPID', $this->yamlConfig['nokia_here_appid']);
+	    define('NOKIA_HERE_TOKEN', $this->yamlConfig['nokia_here_token']);
+	    define('THUNDERFOREST_API_KEY', $this->yamlConfig['thunderforest_api_key']);
+        define('MAPBOX_API_KEY', $this->yamlConfig['mapbox_api_key']);
+    	define('SWISSTOPOMAP_SHOW', $this->yamlConfig['swissTopoMap_show']);
+	    define('PERL_PATH', $this->yamlConfig['perl_path']);
+	    define('TTBIN_PATH', $this->yamlConfig['ttbin_path']);
+	    define('GEONAMES_USERNAME', $this->yamlConfig['geonames_username']);
+	    define('USER_DISABLE_ACCOUNT_ACTIVATION', $this->yamlConfig['user_disable_account_activation']);
+	    define('SQLITE_MOD_SPATIALITE', $this->yamlConfig['sqlite_mod_spatialite']);
+        define('RUNALYZE_VERSION', $this->yamlConfig['RUNALYZE_VERSION']);
+        define('DATA_DIRECTORY', str_replace('%kernel.root_dir%', FRONTEND_PATH.'/../app', $this->yamlConfig['data_directory']));
 	}
 
 	/**
@@ -148,13 +151,6 @@ class Frontend {
 		\Runalyze\Calculation\JD\LegacyEffectiveVO2maxCorrector::setGlobalFactor( Configuration::Data()->vo2maxCorrectionFactor() );
 
 		require_once FRONTEND_PATH.'class.Helper.php';
-	}
-
-	/**
-	 * Include class::Error and and initialise it
-	 */
-	protected function initErrorHandling() {
-		\Runalyze\Error::init(Request::Uri());
 	}
 
 	/**
@@ -208,14 +204,8 @@ class Frontend {
 	 * Display the HTML-Footer
 	 */
 	public function displayFooter() {
-		if (Error::getInstance()->hasErrors()) {
-			Error::getInstance()->display();
-		}
-
 		if (!Request::isAjax() && !isset($_GET['hideHtmlHeader'])) {
 			include 'tpl/tpl.Frontend.footer.php';
 		}
-
-		Error::getInstance()->footer_sent = true;
 	}
 }

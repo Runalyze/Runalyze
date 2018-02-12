@@ -54,8 +54,16 @@
 
 
 {%- block form_widget_simple -%}
+    {%- if errors|length > 0 -%}
+        {%- set errorClass = 'validation-failed' -%}
+        {%- if attr.class is defined -%}
+            {%- set errorClass = errorClass ~ ' ' ~ attr.class -%}
+        {%- endif -%}
+        {%- set attr = attr|merge({'class': errorClass}) -%}
+    {%- endif -%}
     {%- set type = type|default('text') -%}
     {% if input_unit %}<span class="input-with-unit">{% endif %}
     <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
     {% if input_unit %}<label for="{{ id }}" class="input-unit">{{ input_unit|raw }}</label></span>{% endif %}
 {%- endblock form_widget_simple -%}
+

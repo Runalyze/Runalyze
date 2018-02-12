@@ -12,7 +12,7 @@ use Runalyze\Bundle\CoreBundle\Form;
 use Runalyze\Bundle\CoreBundle\Services\AutomaticReloadFlagSetter;
 use Runalyze\Profile\Sport\SportProfile;
 use Runalyze\Profile\View\DataBrowserRowProfile;
-use Runalyze\Util\AbstractEnumFactoryTrait;
+use Runalyze\Common\Enum\AbstractEnumFactoryTrait;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;

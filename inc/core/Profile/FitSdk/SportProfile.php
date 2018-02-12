@@ -2,7 +2,7 @@
 
 namespace Runalyze\Profile\FitSdk;
 
-use Runalyze\Util\AbstractEnum;
+use Runalyze\Common\Enum\AbstractEnum;
 
 /**
  * @codeCoverageIgnore

@@ -81,7 +81,7 @@ class GeneratePoster
      * @param Sport $sport
      * @param null|string $title
      */
-    public function buildCommand($type, $jsonDir, $year, Account $account, Sport $sport, $title)
+    public function buildCommand($type, $jsonDir, $year, Account $account, Sport $sport, $title, $backgroundColor, $trackColor, $textColor, $raceColor)
     {
         $this->generateRandomFileName($account->getUsername(), $year);
 
@@ -91,6 +91,10 @@ class GeneratePoster
         $this->Parameter[] = '--output '.$this->pathToSvgDirectory().$this->Filename;
         $this->Parameter[] = '--type '.$type;
         $this->Parameter[] = '--title '.escapeshellarg($title);
+        $this->Parameter[] = '--background-color  '.escapeshellarg($backgroundColor);
+        $this->Parameter[] = '--track-color '.escapeshellarg($trackColor);
+        $this->Parameter[] = '--text-color '.escapeshellarg($textColor);
+        $this->Parameter[] = '--special-color '.escapeshellarg($raceColor);
 
         $this->addStatsParameter($account, $sport, $year);
 

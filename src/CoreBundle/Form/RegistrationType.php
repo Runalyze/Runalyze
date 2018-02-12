@@ -19,41 +19,36 @@ class RegistrationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('username', TextType::class, array(
+            ->add('username', TextType::class, [
                 'required' => false,
-                'attr' => array(
+                'attr' => [
                     'autofocus' => true
-                )
-            ))
-            ->add('mail', EmailType::class, array(
+                ]
+            ])
+            ->add('mail', EmailType::class, [
                 'required' => false
-            ))
-            ->add('plainPassword', RepeatedType::class, array(
-                'type' => PasswordType::class,
+            ])
+            ->add('plainPassword', PasswordType::class, [
                 'required' => true,
-                'first_options'  => array('label' => 'Password'),
-                'second_options' => array('label' => 'Repeat Password'),
-                'constraints' => array(
-                    new Length(array('min' => 8)),
-                ),
-            ))
-            ->add('termsAccepted', CheckboxType::class, array(
+                'label' => 'Password'
+            ])
+            ->add('termsAccepted', CheckboxType::class, [
                 'mapped' => false,
                 'required' => false,
-                'constraints' => new IsTrue(array('message' => 'You have to accept our terms of use')),
+                'constraints' => new IsTrue(['message' => 'You have to accept our terms of use']),
                 'label' => 'Accept our terms of use'
-            ))
-            ->add('textTimezone', HiddenType::class, array(
+            ])
+            ->add('textTimezone', HiddenType::class, [
                 'mapped' => false,
                 'required' => false
-            ))
+            ])
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'Runalyze\Bundle\CoreBundle\Entity\Account'
-        ));
+        ]);
     }
 }

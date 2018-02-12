@@ -39,4 +39,12 @@ class GeohashLineTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($shortHashes, GeohashLine::shorten($longHashes));
         $this->assertEquals($longHashes, GeohashLine::extend($shortHashes));
     }
+
+    public function testFindingFirstNonNullGeohash()
+    {
+        $this->assertNull(GeohashLine::findFirstNonNullGeohash([], 10));
+        $this->assertNull(GeohashLine::findFirstNonNullGeohash(['7zzzzzzzzzzz', '7zzzzzzzzz', '7zzzzzzzzzzx'], 10));
+        $this->assertEquals('u1xjnxhmrv', GeohashLine::findFirstNonNullGeohash(['7zzzzzzzzzzz', 'u1xjnxhmrvmd', '7zzzzzzzzzzx'], 10));
+        $this->assertEquals('u1xjnxhmrv', GeohashLine::findFirstNonNullGeohash(['u1xjnxhmrvmd', '7zzzzzzzzzzz', '7zzzzzzzzzzx'], 10));
+    }
 }

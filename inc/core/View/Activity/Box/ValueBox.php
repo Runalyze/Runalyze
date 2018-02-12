@@ -10,22 +10,20 @@ use Runalyze\Activity;
 
 /**
  * Boxed value for classes implementing Runalyze\Activity\ValueInterface
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\View\Activity\Box
  */
 class ValueBox extends AbstractBox
 {
-	/**
-	 * Constructor
-	 * @param \Runalyze\Activity\ValueInterface $Value
-	 */
-	public function __construct(Activity\ValueInterface $Value)
+	public function __construct(Activity\ValueInterface $Value, $icon = '', $glossary = '')
 	{
 		parent::__construct(
 			\Helper::Unknown($Value->string(false), '-'),
 			$Value->unit(),
-			$Value->label()
+			$Value->label(),
+            $icon,
+            $glossary
 		);
 	}
 }

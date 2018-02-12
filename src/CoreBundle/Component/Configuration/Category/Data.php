@@ -23,6 +23,14 @@ class Data extends AbstractCategory
     }
 
     /**
+     * @return int timestamp
+     */
+    public function getStartTime()
+    {
+        return (int)$this->Variables['START_TIME'];
+    }
+
+    /**
      * @return int [bpm]
      */
     public function getMaximalHeartRate()

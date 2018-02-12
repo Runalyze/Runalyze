@@ -6,7 +6,7 @@
 
 namespace Runalyze\Dataset;
 
-use Runalyze\Util\AbstractEnum;
+use Runalyze\Common\Enum\AbstractEnum;
 
 /**
  * Enum for summary modes for dataset
@@ -59,6 +59,12 @@ final class SummaryMode extends AbstractEnum
 	const VO2MAX = 6;
 
 	/**
+	 * AVG_WITH_ZERO: This value will not ignore zeros.
+	 * @var int
+	 */
+	const AVG_WITH_ZERO = 7;
+
+	/**
 	 *
 	 * @param int $mode int from internal enum
 	 * @param string $key key of database column
@@ -79,6 +85,8 @@ final class SummaryMode extends AbstractEnum
 				return self::queryForAvgWithoutNull($key);
 			case self::VO2MAX:
 				return self::queryForVO2max($key);
+			case self::AVG_WITH_ZERO:
+				return self::queryForAvgWithZero($key);
 			default:
 				return '';
 		}
@@ -88,9 +96,13 @@ final class SummaryMode extends AbstractEnum
 	 * @param string $key
 	 * @return string
 	 */
-	private static function queryForAvg($key)
+    public static function queryForAvg($key)
 	{
-		return 'SUM(`s`*`'.$key.'`*(`'.$key.'` > 0))'.'/SUM(`s`*(`'.$key.'` > 0)) as `'.$key.'`';
+	    if (is_array($key)) {
+	        return implode(', ', array_map(array(self::class, 'queryForAvg'), $key));
+        }
+
+		return 'SUM(`s`*`'.$key.'`*(`'.$key.'` != 0))'.'/SUM(`s`*(`'.$key.'` != 0)) as `'.$key.'`';
 	}
 
 	/**
@@ -127,6 +139,19 @@ final class SummaryMode extends AbstractEnum
 	private static function queryForAvgWithoutNull($key)
 	{
 		return 'AVG(NULLIF(`'.$key.'`,0)) as `'.$key.'`';
+	}
+
+	/**
+	 * @param string $key
+	 * @return string
+	 */
+    public static function queryForAvgWithZero($key)
+	{
+	    if (is_array($key)) {
+	        return implode(', ', array_map(array(self::class, 'queryForAvgWithZero'), $key));
+        }
+
+		return 'SUM(`s`*`'.$key.'`)'.'/SUM(`s`) as `'.$key.'`';
 	}
 
 	/**

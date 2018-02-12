@@ -241,4 +241,11 @@ class Entity extends Model\EntityWithID implements ProfileInterface {
 	public function defaultTypeID() {
 		return $this->Data[self::DEFAULT_TYPEID];
 	}
+
+    /**
+     * @return bool
+     */
+    public function isMainSport() {
+        return ($this->Data[self::IS_MAIN] == 1);
+    }
 }

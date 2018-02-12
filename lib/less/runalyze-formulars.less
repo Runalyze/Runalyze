@@ -122,6 +122,13 @@ fieldset {
 		padding: 3px 0;
 	}
 
+	label,
+	.checkbox-collection > div {
+		text-overflow: ellipsis;
+		overflow: hidden;
+		white-space: nowrap;
+	}
+
 	.toolbar-line label {
 		float: none;
 		width: auto;
@@ -203,7 +210,7 @@ fieldset {
 	position: relative;
 
 	input { padding: 2px 30px 2px 0; text-align: right; }
-	.small-size { width: 34px; }
+	.small-size { width: 44px; }
 	.middle-size { width: 94px; }
 	.full-size { width: 46%; }
 	.small-size.pick-a-date { width: 60px; }
@@ -221,6 +228,12 @@ fieldset {
 		color: #ccc;
 		padding: 0;
 	}
+}
+
+input:disabled,
+input:read-only,
+input:-moz-read-only {
+	background-color: #f0f0e0;
 }
 
 :invalid, fieldset .validation-failed,

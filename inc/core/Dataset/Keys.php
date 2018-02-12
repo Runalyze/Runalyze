@@ -6,7 +6,7 @@
 
 namespace Runalyze\Dataset;
 
-use Runalyze\Util\AbstractEnum;
+use Runalyze\Common\Enum\AbstractEnum;
 
 /**
  * Enum for dataset keys and their internal ids
@@ -172,6 +172,24 @@ final class Keys extends AbstractEnum
     /** @var int */
     const TOOLS = 53;
 
+    /** @var int */
+    const FLIGHT_TIME = 54;
+
+    /** @var int */
+    const FLIGHT_RATIO = 55;
+
+    /** @var int */
+    const AVG_IMPACT_GS = 56;
+
+    /** @var int */
+    const AVG_BRAKING_GS = 57;
+
+    /** @var int */
+    const AVG_FOOTSTRIKE_TYPE = 58;
+
+    /** @var int */
+    const AVG_PRONATION_EXCURSION = 59;
+
     /**
 	 * @var array|null
 	 */
@@ -281,7 +299,13 @@ final class Keys extends AbstractEnum
             self::FIT_PERFORMANCE_CONDITION_END => 'FitPerformanceConditionEnd',
             self::CLIMB_SCORE => 'ClimbScore',
             self::PERCENTAGE_HILLY => 'PercentageHilly',
-            self::TOOLS => 'Tools'
+            self::TOOLS => 'Tools',
+            self::FLIGHT_TIME => 'FlightTime',
+            self::FLIGHT_RATIO => 'FlightRatio',
+            self::AVG_IMPACT_GS => 'AverageImpactGs',
+            self::AVG_BRAKING_GS => 'AverageBrakingGs',
+            self::AVG_FOOTSTRIKE_TYPE => 'AverageFootstrikeType',
+            self::AVG_PRONATION_EXCURSION => 'AveragePronationExcursion'
         );
 	}
 }

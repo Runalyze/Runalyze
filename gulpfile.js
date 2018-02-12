@@ -58,9 +58,9 @@ function tests() {
 tests.description = 'Run phpunit.';
 
 function translate() {
-  return gulp.src('./inc/locale/*/*/*.po', {read: false})
+  return gulp.src('./vendor/runalyze/translations/gettext/*/*/*.po', {read: false})
     .pipe(shell([
-        'cp <%= file.path %> ./inc/locale', // Needed for symfony
+        'cp <%= file.path %> ./vendor/runalyze/translations/gettext', // Needed for symfony
     ]))
     .pipe(shell([
         'msgfmt -v <%= file.path %> -o <%= target(file.path) %>'

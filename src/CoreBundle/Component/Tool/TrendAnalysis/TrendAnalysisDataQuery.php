@@ -9,6 +9,7 @@ use Runalyze\Bundle\CoreBundle\Component\Tool\Anova\QueryValue\QueryValueInterfa
 use Runalyze\Bundle\CoreBundle\Component\Tool\Anova\QueryValue\QueryValues;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\Sport;
+use Runalyze\Bundle\CoreBundle\Entity\Type;
 use Runalyze\Bundle\CoreBundle\Entity\TrainingRepository;
 use Runalyze\Bundle\CoreBundle\Form\Tools\TrendAnalysis\TrendAnalysisData;
 use Runalyze\Metrics\Common\UnitInterface;
@@ -77,6 +78,7 @@ class TrendAnalysisDataQuery
             ->setParameter('endTime', $this->TrendAnalysisData->getDateToTimestamp());
 
         $this->addSportConditionToQuery($queryBuilder);
+        $this->addTypeConditionToQuery($queryBuilder);
         $this->QueryValue->addSelectionToQuery($queryBuilder, 't', 'value');
 
         return $queryBuilder->getQuery();
@@ -89,4 +91,17 @@ class TrendAnalysisDataQuery
             return $sport->getId();
         }, $this->TrendAnalysisData->getSport()));
     }
+
+    protected function addTypeConditionToQuery(QueryBuilder $queryBuilder)
+    {
+        $types = $this->TrendAnalysisData->getType();
+
+        if (!empty($types)) {
+            $queryBuilder->andWhere($queryBuilder->expr()->in('t.type', ':types'));
+            $queryBuilder->setParameter(':types', array_map(function(Type $type) {
+                return $type->getId();
+            }, $types));
+        }
+    }
+
 }

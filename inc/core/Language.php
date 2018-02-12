@@ -25,7 +25,7 @@ class Language implements InterfaceChoosable
      * Locale dir
      * @var string
      */
-    private static $LOCALE_DIR = './inc/locale';
+    private static $LOCALE_DIR = './vendor/runalyze/translations/gettext';
 
     /**
      * Current language
@@ -77,7 +77,7 @@ class Language implements InterfaceChoosable
      */
     protected function setLocaleDir()
     {
-        self::$LOCALE_DIR = __DIR__.'/../locale';
+        self::$LOCALE_DIR = __DIR__.'/../../vendor/runalyze/translations/gettext';
     }
 
     /**

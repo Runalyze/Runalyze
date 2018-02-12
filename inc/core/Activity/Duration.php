@@ -50,7 +50,7 @@ class Duration {
 
 	/**
 	 * Format
-	 * @param float|string $input seconds as float or "[[[z\d ]H:]i:]s[(.|,)u]"
+	 * @param float|string|int $input seconds as float or "[[[z\d ]H:]i:]s[(.|,)u]"
 	 * @return string
 	 */
 	public static function format($input) {
@@ -61,7 +61,7 @@ class Duration {
 
 	/**
 	 * Create duration
-	 * @param float|string $input [optional] seconds as float or "[[[z\d ]H:]i:]s[(.|,)u]"
+	 * @param float|string|int $input [optional] seconds as float or "[[[z\d ]H:]i:]s[(.|,)u]"
 	 */
 	public function __construct($input = 0) {
 		if (is_numeric($input)) {

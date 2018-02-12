@@ -7,12 +7,14 @@
     "font-awesome": "~4.7.0",
     "fontIconPicker": "~2.0.0",
     "tablesorter": "jquery.tablesorter#2.18.4",
-    "moment": "~2.14.2",
-    "moment-timezone": "~0.5.13",
+    "moment": "^2.20.1",
+    "moment-timezone": "^0.5.14",
+    "moment-duration-format": "^2.1.1",
     "d3": "~4.9.1",
     "d3-tip": "~0.8.0-alpha.1",
     "ifvisible.js": "~1.0.6",
     "jquery-timeago": "~1.5.4",
-    "regression-js": "~1.4.0"
+    "regression-js": "~1.4.0",
+    "pace": "~1.0.2"
   }
 }

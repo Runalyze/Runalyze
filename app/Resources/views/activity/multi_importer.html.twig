@@ -1,0 +1,81 @@
+{% extends "base_logged_in.twig" %}
+
+{% block content %}
+    <div class="panel-menu panel-menu-floated">
+        <ul>
+            <li><a class="window" data-size="small" href="{{ url('activity-upload') }}">{% trans %}Upload{% endtrans %}</a></li>{#-
+            -#}<li><a class="window" data-size="small" href="{{ url('activity-communicator') }}">Garmin Communicator</a></li>{#-
+            -#}<li><a class="window" data-size="small" href="{{ url('activity-new') }}">Form</a></li>
+        </ul>
+    </div>
+
+    <div class="panel-heading">
+        <h1>{{ 'Add activity'|trans }}</h1>
+    </div>
+
+    <div class="panel-content">
+        {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'ajax no-automatic-reload', 'id': 'activity'}}) }}
+
+        <fieldset id="fieldset-sports">
+            <legend>{% trans %}Choose activities{% endtrans %}</legend>
+
+            <p class="info">{% trans with {'%s': previews|length} %}Found %s activities.{% endtrans %}</p>
+
+            <table class="fullwidth multi-import-table zebra-style c" id="multi-import-table">
+                <thead>
+                    <tr>
+                        <th colspan="2">{% trans %}Import{% endtrans %}</th>
+                        <th>{% trans %}Date{% endtrans %}</th>
+                        <th>{% trans %}Duration{% endtrans %}</th>
+                        <th>{% trans %}Distance{% endtrans %}</th>
+                        <th colspan="4"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for activity in form.activity %}
+                    {# @var preview \Runalyze\Bundle\CoreBundle\Component\Activity\ActivityPreview #}
+                    {% set preview = previews[loop.index0] %}
+                    <tr{% if preview.possibleDuplicate %} class="possible-duplicate"{% endif %}>
+                        <td>{% if preview.possibleDuplicate %}<i class="fa fa-fw fa-warning" rel="tooltip" title="{% trans %}It seems that you already have imported this activity{% endtrans %}."></i>{% endif %}</td>
+                        <td>{{ form_widget(activity) }}</td>
+                        <td>{{ preview.dateTime|date('d.m.Y', false) }} - <small>{{ preview.dateTime|date('H:i', false) }}</small></td>
+                        <td>{{ preview.duration|duration }}</td>
+                        <td>{{ preview.distance > 0 ? distance(preview.distance) : '' }}</td>
+                        <td>{% if preview.sportIcon %}<i class="{{ preview.sportIcon }}" rel="tooltip" title="{{ preview.sportName }}"></i>{% else %}{{ preview.sportName }}{% endif %}</td>
+                        <td>{% if preview.hasHeartRate %}<i class="fa fa-fw fa-heart"></i>{% endif %}</td>
+                        <td>{% if preview.hasRoute %}<i class="fa fa-fw fa-location-arrow"></i>{% endif %}</td>
+                        <td>{% if preview.hasRounds %}<i class="fa fa-fw fa-clock-o"></i>{% endif %}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            {% do form.activity.setRendered() %}
+
+            {{ form_row(form.show_multi_editor, {'div_class': 'w100 checkbox-first'}) }}
+        </fieldset>
+
+        {{ form_rest(form) }}
+
+        <div class="c">
+            <input type="submit" value="{% trans %}Import selected activities{% endtrans %}">
+        </div>
+
+        {% include 'flashmessages.html.twig' %}
+
+        {{ form_end(form) }}
+
+        <script>
+(function($){$(document).ready(function(){
+    var $table = $("#multi-import-table");
+
+    $table.find("tr:not(.possible-duplicate) input").attr('checked', true);
+    $table.find("td").click(function(e){
+        if (!$(e.target).closest('input[type="checkbox"]').length) {
+            $(this).parent().find('input:checkbox').attr('checked', !$(this).parent().find('input:checkbox').attr('checked'));
+        }
+    });
+});})(jQuery);
+        </script>
+    </div>
+{% endblock %}

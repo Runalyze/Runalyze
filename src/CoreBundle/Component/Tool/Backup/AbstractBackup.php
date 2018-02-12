@@ -26,11 +26,10 @@ abstract class AbstractBackup
     protected $Filename;
 
     /**
-     * RunalyzeBackup constructor.
      * @param string $filename
      * @param int $accountid
      * @param \PDO $databaseConnection
-     * @param string $databaseTable$this->Prefix
+     * @param string $databaseTablePrefix
      * @param string $runalyzeVersion
      */
 	public function __construct($filename, $accountid, \PDO $databaseConnection, $databaseTablePrefix, $runalyzeVersion)
@@ -43,9 +42,6 @@ abstract class AbstractBackup
         $this->Filename = $filename;
 	}
 
-	/**
-	 * Run backup
-	 */
 	final public function run()
     {
 		if ($this->PDO instanceof \PDOforRunalyze) {
@@ -96,22 +92,13 @@ abstract class AbstractBackup
 		$this->Writer->finish();
         $fs = new Filesystem();
         $fs->rename(md5($this->Filename), $this->Filename);
-
-
     }
 
-	/**
-	 * Start backup file
-	 */
 	protected function startBackup() {}
 
-	/**
-	 * Finish backup file
-	 */
 	protected function finishBackup() {}
 
 	/**
-	 * Save table rows
 	 * @param string $tableName
 	 */
 	private function saveTableRows($tableName)
@@ -162,18 +149,13 @@ abstract class AbstractBackup
 	}
 
 	/**
-	 * Start table rows
 	 * @param string $tableName
 	 */
 	protected function startTableRows($tableName) {}
 
-	/**
-	 * Finish table rows
-	 */
 	protected function finishTableRows() {}
 
 	/**
-	 * Plugin IDs
 	 * @return array
 	 */
 	private function fetchPluginIDs()
@@ -182,7 +164,6 @@ abstract class AbstractBackup
 	}
 
 	/**
-	 * Equipment type IDs
 	 * @return array
 	 */
 	private function fetchEquipmentIDs()
@@ -191,7 +172,6 @@ abstract class AbstractBackup
 	}
 
 	/**
-	 * tagIDs
 	 * @return array
 	 */
 	private function fetchTagIDs()
@@ -200,7 +180,6 @@ abstract class AbstractBackup
 	}
 
 	/**
-	 * Equipment type IDs
 	 * @return array
 	 */
 	private function fetchEquipmentTypeIDs()
@@ -209,10 +188,9 @@ abstract class AbstractBackup
 	}
 
 	/**
-	 * Save rows from statement
 	 * @param string $tableName
 	 * @param array $columnInfo
 	 * @param \PDOStatement $statement
 	 */
-	abstract protected function saveRowsFromStatement(&$tableName, array $columnInfo, \PDOStatement $statement);
+	abstract protected function saveRowsFromStatement($tableName, array $columnInfo, \PDOStatement $statement);
 }

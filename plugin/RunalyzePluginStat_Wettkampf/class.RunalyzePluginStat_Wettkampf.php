@@ -193,6 +193,10 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 		$this->displayTableEnd('pb-table');
 		$this->displayHintForPersonalBests();
 
+		if (Configuration::General()->runningSport() == $this->sportid) {
+		    $this->displayLinkToPerformanceChart();
+        }
+
 		if (!empty($this->PBdistances)) {
 			$this->displayPersonalBestsImages();
 		}
@@ -206,6 +210,12 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 			__('Distances have to match exactly, especially 21.10 km and 42.20 km for (half-)marathons.')
 		);
 	}
+
+	private function displayLinkToPerformanceChart() {
+	    echo '<div class="c blocklist blocklist-width-auto margin-top">
+            <a class="window" href="my/raceresult/performance-chart"><i class="fa fa-fw fa-dashboard"></i> <strong>'.__('Performance chart').'</strong></a>
+        </div>';
+    }
 
 	/**
 	 * Display all table-rows for personal bests
@@ -225,9 +235,9 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 				$PBdata = array();
 
 				foreach ($Races as $data) {
-					if ($data['s'] < $PB) {
+					if ($data['official_time'] < $PB) {
 						$PBdata = $data;
-						$PB = $data['s'];
+						$PB = $data['official_time'];
 					}
 				}
 
@@ -301,8 +311,8 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 			foreach($kms as $km)
 				if ($km == $wk['official_distance']) {
 					$year[$wk['y']][(string)$km]['sum']++;
-					if ($wk['s'] < $year[$wk['y']][(string)$km]['pb'])
-						$year[$wk['y']][(string)$km]['pb'] = $wk['s'];
+					if ($wk['official_time'] < $year[$wk['y']][(string)$km]['pb'])
+						$year[$wk['y']][(string)$km]['pb'] = $wk['official_time'];
 				}
 		}
 

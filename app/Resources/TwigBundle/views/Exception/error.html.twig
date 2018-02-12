@@ -27,20 +27,24 @@
                     <img src="{{ asset('assets/images/runalyze-start.png') }}">
                 </p>
             </div>
+    {% else %}
+            <div class="panel-heading margin-bottom">
+                <h1>{% trans %}Problem{% endtrans %}</h1>
+            </div>
     {% endif %}
 
             <div class="panel-content">
                 <div class="installer-window-container">
                     <div class="w50 c" id="login-window">
                         {% block content %}
-                            <h3>{% trans %}Sorry!{% endtrans %} - {% trans %}Page not found{% endtrans %}</h3>
+                            <h3>{% trans %}Sorry!{% endtrans %} - {% trans %}There was a problem.{% endtrans %}</h3>
 
                             <p class="text">
                                 {% trans %}Looks like something went wrong here.{% endtrans %}
 
                                 {% if not app.request.xmlHttpRequest %}
                                 <br>
-                                <a href="{{ path('base_url') }}">{% trans %}Let's go back to RUNALYZE!{% endtrans %}</a>.
+                                <a href="{{ path('base_url') }}">{% trans %}Let's go back to RUNALYZE!{% endtrans %}</a>
                                 {% endif %}
                             </p>
                         {% endblock %}

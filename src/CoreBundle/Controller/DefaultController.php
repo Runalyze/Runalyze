@@ -4,6 +4,7 @@ namespace Runalyze\Bundle\CoreBundle\Controller;
 
 use Runalyze\Activity\Distance;
 use Runalyze\Bundle\CoreBundle\Component\Account\Registration;
+use Runalyze\Bundle\CoreBundle\Form\FeedbackType;
 use Runalyze\Bundle\CoreBundle\Form\RegistrationType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -51,11 +52,16 @@ class DefaultController extends AbstractPluginsAwareController
 
     /**
      * @Route("/", name="base_url")
-     * @Security("has_role('ROLE_USER')")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        return $this->redirect($this->generateUrl('dashboard'));
+        $securityContext = $this->container->get('security.authorization_checker');
+
+        if ($securityContext->isGranted('IS_AUTHENTICATED_FULLY') || $securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $this->redirect($this->generateUrl('dashboard'));
+        }
+
+        return $this->forward('CoreBundle:Default:register', $request->attributes->all());
     }
 
     /**
@@ -216,5 +222,33 @@ class DefaultController extends AbstractPluginsAwareController
         }
 
         return $this->render('account/unsubscribe_failure.html.twig');
+    }
+
+    /**
+     * @Route("/feedback", name="feedback")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function feedbackAction(Request $request, Account $account)
+    {
+        if (!empty($this->getParameter('feedback_mail'))) {
+            $form = $this->createForm(FeedbackType::class, null, [
+                'action' => $this->generateUrl('feedback'),
+            ]);
+
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                $this->get('app.mailer.account')->sendCustomFeedbackToSystem($account, $this->getParameter('feedback_mail'), $form->getData()['message']);
+                return $this->render('feedback.html.twig', [
+                    'form' => $form->createView()
+                ]);
+            }
+
+            return $this->render('feedback.html.twig', array(
+                'form' => $form->createView()
+            ));
+        } else {
+            throw $this->createNotFoundException();
+        }
     }
 }

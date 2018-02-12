@@ -2,7 +2,9 @@
 
 namespace Runalyze\Bundle\CoreBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Runalyze\Bundle\CoreBundle\Entity\Common\AccountRelatedEntityInterface;
 
 /**
  * EquipmentType
@@ -10,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="equipment_type")
  * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\EquipmentTypeRepository")
  */
-class EquipmentType
+class EquipmentType implements AccountRelatedEntityInterface
 {
     /** @var int only one equipment object can be used at once */
     const CHOICE_SINGLE = 0;
@@ -37,21 +39,21 @@ class EquipmentType
     /**
      * @var int see self::CHOICE_SINGLE and self::CHOICE_MULTIPLE
      *
-     * @ORM\Column(name="input", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
+     * @ORM\Column(name="input", type="tinyint", options={"unsigned":true})
      */
     private $input = 0;
 
     /**
      * @var null|int [km]
      *
-     * @ORM\Column(name="max_km", columnDefinition="mediumint unsigned DEFAULT NULL")
+     * @ORM\Column(name="max_km", type="integer", nullable=true, options={"unsigned":true})
      */
     private $maxKm = null;
 
     /**
      * @var null|int [s]
      *
-     * @ORM\Column(name="max_time", columnDefinition="mediumint unsigned DEFAULT NULL")
+     * @ORM\Column(name="max_time", type="integer", nullable=true, options={"unsigned":true})
      */
     private $maxTime = null;
 
@@ -80,9 +82,17 @@ class EquipmentType
      */
     private $sport;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Equipment", mappedBy="type", cascade={"persist"}, fetch="EXTRA_LAZY")
+     */
+    protected $equipment;
+
     public function __construct()
     {
-        $this->sport = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->sport = new ArrayCollection();
+        $this->equipment = new ArrayCollection();
     }
 
     /**
@@ -243,5 +253,13 @@ class EquipmentType
     public function getSport()
     {
         return $this->sport;
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEquipment()
+    {
+        return $this->equipment;
     }
 }

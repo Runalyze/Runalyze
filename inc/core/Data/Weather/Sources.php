@@ -6,7 +6,7 @@
 
 namespace Runalyze\Data\Weather;
 
-use Runalyze\Util\AbstractEnum;
+use Runalyze\Common\Enum\AbstractEnum;
 
 /**
  * Enum for weather sources and their internal ids

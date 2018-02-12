@@ -9,6 +9,9 @@
 
         <base href="{{ url('base_url') }}">
 
+        <script data-pace-options='{"ajax": {"ignoreURLs": ["_internal/notifications", "_wdt/"]}, "document": true }' src="{{ asset('vendor/pace/pace.min.js') }}"></script>
+
+
         {% block html_head_links %}
             {% block html_head_styles %}
                 <link rel="stylesheet" href="{{ asset('assets/css/runalyze-style.css') }}?v={{ RUNALYZE_VERSION }}">
@@ -18,9 +21,11 @@
             <link rel="manifest" href="{{ asset('assets/appmanifest.json') }}">
 
             {% block html_head_locales %}
+                {% if app.request.get('_route') %}
                 {% for key, locale in locales %}
                     <link rel="alternate" href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale': key})) }}" hreflang="{{ key }}">
                 {% endfor %}
+                {% endif %}
             {% endblock %}
 
             {% block html_head_apple_touch_icons %}

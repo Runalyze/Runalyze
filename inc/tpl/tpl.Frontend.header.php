@@ -6,6 +6,8 @@
 
 	<base href="<?php echo System::getFullDomain(); ?>">
 
+    <script data-pace-options='{"ajax": {"ignoreURLs": ["_internal/notifications", "_wdt/"]}, "document": true }' src="vendor/pace/pace.min.js"></script>
+
     <link rel="stylesheet" href="assets/css/runalyze-style.css?v=<?php echo RUNALYZE_VERSION; ?>">
 
 	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
@@ -43,7 +45,26 @@
                 </li>
                 <li class="separator"></li>
                 <li><a class="window" href="<?php echo $this->get('router')->generate('settings-account'); ?>"><i class="fa fa-fw fa-cogs"></i>&nbsp;<?php _e('Account settings'); ?></a></li>
+                <li><a class="window" href="<?php echo $this->get('router')->generate('settings-privacy'); ?>"><i class="fa fa-fw fa-unlock-alt"></i>&nbsp;<?php _e('Privacy settings'); ?></a></li>
                 <li><a class="window" href="<?php echo $this->get('router')->generate('logout'); ?>"><i class="fa fa-fw fa-sign-out"></i>&nbsp;<?php _e('Logout'); ?></a></li>
+            </ul>
+        </div>
+
+        <div class="headline-menu right">
+            <div class="submenu-label only-icon">
+                <i class="fa fa-fw fa-lg fa-book"></i>
+            </div>
+            <ul class="submenu right-oriented">
+                <li><a class="window" href="<?php echo $this->get('router')->generate('glossary-index'); ?>"><i class="fa fa-fw fa-book"></i>&nbsp;<?php _e('Glossary'); ?></a></li>
+                <li><a href="https://help.runalyze.com"><i class="fa fa-fw fa-book"></i>&nbsp;<?php _e('Documentation'); ?></a></li>
+                <li class="separator"></li>
+                <?php if (!empty($this->getParameter('feedback_mail'))) { ?>
+                <li><a class="window" href="<?php echo $this->get('router')->generate('feedback'); ?>"><i class="fa fa-fw fa-cogs"></i>&nbsp;<?php _e('Feedback'); ?></a></li>
+                <?php } ?>
+                <li><a href="https://forum.runalyze.com"><i class="fa fa-fw fa-comments"></i>&nbsp;<?php _e('Forum'); ?></a></li>
+                <li><a href="https://blog.runalyze.com"><i class="fa fa-fw fa-rss"></i>&nbsp;<?php _e('Blog'); ?></a></li>
+                <li class="separator"></li>
+                <li><a class="window" href="<?php echo $this->get('router')->generate('help'); ?>"><i class="fa fa-fw fa-building"></i>&nbsp;<?php _e('About us'); ?></a></li>
             </ul>
         </div>
 
@@ -52,15 +73,15 @@
                 <i class="fa fa-fw fa-envelope"><span class="hide new-notifications-indicator"></span></i><i class="fa fa-fw fa-caret-down"></i>
             </div>
             <ul class="submenu right-oriented">
+                <li><a class="window" data-size="small" href="<?php echo $this->get('router')->generate('notifications-list'); ?>"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('Show all notifications'); ?></a></li>
+                <li class="separator"></li>
                 <li class="no-notifications-messages"><em class="no-link"><?php _e('No new notifications'); ?></em></li>
                 <li id="tpl-notification-message-with-internal-link" class="hide notification-message is-new"><a class="internal" href=""><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<span></span></a></li>
                 <li id="tpl-notification-message-with-external-link" class="hide notification-message is-new"><a href="" target="_blank"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<span></span></a></li>
                 <li id="tpl-notification-message-without-link" class="hide notification-message is-new"><span class="no-link"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<span></span></span></li>
-                <li class="separator"></li>
-                <li><a class="window" data-size="small" href="<?php echo $this->get('router')->generate('notifications-list'); ?>"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('Show all notifications'); ?></a></li>
-            </ul>
+             </ul>
 
-            <script>Runalyze.Notifications.setLastRequestTime(0);</script>
+            <script>Runalyze.Notifications.setLastRequestTime(1);</script>
         </div>
 
         <div class="headline-menu right">
@@ -68,8 +89,8 @@
                 <i class="fa fa-fw fa-plus"></i><i class="fa fa-fw fa-caret-down"></i>
             </div>
             <ul class="submenu right-oriented">
-                <li><a class="window" href="<?php echo $this->get('router')->generate('activity-add'); ?>?upload" data-size="small"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('Activity upload'); ?></a></li>
-                <li><a class="window" href="<?php echo $this->get('router')->generate('activity-add'); ?>?date" data-size="small"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('Manual activity'); ?></a></li>
+                <li><a class="window" href="<?php echo $this->get('router')->generate('activity-upload'); ?>" data-size="small"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('Activity upload'); ?></a></li>
+                <li><a class="window" href="<?php echo $this->get('router')->generate('activity-new'); ?>" data-size="small"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('Manual activity'); ?></a></li>
                 <li><a class="window" href="<?php echo $this->get('router')->generate('equipment-overview'); ?>"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('New equipment'); ?></a></li>
                 <li><a class="window" href="<?php echo $this->get('router')->generate('body-values-add'); ?>"><i class="fa fa-fw fa-chevron-right small"></i>&nbsp;<?php _e('New body values'); ?></a></li>
             </ul>
@@ -104,6 +125,6 @@
             </ul>
         </div>
 
-        <a class="window tab left b" href="<?php echo $this->get('router')->generate('help') ?>"><i class="fa fa-fw fa-lg fa-question-circle"></i>&nbsp;<?php _e('Help'); ?></a>
+        <a class="window tab left b" data-size="big" href="<?php echo $this->get('router')->generate('my-search') ?>"><i class="fa fa-fw fa-lg fa-search"></i>&nbsp;<?php _e('Search'); ?></a>
 	<?php endif; ?>
 </div>

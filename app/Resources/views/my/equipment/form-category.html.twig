@@ -1,5 +1,4 @@
 {% extends "base_logged_in.twig" %}
-{% from '_macro/form.html.twig' import dangerZoneDelete %}
 
 {% from '_macro/form.html.twig' import dangerZoneDelete %}
 
@@ -104,8 +103,11 @@
     </div>
 
     {% if form.vars.data.id is not null %}
-        {{ dangerZoneDelete(url('equipment-delete', {'id': form.vars.data.id}), 'deleteSport',
-            'If you delete an equipment category all objects in this category and all relations between your activities and these objects will be deleted.'
+        {{ dangerZoneDelete(
+            url('equipment-category-delete', {'id': form.vars.data.id}),
+            'deleteEquipmentCategory',
+            '',
+            ['If you delete an equipment category all objects in this category and all relations between your activities and these objects will be deleted.'|trans]
         ) }}
     {% endif %}
 {% endblock %}

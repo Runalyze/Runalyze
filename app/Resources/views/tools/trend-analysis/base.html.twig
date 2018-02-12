@@ -65,6 +65,30 @@
 
                     {{ form_widget(form.sport) }}
                 </div>
+
+                <div class="w100 with33erLabel">
+                    <label for="trend_analysis_type">
+                        {% trans %}Activity type{% endtrans %}
+                        <span class="right small">
+                            <span class="link chosen-select-all" data-target="trend_analysis_type">{% trans %}all{% endtrans %}</span> |
+                            <span class="link chosen-select-none" data-target="trend_analysis_type">{% trans %}none{% endtrans %}</span>&nbsp;
+                        </span>
+                    </label>
+
+                    {{ form_widget(form.type) }}
+                </div>
+
+                <script>
+                    $("#trend_analysis_sport").chosen().change(function(){
+                        var type = $("#trend_analysis_type");
+
+                        type.find('option').attr('disabled', 'disabled');
+                        $(this).find('option:selected').each(function(i){
+                            type.find('option[data-sportid='+$(this).data('id')+']').removeAttr('disabled');
+                        });
+                        type.trigger('chosen:updated');
+                    });
+                </script>
             </fieldset>
 
             <fieldset>
@@ -127,7 +151,7 @@
                                     '</div>';
                             });
                         var xValue = function(d) { return 1000 * d[0]; },
-                            xScale = d3.scaleTime().range([0, width]).domain([d3.timeParse('%d.%m.%Y')($dateFrom.val()).getTime(), d3.timeParse('%d.%m.%Y')($dateTo.val()).getTime()]),
+                            xScale = d3.scaleTime().range([0, width]).domain([d3.timeParse('%d.%m.%Y')($dateFrom.val()).getTime(), d3.timeParse('%d.%m.%Y')($dateTo.val()).setHours(23, 59)]),
                             xMap = function(d) { return xScale(xValue(d));},
                             xAxis = d3.axisBottom().scale(xScale).ticks(6).tickFormat(d3.timeFormat("%d.%m.%Y"));
 

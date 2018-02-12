@@ -7,7 +7,7 @@
 namespace Runalyze\Parameter\Application;
 
 use Runalyze\Activity\PaceUnit as PaceUnitObject;
-use Runalyze\Util\AbstractEnum;
+use Runalyze\Common\Enum\AbstractEnum;
 
 /**
  * @deprecated since v4.1

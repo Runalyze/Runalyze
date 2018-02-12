@@ -6,6 +6,8 @@ use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\Sport;
 use Runalyze\Bundle\CoreBundle\Entity\SportRepository;
 use Runalyze\Bundle\CoreBundle\Component\Tool\Anova\QueryValue\QueryValues;
+use Runalyze\Bundle\CoreBundle\Entity\Type;
+use Runalyze\Bundle\CoreBundle\Entity\TypeRepository;
 use Runalyze\Bundle\CoreBundle\Services\Configuration\ConfigurationManager;
 use Runalyze\Dataset\Query;
 use Symfony\Component\Form\AbstractType;
@@ -20,6 +22,9 @@ class TrendAnalysisType extends AbstractType
     /** @var SportRepository */
     protected $SportRepository;
 
+    /** @var TypeRepository */
+    protected $TypeRepository;
+
     /** @var TokenStorage */
     protected $TokenStorage;
 
@@ -28,11 +33,13 @@ class TrendAnalysisType extends AbstractType
 
     public function __construct(
         SportRepository $sportRepository,
+        TypeRepository $typeRepository,
         TokenStorage $tokenStorage,
         ConfigurationManager $configurationManager
     )
     {
         $this->SportRepository = $sportRepository;
+        $this->TypeRepository = $typeRepository;
         $this->TokenStorage = $tokenStorage;
         $this->ConfigurationManager = $configurationManager;
     }
@@ -58,13 +65,17 @@ class TrendAnalysisType extends AbstractType
                 'widget' => 'single_text',
                 'format' => 'dd.MM.yyyy',
                 'html5' => false,
-                'attr' => ['class' => 'pick-a-date small-size']
+                'attr' => ['class' => 'pick-a-date small-size'],
+                'model_timezone' => 'UTC',
+                'view_timezone' => 'UTC'
             ])
             ->add('dateTo', DateType::class, [
                 'widget' => 'single_text',
                 'format' => 'dd.MM.yyyy',
                 'html5' => false,
-                'attr' => ['class' => 'pick-a-date small-size']
+                'attr' => ['class' => 'pick-a-date small-size'],
+                'model_timezone' => 'UTC',
+                'view_timezone' => 'UTC'
             ])
             ->add('sport', ChoiceType::class, [
                 'multiple' => true,
@@ -73,8 +84,31 @@ class TrendAnalysisType extends AbstractType
                     /** @var Sport $sport */
                     return $sport->getName();
                 },
-                'placeholder' => 'Choose sport(s)',
-                'attr' => ['class' => 'chosen-select full-size']
+                'attr' => [
+                    'data-placeholder' => __('Choose sport(s)'),
+                    'class' => 'chosen-select full-size'
+                ],
+                'choice_attr' => function($sport, $key, $index) {
+                    /* @var Sport $sport */
+                    return ['data-id' => $sport->getId()];
+                }
+            ])
+            ->add('type', ChoiceType::class, [
+                'required' => false,
+                'multiple' => true,
+                'choices' => $this->TypeRepository->findAllFor($this->getAccount()),
+                'choice_label' => function($type, $key, $index) {
+                    /** @var Type $type */
+                    return $type->getName();
+                },
+                'attr' => [
+                    'data-placeholder' => __('Choose activity type(s)'),
+                    'class' => 'chosen-select full-size'
+                ],
+                'choice_attr' => function($type, $key, $index) {
+                    /* @var Type $type */
+                    return ['data-sportid' => $type->getSport()->getId()];
+                }
             ])
             ->add('valueToLookAt', ChoiceType::class, [
                 'choices' => [
@@ -94,7 +128,19 @@ class TrendAnalysisType extends AbstractType
                     'Running dynamics' => [
                         'Ground contact time' => QueryValues::GROUND_CONTACT_TIME,
                         'Ground contact balance' => QueryValues::GROUND_CONTACT_BALANCE,
-                        'Vertical oscillation' => QueryValues::VERTICAL_OSCILLATION
+                        'Vertical oscillation' => QueryValues::VERTICAL_OSCILLATION,
+                        'Flight time' => QueryValues::FLIGHT_TIME,
+                        'Flight ratio' => QueryValues::FLIGHT_RATIO
+                    ],
+                    'RunScribe' => [
+                        'Impact Gs (left)' => QueryValues::IMPACT_GS_LEFT,
+                        'Impact Gs (right)' => QueryValues::IMPACT_GS_RIGHT,
+                        'Braking Gs (left)' => QueryValues::BRAKING_GS_LEFT,
+                        'Braking Gs (right)' => QueryValues::BRAKING_GS_RIGHT,
+                        'Footstrike type (left)' => QueryValues::FOOTSTRIKE_TYPE_LEFT,
+                        'Footstrike type (right)' => QueryValues::FOOTSTRIKE_TYPE_RIGHT,
+                        'Pronation excursion (left)' => QueryValues::PRONATION_EXCURSION_LEFT,
+                        'Pronation excursion (right)' => QueryValues::PRONATION_EXCURSION_RIGHT,
                     ],
                     'FIT details' => [
                         'HRV analysis' => QueryValues::FIT_HRV_ANALYSIS,

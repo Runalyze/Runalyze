@@ -1,33 +1,21 @@
 <?php
-/**
- * This file contains class::SectionRunningDynamicsRow
- * @package Runalyze\DataObjects\Training\View\Section
- */
 
 use Runalyze\Data\Cadence;
 use Runalyze\Model\Trackdata;
 use Runalyze\View\Activity;
 use Runalyze\View\Activity\Box;
 
-/**
- * Row: Running dynamics
- * 
- * @author Hannes Christiansen
- * @package Runalyze\DataObjects\Training\View\Section
- */
-class SectionRunningDynamicsRow extends TrainingViewSectionRowTabbedPlot {
-	/**
-	 * Set content
-	 */
-	protected function setContent() {
+class SectionRunningDynamicsRow extends TrainingViewSectionRowTabbedPlot
+{
+	protected function setContent()
+    {
 		$this->addCadenceAndStrideLength();
 		$this->addRunningDynamics();
+        $this->addNumberOfSteps();
 	}
 
-	/**
-	 * Set content right
-	 */
-	protected function setRightContent() {
+	protected function setRightContent()
+    {
 		if ($this->Context->trackdata()->has(Trackdata\Entity::CADENCE)) {
 			if ($this->Context->activity()->sportid() == Runalyze\Configuration::General()->runningSport()) {
 				$Cadence = new Cadence\Running();
@@ -68,36 +56,22 @@ class SectionRunningDynamicsRow extends TrainingViewSectionRowTabbedPlot {
 		}
 	}
 
-	/**
-	 * Set boxed values
-	 */
-	protected function setBoxedValues() {
-	}
-
-	/**
-	 * Add cadence and power
-	 */
-	protected function addCadenceAndStrideLength() {
+	protected function addCadenceAndStrideLength()
+    {
 		if ($this->Context->activity()->cadence() > 0 || $this->Context->activity()->strideLength() > 0) {
 			$Cadence = new BoxedValue(Helper::Unknown($this->Context->dataview()->cadence()->value(), '-'), $this->Context->dataview()->cadence()->unitAsString(), $this->Context->dataview()->cadence()->label());
 			$Cadence->defineAsFloatingBlock('w50');
 
 			$StrideLength = new Activity\Box\StrideLength($this->Context);
 			$StrideLength->defineAsFloatingBlock('w50');
-			
-			$TotalCadence = new Box\TotalCadence($this->Context);
-			$TotalCadence->defineAsFloatingBlock('w50');
 
 			$this->BoxedValues[] = $Cadence;
-			$this->BoxedValues[] = $TotalCadence;
 			$this->BoxedValues[] = $StrideLength;
 		}
 	}
 
-	/**
-	 * Add running dynamics
-	 */
-	protected function addRunningDynamics() {
+	protected function addRunningDynamics()
+    {
 		if ($this->Context->activity()->groundcontact() > 0 || $this->Context->activity()->verticalOscillation() > 0) {
 			$Oscillation = new BoxedValue(Helper::Unknown(number_format($this->Context->activity()->verticalOscillation()/10, 1), '-'), 'cm', __('Vertical oscillation'));
 			$Oscillation->defineAsFloatingBlock('w50');
@@ -114,7 +88,28 @@ class SectionRunningDynamicsRow extends TrainingViewSectionRowTabbedPlot {
 			$this->BoxedValues[] = $Oscillation;
 			$this->BoxedValues[] = $VerticalRatio;
 			$this->BoxedValues[] = $Contact;
-			$this->BoxedValues[] = $GroundContactBalance; 
+			$this->BoxedValues[] = $GroundContactBalance;
+
+			if ($this->Context->activity()->groundcontact() > 0 && $this->Context->activity()->cadence() > 0) {
+			    $FlightTime = new Box\FlightTime($this->Context);
+                $FlightTime->defineAsFloatingBlock('w50');
+
+                $FlightRatio = new Box\FlightRatio($this->Context);
+                $FlightRatio->defineAsFloatingBlock('w50');
+
+                $this->BoxedValues[] = $FlightTime;
+                $this->BoxedValues[] = $FlightRatio;
+            }
 		}
 	}
+
+    protected function addNumberOfSteps()
+    {
+        if ($this->Context->activity()->cadence() > 0 || $this->Context->activity()->strideLength() > 0) {
+            $TotalCadence = new Box\TotalCadence($this->Context);
+            $TotalCadence->defineAsFloatingBlock('w50');
+
+            $this->BoxedValues[] = $TotalCadence;
+        }
+    }
 }

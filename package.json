@@ -1,10 +1,11 @@
 {
   "name": "Runalyze",
-  "version": "3.0.0-dev",
+  "version": "4.3.0",
   "description": "Runalyze - training analysis for athletes",
   "homepage": "https://runalyze.com/",
   "engines": {
-    "node": ">=0.11.2"
+    "npm": "~5.6.0",
+    "node": "~8.9.4"
   },
   "repository": {
     "type": "git",
@@ -27,6 +28,6 @@
     "gulp-shell": "~0.5.2",
     "gulp-sourcemaps": "~1.12.0",
     "gulp-uglify": "~1.5.4",
-    "d3-scale-chromatic": "^1.1.1"
+    "d3-scale-chromatic": "^1.2.0"
   }
 }

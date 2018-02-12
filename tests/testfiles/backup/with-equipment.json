@@ -1,4 +1,4 @@
-version=4.2
+version=4.3
 
 {"TABLE":"runalyze_account"}
 
@@ -13,8 +13,8 @@ version=4.2
 {"TABLE":"runalyze_plugin_conf"}
 
 {"TABLE":"runalyze_sport"}
-{"11":{"name":"Sport A"}}
-{"12":{"name":"Sport B"}}
+{"11":{"name":"Sport A","internal_sport_id":"1"}}
+{"12":{"name":"Sport B","internal_sport_id":null}}
 
 {"TABLE":"runalyze_type"}
 

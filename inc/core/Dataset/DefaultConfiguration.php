@@ -51,11 +51,20 @@ class DefaultConfiguration extends Configuration
 			Keys::VO2MAX_VALUE => false,
 			Keys::TRAININGPARTNER => false,
 			Keys::ROUTE => false,
+            Keys::POWER => false,
 			Keys::CADENCE => false,
-			Keys::POWER => false,
+            Keys::STRIDE_LENGTH => false,
+            Keys::TOTAL_STROKES => false,
 			Keys::GROUNDCONTACT => true,
+            Keys::GROUNDCONTACT_BALANCE => true,
 			Keys::VERTICAL_OSCILLATION => true,
-			Keys::STRIDE_LENGTH => false,
+            Keys::VERTICAL_RATIO => false,
+            Keys::FLIGHT_TIME => false,
+            Keys::FLIGHT_RATIO => false,
+            Keys::AVG_IMPACT_GS => false,
+            Keys::AVG_BRAKING_GS => false,
+            Keys::AVG_FOOTSTRIKE_TYPE => false,
+            Keys::AVG_PRONATION_EXCURSION => false,
 			Keys::FIT_VO2MAX_ESTIMATE => false,
 			Keys::FIT_PERFORMANCE_CONDITION => false,
             Keys::FIT_PERFORMANCE_CONDITION_START => false,
@@ -64,9 +73,6 @@ class DefaultConfiguration extends Configuration
 			Keys::FIT_HRV_ANALYSIS => false,
 			Keys::FIT_TRAINING_EFFECT => false,
 			Keys::SWOLF => false,
-			Keys::TOTAL_STROKES => false,
-			Keys::VERTICAL_RATIO => false,
-			Keys::GROUNDCONTACT_BALANCE => false,
 			Keys::TAGS => false,
 			Keys::COMPLETE_EQUIPMENT => false,
 			Keys::MAIN_EQUIPMENT => false,
@@ -91,9 +97,13 @@ class DefaultConfiguration extends Configuration
 	protected function generateDataFor(array $keysArray)
 	{
 		foreach ($keysArray as $keyid => $isActive) {
+			$keyObject = Keys::get($keyid);
+
 			$this->Data[$keyid] = array(
 				'active' => $isActive,
-				'style' => Keys::get($keyid)->defaultCssStyle()
+				'style' => $keyObject->defaultCssStyle(),
+                'privacy' => $keyObject->defaultPrivacy(),
+                'privacyOption' => $keyObject->hasPrivacyOption()
 			);
 		}
 	}

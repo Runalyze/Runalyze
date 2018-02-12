@@ -17,7 +17,7 @@
 
             <div class="w100 clear">
                 <label for="remember_me" class="small">{% trans %}Remember me{% endtrans %}</label>
-                <input id="remember_me" name="_remember_me" type="checkbox">
+                <input id="remember_me" name="_remember_me" type="checkbox" checked>
             </div>
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
         </fieldset>
@@ -32,6 +32,9 @@
 
         <div class="c">
             <input type="submit" value="{% trans %}Login{% endtrans %}" name="submit">
+
+            <p class="text small login-window-stats"><a href="{{ path('account_recover') }}"><i class="fa fa-fw fa-lg fa-lock"></i> {% trans %}Forgot your password?{% endtrans %}</a></p>
+
         </div>
     </form>
 {% endblock %}

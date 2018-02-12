@@ -18,6 +18,11 @@ class Cache {
 	*/
 	private static $LASTCLEAN = null;
 
+    /**
+     * ignore some keywords
+     */
+    private static $ignoreKeywords = ['sport'];
+
 	/**
 	 * Boolean flag: Cache enabled?
 	 * @var bool
@@ -53,8 +58,8 @@ class Cache {
 	 * Set Cache
 	 */
 	public static function get($keyword, $nousercache = 0) {
-		if ($nousercache == 0) {
-			$key = $keyword . SessionAccountHandler::getId();
+		if ($nousercache == 0 && !in_array($keyword, self::$ignoreKeywords)) {
+            $key = $keyword . SessionAccountHandler::getId();
 			$cachedobj = self::$cache->getinfo($key);
 			$lastcacheclean = self::$LASTCLEAN;
 			if ($lastcacheclean === null) {
@@ -76,11 +81,13 @@ class Cache {
 	 * Delete from cache
 	 */
 	public static function delete($keyword, $nousercache = 0) {
-		if ($nousercache == 0) { 
-			return self::$cache->delete($keyword.SessionAccountHandler::getId());
-		} else {
-			return self::$cache->delete($keyword);
-		}
+	    if (!in_array($keyword, self::$ignoreKeywords)) {
+            if ($nousercache == 0) {
+                return self::$cache->delete($keyword . SessionAccountHandler::getId());
+            } else {
+                return self::$cache->delete($keyword);
+            }
+        }
 	}
 
 	/**

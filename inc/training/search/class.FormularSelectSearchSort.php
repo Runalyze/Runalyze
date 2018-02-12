@@ -54,13 +54,23 @@ class FormularSelectSearchSort extends FormularField {
 			Keys::GROUNDCONTACT_BALANCE,
 			Keys::VERTICAL_OSCILLATION,
 			Keys::VERTICAL_RATIO,
+            ['flight_time', __('Flight time')],
+            ['flight_ratio', __('Flight ratio')],
+            ['avg_impact_gs_left', __('Impact Gs').' ('.__('left').')'],
+            ['avg_impact_gs_right', __('Impact Gs').' ('.__('right').')'],
+            ['avg_braking_gs_left', __('Braking Gs').' ('.__('left').')'],
+            ['avg_braking_gs_right', __('Braking Gs').' ('.__('right').')'],
+            ['avg_footstrike_type_left', __('Footstrike type').' ('.__('left').')'],
+            ['avg_footstrike_type_right', __('Footstrike type').' ('.__('right').')'],
+            ['avg_pronation_excursion_left', __('Pronation excursion').' ('.__('left').')'],
+            ['avg_pronation_excursion_right', __('Pronation excursion').' ('.__('right').')'],
 			Keys::TOTAL_STROKES,
 			Keys::SWOLF,
 			Keys::FIT_VO2MAX_ESTIMATE,
 			Keys::FIT_RECOVERY_TIME,
 			Keys::FIT_HRV_ANALYSIS,
 			Keys::FIT_TRAINING_EFFECT,
-			Keys::FIT_PERFORMANCE_CONDITION,
+			Keys::FIT_PERFORMANCE_CONDITION_START,
             Keys::FIT_PERFORMANCE_CONDITION_END,
             Keys::TEMPERATURE,
 			['wind_speed', __('Wind speed')],
@@ -86,7 +96,10 @@ class FormularSelectSearchSort extends FormularField {
 				$this->SortByOptions[$keyIdOrArray[0]] = $keyIdOrArray[1];
 			} else {
 				$Key = Keys::get($keyIdOrArray);
-				$this->SortByOptions[$Key->column()] = $Key->label();
+
+				if (!is_array($Key->column())) {
+    				$this->SortByOptions[$Key->column()] = $Key->label();
+                }
 			}
 		}
 	}

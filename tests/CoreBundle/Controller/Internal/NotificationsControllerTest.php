@@ -38,6 +38,7 @@ class NotificationsControllerTest extends AbstractFixturesAwareWebTestCase
             new TemplateBasedMessage('../../../tests/CoreBundle/DataFixtures/messages/test-message.yml'),
             $account
         );
+        $notification->setCreatedAt(10);
         $this->NotificationRepository->save($notification);
 
         return $notification->getId();
@@ -96,7 +97,8 @@ class NotificationsControllerTest extends AbstractFixturesAwareWebTestCase
                 'id' => $id,
                 'link' => 'http://runalyze.com/',
                 'text' => 'foobar',
-                'size' => 'external'
+                'size' => 'external',
+                'createdAt' => 10
             ]]),
             $this->fetchContent('/_internal/notifications')
         );

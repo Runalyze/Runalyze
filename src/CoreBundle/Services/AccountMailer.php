@@ -35,8 +35,15 @@ class AccountMailer
         $this->Sender = [$senderMail => $senderName];
     }
 
-    protected function sendMailTo(Account $account, $subject, $template, array $templateData)
+    /**
+     * @param Account $account
+     * @param string $subject
+     * @param string $template
+     * @param array $templateData
+     */
+    public function sendMailTo(Account $account, $subject, $template, array $templateData)
     {
+        $template = $this->customLanguageTemplates($template, $account->getLanguage());
         $message = \Swift_Message::newInstance($subject)
             ->setTo([$account->getMail() => $account->getUsername()])
             ->setFrom($this->Sender);
@@ -45,10 +52,42 @@ class AccountMailer
         $this->Mailer->send($message);
     }
 
+    /**
+     * @param Account $account
+     * @param string $mailTo
+     * @param string $customText
+     */
+    public function sendCustomFeedbackToSystem(Account $account, $mailTo, $customText)
+    {
+        $subject = 'RUNALYZE - '.$this->Translator->trans('Customer feedback');
+        $content = 'Username: '.$account->getUsername()."\n";
+        $content .= 'Mail: '.$account->getMail()."\n";
+        $content .= 'Message:'."\n".$customText;
+
+        $message = \Swift_Message::newInstance($subject)
+            ->setTo($mailTo)
+            ->setFrom($this->Sender)
+            ->setReplyTo([$account->getMail() => $account->getUsername()]);
+        $message->setBody($content, 'text/plain');
+
+        $this->Mailer->send($message);
+    }
+
+
+    protected function customLanguageTemplates($template, $language) {
+        $template = str_replace('html.twig', '', $template);
+        try {
+            $this->Twig->render($template.$language.'.html.twig');
+            return $template.$language.'.html.twig';
+        } catch (\Exception $ex) {
+            return $template.'html.twig';
+        }
+    }
+
     public function sendActivationLinkTo(Account $account)
     {
-        $this->sendMailTo($account, $this->Translator->trans('Please activate your RUNALYZE account'),
-            'mail/account/registration.html.twig', [
+            $this->sendMailTo($account, $this->Translator->trans('Please activate your RUNALYZE account'),
+                'mail/account/registration.html.twig', [
                 'username' => $account->getUsername(),
                 'activationHash' => $account->getActivationHash()
             ]
@@ -58,7 +97,7 @@ class AccountMailer
     public function sendRecoverPasswordLinkTo(Account $account)
     {
         $this->sendMailTo($account, $this->Translator->trans('Reset your RUNALYZE password'),
-            'mail/account/recoverPassword.html.twig', [
+                'mail/account/recoverPassword.html.twig', [
                 'username' => $account->getUsername(),
                 'changepw_hash' => $account->getChangepwHash()
             ]

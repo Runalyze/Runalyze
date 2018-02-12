@@ -4,8 +4,8 @@ namespace Runalyze\Bundle\CoreBundle\Doctrine\Types;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
-use Runalyze\Bundle\CoreBundle\Model\Trackdata\Pause\Pause;
-use Runalyze\Bundle\CoreBundle\Model\Trackdata\Pause\PauseCollection;
+use Runalyze\Parser\Activity\Common\Data\Pause\Pause;
+use Runalyze\Parser\Activity\Common\Data\Pause\PauseCollection;
 
 class RunalyzePauseArray extends Type
 {
@@ -49,8 +49,10 @@ class RunalyzePauseArray extends Type
         if ($value !== null && '' != trim($value)) {
             $pauses = json_decode($value, true);
 
-            foreach ($pauses as $pause) {
-                $collection->add($this->getPauseForNativeValue($pause));
+            if (is_array($pauses)) {
+                foreach ($pauses as $pause) {
+                    $collection->add($this->getPauseForNativeValue($pause));
+                }
             }
         }
 

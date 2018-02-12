@@ -4,20 +4,31 @@ namespace Runalyze\Bundle\CoreBundle\Controller;
 
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\Training;
+use Runalyze\Bundle\CoreBundle\Entity\TrainingRepository;
 use Runalyze\Export\Share\Facebook;
 use Runalyze\View\Activity\Context;
 use Runalyze\View\Activity\Linker;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class SharedController extends Controller
 {
     /**
+     * @return TrainingRepository
+     */
+    protected function getTrainingRepository()
+    {
+        return $this->getDoctrine()->getRepository('CoreBundle:Training');
+    }
+
+    /**
      * @Route("/shared/{activityHash}&{foo}&{bar}&{baz}", requirements={"activityHash": "[a-zA-Z0-9]+"})
      * @Route("/shared/{activityHash}&{foo}&{bar}", requirements={"activityHash": "[a-zA-Z0-9]+"})
      * @Route("/shared/{activityHash}&{foo}", requirements={"activityHash": "[a-zA-Z0-9]+"})
-     * @Route("/shared/{activityHash}", requirements={"activityHash": "[a-zA-Z0-9]+"})
+     * @Route("/shared/{activityHash}", requirements={"activityHash": "[a-zA-Z0-9]+"}, name="shared-activity")
      */
     public function sharedTrainingAction($activityHash, Request $request)
     {
@@ -86,7 +97,7 @@ class SharedController extends Controller
 
         $Frontend = new \FrontendSharedList();
 
-        if (isset($_GET['view'])) {
+        if (isset($_GET['type'])) {
             return $this->render('shared/athlete/base_plot_sum_data.html.twig', [
                 'username' => $username,
                 'plot' => $this->getPlotSumData()
@@ -111,6 +122,37 @@ class SharedController extends Controller
     }
 
     /**
+     * @Route("/athlete/{username}/feed", name="shared-athlete-feed")
+     */
+    public function publicUserFeedAction($username) {
+        /** @var null|Account $account */
+        $account = $this->getDoctrine()->getRepository('CoreBundle:Account')->findByUsername($username);
+        $privacy = $this->get('app.configuration_manager')->getList($account)->getPrivacy();
+
+        $feed = $this->get('app.activity.feed');
+        $feed->setFeedTitle('RUNALYZE athlete '.$username)
+                ->setFeedUrl($this->generateUrl('shared-athlete-feed', ['username' => $username], UrlGeneratorInterface::ABSOLUTE_URL))
+                ->setSiteUrl($this->generateUrl('shared-athlete', ['username' => $username], UrlGeneratorInterface::ABSOLUTE_URL))
+                ->setFeedAuthor($username);
+
+        if (null === $account || !$privacy->isListPublic()) {
+            return new Response(
+                $feed->buildFeed(),
+                Response::HTTP_OK,
+                ['content-type' => 'text/xml']
+            );
+        }
+
+        $feed->setActivities($this->getTrainingRepository()->getLatestActivities($account, 20, !$privacy->isListShowingAllActivities()));
+
+        return new Response(
+            $feed->buildFeed(),
+            Response::HTTP_OK,
+            ['content-type' => 'text/xml']
+        );
+    }
+
+    /**
      * @return \PlotSumData
      */
     protected function getPlotSumData()
@@ -121,6 +163,6 @@ class SharedController extends Controller
             $_GET['y'] = \PlotSumData::LAST_12_MONTHS;
         }
 
-        return 'week' == $Request->query->get('view', 'month') ? new \PlotWeekSumData() : new \PlotMonthSumData();
+        return 'week' == $Request->query->get('type', 'month') ? new \PlotWeekSumData() : new \PlotMonthSumData();
     }
 }

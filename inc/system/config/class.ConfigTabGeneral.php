@@ -27,16 +27,14 @@ class ConfigTabGeneral extends ConfigTab {
 	private function allCategories() {
 		return array(
 			Configuration::General(),
-			Configuration::Privacy(),
 			Configuration::ActivityView(),
 			Configuration::ActivityForm(),
 			Configuration::Design(),
 			Configuration::DataBrowser(),
 			Configuration::VO2max(),
 			Configuration::Trimp(),
-			Configuration::BasicEndurance(),
-			Configuration::Misc()
-		);
+			Configuration::BasicEndurance()
+        );
 	}
 
 	/**

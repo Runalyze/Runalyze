@@ -168,6 +168,6 @@ class Calculator {
 		$Series = new TimeSeries($this->Power, $this->Trackdata->time());
 		$Series->calculateStatistic();
 
-		return round($Series->mean());
+		return (int)round($Series->mean());
 	}
 }

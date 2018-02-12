@@ -2,8 +2,8 @@
 
 namespace Runalyze\Profile\Sport;
 
-use Runalyze\Util\AbstractEnum;
-use Runalyze\Util\AbstractEnumFactoryTrait;
+use Runalyze\Common\Enum\AbstractEnum;
+use Runalyze\Common\Enum\AbstractEnumFactoryTrait;
 use Symfony\Bundle\FrameworkBundle\CacheWarmer\RouterCacheWarmer;
 use Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle;
 use Runalyze\Util\InterfaceChoosable;

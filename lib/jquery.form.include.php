@@ -1,28 +1,6 @@
- $("#sportid").change(function(){
-    jUpdateSportValues();
-<?php if (\Runalyze\Configuration::ActivityForm()->computeCalories()): ?>
-    jUpdateKcal();
-<?php endif; ?>
-});
-
-$("#time_day").change(function(){
-    jUpdateAvailableEquipment();
-    jUpdateWeather();
-});
-
-$("input[name=distance], input[name=s]").change(function() {
-    jUpdatePace();
-    jUpdateKmh();
-<?php if (\Runalyze\Configuration::ActivityForm()->computeCalories()): ?>
-    jUpdateKcal();
-<?php endif; ?>
-});
-
 $(function(){
-    jUpdateAvailableEquipment();
-    jUpdateSportValues();
-    jUpdatePace();
-
-    if ($("input[name=kcal]").val() == 0)
-        jUpdateKcal();
+    Runalyze.ActivityForm.init($('#training'), {
+        calculateCalories: <?php echo (\Runalyze\Configuration::ActivityForm()->computeCalories()) ? 'true' : 'false'; ?>,
+        loadWeather: <?php echo ($this->dataObject->Weather()->isEmpty() && \Runalyze\Configuration::ActivityForm()->loadWeather()) ? 'true' : 'false'; ?>
+    });
 });

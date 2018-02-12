@@ -203,85 +203,6 @@ class Factory {
 	}
 
 	/**
-	 * All equipment type objects
-	 * @return \Runalyze\Model\EquipmentType\Entity[]
-	 */
-	public function allEquipmentTypes() {
-		return $this->allObjects('equipment_type', function($data){
-			return new EquipmentType\Entity($data);
-		});
-	}
-
-	/**
-	 * All equipment for equipment type
-	 * @param int $equipmentTypeid
-	 * @param boolean $onlyIDs [optional]
-	 * @return \Runalyze\Model\Equipment\Entity[]
-	 */
-	public function equipmentForEquipmentType($equipmentTypeid, $onlyIDs = false) {
-	    $Equipment = array();
-
-	    $IDs = $this->DB->Query('SELECT `id` FROM `'.PREFIX.'equipment` WHERE `accountid`='.\SessionAccountHandler::getId().' AND `typeid`="'.$equipmentTypeid.'"')->fetchAll(\PDO::FETCH_COLUMN);
-
-	    if($onlyIDs) {
-		return $IDs;
-	    }
-
-	    foreach ($IDs as $id) {
-		$Equipment[] = $this->equipment ($id);
-	    }
-
-	    return $Equipment;
-
-	}
-
-	/**
-	 * Sport for equipment type
-	 * @param int $equipmentTypeid
-	 * @param boolean $onlyIDs [optional]
-	 * @return int[]|\Runalyze\Model\Sport\Entity[]
-	 */
-	public function sportForEquipmentType($equipmentTypeid, $onlyIDs = false) {
-		$Sport = array();
-
-		// TODO: provide a cache for this
-		$IDs = $this->DB->query('SELECT `sportid` FROM `'.PREFIX.'equipment_sport` WHERE `equipment_typeid`="'.$equipmentTypeid.'"')->fetchAll(\PDO::FETCH_COLUMN);
-
-		if ($onlyIDs) {
-			return $IDs;
-		}
-
-		foreach ($IDs as $id) {
-			$Sport[] = $this->sport($id);
-		}
-
-		return $Sport;
-	}
-
-	/**
-	 * Equipment types for sport
-	 * @param int $sportid
-	 * @param boolean $onlyIDs [optional]
-	 * @return int[]|\Runalyze\Model\EquipmentType\Entity[]
-	 */
-	public function equipmentTypeForSport($sportid, $onlyIDs = false) {
-		$Types = array();
-
-		// TODO: provide a cache for this
-		$IDs = $this->DB->query('SELECT `equipment_typeid` FROM `'.PREFIX.'equipment_sport` WHERE `sportid`="'.$sportid.'"')->fetchAll(\PDO::FETCH_COLUMN);
-
-		if ($onlyIDs) {
-			return $IDs;
-		}
-
-		foreach ($IDs as $id) {
-			$Types[] = $this->equipmentType($id);
-		}
-
-		return $Types;
-	}
-
-	/**
 	 * Equipment
 	 * @param int $equipmentid
 	 * @return \Runalyze\Model\Equipment\Entity
@@ -290,16 +211,6 @@ class Factory {
 		return new Equipment\Entity(
 			$this->arrayByPK('equipment', $equipmentid)
 		);
-	}
-
-	/**
-	 * All equipment objects
-	 * @return \Runalyze\Model\Equipment\Entity[]
-	 */
-	public function allEquipments() {
-		return $this->allObjects('equipment', function($data){
-			return new Equipment\Entity($data);
-		});
 	}
 
 	/**

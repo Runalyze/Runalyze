@@ -16,17 +16,20 @@ class DatasetType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('active', CheckboxType::class, array(
+            ->add('active', CheckboxType::class, [
                 'required' => false
-            ))
-            ->add('position', IntegerType::class, array(
+            ])
+            ->add('privacy', CheckboxType::class, [
+                'required' => false
+            ])
+            ->add('position', IntegerType::class, [
                 'attr' => ['class' => 'dataset-position']
-            ))
+            ])
             ->add('keyId', HiddenType::class)
-            ->add('style', TextType::class, array(
+            ->add('style', TextType::class, [
                 'required' => false,
                 'empty_data' => ''
-            ));
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

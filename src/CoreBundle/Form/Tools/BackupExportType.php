@@ -11,12 +11,12 @@ class BackupExportType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('fileFormat', ChoiceType::class, array(
+            ->add('fileFormat', ChoiceType::class, [
                 'data' => 'general',
-                'choices' => array(
+                'choices' => [
                     'Portable backup (*.json.gz)' => 'json',
-                    'Database backup (*.sql.gz)' => 'sql')
-            ));
+                    'Database backup (*.sql.gz)' => 'sql']
+            ]);
 
         ;
     }

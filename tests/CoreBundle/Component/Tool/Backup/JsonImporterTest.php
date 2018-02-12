@@ -259,6 +259,27 @@ class JsonImporterTest extends \PHPUnit_Framework_TestCase
 		), $this->DB->query('SELECT `sportid`, `equipment_typeid` FROM `runalyze_equipment_sport`')->fetchAll(\PDO::FETCH_NUM));
 	}
 
+    public function testWithExistingInternalSport()
+    {
+        $this->DB->exec('INSERT INTO `runalyze_sport` (`name`, `accountid`, `internal_sport_id`) VALUES("Foobar", '.$this->AccountID.', 1)');
+        $foobarSportId = $this->DB->lastInsertId();
+
+        $importer = new JsonImporter($this->Base.'with-equipment.json.gz', $this->DB, $this->AccountID, $this->Prefix);
+        $importer->importData();
+
+        $notInsertedSportId = $this->DB->query('SELECT `id` FROM `runalyze_sport` WHERE `accountid`='.$this->AccountID.' AND `name`="Sport A"')->fetchColumn();
+        $newSportId = $this->DB->query('SELECT `id` FROM `runalyze_sport` WHERE `accountid`='.$this->AccountID.' AND `name`="Sport B"')->fetchColumn();
+        $this->assertFalse($notInsertedSportId);
+
+        $sportOfActivity1 = $this->DB->query('SELECT `sportid` FROM `runalyze_training` WHERE `accountid`='.$this->AccountID.' AND `title`="UNITTEST-1"')->fetchColumn();
+        $sportOfActivity2 = $this->DB->query('SELECT `sportid` FROM `runalyze_training` WHERE `accountid`='.$this->AccountID.' AND `title`="UNITTEST-2"')->fetchColumn();
+        $sportOfActivity3 = $this->DB->query('SELECT `sportid` FROM `runalyze_training` WHERE `accountid`='.$this->AccountID.' AND `title`="UNITTEST-3"')->fetchColumn();
+
+        $this->assertEquals($foobarSportId, $sportOfActivity1);
+        $this->assertEquals($foobarSportId, $sportOfActivity2);
+        $this->assertEquals($newSportId, $sportOfActivity3);
+    }
+
 	/**
 	 * Test deletes
 	 */

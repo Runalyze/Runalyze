@@ -23,7 +23,7 @@ class JsonImportToolController extends Controller
      */
     protected function getImportFilePath()
     {
-        return $this->getParameter('kernel.root_dir').'/../data/backup-tool/import/';
+        return $this->getParameter('data_directory').'/backup-tool/import/';
     }
 
     /**
@@ -33,6 +33,10 @@ class JsonImportToolController extends Controller
     public function backupUploadAction(Request $request)
     {
         $backupFile = $request->files->get('qqfile');
+
+        if (null === $backupFile) {
+            return $this->json(['error' => 'File upload did not work.']);
+        }
 
         if (!FilenameHandler::validateImportFileExtension($backupFile->getClientOriginalName())) {
             return $this->json(['error' => 'Wrong file extension.']);

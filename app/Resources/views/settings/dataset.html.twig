@@ -28,6 +28,7 @@
                             <th>&nbsp;</th>
                             <th>&nbsp;</th>
                             <th><span rel="tooltip" title="{% trans %}The information will be shown directly in the row.{% endtrans %}">{% trans %}Display{% endtrans %}</span></th>
+                            <th><span rel="tooltip" title="{% trans %}The information will be shown on your public athlete page if checked.{% endtrans %}">{% trans %}Public{% endtrans %}</span></th>
                             <th><span rel="tooltip" title="{% trans %}Indicates the order of appearance.{% endtrans %}">{% trans %}Order{% endtrans %}</span></th>
                             <th><span rel="tooltip" title="{% trans %}any CSS-Code{% endtrans %}">{% trans %}CSS-Style{% endtrans %}</span></th>
                             <th>{% trans %}Example{% endtrans %}</th>
@@ -39,6 +40,7 @@
 
                         {% for dataset in form.datasets %}
                             {% set keyObject = datasetKeys.get(dataset.vars.value.keyid) %}
+                            {# @var keyObject \Runalyze\Dataset\Keys\AbstractKey #}
                             <tr class="r" id="{{ position }}_tr">
                                 <td class="c">
                                     {% if keyObject.description() %}
@@ -59,6 +61,15 @@
                                     {% endif %}
                                 </td>
                                 <td class="c">
+                                    {% if defaultConfiguration[keyObject.id].privacyOption %}
+                                        {% if missingKeys[dataset.vars.value.keyid] and numberOfExistingKeys > 0 %}
+                                            {{ form_widget(dataset.privacy, {'checked' : defaultConfiguration[keyObject.id].privacy }) }}
+                                        {% else %}
+                                            {{ form_widget(dataset.privacy) }}
+                                        {% endif %}
+                                    {% endif %}
+                                </td>
+                                <td class="c">
                                     <input class="dataset-position" type="text" id="{{ dataset.position.vars.id }}" name="{{ dataset.position.vars.full_name }}" value="{{ position }}" size="2">
                                     <span class="link" onclick="datasetMove({{ position }}, 'up')"><i class="fa fa-fw fa-arrow-up"></i></span>
                                     <span class="link" onclick="datasetMove({{ position }}, 'down')"><i class="fa fa-fw fa-arrow-down"></i></span>
@@ -69,8 +80,8 @@
                                     {% else %}
                                         {{ form_widget(dataset.style, {'value' : defaultConfiguration[keyObject.id].style }) }}
                                     {% endif %}                    </td>
-                                <td class="{{ keyObject.getStyle() | raw }}" style="{{ dataset.style.vars.data }}">
-                                    {{ keyObject.stringFor(context) | raw }}
+                                <td class="{{ keyObject.cssClass() | raw }}" style="{{ dataset.style.vars.data }}">
+                                    {{ keyObject.stringForExample(context) | raw }}
                                 </td>
                             </tr>
 

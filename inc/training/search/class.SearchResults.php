@@ -93,13 +93,14 @@ class SearchResults {
 	 */
 	public function __construct($withResults = true) {
 		$this->WithResults = $withResults;
-		$this->ResultsPerPage = Configuration::Misc()->searchResultsPerPage();
 
 		$this->setAllowedKeys();
 		$this->setKeysThatShouldIgnoreNull();
 		$this->setKeysThatShouldIgnoreZero();
 
-		if ($withResults) {
+        $this->ResultsPerPage = (isset($_POST['resultsPerPage']) && is_numeric($_POST['resultsPerPage'])) ? $_POST['resultsPerPage'] : 20;
+
+        if ($withResults) {
 			$this->initDataset();
 			$this->searchTrainings();
 		}
@@ -145,6 +146,14 @@ class SearchResults {
 			'groundcontact_balance',
 			'vertical_oscillation',
 			'vertical_ratio',
+            'avg_impact_gs_left',
+            'avg_impact_gs_right',
+            'avg_braking_gs_left',
+            'avg_braking_gs_right',
+            'avg_footstrike_type_left',
+            'avg_footstrike_type_right',
+            'avg_pronation_excursion_left',
+            'avg_pronation_excursion_right',
 			'temperature',
 			'wind_speed',
 			'wind_deg',
@@ -164,6 +173,14 @@ class SearchResults {
 	 */
 	protected function setKeysThatShouldIgnoreNull() {
 		$this->KeysThatShouldIgnoreNull = [
+            'avg_impact_gs_left',
+            'avg_impact_gs_right',
+            'avg_braking_gs_left',
+            'avg_braking_gs_right',
+            'avg_footstrike_type_left',
+            'avg_footstrike_type_right',
+            'avg_pronation_excursion_left',
+            'avg_pronation_excursion_right',
 		    'climb_score',
 			'percentage_hilly',
 			'fit_training_effect',
@@ -565,6 +582,14 @@ class SearchResults {
 				return ' ORDER BY `t`.`elevation`/`t`.`distance` '.$order;
 			}
 
+            if ($_POST['search-sort-by'] == 'flight_time') {
+                return ' ORDER BY (30000/`t`.`cadence` - `t`.`groundcontact`) '.$order;
+            }
+
+            if ($_POST['search-sort-by'] == 'flight_ratio') {
+                return ' ORDER BY (1 - `t`.`cadence` * `t`.`groundcontact` / 30000) '.$order;
+            }
+
 			if (in_array($_POST['search-sort-by'], $this->AllowedKeys)) {
 				return ' ORDER BY `t`.'.$this->DB->escape($_POST['search-sort-by'], false).' '.$order;
 			}
@@ -586,6 +611,9 @@ class SearchResults {
 		} elseif ($_POST['search-sort-by'] == 'gradient') {
 			$conditions[] = '`t`.`distance` > 0';
 			$conditions[] = '`t`.`elevation` > 0';
+        } elseif ($_POST['search-sort-by'] == 'flight_time' || $_POST['search-sort-by'] == 'flight_ratio') {
+            $conditions[] = '`t`.`cadence` > 0';
+            $conditions[] = '`t`.`groundcontact` > 0';
 		} elseif (in_array($_POST['search-sort-by'], $this->KeysThatShouldIgnoreZero)) {
 			$conditions[] = '`t`.`'.$_POST['search-sort-by'].'` != 0';
 		} elseif (in_array($_POST['search-sort-by'], $this->KeysThatShouldIgnoreNull)) {
@@ -614,38 +642,26 @@ class SearchResults {
 	 * Display
 	 */
 	public function display() {
-		if ($this->multiEditorRequested() && !empty($this->Trainings)) {
-			$this->sendResultsToMultiEditor();
-		} else {
-			echo '<div id="searchResult">';
-			$this->displayResults();
-			echo '</div>';
-		}
+        echo '<div id="searchResult">';
+        $this->displayResults();
+        echo '</div>';
 	}
 
 	/**
-	 * @return boolean
+	 * @return bool
 	 */
-	protected function multiEditorRequested() {
+	public function multiEditorRequested() {
 		return isset($_POST['send-to-multi-editor']);
 	}
 
-	/**
-	 * Send results to Multi Editor
-	 */
-	protected function sendResultsToMultiEditor() {
-		$IDs = array();
-		foreach ($this->Trainings as $data) {
-			$IDs[] = $data['id'];
-		}
-
-		$_POST = array();
-
-		$MultiEditor = new MultiEditor($IDs);
-		$MultiEditor->display();
-
-		echo Ajax::wrapJS('$("#ajax").removeClass("big-window").addClass("small-window");');
-	}
+    /**
+     * @return int[]
+     */
+	public function getIdsForMultiEditor() {
+	    return array_map(function($data) {
+	        return (int)$data['id'];
+        }, $this->Trainings);
+    }
 
 	/**
 	 * Display results

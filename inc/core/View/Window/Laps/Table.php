@@ -144,7 +144,7 @@ class Table {
 						'<th class="{sorter: \'resulttime\'}">'.__('Duration').'</th>'.
 						($this->DemandedTime->isZero() ? '' : '<th>'.__('Diff.').'</th>').
 						'<th>'.__('Pace').'</th>'.
-						'<th>'.__('Diff.').'</th>'.
+                        ($this->DemandedPace->isEmpty() ? '' : '<th>'.__('Diff.').'</th>').
 						'<th>'.__('avg.').' '.__('HR').'</th>'.
 						'<th>'.__('max.').' '.__('HR').'</th>'.
 						'<th class="{sorter: false}">'.__('elevation').'</th>'.

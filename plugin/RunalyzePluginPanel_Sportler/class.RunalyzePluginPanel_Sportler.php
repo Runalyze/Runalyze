@@ -80,10 +80,11 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 	 */
 	protected function displayContentInNewDesign() {
 		$Code = '';
-		$userData = array_merge(
-		    ['weight' => 0.0, 'pulse_rest' => 0, 'pulse_max' => 0, 'fat' => 0.0, 'water' => 0.0, 'muscles' => 0.0],
-		    DB::getInstance()->query('SELECT `weight`, `pulse_rest`, `pulse_max`, `fat`, `water`, `muscles` FROM `'.PREFIX.'user` WHERE `accountid`="'.SessionAccountHandler::getId().'" ORDER BY `time` DESC LIMIT 1')->fetch()
-        );
+		$userData = DB::getInstance()->query('SELECT `weight`, `pulse_rest`, `pulse_max`, `fat`, `water`, `muscles` FROM `'.PREFIX.'user` WHERE `accountid`="'.SessionAccountHandler::getId().'" ORDER BY `time` DESC LIMIT 1')->fetch();
+
+		if (!is_array($userData)) {
+		    $userData = ['weight' => 0.0, 'pulse_rest' => 0, 'pulse_max' => 0, 'fat' => 0.0, 'water' => 0.0, 'muscles' => 0.0];
+        }
 
 		if ($userData['pulse_max'] == 0){
 			$topBox = new BoxedValue(__('Enter maximal HR'), '', __('Otherwise calculations will be wrong'));
@@ -111,14 +112,23 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 			$Code .= '<br>';
 		}
 
-			$SecondValues[] = new BoxedValue(Helper::Unknown($userData['fat'], '-'), '&#37;', __('Fat'));
-			$SecondValues[] = new BoxedValue(Helper::Unknown($userData['water'], '-'), '&#37;', __('Water'));
-			$SecondValues[] = new BoxedValue(Helper::Unknown($userData['muscles'], '-'), '&#37;', __('Muscles'));
+        if ( $userData['fat'] ) {
+            $SecondValues[] = new BoxedValue(Helper::Unknown($userData['fat'], '-'), '&#37;', __('Fat'));
+        }
+        if ( $userData['water'] ) {
+            $SecondValues[] = new BoxedValue(Helper::Unknown($userData['water'], '-'), '&#37;', __('Water'));
+        }
+        if ( $userData['muscles'] ) {
+            $SecondValues[] = new BoxedValue(Helper::Unknown($userData['muscles'], '-'), '&#37;', __('Muscles'));
+        }
 
-		foreach ($SecondValues as &$Value) {
-			$Value->defineAsFloatingBlock( "w33");
-			$Code .= $Value->getCode();
-		}
+        if (count($SecondValues) > 0 ) {
+            foreach ($SecondValues as &$Value) {
+                $Value->defineAsFloatingBlock("w33");
+                $Code .= $Value->getCode();
+            }
+        }
+
 
 		if (!empty($Code)) {
 			BoxedValue::wrapValues($Code);

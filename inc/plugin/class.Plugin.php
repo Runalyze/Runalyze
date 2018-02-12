@@ -287,7 +287,6 @@ abstract class Plugin {
 	 */
 	final public function install() {
 		if ($this->id() != PluginInstaller::ID) {
-			Error::getInstance()->addError('Plugin can not be installed, id is set wrong.');
 			return false;
 		}
 
@@ -409,9 +408,10 @@ abstract class Plugin {
 		if ($name == '') {
 			$name = Icon::$CONF;
 		}
-
-		return Ajax::window('<a href="'.self::$CONFIG_URL.'?id='.$this->id().$add_param.'">'.$name.'</a>','small');
-	}
+		if (!empty($this->Configuration()->objects())) {
+            return Ajax::window('<a href="' . self::$CONFIG_URL . '?id=' . $this->id() . $add_param . '">' . $name . '</a>', 'small');
+        }
+    }
 
 	/**
 	 * Get reload-link

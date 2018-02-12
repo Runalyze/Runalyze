@@ -111,7 +111,7 @@ class Activity extends LeafletRoute {
 		$this->Trackdata = $trackdata;
 		$this->addIconsAndInfo = $addIconsAndInfo;
 
-        $this->addOption('options',array('color' => Configuration::ActivityView()->RouteColor()));
+        $this->addOption('options',array('color' => '#FF5500'));
 
 		$this->createRoute();
 	}

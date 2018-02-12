@@ -284,10 +284,10 @@ class BoxedValue {
 			return '';
 
 		$Code = '<div class="'.self::$VALUE_INFO_DIV.'">';
-		$Code .= str_replace(' ', '&nbsp;', $this->Info);
 		if (!empty($this->Glossary)) {
             $Code .= '<a class="window left" href="glossary/'.$this->Glossary.'"><i class="fa fa-question-circle-o"></i></a>';
         }
+        $Code .= str_replace(' ', '&nbsp;', $this->Info);
         $Code .= '</div>';
 
 		return $Code;

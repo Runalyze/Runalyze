@@ -2,6 +2,8 @@
 
 namespace Runalyze\Bundle\CoreBundle\Component\Configuration\Category;
 
+use Runalyze\Parameter\Application\ElevationMethod;
+
 class ActivityView extends AbstractCategory
 {
     /**
@@ -12,7 +14,6 @@ class ActivityView extends AbstractCategory
         return [
             'GMAP_PATH_PRECISION' => '5',
             'GMAP_PATH_BREAK' => '15',
-            'TRAINING_MAP_COLOR' => '#FF5500',
             'TRAINING_LEAFLET_LAYER' => 'OpenStreetMap',
             'TRAINING_MAP_SHOW_FIRST' => 'false',
             'TRAINING_MAP_ZOOM_ON_SCROLL' => 'false',
@@ -30,6 +31,25 @@ class ActivityView extends AbstractCategory
             'ELEVATION_METHOD' => 'treshold',
             'ELEVATION_TRESHOLD' => '3',
         ];
+    }
+
+    /**
+     * @return ElevationMethod
+     */
+    public function getElevationCalculationMethod()
+    {
+        $method = new ElevationMethod();
+        $method->setFromString($this->Variables['ELEVATION_METHOD']);
+
+        return $method;
+    }
+
+    /**
+     * @return int
+     */
+    public function getElevationCalculationThreshold()
+    {
+        return (int)$this->Variables['ELEVATION_TRESHOLD'];
     }
 
     /**

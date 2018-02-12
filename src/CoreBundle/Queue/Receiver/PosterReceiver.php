@@ -47,8 +47,8 @@ class PosterReceiver
     /** @var AccountMailer */
     protected $AccountMailer;
 
-    /** @var $kernelRootDir */
-    protected $KernelRootDir;
+    /** @var $Datadir */
+    protected $DataDir;
 
     /** @var $RsvgPath */
     protected $RsvgPath;
@@ -65,7 +65,7 @@ class PosterReceiver
      * @param GeneratePoster $generatePoster
      * @param FileHandler $posterFileHandler
      * @param AccountMailer $accountMailer
-     * @param string $kernelRootDir
+     * @param string $dataDir
      * @param string $rsvgPath
      * @param string $inkscapePath
      */
@@ -78,7 +78,7 @@ class PosterReceiver
         GeneratePoster $generatePoster,
         FileHandler $posterFileHandler,
         AccountMailer $accountMailer,
-        $kernelRootDir,
+        $dataDir,
         $rsvgPath,
         $inkscapePath
     )
@@ -91,7 +91,7 @@ class PosterReceiver
         $this->GeneratePoster = $generatePoster;
         $this->FileHandler = $posterFileHandler;
         $this->AccountMailer = $accountMailer;
-        $this->KernelRootDir = $kernelRootDir;
+        $this->DataDir = $dataDir;
         $this->RsvgPath = $rsvgPath;
         $this->InkscapePath = $inkscapePath;
     }
@@ -115,7 +115,18 @@ class PosterReceiver
         if ($jsonFiles->count() > 0) {
             foreach ($message->get('types') as $type) {
                 try {
-                    $this->GeneratePoster->buildCommand($type, $this->GenerateJsonData->getPathToJsonFiles(), $message->get('year'), $account, $sport, $message->get('title'));
+                    $this->GeneratePoster->buildCommand(
+                        $type,
+                        $this->GenerateJsonData->getPathToJsonFiles(),
+                        $message->get('year'),
+                        $account,
+                        $sport,
+                        $message->get('title'),
+                        $message->get('backgroundColor'),
+                        $message->get('trackColor'),
+                        $message->get('textColor'),
+                        $message->get('raceColor')
+                    );
 
                     $finalName = $this->FileHandler->buildFinalFileName($account, $sport, $message->get('year'), $type, $message->get('size'));
                     $finalFile = $this->exportDirectory().$finalName;
@@ -182,6 +193,6 @@ class PosterReceiver
      */
     protected function exportDirectory()
     {
-        return $this->KernelRootDir.'/../data/poster/';
+        return $this->DataDir.'/poster/';
     }
 }

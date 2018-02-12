@@ -8,10 +8,11 @@ namespace Runalyze\Dataset\Keys;
 
 use Runalyze\Dataset\Context;
 use Runalyze\Dataset\SummaryMode;
+use Runalyze\Profile\View\DatasetPrivacyProfile;
 
 /**
  * Abstract dataset key
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Dataset\Keys
  */
@@ -73,6 +74,23 @@ abstract class AbstractKey
 		return $this->label();
 	}
 
+    /**
+     * @return int|bool
+     * @codeCoverageIgnore
+     */
+    public function defaultPrivacy()
+    {
+        return DatasetPrivacyProfile::PUBLIC_KEY;
+    }
+
+    /**
+     * @return bool
+     * @codeCoverageIgnore
+     */
+    public function hasPrivacyOption() {
+        return true;
+    }
+
 	/**
 	 * @return string
 	 * @codeCoverageIgnore
@@ -88,6 +106,16 @@ abstract class AbstractKey
 	 * @return string
 	 */
 	abstract public function stringFor(Context $context);
+
+    /**
+     * Get string to display this dataset value for fake data
+     * @param \Runalyze\Dataset\Context $context
+     * @return string
+     */
+    public function stringForExample(Context $context)
+    {
+        return $this->stringFor($context);
+    }
 
 	/**
 	 * @return int see \Runalyze\Dataset\SummaryMode for enum
@@ -107,10 +135,10 @@ abstract class AbstractKey
 
 	/**
 	 * Is this key always shown?
-	 * 
+	 *
 	 * By default users can hide each dataset.
 	 * Some keys can be forced to be always visible, e.g. duration and sport.
-	 * 
+	 *
 	 * @return bool
 	 * @codeCoverageIgnore
 	 */

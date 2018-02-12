@@ -161,9 +161,9 @@ class Ajax {
 	 */
 	public static function trainingLinkAsOnclick($id) {
 		if (FrontendShared::$IS_SHOWN)
-			return 'onclick="Runalyze.Training.load('.$id.', \''.SharedLinker::getUrlFor($id).'\', event)"';
+			return 'onclick="Pace.restart();Runalyze.Training.load('.$id.', \''.SharedLinker::getUrlFor($id).'\', event)"';
 
-		return 'onclick="Runalyze.Training.load('.$id.', false, event)"';
+		return 'onclick="Pace.restart();Runalyze.Training.load('.$id.', false, event)"';
 	}
 
 	/**
@@ -276,8 +276,8 @@ class Ajax {
 	 * @param string $title   title
 	 * @return string
 	 */
-	public static function link($name, $target, $href, $data = '', $title = '') {
-		return '<a class="ajax" href="'.$href.'" target="'.$target.'" rel="'.$data.'"'.(!empty($title) ? ' title="'.$title.'"' : '').'>'.$name.'</a>';
+	public static function link($name, $target, $href, $data = '', $title = '', $onclick = false) {
+		return '<a class="ajax" href="'.$href.'" target="'.$target.'" rel="'.$data.'"'.(!empty($title) ? ' title="'.$title.'"' : '').' '.(($onclick) ? ' onclick="'.$onclick.'"' : '').'>'.$name.'</a>';
 	}
 
 	/**
