@@ -791,4 +791,21 @@ class FitTest extends AbstractActivityParserTestCase
         $this->assertNull($this->Container->ActivityData->AvgHeartRate);
         $this->assertNull($this->Container->ActivityData->MaxHeartRate);
     }
+
+    public function testRunScribeDataViaSupport001885()
+    {
+        $this->convertAndParse('fit/support-001885-rs-pronation.fit');
+
+        $this->assertNotEmpty($this->Container->ContinuousData->ImpactGsLeft);
+        $this->assertNotEmpty($this->Container->ContinuousData->ImpactGsRight);
+        $this->assertNotEmpty($this->Container->ContinuousData->BrakingGsLeft);
+        $this->assertNotEmpty($this->Container->ContinuousData->BrakingGsRight);
+        $this->assertNotEmpty($this->Container->ContinuousData->FootstrikeTypeLeft);
+        $this->assertNotEmpty($this->Container->ContinuousData->FootstrikeTypeRight);
+        $this->assertNotEmpty($this->Container->ContinuousData->PronationExcursionLeft);
+        $this->assertNotEmpty($this->Container->ContinuousData->PronationExcursionRight);
+
+        $this->assertNotNull($this->Container->ActivityData->AvgPronationExcursionLeft);
+        $this->assertNotNull($this->Container->ActivityData->AvgPronationExcursionRight);
+    }
 }
