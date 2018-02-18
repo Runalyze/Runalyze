@@ -225,7 +225,7 @@ class Entity extends Model\Entity implements Model\Loopable, Model\Common\WithNu
 		foreach ($this->properties() as $key) {
 			if ($this->isArray($key)) {
 				try {
-					if ($key != self::TEMPERATURE && !empty($this->Data[$key]) && max($this->Data[$key]) == 0) {
+                    if ($key != self::TEMPERATURE && $key != self::PRONATION_EXCURSION_LEFT && $key != self::PRONATION_EXCURSION_RIGHT && !empty($this->Data[$key]) && max($this->Data[$key]) == 0) {
 						$this->Data[$key] = array();
 					}
 
