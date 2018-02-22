@@ -16,6 +16,7 @@ class WeatherConditionType extends AbstractType
             'choice_label' => function ($value, $key, $index) {
                 return (new Condition($value))->string();
             },
+            'choice_translation_domain' => false
         ));
     }
 

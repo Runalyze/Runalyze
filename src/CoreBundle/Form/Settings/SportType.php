@@ -92,6 +92,7 @@ class SportType extends AbstractType
             ])
             ->add('img', ChoiceType::class, [
                 'choices' => SportIconProfile::getChoices(),
+                'choice_translation_domain' => false,
                 'label' => 'Icon'
             ])
             ->add('power', CheckboxType::class, [
@@ -124,6 +125,7 @@ class SportType extends AbstractType
             ])
             ->add('speed', ChoiceType::class, [
                 'choices' => PaceEnum::getChoices(),
+                'choice_translation_domain' => false,
                 'label' => 'Speed unit'
             ])
             ->add('short', ChoiceType::class, [
@@ -157,6 +159,7 @@ class SportType extends AbstractType
                 'required' => false,
                 'choices' => $equipmentTypes,
                 'choice_label' => 'name',
+                'choice_translation_domain' => false,
                 'label' => 'Main equipment',
             ]);
         }
@@ -167,6 +170,7 @@ class SportType extends AbstractType
                 'required' => false,
                 'choices' => $activityTypes,
                 'choice_label' => 'name',
+                'choice_translation_domain' => false,
                 'placeholder' => 'None',
                 'label' => 'Default activity type'
             ]);

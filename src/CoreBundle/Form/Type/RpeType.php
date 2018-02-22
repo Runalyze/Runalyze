@@ -13,6 +13,7 @@ class RpeType extends AbstractType
     {
         $resolver->setDefaults(array(
             'choices' => array_flip(RPE::completeList()),
+            'choice_translation_domain' => false,
             'placeholder' => '-'
         ));
     }
