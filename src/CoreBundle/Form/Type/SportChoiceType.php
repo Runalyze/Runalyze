@@ -68,7 +68,8 @@ class SportChoiceType extends AbstractTokenStorageAwareType
                     'data-privacy' => $sport->getDefaultPrivacy() ? '1' : '0',
                     'data-power' => $sport->getPower() ? '1' : '0'
                 ];
-            }
+            },
+            'choice_translation_domain' => false
         ));
     }
 

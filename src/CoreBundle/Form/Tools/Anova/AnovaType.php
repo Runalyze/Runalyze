@@ -91,6 +91,7 @@ class AnovaType extends AbstractType
                     /** @var Sport $sport */
                     return $sport->getName();
                 },
+                'choice_translation_domain' => false,
                 'attr' => [
                     'data-placeholder' => __('Choose sport(s)'),
                     'class' => 'chosen-select full-size'
@@ -108,6 +109,7 @@ class AnovaType extends AbstractType
                     /** @var Type $type */
                     return $type->getName();
                 },
+                'choice_translation_domain' => false,
                 'attr' => [
                     'data-placeholder' => __('Choose activity type(s)'),
                     'class' => 'chosen-select full-size'

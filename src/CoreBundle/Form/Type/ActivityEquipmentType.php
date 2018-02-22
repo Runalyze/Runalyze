@@ -46,6 +46,8 @@ class ActivityEquipmentType extends AbstractType implements DataTransformerInter
                         /* @var Equipment $eqp */
                         return $this->getChoiceAttributesForEquipment($eqp);
                     },
+                    'choice_translation_domain' => false,
+                    'translation_domain' => false,
                     'label' => $category->getName(),
                     'multiple' => !$isSingleChoice,
                     'expanded' => !$isSingleChoice,

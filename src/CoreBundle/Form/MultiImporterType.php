@@ -49,7 +49,8 @@ class MultiImporterType extends AbstractType
             'required' => true,
             'multiple' => true,
             'expanded' => true,
-            'choices' => $activityHashes
+            'choices' => $activityHashes,
+            'choice_translation_domain' => false
         ]);
     }
 
