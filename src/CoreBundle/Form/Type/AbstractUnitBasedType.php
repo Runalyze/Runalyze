@@ -19,6 +19,9 @@ abstract class AbstractUnitBasedType extends AbstractType implements DataTransfo
     protected $ViewPrecision = 1;
 
     /** @var int|null */
+    protected $MaxViewPrecision = null;
+
+    /** @var int|null */
     protected $ModelPrecision = null;
 
     public function __construct(UnitInterface $unit)
@@ -42,7 +45,28 @@ abstract class AbstractUnitBasedType extends AbstractType implements DataTransfo
      */
     public function transform($value)
     {
-        return null === $value ? '' : number_format($this->Unit->fromBaseUnit((float)$value), $this->ViewPrecision, '.', '');
+        if (null === $value) {
+            return '';
+        }
+
+        $precision = null === $this->MaxViewPrecision ? $this->ViewPrecision : $this->getPrecisionFor($value);
+
+        return number_format($this->Unit->fromBaseUnit((float)$value), $precision, '.', '');
+    }
+
+    /**
+     * @param mixed $value
+     * @return int
+     */
+    protected function getPrecisionFor($value)
+    {
+        return max(
+            $this->ViewPrecision,
+            min(
+                $this->MaxViewPrecision,
+                strlen(substr(strrchr((string)$value, '.'), 1))
+            )
+        );
     }
 
     /**
