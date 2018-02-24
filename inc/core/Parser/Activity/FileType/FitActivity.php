@@ -462,6 +462,11 @@ class FitActivity extends AbstractSingleParser
     {
         if (isset($this->Values['unknown17'])) {
             $this->Container->FitDetails->PerformanceConditionEnd = 100 + (float)$this->Values['unknown17'][1];
+
+            if (null === $this->Container->FitDetails->PerformanceCondition && null !== $this->Container->FitDetails->HrvAnalysis) {
+                $this->Container->FitDetails->PerformanceCondition = $this->Container->FitDetails->HrvAnalysis;
+                $this->Container->FitDetails->HrvAnalysis = null;
+            }
         }
     }
 
