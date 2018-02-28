@@ -74,14 +74,16 @@ class XmlPolarExercise extends AbstractSingleParser
     {
         if (isset($this->Xml->result->laps)) {
             foreach ($this->Xml->result->laps->lap as $lap) {
-                $distance = round(((double)$lap->distance) / 1000, 3);
-                $seconds = $this->stringToDuration((string)$lap->duration);
+                if (isset($lap->distance)) {
+                    $distance = round(((double)$lap->distance) / 1000, 3);
+                    $seconds = $this->stringToDuration((string)$lap->duration);
 
-                if (($seconds / (double)$lap->distance) < 0.06) {
-                    $seconds = $seconds * 60;
+                    if (($seconds / (double)$lap->distance) < 0.06) {
+                        $seconds = $seconds * 60;
+                    }
+
+                    $this->Container->Rounds->add(new Round($distance, $seconds));
                 }
-
-                $this->Container->Rounds->add(new Round($distance, $seconds));
             }
         }
     }
