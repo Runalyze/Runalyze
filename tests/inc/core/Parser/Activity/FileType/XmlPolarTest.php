@@ -99,4 +99,34 @@ class XmlPolarTest extends AbstractActivityParserTestCase
             $this->Container[5]->Metadata->getTimestamp()
         );
     }
+
+/**
+ * @group current
+ */
+    public function testFileWithLapsWithoutDistance()
+    {
+        $this->parseFile($this->Parser, 'xml/Polar-lap-without-distance.xml');
+
+        $this->assertCount(2, $this->Container);
+
+        // First activity: cycling
+        $this->assertEquals(3011, $this->Container[0]->ActivityData->Duration, '', 0.5);
+        $this->assertEquals(149, $this->Container[0]->ActivityData->AvgHeartRate, '', 0.5);
+        $this->assertEquals(188, $this->Container[0]->ActivityData->MaxHeartRate);
+        $this->assertEquals(643, $this->Container[0]->ActivityData->EnergyConsumption);
+        $this->assertNull($this->Container[0]->ActivityData->Distance);
+
+        $this->assertNotEmpty($this->Container[0]->ContinuousData->HeartRate);
+        $this->assertEmpty($this->Container[0]->ContinuousData->Distance);
+
+        // First activity: running
+        $this->assertEquals(1373, $this->Container[1]->ActivityData->Duration, '', 0.5);
+        $this->assertEquals(159, $this->Container[1]->ActivityData->AvgHeartRate, '', 0.5);
+        $this->assertEquals(180, $this->Container[1]->ActivityData->MaxHeartRate);
+        $this->assertEquals(326, $this->Container[1]->ActivityData->EnergyConsumption);
+        $this->assertNull($this->Container[1]->ActivityData->Distance);
+
+        $this->assertNotEmpty($this->Container[1]->ContinuousData->HeartRate);
+        $this->assertEmpty($this->Container[1]->ContinuousData->Distance);
+    }
 }
