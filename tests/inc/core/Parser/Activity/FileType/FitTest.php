@@ -809,6 +809,23 @@ class FitTest extends AbstractActivityParserTestCase
         $this->assertNotNull($this->Container->ActivityData->AvgPronationExcursionRight);
     }
 
+    public function testEmptyRunScribeData()
+    {
+        $this->convertAndParse('fit/Fenix-3-with-empty-runscribe.fit');
+
+        $this->assertEmpty($this->Container->ContinuousData->ImpactGsLeft);
+        $this->assertEmpty($this->Container->ContinuousData->ImpactGsRight);
+        $this->assertEmpty($this->Container->ContinuousData->BrakingGsLeft);
+        $this->assertEmpty($this->Container->ContinuousData->BrakingGsRight);
+        $this->assertEmpty($this->Container->ContinuousData->FootstrikeTypeLeft);
+        $this->assertEmpty($this->Container->ContinuousData->FootstrikeTypeRight);
+        $this->assertEmpty($this->Container->ContinuousData->PronationExcursionLeft);
+        $this->assertEmpty($this->Container->ContinuousData->PronationExcursionRight);
+
+        $this->assertNull($this->Container->ActivityData->AvgPronationExcursionLeft);
+        $this->assertNull($this->Container->ActivityData->AvgPronationExcursionRight);
+    }
+
     public function testPerformanceConditionFromGarminForerunner735XT()
     {
         $this->convertAndParse('fit/FR735XT-with-performance-condition.fit');

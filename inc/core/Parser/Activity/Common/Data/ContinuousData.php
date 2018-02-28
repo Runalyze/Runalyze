@@ -134,7 +134,22 @@ class ContinuousData
     public function getPropertyNamesOfArraysThatShouldNotContainZeros()
     {
         return [
-            'HeartRate'
+            'HeartRate',
+            'GroundContactTime',
+            'GroundContactBalance',
+            'MuscleOxygenation',
+            'MuscleOxygenation_2',
+            'TotalHaemoglobin',
+            'TotalHaemoglobin_2',
+            'ImpactGsLeft',
+            'ImpactGsRight',
+            'BrakingGsLeft',
+            'BrakingGsRight',
+            'FootstrikeTypeLeft',
+            'FootstrikeTypeRight',
+            'PronationExcursionLeft',
+            'PronationExcursionRight',
+            'LeftRightBalance',
         ];
     }
 
