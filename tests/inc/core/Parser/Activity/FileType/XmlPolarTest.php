@@ -100,9 +100,6 @@ class XmlPolarTest extends AbstractActivityParserTestCase
         );
     }
 
-/**
- * @group current
- */
     public function testFileWithLapsWithoutDistance()
     {
         $this->parseFile($this->Parser, 'xml/Polar-lap-without-distance.xml');
