@@ -468,6 +468,10 @@ class FitActivity extends AbstractSingleParser
                 $this->Container->FitDetails->HrvAnalysis = null;
             }
         }
+
+        if (isset($this->Values['unknown7'])) {
+            $this->Container->FitDetails->VO2maxEstimate = round((int)$this->Values['unknown7'][1] / 64 * 3.5 / 1024, 2);
+        }
     }
 
     protected function readEvent()
