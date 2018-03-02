@@ -155,6 +155,7 @@ class PosterReceiver
         );
 
         $this->GenerateJsonData->deleteGeneratedFiles();
+	gc_collect_cycles();
     }
 
     /**
