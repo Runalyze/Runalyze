@@ -19,9 +19,9 @@ class Xml extends AbstractMultipleParserWithSubParser implements FileContentAwar
             $this->useSubParser(new XmlSuunto());
         } elseif ($this->isRunningAheadFile()) {
             throw new UnsupportedFileException('Support for xml-files from RunningAHEAD has been dropped.');
-        }
-
-        throw new UnsupportedFileException();
+        } else {
+        	throw new UnsupportedFileException();
+		}
     }
 
     /**
