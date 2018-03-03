@@ -134,9 +134,13 @@ class JsonImporterTest extends \PHPUnit_Framework_TestCase
 	public function testInserts()
     {
         $insertSport = $this->DB->prepare('INSERT INTO `runalyze_sport` (`name`, `accountid`) VALUES (?, ?)');
+        $insertSport->execute(['ID-Increaser 1', $this->AccountID]);
+        $insertSport->execute(['ID-Increaser 2', $this->AccountID]);
         $insertSport->execute(['Testsport', $this->AccountID]);
         $sportId = $this->DB->lastInsertId();
         $insertType = $this->DB->prepare('INSERT INTO `runalyze_type` (`name`, `sportid`, `accountid`) VALUES (?, ?, ?)');
+        $insertType->execute(['ID-Increaser 1', $sportId, $this->AccountID]);
+        $insertType->execute(['ID-Increaser 2', $sportId, $this->AccountID]);
         $insertType->execute(['Testtype', $sportId, $this->AccountID]);
         $typeId = $this->DB->lastInsertId();
 
@@ -151,9 +155,11 @@ class JsonImporterTest extends \PHPUnit_Framework_TestCase
 		// Check existing/new
 		$newSportId = $this->DB->query('SELECT `id` FROM `runalyze_sport` WHERE `accountid`='.$this->AccountID.' AND `name`="Newsport"')->fetchColumn();
 		$newTypeId = $this->DB->query('SELECT `id` FROM `runalyze_type` WHERE `accountid`='.$this->AccountID.' AND `name`="Newtype"')->fetchColumn();
+        $newTypesSportId = $this->DB->query('SELECT `sportid` FROM `runalyze_type` WHERE `accountid`='.$this->AccountID.' AND `name`="Newtype"')->fetchColumn();
 
 		$this->assertNotEquals(0, $newSportId);
 		$this->assertNotEquals(0, $newTypeId);
+        $this->assertEquals($newSportId, $newTypesSportId);
 
 		// Check inserts
 		$this->assertEquals(
