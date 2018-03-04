@@ -4,7 +4,10 @@ namespace Runalyze\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityRepository;
+use Runalyze\Bundle\CoreBundle\Component\Configuration\Category\BasicEndurance;
+use Runalyze\Bundle\CoreBundle\Component\Configuration\Category\VO2max;
 use Runalyze\Bundle\CoreBundle\Model\Account\AccountStatistics;
+use Runalyze\Sports\Running\MarathonShape;
 
 class TrainingRepository extends EntityRepository
 {
@@ -39,6 +42,66 @@ class TrainingRepository extends EntityRepository
             ->setParameter('account', $accountid)
             ->getQuery()
             ->getSingleScalarResult();
+    }
+
+    /**
+     * @param Training $activity
+     * @return bool
+     */
+    public function isPossibleDuplicate(Training $activity)
+    {
+        if (null === $activity->getAccount() || !is_numeric($activity->getAccount()->getId()) || null == $activity->getActivityId()) {
+            return false;
+        }
+
+        return null !== $this->createQueryBuilder('t')
+            ->select('1')
+            ->where('t.account = :account AND t.activityId = :id')
+            ->setParameter('account', $activity->getAccount())
+            ->setParameter('id', $activity->getActivityId())
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    /**
+     * @param Training $activity
+     * @return null|int
+     */
+    public function getIdOfNextActivity(Training $activity) {
+        return $this->createQueryBuilder('t')
+            ->select('t.id')
+            ->where('(t.time > :time AND t.id != :id)')
+            ->orWhere('(t.time = :time AND t.id > :id)')
+            ->andWhere('t.account = :account')
+            ->setParameter('account', $activity->getAccount())
+            ->setParameter('id', $activity->getId())
+            ->setParameter('time', $activity->getTime())
+            ->orderBy('t.time', 'ASC')
+            ->addOrderBy('t.id', 'ASC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult(AbstractQuery::HYDRATE_SINGLE_SCALAR);
+    }
+
+    /**
+     * @param Training $activity
+     * @return null|int
+     */
+    public function getIdOfPreviousActivity(Training $activity) {
+        return $this->createQueryBuilder('t')
+            ->select('t.id')
+            ->where('(t.time < :time AND t.id != :id)')
+            ->orWhere('(t.time = :time AND t.id < :id)')
+            ->andWhere('t.account = :account')
+            ->setParameter('account', $activity->getAccount())
+            ->setParameter('id', $activity->getId())
+            ->setParameter('time', $activity->getTime())
+            ->orderBy('t.time', 'DESC')
+            ->addOrderBy('t.id', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult(AbstractQuery::HYDRATE_SINGLE_SCALAR);
     }
 
     /**
@@ -300,23 +363,232 @@ class TrainingRepository extends EntityRepository
 
     /**
      * @param Account $account
-     * @return bool
+     * @param int $limit
+     * @param bool $onlyPublic
+     * @return Training[]
      */
-    public function latestActivities(Account $account, $limit = 20)
+    public function getLatestActivities(Account $account, $limit = 20, $onlyPublic = false)
     {
-        return $this->createQueryBuilder('t')
+        $queryBuilder = $this->createQueryBuilder('t')
                 ->select('t')
-                ->where('t.account= :accountid')
+                ->where('t.account = :accountid')
                 ->setParameter('accountid', $account->getId())
                 ->orderBy('t.time', 'DESC')
-                ->setMaxResults($limit)
-                ->getQuery()
-                ->getResult();
+                ->setMaxResults($limit);
+
+        if ($onlyPublic) {
+            $queryBuilder->andWhere('t.isPublic = 1');
+        }
+
+        return $queryBuilder->getQuery()->getResult();
     }
 
-    public function save(Training $training)
+    /**
+     * @param Account $account
+     * @param int $limit
+     * @return Training[]
+     */
+    public function getLatestPublicActivities(Account $account, $limit = 20)
     {
+        return $this->getLatestActivities($account, $limit, true);
+    }
+
+    /**
+     * @param int[] $ids
+     * @param Account|null $account
+     * @param int $limit
+     * @return Training[]
+     */
+    public function getPartialEntitiesForPreview(array $ids, Account $account = null, $limit = 20)
+    {
+        $queryBuilder = $this->createQueryBuilder('t')
+            ->select('partial t.{id, time, s, distance, pulseAvg, splits, route, title}');
+
+        if (empty($ids)) {
+            if (null === $account) {
+                return [];
+            }
+
+            $queryBuilder->where('t.account = :accountid')
+                ->setParameter('accountid', $account->getId())
+                ->orderBy('t.time', 'DESC')
+                ->setMaxResults($limit);
+        } else {
+            $queryBuilder->where('t.id IN(:ids)')
+                ->setParameter('ids', $ids);
+        }
+
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+    /**
+     * @param Account $account
+     * @return int|null
+     */
+    public function getStartTime(Account $account)
+    {
+        $result = $this->createQueryBuilder('t')
+            ->select('MIN(t.time)')
+            ->where('t.account = :account')
+            ->setParameter('account', $account->getId())
+            ->groupBy('t.account')
+            ->getQuery()
+            ->getOneOrNullResult(AbstractQuery::HYDRATE_SINGLE_SCALAR);
+
+        return null === $result ? $result : (int)$result;
+    }
+
+    /**
+     * @param Account $account
+     * @param VO2max $configuration
+     * @param int $sportId
+     * @param int $timestamp
+     * @return int [0, inf)
+     */
+    public function calculateVO2maxShape(Account $account, VO2max $configuration, $sportId, $timestamp)
+    {
+        $vo2maxColumn = $configuration->useCorrectionForElevation() ? 'vo2maxWithElevation' : 'vo2max';
+
+        $result = $this->createQueryBuilder('t')
+            ->select([
+                'SUM(t.s * t.useVO2max * t.'.$vo2maxColumn.') as value',
+                'SUM(CASE WHEN t.'.$vo2maxColumn.' > 0 THEN t.s * t.useVO2max ELSE 0 END) as ssum',
+            ])
+            ->where('t.account = :account')
+            ->andWhere('t.time BETWEEN :timeStart AND :timeEnd')
+            ->andWhere('t.sport = :sport')
+            ->setParameter('account', $account->getId())
+            ->setParameter('timeStart', $timestamp - $configuration->getNumberOfDaysToConsider() * 86400)
+            ->setParameter('timeEnd', $timestamp)
+            ->setParameter('sport', $sportId)
+            ->groupBy('t.account')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult(AbstractQuery::HYDRATE_SCALAR);
+
+        if (null === $result || 0.0 == (float)$result['ssum']) {
+            return 0.0;
+        }
+
+        return round((float)$result['value'] / (float)$result['ssum'], 5);
+    }
+
+    /**
+     * @param Account $account
+     * @param BasicEndurance $configuration
+     * @param float $effectiveVO2max
+     * @param int $sportId
+     * @param int $timestamp
+     * @param int|null $timestampOfFirstActivity
+     * @return int [0, inf)
+     */
+    public function calculateMarathonShape(Account $account, BasicEndurance $configuration, $effectiveVO2max, $sportId, $timestamp, $timestampOfFirstActivity = null)
+    {
+        $startTimeForLongJogs = $timestamp - $configuration->getDaysToConsiderForLongJogs() * 86400;
+        $startTimeForWeeklyMileage = $timestamp - $configuration->getDaysToConsiderForWeeklyMileage() * 86400;
+        $numberOfDaysSinceFirstActivity = null === $timestampOfFirstActivity ? null : \Runalyze\Util\Time::diffInDays($timestampOfFirstActivity, $timestamp);
+        $marathonShape = new MarathonShape($effectiveVO2max, $configuration);
+
+        $result = $this->createQueryBuilder('t')
+            ->select([
+                'SUM(CASE WHEN t.time >= :timeStartWeek THEN t.distance ELSE 0 END) as km',
+                'SUM(
+                    CASE WHEN
+                        t.distance > :minLongJog AND t.time >= :timeStartLongJog
+                    THEN
+                        (2 - :weight * ROUND((:timeEnd - t.time) / 86400 - 0.5) )
+                        * ((t.distance - :minLongJog) / :longJogTarget)
+                        * ((t.distance - :minLongJog) / :longJogTarget)
+                    ELSE 0
+                    END
+                ) as points'
+            ])
+            ->where('t.account = :account')
+            ->andWhere('t.time BETWEEN :timeStart AND :timeEnd')
+            ->andWhere('t.sport = :sport')
+            ->setParameter('account', $account->getId())
+            ->setParameter('timeStart', min($startTimeForLongJogs, $startTimeForWeeklyMileage))
+            ->setParameter('timeStartWeek', $startTimeForWeeklyMileage)
+            ->setParameter('timeStartLongJog', $startTimeForLongJogs)
+            ->setParameter('timeEnd', $timestamp)
+            ->setParameter('weight', 2.0 / $configuration->getDaysToConsiderForLongJogs())
+            ->setParameter('minLongJog', $configuration->getMinimalDistanceForLongJog())
+            ->setParameter('longJogTarget', $marathonShape->getTargetForLongJogEachWeek() - $configuration->getMinimalDistanceForLongJog())
+            ->setParameter('sport', $sportId)
+            ->groupBy('t.account')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult(AbstractQuery::HYDRATE_SCALAR);
+
+        if (null === $result) {
+            return 0.0;
+        }
+
+        return $marathonShape->getShapeFor($result['km'], $result['points'], $numberOfDaysSinceFirstActivity);
+    }
+
+    /**
+     * @param Training $training
+     * @param bool $ensureThatSportAndTypeAreManaged
+     * @return int activity id
+     */
+    public function save(Training $training, $ensureThatSportAndTypeAreManaged = false)
+    {
+        if ($ensureThatSportAndTypeAreManaged) {
+            $this->ensureThatSportAndTypeAreManaged($training);
+        }
+
+        if (null !== $training->getRoute()) {
+            $this->_em->persist($training->getRoute());
+        }
+
+        if (null !== $training->getTrackdata()) {
+            $this->_em->persist($training->getTrackdata());
+        }
+
+        if (null !== $training->getSwimdata()) {
+            $this->_em->persist($training->getSwimdata());
+        }
+
+        if (null !== $training->getHrv()) {
+            $this->_em->persist($training->getHrv());
+        }
+
+        if (null !== $training->getRaceresult()) {
+            $this->_em->persist($training->getRaceresult());
+        }
+
         $this->_em->persist($training);
+        $this->_em->flush();
+
+        return $training->getId();
+    }
+
+    protected function ensureThatSportAndTypeAreManaged(Training $activity)
+    {
+        $sport = $activity->getSport();
+        $type = $activity->getType();
+
+        if (null !== $sport && $sport->getId() && !$this->_em->getUnitOfWork()->isInIdentityMap($sport)) {
+            $activity->setSport(
+                $this->_em->find(Sport::class, $sport->getId())
+            );
+        }
+
+        if (null !== $type && $type->getId() && !$this->_em->getUnitOfWork()->isInIdentityMap($type)) {
+            $activity->setType(
+                $this->_em->find(Type::class, $type->getId())
+            );
+        }
+    }
+
+    public function remove(Training $activity)
+    {
+        if (null !== $activity->getRoute()) {
+            $this->_em->remove($activity->getRoute());
+        }
+
+        $this->_em->remove($activity);
         $this->_em->flush();
     }
 }

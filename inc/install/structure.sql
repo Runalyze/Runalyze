@@ -95,6 +95,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_dataset` (
   `active` tinyint(1) unsigned NOT NULL DEFAULT '1',
   `style` varchar(100) NOT NULL DEFAULT '',
   `position` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `privacy` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `accountid` int(10) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -252,6 +253,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_sport` (
   `speed` varchar(10) NOT NULL DEFAULT 'min/km',
   `power` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `outside` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `default_privacy` tinyint(1) unsigned NOT NULL DEFAULT '1',
   `main_equipmenttypeid` int(10) unsigned DEFAULT NULL,
   `default_typeid` int(10) unsigned DEFAULT NULL,
   `is_main` tinyint(1) unsigned NOT NULL DEFAULT '0',
@@ -295,7 +297,16 @@ CREATE TABLE IF NOT EXISTS `runalyze_trackdata` (
   `smo2_1` longtext,
   `thb_0` longtext,
   `thb_1` longtext,
-  `pauses` text
+  `impact_gs_left` longtext,
+  `impact_gs_right` longtext,
+  `braking_gs_left` longtext,
+  `braking_gs_right` longtext,
+  `footstrike_type_left` longtext,
+  `footstrike_type_right` longtext,
+  `pronation_excursion_left` longtext,
+  `pronation_excursion_right` longtext,
+  `pauses` text,
+  `lock` tinyint(1) unsigned NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -344,6 +355,14 @@ CREATE TABLE IF NOT EXISTS `runalyze_training` (
   `groundcontact_balance` SMALLINT unsigned DEFAULT NULL,
   `vertical_oscillation` tinyint(3) unsigned DEFAULT NULL,
   `vertical_ratio` SMALLINT UNSIGNED DEFAULT NULL,
+  `avg_impact_gs_left` double DEFAULT NULL,
+  `avg_impact_gs_right` double DEFAULT NULL,
+  `avg_braking_gs_left` double DEFAULT NULL,
+  `avg_braking_gs_right` double DEFAULT NULL,
+  `avg_footstrike_type_left` tinyint(3) unsigned DEFAULT NULL COMMENT '(DC2Type:tinyint)',
+  `avg_footstrike_type_right` tinyint(3) unsigned DEFAULT NULL COMMENT '(DC2Type:tinyint)',
+  `avg_pronation_excursion_left` double DEFAULT NULL,
+  `avg_pronation_excursion_right` double DEFAULT NULL,
   `temperature` tinyint(4) DEFAULT NULL,
   `wind_speed` tinyint(3) unsigned DEFAULT NULL,
   `wind_deg` smallint(3) unsigned DEFAULT NULL,
@@ -427,7 +446,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_weathercache` (
 --
 
 CREATE TABLE IF NOT EXISTS `runalyze_raceresult` (
-  `official_distance` decimal(6,2) NOT NULL,
+  `official_distance` decimal(6,2) DEFAULT NULL,
   `official_time` decimal(8,2) NOT NULL,
   `officially_measured` tinyint(1)  unsigned NOT NULL DEFAULT 0,
   `name` varchar(50) NOT NULL DEFAULT '',

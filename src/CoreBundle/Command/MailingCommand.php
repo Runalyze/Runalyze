@@ -98,13 +98,14 @@ class MailingCommand extends ContainerAwareCommand
              $query->andWhere('a.registerdate < '.(int)$input->getOption('registration-before'));
         }
 
+        $lang = $input->getOption('lang');
+
         if (!empty($input->getOption('exclude-lang'))) {
             $exclude = true;
             $lang = $input->getOption('exclude-lang');
         }
-
-        if (!empty($input->getOption('lang'))) {
-            $query->andWhere('a.language '.($exclude ? 'NOT' : '').' IN (\''.implode('", "', $input->getOption('lang')).'\')');
+        if (!empty($input->getOption('lang')) || !empty($input->getOption('exclude-lang')) ) {
+            $query->andWhere('a.language '.($exclude ? 'NOT' : '').' IN (\''.implode('", "', $lang).'\')');
         }
 
         if (!empty($input->getOption('account'))) {

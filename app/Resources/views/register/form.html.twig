@@ -5,20 +5,39 @@
 $(function(){
 document.getElementById("registration_textTimezone").value = moment.tz.guess();
 });
+
+function reveal_pass(flag){
+    document.getElementById("registration_plainPassword").setAttribute("type", flag ? "text" : "password");
+}
 </script>
+<style>.input-with-unit input { padding-right: 2px; } .input-with-unit .input-unit:hover { color: inherit; } .input-unit { cursor: pointer; }</style>
 
     {{ form_start(form) }}
 <fieldset>
-    <legend>{% trans %}Create a new account{% endtrans %}</legend>
+    <legend>{% trans %}Sign up{% endtrans %}</legend>
     {{ form_row(form.username) }}
     {{ form_row(form.mail) }}
-    {{ form_row(form.plainPassword) }}
-    <label for="registration_termsAccepted">
-    {% trans with {'%a%': '<a href="https://blog.runalyze.com/de/nutzungsbedingungen/" target="_blank">', '%b%':'</a>'} %}Accept our %a% terms of use %b%{% endtrans %}
-    </label>
-    {{ form_widget(form.termsAccepted) }}
-    {{ form_errors(form.termsAccepted) }}
+
+    <div class="w100 clear">
+        {{ form_label(form.plainPassword) }}
+        <span class="input-with-unit">
+            {{ form_widget(form.plainPassword) }}
+            <span class="input-unit" onmousedown="reveal_pass(true)" onmouseup="reveal_pass(false)"><i class="fa fa-fw fa-eye"></i></span>
+        </span>
+        {{ form_errors(form.plainPassword) }}
+    </div>
+
+    <div class="w100 checkbox-first small">
+        <label for="registration_termsAccepted">
+            {% trans with {'%a%': '<a href="https://blog.runalyze.com/de/nutzungsbedingungen/" target="_blank">', '%b%':'</a>'} %}Accept our %a% terms of use %b%{% endtrans %}
+        </label>
+        {{ form_widget(form.termsAccepted) }}
+        {{ form_errors(form.termsAccepted) }}
+        {% do form.plainPassword.setRendered %}
+    </div>
+
     {{ form_rest(form) }}
+
     <div class="c">
         <input type="submit" value="{% trans %}Register{% endtrans %}" name="submit">
     </div>

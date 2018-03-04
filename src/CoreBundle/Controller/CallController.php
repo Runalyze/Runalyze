@@ -69,19 +69,6 @@ class CallController extends Controller
     }
 
     /**
-     * @Route("/call/ajax.saveTcx.php")
-     * @Security("has_role('ROLE_USER')")
-     */
-    public function ajaxSaveTcxAction()
-    {
-        $Frontend = new \Frontend(true, $this->get('security.token_storage'));
-
-        \Filesystem::writeFile('../data/import/'.$_POST['activityId'].'.tcx', $_POST['data']);
-
-        return new Response();
-    }
-
-    /**
      * @Route("/call/ajax.change.Config.php")
      * @Security("has_role('ROLE_USER')")
      * @Method({"GET"})
@@ -135,6 +122,11 @@ class CallController extends Controller
         }
 
         $Results = new \SearchResults($showResults);
+
+        if ($showResults && $Results->multiEditorRequested()) {
+            return $this->redirectToRoute('multi-editor', ['ids' => implode(',', $Results->getIdsForMultiEditor())]);
+        }
+
         $Results->display();
 
         return new Response();

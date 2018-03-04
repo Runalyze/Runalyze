@@ -1,12 +1,6 @@
 <?php
 /**
- * This file contains class::FormularUnit
- * @package Runalyze\HTML\Formular
- */
-/**
- * Class holds only enum for units
- * @author Hannes Christiansen
- * @package Runalyze\HTML\Formular
+ * @deprecated since v4.3
  */
 class FormularUnit {
 	/**
@@ -44,18 +38,12 @@ class FormularUnit {
 	 * @var string
 	 */
 	public static $M = 'm';
-	
+
 	/**
 	 * Unit: miles
 	 * @var string
 	 */
 	public static $MILES = 'miles';
-
-	/**
-	 * Unit: yards
-	 * @var string
-	 */
-	public static $Y = 'y';
 
 	/**
 	 * Unit: cm
@@ -70,54 +58,6 @@ class FormularUnit {
 	public static $MS = 'ms';
 
 	/**
-	 * Unit: user
-	 * @var string
-	 */
-	public static $USER = '&nbsp;<i class="fa fa-fw fa-user"></i>'; // Icon::$USER
-
-	/**
-	 * Unit: password
-	 * @var string
-	 */
-	public static $PASS = '&nbsp;<i class="fa fa-fw fa-lock"></i>'; // Icon::$PASSWORD
-
-	/**
-	 * Unit: mail-adress
-	 * @var string
-	 */
-	public static $MAIL = '&nbsp;<i class="fa fa-fw fa-envelope"></i>'; // Icon::$MAIL
-
-	/**
-	 * Unit: temperature in degree celsius
-	 * @var string
-	 */
-	public static $CELSIUS = '&deg;C';
-
-	/**
-	 * Unit: elevation
-	 * @var string
-	 */
-	public static $ELEVATION = 'hm';
-
-	/**
-	 * Unit: kcal
-	 * @var string
-	 */
-	public static $KCAL = 'kcal';
-	
-	/**
-	 * Unit: degree
-	 * @var string
-	 */
-	public static $DEGREE = '&deg;';
-
-	/**
-	 * Unit: pace in km/h
-	 * @var string
-	 */
-	public static $KMH = 'km/h';
-
-	/**
 	 * Unit: pace in min/km
 	 * @var string
 	 */
@@ -128,16 +68,4 @@ class FormularUnit {
 	 * @var string
 	 */
 	public static $POWER = 'W';
-        
-        /**
-         * Unit: hour
-         * @var string
-         */
-        public static $HOUR = 'h';
-	
-        /**
-         * Unit: hpa
-         * @var string
-         */
-        public static $HPA = 'hpa';
 }

@@ -3,6 +3,7 @@
 namespace Runalyze\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Runalyze\Bundle\CoreBundle\Entity\Common\AccountRelatedEntityInterface;
 
 /**
  * Conf
@@ -10,10 +11,10 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="conf", indexes={@ORM\Index(name="accountid", columns={"accountid"})})
  * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\ConfRepository")
  */
-class Conf
+class Conf implements AccountRelatedEntityInterface
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer", options={"unsigned":true})
      * @ORM\Id
@@ -53,9 +54,7 @@ class Conf
     private $account;
 
     /**
-     * Get id
-     *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -63,11 +62,9 @@ class Conf
     }
 
     /**
-     * Set category
-     *
      * @param string $category
      *
-     * @return Conf
+     * @return $this
      */
     public function setCategory($category)
     {
@@ -77,8 +74,6 @@ class Conf
     }
 
     /**
-     * Get category
-     *
      * @return string
      */
     public function getCategory()
@@ -87,11 +82,9 @@ class Conf
     }
 
     /**
-     * Set key
-     *
      * @param string $key
      *
-     * @return Conf
+     * @return $this
      */
     public function setKey($key)
     {
@@ -101,8 +94,6 @@ class Conf
     }
 
     /**
-     * Get key
-     *
      * @return string
      */
     public function getKey()
@@ -111,11 +102,9 @@ class Conf
     }
 
     /**
-     * Set value
-     *
      * @param string $value
      *
-     * @return Conf
+     * @return $this
      */
     public function setValue($value)
     {
@@ -125,8 +114,6 @@ class Conf
     }
 
     /**
-     * Get value
-     *
      * @return string
      */
     public function getValue()
@@ -135,13 +122,11 @@ class Conf
     }
 
     /**
-     * Set account
+     * @param Account $account
      *
-     * @param \Runalyze\Bundle\CoreBundle\Entity\Account $account
-     *
-     * @return Conf
+     * @return $this
      */
-    public function setAccount(\Runalyze\Bundle\CoreBundle\Entity\Account $account = null)
+    public function setAccount(Account $account)
     {
         $this->account = $account;
 
@@ -149,9 +134,7 @@ class Conf
     }
 
     /**
-     * Get account
-     *
-     * @return \Runalyze\Bundle\CoreBundle\Entity\Account
+     * @return Account
      */
     public function getAccount()
     {

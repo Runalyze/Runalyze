@@ -170,6 +170,7 @@ class EquipmentController extends Controller
         $equipment = new Equipment();
         $equipment->setAccount($account);
         $equipment->setType($equipmentType);
+        $equipment->setDateStart(new \DateTime("now"));
 
         $form = $this->createForm(Form\EquipmentType::class, $equipment,[
             'action' => $this->generateUrl('equipment-add', ['id' => $equipmentType->getId()])

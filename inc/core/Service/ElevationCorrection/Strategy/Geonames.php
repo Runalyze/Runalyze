@@ -1,10 +1,12 @@
 <?php
-/**
- * This file contains class::Geonames
- * @package Runalyze\Service\ElevationCorrection\Strategy
- */
 
 namespace Runalyze\Service\ElevationCorrection\Strategy;
+
+use GuzzleHttp\Client;
+use Psr\Log\LoggerInterface;
+use Runalyze\Service\ElevationCorrection\Exception\InvalidResponseException;
+use Runalyze\Service\ElevationCorrection\Exception\OverQueryLimitException;
+use Runalyze\Service\ElevationCorrection\Exception\StrategyException;
 
 /**
  * Elevation corrector strategy: ws.geonames.org
@@ -13,92 +15,85 @@ namespace Runalyze\Service\ElevationCorrection\Strategy;
  * ASTER data (resolution of 30m) are available but are not processed (i.e. contain holes).
  * GTOPO30 data have a resolution of only 1 km.
  *
- * @author Hannes Christiansen
- * @package Runalyze\Service\ElevationCorrection\Strategy
+ * @see http://www.geonames.org/export/web-services.html#srtm3
+ * @see http://www.geonames.org/export/credits.html
+ * @see http://www.geonames.org/export/webservice-exception.html
  */
 class Geonames extends AbstractStrategyFromExternalAPI
 {
-	/**
-	 * Value for unknown elevation
-	 *
-	 * "ocean areas have been masked as "no data" and have been assigned a value of -32768"
-	 * 
-	 * @see http://www.geonames.org/export/web-services.html#srtm3
-	 * @var int
-	 */
-	protected $UnknownValue = -32768;
+    use GuessUnknownValuesTrait;
 
-	/**
-	 * Can the strategy handle the data?
-	 *
-	 * To test this, we try to fetch a gtopo30-value.
-	 * This costs only 0.1 credit per call.
-	 *
-	 * We assume that Geonames will find elevation data for all points.
-	 *
-	 * @see http://www.geonames.org/export/credits.html
-	 * @see http://www.geonames.org/export/webservice-exception.html
-	 */
-	public function canHandleData()
-	{
-		$url = 'http://api.geonames.org/gtopo30JSON?lat=47.01&lng=10.2&username='.GEONAMES_USERNAME;
-		$response = json_decode(\Filesystem::getExternUrlContent($url), true);
+    /** @var string */
+    protected $GeonamesUsername;
 
-		if (is_null($response))
-			return false;
+    /**
+     * @param string $geonamesUsername
+     * @param Client $client
+     * @param LoggerInterface|null $logger
+     */
+    public function __construct($geonamesUsername, Client $client, LoggerInterface $logger = null)
+    {
+        $this->GeonamesUsername = $geonamesUsername;
 
-		if (isset($response['gtopo30']))
-			return true;
+        parent::__construct($client, $logger);
+    }
 
-		if (isset($response['status']) && isset($response['status']['value'])) {
-			switch ((int)$response['status']['value']) {
-				case 10:
-					\Runalyze\Error::getInstance()->addWarning('Geonames user account is not valid.');
-					break;
-				case 18:
-					\Runalyze\Error::getInstance()->addDebug('Geonames-request failed: daily limit of credits exceeded');
-					break;
-				case 19:
-					\Runalyze\Error::getInstance()->addDebug('Geonames-request failed: hourly limit of credits exceeded');
-					break;
-				case 20:
-					\Runalyze\Error::getInstance()->addDebug('Geonames-request failed: weekly limit of credits exceeded');
-					break;
-				default:
-					if (isset($response['status']['message']))
-						\Runalyze\Error::getInstance ()->addDebug('Geonames response: '.$response['status']['message']);
-			}
-		}
+    public function isPossible()
+    {
+        return strlen($this->GeonamesUsername) > 0;
+    }
 
-		return false;
-	}
+    public function loadAltitudeData(array $latitudes, array $longitudes)
+    {
+        $altitudes = parent::loadAltitudeData($latitudes, $longitudes);
 
-	/**
-	 * Fetch elevation
-	 * @param array $latitudes
-	 * @param array $longitudes
-	 * @return array
-	 * @throws \Runalyze\Service\ElevationCorrection\Strategy\InvalidResponseException
-	 */
-	protected function fetchElevationFor(array $latitudes, array $longitudes)
-	{
-		$latitudeString = implode(',', $latitudes);
-		$longitudeString = implode(',', $longitudes);
+        $this->guessUnknown($altitudes, -32768);
 
-		$url = 'http://api.geonames.org/srtm3JSON?lats='.$latitudeString.'&lngs='.$longitudeString.'&username='.GEONAMES_USERNAME;
-		$response = json_decode(\Filesystem::getExternUrlContent($url), true);
+        return $altitudes;
+    }
 
-		if (is_null($response) || !isset($response['geonames']) || !is_array($response['geonames'])) {
-			throw new InvalidResponseException('Geonames returned malformed code.');
-		}
+    protected function fetchElevationFor(array $latitudes, array $longitudes)
+    {
+        $response = $this->tryToLoadJsonFromUrl($this->getUrlFor($latitudes, $longitudes));
 
-		$elevationData = array();
-		$responseLength = count($response['geonames']);
+        $elevationData = array();
+        $responseLength = count($response['geonames']);
 
-		for ($i = 0; $i < $responseLength; $i++) {
-			$elevationData[] = (int)$response['geonames'][$i]['srtm3'];
-		}
+        for ($i = 0; $i < $responseLength; $i++) {
+            $elevationData[] = (int)$response['geonames'][$i]['srtm3'];
+        }
 
-		return $elevationData;
-	}
+        return $elevationData;
+    }
+
+    protected function checkApiResult(array $json)
+    {
+        if (isset($json['status']) && isset($json['status']['value'])) {
+            if (isset($json['status']['message'])) {
+                $this->logger->warning(sprintf('Geonames request failed: %s', $json['status']['message']));
+            }
+
+            if (10 == (int)$json['status']['value']) {
+                throw new StrategyException('Invalid user id for geonames.');
+            }
+
+            throw new OverQueryLimitException('Geonames request failed: limit of credits reached.');
+        }
+
+        if (!isset($json['geonames']) || !is_array($json['geonames'])) {
+            throw new InvalidResponseException('Geonames returned malformed code.');
+        }
+
+        return true;
+    }
+
+    protected function getUrlFor(array $latitudes, array $longitudes)
+    {
+        return sprintf(
+            'http://api.geonames.org/srtm3JSON?lats=%s&lngs=%s&username=%s',
+            implode(',', $latitudes),
+            implode(',', $longitudes),
+            $this->GeonamesUsername
+        );
+    }
 }

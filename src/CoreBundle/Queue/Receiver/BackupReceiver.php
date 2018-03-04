@@ -63,5 +63,6 @@ class BackupReceiver
         $this->container->get('doctrine')->getRepository('CoreBundle:Notification')->save(
             Notification::createFromMessage(new BackupReadyMessage(), $account)
         );
+	gc_collect_cycles();
     }
 }

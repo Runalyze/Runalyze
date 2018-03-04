@@ -3,12 +3,13 @@
 namespace Runalyze\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Runalyze\Bundle\CoreBundle\Entity\Common\AccountRelatedEntityInterface;
 
 /**
  * @ORM\Table(name="plugin")
  * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\PluginRepository")
  */
-class Plugin
+class Plugin implements AccountRelatedEntityInterface
 {
     /** @var int */
     const STATE_INACTIVE = 0;
@@ -50,14 +51,14 @@ class Plugin
     /**
      * @var int 0: inactive, 1: active, 2: hidden/misc
      *
-     * @ORM\Column(name="active", columnDefinition="tinyint unsigned NOT NULL DEFAULT 1")
+     * @ORM\Column(name="active", type="tinyint", options={"unsigned":true})
      */
     private $active = 1;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="`order`", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
+     * @ORM\Column(name="`order`", type="tinyint", options={"unsigned":true})
      */
     private $order = 0;
 
@@ -213,6 +214,9 @@ class Plugin
         return $this->order;
     }
 
+    /**
+     * @return $this
+     */
     public function moveUp()
     {
         --$this->order;
@@ -220,6 +224,9 @@ class Plugin
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     public function moveDown()
     {
         ++$this->order;

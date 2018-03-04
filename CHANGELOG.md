@@ -4,6 +4,7 @@ A complete list of our releases with all minor bugfix versions (vX.Y.*) can be f
 at [github](https://github.com/Runalyze/Runalyze/releases)
 and in our [blog](https://blog.runalyze.com/releases/).
 
+* v4.3, [update instructions](https://docs.runalyze.com/en/latest/upgrade/4.x.html), 28.01.2018
 * [v4.2](https://blog.runalyze.com/releases/4-2-0/), [update instructions](https://docs.runalyze.com/en/latest/upgrade/4.x.html#upgrade-from-4-1-to-4-2), 12.08.2017: minor release (trend analysis, climb score, glossary) 
 * [v4.1](https://blog.runalyze.com/releases/4-1-0/), [update instructions](https://docs.runalyze.com/en/latest/upgrade/4.x.html#upgrade-from-4-0-to-4-1), 07.05.2017: minor release (refactored sports configuration, new navigation, retina maps)
 * [v4.0](https://blog.runalyze.com/releases/4-0-0/), [update instructions](https://docs.runalyze.com/en/latest/upgrade/4.x.html#upgrade-from-3-2-to-4-0), 12.03.2017: minor release (poster tool, Removal of VDOT features)

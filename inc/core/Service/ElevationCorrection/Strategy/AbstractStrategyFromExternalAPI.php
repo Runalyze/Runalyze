@@ -1,70 +1,116 @@
 <?php
-/**
- * This file contains class::FromExternalAPI
- * @package Runalyze\Service\ElevationCorrection\Strategy
- */
 
 namespace Runalyze\Service\ElevationCorrection\Strategy;
 
-/**
- * Abstract corrector strategy for external API
- *
- * @author Hannes Christiansen
- * @package Runalyze\Service\ElevationCorrection\Strategy
- */
-abstract class AbstractStrategyFromExternalAPI extends AbstractStrategy
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
+use Psr\Log\LoggerAwareTrait;
+use Psr\Log\LoggerInterface;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\NullLogger;
+use Runalyze\Service\ElevationCorrection\Exception\InvalidResponseException;
+use Runalyze\Service\ElevationCorrection\Exception\NoResponseException;
+use Runalyze\Service\ElevationCorrection\Exception\StrategyException;
+
+abstract class AbstractStrategyFromExternalAPI extends AbstractStrategy implements LoggerAwareInterface
 {
-	/**
-	 * Points per call
-	 * @var int
-	 */
-	protected $POINTS_PER_CALL = 20;
+    use LoggerAwareTrait;
 
-	/** @var int */
-	protected $UnknownValue = -32768;
+    /** @var int */
+    protected $PointsPerCall = 20;
 
-	/**
-	 * Correct elevation
-	 *
-	 * Note: canHandleData() has to be called before!
-	 */
-	final public function correctElevation()
-	{
-		$numberOfPoints = count($this->LatitudePoints);
-		$pointsToGroup  = $this->POINTS_TO_GROUP * ceil($numberOfPoints/1000);
-		$latitudes  = array();
-		$longitudes = array();
+    /** @var Client */
+    protected $HttpClient;
 
-		for ($i = 0; $i < $numberOfPoints; $i++) {
-			if ($i % $pointsToGroup == 0) {
-				$latitudes[]  = $this->LatitudePoints[$i];
-				$longitudes[] = $this->LongitudePoints[$i];
-			}
+    public function __construct(Client $client, LoggerInterface $logger = null)
+    {
+        $this->HttpClient = $client;
+        $this->logger = $logger ?: new NullLogger();
+    }
 
-			if ( ($i+1)%($this->POINTS_PER_CALL*$pointsToGroup) == 0 || $i == $numberOfPoints - 1) {
-				$result = $this->fetchElevationFor($latitudes, $longitudes);
-				$points = count($result);
+    public function loadAltitudeData(array $latitudes, array $longitudes)
+    {
+        try {
+            $altitudes = $this->collectGroupWiseAltitudes($latitudes, $longitudes);
+        } catch (StrategyException $e) {
+            return null;
+        }
 
-				for ($d = 0; $d < $points; $d++)
-					for ($j = 0; $j < $pointsToGroup; $j++)
-						$this->ElevationPoints[] = $result[$d];
+        return $altitudes;
+    }
 
-				$latitudes = array();
-				$longitudes = array();
-			}
-		}
+    /**
+     * @param float[] $latitudes
+     * @param float[] $longitudes
+     *
+     * @return int[] [m]
+     */
+    protected function collectGroupWiseAltitudes(array $latitudes, array $longitudes)
+    {
+        $numberOfPoints = count($latitudes);
+        $pointsToGroup  = $this->PointsToGroup * ceil($numberOfPoints / 1000);
+        $latitudesForRequest = [];
+        $longitudesForRequest = [];
+        $altitudes = [];
 
-		if (count($this->ElevationPoints) > $numberOfPoints)
-			$this->ElevationPoints = array_slice($this->ElevationPoints, 0, $numberOfPoints);
+        for ($i = 0; $i < $numberOfPoints; $i++) {
+            if ($i % $pointsToGroup == 0) {
+                $latitudesForRequest[] = $latitudes[$i];
+                $longitudesForRequest[] = $longitudes[$i];
+            }
 
-		$this->guessUnknown($this->UnknownValue);
-	}
+            if (($i + 1) % ($this->PointsPerCall * $pointsToGroup) == 0 || $i == $numberOfPoints - 1) {
+                $result = $this->fetchElevationFor($latitudesForRequest, $longitudesForRequest);
+                $points = count($result);
 
-	/**
-	 * Fetch elevation
-	 * @param array $latitudes
-	 * @param array $longitudes
-	 * @return array
-	 */
-	abstract protected function fetchElevationFor(array $latitudes, array $longitudes);
+                for ($d = 0; $d < $points; $d++) {
+                    for ($j = 0; $j < $pointsToGroup; $j++) {
+                        $altitudes[] = $result[$d];
+                    }
+                }
+
+                $latitudesForRequest = [];
+                $longitudesForRequest = [];
+            }
+        }
+
+        if (count($altitudes) > $numberOfPoints) {
+            $altitudes = array_slice($altitudes, 0, $numberOfPoints);
+        }
+
+        return $altitudes;
+    }
+
+    protected function tryToLoadJsonFromUrl($url)
+    {
+        try {
+            $response = $this->HttpClient->get($url);
+            $result = json_decode($response->getBody()->getContents(), true);
+
+            if (is_array($result) && $this->checkApiResult($result)) {
+                return $result;
+            }
+        } catch (RequestException $e) {
+            $this->logger->warning('Elevation request failed.', ['exception' => $e]);
+
+            throw new NoResponseException();
+        }
+
+        throw new InvalidResponseException();
+    }
+
+    /**
+     * @param float[] $latitudes
+     * @param float[] $longitudes
+     *
+     * @return int[] [m]
+     */
+    abstract protected function fetchElevationFor(array $latitudes, array $longitudes);
+
+    /**
+     * @param array $json
+     *
+     * @return bool
+     */
+    abstract protected function checkApiResult(array $json);
 }

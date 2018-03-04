@@ -3,6 +3,7 @@
 namespace Runalyze\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Runalyze\Bundle\CoreBundle\Entity\Common\AccountRelatedEntityInterface;
 
 /**
  * Hrv
@@ -10,18 +11,20 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="hrv")
  * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\HrvRepository")
  */
-class Hrv
+class Hrv implements AccountRelatedEntityInterface
 {
     /**
-     * @var string|null
+     * @var array|null
      *
-     * @ORM\Column(name="data", type="text", nullable=true)
+     * @ORM\Column(name="data", type="pipe_array", nullable=true)
      */
     private $data;
 
     /**
      * @var Account
      *
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
      * @ORM\ManyToOne(targetEntity="Account")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="accountid", referencedColumnName="id", nullable=false)
@@ -34,7 +37,7 @@ class Hrv
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="Training")
+     * @ORM\OneToOne(targetEntity="Training", inversedBy = "hrv")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="activityid", referencedColumnName="id")
      * })
@@ -42,11 +45,11 @@ class Hrv
     private $activity;
 
     /**
-     * @param string|null $data
+     * @param array|null $data
      *
      * @return $this
      */
-    public function setData($data)
+    public function setData($data = null)
     {
         $this->data = $data;
 
@@ -54,7 +57,7 @@ class Hrv
     }
 
     /**
-     * @return string|null
+     * @return array|null
      */
     public function getData()
     {

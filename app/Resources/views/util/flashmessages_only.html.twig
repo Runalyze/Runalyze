@@ -1,0 +1,16 @@
+{% extends "base_logged_in.twig" %}
+
+{% block content %}
+    {% include 'flashmessages.html.twig' %}
+
+    {% if reloadActivityOverlay|default(false) %}
+        <script>
+var ajaxVisible = $("#ajax").is(":visible");
+if (ajaxVisible && $("#activity").length) {
+    Runalyze.Overlay.load("{{ url('activity-edit', {'id': activityId}) }}");
+} else if (ajaxVisible && $("#gps-results").length) {
+    Runalyze.Overlay.load("{{ url('runalyze_core_activity_view_elevationinfo', {'id': activityId}) }}");
+}
+        </script>
+    {% endif %}
+{% endblock %}

@@ -2,13 +2,11 @@
 
 namespace Runalyze\Export\File;
 
-use Runalyze\View\Activity\FakeContext;
 use Runalyze\Model\Activity;
-use Runalyze\Model\HRV;
 use Runalyze\Model\Route;
-use Runalyze\Model\Sport;
-use Runalyze\Model\Swimdata;
 use Runalyze\Model\Trackdata;
+use Runalyze\View\Activity\FakeContext;
+use Runalyze\Parser\Activity\FileType\Tcx as TcxParser;
 
 class TcxTest extends \PHPUnit_Framework_TestCase
 {
@@ -45,13 +43,14 @@ class TcxTest extends \PHPUnit_Framework_TestCase
         ));
         $Exporter->createFileWithoutDirectDownload();
 
-        $Importer = new \ImporterFiletypeTCX;
-        $Importer->parseString($Exporter->fileContent());
+        $parser = new TcxParser();
+        $parser->setFileContent($Exporter->fileContent());
+        $parser->parse();
 
-        $this->assertFalse($Importer->failed());
-        $this->assertTrue($Importer->object()->hasArrayTime());
-        $this->assertFalse($Importer->object()->hasArrayDistance());
-        $this->assertFalse($Importer->object()->hasArrayHeartrate());
+        $this->assertEquals(1, $parser->getNumberOfActivities());
+        $this->assertNotEmpty($parser->getActivityDataContainer()->ContinuousData->Time);
+        $this->assertNotEmpty($parser->getActivityDataContainer()->ContinuousData->Distance);
+        $this->assertNotEmpty($parser->getActivityDataContainer()->ContinuousData->HeartRate);
     }
 
     public function testMinimalExampleWithTimeAndHeartrate()
@@ -69,12 +68,13 @@ class TcxTest extends \PHPUnit_Framework_TestCase
         ));
         $Exporter->createFileWithoutDirectDownload();
 
-        $Importer = new \ImporterFiletypeTCX;
-        $Importer->parseString($Exporter->fileContent());
+        $parser = new TcxParser();
+        $parser->setFileContent($Exporter->fileContent());
+        $parser->parse();
 
-        $this->assertFalse($Importer->failed());
-        $this->assertTrue($Importer->object()->hasArrayTime());
-        $this->assertTrue($Importer->object()->hasArrayHeartrate());
+        $this->assertEquals(1, $parser->getNumberOfActivities());
+        $this->assertNotEmpty($parser->getActivityDataContainer()->ContinuousData->Time);
+        $this->assertNotEmpty($parser->getActivityDataContainer()->ContinuousData->HeartRate);
     }
 
     public function testMinimalExampleWithCompleteTrackdata()
@@ -95,15 +95,16 @@ class TcxTest extends \PHPUnit_Framework_TestCase
         ));
         $Exporter->createFileWithoutDirectDownload();
 
-        $Importer = new \ImporterFiletypeTCX;
-        $Importer->parseString($Exporter->fileContent());
+        $parser = new TcxParser();
+        $parser->setFileContent($Exporter->fileContent());
+        $parser->parse();
 
-        $this->assertFalse($Importer->failed());
-        $this->assertTrue($Importer->object()->hasArrayTime());
-        $this->assertTrue($Importer->object()->hasArrayDistance());
-        $this->assertTrue($Importer->object()->hasArrayHeartrate());
-        $this->assertTrue($Importer->object()->hasArrayCadence());
-        $this->assertTrue($Importer->object()->hasArrayPower());
+        $this->assertEquals(1, $parser->getNumberOfActivities());
+        $this->assertNotEmpty($parser->getActivityDataContainer()->ContinuousData->Time);
+        $this->assertNotEmpty($parser->getActivityDataContainer()->ContinuousData->Distance);
+        $this->assertNotEmpty($parser->getActivityDataContainer()->ContinuousData->HeartRate);
+        $this->assertNotEmpty($parser->getActivityDataContainer()->ContinuousData->Cadence);
+        $this->assertNotEmpty($parser->getActivityDataContainer()->ContinuousData->Power);
     }
 
     public function testMinimalExampleWithOnlyElevationForRoute()
@@ -124,14 +125,16 @@ class TcxTest extends \PHPUnit_Framework_TestCase
         ));
         $Exporter->createFileWithoutDirectDownload();
 
-        $Importer = new \ImporterFiletypeTCX;
-        $Importer->parseString($Exporter->fileContent());
+        $parser = new TcxParser();
+        $parser->setFileContent($Exporter->fileContent());
+        $parser->parse();
 
-        $this->assertFalse($Importer->failed());
-        $this->assertTrue($Importer->object()->hasArrayTime());
-        $this->assertFalse($Importer->object()->hasArrayDistance());
-        $this->assertTrue($Importer->object()->hasArrayHeartrate());
-        $this->assertTrue($Importer->object()->hasArrayAltitude());
-        $this->assertFalse($Importer->object()->hasPositionData());
+        $this->assertEquals(1, $parser->getNumberOfActivities());
+        $this->assertNotEmpty($parser->getActivityDataContainer()->ContinuousData->Time);
+        $this->assertNotEmpty($parser->getActivityDataContainer()->ContinuousData->Distance);
+        $this->assertNotEmpty($parser->getActivityDataContainer()->ContinuousData->HeartRate);
+        $this->assertNotEmpty($parser->getActivityDataContainer()->ContinuousData->Altitude);
+        $this->assertNotEmpty($parser->getActivityDataContainer()->ContinuousData->Latitude);
+        $this->assertNotEmpty($parser->getActivityDataContainer()->ContinuousData->Longitude);
     }
 }

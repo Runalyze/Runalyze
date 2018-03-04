@@ -34,6 +34,7 @@
 
       "./lib/runalyze.lib.js",
       "./lib/runalyze.lib.common.js",
+      "./lib/runalyze.lib.formatter.js",
       "./lib/runalyze.lib.plot.js",
       "./lib/runalyze.lib.plot.options.js",
       "./lib/runalyze.lib.plot.saver.js",
@@ -73,18 +74,22 @@
 
       "./web/vendor/d3/d3.js",
       "./web/vendor/d3-tip/index.js",
-      "./node_modules/d3-scale-chromatic/build/d3-scale-chromatic.min.js",
+      "./node_modules/d3-scale-chromatic/dist/d3-scale-chromatic.min.js",
 
       "./app/Resources/public/js/d3js-runalyzeplot.js",
       "./app/Resources/public/js/d3js-boxplot.js",
       "./app/Resources/public/js/climb-score.js",
 
       "./app/Resources/public/js/views/climb-score-view.js",
+      "./app/Resources/public/js/views/race-performance-chart-view.js",
+
+      "./app/Resources/public/js/vendor/d3-annotation.js",
 
       "./web/vendor/fontIconPicker/jquery.fonticonpicker.js",
 
       "./web/vendor/moment/moment.js",
       "./web/vendor/moment-timezone/builds/moment-timezone-with-data-2012-2022.min.js",
+      "./web/vendor/moment-duration-format/lib/moment-duration-format.js",
 
       "./web/vendor/ifvisible.js/src/ifvisible.js",
       "./web/vendor/jquery-timeago/jquery.timeago.js",

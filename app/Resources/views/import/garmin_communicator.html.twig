@@ -65,7 +65,7 @@
 				activityDirectoryHeaderStatus: '{{ 'Status' | trans }}',
 				statusCellProcessingImg: 'upload',
 				detectNewActivities: true,
-				syncDataUrl: '{{ url('activityMatcher') }}',
+				syncDataUrl: '{{ url('internal-activity-matcher') }}',
 				syncDataOptions: {method:'post'},
 				afterTableInsert: function(index, entry, statusCell, checkbox, row, activityMatcher) {
 					var activityId = entry.id, isMatch = false;

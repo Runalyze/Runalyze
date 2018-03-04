@@ -3,6 +3,7 @@
 namespace Runalyze\Bundle\CoreBundle\Tests\Entity;
 
 use Runalyze\Bundle\CoreBundle\Entity\Account;
+use Runalyze\Profile\Athlete\Gender;
 
 class AccountTest extends \PHPUnit_Framework_TestCase
 {
@@ -22,6 +23,9 @@ class AccountTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($this->Account->getChangepwTimelimit());
         $this->assertNull($this->Account->getActivationHash());
         $this->assertNull($this->Account->getDeletionHash());
+        $this->assertFalse($this->Account->knowsGender());
+        $this->assertFalse($this->Account->knowsBirthYear());
+        $this->assertNull($this->Account->getAge());
     }
 
     public function testChangePasswordHash()
@@ -46,5 +50,28 @@ class AccountTest extends \PHPUnit_Framework_TestCase
         $this->Account->removeActivationHash();
 
         $this->assertNull($this->Account->getActivationHash());
+    }
+
+    public function testGender()
+    {
+        $this->Account->setGender(Gender::FEMALE);
+
+        $this->assertTrue($this->Account->knowsGender());
+        $this->assertTrue($this->Account->isFemale());
+        $this->assertFalse($this->Account->isMale());
+
+        $this->Account->setGender(Gender::MALE);
+
+        $this->assertTrue($this->Account->knowsGender());
+        $this->assertFalse($this->Account->isFemale());
+        $this->assertTrue($this->Account->isMale());
+    }
+
+    public function testAge()
+    {
+        $this->Account->setBirthyear((int)date('Y') - 42);
+
+        $this->assertTrue($this->Account->knowsBirthYear());
+        $this->assertEquals(42, $this->Account->getAge());
     }
 }

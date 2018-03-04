@@ -3,6 +3,7 @@
 namespace Runalyze\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Runalyze\Bundle\CoreBundle\Entity\Common\AccountRelatedEntityInterface;
 
 /**
  * Swimdata
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="swimdata")
  * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\SwimdataRepository")
  */
-class Swimdata
+class Swimdata implements AccountRelatedEntityInterface
 {
     /**
      * @var array|null
@@ -29,7 +30,7 @@ class Swimdata
     /**
      * @var int [cm]
      *
-     * @ORM\Column(name="pool_length", type="smallint", precision=5, nullable=false, options={"unsigned":true, "default":0})
+     * @ORM\Column(name="pool_length", type="smallint", precision=5, nullable=false, options={"unsigned":true})
      */
     private $poolLength = 0;
 
@@ -50,7 +51,7 @@ class Swimdata
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="Training")
+     * @ORM\OneToOne(targetEntity="Training", inversedBy = "swimdata")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="activityid", referencedColumnName="id")
      * })
@@ -59,7 +60,7 @@ class Swimdata
 
 
     /**
-     * @param array|null
+     * @param array|null $stroke
      * @return $this
      */
     public function setStroke(array $stroke = null)
@@ -78,12 +79,20 @@ class Swimdata
     }
 
     /**
-     * @param array|null
+     * @return bool
+     */
+    public function hasStrokes()
+    {
+        return null !== $this->stroke;
+    }
+
+    /**
+     * @param array|null $strokeType
      * @return $this
      */
-    public function setStroketype(array $stroketype = null)
+    public function setStroketype(array $strokeType = null)
     {
-        $this->stroketype = $stroketype;
+        $this->stroketype = $strokeType;
 
         return $this;
     }
@@ -94,6 +103,14 @@ class Swimdata
     public function getStroketype()
     {
         return $this->stroketype;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasStrokeTypes()
+    {
+        return null !== $this->stroketype;
     }
 
     /**
@@ -151,5 +168,16 @@ class Swimdata
     public function getActivity()
     {
         return $this->activity;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEmpty()
+    {
+        return (
+            (null === $this->stroke || empty($this->stroke)) &&
+            (null === $this->stroketype || empty($this->stroketype))
+        );
     }
 }

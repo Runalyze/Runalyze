@@ -46,7 +46,7 @@ class SportRepositoryTest extends AbstractRepositoryTestCase
         Sport $sport = null
     )
     {
-        $activity = $this->getActivitiyForDefaultAccount($timestamp, $duration, $distance, $sport);
+        $activity = $this->getActivityForDefaultAccount($timestamp, $duration, $distance, $sport);
 
         $this->TrainingRepository->save($activity);
 
@@ -67,6 +67,8 @@ class SportRepositoryTest extends AbstractRepositoryTestCase
 
         $this->assertNull($this->SportRepository->findRunningFor($account, true));
         $this->assertNull($this->SportRepository->findRunningFor($account)->getId());
+
+        $this->assertNull($this->SportRepository->findThisOrAny(1, $account));
     }
 
     public function testDefaultAccount()
@@ -78,6 +80,9 @@ class SportRepositoryTest extends AbstractRepositoryTestCase
         $this->assertFalse($this->SportRepository->isInternalTypeFree(SportProfile::SWIMMING, $account));
 
         $this->assertEquals($this->getDefaultAccountsRunningSport()->getId(), $this->SportRepository->findRunningFor($account)->getId());
+
+        $this->assertEquals($this->getDefaultAccountsRunningSport(), $this->SportRepository->findThisOrAny($this->getDefaultAccountsRunningSport()->getId(), $account));
+        $this->assertNotNull($this->SportRepository->findThisOrAny(-123, $account));
     }
 
     public function testSportStatisticsWithoutData()

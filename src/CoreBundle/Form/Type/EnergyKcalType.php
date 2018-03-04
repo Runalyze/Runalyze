@@ -9,10 +9,10 @@ use Symfony\Component\Form\FormInterface;
 
 class EnergyKcalType extends AbstractType
 {
-
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars['input_unit'] = 'kcal';
+        $view->vars['attr']['min'] = 0;
     }
 
     public function getParent()

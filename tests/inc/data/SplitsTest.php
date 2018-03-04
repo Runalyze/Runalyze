@@ -13,7 +13,7 @@ class SplitsTest extends PHPUnit_Framework_TestCase {
 	protected $object;
 
 	/**
-	 * Test empty splits 
+	 * Test empty splits
 	 * @covers Splits::areEmpty
 	 */
 	public function testEmpty() {
@@ -50,7 +50,7 @@ class SplitsTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test adding splits 
+	 * Test adding splits
 	 * @covers Splits::addSplit
 	 */
 	public function testAddSplit() {
@@ -84,7 +84,7 @@ class SplitsTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test creationg from post without flag 
+	 * Test creationg from post without flag
 	 */
 	public function testNoCreateFromPostWithoutFlag() {
 		$_POST['splits'] = '1|4:20-2.4|10:09-10|1:00:00';
@@ -92,29 +92,6 @@ class SplitsTest extends PHPUnit_Framework_TestCase {
 		$Splits = new Splits();
 
 		$this->assertTrue( $Splits->areEmpty() );
-	}
-
-	/**
-	 * Test creation from post
-	 */
-	public function testCreateFromPostString() {
-		$_POST['splits'] = '1|4:20-2.4|10:09-10|1:00:00';
-
-		$Splits = new Splits( Splits::$FROM_POST );
-		$this->assertEquals( '1.000|4:20-2.400|10:09-10.000|1:00:00', $Splits->asString() );
-	}
-
-	/**
-	 * Test creation from post
-	 */
-	public function testCreateFromPostArray() {
-		$_POST['splits'] = array(
-			'km' => array(1.2, 0.4, 1),
-			'time' => array('5:20', '1:20', '3:17')
-		);
-
-		$Splits = new Splits( Splits::$FROM_POST );
-		$this->assertEquals( '1.200|5:20-0.400|1:20-1.000|3:17', $Splits->asString() );
 	}
 
 	/**

@@ -20,6 +20,14 @@ class VO2max extends AbstractCategory
     }
 
     /**
+     * @return int
+     */
+    public function getNumberOfDaysToConsider()
+    {
+        return (int)$this->Variables['VO2MAX_DAYS'];
+    }
+
+    /**
      * @return bool
      */
     public function useCorrectionForElevation()

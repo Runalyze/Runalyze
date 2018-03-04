@@ -216,7 +216,6 @@ class TrainingView {
 			if (Configuration::ActivityView()->mapFirst()) {
 				$this->Sections[] = new SectionLaps($this->Context);
 			}
-
 		}
 
 		if (
@@ -228,8 +227,10 @@ class TrainingView {
 			$this->Context->trackdata()->has(\Runalyze\Model\Trackdata\Entity::VERTICAL_OSCILLATION)
 		) {
 			$this->Sections[] = new SectionRunningDynamics($this->Context);
+            $this->Sections[] = new SectionRunScribeData($this->Context);
 			$this->Sections[] = new SectionMiscellaneous($this->Context, false);
 		} else {
+            $this->Sections[] = new SectionRunScribeData($this->Context);
 			$this->Sections[] = new SectionMiscellaneous($this->Context, true);
 		}
 

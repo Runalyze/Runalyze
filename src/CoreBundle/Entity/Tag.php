@@ -2,7 +2,9 @@
 
 namespace Runalyze\Bundle\CoreBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Runalyze\Bundle\CoreBundle\Entity\Common\AccountRelatedEntityInterface;
 
 /**
  * Tag
@@ -10,10 +12,10 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="tag")
  * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\TagRepository")
  */
-class Tag
+class Tag implements AccountRelatedEntityInterface
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer", nullable=false, options={"unsigned":true})
      * @ORM\Id
@@ -31,7 +33,7 @@ class Tag
     /**
      * @var Account
      *
-     * @ORM\ManyToOne(targetEntity="Account")
+     * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Account", inversedBy="tags")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="accountid", referencedColumnName="id", nullable=false)
      * })
@@ -45,18 +47,13 @@ class Tag
      */
     private $activity;
 
-    /**
-     * Constructor
-     */
     public function __construct()
     {
-        $this->activity = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->activity = new ArrayCollection();
     }
 
     /**
-     * Get id
-     *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -64,11 +61,9 @@ class Tag
     }
 
     /**
-     * Set tag
-     *
      * @param string $tag
      *
-     * @return Tag
+     * @return $this
      */
     public function setTag($tag)
     {
@@ -78,8 +73,6 @@ class Tag
     }
 
     /**
-     * Get tag
-     *
      * @return string
      */
     public function getTag()

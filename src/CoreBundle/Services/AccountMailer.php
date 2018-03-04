@@ -37,8 +37,8 @@ class AccountMailer
 
     /**
      * @param Account $account
-     * @param $subject
-     * @param $template
+     * @param string $subject
+     * @param string $template
      * @param array $templateData
      */
     public function sendMailTo(Account $account, $subject, $template, array $templateData)
@@ -51,6 +51,28 @@ class AccountMailer
 
         $this->Mailer->send($message);
     }
+
+    /**
+     * @param Account $account
+     * @param string $mailTo
+     * @param string $customText
+     */
+    public function sendCustomFeedbackToSystem(Account $account, $mailTo, $customText)
+    {
+        $subject = 'RUNALYZE - '.$this->Translator->trans('Customer feedback');
+        $content = 'Username: '.$account->getUsername()."\n";
+        $content .= 'Mail: '.$account->getMail()."\n";
+        $content .= 'Message:'."\n".$customText;
+
+        $message = \Swift_Message::newInstance($subject)
+            ->setTo($mailTo)
+            ->setFrom($this->Sender)
+            ->setReplyTo([$account->getMail() => $account->getUsername()]);
+        $message->setBody($content, 'text/plain');
+
+        $this->Mailer->send($message);
+    }
+
 
     protected function customLanguageTemplates($template, $language) {
         $template = str_replace('html.twig', '', $template);

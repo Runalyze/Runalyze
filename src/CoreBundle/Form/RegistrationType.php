@@ -28,14 +28,9 @@ class RegistrationType extends AbstractType
             ->add('mail', EmailType::class, [
                 'required' => false
             ])
-            ->add('plainPassword', RepeatedType::class, [
-                'type' => PasswordType::class,
+            ->add('plainPassword', PasswordType::class, [
                 'required' => true,
-                'first_options'  => ['label' => 'Password'],
-                'second_options' => ['label' => 'Repeat Password'],
-                'constraints' => [
-                    new Length(['min' => 8]),
-                ],
+                'label' => 'Password'
             ])
             ->add('termsAccepted', CheckboxType::class, [
                 'mapped' => false,

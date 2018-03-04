@@ -2,6 +2,8 @@
 
 namespace Runalyze\Bundle\CoreBundle\Component\Configuration\Category;
 
+use Runalyze\Parameter\Application\DatabaseOrder;
+
 class ActivityForm extends AbstractCategory
 {
     /**
@@ -15,7 +17,6 @@ class ActivityForm extends AbstractCategory
             'TRAINING_LOAD_WEATHER' => 'true',
             'PLZ' => '',
             'COMPUTE_KCAL' => 'true',
-            'COMPUTE_POWER' => 'true',
             'TRAINING_SORT_SPORTS' => 'id-asc',
             'TRAINING_SORT_TYPES' => 'id-asc',
             'TRAINING_SORT_SHOES' => 'id-asc',
@@ -35,6 +36,39 @@ class ActivityForm extends AbstractCategory
     }
 
     /**
+     * @param string $key
+     * @return bool
+     */
+    public function fieldSetIsCollapsed($key)
+    {
+        return isset($this->Variables['FORMULAR_SHOW_'.$key]) && 'true' !== $this->Variables['FORMULAR_SHOW_'.$key];
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAutomaticElevationCorrectionActivated()
+    {
+        return 'true' === $this->Variables['TRAINING_DO_ELEVATION'];
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAutomaticWeatherForecastActivated()
+    {
+        return 'true' === $this->Variables['TRAINING_LOAD_WEATHER'];
+    }
+
+    /**
+     * @return string
+     */
+    public function getDefaultLocationForWeatherForecast()
+    {
+        return $this->Variables['PLZ'];
+    }
+
+    /**
      * @return bool
      */
     public function isComputingEnergyActivated()
@@ -45,9 +79,51 @@ class ActivityForm extends AbstractCategory
     /**
      * @return bool
      */
-    public function isComputingPowerActivated()
+    public function isAutomaticPauseDetectionActivated()
     {
-        return 'true' === $this->Variables['COMPUTE_POWER'];
+        return 'true' === $this->Variables['DETECT_PAUSES'];
+    }
+
+    /**
+     * @return DatabaseOrder
+     */
+    public function getDatabaseOrderForSport()
+    {
+        return $this->getDatabaseOrderFor('TRAINING_SORT_SPORTS');
+    }
+
+    /**
+     * @return DatabaseOrder
+     */
+    public function getDatabaseOrderForTypes()
+    {
+        return $this->getDatabaseOrderFor('TRAINING_SORT_TYPES');
+    }
+
+    /**
+     * @return DatabaseOrder
+     */
+    public function getDatabaseOrderForEquipment()
+    {
+        return $this->getDatabaseOrderFor('TRAINING_SORT_SHOES');
+    }
+
+    /**
+     * @return DatabaseOrder
+     */
+    protected function getDatabaseOrderFor($key)
+    {
+        $order = new DatabaseOrder();
+        $order->set($this->Variables[$key]);
+
+        return $order;
+    }
+
+    public function getIgnoredActivityIds()
+    {
+        return array_filter(
+            explode(',', $this->Variables['GARMIN_IGNORE_IDS'])
+        );
     }
 
     /**

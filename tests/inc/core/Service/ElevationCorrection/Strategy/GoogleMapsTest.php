@@ -1,78 +1,47 @@
 <?php
 
-namespace Runalyze\Service\ElevationCorrection\Strategy;
+namespace Runalyze\Tests\Service\ElevationCorrection\Strategy;
 
-/**
- * @group dependsOn
- * @group dependsOnService
- * @group dependsOnGoogleMaps
- */
+use GuzzleHttp\Psr7\Response;
+use Runalyze\Service\ElevationCorrection\Strategy\GoogleMaps;
+use Runalyze\Tests\Service\HttpClientAwareTestCaseTrait;
+
 class GoogleMapsTest extends \PHPUnit_Framework_TestCase
 {
-	public function testSimpleData()
-	{
-		$corrector = new GoogleMaps(
-			[49.444722],
-			[7.768889]
-		);
+    use HttpClientAwareTestCaseTrait;
 
-		if ($corrector->canHandleData()) {
-		    try {
-                $corrector->correctElevation();
-                $this->assertEquals([237], $corrector->getCorrectedElevation());
-            } catch (NoResponseException $e) {
-                $this->markTestSkipped('Google Maps was not available.');
-            } catch (OverQueryLimitException $e) {
-                $this->markTestSkipped('Google Maps query limit reached.');
-            }
-		} else {
-			$this->markTestSkipped('Google Maps was not available.');
-		}
-	}
+    public function testEmptyResponse()
+    {
+        $google = new GoogleMaps($this->getMockForResponses([
+            new Response(200, [], '')
+        ]));
 
-	public function testSimplePath()
-	{
-		$corrector = new GoogleMaps(
-			[49.440, 49.441, 49.442, 49.443, 49.444, 49.445, 49.446, 49.447, 49.448, 49.449, 49.450],
-			[7.760, 7.761, 7.762, 7.763, 7.764, 7.765, 7.766, 7.767, 7.768, 7.769, 7.770]
-		);
+        $this->assertNull($google->loadAltitudeData([49.444], [7.769]));
+    }
 
-		if ($corrector->canHandleData()) {
-            try {
-			    $corrector->correctElevation();
-			    $this->assertEquals(
-			        [238, 238, 238, 238, 238, 237, 237, 237, 237, 237, 263],
-                    $corrector->getCorrectedElevation()
-                );
-            } catch (NoResponseException $e) {
-                $this->markTestSkipped('Google Maps was not available.');
-            } catch (OverQueryLimitException $e) {
-                $this->markTestSkipped('Google Maps query limit reached.');
-            }
-		} else {
-			$this->markTestSkipped('Google Maps was not available.');
-		}
-	}
+    /**
+     * @see http://maps.googleapis.com/maps/api/elevation/json?locations=50.01,10.2|51.01,11.2
+     */
+    public function testSimpleResponse()
+    {
+        $google = new GoogleMaps($this->getMockForResponses([
+            new Response(200, [], '{"results":[{"elevation":203,"location":{"lat":50.01,"lng":10.2},"resolution":9.543951988220215},{"elevation":240.9113922119141,"location":{"lat":51.01,"lng":11.2},"resolution":19.08790397644043}],"status":"OK"}')
+        ]));
+        $google->setPointsToGroup(1);
 
-	public function testUnknown()
-	{
-		$corrector = new GoogleMaps(
-			[0, 49.440, 49.441, 49.442, 49.443, 49.444, 49.445, 0, 0, 0, 0, 0, 0, 49.446, 49.447, 49.448, 49.449, 49.450],
-			[0,  7.760,  7.761,  7.762,  7.763,  7.764,  7.765, 0, 0, 0, 0, 0, 0,  7.766,  7.767,  7.768,  7.769,  7.770]
-		);
+        $this->assertEquals([203, 241], $google->loadAltitudeData([50.01, 51.01], [10.2, 11.2]));
+    }
 
-		if ($corrector->canHandleData()) {
-            try {
-    			$corrector->correctElevation();
-	    		$this->assertEquals(
-	    		    [238, 238, 238, 238, 238, 238, 238, 238, 238, 238, 238, 238, 238, 238, 238, 245, 245, 245],
-                    $corrector->getCorrectedElevation()
-                );
-            } catch (NoResponseException $e) {
-                $this->markTestSkipped('Google Maps was not available.');
-            }
-		} else {
-			$this->markTestSkipped('Google Maps was not available.');
-		}
-	}
+    /**
+     * @see http://maps.googleapis.com/maps/api/elevation/json?locations=49.445,7.765|0.0,0.0|49.450,7.770
+     */
+    public function testGuessingUnknown()
+    {
+        $google = new GoogleMaps($this->getMockForResponses([
+            new Response(200, [], '{ "results" : [ { "elevation" : 237.1988372802734, "location" : { "lat" : 49.445, "lng" : 7.765 }, "resolution" : 152.7032318115234 }, { "elevation" : -3492, "location" : { "lat" : 0, "lng" : 0 }, "resolution" : 610.8129272460938 }, { "elevation" : 263.6353454589844, "location" : { "lat" : 49.45, "lng" : 7.77 }, "resolution" : 152.7032318115234 } ], "status" : "OK" }')
+        ]));
+        $google->setPointsToGroup(1);
+
+        $this->assertEquals([237, 237, 264], $google->loadAltitudeData([49.445, 0, 49.450], [7.765, 0, 7.770]));
+    }
 }

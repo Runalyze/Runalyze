@@ -1,0 +1,73 @@
+{% extends "base_logged_in.twig" %}
+
+{% block content %}
+    <div id="ajax-navigation" class="panel hide">
+        <div class="panel-heading">
+            <h1>{% trans %}Multi editor{% endtrans %}</h1>
+        </div>
+
+        <div class="panel-content">
+            <table class="multi-edit-table fullwidth zebra-style">
+                <tbody>
+                {% for preview in previews %}
+                    {# @var preview \Runalyze\Bundle\CoreBundle\Component\Activity\ActivityPreview #}
+                    <tr data-activity="{{ preview.activityId }}" class="link{{ loop.index0 == 0 ? ' highlight' : '' }} show-on-hover-parent">
+                        <td class="multi-edit-sport-icon c">
+                            <span class="link show-on-hover multi-edit-remove-link"><i class="fa fa-fw fa-times"></i></span>
+                            {% if preview.sportIcon %}<i class="{{ preview.sportIcon }} atRight" rel="tooltip" title="{{ preview.sportName }}"></i>{% else %}{{ preview.sportName }}{% endif %}
+                        </td>
+                        <td>
+                            {{ preview.dateTime|date('d.m.Y', false) }} - <small>{{ preview.dateTime|date('H:i', false) }}</small>
+                            <br>
+                            <small>{{ preview.duration|duration }} {{ preview.distance > 0 ? distance(preview.distance) : '' }}</small>
+                        </td>
+                        <td class="multi-edit-icon">{% if preview.hasHeartRate %}<i class="fa fa-fw fa-heart"></i>{% endif %}</td>
+                        <td class="multi-edit-icon">{% if preview.hasRoute %}<i class="fa fa-fw fa-location-arrow"></i>{% endif %}</td>
+                        <td class="multi-edit-icon">{% if preview.hasRounds %}<i class="fa fa-fw fa-clock-o"></i>{% endif %}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+(function($){
+    var $nav = $("#ajax-navigation");
+    var onSuccess = function() {
+        var $next = $nav.find(".highlight + tr");
+
+        if ($next.length) {
+            $("#activity_next-multi-editor").val($next.data("activity"));
+            $("#activity").find("input[type=submit]").val("{% trans %}Save and continue{% endtrans %}");
+        }
+
+        $("#ajax-prev, #ajax-next").remove();
+    };
+
+    $nav.appendTo($("#ajax-outer")).removeClass('hide');
+    $nav.find(".multi-edit-remove-link").click(function(e){
+        $(this).parent().parent().remove();
+        e.stopPropagation();
+    });
+    $nav.find("tr.link").click(function(){
+        $nav.find("tr.link.highlight").removeClass("highlight").addClass("edited");
+
+        var id = $(this).data("activity");
+        $(this).removeClass("edited").addClass("highlight");
+        Runalyze.Overlay.load("{{ path('activity-edit', {'id': 123}) }}".replace("123", id), {
+            success: onSuccess
+        });
+    });
+
+    {% if previews[0].activityId %}
+    $("#ajax").append('<div class="panel-content" style="min-height:400px;"></div>');
+
+    Runalyze.Overlay.load("{{ path('activity-edit', {'id': previews[0].activityId}) }}", {
+        success: onSuccess,
+        size: 'small'
+    });
+    {% endif %}
+})(jQuery);
+    </script>
+{% endblock %}

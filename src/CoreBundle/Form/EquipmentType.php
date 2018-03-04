@@ -89,6 +89,7 @@ class EquipmentType extends AbstractType
                     'choices' => $this->EquipmentRepository->findAllFor($this->getAccount()),
                     'choice_label' => 'name',
                     'choice_value' => 'getId',
+                    'choice_translation_domain' => false,
                     'label' => 'Category',
                     'disabled' => true
                 ]);

@@ -72,13 +72,17 @@ class AnovaType extends AbstractType
                 'widget' => 'single_text',
                 'format' => 'dd.MM.yyyy',
                 'html5' => false,
-                'attr' => ['class' => 'pick-a-date small-size']
+                'attr' => ['class' => 'pick-a-date small-size'],
+                'model_timezone' => 'UTC',
+                'view_timezone' => 'UTC'
             ])
             ->add('dateTo', DateType::class, [
                 'widget' => 'single_text',
                 'format' => 'dd.MM.yyyy',
                 'html5' => false,
-                'attr' => ['class' => 'pick-a-date small-size']
+                'attr' => ['class' => 'pick-a-date small-size'],
+                'model_timezone' => 'UTC',
+                'view_timezone' => 'UTC'
             ])
             ->add('sport', ChoiceType::class, [
                 'multiple' => true,
@@ -87,6 +91,7 @@ class AnovaType extends AbstractType
                     /** @var Sport $sport */
                     return $sport->getName();
                 },
+                'choice_translation_domain' => false,
                 'attr' => [
                     'data-placeholder' => __('Choose sport(s)'),
                     'class' => 'chosen-select full-size'
@@ -104,6 +109,7 @@ class AnovaType extends AbstractType
                     /** @var Type $type */
                     return $type->getName();
                 },
+                'choice_translation_domain' => false,
                 'attr' => [
                     'data-placeholder' => __('Choose activity type(s)'),
                     'class' => 'chosen-select full-size'
@@ -145,6 +151,16 @@ class AnovaType extends AbstractType
                         'Vertical oscillation' => QueryValues::VERTICAL_OSCILLATION,
                         'Flight time' => QueryValues::FLIGHT_TIME,
                         'Flight ratio' => QueryValues::FLIGHT_RATIO
+                    ],
+                    'RunScribe' => [
+                        'Impact Gs (left)' => QueryValues::IMPACT_GS_LEFT,
+                        'Impact Gs (right)' => QueryValues::IMPACT_GS_RIGHT,
+                        'Braking Gs (left)' => QueryValues::BRAKING_GS_LEFT,
+                        'Braking Gs (right)' => QueryValues::BRAKING_GS_RIGHT,
+                        'Footstrike type (left)' => QueryValues::FOOTSTRIKE_TYPE_LEFT,
+                        'Footstrike type (right)' => QueryValues::FOOTSTRIKE_TYPE_RIGHT,
+                        'Pronation excursion (left)' => QueryValues::PRONATION_EXCURSION_LEFT,
+                        'Pronation excursion (right)' => QueryValues::PRONATION_EXCURSION_RIGHT,
                     ],
                     'Weather' => [
                         'Temperature' => QueryValues::WEATHER_TEMPERATURE,

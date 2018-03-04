@@ -4,6 +4,7 @@ namespace Runalyze\Bundle\CoreBundle\Controller;
 
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\Training;
+use Runalyze\Bundle\CoreBundle\Entity\TrainingRepository;
 use Runalyze\Export\Share\Facebook;
 use Runalyze\View\Activity\Context;
 use Runalyze\View\Activity\Linker;
@@ -12,7 +13,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-
 
 class SharedController extends Controller
 {
@@ -124,33 +124,32 @@ class SharedController extends Controller
     /**
      * @Route("/athlete/{username}/feed", name="shared-athlete-feed")
      */
-    public function publicUserFeedAction($username, Request $request) {
+    public function publicUserFeedAction($username) {
         /** @var null|Account $account */
         $account = $this->getDoctrine()->getRepository('CoreBundle:Account')->findByUsername($username);
         $privacy = $this->get('app.configuration_manager')->getList($account)->getPrivacy();
 
         $feed = $this->get('app.activity.feed');
         $feed->setFeedTitle('RUNALYZE athlete '.$username)
-                ->setFeedUrl($this->generateUrl('shared-athlete-feed', array('username' => $username), UrlGeneratorInterface::ABSOLUTE_URL))
-                ->setSiteUrl($this->generateUrl('shared-athlete', array('username' => $username), UrlGeneratorInterface::ABSOLUTE_URL))
+                ->setFeedUrl($this->generateUrl('shared-athlete-feed', ['username' => $username], UrlGeneratorInterface::ABSOLUTE_URL))
+                ->setSiteUrl($this->generateUrl('shared-athlete', ['username' => $username], UrlGeneratorInterface::ABSOLUTE_URL))
                 ->setFeedAuthor($username);
 
         if (null === $account || !$privacy->isListPublic()) {
             return new Response(
                 $feed->buildFeed(),
                 Response::HTTP_OK,
-                array('content-type' => 'text/xml')
+                ['content-type' => 'text/xml']
             );
         }
 
-        $feed->setActivities($this->getTrainingRepository()->latestActivities($account));
+        $feed->setActivities($this->getTrainingRepository()->getLatestActivities($account, 20, !$privacy->isListShowingAllActivities()));
 
         return new Response(
             $feed->buildFeed(),
             Response::HTTP_OK,
-            array('content-type' => 'text/xml')
+            ['content-type' => 'text/xml']
         );
-
     }
 
     /**

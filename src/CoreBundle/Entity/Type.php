@@ -3,6 +3,9 @@
 namespace Runalyze\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Runalyze\Bundle\CoreBundle\Entity\Common\AccountRelatedEntityInterface;
+use Runalyze\Bundle\CoreBundle\Entity\Common\IdentifiableEntityInterface;
+use Runalyze\Bundle\CoreBundle\Entity\Common\NamedEntityInterface;
 use Runalyze\Profile\View\DataBrowserRowProfile;
 
 /**
@@ -11,7 +14,7 @@ use Runalyze\Profile\View\DataBrowserRowProfile;
  * @ORM\Table(name="type")
  * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\TypeRepository")
  */
-class Type
+class Type implements IdentifiableEntityInterface, NamedEntityInterface, AccountRelatedEntityInterface
 {
     /**
      * @var int
@@ -39,7 +42,7 @@ class Type
     /**
      * @var Sport
      *
-     * @ORM\ManyToOne(targetEntity="Sport")
+     * @ORM\ManyToOne(targetEntity="Sport", inversedBy="types")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="sportid", referencedColumnName="id", nullable=false)
      * })
@@ -49,23 +52,23 @@ class Type
     /**
      * @var int
      *
-     * @ORM\Column(name="short", type="integer", columnDefinition="tinyint unsigned NOT NULL DEFAULT 2")
+     * @ORM\Column(name="short", type="tinyint", options={"unsigned":true})
      *
      * @see \Runalyze\Profile\View\DataBrowserRowProfile
      */
     private $displayMode = 2;
 
     /**
-     * @var int
+     * @var int [bpm]
      *
-     * @ORM\Column(name="hr_avg", columnDefinition="tinyint unsigned NOT NULL DEFAULT '100'")
+     * @ORM\Column(name="hr_avg", type="tinyint", options={"unsigned":true})
      */
     private $hrAvg = 100;
 
     /**
      * @var bool
      *
-     * @ORM\Column(name="quality_session", type="boolean", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
+     * @ORM\Column(name="quality_session", type="boolean")
      */
     private $qualitySession = false;
 
@@ -79,7 +82,7 @@ class Type
     /**
      * @var \Runalyze\Bundle\CoreBundle\Entity\Account
      *
-     * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Account")
+     * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Account", inversedBy="activityTypes")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="accountid", referencedColumnName="id", nullable=false)
      * })

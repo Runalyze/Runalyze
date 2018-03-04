@@ -98,8 +98,7 @@ class SearchResults {
 		$this->setKeysThatShouldIgnoreNull();
 		$this->setKeysThatShouldIgnoreZero();
 
-        $this->ResultsPerPage = (is_numeric($_POST['resultsPerPage'])) ? $_POST['resultsPerPage'] : 20;
-
+        $this->ResultsPerPage = (isset($_POST['resultsPerPage']) && is_numeric($_POST['resultsPerPage'])) ? $_POST['resultsPerPage'] : 20;
 
         if ($withResults) {
 			$this->initDataset();
@@ -147,6 +146,14 @@ class SearchResults {
 			'groundcontact_balance',
 			'vertical_oscillation',
 			'vertical_ratio',
+            'avg_impact_gs_left',
+            'avg_impact_gs_right',
+            'avg_braking_gs_left',
+            'avg_braking_gs_right',
+            'avg_footstrike_type_left',
+            'avg_footstrike_type_right',
+            'avg_pronation_excursion_left',
+            'avg_pronation_excursion_right',
 			'temperature',
 			'wind_speed',
 			'wind_deg',
@@ -166,6 +173,14 @@ class SearchResults {
 	 */
 	protected function setKeysThatShouldIgnoreNull() {
 		$this->KeysThatShouldIgnoreNull = [
+            'avg_impact_gs_left',
+            'avg_impact_gs_right',
+            'avg_braking_gs_left',
+            'avg_braking_gs_right',
+            'avg_footstrike_type_left',
+            'avg_footstrike_type_right',
+            'avg_pronation_excursion_left',
+            'avg_pronation_excursion_right',
 		    'climb_score',
 			'percentage_hilly',
 			'fit_training_effect',
@@ -627,38 +642,26 @@ class SearchResults {
 	 * Display
 	 */
 	public function display() {
-		if ($this->multiEditorRequested() && !empty($this->Trainings)) {
-			$this->sendResultsToMultiEditor();
-		} else {
-			echo '<div id="searchResult">';
-			$this->displayResults();
-			echo '</div>';
-		}
+        echo '<div id="searchResult">';
+        $this->displayResults();
+        echo '</div>';
 	}
 
 	/**
-	 * @return boolean
+	 * @return bool
 	 */
-	protected function multiEditorRequested() {
+	public function multiEditorRequested() {
 		return isset($_POST['send-to-multi-editor']);
 	}
 
-	/**
-	 * Send results to Multi Editor
-	 */
-	protected function sendResultsToMultiEditor() {
-		$IDs = array();
-		foreach ($this->Trainings as $data) {
-			$IDs[] = $data['id'];
-		}
-
-		$_POST = array();
-
-		$MultiEditor = new MultiEditor($IDs);
-		$MultiEditor->display();
-
-		echo Ajax::wrapJS('$("#ajax").removeClass("big-window").addClass("small-window");');
-	}
+    /**
+     * @return int[]
+     */
+	public function getIdsForMultiEditor() {
+	    return array_map(function($data) {
+	        return (int)$data['id'];
+        }, $this->Trainings);
+    }
 
 	/**
 	 * Display results

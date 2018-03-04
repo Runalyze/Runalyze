@@ -3,6 +3,8 @@
 namespace Runalyze\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Runalyze\Bundle\CoreBundle\Entity\Common\AccountRelatedEntityInterface;
+use Runalyze\Bundle\CoreBundle\Entity\Common\IdentifiableEntityInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -10,9 +12,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="user", indexes={@ORM\Index(name="accountid_time", columns={"accountid", "time"})})
  * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\UserRepository")
- * @ORM\EntityListeners({"Runalyze\Bundle\CoreBundle\EventListener\UserEntityListener"})
+ * @ORM\EntityListeners({"Runalyze\Bundle\CoreBundle\EntityListener\UserListener"})
  */
-class User
+class User implements IdentifiableEntityInterface, AccountRelatedEntityInterface
 {
     /**
      * @var int
@@ -33,21 +35,21 @@ class User
     /**
      * @var float|null [kg]
      *
-     * @ORM\Column(name="weight", type="decimal", precision=5, scale=2, nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="weight", type="casted_decimal_2", precision=5, scale=2, nullable=true, options={"unsigned":true})
      */
     private $weight;
 
     /**
      * @var int|null [bpm]
      *
-     * @ORM\Column(name="pulse_rest", columnDefinition="tinyint unsigned DEFAULT NULL")
+     * @ORM\Column(name="pulse_rest", type="tinyint", nullable=true, options={"unsigned":true})
      */
     private $pulseRest;
 
     /**
      * @var int|null [bpm]
      *
-     * @ORM\Column(name="pulse_max", columnDefinition="tinyint unsigned DEFAULT NULL")
+     * @ORM\Column(name="pulse_max", type="tinyint", nullable=true, options={"unsigned":true})
      */
     private $pulseMax;
 
@@ -56,7 +58,7 @@ class User
      * @Assert\Range(
      *     min = 0,
      *     max = 100)
-     * @ORM\Column(name="fat", type="decimal", precision=3, scale=1, nullable=true)
+     * @ORM\Column(name="fat", type="casted_decimal_1", precision=3, scale=1, nullable=true)
      */
     private $fat;
 
@@ -65,7 +67,7 @@ class User
      * @Assert\Range(
      *     min = 0,
      *     max = 100)
-     * @ORM\Column(name="water", type="decimal", precision=3, scale=1, nullable=true)
+     * @ORM\Column(name="water", type="casted_decimal_1", precision=3, scale=1, nullable=true)
      */
     private $water;
 
@@ -75,7 +77,7 @@ class User
      * @Assert\Range(
      *     min = 0,
      *     max = 100)
-     * @ORM\Column(name="muscles", type="decimal", precision=3, scale=1, nullable=true)
+     * @ORM\Column(name="muscles", type="casted_decimal_1", precision=3, scale=1, nullable=true)
      */
     private $muscles;
 

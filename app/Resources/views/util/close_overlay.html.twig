@@ -1,0 +1,9 @@
+{% extends "base_logged_in.twig" %}
+
+{% block content %}
+    {% include 'flashmessages.html.twig' %}
+
+    {% if app.request.xmlHttpRequest %}
+        <script>Runalyze.Overlay.close();</script>
+    {% endif %}
+{% endblock %}
