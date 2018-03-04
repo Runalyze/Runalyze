@@ -2,6 +2,7 @@
 
 namespace Runalyze\Bundle\CoreBundle\Controller;
 
+use Runalyze\Bundle\CoreBundle\Component\Activity\ActivityContext;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\Training;
 use Runalyze\Bundle\CoreBundle\Entity\TrainingRepository;
@@ -44,6 +45,7 @@ class SharedController extends Controller
         $publicList = $this->get('app.configuration_manager')->getList($account)->getPrivacy()->isListPublic();
 
         $Frontend = new \FrontendShared(true);
+        /** @var ActivityContext $activityContext */
         $activityContext = $this->get('app.activity_context.factory')->getContext($activity);
         $activityContextLegacy = new Context($activity->getId(), $activity->getAccount()->getId());
 

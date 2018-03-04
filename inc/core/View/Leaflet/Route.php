@@ -87,10 +87,10 @@ class Route {
     }
 
 	/**
-	 * Get JS
+	 * @param string|null $currentMapObject
 	 * @return string
 	 */
-	final public function js() {
+	final public function js($currentMapObject = null) {
 		$Options = 'segments: '.json_encode($this->Paths);
 
 		if (count($this->Paths) == count($this->Infos)) {
@@ -105,7 +105,7 @@ class Route {
 			$Options .= ', '.$property.': '.json_encode($value);
 		}
 
-		return 'RunalyzeLeaflet.Routes.addRoute(\''.$this->id.'\', {'.$Options.'});';
+		return ($currentMapObject ?: 'RunalyzeLeaflet.get(\''.$this->id.'\')').'.Routes.addRoute(\''.$this->id.'\', {'.$Options.'});';
 	}
 
 	/**
@@ -168,7 +168,7 @@ class Route {
 	 * @return string
 	 */
 	final public function distIcon($km) {
-		return 'RunalyzeLeaflet.Routes.distIcon('.(int)$km.')';
+		return 'RunalyzeLeaflet.distIcon('.(int)$km.')';
 	}
 
 	/**
@@ -176,7 +176,7 @@ class Route {
 	 * @return string
 	 */
 	final public function startIcon() {
-		return 'RunalyzeLeaflet.Routes.startIcon()';
+		return 'RunalyzeLeaflet.startIcon()';
 	}
 
 	/**
@@ -184,7 +184,7 @@ class Route {
 	 * @return string
 	 */
 	final public function endIcon() {
-		return 'RunalyzeLeaflet.Routes.endIcon()';
+		return 'RunalyzeLeaflet.endIcon()';
 	}
 
 	/**
@@ -192,6 +192,6 @@ class Route {
 	 * @return string
 	 */
 	final public function pauseIcon() {
-		return 'RunalyzeLeaflet.Routes.pauseIcon()';
+		return 'RunalyzeLeaflet.pauseIcon()';
 	}
 }

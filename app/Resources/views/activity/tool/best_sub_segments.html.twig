@@ -1,6 +1,7 @@
 {% extends "base_logged_in.twig" %}
 
 {% import _self as this %}
+{% import '_macro/leaflet.html.twig' as leaflet %}
 
 {% macro tableCell(value, unit) %}
     {{ value|raw }} <small>{{ unit|raw }}</small>
@@ -11,10 +12,10 @@
     {{ value.value }} <small>{{ value.unit }}</small>
 {% endmacro %}
 
-{% macro tableRow(rowLabel, baseValue, pace, from, to) %}
+{% macro tableRow(rowLabel, baseValue, pace, from, to, segmentType, segmentIndex) %}
     {% import _self as this %}
 
-    <tr class="c">
+    <tr class="c" data-segment-index="{{ segmentIndex }}" data-segment-type="{{ segmentType }}">
         <td class="l"><strong>{{ rowLabel }}</strong></td>
         <td>{{ baseValue }}</td>
         <td>{{ this.tableCellFor(pace) }}</td>
@@ -33,7 +34,11 @@
     {% set timeSegments = statistics.timeSegments %}
 
     <div class="panel-content">
-        <table class="zebra-style more-padding" style="width: 400px;">
+        {% if map %}
+        {{ leaflet.mapForAthlete("map-segments-" ~ activityId, activity.account) }}
+        {% endif %}
+
+        <table class="zebra-style more-padding fullwidth" id="best-sub-segment-table-{{ activityId }}">
             <thead>
             <tr>
                 <th colspan="2">{% trans %}Best segment{% endtrans %}</th>
@@ -52,7 +57,9 @@
                         achievedTime|duration,
                         pace(achievedTime / distance, paceUnit),
                         distanceArray[fromTo[0]],
-                        distanceArray[fromTo[1]]
+                        distanceArray[fromTo[1]],
+                        "distance",
+                        i
                     ) }}
                 {% endif %}
             {% endfor %}
@@ -68,11 +75,55 @@
                         this.tableCellFor(distance(achievedDistance)),
                         pace(time / achievedDistance, paceUnit),
                         distanceArray[fromTo[0]],
-                        distanceArray[fromTo[1]]
+                        distanceArray[fromTo[1]],
+                        "time",
+                        i
                     ) }}
                 {% endif %}
             {% endfor %}
             </tbody>
         </table>
+
+        {% if map %}
+        <script>
+            {{ map.js('RunalyzeLeaflet.get("map-segments-' ~ activityId ~ '")')|raw }}
+
+            var $table = $("#best-sub-segment-table-{{ activityId }}");
+            var segments = {{ segments|json_encode|raw }};
+            var polyline = null;
+            var fixed = false;
+            var highlightSegment = function(row) {
+                var index = row.attr('data-segment-index');
+                var type = row.attr('data-segment-type');
+                polyline = L.polyline(segments[type][index], {color: 'yellow'}).addTo(RunalyzeLeaflet.get('map-segments-{{ activityId }}').map());
+            };
+            var removeHighlight = function() {
+                RunalyzeLeaflet.get('map-segments-{{ activityId }}').map().removeLayer(polyline);
+            };
+
+            $("tr[data-segment-index]").on("mouseover", function(){
+                if (!fixed) {
+                    highlightSegment($(this));
+                }
+            }).on("mouseout", function(){
+                if (!fixed) {
+                    removeHighlight();
+                }
+            }).on("click", function(){
+                if (!fixed) {
+                    $(this).addClass('highlight');
+                    fixed = true;
+                } else if ($(this).hasClass('highlight')) {
+                    $(this).removeClass('highlight');
+                    fixed = false;
+                } else {
+                    $table.find('.highlight').removeClass('highlight');
+                    $(this).addClass('highlight');
+                    removeHighlight();
+                    highlightSegment($(this));
+                }
+            });
+        </script>
+        {% endif %}
     </div>
 {% endblock %}

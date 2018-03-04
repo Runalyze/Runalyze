@@ -8,6 +8,7 @@ use League\Geotools\Geohash\Geohash;
 use Runalyze\Bundle\CoreBundle\Entity\Adapter\RouteAdapter;
 use Runalyze\Bundle\CoreBundle\Entity\Common\AccountRelatedEntityInterface;
 use Runalyze\Calculation\Route\GeohashLine;
+use Runalyze\Model;
 
 /**
  * Route
@@ -719,5 +720,31 @@ class Route implements AccountRelatedEntityInterface
             $this->startpoint = null;
             $this->endpoint = null;
         }
+    }
+
+    /**
+     * @return Model\Route\Entity
+     */
+    public function getLegacyModel()
+    {
+        return new Model\Route\Entity([
+            'id' => $this->id,
+            Model\Route\Entity::NAME => $this->name,
+            Model\Route\Entity::CITIES => $this->cities,
+            Model\Route\Entity::DISTANCE => $this->distance,
+            Model\Route\Entity::GEOHASHES => $this->geohashes,
+            Model\Route\Entity::ELEVATIONS_CORRECTED => $this->elevationsCorrected,
+            Model\Route\Entity::ELEVATIONS_ORIGINAL => $this->elevationsOriginal,
+            Model\Route\Entity::ELEVATIONS_SOURCE => $this->elevationsSource,
+            Model\Route\Entity::ELEVATION => $this->elevation,
+            Model\Route\Entity::ELEVATION_DOWN => $this->elevationDown,
+            Model\Route\Entity::ELEVATION_UP => $this->elevationUp,
+            Model\Route\Entity::STARTPOINT => $this->startpoint,
+            Model\Route\Entity::ENDPOINT => $this->endpoint,
+            Model\Route\Entity::MIN => $this->min,
+            Model\Route\Entity::MAX => $this->max,
+            Model\Route\Entity::IN_ROUTENET => $this->inRoutenet,
+            Model\Route\Entity::LOCK => $this->lock
+        ]);
     }
 }
