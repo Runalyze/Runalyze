@@ -10,10 +10,9 @@
     <div id="{{ id }}" class="map"{% if options.width or options.height %} style="{% if options.width %}width: {{ options.width }};{% endif %}{% if options.height %}height: {{ options.height }};{% endif %}"{% endif %}></div>
 
     <script>
-        RunalyzeLeaflet.setDefaultLayer("{{ options.layer }}");
-        RunalyzeLeaflet.init('{{ id }}', { scrollWheelZoom: {{ options.scroll }} } );
+        RunalyzeLeaflet.create('{{ id }}', { scrollWheelZoom: {{ options.scroll }}, layer: "{{ options.layer }}" } );
         {% if options.bounds.count() == 4 %}
-        RunalyzeLeaflet.map().fitBounds([[{{ options.bounds[0] }},{{ options.bounds[1] }}],[{{ options.bounds[2] }},{{ options.bounds[3] }}]]);
+        RunalyzeLeaflet.get('{{ id }}').map().fitBounds([[{{ options.bounds[0] }},{{ options.bounds[1] }}],[{{ options.bounds[2] }},{{ options.bounds[3] }}]]);
         {% endif %}
     </script>
 {% endmacro %}

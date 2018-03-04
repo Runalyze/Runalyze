@@ -69,6 +69,7 @@
       "./lib/geohash.js",
       "./web/vendor/leaflet/dist/leaflet.js",
       "./lib/leaflet/runalyze.leaflet.js",
+      "./lib/leaflet/runalyze.map.js",
       "./lib/leaflet/runalyze.leaflet.layers.js",
       "./lib/leaflet/runalyze.leaflet.routes.js",
 

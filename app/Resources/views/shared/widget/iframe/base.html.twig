@@ -55,13 +55,13 @@
             {{ leaflet.mapForAthlete("map-" ~ activity.id, activity.account) }}
 
             <script>
-                {{ route.js|raw }}
-                RunalyzeLeaflet.Routes.routeid="{{ route.id }}";
+                {{ route.js('RunalyzeLeaflet.get("map-' ~ activity.id ~ '")')|raw }}
+                RunalyzeLeaflet.get("map-{{ activity.id }}").Routes.routeid="{{ route.id }}";
 
                 function resizeMap() {
                     var $m = $(".map"), w = $(window).innerHeight(), d = $("body").outerHeight();
                     $m.height(w - d + $m.height() - 20);
-                    RunalyzeLeaflet.Routes.fitTo("{{ route.id }}");
+                    RunalyzeLeaflet.get("map-{{ activity.id }}").Routes.fitTo("{{ route.id }}");
                 }
 
                 $(document).ready(function(){

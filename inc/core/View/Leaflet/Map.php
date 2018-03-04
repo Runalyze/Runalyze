@@ -120,22 +120,19 @@ class Map {
         }
 
 		$scrollOnZoom = Configuration::ActivityView()->mapZoomOnScroll();
-		$Code  = 'RunalyzeLeaflet.setDefaultLayer("'.Configuration::ActivityView()->mapLayer().'");';
-		$Code .= 'RunalyzeLeaflet.init(\''.$this->id.'\', { scrollWheelZoom: '.($scrollOnZoom ? 'true' : 'false').'} );';
+		$Code = 'var m = RunalyzeLeaflet.create(\''.$this->id.'\', { scrollWheelZoom: '.($scrollOnZoom ? 'true' : 'false').', layer: "'.Configuration::ActivityView()->mapLayer().'"} );';
 
 		foreach ($this->Routes as $Route) {
-			$Code .= $Route->js();
+			$Code .= $Route->js('m');
 		}
 
 		if (!empty($this->Bounds)) {
-			$Code .= 'RunalyzeLeaflet.map().fitBounds([['.$this->Bounds['lat.min'].','.$this->Bounds['lng.min'].'],['.$this->Bounds['lat.max'].','.$this->Bounds['lng.max'].']]);';
+			$Code .= 'm.map().fitBounds([['.$this->Bounds['lat.min'].','.$this->Bounds['lng.min'].'],['.$this->Bounds['lat.max'].','.$this->Bounds['lng.max'].']]);';
 		}
 
 		if (!empty($this->Routes)) {
-	        $Code.= 'RunalyzeLeaflet.Routes.routeid="'.$this->Routes[0]->id().'";';
+	        $Code.= 'm.Routes.routeid="'.$this->Routes[0]->id().'";';
 		}
-
-		$Code = '(function(RL,R){'.str_replace('RunalyzeLeaflet', 'RL', str_replace('RunalyzeLeaflet.Routes', 'R', $Code)).'})(RunalyzeLeaflet, RunalyzeLeaflet.Routes);';
 
 		return '<script>Runalyze.try('.
             'function(){'.$Code.'}, '.

@@ -3,8 +3,8 @@
 namespace Runalyze\Bundle\CoreBundle\Component\Activity\Tool;
 
 use Runalyze\Calculation\Math\SubSegmentMaximization;
-use Runalyze\Model\Trackdata;
 use Runalyze\Model\Route\Entity as RouteEntity;
+use Runalyze\Model\Trackdata;
 
 class BestSubSegmentsStatistics
 {
@@ -98,18 +98,20 @@ class BestSubSegmentsStatistics
      * @param int $precision only add every nth point to path
      * @return array
      */
-    private function getSegments(SubSegmentMaximization $subSegmentMaximization, RouteEntity $route, $precision)
+    protected function getSegments(SubSegmentMaximization $subSegmentMaximization, RouteEntity $route, $precision)
     {
         $latLongs = $route->latitudesAndLongitudesFromGeohash();
         $seg = [];
+
         foreach ($subSegmentMaximization->getAvailableSegmentLengths() as $index => $length) {
             $segIndices = $subSegmentMaximization->getIndizesOfMaximumForLengthIndex($index);
             $seg[$index] = [];
-            for ($i = $segIndices[0]; $i <= $segIndices[1]; $i += $precision) {
-                $seg[$index][] = array($latLongs['lat'][$i], $latLongs['lng'][$i]);
-            }
 
+            for ($i = $segIndices[0]; $i <= $segIndices[1]; $i += $precision) {
+                $seg[$index][] = [$latLongs['lat'][$i], $latLongs['lng'][$i]];
+            }
         }
+
         return $seg;
     }
 

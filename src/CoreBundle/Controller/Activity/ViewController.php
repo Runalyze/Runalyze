@@ -12,7 +12,6 @@ use Runalyze\Bundle\CoreBundle\Component\Activity\Tool\TimeSeriesStatistics;
 use Runalyze\Bundle\CoreBundle\Component\Activity\VO2maxCalculationDetailsDecorator;
 use Runalyze\Bundle\CoreBundle\Entity\TrainingRepository;
 use Runalyze\Metrics\Velocity\Unit\PaceEnum;
-use Runalyze\Model\Activity;
 use Runalyze\Service\ElevationCorrection\StepwiseElevationProfileFixer;
 use Runalyze\View\Activity\Context;
 use Runalyze\View\Leaflet\Map;
@@ -171,22 +170,21 @@ class ViewController extends Controller
 
     /**
      * @Route("/activity/{id}/sub-segments-info", requirements={"id" = "\d+"}, name="activity-tool-sub-segments-info")
+     * @ParamConverter("activity", class="CoreBundle:Training")
      * @Security("has_role('ROLE_USER')")
      */
-    public function subSegmentInfoAction($id, Account $account)
+    public function subSegmentInfoAction(Training $activity, Account $account)
     {
-        if (null === $trackdata) {
+        $this->checkThatEntityBelongsToActivity($activity, $account);
+
+        if (!$activity->hasTrackdata()) {
             return $this->render('activity/tool/not_possible.html.twig');
         }
 
-        if ($trackdata->getAccount()->getId() != $account->getId()) {
-            throw $this->createAccessDeniedException();
-        }
-
-        $trackdataModel = $trackdata->getLegacyModel();
+        $trackdataModel = $activity->getTrackdata()->getLegacyModel();
 
         $paceUnit = PaceEnum::get(
-            $this->getDoctrine()->getManager()->getRepository('CoreBundle:Training')->getSpeedUnitFor($id, $account->getId())
+            $this->getTrainingRepository()->getSpeedUnitFor($activity->getId(), $account->getId())
         );
 
         $statistics = new BestSubSegmentsStatistics($trackdataModel);
@@ -194,28 +192,35 @@ class ViewController extends Controller
         $statistics->setTimesToAnalyze([30, 60, 120, 300, 600, 720, 1800, 3600, 7200]);
         $statistics->findSegments();
 
-        $Frontend = new \Frontend(false, $this->get('security.token_storage'));
-        $context = new Context($id, $account->getId());
-        $route = $context->route();
-        $map = new Map('map-'.$trackdata->getActivity()->getActivityId());
-        $map->addRoute(
-            new \Runalyze\View\Leaflet\Activity(
-                'route-'.$trackdata->getActivity()->getActivityId(),
-                $route,
-                $trackdataModel
-            )
-        );
+        $mapRoute = false;
+        $segments = [];
 
-        $precision = (int) $this->get('app.configuration_manager')->getList()->getActivityView()->get('GMAP_PATH_PRECISION');
-        $distanceSegments = $statistics->getDistanceSegmentPaths($route, $precision);
-        $timeSegments = $statistics->getTimeSegmentPaths($route, $precision);
+        if ($activity->hasRoute() && $activity->getRoute()->hasGeohashes()) {
+            $Frontend = new \Frontend(true, $this->get('security.token_storage'));
+            $routeModel = $activity->getRoute()->getLegacyModel();
+            $mapRoute = new \Runalyze\View\Leaflet\Activity(
+                'route-'.$activity->getId(),
+                $routeModel,
+                $trackdataModel
+            );
+
+            $precision = (int)$this->get('app.configuration_manager')->getList()->getActivityView()->get('GMAP_PATH_PRECISION');
+            $distanceSegments = $statistics->getDistanceSegmentPaths($routeModel, $precision);
+            $timeSegments = $statistics->getTimeSegmentPaths($routeModel, $precision);
+            $segments = [
+                'time' => $timeSegments,
+                'distance' => $distanceSegments
+            ];
+        }
 
         return $this->render('activity/tool/best_sub_segments.html.twig', [
+            'account' => $account,
+            'activityId' => $activity->getId(),
             'statistics' => $statistics,
             'distanceArray' => $trackdataModel->distance(),
             'paceUnit' => $paceUnit,
-            'segments' => ['time' => $timeSegments, 'distance' => $distanceSegments],
-            'map' => $map->code(),
+            'segments' => $segments,
+            'map' => $mapRoute,
         ]);
     }
 
