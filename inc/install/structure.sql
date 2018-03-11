@@ -348,6 +348,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_training` (
   `trimp` smallint unsigned DEFAULT NULL,
   `cadence` int(3) unsigned DEFAULT NULL,
   `power` int(4) unsigned DEFAULT NULL,
+  `is_power_calculated` TINYINT(1) DEFAULT NULL,
   `total_strokes` smallint(5) unsigned DEFAULT NULL,
   `swolf` tinyint(3) unsigned DEFAULT NULL,
   `stride_length` tinyint(3) unsigned DEFAULT NULL,
